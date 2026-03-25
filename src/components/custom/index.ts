@@ -4,5 +4,7 @@ export * from "./controls";
 export * from "./dock";
 export * from "./icon-tooltip";
 export * from "./labeled-field";
+export * from "./search";
+export * from "./sidebar";
 export * from "./tabs";
 export * from "./timeline";
