@@ -265,15 +265,20 @@ function escapeHtml(s: string): string {
     display: flex;
     align-items: center;
     gap: 0.375rem;
-    border: 1.5px solid hsl(var(--border));
-    border-radius: var(--radius-md);
-    background: hsl(var(--background));
-    padding: 0.3rem 0.5rem;
-    transition: border-color var(--duration-fast) var(--ease-standard);
+    border: 1.5px solid hsl(var(--border) / 0.6);
+    border-radius: var(--radius-pill);
+    background: hsl(var(--muted) / 0.3);
+    padding: 0.35rem 0.625rem;
+    transition:
+        border-color var(--duration-fast) var(--ease-standard),
+        background var(--duration-fast) var(--ease-standard),
+        box-shadow var(--duration-fast) var(--ease-standard);
 }
 
 .fuzzy-search-input-wrap:focus-within {
-    border-color: hsl(var(--primary) / 0.5);
+    border-color: hsl(var(--ring) / 0.4);
+    background: hsl(var(--background));
+    box-shadow: var(--focus-ring-shadow);
 }
 
 .fuzzy-search-icon {
