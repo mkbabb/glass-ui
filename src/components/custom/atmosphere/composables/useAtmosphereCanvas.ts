@@ -6,7 +6,7 @@ import {
     type Ref,
     type ShallowRef,
 } from "vue";
-import { clamp, srgbToOKLab, oklabToOklch, oklchToOklab, oklabToRgb255, rgb255ToHex } from "./color";
+import { clamp, srgbToOKLab, oklabToOklch, oklchToOklab, oklabToRgb255 } from "./color";
 import { cssToRgb, DEFAULT_ATMOSPHERE_CONFIG } from "./atmosphereConfig";
 import type { AtmosphereConfig } from "./atmosphereConfig";
 

@@ -11,6 +11,8 @@ const props = withDefaults(
         position?: "fixed" | "inline" | "sticky";
         fadeMs?: number;
         alwaysExpanded?: boolean;
+        /** Allow expanded content to wrap to multiple lines. */
+        wrap?: boolean;
     }>(),
     {
         collapseDelay: 2000,
@@ -19,6 +21,7 @@ const props = withDefaults(
         position: "inline",
         fadeMs: 60,
         alwaysExpanded: false,
+        wrap: false,
     },
 );
 
@@ -64,7 +67,7 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
         ref="dockEl"
         class="glass-dock"
         :class="[
-            { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded },
+            { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'dock-wrap': wrap },
             position === 'fixed' ? 'fixed bottom-[var(--dock-pos)] left-1/2 -translate-x-1/2'
               : position === 'sticky' ? 'dock-sticky'
               : 'dock-inline',
@@ -191,5 +194,27 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
 .glass-dock.always-expanded {
     cursor: default;
     overflow: visible;
+}
+
+/* ── Wrap variant: multi-line dock ── */
+.glass-dock.dock-wrap {
+    white-space: normal;
+    border-radius: var(--radius-xl);
+    max-width: calc(100vw - 1rem);
+}
+
+.glass-dock.dock-wrap .dock-layer--full {
+    flex-wrap: wrap;
+    justify-content: center;
+    height: auto;
+    min-height: 2.5rem;
+    gap: 0.25rem 0.5rem;
+}
+
+/* Collapsed state stays pill-shaped even in wrap mode */
+.glass-dock.dock-wrap.collapsed {
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+    max-width: none;
 }
 </style>
