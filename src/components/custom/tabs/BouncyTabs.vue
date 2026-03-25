@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, onUnmounted, nextTick, type HTMLAttributes } from "vue";
+import { ref, watch, computed, onMounted, onUnmounted, nextTick, type HTMLAttributes } from "vue";
 import { cn } from "../../../utils";
 
 export interface TabOption {
@@ -7,11 +7,15 @@ export interface TabOption {
     value: string;
 }
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
     options: TabOption[];
     modelValue: string;
+    /** "default" = subtle muted slider; "pill" = solid foreground pill */
+    variant?: "default" | "pill";
     class?: HTMLAttributes["class"];
-}>();
+}>(), {
+    variant: "default",
+});
 
 const emit = defineEmits<{
     "update:modelValue": [value: string];
@@ -68,17 +72,30 @@ onMounted(() => {
 onUnmounted(() => {
     resizeObserver?.disconnect();
 });
+
+const isPill = computed(() => props.variant === "pill");
 </script>
 
 <template>
-    <div ref="containerRef" :class="cn('bouncy-toggle', props.class)">
-        <div class="bouncy-slider" :style="sliderStyle" />
+    <div
+        ref="containerRef"
+        :class="cn(
+            isPill ? 'bouncy-toggle bouncy-toggle--pill' : 'bouncy-toggle',
+            props.class,
+        )"
+    >
+        <div
+            :class="isPill ? 'bouncy-slider bouncy-slider--pill' : 'bouncy-slider'"
+            :style="sliderStyle"
+        />
         <button
             v-for="(option, idx) in options"
             :key="option.value"
             :ref="(el) => { if (el) buttonRefs[idx] = el as HTMLElement }"
-            class="bouncy-btn"
-            :class="{ 'is-active': modelValue === option.value }"
+            :class="[
+                isPill ? 'bouncy-btn bouncy-btn--pill' : 'bouncy-btn',
+                { 'is-active': modelValue === option.value },
+            ]"
             @click="select(option.value, idx)"
         >
             {{ option.label }}
@@ -87,6 +104,7 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+/* ── Default variant ── */
 .bouncy-toggle {
     position: relative;
     display: inline-grid;
@@ -151,5 +169,38 @@ onUnmounted(() => {
 
 .bouncy-btn.is-active {
     color: hsl(var(--foreground));
+}
+
+/* ── Pill variant ── */
+.bouncy-toggle--pill {
+    border-radius: 9999px;
+    background: hsl(var(--foreground) / 0.05);
+    padding: 0.125rem;
+    gap: 0.125rem;
+}
+
+.bouncy-slider--pill {
+    border-radius: 9999px;
+    background: hsl(var(--foreground));
+    box-shadow: none;
+    inset-block: 0.125rem;
+}
+
+.bouncy-btn--pill {
+    border-radius: 9999px;
+    padding: 0.125rem 0.625rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+@media (min-width: 640px) {
+    .bouncy-btn--pill {
+        padding: 0.125rem 0.625rem;
+        font-size: 0.75rem;
+    }
+}
+
+.bouncy-btn--pill.is-active {
+    color: hsl(var(--background));
 }
 </style>

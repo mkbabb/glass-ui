@@ -11,7 +11,7 @@
                 <div class="flex flex-col gap-1.5 py-2">
                     <div class="flex items-center justify-between">
                         <div>
-                            <h3 class="font-display text-sm font-semibold text-foreground">{{ section.title }}</h3>
+                            <h3 class="section-label">{{ section.title }}</h3>
                             <p class="font-mono-code text-2xs text-muted-foreground/60 leading-tight">{{ section.desc }}</p>
                         </div>
                         <button
@@ -25,10 +25,10 @@
                     <div v-for="p in section.params" :key="p.key" class="flex flex-col gap-0.5">
                         <div class="flex justify-between items-baseline">
                             <div class="flex items-baseline gap-1.5">
-                                <span class="font-mono-code text-xs text-foreground/80">{{ p.label }}</span>
+                                <span class="font-mono-code text-2xs text-foreground/80">{{ p.label }}</span>
                                 <span class="font-mono-code text-2xs text-muted-foreground/40 hidden sm:inline">&mdash; {{ p.desc }}</span>
                             </div>
-                            <span class="font-mono-code text-xs tabular-nums text-foreground/60">{{ fmt(p) }}</span>
+                            <span class="font-mono-code text-2xs tabular-nums text-foreground/60">{{ fmt(p) }}</span>
                         </div>
                         <Slider
                             :model-value="[(cfg as any)[p.key]]"

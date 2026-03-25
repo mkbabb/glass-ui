@@ -207,7 +207,14 @@ export function useDockState(options: UseDockStateOptions) {
     function release() {
         keepOpenCount = Math.max(0, keepOpenCount - 1);
         if (keepOpenCount === 0 && state.value === "hover") {
-            scheduleCollapse();
+            // Grace period: don't collapse immediately after a child releases
+            // (e.g., dialog dismissed via Escape). Give the user time to re-engage.
+            clearTimer();
+            collapseTimer = setTimeout(() => {
+                if (keepOpenCount === 0 && state.value === "hover") {
+                    scheduleCollapse();
+                }
+            }, Math.min(collapseDelay, 800));
         }
     }
 

@@ -38,7 +38,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
   <SelectPortal>
     <SelectContent
       v-bind="{ ...forwarded, ...$attrs }"
-      style="max-height: var(--reka-popper-available-height, 60dvh)"
+      style="max-height: var(--reka-popper-available-height, 60dvh); font-family: var(--select-font, inherit)"
       :class="cn(
         'relative z-[var(--z-popover)] min-w-32 overflow-y-auto rounded-xl border text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
         position === 'popper'
