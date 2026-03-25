@@ -20,3 +20,7 @@
 @import "./transitions.css";
 @import "./animations.css";
 @import "./utilities.css";
+
+/* Ensure consumer's Tailwind scans glass-ui components for utility classes
+   (e.g. CVA button variants like text-destructive-foreground) */
+@source "../components";

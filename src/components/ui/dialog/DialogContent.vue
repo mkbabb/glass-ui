@@ -15,10 +15,10 @@ import { cn } from '../../../utils'
 const props = withDefaults(
   defineProps<DialogContentProps & {
     class?: HTMLAttributes['class'];
-    /** Visual variant: "default" (opaque) or "glass" (translucent blur). */
-    variant?: 'default' | 'glass';
+    /** Visual variant: "glass" (translucent blur, default) or "opaque" (solid background). */
+    variant?: 'glass' | 'opaque';
   }>(),
-  { variant: 'default' },
+  { variant: 'glass' },
 )
 const emits = defineEmits<DialogContentEmits>()
 
@@ -32,9 +32,9 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 const baseClasses = 'fixed left-1/2 top-1/2 z-[var(--z-modal)] grid w-full max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 border p-6 shadow-lg duration-[var(--duration-fast)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]'
 
 const variantClasses = computed(() =>
-  props.variant === 'glass'
-    ? 'glass-elevated rounded-xl'
-    : 'bg-background sm:rounded-xl'
+  props.variant === 'opaque'
+    ? 'bg-background sm:rounded-xl'
+    : 'glass-elevated rounded-xl'
 )
 </script>
 
