@@ -1,0 +1,190 @@
+/* Shared @keyframes — global animations used across projects */
+
+/* ── Floating panel entrance ── */
+@keyframes floating-panel-in {
+    from {
+        opacity: 0;
+        filter: blur(4px);
+        scale: 0.96;
+    }
+    to {
+        opacity: 1;
+        filter: blur(0);
+        scale: 1;
+    }
+}
+
+/* ── Dialog open / close ── */
+@keyframes dialog-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes dialog-out {
+    from {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.95) translateY(8px);
+    }
+}
+
+/* ── Dialog ↔ drawer transitions ── */
+@keyframes dialog-out-to-drawer {
+    from {
+        opacity: 1;
+        transform: scale(1) translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.35) translateX(-120%);
+    }
+}
+
+@keyframes dialog-in-from-drawer {
+    from {
+        opacity: 0;
+        transform: scale(0.35) translateX(-120%);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateX(0);
+    }
+}
+
+@media (width < 640px) {
+    @keyframes dialog-out-to-drawer {
+        from {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+        to {
+            opacity: 0;
+            transform: scale(0.5) translateY(60%);
+        }
+    }
+    @keyframes dialog-in-from-drawer {
+        from {
+            opacity: 0;
+            transform: scale(0.5) translateY(60%);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+}
+
+/* ── Card menu entrance ── */
+@keyframes card-menu-in {
+    from {
+        opacity: 0;
+        filter: blur(4px);
+        transform: translateX(-100%) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        filter: blur(0);
+        transform: translateX(-100%) scale(1);
+    }
+}
+
+/* ── Golden shimmer ── */
+@keyframes golden-shimmer {
+    0%,
+    100% {
+        background-position: 100% 100%;
+    }
+    50% {
+        background-position: 0% 0%;
+    }
+}
+
+/* ── Collapsible (reka-ui) ── */
+@keyframes collapsible-open {
+    from {
+        height: 0;
+        opacity: 0;
+    }
+    to {
+        height: var(--reka-collapsible-content-height);
+        opacity: 1;
+    }
+}
+
+@keyframes collapsible-close {
+    from {
+        height: var(--reka-collapsible-content-height);
+        opacity: 1;
+    }
+    to {
+        height: 0;
+        opacity: 0;
+    }
+}
+
+/* ── Tooltip entrance ── */
+@keyframes tooltip-in {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ── Generic fade-in ── */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── Scale-in ── */
+@keyframes scale-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ── Slide-up ── */
+@keyframes slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── Rainbow hue rotate ── */
+@keyframes rainbow-hue {
+    from {
+        filter: hue-rotate(0deg);
+    }
+    to {
+        filter: hue-rotate(360deg);
+    }
+}

@@ -1,0 +1,24 @@
+/*
+ * keyframes-js preset — Instrument Serif, cartoon card shadows, heavier glass
+ */
+
+@theme {
+    --font-display: "Instrument Serif", Georgia, serif;
+    --font-serif: "Instrument Serif", Georgia, serif;
+    --font-mono: "Fira Code", monospace;
+
+    --color-gold: #D4AF37;
+    --color-gold-light: #F5E6A3;
+    --color-gold-dark: #A88B2E;
+}
+
+:root {
+    --shadow-color: var(--shadow);
+    --glass-opacity-light: 0.82;
+    --glass-blur: blur(12px);
+
+    /* Status indicators */
+    --color-status-active: hsl(142 71% 45%);
+    --color-status-paused: hsl(43 74% 49%);
+    --color-status-idle: hsl(var(--muted-foreground));
+}

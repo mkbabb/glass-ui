@@ -1,0 +1,10 @@
+/* Scroll-pane utilities — sticky header with scroll-driven animations */
+
+/* Named scroll timeline so ScrollPaneHeader animations respond
+   to THIS container's scroll, not portal-triggered layout shifts
+   in ancestor containers. */
+.pane-scroll-fade {
+    scroll-timeline: --pane-scroll block;
+}
+
+/* Pane title and description styles are in typography.css — single source of truth */

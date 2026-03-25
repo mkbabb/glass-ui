@@ -1,0 +1,22 @@
+/*
+ * @mkbabb/glass-ui — Unified design system styles
+ *
+ * Import this in your project's main CSS file:
+ *   @import "tailwindcss";
+ *   @import "tw-animate-css";
+ *   @import "@mkbabb/glass-ui/styles";
+ *   @import "@mkbabb/glass-ui/presets/value-js";  (or your project's preset)
+ */
+
+/* Order matters: tokens first, then theme (for @theme), then component layers */
+@import "./tokens.css";
+@import "./typography.css";
+@import "./theme.css";
+@import "./glass.css";
+@import "./dock.css";
+@import "./cards.css";
+@import "./scroll-pane.css";
+@import "./floating-panel.css";
+@import "./transitions.css";
+@import "./animations.css";
+@import "./utilities.css";

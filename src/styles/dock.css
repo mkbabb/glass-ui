@@ -1,0 +1,210 @@
+/* Dock utilities — icon buttons, select triggers, separators, layer grid */
+
+@layer components {
+    .dock-icon-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--size-icon-btn);
+        height: var(--size-icon-btn);
+        border-radius: var(--radius-pill);
+        border: none;
+        background: transparent;
+        color: hsl(var(--foreground) / 0.7);
+        cursor: pointer;
+        transition: all var(--duration-fast) var(--ease-standard);
+        flex-shrink: 0;
+        padding: 0;
+    }
+
+    .dock-icon-btn:hover:not(:disabled) {
+        background: hsl(var(--foreground) / 0.08);
+        color: var(--btn-hover-color, hsl(var(--foreground)));
+        transform: scale(var(--scale-hover-dock));
+    }
+
+    .dock-icon-btn:active:not(:disabled) {
+        transform: scale(var(--scale-press-dock));
+    }
+
+    .dock-icon-btn:focus-visible {
+        box-shadow: var(--focus-ring-shadow);
+        outline: none;
+    }
+
+    .dock-icon-btn:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+    }
+
+    .dock-icon-btn.is-active,
+    .dock-icon-btn.active {
+        background: hsl(var(--foreground) / 0.08);
+        color: hsl(var(--foreground));
+    }
+
+    /* Compact variant — auto-sized for inline use */
+    .dock-icon-btn-compact {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-pill);
+        border: none;
+        background: transparent;
+        color: hsl(var(--foreground) / 0.7);
+        cursor: pointer;
+        transition: all var(--duration-fast) var(--ease-standard);
+        flex-shrink: 0;
+        width: auto;
+        height: auto;
+        min-width: 0;
+        padding: 0.25rem;
+    }
+
+    .dock-icon-btn-compact:hover:not(:disabled) {
+        background: hsl(var(--foreground) / 0.08);
+        color: var(--btn-hover-color, hsl(var(--foreground)));
+        transform: scale(var(--scale-hover-dock));
+    }
+
+    .dock-icon-btn-compact:active:not(:disabled) {
+        transform: scale(var(--scale-press-dock));
+    }
+
+    .dock-icon-btn-compact:focus-visible {
+        box-shadow: var(--focus-ring-shadow);
+        outline: none;
+    }
+
+    .dock-icon-btn-compact:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+    }
+
+    .dock-select-trigger {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: var(--radius-pill);
+        border: none;
+        background: transparent;
+        color: hsl(var(--foreground) / 0.8);
+        cursor: pointer;
+        transition: all var(--duration-fast) var(--ease-standard);
+        white-space: nowrap;
+    }
+
+    .dock-select-trigger:hover:not(:disabled) {
+        background: hsl(var(--foreground) / 0.08);
+        color: hsl(var(--foreground));
+    }
+
+    .dock-select-trigger:active:not(:disabled) {
+        transform: scale(var(--scale-press));
+    }
+
+    .dock-select-trigger:focus-visible {
+        box-shadow:
+            0 0 0 var(--focus-ring-width) var(--dock-ring, hsl(var(--ring) / 0.3)),
+            0 0 8px hsl(var(--ring) / 0.15);
+        outline: none;
+    }
+
+    .dock-select-trigger:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+    }
+
+    .dock-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.25rem 0.375rem;
+        border-radius: var(--radius-pill);
+        color: hsl(var(--muted-foreground));
+        font-size: var(--type-small);
+        cursor: default;
+        transition: all var(--duration-fast) var(--ease-standard);
+        white-space: nowrap;
+    }
+
+    .dock-label:hover {
+        color: hsl(var(--foreground) / 0.85);
+    }
+
+    .dock-play-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-pill);
+        border: none;
+        cursor: pointer;
+        transition:
+            filter var(--duration-fast) var(--ease-standard),
+            transform var(--duration-fast) var(--ease-standard);
+    }
+
+    .dock-play-btn:hover:not(:disabled) {
+        filter: brightness(1.1);
+    }
+
+    .dock-play-btn:active:not(:disabled) {
+        transform: scale(var(--scale-press-dock));
+    }
+
+    .dock-play-btn:focus-visible {
+        box-shadow: var(--focus-ring-shadow);
+        outline: none;
+    }
+
+    .dock-play-btn:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+    }
+
+    .dock-separator {
+        width: 1px;
+        height: calc(var(--dock-h, var(--size-icon-btn)) * 0.5);
+        margin: 0 0.375rem;
+        background: hsl(var(--foreground) / 0.15);
+        flex-shrink: 0;
+    }
+
+    .dock-spacer {
+        flex: 1;
+    }
+
+    /* ── Layer transition grid ── */
+    .dock-layer-grid {
+        display: grid;
+        position: relative;
+        transition: width var(--duration-normal) var(--ease-dock);
+    }
+
+    .dock-layer-item {
+        grid-area: 1 / 1;
+        display: flex;
+        align-items: center;
+        gap: 0.375rem;
+        min-width: 0;
+        transition: opacity var(--duration-normal) var(--ease-standard);
+    }
+
+    /* Inactive layers: out of flow so only the active layer drives grid width */
+    .dock-layer-item:not(.dock-layer-active) {
+        position: absolute !important;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .dock-layer-item.dock-layer-active {
+        position: relative;
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .dock-layer-item.dock-layer-leaving {
+        z-index: var(--z-controls);
+    }
+}

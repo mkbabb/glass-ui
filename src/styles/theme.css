@@ -1,0 +1,74 @@
+/*
+ * theme.css — Tailwind CSS v4 @theme block
+ *
+ * Maps CSS custom properties to Tailwind utility-generating tokens.
+ * Import AFTER tokens.css and tailwindcss.
+ */
+
+@theme {
+    /* Container */
+    --container-center: true;
+    --container-padding-x: 2rem;
+    --container-2xl: 1400px;
+
+    /* ── Typography: golden-ratio scale (√φ ≈ 1.272) ── */
+    --font-size-2xs: var(--type-micro);
+    --font-size-xs: var(--type-caption);
+    --font-size-sm: var(--type-small);
+    --font-size-base: var(--type-body);
+    --font-size-lg: var(--type-prose);
+    --font-size-xl: var(--type-subheading);
+    --font-size-2xl: var(--type-heading);
+    --font-size-3xl: var(--type-title);
+    --font-size-4xl: var(--type-display-1);
+    --font-size-5xl: var(--type-display-2);
+    --font-size-6xl: var(--type-display-3);
+
+    /* ── Font families (overridden by presets) ── */
+    --font-display: "Fraunces", Georgia, serif;
+    --font-serif: "Fraunces", Georgia, serif;
+    --font-sans: system-ui, -apple-system, sans-serif;
+    --font-mono: "Fira Code", "Fira Mono", monospace;
+
+    /* ── Colors: reference dynamic CSS vars so .dark overrides work ── */
+    --color-border: hsl(var(--border));
+    --color-input: hsl(var(--input));
+    --color-ring: hsl(var(--ring));
+    --color-background: hsl(var(--background));
+    --color-foreground: hsl(var(--foreground));
+
+    --color-primary: hsl(var(--primary));
+    --color-primary-foreground: hsl(var(--primary-foreground));
+
+    --color-secondary: hsl(var(--secondary));
+    --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+    --color-muted: hsl(var(--muted));
+    --color-muted-foreground: hsl(var(--muted-foreground));
+
+    --color-accent: hsl(var(--accent));
+    --color-accent-foreground: hsl(var(--accent-foreground));
+
+    --color-destructive: hsl(var(--destructive));
+    --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+    --color-popover: hsl(var(--popover));
+    --color-popover-foreground: hsl(var(--popover-foreground));
+
+    --color-card: hsl(var(--card));
+    --color-card-foreground: hsl(var(--card-foreground));
+
+    --color-shadow: hsl(var(--shadow));
+
+    /* ── Border radius ── */
+    --radius: 0.5rem;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: var(--radius);
+    --radius-xl: 12px;
+    --radius-2xl: 1rem;
+    --radius-pill: 9999px;
+}
+
+/* Class-based dark mode */
+@variant dark (&:where(.dark, .dark *));

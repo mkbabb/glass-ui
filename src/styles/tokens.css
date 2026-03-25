@@ -1,0 +1,213 @@
+/*
+ * tokens.css — Unified design tokens for @mkbabb/glass-ui
+ *
+ * Shared structural tokens used by all consumer projects.
+ * Project-specific colors/fonts are overridden via presets.
+ */
+
+:root {
+    /* ═══════════════════════════════════════════════
+       §1  DURATION
+       ═══════════════════════════════════════════════ */
+    --duration-instant: 0.1s;
+    --duration-fast: 0.15s;
+    --duration-normal: 0.25s;
+    --duration-slow: 0.35s;
+    --duration-panel: 0.5s;
+    --duration-linger: 2.5s;
+
+    /* ═══════════════════════════════════════════════
+       §2  EASING
+       ═══════════════════════════════════════════════ */
+
+    /* Core (all projects) */
+    --ease-spring: cubic-bezier(0.22, 1.6, 0.36, 1);
+    --ease-dock: cubic-bezier(0.18, 1.4, 0.4, 1);
+    --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+    --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
+
+    /* Extended */
+    --ease-pane: cubic-bezier(0.25, 1, 0.5, 1);
+    --ease-pane-exit: cubic-bezier(0.5, 0, 1, 0.5);
+    --ease-overshoot: cubic-bezier(0.11, 0.14, 0.29, 1.5);
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* Apple family */
+    --ease-apple-default: cubic-bezier(0.25, 0.1, 0.25, 1);
+    --ease-apple-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-apple-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    /* ═══════════════════════════════════════════════
+       §3  Z-INDEX SCALE
+       ═══════════════════════════════════════════════ */
+    --z-background: 0;
+    --z-content: 10;
+    --z-controls: 20;
+    --z-bar: 30;
+    --z-dock: 40;
+    --z-overlay: 60;
+    --z-hovercard: 80;
+    --z-popover: 150;
+    --z-modal: 100;
+    --z-fullscreen: 200;
+    --z-toast: 250;
+    --z-toggle: 999;
+    --z-max: 9999;
+    --z-debug: 99999;
+
+    /* ═══════════════════════════════════════════════
+       §4  BORDER RADIUS
+       ═══════════════════════════════════════════════ */
+    --radius: 0.5rem;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: var(--radius);
+    --radius-xl: 12px;
+    --radius-2xl: 1rem;
+    --radius-pill: 9999px;
+
+    /* ═══════════════════════════════════════════════
+       §5  BOX SHADOWS
+       All use hsl(var(--shadow-color) / alpha)
+       Projects define --shadow-color in their preset.
+       ═══════════════════════════════════════════════ */
+    --shadow-color: 0 0% 0%;
+
+    /* Elevation scale */
+    --shadow-xs: 0 1px 3px hsl(var(--shadow-color) / 0.04),
+        0 1px 2px hsl(var(--shadow-color) / 0.06);
+    --shadow-sm: 0 2px 8px hsl(var(--shadow-color) / 0.06);
+    --shadow-md: 0 4px 16px hsl(var(--shadow-color) / 0.08);
+    --shadow-lg: 0 4px 20px hsl(var(--shadow-color) / 0.12);
+    --shadow-xl: 0 8px 24px hsl(var(--shadow-color) / 0.14);
+    --shadow-2xl: 0 25px 50px -12px hsl(var(--shadow-color) / 0.25);
+
+    /* Cartoon / offset shadows */
+    --shadow-cartoon-sm: -3px 2px 1px hsl(var(--shadow-color) / 0.10),
+        0 3px 1px hsl(var(--shadow-color) / 0.10),
+        -3px 3px 1px hsl(var(--shadow-color) / 0.06);
+    --shadow-cartoon-md: -4px 3px 1px hsl(var(--shadow-color) / 0.12),
+        0 4px 1px hsl(var(--shadow-color) / 0.12),
+        -4px 4px 2px hsl(var(--shadow-color) / 0.08);
+    --shadow-cartoon-lg: -6px 4px 1px hsl(var(--shadow-color) / 0.12),
+        0 6px 1px hsl(var(--shadow-color) / 0.12),
+        -6px 6px 2px hsl(var(--shadow-color) / 0.08);
+
+    /* Card offset shadow */
+    --shadow-card: 4px 4px 0px 0px hsl(var(--shadow-color) / 0.5);
+    --shadow-card-hover: 5px 5px 0px 0px hsl(var(--shadow-color) / 0.6);
+
+    /* Dock shadows */
+    --shadow-dock: 0 4px 20px hsl(var(--shadow-color) / 0.25), 0 0 0 1px hsl(var(--shadow-color) / 0.15);
+    --shadow-dock-collapsed: 0 2px 12px hsl(var(--shadow-color) / 0.2), 0 0 0 1px hsl(var(--shadow-color) / 0.15);
+
+    /* ═══════════════════════════════════════════════
+       §6  GLASSMORPHISM
+       ═══════════════════════════════════════════════ */
+    --glass-opacity-light: 0.38;
+    --glass-opacity-medium: 0.52;
+    --glass-opacity-heavy: 0.70;
+
+    --glass-bg: hsl(var(--card) / var(--glass-opacity-light));
+    --glass-bg-medium: hsl(var(--card) / var(--glass-opacity-medium));
+    --glass-bg-heavy: hsl(var(--card) / var(--glass-opacity-heavy));
+    --glass-border: hsl(var(--border) / 0.35);
+
+    --glass-blur-light: blur(8px);
+    --glass-blur-sm: blur(12px);
+    --glass-blur: blur(16px) saturate(1.1);
+    --glass-blur-md: blur(20px) saturate(1.15);
+    --glass-blur-heavy: blur(28px) saturate(1.2);
+
+    --glass-shadow: var(--shadow-md);
+    --glass-shadow-elevated: var(--shadow-lg),
+        0 0 0 0.5px hsl(var(--shadow-color) / 0.05);
+
+    /* ═══════════════════════════════════════════════
+       §7  ANIMATION OFFSETS
+       ═══════════════════════════════════════════════ */
+    --animation-slide-sm: 3px;
+    --animation-slide-md: 6px;
+    --animation-slide-lg: 8px;
+    --popover-offset: 0.375rem;
+
+    /* ═══════════════════════════════════════════════
+       §8  SIZING
+       ═══════════════════════════════════════════════ */
+    --size-icon-btn: 2.5rem;
+
+    /* ═══════════════════════════════════════════════
+       §9  INTERACTIVE SCALE TRANSFORMS
+       ═══════════════════════════════════════════════ */
+    --scale-hover: 1.08;
+    --scale-hover-dock: 1.1;
+    --scale-press: 0.95;
+    --scale-press-dock: 0.92;
+    --scale-press-btn: 0.97;
+
+    /* ═══════════════════════════════════════════════
+       §10 FOCUS RING
+       ═══════════════════════════════════════════════ */
+    --focus-ring-width: 2px;
+    --focus-ring-shadow: 0 0 0 var(--focus-ring-width) hsl(var(--ring) / 0.3),
+        0 0 8px hsl(var(--ring) / 0.15);
+
+    /* ═══════════════════════════════════════════════
+       §11 PAPER TEXTURES
+       ═══════════════════════════════════════════════ */
+    --paper-clean-texture: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    --paper-aged-texture: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+
+    /* ═══════════════════════════════════════════════
+       §9  DEFAULT COLOR PALETTE (overridden by presets)
+       ═══════════════════════════════════════════════ */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --ring: 222.2 84% 4.9%;
+    --shadow: 0 0% 65%;
+}
+
+/* ═══════════════════════════════════════════════
+   §10  DEFAULT DARK MODE (overridden by presets)
+   ═══════════════════════════════════════════════ */
+.dark {
+    --background: 224 71% 4%;
+    --foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --popover: 224 71% 4%;
+    --popover-foreground: 210 40% 98%;
+    --card: 224 50% 10%;
+    --card-foreground: 210 40% 98%;
+    --border: 216 34% 17%;
+    --input: 216 34% 17%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --ring: 212.7 26.8% 83.9%;
+    --shadow: 0 0% 10%;
+    --shadow-card: 4px 4px 0px 0px hsl(var(--shadow-color) / 0.85);
+    --shadow-card-hover: 5px 5px 0px 0px hsl(var(--shadow-color) / 0.95);
+}

@@ -1,0 +1,183 @@
+/* Shared utility classes */
+
+@layer components {
+    /* ── Scrollbar ── */
+    .scrollbar-hidden {
+        scrollbar-width: none;
+    }
+    .scrollbar-hidden::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scrollbar-thin {
+        scrollbar-width: thin;
+        scrollbar-color: hsl(var(--muted-foreground) / 0.25) transparent;
+    }
+
+    /* ── Focus ring — auto-activates on :focus-visible ── */
+    .focus-ring:focus-visible {
+        outline: none;
+        border-radius: var(--radius-pill);
+        box-shadow: var(--focus-ring-shadow);
+    }
+
+    /* ── Button press/interactive states ── */
+    .btn-press {
+        transition: transform var(--duration-fast) var(--ease-standard);
+    }
+    .btn-press:active {
+        transform: scale(var(--scale-press-btn));
+    }
+    .btn-press:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .btn-interactive {
+        transition: all var(--duration-fast) var(--ease-standard);
+    }
+    .btn-interactive:hover {
+        transform: scale(var(--scale-hover));
+    }
+    .btn-interactive:active {
+        transform: scale(var(--scale-press));
+    }
+    .btn-interactive:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+    .btn-interactive:focus-visible {
+        box-shadow: var(--focus-ring-shadow);
+        outline: none;
+    }
+
+    /* ── Interactive item (hover bg + focus ring + active scale) ── */
+    .interactive-item {
+        border-radius: var(--radius-lg);
+        user-select: none;
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            color var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard),
+            transform var(--duration-fast) var(--ease-standard);
+    }
+    .interactive-item:hover {
+        background-color: hsl(var(--accent) / 0.5);
+    }
+    .interactive-item:focus-visible {
+        outline: none;
+        box-shadow: var(--focus-ring-shadow);
+    }
+    .interactive-item:active {
+        transform: scale(0.98);
+    }
+    .interactive-item:disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    /* ── Status dot indicator ── */
+    .status-dot {
+        display: inline-block;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: var(--radius-pill);
+        flex-shrink: 0;
+        transition:
+            color var(--duration-fast) var(--ease-standard),
+            background var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard);
+    }
+    .status-dot--active {
+        background: var(--color-status-active, hsl(142 71% 45%));
+    }
+    .status-dot--paused {
+        background: var(--color-status-paused, hsl(48 96% 53%));
+    }
+    .status-dot--idle {
+        background: var(--color-status-idle, hsl(var(--muted-foreground)));
+    }
+
+    /* ── Rainbow text ── */
+    .rainbow-text {
+        background: linear-gradient(
+            90deg,
+            hsl(0 85% 70%),
+            hsl(30 85% 65%),
+            hsl(60 85% 60%),
+            hsl(120 65% 55%),
+            hsl(200 85% 60%),
+            hsl(260 75% 65%),
+            hsl(320 80% 65%)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* ── Rainbow border ── */
+    .rainbow-border {
+        background:
+            linear-gradient(var(--background), var(--background)) padding-box,
+            linear-gradient(
+                    135deg,
+                    hsl(0 85% 70%),
+                    hsl(60 85% 60%),
+                    hsl(120 65% 55%),
+                    hsl(200 85% 60%),
+                    hsl(260 75% 65%),
+                    hsl(320 80% 65%),
+                    hsl(0 85% 70%)
+                )
+                border-box;
+        border: 2px solid transparent;
+    }
+
+    /* ── Depth text (layered shadow with customizable colors) ── */
+    .depth-text {
+        --depth-color-primary: hsl(var(--primary));
+        --depth-color-shadow: hsl(var(--shadow));
+
+        color: var(--depth-color-primary);
+        text-shadow:
+            1px 1px 0 var(--depth-color-shadow),
+            2px 2px 0 var(--depth-color-shadow),
+            3px 3px 0 var(--depth-color-shadow),
+            4px 4px 0 var(--depth-color-shadow),
+            5px 5px 0 var(--depth-color-shadow),
+            5px 5px 1px rgba(0, 0, 0, 0.1),
+            2px 2px 2px rgba(0, 0, 0, 0.2),
+            4px 4px 5px rgba(0, 0, 0, 0.25),
+            6px 6px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ── Touch gate (iOS Safari) ── */
+    .touch-gate-target {
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        transition: outline-color var(--duration-fast) var(--ease-standard);
+    }
+    .touch-gate-active {
+        outline-color: hsl(var(--ring) / 0.25);
+    }
+
+    /* ── 3D preserve ── */
+    .preserve-3d {
+        transform-style: preserve-3d;
+    }
+
+    /* ── iOS input font-size fix (prevent auto-zoom) ── */
+    .ios input,
+    .ios select,
+    .ios textarea,
+    .ios [contenteditable] {
+        font-size: max(1rem, 1em);
+    }
+
+    /* ── Scroll fade mask ── */
+    .scroll-fade-mask {
+        mask-image: linear-gradient(to right, transparent, black 1rem, black calc(100% - 1rem), transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 1rem, black calc(100% - 1rem), transparent);
+    }
+}

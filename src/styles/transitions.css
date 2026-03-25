@@ -1,0 +1,137 @@
+/* Reusable Vue <Transition> class sets */
+
+/* ── Fade (symmetric, fast) ── */
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity var(--duration-fast) var(--ease-standard);
+}
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+/* ── Fade-slide (asymmetric: decel in, accel out) ── */
+.fade-slide-enter-active {
+    transition:
+        opacity var(--duration-normal) var(--ease-decelerate),
+        transform var(--duration-normal) var(--ease-decelerate);
+}
+.fade-slide-leave-active {
+    transition:
+        opacity var(--duration-fast) var(--ease-accelerate),
+        transform var(--duration-fast) var(--ease-accelerate);
+}
+.fade-slide-enter-from {
+    opacity: 0;
+    transform: translateY(-4px);
+}
+.fade-slide-leave-to {
+    opacity: 0;
+    transform: translateY(4px);
+}
+
+/* ── Expand-fade (asymmetric + max-height) ── */
+.expand-fade-enter-active {
+    transition:
+        opacity var(--duration-normal) var(--ease-decelerate),
+        transform var(--duration-normal) var(--ease-decelerate),
+        max-height var(--duration-normal) var(--ease-decelerate);
+}
+.expand-fade-leave-active {
+    transition:
+        opacity var(--duration-fast) var(--ease-accelerate),
+        transform var(--duration-fast) var(--ease-accelerate),
+        max-height var(--duration-fast) var(--ease-accelerate);
+}
+.expand-fade-enter-from,
+.expand-fade-leave-to {
+    opacity: 0;
+    transform: translateY(-4px);
+}
+
+/* ── Dialog scale (decel in, standard out) ── */
+.dialog-scale-enter-active {
+    transition:
+        opacity var(--duration-slow) var(--ease-decelerate),
+        transform var(--duration-slow) var(--ease-decelerate);
+}
+.dialog-scale-leave-active {
+    transition:
+        opacity var(--duration-normal) var(--ease-standard),
+        transform var(--duration-normal) var(--ease-standard);
+}
+.dialog-scale-enter-from {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+}
+.dialog-scale-leave-to {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+}
+
+/* ── Spring pop (spring in, fast out) ── */
+.pop-enter-active {
+    transition:
+        opacity var(--duration-fast) var(--ease-standard),
+        transform var(--duration-slow) var(--ease-spring);
+}
+.pop-leave-active {
+    transition:
+        opacity var(--duration-fast) var(--ease-decelerate),
+        transform var(--duration-fast) var(--ease-decelerate);
+}
+.pop-enter-from {
+    opacity: 0;
+    transform: scale(0.9);
+}
+.pop-leave-to {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+/* ── Dropdown (fast opacity + spring transform) ── */
+.dropdown-enter-active {
+    transition:
+        opacity var(--duration-instant) ease,
+        transform var(--duration-normal) var(--ease-spring);
+}
+.dropdown-leave-active {
+    transition:
+        opacity var(--duration-instant) ease,
+        transform var(--duration-fast) ease;
+}
+.dropdown-enter-from,
+.dropdown-leave-to {
+    opacity: 0;
+    transform: scale(0.96) translateY(4px);
+}
+
+/* ── Tab fade ── */
+.tab-fade-enter-active,
+.tab-fade-leave-active {
+    transition: opacity var(--duration-fast) var(--ease-standard);
+}
+.tab-fade-enter-from,
+.tab-fade-leave-to {
+    opacity: 0;
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+    .fade-enter-active,
+    .fade-leave-active,
+    .fade-slide-enter-active,
+    .fade-slide-leave-active,
+    .expand-fade-enter-active,
+    .expand-fade-leave-active,
+    .dialog-scale-enter-active,
+    .dialog-scale-leave-active,
+    .pop-enter-active,
+    .pop-leave-active,
+    .dropdown-enter-active,
+    .dropdown-leave-active,
+    .tab-fade-enter-active,
+    .tab-fade-leave-active {
+        transition-duration: 0.01ms !important;
+    }
+}
