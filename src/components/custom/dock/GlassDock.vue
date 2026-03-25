@@ -196,25 +196,62 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
     overflow: visible;
 }
 
-/* ── Wrap variant: multi-line dock ── */
+/* ── Wrap variant: multi-line responsive dock ──
+   Mobile: content wraps, dock grows both axes, rounded-rect.
+   Desktop (sm+): single-row pill, same as default. */
 .glass-dock.dock-wrap {
     white-space: normal;
-    border-radius: var(--radius-xl);
+    border-radius: 1rem;
     max-width: calc(100vw - 1rem);
+    padding: 0.375rem 0.625rem;
 }
 
 .glass-dock.dock-wrap .dock-layer--full {
     flex-wrap: wrap;
     justify-content: center;
     height: auto;
-    min-height: 2.5rem;
-    gap: 0.25rem 0.5rem;
+    min-height: 2rem;
+    gap: 0.25rem 0.375rem;
 }
 
-/* Collapsed state stays pill-shaped even in wrap mode */
+.glass-dock.dock-wrap .dock-layer--summary {
+    height: auto;
+    min-height: 2rem;
+}
+
+/* Hide vertical separators when content wraps — they don't make sense between rows */
+.glass-dock.dock-wrap :deep(.dock-separator) {
+    display: none;
+}
+
+/* Collapsed stays pill */
 .glass-dock.dock-wrap.collapsed {
     border-radius: var(--radius-pill);
     white-space: nowrap;
     max-width: none;
+}
+
+/* Desktop: revert to single-row pill */
+@media (min-width: 640px) {
+    .glass-dock.dock-wrap {
+        white-space: nowrap;
+        border-radius: var(--radius-pill);
+        max-width: none;
+        padding: 0.375rem 0.75rem;
+    }
+
+    .glass-dock.dock-wrap .dock-layer--full {
+        flex-wrap: nowrap;
+        height: 2.5rem;
+        gap: 0.25rem;
+    }
+
+    .glass-dock.dock-wrap .dock-layer--summary {
+        height: 2.5rem;
+    }
+
+    .glass-dock.dock-wrap :deep(.dock-separator) {
+        display: block;
+    }
 }
 </style>
