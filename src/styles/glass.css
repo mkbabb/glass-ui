@@ -92,6 +92,10 @@
         transition: all var(--duration-fast) var(--ease-standard);
     }
 
+    .btn-pill > * {
+        flex-shrink: 0;
+    }
+
 
     .btn-pill:active:not(:disabled) {
         transform: scale(0.96);
