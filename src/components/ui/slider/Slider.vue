@@ -54,7 +54,7 @@ const v = computed(() => props.variant ?? 'standard')
         v === 'spectrum'
           ? 'w-3 h-full rounded-full border-2 border-foreground/40 bg-transparent'
           : v === 'timeline'
-            ? 'h-6 w-6 -ml-3 rounded-full bg-foreground/15 border-none shadow-none'
+            ? 'h-6 w-6 rounded-full bg-foreground/15 border-none shadow-none'
             : 'h-3.5 w-3.5 rounded-full border-2 border-background bg-foreground shadow-sm',
       )"
     />
