@@ -1,6 +1,6 @@
 <template>
     <IconTooltip :text="tooltip">
-        <label class="font-display text-lg text-muted-foreground cursor-help">{{ label }}</label>
+        <label :class="labelClass ?? 'font-display text-lg text-muted-foreground cursor-help'">{{ label }}</label>
     </IconTooltip>
     <Input
         :type="type ?? 'string'"
@@ -18,6 +18,7 @@ defineProps<{
     modelValue: string | number;
     label: string;
     tooltip: string;
+    labelClass?: string;
     inputClass?: string;
     type?: string;
 }>();

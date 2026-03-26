@@ -1,6 +1,6 @@
 <template>
     <IconTooltip :text="tooltip">
-        <label class="font-display text-base text-muted-foreground cursor-help">{{ label }}</label>
+        <label :class="labelClass ?? 'font-display text-base text-muted-foreground cursor-help'">{{ label }}</label>
     </IconTooltip>
     <div class="flex items-center">
         <Switch
@@ -18,6 +18,7 @@ defineProps<{
     checked: boolean;
     label: string;
     tooltip: string;
+    labelClass?: string;
 }>();
 
 const emit = defineEmits<{

@@ -13,6 +13,10 @@ const emits = defineEmits<SliderRootEmits>()
 
 const delegatedProps = computed(() => {
   const { class: _, variant: __, ...delegated } = props
+  // Timeline variant: contain thumb within track bounds by default
+  if (v.value === 'timeline' && !delegated.thumbAlignment) {
+    delegated.thumbAlignment = 'contain'
+  }
   return delegated
 })
 

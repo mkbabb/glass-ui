@@ -1,6 +1,6 @@
 <template>
     <IconTooltip :text="tooltip">
-        <label class="font-display text-base text-muted-foreground cursor-help">{{ label }}</label>
+        <label :class="labelClass ?? 'font-display text-base text-muted-foreground cursor-help'">{{ label }}</label>
     </IconTooltip>
     <Slider
         class="py-2"
@@ -20,6 +20,7 @@ defineProps<{
     modelValue: number;
     label: string;
     tooltip: string;
+    labelClass?: string;
     min: number;
     max: number;
     step: number;
