@@ -500,10 +500,18 @@
 
     /* ── Scroll reveal — animate on viewport entry (zero JS) ── */
     @supports (animation-timeline: view()) {
+        /* One-shot: fades in during entry, stays visible */
         .scroll-reveal {
             animation: fade-in linear both;
             animation-timeline: view();
-            animation-range: entry 0% entry 30%;
+            animation-range: entry 0% entry 100%;
+        }
+
+        /* Reversible: fades in on scroll down, fades out on scroll back up */
+        .scroll-reveal-reverse {
+            animation: fade-in linear both;
+            animation-timeline: view();
+            animation-range: entry 0% exit 0%;
         }
     }
 

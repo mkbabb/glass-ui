@@ -45,14 +45,16 @@ void main() {
         color += contrib * u_colors[i];
     }
 
-    if (density > u_threshold * 0.05) {
+    if (density > u_threshold * 0.3) {
         color /= density;
+        // Tight smoothstep for crisp edge with minimal translucent halo
         float edge = smoothstep(
-            u_threshold * (1.0 - u_edgeSoftness),
-            u_threshold * (1.0 + u_edgeSoftness * 0.5),
+            u_threshold * 0.85,
+            u_threshold * 1.05,
             density
         );
-        gl_FragColor = vec4(color, edge * 0.4);
+        // High opacity core, very narrow soft edge
+        gl_FragColor = vec4(color, edge * 0.25 + (1.0 - edge) * 0.02);
     } else {
         gl_FragColor = vec4(0.0, 0.0, 0.0, u_bgAlpha);
     }
