@@ -8,11 +8,9 @@ void main() {
 /**
  * Metaball fragment shader.
  *
- * For each pixel, sums inverse-square density contributions from all blobs.
- * Pixels above the threshold render as a colored surface with smooth edges.
- * Color is the contribution-weighted blend of all nearby blob colors.
- *
- * MAX_BLOBS is set to 16 to stay within uniform limits on mobile GPUs.
+ * Computes a density field per pixel by summing inverse-square
+ * contributions from all blobs. Pixels above the threshold
+ * render as colored goo with smooth edges.
  */
 export const FRAGMENT_SHADER = `
 precision mediump float;
@@ -20,10 +18,9 @@ precision mediump float;
 #define MAX_BLOBS 16
 
 uniform vec2 u_resolution;
-uniform float u_time;
 uniform int u_blobCount;
-uniform vec3 u_blobPositions[MAX_BLOBS];  // xy = position, z = radius
-uniform vec3 u_blobColors[MAX_BLOBS];     // rgb [0,1]
+uniform vec3 u_positions[MAX_BLOBS];
+uniform vec3 u_colors[MAX_BLOBS];
 uniform float u_threshold;
 uniform float u_edgeSoftness;
 uniform float u_bgAlpha;
@@ -39,27 +36,23 @@ void main() {
     for (int i = 0; i < MAX_BLOBS; i++) {
         if (i >= u_blobCount) break;
 
-        vec2 blobPos = vec2(u_blobPositions[i].x * aspect, u_blobPositions[i].y);
-        float radius = u_blobPositions[i].z;
+        vec2 pos = vec2(u_positions[i].x * aspect, u_positions[i].y);
+        float radius = u_positions[i].z;
+        float dist = distance(coord, pos);
+        float contrib = (radius * radius) / (dist * dist + 0.0001);
 
-        float dist = distance(coord, blobPos);
-        float contribution = (radius * radius) / (dist * dist + 0.001);
-
-        density += contribution;
-        color += contribution * u_blobColors[i];
+        density += contrib;
+        color += contrib * u_colors[i];
     }
 
-    if (density > u_threshold * 0.1) {
+    if (density > u_threshold * 0.05) {
         color /= density;
-
         float edge = smoothstep(
             u_threshold * (1.0 - u_edgeSoftness),
             u_threshold * (1.0 + u_edgeSoftness * 0.5),
             density
         );
-
-        float alpha = edge * 0.35;
-        gl_FragColor = vec4(color, alpha);
+        gl_FragColor = vec4(color, edge * 0.4);
     } else {
         gl_FragColor = vec4(0.0, 0.0, 0.0, u_bgAlpha);
     }
