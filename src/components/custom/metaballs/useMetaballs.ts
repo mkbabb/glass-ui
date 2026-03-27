@@ -155,7 +155,8 @@ export function useMetaballs(
     function resize() {
         const canvas = canvasRef.value;
         if (!canvas || !gl) return;
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        // Render at reduced resolution for performance (metaballs are soft — don't need full DPR)
+        const dpr = Math.min(window.devicePixelRatio || 1, 1);
         const rect = canvas.getBoundingClientRect();
         canvas.width = rect.width * dpr;
         canvas.height = rect.height * dpr;
