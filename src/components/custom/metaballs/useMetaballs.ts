@@ -112,8 +112,8 @@ export function useMetaballs(
         uBgAlpha = gl.getUniformLocation(program, "u_bgAlpha");
 
         for (let i = 0; i < 16; i++) {
-            uBlobPositions.push(gl.getUniformLocation(program, `u_blobPositions[${i}]`)!);
-            uBlobColors.push(gl.getUniformLocation(program, `u_blobColors[${i}]`)!);
+            uBlobPositions.push(gl.getUniformLocation(program, `u_blobPositions[${i}]`));
+            uBlobColors.push(gl.getUniformLocation(program, `u_blobColors[${i}]`));
         }
 
         // Set static uniforms
@@ -122,9 +122,10 @@ export function useMetaballs(
         gl.uniform1f(uEdgeSoftness, cfg.edgeSoftness);
         gl.uniform1f(uBgAlpha, cfg.bgAlpha);
 
-        // Set blob colors
+        // Set blob colors (null-check — shader may optimize out unused slots)
         const colors = cfg.colors;
         for (let i = 0; i < cfg.blobCount; i++) {
+            if (!uBlobColors[i]) continue;
             const [r, g, b] = cssColorToRgb(colors[i % colors.length]);
             gl.uniform3f(uBlobColors[i], r / 255, g / 255, b / 255);
         }
@@ -173,7 +174,7 @@ export function useMetaballs(
 
             const radius = cfg.baseRadius + i * 0.008;
 
-            gl.uniform3f(uBlobPositions[i], x, y, radius);
+            if (uBlobPositions[i]) gl.uniform3f(uBlobPositions[i], x, y, radius);
         }
 
         gl.drawArrays(gl.TRIANGLES, 0, 6);
