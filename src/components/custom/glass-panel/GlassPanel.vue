@@ -2,18 +2,21 @@
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import {
     useGlassRenderer,
+    createGlassFilter,
+    destroyGlassFilter,
     type GlassTier,
+    type GlassFilterState,
 } from "../../../composables/glass/useGlassRenderer";
 import { cn } from "../../../utils/cn";
 
 export interface GlassPanelProps {
     /** Force a specific rendering tier */
     tier?: GlassTier;
-    /** Blur radius for GPU tiers (default: 20) */
+    /** Blur radius (default: 16) */
     blur?: number;
     /** Refraction strength 0-1 (default: 0.3) */
     refraction?: number;
-    /** Enable edge chromatic aberration (default: false) */
+    /** Chromatic aberration strength 0-1 (default: 0) */
     chromaticAberration?: boolean;
     /** Glass variant for CSS tier */
     variant?: "default" | "medium" | "elevated";
@@ -22,28 +25,27 @@ export interface GlassPanelProps {
 }
 
 const props = withDefaults(defineProps<GlassPanelProps>(), {
-    blur: 20,
+    blur: 16,
     refraction: 0.3,
     chromaticAberration: false,
     variant: "default",
 });
 
 const panelRef = ref<HTMLElement | null>(null);
-const renderer = useGlassRenderer({
-    preferredTier: props.tier,
-});
-
+const renderer = useGlassRenderer({ preferredTier: props.tier });
 const activeTier = computed(() => props.tier ?? renderer.tier.value);
 
 const cssClass = computed(() => {
-    if (activeTier.value === "webgl" || activeTier.value === "webgpu") {
-        return cn("glass-panel glass-panel--gpu", props.class);
+    // SVG-filter tier: no glass CSS class (filter applied directly via JS)
+    if (activeTier.value === "svg-filter") {
+        return cn("glass-panel glass-panel--svg", props.class);
     }
 
     if (activeTier.value === "fallback") {
         return cn("glass-panel glass-panel--fallback", props.class);
     }
 
+    // CSS tier
     const variantClass =
         props.variant === "elevated"
             ? "glass-elevated"
@@ -54,14 +56,11 @@ const cssClass = computed(() => {
     return cn("glass-panel", variantClass, props.class);
 });
 
-let instanceId: number | null = null;
+let filterState: GlassFilterState | null = null;
 
 onMounted(() => {
-    if (
-        panelRef.value &&
-        (activeTier.value === "webgl" || activeTier.value === "webgpu")
-    ) {
-        instanceId = renderer.register(panelRef.value, {
+    if (panelRef.value && activeTier.value === "svg-filter") {
+        filterState = createGlassFilter(panelRef.value, {
             blur: props.blur,
             refraction: props.refraction,
             chromaticAberration: props.chromaticAberration ? 0.5 : 0,
@@ -70,8 +69,8 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-    if (instanceId !== null) {
-        renderer.unregister(instanceId);
+    if (filterState) {
+        destroyGlassFilter(filterState);
     }
 });
 </script>
@@ -85,17 +84,11 @@ onBeforeUnmount(() => {
 <style scoped>
 .glass-panel {
     position: relative;
-    overflow: hidden;
 }
 
-.glass-panel--gpu {
-    background: transparent;
-    isolation: isolate;
-}
-
-.glass-panel--gpu > :not(canvas) {
-    position: relative;
-    z-index: 1;
+.glass-panel--svg {
+    /* Background tint for SVG filter tier */
+    background: hsl(var(--card) / 0.15);
 }
 
 .glass-panel--fallback {

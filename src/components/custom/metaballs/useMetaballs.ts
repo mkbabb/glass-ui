@@ -1,4 +1,4 @@
-import { ref, onMounted, onBeforeUnmount, watch, type Ref, type ShallowRef } from "vue";
+import { ref, reactive, isReactive, onMounted, onBeforeUnmount, watch, type Ref, type ShallowRef } from "vue";
 import { VERTEX_SHADER, FRAGMENT_SHADER } from "./shaders";
 import { DEFAULT_METABALL_CONFIG, type MetaballConfig } from "./types";
 
@@ -60,7 +60,10 @@ export function useMetaballs(
     canvasRef: Ref<HTMLCanvasElement | null> | ShallowRef<HTMLCanvasElement | null>,
     config?: MetaballConfig,
 ) {
-    const cfg = { ...DEFAULT_METABALL_CONFIG, ...config };
+    // Use passed reactive directly if available, otherwise create new
+    const cfg = (config && isReactive(config))
+        ? config as Required<MetaballConfig>
+        : reactive({ ...DEFAULT_METABALL_CONFIG, ...config }) as Required<MetaballConfig>;
     const isSupported = ref(true);
 
     let gl: WebGLRenderingContext | null = null;
@@ -210,6 +213,23 @@ export function useMetaballs(
             posData[i * 3 + 1] = y;
             posData[i * 3 + 2] = r;
         }
+
+        // Re-upload config uniforms every frame (cheap, enables live config changes)
+        gl.uniform1i(uBlobCount, cfg.blobCount);
+        gl.uniform1f(uThreshold, cfg.threshold);
+        gl.uniform1f(uEdgeSoftness, cfg.edgeSoftness);
+        gl.uniform1f(uBgAlpha, cfg.bgAlpha);
+
+        // Re-upload colors (handles live color picker changes)
+        for (let i = 0; i < MAX_BLOBS; i++) {
+            const [r, g, b] = i < cfg.blobCount
+                ? cssColorToRgb(cfg.colors[i % cfg.colors.length])
+                : [0, 0, 0];
+            colData[i * 3] = r / 255;
+            colData[i * 3 + 1] = g / 255;
+            colData[i * 3 + 2] = b / 255;
+        }
+        gl.uniform3fv(uColors, colData);
 
         gl.uniform3fv(uPositions, posData);
         gl.drawArrays(gl.TRIANGLES, 0, 6);

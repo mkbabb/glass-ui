@@ -1,155 +1,246 @@
-import {
-    ref,
-    shallowRef,
-    onMounted,
-    onBeforeUnmount,
-    type Ref,
-} from "vue";
-import {
-    VERTEX_SHADER,
-    FRAGMENT_SHADER,
-    createFrostProgram,
-    getFrostUniforms,
-    type FrostUniforms,
-} from "./webgl/frostShader";
+import { ref, onMounted } from "vue";
 
-export type GlassTier = "webgpu" | "webgl" | "css" | "fallback";
+export type GlassTier = "svg-filter" | "css" | "fallback";
 
 export interface GlassRendererOptions {
     preferredTier?: GlassTier;
 }
 
-export interface WebGLGlassState {
-    canvas: HTMLCanvasElement;
-    gl: WebGL2RenderingContext;
-    program: WebGLProgram;
-    uniforms: FrostUniforms;
-    vao: WebGLVertexArrayObject;
-    backgroundTexture: WebGLTexture;
-    animId: number;
-    panelEl: HTMLElement;
-    observer: ResizeObserver | null;
-}
-
 /**
- * Detect available rendering tier.
+ * Detect best glass rendering tier.
+ *
+ * - svg-filter: Chromium — uses SVG feDisplacementMap inside backdrop-filter
+ * - css: All browsers — plain backdrop-filter blur
+ * - fallback: No backdrop-filter support
  */
 function detectTier(): GlassTier {
-    // Try WebGL2
-    try {
-        const c = document.createElement("canvas");
-        if (c.getContext("webgl2")) return "webgl";
-    } catch { /* fallthrough */ }
-
-    // CSS backdrop-filter
+    // SVG filter in backdrop-filter only works in Chromium
+    const isChromium = !!(window as any).chrome;
+    if (isChromium && CSS.supports("backdrop-filter", "url(#x) blur(1px)")) {
+        return "svg-filter";
+    }
     if (
         CSS.supports("backdrop-filter", "blur(1px)") ||
         CSS.supports("-webkit-backdrop-filter", "blur(1px)")
     ) {
         return "css";
     }
-
     return "fallback";
 }
 
 /**
- * Capture the area behind a panel element as an ImageData by drawing
- * the page background. Uses a temporary canvas to sample the region.
+ * Generate a refraction displacement map on a canvas.
+ *
+ * The displacement map encodes Snell's law refraction as RGB:
+ * - R channel = X displacement (128 = neutral)
+ * - G channel = Y displacement (128 = neutral)
+ * - B channel = unused (128)
+ *
+ * Content behind the glass is displaced toward the center,
+ * simulating light bending through a convex glass surface.
  */
-function captureBackground(
-    panelEl: HTMLElement,
-    bgTexCanvas: HTMLCanvasElement,
-    bgTexCtx: CanvasRenderingContext2D,
+function generateDisplacementMap(
+    canvas: HTMLCanvasElement,
+    width: number,
+    height: number,
+    refractionStrength: number,
 ): void {
-    const rect = panelEl.getBoundingClientRect();
-    const w = Math.ceil(rect.width);
-    const h = Math.ceil(rect.height);
-    if (w === 0 || h === 0) return;
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext("2d")!;
+    const imageData = ctx.createImageData(width, height);
+    const data = imageData.data;
 
-    bgTexCanvas.width = w;
-    bgTexCanvas.height = h;
+    const cx = width / 2;
+    const cy = height / 2;
+    const maxR = Math.sqrt(cx * cx + cy * cy);
 
-    // Draw the page background at the panel's position.
-    // We look for an AuroraBlobs canvas or any positioned canvas behind the panel.
-    const bgCanvas = document.querySelector<HTMLCanvasElement>(
-        "canvas.aurora-blobs, canvas[aria-hidden='true']",
-    );
+    for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+            const dx = (x - cx) / cx; // -1 to 1
+            const dy = (y - cy) / cy; // -1 to 1
+            const dist = Math.sqrt(dx * dx + dy * dy);
 
-    if (bgCanvas) {
-        // Sample the region from the background canvas
-        bgTexCtx.drawImage(
-            bgCanvas,
-            rect.left * window.devicePixelRatio,
-            rect.top * window.devicePixelRatio,
-            w * window.devicePixelRatio,
-            h * window.devicePixelRatio,
-            0, 0, w, h,
-        );
-    } else {
-        // Fallback: sample the computed background color
-        const bgColor = getComputedStyle(document.documentElement).backgroundColor;
-        bgTexCtx.fillStyle = bgColor || "#ffffff";
-        bgTexCtx.fillRect(0, 0, w, h);
+            // Snell's law: displacement increases toward edges
+            // Uses a smooth lens profile (parabolic with edge falloff)
+            const profile = dist * (1 - dist * 0.3) * refractionStrength;
+
+            // Displacement direction: toward center
+            const dispX = -dx * profile;
+            const dispY = -dy * profile;
+
+            // Encode as 0-255 where 128 = no displacement
+            const i = (y * width + x) * 4;
+            data[i] = Math.round(128 + dispX * 127); // R = X displacement
+            data[i + 1] = Math.round(128 + dispY * 127); // G = Y displacement
+            data[i + 2] = 128; // B = unused
+            data[i + 3] = 255; // A = full
+        }
     }
+
+    ctx.putImageData(imageData, 0, 0);
 }
 
 /**
- * Set up the full-screen quad VAO for the frost shader.
+ * Generate a specular highlight map for Fresnel-based edge lighting.
  */
-function createQuadVAO(gl: WebGL2RenderingContext, program: WebGLProgram): WebGLVertexArrayObject {
-    const vao = gl.createVertexArray()!;
-    gl.bindVertexArray(vao);
+function generateSpecularMap(
+    canvas: HTMLCanvasElement,
+    width: number,
+    height: number,
+): void {
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext("2d")!;
 
-    // Full-screen quad (2 triangles)
-    const positions = new Float32Array([
-        -1, -1, 1, -1, -1, 1,
-        -1, 1, 1, -1, 1, 1,
-    ]);
-    const texCoords = new Float32Array([
-        0, 1, 1, 1, 0, 0,
-        0, 0, 1, 1, 1, 0,
-    ]);
+    // Radial gradient: bright at edges (Fresnel), dim at center
+    const cx = width / 2;
+    const cy = height / 2;
+    const r = Math.max(cx, cy);
 
-    const posBuf = gl.createBuffer()!;
-    gl.bindBuffer(gl.ARRAY_BUFFER, posBuf);
-    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
-    const posLoc = gl.getAttribLocation(program, "a_position");
-    if (posLoc >= 0) {
-        gl.enableVertexAttribArray(posLoc);
-        gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
-    }
+    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+    grad.addColorStop(0, "rgba(255,255,255,0)");
+    grad.addColorStop(0.5, "rgba(255,255,255,0.02)");
+    grad.addColorStop(0.8, "rgba(255,255,255,0.06)");
+    grad.addColorStop(1, "rgba(255,255,255,0.12)");
 
-    const texBuf = gl.createBuffer()!;
-    gl.bindBuffer(gl.ARRAY_BUFFER, texBuf);
-    gl.bufferData(gl.ARRAY_BUFFER, texCoords, gl.STATIC_DRAW);
-    const texLoc = gl.getAttribLocation(program, "a_texCoord");
-    if (texLoc >= 0) {
-        gl.enableVertexAttribArray(texLoc);
-        gl.vertexAttribPointer(texLoc, 2, gl.FLOAT, false, 0, 0);
-    }
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, width, height);
 
-    gl.bindVertexArray(null);
-    return vao;
+    // Top-edge specular line (light catch)
+    const lineGrad = ctx.createLinearGradient(0, 0, width, 0);
+    lineGrad.addColorStop(0, "rgba(255,255,255,0)");
+    lineGrad.addColorStop(0.3, "rgba(255,255,255,0.15)");
+    lineGrad.addColorStop(0.5, "rgba(255,255,255,0.25)");
+    lineGrad.addColorStop(0.7, "rgba(255,255,255,0.15)");
+    lineGrad.addColorStop(1, "rgba(255,255,255,0)");
+    ctx.fillStyle = lineGrad;
+    ctx.fillRect(0, 0, width, 2);
+}
+
+let filterCounter = 0;
+
+export interface GlassFilterState {
+    filterId: string;
+    svgEl: SVGSVGElement;
+    dispCanvas: HTMLCanvasElement;
+    specCanvas: HTMLCanvasElement;
+    observer: ResizeObserver | null;
 }
 
 /**
- * Composable for GPU-accelerated glass rendering.
+ * Create an SVG filter for glass refraction + frost.
  *
- * In WebGL mode, creates a per-panel canvas overlay that applies
- * the frost fragment shader (variable blur, Snell's law refraction,
- * Fresnel specular, chromatic aberration) to the captured background.
+ * Architecture (Chromium SVG displacement approach):
+ * 1. Hidden canvas generates Snell's law displacement map
+ * 2. Inline SVG <filter> references the canvas via <feImage>
+ * 3. <feDisplacementMap> warps the backdrop using R/G channels
+ * 4. CSS `backdrop-filter: url(#filterId) blur(Xpx) saturate(Y)` applies it
  *
- * Falls back to CSS `backdrop-filter` or solid background.
+ * This naturally composites with whatever is behind the element —
+ * no texture capture, no WebGL context, no scroll sync needed.
+ */
+export function createGlassFilter(
+    el: HTMLElement,
+    opts: {
+        blur?: number;
+        refraction?: number;
+        chromaticAberration?: number;
+    } = {},
+): GlassFilterState {
+    const id = `glass-refract-${filterCounter++}`;
+    const blur = opts.blur ?? 16;
+    const refraction = opts.refraction ?? 0.3;
+    const _chromatic = opts.chromaticAberration ?? 0;
+
+    // Create displacement map canvas
+    const dispCanvas = document.createElement("canvas");
+    dispCanvas.style.display = "none";
+    document.body.appendChild(dispCanvas);
+
+    // Create specular map canvas
+    const specCanvas = document.createElement("canvas");
+    specCanvas.style.display = "none";
+    document.body.appendChild(specCanvas);
+
+    // Generate maps at element size
+    const rect = el.getBoundingClientRect();
+    const mapW = Math.max(Math.ceil(rect.width / 4), 32); // Low-res is fine for displacement
+    const mapH = Math.max(Math.ceil(rect.height / 4), 32);
+    generateDisplacementMap(dispCanvas, mapW, mapH, refraction);
+    generateSpecularMap(specCanvas, mapW, mapH);
+
+    // Create inline SVG filter
+    const svgNS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(svgNS, "svg");
+    svg.setAttribute("width", "0");
+    svg.setAttribute("height", "0");
+    svg.style.position = "absolute";
+    svg.style.pointerEvents = "none";
+
+    // Displacement scale maps to pixel displacement
+    const dispScale = refraction * 30;
+
+    svg.innerHTML = `
+        <filter id="${id}" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+            <feImage href="${dispCanvas.toDataURL()}" result="dispMap"
+                preserveAspectRatio="none" x="0%" y="0%" width="100%" height="100%" />
+            <feDisplacementMap in="SourceGraphic" in2="dispMap" result="refracted"
+                scale="${dispScale}" xChannelSelector="R" yChannelSelector="G" />
+            <feGaussianBlur in="refracted" stdDeviation="${blur * 0.3}" result="blurred" />
+            <feImage href="${specCanvas.toDataURL()}" result="specular"
+                preserveAspectRatio="none" x="0%" y="0%" width="100%" height="100%" />
+            <feBlend in="blurred" in2="specular" mode="screen" result="final" />
+        </filter>
+    `;
+
+    document.body.appendChild(svg);
+
+    // Apply the filter + additional CSS frost
+    el.style.backdropFilter = `url(#${id}) blur(${blur * 0.15}px) saturate(1.6) brightness(1.05)`;
+    el.style.setProperty("-webkit-backdrop-filter", el.style.backdropFilter);
+
+    // Add visible glass border
+    el.style.border = "1px solid rgba(255,255,255,0.25)";
+    el.style.boxShadow = `
+        inset 0 0.5px 0 0 rgba(255,255,255,0.3),
+        inset 0 -0.5px 0 0 rgba(0,0,0,0.05),
+        0 4px 16px rgba(0,0,0,0.08)
+    `;
+
+    // Resize handler
+    const observer = new ResizeObserver(() => {
+        const r = el.getBoundingClientRect();
+        const w = Math.max(Math.ceil(r.width / 4), 32);
+        const h = Math.max(Math.ceil(r.height / 4), 32);
+        generateDisplacementMap(dispCanvas, w, h, refraction);
+        generateSpecularMap(specCanvas, w, h);
+
+        // Update SVG feImage hrefs
+        const feImages = svg.querySelectorAll("feImage");
+        if (feImages[0]) feImages[0].setAttribute("href", dispCanvas.toDataURL());
+        if (feImages[1]) feImages[1].setAttribute("href", specCanvas.toDataURL());
+    });
+    observer.observe(el);
+
+    return { filterId: id, svgEl: svg, dispCanvas, specCanvas, observer };
+}
+
+/**
+ * Remove a glass filter and clean up DOM elements.
+ */
+export function destroyGlassFilter(state: GlassFilterState) {
+    state.observer?.disconnect();
+    state.svgEl.remove();
+    state.dispCanvas.remove();
+    state.specCanvas.remove();
+}
+
+/**
+ * Composable for tiered glass rendering.
  */
 export function useGlassRenderer(options?: GlassRendererOptions) {
     const tier = ref<GlassTier>(options?.preferredTier ?? "css");
-    const glState = shallowRef<WebGLGlassState | null>(null);
-
-    // Background capture canvas (shared, reused)
-    let bgTexCanvas: HTMLCanvasElement | null = null;
-    let bgTexCtx: CanvasRenderingContext2D | null = null;
-    let startTime = 0;
-    let captureInterval: ReturnType<typeof setInterval> | null = null;
 
     onMounted(() => {
         if (!options?.preferredTier) {
@@ -157,201 +248,5 @@ export function useGlassRenderer(options?: GlassRendererOptions) {
         }
     });
 
-    onBeforeUnmount(() => {
-        destroy();
-    });
-
-    /**
-     * Initialize WebGL rendering for a specific panel element.
-     * Creates a canvas overlay sized to the panel and compiles the frost shader.
-     */
-    function initWebGL(panelEl: HTMLElement): WebGLGlassState | null {
-        const canvas = document.createElement("canvas");
-        canvas.style.cssText =
-            "position:absolute;inset:0;width:100%;height:100%;pointer-events:none;border-radius:inherit;z-index:0;";
-
-        const gl = canvas.getContext("webgl2", {
-            alpha: true,
-            premultipliedAlpha: false,
-            antialias: false,
-        });
-        if (!gl) return null;
-
-        const program = createFrostProgram(gl);
-        if (!program) return null;
-
-        const uniforms = getFrostUniforms(gl, program);
-        const vao = createQuadVAO(gl, program);
-
-        // Background texture
-        const backgroundTexture = gl.createTexture()!;
-        gl.bindTexture(gl.TEXTURE_2D, backgroundTexture);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-
-        // Init bg capture canvas
-        if (!bgTexCanvas) {
-            bgTexCanvas = document.createElement("canvas");
-            bgTexCtx = bgTexCanvas.getContext("2d")!;
-        }
-
-        // Insert canvas into panel
-        panelEl.style.position = "relative";
-        panelEl.insertBefore(canvas, panelEl.firstChild);
-
-        const state: WebGLGlassState = {
-            canvas,
-            gl,
-            program,
-            uniforms,
-            vao,
-            backgroundTexture,
-            animId: 0,
-            panelEl,
-            observer: null,
-        };
-
-        // Resize handler
-        const resizeCanvas = () => {
-            const rect = panelEl.getBoundingClientRect();
-            const dpr = Math.min(window.devicePixelRatio, 1.5);
-            canvas.width = Math.ceil(rect.width * dpr);
-            canvas.height = Math.ceil(rect.height * dpr);
-            gl.viewport(0, 0, canvas.width, canvas.height);
-        };
-
-        state.observer = new ResizeObserver(resizeCanvas);
-        state.observer.observe(panelEl);
-        resizeCanvas();
-
-        startTime = performance.now();
-
-        // Capture background periodically (debounced)
-        captureInterval = setInterval(() => {
-            if (bgTexCanvas && bgTexCtx) {
-                captureBackground(panelEl, bgTexCanvas, bgTexCtx);
-                uploadTexture(state);
-            }
-        }, 200);
-
-        // Initial capture
-        requestAnimationFrame(() => {
-            if (bgTexCanvas && bgTexCtx) {
-                captureBackground(panelEl, bgTexCanvas, bgTexCtx);
-                uploadTexture(state);
-            }
-        });
-
-        return state;
-    }
-
-    function uploadTexture(state: WebGLGlassState) {
-        if (!bgTexCanvas) return;
-        const { gl, backgroundTexture } = state;
-        gl.bindTexture(gl.TEXTURE_2D, backgroundTexture);
-        gl.texImage2D(
-            gl.TEXTURE_2D, 0, gl.RGBA,
-            gl.RGBA, gl.UNSIGNED_BYTE, bgTexCanvas,
-        );
-    }
-
-    /**
-     * Render one frame of the frost shader.
-     */
-    function renderFrame(
-        state: WebGLGlassState,
-        blurRadius: number,
-        refractionStrength: number,
-        chromaticAberration: number,
-        lightPos: [number, number],
-    ) {
-        const { gl, program, uniforms, vao, canvas } = state;
-
-        gl.useProgram(program);
-        gl.bindVertexArray(vao);
-
-        // Bind background texture
-        gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, state.backgroundTexture);
-        gl.uniform1i(uniforms.u_background, 0);
-
-        // Set uniforms
-        gl.uniform2f(uniforms.u_resolution, canvas.width, canvas.height);
-        gl.uniform4f(uniforms.u_glassBounds, 0, 0, 1, 1); // full panel
-        gl.uniform1f(uniforms.u_blurRadius, blurRadius);
-        gl.uniform1f(uniforms.u_refractionStrength, refractionStrength);
-        gl.uniform1f(uniforms.u_chromaticAberration, chromaticAberration);
-        gl.uniform2f(uniforms.u_lightPos, lightPos[0], lightPos[1]);
-        gl.uniform1f(uniforms.u_time, (performance.now() - startTime) / 1000);
-
-        gl.drawArrays(gl.TRIANGLES, 0, 6);
-        gl.bindVertexArray(null);
-    }
-
-    /**
-     * Start the render loop for a WebGL glass panel.
-     */
-    function startRenderLoop(
-        state: WebGLGlassState,
-        opts: {
-            blur?: number;
-            refraction?: number;
-            chromaticAberration?: number;
-        } = {},
-    ) {
-        const blur = opts.blur ?? 20;
-        const refraction = opts.refraction ?? 0.3;
-        const chromatic = opts.chromaticAberration ?? 0.5;
-
-        function loop() {
-            renderFrame(state, blur, refraction, chromatic, [0.3, 0.3]);
-            state.animId = requestAnimationFrame(loop);
-        }
-        state.animId = requestAnimationFrame(loop);
-    }
-
-    /**
-     * Register a DOM element as a glass panel.
-     * In WebGL mode, initializes the shader pipeline and starts rendering.
-     */
-    function register(
-        el: HTMLElement,
-        opts?: { blur?: number; refraction?: number; chromaticAberration?: number },
-    ): number {
-        if (tier.value === "webgl") {
-            const state = initWebGL(el);
-            if (state) {
-                glState.value = state;
-                startRenderLoop(state, opts);
-                return 1;
-            }
-            // WebGL init failed, fall back to CSS
-            tier.value = "css";
-        }
-        return 0;
-    }
-
-    function unregister(_id: number) {
-        destroy();
-    }
-
-    function destroy() {
-        const state = glState.value;
-        if (state) {
-            cancelAnimationFrame(state.animId);
-            state.observer?.disconnect();
-            state.canvas.remove();
-            state.gl.deleteProgram(state.program);
-            state.gl.deleteTexture(state.backgroundTexture);
-            glState.value = null;
-        }
-        if (captureInterval) {
-            clearInterval(captureInterval);
-            captureInterval = null;
-        }
-    }
-
-    return { tier, register, unregister };
+    return { tier };
 }

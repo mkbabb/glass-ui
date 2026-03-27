@@ -13,8 +13,6 @@ const props = defineProps<{
 
 const variantClass = (() => {
     if (props.plain) return "scrollbar-hidden rounded-xl";
-    if (props.variant === "pane")
-        return "scrollbar-hidden rounded-xl text-card-foreground bg-card/75 backdrop-blur-[var(--glass-blur-light)] shadow-[var(--shadow-card)]";
     return "scrollbar-hidden glass rounded-xl text-card-foreground shadow-[var(--shadow-card)]";
 })();
 </script>

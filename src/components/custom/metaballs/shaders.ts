@@ -49,14 +49,15 @@ void main() {
         color /= density;
         // Gooey edge: slightly wider smoothstep for organic merge zone
         float edge = smoothstep(
-            u_threshold * 0.75,
-            u_threshold * 1.1,
+            u_threshold * (1.0 - u_edgeSoftness),
+            u_threshold * (1.0 + u_edgeSoftness * 0.3),
             density
         );
-        // Solid core with soft goo boundary
-        gl_FragColor = vec4(color, edge * 0.30);
+        // Solid core with soft goo boundary — full color at core
+        gl_FragColor = vec4(color, edge * (1.0 - u_bgAlpha * 0.3));
     } else {
-        gl_FragColor = vec4(0.0, 0.0, 0.0, u_bgAlpha);
+        // Background: transparent (let page bg show through) with optional tint
+        gl_FragColor = vec4(0.0, 0.0, 0.0, u_bgAlpha * 0.15);
     }
 }
 `;

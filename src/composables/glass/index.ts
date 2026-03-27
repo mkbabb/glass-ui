@@ -1,1 +1,8 @@
-export { useGlassRenderer, type GlassTier, type GlassRendererOptions } from "./useGlassRenderer";
+export {
+    useGlassRenderer,
+    createGlassFilter,
+    destroyGlassFilter,
+    type GlassTier,
+    type GlassRendererOptions,
+    type GlassFilterState,
+} from "./useGlassRenderer";
