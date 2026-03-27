@@ -2,24 +2,27 @@
 
 @layer components {
     .glass {
+        position: relative;
         background: var(--glass-bg);
         backdrop-filter: var(--glass-blur);
-        -webkit-backdrop-filter: var(--glass-blur);
         border: 1px solid var(--glass-border);
+        box-shadow: var(--glass-highlight);
     }
 
     .glass-medium {
+        position: relative;
         background: var(--glass-bg-medium);
         backdrop-filter: var(--glass-blur-md);
-        -webkit-backdrop-filter: var(--glass-blur-md);
         border: 1px solid var(--glass-border);
+        box-shadow: var(--glass-highlight);
     }
 
     .glass-elevated {
+        position: relative;
         background: hsl(var(--card));
         backdrop-filter: var(--glass-blur-heavy);
-        -webkit-backdrop-filter: var(--glass-blur-heavy);
         border: 1px solid var(--glass-border);
+        box-shadow: var(--glass-highlight);
     }
 
     @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
@@ -28,20 +31,39 @@
         }
     }
 
+    /* Grain noise overlay — reuses paper texture SVG, no extra assets */
+    .glass::after,
+    .glass-medium::after,
+    .glass-elevated::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: var(--paper-clean-texture);
+        background-repeat: repeat;
+        background-size: var(--paper-texture-size);
+        opacity: var(--glass-grain-opacity);
+        pointer-events: none;
+        mix-blend-mode: overlay;
+    }
+
+    .dark .glass::after,
+    .dark .glass-medium::after,
+    .dark .glass-elevated::after {
+        mix-blend-mode: soft-light;
+    }
+
     /* Glassmorphic circular icon button */
     .glass-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        @apply flex items-center justify-center cursor-pointer;
+
         width: var(--size-icon-btn);
         height: var(--size-icon-btn);
         border-radius: var(--radius-pill);
         border: 1.5px solid hsl(var(--foreground) / 0.1);
         background: hsl(var(--background) / 0.6);
         backdrop-filter: var(--glass-blur-sm);
-        -webkit-backdrop-filter: var(--glass-blur-sm);
         color: hsl(var(--muted-foreground));
-        cursor: pointer;
         transition:
             background var(--duration-fast) ease,
             border-color var(--duration-fast) ease,
@@ -79,21 +101,17 @@
 
     /* ── Pill button base ─────────────────────────── */
     .btn-pill {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+        @apply inline-flex items-center justify-center cursor-pointer font-medium border-none;
+
         gap: 0.375rem;
         border-radius: var(--radius-pill);
         padding: 0.5rem 1rem;
         font-size: 1rem;
-        font-weight: 500;
-        cursor: pointer;
-        border: none;
         transition: all var(--duration-fast) var(--ease-standard);
     }
 
     .btn-pill > * {
-        flex-shrink: 0;
+        @apply flex-shrink-0;
     }
 
 
@@ -128,7 +146,6 @@
     .btn-pill-glass {
         background: var(--glass-bg);
         backdrop-filter: var(--glass-blur-light);
-        -webkit-backdrop-filter: var(--glass-blur-light);
         border: 1px solid var(--glass-border);
         color: hsl(var(--foreground));
     }
@@ -139,14 +156,13 @@
 
     /* ── Pill input ───────────────────────────────── */
     .input-pill {
-        display: flex;
-        width: 100%;
+        @apply flex w-full;
+
         height: 2.5rem;
         border-radius: var(--radius-pill);
         border: 1.5px solid hsl(var(--foreground) / 0.15);
         background: hsl(var(--card) / 0.5);
         backdrop-filter: var(--glass-blur-light);
-        -webkit-backdrop-filter: var(--glass-blur-light);
         padding: 0 1rem;
         font-size: 1rem;
         color: hsl(var(--foreground));
@@ -166,5 +182,45 @@
     .input-pill:disabled {
         opacity: 0.5;
         cursor: not-allowed;
+    }
+}
+
+/* ── Accessibility: reduced transparency ────────── */
+@media (prefers-reduced-transparency: reduce) {
+    :root {
+        --glass-opacity-light: 1;
+        --glass-opacity-medium: 1;
+        --glass-opacity-heavy: 1;
+        --glass-blur: none;
+        --glass-blur-light: none;
+        --glass-blur-sm: none;
+        --glass-blur-md: none;
+        --glass-blur-heavy: none;
+        --glass-grain-opacity: 0;
+        --glass-highlight: none;
+    }
+}
+
+/* ── Accessibility: high contrast ───────────────── */
+@media (prefers-contrast: more) {
+    :root {
+        --glass-opacity-light: 0.92;
+        --glass-opacity-medium: 0.96;
+        --glass-opacity-heavy: 1;
+    }
+}
+
+/* ── @supports fallbacks for non-backdrop-filter browsers ── */
+@layer components {
+    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+        .glass {
+            background: hsl(var(--card) / 0.92);
+        }
+        .glass-medium {
+            background: hsl(var(--card) / 0.96);
+        }
+        .glass-btn {
+            background: hsl(var(--background) / 0.92);
+        }
     }
 }

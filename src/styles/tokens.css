@@ -10,33 +10,49 @@
        §1  DURATION
        ═══════════════════════════════════════════════ */
     --duration-instant: 0.1s;
-    --duration-fast: 0.15s;
-    --duration-normal: 0.25s;
-    --duration-slow: 0.35s;
-    --duration-panel: 0.5s;
+    --duration-fast: 0.2s;
+    --duration-normal: 0.3s;
+    --duration-slow: 0.45s;
+    --duration-panel: 0.55s;
+    --duration-xl: 1s;
+    --duration-xxl: 1.5s;
     --duration-linger: 2.5s;
 
     /* ═══════════════════════════════════════════════
-       §2  EASING
-       ═══════════════════════════════════════════════ */
+       §2  EASING — Spring curves via linear()
+       ═══════════════════════════════════════════════
 
-    /* Core (all projects) */
-    --ease-spring: cubic-bezier(0.22, 1.6, 0.36, 1);
-    --ease-dock: cubic-bezier(0.18, 1.4, 0.4, 1);
+       Generated from damped spring physics:
+         x(t) = 1 - e^(-ζωt)(cos(ωd·t) + (ζ/√(1-ζ²))sin(ωd·t))
+
+       smooth:  ζ=1.0  — critically damped, no overshoot
+       snappy:  ζ=0.65 — 7% overshoot, quick settle
+       bouncy:  ζ=0.45 — 20% overshoot, visible bounce-settle
+       gentle:  ζ=0.85 — barely perceptible overshoot, slow ease
+    */
+
+    /* Spring curves (primary — use for entrances) */
+    --spring-smooth: linear(0, 0.0974, 0.2816, 0.4656, 0.6189, 0.7361, 0.821, 0.8806, 0.9213, 0.9487, 0.9668, 0.9787, 0.9864, 0.9914, 0.9945, 0.9966, 0.9978, 0.9987, 0.9992, 0.9995, 0.9997, 0.9998, 0.9999, 0.9999, 1);
+    --spring-snappy: linear(0, 0.0727, 0.2386, 0.4363, 0.6262, 0.7861, 0.9075, 0.9902, 1.0395, 1.0628, 1.068, 1.0619, 1.0501, 1.0366, 1.0239, 1.0133, 1.0054, 1.0001, 0.997, 0.9956, 0.9954, 0.9959, 0.9967, 0.9976, 0.9985, 0.9992, 0.9997, 1, 1.0002, 1.0003, 1.0003);
+    --spring-bouncy: linear(0, 0.0492, 0.1748, 0.3455, 0.5335, 0.7169, 0.8796, 1.0117, 1.1087, 1.1706, 1.2005, 1.2039, 1.1874, 1.1575, 1.1206, 1.0818, 1.0454, 1.0141, 0.9895, 0.9723, 0.962, 0.958, 0.959, 0.9635, 0.9703, 0.9781, 0.986, 0.9931, 0.9991, 1.0036, 1.0066, 1.0082, 1.0087, 1.0082, 1.007, 1.0055, 1.0039, 1.0023, 1.0009);
+    --spring-gentle: linear(0, 0.1018, 0.3031, 0.5094, 0.6812, 0.8083, 0.8945, 0.9486, 0.98, 0.9964, 1.0038, 1.0061, 1.006, 1.0049, 1.0036, 1.0024, 1.0015, 1.0008, 1.0004, 1.0002, 1.0001, 1, 1, 1, 1);
+
+    /* Core cubic-bezier (for exits, fallback, non-spring uses) */
     --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
-    --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
-    --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
-
-    /* Extended */
-    --ease-pane: cubic-bezier(0.25, 1, 0.5, 1);
-    --ease-pane-exit: cubic-bezier(0.5, 0, 1, 0.5);
-    --ease-overshoot: cubic-bezier(0.11, 0.14, 0.29, 1.5);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
     --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
-    /* Apple family */
+    /* Legacy aliases (deprecated — migrate to --spring-* / --ease-*) */
+    --ease-spring: var(--spring-snappy);
+    --ease-dock: var(--spring-snappy);
+    --ease-decelerate: var(--ease-out);
+    --ease-accelerate: var(--ease-in);
+    --ease-pane: var(--spring-gentle);
+    --ease-pane-exit: cubic-bezier(0.5, 0, 1, 0.5);
+    --ease-overshoot: var(--spring-bouncy);
     --ease-apple-default: cubic-bezier(0.25, 0.1, 0.25, 1);
-    --ease-apple-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-    --ease-apple-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --ease-apple-spring: var(--spring-snappy);
 
     /* ═══════════════════════════════════════════════
        §3  Z-INDEX SCALE
@@ -102,6 +118,12 @@
     --shadow-dock: 0 4px 20px hsl(var(--shadow-color) / 0.25), 0 0 0 1px hsl(var(--shadow-color) / 0.15);
     --shadow-dock-collapsed: 0 2px 12px hsl(var(--shadow-color) / 0.2), 0 0 0 1px hsl(var(--shadow-color) / 0.15);
 
+    /* Cartoon shadow colors */
+    --shadow-cartoon-color: rgb(0 0 0 / 0.12);
+    --shadow-cartoon-color-soft: rgb(0 0 0 / 0.06);
+    --shadow-cartoon-color-hover: rgb(0 0 0 / 0.16);
+    --shadow-cartoon-color-hover-soft: rgb(0 0 0 / 0.08);
+
     /* ═══════════════════════════════════════════════
        §6  GLASSMORPHISM
        ═══════════════════════════════════════════════ */
@@ -116,13 +138,19 @@
 
     --glass-blur-light: blur(8px);
     --glass-blur-sm: blur(12px);
-    --glass-blur: blur(16px) saturate(1.1);
-    --glass-blur-md: blur(20px) saturate(1.15);
-    --glass-blur-heavy: blur(28px) saturate(1.2);
+    --glass-blur: blur(16px) saturate(1.6) brightness(1.05);
+    --glass-blur-md: blur(20px) saturate(1.7) brightness(1.06);
+    --glass-blur-heavy: blur(28px) saturate(1.8) brightness(1.08);
 
     --glass-shadow: var(--shadow-md);
     --glass-shadow-elevated: var(--shadow-lg),
         0 0 0 0.5px hsl(var(--shadow-color) / 0.05);
+
+    /* Glass grain overlay */
+    --glass-grain-opacity: 0.035;
+
+    /* Glass specular highlight (top-edge light catch) */
+    --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.25);
 
     /* ═══════════════════════════════════════════════
        §7  ANIMATION OFFSETS
@@ -131,6 +159,27 @@
     --animation-slide-md: 6px;
     --animation-slide-lg: 8px;
     --popover-offset: 0.375rem;
+
+    /* ═══════════════════════════════════════════════
+       §7b HOVER LIFT OFFSETS
+       ═══════════════════════════════════════════════ */
+    --lift-sm: -1px;
+    --lift-md: -2px;
+    --lift-lg: -4px;
+
+    /* ═══════════════════════════════════════════════
+       §7c LAYOUT TOKENS
+       ═══════════════════════════════════════════════ */
+    --mask-fade-width: 1rem;
+    --max-width-input: 24rem;
+    --paper-texture-size: 200px 200px;
+
+    /* ═══════════════════════════════════════════════
+       §7d BORDER OPACITY SCALE
+       ═══════════════════════════════════════════════ */
+    --border-opacity-light: 0.15;
+    --border-opacity-medium: 0.25;
+    --border-opacity-strong: 0.6;
 
     /* ═══════════════════════════════════════════════
        §8  SIZING
@@ -194,6 +243,14 @@
    §10  DEFAULT DARK MODE (overridden by presets)
    ═══════════════════════════════════════════════ */
 .dark {
+    /* Glass opacity boosted for dark backgrounds */
+    --glass-opacity-light: 0.50;
+    --glass-opacity-medium: 0.68;
+    --glass-opacity-heavy: 0.85;
+
+    --glass-grain-opacity: 0.06;
+    --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.08);
+
     --background: 224 71% 4%;
     --foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
@@ -210,10 +267,15 @@
     --secondary-foreground: 210 40% 98%;
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 72% 50%;
     --destructive-foreground: 210 40% 98%;
     --ring: 212.7 26.8% 83.9%;
     --shadow: 0 0% 10%;
     --shadow-card: 4px 4px 0px 0px hsl(var(--shadow-color) / 0.85);
     --shadow-card-hover: 5px 5px 0px 0px hsl(var(--shadow-color) / 0.95);
+
+    --shadow-cartoon-color: rgb(255 255 255 / 0.07);
+    --shadow-cartoon-color-soft: rgb(255 255 255 / 0.03);
+    --shadow-cartoon-color-hover: rgb(255 255 255 / 0.10);
+    --shadow-cartoon-color-hover-soft: rgb(255 255 255 / 0.05);
 }

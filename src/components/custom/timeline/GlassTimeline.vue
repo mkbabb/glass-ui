@@ -155,11 +155,14 @@ function onTrackKeydown(e: KeyboardEvent) {
     transform: translate(calc(-50% - 3px), -50%);
     width: 6px;
     height: 16px;
-    border-radius: 2px;
+    border-radius: var(--radius-sm);
     background: hsl(var(--foreground) / 0.25);
     opacity: 0;
     pointer-events: none;
-    transition: all var(--duration-fast) var(--ease-standard);
+    transition: opacity var(--duration-fast) var(--ease-standard),
+        width var(--duration-fast) var(--ease-standard),
+        height var(--duration-fast) var(--ease-standard),
+        background var(--duration-fast) var(--ease-standard);
 }
 
 .glass-track:hover .glass-thumb {

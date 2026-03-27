@@ -25,25 +25,36 @@
 </template>
 
 <script setup lang="ts">
+import { watchEffect } from "vue";
 import { useGlobalDark } from "../../../composables/useGlobalDark";
 
-defineProps<{
+const props = defineProps<{
     passive?: boolean;
+    /**
+     * When true, CSS transitions on `<html>` and all descendants are
+     * temporarily suppressed during dark mode toggle to prevent jank.
+     * @default false
+     */
+    disableTransitions?: boolean;
 }>();
 
-const { toggleDark } = useGlobalDark();
+const { toggleDark, setDisableTransitions } = useGlobalDark();
+
+watchEffect(() => {
+    setDisableTransitions(props.disableTransitions ?? false);
+});
 </script>
 
 <style scoped>
 .dark-mode-toggle-button {
     cursor: pointer;
     border: 0;
-    opacity: 0.8;
     padding: 0;
-    border-radius: 50%;
+    border-radius: 9999px;
     position: relative;
     isolation: isolate;
-    background: 0;
+    background: none;
+    opacity: 0.8;
 
     transition: opacity var(--duration-normal) var(--ease-standard),
                 background var(--duration-normal) var(--ease-standard);

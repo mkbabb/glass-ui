@@ -1,24 +1,32 @@
 import type { Ref, ComputedRef } from "vue";
 
-/** A section in the sidebar tree. */
-export interface SidebarSection {
+/** Minimal interface for tree-structured content with scroll targets. */
+export interface TreeNode {
     id: string;
-    title: string;
-    children?: SidebarSection[];
-    level?: number;
+    children?: TreeNode[];
 }
 
-/** Flat index entry for a sidebar section. */
-export interface SidebarIndexEntry {
-    node: SidebarSection;
+/** Generic flat index entry for a tree node. */
+export interface TreeIndexEntry<T extends TreeNode = TreeNode> {
+    node: T;
     depth: number;
     /** ID of the root-level ancestor (self.id when depth === 0). */
     rootId: string;
     /** Direct parent ID (self.id for root nodes). */
     parentId: string | null;
-    /** Index within root-level sections. */
+    /** Index within root-level nodes. */
     rootIndex: number;
 }
+
+/** A section in the sidebar tree. */
+export interface SidebarSection extends TreeNode {
+    title: string;
+    children?: SidebarSection[];
+    level?: number;
+}
+
+/** Flat index entry for a sidebar section (backward-compatible alias). */
+export type SidebarIndexEntry = TreeIndexEntry<SidebarSection>;
 
 /** Options for scroll tracking. */
 export interface ScrollTrackerOptions {

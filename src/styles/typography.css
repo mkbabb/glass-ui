@@ -20,9 +20,9 @@
     --type-subheading: 1.272rem; /* 20.4px — φ^(1/2) */
     --type-heading: 1.618rem; /* 25.9px — φ^1 */
     --type-title: 2.058rem; /* 32.9px — φ^(3/2) */
-    --type-display-1: 2.618rem; /* 41.9px — φ^2 */
-    --type-display-2: 3.33rem; /* 53.3px — φ^(5/2) */
-    --type-display-3: 4.236rem; /* 67.8px — φ^3 */
+    --type-display-1: clamp(1.618rem, 1.2rem + 1.6vw, 2.618rem); /* φ^2, fluid */
+    --type-display-2: clamp(2.058rem, 1.5rem + 2.2vw, 3.33rem); /* φ^(5/2), fluid */
+    --type-display-3: clamp(2.618rem, 2rem + 3vw, 4.236rem); /* φ^3, fluid */
 
     /* Line heights — semantic, paired to scale steps */
     --leading-micro: 1.2;
@@ -42,13 +42,15 @@
 }
 
 @layer components {
-    /* ── Display: Hero / splash ── */
+    /* ── Display: Hero / splash — light weight, knife-edge serifs ── */
     .text-display-3 {
         font-family: var(--font-display);
         font-size: var(--type-display-3);
         line-height: var(--leading-display);
         letter-spacing: var(--tracking-tight);
-        font-weight: 700;
+        font-weight: 350;
+        font-optical-sizing: auto;
+        font-variation-settings: "WONK" 1, "SOFT" 0;
     }
 
     .text-display-2 {
@@ -56,7 +58,9 @@
         font-size: var(--type-display-2);
         line-height: var(--leading-display);
         letter-spacing: var(--tracking-tight);
-        font-weight: 700;
+        font-weight: 350;
+        font-optical-sizing: auto;
+        font-variation-settings: "WONK" 1, "SOFT" 0;
     }
 
     .text-display {
@@ -64,7 +68,9 @@
         font-size: var(--type-display-1);
         line-height: var(--leading-display);
         letter-spacing: var(--tracking-tight);
-        font-weight: 700;
+        font-weight: 350;
+        font-optical-sizing: auto;
+        font-variation-settings: "WONK" 1, "SOFT" 0;
     }
 
     /* ── Title: Page / section heads ── */
@@ -73,7 +79,8 @@
         font-size: var(--type-title);
         line-height: var(--leading-heading);
         letter-spacing: var(--tracking-tight);
-        font-weight: 700;
+        font-weight: 400;
+        font-optical-sizing: auto;
     }
 
     /* ── Heading: Subsection heads ── */
@@ -82,7 +89,7 @@
         font-size: var(--type-heading);
         line-height: var(--leading-heading);
         letter-spacing: var(--tracking-normal);
-        font-weight: 600;
+        font-weight: 500;
     }
 
     /* ── Subheading: Card titles, field labels ── */
@@ -196,5 +203,51 @@
     .font-mono-code {
         font-family: var(--font-mono);
         font-feature-settings: "liga", "calt";
+    }
+
+    /* ── Font feature utilities ── */
+    .tabular-nums {
+        font-variant-numeric: tabular-nums;
+    }
+
+    .proportional-nums {
+        font-variant-numeric: proportional-nums;
+    }
+
+    /* ── Glass legibility — halo shadow for text over translucent backgrounds ── */
+    .text-glass-legible {
+        text-shadow:
+            0 0 12px hsl(var(--background) / 0.5),
+            0 0 4px hsl(var(--background) / 0.3);
+    }
+
+    /* ── Kinetic: ambient weight breathing ── */
+    .text-breathe {
+        animation: weight-breathe 4s ease-in-out infinite;
+    }
+
+    /* ── Kinetic: Fraunces WONK/SOFT personality shift on hover ── */
+    .text-wonk-hover {
+        font-variation-settings: "WONK" 0, "SOFT" 100;
+        transition: font-variation-settings var(--duration-slow) var(--spring-smooth, ease);
+    }
+    .text-wonk-hover:hover {
+        font-variation-settings: "WONK" 1, "SOFT" 0;
+    }
+
+    /* ── Kinetic: scroll-driven weight reveal (zero JS) ── */
+    @supports (animation-timeline: view()) {
+        .scroll-weight-reveal {
+            animation: weight-reveal linear both;
+            animation-timeline: view();
+            animation-range: entry 0% entry 60%;
+        }
+    }
+
+    /* ── Kinetic: per-character stagger ── */
+    .char-stagger > .char {
+        display: inline-block;
+        animation: fade-in var(--duration-normal) var(--spring-smooth, ease) backwards;
+        animation-delay: calc(var(--char-index, 0) * 30ms);
     }
 }

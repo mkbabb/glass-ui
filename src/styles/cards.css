@@ -1,20 +1,25 @@
 /* Card utilities — cartoon, elevated, paper texture */
 
 @layer components {
-    /* Cartoon card — thick border + offset hard shadow */
-    .cartoon-card {
+    /* Shared card base */
+    .cartoon-card,
+    .elevated-card {
         border-radius: var(--radius-xl);
-        border: 2px solid hsl(var(--foreground) / 0.15);
+        border: 2px solid hsl(var(--foreground) / var(--border-opacity-light));
         background: hsl(var(--card));
         color: hsl(var(--card-foreground));
-        box-shadow: var(--shadow-cartoon-md);
         transition:
-            box-shadow 0.2s ease,
-            border-color 0.2s ease;
+            box-shadow var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard);
+    }
+
+    /* Cartoon card — thick border + offset hard shadow */
+    .cartoon-card {
+        box-shadow: var(--shadow-cartoon-md);
     }
 
     .cartoon-card:hover {
-        border-color: hsl(var(--foreground) / 0.25);
+        border-color: hsl(var(--foreground) / var(--border-opacity-medium));
         box-shadow: var(--shadow-cartoon-lg);
     }
 
@@ -28,15 +33,11 @@
 
     /* Elevated card — soft shadow */
     .elevated-card {
-        border-radius: var(--radius-xl);
-        border: 2px solid hsl(var(--foreground) / 0.15);
-        background: hsl(var(--card));
-        color: hsl(var(--card-foreground));
         box-shadow: var(--shadow-md);
         transition:
-            box-shadow 0.2s ease,
-            border-color 0.2s ease,
-            transform 0.3s ease;
+            box-shadow var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard),
+            transform var(--duration-normal) var(--ease-standard);
     }
 
     .elevated-card:hover {
@@ -47,14 +48,14 @@
     .paper-texture {
         background-image: var(--paper-clean-texture);
         background-repeat: repeat;
-        background-size: 200px 200px;
+        background-size: var(--paper-texture-size);
         background-blend-mode: multiply;
     }
 
     .paper-texture-aged {
         background-image: var(--paper-aged-texture);
         background-repeat: repeat;
-        background-size: 200px 200px;
+        background-size: var(--paper-texture-size);
         background-blend-mode: multiply;
     }
 

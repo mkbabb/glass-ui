@@ -30,9 +30,15 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
   <DropdownMenuPortal>
     <DropdownMenuContent
       v-bind="forwarded"
-      :class="cn('z-[var(--z-popover)] min-w-32 max-h-[60vh] overflow-y-auto rounded-xl border glass-elevated p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2', props.class)"
+      :class="cn('dropdown-menu-content z-[var(--z-popover)] min-w-32 max-h-[60vh] overflow-y-auto rounded-xl border glass-elevated p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2', props.class)"
     >
       <slot />
     </DropdownMenuContent>
   </DropdownMenuPortal>
 </template>
+
+<style scoped>
+.dropdown-menu-content {
+    font-family: var(--dropdown-menu-font, inherit);
+}
+</style>

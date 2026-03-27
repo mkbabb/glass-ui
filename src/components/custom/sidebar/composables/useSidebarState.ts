@@ -5,8 +5,8 @@
  */
 import { reactive, computed } from "vue";
 import type { Ref } from "vue";
-import type { SidebarSection, SidebarState } from "./types";
-import { buildTreeIndex, isActive as checkActive, isInActiveChain as checkChain } from "./useTreeIndex";
+import type { SidebarSection, SidebarState } from "../types";
+import { useTreeIndex } from "./useTreeIndex";
 
 export interface UseSidebarStateOptions {
     sections: SidebarSection[];
@@ -17,7 +17,11 @@ export interface UseSidebarStateOptions {
 }
 
 export function useSidebarState(options: UseSidebarStateOptions): SidebarState {
-    const treeIndex = buildTreeIndex(options.sections);
+    const {
+        index: treeIndex,
+        isActive: checkActive,
+        isInActiveChain: checkChain,
+    } = useTreeIndex(options.sections);
 
     // Tracks user overrides for section expand/collapse state
     const userExpanded = reactive(new Set<string>());
@@ -48,7 +52,7 @@ export function useSidebarState(options: UseSidebarStateOptions): SidebarState {
     }
 
     function isInActiveChain(id: string): boolean {
-        return checkChain(id, options.activeId.value, treeIndex, options.sections);
+        return checkChain(id, options.activeId.value);
     }
 
     const activeRootId = computed(() => options.activeRootId.value);

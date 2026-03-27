@@ -10,16 +10,16 @@
     opacity: 0;
 }
 
-/* ── Fade-slide (asymmetric: decel in, accel out) ── */
+/* ── Fade-slide (spring in, accelerate out) ── */
 .fade-slide-enter-active {
     transition:
-        opacity var(--duration-normal) var(--ease-decelerate),
-        transform var(--duration-normal) var(--ease-decelerate);
+        opacity var(--duration-normal) var(--ease-out),
+        transform var(--duration-normal) var(--spring-smooth);
 }
 .fade-slide-leave-active {
     transition:
-        opacity var(--duration-fast) var(--ease-accelerate),
-        transform var(--duration-fast) var(--ease-accelerate);
+        opacity var(--duration-fast) var(--ease-in),
+        transform var(--duration-fast) var(--ease-in);
 }
 .fade-slide-enter-from {
     opacity: 0;
@@ -30,18 +30,18 @@
     transform: translateY(4px);
 }
 
-/* ── Expand-fade (asymmetric + max-height) ── */
+/* ── Expand-fade (spring in + max-height) ── */
 .expand-fade-enter-active {
     transition:
-        opacity var(--duration-normal) var(--ease-decelerate),
-        transform var(--duration-normal) var(--ease-decelerate),
-        max-height var(--duration-normal) var(--ease-decelerate);
+        opacity var(--duration-normal) var(--ease-out),
+        transform var(--duration-normal) var(--spring-smooth),
+        max-height var(--duration-normal) var(--spring-smooth);
 }
 .expand-fade-leave-active {
     transition:
-        opacity var(--duration-fast) var(--ease-accelerate),
-        transform var(--duration-fast) var(--ease-accelerate),
-        max-height var(--duration-fast) var(--ease-accelerate);
+        opacity var(--duration-fast) var(--ease-in),
+        transform var(--duration-fast) var(--ease-in),
+        max-height var(--duration-fast) var(--ease-in);
 }
 .expand-fade-enter-from,
 .expand-fade-leave-to {
@@ -49,11 +49,11 @@
     transform: translateY(-4px);
 }
 
-/* ── Dialog scale (decel in, standard out) ── */
+/* ── Dialog scale (bouncy spring in, ease out) ── */
 .dialog-scale-enter-active {
     transition:
-        opacity var(--duration-slow) var(--ease-decelerate),
-        transform var(--duration-slow) var(--ease-decelerate);
+        opacity var(--duration-slow) var(--ease-out),
+        transform var(--duration-slow) var(--spring-bouncy);
 }
 .dialog-scale-leave-active {
     transition:
@@ -69,16 +69,16 @@
     transform: scale(0.95) translateY(8px);
 }
 
-/* ── Spring pop (spring in, fast out) ── */
+/* ── Spring pop (bouncy in, fast out) ── */
 .pop-enter-active {
     transition:
-        opacity var(--duration-fast) var(--ease-standard),
-        transform var(--duration-slow) var(--ease-spring);
+        opacity var(--duration-fast) var(--ease-out),
+        transform var(--duration-slow) var(--spring-bouncy);
 }
 .pop-leave-active {
     transition:
-        opacity var(--duration-fast) var(--ease-decelerate),
-        transform var(--duration-fast) var(--ease-decelerate);
+        opacity var(--duration-fast) var(--ease-out),
+        transform var(--duration-fast) var(--ease-out);
 }
 .pop-enter-from {
     opacity: 0;
@@ -89,16 +89,16 @@
     transform: scale(0.95);
 }
 
-/* ── Dropdown (fast opacity + spring transform) ── */
+/* ── Dropdown (fast opacity + snappy spring transform) ── */
 .dropdown-enter-active {
     transition:
-        opacity var(--duration-instant) ease,
-        transform var(--duration-normal) var(--ease-spring);
+        opacity var(--duration-instant) var(--ease-out),
+        transform var(--duration-normal) var(--spring-snappy);
 }
 .dropdown-leave-active {
     transition:
-        opacity var(--duration-instant) ease,
-        transform var(--duration-fast) ease;
+        opacity var(--duration-instant) var(--ease-standard),
+        transform var(--duration-fast) var(--ease-standard);
 }
 .dropdown-enter-from,
 .dropdown-leave-to {
@@ -116,10 +116,77 @@
     opacity: 0;
 }
 
-/* ── Reduced motion ── */
+/* ── Pane swap (horizontal slide + fade) ── */
+.pane-swap-enter-active {
+    transition:
+        opacity var(--duration-normal, 0.3s) var(--ease-out, ease),
+        transform var(--duration-normal, 0.3s) var(--spring-smooth, ease);
+}
+.pane-swap-leave-active {
+    transition:
+        opacity var(--duration-normal, 0.3s) var(--ease-standard, ease),
+        transform var(--duration-normal, 0.3s) var(--ease-standard, ease);
+}
+.pane-swap-enter-from {
+    opacity: 0;
+    transform: translateX(var(--animation-slide-md, 6px));
+}
+.pane-swap-leave-to {
+    opacity: 0;
+    transform: translateX(calc(-1 * var(--animation-slide-md, 6px)));
+}
+
+/* ── Pane slide (collapse/expand) ── */
+.pane-slide-enter-active {
+    transition:
+        opacity var(--duration-panel, 0.55s) var(--ease-out, ease),
+        max-height var(--duration-panel, 0.55s) var(--spring-gentle, ease);
+}
+.pane-slide-leave-active {
+    transition:
+        opacity var(--duration-panel, 0.55s) var(--ease-standard, ease),
+        max-height var(--duration-panel, 0.55s) var(--ease-standard, ease);
+}
+.pane-slide-enter-from,
+.pane-slide-leave-to {
+    opacity: 0;
+    max-height: 0;
+}
+
+/* ── Badge entrance (wiggle + bounce) ── */
+@keyframes badge-in {
+    0% {
+        opacity: 0;
+        transform: translateY(1rem) scale(0.8) rotate(-3deg);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(-0.15rem) scale(1.02) rotate(1.5deg);
+    }
+    80% {
+        transform: translateY(0.05rem) scale(0.99) rotate(-0.5deg);
+    }
+    100% {
+        transform: translateY(0) scale(1) rotate(0);
+    }
+}
+.badge-enter-active {
+    animation: badge-in 600ms var(--ease-standard, ease);
+}
+.badge-leave-active {
+    animation: badge-in 300ms var(--ease-standard, ease) reverse;
+}
+
+/* ── Reduced motion: preserve fades, remove transform/scale motion ── */
 @media (prefers-reduced-motion: reduce) {
     .fade-enter-active,
     .fade-leave-active,
+    .tab-fade-enter-active,
+    .tab-fade-leave-active {
+        /* Fades are safe — keep them but shorten */
+        transition-duration: 0.1s !important;
+    }
+
     .fade-slide-enter-active,
     .fade-slide-leave-active,
     .expand-fade-enter-active,
@@ -130,8 +197,30 @@
     .pop-leave-active,
     .dropdown-enter-active,
     .dropdown-leave-active,
-    .tab-fade-enter-active,
-    .tab-fade-leave-active {
-        transition-duration: 0.01ms !important;
+    .pane-swap-enter-active,
+    .pane-swap-leave-active,
+    .pane-slide-enter-active,
+    .pane-slide-leave-active,
+    .badge-enter-active,
+    .badge-leave-active {
+        /* Keep opacity transition, eliminate transform motion */
+        transition-property: opacity !important;
+        transition-duration: 0.15s !important;
+        animation-duration: 0.01ms !important;
+    }
+
+    .fade-slide-enter-from,
+    .fade-slide-leave-to,
+    .expand-fade-enter-from,
+    .expand-fade-leave-to,
+    .dialog-scale-enter-from,
+    .dialog-scale-leave-to,
+    .pop-enter-from,
+    .pop-leave-to,
+    .dropdown-enter-from,
+    .dropdown-leave-to,
+    .pane-swap-enter-from,
+    .pane-swap-leave-to {
+        transform: none !important;
     }
 }

@@ -110,34 +110,33 @@ defineExpose({ sidebarNav });
 }
 
 .sidebar-nav {
-    max-height: calc(100dvh - var(--sidebar-top-inset) - var(--sidebar-bottom-inset));
     overflow-y: auto;
-    overscroll-behavior-y: contain;
-    overscroll-behavior-x: contain;
+    overscroll-behavior: contain;
+    border-radius: var(--radius-xl);
+    background: hsl(var(--card));
+    max-height: calc(100dvh - var(--sidebar-top-inset) - var(--sidebar-bottom-inset));
     scrollbar-gutter: stable;
     scroll-padding-bottom: var(--sidebar-bottom-inset);
     touch-action: pan-y;
     padding: 0.625rem 0.625rem var(--sidebar-bottom-inset);
-    border-radius: var(--radius-xl);
     border: 2px solid hsl(var(--foreground) / 0.15);
-    background: hsl(var(--card));
 }
 
 .sidebar-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 0.625rem;
     margin-bottom: 0.5rem;
+    padding: 0 0.625rem;
 }
 
 .sidebar-label {
-    font-size: 0.875rem;
+    font-size: var(--type-small);
     font-weight: 700;
     text-transform: uppercase;
+    margin: 0;
     letter-spacing: 0.08em;
     color: hsl(var(--muted-foreground) / 0.6);
-    margin: 0;
 }
 
 .sidebar-top-btn {
@@ -145,13 +144,13 @@ defineExpose({ sidebarNav });
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
     width: 1.25rem;
     height: 1.25rem;
     border-radius: var(--radius-sm);
     border: 1px solid hsl(var(--border) / 0.4);
     background: none;
     color: hsl(var(--muted-foreground) / 0.45);
-    cursor: pointer;
     transition: all var(--duration-fast) var(--ease-standard);
 }
 
@@ -167,7 +166,7 @@ defineExpose({ sidebarNav });
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.0625rem;
+    gap: 1px;
 }
 
 .sidebar-link {
@@ -177,8 +176,8 @@ defineExpose({ sidebarNav });
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1rem;
     font-weight: 500;
+    font-size: 1rem;
     line-height: 1.35;
     padding: 0.28rem 0.625rem;
     border-radius: var(--radius-md);
@@ -209,16 +208,16 @@ defineExpose({ sidebarNav });
 /* Animated subsection expand/collapse */
 .sidebar-sublist-wrapper {
     display: grid;
-    grid-template-rows: 0fr;
     opacity: 0;
+    grid-template-rows: 0fr;
     transition:
         grid-template-rows 0.4s var(--ease-out-expo),
         opacity 0.3s var(--ease-out-expo);
 }
 
 .sidebar-sublist-wrapper.is-expanded {
-    grid-template-rows: 1fr;
     opacity: 1;
+    grid-template-rows: 1fr;
 }
 
 .sidebar-sublist-wrapper > .sidebar-sublist {

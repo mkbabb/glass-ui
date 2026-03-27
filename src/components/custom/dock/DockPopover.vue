@@ -2,8 +2,9 @@
 /**
  * Compact popover that expands from a dock button.
  * Stays open while mouse is inside. Click to toggle.
+ * Auto-flips direction and adjusts horizontal position to avoid clipping.
  */
-import { ref, inject, watch, onUnmounted, nextTick, useTemplateRef } from "vue";
+import { ref, inject, watch, onUnmounted, nextTick, useTemplateRef, type CSSProperties } from "vue";
 import type { Ref } from "vue";
 
 // Track all popover instances so opening one collapses the others
@@ -22,6 +23,8 @@ const props = withDefaults(
 
 const expanded = ref(false);
 const zOffset = ref(0);
+const panelStyle = ref<CSSProperties>({});
+const resolvedDir = ref(props.direction);
 let collapseTimer: ReturnType<typeof setTimeout> | null = null;
 
 const self = { expanded, scheduleCollapse: (d: number) => scheduleCollapse(d) };
@@ -72,8 +75,91 @@ function toggle() {
     expanded.value ? scheduleCollapse(0) : onEnter();
 }
 
-// --- Click-away: collapse when clicking outside .dock-popover ---
+// --- Position the panel after it mounts to avoid clipping ---
 const popoverEl = useTemplateRef<HTMLElement>("popoverEl");
+const panelEl = useTemplateRef<HTMLElement>("panelEl");
+const OFFSET = 6;
+const VIEWPORT_PAD = 8;
+
+function positionPanel() {
+    const trigger = popoverEl.value;
+    const panel = panelEl.value;
+    if (!trigger || !panel) return;
+
+    const triggerRect = trigger.getBoundingClientRect();
+    const panelRect = panel.getBoundingClientRect();
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+
+    // Decide direction: prefer props.direction, flip if clipping
+    let dir = props.direction;
+    if (dir === "up" && triggerRect.top - panelRect.height - OFFSET < VIEWPORT_PAD) {
+        dir = "down";
+    } else if (dir === "down" && triggerRect.bottom + panelRect.height + OFFSET > vh - VIEWPORT_PAD) {
+        dir = "up";
+    }
+    resolvedDir.value = dir;
+
+    const style: CSSProperties = {
+        position: "absolute",
+        zIndex: 50 + (zOffset.value % 50),
+    };
+
+    // Vertical
+    if (dir === "up") {
+        style.bottom = `calc(100% + ${OFFSET}px)`;
+        style.top = "auto";
+    } else {
+        style.top = `calc(100% + ${OFFSET}px)`;
+        style.bottom = "auto";
+    }
+
+    // Horizontal
+    if (props.align === "end") {
+        style.right = "0";
+        style.left = "auto";
+        style.transform = "none";
+        // Check right-edge clipping (panel extends left from trigger's right edge)
+        const panelLeft = triggerRect.right - panelRect.width;
+        if (panelLeft < VIEWPORT_PAD) {
+            // Shift right so panel starts at viewport edge
+            style.right = "auto";
+            style.left = `${VIEWPORT_PAD - triggerRect.left}px`;
+        }
+    } else {
+        // center alignment
+        style.left = "50%";
+        style.right = "auto";
+        style.transform = "translateX(-50%)";
+
+        // Check horizontal clipping
+        const panelCenterLeft = triggerRect.left + triggerRect.width / 2 - panelRect.width / 2;
+        const panelCenterRight = panelCenterLeft + panelRect.width;
+
+        if (panelCenterLeft < VIEWPORT_PAD) {
+            const shift = VIEWPORT_PAD - panelCenterLeft;
+            style.transform = `translateX(calc(-50% + ${shift}px))`;
+        } else if (panelCenterRight > vw - VIEWPORT_PAD) {
+            const shift = panelCenterRight - (vw - VIEWPORT_PAD);
+            style.transform = `translateX(calc(-50% - ${shift}px))`;
+        }
+    }
+
+    panelStyle.value = style;
+}
+
+watch(expanded, async (isExpanded) => {
+    if (isExpanded) {
+        installClickAway();
+        // Position after the panel mounts
+        await nextTick();
+        positionPanel();
+    } else {
+        removeClickAwayListener();
+    }
+});
+
+// --- Click-away: collapse when clicking outside .dock-popover ---
 let removeClickAwayFn: (() => void) | null = null;
 
 function onClickAway(e: PointerEvent) {
@@ -96,14 +182,6 @@ function removeClickAwayListener() {
     removeClickAwayFn?.();
 }
 
-watch(expanded, (isExpanded) => {
-    if (isExpanded) {
-        installClickAway();
-    } else {
-        removeClickAwayListener();
-    }
-});
-
 defineExpose({ expanded, expand: onEnter, collapse: () => { expanded.value = false; } });
 </script>
 
@@ -111,16 +189,15 @@ defineExpose({ expanded, expand: onEnter, collapse: () => { expanded.value = fal
     <div
         ref="popoverEl"
         class="dock-popover"
-        :class="{ expanded, ['dir-' + direction]: true, ['align-' + align]: true }"
+        :class="{ expanded, ['dir-' + resolvedDir]: true, ['align-' + align]: true }"
         @mouseenter="!clickOnly && onEnter()"
         @mouseleave="!clickOnly && scheduleCollapse(collapseDelay)"
     >
         <button class="popover-trigger dock-icon-btn" @click.stop="toggle">
             <slot name="trigger" />
         </button>
-        <Transition name="pop">
-            <div v-if="expanded" class="popover-panel"
-                :style="{ zIndex: 50 + (zOffset % 50) }"
+        <Transition :name="'pop-' + resolvedDir">
+            <div v-if="expanded" ref="panelEl" class="popover-panel" :style="panelStyle"
                 @click.stop @mousedown.stop @pointerdown.stop>
                 <slot />
             </div>
@@ -145,75 +222,42 @@ defineExpose({ expanded, expand: onEnter, collapse: () => { expanded.value = fal
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    pointer-events: auto;
+    overflow: hidden;
     gap: 0.125rem;
     padding: 0.25rem;
     z-index: var(--z-modal);
-    pointer-events: auto;
-
-    background: hsl(var(--card) / 0.75);
-    backdrop-filter: blur(12px) saturate(1.3);
-    -webkit-backdrop-filter: blur(12px) saturate(1.3);
+    background: var(--glass-bg-heavy, hsl(var(--card) / 0.92));
+    backdrop-filter: var(--glass-blur-heavy, blur(28px) saturate(1.2));
+    -webkit-backdrop-filter: var(--glass-blur-heavy, blur(28px) saturate(1.2));
     border: 1px solid hsl(var(--border) / 0.6);
     border-radius: var(--radius-lg, 1rem);
     box-shadow: var(--glass-shadow-elevated);
 }
 
-.dir-up.align-center .popover-panel {
-    bottom: calc(100% + var(--popover-offset));
-    left: 50%;
-    transform: translateX(-50%);
-}
-.dir-down.align-center .popover-panel {
-    top: calc(100% + var(--popover-offset));
-    left: 50%;
-    transform: translateX(-50%);
-}
-.dir-up.align-end .popover-panel {
-    bottom: calc(100% + var(--popover-offset));
-    right: 0;
-}
-.dir-down.align-end .popover-panel {
-    top: calc(100% + var(--popover-offset));
-    right: 0;
-}
-
 /* ── Spring transitions ── */
-.pop-enter-active {
+.pop-up-enter-active,
+.pop-down-enter-active {
     transition: opacity var(--duration-fast) var(--ease-standard), transform var(--duration-slow) var(--ease-spring);
 }
-.pop-leave-active {
+.pop-up-leave-active,
+.pop-down-leave-active {
     transition: opacity var(--duration-fast) var(--ease-decelerate), transform var(--duration-fast) var(--ease-decelerate);
 }
-.dir-up.align-center .pop-enter-from {
+.pop-up-enter-from {
     opacity: 0;
-    transform: translateX(-50%) scale(0.5) translateY(var(--animation-slide-lg));
+    transform: scale(0.85) translateY(8px);
 }
-.dir-up.align-center .pop-leave-to {
+.pop-up-leave-to {
     opacity: 0;
-    transform: translateX(-50%) scale(0.9) translateY(var(--animation-slide-sm));
+    transform: scale(0.95) translateY(4px);
 }
-.dir-down.align-center .pop-enter-from {
+.pop-down-enter-from {
     opacity: 0;
-    transform: translateX(-50%) scale(0.5) translateY(calc(-1 * var(--animation-slide-lg)));
+    transform: scale(0.85) translateY(-8px);
 }
-.dir-down.align-center .pop-leave-to {
+.pop-down-leave-to {
     opacity: 0;
-    transform: translateX(-50%) scale(0.9) translateY(calc(-1 * var(--animation-slide-sm)));
-}
-.dir-up.align-end .pop-enter-from {
-    opacity: 0;
-    transform: scale(0.5) translateY(var(--animation-slide-lg));
-}
-.dir-up.align-end .pop-leave-to {
-    opacity: 0;
-    transform: scale(0.9) translateY(var(--animation-slide-sm));
-}
-.dir-down.align-end .pop-enter-from {
-    opacity: 0;
-    transform: scale(0.5) translateY(calc(-1 * var(--animation-slide-lg)));
-}
-.dir-down.align-end .pop-leave-to {
-    opacity: 0;
-    transform: scale(0.9) translateY(calc(-1 * var(--animation-slide-sm)));
+    transform: scale(0.95) translateY(-4px);
 }
 </style>

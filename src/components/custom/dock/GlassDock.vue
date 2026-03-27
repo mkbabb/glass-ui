@@ -100,15 +100,15 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
 .glass-dock {
     display: inline-flex;
     align-items: center;
+    border-radius: 9999px;
+    white-space: nowrap;
+    overflow: hidden;
     padding: 0.375rem 0.5rem;
-    border-radius: var(--radius-pill);
     background: var(--glass-bg-medium);
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
     border: 1.5px solid hsl(var(--foreground) / 0.25);
     box-shadow: var(--shadow-dock);
-    white-space: nowrap;
-    overflow: hidden;
     transition:
         width var(--duration-normal) var(--ease-dock),
         padding var(--duration-normal) var(--ease-dock),
@@ -161,7 +161,7 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
 /* ── Layer stacking via grid ── */
 .dock-layers {
     display: grid;
-    transition: opacity 60ms var(--ease-standard);
+    transition: opacity var(--duration-instant) var(--ease-standard);
 }
 
 .dock-layers.dock-transitioning {
@@ -169,12 +169,12 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
 }
 
 .dock-layer {
-    grid-area: 1 / 1;
     display: flex;
     align-items: center;
-    gap: 0.25rem;
-    height: 2.5rem;
     white-space: nowrap;
+    grid-area: 1 / 1;
+    gap: 0.375rem;
+    height: 2.5rem;
 }
 
 .dock-layer.layer-active {
@@ -189,6 +189,15 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
 
 .glass-dock.expanded {
     overflow: visible;
+}
+
+/* When the dock stretches to a set width (not fit-content), layers fill it */
+.glass-dock.expanded:not(.fit-content) .dock-layers {
+    width: 100%;
+}
+
+.glass-dock.expanded:not(.fit-content) .dock-layer--full {
+    width: 100%;
 }
 
 .glass-dock.always-expanded {

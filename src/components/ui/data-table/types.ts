@@ -1,0 +1,48 @@
+import type { Component } from "vue";
+
+export interface DataTableColumn<T = any> {
+    /** Unique key matching a property on the row object */
+    key: string;
+    /** Display label for the column header */
+    label: string;
+    /** Optional formatter for cell values */
+    formatter?: (value: any, row: T) => string;
+    /** Optional custom component to render in the cell. Receives `value` and `row` props. */
+    component?: Component;
+    /** Whether this column is sortable */
+    sortable?: boolean;
+    /** Text alignment */
+    align?: "left" | "center" | "right";
+    /** Additional CSS classes for the column cells */
+    class?: string;
+    /** Additional CSS classes for the header cell */
+    headerClass?: string;
+}
+
+export interface DataTableSort {
+    key: string;
+    direction: "asc" | "desc";
+}
+
+export interface DataTableProps<T = any> {
+    /** Column definitions */
+    columns: DataTableColumn<T>[];
+    /** Row data to display */
+    rows: T[];
+    /** Total number of rows across all pages (for pagination display) */
+    total: number;
+    /** Current page number (1-indexed) */
+    page: number;
+    /** Number of rows per page */
+    pageSize: number;
+    /** Whether data is currently loading */
+    isLoading?: boolean;
+    /** Unique key field on each row (defaults to "_id") */
+    rowKey?: string;
+    /** Current sort state */
+    sort?: DataTableSort;
+    /** When true, hides pagination and shows infinite scroll sentinel */
+    infinite?: boolean;
+    /** Whether more data is available (for infinite scroll mode) */
+    hasMore?: boolean;
+}

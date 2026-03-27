@@ -4,7 +4,9 @@
     "description": "Glassmorphic design system — Vue 3.5 components, reka-ui primitives, Tailwind CSS v4 tokens",
     "license": "MIT",
     "type": "module",
-    "sideEffects": ["*.css"],
+    "sideEffects": [
+        "*.css"
+    ],
     "exports": {
         ".": {
             "types": "./dist/index.d.ts",
@@ -14,7 +16,11 @@
         "./styles/*": "./src/styles/*",
         "./presets/*": "./presets/*"
     },
-    "files": ["dist", "src", "presets"],
+    "files": [
+        "dist",
+        "src",
+        "presets"
+    ],
     "scripts": {
         "dev": "vite",
         "build": "vite build",
@@ -24,20 +30,28 @@
         "node": ">=22"
     },
     "peerDependencies": {
-        "vue": "^3.5",
-        "reka-ui": "^2.0",
         "@vueuse/core": "^14.0",
-        "tailwindcss": "^4.0",
         "class-variance-authority": "^0.7",
         "clsx": "^2.0",
-        "tailwind-merge": "^3.0"
+        "embla-carousel-vue": "^8.0",
+        "reka-ui": "^2.0",
+        "tailwind-merge": "^3.0",
+        "tailwindcss": "^4.0",
+        "vue": "^3.5"
+    },
+    "peerDependenciesMeta": {
+        "embla-carousel-vue": {
+            "optional": true
+        }
     },
     "devDependencies": {
         "@tailwindcss/postcss": "^4.1.11",
+        "@tailwindcss/vite": "^4.2.2",
         "@vitejs/plugin-vue": "^6.0.0",
         "@vueuse/core": "^14.2.1",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
+        "embla-carousel-vue": "^8.6.0",
         "lucide-vue-next": "^0.525.0",
         "reka-ui": "^2.0.0",
         "tailwind-merge": "^3.3.1",

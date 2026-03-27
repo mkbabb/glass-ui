@@ -3,7 +3,8 @@
         <div
             v-if="open"
             class="absolute inset-0 z-[var(--z-popover)] grid place-items-center bg-black/50 rounded-2xl"
-            @click.self="open = false"
+            @click.self="!loading && (open = false)"
+            @keydown.escape="!loading && (open = false)"
         >
             <Transition name="confirm-panel" appear>
                 <div
@@ -23,6 +24,7 @@
                             <Button
                                 variant="outline"
                                 class="cursor-pointer rounded-full"
+                                :disabled="loading"
                                 @click="open = false"
                             >
                                 Cancel
@@ -30,8 +32,13 @@
                             <Button
                                 :variant="destructive ? 'destructive' : 'default'"
                                 class="cursor-pointer gap-1.5 rounded-full"
+                                :disabled="loading"
                                 @click="onConfirm"
                             >
+                                <LoaderCircle
+                                    v-if="loading"
+                                    class="size-4 animate-spin"
+                                />
                                 <slot name="action">{{ confirmLabel }}</slot>
                             </Button>
                         </div>
@@ -43,19 +50,22 @@
 </template>
 
 <script setup lang="ts">
+import { LoaderCircle } from "lucide-vue-next";
 import { Button } from "../../ui/button";
 
-defineProps<{
+const props = defineProps<{
     title: string;
     description?: string;
     confirmLabel: string;
     destructive?: boolean;
+    loading?: boolean;
 }>();
 
 const open = defineModel<boolean>("open", { default: false });
 const emit = defineEmits<{ confirm: [] }>();
 
 function onConfirm() {
+    if (props.loading) return;
     emit("confirm");
     open.value = false;
 }

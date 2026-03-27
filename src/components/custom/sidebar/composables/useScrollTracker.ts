@@ -1,19 +1,25 @@
 /**
- * Tracks which section is currently visible via IntersectionObserver,
+ * Tracks which tree node is currently visible via IntersectionObserver,
  * with a scroll-event fallback for fast scrollbar drags.
- * Deepest visible section wins.
+ * Deepest visible node wins.
+ *
+ * Generic over `T extends TreeNode` — pass a custom `getChildren` callback
+ * for tree structures whose children are stored under a different property.
  */
 import { ref, computed, watch, onMounted, onUnmounted, nextTick, toValue } from "vue";
 import type { MaybeRefOrGetter, Ref } from "vue";
-import type { SidebarSection, SidebarIndexEntry, ScrollTrackerOptions } from "./types";
+import type { TreeNode, TreeIndexEntry, ScrollTrackerOptions } from "../types";
 
-export function useScrollTracker(
-    roots: MaybeRefOrGetter<SidebarSection[]>,
-    index: MaybeRefOrGetter<Map<string, SidebarIndexEntry>>,
+export function useScrollTracker<T extends TreeNode>(
+    roots: MaybeRefOrGetter<T[]>,
+    index: MaybeRefOrGetter<Map<string, TreeIndexEntry<T>>>,
     options?: ScrollTrackerOptions & {
+        getChildren?: (node: T) => T[] | undefined;
         scrollContainer?: Ref<HTMLElement | null>;
     },
 ) {
+    const getChildren =
+        options?.getChildren ?? ((n: T) => n.children as T[] | undefined);
     const rootMargin = options?.rootMargin ?? "-20% 0px -60% 0px";
     const threshold = options?.threshold ?? 0;
 
@@ -36,10 +42,11 @@ export function useScrollTracker(
         return toValue(index).get(activeId.value)?.parentId ?? null;
     });
 
-    function findDeepestVisible(list: SidebarSection[]): string | null {
+    function findDeepestVisible(list: T[]): string | null {
         for (const node of list) {
-            if (node.children) {
-                const deep = findDeepestVisible(node.children);
+            const children = getChildren(node);
+            if (children) {
+                const deep = findDeepestVisible(children);
                 if (deep) return deep;
             }
             if (sectionVisibility.get(node.id)) return node.id;
@@ -56,10 +63,11 @@ export function useScrollTracker(
     function collectIds(): string[] {
         if (cachedIds) return cachedIds;
         const out: string[] = [];
-        function walk(nodes: SidebarSection[]) {
+        function walk(nodes: T[]) {
             for (const node of nodes) {
                 out.push(node.id);
-                if (node.children) walk(node.children);
+                const children = getChildren(node);
+                if (children) walk(children);
             }
         }
         walk(toValue(roots));
@@ -116,7 +124,7 @@ export function useScrollTracker(
         });
     }
 
-    function observeTree(list: SidebarSection[]) {
+    function observeTree(list: T[]) {
         for (const node of list) {
             if (!observedIds.has(node.id)) {
                 const el = document.getElementById(node.id);
@@ -125,7 +133,8 @@ export function useScrollTracker(
                     observedIds.add(node.id);
                 }
             }
-            if (node.children) observeTree(node.children);
+            const children = getChildren(node);
+            if (children) observeTree(children);
         }
     }
 

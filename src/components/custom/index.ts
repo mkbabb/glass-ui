@@ -12,3 +12,4 @@ export * from "./sidebar";
 export * from "./tabs";
 export * from "./timeline";
 export * from "./typewriter";
+export * from "./glass-panel";

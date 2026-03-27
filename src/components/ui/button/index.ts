@@ -21,6 +21,8 @@ export const buttonVariants = cva(
         glass: 'btn-pill-glass',
         'glass-subtle':
           'bg-transparent border border-[hsl(var(--border)/0.3)] backdrop-blur-sm text-foreground/70 hover:border-[hsl(var(--border)/0.5)] hover:text-foreground',
+        ai: 'bg-amber-500/15 text-amber-700 hover:bg-amber-500/25 dark:text-amber-400',
+        'danger-subtle': 'bg-destructive/10 text-destructive hover:bg-destructive/20',
         link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, watch, nextTick } from "vue";
 import { Search, X, Maximize2, Minimize2 } from "lucide-vue-next";
-import { fuzzyMatch } from "./fuzzySearchIndex";
-import type { FuzzySearchState, SearchableItem, SearchResult } from "./types";
+import { fuzzyMatch } from "./composables/fuzzySearchIndex";
+import type { FuzzySearchState, SearchableItem, SearchResult } from "./composables/types";
 
 const props = withDefaults(
     defineProps<{
@@ -333,10 +333,9 @@ function escapeHtml(s: string): string {
     overscroll-behavior: contain;
     background: hsl(var(--background) / 0.97);
     backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     border: 1.5px solid hsl(var(--border));
     border-radius: var(--radius-md);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-md);
     padding: 0.25rem;
 }
 
@@ -386,7 +385,7 @@ function escapeHtml(s: string): string {
 .fuzzy-search-label :deep(mark) {
     background: hsl(50 100% 60% / 0.35);
     color: inherit;
-    border-radius: 1px;
+    border-radius: var(--radius-sm);
     padding: 0 1px;
 }
 
@@ -446,7 +445,6 @@ function escapeHtml(s: string): string {
     padding-top: min(12vh, 6rem);
     background: hsl(var(--background) / 0.55);
     backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
 }
 
 .fuzzy-search-modal {
@@ -457,9 +455,7 @@ function escapeHtml(s: string): string {
     border-radius: var(--radius-xl);
     border: 1.5px solid hsl(var(--border));
     background: hsl(var(--background));
-    box-shadow:
-        0 8px 40px rgba(0, 0, 0, 0.14),
-        0 2px 8px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--shadow-xl);
     overflow: hidden;
 }
 

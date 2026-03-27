@@ -85,7 +85,7 @@ onUnmounted(() => {
     left: 0;
     height: 2px;
     background: hsl(var(--foreground));
-    border-radius: 1px;
+    border-radius: var(--radius-sm);
     transition:
         transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
         width 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -93,15 +93,15 @@ onUnmounted(() => {
 
 .underline-tab {
     position: relative;
-    padding: 0.375rem 0.75rem;
     border: none;
     background: none;
-    font: inherit;
     font-weight: 500;
-    color: hsl(var(--muted-foreground));
     cursor: pointer;
-    transition: color 0.2s ease;
     white-space: nowrap;
+    padding: 0.375rem 0.75rem;
+    font: inherit;
+    color: hsl(var(--muted-foreground));
+    transition: color var(--duration-normal) var(--ease-standard);
     border-radius: 0.25rem;
 }
 

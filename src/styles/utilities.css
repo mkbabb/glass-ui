@@ -1,6 +1,15 @@
 /* Shared utility classes */
 
 @layer components {
+    /* ── Popover/dropdown shared animation ── */
+    .popover-animate {
+        @apply data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95;
+    }
+
+    .slide-in-from-side {
+        @apply data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2;
+    }
+
     /* ── Scrollbar ── */
     .scrollbar-hidden {
         scrollbar-width: none;
@@ -99,6 +108,20 @@
         background: var(--color-status-idle, hsl(var(--muted-foreground)));
     }
 
+    /* ── Paper texture backgrounds ── */
+    .bg-paper-clean {
+        background-image: var(--paper-clean-texture);
+        background-repeat: repeat;
+        background-size: var(--paper-texture-size);
+        background-blend-mode: multiply;
+    }
+    .bg-paper-aged {
+        background-image: var(--paper-aged-texture);
+        background-repeat: repeat;
+        background-size: var(--paper-texture-size);
+        background-blend-mode: multiply;
+    }
+
     /* ── Rainbow text ── */
     .rainbow-text {
         background: linear-gradient(
@@ -111,7 +134,6 @@
             hsl(260 75% 65%),
             hsl(320 80% 65%)
         );
-        -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
     }
@@ -177,8 +199,8 @@
 
     /* ── Scroll fade mask ── */
     .scroll-fade-mask {
-        mask-image: linear-gradient(to right, transparent, black 1rem, black calc(100% - 1rem), transparent);
-        -webkit-mask-image: linear-gradient(to right, transparent, black 1rem, black calc(100% - 1rem), transparent);
+        mask-image: linear-gradient(to right, transparent, black var(--mask-fade-width), black calc(100% - var(--mask-fade-width)), transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black var(--mask-fade-width), black calc(100% - var(--mask-fade-width)), transparent);
     }
 
     /* ── Shimmer text effects ── */
@@ -200,6 +222,15 @@
         animation: shimmer 3s linear infinite;
     }
 
+    .gold-shimmer-subtle {
+        background: linear-gradient(90deg, #c9a84c, #dcc275, #c9a84c);
+        background-size: 300% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        animation: shimmer 8s linear infinite;
+    }
+
     /* ── Code badge ── */
     .code-badge {
         font-family: var(--font-mono, monospace);
@@ -208,9 +239,426 @@
         border: 1px solid hsl(var(--border));
         padding: 0.125rem 0.375rem;
     }
+
+    /* ── Input bar — glassmorphic inline input container ── */
+    .input-bar {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        border-radius: var(--radius-2xl);
+        border: 1px solid hsl(var(--border) / 0.5);
+        background: hsl(var(--card) / 0.8);
+        backdrop-filter: blur(24px);
+
+        padding: 0 0.75rem;
+        height: 2.25rem;
+        max-width: var(--max-width-input);
+        width: 100%;
+        transition:
+            box-shadow var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard);
+    }
+    .input-bar:focus-within {
+        box-shadow: 0 0 0 2px hsl(var(--ring) / 0.4);
+        border-color: hsl(var(--border));
+    }
+
+    .input-bar-field {
+        font-family: var(--font-mono, monospace);
+        font-size: var(--type-small);
+        background: transparent;
+        border: none;
+        outline: none;
+        flex: 1;
+        min-width: 0;
+    }
+    .input-bar-field::placeholder {
+        color: hsl(var(--muted-foreground) / 0.5);
+    }
+
+    /* ── Dashed well — muted container for adding/selecting items ── */
+    .dashed-well {
+        max-width: var(--max-width-input);
+        border-radius: var(--radius-2xl);
+        border: 2px dashed hsl(var(--primary) / 0.3);
+        background: hsl(var(--primary) / 0.05);
+        padding: 0.75rem;
+        display: grid;
+        gap: 0.5rem;
+    }
+
+    /* ── Hover lift — translate-y + shadow on hover (3 levels) ── */
+    .hover-lift {
+        transition-property: transform, box-shadow;
+        transition-duration: var(--duration-normal);
+        transition-timing-function: var(--ease-apple-default);
+    }
+    .hover-lift:hover {
+        transform: translateY(var(--lift-sm));
+        box-shadow: var(--shadow-md);
+    }
+
+    .hover-lift-md {
+        transition-property: transform, box-shadow;
+        transition-duration: var(--duration-normal);
+        transition-timing-function: var(--ease-apple-default);
+    }
+    .hover-lift-md:hover {
+        transform: translateY(var(--lift-md));
+        box-shadow: var(--shadow-md);
+    }
+
+    .hover-lift-lg {
+        transition-property: transform, box-shadow;
+        transition-duration: var(--duration-normal);
+        transition-timing-function: var(--ease-apple-default);
+    }
+    .hover-lift-lg:hover {
+        transform: translateY(var(--lift-lg));
+        box-shadow: var(--shadow-lg);
+    }
+
+    /* ── Hover shadow lift — shadow-only hover ── */
+    .hover-shadow-lift {
+        transition-property: box-shadow;
+        transition-duration: var(--duration-normal);
+        transition-timing-function: var(--ease-apple-smooth);
+    }
+    .hover-shadow-lift:hover {
+        box-shadow: var(--shadow-xl);
+    }
+
+    /* ── Glass overlay — dark backdrop ── */
+    .glass-overlay {
+        background: rgb(0 0 0 / 0.6);
+        backdrop-filter: blur(4px);
+
+    }
+
+    /* ── Cartoon shadows — multi-layer offset shadow + border + translateY ── */
+    .shadow-cartoon-sm {
+        box-shadow:
+            -3px 2px 1px var(--shadow-cartoon-color),
+            0 3px 1px var(--shadow-cartoon-color),
+            -3px 3px 1px var(--shadow-cartoon-color-soft);
+        border: 2px solid hsl(var(--border));
+        transform: translateY(-1px);
+    }
+
+    .shadow-cartoon-md {
+        box-shadow:
+            -4px 3px 1px var(--shadow-cartoon-color),
+            0 4px 1px var(--shadow-cartoon-color),
+            -4px 4px 2px var(--shadow-cartoon-color-soft);
+        border: 2px solid hsl(var(--border));
+        transform: translateY(-1px);
+    }
+
+    .shadow-cartoon-lg {
+        box-shadow:
+            -6px 4px 1px var(--shadow-cartoon-color),
+            0 6px 1px var(--shadow-cartoon-color),
+            -6px 6px 2px var(--shadow-cartoon-color-soft);
+        border: 2px solid hsl(var(--border));
+        transform: translateY(-2px);
+    }
+
+    .shadow-cartoon-sm-hover {
+        box-shadow:
+            -4px 3px 1px var(--shadow-cartoon-color-hover),
+            0 4px 1px var(--shadow-cartoon-color-hover),
+            -4px 4px 2px var(--shadow-cartoon-color-hover-soft);
+        border: 2px solid hsl(var(--border));
+        transform: translateY(-2px);
+    }
+
+    /* ── Shimmer text — background gradient sweep over text ── */
+    .shimmer-text {
+        background: linear-gradient(
+            90deg,
+            currentColor 0%,
+            currentColor 40%,
+            rgba(255, 255, 255, 0.8) 50%,
+            currentColor 60%,
+            currentColor 100%
+        );
+        background-size: 200% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        animation: shimmer-sweep var(--shimmer-duration, 2000ms) ease-in-out infinite;
+    }
+
+    .dark .shimmer-text {
+        background: linear-gradient(
+            90deg,
+            currentColor 0%,
+            currentColor 40%,
+            rgba(255, 255, 255, 0.9) 50%,
+            currentColor 60%,
+            currentColor 100%
+        );
+        background-size: 200% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        animation: shimmer-sweep var(--shimmer-duration, 2000ms) ease-in-out infinite;
+    }
+
+    /* ── Progress gradient (rainbow) ── */
+    .progress-gradient {
+        background: linear-gradient(90deg, #ef4444, #f97316, #eab308, #22c55e, #06b6d0, #3b82f6, #9333ea);
+    }
+
+    /* ── Glassmorphic checkbox ── */
+    .checkbox-glass {
+        height: 1.25rem;
+        width: 1.25rem;
+        border-radius: var(--radius-lg);
+        border: 2px solid hsl(var(--border) / 0.6);
+        backdrop-filter: blur(4px);
+
+        box-shadow: var(--shadow-sm);
+        transition-property: background-color, border-color, transform, box-shadow;
+        transition-duration: var(--duration-normal);
+        transition-timing-function: var(--ease-apple-spring);
+    }
+
+    /* ── Divider utilities ── */
+    .divider-h {
+        height: 2px;
+        background: linear-gradient(
+            to right,
+            transparent 1%,
+            hsl(var(--border)) 8%,
+            hsl(var(--border)) 92%,
+            transparent 99%
+        );
+    }
+
+    .divider-h-tapered {
+        height: 2px;
+        background: linear-gradient(
+            to right,
+            transparent 3%,
+            hsl(var(--border)) 15%,
+            hsl(var(--border)) 85%,
+            transparent 97%
+        );
+    }
+
+    .divider-v {
+        width: 2px;
+        background: linear-gradient(
+            to bottom,
+            transparent 3%,
+            hsl(var(--border)) 15%,
+            hsl(var(--border)) 85%,
+            transparent 97%
+        );
+    }
+
+    /* ── Shake error ── */
+    .shake-error {
+        animation: shake 0.5s ease-in-out;
+    }
+
+    /* ── Input focus ring ── */
+    .input-focus {
+        outline: none;
+        transition-property: box-shadow;
+        transition-duration: var(--duration-normal);
+        transition-timing-function: var(--ease-apple-smooth);
+    }
+    .input-focus:focus-visible {
+        box-shadow: 0 0 0 2px hsl(var(--primary) / 0.4);
+        outline: none;
+    }
+
+    /* ── Active scale — press feedback ── */
+    .active-scale:active {
+        transform: scale(0.97);
+        transition-property: transform;
+        transition-duration: var(--duration-fast);
+    }
+
+    /* ── Stagger children — cascading entrance for list/grid items ── */
+    .stagger-children > * {
+        animation: fade-in var(--duration-normal) var(--spring-smooth, ease) backwards;
+        animation-delay: calc(var(--stagger-index, 0) * 50ms);
+    }
+    .stagger-children > *:nth-child(1) { --stagger-index: 0; }
+    .stagger-children > *:nth-child(2) { --stagger-index: 1; }
+    .stagger-children > *:nth-child(3) { --stagger-index: 2; }
+    .stagger-children > *:nth-child(4) { --stagger-index: 3; }
+    .stagger-children > *:nth-child(5) { --stagger-index: 4; }
+    .stagger-children > *:nth-child(6) { --stagger-index: 5; }
+    .stagger-children > *:nth-child(7) { --stagger-index: 6; }
+    .stagger-children > *:nth-child(8) { --stagger-index: 7; }
+    .stagger-children > *:nth-child(9) { --stagger-index: 8; }
+    .stagger-children > *:nth-child(10) { --stagger-index: 9; }
+    .stagger-children > *:nth-child(11) { --stagger-index: 10; }
+    .stagger-children > *:nth-child(12) { --stagger-index: 11; }
+
+    /* ── Scroll reveal — animate on viewport entry (zero JS) ── */
+    @supports (animation-timeline: view()) {
+        .scroll-reveal {
+            animation: fade-in linear both;
+            animation-timeline: view();
+            animation-range: entry 0% entry 30%;
+        }
+    }
+
+    /* ── Letter spacing hover spread ── */
+    .text-hover-spread {
+        letter-spacing: var(--tracking-tight);
+        transition: letter-spacing var(--duration-normal) var(--spring-smooth, ease);
+    }
+    .text-hover-spread:hover {
+        letter-spacing: var(--tracking-wide);
+    }
+
+    /* ── Disabled base state ── */
+    .disabled-base:disabled {
+        pointer-events: none;
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    /* ── Card hover transitions ── */
+    .card-hover {
+        transition-property: color, background-color, border-color, box-shadow;
+        transition-duration: var(--duration-normal);
+        transition-timing-function: var(--ease-apple-default);
+    }
+    .card-hover:hover {
+        border-color: hsl(var(--border) / 0.5);
+        background-color: hsl(var(--muted) / 0.3);
+    }
+
+    .card-hover-interactive {
+        transition-property: color, background-color, border-color, box-shadow;
+        transition-duration: var(--duration-normal);
+        transition-timing-function: var(--ease-apple-default);
+    }
+    .card-hover-interactive:hover {
+        border-color: hsl(var(--primary) / 0.3);
+        background-color: hsl(var(--primary) / 0.05);
+    }
+
+    /* ── Sort button active state ── */
+    .sort-button-active {
+        background-color: hsl(var(--primary) / 0.1);
+        color: hsl(var(--primary));
+        border-color: hsl(var(--primary) / 0.3);
+    }
+
+    /* ── Heatmap color scale (10 levels, light mode) ── */
+    .heatmap-1 {
+        background-color: rgb(254 226 226);
+        color: rgb(127 29 29);
+    }
+    .heatmap-2 {
+        background-color: rgb(254 202 202);
+        color: rgb(127 29 29);
+    }
+    .heatmap-3 {
+        background-color: rgb(252 165 165);
+        color: rgb(127 29 29);
+    }
+    .heatmap-4 {
+        background-color: rgb(248 113 113);
+        color: rgb(127 29 29);
+    }
+    .heatmap-5 {
+        background-color: rgb(239 68 68);
+        color: rgb(220 38 38);
+    }
+    .heatmap-6 {
+        background-color: rgb(220 38 38);
+        color: rgb(254 226 226);
+    }
+    .heatmap-7 {
+        background-color: rgb(185 28 28);
+        color: rgb(254 226 226);
+    }
+    .heatmap-8 {
+        background-color: rgb(153 27 27);
+        color: rgb(254 226 226);
+    }
+    .heatmap-9 {
+        background-color: rgb(127 29 29);
+        color: rgb(254 226 226);
+    }
+    .heatmap-10 {
+        background-color: rgb(69 10 10);
+        color: rgb(254 226 226);
+    }
+
+    /* ── Heatmap color scale (dark mode) ── */
+    .dark .heatmap-1 {
+        background-color: rgb(30 10 10);
+        color: rgb(156 163 175);
+    }
+    .dark .heatmap-2 {
+        background-color: rgb(45 15 15);
+        color: rgb(209 213 219);
+    }
+    .dark .heatmap-3 {
+        background-color: rgb(69 10 10);
+        color: rgb(229 231 235);
+    }
+    .dark .heatmap-4 {
+        background-color: rgb(91 15 15);
+        color: rgb(243 244 246);
+    }
+    .dark .heatmap-5 {
+        background-color: rgb(127 29 29);
+        color: rgb(249 250 251);
+    }
+    .dark .heatmap-6 {
+        background-color: rgb(153 27 27);
+        color: rgb(254 226 226);
+    }
+    .dark .heatmap-7 {
+        background-color: rgb(185 28 28);
+        color: rgb(254 242 242);
+    }
+    .dark .heatmap-8 {
+        background-color: rgb(220 38 38);
+        color: rgb(255 251 251);
+    }
+    .dark .heatmap-9 {
+        background-color: rgb(239 68 68);
+        color: rgb(255 255 255);
+    }
+    .dark .heatmap-10 {
+        background-color: rgb(248 113 113);
+        color: rgb(255 255 255);
+    }
 }
 
 @keyframes shimmer {
     0% { background-position: 250% 0; }
     100% { background-position: -250% 0; }
+}
+
+/* ── Reduced motion: nuanced — preserve opacity, remove spatial motion ── */
+@media (prefers-reduced-motion: reduce) {
+    *:not([data-allow-motion]) {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+
+    /* Keep opacity transitions (safe, non-spatial) but shorten */
+    *:not([data-allow-motion]) {
+        transition-duration: 0.1s !important;
+        transition-property: opacity, color, background-color, border-color, box-shadow !important;
+    }
+}
+
+/* ── No-transition class (for theme switches, etc.) ── */
+html.no-transition,
+html.no-transition *,
+html.no-transition *::before,
+html.no-transition *::after {
+    transition-duration: 0s !important;
 }

@@ -1,0 +1,6 @@
+@import "tailwindcss" source("../demo");
+@import "tw-animate-css";
+@import "../src/styles/index.css";
+@import "../presets/words.css";
+
+@variant dark (&:where(.dark, .dark *));

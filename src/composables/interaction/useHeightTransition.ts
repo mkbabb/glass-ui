@@ -1,11 +1,11 @@
-const DEFAULT_EXPAND_DURATION = 300;
-const DEFAULT_COLLAPSE_DURATION = 200;
-const EXPAND_EASING = "cubic-bezier(0.16, 1, 0.3, 1)";
-const COLLAPSE_EASING = "cubic-bezier(0.4, 0, 0.2, 1)";
+const DEFAULT_EXPAND_DURATION = "var(--duration-normal, 0.3s)";
+const DEFAULT_COLLAPSE_DURATION = "var(--duration-fast, 0.2s)";
+const EXPAND_EASING = "var(--spring-smooth, cubic-bezier(0.16, 1, 0.3, 1))";
+const COLLAPSE_EASING = "var(--ease-out, cubic-bezier(0, 0, 0.2, 1))";
 
 export function useHeightTransition(options?: {
-    expandDuration?: number;
-    collapseDuration?: number;
+    expandDuration?: string;
+    collapseDuration?: string;
     onBeforeCollapse?: () => void;
     onAfterExpand?: () => void;
 }) {
@@ -21,7 +21,7 @@ export function useHeightTransition(options?: {
     function onEnter(el: Element, done: () => void) {
         const htmlEl = el as HTMLElement;
         const targetHeight = htmlEl.scrollHeight;
-        htmlEl.style.transition = `height ${expandDuration}ms ${EXPAND_EASING}, opacity ${expandDuration}ms ease`;
+        htmlEl.style.transition = `height ${expandDuration} ${EXPAND_EASING}, opacity ${expandDuration} ease`;
         // Force reflow
         void htmlEl.offsetHeight;
         htmlEl.style.height = `${targetHeight}px`;
@@ -52,7 +52,7 @@ export function useHeightTransition(options?: {
 
     function onLeave(el: Element, done: () => void) {
         const htmlEl = el as HTMLElement;
-        htmlEl.style.transition = `height ${collapseDuration}ms ${COLLAPSE_EASING}, opacity ${collapseDuration}ms ease`;
+        htmlEl.style.transition = `height ${collapseDuration} ${COLLAPSE_EASING}, opacity ${collapseDuration} ease`;
         // Force reflow
         void htmlEl.offsetHeight;
         htmlEl.style.height = "0";
