@@ -45,16 +45,16 @@ void main() {
         color += contrib * u_colors[i];
     }
 
-    if (density > u_threshold * 0.3) {
+    if (density > u_threshold * 0.4) {
         color /= density;
-        // Tight smoothstep for crisp edge with minimal translucent halo
+        // Gooey edge: slightly wider smoothstep for organic merge zone
         float edge = smoothstep(
-            u_threshold * 0.85,
-            u_threshold * 1.05,
+            u_threshold * 0.75,
+            u_threshold * 1.1,
             density
         );
-        // High opacity core, very narrow soft edge
-        gl_FragColor = vec4(color, edge * 0.25 + (1.0 - edge) * 0.02);
+        // Solid core with soft goo boundary
+        gl_FragColor = vec4(color, edge * 0.30);
     } else {
         gl_FragColor = vec4(0.0, 0.0, 0.0, u_bgAlpha);
     }

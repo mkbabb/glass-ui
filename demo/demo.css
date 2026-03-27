@@ -4,3 +4,9 @@
 @import "../presets/words.css";
 
 @variant dark (&:where(.dark, .dark *));
+
+/* Demo: put bg color on html so blobs are visible through glass panels */
+html {
+    background: hsl(var(--background));
+}
+

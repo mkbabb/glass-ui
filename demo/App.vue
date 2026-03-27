@@ -2,6 +2,7 @@
 import { ref, nextTick } from "vue";
 import { useCharSplit } from "@/composables/useCharSplit";
 import { GlassPanel } from "@/components/custom/glass-panel";
+import { AuroraBlobs } from "@/components/custom/aurora-blobs";
 
 const isDark = ref(false);
 const toggleDark = () => {
@@ -59,26 +60,20 @@ const replayScrollReveal = async () => {
 
 <template>
     <div
-        class="min-h-screen bg-background text-foreground transition-colors duration-500"
+        class="min-h-screen text-foreground transition-colors duration-500"
     >
-        <!-- Colorful background blobs for glass effect visibility -->
-        <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-            <div
-                class="absolute -left-32 -top-32 h-[500px] w-[500px] rounded-full bg-purple-400/40 blur-[100px]"
-            />
-            <div
-                class="absolute -right-20 top-[20%] h-[450px] w-[450px] rounded-full bg-cyan-400/35 blur-[100px]"
-            />
-            <div
-                class="absolute bottom-[10%] left-[20%] h-[400px] w-[400px] rounded-full bg-pink-400/30 blur-[100px]"
-            />
-            <div
-                class="absolute right-[15%] top-[55%] h-[350px] w-[350px] rounded-full bg-amber-400/30 blur-[100px]"
-            />
-            <div
-                class="absolute left-[50%] top-[40%] h-[300px] w-[300px] rounded-full bg-emerald-400/25 blur-[100px]"
-            />
-        </div>
+        <!-- Animated aurora background (AuroraBlobs component) -->
+        <AuroraBlobs
+            class="fixed inset-0"
+            :colors="['#c084fc', '#60a5fa', '#f472b6', '#34d399', '#fbbf24']"
+            :blob-count="5"
+            :base-radius="0.45"
+            :blur="90"
+            :speed="0.4"
+            :alpha-light="0.4"
+            :alpha-dark="0.22"
+            :orbit-amplitude="0.2"
+        />
 
         <div class="mx-auto max-w-5xl px-6 py-12">
             <!-- Header -->
@@ -214,19 +209,33 @@ const replayScrollReveal = async () => {
             <section class="mb-20">
                 <p class="section-label mb-6">WS5 — GlassPanel Component (tiered renderer)</p>
 
-                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
                     <GlassPanel variant="default" class="rounded-2xl p-6">
-                        <h3 class="text-heading mb-2">GlassPanel (auto-tier)</h3>
+                        <h3 class="text-heading mb-2">CSS tier</h3>
                         <p class="text-small text-muted-foreground">
-                            Auto-detects: WebGPU → WebGL → CSS → fallback.
-                            Currently rendering with CSS backdrop-filter.
+                            backdrop-filter + grain + specular.
+                            Default auto-detected tier.
+                        </p>
+                    </GlassPanel>
+
+                    <GlassPanel
+                        tier="webgl"
+                        :blur="20"
+                        :refraction="0.3"
+                        :chromatic-aberration="true"
+                        class="rounded-2xl p-6"
+                    >
+                        <h3 class="text-heading mb-2">WebGL tier</h3>
+                        <p class="text-small text-muted-foreground">
+                            Frost shader: Snell refraction,
+                            Fresnel specular, chromatic aberration.
                         </p>
                     </GlassPanel>
 
                     <GlassPanel variant="elevated" class="rounded-2xl p-6">
-                        <h3 class="text-heading mb-2">GlassPanel (elevated)</h3>
+                        <h3 class="text-heading mb-2">CSS elevated</h3>
                         <p class="text-small text-muted-foreground">
-                            Elevated variant — maximum frosting depth with grain overlay.
+                            Maximum frosting depth with grain overlay.
                         </p>
                     </GlassPanel>
                 </div>

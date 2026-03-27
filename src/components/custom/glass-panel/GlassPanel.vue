@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount, watch } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import {
     useGlassRenderer,
     type GlassTier,
@@ -13,9 +13,7 @@ export interface GlassPanelProps {
     blur?: number;
     /** Refraction strength 0-1 (default: 0.3) */
     refraction?: number;
-    /** Enable animated caustic light patterns */
-    caustics?: boolean;
-    /** Enable edge chromatic aberration */
+    /** Enable edge chromatic aberration (default: false) */
     chromaticAberration?: boolean;
     /** Glass variant for CSS tier */
     variant?: "default" | "medium" | "elevated";
@@ -26,7 +24,6 @@ export interface GlassPanelProps {
 const props = withDefaults(defineProps<GlassPanelProps>(), {
     blur: 20,
     refraction: 0.3,
-    caustics: false,
     chromaticAberration: false,
     variant: "default",
 });
@@ -40,7 +37,6 @@ const activeTier = computed(() => props.tier ?? renderer.tier.value);
 
 const cssClass = computed(() => {
     if (activeTier.value === "webgl" || activeTier.value === "webgpu") {
-        // GPU tier — no glass CSS classes, canvas handles rendering
         return cn("glass-panel glass-panel--gpu", props.class);
     }
 
@@ -48,7 +44,6 @@ const cssClass = computed(() => {
         return cn("glass-panel glass-panel--fallback", props.class);
     }
 
-    // CSS tier — use existing glass classes
     const variantClass =
         props.variant === "elevated"
             ? "glass-elevated"
@@ -62,8 +57,15 @@ const cssClass = computed(() => {
 let instanceId: number | null = null;
 
 onMounted(() => {
-    if (panelRef.value && (activeTier.value === "webgl" || activeTier.value === "webgpu")) {
-        instanceId = renderer.register(panelRef.value);
+    if (
+        panelRef.value &&
+        (activeTier.value === "webgl" || activeTier.value === "webgpu")
+    ) {
+        instanceId = renderer.register(panelRef.value, {
+            blur: props.blur,
+            refraction: props.refraction,
+            chromaticAberration: props.chromaticAberration ? 0.5 : 0,
+        });
     }
 });
 
@@ -83,18 +85,21 @@ onBeforeUnmount(() => {
 <style scoped>
 .glass-panel {
     position: relative;
+    overflow: hidden;
 }
 
 .glass-panel--gpu {
-    /* GPU tier: glass canvas renders behind, content sits on top */
     background: transparent;
     isolation: isolate;
 }
 
+.glass-panel--gpu > :not(canvas) {
+    position: relative;
+    z-index: 1;
+}
+
 .glass-panel--fallback {
-    /* Solid fallback for browsers without backdrop-filter or GPU */
     background: hsl(var(--card) / 0.92);
     border: 1px solid hsl(var(--border) / 0.35);
-    border-radius: inherit;
 }
 </style>

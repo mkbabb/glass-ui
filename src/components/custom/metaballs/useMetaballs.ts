@@ -155,8 +155,7 @@ export function useMetaballs(
     function resize() {
         const canvas = canvasRef.value;
         if (!canvas || !gl) return;
-        // Render at reduced resolution for performance (metaballs are soft — don't need full DPR)
-        const dpr = Math.min(window.devicePixelRatio || 1, 1);
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
         const rect = canvas.getBoundingClientRect();
         canvas.width = rect.width * dpr;
         canvas.height = rect.height * dpr;
@@ -201,9 +200,11 @@ export function useMetaballs(
                 + Math.cos(t * s[4] * PHI + p * SQRT2) * amp * 0.3
                 + Math.sin(t * s[5] * PHI + i * SQRT2) * amp * 0.15;
 
-            // Slightly pulsing radius
-            const r = cfg.baseRadius + i * 0.01
-                + Math.sin(t * 0.5 + i * PHI) * cfg.baseRadius * 0.15;
+            // Size variation: each blob has a unique base size (0.6x to 1.4x)
+            // plus gentle breathing pulse
+            const sizeScale = 0.6 + (s[0] * 0.8); // deterministic per-blob scale
+            const r = cfg.baseRadius * sizeScale
+                + Math.sin(t * 0.4 + i * PHI) * cfg.baseRadius * 0.2;
 
             posData[i * 3] = x;
             posData[i * 3 + 1] = y;
