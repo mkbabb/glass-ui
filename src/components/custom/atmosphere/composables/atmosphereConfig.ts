@@ -37,6 +37,8 @@ export interface AtmosphereConfig {
     gradStop3: number;
     /** Gradient stop 4 (fade-out) position (0–1) */
     gradStop4: number;
+    /** Canvas composite operation for blob rendering */
+    blendMode: GlobalCompositeOperation;
 }
 
 export const DEFAULT_ATMOSPHERE_CONFIG: AtmosphereConfig = {
@@ -58,6 +60,7 @@ export const DEFAULT_ATMOSPHERE_CONFIG: AtmosphereConfig = {
     gradStop2: 0.30,
     gradStop3: 0.60,
     gradStop4: 1.00,
+    blendMode: "source-over" as GlobalCompositeOperation,
 };
 
 /** Resolve any CSS color string → [r, g, b] via a 1×1 canvas. */

@@ -221,6 +221,7 @@ export function useAtmosphereCanvas(
 
             // Phase 2: blob layer (single blur filter for all blobs)
             ctx.globalAlpha = 1;
+            ctx.globalCompositeOperation = cfg.blendMode ?? "source-over";
             ctx.save();
             ctx.filter = `blur(${blur}px) saturate(140%)`;
 
