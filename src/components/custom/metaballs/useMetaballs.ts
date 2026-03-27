@@ -67,8 +67,8 @@ export function useMetaballs(
     let uThreshold: WebGLUniformLocation | null = null;
     let uEdgeSoftness: WebGLUniformLocation | null = null;
     let uBgAlpha: WebGLUniformLocation | null = null;
-    let uBlobPositions: WebGLUniformLocation[] = [];
-    let uBlobColors: WebGLUniformLocation[] = [];
+    let uBlobPositions: (WebGLUniformLocation | null)[] = [];
+    let uBlobColors: (WebGLUniformLocation | null)[] = [];
 
     function init() {
         const canvas = canvasRef.value;
@@ -122,12 +122,21 @@ export function useMetaballs(
         gl.uniform1f(uEdgeSoftness, cfg.edgeSoftness);
         gl.uniform1f(uBgAlpha, cfg.bgAlpha);
 
-        // Set blob colors (null-check — shader may optimize out unused slots)
+        // Set ALL 16 blob slots (even unused ones get off-screen positions)
+        // This prevents WebGL INVALID_OPERATION from null uniform locations
         const colors = cfg.colors;
-        for (let i = 0; i < cfg.blobCount; i++) {
-            if (!uBlobColors[i]) continue;
-            const [r, g, b] = cssColorToRgb(colors[i % colors.length]);
-            gl.uniform3f(uBlobColors[i], r / 255, g / 255, b / 255);
+        for (let i = 0; i < 16; i++) {
+            const cLoc = uBlobColors[i];
+            if (cLoc) {
+                const [r, g, b] = i < cfg.blobCount
+                    ? cssColorToRgb(colors[i % colors.length])
+                    : [0, 0, 0];
+                gl.uniform3f(cLoc, r / 255, g / 255, b / 255);
+            }
+            const pLoc = uBlobPositions[i];
+            if (pLoc) {
+                gl.uniform3f(pLoc, -10, -10, 0.001);
+            }
         }
 
         // Enable blending for transparency
@@ -174,7 +183,8 @@ export function useMetaballs(
 
             const radius = cfg.baseRadius + i * 0.008;
 
-            if (uBlobPositions[i]) gl.uniform3f(uBlobPositions[i], x, y, radius);
+            const loc = uBlobPositions[i];
+            if (loc !== null) gl.uniform3f(loc, x, y, radius);
         }
 
         gl.drawArrays(gl.TRIANGLES, 0, 6);
