@@ -164,21 +164,50 @@ export function useMetaballs(
         if (uResolution) gl.uniform2f(uResolution, canvas.width, canvas.height);
     }
 
+    // Golden ratio and irrational constants for non-repeating paths
+    const PHI = 1.618033988749;
+    const SQRT2 = 1.4142135623731;
+    const SQRT3 = 1.7320508075689;
+
+    // Per-blob random-ish seeds (deterministic from index)
+    const blobSeeds: number[][] = [];
+    for (let i = 0; i < MAX_BLOBS; i++) {
+        blobSeeds.push([
+            (i + 1) * PHI % 1,           // phase offset
+            0.15 + (i * 0.37 % 0.4),     // primary freq x
+            0.12 + (i * 0.29 % 0.35),    // primary freq y
+            0.07 + (i * 0.19 % 0.15),    // secondary freq x
+            0.05 + (i * 0.23 % 0.12),    // secondary freq y
+            0.03 + (i * 0.13 % 0.08),    // tertiary freq
+        ]);
+    }
+
     function render(now: number) {
         if (!gl || !program) return;
         const t = (now - startTime) * 0.001 * cfg.speed;
+        const amp = cfg.orbitAmplitude;
 
         for (let i = 0; i < cfg.blobCount; i++) {
-            const phase = i * ((Math.PI * 2) / cfg.blobCount);
-            const fx = 0.4 + i * 0.12;
-            const fy = 0.35 + i * 0.1;
-            posData[i * 3] = 0.5
-                + Math.sin(t * fx + phase) * cfg.orbitAmplitude
-                + Math.cos(t * 0.2 + i) * cfg.orbitAmplitude * 0.4;
-            posData[i * 3 + 1] = 0.5
-                + Math.cos(t * fy + phase) * cfg.orbitAmplitude
-                + Math.sin(t * 0.3 + i * 0.7) * cfg.orbitAmplitude * 0.3;
-            posData[i * 3 + 2] = cfg.baseRadius + i * 0.008;
+            const s = blobSeeds[i];
+            const p = s[0] * Math.PI * 2; // phase
+
+            // Multi-frequency oscillation with irrational ratios (non-repeating)
+            const x = 0.5
+                + Math.sin(t * s[1] + p) * amp * 0.6
+                + Math.sin(t * s[3] * SQRT2 + p * PHI) * amp * 0.3
+                + Math.cos(t * s[5] * SQRT3 + i) * amp * 0.15;
+            const y = 0.5
+                + Math.cos(t * s[2] + p * PHI) * amp * 0.6
+                + Math.cos(t * s[4] * PHI + p * SQRT2) * amp * 0.3
+                + Math.sin(t * s[5] * PHI + i * SQRT2) * amp * 0.15;
+
+            // Slightly pulsing radius
+            const r = cfg.baseRadius + i * 0.01
+                + Math.sin(t * 0.5 + i * PHI) * cfg.baseRadius * 0.15;
+
+            posData[i * 3] = x;
+            posData[i * 3 + 1] = y;
+            posData[i * 3 + 2] = r;
         }
 
         gl.uniform3fv(uPositions, posData);
