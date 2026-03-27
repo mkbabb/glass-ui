@@ -87,6 +87,11 @@
         outline: none;
     }
 
+    .dock-select-trigger[aria-expanded="true"],
+    .dock-select-trigger.is-active {
+        background: hsl(var(--foreground) / 0.08);
+    }
+
     .dock-select-trigger:disabled {
         opacity: 0.35;
         cursor: not-allowed;
