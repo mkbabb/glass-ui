@@ -11,7 +11,7 @@
     }
 
     .dock-icon-btn:hover:not(:disabled) {
-        background: hsl(var(--foreground) / 0.08);
+        background: hsl(var(--muted));
         color: var(--btn-hover-color, hsl(var(--foreground)));
         transform: scale(var(--scale-hover-dock));
     }
@@ -32,7 +32,7 @@
 
     .dock-icon-btn.is-active,
     .dock-icon-btn.active {
-        background: hsl(var(--foreground) / 0.08);
+        background: hsl(var(--muted));
         color: hsl(var(--foreground));
     }
 
@@ -45,7 +45,7 @@
     }
 
     .dock-icon-btn-compact:hover:not(:disabled) {
-        background: hsl(var(--foreground) / 0.08);
+        background: hsl(var(--muted));
         color: var(--btn-hover-color, hsl(var(--foreground)));
         transform: scale(var(--scale-hover-dock));
     }
@@ -72,7 +72,7 @@
     }
 
     .dock-select-trigger:hover:not(:disabled) {
-        background: hsl(var(--foreground) / 0.08);
+        background: hsl(var(--muted));
         color: hsl(var(--foreground));
     }
 
@@ -89,7 +89,7 @@
 
     .dock-select-trigger[aria-expanded="true"],
     .dock-select-trigger.is-active {
-        background: hsl(var(--foreground) / 0.08);
+        background: hsl(var(--muted));
     }
 
     .dock-select-trigger:disabled {
@@ -105,7 +105,7 @@
     }
 
     .dock-dropdown-trigger:hover:not(:disabled) {
-        background: hsl(var(--foreground) / 0.08);
+        background: hsl(var(--muted));
         transform: scale(var(--scale-hover-dock));
     }
 
@@ -115,7 +115,7 @@
 
     .dock-dropdown-trigger[aria-expanded="true"],
     .dock-dropdown-trigger.is-active {
-        background: hsl(var(--foreground) / 0.08);
+        background: hsl(var(--muted));
     }
 
     .dock-dropdown-trigger:focus-visible {
@@ -210,5 +210,11 @@
 
     .dock-layer-item.dock-layer-leaving {
         z-index: var(--z-controls);
+    }
+
+    /* ── Dock-safe insets — content clears top + bottom floating docks ── */
+    .dock-inset {
+        padding-top: calc(var(--dock-h) + var(--dock-margin));
+        padding-bottom: calc(var(--dock-menubar-reserve) + var(--dock-margin));
     }
 }
