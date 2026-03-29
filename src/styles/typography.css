@@ -23,6 +23,8 @@
     --type-display-1: clamp(1.618rem, 1.2rem + 1.6vw, 2.618rem); /* φ^2, fluid */
     --type-display-2: clamp(2.058rem, 1.5rem + 2.2vw, 3.33rem); /* φ^(5/2), fluid */
     --type-display-3: clamp(2.618rem, 2rem + 3vw, 4.236rem); /* φ^3, fluid */
+    --type-display-4: clamp(3.33rem, 2.5rem + 4vw, 5.382rem); /* φ^(7/2), fluid */
+    --type-display-5: clamp(4.236rem, 3.5rem + 6vw, 6.854rem); /* φ^4, fluid */
 
     /* Line heights — semantic, paired to scale steps */
     --leading-micro: 1.2;
@@ -43,6 +45,28 @@
 
 @layer components {
     /* ── Display: Hero / splash — light weight, knife-edge serifs ── */
+    .text-display-5 {
+        font-family: var(--font-display);
+        font-size: var(--type-display-5);
+        line-height: var(--leading-display);
+        letter-spacing: var(--tracking-tight);
+        font-weight: 300;
+        font-optical-sizing: auto;
+        font-variation-settings: "WONK" 1, "SOFT" 0;
+    }
+
+
+    .text-display-4 {
+        font-family: var(--font-display);
+        font-size: var(--type-display-4);
+        line-height: var(--leading-display);
+        letter-spacing: var(--tracking-tight);
+        font-weight: 350;
+        font-optical-sizing: auto;
+        font-variation-settings: "WONK" 1, "SOFT" 0;
+    }
+
+
     .text-display-3 {
         font-family: var(--font-display);
         font-size: var(--type-display-3);
@@ -165,7 +189,7 @@
     /* ── Responsive pane title ── */
     .text-pane-title {
         font-family: var(--font-display);
-        font-size: var(--type-display-2);
+        font-size: clamp(2.4rem, 1.8rem + 2vw, 3.33rem);
         line-height: var(--leading-display);
         letter-spacing: var(--tracking-tight);
         font-weight: 400;

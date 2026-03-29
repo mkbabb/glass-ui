@@ -4,13 +4,13 @@
     .floating-panel {
         position: fixed;
         z-index: var(--z-overlay);
-        border-radius: var(--radius-xl);
-        border: 1px solid hsl(var(--border) / 0.6);
-        background: hsl(var(--card) / 0.75);
-        backdrop-filter: var(--glass-blur-md);
-        -webkit-backdrop-filter: var(--glass-blur-md);
+        border-radius: var(--radius-panel);
+        border: 1px solid var(--glass-border-medium);
+        background: var(--glass-bg-medium);
+        backdrop-filter: var(--glass-blur-medium);
+        -webkit-backdrop-filter: var(--glass-blur-medium);
         color: hsl(var(--popover-foreground));
-        box-shadow: var(--glass-shadow-elevated);
+        box-shadow: var(--glass-shadow-medium);
         pointer-events: auto;
         animation: floating-panel-in var(--duration-fast) var(--ease-decelerate);
     }

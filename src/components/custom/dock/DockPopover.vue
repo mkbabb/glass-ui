@@ -227,11 +227,11 @@ defineExpose({ expanded, expand: onEnter, collapse: () => { expanded.value = fal
     gap: 0.125rem;
     padding: 0.25rem;
     z-index: var(--z-modal);
-    background: var(--glass-bg-heavy, hsl(var(--card) / 0.92));
-    backdrop-filter: var(--glass-blur-heavy, blur(28px) saturate(1.2));
-    -webkit-backdrop-filter: var(--glass-blur-heavy, blur(28px) saturate(1.2));
-    border: 1px solid hsl(var(--border) / 0.6);
-    border-radius: var(--radius-lg, 1rem);
+    background: var(--glass-bg-elevated);
+    backdrop-filter: var(--glass-blur-elevated);
+    -webkit-backdrop-filter: var(--glass-blur-elevated);
+    border: 1px solid var(--glass-border-elevated);
+    border-radius: var(--radius-panel);
     box-shadow: var(--glass-shadow-elevated);
 }
 

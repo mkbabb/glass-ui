@@ -1,4 +1,4 @@
-import { ref, watch, nextTick, onUnmounted, provide, inject } from "vue";
+import { ref, watch, onUnmounted, provide, inject } from "vue";
 import type { Ref } from "vue";
 import { isTeleportedTarget } from "./isTeleportedTarget";
 
@@ -238,8 +238,11 @@ export function useDockState(options: UseDockStateOptions) {
 
     watch(expanded, (isExpanded) => {
         if (isExpanded) {
-            // Defer attachment so the opening click doesn't immediately close
-            nextTick(() => {
+            // Defer attachment past the current event's propagation.
+            // nextTick alone isn't enough — the opening pointerdown can still
+            // reach a capture-phase listener attached in the same microtask.
+            // requestAnimationFrame ensures we wait until the next frame.
+            requestAnimationFrame(() => {
                 document.addEventListener(
                     "pointerdown",
                     onPointerDownOutside,

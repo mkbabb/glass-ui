@@ -2,7 +2,7 @@
  * tokens.css — Unified design tokens for @mkbabb/glass-ui
  *
  * Shared structural tokens used by all consumer projects.
- * Project-specific colors/fonts are overridden via presets.
+ * Project-specific colors/fonts are overridden in each consumer's local CSS.
  */
 
 :root {
@@ -83,6 +83,15 @@
     --radius-2xl: 1rem;
     --radius-pill: 9999px;
 
+    /* Semantic aliases */
+    --radius-card:   var(--radius-2xl);
+    --radius-panel:  var(--radius-xl);
+    --radius-dialog: var(--radius-2xl);
+    --radius-input:  var(--radius);
+    --radius-button: var(--radius);
+    --radius-badge:  var(--radius-pill);
+    --radius-dock:   var(--radius-pill);
+
     /* ═══════════════════════════════════════════════
        §5  BOX SHADOWS
        All use hsl(var(--shadow-color) / alpha)
@@ -125,31 +134,46 @@
     --shadow-cartoon-color-hover-soft: rgb(0 0 0 / 0.08);
 
     /* ═══════════════════════════════════════════════
-       §6  GLASSMORPHISM
+       §6  GLASSMORPHISM — Four-tier surface system
+       subtle   → lightest (dock bg, input bg, hover overlays)
+       default  → standard (cards, content containers, select triggers)
+       medium   → heavier  (popovers, dropdowns, floating panels)
+       elevated → heaviest (dialogs, command palette, modal overlays)
        ═══════════════════════════════════════════════ */
-    --glass-opacity-light: 0.38;
-    --glass-opacity-medium: 0.52;
-    --glass-opacity-heavy: 0.70;
 
-    --glass-bg: hsl(var(--card) / var(--glass-opacity-light));
-    --glass-bg-medium: hsl(var(--card) / var(--glass-opacity-medium));
-    --glass-bg-heavy: hsl(var(--card) / var(--glass-opacity-heavy));
-    --glass-border: hsl(var(--border) / 0.35);
+    /* Opacity primitives */
+    --glass-opacity-subtle:   0.30;
+    --glass-opacity-default:  0.50;
+    --glass-opacity-medium:   0.65;
+    --glass-opacity-elevated: 0.80;
 
-    --glass-blur-light: blur(4px);
-    --glass-blur-sm: blur(6px) saturate(1.1);
-    --glass-blur: blur(8px) saturate(1.2) brightness(1.02);
-    --glass-blur-md: blur(10px) saturate(1.3) brightness(1.03);
-    --glass-blur-heavy: blur(14px) saturate(1.4) brightness(1.04);
+    /* Blur primitives */
+    --glass-blur-subtle:   blur(4px) saturate(1.05);
+    --glass-blur-default:  blur(8px) saturate(1.2);
+    --glass-blur-medium:   blur(12px) saturate(1.3);
+    --glass-blur-elevated: blur(16px) saturate(1.4);
 
-    --glass-shadow: var(--shadow-md);
-    --glass-shadow-elevated: var(--shadow-lg),
+    /* Composed backgrounds */
+    --glass-bg-subtle:   hsl(var(--card) / var(--glass-opacity-subtle));
+    --glass-bg-default:  hsl(var(--card) / var(--glass-opacity-default));
+    --glass-bg-medium:   hsl(var(--card) / var(--glass-opacity-medium));
+    --glass-bg-elevated: hsl(var(--card) / var(--glass-opacity-elevated));
+
+    /* Composed borders */
+    --glass-border-subtle:   hsl(var(--border) / 0.20);
+    --glass-border-default:  hsl(var(--border) / 0.35);
+    --glass-border-medium:   hsl(var(--border) / 0.45);
+    --glass-border-elevated: hsl(var(--border) / 0.55);
+
+    /* Shadow per tier */
+    --glass-shadow-subtle:   var(--shadow-sm);
+    --glass-shadow-default:  var(--shadow-md);
+    --glass-shadow-medium:   var(--shadow-lg);
+    --glass-shadow-elevated: var(--shadow-xl),
         0 0 0 0.5px hsl(var(--shadow-color) / 0.05);
 
-    /* Glass grain overlay */
+    /* Shared decorative */
     --glass-grain-opacity: 0.035;
-
-    /* Glass specular highlight (top-edge light catch) */
     --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.25);
 
     /* ═══════════════════════════════════════════════
@@ -186,9 +210,14 @@
        ═══════════════════════════════════════════════ */
     --size-icon-btn: 2.5rem;
 
+    /* Dock geometry — consumers may override locally */
+    --dock-h: calc(var(--size-icon-btn) + 0.75rem + 3px);
+    --dock-margin: 0.5rem;
+    --dock-menubar-reserve: 4rem;
+
     /* ═══════════════════════════════════════════════
        §8b  COMPONENT FONT OVERRIDES
-       Consumers override these in their preset.
+       Consumers override these locally.
        ═══════════════════════════════════════════════ */
     --select-font: inherit;
 
@@ -215,7 +244,7 @@
     --paper-aged-texture: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
 
     /* ═══════════════════════════════════════════════
-       §9  DEFAULT COLOR PALETTE (overridden by presets)
+       §9  DEFAULT COLOR PALETTE (consumers override locally)
        ═══════════════════════════════════════════════ */
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
@@ -240,13 +269,14 @@
 }
 
 /* ═══════════════════════════════════════════════
-   §10  DEFAULT DARK MODE (overridden by presets)
+   §10  DEFAULT DARK MODE (consumers override locally)
    ═══════════════════════════════════════════════ */
 .dark {
     /* Glass opacity boosted for dark backgrounds */
-    --glass-opacity-light: 0.50;
-    --glass-opacity-medium: 0.68;
-    --glass-opacity-heavy: 0.85;
+    --glass-opacity-subtle:   0.42;
+    --glass-opacity-default:  0.58;
+    --glass-opacity-medium:   0.72;
+    --glass-opacity-elevated: 0.88;
 
     --glass-grain-opacity: 0.06;
     --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.08);

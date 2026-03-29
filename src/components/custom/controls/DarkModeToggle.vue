@@ -50,7 +50,7 @@ watchEffect(() => {
     cursor: pointer;
     border: 0;
     padding: 0;
-    border-radius: 9999px;
+    border-radius: var(--radius-pill);
     position: relative;
     isolation: isolate;
     background: none;

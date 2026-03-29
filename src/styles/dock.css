@@ -213,6 +213,7 @@
     }
 
     /* ── Dock-safe insets — content clears top + bottom floating docks ── */
+    /* Content insets that clear floating top + bottom docks. */
     .dock-inset {
         padding-top: calc(var(--dock-h) + var(--dock-margin));
         padding-bottom: calc(var(--dock-menubar-reserve) + var(--dock-margin));

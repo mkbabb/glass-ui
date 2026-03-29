@@ -15,18 +15,29 @@ export interface UseDockTransitionOptions {
 /**
  * Orchestrates a deferred layer-swap transition for dock components.
  *
- * Returns `visualExpanded` (drives layer visibility class bindings) and
- * `isTransitioning` (drives a content fade class). The visual layer swap
- * is deferred until after the fade-out completes, so layout position jumps
- * between layers are never visible.
+ * Both expand and collapse follow the same sequence:
+ *   fade out → swap layer → animate width → fade in
  *
- * Sequence: fade out → swap layer → animate width → fade in.
+ * Width animation is driven through a reactive ref (`transitionWidth`)
+ * so it cooperates with Vue's reactive :style bindings.
  */
 export function useDockTransition(options: UseDockTransitionOptions) {
     const { expanded, rootEl, fadeMs = 60, alwaysExpanded } = options;
 
     const visualExpanded = ref(expanded.value);
     const isTransitioning = ref(false);
+
+    /**
+     * Reactive width applied during transitions via :style.
+     * `null` means "no override — use natural sizing".
+     */
+    const transitionWidth = ref<string | null>(null);
+
+    /**
+     * When true, CSS transitions on the dock are suppressed.
+     * Used during the measure phase so width changes don't animate.
+     */
+    const suppressTransition = ref(false);
 
     let fadeTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -40,7 +51,6 @@ export function useDockTransition(options: UseDockTransitionOptions) {
     let transitionId = 0;
 
     watch(expanded, () => {
-        // Skip width-pinning transition when always expanded — no layer swap needed
         if (alwaysExpanded?.value) {
             visualExpanded.value = expanded.value;
             return;
@@ -52,36 +62,64 @@ export function useDockTransition(options: UseDockTransitionOptions) {
         clearFadeTimer();
         const id = ++transitionId;
 
-        // Pin width so the layer swap can't cause a resize
+        // Capture current width before any changes
         const from = el.getBoundingClientRect().width;
-        el.style.width = `${from}px`;
+
+        // Pin width so the layer swap can't cause a resize jump
+        suppressTransition.value = true;
+        transitionWidth.value = `${from}px`;
 
         // Phase 1: fade out (visualExpanded still shows OLD layer)
         isTransitioning.value = true;
 
-        // Phase 2: after fade, swap visual layer and animate width
+        // Phase 2: after fade completes, swap layer and animate width
         fadeTimer = setTimeout(() => {
             fadeTimer = null;
-            if (id !== transitionId) return; // stale
+            if (id !== transitionId) return;
 
             // Swap layers while content is invisible
             visualExpanded.value = expanded.value;
 
+            // Wait for Vue to flush the layer swap, then measure target width
             nextTick(() => {
-                if (id !== transitionId) return; // stale
+                if (id !== transitionId) return;
 
-                // Measure target width with new layer in flow
-                el.style.transition = "none";
-                el.style.width = "";
-                const to = el.getBoundingClientRect().width;
+                // Release width to measure natural target (still no transitions)
+                transitionWidth.value = null;
 
-                // Set back to old width, restore transitions, animate width
-                el.style.width = `${from}px`;
-                el.offsetWidth; // force recalc
-                el.style.transition = "";
-                requestAnimationFrame(() => {
-                    if (id !== transitionId) return; // stale
-                    el.style.width = `${to}px`;
+                nextTick(() => {
+                    if (id !== transitionId) return;
+
+                    const to = el.getBoundingClientRect().width;
+
+                    // If from ≈ to, no animation needed
+                    if (Math.abs(from - to) < 1) {
+                        suppressTransition.value = false;
+                        transitionWidth.value = null;
+                        isTransitioning.value = false;
+                        return;
+                    }
+
+                    // Pin back to old width (still suppressed)
+                    transitionWidth.value = `${from}px`;
+
+                    // Let Vue flush the pinned width, then enable transitions and animate
+                    nextTick(() => {
+                        if (id !== transitionId) return;
+
+                        // Force the browser to commit the from-width
+                        el.offsetWidth;
+
+                        // Re-enable CSS transitions and set target width
+                        suppressTransition.value = false;
+
+                        // rAF ensures the browser has painted the from-width
+                        // before we set the to-width, guaranteeing the transition fires
+                        requestAnimationFrame(() => {
+                            if (id !== transitionId) return;
+                            transitionWidth.value = `${to}px`;
+                        });
+                    });
                 });
             });
         }, fadeMs);
@@ -91,7 +129,7 @@ export function useDockTransition(options: UseDockTransitionOptions) {
     function onTransitionEnd(e: TransitionEvent) {
         if (e.target !== rootEl.value) return;
         if (e.propertyName === "width") {
-            rootEl.value!.style.width = "";
+            transitionWidth.value = null;
             isTransitioning.value = false;
         }
     }
@@ -101,6 +139,8 @@ export function useDockTransition(options: UseDockTransitionOptions) {
     return {
         visualExpanded,
         isTransitioning,
+        transitionWidth,
+        suppressTransition,
         onTransitionEnd,
     };
 }

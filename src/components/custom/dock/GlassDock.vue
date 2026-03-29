@@ -46,12 +46,16 @@ const {
     alwaysExpanded,
 });
 
-const { visualExpanded, isTransitioning, onTransitionEnd } = useDockTransition({
+const { visualExpanded, isTransitioning, transitionWidth, suppressTransition, onTransitionEnd } = useDockTransition({
     expanded,
     rootEl: dockEl,
     fadeMs: props.fadeMs,
     alwaysExpanded,
 });
+
+const dockStyle = computed(() =>
+    transitionWidth.value != null ? { width: transitionWidth.value } : undefined
+);
 
 onMounted(() => {
     if (props.alwaysExpanded || !props.startCollapsed) {
@@ -67,11 +71,12 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
         ref="dockEl"
         class="glass-dock"
         :class="[
-            { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'dock-wrap': wrap },
+            { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'dock-wrap': wrap, 'no-transition': suppressTransition },
             position === 'fixed' ? 'fixed bottom-[var(--dock-pos)] left-1/2 -translate-x-1/2'
               : position === 'sticky' ? 'dock-sticky'
               : 'dock-inline',
         ]"
+        :style="dockStyle"
         @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave($event)"
         @focusin="onFocusIn"
@@ -100,14 +105,14 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
 .glass-dock {
     display: inline-flex;
     align-items: center;
-    border-radius: 9999px;
+    border-radius: var(--radius-dock);
     white-space: nowrap;
     overflow: hidden;
     padding: 0.375rem 0.5rem;
     background: var(--glass-bg-medium);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    border: 1.5px solid hsl(var(--foreground) / 0.25);
+    backdrop-filter: var(--glass-blur-subtle);
+    -webkit-backdrop-filter: var(--glass-blur-subtle);
+    border: 1.5px solid hsl(var(--foreground) / 0.1);
     box-shadow: var(--shadow-dock);
     transition:
         width var(--duration-normal) var(--ease-dock),
@@ -123,7 +128,7 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
     cursor: pointer;
     padding: 0.375rem;
     justify-content: center;
-    background: var(--glass-bg);
+    background: var(--glass-bg-subtle);
     border-color: hsl(var(--foreground) / 0.3);
     box-shadow: var(--shadow-dock-collapsed);
 }
@@ -137,7 +142,7 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
 }
 
 .glass-dock.collapsed:hover {
-    background: var(--glass-bg);
+    background: var(--glass-bg-subtle);
     border-color: hsl(var(--foreground) / 0.4);
     box-shadow: var(--shadow-dock);
     transform: scale(1.03);
@@ -166,6 +171,7 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
 
 .dock-layers.dock-transitioning {
     opacity: 0;
+    pointer-events: none;
 }
 
 .dock-layer {
@@ -200,6 +206,10 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
     width: 100%;
 }
 
+.glass-dock.no-transition {
+    transition: none !important;
+}
+
 .glass-dock.always-expanded {
     cursor: default;
     overflow: visible;
@@ -210,7 +220,7 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
    Desktop (sm+): single-row pill, same as default. */
 .glass-dock.dock-wrap {
     white-space: normal;
-    border-radius: 1rem;
+    border-radius: var(--radius-2xl);
     max-width: calc(100vw - 1rem);
     padding: 0.375rem 0.625rem;
 }

@@ -121,8 +121,8 @@ function onTrackKeydown(e: KeyboardEvent) {
     height: 24px;
     border-radius: var(--radius-pill);
     background: hsl(var(--foreground) / 0.05);
-    backdrop-filter: var(--glass-blur-sm);
-    -webkit-backdrop-filter: var(--glass-blur-sm);
+    backdrop-filter: var(--glass-blur-subtle);
+    -webkit-backdrop-filter: var(--glass-blur-subtle);
     cursor: pointer;
     touch-action: none;
     overflow: hidden;

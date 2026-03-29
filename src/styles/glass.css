@@ -1,38 +1,47 @@
-/* Glass utilities — glassmorphism base styles referencing --glass-* tokens */
+/* Glass utilities — glassmorphism surface classes referencing --glass-* tokens */
 
 @layer components {
-    .glass {
+    /* ── Four-tier surface classes (visual only, no geometry) ── */
+
+    .glass-subtle {
         position: relative;
-        background: var(--glass-bg);
-        backdrop-filter: var(--glass-blur);
-        border: 1px solid var(--glass-border);
+        background: var(--glass-bg-subtle);
+        backdrop-filter: var(--glass-blur-subtle);
+        -webkit-backdrop-filter: var(--glass-blur-subtle);
+        border: 1px solid var(--glass-border-subtle);
+        box-shadow: var(--glass-highlight);
+    }
+
+    .glass-default {
+        position: relative;
+        background: var(--glass-bg-default);
+        backdrop-filter: var(--glass-blur-default);
+        -webkit-backdrop-filter: var(--glass-blur-default);
+        border: 1px solid var(--glass-border-default);
         box-shadow: var(--glass-highlight);
     }
 
     .glass-medium {
         position: relative;
         background: var(--glass-bg-medium);
-        backdrop-filter: var(--glass-blur-md);
-        border: 1px solid var(--glass-border);
+        backdrop-filter: var(--glass-blur-medium);
+        -webkit-backdrop-filter: var(--glass-blur-medium);
+        border: 1px solid var(--glass-border-medium);
         box-shadow: var(--glass-highlight);
     }
 
     .glass-elevated {
         position: relative;
-        background: hsl(var(--card));
-        backdrop-filter: var(--glass-blur-heavy);
-        border: 1px solid var(--glass-border);
+        background: var(--glass-bg-elevated);
+        backdrop-filter: var(--glass-blur-elevated);
+        -webkit-backdrop-filter: var(--glass-blur-elevated);
+        border: 1px solid var(--glass-border-elevated);
         box-shadow: var(--glass-highlight);
     }
 
-    @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
-        .glass-elevated {
-            background: var(--glass-bg-heavy);
-        }
-    }
-
     /* Grain noise overlay — reuses paper texture SVG, no extra assets */
-    .glass::after,
+    .glass-subtle::after,
+    .glass-default::after,
     .glass-medium::after,
     .glass-elevated::after {
         content: '';
@@ -47,22 +56,46 @@
         mix-blend-mode: overlay;
     }
 
-    .dark .glass::after,
+    .dark .glass-subtle::after,
+    .dark .glass-default::after,
     .dark .glass-medium::after,
     .dark .glass-elevated::after {
         mix-blend-mode: soft-light;
     }
 
-    /* Glassmorphic circular icon button */
+    /* ── Convenience shorthands (tier + shape) ── */
+
+    .glass-card {
+        position: relative;
+        background: var(--glass-bg-default);
+        backdrop-filter: var(--glass-blur-default);
+        -webkit-backdrop-filter: var(--glass-blur-default);
+        border: 1px solid var(--glass-border-default);
+        border-radius: var(--radius-card);
+        box-shadow: var(--glass-shadow-default);
+    }
+
+    .glass-pill {
+        position: relative;
+        background: var(--glass-bg-default);
+        backdrop-filter: var(--glass-blur-default);
+        -webkit-backdrop-filter: var(--glass-blur-default);
+        border: 1px solid var(--glass-border-default);
+        border-radius: var(--radius-pill);
+        box-shadow: var(--glass-shadow-subtle);
+    }
+
+    /* ── Glassmorphic circular icon button ── */
+
     .glass-btn {
         @apply flex items-center justify-center cursor-pointer;
 
         width: var(--size-icon-btn);
         height: var(--size-icon-btn);
         border-radius: var(--radius-pill);
-        border: 1.5px solid hsl(var(--foreground) / 0.1);
-        background: hsl(var(--background) / 0.6);
-        backdrop-filter: var(--glass-blur-sm);
+        border: 1.5px solid var(--glass-border-subtle);
+        background: var(--glass-bg-subtle);
+        backdrop-filter: var(--glass-blur-subtle);
         color: hsl(var(--muted-foreground));
         transition:
             background var(--duration-fast) ease,
@@ -144,14 +177,14 @@
     }
 
     .btn-pill-glass {
-        background: var(--glass-bg);
-        backdrop-filter: var(--glass-blur-light);
-        border: 1px solid var(--glass-border);
+        background: var(--glass-bg-subtle);
+        backdrop-filter: var(--glass-blur-subtle);
+        border: 1px solid var(--glass-border-default);
         color: hsl(var(--foreground));
     }
 
     .btn-pill-glass:hover:not(:disabled) {
-        box-shadow: var(--glass-shadow);
+        box-shadow: var(--glass-shadow-default);
     }
 
     /* ── Pill input ───────────────────────────────── */
@@ -160,9 +193,9 @@
 
         height: 2.5rem;
         border-radius: var(--radius-pill);
-        border: 1.5px solid hsl(var(--foreground) / 0.15);
-        background: hsl(var(--card) / 0.5);
-        backdrop-filter: var(--glass-blur-light);
+        border: 1.5px solid var(--glass-border-subtle);
+        background: var(--glass-bg-default);
+        backdrop-filter: var(--glass-blur-subtle);
         padding: 0 1rem;
         font-size: 1rem;
         color: hsl(var(--foreground));
@@ -188,14 +221,14 @@
 /* ── Accessibility: reduced transparency ────────── */
 @media (prefers-reduced-transparency: reduce) {
     :root {
-        --glass-opacity-light: 1;
+        --glass-opacity-subtle: 1;
+        --glass-opacity-default: 1;
         --glass-opacity-medium: 1;
-        --glass-opacity-heavy: 1;
-        --glass-blur: none;
-        --glass-blur-light: none;
-        --glass-blur-sm: none;
-        --glass-blur-md: none;
-        --glass-blur-heavy: none;
+        --glass-opacity-elevated: 1;
+        --glass-blur-subtle: none;
+        --glass-blur-default: none;
+        --glass-blur-medium: none;
+        --glass-blur-elevated: none;
         --glass-grain-opacity: 0;
         --glass-highlight: none;
     }
@@ -204,20 +237,27 @@
 /* ── Accessibility: high contrast ───────────────── */
 @media (prefers-contrast: more) {
     :root {
-        --glass-opacity-light: 0.92;
+        --glass-opacity-subtle: 0.88;
+        --glass-opacity-default: 0.92;
         --glass-opacity-medium: 0.96;
-        --glass-opacity-heavy: 1;
+        --glass-opacity-elevated: 1;
     }
 }
 
 /* ── @supports fallbacks for non-backdrop-filter browsers ── */
 @layer components {
     @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-        .glass {
+        .glass-subtle {
+            background: hsl(var(--card) / 0.88);
+        }
+        .glass-default {
             background: hsl(var(--card) / 0.92);
         }
         .glass-medium {
             background: hsl(var(--card) / 0.96);
+        }
+        .glass-elevated {
+            background: hsl(var(--card));
         }
         .glass-btn {
             background: hsl(var(--background) / 0.92);

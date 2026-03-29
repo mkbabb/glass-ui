@@ -84,23 +84,33 @@
     --radius-2xl: 1rem;
     --radius-pill: 9999px;
 
+    /* Semantic radius */
+    --radius-card:   var(--radius-card);
+    --radius-panel:  var(--radius-panel);
+    --radius-dialog: var(--radius-dialog);
+    --radius-input:  var(--radius-input);
+    --radius-button: var(--radius-button);
+    --radius-badge:  var(--radius-badge);
+    --radius-dock:   var(--radius-dock);
+
     /* ── Box shadows: map tokens → Tailwind shadow-* utilities ── */
     --shadow-card: var(--shadow-card);
     --shadow-card-hover: var(--shadow-card-hover);
     --shadow-dock: var(--shadow-dock);
     --shadow-dock-collapsed: var(--shadow-dock-collapsed);
-    --shadow-glass: var(--glass-shadow);
+    --shadow-glass-subtle:   var(--glass-shadow-subtle);
+    --shadow-glass-default:  var(--glass-shadow-default);
+    --shadow-glass-medium:   var(--glass-shadow-medium);
     --shadow-glass-elevated: var(--glass-shadow-elevated);
     --shadow-cartoon-sm: var(--shadow-cartoon-sm);
     --shadow-cartoon-md: var(--shadow-cartoon-md);
     --shadow-cartoon-lg: var(--shadow-cartoon-lg);
 
     /* ── Backdrop blur: map tokens → Tailwind backdrop-blur-* utilities ── */
-    --backdrop-blur-glass-light: var(--glass-blur-light);
-    --backdrop-blur-glass-sm: var(--glass-blur-sm);
-    --backdrop-blur-glass: var(--glass-blur);
-    --backdrop-blur-glass-md: var(--glass-blur-md);
-    --backdrop-blur-glass-heavy: var(--glass-blur-heavy);
+    --backdrop-blur-glass-subtle:   var(--glass-blur-subtle);
+    --backdrop-blur-glass-default:  var(--glass-blur-default);
+    --backdrop-blur-glass-medium:   var(--glass-blur-medium);
+    --backdrop-blur-glass-elevated: var(--glass-blur-elevated);
 }
 
 /* Class-based dark mode */
