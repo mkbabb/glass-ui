@@ -57,6 +57,10 @@ src/
 │   │   │   ├── DockPopover.vue     # portaled popover for dock items
 │   │   │   ├── DockLayerGroup.vue  # multi-layer content visibility
 │   │   │   └── index.ts
+│   │   ├── aurora/
+│   │   │   ├── Aurora.vue          # WebGL aurora background
+│   │   │   ├── composables/        # useAurora, color utilities
+│   │   │   └── index.ts
 │   │   ├── controls/
 │   │   │   ├── DarkModeToggle.vue  # animated sun/moon SVG (useGlobalDark)
 │   │   │   └── index.ts
@@ -65,7 +69,7 @@ src/
 ├── composables/
 │   ├── dock/
 │   │   ├── useDockState.ts         # expand/collapse, ref-counted keepOpen/release, click-away
-│   │   ├── useDockTransition.ts    # deferred layer-swap FLIP, fade opacity
+│   │   ├── useDockTransition.ts    # reactive-ref width animation, symmetric fade-swap-animate
 │   │   ├── useLayerTransition.ts   # grid-stacked crossfade + width FLIP
 │   │   ├── usePopupMutex.ts        # one-at-a-time popup exclusivity
 │   │   ├── useDockActionBar.ts     # action bar context
@@ -88,7 +92,7 @@ src/
 │   ├── tokens.css                  # §1–§10: duration, easing, z-index, radius, shadows, glass, paper, colors
 │   ├── theme.css                   # @theme block: Tailwind color/font/radius aliases + dark variant
 │   ├── typography.css              # golden-ratio scale (√φ), semantic classes, font utilities
-│   ├── glass.css                   # .glass, .glass-medium, .glass-elevated, .glass-btn
+│   ├── glass.css                   # .glass-{subtle,default,medium,elevated}, .glass-card, .glass-pill, .glass-btn
 │   ├── dock.css                    # .dock-icon-btn, .dock-select-trigger, .dock-separator, .dock-layer-grid
 │   ├── cards.css                   # .cartoon-card, .elevated-card, .paper-texture
 │   ├── floating-panel.css          # .floating-panel, .floating-panel-item
@@ -98,11 +102,6 @@ src/
 └── utils/
     └── cn.ts                       # clsx + tailwind-merge
 
-presets/                            # per-project token overrides
-├── value-js.css                    # Fraunces, cool blue, light glass
-├── keyframes-js.css                # Instrument Serif, cartoon shadows, status colors
-├── fourier.css                     # Computer Modern, warm cream, cartoon shadows
-└── words.css                       # Fraunces, warm paper, glass depth levels
 ```
 
 ## Conventions
@@ -160,8 +159,13 @@ Projects import styles via CSS, components and composables via JS:
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "@mkbabb/glass-ui/styles";
-@import "@mkbabb/glass-ui/presets/value-js";
 @variant dark (&:where(.dark, .dark *));
+
+/* then override tokens locally */
+:root {
+    --glass-opacity-subtle: 0.82;
+    --glass-blur-default: blur(12px);
+}
 ```
 
 ```ts

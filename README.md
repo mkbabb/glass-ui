@@ -1,16 +1,16 @@
 # glass-ui
 
-Glassmorphic design system for Vue 3.5. Shared components, design tokens, and composables built on reka-ui and Tailwind CSS v4, with a golden-ratio type scale and per-project theming via CSS custom property presets.
+Glassmorphic design system for Vue 3.5. Shared components, design tokens, and composables built on reka-ui and Tailwind CSS v4, with a golden-ratio typography scale.
 
 ## Features
 
-- 32 pre-styled shadcn-vue components (Button, Card, Dialog, Select, Tabs, Popover, Slider, etc.)
-- Glassmorphism primitives: `.glass`, `.glass-elevated`, `.glass-btn`, `.floating-panel`
+- 32 shadcn-vue components (Button, Card, Dialog, Select, Tabs, Popover, Slider, etc.)
+- Four-tier glassmorphism: `.glass-subtle`, `.glass-default`, `.glass-medium`, `.glass-elevated`
+- Convenience shorthands: `.glass-card`, `.glass-pill`, `.glass-btn`, `.floating-panel`
 - GlassDock: collapsible glass action bar with dual-layer grid and ref-counted state
 - Golden-ratio typography scale (√φ ≈ 1.272, 11 stops from micro to display-3)
-- Unified design tokens: duration, easing, z-index, radius, shadows (elevation + cartoon offset), glass depth
-- Paper textures (SVG noise), Vue `<Transition>` class sets, shared `@keyframes`
-- Per-project presets for fonts, colors, shadow style
+- Design tokens: duration, easing, z-index, radius (primitive + semantic), shadows, glass tiers, paper textures
+- Vue `<Transition>` class sets, shared `@keyframes`, SVG noise textures
 - Composables: dock state, hover popover, touch gate, keyboard shortcuts, clipboard, dark mode
 
 ## Install
@@ -30,7 +30,13 @@ import { useDockState, useKeyboardShortcuts, copyToClipboard } from "@mkbabb/gla
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "@mkbabb/glass-ui/styles";
-@import "@mkbabb/glass-ui/presets/value-js";
+@variant dark (&:where(.dark, .dark *));
+
+/* override tokens locally for your project */
+:root {
+    --glass-opacity-subtle: 0.82;
+    --glass-blur-default: blur(12px);
+}
 ```
 
 ## Build
@@ -60,6 +66,7 @@ src/
 │   │   └── ...                 # + 22 more (toggle, switch, checkbox, badge, etc.)
 │   └── custom/
 │       ├── dock/               # GlassDock, DockPopover, DockLayerGroup
+│       ├── aurora/             # Aurora WebGL background
 │       └── controls/           # DarkModeToggle
 ├── composables/
 │   ├── dock/                   # useDockState, useDockTransition, useLayerTransition, usePopupMutex, useDockActionBar
@@ -74,7 +81,7 @@ src/
 │   ├── tokens.css              # design tokens (duration, easing, z-index, radius, shadows, glass, paper)
 │   ├── theme.css               # @theme block (Tailwind color/font/radius aliases)
 │   ├── typography.css          # golden-ratio type scale + semantic classes
-│   ├── glass.css               # .glass, .glass-medium, .glass-elevated, .glass-btn
+│   ├── glass.css               # .glass-{subtle,default,medium,elevated}, .glass-card, .glass-pill, .glass-btn
 │   ├── dock.css                # .dock-icon-btn, .dock-select-trigger, .dock-layer-grid, etc.
 │   ├── cards.css               # .cartoon-card, .elevated-card, .paper-texture
 │   ├── floating-panel.css      # .floating-panel, .floating-panel-item
@@ -83,29 +90,41 @@ src/
 │   └── utilities.css           # scrollbar-hidden, focus-ring, btn-press, rainbow-text, touch-gate, etc.
 └── utils/
     └── cn.ts                   # clsx + tailwind-merge
-
-presets/
-├── value-js.css                # Fraunces, cool blue palette, light glass
-├── keyframes-js.css            # Instrument Serif, cartoon shadows, status indicators
-├── fourier.css                 # Computer Modern, warm cream, cartoon shadows
-└── words.css                   # Fraunces, warm paper, glass depth levels
 ```
+
+## Glass Token System
+
+Four tiers with 1:1 alignment across opacity, blur, background, border, and shadow:
+
+| Tier | Opacity | Blur | Use |
+|------|---------|------|-----|
+| `subtle` | 0.30 | 4px | Dock backgrounds, input fills, hover overlays |
+| `default` | 0.50 | 8px | Cards, content containers, select triggers |
+| `medium` | 0.65 | 12px | Popovers, dropdowns, floating panels |
+| `elevated` | 0.80 | 16px | Dialogs, command palette, modal overlays |
+
+Each tier defines `--glass-{opacity,blur,bg,border,shadow}-{tier}`. Consumers override the primitives (`--glass-opacity-subtle`, `--glass-blur-default`, etc.) in their own `:root` to tune intensity.
+
+Convenience classes bundle a tier with a shape:
+- `.glass-card` = default tier + `var(--radius-card)`
+- `.glass-pill` = default tier + `var(--radius-pill)`
 
 ## Design Tokens
 
-`tokens.css` defines the shared `:root` properties consumed by all style modules and components. Categories:
+`tokens.css` defines the shared `:root` properties consumed by all style modules and components:
 
 | Category | Tokens | Notes |
 |----------|--------|-------|
 | Duration | `--duration-fast` through `--duration-linger` | 6 stops, 0.1s–2.5s |
 | Easing | `--ease-spring`, `--ease-dock`, `--ease-standard`, etc. | 12 curves (core + apple + extended) |
 | Z-index | `--z-background` through `--z-debug` | 14-level scale, 0–99999 |
-| Radius | `--radius` base + `sm`/`md`/`lg`/`xl`/`2xl`/`pill` | Computed from 0.5rem base |
+| Radius | `--radius` base + `sm`/`md`/`lg`/`xl`/`2xl`/`pill` | Primitive scale from 0.5rem base |
+| Radius (semantic) | `--radius-card`, `--radius-panel`, `--radius-dialog`, `--radius-input`, `--radius-button`, `--radius-badge`, `--radius-dock` | Aliases into the primitive scale |
 | Shadows | `--shadow-xs` through `--shadow-2xl` | Elevation scale, hsl-based |
 | Shadows (cartoon) | `--shadow-cartoon-sm`/`md`/`lg`, `--shadow-card` | Offset hard shadows |
-| Glass | `--glass-bg`, `--glass-blur`, `--glass-shadow`, etc. | 3 opacity levels, 4 blur levels |
+| Glass | `--glass-{opacity,blur,bg,border,shadow}-{subtle,default,medium,elevated}` | 4 tiers, all aligned |
 | Paper | `--paper-clean-texture`, `--paper-aged-texture` | SVG feTurbulence noise |
-| Colors | Full shadcn HSL-channel palette | Overridden by presets |
+| Colors | Full shadcn HSL-channel palette | Override locally per project |
 
 ## Typography
 
@@ -125,18 +144,7 @@ Type scale based on √φ ≈ 1.272 (modulated golden ratio). Each step is φ^(n
 | `--type-display-2` | 3.33rem | 53 | `.text-display-2` |
 | `--type-display-3` | 4.236rem | 68 | `.text-display-3` |
 
-The `@theme` block in `theme.css` maps these to Tailwind's `--font-size-*` tokens, so `text-sm`, `text-lg`, etc. automatically adopt the golden-ratio scale.
-
-## Presets
-
-Each project imports a preset CSS file after the shared styles to override fonts, colors, shadow style, and glass intensity:
-
-```css
-@import "@mkbabb/glass-ui/styles";
-@import "@mkbabb/glass-ui/presets/value-js";   /* or keyframes-js, fourier, words */
-```
-
-Presets define `--font-display`, `--font-serif`, `--font-mono`, the full HSL color palette, `--shadow-color`, glass opacity, and any project-specific tokens. The cascade handles specificity naturally.
+The `@theme` block in `theme.css` maps these to Tailwind's `--font-size-*` tokens, so `text-sm`, `text-lg`, etc. adopt the golden-ratio scale.
 
 ## Conventions
 
