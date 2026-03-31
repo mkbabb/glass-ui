@@ -147,11 +147,11 @@
     --glass-bg-medium:   color-mix(in srgb, var(--card) calc(var(--glass-opacity-medium) * 100%), transparent);
     --glass-bg-elevated: color-mix(in srgb, var(--card) calc(var(--glass-opacity-elevated) * 100%), transparent);
 
-    /* Composed borders */
-    --glass-border-subtle:   color-mix(in srgb, var(--border) 20%, transparent);
-    --glass-border-default:  color-mix(in srgb, var(--border) 35%, transparent);
-    --glass-border-medium:   color-mix(in srgb, var(--border) 45%, transparent);
-    --glass-border-elevated: color-mix(in srgb, var(--border) 55%, transparent);
+    /* Composed borders — foreground-tinted for Apple-like luminosity */
+    --glass-border-subtle:   color-mix(in srgb, var(--foreground) 8%, transparent);
+    --glass-border-default:  color-mix(in srgb, var(--foreground) 10%, transparent);
+    --glass-border-medium:   color-mix(in srgb, var(--foreground) 12%, transparent);
+    --glass-border-elevated: color-mix(in srgb, var(--foreground) 15%, transparent);
 
     /* Shadow per tier */
     --glass-shadow-subtle:   var(--shadow-sm);

@@ -112,7 +112,7 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
     background: var(--glass-bg-medium);
     backdrop-filter: var(--glass-blur-subtle);
     -webkit-backdrop-filter: var(--glass-blur-subtle);
-    border: 1.5px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+    border: 1.5px solid var(--glass-border-medium);
     box-shadow: var(--shadow-dock);
     transition:
         width var(--duration-normal) var(--spring-snappy),
@@ -129,7 +129,7 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
     padding: 0.375rem;
     justify-content: center;
     background: var(--glass-bg-subtle);
-    border-color: color-mix(in srgb, var(--foreground) 30%, transparent);
+    border-color: var(--glass-border-elevated);
     box-shadow: var(--shadow-dock-collapsed);
 }
 
@@ -143,7 +143,7 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
 
 .glass-dock.collapsed:hover {
     background: var(--glass-bg-subtle);
-    border-color: color-mix(in srgb, var(--foreground) 40%, transparent);
+    border-color: var(--glass-border-elevated);
     box-shadow: var(--shadow-dock);
     transform: scale(1.03);
 }
