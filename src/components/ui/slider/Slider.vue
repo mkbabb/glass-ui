@@ -37,7 +37,7 @@ const v = computed(() => props.variant ?? 'standard')
       :class="cn(
         'slider-track relative w-full grow overflow-hidden rounded-full',
         v === 'spectrum' ? 'h-6 bg-secondary'
-          : v === 'timeline' ? 'h-6 bg-foreground/5 backdrop-blur-[var(--glass-blur-subtle)]'
+          : v === 'timeline' ? 'h-6 bg-foreground/5 [backdrop-filter:var(--glass-blur-subtle)]'
           : 'h-1.5 bg-muted/50',
       )"
     >

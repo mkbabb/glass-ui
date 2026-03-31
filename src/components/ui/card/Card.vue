@@ -16,7 +16,7 @@ const variantClass = computed(() => {
     if (props.variant === "pane")
         // Pane uses glass background + blur without the ::after grain overlay,
         // which conflicts with overflow:auto scroll containers.
-        return "scrollbar-hidden rounded-xl text-card-foreground bg-[var(--glass-bg-subtle)] backdrop-blur-[var(--glass-blur-subtle)] border border-[var(--glass-border-subtle)]";
+        return "scrollbar-hidden rounded-xl text-card-foreground bg-[var(--glass-bg-subtle)] [backdrop-filter:var(--glass-blur-subtle)] border border-[var(--glass-border-subtle)]";
     return "scrollbar-hidden glass-default rounded-xl text-card-foreground shadow-[var(--shadow-card)]";
 });
 </script>

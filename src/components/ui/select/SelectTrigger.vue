@@ -24,7 +24,7 @@ const forwardedProps = useForwardProps(delegatedProps)
 const variantClass = computed(() =>
   props.variant === 'ghost'
     ? 'bg-transparent border-none shadow-none'
-    : 'bg-[var(--glass-bg-subtle)] [backdrop-filter:var(--glass-blur-subtle)] border border-[var(--glass-border-subtle)]',
+    : 'glass-subtle',
 )
 </script>
 
