@@ -5,9 +5,9 @@
     .cartoon-card,
     .elevated-card {
         border-radius: var(--radius-xl);
-        border: 2px solid hsl(var(--foreground) / var(--border-opacity-light));
-        background: hsl(var(--card));
-        color: hsl(var(--card-foreground));
+        border: 2px solid color-mix(in srgb, var(--foreground) calc(var(--border-opacity-light) * 100%), transparent);
+        background: var(--card);
+        color: var(--card-foreground);
         transition:
             box-shadow var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard);
@@ -19,16 +19,16 @@
     }
 
     .cartoon-card:hover {
-        border-color: hsl(var(--foreground) / var(--border-opacity-medium));
+        border-color: color-mix(in srgb, var(--foreground) calc(var(--border-opacity-medium) * 100%), transparent);
         box-shadow: var(--shadow-cartoon-lg);
     }
 
     :where(.dark) .cartoon-card {
-        border-color: hsl(var(--foreground) / 0.12);
+        border-color: color-mix(in srgb, var(--foreground) 12%, transparent);
     }
 
     :where(.dark) .cartoon-card:hover {
-        border-color: hsl(var(--foreground) / 0.18);
+        border-color: color-mix(in srgb, var(--foreground) 18%, transparent);
     }
 
     /* Elevated card — soft shadow */

@@ -9,10 +9,10 @@
         background: var(--glass-bg-medium);
         backdrop-filter: var(--glass-blur-medium);
         -webkit-backdrop-filter: var(--glass-blur-medium);
-        color: hsl(var(--popover-foreground));
+        color: var(--popover-foreground);
         box-shadow: var(--glass-shadow-medium);
         pointer-events: auto;
-        animation: floating-panel-in var(--duration-fast) var(--ease-decelerate);
+        animation: floating-panel-in var(--duration-fast) var(--ease-out);
     }
 
     .floating-panel-item {
@@ -30,7 +30,7 @@
     }
 
     .floating-panel-item:hover {
-        background-color: hsl(var(--foreground) / 0.06);
+        background-color: color-mix(in srgb, var(--foreground) 6%, transparent);
     }
 
     .floating-panel-item:focus-visible {

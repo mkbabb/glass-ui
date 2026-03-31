@@ -31,34 +31,38 @@
     --font-mono: "Fira Code", "Fira Mono", monospace;
 
     /* ── Colors: reference dynamic CSS vars so .dark overrides work ── */
-    --color-border: hsl(var(--border));
-    --color-input: hsl(var(--input));
-    --color-ring: hsl(var(--ring));
-    --color-background: hsl(var(--background));
-    --color-foreground: hsl(var(--foreground));
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
 
-    --color-primary: hsl(var(--primary));
-    --color-primary-foreground: hsl(var(--primary-foreground));
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
 
-    --color-secondary: hsl(var(--secondary));
-    --color-secondary-foreground: hsl(var(--secondary-foreground));
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
 
-    --color-muted: hsl(var(--muted));
-    --color-muted-foreground: hsl(var(--muted-foreground));
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
 
-    --color-accent: hsl(var(--accent));
-    --color-accent-foreground: hsl(var(--accent-foreground));
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
 
-    --color-destructive: hsl(var(--destructive));
-    --color-destructive-foreground: hsl(var(--destructive-foreground));
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
 
-    --color-popover: hsl(var(--popover));
-    --color-popover-foreground: hsl(var(--popover-foreground));
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
 
-    --color-card: hsl(var(--card));
-    --color-card-foreground: hsl(var(--card-foreground));
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
 
-    --color-shadow: hsl(var(--shadow));
+    --color-shadow: var(--shadow);
+
+    --color-gold: var(--color-gold);
+    --color-gold-light: var(--color-gold-light);
+    --color-gold-dark: var(--color-gold-dark);
 
     /* ── Z-index: map design tokens → Tailwind z-* utilities ── */
     --z-index-background: var(--z-background);
@@ -106,11 +110,28 @@
     --shadow-cartoon-md: var(--shadow-cartoon-md);
     --shadow-cartoon-lg: var(--shadow-cartoon-lg);
 
-    /* ── Backdrop blur: map tokens → Tailwind backdrop-blur-* utilities ── */
-    --backdrop-blur-glass-subtle:   var(--glass-blur-subtle);
-    --backdrop-blur-glass-default:  var(--glass-blur-default);
-    --backdrop-blur-glass-medium:   var(--glass-blur-medium);
-    --backdrop-blur-glass-elevated: var(--glass-blur-elevated);
+    /* ── Backdrop blur: glass tokens use full backdrop-filter values
+         (blur + saturate), so they can't map to Tailwind's backdrop-blur-*
+         utility directly. Use [backdrop-filter:var(--glass-blur-*)] instead. ── */
+
+    /* ── Easing: spring curves → ease-spring-* utilities ── */
+    --transition-timing-function-spring-smooth: var(--spring-smooth);
+    --transition-timing-function-spring-snappy: var(--spring-snappy);
+    --transition-timing-function-spring-bouncy: var(--spring-bouncy);
+    --transition-timing-function-spring-gentle: var(--spring-gentle);
+
+    /* ── Easing: cubic-bezier → ease-* utilities ── */
+    --transition-timing-function-standard: var(--ease-standard);
+    --transition-timing-function-out: var(--ease-out);
+    --transition-timing-function-in: var(--ease-in);
+    --transition-timing-function-out-expo: var(--ease-out-expo);
+
+    /* ── Duration: map tokens → Tailwind duration-* utilities ── */
+    --transition-duration-instant: var(--duration-instant);
+    --transition-duration-fast: var(--duration-fast);
+    --transition-duration-normal: var(--duration-normal);
+    --transition-duration-slow: var(--duration-slow);
+    --transition-duration-panel: var(--duration-panel);
 }
 
 /* Class-based dark mode */

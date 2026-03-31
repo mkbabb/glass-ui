@@ -43,17 +43,6 @@
     --ease-in: cubic-bezier(0.4, 0, 1, 1);
     --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
-    /* Legacy aliases (deprecated — migrate to --spring-* / --ease-*) */
-    --ease-spring: var(--spring-snappy);
-    --ease-dock: var(--spring-snappy);
-    --ease-decelerate: var(--ease-out);
-    --ease-accelerate: var(--ease-in);
-    --ease-pane: var(--spring-gentle);
-    --ease-pane-exit: cubic-bezier(0.5, 0, 1, 0.5);
-    --ease-overshoot: var(--spring-bouncy);
-    --ease-apple-default: cubic-bezier(0.25, 0.1, 0.25, 1);
-    --ease-apple-spring: var(--spring-snappy);
-
     /* ═══════════════════════════════════════════════
        §3  Z-INDEX SCALE
        ═══════════════════════════════════════════════ */
@@ -94,38 +83,37 @@
 
     /* ═══════════════════════════════════════════════
        §5  BOX SHADOWS
-       All use hsl(var(--shadow-color) / alpha)
        Projects define --shadow-color in their preset.
        ═══════════════════════════════════════════════ */
-    --shadow-color: 0 0% 0%;
+    --shadow-color: hsl(0 0% 0%);
 
     /* Elevation scale */
-    --shadow-xs: 0 1px 3px hsl(var(--shadow-color) / 0.04),
-        0 1px 2px hsl(var(--shadow-color) / 0.06);
-    --shadow-sm: 0 2px 8px hsl(var(--shadow-color) / 0.06);
-    --shadow-md: 0 4px 16px hsl(var(--shadow-color) / 0.08);
-    --shadow-lg: 0 4px 20px hsl(var(--shadow-color) / 0.12);
-    --shadow-xl: 0 8px 24px hsl(var(--shadow-color) / 0.14);
-    --shadow-2xl: 0 25px 50px -12px hsl(var(--shadow-color) / 0.25);
+    --shadow-xs: 0 1px 3px color-mix(in srgb, var(--shadow-color) 4%, transparent),
+        0 1px 2px color-mix(in srgb, var(--shadow-color) 6%, transparent);
+    --shadow-sm: 0 2px 8px color-mix(in srgb, var(--shadow-color) 6%, transparent);
+    --shadow-md: 0 4px 16px color-mix(in srgb, var(--shadow-color) 8%, transparent);
+    --shadow-lg: 0 4px 20px color-mix(in srgb, var(--shadow-color) 12%, transparent);
+    --shadow-xl: 0 8px 24px color-mix(in srgb, var(--shadow-color) 14%, transparent);
+    --shadow-2xl: 0 25px 50px -12px color-mix(in srgb, var(--shadow-color) 25%, transparent);
 
     /* Cartoon / offset shadows */
-    --shadow-cartoon-sm: -3px 2px 1px hsl(var(--shadow-color) / 0.10),
-        0 3px 1px hsl(var(--shadow-color) / 0.10),
-        -3px 3px 1px hsl(var(--shadow-color) / 0.06);
-    --shadow-cartoon-md: -4px 3px 1px hsl(var(--shadow-color) / 0.12),
-        0 4px 1px hsl(var(--shadow-color) / 0.12),
-        -4px 4px 2px hsl(var(--shadow-color) / 0.08);
-    --shadow-cartoon-lg: -6px 4px 1px hsl(var(--shadow-color) / 0.12),
-        0 6px 1px hsl(var(--shadow-color) / 0.12),
-        -6px 6px 2px hsl(var(--shadow-color) / 0.08);
+    --shadow-cartoon-sm: -3px 2px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
+        0 3px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
+        -3px 3px 1px color-mix(in srgb, var(--shadow-color) 6%, transparent);
+    --shadow-cartoon-md: -4px 3px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
+        0 4px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
+        -4px 4px 2px color-mix(in srgb, var(--shadow-color) 8%, transparent);
+    --shadow-cartoon-lg: -6px 4px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
+        0 6px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
+        -6px 6px 2px color-mix(in srgb, var(--shadow-color) 8%, transparent);
 
     /* Card offset shadow */
-    --shadow-card: 4px 4px 0px 0px hsl(var(--shadow-color) / 0.5);
-    --shadow-card-hover: 5px 5px 0px 0px hsl(var(--shadow-color) / 0.6);
+    --shadow-card: 4px 4px 0px 0px color-mix(in srgb, var(--shadow-color) 50%, transparent);
+    --shadow-card-hover: 5px 5px 0px 0px color-mix(in srgb, var(--shadow-color) 60%, transparent);
 
     /* Dock shadows */
-    --shadow-dock: 0 4px 20px hsl(var(--shadow-color) / 0.25), 0 0 0 1px hsl(var(--shadow-color) / 0.15);
-    --shadow-dock-collapsed: 0 2px 12px hsl(var(--shadow-color) / 0.2), 0 0 0 1px hsl(var(--shadow-color) / 0.15);
+    --shadow-dock: 0 4px 20px color-mix(in srgb, var(--shadow-color) 25%, transparent), 0 0 0 1px color-mix(in srgb, var(--shadow-color) 15%, transparent);
+    --shadow-dock-collapsed: 0 2px 12px color-mix(in srgb, var(--shadow-color) 20%, transparent), 0 0 0 1px color-mix(in srgb, var(--shadow-color) 15%, transparent);
 
     /* Cartoon shadow colors */
     --shadow-cartoon-color: rgb(0 0 0 / 0.12);
@@ -154,23 +142,23 @@
     --glass-blur-elevated: blur(16px) saturate(1.4);
 
     /* Composed backgrounds */
-    --glass-bg-subtle:   hsl(var(--card) / var(--glass-opacity-subtle));
-    --glass-bg-default:  hsl(var(--card) / var(--glass-opacity-default));
-    --glass-bg-medium:   hsl(var(--card) / var(--glass-opacity-medium));
-    --glass-bg-elevated: hsl(var(--card) / var(--glass-opacity-elevated));
+    --glass-bg-subtle:   color-mix(in srgb, var(--card) calc(var(--glass-opacity-subtle) * 100%), transparent);
+    --glass-bg-default:  color-mix(in srgb, var(--card) calc(var(--glass-opacity-default) * 100%), transparent);
+    --glass-bg-medium:   color-mix(in srgb, var(--card) calc(var(--glass-opacity-medium) * 100%), transparent);
+    --glass-bg-elevated: color-mix(in srgb, var(--card) calc(var(--glass-opacity-elevated) * 100%), transparent);
 
     /* Composed borders */
-    --glass-border-subtle:   hsl(var(--border) / 0.20);
-    --glass-border-default:  hsl(var(--border) / 0.35);
-    --glass-border-medium:   hsl(var(--border) / 0.45);
-    --glass-border-elevated: hsl(var(--border) / 0.55);
+    --glass-border-subtle:   color-mix(in srgb, var(--border) 20%, transparent);
+    --glass-border-default:  color-mix(in srgb, var(--border) 35%, transparent);
+    --glass-border-medium:   color-mix(in srgb, var(--border) 45%, transparent);
+    --glass-border-elevated: color-mix(in srgb, var(--border) 55%, transparent);
 
     /* Shadow per tier */
     --glass-shadow-subtle:   var(--shadow-sm);
     --glass-shadow-default:  var(--shadow-md);
     --glass-shadow-medium:   var(--shadow-lg);
     --glass-shadow-elevated: var(--shadow-xl),
-        0 0 0 0.5px hsl(var(--shadow-color) / 0.05);
+        0 0 0 0.5px color-mix(in srgb, var(--shadow-color) 5%, transparent);
 
     /* Shared decorative */
     --glass-grain-opacity: 0.035;
@@ -234,8 +222,8 @@
        §10 FOCUS RING
        ═══════════════════════════════════════════════ */
     --focus-ring-width: 2px;
-    --focus-ring-shadow: 0 0 0 var(--focus-ring-width) hsl(var(--ring) / 0.3),
-        0 0 8px hsl(var(--ring) / 0.15);
+    --focus-ring-shadow: 0 0 0 var(--focus-ring-width) color-mix(in srgb, var(--ring) 30%, transparent),
+        0 0 8px color-mix(in srgb, var(--ring) 15%, transparent);
 
     /* ═══════════════════════════════════════════════
        §11 PAPER TEXTURES
@@ -246,26 +234,55 @@
     /* ═══════════════════════════════════════════════
        §9  DEFAULT COLOR PALETTE (consumers override locally)
        ═══════════════════════════════════════════════ */
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --ring: 222.2 84% 4.9%;
-    --shadow: 0 0% 65%;
+    --background: hsl(0 0% 100%);
+    --foreground: hsl(222.2 84% 4.9%);
+    --muted: hsl(210 40% 96.1%);
+    --muted-foreground: hsl(215.4 16.3% 46.9%);
+    --popover: hsl(0 0% 100%);
+    --popover-foreground: hsl(222.2 84% 4.9%);
+    --card: hsl(0 0% 100%);
+    --card-foreground: hsl(222.2 84% 4.9%);
+    --border: hsl(214.3 31.8% 91.4%);
+    --input: hsl(214.3 31.8% 91.4%);
+    --primary: hsl(222.2 47.4% 11.2%);
+    --primary-foreground: hsl(210 40% 98%);
+    --secondary: hsl(210 40% 96.1%);
+    --secondary-foreground: hsl(222.2 47.4% 11.2%);
+    --accent: hsl(210 40% 96.1%);
+    --accent-foreground: hsl(222.2 47.4% 11.2%);
+    --destructive: hsl(0 84.2% 60.2%);
+    --destructive-foreground: hsl(210 40% 98%);
+    --ring: hsl(222.2 84% 4.9%);
+    --shadow: hsl(0 0% 65%);
+
+    /* ═══════════════════════════════════════════════
+       §12 GOLD PALETTE
+       ═══════════════════════════════════════════════ */
+    --color-gold: hsl(43 74% 49%);
+    --color-gold-light: hsl(51 100% 50%);
+    --color-gold-dark: hsl(34 87% 38%);
+
+    /* ═══════════════════════════════════════════════
+       §13 RAINBOW PALETTE
+       ═══════════════════════════════════════════════ */
+
+    /* Rainbow vivid */
+    --rainbow-red: hsl(0 85% 60%);
+    --rainbow-orange: hsl(30 90% 55%);
+    --rainbow-yellow: hsl(55 90% 55%);
+    --rainbow-green: hsl(130 70% 50%);
+    --rainbow-blue: hsl(210 80% 55%);
+    --rainbow-indigo: hsl(260 70% 60%);
+    --rainbow-violet: hsl(300 75% 60%);
+
+    /* Rainbow pastel */
+    --rainbow-pastel-red: hsl(0 50% 78%);
+    --rainbow-pastel-orange: hsl(25 55% 76%);
+    --rainbow-pastel-yellow: hsl(50 55% 78%);
+    --rainbow-pastel-green: hsl(130 35% 74%);
+    --rainbow-pastel-blue: hsl(220 45% 76%);
+    --rainbow-pastel-indigo: hsl(260 35% 76%);
+    --rainbow-pastel-violet: hsl(280 40% 78%);
 }
 
 /* ═══════════════════════════════════════════════
@@ -281,31 +298,36 @@
     --glass-grain-opacity: 0.06;
     --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.08);
 
-    --background: 224 71% 4%;
-    --foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --popover: 224 71% 4%;
-    --popover-foreground: 210 40% 98%;
-    --card: 224 50% 10%;
-    --card-foreground: 210 40% 98%;
-    --border: 216 34% 17%;
-    --input: 216 34% 17%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 72% 50%;
-    --destructive-foreground: 210 40% 98%;
-    --ring: 212.7 26.8% 83.9%;
-    --shadow: 0 0% 10%;
-    --shadow-card: 4px 4px 0px 0px hsl(var(--shadow-color) / 0.85);
-    --shadow-card-hover: 5px 5px 0px 0px hsl(var(--shadow-color) / 0.95);
+    --background: hsl(224 71% 4%);
+    --foreground: hsl(210 40% 98%);
+    --muted: hsl(217.2 32.6% 17.5%);
+    --muted-foreground: hsl(215 20.2% 65.1%);
+    --popover: hsl(224 71% 4%);
+    --popover-foreground: hsl(210 40% 98%);
+    --card: hsl(224 50% 10%);
+    --card-foreground: hsl(210 40% 98%);
+    --border: hsl(216 34% 17%);
+    --input: hsl(216 34% 17%);
+    --primary: hsl(210 40% 98%);
+    --primary-foreground: hsl(222.2 47.4% 11.2%);
+    --secondary: hsl(217.2 32.6% 17.5%);
+    --secondary-foreground: hsl(210 40% 98%);
+    --accent: hsl(217.2 32.6% 17.5%);
+    --accent-foreground: hsl(210 40% 98%);
+    --destructive: hsl(0 72% 50%);
+    --destructive-foreground: hsl(210 40% 98%);
+    --ring: hsl(212.7 26.8% 83.9%);
+    --shadow: hsl(0 0% 10%);
+    --shadow-card: 4px 4px 0px 0px color-mix(in srgb, var(--shadow-color) 85%, transparent);
+    --shadow-card-hover: 5px 5px 0px 0px color-mix(in srgb, var(--shadow-color) 95%, transparent);
 
     --shadow-cartoon-color: rgb(255 255 255 / 0.07);
     --shadow-cartoon-color-soft: rgb(255 255 255 / 0.03);
     --shadow-cartoon-color-hover: rgb(255 255 255 / 0.10);
     --shadow-cartoon-color-hover-soft: rgb(255 255 255 / 0.05);
+
+    /* Gold — boosted for dark backgrounds */
+    --color-gold: hsl(43 74% 55%);
+    --color-gold-light: hsl(51 100% 55%);
+    --color-gold-dark: hsl(34 87% 45%);
 }

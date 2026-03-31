@@ -206,7 +206,7 @@
     .section-label {
         font-family: var(--font-mono);
         font-size: var(--type-caption);
-        color: hsl(var(--muted-foreground));
+        color: var(--muted-foreground);
         text-transform: uppercase;
         letter-spacing: var(--tracking-caps);
     }
@@ -215,7 +215,7 @@
     .text-pane-description {
         font-family: var(--font-mono);
         font-size: var(--type-small);
-        color: hsl(var(--muted-foreground) / 0.6);
+        color: color-mix(in srgb, var(--muted-foreground) 60%, transparent);
     }
 
     /* ── Font family utilities ── */
@@ -241,8 +241,8 @@
     /* ── Glass legibility — halo shadow for text over translucent backgrounds ── */
     .text-glass-legible {
         text-shadow:
-            0 0 12px hsl(var(--background) / 0.5),
-            0 0 4px hsl(var(--background) / 0.3);
+            0 0 12px color-mix(in srgb, var(--background) 50%, transparent),
+            0 0 4px color-mix(in srgb, var(--background) 30%, transparent);
     }
 
     /* ── Kinetic: ambient weight breathing ── */
