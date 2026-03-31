@@ -2,7 +2,7 @@
     <Transition name="fade">
         <div
             v-if="open"
-            class="absolute inset-0 z-[var(--z-popover)] grid place-items-center bg-black/50 rounded-2xl"
+            class="absolute inset-0 z-popover grid place-items-center bg-black/50 rounded-2xl"
             @click.self="!loading && (open = false)"
             @keydown.escape="!loading && (open = false)"
         >
@@ -73,12 +73,12 @@ function onConfirm() {
 
 <style scoped>
 .confirm-panel-enter-active {
-    transition: opacity var(--duration-normal) var(--ease-decelerate),
-                transform var(--duration-normal) var(--ease-decelerate);
+    transition: opacity var(--duration-normal) var(--ease-out),
+                transform var(--duration-normal) var(--ease-out);
 }
 .confirm-panel-leave-active {
-    transition: opacity var(--duration-fast) var(--ease-accelerate),
-                transform var(--duration-fast) var(--ease-accelerate);
+    transition: opacity var(--duration-fast) var(--ease-in),
+                transform var(--duration-fast) var(--ease-in);
 }
 .confirm-panel-enter-from,
 .confirm-panel-leave-to {

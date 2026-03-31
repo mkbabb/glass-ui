@@ -31,14 +31,14 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
   <DialogPortal>
     <DialogOverlay
       :class="cn(
-        'fixed inset-0 z-[var(--z-overlay)] grid place-items-center overflow-y-auto bg-black/40 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+        'fixed inset-0 z-overlay grid place-items-center overflow-y-auto bg-black/40 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
         props.overlayClass,
       )"
     >
       <DialogContent
         :class="
           cn(
-            'relative z-[var(--z-overlay)] grid w-full max-w-lg my-8 gap-4 border border-border bg-background p-6 shadow-lg duration-200 sm:rounded-2xl md:w-full',
+            'relative z-overlay grid w-full max-w-lg my-8 gap-4 border border-border bg-background p-6 shadow-lg duration-200 sm:rounded-2xl md:w-full',
             props.class,
           )
         "
@@ -54,7 +54,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
         <slot />
 
         <DialogClose
-          class="absolute top-3 right-3 p-0.5 transition-colors rounded-full hover:bg-secondary focus-visible:outline-none focus-visible:shadow-[0_0_0_2px_hsl(var(--ring)/0.3),0_0_8px_hsl(var(--ring)/0.15)]"
+          class="absolute top-3 right-3 p-0.5 transition-colors rounded-full hover:bg-secondary focus-visible:outline-none focus-visible:shadow-[0_0_0_2px_color-mix(in_srgb,var(--ring)_30%,transparent),0_0_8px_color-mix(in_srgb,var(--ring)_15%,transparent)]"
         >
           <X class="w-4 h-4" />
           <span class="sr-only">Close</span>
