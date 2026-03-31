@@ -115,7 +115,7 @@ function animatePress(btn: HTMLElement) {
         ],
         {
             duration: 200,
-            easing: "cubic-bezier(0.175, 0.885, 0.32, 1.275)", // --ease-apple-spring
+            easing: "cubic-bezier(0.175, 0.885, 0.32, 1.275)", // --spring-bouncy (Web Animations API needs literal value)
         },
     );
 }
@@ -251,7 +251,7 @@ onUnmounted(() => {
     grid-auto-columns: 1fr;
     padding: 0.1875rem;
     border-radius: 0.4375rem;
-    background: hsl(var(--muted) / 0.5);
+    background: color-mix(in srgb, var(--muted) 50%, transparent);
 }
 
 @media (min-width: 640px) {
@@ -263,16 +263,16 @@ onUnmounted(() => {
 
 .bouncy-slider {
     position: absolute;
-    background: hsl(var(--background));
+    background: var(--background);
     z-index: 0;
     inset-block: 0.1875rem;
     border-radius: 0.3125rem;
     box-shadow:
         0 1px 3px rgba(0, 0, 0, 0.08),
-        0 0 0 1px hsl(var(--border) / 0.3);
+        0 0 0 1px color-mix(in srgb, var(--border) 30%, transparent);
     transition:
-        transform var(--duration-normal) var(--ease-spring),
-        width var(--duration-normal) var(--ease-spring),
+        transform var(--duration-normal) var(--spring-snappy),
+        width var(--duration-normal) var(--spring-snappy),
         opacity var(--duration-fast) ease;
 }
 
@@ -295,7 +295,7 @@ onUnmounted(() => {
     border-radius: 0.3125rem;
     font: inherit;
     font-size: 0.8125rem;
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
     transition: color var(--duration-fast) ease;
 }
 
@@ -307,7 +307,7 @@ onUnmounted(() => {
 }
 
 .bouncy-btn.is-active {
-    color: hsl(var(--foreground));
+    color: var(--foreground);
 }
 
 .bouncy-btn.is-disabled {
@@ -320,14 +320,14 @@ onUnmounted(() => {
 /* ── Pill variant ── */
 .bouncy-toggle--pill {
     border-radius: var(--radius-pill);
-    background: hsl(var(--foreground) / 0.05);
+    background: color-mix(in srgb, var(--foreground) 5%, transparent);
     padding: 0.125rem;
     gap: 0.125rem;
 }
 
 .bouncy-slider--pill {
     border-radius: var(--radius-pill);
-    background: hsl(var(--foreground));
+    background: var(--foreground);
     box-shadow: none;
     inset-block: 0.125rem;
 }
@@ -347,6 +347,6 @@ onUnmounted(() => {
 }
 
 .bouncy-btn--pill.is-active {
-    color: hsl(var(--background));
+    color: var(--background);
 }
 </style>

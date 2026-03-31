@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from "vue";
+import { computed, type HTMLAttributes } from "vue";
 import { cn } from "../../../utils";
 
 const props = defineProps<{
@@ -11,10 +11,14 @@ const props = defineProps<{
     variant?: "default" | "pane";
 }>();
 
-const variantClass = (() => {
+const variantClass = computed(() => {
     if (props.plain) return "scrollbar-hidden rounded-xl";
-    return "scrollbar-hidden glass rounded-xl text-card-foreground shadow-[var(--shadow-card)]";
-})();
+    if (props.variant === "pane")
+        // Pane uses glass background + blur without the ::after grain overlay,
+        // which conflicts with overflow:auto scroll containers.
+        return "scrollbar-hidden rounded-xl text-card-foreground bg-[var(--glass-bg-subtle)] backdrop-blur-[var(--glass-blur-subtle)] border border-[var(--glass-border-subtle)]";
+    return "scrollbar-hidden glass-default rounded-xl text-card-foreground shadow-[var(--shadow-card)]";
+});
 </script>
 
 <template>

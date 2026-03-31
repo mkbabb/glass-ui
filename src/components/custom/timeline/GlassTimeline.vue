@@ -107,9 +107,9 @@ function onTrackKeydown(e: KeyboardEvent) {
     padding: 0.125rem 0.375rem;
     font-size: var(--type-small);
     font-weight: 500;
-    color: hsl(var(--popover-foreground));
-    background: hsl(var(--popover));
-    border: 1px solid hsl(var(--border));
+    color: var(--popover-foreground);
+    background: var(--popover);
+    border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     box-shadow: var(--shadow-sm);
     white-space: nowrap;
@@ -120,7 +120,7 @@ function onTrackKeydown(e: KeyboardEvent) {
     width: 100%;
     height: 24px;
     border-radius: var(--radius-pill);
-    background: hsl(var(--foreground) / 0.05);
+    background: color-mix(in srgb, var(--foreground) 5%, transparent);
     backdrop-filter: var(--glass-blur-subtle);
     -webkit-backdrop-filter: var(--glass-blur-subtle);
     cursor: pointer;
@@ -132,7 +132,7 @@ function onTrackKeydown(e: KeyboardEvent) {
 
 .glass-track:hover,
 .glass-track:focus-visible {
-    background: hsl(var(--foreground) / 0.08);
+    background: color-mix(in srgb, var(--foreground) 8%, transparent);
 }
 
 .glass-track:focus-visible {
@@ -144,7 +144,7 @@ function onTrackKeydown(e: KeyboardEvent) {
     top: 0;
     left: 0;
     bottom: 0;
-    background: hsl(var(--foreground) / 0.07);
+    background: color-mix(in srgb, var(--foreground) 7%, transparent);
     border-radius: var(--radius-pill);
     pointer-events: none;
 }
@@ -156,7 +156,7 @@ function onTrackKeydown(e: KeyboardEvent) {
     width: 6px;
     height: 16px;
     border-radius: var(--radius-sm);
-    background: hsl(var(--foreground) / 0.25);
+    background: color-mix(in srgb, var(--foreground) 25%, transparent);
     opacity: 0;
     pointer-events: none;
     transition: opacity var(--duration-fast) var(--ease-standard),
@@ -169,6 +169,6 @@ function onTrackKeydown(e: KeyboardEvent) {
     opacity: 1;
     width: 8px;
     height: 18px;
-    background: hsl(var(--foreground) / 0.4);
+    background: color-mix(in srgb, var(--foreground) 40%, transparent);
 }
 </style>

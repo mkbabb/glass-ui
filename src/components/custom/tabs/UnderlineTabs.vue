@@ -84,7 +84,7 @@ onUnmounted(() => {
     bottom: 0;
     left: 0;
     height: 2px;
-    background: hsl(var(--foreground));
+    background: var(--foreground);
     border-radius: var(--radius-sm);
     transition:
         transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -100,16 +100,16 @@ onUnmounted(() => {
     white-space: nowrap;
     padding: 0.375rem 0.75rem;
     font: inherit;
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
     transition: color var(--duration-normal) var(--ease-standard);
     border-radius: 0.25rem;
 }
 
 .underline-tab:hover {
-    color: hsl(var(--foreground) / 0.7);
+    color: color-mix(in srgb, var(--foreground) 70%, transparent);
 }
 
 .underline-tab.is-active {
-    color: hsl(var(--foreground));
+    color: var(--foreground);
 }
 </style>

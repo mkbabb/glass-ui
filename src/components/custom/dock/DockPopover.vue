@@ -238,11 +238,11 @@ defineExpose({ expanded, expand: onEnter, collapse: () => { expanded.value = fal
 /* ── Spring transitions ── */
 .pop-up-enter-active,
 .pop-down-enter-active {
-    transition: opacity var(--duration-fast) var(--ease-standard), transform var(--duration-slow) var(--ease-spring);
+    transition: opacity var(--duration-fast) var(--ease-standard), transform var(--duration-slow) var(--spring-snappy);
 }
 .pop-up-leave-active,
 .pop-down-leave-active {
-    transition: opacity var(--duration-fast) var(--ease-decelerate), transform var(--duration-fast) var(--ease-decelerate);
+    transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
 }
 .pop-up-enter-from {
     opacity: 0;

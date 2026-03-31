@@ -113,13 +113,13 @@ defineExpose({ sidebarNav });
     overflow-y: auto;
     overscroll-behavior: contain;
     border-radius: var(--radius-xl);
-    background: hsl(var(--card));
+    background: var(--card);
     max-height: calc(100dvh - var(--sidebar-top-inset) - var(--sidebar-bottom-inset));
     scrollbar-gutter: stable;
     scroll-padding-bottom: var(--sidebar-bottom-inset);
     touch-action: pan-y;
     padding: 0.625rem 0.625rem var(--sidebar-bottom-inset);
-    border: 2px solid hsl(var(--foreground) / 0.15);
+    border: 2px solid color-mix(in srgb, var(--foreground) 15%, transparent);
 }
 
 .sidebar-header {
@@ -136,7 +136,7 @@ defineExpose({ sidebarNav });
     text-transform: uppercase;
     margin: 0;
     letter-spacing: 0.08em;
-    color: hsl(var(--muted-foreground) / 0.6);
+    color: color-mix(in srgb, var(--muted-foreground) 60%, transparent);
 }
 
 .sidebar-top-btn {
@@ -148,16 +148,16 @@ defineExpose({ sidebarNav });
     width: 1.25rem;
     height: 1.25rem;
     border-radius: var(--radius-sm);
-    border: 1px solid hsl(var(--border) / 0.4);
+    border: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
     background: none;
-    color: hsl(var(--muted-foreground) / 0.45);
+    color: color-mix(in srgb, var(--muted-foreground) 45%, transparent);
     transition: all var(--duration-fast) var(--ease-standard);
 }
 
 .sidebar-top-btn:hover {
-    color: hsl(var(--foreground));
-    border-color: hsl(var(--border));
-    background: hsl(var(--muted) / 0.5);
+    color: var(--foreground);
+    border-color: var(--border);
+    background: color-mix(in srgb, var(--muted) 50%, transparent);
 }
 
 .sidebar-list {
@@ -181,7 +181,7 @@ defineExpose({ sidebarNav });
     line-height: 1.35;
     padding: 0.28rem 0.625rem;
     border-radius: var(--radius-md);
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
     transition:
         color var(--duration-normal) var(--ease-out-expo),
         background-color var(--duration-normal) var(--ease-out-expo),
@@ -189,20 +189,20 @@ defineExpose({ sidebarNav });
 }
 
 .sidebar-link:hover {
-    color: hsl(var(--foreground));
-    background: hsl(var(--muted) / 0.5);
+    color: var(--foreground);
+    background: color-mix(in srgb, var(--muted) 50%, transparent);
 }
 
 .sidebar-link.is-active {
     background: none;
     font-weight: 600;
-    color: hsl(var(--primary));
+    color: var(--primary);
 }
 
 .sidebar-link.is-active-sub {
     font-weight: 600;
-    background: hsl(var(--muted) / 0.4);
-    color: hsl(var(--primary));
+    background: color-mix(in srgb, var(--muted) 40%, transparent);
+    color: var(--primary);
 }
 
 /* Animated subsection expand/collapse */

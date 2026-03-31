@@ -62,7 +62,7 @@ watchEffect(() => {
     z-index: var(--z-popover);
 
     svg {
-        fill: hsl(var(--foreground));
+        fill: var(--foreground);
         width: 100%;
         height: 100%;
     }
@@ -77,12 +77,12 @@ watchEffect(() => {
 
 .toggle-sun {
     transform-origin: center center;
-    transition: transform 750ms var(--ease-overshoot);
+    transition: transform 750ms var(--spring-bouncy);
 }
 
 .toggle-circle {
     transform: translateX(0%);
-    transition: transform 500ms var(--ease-decelerate);
+    transition: transform 500ms var(--ease-out);
 }
 
 /* Dark mode styles — use :where(.dark) so it doesn't leak to <html> */

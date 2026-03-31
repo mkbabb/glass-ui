@@ -4,7 +4,7 @@ export { default as Button } from './Button.vue'
 
 export const buttonVariants = cva(
   // Base: compose with btn-pill from glass.css
-  'btn-pill whitespace-nowrap text-sm font-medium focus-visible:outline-none focus-visible:shadow-[0_0_0_2px_hsl(var(--ring)/0.3),0_0_8px_hsl(var(--ring)/0.15)] disabled:pointer-events-none disabled:opacity-50',
+  'btn-pill whitespace-nowrap text-sm font-medium focus-visible:outline-none focus-visible:shadow-[0_0_0_2px_color-mix(in_srgb,var(--ring)_30%,transparent),0_0_8px_color-mix(in_srgb,var(--ring)_15%,transparent)] disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -20,7 +20,7 @@ export const buttonVariants = cva(
         ghost: 'btn-pill-ghost',
         glass: 'btn-pill-glass',
         'glass-subtle':
-          'glass-subtle text-foreground/70 hover:border-[hsl(var(--border)/0.5)] hover:text-foreground',
+          'glass-subtle text-foreground/70 hover:border-[color-mix(in_srgb,var(--border)_50%,transparent)] hover:text-foreground',
         ai: 'bg-amber-500/15 text-amber-700 hover:bg-amber-500/25 dark:text-amber-400',
         'danger-subtle': 'bg-destructive/10 text-destructive hover:bg-destructive/20',
         link: 'text-primary underline-offset-4 hover:underline',

@@ -265,9 +265,9 @@ function escapeHtml(s: string): string {
     display: flex;
     align-items: center;
     gap: 0.375rem;
-    border: 1.5px solid hsl(var(--border) / 0.6);
+    border: 1.5px solid color-mix(in srgb, var(--border) 60%, transparent);
     border-radius: var(--radius-pill);
-    background: hsl(var(--muted) / 0.3);
+    background: color-mix(in srgb, var(--muted) 30%, transparent);
     padding: 0.35rem 0.625rem;
     transition:
         border-color var(--duration-fast) var(--ease-standard),
@@ -276,8 +276,8 @@ function escapeHtml(s: string): string {
 }
 
 .fuzzy-search-input-wrap:focus-within {
-    border-color: hsl(var(--ring) / 0.4);
-    background: hsl(var(--background));
+    border-color: color-mix(in srgb, var(--ring) 40%, transparent);
+    background: var(--background);
     box-shadow: var(--focus-ring-shadow);
 }
 
@@ -285,7 +285,7 @@ function escapeHtml(s: string): string {
     width: 0.8rem;
     height: 0.8rem;
     flex-shrink: 0;
-    color: hsl(var(--muted-foreground) / 0.5);
+    color: color-mix(in srgb, var(--muted-foreground) 50%, transparent);
 }
 
 .fuzzy-search-input {
@@ -295,12 +295,12 @@ function escapeHtml(s: string): string {
     outline: none;
     background: transparent;
     font-size: 0.78rem;
-    color: hsl(var(--foreground));
+    color: var(--foreground);
     font-family: inherit;
 }
 
 .fuzzy-search-input::placeholder {
-    color: hsl(var(--muted-foreground) / 0.45);
+    color: color-mix(in srgb, var(--muted-foreground) 45%, transparent);
 }
 
 .fuzzy-search-action-btn {
@@ -310,15 +310,15 @@ function escapeHtml(s: string): string {
     padding: 0.15rem;
     border: none;
     background: none;
-    color: hsl(var(--muted-foreground) / 0.45);
+    color: color-mix(in srgb, var(--muted-foreground) 45%, transparent);
     cursor: pointer;
     border-radius: var(--radius-sm);
     transition: color var(--duration-fast), background var(--duration-fast);
 }
 
 .fuzzy-search-action-btn:hover {
-    color: hsl(var(--foreground));
-    background: hsl(var(--muted) / 0.5);
+    color: var(--foreground);
+    background: color-mix(in srgb, var(--muted) 50%, transparent);
 }
 
 /* ── Inline dropdown ───────────────────────────────────── */
@@ -331,9 +331,9 @@ function escapeHtml(s: string): string {
     max-height: 50vh;
     overflow-y: auto;
     overscroll-behavior: contain;
-    background: hsl(var(--background) / 0.97);
+    background: color-mix(in srgb, var(--background) 97%, transparent);
     backdrop-filter: blur(12px);
-    border: 1.5px solid hsl(var(--border));
+    border: 1.5px solid var(--border);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
     padding: 0.25rem;
@@ -355,7 +355,7 @@ function escapeHtml(s: string): string {
 
 .fuzzy-search-result:hover,
 .fuzzy-search-result.is-selected {
-    background: hsl(var(--muted) / 0.5);
+    background: color-mix(in srgb, var(--muted) 50%, transparent);
 }
 
 .fuzzy-search-badge {
@@ -366,8 +366,8 @@ function escapeHtml(s: string): string {
     letter-spacing: 0.04em;
     padding: 0.1rem 0.3rem;
     border-radius: var(--radius-sm);
-    background: hsl(var(--muted));
-    color: hsl(var(--muted-foreground) / 0.7);
+    background: var(--muted);
+    color: color-mix(in srgb, var(--muted-foreground) 70%, transparent);
     line-height: 1;
 }
 
@@ -375,7 +375,7 @@ function escapeHtml(s: string): string {
     flex: 1;
     min-width: 0;
     font-size: 0.875rem;
-    color: hsl(var(--foreground) / 0.85);
+    color: color-mix(in srgb, var(--foreground) 85%, transparent);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -443,7 +443,7 @@ function escapeHtml(s: string): string {
     align-items: flex-start;
     justify-content: center;
     padding-top: min(12vh, 6rem);
-    background: hsl(var(--background) / 0.55);
+    background: color-mix(in srgb, var(--background) 55%, transparent);
     backdrop-filter: blur(6px);
 }
 
@@ -453,8 +453,8 @@ function escapeHtml(s: string): string {
     display: flex;
     flex-direction: column;
     border-radius: var(--radius-xl);
-    border: 1.5px solid hsl(var(--border));
-    background: hsl(var(--background));
+    border: 1.5px solid var(--border);
+    background: var(--background);
     box-shadow: var(--shadow-xl);
     overflow: hidden;
 }
@@ -464,14 +464,14 @@ function escapeHtml(s: string): string {
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 0.875rem;
-    border-bottom: 1px solid hsl(var(--border) / 0.5);
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
 }
 
 .fuzzy-search-modal-icon {
     width: 1rem;
     height: 1rem;
     flex-shrink: 0;
-    color: hsl(var(--muted-foreground) / 0.5);
+    color: color-mix(in srgb, var(--muted-foreground) 50%, transparent);
 }
 
 .fuzzy-search-modal-input {
@@ -481,12 +481,12 @@ function escapeHtml(s: string): string {
     outline: none;
     background: transparent;
     font-size: 1rem;
-    color: hsl(var(--foreground));
+    color: var(--foreground);
     font-family: inherit;
 }
 
 .fuzzy-search-modal-input::placeholder {
-    color: hsl(var(--muted-foreground) / 0.4);
+    color: color-mix(in srgb, var(--muted-foreground) 40%, transparent);
 }
 
 .fuzzy-search-modal-results {
@@ -513,7 +513,7 @@ function escapeHtml(s: string): string {
 .fuzzy-search-modal-empty {
     padding: 2rem 1rem;
     text-align: center;
-    color: hsl(var(--muted-foreground) / 0.5);
+    color: color-mix(in srgb, var(--muted-foreground) 50%, transparent);
     font-size: 1rem;
 }
 
@@ -522,13 +522,13 @@ function escapeHtml(s: string): string {
     align-items: center;
     gap: 1rem;
     padding: 0.5rem 0.875rem;
-    border-top: 1px solid hsl(var(--border) / 0.5);
+    border-top: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
 }
 
 .fuzzy-search-modal-hint {
     font-size: 0.875rem;
     font-family: var(--font-mono, monospace);
-    color: hsl(var(--muted-foreground) / 0.45);
+    color: color-mix(in srgb, var(--muted-foreground) 45%, transparent);
     display: flex;
     align-items: center;
     gap: 0.25rem;
@@ -542,8 +542,8 @@ function escapeHtml(s: string): string {
     height: 1.125rem;
     padding: 0 0.25rem;
     border-radius: var(--radius-sm);
-    border: 1px solid hsl(var(--border) / 0.6);
-    background: hsl(var(--muted) / 0.4);
+    border: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+    background: color-mix(in srgb, var(--muted) 40%, transparent);
     font-size: 0.6rem;
     line-height: 1;
 }
@@ -566,7 +566,7 @@ function escapeHtml(s: string): string {
 .fuzzy-search-modal-leave-active .fuzzy-search-modal {
     transition:
         opacity var(--duration-fast) var(--ease-standard),
-        transform var(--duration-fast) var(--ease-accelerate);
+        transform var(--duration-fast) var(--ease-in);
 }
 
 .fuzzy-search-modal-enter-from {

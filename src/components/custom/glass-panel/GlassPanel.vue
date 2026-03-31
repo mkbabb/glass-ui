@@ -88,11 +88,11 @@ onBeforeUnmount(() => {
 
 .glass-panel--svg {
     /* Background tint for SVG filter tier */
-    background: hsl(var(--card) / 0.15);
+    background: color-mix(in srgb, var(--card) 15%, transparent);
 }
 
 .glass-panel--fallback {
-    background: hsl(var(--card) / 0.92);
-    border: 1px solid hsl(var(--border) / 0.35);
+    background: color-mix(in srgb, var(--card) 92%, transparent);
+    border: 1px solid color-mix(in srgb, var(--border) 35%, transparent);
 }
 </style>

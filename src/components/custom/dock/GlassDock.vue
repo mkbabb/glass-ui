@@ -112,13 +112,13 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
     background: var(--glass-bg-medium);
     backdrop-filter: var(--glass-blur-subtle);
     -webkit-backdrop-filter: var(--glass-blur-subtle);
-    border: 1.5px solid hsl(var(--foreground) / 0.1);
+    border: 1.5px solid color-mix(in srgb, var(--foreground) 10%, transparent);
     box-shadow: var(--shadow-dock);
     transition:
-        width var(--duration-normal) var(--ease-dock),
-        padding var(--duration-normal) var(--ease-dock),
+        width var(--duration-normal) var(--spring-snappy),
+        padding var(--duration-normal) var(--spring-snappy),
         box-shadow var(--duration-normal) var(--ease-standard),
-        transform var(--duration-normal) var(--ease-dock),
+        transform var(--duration-normal) var(--spring-snappy),
         background var(--duration-normal) var(--ease-standard),
         border-color var(--duration-normal) var(--ease-standard);
 }
@@ -129,7 +129,7 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
     padding: 0.375rem;
     justify-content: center;
     background: var(--glass-bg-subtle);
-    border-color: hsl(var(--foreground) / 0.3);
+    border-color: color-mix(in srgb, var(--foreground) 30%, transparent);
     box-shadow: var(--shadow-dock-collapsed);
 }
 
@@ -143,7 +143,7 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
 
 .glass-dock.collapsed:hover {
     background: var(--glass-bg-subtle);
-    border-color: hsl(var(--foreground) / 0.4);
+    border-color: color-mix(in srgb, var(--foreground) 40%, transparent);
     box-shadow: var(--shadow-dock);
     transform: scale(1.03);
 }
