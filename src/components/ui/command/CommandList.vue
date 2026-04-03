@@ -5,7 +5,7 @@ import { ComboboxContent, useForwardPropsEmits } from 'reka-ui'
 import { cn } from '../../../utils'
 
 const props = withDefaults(defineProps<ComboboxContentProps & { class?: HTMLAttributes['class'] }>(), {
-  dismissable: false,
+  disableOutsidePointerEvents: false,
 })
 const emits = defineEmits<ComboboxContentEmits>()
 

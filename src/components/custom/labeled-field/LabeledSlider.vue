@@ -8,7 +8,7 @@
         :max="max"
         :step="step"
         :model-value="[modelValue]"
-        @update:model-value="(v: number[]) => emit('update:modelValue', v[0]!)"
+        @update:model-value="(v: number[] | undefined) => { if (v) emit('update:modelValue', v[0]!) }"
     />
 </template>
 

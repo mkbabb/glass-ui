@@ -10,7 +10,7 @@ export interface InfiniteScrollOptions {
     /** Whether data is currently loading */
     isLoading: MaybeRefOrGetter<boolean>;
     /** Callback invoked when the sentinel enters the viewport */
-    onLoadMore: () => void;
+    onLoadMore: () => void | Promise<void>;
 }
 
 export interface InfiniteScrollReturn {
