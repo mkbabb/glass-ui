@@ -9,7 +9,9 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { Tabs, TabsList, TabsTrigger, TabsIndicator } from "@/components/ui/tabs";
+import { DarkModeToggle } from "@/components/custom/controls";
 import ConfigPanel from "./components/ConfigPanel.vue";
 import { FONTS, applyFont, type FontOption } from "./fonts";
 import { AURORA_SECTIONS, METABALL_SECTIONS, ATMOSPHERE_SECTIONS } from "./backgroundConfigs";
@@ -18,12 +20,7 @@ import { AURORA_SECTIONS, METABALL_SECTIONS, ATMOSPHERE_SECTIONS } from "./backg
 type Page = "demo" | "config";
 const currentPage = ref<Page>("demo");
 
-// ── Dark mode ──
-const isDark = ref(false);
-const toggleDark = () => {
-    isDark.value = !isDark.value;
-    document.documentElement.classList.toggle("dark", isDark.value);
-};
+// ── Dark mode (via useGlobalDark — shared with DarkModeToggle + aurora) ──
 
 // ── Font ──
 const activeFont = ref<FontOption>(FONTS[0]);
@@ -97,6 +94,7 @@ const replayScrollReveal = async () => { showScrollReveal.value = false; await n
 </script>
 
 <template>
+    <TooltipProvider>
     <div class="min-h-screen text-foreground">
         <!-- ═══ Background canvases ═══ -->
         <canvas
@@ -115,44 +113,44 @@ const replayScrollReveal = async () => { showScrollReveal.value = false; await n
         <div class="mx-auto max-w-6xl px-6 py-8">
 
             <!-- ═══════════ Shared Header (persists across pages) ═══════════ -->
-            <header class="glass sticky top-4 z-50 mb-8 flex flex-wrap items-center gap-4 rounded-2xl p-4">
+            <header class="glass-default sticky top-4 z-overlay mb-8 flex flex-wrap items-center gap-4 rounded-card p-4">
                 <span class="text-small font-medium">glass-ui</span>
 
                 <Separator orientation="vertical" class="h-6" />
 
                 <Select
                     :model-value="activeFont.name"
-                    @update:model-value="(name: string) => {
-                        const f = FONTS.find(f => f.name === name);
+                    @update:model-value="(name) => {
+                        const f = FONTS.find(f => f.name === String(name));
                         if (f) activeFont = f;
                     }"
                 >
-                    <SelectTrigger class="w-48 h-9">
+                    <SelectTrigger class="w-48 h-9 font-sans text-sm">
                         <SelectValue placeholder="Choose font" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent class="font-sans">
                         <SelectGroup>
-                            <SelectLabel>Sans-Serif</SelectLabel>
-                            <SelectItem v-for="f in FONTS.filter(f => f.category === 'sans')" :key="f.name" :value="f.name">{{ f.name }}</SelectItem>
+                            <SelectLabel class="font-sans text-xs">Sans-Serif</SelectLabel>
+                            <SelectItem v-for="f in FONTS.filter(f => f.category === 'sans')" :key="f.name" :value="f.name" :style="{ fontFamily: f.family }">{{ f.name }}</SelectItem>
                         </SelectGroup>
                         <SelectGroup>
-                            <SelectLabel>Serif</SelectLabel>
-                            <SelectItem v-for="f in FONTS.filter(f => f.category === 'serif')" :key="f.name" :value="f.name">{{ f.name }}</SelectItem>
+                            <SelectLabel class="font-sans text-xs">Serif</SelectLabel>
+                            <SelectItem v-for="f in FONTS.filter(f => f.category === 'serif')" :key="f.name" :value="f.name" :style="{ fontFamily: f.family }">{{ f.name }}</SelectItem>
                         </SelectGroup>
                         <SelectGroup>
-                            <SelectLabel>Monospace</SelectLabel>
-                            <SelectItem v-for="f in FONTS.filter(f => f.category === 'mono')" :key="f.name" :value="f.name">{{ f.name }}</SelectItem>
+                            <SelectLabel class="font-sans text-xs">Monospace</SelectLabel>
+                            <SelectItem v-for="f in FONTS.filter(f => f.category === 'mono')" :key="f.name" :value="f.name" :style="{ fontFamily: f.family }">{{ f.name }}</SelectItem>
                         </SelectGroup>
                     </SelectContent>
                 </Select>
 
                 <Separator orientation="vertical" class="h-6" />
 
-                <div class="flex rounded-full border border-border/30 p-0.5">
+                <div class="flex rounded-pill border border-border/30 p-0.5">
                     <Button
                         :variant="bgMode === 'aurora' ? 'secondary' : 'ghost'"
                         size="sm"
-                        class="rounded-full px-3 h-7 text-micro"
+                        class="rounded-pill px-3 h-7 text-micro"
                         @click="bgMode = 'aurora'"
                     >
                         Aurora
@@ -160,7 +158,7 @@ const replayScrollReveal = async () => { showScrollReveal.value = false; await n
                     <Button
                         :variant="bgMode === 'metaballs' ? 'secondary' : 'ghost'"
                         size="sm"
-                        class="rounded-full px-3 h-7 text-micro"
+                        class="rounded-pill px-3 h-7 text-micro"
                         @click="bgMode = 'metaballs'"
                     >
                         Metaballs
@@ -172,7 +170,7 @@ const replayScrollReveal = async () => { showScrollReveal.value = false; await n
                     <Button
                         :variant="auroraConfig.colorMode === 'derived' ? 'secondary' : 'ghost'"
                         size="sm"
-                        class="rounded-full px-3 h-7 text-micro"
+                        class="rounded-pill px-3 h-7 text-micro"
                         @click="toggleDerived"
                     >
                         {{ auroraConfig.colorMode === 'derived' ? 'Derived' : 'Explicit' }}
@@ -181,7 +179,7 @@ const replayScrollReveal = async () => { showScrollReveal.value = false; await n
                         v-if="auroraConfig.colorMode === 'derived'"
                         type="color"
                         v-model="baseColor"
-                        class="h-7 w-7 cursor-pointer appearance-none rounded-full border-2 border-border/30 bg-transparent p-0 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded-full [&::-webkit-color-swatch]:border-none"
+                        class="h-7 w-7 cursor-pointer appearance-none rounded-pill border-2 border-border/30 bg-transparent p-0 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded-pill [&::-webkit-color-swatch]:border-none"
                         title="Base color"
                     />
                 </template>
@@ -189,30 +187,17 @@ const replayScrollReveal = async () => { showScrollReveal.value = false; await n
                 <div class="flex-1" />
 
                 <!-- Page nav -->
-                <div class="flex rounded-full border border-border/30 p-0.5">
-                    <Button
-                        :variant="currentPage === 'demo' ? 'secondary' : 'ghost'"
-                        size="sm"
-                        class="rounded-full px-3 h-7 text-micro"
-                        @click="currentPage = 'demo'"
-                    >
-                        Demo
-                    </Button>
-                    <Button
-                        :variant="currentPage === 'config' ? 'secondary' : 'ghost'"
-                        size="sm"
-                        class="rounded-full px-3 h-7 text-micro"
-                        @click="currentPage = 'config'"
-                    >
-                        Config
-                    </Button>
-                </div>
+                <Tabs v-model="currentPage" class="relative">
+                    <TabsList class="relative rounded-pill border border-border/30 bg-transparent p-0.5 h-auto">
+                        <TabsIndicator />
+                        <TabsTrigger value="demo" class="relative z-10 rounded-pill px-3 h-7 text-micro">Demo</TabsTrigger>
+                        <TabsTrigger value="config" class="relative z-10 rounded-pill px-3 h-7 text-micro">Config</TabsTrigger>
+                    </TabsList>
+                </Tabs>
 
                 <Separator orientation="vertical" class="h-6" />
 
-                <Button variant="ghost" size="sm" class="rounded-full" @click="toggleDark">
-                    {{ isDark ? "☀ Light" : "● Dark" }}
-                </Button>
+                <DarkModeToggle class="size-6" />
             </header>
 
             <!-- ═══════════ Page content with animated transition ═══════════ -->
@@ -231,7 +216,7 @@ const replayScrollReveal = async () => { showScrollReveal.value = false; await n
                 <!-- ════════ DEMO PAGE ════════ -->
                 <div v-else key="demo">
                     <!-- Font info -->
-                    <div class="glass mb-12 rounded-xl p-3">
+                    <div class="glass-default mb-12 rounded-panel p-3">
                         <div class="flex items-baseline gap-3">
                             <span class="text-heading" :style="{ fontFamily: activeFont.family }">{{ activeFont.name }}</span>
                             <span class="text-caption text-muted-foreground">{{ activeFont.axes }}</span>
@@ -248,7 +233,7 @@ const replayScrollReveal = async () => { showScrollReveal.value = false; await n
                         <div class="mb-8">
                             <div class="mb-2 flex items-center gap-3">
                                 <p class="text-caption text-muted-foreground">Per-character stagger</p>
-                                <Button variant="glass-subtle" size="sm" class="rounded-full h-7 px-3 text-micro" @click="replayCharStagger">↻ Replay</Button>
+                                <Button variant="glass-subtle" size="sm" class="rounded-pill h-7 px-3 text-micro" @click="replayCharStagger">↻ Replay</Button>
                             </div>
                             <h2 v-if="showCharStagger" class="char-stagger text-display-2" v-html="heroChars" />
                         </div>
@@ -256,7 +241,7 @@ const replayScrollReveal = async () => { showScrollReveal.value = false; await n
                         <div class="mb-8">
                             <div class="mb-2 flex items-center gap-3">
                                 <p class="text-caption text-muted-foreground">Weight breathing</p>
-                                <Button variant="glass-subtle" size="sm" class="rounded-full h-7 px-3 text-micro" @click="replayBreathe">↻ Replay</Button>
+                                <Button variant="glass-subtle" size="sm" class="rounded-pill h-7 px-3 text-micro" @click="replayBreathe">↻ Replay</Button>
                             </div>
                             <p v-if="showBreathe" class="text-breathe text-display">Ambient motion</p>
                         </div>
@@ -286,11 +271,15 @@ const replayScrollReveal = async () => { showScrollReveal.value = false; await n
                     <section class="mb-20">
                         <p class="section-label mb-6">Glass Depth System</p>
                         <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-                            <div class="glass rounded-2xl p-6"><h3 class="text-heading mb-2">.glass</h3><p class="text-small text-muted-foreground">blur 16, sat 1.6, bright 1.05</p></div>
-                            <div class="glass-medium rounded-2xl p-6"><h3 class="text-heading mb-2">.glass-medium</h3><p class="text-small text-muted-foreground">blur 20, sat 1.7</p></div>
-                            <div class="glass-elevated rounded-2xl p-6"><h3 class="text-heading mb-2">.glass-elevated</h3><p class="text-small text-muted-foreground">blur 28, sat 1.8</p></div>
+                            <div class="glass-subtle rounded-card p-6"><h3 class="text-heading mb-2">.glass-subtle</h3><p class="text-small text-muted-foreground">blur 4px, sat 1.05, opacity 30%</p></div>
+                            <div class="glass-default rounded-card p-6"><h3 class="text-heading mb-2">.glass-default</h3><p class="text-small text-muted-foreground">blur 8px, sat 1.2, opacity 50%</p></div>
+                            <div class="glass-medium rounded-card p-6"><h3 class="text-heading mb-2">.glass-medium</h3><p class="text-small text-muted-foreground">blur 12px, sat 1.3, opacity 65%</p></div>
                         </div>
-                        <div class="glass-medium mt-6 rounded-2xl p-6">
+                        <div class="grid grid-cols-1 gap-6 mt-6 md:grid-cols-2">
+                            <div class="glass-elevated rounded-card p-6"><h3 class="text-heading mb-2">.glass-elevated</h3><p class="text-small text-muted-foreground">blur 16px, sat 1.4, opacity 80%</p></div>
+                            <div class="glass-card p-6"><h3 class="text-heading mb-2">.glass-card</h3><p class="text-small text-muted-foreground">default tier + radius-card + shadow</p></div>
+                        </div>
+                        <div class="glass-medium mt-6 rounded-card p-6">
                             <p class="text-glass-legible text-display">Legible over glass</p>
                         </div>
                     </section>
@@ -299,9 +288,9 @@ const replayScrollReveal = async () => { showScrollReveal.value = false; await n
                     <section class="mb-20">
                         <p class="section-label mb-6">GlassPanel — Tiered Renderer</p>
                         <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-                            <GlassPanel tier="css" variant="default" class="rounded-2xl p-6"><h3 class="text-heading mb-2">CSS</h3><p class="text-small text-muted-foreground">backdrop-filter + grain</p></GlassPanel>
-                            <GlassPanel tier="svg-filter" :blur="16" :refraction="0.6" :chromatic-aberration="true" class="rounded-2xl p-6"><h3 class="text-heading mb-2">SVG filter</h3><p class="text-small text-muted-foreground">Snell displacement + Fresnel</p></GlassPanel>
-                            <GlassPanel tier="css" variant="elevated" class="rounded-2xl p-6"><h3 class="text-heading mb-2">CSS elevated</h3><p class="text-small text-muted-foreground">Max frosting + grain</p></GlassPanel>
+                            <GlassPanel tier="css" variant="default" class="rounded-card p-6"><h3 class="text-heading mb-2">CSS</h3><p class="text-small text-muted-foreground">backdrop-filter + grain</p></GlassPanel>
+                            <GlassPanel tier="svg-filter" :blur="16" :refraction="0.6" :chromatic-aberration="true" class="rounded-card p-6"><h3 class="text-heading mb-2">SVG filter</h3><p class="text-small text-muted-foreground">Snell displacement + Fresnel</p></GlassPanel>
+                            <GlassPanel tier="css" variant="elevated" class="rounded-card p-6"><h3 class="text-heading mb-2">CSS elevated</h3><p class="text-small text-muted-foreground">Max frosting + grain</p></GlassPanel>
                         </div>
                     </section>
 
@@ -314,18 +303,18 @@ const replayScrollReveal = async () => { showScrollReveal.value = false; await n
                             <Button variant="glass" @click="showPop = !showPop">Pop (bouncy)</Button>
                             <Button variant="glass" @click="showFadeSlide = !showFadeSlide">Fade-slide (smooth)</Button>
                         </div>
-                        <Transition name="fade"><div v-if="showDialog" class="glass-overlay fixed inset-0 z-40" @click="showDialog = false" /></Transition>
+                        <Transition name="fade"><div v-if="showDialog" class="glass-overlay fixed inset-0 z-overlay" @click="showDialog = false" /></Transition>
                         <Transition name="dialog-scale">
-                            <div v-if="showDialog" class="glass-elevated fixed left-1/2 top-1/2 z-50 w-80 -translate-x-1/2 -translate-y-1/2 rounded-2xl p-8">
+                            <div v-if="showDialog" class="glass-elevated fixed left-1/2 top-1/2 z-modal w-80 -translate-x-1/2 -translate-y-1/2 rounded-dialog p-8">
                                 <h3 class="text-heading mb-3">Spring Dialog</h3>
                                 <p class="text-small mb-4 text-muted-foreground">--spring-bouncy: 20% overshoot</p>
                                 <Button variant="glass" size="sm" @click="showDialog = false">Close</Button>
                             </div>
                         </Transition>
-                        <Transition name="dropdown"><div v-if="showDropdown" class="glass-elevated inline-block rounded-xl p-3 mb-4"><div class="space-y-1 text-small"><div class="rounded-lg px-3 py-2 hover:bg-accent">Item 1</div><div class="rounded-lg px-3 py-2 hover:bg-accent">Item 2</div><div class="rounded-lg px-3 py-2 hover:bg-accent">Item 3</div></div></div></Transition>
-                        <Transition name="pop"><div v-if="showPop" class="glass inline-block rounded-2xl p-6 mb-4"><p class="text-heading">Pop!</p></div></Transition>
-                        <Transition name="fade-slide"><div v-if="showFadeSlide" class="glass rounded-2xl p-6 mb-4"><p class="text-heading">Fade-slide</p></div></Transition>
-                        <div class="glass rounded-xl p-4"><code class="text-micro block space-y-1"><div>--spring-smooth: no overshoot</div><div>--spring-snappy: 7% overshoot</div><div>--spring-bouncy: 20% overshoot</div><div>--spring-gentle: ~0.6% overshoot</div></code></div>
+                        <Transition name="dropdown"><div v-if="showDropdown" class="glass-elevated inline-block rounded-panel p-3 mb-4"><div class="space-y-1 text-small"><div class="rounded-lg px-3 py-2 hover:bg-accent">Item 1</div><div class="rounded-lg px-3 py-2 hover:bg-accent">Item 2</div><div class="rounded-lg px-3 py-2 hover:bg-accent">Item 3</div></div></div></Transition>
+                        <Transition name="pop"><div v-if="showPop" class="glass-default inline-block rounded-card p-6 mb-4"><p class="text-heading">Pop!</p></div></Transition>
+                        <Transition name="fade-slide"><div v-if="showFadeSlide" class="glass-default rounded-card p-6 mb-4"><p class="text-heading">Fade-slide</p></div></Transition>
+                        <div class="glass-subtle rounded-panel p-4"><code class="text-micro block space-y-1"><div>--spring-smooth: no overshoot</div><div>--spring-snappy: 7% overshoot</div><div>--spring-bouncy: 20% overshoot</div><div>--spring-gentle: ~0.6% overshoot</div></code></div>
                     </section>
 
                     <!-- Stagger -->
@@ -333,14 +322,14 @@ const replayScrollReveal = async () => { showScrollReveal.value = false; await n
                         <p class="section-label mb-6">Stagger & Entry</p>
                         <Button variant="glass" class="mb-4" @click="replayStagger">↻ Replay stagger</Button>
                         <div v-if="showStagger" class="stagger-children grid grid-cols-2 gap-4 md:grid-cols-3 mb-12">
-                            <div v-for="(item, i) in staggerItems" :key="i" class="glass rounded-xl p-4"><p class="text-small">{{ item }}</p></div>
+                            <div v-for="(item, i) in staggerItems" :key="i" class="glass-default rounded-panel p-4"><p class="text-small">{{ item }}</p></div>
                         </div>
                         <div class="mb-2 flex items-center gap-3">
                             <p class="text-caption text-muted-foreground">.scroll-reveal-reverse</p>
-                            <Button variant="glass-subtle" size="sm" class="rounded-full h-7 px-3 text-micro" @click="replayScrollReveal">↻ Replay</Button>
+                            <Button variant="glass-subtle" size="sm" class="rounded-pill h-7 px-3 text-micro" @click="replayScrollReveal">↻ Replay</Button>
                         </div>
                         <div v-if="showScrollReveal" class="space-y-4 mb-12">
-                            <div v-for="i in 4" :key="i" class="scroll-reveal-reverse glass rounded-xl p-6"><p class="text-heading">Scroll-revealed {{ i }}</p></div>
+                            <div v-for="i in 4" :key="i" class="scroll-reveal-reverse glass-default rounded-panel p-6"><p class="text-heading">Scroll-revealed {{ i }}</p></div>
                         </div>
                         <p class="text-caption mb-2 text-muted-foreground">.scroll-weight-reveal</p>
                         <p class="scroll-weight-reveal text-display-2">Weight reveals on scroll</p>
@@ -353,4 +342,5 @@ const replayScrollReveal = async () => { showScrollReveal.value = false; await n
             </Transition>
         </div>
     </div>
+    </TooltipProvider>
 </template>
