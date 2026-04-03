@@ -51,7 +51,7 @@ const cssClass = computed(() => {
             ? "glass-elevated"
             : props.variant === "medium"
               ? "glass-medium"
-              : "glass";
+              : "glass-default";
 
     return cn("glass-panel", variantClass, props.class);
 });
