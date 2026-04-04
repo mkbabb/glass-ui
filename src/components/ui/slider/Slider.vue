@@ -53,6 +53,7 @@ const v = computed(() => props.variant ?? 'standard')
     <SliderThumb
       v-for="(_, key) in modelValue"
       :key="key"
+      :aria-label="$attrs['aria-label'] as string ?? undefined"
       :class="cn(
         'slider-thumb block transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50',
         v === 'spectrum'
