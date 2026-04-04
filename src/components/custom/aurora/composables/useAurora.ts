@@ -116,10 +116,7 @@ const PHI = 1.618033988749895;
 const SQRT2 = 1.4142135623730951;
 
 function isDarkMode(): boolean {
-    return (
-        document.documentElement.classList.contains("dark") ||
-        window.matchMedia("(prefers-color-scheme: dark)").matches
-    );
+    return document.documentElement.classList.contains("dark");
 }
 
 function rgba(r: number, g: number, b: number, a: number): string {
