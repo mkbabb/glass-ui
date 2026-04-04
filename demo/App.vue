@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Tabs, TabsList, TabsTrigger, TabsIndicator } from "@/components/ui/tabs";
+import { BouncyTabs } from "@/components/custom/tabs";
 import { DarkModeToggle } from "@/components/custom/controls";
 import ConfigPanel from "./components/ConfigPanel.vue";
 import { FONTS, applyFont, type FontOption } from "./fonts";
@@ -47,17 +47,20 @@ const metaballConfig = reactive<Required<MetaballConfig>>({
 useAurora(auroraCanvasRef, auroraConfig, baseColor);
 useMetaballs(metaballCanvasRef, metaballConfig);
 
-// Toggle derived mode
-function toggleDerived() {
-    if (auroraConfig.colorMode === "explicit") {
-        Object.assign(auroraConfig, ATMOSPHERE_PRESET);
-    } else {
-        Object.assign(auroraConfig, {
-            ...DEFAULT_AURORA_CONFIG,
-            colors: DEFAULT_AURORA_CONFIG.colors,
-        });
-    }
-}
+// Aurora color mode toggle — applies full preset when switching
+const auroraColorMode = computed({
+    get: () => auroraConfig.colorMode,
+    set: (mode: string) => {
+        if (mode === "derived") {
+            Object.assign(auroraConfig, ATMOSPHERE_PRESET);
+        } else {
+            Object.assign(auroraConfig, {
+                ...DEFAULT_AURORA_CONFIG,
+                colors: DEFAULT_AURORA_CONFIG.colors,
+            });
+        }
+    },
+});
 
 // ── Active config for config page ──
 const activeConfigObj = computed(() => bgMode.value === "aurora" ? auroraConfig : metaballConfig);
@@ -146,35 +149,19 @@ const replayScrollReveal = async () => { showScrollReveal.value = false; await n
 
                 <Separator orientation="vertical" class="h-6" />
 
-                <div class="flex rounded-pill border border-border/30 p-0.5">
-                    <Button
-                        :variant="bgMode === 'aurora' ? 'secondary' : 'ghost'"
-                        size="sm"
-                        class="rounded-pill px-3 h-7 text-micro"
-                        @click="bgMode = 'aurora'"
-                    >
-                        Aurora
-                    </Button>
-                    <Button
-                        :variant="bgMode === 'metaballs' ? 'secondary' : 'ghost'"
-                        size="sm"
-                        class="rounded-pill px-3 h-7 text-micro"
-                        @click="bgMode = 'metaballs'"
-                    >
-                        Metaballs
-                    </Button>
-                </div>
+                <BouncyTabs
+                    v-model="bgMode"
+                    variant="pill"
+                    :options="[{ label: 'Aurora', value: 'aurora' }, { label: 'Metaballs', value: 'metaballs' }]"
+                />
 
                 <!-- Derived mode sub-toggle (only when aurora active) -->
                 <template v-if="bgMode === 'aurora'">
-                    <Button
-                        :variant="auroraConfig.colorMode === 'derived' ? 'secondary' : 'ghost'"
-                        size="sm"
-                        class="rounded-pill px-3 h-7 text-micro"
-                        @click="toggleDerived"
-                    >
-                        {{ auroraConfig.colorMode === 'derived' ? 'Derived' : 'Explicit' }}
-                    </Button>
+                    <BouncyTabs
+                        v-model="auroraColorMode"
+                        variant="pill"
+                        :options="[{ label: 'Explicit', value: 'explicit' }, { label: 'Derived', value: 'derived' }]"
+                    />
                     <input
                         v-if="auroraConfig.colorMode === 'derived'"
                         type="color"
@@ -187,13 +174,10 @@ const replayScrollReveal = async () => { showScrollReveal.value = false; await n
                 <div class="flex-1" />
 
                 <!-- Page nav -->
-                <Tabs v-model="currentPage" class="relative">
-                    <TabsList class="relative rounded-pill border border-border/30 bg-transparent p-0.5 h-auto">
-                        <TabsIndicator />
-                        <TabsTrigger value="demo" class="relative z-10 rounded-pill px-3 h-7 text-micro">Demo</TabsTrigger>
-                        <TabsTrigger value="config" class="relative z-10 rounded-pill px-3 h-7 text-micro">Config</TabsTrigger>
-                    </TabsList>
-                </Tabs>
+                <BouncyTabs
+                    v-model="currentPage"
+                    :options="[{ label: 'Demo', value: 'demo' }, { label: 'Config', value: 'config' }]"
+                />
 
                 <Separator orientation="vertical" class="h-6" />
 
