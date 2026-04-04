@@ -231,6 +231,19 @@ export function useDockState(options: UseDockStateOptions) {
         if (!root || root.contains(e.target as Node)) return;
         if (isTeleportedTarget(e.target)) return;
 
+        // Bounds check: during transitions, pointer-events:none on dock-layers
+        // makes the event target the parent element. The click is still visually
+        // "inside" the dock, so don't treat it as an outside click.
+        const rect = root.getBoundingClientRect();
+        if (
+            e.clientX >= rect.left &&
+            e.clientX <= rect.right &&
+            e.clientY >= rect.top &&
+            e.clientY <= rect.bottom
+        ) {
+            return;
+        }
+
         // Click outside → always collapse, even if keepOpenCount > 0
         // (keepOpenCount prevents timer-based collapse, not explicit dismissal)
         collapse();
