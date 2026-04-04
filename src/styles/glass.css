@@ -73,6 +73,7 @@
         border: 1px solid var(--glass-border-default);
         border-radius: var(--radius-card);
         box-shadow: var(--glass-shadow-default);
+        contain: layout style;
     }
 
     .glass-pill {
@@ -83,6 +84,7 @@
         border: 1px solid var(--glass-border-default);
         border-radius: var(--radius-pill);
         box-shadow: var(--glass-shadow-subtle);
+        contain: layout style;
     }
 
     /* ── Glassmorphic circular icon button ── */
@@ -126,7 +128,8 @@
         pointer-events: none;
     }
 
-    .glass-btn.is-active {
+    .glass-btn.is-active,
+    .glass-btn[aria-pressed="true"] {
         background: color-mix(in srgb, var(--foreground) 10%, transparent);
         border-color: color-mix(in srgb, var(--foreground) 25%, transparent);
         color: var(--foreground);
@@ -155,6 +158,11 @@
     .btn-pill:disabled {
         opacity: 0.4;
         cursor: not-allowed;
+    }
+
+    .btn-pill[aria-pressed="true"] {
+        background: color-mix(in srgb, var(--primary) 15%, transparent);
+        border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--border));
     }
 
     .btn-pill-accent {
