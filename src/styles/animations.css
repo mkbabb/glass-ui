@@ -233,23 +233,29 @@
 }
 
 /* ── Gold shimmer: metallic text highlight sweep ── */
-.gold-shimmer {
-    background: linear-gradient(
-        110deg,
-        currentColor 0%,
-        #ffd700 45%,
-        #fff8dc 50%,
-        #ffd700 55%,
-        currentColor 100%
-    );
-    background-size: 250% 100%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: gold-shimmer-slide 3s ease-in-out infinite;
-}
 
 @keyframes gold-shimmer-slide {
-    0%   { background-position: 100% 0; }
-    100% { background-position: -100% 0; }
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.gold-shimmer,
+.gold-shimmer-text {
+    --color-gold-dark: #C0A050;
+    --color-gold-mid: #DAB860;
+    --color-gold-light: #E8D5A0;
+
+    background: linear-gradient(
+        90deg,
+        var(--color-gold-dark),
+        var(--color-gold-light),
+        var(--color-gold-mid),
+        var(--color-gold-light),
+        var(--color-gold-dark)
+    );
+    background-size: 300% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: gold-shimmer-slide 6s linear infinite;
 }
