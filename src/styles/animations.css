@@ -231,3 +231,25 @@
     from { font-variation-settings: "wght" 100; opacity: 0.3; }
     to   { font-variation-settings: "wght" 400; opacity: 1; }
 }
+
+/* ── Gold shimmer: metallic text highlight sweep ── */
+.gold-shimmer {
+    background: linear-gradient(
+        110deg,
+        currentColor 0%,
+        #ffd700 45%,
+        #fff8dc 50%,
+        #ffd700 55%,
+        currentColor 100%
+    );
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gold-shimmer-slide 3s ease-in-out infinite;
+}
+
+@keyframes gold-shimmer-slide {
+    0%   { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+}
