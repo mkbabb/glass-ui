@@ -1,4 +1,4 @@
-import { ref, watch, onScopeDispose, toValue, type MaybeRefOrGetter } from "vue";
+import { ref, watch, onScopeDispose, toValue } from "vue";
 import type { InfiniteScrollOptions, InfiniteScrollReturn } from "./types";
 
 /**

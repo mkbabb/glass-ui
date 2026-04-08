@@ -53,7 +53,6 @@ function generateDisplacementMap(
 
     const cx = width / 2;
     const cy = height / 2;
-    const maxR = Math.sqrt(cx * cx + cy * cy);
 
     for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
@@ -151,7 +150,6 @@ export function createGlassFilter(
     const id = `glass-refract-${filterCounter++}`;
     const blur = opts.blur ?? 16;
     const refraction = opts.refraction ?? 0.3;
-    const _chromatic = opts.chromaticAberration ?? 0;
 
     // Create displacement map canvas
     const dispCanvas = document.createElement("canvas");

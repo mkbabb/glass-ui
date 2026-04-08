@@ -119,7 +119,7 @@ export function isInActiveChain(
     id: string,
     activeId: string | null,
     index: Map<string, SidebarIndexEntry>,
-    roots: SidebarSection[],
+    _roots: SidebarSection[],
 ): boolean {
     if (!activeId) return false;
     const entry = index.get(activeId);

@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onUnmounted, defineOptions } from "vue";
+import { ref, watch, onUnmounted } from "vue";
 
 defineOptions({ inheritAttrs: false });
 import { Maximize2, Minimize2 } from "lucide-vue-next";

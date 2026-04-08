@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { ChevronUp } from "lucide-vue-next";
-import type { SidebarState, SidebarSection } from "./types";
+import type { SidebarState } from "./types";
 
 const props = withDefaults(
     defineProps<{
@@ -38,7 +38,7 @@ defineExpose({ sidebarNav });
                 </button>
             </div>
             <ol class="sidebar-list">
-                <li v-for="(section, si) in state.sections" :key="section.id">
+                <li v-for="section in state.sections" :key="section.id">
                     <button
                         :data-toc-id="section.id"
                         @click="state.toggleSection(section.id)"

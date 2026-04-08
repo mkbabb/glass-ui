@@ -29,6 +29,10 @@ const { sentinelRef } = useInfiniteScroll({
     isLoading: toRef(() => props.isLoading),
     onLoadMore: () => emit("load-more"),
 });
+
+// Re-expose for the template — the destructured binding above isn't picked
+// up by Vue's template-ref auto-binding when the source is a composable.
+defineExpose({ sentinelRef });
 </script>
 
 <template>
