@@ -8,6 +8,7 @@ export * from "./labeled-field";
 export * from "./metaballs";
 export * from "./search";
 export * from "./sidebar";
+export * from "./stacked-icons";
 export * from "./tabs";
 export * from "./timeline";
 export * from "./typewriter";
