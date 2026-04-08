@@ -57,7 +57,6 @@
     --z-modal: 80;
     --z-fullscreen: 90;
     --z-toast: 100;
-    --z-toggle: 999;
     --z-max: 9999;
     --z-debug: 99999;
 
@@ -198,10 +197,26 @@
        ═══════════════════════════════════════════════ */
     --size-icon-btn: 2.5rem;
 
+    /* Icon glyph sizes — used by .icon-{xs,sm,md,lg,xl} utilities */
+    --icon-xs: 0.75rem;   /* 12px — w-3 */
+    --icon-sm: 0.875rem;  /* 14px — w-3.5 */
+    --icon-md: 1rem;      /* 16px — w-4 */
+    --icon-lg: 1.25rem;   /* 20px — w-5 */
+    --icon-xl: 1.5rem;    /* 24px — w-6 */
+
     /* Dock geometry — consumers may override locally */
     --dock-h: calc(var(--size-icon-btn) + 0.75rem + 3px);
     --dock-margin: 0.5rem;
     --dock-menubar-reserve: 4rem;
+
+    /* Carousel navigation button offset (negative position from carousel edge) */
+    --carousel-nav-offset: 3rem;
+    --carousel-nav-size: 2rem;
+
+    /* StackedIconGroup overlap (negative margin between stacked icons) */
+    --stack-overlap-sm: 0.375rem; /* -ml-1.5 */
+    --stack-overlap-md: 0.5rem;   /* -ml-2 */
+    --stack-overlap-lg: 0.625rem; /* -ml-2.5 */
 
     /* ═══════════════════════════════════════════════
        §8b  COMPONENT FONT OVERRIDES
@@ -263,6 +278,13 @@
     --color-gold-dark: hsl(34 87% 38%);
 
     /* ═══════════════════════════════════════════════
+       §12b BLUE SHIMMER PALETTE
+       ═══════════════════════════════════════════════ */
+    --shimmer-blue-dark: hsl(224 76% 40%);
+    --shimmer-blue-mid: hsl(217 91% 60%);
+    --shimmer-blue-light: hsl(213 94% 68%);
+
+    /* ═══════════════════════════════════════════════
        §13 RAINBOW PALETTE
        ═══════════════════════════════════════════════ */
 
@@ -283,6 +305,30 @@
     --rainbow-pastel-blue: hsl(220 45% 76%);
     --rainbow-pastel-indigo: hsl(260 35% 76%);
     --rainbow-pastel-violet: hsl(280 40% 78%);
+
+    /* ═══════════════════════════════════════════════
+       §14 HEATMAP PALETTE — 10-step red intensity
+       ═══════════════════════════════════════════════ */
+    --heatmap-1-bg:  rgb(254 226 226);
+    --heatmap-1-fg:  rgb(127 29 29);
+    --heatmap-2-bg:  rgb(254 202 202);
+    --heatmap-2-fg:  rgb(127 29 29);
+    --heatmap-3-bg:  rgb(252 165 165);
+    --heatmap-3-fg:  rgb(127 29 29);
+    --heatmap-4-bg:  rgb(248 113 113);
+    --heatmap-4-fg:  rgb(127 29 29);
+    --heatmap-5-bg:  rgb(239 68 68);
+    --heatmap-5-fg:  rgb(220 38 38);
+    --heatmap-6-bg:  rgb(220 38 38);
+    --heatmap-6-fg:  rgb(254 226 226);
+    --heatmap-7-bg:  rgb(185 28 28);
+    --heatmap-7-fg:  rgb(254 226 226);
+    --heatmap-8-bg:  rgb(153 27 27);
+    --heatmap-8-fg:  rgb(254 226 226);
+    --heatmap-9-bg:  rgb(127 29 29);
+    --heatmap-9-fg:  rgb(254 226 226);
+    --heatmap-10-bg: rgb(69 10 10);
+    --heatmap-10-fg: rgb(254 226 226);
 }
 
 /* ═══════════════════════════════════════════════
@@ -330,4 +376,26 @@
     --color-gold: hsl(43 74% 55%);
     --color-gold-light: hsl(51 100% 55%);
     --color-gold-dark: hsl(34 87% 45%);
+
+    /* Heatmap — inverted intensity for dark backgrounds */
+    --heatmap-1-bg:  rgb(30 10 10);
+    --heatmap-1-fg:  rgb(156 163 175);
+    --heatmap-2-bg:  rgb(45 15 15);
+    --heatmap-2-fg:  rgb(209 213 219);
+    --heatmap-3-bg:  rgb(69 10 10);
+    --heatmap-3-fg:  rgb(229 231 235);
+    --heatmap-4-bg:  rgb(91 15 15);
+    --heatmap-4-fg:  rgb(243 244 246);
+    --heatmap-5-bg:  rgb(127 29 29);
+    --heatmap-5-fg:  rgb(249 250 251);
+    --heatmap-6-bg:  rgb(153 27 27);
+    --heatmap-6-fg:  rgb(254 226 226);
+    --heatmap-7-bg:  rgb(185 28 28);
+    --heatmap-7-fg:  rgb(254 242 242);
+    --heatmap-8-bg:  rgb(220 38 38);
+    --heatmap-8-fg:  rgb(255 251 251);
+    --heatmap-9-bg:  rgb(239 68 68);
+    --heatmap-9-fg:  rgb(255 255 255);
+    --heatmap-10-bg: rgb(248 113 113);
+    --heatmap-10-fg: rgb(255 255 255);
 }
