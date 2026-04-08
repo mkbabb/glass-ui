@@ -52,7 +52,7 @@ const {
     isTransitioning,
 });
 
-const { visualExpanded, isTransitioning: _isTransitioning, transitionWidth, suppressTransition, onTransitionEnd } = useDockTransition({
+const { visualExpanded, isTransitioning: _isTransitioning, transitionSize, dim, suppressTransition, onTransitionEnd } = useDockTransition({
     expanded,
     rootEl: dockEl,
     fadeMs: props.fadeMs,
@@ -65,7 +65,7 @@ const { visualExpanded, isTransitioning: _isTransitioning, transitionWidth, supp
 watch(_isTransitioning, (v) => { isTransitioning.value = v; }, { immediate: true, flush: 'sync' });
 
 const dockStyle = computed(() =>
-    transitionWidth.value != null ? { width: transitionWidth.value } : undefined
+    transitionSize.value != null ? { [dim.value]: transitionSize.value } : undefined
 );
 
 onMounted(() => {

@@ -1,4 +1,4 @@
-import { ref, watch, nextTick, onUnmounted } from "vue";
+import { ref, computed, watch, nextTick, onUnmounted } from "vue";
 import type { Ref } from "vue";
 
 export interface UseLayerTransitionOptions {
@@ -6,6 +6,11 @@ export interface UseLayerTransitionOptions {
     containerEl: Ref<HTMLElement | null>;
     /** The currently active layer id */
     activeLayer: Ref<string>;
+    /**
+     * Animation axis. `"horizontal"` animates `width`; `"vertical"` animates
+     * `height`. Defaults to horizontal when omitted.
+     */
+    axis?: Ref<"horizontal" | "vertical">;
 }
 
 export interface UseLayerTransitionReturn {
@@ -13,25 +18,34 @@ export interface UseLayerTransitionReturn {
     layerProps(id: string): { class: string[]; inert: true | undefined };
     /** Attach to @transitionend on the container */
     onTransitionEnd(e: TransitionEvent): void;
+    /** The currently active layer id (post-swap) */
+    currentLayer: Ref<string>;
+    /** The layer id currently fading out, or null */
+    leavingLayer: Ref<string | null>;
 }
 
 /**
- * Coordinates simultaneous crossfade + FLIP width animation for
+ * Coordinates simultaneous crossfade + FLIP size animation for
  * grid-stacked layer containers. Reusable at any nesting level.
  *
  * Algorithm on activeLayer change:
- * 1. Capture current container width
- * 2. Pin container to that width
+ * 1. Capture current container size
+ * 2. Pin container to that size
  * 3. Swap classes: old layer → leaving (absolute, fading out),
  *    new layer → active (relative, fading in)
- * 4. nextTick: measure new natural width, re-pin to old
- * 5. Animate to new width via CSS transition
- * 6. On transitionend(width), clear inline width
+ * 4. nextTick: measure new natural size, re-pin to old
+ * 5. Animate to new size via CSS transition
+ * 6. On transitionend(size), clear inline size
  */
 export function useLayerTransition(
     options: UseLayerTransitionOptions,
 ): UseLayerTransitionReturn {
-    const { containerEl, activeLayer } = options;
+    const { containerEl, activeLayer, axis } = options;
+
+    const dim = computed<"width" | "height">(() =>
+        axis?.value === "vertical" ? "height" : "width",
+    );
+    const getSize = (el: HTMLElement) => el.getBoundingClientRect()[dim.value];
 
     const currentLayer = ref(activeLayer.value);
     const leavingLayer = ref<string | null>(null);
@@ -43,6 +57,14 @@ export function useLayerTransition(
             clearTimeout(cleanupTimer);
             cleanupTimer = null;
         }
+    }
+
+    function setDim(el: HTMLElement, value: string) {
+        el.style.setProperty(dim.value, value);
+    }
+
+    function clearDim(el: HTMLElement) {
+        el.style.removeProperty(dim.value);
     }
 
     watch(activeLayer, (newLayer, oldLayer) => {
@@ -58,44 +80,44 @@ export function useLayerTransition(
         clearCleanup();
         const id = ++transitionId;
 
-        // 1. Capture current width
-        const fromWidth = el.getBoundingClientRect().width;
+        // 1. Capture current size
+        const fromSize = getSize(el);
 
-        // 2. Pin width (prevents snap during class swap)
-        el.style.width = `${fromWidth}px`;
+        // 2. Pin size (prevents snap during class swap)
+        setDim(el, `${fromSize}px`);
 
         // 3. Swap: mark old as leaving, new as active
         leavingLayer.value = oldLayer;
         currentLayer.value = newLayer;
 
-        // 4. Measure new natural width on next tick
+        // 4. Measure new natural size on next tick
         nextTick(() => {
             if (id !== transitionId) return;
             if (!el) return;
 
             // Temporarily unpin to measure
             el.style.transition = "none";
-            el.style.width = "";
-            const toWidth = el.getBoundingClientRect().width;
+            clearDim(el);
+            const toSize = getSize(el);
 
-            // Re-pin to old width
-            el.style.width = `${fromWidth}px`;
-            // Force reflow so the browser registers the old width
+            // Re-pin to old size
+            setDim(el, `${fromSize}px`);
+            // Force reflow so the browser registers the old size
             void el.offsetWidth;
             // Restore CSS transitions
             el.style.transition = "";
 
-            // 5. Animate to new width
+            // 5. Animate to new size
             requestAnimationFrame(() => {
                 if (id !== transitionId) return;
-                el.style.width = `${toWidth}px`;
+                setDim(el, `${toSize}px`);
             });
 
-            // Safety: clear inline width after max duration in case transitionend
-            // doesn't fire (e.g. width didn't actually change)
+            // Safety: clear inline size after max duration in case transitionend
+            // doesn't fire (e.g. size didn't actually change)
             cleanupTimer = setTimeout(() => {
                 if (id !== transitionId) return;
-                el.style.width = "";
+                clearDim(el);
                 leavingLayer.value = null;
             }, 400);
         });
@@ -105,10 +127,10 @@ export function useLayerTransition(
         const el = containerEl.value;
         if (!el) return;
         if (e.target !== el) return;
-        if (e.propertyName !== "width") return;
+        if (e.propertyName !== dim.value) return;
 
         clearCleanup();
-        el.style.width = "";
+        clearDim(el);
         leavingLayer.value = null;
     }
 
@@ -131,5 +153,5 @@ export function useLayerTransition(
 
     onUnmounted(clearCleanup);
 
-    return { layerProps, onTransitionEnd };
+    return { layerProps, onTransitionEnd, currentLayer, leavingLayer };
 }
