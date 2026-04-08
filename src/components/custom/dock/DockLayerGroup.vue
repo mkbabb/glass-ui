@@ -97,6 +97,11 @@ function isComponent(icon: unknown): icon is Component {
                     :is="layer.icon"
                     class="size-4"
                 />
+                <span
+                    v-else-if="typeof layer.icon === 'string' && layer.icon.trim().startsWith('<')"
+                    class="inline-flex size-4 items-center justify-center"
+                    v-html="layer.icon"
+                />
                 <span v-else-if="typeof layer.icon === 'string'">{{ layer.icon }}</span>
                 <span v-else>{{ (layer.label ?? layer.id).charAt(0) }}</span>
             </button>

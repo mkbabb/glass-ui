@@ -104,21 +104,33 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
         @focusout="onFocusOut"
         @transitionend="onTransitionEnd"
     >
-        <div class="dock-layers" :class="{ 'dock-transitioning': isTransitioning }">
-            <div
-                :class="['dock-layer dock-layer--full', { 'layer-active': visualExpanded }]"
-                :inert="!expanded || undefined"
-            >
-                <slot />
+        <!--
+            Horizontal docks use the built-in two-layer pattern (full +
+            collapsed summary) with CSS-grid stacking and fade-swap
+            transitions. Vertical docks are tool palettes: they don't
+            collapse into a summary icon, and hosting a DockLayerGroup
+            inside demands a direct single-slot body with no nested grid.
+        -->
+        <template v-if="orientation === 'horizontal'">
+            <div class="dock-layers" :class="{ 'dock-transitioning': isTransitioning }">
+                <div
+                    :class="['dock-layer dock-layer--full', { 'layer-active': visualExpanded }]"
+                    :inert="!expanded || undefined"
+                >
+                    <slot />
+                </div>
+                <div
+                    :class="['dock-layer dock-layer--summary', { 'layer-active': !visualExpanded }]"
+                    :inert="expanded || undefined"
+                    @click="onClickCollapsed"
+                >
+                    <slot name="collapsed" />
+                </div>
             </div>
-            <div
-                :class="['dock-layer dock-layer--summary', { 'layer-active': !visualExpanded }]"
-                :inert="expanded || undefined"
-                @click="onClickCollapsed"
-            >
-                <slot name="collapsed" />
-            </div>
-        </div>
+        </template>
+        <template v-else>
+            <slot />
+        </template>
     </div>
 </template>
 
@@ -148,44 +160,29 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
         border-color var(--duration-normal) var(--ease-standard);
 }
 
-/* ── Vertical: column layout, height animates ── */
+/* ── Vertical: column layout, content-sized, rounded rectangle ──
+   Vertical docks host tool palettes. They don't collapse into a summary
+   icon, so the template renders the default slot directly — no dock-layers
+   grid wrapper. Width hugs the widest child; height is content-driven
+   (with the consumer's max-height applying naturally). */
 .glass-dock.vertical {
     display: inline-flex;
     flex-direction: column;
     align-items: stretch;
+    justify-content: flex-start;
     white-space: normal;
     width: auto;
     height: auto;
+    padding: 0.375rem;
+    border-radius: var(--radius-xl);
     transition:
         height var(--duration-normal) var(--spring-snappy),
+        width var(--duration-normal) var(--spring-snappy),
         padding var(--duration-normal) var(--spring-snappy),
         box-shadow var(--duration-normal) var(--ease-standard),
         transform var(--duration-normal) var(--spring-snappy),
         background var(--duration-normal) var(--ease-standard),
         border-color var(--duration-normal) var(--ease-standard);
-}
-
-.glass-dock.vertical .dock-layers {
-    grid-auto-flow: row;
-}
-
-.glass-dock.vertical .dock-layer {
-    flex-direction: column;
-    height: auto;
-    width: 100%;
-    min-height: 2.5rem;
-    white-space: normal;
-}
-
-.glass-dock.vertical.collapsed .dock-layer--summary {
-    min-width: auto;
-    min-height: 2.5rem;
-    width: 100%;
-}
-
-/* dock-wrap is a horizontal responsive concept; force column on vertical */
-.glass-dock.vertical.dock-wrap {
-    flex-direction: column;
 }
 
 /* ── Collapsed: compact pill (round when icon-only) ── */

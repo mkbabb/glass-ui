@@ -59,16 +59,28 @@ const isLeaving = computed(() => group.leavingLayerId.value === props.id);
 </template>
 
 <style scoped>
+/*
+ * Only the active layer participates in grid sizing. Inactive layers are
+ * absolutely positioned at grid-area 1/1 so the parent grid track sizes
+ * itself to the active layer's natural width/height. This is what lets
+ * the DockLayerGroup hug a narrow tool palette and grow to 14rem when
+ * the user switches to a wider layer — useLayerTransition's FLIP width
+ * animation then interpolates between the two measured sizes.
+ */
 .dock-layer-item-host {
     grid-area: 1 / 1;
     opacity: 0;
     pointer-events: none;
+    position: absolute;
+    inset: 0;
     transition: opacity var(--duration-fast) var(--ease-standard);
 }
 
 .dock-layer-item-host.is-active {
     opacity: 1;
     pointer-events: auto;
+    position: relative;
+    inset: auto;
 }
 
 .dock-layer-item-host.is-leaving {
