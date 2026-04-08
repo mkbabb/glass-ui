@@ -30,20 +30,12 @@
         box-shadow: var(--focus-ring-shadow);
     }
 
-    /* ── Button press/interactive states ── */
-    .btn-press {
-        transition: transform var(--duration-fast) var(--ease-standard);
-    }
-    .btn-press:active {
-        transform: scale(var(--scale-press-btn));
-    }
-    .btn-press:disabled {
-        opacity: 0.5;
-        pointer-events: none;
-    }
-
+    /* ── Button interactive states ── */
     .btn-interactive {
-        transition: all var(--duration-fast) var(--ease-standard);
+        transition: background-color var(--duration-fast) var(--ease-standard),
+                    color var(--duration-fast) var(--ease-standard),
+                    transform var(--duration-fast) var(--ease-standard),
+                    opacity var(--duration-fast) var(--ease-standard);
     }
     .btn-interactive:hover {
         transform: scale(var(--scale-hover));
@@ -52,12 +44,18 @@
         transform: scale(var(--scale-press));
     }
     .btn-interactive:disabled {
-        opacity: 0.5;
+        opacity: var(--opacity-disabled);
         pointer-events: none;
     }
     .btn-interactive:focus-visible {
         box-shadow: var(--focus-ring-shadow);
         outline: none;
+        /* Fade in; base state has no box-shadow transition → instant removal */
+        transition: background-color var(--duration-fast) var(--ease-standard),
+                    color var(--duration-fast) var(--ease-standard),
+                    transform var(--duration-fast) var(--ease-standard),
+                    opacity var(--duration-fast) var(--ease-standard),
+                    box-shadow var(--duration-fast) var(--ease-standard);
     }
 
     /* ── Interactive item (hover bg + focus ring + active scale) ── */
@@ -83,7 +81,7 @@
     }
     .interactive-item:disabled {
         pointer-events: none;
-        opacity: 0.5;
+        opacity: var(--opacity-disabled);
     }
 
     /* ── Status dot indicator ── */
@@ -99,13 +97,13 @@
             box-shadow var(--duration-fast) var(--ease-standard);
     }
     .status-dot--active {
-        background: var(--color-status-active, hsl(142 71% 45%));
+        background: var(--color-status-active);
     }
     .status-dot--paused {
-        background: var(--color-status-paused, hsl(48 96% 53%));
+        background: var(--color-status-paused);
     }
     .status-dot--idle {
-        background: var(--color-status-idle, var(--muted-foreground));
+        background: var(--color-status-idle);
     }
 
     /* ── Paper texture backgrounds ── */
@@ -232,7 +230,7 @@
         background-clip: text;
         -webkit-background-clip: text;
         color: transparent;
-        animation: shimmer 5s linear infinite;
+        animation: shimmer var(--duration-shimmer) linear infinite;
     }
 
     .blue-shimmer {
@@ -241,7 +239,7 @@
         background-clip: text;
         -webkit-background-clip: text;
         color: transparent;
-        animation: shimmer 3s linear infinite;
+        animation: shimmer var(--duration-shimmer-fast) linear infinite;
     }
 
     .gold-shimmer-subtle {
@@ -250,7 +248,7 @@
         background-clip: text;
         -webkit-background-clip: text;
         color: transparent;
-        animation: shimmer 8s linear infinite;
+        animation: shimmer var(--duration-shimmer-slow) linear infinite;
     }
 
     /* ── Keyboard key ── */
@@ -310,7 +308,7 @@
             border-color var(--duration-fast) var(--ease-standard);
     }
     .input-bar:focus-within {
-        box-shadow: 0 0 0 2px color-mix(in srgb, var(--ring) 40%, transparent);
+        box-shadow: var(--focus-ring-shadow);
         border-color: var(--border);
     }
 
@@ -528,7 +526,7 @@
         transition-timing-function: var(--spring-smooth);
     }
     .input-focus:focus-visible {
-        box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 40%, transparent);
+        box-shadow: var(--focus-ring-shadow);
         outline: none;
     }
 
@@ -602,7 +600,7 @@
     .disabled-base:disabled {
         pointer-events: none;
         cursor: not-allowed;
-        opacity: 0.5;
+        opacity: var(--opacity-disabled);
     }
 
     /* ── Card hover transitions ── */
