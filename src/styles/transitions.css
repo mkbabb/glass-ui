@@ -153,6 +153,42 @@
     max-height: 0;
 }
 
+/* ── Pane left (spring in from left, ease out to left) ── */
+.pane-left-enter-active {
+    transition: transform var(--duration-slow) var(--spring-snappy);
+}
+.pane-left-leave-active {
+    transition: transform var(--duration-normal) var(--ease-out);
+}
+.pane-left-enter-from,
+.pane-left-leave-to {
+    transform: translateX(-110%) rotate(-2deg);
+}
+
+/* ── Pane right (spring in from right, ease out to right) ── */
+.pane-right-enter-active {
+    transition: transform var(--duration-slow) var(--spring-snappy);
+}
+.pane-right-leave-active {
+    transition: transform var(--duration-normal) var(--ease-out);
+}
+.pane-right-enter-from,
+.pane-right-leave-to {
+    transform: translateX(110%) rotate(2deg);
+}
+
+/* ── Pane directional (CSS-variable-driven direction) ── */
+.pane-dir-enter-active {
+    transition: transform var(--duration-slow) var(--spring-snappy);
+}
+.pane-dir-leave-active {
+    transition: transform var(--duration-normal) var(--ease-out);
+}
+.pane-dir-enter-from,
+.pane-dir-leave-to {
+    transform: translateX(var(--pane-slide-dir, -110%)) rotate(var(--pane-slide-rot, -2deg));
+}
+
 /* ── Badge entrance (wiggle + bounce) ── */
 @keyframes badge-in {
     0% {
@@ -201,6 +237,12 @@
     .pane-swap-leave-active,
     .pane-slide-enter-active,
     .pane-slide-leave-active,
+    .pane-left-enter-active,
+    .pane-left-leave-active,
+    .pane-right-enter-active,
+    .pane-right-leave-active,
+    .pane-dir-enter-active,
+    .pane-dir-leave-active,
     .badge-enter-active,
     .badge-leave-active {
         /* Keep opacity transition, eliminate transform motion */
@@ -220,7 +262,13 @@
     .dropdown-enter-from,
     .dropdown-leave-to,
     .pane-swap-enter-from,
-    .pane-swap-leave-to {
+    .pane-swap-leave-to,
+    .pane-left-enter-from,
+    .pane-left-leave-to,
+    .pane-right-enter-from,
+    .pane-right-leave-to,
+    .pane-dir-enter-from,
+    .pane-dir-leave-to {
         transform: none !important;
     }
 }
