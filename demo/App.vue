@@ -12,6 +12,8 @@ import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { BouncyTabs } from "@/components/custom/tabs";
 import { DarkModeToggle } from "@/components/custom/controls";
+import { GlassDock, DockLayerGroup, DockLayer } from "@/components/custom/dock";
+import { Layers, Package, Library } from "lucide-vue-next";
 import ConfigPanel from "./components/ConfigPanel.vue";
 import { FONTS, applyFont, type FontOption } from "./fonts";
 import { AURORA_SECTIONS, METABALL_SECTIONS, ATMOSPHERE_SECTIONS } from "./backgroundConfigs";
@@ -94,6 +96,9 @@ const showStagger = ref(true);
 const replayStagger = async () => { showStagger.value = false; await nextTick(); showStagger.value = true; };
 const showScrollReveal = ref(true);
 const replayScrollReveal = async () => { showScrollReveal.value = false; await nextTick(); showScrollReveal.value = true; };
+
+// ── Vertical GlassDock example state ──
+const verticalDockLayer = ref("assets");
 </script>
 
 <template>
@@ -317,6 +322,54 @@ const replayScrollReveal = async () => { showScrollReveal.value = false; await n
                         </div>
                         <p class="text-caption mb-2 text-muted-foreground">.scroll-weight-reveal</p>
                         <p class="scroll-weight-reveal text-display-2">Weight reveals on scroll</p>
+                    </section>
+
+                    <!-- Vertical GlassDock with DockLayer children -->
+                    <section class="mb-20">
+                        <p class="section-label mb-6">Vertical GlassDock & Multi-Layer</p>
+                        <div class="flex flex-wrap items-start gap-8">
+                            <GlassDock
+                                orientation="vertical"
+                                :always-expanded="true"
+                                :start-collapsed="false"
+                                position="inline"
+                                class="self-start"
+                            >
+                                <DockLayerGroup
+                                    v-model:active="verticalDockLayer"
+                                    orientation="vertical"
+                                >
+                                    <DockLayer id="assets" label="Assets" :icon="Package">
+                                        <div class="flex flex-col gap-2 p-2 min-w-48">
+                                            <p class="text-caption text-muted-foreground">Assets</p>
+                                            <div class="rounded-lg px-3 py-2 text-small hover:bg-accent">Logo.svg</div>
+                                            <div class="rounded-lg px-3 py-2 text-small hover:bg-accent">Hero.png</div>
+                                            <div class="rounded-lg px-3 py-2 text-small hover:bg-accent">Pattern.jpg</div>
+                                        </div>
+                                    </DockLayer>
+                                    <DockLayer id="layers" label="Layers" :icon="Layers">
+                                        <div class="flex flex-col gap-2 p-2 min-w-48">
+                                            <p class="text-caption text-muted-foreground">Layers</p>
+                                            <div class="rounded-lg px-3 py-2 text-small hover:bg-accent">Background</div>
+                                            <div class="rounded-lg px-3 py-2 text-small hover:bg-accent">Frame 01</div>
+                                            <div class="rounded-lg px-3 py-2 text-small hover:bg-accent">Frame 02</div>
+                                            <div class="rounded-lg px-3 py-2 text-small hover:bg-accent">Text</div>
+                                        </div>
+                                    </DockLayer>
+                                    <DockLayer id="libs" label="Libraries" :icon="Library">
+                                        <div class="flex flex-col gap-2 p-2 min-w-48">
+                                            <p class="text-caption text-muted-foreground">Libraries</p>
+                                            <div class="rounded-lg px-3 py-2 text-small hover:bg-accent">glass-ui</div>
+                                            <div class="rounded-lg px-3 py-2 text-small hover:bg-accent">reka-ui</div>
+                                        </div>
+                                    </DockLayer>
+                                </DockLayerGroup>
+                            </GlassDock>
+                            <div class="flex-1 text-small text-muted-foreground">
+                                <p class="mb-2">A vertical <code>GlassDock</code> hosts a <code>DockLayerGroup</code> with three <code>DockLayer</code> children (Assets / Layers / Libraries).</p>
+                                <p>The group auto-generates a switcher rail from each layer's icon + label, and crossfades between panes with a FLIP size animation on the active axis.</p>
+                            </div>
+                        </div>
                     </section>
 
                     <footer class="pb-12 text-center">

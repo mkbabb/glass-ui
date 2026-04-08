@@ -53,9 +53,10 @@ src/
 │   │   └── index.ts                # barrel: all ui/ exports
 │   ├── custom/
 │   │   ├── dock/
-│   │   │   ├── GlassDock.vue       # collapsible glass pill, dual-layer grid
+│   │   │   ├── GlassDock.vue       # collapsible glass pill, dual-layer grid, horizontal | vertical
 │   │   │   ├── DockPopover.vue     # portaled popover for dock items
-│   │   │   ├── DockLayerGroup.vue  # multi-layer content visibility
+│   │   │   ├── DockLayerGroup.vue  # multi-layer container + optional switcher rail
+│   │   │   ├── DockLayer.vue       # named pane inside a DockLayerGroup
 │   │   │   └── index.ts
 │   │   ├── aurora/
 │   │   │   ├── Aurora.vue          # WebGL aurora background
@@ -150,6 +151,24 @@ All `ui/` components follow the shadcn-vue pattern:
 CVA variants are co-exported from each component's `index.ts` (e.g., `buttonVariants`, `toggleVariants`, `badgeVariants`).
 
 Button variants: `default`, `destructive`, `outline`, `secondary`, `ghost`, `link`, `glass`, `glass-subtle`. All enforce four states: standard, hover, active (`scale-[0.97]`), disabled (`opacity-50`, `pointer-events-none`).
+
+### Dock orientation and multi-layer
+
+`GlassDock` takes an `orientation?: "horizontal" | "vertical"` prop (default `"horizontal"`). Horizontal docks animate `width` on expand/collapse and lay children out in a row; vertical docks animate `height` and stack children in a column. The prop is threaded through `useDockTransition` as its `axis` ref—both `useDockTransition` and `useLayerTransition` are axis-aware, keying their FLIP logic off a computed `dim` (`"width" | "height"`) rather than a hardcoded dimension. Vertical consumers just set the prop; no other consumer changes are required.
+
+Beyond the built-in two-layer grid (the default slot + the `collapsed` slot), richer docks can compose `DockLayerGroup` with one or more `DockLayer` children:
+
+```vue
+<GlassDock orientation="vertical">
+    <DockLayerGroup v-model:active="tab" orientation="vertical">
+        <DockLayer id="assets" label="Assets" :icon="Package">...</DockLayer>
+        <DockLayer id="layers" label="Layers" :icon="Layers">...</DockLayer>
+        <DockLayer id="libs" label="Libraries" :icon="Library">...</DockLayer>
+    </DockLayerGroup>
+</GlassDock>
+```
+
+Each `DockLayer` registers itself with its parent via `provide`/`inject`; the group renders an optional Figma-style switcher rail from the registered descriptors (`showRail` + `railPosition`) and drives crossfade + size FLIP transitions between layers. Only the active layer is interactive—inactive layers receive `inert` and `pointer-events: none`.
 
 ## Consumer wiring
 
