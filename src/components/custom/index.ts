@@ -13,4 +13,5 @@ export * from "./tabs";
 export * from "./timeline";
 export * from "./typewriter";
 export * from "./glass-panel";
+export * from "./glass-carousel";
 export * from "./aurora";
