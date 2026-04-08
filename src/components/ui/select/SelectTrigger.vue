@@ -24,7 +24,7 @@ const forwardedProps = useForwardProps(delegatedProps)
 const variantClass = computed(() =>
   props.variant === 'ghost'
     ? 'bg-transparent border-none shadow-none'
-    : 'glass-subtle',
+    : 'glass-subtle focus-visible:shadow-[var(--focus-ring-shadow)]',
 )
 </script>
 
@@ -33,7 +33,7 @@ const variantClass = computed(() =>
     v-bind="forwardedProps"
     :class="cn(
       variantClass,
-      'flex h-10 w-full items-center justify-between rounded-full px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:shadow-[0_0_0_2px_color-mix(in_srgb,var(--ring)_40%,transparent)] disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 transition-all',
+      'flex h-10 w-full items-center justify-between rounded-full px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 transition-[background-color,border-color,color,opacity] duration-fast',
       props.class,
     )"
   >
