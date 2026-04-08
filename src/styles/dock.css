@@ -1,131 +1,112 @@
 /* Dock utilities — icon buttons, select triggers, separators, layer grid */
 
 @layer components {
+    /* ── Shared interactive base for all dock controls ── */
+    .dock-btn-base {
+        @apply inline-flex items-center justify-center flex-shrink-0 cursor-pointer border-none bg-transparent;
+        border-radius: var(--radius-pill);
+        color: color-mix(in srgb, var(--foreground) calc(var(--opacity-icon-muted) * 100%), transparent);
+        outline: none;
+        transition: background-color var(--duration-fast) var(--ease-standard),
+                    color var(--duration-fast) var(--ease-standard),
+                    transform var(--duration-fast) var(--ease-standard),
+                    opacity var(--duration-fast) var(--ease-standard);
+    }
+
+    .dock-btn-base:hover:not(:disabled) {
+        background: var(--muted);
+        color: var(--btn-hover-color, var(--foreground));
+    }
+
+    .dock-btn-base:active:not(:disabled) {
+        transform: scale(var(--scale-press-dock));
+    }
+
+    .dock-btn-base:focus:not(:focus-visible) {
+        box-shadow: none !important;
+        outline: none !important;
+    }
+
+    .dock-btn-base:focus-visible {
+        box-shadow: var(--focus-ring-shadow);
+        outline: none;
+        transition: background-color var(--duration-fast) var(--ease-standard),
+                    color var(--duration-fast) var(--ease-standard),
+                    transform var(--duration-fast) var(--ease-standard),
+                    opacity var(--duration-fast) var(--ease-standard),
+                    box-shadow var(--duration-fast) var(--ease-standard);
+    }
+
+    .dock-btn-base:disabled {
+        opacity: var(--opacity-disabled);
+        cursor: not-allowed;
+    }
+
+    .dock-btn-base.is-active,
+    .dock-btn-base.active,
+    .dock-btn-base[aria-expanded="true"],
+    .dock-btn-base[aria-pressed="true"] {
+        background: var(--muted);
+        color: var(--foreground);
+    }
+
+    /* ── Icon button — fixed square ── */
     .dock-icon-btn {
-        @apply inline-flex items-center justify-center flex-shrink-0 cursor-pointer p-0 border-none bg-transparent;
         width: var(--size-icon-btn);
         height: var(--size-icon-btn);
-        border-radius: var(--radius-pill);
-        color: color-mix(in srgb, var(--foreground) 80%, transparent);
-        transition: all var(--duration-fast) var(--ease-standard);
+        padding: 0;
     }
 
     .dock-icon-btn:hover:not(:disabled) {
-        background: var(--muted);
-        color: var(--btn-hover-color, var(--foreground));
         transform: scale(var(--scale-hover-dock));
     }
 
-    .dock-icon-btn:active:not(:disabled) {
-        transform: scale(var(--scale-press-dock));
-    }
-
-    .dock-icon-btn:focus-visible {
-        box-shadow: var(--focus-ring-shadow);
-        outline: none;
-    }
-
-    .dock-icon-btn:disabled {
-        opacity: 0.35;
-        cursor: not-allowed;
-    }
-
-    .dock-icon-btn.is-active,
-    .dock-icon-btn.active {
-        background: var(--muted);
-        color: var(--foreground);
-    }
-
-    /* Compact variant — auto-sized for inline use */
+    /* ── Compact icon button — auto-sized for inline use ── */
     .dock-icon-btn-compact {
-        @apply inline-flex items-center justify-center flex-shrink-0 cursor-pointer border-none bg-transparent w-auto h-auto min-w-0 p-1;
-        border-radius: var(--radius-pill);
-        color: color-mix(in srgb, var(--foreground) 80%, transparent);
-        transition: all var(--duration-fast) var(--ease-standard);
+        width: auto;
+        height: auto;
+        min-width: 0;
+        padding: 0.25rem;
     }
 
     .dock-icon-btn-compact:hover:not(:disabled) {
-        background: var(--muted);
-        color: var(--btn-hover-color, var(--foreground));
         transform: scale(var(--scale-hover-dock));
     }
 
-    .dock-icon-btn-compact:active:not(:disabled) {
-        transform: scale(var(--scale-press-dock));
-    }
-
-    .dock-icon-btn-compact:focus-visible {
-        box-shadow: var(--focus-ring-shadow);
-        outline: none;
-    }
-
-    .dock-icon-btn-compact:disabled {
-        opacity: 0.35;
-        cursor: not-allowed;
-    }
-
+    /* ── Select trigger — variable width, text + chevron ── */
     .dock-select-trigger {
-        @apply inline-flex items-center gap-1 py-1 px-2 cursor-pointer whitespace-nowrap border-none bg-transparent;
-        border-radius: var(--radius-pill);
-        color: color-mix(in srgb, var(--foreground) 80%, transparent);
-        transition: all var(--duration-fast) var(--ease-standard);
+        @apply gap-1 py-1 px-2 whitespace-nowrap;
     }
 
     .dock-select-trigger:hover:not(:disabled) {
-        background: var(--muted);
-        color: var(--foreground);
+        transform: none;
     }
 
     .dock-select-trigger:active:not(:disabled) {
         transform: scale(var(--scale-press));
     }
 
-    .dock-select-trigger:focus-visible {
-        box-shadow:
-            0 0 0 var(--focus-ring-width) var(--dock-ring, color-mix(in srgb, var(--ring) 30%, transparent)),
-            0 0 8px color-mix(in srgb, var(--ring) 15%, transparent);
-        outline: none;
-    }
-
-    .dock-select-trigger[aria-expanded="true"],
-    .dock-select-trigger.is-active {
-        background: var(--muted);
-    }
-
-    .dock-select-trigger:disabled {
-        opacity: 0.35;
-        cursor: not-allowed;
-    }
-
-    /* Dropdown trigger — variable width, text + icon + chevron */
+    /* ── Dropdown trigger — variable width, text + icon + chevron ── */
     .dock-dropdown-trigger {
-        @apply inline-flex items-center gap-1 py-1 px-2 flex-shrink-0 cursor-pointer whitespace-nowrap border-none bg-transparent;
-        border-radius: var(--radius-pill);
-        transition: all var(--duration-fast) var(--ease-standard);
+        @apply gap-1 py-1 px-2 whitespace-nowrap;
     }
 
     .dock-dropdown-trigger:hover:not(:disabled) {
-        background: var(--muted);
         transform: scale(var(--scale-hover-dock));
     }
 
-    .dock-dropdown-trigger:active:not(:disabled) {
-        transform: scale(var(--scale-press-dock));
+    /* ── Play button — gradient CTA ── */
+    .dock-play-btn {
+        transition:
+            filter var(--duration-fast) var(--ease-standard),
+            transform var(--duration-fast) var(--ease-standard);
     }
 
-    .dock-dropdown-trigger[aria-expanded="true"],
-    .dock-dropdown-trigger.is-active {
+    .dock-play-btn:hover:not(:disabled) {
+        filter: brightness(1.1);
         background: var(--muted);
-    }
-
-    .dock-dropdown-trigger:focus-visible {
-        box-shadow: var(--focus-ring-shadow);
-        outline: none;
-    }
-
-    .dock-dropdown-trigger:disabled {
-        opacity: 0.35;
-        cursor: not-allowed;
+        color: var(--foreground);
+        transform: none;
     }
 
     .dock-label {
@@ -134,37 +115,12 @@
         border-radius: var(--radius-pill);
         color: var(--muted-foreground);
         font-size: var(--type-small);
-        transition: all var(--duration-fast) var(--ease-standard);
+        transition: color var(--duration-fast) var(--ease-standard),
+                    opacity var(--duration-fast) var(--ease-standard);
     }
 
     .dock-label:hover {
-        color: color-mix(in srgb, var(--foreground) 85%, transparent);
-    }
-
-    .dock-play-btn {
-        @apply inline-flex items-center justify-center cursor-pointer border-none;
-        border-radius: var(--radius-pill);
-        transition:
-            filter var(--duration-fast) var(--ease-standard),
-            transform var(--duration-fast) var(--ease-standard);
-    }
-
-    .dock-play-btn:hover:not(:disabled) {
-        filter: brightness(1.1);
-    }
-
-    .dock-play-btn:active:not(:disabled) {
-        transform: scale(var(--scale-press-dock));
-    }
-
-    .dock-play-btn:focus-visible {
-        box-shadow: var(--focus-ring-shadow);
-        outline: none;
-    }
-
-    .dock-play-btn:disabled {
-        opacity: 0.35;
-        cursor: not-allowed;
+        color: color-mix(in srgb, var(--foreground) calc(var(--opacity-icon-muted) * 100% + 5%), transparent);
     }
 
     .dock-separator {
@@ -213,7 +169,6 @@
     }
 
     /* ── Dock-safe insets — content clears top + bottom floating docks ── */
-    /* Content insets that clear floating top + bottom docks. */
     .dock-inset {
         padding-top: calc(var(--dock-h) + var(--dock-margin));
         padding-bottom: calc(var(--dock-menubar-reserve) + var(--dock-margin));
