@@ -85,6 +85,11 @@
         border-radius: var(--radius-pill);
         box-shadow: var(--glass-shadow-subtle);
         contain: layout style;
+        transition: transform var(--duration-fast) var(--ease-standard);
+    }
+
+    .glass-pill:active {
+        transform: scale(var(--scale-press-btn));
     }
 
     /* ── Glassmorphic circular icon button ── */
@@ -123,7 +128,7 @@
     }
 
     .glass-btn:disabled {
-        opacity: 0.35;
+        opacity: var(--opacity-disabled);
         cursor: not-allowed;
         pointer-events: none;
     }
@@ -143,7 +148,11 @@
         border-radius: var(--radius-pill);
         padding: 0.5rem 1rem;
         font-size: 1rem;
-        transition: all var(--duration-fast) var(--ease-standard);
+        transition: background-color var(--duration-fast) var(--ease-standard),
+                    border-color var(--duration-fast) var(--ease-standard),
+                    color var(--duration-fast) var(--ease-standard),
+                    opacity var(--duration-fast) var(--ease-standard),
+                    transform var(--duration-fast) var(--ease-standard);
     }
 
     .btn-pill > * {
@@ -156,7 +165,7 @@
     }
 
     .btn-pill:disabled {
-        opacity: 0.4;
+        opacity: var(--opacity-disabled);
         cursor: not-allowed;
     }
 
@@ -172,6 +181,10 @@
 
     .btn-pill-accent:hover:not(:disabled) {
         opacity: 0.9;
+    }
+
+    .btn-pill-accent:active:not(:disabled) {
+        transform: scale(var(--scale-press-btn));
     }
 
     .btn-pill-ghost {
@@ -195,6 +208,10 @@
         box-shadow: var(--glass-shadow-default);
     }
 
+    .btn-pill-glass:active:not(:disabled) {
+        transform: scale(var(--scale-press-btn));
+    }
+
     /* ── Pill input ───────────────────────────────── */
     .input-pill {
         @apply flex w-full;
@@ -207,7 +224,10 @@
         padding: 0 1rem;
         font-size: 1rem;
         color: var(--foreground);
-        transition: all var(--duration-fast) var(--ease-standard);
+        transition: background-color var(--duration-fast) var(--ease-standard),
+                    border-color var(--duration-fast) var(--ease-standard),
+                    color var(--duration-fast) var(--ease-standard),
+                    opacity var(--duration-fast) var(--ease-standard);
     }
 
     .input-pill::placeholder {
@@ -221,7 +241,7 @@
     }
 
     .input-pill:disabled {
-        opacity: 0.5;
+        opacity: var(--opacity-disabled);
         cursor: not-allowed;
     }
 }
