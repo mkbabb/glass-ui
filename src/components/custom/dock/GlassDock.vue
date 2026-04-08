@@ -13,6 +13,12 @@ const props = withDefaults(
         alwaysExpanded?: boolean;
         /** Allow expanded content to wrap to multiple lines. */
         wrap?: boolean;
+        /**
+         * Layout axis of the dock. `"horizontal"` (default) lays items out
+         * left-to-right and animates `width`; `"vertical"` lays items out
+         * top-to-bottom and animates `height`.
+         */
+        orientation?: "horizontal" | "vertical";
     }>(),
     {
         collapseDelay: 2000,
@@ -22,11 +28,13 @@ const props = withDefaults(
         fadeMs: 60,
         alwaysExpanded: false,
         wrap: false,
+        orientation: "horizontal",
     },
 );
 
 const dockEl = useTemplateRef<HTMLElement>("dockEl");
 const alwaysExpanded = computed(() => props.alwaysExpanded);
+const orientation = computed(() => props.orientation);
 
 // isTransitioning is created by useDockTransition but also needed by
 // useDockState to suppress click-away during animation. We use a shared
@@ -57,6 +65,7 @@ const { visualExpanded, isTransitioning: _isTransitioning, transitionSize, dim, 
     rootEl: dockEl,
     fadeMs: props.fadeMs,
     alwaysExpanded,
+    axis: orientation,
 });
 
 // Sync the transition ref from useDockTransition to the shared ref.
@@ -82,6 +91,7 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
         ref="dockEl"
         class="glass-dock"
         :class="[
+            orientation,
             { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'dock-wrap': wrap, 'no-transition': suppressTransition, 'dock-animating': isTransitioning },
             position === 'fixed' ? 'fixed bottom-[var(--dock-pos)] left-1/2 -translate-x-1/2'
               : position === 'sticky' ? 'dock-sticky'
@@ -125,6 +135,10 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
     -webkit-backdrop-filter: var(--glass-blur-subtle);
     border: 1.5px solid var(--glass-border-medium);
     box-shadow: var(--shadow-dock);
+}
+
+/* ── Horizontal (default): width animates ── */
+.glass-dock:not(.vertical) {
     transition:
         width var(--duration-normal) var(--spring-snappy),
         padding var(--duration-normal) var(--spring-snappy),
@@ -132,6 +146,46 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
         transform var(--duration-normal) var(--spring-snappy),
         background var(--duration-normal) var(--ease-standard),
         border-color var(--duration-normal) var(--ease-standard);
+}
+
+/* ── Vertical: column layout, height animates ── */
+.glass-dock.vertical {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: stretch;
+    white-space: normal;
+    width: auto;
+    height: auto;
+    transition:
+        height var(--duration-normal) var(--spring-snappy),
+        padding var(--duration-normal) var(--spring-snappy),
+        box-shadow var(--duration-normal) var(--ease-standard),
+        transform var(--duration-normal) var(--spring-snappy),
+        background var(--duration-normal) var(--ease-standard),
+        border-color var(--duration-normal) var(--ease-standard);
+}
+
+.glass-dock.vertical .dock-layers {
+    grid-auto-flow: row;
+}
+
+.glass-dock.vertical .dock-layer {
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+    min-height: 2.5rem;
+    white-space: normal;
+}
+
+.glass-dock.vertical.collapsed .dock-layer--summary {
+    min-width: auto;
+    min-height: 2.5rem;
+    width: 100%;
+}
+
+/* dock-wrap is a horizontal responsive concept; force column on vertical */
+.glass-dock.vertical.dock-wrap {
+    flex-direction: column;
 }
 
 /* ── Collapsed: compact pill (round when icon-only) ── */
