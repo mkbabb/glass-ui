@@ -22,7 +22,10 @@ export interface UseDockTransitionOptions {
  * so it cooperates with Vue's reactive :style bindings.
  */
 export function useDockTransition(options: UseDockTransitionOptions) {
-    const { expanded, rootEl, fadeMs = 60, alwaysExpanded } = options;
+    const cssFadeMs = typeof document !== 'undefined'
+        ? parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-dock-fade')) || 60
+        : 60;
+    const { expanded, rootEl, fadeMs = cssFadeMs, alwaysExpanded } = options;
 
     const visualExpanded = ref(expanded.value);
     const isTransitioning = ref(false);
@@ -40,11 +43,16 @@ export function useDockTransition(options: UseDockTransitionOptions) {
     const suppressTransition = ref(false);
 
     let fadeTimer: ReturnType<typeof setTimeout> | null = null;
+    let fadeInTimer: ReturnType<typeof setTimeout> | null = null;
 
-    function clearFadeTimer() {
+    function clearTimers() {
         if (fadeTimer) {
             clearTimeout(fadeTimer);
             fadeTimer = null;
+        }
+        if (fadeInTimer) {
+            clearTimeout(fadeInTimer);
+            fadeInTimer = null;
         }
     }
 
@@ -59,7 +67,7 @@ export function useDockTransition(options: UseDockTransitionOptions) {
         const el = rootEl.value;
         if (!el) return;
 
-        clearFadeTimer();
+        clearTimers();
         const id = ++transitionId;
 
         // Capture current width before any changes
@@ -118,6 +126,14 @@ export function useDockTransition(options: UseDockTransitionOptions) {
                         requestAnimationFrame(() => {
                             if (id !== transitionId) return;
                             transitionWidth.value = `${to}px`;
+
+                            // Begin fade-in during the width animation's deceleration
+                            // phase so items appear while the dock is still settling.
+                            const widthMs = parseFloat(getComputedStyle(el).transitionDuration) * 1000 || 300;
+                            fadeInTimer = setTimeout(() => {
+                                if (id !== transitionId) return;
+                                isTransitioning.value = false;
+                            }, widthMs * 0.55);
                         });
                     });
                 });
@@ -134,7 +150,7 @@ export function useDockTransition(options: UseDockTransitionOptions) {
         }
     }
 
-    onUnmounted(clearFadeTimer);
+    onUnmounted(clearTimers);
 
     return {
         visualExpanded,

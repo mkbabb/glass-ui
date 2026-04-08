@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, useTemplateRef } from "vue";
+import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
 import { useDockState } from "./composables/useDockState";
 import { useDockTransition } from "./composables/useDockTransition";
 
@@ -28,6 +28,11 @@ const props = withDefaults(
 const dockEl = useTemplateRef<HTMLElement>("dockEl");
 const alwaysExpanded = computed(() => props.alwaysExpanded);
 
+// isTransitioning is created by useDockTransition but also needed by
+// useDockState to suppress click-away during animation. We use a shared
+// ref: useDockTransition populates it, useDockState reads it at runtime.
+const isTransitioning = ref(false);
+
 const {
     expanded,
     isPinned,
@@ -44,14 +49,20 @@ const {
     collapseDelay: props.collapseDelay,
     rootEl: dockEl,
     alwaysExpanded,
+    isTransitioning,
 });
 
-const { visualExpanded, isTransitioning, transitionWidth, suppressTransition, onTransitionEnd } = useDockTransition({
+const { visualExpanded, isTransitioning: _isTransitioning, transitionWidth, suppressTransition, onTransitionEnd } = useDockTransition({
     expanded,
     rootEl: dockEl,
     fadeMs: props.fadeMs,
     alwaysExpanded,
 });
+
+// Sync the transition ref from useDockTransition to the shared ref.
+// flush: 'sync' ensures the value is available immediately for
+// capture-phase event handlers (onPointerDownOutside).
+watch(_isTransitioning, (v) => { isTransitioning.value = v; }, { immediate: true, flush: 'sync' });
 
 const dockStyle = computed(() =>
     transitionWidth.value != null ? { width: transitionWidth.value } : undefined
@@ -63,7 +74,7 @@ onMounted(() => {
     }
 });
 
-defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
+defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, release });
 </script>
 
 <template>
@@ -71,7 +82,7 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
         ref="dockEl"
         class="glass-dock"
         :class="[
-            { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'dock-wrap': wrap, 'no-transition': suppressTransition },
+            { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'dock-wrap': wrap, 'no-transition': suppressTransition, 'dock-animating': isTransitioning },
             position === 'fixed' ? 'fixed bottom-[var(--dock-pos)] left-1/2 -translate-x-1/2'
               : position === 'sticky' ? 'dock-sticky'
               : 'dock-inline',
@@ -195,6 +206,12 @@ defineExpose({ expanded, isPinned, expand, collapse, keepOpen, release });
 
 .glass-dock.expanded {
     overflow: visible;
+}
+
+/* Contain items during width animation — prevents play button / icons
+   from visually teleporting outside the dock's animating bounds. */
+.glass-dock.dock-animating {
+    overflow: hidden !important;
 }
 
 /* When the dock stretches to a set width (not fit-content), layers fill it */

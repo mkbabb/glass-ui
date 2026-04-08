@@ -9,6 +9,8 @@ export interface UseDockStateOptions {
     rootEl: Ref<HTMLElement | null>;
     /** Disable collapse behavior and keep the dock expanded. */
     alwaysExpanded?: Ref<boolean> | boolean;
+    /** Ref from useDockTransition — suppresses click-away during animation */
+    isTransitioning?: Ref<boolean>;
     /** Called on every state transition */
     onStateChange?: (newState: DockState, oldState: DockState) => void;
 }
@@ -34,7 +36,7 @@ export type DockState = "collapsed" | "hover" | "pinned";
  * ```
  */
 export function useDockState(options: UseDockStateOptions) {
-    const { collapseDelay = 2500, rootEl, alwaysExpanded = false, onStateChange } = options;
+    const { collapseDelay = 2500, rootEl, alwaysExpanded = false, isTransitioning, onStateChange } = options;
 
     const getAlwaysExpanded = () =>
         typeof alwaysExpanded === "boolean" ? alwaysExpanded : alwaysExpanded.value;
@@ -227,22 +229,12 @@ export function useDockState(options: UseDockStateOptions) {
 
     function onPointerDownOutside(e: PointerEvent) {
         if (getAlwaysExpanded()) return;
+        // During transitions, pointer-events:none on dock-layers causes clicks
+        // to target the parent element — suppress click-away entirely.
+        if (isTransitioning?.value) return;
         const root = rootEl.value;
         if (!root || root.contains(e.target as Node)) return;
         if (isTeleportedTarget(e.target)) return;
-
-        // Bounds check: during transitions, pointer-events:none on dock-layers
-        // makes the event target the parent element. The click is still visually
-        // "inside" the dock, so don't treat it as an outside click.
-        const rect = root.getBoundingClientRect();
-        if (
-            e.clientX >= rect.left &&
-            e.clientX <= rect.right &&
-            e.clientY >= rect.top &&
-            e.clientY <= rect.bottom
-        ) {
-            return;
-        }
 
         // Click outside → always collapse, even if keepOpenCount > 0
         // (keepOpenCount prevents timer-based collapse, not explicit dismissal)

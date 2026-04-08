@@ -1,9 +1,12 @@
-import { ref, computed, onUnmounted } from "vue";
+import { ref, computed, nextTick, onUnmounted } from "vue";
 import type { Ref, WritableComputedRef } from "vue";
 
 export interface UsePopupMutexOptions {
     /** Delay when swapping between popups to prevent jarring transitions (ms, default: 180) */
     swapDelay?: number;
+    /** Root element — when a popup closes during a swap, the closing trigger's
+     *  focus is cleared to prevent a flash before the next popup opens. */
+    rootEl?: Ref<HTMLElement | null>;
 }
 
 export interface UsePopupMutexReturn<K extends string> {
@@ -22,7 +25,10 @@ export interface UsePopupMutexReturn<K extends string> {
 export function usePopupMutex<K extends string>(
     options?: UsePopupMutexOptions,
 ): UsePopupMutexReturn<K> {
-    const { swapDelay = 180 } = options ?? {};
+    const cssSwapDelay = typeof document !== 'undefined'
+        ? parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-popup-swap')) || 180
+        : 180;
+    const { swapDelay = cssSwapDelay, rootEl } = options ?? {};
 
     const current = ref<K | null>(null) as Ref<K | null>;
     const pending = ref<K | null>(null) as Ref<K | null>;
@@ -35,6 +41,21 @@ export function usePopupMutex<K extends string>(
         }
     }
 
+    /**
+     * When a popup closes during a swap, reka-ui returns focus to the
+     * closing trigger (correct for accessibility, but causes a visible
+     * focus-ring flash before the next popup opens). Blur it.
+     */
+    function blurClosingTrigger() {
+        nextTick(() => {
+            const root = rootEl?.value;
+            const active = document.activeElement;
+            if (active instanceof HTMLElement && root?.contains(active)) {
+                active.blur();
+            }
+        });
+    }
+
     function update(key: K, open: boolean) {
         if (open) {
             if (current.value === key) return;
@@ -44,6 +65,7 @@ export function usePopupMutex<K extends string>(
             if (current.value && current.value !== key) {
                 pending.value = key;
                 current.value = null;
+                blurClosingTrigger();
                 swapTimer = setTimeout(() => {
                     current.value = pending.value;
                     pending.value = null;
