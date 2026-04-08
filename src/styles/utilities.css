@@ -126,13 +126,13 @@
     .rainbow-text {
         background: linear-gradient(
             90deg,
-            hsl(0 85% 70%),
-            hsl(30 85% 65%),
-            hsl(60 85% 60%),
-            hsl(120 65% 55%),
-            hsl(200 85% 60%),
-            hsl(260 75% 65%),
-            hsl(320 80% 65%)
+            var(--rainbow-red),
+            var(--rainbow-orange),
+            var(--rainbow-yellow),
+            var(--rainbow-green),
+            var(--rainbow-blue),
+            var(--rainbow-indigo),
+            var(--rainbow-violet)
         );
         background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -144,13 +144,13 @@
             linear-gradient(var(--background), var(--background)) padding-box,
             linear-gradient(
                     135deg,
-                    hsl(0 85% 70%),
-                    hsl(60 85% 60%),
-                    hsl(120 65% 55%),
-                    hsl(200 85% 60%),
-                    hsl(260 75% 65%),
-                    hsl(320 80% 65%),
-                    hsl(0 85% 70%)
+                    var(--rainbow-red),
+                    var(--rainbow-yellow),
+                    var(--rainbow-green),
+                    var(--rainbow-blue),
+                    var(--rainbow-indigo),
+                    var(--rainbow-violet),
+                    var(--rainbow-red)
                 )
                 border-box;
         border: 2px solid transparent;
@@ -168,10 +168,10 @@
             3px 3px 0 var(--depth-color-shadow),
             4px 4px 0 var(--depth-color-shadow),
             5px 5px 0 var(--depth-color-shadow),
-            5px 5px 1px rgba(0, 0, 0, 0.1),
-            2px 2px 2px rgba(0, 0, 0, 0.2),
-            4px 4px 5px rgba(0, 0, 0, 0.25),
-            6px 6px 10px rgba(0, 0, 0, 0.15);
+            5px 5px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
+            2px 2px 2px color-mix(in srgb, var(--shadow-color) 20%, transparent),
+            4px 4px 5px color-mix(in srgb, var(--shadow-color) 25%, transparent),
+            6px 6px 10px color-mix(in srgb, var(--shadow-color) 15%, transparent);
     }
 
     /* ── Touch gate (iOS Safari) ── */
@@ -219,10 +219,11 @@
     }
 
     /* ── Icon sizing ── */
-    .icon-xs { @apply w-3 h-3 shrink-0; }
-    .icon-sm { @apply w-3.5 h-3.5 shrink-0; }
-    .icon-md { @apply w-4 h-4 shrink-0; }
-    .icon-lg { @apply w-5 h-5 shrink-0; }
+    .icon-xs { width: var(--icon-xs); height: var(--icon-xs); flex-shrink: 0; }
+    .icon-sm { width: var(--icon-sm); height: var(--icon-sm); flex-shrink: 0; }
+    .icon-md { width: var(--icon-md); height: var(--icon-md); flex-shrink: 0; }
+    .icon-lg { width: var(--icon-lg); height: var(--icon-lg); flex-shrink: 0; }
+    .icon-xl { width: var(--icon-xl); height: var(--icon-xl); flex-shrink: 0; }
 
     /* ── Shimmer text effects ── */
     .gold-shimmer {
@@ -235,7 +236,7 @@
     }
 
     .blue-shimmer {
-        background: linear-gradient(90deg, #1e40af, #60a5fa, #3b82f6, #60a5fa, #1e40af);
+        background: linear-gradient(90deg, var(--shimmer-blue-dark), var(--shimmer-blue-light), var(--shimmer-blue-mid), var(--shimmer-blue-light), var(--shimmer-blue-dark));
         background-size: 200% 100%;
         background-clip: text;
         -webkit-background-clip: text;
@@ -276,6 +277,18 @@
         border-radius: var(--radius-md);
         border: 1px solid var(--border);
         padding: 0.125rem 0.375rem;
+    }
+
+    /* ── Inline pill — compact rounded label for inline metadata
+       Used in lists and cards for tags, counts, statuses. ── */
+    .inline-pill {
+        display: inline-flex;
+        align-items: center;
+        border-radius: var(--radius-pill);
+        padding: 1px 6px;
+        font-size: var(--type-micro);
+        font-weight: 500;
+        line-height: 1.4;
     }
 
     /* ── Input bar — glassmorphic inline input container ── */
@@ -331,7 +344,7 @@
         transition-duration: var(--duration-normal);
         transition-timing-function: ease;
     }
-    .hover-lift:hover {
+    .hover-lift:hover:not(:disabled):not([aria-disabled='true']) {
         transform: translateY(var(--lift-sm));
         box-shadow: var(--shadow-md);
     }
@@ -341,7 +354,7 @@
         transition-duration: var(--duration-normal);
         transition-timing-function: ease;
     }
-    .hover-lift-md:hover {
+    .hover-lift-md:hover:not(:disabled):not([aria-disabled='true']) {
         transform: translateY(var(--lift-md));
         box-shadow: var(--shadow-md);
     }
@@ -351,7 +364,7 @@
         transition-duration: var(--duration-normal);
         transition-timing-function: ease;
     }
-    .hover-lift-lg:hover {
+    .hover-lift-lg:hover:not(:disabled):not([aria-disabled='true']) {
         transform: translateY(var(--lift-lg));
         box-shadow: var(--shadow-lg);
     }
@@ -362,7 +375,7 @@
         transition-duration: var(--duration-normal);
         transition-timing-function: var(--spring-smooth);
     }
-    .hover-shadow-lift:hover {
+    .hover-shadow-lift:hover:not(:disabled):not([aria-disabled='true']) {
         box-shadow: var(--shadow-xl);
     }
 
@@ -526,23 +539,38 @@
         transition-duration: var(--duration-fast);
     }
 
-    /* ── Stagger children — cascading entrance for list/grid items ── */
+    /* ── Stagger children — cascading entrance for list/grid items ──
+       Components may set `--stagger-index` directly via :style for unbounded lists.
+       Auto-staggering handled here for the first 24 children via nth-child;
+       additional children fall back to the last cycle position (0–23 modulo). */
     .stagger-children > * {
         animation: fade-in var(--duration-normal) var(--spring-smooth, ease) backwards;
-        animation-delay: calc(var(--stagger-index, 0) * 50ms);
+        animation-delay: calc(var(--stagger-index, 0) * var(--stagger-step, 50ms));
     }
-    .stagger-children > *:nth-child(1) { --stagger-index: 0; }
-    .stagger-children > *:nth-child(2) { --stagger-index: 1; }
-    .stagger-children > *:nth-child(3) { --stagger-index: 2; }
-    .stagger-children > *:nth-child(4) { --stagger-index: 3; }
-    .stagger-children > *:nth-child(5) { --stagger-index: 4; }
-    .stagger-children > *:nth-child(6) { --stagger-index: 5; }
-    .stagger-children > *:nth-child(7) { --stagger-index: 6; }
-    .stagger-children > *:nth-child(8) { --stagger-index: 7; }
-    .stagger-children > *:nth-child(9) { --stagger-index: 8; }
+    .stagger-children > *:nth-child(1)  { --stagger-index: 0; }
+    .stagger-children > *:nth-child(2)  { --stagger-index: 1; }
+    .stagger-children > *:nth-child(3)  { --stagger-index: 2; }
+    .stagger-children > *:nth-child(4)  { --stagger-index: 3; }
+    .stagger-children > *:nth-child(5)  { --stagger-index: 4; }
+    .stagger-children > *:nth-child(6)  { --stagger-index: 5; }
+    .stagger-children > *:nth-child(7)  { --stagger-index: 6; }
+    .stagger-children > *:nth-child(8)  { --stagger-index: 7; }
+    .stagger-children > *:nth-child(9)  { --stagger-index: 8; }
     .stagger-children > *:nth-child(10) { --stagger-index: 9; }
     .stagger-children > *:nth-child(11) { --stagger-index: 10; }
     .stagger-children > *:nth-child(12) { --stagger-index: 11; }
+    .stagger-children > *:nth-child(13) { --stagger-index: 12; }
+    .stagger-children > *:nth-child(14) { --stagger-index: 13; }
+    .stagger-children > *:nth-child(15) { --stagger-index: 14; }
+    .stagger-children > *:nth-child(16) { --stagger-index: 15; }
+    .stagger-children > *:nth-child(17) { --stagger-index: 16; }
+    .stagger-children > *:nth-child(18) { --stagger-index: 17; }
+    .stagger-children > *:nth-child(19) { --stagger-index: 18; }
+    .stagger-children > *:nth-child(20) { --stagger-index: 19; }
+    .stagger-children > *:nth-child(21) { --stagger-index: 20; }
+    .stagger-children > *:nth-child(22) { --stagger-index: 21; }
+    .stagger-children > *:nth-child(23) { --stagger-index: 22; }
+    .stagger-children > *:nth-child(24) { --stagger-index: 23; }
 
     /* ── Scroll reveal — animate on viewport entry (zero JS) ── */
     @supports (animation-timeline: view()) {
@@ -605,89 +633,18 @@
         border-color: color-mix(in srgb, var(--primary) 30%, transparent);
     }
 
-    /* ── Heatmap color scale (10 levels, light mode) ── */
-    .heatmap-1 {
-        background-color: rgb(254 226 226);
-        color: rgb(127 29 29);
-    }
-    .heatmap-2 {
-        background-color: rgb(254 202 202);
-        color: rgb(127 29 29);
-    }
-    .heatmap-3 {
-        background-color: rgb(252 165 165);
-        color: rgb(127 29 29);
-    }
-    .heatmap-4 {
-        background-color: rgb(248 113 113);
-        color: rgb(127 29 29);
-    }
-    .heatmap-5 {
-        background-color: rgb(239 68 68);
-        color: rgb(220 38 38);
-    }
-    .heatmap-6 {
-        background-color: rgb(220 38 38);
-        color: rgb(254 226 226);
-    }
-    .heatmap-7 {
-        background-color: rgb(185 28 28);
-        color: rgb(254 226 226);
-    }
-    .heatmap-8 {
-        background-color: rgb(153 27 27);
-        color: rgb(254 226 226);
-    }
-    .heatmap-9 {
-        background-color: rgb(127 29 29);
-        color: rgb(254 226 226);
-    }
-    .heatmap-10 {
-        background-color: rgb(69 10 10);
-        color: rgb(254 226 226);
-    }
-
-    /* ── Heatmap color scale (dark mode) ── */
-    .dark .heatmap-1 {
-        background-color: rgb(30 10 10);
-        color: rgb(156 163 175);
-    }
-    .dark .heatmap-2 {
-        background-color: rgb(45 15 15);
-        color: rgb(209 213 219);
-    }
-    .dark .heatmap-3 {
-        background-color: rgb(69 10 10);
-        color: rgb(229 231 235);
-    }
-    .dark .heatmap-4 {
-        background-color: rgb(91 15 15);
-        color: rgb(243 244 246);
-    }
-    .dark .heatmap-5 {
-        background-color: rgb(127 29 29);
-        color: rgb(249 250 251);
-    }
-    .dark .heatmap-6 {
-        background-color: rgb(153 27 27);
-        color: rgb(254 226 226);
-    }
-    .dark .heatmap-7 {
-        background-color: rgb(185 28 28);
-        color: rgb(254 242 242);
-    }
-    .dark .heatmap-8 {
-        background-color: rgb(220 38 38);
-        color: rgb(255 251 251);
-    }
-    .dark .heatmap-9 {
-        background-color: rgb(239 68 68);
-        color: rgb(255 255 255);
-    }
-    .dark .heatmap-10 {
-        background-color: rgb(248 113 113);
-        color: rgb(255 255 255);
-    }
+    /* ── Heatmap color scale (10 levels)
+       Tokens defined in tokens.css §14 with dark mode override. ── */
+    .heatmap-1  { background-color: var(--heatmap-1-bg);  color: var(--heatmap-1-fg); }
+    .heatmap-2  { background-color: var(--heatmap-2-bg);  color: var(--heatmap-2-fg); }
+    .heatmap-3  { background-color: var(--heatmap-3-bg);  color: var(--heatmap-3-fg); }
+    .heatmap-4  { background-color: var(--heatmap-4-bg);  color: var(--heatmap-4-fg); }
+    .heatmap-5  { background-color: var(--heatmap-5-bg);  color: var(--heatmap-5-fg); }
+    .heatmap-6  { background-color: var(--heatmap-6-bg);  color: var(--heatmap-6-fg); }
+    .heatmap-7  { background-color: var(--heatmap-7-bg);  color: var(--heatmap-7-fg); }
+    .heatmap-8  { background-color: var(--heatmap-8-bg);  color: var(--heatmap-8-fg); }
+    .heatmap-9  { background-color: var(--heatmap-9-bg);  color: var(--heatmap-9-fg); }
+    .heatmap-10 { background-color: var(--heatmap-10-bg); color: var(--heatmap-10-fg); }
 }
 
 @keyframes shimmer {
