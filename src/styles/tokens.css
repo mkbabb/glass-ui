@@ -43,6 +43,11 @@
     --ease-in: cubic-bezier(0.4, 0, 1, 1);
     --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
+    /* Semantic aliases (express intent; map to spring/bezier primitives) */
+    --ease-decelerate: var(--ease-out);
+    --ease-accelerate: var(--ease-in);
+    --ease-spring: var(--spring-snappy);
+
     /* ═══════════════════════════════════════════════
        §3  Z-INDEX SCALE
        ═══════════════════════════════════════════════ */
@@ -171,6 +176,15 @@
     --animation-slide-lg: 8px;
     --popover-offset: 0.375rem;
 
+    /* Shimmer durations */
+    --duration-shimmer-fast: 3s;
+    --duration-shimmer: 5s;
+    --duration-shimmer-slow: 8s;
+
+    /* Composable timing (read by JS via getComputedStyle) */
+    --duration-dock-fade: 60ms;
+    --duration-popup-swap: 180ms;
+
     /* ═══════════════════════════════════════════════
        §7b HOVER LIFT OFFSETS
        ═══════════════════════════════════════════════ */
@@ -232,6 +246,8 @@
     --scale-press: 0.95;
     --scale-press-dock: 0.92;
     --scale-press-btn: 0.97;
+    --opacity-disabled: 0.50;
+    --opacity-icon-muted: 0.8;
 
     /* ═══════════════════════════════════════════════
        §10 FOCUS RING
@@ -273,6 +289,11 @@
     /* ═══════════════════════════════════════════════
        §12 GOLD PALETTE
        ═══════════════════════════════════════════════ */
+    /* Status colors */
+    --color-status-active: hsl(142 71% 45%);
+    --color-status-paused: hsl(48 96% 53%);
+    --color-status-idle: var(--muted-foreground);
+
     --color-gold: hsl(43 74% 49%);
     --color-gold-light: hsl(51 100% 50%);
     --color-gold-dark: hsl(34 87% 38%);
