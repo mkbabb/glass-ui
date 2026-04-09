@@ -189,11 +189,14 @@
 
     .btn-pill-ghost {
         background: transparent;
-        color: color-mix(in srgb, var(--foreground) 70%, transparent);
+        /* 85% foreground, not 70% — needs to read over translucent glass. */
+        color: color-mix(in srgb, var(--foreground) 85%, transparent);
     }
 
     .btn-pill-ghost:hover:not(:disabled) {
-        background: color-mix(in srgb, var(--foreground) 8%, transparent);
+        /* 12% bg, not 8% — a firmer lift so the hover state is obvious
+           against every glass card the dock may sit above. */
+        background: color-mix(in srgb, var(--foreground) 12%, transparent);
         color: var(--foreground);
     }
 
