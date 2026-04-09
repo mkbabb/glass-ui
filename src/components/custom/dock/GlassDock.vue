@@ -142,11 +142,15 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
     white-space: nowrap;
     overflow: hidden;
     padding: 0.375rem 0.5rem;
-    background: var(--glass-bg-medium);
-    backdrop-filter: var(--glass-blur-subtle);
-    -webkit-backdrop-filter: var(--glass-blur-subtle);
-    border: 1.5px solid var(--glass-border-medium);
-    box-shadow: var(--shadow-dock);
+    /* Consumers can reskin the dock surface by defining --glass-bg-dock,
+       --glass-blur-dock, --glass-border-dock and --shadow-dock-override.
+       Each falls back to the historical default so existing consumers are
+       untouched. bbnf-buddy routes these to its cartoon tokens. */
+    background: var(--glass-bg-dock, var(--glass-bg-medium));
+    backdrop-filter: var(--glass-blur-dock, var(--glass-blur-subtle));
+    -webkit-backdrop-filter: var(--glass-blur-dock, var(--glass-blur-subtle));
+    border: 1.5px solid var(--glass-border-dock, var(--glass-border-medium));
+    box-shadow: var(--shadow-dock-override, var(--shadow-dock));
 }
 
 /* ── Horizontal (default): width animates ── */

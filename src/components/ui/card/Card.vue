@@ -7,8 +7,15 @@ const props = defineProps<{
     /** When true, renders as a plain structural wrapper with no border, shadow, or background.
      *  Used when a Card is nested inside another card or serves as a layout container. */
     plain?: boolean;
-    /** 'default' = glass bg + shadow; 'pane' = translucent bg + blur (scrollable content panes) */
-    variant?: "default" | "pane";
+    /**
+     * 'default' = glass bg + grain overlay + shadow
+     * 'pane'    = translucent bg + blur, no grain (for scroll panes)
+     * 'cartoon' = translucent bg + heavier blur + drop shadow, no grain.
+     *             Tokens (`--glass-*-cartoon`, `--shadow-cartoon`) fall back
+     *             to the default glass tokens, so consumers opting into the
+     *             variant without defining tokens get the default look.
+     */
+    variant?: "default" | "pane" | "cartoon";
 }>();
 
 const variantClass = computed(() => {
@@ -17,6 +24,11 @@ const variantClass = computed(() => {
         // Pane uses glass background + blur without the ::after grain overlay,
         // which conflicts with overflow:auto scroll containers.
         return "scrollbar-hidden rounded-xl text-card-foreground bg-[var(--glass-bg-subtle)] [backdrop-filter:var(--glass-blur-subtle)] border border-[var(--glass-border-subtle)] shadow-[var(--shadow-card)] transition-shadow";
+    if (props.variant === "cartoon")
+        // Cartoon uses the consumer-defined cartoon tokens with graceful
+        // fallbacks to the default glass tokens. No grain overlay — the
+        // drop shadow is the primary affordance and the grain fights it.
+        return "scrollbar-hidden rounded-xl text-card-foreground bg-[var(--glass-bg-cartoon,var(--glass-bg-default))] [backdrop-filter:var(--glass-blur-cartoon,var(--glass-blur-default))] border border-[var(--glass-border-cartoon,var(--glass-border-default))] shadow-[var(--shadow-cartoon,var(--shadow-card))] transition-shadow";
     return "scrollbar-hidden glass-default rounded-xl text-card-foreground shadow-[var(--shadow-card)]";
 });
 </script>
