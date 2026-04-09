@@ -25,10 +25,11 @@ const variantClass = computed(() => {
         // which conflicts with overflow:auto scroll containers.
         return "scrollbar-hidden rounded-xl text-card-foreground bg-[var(--glass-bg-subtle)] [backdrop-filter:var(--glass-blur-subtle)] border border-[var(--glass-border-subtle)] shadow-[var(--shadow-card)] transition-shadow";
     if (props.variant === "cartoon")
-        // Cartoon uses the consumer-defined cartoon tokens with graceful
-        // fallbacks to the default glass tokens. No grain overlay — the
-        // drop shadow is the primary affordance and the grain fights it.
-        return "scrollbar-hidden rounded-xl text-card-foreground bg-[var(--glass-bg-cartoon,var(--glass-bg-default))] [backdrop-filter:var(--glass-blur-cartoon,var(--glass-blur-default))] border border-[var(--glass-border-cartoon,var(--glass-border-default))] shadow-[var(--shadow-cartoon,var(--shadow-card))] transition-shadow";
+        // Cartoon resolves through `.glass-cartoon` in glass.css — no
+        // Tailwind arbitrary-value gymnastics, no comma-in-var parsing
+        // traps. Consumers override the cartoon tokens at :root to
+        // reskin every cartoon surface at once.
+        return "scrollbar-hidden glass-cartoon rounded-xl text-card-foreground transition-shadow";
     return "scrollbar-hidden glass-default rounded-xl text-card-foreground shadow-[var(--shadow-card)]";
 });
 </script>

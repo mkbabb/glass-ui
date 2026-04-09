@@ -39,6 +39,21 @@
         box-shadow: var(--glass-highlight);
     }
 
+    /* ── Cartoon surface ──
+       Translucent bg + heavy blur + drop shadow, no grain overlay.
+       Tokens fall back to the default glass tokens so the class
+       works standalone. Consumers (e.g. bbnf-buddy) override the
+       `--glass-*-cartoon` and `--shadow-cartoon` variables at :root
+       to skin every cartoon surface at once. */
+    .glass-cartoon {
+        position: relative;
+        background: var(--glass-bg-cartoon, var(--glass-bg-default));
+        backdrop-filter: var(--glass-blur-cartoon, var(--glass-blur-default));
+        -webkit-backdrop-filter: var(--glass-blur-cartoon, var(--glass-blur-default));
+        border: 1px solid var(--glass-border-cartoon, var(--glass-border-default));
+        box-shadow: var(--shadow-cartoon, var(--shadow-card));
+    }
+
     /* Grain noise overlay — reuses paper texture SVG, no extra assets */
     .glass-subtle::after,
     .glass-default::after,
