@@ -475,6 +475,34 @@ export function useSortable<T>(
             }
         };
 
+        /**
+         * Drop-target class for a single row under a given drop
+         * index. ONE class at most — never both — so the user
+         * sees exactly one insertion line instead of a doubled
+         * pair at adjacent edges.
+         *
+         * Insertion-line convention:
+         *   drop === 0           → top of row 0 (DROP_ABOVE on row 0)
+         *   drop === k (middle)  → top of row k (DROP_ABOVE on row k)
+         *   drop === length      → bottom of last row (DROP_BELOW on last)
+         *
+         * Two rows adjacent to the insertion line sharing the
+         * line visually equals one drawn border (not two) —
+         * picking a single row eliminates the prior "doubled
+         * and wrong" appearance.
+         */
+        function flagsFor(drop: number, listLength: number): {
+            above: boolean;
+            below: boolean;
+        } {
+            const idx = findIndexById(id);
+            if (idx < 0) return { above: false, below: false };
+            if (drop === listLength) {
+                return { above: false, below: idx === listLength - 1 };
+            }
+            return { above: idx === drop, below: false };
+        }
+
         const classComputed = computed<Record<string, boolean>>(() => {
             const result: Record<string, boolean> = {
                 [DROP_ABOVE_CLASS]: false,
@@ -482,23 +510,26 @@ export function useSortable<T>(
             };
             // Local drop hint (same-list case).
             if (_dragId.value !== null && _dropIndex.value !== null) {
-                const idx = findIndexById(id);
-                if (idx >= 0) {
-                    const drop = _dropIndex.value;
-                    result[DROP_ABOVE_CLASS] = idx === drop - 1;
-                    result[DROP_BELOW_CLASS] = idx === drop;
-                }
+                const flags = flagsFor(_dropIndex.value, getItemsArray().length);
+                if (flags.above) result[DROP_ABOVE_CLASS] = true;
+                if (flags.below) result[DROP_BELOW_CLASS] = true;
             }
             // External drop hint (this instance is receiving a
             // foreign drag). `_externalDropIndex` is set by a
             // source instance through the module-level registry.
-            if (_externalDropIndex.value !== null) {
-                const idx = findIndexById(id);
-                if (idx >= 0) {
-                    const drop = _externalDropIndex.value;
-                    if (idx === drop - 1) result[DROP_ABOVE_CLASS] = true;
-                    if (idx === drop) result[DROP_BELOW_CLASS] = true;
-                }
+            // Local and external are mutually exclusive in
+            // practice — either we own the drag or a sibling does —
+            // but guard anyway so a stale value can't double-paint.
+            if (
+                _externalDropIndex.value !== null &&
+                _dragId.value === null
+            ) {
+                const flags = flagsFor(
+                    _externalDropIndex.value,
+                    getItemsArray().length,
+                );
+                if (flags.above) result[DROP_ABOVE_CLASS] = true;
+                if (flags.below) result[DROP_BELOW_CLASS] = true;
             }
             return result;
         });
