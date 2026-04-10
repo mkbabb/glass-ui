@@ -13,7 +13,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { BouncyTabs } from "@/components/custom/tabs";
 import { DarkModeToggle } from "@/components/custom/controls";
 import { GlassDock, DockLayerGroup, DockLayer } from "@/components/custom/dock";
-import { Layers, Package, Library } from "lucide-vue-next";
+import { SortableList, SortableItem, SortableHandle } from "@/components/custom/sortable-list";
+import { Layers, Package, Library, GripVertical } from "lucide-vue-next";
 import ConfigPanel from "./components/ConfigPanel.vue";
 import { FONTS, applyFont, type FontOption } from "./fonts";
 import { AURORA_SECTIONS, METABALL_SECTIONS, ATMOSPHERE_SECTIONS } from "./backgroundConfigs";
@@ -99,6 +100,23 @@ const replayScrollReveal = async () => { showScrollReveal.value = false; await n
 
 // ── Vertical GlassDock example state ──
 const verticalDockLayer = ref("assets");
+
+// ── Sortable list example state ──
+interface SortableRow {
+    id: string;
+    label: string;
+    subtitle: string;
+}
+const sortableRows = ref<SortableRow[]>([
+    { id: "hero", label: "Hero", subtitle: "Above the fold" },
+    { id: "featured", label: "Featured work", subtitle: "Case study carousel" },
+    { id: "about", label: "About", subtitle: "Bio + values" },
+    { id: "journal", label: "Journal", subtitle: "Recent notes" },
+    { id: "contact", label: "Contact", subtitle: "Footer card" },
+]);
+function commitSortableReorder(next: SortableRow[]) {
+    sortableRows.value = next;
+}
 </script>
 
 <template>
@@ -372,6 +390,50 @@ const verticalDockLayer = ref("assets");
                         </div>
                     </section>
 
+                    <!-- SortableList — pointer-drag reorder -->
+                    <section class="mb-20">
+                        <p class="section-label mb-6">Sortable — Pointer-drag Reorder</p>
+                        <div class="flex flex-col gap-4 md:flex-row md:items-start">
+                            <SortableList
+                                :items="sortableRows"
+                                :get-id="(r: SortableRow) => r.id"
+                                class="flex-1"
+                                @reorder="commitSortableReorder"
+                            >
+                                <ul class="flex flex-col gap-2">
+                                    <SortableItem
+                                        v-for="row in sortableRows"
+                                        :key="row.id"
+                                        :id="row.id"
+                                        as="li"
+                                        class="glass-default flex items-center gap-3 rounded-panel p-3"
+                                    >
+                                        <SortableHandle class="text-muted-foreground">
+                                            <GripVertical :size="16" />
+                                        </SortableHandle>
+                                        <div class="flex flex-col">
+                                            <span class="text-small font-medium">{{ row.label }}</span>
+                                            <span class="text-caption text-muted-foreground">{{ row.subtitle }}</span>
+                                        </div>
+                                    </SortableItem>
+                                </ul>
+                                <template #preview="{ dragId, x, y }">
+                                    <div
+                                        class="pointer-events-none fixed z-modal glass-elevated rounded-panel px-3 py-2 text-small font-medium shadow-lg"
+                                        :style="{ left: `${x + 12}px`, top: `${y - 10}px` }"
+                                    >
+                                        {{ sortableRows.find((r) => r.id === dragId)?.label }}
+                                    </div>
+                                </template>
+                            </SortableList>
+                            <div class="flex-1 text-small text-muted-foreground">
+                                <p class="mb-2">Drag the grip handle on any row — pointer capture drives the drag; drop target resolves against row midpoints.</p>
+                                <p class="mb-2">The composable is headless (<code>useSortable</code>); this list uses the <code>&lt;SortableList&gt;</code> / <code>&lt;SortableItem&gt;</code> / <code>&lt;SortableHandle&gt;</code> wrappers with a teleported preview slot.</p>
+                                <p>Works on touch + mouse + pen; no HTML5 DnD, no <code>user-select</code> fights.</p>
+                            </div>
+                        </div>
+                    </section>
+
                     <footer class="pb-12 text-center">
                         <p class="text-caption text-muted-foreground">glass-ui — glassmorphism, spring motion, kinetic type</p>
                     </footer>
@@ -381,3 +443,19 @@ const verticalDockLayer = ref("assets");
     </div>
     </TooltipProvider>
 </template>
+
+<style scoped>
+/* Drop-target hint styling for the SortableList demo. The
+   composable toggles these classes on whichever row the
+   insertion line currently crosses — a 2px inset line along
+   the upper edge (drop-above) or lower edge (drop-below). */
+:deep(.is-sortable-drop-above) {
+    box-shadow: inset 0 2px 0 0 hsl(260 85% 65%);
+}
+:deep(.is-sortable-drop-below) {
+    box-shadow: inset 0 -2px 0 0 hsl(260 85% 65%);
+}
+:deep(.is-sortable-dragging) {
+    opacity: 0.35;
+}
+</style>

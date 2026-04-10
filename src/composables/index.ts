@@ -1,4 +1,5 @@
 export * from "./interaction";
+export * from "./sortable";
 export { copyToClipboard } from "./useClipboard";
 export { useGlobalDark, type UseGlobalDarkOptions } from "./useGlobalDark";
 export * from "./useKeyboardShortcuts";
