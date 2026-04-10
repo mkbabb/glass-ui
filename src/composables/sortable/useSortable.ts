@@ -1,12 +1,13 @@
 /**
  * useSortable — pointer-capture drag-reorder for Vue lists.
  *
- * Headless composable: returns state + per-item registration
- * callbacks that a consumer (or the <SortableList> wrapper)
- * spreads on each row element. The composable owns all pointer
- * handling, drop-target resolution, and splice math; the consumer
- * owns the visual markup, the reactive data, and the `onReorder`
- * commit.
+ * Headless composable that owns all pointer handling, drop-target
+ * resolution, splice math, AND a DOM-clone drag ghost. Consumers
+ * spread the returned per-item binding on each row; the composable
+ * handles everything else. No `#preview` slot required — the
+ * ghost is a cloned snapshot of the row the user grabbed, so it
+ * always looks exactly like what's being dragged regardless of the
+ * row's markup.
  *
  * Why pointer events (not HTML5 DnD): HTML5 DnD is flaky inside
  * reactive rendering loops, doesn't respect `user-select: none`
@@ -15,26 +16,25 @@
  * over the entire drag lifecycle and composes cleanly with other
  * pointer-driven UI (canvas editors, pan/zoom, hover popovers).
  *
- * Drop resolution walks rendered rows via a data attribute rather
- * than subscribing to each row's bounding-box reactively — that
- * keeps the cost at O(rows) per pointermove frame and avoids a
- * layout thrash storm.
+ * Cross-list drops via `group`: two or more SortableList
+ * instances that share a group id accept items from each other.
+ * On drag move, the composable hit-tests `elementFromPoint` for
+ * any `[data-sortable-container]` element matching the same
+ * group; when the cursor crosses into a sibling instance, the
+ * drop target transfers to that instance. On drop into a
+ * foreign group, the source's `onReorder` emits the removal
+ * and the target's `onInsert` receives the item + insertion
+ * index.
  *
- * Typical usage (via the <SortableList> wrapper):
- *
- *     <SortableList :items="rows" :get-id="(r) => r.id" @reorder="commit">
- *       <SortableItem v-for="row in rows" :key="row.id" :id="row.id">
- *         <SortableHandle class="my-grip">⋮⋮</SortableHandle>
- *         <span>{{ row.label }}</span>
- *       </SortableItem>
- *     </SortableList>
- *
- * Direct composable usage is also supported for consumers that
- * want raw control and don't need the component shell.
+ * Drop resolution walks registered row elements via a data
+ * attribute rather than subscribing to each row's bounding-box
+ * reactively — that keeps the cost at O(rows) per pointermove
+ * frame and avoids a layout thrash storm.
  */
 
 import {
     computed,
+    onScopeDispose,
     shallowRef,
     type ComputedRef,
     type Ref,
@@ -57,12 +57,27 @@ export interface UseSortableOptions<T> {
      */
     getId: (item: T) => SortableId;
     /**
-     * Called once per successful drop with the full reordered
-     * array. The consumer is responsible for committing the new
-     * order back to its source of truth (store, emit, etc).
-     * Never mutates the input array.
+     * Called once per successful same-list drop with the full
+     * reordered array. Also called with the post-removal array
+     * when an item is transferred OUT to another list in the
+     * same group.
      */
     onReorder: (next: T[]) => void;
+    /**
+     * Cross-list group id. Instances that share a group id
+     * accept drops from each other. Undefined (the default)
+     * isolates this instance — drags stay within the same list.
+     */
+    group?: string;
+    /**
+     * Called when a foreign item is dropped into this list. The
+     * consumer is responsible for the insert (typically by
+     * calling its own onReorder counterpart to mutate the
+     * source-of-truth). The item type is `unknown` because the
+     * source list may own a different T — the group id is the
+     * only contract that asserts compatibility.
+     */
+    onInsert?: (index: number, item: unknown) => void;
     /**
      * Optional grip constraint. When set, drag only starts if
      * the pointerdown target is (or is a descendant of) an
@@ -103,6 +118,15 @@ export interface SortableItemBinding {
     onPointerdown: (e: PointerEvent) => void;
 }
 
+/**
+ * Container binding — spread on the list's root element so the
+ * composable can hit-test it during cross-list drags.
+ */
+export interface SortableContainerBinding {
+    ref: (el: Element | null) => void;
+    dataAttrs: Record<string, string>;
+}
+
 export interface UseSortableReturn {
     /**
      * Register a row by its stable id. Returns the binding
@@ -111,14 +135,20 @@ export interface UseSortableReturn {
      * binding so Vue's `v-bind` stays stable across rerenders.
      */
     registerItem: (id: SortableId) => SortableItemBinding;
+    /**
+     * Binding to spread on the list's container element. Marks
+     * it as a drop target for cross-list drags in the same
+     * group and exposes the container bounding rect for hit
+     * testing.
+     */
+    container: SortableContainerBinding;
     /** True while a drag is in progress. */
     isDragging: ComputedRef<boolean>;
     /** Id of the row currently being dragged, or null. */
     dragId: ComputedRef<SortableId | null>;
     /**
      * Live pointer position in page coordinates while a drag
-     * is in progress. Use this to render a floating drag
-     * preview via `<Teleport to="body">`.
+     * is in progress.
      */
     dragPosition: ComputedRef<{ x: number; y: number } | null>;
     /** Index the drop will land at, or null when no target. */
@@ -128,6 +158,50 @@ export interface UseSortableReturn {
 const DEFAULT_HANDLE_SELECTOR = "[data-sortable-handle]";
 const DROP_ABOVE_CLASS = "is-sortable-drop-above";
 const DROP_BELOW_CLASS = "is-sortable-drop-below";
+const DRAG_GHOST_CLASS = "sortable-drag-ghost";
+const SOURCE_DRAGGING_CLASS = "is-sortable-dragging";
+
+/**
+ * Module-level registry of every live `useSortable` instance.
+ * Used for cross-list drop resolution — on drag move, the source
+ * instance looks up any other instance in the same group whose
+ * container contains the cursor, and transfers the drop target
+ * to it. Entries are removed on scope dispose.
+ */
+interface InstanceHandle {
+    group?: string;
+    getContainer: () => Element | null;
+    getItems: () => readonly unknown[];
+    getId: (item: unknown) => SortableId;
+    getElements: () => Map<SortableId, Element | null>;
+    setExternalDropIndex: (index: number | null) => void;
+    acceptExternal: (index: number, item: unknown) => void;
+}
+const instances = new Set<InstanceHandle>();
+
+function findForeignTarget(
+    sourceHandle: InstanceHandle,
+    clientX: number,
+    clientY: number,
+): InstanceHandle | null {
+    if (!sourceHandle.group) return null;
+    for (const inst of instances) {
+        if (inst === sourceHandle) continue;
+        if (inst.group !== sourceHandle.group) continue;
+        const container = inst.getContainer();
+        if (!container) continue;
+        const rect = (container as HTMLElement).getBoundingClientRect();
+        if (
+            clientX >= rect.left &&
+            clientX <= rect.right &&
+            clientY >= rect.top &&
+            clientY <= rect.bottom
+        ) {
+            return inst;
+        }
+    }
+    return null;
+}
 
 export function useSortable<T>(
     options: UseSortableOptions<T>,
@@ -136,27 +210,40 @@ export function useSortable<T>(
         items,
         getId,
         onReorder,
+        onInsert,
+        group,
         handleSelector = DEFAULT_HANDLE_SELECTOR,
         axis = "y",
     } = options;
 
-    // Drag state. `_dragId` + `_dropIndex` drive the computed
-    // surface; `_pos` updates on every pointermove so a drag
-    // preview can track the cursor without reading the event
-    // stream directly.
+    // Drag state.
     const _dragId = shallowRef<SortableId | null>(null);
     const _pos = shallowRef<{ x: number; y: number } | null>(null);
     const _dropIndex = shallowRef<number | null>(null);
+    /**
+     * Foreign-drop target handle (null when the drop stays on
+     * this instance). Set by `onPointerMove` when the cursor
+     * enters another instance in the same group; consulted by
+     * `onPointerUp` to route the drop.
+     */
+    let foreignTarget: InstanceHandle | null = null;
+    /** Captured source element for the drag ghost. */
+    let ghostEl: HTMLElement | null = null;
+    /** Offset from cursor to the source element's top-left, so
+     *  the ghost tracks under the grab point rather than
+     *  teleporting to the cursor. */
+    let ghostOffsetX = 0;
+    let ghostOffsetY = 0;
+    /** The original row the user grabbed. Restored on endDrag. */
+    let sourceEl: HTMLElement | null = null;
 
-    // Per-id element cache. Populated by `registerItem` via the
-    // template ref callback. Keyed by id so the live row
-    // reference is always current even after reordering.
+    /** Container reference used for hit-testing cross-list drops. */
+    let containerEl: Element | null = null;
+
+    // Per-id element cache.
     const elements = new Map<SortableId, Element | null>();
 
-    // Binding cache. `registerItem` is called during render, so
-    // we memoize the returned object to keep v-bind identity
-    // stable frame-to-frame. Without this the row would
-    // re-bind on every render tick.
+    // Binding cache for stable v-bind identity.
     const bindings = new Map<SortableId, SortableItemBinding>();
 
     function getItemsArray(): readonly T[] {
@@ -171,20 +258,16 @@ export function useSortable<T>(
         return -1;
     }
 
-    /**
-     * Resolve the drop index for a cursor position. Walks the
-     * currently-registered row elements in document order and
-     * returns the first index whose row midpoint is past the
-     * cursor. Past the last row → length (append). Empty list
-     * → 0.
-     */
-    function resolveDropIndex(clientX: number, clientY: number): number {
-        const list = getItemsArray();
-        const horizontal = axis === "x";
+    function resolveDropIndexIn(
+        elMap: Map<SortableId, Element | null>,
+        list: readonly { id: SortableId }[],
+        clientX: number,
+        clientY: number,
+        horizontal: boolean,
+    ): number {
         const cursor = horizontal ? clientX : clientY;
         for (let i = 0; i < list.length; i++) {
-            const id = getId(list[i]);
-            const el = elements.get(id);
+            const el = elMap.get(list[i].id);
             if (!el) continue;
             const rect = (el as HTMLElement).getBoundingClientRect();
             const mid = horizontal
@@ -195,22 +278,74 @@ export function useSortable<T>(
         return list.length;
     }
 
-    /**
-     * Does a pointerdown target pass the handle filter? When
-     * `handleSelector` is null, every pointerdown on the row
-     * counts. Otherwise the target must be inside an element
-     * matching the selector.
-     */
+    function resolveDropIndex(clientX: number, clientY: number): number {
+        const list = getItemsArray().map((item) => ({ id: getId(item) }));
+        return resolveDropIndexIn(elements, list, clientX, clientY, axis === "x");
+    }
+
     function targetIsHandle(target: EventTarget | null): boolean {
         if (handleSelector === null) return true;
         if (!(target instanceof Element)) return false;
         return target.closest(handleSelector) !== null;
     }
 
+    /**
+     * Build the drag ghost by cloning the source row's DOM and
+     * positioning a fixed copy at its current bounding rect.
+     * The clone inherits scoped data-v-* attributes + classes so
+     * stylesheet selectors continue to match, giving a pixel-
+     * faithful preview without any per-consumer markup.
+     */
+    function createGhost(source: HTMLElement, clientX: number, clientY: number): void {
+        const rect = source.getBoundingClientRect();
+        ghostOffsetX = clientX - rect.left;
+        ghostOffsetY = clientY - rect.top;
+
+        const clone = source.cloneNode(true) as HTMLElement;
+        clone.classList.add(DRAG_GHOST_CLASS);
+        clone.style.position = "fixed";
+        clone.style.left = `${rect.left}px`;
+        clone.style.top = `${rect.top}px`;
+        clone.style.width = `${rect.width}px`;
+        clone.style.height = `${rect.height}px`;
+        clone.style.margin = "0";
+        clone.style.pointerEvents = "none";
+        clone.style.zIndex = "9999";
+        // Drop any id attributes on the clone so subtree query
+        // selectors don't double-match the original.
+        if (clone.id) clone.removeAttribute("id");
+        for (const el of clone.querySelectorAll<HTMLElement>("[id]")) {
+            el.removeAttribute("id");
+        }
+        document.body.appendChild(clone);
+        ghostEl = clone;
+    }
+
+    function updateGhost(clientX: number, clientY: number): void {
+        if (!ghostEl) return;
+        ghostEl.style.left = `${clientX - ghostOffsetX}px`;
+        ghostEl.style.top = `${clientY - ghostOffsetY}px`;
+    }
+
+    function destroyGhost(): void {
+        if (ghostEl && ghostEl.parentNode) {
+            ghostEl.parentNode.removeChild(ghostEl);
+        }
+        ghostEl = null;
+    }
+
     function beginDrag(id: SortableId, e: PointerEvent): void {
+        const src = elements.get(id);
+        if (!(src instanceof HTMLElement)) return;
+
         _dragId.value = id;
         _pos.value = { x: e.clientX, y: e.clientY };
         _dropIndex.value = findIndexById(id);
+        foreignTarget = null;
+        sourceEl = src;
+        src.classList.add(SOURCE_DRAGGING_CLASS);
+
+        createGhost(src, e.clientX, e.clientY);
 
         const host = e.currentTarget as Element | null;
         if (host && "setPointerCapture" in host) {
@@ -221,9 +356,6 @@ export function useSortable<T>(
             }
         }
 
-        // Attach document-level move/up so a drag that leaves
-        // the row element still tracks + commits. Removed on
-        // endDrag.
         document.addEventListener("pointermove", onPointerMove);
         document.addEventListener("pointerup", onPointerUp);
         document.addEventListener("pointercancel", onPointerUp);
@@ -232,26 +364,80 @@ export function useSortable<T>(
     function onPointerMove(e: PointerEvent): void {
         if (_dragId.value === null) return;
         _pos.value = { x: e.clientX, y: e.clientY };
-        _dropIndex.value = resolveDropIndex(e.clientX, e.clientY);
+        updateGhost(e.clientX, e.clientY);
+
+        // Cross-list drop detection. If the cursor is over
+        // another instance in the same group, hand drop target
+        // resolution to that instance. Otherwise resolve against
+        // our own rows.
+        const foreign = findForeignTarget(handle, e.clientX, e.clientY);
+        if (foreign) {
+            if (foreignTarget && foreignTarget !== foreign) {
+                foreignTarget.setExternalDropIndex(null);
+            }
+            foreignTarget = foreign;
+            const list = foreign.getItems().map((item) => ({
+                id: foreign.getId(item),
+            }));
+            const idx = resolveDropIndexIn(
+                foreign.getElements(),
+                list,
+                e.clientX,
+                e.clientY,
+                axis === "x",
+            );
+            foreign.setExternalDropIndex(idx);
+            _dropIndex.value = null;
+        } else {
+            if (foreignTarget) {
+                foreignTarget.setExternalDropIndex(null);
+                foreignTarget = null;
+            }
+            _dropIndex.value = resolveDropIndex(e.clientX, e.clientY);
+        }
     }
 
     function onPointerUp(_e: PointerEvent): void {
         const id = _dragId.value;
-        const target = _dropIndex.value;
+        const foreign = foreignTarget;
+        const dropLocal = _dropIndex.value;
+
         endDrag();
-        if (id === null || target === null) return;
+
+        if (id === null) return;
 
         const list = getItemsArray();
-        const srcIndex = findIndexById(id);
+        const srcIndex = list.findIndex((item) => getId(item) === id);
         if (srcIndex < 0) return;
 
-        // Splice semantics: when dropping below the source row,
-        // the removal shifts every index past srcIndex back by
-        // one. Clamp + adjust so the user's visual intent
-        // ("drop here") matches the landed position.
-        let insertIndex = target;
+        if (foreign) {
+            // Cross-list drop: remove from source, insert into
+            // the foreign target. Note the target's external
+            // drop index was set in pointermove.
+            const item = list[srcIndex];
+            const next = list.slice();
+            next.splice(srcIndex, 1);
+            onReorder(next);
+            // Adjust the target's insertion index only if the
+            // target is THIS instance (a noop here since foreign
+            // ≠ this). `setExternalDropIndex(null)` clears its
+            // hint class first.
+            const targetIndex = (foreign as unknown as {
+                getExternalDropIndex?: () => number | null;
+            }).getExternalDropIndex?.() ?? null;
+            foreign.setExternalDropIndex(null);
+            foreign.acceptExternal(targetIndex ?? 0, item);
+            return;
+        }
+
+        if (dropLocal === null) return;
+
+        // Same-list reorder. Splice the item out + back in at
+        // the target index, adjusting for the fact that removing
+        // the source shifts indices past it down by one.
+        let insertIndex = dropLocal;
         if (insertIndex > srcIndex) insertIndex -= 1;
-        if (insertIndex === srcIndex) return; // no-op
+        if (insertIndex === srcIndex) return;
 
         const next = list.slice();
         const [moved] = next.splice(srcIndex, 1);
@@ -260,6 +446,15 @@ export function useSortable<T>(
     }
 
     function endDrag(): void {
+        destroyGhost();
+        if (sourceEl) {
+            sourceEl.classList.remove(SOURCE_DRAGGING_CLASS);
+            sourceEl = null;
+        }
+        if (foreignTarget) {
+            foreignTarget.setExternalDropIndex(null);
+            foreignTarget = null;
+        }
         _dragId.value = null;
         _pos.value = null;
         _dropIndex.value = null;
@@ -285,17 +480,26 @@ export function useSortable<T>(
                 [DROP_ABOVE_CLASS]: false,
                 [DROP_BELOW_CLASS]: false,
             };
-            if (_dragId.value === null) return result;
-            if (_dropIndex.value === null) return result;
-            const idx = findIndexById(id);
-            if (idx < 0) return result;
-            // The drop index names the slot BEFORE which the
-            // item will land. So dropIndex === i means the row
-            // at index i is "below" the drop line, and the row
-            // at i-1 is "above" it.
-            const drop = _dropIndex.value;
-            result[DROP_ABOVE_CLASS] = idx === drop - 1;
-            result[DROP_BELOW_CLASS] = idx === drop;
+            // Local drop hint (same-list case).
+            if (_dragId.value !== null && _dropIndex.value !== null) {
+                const idx = findIndexById(id);
+                if (idx >= 0) {
+                    const drop = _dropIndex.value;
+                    result[DROP_ABOVE_CLASS] = idx === drop - 1;
+                    result[DROP_BELOW_CLASS] = idx === drop;
+                }
+            }
+            // External drop hint (this instance is receiving a
+            // foreign drag). `_externalDropIndex` is set by a
+            // source instance through the module-level registry.
+            if (_externalDropIndex.value !== null) {
+                const idx = findIndexById(id);
+                if (idx >= 0) {
+                    const drop = _externalDropIndex.value;
+                    if (idx === drop - 1) result[DROP_ABOVE_CLASS] = true;
+                    if (idx === drop) result[DROP_BELOW_CLASS] = true;
+                }
+            }
             return result;
         });
 
@@ -315,8 +519,55 @@ export function useSortable<T>(
         return binding;
     }
 
+    // External drop index — set by a sibling instance when it's
+    // dragging an item over this list. Drives drop-target
+    // highlighting on this instance's rows during a foreign
+    // drag.
+    const _externalDropIndex = shallowRef<number | null>(null);
+
+    const container: SortableContainerBinding = {
+        ref: (el) => {
+            containerEl = el;
+        },
+        dataAttrs: {
+            "data-sortable-container": group ?? "",
+        },
+    };
+
+    // Register this instance in the module-level set for
+    // cross-list lookups. Captured after all closures are
+    // defined so the handle's callbacks can reference them.
+    const handle: InstanceHandle = {
+        group,
+        getContainer: () => containerEl,
+        getItems: () => items.value as readonly unknown[],
+        getId: (item) => getId(item as T),
+        getElements: () => elements,
+        setExternalDropIndex: (index) => {
+            _externalDropIndex.value = index;
+        },
+        acceptExternal: (index, item) => {
+            if (!onInsert) return;
+            onInsert(index, item);
+        },
+    };
+    // Extra getter for the external drop index (used by the
+    // source instance's pointerup to find the target insertion
+    // index at drop time).
+    (handle as unknown as {
+        getExternalDropIndex: () => number | null;
+    }).getExternalDropIndex = () => _externalDropIndex.value;
+
+    instances.add(handle);
+    onScopeDispose(() => {
+        instances.delete(handle);
+        // Defensive cleanup if the scope is torn down mid-drag.
+        endDrag();
+    });
+
     return {
         registerItem,
+        container,
         isDragging: computed(() => _dragId.value !== null),
         dragId: computed(() => _dragId.value),
         dragPosition: computed(() => _pos.value),

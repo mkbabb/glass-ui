@@ -417,19 +417,11 @@ function commitSortableReorder(next: SortableRow[]) {
                                         </div>
                                     </SortableItem>
                                 </ul>
-                                <template #preview="{ dragId, x, y }">
-                                    <div
-                                        class="pointer-events-none fixed z-modal glass-elevated rounded-panel px-3 py-2 text-small font-medium shadow-lg"
-                                        :style="{ left: `${x + 12}px`, top: `${y - 10}px` }"
-                                    >
-                                        {{ sortableRows.find((r) => r.id === dragId)?.label }}
-                                    </div>
-                                </template>
                             </SortableList>
                             <div class="flex-1 text-small text-muted-foreground">
                                 <p class="mb-2">Drag the grip handle on any row — pointer capture drives the drag; drop target resolves against row midpoints.</p>
-                                <p class="mb-2">The composable is headless (<code>useSortable</code>); this list uses the <code>&lt;SortableList&gt;</code> / <code>&lt;SortableItem&gt;</code> / <code>&lt;SortableHandle&gt;</code> wrappers with a teleported preview slot.</p>
-                                <p>Works on touch + mouse + pen; no HTML5 DnD, no <code>user-select</code> fights.</p>
+                                <p class="mb-2">The composable is headless (<code>useSortable</code>); this list uses the <code>&lt;SortableList&gt;</code> / <code>&lt;SortableItem&gt;</code> / <code>&lt;SortableHandle&gt;</code> wrappers. The drag ghost is auto-cloned from the source row so it matches whatever markup you put inside.</p>
+                                <p>Works on touch + mouse + pen; no HTML5 DnD, no <code>user-select</code> fights. Pass the same <code>group</code> id to multiple lists for cross-list drops.</p>
                             </div>
                         </div>
                     </section>
