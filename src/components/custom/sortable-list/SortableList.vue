@@ -105,9 +105,20 @@ defineExpose({
 .sortable-drag-ghost {
     /* Make the floating clone read as semi-lifted without
        obscuring what's underneath. Rotation adds the same
-       "picked up" affordance macOS + Figma use. */
-    opacity: 0.88;
+       "picked up" affordance macOS + Figma use.
+
+       The golden outline + halo match the drop-zone shimmer
+       bar's palette so the whole drag reads as a single
+       visual system: "this golden thing is moving to this
+       golden line." A solid 2px gold ring wraps the clone
+       (tight affordance), a soft ~16px gold glow bleeds out
+       around it (warmth), then the usual charcoal drop
+       shadows sit underneath to lift it off the page. */
+    opacity: 0.92;
     box-shadow:
+        0 0 0 2px var(--color-gold),
+        0 0 18px 2px color-mix(in srgb, var(--color-gold) 55%, transparent),
+        0 0 4px 0 color-mix(in srgb, var(--color-gold-light) 70%, transparent),
         0 12px 32px -4px color-mix(in srgb, black 35%, transparent),
         0 4px 12px -2px color-mix(in srgb, black 20%, transparent);
     transform: rotate(1.5deg);
