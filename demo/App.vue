@@ -14,6 +14,7 @@ import { BouncyTabs } from "@/components/custom/tabs";
 import { DarkModeToggle } from "@/components/custom/controls";
 import { GlassDock, DockLayerGroup, DockLayer } from "@/components/custom/dock";
 import { SortableList, SortableItem, SortableHandle } from "@/components/custom/sortable-list";
+import { ToggleChip } from "@/components/custom/toggle-chip";
 import { Layers, Package, Library, GripVertical } from "lucide-vue-next";
 import ConfigPanel from "./components/ConfigPanel.vue";
 import { FONTS, applyFont, type FontOption } from "./fonts";
@@ -117,6 +118,19 @@ const sortableRows = ref<SortableRow[]>([
 function commitSortableReorder(next: SortableRow[]) {
     sortableRows.value = next;
 }
+
+// ── ToggleChip example state ──
+const toggleChipFilter = ref<"outer" | "counter">("outer");
+const toggleChipBones = ["crown", "base", "throat", "stem", "tail"] as const;
+const activeBone = ref<string | null>("stem");
+const posePreviewIds = [
+    { id: "idle", label: "Idle" },
+    { id: "excited", label: "Excited" },
+    { id: "scared", label: "Scared" },
+    { id: "sleepy", label: "Sleepy" },
+    { id: "sad", label: "Sad" },
+] as const;
+const activePose = ref<string>("idle");
 </script>
 
 <template>
@@ -422,6 +436,59 @@ function commitSortableReorder(next: SortableRow[]) {
                                 <p class="mb-2">Drag the grip handle on any row — pointer capture drives the drag; drop target resolves against row midpoints.</p>
                                 <p class="mb-2">The composable is headless (<code>useSortable</code>); this list uses the <code>&lt;SortableList&gt;</code> / <code>&lt;SortableItem&gt;</code> / <code>&lt;SortableHandle&gt;</code> wrappers. The drag ghost is auto-cloned from the source row so it matches whatever markup you put inside.</p>
                                 <p>Works on touch + mouse + pen; no HTML5 DnD, no <code>user-select</code> fights. Pass the same <code>group</code> id to multiple lists for cross-list drops.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ToggleChip — selectable chip + cell variants -->
+                    <section class="mb-20">
+                        <p class="section-label mb-6">ToggleChip — Selector Chips &amp; Cells</p>
+                        <div class="flex flex-col gap-8 md:flex-row md:items-start">
+                            <div class="flex-1 flex flex-col gap-6">
+                                <div>
+                                    <p class="text-caption text-muted-foreground mb-2">Exclusive — contour filter (chip variant)</p>
+                                    <div class="flex items-center gap-2">
+                                        <ToggleChip
+                                            :pressed="toggleChipFilter === 'outer'"
+                                            @update:pressed="toggleChipFilter = 'outer'"
+                                        >Outer</ToggleChip>
+                                        <ToggleChip
+                                            :pressed="toggleChipFilter === 'counter'"
+                                            @update:pressed="toggleChipFilter = 'counter'"
+                                        >Counter</ToggleChip>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-caption text-muted-foreground mb-2">Single-select — bone picker (chip variant)</p>
+                                    <div class="flex flex-wrap items-center gap-1.5">
+                                        <ToggleChip
+                                            v-for="bone in toggleChipBones"
+                                            :key="bone"
+                                            :pressed="activeBone === bone"
+                                            @update:pressed="activeBone = $event ? bone : null"
+                                        >{{ bone }}</ToggleChip>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-caption text-muted-foreground mb-2">Grid — pose picker (cell variant)</p>
+                                    <div class="grid grid-cols-3 gap-2 max-w-md">
+                                        <ToggleChip
+                                            v-for="pose in posePreviewIds"
+                                            :key="pose.id"
+                                            variant="cell"
+                                            :pressed="activePose === pose.id"
+                                            @update:pressed="activePose = pose.id"
+                                        >
+                                            <Layers :size="22" />
+                                            <span>{{ pose.label }}</span>
+                                        </ToggleChip>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-1 text-small text-muted-foreground">
+                                <p class="mb-2">Toggleable <code>ToggleChip</code> is a thin cva wrapper around reka-ui's <code>Toggle</code> root — <code>aria-pressed</code>, keyboard activation, and <code>data-state</code> styling come free.</p>
+                                <p class="mb-2">Two variants today: <code>chip</code> (inline, caption-sized) for token-like selectors; <code>cell</code> (vertical card with icon + label) for preview grids.</p>
+                                <p>Use plain <code>pressed</code> / <code>@update:pressed</code> for exclusive one-shot selects, or stack multiple instances for multi-select — no <code>ToggleGroup</code> required.</p>
                             </div>
                         </div>
                     </section>
