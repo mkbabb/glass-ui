@@ -78,13 +78,21 @@ function toggle() {
 // --- Position the panel after it mounts to avoid clipping ---
 const popoverEl = useTemplateRef<HTMLElement>("popoverEl");
 const panelEl = useTemplateRef<HTMLElement>("panelEl");
-const OFFSET = 6;
-const VIEWPORT_PAD = 8;
+
+function readCssLen(prop: string, fallback: number): number {
+    if (typeof document === "undefined") return fallback;
+    const raw = getComputedStyle(document.documentElement).getPropertyValue(prop).trim();
+    const n = parseFloat(raw);
+    return Number.isFinite(n) ? n : fallback;
+}
 
 function positionPanel() {
     const trigger = popoverEl.value;
     const panel = panelEl.value;
     if (!trigger || !panel) return;
+
+    const OFFSET = readCssLen("--popover-offset", 6);
+    const VIEWPORT_PAD = readCssLen("--popover-viewport-pad", 8);
 
     const triggerRect = trigger.getBoundingClientRect();
     const panelRect = panel.getBoundingClientRect();

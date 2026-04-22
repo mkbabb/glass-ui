@@ -69,6 +69,10 @@ const isLeaving = computed(() => group.leavingLayerId.value === props.id);
  */
 .dock-layer-item-host {
     grid-area: 1 / 1;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    gap: 0.375rem;
     opacity: 0;
     pointer-events: none;
     position: absolute;
@@ -81,6 +85,11 @@ const isLeaving = computed(() => group.leavingLayerId.value === props.id);
     pointer-events: auto;
     position: relative;
     inset: auto;
+    /* max-content gives a definite width so any `w-full` / `flex-1` descendants
+       resolve non-circularly against the layer's natural content width, and the
+       grid track sizes correctly for useLayerTransition's FLIP measurement. */
+    width: max-content;
+    min-width: 0;
 }
 
 .dock-layer-item-host.is-leaving {

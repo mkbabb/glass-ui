@@ -232,12 +232,6 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
 /* ── Layer stacking via grid ── */
 .dock-layers {
     display: grid;
-    transition: opacity var(--duration-instant) var(--ease-standard);
-}
-
-.dock-layers.dock-transitioning {
-    opacity: 0;
-    pointer-events: none;
 }
 
 .dock-layer {
@@ -261,12 +255,6 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
 
 .glass-dock.expanded {
     overflow: visible;
-}
-
-/* Contain items during width animation — prevents play button / icons
-   from visually teleporting outside the dock's animating bounds. */
-.glass-dock.dock-animating {
-    overflow: hidden !important;
 }
 
 /* When the dock stretches to a set width (not fit-content), layers fill it */

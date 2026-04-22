@@ -51,12 +51,6 @@ export function useDockState(options: UseDockStateOptions) {
     let removeClickAway: (() => void) | null = null;
     let isCollapsing = false;
 
-    // Suppress events briefly after mount to avoid phantom triggers
-    let ignoreEvents = true;
-    setTimeout(() => {
-        ignoreEvents = false;
-    }, 600);
-
     let prevState: DockState = state.value;
     function syncDerived() {
         if (getAlwaysExpanded()) {
@@ -123,7 +117,6 @@ export function useDockState(options: UseDockStateOptions) {
             syncDerived();
             return;
         }
-        if (ignoreEvents) return;
         clearTimer();
         state.value = "hover";
         syncDerived();
@@ -133,7 +126,6 @@ export function useDockState(options: UseDockStateOptions) {
 
     function onMouseEnter() {
         if (getAlwaysExpanded()) return;
-        if (ignoreEvents) return;
         clearTimer();
         if (state.value === "collapsed") {
             state.value = "hover";
@@ -167,7 +159,6 @@ export function useDockState(options: UseDockStateOptions) {
 
     function onFocusIn() {
         if (getAlwaysExpanded()) return;
-        if (ignoreEvents) return;
         clearTimer();
         if (state.value === "collapsed") {
             state.value = "hover";

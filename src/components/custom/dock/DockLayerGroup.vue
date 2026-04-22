@@ -197,9 +197,6 @@ function isComponent(icon: unknown): icon is Component {
 
 .dock-layer-stack {
     position: relative;
-    flex: 1;
-    min-width: 0;
-    min-height: 0;
     display: grid;
     transition:
         width var(--duration-normal) var(--spring-snappy),

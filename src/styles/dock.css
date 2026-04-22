@@ -1,100 +1,13 @@
-/* Dock utilities — icon buttons, select triggers, separators, layer grid */
+/* Dock utilities — layer grid, separators, spacers, play button, labels.
+ *
+ * NOTE: dock button styling (icon, select, dropdown) has been replaced by
+ * self-contained Vue components — <DockIconButton>, <DockSelectTrigger>,
+ * <DockDropdownTrigger> — each with scoped four-state styles. The legacy
+ * utility classes .dock-btn-base, .dock-icon-btn, .dock-icon-btn-compact,
+ * .dock-select-trigger, .dock-dropdown-trigger have been removed.
+ */
 
 @layer components {
-    /* ── Shared interactive base for all dock controls ── */
-    .dock-btn-base {
-        @apply inline-flex items-center justify-center flex-shrink-0 cursor-pointer border-none bg-transparent;
-        border-radius: var(--radius-pill);
-        color: color-mix(in srgb, var(--foreground) calc(var(--opacity-icon-muted) * 100%), transparent);
-        outline: none;
-        transition: background-color var(--duration-fast) var(--ease-standard),
-                    color var(--duration-fast) var(--ease-standard),
-                    transform var(--duration-fast) var(--ease-standard),
-                    opacity var(--duration-fast) var(--ease-standard);
-    }
-
-    .dock-btn-base:hover:not(:disabled) {
-        background: var(--muted);
-        color: var(--btn-hover-color, var(--foreground));
-    }
-
-    .dock-btn-base:active:not(:disabled) {
-        transform: scale(var(--scale-press-dock));
-    }
-
-    .dock-btn-base:focus:not(:focus-visible) {
-        box-shadow: none !important;
-        outline: none !important;
-    }
-
-    .dock-btn-base:focus-visible {
-        box-shadow: var(--focus-ring-shadow);
-        outline: none;
-        transition: background-color var(--duration-fast) var(--ease-standard),
-                    color var(--duration-fast) var(--ease-standard),
-                    transform var(--duration-fast) var(--ease-standard),
-                    opacity var(--duration-fast) var(--ease-standard),
-                    box-shadow var(--duration-fast) var(--ease-standard);
-    }
-
-    .dock-btn-base:disabled {
-        opacity: var(--opacity-disabled);
-        cursor: not-allowed;
-    }
-
-    .dock-btn-base.is-active,
-    .dock-btn-base.active,
-    .dock-btn-base[aria-expanded="true"],
-    .dock-btn-base[aria-pressed="true"] {
-        background: var(--muted);
-        color: var(--foreground);
-    }
-
-    /* ── Icon button — fixed square ── */
-    .dock-icon-btn {
-        width: var(--size-icon-btn);
-        height: var(--size-icon-btn);
-        padding: 0;
-    }
-
-    .dock-icon-btn:hover:not(:disabled) {
-        transform: scale(var(--scale-hover-dock));
-    }
-
-    /* ── Compact icon button — auto-sized for inline use ── */
-    .dock-icon-btn-compact {
-        width: auto;
-        height: auto;
-        min-width: 0;
-        padding: 0.25rem;
-    }
-
-    .dock-icon-btn-compact:hover:not(:disabled) {
-        transform: scale(var(--scale-hover-dock));
-    }
-
-    /* ── Select trigger — variable width, text + chevron ── */
-    .dock-select-trigger {
-        @apply gap-1 py-1 px-2 whitespace-nowrap;
-    }
-
-    .dock-select-trigger:hover:not(:disabled) {
-        transform: none;
-    }
-
-    .dock-select-trigger:active:not(:disabled) {
-        transform: scale(var(--scale-press));
-    }
-
-    /* ── Dropdown trigger — variable width, text + icon + chevron ── */
-    .dock-dropdown-trigger {
-        @apply gap-1 py-1 px-2 whitespace-nowrap;
-    }
-
-    .dock-dropdown-trigger:hover:not(:disabled) {
-        transform: scale(var(--scale-hover-dock));
-    }
-
     /* ── Play button — gradient CTA ── */
     .dock-play-btn {
         transition:
