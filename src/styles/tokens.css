@@ -56,8 +56,10 @@
     --z-controls: 20;
     --z-bar: 30;
     --z-dock: 40;
+    --z-panel: 45;        /* non-modal floating editor panels, above dock */
     --z-overlay: 50;
     --z-hovercard: 60;
+    --z-tooltip: 60;      /* alias of hovercard — tooltips sit at the same tier */
     --z-popover: 70;
     --z-modal: 80;
     --z-fullscreen: 90;
@@ -175,6 +177,7 @@
     --animation-slide-md: 6px;
     --animation-slide-lg: 8px;
     --popover-offset: 0.375rem;
+    --popover-viewport-pad: 0.5rem;
 
     /* Shimmer durations */
     --duration-shimmer-fast: 3s;
@@ -197,7 +200,22 @@
        ═══════════════════════════════════════════════ */
     --mask-fade-width: 1rem;
     --max-width-input: 24rem;
+    --min-width-input-sm: 5rem;
     --paper-texture-size: 200px 200px;
+
+    /* Chart container heights — common echarts/viz container dimensions */
+    --chart-height-compact: 15rem;    /* 240px — mobile compact */
+    --chart-height-default: 22.5rem;  /* 360px — standard chart */
+    --chart-height-large: 25rem;      /* 400px — maps, large viz */
+    --chart-margin: 1.25rem;          /* 20px — echarts { left, right } */
+
+    /* Neutral divider colors for chart gridlines, subtle overlays
+       (canvas-safe rgba literals — echarts / canvas contexts that can't
+        resolve CSS variables at render time can import from
+        @mkbabb/glass-ui/tokens TS module) */
+    --color-divider-subtle: rgba(128, 128, 128, 0.05);
+    --color-divider-medium: rgba(128, 128, 128, 0.4);
+    --color-divider-strong: rgba(128, 128, 128, 0.7);
 
     /* ═══════════════════════════════════════════════
        §7d BORDER OPACITY SCALE

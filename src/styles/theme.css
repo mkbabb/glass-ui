@@ -23,8 +23,6 @@
     --font-size-4xl: var(--type-display-1);
     --font-size-5xl: var(--type-display-2);
     --font-size-6xl: var(--type-display-3);
-    --font-size-7xl: var(--type-display-4);
-    --font-size-8xl: var(--type-display-5);
 
     /* ── Line heights — golden-ratio paired ── */
     --line-height-micro: var(--leading-micro);
@@ -95,6 +93,12 @@
     --z-index-fullscreen: var(--z-fullscreen);
     --z-index-toast: var(--z-toast);
     --z-index-max: var(--z-max);
+
+    /* ── Chart & form container sizes (Tailwind utilities: h-chart-*, min-w-input-*) ── */
+    --height-chart-compact: var(--chart-height-compact);
+    --height-chart-default: var(--chart-height-default);
+    --height-chart-large:   var(--chart-height-large);
+    --min-width-input-sm:   var(--min-width-input-sm);
 
     /* ── Border radius ── */
     --radius: 0.5rem;
