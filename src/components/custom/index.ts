@@ -17,3 +17,5 @@ export * from "./glass-panel";
 export * from "./glass-carousel";
 export * from "./aurora";
 export * from "./toggle-chip";
+export * from "./pulse";
+export * from "./metric-badge";
