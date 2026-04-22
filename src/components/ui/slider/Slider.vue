@@ -11,6 +11,8 @@ const props = defineProps<SliderRootProps & {
 }>()
 const emits = defineEmits<SliderRootEmits>()
 
+const v = computed(() => props.variant ?? 'standard')
+
 const delegatedProps = computed(() => {
   const { class: _, variant: __, ...delegated } = props
   // Timeline variant: contain thumb within track bounds by default
@@ -21,47 +23,105 @@ const delegatedProps = computed(() => {
 })
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
-
-const v = computed(() => props.variant ?? 'standard')
 </script>
 
 <template>
   <SliderRoot
     :class="cn(
+      'glass-slider',
+      `glass-slider--${v}`,
       'relative flex w-full touch-none select-none items-center',
       props.class,
     )"
     v-bind="forwarded"
   >
-    <SliderTrack
-      :class="cn(
-        'slider-track relative w-full grow overflow-hidden rounded-full',
-        v === 'spectrum' ? 'h-6 bg-secondary'
-          : v === 'timeline' ? 'h-6 bg-foreground/5 [backdrop-filter:var(--glass-blur-subtle)]'
-          : 'h-1.5 bg-muted/50',
-      )"
-    >
-      <SliderRange
-        :class="cn(
-          'absolute h-full',
-          v === 'spectrum' ? 'bg-transparent'
-            : v === 'timeline' ? 'bg-foreground/7 rounded-full'
-            : 'bg-foreground/25',
-        )"
-      />
+    <SliderTrack class="slider-track">
+      <SliderRange class="slider-range" />
     </SliderTrack>
     <SliderThumb
       v-for="(_, key) in modelValue"
       :key="key"
       :aria-label="$attrs['aria-label'] as string ?? undefined"
-      :class="cn(
-        'slider-thumb block transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50',
-        v === 'spectrum'
-          ? 'w-3 h-full rounded-full border-2 border-foreground/40 bg-transparent'
-          : v === 'timeline'
-            ? 'h-6 w-6 rounded-full bg-foreground/15 border-none shadow-none'
-            : 'h-3.5 w-3.5 rounded-full border-2 border-background bg-foreground shadow-sm',
-      )"
+      class="slider-thumb"
     />
   </SliderRoot>
 </template>
+
+<style scoped>
+/* ── Shared geometry ── */
+.slider-track {
+    position: relative;
+    width: 100%;
+    flex-grow: 1;
+    overflow: hidden;
+    border-radius: var(--radius-pill);
+    height: var(--slider-track-height, 0.375rem);
+    background: var(--slider-track-bg, color-mix(in srgb, var(--muted) 50%, transparent));
+}
+
+.slider-range {
+    position: absolute;
+    height: 100%;
+    background: var(--slider-range-bg, color-mix(in srgb, var(--foreground) 25%, transparent));
+}
+
+.slider-thumb {
+    display: block;
+    width: var(--slider-thumb-size, 0.875rem);
+    height: var(--slider-thumb-size, 0.875rem);
+    border-radius: var(--radius-pill);
+    border: var(--slider-thumb-border-width, 2px) solid
+        var(--slider-thumb-border-color, var(--background));
+    background: var(--slider-thumb-bg, var(--foreground));
+    box-shadow: var(--slider-thumb-shadow, var(--shadow-sm));
+    transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.slider-thumb:focus-visible {
+    outline: none;
+}
+
+.glass-slider[data-disabled] .slider-thumb {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* ── Variant: spectrum (tall bg track, thin bar thumb) ── */
+.glass-slider--spectrum .slider-track {
+    height: var(--slider-track-height, 1.5rem);
+    background: var(--slider-track-bg, var(--secondary));
+}
+
+.glass-slider--spectrum .slider-range {
+    background: transparent;
+}
+
+.glass-slider--spectrum .slider-thumb {
+    width: var(--slider-thumb-size, 0.75rem);
+    height: 100%;
+    border-color: var(--slider-thumb-border-color, color-mix(in srgb, var(--foreground) 40%, transparent));
+    background: transparent;
+    box-shadow: none;
+}
+
+/* ── Variant: timeline (glass scrub track, disc thumb) ── */
+.glass-slider--timeline .slider-track {
+    height: var(--slider-track-height, 1.5rem);
+    background: var(--slider-track-bg, color-mix(in srgb, var(--foreground) 5%, transparent));
+    backdrop-filter: var(--glass-blur-subtle);
+    -webkit-backdrop-filter: var(--glass-blur-subtle);
+}
+
+.glass-slider--timeline .slider-range {
+    background: var(--slider-range-bg, color-mix(in srgb, var(--foreground) 7%, transparent));
+    border-radius: var(--radius-pill);
+}
+
+.glass-slider--timeline .slider-thumb {
+    width: var(--slider-thumb-size, 1.5rem);
+    height: var(--slider-thumb-size, 1.5rem);
+    background: var(--slider-thumb-bg, color-mix(in srgb, var(--foreground) 15%, transparent));
+    border: none;
+    box-shadow: none;
+}
+</style>

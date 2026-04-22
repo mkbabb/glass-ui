@@ -1,14 +1,20 @@
 <script setup lang="ts">
+import type { HTMLAttributes } from "vue";
+
 defineProps<{
     description?: string;
+    /** Class appended to the title <h3>. Overrides via Tailwind or component-scoped. */
+    titleClass?: HTMLAttributes["class"];
+    /** Class appended to the description <p>. */
+    descriptionClass?: HTMLAttributes["class"];
 }>();
 </script>
 
 <template>
     <div class="pane-header sticky top-0 z-10 px-4 sm:px-6 pt-4 pb-2 [backdrop-filter:var(--glass-blur-default)] bg-card/80">
-        <h3 class="pane-header-title text-pane-title"><slot /></h3>
+        <h3 :class="['pane-header-title text-pane-title', titleClass]"><slot /></h3>
         <div v-if="description" class="pane-header-desc-wrap">
-            <p class="text-pane-description">{{ description }}</p>
+            <p :class="['text-pane-description', descriptionClass]">{{ description }}</p>
         </div>
     </div>
 </template>
@@ -53,10 +59,10 @@ defineProps<{
 
 @keyframes pane-title-shrink {
     from {
-        font-size: var(--type-display-2, 3.33rem);
+        font-size: var(--pane-header-title-from-size, var(--type-display-2, 3.33rem));
     }
     to {
-        font-size: var(--type-subheading, 1.272rem);
+        font-size: var(--pane-header-title-to-size, var(--type-subheading, 1.272rem));
     }
 }
 
