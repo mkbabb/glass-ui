@@ -2,7 +2,11 @@
 import { ref, reactive, nextTick, watch, computed } from "vue";
 import { useCharSplit } from "@/composables/useCharSplit";
 import { GlassPanel } from "@/components/custom/glass-panel";
-import { useAurora, DEFAULT_AURORA_CONFIG, ATMOSPHERE_PRESET } from "@/components/custom/aurora/composables/useAurora";
+import {
+    useAurora,
+    DEFAULT_AURORA_CONFIG,
+    type AuroraConfig,
+} from "@/components/custom/aurora";
 import { useMetaballs, DEFAULT_METABALL_CONFIG, type MetaballConfig } from "@/components/custom/metaballs";
 import {
     Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectItem, SelectLabel,
@@ -18,7 +22,11 @@ import { ToggleChip } from "@/components/custom/toggle-chip";
 import { Layers, Package, Library, GripVertical } from "lucide-vue-next";
 import ConfigPanel from "./components/ConfigPanel.vue";
 import { FONTS, applyFont, type FontOption } from "./fonts";
-import { AURORA_SECTIONS, METABALL_SECTIONS, ATMOSPHERE_SECTIONS } from "./backgroundConfigs";
+import {
+    AURORA_SECTIONS,
+    AURORA_PRESETS,
+    METABALL_SECTIONS,
+} from "./backgroundConfigs";
 
 // ── Page navigation ──
 type Page = "demo" | "config";
@@ -33,55 +41,47 @@ watch(activeFont, (f) => applyFont(f), { immediate: true });
 // ── Background mode ──
 type BgMode = "aurora" | "metaballs";
 const bgMode = ref<BgMode>("aurora");
-const baseColor = ref("#c084fc");
 
 // ── Canvas refs ──
 const auroraCanvasRef = ref<HTMLCanvasElement | null>(null);
 const metaballCanvasRef = ref<HTMLCanvasElement | null>(null);
 
-// ── Configs ──
-const auroraConfig = reactive({ ...DEFAULT_AURORA_CONFIG });
+// ── Aurora config (deep-cloned default so reactive array identity survives presets) ──
+function cloneAuroraConfig(): AuroraConfig {
+    return {
+        ...DEFAULT_AURORA_CONFIG,
+        palette: DEFAULT_AURORA_CONFIG.palette.map((s) => ({ ...s })),
+    };
+}
+
+const auroraConfig = reactive<AuroraConfig>(cloneAuroraConfig());
 const metaballConfig = reactive<Required<MetaballConfig>>({
     ...DEFAULT_METABALL_CONFIG,
     colors: ["#c084fc", "#60a5fa", "#f472b6", "#34d399"],
     bgAlpha: 0.0,
 });
 
-// ── Initialize composables (shared reactive config) ──
-useAurora(auroraCanvasRef, auroraConfig, baseColor);
+// ── Initialize composables ──
+useAurora(auroraCanvasRef, auroraConfig);
 useMetaballs(metaballCanvasRef, metaballConfig);
-
-// Aurora color mode toggle — applies full preset when switching
-const auroraColorMode = computed({
-    get: () => auroraConfig.colorMode,
-    set: (mode: string) => {
-        if (mode === "derived") {
-            Object.assign(auroraConfig, ATMOSPHERE_PRESET);
-        } else {
-            Object.assign(auroraConfig, {
-                ...DEFAULT_AURORA_CONFIG,
-                colors: DEFAULT_AURORA_CONFIG.colors,
-            });
-        }
-    },
-});
 
 // ── Active config for config page ──
 const activeConfigObj = computed(() => bgMode.value === "aurora" ? auroraConfig : metaballConfig);
-const activeSections = computed(() => {
-    if (bgMode.value === "metaballs") return METABALL_SECTIONS;
-    return auroraConfig.colorMode === "derived" ? ATMOSPHERE_SECTIONS : AURORA_SECTIONS;
-});
-const activeDefaults = computed(() => {
-    if (bgMode.value === "metaballs") return { ...DEFAULT_METABALL_CONFIG };
-    return auroraConfig.colorMode === "derived"
-        ? { ...DEFAULT_AURORA_CONFIG, ...ATMOSPHERE_PRESET }
-        : { ...DEFAULT_AURORA_CONFIG };
-});
-const panelTitle = computed(() => {
-    if (bgMode.value === "metaballs") return "Metaballs";
-    return auroraConfig.colorMode === "derived" ? "Aurora (derived)" : "Aurora";
-});
+const activeContext = computed(() => undefined);
+const activeSections = computed(() =>
+    bgMode.value === "aurora" ? AURORA_SECTIONS : METABALL_SECTIONS,
+);
+const activeDefaults = computed(() =>
+    bgMode.value === "aurora"
+        ? (cloneAuroraConfig() as unknown as Record<string, unknown>)
+        : ({ ...DEFAULT_METABALL_CONFIG } as Record<string, unknown>),
+);
+const activePresets = computed(() =>
+    bgMode.value === "aurora" ? AURORA_PRESETS : undefined,
+);
+const panelTitle = computed(() =>
+    bgMode.value === "aurora" ? "Aurora" : "Metaballs",
+);
 
 // ── Demo state ──
 const heroChars = useCharSplit("Glassmorphism");
@@ -192,21 +192,6 @@ const activePose = ref<string>("idle");
                     :options="[{ label: 'Aurora', value: 'aurora' }, { label: 'Metaballs', value: 'metaballs' }]"
                 />
 
-                <!-- Derived mode sub-toggle (only when aurora active) -->
-                <template v-if="bgMode === 'aurora'">
-                    <BouncyTabs
-                        v-model="auroraColorMode"
-                        variant="pill"
-                        :options="[{ label: 'Explicit', value: 'explicit' }, { label: 'Derived', value: 'derived' }]"
-                    />
-                    <input
-                        v-if="auroraConfig.colorMode === 'derived'"
-                        type="color"
-                        v-model="baseColor"
-                        class="h-7 w-7 cursor-pointer appearance-none rounded-pill border-2 border-border/30 bg-transparent p-0 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded-pill [&::-webkit-color-swatch]:border-none"
-                        title="Base color"
-                    />
-                </template>
 
                 <div class="flex-1" />
 
@@ -228,9 +213,11 @@ const activePose = ref<string>("idle");
                 <div v-if="currentPage === 'config'" key="config">
                     <ConfigPanel
                         :config="activeConfigObj"
+                        :context="activeContext"
                         :sections="activeSections"
                         :defaults="activeDefaults"
                         :title="panelTitle"
+                        :presets="activePresets"
                     />
                 </div>
 

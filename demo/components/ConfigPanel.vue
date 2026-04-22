@@ -1,17 +1,22 @@
 <script setup lang="ts">
-import type { ConfigSection } from "../backgroundConfigs";
-import { LabeledSlider } from "@/components/custom/labeled-field";
+import type { ConfigSection, ConfigPreset, ConfigContext } from "../backgroundConfigs";
 import { Button } from "@/components/ui/button";
-import {
-    Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectItem,
-} from "@/components/ui/select";
+import ConfigFields from "./ConfigFields.vue";
 
 const props = defineProps<{
     config: Record<string, unknown>;
+    context?: ConfigContext;
     sections: ConfigSection[];
     defaults: Record<string, unknown>;
     title: string;
+    presets?: ConfigPreset[];
 }>();
+
+const emptyContext: ConfigContext = {};
+
+function ctx(): ConfigContext {
+    return props.context ?? emptyContext;
+}
 
 function resetToDefaults() {
     for (const [k, v] of Object.entries(props.defaults)) {
@@ -19,6 +24,10 @@ function resetToDefaults() {
             (props.config as Record<string, unknown>)[k] = v;
         }
     }
+}
+
+function sectionVisible(section: ConfigSection): boolean {
+    return section.visibleWhen ? section.visibleWhen(props.config, ctx()) : true;
 }
 </script>
 
@@ -29,41 +38,32 @@ function resetToDefaults() {
             <Button variant="ghost" size="sm" @click="resetToDefaults">Reset defaults</Button>
         </div>
 
-        <div v-for="section in sections" :key="section.title" class="glass-default rounded-card p-6 space-y-5">
-            <h3 class="text-small font-semibold text-muted-foreground uppercase tracking-wider">{{ section.title }}</h3>
-            <div class="grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2">
-                <div v-for="field in section.fields" :key="field.key" class="space-y-1">
-                    <template v-if="field.type === 'slider'">
-                        <LabeledSlider
-                            :model-value="(config[field.key] as number)"
-                            :label="field.label"
-                            :tooltip="field.tooltip"
-                            :min="field.min!"
-                            :max="field.max!"
-                            :step="field.step!"
-                            @update:model-value="(v: number) => (config as Record<string, unknown>)[field.key] = v"
-                        />
-                        <span class="text-micro text-muted-foreground font-mono">{{ (config[field.key] as number).toFixed(field.step! < 1 ? 2 : 0) }}</span>
-                    </template>
-
-                    <template v-else-if="field.type === 'select'">
-                        <label class="font-display text-base text-muted-foreground">{{ field.label }}</label>
-                        <Select
-                            :model-value="(config[field.key] as string)"
-                            @update:model-value="(v) => (config as Record<string, unknown>)[field.key] = v"
-                        >
-                            <SelectTrigger class="font-mono-code">
-                                <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup class="font-mono-code">
-                                    <SelectItem v-for="item in field.items" :key="item" :value="item">{{ item }}</SelectItem>
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
-                    </template>
-                </div>
+        <div v-if="presets?.length" class="glass-default rounded-card p-4">
+            <div class="flex flex-wrap items-center gap-2">
+                <span class="font-display text-small text-muted-foreground mr-2">Presets</span>
+                <Button
+                    v-for="p in presets"
+                    :key="p.label"
+                    variant="glass"
+                    size="sm"
+                    class="rounded-pill"
+                    @click="p.apply(config, ctx())"
+                >{{ p.label }}</Button>
             </div>
+        </div>
+
+        <div
+            v-for="section in sections"
+            v-show="sectionVisible(section)"
+            :key="section.title"
+            class="glass-default rounded-card p-6 space-y-5"
+        >
+            <h3 class="text-small font-semibold text-muted-foreground uppercase tracking-wider">{{ section.title }}</h3>
+            <ConfigFields
+                :config="config"
+                :context="ctx()"
+                :fields="section.fields"
+            />
         </div>
     </div>
 </template>
