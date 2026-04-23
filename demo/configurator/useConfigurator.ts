@@ -44,12 +44,12 @@ export const FONT_OPTIONS: readonly FontOption[] = [
     {
         id: "cm-serif",
         label: "Computer Modern Serif",
-        stack: '"Computer Modern Serif", "Latin Modern Roman", Georgia, serif',
+        stack: '"Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif',
     },
     {
         id: "fraunces",
         label: "Fraunces",
-        stack: '"Fraunces", "Computer Modern Serif", Georgia, serif',
+        stack: '"Fraunces", Georgia, serif',
     },
     {
         id: "general-sans",
@@ -81,10 +81,10 @@ export const FONT_OPTIONS: readonly FontOption[] = [
 export const DEFAULT_CONFIG: ConfiguratorState = {
     preset: "default",
     font: {
-        serif: '"Computer Modern Serif", "Latin Modern Roman", Georgia, serif',
-        sans: '"General Sans", "Inter", system-ui, sans-serif',
-        display: '"Fraunces", "Computer Modern Serif", Georgia, serif',
-        mono: '"Fira Code", ui-monospace, monospace',
+        serif: '"Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif',
+        sans: '"Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif',
+        display: '"Fraunces", Georgia, serif',
+        mono: '"Fira Code", "Fira Mono", monospace',
     },
     scaleBase: 16,
     hueShift: 0,
