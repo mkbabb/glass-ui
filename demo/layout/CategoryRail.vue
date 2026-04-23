@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { GlassDock, DockIconButton } from "@/components/custom/dock";
 import { cn } from "@/utils/cn";
 import { CATEGORIES } from "../stories/manifest";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
@@ -12,8 +14,9 @@ import { useStoryNavigation } from "../composables/useStoryNavigation";
 const { current, firstOfCategory } = useStoryNavigation();
 
 // Active category id falls back to the first category when no story is loaded.
-const activeCategoryId = (): string =>
-    current.value?.category.id ?? CATEGORIES[0]!.id;
+const activeCategoryId = computed<string>(
+    () => current.value?.category.id ?? CATEGORIES[0]!.id,
+);
 </script>
 
 <template>
@@ -22,30 +25,31 @@ const activeCategoryId = (): string =>
         aria-label="Category navigation"
     >
         <TooltipProvider :delay-duration="250">
-            <nav
+            <GlassDock
+                orientation="vertical"
+                always-expanded
+                fit-content
+                position="inline"
+                aria-label="Categories"
+                role="navigation"
                 :class="
                     cn(
-                        'glass-subtle flex flex-col items-center gap-1 rounded-[var(--radius-pill)] p-1.5',
+                        'max-h-[calc(100vh-6rem)] overflow-y-auto scrollbar-hidden',
                     )
                 "
-                aria-label="Categories"
             >
                 <Tooltip v-for="category in CATEGORIES" :key="category.id">
                     <TooltipTrigger as-child>
-                        <button
-                            type="button"
+                        <DockIconButton
                             :aria-current="
-                                category.id === activeCategoryId()
+                                category.id === activeCategoryId
                                     ? 'page'
                                     : undefined
                             "
                             :class="
                                 cn(
-                                    'group relative flex h-10 w-10 items-center justify-center rounded-full transition-colors',
-                                    'text-muted-foreground hover:bg-foreground/5 hover:text-foreground',
-                                    'focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)]',
-                                    category.id === activeCategoryId() &&
-                                        'bg-foreground/10 text-foreground',
+                                    category.id === activeCategoryId &&
+                                        'is-active',
                                 )
                             "
                             @click="firstOfCategory(category.id)"
@@ -56,13 +60,13 @@ const activeCategoryId = (): string =>
                                 aria-hidden="true"
                             />
                             <span class="sr-only">{{ category.title }}</span>
-                        </button>
+                        </DockIconButton>
                     </TooltipTrigger>
                     <TooltipContent side="right" :side-offset="10">
                         {{ category.title }}
                     </TooltipContent>
                 </Tooltip>
-            </nav>
+            </GlassDock>
         </TooltipProvider>
     </aside>
 </template>
