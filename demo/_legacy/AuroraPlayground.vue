@@ -20,13 +20,13 @@ import { GlassDock, DockLayerGroup, DockLayer } from "@/components/custom/dock";
 import { SortableList, SortableItem, SortableHandle } from "@/components/custom/sortable-list";
 import { ToggleChip } from "@/components/custom/toggle-chip";
 import { Layers, Package, Library, GripVertical } from "lucide-vue-next";
-import ConfigPanel from "./components/ConfigPanel.vue";
-import { FONTS, applyFont, type FontOption } from "./fonts";
+import ConfigPanel from "../components/ConfigPanel.vue";
+import { FONTS, applyFont, type FontOption } from "../fonts";
 import {
     AURORA_SECTIONS,
     AURORA_PRESETS,
     METABALL_SECTIONS,
-} from "./backgroundConfigs";
+} from "../backgroundConfigs";
 
 // ── Page navigation ──
 type Page = "demo" | "config";

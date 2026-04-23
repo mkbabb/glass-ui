@@ -25,7 +25,7 @@ withDefaults(
       'transition-all cursor-pointer',
       'hover:scale-110 hover:shadow-md active:scale-95',
       'focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2',
-      props.class,
+      $props.class,
     )"
   >
     <span
