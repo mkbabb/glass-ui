@@ -178,7 +178,7 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
     width: auto;
     height: auto;
     padding: 0.375rem;
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-dock);
     transition:
         height var(--duration-normal) var(--spring-snappy),
         width var(--duration-normal) var(--spring-snappy),
