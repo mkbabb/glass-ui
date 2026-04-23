@@ -11,21 +11,16 @@ export const buttonVariants = cva(
         default: 'bg-primary text-primary-foreground hover:bg-primary/90',
         destructive:
           'bg-destructive text-destructive-foreground hover:bg-destructive/90',
-        // Outline: stronger border + full-opacity foreground so the
-        // label reads cleanly over translucent glass backgrounds.
         outline:
-          'border border-[color-mix(in_srgb,var(--border)_70%,transparent)] bg-background/60 text-foreground hover:bg-accent/60 hover:text-foreground hover:border-[color-mix(in_srgb,var(--border)_90%,transparent)]',
+          'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
         secondary:
           'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         // Glass library modifier classes:
         accent: 'btn-pill-accent',
         ghost: 'btn-pill-ghost',
         glass: 'btn-pill-glass',
-        // Glass-subtle: full-opacity text (was 70%) — the glass surface
-        // already softens the button; a second 30% desaturation on the
-        // label just made it unreadable.
         'glass-subtle':
-          'glass-subtle text-foreground hover:border-[color-mix(in_srgb,var(--border)_60%,transparent)] hover:text-foreground',
+          'glass-subtle text-foreground/70 hover:border-[color-mix(in_srgb,var(--border)_50%,transparent)] hover:text-foreground',
         ai: 'bg-amber-500/15 text-amber-700 hover:bg-amber-500/25 dark:text-amber-400',
         'danger-subtle': 'bg-destructive/10 text-destructive hover:bg-destructive/20',
         link: 'text-primary underline-offset-4 hover:underline',

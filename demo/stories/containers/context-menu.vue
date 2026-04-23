@@ -1,0 +1,88 @@
+<script setup lang="ts">
+import { ref } from "vue";
+import {
+    ContextMenu,
+    ContextMenuCheckboxItem,
+    ContextMenuContent,
+    ContextMenuItem,
+    ContextMenuLabel,
+    ContextMenuRadioGroup,
+    ContextMenuRadioItem,
+    ContextMenuSeparator,
+    ContextMenuShortcut,
+    ContextMenuTrigger,
+} from "@/components/ui/context-menu";
+
+const tone = ref<"warm" | "cool" | "neutral">("warm");
+const showGrid = ref(true);
+</script>
+
+<template>
+    <section class="mx-auto max-w-5xl px-8 py-16">
+        <header class="mb-12 grid gap-3">
+            <p class="font-mono text-2xs uppercase tracking-[0.2em] text-muted-foreground">
+                Containers · Context Menu
+            </p>
+            <h1 class="font-display text-5xl leading-tight">Context menu</h1>
+            <p class="max-w-2xl text-lg text-muted-foreground">
+                Right-click (or long-press on touch) anchored menu sharing the
+                dropdown's subcomponent vocabulary. Use for per-element actions
+                without consuming trigger real-estate.
+            </p>
+        </header>
+
+        <div class="grid gap-12">
+            <div class="grid gap-4">
+                <h2 class="font-display text-xl">Right-click surface</h2>
+                <p class="text-sm text-muted-foreground">
+                    Right-click the paper below.
+                </p>
+                <ContextMenu>
+                    <ContextMenuTrigger
+                        class="grid h-72 place-items-center rounded-2xl border border-dashed border-border bg-card/50 text-muted-foreground transition-colors hover:bg-card/70"
+                    >
+                        <div class="grid gap-2 text-center">
+                            <p class="font-display text-xl">Right-click here</p>
+                            <p class="font-mono text-xs">
+                                tone = {{ tone }} · grid = {{ showGrid }}
+                            </p>
+                        </div>
+                    </ContextMenuTrigger>
+                    <ContextMenuContent class="w-64">
+                        <ContextMenuLabel>Canvas</ContextMenuLabel>
+                        <ContextMenuItem>
+                            Rename
+                            <ContextMenuShortcut>F2</ContextMenuShortcut>
+                        </ContextMenuItem>
+                        <ContextMenuItem>
+                            Duplicate
+                            <ContextMenuShortcut>⌘D</ContextMenuShortcut>
+                        </ContextMenuItem>
+                        <ContextMenuSeparator />
+                        <ContextMenuLabel>Tone</ContextMenuLabel>
+                        <ContextMenuRadioGroup v-model="tone">
+                            <ContextMenuRadioItem value="warm">
+                                Warm
+                            </ContextMenuRadioItem>
+                            <ContextMenuRadioItem value="cool">
+                                Cool
+                            </ContextMenuRadioItem>
+                            <ContextMenuRadioItem value="neutral">
+                                Neutral
+                            </ContextMenuRadioItem>
+                        </ContextMenuRadioGroup>
+                        <ContextMenuSeparator />
+                        <ContextMenuCheckboxItem v-model="showGrid">
+                            Show grid
+                        </ContextMenuCheckboxItem>
+                        <ContextMenuSeparator />
+                        <ContextMenuItem class="text-destructive">
+                            Delete
+                            <ContextMenuShortcut>⌘⌫</ContextMenuShortcut>
+                        </ContextMenuItem>
+                    </ContextMenuContent>
+                </ContextMenu>
+            </div>
+        </div>
+    </section>
+</template>

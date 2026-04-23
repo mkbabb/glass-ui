@@ -1,0 +1,105 @@
+<script setup lang="ts">
+import {
+    Sheet,
+    SheetClose,
+    SheetContent,
+    SheetDescription,
+    SheetFooter,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+
+type Side = "top" | "right" | "bottom" | "left";
+const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
+</script>
+
+<template>
+    <section class="mx-auto max-w-5xl px-8 py-16">
+        <header class="mb-12 grid gap-3">
+            <p class="font-mono text-2xs uppercase tracking-[0.2em] text-muted-foreground">
+                Containers · Sheet
+            </p>
+            <h1 class="font-display text-5xl leading-tight">Sheet</h1>
+            <p class="max-w-2xl text-lg text-muted-foreground">
+                Edge-anchored surface with slide entry from any of the four sides.
+                Typical host for detail panels, contextual editors, and the
+                configurator fly-out.
+            </p>
+        </header>
+
+        <div class="grid gap-12">
+            <div class="grid gap-4">
+                <h2 class="font-display text-xl">Four sides</h2>
+                <p class="text-sm text-muted-foreground">
+                    Each trigger opens its own sheet — identical body, different
+                    <code class="font-mono text-xs">side</code> prop.
+                </p>
+                <div class="flex flex-wrap gap-3">
+                    <Sheet v-for="side in sides" :key="side">
+                        <SheetTrigger as-child>
+                            <Button variant="outline" class="capitalize">
+                                Open {{ side }}
+                            </Button>
+                        </SheetTrigger>
+                        <SheetContent :side="side">
+                            <SheetHeader>
+                                <SheetTitle class="capitalize">
+                                    {{ side }} sheet
+                                </SheetTitle>
+                                <SheetDescription>
+                                    Slides in from the {{ side }} edge. Esc or
+                                    overlay-click dismisses.
+                                </SheetDescription>
+                            </SheetHeader>
+                            <div class="grid gap-4 py-4">
+                                <div class="grid gap-2">
+                                    <Label for="name">Name</Label>
+                                    <Input id="name" placeholder="workspace-01" />
+                                </div>
+                                <div class="grid gap-2">
+                                    <Label for="notes">Notes</Label>
+                                    <Textarea
+                                        id="notes"
+                                        placeholder="Free-form text…"
+                                        class="min-h-24"
+                                    />
+                                </div>
+                            </div>
+                            <SheetFooter>
+                                <SheetClose as-child>
+                                    <Button variant="outline">Cancel</Button>
+                                </SheetClose>
+                                <SheetClose as-child>
+                                    <Button>Save changes</Button>
+                                </SheetClose>
+                            </SheetFooter>
+                        </SheetContent>
+                    </Sheet>
+                </div>
+            </div>
+
+            <div class="grid gap-4">
+                <h2 class="font-display text-xl">When to use</h2>
+                <ul class="list-disc pl-6 text-sm text-muted-foreground grid gap-1">
+                    <li>
+                        Detail / inspector panels that reveal alongside the primary
+                        view rather than replacing it.
+                    </li>
+                    <li>
+                        Multi-field forms where a <code class="font-mono">Dialog</code>
+                        would feel cramped.
+                    </li>
+                    <li>
+                        Host for the demo configurator on the right edge — toggled
+                        from the <code class="font-mono">,</code> shortcut.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</template>

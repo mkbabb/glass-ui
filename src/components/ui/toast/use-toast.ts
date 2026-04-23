@@ -19,6 +19,8 @@ type ToasterToast = Toast & {
   title?: string
   description?: string
   action?: Component | VNode
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
 const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>()
@@ -41,7 +43,13 @@ function addToRemoveQueue(toastId: string) {
 
 const toasts = ref<ToasterToast[]>([])
 
-function dispatch(action: any) {
+type ToastAction =
+  | { type: 'ADD_TOAST'; toast: ToasterToast }
+  | { type: 'UPDATE_TOAST'; toast: Partial<ToasterToast> & { id: string } }
+  | { type: 'DISMISS_TOAST'; toastId?: string }
+  | { type: 'REMOVE_TOAST'; toastId?: string }
+
+function dispatch(action: ToastAction) {
   switch (action.type) {
     case 'ADD_TOAST':
       toasts.value = [action.toast, ...toasts.value].slice(0, TOAST_LIMIT)

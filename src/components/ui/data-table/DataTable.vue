@@ -47,8 +47,11 @@ const skeletonRows = computed(() =>
     Array.from({ length: Math.min(props.pageSize, 5) }, (_, i) => i),
 );
 
-function getNestedValue(obj: any, key: string): any {
-    return key.split(".").reduce((o, k) => o?.[k], obj);
+function getNestedValue(obj: unknown, key: string): unknown {
+    return key.split(".").reduce<unknown>((o, k) => {
+        if (o == null || typeof o !== "object") return undefined;
+        return (o as Record<string, unknown>)[k];
+    }, obj);
 }
 
 function getCellValue(row: T, col: DataTableColumn<T>): string {
@@ -123,7 +126,7 @@ function sortIndicator(col: DataTableColumn<T>): string {
                 <template v-else-if="rows.length > 0">
                     <TableRow
                         v-for="row in rows"
-                        :key="getNestedValue(row, rowKey) ?? undefined"
+                        :key="(getNestedValue(row, rowKey) as PropertyKey | undefined) ?? undefined"
                         class="cursor-pointer"
                         @click="emit('select', row)"
                     >
