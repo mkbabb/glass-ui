@@ -17,10 +17,10 @@ interface Accent {
 }
 
 const accents: Accent[] = [
-    { id: "rose", label: "Rose", color: "hsl(8 72% 56%)" },
-    { id: "amber", label: "Amber", color: "hsl(38 78% 54%)" },
-    { id: "teal", label: "Teal", color: "hsl(178 58% 40%)" },
-    { id: "indigo", label: "Indigo", color: "hsl(238 62% 58%)" },
+    { id: "rose", label: "§0 · Rose", color: "var(--section-color-0)" },
+    { id: "amber", label: "§5 · Amber", color: "var(--section-color-5)" },
+    { id: "teal", label: "§3 · Teal", color: "var(--section-color-3)" },
+    { id: "indigo", label: "§2 · Indigo", color: "var(--section-color-2)" },
 ];
 </script>
 

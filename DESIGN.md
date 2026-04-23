@@ -780,3 +780,42 @@ export { Button, buttonVariants, type ButtonVariants } from "@mkbabb/glass-ui";
 ```
 
 When a consumer needs shared styling tweaks, edit glass-ui source — add a variant to the CVA definition or a new CSS class. Consumer-side `:deep()` overrides signal that a token, slot-class prop, or variant is missing.
+
+
+---
+
+## Storybook (demo)
+
+`npm run dev` launches a multi-page Vue storybook at the repo root. Use it as the canonical view of every primitive in its natural habitat — no synthetic isolation, live against real tokens.
+
+### Navigation
+
+- **Vertical `GlassDock` rail** (left) — one `DockLayer` per category. Click an icon to swap.
+- **Horizontal `Carousel` pager** (top of content) — chips for every story in the active category.
+- **Keyboard**: `[` / `]` prev/next story · `{` / `}` prev/next category · `,` toggle configurator · `?` keyboard help.
+- URL scheme `/:category/:story` with browser history — every page is linkable.
+
+### Categories
+
+| Category | What it covers |
+|----------|----------------|
+| Foundations | Intro, Colors (core / rainbow / accent / viz-basis), Typography, Radii, Shadows, Motion, Paper & Glass, Icons |
+| Primitives | Buttons, Inputs, Textarea, Checkbox/Radio/Switch, Slider, NumberField, Select, Combobox, Multi-Select, Toggle, Label, Badge, MetricBadge, StatusDot, Pulse, Separator |
+| Containers | Card, Dialog, Sheet, Drawer, Popover, DropdownMenu, ContextMenu, HoverCard, Tooltip, Alert, Accordion, Collapsible |
+| Navigation | Tabs, BouncyTabs, Dock, DockLayers, Sidebar, Carousel, Command |
+| Data | Table, DataTable, TagsInput, Avatar, SortableList, InfiniteScroll, Timeline |
+| Feedback | Toast, Notification, Progress, Skeleton, ConfirmDialog |
+| Motion | Transitions, Spring Orchestrator, Stagger Reveal, Scroll-driven Type, Typewriter |
+| Compositions | Hero, Math-paper, Dashboard, Auth shell, Settings, Empty States, Aurora Playground |
+
+### Adding a story
+
+1. Create `demo/stories/<category>/<id>.vue`.
+2. Append the row to the matching category in `demo/stories/manifest.ts` (helper `s(cat, id, title, blurb?)`).
+
+The story loader is convention-based (`import.meta.glob`) — no router edits required.
+
+### Configurator
+
+Bottom-right FAB opens a `Sheet` with live controls for preset, font family (serif/sans/display/mono), scale base, hue rotation, grain opacity, density, radius, cartoon shadow, dark mode. Writes to `:root` CSS custom properties, persists to `localStorage['glass-ui-demo-config']`. The *neutral* preset in `demo/presets/neutral.css` showcases the library's range against its warm-cream default.
+

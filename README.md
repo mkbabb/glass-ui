@@ -42,9 +42,14 @@ import { useDockState, useKeyboardShortcuts, copyToClipboard } from "@mkbabb/gla
 ## Build
 
 ```bash
+npm run dev          # storybook demo (multi-page, dock + carousel navigation)
 npm run build        # library → dist/glass-ui.js + glass-ui.css + index.d.ts
 npm run typecheck    # vue-tsc --noEmit
 ```
+
+## Storybook
+
+`npm run dev` launches a Vue 3 storybook under `demo/` covering every primitive, container, navigation element, data component, feedback pattern, motion demo, and composition. Vertical `GlassDock` rail for category navigation; horizontal `Carousel` pager for stories within a category. Keyboard: `[`/`]` prev/next story, `{`/`}` prev/next category, `,` configurator, `?` keyboard help. A dismissible right-side `Sheet` lets you live-edit font/scale/hue/grain/radius/density/cartoon-shadow/dark tokens against `:root`. See `DESIGN.md#storybook-demo` for the full category index.
 
 ## Structure
 

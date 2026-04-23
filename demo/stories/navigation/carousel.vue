@@ -60,7 +60,7 @@ function setApi(api: CarouselApi | undefined) {
                     <CarouselContent>
                         <CarouselItem v-for="s in slides" :key="s.title">
                             <div
-                                class="flex h-48 flex-col items-start justify-end rounded-[var(--radius-card)] p-5 text-[hsl(24_10%_10%)]"
+                                class="flex h-48 flex-col items-start justify-end rounded-card p-5 text-foreground"
                                 :style="{ background: `hsl(${s.hue} 60% 82%)` }"
                             >
                                 <p class="text-xs uppercase tracking-widest opacity-70">{{ s.note }}</p>
