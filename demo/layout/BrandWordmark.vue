@@ -19,11 +19,11 @@ defineProps<{
     >
         <span
             aria-hidden="true"
-            class="font-display italic text-[1.45em] leading-none text-foreground"
+            class="font-display italic text-[1.35em] leading-none text-foreground"
             style="font-variation-settings: 'WONK' 1, 'SOFT' 0; font-optical-sizing: auto"
         >
             &#x2131;
         </span>
-        <span class="font-serif text-[1em] text-foreground/90">glass-ui</span>
+        <span class="font-serif text-[1em] tracking-tight text-foreground/90">glass-ui</span>
     </span>
 </template>
