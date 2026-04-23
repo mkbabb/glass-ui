@@ -1,8 +1,13 @@
 /*
  * tokens.css — Unified design tokens for @mkbabb/glass-ui
  *
- * Shared structural tokens used by all consumer projects.
- * Project-specific colors/fonts are overridden in each consumer's local CSS.
+ * Library default identity: warm-cream + muted-black, 13-stop per-section jewel
+ * palette, viz-basis colors (Fourier red / Chebyshev blue / Legendre purple),
+ * cartoon offset shadows, 0.625rem base radius, paper-and-glass forward.
+ *
+ * Structural tokens (durations, easings, springs, z-index, focus ring,
+ * interactive scales) are stable across consumers. Visual tokens (colors,
+ * shadows, radii, grain opacities) are consumer-overridable.
  */
 
 :root {
@@ -17,36 +22,35 @@
     --duration-xl: 1s;
     --duration-xxl: 1.5s;
     --duration-linger: 2.5s;
+    --duration-shimmer-fast: 3s;
+    --duration-shimmer: 5s;
+    --duration-shimmer-slow: 8s;
+    --duration-dock-fade: 60ms;
+    --duration-popup-swap: 180ms;
 
     /* ═══════════════════════════════════════════════
        §2  EASING — Spring curves via linear()
-       ═══════════════════════════════════════════════
 
-       Generated from damped spring physics:
-         x(t) = 1 - e^(-ζωt)(cos(ωd·t) + (ζ/√(1-ζ²))sin(ωd·t))
-
-       smooth:  ζ=1.0  — critically damped, no overshoot
-       snappy:  ζ=0.65 — 7% overshoot, quick settle
-       bouncy:  ζ=0.45 — 20% overshoot, visible bounce-settle
-       gentle:  ζ=0.85 — barely perceptible overshoot, slow ease
-    */
-
-    /* Spring curves (primary — use for entrances) */
+       smooth: ζ=1.0    snappy: ζ=0.65
+       bouncy: ζ=0.45   gentle: ζ=0.85
+       ═══════════════════════════════════════════════ */
     --spring-smooth: linear(0, 0.0974, 0.2816, 0.4656, 0.6189, 0.7361, 0.821, 0.8806, 0.9213, 0.9487, 0.9668, 0.9787, 0.9864, 0.9914, 0.9945, 0.9966, 0.9978, 0.9987, 0.9992, 0.9995, 0.9997, 0.9998, 0.9999, 0.9999, 1);
     --spring-snappy: linear(0, 0.0727, 0.2386, 0.4363, 0.6262, 0.7861, 0.9075, 0.9902, 1.0395, 1.0628, 1.068, 1.0619, 1.0501, 1.0366, 1.0239, 1.0133, 1.0054, 1.0001, 0.997, 0.9956, 0.9954, 0.9959, 0.9967, 0.9976, 0.9985, 0.9992, 0.9997, 1, 1.0002, 1.0003, 1.0003);
     --spring-bouncy: linear(0, 0.0492, 0.1748, 0.3455, 0.5335, 0.7169, 0.8796, 1.0117, 1.1087, 1.1706, 1.2005, 1.2039, 1.1874, 1.1575, 1.1206, 1.0818, 1.0454, 1.0141, 0.9895, 0.9723, 0.962, 0.958, 0.959, 0.9635, 0.9703, 0.9781, 0.986, 0.9931, 0.9991, 1.0036, 1.0066, 1.0082, 1.0087, 1.0082, 1.007, 1.0055, 1.0039, 1.0023, 1.0009);
     --spring-gentle: linear(0, 0.1018, 0.3031, 0.5094, 0.6812, 0.8083, 0.8945, 0.9486, 0.98, 0.9964, 1.0038, 1.0061, 1.006, 1.0049, 1.0036, 1.0024, 1.0015, 1.0008, 1.0004, 1.0002, 1.0001, 1, 1, 1, 1);
 
-    /* Core cubic-bezier (for exits, fallback, non-spring uses) */
+    /* Core cubic-bezier (exits, fallbacks, non-spring uses) */
     --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
     --ease-out: cubic-bezier(0, 0, 0.2, 1);
     --ease-in: cubic-bezier(0.4, 0, 1, 1);
     --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
-    /* Semantic aliases (express intent; map to spring/bezier primitives) */
+    /* Apple-inspired — micro-interactions, switches, dock hover */
+    --ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1);
+    --ease-apple-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --ease-spring: var(--spring-snappy);
     --ease-decelerate: var(--ease-out);
     --ease-accelerate: var(--ease-in);
-    --ease-spring: var(--spring-snappy);
 
     /* ═══════════════════════════════════════════════
        §3  Z-INDEX SCALE
@@ -56,21 +60,23 @@
     --z-controls: 20;
     --z-bar: 30;
     --z-dock: 40;
-    --z-panel: 45;        /* non-modal floating editor panels, above dock */
+    --z-panel: 45;
     --z-overlay: 50;
     --z-hovercard: 60;
-    --z-tooltip: 60;      /* alias of hovercard — tooltips sit at the same tier */
+    --z-tooltip: 60;
     --z-popover: 70;
     --z-modal: 80;
     --z-fullscreen: 90;
     --z-toast: 100;
+    --z-toggle: 999;
     --z-max: 9999;
     --z-debug: 99999;
 
     /* ═══════════════════════════════════════════════
-       §4  BORDER RADIUS
+       §4  BORDER RADIUS — 0.625rem base (warm-cream identity)
        ═══════════════════════════════════════════════ */
-    --radius: 0.5rem;
+    --radius: 0.625rem;
+    --radius-xs: 4px;
     --radius-sm: 4px;
     --radius-md: 6px;
     --radius-lg: var(--radius);
@@ -79,19 +85,92 @@
     --radius-pill: 9999px;
 
     /* Semantic aliases */
-    --radius-card:   var(--radius-2xl);
-    --radius-panel:  var(--radius-xl);
+    --radius-card: var(--radius-2xl);
+    --radius-panel: var(--radius-xl);
     --radius-dialog: var(--radius-2xl);
-    --radius-input:  var(--radius);
+    --radius-input: var(--radius);
     --radius-button: var(--radius);
-    --radius-badge:  var(--radius-pill);
-    --radius-dock:   var(--radius-pill);
+    --radius-badge: var(--radius-pill);
+    --radius-dock: var(--radius-pill);
 
     /* ═══════════════════════════════════════════════
-       §5  BOX SHADOWS
-       Projects define --shadow-color in their preset.
+       §5  COLOR PALETTE — Warm cream / muted black
        ═══════════════════════════════════════════════ */
-    --shadow-color: hsl(0 0% 0%);
+    --background: hsl(48 15% 98%);
+    --foreground: hsl(24 10% 10%);
+    --muted: hsl(48 8% 96.1%);
+    --muted-foreground: hsl(24 5% 46%);
+    --card: hsl(48 12% 99%);
+    --card-foreground: hsl(24 10% 10%);
+    --popover: hsl(48 12% 99%);
+    --popover-foreground: hsl(24 10% 10%);
+    --border: hsl(48 8% 88%);
+    --input: hsl(48 8% 88%);
+    --primary: hsl(24 10% 10%);
+    --primary-foreground: hsl(48 15% 98%);
+    --secondary: hsl(48 8% 96.1%);
+    --secondary-foreground: hsl(24 10% 10%);
+    --accent: hsl(48 8% 96.1%);
+    --accent-foreground: hsl(24 10% 10%);
+    --destructive: hsl(0 72% 50%);
+    --destructive-foreground: hsl(48 15% 98%);
+    --ring: hsl(24 10% 10%);
+    --shadow: hsl(24 10% 10%);
+    --shadow-color: var(--foreground);
+
+    /* ═══════════════════════════════════════════════
+       §6  SECTION PALETTE — 13-stop jewel tones (light)
+       ═══════════════════════════════════════════════ */
+    --section-color-0:  hsl(334 63% 47%);   /* rose       */
+    --section-color-1:  hsl(272 44% 47%);   /* purple     */
+    --section-color-2:  hsl(224 58% 46%);   /* indigo     */
+    --section-color-3:  hsl(194 62% 36%);   /* teal-cyan  */
+    --section-color-4:  hsl(163 46% 35%);   /* forest     */
+    --section-color-5:  hsl(35 70% 42%);    /* amber      */
+    --section-color-6:  hsl(6 72% 49%);     /* tomato-red */
+    --section-color-7:  hsl(286 46% 47%);   /* violet     */
+    --section-color-8:  hsl(342 62% 44%);   /* ruby       */
+    --section-color-9:  hsl(205 20% 38%);   /* slate-blue */
+    --section-color-10: hsl(86 38% 36%);    /* olive      */
+    --section-color-11: hsl(187 58% 39%);   /* ocean      */
+    --section-color-12: hsl(256 44% 52%);   /* periwinkle */
+
+    /* Accent colors */
+    --accent-pink: hsl(330 65% 55%);
+    --section-heading: hsl(328 60% 46%);
+    --accent-red: hsl(0 72% 50%);
+
+    /* ═══════════════════════════════════════════════
+       §6b VIZ BASIS — core brand hues
+       ═══════════════════════════════════════════════ */
+    --viz-fourier:   hsl(6 72% 49%);
+    --viz-chebyshev: hsl(224 58% 46%);
+    --viz-legendre:  hsl(286 46% 47%);
+    --viz-amber:     var(--section-color-5);
+    --viz-green:     var(--section-color-4);
+
+    /* Motion accent (used by easing indicators) */
+    --easing-accent: hsl(248 88% 71%);
+
+    /* Semantic UI accents */
+    --tier-featured: hsl(45 100% 50%);
+    --tier-saved:    hsl(210 100% 60%);
+    --like:          hsl(0 80% 60%);
+    --success:       hsl(142 71% 45%);
+    --warning:       hsl(38 92% 50%);
+    --info:          hsl(217 91% 60%);
+    --delete:        hsl(0 70% 55%);
+
+    /* ═══════════════════════════════════════════════
+       §7  SHADOWS — cartoon offset is the signature
+       ═══════════════════════════════════════════════ */
+    --shadow-cartoon:       3px 3px 0px 0px color-mix(in srgb, var(--foreground) 8%, transparent);
+    --shadow-cartoon-hover: 4px 4px 0px 0px color-mix(in srgb, var(--foreground) 10%, transparent);
+    --shadow-soft:          0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-elevated:      0 8px 24px rgba(0, 0, 0, 0.12);
+    --shadow-modal:
+        4px 4px 0px 0px color-mix(in srgb, var(--foreground) 8%, transparent),
+        0 24px 64px color-mix(in srgb, var(--foreground) 12%, transparent);
 
     /* Elevation scale */
     --shadow-xs: 0 1px 3px color-mix(in srgb, var(--shadow-color) 4%, transparent),
@@ -102,7 +181,21 @@
     --shadow-xl: 0 8px 24px color-mix(in srgb, var(--shadow-color) 14%, transparent);
     --shadow-2xl: 0 25px 50px -12px color-mix(in srgb, var(--shadow-color) 25%, transparent);
 
-    /* Cartoon / offset shadows */
+    /* Card = cartoon by default */
+    --shadow-card:       var(--shadow-cartoon);
+    --shadow-card-hover: var(--shadow-cartoon-hover);
+
+    /* Dock shadows */
+    --shadow-dock:           0 4px 20px color-mix(in srgb, var(--shadow-color) 18%, transparent), 0 0 0 1px color-mix(in srgb, var(--shadow-color) 10%, transparent);
+    --shadow-dock-collapsed: 0 2px 12px color-mix(in srgb, var(--shadow-color) 14%, transparent), 0 0 0 1px color-mix(in srgb, var(--shadow-color) 10%, transparent);
+
+    /* Cartoon shadow color primitives (kept for tiered cartoon utilities) */
+    --shadow-cartoon-color:             rgb(0 0 0 / 0.12);
+    --shadow-cartoon-color-soft:        rgb(0 0 0 / 0.06);
+    --shadow-cartoon-color-hover:       rgb(0 0 0 / 0.16);
+    --shadow-cartoon-color-hover-soft:  rgb(0 0 0 / 0.08);
+
+    /* Tiered cartoon shadows */
     --shadow-cartoon-sm: -3px 2px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
         0 3px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
         -3px 3px 1px color-mix(in srgb, var(--shadow-color) 6%, transparent);
@@ -113,37 +206,20 @@
         0 6px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
         -6px 6px 2px color-mix(in srgb, var(--shadow-color) 8%, transparent);
 
-    /* Card offset shadow */
-    --shadow-card: 4px 4px 0px 0px color-mix(in srgb, var(--shadow-color) 50%, transparent);
-    --shadow-card-hover: 5px 5px 0px 0px color-mix(in srgb, var(--shadow-color) 60%, transparent);
-
-    /* Dock shadows */
-    --shadow-dock: 0 4px 20px color-mix(in srgb, var(--shadow-color) 25%, transparent), 0 0 0 1px color-mix(in srgb, var(--shadow-color) 15%, transparent);
-    --shadow-dock-collapsed: 0 2px 12px color-mix(in srgb, var(--shadow-color) 20%, transparent), 0 0 0 1px color-mix(in srgb, var(--shadow-color) 15%, transparent);
-
-    /* Cartoon shadow colors */
-    --shadow-cartoon-color: rgb(0 0 0 / 0.12);
-    --shadow-cartoon-color-soft: rgb(0 0 0 / 0.06);
-    --shadow-cartoon-color-hover: rgb(0 0 0 / 0.16);
-    --shadow-cartoon-color-hover-soft: rgb(0 0 0 / 0.08);
-
     /* ═══════════════════════════════════════════════
-       §6  GLASSMORPHISM — Four-tier surface system
-       subtle   → lightest (dock bg, input bg, hover overlays)
-       default  → standard (cards, content containers, select triggers)
-       medium   → heavier  (popovers, dropdowns, floating panels)
-       elevated → heaviest (dialogs, command palette, modal overlays)
+       §8  GLASSMORPHISM — Four-tier surface system
+       Opacities raised for warm-cream base.
        ═══════════════════════════════════════════════ */
 
     /* Opacity primitives */
-    --glass-opacity-subtle:   0.30;
+    --glass-opacity-subtle:   0.82;
     --glass-opacity-default:  0.50;
     --glass-opacity-medium:   0.65;
     --glass-opacity-elevated: 0.80;
 
     /* Blur primitives */
     --glass-blur-subtle:   blur(4px) saturate(1.05);
-    --glass-blur-default:  blur(8px) saturate(1.2);
+    --glass-blur-default:  blur(12px);
     --glass-blur-medium:   blur(12px) saturate(1.3);
     --glass-blur-elevated: blur(16px) saturate(1.4);
 
@@ -153,11 +229,13 @@
     --glass-bg-medium:   color-mix(in srgb, var(--card) calc(var(--glass-opacity-medium) * 100%), transparent);
     --glass-bg-elevated: color-mix(in srgb, var(--card) calc(var(--glass-opacity-elevated) * 100%), transparent);
 
-    /* Composed borders — foreground-tinted for Apple-like luminosity */
+    /* Composed borders — foreground-tinted */
     --glass-border-subtle:   color-mix(in srgb, var(--foreground) 8%, transparent);
     --glass-border-default:  color-mix(in srgb, var(--foreground) 10%, transparent);
     --glass-border-medium:   color-mix(in srgb, var(--foreground) 12%, transparent);
     --glass-border-elevated: color-mix(in srgb, var(--foreground) 15%, transparent);
+    --glass-border:          var(--glass-border-default);
+    --glass-border-strong:   var(--glass-border-elevated);
 
     /* Shadow per tier */
     --glass-shadow-subtle:   var(--shadow-sm);
@@ -165,169 +243,86 @@
     --glass-shadow-medium:   var(--shadow-lg);
     --glass-shadow-elevated: var(--shadow-xl),
         0 0 0 0.5px color-mix(in srgb, var(--shadow-color) 5%, transparent);
+    --glass-shadow:    var(--glass-shadow-default);
+    --glass-shadow-lg: var(--glass-shadow-elevated);
 
     /* Shared decorative */
     --glass-grain-opacity: 0.035;
     --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.25);
 
     /* ═══════════════════════════════════════════════
-       §7  ANIMATION OFFSETS
+       §9  ANIMATION OFFSETS
        ═══════════════════════════════════════════════ */
     --animation-slide-sm: 3px;
     --animation-slide-md: 6px;
     --animation-slide-lg: 8px;
     --popover-offset: 0.375rem;
-    --popover-viewport-pad: 0.5rem;
 
-    /* Shimmer durations */
-    --duration-shimmer-fast: 3s;
-    --duration-shimmer: 5s;
-    --duration-shimmer-slow: 8s;
-
-    /* Composable timing (read by JS via getComputedStyle) */
-    --duration-dock-fade: 60ms;
-    --duration-popup-swap: 180ms;
-
-    /* ═══════════════════════════════════════════════
-       §7b HOVER LIFT OFFSETS
-       ═══════════════════════════════════════════════ */
+    /* Hover lift offsets */
     --lift-sm: -1px;
     --lift-md: -2px;
     --lift-lg: -4px;
 
-    /* ═══════════════════════════════════════════════
-       §7c LAYOUT TOKENS
-       ═══════════════════════════════════════════════ */
+    /* Layout tokens */
     --mask-fade-width: 1rem;
     --max-width-input: 24rem;
-    --min-width-input-sm: 5rem;
     --paper-texture-size: 200px 200px;
 
-    /* Chart container heights — common echarts/viz container dimensions */
-    --chart-height-compact: 15rem;    /* 240px — mobile compact */
-    --chart-height-default: 22.5rem;  /* 360px — standard chart */
-    --chart-height-large: 25rem;      /* 400px — maps, large viz */
-    --chart-margin: 1.25rem;          /* 20px — echarts { left, right } */
-
-    /* Neutral divider colors for chart gridlines, subtle overlays
-       (canvas-safe rgba literals — echarts / canvas contexts that can't
-        resolve CSS variables at render time can import from
-        @mkbabb/glass-ui/tokens TS module) */
-    --color-divider-subtle: rgba(128, 128, 128, 0.05);
-    --color-divider-medium: rgba(128, 128, 128, 0.4);
-    --color-divider-strong: rgba(128, 128, 128, 0.7);
-
-    /* ═══════════════════════════════════════════════
-       §7d BORDER OPACITY SCALE
-       ═══════════════════════════════════════════════ */
-    --border-opacity-light: 0.15;
+    /* Border opacity scale */
+    --border-opacity-light:  0.15;
     --border-opacity-medium: 0.25;
     --border-opacity-strong: 0.6;
 
     /* ═══════════════════════════════════════════════
-       §8  SIZING
+       §10 SIZING
        ═══════════════════════════════════════════════ */
     --size-icon-btn: 2.5rem;
-
-    /* Icon glyph sizes — used by .icon-{xs,sm,md,lg,xl} utilities */
-    --icon-xs: 0.75rem;   /* 12px — w-3 */
-    --icon-sm: 0.875rem;  /* 14px — w-3.5 */
-    --icon-md: 1rem;      /* 16px — w-4 */
-    --icon-lg: 1.25rem;   /* 20px — w-5 */
-    --icon-xl: 1.5rem;    /* 24px — w-6 */
+    --icon-xs: 0.75rem;
+    --icon-sm: 0.875rem;
+    --icon-md: 1rem;
+    --icon-lg: 1.25rem;
+    --icon-xl: 1.5rem;
 
     /* Dock geometry — consumers may override locally */
     --dock-h: calc(var(--size-icon-btn) + 0.75rem + 3px);
     --dock-margin: 0.5rem;
     --dock-menubar-reserve: 4rem;
 
-    /* Carousel navigation button offset (negative position from carousel edge) */
-    --carousel-nav-offset: 3rem;
-    --carousel-nav-size: 2rem;
-
-    /* StackedIconGroup overlap (negative margin between stacked icons) */
-    --stack-overlap-sm: 0.375rem; /* -ml-1.5 */
-    --stack-overlap-md: 0.5rem;   /* -ml-2 */
-    --stack-overlap-lg: 0.625rem; /* -ml-2.5 */
-
-    /* ═══════════════════════════════════════════════
-       §8b  COMPONENT FONT OVERRIDES
-       Consumers override these locally.
-       ═══════════════════════════════════════════════ */
+    /* Component font override (consumers override locally) */
     --select-font: inherit;
 
     /* ═══════════════════════════════════════════════
-       §9  INTERACTIVE SCALE TRANSFORMS
+       §11 INTERACTIVE SCALES & FOCUS
        ═══════════════════════════════════════════════ */
     --scale-hover: 1.08;
     --scale-hover-dock: 1.1;
     --scale-press: 0.95;
     --scale-press-dock: 0.92;
     --scale-press-btn: 0.97;
-    --opacity-disabled: 0.50;
+    --opacity-disabled: 0.5;
     --opacity-icon-muted: 0.8;
 
-    /* ═══════════════════════════════════════════════
-       §10 FOCUS RING
-       ═══════════════════════════════════════════════ */
     --focus-ring-width: 2px;
     --focus-ring-shadow: 0 0 0 var(--focus-ring-width) color-mix(in srgb, var(--ring) 30%, transparent),
         0 0 8px color-mix(in srgb, var(--ring) 15%, transparent);
+    --focus-ring: var(--focus-ring-shadow);
 
     /* ═══════════════════════════════════════════════
-       §11 PAPER TEXTURES
+       §12 PAPER TEXTURES
        ═══════════════════════════════════════════════ */
-    --paper-clean-texture: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    --paper-aged-texture: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    --paper-clean-texture: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    --paper-aged-texture: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
 
     /* ═══════════════════════════════════════════════
-       §9  DEFAULT COLOR PALETTE (consumers override locally)
+       §13 GOLD (legacy accent kept for consumers using it)
        ═══════════════════════════════════════════════ */
-    --background: hsl(0 0% 100%);
-    --foreground: hsl(222.2 84% 4.9%);
-    --muted: hsl(210 40% 96.1%);
-    --muted-foreground: hsl(215.4 16.3% 46.9%);
-    --popover: hsl(0 0% 100%);
-    --popover-foreground: hsl(222.2 84% 4.9%);
-    --card: hsl(0 0% 100%);
-    --card-foreground: hsl(222.2 84% 4.9%);
-    --border: hsl(214.3 31.8% 91.4%);
-    --input: hsl(214.3 31.8% 91.4%);
-    --primary: hsl(222.2 47.4% 11.2%);
-    --primary-foreground: hsl(210 40% 98%);
-    --secondary: hsl(210 40% 96.1%);
-    --secondary-foreground: hsl(222.2 47.4% 11.2%);
-    --accent: hsl(210 40% 96.1%);
-    --accent-foreground: hsl(222.2 47.4% 11.2%);
-    --destructive: hsl(0 84.2% 60.2%);
-    --destructive-foreground: hsl(210 40% 98%);
-    --ring: hsl(222.2 84% 4.9%);
-    --shadow: hsl(0 0% 65%);
-
-    /* ═══════════════════════════════════════════════
-       §12 GOLD PALETTE
-       ═══════════════════════════════════════════════ */
-    /* Status colors */
-    --color-status-active: hsl(142 71% 45%);
-    --color-status-paused: hsl(48 96% 53%);
-    --color-status-idle: var(--muted-foreground);
-
     --color-gold: hsl(43 74% 49%);
     --color-gold-light: hsl(51 100% 50%);
     --color-gold-dark: hsl(34 87% 38%);
 
     /* ═══════════════════════════════════════════════
-       §12b BLUE SHIMMER PALETTE
+       §14 RAINBOW PALETTE
        ═══════════════════════════════════════════════ */
-    --shimmer-blue-dark: hsl(224 76% 40%);
-    --shimmer-blue-mid: hsl(217 91% 60%);
-    --shimmer-blue-light: hsl(213 94% 68%);
-
-    /* ═══════════════════════════════════════════════
-       §13 RAINBOW PALETTE
-       ═══════════════════════════════════════════════ */
-
-    /* Rainbow vivid */
     --rainbow-red: hsl(0 85% 60%);
     --rainbow-orange: hsl(30 90% 55%);
     --rainbow-yellow: hsl(55 90% 55%);
@@ -336,7 +331,6 @@
     --rainbow-indigo: hsl(260 70% 60%);
     --rainbow-violet: hsl(300 75% 60%);
 
-    /* Rainbow pastel */
     --rainbow-pastel-red: hsl(0 50% 78%);
     --rainbow-pastel-orange: hsl(25 55% 76%);
     --rainbow-pastel-yellow: hsl(50 55% 78%);
@@ -344,97 +338,89 @@
     --rainbow-pastel-blue: hsl(220 45% 76%);
     --rainbow-pastel-indigo: hsl(260 35% 76%);
     --rainbow-pastel-violet: hsl(280 40% 78%);
-
-    /* ═══════════════════════════════════════════════
-       §14 HEATMAP PALETTE — 10-step red intensity
-       ═══════════════════════════════════════════════ */
-    --heatmap-1-bg:  rgb(254 226 226);
-    --heatmap-1-fg:  rgb(127 29 29);
-    --heatmap-2-bg:  rgb(254 202 202);
-    --heatmap-2-fg:  rgb(127 29 29);
-    --heatmap-3-bg:  rgb(252 165 165);
-    --heatmap-3-fg:  rgb(127 29 29);
-    --heatmap-4-bg:  rgb(248 113 113);
-    --heatmap-4-fg:  rgb(127 29 29);
-    --heatmap-5-bg:  rgb(239 68 68);
-    --heatmap-5-fg:  rgb(220 38 38);
-    --heatmap-6-bg:  rgb(220 38 38);
-    --heatmap-6-fg:  rgb(254 226 226);
-    --heatmap-7-bg:  rgb(185 28 28);
-    --heatmap-7-fg:  rgb(254 226 226);
-    --heatmap-8-bg:  rgb(153 27 27);
-    --heatmap-8-fg:  rgb(254 226 226);
-    --heatmap-9-bg:  rgb(127 29 29);
-    --heatmap-9-fg:  rgb(254 226 226);
-    --heatmap-10-bg: rgb(69 10 10);
-    --heatmap-10-fg: rgb(254 226 226);
 }
 
 /* ═══════════════════════════════════════════════
-   §10  DEFAULT DARK MODE (consumers override locally)
+   DARK MODE — warm dark, section palette brightened ~20% L
    ═══════════════════════════════════════════════ */
 .dark {
-    /* Glass opacity boosted for dark backgrounds */
-    --glass-opacity-subtle:   0.42;
+    --background: hsl(24 8% 6%);
+    --foreground: hsl(48 10% 90%);
+    --muted: hsl(24 5% 15%);
+    --muted-foreground: hsl(48 5% 55%);
+    --card: hsl(24 8% 10%);
+    --card-foreground: hsl(48 10% 90%);
+    --popover: hsl(24 8% 10%);
+    --popover-foreground: hsl(48 10% 90%);
+    --border: hsl(24 5% 18%);
+    --input: hsl(24 5% 18%);
+    --primary: hsl(48 10% 90%);
+    --primary-foreground: hsl(24 10% 10%);
+    --secondary: hsl(24 5% 15%);
+    --secondary-foreground: hsl(48 10% 90%);
+    --accent: hsl(24 5% 15%);
+    --accent-foreground: hsl(48 10% 90%);
+    --destructive: hsl(0 62.8% 30.6%);
+    --destructive-foreground: hsl(48 10% 90%);
+    --ring: hsl(48 10% 70%);
+    --shadow: hsl(0 0% 5%);
+
+    /* Section palette — brightened for dark backgrounds */
+    --section-color-0:  hsl(334 72% 70%);
+    --section-color-1:  hsl(272 54% 73%);
+    --section-color-2:  hsl(224 67% 72%);
+    --section-color-3:  hsl(194 61% 64%);
+    --section-color-4:  hsl(163 50% 60%);
+    --section-color-5:  hsl(37 73% 67%);
+    --section-color-6:  hsl(6 77% 66%);
+    --section-color-7:  hsl(286 58% 72%);
+    --section-color-8:  hsl(342 71% 69%);
+    --section-color-9:  hsl(205 24% 70%);
+    --section-color-10: hsl(86 44% 63%);
+    --section-color-11: hsl(187 63% 65%);
+    --section-color-12: hsl(256 60% 74%);
+
+    --accent-pink: hsl(335 55% 65%);
+    --section-heading: hsl(330 55% 68%);
+    --accent-red: hsl(0 68% 62%);
+
+    --viz-fourier:   hsl(6 77% 66%);
+    --viz-chebyshev: hsl(224 67% 72%);
+    --viz-legendre:  hsl(286 58% 72%);
+    --viz-amber:     var(--section-color-5);
+    --viz-green:     var(--section-color-4);
+
+    --tier-featured: hsl(45 100% 60%);
+    --tier-saved:    hsl(210 100% 70%);
+    --like:          hsl(0 80% 68%);
+    --success:       hsl(142 71% 58%);
+    --warning:       hsl(38 92% 60%);
+    --info:          hsl(217 91% 70%);
+    --delete:        hsl(0 70% 62%);
+
+    --shadow-cartoon:       3px 3px 0px 0px color-mix(in srgb, var(--foreground) 6%, transparent);
+    --shadow-cartoon-hover: 4px 4px 0px 0px color-mix(in srgb, var(--foreground) 8%, transparent);
+    --shadow-soft:     0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-elevated: 0 8px 24px rgba(0, 0, 0, 0.35);
+    --shadow-modal:
+        4px 4px 0px 0px color-mix(in srgb, var(--foreground) 6%, transparent),
+        0 24px 64px color-mix(in srgb, var(--foreground) 18%, transparent);
+
+    --shadow-cartoon-color:            rgb(255 255 255 / 0.07);
+    --shadow-cartoon-color-soft:       rgb(255 255 255 / 0.03);
+    --shadow-cartoon-color-hover:      rgb(255 255 255 / 0.10);
+    --shadow-cartoon-color-hover-soft: rgb(255 255 255 / 0.05);
+
+    /* Glass opacity + grain for dark */
+    --glass-opacity-subtle:   0.90;
     --glass-opacity-default:  0.58;
     --glass-opacity-medium:   0.72;
     --glass-opacity-elevated: 0.88;
-
     --glass-grain-opacity: 0.06;
     --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.08);
 
-    --background: hsl(224 71% 4%);
-    --foreground: hsl(210 40% 98%);
-    --muted: hsl(217.2 32.6% 17.5%);
-    --muted-foreground: hsl(215 20.2% 65.1%);
-    --popover: hsl(224 71% 4%);
-    --popover-foreground: hsl(210 40% 98%);
-    --card: hsl(224 50% 10%);
-    --card-foreground: hsl(210 40% 98%);
-    --border: hsl(216 34% 17%);
-    --input: hsl(216 34% 17%);
-    --primary: hsl(210 40% 98%);
-    --primary-foreground: hsl(222.2 47.4% 11.2%);
-    --secondary: hsl(217.2 32.6% 17.5%);
-    --secondary-foreground: hsl(210 40% 98%);
-    --accent: hsl(217.2 32.6% 17.5%);
-    --accent-foreground: hsl(210 40% 98%);
-    --destructive: hsl(0 72% 50%);
-    --destructive-foreground: hsl(210 40% 98%);
-    --ring: hsl(212.7 26.8% 83.9%);
-    --shadow: hsl(0 0% 10%);
-    --shadow-card: 4px 4px 0px 0px color-mix(in srgb, var(--shadow-color) 85%, transparent);
-    --shadow-card-hover: 5px 5px 0px 0px color-mix(in srgb, var(--shadow-color) 95%, transparent);
-
-    --shadow-cartoon-color: rgb(255 255 255 / 0.07);
-    --shadow-cartoon-color-soft: rgb(255 255 255 / 0.03);
-    --shadow-cartoon-color-hover: rgb(255 255 255 / 0.10);
-    --shadow-cartoon-color-hover-soft: rgb(255 255 255 / 0.05);
-
-    /* Gold — boosted for dark backgrounds */
+    /* Gold — boosted for dark */
     --color-gold: hsl(43 74% 55%);
     --color-gold-light: hsl(51 100% 55%);
     --color-gold-dark: hsl(34 87% 45%);
-
-    /* Heatmap — inverted intensity for dark backgrounds */
-    --heatmap-1-bg:  rgb(30 10 10);
-    --heatmap-1-fg:  rgb(156 163 175);
-    --heatmap-2-bg:  rgb(45 15 15);
-    --heatmap-2-fg:  rgb(209 213 219);
-    --heatmap-3-bg:  rgb(69 10 10);
-    --heatmap-3-fg:  rgb(229 231 235);
-    --heatmap-4-bg:  rgb(91 15 15);
-    --heatmap-4-fg:  rgb(243 244 246);
-    --heatmap-5-bg:  rgb(127 29 29);
-    --heatmap-5-fg:  rgb(249 250 251);
-    --heatmap-6-bg:  rgb(153 27 27);
-    --heatmap-6-fg:  rgb(254 226 226);
-    --heatmap-7-bg:  rgb(185 28 28);
-    --heatmap-7-fg:  rgb(254 242 242);
-    --heatmap-8-bg:  rgb(220 38 38);
-    --heatmap-8-fg:  rgb(255 251 251);
-    --heatmap-9-bg:  rgb(239 68 68);
-    --heatmap-9-fg:  rgb(255 255 255);
-    --heatmap-10-bg: rgb(248 113 113);
-    --heatmap-10-fg: rgb(255 255 255);
 }

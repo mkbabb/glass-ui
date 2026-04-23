@@ -20,3 +20,4 @@ export * from "./aurora";
 export * from "./toggle-chip";
 export * from "./pulse";
 export * from "./metric-badge";
+export * from "./paper-backdrop";

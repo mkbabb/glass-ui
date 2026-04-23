@@ -8,11 +8,16 @@
  *   (then add your project-specific token overrides locally)
  */
 
+/* Font imports — Computer Modern (body) + Fraunces (display) + Fira Code (mono) */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,0..100,0..1&family=Fira+Code:wght@300..700&display=swap");
+@import url("https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css");
+
 /* Order matters: tokens first, then theme (for @theme), then component layers */
 @import "./tokens.css";
 @import "./typography.css";
 @import "./theme.css";
 @import "./glass.css";
+@import "./paper.css";
 @import "./dock.css";
 @import "./cards.css";
 @import "./scroll-pane.css";

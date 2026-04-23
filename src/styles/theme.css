@@ -1,8 +1,9 @@
 /*
  * theme.css — Tailwind CSS v4 @theme block
  *
- * Maps CSS custom properties to Tailwind utility-generating tokens.
- * Import AFTER tokens.css and tailwindcss.
+ * Maps every CSS custom property from tokens.css + typography.css to a
+ * Tailwind utility-generating token. References vars (not literals) so
+ * consumers can override at :root / .dark without rebuilding Tailwind.
  */
 
 @theme {
@@ -11,42 +12,64 @@
     --container-padding-x: 2rem;
     --container-2xl: 1400px;
 
-    /* ── Typography: golden-ratio scale (√φ ≈ 1.272) ── */
-    --font-size-2xs: var(--type-micro);
-    --font-size-xs: var(--type-caption);
-    --font-size-sm: var(--type-small);
-    --font-size-base: var(--type-body);
-    --font-size-lg: var(--type-prose);
-    --font-size-xl: var(--type-subheading);
-    --font-size-2xl: var(--type-heading);
-    --font-size-3xl: var(--type-title);
-    --font-size-4xl: var(--type-display-1);
-    --font-size-5xl: var(--type-display-2);
-    --font-size-6xl: var(--type-display-3);
+    /* ═══════════════════════════════════════════════
+       Typography — size scale → text-* utilities
+       ═══════════════════════════════════════════════ */
+    --font-size-admin-label: var(--type-admin-label);
+    --font-size-micro:       var(--type-micro);
+    --font-size-caption:     var(--type-caption);
+    --font-size-small:       var(--type-small);
+    --font-size-body:        var(--type-body);
+    --font-size-prose:       var(--type-prose);
+    --font-size-subheading:  var(--type-subheading);
+    --font-size-heading:     var(--type-heading);
+    --font-size-title:       var(--type-title);
+    --font-size-display-1:   var(--type-display-1);
+    --font-size-display-2:   var(--type-display-2);
+    --font-size-display-3:   var(--type-display-3);
+    --font-size-display-4:   var(--type-display-4);
+    --font-size-display-5:   var(--type-display-5);
 
-    /* ── Line heights — golden-ratio paired ── */
-    --line-height-micro: var(--leading-micro);
+    /* Legacy t-shirt aliases — golden-ratio equivalents */
+    --font-size-2xs:  var(--type-micro);
+    --font-size-xs:   var(--type-caption);
+    --font-size-sm:   var(--type-small);
+    --font-size-base: var(--type-body);
+    --font-size-lg:   var(--type-prose);
+    --font-size-xl:   var(--type-subheading);
+    --font-size-2xl:  var(--type-heading);
+    --font-size-3xl:  var(--type-title);
+    --font-size-4xl:  var(--type-display-1);
+    --font-size-5xl:  var(--type-display-2);
+    --font-size-6xl:  var(--type-display-3);
+
+    /* Line heights → leading-* utilities */
+    --line-height-micro:   var(--leading-micro);
     --line-height-caption: var(--leading-caption);
-    --line-height-small: var(--leading-small);
-    --line-height-body: var(--leading-body);
-    --line-height-prose: var(--leading-prose);
+    --line-height-small:   var(--leading-small);
+    --line-height-body:    var(--leading-body);
+    --line-height-prose:   var(--leading-prose);
     --line-height-heading: var(--leading-heading);
     --line-height-display: var(--leading-display);
 
-    /* ── Letter spacing ── */
-    --letter-spacing-tight: var(--tracking-tight);
+    /* Letter spacing → tracking-* utilities */
+    --letter-spacing-tight:  var(--tracking-tight);
     --letter-spacing-normal: var(--tracking-normal);
-    --letter-spacing-wide: var(--tracking-wide);
-    --letter-spacing-wider: var(--tracking-wider);
-    --letter-spacing-caps: var(--tracking-caps);
+    --letter-spacing-wide:   var(--tracking-wide);
+    --letter-spacing-wider:  var(--tracking-wider);
+    --letter-spacing-caps:   var(--tracking-caps);
 
-    /* ── Font families (overridden by presets) ── */
-    --font-display: "Fraunces", Georgia, serif;
-    --font-serif: "Fraunces", Georgia, serif;
-    --font-sans: system-ui, -apple-system, sans-serif;
-    --font-mono: "Fira Code", "Fira Mono", monospace;
+    /* ═══════════════════════════════════════════════
+       Font families → font-* utilities
+       ═══════════════════════════════════════════════ */
+    --font-family-display: var(--font-display);
+    --font-family-serif:   var(--font-serif);
+    --font-family-sans:    var(--font-sans);
+    --font-family-mono:    var(--font-mono);
 
-    /* ── Colors: reference dynamic CSS vars so .dark overrides work ── */
+    /* ═══════════════════════════════════════════════
+       Colors — core
+       ═══════════════════════════════════════════════ */
     --color-border: var(--border);
     --color-input: var(--input);
     --color-ring: var(--ring);
@@ -76,32 +99,86 @@
 
     --color-shadow: var(--shadow);
 
+    /* ═══════════════════════════════════════════════
+       Colors — section palette (13-stop)
+       ═══════════════════════════════════════════════ */
+    --color-section-0:  var(--section-color-0);
+    --color-section-1:  var(--section-color-1);
+    --color-section-2:  var(--section-color-2);
+    --color-section-3:  var(--section-color-3);
+    --color-section-4:  var(--section-color-4);
+    --color-section-5:  var(--section-color-5);
+    --color-section-6:  var(--section-color-6);
+    --color-section-7:  var(--section-color-7);
+    --color-section-8:  var(--section-color-8);
+    --color-section-9:  var(--section-color-9);
+    --color-section-10: var(--section-color-10);
+    --color-section-11: var(--section-color-11);
+    --color-section-12: var(--section-color-12);
+
+    --color-section-heading: var(--section-heading);
+    --color-accent-pink: var(--accent-pink);
+    --color-accent-red:  var(--accent-red);
+
+    /* ═══════════════════════════════════════════════
+       Colors — viz basis
+       ═══════════════════════════════════════════════ */
+    --color-viz-fourier:   var(--viz-fourier);
+    --color-viz-chebyshev: var(--viz-chebyshev);
+    --color-viz-legendre:  var(--viz-legendre);
+    --color-viz-amber:     var(--viz-amber);
+    --color-viz-green:     var(--viz-green);
+
+    /* ═══════════════════════════════════════════════
+       Colors — semantic UI accents
+       ═══════════════════════════════════════════════ */
+    --color-tier-featured: var(--tier-featured);
+    --color-tier-saved:    var(--tier-saved);
+    --color-like:          var(--like);
+    --color-success:       var(--success);
+    --color-warning:       var(--warning);
+    --color-info:          var(--info);
+    --color-delete:        var(--delete);
+
+    /* ═══════════════════════════════════════════════
+       Colors — legacy gold + rainbow (kept for consumers)
+       ═══════════════════════════════════════════════ */
     --color-gold: var(--color-gold);
     --color-gold-light: var(--color-gold-light);
     --color-gold-dark: var(--color-gold-dark);
 
-    /* ── Z-index: map design tokens → Tailwind z-* utilities ── */
+    --color-rainbow-red:    var(--rainbow-red);
+    --color-rainbow-orange: var(--rainbow-orange);
+    --color-rainbow-yellow: var(--rainbow-yellow);
+    --color-rainbow-green:  var(--rainbow-green);
+    --color-rainbow-blue:   var(--rainbow-blue);
+    --color-rainbow-indigo: var(--rainbow-indigo);
+    --color-rainbow-violet: var(--rainbow-violet);
+
+    /* ═══════════════════════════════════════════════
+       Z-index → z-* utilities
+       ═══════════════════════════════════════════════ */
     --z-index-background: var(--z-background);
     --z-index-content: var(--z-content);
     --z-index-controls: var(--z-controls);
     --z-index-bar: var(--z-bar);
     --z-index-dock: var(--z-dock);
+    --z-index-panel: var(--z-panel);
     --z-index-overlay: var(--z-overlay);
     --z-index-hovercard: var(--z-hovercard);
+    --z-index-tooltip: var(--z-tooltip);
     --z-index-popover: var(--z-popover);
     --z-index-modal: var(--z-modal);
     --z-index-fullscreen: var(--z-fullscreen);
     --z-index-toast: var(--z-toast);
+    --z-index-toggle: var(--z-toggle);
     --z-index-max: var(--z-max);
 
-    /* ── Chart & form container sizes (Tailwind utilities: h-chart-*, min-w-input-*) ── */
-    --height-chart-compact: var(--chart-height-compact);
-    --height-chart-default: var(--chart-height-default);
-    --height-chart-large:   var(--chart-height-large);
-    --min-width-input-sm:   var(--min-width-input-sm);
-
-    /* ── Border radius ── */
-    --radius: 0.5rem;
+    /* ═══════════════════════════════════════════════
+       Border radius → rounded-* utilities
+       ═══════════════════════════════════════════════ */
+    --radius: 0.625rem;
+    --radius-xs: 4px;
     --radius-sm: 4px;
     --radius-md: 6px;
     --radius-lg: var(--radius);
@@ -118,41 +195,54 @@
     --radius-badge:  var(--radius-badge);
     --radius-dock:   var(--radius-dock);
 
-    /* ── Box shadows: map tokens → Tailwind shadow-* utilities ── */
-    --shadow-card: var(--shadow-card);
-    --shadow-card-hover: var(--shadow-card-hover);
-    --shadow-dock: var(--shadow-dock);
+    /* ═══════════════════════════════════════════════
+       Shadows → shadow-* utilities
+       ═══════════════════════════════════════════════ */
+    --shadow-cartoon:       var(--shadow-cartoon);
+    --shadow-cartoon-hover: var(--shadow-cartoon-hover);
+    --shadow-soft:          var(--shadow-soft);
+    --shadow-elevated:      var(--shadow-elevated);
+    --shadow-modal:         var(--shadow-modal);
+
+    --shadow-card:        var(--shadow-card);
+    --shadow-card-hover:  var(--shadow-card-hover);
+    --shadow-dock:        var(--shadow-dock);
     --shadow-dock-collapsed: var(--shadow-dock-collapsed);
+
     --shadow-glass-subtle:   var(--glass-shadow-subtle);
     --shadow-glass-default:  var(--glass-shadow-default);
     --shadow-glass-medium:   var(--glass-shadow-medium);
     --shadow-glass-elevated: var(--glass-shadow-elevated);
+
     --shadow-cartoon-sm: var(--shadow-cartoon-sm);
     --shadow-cartoon-md: var(--shadow-cartoon-md);
     --shadow-cartoon-lg: var(--shadow-cartoon-lg);
 
-    /* ── Backdrop blur: glass tokens use full backdrop-filter values
-         (blur + saturate), so they can't map to Tailwind's backdrop-blur-*
-         utility directly. Use [backdrop-filter:var(--glass-blur-*)] instead. ── */
-
-    /* ── Easing: spring curves → ease-spring-* utilities ── */
+    /* ═══════════════════════════════════════════════
+       Easing → ease-* utilities
+       ═══════════════════════════════════════════════ */
     --transition-timing-function-spring-smooth: var(--spring-smooth);
     --transition-timing-function-spring-snappy: var(--spring-snappy);
     --transition-timing-function-spring-bouncy: var(--spring-bouncy);
     --transition-timing-function-spring-gentle: var(--spring-gentle);
 
-    /* ── Easing: cubic-bezier → ease-* utilities ── */
     --transition-timing-function-standard: var(--ease-standard);
     --transition-timing-function-out: var(--ease-out);
     --transition-timing-function-in: var(--ease-in);
     --transition-timing-function-out-expo: var(--ease-out-expo);
+    --transition-timing-function-apple: var(--ease-apple);
+    --transition-timing-function-apple-spring: var(--ease-apple-spring);
 
-    /* ── Duration: map tokens → Tailwind duration-* utilities ── */
+    /* ═══════════════════════════════════════════════
+       Duration → duration-* utilities
+       ═══════════════════════════════════════════════ */
     --transition-duration-instant: var(--duration-instant);
     --transition-duration-fast: var(--duration-fast);
     --transition-duration-normal: var(--duration-normal);
     --transition-duration-slow: var(--duration-slow);
     --transition-duration-panel: var(--duration-panel);
+    --transition-duration-xl: var(--duration-xl);
+    --transition-duration-xxl: var(--duration-xxl);
 }
 
 /* Class-based dark mode */

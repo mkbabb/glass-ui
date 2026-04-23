@@ -1,0 +1,68 @@
+/*
+ * paper.css — Paper-texture primitives
+ *
+ * Two composable Tailwind `@utility` declarations:
+ *   - paper-underpaint: fixed, app-root, fullscreen SVG turbulence at z-index -1
+ *   - paper-grain-overlay: ::after overlay for individual surfaces
+ *
+ * Texture: feTurbulence baseFrequency 0.65, 4 octaves, desaturated via
+ * feColorMatrix, blended multiply (light) / soft-light (dark). Tiles ~60px.
+ */
+
+@utility paper-underpaint {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend mode='multiply' in2='SourceGraphic'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 60px 60px;
+    opacity: var(--glass-grain-opacity);
+    mix-blend-mode: multiply;
+}
+
+:where(.dark) .paper-underpaint,
+.dark .paper-underpaint {
+    mix-blend-mode: soft-light;
+}
+
+@utility paper-grain-overlay {
+    position: relative;
+    isolation: isolate;
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend mode='multiply' in2='SourceGraphic'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+        background-size: 60px 60px;
+        opacity: var(--glass-grain-opacity);
+        mix-blend-mode: overlay;
+    }
+}
+
+:where(.dark) .paper-grain-overlay::after,
+.dark .paper-grain-overlay::after {
+    mix-blend-mode: soft-light;
+}
+
+/* ═══════════════════════════════════════════════
+   A11y — respect user motion + transparency preferences
+   ═══════════════════════════════════════════════ */
+@media (prefers-reduced-transparency: reduce) {
+    .paper-underpaint,
+    .paper-grain-overlay::after {
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .paper-underpaint {
+        /* Static noise is fine at rest; only kill animated grain shimmer if any.
+           The underpaint is currently a still texture, but guard future motion. */
+        animation: none !important;
+    }
+}

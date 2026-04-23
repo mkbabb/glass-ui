@@ -39,21 +39,6 @@
         box-shadow: var(--glass-highlight);
     }
 
-    /* ── Cartoon surface ──
-       Translucent bg + heavy blur + drop shadow, no grain overlay.
-       Tokens fall back to the default glass tokens so the class
-       works standalone. Consumers (e.g. bbnf-buddy) override the
-       `--glass-*-cartoon` and `--shadow-cartoon` variables at :root
-       to skin every cartoon surface at once. */
-    .glass-cartoon {
-        position: relative;
-        background: var(--glass-bg-cartoon, var(--glass-bg-default));
-        backdrop-filter: var(--glass-blur-cartoon, var(--glass-blur-default));
-        -webkit-backdrop-filter: var(--glass-blur-cartoon, var(--glass-blur-default));
-        border: 1px solid var(--glass-border-cartoon, var(--glass-border-default));
-        box-shadow: var(--shadow-cartoon, var(--shadow-card));
-    }
-
     /* Grain noise overlay — reuses paper texture SVG, no extra assets */
     .glass-subtle::after,
     .glass-default::after,
@@ -87,8 +72,16 @@
         -webkit-backdrop-filter: var(--glass-blur-default);
         border: 1px solid var(--glass-border-default);
         border-radius: var(--radius-card);
-        box-shadow: var(--glass-shadow-default);
+        box-shadow: var(--shadow-card);
         contain: layout style;
+        transition:
+            transform var(--duration-normal) var(--ease-apple-spring),
+            box-shadow var(--duration-normal) var(--ease-apple);
+    }
+
+    .glass-card:hover:not(:disabled) {
+        transform: translate(var(--lift-sm), var(--lift-sm));
+        box-shadow: var(--shadow-card-hover);
     }
 
     .glass-pill {
@@ -100,11 +93,6 @@
         border-radius: var(--radius-pill);
         box-shadow: var(--glass-shadow-subtle);
         contain: layout style;
-        transition: transform var(--duration-fast) var(--ease-standard);
-    }
-
-    .glass-pill:active {
-        transform: scale(var(--scale-press-btn));
     }
 
     /* ── Glassmorphic circular icon button ── */
@@ -138,12 +126,12 @@
     }
 
     .glass-btn:focus-visible {
-        outline: none;
-        box-shadow: var(--focus-ring-shadow);
+        outline: var(--focus-ring-width) solid var(--ring);
+        outline-offset: var(--focus-ring-width);
     }
 
     .glass-btn:disabled {
-        opacity: var(--opacity-disabled);
+        opacity: 0.35;
         cursor: not-allowed;
         pointer-events: none;
     }
@@ -163,11 +151,7 @@
         border-radius: var(--radius-pill);
         padding: 0.5rem 1rem;
         font-size: 1rem;
-        transition: background-color var(--duration-fast) var(--ease-standard),
-                    border-color var(--duration-fast) var(--ease-standard),
-                    color var(--duration-fast) var(--ease-standard),
-                    opacity var(--duration-fast) var(--ease-standard),
-                    transform var(--duration-fast) var(--ease-standard);
+        transition: all var(--duration-fast) var(--ease-standard);
     }
 
     .btn-pill > * {
@@ -176,11 +160,11 @@
 
 
     .btn-pill:active:not(:disabled) {
-        transform: scale(var(--scale-press-btn));
+        transform: scale(0.96);
     }
 
     .btn-pill:disabled {
-        opacity: var(--opacity-disabled);
+        opacity: 0.4;
         cursor: not-allowed;
     }
 
@@ -198,20 +182,13 @@
         opacity: 0.9;
     }
 
-    .btn-pill-accent:active:not(:disabled) {
-        transform: scale(var(--scale-press-btn));
-    }
-
     .btn-pill-ghost {
         background: transparent;
-        /* 85% foreground, not 70% — needs to read over translucent glass. */
-        color: color-mix(in srgb, var(--foreground) 85%, transparent);
+        color: color-mix(in srgb, var(--foreground) 70%, transparent);
     }
 
     .btn-pill-ghost:hover:not(:disabled) {
-        /* 12% bg, not 8% — a firmer lift so the hover state is obvious
-           against every glass card the dock may sit above. */
-        background: color-mix(in srgb, var(--foreground) 12%, transparent);
+        background: color-mix(in srgb, var(--foreground) 8%, transparent);
         color: var(--foreground);
     }
 
@@ -226,10 +203,6 @@
         box-shadow: var(--glass-shadow-default);
     }
 
-    .btn-pill-glass:active:not(:disabled) {
-        transform: scale(var(--scale-press-btn));
-    }
-
     /* ── Pill input ───────────────────────────────── */
     .input-pill {
         @apply flex w-full;
@@ -242,10 +215,7 @@
         padding: 0 1rem;
         font-size: 1rem;
         color: var(--foreground);
-        transition: background-color var(--duration-fast) var(--ease-standard),
-                    border-color var(--duration-fast) var(--ease-standard),
-                    color var(--duration-fast) var(--ease-standard),
-                    opacity var(--duration-fast) var(--ease-standard);
+        transition: all var(--duration-fast) var(--ease-standard);
     }
 
     .input-pill::placeholder {
@@ -259,7 +229,7 @@
     }
 
     .input-pill:disabled {
-        opacity: var(--opacity-disabled);
+        opacity: 0.5;
         cursor: not-allowed;
     }
 }

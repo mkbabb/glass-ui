@@ -1,0 +1,97 @@
+/*
+ * demo/presets/neutral.css — Alternate preset for the demo Configurator.
+ *
+ * Re-declares `:root` tokens back to a minimal neutral: white background,
+ * cool-grey palette, system sans-serif stack, no cartoon shadow, no grain,
+ * 8px radius. Meant to be toggled on at runtime via a <link rel="stylesheet">
+ * so visitors can feel the library's range against its warm-cream default.
+ *
+ * Glass-ui's default identity = warm-cream / paper-and-glass / Computer Modern.
+ * This preset temporarily overrides those visual tokens while keeping every
+ * structural token (durations, easings, springs, z-index, focus ring) intact.
+ */
+
+:root {
+    /* ═══════════════════════════════════════════════
+       Colors — minimal cool neutral
+       ═══════════════════════════════════════════════ */
+    --background: hsl(0 0% 100%);
+    --foreground: hsl(222.2 84% 4.9%);
+    --muted: hsl(210 40% 96.1%);
+    --muted-foreground: hsl(215.4 16.3% 46.9%);
+    --card: hsl(0 0% 100%);
+    --card-foreground: hsl(222.2 84% 4.9%);
+    --popover: hsl(0 0% 100%);
+    --popover-foreground: hsl(222.2 84% 4.9%);
+    --border: hsl(214.3 31.8% 91.4%);
+    --input: hsl(214.3 31.8% 91.4%);
+    --primary: hsl(222.2 47.4% 11.2%);
+    --primary-foreground: hsl(210 40% 98%);
+    --secondary: hsl(210 40% 96.1%);
+    --secondary-foreground: hsl(222.2 47.4% 11.2%);
+    --accent: hsl(210 40% 96.1%);
+    --accent-foreground: hsl(222.2 47.4% 11.2%);
+    --destructive: hsl(0 84.2% 60.2%);
+    --destructive-foreground: hsl(210 40% 98%);
+    --ring: hsl(222.2 84% 4.9%);
+    --shadow: hsl(0 0% 65%);
+    --shadow-color: hsl(0 0% 0%);
+
+    /* ═══════════════════════════════════════════════
+       Fonts — system sans-serif
+       ═══════════════════════════════════════════════ */
+    --font-serif: "Inter", system-ui, -apple-system, sans-serif;
+    --font-sans:  "Inter", system-ui, -apple-system, sans-serif;
+    --font-display: "Inter", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+
+    /* ═══════════════════════════════════════════════
+       Radius — 8px (flatter than cream default)
+       ═══════════════════════════════════════════════ */
+    --radius: 0.5rem;
+    --radius-card: var(--radius-xl);
+    --radius-panel: var(--radius);
+    --radius-dialog: var(--radius-xl);
+
+    /* ═══════════════════════════════════════════════
+       Shadows — drop cartoon, use soft elevation
+       ═══════════════════════════════════════════════ */
+    --shadow-cartoon:       0 1px 3px color-mix(in srgb, var(--shadow-color) 8%, transparent);
+    --shadow-cartoon-hover: 0 4px 12px color-mix(in srgb, var(--shadow-color) 12%, transparent);
+    --shadow-card:        var(--shadow-sm);
+    --shadow-card-hover:  var(--shadow-md);
+
+    /* ═══════════════════════════════════════════════
+       Glass — no grain, soft opacities
+       ═══════════════════════════════════════════════ */
+    --glass-grain-opacity: 0;
+    --glass-opacity-subtle:   0.30;
+    --glass-opacity-default:  0.50;
+    --glass-opacity-medium:   0.65;
+    --glass-opacity-elevated: 0.80;
+}
+
+.dark {
+    --background: hsl(224 71% 4%);
+    --foreground: hsl(210 40% 98%);
+    --muted: hsl(217.2 32.6% 17.5%);
+    --muted-foreground: hsl(215 20.2% 65.1%);
+    --card: hsl(224 50% 10%);
+    --card-foreground: hsl(210 40% 98%);
+    --popover: hsl(224 71% 4%);
+    --popover-foreground: hsl(210 40% 98%);
+    --border: hsl(216 34% 17%);
+    --input: hsl(216 34% 17%);
+    --primary: hsl(210 40% 98%);
+    --primary-foreground: hsl(222.2 47.4% 11.2%);
+    --secondary: hsl(217.2 32.6% 17.5%);
+    --secondary-foreground: hsl(210 40% 98%);
+    --accent: hsl(217.2 32.6% 17.5%);
+    --accent-foreground: hsl(210 40% 98%);
+    --destructive: hsl(0 72% 50%);
+    --destructive-foreground: hsl(210 40% 98%);
+    --ring: hsl(212.7 26.8% 83.9%);
+    --shadow: hsl(0 0% 10%);
+
+    --glass-grain-opacity: 0;
+}
