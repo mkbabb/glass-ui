@@ -1,16 +1,80 @@
+<script setup lang="ts">
+import { computed, useAttrs, watchEffect } from "vue";
+import { useGlobalDark } from "../../../composables/useGlobalDark";
+import { cn } from "../../../utils/cn";
+
+defineOptions({ inheritAttrs: false });
+
+type DarkModeToggleSize = "sm" | "md" | "lg";
+
+const props = withDefaults(
+    defineProps<{
+        passive?: boolean;
+        /**
+         * Button size. `sm` = 28px, `md` = 36px (default), `lg` = 44px.
+         * Override with a Tailwind sizing class on the component
+         * (e.g. `class="size-6"`) when a non-standard size is required.
+         */
+        size?: DarkModeToggleSize;
+        /**
+         * When true, CSS transitions on `<html>` and all descendants are
+         * temporarily suppressed during dark mode toggle to prevent jank.
+         * @default false
+         */
+        disableTransitions?: boolean;
+    }>(),
+    {
+        passive: false,
+        size: "md",
+        disableTransitions: false,
+    }
+);
+
+const SIZE_CLASS: Record<DarkModeToggleSize, string> = {
+    sm: "h-7 w-7 p-1",
+    md: "h-9 w-9 p-1.5",
+    lg: "h-11 w-11 p-2",
+};
+
+const attrs = useAttrs();
+
+const rootClass = computed(() =>
+    cn(
+        "dark-mode-toggle-button",
+        "relative isolate inline-flex shrink-0 items-center justify-center",
+        "cursor-pointer border-0 bg-transparent",
+        "rounded-[var(--radius-pill)]",
+        "opacity-80 transition-[opacity,background] duration-[var(--duration-normal)] ease-[var(--ease-standard)]",
+        "hover:opacity-100 hover:bg-white/10 focus:outline-none focus:opacity-100 focus:bg-white/10",
+        SIZE_CLASS[props.size],
+        attrs.class as string | undefined
+    )
+);
+
+const forwardedAttrs = computed(() => {
+    const { class: _omit, ...rest } = attrs;
+    return rest;
+});
+
+const { toggleDark, setDisableTransitions } = useGlobalDark();
+
+watchEffect(() => {
+    setDisableTransitions(props.disableTransitions);
+});
+</script>
+
 <template>
     <!-- Credit to Kevin Powell at https://codepen.io/kevinpowell/pen/PomqjxO -->
     <component
         :is="passive ? 'div' : 'button'"
-        class="dark-mode-toggle-button"
-        v-bind="$attrs"
+        :class="rootClass"
+        v-bind="forwardedAttrs"
         @click="!passive && toggleDark()"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="472.39"
-            height="472.39"
             viewBox="0 0 472.39 472.39"
+            class="block h-full w-full fill-[hsl(var(--foreground))]"
         >
             <g class="toggle-sun">
                 <path
@@ -24,57 +88,7 @@
     </component>
 </template>
 
-<script setup lang="ts">
-import { watchEffect } from "vue";
-import { useGlobalDark } from "../../../composables/useGlobalDark";
-
-const props = defineProps<{
-    passive?: boolean;
-    /**
-     * When true, CSS transitions on `<html>` and all descendants are
-     * temporarily suppressed during dark mode toggle to prevent jank.
-     * @default false
-     */
-    disableTransitions?: boolean;
-}>();
-
-const { toggleDark, setDisableTransitions } = useGlobalDark();
-
-watchEffect(() => {
-    setDisableTransitions(props.disableTransitions ?? false);
-});
-</script>
-
 <style scoped>
-.dark-mode-toggle-button {
-    cursor: pointer;
-    border: 0;
-    padding: 0;
-    border-radius: var(--radius-pill);
-    position: relative;
-    isolation: isolate;
-    background: none;
-    opacity: 0.8;
-
-    transition: opacity var(--duration-normal) var(--ease-standard),
-                background var(--duration-normal) var(--ease-standard);
-
-    z-index: var(--z-popover);
-
-    svg {
-        fill: var(--foreground);
-        width: 100%;
-        height: 100%;
-    }
-
-    &:hover,
-    &:focus {
-        outline: none;
-        opacity: 1;
-        background: hsl(0 0% 50% / 0.15);
-    }
-}
-
 .toggle-sun {
     transform-origin: center center;
     transition: transform 750ms var(--spring-bouncy);

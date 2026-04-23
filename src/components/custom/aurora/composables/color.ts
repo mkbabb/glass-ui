@@ -1,5 +1,5 @@
 import type { OklchStop } from "../presets";
-import { MAX_PALETTE_STOPS } from "../presets";
+import { MAX_STOPS } from "../presets";
 
 export function clamp(v: number, min: number, max: number): number {
     return v < min ? min : v > max ? max : v;
@@ -72,17 +72,29 @@ export function oklchToRgb(L: number, C: number, H: number): [number, number, nu
 }
 
 /**
- * OKLCh stop → sRGB vec3 in [0,1] for shader uniform.
- * Baked in gamma space so 2D compositing reads as pigment.
+ * OKLCh stop to linear-sRGB in [0, 1] — bundle-canonical bake target.
+ * The shader ACES-tonemaps in linear, so the LUT must stay linear.
  */
-export function oklchStopToShaderRgb(stop: OklchStop): [number, number, number] {
+export function oklchToLinear(stop: OklchStop): [number, number, number] {
     const [la, a, b] = oklchToOklab(stop.L, stop.C, stop.h);
     const [lr, lg, lb] = oklabToLinearRgb(la, a, b);
-    return [
-        clamp(delinearize(lr), 0, 1),
-        clamp(delinearize(lg), 0, 1),
-        clamp(delinearize(lb), 0, 1),
-    ];
+    return [Math.max(0, lr), Math.max(0, lg), Math.max(0, lb)];
+}
+
+/**
+ * Pack up to MAX_STOPS OklchStops into Float32Array[MAX_STOPS * 3] of linear sRGB.
+ * Unused slots remain zero-filled; shader clamps `uStopCount` to the authored length.
+ */
+export function flattenPalette(stops: OklchStop[], maxStops: number = MAX_STOPS): Float32Array {
+    const out = new Float32Array(maxStops * 3);
+    const n = Math.min(stops.length, maxStops);
+    for (let i = 0; i < n; i++) {
+        const [r, g, b] = oklchToLinear(stops[i]!);
+        out[i * 3 + 0] = r;
+        out[i * 3 + 1] = g;
+        out[i * 3 + 2] = b;
+    }
+    return out;
 }
 
 export function oklchStopToHex(s: OklchStop): string {
@@ -119,17 +131,4 @@ export function cssToOklch(css: string): OklchStop {
     const [r, g, b] = cssToRgb(css);
     const [L, C, H] = rgbToOklch(r, g, b);
     return { L, C, h: H };
-}
-
-/** Multi-stop palette → Float32Array[MAX_PALETTE_STOPS * 3]. Unused slots zero-filled. */
-export function bakePalette(stops: OklchStop[]): Float32Array {
-    const out = new Float32Array(MAX_PALETTE_STOPS * 3);
-    const n = Math.min(stops.length, MAX_PALETTE_STOPS);
-    for (let i = 0; i < n; i++) {
-        const [r, g, b] = oklchStopToShaderRgb(stops[i]!);
-        out[i * 3 + 0] = r;
-        out[i * 3 + 1] = g;
-        out[i * 3 + 2] = b;
-    }
-    return out;
 }

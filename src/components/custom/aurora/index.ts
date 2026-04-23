@@ -1,20 +1,26 @@
 export { default as Aurora } from "./Aurora.vue";
-export type { AuroraProps } from "./Aurora.vue";
 export { useAurora } from "./composables/useAurora";
+export { useCursorInteraction } from "./composables/useCursorInteraction";
+export { createAurora } from "./composables/runtime";
 export {
     DEFAULT_AURORA_CONFIG,
-    OPENAI_DAWN_PRESET,
-    OPENAI_SKY_PRESET,
-    OPENAI_MEADOW_PRESET,
-    PASTEL_STORM_PRESET,
-    MAX_PALETTE_STOPS,
+    MAX_NUCLEI,
+    MAX_STOPS,
     type AuroraConfig,
-    type OklchStop,
+    type AuroraCursorApi,
+    type AuroraFlow,
+    type AuroraInstance,
+    type AuroraMedium,
+    type AuroraNucleus,
     type FlowPattern,
+    type OklchStop,
+    type StrokeMode,
+    type WarpMode,
 } from "./presets";
 export {
-    oklchStopToHex,
-    hexToOklchStop,
     cssToOklch,
-    bakePalette,
+    flattenPalette,
+    hexToOklchStop,
+    oklchStopToHex,
+    oklchToLinear,
 } from "./composables/color";

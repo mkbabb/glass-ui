@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { registerShortcut } from "@/composables/useKeyboardShortcuts";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
+import { Configurator } from "../configurator";
 import CategoryRail from "./CategoryRail.vue";
 import HeaderBar from "./HeaderBar.vue";
 import StoryPager from "./StoryPager.vue";
@@ -81,6 +82,9 @@ onMounted(() => {
                 </main>
             </div>
         </div>
+
+        <!-- Live token configurator — opened by HeaderBar FAB or `,` shortcut -->
+        <Configurator />
 
         <!-- Keyboard shortcut help dialog -->
         <Dialog v-model:open="showHelp">

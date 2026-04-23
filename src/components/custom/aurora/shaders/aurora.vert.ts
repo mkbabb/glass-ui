@@ -1,10 +1,11 @@
-export const VERT_SRC = `#version 300 es
-// Full-screen triangle; no VBO — positions derived from gl_VertexID.
+// Aurora v4.1 — vertex shader (verbatim port of bundle shader.js VERTEX_SRC).
+// Full-screen triangle via VBO: three vertices at (-1,-1), (3,-1), (-1,3).
+// `vUv` varies 0..1 across the visible quad.
+
+export const VERTEX_SRC = /* glsl */ `#version 300 es
+in vec2 aPos;
+out vec2 vUv;
 void main() {
-    vec2 p = vec2(
-        float((gl_VertexID & 1) << 2) - 1.0,
-        float((gl_VertexID & 2) << 1) - 1.0
-    );
-    gl_Position = vec4(p, 0.0, 1.0);
-}
-`;
+  vUv = aPos * 0.5 + 0.5;
+  gl_Position = vec4(aPos, 0.0, 1.0);
+}`;

@@ -176,7 +176,7 @@ export const CATEGORIES: Category[] = [
             s("compositions", "auth-shell", "Auth Shell"),
             s("compositions", "settings", "Settings"),
             s("compositions", "empty-states", "Empty States"),
-            s("compositions", "aurora-playground", "Aurora Playground", "The original demo — preserved."),
+            s("compositions", "aurora-playground", "Aurora Playground", "Procedural painterly gradients — multi-nuclei composition, four mediums, cursor-driven swirl."),
         ],
     },
 ];
