@@ -3,34 +3,38 @@ import { type VariantProps, cva } from 'class-variance-authority'
 export { default as Button } from './Button.vue'
 
 export const buttonVariants = cva(
-  // Base: compose with btn-pill from glass.css
-  'btn-pill whitespace-nowrap text-sm font-medium focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)] disabled:pointer-events-none disabled:opacity-50',
+  // Base: compose with btn-pill from glass.css.
+  // Four-state contract enforced per variant below; shared base locks down
+  // focus-visible ring, disabled geometry, and press scale via tokens.
+  'btn-pill whitespace-nowrap text-sm font-medium cursor-pointer active:scale-[var(--scale-press-btn)] focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)]',
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        default:
+          'bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 aria-pressed:bg-primary/85',
         destructive:
-          'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+          'bg-destructive text-destructive-foreground hover:bg-destructive/90 active:bg-destructive/80 aria-pressed:bg-destructive/85',
         outline:
-          'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+          'border border-input bg-background hover:bg-accent hover:text-accent-foreground active:bg-accent/80 aria-pressed:bg-accent aria-pressed:text-accent-foreground',
         secondary:
-          'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+          'bg-secondary text-secondary-foreground hover:bg-secondary/80 active:bg-secondary/70 aria-pressed:bg-secondary/60',
         // Glass library modifier classes:
         accent: 'btn-pill-accent',
         ghost: 'btn-pill-ghost',
         glass: 'btn-pill-glass',
         'glass-subtle':
-          'glass-subtle text-foreground/70 hover:border-[color-mix(in_srgb,var(--border)_50%,transparent)] hover:text-foreground',
-        ai: 'bg-amber-500/15 text-amber-700 hover:bg-amber-500/25 dark:text-amber-400',
-        'danger-subtle': 'bg-destructive/10 text-destructive hover:bg-destructive/20',
-        link: 'text-primary underline-offset-4 hover:underline',
+          'glass-subtle text-foreground/70 hover:bg-foreground/[0.04] hover:border-[color-mix(in_srgb,var(--foreground)_20%,transparent)] hover:text-foreground active:bg-foreground/[0.08] aria-pressed:bg-foreground/[0.1] aria-pressed:text-foreground',
+        ai: 'bg-amber-500/15 text-amber-700 hover:bg-amber-500/25 active:bg-amber-500/35 dark:text-amber-400 aria-pressed:bg-amber-500/30',
+        'danger-subtle':
+          'bg-destructive/10 text-destructive hover:bg-destructive/20 active:bg-destructive/30 aria-pressed:bg-destructive/25',
+        link: 'text-primary underline-offset-4 hover:underline active:opacity-80 active:scale-100',
       },
       size: {
         default: 'h-10 px-4 py-2',
-        xs: 'h-7 rounded-full px-2',
+        xs: 'h-7 rounded-full px-2 text-xs',
         sm: 'h-9 rounded-full px-3',
         lg: 'h-11 rounded-full px-8',
-        icon: 'h-10 w-10',
+        icon: 'h-10 w-10 p-0',
       },
     },
     defaultVariants: {
