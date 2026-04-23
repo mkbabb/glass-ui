@@ -1,36 +1,55 @@
-import { createRouter, createWebHashHistory, type RouteRecordRaw } from "vue-router";
-import { CATEGORIES, resolveStory, firstStory } from "./stories/manifest";
+import { createRouter, createWebHistory } from "vue-router";
+import type { RouteRecordRaw } from "vue-router";
+import { CATEGORIES, firstStoryPath } from "./stories/manifest";
 
-const defaultTarget = firstStory();
+/**
+ * Routes are derived from the manifest: every category produces a
+ * landing redirect to its first story, and every story produces a
+ * `/:category/:story` route that lazy-loads its component.
+ */
+function buildRoutes(): RouteRecordRaw[] {
+    const routes: RouteRecordRaw[] = [
+        {
+            path: "/",
+            redirect: () => firstStoryPath(),
+        },
+    ];
 
-const routes: RouteRecordRaw[] = [
-    {
-        path: "/",
-        redirect: { name: "story", params: defaultTarget },
-    },
-    {
-        path: "/:category/:story",
-        name: "story",
-        component: () => import("./stories/StoryPage.vue"),
-        props: true,
-    },
-    // Shallow per-category redirect to its first story.
-    ...CATEGORIES.map((c) => ({
-        path: `/${c.id}`,
-        redirect: { name: "story", params: { category: c.id, story: c.stories[0].id } },
-    })),
-    {
-        path: "/:pathMatch(.*)*",
-        redirect: { name: "story", params: defaultTarget },
-    },
-];
+    for (const category of CATEGORIES) {
+        // Category landing — redirect to first story (or show empty-state fallback below).
+        routes.push({
+            path: `/${category.id}`,
+            name: `category:${category.id}`,
+            redirect: () => {
+                const first = category.stories[0];
+                return first
+                    ? `/${category.id}/${first.id}`
+                    : firstStoryPath();
+            },
+        });
+
+        for (const story of category.stories) {
+            routes.push({
+                path: `/${category.id}/${story.id}`,
+                name: `story:${category.id}:${story.id}`,
+                component: story.component,
+                meta: {
+                    categoryId: category.id,
+                    storyId: story.id,
+                    title: story.title,
+                },
+            });
+        }
+    }
+
+    // Catch-all → root redirect
+    routes.push({ path: "/:pathMatch(.*)*", redirect: "/" });
+
+    return routes;
+}
 
 export const router = createRouter({
-    history: createWebHashHistory(),
-    routes,
-    scrollBehavior(_to, _from, saved) {
-        return saved ?? { top: 0 };
-    },
+    history: createWebHistory(),
+    routes: buildRoutes(),
+    scrollBehavior: () => ({ top: 0 }),
 });
-
-export { resolveStory };

@@ -1,172 +1,194 @@
 /**
- * Story manifest — authoritative index of every storybook page.
+ * Story manifest — single source of truth for the storybook.
  *
- * Convention-based: each story SFC lives at
- *   demo/stories/<category.id>/<story.id>.vue
- * and is resolved by the router via import.meta.glob. Adding a story means
- * creating its SFC and appending a row here.
+ * Each row is one navigable page. `component` is a lazy import resolved via
+ * `import.meta.glob`, so adding a story means creating its SFC at
+ * `demo/stories/<category>/<id>.vue` and appending a row here.
+ *
+ * The manifest is consumed by `router.ts` (routes), `AppShell.vue` (dock rail
+ * + carousel pager), and `useStoryNavigation` (current/next/prev).
  */
+import type { Component } from "vue";
+import {
+    Compass,
+    Shapes,
+    Boxes,
+    Navigation,
+    Database,
+    Bell,
+    Sparkles,
+    LayoutDashboard,
+    type LucideIcon,
+} from "lucide-vue-next";
 
-import { h, defineAsyncComponent, type Component } from "vue";
-
-export interface StoryDef {
+export interface Story {
     id: string;
     title: string;
     blurb?: string;
+    component: () => Promise<Component>;
+    sourceFiles?: string[];
 }
 
-export interface CategoryDef {
+export interface Category {
     id: string;
     title: string;
-    /** Lucide icon name (rendered by the dock rail). */
-    icon: string;
-    stories: StoryDef[];
+    icon: LucideIcon;
+    stories: Story[];
 }
 
-export const CATEGORIES: CategoryDef[] = [
+const modules = import.meta.glob<{ default: Component }>("./*/*.vue");
+
+function lazy(category: string, id: string): () => Promise<Component> {
+    const key = `./${category}/${id}.vue`;
+    const loader = modules[key];
+    if (!loader) {
+        return () =>
+            Promise.resolve({
+                render: () => null,
+                name: `MissingStory:${category}/${id}`,
+            }) as Promise<Component>;
+    }
+    return () => loader().then((m) => m.default);
+}
+
+function s(cat: string, id: string, title: string, blurb?: string): Story {
+    return { id, title, blurb, component: lazy(cat, id) };
+}
+
+export const CATEGORIES: Category[] = [
     {
         id: "foundations",
         title: "Foundations",
-        icon: "compass",
+        icon: Compass,
         stories: [
-            { id: "intro", title: "Intro", blurb: "What this storybook is." },
-            { id: "colors", title: "Colors", blurb: "Warm cream, 13-stop section palette, viz basis." },
-            { id: "typography", title: "Typography", blurb: "Computer Modern, Fraunces, Fira Code — golden-ratio scale." },
-            { id: "radii", title: "Radii", blurb: "Radius tokens from xs to pill." },
-            { id: "shadows", title: "Shadows", blurb: "Cartoon offset, elevated, modal." },
-            { id: "motion", title: "Motion", blurb: "Easings, damped spring linear() curves." },
-            { id: "paper-glass", title: "Paper & Glass", blurb: "Four glass tiers, paper grain, blend modes." },
-            { id: "icons", title: "Icons", blurb: "Lucide, 2px stroke, semantic sizes." },
+            s("foundations", "intro", "Intro", "What this storybook is."),
+            s("foundations", "colors", "Colors", "Warm cream, 13-stop section palette, viz basis."),
+            s("foundations", "typography", "Typography", "Computer Modern, Fraunces, Fira Code — golden-ratio scale."),
+            s("foundations", "radii", "Radii", "Radius tokens from xs to pill."),
+            s("foundations", "shadows", "Shadows", "Cartoon offset, elevated, modal."),
+            s("foundations", "motion", "Motion", "Easings, damped spring linear() curves."),
+            s("foundations", "paper-glass", "Paper & Glass", "Four glass tiers, paper grain, blend modes."),
+            s("foundations", "icons", "Icons", "Lucide, 2px stroke, semantic sizes."),
         ],
     },
     {
         id: "primitives",
         title: "Primitives",
-        icon: "shapes",
+        icon: Shapes,
         stories: [
-            { id: "buttons", title: "Buttons" },
-            { id: "inputs", title: "Inputs" },
-            { id: "textarea", title: "Textarea" },
-            { id: "checks", title: "Checkbox · Radio · Switch" },
-            { id: "slider", title: "Slider" },
-            { id: "number-field", title: "Number Field" },
-            { id: "select", title: "Select" },
-            { id: "combobox", title: "Combobox" },
-            { id: "multi-select", title: "Multi-Select" },
-            { id: "toggle", title: "Toggle · Toggle Group" },
-            { id: "label", title: "Label" },
-            { id: "badge", title: "Badge" },
-            { id: "metric-badge", title: "Metric Badge" },
-            { id: "status-dot", title: "Status Dot" },
-            { id: "pulse", title: "Pulse" },
-            { id: "separator", title: "Separator" },
+            s("primitives", "buttons", "Buttons"),
+            s("primitives", "inputs", "Inputs"),
+            s("primitives", "textarea", "Textarea"),
+            s("primitives", "checks", "Checkbox · Radio · Switch"),
+            s("primitives", "slider", "Slider"),
+            s("primitives", "number-field", "Number Field"),
+            s("primitives", "select", "Select"),
+            s("primitives", "combobox", "Combobox"),
+            s("primitives", "multi-select", "Multi-Select"),
+            s("primitives", "toggle", "Toggle · Toggle Group"),
+            s("primitives", "label", "Label"),
+            s("primitives", "badge", "Badge"),
+            s("primitives", "metric-badge", "Metric Badge"),
+            s("primitives", "status-dot", "Status Dot"),
+            s("primitives", "pulse", "Pulse"),
+            s("primitives", "separator", "Separator"),
         ],
     },
     {
         id: "containers",
         title: "Containers",
-        icon: "square-stack",
+        icon: Boxes,
         stories: [
-            { id: "card", title: "Card" },
-            { id: "dialog", title: "Dialog" },
-            { id: "sheet", title: "Sheet" },
-            { id: "drawer", title: "Drawer" },
-            { id: "popover", title: "Popover" },
-            { id: "dropdown-menu", title: "Dropdown Menu" },
-            { id: "context-menu", title: "Context Menu" },
-            { id: "hover-card", title: "Hover Card" },
-            { id: "tooltip", title: "Tooltip" },
-            { id: "alert", title: "Alert" },
-            { id: "accordion", title: "Accordion" },
-            { id: "collapsible", title: "Collapsible" },
+            s("containers", "card", "Card"),
+            s("containers", "dialog", "Dialog"),
+            s("containers", "sheet", "Sheet"),
+            s("containers", "drawer", "Drawer"),
+            s("containers", "popover", "Popover"),
+            s("containers", "dropdown-menu", "Dropdown Menu"),
+            s("containers", "context-menu", "Context Menu"),
+            s("containers", "hover-card", "Hover Card"),
+            s("containers", "tooltip", "Tooltip"),
+            s("containers", "alert", "Alert"),
+            s("containers", "accordion", "Accordion"),
+            s("containers", "collapsible", "Collapsible"),
         ],
     },
     {
         id: "navigation",
         title: "Navigation",
-        icon: "compass",
+        icon: Navigation,
         stories: [
-            { id: "tabs", title: "Tabs" },
-            { id: "bouncy-tabs", title: "Bouncy Tabs" },
-            { id: "dock", title: "Dock" },
-            { id: "dock-layers", title: "Dock Layers" },
-            { id: "sidebar", title: "Sidebar" },
-            { id: "carousel", title: "Carousel" },
-            { id: "command", title: "Command Palette" },
+            s("navigation", "tabs", "Tabs"),
+            s("navigation", "bouncy-tabs", "Bouncy Tabs"),
+            s("navigation", "dock", "Dock"),
+            s("navigation", "dock-layers", "Dock Layers"),
+            s("navigation", "sidebar", "Sidebar"),
+            s("navigation", "carousel", "Carousel"),
+            s("navigation", "command", "Command Palette"),
         ],
     },
     {
         id: "data",
         title: "Data",
-        icon: "table",
+        icon: Database,
         stories: [
-            { id: "table", title: "Table" },
-            { id: "data-table", title: "Data Table" },
-            { id: "tags-input", title: "Tags Input" },
-            { id: "avatar", title: "Avatar" },
-            { id: "sortable-list", title: "Sortable List" },
-            { id: "infinite-scroll", title: "Infinite Scroll" },
-            { id: "timeline", title: "Timeline" },
+            s("data", "table", "Table"),
+            s("data", "data-table", "Data Table"),
+            s("data", "tags-input", "Tags Input"),
+            s("data", "avatar", "Avatar"),
+            s("data", "sortable-list", "Sortable List"),
+            s("data", "infinite-scroll", "Infinite Scroll"),
+            s("data", "timeline", "Timeline"),
         ],
     },
     {
         id: "feedback",
         title: "Feedback",
-        icon: "bell",
+        icon: Bell,
         stories: [
-            { id: "toast", title: "Toast" },
-            { id: "notification", title: "Notification" },
-            { id: "progress", title: "Progress" },
-            { id: "skeleton", title: "Skeleton" },
-            { id: "confirm-dialog", title: "Confirm Dialog" },
+            s("feedback", "toast", "Toast"),
+            s("feedback", "notification", "Notification"),
+            s("feedback", "progress", "Progress"),
+            s("feedback", "skeleton", "Skeleton"),
+            s("feedback", "confirm-dialog", "Confirm Dialog"),
         ],
     },
     {
         id: "motion",
         title: "Motion",
-        icon: "waves",
+        icon: Sparkles,
         stories: [
-            { id: "transitions", title: "Transitions" },
-            { id: "springs", title: "Spring Orchestrator" },
-            { id: "stagger", title: "Stagger Reveal" },
-            { id: "scroll-type", title: "Scroll-driven Type" },
-            { id: "typewriter", title: "Typewriter" },
+            s("motion", "transitions", "Transitions"),
+            s("motion", "springs", "Spring Orchestrator"),
+            s("motion", "stagger", "Stagger Reveal"),
+            s("motion", "scroll-type", "Scroll-driven Type"),
+            s("motion", "typewriter", "Typewriter"),
         ],
     },
     {
         id: "compositions",
         title: "Compositions",
-        icon: "layout-template",
+        icon: LayoutDashboard,
         stories: [
-            { id: "hero", title: "Hero" },
-            { id: "math-paper", title: "Math Paper" },
-            { id: "dashboard", title: "Dashboard" },
-            { id: "auth-shell", title: "Auth Shell" },
-            { id: "settings", title: "Settings" },
-            { id: "empty-states", title: "Empty States" },
-            { id: "aurora-playground", title: "Aurora Playground", blurb: "The original demo — preserved." },
+            s("compositions", "hero", "Hero"),
+            s("compositions", "math-paper", "Math Paper"),
+            s("compositions", "dashboard", "Dashboard"),
+            s("compositions", "auth-shell", "Auth Shell"),
+            s("compositions", "settings", "Settings"),
+            s("compositions", "empty-states", "Empty States"),
+            s("compositions", "aurora-playground", "Aurora Playground", "The original demo — preserved."),
         ],
     },
 ];
 
-// Glob all story SFCs at build time. Vite resolves this to a map of
-// '../stories/<category>/<id>.vue' -> () => import(...).
-const storyModules = import.meta.glob("./*/*.vue");
-
-export function resolveStory(category: string, id: string): Component {
-    const key = `./${category}/${id}.vue`;
-    const loader = storyModules[key];
-    if (!loader) {
-        return { render: () => h("div", { class: "p-8 text-muted-foreground" }, `Missing story: ${category}/${id}`) };
-    }
-    return defineAsyncComponent(loader as () => Promise<Component>);
-}
-
-export function findCategory(id: string): CategoryDef | undefined {
+export function findCategory(id: string): Category | undefined {
     return CATEGORIES.find((c) => c.id === id);
 }
 
-export function findStory(categoryId: string, storyId: string): { category: CategoryDef; story: StoryDef } | undefined {
+export function findStory(
+    categoryId: string,
+    storyId: string,
+): { category: Category; story: Story } | undefined {
     const category = findCategory(categoryId);
     if (!category) return undefined;
     const story = category.stories.find((s) => s.id === storyId);
@@ -174,7 +196,9 @@ export function findStory(categoryId: string, storyId: string): { category: Cate
     return { category, story };
 }
 
-export function firstStory(): { category: string; story: string } {
-    const c = CATEGORIES[0];
-    return { category: c.id, story: c.stories[0].id };
+export function firstStoryPath(): string {
+    for (const c of CATEGORIES) {
+        if (c.stories.length > 0) return `/${c.id}/${c.stories[0]!.id}`;
+    }
+    return "/foundations";
 }
