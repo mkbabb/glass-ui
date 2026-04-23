@@ -19,7 +19,7 @@ defineProps<{
     >
         <span
             aria-hidden="true"
-            class="font-display italic text-[1.35em] leading-none text-foreground"
+            class="font-display italic text-[1.35em] leading-none text-viz-fourier"
             style="font-variation-settings: 'WONK' 1, 'SOFT' 0; font-optical-sizing: auto"
         >
             &#x2131;
