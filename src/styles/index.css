@@ -8,9 +8,13 @@
  *   (then add your project-specific token overrides locally)
  */
 
-/* Font imports — Computer Modern (body) + Fraunces (display) + Fira Code (mono) */
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,0..100,0..1&family=Fira+Code:wght@300..700&display=swap");
-@import url("https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css");
+/*
+ * NOTE: Font imports (Fraunces, Fira Code, Computer Modern) are issued by
+ * the consumer's root CSS so they land at the top of the cascade. See
+ * demo/demo.css for the canonical example. Importing @import url(...) from
+ * here would put them after @import "tailwindcss" in the consumer's output,
+ * which violates the CSS spec (and some bundlers then drop them).
+ */
 
 /* Order matters: tokens first, then theme (for @theme), then component layers */
 @import "./tokens.css";

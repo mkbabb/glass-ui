@@ -1,12 +1,13 @@
+/* Font imports must be first so the bundler hoists them above all rules. */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,0..100,0..1&family=Fira+Code:wght@300..700&display=swap");
+@import url("https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css");
+
 @import "tailwindcss" source("../demo");
 @import "tw-animate-css";
 @import "../src/styles/index.css";
-@import "../presets/words.css";
 
 @variant dark (&:where(.dark, .dark *));
 
-/* Demo: put bg color on html so blobs are visible through glass panels */
 html {
     background: hsl(var(--background));
 }
-
