@@ -18,10 +18,12 @@ export const buttonVariants = cva(
           'border border-input bg-background hover:bg-accent hover:text-accent-foreground active:bg-accent/80 aria-pressed:bg-accent aria-pressed:text-accent-foreground',
         secondary:
           'bg-secondary text-secondary-foreground hover:bg-secondary/80 active:bg-secondary/70 aria-pressed:bg-secondary/60',
-        // Glass library modifier classes:
-        accent: 'btn-pill-accent',
-        ghost: 'btn-pill-ghost',
-        glass: 'btn-pill-glass',
+        accent:
+          'bg-accent text-accent-foreground border border-border/40 hover:bg-accent/80 active:bg-accent/70 aria-pressed:bg-accent/60',
+        ghost:
+          'bg-transparent text-foreground/70 hover:bg-foreground/8 hover:text-foreground active:bg-foreground/12 aria-pressed:bg-foreground/10 aria-pressed:text-foreground',
+        glass:
+          'bg-[var(--glass-bg-subtle)] border border-[var(--glass-border-default)] text-foreground backdrop-blur-[var(--glass-blur-subtle)] hover:bg-[var(--glass-bg-medium)] hover:border-[var(--glass-border-medium)] hover:shadow-md active:bg-[var(--glass-bg-elevated)] active:border-[var(--glass-border-elevated)] aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-medium))]',
         'glass-subtle':
           'glass-subtle text-foreground/70 hover:bg-foreground/[0.04] hover:border-[color-mix(in_srgb,var(--foreground)_20%,transparent)] hover:text-foreground active:bg-foreground/[0.08] aria-pressed:bg-foreground/[0.1] aria-pressed:text-foreground',
         ai: 'bg-amber-500/15 text-amber-700 hover:bg-amber-500/25 active:bg-amber-500/35 dark:text-amber-400 aria-pressed:bg-amber-500/30',

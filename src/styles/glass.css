@@ -165,65 +165,6 @@
         pointer-events: none;
     }
 
-    .btn-pill-accent {
-        background: var(--th-accent-opaque, var(--primary));
-        color: var(--foreground);
-    }
-
-    .btn-pill-accent:hover:not(:disabled) {
-        opacity: 0.9;
-    }
-
-    .btn-pill-accent:active:not(:disabled) {
-        opacity: 0.8;
-    }
-
-    .btn-pill-accent[aria-pressed="true"] {
-        background: color-mix(in srgb, var(--primary) 85%, var(--foreground));
-    }
-
-    .btn-pill-ghost {
-        background: transparent;
-        color: color-mix(in srgb, var(--foreground) 70%, transparent);
-    }
-
-    .btn-pill-ghost:hover:not(:disabled) {
-        background: color-mix(in srgb, var(--foreground) 8%, transparent);
-        color: var(--foreground);
-    }
-
-    .btn-pill-ghost:active:not(:disabled) {
-        background: color-mix(in srgb, var(--foreground) 12%, transparent);
-    }
-
-    .btn-pill-ghost[aria-pressed="true"] {
-        background: color-mix(in srgb, var(--foreground) 10%, transparent);
-        color: var(--foreground);
-    }
-
-    .btn-pill-glass {
-        background: var(--glass-bg-subtle);
-        backdrop-filter: var(--glass-blur-subtle);
-        border: 1px solid var(--glass-border-default);
-        color: var(--foreground);
-    }
-
-    .btn-pill-glass:hover:not(:disabled) {
-        background: var(--glass-bg-medium);
-        border-color: var(--glass-border-medium);
-        box-shadow: var(--glass-shadow-default);
-    }
-
-    .btn-pill-glass:active:not(:disabled) {
-        background: var(--glass-bg-elevated);
-        border-color: var(--glass-border-elevated);
-    }
-
-    .btn-pill-glass[aria-pressed="true"] {
-        background: color-mix(in srgb, var(--foreground) 10%, var(--glass-bg-medium));
-        border-color: var(--glass-border-elevated);
-    }
-
     /* ── Pill input ───────────────────────────────── */
     .input-pill {
         @apply flex w-full;
