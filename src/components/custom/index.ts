@@ -9,6 +9,7 @@ export * from "./metaballs";
 export * from "./search";
 export * from "./sidebar";
 export * from "./sortable-list";
+export * from "./status-dot";
 export * from "./stacked-icons";
 export * from "./tabs";
 export * from "./timeline";

@@ -30,6 +30,7 @@ export default defineConfig({
                 "vue",
                 "reka-ui",
                 "@vueuse/core",
+                "@mkbabb/keyframes.js",
                 "class-variance-authority",
                 "clsx",
                 "tailwind-merge",
@@ -39,6 +40,7 @@ export default defineConfig({
             output: {
                 globals: {
                     vue: "Vue",
+                    "@mkbabb/keyframes.js": "Keyframes",
                 },
             },
         },

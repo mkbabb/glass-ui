@@ -6,6 +6,7 @@ export * from "./useKeyboardShortcuts";
 export * from "./useWatercolorBlob";
 export { useCharSplit } from "./useCharSplit";
 export * from "./glass";
+export * from "./motion";
 export * from "./pagination";
 export * from "./prng";
 export * from "./virtual";

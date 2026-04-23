@@ -32,6 +32,7 @@
         "node": ">=22"
     },
     "peerDependencies": {
+        "@mkbabb/keyframes.js": "^2.0.0",
         "@vueuse/core": "^14.0",
         "class-variance-authority": "^0.7",
         "clsx": "^2.0",
@@ -42,11 +43,15 @@
         "vue": "^3.5"
     },
     "peerDependenciesMeta": {
+        "@mkbabb/keyframes.js": {
+            "optional": true
+        },
         "embla-carousel-vue": {
             "optional": true
         }
     },
     "devDependencies": {
+        "@mkbabb/keyframes.js": "file:../keyframes.js",
         "@tailwindcss/postcss": "^4.1.11",
         "@tailwindcss/vite": "^4.2.2",
         "@vitejs/plugin-vue": "^6.0.0",
