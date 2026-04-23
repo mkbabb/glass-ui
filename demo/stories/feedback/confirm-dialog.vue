@@ -1,0 +1,175 @@
+<script setup lang="ts">
+import { ref } from "vue";
+import { Button } from "@/components/ui/button";
+import { ConfirmDialog } from "@/components/custom/confirm-dialog";
+import { Trash2, LogOut, Archive, CheckCircle2 } from "lucide-vue-next";
+
+const destructiveOpen = ref(false);
+const destructiveLoading = ref(false);
+const destructiveLog = ref<string[]>([]);
+
+function onDestructiveConfirm(): void {
+    destructiveLoading.value = true;
+    window.setTimeout(() => {
+        destructiveLoading.value = false;
+        destructiveOpen.value = false;
+        destructiveLog.value = [
+            `Workspace deleted at ${new Date().toLocaleTimeString()}`,
+            ...destructiveLog.value,
+        ].slice(0, 4);
+    }, 900);
+}
+
+const benignOpen = ref(false);
+const benignLog = ref<string[]>([]);
+function onBenignConfirm(): void {
+    benignLog.value = [
+        `Archived at ${new Date().toLocaleTimeString()}`,
+        ...benignLog.value,
+    ].slice(0, 4);
+}
+
+const signOutOpen = ref(false);
+</script>
+
+<template>
+    <article class="flex flex-col gap-14">
+        <header class="flex flex-col gap-3">
+            <p class="text-admin-label text-muted-foreground">feedback · confirm dialog</p>
+            <h1 class="text-title text-foreground">Confirm Dialog</h1>
+            <p class="text-prose max-w-2xl text-muted-foreground">
+                Compact yes/no guard for irreversible actions. Positions
+                <em>absolute</em> inside the nearest relative ancestor so it can
+                scope to a panel instead of the full viewport. Flip
+                <code class="font-mono-code">destructive</code> to tone the
+                confirm button red; pipe a <code class="font-mono-code">loading</code>
+                ref for async commits — the spinner swaps in and buttons lock.
+            </p>
+        </header>
+
+        <section class="flex flex-col gap-3">
+            <p class="section-label">destructive — delete workspace</p>
+            <div
+                class="relative overflow-hidden rounded-2xl border border-border/60 bg-card/60 p-6 min-h-[240px]"
+            >
+                <div class="flex flex-col gap-3">
+                    <div class="flex items-center gap-2 text-sm text-foreground">
+                        <Trash2 class="size-4 text-destructive" />
+                        <span>Workspace: <em>fourier-sandbox-42</em></span>
+                    </div>
+                    <p class="max-w-prose text-sm text-muted-foreground">
+                        Deleting a workspace removes every analysis, note, and
+                        attachment inside it. This cannot be undone — use the
+                        destructive pattern.
+                    </p>
+                    <div>
+                        <Button
+                            variant="destructive"
+                            class="gap-1.5"
+                            @click="destructiveOpen = true"
+                        >
+                            <Trash2 class="size-4" />
+                            Delete workspace
+                        </Button>
+                    </div>
+                    <ul
+                        v-if="destructiveLog.length"
+                        class="mt-2 font-mono text-xs text-muted-foreground"
+                    >
+                        <li v-for="line in destructiveLog" :key="line">— {{ line }}</li>
+                    </ul>
+                </div>
+
+                <ConfirmDialog
+                    v-model:open="destructiveOpen"
+                    title="Delete workspace?"
+                    description="This will permanently remove all analyses, notes, and attachments inside fourier-sandbox-42. This cannot be undone."
+                    confirm-label="Delete workspace"
+                    destructive
+                    :loading="destructiveLoading"
+                    @confirm="onDestructiveConfirm"
+                />
+            </div>
+        </section>
+
+        <section class="flex flex-col gap-3">
+            <p class="section-label">benign — archive thread</p>
+            <div
+                class="relative overflow-hidden rounded-2xl border border-border/60 bg-card/60 p-6 min-h-[200px]"
+            >
+                <div class="flex flex-col gap-3">
+                    <div class="flex items-center gap-2 text-sm text-foreground">
+                        <Archive class="size-4 text-muted-foreground" />
+                        <span>Thread: <em>Q2 planning notes</em></span>
+                    </div>
+                    <p class="max-w-prose text-sm text-muted-foreground">
+                        Archive is reversible — the confirm button stays
+                        default-tone. Keep the guardrail for deliberate
+                        intent, not for consequence.
+                    </p>
+                    <div>
+                        <Button
+                            variant="outline"
+                            class="gap-1.5"
+                            @click="benignOpen = true"
+                        >
+                            <Archive class="size-4" />
+                            Archive thread
+                        </Button>
+                    </div>
+                    <ul
+                        v-if="benignLog.length"
+                        class="mt-2 font-mono text-xs text-muted-foreground"
+                    >
+                        <li v-for="line in benignLog" :key="line">— {{ line }}</li>
+                    </ul>
+                </div>
+
+                <ConfirmDialog
+                    v-model:open="benignOpen"
+                    title="Archive this thread?"
+                    description="Archived threads move to the Archive tab. You can restore them any time."
+                    confirm-label="Archive"
+                    @confirm="onBenignConfirm"
+                />
+            </div>
+        </section>
+
+        <section class="flex flex-col gap-3">
+            <p class="section-label">slot override — custom body + action</p>
+            <div
+                class="relative overflow-hidden rounded-2xl border border-border/60 bg-card/60 p-6 min-h-[220px]"
+            >
+                <div class="flex flex-col gap-3">
+                    <p class="max-w-prose text-sm text-muted-foreground">
+                        Default + action slots let consumers swap copy and the
+                        confirm label for richer framing.
+                    </p>
+                    <div>
+                        <Button variant="outline" class="gap-1.5" @click="signOutOpen = true">
+                            <LogOut class="size-4" />
+                            Sign out
+                        </Button>
+                    </div>
+                </div>
+
+                <ConfirmDialog
+                    v-model:open="signOutOpen"
+                    title="Sign out of all devices?"
+                    confirm-label="Sign out"
+                >
+                    <p>
+                        You'll need to re-authenticate the next time you open
+                        the editor. Local drafts stay on this device.
+                    </p>
+                    <template #action>
+                        <span class="inline-flex items-center gap-1.5">
+                            <CheckCircle2 class="size-4" />
+                            Sign me out
+                        </span>
+                    </template>
+                </ConfirmDialog>
+            </div>
+        </section>
+    </article>
+</template>
