@@ -44,6 +44,7 @@
 
     /* Letter spacing */
     --tracking-tight: -0.025em;
+    --tracking-snug: -0.01em;
     --tracking-normal: 0;
     --tracking-wide: 0.025em;
     --tracking-wider: 0.05em;
@@ -214,6 +215,13 @@ body {
     font-family: var(--font-mono);
     font-size: var(--type-small);
     line-height: var(--leading-small);
+}
+
+@utility text-mono-micro {
+    font-family: var(--font-mono);
+    font-size: var(--type-micro);
+    line-height: 1.25;
+    letter-spacing: 0.025em;
 }
 
 /* ═══════════════════════════════════════════════

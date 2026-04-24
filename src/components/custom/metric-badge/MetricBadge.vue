@@ -29,7 +29,7 @@ withDefaults(
     )"
   >
     <span
-      class="text-mono-micro font-semibold tabular-nums truncate transition-colors"
+      class="text-mono-micro font-semibold tabular-nums tracking-snug truncate transition-colors"
       :style="amount ? { color } : undefined"
       :class="{ 'text-muted-foreground/40': !amount }"
     >{{ amount || placeholder }}</span>
