@@ -95,25 +95,45 @@
 
     /* ═══════════════════════════════════════════════
        §5  COLOR PALETTE — Warm cream / muted black
+
+       Neutral scale: perceptually-uniform L* steps at hue 48 (warm paper).
+       Each pair visibly distinct at 20px viewing distance.
+           0 → 1  : 3 L   (page → soft field)
+           1 → 2  : 5 L   (soft field → chip / tab-inactive)
+           2 → 3  : 8 L   (chip → hover / highlight)
+           3 → 4  : 12 L  (highlight → subtle border)
+           4 → 5  : 25 L  (border → muted text, contrast jump)
+
+       Semantic aliases re-point into the scale — no back-compat shims.
        ═══════════════════════════════════════════════ */
-    --background: hsl(48 15% 98%);
+    --neutral-0: hsl(48 12% 98%);   /* L 98 — page surface */
+    --neutral-1: hsl(48 10% 95%);   /* L 95 — soft field bg */
+    --neutral-2: hsl(48  9% 90%);   /* L 90 — chip / tab-inactive bg */
+    --neutral-3: hsl(48  8% 82%);   /* L 82 — hover / highlight bg */
+    --neutral-4: hsl(48  7% 70%);   /* L 70 — subtle border */
+    --neutral-5: hsl(48  6% 45%);   /* L 45 — muted text */
+
+    --background: var(--neutral-0);
     --foreground: hsl(24 10% 10%);
-    --muted: hsl(48 8% 96.1%);
-    --muted-foreground: hsl(24 5% 46%);
-    --card: hsl(48 12% 99%);
-    --card-foreground: hsl(24 10% 10%);
-    --popover: hsl(48 12% 99%);
-    --popover-foreground: hsl(24 10% 10%);
-    --border: hsl(48 8% 88%);
-    --input: hsl(48 8% 88%);
+    --card: var(--neutral-0);
+    --card-foreground: var(--foreground);
+    --popover: var(--neutral-0);
+    --popover-foreground: var(--foreground);
+
+    --muted: var(--neutral-1);
+    --muted-foreground: var(--neutral-5);
+    --secondary: var(--neutral-2);
+    --secondary-foreground: var(--foreground);
+    --accent: var(--neutral-3);
+    --accent-foreground: var(--foreground);
+
+    --border: var(--neutral-4);
+    --input: var(--neutral-4);
+
     --primary: hsl(24 10% 10%);
-    --primary-foreground: hsl(48 15% 98%);
-    --secondary: hsl(48 8% 96.1%);
-    --secondary-foreground: hsl(24 10% 10%);
-    --accent: hsl(48 8% 96.1%);
-    --accent-foreground: hsl(24 10% 10%);
+    --primary-foreground: var(--neutral-0);
     --destructive: hsl(0 72% 50%);
-    --destructive-foreground: hsl(48 15% 98%);
+    --destructive-foreground: var(--neutral-0);
     --ring: hsl(24 10% 10%);
     --shadow: hsl(24 10% 10%);
     --shadow-color: var(--foreground);
@@ -344,22 +364,34 @@
    DARK MODE — warm dark, section palette brightened ~20% L
    ═══════════════════════════════════════════════ */
 .dark {
-    --background: hsl(24 8% 6%);
+    /* Neutral scale mirrors light-mode pattern: step UP from the background's
+       low L toward foreground. Same perceptual deltas as light. */
+    --neutral-0: hsl(24 8% 6%);    /* L 6  — page surface (dark) */
+    --neutral-1: hsl(24 6% 11%);   /* L 11 — soft field */
+    --neutral-2: hsl(24 5% 16%);   /* L 16 — chip / tab-inactive */
+    --neutral-3: hsl(24 5% 22%);   /* L 22 — hover / highlight */
+    --neutral-4: hsl(24 5% 34%);   /* L 34 — subtle border */
+    --neutral-5: hsl(48 5% 60%);   /* L 60 — muted text */
+
+    --background: var(--neutral-0);
     --foreground: hsl(48 10% 90%);
-    --muted: hsl(24 5% 15%);
-    --muted-foreground: hsl(48 5% 55%);
     --card: hsl(24 8% 10%);
-    --card-foreground: hsl(48 10% 90%);
+    --card-foreground: var(--foreground);
     --popover: hsl(24 8% 10%);
-    --popover-foreground: hsl(48 10% 90%);
-    --border: hsl(24 5% 18%);
-    --input: hsl(24 5% 18%);
+    --popover-foreground: var(--foreground);
+
+    --muted: var(--neutral-1);
+    --muted-foreground: var(--neutral-5);
+    --secondary: var(--neutral-2);
+    --secondary-foreground: var(--foreground);
+    --accent: var(--neutral-3);
+    --accent-foreground: var(--foreground);
+
+    --border: var(--neutral-4);
+    --input: var(--neutral-4);
+
     --primary: hsl(48 10% 90%);
     --primary-foreground: hsl(24 10% 10%);
-    --secondary: hsl(24 5% 15%);
-    --secondary-foreground: hsl(48 10% 90%);
-    --accent: hsl(24 5% 15%);
-    --accent-foreground: hsl(48 10% 90%);
     --destructive: hsl(0 62.8% 30.6%);
     --destructive-foreground: hsl(48 10% 90%);
     --ring: hsl(48 10% 70%);

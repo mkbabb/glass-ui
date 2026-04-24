@@ -24,7 +24,6 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/cn";
 import { PRESETS } from "../presets/manifest";
 import {
-    DEFAULT_CONFIG,
     FONT_OPTIONS,
     useConfigurator,
     type Density,
@@ -34,7 +33,7 @@ import ConfiguratorField from "./ConfiguratorField.vue";
 
 const CONFIG_EVENT = "glass-ui-demo:toggle-configurator";
 
-const { state, reset, setPreset, markCustom } = useConfigurator();
+const cfg = useConfigurator();
 const open = ref(false);
 
 // ─── External event wiring ────────────────────────────────────────────────
@@ -50,7 +49,7 @@ onBeforeUnmount(() => {
     window.removeEventListener(CONFIG_EVENT, onToggleEvent);
 });
 
-// ─── Helpers — slider bindings need number[] ──────────────────────────────
+// ─── Slider bindings — Reka sliders model number[] ────────────────────────
 
 function num(v: unknown, fallback: number): number {
     if (Array.isArray(v) && typeof v[0] === "number") return v[0];
@@ -59,71 +58,52 @@ function num(v: unknown, fallback: number): number {
 }
 
 const scaleBaseModel = computed<number[]>({
-    get: () => [state.scaleBase],
-    set: (v) => {
-        state.scaleBase = num(v, DEFAULT_CONFIG.scaleBase);
-        markCustom();
-    },
+    get: () => [cfg.effective("scaleBase")],
+    set: (v) => cfg.setField("scaleBase", num(v, cfg.defaults.scaleBase)),
 });
 const hueShiftModel = computed<number[]>({
-    get: () => [state.hueShift],
-    set: (v) => {
-        state.hueShift = num(v, DEFAULT_CONFIG.hueShift);
-        markCustom();
-    },
+    get: () => [cfg.effective("hueShift")],
+    set: (v) => cfg.setField("hueShift", num(v, cfg.defaults.hueShift)),
 });
 const grainModel = computed<number[]>({
-    get: () => [state.grain],
-    set: (v) => {
-        state.grain = num(v, DEFAULT_CONFIG.grain);
-        markCustom();
-    },
+    get: () => [cfg.effective("grain")],
+    set: (v) => cfg.setField("grain", num(v, cfg.defaults.grain)),
 });
 const radiusModel = computed<number[]>({
-    get: () => [state.radius],
-    set: (v) => {
-        state.radius = num(v, DEFAULT_CONFIG.radius);
-        markCustom();
-    },
+    get: () => [cfg.effective("radius")],
+    set: (v) => cfg.setField("radius", num(v, cfg.defaults.radius)),
 });
 
 const cartoonModel = computed<boolean>({
-    get: () => state.cartoonShadow,
-    set: (v) => {
-        state.cartoonShadow = v;
-        markCustom();
-    },
+    get: () => cfg.effective("cartoonShadow"),
+    set: (v) => cfg.setField("cartoonShadow", v),
 });
 const darkModel = computed<boolean>({
-    get: () => state.dark,
-    set: (v) => {
-        state.dark = v;
+    get: () => cfg.effective("dark"),
+    set: (v) => cfg.setField("dark", v),
+});
+
+const presetModel = computed({
+    get: () => cfg.effective("preset"),
+    set: (v: string | null) => {
+        if (v) cfg.setPreset(v as "default" | "neutral" | "custom");
     },
 });
 
 function onDensity(v: Density): void {
-    state.density = v;
-    markCustom();
+    cfg.setField("density", v);
 }
 
 function onFontChange(slot: keyof FontSlots, stack: string): void {
-    state.font[slot] = stack;
-    markCustom();
-}
-
-function resetField<K extends keyof typeof DEFAULT_CONFIG>(key: K): void {
-    const def = DEFAULT_CONFIG[key];
-    if (key === "font") {
-        state.font = { ...DEFAULT_CONFIG.font };
-    } else {
-        // Assign the default — runtime types are known to match the field.
-        (state as unknown as Record<string, unknown>)[key as string] =
-            def as unknown;
-    }
+    cfg.setFont(slot, stack);
 }
 
 function presetLabel(id: string): string {
     return PRESETS.find((p) => p.id === id)?.label ?? id;
+}
+
+function effectiveFont(slot: keyof FontSlots): string {
+    return cfg.effectiveFont(slot);
 }
 </script>
 
@@ -135,7 +115,7 @@ function presetLabel(id: string): string {
                 :class="
                     cn(
                         'glass-btn fixed bottom-6 right-6 z-dock inline-flex h-12 w-12 items-center justify-center rounded-full text-foreground shadow-lg transition-transform',
-                        'hover:scale-[1.04] active:scale-[0.97] focus-visible:outline-none focus-visible:shadow-[0_0_0_2px_color-mix(in_srgb,var(--ring)_30%,transparent)]',
+                        'hover:scale-[1.04] active:scale-[0.97] focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)]',
                     )
                 "
                 aria-label="Open configurator"
@@ -165,9 +145,9 @@ function presetLabel(id: string): string {
                             Preset
                         </h3>
                         <RadioGroup
-                            :model-value="state.preset"
+                            :model-value="presetModel"
                             class="grid gap-2"
-                            @update:model-value="(v) => v && setPreset(v as typeof state.preset)"
+                            @update:model-value="(v) => { if (v) presetModel = v as string; }"
                         >
                             <label
                                 v-for="p in PRESETS"
@@ -195,7 +175,7 @@ function presetLabel(id: string): string {
                             </label>
                         </RadioGroup>
                         <p
-                            v-if="state.preset === 'custom'"
+                            v-if="cfg.effective('preset') === 'custom'"
                             class="text-[0.6875rem] text-muted-foreground/80 italic"
                         >
                             Based on {{ presetLabel("default") }} with local overrides.
@@ -213,10 +193,10 @@ function presetLabel(id: string): string {
                             :label="slot[0].toUpperCase() + slot.slice(1)"
                             :name="`--font-${slot}`"
                             can-reset
-                            @reset="() => { state.font[slot] = DEFAULT_CONFIG.font[slot]; markCustom(); }"
+                            @reset="() => cfg.setFont(slot, cfg.defaults.font[slot])"
                         >
                             <Select
-                                :model-value="state.font[slot]"
+                                :model-value="effectiveFont(slot)"
                                 @update:model-value="(v) => v && onFontChange(slot, String(v))"
                             >
                                 <SelectTrigger class="w-full">
@@ -237,9 +217,9 @@ function presetLabel(id: string): string {
                         <ConfiguratorField
                             label="Scale base"
                             name="--font-size-base"
-                            :description="`${state.scaleBase}px`"
+                            :description="`${cfg.effective('scaleBase')}px`"
                             can-reset
-                            @reset="() => resetField('scaleBase')"
+                            @reset="() => cfg.clearField('scaleBase')"
                         >
                             <Slider
                                 v-model="scaleBaseModel"
@@ -259,9 +239,9 @@ function presetLabel(id: string): string {
                         <ConfiguratorField
                             label="Hue shift"
                             name="--hue-shift"
-                            :description="`${state.hueShift}° — rotates sections via filter`"
+                            :description="`${cfg.effective('hueShift')}° — rotates sections via filter`"
                             can-reset
-                            @reset="() => resetField('hueShift')"
+                            @reset="() => cfg.clearField('hueShift')"
                         >
                             <Slider
                                 v-model="hueShiftModel"
@@ -274,9 +254,9 @@ function presetLabel(id: string): string {
                         <ConfiguratorField
                             label="Grain"
                             name="--glass-grain-opacity"
-                            :description="state.grain.toFixed(3)"
+                            :description="cfg.effective('grain').toFixed(3)"
                             can-reset
-                            @reset="() => resetField('grain')"
+                            @reset="() => cfg.clearField('grain')"
                         >
                             <Slider
                                 v-model="grainModel"
@@ -297,7 +277,7 @@ function presetLabel(id: string): string {
                             label="Density"
                             name="--density-pad / --density-gap"
                             can-reset
-                            @reset="() => resetField('density')"
+                            @reset="() => cfg.clearField('density')"
                         >
                             <div class="flex w-full gap-1">
                                 <button
@@ -307,7 +287,7 @@ function presetLabel(id: string): string {
                                     :class="
                                         cn(
                                             'flex-1 h-9 rounded-md text-xs font-medium border border-border/40 transition-colors',
-                                            state.density === d
+                                            cfg.effective('density') === d
                                                 ? 'bg-foreground text-background'
                                                 : 'bg-card/40 text-foreground hover:bg-card/70',
                                         )
@@ -322,9 +302,9 @@ function presetLabel(id: string): string {
                         <ConfiguratorField
                             label="Radius"
                             name="--radius"
-                            :description="`${state.radius}px`"
+                            :description="`${cfg.effective('radius')}px`"
                             can-reset
-                            @reset="() => resetField('radius')"
+                            @reset="() => cfg.clearField('radius')"
                         >
                             <Slider
                                 v-model="radiusModel"
@@ -346,7 +326,7 @@ function presetLabel(id: string): string {
                             name="--shadow-card"
                             description="Swaps between cartoon offset and small sm shadow."
                             can-reset
-                            @reset="() => resetField('cartoonShadow')"
+                            @reset="() => cfg.clearField('cartoonShadow')"
                         >
                             <div class="flex w-full items-center justify-end">
                                 <Switch v-model="cartoonModel" />
@@ -356,7 +336,7 @@ function presetLabel(id: string): string {
                             label="Dark mode"
                             description="Mirrors the global dark toggle."
                             can-reset
-                            @reset="() => resetField('dark')"
+                            @reset="() => cfg.clearField('dark')"
                         >
                             <div class="flex w-full items-center justify-end">
                                 <Switch v-model="darkModel" />
@@ -369,7 +349,7 @@ function presetLabel(id: string): string {
                     <Label class="text-[0.6875rem] font-mono text-muted-foreground/70">
                         glass-ui-demo-config
                     </Label>
-                    <Button variant="ghost" size="sm" @click="reset">
+                    <Button variant="ghost" size="sm" @click="cfg.reset">
                         Reset all
                     </Button>
                 </div>

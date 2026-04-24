@@ -3,10 +3,11 @@ export { default as ConfiguratorField } from "./ConfiguratorField.vue";
 export {
     DEFAULT_CONFIG,
     FONT_OPTIONS,
-    PRESET_OVERRIDES,
     useConfigurator,
     type Configurator as ConfiguratorApi,
-    type ConfiguratorState,
+    type ConfigBaseline,
+    type ConfigDelta,
+    type DeltaKey,
     type Density,
     type FontOption,
     type FontSlots,
