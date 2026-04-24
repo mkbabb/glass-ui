@@ -14,3 +14,8 @@ export {
     useScrollProgress,
     type UseScrollProgressOptions,
 } from "./useScrollProgress";
+export {
+    useAnimatedNumber,
+    type AnimatedNumber,
+    type UseAnimatedNumberOptions,
+} from "./useAnimatedNumber";

@@ -525,6 +525,7 @@ Reusable sets in `transitions.css`. Each defines enter/leave-active + enter-from
 | `dropdown`        | Opacity + translateY + scale           | 300 ms `--spring-snappy`       | 100 ms opacity-only             | Dropdown menus                 |
 | `tab-fade`        | Opacity                                | 200 ms `--ease-standard`       | 200 ms `--ease-standard`        | Tab content swap               |
 | `pane-swap`       | Opacity + translateX (mode="out-in")   | 300 ms `--spring-smooth`       | 300 ms `--ease-out`             | Pane content swap              |
+| `metric-swap`     | Opacity + translateY + scale(0.95)     | 300 ms `--spring-smooth`       | 200 ms `--ease-standard`        | Metric value crossfade         |
 | `pane-slide`      | Opacity + max-height                   | 550 ms `--spring-gentle`       | 550 ms `--ease-out`             | Collapsible panes              |
 | `pane-left`       | translateX(−110%) + rotate(−2°)        | 450 ms `--spring-snappy`       | 300 ms `--ease-out`             | Left pane nav                  |
 | `pane-right`      | translateX(110%) + rotate(2°)          | 450 ms `--spring-snappy`       | 300 ms `--ease-out`             | Right pane nav                 |
@@ -538,6 +539,7 @@ All transitions respect `prefers-reduced-motion`: fades preserved at 150 ms, tra
 - `scale-in` — opacity + scale(0.95)
 - `fade-in` — opacity + translateY(6 px)
 - `slide-up` — opacity + translateY(16 px)
+- `dock-in` — opacity + translateY(14 px) + scale(0.96); opt-in via `.dock-in` utility on a dock wrapper (panel duration, `--spring-snappy`)
 
 ### Kinetic typography keyframes
 
@@ -712,6 +714,8 @@ animation · aurora · confirm-dialog · controls · **dock** (`GlassDock`, `Doc
 ### Composables (`src/composables/`)
 
 Dock: `useDockState`, `useDockTransition`, `useLayerTransition`. Sorting: `useSortable`. Sidebar: `useTreeIndex`, `useScrollTracker`, `useSidebarFollow`, `useSidebarState`, `buildTreeIndex`. Effects: `useGlobalDark`, `useKeyboardShortcuts`, `useCharSplit`, `useWatercolorBlob`, `copyToClipboard`. Infinite scroll: `useInfiniteScroll`.
+
+Motion: `useSpringOrchestrator`, `useStaggerReveal`, `useScrollProgress`, `useAnimatedNumber`. The last wraps keyframes.js `SmoothProgress.play` to expose a reactive hysteresis-smoothed value for live numeric tracking (hero values, pill amounts, progress bars). Not a typewriter — the target glides toward a moving signal via exponential damping.
 
 ---
 

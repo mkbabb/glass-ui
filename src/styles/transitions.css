@@ -136,6 +136,23 @@
     transform: translateX(calc(-1 * var(--animation-slide-md, 6px)));
 }
 
+/* ── Metric swap (vertical crossfade + scale — for metric value swaps) ── */
+.metric-swap-enter-active {
+    transition:
+        opacity var(--duration-normal, 0.3s) var(--spring-smooth, ease),
+        transform var(--duration-normal, 0.3s) var(--spring-smooth, ease);
+}
+.metric-swap-leave-active {
+    transition:
+        opacity var(--duration-fast, 0.2s) var(--ease-standard, ease),
+        transform var(--duration-fast, 0.2s) var(--ease-standard, ease);
+}
+.metric-swap-enter-from,
+.metric-swap-leave-to {
+    opacity: 0;
+    transform: translateY(var(--animation-slide-md, 6px)) scale(0.95);
+}
+
 /* ── Pane slide (collapse/expand) ── */
 .pane-slide-enter-active {
     transition:
@@ -235,6 +252,8 @@
     .dropdown-leave-active,
     .pane-swap-enter-active,
     .pane-swap-leave-active,
+    .metric-swap-enter-active,
+    .metric-swap-leave-active,
     .pane-slide-enter-active,
     .pane-slide-leave-active,
     .pane-left-enter-active,
@@ -263,6 +282,8 @@
     .dropdown-leave-to,
     .pane-swap-enter-from,
     .pane-swap-leave-to,
+    .metric-swap-enter-from,
+    .metric-swap-leave-to,
     .pane-left-enter-from,
     .pane-left-leave-to,
     .pane-right-enter-from,
