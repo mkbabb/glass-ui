@@ -122,6 +122,7 @@ export const CATEGORIES: Category[] = [
             s("navigation", "bouncy-tabs", "Bouncy Tabs"),
             s("navigation", "dock", "Dock"),
             s("navigation", "dock-layers", "Dock Layers"),
+            s("navigation", "rail", "Rail", "Vertical icon-button bar — the library primitive behind the demo's category nav."),
             s("navigation", "sidebar", "Sidebar"),
             s("navigation", "carousel", "Carousel"),
             s("navigation", "command", "Command Palette"),

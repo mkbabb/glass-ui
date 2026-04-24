@@ -1,0 +1,94 @@
+<script setup lang="ts">
+import { ref } from "vue";
+import {
+    Compass,
+    Shapes,
+    Boxes,
+    Database,
+    Bell,
+    Sparkles,
+    LayoutDashboard,
+    Navigation as NavigationIcon,
+} from "lucide-vue-next";
+import { Rail } from "@/components/custom/rail";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { cn } from "@/utils/cn";
+
+interface Entry {
+    id: string;
+    label: string;
+    icon: typeof Compass;
+}
+
+const entries: Entry[] = [
+    { id: "foundations", label: "Foundations", icon: Compass },
+    { id: "primitives", label: "Primitives", icon: Shapes },
+    { id: "containers", label: "Containers", icon: Boxes },
+    { id: "navigation", label: "Navigation", icon: NavigationIcon },
+    { id: "data", label: "Data", icon: Database },
+    { id: "feedback", label: "Feedback", icon: Bell },
+    { id: "motion", label: "Motion", icon: Sparkles },
+    { id: "compositions", label: "Compositions", icon: LayoutDashboard },
+];
+
+const active = ref<string>("primitives");
+</script>
+
+<template>
+    <div class="flex flex-col gap-10">
+        <section class="flex flex-col gap-3">
+            <h2 class="text-subheading">Default pill</h2>
+            <p class="text-small text-muted-foreground">
+                Vertical <code class="rounded bg-muted px-1">Rail</code> hosts any children — icon
+                buttons, separators, brand marks. Glass-subtle pill by default.
+            </p>
+            <div class="flex justify-start">
+                <Rail>
+                    <Tooltip v-for="e in entries" :key="e.id">
+                        <TooltipTrigger as-child>
+                            <button
+                                type="button"
+                                :aria-current="active === e.id ? 'page' : undefined"
+                                :class="
+                                    cn(
+                                        'flex h-10 w-10 items-center justify-center rounded-full transition-colors',
+                                        'text-muted-foreground hover:bg-foreground/8 hover:text-foreground',
+                                        'focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)]',
+                                        active === e.id && 'bg-foreground/10 text-foreground',
+                                    )
+                                "
+                                @click="active = e.id"
+                            >
+                                <component :is="e.icon" class="h-4 w-4" />
+                                <span class="sr-only">{{ e.label }}</span>
+                            </button>
+                        </TooltipTrigger>
+                        <TooltipContent side="right">{{ e.label }}</TooltipContent>
+                    </Tooltip>
+                </Rail>
+            </div>
+        </section>
+
+        <section class="flex flex-col gap-3">
+            <h2 class="text-subheading">Rounded shape</h2>
+            <p class="text-small text-muted-foreground">
+                Consumers can switch to rectangular corners via
+                <code class="rounded bg-muted px-1">shape="rounded"</code> when the rail hosts a
+                tool palette rather than a category nav.
+            </p>
+            <div class="flex justify-start">
+                <Rail shape="rounded">
+                    <button
+                        v-for="e in entries.slice(0, 4)"
+                        :key="e.id"
+                        type="button"
+                        class="flex h-10 w-10 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-foreground/8 hover:text-foreground focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)]"
+                        :aria-label="e.label"
+                    >
+                        <component :is="e.icon" class="h-4 w-4" />
+                    </button>
+                </Rail>
+            </div>
+        </section>
+    </div>
+</template>

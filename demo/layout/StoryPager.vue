@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { BouncyTabs, type TabOption } from "@/components/custom/tabs";
-import { cn } from "@/utils/cn";
 import { CATEGORIES } from "../stories/manifest";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 
@@ -29,28 +28,15 @@ function handleUpdate(storyId: string): void {
 <template>
     <nav
         v-if="options.length > 0"
-        class="px-4 py-3"
+        class="flex min-w-0 px-4 pt-2 pb-1"
         aria-label="Stories in category"
     >
-        <!--
-            Continuous tab-bar: a single glass pill that horizontally scrolls
-            when stories overflow. The sliding indicator lives inside
-            BouncyTabs and reacts to modelValue changes (route-driven).
-        -->
-        <div
-            :class="
-                cn(
-                    'glass-subtle scrollbar-hidden flex overflow-x-auto rounded-[var(--radius-pill)] p-0.5',
-                )
-            "
-        >
-            <BouncyTabs
-                :options="options"
-                :model-value="activeStoryId"
-                variant="pill"
-                class="!flex !bg-transparent"
-                @update:model-value="handleUpdate"
-            />
-        </div>
+        <BouncyTabs
+            :options="options"
+            :model-value="activeStoryId"
+            variant="pill"
+            class="max-w-full scrollbar-hidden overflow-x-auto"
+            @update:model-value="handleUpdate"
+        />
     </nav>
 </template>
