@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import {
     Accordion,
     AccordionContent,
@@ -31,19 +32,7 @@ const faq = [
 </script>
 
 <template>
-    <section class="mx-auto max-w-3xl px-8 py-16">
-        <header class="mb-12 grid gap-3">
-            <p class="font-mono text-2xs uppercase tracking-[0.2em] text-muted-foreground">
-                Containers · Accordion
-            </p>
-            <h1 class="font-display text-5xl leading-tight">Accordion</h1>
-            <p class="max-w-2xl text-lg text-muted-foreground">
-                Vertical collection of disclosure panels. Two selection modes —
-                <em>single</em> (one open at a time) and
-                <em>multiple</em> (any combination).
-            </p>
-        </header>
-
+    <StoryPage>
         <div class="grid gap-12">
             <div class="grid gap-4">
                 <h2 class="font-display text-xl">Single</h2>
@@ -85,5 +74,5 @@ const faq = [
                 </Accordion>
             </div>
         </div>
-    </section>
+    </StoryPage>
 </template>

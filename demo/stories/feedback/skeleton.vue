@@ -1,22 +1,10 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { Skeleton } from "@/components/ui/skeleton";
 </script>
 
 <template>
-    <article class="flex flex-col gap-14">
-        <header class="flex flex-col gap-3">
-            <p class="text-admin-label text-muted-foreground">feedback · skeleton</p>
-            <h1 class="text-title text-foreground">Skeleton</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Shape-matched loading placeholder. Two variants:
-                <em>pulse</em> (default, opacity fade) and <em>shimmer</em>
-                (sliding gradient). Both honour
-                <code class="font-mono-code">prefers-reduced-motion</code>.
-                Compose rounded pills + rectangles to mirror the layout that is
-                being awaited so nothing shifts on resolve.
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="flex flex-col gap-3">
             <p class="section-label">variants</p>
             <div class="grid gap-4 sm:grid-cols-2">
@@ -101,5 +89,5 @@ import { Skeleton } from "@/components/ui/skeleton";
                 </div>
             </div>
         </section>
-    </article>
+    </StoryPage>
 </template>

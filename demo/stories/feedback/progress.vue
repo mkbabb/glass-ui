@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { onMounted, onUnmounted, ref } from "vue";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
@@ -32,19 +33,7 @@ onUnmounted(stopAnimated);
 </script>
 
 <template>
-    <article class="flex flex-col gap-14">
-        <header class="flex flex-col gap-3">
-            <p class="text-admin-label text-muted-foreground">feedback · progress</p>
-            <h1 class="text-title text-foreground">Progress</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Linear progress indicator backed by reka-ui's
-                <code class="font-mono-code">ProgressRoot</code>. The fill colour
-                is a Tailwind utility on the indicator; swap
-                <code class="font-mono-code">bg-primary</code> for any palette
-                token — here, the viz-fourier red — to re-theme without forking.
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="flex flex-col gap-3">
             <p class="section-label">determinate</p>
             <div class="flex flex-col gap-3">
@@ -106,5 +95,5 @@ onUnmounted(stopAnimated);
                 <Progress :model-value="62" class="h-6" />
             </div>
         </section>
-    </article>
+    </StoryPage>
 </template>

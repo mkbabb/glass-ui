@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { h } from "vue";
 import { ToastProvider, ToastViewport } from "reka-ui";
 import { Button } from "@/components/ui/button";
@@ -93,21 +94,7 @@ function toneFor(id: string): keyof typeof toneClass {
 </script>
 
 <template>
-    <article class="flex flex-col gap-14">
-        <header class="flex flex-col gap-3">
-            <p class="text-admin-label text-muted-foreground">feedback · toast</p>
-            <h1 class="text-title text-foreground">Toast</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Transient notification pinned to the viewport edge. Ships
-                <em>default</em> and <em>destructive</em> variants via
-                <code class="font-mono-code">useToast()</code>; additional tones layer
-                Tailwind utilities through the
-                <code class="font-mono-code">class</code> passthrough. Triggers fire
-                into the local <code class="font-mono-code">ToastViewport</code>
-                below so the story is self-contained.
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="flex flex-col gap-3">
             <p class="section-label">triggers</p>
             <div class="flex flex-wrap items-center gap-3">
@@ -156,5 +143,5 @@ function toneFor(id: string): keyof typeof toneClass {
                 />
             </ToastProvider>
         </section>
-    </article>
+    </StoryPage>
 </template>

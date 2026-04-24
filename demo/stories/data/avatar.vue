@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { StackedIconGroup } from "@/components/custom/stacked-icons";
 import { cn } from "@/utils/cn";
@@ -25,7 +26,7 @@ const sizes = ["sm", "base", "lg"] as const;
 </script>
 
 <template>
-    <section class="flex flex-col gap-12">
+    <StoryPage>
         <!-- SIZES -->
         <div>
             <p class="text-admin-label mb-4 text-muted-foreground">Sizes</p>
@@ -136,5 +137,5 @@ const sizes = ["sm", "base", "lg"] as const;
                 </li>
             </ul>
         </div>
-    </section>
+    </StoryPage>
 </template>

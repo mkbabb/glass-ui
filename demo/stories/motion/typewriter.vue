@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 // Typewriter story — cycles multiple phrases, exposes speed + cursor controls.
 import { computed, ref } from "vue";
 import {
@@ -37,21 +38,7 @@ function restart(): void {
 </script>
 
 <template>
-    <article class="flex flex-col gap-10 p-8 text-foreground">
-        <header class="flex flex-col gap-2">
-            <span class="text-admin-label text-muted-foreground">
-                Motion · Typewriter
-            </span>
-            <h1 class="text-title">Typewriter</h1>
-            <p class="text-prose max-w-prose text-muted-foreground">
-                The <code class="font-mono-code">TypewriterText</code> primitive from
-                <code class="font-mono-code">@/components/custom/typewriter</code>. Types
-                n-grams at a variable cadence, occasionally commits realistic typos,
-                backspaces to correct, and rotates through an array of phrases. Every
-                knob is live below.
-            </p>
-        </header>
-
+    <StoryPage>
         <!-- Hero display: Fraunces display type hosting the rotating phrase. -->
         <section
             :class="
@@ -154,5 +141,5 @@ function restart(): void {
                 <Button variant="secondary" @click="restart">Restart</Button>
             </div>
         </section>
-    </article>
+    </StoryPage>
 </template>

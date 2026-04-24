@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { cn } from "@/utils/cn";
 
 const sectionAccent = "var(--section-color-3, hsl(265 65% 62%))";
@@ -6,17 +7,7 @@ const fourierAccent = "var(--viz-fourier, hsl(358 72% 52%))";
 </script>
 
 <template>
-    <section class="flex flex-col gap-12 py-10">
-        <header class="flex flex-col gap-2">
-            <span class="section-label text-admin-label">Compositions · Math paper</span>
-            <h1 class="text-title">Textbook layout</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Numbered section heading with mono eyebrow, serif body copy, an italicized pull-quote,
-                and a display-math block bordered in the Fourier-basis red. No KaTeX — just Unicode
-                math glyphs in the library mono.
-            </p>
-        </header>
-
+    <StoryPage>
         <article
             :class="cn(
                 'max-w-3xl rounded-[var(--radius-card)] border border-border/40 bg-card/60',
@@ -115,5 +106,5 @@ const fourierAccent = "var(--viz-fourier, hsl(358 72% 52%))";
                 </p>
             </div>
         </article>
-    </section>
+    </StoryPage>
 </template>

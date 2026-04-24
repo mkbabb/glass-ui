@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import {
     FileText, Settings, User, Palette, Moon, Sun, Search, Plus,
@@ -47,16 +48,7 @@ function pick(id: string) {
 </script>
 
 <template>
-    <div class="flex flex-col gap-10 p-8 max-w-5xl mx-auto">
-        <header class="flex flex-col gap-1">
-            <p class="text-xs uppercase tracking-widest text-muted-foreground">Navigation · Command</p>
-            <h1 class="text-3xl font-display">Command Palette</h1>
-            <p class="text-sm text-muted-foreground max-w-prose">
-                Fuzzy-searchable list with groups, separators, and shortcut glyphs. Built on reka-ui's
-                Combobox primitive — keyboard navigation and highlighting come for free.
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="flex flex-col gap-3">
             <h2 class="text-sm font-semibold text-muted-foreground">Inline palette</h2>
             <p class="text-sm text-muted-foreground">
@@ -140,5 +132,5 @@ function pick(id: string) {
                 <li><code class="rounded bg-muted px-1">CommandShortcut</code> — aligned key glyph at the row's tail.</li>
             </ul>
         </section>
-    </div>
+    </StoryPage>
 </template>

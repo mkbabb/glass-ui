@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import {
     DropdownMenu,
@@ -23,19 +24,7 @@ const flags = ref({ minimap: true, overlays: false, rulers: true });
 </script>
 
 <template>
-    <section class="mx-auto max-w-5xl px-8 py-16">
-        <header class="mb-12 grid gap-3">
-            <p class="font-mono text-2xs uppercase tracking-[0.2em] text-muted-foreground">
-                Containers · Dropdown Menu
-            </p>
-            <h1 class="font-display text-5xl leading-tight">Dropdown menu</h1>
-            <p class="max-w-2xl text-lg text-muted-foreground">
-                Click-anchored action list with items, labels, separators,
-                checkbox + radio groups, nested submenus, and right-aligned
-                shortcut hints.
-            </p>
-        </header>
-
+    <StoryPage>
         <div class="grid gap-12">
             <div class="grid gap-4">
                 <h2 class="font-display text-xl">Composed menu</h2>
@@ -111,5 +100,5 @@ const flags = ref({ minimap: true, overlays: false, rulers: true });
                 </div>
             </div>
         </div>
-    </section>
+    </StoryPage>
 </template>

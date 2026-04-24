@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { cn } from "@/utils/cn";
 
@@ -46,7 +47,7 @@ function setDotRef(id: string, el: Element | null): void {
 </script>
 
 <template>
-    <section class="flex flex-col gap-4">
+    <StoryPage>
         <div
             v-for="c in curves"
             :key="c.id"
@@ -111,5 +112,5 @@ function setDotRef(id: string, el: Element | null): void {
             <code class="font-mono-code">linear()</code> stops generated from damped
             physics; cubics are classic bézier.
         </p>
-    </section>
+    </StoryPage>
 </template>

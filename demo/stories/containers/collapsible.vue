@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import {
     Collapsible,
@@ -12,19 +13,7 @@ const open = ref(true);
 </script>
 
 <template>
-    <section class="mx-auto max-w-3xl px-8 py-16">
-        <header class="mb-12 grid gap-3">
-            <p class="font-mono text-2xs uppercase tracking-[0.2em] text-muted-foreground">
-                Containers · Collapsible
-            </p>
-            <h1 class="font-display text-5xl leading-tight">Collapsible</h1>
-            <p class="max-w-2xl text-lg text-muted-foreground">
-                Single open/close disclosure. Use when you need the
-                accordion primitive's mechanics without the group semantics —
-                e.g. a "show more" toggle or an inline details drawer.
-            </p>
-        </header>
-
+    <StoryPage>
         <div class="grid gap-12">
             <div class="grid gap-4">
                 <h2 class="font-display text-xl">Basic</h2>
@@ -104,5 +93,5 @@ const open = ref(true);
                 </Collapsible>
             </div>
         </div>
-    </section>
+    </StoryPage>
 </template>

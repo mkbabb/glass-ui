@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { StatusDot } from "@/components/custom/status-dot";
 
 type Variant = "active" | "paused" | "idle" | "error" | "custom";
@@ -16,18 +17,7 @@ const sizes: Size[] = ["xs", "sm", "md"];
 </script>
 
 <template>
-    <article class="flex flex-col gap-14">
-        <header class="flex flex-col gap-3">
-            <p class="text-admin-label text-muted-foreground">primitives · status-dot</p>
-            <h1 class="text-title text-foreground">Status Dot</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Tiny coloured disc for inline state. Five variants
-                (<code class="font-mono-code">active / paused / idle / error / custom</code>),
-                three sizes (<code class="font-mono-code">xs / sm / md</code>), and an
-                optional motion-safe ping halo. The matrix below shows every combination.
-            </p>
-        </header>
-
+    <StoryPage>
         <!-- Matrix: variant × size, pulse off. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">matrix · no pulse</p>
@@ -103,5 +93,5 @@ const sizes: Size[] = ["xs", "sm", "md"];
                 Pulse halo respects <code class="font-mono-code">prefers-reduced-motion</code>.
             </p>
         </section>
-    </article>
+    </StoryPage>
 </template>

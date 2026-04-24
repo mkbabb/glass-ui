@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import {
     Carousel,
@@ -41,18 +42,7 @@ function setApi(api: CarouselApi | undefined) {
 </script>
 
 <template>
-    <div class="flex flex-col gap-12 p-8 max-w-5xl mx-auto">
-        <header class="flex flex-col gap-1">
-            <p class="text-xs uppercase tracking-widest text-muted-foreground">Navigation · Carousel</p>
-            <h1 class="text-3xl font-display">Carousel</h1>
-            <p class="text-sm text-muted-foreground max-w-prose">
-                Embla-based horizontal pager. <code class="rounded bg-muted px-1">Carousel</code> provides the root +
-                API via slot props; <code class="rounded bg-muted px-1">CarouselContent</code> is the scroller,
-                <code class="rounded bg-muted px-1">CarouselItem</code> is each slide.
-                <strong class="text-foreground">This is the same carousel that paginates stories in this demo.</strong>
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="flex flex-col gap-3">
             <h2 class="text-sm font-semibold text-muted-foreground">Basic horizontal pager</h2>
             <div class="relative mx-auto w-full max-w-md">
@@ -136,5 +126,5 @@ function setApi(api: CarouselApi | undefined) {
                 <li>Subscribe to <code class="rounded bg-muted px-1">"select"</code> for the active index.</li>
             </ul>
         </section>
-    </div>
+    </StoryPage>
 </template>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -67,17 +68,7 @@ const groups: Record<string, Group> = {
 </script>
 
 <template>
-    <section class="flex flex-col gap-12 py-10">
-        <header class="flex flex-col gap-2">
-            <span class="section-label text-admin-label">Compositions · Settings</span>
-            <h1 class="text-title">Grouped preferences panel</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Section-labelled groups, each with labeled-field rows — a familiar settings rhythm
-                that stays legible whether you are filling in a string, flipping a switch, or
-                pulling a slider.
-            </p>
-        </header>
-
+    <StoryPage>
         <div class="flex flex-col gap-10 max-w-3xl">
             <!-- Account -->
             <section class="flex flex-col gap-4">
@@ -274,5 +265,5 @@ const groups: Record<string, Group> = {
                 </Card>
             </section>
         </div>
-    </section>
+    </StoryPage>
 </template>

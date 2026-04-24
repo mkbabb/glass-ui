@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 // Fraunces display text animates font-variation-settings + weight based on the
 // scroll progress of a target element. Drives WONK 0→1, SOFT 0→100, wght 300→700.
 import { computed, ref } from "vue";
@@ -26,20 +27,7 @@ const fvs = computed(
 </script>
 
 <template>
-    <article class="flex flex-col gap-10 p-8 text-foreground">
-        <header class="flex flex-col gap-2">
-            <span class="text-admin-label text-muted-foreground">
-                Motion · Scroll-driven type
-            </span>
-            <h1 class="text-title">useScrollProgress</h1>
-            <p class="text-prose max-w-prose text-muted-foreground">
-                Fraunces animates its <code class="font-mono-code">WONK</code>,
-                <code class="font-mono-code">SOFT</code>, optical size, and weight axes
-                in lockstep with the target's 0→1 scroll progress. Scroll down to watch
-                letterforms soften, swell, and bend.
-            </p>
-        </header>
-
+    <StoryPage>
         <!-- Live readout of the axes. -->
         <section
             :class="
@@ -103,5 +91,5 @@ const fvs = computed(
         </section>
 
         <div aria-hidden="true" class="h-[60vh]" />
-    </article>
+    </StoryPage>
 </template>

@@ -51,6 +51,16 @@
 }
 
 /* ═══════════════════════════════════════════════
+   BODY CASCADE — CM serif inherits globally
+   ═══════════════════════════════════════════════ */
+body {
+    font-family: var(--font-serif);
+    color: var(--foreground);
+    font-size: var(--type-body);
+    line-height: var(--leading-body);
+}
+
+/* ═══════════════════════════════════════════════
    DISPLAY — Fraunces, WONK=1 SOFT=0, tracking-tight
    ═══════════════════════════════════════════════ */
 @utility text-display-5 {

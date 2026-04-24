@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 // Gallery of the Vue <Transition> class-sets shipped in `src/styles/transitions.css`.
 // Each card hosts one v-if toggle + a sample element wearing that transition's classes.
 import { ref } from "vue";
@@ -61,19 +62,7 @@ function toggle(id: string): void {
 </script>
 
 <template>
-    <article class="flex flex-col gap-10 p-8 text-foreground">
-        <header class="flex flex-col gap-2">
-            <span class="text-admin-label text-muted-foreground">Motion · Transitions</span>
-            <h1 class="text-title">Vue &lt;Transition&gt; gallery</h1>
-            <p class="text-prose max-w-prose text-muted-foreground">
-                Six class-sets from
-                <code class="font-mono-code">src/styles/transitions.css</code>. Each demo
-                toggles a sample element via <code class="font-mono-code">v-if</code> so
-                you can feel both the enter and leave phases back-to-back. Respects
-                <code class="font-mono-code">prefers-reduced-motion</code>.
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
             <div
                 v-for="demo in demos"
@@ -127,5 +116,5 @@ function toggle(id: string): void {
                 </div>
             </div>
         </section>
-    </article>
+    </StoryPage>
 </template>

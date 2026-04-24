@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import {
     ContextMenu,
@@ -18,19 +19,7 @@ const showGrid = ref(true);
 </script>
 
 <template>
-    <section class="mx-auto max-w-5xl px-8 py-16">
-        <header class="mb-12 grid gap-3">
-            <p class="font-mono text-2xs uppercase tracking-[0.2em] text-muted-foreground">
-                Containers · Context Menu
-            </p>
-            <h1 class="font-display text-5xl leading-tight">Context menu</h1>
-            <p class="max-w-2xl text-lg text-muted-foreground">
-                Right-click (or long-press on touch) anchored menu sharing the
-                dropdown's subcomponent vocabulary. Use for per-element actions
-                without consuming trigger real-estate.
-            </p>
-        </header>
-
+    <StoryPage>
         <div class="grid gap-12">
             <div class="grid gap-4">
                 <h2 class="font-display text-xl">Right-click surface</h2>
@@ -84,5 +73,5 @@ const showGrid = ref(true);
                 </ContextMenu>
             </div>
         </div>
-    </section>
+    </StoryPage>
 </template>

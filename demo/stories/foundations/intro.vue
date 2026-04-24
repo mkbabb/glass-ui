@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { cn } from "@/utils/cn";
 
 // Anchor links to every category — resolved by the router via the manifest.
@@ -15,8 +16,9 @@ const categories: { slug: string; title: string; blurb: string }[] = [
 </script>
 
 <template>
-    <!-- Hero wash: pastel radial bloom behind audacious display title. -->
-    <section
+    <StoryPage>
+        <!-- Hero wash: pastel radial bloom behind audacious display title. -->
+        <section
         :class="
             cn(
                 'relative overflow-hidden rounded-card px-8 py-20 md:px-16 md:py-32',
@@ -73,4 +75,5 @@ const categories: { slug: string; title: string; blurb: string }[] = [
             </a>
         </div>
     </section>
+    </StoryPage>
 </template>

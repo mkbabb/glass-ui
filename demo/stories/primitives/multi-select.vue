@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { MultiSelect, type MultiSelectOption } from "@/components/ui/multi-select";
 import { Label } from "@/components/ui/label";
@@ -26,19 +27,7 @@ const lockedTools = ref<string[]>(["vue", "tailwind"]);
 </script>
 
 <template>
-    <article class="flex flex-col gap-14">
-        <header class="flex flex-col gap-3">
-            <p class="text-admin-label text-muted-foreground">primitives · multi-select</p>
-            <h1 class="text-title text-foreground">Multi-Select</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Multi-value picker built on <code class="font-mono-code">Popover</code> +
-                <code class="font-mono-code">Command</code>. Selections echo below the
-                trigger as dismissible badges; the trigger copy collapses to an
-                <code class="font-mono-code">(+N)</code> overflow marker past
-                <code class="font-mono-code">maxDisplay</code>.
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="flex flex-col gap-3 max-w-sm">
             <Label>Bases</Label>
             <MultiSelect
@@ -95,5 +84,5 @@ const lockedTools = ref<string[]>(["vue", "tailwind"]);
                 </div>
             </div>
         </section>
-    </article>
+    </StoryPage>
 </template>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Button } from "@/components/ui/button";
 import { ConfirmDialog } from "@/components/custom/confirm-dialog";
@@ -33,20 +34,7 @@ const signOutOpen = ref(false);
 </script>
 
 <template>
-    <article class="flex flex-col gap-14">
-        <header class="flex flex-col gap-3">
-            <p class="text-admin-label text-muted-foreground">feedback · confirm dialog</p>
-            <h1 class="text-title text-foreground">Confirm Dialog</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Compact yes/no guard for irreversible actions. Positions
-                <em>absolute</em> inside the nearest relative ancestor so it can
-                scope to a panel instead of the full viewport. Flip
-                <code class="font-mono-code">destructive</code> to tone the
-                confirm button red; pipe a <code class="font-mono-code">loading</code>
-                ref for async commits — the spinner swaps in and buttons lock.
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="flex flex-col gap-3">
             <p class="section-label">destructive — delete workspace</p>
             <div
@@ -171,5 +159,5 @@ const signOutOpen = ref(false);
                 </ConfirmDialog>
             </div>
         </section>
-    </article>
+    </StoryPage>
 </template>

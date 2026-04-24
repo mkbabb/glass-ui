@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,17 +13,7 @@ const pillBare = ref("");
 </script>
 
 <template>
-    <article class="flex flex-col gap-10 p-8 text-foreground">
-        <header class="flex flex-col gap-2">
-            <span class="text-admin-label text-muted-foreground">Primitives · Inputs</span>
-            <h1 class="text-title">Inputs</h1>
-            <p class="text-prose max-w-prose text-muted-foreground">
-                Glass-styled <code class="font-mono-code">Input</code> across label / error /
-                disabled states, paired with <code class="font-mono-code">SearchBar</code> and the
-                bare <code class="font-mono-code">.input-pill</code> utility.
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="flex flex-col gap-4">
             <h2 class="text-subheading">Default</h2>
             <p class="text-small text-muted-foreground">
@@ -107,5 +98,5 @@ const pillBare = ref("");
                 >
             </div>
         </section>
-    </article>
+    </StoryPage>
 </template>

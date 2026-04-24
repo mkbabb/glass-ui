@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import {
     Table,
     TableBody,
@@ -39,7 +40,7 @@ const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", c
 </script>
 
 <template>
-    <section class="flex flex-col gap-12">
+    <StoryPage>
         <div>
             <p class="text-admin-label mb-4 text-muted-foreground">Basic table</p>
             <div
@@ -91,5 +92,5 @@ const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", c
                 </div>
             </div>
         </div>
-    </section>
+    </StoryPage>
 </template>

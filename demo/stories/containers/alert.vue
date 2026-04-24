@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
     Info,
@@ -10,22 +11,7 @@ import {
 </script>
 
 <template>
-    <section class="mx-auto max-w-5xl px-8 py-16">
-        <header class="mb-12 grid gap-3">
-            <p class="font-mono text-2xs uppercase tracking-[0.2em] text-muted-foreground">
-                Containers · Alert
-            </p>
-            <h1 class="font-display text-5xl leading-tight">Alert</h1>
-            <p class="max-w-2xl text-lg text-muted-foreground">
-                Inline callout for persistent messages — not to be confused with
-                a dialog (modal) or toast (transient). The
-                <code class="font-mono text-sm">variant</code> prop ships
-                <em>default</em> and <em>destructive</em>; the other tones below
-                extend the same base via Tailwind utilities on
-                <code class="font-mono text-sm">class</code>.
-            </p>
-        </header>
-
+    <StoryPage>
         <div class="grid gap-8">
             <div class="grid gap-3">
                 <h2 class="font-display text-xl">Default</h2>
@@ -106,5 +92,5 @@ import {
                 </Alert>
             </div>
         </div>
-    </section>
+    </StoryPage>
 </template>

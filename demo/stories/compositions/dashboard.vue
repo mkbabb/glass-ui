@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ArrowDownRight, ArrowUpRight, Activity, AlertTriangle, CheckCircle2, Clock } from "lucide-vue-next";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -66,17 +67,7 @@ const trendClasses: Record<Trend, string> = {
 </script>
 
 <template>
-    <section class="flex flex-col gap-12 py-10">
-        <header class="flex flex-col gap-2">
-            <span class="section-label text-admin-label">Compositions · Dashboard</span>
-            <h1 class="text-title">Three-column control surface</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Section-colored status rail on the left, metric grid plus data table in the centre,
-                activity timeline on the right. Every surface is a cartoon-shadowed card over the
-                paper underpaint.
-            </p>
-        </header>
-
+    <StoryPage>
         <div class="grid gap-6 lg:grid-cols-[16rem_1fr_18rem]">
             <aside class="flex flex-col gap-3">
                 <span class="text-admin-label section-label">System</span>
@@ -229,5 +220,5 @@ const trendClasses: Record<Trend, string> = {
                 </Card>
             </aside>
         </div>
-    </section>
+    </StoryPage>
 </template>

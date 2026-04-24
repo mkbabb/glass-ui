@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/cn";
@@ -29,19 +30,7 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
 </script>
 
 <template>
-    <article class="flex flex-col gap-10 p-8 text-foreground">
-        <header class="flex flex-col gap-2">
-            <span class="text-admin-label text-muted-foreground">Primitives · Buttons</span>
-            <h1 class="text-title">Buttons</h1>
-            <p class="text-prose max-w-prose text-muted-foreground">
-                Every button variant shipped by <code class="font-mono-code">@/components/ui/button</code>,
-                the bare <code class="font-mono-code">.glass-btn</code> utility, the chromatic viz-basis
-                set, and the cartoon-shadow treatment. Four-state contract enforced:
-                rest / hover / active / disabled, with
-                <code class="font-mono-code">aria-pressed</code> support.
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="flex flex-col gap-4">
             <h2 class="text-subheading">Variants</h2>
             <p class="text-small text-muted-foreground">
@@ -136,5 +125,5 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
                 <Button variant="outline" class="bg-card shadow-cartoon-lg">lg</Button>
             </div>
         </section>
-    </article>
+    </StoryPage>
 </template>

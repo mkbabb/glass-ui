@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Check, ChevronsUpDown } from "lucide-vue-next";
 import {
@@ -35,17 +36,7 @@ const selected = ref<string>("");
 </script>
 
 <template>
-    <article class="flex flex-col gap-14">
-        <header class="flex flex-col gap-3">
-            <p class="text-admin-label text-muted-foreground">primitives · combobox</p>
-            <h1 class="text-title text-foreground">Combobox</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Filterable, keyboard-driven selector. Trigger opens a portaled list with a
-                search input; items filter as you type, and arrow keys walk the options.
-                Groups render a heading plus their own indented set.
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="flex flex-col gap-3 max-w-sm">
             <Label for="cbx">Basis or palette</Label>
             <Combobox v-model="selected" by="value">
@@ -105,5 +96,5 @@ const selected = ref<string>("");
                 selected · {{ selected || "—" }}
             </p>
         </section>
-    </article>
+    </StoryPage>
 </template>

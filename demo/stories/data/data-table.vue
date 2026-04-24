@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { computed, ref } from "vue";
 import { DataTable } from "@/components/ui/data-table";
 import type { DataTableColumn, DataTableSort } from "@/components/ui/data-table";
@@ -67,7 +68,7 @@ const paged = computed(() => {
 </script>
 
 <template>
-    <section class="flex flex-col gap-6">
+    <StoryPage>
         <div class="flex items-end justify-between gap-4">
             <div>
                 <p class="text-admin-label text-muted-foreground">Data table</p>
@@ -93,5 +94,5 @@ const paged = computed(() => {
                 @update:sort="sort = $event"
             />
         </div>
-    </section>
+    </StoryPage>
 </template>

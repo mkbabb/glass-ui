@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -14,17 +15,7 @@ const locked = ref("This content is read-only and visually muted.");
 </script>
 
 <template>
-    <article class="flex flex-col gap-10 p-8 text-foreground">
-        <header class="flex flex-col gap-2">
-            <span class="text-admin-label text-muted-foreground">Primitives · Textarea</span>
-            <h1 class="text-title">Textarea</h1>
-            <p class="text-prose max-w-prose text-muted-foreground">
-                Multi-line sibling of <code class="font-mono-code">Input</code>, leaning on the same
-                <code class="font-mono-code">.input-pill</code> surface with a minimum height and
-                configurable resize affordance.
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="flex flex-col gap-4">
             <h2 class="text-subheading">With label</h2>
             <p class="text-small text-muted-foreground">
@@ -80,5 +71,5 @@ const locked = ref("This content is read-only and visually muted.");
                 <Textarea id="story-locked" v-model="locked" disabled />
             </div>
         </section>
-    </article>
+    </StoryPage>
 </template>

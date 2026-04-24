@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ArrowRight, Sparkles } from "lucide-vue-next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -26,17 +27,7 @@ const claims = [
 </script>
 
 <template>
-    <section class="flex flex-col gap-12 py-10">
-        <header class="flex flex-col gap-2">
-            <span class="section-label text-admin-label">Compositions · Hero</span>
-            <h1 class="text-title">Full-bleed pastel radial</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Three radial-gradient stops over warm cream, a Fraunces display glyph set against
-                Computer Modern lead, primary and ghost calls to action, and a cartoon-shadow claim
-                grid to anchor the composition.
-            </p>
-        </header>
-
+    <StoryPage>
         <div
             :class="cn(
                 'relative isolate overflow-hidden rounded-[var(--radius-dialog)]',
@@ -130,5 +121,5 @@ const claims = [
                 </div>
             </CardContent>
         </Card>
-    </section>
+    </StoryPage>
 </template>

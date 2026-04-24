@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import {
     Home, Search, Bell, Settings, Plus, Share2, Download,
@@ -16,17 +17,7 @@ function togglePlay() {
 </script>
 
 <template>
-    <div class="flex flex-col gap-12 p-8 max-w-5xl mx-auto">
-        <header class="flex flex-col gap-1">
-            <p class="text-xs uppercase tracking-widest text-muted-foreground">Navigation · GlassDock</p>
-            <h1 class="text-3xl font-display">Glass Dock</h1>
-            <p class="text-sm text-muted-foreground max-w-prose">
-                Collapsible glass pill. Default slot is the expanded row; <code class="rounded bg-muted px-1">#collapsed</code>
-                slot is the compact summary. Hover or focus expands; click the collapsed pill toggles.
-                <code class="rounded bg-muted px-1">DockPopover</code> hosts a trigger button with a portaled panel.
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="flex flex-col gap-3">
             <h2 class="text-sm font-semibold text-muted-foreground">Collapsible (hover to expand)</h2>
             <div class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
@@ -131,5 +122,5 @@ function togglePlay() {
                 <li>Use <code class="rounded bg-muted px-1">dock-icon-btn</code> utility for flush-fit buttons inside.</li>
             </ul>
         </section>
-    </div>
+    </StoryPage>
 </template>

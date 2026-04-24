@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref, computed } from "vue";
 import { ProgressiveSidebar, useSidebarState, type SidebarSection } from "@/components/custom/sidebar";
 
@@ -91,16 +92,7 @@ const state = useSidebarState({
 </script>
 
 <template>
-    <div class="flex flex-col gap-8 p-8 max-w-5xl mx-auto">
-        <header class="flex flex-col gap-1">
-            <p class="text-xs uppercase tracking-widest text-muted-foreground">Navigation · ProgressiveSidebar</p>
-            <h1 class="text-3xl font-display">Progressive Sidebar</h1>
-            <p class="text-sm text-muted-foreground max-w-prose">
-                Tree-indexed table of contents with animated expand/collapse. The active root expands automatically;
-                clicking a sibling root toggles its subtree without losing user overrides.
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="grid grid-cols-1 gap-6 lg:grid-cols-[260px_1fr]">
             <ProgressiveSidebar :state="state" class="lg:block" />
 
@@ -138,5 +130,5 @@ const state = useSidebarState({
                 <li>Renders two nesting levels of children with an animated <code class="rounded bg-muted px-1">grid-template-rows</code> height transition.</li>
             </ul>
         </section>
-    </div>
+    </StoryPage>
 </template>

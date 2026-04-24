@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Lock, ShieldCheck, Sparkles, Users } from "lucide-vue-next";
 import { Button } from "@/components/ui/button";
@@ -22,16 +23,7 @@ const trustBadges = [
 </script>
 
 <template>
-    <section class="flex flex-col gap-12 py-10">
-        <header class="flex flex-col gap-2">
-            <span class="section-label text-admin-label">Compositions · Auth shell</span>
-            <h1 class="text-title">Split-screen sign-in</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Brand wordmark, trust statement, and compact credential form — framed as two panes
-                so the marketing voice lives alongside the interaction without competing with it.
-            </p>
-        </header>
-
+    <StoryPage>
         <div
             :class="cn(
                 'overflow-hidden rounded-[var(--radius-dialog)] border-2 border-foreground/10',
@@ -160,5 +152,5 @@ const trustBadges = [
                 </form>
             </div>
         </div>
-    </section>
+    </StoryPage>
 </template>

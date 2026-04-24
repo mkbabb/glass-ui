@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import {
     CheckCircle2,
     CloudOff,
@@ -88,17 +89,7 @@ const states: EmptyState[] = [
 </script>
 
 <template>
-    <section class="flex flex-col gap-12 py-10">
-        <header class="flex flex-col gap-2">
-            <span class="section-label text-admin-label">Compositions · Empty states</span>
-            <h1 class="text-title">Patterns for nothing</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Six variants of the centred-icon-and-sentence archetype: search no-results,
-                onboarding, error, offline, first-run, completed-all. Each is a cartoon-shadowed
-                card with a section-coloured icon halo.
-            </p>
-        </header>
-
+    <StoryPage>
         <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             <Card
                 v-for="state in states"
@@ -129,5 +120,5 @@ const states: EmptyState[] = [
                 </CardContent>
             </Card>
         </div>
-    </section>
+    </StoryPage>
 </template>

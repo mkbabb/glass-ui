@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref, computed, watch } from "vue";
 import {
     TagsInput,
@@ -39,7 +40,7 @@ const skillCount = computed(() => skills.value.length);
 </script>
 
 <template>
-    <section class="flex flex-col gap-10">
+    <StoryPage>
         <!-- Prefilled -->
         <div class="flex flex-col gap-2">
             <Label for="skills-input">Skills · prefilled</Label>
@@ -129,5 +130,5 @@ const skillCount = computed(() => skills.value.length);
                 {{ emailError ?? "Valid RFC-ish emails only." }}
             </p>
         </div>
-    </section>
+    </StoryPage>
 </template>

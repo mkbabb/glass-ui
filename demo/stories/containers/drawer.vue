@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import {
     Drawer,
@@ -17,20 +18,7 @@ const snapPoints = [0.25, 0.4, 0.7, 1] as const;
 </script>
 
 <template>
-    <section class="mx-auto max-w-5xl px-8 py-16">
-        <header class="mb-12 grid gap-3">
-            <p class="font-mono text-2xs uppercase tracking-[0.2em] text-muted-foreground">
-                Containers · Drawer
-            </p>
-            <h1 class="font-display text-5xl leading-tight">Drawer</h1>
-            <p class="max-w-2xl text-lg text-muted-foreground">
-                Bottom-anchored sheet built on
-                <code class="font-mono text-sm">vaul-vue</code>. Drag to move
-                between snap points; flick to dismiss. Best for mobile detail
-                views and quick pickers.
-            </p>
-        </header>
-
+    <StoryPage>
         <div class="grid gap-12">
             <div class="grid gap-4">
                 <h2 class="font-display text-xl">Snap points</h2>
@@ -110,5 +98,5 @@ const snapPoints = [0.25, 0.4, 0.7, 1] as const;
                 </div>
             </div>
         </div>
-    </section>
+    </StoryPage>
 </template>

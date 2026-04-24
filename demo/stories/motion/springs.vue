@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 // Drive a parametric spring across translateX + hue + rotate between two snapshots.
 // Showcases `useSpringOrchestrator` from `@/composables/motion` with four spring
 // presets expressed as explicit TimingFunction lambdas (damped-spring closed form).
@@ -103,24 +104,7 @@ function reset(): void {
 </script>
 
 <template>
-    <article class="flex flex-col gap-10 p-8 text-foreground">
-        <header class="flex flex-col gap-2">
-            <span class="text-admin-label text-muted-foreground">
-                Motion · Spring orchestrator
-            </span>
-            <h1 class="text-title">useSpringOrchestrator</h1>
-            <p class="text-prose max-w-prose text-muted-foreground">
-                Parametric spring driven by
-                <code class="font-mono-code">@mkbabb/keyframes.js</code> via
-                <code class="font-mono-code">useSpringOrchestrator</code>. We interpolate
-                three numeric channels — <code class="font-mono-code">translateX</code>,
-                <code class="font-mono-code">rotate</code>, and the hue feeding
-                <code class="font-mono-code">backgroundColor</code> — between two
-                snapshots. Each preset is a closed-form damped-spring
-                <code class="font-mono-code">TimingFunction</code>.
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="flex flex-col gap-6">
             <!-- Controls -->
             <div class="flex flex-wrap items-end gap-4">
@@ -195,5 +179,5 @@ function reset(): void {
                 </div>
             </div>
         </section>
-    </article>
+    </StoryPage>
 </template>

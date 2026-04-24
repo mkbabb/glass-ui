@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import {
     Sheet,
     SheetClose,
@@ -19,19 +20,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
 </script>
 
 <template>
-    <section class="mx-auto max-w-5xl px-8 py-16">
-        <header class="mb-12 grid gap-3">
-            <p class="font-mono text-2xs uppercase tracking-[0.2em] text-muted-foreground">
-                Containers · Sheet
-            </p>
-            <h1 class="font-display text-5xl leading-tight">Sheet</h1>
-            <p class="max-w-2xl text-lg text-muted-foreground">
-                Edge-anchored surface with slide entry from any of the four sides.
-                Typical host for detail panels, contextual editors, and the
-                configurator fly-out.
-            </p>
-        </header>
-
+    <StoryPage>
         <div class="grid gap-12">
             <div class="grid gap-4">
                 <h2 class="font-display text-xl">Four sides</h2>
@@ -101,5 +90,5 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                 </ul>
             </div>
         </div>
-    </section>
+    </StoryPage>
 </template>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import {
     SortableList,
@@ -49,7 +50,7 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
 </script>
 
 <template>
-    <section class="flex flex-col gap-12">
+    <StoryPage>
         <!-- SINGLE LIST -->
         <div>
             <p class="text-admin-label mb-4 text-muted-foreground">
@@ -170,5 +171,5 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
                 </div>
             </div>
         </div>
-    </section>
+    </StoryPage>
 </template>

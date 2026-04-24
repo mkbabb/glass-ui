@@ -1,21 +1,10 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { Separator } from "@/components/ui/separator";
 </script>
 
 <template>
-    <article class="flex flex-col gap-14">
-        <header class="flex flex-col gap-3">
-            <p class="text-admin-label text-muted-foreground">primitives · separator</p>
-            <h1 class="text-title text-foreground">Separator</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Thin border line for structural division. Horizontal by default; set
-                <code class="font-mono-code">orientation="vertical"</code> to divide in a
-                flex row. A <code class="font-mono-code">label</code> prop floats an
-                inline caption over the line — pairs nicely with
-                <code class="font-mono-code">.section-label</code> copy.
-            </p>
-        </header>
-
+    <StoryPage>
         <!-- Plain horizontal. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">horizontal</p>
@@ -84,5 +73,5 @@ import { Separator } from "@/components/ui/separator";
                 </div>
             </div>
         </section>
-    </article>
+    </StoryPage>
 </template>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/utils/cn";
 
@@ -17,18 +18,7 @@ const vizBadges: { cls: string; label: string }[] = [
 </script>
 
 <template>
-    <article class="flex flex-col gap-14">
-        <header class="flex flex-col gap-3">
-            <p class="text-admin-label text-muted-foreground">primitives · badge</p>
-            <h1 class="text-title text-foreground">Badge</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Small inline pill for metadata, status, categorical tags. Ships four
-                variants via <code class="font-mono-code">badgeVariants</code>; project
-                palettes (like the viz-basis trio below) opt into their own fill through
-                plain Tailwind utilities.
-            </p>
-        </header>
-
+    <StoryPage>
         <!-- Built-in variants. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">variants</p>
@@ -89,5 +79,5 @@ const vizBadges: { cls: string; label: string }[] = [
                 <Badge class="px-3 py-1 text-sm">large</Badge>
             </div>
         </section>
-    </article>
+    </StoryPage>
 </template>

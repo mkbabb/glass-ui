@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { BouncyTabs, type TabOption } from "@/components/custom/tabs";
 
@@ -34,16 +35,7 @@ const densityOptions: TabOption[] = [
 </script>
 
 <template>
-    <div class="flex flex-col gap-10 p-8 max-w-5xl mx-auto">
-        <header class="flex flex-col gap-1">
-            <p class="text-xs uppercase tracking-widest text-muted-foreground">Navigation · BouncyTabs</p>
-            <h1 class="text-3xl font-display">Bouncy Tabs</h1>
-            <p class="text-sm text-muted-foreground max-w-prose">
-                Spring-driven slider tracks the active option. The slider interpolates position and width;
-                clicking fires a scale-squash press animation via Web Animations API.
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="flex flex-col gap-3">
             <h2 class="text-sm font-semibold text-muted-foreground">Default variant</h2>
             <p class="text-sm text-muted-foreground">
@@ -85,5 +77,5 @@ const densityOptions: TabOption[] = [
                 <li>Click triggers a keyframed squash-stretch on the pressed button (200ms bouncy cubic).</li>
             </ul>
         </section>
-    </div>
+    </StoryPage>
 </template>

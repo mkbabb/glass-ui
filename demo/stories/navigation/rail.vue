@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import {
     Compass,
@@ -35,7 +36,7 @@ const active = ref<string>("primitives");
 </script>
 
 <template>
-    <div class="flex flex-col gap-10">
+    <StoryPage>
         <section class="flex flex-col gap-3">
             <h2 class="text-subheading">Default pill</h2>
             <p class="text-small text-muted-foreground">
@@ -90,5 +91,5 @@ const active = ref<string>("primitives");
                 </Rail>
             </div>
         </section>
-    </div>
+    </StoryPage>
 </template>

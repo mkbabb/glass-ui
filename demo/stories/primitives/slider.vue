@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/utils/cn";
@@ -11,17 +12,7 @@ const disabled = ref<number[]>([30]);
 </script>
 
 <template>
-    <article class="flex flex-col gap-14">
-        <header class="flex flex-col gap-3">
-            <p class="text-admin-label text-muted-foreground">primitives · slider</p>
-            <h1 class="text-title text-foreground">Slider</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Glass track, circular thumb. The standard variant is a draggable pill; range
-                mode adds a second thumb. Every thumb honours keyboard arrows and the
-                disabled state dims in lock-step.
-            </p>
-        </header>
-
+    <StoryPage>
         <!-- Standard, with label + value readout. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">standard</p>
@@ -97,5 +88,5 @@ const disabled = ref<number[]>([30]);
                 aria-label="Disabled slider"
             />
         </section>
-    </article>
+    </StoryPage>
 </template>

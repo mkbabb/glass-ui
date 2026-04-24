@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Button } from "@/components/ui/button";
 import { Notification } from "@/components/ui/notification";
@@ -53,19 +54,7 @@ const swatch: Record<Item["type"], string> = {
 </script>
 
 <template>
-    <article class="flex flex-col gap-14">
-        <header class="flex flex-col gap-3">
-            <p class="text-admin-label text-muted-foreground">feedback · notification</p>
-            <h1 class="text-title text-foreground">Notification</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Opinionated stacked toast strip — four tones (info, success,
-                warning, error) driven by a single <code class="font-mono-code">notifications</code>
-                array. Lighter than <em>Toast</em>: no portal, no swipe dismiss, no
-                action slot. Best for quick status pings layered over a full-screen
-                app shell.
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="flex flex-col gap-3">
             <p class="section-label">triggers</p>
             <div class="flex flex-wrap items-center gap-3">
@@ -101,5 +90,5 @@ const swatch: Record<Item["type"], string> = {
         </section>
 
         <Notification :notifications="notifications" @remove="remove" />
-    </article>
+    </StoryPage>
 </template>

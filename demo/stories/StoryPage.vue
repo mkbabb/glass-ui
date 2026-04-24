@@ -37,7 +37,14 @@ const blurb = computed(() => current.value?.story.blurb);
             </p>
         </header>
 
-        <section :class="cn('mt-8', props.contentClass)">
+        <section
+            :class="
+                cn(
+                    'mt-8 flex flex-col gap-10',
+                    props.contentClass,
+                )
+            "
+        >
             <slot />
         </section>
     </article>

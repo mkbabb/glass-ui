@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { cn } from "@/utils/cn";
@@ -35,15 +36,7 @@ const profile = [
 </script>
 
 <template>
-    <div class="flex flex-col gap-10 p-8 max-w-5xl mx-auto">
-        <header class="flex flex-col gap-1">
-            <p class="text-xs uppercase tracking-widest text-muted-foreground">Navigation · Tabs</p>
-            <h1 class="text-3xl font-display">Tabs</h1>
-            <p class="text-sm text-muted-foreground max-w-prose">
-                reka-ui tab primitive with three visual treatments and a vertical orientation.
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="flex flex-col gap-3">
             <h2 class="text-sm font-semibold text-muted-foreground">Default</h2>
             <Tabs v-model="defaultTab" class="flex flex-col gap-3">
@@ -146,5 +139,5 @@ const profile = [
                 </div>
             </Tabs>
         </section>
-    </div>
+    </StoryPage>
 </template>

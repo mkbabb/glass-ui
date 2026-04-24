@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { cn } from "@/utils/cn";
 
 const shadows: { cls: string; label: string }[] = [
@@ -17,7 +18,7 @@ const shadows: { cls: string; label: string }[] = [
 </script>
 
 <template>
-    <section class="flex flex-col gap-12">
+    <StoryPage>
         <!-- Grid of static shadow demos -->
         <div>
             <p class="text-admin-label mb-4 text-muted-foreground">Elevation</p>
@@ -71,5 +72,5 @@ const shadows: { cls: string; label: string }[] = [
                 </p>
             </div>
         </div>
-    </section>
+    </StoryPage>
 </template>

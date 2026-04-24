@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import {
     Popover,
     PopoverContent,
@@ -13,19 +14,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
 </script>
 
 <template>
-    <section class="mx-auto max-w-5xl px-8 py-16">
-        <header class="mb-12 grid gap-3">
-            <p class="font-mono text-2xs uppercase tracking-[0.2em] text-muted-foreground">
-                Containers · Popover
-            </p>
-            <h1 class="font-display text-5xl leading-tight">Popover</h1>
-            <p class="max-w-2xl text-lg text-muted-foreground">
-                Click-anchored floating panel. Lightweight container for small
-                forms, settings pods, and contextual tooltips that exceed what a
-                <code class="font-mono text-sm">Tooltip</code> should carry.
-            </p>
-        </header>
-
+    <StoryPage>
         <div class="grid gap-12">
             <div class="grid gap-4">
                 <h2 class="font-display text-xl">Form pod</h2>
@@ -119,5 +108,5 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                 </div>
             </div>
         </div>
-    </section>
+    </StoryPage>
 </template>

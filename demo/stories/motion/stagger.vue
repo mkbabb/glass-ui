@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 // Stagger reveal grid — 24 cards fade/slide-in as they enter the viewport.
 import { computed, ref } from "vue";
 import { useStaggerReveal } from "@/composables/motion";
@@ -32,20 +33,7 @@ function setRef(el: Element | null, idx: number): void {
 </script>
 
 <template>
-    <article class="flex flex-col gap-10 p-8 text-foreground">
-        <header class="flex flex-col gap-2">
-            <span class="text-admin-label text-muted-foreground">
-                Motion · Stagger reveal
-            </span>
-            <h1 class="text-title">useStaggerReveal</h1>
-            <p class="text-prose max-w-prose text-muted-foreground">
-                IntersectionObserver-gated sequenced entry. Each tile registers itself
-                and flips <code class="font-mono-code">revealed[i]</code> after its slot
-                delay — Tailwind classes handle the visual transition. Scroll down to
-                trigger, or hit replay.
-            </p>
-        </header>
-
+    <StoryPage>
         <div class="flex items-center gap-3">
             <Button variant="secondary" @click="replay">Replay</Button>
             <span class="text-small text-muted-foreground">
@@ -83,5 +71,5 @@ function setRef(el: Element | null, idx: number): void {
         </section>
 
         <div aria-hidden="true" class="h-[20vh]" />
-    </article>
+    </StoryPage>
 </template>

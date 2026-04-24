@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import {
     NumberField,
@@ -16,21 +17,7 @@ const bounded = ref<number>(5);
 </script>
 
 <template>
-    <article class="flex flex-col gap-14">
-        <header class="flex flex-col gap-3">
-            <p class="text-admin-label text-muted-foreground">primitives · number-field</p>
-            <h1 class="text-title text-foreground">Number Field</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Spin-button input with decrement / increment controls, keyboard arrow and
-                wheel support, locale formatting, and min / max / step bounds. Ships as a
-                compound of <code class="font-mono-code">NumberField</code> plus
-                <code class="font-mono-code">Content</code>,
-                <code class="font-mono-code">Decrement</code>,
-                <code class="font-mono-code">Input</code>,
-                <code class="font-mono-code">Increment</code>.
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="grid grid-cols-1 gap-10 md:grid-cols-2">
             <!-- Plain integer counter. -->
             <div class="flex flex-col gap-3">
@@ -91,5 +78,5 @@ const bounded = ref<number>(5);
                 <p class="text-mono-caption text-muted-foreground">Locked</p>
             </div>
         </section>
-    </article>
+    </StoryPage>
 </template>

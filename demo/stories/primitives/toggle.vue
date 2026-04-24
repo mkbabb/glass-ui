@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight } from "lucide-vue-next";
 import { Toggle } from "@/components/ui/toggle";
@@ -19,19 +20,7 @@ const cell = ref<string>("warm");
 </script>
 
 <template>
-    <article class="flex flex-col gap-14">
-        <header class="flex flex-col gap-3">
-            <p class="text-admin-label text-muted-foreground">primitives · toggle</p>
-            <h1 class="text-title text-foreground">Toggle · Toggle Group · Chip</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Boolean and grouped selectors. <code class="font-mono-code">Toggle</code>
-                is a single pressable button; <code class="font-mono-code">ToggleGroup</code>
-                bundles multiple under a shared <code class="font-mono-code">type</code>
-                (single / multiple); <code class="font-mono-code">ToggleChip</code> is
-                a slimmer chip / cell variant for filters and pickers.
-            </p>
-        </header>
-
+    <StoryPage>
         <!-- Single toggle. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">single toggle</p>
@@ -114,5 +103,5 @@ const cell = ref<string>("warm");
             </div>
             <p class="text-mono-caption text-muted-foreground">cell · {{ cell }}</p>
         </section>
-    </article>
+    </StoryPage>
 </template>

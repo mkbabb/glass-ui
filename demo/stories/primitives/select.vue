@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import {
     Select,
@@ -18,20 +19,7 @@ const density = ref<string>("");
 </script>
 
 <template>
-    <article class="flex flex-col gap-14">
-        <header class="flex flex-col gap-3">
-            <p class="text-admin-label text-muted-foreground">primitives · select</p>
-            <h1 class="text-title text-foreground">Select</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Glass pill trigger, portaled glass-elevated content, grouped items with
-                section labels and separators. Compound of
-                <code class="font-mono-code">Select</code> · <code class="font-mono-code">Trigger</code> ·
-                <code class="font-mono-code">Value</code> · <code class="font-mono-code">Content</code> ·
-                <code class="font-mono-code">Group</code> · <code class="font-mono-code">Label</code> ·
-                <code class="font-mono-code">Item</code>.
-            </p>
-        </header>
-
+    <StoryPage>
         <!-- Grouped items with labels + separator. -->
         <section class="flex flex-col gap-3 max-w-sm">
             <Label for="sel-font">Font family</Label>
@@ -111,5 +99,5 @@ const density = ref<string>("");
                 </SelectContent>
             </Select>
         </section>
-    </article>
+    </StoryPage>
 </template>

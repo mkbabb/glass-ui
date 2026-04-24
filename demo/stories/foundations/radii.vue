@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { cn } from "@/utils/cn";
 
 const scale: { cls: string; label: string; hint: string }[] = [
@@ -23,7 +24,7 @@ const semantic: { cls: string; label: string; role: string }[] = [
 </script>
 
 <template>
-    <section class="flex flex-col gap-12">
+    <StoryPage>
         <div>
             <p class="text-admin-label mb-4 text-muted-foreground">Scale</p>
             <div class="flex flex-wrap gap-4">
@@ -75,5 +76,5 @@ const semantic: { cls: string; label: string; role: string }[] = [
                 </div>
             </div>
         </div>
-    </section>
+    </StoryPage>
 </template>

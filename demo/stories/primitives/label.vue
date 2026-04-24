@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -13,18 +14,7 @@ const plan = ref<string>("pro");
 </script>
 
 <template>
-    <article class="flex flex-col gap-14">
-        <header class="flex flex-col gap-3">
-            <p class="text-admin-label text-muted-foreground">primitives · label</p>
-            <h1 class="text-title text-foreground">Label</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Accessible <code class="font-mono-code">&lt;label&gt;</code> wrapper from
-                reka-ui. Clicking the label transfers focus to the associated control via
-                <code class="font-mono-code">for</code>; nesting the control inside the
-                label achieves the same coupling. Both patterns shown below.
-            </p>
-        </header>
-
+    <StoryPage>
         <!-- Labelled input via `for`. -->
         <section class="flex flex-col gap-3 max-w-sm">
             <p class="section-label">for-attribute coupling</p>
@@ -85,5 +75,5 @@ const plan = ref<string>("pro");
             <Label for="lbl-disabled">Disabled field</Label>
             <Input id="lbl-disabled" class="peer" disabled placeholder="Locked" />
         </section>
-    </article>
+    </StoryPage>
 </template>

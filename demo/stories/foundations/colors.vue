@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { cn } from "@/utils/cn";
 
 // Core surface/semantic roles exposed as Tailwind utilities via @theme.
@@ -32,7 +33,7 @@ const viz: { id: string; glyph: string; label: string; sub: string }[] = [
 </script>
 
 <template>
-    <section class="flex flex-col gap-16">
+    <StoryPage>
         <!-- CORE -->
         <div>
             <p class="text-admin-label mb-4 text-muted-foreground">Core</p>
@@ -126,5 +127,5 @@ const viz: { id: string; glyph: string; label: string; sub: string }[] = [
                 </div>
             </div>
         </div>
-    </section>
+    </StoryPage>
 </template>

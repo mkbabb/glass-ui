@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { cn } from "@/utils/cn";
 
 // Ladder order: display → body → admin rail.
@@ -25,7 +26,7 @@ const ladder: { cls: string; label: string; sample: string }[] = [
 </script>
 
 <template>
-    <section class="flex flex-col gap-8">
+    <StoryPage>
         <div class="flex flex-col gap-4">
             <div
                 v-for="row in ladder"
@@ -53,5 +54,5 @@ const ladder: { cls: string; label: string; sample: string }[] = [
                 <code class="font-mono-code">.fourier-f</code> — Fraunces WONK italic, viz-fourier red.
             </p>
         </div>
-    </section>
+    </StoryPage>
 </template>

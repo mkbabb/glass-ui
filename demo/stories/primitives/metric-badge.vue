@@ -1,19 +1,10 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { MetricBadge } from "@/components/custom/metric-badge";
 </script>
 
 <template>
-    <article class="flex flex-col gap-14">
-        <header class="flex flex-col gap-3">
-            <p class="text-admin-label text-muted-foreground">primitives · metric-badge</p>
-            <h1 class="text-title text-foreground">Metric Badge</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Compact number + unit pair for dashboards and inline stats. Mono-micro
-                amount with a subdued unit tail; falls back to an em dash when empty.
-                Tabular numerals keep columns honest.
-            </p>
-        </header>
-
+    <StoryPage>
         <!-- Basic amounts + units. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">amount · unit</p>
@@ -97,5 +88,5 @@ import { MetricBadge } from "@/components/custom/metric-badge";
                 </div>
             </div>
         </section>
-    </article>
+    </StoryPage>
 </template>

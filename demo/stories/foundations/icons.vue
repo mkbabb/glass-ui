@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import {
     Bell,
     BookOpen,
@@ -64,7 +65,7 @@ const strokes: number[] = [1, 1.5, 2];
 </script>
 
 <template>
-    <section class="flex flex-col gap-12">
+    <StoryPage>
         <!-- Icon grid -->
         <div>
             <p class="text-admin-label mb-4 text-muted-foreground">
@@ -134,5 +135,5 @@ const strokes: number[] = [1, 1.5, 2];
                 </div>
             </div>
         </div>
-    </section>
+    </StoryPage>
 </template>

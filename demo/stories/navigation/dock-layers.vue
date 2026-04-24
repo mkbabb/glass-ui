@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Package, Layers, Library, FileText, ChevronLeft, ChevronRight } from "lucide-vue-next";
 import { GlassDock, DockLayerGroup, DockLayer } from "@/components/custom/dock";
@@ -24,18 +25,7 @@ function back() {
 </script>
 
 <template>
-    <div class="mx-auto flex max-w-5xl flex-col gap-10 p-8">
-        <header class="flex flex-col gap-1">
-            <p class="text-admin-label text-muted-foreground">Navigation · DockLayerGroup</p>
-            <h1 class="text-title">Dock Layers</h1>
-            <p class="text-prose max-w-prose text-muted-foreground">
-                <code class="rounded bg-muted px-1">DockLayerGroup</code> stacks named
-                <code class="rounded bg-muted px-1">&lt;DockLayer&gt;</code> children in a CSS grid and coordinates
-                crossfade + size FLIP on swap. An optional Figma-style switcher rail renders from each layer's
-                metadata (label + icon).
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="flex flex-col gap-3">
             <h2 class="text-subheading">Drill-in navigation</h2>
             <p class="text-small text-muted-foreground">
@@ -118,5 +108,5 @@ function back() {
                 <li>Clear inline dimension on <code class="rounded bg-muted px-1">transitionend</code>.</li>
             </ol>
         </section>
-    </div>
+    </StoryPage>
 </template>

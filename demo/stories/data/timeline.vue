@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref, computed } from "vue";
 import { GlassTimeline } from "@/components/custom/timeline";
 import { cn } from "@/utils/cn";
@@ -45,7 +46,7 @@ function jumpTo(e: TimelineEvent) {
 </script>
 
 <template>
-    <section class="flex flex-col gap-10">
+    <StoryPage>
         <div>
             <p class="text-admin-label mb-4 text-muted-foreground">Release timeline</p>
 
@@ -136,5 +137,5 @@ function jumpTo(e: TimelineEvent) {
                 </li>
             </ol>
         </div>
-    </section>
+    </StoryPage>
 </template>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { onMounted, ref } from "vue";
 import { cn } from "@/utils/cn";
 
@@ -61,7 +62,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <section class="flex flex-col gap-10">
+    <StoryPage>
         <!-- Pastel radial wash backdrop for the four tier tiles. -->
         <div
             :class="
@@ -138,5 +139,5 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-    </section>
+    </StoryPage>
 </template>

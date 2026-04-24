@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -17,17 +18,7 @@ const airplane = ref(false);
 </script>
 
 <template>
-    <article class="flex flex-col gap-10 p-8 text-foreground">
-        <header class="flex flex-col gap-2">
-            <span class="text-admin-label text-muted-foreground">Primitives · Checks</span>
-            <h1 class="text-title">Checkbox, Radio, Switch</h1>
-            <p class="text-prose max-w-prose text-muted-foreground">
-                The three boolean / selection primitives. All use reka-ui roots, forward classes via
-                <code class="font-mono-code">cn()</code>, and pair with
-                <code class="font-mono-code">Label</code> for hit-targets and a11y.
-            </p>
-        </header>
-
+    <StoryPage>
         <section class="flex flex-col gap-4">
             <h2 class="text-subheading">Checkbox</h2>
             <p class="text-small text-muted-foreground">
@@ -104,5 +95,5 @@ const airplane = ref(false);
                 </div>
             </div>
         </section>
-    </article>
+    </StoryPage>
 </template>

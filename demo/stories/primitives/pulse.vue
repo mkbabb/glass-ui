@@ -1,20 +1,10 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { Pulse } from "@/components/custom/pulse";
 </script>
 
 <template>
-    <article class="flex flex-col gap-14">
-        <header class="flex flex-col gap-3">
-            <p class="text-admin-label text-muted-foreground">primitives · pulse</p>
-            <h1 class="text-title text-foreground">Pulse</h1>
-            <p class="text-prose max-w-2xl text-muted-foreground">
-                Lightweight loading indicator. <code class="font-mono-code">dots</code>
-                variant bounces a row of discs; <code class="font-mono-code">ring</code>
-                spins a partial border. Color follows <code class="font-mono-code">currentColor</code>,
-                so tinting happens via the surrounding text color.
-            </p>
-        </header>
-
+    <StoryPage>
         <!-- Dots: vary speed and count. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">dots variant</p>
@@ -78,5 +68,5 @@ import { Pulse } from "@/components/custom/pulse";
                 <span class="text-small text-foreground">Computing projection…</span>
             </div>
         </section>
-    </article>
+    </StoryPage>
 </template>

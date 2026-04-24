@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { InfiniteScroll } from "@/components/custom/infinite-scroll";
 import { Badge } from "@/components/ui/badge";
@@ -64,7 +65,7 @@ function reset() {
 </script>
 
 <template>
-    <section class="flex flex-col gap-4">
+    <StoryPage>
         <div class="flex items-end justify-between gap-4">
             <div>
                 <p class="text-admin-label text-muted-foreground">Infinite scroll</p>
@@ -118,5 +119,5 @@ function reset() {
                 <span class="font-mono-code">— end of feed ({{ events.length }} events) —</span>
             </template>
         </InfiniteScroll>
-    </section>
+    </StoryPage>
 </template>

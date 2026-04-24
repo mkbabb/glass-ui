@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import StoryPage from "../StoryPage.vue";
 import {
     HoverCard,
     HoverCardContent,
@@ -11,20 +12,7 @@ import { Info, CircleHelp, Sparkles } from "lucide-vue-next";
 </script>
 
 <template>
-    <section class="mx-auto max-w-5xl px-8 py-16">
-        <header class="mb-12 grid gap-3">
-            <p class="font-mono text-2xs uppercase tracking-[0.2em] text-muted-foreground">
-                Containers · Hover Card
-            </p>
-            <h1 class="font-display text-5xl leading-tight">Hover card</h1>
-            <p class="max-w-2xl text-lg text-muted-foreground">
-                Hover-triggered rich surface — richer than a tooltip, lighter
-                than a popover. Pair with
-                <code class="font-mono text-sm">IconTooltip</code> for inline
-                glosses on icon chrome.
-            </p>
-        </header>
-
+    <StoryPage>
         <div class="grid gap-12">
             <div class="grid gap-4">
                 <h2 class="font-display text-xl">Profile preview</h2>
@@ -93,5 +81,5 @@ import { Info, CircleHelp, Sparkles } from "lucide-vue-next";
                 </div>
             </div>
         </div>
-    </section>
+    </StoryPage>
 </template>
