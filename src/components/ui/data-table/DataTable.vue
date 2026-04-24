@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T extends Record<string, any>">
-import { computed } from "vue";
+import { computed, useSlots } from "vue";
 import {
     Table,
     TableBody,
@@ -10,6 +10,7 @@ import {
     TableEmpty,
 } from "../table";
 import { Skeleton } from "../skeleton";
+import { ContextMenu, ContextMenuTrigger, ContextMenuContent } from "../context-menu";
 import DataTablePagination from "./DataTablePagination.vue";
 import type { DataTableColumn, DataTableSort } from "./types";
 import { cn } from "../../../utils";
@@ -42,6 +43,10 @@ const emit = defineEmits<{
     select: [row: T];
     "load-more": [];
 }>();
+
+const slots = useSlots();
+const hasRowActions = computed(() => !!slots["row-actions"]);
+const hasRowContextMenu = computed(() => !!slots["row-context-menu"]);
 
 const skeletonRows = computed(() =>
     Array.from({ length: Math.min(props.pageSize, 5) }, (_, i) => i),
@@ -105,6 +110,8 @@ function sortIndicator(col: DataTableColumn<T>): string {
                     >
                         {{ col.label }}{{ sortIndicator(col) }}
                     </TableHead>
+                    <!-- Trailing actions column header (auto when row-actions slot is provided) -->
+                    <TableHead v-if="hasRowActions" class="w-10" />
                 </TableRow>
             </TableHeader>
 
@@ -119,37 +126,77 @@ function sortIndicator(col: DataTableColumn<T>): string {
                         >
                             <Skeleton class="h-4 w-3/4" />
                         </TableCell>
+                        <TableCell v-if="hasRowActions" class="w-10">
+                            <Skeleton class="h-4 w-6" />
+                        </TableCell>
                     </TableRow>
                 </template>
 
                 <!-- Data rows -->
                 <template v-else-if="rows.length > 0">
-                    <TableRow
-                        v-for="row in rows"
-                        :key="(getNestedValue(row, rowKey) as PropertyKey | undefined) ?? undefined"
-                        class="cursor-pointer"
-                        @click="emit('select', row)"
-                    >
-                        <TableCell
-                            v-for="col in columns"
-                            :key="col.key"
-                            :class="cn(getAlignClass(col.align), col.class)"
+                    <template v-for="row in rows" :key="(getNestedValue(row, rowKey) as PropertyKey | undefined) ?? undefined">
+                        <!-- Row with right-click context menu -->
+                        <ContextMenu v-if="hasRowContextMenu">
+                            <ContextMenuTrigger as-child>
+                                <TableRow
+                                    class="cursor-pointer"
+                                    @click="emit('select', row)"
+                                >
+                                    <TableCell
+                                        v-for="col in columns"
+                                        :key="col.key"
+                                        :class="cn(getAlignClass(col.align), col.class)"
+                                    >
+                                        <component
+                                            v-if="col.component"
+                                            :is="col.component"
+                                            :value="getNestedValue(row, col.key)"
+                                            :row="row"
+                                        />
+                                        <template v-else>
+                                            {{ getCellValue(row, col) }}
+                                        </template>
+                                    </TableCell>
+                                    <TableCell v-if="hasRowActions" class="w-10" @click.stop>
+                                        <slot name="row-actions" :row="row" />
+                                    </TableCell>
+                                </TableRow>
+                            </ContextMenuTrigger>
+                            <ContextMenuContent>
+                                <slot name="row-context-menu" :row="row" />
+                            </ContextMenuContent>
+                        </ContextMenu>
+
+                        <!-- Plain row (no context menu) -->
+                        <TableRow
+                            v-else
+                            class="cursor-pointer"
+                            @click="emit('select', row)"
                         >
-                            <component
-                                v-if="col.component"
-                                :is="col.component"
-                                :value="getNestedValue(row, col.key)"
-                                :row="row"
-                            />
-                            <template v-else>
-                                {{ getCellValue(row, col) }}
-                            </template>
-                        </TableCell>
-                    </TableRow>
+                            <TableCell
+                                v-for="col in columns"
+                                :key="col.key"
+                                :class="cn(getAlignClass(col.align), col.class)"
+                            >
+                                <component
+                                    v-if="col.component"
+                                    :is="col.component"
+                                    :value="getNestedValue(row, col.key)"
+                                    :row="row"
+                                />
+                                <template v-else>
+                                    {{ getCellValue(row, col) }}
+                                </template>
+                            </TableCell>
+                            <TableCell v-if="hasRowActions" class="w-10" @click.stop>
+                                <slot name="row-actions" :row="row" />
+                            </TableCell>
+                        </TableRow>
+                    </template>
                 </template>
 
                 <!-- Empty state -->
-                <TableEmpty v-else :colspan="columns.length">
+                <TableEmpty v-else :colspan="columns.length + (hasRowActions ? 1 : 0)">
                     <slot name="empty">No results found</slot>
                 </TableEmpty>
             </TableBody>
