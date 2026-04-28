@@ -1,11 +1,11 @@
 <template>
     <!-- Normal mode: render inline -->
-    <div v-if="!isFullscreen" class="relative" v-bind="$attrs">
+    <div v-if="!open" class="relative" v-bind="$attrs">
         <button
             class="absolute z-10 rounded-lg bg-card/70 [backdrop-filter:var(--glass-blur-subtle)] p-1.5 text-muted-foreground hover:text-foreground transition-colors shadow-sm border border-border/40"
             :class="buttonPosition === 'left' ? 'left-2 top-2' : 'right-2 top-2'"
             title="Fullscreen"
-            @click="isFullscreen = true"
+            @click="open = true"
         >
             <Maximize2 class="h-4 w-4" />
         </button>
@@ -15,14 +15,14 @@
     <!-- Fullscreen mode: teleport to body -->
     <Teleport to="body">
         <div
-            v-if="isFullscreen"
+            v-if="open"
             class="fixed inset-0 z-modal flex flex-col bg-background"
         >
             <button
                 class="absolute z-10 rounded-lg bg-card/70 [backdrop-filter:var(--glass-blur-subtle)] p-2 text-muted-foreground hover:text-foreground transition-colors shadow-sm border border-border/40"
                 :class="buttonPosition === 'left' ? 'left-3 top-3' : 'right-3 top-3'"
                 title="Exit fullscreen"
-                @click="isFullscreen = false"
+                @click="open = false"
             >
                 <Minimize2 class="h-4 w-4" />
             </button>
@@ -34,31 +34,44 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onUnmounted } from "vue";
+import { onMounted, onUnmounted, watch } from "vue";
+import { Maximize2, Minimize2 } from "lucide-vue-next";
+import { registerShortcut } from "../../../composables/useKeyboardShortcuts";
 
 defineOptions({ inheritAttrs: false });
-import { Maximize2, Minimize2 } from "lucide-vue-next";
 
-withDefaults(defineProps<{
-    buttonPosition?: "left" | "right";
-}>(), {
-    buttonPosition: "right",
-});
+withDefaults(
+    defineProps<{
+        buttonPosition?: "left" | "right";
+    }>(),
+    { buttonPosition: "right" },
+);
 
-const isFullscreen = ref(false);
+/**
+ * Two-way `open` model so consumers can drive fullscreen externally
+ * (programmatic toggles, route-driven launches, etc.) while the corner
+ * buttons continue to operate without parent wiring.
+ */
+const open = defineModel<boolean>("open", { default: false });
 
-watch(isFullscreen, (fs) => {
+watch(open, (fs) => {
     document.body.style.overflow = fs ? "hidden" : "";
 });
 
-function onKeydown(e: KeyboardEvent) {
-    if (e.key === "Escape" && isFullscreen.value) {
-        isFullscreen.value = false;
-    }
-}
-document.addEventListener("keydown", onKeydown);
+let unregEsc: (() => void) | null = null;
+
+onMounted(() => {
+    unregEsc = registerShortcut(
+        "Escape",
+        () => {
+            if (open.value) open.value = false;
+        },
+        { label: "Exit fullscreen", group: "UI", allowInInput: true },
+    );
+});
+
 onUnmounted(() => {
-    document.removeEventListener("keydown", onKeydown);
+    unregEsc?.();
     document.body.style.overflow = "";
 });
 </script>
