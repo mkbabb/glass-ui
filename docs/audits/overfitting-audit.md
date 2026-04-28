@@ -30,17 +30,22 @@ Enumerate every component, composable, CSS class, `@utility`, type interface, an
    - For each count, paste the exact `rg` invocation in the row's rationale field — counts unverifiable by re-running grep are rejected.
 
 3. **Verdict** per artefact:
-   - **keep** — ≥ 2 distinct usage sites, OR is in the library's public surface (e.g. exported from `src/index.ts`).
-   - **inline-and-remove** — exactly 1 usage site within `{SCOPE_PATHS}`. Inline at the call site; remove the standalone artefact. Especially apt for unnamed "spacing helper" classes or single-use composables that don't earn their abstraction.
-   - **generalize** — exactly 1 usage site, but the abstraction has semantic value worth preserving (e.g. an `@utility` with a meaningful name like `text-mono-caption`, even if used once today). Document the intended reuse path; don't inline.
-   - **delete-unused** — 0 usage sites anywhere. Delete the artefact.
+   - **keep** — ≥ 2 distinct usage sites in `{CONSUMER_PATHS}` (demo + library + external consumers all count toward the threshold).
+   - **library-orphan** — exported from `src/index.ts` but **0 distinct usage sites anywhere** (not src, not demo, not external consumers). The library ships a primitive nobody — including its own demo — uses. This is the strongest overfitting signal for a public-surface library. Triage: (a) delete it (per "no legacy code"), (b) wire a demo story that exercises it, or (c) document as "shipped for forward compatibility with a named consumer roadmap entry". Default action: triage → either (a) or (b); (c) requires a named justification.
+   - **inline-and-remove** — exactly 1 usage site, AND the artefact is NOT exported from `src/index.ts`. Inline at the call site; remove the standalone abstraction. Apt for unnamed helper-shaped classes or single-use private composables that don't earn their abstraction.
+   - **generalize** — exactly 1 usage site, AND the artefact has semantic value worth preserving (e.g., an `@utility` with a meaningful name like `text-mono-caption`, or a public-surface component with one consumer that should grow). Document the intended reuse path; don't inline.
+   - **delete-unused** — 0 usage sites anywhere AND not in `src/index.ts`. Pure dead code; delete.
    - **demo-only-private** — 0 sites in `src/`, only used in `demo/`. Move under `demo/<area>/_internal/` if not already; document as private demo helper. Not a library candidate.
+
+Verdict precedence when multiple apply: `delete-unused` > `library-orphan` > `inline-and-remove` > `generalize` > `demo-only-private` > `keep`. Library-orphan beats keep — auto-keep on public-surface re-export is a false negative.
 
 ## Output format
 
 ```
-| artefact | kind | def-site | sites-in-src | sites-in-demo | sites-in-consumers | verdict | rationale (with rg invocation) |
+| artefact | kind | def-site | in-public-surface | sites-in-src | sites-in-demo | sites-in-consumers | total-sites | verdict | rationale (with rg invocation) |
 ```
+
+`in-public-surface` is `yes`/`no` based on `rg "<symbol>" src/index.ts src/components/index.ts src/composables/index.ts` etc. — needed to distinguish `library-orphan` from `delete-unused`. `total-sites` is the sum of distinct files across the four count columns; the verdict is driven by total + public-surface, per §3.
 
 Demands:
 - Every entry's site count cites the exact `rg` invocation in the rationale field.

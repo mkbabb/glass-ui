@@ -23,7 +23,7 @@ A library component must work standalone — no "mount X above me" footnotes. A 
 
 | Wave | Title | Agents | Mode | Workspace at close | Hard gate (one-line) | Status |
 |---|---|---|---|---|---|---|
-| W0 | Audits — live + overfitting + token resolution | 4 | parallel | green | three audit docs landed; ≥ 5 overfitting candidates marked `inline-and-remove` or `delete-unused` | planned |
+| W0 | Audits — live + overfitting + token resolution | 4 | parallel | green | three audit docs landed; ≥ 5 overfitting candidates marked `inline-and-remove` or `delete-unused` | complete |
 | W1 | Crash + utility-resolution fixes | 4 | parallel | green | settings + rail render; `font-mono-code`/`text-2xs` resolve; `rounded-card` maps to primitive | planned |
 | W2 | Chrome reform — pager, dashboard, rail | 3 | parallel | green | StoryPager clamped 80vw with internal scroll; dashboard 2-up at xl, 4-up at 2xl; Rail scrolls at 1440×600 | planned |
 | W3 | Polish + commit aurora user work | 4 | parallel | green | math-paper Sₙ inline; aurora preset masked; configurator preset direct; aurora work committed; favicon 200 | planned |
@@ -91,17 +91,16 @@ Substrate exists for live audit + token resolution; overfitting is novel and pro
 - **Commit**: `fix(typography): @utility font-mono-code + text-2xs (C.W1.C)`.
 
 #### C.W1.D — theme.css radius primitive references
-- **Mechanism**: replace `theme.css:191-197` self-references with primitive mappings from `tokens.css`:
+- **Mechanism**: replace `theme.css:191-197` self-references with the same primitive mappings tokens.css already uses (verified W0.D — `tokens.css:88-94`):
   ```css
-  --radius-card:   var(--radius-2xl);
-  --radius-panel:  var(--radius-xl);
-  --radius-dialog: var(--radius-2xl);
-  --radius-input:  var(--radius-md);
-  --radius-button: var(--radius-full);
-  --radius-badge:  var(--radius-full);
-  --radius-dock:   var(--radius-2xl);
+  --radius-card:   var(--radius-2xl);    /* 1rem */
+  --radius-panel:  var(--radius-xl);     /* 12px */
+  --radius-dialog: var(--radius-2xl);    /* 1rem */
+  --radius-input:  var(--radius);        /* 0.625rem */
+  --radius-button: var(--radius);        /* 0.625rem */
+  --radius-badge:  var(--radius-pill);   /* 9999px */
+  --radius-dock:   var(--radius-pill);   /* 9999px */
   ```
-  Exact mappings verified against existing usage at audit time (W0.D).
 - **Files**: `src/styles/theme.css:191-197` (modify).
 - **Sub-gate**: `getComputedStyle(.rounded-card).borderRadius` resolves to a non-empty pixel value matching `--radius-2xl`'s computed value.
 - **Commit**: `fix(theme): radius @theme tokens reference primitive scale (C.W1.D)`.
