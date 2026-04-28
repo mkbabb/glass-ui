@@ -24,9 +24,9 @@ interface Metric {
 }
 
 const metrics: Metric[] = [
-    { label: "Active projects", value: "42", delta: "+6 wk", trend: "up", section: 0 },
-    { label: "Requests / min", value: "1.2k", delta: "+18%", trend: "up", section: 3 },
-    { label: "p95 latency", value: "128ms", delta: "−12ms", trend: "down", section: 5 },
+    { label: "Active", value: "42", delta: "+6 wk", trend: "up", section: 0 },
+    { label: "Reqs/min", value: "1.2k", delta: "+18%", trend: "up", section: 3 },
+    { label: "p95", value: "128ms", delta: "−12ms", trend: "down", section: 5 },
     { label: "Error rate", value: "0.04%", delta: "flat", trend: "flat", section: 8 },
 ];
 
@@ -96,11 +96,11 @@ const trendClasses: Record<Trend, string> = {
             </aside>
 
             <main class="flex flex-col gap-6">
-                <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                <div class="grid gap-4 grid-cols-2 2xl:grid-cols-4">
                     <Card
                         v-for="metric in metrics"
                         :key="metric.label"
-                        class="border-2 border-foreground/10 transition-transform hover:-translate-x-px hover:-translate-y-px"
+                        class="min-w-0 border-2 border-foreground/10 transition-transform hover:-translate-x-px hover:-translate-y-px"
                         :style="{ boxShadow: 'var(--shadow-cartoon, var(--shadow-card))' }"
                     >
                         <CardHeader class="pb-2">
