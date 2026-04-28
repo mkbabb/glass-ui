@@ -44,6 +44,7 @@ const shapeClass = computed(() =>
             :class="
                 cn(
                     'glass-subtle flex w-fit flex-col items-center gap-1 p-2',
+                    'max-h-[calc(100vh-2rem)] overflow-y-auto scrollbar-hidden',
                     shapeClass,
                 )
             "
