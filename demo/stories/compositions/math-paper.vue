@@ -35,7 +35,7 @@ const fourierAccent = "var(--viz-fourier, hsl(358 72% 52%))";
                     <span class="fira-code text-[1.05em]">[−π, π]</span>, and consider its
                     Fourier series
                     <span
-                        class="fourier-f font-display italic align-baseline"
+                        class="font-display italic align-baseline"
                         :style="{ color: fourierAccent, fontSize: '1.15em' }"
                     >S</span
                     >ₙ. At every point of continuity, the partial sums converge to the value of the
