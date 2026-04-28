@@ -144,11 +144,7 @@ function effectiveFont(slot: keyof FontSlots): string {
                         <h3 class="text-xs font-mono uppercase tracking-wider text-muted-foreground">
                             Preset
                         </h3>
-                        <RadioGroup
-                            :model-value="presetModel"
-                            class="grid gap-2"
-                            @update:model-value="(v) => { if (v) presetModel = v as string; }"
-                        >
+                        <RadioGroup v-model="presetModel" class="grid gap-2">
                             <label
                                 v-for="p in PRESETS"
                                 :key="p.id"
