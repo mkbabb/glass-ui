@@ -67,6 +67,49 @@ const accents: Accent[] = [
             </div>
 
             <div class="grid gap-4">
+                <h2 class="font-display text-xl">Cartoon variant</h2>
+                <p class="text-sm text-muted-foreground">
+                    <code class="font-mono text-xs">variant="cartoon"</code>
+                    composes via the <code class="font-mono text-xs">.glass-cartoon</code>
+                    surface utility — cartoon-tier shadow, 2px border,
+                    hover lift via <code class="font-mono text-xs">--lift-sm</code>
+                    + <code class="font-mono text-xs">--shadow-cartoon-lg</code>.
+                </p>
+                <div class="grid gap-6 sm:grid-cols-2">
+                    <Card variant="cartoon">
+                        <CardHeader>
+                            <CardTitle>Cartoon panel</CardTitle>
+                            <CardDescription>
+                                Lifts on hover; cartoon-shadow tier.
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent class="text-sm text-muted-foreground">
+                            Hover this card to see the lift transition. The
+                            shadow uses <code class="font-mono text-xs">--shadow-cartoon-md</code>
+                            at rest and <code class="font-mono text-xs">--shadow-cartoon-lg</code>
+                            on hover.
+                        </CardContent>
+                    </Card>
+
+                    <Card variant="cartoon">
+                        <CardHeader>
+                            <CardTitle>Token fallback</CardTitle>
+                            <CardDescription>
+                                Glass tokens fall through to default tier.
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent class="text-sm text-muted-foreground">
+                            Without a consumer-defined
+                            <code class="font-mono text-xs">--glass-bg-cartoon</code>,
+                            the surface inherits
+                            <code class="font-mono text-xs">--glass-bg-default</code>
+                            via CSS variable fall-through.
+                        </CardContent>
+                    </Card>
+                </div>
+            </div>
+
+            <div class="grid gap-4">
                 <h2 class="font-display text-xl">Section-accented</h2>
                 <p class="text-sm text-muted-foreground">
                     Left-border colored from a section palette variable. Same default
