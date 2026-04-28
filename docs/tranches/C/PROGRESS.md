@@ -21,7 +21,7 @@ Dated execution log for tranche C. Updated at every wave boundary.
 - W0: complete
 - W1: complete
 - W2: complete
-- W3: planned (scope expanded — see open log)
+- W3: complete
 - W4: planned
 - W5: planned
 
@@ -67,3 +67,22 @@ Three sub-phase commits:
 Gestalt scope-reveal at C.W2.A: the plan proposed adding an `@utility dock-tab-btn` block to `dock.css`. dock.css's own header documents that dock-button styling moved from CSS utilities to self-contained Vue components (DockIconButton, DockSelectTrigger, DockDropdownTrigger) — the CSS utility approach was actively retired. Adding `@utility dock-tab-btn` would have re-introduced the very pattern dock.css explicitly retired. Pivoted to the matching pattern: DockTabButton.vue Vue component with scoped four-state styles and reka-ui Primitive as-child polymorphism. The component lands on the public surface (re-export from dock/index.ts), available to any consumer who wants tab-styled dock-internal links. No new CSS utility shipped.
 
 `npm run typecheck` clean. `npm run build` clean (384.54 kB JS, 40.83 kB CSS).
+
+## 2026-04-28 — W3 close
+
+Eight commits land the polish + the broader-than-planned aurora work:
+
+- `faddbed` fix(math-paper): drop .fourier-f from inline prose (C.W3.A)
+- `9966c1d` fix(aurora): mask preset row via existing .scroll-fade-mask utility (C.W3.B)
+- `dd8b73f` refactor(configurator): RadioGroup uses v-model (C.W3.C)
+- `4dd0d28` chore(html): inline empty favicon to silence 404 (C.W3.D)
+- `69c1d1c` feat(demo): aurora as flat standalone route — manifest + router + nav + rail (user WIP, C.W3.D)
+- `4f84e64` feat(stories): aurora playground refactor — stage + config dock + nuclei (user WIP, C.W3.D)
+- `70dcfa5` feat(aurora): library aurora composable + shader refactor (user WIP, C.W3.D)
+- `f1d3815` refactor(expandable-container): defineModel + registerShortcut Escape (user WIP, C.W3.D)
+
+C.W3.B scope-reveal: the plan said add `mask-image: linear-gradient(...)` inline to the preset scroll container. utilities.css already shipped `.scroll-fade-mask` with the equivalent mask-image declaration — exactly the pattern §Invariant 5 says to reuse over reinvent. Added the class instead of inline rule. Same outcome, zero new CSS.
+
+C.W3.D was always the largest unknown. Real surface: 14 files modified + 2 untracked, vs the plan's "5 files." Every WIP file was reviewed, typechecked, and committed in four logically-grouped commits attributing user work. Master is now clean. The aurora-flat-route reform that was bundled into earlier commits (C.W1.B's StoryPage kind-discriminator, C.W2.A's pager flat-route gating) finally gets its canonical landing at `69c1d1c`.
+
+`npm run typecheck` clean. `npm run build` clean.
