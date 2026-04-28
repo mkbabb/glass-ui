@@ -68,42 +68,36 @@ export function useAnimatedNumber(
     target: MaybeRefOrGetter<number | null | undefined>,
     options: UseAnimatedNumberOptions = {},
 ): AnimatedNumber {
-    const reduced =
-        options.respectReducedMotion !== false &&
-        typeof matchMedia !== "undefined" &&
-        matchMedia("(prefers-reduced-motion: reduce)").matches;
-
     const initial = options.initial ?? 0;
     const current = ref(initial);
     const isAnimating = ref(false);
 
+    // Reduced-motion handling lives in the keyframes.js engine itself —
+    // SmoothProgress.setTarget() / play() short-circuit to immediate snap
+    // when the option is enabled and matchMedia matches. Default this on
+    // so every useAnimatedNumber consumer inherits the behavior. Closes
+    // the Tranche-G activation gap where the engine option had no
+    // production consumer.
     const smootherOpts: Partial<SmoothProgressOptions> = {
         damping: options.damping ?? 0.1,
         snapThreshold: options.snapThreshold ?? 0.01,
         targetEpsilon: options.targetEpsilon ?? 0,
         initial,
         clamp: options.clamp ?? false,
+        respectReducedMotion: options.respectReducedMotion !== false,
     };
     const smoother = shallowRef(new SmoothProgress(smootherOpts));
 
-    if (!reduced) {
-        smoother.value.play((v) => {
-            current.value = v;
-            isAnimating.value = !smoother.value.settled;
-            options.onValue?.(v);
-        });
-    }
+    smoother.value.play((v) => {
+        current.value = v;
+        isAnimating.value = !smoother.value.settled;
+        options.onValue?.(v);
+    });
 
     watch(
         () => toValue(target),
         (t) => {
             if (t == null) return;
-            if (reduced) {
-                smoother.value.reset(t);
-                current.value = t;
-                options.onValue?.(t);
-                return;
-            }
             smoother.value.setTarget(t);
         },
         { immediate: true },
