@@ -242,6 +242,9 @@
     --glass-blur-default:  blur(12px);
     --glass-blur-medium:   blur(12px) saturate(1.3);
     --glass-blur-elevated: blur(16px) saturate(1.4);
+    /* Dock-specific: half the subtle weight so the dock reads as a feather-light
+       overlay rather than a heavy blurred slab. */
+    --glass-blur-dock:     blur(2px) saturate(1.025);
 
     /* Composed backgrounds */
     --glass-bg-subtle:   color-mix(in srgb, var(--card) calc(var(--glass-opacity-subtle) * 100%), transparent);
