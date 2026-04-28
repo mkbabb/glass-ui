@@ -1,20 +1,11 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import {
-    Brush,
-    CircleDot,
-    Layers,
-    Palette,
-    Sliders,
-    Wind,
-    RefreshCw,
-    Plus,
-} from "lucide-vue-next";
+import { RefreshCw, Plus } from "lucide-vue-next";
 import { cn } from "@/utils/cn";
 import { Button } from "@/components/ui/button";
 import { LabeledSlider } from "@/components/custom/labeled-field";
 import { BouncyTabs } from "@/components/custom/tabs";
-import { GlassDock, DockLayerGroup, DockLayer } from "@/components/custom/dock";
+import { DockLayerGroup, DockLayer } from "@/components/custom/dock";
 import { SortableList, SortableItem } from "@/components/custom/sortable-list";
 import type {
     AuroraConfig,
@@ -80,6 +71,18 @@ const noiseOctavesOptions = [
     { label: "3", value: "3" },
     { label: "4", value: "4" },
     { label: "5", value: "5" },
+] as const;
+
+// Layer switcher options. Replaces the DockLayerGroup letter-rail with a
+// full-label pill toggle — matches the storybook idiom used in StoryPager
+// and elsewhere in this dock.
+const layerOptions = [
+    { label: "Medium", value: "medium" },
+    { label: "Palette", value: "palette" },
+    { label: "Flow", value: "flow" },
+    { label: "Texture", value: "texture" },
+    { label: "Comp", value: "composition" },
+    { label: "Nuclei", value: "nuclei" },
 ] as const;
 
 // ── Palette helpers ───────────────────────────────────────────────────
@@ -176,21 +179,35 @@ function setNoiseOctaves(v: string) { props.config.noiseOctaves = Number(v) as 3
             </Button>
         </div>
 
-        <GlassDock
-            orientation="vertical"
-            :always-expanded="true"
-            position="inline"
-            class="flex-1 overflow-hidden"
-        >
+        <!--
+          Pill-tab switcher above the layer stack. DockLayerGroup keeps its
+          crossfade transition but its built-in icon rail is hidden via
+          `:show-rail="false"` — full labels in a pill row are clearer than
+          a column of single-letter glyphs.
+        -->
+        <div class="border-b border-border/40 px-3 py-2">
+            <BouncyTabs
+                :options="[...layerOptions]"
+                :model-value="activeLayer"
+                variant="pill"
+                class="overflow-x-auto scrollbar-hidden"
+                @update:model-value="activeLayerProxy"
+            />
+        </div>
+        <!--
+          Layer content scrolls vertically. `min-h-0` lets the flex item
+          shrink below intrinsic content height; `overflow-y-auto` keeps
+          tall layers from pushing the panel taller than the stage frame.
+        -->
+        <div class="flex-1 min-h-0 overflow-y-auto">
             <DockLayerGroup
                 :active="activeLayer"
                 @update:active="activeLayerProxy"
                 orientation="vertical"
-                :show-rail="true"
-                rail-position="start"
+                :show-rail="false"
             >
                 <!-- ── Medium ─────────────────────────────────────────────── -->
-                <DockLayer id="medium" label="Medium" :icon="Brush">
+                <DockLayer id="medium" label="Medium">
                     <div class="flex min-w-[280px] flex-col gap-3 p-3">
                         <div class="flex flex-col gap-1">
                             <p class="text-admin-label text-muted-foreground">Medium</p>
@@ -232,7 +249,7 @@ function setNoiseOctaves(v: string) { props.config.noiseOctaves = Number(v) as 3
                 </DockLayer>
 
                 <!-- ── Palette ───────────────────────────────────────────── -->
-                <DockLayer id="palette" label="Palette" :icon="Palette">
+                <DockLayer id="palette" label="Palette">
                     <div class="flex min-w-[320px] flex-col gap-2 p-3">
                         <div class="flex items-center justify-between">
                             <p class="text-admin-label text-muted-foreground">
@@ -274,7 +291,7 @@ function setNoiseOctaves(v: string) { props.config.noiseOctaves = Number(v) as 3
                 </DockLayer>
 
                 <!-- ── Flow ──────────────────────────────────────────────── -->
-                <DockLayer id="flow" label="Flow" :icon="Wind">
+                <DockLayer id="flow" label="Flow">
                     <div class="flex min-w-[280px] flex-col gap-3 p-3">
                         <div class="flex flex-col gap-1">
                             <p class="text-admin-label text-muted-foreground">Pattern</p>
@@ -320,7 +337,7 @@ function setNoiseOctaves(v: string) { props.config.noiseOctaves = Number(v) as 3
                 </DockLayer>
 
                 <!-- ── Texture ───────────────────────────────────────────── -->
-                <DockLayer id="texture" label="Texture" :icon="Layers">
+                <DockLayer id="texture" label="Texture">
                     <div class="flex min-w-[280px] flex-col gap-3 p-3">
                         <LabeledSlider
                             :model-value="config.strokeAmount"
@@ -389,7 +406,7 @@ function setNoiseOctaves(v: string) { props.config.noiseOctaves = Number(v) as 3
                 </DockLayer>
 
                 <!-- ── Composition ───────────────────────────────────────── -->
-                <DockLayer id="composition" label="Comp" :icon="Sliders">
+                <DockLayer id="composition" label="Comp">
                     <div class="flex min-w-[280px] flex-col gap-3 p-3">
                         <div class="flex flex-col gap-1">
                             <p class="text-admin-label text-muted-foreground">Warp mode</p>
@@ -474,7 +491,7 @@ function setNoiseOctaves(v: string) { props.config.noiseOctaves = Number(v) as 3
                 </DockLayer>
 
                 <!-- ── Nuclei ────────────────────────────────────────────── -->
-                <DockLayer id="nuclei" label="Nuclei" :icon="CircleDot">
+                <DockLayer id="nuclei" label="Nuclei">
                     <div class="flex min-w-[300px] flex-col gap-3 p-3">
                         <div class="flex items-center justify-between">
                             <p class="text-admin-label text-muted-foreground">
@@ -534,6 +551,20 @@ function setNoiseOctaves(v: string) { props.config.noiseOctaves = Number(v) as 3
                                     @update:model-value="(v: number) => (nu.radius = v)"
                                 />
                                 <LabeledSlider
+                                    :model-value="nu.elongation ?? 1"
+                                    label="Elongation"
+                                    tooltip="Major:minor axis ratio (1 = isotropic)"
+                                    :min="1" :max="3" :step="0.05"
+                                    @update:model-value="(v: number) => (nu.elongation = v)"
+                                />
+                                <LabeledSlider
+                                    :model-value="nu.angle ?? 0"
+                                    label="Angle"
+                                    tooltip="Major-axis orientation in degrees (top-origin)"
+                                    :min="-180" :max="180" :step="1"
+                                    @update:model-value="(v: number) => (nu.angle = v)"
+                                />
+                                <LabeledSlider
                                     :model-value="nu.paletteBias"
                                     label="Palette bias"
                                     tooltip="0..1 · which palette stop this nucleus pulls toward"
@@ -559,6 +590,6 @@ function setNoiseOctaves(v: string) { props.config.noiseOctaves = Number(v) as 3
                     </div>
                 </DockLayer>
             </DockLayerGroup>
-        </GlassDock>
+        </div>
     </div>
 </template>

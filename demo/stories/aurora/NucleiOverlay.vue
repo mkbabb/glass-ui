@@ -28,11 +28,21 @@ const VISUAL_RADIUS_FRAC = 0.35;
 const items = computed(() =>
     props.nuclei.map((nu, i) => {
         const r = nu.radius * VISUAL_RADIUS_FRAC;
+        const elong = nu.elongation ?? 1;
+        const angle = nu.angle ?? 0;
         return {
             i,
             left: `${nu.x * 100}%`,
             top: `${nu.y * 100}%`,
-            size: `${r * 200}%`, // width = 2r as fraction of stage width
+            // Width = 2r * elongation along the major axis; height = 2r across.
+            // The shader stretches `along` by 1/elong; visually the contour
+            // moves outward by `elong`, so the ring widens by the same factor.
+            width: `${r * 2 * elong * 100}%`,
+            height: `${r * 2 * 100}%`,
+            // Rotate around the nucleus centre. We pre-translate by -50% on
+            // both axes (Tailwind utility), so the rotation pivot is correct.
+            transform: `translate(-50%, -50%) rotate(${angle}deg)`,
+            labelTransform: `translate(-50%, -50%) rotate(${-angle}deg)`,
         };
     }),
 );
@@ -47,18 +57,21 @@ const items = computed(() =>
         <div
             v-for="n in items"
             :key="n.i"
-            class="absolute -translate-x-1/2 -translate-y-1/2 rounded-full border border-foreground/40"
+            class="absolute rounded-full border border-foreground/40"
             :style="{
                 left: n.left,
                 top: n.top,
-                width: n.size,
-                aspectRatio: '1 / 1',
+                width: n.width,
+                height: n.height,
+                transform: n.transform,
                 background:
-                    'radial-gradient(circle, transparent 60%, color-mix(in srgb, var(--foreground) 22%, transparent) 85%, transparent 100%)',
+                    'radial-gradient(ellipse, transparent 60%, color-mix(in srgb, var(--foreground) 22%, transparent) 85%, transparent 100%)',
             }"
         >
+            <!-- Counter-rotate so the index reads upright regardless of nucleus angle. -->
             <span
-                class="text-mono-caption absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-foreground/70 px-1.5 py-0.5 text-[10px] leading-none text-background"
+                class="text-mono-caption absolute left-1/2 top-1/2 rounded-full bg-foreground/70 px-1.5 py-0.5 text-[10px] leading-none text-background"
+                :style="{ transform: n.labelTransform }"
             >
                 {{ n.i + 1 }}
             </span>
