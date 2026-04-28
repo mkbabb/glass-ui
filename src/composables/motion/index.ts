@@ -19,3 +19,4 @@ export {
     type AnimatedNumber,
     type UseAnimatedNumberOptions,
 } from "./useAnimatedNumber";
+export { useDarkModeSync } from "./useDarkModeSync";
