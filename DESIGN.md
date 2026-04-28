@@ -220,7 +220,7 @@ For each tier, `--glass-bg-{tier}` (rgba), `--glass-blur-{tier}` (full filter st
 
 - `.glass-card` — **static surface utility**: `.glass-default` + `border-radius: var(--radius-card)` + offset card shadow. No hover lift; interactive cards live in `<Card>` (which composes its own hover via `.glass-cartoon` / `.cartoon-card` / etc.) or in components that explicitly opt into a hover variant. The `.glass-card:hover` rule was removed because conflating a static surface with an interactive primitive forced every consumer of the utility (badges, pills, panels) to fight off an unwanted lift.
 - `.glass-pill` — `.glass-default` + pill radius + press feedback (scale 0.97 on active)
-- `.glass-cartoon` — custom cartoon-tokened surface with default fallback
+- `.glass-cartoon` — **interactive cartoon surface** (Tranche G): cartoon-tier shadow (`--shadow-cartoon-md`), 2px border, hover lift via `--lift-sm` + `--shadow-cartoon-lg`. Token-fall-through to default-tier glass tokens (`--glass-bg-cartoon, var(--glass-bg-default)`) so consumers without cartoon-specific overrides still get a coherent surface. Closes the contract `Card.vue variant="cartoon"` outputs.
 
 ### Accessibility fallbacks
 
@@ -299,7 +299,14 @@ Consumers extending beyond display-5 add tokens in their preset — the library 
 | `--tracking-wider`    | 0.05em      | 0.8          | Uppercase mono       |
 | `--tracking-caps`     | 0.1em       | 1.6          | Section labels (caps)|
 
-### Font stacks
+### Typography Tokens
+
+| Token            | Value                                                       | Semantic Use                                          |
+|------------------|-------------------------------------------------------------|-------------------------------------------------------|
+| `--font-display` | Fraunces (variable; `opsz`/`wght`/`SOFT`/`WONK`)            | Ornamental display voice; headings with personality   |
+| `--font-serif`   | Computer Modern Serif → Georgia fallback                    | Body, prose, headings, math                           |
+| `--font-sans`    | Helvetica Neue → Arial → system-ui                          | System sans fallback (rarely direct)                  |
+| `--font-mono`    | Fira Code → Fira Mono → monospace                           | Code, monospace, admin labels                         |
 
 ```css
 --font-display: "Fraunces", Georgia, serif;                                         /* display voice */
@@ -308,10 +315,19 @@ Consumers extending beyond display-5 add tokens in their preset — the library 
 --font-mono:    "Fira Code", "Fira Mono", monospace;
 ```
 
+Consumers override these tokens at `:root` (not just `@theme` at-rules
+— `@theme` may not propagate into already-emitted `@utility` rules at
+evaluation time, so consumer-side cascade leaks are real). For example,
+speedtest pins both `--font-display` and `--font-serif` to General Sans
+at `:root` since its brand is brand-uniform sans.
+
 `--font-sans` was previously aliased to `--font-serif`, which collapsed the
 two semantic identities and confused consumers that overrode `--font-serif`
 for branding. It now resolves to its own system stack; consumers override
 per-app for brand sans without touching the serif voice.
+
+`.dock-label` is pinned to `var(--font-display)` so dock typography stays
+consistent regardless of consumer body cascade tweaks.
 
 Fraunces axes available: `wght` (300–700), `opsz`, `WONK` (0–1), `SOFT` (0–100).
 
@@ -722,7 +738,30 @@ animation · aurora · confirm-dialog · controls · **dock** (`GlassDock`, `Doc
 
 Dock: `useDockState`, `useDockTransition`, `useLayerTransition`. Sorting: `useSortable`. Sidebar: `useTreeIndex`, `useScrollTracker`, `useSidebarFollow`, `useSidebarState`, `buildTreeIndex`. Effects: `useGlobalDark`, `useKeyboardShortcuts`, `useCharSplit`, `useWatercolorBlob`, `copyToClipboard`. Infinite scroll: `useInfiniteScroll`.
 
-Motion: `useSpringOrchestrator`, `useStaggerReveal`, `useScrollProgress`, `useAnimatedNumber`. The last wraps keyframes.js `SmoothProgress.play` to expose a reactive hysteresis-smoothed value for live numeric tracking (hero values, pill amounts, progress bars). Not a typewriter — the target glides toward a moving signal via exponential damping.
+Motion: `useSpringOrchestrator`, `useStaggerReveal`, `useScrollProgress`, `useAnimatedNumber`, `useDarkModeSync`. `useAnimatedNumber` wraps keyframes.js `SmoothProgress.play` to expose a reactive hysteresis-smoothed value for live numeric tracking (hero values, pill amounts, progress bars). Not a typewriter — the target glides toward a moving signal via exponential damping. `useDarkModeSync` (Tranche G) encapsulates the two-step `nextTick → requestAnimationFrame` dance required to react to dark-mode toggles in code that reads computed CSS variables (canvas renderers etc.).
+
+### Progress component variants (Tranche G)
+
+`<Progress>` accepts a `variant?: "default" | "gradient"` prop:
+
+- **default**: `bg-secondary` rail + `bg-primary` indicator. Back-compat;
+  every existing consumer renders unchanged.
+- **gradient**: rail bg resolves from `var(--progress-track)` (with
+  `bg-secondary` fallback); indicator bg resolves from
+  `var(--progress-fill)` (with `bg-primary` fallback). Consumers paint
+  arbitrary CSS values inline (linear-gradient, color-mix, hex, etc.):
+
+  ```vue
+  <Progress
+      variant="gradient"
+      :model-value="phaseProgress"
+      :style="{ '--progress-fill': linearGradient, '--progress-track': trackColor }"
+  />
+  ```
+
+  Replaces the `:deep(> *) { background: var(--progress-fill) }` workaround
+  speedtest had been carrying — first-class API instead of breaking
+  component encapsulation.
 
 ---
 
