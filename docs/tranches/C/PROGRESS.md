@@ -20,7 +20,7 @@ Dated execution log for tranche C. Updated at every wave boundary.
 
 - W0: complete
 - W1: complete
-- W2: planned
+- W2: complete
 - W3: planned (scope expanded — see open log)
 - W4: planned
 - W5: planned
@@ -54,3 +54,16 @@ Four sub-phase commits landed in order:
 C.W1.C scope-reveal: the plan proposed adding `@utility font-mono-code` and `@utility text-2xs` to typography.css. Mid-execution, found that `fira-code` already existed in typography.css with the identical definition; adding `font-mono-code` would have shipped a duplicate utility in violation of §Invariant 5. Pivoted to gestalt migration: 60 occurrences across 25 files migrated to `fira-code`; 1 `text-2xs` site migrated to existing `text-micro` (10px → 11px is visually equivalent at description-hint scale). Net: codebase loses two duplicate-shaped utility names and gains zero new @utility blocks. Hard gate (W1) cleared by alternative path — runtime verification at C.W4 will confirm `getComputedStyle(.fira-code).fontFamily` includes "Fira Code" rather than the body serif.
 
 `npm run typecheck` clean. `npm run build` clean (382.94 kB JS, 39.63 kB CSS).
+
+## 2026-04-28 — W2 close
+
+Three sub-phase commits:
+
+- `12a558d` feat(dock): DockTabButton primitive — sibling to DockIconButton, text-tab variant with as-child polymorphism (C.W2.A)
+- `5372155` feat(demo): StoryPager rewrite as horizontal GlassDock with DockTabButton + RouterLink (C.W2.A)
+- `6ef298f` fix(demo): dashboard metric grid 2-up below 2xl, terser labels (C.W2.B)
+- `b839543` fix(rail): inner pill max-h overflow for small viewports (C.W2.C)
+
+Gestalt scope-reveal at C.W2.A: the plan proposed adding an `@utility dock-tab-btn` block to `dock.css`. dock.css's own header documents that dock-button styling moved from CSS utilities to self-contained Vue components (DockIconButton, DockSelectTrigger, DockDropdownTrigger) — the CSS utility approach was actively retired. Adding `@utility dock-tab-btn` would have re-introduced the very pattern dock.css explicitly retired. Pivoted to the matching pattern: DockTabButton.vue Vue component with scoped four-state styles and reka-ui Primitive as-child polymorphism. The component lands on the public surface (re-export from dock/index.ts), available to any consumer who wants tab-styled dock-internal links. No new CSS utility shipped.
+
+`npm run typecheck` clean. `npm run build` clean (384.54 kB JS, 40.83 kB CSS).
