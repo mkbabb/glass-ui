@@ -8,20 +8,6 @@
  */
 
 @layer components {
-    /* ── Play button — gradient CTA ── */
-    .dock-play-btn {
-        transition:
-            filter var(--duration-fast) var(--ease-standard),
-            transform var(--duration-fast) var(--ease-standard);
-    }
-
-    .dock-play-btn:hover:not(:disabled) {
-        filter: brightness(1.1);
-        background: var(--muted);
-        color: var(--foreground);
-        transform: none;
-    }
-
     .dock-label {
         @apply inline-flex items-center gap-1 cursor-default whitespace-nowrap;
         padding: 0.25rem 0.375rem;

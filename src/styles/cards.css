@@ -1,49 +1,7 @@
-/* Card utilities — cartoon, elevated, paper texture */
+/* Card utilities — paper texture (cartoon-card + elevated-card removed at C.W5
+ * per W0 overfitting audit; Card primitive's variant system covers both styles). */
 
 @layer components {
-    /* Shared card base */
-    .cartoon-card,
-    .elevated-card {
-        border-radius: var(--radius-xl);
-        border: 2px solid color-mix(in srgb, var(--foreground) calc(var(--border-opacity-light) * 100%), transparent);
-        background: var(--card);
-        color: var(--card-foreground);
-        transition:
-            box-shadow var(--duration-fast) var(--ease-standard),
-            border-color var(--duration-fast) var(--ease-standard);
-    }
-
-    /* Cartoon card — thick border + offset hard shadow */
-    .cartoon-card {
-        box-shadow: var(--shadow-cartoon-md);
-    }
-
-    .cartoon-card:hover {
-        border-color: color-mix(in srgb, var(--foreground) calc(var(--border-opacity-medium) * 100%), transparent);
-        box-shadow: var(--shadow-cartoon-lg);
-    }
-
-    :where(.dark) .cartoon-card {
-        border-color: color-mix(in srgb, var(--foreground) 12%, transparent);
-    }
-
-    :where(.dark) .cartoon-card:hover {
-        border-color: color-mix(in srgb, var(--foreground) 18%, transparent);
-    }
-
-    /* Elevated card — soft shadow */
-    .elevated-card {
-        box-shadow: var(--shadow-md);
-        transition:
-            box-shadow var(--duration-fast) var(--ease-standard),
-            border-color var(--duration-fast) var(--ease-standard),
-            transform var(--duration-normal) var(--ease-standard);
-    }
-
-    .elevated-card:hover {
-        box-shadow: var(--shadow-lg);
-    }
-
     /* Paper texture overlay */
     .paper-texture {
         background-image: var(--paper-clean-texture);
