@@ -17,7 +17,10 @@ const props = defineProps<{
 }>();
 
 const canvasRef = ref<HTMLCanvasElement | null>(null);
-const api = useAurora(canvasRef, props.config);
+// Pass a getter so `watch` tracks prop swaps (preset switch) as well as
+// deep mutations (slider edits). If we passed `props.config` directly the
+// watch would bind to the initial object and miss reference changes.
+const api = useAurora(canvasRef, () => props.config);
 
 defineExpose({
     config: props.config,

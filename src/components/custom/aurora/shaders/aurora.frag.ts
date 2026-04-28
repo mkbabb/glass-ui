@@ -34,6 +34,10 @@ uniform float uNucleiPaletteBias[MAX_NUCLEI];
 uniform float uNucleiValueBias[MAX_NUCLEI];
 uniform float uNucleiDriftRadius[MAX_NUCLEI];
 uniform float uNucleiDriftPhase[MAX_NUCLEI];
+// Anisotropy: per-nucleus elongation (1.0 = isotropic) and major-axis angle (radians).
+// Defaults (1.0 / 0.0) reduce to the original circular Gaussian.
+uniform float uNucleiElong[MAX_NUCLEI];
+uniform float uNucleiAngle[MAX_NUCLEI];
 uniform float uSoftmaxBeta;
 uniform float uValueVariance;
 
@@ -197,7 +201,17 @@ void nucleiField(vec2 p, float t, out float paletteId, out float valueMod) {
                   sin(t * uNucleiDrift + uNucleiDriftPhase[i] * 1.13)
                 );
     vec2 diff = p - posI;
-    float d2 = dot(diff, diff);
+    // Anisotropic Gaussian: rotate diff into the nucleus's local frame
+    // (major axis along uNucleiAngle), then scale the major-axis component by
+    // 1/elongation so the squared distance describes an ellipse. Defaults
+    // 1.0/0.0 reduce to the isotropic dot(diff, diff).
+    float ca = cos(uNucleiAngle[i]);
+    float sa = sin(uNucleiAngle[i]);
+    vec2  local = vec2( ca * diff.x + sa * diff.y,
+                       -sa * diff.x + ca * diff.y);
+    float along  = local.x / max(uNucleiElong[i], 0.01);
+    float across = local.y;
+    float d2 = along * along + across * across;
     float r = max(uNucleiRadius[i], 0.01);
     float w = exp(-uSoftmaxBeta * d2 / (r * r));
     accumBias  += w * uNucleiPaletteBias[i];

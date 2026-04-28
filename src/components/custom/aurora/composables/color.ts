@@ -82,19 +82,30 @@ export function oklchToLinear(stop: OklchStop): [number, number, number] {
 }
 
 /**
- * Pack up to MAX_STOPS OklchStops into Float32Array[MAX_STOPS * 3] of linear sRGB.
- * Unused slots remain zero-filled; shader clamps `uStopCount` to the authored length.
+ * Pack up to `maxStops` OklchStops into linear-sRGB triples. When `out` is
+ * provided the buffer is filled in place (no allocation) — the runtime owns a
+ * single buffer reused on every config update so a slider drag does not churn
+ * the GC. Unused slots are zero-filled; the shader clamps via `uStopCount`.
  */
-export function flattenPalette(stops: OklchStop[], maxStops: number = MAX_STOPS): Float32Array {
-    const out = new Float32Array(maxStops * 3);
+export function flattenPalette(
+    stops: OklchStop[],
+    maxStops: number = MAX_STOPS,
+    out?: Float32Array,
+): Float32Array {
+    const buf = out ?? new Float32Array(maxStops * 3);
     const n = Math.min(stops.length, maxStops);
     for (let i = 0; i < n; i++) {
         const [r, g, b] = oklchToLinear(stops[i]!);
-        out[i * 3 + 0] = r;
-        out[i * 3 + 1] = g;
-        out[i * 3 + 2] = b;
+        buf[i * 3 + 0] = r;
+        buf[i * 3 + 1] = g;
+        buf[i * 3 + 2] = b;
     }
-    return out;
+    for (let i = n; i < maxStops; i++) {
+        buf[i * 3 + 0] = 0;
+        buf[i * 3 + 1] = 0;
+        buf[i * 3 + 2] = 0;
+    }
+    return buf;
 }
 
 export function oklchStopToHex(s: OklchStop): string {

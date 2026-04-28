@@ -33,6 +33,16 @@ export interface AuroraNucleus {
     driftRadius: number;
     /** 0..2π — phase seed. */
     driftPhase: number;
+    /**
+     * Major:minor axis ratio. 1.0 = isotropic (default). Range [1, 3]. The
+     * nucleus's Gaussian becomes an ellipse stretched along `angle`.
+     */
+    elongation?: number;
+    /**
+     * Major-axis orientation in degrees, CSS-top-origin (matches y-flip).
+     * Default 0 (horizontal). Range [-180, 180]. Runtime converts to radians.
+     */
+    angle?: number;
 }
 
 export type AuroraMedium = "smooth" | "pastel" | "watercolor" | "oil";

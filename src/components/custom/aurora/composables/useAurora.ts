@@ -1,23 +1,22 @@
 import { onBeforeUnmount, onMounted, watch, type Ref } from "vue";
 import { createAurora } from "./runtime";
+import { asGetter, type ConfigSource } from "./configSource";
 import type { AuroraConfig, AuroraInstance } from "../presets";
 
 /**
  * Vue-side wrapper for the imperative `createAurora` runtime.
  *
- * Compiles the shader on mount, mirrors the reactive `config` into shader
- * uniforms via a deep `watch`, and releases the WebGL context on unmount.
- * Returns the imperative cursor/render API so the caller can wire pointer
- * events and thumbnail bakes.
- *
- * Dark-mode and reduced-motion are observed here and forwarded to the
- * runtime; the shader itself holds no opinions about either.
+ * Accepts the config as a plain object, a ref, or a getter. Internally we
+ * watch it deeply with `{ deep: true }` so both:
+ *   (a) parent swaps the reference (e.g. preset switch), and
+ *   (b) parent mutates the reactive object (slider drag),
+ * trigger a uniform re-upload. Passing a raw object works for single-config
+ * use; passing a getter or ref works for preset-switch scenarios.
  */
 export function useAurora(
     canvasRef: Ref<HTMLCanvasElement | null>,
-    config: AuroraConfig,
+    configSource: ConfigSource<AuroraConfig>,
 ): {
-    instance: Ref<AuroraInstance | null>;
     setCursor: (x: number, y: number, strength?: number) => void;
     clearCursor: () => void;
     setCursorRadius: (r: number) => void;
@@ -25,10 +24,10 @@ export function useAurora(
     pause: () => void;
     resume: () => void;
 } {
+    const getCfg = asGetter(configSource);
     let inst: AuroraInstance | null = null;
     let stopWatch: (() => void) | null = null;
     let reducedMq: MediaQueryList | null = null;
-    const instanceRef = { value: null } as unknown as Ref<AuroraInstance | null>;
 
     function onReducedChange() {
         if (reducedMq && inst) inst.setReducedMotion(reducedMq.matches);
@@ -38,18 +37,17 @@ export function useAurora(
         const canvas = canvasRef.value;
         if (!canvas) return;
         try {
-            inst = createAurora(canvas, config);
+            inst = createAurora(canvas, getCfg());
         } catch (err) {
             console.warn("[Aurora]", err);
             return;
         }
-        instanceRef.value = inst;
 
         reducedMq = window.matchMedia("(prefers-reduced-motion: reduce)");
         reducedMq.addEventListener("change", onReducedChange);
 
         stopWatch = watch(
-            () => config,
+            getCfg,
             (next) => inst?.update(next),
             { deep: true },
         );
@@ -60,11 +58,9 @@ export function useAurora(
         reducedMq?.removeEventListener("change", onReducedChange);
         inst?.dispose();
         inst = null;
-        instanceRef.value = null;
     });
 
     return {
-        instance: instanceRef,
         setCursor: (x, y, strength) => inst?.setCursor(x, y, strength),
         clearCursor: () => inst?.clearCursor(),
         setCursorRadius: (r) => inst?.setCursorRadius(r),

@@ -28,6 +28,16 @@ const FLOW_ID: Record<FlowPattern, number> = { none: 0, radial: 1, swirl: 2, dia
 const WARP_ID: Record<WarpMode, number> = { fbm: 0, cellular: 1, hybrid: 2 };
 const STROKE_MODE_ID: Record<StrokeMode, number> = { oil: 0, knife: 1, crayon: 2, chunky: 3 };
 
+/**
+ * Cursor easing constants. Authored to feel "snappy on entry, gentle decay";
+ * documented in DESIGN.md §4. Higher lerp = faster ramp; smaller decay = longer
+ * tail. Keep in sync with the CPU-mirror in any consumer that reproduces the
+ * cursor model.
+ */
+const CURSOR_POS_LERP = 0.22;
+const CURSOR_STRENGTH_LERP = 0.18;
+const CURSOR_DECAY_PER_FRAME = 0.992; // ≈ 2 s half-life at 60 fps
+
 function compile(gl: WebGL2RenderingContext, type: number, src: string): WebGLShader {
     const sh = gl.createShader(type)!;
     gl.shaderSource(sh, src);
@@ -58,6 +68,7 @@ const UNIFORM_NAMES = [
     "uPalette", "uStopCount",
     "uNucleiCount", "uNucleiPos", "uNucleiRadius",
     "uNucleiPaletteBias", "uNucleiValueBias", "uNucleiDriftRadius", "uNucleiDriftPhase",
+    "uNucleiElong", "uNucleiAngle",
     "uSoftmaxBeta", "uValueVariance",
     "uWarpAmount", "uWarpScale", "uWarpDrift", "uWarpMode", "uNoiseOctaves",
     "uMedium", "uFlowPattern", "uFlowFocal", "uFlowAngle", "uFlowCurl",
@@ -161,41 +172,71 @@ export function createAurora(canvas: HTMLCanvasElement, initial: AuroraConfig): 
         requestAnimationFrame(resize);
     });
 
+    // Pre-allocated upload buffers — filled in place inside setConfig() so a
+    // slider drag does not allocate ~8 Float32Arrays per frame. Sized to the
+    // shader's MAX_NUCLEI / MAX_STOPS arrays; spare slots are uploaded but
+    // ignored thanks to uNucleiCount / uStopCount gates in the shader.
+    const ub = {
+        palette: new Float32Array(MAX_STOPS * 3),
+        pos: new Float32Array(MAX_NUCLEI * 2),
+        rad: new Float32Array(MAX_NUCLEI),
+        pb: new Float32Array(MAX_NUCLEI),
+        vb: new Float32Array(MAX_NUCLEI),
+        dr: new Float32Array(MAX_NUCLEI),
+        dp: new Float32Array(MAX_NUCLEI),
+        elong: new Float32Array(MAX_NUCLEI),
+        angle: new Float32Array(MAX_NUCLEI),
+    };
+
     function setConfig(cfg: AuroraConfig) {
         config = cfg;
         gl!.useProgram(prog);
 
-        // Palette
-        const flat = flattenPalette(cfg.palette, MAX_STOPS);
-        gl!.uniform3fv(U.uPalette, flat);
+        // Palette — fill in place. flattenPalette writes into `ub.palette`.
+        flattenPalette(cfg.palette, MAX_STOPS, ub.palette);
+        gl!.uniform3fv(U.uPalette, ub.palette);
         gl!.uniform1i(U.uStopCount, Math.min(cfg.palette.length, MAX_STOPS));
 
         // Nuclei
         const n = Math.min(cfg.nuclei.length, MAX_NUCLEI);
         gl!.uniform1i(U.uNucleiCount, n);
-        const pos = new Float32Array(MAX_NUCLEI * 2);
-        const rad = new Float32Array(MAX_NUCLEI);
-        const pb = new Float32Array(MAX_NUCLEI);
-        const vb = new Float32Array(MAX_NUCLEI);
-        const dr = new Float32Array(MAX_NUCLEI);
-        const dp = new Float32Array(MAX_NUCLEI);
         for (let i = 0; i < n; i++) {
             const nu = cfg.nuclei[i]!;
-            pos[i * 2 + 0] = nu.x;
+            ub.pos[i * 2 + 0] = nu.x;
             // AUTHOR_Y_ORIGIN_IS_TOP — flip to shader's bottom-origin.
-            pos[i * 2 + 1] = 1.0 - nu.y;
-            rad[i] = nu.radius;
-            pb[i] = nu.paletteBias;
-            vb[i] = nu.valueBias;
-            dr[i] = nu.driftRadius;
-            dp[i] = nu.driftPhase;
+            ub.pos[i * 2 + 1] = 1.0 - nu.y;
+            ub.rad[i] = nu.radius;
+            ub.pb[i] = nu.paletteBias;
+            ub.vb[i] = nu.valueBias;
+            ub.dr[i] = nu.driftRadius;
+            ub.dp[i] = nu.driftPhase;
+            ub.elong[i] = nu.elongation ?? 1.0;
+            // AUTHOR_Y_ORIGIN_IS_TOP — top-origin angles invert relative to
+            // bottom-origin shader space.
+            ub.angle[i] = (-(nu.angle ?? 0) * Math.PI) / 180;
         }
-        gl!.uniform2fv(U.uNucleiPos, pos);
-        gl!.uniform1fv(U.uNucleiRadius, rad);
-        gl!.uniform1fv(U.uNucleiPaletteBias, pb);
-        gl!.uniform1fv(U.uNucleiValueBias, vb);
-        gl!.uniform1fv(U.uNucleiDriftRadius, dr);
-        gl!.uniform1fv(U.uNucleiDriftPhase, dp);
+        // Spare slots: zero-out so old values from a longer prior config don't
+        // bleed into the per-iteration loop (gated by uNucleiCount, but cheap
+        // to defend).
+        for (let i = n; i < MAX_NUCLEI; i++) {
+            ub.pos[i * 2 + 0] = 0;
+            ub.pos[i * 2 + 1] = 0;
+            ub.rad[i] = 0;
+            ub.pb[i] = 0;
+            ub.vb[i] = 0;
+            ub.dr[i] = 0;
+            ub.dp[i] = 0;
+            ub.elong[i] = 1.0;
+            ub.angle[i] = 0;
+        }
+        gl!.uniform2fv(U.uNucleiPos, ub.pos);
+        gl!.uniform1fv(U.uNucleiRadius, ub.rad);
+        gl!.uniform1fv(U.uNucleiPaletteBias, ub.pb);
+        gl!.uniform1fv(U.uNucleiValueBias, ub.vb);
+        gl!.uniform1fv(U.uNucleiDriftRadius, ub.dr);
+        gl!.uniform1fv(U.uNucleiDriftPhase, ub.dp);
+        gl!.uniform1fv(U.uNucleiElong, ub.elong);
+        gl!.uniform1fv(U.uNucleiAngle, ub.angle);
         gl!.uniform1f(U.uSoftmaxBeta, cfg.softmaxBeta);
         gl!.uniform1f(U.uValueVariance, cfg.valueVariance);
 
@@ -255,13 +296,13 @@ export function createAurora(canvas: HTMLCanvasElement, initial: AuroraConfig): 
         const t = reducedMotion
             ? frozenOffset
             : (performance.now() - startTime) / 1000;
-        // Cursor easing — snappy approach, gentle decay when idle.
-        cursor.x += (cursor.targetX - cursor.x) * 0.22;
-        cursor.y += (cursor.targetY - cursor.y) * 0.22;
-        cursor.strength += (cursor.targetStrength - cursor.strength) * 0.18;
-        // Slow decay of target — lets strength reach near-full during movement,
-        // then fades over ~2 s after the user leaves.
-        cursor.targetStrength *= 0.992;
+        // Cursor easing — snappy approach, gentle decay when idle. Constants
+        // live at module scope; see DESIGN.md §4.
+        cursor.x += (cursor.targetX - cursor.x) * CURSOR_POS_LERP;
+        cursor.y += (cursor.targetY - cursor.y) * CURSOR_POS_LERP;
+        cursor.strength +=
+            (cursor.targetStrength - cursor.strength) * CURSOR_STRENGTH_LERP;
+        cursor.targetStrength *= CURSOR_DECAY_PER_FRAME;
         gl!.useProgram(prog);
         // AUTHOR_Y_ORIGIN_IS_TOP
         gl!.uniform2f(U.uCursor, cursor.x, 1.0 - cursor.y);
