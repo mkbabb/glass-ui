@@ -187,14 +187,14 @@
     --radius-2xl: 1rem;
     --radius-pill: 9999px;
 
-    /* Semantic radius */
-    --radius-card:   var(--radius-card);
-    --radius-panel:  var(--radius-panel);
-    --radius-dialog: var(--radius-dialog);
-    --radius-input:  var(--radius-input);
-    --radius-button: var(--radius-button);
-    --radius-badge:  var(--radius-badge);
-    --radius-dock:   var(--radius-dock);
+    /* Semantic radius — point at primitives from tokens.css; no self-reference */
+    --radius-card:   var(--radius-2xl);
+    --radius-panel:  var(--radius-xl);
+    --radius-dialog: var(--radius-2xl);
+    --radius-input:  var(--radius);
+    --radius-button: var(--radius);
+    --radius-badge:  var(--radius-pill);
+    --radius-dock:   var(--radius-pill);
 
     /* ═══════════════════════════════════════════════
        Shadows → shadow-* utilities
