@@ -214,9 +214,11 @@ For each tier, `--glass-bg-{tier}` (rgba), `--glass-blur-{tier}` (full filter st
 - Light mode: 3.5% opacity, blend `overlay`
 - Dark mode: 6% opacity, blend `soft-light`
 
+**Dock-specific blur** — `--glass-blur-dock = blur(2px) saturate(1.025)` is its own token (half the subtle weight) so the floating dock reads as a feather-light overlay rather than a heavy blurred slab. `GlassDock` references `var(--glass-blur-dock, var(--glass-blur-subtle))`; consumers can override the dock token at `:root` without touching the four tier blurs.
+
 ### Convenience shorthands
 
-- `.glass-card` — `.glass-default` + `border-radius: var(--radius-card)` + offset card shadow
+- `.glass-card` — **static surface utility**: `.glass-default` + `border-radius: var(--radius-card)` + offset card shadow. No hover lift; interactive cards live in `<Card>` (which composes its own hover via `.glass-cartoon` / `.cartoon-card` / etc.) or in components that explicitly opt into a hover variant. The `.glass-card:hover` rule was removed because conflating a static surface with an interactive primitive forced every consumer of the utility (badges, pills, panels) to fight off an unwanted lift.
 - `.glass-pill` — `.glass-default` + pill radius + press feedback (scale 0.97 on active)
 - `.glass-cartoon` — custom cartoon-tokened surface with default fallback
 
@@ -300,11 +302,16 @@ Consumers extending beyond display-5 add tokens in their preset — the library 
 ### Font stacks
 
 ```css
---font-display: "Fraunces", Georgia, serif;     /* display voice */
---font-serif:   "Fraunces", Georgia, serif;     /* body serif */
---font-sans:    system-ui, -apple-system, sans-serif;
+--font-display: "Fraunces", Georgia, serif;                                         /* display voice */
+--font-serif:   "Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif; /* body serif */
+--font-sans:    "Helvetica Neue", "Arial Nova", Arial, system-ui, sans-serif;       /* independent system sans */
 --font-mono:    "Fira Code", "Fira Mono", monospace;
 ```
+
+`--font-sans` was previously aliased to `--font-serif`, which collapsed the
+two semantic identities and confused consumers that overrode `--font-serif`
+for branding. It now resolves to its own system stack; consumers override
+per-app for brand sans without touching the serif voice.
 
 Fraunces axes available: `wght` (300–700), `opsz`, `WONK` (0–1), `SOFT` (0–100).
 
@@ -445,7 +452,7 @@ The dock is a first-class composable system. Three principles: a dock is a posit
 
 - `.dock-separator` — 1 px vertical divider, 50% dock-h tall, 15% foreground
 - `.dock-spacer` — `flex: 1` for pushing items apart
-- `.dock-label` — inline-flex, 14 px text, muted-foreground
+- `.dock-label` — inline-flex, 14 px text, muted-foreground; `font-family: var(--font-display)` pinned so dock typography tracks the display voice regardless of consumer body cascade
 
 ### Layer transitions
 
