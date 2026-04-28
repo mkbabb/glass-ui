@@ -22,8 +22,8 @@ Dated execution log for tranche C. Updated at every wave boundary.
 - W1: complete
 - W2: complete
 - W3: complete
-- W4: planned
-- W5: planned
+- W4: in_progress
+- W5: in_progress (delete-unused sweep landed; FINAL + retro pending W4 close)
 
 ## 2026-04-28 — W0 close
 
@@ -86,3 +86,23 @@ C.W3.B scope-reveal: the plan said add `mask-image: linear-gradient(...)` inline
 C.W3.D was always the largest unknown. Real surface: 14 files modified + 2 untracked, vs the plan's "5 files." Every WIP file was reviewed, typechecked, and committed in four logically-grouped commits attributing user work. Master is now clean. The aurora-flat-route reform that was bundled into earlier commits (C.W1.B's StoryPage kind-discriminator, C.W2.A's pager flat-route gating) finally gets its canonical landing at `69c1d1c`.
 
 `npm run typecheck` clean. `npm run build` clean.
+
+## 2026-04-28 — W4 dispatch + W5 partial close
+
+W4 dispatched: Playwright sub-agent walking 68 routes (67 categorised + 1 flat) at 1440×900 in three modes (light, dark, reduced-motion); seven hard-gate runtime evals; consumer builds in parallel.
+
+Three consumer builds executed concurrently via background bash:
+- `fourier-analysis/web` — exit 0
+- `words/frontend` — exit 0
+- `bbnf-lang/playground` — exit 0
+
+W5 partial close — the W0 delete-unused sweep landed at `304ac78`:
+- `src/components/ui/scroll-area/` removed (entire subdirectory)
+- `src/components/ui/scroll-pane/` removed (entire subdirectory)
+- `.cartoon-card` + `.elevated-card` rules removed from `cards.css` (Card primitive's variant system covers both)
+- `.dock-play-btn` rules removed from `dock.css` (never wired)
+- Both `scroll-area`/`scroll-pane` re-exports removed from `src/components/ui/index.ts`
+
+Audit-claim hardening: Agent 4's W0 narrative listed 7 delete-unused items. Re-running `rg` against current master showed only 4 truly orphaned. False positives kept: `.glass-btn` (used in demo/configurator + buttons story), `.btn-pill` (load-bearing in Button CVA's base class), `.input-pill` (used in Input.vue + Textarea.vue). Per bbnf-lang SPEC §"Agent-claim hardening" — trust artefacts, not claims.
+
+Net build: 381.42 kB JS / 39.81 kB CSS (vs pre-sweep 384.54 / 40.83 — 3.12 kB JS / 1.02 kB CSS smaller).
