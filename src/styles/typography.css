@@ -13,7 +13,8 @@
 :root {
     /* Font stacks */
     --font-serif: "Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif;
-    --font-sans: var(--font-serif);
+    /* Independent system sans stack; consumers override per-app for brand sans. */
+    --font-sans: "Helvetica Neue", "Arial Nova", Arial, system-ui, sans-serif;
     --font-display: "Fraunces", Georgia, serif;
     --font-mono: "Fira Code", "Fira Mono", monospace;
 
