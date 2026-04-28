@@ -63,7 +63,7 @@ const sizes = ["sm", "base", "lg"] as const;
                     </AvatarFallback>
                 </Avatar>
                 <Avatar size="base" shape="square">
-                    <AvatarFallback class="bg-muted font-mono-code text-foreground">
+                    <AvatarFallback class="bg-muted fira-code text-foreground">
                         ℱ
                     </AvatarFallback>
                 </Avatar>

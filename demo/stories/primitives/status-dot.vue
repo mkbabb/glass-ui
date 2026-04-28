@@ -90,7 +90,7 @@ const sizes: Size[] = ["xs", "sm", "md"];
                 </table>
             </div>
             <p class="text-mono-caption text-muted-foreground">
-                Pulse halo respects <code class="font-mono-code">prefers-reduced-motion</code>.
+                Pulse halo respects <code class="fira-code">prefers-reduced-motion</code>.
             </p>
         </section>
     </StoryPage>

@@ -51,7 +51,7 @@ const ladder: { cls: string; label: string; sample: string }[] = [
             <p class="text-admin-label text-muted-foreground">Signature glyph</p>
             <div class="fourier-f text-display-5 leading-none italic">ℱ</div>
             <p class="text-small text-muted-foreground">
-                <code class="font-mono-code">.fourier-f</code> — Fraunces WONK italic, viz-fourier red.
+                <code class="fira-code">.fourier-f</code> — Fraunces WONK italic, viz-fourier red.
             </p>
         </div>
     </StoryPage>

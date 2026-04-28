@@ -4,7 +4,7 @@
     </IconTooltip>
     <Input
         :type="type ?? 'string'"
-        :class="inputClass ?? 'font-mono-code'"
+        :class="inputClass ?? 'fira-code'"
         :model-value="modelValue"
         @change="(e: Event) => emit('update:modelValue', (e.target as HTMLInputElement).value)"
     />

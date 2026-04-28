@@ -74,7 +74,7 @@ function restart(): void {
                 :class="
                     cn(
                         'rounded-panel border border-border bg-background/50 px-4 py-3',
-                        'font-mono-code text-small text-foreground',
+                        'fira-code text-small text-foreground',
                     )
                 "
             >
@@ -104,7 +104,7 @@ function restart(): void {
             <div class="flex flex-col gap-3">
                 <div class="flex items-center justify-between">
                     <Label for="tw-speed">Base speed</Label>
-                    <span class="font-mono-code text-small text-muted-foreground">
+                    <span class="fira-code text-small text-muted-foreground">
                         {{ speedMs }}ms
                     </span>
                 </div>
@@ -114,7 +114,7 @@ function restart(): void {
             <div class="flex flex-col gap-3">
                 <div class="flex items-center justify-between">
                     <Label for="tw-errors">Error rate</Label>
-                    <span class="font-mono-code text-small text-muted-foreground">
+                    <span class="fira-code text-small text-muted-foreground">
                         {{ errorPct.toFixed(1) }}%
                     </span>
                 </div>

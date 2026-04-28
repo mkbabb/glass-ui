@@ -112,8 +112,8 @@ onMounted(() => {
                     Warm cream + SVG turbulence
                 </p>
                 <p class="text-small text-muted-foreground">
-                    Grain opacity · <code class="font-mono-code">--glass-grain-opacity</code> =
-                    <code class="font-mono-code">{{ grainOpacity || "…" }}</code>
+                    Grain opacity · <code class="fira-code">--glass-grain-opacity</code> =
+                    <code class="fira-code">{{ grainOpacity || "…" }}</code>
                 </p>
             </div>
         </div>

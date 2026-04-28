@@ -8,11 +8,11 @@
         @update:open="(v: boolean) => emit('update:open', v)"
         @update:model-value="(v: any) => emit('update:modelValue', v)"
     >
-        <SelectTrigger class="font-mono-code">
+        <SelectTrigger class="fira-code">
             <SelectValue />
         </SelectTrigger>
         <SelectContent>
-            <SelectGroup class="font-mono-code">
+            <SelectGroup class="fira-code">
                 <SelectItem
                     v-for="item in items"
                     :key="item"
@@ -22,7 +22,7 @@
                     <template #description>
                         <span
                             v-if="descriptions?.[item]"
-                            class="ml-auto pl-2 text-2xs text-muted-foreground whitespace-nowrap"
+                            class="ml-auto pl-2 text-micro text-muted-foreground whitespace-nowrap"
                         >{{ descriptions[item] }}</span>
                     </template>
                 </SelectItem>

@@ -111,7 +111,7 @@ const skillCount = computed(() => skills.value.length);
                     :value="tag"
                     class="gap-1 bg-section-3/15 px-2 py-0.5 text-section-3"
                 >
-                    <TagsInputItemText class="text-small font-mono-code" />
+                    <TagsInputItemText class="text-small fira-code" />
                     <TagsInputItemDelete class="hover:opacity-70">✕</TagsInputItemDelete>
                 </TagsInputItem>
                 <TagsInputInput

@@ -173,7 +173,7 @@ function reset(): void {
                     "
                 >
                     <span class="text-mono-caption text-muted-foreground">{{ label }}</span>
-                    <span class="font-mono-code text-small text-foreground">
+                    <span class="fira-code text-small text-foreground">
                         {{ from[key as Keys] }} &rarr; {{ to[key as Keys] }}
                     </span>
                 </div>

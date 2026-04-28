@@ -39,25 +39,25 @@ const fvs = computed(
         >
             <div class="flex flex-col">
                 <span class="text-mono-caption text-muted-foreground">progress</span>
-                <span class="font-mono-code text-small text-foreground">
+                <span class="fira-code text-small text-foreground">
                     {{ progress.toFixed(2) }}
                 </span>
             </div>
             <div class="flex flex-col">
                 <span class="text-mono-caption text-muted-foreground">WONK</span>
-                <span class="font-mono-code text-small text-foreground">{{ wonk }}</span>
+                <span class="fira-code text-small text-foreground">{{ wonk }}</span>
             </div>
             <div class="flex flex-col">
                 <span class="text-mono-caption text-muted-foreground">SOFT</span>
-                <span class="font-mono-code text-small text-foreground">{{ soft }}</span>
+                <span class="fira-code text-small text-foreground">{{ soft }}</span>
             </div>
             <div class="flex flex-col">
                 <span class="text-mono-caption text-muted-foreground">opsz</span>
-                <span class="font-mono-code text-small text-foreground">{{ optical }}</span>
+                <span class="fira-code text-small text-foreground">{{ optical }}</span>
             </div>
             <div class="flex flex-col">
                 <span class="text-mono-caption text-muted-foreground">wght</span>
-                <span class="font-mono-code text-small text-foreground">{{ weight }}</span>
+                <span class="fira-code text-small text-foreground">{{ weight }}</span>
             </div>
         </section>
 

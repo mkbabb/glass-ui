@@ -52,7 +52,7 @@ function onTrackKeydown(e: KeyboardEvent) {
 <template>
     <div class="timeline-row">
         <div v-if="label" class="timeline-caret" :style="{ left: (modelValue * 100) + '%' }">
-            <span class="caret-value font-mono-code">{{ label }}</span>
+            <span class="caret-value fira-code">{{ label }}</span>
         </div>
         <div
             ref="trackRef"

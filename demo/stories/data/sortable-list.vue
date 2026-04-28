@@ -69,7 +69,7 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
                     class="flex items-center gap-3 rounded-md border border-border/70 bg-background px-3 py-2.5"
                 >
                     <SortableHandle class="text-muted-foreground hover:text-foreground">
-                        <span class="font-mono-code leading-none">⋮⋮</span>
+                        <span class="fira-code leading-none">⋮⋮</span>
                     </SortableHandle>
                     <span
                         class="h-2 w-2 rounded-full"

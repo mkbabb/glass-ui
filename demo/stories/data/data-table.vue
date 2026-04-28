@@ -34,8 +34,8 @@ const sort = ref<DataTableSort | undefined>({ key: "stars", direction: "desc" })
 const columns: DataTableColumn<Repo>[] = [
     { key: "name", label: "Repository", sortable: true, class: "font-medium" },
     { key: "language", label: "Language", sortable: true, class: "text-muted-foreground" },
-    { key: "stars", label: "Stars", sortable: true, align: "right", class: "font-mono-code" },
-    { key: "issues", label: "Issues", sortable: true, align: "right", class: "font-mono-code" },
+    { key: "stars", label: "Stars", sortable: true, align: "right", class: "fira-code" },
+    { key: "issues", label: "Issues", sortable: true, align: "right", class: "fira-code" },
     { key: "updated", label: "Updated", sortable: true, align: "right", class: "text-mono-caption text-muted-foreground" },
 ];
 

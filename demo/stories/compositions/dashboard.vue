@@ -119,7 +119,7 @@ const trendClasses: Record<Trend, string> = {
                             </span>
                             <Badge
                                 variant="secondary"
-                                :class="cn('gap-1 font-mono-code', trendClasses[metric.trend])"
+                                :class="cn('gap-1 fira-code', trendClasses[metric.trend])"
                             >
                                 <ArrowUpRight
                                     v-if="metric.trend === 'up'"
@@ -156,7 +156,7 @@ const trendClasses: Record<Trend, string> = {
                             </TableHeader>
                             <TableBody>
                                 <TableRow v-for="row in rows" :key="row.id">
-                                    <TableCell class="font-mono-code text-small">
+                                    <TableCell class="fira-code text-small">
                                         {{ row.id }}
                                     </TableCell>
                                     <TableCell class="flex items-center gap-2">
@@ -209,7 +209,7 @@ const trendClasses: Record<Trend, string> = {
                                     aria-hidden="true"
                                 />
                                 <div class="flex flex-col gap-1">
-                                    <span class="font-mono-code text-xs text-muted-foreground">
+                                    <span class="fira-code text-xs text-muted-foreground">
                                         {{ event.time }}
                                     </span>
                                     <span class="text-small leading-snug">{{ event.text }}</span>

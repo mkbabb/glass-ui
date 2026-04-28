@@ -109,7 +109,7 @@ function setDotRef(id: string, el: Element | null): void {
 
         <p class="text-small text-muted-foreground">
             Click a row — the dot slides 500px with that curve. Springs are
-            <code class="font-mono-code">linear()</code> stops generated from damped
+            <code class="fira-code">linear()</code> stops generated from damped
             physics; cubics are classic bézier.
         </p>
     </StoryPage>

@@ -37,7 +37,7 @@ function setRef(el: Element | null, idx: number): void {
         <div class="flex items-center gap-3">
             <Button variant="secondary" @click="replay">Replay</Button>
             <span class="text-small text-muted-foreground">
-                45ms stagger, threshold 0.2, <code class="font-mono-code">once: false</code>.
+                45ms stagger, threshold 0.2, <code class="fira-code">once: false</code>.
             </span>
         </div>
 

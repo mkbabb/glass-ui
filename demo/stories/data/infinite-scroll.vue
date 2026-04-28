@@ -109,14 +109,14 @@ function reset() {
                             #{{ e.id }} · page {{ e.page }}
                         </span>
                     </div>
-                    <Badge variant="outline" class="font-mono-code">
+                    <Badge variant="outline" class="fira-code">
                         {{ e.id }}
                     </Badge>
                 </li>
             </ul>
 
             <template #end>
-                <span class="font-mono-code">— end of feed ({{ events.length }} events) —</span>
+                <span class="fira-code">— end of feed ({{ events.length }} events) —</span>
             </template>
         </InfiniteScroll>
     </StoryPage>

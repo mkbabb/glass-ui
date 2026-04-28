@@ -30,9 +30,9 @@ const fourierAccent = "var(--viz-fourier, hsl(358 72% 52%))";
 
             <div class="flex flex-col gap-6">
                 <p class="text-prose">
-                    Let <span class="font-mono-code text-[1.05em]">f</span> be a piecewise-continuous
+                    Let <span class="fira-code text-[1.05em]">f</span> be a piecewise-continuous
                     function on
-                    <span class="font-mono-code text-[1.05em]">[−π, π]</span>, and consider its
+                    <span class="fira-code text-[1.05em]">[−π, π]</span>, and consider its
                     Fourier series
                     <span
                         class="fourier-f font-display italic align-baseline"
@@ -63,7 +63,7 @@ const fourierAccent = "var(--viz-fourier, hsl(358 72% 52%))";
                 <p class="text-prose">
                     The full statement, sometimes called the Dirichlet–Jordan criterion, can be
                     written compactly. For bounded variation
-                    <span class="font-mono-code text-[1.05em]">f</span>:
+                    <span class="fira-code text-[1.05em]">f</span>:
                 </p>
 
                 <div
@@ -71,7 +71,7 @@ const fourierAccent = "var(--viz-fourier, hsl(358 72% 52%))";
                     :style="{ borderColor: fourierAccent }"
                 >
                     <div
-                        class="font-mono-code text-[1.15rem] leading-loose tabular-nums text-center"
+                        class="fira-code text-[1.15rem] leading-loose tabular-nums text-center"
                     >
                         <div>
                             Sₙ(x) &nbsp;=&nbsp; a₀ &nbsp;+&nbsp;
@@ -99,7 +99,7 @@ const fourierAccent = "var(--viz-fourier, hsl(358 72% 52%))";
                     <span class="italic">no assumption of continuity</span> is required. Bounded
                     variation alone — a geometric condition, not an analytic one — is enough to
                     guarantee convergence almost everywhere, with the integral
-                    <span class="font-mono-code">∫</span>
+                    <span class="fira-code">∫</span>
                     <sub class="text-[0.65em]">−π</sub><sup class="text-[0.65em]">π</sup>
                     acting as the weighting on each basis element. The whole apparatus rests on π,
                     orthogonality, and ∞-many cleanly decoupled projections.

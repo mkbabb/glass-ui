@@ -69,7 +69,7 @@ const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", c
                             :key="row.id"
                             class="interactive-item cursor-pointer"
                         >
-                            <TableCell class="font-mono-code text-mono-code">{{ row.id }}</TableCell>
+                            <TableCell class="fira-code text-mono-code">{{ row.id }}</TableCell>
                             <TableCell class="font-medium">{{ row.customer }}</TableCell>
                             <TableCell>
                                 <Badge
@@ -80,7 +80,7 @@ const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", c
                                 </Badge>
                             </TableCell>
                             <TableCell class="text-muted-foreground">{{ row.method }}</TableCell>
-                            <TableCell class="text-right font-mono-code">{{ fmt(row.amount) }}</TableCell>
+                            <TableCell class="text-right fira-code">{{ fmt(row.amount) }}</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
@@ -88,7 +88,7 @@ const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", c
                     class="flex items-center justify-between border-t border-border px-4 py-3 text-small"
                 >
                     <span class="text-muted-foreground">{{ rows.length }} invoices</span>
-                    <span class="font-mono-code">Total · {{ fmt(total) }}</span>
+                    <span class="fira-code">Total · {{ fmt(total) }}</span>
                 </div>
             </div>
         </div>

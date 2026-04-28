@@ -131,7 +131,7 @@ function jumpTo(e: TimelineEvent) {
                         <span class="text-small font-medium">{{ e.label }}</span>
                         <span class="text-mono-caption text-muted-foreground">{{ e.body }}</span>
                     </div>
-                    <span class="font-mono-code text-mono-caption text-muted-foreground">
+                    <span class="fira-code text-mono-caption text-muted-foreground">
                         {{ Math.round(e.at * 100) }}%
                     </span>
                 </li>

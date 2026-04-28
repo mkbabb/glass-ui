@@ -16,7 +16,7 @@
                             <h2 class="font-display text-lg font-semibold leading-none tracking-tight">
                                 {{ title }}
                             </h2>
-                            <div class="font-mono-code text-sm text-muted-foreground">
+                            <div class="fira-code text-sm text-muted-foreground">
                                 <slot>{{ description }}</slot>
                             </div>
                         </div>

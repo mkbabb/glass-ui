@@ -19,7 +19,7 @@ const locked = ref("This content is read-only and visually muted.");
         <section class="flex flex-col gap-4">
             <h2 class="text-subheading">With label</h2>
             <p class="text-small text-muted-foreground">
-                The baseline pairing — <code class="font-mono-code">Label</code> above, field below.
+                The baseline pairing — <code class="fira-code">Label</code> above, field below.
             </p>
             <div class="flex flex-col gap-2 max-w-md">
                 <Label for="story-bio">Bio</Label>
@@ -34,7 +34,7 @@ const locked = ref("This content is read-only and visually muted.");
         <section class="flex flex-col gap-4">
             <h2 class="text-subheading">Resizable</h2>
             <p class="text-small text-muted-foreground">
-                Native <code class="font-mono-code">resize: vertical</code>.
+                Native <code class="fira-code">resize: vertical</code>.
             </p>
             <div class="flex flex-col gap-2 max-w-md">
                 <Label for="story-resize">Notes</Label>
@@ -49,7 +49,7 @@ const locked = ref("This content is read-only and visually muted.");
         <section class="flex flex-col gap-4">
             <h2 class="text-subheading">Resize off</h2>
             <p class="text-small text-muted-foreground">
-                Forced <code class="font-mono-code">resize: none</code> — height stays where you put it.
+                Forced <code class="fira-code">resize: none</code> — height stays where you put it.
             </p>
             <div class="flex flex-col gap-2 max-w-md">
                 <Label for="story-fixed">Caption</Label>
@@ -64,7 +64,7 @@ const locked = ref("This content is read-only and visually muted.");
         <section class="flex flex-col gap-4">
             <h2 class="text-subheading">Disabled</h2>
             <p class="text-small text-muted-foreground">
-                <code class="font-mono-code">disabled</code> drops opacity and blocks interaction.
+                <code class="fira-code">disabled</code> drops opacity and blocks interaction.
             </p>
             <div class="flex flex-col gap-2 max-w-md">
                 <Label for="story-locked" class="opacity-60">Release notes</Label>

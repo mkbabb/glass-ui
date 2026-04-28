@@ -34,7 +34,7 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
         <section class="flex flex-col gap-4">
             <h2 class="text-subheading">Variants</h2>
             <p class="text-small text-muted-foreground">
-                Every <code class="font-mono-code">buttonVariants</code> entry at default size.
+                Every <code class="fira-code">buttonVariants</code> entry at default size.
             </p>
             <div class="flex flex-wrap gap-3">
                 <Button v-for="v in coreVariants" :key="v" :variant="v">{{ v }}</Button>
@@ -54,7 +54,7 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
         <section class="flex flex-col gap-4">
             <h2 class="text-subheading">Four-state contract</h2>
             <p class="text-small text-muted-foreground">
-                Rest, hover, active, disabled, and <code class="font-mono-code">aria-pressed</code>.
+                Rest, hover, active, disabled, and <code class="fira-code">aria-pressed</code>.
                 Hover and active emerge from pointer interaction — shown simulated for reference.
             </p>
             <div class="flex flex-wrap items-center gap-3">
@@ -75,9 +75,9 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
         <section class="flex flex-col gap-4">
             <h2 class="text-subheading">Raw .glass-btn utility</h2>
             <p class="text-small text-muted-foreground">
-                Circular icon button from <code class="font-mono-code">glass.css</code>, rendered
-                bare. Supports <code class="font-mono-code">aria-pressed</code> and
-                <code class="font-mono-code">:disabled</code> out of the box.
+                Circular icon button from <code class="fira-code">glass.css</code>, rendered
+                bare. Supports <code class="fira-code">aria-pressed</code> and
+                <code class="fira-code">:disabled</code> out of the box.
             </p>
             <div class="flex flex-wrap items-center gap-3">
                 <button class="glass-btn" aria-label="plus"><span aria-hidden>+</span></button>
@@ -93,7 +93,7 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
             <h2 class="text-subheading">Chromatic · viz basis</h2>
             <p class="text-small text-muted-foreground">
                 Fourier / Chebyshev / Legendre — the three basis hues the library exposes as
-                <code class="font-mono-code">bg-viz-*</code> utilities.
+                <code class="fira-code">bg-viz-*</code> utilities.
             </p>
             <div class="flex flex-wrap gap-3">
                 <Button
@@ -111,7 +111,7 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
             <p class="text-small text-muted-foreground">
                 The library&rsquo;s signature treatment: a hard offset shadow plus a 1px translate
                 on hover. Default card shadow already points at
-                <code class="font-mono-code">--shadow-cartoon</code>.
+                <code class="fira-code">--shadow-cartoon</code>.
             </p>
             <div class="flex flex-wrap items-center gap-4">
                 <Button

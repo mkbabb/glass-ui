@@ -75,7 +75,7 @@ function toggle(id: string): void {
                 "
             >
                 <div class="flex flex-col gap-1">
-                    <code class="font-mono-code text-small text-foreground">
+                    <code class="fira-code text-small text-foreground">
                         {{ demo.name }}
                     </code>
                     <p class="text-small text-muted-foreground">{{ demo.blurb }}</p>
