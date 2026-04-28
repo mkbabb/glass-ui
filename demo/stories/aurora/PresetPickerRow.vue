@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
 import { cn } from "@/utils/cn";
-import { BouncyTabs } from "@/components/custom/tabs";
-import type { AuroraMedium } from "@/components/custom/aurora";
 import { PRESET_KEYS, PRESET_META, type PresetKey } from "./presets";
 
-const props = defineProps<{
+defineProps<{
     current: PresetKey;
     thumbs: Record<PresetKey, string>;
 }>();
@@ -13,23 +10,6 @@ const props = defineProps<{
 const emit = defineEmits<{
     (e: "select", key: PresetKey): void;
 }>();
-
-type Filter = "all" | AuroraMedium;
-const filter = ref<Filter>("all");
-
-const filterOptions = [
-    { label: "All", value: "all" },
-    { label: "Smooth", value: "smooth" },
-    { label: "Watercolor", value: "watercolor" },
-    { label: "Pastel", value: "pastel" },
-    { label: "Oil", value: "oil" },
-] as const;
-
-const visibleKeys = computed<PresetKey[]>(() =>
-    PRESET_KEYS.filter((k) =>
-        filter.value === "all" ? true : PRESET_META[k].medium === filter.value,
-    ),
-);
 
 function onPick(key: PresetKey) {
     emit("select", key);
@@ -45,29 +25,26 @@ function onKey(e: KeyboardEvent, key: PresetKey) {
 
 <template>
     <div class="flex flex-col gap-3">
-        <div class="flex items-center justify-between gap-4">
-            <p class="text-admin-label text-muted-foreground">Presets</p>
-            <BouncyTabs
-                v-model="filter"
-                :options="[...filterOptions]"
-                variant="pill"
-            />
-        </div>
-        <!-- Horizontal scroll row. Mirrors intro.vue's bg-card grid idiom but 1-D. -->
-        <div
-            class="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 -mx-1 px-1"
-            :class="cn('scrollbar-thin')"
-        >
+        <p class="text-admin-label text-muted-foreground">Presets</p>
+        <!--
+          Horizontal scroll row. The scroll container's overflow-x-auto would
+          clip outset focus / active rings (one-axis scroll forces the other
+          axis to `auto` per CSS spec), so the active and focus indicators are
+          drawn as INSET shadows. The inner aspect-ratio wrapper owns the
+          rounded clip so the thumbnail's edges meet the border-radius cleanly
+          and no `bg-muted` strip leaks at the top.
+        -->
+        <div class="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 scrollbar-thin scroll-fade-mask">
             <button
-                v-for="key in visibleKeys"
+                v-for="key in PRESET_KEYS"
                 :key="key"
                 type="button"
                 :class="cn(
-                    'relative flex-shrink-0 snap-start overflow-hidden rounded-card border border-border bg-card text-left',
+                    'group relative flex-shrink-0 snap-start rounded-card border border-border bg-card text-left',
                     'shadow-cartoon transition-[transform,box-shadow] duration-fast ease-out',
                     'hover:-translate-x-px hover:-translate-y-px hover:shadow-cartoon-hover',
-                    'focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)]',
-                    key === current && 'ring-2 ring-foreground shadow-cartoon-hover -translate-y-px',
+                    'focus-visible:outline-none focus-visible:shadow-[inset_0_0_0_2px_var(--ring)]',
+                    key === current && 'shadow-[inset_0_0_0_2px_var(--foreground)] -translate-y-px',
                 )"
                 :style="{ width: '200px' }"
                 :aria-pressed="key === current"
@@ -75,7 +52,7 @@ function onKey(e: KeyboardEvent, key: PresetKey) {
                 @click="onPick(key)"
                 @keydown="(e) => onKey(e, key)"
             >
-                <div class="aspect-[16/10] w-full bg-muted">
+                <div class="aspect-[16/10] w-full overflow-hidden rounded-t-card bg-muted">
                     <img
                         v-if="thumbs[key]"
                         :src="thumbs[key]"
