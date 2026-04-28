@@ -65,6 +65,9 @@
 
     /* ── Convenience shorthands (tier + shape) ── */
 
+    /* Static surface utility — no hover lift, no transition.
+       Interactive cards live in <Card> (which owns its own hover composition)
+       or in components that explicitly opt into a hover variant. */
     .glass-card {
         position: relative;
         background: var(--glass-bg-default);
@@ -74,14 +77,6 @@
         border-radius: var(--radius-card);
         box-shadow: var(--shadow-card);
         contain: layout style;
-        transition:
-            transform var(--duration-normal) var(--ease-apple-spring),
-            box-shadow var(--duration-normal) var(--ease-apple);
-    }
-
-    .glass-card:hover:not(:disabled) {
-        transform: translate(var(--lift-sm), var(--lift-sm));
-        box-shadow: var(--shadow-card-hover);
     }
 
     .glass-pill {
