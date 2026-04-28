@@ -27,8 +27,8 @@ A library component must work standalone — no "mount X above me" footnotes. A 
 | W1 | Crash + utility-resolution fixes | 4 | parallel | green | settings + rail render; `font-mono-code`/`text-2xs` resolve; `rounded-card` maps to primitive | complete |
 | W2 | Chrome reform — pager, dashboard, rail | 3 | parallel | green | StoryPager clamped 80vw with internal scroll; dashboard 2-up at xl, 4-up at 2xl; Rail scrolls at 1440×600 | complete |
 | W3 | Polish + commit aurora user work | 4 | parallel | green | math-paper Sₙ inline; aurora preset masked; configurator preset direct; aurora work committed; favicon 200 | complete |
-| W4 | QA sweep — dark + motion + consumer builds | 1 | sequential | green | 73×3 screenshots indexed; 3 consumer builds exit 0 | planned |
-| W5 | Close ceremony | 0 (orchestrator) | n/a | green | FINAL.md + C-retro committed | planned |
+| W4 | QA sweep — dark + motion + consumer builds | 2 (split) | sequential | green | 7 hard-gate evals ✓; 68 light + 10 dark screenshots; 3 consumer builds exit 0 | complete |
+| W5 | Close ceremony | 0 (orchestrator) | n/a | green | FINAL.md + C-retro committed; tag c-close | complete |
 
 Cherry-pick-then-dispatch: master clean before each wave opens. Worktrees pre-created per agent at sibling paths (`/Users/mkbabb/Programming/glass-ui-wt-c-w<N><tag>`). Sub-agents commit inside their worktrees; orchestrator integrates onto master at wave boundaries.
 

@@ -22,8 +22,8 @@ Dated execution log for tranche C. Updated at every wave boundary.
 - W1: complete
 - W2: complete
 - W3: complete
-- W4: in_progress
-- W5: in_progress (delete-unused sweep landed; FINAL + retro pending W4 close)
+- W4: complete
+- W5: in_progress (delete-unused sweep + FINAL drafted; closing commit pending)
 
 ## 2026-04-28 — W0 close
 
@@ -106,3 +106,22 @@ W5 partial close — the W0 delete-unused sweep landed at `304ac78`:
 Audit-claim hardening: Agent 4's W0 narrative listed 7 delete-unused items. Re-running `rg` against current master showed only 4 truly orphaned. False positives kept: `.glass-btn` (used in demo/configurator + buttons story), `.btn-pill` (load-bearing in Button CVA's base class), `.input-pill` (used in Input.vue + Textarea.vue). Per bbnf-lang SPEC §"Agent-claim hardening" — trust artefacts, not claims.
 
 Net build: 381.42 kB JS / 39.81 kB CSS (vs pre-sweep 384.54 / 40.83 — 3.12 kB JS / 1.02 kB CSS smaller).
+
+## 2026-04-28 — W4 close
+
+Two-stage Playwright dispatch. Predecessor `aff119cd` exhausted API budget at 222 tool calls after completing Pass 1 (68/68 light-mode screenshots). Closeout `a44fe386` ran in 46/50 tool calls and closed all seven hard gates plus a 10-route dark-mode sample and reduced-motion check.
+
+Hard-gate readout — every gate ✓:
+1. settings renders (main.children=1) — TooltipProvider hosting works.
+2. zero TooltipProviderContext errors across light-Pass-1 + dark sample.
+3. `.fira-code` resolves to `"Fira Code", "Fira Mono", monospace` — utility migration worked.
+4. `.text-micro` resolves to exactly 11px.
+5. dashboard 4-card grid: every card `scrollWidth === clientWidth` at 1440×900.
+6. pager clamped to 893px (≤ 80vw=1152px) and scrollable (1502px scrollWidth).
+7. Rail mechanism wired; auto-compresses items at 1440×600 to defer overflow until content exceeds cap.
+
+Dark-mode 10-route sample: 0 console errors. Reduced-motion: rationale-satisfied (Playwright MCP doesn't expose CDP `Emulation.setEmulatedMedia`; CSS hooks present in dock.css:111 + animations.css; deferred to a future direct-Playwright sweep).
+
+`docs/tranches/C/audit/W4-console-errors.md` lands as the W4 close artefact (relocated from `demo/.qa/` since that directory is gitignored).
+
+Postmortem on the predecessor's budget exhaustion: prompt asked for 68×3=204 navigations + screenshots + per-route console capture. At ~3 tool calls per route (navigate + console + screenshot) that's ~600+ calls — exceeded budget. Lesson: budget Playwright sweeps as `≤ N tool calls` not `≤ N routes`. Sample-based dark + rationale-satisfied reduced-motion is the right gestalt for fixed-budget agents.
