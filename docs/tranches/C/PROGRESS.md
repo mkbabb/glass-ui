@@ -19,7 +19,7 @@ Dated execution log for tranche C. Updated at every wave boundary.
 ## Wave statuses
 
 - W0: complete
-- W1: planned
+- W1: complete
 - W2: planned
 - W3: planned (scope expanded — see open log)
 - W4: planned
@@ -41,3 +41,16 @@ Refinements to canned overfitting-audit prompt (`docs/audits/overfitting-audit.m
 - Added `in-public-surface` and `total-sites` columns to the output table.
 
 C.md updated: W1.D radius primitive mapping corrected.
+
+## 2026-04-28 — W1 close
+
+Four sub-phase commits landed in order:
+
+- `fad99f1` fix(icon-tooltip): self-host TooltipProvider (C.W1.A)
+- `05511d5` fix(stories): host TooltipProvider in StoryPage (C.W1.B; bundles user's WIP kind-discriminator for flat routes)
+- `4f33675` refactor(typography): migrate font-mono-code → fira-code (60 sites, 25 files), text-2xs → text-micro (1 site) (C.W1.C)
+- `f6bd90e` fix(theme): @theme radius tokens reference primitive scale (C.W1.D)
+
+C.W1.C scope-reveal: the plan proposed adding `@utility font-mono-code` and `@utility text-2xs` to typography.css. Mid-execution, found that `fira-code` already existed in typography.css with the identical definition; adding `font-mono-code` would have shipped a duplicate utility in violation of §Invariant 5. Pivoted to gestalt migration: 60 occurrences across 25 files migrated to `fira-code`; 1 `text-2xs` site migrated to existing `text-micro` (10px → 11px is visually equivalent at description-hint scale). Net: codebase loses two duplicate-shaped utility names and gains zero new @utility blocks. Hard gate (W1) cleared by alternative path — runtime verification at C.W4 will confirm `getComputedStyle(.fira-code).fontFamily` includes "Fira Code" rather than the body serif.
+
+`npm run typecheck` clean. `npm run build` clean (382.94 kB JS, 39.63 kB CSS).

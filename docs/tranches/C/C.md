@@ -24,7 +24,7 @@ A library component must work standalone — no "mount X above me" footnotes. A 
 | Wave | Title | Agents | Mode | Workspace at close | Hard gate (one-line) | Status |
 |---|---|---|---|---|---|---|
 | W0 | Audits — live + overfitting + token resolution | 4 | parallel | green | three audit docs landed; ≥ 5 overfitting candidates marked `inline-and-remove` or `delete-unused` | complete |
-| W1 | Crash + utility-resolution fixes | 4 | parallel | green | settings + rail render; `font-mono-code`/`text-2xs` resolve; `rounded-card` maps to primitive | planned |
+| W1 | Crash + utility-resolution fixes | 4 | parallel | green | settings + rail render; `font-mono-code`/`text-2xs` resolve; `rounded-card` maps to primitive | complete |
 | W2 | Chrome reform — pager, dashboard, rail | 3 | parallel | green | StoryPager clamped 80vw with internal scroll; dashboard 2-up at xl, 4-up at 2xl; Rail scrolls at 1440×600 | planned |
 | W3 | Polish + commit aurora user work | 4 | parallel | green | math-paper Sₙ inline; aurora preset masked; configurator preset direct; aurora work committed; favicon 200 | planned |
 | W4 | QA sweep — dark + motion + consumer builds | 1 | sequential | green | 73×3 screenshots indexed; 3 consumer builds exit 0 | planned |
