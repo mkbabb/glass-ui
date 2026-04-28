@@ -8,14 +8,20 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/utils/cn";
-import { CATEGORIES } from "../stories/manifest";
+import { CATEGORIES, FLAT_STORIES } from "../stories/manifest";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 
-const { current, firstOfCategory } = useStoryNavigation();
+const { current, firstOfCategory, goToFlat } = useStoryNavigation();
 
-const activeCategoryId = computed<string>(
-    () => current.value?.category.id ?? CATEGORIES[0]!.id,
-);
+const activeCategoryId = computed<string | null>(() => {
+    const loc = current.value;
+    return loc?.kind === "category" ? loc.category.id : null;
+});
+
+const activeFlatId = computed<string | null>(() => {
+    const loc = current.value;
+    return loc?.kind === "flat" ? loc.story.id : null;
+});
 </script>
 
 <template>
@@ -74,6 +80,50 @@ const activeCategoryId = computed<string>(
                     {{ category.title }}
                 </TooltipContent>
             </Tooltip>
+
+            <!--
+              Flat standalone stories (tools / playgrounds). Visually
+              separated from the component categories by a thin divider so
+              the distinction reads at a glance.
+            -->
+            <template v-if="FLAT_STORIES.length > 0">
+                <div
+                    aria-hidden="true"
+                    class="my-1 h-px w-6 self-center bg-border/50"
+                />
+                <Tooltip v-for="flat in FLAT_STORIES" :key="flat.id">
+                    <TooltipTrigger as-child>
+                        <button
+                            type="button"
+                            :aria-current="
+                                flat.id === activeFlatId ? 'page' : undefined
+                            "
+                            :aria-label="flat.title"
+                            :class="
+                                cn(
+                                    'inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors',
+                                    'hover:bg-foreground/8',
+                                    'focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)]',
+                                    'active:scale-[0.97]',
+                                    flat.id === activeFlatId
+                                        ? 'text-foreground bg-foreground/8'
+                                        : 'text-muted-foreground',
+                                )
+                            "
+                            @click="goToFlat(flat.id)"
+                        >
+                            <component
+                                :is="flat.icon"
+                                class="h-4 w-4"
+                                aria-hidden="true"
+                            />
+                        </button>
+                    </TooltipTrigger>
+                    <TooltipContent side="right" :side-offset="10">
+                        {{ flat.title }}
+                    </TooltipContent>
+                </Tooltip>
+            </template>
         </TooltipProvider>
     </Rail>
 </template>

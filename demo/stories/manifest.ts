@@ -18,6 +18,7 @@ import {
     Bell,
     Sparkles,
     LayoutDashboard,
+    Wand2,
     type LucideIcon,
 } from "lucide-vue-next";
 
@@ -34,6 +35,19 @@ export interface Category {
     title: string;
     icon: LucideIcon;
     stories: Story[];
+}
+
+/**
+ * Top-level standalone story (not part of a component category). Renders as
+ * a distinct icon in the left rail, with no story-pager above the content.
+ * Used for tools and playgrounds — Aurora is the first instance.
+ */
+export interface FlatStory {
+    id: string;
+    title: string;
+    blurb?: string;
+    icon: LucideIcon;
+    component: () => Promise<Component>;
 }
 
 const modules = import.meta.glob<{ default: Component }>("./*/*.vue");
@@ -177,10 +191,24 @@ export const CATEGORIES: Category[] = [
             s("compositions", "auth-shell", "Auth Shell"),
             s("compositions", "settings", "Settings"),
             s("compositions", "empty-states", "Empty States"),
-            s("compositions", "aurora-playground", "Aurora Playground", "Procedural painterly gradients — multi-nuclei composition, four mediums, cursor-driven swirl."),
         ],
     },
 ];
+
+export const FLAT_STORIES: FlatStory[] = [
+    {
+        id: "aurora",
+        title: "Aurora",
+        blurb:
+            "Procedural painterly gradients — multi-nuclei composition, four mediums, cursor-driven swirl.",
+        icon: Wand2,
+        component: () => import("./aurora.vue").then((m) => m.default),
+    },
+];
+
+export function findFlatStory(id: string): FlatStory | undefined {
+    return FLAT_STORIES.find((f) => f.id === id);
+}
 
 export function findCategory(id: string): Category | undefined {
     return CATEGORIES.find((c) => c.id === id);

@@ -1,23 +1,50 @@
 import { computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { CATEGORIES, findCategory, type Category, type Story } from "../stories/manifest";
+import {
+    CATEGORIES,
+    FLAT_STORIES,
+    findCategory,
+    findFlatStory,
+    type Category,
+    type FlatStory,
+    type Story,
+} from "../stories/manifest";
 
-export interface StoryLocation {
+export interface CategoryStoryLocation {
+    kind: "category";
     category: Category;
     story: Story;
     categoryIndex: number;
     storyIndex: number;
 }
 
+export interface FlatStoryLocation {
+    kind: "flat";
+    story: FlatStory;
+    flatIndex: number;
+}
+
+export type StoryLocation = CategoryStoryLocation | FlatStoryLocation;
+
 /**
  * Story navigation helpers keyed off the current route + manifest.
- * All setters call `router.push` with `/:category/:story` paths.
+ * Resolves to either a category-story (`kind: "category"`) or a flat
+ * standalone story (`kind: "flat"`). Within-category siblings drive
+ * `next` / `prev`; flat stories have no siblings, so those calls no-op.
  */
 export function useStoryNavigation() {
     const route = useRoute();
     const router = useRouter();
 
     const current = computed<StoryLocation | null>(() => {
+        const flatStoryId = route.meta.flatStoryId as string | undefined;
+        if (flatStoryId) {
+            const flatIndex = FLAT_STORIES.findIndex((f) => f.id === flatStoryId);
+            if (flatIndex < 0) return null;
+            const story = FLAT_STORIES[flatIndex]!;
+            return { kind: "flat", story, flatIndex };
+        }
+
         const categoryId = route.meta.categoryId as string | undefined;
         const storyId = route.meta.storyId as string | undefined;
         if (!categoryId || !storyId) return null;
@@ -30,11 +57,16 @@ export function useStoryNavigation() {
         if (storyIndex < 0) return null;
         const story = category.stories[storyIndex]!;
 
-        return { category, story, categoryIndex, storyIndex };
+        return { kind: "category", category, story, categoryIndex, storyIndex };
     });
 
     function goTo(categoryId: string, storyId: string): void {
         void router.push(`/${categoryId}/${storyId}`);
+    }
+
+    function goToFlat(flatStoryId: string): void {
+        if (!findFlatStory(flatStoryId)) return;
+        void router.push(`/${flatStoryId}`);
     }
 
     /** First story of a category (used by rail clicks + jump-to-category shortcuts). */
@@ -46,7 +78,7 @@ export function useStoryNavigation() {
 
     function next(): void {
         const loc = current.value;
-        if (!loc) return;
+        if (!loc || loc.kind !== "category") return;
         const nextStory = loc.category.stories[loc.storyIndex + 1];
         if (nextStory) {
             void router.push(`/${loc.category.id}/${nextStory.id}`);
@@ -55,7 +87,7 @@ export function useStoryNavigation() {
 
     function prev(): void {
         const loc = current.value;
-        if (!loc) return;
+        if (!loc || loc.kind !== "category") return;
         const prevStory = loc.category.stories[loc.storyIndex - 1];
         if (prevStory) {
             void router.push(`/${loc.category.id}/${prevStory.id}`);
@@ -64,7 +96,7 @@ export function useStoryNavigation() {
 
     function nextCategory(): void {
         const loc = current.value;
-        if (!loc) return;
+        if (!loc || loc.kind !== "category") return;
         // Find the next category (with at least one story) — wraps at end.
         for (let i = 1; i <= CATEGORIES.length; i++) {
             const target = CATEGORIES[(loc.categoryIndex + i) % CATEGORIES.length]!;
@@ -77,7 +109,7 @@ export function useStoryNavigation() {
 
     function prevCategory(): void {
         const loc = current.value;
-        if (!loc) return;
+        if (!loc || loc.kind !== "category") return;
         for (let i = 1; i <= CATEGORIES.length; i++) {
             const idx =
                 (loc.categoryIndex - i + CATEGORIES.length) % CATEGORIES.length;
@@ -94,6 +126,7 @@ export function useStoryNavigation() {
         next,
         prev,
         goTo,
+        goToFlat,
         nextCategory,
         prevCategory,
         firstOfCategory,
