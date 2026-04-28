@@ -26,6 +26,9 @@
         @apply inline-flex items-center gap-1 cursor-default whitespace-nowrap;
         padding: 0.25rem 0.375rem;
         border-radius: var(--radius-pill);
+        /* Pin to display voice so dock typography stays consistent regardless
+           of consumer body cascade tweaks. */
+        font-family: var(--font-display);
         color: var(--muted-foreground);
         font-size: var(--type-small);
         transition: color var(--duration-fast) var(--ease-standard),
