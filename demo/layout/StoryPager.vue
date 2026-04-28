@@ -1,42 +1,70 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { BouncyTabs, type TabOption } from "@/components/custom/tabs";
-import { CATEGORIES } from "../stories/manifest";
+import { GlassDock, DockTabButton } from "@/components/custom/dock";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 
-const { current, goTo } = useStoryNavigation();
+const { current } = useStoryNavigation();
 
-const activeCategory = computed(
-    () => current.value?.category ?? CATEGORIES[0]!,
+const categoryLoc = computed(() =>
+    current.value?.kind === "category" ? current.value : null,
 );
 
-const options = computed<TabOption[]>(() =>
-    activeCategory.value.stories.map((s) => ({ label: s.title, value: s.id })),
-);
-
-const activeStoryId = computed(
-    () =>
-        current.value?.story.id ?? activeCategory.value.stories[0]?.id ?? "",
-);
-
-function handleUpdate(storyId: string): void {
-    if (!storyId || storyId === current.value?.story.id) return;
-    goTo(activeCategory.value.id, storyId);
+interface PagerEntry {
+    id: string;
+    title: string;
+    to: string;
 }
+
+const entries = computed<PagerEntry[]>(() =>
+    categoryLoc.value
+        ? categoryLoc.value.category.stories.map((s) => ({
+              id: s.id,
+              title: s.title,
+              to: `/${categoryLoc.value!.category.id}/${s.id}`,
+          }))
+        : [],
+);
 </script>
 
 <template>
+    <!--
+      Pager hides entirely when the active route is a flat standalone story
+      (Aurora et al.) — there are no siblings to page through.
+    -->
     <nav
-        v-if="options.length > 0"
-        class="flex min-w-0 px-4 pt-2 pb-1"
+        v-if="categoryLoc && entries.length > 0"
+        class="flex w-full justify-center pt-2 pb-1"
         aria-label="Stories in category"
     >
-        <BouncyTabs
-            :options="options"
-            :model-value="activeStoryId"
-            variant="pill"
-            class="max-w-full scrollbar-hidden overflow-x-auto"
-            @update:model-value="handleUpdate"
-        />
+        <GlassDock orientation="horizontal" always-expanded fit-content class="story-pager-dock">
+            <div class="story-pager-row">
+                <DockTabButton
+                    v-for="entry in entries"
+                    :key="entry.id"
+                    as-child
+                >
+                    <RouterLink :to="entry.to">{{ entry.title }}</RouterLink>
+                </DockTabButton>
+            </div>
+        </GlassDock>
     </nav>
 </template>
+
+<style scoped>
+.story-pager-dock {
+    max-width: min(80vw, 56rem);
+}
+
+.story-pager-row {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    overflow-x: auto;
+    /* scrollbar-hidden — class form would compose; use raw rules in scoped block */
+    scrollbar-width: none;
+}
+
+.story-pager-row::-webkit-scrollbar {
+    display: none;
+}
+</style>
