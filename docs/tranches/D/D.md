@@ -33,14 +33,16 @@ D-specific:
 
 ## Wave schedule
 
-| Wave | Title | Agents | Mode | Workspace at close | Hard gate (one-line) | Status |
+Per-wave specs at [`waves/W{0..5}.md`](waves/) (bbnf-lang WAVE_SPEC format). Sub-agent dispatch boilerplate at [`dispatch/AGENT.md`](dispatch/AGENT.md). Orchestrator entry-point at [`HANDOFF.md`](HANDOFF.md).
+
+| Wave | Title | Spec | Agents | Mode | Hard gate (one-line) | Status |
 |---|---|---|---|---|---|---|
-| W0 | Hardened audit + triage + structural decisions | 5 | parallel | green | 6 audit docs landed; every C-forwarded candidate re-grepped; sidebar decision = hoist; façade-list enumerated | planned |
-| W1 | Wire pass — orphan packages with demo stories | 5 | parallel | green | every `wire`-verdict has Playwright-rendered story; manifest entry; route renders non-empty `<main>` zero console errors | planned |
-| W2 | Delete pass — orphans + façades + sidebar hoist | 5 | parallel | green | named symbols absent from `src/index.ts`; bundle smaller; sidebar at `src/composables/sidebar/`; consumer builds clean | planned |
-| W3 | Generalize — forward-compat docs with named consumers | 2 | parallel | green | `docs/forward-compat/*.md` per `generalize`; each cites named consumer repo path; canned audit prompt updated | planned |
-| W4 | Velocity foundation — Vitest + tsconfig.src + iter scripts | 4 | parallel | green | `npm run iter-check && iter-build && iter-test` < 10 s wall; ~100 tests green | planned |
-| W5 | Re-audit + close ceremony | 4 + orchestrator | parallel + n/a | green | re-audit actionable ≤ 5; FINAL.md + retro committed; tag `d-close` | planned |
+| W0 | Hardened audit + triage + structural decisions | [W0.md](waves/W0.md) | 5 | parallel | 9 audit docs landed; every C-forwarded candidate re-grepped; sidebar decision = hoist; façade-list enumerated | planned |
+| W1 | Wire pass — orphan packages with demo stories | [W1.md](waves/W1.md) | 5 | parallel | every `wire`-verdict has Playwright-rendered story; manifest entry; route renders non-empty `<main>` zero console errors | planned |
+| W2 | Delete pass — orphans + façades + sidebar hoist | [W2.md](waves/W2.md) | 5 | parallel | named symbols absent from `src/index.ts`; bundle smaller; sidebar at `src/composables/sidebar/`; consumer builds clean | planned |
+| W3 | Generalize — forward-compat docs with named consumers | [W3.md](waves/W3.md) | 2 | parallel | `docs/forward-compat/*.md` per `generalize`; each cites named consumer repo path; canned audit prompt updated | planned |
+| W4 | Velocity foundation — Vitest + tsconfig.src + iter scripts | [W4.md](waves/W4.md) | 4 | parallel | `npm run iter` < 10 s wall; ~120-160 tests green; `scripts/ay-close.sh` end-to-end exits 0 | planned |
+| W5 | Re-audit + close ceremony | [W5.md](waves/W5.md) | 4 + orchestrator | parallel + n/a | re-audit actionable ≤ 5; FINAL.md + retro committed; tag `d-close` | planned |
 
 Cherry-pick-then-dispatch model. Worktrees pre-created at `/Users/mkbabb/Programming/glass-ui-wt-d-w<N><tag>`. Parallel agents within a wave have disjoint allow-lists; cross-wave conflicts sequence (W2 follows W1's `manifest.ts` consolidation).
 
