@@ -33,11 +33,11 @@ Enumerate every component, composable, CSS class, `@utility`, type interface, an
    - **keep** — ≥ 2 distinct usage sites in `{CONSUMER_PATHS}` (demo + library + external consumers all count toward the threshold).
    - **library-orphan** — exported from `src/index.ts` but **0 distinct usage sites anywhere** (not src, not demo, not external consumers). The library ships a primitive nobody — including its own demo — uses. This is the strongest overfitting signal for a public-surface library. Triage: (a) delete it (per "no legacy code"), (b) wire a demo story that exercises it, or (c) document as "shipped for forward compatibility with a named consumer roadmap entry". Default action: triage → either (a) or (b); (c) requires a named justification.
    - **inline-and-remove** — exactly 1 usage site, AND the artefact is NOT exported from `src/index.ts`. Inline at the call site; remove the standalone abstraction. Apt for unnamed helper-shaped classes or single-use private composables that don't earn their abstraction.
-   - **generalize** — exactly 1 usage site, AND the artefact has semantic value worth preserving (e.g., an `@utility` with a meaningful name like `text-mono-caption`, or a public-surface component with one consumer that should grow). Document the intended reuse path; don't inline.
+   - **keep-current** — exactly 1 usage site, AND the artefact has semantic value worth preserving (e.g., an `@utility` with a meaningful name like `text-mono-caption`, or a public-surface component with one current consumer that should grow). Current-consumer keeps require a matching `docs/consumer-evidence/<artefact>.md` file and a fresh rerun of that file's cited proof grep.
    - **delete-unused** — 0 usage sites anywhere AND not in `src/index.ts`. Pure dead code; delete.
    - **demo-only-private** — 0 sites in `src/`, only used in `demo/`. Move under `demo/<area>/_internal/` if not already; document as private demo helper. Not a library candidate.
 
-Verdict precedence when multiple apply: `delete-unused` > `library-orphan` > `inline-and-remove` > `generalize` > `demo-only-private` > `keep`. Library-orphan beats keep — auto-keep on public-surface re-export is a false negative.
+**Verdict precedence (refined at D)**: before assigning `library-orphan` to any artefact, check current source usage and `docs/consumer-evidence/<artefact>.md`. If the evidence doc exists and its cited proof grep still finds the consumer, the verdict is `keep-current` with citation to the doc and the fresh grep output. If the evidence doc exists but the grep no longer finds a consumer, the artefact reverts to the normal verdict precedence; do not keep a current-consumer artefact on a stale evidence doc. Normal precedence when no fresh consumer proof applies: `delete-unused` > `library-orphan` > `inline-and-remove` > `keep-current` > `demo-only-private` > `keep`. Library-orphan beats keep — auto-keep on public-surface re-export is a false negative.
 
 ## Output format
 
@@ -50,7 +50,7 @@ Verdict precedence when multiple apply: `delete-unused` > `library-orphan` > `in
 Demands:
 - Every entry's site count cites the exact `rg` invocation in the rationale field.
 - Zero generic claims ("seems unused"). Every verdict cites grep output.
-- Idiomatic gestalt judgement on `generalize` vs `inline-and-remove`: one-shot anonymous helpers are inline-and-remove; one-shot semantic utilities are generalize.
+- Idiomatic gestalt judgement on `keep-current` vs `inline-and-remove`: one-shot anonymous helpers are inline-and-remove; one-shot semantic utilities with fresh consumer evidence are keep-current.
 
 ## Substitutions
 
