@@ -6,7 +6,7 @@ Six parallel research agents (A1-A6) audited the prior tranches A+B+C, hunted de
 
 ---
 
-## What the six agents found
+## Six-Agent Findings
 
 ### A1 — A+B retrospective (reconstruction from git log)
 - A shipped 30+ ui primitives + Aurora WebGL + dock multi-layer + foundational tokens. Authoring outpaced consumer adoption: 38 custom components landed in the public barrel before any demo wired them.
@@ -43,11 +43,11 @@ Drafted D — Demo Wiring + Library Cleanup. Six waves:
 - W0 hardened audit re-run (5 parallel) — fixes C's grep-pattern false negatives
 - W1 wire pass (5 parallel) — search/sortable/carousel/sidebar/dock-subset/singletons
 - W2 delete pass + sidebar restructure (4 parallel)
-- W3 generalize → forward-compat docs (2 parallel)
+- W3 keep-current → consumer-evidence docs (2 parallel)
 - W4 conditional fold-in for A3/A4 findings
 - W5 re-audit + close (≤ 5 actionable as gate; D-II split if 5 < count ≤ 15)
 
-Five new D-specific invariants on top of C's six: re-grounded audit not C's ledger; deletes propagate to `src/index.ts`; wires are Playwright-walked; forward-compat docs name the consumer; agent budgets calibrated at dispatch.
+Five new D-specific invariants on top of C's six: re-grounded audit not C's ledger; deletes propagate to `src/index.ts`; wires are Playwright-walked; consumer-evidence docs name the consumer; agent budgets calibrated at dispatch.
 
 ### A6 — Architectural departure (tranche E)
 **Thesis**: convert `@mkbabb/glass-ui` from single-barrel monolith into Tailwind-v4 plugin (CSS) + fan of importable JS subpaths (`/core`, `/dock`, `/aurora`, `/search`, `/sidebar`, `/sortable`, …). Same git tree, same `package.json`, no monorepo — just `package.json#exports` subpath publication.
@@ -97,18 +97,18 @@ E ships `dist/plugin.css` as static file. F upgrades it to a Tailwind v4 `@plugi
 
 ---
 
-## What carries forward and what doesn't
+## Carried Scope
 
 ### Things D inherits from C (already known)
 - 101 library-orphan candidates (W0 re-run flips ~10-15 to `keep` due to known false negatives)
-- 21 generalize candidates (resolved at D.W3 with named consumer roadmap entries)
+- 21 keep-current candidates (resolved at D.W3 with named current consumer entries)
 - 4 already-deleted items (D verifies cascade)
 - Reduced-motion visual emulation (forwarded to E, deferred earlier per Playwright MCP CDP limitation)
 - Velocity gap (now folded into D.W4)
 
 ### Things E inherits from D
 - Hardened public surface (only "really used" symbols remain).
-- Per-package boundaries documented in `docs/forward-compat/` README.
+- Per-package boundaries documented in `docs/consumer-evidence/` README.
 - Vitest harness — E's subpath restructure can land per-entry test verification.
 - `tsconfig.src.json` + `vite.iter.config.ts` patterns ready to multi-entry.
 
@@ -124,7 +124,7 @@ E ships `dist/plugin.css` as static file. F upgrades it to a Tailwind v4 `@plugi
 
 ---
 
-## What we are NOT doing
+## Boundaries
 
 These were considered and explicitly rejected:
 
@@ -139,7 +139,7 @@ These were considered and explicitly rejected:
 
 From A1 + A2 + C-retro:
 
-1. **Substrate-without-consumer at public surface.** Before adding to `src/index.ts`: confirm story-landing in same/named-future commit OR `docs/forward-compat/<Name>.md` entry. Otherwise demo-only-private under `demo/_internal/`.
+1. **Substrate-without-consumer at public surface.** Before adding to `src/index.ts`: confirm story-landing in same/current commit OR `docs/consumer-evidence/<Name>.md` entry. Otherwise demo-only-private under `demo/_internal/`.
 
 2. **Silent token duplication & undefined-utility fallthrough.** Pre-wave grep for similar names; verify `@theme` references primitives, not itself; `rg` every `.class`/`@utility` ref across full corpus including all 3 consumer trees.
 
@@ -187,9 +187,9 @@ The D plan's "Critical files" table will include:
 - `src/composables/index.ts` (modify)
 - `src/index.ts`, `CLAUDE.md` (orchestrator-consolidation per W2.D)
 
-**Generalize (W3)**:
-- `docs/forward-compat/<artefact>.md` (×21+)
-- `docs/forward-compat/README.md`
+**Keep current (W3)**:
+- `docs/consumer-evidence/<artefact>.md` (×21+)
+- `docs/consumer-evidence/README.md`
 - `docs/audits/overfitting-audit.md` (verdict precedence update)
 
 **Velocity (W4)**:
@@ -233,4 +233,4 @@ The D plan's "Critical files" table will include:
 7. **E close**: tag `e-close` when consumer JS reductions verified.
 8. **F**: Tailwind v4 plugin formalisation; 40 kB → ≤ 12 kB CSS.
 
-Total horizon: ~3-4 tranches across D + E + F, with G + H as future-tranche seeds for prop-unification + a11y + consumer adoption.
+Total horizon: ~3-4 tranches across D + E + F, with G + H carrying prop-unification, a11y, and consumer adoption.

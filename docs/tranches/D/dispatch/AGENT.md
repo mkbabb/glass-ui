@@ -20,12 +20,13 @@ main checkout. Run all `npm` and `git` commands from your worktree root.
 
 ## Read first (required, in order)
 
-1. `/Users/mkbabb/Programming/bbnf-lang/docs/instructions/README.md` — operational directives.
-2. `/Users/mkbabb/Programming/bbnf-lang/docs/instructions/tranche/SPEC.md` §Hard gates, §Runtime-evidence, §Activation-gate, §Scope-reveal.
-3. `/Users/mkbabb/Programming/glass-ui/CLAUDE.md` — codebase conventions.
-4. `/Users/mkbabb/Programming/glass-ui/docs/tranches/D/D.md` — tranche plan (invariants, wave summary).
-5. `/Users/mkbabb/Programming/glass-ui/docs/tranches/D/waves/{WAVE}.md` — your wave spec.
-6. {WAVE_SPECIFIC_READS}
+1. `/Users/mkbabb/Programming/glass-ui/docs/precepts/instructions/README.md` — shared operational directives.
+2. `/Users/mkbabb/Programming/glass-ui/docs/precepts/instructions/tranche/SPEC.md` — shared tranche spec.
+3. `/Users/mkbabb/Programming/glass-ui/docs/instructions/README.md` — glass-ui local rules.
+4. `/Users/mkbabb/Programming/glass-ui/CLAUDE.md` — codebase conventions.
+5. `/Users/mkbabb/Programming/glass-ui/docs/tranches/D/D.md` — tranche plan (invariants, wave summary).
+6. `/Users/mkbabb/Programming/glass-ui/docs/tranches/D/waves/{WAVE}.md` — your wave spec.
+7. {WAVE_SPECIFIC_READS}
 
 {ARCHAEOLOGY_NOTE_IF_ANY}
 
@@ -85,7 +86,7 @@ Commit message template:
 4. Any deviation from this spec with rationale.
 5. `git status --short` (must be empty inside your worktree).
 
-No narrative filler. No "I then ran …" prose. No meta-commentary.
+No narrative filler. No "I then ran ..." prose. No process commentary.
 
 ## Non-negotiables
 
@@ -124,7 +125,7 @@ Begin.
 | `{GATE_ITEMS}` | Per-item: what closes the gate + verification tool. |
 | `{BUDGET}` | Numeric tool-call budget. Defaults: research/audit 50; wire 30; delete 25; doc-author 20. |
 | `{WORD_CAP}` | 800 for surgical; 1500 for moderate; 2000 for deep. |
-| `{WAVE_SPECIFIC_DELIVERABLE_SUMMARY}` | What the agent reports beyond commits — verdict tables, before/after diffs, eval results. |
+| `{WAVE_SPECIFIC_DELIVERABLE_SUMMARY}` | Extra return content beyond commits: verdict tables, before/after diffs, eval results. |
 
 ## Invariants inherited (do NOT re-state per-prompt)
 

@@ -80,7 +80,7 @@ B added demo stories for: Sortable (`cd85566`), BouncyTabs (`41aa672`), StatusDo
 
 ### 1. Substrate-without-consumer at public surface
 **Pattern**: component authored, added to `src/index.ts`, released without wired consumer.
-**Guardrail for D**: before adding to `src/index.ts`, confirm story landing in same/named-future commit OR `docs/forward-compat/<Name>.md` with consumer roadmap entry. Otherwise demo-only-private under `demo/_internal/`.
+**Guardrail for D**: before adding to `src/index.ts`, confirm story landing in same/current commit OR `docs/consumer-evidence/<Name>.md` with current consumer entry. Otherwise demo-only-private under `demo/_internal/`.
 
 ### 2. Silent token duplication & undefined-utility fallthrough
 **Pattern**: token added without dedup audit; markup fallthroughs silent.

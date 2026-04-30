@@ -47,9 +47,9 @@ YES. Audit-claim hardening discipline caught 3 false positives (`.glass-btn`, `.
 ### 6. Navigation reform bundled at C.W1.B — clean or premature?
 Defensive scaffolding; not broken. C.W1.B's kind check (`if (loc.kind === "category")`) is safe when kind is undefined (returns single-segment eyebrow). C.W2.A's categoryLoc computed similarly safe. Full structure activates at C.W3.D's `69c1d1c` without intermediate-broken windows. Disclosed in PROGRESS.md.
 
-### 7. What did C explicitly defer to D?
+### 7. C items carried to D
 - 101 library-orphan candidates (38 custom/ + 63 composables — 63 is upper bound; cross-package imports inflate the count)
-- D scope: triage → demo-wire / generalize / delete-with-`src/index.ts`-removal
+- D scope: triage → demo-wire / keep-current / delete-with-`src/index.ts`-removal
 - Chronic debt not explicitly listed: kind-aware navigation pattern (now structural; D should document)
 
 `package.json` was NOT modified in C. Script at c-close is still `"typecheck": "vue-tsc --noEmit"`. The `bench` rename observed in working-tree drifted from outside C and was reverted before close.
@@ -72,7 +72,7 @@ Two cross-wave bundles:
 
 | Item | Severity | D Destination |
 |---|---|---|
-| 101 library-orphan candidates | High | D.W1 (wire) + D.W2 (delete) + D.W3 (forward-compat) |
+| 101 library-orphan candidates | High | D.W1 (wire) + D.W2 (delete) + D.W3 (consumer-evidence) |
 | 63 composables audit upper-bound inflated | Medium | D re-audit with looser grep patterns |
 | Kind-aware navigation pattern now core | Medium | D documentation phase |
 

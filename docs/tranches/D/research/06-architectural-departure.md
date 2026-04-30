@@ -70,7 +70,7 @@ The plugin extraction lands in E as a static CSS file. F upgrades it to a Tailwi
 
 (Optional, deferred): tranche G could fold prop-API unification via `defineComponentBase`. It composes; this thesis does not foreclose it.
 
-## What it breaks
+## Breakage Surface
 
 - **Top-level imports of non-core names emit a dev-time warning.** `import { Aurora } from "@mkbabb/glass-ui"` keeps working in E (re-export shim) but logs once. Consumers must migrate within E or G.
 - **`@import "@mkbabb/glass-ui/styles"` becomes deprecated.** Consumers without Tailwind v4 (none of the three known) lose the convenient one-liner; they must `@import "@mkbabb/glass-ui/tokens"` (tokens-only) and accept components-layer CSS via `@plugin`.

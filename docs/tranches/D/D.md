@@ -1,14 +1,14 @@
 # D — Substrate-with-Consumer
 
-Tranche document for Phase 4 of the glass-ui storybook reform. Adapted to bbnf-lang's tranche spec (`/Users/mkbabb/Programming/bbnf-lang/docs/instructions/tranche/SPEC.md`). Tranche letters: A = build-out, B = Coherent Chrome, C = Operational Truth, **D = Substrate-with-Consumer**.
+Tranche document for Phase 4 of the glass-ui storybook reform. It now inherits shared orchestration from `docs/precepts/instructions/tranche/SPEC.md`; glass-ui-specific rules live at `docs/instructions/README.md`. Tranche letters: A = build-out, B = Coherent Chrome, C = Operational Truth, **D = Substrate-with-Consumer**.
 
 ## Opening
 
-C closed at tag `c-close`. Six research agents (A1-A6) audited A+B+C, hunted dead/contrived code, measured velocity, drafted plans, and proposed E's architectural departure. Synthesis at `docs/tranches/D/research/SYNTHESIS.md`. D resolves every actionable item from the synthesis without deferral: wires the orphans whose abstractions earn their slot, deletes everything else (including the ~20 zero-value reka-ui façade wrappers and any composable not consumed by component or demo), hoists sidebar composables to `src/composables/sidebar/`, ships the Vitest harness with ~100 smoke tests, splits the typecheck and build into routine vs proof tiers, and re-runs the hardened audit at close. D's name is its thesis: every public-surface symbol either has ≥ 1 Playwright-walked story OR is consumed by another component OR has a `docs/forward-compat/<name>.md` naming a consumer roadmap entry. Anything that doesn't, deletes.
+C closed at tag `c-close`. Six research agents (A1-A6) audited A+B+C, hunted dead/contrived code, measured velocity, drafted plans, and proposed E's architectural departure. Synthesis at `docs/tranches/D/research/SYNTHESIS.md`. D resolves every actionable item from the synthesis without deferral: wires the orphans whose abstractions earn their slot, deletes everything else (including the ~20 zero-value reka-ui façade wrappers and any composable not consumed by component or demo), hoists sidebar composables to `src/composables/sidebar/`, ships the Vitest harness with ~100 smoke tests, splits the typecheck and build into routine vs proof tiers, and re-runs the hardened audit at close. D's name is its thesis: every public-surface symbol has a Playwright-walked story or a current source consumer. Anything else deletes.
 
 ## Architectural thesis
 
-A library exports what its consumers (including its own demo) actually use. Substrate without consumer is debt. The remedy is mechanical: re-ground each candidate against current master, route through one of three lanes — wire, generalize-with-named-roadmap, delete — and verify at close that the audit's actionable count drops below noise. The velocity work is structural, not cosmetic: routine iteration must complete in under 10 s wall, or every subsequent tranche pays the tax. Vitest is the missing test substrate; once it ships, E + F + G inherit it. The sidebar's split structure (composables under a component package, re-exported from `src/composables/`) is two concerns sharing one path: hoist them once, structurally, per CLAUDE.md's stated convention.
+A library exports what its consumers (including its own demo) actually use. Substrate without consumer is debt. The remedy is mechanical: re-ground each candidate against current master, wire it to a current consumer or delete it, and verify at close that the audit's actionable count drops below noise. The velocity work is structural, not cosmetic: routine iteration must complete in under 10 s wall, or every subsequent tranche pays the tax. Vitest is the missing test substrate; once it ships, E + F + G inherit it. The sidebar's split structure (composables under a component package, re-exported from `src/composables/`) is two concerns sharing one path: hoist them once, structurally, per CLAUDE.md's stated convention.
 
 ## Invariants
 
@@ -18,7 +18,7 @@ Cross-tranche preserved (A/B/C):
 2. Tailwind-first. Every utility class has a matching `@theme` token or `@utility` block; no ambient fallthrough.
 3. `@theme` references primitives. No self-referential `--x: var(--x)`.
 4. Storybook chrome is library composition. `demo/layout/` does not re-implement glass primitives.
-5. No silent overfitting. Every public-surface symbol has ≥ 1 story OR ≥ 2 internal consumers OR `docs/forward-compat/<name>.md` entry. Audit runs at every tranche close.
+5. No silent overfitting. Every public-surface symbol has a current story, current internal consumer, or current external consumer. Audit runs at every tranche close.
 6. Workspace green at every wave boundary. typecheck + build clean; zero console errors on Playwright walk.
 
 D-specific:
@@ -26,21 +26,21 @@ D-specific:
 7. **Re-grounded audit, not C's ledger.** Every wire/delete decision references a fresh `rg` against current master.
 8. **Deletes propagate to `src/index.ts`.** Half-deletes don't pass; gate closes only when `git diff src/index.ts` shows the symbol removed AND `npm run build` exits 0.
 9. **Wires are Playwright-walked.** A "wired" story whose route 404s, throws on mount, or renders empty `<main>` does not count.
-10. **Forward-compat docs name the consumer.** No "future use" / "may be useful" / "TBD". Every doc cites a specific consumer repo path + use case.
+10. **Consumer evidence names current code.** Every retained public symbol cites a current story path, internal source path, or external consumer repo path.
 11. **Agent budgets calibrated at dispatch.** Each prompt declares tool-call budget per the wave's measured-scope-per-call rate (~3-5 tool calls per Playwright route from C.W4 measurement).
 12. **Zero façade components.** A component whose template is `<X v-bind="props"><slot/></X>` with no added styling beyond `cn()` adds zero semantic value. Inline at consumer or delete.
 13. **Routine cycle < 10 s wall.** `npm run iter-check && iter-build && iter-test` < 10 s. Hard infrastructure gate at D.W4 close.
 
 ## Wave schedule
 
-Per-wave specs at [`waves/W{0..5}.md`](waves/) (bbnf-lang WAVE_SPEC format). Sub-agent dispatch boilerplate at [`dispatch/AGENT.md`](dispatch/AGENT.md). Orchestrator entry-point at [`HANDOFF.md`](HANDOFF.md).
+Per-wave specs at [`waves/W{0..5}.md`](waves/) (shared precepts WAVE_SPEC format). Sub-agent dispatch boilerplate at [`dispatch/AGENT.md`](dispatch/AGENT.md). Orchestrator entry-point at [`HANDOFF.md`](HANDOFF.md).
 
 | Wave | Title | Spec | Agents | Mode | Hard gate (one-line) | Status |
 |---|---|---|---|---|---|---|
 | W0 | Hardened audit + triage + structural decisions | [W0.md](waves/W0.md) | 5 | parallel | 9 audit docs landed; every C-forwarded candidate re-grepped; sidebar decision = hoist; façade-list enumerated | planned |
 | W1 | Wire pass — orphan packages with demo stories | [W1.md](waves/W1.md) | 5 | parallel | every `wire`-verdict has Playwright-rendered story; manifest entry; route renders non-empty `<main>` zero console errors | planned |
 | W2 | Delete pass — orphans + façades + sidebar hoist | [W2.md](waves/W2.md) | 5 | parallel | named symbols absent from `src/index.ts`; bundle smaller; sidebar at `src/composables/sidebar/`; consumer builds clean | planned |
-| W3 | Generalize — forward-compat docs with named consumers | [W3.md](waves/W3.md) | 2 | parallel | `docs/forward-compat/*.md` per `generalize`; each cites named consumer repo path; canned audit prompt updated | planned |
+| W3 | Consumer evidence sweep | [W3.md](waves/W3.md) | 2 | parallel | `docs/consumer-evidence/*.md` per retained public symbol that lacks a story; each cites current source paths; canned audit prompt updated | planned |
 | W4 | Velocity foundation — Vitest + tsconfig.src + iter scripts | [W4.md](waves/W4.md) | 4 | parallel | `npm run iter` < 10 s wall; ~120-160 tests green; `scripts/ay-close.sh` end-to-end exits 0 | planned |
 | W5 | Re-audit + close ceremony | [W5.md](waves/W5.md) | 4 + orchestrator | parallel + n/a | re-audit actionable ≤ 5; FINAL.md + retro committed; tag `d-close` | planned |
 
@@ -58,7 +58,7 @@ C.W0's auto-keep-on-public-surface masked half the signal until the `library-orp
 - **Sub-gate**: integrated table covers C's 335-row baseline; `c-w0-verdict` vs `d-w0-verdict` columns with `delta` flag; expected delta ≥ 10 (false-negative recoveries).
 
 #### D.W0.B — Triage classification per candidate
-- **Mechanism**: synthesize the 4-agent integrated table into a single triage MD with one row per actionable candidate. Columns: `candidate | def-site | actual-site-count-rerun | proposed-action ∈ {wire, generalize, delete} | rationale-with-rg | budget-estimate-tool-calls`. **Wire-vs-delete cutoff**: candidate is `wire` iff (a) a single-page demo story can be authored in ≤ 80 SLoC `<template>` + ≤ 40 SLoC `<script setup>` AND (b) the abstraction has semantic value beyond reka-ui's primitive (i.e., not a façade). Candidates failing either condition route through `delete` or `generalize`.
+- **Mechanism**: synthesize the 4-agent integrated table into a single triage MD with one row per actionable candidate. Columns: `candidate | def-site | actual-site-count-rerun | proposed-action ∈ {wire, keep-current, delete} | rationale-with-rg | budget-estimate-tool-calls`. **Wire-vs-delete cutoff**: candidate is `wire` iff (a) a single-page demo story can be authored in ≤ 80 SLoC `<template>` + ≤ 40 SLoC `<script setup>` AND (b) the abstraction has semantic value beyond reka-ui's primitive (i.e., not a façade). Candidates failing either condition route through `delete` unless current source usage justifies `keep-current`.
 - **Files**: `docs/tranches/D/audit/W0-triage.md` (create); `docs/tranches/D/audit/W0-already-resolved.md` (create — for C-forwarded rows whose re-grep flips to `keep`).
 - **Sub-gate**: every C-forwarded candidate has either a triage row OR an already-resolved row. Sum equals 101.
 
@@ -128,7 +128,7 @@ For each W0.C `delete` verdict: `rm` the component file; remove from `src/compon
 - **Sub-gate**: `rg 'from "@/components/custom/sidebar/composables"' src/ demo/` empty; typecheck + build exit 0; consumer builds clean.
 
 #### D.W2.D — Delete unwired CSS classes / @utility blocks
-Per W0.B `delete` verdicts. C.W5 swept 4; D handles whatever the re-run flags new (expected: minimal — most styles rows are `generalize`).
+Per W0.B `delete` verdicts. C.W5 swept 4; D handles whatever the re-run flags new.
 - **Sub-gate**: full route walk produces zero "missing utility" warnings.
 
 #### D.W2.E — `src/index.ts` reconciliation + CLAUDE.md sync
@@ -137,17 +137,17 @@ Orchestrator-led consolidation post-W2.A/B/C/D cherry-picks. Verify cascade reso
 
 **Hard gate (W2)**: typecheck + build clean; bundle strictly smaller than c-close (currently 381.42 kB JS); three consumer builds clean; CLAUDE.md counts match filesystem; sidebar at `src/composables/sidebar/`.
 
-### D.W3 — Generalize → forward-compat docs (2 parallel)
+### D.W3 — Consumer evidence sweep (2 parallel)
 
-#### D.W3.A — Per-`generalize` doc creation
-For each `generalize`-verdict from W0.B (~21 from styles + handful from components): create `docs/forward-compat/<artefact>.md`. Each doc contains: (1) artefact path, (2) current single-consumer site, (3) **named roadmap consumer (project + use case — e.g., "fourier-analysis/web's planned spectrogram view will use `text-mono-micro` for tick labels")**, (4) `keep` rationale citing semantic value, (5) re-audit-immunity clause. **No doc body contains "future use" / "may be useful" / "TBD"**. Roadmap-less items flip to `delete` and route through W2 follow-on.
-- **Sub-gate**: every `generalize` verdict has doc; named-consumer grep per doc passes.
+#### D.W3.A — Per-`keep-current` evidence doc creation
+For each `keep-current` verdict from W0.B: create `docs/consumer-evidence/<artefact>.md`. Each doc contains: (1) artefact path, (2) current source consumer path, (3) current use case, (4) `keep-current` rationale citing semantic value, (5) exact `rg` command proving the consumer. Items without current consumers flip to `delete` and route through W2 follow-on.
+- **Sub-gate**: every `keep-current` verdict has a doc; current-consumer grep per doc passes.
 
 #### D.W3.B — Index + canned-prompt verdict precedence
-Create `docs/forward-compat/README.md` with table (artefact | doc | named consumer | added-in-tranche). Update `docs/audits/overfitting-audit.md`'s verdict precedence: "before assigning `library-orphan`, check `docs/forward-compat/`; if a doc names the artefact, verdict is `keep` with citation."
-- **Sub-gate**: README row count = doc count; canned prompt's verdict precedence references the directory.
+Create `docs/consumer-evidence/README.md` with table (artefact | doc | current consumer | added-in-tranche). Update `docs/audits/overfitting-audit.md`'s verdict precedence: before assigning `library-orphan`, check current source usage and cite `docs/consumer-evidence/` only when the grep still passes.
+- **Sub-gate**: README row count = doc count; canned prompt references current consumer evidence.
 
-**Hard gate (W3)**: `ls docs/forward-compat/*.md | wc -l` = `generalize` count + 1 (README); zero docs contain "future use" / "may be useful" / "TBD".
+**Hard gate (W3)**: `ls docs/consumer-evidence/*.md | wc -l` = `keep-current` count + 1 (README); every doc contains a current source path and exact `rg` command.
 
 ### D.W4 — Velocity foundation (4 parallel)
 
@@ -189,7 +189,7 @@ A4 measured: typecheck 11.8 s warm, build 6.5 s warm (65% = dts plugin), zero te
 ### D.W5 — Re-audit + close ceremony (4 parallel + orchestrator)
 
 #### D.W5.A — Re-run hardened audit
-Re-dispatch the 4-agent audit per `docs/audits/overfitting-audit.md` (now with W3.B's verdict-precedence forward-compat lookup). Integrate to `docs/tranches/D/audit/W5-overfitting.md`. Compute actionable count.
+Re-dispatch the 4-agent audit per `docs/audits/overfitting-audit.md` with W3.B's current-consumer evidence check. Integrate to `docs/tranches/D/audit/W5-overfitting.md`. Compute actionable count.
 - **Sub-gate**: actionable count ≤ 5. Else: 5 < count ≤ 10 → declare D-II per SPEC §"Multi-pass tranche split" with named residual; count > 10 → halt + research+plan+redress triumvirate.
 
 #### D.W5.B — Final QA sweep
@@ -212,7 +212,7 @@ Playwright walks every route in light + dark mode. Three consumer builds. Bundle
 |---|---|---|---|
 | `docs/tranches/D/audit/W0-overfitting-{ui,custom,composables,styles}.md` | D.W0.A | create | per-scope re-audit (4 agents) |
 | `docs/tranches/D/audit/W0-overfitting.md` | D.W0.A | create | integrated 4-agent table |
-| `docs/tranches/D/audit/W0-triage.md` | D.W0.B | create | per-candidate wire/generalize/delete verdict |
+| `docs/tranches/D/audit/W0-triage.md` | D.W0.B | create | per-candidate wire/keep-current/delete verdict |
 | `docs/tranches/D/audit/W0-already-resolved.md` | D.W0.B | create | C-forwarded → keep flips |
 | `docs/tranches/D/audit/W0-facade-list.md` | D.W0.C | create | ui façade enumeration with verdict per row |
 | `docs/tranches/D/audit/W0-sidebar-plan.md` | D.W0.D | create | hoist diff plan |
@@ -233,9 +233,9 @@ Playwright walks every route in light + dark mode. Three consumer builds. Bundle
 | `src/composables/index.ts` | D.W2.C | modify | rewrite sidebar block |
 | `src/styles/<files>` | D.W2.D | modify | delete unused CSS rules |
 | `src/index.ts`, `CLAUDE.md` | D.W2.E | modify-orchestrator-consolidation | reconcile cascade + counts |
-| `docs/forward-compat/<artefact>.md` (×N) | D.W3.A | create | per-`generalize` named-consumer doc |
-| `docs/forward-compat/README.md` | D.W3.B | create | index |
-| `docs/audits/overfitting-audit.md` | D.W3.B | modify | verdict-precedence forward-compat lookup |
+| `docs/consumer-evidence/<artefact>.md` (×N) | D.W3.A | create | per-`keep-current` evidence doc |
+| `docs/consumer-evidence/README.md` | D.W3.B | create | index |
+| `docs/audits/overfitting-audit.md` | D.W3.B | modify | current-consumer verdict precedence |
 | `tsconfig.src.json` | D.W4.A | create | src-only typecheck path |
 | `vite.iter.config.ts` | D.W4.B | create | no-dts iter build |
 | `vitest.config.ts` | D.W4.C | create | test runner config |
@@ -256,7 +256,7 @@ W2.E and W4 `package.json` modifications are orchestrator-led consolidation comm
 | W0 | 9 audit docs landed; triage + façade-list + sidebar-plan recorded; file-bounds disjoint | `ls docs/tranches/D/audit/`; row counts |
 | W1 | every `wire`-verdict has Playwright-rendered story; typecheck + build clean; route walk zero errors | Playwright DOM evals; build exit codes; manifest row count delta |
 | W2 | named symbols absent from `src/index.ts`; bundle smaller than c-close; consumer builds clean; sidebar at `src/composables/sidebar/` | `dist/index.d.ts` greps; `du -sh dist/glass-ui.js` delta; consumer build exits |
-| W3 | every `generalize` has forward-compat doc with named consumer; canned prompt updated | `ls docs/forward-compat/*.md`; named-consumer grep per doc |
+| W3 | every `keep-current` item has current-consumer evidence; canned prompt updated | `ls docs/consumer-evidence/*.md`; current-consumer grep per doc |
 | W4 | `npm run iter` < 10 s wall; ~120-160 Vitest tests green; `ay-close.sh` end-to-end | `time` outputs; vitest run exit + count |
 | W5 | re-audit actionable ≤ 5 (or D-II); FINAL.md + retro committed; tag `d-close` | re-audit table; `git show d-close` |
 
@@ -265,17 +265,17 @@ Every gate closes on runtime evidence per SPEC §"Runtime-evidence clause". No g
 ### Floor-check
 
 - W4's "iter < 10 s" gate: A4 measured warm typecheck (full) at 11.8 s; src-only excludes demo (~50 files, ~14% of corpus) → ~7 s estimated. Build without dts is ~2.3 s (per A4: 6.5 s × 0.35 = 2.3 s). Vitest full suite < 1 s for 120 tests warm. Combined: ~10 s. Tight but achievable.
-- W5.A's "actionable ≤ 5" gate: C.W0 was 108 actionable. D wires N (~30-50), deletes M (~30-50), generalizes K (~21+). Conservative conversion → residual 5-10. ≤ 5 tight; fallback (D-II if 5 < count ≤ 10) named explicitly.
+- W5.A's "actionable ≤ 5" gate: C.W0 was 108 actionable. D wires N (~30-50), deletes M (~30-50), and keeps only current-consumer evidence rows. Conservative conversion gives residual 5-10. ≤ 5 tight; fallback (D-II if 5 < count ≤ 10) named explicitly.
 
 ## Cross-tranche debt
 
 **Inherited from C**:
 - 101 library-orphan candidates (W0.A re-run flips ~10-15 to `keep`).
-- 21 generalize candidates (resolved at W3).
+- 21 current-consumer evidence candidates (resolved at W3).
 - 4 already-deleted items (D verifies cascade through `src/index.ts`).
 - Reduced-motion visual emulation (forwarded to E — Playwright MCP doesn't expose CDP `Emulation.setEmulatedMedia`; E ships consumer-bundle measurement which can run direct Playwright if needed).
 - Velocity gap (folded into D.W4).
-- Kind-aware navigation pattern documentation (folded into D.W3 forward-compat as `flat-route-contract.md`).
+- Kind-aware navigation pattern documentation (folded into D.W3 current-consumer evidence as `flat-route-contract.md`).
 
 **Forwarded to E**:
 - Subpath publication of orphan-package code that survives D as wired (e.g., `/dock`, `/aurora`, `/search`, `/sidebar`, `/sortable`, `/carousel`, `/timeline`, `/metaballs`).
@@ -326,7 +326,7 @@ docs/tranches/D/
     ├── W5-overfitting.md
     └── D-retro.md
 
-docs/forward-compat/                            # NEW at D.W3
+docs/consumer-evidence/                         # NEW at D.W3
 ├── README.md
 └── <artefact>.md (×~21+)
 
@@ -375,7 +375,7 @@ demo/stories/navigation/progressive-sidebar.vue # NEW at D.W1.C
 - `rg 'from "@/components/custom/sidebar/composables"' src/ demo/` empty.
 - `npm run build` in 3 consumer dirs exit 0.
 - `docs/tranches/D/audit/W5-overfitting.md` actionable count ≤ 5.
-- `docs/forward-compat/` contains a doc per `generalize` verdict with named consumer.
+- `docs/consumer-evidence/` contains a doc per `keep-current` verdict with a current consumer.
 - CLAUDE.md `<n> ui + <m> custom` / `<k> composables` counts updated to post-D values.
 - `git tag` includes `d-close`.
 
@@ -399,7 +399,7 @@ demo/stories/navigation/progressive-sidebar.vue # NEW at D.W1.C
 
 - [ ] `docs/tranches/D/D.md` on master.
 - [ ] Worktrees pre-created: `glass-ui-wt-d-w0a`, `…-w0b`, `…-w0c`, `…-w0d`, `…-w0e`.
-- [ ] Sub-agent prompts drafted from `bbnf-lang/docs/instructions/tranche/AGENT_DISPATCH_TEMPLATE.md`; each declares tool-call budget.
+- [ ] Sub-agent prompts drafted from `docs/precepts/instructions/tranche/AGENT_DISPATCH_TEMPLATE.md`; each declares tool-call budget.
 - [ ] Allow-lists verified disjoint within W0.
 - [ ] Master clean (`git status --short` empty).
 - [ ] Hard-gate phrasings runtime-verifiable.
@@ -416,7 +416,7 @@ demo/stories/navigation/progressive-sidebar.vue # NEW at D.W1.C
 - [ ] `docs/tranches/D/audit/W5-overfitting.md` actionable ≤ 5 (or D-II declared).
 - [ ] `docs/tranches/D/FINAL.md` composed.
 - [ ] `docs/tranches/D/PROGRESS.md` close entry.
-- [ ] `docs/forward-compat/` populated; canned prompt updated.
+- [ ] `docs/consumer-evidence/` populated; canned prompt updated.
 - [ ] CLAUDE.md structure tree + counts synced.
 - [ ] All D-specific worktrees removed.
 - [ ] `git tag d-close` placed.

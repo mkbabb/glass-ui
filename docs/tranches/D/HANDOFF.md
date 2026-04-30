@@ -28,14 +28,15 @@ npm run iter < 10 s wall.
 
 ## Read-first reading order for the next orchestrator
 
-1. **`/Users/mkbabb/Programming/bbnf-lang/docs/instructions/README.md`** — operational directives (file-first commands, worktree isolation, hardened agent claims, no trammelling, indefatigability).
-2. **`/Users/mkbabb/Programming/bbnf-lang/docs/instructions/tranche/SPEC.md`** — tranche spec; §"Plan structure", §"Wave stipulation", §"Hard gates", §"Runtime-evidence clause", §"Scope-reveal protocol" all binding.
-3. **`/Users/mkbabb/Programming/bbnf-lang/docs/instructions/tranche/WAVE_SPEC.md`** — per-wave doc format; D's `waves/W{0..5}.md` follow this.
-4. **`/Users/mkbabb/Programming/bbnf-lang/docs/instructions/tranche/AGENT_DISPATCH_TEMPLATE.md`** — dispatch boilerplate; D's `dispatch/AGENT.md` is the specialised form.
-5. **`/Users/mkbabb/Programming/glass-ui/CLAUDE.md`** — codebase conventions for glass-ui specifically.
-6. **`/Users/mkbabb/Programming/glass-ui/docs/tranches/C/FINAL.md`** — what C closed; D inherits from this.
-7. **`/Users/mkbabb/Programming/glass-ui/docs/tranches/C/audit/W0-overfitting.md`** — the 108-actionable ledger D triages.
-8. **`/Users/mkbabb/Programming/glass-ui/docs/tranches/D/research/SYNTHESIS.md`** — 6-agent findings, refined path forward, anti-patterns to bind against.
+1. **`/Users/mkbabb/Programming/glass-ui/docs/precepts/instructions/README.md`** — shared operational directives.
+2. **`/Users/mkbabb/Programming/glass-ui/docs/precepts/instructions/tranche/SPEC.md`** — shared tranche spec.
+3. **`/Users/mkbabb/Programming/glass-ui/docs/precepts/instructions/tranche/WAVE_SPEC.md`** — per-wave doc format; D's `waves/W{0..5}.md` follow this.
+4. **`/Users/mkbabb/Programming/glass-ui/docs/precepts/instructions/tranche/AGENT_DISPATCH_TEMPLATE.md`** — dispatch boilerplate; D's `dispatch/AGENT.md` is the specialised form.
+5. **`/Users/mkbabb/Programming/glass-ui/docs/instructions/README.md`** — glass-ui local rules.
+6. **`/Users/mkbabb/Programming/glass-ui/CLAUDE.md`** — codebase conventions for glass-ui specifically.
+7. **`/Users/mkbabb/Programming/glass-ui/docs/tranches/C/FINAL.md`** — what C closed; D inherits from this.
+8. **`/Users/mkbabb/Programming/glass-ui/docs/tranches/C/audit/W0-overfitting.md`** — the 108-actionable ledger D triages.
+9. **`/Users/mkbabb/Programming/glass-ui/docs/tranches/D/research/SYNTHESIS.md`** — 6-agent findings, refined path forward, anti-patterns to bind against.
 9. **`/Users/mkbabb/Programming/glass-ui/docs/tranches/D/D.md`** — D's plan in full.
 10. **`/Users/mkbabb/Programming/glass-ui/docs/tranches/D/waves/W0.md`** — the first wave to dispatch.
 
@@ -95,7 +96,7 @@ D closes when:
 6. Bundle strictly smaller than c-close (`du -sh dist/glass-ui.js`).
 7. Three consumer builds clean.
 8. `docs/tranches/D/FINAL.md` + `docs/tranches/D/audit/D-retro.md` committed.
-9. `docs/forward-compat/` populated; canned prompt updated.
+9. `docs/consumer-evidence/` populated; canned prompt updated.
 10. CLAUDE.md structure tree + counts synced.
 11. `git tag d-close` placed.
 
@@ -111,11 +112,11 @@ Per bbnf-lang SPEC §"Scope-reveal protocol":
 - **W5 actionable 5 < count ≤ 10**: declare D-II per SPEC §"Multi-pass tranche split". Open `docs/tranches/D-II/D-II.md` with named residual scope.
 - **W5 actionable > 10**: halt + dispatch research+plan+redress; the verdict process itself was miscalibrated.
 
-## What you do NOT do
+## Boundaries
 
 - Modify `package.json` outside D.W4 (other waves leave it alone).
 - Skip waves.
-- Defer items silently (every forward names a destination tranche).
+- Carry items silently (every carry-over names a destination tranche).
 - Trust agent claims without re-grep.
 - Run multiple cargo/npm invocations concurrently (one at a time per host).
 - Polling sub-agent JSONL output (the harness notifies on completion).

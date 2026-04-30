@@ -30,21 +30,21 @@ Dated execution log for tranche D — Substrate-with-Consumer. Updated at every 
 Per `docs/tranches/C/FINAL.md` and SYNTHESIS:
 
 - 101 library-orphan candidates from C.W0.A (W0.A re-run expected to flip ~10-15 to `keep` due to known false negatives — sortable-list, timeline, infinite-scroll, plus composable re-export-chain hits).
-- 21 generalize candidates (typography + utilities; resolved at W3).
+- 21 current-consumer evidence candidates (typography + utilities; resolved at W3).
 - 4 already-deleted items (D.W0/W2.E verifies cascade through `src/index.ts`).
 - ~20 façade ui passthrough wrappers from A3 hunt (W0.C enumerates; W2.B deletes per re-grep).
 - Sidebar composables wrongly nested at `src/components/custom/sidebar/composables/` (W0.D plans hoist; W2.C executes).
 - Velocity gap (W4 ships Vitest + tsconfig.src + vite.iter + three-tier scripts).
 - Reduced-motion CDP gap (forwarded to E.W4.B with direct Playwright).
-- Kind-aware navigation pattern docs (forwarded to W3 forward-compat as `flat-route-contract.md`).
+- Kind-aware navigation pattern docs (carried to W3 current-consumer evidence as `flat-route-contract.md`).
 
 ## Wave-close entries
 
 (Populated as waves close. See bbnf-lang SPEC §"Wave verification ledger" for required content per close.)
 
-### W0 close (TBD)
-### W1 close (TBD)
-### W2 close (TBD)
-### W3 close (TBD)
-### W4 close (TBD)
-### W5 close (TBD)
+### W0 close (open)
+### W1 close (open)
+### W2 close (open)
+### W3 close (open)
+### W4 close (open)
+### W5 close (open)
