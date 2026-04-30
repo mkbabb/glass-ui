@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { ref } from "vue";
+import { computed, defineComponent, h, inject, ref } from "vue";
+import { GripVertical } from "lucide-vue-next";
 import {
     SortableList,
     SortableItem,
     SortableHandle,
+    SORTABLE_CONTEXT,
 } from "@/components/custom/sortable-list";
 import { cn } from "@/utils/cn";
 
@@ -22,6 +24,42 @@ const tasks = ref<Task[]>([
     { id: "t4", label: "Tune cartoon shadows",  tone: "5" },
     { id: "t5", label: "Write changelog",       tone: "7" },
 ]);
+
+const handleOnlyTasks = ref<Task[]>([
+    { id: "h1", label: "Pin keyboard affordance", tone: "1" },
+    { id: "h2", label: "Check drag ghost offset", tone: "3" },
+    { id: "h3", label: "Verify handle selector",  tone: "5" },
+    { id: "h4", label: "Record context readout",  tone: "8" },
+]);
+
+// Story-local consumer proving SORTABLE_CONTEXT can be read by descendants.
+const SortableContextReadout = defineComponent({
+    name: "SortableContextReadout",
+    setup() {
+        const sortable = inject(SORTABLE_CONTEXT);
+        const readout = computed(() => {
+            if (!sortable) return "missing";
+            return [
+                `isDragging=${sortable.isDragging.value}`,
+                `dragId=${sortable.dragId.value ?? "none"}`,
+                `dropIndex=${sortable.dropIndex.value ?? "none"}`,
+            ].join(" | ");
+        });
+
+        return () =>
+            h(
+                "div",
+                {
+                    class: "flex flex-wrap items-center gap-2 rounded-md border border-border/70 bg-muted/40 px-3 py-2 text-mono-caption text-muted-foreground",
+                    "data-sortable-context-readout": "",
+                },
+                [
+                    h("span", { class: "text-foreground" }, "SORTABLE_CONTEXT"),
+                    h("span", readout.value),
+                ],
+            );
+    },
+});
 
 // Cross-list: Todo / Doing / Done — share the same `group="kanban"`.
 interface Card {
@@ -70,6 +108,42 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
                 >
                     <SortableHandle class="text-muted-foreground hover:text-foreground">
                         <span class="fira-code leading-none">⋮⋮</span>
+                    </SortableHandle>
+                    <span
+                        class="h-2 w-2 rounded-full"
+                        :style="{ background: `var(--section-color-${t.tone})` }"
+                    />
+                    <span class="text-small">{{ t.label }}</span>
+                </SortableItem>
+            </SortableList>
+        </div>
+
+        <!-- HANDLE-ONLY + CONTEXT CONSUMER -->
+        <div>
+            <p class="text-admin-label mb-4 text-muted-foreground">
+                Handle-only · context readout is injected inside the list
+            </p>
+            <SortableList
+                :items="handleOnlyTasks"
+                :get-id="(t) => t.id"
+                handle-selector="[data-sortable-handle]"
+                class="flex flex-col gap-2 rounded-card border border-border bg-card p-3 shadow-cartoon"
+                @reorder="handleOnlyTasks = $event"
+            >
+                <SortableContextReadout />
+                <SortableItem
+                    v-for="t in handleOnlyTasks"
+                    :key="t.id"
+                    :id="t.id"
+                    class="flex items-center gap-3 rounded-md border border-border/70 bg-background px-3 py-2.5"
+                >
+                    <SortableHandle
+                        as="button"
+                        type="button"
+                        class="rounded-md border border-border bg-card p-1.5 text-muted-foreground transition-colors hover:text-foreground"
+                        :aria-label="`Drag ${t.label}`"
+                    >
+                        <GripVertical class="size-4" />
                     </SortableHandle>
                     <span
                         class="h-2 w-2 rounded-full"

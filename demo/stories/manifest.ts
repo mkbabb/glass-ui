@@ -125,6 +125,7 @@ export const CATEGORIES: Category[] = [
             s("containers", "alert", "Alert"),
             s("containers", "accordion", "Accordion"),
             s("containers", "collapsible", "Collapsible"),
+            s("containers", "glass-carousel", "Glass Carousel", "GlassCarousel items and composable controls."),
         ],
     },
     {
