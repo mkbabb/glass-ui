@@ -19,8 +19,8 @@ Dated execution log for tranche D — Substrate-with-Consumer. Updated at every 
 ## Wave statuses
 
 - W0: complete
-- W1: planned (unblocked by W0; open next)
-- W2: planned (blocked-by W1)
+- W1: complete
+- W2: planned (unblocked by W1; open next)
 - W3: planned (blocked-by W2)
 - W4: planned (blocked-by W3)
 - W5: planned (blocked-by W4)
@@ -82,7 +82,36 @@ Scope reveal:
 - `hashString`, `mulberry32`, `radiiToCSS`, and `randomRadii` changed to W2 delete candidates because their only source consumer disappeared.
 - W1/W2 wave specs were amended at W0 close so dispatch uses the binding W0 ledger: W1 wires the 12 `wire` rows; W2 absorbs the 32 composable delete rows plus the 39 façade deletions and style recheck.
 
-### W1 close (open)
+### W1 close (2026-04-30)
+
+Commits:
+
+- `974a49c` — D.W1.A search story for `FuzzySearch`, `buildIndex`, and `clearSearchCache`.
+- `5a52be2` — D.W1.B `GlassCarousel` story plus sortable handle/context coverage.
+- `5bc8f38` — D.W1.C `GlassPanel`, `MetaballCanvas`, and `useMetaballs` story coverage.
+- `527f2c3` — D.W1.D dock select/dropdown trigger coverage.
+- `2db79b1` — D.W1.E ToggleChip route verification affordances.
+
+Artefacts:
+
+- `demo/stories/data/search.vue`
+- `demo/stories/containers/glass-carousel.vue`
+- `demo/stories/motion/metaballs.vue`
+- `docs/tranches/D/audit/W1-playwright-evals.md`
+
+Gate evidence:
+
+- All 12 W0 `wire` rows now have story consumers: `FuzzySearch`, `buildIndex`, `clearSearchCache`, `GlassCarousel`, `GlassCarouselItem`, `useGlassCarousel`, `GlassPanel`, `MetaballCanvas`, `useMetaballs`, `DockDropdownTrigger`, `DockSelectTrigger`, `ToggleChip`.
+- Manifest row delta: 3 new routes (`data/search`, `containers/glass-carousel`, `motion/metaballs`).
+- Focused browser checks passed for search, carousel, sortable context, glass panel, metaballs, ToggleChip, dock layers, and dock trigger routes.
+- Full manifest route walk: 71/71 routes rendered with no story fallback and zero captured console errors.
+- `npm run typecheck` passed on 2026-04-30.
+- `npm run build` passed on 2026-04-30; output `dist/glass-ui.js 378.58 kB`, `dist/glass-ui.css 39.81 kB`.
+
+Notes:
+
+- D.W1.C scope had an accidental main-checkout edit from a worker. The orchestrator validated, committed, and closed it as `5bc8f38`; the worker was stopped before committing its partial worktree copy.
+
 ### W2 close (open)
 ### W3 close (open)
 ### W4 close (open)
