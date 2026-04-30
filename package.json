@@ -29,7 +29,14 @@
         "typecheck": "vue-tsc --noEmit",
         "iter-check": "vue-tsc --noEmit --project tsconfig.src.json",
         "iter-build": "vite build --config vite.iter.config.ts",
-        "emit-types": "vue-tsc --emitDeclarationOnly --outDir dist/types --project tsconfig.json"
+        "iter-test": "vitest run --reporter=verbose",
+        "iter-test-watch": "vitest --watch",
+        "emit-types": "vue-tsc --emitDeclarationOnly --outDir dist/types --project tsconfig.json",
+        "iter": "npm run iter-check && npm run iter-build && npm run iter-test",
+        "profile-bundle": "vite build --config vite.config.ts",
+        "profile-consumers": "scripts/validate-consumers.sh",
+        "ay-close": "scripts/ay-close.sh",
+        "validate-consumers": "scripts/validate-consumers.sh"
     },
     "engines": {
         "node": ">=22"
