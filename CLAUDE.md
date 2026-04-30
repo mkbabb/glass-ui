@@ -15,43 +15,49 @@ npm run typecheck    # vue-tsc --noEmit
 src/
 ├── index.ts                        # barrel: components + composables + utils
 ├── components/
-│   ├── ui/                         # 32 shadcn-vue base components (reka-ui)
+│   ├── ui/                         # 39 shadcn-vue base component packages (reka-ui)
+│   │   ├── accordion/              # Accordion + trigger/content wrappers
+│   │   ├── alert/                  # Alert, title, description
+│   │   ├── avatar/                 # Avatar, AvatarImage, AvatarFallback
+│   │   ├── badge/                  # Badge + badgeVariants CVA
 │   │   ├── button/                 # Primitive + buttonVariants CVA
-│   │   │   ├── Button.vue
-│   │   │   └── index.ts            # exports Button, buttonVariants, ButtonVariants
-│   │   ├── card/                   # Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter
-│   │   ├── dialog/                 # Dialog + 10 subcomponents (Content, Header, Title, etc.)
-│   │   ├── input/                  # Glass-styled input (bg-card/50 backdrop-blur-sm)
-│   │   ├── select/                 # Select + 10 subcomponents
-│   │   ├── tabs/                   # Tabs, TabsList, TabsTrigger, TabsContent
-│   │   ├── popover/                # Popover, PopoverTrigger, PopoverContent
-│   │   ├── dropdown-menu/          # DropdownMenu + 14 subcomponents
-│   │   ├── context-menu/           # ContextMenu + subcomponents
-│   │   ├── tooltip/                # Tooltip, TooltipTrigger, TooltipContent, TooltipProvider
-│   │   ├── toggle/                 # Toggle + toggleVariants CVA
-│   │   ├── toggle-group/           # ToggleGroup, ToggleGroupItem
+│   │   ├── card/                   # Card, header/title/description/content/footer
+│   │   ├── carousel/               # Carousel primitives
+│   │   ├── checkbox/               # Checkbox
+│   │   ├── collapsible/            # Collapsible root/trigger/content
+│   │   ├── combobox/               # Combobox shell
+│   │   ├── command/                # Command palette + subcomponents
+│   │   ├── context-menu/           # ContextMenu public compound wrappers
+│   │   ├── data-table/             # Table sorting/filter helpers
+│   │   ├── dialog/                 # Dialog + subcomponents
+│   │   ├── drawer/                 # Drawer bottom sheet (vaul-vue)
+│   │   ├── dropdown-menu/          # DropdownMenu compound wrappers
+│   │   ├── hover-card/             # HoverCard trigger/content
+│   │   ├── input/                  # Glass-styled input
+│   │   ├── label/                  # Label
+│   │   ├── multi-select/           # Multi-select control
+│   │   ├── notification/           # Notification surface
+│   │   ├── number-field/           # NumberField + subcomponents
+│   │   ├── popover/                # Popover trigger/content
+│   │   ├── progress/               # Progress bar
+│   │   ├── radio-group/            # RadioGroup, RadioGroupItem
+│   │   ├── select/                 # Select public compound wrappers
+│   │   ├── separator/              # Separator (h/v)
+│   │   ├── sheet/                  # Sheet side drawer + subcomponents
+│   │   ├── skeleton/               # Loading skeleton
 │   │   ├── slider/                 # reka-ui SliderRoot wrapper
 │   │   ├── switch/                 # Switch
-│   │   ├── checkbox/               # Checkbox
-│   │   ├── radio-group/            # RadioGroup, RadioGroupItem
-│   │   ├── label/                  # Label
-│   │   ├── badge/                  # Badge + badgeVariants CVA
-│   │   ├── separator/              # Separator (h/v)
-│   │   ├── scroll-area/            # ScrollArea, ScrollBar
-│   │   ├── collapsible/            # Collapsible, CollapsibleTrigger, CollapsibleContent
-│   │   ├── accordion/              # Accordion + subcomponents
-│   │   ├── sheet/                  # Sheet (side drawer) + subcomponents
-│   │   ├── drawer/                 # Drawer (bottom sheet, vaul-vue)
-│   │   ├── hover-card/             # HoverCard, HoverCardTrigger, HoverCardContent
-│   │   ├── command/                # Command palette + subcomponents
-│   │   ├── progress/               # Progress bar
-│   │   ├── skeleton/               # Loading skeleton
-│   │   ├── avatar/                 # Avatar, AvatarImage, AvatarFallback
-│   │   ├── number-field/           # NumberField + subcomponents
+│   │   ├── table/                  # Table primitives
+│   │   ├── tabs/                   # Tabs, list, trigger, content
 │   │   ├── tags-input/             # TagsInput + subcomponents
 │   │   ├── textarea/               # Textarea
+│   │   ├── toast/                  # Toast exports
+│   │   ├── toggle/                 # Toggle + toggleVariants CVA
+│   │   ├── toggle-group/           # ToggleGroup, ToggleGroupItem
+│   │   ├── tooltip/                # Tooltip provider/trigger/content
 │   │   └── index.ts                # barrel: all ui/ exports
-│   ├── custom/
+│   ├── custom/                     # 26 custom package dirs; 24 public package barrels
+│   │   ├── animation/              # internal animation helpers
 │   │   ├── dock/
 │   │   │   ├── GlassDock.vue       # collapsible glass pill, dual-layer grid, horizontal | vertical
 │   │   │   ├── DockPopover.vue     # portaled popover for dock items
@@ -65,29 +71,27 @@ src/
 │   │   ├── controls/
 │   │   │   ├── DarkModeToggle.vue  # animated sun/moon SVG (useGlobalDark)
 │   │   │   └── index.ts
+│   │   ├── form/                   # internal form helpers
+│   │   ├── glass-carousel/         # GlassCarousel + useGlassCarousel
+│   │   ├── glass-panel/            # GlassPanel substrate wrapper
+│   │   ├── infinite-scroll/        # InfiniteScroll + current public composable implementation
+│   │   ├── metaballs/              # WebGL metaball substrate
+│   │   ├── search/                 # Fuzzy search exports
+│   │   ├── sidebar/                # ProgressiveSidebar + component-owned types only
+│   │   ├── sortable-list/          # SortableList + list item helpers
+│   │   ├── toggle-chip/            # segmented chip/cell toggle
 │   │   └── index.ts
 │   └── index.ts                    # barrel: ui/ + custom/
 ├── composables/
-│   ├── dock/
-│   │   ├── useDockState.ts         # expand/collapse, ref-counted keepOpen/release, click-away
-│   │   ├── useDockTransition.ts    # reactive-ref width animation, symmetric fade-swap-animate
-│   │   ├── useLayerTransition.ts   # grid-stacked crossfade + width FLIP
-│   │   ├── usePopupMutex.ts        # one-at-a-time popup exclusivity
-│   │   ├── useDockActionBar.ts     # action bar context
-│   │   └── index.ts
-│   ├── interaction/
-│   │   ├── useHeightTransition.ts  # JS-driven expand/collapse hooks
-│   │   ├── useHoverPopover.ts      # hover-timer + floating panel positioning
-│   │   ├── useHoverToggle.ts       # toggle on hover with linger
-│   │   ├── useTouchGate.ts         # iOS Safari touch-vs-scroll discrimination
-│   │   ├── useLeaveTimer.ts        # debounced mouseleave timer
-│   │   └── index.ts
-│   ├── useClipboard.ts             # copyToClipboard (navigator.clipboard + textarea fallback)
+│   ├── glass/                      # useGlassRenderer + shader assets
+│   ├── motion/                     # useScrollProgress, useSpringOrchestrator, useStaggerReveal
+│   ├── pagination/                 # useOffsetPagination
+│   ├── sidebar/                    # useSidebarState, useSidebarFollow, useScrollTracker, useTreeIndex
+│   ├── sortable/                   # useSortable
+│   ├── virtual/                    # virtual section/windowed-store helpers
 │   ├── useGlobalDark.ts            # createGlobalState(useDark) + Safari FOUC fix
 │   ├── useKeyboardShortcuts.ts     # singleton registry, Mod aliasing, category groups
-│   ├── useWatercolorBlob.ts        # seeded PRNG blob animation (Mulberry32)
-│   ├── prng.ts                     # mulberry32, hashString, randomRadii, seededRandom
-│   └── index.ts
+│   └── index.ts                    # 9 top-level public export groups
 ├── styles/
 │   ├── index.css                   # imports all below in cascade order
 │   ├── tokens.css                  # §1–§10: duration, easing, z-index, radius, shadows, glass, paper, colors
@@ -116,7 +120,7 @@ src/
 
 ## Entry point
 
-`src/index.ts`—re-exports all components (32 ui + 4 custom), 18 composables, and `cn()` utility.
+`src/index.ts`—re-exports all public components (39 ui package barrels + 24 custom package barrels), 9 top-level composable export groups, and `cn()` utility. `src/components/custom/sidebar/` now exports `ProgressiveSidebar` plus component-owned types only; sidebar state/follow/scroll/tree composables live under `src/composables/sidebar/`.
 
 ## Dependencies
 
