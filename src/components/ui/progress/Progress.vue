@@ -5,7 +5,7 @@ import {
   ProgressRoot,
   type ProgressRootProps,
 } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '@utils'
 
 type ProgressVariant = 'default' | 'gradient'
 

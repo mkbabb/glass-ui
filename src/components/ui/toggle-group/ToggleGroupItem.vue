@@ -3,7 +3,7 @@ import type { VariantProps } from 'class-variance-authority'
 import { type HTMLAttributes, computed, inject } from 'vue'
 import { ToggleGroupItem, type ToggleGroupItemProps, useForwardProps } from 'reka-ui'
 import { toggleVariants } from '../toggle'
-import { cn } from '../../../utils'
+import { cn } from '@utils'
 
 type ToggleGroupVariants = VariantProps<typeof toggleVariants>
 

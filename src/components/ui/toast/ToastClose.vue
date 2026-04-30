@@ -2,7 +2,7 @@
 import { computed, type HTMLAttributes } from 'vue'
 import { ToastClose, type ToastCloseProps } from 'reka-ui'
 import { X } from 'lucide-vue-next'
-import { cn } from '../../../utils'
+import { cn } from '@utils'
 
 interface Props extends ToastCloseProps {
   class?: HTMLAttributes['class']

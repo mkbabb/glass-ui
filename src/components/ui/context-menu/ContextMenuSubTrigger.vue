@@ -6,7 +6,7 @@ import {
   useForwardProps,
 } from 'reka-ui'
 import { ChevronRight } from 'lucide-vue-next'
-import { cn } from '../../../utils'
+import { cn } from '@utils'
 
 const props = defineProps<ContextMenuSubTriggerProps & { class?: HTMLAttributes['class'], inset?: boolean }>()
 

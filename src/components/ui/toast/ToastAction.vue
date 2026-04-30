@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, type HTMLAttributes } from 'vue'
 import { ToastAction, type ToastActionProps } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '@utils'
 
 interface Props extends ToastActionProps {
   class?: HTMLAttributes['class']

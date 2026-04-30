@@ -7,7 +7,7 @@ import {
   type ToastRootEmits,
   type ToastRootProps,
 } from 'reka-ui'
-import { cn } from '../../../utils'
+import { cn } from '@utils'
 
 interface ToastProps extends ToastRootProps {
   class?: HTMLAttributes['class']

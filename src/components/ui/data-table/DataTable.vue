@@ -13,7 +13,7 @@ import { Skeleton } from "../skeleton";
 import { ContextMenu, ContextMenuTrigger, ContextMenuContent } from "../context-menu";
 import DataTablePagination from "./DataTablePagination.vue";
 import type { DataTableColumn, DataTableSort } from "./types";
-import { cn } from "../../../utils";
+import { cn } from "@utils";
 
 const props = withDefaults(
     defineProps<{
