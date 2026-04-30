@@ -7,11 +7,16 @@ export default defineConfig({
     resolve: {
         alias: {
             "@": fileURLToPath(new URL("./src", import.meta.url)),
+            "@utils": fileURLToPath(new URL("./src/utils", import.meta.url)),
         },
     },
     test: {
         environment: "happy-dom",
         globals: true,
+        include: [
+            "src/**/*.{test,spec}.{ts,tsx}",
+            "src/**/*.{test,spec}.vue",
+        ],
         setupFiles: ["./tests/setup.ts"],
     },
 });
