@@ -27,7 +27,9 @@
         "dev": "vite",
         "build": "vite build",
         "typecheck": "vue-tsc --noEmit",
-        "iter-check": "vue-tsc --noEmit --project tsconfig.src.json"
+        "iter-check": "vue-tsc --noEmit --project tsconfig.src.json",
+        "iter-build": "vite build --config vite.iter.config.ts",
+        "emit-types": "vue-tsc --emitDeclarationOnly --outDir dist/types --project tsconfig.json"
     },
     "engines": {
         "node": ">=22"
