@@ -20,7 +20,7 @@ import {
     type SectionWindowRange,
 } from "./virtualSectionLayout";
 
-export interface VirtualSectionWindowOptions<T extends FlatSection = FlatSection> {
+interface VirtualWindowConfig<T extends FlatSection = FlatSection> {
     /** The flat list of section items to virtualize. */
     items: MaybeRefOrGetter<readonly T[]>;
     /**
@@ -64,7 +64,7 @@ const SESSION_HEIGHT_CACHE = new Map<string, number>();
  *   content (headers, banners) above the virtual list.
  */
 export function useVirtualSectionWindow<T extends FlatSection>(
-    options: VirtualSectionWindowOptions<T>,
+    options: VirtualWindowConfig<T>,
 ) {
     const items = computed(() => Array.from(toValue(options.items)));
     const measuredHeights = new Map<string, number>();

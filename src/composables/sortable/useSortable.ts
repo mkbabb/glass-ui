@@ -46,7 +46,7 @@ import {
  */
 export type SortableId = string | number;
 
-export interface UseSortableOptions<T> {
+interface SortableOptions<T> {
     /** The reactive array being reordered. */
     items: Ref<readonly T[]> | ComputedRef<readonly T[]>;
     /**
@@ -100,7 +100,7 @@ export interface UseSortableOptions<T> {
  * calls `registerItem(id)` once per row and forwards these via
  * a `v-bind` on the row's root.
  */
-export interface SortableItemBinding {
+interface SortableRowBinding {
     /**
      * Template ref callback. Spread on the row's root element
      * via `:ref="binding.ref"`.
@@ -134,7 +134,7 @@ export interface UseSortableReturn {
      * Idempotent — calling with the same id returns the same
      * binding so Vue's `v-bind` stays stable across rerenders.
      */
-    registerItem: (id: SortableId) => SortableItemBinding;
+    registerItem: (id: SortableId) => SortableRowBinding;
     /**
      * Binding to spread on the list's container element. Marks
      * it as a drop target for cross-list drags in the same
@@ -204,7 +204,7 @@ function findForeignTarget(
 }
 
 export function useSortable<T>(
-    options: UseSortableOptions<T>,
+    options: SortableOptions<T>,
 ): UseSortableReturn {
     const {
         items,
@@ -244,7 +244,7 @@ export function useSortable<T>(
     const elements = new Map<SortableId, Element | null>();
 
     // Binding cache for stable v-bind identity.
-    const bindings = new Map<SortableId, SortableItemBinding>();
+    const bindings = new Map<SortableId, SortableRowBinding>();
 
     function getItemsArray(): readonly T[] {
         return items.value;
@@ -463,7 +463,7 @@ export function useSortable<T>(
         document.removeEventListener("pointercancel", onPointerUp);
     }
 
-    function registerItem(id: SortableId): SortableItemBinding {
+    function registerItem(id: SortableId): SortableRowBinding {
         const cached = bindings.get(id);
         if (cached) return cached;
 
@@ -534,7 +534,7 @@ export function useSortable<T>(
             return result;
         });
 
-        const binding: SortableItemBinding = {
+        const binding: SortableRowBinding = {
             ref: setEl,
             dataAttrs: { "data-sortable-id": String(id) },
             class: classComputed,

@@ -1,11 +1,11 @@
 import { ref, shallowRef, type Ref, type ShallowRef } from "vue";
 
-export interface UseWindowedStoreOptions {
+interface ResidentWindowConfig {
     /** Maximum items to keep in memory. Default: 200. */
     maxResident?: number;
 }
 
-export interface WindowedStore<T> {
+interface ResidentWindowState<T> {
     /** Currently loaded items (a sliding window of the full list). */
     items: ShallowRef<T[]>;
     /** Logical offset of `items[0]` in the full list. */
@@ -35,8 +35,8 @@ export interface WindowedStore<T> {
  * preventing race conditions between concurrent page fetches.
  */
 export function useWindowedStore<T>(
-    options?: UseWindowedStoreOptions,
-): WindowedStore<T> {
+    options?: ResidentWindowConfig,
+): ResidentWindowState<T> {
     const maxResident = options?.maxResident ?? 200;
     const items = shallowRef<T[]>([]);
     const windowStart = ref(0);

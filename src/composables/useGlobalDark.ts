@@ -1,18 +1,6 @@
 import { createGlobalState, useDark, useToggle } from "@vueuse/core";
 import { ref, watch } from "vue";
 
-export interface UseGlobalDarkOptions {
-    /**
-     * When true, temporarily adds `no-transition` class to `<html>` during
-     * dark mode toggle to prevent CSS transition jank on pages with many
-     * transitioned elements.
-     *
-     * Requires the `.no-transition` utility rule in glass-ui's utilities.css.
-     * @default false
-     */
-    disableTransitions?: boolean;
-}
-
 /** Single shared dark mode instance — avoids multiple useDark() watchers racing on classList. */
 export const useGlobalDark = createGlobalState(() => {
     const isDark = useDark({ disableTransition: false });

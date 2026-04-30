@@ -2,10 +2,6 @@ import { ref, onMounted } from "vue";
 
 export type GlassTier = "svg-filter" | "css" | "fallback";
 
-export interface GlassRendererOptions {
-    preferredTier?: GlassTier;
-}
-
 /**
  * Detect best glass rendering tier.
  *
@@ -237,7 +233,7 @@ export function destroyGlassFilter(state: GlassFilterState) {
 /**
  * Composable for tiered glass rendering.
  */
-export function useGlassRenderer(options?: GlassRendererOptions) {
+export function useGlassRenderer(options?: { preferredTier?: GlassTier }) {
     const tier = ref<GlassTier>(options?.preferredTier ?? "css");
 
     onMounted(() => {

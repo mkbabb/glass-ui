@@ -2,7 +2,7 @@
 import { onBeforeUnmount, onMounted, ref, unref, watch } from "vue";
 import type { MaybeRef, Ref } from "vue";
 
-export interface UseScrollProgressOptions {
+interface ScrollProgressConfig {
     /** Element whose vertical position maps to 0..1. */
     target: MaybeRef<HTMLElement | null>;
     /** Pixel offset added to the mapped start. Negative values start earlier. */
@@ -24,7 +24,7 @@ export interface UseScrollProgressOptions {
  * stays accurate when layout shifts.
  */
 export function useScrollProgress(
-    options: UseScrollProgressOptions,
+    options: ScrollProgressConfig,
 ): Ref<number> {
     const { offset = 0, trackExit = false } = options;
     const progress = ref(0);

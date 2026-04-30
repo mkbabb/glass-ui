@@ -1,12 +1,9 @@
 export {
     useVirtualSectionWindow,
-    type VirtualSectionWindowOptions,
 } from "./useVirtualSectionWindow";
 
 export {
     useWindowedStore,
-    type WindowedStore,
-    type UseWindowedStoreOptions,
 } from "./useWindowedStore";
 
 export {
@@ -17,6 +14,5 @@ export {
     type FlatSection,
     type ForcedSectionWindowRange,
     type SectionLayout,
-    type SectionLayoutEntry,
     type SectionWindowRange,
 } from "./virtualSectionLayout";

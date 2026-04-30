@@ -1,11 +1,9 @@
-export * from "./interaction";
 export * from "./sortable";
-export { useGlobalDark, type UseGlobalDarkOptions } from "./useGlobalDark";
+export { useGlobalDark } from "./useGlobalDark";
 export * from "./useKeyboardShortcuts";
 export * from "./glass";
 export * from "./motion";
 export * from "./pagination";
-export * from "./prng";
 export * from "./virtual";
 export * from "../components/custom/infinite-scroll/composables";
 export * from "./sidebar";

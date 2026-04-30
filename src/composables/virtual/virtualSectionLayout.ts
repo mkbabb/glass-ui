@@ -17,7 +17,7 @@ export interface FlatSection {
 }
 
 /** A single entry in a computed section layout with resolved position. */
-export interface SectionLayoutEntry<T extends FlatSection = FlatSection> {
+interface VirtualLayoutEntry<T extends FlatSection = FlatSection> {
     item: T;
     height: number;
     top: number;
@@ -26,7 +26,7 @@ export interface SectionLayoutEntry<T extends FlatSection = FlatSection> {
 
 /** Complete layout for a list of sections — entries plus total height. */
 export interface SectionLayout<T extends FlatSection = FlatSection> {
-    entries: SectionLayoutEntry<T>[];
+    entries: VirtualLayoutEntry<T>[];
     totalHeight: number;
 }
 
@@ -78,7 +78,7 @@ export function buildSectionLayout<T extends FlatSection>(
  * Returns the index of the first visible item.
  */
 function findStartIndex<T extends FlatSection>(
-    entries: readonly SectionLayoutEntry<T>[],
+    entries: readonly VirtualLayoutEntry<T>[],
     startOffset: number,
 ): number {
     if (entries.length === 0) return 0;
@@ -100,7 +100,7 @@ function findStartIndex<T extends FlatSection>(
  * Returns the index of the last visible item.
  */
 function findEndIndex<T extends FlatSection>(
-    entries: readonly SectionLayoutEntry<T>[],
+    entries: readonly VirtualLayoutEntry<T>[],
     endOffset: number,
 ): number {
     if (entries.length === 0) return 0;

@@ -1,6 +1,6 @@
 import { ref, computed, type Ref } from "vue";
 
-export interface OffsetPaginationOptions<T> {
+interface OffsetPaginationConfig<T> {
     fetchFn: (limit: number, offset: number) => Promise<{ data: T[]; total: number }>;
     pageSize?: number;
 }
@@ -9,7 +9,7 @@ export interface OffsetPaginationOptions<T> {
  * Composable for offset-based pagination with page navigation.
  * Suitable for admin views that need jump-to-page and stable positions.
  */
-export function useOffsetPagination<T>(options: OffsetPaginationOptions<T>) {
+export function useOffsetPagination<T>(options: OffsetPaginationConfig<T>) {
     const items = ref<T[]>([]) as Ref<T[]>;
     const total = ref(0);
     const page = ref(1);

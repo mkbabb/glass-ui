@@ -6,11 +6,10 @@ import type {
     TimingFunctionNames,
 } from "@mkbabb/keyframes.js";
 import { onBeforeUnmount, ref, shallowRef } from "vue";
-import type { Ref } from "vue";
 
 export type SpringSnapshot<K extends string> = Record<K, number>;
 
-export interface UseSpringOrchestratorOptions<K extends string> {
+interface SpringOrchestrationConfig<K extends string> {
     /** Named numeric endpoints to interpolate between. */
     from: SpringSnapshot<K>;
     to: SpringSnapshot<K>;
@@ -20,17 +19,6 @@ export interface UseSpringOrchestratorOptions<K extends string> {
     timingFunction?: TimingFunction | TimingFunctionNames;
     /** Per-frame consumer. Receives the same zero-allocation record each tick. */
     onFrame?: (values: SpringSnapshot<K>) => void;
-}
-
-export interface SpringOrchestrator<K extends string> {
-    /** Kick off the animation. Resolves when complete or stopped. */
-    start: () => Promise<void>;
-    /** Cancel an in-flight animation. */
-    stop: () => void;
-    /** Reactive 0..1 progress of the most recent run. */
-    progress: Ref<number>;
-    /** True while a run is active. */
-    playing: Ref<boolean>;
 }
 
 /**
@@ -45,8 +33,8 @@ export interface SpringOrchestrator<K extends string> {
  * the renderer.
  */
 export function useSpringOrchestrator<K extends string>(
-    options: UseSpringOrchestratorOptions<K>,
-): SpringOrchestrator<K> {
+    options: SpringOrchestrationConfig<K>,
+) {
     const progress = ref(0);
     const playing = ref(false);
 

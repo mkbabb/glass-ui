@@ -1,8 +1,7 @@
 // IntersectionObserver-gated sequenced reveal — returns per-target revealed state for stagger entrance.
 import { onBeforeUnmount, reactive, ref } from "vue";
-import type { Ref } from "vue";
 
-export interface UseStaggerRevealOptions {
+interface StaggerRevealConfig {
     /** Delay between each target becoming `revealed`. Default 60ms. */
     staggerMs?: number;
     /** When true (default), a target stays revealed after first entering the viewport. */
@@ -13,15 +12,6 @@ export interface UseStaggerRevealOptions {
     threshold?: number;
 }
 
-export interface StaggerRevealApi {
-    /** Ordered list of observed elements (index is the stagger slot). */
-    targets: Ref<HTMLElement[]>;
-    /** Register an element — call from a `:ref` callback or `onMounted`. */
-    register: (el: HTMLElement | null, index?: number) => void;
-    /** Revealed flags keyed by element; reactive. */
-    revealed: Record<number, boolean>;
-}
-
 /**
  * Sequence entrance animations for a list/grid. Each registered target
  * gets a staggered `revealed` flag once it crosses the viewport threshold.
@@ -29,8 +19,8 @@ export interface StaggerRevealApi {
  * and let CSS transitions handle the visual entry.
  */
 export function useStaggerReveal(
-    options: UseStaggerRevealOptions = {},
-): StaggerRevealApi {
+    options: StaggerRevealConfig = {},
+) {
     const {
         staggerMs = 60,
         once = true,
