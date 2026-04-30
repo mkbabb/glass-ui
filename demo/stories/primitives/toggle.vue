@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight } from "lucide-vue-next";
 import { Toggle } from "@/components/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
@@ -16,6 +16,7 @@ const filters = ref<{ fourier: boolean; chebyshev: boolean; legendre: boolean }>
 });
 type FilterKey = keyof typeof filters.value;
 const filterKeys: FilterKey[] = ["fourier", "chebyshev", "legendre"];
+const selectedFilters = computed(() => filterKeys.filter((key) => filters.value[key]));
 const cell = ref<string>("warm");
 </script>
 
@@ -71,37 +72,54 @@ const cell = ref<string>("warm");
         </section>
 
         <!-- ToggleChip: chip variant. -->
-        <section class="flex flex-col gap-3">
+        <section class="flex flex-col gap-3" data-testid="toggle-chip-chip-section">
             <p class="section-label">toggle-chip · chip variant</p>
             <div class="flex flex-wrap items-center gap-2">
                 <ToggleChip
                     v-for="key in filterKeys"
                     :key="key"
-                    v-model:pressed="filters[key]"
+                    v-model="filters[key]"
                     variant="chip"
+                    :aria-label="`Toggle ${key} filter`"
+                    :data-testid="`toggle-chip-chip-${key}`"
+                    data-toggle-chip-variant="chip"
                 >
                     {{ key }}
                 </ToggleChip>
             </div>
+            <p
+                class="text-mono-caption text-muted-foreground"
+                data-testid="toggle-chip-chip-state"
+            >
+                chip filters · [{{ selectedFilters.join(", ") || "none" }}]
+            </p>
         </section>
 
         <!-- ToggleChip: cell variant — icon + label. -->
-        <section class="flex flex-col gap-3">
+        <section class="flex flex-col gap-3" data-testid="toggle-chip-cell-section">
             <p class="section-label">toggle-chip · cell variant</p>
             <div class="flex flex-wrap items-stretch gap-3">
                 <ToggleChip
                     v-for="opt in ['warm', 'cool', 'mono'] as const"
                     :key="opt"
-                    :pressed="cell === opt"
+                    :model-value="cell === opt"
                     variant="cell"
                     class="w-24"
-                    @update:pressed="cell = opt"
+                    :aria-label="`Select ${opt} palette`"
+                    :data-testid="`toggle-chip-cell-${opt}`"
+                    data-toggle-chip-variant="cell"
+                    @update:model-value="cell = opt"
                 >
                     <span class="h-6 w-6 rounded-full bg-viz-fourier" />
                     <span class="capitalize">{{ opt }}</span>
                 </ToggleChip>
             </div>
-            <p class="text-mono-caption text-muted-foreground">cell · {{ cell }}</p>
+            <p
+                class="text-mono-caption text-muted-foreground"
+                data-testid="toggle-chip-cell-state"
+            >
+                cell · {{ cell }}
+            </p>
         </section>
     </StoryPage>
 </template>
