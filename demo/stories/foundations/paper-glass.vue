@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { onMounted, ref } from "vue";
+import { GlassPanel } from "@/components/custom/glass-panel";
+import { useGlassRenderer, type GlassTier } from "@/composables/glass";
 import { cn } from "@/utils/cn";
 
 interface Tile {
@@ -9,6 +11,20 @@ interface Tile {
     opacityVar: string;
     blurVar: string;
     role: string;
+}
+
+type GlassPanelVariant = "default" | "medium" | "elevated";
+
+interface PanelExample {
+    id: string;
+    title: string;
+    tier: GlassTier;
+    variant: GlassPanelVariant;
+    rendering: string;
+    blur: number;
+    refraction: number;
+    chromaticAberration: boolean;
+    accent: string;
 }
 
 const tiers: Tile[] = [
@@ -41,6 +57,44 @@ const tiers: Tile[] = [
         role: "dialogs, command palette, modals",
     },
 ];
+
+const panelExamples: PanelExample[] = [
+    {
+        id: "css-medium",
+        title: "CSS frost layer",
+        tier: "css",
+        variant: "medium",
+        rendering: "backdrop-filter blur + tokenized medium glass",
+        blur: 14,
+        refraction: 0.18,
+        chromaticAberration: false,
+        accent: "var(--viz-topology)",
+    },
+    {
+        id: "svg-elevated",
+        title: "Refractive lens",
+        tier: "svg-filter",
+        variant: "elevated",
+        rendering: "SVG displacement map + elevated glass shell",
+        blur: 18,
+        refraction: 0.42,
+        chromaticAberration: true,
+        accent: "var(--viz-fourier)",
+    },
+    {
+        id: "fallback-default",
+        title: "Fallback plate",
+        tier: "fallback",
+        variant: "default",
+        rendering: "opaque token surface for unsupported backdrop filters",
+        blur: 8,
+        refraction: 0,
+        chromaticAberration: false,
+        accent: "var(--viz-recursion)",
+    },
+];
+
+const { tier: detectedGlassTier } = useGlassRenderer();
 
 // Live token values are read on mount and exposed for display.
 const values = ref<Record<string, string>>({});
@@ -95,6 +149,94 @@ onMounted(() => {
                 </div>
             </div>
         </div>
+
+        <!-- GlassPanel substrate: component-level renderer tiers. -->
+        <section data-testid="glass-panel-section" class="flex flex-col gap-4">
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                    <p class="text-admin-label text-muted-foreground">
+                        GlassPanel · renderer substrate
+                    </p>
+                    <h2 class="text-subheading text-foreground">
+                        Tiered glass panels
+                    </h2>
+                </div>
+                <p
+                    data-testid="glass-renderer-readout"
+                    class="text-small rounded-panel border border-border/60 bg-card/60 px-3 py-2 text-muted-foreground"
+                >
+                    detected tier ·
+                    <code class="fira-code text-foreground">{{ detectedGlassTier }}</code>
+                </p>
+            </div>
+
+            <div
+                :class="
+                    cn(
+                        'relative overflow-hidden rounded-card border border-border/60 p-5 md:p-7',
+                        'bg-[linear-gradient(135deg,color-mix(in_srgb,var(--viz-fourier)_24%,transparent),transparent_36%),radial-gradient(circle_at_80%_20%,color-mix(in_srgb,var(--viz-topology)_25%,transparent),transparent_32%),var(--background)]',
+                    )
+                "
+            >
+                <div
+                    class="absolute inset-0 opacity-45"
+                    aria-hidden="true"
+                    style="background-image: linear-gradient(90deg, color-mix(in srgb, var(--foreground) 8%, transparent) 1px, transparent 1px), linear-gradient(color-mix(in srgb, var(--foreground) 8%, transparent) 1px, transparent 1px); background-size: 34px 34px;"
+                />
+
+                <div class="relative grid grid-cols-1 gap-4 lg:grid-cols-3">
+                    <GlassPanel
+                        v-for="panel in panelExamples"
+                        :key="panel.id"
+                        data-testid="glass-panel-card"
+                        :tier="panel.tier"
+                        :variant="panel.variant"
+                        :blur="panel.blur"
+                        :refraction="panel.refraction"
+                        :chromatic-aberration="panel.chromaticAberration"
+                        :class="
+                            cn(
+                                'paper-grain-overlay min-h-56 rounded-card p-5',
+                                'flex flex-col justify-between overflow-hidden',
+                            )
+                        "
+                    >
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="flex flex-col gap-1">
+                                <p class="text-admin-label text-muted-foreground">
+                                    {{ panel.variant }} variant
+                                </p>
+                                <p class="text-subheading text-foreground">
+                                    {{ panel.title }}
+                                </p>
+                            </div>
+                            <span
+                                class="h-3 w-3 shrink-0 rounded-full shadow-cartoon-sm"
+                                :style="{ backgroundColor: panel.accent }"
+                                aria-hidden="true"
+                            />
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-2 text-small">
+                            <p class="text-muted-foreground">
+                                tier ·
+                                <code class="fira-code text-foreground">{{ panel.tier }}</code>
+                            </p>
+                            <p class="text-muted-foreground">
+                                rendering ·
+                                <span class="text-foreground">{{ panel.rendering }}</span>
+                            </p>
+                            <p class="text-muted-foreground">
+                                blur/refraction ·
+                                <code class="fira-code text-foreground">
+                                    {{ panel.blur }}px / {{ panel.refraction }}
+                                </code>
+                            </p>
+                        </div>
+                    </GlassPanel>
+                </div>
+            </div>
+        </section>
 
         <!-- Paper-grain overlay tile: explicit grain utility on a flat surface. -->
         <div>
