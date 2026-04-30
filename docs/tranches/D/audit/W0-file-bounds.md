@@ -27,11 +27,13 @@ The D.md critical-files table mixes existing files, planned create files, delete
 | `demo/stories/data/search.vue` | create | absent | OK - W1.A create target |
 | `demo/stories/containers/glass-carousel.vue` | create | absent | OK - W1.B create target |
 | `demo/stories/data/sortable-list.vue` | modify | present | OK |
-| `demo/stories/navigation/progressive-sidebar.vue` | create | absent | OK - W1.C create target |
+| `demo/stories/foundations/paper-glass.vue` | modify | present | OK - W1.C modify target |
+| `demo/stories/motion/metaballs.vue` | create | absent | OK - W1.C create target |
 | `demo/stories/navigation/{dock,dock-layers}.vue` | modify | both present | OK |
 | existing `demo/stories/{feedback,containers,compositions,primitives}/*.vue` | modify | present category dirs | OK |
 | `demo/stories/manifest.ts` | modify-disjoint-hunks | present | OK |
-| `src/components/custom/<deleted>/**` | delete | dynamic | OK - resolved by W0.B |
+| `src/composables/<deleted>/**` + composable barrels | modify/delete | dynamic | OK - resolved by W0.B |
+| `src/components/custom/<deleted>/**` | delete | none planned after W0.B | OK - fresh W2 preflight only |
 | `src/components/ui/<facade-deletes>/**` | delete | dynamic | OK - resolved by W0.C |
 | `src/composables/sidebar/**` | create+rename | absent | OK - W2.C target clear |
 | `src/components/custom/sidebar/composables/` | delete | present | OK - W2.C source exists |
@@ -60,10 +62,11 @@ W1 write set:
 demo/stories/data/search.vue
 demo/stories/containers/glass-carousel.vue
 demo/stories/data/sortable-list.vue
-demo/stories/navigation/progressive-sidebar.vue
+demo/stories/foundations/paper-glass.vue
+demo/stories/motion/metaballs.vue
 demo/stories/navigation/dock.vue
 demo/stories/navigation/dock-layers.vue
-demo/stories/{feedback,containers,compositions,primitives}/*.vue
+demo/stories/primitives/toggle.vue
 demo/stories/manifest.ts
 ```
 
@@ -74,7 +77,9 @@ Verdict: no W1 path is also in W2's source-tree delete/hoist allow-list. `demo/s
 W2 write set:
 
 ```text
-src/components/custom/<deleted-packages>/**
+src/composables/<deleted-files>
+src/composables/**/index.ts
+src/components/custom/<deleted-packages>/** (fresh preflight only)
 src/components/custom/index.ts
 src/components/ui/<facade-deletes>/**
 src/components/ui/index.ts
@@ -98,6 +103,17 @@ Verdict: W2 is disjoint from W1. Inside W2, `src/index.ts` and `CLAUDE.md` are s
 | W1 create targets intersect W2 delete targets | 0 |
 | W1 manifest edits intersect W2 source edits | 0 |
 | W1/W2 intersection verdict | pass |
+
+## Close addendum after W0 triage
+
+W0.B's binding ledger superseded several draft W1/W2 guesses:
+
+- `demo/stories/navigation/progressive-sidebar.vue` is retired from W1 because the sidebar rows moved to `W0-already-resolved.md`; the existing `demo/stories/navigation/sidebar.vue` remains the current story proof.
+- D.W1.C now owns `demo/stories/foundations/paper-glass.vue` and `demo/stories/motion/metaballs.vue` for `GlassPanel`, `MetaballCanvas`, and `useMetaballs`.
+- D.W1.E now owns only `demo/stories/primitives/toggle.vue` for `ToggleChip`.
+- D.W2.A now owns composable delete rows in `src/composables/**` plus related composable barrels; W0 closed with no planned custom-component package deletes.
+
+Updated W1 paths remain under `demo/stories/**`; updated W2.A paths remain under `src/composables/**`. The W1/W2 intersection is still empty.
 
 ## W4 tooling conflict check
 

@@ -18,8 +18,8 @@ Dated execution log for tranche D — Substrate-with-Consumer. Updated at every 
 
 ## Wave statuses
 
-- W0: planned
-- W1: planned (blocked-by W0)
+- W0: complete
+- W1: planned (unblocked by W0; open next)
 - W2: planned (blocked-by W1)
 - W3: planned (blocked-by W2)
 - W4: planned (blocked-by W3)
@@ -42,7 +42,46 @@ Per `docs/tranches/C/FINAL.md` and SYNTHESIS:
 
 (Populated as waves close. See bbnf-lang SPEC §"Wave verification ledger" for required content per close.)
 
-### W0 close (open)
+### W0 close (2026-04-30)
+
+Commits:
+
+- `f76c1b8` — D.W0.A.1 hardened `src/components/ui/` audit.
+- `ca49a1a` — D.W0.A.2 hardened `src/components/custom/` audit.
+- `db91793` — D.W0.A.3 hardened `src/composables/` audit; normalized by `b120e23` after current-master scope reveal.
+- `492b9a4` — D.W0.A.4 hardened `src/styles/` audit.
+- `d512ac3` — D.W0.C/D/E façade list, sidebar hoist plan, and file-bounds audit.
+- `b120e23` — integrated W0 audit, C-forwarded triage, and already-resolved ledger.
+
+Artefacts:
+
+- `docs/tranches/D/audit/W0-overfitting-{ui,custom,composables,styles}.md`
+- `docs/tranches/D/audit/W0-overfitting.md`
+- `docs/tranches/D/audit/W0-triage.md`
+- `docs/tranches/D/audit/W0-already-resolved.md`
+- `docs/tranches/D/audit/W0-facade-list.md`
+- `docs/tranches/D/audit/W0-sidebar-plan.md`
+- `docs/tranches/D/audit/W0-file-bounds.md`
+
+Gate evidence:
+
+- 10 W0 audit/planning docs exist under `docs/tranches/D/audit/`.
+- C-forwarded arithmetic closed: `W0-already-resolved.md` 36 rows + `W0-triage.md` 65 rows = 101.
+- W0 triage action distribution: `wire` 12, `keep-current` 21, `delete` 32.
+- Façade verdicts assigned: 29 `keep-as-wired-facade`, 39 `delete`.
+- Sidebar decision recorded as hoist to `src/composables/sidebar/`.
+- W1/W2 file-bounds intersection remains empty.
+- `git diff --check` and `git diff --cached --check` passed for the W0 integration commit.
+- `npm run typecheck` passed on 2026-04-30.
+- `npm run build` passed on 2026-04-30; output `dist/glass-ui.js 378.58 kB`, `dist/glass-ui.css 39.81 kB`.
+
+Scope reveal:
+
+- `6104ebb` landed on `master` while W0 agents were running and deleted `useWatercolorBlob`, `useClipboard`/`copyToClipboard`, and `useCharSplit`.
+- The composables audit was re-grounded on current `master`; deleted rows moved to `W0-already-resolved.md`.
+- `hashString`, `mulberry32`, `radiiToCSS`, and `randomRadii` changed to W2 delete candidates because their only source consumer disappeared.
+- W1/W2 wave specs were amended at W0 close so dispatch uses the binding W0 ledger: W1 wires the 12 `wire` rows; W2 absorbs the 32 composable delete rows plus the 39 façade deletions and style recheck.
+
 ### W1 close (open)
 ### W2 close (open)
 ### W3 close (open)

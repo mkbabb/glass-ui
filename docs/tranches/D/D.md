@@ -37,9 +37,9 @@ Per-wave specs at [`waves/W{0..5}.md`](waves/) (shared precepts WAVE_SPEC format
 
 | Wave | Title | Spec | Agents | Mode | Hard gate (one-line) | Status |
 |---|---|---|---|---|---|---|
-| W0 | Hardened audit + triage + structural decisions | [W0.md](waves/W0.md) | 5 | parallel | 9 audit docs landed; every C-forwarded candidate re-grepped; sidebar decision = hoist; façade-list enumerated | planned |
-| W1 | Wire pass — orphan packages with demo stories | [W1.md](waves/W1.md) | 5 | parallel | every `wire`-verdict has Playwright-rendered story; manifest entry; route renders non-empty `<main>` zero console errors | planned |
-| W2 | Delete pass — orphans + façades + sidebar hoist | [W2.md](waves/W2.md) | 5 | parallel | named symbols absent from `src/index.ts`; bundle smaller; sidebar at `src/composables/sidebar/`; consumer builds clean | planned |
+| W0 | Hardened audit + triage + structural decisions | [W0.md](waves/W0.md) | 5 | parallel | 10 audit/planning docs landed; every C-forwarded candidate re-grepped; sidebar decision = hoist; façade-list enumerated | complete |
+| W1 | Wire pass — W0 `wire` rows with demo stories | [W1.md](waves/W1.md) | 5 | parallel | every `wire`-verdict has Playwright-rendered story; manifest entry where new route exists; route renders non-empty `<main>` zero console errors | planned |
+| W2 | Delete pass — composable orphans + façades + sidebar hoist | [W2.md](waves/W2.md) | 5 | parallel | named symbols absent from `src/index.ts`; bundle smaller; sidebar at `src/composables/sidebar/`; consumer builds clean | planned |
 | W3 | Consumer evidence sweep | [W3.md](waves/W3.md) | 2 | parallel | `docs/consumer-evidence/*.md` per retained public symbol that lacks a story; each cites current source paths; canned audit prompt updated | planned |
 | W4 | Velocity foundation — Vitest + tsconfig.src + iter scripts | [W4.md](waves/W4.md) | 4 | parallel | `npm run iter` < 10 s wall; ~120-160 tests green; `scripts/ay-close.sh` end-to-end exits 0 | planned |
 | W5 | Re-audit + close ceremony | [W5.md](waves/W5.md) | 4 + orchestrator | parallel + n/a | re-audit actionable ≤ 5; FINAL.md + retro committed; tag `d-close` | planned |
@@ -77,11 +77,11 @@ C.W0's auto-keep-on-public-surface masked half the signal until the `library-orp
 - **Files**: `docs/tranches/D/audit/W0-file-bounds.md` (create).
 - **Sub-gate**: zero overlapping allow-lists; W1/W2 intersection = ∅; tooling-file-not-yet-present ✓.
 
-**Hard gate (W0)**: 6 audit docs landed (4 per-scope + W0-overfitting integrated + W0-triage + W0-already-resolved + W0-facade-list + W0-sidebar-plan + W0-file-bounds = 9 files at minimum). Triage covers every C-forwarded candidate; façade verdicts assigned; sidebar plan recorded.
+**Hard gate (W0)**: 10 audit/planning docs landed (4 per-scope + W0-overfitting integrated + W0-triage + W0-already-resolved + W0-facade-list + W0-sidebar-plan + W0-file-bounds). Triage covers every C-forwarded candidate; façade verdicts assigned; sidebar plan recorded.
 
 ### D.W1 — Wire pass (5 parallel)
 
-For every `wire`-verdict candidate from W0.B. Sub-agents partition by package.
+For every `wire`-verdict candidate from W0.B. Sub-agents partition by package. W0 closed with 12 binding wire rows: `FuzzySearch`, `buildIndex`, `clearSearchCache`, `GlassCarousel`, `GlassCarouselItem`, `useGlassCarousel`, `GlassPanel`, `MetaballCanvas`, `useMetaballs`, `DockDropdownTrigger`, `DockSelectTrigger`, and `ToggleChip`. Rows that W0 moved to `W0-already-resolved.md` are not W1 obligations unless a fresh pre-dispatch check shows the existing story no longer renders.
 
 #### D.W1.A — Search package
 `demo/stories/data/search.vue` (create) exercising `FuzzySearch`, `SearchBar`, `useFuzzySearch`, `buildIndex`, `searchIndex`, `fuzzyMatch`, `clearSearchCache`. Sample 50-row dataset; results in `<Card>`; story controls trigger each helper explicitly. Append manifest row.
@@ -92,17 +92,17 @@ For every `wire`-verdict candidate from W0.B. Sub-agents partition by package.
 - `demo/stories/data/sortable-list.vue` (modify) — extend coverage to demonstrate `SortableHandle` + `SORTABLE_CONTEXT` use (audit's grep missed these).
 - **Sub-gate**: Playwright at `/containers/glass-carousel` (carousel pages on click; reactive index) and `/data/sortable-list` (drag-handle visible; reorder operates).
 
-#### D.W1.C — Sidebar story
-`demo/stories/navigation/progressive-sidebar.vue` (create) exercising `ProgressiveSidebar`, `useSidebarState`, `useSidebarFollow`, `useScrollTracker`, `useTreeIndex`, `buildTreeIndex`, `isActive`, `isInActiveChain`. Tree of mock document sections; sidebar tracks scroll; click navigates.
-- **Sub-gate**: Playwright at `/navigation/progressive-sidebar`: scroll updates active-row class within 500ms; tree expand/collapse works.
+#### D.W1.C — Glass substrate story
+`demo/stories/foundations/paper-glass.vue` (modify) and `demo/stories/motion/metaballs.vue` (create) exercising `GlassPanel`, `MetaballCanvas`, and `useMetaballs`. `GlassPanel` belongs with the paper/glass token story; metaballs earns a dedicated motion route because it owns a WebGL canvas substrate.
+- **Sub-gate**: Playwright at `/foundations/paper-glass` sees `GlassPanel` content; Playwright at `/motion/metaballs` sees either a live canvas or explicit fallback plus a `useMetaballs` support readout; zero console errors.
 
 #### D.W1.D — Dock subset extension
 Extend existing `demo/stories/navigation/dock.vue` + `dock-layers.vue` with sections demonstrating `DockPopover`, `DockSelectTrigger`, `DockDropdownTrigger`, `DockIconButton`, `DockLayerGroup`. No new routes — gestalt: dock primitives belong together.
 - **Sub-gate**: Playwright: every named subcomponent in DOM; each interactive subcomponent's basic action fires.
 
-#### D.W1.E — Singleton orphans (per W0.B verdict)
-For singleton orphans verdicted `wire`: extend existing category stories (Pulse/StatusDot → feedback; ToggleChip → primitives/buttons; ConfirmDialog → containers/dialog; TypewriterText/StackedIconGroup → compositions). New routes only when no fit. ExpandableContainer + GlassPanel + InfiniteScroll + GlassTimeline stay or delete per W0.B.
-- **Sub-gate**: Playwright walk over modified routes; every wired component in DOM; manifest row growth ≤ 2.
+#### D.W1.E — Toggle singleton (per W0.B verdict)
+Extend or verify `demo/stories/primitives/toggle.vue` for `ToggleChip`. W0 already resolved Pulse, StatusDot, ConfirmDialog, TypewriterText, StackedIconGroup, InfiniteScroll, GlassTimeline, and ProgressiveSidebar; do not add duplicate routes for those rows unless pre-dispatch Playwright shows the existing route fails.
+- **Sub-gate**: Playwright at `/primitives/toggle` sees `ToggleChip` chip and cell variants and interaction changes state; manifest row growth from this sub-phase = 0.
 
 **Hard gate (W1)**: every `wire`-verdict from W0.B has a Playwright-rendered story; `npm run typecheck` + `npm run build` clean; full route walk produces zero console errors.
 
@@ -110,9 +110,9 @@ For singleton orphans verdicted `wire`: extend existing category stories (Pulse/
 
 C-retro lesson: trust artefacts not claims. Every delete in W2 re-greps against current master immediately before `rm`; if a consumer surfaces, the row flips to `wire` and dispatches as a follow-on commit within W2.
 
-#### D.W2.A — Delete orphan components
-For each `delete`-verdict component from W0.B: `rm -rf src/components/custom/<package>/`; remove from `src/components/custom/index.ts`; remove from CLAUDE.md.
-- **Sub-gate**: typecheck + build exit 0; `git diff src/components/custom/index.ts` shows exports removed; bundle size shrinks.
+#### D.W2.A — Delete orphan composables and custom rows
+W0.B produced no custom-component package deletes; it produced 32 C-forwarded delete rows, mostly composable values/types. For each `delete` row from `W0-triage.md`, re-`rg` against current master, remove the symbol or dead file, and update barrel exports. If a custom component row flips to delete in W1/W2 preflight, handle it here with the same pre-delete grep rule.
+- **Sub-gate**: typecheck + build exit 0; `git diff src/composables/index.ts src/components/custom/index.ts` shows only named exports removed; bundle size shrinks.
 
 #### D.W2.B — Delete façade ui components
 For each W0.C `delete` verdict: `rm` the component file; remove from `src/components/ui/<dir>/index.ts`; remove cn() / re-imports from any consumer in src/ or demo/. Wired façades (W0.C `keep-as-wired-facade`) remain untouched.
@@ -220,11 +220,13 @@ Playwright walks every route in light + dark mode. Three consumer builds. Bundle
 | `demo/stories/data/search.vue` | D.W1.A | create | FuzzySearch + helpers story |
 | `demo/stories/containers/glass-carousel.vue` | D.W1.B | create | Carousel + composable story |
 | `demo/stories/data/sortable-list.vue` | D.W1.B | modify | extend SortableHandle + SORTABLE_CONTEXT coverage |
-| `demo/stories/navigation/progressive-sidebar.vue` | D.W1.C | create | sidebar + composables story |
+| `demo/stories/foundations/paper-glass.vue` | D.W1.C | modify | GlassPanel substrate story |
+| `demo/stories/motion/metaballs.vue` | D.W1.C | create | MetaballCanvas + useMetaballs story |
 | `demo/stories/navigation/{dock,dock-layers}.vue` | D.W1.D | modify | extend dock subset coverage |
-| existing feedback/containers/compositions stories | D.W1.E | modify | wire singletons |
+| `demo/stories/primitives/toggle.vue` | D.W1.E | modify-or-verify | ToggleChip wire row |
 | `demo/stories/manifest.ts` | D.W1.A-E | modify-disjoint-hunks | append manifest rows |
-| `src/components/custom/<deleted>/**` | D.W2.A | delete | unwired component packages |
+| `src/composables/<deleted>/**`, `src/composables/index.ts` | D.W2.A | modify/delete | unwired composable values/types from W0 triage |
+| `src/components/custom/<deleted>/**` | D.W2.A | delete | custom rows only if fresh W2 preflight flips one to delete |
 | `src/components/ui/<facade-deletes>/**` | D.W2.B | delete | zero-value façade wrappers |
 | `src/components/custom/index.ts`, `src/components/ui/index.ts` | D.W2.A/B | modify | drop deleted re-exports |
 | `src/composables/sidebar/**` | D.W2.C | create+rename | hoisted composables |
@@ -253,7 +255,7 @@ W2.E and W4 `package.json` modifications are orchestrator-led consolidation comm
 
 | Wave | Gate | Verification artefact |
 |---|---|---|
-| W0 | 9 audit docs landed; triage + façade-list + sidebar-plan recorded; file-bounds disjoint | `ls docs/tranches/D/audit/`; row counts |
+| W0 | 10 audit/planning docs landed; triage + façade-list + sidebar-plan recorded; file-bounds disjoint | `ls docs/tranches/D/audit/`; row counts |
 | W1 | every `wire`-verdict has Playwright-rendered story; typecheck + build clean; route walk zero errors | Playwright DOM evals; build exit codes; manifest row count delta |
 | W2 | named symbols absent from `src/index.ts`; bundle smaller than c-close; consumer builds clean; sidebar at `src/composables/sidebar/` | `dist/index.d.ts` greps; `du -sh dist/glass-ui.js` delta; consumer build exits |
 | W3 | every `keep-current` item has current-consumer evidence; canned prompt updated | `ls docs/consumer-evidence/*.md`; current-consumer grep per doc |
@@ -335,10 +337,7 @@ src/composables/sidebar/                        # NEW at D.W2.C (hoist target)
 ├── useSidebarState.ts
 ├── useSidebarFollow.ts
 ├── useScrollTracker.ts
-├── useTreeIndex.ts
-├── buildTreeIndex.ts
-├── isActive.ts
-└── isInActiveChain.ts
+└── useTreeIndex.ts                              # exports buildTreeIndex, isActive, isInActiveChain
 
 tests/                                          # NEW at D.W4.C
 ├── ui/
@@ -360,7 +359,7 @@ vitest.config.ts                                # NEW at D.W4.C
 
 demo/stories/data/search.vue                    # NEW at D.W1.A
 demo/stories/containers/glass-carousel.vue      # NEW at D.W1.B
-demo/stories/navigation/progressive-sidebar.vue # NEW at D.W1.C
+demo/stories/motion/metaballs.vue               # NEW at D.W1.C
 ```
 
 ## Verification (run end-to-end after D close)
