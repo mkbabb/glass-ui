@@ -5,3 +5,8 @@ export {
 } from "./useSpringOrchestrator";
 export { useStaggerReveal } from "./useStaggerReveal";
 export { useScrollProgress } from "./useScrollProgress";
+export {
+    useAnimatedNumber,
+    type AnimatedNumber,
+    type UseAnimatedNumberOptions,
+} from "./useAnimatedNumber";
