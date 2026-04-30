@@ -8,7 +8,11 @@
  */
 import { ref, computed, watch, onMounted, onUnmounted, nextTick, toValue } from "vue";
 import type { MaybeRefOrGetter, Ref } from "vue";
-import type { TreeNode, TreeIndexEntry, ScrollTrackerOptions } from "../types";
+import type {
+    TreeNode,
+    TreeIndexEntry,
+    ScrollTrackerOptions,
+} from "../../components/custom/sidebar/types";
 
 export function useScrollTracker<T extends TreeNode>(
     roots: MaybeRefOrGetter<T[]>,

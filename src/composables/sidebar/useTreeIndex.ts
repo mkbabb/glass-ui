@@ -1,4 +1,9 @@
-import type { TreeNode, TreeIndexEntry, SidebarSection, SidebarIndexEntry } from "../types";
+import type {
+    TreeNode,
+    TreeIndexEntry,
+    SidebarSection,
+    SidebarIndexEntry,
+} from "../../components/custom/sidebar/types";
 
 // ---------------------------------------------------------------------------
 // Generic composable — builds index + provides helpers with `getChildren` support

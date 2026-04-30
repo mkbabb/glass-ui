@@ -5,7 +5,7 @@
  */
 import { reactive, computed } from "vue";
 import type { Ref } from "vue";
-import type { SidebarSection, SidebarState } from "../types";
+import type { SidebarSection, SidebarState } from "../../components/custom/sidebar/types";
 import { useTreeIndex } from "./useTreeIndex";
 
 export interface UseSidebarStateOptions {
