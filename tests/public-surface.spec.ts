@@ -82,6 +82,7 @@ const composableRuntimeExports = [
     "useRegisteredShortcuts",
     "useTouchGate",
     "useTimer",
+    "useInterval",
     "useGlassRenderer",
     "createGlassFilter",
     "destroyGlassFilter",
