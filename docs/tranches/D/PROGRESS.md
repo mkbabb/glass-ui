@@ -21,8 +21,8 @@ Dated execution log for tranche D — Substrate-with-Consumer. Updated at every 
 - W0: complete
 - W1: complete
 - W2: complete
-- W3: planned (unblocked by W2; open next)
-- W4: planned (blocked-by W3)
+- W3: complete
+- W4: planned (unblocked by W3; open next)
 - W5: planned (blocked-by W4)
 
 ## Cross-tranche debt entering D
@@ -147,6 +147,33 @@ Scope reveal:
 - W2.A restored `useAnimatedNumber`, `AnimatedNumber`, `UseAnimatedNumberOptions`, and `useDarkModeSync` after current speedtest grep surfaced live imports.
 - W2.C required one demo import split: `ProgressiveSidebar` stays under `@/components/custom/sidebar`; `useSidebarState` comes from `@/composables/sidebar`.
 
-### W3 close (open)
+### W3 close (2026-04-30)
+
+Commits:
+
+- `52194f2` — D.W3.B consumer-evidence README and overfitting-audit verdict-precedence binding.
+- `fad212a` — D.W3.A 24 per-artefact current-consumer evidence docs.
+
+Artefacts:
+
+- `docs/consumer-evidence/README.md`
+- `docs/consumer-evidence/*.md`
+- `docs/tranches/D/audit/W3-verification.md`
+- `docs/audits/overfitting-audit.md`
+
+Gate evidence:
+
+- Evidence docs excluding README: 24.
+- README rows: 24; README links: 24; missing README links: 0.
+- Per-doc `Proof` commands: 24/24 passed.
+- Canned overfitting prompt references `docs/consumer-evidence/` and requires stale evidence to fall back to normal verdict precedence.
+- `npm run typecheck` passed on 2026-04-30.
+- `npm run build` passed on 2026-04-30; output `dist/glass-ui.js 370.04 kB`, `dist/glass-ui.css 39.81 kB`.
+
+Scope notes:
+
+- `useLeaveTimer` did not receive W3 evidence because W2 deleted its only consumer cascade.
+- `isMac` was normalized from the stale W0 external-consumer claim to current source-consumer proof in `src/composables/useKeyboardShortcuts.ts`.
+
 ### W4 close (open)
 ### W5 close (open)
