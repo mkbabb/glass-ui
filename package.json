@@ -26,7 +26,8 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "typecheck": "vue-tsc --noEmit"
+        "typecheck": "vue-tsc --noEmit",
+        "iter-check": "vue-tsc --noEmit --project tsconfig.src.json"
     },
     "engines": {
         "node": ">=22"
