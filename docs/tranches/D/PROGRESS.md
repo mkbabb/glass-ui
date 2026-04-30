@@ -20,8 +20,8 @@ Dated execution log for tranche D — Substrate-with-Consumer. Updated at every 
 
 - W0: complete
 - W1: complete
-- W2: planned (unblocked by W1; open next)
-- W3: planned (blocked-by W2)
+- W2: complete
+- W3: planned (unblocked by W2; open next)
 - W4: planned (blocked-by W3)
 - W5: planned (blocked-by W4)
 
@@ -112,7 +112,41 @@ Notes:
 
 - D.W1.C scope had an accidental main-checkout edit from a worker. The orchestrator validated, committed, and closed it as `5bc8f38`; the worker was stopped before committing its partial worktree copy.
 
-### W2 close (open)
+### W2 close (2026-04-30)
+
+Commits:
+
+- `0b66855` — D.W2.C sidebar composables hoisted to `src/composables/sidebar/`.
+- `0f4e3d1` — D.W2.B zero-consumer ui façade deletes.
+- `b0debec` — D.W2.D zero-site style-surface deletes.
+- `698d022` — D.W2.A orphan composable export deletes.
+- `a9291f6` — D.W2.A scope reveal restore for `useAnimatedNumber` speedtest consumers.
+- `8ec807b` — D.W2.A scope reveal restore for `useDarkModeSync` speedtest consumer.
+- `42db7bc` — D.W2.E public-surface count reconciliation in `CLAUDE.md`.
+
+Artefacts:
+
+- `docs/tranches/D/audit/W2-verification.md`
+- `src/composables/sidebar/`
+- `CLAUDE.md`
+
+Gate evidence:
+
+- `npm run typecheck` passed on 2026-04-30.
+- `npm run build` passed on 2026-04-30; output `dist/glass-ui.js 369.04 kB` (`370036` bytes), `dist/glass-ui.css 39.81 kB` (`39809` bytes).
+- Bundle delta: `c-close` `381.42 kB` → `d.W2` `369.04 kB` (`-12.38 kB`).
+- Star re-export resolution check passed for `src/index.ts`, `src/components/index.ts`, `src/components/custom/index.ts`, `src/components/ui/index.ts`, and `src/composables/index.ts`.
+- Sidebar old directory absent; stale import grep for `src/components/custom/sidebar/composables` was empty across `src/` and `demo/`.
+- Actual-deleted symbol check: 33/33 absent from `dist/index.d.ts`.
+- Consumer builds passed for `fourier-analysis/web`, `words/frontend`, and `bbnf-lang/playground`; additional speedtest build passed because W2.A surfaced current speedtest consumers.
+- In-app browser manifest route walk: 71/71 routes rendered with no story fallback and zero new console errors.
+
+Scope reveal:
+
+- W2.B deleted 5 façade components and flipped 34 W0.C delete rows to keep-current after fresh consumer/source grep.
+- W2.A restored `useAnimatedNumber`, `AnimatedNumber`, `UseAnimatedNumberOptions`, and `useDarkModeSync` after current speedtest grep surfaced live imports.
+- W2.C required one demo import split: `ProgressiveSidebar` stays under `@/components/custom/sidebar`; `useSidebarState` comes from `@/composables/sidebar`.
+
 ### W3 close (open)
 ### W4 close (open)
 ### W5 close (open)

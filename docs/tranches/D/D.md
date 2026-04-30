@@ -39,7 +39,7 @@ Per-wave specs at [`waves/W{0..5}.md`](waves/) (shared precepts WAVE_SPEC format
 |---|---|---|---|---|---|---|
 | W0 | Hardened audit + triage + structural decisions | [W0.md](waves/W0.md) | 5 | parallel | 10 audit/planning docs landed; every C-forwarded candidate re-grepped; sidebar decision = hoist; façade-list enumerated | complete |
 | W1 | Wire pass — W0 `wire` rows with demo stories | [W1.md](waves/W1.md) | 5 | parallel | every `wire`-verdict has Playwright-rendered story; manifest entry where new route exists; route renders non-empty `<main>` zero console errors | complete |
-| W2 | Delete pass — composable orphans + façades + sidebar hoist | [W2.md](waves/W2.md) | 5 | parallel | named symbols absent from `src/index.ts`; bundle smaller; sidebar at `src/composables/sidebar/`; consumer builds clean | planned |
+| W2 | Delete pass — composable orphans + façades + sidebar hoist | [W2.md](waves/W2.md) | 5 | parallel | named symbols absent from `src/index.ts`; bundle smaller; sidebar at `src/composables/sidebar/`; consumer builds clean | complete |
 | W3 | Consumer evidence sweep | [W3.md](waves/W3.md) | 2 | parallel | `docs/consumer-evidence/*.md` per retained public symbol that lacks a story; each cites current source paths; canned audit prompt updated | planned |
 | W4 | Velocity foundation — Vitest + tsconfig.src + iter scripts | [W4.md](waves/W4.md) | 4 | parallel | `npm run iter` < 10 s wall; ~120-160 tests green; `scripts/ay-close.sh` end-to-end exits 0 | planned |
 | W5 | Re-audit + close ceremony | [W5.md](waves/W5.md) | 4 + orchestrator | parallel + n/a | re-audit actionable ≤ 5; FINAL.md + retro committed; tag `d-close` | planned |
