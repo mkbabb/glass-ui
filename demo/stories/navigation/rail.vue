@@ -11,7 +11,7 @@ import {
     LayoutDashboard,
     Navigation as NavigationIcon,
 } from "lucide-vue-next";
-import { Rail } from "@/components/custom/rail";
+import { GlassDock } from "@/components/custom/dock";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/utils/cn";
 
@@ -40,11 +40,11 @@ const active = ref<string>("primitives");
         <section class="flex flex-col gap-3">
             <h2 class="text-subheading">Default pill</h2>
             <p class="text-small text-muted-foreground">
-                Vertical <code class="rounded bg-muted px-1">Rail</code> hosts any children — icon
-                buttons, separators, brand marks. Glass-subtle pill by default.
+                Vertical <code class="rounded bg-muted px-1">GlassDock</code> rail variant hosts any children — icon
+                buttons, separators, brand marks. It uses the dock surface tokens by default.
             </p>
             <div class="flex justify-start">
-                <Rail>
+                <GlassDock variant="rail" aria-label="Example dock rail">
                     <Tooltip v-for="e in entries" :key="e.id">
                         <TooltipTrigger as-child>
                             <button
@@ -66,7 +66,7 @@ const active = ref<string>("primitives");
                         </TooltipTrigger>
                         <TooltipContent side="right">{{ e.label }}</TooltipContent>
                     </Tooltip>
-                </Rail>
+                </GlassDock>
             </div>
         </section>
 
@@ -74,11 +74,11 @@ const active = ref<string>("primitives");
             <h2 class="text-subheading">Rounded shape</h2>
             <p class="text-small text-muted-foreground">
                 Consumers can switch to rectangular corners via
-                <code class="rounded bg-muted px-1">shape="rounded"</code> when the rail hosts a
+                <code class="rounded bg-muted px-1">shape="rounded"</code> when the dock hosts a
                 tool palette rather than a category nav.
             </p>
             <div class="flex justify-start">
-                <Rail shape="rounded">
+                <GlassDock variant="rail" shape="rounded" aria-label="Rounded dock rail">
                     <button
                         v-for="e in entries.slice(0, 4)"
                         :key="e.id"
@@ -88,7 +88,7 @@ const active = ref<string>("primitives");
                     >
                         <component :is="e.icon" class="h-4 w-4" />
                     </button>
-                </Rail>
+                </GlassDock>
             </div>
         </section>
     </StoryPage>

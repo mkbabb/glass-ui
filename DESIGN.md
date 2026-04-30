@@ -47,7 +47,7 @@ Eight timings form a rhythmic vocabulary:
 
 Shimmer-specific durations: `--duration-shimmer-fast` 3s · `--duration-shimmer` 5s · `--duration-shimmer-slow` 8s.
 
-Dock internals: `--duration-dock-fade` 60ms (layer swap opacity) · `--duration-popup-swap` 180ms.
+Dock internals: `--duration-popup-swap` 180ms.
 
 ---
 
@@ -214,7 +214,7 @@ For each tier, `--glass-bg-{tier}` (rgba), `--glass-blur-{tier}` (full filter st
 - Light mode: 3.5% opacity, blend `overlay`
 - Dark mode: 6% opacity, blend `soft-light`
 
-**Dock-specific blur** — `--glass-blur-dock = blur(2px) saturate(1.025)` is its own token (half the subtle weight) so the floating dock reads as a feather-light overlay rather than a heavy blurred slab. `GlassDock` references `var(--glass-blur-dock, var(--glass-blur-subtle))`; consumers can override the dock token at `:root` without touching the four tier blurs.
+**Dock-specific blur** — `--glass-blur-dock = blur(2px) saturate(1.025)` is its own token (half the subtle weight) so floating and rail docks read as feather-light overlays rather than heavy blurred slabs. `GlassDock` references `var(--glass-blur-dock, var(--glass-blur-subtle))`; consumers can override the dock token at `:root` without touching the four tier blurs.
 
 ### Convenience shorthands
 
@@ -472,10 +472,9 @@ The dock is a first-class composable system. Three principles: a dock is a posit
 
 ### Layer transitions
 
-- `.dock-layer-grid` — `transition: width 300ms var(--spring-snappy)`
-- `.dock-layer-item.dock-layer-active` — `position: relative; opacity: 1`
-- `.dock-layer-item:not(.dock-layer-active)` — `position: absolute; opacity: 0; pointer-events: none; visibility: hidden`
-- Fade duration `--duration-dock-fade` (60 ms)
+- `DockLayerGroup` owns the stacked layer grid with scoped `.dock-layer-stack` sizing.
+- `DockLayer` owns active/leaving panes through `.dock-layer-item-host`.
+- `useLayerTransition` performs the FLIP size animation for layer swaps.
 
 ---
 
@@ -736,7 +735,7 @@ animation · aurora · confirm-dialog · controls · **dock** (`GlassDock`, `Doc
 
 ### Composables (`src/composables/`)
 
-Dock: `useDockState`, `useDockTransition`, `useLayerTransition`. Sorting: `useSortable`. Sidebar: `useTreeIndex`, `useScrollTracker`, `useSidebarFollow`, `useSidebarState`, `buildTreeIndex`. Effects: `useGlobalDark`, `useKeyboardShortcuts`, `useCharSplit`, `useWatercolorBlob`, `copyToClipboard`. Infinite scroll: `useInfiniteScroll`.
+Dock: `useDockState`, `useLayerTransition`. Sorting: `useSortable`. Sidebar: `useTreeIndex`, `useScrollTracker`, `useSidebarFollow`, `useSidebarState`, `buildTreeIndex`. Effects: `useGlobalDark`, `useKeyboardShortcuts`. Infinite scroll: `useInfiniteScroll`.
 
 Motion: `useSpringOrchestrator`, `useStaggerReveal`, `useScrollProgress`, `useAnimatedNumber`, `useDarkModeSync`. `useAnimatedNumber` wraps keyframes.js `SmoothProgress.play` to expose a reactive hysteresis-smoothed value for live numeric tracking (hero values, pill amounts, progress bars). Not a typewriter — the target glides toward a moving signal via exponential damping. `useDarkModeSync` (Tranche G) encapsulates the two-step `nextTick → requestAnimationFrame` dance required to react to dark-mode toggles in code that reads computed CSS variables (canvas renderers etc.).
 
@@ -840,7 +839,7 @@ When a consumer needs shared styling tweaks, edit glass-ui source — add a vari
 
 ### Navigation
 
-- **Vertical `GlassDock` rail** (left) — one `DockLayer` per category. Click an icon to swap.
+- **Vertical `GlassDock` rail** (left) — `variant="rail"` with tooltip-backed category icons. Click an icon to swap categories.
 - **Horizontal `Carousel` pager** (top of content) — chips for every story in the active category.
 - **Keyboard**: `[` / `]` prev/next story · `{` / `}` prev/next category · `,` toggle configurator · `?` keyboard help.
 - URL scheme `/:category/:story` with browser history — every page is linkable.
@@ -868,4 +867,3 @@ The story loader is convention-based (`import.meta.glob`) — no router edits re
 ### Configurator
 
 Bottom-right FAB opens a `Sheet` with live controls for preset, font family (serif/sans/display/mono), scale base, hue rotation, grain opacity, density, radius, cartoon shadow, dark mode. Writes to `:root` CSS custom properties, persists to `localStorage['glass-ui-demo-config']`. The *neutral* preset in `demo/presets/neutral.css` showcases the library's range against its warm-cream default.
-

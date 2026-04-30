@@ -7,6 +7,7 @@ import {
 } from "lucide-vue-next";
 import {
     GlassDock,
+    DockIconButton,
     DockDropdownTrigger,
     DockPopover,
     DockSelectTrigger,
@@ -71,11 +72,11 @@ function togglePlay() {
             <h2 class="text-sm font-semibold text-muted-foreground">Collapsible (hover to expand)</h2>
             <div class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
                 <GlassDock>
-                    <button class="dock-icon-btn" aria-label="Home"><Home class="h-4 w-4" /></button>
-                    <button class="dock-icon-btn" aria-label="Search"><Search class="h-4 w-4" /></button>
+                    <DockIconButton aria-label="Home"><Home class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Search"><Search class="h-4 w-4" /></DockIconButton>
                     <div class="dock-separator" />
-                    <button class="dock-icon-btn" aria-label="Notifications"><Bell class="h-4 w-4" /></button>
-                    <button class="dock-icon-btn" aria-label="Settings"><Settings class="h-4 w-4" /></button>
+                    <DockIconButton aria-label="Notifications"><Bell class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Settings"><Settings class="h-4 w-4" /></DockIconButton>
                     <template #collapsed>
                         <Home class="h-4 w-4" />
                     </template>
@@ -87,17 +88,16 @@ function togglePlay() {
             <h2 class="text-sm font-semibold text-muted-foreground">Always expanded — media transport</h2>
             <div class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
                 <GlassDock always-expanded>
-                    <button class="dock-icon-btn" aria-label="Previous"><SkipBack class="h-4 w-4" /></button>
-                    <button
-                        class="dock-icon-btn"
+                    <DockIconButton aria-label="Previous"><SkipBack class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton
                         :aria-pressed="playing"
                         :aria-label="playing ? 'Pause' : 'Play'"
                         @click="togglePlay"
                     >
                         <Pause v-if="playing" class="h-4 w-4" />
                         <Play v-else class="h-4 w-4" />
-                    </button>
-                    <button class="dock-icon-btn" aria-label="Next"><SkipForward class="h-4 w-4" /></button>
+                    </DockIconButton>
+                    <DockIconButton aria-label="Next"><SkipForward class="h-4 w-4" /></DockIconButton>
                     <div class="dock-separator" />
                     <span class="px-2 text-xs text-muted-foreground tabular-nums max-w-36 truncate">
                         {{ track }}
@@ -176,7 +176,7 @@ function togglePlay() {
             </p>
             <div class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
                 <GlassDock always-expanded>
-                    <button class="dock-icon-btn" aria-label="New"><Plus class="h-4 w-4" /></button>
+                    <DockIconButton aria-label="New"><Plus class="h-4 w-4" /></DockIconButton>
 
                     <DockPopover direction="down">
                         <template #trigger>
@@ -231,7 +231,7 @@ function togglePlay() {
             <ul class="list-disc pl-5 space-y-1">
                 <li>Collapse delay is ref-counted — any popover or nested keep-open source pins it.</li>
                 <li>The collapsed pill renders via the named <code class="rounded bg-muted px-1">#collapsed</code> slot.</li>
-                <li>Use <code class="rounded bg-muted px-1">dock-icon-btn</code> utility for flush-fit buttons inside.</li>
+                <li>Use <code class="rounded bg-muted px-1">DockIconButton</code> for flush-fit buttons inside.</li>
             </ul>
         </section>
     </StoryPage>

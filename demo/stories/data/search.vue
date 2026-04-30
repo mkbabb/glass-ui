@@ -75,7 +75,7 @@ const rowSeeds = [
     ["Tags input catalogue", "data", "Tokenized data entry row with removable tag chips.", "proof", "Data", ["tags", "input"]],
     ["Avatar fallback stack", "data", "Initials, image loading, and grouped avatar row.", "proof", "Data", ["avatar", "fallback"]],
     ["Command palette route", "navigation", "Keyboard-first command row with grouped actions.", "consumer", "Navigation", ["command", "palette"]],
-    ["Rail icon navigation", "navigation", "Vertical story rail row with tooltip-backed icon buttons.", "consumer", "Navigation", ["rail", "icons"]],
+    ["Dock rail navigation", "navigation", "Vertical GlassDock rail row with tooltip-backed icon buttons.", "consumer", "Navigation", ["rail", "icons"]],
     ["Sidebar progressive panels", "navigation", "Nested navigation row with progressive disclosure and route state.", "consumer", "Navigation", ["sidebar", "panels"]],
     ["Bouncy tabs motion", "navigation", "Animated tab indicator row with active tab geometry.", "proof", "Navigation", ["tabs", "motion"]],
     ["Dialog focus trap", "container", "Modal surface row with overlay, title, and close action.", "proof", "Containers", ["dialog", "focus"]],

@@ -2,7 +2,7 @@
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Package, Layers, Library, FileText, ChevronLeft, ChevronRight } from "lucide-vue-next";
-import { GlassDock, DockLayerGroup, DockLayer } from "@/components/custom/dock";
+import { GlassDock, DockIconButton, DockLayerGroup, DockLayer } from "@/components/custom/dock";
 import { cn } from "@/utils/cn";
 
 type LayerId = "root" | "assets" | "layers" | "libs";
@@ -45,7 +45,7 @@ function back() {
                             <button
                                 v-for="l in layers"
                                 :key="l.id"
-                                class="dock-icon-btn-compact flex items-center gap-1 px-2 text-sm"
+                                class="inline-flex items-center gap-1 rounded-[var(--radius-pill)] px-2 py-1 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)]"
                                 :aria-label="l.label"
                                 :data-testid="`dock-layer-open-${l.id}`"
                                 @click="open(l.id)"
@@ -61,20 +61,20 @@ function back() {
                             :label="l.label"
                             :icon="l.icon"
                         >
-                            <button class="dock-icon-btn" aria-label="Back" @click="back">
+                            <DockIconButton aria-label="Back" @click="back">
                                 <ChevronLeft class="h-4 w-4" />
-                            </button>
+                            </DockIconButton>
                             <div class="dock-separator" />
                             <component :is="l.icon" class="h-4 w-4 opacity-70" />
                             <span class="text-sm font-medium">{{ l.label }}</span>
                             <span class="text-xs text-muted-foreground">· {{ l.blurb }}</span>
                             <div class="dock-separator" />
-                            <button class="dock-icon-btn" aria-label="New item">
+                            <DockIconButton aria-label="New item">
                                 <FileText class="h-4 w-4" />
-                            </button>
-                            <button class="dock-icon-btn" aria-label="Forward">
+                            </DockIconButton>
+                            <DockIconButton aria-label="Forward">
                                 <ChevronRight class="h-4 w-4" />
-                            </button>
+                            </DockIconButton>
                         </DockLayer>
                     </DockLayerGroup>
                 </GlassDock>

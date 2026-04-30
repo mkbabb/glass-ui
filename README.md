@@ -70,11 +70,11 @@ src/
 │   │   ├── input/              # Glass-styled input
 │   │   └── ...                 # + 22 more (toggle, switch, checkbox, badge, etc.)
 │   └── custom/
-│       ├── dock/               # GlassDock, DockPopover, DockLayerGroup
+│       ├── dock/               # GlassDock, DockPopover, DockLayerGroup, rail variant
 │       ├── aurora/             # Aurora WebGL background
 │       └── controls/           # DarkModeToggle
 ├── composables/
-│   ├── dock/                   # useDockState, useDockTransition, useLayerTransition, usePopupMutex, useDockActionBar
+│   ├── dock/                   # useDockState, useLayerTransition, teleported-target helpers
 │   ├── interaction/            # useHeightTransition, useHoverPopover, useHoverToggle, useTouchGate, useLeaveTimer
 │   ├── useClipboard.ts         # copyToClipboard (navigator.clipboard + textarea fallback)
 │   ├── useGlobalDark.ts        # createGlobalState(useDark) + Safari FOUC fix
@@ -87,7 +87,7 @@ src/
 │   ├── theme.css               # @theme block (Tailwind color/font/radius aliases)
 │   ├── typography.css          # golden-ratio type scale + semantic classes
 │   ├── glass.css               # .glass-{subtle,default,medium,elevated}, .glass-card, .glass-pill, .glass-btn
-│   ├── dock.css                # .dock-icon-btn, .dock-select-trigger, .dock-layer-grid, etc.
+│   ├── dock.css                # separators and layer-grid helpers; button styling lives in dock components
 │   ├── cards.css               # .cartoon-card, .elevated-card, .paper-texture
 │   ├── floating-panel.css      # .floating-panel, .floating-panel-item
 │   ├── transitions.css         # Vue <Transition> classes: fade, fade-slide, pop, dialog-scale, dropdown

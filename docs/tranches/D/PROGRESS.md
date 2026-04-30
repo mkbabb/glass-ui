@@ -175,5 +175,53 @@ Scope notes:
 - `useLeaveTimer` did not receive W3 evidence because W2 deleted its only consumer cascade.
 - `isMac` was normalized from the stale W0 external-consumer claim to current source-consumer proof in `src/composables/useKeyboardShortcuts.ts`.
 
-### W4 close (open)
-### W5 close (open)
+### W4 close (2026-04-30, D-II redress)
+
+Scope reveal forced W4 to close through D-II rather than the original narrow
+tooling slice.
+
+Artefacts:
+
+- `docs/tranches/D-II/D-II.md`
+- `docs/tranches/D-II/PROGRESS.md`
+- `tests/components.smoke.spec.ts`
+- `tests/composables.smoke.spec.ts`
+- `tests/public-surface.spec.ts`
+- `scripts/verify-export-types.mjs`
+
+Gate evidence:
+
+- `GlassDock variant="rail"` replaced the standalone `Rail` package for the app
+  category rail and the `/navigation/rail` story.
+- Removed dock utility classes and public no-op dock composables no longer have
+  live source/demo/test references.
+- Source imports no longer depend on `@utils`; `tsconfig.json`, `vite.config.ts`,
+  and `vitest.config.ts` no longer define the alias.
+- `useTouchGate` is consumed by `GlassDock` collapsed touch activation; the
+  unused public `useInterval` helper was deleted.
+- `npm run iter` passed with 186 tests across 9 files.
+- `npm run verify-export-types` passed.
+- `scripts/validate-consumers.sh` passed for `fourier-analysis/web`,
+  `words/frontend`, and `bbnf-lang/playground`.
+
+### W5 close (2026-04-30, D-II close)
+
+Close artefacts:
+
+- `docs/tranches/D/FINAL.md`
+- `docs/tranches/D/audit/D-retro.md`
+
+Gate evidence:
+
+- Browser Use route proof passed for `/compositions/empty-states`,
+  `/navigation/rail`, `/navigation/dock`, and `/navigation/dock-layers`; no
+  fallback route rendered.
+- `scripts/ay-close.sh` passed after the final D-II code corrections.
+
+## 2026-04-30 — Scope reveal: D-II opened
+
+The dock audit found that the visible vertical rail was a separate `Rail`
+package rather than a `GlassDock` variant, and W4 tooling audit found that the
+current post-W3 work was not honestly closable under the original W4 file
+bounds. D-II was opened at `docs/tranches/D-II/D-II.md` to redress the dock
+surface, close W4 velocity gates, then resume D.W5 close ceremony before E.

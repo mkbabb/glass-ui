@@ -9,7 +9,7 @@ export interface UseDockStateOptions {
     rootEl: Ref<HTMLElement | null>;
     /** Disable collapse behavior and keep the dock expanded. */
     alwaysExpanded?: Ref<boolean> | boolean;
-    /** Ref from useDockTransition — suppresses click-away during animation */
+    /** Ref that suppresses click-away during an active dock animation. */
     isTransitioning?: Ref<boolean>;
     /** Called on every state transition */
     onStateChange?: (newState: DockState, oldState: DockState) => void;

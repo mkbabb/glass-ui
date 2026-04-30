@@ -44,7 +44,7 @@
         "iter-build": "vite build --config vite.iter.config.ts",
         "iter-test": "vitest run --reporter=verbose",
         "iter-test-watch": "vitest --watch",
-        "emit-types": "vue-tsc --emitDeclarationOnly --outDir dist/types --project tsconfig.json",
+        "emit-types": "vue-tsc --declaration --emitDeclarationOnly --outDir dist/types --project tsconfig.json --noEmit false",
         "iter": "npm run iter-check && npm run iter-build && npm run iter-test",
         "profile-bundle": "vite build --config vite.config.ts",
         "profile-consumers": "scripts/validate-consumers.sh",

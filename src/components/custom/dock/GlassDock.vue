@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
+import { useTouchGate } from "../../../composables/useTouchGate";
 import { useDockState } from "./composables/useDockState";
-import { useDockTransition } from "./composables/useDockTransition";
 
 const props = withDefaults(
     defineProps<{
@@ -9,10 +9,16 @@ const props = withDefaults(
         startCollapsed?: boolean;
         fitContent?: boolean;
         position?: "fixed" | "inline" | "sticky";
-        fadeMs?: number;
         alwaysExpanded?: boolean;
         /** Allow expanded content to wrap to multiple lines. */
         wrap?: boolean;
+        /**
+         * Visual/behavioral preset. `dock` is the horizontal floating dock;
+         * `rail` is the vertical icon rail variant used by app chrome.
+         */
+        variant?: "dock" | "rail";
+        /** Corner treatment for vertical rail/tool-palette docks. */
+        shape?: "pill" | "rounded";
         /**
          * Layout axis of the dock. `"horizontal"` (default) lays items out
          * left-to-right and animates `width`; `"vertical"` lays items out
@@ -25,21 +31,23 @@ const props = withDefaults(
         startCollapsed: true,
         fitContent: false,
         position: "inline",
-        fadeMs: 60,
         alwaysExpanded: false,
         wrap: false,
+        variant: "dock",
+        shape: "pill",
         orientation: "horizontal",
     },
 );
 
 const dockEl = useTemplateRef<HTMLElement>("dockEl");
-const alwaysExpanded = computed(() => props.alwaysExpanded);
-const orientation = computed(() => props.orientation);
+const variant = computed(() => props.variant);
+const shape = computed(() => props.shape);
+const orientation = computed(() => props.variant === "rail" ? "vertical" : props.orientation);
+const alwaysExpanded = computed(() => props.alwaysExpanded || orientation.value === "vertical");
+const fitContent = computed(() => props.fitContent || props.variant === "rail");
 
-// isTransitioning is created by useDockTransition but also needed by
-// useDockState to suppress click-away during animation. We use a shared
-// ref: useDockTransition populates it, useDockState reads it at runtime.
 const isTransitioning = ref(false);
+const touchGate = useTouchGate(props.collapseDelay);
 
 const {
     expanded,
@@ -60,26 +68,55 @@ const {
     isTransitioning,
 });
 
-const { visualExpanded, isTransitioning: _isTransitioning, transitionSize, dim, suppressTransition, onTransitionEnd } = useDockTransition({
-    expanded,
-    rootEl: dockEl,
-    fadeMs: props.fadeMs,
-    alwaysExpanded,
-    axis: orientation,
-});
-
-// Sync the transition ref from useDockTransition to the shared ref.
-// flush: 'sync' ensures the value is available immediately for
-// capture-phase event handlers (onPointerDownOutside).
-watch(_isTransitioning, (v) => { isTransitioning.value = v; }, { immediate: true, flush: 'sync' });
-
-const dockStyle = computed(() =>
-    transitionSize.value != null ? { [dim.value]: transitionSize.value } : undefined
-);
+const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
 
 onMounted(() => {
     if (props.alwaysExpanded || !props.startCollapsed) {
         expand();
+    }
+});
+
+function shouldGateTouch(): boolean {
+    return orientation.value === "horizontal" && !alwaysExpanded.value;
+}
+
+function onTouchStart(event: TouchEvent): void {
+    if (!shouldGateTouch() || visualExpanded.value) return;
+    const root = dockEl.value;
+    const touch = event.touches[0];
+    if (!root || !touch) return;
+
+    if (!touchGate.handleTouchStart(root, touch.clientY)) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+}
+
+function onTouchMove(event: TouchEvent): void {
+    if (!shouldGateTouch()) return;
+    touchGate.handleScrollCheck(event);
+}
+
+function onTouchEnd(event: TouchEvent): void {
+    if (!shouldGateTouch()) return;
+    const wasActive = touchGate.isActive.value;
+    touchGate.handleTouchEnd();
+    if (!wasActive && touchGate.isActive.value && !visualExpanded.value) {
+        event.preventDefault();
+        event.stopPropagation();
+        expand();
+    }
+}
+
+watch(touchGate.isActive, (isActive) => {
+    if (!isActive && expanded.value && !isPinned.value && !alwaysExpanded.value) {
+        collapse();
+    }
+});
+
+watch(visualExpanded, (isExpanded) => {
+    if (!isExpanded) {
+        touchGate.deactivate();
     }
 });
 
@@ -92,17 +129,20 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
         class="glass-dock"
         :class="[
             orientation,
-            { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'dock-wrap': wrap, 'no-transition': suppressTransition, 'dock-animating': isTransitioning },
+            `variant-${variant}`,
+            `shape-${shape}`,
+            { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'dock-wrap': wrap },
             position === 'fixed' ? 'fixed bottom-[var(--dock-pos)] left-1/2 -translate-x-1/2'
               : position === 'sticky' ? 'dock-sticky'
               : 'dock-inline',
         ]"
-        :style="dockStyle"
         @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave($event)"
         @focusin="onFocusIn"
         @focusout="onFocusOut"
-        @transitionend="onTransitionEnd"
+        @touchstart="onTouchStart"
+        @touchmove="onTouchMove"
+        @touchend="onTouchEnd"
     >
         <!--
             Horizontal docks use the built-in two-layer pattern (full +
@@ -112,7 +152,7 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
             inside demands a direct single-slot body with no nested grid.
         -->
         <template v-if="orientation === 'horizontal'">
-            <div class="dock-layers" :class="{ 'dock-transitioning': isTransitioning }">
+            <div class="dock-layers">
                 <div
                     :class="['dock-layer dock-layer--full', { 'layer-active': visualExpanded }]"
                     :inert="!expanded || undefined"
@@ -136,6 +176,7 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
 
 <style scoped>
 .glass-dock {
+    position: relative;
     display: inline-flex;
     align-items: center;
     border-radius: var(--radius-dock);
@@ -151,6 +192,23 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
     -webkit-backdrop-filter: var(--glass-blur-dock, var(--glass-blur-subtle));
     border: 1.5px solid var(--glass-border-dock, var(--glass-border-medium));
     box-shadow: var(--shadow-dock-override, var(--shadow-dock));
+}
+
+.glass-dock::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--paper-clean-texture);
+    background-repeat: repeat;
+    background-size: var(--paper-texture-size);
+    opacity: var(--glass-grain-opacity);
+    pointer-events: none;
+    mix-blend-mode: overlay;
+}
+
+.dark .glass-dock::after {
+    mix-blend-mode: soft-light;
 }
 
 /* ── Horizontal (default): width animates ── */
@@ -174,9 +232,14 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
+    gap: 0.25rem;
     white-space: normal;
     width: auto;
     height: auto;
+    max-height: calc(100vh - 2rem);
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
     padding: 0.375rem;
     border-radius: var(--radius-dock);
     transition:
@@ -187,6 +250,24 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
         transform var(--duration-normal) var(--spring-snappy),
         background var(--duration-normal) var(--ease-standard),
         border-color var(--duration-normal) var(--ease-standard);
+}
+
+.glass-dock.vertical::-webkit-scrollbar {
+    display: none;
+}
+
+.glass-dock.variant-rail {
+    padding: 0.5rem;
+    background: var(--glass-bg-dock, var(--glass-bg-subtle));
+    border-color: var(--glass-border-dock, var(--glass-border-subtle));
+}
+
+.glass-dock.variant-rail.shape-pill {
+    border-radius: var(--radius-pill);
+}
+
+.glass-dock.variant-rail.shape-rounded {
+    border-radius: var(--radius-xl);
 }
 
 /* ── Collapsed: compact pill (round when icon-only) ── */
@@ -266,13 +347,14 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
     width: 100%;
 }
 
-.glass-dock.no-transition {
-    transition: none !important;
-}
-
 .glass-dock.always-expanded {
     cursor: default;
     overflow: visible;
+}
+
+.glass-dock.vertical.always-expanded {
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 /* ── Wrap variant: multi-line responsive dock ──

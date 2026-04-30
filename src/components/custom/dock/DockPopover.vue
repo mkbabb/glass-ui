@@ -6,6 +6,7 @@
  */
 import { ref, inject, watch, onUnmounted, nextTick, useTemplateRef, type CSSProperties } from "vue";
 import type { Ref } from "vue";
+import DockIconButton from "./DockIconButton.vue";
 
 // Track all popover instances so opening one collapses the others
 const allPopovers = new Set<{ expanded: { value: boolean }, scheduleCollapse: (d: number) => void }>();
@@ -201,9 +202,9 @@ defineExpose({ expanded, expand: onEnter, collapse: () => { expanded.value = fal
         @mouseenter="!clickOnly && onEnter()"
         @mouseleave="!clickOnly && scheduleCollapse(collapseDelay)"
     >
-        <button class="popover-trigger dock-icon-btn" @click.stop="toggle">
+        <DockIconButton class="popover-trigger" @click.stop="toggle">
             <slot name="trigger" />
-        </button>
+        </DockIconButton>
         <Transition :name="'pop-' + resolvedDir">
             <div v-if="expanded" ref="panelEl" class="popover-panel" :style="panelStyle"
                 @click.stop @mousedown.stop @pointerdown.stop>

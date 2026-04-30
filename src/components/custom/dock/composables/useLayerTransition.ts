@@ -2,7 +2,7 @@ import { ref, computed, watch, nextTick, onUnmounted } from "vue";
 import type { Ref } from "vue";
 
 export interface UseLayerTransitionOptions {
-    /** The container element (must have `.dock-layer-grid` class) */
+    /** The container element that owns the stacked layer panes. */
     containerEl: Ref<HTMLElement | null>;
     /** The currently active layer id */
     activeLayer: Ref<string>;
@@ -14,8 +14,6 @@ export interface UseLayerTransitionOptions {
 }
 
 export interface UseLayerTransitionReturn {
-    /** Returns class array + inert for a given layer id */
-    layerProps(id: string): { class: string[]; inert: true | undefined };
     /** Attach to @transitionend on the container */
     onTransitionEnd(e: TransitionEvent): void;
     /** The currently active layer id (post-swap) */
@@ -134,24 +132,7 @@ export function useLayerTransition(
         leavingLayer.value = null;
     }
 
-    function layerProps(id: string): {
-        class: string[];
-        inert: true | undefined;
-    } {
-        const isActive = currentLayer.value === id;
-        const isLeaving = leavingLayer.value === id;
-
-        const classes = ["dock-layer-item"];
-        if (isActive) classes.push("dock-layer-active");
-        if (isLeaving) classes.push("dock-layer-leaving");
-
-        return {
-            class: classes,
-            inert: isActive ? undefined : true,
-        };
-    }
-
     onUnmounted(clearCleanup);
 
-    return { layerProps, onTransitionEnd, currentLayer, leavingLayer };
+    return { onTransitionEnd, currentLayer, leavingLayer };
 }

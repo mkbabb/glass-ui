@@ -75,7 +75,7 @@ export function useGlassCarousel(options: UseGlassCarouselOptions) {
         child.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
     }
 
-    // ── Expand / collapse transition (FLIP pattern from useDockTransition) ──
+    // ── Expand / collapse transition (local FLIP size pattern) ──
     const visualExpanded = ref(expanded.value);
     const isTransitioning = ref(false);
     const transitionSize = ref<string | null>(null);

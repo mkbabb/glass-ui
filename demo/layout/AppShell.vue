@@ -8,7 +8,12 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import { PaperBackdrop } from "@/components/custom/paper-backdrop";
-import { registerShortcut } from "@/composables/useKeyboardShortcuts";
+import {
+    formatCombo,
+    formatComboParts,
+    registerShortcut,
+    useRegisteredShortcuts,
+} from "@/composables/useKeyboardShortcuts";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 import { Configurator } from "../configurator";
 import CategoryRail from "./CategoryRail.vue";
@@ -17,6 +22,7 @@ import StoryPager from "./StoryPager.vue";
 const { next, prev, nextCategory, prevCategory } = useStoryNavigation();
 
 const showHelp = ref(false);
+const shortcuts = useRegisteredShortcuts();
 
 onMounted(() => {
     registerShortcut("]", () => next(), {
@@ -92,18 +98,19 @@ onMounted(() => {
                 </DialogDescription>
             </DialogHeader>
             <dl class="mt-2 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm">
-                <dt><kbd class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">]</kbd></dt>
-                <dd>Next story in category</dd>
-                <dt><kbd class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">[</kbd></dt>
-                <dd>Previous story in category</dd>
-                <dt><kbd class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">}</kbd></dt>
-                <dd>Next category (first story)</dd>
-                <dt><kbd class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">{</kbd></dt>
-                <dd>Previous category (first story)</dd>
-                <dt><kbd class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">,</kbd></dt>
-                <dd>Toggle the configurator panel</dd>
-                <dt><kbd class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">?</kbd></dt>
-                <dd>Toggle this help dialog</dd>
+                <template v-for="shortcut in shortcuts" :key="shortcut.raw">
+                    <dt class="flex gap-1">
+                        <kbd
+                            v-for="part in formatComboParts(shortcut.raw)"
+                            :key="part"
+                            :aria-label="formatCombo(shortcut.raw)"
+                            class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs"
+                        >
+                            {{ part }}
+                        </kbd>
+                    </dt>
+                    <dd>{{ shortcut.options.label }}</dd>
+                </template>
             </dl>
         </DialogContent>
     </Dialog>
