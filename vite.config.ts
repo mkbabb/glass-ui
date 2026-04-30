@@ -27,7 +27,7 @@ export default defineConfig({
             },
             name: "GlassUI",
             fileName: (_format, entryName) =>
-                entryName === "index" ? "glass-ui" : entryName,
+                entryName === "index" ? "glass-ui.js" : `${entryName}.js`,
             formats: ["es"],
         },
         rollupOptions: {

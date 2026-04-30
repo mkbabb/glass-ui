@@ -9,17 +9,19 @@ const missing = [];
 
 for (const [name, value] of Object.entries(pkg.exports ?? {})) {
     if (!value || typeof value !== "object" || Array.isArray(value)) continue;
-    if (typeof value.types !== "string") continue;
 
-    const target = resolve(root, value.types);
-    if (!existsSync(target)) {
-        missing.push(`${name}: ${value.types}`);
+    for (const key of ["types", "import"]) {
+        if (typeof value[key] !== "string") continue;
+        const target = resolve(root, value[key]);
+        if (!existsSync(target)) {
+            missing.push(`${name}.${key}: ${value[key]}`);
+        }
     }
 }
 
 if (missing.length > 0) {
-    console.error(`Missing package export type targets:\n${missing.join("\n")}`);
+    console.error(`Missing package export targets:\n${missing.join("\n")}`);
     process.exit(1);
 }
 
-console.log("All package export type targets exist.");
+console.log("All package export targets exist.");

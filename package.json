@@ -10,11 +10,11 @@
     "exports": {
         ".": {
             "types": "./dist/index.d.ts",
-            "import": "./dist/glass-ui"
+            "import": "./dist/glass-ui.js"
         },
         "./tokens": {
             "types": "./dist/tokens.d.ts",
-            "import": "./dist/tokens"
+            "import": "./dist/tokens.js"
         },
         "./styles": "./src/styles/index.css",
         "./styles/*": "./src/styles/*"
@@ -28,6 +28,7 @@
         "build": "vite build",
         "typecheck": "vue-tsc --noEmit",
         "test": "vitest run",
+        "verify-export-types": "node scripts/verify-export-types.mjs",
         "iter-check": "vue-tsc --noEmit --project tsconfig.src.json",
         "iter-build": "vite build --config vite.iter.config.ts",
         "iter-test": "vitest run --reporter=verbose",
