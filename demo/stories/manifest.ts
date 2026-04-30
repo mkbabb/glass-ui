@@ -155,6 +155,7 @@ export const CATEGORIES: Category[] = [
             s("data", "sortable-list", "Sortable List"),
             s("data", "infinite-scroll", "Infinite Scroll"),
             s("data", "timeline", "Timeline"),
+            s("data", "search", "Fuzzy Search"),
         ],
     },
     {
