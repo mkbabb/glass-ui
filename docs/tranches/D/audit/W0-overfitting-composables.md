@@ -26,7 +26,7 @@ Public-surface commands:
 
 ```sh
 rg -n 'export \* from "\./composables"' src/index.ts
-rg -n 'export \* from "\./interaction"|export \* from "\./sortable"|export \* from "\./useKeyboardShortcuts"|export \* from "\./useWatercolorBlob"|export \* from "\./glass"|export \* from "\./motion"|export \* from "\./pagination"|export \* from "\./prng"|export \* from "\./virtual"|copyToClipboard|useGlobalDark|useCharSplit' src/composables/index.ts
+rg -n 'export \* from "\./interaction"|export \* from "\./sortable"|export \* from "\./useKeyboardShortcuts"|export \* from "\./glass"|export \* from "\./motion"|export \* from "\./pagination"|export \* from "\./prng"|export \* from "\./virtual"|useGlobalDark' src/composables/index.ts
 rg -n 'export' src/composables/*/index.ts
 ```
 
@@ -46,26 +46,28 @@ The first command is the W0-refined symbol-only source grep. The second command 
 
 | metric | C.W0 composables | D.W0 composables | delta |
 |---|---:|---:|---:|
-| audited rows | 74 | 73 | -1 current export |
-| keep | 11 | 12 | +1 |
-| generalize | 0 | 25 | +25 |
-| library-orphan | 63 | 29 | -34 |
+| audited rows | 74 | 69 | -5 current exports |
+| keep | 11 | 11 | 0 |
+| generalize | 0 | 20 | +20 |
+| library-orphan | 63 | 31 | -32 |
 | inline-and-remove | 0 | 1 | +1 |
 | delete-unused | 0 | 6 | +6 |
-| actionable rows (`library-orphan` + `inline-and-remove` + `delete-unused`) | 63 | 36 | -27 |
+| actionable rows (`library-orphan` + `inline-and-remove` + `delete-unused`) | 63 | 38 | -25 |
 
-False-negative recovery delta: **34 fewer `library-orphan` rows** after the hardened symbol-only source grep and external consumer sweep.
+False-negative recovery delta: **32 fewer `library-orphan` rows** after the hardened symbol-only source grep and external consumer sweep.
+
+Scope-reveal note: while W0 was running, `6104ebb` deleted `src/composables/useWatercolorBlob.ts`, `src/composables/useClipboard.ts`, and `src/composables/useCharSplit.ts`, and removed their public barrel exports. This integrated table reflects current `master` after that commit, not the detached W0.A.3 worktree snapshot. The deleted rows are recorded in `W0-already-resolved.md`.
 
 ## Verdict Distribution
 
 | verdict | count |
 |---|---:|
-| keep | 12 |
-| generalize | 25 |
-| library-orphan | 29 |
+| keep | 11 |
+| generalize | 20 |
+| library-orphan | 31 |
 | inline-and-remove | 1 |
 | delete-unused | 6 |
-| **total** | **73** |
+| **total** | **69** |
 
 ## Audit Table
 
@@ -109,18 +111,16 @@ False-negative recovery delta: **34 fewer `library-orphan` rows** after the hard
 | `UseStaggerRevealOptions` | interface | `src/composables/motion/useStaggerReveal.ts` | yes | 0 | 0 | 0 | 0 | library-orphan | src: -; demo: -; external: - |
 | `OffsetPaginationOptions` | interface | `src/composables/pagination/useOffsetPagination.ts` | yes | 0 | 0 | 0 | 0 | library-orphan | src: -; demo: -; external: - |
 | `useOffsetPagination` | function | `src/composables/pagination/useOffsetPagination.ts` | yes | 0 | 0 | 2 | 2 | keep | src: -; demo: -; external: `../fourier-analysis/web/src/components/visualization/gallery/AdminFlaggedPanel.vue`, `../fourier-analysis/web/src/components/visualization/gallery/AdminUserList.vue` |
-| `hashString` | function | `src/composables/prng.ts` | yes | 1 | 0 | 0 | 1 | generalize | src: `src/composables/useWatercolorBlob.ts`; demo: -; external: - |
-| `mulberry32` | function | `src/composables/prng.ts` | yes | 1 | 0 | 0 | 1 | generalize | src: `src/composables/useWatercolorBlob.ts`; demo: -; external: - |
-| `radiiToCSS` | function | `src/composables/prng.ts` | yes | 1 | 0 | 0 | 1 | generalize | src: `src/composables/useWatercolorBlob.ts`; demo: -; external: - |
-| `randomRadii` | function | `src/composables/prng.ts` | yes | 1 | 0 | 0 | 1 | generalize | src: `src/composables/useWatercolorBlob.ts`; demo: -; external: - |
+| `hashString` | function | `src/composables/prng.ts` | yes | 0 | 0 | 0 | 0 | library-orphan | `rg -n "\bhashString\b" src demo ../fourier-analysis/web/src ../words/frontend/src ../bbnf-lang/playground/src` finds only `src/composables/prng.ts` after `6104ebb`. |
+| `mulberry32` | function | `src/composables/prng.ts` | yes | 0 | 0 | 0 | 0 | library-orphan | `rg -n "\bmulberry32\b" src demo ../fourier-analysis/web/src ../words/frontend/src ../bbnf-lang/playground/src` finds only `src/composables/prng.ts` after `6104ebb`. |
+| `radiiToCSS` | function | `src/composables/prng.ts` | yes | 0 | 0 | 0 | 0 | library-orphan | `rg -n "\bradiiToCSS\b" src demo ../fourier-analysis/web/src ../words/frontend/src ../bbnf-lang/playground/src` finds only `src/composables/prng.ts` after `6104ebb`. |
+| `randomRadii` | function | `src/composables/prng.ts` | yes | 0 | 0 | 0 | 0 | library-orphan | `rg -n "\brandomRadii\b" src demo ../fourier-analysis/web/src ../words/frontend/src ../bbnf-lang/playground/src` finds only `src/composables/prng.ts` after `6104ebb`. |
 | `SortableContainerBinding` | interface | `src/composables/sortable/useSortable.ts` | no | 0 | 0 | 0 | 0 | delete-unused | src: -; demo: -; external: - |
 | `SortableId` | type | `src/composables/sortable/useSortable.ts` | yes | 2 | 0 | 0 | 2 | keep | src: `src/components/custom/sortable-list/SortableItem.vue`, `src/components/custom/sortable-list/SortableList.vue`; demo: -; external: - |
 | `SortableItemBinding` | interface | `src/composables/sortable/useSortable.ts` | yes | 0 | 0 | 0 | 0 | library-orphan | src: -; demo: -; external: - |
 | `useSortable` | function | `src/composables/sortable/useSortable.ts` | yes | 1 | 0 | 0 | 1 | generalize | src: `src/components/custom/sortable-list/SortableList.vue`; demo: -; external: - |
 | `UseSortableOptions` | interface | `src/composables/sortable/useSortable.ts` | yes | 0 | 0 | 0 | 0 | library-orphan | src: -; demo: -; external: - |
 | `UseSortableReturn` | interface | `src/composables/sortable/useSortable.ts` | yes | 1 | 0 | 0 | 1 | generalize | src: `src/components/custom/sortable-list/context.ts`; demo: -; external: - |
-| `useCharSplit` | function | `src/composables/useCharSplit.ts` | yes | 1 | 0 | 0 | 1 | generalize | src: `src/composables/motion/useAnimatedNumber.ts`; demo: -; external: - |
-| `copyToClipboard` | function | `src/composables/useClipboard.ts` | yes | 0 | 0 | 3 | 3 | keep | src: -; demo: -; external: `../bbnf-lang/playground/src/views/playground/PlaygroundPage.vue`, `../fourier-analysis/web/src/components/morph/FourierMorphDemo.vue`, `../fourier-analysis/web/src/composables/useMorphConfig.ts` |
 | `useGlobalDark` | const | `src/composables/useGlobalDark.ts` | yes | 2 | 1 | 5 | 8 | keep | src: `src/components/custom/controls/DarkModeToggle.vue`, `src/composables/motion/useDarkModeSync.ts`; demo: `demo/configurator/useConfigurator.ts`; external: `../bbnf-lang/playground/src/components/editors/MonacoEditor.vue`, `../fourier-analysis/web/src/components/layout/DarkModeToggle.vue`, `../words/frontend/src/App.vue`, `../words/frontend/src/composables/useStateSync.ts`, `../words/frontend/src/stores/ui/ui-state.ts` |
 | `UseGlobalDarkOptions` | interface | `src/composables/useGlobalDark.ts` | yes | 0 | 0 | 0 | 0 | library-orphan | src: -; demo: -; external: - |
 | `formatCombo` | function | `src/composables/useKeyboardShortcuts.ts` | yes | 0 | 0 | 0 | 0 | library-orphan | src: -; demo: -; external: - |
@@ -130,8 +130,6 @@ False-negative recovery delta: **34 fewer `library-orphan` rows** after the hard
 | `registerShortcut` | function | `src/composables/useKeyboardShortcuts.ts` | yes | 1 | 2 | 0 | 3 | keep | src: `src/components/custom/expandable-container/ExpandableContainer.vue`; demo: `demo/layout/AppShell.vue`, `demo/stories/aurora.vue`; external: - |
 | `ShortcutOptions` | interface | `src/composables/useKeyboardShortcuts.ts` | yes | 0 | 0 | 0 | 0 | library-orphan | src: -; demo: -; external: - |
 | `useRegisteredShortcuts` | function | `src/composables/useKeyboardShortcuts.ts` | yes | 0 | 0 | 0 | 0 | library-orphan | src: -; demo: -; external: - |
-| `useWatercolorBlob` | function | `src/composables/useWatercolorBlob.ts` | yes | 0 | 0 | 0 | 0 | library-orphan | src: -; demo: -; external: - |
-| `UseWatercolorBlobOptions` | interface | `src/composables/useWatercolorBlob.ts` | yes | 0 | 0 | 0 | 0 | library-orphan | src: -; demo: -; external: - |
 | `useVirtualSectionWindow` | function | `src/composables/virtual/useVirtualSectionWindow.ts` | yes | 0 | 0 | 2 | 2 | keep | src: -; demo: -; external: `../fourier-analysis/web/src/components/paper/PaperView.vue`, `../words/frontend/src/components/custom/definition/components/content/DefinitionContentView.vue` |
 | `VirtualSectionWindowOptions` | interface | `src/composables/virtual/useVirtualSectionWindow.ts` | yes | 0 | 0 | 0 | 0 | library-orphan | src: -; demo: -; external: - |
 | `useWindowedStore` | function | `src/composables/virtual/useWindowedStore.ts` | yes | 0 | 0 | 1 | 1 | generalize | src: -; demo: -; external: `../words/frontend/src/stores/search/modes/wordlist.ts` |
@@ -152,3 +150,4 @@ False-negative recovery delta: **34 fewer `library-orphan` rows** after the hard
 - The local `src/composables/infinite-scroll/` exports are not public through `src/composables/index.ts`; the current public `useInfiniteScroll` path is the custom infinite-scroll composables re-export. This audit still counts the local `src/composables/` files because they are exported from their own module files.
 - `src/composables/glass/webgl/frostShader.ts` is not public through `src/composables/glass/index.ts`. Its shader constants are kept because current source components use them; the unused program/uniform helpers remain `delete-unused`.
 - `isMac` has an external symbol-only consumer in `../words/frontend/src/components/custom/wordlist/modals/EditWordNotesModal.vue`; the import grep does not catch it, which is exactly the D.W0.A.3 refinement case.
+- `rg -n "useWatercolorBlob|copyToClipboard|useClipboard|useCharSplit" src demo ../fourier-analysis/web/src ../words/frontend/src ../bbnf-lang/playground/src` finds only local consumer helper methods named `copyToClipboard` after `6104ebb`, not imports from glass-ui. The glass-ui composable exports are therefore already deleted, not current W0 inventory.
