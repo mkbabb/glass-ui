@@ -5,8 +5,8 @@
 // reactive smoothed `current` ref, wires setTarget on source changes,
 // and handles reduced-motion.
 //
-// Not a typewriter / reveal primitive — for character-staggered text
-// entrance, see useCharSplit + .char-stagger utility.
+// Not a typewriter / reveal primitive. Character-staggered text entrance
+// belongs to consumer markup paired with the .char-stagger utility.
 import { SmoothProgress } from "@mkbabb/keyframes.js";
 import type { SmoothProgressOptions } from "@mkbabb/keyframes.js";
 import {
