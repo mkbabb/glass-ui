@@ -16,6 +16,7 @@ export default defineConfig({
         include: [
             "src/**/*.{test,spec}.{ts,tsx}",
             "src/**/*.{test,spec}.vue",
+            "tests/**/*.{test,spec}.{ts,tsx}",
         ],
         setupFiles: ["./tests/setup.ts"],
     },

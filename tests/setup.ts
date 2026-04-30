@@ -95,6 +95,7 @@ HTMLElement.prototype.animate = vi.fn(() => ({
     play: vi.fn(),
     finished: Promise.resolve(),
 })) as unknown as typeof HTMLElement.prototype.animate;
+HTMLElement.prototype.getAnimations = vi.fn(() => []);
 
 HTMLCanvasElement.prototype.getContext = vi.fn(() => ({
     createImageData: (width: number, height: number) => ({

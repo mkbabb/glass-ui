@@ -21,9 +21,13 @@ export default defineConfig({
     },
     build: {
         lib: {
-            entry: resolve(__dirname, "src/index.ts"),
+            entry: {
+                index: resolve(__dirname, "src/index.ts"),
+                tokens: resolve(__dirname, "src/tokens.ts"),
+            },
             name: "GlassUI",
-            fileName: "glass-ui",
+            fileName: (_format, entryName) =>
+                entryName === "index" ? "glass-ui" : entryName,
             formats: ["es"],
         },
         rollupOptions: {

@@ -1,7 +1,15 @@
 import { createGlobalState, useEventListener } from "@vueuse/core";
-import { onScopeDispose } from "vue";
+import {
+    computed,
+    getCurrentScope,
+    onScopeDispose,
+    ref,
+    type ComputedRef,
+} from "vue";
 
-interface ShortcutRegistrationOptions {
+export type ShortcutEventType = "keydown" | "keyup";
+
+export interface ShortcutOptions {
     /** Fire even when focus is in input/textarea/contenteditable. Default: false */
     allowInInput?: boolean;
     /** Call preventDefault on the event. Default: false */
@@ -10,31 +18,44 @@ interface ShortcutRegistrationOptions {
     label?: string;
     /** Group name for display (e.g. "Playback", "Navigation") */
     group?: string;
+    /** Keyboard event phase to match. Default: keydown */
+    event?: ShortcutEventType;
 }
 
-interface ShortcutEntry {
-    combo: ParsedCombo;
+export interface RegisteredShortcut {
+    combo: ShortcutCombo;
     raw: string;
     handler: (e: KeyboardEvent) => void;
-    options: ShortcutRegistrationOptions;
+    options: ShortcutOptions;
 }
 
-interface ParsedCombo {
+export interface ShortcutCombo {
     key: string;
     ctrl: boolean;
     meta: boolean;
     shift: boolean;
     alt: boolean;
-    mod: boolean; // Mod = Meta on mac, Ctrl elsewhere
+    mod: boolean;
 }
 
 export const isMac =
     typeof navigator !== "undefined" &&
     /Mac|iPhone|iPad|iPod/.test(navigator.platform);
 
-function parseCombo(combo: string): ParsedCombo {
-    const parts = combo.split("+").map((p) => p.trim());
-    const parsed: ParsedCombo = {
+const MODIFIER_KEYS: Record<string, string> = {
+    alt: "Alt",
+    option: "Alt",
+    ctrl: "Control",
+    control: "Control",
+    meta: "Meta",
+    cmd: "Meta",
+    command: "Meta",
+    shift: "Shift",
+};
+
+function parseCombo(combo: string): ShortcutCombo {
+    const parts = combo.split("+").map((part) => part.trim());
+    const parsed: ShortcutCombo = {
         key: "",
         ctrl: false,
         meta: false,
@@ -43,21 +64,37 @@ function parseCombo(combo: string): ParsedCombo {
         mod: false,
     };
 
-    for (const part of parts) {
+    for (const [index, part] of parts.entries()) {
         const lower = part.toLowerCase();
-        if (lower === "mod") parsed.mod = true;
-        else if (lower === "ctrl" || lower === "control") parsed.ctrl = true;
-        else if (lower === "meta" || lower === "cmd" || lower === "command")
-            parsed.meta = true;
-        else if (lower === "shift") parsed.shift = true;
-        else if (lower === "alt" || lower === "option") parsed.alt = true;
-        else parsed.key = part; // Preserve original case for e.key matching
+        const isOnlyPart = parts.length === 1 && index === 0;
+
+        if (lower === "mod") {
+            if (isOnlyPart) parsed.key = isMac ? "Meta" : "Control";
+            else parsed.mod = true;
+        } else if (lower === "ctrl" || lower === "control") {
+            if (isOnlyPart) parsed.key = "Control";
+            else parsed.ctrl = true;
+        } else if (lower === "meta" || lower === "cmd" || lower === "command") {
+            if (isOnlyPart) parsed.key = "Meta";
+            else parsed.meta = true;
+        } else if (lower === "shift") {
+            if (isOnlyPart) parsed.key = "Shift";
+            else parsed.shift = true;
+        } else if (lower === "alt" || lower === "option") {
+            if (isOnlyPart) parsed.key = "Alt";
+            else parsed.alt = true;
+        } else {
+            parsed.key = part;
+        }
+
+        if (isOnlyPart && MODIFIER_KEYS[lower]) {
+            parsed.key = MODIFIER_KEYS[lower];
+        }
     }
 
     return parsed;
 }
 
-/** Normalize key aliases so registrations like "Space" or "Delete" work cross-platform. */
 const KEY_ALIASES: Record<string, string[]> = {
     space: [" "],
     delete: ["backspace", "delete"],
@@ -65,83 +102,132 @@ const KEY_ALIASES: Record<string, string[]> = {
     escape: ["escape", "esc"],
 };
 
-function matchesCombo(e: KeyboardEvent, combo: ParsedCombo): boolean {
-    // Check modifiers
+function isComboKey(combo: ShortcutCombo, key: string): boolean {
+    return combo.key.toLowerCase() === key.toLowerCase();
+}
+
+function matchesCombo(e: KeyboardEvent, combo: ShortcutCombo): boolean {
     const wantCtrl = combo.ctrl || (combo.mod && !isMac);
     const wantMeta = combo.meta || (combo.mod && isMac);
 
-    if (e.ctrlKey !== wantCtrl) return false;
-    if (e.metaKey !== wantMeta) return false;
-    if (e.altKey !== combo.alt) return false;
+    if (!isComboKey(combo, "Control") && e.ctrlKey !== wantCtrl) return false;
+    if (!isComboKey(combo, "Meta") && e.metaKey !== wantMeta) return false;
+    if (!isComboKey(combo, "Alt") && e.altKey !== combo.alt) return false;
 
-    // For printable chars that inherently require shift (e.g. "?", "!", "+"),
-    // don't enforce shift match unless shift was explicitly in the combo.
     const isPrintableShifted = e.key.length === 1 && e.shiftKey && !combo.shift;
-    if (!isPrintableShifted && e.shiftKey !== combo.shift) return false;
+    if (
+        !isComboKey(combo, "Shift") &&
+        !isPrintableShifted &&
+        e.shiftKey !== combo.shift
+    ) {
+        return false;
+    }
 
     const comboKeyLower = combo.key.toLowerCase();
     const eventKeyLower = e.key.toLowerCase();
 
-    // Direct match
     if (eventKeyLower === comboKeyLower) return true;
 
-    // Alias match (e.g. combo "Space" matches e.key " ")
     const aliases = KEY_ALIASES[comboKeyLower];
-    if (aliases && aliases.some((a) => a.toLowerCase() === eventKeyLower)) return true;
+    if (aliases && aliases.some((alias) => alias.toLowerCase() === eventKeyLower)) {
+        return true;
+    }
 
-    // Also match against e.code (e.g. "Space", "Delete", "Backspace")
     if (e.code.toLowerCase() === comboKeyLower) return true;
 
     return false;
 }
 
-function isEditableTarget(el: Element | null): boolean {
-    if (!el) return false;
-    const tag = (el as HTMLElement).tagName;
+function isEditableTarget(target: EventTarget | null): boolean {
+    if (!(target instanceof Element)) return false;
+    const tag = (target as HTMLElement).tagName;
     if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return true;
-    if ((el as HTMLElement).isContentEditable) return true;
-    if (el.closest(".monaco-editor")) return true;
+    if ((target as HTMLElement).isContentEditable) return true;
+    if (target.closest(".monaco-editor")) return true;
     return false;
 }
 
+function formatPart(part: string): string {
+    const lower = part.trim().toLowerCase();
+    if (lower === "mod") return isMac ? "⌘" : "Ctrl";
+    if (lower === "shift") return isMac ? "⇧" : "Shift";
+    if (lower === "alt" || lower === "option") return isMac ? "⌥" : "Alt";
+    if (lower === "ctrl" || lower === "control") return isMac ? "⌃" : "Ctrl";
+    if (lower === "meta" || lower === "cmd" || lower === "command") return "⌘";
+    if (lower === "space") return isMac ? "␣" : "Space";
+    if (lower === "arrowleft") return "←";
+    if (lower === "arrowright") return "→";
+    if (lower === "arrowup") return "↑";
+    if (lower === "arrowdown") return "↓";
+    if (lower === "delete") return isMac ? "⌫" : "Del";
+    if (lower === "escape") return "Esc";
+    if (lower === "enter") return "↵";
+    if (lower === "home") return "Home";
+    if (lower === "end") return "End";
+    return part.trim();
+}
+
+export function formatComboParts(raw: string): string[] {
+    return raw.split("+").map(formatPart);
+}
+
+export function formatCombo(raw: string): string {
+    return formatComboParts(raw).join(isMac ? "" : "+");
+}
+
+function dispatchShortcut(
+    shortcuts: Set<RegisteredShortcut>,
+    eventType: ShortcutEventType,
+    e: KeyboardEvent,
+): void {
+    for (const shortcut of shortcuts) {
+        if ((shortcut.options.event ?? "keydown") !== eventType) continue;
+        if (!matchesCombo(e, shortcut.combo)) continue;
+
+        if (
+            !shortcut.options.allowInInput &&
+            isEditableTarget(e.target)
+        ) {
+            continue;
+        }
+
+        if (shortcut.options.preventDefault) {
+            e.preventDefault();
+        }
+
+        shortcut.handler(e);
+        return;
+    }
+}
+
 const useShortcutRegistry = createGlobalState(() => {
-    const shortcuts = new Set<ShortcutEntry>();
+    const shortcuts = new Set<RegisteredShortcut>();
+    const version = ref(0);
 
     useEventListener(window, "keydown", (e: KeyboardEvent) => {
-        for (const shortcut of shortcuts) {
-            if (!matchesCombo(e, shortcut.combo)) continue;
-
-            if (
-                !shortcut.options.allowInInput &&
-                isEditableTarget(e.target as Element)
-            ) {
-                continue;
-            }
-
-            if (shortcut.options.preventDefault) {
-                e.preventDefault();
-            }
-
-            shortcut.handler(e);
-            return; // First match wins
-        }
+        dispatchShortcut(shortcuts, "keydown", e);
     });
 
-    return { shortcuts };
+    useEventListener(window, "keyup", (e: KeyboardEvent) => {
+        dispatchShortcut(shortcuts, "keyup", e);
+    });
+
+    const labeled = computed(() => {
+        version.value;
+        return [...shortcuts].filter((shortcut) => shortcut.options.label);
+    });
+
+    return { shortcuts, version, labeled };
 });
 
-/**
- * Register a keyboard shortcut. Returns cleanup function.
- * Auto-disposed when the current effect scope is disposed.
- */
 export function registerShortcut(
     combo: string,
     handler: (e: KeyboardEvent) => void,
-    options: ShortcutRegistrationOptions = {},
+    options: ShortcutOptions = {},
 ): () => void {
-    const { shortcuts } = useShortcutRegistry();
+    const { shortcuts, version } = useShortcutRegistry();
 
-    const entry: ShortcutEntry = {
+    const entry: RegisteredShortcut = {
         combo: parseCombo(combo),
         raw: combo,
         handler,
@@ -149,12 +235,22 @@ export function registerShortcut(
     };
 
     shortcuts.add(entry);
+    version.value++;
 
     const cleanup = () => {
-        shortcuts.delete(entry);
+        if (shortcuts.delete(entry)) {
+            version.value++;
+        }
     };
 
-    onScopeDispose(cleanup);
+    if (getCurrentScope()) {
+        onScopeDispose(cleanup);
+    }
 
     return cleanup;
+}
+
+export function useRegisteredShortcuts(): ComputedRef<RegisteredShortcut[]> {
+    const { labeled } = useShortcutRegistry();
+    return labeled;
 }
