@@ -31,15 +31,23 @@ function back() {
             <p class="text-small text-muted-foreground">
                 Root pane shows three entry points. Clicking one swaps the pane; the dock resizes in place.
             </p>
+            <p class="text-mono-caption text-muted-foreground" data-testid="dock-layer-readout">
+                active layer = {{ activeLayer }}
+            </p>
             <div class="flex justify-center rounded-card border border-border/40 bg-card/40 p-10">
                 <GlassDock always-expanded fit-content>
-                    <DockLayerGroup v-model:active="activeLayer" :show-rail="false">
+                    <DockLayerGroup
+                        v-model:active="activeLayer"
+                        :show-rail="false"
+                        data-testid="dock-layer-drill-group"
+                    >
                         <DockLayer id="root" label="Root">
                             <button
                                 v-for="l in layers"
                                 :key="l.id"
                                 class="dock-icon-btn-compact flex items-center gap-1 px-2 text-sm"
                                 :aria-label="l.label"
+                                :data-testid="`dock-layer-open-${l.id}`"
                                 @click="open(l.id)"
                             >
                                 <component :is="l.icon" class="h-4 w-4" />
@@ -81,7 +89,10 @@ function back() {
             </p>
             <div class="flex justify-center rounded-card border border-border/40 bg-card/40 p-10">
                 <GlassDock always-expanded fit-content>
-                    <DockLayerGroup v-model:active="activeLayer">
+                    <DockLayerGroup
+                        v-model:active="activeLayer"
+                        data-testid="dock-layer-rail-group"
+                    >
                         <DockLayer
                             v-for="l in layers"
                             :key="l.id"

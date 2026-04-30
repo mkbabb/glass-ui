@@ -5,11 +5,60 @@ import {
     Home, Search, Bell, Settings, Plus, Share2, Download,
     ChevronDown, Play, Pause, SkipBack, SkipForward,
 } from "lucide-vue-next";
-import { GlassDock, DockPopover } from "@/components/custom/dock";
+import {
+    GlassDock,
+    DockDropdownTrigger,
+    DockPopover,
+    DockSelectTrigger,
+} from "@/components/custom/dock";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuLabel,
+    DropdownMenuRadioGroup,
+    DropdownMenuRadioItem,
+    DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectValue,
+} from "@/components/ui/select";
 
 const playing = ref(false);
 const track = ref("The Garden");
 const tracks = ["The Garden", "Morning Weft", "Carmine Drift", "Salt & Slate"];
+
+type DockView = "preview" | "inspect" | "timeline";
+type DockCommand = "focus" | "share" | "archive";
+
+const dockView = ref<DockView>("preview");
+const dockCommand = ref<DockCommand>("focus");
+
+const dockViews: { value: DockView; label: string }[] = [
+    { value: "preview", label: "Preview" },
+    { value: "inspect", label: "Inspect" },
+    { value: "timeline", label: "Timeline" },
+];
+
+const dockCommands: { value: DockCommand; label: string }[] = [
+    { value: "focus", label: "Focus canvas" },
+    { value: "share", label: "Share workspace" },
+    { value: "archive", label: "Archive scene" },
+];
+
+const dockViewLabels: Record<DockView, string> = {
+    preview: "Preview",
+    inspect: "Inspect",
+    timeline: "Timeline",
+};
+
+const dockCommandLabels: Record<DockCommand, string> = {
+    focus: "Focus canvas",
+    share: "Share workspace",
+    archive: "Archive scene",
+};
 
 function togglePlay() {
     playing.value = !playing.value;
@@ -54,6 +103,69 @@ function togglePlay() {
                         {{ track }}
                     </span>
                 </GlassDock>
+            </div>
+        </section>
+
+        <section class="flex flex-col gap-3" data-testid="dock-trigger-story">
+            <h2 class="text-sm font-semibold text-muted-foreground">Select and dropdown triggers</h2>
+            <div class="flex flex-col items-center gap-3 rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
+                <!-- import { DockSelectTrigger, DockDropdownTrigger } from "@/components/custom/dock"; -->
+                <GlassDock always-expanded fit-content>
+                    <Select v-model="dockView">
+                        <DockSelectTrigger
+                            aria-label="Dock view"
+                            data-testid="dock-select-trigger"
+                        >
+                            <span class="text-xs">{{ dockViewLabels[dockView] }}</span>
+                            <SelectValue class="sr-only" />
+                        </DockSelectTrigger>
+                        <SelectContent>
+                            <SelectItem
+                                v-for="view in dockViews"
+                                :key="view.value"
+                                :value="view.value"
+                            >
+                                {{ view.label }}
+                            </SelectItem>
+                        </SelectContent>
+                    </Select>
+
+                    <div class="dock-separator" />
+
+                    <DropdownMenu>
+                        <DockDropdownTrigger
+                            type="button"
+                            aria-label="Dock command"
+                            data-testid="dock-dropdown-trigger"
+                        >
+                            <Settings class="h-4 w-4" />
+                            <span class="text-xs">{{ dockCommandLabels[dockCommand] }}</span>
+                            <ChevronDown class="h-3 w-3 opacity-60" />
+                        </DockDropdownTrigger>
+                        <DropdownMenuContent align="center" class="w-52">
+                            <DropdownMenuLabel>Dock command</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuRadioGroup v-model="dockCommand">
+                                <DropdownMenuRadioItem
+                                    v-for="command in dockCommands"
+                                    :key="command.value"
+                                    :value="command.value"
+                                >
+                                    {{ command.label }}
+                                </DropdownMenuRadioItem>
+                            </DropdownMenuRadioGroup>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </GlassDock>
+
+                <div class="grid gap-1 rounded-lg border border-border/50 bg-background/60 px-3 py-2 text-xs text-muted-foreground sm:grid-cols-2">
+                    <p data-testid="dock-select-readout">
+                        select = <span class="font-medium text-foreground">{{ dockViewLabels[dockView] }}</span>
+                    </p>
+                    <p data-testid="dock-dropdown-readout">
+                        dropdown = <span class="font-medium text-foreground">{{ dockCommandLabels[dockCommand] }}</span>
+                    </p>
+                </div>
             </div>
         </section>
 
