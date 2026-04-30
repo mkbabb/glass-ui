@@ -14,89 +14,6 @@
     }
 }
 
-/* ── Dialog open / close ── */
-@keyframes dialog-in {
-    from {
-        opacity: 0;
-        transform: scale(0.95) translateY(8px);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-@keyframes dialog-out {
-    from {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-    to {
-        opacity: 0;
-        transform: scale(0.95) translateY(8px);
-    }
-}
-
-/* ── Dialog ↔ drawer transitions ── */
-@keyframes dialog-out-to-drawer {
-    from {
-        opacity: 1;
-        transform: scale(1) translateX(0);
-    }
-    to {
-        opacity: 0;
-        transform: scale(0.35) translateX(-120%);
-    }
-}
-
-@keyframes dialog-in-from-drawer {
-    from {
-        opacity: 0;
-        transform: scale(0.35) translateX(-120%);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateX(0);
-    }
-}
-
-@media (width < 640px) {
-    @keyframes dialog-out-to-drawer {
-        from {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-        }
-        to {
-            opacity: 0;
-            transform: scale(0.5) translateY(60%);
-        }
-    }
-    @keyframes dialog-in-from-drawer {
-        from {
-            opacity: 0;
-            transform: scale(0.5) translateY(60%);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-        }
-    }
-}
-
-/* ── Card menu entrance ── */
-@keyframes card-menu-in {
-    from {
-        opacity: 0;
-        filter: blur(4px);
-        transform: translateX(-100%) scale(0.96);
-    }
-    to {
-        opacity: 1;
-        filter: blur(0);
-        transform: translateX(-100%) scale(1);
-    }
-}
-
 /* ── Golden shimmer ── */
 @keyframes golden-shimmer {
     0%,
@@ -179,16 +96,6 @@
     }
 }
 
-/* ── Rainbow hue rotate ── */
-@keyframes rainbow-hue {
-    from {
-        filter: hue-rotate(0deg);
-    }
-    to {
-        filter: hue-rotate(360deg);
-    }
-}
-
 /* ── Shimmer sweep (background-position for .shimmer-text) ── */
 @keyframes shimmer-sweep {
     0% {
@@ -220,18 +127,6 @@
     }
 }
 
-/* ── Kinetic typography: weight breathing ── */
-@keyframes weight-breathe {
-    0%, 100% { font-variation-settings: "wght" 300; }
-    50%      { font-variation-settings: "wght" 500; }
-}
-
-/* ── Kinetic typography: scroll-driven weight reveal ── */
-@keyframes weight-reveal {
-    from { font-variation-settings: "wght" 100; opacity: 0.3; }
-    to   { font-variation-settings: "wght" 400; opacity: 1; }
-}
-
 /* ── Gold shimmer: metallic text highlight sweep ── */
 
 @keyframes gold-shimmer-slide {
@@ -239,8 +134,7 @@
     100% { background-position: -200% 0; }
 }
 
-.gold-shimmer,
-.gold-shimmer-text {
+.gold-shimmer {
     --color-gold-dark: #C0A050;
     --color-gold-mid: #DAB860;
     --color-gold-light: #E8D5A0;

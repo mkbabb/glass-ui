@@ -30,34 +30,6 @@
         box-shadow: var(--focus-ring-shadow);
     }
 
-    /* ── Button interactive states ── */
-    .btn-interactive {
-        transition: background-color var(--duration-fast) var(--ease-standard),
-                    color var(--duration-fast) var(--ease-standard),
-                    transform var(--duration-fast) var(--ease-standard),
-                    opacity var(--duration-fast) var(--ease-standard);
-    }
-    .btn-interactive:hover {
-        transform: scale(var(--scale-hover));
-    }
-    .btn-interactive:active {
-        transform: scale(var(--scale-press));
-    }
-    .btn-interactive:disabled {
-        opacity: var(--opacity-disabled);
-        pointer-events: none;
-    }
-    .btn-interactive:focus-visible {
-        box-shadow: var(--focus-ring-shadow);
-        outline: none;
-        /* Fade in; base state has no box-shadow transition → instant removal */
-        transition: background-color var(--duration-fast) var(--ease-standard),
-                    color var(--duration-fast) var(--ease-standard),
-                    transform var(--duration-fast) var(--ease-standard),
-                    opacity var(--duration-fast) var(--ease-standard),
-                    box-shadow var(--duration-fast) var(--ease-standard);
-    }
-
     /* ── Interactive item (hover bg + focus ring + active scale) ── */
     .interactive-item {
         border-radius: var(--radius-lg);
@@ -96,64 +68,6 @@
             background var(--duration-fast) var(--ease-standard),
             box-shadow var(--duration-fast) var(--ease-standard);
     }
-    .status-dot--active {
-        background: var(--color-status-active);
-    }
-    .status-dot--paused {
-        background: var(--color-status-paused);
-    }
-    .status-dot--idle {
-        background: var(--color-status-idle);
-    }
-
-    /* ── Paper texture backgrounds ── */
-    .bg-paper-clean {
-        background-image: var(--paper-clean-texture);
-        background-repeat: repeat;
-        background-size: var(--paper-texture-size);
-        background-blend-mode: multiply;
-    }
-    .bg-paper-aged {
-        background-image: var(--paper-aged-texture);
-        background-repeat: repeat;
-        background-size: var(--paper-texture-size);
-        background-blend-mode: multiply;
-    }
-
-    /* ── Rainbow text ── */
-    .rainbow-text {
-        background: linear-gradient(
-            90deg,
-            var(--rainbow-red),
-            var(--rainbow-orange),
-            var(--rainbow-yellow),
-            var(--rainbow-green),
-            var(--rainbow-blue),
-            var(--rainbow-indigo),
-            var(--rainbow-violet)
-        );
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    /* ── Rainbow border ── */
-    .rainbow-border {
-        background:
-            linear-gradient(var(--background), var(--background)) padding-box,
-            linear-gradient(
-                    135deg,
-                    var(--rainbow-red),
-                    var(--rainbow-yellow),
-                    var(--rainbow-green),
-                    var(--rainbow-blue),
-                    var(--rainbow-indigo),
-                    var(--rainbow-violet),
-                    var(--rainbow-red)
-                )
-                border-box;
-        border: 2px solid transparent;
-    }
-
     /* ── Depth text (layered shadow with customizable colors) ── */
     .depth-text {
         --depth-color-primary: var(--primary);
@@ -170,16 +84,6 @@
             2px 2px 2px color-mix(in srgb, var(--shadow-color) 20%, transparent),
             4px 4px 5px color-mix(in srgb, var(--shadow-color) 25%, transparent),
             6px 6px 10px color-mix(in srgb, var(--shadow-color) 15%, transparent);
-    }
-
-    /* ── Touch gate (iOS Safari) ── */
-    .touch-gate-target {
-        outline: 2px solid transparent;
-        outline-offset: -2px;
-        transition: outline-color var(--duration-fast) var(--ease-standard);
-    }
-    .touch-gate-active {
-        outline-color: color-mix(in srgb, var(--ring) 25%, transparent);
     }
 
     /* ── 3D preserve ── */
@@ -216,13 +120,6 @@
         -webkit-mask-image: linear-gradient(to bottom, transparent, black var(--mask-fade-width), black calc(100% - var(--mask-fade-width)), transparent);
     }
 
-    /* ── Icon sizing ── */
-    .icon-xs { width: var(--icon-xs); height: var(--icon-xs); flex-shrink: 0; }
-    .icon-sm { width: var(--icon-sm); height: var(--icon-sm); flex-shrink: 0; }
-    .icon-md { width: var(--icon-md); height: var(--icon-md); flex-shrink: 0; }
-    .icon-lg { width: var(--icon-lg); height: var(--icon-lg); flex-shrink: 0; }
-    .icon-xl { width: var(--icon-xl); height: var(--icon-xl); flex-shrink: 0; }
-
     /* ── Shimmer text effects ── */
     .gold-shimmer {
         background: linear-gradient(90deg, var(--color-gold-dark), var(--color-gold-light), var(--color-gold), var(--color-gold-light), var(--color-gold-dark));
@@ -240,15 +137,6 @@
         -webkit-background-clip: text;
         color: transparent;
         animation: shimmer var(--duration-shimmer-fast) linear infinite;
-    }
-
-    .gold-shimmer-subtle {
-        background: linear-gradient(90deg, var(--color-gold-dark), var(--color-gold-light), var(--color-gold-dark));
-        background-size: 300% 100%;
-        background-clip: text;
-        -webkit-background-clip: text;
-        color: transparent;
-        animation: shimmer var(--duration-shimmer-slow) linear infinite;
     }
 
     /* ── Keyboard key ── */
@@ -325,17 +213,6 @@
         color: color-mix(in srgb, var(--muted-foreground) 50%, transparent);
     }
 
-    /* ── Dashed well — muted container for adding/selecting items ── */
-    .dashed-well {
-        max-width: var(--max-width-input);
-        border-radius: var(--radius-2xl);
-        border: 2px dashed color-mix(in srgb, var(--primary) 30%, transparent);
-        background: color-mix(in srgb, var(--primary) 5%, transparent);
-        padding: 0.75rem;
-        display: grid;
-        gap: 0.5rem;
-    }
-
     /* ── Hover lift — translate-y + shadow on hover (3 levels) ── */
     .hover-lift {
         transition-property: transform, box-shadow;
@@ -365,16 +242,6 @@
     .hover-lift-lg:hover:not(:disabled):not([aria-disabled='true']) {
         transform: translateY(var(--lift-lg));
         box-shadow: var(--shadow-lg);
-    }
-
-    /* ── Hover shadow lift — shadow-only hover ── */
-    .hover-shadow-lift {
-        transition-property: box-shadow;
-        transition-duration: var(--duration-normal);
-        transition-timing-function: var(--spring-smooth);
-    }
-    .hover-shadow-lift:hover:not(:disabled):not([aria-disabled='true']) {
-        box-shadow: var(--shadow-xl);
     }
 
     /* ── Glass overlay — dark backdrop ── */
@@ -452,31 +319,9 @@
         animation: shimmer-sweep var(--shimmer-duration, 2000ms) ease-in-out infinite;
     }
 
-    /* ── Rainbow gradients ── */
-    .rainbow-pastel {
-        background: linear-gradient(to right, var(--rainbow-pastel-red), var(--rainbow-pastel-orange), var(--rainbow-pastel-yellow), var(--rainbow-pastel-green), var(--rainbow-pastel-blue), var(--rainbow-pastel-indigo), var(--rainbow-pastel-violet));
-    }
-    .rainbow-vivid {
-        background: linear-gradient(to right, var(--rainbow-red), var(--rainbow-orange), var(--rainbow-yellow), var(--rainbow-green), var(--rainbow-blue), var(--rainbow-indigo), var(--rainbow-violet));
-    }
-
     /* ── Progress gradient (rainbow) ── */
     .progress-gradient {
         background: linear-gradient(90deg, #ef4444, #f97316, #eab308, #22c55e, #06b6d0, #3b82f6, #9333ea);
-    }
-
-    /* ── Glassmorphic checkbox ── */
-    .checkbox-glass {
-        height: 1.25rem;
-        width: 1.25rem;
-        border-radius: var(--radius-lg);
-        border: 2px solid color-mix(in srgb, var(--border) 60%, transparent);
-        backdrop-filter: blur(4px);
-
-        box-shadow: var(--shadow-sm);
-        transition-property: background-color, border-color, transform, box-shadow;
-        transition-duration: var(--duration-normal);
-        transition-timing-function: var(--spring-snappy);
     }
 
     /* ── Divider utilities ── */
@@ -502,32 +347,9 @@
         );
     }
 
-    .divider-v {
-        width: 2px;
-        background: linear-gradient(
-            to bottom,
-            transparent 3%,
-            var(--border) 15%,
-            var(--border) 85%,
-            transparent 97%
-        );
-    }
-
     /* ── Shake error ── */
     .shake-error {
         animation: shake 0.5s ease-in-out;
-    }
-
-    /* ── Input focus ring ── */
-    .input-focus {
-        outline: none;
-        transition-property: box-shadow;
-        transition-duration: var(--duration-normal);
-        transition-timing-function: var(--spring-smooth);
-    }
-    .input-focus:focus-visible {
-        box-shadow: var(--focus-ring-shadow);
-        outline: none;
     }
 
     /* ── Active scale — press feedback ── */
@@ -537,65 +359,6 @@
         transition-duration: var(--duration-fast);
     }
 
-    /* ── Stagger children — cascading entrance for list/grid items ──
-       Components may set `--stagger-index` directly via :style for unbounded lists.
-       Auto-staggering handled here for the first 24 children via nth-child;
-       additional children fall back to the last cycle position (0–23 modulo). */
-    .stagger-children > * {
-        animation: fade-in var(--duration-normal) var(--spring-smooth, ease) backwards;
-        animation-delay: calc(var(--stagger-index, 0) * var(--stagger-step, 50ms));
-    }
-    .stagger-children > *:nth-child(1)  { --stagger-index: 0; }
-    .stagger-children > *:nth-child(2)  { --stagger-index: 1; }
-    .stagger-children > *:nth-child(3)  { --stagger-index: 2; }
-    .stagger-children > *:nth-child(4)  { --stagger-index: 3; }
-    .stagger-children > *:nth-child(5)  { --stagger-index: 4; }
-    .stagger-children > *:nth-child(6)  { --stagger-index: 5; }
-    .stagger-children > *:nth-child(7)  { --stagger-index: 6; }
-    .stagger-children > *:nth-child(8)  { --stagger-index: 7; }
-    .stagger-children > *:nth-child(9)  { --stagger-index: 8; }
-    .stagger-children > *:nth-child(10) { --stagger-index: 9; }
-    .stagger-children > *:nth-child(11) { --stagger-index: 10; }
-    .stagger-children > *:nth-child(12) { --stagger-index: 11; }
-    .stagger-children > *:nth-child(13) { --stagger-index: 12; }
-    .stagger-children > *:nth-child(14) { --stagger-index: 13; }
-    .stagger-children > *:nth-child(15) { --stagger-index: 14; }
-    .stagger-children > *:nth-child(16) { --stagger-index: 15; }
-    .stagger-children > *:nth-child(17) { --stagger-index: 16; }
-    .stagger-children > *:nth-child(18) { --stagger-index: 17; }
-    .stagger-children > *:nth-child(19) { --stagger-index: 18; }
-    .stagger-children > *:nth-child(20) { --stagger-index: 19; }
-    .stagger-children > *:nth-child(21) { --stagger-index: 20; }
-    .stagger-children > *:nth-child(22) { --stagger-index: 21; }
-    .stagger-children > *:nth-child(23) { --stagger-index: 22; }
-    .stagger-children > *:nth-child(24) { --stagger-index: 23; }
-
-    /* ── Scroll reveal — animate on viewport entry (zero JS) ── */
-    @supports (animation-timeline: view()) {
-        /* One-shot: fades in during entry, stays visible */
-        .scroll-reveal {
-            animation: fade-in linear both;
-            animation-timeline: view();
-            animation-range: entry 0% entry 100%;
-        }
-
-        /* Reversible: fades in on scroll down, fades out on scroll back up */
-        .scroll-reveal-reverse {
-            animation: fade-in linear both;
-            animation-timeline: view();
-            animation-range: entry 0% cover 50%;
-        }
-    }
-
-    /* ── Letter spacing hover spread ── */
-    .text-hover-spread {
-        letter-spacing: var(--tracking-tight);
-        transition: letter-spacing var(--duration-normal) var(--spring-smooth, ease);
-    }
-    .text-hover-spread:hover {
-        letter-spacing: var(--tracking-wide);
-    }
-
     /* ── Disabled base state ── */
     .disabled-base:disabled {
         pointer-events: none;
@@ -603,46 +366,6 @@
         opacity: var(--opacity-disabled);
     }
 
-    /* ── Card hover transitions ── */
-    .card-hover {
-        transition-property: color, background-color, border-color, box-shadow;
-        transition-duration: var(--duration-normal);
-        transition-timing-function: ease;
-    }
-    .card-hover:hover {
-        border-color: color-mix(in srgb, var(--border) 50%, transparent);
-        background-color: color-mix(in srgb, var(--muted) 30%, transparent);
-    }
-
-    .card-hover-interactive {
-        transition-property: color, background-color, border-color, box-shadow;
-        transition-duration: var(--duration-normal);
-        transition-timing-function: ease;
-    }
-    .card-hover-interactive:hover {
-        border-color: color-mix(in srgb, var(--primary) 30%, transparent);
-        background-color: color-mix(in srgb, var(--primary) 5%, transparent);
-    }
-
-    /* ── Sort button active state ── */
-    .sort-button-active {
-        background-color: color-mix(in srgb, var(--primary) 10%, transparent);
-        color: var(--primary);
-        border-color: color-mix(in srgb, var(--primary) 30%, transparent);
-    }
-
-    /* ── Heatmap color scale (10 levels)
-       Tokens defined in tokens.css §14 with dark mode override. ── */
-    .heatmap-1  { background-color: var(--heatmap-1-bg);  color: var(--heatmap-1-fg); }
-    .heatmap-2  { background-color: var(--heatmap-2-bg);  color: var(--heatmap-2-fg); }
-    .heatmap-3  { background-color: var(--heatmap-3-bg);  color: var(--heatmap-3-fg); }
-    .heatmap-4  { background-color: var(--heatmap-4-bg);  color: var(--heatmap-4-fg); }
-    .heatmap-5  { background-color: var(--heatmap-5-bg);  color: var(--heatmap-5-fg); }
-    .heatmap-6  { background-color: var(--heatmap-6-bg);  color: var(--heatmap-6-fg); }
-    .heatmap-7  { background-color: var(--heatmap-7-bg);  color: var(--heatmap-7-fg); }
-    .heatmap-8  { background-color: var(--heatmap-8-bg);  color: var(--heatmap-8-fg); }
-    .heatmap-9  { background-color: var(--heatmap-9-bg);  color: var(--heatmap-9-fg); }
-    .heatmap-10 { background-color: var(--heatmap-10-bg); color: var(--heatmap-10-fg); }
 }
 
 @keyframes shimmer {

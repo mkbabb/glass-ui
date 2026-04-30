@@ -14,36 +14,4 @@
         pointer-events: auto;
         animation: floating-panel-in var(--duration-fast) var(--ease-out);
     }
-
-    .floating-panel-item {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        padding: 0.375rem;
-        border-radius: var(--radius-pill);
-        color: inherit;
-        cursor: pointer;
-        transition:
-            background-color var(--duration-fast) var(--ease-standard),
-            transform var(--duration-fast) var(--ease-standard);
-    }
-
-    .floating-panel-item:hover {
-        background-color: color-mix(in srgb, var(--foreground) 6%, transparent);
-    }
-
-    .floating-panel-item:focus-visible {
-        outline: none;
-        border-radius: var(--radius-pill);
-        box-shadow: var(--focus-ring-shadow);
-    }
-
-    .floating-panel-item:active:not(:disabled) {
-        transform: scale(0.95);
-    }
-    .floating-panel-item:disabled {
-        opacity: var(--opacity-disabled);
-        pointer-events: none;
-    }
 }

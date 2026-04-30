@@ -79,17 +79,6 @@
         contain: layout style;
     }
 
-    .glass-pill {
-        position: relative;
-        background: var(--glass-bg-default);
-        backdrop-filter: var(--glass-blur-default);
-        -webkit-backdrop-filter: var(--glass-blur-default);
-        border: 1px solid var(--glass-border-default);
-        border-radius: var(--radius-pill);
-        box-shadow: var(--glass-shadow-subtle);
-        contain: layout style;
-    }
-
     /* Cartoon surface — interactive card with cartoon-tier shadow + hover lift.
        Card.vue's variant="cartoon" outputs class="glass-cartoon"; this rule
        closes that contract. Token-fall-through to default-tier glass tokens

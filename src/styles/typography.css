@@ -280,50 +280,9 @@ body {
         letter-spacing: var(--tracking-caps);
     }
 
-    /* Pane description */
-    .text-pane-description {
-        font-family: var(--font-mono);
-        font-size: var(--type-small);
-        color: color-mix(in srgb, var(--muted-foreground) 60%, transparent);
-    }
-
     /* Font-feature helpers */
     .tabular-nums {
         font-variant-numeric: tabular-nums;
-    }
-
-    .proportional-nums {
-        font-variant-numeric: proportional-nums;
-    }
-
-    /* Glass legibility — halo shadow for text over translucent backgrounds */
-    .text-glass-legible {
-        text-shadow:
-            0 0 12px color-mix(in srgb, var(--background) 50%, transparent),
-            0 0 4px color-mix(in srgb, var(--background) 30%, transparent);
-    }
-
-    /* Kinetic: ambient weight breathing */
-    .text-breathe {
-        animation: weight-breathe 4s ease-in-out infinite;
-    }
-
-    /* Kinetic: Fraunces WONK/SOFT personality shift on hover */
-    .text-wonk-hover {
-        font-variation-settings: "WONK" 0, "SOFT" 100;
-        transition: font-variation-settings var(--duration-slow) var(--spring-smooth, ease);
-    }
-    .text-wonk-hover:hover {
-        font-variation-settings: "WONK" 1, "SOFT" 0;
-    }
-
-    /* Kinetic: scroll-driven weight reveal (zero JS) */
-    @supports (animation-timeline: view()) {
-        .scroll-weight-reveal {
-            animation: weight-reveal linear both;
-            animation-timeline: view();
-            animation-range: entry 0% cover 30%;
-        }
     }
 
     /* Kinetic: per-character stagger */

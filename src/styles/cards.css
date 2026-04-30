@@ -10,15 +10,7 @@
         background-blend-mode: multiply;
     }
 
-    .paper-texture-aged {
-        background-image: var(--paper-aged-texture);
-        background-repeat: repeat;
-        background-size: var(--paper-texture-size);
-        background-blend-mode: multiply;
-    }
-
-    :where(.dark) .paper-texture,
-    :where(.dark) .paper-texture-aged {
+    :where(.dark) .paper-texture {
         background-blend-mode: screen;
     }
 }
