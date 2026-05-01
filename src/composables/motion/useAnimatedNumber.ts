@@ -7,7 +7,8 @@
 import { SmoothProgress } from "@mkbabb/keyframes.js";
 import type { SmoothProgressOptions } from "@mkbabb/keyframes.js";
 import {
-    onBeforeUnmount,
+    getCurrentScope,
+    onScopeDispose,
     readonly,
     ref,
     shallowRef,
@@ -16,17 +17,22 @@ import {
     type MaybeRefOrGetter,
     type Ref,
 } from "vue";
+import { DAMPING, SNAP_THRESHOLD } from "./constants";
+
+export type AnimatedNumberMode = "absolute" | "progress";
 
 export interface UseAnimatedNumberOptions {
-    /** SmoothProgress damping; default 0.1. Lower = smoother, higher = snappier. */
+    /** Numeric contract. Progress mode accepts and clamps 0..100. Default absolute. */
+    mode?: AnimatedNumberMode;
+    /** SmoothProgress damping. Lower = smoother, higher = snappier. */
     damping?: number;
-    /** Absolute-delta threshold below which current snaps to target. Default 0.01. */
+    /** Absolute-delta threshold below which current snaps to target. */
     snapThreshold?: number;
     /** Minimum target change accepted as noise filter. Default 0. */
     targetEpsilon?: number;
     /** Starting current value. Default 0. */
     initial?: number;
-    /** Clamp current to [0, 1]. Default false for absolute values like Mbps or ms. */
+    /** Absolute-mode clamp to [0, 1]. Progress mode always clamps to [0, 100]. */
     clamp?: boolean;
     /** Respect prefers-reduced-motion with synchronous target snaps. Default true. */
     respectReducedMotion?: boolean;
@@ -43,6 +49,12 @@ export interface AnimatedNumber {
     snap: () => void;
     /** Reset current and target to `value` (default 0), then stop the loop. */
     reset: (value?: number) => void;
+    /** Stop the smoother and target watcher. */
+    dispose: () => void;
+}
+
+function clampProgress(value: number): number {
+    return Math.max(0, Math.min(100, value));
 }
 
 /**
@@ -56,49 +68,65 @@ export function useAnimatedNumber(
     target: MaybeRefOrGetter<number | null | undefined>,
     options: UseAnimatedNumberOptions = {},
 ): AnimatedNumber {
-    const initial = options.initial ?? 0;
+    const mode = options.mode ?? "absolute";
+    const normalizeValue =
+        mode === "progress" ? clampProgress : (value: number) => value;
+    const initial = normalizeValue(options.initial ?? 0);
     const current = ref(initial);
     const isAnimating = ref(false);
+    const defaultDamping =
+        mode === "progress" ? DAMPING.domProgress : DAMPING.domHero;
+    const defaultSnapThreshold =
+        mode === "progress" ? SNAP_THRESHOLD.domProgress : SNAP_THRESHOLD.dom;
 
     const smootherOpts: Partial<SmoothProgressOptions> = {
-        damping: options.damping ?? 0.1,
-        snapThreshold: options.snapThreshold ?? 0.01,
+        damping: options.damping ?? defaultDamping,
+        snapThreshold: options.snapThreshold ?? defaultSnapThreshold,
         targetEpsilon: options.targetEpsilon ?? 0,
         initial,
-        clamp: options.clamp ?? false,
+        clamp: mode === "progress" ? false : (options.clamp ?? false),
         respectReducedMotion: options.respectReducedMotion !== false,
     };
     const smoother = shallowRef(new SmoothProgress(smootherOpts));
 
     smoother.value.play((value) => {
-        current.value = value;
+        current.value = normalizeValue(value);
         isAnimating.value = !smoother.value.settled;
-        options.onValue?.(value);
+        options.onValue?.(current.value);
     });
 
-    watch(
+    const stopTargetWatch = watch(
         () => toValue(target),
         (nextTarget) => {
             if (nextTarget == null) return;
-            smoother.value.setTarget(nextTarget);
+            smoother.value.setTarget(normalizeValue(nextTarget));
         },
         { immediate: true },
     );
 
-    onBeforeUnmount(() => smoother.value.stop());
+    function dispose(): void {
+        stopTargetWatch();
+        smoother.value.stop();
+        isAnimating.value = false;
+    }
+
+    if (getCurrentScope()) {
+        onScopeDispose(dispose);
+    }
 
     return {
         current: readonly(current),
         isAnimating: readonly(isAnimating),
         snap: () => {
             smoother.value.snap();
-            current.value = smoother.value.current;
+            current.value = normalizeValue(smoother.value.current);
             isAnimating.value = false;
         },
         reset: (value) => {
-            smoother.value.reset(value);
-            current.value = smoother.value.current;
+            smoother.value.reset(normalizeValue(value ?? 0));
+            current.value = normalizeValue(smoother.value.current);
             isAnimating.value = false;
         },
+        dispose,
     };
 }
