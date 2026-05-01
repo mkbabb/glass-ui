@@ -106,7 +106,8 @@ Twelve-tier stacking, plus two out-of-band tiers:
 | `--z-background`  | 0     | Aurora, decorative layers            |
 | `--z-content`     | 10    | Main content                         |
 | `--z-controls`    | 20    | Inline controls                      |
-| `--z-bar`         | 30    | Status bars, headers                 |
+| `--z-bar`         | 30    | Status bars                          |
+| `--z-header`      | 35    | Headers                              |
 | `--z-dock`        | 40    | Docks                                |
 | `--z-panel`       | 45    | Floating editor panels               |
 | `--z-overlay`     | 50    | Full-screen overlays                 |
@@ -188,10 +189,10 @@ Twelve-tier stacking, plus two out-of-band tiers:
 ### Glass-tier shadows
 
 ```
---glass-shadow-subtle:   var(--shadow-sm);
---glass-shadow-default:  var(--shadow-md);
---glass-shadow-medium:   var(--shadow-lg);
---glass-shadow-elevated: var(--shadow-xl), inset 0 0 0 1px rgba(255,255,255,0.08);  /* rim */
+--glass-shadow-subtle:   var(--shadow-sm), var(--glass-highlight);
+--glass-shadow-default:  var(--shadow-md), var(--glass-highlight);
+--glass-shadow-medium:   var(--shadow-lg), var(--glass-highlight);
+--glass-shadow-elevated: var(--shadow-xl), 0 0 0 0.5px color-mix(in srgb, var(--shadow-color) 5%, transparent), var(--glass-highlight);
 ```
 
 ---
@@ -202,10 +203,10 @@ Four tiers compose background opacity, backdrop-blur, border, shadow, grain. Dar
 
 | Tier     | Class              | Light opacity | Dark opacity | Blur                        | Border               | Shadow                   | Use                                 |
 |----------|--------------------|---------------|--------------|-----------------------------|----------------------|--------------------------|-------------------------------------|
-| Subtle   | `.glass-subtle`    | 30%           | 42%          | `blur(4px) saturate(1.05)`  | 8% foreground        | `--shadow-sm`            | Dock bg, input bg, hover overlays   |
-| Default  | `.glass-default`   | 50%           | 58%          | `blur(8px) saturate(1.2)`   | 10% foreground       | `--shadow-md`            | Cards, containers, select triggers  |
-| Medium   | `.glass-medium`    | 65%           | 72%          | `blur(12px) saturate(1.3)`  | 12% foreground       | `--shadow-lg`            | Popovers, dropdowns, dock expanded  |
-| Elevated | `.glass-elevated`  | 80%           | 88%          | `blur(16px) saturate(1.4)`  | 15% foreground       | `--shadow-xl` + inner rim | Dialogs, command palette, modals    |
+| Subtle   | `.glass-subtle`    | 30%           | 42%          | `blur(4px) saturate(1.05)`  | 8% foreground        | `--glass-shadow-subtle`   | Dock bg, input bg, hover overlays   |
+| Default  | `.glass-default`   | 50%           | 58%          | `blur(8px) saturate(1.2)`   | 10% foreground       | `--glass-shadow-default`  | Cards, containers, select triggers  |
+| Medium   | `.glass-medium`    | 65%           | 72%          | `blur(12px) saturate(1.3)`  | 12% foreground       | `--glass-shadow-medium`   | Popovers, dropdowns, dock expanded  |
+| Elevated | `.glass-elevated`  | 80%           | 88%          | `blur(16px) saturate(1.4)`  | 15% foreground       | `--glass-shadow-elevated` | Dialogs, command palette, modals    |
 
 ### Tokens per tier
 
@@ -305,21 +306,35 @@ Consumers extending beyond display-5 add tokens in their preset — the library 
 |------------------|-------------------------------------------------------------|-------------------------------------------------------|
 | `--font-display` | Fraunces (variable; `opsz`/`wght`/`SOFT`/`WONK`)            | Ornamental display voice; headings with personality   |
 | `--font-serif`   | Computer Modern Serif → Georgia fallback                    | Body, prose, headings, math                           |
-| `--font-sans`    | Helvetica Neue → Arial → system-ui                          | System sans fallback (rarely direct)                  |
+| `--font-brand-sans` | Helvetica Neue → Arial → system-ui                       | Brand/system sans stack used by presets and overrides |
+| `--font-sans`    | `var(--font-brand-sans)`                                    | System sans fallback (rarely direct)                  |
 | `--font-mono`    | Fira Code → Fira Mono → monospace                           | Code, monospace, admin labels                         |
+| `--font-display-variation-settings` | `"WONK" 1, "SOFT" 0`                    | Display font axis defaults                            |
+| `--font-display-weight` | 400                                                 | Display utility weight default                        |
 
 ```css
 --font-display: "Fraunces", Georgia, serif;                                         /* display voice */
 --font-serif:   "Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif; /* body serif */
---font-sans:    "Helvetica Neue", "Arial Nova", Arial, system-ui, sans-serif;       /* independent system sans */
+--font-brand-sans: "Helvetica Neue", "Arial Nova", Arial, system-ui, sans-serif;    /* independent brand/system sans */
+--font-sans:    var(--font-brand-sans);                                             /* system sans */
 --font-mono:    "Fira Code", "Fira Mono", monospace;
+--font-display-variation-settings: "WONK" 1, "SOFT" 0;
+--font-display-weight: 400;
 ```
 
 Consumers override these tokens at `:root` (not just `@theme` at-rules
 — `@theme` may not propagate into already-emitted `@utility` rules at
-evaluation time, so consumer-side cascade leaks are real). For example,
-speedtest pins both `--font-display` and `--font-serif` to General Sans
-at `:root` since its brand is brand-uniform sans.
+evaluation time, so consumer-side cascade leaks are real). Consumers
+that need a uniform sans voice set `--font-brand-sans` and apply the
+root preset:
+
+```html
+<html data-typography-preset="brand-uniform-sans">
+```
+
+The preset maps `--font-serif` and `--font-display` to
+`--font-brand-sans`, normalizes display font variation settings, and
+sets `--font-display-weight` for a non-Fraunces display stack.
 
 `--font-sans` was previously aliased to `--font-serif`, which collapsed the
 two semantic identities and confused consumers that overrode `--font-serif`
@@ -462,13 +477,40 @@ The dock is a first-class composable system. Three principles: a dock is a posit
 - `fit-content` — adapt width to content vs stretch
 - `wrap` — multi-line responsive dock (mobile rounded-rect, desktop pill)
 - `orientation` — `horizontal` (default) or `vertical`
+- `density` — `compact | comfortable | spacious`; controls padding, gaps, layer height, and inherited dock control sizing through root-overridable CSS variables
 - `<template #collapsed>` — summary content shown when compacted
+
+### Density variables
+
+`comfortable` is the default and keeps the historical dimensions. The
+`compact` and `spacious` classes set these variables, each with a
+consumer-overridable density token fallback:
+
+```css
+--dock-padding-block
+--dock-padding-inline
+--dock-control-size
+--dock-layer-height
+--dock-layer-gap
+--dock-trigger-padding-block
+--dock-trigger-padding-inline
+--dock-tab-padding-block
+--dock-tab-padding-inline
+```
+
+Density overrides are named by tier, for example
+`--dock-density-compact-control-size`,
+`--dock-density-compact-padding-block`,
+`--dock-density-spacious-layer-height`, and
+`--dock-density-spacious-gap`.
 
 ### Utilities
 
 - `.dock-separator` — 1 px vertical divider, 50% dock-h tall, 15% foreground
 - `.dock-spacer` — `flex: 1` for pushing items apart
 - `.dock-label` — inline-flex, 14 px text, muted-foreground; `font-family: var(--font-display)` pinned so dock typography tracks the display voice regardless of consumer body cascade
+- `DarkModeToggle size="control"` follows `--control-size` and `--control-icon-padding`.
+- `DarkModeToggle size="dock"` follows `--dock-control-size` and `--dock-icon-padding`; a toggle placed inside `.glass-dock` defaults to dock sizing unless an explicit `sm`, `lg`, or `control` size is supplied.
 
 ### Layer transitions
 
@@ -569,6 +611,9 @@ All transitions respect `prefers-reduced-motion`: fades preserved at 150 ms, tra
 - `weight-reveal` — wght 100 → 400, opacity 0.3 → 1 (scroll-timeline driven)
 - `gold-shimmer-slide` — `background-position: 200% → -200%` over 6 s linear
 
+`animations.css` owns shimmer keyframes only. Text shimmer utility
+classes, including `.gold-shimmer`, live in `utilities.css`.
+
 ### Utility animations
 
 - `rainbow-hue` — hue-rotate 0 → 360°
@@ -596,7 +641,8 @@ Utility classes `.icon-xs`..`.icon-xl` set width + height.
 ```
 --mask-fade-width:     1rem    (16 px)
 --max-width-input:     24rem   (384 px)
---min-width-input-sm:  5rem    (80 px)
+--input-min-width-sm:  5rem    (80 px)
+--min-width-input-sm:  var(--input-min-width-sm)
 ```
 
 ### Chart dimensions (consumer-facing tokens)
@@ -608,7 +654,7 @@ Utility classes `.icon-xs`..`.icon-xl` set width + height.
 --chart-margin:         1.25rem (20 px)
 ```
 
-Tailwind exposure: `h-chart-compact`, `h-chart-default`, `h-chart-large`; `min-w-input-sm`.
+Tailwind exposure: `h-chart-compact`, `h-chart-default`, `h-chart-large`; `min-w-input-sm`; `m-chart-margin`, `mx-chart-margin`, `my-chart-margin`, and related spacing utilities backed by `--spacing-chart-margin`.
 
 ### Divider colors (for charts, overlays, echarts)
 

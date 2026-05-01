@@ -9,7 +9,7 @@
         backdrop-filter: var(--glass-blur-subtle);
         -webkit-backdrop-filter: var(--glass-blur-subtle);
         border: 1px solid var(--glass-border-subtle);
-        box-shadow: var(--glass-highlight);
+        box-shadow: var(--glass-shadow-subtle);
     }
 
     .glass-default {
@@ -18,7 +18,7 @@
         backdrop-filter: var(--glass-blur-default);
         -webkit-backdrop-filter: var(--glass-blur-default);
         border: 1px solid var(--glass-border-default);
-        box-shadow: var(--glass-highlight);
+        box-shadow: var(--glass-shadow-default);
     }
 
     .glass-medium {
@@ -27,7 +27,7 @@
         backdrop-filter: var(--glass-blur-medium);
         -webkit-backdrop-filter: var(--glass-blur-medium);
         border: 1px solid var(--glass-border-medium);
-        box-shadow: var(--glass-highlight);
+        box-shadow: var(--glass-shadow-medium);
     }
 
     .glass-elevated {
@@ -36,7 +36,7 @@
         backdrop-filter: var(--glass-blur-elevated);
         -webkit-backdrop-filter: var(--glass-blur-elevated);
         border: 1px solid var(--glass-border-elevated);
-        box-shadow: var(--glass-highlight);
+        box-shadow: var(--glass-shadow-elevated);
     }
 
     /* Grain noise overlay — reuses paper texture SVG, no extra assets */
@@ -217,7 +217,7 @@
         --glass-blur-elevated: none;
         --glass-blur-dock: none;
         --glass-grain-opacity: 0;
-        --glass-highlight: none;
+        --glass-highlight: 0 0 0 0 transparent;
     }
 }
 

@@ -119,7 +119,7 @@ function isComponent(icon: unknown): icon is Component {
 <style scoped>
 .dock-layer-group {
     display: flex;
-    gap: 0.25rem;
+    gap: var(--dock-layer-group-gap, var(--dock-layer-gap, 0.25rem));
     min-width: 0;
     min-height: 0;
 }
@@ -146,8 +146,8 @@ function isComponent(icon: unknown): icon is Component {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-    gap: 0.125rem;
-    padding: 0.125rem;
+    gap: var(--dock-layer-rail-gap, 0.125rem);
+    padding: var(--dock-layer-rail-padding, 0.125rem);
     border-right: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
 }
 
@@ -171,10 +171,10 @@ function isComponent(icon: unknown): icon is Component {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 1.75rem;
-    height: 1.75rem;
+    width: var(--dock-layer-tab-size, var(--dock-control-size, 1.75rem));
+    height: var(--dock-layer-tab-size, var(--dock-control-size, 1.75rem));
     border: 0;
-    border-radius: var(--radius-sm);
+    border-radius: var(--dock-layer-tab-radius, var(--radius-sm));
     background: transparent;
     color: var(--muted-foreground);
     cursor: pointer;

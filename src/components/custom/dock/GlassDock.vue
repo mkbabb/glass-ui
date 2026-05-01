@@ -3,6 +3,8 @@ import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
 import { useTouchGate } from "../../../composables/useTouchGate";
 import { useDockState } from "./composables/useDockState";
 
+type DockDensity = "compact" | "comfortable" | "spacious";
+
 const props = withDefaults(
     defineProps<{
         collapseDelay?: number;
@@ -25,6 +27,11 @@ const props = withDefaults(
          * top-to-bottom and animates `height`.
          */
         orientation?: "horizontal" | "vertical";
+        /**
+         * Density controls dock padding, gaps, layer height, and inherited
+         * dock control sizing. Root CSS variables can override each density.
+         */
+        density?: DockDensity;
     }>(),
     {
         collapseDelay: 2000,
@@ -36,6 +43,7 @@ const props = withDefaults(
         variant: "dock",
         shape: "pill",
         orientation: "horizontal",
+        density: "comfortable",
     },
 );
 
@@ -43,6 +51,7 @@ const dockEl = useTemplateRef<HTMLElement>("dockEl");
 const variant = computed(() => props.variant);
 const shape = computed(() => props.shape);
 const orientation = computed(() => props.variant === "rail" ? "vertical" : props.orientation);
+const density = computed(() => props.density);
 const alwaysExpanded = computed(() => props.alwaysExpanded || orientation.value === "vertical");
 const fitContent = computed(() => props.fitContent || props.variant === "rail");
 
@@ -131,6 +140,7 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
             orientation,
             `variant-${variant}`,
             `shape-${shape}`,
+            `density-${density}`,
             { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'dock-wrap': wrap },
             position === 'fixed' ? 'fixed bottom-[var(--dock-pos)] left-1/2 -translate-x-1/2'
               : position === 'sticky' ? 'dock-sticky'
@@ -182,7 +192,7 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
     border-radius: var(--radius-dock);
     white-space: nowrap;
     overflow: hidden;
-    padding: 0.375rem 0.5rem;
+    padding: var(--dock-padding-block, 0.375rem) var(--dock-padding-inline, 0.5rem);
     /* Consumers can reskin the dock surface by defining --glass-bg-dock,
        --glass-blur-dock, --glass-border-dock and --shadow-dock-override.
        Each falls back to the historical default so existing consumers are
@@ -192,6 +202,30 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
     -webkit-backdrop-filter: var(--glass-blur-dock, var(--glass-blur-subtle));
     border: 1.5px solid var(--glass-border-dock, var(--glass-border-medium));
     box-shadow: var(--shadow-dock-override, var(--shadow-dock));
+}
+
+.glass-dock.density-compact {
+    --dock-padding-block: var(--dock-density-compact-padding-block, 0.25rem);
+    --dock-padding-inline: var(--dock-density-compact-padding-inline, 0.375rem);
+    --dock-control-size: var(--dock-density-compact-control-size, 2rem);
+    --dock-layer-height: var(--dock-density-compact-layer-height, 2rem);
+    --dock-layer-gap: var(--dock-density-compact-gap, 0.25rem);
+    --dock-trigger-padding-block: var(--dock-density-compact-trigger-padding-block, 0.1875rem);
+    --dock-trigger-padding-inline: var(--dock-density-compact-trigger-padding-inline, 0.4375rem);
+    --dock-tab-padding-block: var(--dock-density-compact-tab-padding-block, 0.3125rem);
+    --dock-tab-padding-inline: var(--dock-density-compact-tab-padding-inline, 0.625rem);
+}
+
+.glass-dock.density-spacious {
+    --dock-padding-block: var(--dock-density-spacious-padding-block, 0.5rem);
+    --dock-padding-inline: var(--dock-density-spacious-padding-inline, 0.75rem);
+    --dock-control-size: var(--dock-density-spacious-control-size, 2.75rem);
+    --dock-layer-height: var(--dock-density-spacious-layer-height, 2.75rem);
+    --dock-layer-gap: var(--dock-density-spacious-gap, 0.5rem);
+    --dock-trigger-padding-block: var(--dock-density-spacious-trigger-padding-block, 0.375rem);
+    --dock-trigger-padding-inline: var(--dock-density-spacious-trigger-padding-inline, 0.625rem);
+    --dock-tab-padding-block: var(--dock-density-spacious-tab-padding-block, 0.5rem);
+    --dock-tab-padding-inline: var(--dock-density-spacious-tab-padding-inline, 0.875rem);
 }
 
 .glass-dock::after {
@@ -240,7 +274,7 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
     overflow-x: hidden;
     overflow-y: auto;
     scrollbar-width: none;
-    padding: 0.375rem;
+    padding: var(--dock-vertical-padding, var(--dock-padding-block, 0.375rem));
     border-radius: var(--radius-dock);
     transition:
         height var(--duration-normal) var(--spring-snappy),
@@ -257,7 +291,7 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
 }
 
 .glass-dock.variant-rail {
-    padding: 0.5rem;
+    padding: var(--dock-rail-padding, var(--dock-padding-inline, 0.5rem));
     background: var(--glass-bg-dock, var(--glass-bg-subtle));
     border-color: var(--glass-border-dock, var(--glass-border-subtle));
 }
@@ -273,7 +307,7 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
 /* ── Collapsed: compact pill (round when icon-only) ── */
 .glass-dock.collapsed {
     cursor: pointer;
-    padding: 0.375rem;
+    padding: var(--dock-collapsed-padding, var(--dock-padding-block, 0.375rem));
     justify-content: center;
     background: var(--glass-bg-subtle);
     border-color: var(--glass-border-elevated);
@@ -284,7 +318,7 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
    The dock-layer height is 2.5rem; with 0.375rem padding each side that's
    the intrinsic height. We match width to height via the same constraint. */
 .glass-dock.collapsed .dock-layer--summary {
-    min-width: 2.5rem;
+    min-width: var(--dock-collapsed-summary-min-size, var(--dock-layer-height, 2.5rem));
     justify-content: center;
 }
 
@@ -320,8 +354,8 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
     align-items: center;
     white-space: nowrap;
     grid-area: 1 / 1;
-    gap: 0.375rem;
-    height: 2.5rem;
+    gap: var(--dock-layer-gap, 0.375rem);
+    height: var(--dock-layer-height, 2.5rem);
 }
 
 .dock-layer.layer-active {
@@ -364,20 +398,22 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
     white-space: normal;
     border-radius: var(--radius-2xl);
     max-width: calc(100vw - 1rem);
-    padding: 0.375rem 0.625rem;
+    padding:
+        var(--dock-wrap-padding-block, var(--dock-padding-block, 0.375rem))
+        var(--dock-wrap-padding-inline, 0.625rem);
 }
 
 .glass-dock.dock-wrap .dock-layer--full {
     flex-wrap: wrap;
     justify-content: center;
     height: auto;
-    min-height: 2rem;
-    gap: 0.25rem 0.375rem;
+    min-height: var(--dock-wrap-layer-min-height, var(--dock-layer-height, 2rem));
+    gap: var(--dock-wrap-row-gap, 0.25rem) var(--dock-wrap-column-gap, var(--dock-layer-gap, 0.375rem));
 }
 
 .glass-dock.dock-wrap .dock-layer--summary {
     height: auto;
-    min-height: 2rem;
+    min-height: var(--dock-wrap-layer-min-height, var(--dock-layer-height, 2rem));
 }
 
 /* Hide vertical separators when content wraps — they don't make sense between rows */
@@ -398,17 +434,19 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
         white-space: nowrap;
         border-radius: var(--radius-pill);
         max-width: none;
-        padding: 0.375rem 0.75rem;
+        padding:
+            var(--dock-wrap-desktop-padding-block, var(--dock-padding-block, 0.375rem))
+            var(--dock-wrap-desktop-padding-inline, 0.75rem);
     }
 
     .glass-dock.dock-wrap .dock-layer--full {
         flex-wrap: nowrap;
-        height: 2.5rem;
-        gap: 0.25rem;
+        height: var(--dock-layer-height, 2.5rem);
+        gap: var(--dock-wrap-desktop-gap, var(--dock-layer-gap, 0.25rem));
     }
 
     .glass-dock.dock-wrap .dock-layer--summary {
-        height: 2.5rem;
+        height: var(--dock-layer-height, 2.5rem);
     }
 
     .glass-dock.dock-wrap :deep(.dock-separator) {

@@ -42,13 +42,13 @@ const classes = computed(() =>
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    width: var(--size-icon-btn);
-    height: var(--size-icon-btn);
-    padding: 0;
+    width: var(--dock-control-size, var(--size-icon-btn));
+    height: var(--dock-control-size, var(--size-icon-btn));
+    padding: var(--dock-icon-padding, 0);
     cursor: pointer;
     border: none;
     background: transparent;
-    border-radius: var(--radius-pill);
+    border-radius: var(--dock-control-radius, var(--radius-pill));
     color: color-mix(in srgb, var(--foreground) calc(var(--opacity-icon-muted) * 100%), transparent);
     outline: none;
     transition:
@@ -59,10 +59,10 @@ const classes = computed(() =>
 }
 
 .dock-icon-button--compact {
-    width: auto;
-    height: auto;
-    min-width: 0;
-    padding: 0.25rem;
+    width: var(--dock-compact-control-size, auto);
+    height: var(--dock-compact-control-size, auto);
+    min-width: var(--dock-compact-control-min-width, 0);
+    padding: var(--dock-compact-control-padding, 0.25rem);
 }
 
 .dock-icon-button:hover:not(:disabled) {

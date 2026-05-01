@@ -58,6 +58,7 @@
     --z-content: 10;
     --z-controls: 20;
     --z-bar: 30;
+    --z-header: 35;
     --z-dock: 40;
     --z-panel: 45;
     --z-overlay: 50;
@@ -258,18 +259,19 @@
     --glass-border:          var(--glass-border-default);
     --glass-border-strong:   var(--glass-border-elevated);
 
-    /* Shadow per tier */
-    --glass-shadow-subtle:   var(--shadow-sm);
-    --glass-shadow-default:  var(--shadow-md);
-    --glass-shadow-medium:   var(--shadow-lg);
-    --glass-shadow-elevated: var(--shadow-xl),
-        0 0 0 0.5px color-mix(in srgb, var(--shadow-color) 5%, transparent);
-    --glass-shadow:    var(--glass-shadow-default);
-    --glass-shadow-lg: var(--glass-shadow-elevated);
-
     /* Shared decorative */
     --glass-grain-opacity: 0.035;
     --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.25);
+
+    /* Shadow per tier — complete box-shadow lists for glass surface classes */
+    --glass-shadow-subtle:   var(--shadow-sm), var(--glass-highlight);
+    --glass-shadow-default:  var(--shadow-md), var(--glass-highlight);
+    --glass-shadow-medium:   var(--shadow-lg), var(--glass-highlight);
+    --glass-shadow-elevated: var(--shadow-xl),
+        0 0 0 0.5px color-mix(in srgb, var(--shadow-color) 5%, transparent),
+        var(--glass-highlight);
+    --glass-shadow:    var(--glass-shadow-default);
+    --glass-shadow-lg: var(--glass-shadow-elevated);
 
     /* ═══════════════════════════════════════════════
        §9  ANIMATION OFFSETS
@@ -287,6 +289,12 @@
     /* Layout tokens */
     --mask-fade-width: 1rem;
     --max-width-input: 24rem;
+    --input-min-width-sm: 5rem;
+    --min-width-input-sm: var(--input-min-width-sm);
+    --chart-height-compact: 15rem;
+    --chart-height-default: 22.5rem;
+    --chart-height-large: 25rem;
+    --chart-margin: 1.25rem;
     --paper-texture-size: 200px 200px;
 
     /* Border opacity scale */

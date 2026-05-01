@@ -72,7 +72,7 @@ const isLeaving = computed(() => group.leavingLayerId.value === props.id);
     display: flex;
     align-items: center;
     white-space: nowrap;
-    gap: 0.375rem;
+    gap: var(--dock-layer-gap, 0.375rem);
     opacity: 0;
     pointer-events: none;
     position: absolute;

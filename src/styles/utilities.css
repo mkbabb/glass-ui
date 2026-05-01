@@ -127,7 +127,7 @@
         background-clip: text;
         -webkit-background-clip: text;
         color: transparent;
-        animation: shimmer var(--duration-shimmer) linear infinite;
+        animation: gold-shimmer-slide var(--duration-shimmer) linear infinite;
     }
 
     .blue-shimmer {
@@ -366,11 +366,6 @@
         opacity: var(--opacity-disabled);
     }
 
-}
-
-@keyframes shimmer {
-    0% { background-position: 250% 0; }
-    100% { background-position: -250% 0; }
 }
 
 /* ── Reduced motion: nuanced — preserve opacity, remove spatial motion ── */

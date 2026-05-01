@@ -13,10 +13,13 @@
 :root {
     /* Font stacks */
     --font-serif: "Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif;
-    /* Independent system sans stack; consumers override per-app for brand sans. */
-    --font-sans: "Helvetica Neue", "Arial Nova", Arial, system-ui, sans-serif;
+    /* Independent brand/system sans stack; consumers override once for uniform sans. */
+    --font-brand-sans: "Helvetica Neue", "Arial Nova", Arial, system-ui, sans-serif;
+    --font-sans: var(--font-brand-sans);
     --font-display: "Fraunces", Georgia, serif;
     --font-mono: "Fira Code", "Fira Mono", monospace;
+    --font-display-variation-settings: "WONK" 1, "SOFT" 0;
+    --font-display-weight: 400;
 
     /* Scale tokens */
     --type-admin-label: 0.625rem;  /* 10px */
@@ -52,6 +55,13 @@
     --tracking-caps: 0.1em;
 }
 
+:root[data-typography-preset="brand-uniform-sans"] {
+    --font-serif: var(--font-brand-sans);
+    --font-display: var(--font-brand-sans);
+    --font-display-variation-settings: normal;
+    --font-display-weight: 600;
+}
+
 /* ═══════════════════════════════════════════════
    BODY CASCADE — CM serif inherits globally
    ═══════════════════════════════════════════════ */
@@ -71,8 +81,8 @@ body {
     line-height: var(--leading-display);
     letter-spacing: var(--tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: "WONK" 1, "SOFT" 0;
-    font-weight: 400;
+    font-variation-settings: var(--font-display-variation-settings);
+    font-weight: var(--font-display-weight);
 }
 
 @utility text-display-4 {
@@ -81,8 +91,8 @@ body {
     line-height: var(--leading-display);
     letter-spacing: var(--tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: "WONK" 1, "SOFT" 0;
-    font-weight: 400;
+    font-variation-settings: var(--font-display-variation-settings);
+    font-weight: var(--font-display-weight);
 }
 
 @utility text-display-3 {
@@ -91,8 +101,8 @@ body {
     line-height: var(--leading-display);
     letter-spacing: var(--tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: "WONK" 1, "SOFT" 0;
-    font-weight: 400;
+    font-variation-settings: var(--font-display-variation-settings);
+    font-weight: var(--font-display-weight);
 }
 
 @utility text-display-2 {
@@ -101,8 +111,8 @@ body {
     line-height: var(--leading-display);
     letter-spacing: var(--tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: "WONK" 1, "SOFT" 0;
-    font-weight: 400;
+    font-variation-settings: var(--font-display-variation-settings);
+    font-weight: var(--font-display-weight);
 }
 
 @utility text-display {
@@ -111,8 +121,8 @@ body {
     line-height: var(--leading-display);
     letter-spacing: var(--tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: "WONK" 1, "SOFT" 0;
-    font-weight: 400;
+    font-variation-settings: var(--font-display-variation-settings);
+    font-weight: var(--font-display-weight);
 }
 
 /* ═══════════════════════════════════════════════
@@ -248,7 +258,7 @@ body {
     vertical-align: -0.05em;
     font-weight: 700;
     display: inline-block;
-    font-variation-settings: "WONK" 1, "SOFT" 0;
+    font-variation-settings: var(--font-display-variation-settings);
 }
 
 /* ═══════════════════════════════════════════════
@@ -261,8 +271,9 @@ body {
         font-size: clamp(2.4rem, 1.8rem + 2vw, 3.33rem);
         line-height: var(--leading-display);
         letter-spacing: var(--tracking-tight);
-        font-weight: 400;
+        font-weight: var(--font-display-weight);
         font-optical-sizing: auto;
+        font-variation-settings: var(--font-display-variation-settings);
     }
 
     @media (min-width: 640px) {

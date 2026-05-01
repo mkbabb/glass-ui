@@ -46,13 +46,16 @@ const forwardedProps = useForwardProps(delegatedProps);
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    gap: 0.25rem;
-    padding: 0.25rem 0.5rem;
+    gap: var(--dock-trigger-gap, 0.25rem);
+    min-height: var(--dock-trigger-min-height, auto);
+    padding:
+        var(--dock-trigger-padding-block, 0.25rem)
+        var(--dock-trigger-padding-inline, 0.5rem);
     white-space: nowrap;
     cursor: pointer;
     border: none;
     background: transparent;
-    border-radius: var(--radius-pill);
+    border-radius: var(--dock-control-radius, var(--radius-pill));
     color: color-mix(in srgb, var(--foreground) calc(var(--opacity-icon-muted) * 100%), transparent);
     outline: none;
     transition:
@@ -98,8 +101,8 @@ const forwardedProps = useForwardProps(delegatedProps);
 }
 
 .dock-select-trigger__chevron {
-    width: 0.75rem;
-    height: 0.75rem;
+    width: var(--dock-trigger-icon-size, 0.75rem);
+    height: var(--dock-trigger-icon-size, 0.75rem);
     flex-shrink: 0;
     opacity: 0.5;
     transition: transform var(--duration-fast) var(--ease-standard);

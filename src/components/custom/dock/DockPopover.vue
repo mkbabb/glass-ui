@@ -233,8 +233,8 @@ defineExpose({ expanded, expand: onEnter, collapse: () => { expanded.value = fal
     align-items: stretch;
     pointer-events: auto;
     overflow: hidden;
-    gap: 0.125rem;
-    padding: 0.25rem;
+    gap: var(--dock-popover-gap, 0.125rem);
+    padding: var(--dock-popover-padding, 0.25rem);
     z-index: var(--z-modal);
     background: var(--glass-bg-elevated);
     backdrop-filter: var(--glass-blur-elevated);

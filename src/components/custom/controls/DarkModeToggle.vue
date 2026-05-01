@@ -5,15 +5,15 @@ import { cn } from "../../../utils/cn";
 
 defineOptions({ inheritAttrs: false });
 
-type DarkModeToggleSize = "sm" | "md" | "lg";
+type DarkModeToggleSize = "sm" | "md" | "lg" | "control" | "dock";
 
 const props = withDefaults(
     defineProps<{
         passive?: boolean;
         /**
          * Button size. `sm` = 28px, `md` = 36px (default), `lg` = 44px.
-         * Override with a Tailwind sizing class on the component
-         * (e.g. `class="size-6"`) when a non-standard size is required.
+         * `control` follows generic control CSS variables; `dock` follows
+         * GlassDock sizing variables.
          */
         size?: DarkModeToggleSize;
         /**
@@ -30,12 +30,6 @@ const props = withDefaults(
     }
 );
 
-const SIZE_CLASS: Record<DarkModeToggleSize, string> = {
-    sm: "h-7 w-7 p-1",
-    md: "h-9 w-9 p-1.5",
-    lg: "h-11 w-11 p-2",
-};
-
 const attrs = useAttrs();
 
 const rootClass = computed(() =>
@@ -44,19 +38,27 @@ const rootClass = computed(() =>
         "relative isolate inline-flex shrink-0 items-center justify-center",
         "cursor-pointer border-0 bg-transparent",
         "rounded-[var(--radius-pill)]",
-        "opacity-80 transition-[opacity,background] duration-[var(--duration-normal)] ease-[var(--ease-standard)]",
-        "hover:opacity-100 hover:bg-white/10 focus:outline-none focus:opacity-100 focus:bg-white/10",
-        SIZE_CLASS[props.size],
+        "opacity-80",
         attrs.class as string | undefined
     )
 );
 
+const { isDark, toggleDark, setDisableTransitions } = useGlobalDark();
+
 const forwardedAttrs = computed(() => {
     const { class: _omit, ...rest } = attrs;
-    return rest;
-});
 
-const { toggleDark, setDisableTransitions } = useGlobalDark();
+    if (props.passive) {
+        return rest;
+    }
+
+    return {
+        type: "button",
+        "aria-label": isDark.value ? "Switch to light mode" : "Switch to dark mode",
+        "aria-pressed": isDark.value ? "true" : "false",
+        ...rest,
+    };
+});
 
 watchEffect(() => {
     setDisableTransitions(props.disableTransitions);
@@ -68,6 +70,7 @@ watchEffect(() => {
     <component
         :is="passive ? 'div' : 'button'"
         :class="rootClass"
+        :data-size="props.size"
         v-bind="forwardedAttrs"
         @click="!passive && toggleDark()"
     >
@@ -89,6 +92,53 @@ watchEffect(() => {
 </template>
 
 <style scoped>
+.dark-mode-toggle-button {
+    width: var(--dark-mode-toggle-size, 2.25rem);
+    height: var(--dark-mode-toggle-size, 2.25rem);
+    padding: var(--dark-mode-toggle-padding, 0.375rem);
+    transition:
+        opacity var(--duration-normal) var(--ease-standard),
+        background-color var(--duration-normal) var(--ease-standard),
+        box-shadow var(--duration-fast) var(--ease-standard);
+}
+
+.dark-mode-toggle-button:hover,
+.dark-mode-toggle-button:focus {
+    background: color-mix(in srgb, var(--foreground) 10%, transparent);
+    opacity: 1;
+    outline: none;
+}
+
+.dark-mode-toggle-button:focus-visible {
+    box-shadow: var(--focus-ring-shadow);
+}
+
+.dark-mode-toggle-button[data-size="sm"] {
+    --dark-mode-toggle-size: 1.75rem;
+    --dark-mode-toggle-padding: 0.25rem;
+}
+
+.dark-mode-toggle-button[data-size="md"] {
+    --dark-mode-toggle-size: 2.25rem;
+    --dark-mode-toggle-padding: 0.375rem;
+}
+
+.dark-mode-toggle-button[data-size="lg"] {
+    --dark-mode-toggle-size: 2.75rem;
+    --dark-mode-toggle-padding: 0.5rem;
+}
+
+.dark-mode-toggle-button[data-size="control"] {
+    --dark-mode-toggle-size: var(--control-size, 2.25rem);
+    --dark-mode-toggle-padding: var(--control-icon-padding, 0.375rem);
+}
+
+.dark-mode-toggle-button[data-size="dock"],
+:global(.glass-dock) .dark-mode-toggle-button:not([data-size="sm"]):not([data-size="lg"]):not([data-size="control"]) {
+    --dark-mode-toggle-size: var(--dock-control-size, var(--size-icon-btn));
+    --dark-mode-toggle-padding: var(--dock-icon-padding, 0);
+}
+
 .toggle-sun {
     transform-origin: center center;
     transition: transform 750ms var(--spring-bouncy);

@@ -96,6 +96,18 @@
     }
 }
 
+/* ── Dock entrance ── */
+@keyframes dock-in {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
 /* ── Shimmer sweep (background-position for .shimmer-text) ── */
 @keyframes shimmer-sweep {
     0% {
@@ -104,6 +116,12 @@
     100% {
         background-position: 200% 0;
     }
+}
+
+/* ── Shimmer sweep (background-position for shimmer utilities) ── */
+@keyframes shimmer {
+    0% { background-position: 250% 0; }
+    100% { background-position: -250% 0; }
 }
 
 /* ── Shake (horizontal ±4px for .shake-error) ── */
@@ -132,24 +150,4 @@
 @keyframes gold-shimmer-slide {
     0%   { background-position: 200% 0; }
     100% { background-position: -200% 0; }
-}
-
-.gold-shimmer {
-    --color-gold-dark: #C0A050;
-    --color-gold-mid: #DAB860;
-    --color-gold-light: #E8D5A0;
-
-    background: linear-gradient(
-        90deg,
-        var(--color-gold-dark),
-        var(--color-gold-light),
-        var(--color-gold-mid),
-        var(--color-gold-light),
-        var(--color-gold-dark)
-    );
-    background-size: 300% 100%;
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    animation: gold-shimmer-slide 6s linear infinite;
 }
