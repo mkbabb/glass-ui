@@ -11,8 +11,10 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const parent = resolve(root, "..");
-const auditDir = resolve(root, "docs/tranches/F/audit");
-const artifactPath = resolve(auditDir, "W1-consumers-static.json");
+const artifactPath = resolve(
+    root,
+    process.env.GLASS_UI_CONSUMERS_STATIC_ARTIFACT ?? "docs/tranches/F/audit/W1-consumers-static.json",
+);
 const packageJson = JSON.parse(readFileSync(resolve(root, "package.json"), "utf8"));
 
 const consumers = [
@@ -92,7 +94,34 @@ function collectExports(filePath, seen = new Set()) {
     return exports;
 }
 
-const rootAllowed = collectExports(resolve(root, "src/index.ts"));
+function unionExports(files) {
+    const exports = new Set();
+    for (const file of files) {
+        for (const name of collectExports(file)) exports.add(name);
+    }
+    return exports;
+}
+
+const rootContractFiles = [
+    "src/components/ui/index.ts",
+    "src/composables/useGlobalDark.ts",
+    "src/composables/useInterval.ts",
+    "src/composables/useKeyboardShortcuts.ts",
+    "src/composables/useTimer.ts",
+    "src/composables/useTouchGate.ts",
+    "src/composables/glass/index.ts",
+    "src/composables/motion/index.ts",
+    "src/composables/sortable/index.ts",
+    "src/utils/index.ts",
+].map((file) => resolve(root, file));
+const rootAllowed = unionExports(rootContractFiles);
+const actualRootExports = collectExports(resolve(root, "src/index.ts"));
+const unexpectedRootExports = [...actualRootExports]
+    .filter((name) => !rootAllowed.has(name))
+    .sort();
+const missingRootExports = [...rootAllowed]
+    .filter((name) => !actualRootExports.has(name))
+    .sort();
 const exportsMap = new Set(Object.keys(packageJson.exports ?? {}));
 
 function walk(dir) {
@@ -286,23 +315,35 @@ const results = consumers.map((consumer) => {
     };
 });
 
-mkdirSync(auditDir, { recursive: true });
+mkdirSync(dirname(artifactPath), { recursive: true });
 writeFileSync(
     artifactPath,
     `${JSON.stringify(
-        {
-            generatedAt: new Date().toISOString(),
-            rootAllowedSymbols: [...rootAllowed].sort(),
-            consumers: results,
-        },
+            {
+                generatedAt: new Date().toISOString(),
+                rootContractFiles: rootContractFiles.map((file) => file.slice(root.length + 1)),
+                rootAllowedSymbols: [...rootAllowed].sort(),
+                actualRootExports: [...actualRootExports].sort(),
+                rootSurfaceFailures: {
+                    unexpectedRootExports,
+                    missingRootExports,
+                },
+                consumers: results,
+            },
         null,
         2,
     )}\n`,
 );
 
 const failed = results.filter((result) => result.failures.length > 0);
-if (failed.length > 0) {
+if (unexpectedRootExports.length > 0 || missingRootExports.length > 0 || failed.length > 0) {
     console.error(`Consumer static policy failed: ${artifactPath}`);
+    for (const name of unexpectedRootExports) {
+        console.error(`root-surface unexpected export ${name}`);
+    }
+    for (const name of missingRootExports) {
+        console.error(`root-surface missing core export ${name}`);
+    }
     for (const result of failed) {
         for (const failure of result.failures) {
             console.error(

@@ -46,6 +46,7 @@ const probeClasses = [
     "duration-fast",
     "blur-dock",
     "blur-glass-subtle",
+    "max-w-2xl",
     "animate-dock-in",
     "animate-shimmer",
 ];
@@ -59,6 +60,7 @@ const cssAssertions = [
     ["shadow-card", "var(--card-shadow)"],
     ["rounded-card", "border-radius: var(--radius-card)"],
     ["z-dock", "z-index: var(--z-index-dock)"],
+    ["max-w-2xl", "max-width: var(--container-2xl)"],
     ["animate-dock-in", "animation: var(--animate-dock-in)"],
 ];
 
@@ -68,6 +70,15 @@ const forbiddenThemeNamespaces = [
     "--line-height-",
     "--letter-spacing-",
     "--transition-timing-function-",
+];
+const forbiddenLocalThemeEntries = [
+    "--container-center",
+    "--container-padding-x",
+    "--font-size-base",
+];
+const retiredSourceTokens = [
+    "--font-size-base",
+    ".shadow-cartoon-sm-hover",
 ];
 
 function escapeRegExp(value) {
@@ -115,6 +126,7 @@ function staticChecks() {
         ["invalid density calc spacing", /calc\([^_\]\n]*\+var\(--density/g],
     ];
     const invalidNamespaces = forbiddenThemeNamespaces.filter((name) => theme.includes(name));
+    const invalidThemeEntries = forbiddenLocalThemeEntries.filter((name) => theme.includes(name));
     const selfReferences = theme
         .split(/\r?\n/)
         .map((line, index) => ({ line: index + 1, text: line.trim() }))
@@ -127,6 +139,23 @@ function staticChecks() {
     if (utilities.includes("--shimmer-blue-")) {
         unresolvedUtilityTokens.push("--shimmer-blue-*");
     }
+
+    const retiredTokenMatches = sourceFiles.flatMap((file) => {
+        const text = readFileSync(file, "utf8");
+        return retiredSourceTokens.flatMap((token) => {
+            const matches = [];
+            let index = text.indexOf(token);
+            while (index !== -1) {
+                matches.push({
+                    file: file.slice(root.length + 1),
+                    line: text.slice(0, index).split(/\r?\n/).length,
+                    token,
+                });
+                index = text.indexOf(token, index + token.length);
+            }
+            return matches;
+        });
+    });
 
     const brittleMatches = sourceFiles.flatMap((file) => {
         const text = readFileSync(file, "utf8");
@@ -153,8 +182,10 @@ function staticChecks() {
 
     return {
         invalidNamespaces,
+        invalidThemeEntries,
         selfReferences,
         unresolvedUtilityTokens,
+        retiredTokenMatches,
         brittleMatches,
         dockScopedStyleBlocks,
     };
@@ -203,8 +234,10 @@ async function run() {
     const checks = staticChecks();
     const staticFailures = [
         ...checks.invalidNamespaces.map((name) => `invalid theme namespace ${name}`),
+        ...checks.invalidThemeEntries.map((name) => `invalid local theme entry ${name}`),
         ...checks.selfReferences.map((entry) => `self-referential theme variable at line ${entry.line}: ${entry.text}`),
         ...checks.unresolvedUtilityTokens.map((name) => `unresolved utility token ${name}`),
+        ...checks.retiredTokenMatches.map((entry) => `retired source token ${entry.token} at ${entry.file}:${entry.line}`),
         ...checks.brittleMatches.map((entry) => `${entry.label} at ${entry.file}:${entry.line}`),
         ...checks.dockScopedStyleBlocks.map((file) => `dock scoped style block remains in ${file}`),
     ];

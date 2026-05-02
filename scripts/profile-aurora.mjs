@@ -55,6 +55,47 @@ function sleep(ms) {
     return new Promise((resolveSleep) => setTimeout(resolveSleep, ms));
 }
 
+function waitForProcessExit(child, timeoutMs = 3_000) {
+    return new Promise((resolveExit) => {
+        if (!child || child.exitCode !== null || child.signalCode !== null) {
+            resolveExit(true);
+            return;
+        }
+        const timer = setTimeout(() => {
+            child.off("exit", onExit);
+            resolveExit(false);
+        }, timeoutMs);
+        function onExit() {
+            clearTimeout(timer);
+            resolveExit(true);
+        }
+        child.once("exit", onExit);
+    });
+}
+
+async function stopProcess(child) {
+    if (!child) return;
+    if (child.exitCode !== null || child.signalCode !== null) return;
+    child.kill("SIGTERM");
+    const exited = await waitForProcessExit(child);
+    if (!exited && child.exitCode === null && child.signalCode === null) {
+        child.kill("SIGKILL");
+        await waitForProcessExit(child, 1_500);
+    }
+}
+
+async function removeDirWithRetry(dir) {
+    for (let attempt = 0; attempt < 6; attempt += 1) {
+        try {
+            rmSync(dir, { recursive: true, force: true });
+            return;
+        } catch (err) {
+            if (attempt === 5) throw err;
+            await sleep(150 * (attempt + 1));
+        }
+    }
+}
+
 async function waitForHttp(url, timeoutMs = 20_000) {
     const started = Date.now();
     while (Date.now() - started < timeoutMs) {
@@ -711,7 +752,7 @@ async function main() {
             artifact.browser = await waitForJson(`http://127.0.0.1:${debugPort}/json/version`);
         } catch (err) {
             if (chromePath === fallbackChromePath) throw err;
-            chrome?.kill("SIGTERM");
+            await stopProcess(chrome);
             chrome = spawn(fallbackChromePath, chromeArgs(profileDir), {
                 stdio: "ignore",
             });
@@ -827,9 +868,9 @@ async function main() {
         writeArtifact(artifact);
         client?.close();
         if (target) await closeTarget(target.id);
-        chrome?.kill("SIGTERM");
-        if (profileDir) rmSync(profileDir, { recursive: true, force: true });
-        server?.kill("SIGTERM");
+        await stopProcess(chrome);
+        if (profileDir) await removeDirWithRetry(profileDir);
+        await stopProcess(server);
     }
 
     if (artifact.status === "pass") {

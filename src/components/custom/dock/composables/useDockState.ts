@@ -51,6 +51,7 @@ export function useDockState(options: UseDockStateOptions) {
     let collapseTimer: ReturnType<typeof setTimeout> | null = null;
     let keepOpenCount = 0;
     let removeClickAway: (() => void) | null = null;
+    let installClickAwayFrame: number | null = null;
     let isCollapsing = false;
 
     let prevState: DockState = state.value;
@@ -71,6 +72,18 @@ export function useDockState(options: UseDockStateOptions) {
             clearTimeout(collapseTimer);
             collapseTimer = null;
         }
+    }
+
+    function cancelDeferredClickAwayInstall() {
+        if (installClickAwayFrame !== null) {
+            cancelAnimationFrame(installClickAwayFrame);
+            installClickAwayFrame = null;
+        }
+    }
+
+    function removeClickAwayListener() {
+        cancelDeferredClickAwayInstall();
+        removeClickAway?.();
     }
 
     function scheduleCollapse() {
@@ -231,11 +244,14 @@ export function useDockState(options: UseDockStateOptions) {
 
     watch(expanded, (isExpanded) => {
         if (isExpanded) {
+            removeClickAwayListener();
             // Defer attachment past the current event's propagation.
             // nextTick alone isn't enough — the opening pointerdown can still
             // reach a capture-phase listener attached in the same microtask.
             // requestAnimationFrame ensures we wait until the next frame.
-            requestAnimationFrame(() => {
+            installClickAwayFrame = requestAnimationFrame(() => {
+                installClickAwayFrame = null;
+                if (!expanded.value) return;
                 document.addEventListener(
                     "pointerdown",
                     onPointerDownOutside,
@@ -251,7 +267,7 @@ export function useDockState(options: UseDockStateOptions) {
                 };
             });
         } else {
-            removeClickAway?.();
+            removeClickAwayListener();
         }
     });
 
@@ -274,7 +290,7 @@ export function useDockState(options: UseDockStateOptions) {
     // Cleanup
     onUnmounted(() => {
         clearTimer();
-        removeClickAway?.();
+        removeClickAwayListener();
     });
 
     return {

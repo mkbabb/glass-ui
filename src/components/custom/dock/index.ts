@@ -6,6 +6,3 @@ export { default as DockIconButton } from "./DockIconButton.vue";
 export { default as DockTabButton } from "./DockTabButton.vue";
 export { default as DockSelectTrigger } from "./DockSelectTrigger.vue";
 export { default as DockDropdownTrigger } from "./DockDropdownTrigger.vue";
-export { useDockState, useLayerTransition, isTeleportedTarget } from "./composables";
-export type { UseDockStateOptions, DockState } from "./composables";
-export type { UseLayerTransitionOptions, UseLayerTransitionReturn } from "./composables";

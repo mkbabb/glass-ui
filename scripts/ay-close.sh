@@ -5,6 +5,15 @@ shopt -s nullglob
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 
+export GLASS_UI_PACKAGE_ARTIFACT="${GLASS_UI_PACKAGE_ARTIFACT:-docs/tranches/F/audit/W6-package-proof.json}"
+export GLASS_UI_CONSUMERS_STATIC_ARTIFACT="${GLASS_UI_CONSUMERS_STATIC_ARTIFACT:-docs/tranches/F/audit/W6-consumers-static.json}"
+export GLASS_UI_CONSUMERS_BUILD_ARTIFACT="${GLASS_UI_CONSUMERS_BUILD_ARTIFACT:-$ROOT/docs/tranches/F/audit/W6-consumers-build.json}"
+export GLASS_UI_THEME_ARTIFACT="${GLASS_UI_THEME_ARTIFACT:-docs/tranches/F/audit/W6-tailwind-theme-proof.json}"
+export GLASS_UI_RUNTIME_ARTIFACT="${GLASS_UI_RUNTIME_ARTIFACT:-docs/tranches/F/audit/W6-runtime-smoke.json}"
+export GLASS_UI_RUNTIME_SCREENSHOT_DIR="${GLASS_UI_RUNTIME_SCREENSHOT_DIR:-docs/tranches/F/audit/screenshots/W6/runtime}"
+export GLASS_UI_BUNDLE_ARTIFACT="${GLASS_UI_BUNDLE_ARTIFACT:-docs/tranches/F/audit/W6-bundle-profile.json}"
+export GLASS_UI_AURORA_PROFILE_ARTIFACT="${GLASS_UI_AURORA_PROFILE_ARTIFACT:-docs/tranches/F/audit/W6-aurora-profile.json}"
+
 echo "ay-close proof ceremony for tranche close"
 echo "========================================="
 

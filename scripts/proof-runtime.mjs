@@ -41,6 +41,47 @@ function sleep(ms) {
     return new Promise((resolveSleep) => setTimeout(resolveSleep, ms));
 }
 
+function waitForProcessExit(child, timeoutMs = 3_000) {
+    return new Promise((resolveExit) => {
+        if (!child || child.exitCode !== null || child.signalCode !== null) {
+            resolveExit(true);
+            return;
+        }
+        const timer = setTimeout(() => {
+            child.off("exit", onExit);
+            resolveExit(false);
+        }, timeoutMs);
+        function onExit() {
+            clearTimeout(timer);
+            resolveExit(true);
+        }
+        child.once("exit", onExit);
+    });
+}
+
+async function stopProcess(child) {
+    if (!child) return;
+    if (child.exitCode !== null || child.signalCode !== null) return;
+    child.kill("SIGTERM");
+    const exited = await waitForProcessExit(child);
+    if (!exited && child.exitCode === null && child.signalCode === null) {
+        child.kill("SIGKILL");
+        await waitForProcessExit(child, 1_500);
+    }
+}
+
+async function removeDirWithRetry(dir) {
+    for (let attempt = 0; attempt < 6; attempt += 1) {
+        try {
+            rmSync(dir, { recursive: true, force: true });
+            return;
+        } catch (err) {
+            if (attempt === 5) throw err;
+            await sleep(150 * (attempt + 1));
+        }
+    }
+}
+
 function manifestRoutes() {
     const manifest = readFileSync(resolve(root, "demo/stories/manifest.ts"), "utf8");
     const routes = [];
@@ -286,9 +327,71 @@ async function dockAssertions(client, route) {
 async function auroraAssertions(client) {
     const state = await evaluate(
         client,
-        `(() => {
+        `(async () => {
+            await new Promise((resolve) => requestAnimationFrame(resolve));
+            await new Promise((resolve) => requestAnimationFrame(resolve));
+            function readPixelStats(gl, width, height) {
+                if (!gl || width <= 0 || height <= 0) {
+                    return { status: "fail", width, height, sampledPixels: 0, nonblank: false };
+                }
+                const pixels = new Uint8Array(width * height * 4);
+                try {
+                    gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+                } catch (err) {
+                    return {
+                        status: "fail",
+                        error: String(err?.message ?? err),
+                        width,
+                        height,
+                        sampledPixels: 0,
+                        nonblank: false,
+                    };
+                }
+                const totalPixels = width * height;
+                const step = Math.max(1, Math.floor(totalPixels / 12000));
+                let sampled = 0;
+                let active = 0;
+                let sumLum = 0;
+                let sumLumSq = 0;
+                let minLum = Infinity;
+                let maxLum = -Infinity;
+                const buckets = new Set();
+                for (let pixel = 0; pixel < totalPixels; pixel += step) {
+                    const offset = pixel * 4;
+                    const r = pixels[offset + 0];
+                    const g = pixels[offset + 1];
+                    const b = pixels[offset + 2];
+                    const a = pixels[offset + 3];
+                    const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+                    sampled += 1;
+                    sumLum += lum;
+                    sumLumSq += lum * lum;
+                    minLum = Math.min(minLum, lum);
+                    maxLum = Math.max(maxLum, lum);
+                    if (a > 2 && r + g + b > 5) active += 1;
+                    buckets.add(((r >> 4) << 8) | ((g >> 4) << 4) | (b >> 4));
+                }
+                const meanLum = sumLum / sampled;
+                const luminanceVariance = Math.max(0, sumLumSq / sampled - meanLum * meanLum);
+                const activePixelRatio = active / sampled;
+                return {
+                    status: "pass",
+                    width,
+                    height,
+                    sampledPixels: sampled,
+                    meanLuminance: meanLum,
+                    luminanceVariance,
+                    luminanceRange: maxLum - minLum,
+                    activePixelRatio,
+                    uniqueColorBuckets: buckets.size,
+                    nonblank: activePixelRatio > 0.01 && luminanceVariance > 1 && buckets.size > 3,
+                };
+            }
             const canvas = document.querySelector('canvas[aria-hidden="true"]');
             const gl = canvas?.getContext("webgl2");
+            const pixelStats = gl
+                ? readPixelStats(gl, gl.drawingBufferWidth, gl.drawingBufferHeight)
+                : { status: "fail", width: 0, height: 0, sampledPixels: 0, nonblank: false };
             return {
                 hasCanvas: !!canvas,
                 width: canvas?.width ?? 0,
@@ -297,6 +400,7 @@ async function auroraAssertions(client) {
                 clientHeight: canvas?.clientHeight ?? 0,
                 contextAttributes: gl?.getContextAttributes?.() ?? null,
                 contextLost: gl?.isContextLost?.() ?? null,
+                pixelStats,
             };
         })()`,
     );
@@ -311,7 +415,8 @@ async function auroraAssertions(client) {
                 state.clientWidth > 0 &&
                 state.clientHeight > 0 &&
                 state.contextAttributes?.preserveDrawingBuffer === false &&
-                state.contextLost === false,
+                state.contextLost === false &&
+                state.pixelStats?.nonblank === true,
             details: state,
         },
     ];
@@ -474,7 +579,7 @@ try {
         console.log(`Runtime smoke passed: ${artifactPath}`);
     }
 } finally {
-    chrome.kill("SIGTERM");
-    rmSync(profileDir, { recursive: true, force: true });
-    if (server) server.kill("SIGTERM");
+    await stopProcess(chrome);
+    await removeDirWithRetry(profileDir);
+    await stopProcess(server);
 }

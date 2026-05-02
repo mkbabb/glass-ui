@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT="$(git rev-parse --show-toplevel)"
 PARENT="$(dirname "$ROOT")"
-ARTIFACT="$ROOT/docs/tranches/F/audit/W1-consumers-build.json"
+ARTIFACT="${GLASS_UI_CONSUMERS_BUILD_ARTIFACT:-$ROOT/docs/tranches/F/audit/W1-consumers-build.json}"
 CONSUMERS=(
     "fourier-analysis/web"
     "words/frontend"

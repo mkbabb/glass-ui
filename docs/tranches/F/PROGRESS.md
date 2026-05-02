@@ -218,3 +218,44 @@ Measurements:
 - `aurora.js` changed from 46748 bytes / 15190 gzip at W4 to 47958 bytes / 15590 gzip at W5.
 
 No W5 correctness residual remains. W6 is now unblocked and should classify the measured oil DPR 2 cost as accepted heavy-mode behavior or a named follow-on.
+
+## 2026-05-02 - F.W6 Runtime/Profile Close And Residual Audit Closed
+
+W6 ran six audit lanes over public surface, active consumers, component contracts, style/theme, dock/stories, and Aurora/profile. The audit found several close blockers, which were resolved before the final gate:
+
+- public root policy now derives from intended core roots instead of `src/index.ts`;
+- dock internals were removed from the public dock subpath and exact dock export tests were added;
+- Aurora oil `strokeAmount` now controls main stroke opacity, and dead `uRes` shader/runtime surface was removed;
+- `/aurora` runtime smoke now proves nonblank sampled pixels with live `preserveDrawingBuffer: false`;
+- Aurora profiler cleanup now waits for Chrome process exit and retries profile-directory removal;
+- dock click-away listener installation cancels deferred `requestAnimationFrame` work on collapse/unmount;
+- Tailwind `@theme` container drift, retired `--font-size-base`, unconsumed `.shadow-cartoon-sm-hover`, and rem-to-px dock popover offset parsing were corrected.
+
+Final close evidence:
+
+- `scripts/ay-close.sh`: pass
+- full typecheck: pass
+- full build: pass, with the existing API Extractor TypeScript-version warning
+- `verify-export-types`: pass
+- `iter-test`: pass, 18 files / 266 tests
+- `proof:package`: pass, artifact `audit/W6-package-proof.json`
+- `proof:consumers:static`: pass, artifact `audit/W6-consumers-static.json`
+- `proof:consumers:build`: pass, artifact `audit/W6-consumers-build.json`
+- `proof:theme`: pass, artifact `audit/W6-tailwind-theme-proof.json`
+- `proof:runtime`: pass, 71 routes / 0 failures, artifact `audit/W6-runtime-smoke.json`
+- `profile:bundle`: pass, artifact `audit/W6-bundle-profile.json`
+- `profile:aurora`: pass, artifact `audit/W6-aurora-profile.json`
+
+Measurements:
+
+- W6 bundle: 392754 bytes / 102358 gzip.
+- W6 CSS: 26518 bytes / 4847 gzip, unchanged from W4 after the style authority reduction.
+- W6 Aurora profile: 16 live cases, 22 thumbnail cases, 0 failures, 0 page errors.
+- Oil gestural DPR 2 remains the accepted heavy path: 25.2 ms median / 33.8 ms P95 with live preservation false.
+
+Residuals:
+
+- Five accepted P3 residuals are recorded in `audit/W6-residuals.md`.
+- No named next tranche is opened.
+
+F is complete. See `FINAL.md`, `audit/W6-close-proof.md`, and `audit/F-retro.md`.

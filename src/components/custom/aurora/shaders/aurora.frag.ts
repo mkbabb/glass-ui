@@ -18,7 +18,6 @@ out vec4 fragColor;
 #define MAX_STOPS  8
 
 // ── Uniforms ───────────────────────────────────────────────────────────────
-uniform vec2  uRes;
 uniform float uTime;
 
 // Palette baked CPU-side to linear-sRGB
@@ -516,6 +515,8 @@ StrokeHit curvedStroke(vec2 p, vec2 a, vec2 b, float halfW,
 void paintOver(inout vec3 col, StrokeHit s, float streakFreq, float streakAmp,
                float impastoAmp, float hardness, float streakSeed) {
   if (s.coverage < 0.002) return;
+  float strokeOpacity = clamp(uStrokeAmount, 0.0, 1.0);
+  if (strokeOpacity <= 0.001) return;
   vec3 c = s.color;
 
   // Internal streaks — fbm along spine, modulated by cross position. Gives
@@ -537,7 +538,7 @@ void paintOver(inout vec3 col, StrokeHit s, float streakFreq, float streakAmp,
   c -= impastoAmp * shadow * 0.25 * vec3(0.10, 0.09, 0.07);
 
   float softLimit = mix(0.35, 0.98, hardness);
-  float alpha = smoothstep(0.0, 1.0 - softLimit, s.coverage);
+  float alpha = smoothstep(0.0, 1.0 - softLimit, s.coverage) * strokeOpacity;
   col = mix(col, c, alpha);
 }
 
@@ -760,12 +761,9 @@ vec3 mediumOil(vec3 col, vec2 p, float t) {
 
 // ── Main ──────────────────────────────────────────────────────────────────
 void main() {
-  // Normalized coords with aspect-preserved uv in [-aspect/2..aspect/2, -0.5..0.5]
+  // Normalized 0..1 coordinates for nuclei, domain warp, and medium sampling.
   vec2 uv = vUv;
-  float aspect = uRes.x / uRes.y;
-  vec2 p = vec2((uv.x - 0.5) * aspect, uv.y - 0.5);
-  // Re-center so nuclei config uses 0..1 space with origin (0.5, 0.5) mapped to center
-  vec2 pN = uv; // 0..1 for nuclei distances
+  vec2 pN = uv;
 
   float t = uTime;
 

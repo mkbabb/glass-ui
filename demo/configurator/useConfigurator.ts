@@ -144,7 +144,7 @@ const FONT_SLOT_VARS: Record<keyof FontSlots, string> = {
 };
 
 const FIELD_CSS_VARS = {
-    scaleBase: ["--font-size-base", "--type-body"],
+    scaleBase: ["--type-body"],
     hueShift: ["--hue-shift"],
     grain: ["--glass-grain-opacity"],
     density: ["--density-pad", "--density-gap"],
@@ -159,7 +159,6 @@ function writeField(root: HTMLElement, field: WritableField, value: unknown): vo
     switch (field) {
         case "scaleBase": {
             const px = `${value as number}px`;
-            s.setProperty("--font-size-base", px);
             s.setProperty("--type-body", px);
             return;
         }

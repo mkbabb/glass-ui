@@ -212,7 +212,7 @@ function effectiveFont(slot: keyof FontSlots): string {
 
                         <ConfiguratorField
                             label="Scale base"
-                            name="--font-size-base"
+                            name="--type-body"
                             :description="`${cfg.effective('scaleBase')}px`"
                             can-reset
                             @reset="() => cfg.clearField('scaleBase')"

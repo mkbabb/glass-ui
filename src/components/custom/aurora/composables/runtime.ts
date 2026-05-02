@@ -78,7 +78,7 @@ function link(gl: WebGL2RenderingContext, vs: WebGLShader, fs: WebGLShader): Web
 }
 
 const UNIFORM_NAMES = [
-    "uRes", "uTime",
+    "uTime",
     "uPalette", "uStopCount",
     "uNucleiCount", "uNucleiPos", "uNucleiRadius",
     "uNucleiPaletteBias", "uNucleiValueBias", "uNucleiDriftRadius", "uNucleiDriftPhase",
@@ -179,7 +179,6 @@ export function createAurora(
         canvas.height = h;
         gl!.viewport(0, 0, w, h);
         gl!.useProgram(prog);
-        gl!.uniform2f(U.uRes, w, h);
     }
 
     const ro = new ResizeObserver(() => resize());

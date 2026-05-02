@@ -192,7 +192,8 @@ Projects import styles via CSS, components and composables via JS:
 ```
 
 ```ts
-import { Button, GlassDock, useDockState } from "@mkbabb/glass-ui";
+import { Button } from "@mkbabb/glass-ui";
+import { GlassDock } from "@mkbabb/glass-ui/dock";
 ```
 
 To avoid rewriting every import in a consumer project, replace each local `ui/<component>/index.ts` barrel with a re-export:

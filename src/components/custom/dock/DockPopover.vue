@@ -82,8 +82,40 @@ function readCssLen(target: HTMLElement, prop: string, fallback: number): number
     if (typeof document === "undefined") return fallback;
     const raw = getComputedStyle(target).getPropertyValue(prop).trim()
         || getComputedStyle(document.documentElement).getPropertyValue(prop).trim();
+    return cssLengthToPx(raw, target, fallback);
+}
+
+function cssLengthToPx(value: string, target: HTMLElement, fallback: number): number {
+    const raw = value.trim();
+    if (!raw) return fallback;
+    const numeric = Number(raw);
+    if (Number.isFinite(numeric)) return numeric;
+
     const n = parseFloat(raw);
-    return Number.isFinite(n) ? n : fallback;
+    if (Number.isFinite(n) && raw.endsWith("px")) return n;
+    if (raw.endsWith("rem")) {
+        const rootSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+        return Number.isFinite(n) && Number.isFinite(rootSize) ? n * rootSize : fallback;
+    }
+    if (raw.endsWith("em")) {
+        const fontSize = parseFloat(getComputedStyle(target).fontSize);
+        return Number.isFinite(n) && Number.isFinite(fontSize) ? n * fontSize : fallback;
+    }
+    if (raw.endsWith("vw")) return Number.isFinite(n) ? (n / 100) * window.innerWidth : fallback;
+    if (raw.endsWith("vh")) return Number.isFinite(n) ? (n / 100) * window.innerHeight : fallback;
+
+    const probe = document.createElement("div");
+    probe.style.cssText = [
+        "position:absolute",
+        "visibility:hidden",
+        "pointer-events:none",
+        "contain:strict",
+        `width:${raw}`,
+    ].join(";");
+    target.appendChild(probe);
+    const px = probe.getBoundingClientRect().width;
+    probe.remove();
+    return Number.isFinite(px) && px > 0 ? px : fallback;
 }
 
 function positionPanel() {

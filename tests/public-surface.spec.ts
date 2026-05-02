@@ -96,6 +96,9 @@ const subpathRuntimeExports = [
     { subpath: "dock", surface: Dock, name: "DockLayer" },
     { subpath: "dock", surface: Dock, name: "DockLayerGroup" },
     { subpath: "dock", surface: Dock, name: "DockPopover" },
+    { subpath: "dock", surface: Dock, name: "DockTabButton" },
+    { subpath: "dock", surface: Dock, name: "DockSelectTrigger" },
+    { subpath: "dock", surface: Dock, name: "DockDropdownTrigger" },
     { subpath: "search", surface: Search, name: "FuzzySearch" },
     { subpath: "search", surface: Search, name: "useFuzzySearch" },
     { subpath: "sidebar", surface: Sidebar, name: "ProgressiveSidebar" },
@@ -159,12 +162,32 @@ const nonCoreRootRetirements = [
     "LabeledInput",
     "ExpandableContainer",
     "IconTooltip",
+    "useDockState",
+    "useLayerTransition",
+    "isTeleportedTarget",
     "useWindowedStore",
     "useVirtualSectionWindow",
     "useOffsetPagination",
     "useTreeIndex",
     "buildTreeIndex",
 ];
+
+const exactSubpathRuntimeSurfaces = [
+    {
+        subpath: "dock",
+        surface: Dock,
+        names: [
+            "DockDropdownTrigger",
+            "DockIconButton",
+            "DockLayer",
+            "DockLayerGroup",
+            "DockPopover",
+            "DockSelectTrigger",
+            "DockTabButton",
+            "GlassDock",
+        ],
+    },
+] as const;
 
 const typeSurfaceChecks = [
     ["src/composables/glass/useGlassRenderer.ts", "GlassFilterState"],
@@ -219,6 +242,10 @@ describe("public runtime surface", () => {
 
     it.each(nonCoreRootRetirements)("does not export non-core root symbol %s", (name) => {
         expect(Glass).not.toHaveProperty(name);
+    });
+
+    it.each(exactSubpathRuntimeSurfaces)("keeps exact $subpath runtime surface", ({ surface, names }) => {
+        expect(Object.keys(surface).sort()).toEqual([...names].sort());
     });
 });
 

@@ -1,14 +1,13 @@
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const parent = resolve(root, "..");
 const keyframes = resolve(parent, "keyframes.js");
-const auditDir = resolve(root, "docs/tranches/F/audit");
-const artifactPath = resolve(auditDir, "W1-package-proof.json");
+const artifactPath = resolve(root, process.env.GLASS_UI_PACKAGE_ARTIFACT ?? "docs/tranches/F/audit/W1-package-proof.json");
 const tmp = join(tmpdir(), `glass-ui-packed-fixture-${Date.now()}`);
 const pkg = JSON.parse(
     execFileSync("node", ["-e", "console.log(JSON.stringify(require('./package.json')))"], {
@@ -62,7 +61,7 @@ function dependencyVersion(name) {
 }
 
 function writeArtifact(status, extra = {}) {
-    mkdirSync(auditDir, { recursive: true });
+    mkdirSync(dirname(artifactPath), { recursive: true });
     writeFileSync(
         artifactPath,
         `${JSON.stringify(
