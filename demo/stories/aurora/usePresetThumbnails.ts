@@ -9,9 +9,9 @@ import { PRESET_KEYS, PRESETS, type PresetKey } from "./presets";
  * stage needs one context; rendering live thumbnails for all 11 presets
  * would blow the budget and silently fail.
  *
- * Strategy: one offscreen canvas, one createAurora call, iterate `update` +
- * `renderAt(1)` + `toDataURL` per preset, then `dispose` releasing the
- * context via WEBGL_lose_context. Thumbnails are cached as data URLs.
+ * Strategy: one offscreen canvas, one capture-mode createAurora call, iterate
+ * `update` + `renderAt(1)` + `toDataURL` per preset, then `dispose` releasing
+ * the context via WEBGL_lose_context. Thumbnails are cached as data URLs.
  */
 
 function freezeCfg(src: AuroraConfig): AuroraConfig {
@@ -58,7 +58,9 @@ export function usePresetThumbnails(options: {
 
         let aurora;
         try {
-            aurora = createAurora(shared, freezeCfg(PRESETS[PRESET_KEYS[0]!]));
+            aurora = createAurora(shared, freezeCfg(PRESETS[PRESET_KEYS[0]!]), {
+                mode: "capture",
+            });
         } catch (err) {
             console.warn("[Aurora] thumbnail bake aborted:", err);
             shared.remove();

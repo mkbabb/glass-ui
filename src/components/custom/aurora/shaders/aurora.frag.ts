@@ -20,7 +20,6 @@ out vec4 fragColor;
 // ── Uniforms ───────────────────────────────────────────────────────────────
 uniform vec2  uRes;
 uniform float uTime;
-uniform float uDpr;
 
 // Palette baked CPU-side to linear-sRGB
 uniform vec3  uPalette[MAX_STOPS];
@@ -296,6 +295,14 @@ vec3 hueShift(vec3 c, float degrees) {
   return m * c;
 }
 
+vec3 brokenColorJitter(vec3 c, float hueSeed, float valueSeed, float strength) {
+  float amt = clamp(uBrokenColor * strength, 0.0, 1.0);
+  if (amt <= 0.001) return c;
+  float hueDeg = (hueSeed - 0.5) * 32.0 * amt;
+  float valueMul = 1.0 + (valueSeed - 0.5) * 0.28 * amt;
+  return max(hueShift(c, hueDeg) * valueMul, vec3(0.0));
+}
+
 vec3 saturate3(vec3 c, float amt) {
   float l = dot(c, W_LUMA);
   return mix(vec3(l), c, amt);
@@ -321,10 +328,6 @@ vec3 sampleBase(vec2 p, float t) {
   vec3 c = samplePalette(id);
   c *= 1.0 + uValueVariance * vm;
   return c;
-}
-
-vec3 mediumSmooth(vec3 col, vec2 p, float t) {
-  return col;
 }
 
 vec3 mediumWatercolor(vec3 col, vec2 p, float t) {
@@ -390,6 +393,16 @@ struct StrokeHit {
 };
 
 StrokeHit noHit() { return StrokeHit(0.0, vec3(0.0), 0.0, 0.0, 0.0); }
+
+vec2 rotateDir(vec2 dir, float angle) {
+  float ca = cos(angle), sa = sin(angle);
+  return vec2(dir.x * ca - dir.y * sa, dir.x * sa + dir.y * ca);
+}
+
+vec2 safeDir(vec2 dir) {
+  float len = length(dir);
+  return len > 1e-4 ? dir / len : vec2(1.0, 0.0);
+}
 
 // Shape profile along the stroke. type:
 //   0 tapered    — thin-fat-thin (classic brush)
@@ -548,11 +561,12 @@ StrokeHit bestOil(vec2 p, float cellSize, float lenMul, float halfWMul,
 
       vec2 center = (cc + 0.5 + hh * jitterAmt) * cellSize;
 
-      // Per-stroke direction: start from local flow, add perturbation.
-      vec2 f = flowField(center, t);
+      // Per-stroke direction: consume the layer-provided flow, then add only
+      // deterministic local perturbation so alternate stroke layers stay live.
+      vec2 f = safeDir(flow);
       float angJ = (hash21(cc + seed + 11.0) - 0.5) * 0.9;  // +/- 0.45 rad
-      float ca = cos(angJ), sa = sin(angJ);
-      vec2 dir = vec2(f.x * ca - f.y * sa, f.x * sa + f.y * ca);
+      float localCurl = (fbm(center * (2.6 + seed * 0.11) + seed * 1.9) - 0.5) * 0.55 * uFlowCurl;
+      vec2 dir = rotateDir(f, angJ + localCurl);
 
       float lenV = cellSize * lenMul * (0.65 + 0.55 * hash21(cc + seed + 23.0));
       float halfW = cellSize * halfWMul * (0.70 + 0.55 * hash21(cc + seed + 41.0));
@@ -561,7 +575,12 @@ StrokeHit bestOil(vec2 p, float cellSize, float lenMul, float halfWMul,
       vec2 a = center - dir * (lenV * 0.5);
       vec2 b = center + dir * (lenV * 0.5);
 
-      vec3 colMid = sampleBase(center, t);
+      vec3 colMid = brokenColorJitter(
+        sampleBase(center, t),
+        hash21(cc + seed + 89.0),
+        hash21(cc * 2.3 + seed + 97.0),
+        1.0
+      );
 
       StrokeHit h = curvedStroke(p, a, b, halfW, bulge, shapeType,
                                  7.0, bristleAmp,
@@ -610,6 +629,16 @@ vec3 mediumOil_crayon(vec3 col, vec2 p, float t) {
   // Paper tooth overlay (subtler than oil's canvas)
   float paperTooth = vnoise(p * 340.0) - 0.5;
   result *= 1.0 + paperTooth * 0.14 * uCanvasGrain;
+
+  // Broken-color pigment: stable wax/pigment patches, not temporal flicker.
+  vec2 pigmentCell = floor(pr * max(scale * 0.18, 32.0));
+  float pigmentMask = smoothstep(0.28, 0.82, vnoise(pr * scale * 0.21 + 19.0));
+  result = brokenColorJitter(
+    result,
+    hash21(pigmentCell + 17.0),
+    hash21(pigmentCell * 2.1 + 31.0),
+    0.45 + 0.55 * pigmentMask
+  );
 
   // Crayon is saturation-amplified
   result = saturate3(result, 1.12);
@@ -710,8 +739,7 @@ vec3 mediumOil(vec3 col, vec2 p, float t) {
 
   // Optional crosshatch layer
   if (uStrokeLayers == 2) {
-    float a = radians(uFlowAngle + 90.0);
-    vec2 flow2 = vec2(cos(a), sin(a));
+    vec2 flow2 = vec2(-flow.y, flow.x);
     StrokeHit hX = bestOil(p + vec2(7.3, -2.1), sMed, lenMulMed * 0.9, widMulMed,
                            jitterAmt, densityMed * 0.7, shapeType, bristleAmp, flow2, t, 6.5);
     paintOver(result, hX, streakFreq, streakAmp * 0.85,

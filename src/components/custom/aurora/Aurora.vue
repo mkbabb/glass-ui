@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useAurora } from "./composables/useAurora";
+import type { AuroraRuntimeOptions } from "./composables/runtime";
 import type { AuroraConfig } from "./presets";
 
 /**
@@ -14,13 +15,14 @@ import type { AuroraConfig } from "./presets";
  */
 const props = defineProps<{
     config: AuroraConfig;
+    runtimeOptions?: AuroraRuntimeOptions;
 }>();
 
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 // Pass a getter so `watch` tracks prop swaps (preset switch) as well as
 // deep mutations (slider edits). If we passed `props.config` directly the
 // watch would bind to the initial object and miss reference changes.
-const api = useAurora(canvasRef, () => props.config);
+const api = useAurora(canvasRef, () => props.config, props.runtimeOptions);
 
 defineExpose({
     config: props.config,

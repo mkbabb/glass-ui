@@ -1,0 +1,2003 @@
+{
+  "generatedAt": "2026-05-02T20:39:47.563Z",
+  "baseUrl": "http://127.0.0.1:5173",
+  "status": "pass",
+  "script": "scripts/profile-aurora.mjs",
+  "assumptions": [
+    "The profiler imports Aurora runtime and authored demo presets through the Vite dev server.",
+    "Live preserveDrawingBuffer true/false comparisons call createAurora with explicit runtime options.",
+    "Thumbnail batches call createAurora with capture mode, which opts into preserveDrawingBuffer and skips the live RAF loop.",
+    "Frame timing is sampled from requestAnimationFrame intervals while the runtime RAF loop is active; renderAt timing is measured separately with gl.finish()."
+  ],
+  "dimensions": {
+    "liveViewport": {
+      "width": 960,
+      "height": 540
+    },
+    "thumbnailViewport": {
+      "width": 320,
+      "height": 200
+    },
+    "dprs": [
+      1,
+      2
+    ],
+    "liveFrameCount": 90,
+    "drawSamples": 30
+  },
+  "liveCases": [
+    {
+      "id": "smooth-openai-sky",
+      "preset": "OPENAI_SKY",
+      "medium": "smooth"
+    },
+    {
+      "id": "pastel-deliberative",
+      "preset": "DELIBERATIVE",
+      "medium": "pastel"
+    },
+    {
+      "id": "watercolor-openai-meadow",
+      "preset": "OPENAI_MEADOW",
+      "medium": "watercolor"
+    },
+    {
+      "id": "oil-oil-gestural",
+      "preset": "OIL_GESTURAL",
+      "medium": "oil"
+    }
+  ],
+  "liveResults": [
+    {
+      "kind": "live",
+      "id": "smooth-openai-sky",
+      "preset": "OPENAI_SKY",
+      "medium": "smooth",
+      "requestedPreserveDrawingBuffer": false,
+      "dpr": 1,
+      "widthCss": 960,
+      "heightCss": 540,
+      "status": "pass",
+      "setupMs": 90,
+      "context": {
+        "attributes": {
+          "alpha": true,
+          "antialias": false,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "renderer": {
+          "vendor": "Google Inc. (Apple)",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguageVersion": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        }
+      },
+      "canvas": {
+        "width": 960,
+        "height": 540,
+        "clientWidth": 960,
+        "clientHeight": 540
+      },
+      "frameTiming": {
+        "samplesMs": {
+          "count": 90,
+          "min": 5.2000000000000455,
+          "max": 10.699999999999989,
+          "mean": 7.797777777777777,
+          "median": 8,
+          "p95": 10.100000000000023
+        },
+        "overBudgetFrames": 0,
+        "overBudgetRatio": 0
+      },
+      "renderAtMs": {
+        "count": 30,
+        "min": 0,
+        "max": 0.10000002384185791,
+        "mean": 0.0066666682561238606,
+        "median": 0,
+        "p95": 0
+      },
+      "pixelStats": {
+        "status": "pass",
+        "width": 960,
+        "height": 540,
+        "sampledPixels": 12056,
+        "meanLuminance": 151.39755950562656,
+        "luminanceVariance": 471.61970398889025,
+        "luminanceRange": 72.44160000000001,
+        "alphaMean": 255,
+        "activePixelRatio": 1,
+        "uniqueColorBuckets": 19,
+        "nonblank": true
+      },
+      "capture": {
+        "status": "pass",
+        "durationMs": 12.800000071525574,
+        "mimeType": "image/png",
+        "bytesApprox": 875430
+      }
+    },
+    {
+      "kind": "live",
+      "id": "smooth-openai-sky",
+      "preset": "OPENAI_SKY",
+      "medium": "smooth",
+      "requestedPreserveDrawingBuffer": true,
+      "dpr": 1,
+      "widthCss": 960,
+      "heightCss": 540,
+      "status": "pass",
+      "setupMs": 9.899999976158142,
+      "context": {
+        "attributes": {
+          "alpha": true,
+          "antialias": false,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": true,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "renderer": {
+          "vendor": "Google Inc. (Apple)",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguageVersion": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        }
+      },
+      "canvas": {
+        "width": 960,
+        "height": 540,
+        "clientWidth": 960,
+        "clientHeight": 540
+      },
+      "frameTiming": {
+        "samplesMs": {
+          "count": 90,
+          "min": 4.7999999999999545,
+          "max": 10,
+          "mean": 7.402222222222223,
+          "median": 7.599999999999909,
+          "p95": 9.199999999999818
+        },
+        "overBudgetFrames": 0,
+        "overBudgetRatio": 0
+      },
+      "renderAtMs": {
+        "count": 30,
+        "min": 0,
+        "max": 0.10000002384185791,
+        "mean": 0.0033333341280619303,
+        "median": 0,
+        "p95": 0
+      },
+      "pixelStats": {
+        "status": "pass",
+        "width": 960,
+        "height": 540,
+        "sampledPixels": 12056,
+        "meanLuminance": 151.39755950562656,
+        "luminanceVariance": 471.61970398889025,
+        "luminanceRange": 72.44160000000001,
+        "alphaMean": 255,
+        "activePixelRatio": 1,
+        "uniqueColorBuckets": 19,
+        "nonblank": true
+      },
+      "capture": {
+        "status": "pass",
+        "durationMs": 17.100000023841858,
+        "mimeType": "image/png",
+        "bytesApprox": 875430
+      }
+    },
+    {
+      "kind": "live",
+      "id": "pastel-deliberative",
+      "preset": "DELIBERATIVE",
+      "medium": "pastel",
+      "requestedPreserveDrawingBuffer": false,
+      "dpr": 1,
+      "widthCss": 960,
+      "heightCss": 540,
+      "status": "pass",
+      "setupMs": 10,
+      "context": {
+        "attributes": {
+          "alpha": true,
+          "antialias": false,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "renderer": {
+          "vendor": "Google Inc. (Apple)",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguageVersion": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        }
+      },
+      "canvas": {
+        "width": 960,
+        "height": 540,
+        "clientWidth": 960,
+        "clientHeight": 540
+      },
+      "frameTiming": {
+        "samplesMs": {
+          "count": 90,
+          "min": 5.099999999999909,
+          "max": 10.599999999999909,
+          "mean": 7.812222222222224,
+          "median": 8,
+          "p95": 9.5
+        },
+        "overBudgetFrames": 0,
+        "overBudgetRatio": 0
+      },
+      "renderAtMs": {
+        "count": 30,
+        "min": 0,
+        "max": 0.20000004768371582,
+        "mean": 0.0066666682561238606,
+        "median": 0,
+        "p95": 0
+      },
+      "pixelStats": {
+        "status": "pass",
+        "width": 960,
+        "height": 540,
+        "sampledPixels": 12056,
+        "meanLuminance": 156.94339059389847,
+        "luminanceVariance": 980.8236097684239,
+        "luminanceRange": 155.02999999999997,
+        "alphaMean": 255,
+        "activePixelRatio": 1,
+        "uniqueColorBuckets": 60,
+        "nonblank": true
+      },
+      "capture": {
+        "status": "pass",
+        "durationMs": 13.599999904632568,
+        "mimeType": "image/png",
+        "bytesApprox": 1100070
+      }
+    },
+    {
+      "kind": "live",
+      "id": "pastel-deliberative",
+      "preset": "DELIBERATIVE",
+      "medium": "pastel",
+      "requestedPreserveDrawingBuffer": true,
+      "dpr": 1,
+      "widthCss": 960,
+      "heightCss": 540,
+      "status": "pass",
+      "setupMs": 9.900000095367432,
+      "context": {
+        "attributes": {
+          "alpha": true,
+          "antialias": false,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": true,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "renderer": {
+          "vendor": "Google Inc. (Apple)",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguageVersion": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        }
+      },
+      "canvas": {
+        "width": 960,
+        "height": 540,
+        "clientWidth": 960,
+        "clientHeight": 540
+      },
+      "frameTiming": {
+        "samplesMs": {
+          "count": 90,
+          "min": 4.900000000000091,
+          "max": 10.400000000000091,
+          "mean": 7.489999999999999,
+          "median": 7.699999999999818,
+          "p95": 9.300000000000182
+        },
+        "overBudgetFrames": 0,
+        "overBudgetRatio": 0
+      },
+      "renderAtMs": {
+        "count": 30,
+        "min": 0,
+        "max": 0.10000002384185791,
+        "mean": 0.0033333341280619303,
+        "median": 0,
+        "p95": 0
+      },
+      "pixelStats": {
+        "status": "pass",
+        "width": 960,
+        "height": 540,
+        "sampledPixels": 12056,
+        "meanLuminance": 156.94339059389847,
+        "luminanceVariance": 980.8236097684239,
+        "luminanceRange": 155.02999999999997,
+        "alphaMean": 255,
+        "activePixelRatio": 1,
+        "uniqueColorBuckets": 60,
+        "nonblank": true
+      },
+      "capture": {
+        "status": "pass",
+        "durationMs": 17.5,
+        "mimeType": "image/png",
+        "bytesApprox": 1100070
+      }
+    },
+    {
+      "kind": "live",
+      "id": "watercolor-openai-meadow",
+      "preset": "OPENAI_MEADOW",
+      "medium": "watercolor",
+      "requestedPreserveDrawingBuffer": false,
+      "dpr": 1,
+      "widthCss": 960,
+      "heightCss": 540,
+      "status": "pass",
+      "setupMs": 9.699999928474426,
+      "context": {
+        "attributes": {
+          "alpha": true,
+          "antialias": false,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "renderer": {
+          "vendor": "Google Inc. (Apple)",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguageVersion": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        }
+      },
+      "canvas": {
+        "width": 960,
+        "height": 540,
+        "clientWidth": 960,
+        "clientHeight": 540
+      },
+      "frameTiming": {
+        "samplesMs": {
+          "count": 90,
+          "min": 5,
+          "max": 10.700000000000273,
+          "mean": 7.676666666666668,
+          "median": 7.799999999999727,
+          "p95": 9.299999999999727
+        },
+        "overBudgetFrames": 0,
+        "overBudgetRatio": 0
+      },
+      "renderAtMs": {
+        "count": 30,
+        "min": 0,
+        "max": 0.10000002384185791,
+        "mean": 0.0066666682561238606,
+        "median": 0,
+        "p95": 0
+      },
+      "pixelStats": {
+        "status": "pass",
+        "width": 960,
+        "height": 540,
+        "sampledPixels": 12056,
+        "meanLuminance": 118.18335678500036,
+        "luminanceVariance": 3196.1011571894887,
+        "luminanceRange": 139.6712,
+        "alphaMean": 255,
+        "activePixelRatio": 1,
+        "uniqueColorBuckets": 43,
+        "nonblank": true
+      },
+      "capture": {
+        "status": "pass",
+        "durationMs": 15.799999952316284,
+        "mimeType": "image/png",
+        "bytesApprox": 1040746
+      }
+    },
+    {
+      "kind": "live",
+      "id": "watercolor-openai-meadow",
+      "preset": "OPENAI_MEADOW",
+      "medium": "watercolor",
+      "requestedPreserveDrawingBuffer": true,
+      "dpr": 1,
+      "widthCss": 960,
+      "heightCss": 540,
+      "status": "pass",
+      "setupMs": 10.299999952316284,
+      "context": {
+        "attributes": {
+          "alpha": true,
+          "antialias": false,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": true,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "renderer": {
+          "vendor": "Google Inc. (Apple)",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguageVersion": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        }
+      },
+      "canvas": {
+        "width": 960,
+        "height": 540,
+        "clientWidth": 960,
+        "clientHeight": 540
+      },
+      "frameTiming": {
+        "samplesMs": {
+          "count": 90,
+          "min": 5,
+          "max": 10.900000000000546,
+          "mean": 7.781111111111113,
+          "median": 7.899999999999636,
+          "p95": 9.400000000000546
+        },
+        "overBudgetFrames": 0,
+        "overBudgetRatio": 0
+      },
+      "renderAtMs": {
+        "count": 30,
+        "min": 0,
+        "max": 0.10000002384185791,
+        "mean": 0.0066666682561238606,
+        "median": 0,
+        "p95": 0
+      },
+      "pixelStats": {
+        "status": "pass",
+        "width": 960,
+        "height": 540,
+        "sampledPixels": 12056,
+        "meanLuminance": 118.18335678500036,
+        "luminanceVariance": 3196.1011571894887,
+        "luminanceRange": 139.6712,
+        "alphaMean": 255,
+        "activePixelRatio": 1,
+        "uniqueColorBuckets": 43,
+        "nonblank": true
+      },
+      "capture": {
+        "status": "pass",
+        "durationMs": 15.200000047683716,
+        "mimeType": "image/png",
+        "bytesApprox": 1040746
+      }
+    },
+    {
+      "kind": "live",
+      "id": "oil-oil-gestural",
+      "preset": "OIL_GESTURAL",
+      "medium": "oil",
+      "requestedPreserveDrawingBuffer": false,
+      "dpr": 1,
+      "widthCss": 960,
+      "heightCss": 540,
+      "status": "pass",
+      "setupMs": 9.800000071525574,
+      "context": {
+        "attributes": {
+          "alpha": true,
+          "antialias": false,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "renderer": {
+          "vendor": "Google Inc. (Apple)",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguageVersion": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        }
+      },
+      "canvas": {
+        "width": 960,
+        "height": 540,
+        "clientWidth": 960,
+        "clientHeight": 540
+      },
+      "frameTiming": {
+        "samplesMs": {
+          "count": 90,
+          "min": 6.300000000000182,
+          "max": 10.400000000000546,
+          "mean": 8.315555555555562,
+          "median": 8.300000000000182,
+          "p95": 10.099999999999454
+        },
+        "overBudgetFrames": 0,
+        "overBudgetRatio": 0
+      },
+      "renderAtMs": {
+        "count": 30,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "median": 0,
+        "p95": 0
+      },
+      "pixelStats": {
+        "status": "pass",
+        "width": 960,
+        "height": 540,
+        "sampledPixels": 12056,
+        "meanLuminance": 62.075329678168764,
+        "luminanceVariance": 57.99764221935493,
+        "luminanceRange": 89.827,
+        "alphaMean": 255,
+        "activePixelRatio": 1,
+        "uniqueColorBuckets": 40,
+        "nonblank": true
+      },
+      "capture": {
+        "status": "pass",
+        "durationMs": 12,
+        "mimeType": "image/png",
+        "bytesApprox": 965442
+      }
+    },
+    {
+      "kind": "live",
+      "id": "oil-oil-gestural",
+      "preset": "OIL_GESTURAL",
+      "medium": "oil",
+      "requestedPreserveDrawingBuffer": true,
+      "dpr": 1,
+      "widthCss": 960,
+      "heightCss": 540,
+      "status": "pass",
+      "setupMs": 9.799999952316284,
+      "context": {
+        "attributes": {
+          "alpha": true,
+          "antialias": false,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": true,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "renderer": {
+          "vendor": "Google Inc. (Apple)",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguageVersion": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        }
+      },
+      "canvas": {
+        "width": 960,
+        "height": 540,
+        "clientWidth": 960,
+        "clientHeight": 540
+      },
+      "frameTiming": {
+        "samplesMs": {
+          "count": 90,
+          "min": 5.800000000000182,
+          "max": 10.100000000000364,
+          "mean": 8.280000000000008,
+          "median": 8.199999999999818,
+          "p95": 9.400000000000546
+        },
+        "overBudgetFrames": 0,
+        "overBudgetRatio": 0
+      },
+      "renderAtMs": {
+        "count": 30,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "median": 0,
+        "p95": 0
+      },
+      "pixelStats": {
+        "status": "pass",
+        "width": 960,
+        "height": 540,
+        "sampledPixels": 12056,
+        "meanLuminance": 62.075329678168764,
+        "luminanceVariance": 57.99764221935493,
+        "luminanceRange": 89.827,
+        "alphaMean": 255,
+        "activePixelRatio": 1,
+        "uniqueColorBuckets": 40,
+        "nonblank": true
+      },
+      "capture": {
+        "status": "pass",
+        "durationMs": 12.199999928474426,
+        "mimeType": "image/png",
+        "bytesApprox": 965442
+      }
+    },
+    {
+      "kind": "live",
+      "id": "smooth-openai-sky",
+      "preset": "OPENAI_SKY",
+      "medium": "smooth",
+      "requestedPreserveDrawingBuffer": false,
+      "dpr": 2,
+      "widthCss": 960,
+      "heightCss": 540,
+      "status": "pass",
+      "setupMs": 9.699999928474426,
+      "context": {
+        "attributes": {
+          "alpha": true,
+          "antialias": false,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "renderer": {
+          "vendor": "Google Inc. (Apple)",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguageVersion": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        }
+      },
+      "canvas": {
+        "width": 1920,
+        "height": 1080,
+        "clientWidth": 960,
+        "clientHeight": 540
+      },
+      "frameTiming": {
+        "samplesMs": {
+          "count": 90,
+          "min": 4.800000000000182,
+          "max": 10.699999999999818,
+          "mean": 7.5177777777777814,
+          "median": 7.800000000000182,
+          "p95": 9.199999999999818
+        },
+        "overBudgetFrames": 0,
+        "overBudgetRatio": 0
+      },
+      "renderAtMs": {
+        "count": 30,
+        "min": 0,
+        "max": 0.10000002384185791,
+        "mean": 0.0033333341280619303,
+        "median": 0,
+        "p95": 0
+      },
+      "pixelStats": {
+        "status": "pass",
+        "width": 1920,
+        "height": 1080,
+        "sampledPixels": 12056,
+        "meanLuminance": 151.4083652786857,
+        "luminanceVariance": 471.98570707341787,
+        "luminanceRange": 73.58200000000001,
+        "alphaMean": 255,
+        "activePixelRatio": 1,
+        "uniqueColorBuckets": 19,
+        "nonblank": true
+      },
+      "capture": {
+        "status": "pass",
+        "durationMs": 41.39999997615814,
+        "mimeType": "image/png",
+        "bytesApprox": 3343878
+      }
+    },
+    {
+      "kind": "live",
+      "id": "smooth-openai-sky",
+      "preset": "OPENAI_SKY",
+      "medium": "smooth",
+      "requestedPreserveDrawingBuffer": true,
+      "dpr": 2,
+      "widthCss": 960,
+      "heightCss": 540,
+      "status": "pass",
+      "setupMs": 10.5,
+      "context": {
+        "attributes": {
+          "alpha": true,
+          "antialias": false,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": true,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "renderer": {
+          "vendor": "Google Inc. (Apple)",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguageVersion": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        }
+      },
+      "canvas": {
+        "width": 1920,
+        "height": 1080,
+        "clientWidth": 960,
+        "clientHeight": 540
+      },
+      "frameTiming": {
+        "samplesMs": {
+          "count": 90,
+          "min": 4.700000000000728,
+          "max": 9.799999999999272,
+          "mean": 7.401111111111115,
+          "median": 7.599999999998545,
+          "p95": 9.200000000000728
+        },
+        "overBudgetFrames": 0,
+        "overBudgetRatio": 0
+      },
+      "renderAtMs": {
+        "count": 30,
+        "min": 0,
+        "max": 0.10000002384185791,
+        "mean": 0.0066666682561238606,
+        "median": 0,
+        "p95": 0
+      },
+      "pixelStats": {
+        "status": "pass",
+        "width": 1920,
+        "height": 1080,
+        "sampledPixels": 12056,
+        "meanLuminance": 151.4083652786857,
+        "luminanceVariance": 471.98570707341787,
+        "luminanceRange": 73.58200000000001,
+        "alphaMean": 255,
+        "activePixelRatio": 1,
+        "uniqueColorBuckets": 19,
+        "nonblank": true
+      },
+      "capture": {
+        "status": "pass",
+        "durationMs": 42.799999952316284,
+        "mimeType": "image/png",
+        "bytesApprox": 3343878
+      }
+    },
+    {
+      "kind": "live",
+      "id": "pastel-deliberative",
+      "preset": "DELIBERATIVE",
+      "medium": "pastel",
+      "requestedPreserveDrawingBuffer": false,
+      "dpr": 2,
+      "widthCss": 960,
+      "heightCss": 540,
+      "status": "pass",
+      "setupMs": 10.299999952316284,
+      "context": {
+        "attributes": {
+          "alpha": true,
+          "antialias": false,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "renderer": {
+          "vendor": "Google Inc. (Apple)",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguageVersion": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        }
+      },
+      "canvas": {
+        "width": 1920,
+        "height": 1080,
+        "clientWidth": 960,
+        "clientHeight": 540
+      },
+      "frameTiming": {
+        "samplesMs": {
+          "count": 90,
+          "min": 4.800000000001091,
+          "max": 9.5,
+          "mean": 7.4944444444444445,
+          "median": 7.700000000000728,
+          "p95": 8.799999999999272
+        },
+        "overBudgetFrames": 0,
+        "overBudgetRatio": 0
+      },
+      "renderAtMs": {
+        "count": 30,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "median": 0,
+        "p95": 0
+      },
+      "pixelStats": {
+        "status": "pass",
+        "width": 1920,
+        "height": 1080,
+        "sampledPixels": 12056,
+        "meanLuminance": 156.881058311218,
+        "luminanceVariance": 983.4542196486072,
+        "luminanceRange": 156.4604,
+        "alphaMean": 255,
+        "activePixelRatio": 1,
+        "uniqueColorBuckets": 58,
+        "nonblank": true
+      },
+      "capture": {
+        "status": "pass",
+        "durationMs": 49.799999952316284,
+        "mimeType": "image/png",
+        "bytesApprox": 4201782
+      }
+    },
+    {
+      "kind": "live",
+      "id": "pastel-deliberative",
+      "preset": "DELIBERATIVE",
+      "medium": "pastel",
+      "requestedPreserveDrawingBuffer": true,
+      "dpr": 2,
+      "widthCss": 960,
+      "heightCss": 540,
+      "status": "pass",
+      "setupMs": 10.800000071525574,
+      "context": {
+        "attributes": {
+          "alpha": true,
+          "antialias": false,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": true,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "renderer": {
+          "vendor": "Google Inc. (Apple)",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguageVersion": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        }
+      },
+      "canvas": {
+        "width": 1920,
+        "height": 1080,
+        "clientWidth": 960,
+        "clientHeight": 540
+      },
+      "frameTiming": {
+        "samplesMs": {
+          "count": 90,
+          "min": 4.799999999999272,
+          "max": 11.5,
+          "mean": 7.575555555555548,
+          "median": 7.700000000000728,
+          "p95": 9.399999999999636
+        },
+        "overBudgetFrames": 0,
+        "overBudgetRatio": 0
+      },
+      "renderAtMs": {
+        "count": 30,
+        "min": 0,
+        "max": 0.10000002384185791,
+        "mean": 0.009999998410542806,
+        "median": 0,
+        "p95": 0.09999990463256836
+      },
+      "pixelStats": {
+        "status": "pass",
+        "width": 1920,
+        "height": 1080,
+        "sampledPixels": 12056,
+        "meanLuminance": 156.881058311218,
+        "luminanceVariance": 983.4542196486072,
+        "luminanceRange": 156.4604,
+        "alphaMean": 255,
+        "activePixelRatio": 1,
+        "uniqueColorBuckets": 58,
+        "nonblank": true
+      },
+      "capture": {
+        "status": "pass",
+        "durationMs": 49.799999952316284,
+        "mimeType": "image/png",
+        "bytesApprox": 4201782
+      }
+    },
+    {
+      "kind": "live",
+      "id": "watercolor-openai-meadow",
+      "preset": "OPENAI_MEADOW",
+      "medium": "watercolor",
+      "requestedPreserveDrawingBuffer": false,
+      "dpr": 2,
+      "widthCss": 960,
+      "heightCss": 540,
+      "status": "pass",
+      "setupMs": 10.200000047683716,
+      "context": {
+        "attributes": {
+          "alpha": true,
+          "antialias": false,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "renderer": {
+          "vendor": "Google Inc. (Apple)",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguageVersion": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        }
+      },
+      "canvas": {
+        "width": 1920,
+        "height": 1080,
+        "clientWidth": 960,
+        "clientHeight": 540
+      },
+      "frameTiming": {
+        "samplesMs": {
+          "count": 90,
+          "min": 5.299999999999272,
+          "max": 9.899999999999636,
+          "mean": 8.251111111111095,
+          "median": 8.300000000001091,
+          "p95": 9.199999999998909
+        },
+        "overBudgetFrames": 0,
+        "overBudgetRatio": 0
+      },
+      "renderAtMs": {
+        "count": 30,
+        "min": 0,
+        "max": 0.6000000238418579,
+        "mean": 0.026666669050852458,
+        "median": 0,
+        "p95": 0.10000002384185791
+      },
+      "pixelStats": {
+        "status": "pass",
+        "width": 1920,
+        "height": 1080,
+        "sampledPixels": 12056,
+        "meanLuminance": 118.26755854346149,
+        "luminanceVariance": 3196.8691162547257,
+        "luminanceRange": 139.956,
+        "alphaMean": 255,
+        "activePixelRatio": 1,
+        "uniqueColorBuckets": 43,
+        "nonblank": true
+      },
+      "capture": {
+        "status": "pass",
+        "durationMs": 46,
+        "mimeType": "image/png",
+        "bytesApprox": 3872294
+      }
+    },
+    {
+      "kind": "live",
+      "id": "watercolor-openai-meadow",
+      "preset": "OPENAI_MEADOW",
+      "medium": "watercolor",
+      "requestedPreserveDrawingBuffer": true,
+      "dpr": 2,
+      "widthCss": 960,
+      "heightCss": 540,
+      "status": "pass",
+      "setupMs": 10.300000071525574,
+      "context": {
+        "attributes": {
+          "alpha": true,
+          "antialias": false,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": true,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "renderer": {
+          "vendor": "Google Inc. (Apple)",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguageVersion": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        }
+      },
+      "canvas": {
+        "width": 1920,
+        "height": 1080,
+        "clientWidth": 960,
+        "clientHeight": 540
+      },
+      "frameTiming": {
+        "samplesMs": {
+          "count": 90,
+          "min": 5.799999999999272,
+          "max": 9.899999999999636,
+          "mean": 8.121111111111107,
+          "median": 8.100000000000364,
+          "p95": 9.5
+        },
+        "overBudgetFrames": 0,
+        "overBudgetRatio": 0
+      },
+      "renderAtMs": {
+        "count": 30,
+        "min": 0,
+        "max": 0.09999990463256836,
+        "mean": 0.0033333301544189453,
+        "median": 0,
+        "p95": 0
+      },
+      "pixelStats": {
+        "status": "pass",
+        "width": 1920,
+        "height": 1080,
+        "sampledPixels": 12056,
+        "meanLuminance": 118.26755854346149,
+        "luminanceVariance": 3196.8691162547257,
+        "luminanceRange": 139.956,
+        "alphaMean": 255,
+        "activePixelRatio": 1,
+        "uniqueColorBuckets": 43,
+        "nonblank": true
+      },
+      "capture": {
+        "status": "pass",
+        "durationMs": 46.5,
+        "mimeType": "image/png",
+        "bytesApprox": 3872294
+      }
+    },
+    {
+      "kind": "live",
+      "id": "oil-oil-gestural",
+      "preset": "OIL_GESTURAL",
+      "medium": "oil",
+      "requestedPreserveDrawingBuffer": false,
+      "dpr": 2,
+      "widthCss": 960,
+      "heightCss": 540,
+      "status": "pass",
+      "setupMs": 10.100000023841858,
+      "context": {
+        "attributes": {
+          "alpha": true,
+          "antialias": false,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "renderer": {
+          "vendor": "Google Inc. (Apple)",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguageVersion": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        }
+      },
+      "canvas": {
+        "width": 1920,
+        "height": 1080,
+        "clientWidth": 960,
+        "clientHeight": 540
+      },
+      "frameTiming": {
+        "samplesMs": {
+          "count": 90,
+          "min": 8,
+          "max": 34.899999999999636,
+          "mean": 27.221111111111128,
+          "median": 25.5,
+          "p95": 33.600000000000364
+        },
+        "overBudgetFrames": 87,
+        "overBudgetRatio": 0.9666666666666667
+      },
+      "renderAtMs": {
+        "count": 30,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "median": 0,
+        "p95": 0
+      },
+      "pixelStats": {
+        "status": "pass",
+        "width": 1920,
+        "height": 1080,
+        "sampledPixels": 12056,
+        "meanLuminance": 62.02932415394811,
+        "luminanceVariance": 55.54724869552365,
+        "luminanceRange": 88.9674,
+        "alphaMean": 255,
+        "activePixelRatio": 1,
+        "uniqueColorBuckets": 41,
+        "nonblank": true
+      },
+      "capture": {
+        "status": "pass",
+        "durationMs": 47.300000071525574,
+        "mimeType": "image/png",
+        "bytesApprox": 3714086
+      }
+    },
+    {
+      "kind": "live",
+      "id": "oil-oil-gestural",
+      "preset": "OIL_GESTURAL",
+      "medium": "oil",
+      "requestedPreserveDrawingBuffer": true,
+      "dpr": 2,
+      "widthCss": 960,
+      "heightCss": 540,
+      "status": "pass",
+      "setupMs": 10.5,
+      "context": {
+        "attributes": {
+          "alpha": true,
+          "antialias": false,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": true,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "renderer": {
+          "vendor": "Google Inc. (Apple)",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguageVersion": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        }
+      },
+      "canvas": {
+        "width": 1920,
+        "height": 1080,
+        "clientWidth": 960,
+        "clientHeight": 540
+      },
+      "frameTiming": {
+        "samplesMs": {
+          "count": 90,
+          "min": 8.299999999999272,
+          "max": 35,
+          "mean": 28.425555555555547,
+          "median": 29.600000000002183,
+          "p95": 33.70000000000073
+        },
+        "overBudgetFrames": 85,
+        "overBudgetRatio": 0.9444444444444444
+      },
+      "renderAtMs": {
+        "count": 30,
+        "min": 0,
+        "max": 0,
+        "mean": 0,
+        "median": 0,
+        "p95": 0
+      },
+      "pixelStats": {
+        "status": "pass",
+        "width": 1920,
+        "height": 1080,
+        "sampledPixels": 12056,
+        "meanLuminance": 62.02932415394811,
+        "luminanceVariance": 55.54724869552365,
+        "luminanceRange": 88.9674,
+        "alphaMean": 255,
+        "activePixelRatio": 1,
+        "uniqueColorBuckets": 41,
+        "nonblank": true
+      },
+      "capture": {
+        "status": "pass",
+        "durationMs": 48.10000002384186,
+        "mimeType": "image/png",
+        "bytesApprox": 3714086
+      }
+    }
+  ],
+  "thumbnailBatches": [
+    {
+      "kind": "thumbnail-batch",
+      "id": "thumbnail-bake-all-presets",
+      "dpr": 1,
+      "widthCss": 320,
+      "heightCss": 200,
+      "requestedPreserveDrawingBuffer": true,
+      "sharedContext": true,
+      "presetCount": 11,
+      "presetKeys": [
+        "OPENAI_SKY",
+        "OPENAI_DAWN",
+        "OPENAI_MEADOW",
+        "DELIBERATIVE",
+        "DAY9_YELLOW",
+        "OIL_IMPASTO",
+        "OIL_GESTURAL",
+        "OIL_VANGOGH",
+        "CRAYON_SUNSET",
+        "CRAYON_RAINBOW",
+        "CRAYON_OCEAN"
+      ],
+      "status": "pass",
+      "results": [
+        {
+          "kind": "thumbnail",
+          "preset": "OPENAI_SKY",
+          "dpr": 1,
+          "status": "pass",
+          "renderAtMs": 0,
+          "pixelStats": {
+            "status": "pass",
+            "width": 320,
+            "height": 200,
+            "sampledPixels": 12800,
+            "meanLuminance": 151.0613593749854,
+            "luminanceVariance": 470.5237015066523,
+            "luminanceRange": 70.7264,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 17,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 4.100000023841858,
+            "mimeType": "image/webp",
+            "bytesApprox": 2535
+          }
+        },
+        {
+          "kind": "thumbnail",
+          "preset": "OPENAI_DAWN",
+          "dpr": 1,
+          "status": "pass",
+          "renderAtMs": 0,
+          "pixelStats": {
+            "status": "pass",
+            "width": 320,
+            "height": 200,
+            "sampledPixels": 12800,
+            "meanLuminance": 117.33443295312632,
+            "luminanceVariance": 918.3391089738998,
+            "luminanceRange": 129.1116,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 38,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 2.799999952316284,
+            "mimeType": "image/webp",
+            "bytesApprox": 2607
+          }
+        },
+        {
+          "kind": "thumbnail",
+          "preset": "OPENAI_MEADOW",
+          "dpr": 1,
+          "status": "pass",
+          "renderAtMs": 0,
+          "pixelStats": {
+            "status": "pass",
+            "width": 320,
+            "height": 200,
+            "sampledPixels": 12800,
+            "meanLuminance": 118.68217131249703,
+            "luminanceVariance": 3197.6323873161637,
+            "luminanceRange": 140.4586,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 44,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 3.0999999046325684,
+            "mimeType": "image/webp",
+            "bytesApprox": 4039
+          }
+        },
+        {
+          "kind": "thumbnail",
+          "preset": "DELIBERATIVE",
+          "dpr": 1,
+          "status": "pass",
+          "renderAtMs": 0,
+          "pixelStats": {
+            "status": "pass",
+            "width": 320,
+            "height": 200,
+            "sampledPixels": 12800,
+            "meanLuminance": 156.08697571875635,
+            "luminanceVariance": 1009.6115904204562,
+            "luminanceRange": 157.2426,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 58,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 3,
+            "mimeType": "image/webp",
+            "bytesApprox": 3747
+          }
+        },
+        {
+          "kind": "thumbnail",
+          "preset": "DAY9_YELLOW",
+          "dpr": 1,
+          "status": "pass",
+          "renderAtMs": 0,
+          "pixelStats": {
+            "status": "pass",
+            "width": 320,
+            "height": 200,
+            "sampledPixels": 12800,
+            "meanLuminance": 165.2847284687515,
+            "luminanceVariance": 881.5799514105274,
+            "luminanceRange": 94.46399999999998,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 46,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 2.8000000715255737,
+            "mimeType": "image/webp",
+            "bytesApprox": 3295
+          }
+        },
+        {
+          "kind": "thumbnail",
+          "preset": "OIL_IMPASTO",
+          "dpr": 1,
+          "status": "pass",
+          "renderAtMs": 0,
+          "pixelStats": {
+            "status": "pass",
+            "width": 320,
+            "height": 200,
+            "sampledPixels": 12800,
+            "meanLuminance": 38.09428429687267,
+            "luminanceVariance": 5.348852757291297,
+            "luminanceRange": 32.00079999999999,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 9,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 2.700000047683716,
+            "mimeType": "image/webp",
+            "bytesApprox": 2567
+          }
+        },
+        {
+          "kind": "thumbnail",
+          "preset": "OIL_GESTURAL",
+          "dpr": 1,
+          "status": "pass",
+          "renderAtMs": 0,
+          "pixelStats": {
+            "status": "pass",
+            "width": 320,
+            "height": 200,
+            "sampledPixels": 12800,
+            "meanLuminance": 62.05827818750042,
+            "luminanceVariance": 56.313933903423276,
+            "luminanceRange": 89.89920000000001,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 43,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 2.899999976158142,
+            "mimeType": "image/webp",
+            "bytesApprox": 4103
+          }
+        },
+        {
+          "kind": "thumbnail",
+          "preset": "OIL_VANGOGH",
+          "dpr": 1,
+          "status": "pass",
+          "renderAtMs": 0,
+          "pixelStats": {
+            "status": "pass",
+            "width": 320,
+            "height": 200,
+            "sampledPixels": 12800,
+            "meanLuminance": 17.66414467187505,
+            "luminanceVariance": 181.09668566833284,
+            "luminanceRange": 154.5974,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 56,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 3.1999999284744263,
+            "mimeType": "image/webp",
+            "bytesApprox": 4907
+          }
+        },
+        {
+          "kind": "thumbnail",
+          "preset": "CRAYON_SUNSET",
+          "dpr": 1,
+          "status": "pass",
+          "renderAtMs": 0.09999990463256836,
+          "pixelStats": {
+            "status": "pass",
+            "width": 320,
+            "height": 200,
+            "sampledPixels": 12800,
+            "meanLuminance": 100.71749418750004,
+            "luminanceVariance": 925.2149737063155,
+            "luminanceRange": 140.90619999999996,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 247,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 4.899999976158142,
+            "mimeType": "image/webp",
+            "bytesApprox": 20751
+          }
+        },
+        {
+          "kind": "thumbnail",
+          "preset": "CRAYON_RAINBOW",
+          "dpr": 1,
+          "status": "pass",
+          "renderAtMs": 0,
+          "pixelStats": {
+            "status": "pass",
+            "width": 320,
+            "height": 200,
+            "sampledPixels": 12800,
+            "meanLuminance": 130.81751128124978,
+            "luminanceVariance": 308.5051717181195,
+            "luminanceRange": 98.68879999999999,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 205,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 4.600000023841858,
+            "mimeType": "image/webp",
+            "bytesApprox": 17723
+          }
+        },
+        {
+          "kind": "thumbnail",
+          "preset": "CRAYON_OCEAN",
+          "dpr": 1,
+          "status": "pass",
+          "renderAtMs": 0,
+          "pixelStats": {
+            "status": "pass",
+            "width": 320,
+            "height": 200,
+            "sampledPixels": 12800,
+            "meanLuminance": 99.40316490624996,
+            "luminanceVariance": 931.3647054900412,
+            "luminanceRange": 153.58679999999998,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 140,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 4.599999904632568,
+            "mimeType": "image/webp",
+            "bytesApprox": 18051
+          }
+        }
+      ],
+      "setupMs": 9.600000023841858,
+      "context": {
+        "attributes": {
+          "alpha": true,
+          "antialias": false,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": true,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "renderer": {
+          "vendor": "Google Inc. (Apple)",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguageVersion": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        }
+      },
+      "canvas": {
+        "width": 320,
+        "height": 200,
+        "clientWidth": 320,
+        "clientHeight": 200
+      }
+    },
+    {
+      "kind": "thumbnail-batch",
+      "id": "thumbnail-bake-all-presets",
+      "dpr": 2,
+      "widthCss": 320,
+      "heightCss": 200,
+      "requestedPreserveDrawingBuffer": true,
+      "sharedContext": true,
+      "presetCount": 11,
+      "presetKeys": [
+        "OPENAI_SKY",
+        "OPENAI_DAWN",
+        "OPENAI_MEADOW",
+        "DELIBERATIVE",
+        "DAY9_YELLOW",
+        "OIL_IMPASTO",
+        "OIL_GESTURAL",
+        "OIL_VANGOGH",
+        "CRAYON_SUNSET",
+        "CRAYON_RAINBOW",
+        "CRAYON_OCEAN"
+      ],
+      "status": "pass",
+      "results": [
+        {
+          "kind": "thumbnail",
+          "preset": "OPENAI_SKY",
+          "dpr": 2,
+          "status": "pass",
+          "renderAtMs": 0,
+          "pixelStats": {
+            "status": "pass",
+            "width": 640,
+            "height": 400,
+            "sampledPixels": 12191,
+            "meanLuminance": 150.9679590681514,
+            "luminanceVariance": 471.74481945883963,
+            "luminanceRange": 71.65420000000002,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 18,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 9.899999976158142,
+            "mimeType": "image/webp",
+            "bytesApprox": 4643
+          }
+        },
+        {
+          "kind": "thumbnail",
+          "preset": "OPENAI_DAWN",
+          "dpr": 2,
+          "status": "pass",
+          "renderAtMs": 0.10000002384185791,
+          "pixelStats": {
+            "status": "pass",
+            "width": 640,
+            "height": 400,
+            "sampledPixels": 12191,
+            "meanLuminance": 117.69616792716175,
+            "luminanceVariance": 898.3950362833693,
+            "luminanceRange": 128.11159999999998,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 38,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 9.599999904632568,
+            "mimeType": "image/webp",
+            "bytesApprox": 4987
+          }
+        },
+        {
+          "kind": "thumbnail",
+          "preset": "OPENAI_MEADOW",
+          "dpr": 2,
+          "status": "pass",
+          "renderAtMs": 0,
+          "pixelStats": {
+            "status": "pass",
+            "width": 640,
+            "height": 400,
+            "sampledPixels": 12191,
+            "meanLuminance": 118.01920733327495,
+            "luminanceVariance": 3195.1825364574997,
+            "luminanceRange": 140.74339999999998,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 45,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 11.299999952316284,
+            "mimeType": "image/webp",
+            "bytesApprox": 8723
+          }
+        },
+        {
+          "kind": "thumbnail",
+          "preset": "DELIBERATIVE",
+          "dpr": 2,
+          "status": "pass",
+          "renderAtMs": 0,
+          "pixelStats": {
+            "status": "pass",
+            "width": 640,
+            "height": 400,
+            "sampledPixels": 12191,
+            "meanLuminance": 156.59417189730632,
+            "luminanceVariance": 982.8703944531371,
+            "luminanceRange": 155.03519999999997,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 58,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 10.399999976158142,
+            "mimeType": "image/webp",
+            "bytesApprox": 8119
+          }
+        },
+        {
+          "kind": "thumbnail",
+          "preset": "DAY9_YELLOW",
+          "dpr": 2,
+          "status": "pass",
+          "renderAtMs": 0.10000002384185791,
+          "pixelStats": {
+            "status": "pass",
+            "width": 640,
+            "height": 400,
+            "sampledPixels": 12191,
+            "meanLuminance": 165.09194756788048,
+            "luminanceVariance": 889.5179461543339,
+            "luminanceRange": 93.6766,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 44,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 10.399999976158142,
+            "mimeType": "image/webp",
+            "bytesApprox": 6827
+          }
+        },
+        {
+          "kind": "thumbnail",
+          "preset": "OIL_IMPASTO",
+          "dpr": 2,
+          "status": "pass",
+          "renderAtMs": 0,
+          "pixelStats": {
+            "status": "pass",
+            "width": 640,
+            "height": 400,
+            "sampledPixels": 12191,
+            "meanLuminance": 38.08879184644212,
+            "luminanceVariance": 5.330130790361636,
+            "luminanceRange": 31.000799999999977,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 8,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 10.099999904632568,
+            "mimeType": "image/webp",
+            "bytesApprox": 5535
+          }
+        },
+        {
+          "kind": "thumbnail",
+          "preset": "OIL_GESTURAL",
+          "dpr": 2,
+          "status": "pass",
+          "renderAtMs": 0,
+          "pixelStats": {
+            "status": "pass",
+            "width": 640,
+            "height": 400,
+            "sampledPixels": 12191,
+            "meanLuminance": 62.0511336887869,
+            "luminanceVariance": 55.86113198627254,
+            "luminanceRange": 87.4018,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 50,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 12.5,
+            "mimeType": "image/webp",
+            "bytesApprox": 9007
+          }
+        },
+        {
+          "kind": "thumbnail",
+          "preset": "OIL_VANGOGH",
+          "dpr": 2,
+          "status": "pass",
+          "renderAtMs": 0,
+          "pixelStats": {
+            "status": "pass",
+            "width": 640,
+            "height": 400,
+            "sampledPixels": 12191,
+            "meanLuminance": 17.86330299401195,
+            "luminanceVariance": 203.8952559944459,
+            "luminanceRange": 153.95439999999996,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 61,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 11.5,
+            "mimeType": "image/webp",
+            "bytesApprox": 11143
+          }
+        },
+        {
+          "kind": "thumbnail",
+          "preset": "CRAYON_SUNSET",
+          "dpr": 2,
+          "status": "pass",
+          "renderAtMs": 0,
+          "pixelStats": {
+            "status": "pass",
+            "width": 640,
+            "height": 400,
+            "sampledPixels": 12191,
+            "meanLuminance": 101.10723340168968,
+            "luminanceVariance": 909.4689239109593,
+            "luminanceRange": 140.83799999999997,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 245,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 18.299999952316284,
+            "mimeType": "image/webp",
+            "bytesApprox": 59743
+          }
+        },
+        {
+          "kind": "thumbnail",
+          "preset": "CRAYON_RAINBOW",
+          "dpr": 2,
+          "status": "pass",
+          "renderAtMs": 0.10000002384185791,
+          "pixelStats": {
+            "status": "pass",
+            "width": 640,
+            "height": 400,
+            "sampledPixels": 12191,
+            "meanLuminance": 130.89457462062154,
+            "luminanceVariance": 307.0434376648627,
+            "luminanceRange": 94.14,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 203,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 17.200000047683716,
+            "mimeType": "image/webp",
+            "bytesApprox": 49987
+          }
+        },
+        {
+          "kind": "thumbnail",
+          "preset": "CRAYON_OCEAN",
+          "dpr": 2,
+          "status": "pass",
+          "renderAtMs": 0.10000002384185791,
+          "pixelStats": {
+            "status": "pass",
+            "width": 640,
+            "height": 400,
+            "sampledPixels": 12191,
+            "meanLuminance": 99.81354440160729,
+            "luminanceVariance": 909.507332137553,
+            "luminanceRange": 154.9398,
+            "alphaMean": 255,
+            "activePixelRatio": 1,
+            "uniqueColorBuckets": 144,
+            "nonblank": true
+          },
+          "capture": {
+            "status": "pass",
+            "durationMs": 16.899999976158142,
+            "mimeType": "image/webp",
+            "bytesApprox": 46671
+          }
+        }
+      ],
+      "setupMs": 10.399999976158142,
+      "context": {
+        "attributes": {
+          "alpha": true,
+          "antialias": false,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "default",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": true,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "renderer": {
+          "vendor": "Google Inc. (Apple)",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguageVersion": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        }
+      },
+      "canvas": {
+        "width": 640,
+        "height": 400,
+        "clientWidth": 320,
+        "clientHeight": 200
+      }
+    }
+  ],
+  "pageErrors": [],
+  "server": {
+    "baseUrl": "http://127.0.0.1:5173",
+    "launched": true
+  },
+  "browser": {
+    "Browser": "Chrome/147.0.7727.138",
+    "Protocol-Version": "1.3",
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/147.0.0.0 Safari/537.36",
+    "V8-Version": "14.7.173.22",
+    "WebKit-Version": "537.36 (@022a5605792996d967e05acda7091c2bd9b915db)",
+    "webSocketDebuggerUrl": "ws://127.0.0.1:9347/devtools/browser/e06674eb-ed70-466a-9e9c-76d230978c5a"
+  },
+  "harness": {
+    "presetKeys": [
+      "OPENAI_SKY",
+      "OPENAI_DAWN",
+      "OPENAI_MEADOW",
+      "DELIBERATIVE",
+      "DAY9_YELLOW",
+      "OIL_IMPASTO",
+      "OIL_GESTURAL",
+      "OIL_VANGOGH",
+      "CRAYON_SUNSET",
+      "CRAYON_RAINBOW",
+      "CRAYON_OCEAN"
+    ],
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/147.0.0.0 Safari/537.36",
+    "devicePixelRatio": 1
+  },
+  "summary": {
+    "liveCases": 16,
+    "liveFailures": 0,
+    "thumbnailBatches": 2,
+    "thumbnailCases": 22,
+    "thumbnailFailures": 0,
+    "pageErrors": 0
+  },
+  "durationMs": 22715
+}

@@ -181,3 +181,40 @@ Measurements:
 - Total bundle changed from 403503 bytes / 102634 gzip at W1 to 390524 bytes / 101781 gzip at W4.
 
 No W4 residual remains. W5 is now unblocked.
+
+## 2026-05-02 - F.W5 Aurora Runtime, Shader, And Studio Hardening Closed
+
+W5 hardened Aurora without changing its one-component, single-pass WebGL2 thesis:
+
+- live runtime contexts now default to `preserveDrawingBuffer: false`;
+- capture/thumbnail runtimes opt into preservation through explicit runtime options;
+- `renderAt()` is now a draw-only path and no longer mutates RAF, start time, cursor easing/decay, or running state;
+- dead `uDpr` and `mediumSmooth` shader/runtime surface was removed;
+- `uBrokenColor` now drives deterministic oil-stroke and crayon pigment jitter;
+- `bestOil()` consumes caller-provided flow, so crosshatch and alternate layer flow are live;
+- `AuroraConfigDock.vue` was split from 595 lines into a 106-line shell plus colocated layer components/composables;
+- `profile:aurora` benchmarks live media and shared thumbnail capture, and `ay-close.sh` now runs it;
+- runtime smoke now asserts `/aurora` has a live WebGL2 canvas with live-mode preservation disabled.
+
+Evidence:
+
+- `node --check scripts/profile-aurora.mjs && node --check scripts/proof-runtime.mjs`: pass
+- `npm run iter-check`: pass
+- `npm run iter-test`: pass, 18 files / 259 tests
+- `npm run iter-build`: pass
+- `npm run build`: pass, declaration generation completed with the existing API Extractor TypeScript-version warning
+- `npm run verify-export-types`: pass
+- `npm run profile:aurora`: pass, artifact `audit/W5-aurora-profile.json`
+- `proof:runtime` with W5 artifact/screenshot env: pass, 71 routes, artifact `audit/W5-runtime-smoke.json`
+- `profile:bundle` with W5 artifact env: pass, artifact `audit/W5-bundle-profile.json`
+- `git diff --check`: pass
+
+Measurements:
+
+- `profile:aurora`: 16 live cases, 22 thumbnail cases, 0 failures, 0 page errors.
+- smooth/pastel/watercolor DPR 2 P95 frame timing stays under 10 ms.
+- oil gestural DPR 2 is the measured heavy path: median 25.5 ms, P95 33.6 ms, 87 over-budget frames.
+- thumbnail capture through one shared context: DPR 1 P95 4.6 ms, DPR 2 P95 17.2 ms.
+- `aurora.js` changed from 46748 bytes / 15190 gzip at W4 to 47958 bytes / 15590 gzip at W5.
+
+No W5 correctness residual remains. W6 is now unblocked and should classify the measured oil DPR 2 cost as accepted heavy-mode behavior or a named follow-on.

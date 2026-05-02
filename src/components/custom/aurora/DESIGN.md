@@ -130,9 +130,9 @@ export interface AuroraInstance {
 }
 ```
 
-`createAurora(canvas, config): AuroraInstance` is the imperative core. `useAurora(ref, config)` is the Vue wrapper that watches config deeply and updates uniforms on change.
+`createAurora(canvas, config, options?): AuroraInstance` is the imperative core. Live runtimes default to `{ preserveDrawingBuffer: false }`; capture runtimes pass `{ mode: "capture" }` or an explicit `preserveDrawingBuffer` override. `useAurora(ref, config, options?)` is the Vue wrapper that watches config deeply and updates uniforms on change.
 
-Per memory rule "Presets in consumers": the 11 authored themes (Sky, Dawn, Meadow, Deliberative, Day9, Oil Impasto, Oil Gestural, Oil Van Gogh, Crayon Sunset, Crayon Rainbow, Crayon Ocean) live at `demo/stories/compositions/aurora/presets.ts`, not here.
+Per memory rule "Presets in consumers": the 11 authored themes (Sky, Dawn, Meadow, Deliberative, Day9, Oil Impasto, Oil Gestural, Oil Van Gogh, Crayon Sunset, Crayon Rainbow, Crayon Ocean) live at `demo/stories/aurora/presets.ts`, not here.
 
 ## 6. Spec deltas (v4 → v4.1)
 
@@ -140,14 +140,18 @@ Per memory rule "Presets in consumers": the 11 authored themes (Sky, Dawn, Meado
 - **Δ02 `strokeLayers: 1 | 2`** — oil-pastel crosshatching needs a second stroke layer rotated 90° from `flow.angle`. Added via average-blend so ridges weave rather than explode.
 - **Δ03 Cursor API** — `setCursor(x, y, strength)` / `clearCursor()` / `setCursorRadius(r)`. Palette zones DO rotate near cursor despite the draft invariant saying otherwise; this is a deliberate reversal driven by reference-image fidelity.
 - **Δ04 `strokeMode` under `medium: "oil"`** — `oil` default (balanced bristle), `knife` (razor edges, flat, heavy impasto), `crayon` (anisotropic tooth noise multiplied into base, NOT stroke-based), `chunky` (thick gestural bristle).
+- **Δ05 live/capture runtime modes** — live canvases avoid capture-only drawing-buffer preservation; capture and thumbnail bakes opt into it explicitly and use `renderAt()` as a draw-only call.
 
 ## 7. Load-bearing implementation notes
 
 - **Palette is baked to LINEAR sRGB**, not gamma-sRGB. The shader ACES-tonemaps in linear. `oklchToLinear()` and `flattenPalette()` in `composables/color.ts`.
-- **`preserveDrawingBuffer: true`** on context creation. Without it, `readPixels` / `toDataURL` return zeros after the next frame's clear.
+- **`preserveDrawingBuffer` is capture-only by default.** WebGL context attributes are fixed at context creation, so live runtimes default false while thumbnail/capture runtimes opt true. Without preservation, `readPixels` / `toDataURL` after the composited frame is not a stable capture contract.
 - **Nuclei y-coordinate is CSS-top-origin** (0 = top, 1 = bottom). Runtime flips Y at the uniform boundary — see `AUTHOR_Y_ORIGIN_IS_TOP` marks in `runtime.ts`. Config authoring stays top-origin.
-- **Thumbnail baking uses a shared offscreen context.** 11 presets + 1 live stage exceeds Chromium's ~8 contexts/page cap. One offscreen aurora, `update(frozen) + renderAt(1.0) + toDataURL` per preset, `dispose()` releasing via `WEBGL_lose_context`. Pattern at `demo/stories/compositions/aurora/usePresetThumbnails.ts`.
+- **Thumbnail baking uses a shared offscreen context.** 11 presets + 1 live stage exceeds Chromium's ~8 contexts/page cap. One capture-mode aurora, `update(frozen) + renderAt(1.0) + toDataURL` per preset, `dispose()` releasing via `WEBGL_lose_context`. Pattern at `demo/stories/aurora/usePresetThumbnails.ts`.
+- **`renderAt()` is draw-only.** It uploads `uTime`, current cursor uniforms, clears, and draws once. It does not mutate `startTime`, advance cursor easing/decay, schedule/cancel RAF, or change running state.
 - **Crayon is not strokes.** `mediumOil_crayon()` rotates `p` to align with flow then multiplies anisotropic tooth noise into base color. Routing via `strokeMode == 2` inside `mediumOil`.
+- **Broken oil color is deterministic pigment jitter.** `uBrokenColor` affects oil-family output only: stroke modes hash each stroke cell to hue-shift and value-jitter the midpoint pigment, while crayon hashes stable pigment patches. The maximum shader shift is intentionally bounded (about ±16° hue and ±14% value at `brokenColor = 1`) so presets read as broken paint rather than random color noise.
+- **Oil crosshatch flow is layer-routed.** `bestOil()` consumes the flow vector passed by the caller as its base stroke direction and adds only deterministic per-cell perturbation. The optional second layer passes a perpendicular flow so `strokeLayers: 2` materially changes the hatch direction without adding shader variants.
 - **Cursor state** — JS-side easing and decay required; shader alone can't provide breath-paced cursor response without framerate-dependent artifacts.
 
 ## 8. Reference implementations
@@ -174,9 +178,9 @@ src/components/custom/aurora/
 │   └── aurora.frag.ts            # the entire pipeline — composition + medium + post
 └── composables/
     ├── color.ts                  # OKLCh math + oklchToLinear + flattenPalette
-    ├── runtime.ts                # createAurora — WebGL lifecycle + cursor easing + renderAt
+    ├── runtime.ts                # createAurora — live/capture WebGL lifecycle + cursor easing + renderAt
     ├── useAurora.ts              # Vue-side wrapper: onMounted/watch/onBeforeUnmount
     └── useCursorInteraction.ts   # pointer layer: continuous swirl + nucleus CRUD
 ```
 
-Demo studio composition (the 11 authored presets and the configurator UI) lives at `demo/stories/compositions/aurora/`.
+Demo studio composition (the 11 authored presets and the configurator UI) lives at `demo/stories/aurora/`.

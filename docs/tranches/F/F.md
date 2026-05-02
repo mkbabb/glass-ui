@@ -55,7 +55,7 @@ F makes the library easier to change quickly by reducing false surfaces and brit
 | W2 | Dock, rail, layering, and navigation substrate | 3-4 | implementation on dock/nav files with orchestrator-owned shared styles | vertical dock/layer behavior, z-index, transitions, portal ownership, and blur tokens are proved on dock routes | complete |
 | W3 | Component contracts and Vue idioms | 4-5 | implementation on disjoint component families | unsafe HTML, stale search cache, row identity, lifecycle cleanup, and large-component splits are fixed and tested | complete |
 | W4 | Tailwind theme and style authority | 4 | implementation on style/token/story-surface files | Tailwind v4 theme compile proof passes; duplicated/global brittle CSS is removed or localized with parity evidence | complete |
-| W5 | Aurora runtime, shader, and studio hardening | 4 | implementation on Aurora library/studio with benchmark evidence | public config matches live shader behavior; capture/live modes, oil flow, thumbnails, and studio splits are proved | planned |
+| W5 | Aurora runtime, shader, and studio hardening | 4 | implementation on Aurora library/studio with benchmark evidence | public config matches live shader behavior; capture/live modes, oil flow, thumbnails, and studio splits are proved | complete |
 | W6 | Runtime/profile close and residual audit | 6 + orchestrator | parallel re-audit + close | close command exits 0; residuals are <= 5 or a named next tranche is opened before final | planned |
 
 ## W0 Close

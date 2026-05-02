@@ -1,5 +1,5 @@
 import { onBeforeUnmount, onMounted, watch, type Ref } from "vue";
-import { createAurora } from "./runtime";
+import { createAurora, type AuroraRuntimeOptions } from "./runtime";
 import { asGetter, type ConfigSource } from "./configSource";
 import type { AuroraConfig, AuroraInstance } from "../presets";
 
@@ -16,6 +16,7 @@ import type { AuroraConfig, AuroraInstance } from "../presets";
 export function useAurora(
     canvasRef: Ref<HTMLCanvasElement | null>,
     configSource: ConfigSource<AuroraConfig>,
+    runtimeOptions: AuroraRuntimeOptions = {},
 ): {
     setCursor: (x: number, y: number, strength?: number) => void;
     clearCursor: () => void;
@@ -37,7 +38,7 @@ export function useAurora(
         const canvas = canvasRef.value;
         if (!canvas) return;
         try {
-            inst = createAurora(canvas, getCfg());
+            inst = createAurora(canvas, getCfg(), runtimeOptions);
         } catch (err) {
             console.warn("[Aurora]", err);
             return;

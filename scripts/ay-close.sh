@@ -9,45 +9,49 @@ echo "ay-close proof ceremony for tranche close"
 echo "========================================="
 
 echo
-echo "[1/9] Clean dist and Vite cache"
+echo "[1/11] Clean dist and Vite cache"
 rm -rf dist node_modules/.vite
 
 echo
-echo "[2/9] Full typecheck"
+echo "[2/11] Full typecheck"
 time npm run typecheck
 
 echo
-echo "[3/9] Full build"
+echo "[3/11] Full build"
 time npm run build
 
 echo
-echo "[4/9] Export type proof"
+echo "[4/11] Export type proof"
 time npm run verify-export-types
 
 echo
-echo "[5/9] Iter test"
+echo "[5/11] Iter test"
 time npm run iter-test
 
 echo
-echo "[6/9] Package fixture proof"
+echo "[6/11] Package fixture proof"
 time npm run proof:package
 
 echo
-echo "[7/9] Consumer static policy"
+echo "[7/11] Consumer static policy"
 time npm run proof:consumers:static
 
 echo
-echo "[8/9] Consumer builds"
+echo "[8/11] Consumer builds"
 time npm run proof:consumers:build
 
 echo
-echo "[9/10] Theme/style proof"
+echo "[9/11] Theme/style proof"
 time npm run proof:theme
 
 echo
-echo "[10/10] Runtime and bundle artifacts"
+echo "[10/11] Runtime and bundle artifacts"
 time npm run proof:runtime
 time npm run profile:bundle
+
+echo
+echo "[11/11] Aurora profile"
+time npm run profile:aurora
 
 echo
 echo "Dist sizes"

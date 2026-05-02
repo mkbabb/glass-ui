@@ -3,7 +3,7 @@
  *
  * Compiles the shader, owns the WebGL2 context and RAF loop, translates a
  * reactive `AuroraConfig` into uniforms, and exposes an imperative cursor API
- * plus a `renderAt(t)` method for offscreen thumbnail baking.
+ * plus a side-effect-safe `renderAt(t)` method for capture baking.
  *
  * Y-origin convention: config authoring is CSS-top-origin (0 = top). The
  * runtime flips Y at the uniform boundary (see AUTHOR_Y_ORIGIN_IS_TOP marks).
@@ -38,6 +38,20 @@ const CURSOR_POS_LERP = 0.22;
 const CURSOR_STRENGTH_LERP = 0.18;
 const CURSOR_DECAY_PER_FRAME = 0.992; // ≈ 2 s half-life at 60 fps
 
+export type AuroraRuntimeMode = "live" | "capture";
+
+export interface AuroraRuntimeOptions {
+    mode?: AuroraRuntimeMode;
+    preserveDrawingBuffer?: boolean;
+}
+
+function shouldPreserveDrawingBuffer(options: AuroraRuntimeOptions): boolean {
+    if (typeof options.preserveDrawingBuffer === "boolean") {
+        return options.preserveDrawingBuffer;
+    }
+    return options.mode === "capture";
+}
+
 function compile(gl: WebGL2RenderingContext, type: number, src: string): WebGLShader {
     const sh = gl.createShader(type)!;
     gl.shaderSource(sh, src);
@@ -64,7 +78,7 @@ function link(gl: WebGL2RenderingContext, vs: WebGLShader, fs: WebGLShader): Web
 }
 
 const UNIFORM_NAMES = [
-    "uRes", "uTime", "uDpr",
+    "uRes", "uTime",
     "uPalette", "uStopCount",
     "uNucleiCount", "uNucleiPos", "uNucleiRadius",
     "uNucleiPaletteBias", "uNucleiValueBias", "uNucleiDriftRadius", "uNucleiDriftPhase",
@@ -81,14 +95,19 @@ const UNIFORM_NAMES = [
 
 type UniformName = (typeof UNIFORM_NAMES)[number];
 
-export function createAurora(canvas: HTMLCanvasElement, initial: AuroraConfig): AuroraInstance {
+export function createAurora(
+    canvas: HTMLCanvasElement,
+    initial: AuroraConfig,
+    options: AuroraRuntimeOptions = {},
+): AuroraInstance {
+    const preserveDrawingBuffer = shouldPreserveDrawingBuffer(options);
     const gl = canvas.getContext("webgl2", {
         antialias: false,
         alpha: true,
         premultipliedAlpha: true,
-        // Load-bearing. Without this, readPixels/toDataURL returns zeros after the
-        // next frame's clear. The bundle chat-log documents ~30 min of debug pain.
-        preserveDrawingBuffer: true,
+        // Live canvases default false; capture/thumbnail runtimes opt in for
+        // readPixels/toDataURL after a deterministic renderAt() draw.
+        preserveDrawingBuffer,
     });
     if (!gl) throw new Error("[Aurora] WebGL2 unavailable");
 
@@ -116,7 +135,7 @@ export function createAurora(canvas: HTMLCanvasElement, initial: AuroraConfig): 
     for (const n of UNIFORM_NAMES) U[n] = gl.getUniformLocation(prog, n);
 
     let config: AuroraConfig = initial;
-    let running = true;
+    let running = options.mode !== "capture";
     let reducedMotion =
         typeof window !== "undefined" && window.matchMedia
             ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -161,7 +180,6 @@ export function createAurora(canvas: HTMLCanvasElement, initial: AuroraConfig): 
         gl!.viewport(0, 0, w, h);
         gl!.useProgram(prog);
         gl!.uniform2f(U.uRes, w, h);
-        gl!.uniform1f(U.uDpr, dpr);
     }
 
     const ro = new ResizeObserver(() => resize());
@@ -291,11 +309,7 @@ export function createAurora(canvas: HTMLCanvasElement, initial: AuroraConfig): 
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 
     let raf = 0;
-    function tick() {
-        if (!running) return;
-        const t = reducedMotion
-            ? frozenOffset
-            : (performance.now() - startTime) / 1000;
+    function advanceCursor() {
         // Cursor easing — snappy approach, gentle decay when idle. Constants
         // live at module scope; see DESIGN.md §4.
         cursor.x += (cursor.targetX - cursor.x) * CURSOR_POS_LERP;
@@ -303,25 +317,32 @@ export function createAurora(canvas: HTMLCanvasElement, initial: AuroraConfig): 
         cursor.strength +=
             (cursor.targetStrength - cursor.strength) * CURSOR_STRENGTH_LERP;
         cursor.targetStrength *= CURSOR_DECAY_PER_FRAME;
+    }
+
+    function drawFrame(timeSec: number) {
         gl!.useProgram(prog);
         // AUTHOR_Y_ORIGIN_IS_TOP
         gl!.uniform2f(U.uCursor, cursor.x, 1.0 - cursor.y);
         gl!.uniform1f(U.uCursorStrength, cursor.strength);
         gl!.uniform1f(U.uCursorRadius, cursor.radius);
-        gl!.uniform1f(U.uTime, t);
+        gl!.uniform1f(U.uTime, timeSec);
         gl!.clear(gl!.COLOR_BUFFER_BIT);
         gl!.drawArrays(gl!.TRIANGLES, 0, 3);
+    }
+
+    function tick() {
+        if (!running) return;
+        const t = reducedMotion
+            ? frozenOffset
+            : (performance.now() - startTime) / 1000;
+        advanceCursor();
+        drawFrame(t);
         raf = requestAnimationFrame(tick);
     }
-    raf = requestAnimationFrame(tick);
+    if (running) raf = requestAnimationFrame(tick);
 
     function renderAt(timeSec: number) {
-        const prev = running;
-        running = true;
-        startTime = performance.now() - timeSec * 1000;
-        tick();
-        cancelAnimationFrame(raf);
-        running = prev;
+        drawFrame(timeSec);
     }
 
     function pause() {

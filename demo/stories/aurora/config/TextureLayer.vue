@@ -1,0 +1,94 @@
+<script setup lang="ts">
+import { LabeledSlider } from "@/components/custom/labeled-field";
+import type { AuroraConfig } from "@/components/custom/aurora";
+
+defineProps<{
+    config: AuroraConfig;
+}>();
+</script>
+
+<template>
+    <div class="flex min-w-[280px] flex-col gap-3 p-3">
+        <LabeledSlider
+            :model-value="config.strokeAmount"
+            label="Stroke amount"
+            tooltip="0..1 · overall strength of medium texture"
+            :min="0"
+            :max="1"
+            :step="0.01"
+            @update:model-value="(v: number) => (config.strokeAmount = v)"
+        />
+        <LabeledSlider
+            :model-value="config.strokeScale"
+            label="Stroke scale"
+            tooltip="Reciprocal density for strokes"
+            :min="40"
+            :max="320"
+            :step="2"
+            @update:model-value="(v: number) => (config.strokeScale = v)"
+        />
+        <LabeledSlider
+            :model-value="config.strokeAnisotropy"
+            label="Anisotropy"
+            tooltip="0..1 · stroke elongation along flow"
+            :min="0"
+            :max="1"
+            :step="0.01"
+            @update:model-value="(v: number) => (config.strokeAnisotropy = v)"
+        />
+        <LabeledSlider
+            :model-value="config.impasto"
+            label="Impasto"
+            tooltip="0..1 · edge catch-light for oil"
+            :min="0"
+            :max="1"
+            :step="0.01"
+            @update:model-value="(v: number) => (config.impasto = v)"
+        />
+        <LabeledSlider
+            :model-value="config.brokenColor"
+            label="Broken color"
+            tooltip="0..1 · per-stroke hue jitter"
+            :min="0"
+            :max="1"
+            :step="0.01"
+            @update:model-value="(v: number) => (config.brokenColor = v)"
+        />
+        <LabeledSlider
+            :model-value="config.canvasGrain"
+            label="Canvas grain"
+            tooltip="0..0.1 · oil canvas weave strength"
+            :min="0"
+            :max="0.1"
+            :step="0.002"
+            @update:model-value="(v: number) => (config.canvasGrain = v)"
+        />
+        <LabeledSlider
+            :model-value="config.wetEdge"
+            label="Wet edge"
+            tooltip="0..1 · watercolor cauliflower darkening"
+            :min="0"
+            :max="1"
+            :step="0.01"
+            @update:model-value="(v: number) => (config.wetEdge = v)"
+        />
+        <LabeledSlider
+            :model-value="config.granulation"
+            label="Granulation"
+            tooltip="0..1 · paper-fiber pigment settle"
+            :min="0"
+            :max="1"
+            :step="0.01"
+            @update:model-value="(v: number) => (config.granulation = v)"
+        />
+        <LabeledSlider
+            :model-value="config.paperGrain"
+            label="Paper grain"
+            tooltip="0..0.02 · final film-grain"
+            :min="0"
+            :max="0.02"
+            :step="0.001"
+            @update:model-value="(v: number) => (config.paperGrain = v)"
+        />
+    </div>
+</template>

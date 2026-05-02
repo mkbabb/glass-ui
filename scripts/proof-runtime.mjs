@@ -283,6 +283,40 @@ async function dockAssertions(client, route) {
     return assertions;
 }
 
+async function auroraAssertions(client) {
+    const state = await evaluate(
+        client,
+        `(() => {
+            const canvas = document.querySelector('canvas[aria-hidden="true"]');
+            const gl = canvas?.getContext("webgl2");
+            return {
+                hasCanvas: !!canvas,
+                width: canvas?.width ?? 0,
+                height: canvas?.height ?? 0,
+                clientWidth: canvas?.clientWidth ?? 0,
+                clientHeight: canvas?.clientHeight ?? 0,
+                contextAttributes: gl?.getContextAttributes?.() ?? null,
+                contextLost: gl?.isContextLost?.() ?? null,
+            };
+        })()`,
+    );
+
+    return [
+        {
+            name: "aurora route has a live WebGL2 canvas",
+            pass:
+                state.hasCanvas &&
+                state.width > 0 &&
+                state.height > 0 &&
+                state.clientWidth > 0 &&
+                state.clientHeight > 0 &&
+                state.contextAttributes?.preserveDrawingBuffer === false &&
+                state.contextLost === false,
+            details: state,
+        },
+    ];
+}
+
 async function checkRoute(route) {
     const url = `${baseUrl}${route.path}`;
     const target = await createTarget("about:blank");
@@ -343,10 +377,12 @@ async function checkRoute(route) {
             await captureScreenshot(client, screenshot);
         }
 
-        const routeAssertions = route.path.startsWith("/navigation/dock") ||
-            route.path === "/navigation/rail"
-            ? await dockAssertions(client, route)
-            : [];
+        const routeAssertions = [
+            ...(route.path.startsWith("/navigation/dock") || route.path === "/navigation/rail"
+                ? await dockAssertions(client, route)
+                : []),
+            ...(route.path === "/aurora" ? await auroraAssertions(client) : []),
+        ];
 
         return {
             route: route.path,
@@ -390,7 +426,7 @@ const chrome = spawn(chromePath, [
     "--headless=new",
     `--remote-debugging-port=${debugPort}`,
     `--user-data-dir=${profileDir}`,
-    "--disable-gpu",
+    "--ignore-gpu-blocklist",
     "--no-first-run",
     "--no-default-browser-check",
     "about:blank",
