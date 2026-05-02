@@ -41,7 +41,11 @@ echo "[8/9] Consumer builds"
 time npm run proof:consumers:build
 
 echo
-echo "[9/9] Runtime and bundle artifacts"
+echo "[9/10] Theme/style proof"
+time npm run proof:theme
+
+echo
+echo "[10/10] Runtime and bundle artifacts"
 time npm run proof:runtime
 time npm run profile:bundle
 

@@ -13,7 +13,7 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const auditDir = resolve(root, "docs/tranches/F/audit");
-const artifactPath = resolve(auditDir, "W1-bundle-profile.json");
+const artifactPath = resolve(process.env.GLASS_UI_BUNDLE_ARTIFACT ?? resolve(auditDir, "W1-bundle-profile.json"));
 const startedAt = Date.now();
 
 function walk(dir) {

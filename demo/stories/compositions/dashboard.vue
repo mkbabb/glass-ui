@@ -68,13 +68,10 @@ const trendClasses: Record<Trend, string> = {
 
 <template>
     <StoryPage>
-        <div class="grid gap-6 lg:grid-cols-[16rem_1fr_18rem]">
-            <aside class="flex flex-col gap-3">
+        <div class="grid gap-[calc(1.5rem_+_var(--density-gap,0rem))] lg:grid-cols-[16rem_1fr_18rem]">
+            <aside class="flex flex-col gap-[calc(0.75rem_+_var(--density-gap,0rem))]">
                 <span class="text-admin-label section-label">System</span>
-                <Card
-                    class="border-2 border-foreground/10"
-                    :style="{ boxShadow: 'var(--shadow-cartoon, var(--shadow-card))' }"
-                >
+                <Card class="border-2 border-foreground/10">
                     <CardContent class="flex flex-col divide-y divide-border/50 p-0">
                         <div
                             v-for="item in sidebarStatus"
@@ -95,13 +92,12 @@ const trendClasses: Record<Trend, string> = {
                 </Card>
             </aside>
 
-            <main class="flex flex-col gap-6">
-                <div class="grid gap-4 grid-cols-2 2xl:grid-cols-4">
+            <main class="flex flex-col gap-[calc(1.5rem_+_var(--density-gap,0rem))]">
+                <div class="grid grid-cols-2 gap-[calc(1rem_+_var(--density-gap,0rem))] 2xl:grid-cols-4">
                     <Card
                         v-for="metric in metrics"
                         :key="metric.label"
                         class="min-w-0 border-2 border-foreground/10 transition-transform hover:-translate-x-px hover:-translate-y-px"
-                        :style="{ boxShadow: 'var(--shadow-cartoon, var(--shadow-card))' }"
                     >
                         <CardHeader class="pb-2">
                             <CardTitle
@@ -137,10 +133,7 @@ const trendClasses: Record<Trend, string> = {
                     </Card>
                 </div>
 
-                <Card
-                    class="border-2 border-foreground/10"
-                    :style="{ boxShadow: 'var(--shadow-cartoon, var(--shadow-card))' }"
-                >
+                <Card class="border-2 border-foreground/10">
                     <CardHeader>
                         <CardTitle class="text-heading">Recent projects</CardTitle>
                     </CardHeader>
@@ -186,16 +179,13 @@ const trendClasses: Record<Trend, string> = {
                 </Card>
             </main>
 
-            <aside class="flex flex-col gap-3">
+            <aside class="flex flex-col gap-[calc(0.75rem_+_var(--density-gap,0rem))]">
                 <span class="text-admin-label section-label flex items-center gap-2">
                     <Activity class="size-3" aria-hidden="true" /> Activity
                 </span>
-                <Card
-                    class="border-2 border-foreground/10"
-                    :style="{ boxShadow: 'var(--shadow-cartoon, var(--shadow-card))' }"
-                >
-                    <CardContent class="p-5">
-                        <ol class="flex flex-col gap-4">
+                <Card class="border-2 border-foreground/10">
+                    <CardContent class="p-[calc(1.25rem_+_var(--density-pad,0rem))]">
+                        <ol class="flex flex-col gap-[calc(1rem_+_var(--density-gap,0rem))]">
                             <li
                                 v-for="event in timeline"
                                 :key="event.time"

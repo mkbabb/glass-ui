@@ -12,6 +12,34 @@
 
 :root {
     /* ═══════════════════════════════════════════════
+       §0  THEME BRIDGE FALLBACKS
+
+       theme.css uses these non-Tailwind names to register v4 utility
+       namespaces without self-referential @theme variables. The public
+       runtime tokens remain --font-*, --leading-*, and --tracking-* in
+       typography.css.
+       ═══════════════════════════════════════════════ */
+    --font-stack-display: "Fraunces", Georgia, serif;
+    --font-stack-serif: "Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif;
+    --font-stack-sans: "Helvetica Neue", "Arial Nova", Arial, system-ui, sans-serif;
+    --font-stack-mono: "Fira Code", "Fira Mono", monospace;
+
+    --type-leading-micro: 1.2;
+    --type-leading-caption: 1.3;
+    --type-leading-small: 1.4;
+    --type-leading-body: 1.5;
+    --type-leading-prose: 1.618;
+    --type-leading-heading: 1.2;
+    --type-leading-display: 1.1;
+
+    --type-tracking-tight: -0.025em;
+    --type-tracking-snug: -0.01em;
+    --type-tracking-normal: 0;
+    --type-tracking-wide: 0.025em;
+    --type-tracking-wider: 0.05em;
+    --type-tracking-caps: 0.1em;
+
+    /* ═══════════════════════════════════════════════
        §1  DURATION
        ═══════════════════════════════════════════════ */
     --duration-instant: 0.1s;
@@ -39,14 +67,22 @@
     --spring-gentle: linear(0, 0.1018, 0.3031, 0.5094, 0.6812, 0.8083, 0.8945, 0.9486, 0.98, 0.9964, 1.0038, 1.0061, 1.006, 1.0049, 1.0036, 1.0024, 1.0015, 1.0008, 1.0004, 1.0002, 1.0001, 1, 1, 1, 1);
 
     /* Core cubic-bezier (exits, fallbacks, non-spring uses) */
-    --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
-    --ease-out: cubic-bezier(0, 0, 0.2, 1);
-    --ease-in: cubic-bezier(0.4, 0, 1, 1);
-    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    --motion-ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --motion-ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --motion-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+    --ease-standard: var(--motion-ease-standard);
+    --ease-out: var(--motion-ease-out);
+    --ease-in: var(--motion-ease-in);
+    --ease-out-expo: var(--motion-ease-out-expo);
 
     /* Apple-inspired — micro-interactions, switches, dock hover */
-    --ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1);
-    --ease-apple-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --motion-ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1);
+    --motion-ease-apple-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    --ease-apple: var(--motion-ease-apple);
+    --ease-apple-spring: var(--motion-ease-apple-spring);
     --ease-spring: var(--spring-snappy);
     --ease-decelerate: var(--ease-out);
     --ease-accelerate: var(--ease-in);
@@ -192,6 +228,12 @@
         4px 4px 0px 0px color-mix(in srgb, var(--foreground) 8%, transparent),
         0 24px 64px color-mix(in srgb, var(--foreground) 12%, transparent);
 
+    --cartoon-shadow:       var(--shadow-cartoon);
+    --cartoon-shadow-hover: var(--shadow-cartoon-hover);
+    --soft-shadow:          var(--shadow-soft);
+    --elevated-shadow:      var(--shadow-elevated);
+    --modal-shadow:         var(--shadow-modal);
+
     /* Elevation scale */
     --shadow-xs: 0 1px 3px color-mix(in srgb, var(--shadow-color) 4%, transparent),
         0 1px 2px color-mix(in srgb, var(--shadow-color) 6%, transparent);
@@ -203,10 +245,13 @@
 
     /* Card = cartoon by default */
     --shadow-card:       var(--shadow-cartoon);
+    --card-shadow:       var(--shadow-card);
 
     /* Dock shadows */
     --shadow-dock:           0 4px 20px color-mix(in srgb, var(--shadow-color) 18%, transparent), 0 0 0 1px color-mix(in srgb, var(--shadow-color) 10%, transparent);
     --shadow-dock-collapsed: 0 2px 12px color-mix(in srgb, var(--shadow-color) 14%, transparent), 0 0 0 1px color-mix(in srgb, var(--shadow-color) 10%, transparent);
+    --dock-shadow:           var(--shadow-dock);
+    --dock-shadow-collapsed: var(--shadow-dock-collapsed);
 
     /* Cartoon shadow color primitives (kept for tiered cartoon utilities) */
     --shadow-cartoon-color:             rgb(0 0 0 / 0.12);
@@ -224,6 +269,9 @@
     --shadow-cartoon-lg: -6px 4px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
         0 6px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
         -6px 6px 2px color-mix(in srgb, var(--shadow-color) 8%, transparent);
+    --cartoon-shadow-sm: var(--shadow-cartoon-sm);
+    --cartoon-shadow-md: var(--shadow-cartoon-md);
+    --cartoon-shadow-lg: var(--shadow-cartoon-lg);
 
     /* ═══════════════════════════════════════════════
        §8  GLASSMORPHISM — Four-tier surface system
@@ -237,13 +285,19 @@
     --glass-opacity-elevated: 0.80;
 
     /* Blur primitives */
-    --glass-blur-subtle:   blur(4px) saturate(1.05);
-    --glass-blur-default:  blur(12px);
-    --glass-blur-medium:   blur(12px) saturate(1.3);
-    --glass-blur-elevated: blur(16px) saturate(1.4);
+    --glass-blur-subtle-radius:   4px;
+    --glass-blur-default-radius:  12px;
+    --glass-blur-medium-radius:   12px;
+    --glass-blur-elevated-radius: 16px;
+    --glass-blur-dock-radius:     2px;
+
+    --glass-blur-subtle:   blur(var(--glass-blur-subtle-radius)) saturate(1.05);
+    --glass-blur-default:  blur(var(--glass-blur-default-radius));
+    --glass-blur-medium:   blur(var(--glass-blur-medium-radius)) saturate(1.3);
+    --glass-blur-elevated: blur(var(--glass-blur-elevated-radius)) saturate(1.4);
     /* Dock-specific: half the subtle weight so the dock reads as a feather-light
        overlay rather than a heavy blurred slab. */
-    --glass-blur-dock:     blur(2px) saturate(1.025);
+    --glass-blur-dock:     blur(var(--glass-blur-dock-radius)) saturate(1.025);
 
     /* Composed backgrounds */
     --glass-bg-subtle:   color-mix(in srgb, var(--card) calc(var(--glass-opacity-subtle) * 100%), transparent);
@@ -276,9 +330,9 @@
     /* ═══════════════════════════════════════════════
        §9  ANIMATION OFFSETS
        ═══════════════════════════════════════════════ */
-    --animation-slide-sm: 3px;
-    --animation-slide-md: 6px;
-    --animation-slide-lg: 8px;
+    --motion-slide-sm: 3px;
+    --motion-slide-md: 6px;
+    --motion-slide-lg: 8px;
     --popover-offset: 0.375rem;
 
     /* Hover lift offsets */
@@ -345,9 +399,13 @@
     /* ═══════════════════════════════════════════════
        §13 GOLD (accent family kept for consumers using it)
        ═══════════════════════════════════════════════ */
-    --color-gold: hsl(43 74% 49%);
-    --color-gold-light: hsl(51 100% 50%);
-    --color-gold-dark: hsl(34 87% 38%);
+    --gold: hsl(43 74% 49%);
+    --gold-light: hsl(51 100% 50%);
+    --gold-dark: hsl(34 87% 38%);
+
+    --color-gold: var(--gold);
+    --color-gold-light: var(--gold-light);
+    --color-gold-dark: var(--gold-dark);
 
     /* ═══════════════════════════════════════════════
        §14 RAINBOW PALETTE
@@ -461,7 +519,7 @@
     --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.08);
 
     /* Gold — boosted for dark */
-    --color-gold: hsl(43 74% 55%);
-    --color-gold-light: hsl(51 100% 55%);
-    --color-gold-dark: hsl(34 87% 45%);
+    --gold: hsl(43 74% 55%);
+    --gold-light: hsl(51 100% 55%);
+    --gold-dark: hsl(34 87% 45%);
 }

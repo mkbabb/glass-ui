@@ -151,7 +151,12 @@ defineExpose({ sidebarNav });
     border: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
     background: none;
     color: color-mix(in srgb, var(--muted-foreground) 45%, transparent);
-    transition: all var(--duration-fast) var(--ease-standard);
+    transition:
+        background-color var(--duration-fast) var(--ease-standard),
+        border-color var(--duration-fast) var(--ease-standard),
+        color var(--duration-fast) var(--ease-standard),
+        box-shadow var(--duration-fast) var(--ease-standard),
+        transform var(--duration-fast) var(--ease-standard);
 }
 
 .sidebar-top-btn:hover {

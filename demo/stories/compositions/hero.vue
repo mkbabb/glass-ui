@@ -96,14 +96,13 @@ const claims = [
                 'border-2 border-foreground/10 transition-transform duration-200',
                 'hover:-translate-x-px hover:-translate-y-px',
             )"
-            :style="{ boxShadow: 'var(--shadow-cartoon, var(--shadow-card))' }"
         >
             <CardContent class="grid gap-0 p-0 md:grid-cols-3">
                 <div
                     v-for="(claim, idx) in claims"
                     :key="claim.title"
                     :class="cn(
-                        'flex flex-col gap-3 p-8',
+                        'flex flex-col gap-[calc(0.75rem_+_var(--density-gap,0rem))] p-[calc(2rem_+_var(--density-pad,0rem))]',
                         idx < claims.length - 1 && 'md:border-r md:border-border/40',
                         idx < claims.length - 1 && 'border-b border-border/40 md:border-b-0',
                     )"

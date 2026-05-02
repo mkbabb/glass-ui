@@ -116,9 +116,9 @@
         backdrop-filter: var(--glass-blur-subtle);
         color: var(--muted-foreground);
         transition:
-            background var(--duration-fast) ease,
-            border-color var(--duration-fast) ease,
-            color var(--duration-fast) ease,
+            background var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard),
+            color var(--duration-fast) var(--ease-standard),
             transform var(--duration-normal) var(--spring-snappy);
     }
 
@@ -159,7 +159,13 @@
         border-radius: var(--radius-pill);
         padding: 0.5rem 1rem;
         font-size: 1rem;
-        transition: all var(--duration-fast) var(--ease-standard);
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard),
+            color var(--duration-fast) var(--ease-standard),
+            opacity var(--duration-fast) var(--ease-standard),
+            transform var(--duration-fast) var(--ease-standard);
     }
 
     .btn-pill > * {
@@ -185,7 +191,12 @@
         padding: 0 1rem;
         font-size: 1rem;
         color: var(--foreground);
-        transition: all var(--duration-fast) var(--ease-standard);
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard),
+            color var(--duration-fast) var(--ease-standard),
+            opacity var(--duration-fast) var(--ease-standard);
     }
 
     .input-pill::placeholder {

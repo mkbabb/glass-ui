@@ -127,10 +127,13 @@ const PRESET_LINK_ID = "glass-ui-demo-preset-link";
 // writer sets them; the reset path needs the same key list to know what to
 // remove. Centralising the mapping here keeps "write" and "unwrite" symmetric.
 
+// Story surfaces keep their authored comfortable spacing as CSS fallbacks.
+// These values are deltas added on top, so an empty/default configurator
+// delta remains visually identical to library tokens.
 const DENSITY_SCALE: Record<Density, { pad: string; gap: string }> = {
-    cozy: { pad: "1.25rem", gap: "0.875rem" },
-    comfortable: { pad: "1rem", gap: "0.75rem" },
-    compact: { pad: "0.625rem", gap: "0.5rem" },
+    cozy: { pad: "0.25rem", gap: "0.125rem" },
+    comfortable: { pad: "0rem", gap: "0rem" },
+    compact: { pad: "-0.25rem", gap: "-0.125rem" },
 };
 
 const FONT_SLOT_VARS: Record<keyof FontSlots, string> = {
@@ -146,7 +149,7 @@ const FIELD_CSS_VARS = {
     grain: ["--glass-grain-opacity"],
     density: ["--density-pad", "--density-gap"],
     radius: ["--radius"],
-    cartoonShadow: ["--shadow-card"],
+    cartoonShadow: ["--shadow-card", "--shadow-card-hover"],
 } as const satisfies Record<string, readonly string[]>;
 
 type WritableField = keyof typeof FIELD_CSS_VARS;
@@ -177,6 +180,10 @@ function writeField(root: HTMLElement, field: WritableField, value: unknown): vo
             return;
         case "cartoonShadow":
             s.setProperty(
+                "--shadow-card-hover",
+                (value as boolean) ? "var(--shadow-cartoon-hover)" : "var(--shadow-md)",
+            );
+            s.setProperty(
                 "--shadow-card",
                 (value as boolean) ? "var(--shadow-cartoon)" : "var(--shadow-sm)",
             );
@@ -192,6 +199,10 @@ function writeFontSlot(root: HTMLElement, slot: keyof FontSlots, stack: string):
 
 function isPlainObject(v: unknown): v is Record<string, unknown> {
     return typeof v === "object" && v !== null && !Array.isArray(v);
+}
+
+function isDensity(v: unknown): v is Density {
+    return v === "cozy" || v === "comfortable" || v === "compact";
 }
 
 /**
@@ -242,8 +253,8 @@ function migrateFullSnapshotToDelta(raw: Record<string, unknown>): ConfigDelta {
     if (typeof raw.grain === "number" && raw.grain !== DEFAULT_CONFIG.grain) {
         out.grain = raw.grain;
     }
-    if (typeof raw.density === "string" && raw.density !== DEFAULT_CONFIG.density) {
-        out.density = raw.density as Density;
+    if (isDensity(raw.density) && raw.density !== DEFAULT_CONFIG.density) {
+        out.density = raw.density;
     }
     if (typeof raw.radius === "number" && raw.radius !== DEFAULT_CONFIG.radius) {
         out.radius = raw.radius;
@@ -275,7 +286,9 @@ function parseDelta(raw: Record<string, unknown>): ConfigDelta {
     if (typeof raw.scaleBase === "number") out.scaleBase = raw.scaleBase;
     if (typeof raw.hueShift === "number") out.hueShift = raw.hueShift;
     if (typeof raw.grain === "number") out.grain = raw.grain;
-    if (typeof raw.density === "string") out.density = raw.density as Density;
+    if (isDensity(raw.density) && raw.density !== DEFAULT_CONFIG.density) {
+        out.density = raw.density;
+    }
     if (typeof raw.radius === "number") out.radius = raw.radius;
     if (typeof raw.cartoonShadow === "boolean") out.cartoonShadow = raw.cartoonShadow;
     if (typeof raw.dark === "boolean") out.dark = raw.dark;

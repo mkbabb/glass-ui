@@ -151,3 +151,33 @@ Evidence:
 - `git diff --check`: pass
 
 W4 is now unblocked.
+
+## 2026-05-02 - F.W4 Tailwind Theme And Style Authority Closed
+
+W4 corrected the style substrate and proved it at compile/runtime boundaries:
+
+- Tailwind v4 theme namespaces now generate the expected text, font, leading, tracking, color, shadow, radius, z-index, easing, duration, blur, and animation utilities;
+- runtime tokens remain the semantic design source, while `@theme` entries are explicit utility-generation bridges;
+- dock styling now has one authority in `src/styles/dock.css`; dock SFC scoped style blocks were removed;
+- retired orphan utilities and undefined shimmer/progress drift were removed;
+- toast/notification z-indexes, glass transitions, and story/configurator shadow surfaces now use named tokens;
+- W0-named brittle selectors were narrowed or removed, including broad `:deep(*)`, touched-surface `transition: all`, and raw z-index constants;
+- runtime proof can now capture extra screenshot routes through environment variables, and bundle profiling can write wave-specific artifacts.
+
+Evidence:
+
+- `npm run proof:theme`: pass, artifact `audit/W4-tailwind-theme-proof.json`
+- `npm run iter-check`: pass
+- `npm run iter-test`: pass, 18 files / 259 tests
+- `npm run iter-build`: pass
+- `npm test -- tests/public-surface.spec.ts`: pass, 154 tests
+- `proof:runtime` with W4 artifact/screenshot env: pass, 71 routes, artifact `audit/W4-runtime-smoke.json`
+- `profile:bundle` with W4 artifact env: pass, artifact `audit/W4-bundle-profile.json`
+- `git diff --check`: pass
+
+Measurements:
+
+- CSS changed from 44143 bytes / 7056 gzip at W1 to 26518 bytes / 4847 gzip at W4.
+- Total bundle changed from 403503 bytes / 102634 gzip at W1 to 390524 bytes / 101781 gzip at W4.
+
+No W4 residual remains. W5 is now unblocked.

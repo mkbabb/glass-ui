@@ -139,7 +139,7 @@ function toneFor(id: string): keyof typeof toneClass {
                     <ToastClose />
                 </Toast>
                 <ToastViewport
-                    class="fixed top-0 right-0 z-50 flex max-h-screen w-full flex-col-reverse gap-2 p-4 sm:bottom-0 sm:top-auto sm:flex-col md:max-w-[420px]"
+                    class="fixed top-0 right-0 z-toast flex max-h-screen w-full flex-col-reverse gap-2 p-4 sm:bottom-0 sm:top-auto sm:flex-col md:max-w-[420px]"
                 />
             </ToastProvider>
         </section>

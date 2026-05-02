@@ -393,7 +393,7 @@ function highlightFuzzySegments(text: string, query: string): HighlightSegment[]
     line-height: 1.4;
 }
 
-.fuzzy-search-label :deep(mark) {
+.fuzzy-search-label mark {
     background: hsl(50 100% 60% / 0.35);
     color: inherit;
     border-radius: var(--radius-sm);

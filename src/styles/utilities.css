@@ -130,15 +130,6 @@
         animation: gold-shimmer-slide var(--duration-shimmer) linear infinite;
     }
 
-    .blue-shimmer {
-        background: linear-gradient(90deg, var(--shimmer-blue-dark), var(--shimmer-blue-light), var(--shimmer-blue-mid), var(--shimmer-blue-light), var(--shimmer-blue-dark));
-        background-size: 200% 100%;
-        background-clip: text;
-        -webkit-background-clip: text;
-        color: transparent;
-        animation: shimmer var(--duration-shimmer-fast) linear infinite;
-    }
-
     /* ── Keyboard key ── */
     .kbd {
         display: inline-flex;
@@ -154,27 +145,6 @@
         border-radius: var(--radius-sm);
         box-shadow: 0 1px 0 1px color-mix(in srgb, var(--border) 30%, transparent);
         line-height: 1;
-    }
-
-    /* ── Code badge ── */
-    .code-badge {
-        font-family: var(--font-mono, monospace);
-        font-size: 0.75rem;
-        border-radius: var(--radius-md);
-        border: 1px solid var(--border);
-        padding: 0.125rem 0.375rem;
-    }
-
-    /* ── Inline pill — compact rounded label for inline metadata
-       Used in lists and cards for tags, counts, statuses. ── */
-    .inline-pill {
-        display: inline-flex;
-        align-items: center;
-        border-radius: var(--radius-pill);
-        padding: 1px 6px;
-        font-size: var(--type-micro);
-        font-weight: 500;
-        line-height: 1.4;
     }
 
     /* ── Metric badge pill — compact glass label for numeric telemetry ── */
@@ -265,7 +235,7 @@
     .hover-lift {
         transition-property: transform, box-shadow;
         transition-duration: var(--duration-normal);
-        transition-timing-function: ease;
+        transition-timing-function: var(--ease-standard);
     }
     .hover-lift:hover:not(:disabled):not([aria-disabled='true']) {
         transform: translateY(var(--lift-sm));
@@ -275,7 +245,7 @@
     .hover-lift-md {
         transition-property: transform, box-shadow;
         transition-duration: var(--duration-normal);
-        transition-timing-function: ease;
+        transition-timing-function: var(--ease-standard);
     }
     .hover-lift-md:hover:not(:disabled):not([aria-disabled='true']) {
         transform: translateY(var(--lift-md));
@@ -285,18 +255,11 @@
     .hover-lift-lg {
         transition-property: transform, box-shadow;
         transition-duration: var(--duration-normal);
-        transition-timing-function: ease;
+        transition-timing-function: var(--ease-standard);
     }
     .hover-lift-lg:hover:not(:disabled):not([aria-disabled='true']) {
         transform: translateY(var(--lift-lg));
         box-shadow: var(--shadow-lg);
-    }
-
-    /* ── Glass overlay — dark backdrop ── */
-    .glass-overlay {
-        background: rgb(0 0 0 / 0.6);
-        backdrop-filter: blur(4px);
-
     }
 
     /* ── Cartoon shadows — multi-layer offset shadow + border + translateY ── */
@@ -336,42 +299,6 @@
         transform: translateY(-2px);
     }
 
-    /* ── Shimmer text — background gradient sweep over text ── */
-    .shimmer-text {
-        background: linear-gradient(
-            90deg,
-            currentColor 0%,
-            currentColor 40%,
-            rgba(255, 255, 255, 0.8) 50%,
-            currentColor 60%,
-            currentColor 100%
-        );
-        background-size: 200% 100%;
-        background-clip: text;
-        -webkit-background-clip: text;
-        animation: shimmer-sweep var(--shimmer-duration, 2000ms) ease-in-out infinite;
-    }
-
-    .dark .shimmer-text {
-        background: linear-gradient(
-            90deg,
-            currentColor 0%,
-            currentColor 40%,
-            rgba(255, 255, 255, 0.9) 50%,
-            currentColor 60%,
-            currentColor 100%
-        );
-        background-size: 200% 100%;
-        background-clip: text;
-        -webkit-background-clip: text;
-        animation: shimmer-sweep var(--shimmer-duration, 2000ms) ease-in-out infinite;
-    }
-
-    /* ── Progress gradient (rainbow) ── */
-    .progress-gradient {
-        background: linear-gradient(90deg, #ef4444, #f97316, #eab308, #22c55e, #06b6d0, #3b82f6, #9333ea);
-    }
-
     /* ── Divider utilities ── */
     .divider-h {
         height: 2px;
@@ -393,25 +320,6 @@
             var(--border) 85%,
             transparent 97%
         );
-    }
-
-    /* ── Shake error ── */
-    .shake-error {
-        animation: shake 0.5s ease-in-out;
-    }
-
-    /* ── Active scale — press feedback ── */
-    .active-scale:active {
-        transform: scale(0.97);
-        transition-property: transform;
-        transition-duration: var(--duration-fast);
-    }
-
-    /* ── Disabled base state ── */
-    .disabled-base:disabled {
-        pointer-events: none;
-        cursor: not-allowed;
-        opacity: var(--opacity-disabled);
     }
 
 }

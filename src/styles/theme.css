@@ -15,58 +15,46 @@
     /* ═══════════════════════════════════════════════
        Typography — size scale → text-* utilities
        ═══════════════════════════════════════════════ */
-    --font-size-admin-label: var(--type-admin-label);
-    --font-size-micro:       var(--type-micro);
-    --font-size-caption:     var(--type-caption);
-    --font-size-small:       var(--type-small);
-    --font-size-body:        var(--type-body);
-    --font-size-prose:       var(--type-prose);
-    --font-size-subheading:  var(--type-subheading);
-    --font-size-heading:     var(--type-heading);
-    --font-size-title:       var(--type-title);
-    --font-size-display-1:   var(--type-display-1);
-    --font-size-display-2:   var(--type-display-2);
-    --font-size-display-3:   var(--type-display-3);
-    --font-size-display-4:   var(--type-display-4);
-    --font-size-display-5:   var(--type-display-5);
-
-    /* Legacy t-shirt aliases — golden-ratio equivalents */
-    --font-size-2xs:  var(--type-micro);
-    --font-size-xs:   var(--type-caption);
-    --font-size-sm:   var(--type-small);
-    --font-size-base: var(--type-body);
-    --font-size-lg:   var(--type-prose);
-    --font-size-xl:   var(--type-subheading);
-    --font-size-2xl:  var(--type-heading);
-    --font-size-3xl:  var(--type-title);
-    --font-size-4xl:  var(--type-display-1);
-    --font-size-5xl:  var(--type-display-2);
-    --font-size-6xl:  var(--type-display-3);
+    --text-admin-label: var(--type-admin-label);
+    --text-micro:       var(--type-micro);
+    --text-caption:     var(--type-caption);
+    --text-small:       var(--type-small);
+    --text-body:        var(--type-body);
+    --text-prose:       var(--type-prose);
+    --text-subheading:  var(--type-subheading);
+    --text-heading:     var(--type-heading);
+    --text-title:       var(--type-title);
+    --text-display:     var(--type-display-1);
+    --text-display-1:   var(--type-display-1);
+    --text-display-2:   var(--type-display-2);
+    --text-display-3:   var(--type-display-3);
+    --text-display-4:   var(--type-display-4);
+    --text-display-5:   var(--type-display-5);
 
     /* Line heights → leading-* utilities */
-    --line-height-micro:   var(--leading-micro);
-    --line-height-caption: var(--leading-caption);
-    --line-height-small:   var(--leading-small);
-    --line-height-body:    var(--leading-body);
-    --line-height-prose:   var(--leading-prose);
-    --line-height-heading: var(--leading-heading);
-    --line-height-display: var(--leading-display);
+    --leading-micro:   var(--type-leading-micro);
+    --leading-caption: var(--type-leading-caption);
+    --leading-small:   var(--type-leading-small);
+    --leading-body:    var(--type-leading-body);
+    --leading-prose:   var(--type-leading-prose);
+    --leading-heading: var(--type-leading-heading);
+    --leading-display: var(--type-leading-display);
 
     /* Letter spacing → tracking-* utilities */
-    --letter-spacing-tight:  var(--tracking-tight);
-    --letter-spacing-snug:   var(--tracking-snug);
-    --letter-spacing-normal: var(--tracking-normal);
-    --letter-spacing-wide:   var(--tracking-wide);
-    --letter-spacing-wider:  var(--tracking-wider);
-    --letter-spacing-caps:   var(--tracking-caps);
+    --tracking-tight:  var(--type-tracking-tight);
+    --tracking-snug:   var(--type-tracking-snug);
+    --tracking-normal: var(--type-tracking-normal);
+    --tracking-wide:   var(--type-tracking-wide);
+    --tracking-wider:  var(--type-tracking-wider);
+    --tracking-caps:   var(--type-tracking-caps);
 
     /* ═══════════════════════════════════════════════
        Font families → font-* utilities
        ═══════════════════════════════════════════════ */
-    --font-family-display: var(--font-display);
-    --font-family-serif:   var(--font-serif);
-    --font-family-sans:    var(--font-sans);
-    --font-family-mono:    var(--font-mono);
+    --font-display: var(--font-stack-display);
+    --font-serif:   var(--font-stack-serif);
+    --font-sans:    var(--font-stack-sans);
+    --font-mono:    var(--font-stack-mono);
 
     /* ═══════════════════════════════════════════════
        Colors — core
@@ -144,9 +132,9 @@
     /* ═══════════════════════════════════════════════
        Colors — gold + rainbow accents (kept for consumers)
        ═══════════════════════════════════════════════ */
-    --color-gold: var(--color-gold);
-    --color-gold-light: var(--color-gold-light);
-    --color-gold-dark: var(--color-gold-dark);
+    --color-gold: var(--gold);
+    --color-gold-light: var(--gold-light);
+    --color-gold-dark: var(--gold-dark);
 
     --color-rainbow-red:    var(--rainbow-red);
     --color-rainbow-orange: var(--rainbow-orange);
@@ -209,39 +197,51 @@
     /* ═══════════════════════════════════════════════
        Shadows → shadow-* utilities
        ═══════════════════════════════════════════════ */
-    --shadow-cartoon:       var(--shadow-cartoon);
-    --shadow-cartoon-hover: var(--shadow-cartoon-hover);
-    --shadow-soft:          var(--shadow-soft);
-    --shadow-elevated:      var(--shadow-elevated);
-    --shadow-modal:         var(--shadow-modal);
+    --shadow-cartoon:       var(--cartoon-shadow);
+    --shadow-cartoon-hover: var(--cartoon-shadow-hover);
+    --shadow-soft:          var(--soft-shadow);
+    --shadow-elevated:      var(--elevated-shadow);
+    --shadow-modal:         var(--modal-shadow);
 
-    --shadow-card:        var(--shadow-card);
-    --shadow-dock:        var(--shadow-dock);
-    --shadow-dock-collapsed: var(--shadow-dock-collapsed);
+    --shadow-card:           var(--card-shadow);
+    --shadow-dock:           var(--dock-shadow);
+    --shadow-dock-collapsed: var(--dock-shadow-collapsed);
 
     --shadow-glass-subtle:   var(--glass-shadow-subtle);
     --shadow-glass-default:  var(--glass-shadow-default);
     --shadow-glass-medium:   var(--glass-shadow-medium);
     --shadow-glass-elevated: var(--glass-shadow-elevated);
 
-    --shadow-cartoon-sm: var(--shadow-cartoon-sm);
-    --shadow-cartoon-md: var(--shadow-cartoon-md);
-    --shadow-cartoon-lg: var(--shadow-cartoon-lg);
+    --shadow-cartoon-sm: var(--cartoon-shadow-sm);
+    --shadow-cartoon-md: var(--cartoon-shadow-md);
+    --shadow-cartoon-lg: var(--cartoon-shadow-lg);
+
+    /* ═══════════════════════════════════════════════
+       Blur → blur-* and backdrop-blur-* utilities
+       ═══════════════════════════════════════════════ */
+    --blur-glass-subtle:   var(--glass-blur-subtle-radius);
+    --blur-glass-default:  var(--glass-blur-default-radius);
+    --blur-glass-medium:   var(--glass-blur-medium-radius);
+    --blur-glass-elevated: var(--glass-blur-elevated-radius);
+    --blur-dock:           var(--glass-blur-dock-radius);
 
     /* ═══════════════════════════════════════════════
        Easing → ease-* utilities
        ═══════════════════════════════════════════════ */
-    --transition-timing-function-spring-smooth: var(--spring-smooth);
-    --transition-timing-function-spring-snappy: var(--spring-snappy);
-    --transition-timing-function-spring-bouncy: var(--spring-bouncy);
-    --transition-timing-function-spring-gentle: var(--spring-gentle);
+    --ease-spring-smooth: var(--spring-smooth);
+    --ease-spring-snappy: var(--spring-snappy);
+    --ease-spring-bouncy: var(--spring-bouncy);
+    --ease-spring-gentle: var(--spring-gentle);
 
-    --transition-timing-function-standard: var(--ease-standard);
-    --transition-timing-function-out: var(--ease-out);
-    --transition-timing-function-in: var(--ease-in);
-    --transition-timing-function-out-expo: var(--ease-out-expo);
-    --transition-timing-function-apple: var(--ease-apple);
-    --transition-timing-function-apple-spring: var(--ease-apple-spring);
+    --ease-standard: var(--motion-ease-standard);
+    --ease-out: var(--motion-ease-out);
+    --ease-in: var(--motion-ease-in);
+    --ease-out-expo: var(--motion-ease-out-expo);
+    --ease-apple: var(--motion-ease-apple);
+    --ease-apple-spring: var(--motion-ease-apple-spring);
+    --ease-spring: var(--spring-snappy);
+    --ease-decelerate: var(--motion-ease-out);
+    --ease-accelerate: var(--motion-ease-in);
 
     /* ═══════════════════════════════════════════════
        Duration → duration-* utilities
@@ -253,6 +253,20 @@
     --transition-duration-panel: var(--duration-panel);
     --transition-duration-xl: var(--duration-xl);
     --transition-duration-xxl: var(--duration-xxl);
+
+    /* ═══════════════════════════════════════════════
+       Animation → animate-* utilities
+       ═══════════════════════════════════════════════ */
+    --animate-floating-panel-in: floating-panel-in var(--duration-fast) var(--ease-out);
+    --animate-tooltip-in: tooltip-in var(--duration-fast) var(--ease-out);
+    --animate-fade-in: fade-in var(--duration-normal) var(--spring-smooth);
+    --animate-scale-in: scale-in var(--duration-normal) var(--spring-smooth);
+    --animate-slide-up: slide-up var(--duration-normal) var(--spring-smooth);
+    --animate-dock-in: dock-in var(--duration-panel) var(--spring-snappy) both;
+    --animate-shimmer: shimmer var(--duration-shimmer-fast) linear infinite;
+    --animate-shimmer-sweep: shimmer-sweep var(--duration-shimmer) ease-in-out infinite;
+    --animate-gold-shimmer: gold-shimmer-slide var(--duration-shimmer) linear infinite;
+    --animate-shake: shake 0.5s ease-in-out;
 }
 
 /* Class-based dark mode */

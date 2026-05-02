@@ -5,10 +5,8 @@ import { cn } from "../../../utils";
 /**
  * <DockIconButton> — fixed-square icon button for use inside GlassDock.
  *
- * Self-contained: scoped styles cover all four interactive states
- * (rest, hover, focus-visible, active, disabled, and toggled via
- *  aria-expanded / aria-pressed / .is-active). Consumers don't need
- *  to remember companion classes.
+ * Emits the dock icon-button class contract. Interactive styling is owned by
+ * src/styles/dock.css so all dock controls share one public style authority.
  */
 const props = withDefaults(
     defineProps<{
@@ -35,69 +33,3 @@ const classes = computed(() =>
         <slot />
     </button>
 </template>
-
-<style scoped>
-.dock-icon-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    width: var(--dock-control-size, var(--size-icon-btn));
-    height: var(--dock-control-size, var(--size-icon-btn));
-    padding: var(--dock-icon-padding, 0);
-    cursor: pointer;
-    border: none;
-    background: transparent;
-    border-radius: var(--dock-control-radius, var(--radius-pill));
-    color: color-mix(in srgb, var(--foreground) calc(var(--opacity-icon-muted) * 100%), transparent);
-    outline: none;
-    transition:
-        background-color var(--duration-fast) var(--ease-standard),
-        color var(--duration-fast) var(--ease-standard),
-        transform var(--duration-fast) var(--ease-standard),
-        opacity var(--duration-fast) var(--ease-standard);
-}
-
-.dock-icon-button--compact {
-    width: var(--dock-compact-control-size, auto);
-    height: var(--dock-compact-control-size, auto);
-    min-width: var(--dock-compact-control-min-width, 0);
-    padding: var(--dock-compact-control-padding, 0.25rem);
-}
-
-.dock-icon-button:hover:not(:disabled) {
-    background: var(--muted);
-    color: var(--btn-hover-color, var(--foreground));
-    transform: scale(var(--scale-hover-dock));
-}
-
-.dock-icon-button:active:not(:disabled) {
-    transform: scale(var(--scale-press-dock));
-}
-
-.dock-icon-button:focus:not(:focus-visible) {
-    box-shadow: none;
-    outline: none;
-}
-
-.dock-icon-button:focus-visible {
-    box-shadow: var(--focus-ring-shadow);
-    outline: none;
-    transition:
-        background-color var(--duration-fast) var(--ease-standard),
-        color var(--duration-fast) var(--ease-standard),
-        transform var(--duration-fast) var(--ease-standard),
-        opacity var(--duration-fast) var(--ease-standard),
-        box-shadow var(--duration-fast) var(--ease-standard);
-}
-
-.dock-icon-button:disabled {
-    opacity: var(--opacity-disabled);
-    cursor: not-allowed;
-}
-
-.dock-icon-button:is(.is-active, .active, [aria-expanded="true"], [aria-pressed="true"]) {
-    background: var(--muted);
-    color: var(--foreground);
-}
-</style>

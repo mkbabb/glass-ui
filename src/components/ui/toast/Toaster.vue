@@ -26,6 +26,6 @@ const { toasts } = useToast()
       </div>
       <ToastClose />
     </Toast>
-    <ToastViewport class="fixed top-0 z-50 flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]" />
+    <ToastViewport class="fixed top-0 z-toast flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]" />
   </ToastProvider>
 </template>

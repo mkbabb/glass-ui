@@ -78,9 +78,10 @@ function toggle() {
 const popoverEl = useTemplateRef<HTMLElement>("popoverEl");
 const panelEl = useTemplateRef<HTMLElement>("panelEl");
 
-function readCssLen(prop: string, fallback: number): number {
+function readCssLen(target: HTMLElement, prop: string, fallback: number): number {
     if (typeof document === "undefined") return fallback;
-    const raw = getComputedStyle(document.documentElement).getPropertyValue(prop).trim();
+    const raw = getComputedStyle(target).getPropertyValue(prop).trim()
+        || getComputedStyle(document.documentElement).getPropertyValue(prop).trim();
     const n = parseFloat(raw);
     return Number.isFinite(n) ? n : fallback;
 }
@@ -90,8 +91,8 @@ function positionPanel() {
     const panel = panelEl.value;
     if (!trigger || !panel) return;
 
-    const OFFSET = readCssLen("--popover-offset", 6);
-    const VIEWPORT_PAD = readCssLen("--popover-viewport-pad", 8);
+    const OFFSET = readCssLen(trigger, "--dock-popover-offset", 6);
+    const VIEWPORT_PAD = readCssLen(trigger, "--dock-popover-viewport-pad", 8);
 
     const triggerRect = trigger.getBoundingClientRect();
     const panelRect = panel.getBoundingClientRect();
@@ -221,60 +222,3 @@ defineExpose({ expanded, expand: onEnter, collapse: () => { expanded.value = fal
         </Transition>
     </div>
 </template>
-
-<style scoped>
-.dock-popover {
-    position: relative;
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-}
-.popover-trigger {
-    z-index: 2;
-    position: relative;
-}
-
-.popover-panel {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    pointer-events: auto;
-    overflow: hidden;
-    gap: var(--dock-popover-gap, 0.125rem);
-    padding: var(--dock-popover-padding, 0.25rem);
-    z-index: var(--z-popover);
-    background: var(--glass-bg-elevated);
-    backdrop-filter: var(--glass-blur-elevated);
-    -webkit-backdrop-filter: var(--glass-blur-elevated);
-    border: 1px solid var(--glass-border-elevated);
-    border-radius: var(--radius-panel);
-    box-shadow: var(--glass-shadow-elevated);
-}
-
-/* ── Spring transitions ── */
-.pop-up-enter-active,
-.pop-down-enter-active {
-    transition: opacity var(--duration-fast) var(--ease-standard), transform var(--duration-slow) var(--spring-snappy);
-}
-.pop-up-leave-active,
-.pop-down-leave-active {
-    transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
-}
-.pop-up-enter-from {
-    opacity: 0;
-    transform: scale(0.85) translateY(8px);
-}
-.pop-up-leave-to {
-    opacity: 0;
-    transform: scale(0.95) translateY(4px);
-}
-.pop-down-enter-from {
-    opacity: 0;
-    transform: scale(0.85) translateY(-8px);
-}
-.pop-down-leave-to {
-    opacity: 0;
-    transform: scale(0.95) translateY(-4px);
-}
-</style>

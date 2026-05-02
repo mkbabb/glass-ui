@@ -30,6 +30,12 @@ const keyScreenshotRoutes = new Set([
     "/data/search",
     "/aurora",
 ]);
+const extraScreenshotRoutes = new Set(
+    (process.env.GLASS_UI_RUNTIME_SCREENSHOT_ROUTES ?? "")
+        .split(",")
+        .map((route) => route.trim())
+        .filter(Boolean),
+);
 
 function sleep(ms) {
     return new Promise((resolveSleep) => setTimeout(resolveSleep, ms));
@@ -327,7 +333,12 @@ async function checkRoute(route) {
         );
 
         let screenshot = null;
-        if (keyScreenshotRoutes.has(route.path) || errors.length > 0 || metrics.fallbackCount > 0) {
+        if (
+            keyScreenshotRoutes.has(route.path) ||
+            extraScreenshotRoutes.has(route.path) ||
+            errors.length > 0 ||
+            metrics.fallbackCount > 0
+        ) {
             screenshot = join(screenshotDir, `${route.label}.png`);
             await captureScreenshot(client, screenshot);
         }

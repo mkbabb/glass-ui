@@ -272,6 +272,7 @@ function effectiveFont(slot: keyof FontSlots): string {
                         <ConfiguratorField
                             label="Density"
                             name="--density-pad / --density-gap"
+                            description="Adds deltas to story padding and gaps."
                             can-reset
                             @reset="() => cfg.clearField('density')"
                         >
@@ -319,8 +320,8 @@ function effectiveFont(slot: keyof FontSlots): string {
                         </h3>
                         <ConfiguratorField
                             label="Cartoon shadow"
-                            name="--shadow-card"
-                            description="Swaps between cartoon offset and small sm shadow."
+                            name="--shadow-card / --shadow-card-hover"
+                            description="Routes demo card shadows through semantic surface tokens."
                             can-reset
                             @reset="() => cfg.clearField('cartoonShadow')"
                         >

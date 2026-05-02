@@ -7,10 +7,9 @@ import { cn } from "../../../utils";
 /**
  * <DockSelectTrigger> — variable-width Select trigger for use inside GlassDock.
  *
- * Self-contained: scoped styles cover all four interactive states
- * plus aria-expanded highlight when the dropdown is open. Unlike
- * DockIconButton, does NOT scale on hover (just bg darken) so that
- * dropdown content anchors smoothly to the trigger.
+ * Emits the dock select-trigger class contract. Interactive styling is owned
+ * by src/styles/dock.css. Unlike DockIconButton, this does NOT scale on hover
+ * so dropdown content anchors smoothly to the trigger.
  *
  * The trailing chevron is built-in; override via :icon slot.
  */
@@ -39,76 +38,3 @@ const forwardedProps = useForwardProps(delegatedProps);
         </SelectIcon>
     </SelectTrigger>
 </template>
-
-<style scoped>
-.dock-select-trigger {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    gap: var(--dock-trigger-gap, 0.25rem);
-    min-height: var(--dock-trigger-min-height, auto);
-    padding:
-        var(--dock-trigger-padding-block, 0.25rem)
-        var(--dock-trigger-padding-inline, 0.5rem);
-    white-space: nowrap;
-    cursor: pointer;
-    border: none;
-    background: transparent;
-    border-radius: var(--dock-control-radius, var(--radius-pill));
-    color: color-mix(in srgb, var(--foreground) calc(var(--opacity-icon-muted) * 100%), transparent);
-    outline: none;
-    transition:
-        background-color var(--duration-fast) var(--ease-standard),
-        color var(--duration-fast) var(--ease-standard),
-        transform var(--duration-fast) var(--ease-standard),
-        opacity var(--duration-fast) var(--ease-standard);
-}
-
-.dock-select-trigger:hover:not(:disabled) {
-    background: var(--muted);
-    color: var(--btn-hover-color, var(--foreground));
-}
-
-.dock-select-trigger:active:not(:disabled) {
-    transform: scale(var(--scale-press-dock));
-}
-
-.dock-select-trigger:focus:not(:focus-visible) {
-    box-shadow: none;
-    outline: none;
-}
-
-.dock-select-trigger:focus-visible {
-    box-shadow: var(--focus-ring-shadow);
-    outline: none;
-    transition:
-        background-color var(--duration-fast) var(--ease-standard),
-        color var(--duration-fast) var(--ease-standard),
-        transform var(--duration-fast) var(--ease-standard),
-        opacity var(--duration-fast) var(--ease-standard),
-        box-shadow var(--duration-fast) var(--ease-standard);
-}
-
-.dock-select-trigger:disabled {
-    opacity: var(--opacity-disabled);
-    cursor: not-allowed;
-}
-
-.dock-select-trigger:is(.is-active, .active, [aria-expanded="true"], [aria-pressed="true"]) {
-    background: var(--muted);
-    color: var(--foreground);
-}
-
-.dock-select-trigger__chevron {
-    width: var(--dock-trigger-icon-size, 0.75rem);
-    height: var(--dock-trigger-icon-size, 0.75rem);
-    flex-shrink: 0;
-    opacity: 0.5;
-    transition: transform var(--duration-fast) var(--ease-standard);
-}
-
-.dock-select-trigger[data-state="open"] .dock-select-trigger__chevron {
-    transform: rotate(180deg);
-}
-</style>

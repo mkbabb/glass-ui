@@ -195,11 +195,11 @@ defineExpose({
     justify-content: stretch;
 }
 
-.glass-carousel--expanded .glass-carousel__content--vertical > :deep(*) {
+.glass-carousel--expanded .glass-carousel__content--vertical > :deep(.glass-carousel-item) {
     flex: 1;
 }
 
-.glass-carousel--expanded .glass-carousel__content--horizontal > :deep(*) {
+.glass-carousel--expanded .glass-carousel__content--horizontal > :deep(.glass-carousel-item) {
     flex: 1;
 }
 
@@ -209,11 +209,11 @@ defineExpose({
     gap: 0.125rem;
 }
 
-.glass-carousel--collapsed .glass-carousel__content--vertical > :deep(*) {
+.glass-carousel--collapsed .glass-carousel__content--vertical > :deep(.glass-carousel-item) {
     flex: 0 0 auto;
 }
 
-.glass-carousel--collapsed .glass-carousel__content--horizontal > :deep(*) {
+.glass-carousel--collapsed .glass-carousel__content--horizontal > :deep(.glass-carousel-item) {
     flex: 0 0 auto;
 }
 

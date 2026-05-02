@@ -1,12 +1,36 @@
 /* Dock primitives exported through @mkbabb/glass-ui/styles.
  *
- * Dock Vue components still carry scoped copies for direct SFC use, but this
- * root contract is what source consumers get when they import the shared
- * style entry without bundling component CSS extraction.
+ * This file is the style authority for the dock component family. The Vue
+ * SFCs own structure and runtime behavior; selectors, motion, glass, and
+ * layering tokens live here so consumers have one public CSS path.
  */
 
 @layer components {
+    :where(
+        .glass-dock,
+        .dock-popover,
+        .dock-layer-stack,
+        .dock-layer-item-host,
+        .dock-layer-tab,
+        .dock-icon-button,
+        .dark-mode-toggle-button,
+        .dock-tab-button,
+        .dock-select-trigger,
+        .dock-dropdown-trigger
+    ) {
+        --dock-motion-fast: var(--duration-fast) var(--ease-standard);
+        --dock-motion-standard: var(--duration-normal) var(--ease-standard);
+        --dock-motion-resize: var(--duration-normal) var(--spring-snappy);
+        --dock-motion-popover-enter: var(--duration-slow) var(--spring-snappy);
+        --dock-motion-popover-leave: var(--duration-fast) var(--ease-out);
+    }
+
     .glass-dock {
+        --dock-surface-blur: var(--glass-blur-dock, var(--glass-blur-subtle));
+        --dock-vertical-max-height: calc(100vh - var(--dock-viewport-block-gutter, 2rem));
+        --dock-wrap-max-width: calc(100vw - var(--dock-viewport-inline-gutter, 1rem));
+        --dock-separator-height: calc(var(--dock-h, var(--size-icon-btn)) * 0.5);
+        --dock-collapsed-hover-scale: var(--scale-hover-dock);
         position: relative;
         display: inline-flex;
         align-items: center;
@@ -15,8 +39,8 @@
         overflow: hidden;
         padding: var(--dock-padding-block, 0.375rem) var(--dock-padding-inline, 0.5rem);
         background: var(--glass-bg-dock, var(--glass-bg-medium));
-        backdrop-filter: var(--glass-blur-dock, var(--glass-blur-subtle));
-        -webkit-backdrop-filter: var(--glass-blur-dock, var(--glass-blur-subtle));
+        backdrop-filter: var(--dock-surface-blur);
+        -webkit-backdrop-filter: var(--dock-surface-blur);
         border: 1.5px solid var(--glass-border-dock, var(--glass-border-medium));
         box-shadow: var(--shadow-dock-override, var(--shadow-dock));
     }
@@ -64,12 +88,12 @@
 
     .glass-dock:not(.vertical) {
         transition:
-            width var(--duration-normal) var(--spring-snappy),
-            padding var(--duration-normal) var(--spring-snappy),
-            box-shadow var(--duration-normal) var(--ease-standard),
-            transform var(--duration-normal) var(--spring-snappy),
-            background var(--duration-normal) var(--ease-standard),
-            border-color var(--duration-normal) var(--ease-standard);
+            width var(--dock-motion-resize),
+            padding var(--dock-motion-resize),
+            box-shadow var(--dock-motion-standard),
+            transform var(--dock-motion-resize),
+            background var(--dock-motion-standard),
+            border-color var(--dock-motion-standard);
     }
 
     .glass-dock.vertical {
@@ -81,20 +105,20 @@
         white-space: normal;
         width: auto;
         height: auto;
-        max-height: calc(100vh - 2rem);
+        max-height: var(--dock-vertical-max-height);
         overflow-x: hidden;
         overflow-y: auto;
         scrollbar-width: none;
         padding: var(--dock-vertical-padding, var(--dock-padding-block, 0.375rem));
         border-radius: var(--radius-dock);
         transition:
-            height var(--duration-normal) var(--spring-snappy),
-            width var(--duration-normal) var(--spring-snappy),
-            padding var(--duration-normal) var(--spring-snappy),
-            box-shadow var(--duration-normal) var(--ease-standard),
-            transform var(--duration-normal) var(--spring-snappy),
-            background var(--duration-normal) var(--ease-standard),
-            border-color var(--duration-normal) var(--ease-standard);
+            height var(--dock-motion-resize),
+            width var(--dock-motion-resize),
+            padding var(--dock-motion-resize),
+            box-shadow var(--dock-motion-standard),
+            transform var(--dock-motion-resize),
+            background var(--dock-motion-standard),
+            border-color var(--dock-motion-standard);
     }
 
     .glass-dock.vertical::-webkit-scrollbar {
@@ -133,7 +157,7 @@
         background: var(--glass-bg-subtle);
         border-color: var(--glass-border-elevated);
         box-shadow: var(--shadow-dock);
-        transform: scale(1.03);
+        transform: scale(var(--dock-collapsed-hover-scale));
     }
 
     .glass-dock:where(.fixed) {
@@ -199,7 +223,7 @@
     .glass-dock.dock-wrap {
         white-space: normal;
         border-radius: var(--radius-2xl);
-        max-width: calc(100vw - 1rem);
+        max-width: var(--dock-wrap-max-width);
         padding:
             var(--dock-wrap-padding-block, var(--dock-padding-block, 0.375rem))
             var(--dock-wrap-padding-inline, 0.625rem);
@@ -231,7 +255,7 @@
     .dock-separator {
         @apply flex-shrink-0;
         width: 1px;
-        height: calc(var(--dock-h, var(--size-icon-btn)) * 0.5);
+        height: var(--dock-separator-height);
         margin: 0 0.375rem;
         background: color-mix(in srgb, var(--foreground) 15%, transparent);
     }
@@ -304,8 +328,8 @@
         font: inherit;
         font-size: 0.75rem;
         transition:
-            background var(--duration-fast) var(--ease-standard),
-            color var(--duration-fast) var(--ease-standard);
+            background var(--dock-motion-fast),
+            color var(--dock-motion-fast);
     }
 
     .dock-layer-rail .dock-layer-tab:hover {
@@ -322,8 +346,8 @@
         position: relative;
         display: grid;
         transition:
-            width var(--duration-normal) var(--spring-snappy),
-            height var(--duration-normal) var(--spring-snappy);
+            width var(--dock-motion-resize),
+            height var(--dock-motion-resize);
     }
 
     .dock-layer-item-host {
@@ -336,7 +360,7 @@
         pointer-events: none;
         position: absolute;
         inset: 0;
-        transition: opacity var(--duration-fast) var(--ease-standard);
+        transition: opacity var(--dock-motion-fast);
     }
 
     .dock-layer-item-host.is-active {
@@ -368,10 +392,10 @@
         color: color-mix(in srgb, var(--foreground) calc(var(--opacity-icon-muted) * 100%), transparent);
         outline: none;
         transition:
-            background-color var(--duration-fast) var(--ease-standard),
-            color var(--duration-fast) var(--ease-standard),
-            transform var(--duration-fast) var(--ease-standard),
-            opacity var(--duration-fast) var(--ease-standard);
+            background-color var(--dock-motion-fast),
+            color var(--dock-motion-fast),
+            transform var(--dock-motion-fast),
+            opacity var(--dock-motion-fast);
     }
 
     .dock-icon-button--compact {
@@ -400,11 +424,11 @@
         box-shadow: var(--focus-ring-shadow);
         outline: none;
         transition:
-            background-color var(--duration-fast) var(--ease-standard),
-            color var(--duration-fast) var(--ease-standard),
-            transform var(--duration-fast) var(--ease-standard),
-            opacity var(--duration-fast) var(--ease-standard),
-            box-shadow var(--duration-fast) var(--ease-standard);
+            background-color var(--dock-motion-fast),
+            color var(--dock-motion-fast),
+            transform var(--dock-motion-fast),
+            opacity var(--dock-motion-fast),
+            box-shadow var(--dock-motion-fast);
     }
 
     .dock-icon-button:disabled {
@@ -417,6 +441,78 @@
         color: var(--foreground);
     }
 
+    .dock-popover {
+        --dock-popover-offset: var(--popover-offset, 6);
+        --dock-popover-viewport-pad: var(--popover-viewport-pad, 8);
+        --dock-popover-trigger-z: var(--z-controls);
+        --dock-popover-panel-blur: var(--glass-blur-elevated);
+        --dock-popover-enter-scale: 0.85;
+        --dock-popover-leave-scale: 0.95;
+        --dock-popover-enter-shift: 0.5rem;
+        --dock-popover-leave-shift: 0.25rem;
+        position: relative;
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+    }
+
+    .dock-popover > .popover-trigger {
+        z-index: var(--dock-popover-trigger-z);
+        position: relative;
+    }
+
+    .dock-popover > .popover-panel {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        pointer-events: auto;
+        overflow: hidden;
+        gap: var(--dock-popover-gap, 0.125rem);
+        padding: var(--dock-popover-padding, 0.25rem);
+        z-index: var(--z-popover);
+        background: var(--glass-bg-elevated);
+        backdrop-filter: var(--dock-popover-panel-blur);
+        -webkit-backdrop-filter: var(--dock-popover-panel-blur);
+        border: 1px solid var(--glass-border-elevated);
+        border-radius: var(--radius-panel);
+        box-shadow: var(--glass-shadow-elevated);
+    }
+
+    .dock-popover > .pop-up-enter-active,
+    .dock-popover > .pop-down-enter-active {
+        transition:
+            opacity var(--dock-motion-fast),
+            transform var(--dock-motion-popover-enter);
+    }
+
+    .dock-popover > .pop-up-leave-active,
+    .dock-popover > .pop-down-leave-active {
+        transition:
+            opacity var(--dock-motion-popover-leave),
+            transform var(--dock-motion-popover-leave);
+    }
+
+    .dock-popover > .pop-up-enter-from {
+        opacity: 0;
+        transform: scale(var(--dock-popover-enter-scale)) translateY(var(--dock-popover-enter-shift));
+    }
+
+    .dock-popover > .pop-up-leave-to {
+        opacity: 0;
+        transform: scale(var(--dock-popover-leave-scale)) translateY(var(--dock-popover-leave-shift));
+    }
+
+    .dock-popover > .pop-down-enter-from {
+        opacity: 0;
+        transform: scale(var(--dock-popover-enter-scale)) translateY(calc(var(--dock-popover-enter-shift) * -1));
+    }
+
+    .dock-popover > .pop-down-leave-to {
+        opacity: 0;
+        transform: scale(var(--dock-popover-leave-scale)) translateY(calc(var(--dock-popover-leave-shift) * -1));
+    }
+
     .dark-mode-toggle-button {
         width: var(--dark-mode-toggle-size, 2.25rem);
         height: var(--dark-mode-toggle-size, 2.25rem);
@@ -427,9 +523,9 @@
         aspect-ratio: 1;
         padding: var(--dark-mode-toggle-padding, 0.375rem);
         transition:
-            opacity var(--duration-normal) var(--ease-standard),
-            background-color var(--duration-normal) var(--ease-standard),
-            box-shadow var(--duration-fast) var(--ease-standard);
+            opacity var(--dock-motion-standard),
+            background-color var(--dock-motion-standard),
+            box-shadow var(--dock-motion-fast);
     }
 
     .dark-mode-toggle-button > svg {
@@ -494,9 +590,9 @@
         white-space: nowrap;
         outline: none;
         transition:
-            background-color var(--duration-fast) var(--ease-standard),
-            color var(--duration-fast) var(--ease-standard),
-            transform var(--duration-fast) var(--ease-standard);
+            background-color var(--dock-motion-fast),
+            color var(--dock-motion-fast),
+            transform var(--dock-motion-fast);
     }
 
     .dock-tab-button:hover:not(:disabled) {
@@ -546,10 +642,10 @@
         color: color-mix(in srgb, var(--foreground) calc(var(--opacity-icon-muted) * 100%), transparent);
         outline: none;
         transition:
-            background-color var(--duration-fast) var(--ease-standard),
-            color var(--duration-fast) var(--ease-standard),
-            transform var(--duration-fast) var(--ease-standard),
-            opacity var(--duration-fast) var(--ease-standard);
+            background-color var(--dock-motion-fast),
+            color var(--dock-motion-fast),
+            transform var(--dock-motion-fast),
+            opacity var(--dock-motion-fast);
     }
 
     .dock-select-trigger:hover:not(:disabled),
@@ -578,11 +674,11 @@
         box-shadow: var(--focus-ring-shadow);
         outline: none;
         transition:
-            background-color var(--duration-fast) var(--ease-standard),
-            color var(--duration-fast) var(--ease-standard),
-            transform var(--duration-fast) var(--ease-standard),
-            opacity var(--duration-fast) var(--ease-standard),
-            box-shadow var(--duration-fast) var(--ease-standard);
+            background-color var(--dock-motion-fast),
+            color var(--dock-motion-fast),
+            transform var(--dock-motion-fast),
+            opacity var(--dock-motion-fast),
+            box-shadow var(--dock-motion-fast);
     }
 
     .dock-select-trigger:disabled,
@@ -602,7 +698,7 @@
         height: var(--dock-trigger-icon-size, 0.75rem);
         flex-shrink: 0;
         opacity: 0.5;
-        transition: transform var(--duration-fast) var(--ease-standard);
+        transition: transform var(--dock-motion-fast);
     }
 
     .dock-select-trigger[data-state="open"] .dock-select-trigger__chevron {

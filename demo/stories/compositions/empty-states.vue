@@ -98,12 +98,12 @@ const states: EmptyState[] = [
                     'border-2 border-foreground/10 transition-transform duration-200',
                     'hover:-translate-x-px hover:-translate-y-px',
                 )"
-                :style="{ boxShadow: 'var(--shadow-cartoon, var(--shadow-card))' }"
             >
-                <CardContent class="flex flex-col items-center gap-4 px-6 py-10 text-center">
+                <CardContent class="flex flex-col items-center gap-[calc(1rem_+_var(--density-gap,0rem))] px-[calc(1.5rem_+_var(--density-pad,0rem))] py-[calc(2.5rem_+_var(--density-pad,0rem))] text-center">
                     <span
                         class="flex size-14 items-center justify-center rounded-full"
                         :style="{
+                            filter: 'hue-rotate(var(--hue-shift, 0deg))',
                             backgroundColor: `color-mix(in srgb, var(--section-color-${state.section}, var(--muted)) 25%, transparent)`,
                             color: `var(--section-color-${state.section}, var(--muted-foreground))`,
                         }"

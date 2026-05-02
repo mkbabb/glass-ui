@@ -187,6 +187,16 @@ const rootStyleChecks = [
     ["src/styles/dock.css", ".dark-mode-toggle-button[data-size=\"sm\"]"],
 ];
 
+const retiredRootUtilities = [
+    ".active-scale",
+    ".blue-shimmer",
+    ".code-badge",
+    ".disabled-base",
+    ".inline-pill",
+    ".progress-gradient",
+    ".shimmer-text",
+] as const;
+
 function readTokenNumber(name: string): number {
     const source = readFileSync("src/styles/tokens.css", "utf8");
     const match = source.match(new RegExp(`${name}:\\s*(\\d+);`));
@@ -221,6 +231,36 @@ describe("public type surface", () => {
 describe("root style surface", () => {
     it.each(rootStyleChecks)("keeps %s exporting %s", (file, selector) => {
         expect(readFileSync(file, "utf8")).toContain(selector);
+    });
+
+    it.each(retiredRootUtilities)("does not re-export retired utility %s", (selector) => {
+        expect(readFileSync("src/styles/utilities.css", "utf8")).not.toContain(selector);
+    });
+
+    it("keeps utility shimmer/progress aliases off undefined local tokens", () => {
+        const utilities = readFileSync("src/styles/utilities.css", "utf8");
+
+        expect(utilities).not.toContain("--shimmer-blue-");
+        expect(utilities).not.toContain("--shimmer-duration");
+        expect(utilities).not.toContain(".progress-gradient");
+    });
+
+    it("keeps glass primitives on explicit tokenized transitions", () => {
+        const glass = readFileSync("src/styles/glass.css", "utf8");
+
+        expect(glass).not.toMatch(/transition:\s*all\b/);
+        expect(glass).not.toMatch(/var\(--duration-fast\)\s+ease\b/);
+    });
+
+    it("routes toast and notification stacking through z tokens", () => {
+        const notification = readFileSync("src/components/ui/notification/Notification.vue", "utf8");
+        const toaster = readFileSync("src/components/ui/toast/Toaster.vue", "utf8");
+
+        expect(notification).toContain("z-toast");
+        expect(toaster).toContain("z-toast");
+        expect(notification).not.toContain("z-50");
+        expect(toaster).not.toContain("z-50");
+        expect(notification).not.toMatch(/transition:\s*all\b/);
     });
 
     it("keeps hovercard and tooltip above app chrome tiers", () => {

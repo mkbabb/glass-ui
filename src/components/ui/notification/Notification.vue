@@ -2,7 +2,7 @@
   <TransitionGroup
     name="notification"
     tag="div"
-    class="fixed bottom-4 right-4 z-50 flex flex-col gap-2"
+    class="fixed bottom-4 right-4 z-toast flex flex-col gap-2"
   >
     <div
       v-for="notification in notifications"
@@ -49,10 +49,10 @@ defineEmits<{
 }>()
 
 const notificationClasses = {
-  success: 'bg-green-500/90 text-white',
-  error: 'bg-red-500/90 text-white',
-  warning: 'bg-amber-500/90 text-white',
-  info: 'bg-blue-500/90 text-white',
+  success: 'bg-success/90 text-white',
+  error: 'bg-destructive/90 text-white',
+  warning: 'bg-warning/90 text-white',
+  info: 'bg-info/90 text-white',
 }
 
 const notificationIcons = {
@@ -66,7 +66,9 @@ const notificationIcons = {
 <style scoped>
 .notification-enter-active,
 .notification-leave-active {
-  transition: all 0.3s ease;
+  transition:
+    opacity var(--duration-normal) var(--ease-standard),
+    transform var(--duration-normal) var(--ease-standard);
 }
 
 .notification-enter-from {
@@ -80,6 +82,6 @@ const notificationIcons = {
 }
 
 .notification-move {
-  transition: transform 0.3s ease;
+  transition: transform var(--duration-normal) var(--ease-standard);
 }
 </style>

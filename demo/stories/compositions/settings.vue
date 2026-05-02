@@ -81,11 +81,8 @@ const groups: Record<string, Group> = {
                     </span>
                     <p class="text-small text-muted-foreground">{{ groups.account.blurb }}</p>
                 </div>
-                <Card
-                    class="border-2 border-foreground/10"
-                    :style="{ boxShadow: 'var(--shadow-cartoon, var(--shadow-card))' }"
-                >
-                    <CardContent class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-6 gap-y-5 p-6">
+                <Card class="border-2 border-foreground/10">
+                    <CardContent class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]">
                         <LabeledInput
                             v-model="displayName"
                             label="Display name"
@@ -116,14 +113,11 @@ const groups: Record<string, Group> = {
                     </span>
                     <p class="text-small text-muted-foreground">{{ groups.appearance.blurb }}</p>
                 </div>
-                <Card
-                    class="border-2 border-foreground/10"
-                    :style="{ boxShadow: 'var(--shadow-cartoon, var(--shadow-card))' }"
-                >
+                <Card class="border-2 border-foreground/10">
                     <CardContent
                         :class="cn(
                             'grid grid-cols-[minmax(10rem,14rem)_1fr] items-center',
-                            'gap-x-6 gap-y-5 p-6',
+                            'gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]',
                         )"
                     >
                         <LabeledSelect
@@ -208,11 +202,8 @@ const groups: Record<string, Group> = {
                     </span>
                     <p class="text-small text-muted-foreground">{{ groups.notifications.blurb }}</p>
                 </div>
-                <Card
-                    class="border-2 border-foreground/10"
-                    :style="{ boxShadow: 'var(--shadow-cartoon, var(--shadow-card))' }"
-                >
-                    <CardContent class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-6 gap-y-5 p-6">
+                <Card class="border-2 border-foreground/10">
+                    <CardContent class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]">
                         <LabeledSwitch
                             :checked="emailAlerts"
                             label="Email alerts"
@@ -250,11 +241,8 @@ const groups: Record<string, Group> = {
                     </span>
                     <p class="text-small text-muted-foreground">{{ groups.accessibility.blurb }}</p>
                 </div>
-                <Card
-                    class="border-2 border-foreground/10"
-                    :style="{ boxShadow: 'var(--shadow-cartoon, var(--shadow-card))' }"
-                >
-                    <CardContent class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-6 gap-y-5 p-6">
+                <Card class="border-2 border-foreground/10">
+                    <CardContent class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]">
                         <LabeledSwitch
                             :checked="reducedMotion"
                             label="Reduce motion"

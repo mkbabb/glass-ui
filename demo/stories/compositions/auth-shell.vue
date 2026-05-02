@@ -27,12 +27,11 @@ const trustBadges = [
         <div
             :class="cn(
                 'overflow-hidden rounded-[var(--radius-dialog)] border-2 border-foreground/10',
-                'grid min-h-[32rem] lg:grid-cols-2',
+                'grid min-h-[32rem] shadow-[var(--shadow-card)] lg:grid-cols-2',
             )"
-            :style="{ boxShadow: 'var(--shadow-cartoon, var(--shadow-card))' }"
         >
             <div
-                class="relative flex flex-col justify-between gap-8 p-10 lg:p-14"
+                class="relative flex flex-col justify-between gap-[calc(2rem_+_var(--density-gap,0rem))] p-[calc(2.5rem_+_var(--density-pad,0rem))] lg:p-[calc(3.5rem_+_var(--density-pad,0rem))]"
                 :style="{
                     backgroundImage: `
                         radial-gradient(
@@ -60,7 +59,7 @@ const trustBadges = [
                     <span class="font-display text-xl tracking-tight">glass-ui</span>
                 </div>
 
-                <div class="flex flex-col gap-6 max-w-md">
+                <div class="flex max-w-md flex-col gap-[calc(1.5rem_+_var(--density-gap,0rem))]">
                     <Sparkles class="size-5 text-muted-foreground" aria-hidden="true" />
                     <h2 class="text-display tracking-tight">
                         Build warm, audacious interfaces. Skip the cold gradient canvas.
@@ -91,7 +90,7 @@ const trustBadges = [
                 </ul>
             </div>
 
-            <div class="flex flex-col justify-center gap-6 bg-card/70 p-10 lg:p-14 backdrop-blur-sm">
+            <div class="flex flex-col justify-center gap-[calc(1.5rem_+_var(--density-gap,0rem))] bg-card/70 p-[calc(2.5rem_+_var(--density-pad,0rem))] backdrop-blur-sm lg:p-[calc(3.5rem_+_var(--density-pad,0rem))]">
                 <div class="flex flex-col gap-2">
                     <span class="text-admin-label section-label">Sign in</span>
                     <h3 class="text-heading">Welcome back</h3>
@@ -104,7 +103,7 @@ const trustBadges = [
                     </p>
                 </div>
 
-                <form class="flex flex-col gap-5" @submit.prevent>
+                <form class="flex flex-col gap-[calc(1.25rem_+_var(--density-gap,0rem))]" @submit.prevent>
                     <div class="flex flex-col gap-2">
                         <Label for="auth-email">Email</Label>
                         <Input
