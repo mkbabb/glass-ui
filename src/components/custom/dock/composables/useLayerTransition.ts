@@ -50,6 +50,27 @@ export function useLayerTransition(
     let transitionId = 0;
     let cleanupTimer: ReturnType<typeof setTimeout> | null = null;
 
+    function parseTimeMs(value: string): number {
+        const trimmed = value.trim();
+        if (!trimmed) return 0;
+        if (trimmed.endsWith("ms")) return Number.parseFloat(trimmed);
+        if (trimmed.endsWith("s")) return Number.parseFloat(trimmed) * 1000;
+        return Number.parseFloat(trimmed) || 0;
+    }
+
+    function cleanupDelayMs(el: HTMLElement): number {
+        const style = getComputedStyle(el);
+        const properties = style.transitionProperty.split(",").map((part) => part.trim());
+        const durations = style.transitionDuration.split(",").map(parseTimeMs);
+        const delays = style.transitionDelay.split(",").map(parseTimeMs);
+        const candidates = durations.map((duration, index) => {
+            const property = properties[index] ?? properties[0] ?? "all";
+            if (property !== "all" && property !== dim.value) return 0;
+            return duration + (delays[index] ?? delays[0] ?? 0);
+        });
+        return Math.max(0, ...candidates) + 50;
+    }
+
     function clearCleanup() {
         if (cleanupTimer) {
             clearTimeout(cleanupTimer);
@@ -111,13 +132,19 @@ export function useLayerTransition(
                 setDim(el, `${toSize}px`);
             });
 
-            // Safety: clear inline size after max duration in case transitionend
-            // doesn't fire (e.g. size didn't actually change)
+            if (Math.abs(toSize - fromSize) < 0.5) {
+                clearDim(el);
+                leavingLayer.value = null;
+                return;
+            }
+
+            // Safety: clear inline size after the computed transition window in
+            // case transitionend doesn't fire.
             cleanupTimer = setTimeout(() => {
                 if (id !== transitionId) return;
                 clearDim(el);
                 leavingLayer.value = null;
-            }, 400);
+            }, cleanupDelayMs(el));
         });
     });
 

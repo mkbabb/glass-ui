@@ -11,6 +11,8 @@ export interface UseDockStateOptions {
     alwaysExpanded?: Ref<boolean> | boolean;
     /** Ref that suppresses click-away during an active dock animation. */
     isTransitioning?: Ref<boolean>;
+    /** Owner id for dock-owned teleported targets. */
+    dockId?: string;
     /** Called on every state transition */
     onStateChange?: (newState: DockState, oldState: DockState) => void;
 }
@@ -36,7 +38,7 @@ export type DockState = "collapsed" | "hover" | "pinned";
  * ```
  */
 export function useDockState(options: UseDockStateOptions) {
-    const { collapseDelay = 2500, rootEl, alwaysExpanded = false, isTransitioning, onStateChange } = options;
+    const { collapseDelay = 2500, rootEl, alwaysExpanded = false, isTransitioning, dockId, onStateChange } = options;
 
     const getAlwaysExpanded = () =>
         typeof alwaysExpanded === "boolean" ? alwaysExpanded : alwaysExpanded.value;
@@ -83,17 +85,12 @@ export function useDockState(options: UseDockStateOptions) {
     }
 
     function dismissOpenOverlays() {
-        // Close any open reka-ui portals by programmatically clicking the document body.
-        // This triggers reka-ui's native "dismiss on outside click" without interfering
-        // with keyboard shortcut listeners (Escape would stop animations, etc.).
-        const active = document.querySelector(
-            '[data-reka-menu-content][data-state="open"], ' +
-            '[data-reka-popper-content-wrapper]'
+        // Pointerdown on the body lets open portals run their normal outside
+        // dismissal without the dock querying library-internal portal selectors.
+        if (typeof document === "undefined" || typeof PointerEvent === "undefined") return;
+        document.body.dispatchEvent(
+            new PointerEvent("pointerdown", { bubbles: true, composed: true }),
         );
-        if (active) {
-            // Pointer event outside the portal triggers reka-ui's onPointerDownOutside
-            document.body.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true, composed: true }));
-        }
     }
 
     function collapse() {
@@ -148,7 +145,7 @@ export function useDockState(options: UseDockStateOptions) {
                     root.contains(e.relatedTarget)
                 )
                     return;
-                if (isTeleportedTarget(e.relatedTarget)) return;
+                if (isTeleportedTarget(e.relatedTarget, dockId)) return;
             }
             scheduleCollapse();
         }
@@ -173,7 +170,7 @@ export function useDockState(options: UseDockStateOptions) {
         const root = e.currentTarget as HTMLElement;
         if (e.relatedTarget && root.contains(e.relatedTarget as Node)) return;
         // Focus moved to a teleported element (dropdown content, select, popover)
-        if (isTeleportedTarget(e.relatedTarget)) return;
+        if (isTeleportedTarget(e.relatedTarget, dockId)) return;
         scheduleCollapse();
     }
 
@@ -225,7 +222,7 @@ export function useDockState(options: UseDockStateOptions) {
         if (isTransitioning?.value) return;
         const root = rootEl.value;
         if (!root || root.contains(e.target as Node)) return;
-        if (isTeleportedTarget(e.target)) return;
+        if (isTeleportedTarget(e.target, dockId)) return;
 
         // Click outside → always collapse, even if keepOpenCount > 0
         // (keepOpenCount prevents timer-based collapse, not explicit dismissal)

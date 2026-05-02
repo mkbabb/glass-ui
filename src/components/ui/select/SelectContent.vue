@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
+import { type HTMLAttributes, computed, inject } from 'vue'
 import {
   SelectContent,
   type SelectContentEmits,
@@ -32,12 +32,15 @@ const delegatedProps = computed(() => {
 })
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const dockContext = inject<{ id: string } | null>("glassDockContext", null)
 </script>
 
 <template>
   <SelectPortal>
     <SelectContent
       v-bind="{ ...forwarded, ...$attrs }"
+      :data-glass-dock-portal="dockContext?.id ? '' : undefined"
+      :data-glass-dock-owner="dockContext?.id"
       :class="cn(
         'relative z-popover min-w-32 overflow-y-auto rounded-xl border text-popover-foreground shadow-md [max-height:var(--reka-popper-available-height,60dvh)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
         position === 'popper'

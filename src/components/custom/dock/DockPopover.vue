@@ -7,10 +7,7 @@
 import { ref, inject, watch, onUnmounted, nextTick, useTemplateRef, type CSSProperties } from "vue";
 import type { Ref } from "vue";
 import DockIconButton from "./DockIconButton.vue";
-
-// Track all popover instances so opening one collapses the others
-const allPopovers = new Set<{ expanded: { value: boolean }, scheduleCollapse: (d: number) => void }>();
-let popoverZCounter = 0;
+import { useDockContext } from "./composables/dockContext";
 
 const props = withDefaults(
     defineProps<{
@@ -23,14 +20,19 @@ const props = withDefaults(
 );
 
 const expanded = ref(false);
-const zOffset = ref(0);
 const panelStyle = ref<CSSProperties>({});
 const resolvedDir = ref(props.direction);
 let collapseTimer: ReturnType<typeof setTimeout> | null = null;
+let installClickAwayFrame: number | null = null;
 
 const self = { expanded, scheduleCollapse: (d: number) => scheduleCollapse(d) };
-allPopovers.add(self);
-onUnmounted(() => { clearTimer(); removeClickAwayListener(); allPopovers.delete(self); });
+const dock = useDockContext();
+const unregisterPopover = dock?.registerPopover(self);
+onUnmounted(() => {
+    clearTimer();
+    removeClickAwayListener();
+    unregisterPopover?.();
+});
 
 // Hold parent GlassDock open while this popover is expanded
 const dockKeepOpen = inject<(() => void) | null>("dockKeepOpen", null);
@@ -59,11 +61,7 @@ function onEnter() {
     // Guard: don't open if parent dock is collapsing
     if (!dockExpanded.value) return;
     clearTimer();
-    // Collapse all other popovers
-    for (const p of allPopovers) {
-        if (p !== self && p.expanded.value) p.scheduleCollapse(0);
-    }
-    zOffset.value = ++popoverZCounter;
+    dock?.closeOtherPopovers(self);
     expanded.value = true;
 }
 
@@ -111,7 +109,6 @@ function positionPanel() {
 
     const style: CSSProperties = {
         position: "absolute",
-        zIndex: 50 + (zOffset.value % 50),
     };
 
     // Vertical
@@ -178,7 +175,8 @@ function onClickAway(e: PointerEvent) {
 }
 
 function installClickAway() {
-    nextTick(() => {
+    installClickAwayFrame = requestAnimationFrame(() => {
+        installClickAwayFrame = null;
         document.addEventListener("pointerdown", onClickAway, true);
         removeClickAwayFn = () => {
             document.removeEventListener("pointerdown", onClickAway, true);
@@ -188,6 +186,10 @@ function installClickAway() {
 }
 
 function removeClickAwayListener() {
+    if (installClickAwayFrame !== null) {
+        cancelAnimationFrame(installClickAwayFrame);
+        installClickAwayFrame = null;
+    }
     removeClickAwayFn?.();
 }
 
@@ -206,7 +208,13 @@ defineExpose({ expanded, expand: onEnter, collapse: () => { expanded.value = fal
             <slot name="trigger" />
         </DockIconButton>
         <Transition :name="'pop-' + resolvedDir">
-            <div v-if="expanded" ref="panelEl" class="popover-panel" :style="panelStyle"
+            <div
+                v-if="expanded"
+                ref="panelEl"
+                class="popover-panel"
+                :data-glass-dock-portal="dock?.id ? '' : undefined"
+                :data-glass-dock-owner="dock?.id"
+                :style="panelStyle"
                 @click.stop @mousedown.stop @pointerdown.stop>
                 <slot />
             </div>
@@ -235,7 +243,7 @@ defineExpose({ expanded, expand: onEnter, collapse: () => { expanded.value = fal
     overflow: hidden;
     gap: var(--dock-popover-gap, 0.125rem);
     padding: var(--dock-popover-padding, 0.25rem);
-    z-index: var(--z-modal);
+    z-index: var(--z-popover);
     background: var(--glass-bg-elevated);
     backdrop-filter: var(--glass-blur-elevated);
     -webkit-backdrop-filter: var(--glass-blur-elevated);

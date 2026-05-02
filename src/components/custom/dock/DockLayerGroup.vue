@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, provide, ref, useTemplateRef } from "vue";
 import type { Component } from "vue";
+import { useDockContext } from "./composables/dockContext";
 import { useLayerTransition } from "./composables/useLayerTransition";
 
 /**
@@ -30,13 +31,13 @@ const props = withDefaults(
         railPosition?: "start" | "end";
     }>(),
     {
-        orientation: "horizontal",
         showRail: true,
         railPosition: "start",
     },
 );
 
 const activeLayer = defineModel<string>("active", { required: true });
+const dock = useDockContext();
 
 const layers = ref<DockLayerDescriptor[]>([]);
 const containerEl = useTemplateRef<HTMLElement>("containerEl");
@@ -51,7 +52,7 @@ function unregister(id: string) {
     layers.value = layers.value.filter((l) => l.id !== id);
 }
 
-const axis = computed(() => props.orientation);
+const axis = computed(() => props.orientation ?? dock?.orientation.value ?? "horizontal");
 
 const { onTransitionEnd, currentLayer, leavingLayer } = useLayerTransition({
     containerEl,
@@ -74,7 +75,7 @@ function isComponent(icon: unknown): icon is Component {
 <template>
     <div
         class="dock-layer-group"
-        :class="[orientation, `rail-${railPosition}`]"
+        :class="[axis, `rail-${railPosition}`]"
     >
         <nav
             v-if="showRail && layers.length > 1"
@@ -96,11 +97,6 @@ function isComponent(icon: unknown): icon is Component {
                     v-if="isComponent(layer.icon)"
                     :is="layer.icon"
                     class="size-4"
-                />
-                <span
-                    v-else-if="typeof layer.icon === 'string' && layer.icon.trim().startsWith('<')"
-                    class="inline-flex size-4 items-center justify-center"
-                    v-html="layer.icon"
                 />
                 <span v-else-if="typeof layer.icon === 'string'">{{ layer.icon }}</span>
                 <span v-else>{{ (layer.label ?? layer.id).charAt(0) }}</span>

@@ -103,3 +103,28 @@ Notes:
 - runtime screenshots were captured locally under `audit/screenshots/W1/runtime/` and remain git-ignored PNG files.
 
 W2 is now unblocked.
+
+## 2026-05-02 - F.W2 Dock, Rail, Layering, And Navigation Closed
+
+W2 hardened the dock family as one substrate:
+
+- added typed dock context for owner id, orientation, and scoped popover registry;
+- made `DockLayerGroup` inherit orientation from `GlassDock` unless explicitly overridden;
+- removed raw HTML icon rendering from `DockLayerGroup`;
+- replaced hard-coded layer transition cleanup with CSS-derived duration/delay and transition cancel/end cleanup;
+- made dock transition state real for click-away suppression;
+- removed arithmetic popover z-index and scoped popover coordination per dock;
+- marked dock-owned popovers, dropdowns, selects, and popovers with explicit `data-glass-dock-*` owner attributes;
+- rewired category/rail stories to consume `DockIconButton`;
+- added a rail-hosted layer stack route sample to prove vertical inheritance.
+
+Evidence:
+
+- `npm run iter-check`: pass
+- `npm run iter-test`: pass, 13 files / 234 tests
+- `npm run iter-build`: pass
+- `proof:runtime` with W2 artifact env: pass, 71 routes, artifact `audit/W2-runtime-smoke.json`
+
+Dock-specific runtime assertions passed for computed blur, owned portal markers, and vertical layer inheritance. W4 still owns dock CSS authority convergence.
+
+W3 is now unblocked.

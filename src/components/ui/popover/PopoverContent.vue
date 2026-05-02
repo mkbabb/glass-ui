@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
+import { type HTMLAttributes, computed, inject } from 'vue'
 import {
   PopoverContent,
   type PopoverContentEmits,
@@ -30,12 +30,15 @@ const delegatedProps = computed(() => {
 })
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
+const dockContext = inject<{ id: string } | null>("glassDockContext", null)
 </script>
 
 <template>
   <PopoverPortal v-if="portal">
     <PopoverContent
       v-bind="{ ...forwarded, ...$attrs }"
+      :data-glass-dock-portal="dockContext?.id ? '' : undefined"
+      :data-glass-dock-owner="dockContext?.id"
       :class="
         cn(
           'z-popover w-72 rounded-xl border glass-elevated [backdrop-filter:var(--glass-blur-elevated)] p-4 text-popover-foreground shadow-md outline-none popover-animate slide-in-from-side',
@@ -49,6 +52,8 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
   <PopoverContent
     v-else
     v-bind="{ ...forwarded, ...$attrs }"
+    :data-glass-dock-portal="dockContext?.id ? '' : undefined"
+    :data-glass-dock-owner="dockContext?.id"
     :class="
       cn(
         'z-popover w-72 rounded-xl border glass-elevated [backdrop-filter:var(--glass-blur-elevated)] p-4 text-popover-foreground shadow-md outline-none popover-animate slide-in-from-side',

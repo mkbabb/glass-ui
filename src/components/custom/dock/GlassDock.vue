@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, useTemplateRef, watch } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from "vue";
 import { useTouchGate } from "../../../composables/useTouchGate";
+import {
+    provideDockContext,
+    type DockPopoverRegistration,
+} from "./composables/dockContext";
 import { useDockState } from "./composables/useDockState";
 
 type DockDensity = "compact" | "comfortable" | "spacious";
+let dockInstanceId = 0;
 
 const props = withDefaults(
     defineProps<{
@@ -57,6 +62,31 @@ const fitContent = computed(() => props.fitContent || props.variant === "rail");
 
 const isTransitioning = ref(false);
 const touchGate = useTouchGate(props.collapseDelay);
+const dockId = `glass-dock-${++dockInstanceId}`;
+const popovers = new Set<DockPopoverRegistration>();
+let transitionTimer: ReturnType<typeof setTimeout> | null = null;
+
+function registerPopover(popover: DockPopoverRegistration): () => void {
+    popovers.add(popover);
+    return () => {
+        popovers.delete(popover);
+    };
+}
+
+function closeOtherPopovers(popover: DockPopoverRegistration): void {
+    for (const registered of popovers) {
+        if (registered !== popover && registered.expanded.value) {
+            registered.scheduleCollapse(0);
+        }
+    }
+}
+
+provideDockContext({
+    id: dockId,
+    orientation,
+    registerPopover,
+    closeOtherPopovers,
+});
 
 const {
     expanded,
@@ -75,9 +105,52 @@ const {
     rootEl: dockEl,
     alwaysExpanded,
     isTransitioning,
+    dockId,
 });
 
 const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
+
+function parseTimeMs(value: string): number {
+    const trimmed = value.trim();
+    if (!trimmed) return 0;
+    if (trimmed.endsWith("ms")) return Number.parseFloat(trimmed);
+    if (trimmed.endsWith("s")) return Number.parseFloat(trimmed) * 1000;
+    return Number.parseFloat(trimmed) || 0;
+}
+
+function longestTransitionMs(el: HTMLElement): number {
+    const style = getComputedStyle(el);
+    const durations = style.transitionDuration.split(",").map(parseTimeMs);
+    const delays = style.transitionDelay.split(",").map(parseTimeMs);
+    return Math.max(
+        0,
+        ...durations.map((duration, index) => duration + (delays[index] ?? delays[0] ?? 0)),
+    );
+}
+
+function clearTransitionTimer(): void {
+    if (transitionTimer) {
+        clearTimeout(transitionTimer);
+        transitionTimer = null;
+    }
+}
+
+function markTransitioning(): void {
+    const root = dockEl.value;
+    if (!root) return;
+    clearTransitionTimer();
+    isTransitioning.value = true;
+    transitionTimer = setTimeout(() => {
+        isTransitioning.value = false;
+        transitionTimer = null;
+    }, longestTransitionMs(root) + 50);
+}
+
+function onDockTransitionDone(event: TransitionEvent): void {
+    if (event.target !== dockEl.value) return;
+    clearTransitionTimer();
+    isTransitioning.value = false;
+}
 
 onMounted(() => {
     if (props.alwaysExpanded || !props.startCollapsed) {
@@ -124,10 +197,13 @@ watch(touchGate.isActive, (isActive) => {
 });
 
 watch(visualExpanded, (isExpanded) => {
+    markTransitioning();
     if (!isExpanded) {
         touchGate.deactivate();
     }
 });
+
+onBeforeUnmount(clearTransitionTimer);
 
 defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, release });
 </script>
@@ -153,6 +229,8 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
         @touchstart="onTouchStart"
         @touchmove="onTouchMove"
         @touchend="onTouchEnd"
+        @transitionend="onDockTransitionDone"
+        @transitioncancel="onDockTransitionDone"
     >
         <!--
             Horizontal docks use the built-in two-layer pattern (full +

@@ -7,8 +7,16 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const auditDir = resolve(root, "docs/tranches/F/audit");
-const artifactPath = resolve(auditDir, "W1-runtime-smoke.json");
-const screenshotDir = resolve(auditDir, "screenshots/W1/runtime");
+const artifactPath = resolve(
+    root,
+    process.env.GLASS_UI_RUNTIME_ARTIFACT ??
+        "docs/tranches/F/audit/W1-runtime-smoke.json",
+);
+const screenshotDir = resolve(
+    root,
+    process.env.GLASS_UI_RUNTIME_SCREENSHOT_DIR ??
+        "docs/tranches/F/audit/screenshots/W1/runtime",
+);
 const baseUrl = process.env.GLASS_UI_RUNTIME_BASE_URL ?? "http://127.0.0.1:5173";
 const debugPort = Number(process.env.GLASS_UI_CHROME_DEBUG_PORT ?? 9337);
 const chromePath =
@@ -193,6 +201,82 @@ async function captureScreenshot(client, filePath) {
     writeFileSync(filePath, Buffer.from(screenshot.data, "base64"));
 }
 
+async function dockAssertions(client, route) {
+    const assertions = [];
+    const dockState = await evaluate(
+        client,
+        `(() => {
+            const docks = [...document.querySelectorAll(".glass-dock")].map((el) => {
+                const style = getComputedStyle(el);
+                return {
+                    className: el.className,
+                    backdropFilter: style.backdropFilter || style.webkitBackdropFilter || "",
+                    hasBlur: !["", "none"].includes(style.backdropFilter || style.webkitBackdropFilter || ""),
+                };
+            });
+            const railLayerGroup = document.querySelector('[data-testid="dock-rail-layer-group"]');
+            return {
+                docks,
+                railLayerGroupClass: railLayerGroup?.className ?? null,
+            };
+        })()`,
+    );
+
+    if (route.path === "/navigation/dock") {
+        assertions.push({
+            name: "dock route has blurred dock surfaces",
+            pass: dockState.docks.length > 0 && dockState.docks.every((dock) => dock.hasBlur),
+            details: dockState.docks,
+        });
+
+        await evaluate(
+            client,
+            `document.querySelector('[data-testid="dock-dropdown-trigger"]')?.click()`,
+        );
+        await sleep(150);
+        const portalState = await evaluate(
+            client,
+            `(() => {
+                const portal = document.querySelector('[data-glass-dock-portal][data-glass-dock-owner]');
+                return {
+                    hasPortal: !!portal,
+                    owner: portal?.getAttribute('data-glass-dock-owner') ?? null,
+                };
+            })()`,
+        );
+        assertions.push({
+            name: "dock dropdown portal is explicitly owned",
+            pass: portalState.hasPortal && !!portalState.owner,
+            details: portalState,
+        });
+    }
+
+    if (route.path === "/navigation/rail") {
+        assertions.push({
+            name: "rail route renders a blurred vertical GlassDock",
+            pass: dockState.docks.some(
+                (dock) =>
+                    dock.className.includes("variant-rail") &&
+                    dock.className.includes("vertical") &&
+                    dock.hasBlur,
+            ),
+            details: dockState.docks,
+        });
+    }
+
+    if (route.path === "/navigation/dock-layers") {
+        assertions.push({
+            name: "rail-hosted DockLayerGroup inherits vertical orientation",
+            pass: dockState.railLayerGroupClass?.includes("vertical") ?? false,
+            details: {
+                railLayerGroupClass: dockState.railLayerGroupClass,
+            },
+        });
+    }
+
+    return assertions;
+}
+
 async function checkRoute(route) {
     const url = `${baseUrl}${route.path}`;
     const target = await createTarget("about:blank");
@@ -248,6 +332,11 @@ async function checkRoute(route) {
             await captureScreenshot(client, screenshot);
         }
 
+        const routeAssertions = route.path.startsWith("/navigation/dock") ||
+            route.path === "/navigation/rail"
+            ? await dockAssertions(client, route)
+            : [];
+
         return {
             route: route.path,
             title: metrics.title,
@@ -255,6 +344,7 @@ async function checkRoute(route) {
             fallbackCount: metrics.fallbackCount,
             mainTextLength: metrics.mainTextLength,
             consoleErrors: errors.filter(Boolean),
+            assertions: routeAssertions,
             screenshot,
         };
     } finally {
@@ -310,7 +400,8 @@ try {
             result.fallbackCount !== 0 ||
             result.mainTextLength <= 0 ||
             result.consoleErrors.length > 0 ||
-            result.resolvedPath !== result.route,
+            result.resolvedPath !== result.route ||
+            result.assertions.some((assertion) => !assertion.pass),
     );
 
     writeFileSync(

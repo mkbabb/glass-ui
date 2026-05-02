@@ -8,6 +8,7 @@ import { cn } from "@/utils/cn";
 type LayerId = "root" | "assets" | "layers" | "libs";
 
 const activeLayer = ref<LayerId>("root");
+const railLayer = ref<LayerId>("assets");
 
 const layers = [
     { id: "assets" as const, label: "Assets", icon: Package, blurb: "images, fonts, tokens" },
@@ -103,6 +104,46 @@ function back() {
                             <component :is="l.icon" class="h-4 w-4" />
                             <span class="px-1 text-sm font-medium">{{ l.label }}</span>
                             <span class="text-xs text-muted-foreground">{{ l.blurb }}</span>
+                        </DockLayer>
+                    </DockLayerGroup>
+                </GlassDock>
+            </div>
+        </section>
+
+        <section class="flex flex-col gap-3">
+            <h2 class="text-subheading">Rail-hosted layer stack</h2>
+            <p class="text-small text-muted-foreground">
+                A layer group inside <code class="rounded bg-muted px-1">GlassDock variant="rail"</code>
+                inherits the dock's vertical orientation without a duplicate prop.
+            </p>
+            <div class="flex justify-center rounded-card border border-border/40 bg-card/40 p-10">
+                <GlassDock
+                    variant="rail"
+                    shape="rounded"
+                    aria-label="Rail layer dock"
+                    data-testid="dock-rail-layer-host"
+                >
+                    <DockLayerGroup
+                        v-model:active="railLayer"
+                        :show-rail="false"
+                        data-testid="dock-rail-layer-group"
+                    >
+                        <DockLayer
+                            v-for="l in layers"
+                            :key="l.id"
+                            :id="l.id"
+                            :label="l.label"
+                            :icon="l.icon"
+                        >
+                            <DockIconButton
+                                v-for="candidate in layers"
+                                :key="candidate.id"
+                                :aria-label="candidate.label"
+                                :aria-pressed="railLayer === candidate.id"
+                                @click="railLayer = candidate.id"
+                            >
+                                <component :is="candidate.icon" class="h-4 w-4" />
+                            </DockIconButton>
                         </DockLayer>
                     </DockLayerGroup>
                 </GlassDock>

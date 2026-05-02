@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { GlassDock } from "@/components/custom/dock";
+import { DockIconButton, GlassDock } from "@/components/custom/dock";
 import {
     Tooltip,
     TooltipContent,
@@ -49,7 +49,7 @@ const activeFlatId = computed<string | null>(() => {
             <TooltipProvider :delay-duration="250">
                 <Tooltip v-for="category in CATEGORIES" :key="category.id">
                     <TooltipTrigger as-child>
-                        <button
+                        <DockIconButton
                             type="button"
                             :aria-current="
                                 category.id === activeCategoryId
@@ -59,12 +59,8 @@ const activeFlatId = computed<string | null>(() => {
                             :aria-label="category.title"
                             :class="
                                 cn(
-                                    'inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors',
-                                    'hover:bg-foreground/8',
-                                    'focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)]',
-                                    'active:scale-[0.97]',
                                     category.id === activeCategoryId
-                                        ? 'text-foreground bg-foreground/8'
+                                        ? 'is-active'
                                         : 'text-muted-foreground',
                                 )
                             "
@@ -75,7 +71,7 @@ const activeFlatId = computed<string | null>(() => {
                                 class="h-4 w-4"
                                 aria-hidden="true"
                             />
-                        </button>
+                        </DockIconButton>
                     </TooltipTrigger>
                     <TooltipContent side="right" :side-offset="10">
                         {{ category.title }}
@@ -94,7 +90,7 @@ const activeFlatId = computed<string | null>(() => {
                     />
                     <Tooltip v-for="flat in FLAT_STORIES" :key="flat.id">
                         <TooltipTrigger as-child>
-                            <button
+                            <DockIconButton
                                 type="button"
                                 :aria-current="
                                     flat.id === activeFlatId ? 'page' : undefined
@@ -102,12 +98,8 @@ const activeFlatId = computed<string | null>(() => {
                                 :aria-label="flat.title"
                                 :class="
                                     cn(
-                                        'inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors',
-                                        'hover:bg-foreground/8',
-                                        'focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)]',
-                                        'active:scale-[0.97]',
                                         flat.id === activeFlatId
-                                            ? 'text-foreground bg-foreground/8'
+                                            ? 'is-active'
                                             : 'text-muted-foreground',
                                     )
                                 "
@@ -118,7 +110,7 @@ const activeFlatId = computed<string | null>(() => {
                                     class="h-4 w-4"
                                     aria-hidden="true"
                                 />
-                            </button>
+                            </DockIconButton>
                         </TooltipTrigger>
                         <TooltipContent side="right" :side-offset="10">
                             {{ flat.title }}

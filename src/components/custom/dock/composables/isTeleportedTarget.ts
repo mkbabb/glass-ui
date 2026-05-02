@@ -1,19 +1,18 @@
 /**
- * Detect whether a DOM target is inside a reka-ui teleported overlay
- * (dropdown, select, popover, menu) or a glass-ui floating panel.
+ * Detect whether a DOM target is inside a dock-owned teleported overlay.
  *
- * Used by useDockState and DockPopover to distinguish "logically inside
- * the dock" clicks from true outside clicks. Uses Element (not HTMLElement)
- * so SVG icon targets inside dropdowns are caught too.
+ * Dock-owned popovers/selects/menus mark their teleported content with
+ * `data-glass-dock-portal` and `data-glass-dock-owner`. That keeps click-away
+ * logic scoped to the owning dock instead of depending on Reka internals,
+ * ARIA roles, or broad class names.
  */
-export function isTeleportedTarget(target: EventTarget | null): boolean {
+export function isTeleportedTarget(
+    target: EventTarget | null,
+    ownerId?: string,
+): boolean {
     if (!(target instanceof Element)) return false;
-    return !!(
-        target.closest('[data-reka-popper-content-wrapper]') ||
-        target.closest('[data-reka-menu-content]') ||
-        target.closest('[role="menu"]') ||
-        target.closest('[role="listbox"]') ||
-        target.closest('.floating-panel') ||
-        target.closest('.dock-popover')
-    );
+    const portal = target.closest("[data-glass-dock-portal]");
+    if (!portal) return false;
+    if (!ownerId) return true;
+    return portal.getAttribute("data-glass-dock-owner") === ownerId;
 }

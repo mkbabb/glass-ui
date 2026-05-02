@@ -1,4 +1,5 @@
 import { mount } from "@vue/test-utils";
+import { nextTick, ref } from "vue";
 import { describe, expect, it } from "vitest";
 import {
     Alert,
@@ -20,7 +21,7 @@ import {
     buttonVariants,
 } from "@/index";
 import { DarkModeToggle } from "@/controls";
-import { GlassDock } from "@/dock";
+import { DockLayer, DockLayerGroup, GlassDock } from "@/dock";
 import { MetricBadge } from "@/metric-badge";
 import { PaperBackdrop } from "@/paper-backdrop";
 import { Pulse } from "@/pulse";
@@ -169,6 +170,26 @@ describe("component smoke coverage", () => {
             props: { variant: "rail", shape: "rounded" },
         });
         expect(wrapper.classes()).toContain("shape-rounded");
+    });
+
+    it("lets DockLayerGroup inherit vertical rail orientation", async () => {
+        const wrapper = mount({
+            components: { DockLayer, DockLayerGroup, GlassDock },
+            setup() {
+                const active = ref("one");
+                return { active };
+            },
+            template: `
+                <GlassDock variant="rail">
+                    <DockLayerGroup v-model:active="active">
+                        <DockLayer id="one" label="One">One</DockLayer>
+                        <DockLayer id="two" label="Two">Two</DockLayer>
+                    </DockLayerGroup>
+                </GlassDock>
+            `,
+        });
+        await nextTick();
+        expect(wrapper.find(".dock-layer-group").classes()).toContain("vertical");
     });
 
     it("renders DarkModeToggle with bounded size contract", () => {

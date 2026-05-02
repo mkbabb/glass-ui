@@ -11,7 +11,7 @@ import {
     LayoutDashboard,
     Navigation as NavigationIcon,
 } from "lucide-vue-next";
-import { GlassDock } from "@/components/custom/dock";
+import { DockIconButton, GlassDock } from "@/components/custom/dock";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/utils/cn";
 
@@ -47,14 +47,12 @@ const active = ref<string>("primitives");
                 <GlassDock variant="rail" aria-label="Example dock rail">
                     <Tooltip v-for="e in entries" :key="e.id">
                         <TooltipTrigger as-child>
-                            <button
+                            <DockIconButton
                                 type="button"
                                 :aria-current="active === e.id ? 'page' : undefined"
                                 :class="
                                     cn(
-                                        'flex h-10 w-10 items-center justify-center rounded-full transition-colors',
-                                        'text-muted-foreground hover:bg-foreground/8 hover:text-foreground',
-                                        'focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)]',
+                                        'text-muted-foreground',
                                         active === e.id && 'bg-foreground/10 text-foreground',
                                     )
                                 "
@@ -62,7 +60,7 @@ const active = ref<string>("primitives");
                             >
                                 <component :is="e.icon" class="h-4 w-4" />
                                 <span class="sr-only">{{ e.label }}</span>
-                            </button>
+                            </DockIconButton>
                         </TooltipTrigger>
                         <TooltipContent side="right">{{ e.label }}</TooltipContent>
                     </Tooltip>
@@ -79,15 +77,15 @@ const active = ref<string>("primitives");
             </p>
             <div class="flex justify-start">
                 <GlassDock variant="rail" shape="rounded" aria-label="Rounded dock rail">
-                    <button
+                    <DockIconButton
                         v-for="e in entries.slice(0, 4)"
                         :key="e.id"
                         type="button"
-                        class="flex h-10 w-10 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-foreground/8 hover:text-foreground focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)]"
+                        class="text-muted-foreground"
                         :aria-label="e.label"
                     >
                         <component :is="e.icon" class="h-4 w-4" />
-                    </button>
+                    </DockIconButton>
                 </GlassDock>
             </div>
         </section>
