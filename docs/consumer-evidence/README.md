@@ -2,6 +2,12 @@
 
 Documents current consumers for library-surface artefacts that earn `keep-current`. Audits cite this directory only after the proof grep still passes.
 
+F.W1 adds a static consumer contract on top of these per-artefact notes:
+`npm run proof:consumers:static` rejects non-core root imports, undeclared
+subpaths, retired style paths, and `glass-ui/src` source-relative imports across
+`fourier-analysis/web`, `words/frontend`, `bbnf-lang/playground`, and
+`speedtest`. Build proof is recorded by `npm run proof:consumers:build`.
+
 | Artefact | Doc | Current Consumer | Added in Tranche |
 |---|---|---|---|
 | `ExpandableContainer` | [expandable-container.md](expandable-container.md) | speedtest Charts/Map views | D |

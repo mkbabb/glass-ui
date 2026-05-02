@@ -9,24 +9,41 @@ echo "ay-close proof ceremony for tranche close"
 echo "========================================="
 
 echo
-echo "[1/5] Clean dist and Vite cache"
+echo "[1/9] Clean dist and Vite cache"
 rm -rf dist node_modules/.vite
 
 echo
-echo "[2/5] Full typecheck"
+echo "[2/9] Full typecheck"
 time npm run typecheck
 
 echo
-echo "[3/5] Full build"
+echo "[3/9] Full build"
 time npm run build
 
 echo
-echo "[4/5] Iter test"
+echo "[4/9] Export type proof"
+time npm run verify-export-types
+
+echo
+echo "[5/9] Iter test"
 time npm run iter-test
 
 echo
-echo "[5/5] Consumer validation"
-time npm run validate-consumers
+echo "[6/9] Package fixture proof"
+time npm run proof:package
+
+echo
+echo "[7/9] Consumer static policy"
+time npm run proof:consumers:static
+
+echo
+echo "[8/9] Consumer builds"
+time npm run proof:consumers:build
+
+echo
+echo "[9/9] Runtime and bundle artifacts"
+time npm run proof:runtime
+time npm run profile:bundle
 
 echo
 echo "Dist sizes"

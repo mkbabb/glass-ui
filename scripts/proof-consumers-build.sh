@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)"
+PARENT="$(dirname "$ROOT")"
+ARTIFACT="$ROOT/docs/tranches/F/audit/W1-consumers-build.json"
+CONSUMERS=(
+    "fourier-analysis/web"
+    "words/frontend"
+    "bbnf-lang/playground"
+    "speedtest"
+)
+
+mkdir -p "$(dirname "$ARTIFACT")"
+
+status=0
+first=1
+{
+    printf '{\n'
+    printf '  "generatedAt": "%s",\n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+    printf '  "consumers": [\n'
+} > "$ARTIFACT"
+
+for consumer in "${CONSUMERS[@]}"; do
+    consumer_dir="$PARENT/$consumer"
+    start="$(date +%s)"
+    rc=0
+
+    echo
+    echo "[$consumer] npm run build"
+    echo "path: $consumer_dir"
+
+    if [[ ! -d "$consumer_dir" ]]; then
+        echo "[$consumer] FAIL: missing consumer directory"
+        rc=127
+    elif (cd "$consumer_dir" && npm run build); then
+        echo "[$consumer] PASS"
+    else
+        rc=$?
+        echo "[$consumer] FAIL: npm run build exited $rc"
+    fi
+
+    duration="$(( $(date +%s) - start ))"
+    if [[ "$rc" -ne 0 ]]; then
+        status=1
+    fi
+
+    if [[ "$first" -eq 0 ]]; then
+        printf ',\n' >> "$ARTIFACT"
+    fi
+    first=0
+    {
+        printf '    {\n'
+        printf '      "consumer": "%s",\n' "$consumer"
+        printf '      "path": "%s",\n' "$consumer_dir"
+        printf '      "command": "npm run build",\n'
+        printf '      "status": "%s",\n' "$([[ "$rc" -eq 0 ]] && echo pass || echo fail)"
+        printf '      "exitCode": %s,\n' "$rc"
+        printf '      "durationSeconds": %s\n' "$duration"
+        printf '    }'
+    } >> "$ARTIFACT"
+done
+
+{
+    printf '\n  ]\n'
+    printf '}\n'
+} >> "$ARTIFACT"
+
+echo
+echo "Consumer build artifact: $ARTIFACT"
+exit "$status"

@@ -217,8 +217,11 @@
         "iter-test-watch": "vitest --watch",
         "emit-types": "vue-tsc --declaration --emitDeclarationOnly --outDir dist/types --project tsconfig.json --noEmit false",
         "iter": "npm run iter-check && npm run iter-build && npm run iter-test",
-        "profile-bundle": "vite build --config vite.config.ts",
-        "profile-consumers": "scripts/validate-consumers.sh",
+        "proof:package": "node scripts/proof-package.mjs",
+        "proof:consumers:static": "node scripts/proof-consumers-static.mjs",
+        "proof:consumers:build": "bash scripts/proof-consumers-build.sh",
+        "proof:runtime": "node scripts/proof-runtime.mjs",
+        "profile:bundle": "node scripts/profile-bundle.mjs",
         "ay-close": "scripts/ay-close.sh",
         "validate-consumers": "scripts/validate-consumers.sh"
     },

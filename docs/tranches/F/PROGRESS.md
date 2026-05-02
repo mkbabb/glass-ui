@@ -68,3 +68,38 @@ W0 accepted one implementation path:
 6. W6 re-audits and closes with artifacts.
 
 No source, style, script, test, package, or consumer implementation changes were made in W0. W1 is the next implementation wave.
+
+## 2026-05-02 - F.W1 Proof Substrate And Consumer Contract Closed
+
+W1 landed durable proof scripts and migrated the active consumer drift identified by W0.
+
+Glass-ui changes:
+
+- added `proof:package`, `proof:consumers:static`, `proof:consumers:build`, `proof:runtime`, and `profile:bundle`;
+- updated `validate-consumers.sh` to call the split consumer gates;
+- updated `ay-close.sh` to run typecheck, build, export proof, tests, package fixture, consumer static/build proof, runtime smoke, and bundle profile;
+- refreshed README import examples so non-core components use explicit subpaths;
+- documented the W1 proof and consumer contract artifacts.
+
+Consumer changes:
+
+- `../bbnf-lang/playground`: migrated dock/search/sidebar/controls imports to explicit subpaths;
+- `../speedtest`: migrated Aurora/dock/control/tabs/metric/pulse/toggle/tooltip/expandable imports to explicit subpaths and removed `glass-ui/src` source references.
+
+Evidence:
+
+- `npm run iter-check`: pass
+- `npm run iter-test`: pass, 13 files / 233 tests
+- `npm run verify-export-types`: pass
+- `npm run proof:consumers:static`: pass, artifact `audit/W1-consumers-static.json`
+- `npm run proof:consumers:build`: pass, artifact `audit/W1-consumers-build.json`
+- `npm run proof:package -- --build`: pass, artifact `audit/W1-package-proof.json`
+- `npm run profile:bundle`: pass, artifact `audit/W1-bundle-profile.json`
+- `npm run proof:runtime`: pass, 71 routes, artifact `audit/W1-runtime-smoke.json`
+
+Notes:
+
+- sibling consumer repositories had unrelated dirty work before W1; W1 preserved it and recorded the active contract proof in this repository;
+- runtime screenshots were captured locally under `audit/screenshots/W1/runtime/` and remain git-ignored PNG files.
+
+W2 is now unblocked.

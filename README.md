@@ -7,11 +7,11 @@ Glassmorphic design system for Vue 3.5. Shared components, design tokens, and co
 - 32 shadcn-vue components (Button, Card, Dialog, Select, Tabs, Popover, Slider, etc.)
 - Four-tier glassmorphism: `.glass-subtle`, `.glass-default`, `.glass-medium`, `.glass-elevated`
 - Convenience shorthands: `.glass-card`, `.glass-pill`, `.glass-btn`, `.floating-panel`
-- GlassDock: collapsible glass action bar with dual-layer grid and ref-counted state
+- GlassDock: collapsible glass action bar with a vertical rail variant, layered groups, and ref-counted state
 - Golden-ratio typography scale (√φ ≈ 1.272, 11 stops from micro to display-3)
 - Design tokens: duration, easing, z-index, radius (primitive + semantic), shadows, glass tiers, paper textures
 - Vue `<Transition>` class sets, shared `@keyframes`, SVG noise textures
-- Composables: dock state, hover popover, touch gate, keyboard shortcuts, clipboard, dark mode
+- Composables: timer, keyboard shortcut, touch gate, dark-mode, glass-renderer, motion, sortable, pagination, and virtual-list substrate
 
 ## Install
 
@@ -22,8 +22,9 @@ npm install @mkbabb/glass-ui
 ## Usage
 
 ```ts
-import { Button, Card, Dialog, GlassDock, DarkModeToggle } from "@mkbabb/glass-ui";
-import { useDockState, useKeyboardShortcuts, copyToClipboard } from "@mkbabb/glass-ui";
+import { Button, Card, Dialog, useKeyboardShortcuts } from "@mkbabb/glass-ui";
+import { GlassDock } from "@mkbabb/glass-ui/dock";
+import { DarkModeToggle } from "@mkbabb/glass-ui/controls";
 ```
 
 ```css
@@ -55,7 +56,7 @@ npm run typecheck    # vue-tsc --noEmit
 
 ```
 src/
-├── index.ts                    # barrel: components + composables + utils
+├── index.ts                    # core primitives, core composables, utilities
 ├── components/
 │   ├── ui/                     # 32 shadcn-vue components (reka-ui primitives)
 │   │   ├── button/             # Primitive + CVA (8 variants, 5 sizes)
@@ -74,13 +75,15 @@ src/
 │       ├── aurora/             # Aurora WebGL background
 │       └── controls/           # DarkModeToggle
 ├── composables/
-│   ├── dock/                   # useDockState, useLayerTransition, teleported-target helpers
-│   ├── interaction/            # useHeightTransition, useHoverPopover, useHoverToggle, useTouchGate, useLeaveTimer
-│   ├── useClipboard.ts         # copyToClipboard (navigator.clipboard + textarea fallback)
+│   ├── glass/                  # useGlassRenderer, createGlassFilter, destroyGlassFilter
+│   ├── motion/                 # keyframes-backed spring, RAF, animated-number, and pause helpers
+│   ├── pagination/             # useOffsetPagination
+│   ├── sortable/               # useSortable
+│   ├── virtual/                # virtual section/window helpers
 │   ├── useGlobalDark.ts        # createGlobalState(useDark) + Safari FOUC fix
 │   ├── useKeyboardShortcuts.ts # singleton registry, Mod key aliasing, grouped display
-│   ├── useWatercolorBlob.ts    # seeded PRNG blob animation (Mulberry32)
-│   └── prng.ts                 # mulberry32, hashString, seededRandom
+│   ├── useTimer.ts             # shared timer cleanup substrate
+│   └── useTouchGate.ts         # delayed touch activation helper
 ├── styles/
 │   ├── index.css               # imports all below in order
 │   ├── tokens.css              # design tokens (duration, easing, z-index, radius, shadows, glass, paper)
