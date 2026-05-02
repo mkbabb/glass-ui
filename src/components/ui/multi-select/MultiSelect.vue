@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, toRaw } from 'vue'
+import type { Component } from 'vue'
 import {
   Command,
   CommandEmpty,
@@ -21,7 +22,7 @@ import { cn } from '@utils'
 export interface MultiSelectOption {
   value: string
   label: string
-  icon?: string
+  icon?: string | Component
 }
 
 interface Props {
@@ -61,6 +62,15 @@ const displayText = computed(() => {
 
   return `${selectedOptions.value.slice(0, props.maxDisplay).map(option => option.label).join(', ')}... (+${selectedOptions.value.length - props.maxDisplay})`
 })
+
+function isTextIcon(icon: MultiSelectOption['icon']): icon is string {
+  return typeof icon === 'string' && icon.length > 0
+}
+
+function componentIcon(icon: MultiSelectOption['icon']): Component | null {
+  if (!icon || isTextIcon(icon)) return null
+  return toRaw(icon) as Component
+}
 
 function toggleOption(value: string) {
   const newValue = props.modelValue.includes(value)
@@ -109,7 +119,13 @@ function removeOption(value: string) {
                   modelValue.includes(option.value) ? 'opacity-100' : 'opacity-0'
                 )"
               />
-              <span v-if="option.icon" class="mr-2" v-html="option.icon" />
+              <span v-if="isTextIcon(option.icon)" class="mr-2">{{ option.icon }}</span>
+              <component
+                v-else-if="componentIcon(option.icon)"
+                :is="componentIcon(option.icon)"
+                class="mr-2 h-4 w-4 shrink-0"
+                aria-hidden="true"
+              />
               {{ option.label }}
             </CommandItem>
           </CommandGroup>
@@ -126,7 +142,13 @@ function removeOption(value: string) {
       variant="secondary"
       class="text-xs px-2 py-1"
     >
-      <span v-if="option.icon" class="mr-1" v-html="option.icon" />
+      <span v-if="isTextIcon(option.icon)" class="mr-1">{{ option.icon }}</span>
+      <component
+        v-else-if="componentIcon(option.icon)"
+        :is="componentIcon(option.icon)"
+        class="mr-1 h-3 w-3 shrink-0"
+        aria-hidden="true"
+      />
       {{ option.label }}
       <Button
         variant="ghost"

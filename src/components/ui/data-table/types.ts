@@ -39,6 +39,8 @@ export interface DataTableProps<T = any> {
     isLoading?: boolean;
     /** Unique key field on each row (defaults to "_id") */
     rowKey?: string;
+    /** Optional resolver for stable unique row identities. Takes precedence over rowKey. */
+    getRowId?: (row: T) => PropertyKey | null | undefined;
     /** Current sort state */
     sort?: DataTableSort;
     /** When true, hides pagination and shows infinite scroll sentinel */

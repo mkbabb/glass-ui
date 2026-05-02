@@ -24,6 +24,7 @@ const props = withDefaults(
         pageSize: number;
         isLoading?: boolean;
         rowKey?: string;
+        getRowId?: (row: T) => PropertyKey | null | undefined;
         sort?: DataTableSort;
         infinite?: boolean;
         hasMore?: boolean;
@@ -52,12 +53,88 @@ const skeletonRows = computed(() =>
     Array.from({ length: Math.min(props.pageSize, 5) }, (_, i) => i),
 );
 
+type RowEntry<T> = {
+    row: T;
+    key: PropertyKey;
+};
+
+const generatedRowIds = new WeakMap<object, symbol>();
+const warnedRowIdentityIssues = new Set<string>();
+let nextGeneratedRowId = 0;
+
 function getNestedValue(obj: unknown, key: string): unknown {
     return key.split(".").reduce<unknown>((o, k) => {
         if (o == null || typeof o !== "object") return undefined;
         return (o as Record<string, unknown>)[k];
     }, obj);
 }
+
+function isPropertyKey(value: unknown): value is PropertyKey {
+    return typeof value === "string" || typeof value === "number" || typeof value === "symbol";
+}
+
+function describeRowId(id: PropertyKey): string {
+    return typeof id === "symbol" ? id.toString() : JSON.stringify(id);
+}
+
+function warnRowIdentityIssue(issue: string, message: string): void {
+    if (!import.meta.env.DEV || warnedRowIdentityIssues.has(issue)) return;
+    warnedRowIdentityIssues.add(issue);
+    console.warn(`[DataTable] ${message}`);
+}
+
+function getExplicitRowId(row: T): unknown {
+    if (props.getRowId) return props.getRowId(row);
+    return getNestedValue(row, props.rowKey);
+}
+
+function getGeneratedRowId(row: T): symbol {
+    const objectRow = row as object;
+    const existing = generatedRowIds.get(objectRow);
+    if (existing) return existing;
+
+    const generated = Symbol(`DataTable row ${nextGeneratedRowId++}`);
+    generatedRowIds.set(objectRow, generated);
+    return generated;
+}
+
+const rowEntries = computed<RowEntry<T>[]>(() => {
+    const explicitIds = props.rows.map((row) => getExplicitRowId(row));
+    const idCounts = new Map<PropertyKey, number>();
+
+    for (const id of explicitIds) {
+        if (!isPropertyKey(id)) continue;
+        idCounts.set(id, (idCounts.get(id) ?? 0) + 1);
+    }
+
+    const missingCount = explicitIds.filter((id) => !isPropertyKey(id)).length;
+    if (missingCount > 0) {
+        warnRowIdentityIssue(
+            "missing",
+            `Missing row identity for ${missingCount} row(s). Provide getRowId or a rowKey with stable unique values; falling back to object identity.`,
+        );
+    }
+
+    const duplicateIds = Array.from(idCounts)
+        .filter(([, count]) => count > 1)
+        .map(([id]) => describeRowId(id));
+    if (duplicateIds.length > 0) {
+        warnRowIdentityIssue(
+            `duplicate:${duplicateIds.join(",")}`,
+            `Duplicate row identity value(s) ${duplicateIds.join(", ")}. Provide getRowId or a rowKey with stable unique values; falling back to object identity for those rows.`,
+        );
+    }
+
+    return props.rows.map((row, index) => {
+        const explicitId = explicitIds[index];
+        const key =
+            isPropertyKey(explicitId) && idCounts.get(explicitId) === 1
+                ? explicitId
+                : getGeneratedRowId(row);
+
+        return { row, key };
+    });
+});
 
 function getCellValue(row: T, col: DataTableColumn<T>): string {
     const raw = getNestedValue(row, col.key);
@@ -134,13 +211,13 @@ function sortIndicator(col: DataTableColumn<T>): string {
 
                 <!-- Data rows -->
                 <template v-else-if="rows.length > 0">
-                    <template v-for="row in rows" :key="(getNestedValue(row, rowKey) as PropertyKey | undefined) ?? undefined">
+                    <template v-for="entry in rowEntries" :key="entry.key">
                         <!-- Row with right-click context menu -->
                         <ContextMenu v-if="hasRowContextMenu">
                             <ContextMenuTrigger as-child>
                                 <TableRow
                                     class="cursor-pointer"
-                                    @click="emit('select', row)"
+                                    @click="emit('select', entry.row)"
                                 >
                                     <TableCell
                                         v-for="col in columns"
@@ -150,20 +227,20 @@ function sortIndicator(col: DataTableColumn<T>): string {
                                         <component
                                             v-if="col.component"
                                             :is="col.component"
-                                            :value="getNestedValue(row, col.key)"
-                                            :row="row"
+                                            :value="getNestedValue(entry.row, col.key)"
+                                            :row="entry.row"
                                         />
                                         <template v-else>
-                                            {{ getCellValue(row, col) }}
+                                            {{ getCellValue(entry.row, col) }}
                                         </template>
                                     </TableCell>
                                     <TableCell v-if="hasRowActions" class="w-10" @click.stop>
-                                        <slot name="row-actions" :row="row" />
+                                        <slot name="row-actions" :row="entry.row" />
                                     </TableCell>
                                 </TableRow>
                             </ContextMenuTrigger>
                             <ContextMenuContent>
-                                <slot name="row-context-menu" :row="row" />
+                                <slot name="row-context-menu" :row="entry.row" />
                             </ContextMenuContent>
                         </ContextMenu>
 
@@ -171,7 +248,7 @@ function sortIndicator(col: DataTableColumn<T>): string {
                         <TableRow
                             v-else
                             class="cursor-pointer"
-                            @click="emit('select', row)"
+                            @click="emit('select', entry.row)"
                         >
                             <TableCell
                                 v-for="col in columns"
@@ -181,15 +258,15 @@ function sortIndicator(col: DataTableColumn<T>): string {
                                 <component
                                     v-if="col.component"
                                     :is="col.component"
-                                    :value="getNestedValue(row, col.key)"
-                                    :row="row"
+                                    :value="getNestedValue(entry.row, col.key)"
+                                    :row="entry.row"
                                 />
                                 <template v-else>
-                                    {{ getCellValue(row, col) }}
+                                    {{ getCellValue(entry.row, col) }}
                                 </template>
                             </TableCell>
                             <TableCell v-if="hasRowActions" class="w-10" @click.stop>
-                                <slot name="row-actions" :row="row" />
+                                <slot name="row-actions" :row="entry.row" />
                             </TableCell>
                         </TableRow>
                     </template>

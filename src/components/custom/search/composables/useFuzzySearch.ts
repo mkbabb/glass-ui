@@ -2,7 +2,7 @@
  * Vue composable for fuzzy search — manages reactive state, debouncing,
  * keyboard navigation, modal expand, and result selection.
  */
-import { ref, watch, computed } from "vue";
+import { ref, watch, computed, onScopeDispose } from "vue";
 import type { SearchableItem, SearchResult, FuzzySearchState } from "./types";
 import { buildIndex, searchIndex, clearSearchCache } from "./fuzzySearchIndex";
 
@@ -30,18 +30,45 @@ export function useFuzzySearch<T extends SearchableItem = SearchableItem>(
     const selectedIndex = ref(0);
     const debouncedQuery = ref("");
 
-    // Inline debounce
+    const sourceItems = computed(() => getItems());
+    const index = computed(() => buildIndex(sourceItems.value));
+
     let debounceTimer: ReturnType<typeof setTimeout> | undefined;
-    watch(query, (val) => {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => {
+
+    function clearDebounceTimer(timer = debounceTimer) {
+        if (timer === undefined) return;
+        clearTimeout(timer);
+        if (debounceTimer === timer) debounceTimer = undefined;
+    }
+
+    watch(query, (val, _oldVal, onCleanup) => {
+        clearDebounceTimer();
+
+        if (!val || debounceMs <= 0) {
             debouncedQuery.value = val;
+            return;
+        }
+
+        const timer = setTimeout(() => {
+            if (debounceTimer !== timer) return;
+            debouncedQuery.value = val;
+            debounceTimer = undefined;
         }, debounceMs);
+
+        debounceTimer = timer;
+        onCleanup(() => clearDebounceTimer(timer));
+    });
+
+    watch(sourceItems, () => {
+        clearDebounceTimer();
+        debouncedQuery.value = query.value;
+        selectedIndex.value = 0;
+    }, {
+        deep: true,
     });
 
     const results = computed(() => {
-        const index = buildIndex(getItems());
-        return searchIndex<T>(index, debouncedQuery.value, maxResults);
+        return searchIndex<T>(index.value, debouncedQuery.value, maxResults);
     });
 
     watch(results, () => {
@@ -56,9 +83,11 @@ export function useFuzzySearch<T extends SearchableItem = SearchableItem>(
     function close() {
         isOpen.value = false;
         isExpanded.value = false;
+        clearDebounceTimer();
         query.value = "";
+        debouncedQuery.value = "";
         selectedIndex.value = 0;
-        clearSearchCache();
+        clearSearchCache(index.value);
     }
 
     function open() {
@@ -99,6 +128,11 @@ export function useFuzzySearch<T extends SearchableItem = SearchableItem>(
                 break;
         }
     }
+
+    onScopeDispose(() => {
+        clearDebounceTimer();
+        clearSearchCache(index.value);
+    }, true);
 
     return {
         query,

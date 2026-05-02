@@ -163,8 +163,23 @@ export function buildIndex<T extends SearchableItem>(items: T[]): SearchIndex<T>
 
 // ── Search function ──────────────────────────────────────────
 
-/** Query result cache — cleared when prefix diverges. */
-let _cache: Map<string, SearchResult<any>[]> = new Map();
+type CachedResults = SearchResult<SearchableItem>[];
+
+/** Query result cache scoped by index instance. */
+let _cacheByIndex: WeakMap<object, Map<string, CachedResults>> = new WeakMap();
+
+function getCache<T extends SearchableItem>(
+    index: SearchIndex<T>,
+): Map<string, SearchResult<T>[]> {
+    let cache = _cacheByIndex.get(index) as Map<string, SearchResult<T>[]> | undefined;
+
+    if (!cache) {
+        cache = new Map<string, SearchResult<T>[]>();
+        _cacheByIndex.set(index, cache as unknown as Map<string, CachedResults>);
+    }
+
+    return cache;
+}
 
 /** Search the index for items matching `query`. */
 export function searchIndex<T extends SearchableItem>(
@@ -174,14 +189,14 @@ export function searchIndex<T extends SearchableItem>(
 ): SearchResult<T>[] {
     const q = query.toLowerCase().trim();
     if (!q) {
-        _cache.clear();
         return [];
     }
 
-    const cached = _cache.get(q);
-    if (cached) return cached;
+    const cache = getCache(index);
+    const cached = cache.get(q);
+    if (cached) return cached.slice(0, maxResults);
 
-    if (_cache.size > 200) _cache.clear();
+    if (cache.size > 200) cache.clear();
 
     const tokens = q.split(/\s+/).filter(Boolean);
     if (tokens.length === 0) return [];
@@ -190,7 +205,7 @@ export function searchIndex<T extends SearchableItem>(
     let candidates: IndexEntry<T>[] = index;
     if (q.length > 1) {
         const prefix = q.slice(0, -1);
-        const prefixResults = _cache.get(prefix);
+        const prefixResults = cache.get(prefix);
         if (prefixResults) {
             // Re-wrap previous results back into IndexEntry form
             candidates = prefixResults.map((r: SearchResult<T>) => ({
@@ -213,12 +228,16 @@ export function searchIndex<T extends SearchableItem>(
     }
 
     scored.sort((a, b) => b.score - a.score);
-    const results = scored.slice(0, maxResults);
-    _cache.set(q, results);
-    return results;
+    cache.set(q, scored);
+    return scored.slice(0, maxResults);
 }
 
-/** Clear the search cache (call when index changes). */
-export function clearSearchCache(): void {
-    _cache.clear();
+/** Clear search caches. Pass an index to clear only that instance. */
+export function clearSearchCache(index?: SearchIndex): void {
+    if (index) {
+        _cacheByIndex.delete(index);
+        return;
+    }
+
+    _cacheByIndex = new WeakMap();
 }

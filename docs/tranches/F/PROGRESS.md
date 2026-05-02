@@ -128,3 +128,26 @@ Evidence:
 Dock-specific runtime assertions passed for computed blur, owned portal markers, and vertical layer inheritance. W4 still owns dock CSS authority convergence.
 
 W3 is now unblocked.
+
+## 2026-05-02 - F.W3 Component Contracts And Vue Idioms Closed
+
+W3 repaired the component safety, state, and lifecycle contracts identified by W0:
+
+- `FuzzySearch` now renders highlight segments as Vue text/`mark` nodes instead of generated HTML;
+- fuzzy search caches are scoped per index instance and debounce timers are cleaned on source changes, close, and owner disposal;
+- `ProgressiveSidebar` renders transformed titles as text, not consumer-provided HTML;
+- `MultiSelect` renders string icons as literal text and supports component icons without reactive component warnings;
+- `DataTable` supports `getRowId`, nested `rowKey`, duplicate/missing identity warnings, and object-identity fallback;
+- `TypewriterText`, `ExpandableContainer`, and `useGlassCarousel` clean owned timers, body locks, and viewport listeners;
+- unused empty custom directories were removed.
+
+Evidence:
+
+- `npm run iter-check`: pass
+- `npm run iter-test`: pass, 18 files / 249 tests
+- `npm run iter-build`: pass
+- `proof:runtime` with W3 artifact env: pass, 71 routes, artifact `audit/W3-runtime-smoke.json`
+- `rg -n "v-html" src demo`: no matches
+- `git diff --check`: pass
+
+W4 is now unblocked.

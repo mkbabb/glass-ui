@@ -43,21 +43,27 @@ export function useGlassCarousel(options: UseGlassCarouselOptions) {
     }
 
     let scrollHandler: (() => void) | null = null;
+    let boundViewport: HTMLElement | null = null;
 
     function attachScrollListener() {
         detachScrollListener();
         const vp = viewportEl.value;
-        if (!vp) return;
+        if (!vp) {
+            updateOverflow();
+            return;
+        }
         scrollHandler = updateOverflow;
+        boundViewport = vp;
         vp.addEventListener("scroll", scrollHandler, { passive: true });
         updateOverflow();
     }
 
     function detachScrollListener() {
-        if (scrollHandler && viewportEl.value) {
-            viewportEl.value.removeEventListener("scroll", scrollHandler);
-            scrollHandler = null;
+        if (scrollHandler && boundViewport) {
+            boundViewport.removeEventListener("scroll", scrollHandler);
         }
+        scrollHandler = null;
+        boundViewport = null;
     }
 
     // Re-attach when viewport element changes

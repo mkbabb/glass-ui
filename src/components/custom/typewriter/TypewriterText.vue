@@ -136,15 +136,41 @@ const tailChar = computed(() =>
 
 const charClass = computed(() => (props.interactive ? "tw-char tw-char--interactive" : "tw-char"));
 
+type TypewriterTimer = ReturnType<typeof setTimeout>;
+
+const activeTimers = new Set<TypewriterTimer>();
+
+function scheduleTimer(callback: () => void, delay: number) {
+    const timer = setTimeout(() => {
+        activeTimers.delete(timer);
+        callback();
+    }, delay);
+    activeTimers.add(timer);
+    return timer;
+}
+
+function clearTypewriterTimers() {
+    activeTimers.forEach((timer) => clearTimeout(timer));
+    activeTimers.clear();
+}
+
+function scheduleStart() {
+    clearTypewriterTimers();
+    scheduleTimer(() => {
+        emit("start");
+        void startTyping();
+    }, props.startDelay);
+}
+
 function handleCharClick(clickedIndex: number) {
     if (!props.interactive) return;
     if (clickedIndex >= displayText.value.length) return;
 
     if (typewriter.isTyping.value) {
         stopTyping();
-        setTimeout(() => backspaceToPosition(clickedIndex + 1), 50);
+        scheduleTimer(() => void backspaceToPosition(clickedIndex + 1), 50);
     } else {
-        backspaceToPosition(clickedIndex + 1);
+        void backspaceToPosition(clickedIndex + 1);
     }
 }
 
@@ -155,10 +181,7 @@ watch(
         if (newText !== oldText && newText) {
             stopTyping();
             typewriter.updateText(newText);
-            setTimeout(() => {
-                emit("start");
-                startTyping();
-            }, props.startDelay);
+            scheduleStart();
         }
     },
 );
@@ -166,14 +189,12 @@ watch(
 onMounted(() => {
     const hasContent = props.text || (props.words && props.words.length > 0);
     if (hasContent) {
-        setTimeout(() => {
-            emit("start");
-            startTyping();
-        }, props.startDelay);
+        scheduleStart();
     }
 });
 
 onUnmounted(() => {
+    clearTypewriterTimers();
     stopTyping();
 });
 

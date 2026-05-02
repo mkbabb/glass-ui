@@ -33,6 +33,32 @@
     </Teleport>
 </template>
 
+<script lang="ts">
+let bodyOverflowLockDepth = 0;
+let bodyOverflowBeforeLock: string | null = null;
+
+function acquireBodyOverflowLock() {
+    if (typeof document === "undefined") return false;
+
+    if (bodyOverflowLockDepth === 0) {
+        bodyOverflowBeforeLock = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+    }
+    bodyOverflowLockDepth += 1;
+    return true;
+}
+
+function releaseBodyOverflowLock() {
+    if (typeof document === "undefined" || bodyOverflowLockDepth === 0) return;
+
+    bodyOverflowLockDepth -= 1;
+    if (bodyOverflowLockDepth === 0) {
+        document.body.style.overflow = bodyOverflowBeforeLock ?? "";
+        bodyOverflowBeforeLock = null;
+    }
+}
+</script>
+
 <script setup lang="ts">
 import { onMounted, onUnmounted, watch } from "vue";
 import { Maximize2, Minimize2 } from "lucide-vue-next";
@@ -54,9 +80,21 @@ withDefaults(
  */
 const open = defineModel<boolean>("open", { default: false });
 
-watch(open, (fs) => {
-    document.body.style.overflow = fs ? "hidden" : "";
-});
+let holdsBodyOverflowLock = false;
+
+function syncBodyOverflowLock(fs: boolean) {
+    if (fs && !holdsBodyOverflowLock) {
+        holdsBodyOverflowLock = acquireBodyOverflowLock();
+        return;
+    }
+
+    if (!fs && holdsBodyOverflowLock) {
+        releaseBodyOverflowLock();
+        holdsBodyOverflowLock = false;
+    }
+}
+
+watch(open, syncBodyOverflowLock, { immediate: true });
 
 let unregEsc: (() => void) | null = null;
 
@@ -72,6 +110,6 @@ onMounted(() => {
 
 onUnmounted(() => {
     unregEsc?.();
-    document.body.style.overflow = "";
+    syncBodyOverflowLock(false);
 });
 </script>

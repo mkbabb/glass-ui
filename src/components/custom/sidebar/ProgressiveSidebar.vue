@@ -45,7 +45,7 @@ defineExpose({ sidebarNav });
                         class="sidebar-link"
                         :class="{ 'is-active': state.activeRootId.value === section.id }"
                     >
-                        <span v-html="renderTitle(section.title)" />
+                        <span>{{ renderTitle(section.title) }}</span>
                     </button>
                     <!-- Subsections (animated expand) -->
                     <div
@@ -61,7 +61,7 @@ defineExpose({ sidebarNav });
                                     class="sidebar-link sidebar-sublink"
                                     :class="{ 'is-active-sub': state.isActive(sub.id) || state.isInActiveChain(sub.id) }"
                                 >
-                                    <span v-html="renderTitle(sub.title)" />
+                                    <span>{{ renderTitle(sub.title) }}</span>
                                 </button>
                                 <!-- Sub-subsections -->
                                 <ol
@@ -75,7 +75,7 @@ defineExpose({ sidebarNav });
                                             class="sidebar-link sidebar-subsublink"
                                             :class="{ 'is-active-sub': state.isActive(subsub.id) }"
                                         >
-                                            <span v-html="renderTitle(subsub.title)" />
+                                            <span>{{ renderTitle(subsub.title) }}</span>
                                         </button>
                                     </li>
                                 </ol>

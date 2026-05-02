@@ -66,14 +66,21 @@ function getTypeLabel(r: SearchResult): string {
     return r.item.type ?? "";
 }
 
+interface HighlightSegment {
+    text: string;
+    matched: boolean;
+}
+
 /**
  * Highlight matched characters using fuzzy match indices.
  * Re-runs fuzzyMatch on the display label for precise positions.
  */
-function highlightFuzzy(text: string, query: string): string {
-    if (!query.trim() || !text) return escapeHtml(text);
+function highlightFuzzySegments(text: string, query: string): HighlightSegment[] {
+    if (!text) return [];
 
     const tokens = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
+    if (tokens.length === 0) return [{ text, matched: false }];
+
     const textLc = text.toLowerCase();
     const matchSet = new Set<number>();
 
@@ -84,29 +91,23 @@ function highlightFuzzy(text: string, query: string): string {
         }
     }
 
-    if (matchSet.size === 0) return escapeHtml(text);
+    if (matchSet.size === 0) return [{ text, matched: false }];
 
-    const chars = [...text];
-    const parts: string[] = [];
-    let i = 0;
+    const segments: HighlightSegment[] = [];
+    let start = 0;
+    let matched = matchSet.has(0);
 
-    while (i < chars.length) {
-        if (matchSet.has(i)) {
-            let j = i;
-            while (j < chars.length && matchSet.has(j)) j++;
-            parts.push(`<mark>${escapeHtml(chars.slice(i, j).join(""))}</mark>`);
-            i = j;
-        } else {
-            parts.push(escapeHtml(chars[i]));
-            i++;
+    for (let i = 1; i < text.length; i++) {
+        const nextMatched = matchSet.has(i);
+        if (nextMatched !== matched) {
+            segments.push({ text: text.slice(start, i), matched });
+            start = i;
+            matched = nextMatched;
         }
     }
 
-    return parts.join("");
-}
-
-function escapeHtml(s: string): string {
-    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    segments.push({ text: text.slice(start), matched });
+    return segments;
 }
 </script>
 
@@ -162,10 +163,15 @@ function escapeHtml(s: string): string {
                     <span v-if="getTypeLabel(r)" class="fuzzy-search-badge" :data-type="r.item.type">
                         {{ getTypeLabel(r) }}
                     </span>
-                    <span
-                        class="fuzzy-search-label"
-                        v-html="highlightFuzzy(resultLabel(r), state.query.value)"
-                    />
+                    <span class="fuzzy-search-label">
+                        <template
+                            v-for="(segment, segmentIndex) in highlightFuzzySegments(resultLabel(r), state.query.value)"
+                            :key="segmentIndex"
+                        >
+                            <mark v-if="segment.matched">{{ segment.text }}</mark>
+                            <span v-else>{{ segment.text }}</span>
+                        </template>
+                    </span>
                 </button>
             </div>
         </Transition>
@@ -227,10 +233,15 @@ function escapeHtml(s: string): string {
                                 <span v-if="getTypeLabel(r)" class="fuzzy-search-badge" :data-type="r.item.type">
                                     {{ getTypeLabel(r) }}
                                 </span>
-                                <span
-                                    class="fuzzy-search-label"
-                                    v-html="highlightFuzzy(resultLabel(r), state.query.value)"
-                                />
+                                <span class="fuzzy-search-label">
+                                    <template
+                                        v-for="(segment, segmentIndex) in highlightFuzzySegments(resultLabel(r), state.query.value)"
+                                        :key="segmentIndex"
+                                    >
+                                        <mark v-if="segment.matched">{{ segment.text }}</mark>
+                                        <span v-else>{{ segment.text }}</span>
+                                    </template>
+                                </span>
                             </button>
                         </div>
                         <div v-else class="fuzzy-search-modal-empty">
