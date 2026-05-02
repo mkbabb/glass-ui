@@ -21,9 +21,8 @@ withDefaults(
 <template>
   <div
     :class="cn(
-      'metric-badge inline-flex items-baseline gap-0.5 leading-tight shrink-0 overflow-hidden max-w-32',
-      'transition-all cursor-pointer',
-      'hover:scale-110 hover:shadow-md active:scale-95',
+      'metric-badge inline-flex items-center justify-center text-center leading-tight shrink-0 overflow-hidden',
+      'cursor-pointer',
       'focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2',
       $props.class,
     )"

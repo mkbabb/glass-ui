@@ -1,6 +1,31 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
+import * as Aurora from "@/aurora";
+import * as ConfirmDialogSurface from "@/confirm-dialog";
 import * as Glass from "@/index";
+import * as Controls from "@/controls";
+import * as Dock from "@/dock";
+import * as ExpandableContainerSurface from "@/expandable-container";
+import * as GlassCarouselSurface from "@/glass-carousel";
+import * as GlassPanelSurface from "@/glass-panel";
+import * as IconTooltipSurface from "@/icon-tooltip";
+import * as InfiniteScrollSurface from "@/infinite-scroll";
+import * as LabeledFieldSurface from "@/labeled-field";
+import * as MetaballsSurface from "@/metaballs";
+import * as MetricBadgeSurface from "@/metric-badge";
+import * as Pagination from "@/pagination";
+import * as PaperBackdropSurface from "@/paper-backdrop";
+import * as PulseSurface from "@/pulse";
+import * as Search from "@/search";
+import * as Sidebar from "@/sidebar";
+import * as SortableListSurface from "@/sortable-list";
+import * as StackedIconsSurface from "@/stacked-icons";
+import * as StatusDotSurface from "@/status-dot";
+import * as TabsSurface from "@/tabs";
+import * as TimelineSurface from "@/timeline";
+import * as ToggleChipSurface from "@/toggle-chip";
+import * as TypewriterSurface from "@/typewriter";
+import * as Virtual from "@/virtual";
 
 const uiRuntimeExports = [
     "Accordion",
@@ -44,35 +69,6 @@ const uiRuntimeExports = [
     "Tooltip",
 ];
 
-const customRuntimeExports = [
-    "Aurora",
-    "ConfirmDialog",
-    "DarkModeToggle",
-    "GlassDock",
-    "DockIconButton",
-    "DockLayer",
-    "DockLayerGroup",
-    "ExpandableContainer",
-    "GlassCarousel",
-    "GlassPanel",
-    "IconTooltip",
-    "InfiniteScroll",
-    "LabeledInput",
-    "MetaballCanvas",
-    "MetricBadge",
-    "PaperBackdrop",
-    "Pulse",
-    "FuzzySearch",
-    "ProgressiveSidebar",
-    "SortableList",
-    "StackedIconGroup",
-    "StatusDot",
-    "UnderlineTabs",
-    "GlassTimeline",
-    "ToggleChip",
-    "TypewriterText",
-];
-
 const composableRuntimeExports = [
     "useGlobalDark",
     "isMac",
@@ -91,20 +87,83 @@ const composableRuntimeExports = [
     "useScrollProgress",
     "useAnimatedNumber",
     "useDarkModeSync",
-    "useOffsetPagination",
     "useSortable",
-    "useInfiniteScroll",
+];
+
+const subpathRuntimeExports = [
+    { subpath: "dock", surface: Dock, name: "GlassDock" },
+    { subpath: "dock", surface: Dock, name: "DockIconButton" },
+    { subpath: "dock", surface: Dock, name: "DockLayer" },
+    { subpath: "dock", surface: Dock, name: "DockLayerGroup" },
+    { subpath: "dock", surface: Dock, name: "DockPopover" },
+    { subpath: "search", surface: Search, name: "FuzzySearch" },
+    { subpath: "search", surface: Search, name: "useFuzzySearch" },
+    { subpath: "sidebar", surface: Sidebar, name: "ProgressiveSidebar" },
+    { subpath: "sidebar", surface: Sidebar, name: "useScrollTracker" },
+    { subpath: "sidebar", surface: Sidebar, name: "useSidebarFollow" },
+    { subpath: "sidebar", surface: Sidebar, name: "useTreeIndex" },
+    { subpath: "sidebar", surface: Sidebar, name: "buildTreeIndex" },
+    { subpath: "controls", surface: Controls, name: "DarkModeToggle" },
+    { subpath: "confirm-dialog", surface: ConfirmDialogSurface, name: "ConfirmDialog" },
+    { subpath: "infinite-scroll", surface: InfiniteScrollSurface, name: "InfiniteScroll" },
+    { subpath: "infinite-scroll", surface: InfiniteScrollSurface, name: "useInfiniteScroll" },
+    { subpath: "tabs", surface: TabsSurface, name: "UnderlineTabs" },
+    { subpath: "tabs", surface: TabsSurface, name: "BouncyToggle" },
+    { subpath: "typewriter", surface: TypewriterSurface, name: "TypewriterText" },
+    { subpath: "typewriter", surface: TypewriterSurface, name: "useTypewriter" },
+    { subpath: "stacked-icons", surface: StackedIconsSurface, name: "StackedIconGroup" },
+    { subpath: "virtual", surface: Virtual, name: "useWindowedStore" },
+    { subpath: "virtual", surface: Virtual, name: "useVirtualSectionWindow" },
+    { subpath: "pagination", surface: Pagination, name: "useOffsetPagination" },
+    { subpath: "glass-carousel", surface: GlassCarouselSurface, name: "GlassCarousel" },
+    { subpath: "glass-carousel", surface: GlassCarouselSurface, name: "GlassCarouselItem" },
+    { subpath: "aurora", surface: Aurora, name: "Aurora" },
+    { subpath: "aurora", surface: Aurora, name: "useAurora" },
+    { subpath: "metric-badge", surface: MetricBadgeSurface, name: "MetricBadge" },
+    { subpath: "status-dot", surface: StatusDotSurface, name: "StatusDot" },
+    { subpath: "pulse", surface: PulseSurface, name: "Pulse" },
+    { subpath: "paper-backdrop", surface: PaperBackdropSurface, name: "PaperBackdrop" },
+    { subpath: "toggle-chip", surface: ToggleChipSurface, name: "ToggleChip" },
+    { subpath: "glass-panel", surface: GlassPanelSurface, name: "GlassPanel" },
+    { subpath: "metaballs", surface: MetaballsSurface, name: "MetaballCanvas" },
+    { subpath: "sortable-list", surface: SortableListSurface, name: "SortableList" },
+    { subpath: "timeline", surface: TimelineSurface, name: "GlassTimeline" },
+    { subpath: "labeled-field", surface: LabeledFieldSurface, name: "LabeledInput" },
+    { subpath: "expandable-container", surface: ExpandableContainerSurface, name: "ExpandableContainer" },
+    { subpath: "icon-tooltip", surface: IconTooltipSurface, name: "IconTooltip" },
+] as const;
+
+const nonCoreRootRetirements = [
+    "GlassDock",
+    "DockIconButton",
+    "FuzzySearch",
+    "ProgressiveSidebar",
+    "DarkModeToggle",
+    "ConfirmDialog",
+    "InfiniteScroll",
+    "MetricBadge",
+    "StatusDot",
+    "Pulse",
+    "PaperBackdrop",
+    "UnderlineTabs",
+    "BouncyToggle",
+    "TypewriterText",
+    "StackedIconGroup",
+    "ToggleChip",
+    "GlassCarousel",
+    "Aurora",
+    "GlassPanel",
+    "MetaballCanvas",
+    "SortableList",
+    "GlassTimeline",
+    "LabeledInput",
+    "ExpandableContainer",
+    "IconTooltip",
     "useWindowedStore",
-    "buildSectionLayout",
-    "resolveSectionWindow",
-    "resolveActiveSection",
-    "findSectionOffset",
     "useVirtualSectionWindow",
-    "useSidebarState",
+    "useOffsetPagination",
     "useTreeIndex",
     "buildTreeIndex",
-    "isActive",
-    "isInActiveChain",
 ];
 
 const typeSurfaceChecks = [
@@ -122,22 +181,62 @@ const typeSurfaceChecks = [
     ["src/composables/virtual/virtualSectionLayout.ts", "SectionWindowRange"],
 ];
 
+const rootStyleChecks = [
+    ["src/styles/utilities.css", ".metric-badge"],
+    ["src/styles/utilities.css", "justify-content: center"],
+    ["src/styles/dock.css", ".dark-mode-toggle-button[data-size=\"sm\"]"],
+];
+
+function readTokenNumber(name: string): number {
+    const source = readFileSync("src/styles/tokens.css", "utf8");
+    const match = source.match(new RegExp(`${name}:\\s*(\\d+);`));
+    if (!match) throw new Error(`Missing ${name}`);
+    return Number(match[1]);
+}
+
 describe("public runtime surface", () => {
     it.each(uiRuntimeExports)("exports ui package %s", (name) => {
-        expect(Glass).toHaveProperty(name);
-    });
-
-    it.each(customRuntimeExports)("exports custom package %s", (name) => {
         expect(Glass).toHaveProperty(name);
     });
 
     it.each(composableRuntimeExports)("exports composable or utility %s", (name) => {
         expect(Glass).toHaveProperty(name);
     });
+
+    it.each(subpathRuntimeExports)("exports $subpath subpath symbol $name", ({ surface, name }) => {
+        expect(surface).toHaveProperty(name);
+    });
+
+    it.each(nonCoreRootRetirements)("does not export non-core root symbol %s", (name) => {
+        expect(Glass).not.toHaveProperty(name);
+    });
 });
 
 describe("public type surface", () => {
     it.each(typeSurfaceChecks)("keeps %s in %s", (file, symbol) => {
         expect(readFileSync(file, "utf8")).toContain(symbol);
+    });
+});
+
+describe("root style surface", () => {
+    it.each(rootStyleChecks)("keeps %s exporting %s", (file, selector) => {
+        expect(readFileSync(file, "utf8")).toContain(selector);
+    });
+
+    it("keeps hovercard and tooltip above app chrome tiers", () => {
+        expect(readTokenNumber("--z-hovercard")).toBeGreaterThan(readTokenNumber("--z-header"));
+        expect(readTokenNumber("--z-hovercard")).toBeGreaterThan(readTokenNumber("--z-dock"));
+        expect(readTokenNumber("--z-tooltip")).toBeGreaterThan(readTokenNumber("--z-dock"));
+        expect(readTokenNumber("--z-popover")).toBeGreaterThan(readTokenNumber("--z-hovercard"));
+        expect(readTokenNumber("--z-modal")).toBeGreaterThan(readTokenNumber("--z-popover"));
+        expect(readTokenNumber("--z-toast")).toBeGreaterThan(readTokenNumber("--z-modal"));
+    });
+
+    it("maps floating z-index utilities through root tokens", () => {
+        const theme = readFileSync("src/styles/theme.css", "utf8");
+
+        expect(theme).toContain("--z-index-hovercard: var(--z-hovercard);");
+        expect(theme).toContain("--z-index-tooltip: var(--z-tooltip);");
+        expect(theme).toContain("--z-index-popover: var(--z-popover);");
     });
 });

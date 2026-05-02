@@ -77,7 +77,7 @@ watchEffect(() => {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 472.39 472.39"
-            class="block h-full w-full fill-[hsl(var(--foreground))]"
+            class="block h-full w-full fill-[var(--foreground)]"
         >
             <g class="toggle-sun">
                 <path
@@ -92,53 +92,6 @@ watchEffect(() => {
 </template>
 
 <style scoped>
-.dark-mode-toggle-button {
-    width: var(--dark-mode-toggle-size, 2.25rem);
-    height: var(--dark-mode-toggle-size, 2.25rem);
-    padding: var(--dark-mode-toggle-padding, 0.375rem);
-    transition:
-        opacity var(--duration-normal) var(--ease-standard),
-        background-color var(--duration-normal) var(--ease-standard),
-        box-shadow var(--duration-fast) var(--ease-standard);
-}
-
-.dark-mode-toggle-button:hover,
-.dark-mode-toggle-button:focus {
-    background: color-mix(in srgb, var(--foreground) 10%, transparent);
-    opacity: 1;
-    outline: none;
-}
-
-.dark-mode-toggle-button:focus-visible {
-    box-shadow: var(--focus-ring-shadow);
-}
-
-.dark-mode-toggle-button[data-size="sm"] {
-    --dark-mode-toggle-size: 1.75rem;
-    --dark-mode-toggle-padding: 0.25rem;
-}
-
-.dark-mode-toggle-button[data-size="md"] {
-    --dark-mode-toggle-size: 2.25rem;
-    --dark-mode-toggle-padding: 0.375rem;
-}
-
-.dark-mode-toggle-button[data-size="lg"] {
-    --dark-mode-toggle-size: 2.75rem;
-    --dark-mode-toggle-padding: 0.5rem;
-}
-
-.dark-mode-toggle-button[data-size="control"] {
-    --dark-mode-toggle-size: var(--control-size, 2.25rem);
-    --dark-mode-toggle-padding: var(--control-icon-padding, 0.375rem);
-}
-
-.dark-mode-toggle-button[data-size="dock"],
-:global(.glass-dock) .dark-mode-toggle-button:not([data-size="sm"]):not([data-size="lg"]):not([data-size="control"]) {
-    --dark-mode-toggle-size: var(--dock-control-size, var(--size-icon-btn));
-    --dark-mode-toggle-padding: var(--dock-icon-padding, 0);
-}
-
 .toggle-sun {
     transform-origin: center center;
     transition: transform 750ms var(--spring-bouncy);

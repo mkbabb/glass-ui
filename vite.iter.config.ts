@@ -1,7 +1,13 @@
 import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
-import { resolve } from "node:path";
 import { defineConfig } from "vite";
+import {
+    libraryAliases,
+    libraryEntries,
+    libraryExternal,
+    libraryFileName,
+    libraryGlobals,
+} from "./vite.library";
 
 export default defineConfig({
     plugins: [
@@ -9,35 +15,20 @@ export default defineConfig({
         vue(),
     ],
     resolve: {
-        alias: {
-            "@": resolve(__dirname, "src"),
-        },
+        alias: libraryAliases(__dirname),
     },
     build: {
         sourcemap: false,
         lib: {
-            entry: resolve(__dirname, "src/index.ts"),
+            entry: libraryEntries(__dirname),
             name: "GlassUI",
-            fileName: "glass-ui",
+            fileName: libraryFileName,
             formats: ["es"],
         },
         rollupOptions: {
-            external: [
-                "vue",
-                "reka-ui",
-                "@vueuse/core",
-                "@mkbabb/keyframes.js",
-                "class-variance-authority",
-                "clsx",
-                "tailwind-merge",
-                "lucide-vue-next",
-                "vaul-vue",
-            ],
+            external: libraryExternal,
             output: {
-                globals: {
-                    vue: "Vue",
-                    "@mkbabb/keyframes.js": "Keyframes",
-                },
+                globals: libraryGlobals,
             },
         },
     },

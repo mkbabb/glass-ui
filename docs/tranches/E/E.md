@@ -1,209 +1,189 @@
-# E — Subpath Publication + Tailwind Plugin
+# E — Publication Contract Cutover
 
-Tranche document for Phase 5 of the glass-ui storybook reform. Adapted to bbnf-lang's tranche spec. Tranche letters: A = build-out, B = Coherent Chrome, C = Operational Truth, D = Substrate-with-Consumer, **E = Subpath Publication + Tailwind Plugin**.
+E replaces the prior “Subpath Publication + Tailwind Plugin” plan. D closed the substrate-with-consumer thesis, but current `HEAD` has drifted past `d-close`: `useInterval` and `@utils` resolution were restored after D-II, while D close documents still say they were removed. E therefore starts with contract reconciliation before any package publication edit. The tranche completes one path: publish the current consumed surface through explicit package contracts, migrate the three known consumers, and prove build/runtime/type compatibility.
 
-Folds the originally-separate "subpath publication" and "Tailwind plugin formalisation" tranches into one — the plugin extraction lands as part of the multi-entry build anyway; splitting them was ceremonial overhead.
+## Thesis
 
-## Opening
-
-D closes when every public-surface symbol earns its export through a Playwright-walked story or a forward-compat doc. The library that emerges has organic package boundaries — `dock/`, `aurora/`, `search/`, `sidebar/`, `sortable-list/`, `glass-carousel/`, `timeline/`, `metaballs/`. E converts the publication shape (not the source tree) to mirror those boundaries: `@mkbabb/glass-ui` becomes "core" (Button, Card, Input, Label, Tooltip*, Dialog*, Select*, Sheet*, Drawer*, Badge, Separator, plus `cn`, `useGlobalDark`, `useKeyboardShortcuts`, `useClipboard`, `useOffsetPagination`, `buttonVariants`, `badgeVariants`); everything else is `@mkbabb/glass-ui/<subpath>`. Same wave ships the Tailwind v4 `@plugin` extraction so consumers' Tailwind builds tree-shake unused glass utilities; dist CSS drops from ~40 kB to ≤ 12 kB per consumer's actual usage.
-
-## Architectural thesis
-
-A consumer that imports `<Tooltip>` should not pay parse cost for WebGL shader compilation. The current barrel ships everything; tree-shaking helps but doesn't eliminate the cost (named imports still load module graphs). Subpath publication via `package.json#exports` makes the import line the build-time gate. The 27-some `custom/` directories surviving D are already plugin-shaped — E exposes them at their natural granularity. The Tailwind plugin half is the same gestalt for CSS: every `@layer components` rule moves into a Tailwind v4 `@plugin` with `@source` directives and `addUtilities` / `addComponents` hooks; consumers' Tailwind builds emit only the utilities their templates reference. Tokens stay in `tokens.css` for the non-Tailwind fallback path. Same git tree. No monorepo. The architecture is just `package.json#exports` + `vite.config.ts` multi-entry + a postcss-or-Tailwind-plugin pipeline.
+The package boundary should match real use. A consumer importing a core button should not load dock, search, sidebar, or shader surfaces; a consumer using dock should import dock through one dock subpath; styles should enter through one public CSS path. The cutover is not a compatibility-shim exercise and not a broad design-system refactor. It is a contract normalization: every public symbol has exactly one intended import path, every exported subpath has emitted JS and declaration targets, and every known consumer builds after migration.
 
 ## Invariants
 
-Cross-tranche preserved (1-13 from C + D); E-specific:
+1. C and D invariants still bind: KISS, no quick fixes, no legacy, no silent deferrals, consumed substrate, evidence over claims.
+2. One public import path per public symbol at E close.
+3. No permanent deprecation barrel, warning shim, fallback plugin, or parallel old/new style path.
+4. Top-level `@mkbabb/glass-ui` exports only the W0-defined core allowlist.
+5. Non-core public packages export from explicit subpaths only.
+6. `@mkbabb/glass-ui/styles` is the single public CSS entry for E; `./styles/*` wildcard publication is retired unless W0 proves a current consumer that cannot migrate in E.
+7. `@utils`, `useInterval`, dock internals, sidebar legacy helpers, and component-package composables are contract decisions in W0, not assumptions.
+8. Consumer builds are hard gates, not follow-up work.
+9. Bundle and CSS deltas are recorded as measurements. They become hard gates only in a later tranche if E’s baseline proves stable floors.
+10. Scope reveal uses the shared SPEC protocol; no shadow APIs or unconsumed scaffolding.
 
-14. **Source tree shape unchanged.** Same paths, same internal imports inside the package. Only `package.json#exports`, `vite.config.ts`, `src/core/index.ts` (NEW), and `dist/plugin.{css,ts}` (NEW) change at the boundary.
-15. **Existing consumer imports keep compiling at E-close.** Top-level barrel becomes a re-export shim with dev-time `console.warn` per non-core symbol. Production strips warnings via `import.meta.env.PROD` guard.
-16. **Tailwind v4 is a hard peer iff consumer opts into `/plugin`.** Otherwise tokens-only CSS path stays available.
-17. **Token CSS independently importable.** `@mkbabb/glass-ui/tokens` ships `tokens.css` for non-Tailwind consumers; deliberately-kept fallback. The component-layer rules ship via `/plugin` only.
-18. **Per-entry dts.** `vite-plugin-dts` switches to `rollupTypes: false` with explicit `entryRoot` per export.
-19. **Consumer JS reduction is one of two close gates.** ≥ 30% glass-ui-attributable JS reduction in ≥ 2/3 consumers (`vite build --analyze` baseline from D-close vs E-close).
-20. **Consumer CSS reduction is the other close gate.** Final dist CSS payload (per consumer's Tailwind output, not the library's `dist/plugin.css` raw size) drops from ~40 kB to ≤ 12 kB in ≥ 2/3 consumers.
-21. **Pixel oracle.** Every Playwright route from D-close baseline matches at ≤ 0.5% pixel diff post-E across light + dark modes.
+## Tranche Artifacts
 
-## Wave schedule
+- Research synthesis: `docs/tranches/E/research/00-six-lane-audit-synthesis.md`
+- Initial plan challenge: `docs/tranches/E/audit/W0-challenge.md`
+- Wave specifications: `docs/tranches/E/waves/W0.md` through `docs/tranches/E/waves/W4.md`
+- Agent dispatch template: `docs/tranches/E/dispatch/AGENT.md`
+- Progress log: `docs/tranches/E/PROGRESS.md`
 
-| Wave | Title | Agents | Mode | Workspace at close | Hard gate (one-line) | Status |
-|---|---|---|---|---|---|---|
-| W0 | Cut-line + per-consumer baseline | 3 | parallel | green | `src/core/index.ts` allowlist; consumer-import audit; per-consumer JS+CSS baseline captured | planned |
-| W1 | Multi-entry lib + Tailwind v4 plugin | 4 | parallel | green | `package.json#exports` populated; multi-entry build clean; `dist/plugin.{css,ts}` ships as Tailwind v4 plugin; barrel becomes deprecation shim | planned |
-| W2 | Three consumer migrations | 3 | parallel | green | every consumer's non-core imports moved to subpaths; consumer's `tailwind.config` adds `@plugin "@mkbabb/glass-ui/plugin"`; deprecated `@import "@mkbabb/glass-ui/styles"` removed | planned |
-| W3 | Bundle-delta + pixel oracle verification | 1 | sequential | green | ≥ 30% JS reduction in ≥ 2/3; CSS ≤ 12 kB in ≥ 2/3; pixel-diff ≤ 0.5% per route | planned |
-| W4 | Re-audit + close ceremony | 4 + orchestrator | parallel + n/a | green | re-audit clean; FINAL + retro; tag `e-close` | planned |
+W0 is the only dispatchable wave at tranche open. W1 is blocked until W0 produces the contract, consumer, style, package-export, build-parity, velocity, and challenge ledgers named in `waves/W0.md`.
 
-## Phases
+## Wave Schedule
 
-### E.W0 — Cut-line + per-consumer baseline (3 parallel)
+| Wave | Title | Agents | Mode | Hard Gate | Status |
+|---|---|---:|---|---|---|
+| W0 | Contract audit + drift reconciliation | 6 | parallel research + orchestrator synthesis | export/import/style ledger names one destination for every public symbol and resolves post-D drift | complete_with_misses |
+| W1 | Package contract cutover | 3-4 | parallel on disjoint files, orchestrator on shared config | build, emitted declarations, export verification, pack dry-run, and package import probe pass | complete |
+| W2 | Three consumer migrations | 3 | parallel, one consumer each | all consumers build with new subpaths and one style path; removed paths absent | complete |
+| W3 | Runtime + bundle proof | orchestrator | sequential | local routes and consumer smoke routes pass; JS/CSS deltas recorded | complete |
+| W4 | Re-audit + close ceremony | 4 + orchestrator | parallel audit + direct close | overfitting/export audit clean or named residual; FINAL, retro, `e-close` | complete |
 
-#### E.W0.A — `src/core/index.ts` allowlist
-- **Mechanism**: author the strict allowlist re-export. Initial set per opening paragraph; refined per W0.B.
-- **Files**: `src/core/index.ts` (create).
-- **Sub-gate**: file exists; `npm run typecheck` clean.
+## W0 — Contract Audit + Drift Reconciliation
 
-#### E.W0.B — Consumer-import audit
-- **Mechanism**: `rg "from ['\"]@mkbabb/glass-ui['\"]" ../fourier-analysis/web/src/ ../words/frontend/src/ ../bbnf-lang/playground/src/`. Per consumer: extract every imported symbol. Cross-reference against W0.A allowlist. Force-subpath set = consumer-imported symbols absent from `src/core/`.
-- **Files**: `docs/tranches/E/audit/W0-consumer-imports.md`.
-- **Sub-gate**: per-consumer table; force-subpath set enumerated.
+Mechanism:
 
-#### E.W0.C — Per-consumer JS + CSS baseline
-- **Mechanism**: in each consumer, `npm run build` then capture (a) glass-ui-attributable JS bytes from `vite build --analyze` stats, (b) glass-ui-attributable CSS bytes from final `dist/assets/*.css`. Save baseline.
-- **Files**: `docs/tranches/E/audit/W0-baseline-{fourier,words,bbnf}.txt`.
-- **Sub-gate**: three baseline files exist; each contains JS bytes + CSS bytes lines.
+1. Audit current root exports, subpackage barrels, package exports, emitted declaration targets, public CSS exports, and all current consumer imports.
+2. Reconcile current `HEAD` against D close claims:
+   - `useInterval` is currently exported again after D said it was deleted.
+   - `@utils` is currently a source/config alias again after D said package-local alias leakage was removed.
+   - `vite.iter.config.ts` must be checked against the real build shape and current aliases.
+3. Produce a ledger with one row per public symbol: `symbol | current path | current consumer evidence | E destination | action`.
+4. Produce a style ledger: `current import | consumer | E path | migration`.
+5. Produce a package-export ledger: every planned `package.json#exports` key, JS target, declaration target, and owning source barrel.
 
-**Hard gate (W0)**: allowlist + audit + baselines landed.
+Agent lanes:
 
-### E.W1 — Multi-entry lib + Tailwind v4 plugin (4 parallel)
+- W0.A original-plan recap: D/D-II/E plan-vs-actual and precepts.
+- W0.B dead/legacy surface: public exports, aliases, shims, legacy helpers, under-consumed code.
+- W0.C process lessons: C and D/D-II tranche process, gate hardening, scope reveal.
+- W0.D future fold-in: rewrite old E/F ideas into one path and retire speculation.
+- W0.E velocity substrate: iter/build/test/profile/consumer scripts and proof gaps.
+- W0.F tranche-spec challenge: challenge W0 findings before W1 dispatch.
 
-#### E.W1.A — `package.json#exports` rewrite
-- **Mechanism**: replace single-entry exports with subpath map (one per surviving custom package per D-close). Conditional exports per entry: `import` → `./dist/<name>.js`, `types` → `./dist/<name>.d.ts`. Plus `./tokens` (tokens.css) and `./plugin` (Tailwind v4 plugin entry).
-- **Files**: `package.json`.
-- **Sub-gate**: `npm pack --dry-run` shows expected file list; package validates against `npm publish --dry-run`.
+Hard gate:
 
-#### E.W1.B — `vite.config.ts` multi-entry + per-entry dts
-- **Mechanism**: convert single `lib.entry` to entry map (core + every surviving custom subpath). Switch `vite-plugin-dts` to `rollupTypes: false` with explicit per-entry `entryRoot`.
-- **Files**: `vite.config.ts`.
-- **Sub-gate**: `npm run build` exit 0; `dist/` contains N `.js` + N `.d.ts` files (N = subpath count); tree-shake test (`vite build --analyze` against a probe consumer importing only `Button` from `core`) shows zero aurora/dock/search code in core bundle.
+- `docs/tranches/E/audit/W0-contract-ledger.md` exists and classifies every current root export.
+- `docs/tranches/E/audit/W0-consumer-imports.md` lists imports from `fourier-analysis/web`, `words/frontend`, and `bbnf-lang/playground`.
+- `docs/tranches/E/audit/W0-style-ledger.md` lists all current glass-ui style imports and the one E migration path.
+- `docs/tranches/E/audit/W0-package-exports.md` lists every planned package export key, JS target, type target, and source owner.
+- `docs/tranches/E/audit/W0-build-parity.md` reconciles `vite.config.ts`, `vite.iter.config.ts`, `vitest.config.ts`, and `tsconfig.json`.
+- `docs/tranches/E/audit/W0-velocity-ledger.md` defines the fast, proof, profiling, and close command tiers with write behavior.
+- `docs/tranches/E/audit/W0-challenge.md` records accepted/rejected research claims.
+- W1 file bounds are amended from those ledgers before implementation.
 
-#### E.W1.C — Tailwind v4 plugin extraction
-- **Mechanism**: author `dist/plugin.ts` (or `.js`) as a Tailwind v4 plugin function. It registers every `@layer components` rule from `glass.css`, `dock.css`, `cards.css`, `floating-panel.css`, `transitions.css`, `animations.css`, `utilities.css` via `addUtilities`/`addComponents`. `@source` directives include the library's component templates so Tailwind can scan for class usage.
-  - Postcss alternative path (fallback): if Tailwind plugin authoring proves too brittle for v4 at time of E.W1, ship `dist/plugin.css` as static — consumers `@import "@mkbabb/glass-ui/plugin"`. Plugin formalisation lands as a follow-on commit (still within E, not deferred). Decision point: at W1.C dispatch, evaluate Tailwind v4 plugin DX; pick whichever works first-attempt cleanly.
-- **Files**: `src/plugin.ts` (create — built to `dist/plugin.js`); `dist/plugin.css` if static path chosen.
-- **Sub-gate**: a probe consumer with `@plugin "@mkbabb/glass-ui/plugin"` in its `@import "tailwindcss";` block compiles; emits only the utilities its templates reference; pixel-diff vs raw `glass-ui.css` import ≤ 0.5%.
+## W1 — Package Contract Cutover
 
-#### E.W1.D — Top-level barrel becomes deprecation shim
-- **Mechanism**: `src/index.ts` rewritten to import from `./core` for core symbols and from `./components/custom/<package>` for non-core, with one-time `console.warn` per non-core symbol on dev. Production guards strip warnings.
-- **Files**: `src/index.ts` (rewrite).
-- **Sub-gate**: existing consumer imports keep compiling; dev console shows one warn per non-core import; production builds emit zero warns.
+Mechanism:
 
-**Hard gate (W1)**: multi-entry build clean; `package.json#exports` validates; Tailwind plugin (or fallback `plugin.css`) ships; deprecation shim warns dev-only.
+1. Create the W0-defined core entry.
+2. Populate explicit package subpaths for non-core packages that remain public.
+3. Remove broad wildcard style publication unless W0 names a current same-tranche migration blocker.
+4. Keep one CSS entry: `@mkbabb/glass-ui/styles`.
+5. Make Vite build every exported JS entry and emit matching declarations.
+6. Extend export verification so it checks object and string exports, declaration targets, import targets, and a packed-package import probe.
 
-### E.W2 — Three consumer migrations (3 parallel)
+Hard gate:
 
-Per consumer (`fourier-analysis/web`, `words/frontend`, `bbnf-lang/playground`):
+- `npm run iter` exits 0.
+- `npm run build` exits 0 from a clean `dist`.
+- `npm run verify-export-types` exits 0 and covers every export form.
+- `npm pack --dry-run` shows only intended package files.
+- A local fixture imports the packed package root, `./tokens`, `./styles`, and every new subpath through package exports and typechecks.
 
-- **Mechanism**: walk every `from "@mkbabb/glass-ui"`; route non-core symbols to subpath imports per W0.B's force-subpath table. Replace consumer's `@import "@mkbabb/glass-ui/styles"` with `@import "@mkbabb/glass-ui/tokens"` plus `@plugin "@mkbabb/glass-ui/plugin"` in the consumer's Tailwind entry.
-- **Files**: consumer source + Tailwind entry (modify).
-- **Sub-gate**: zero `console.warn` from top-level imports; `vite build --analyze` shows reduced JS; consumer `dist/assets/*.css` shows reduced CSS; pixel-diff ≤ 0.5% per route.
+## W2 — Three Consumer Migrations
 
-**Hard gate (W2)**: all three consumers migrated cleanly.
+Mechanism:
 
-### E.W3 — Bundle-delta + pixel oracle (sequential, orchestrator)
+1. In each consumer, rewrite non-core imports from `@mkbabb/glass-ui` to the E subpath ledger.
+2. Rewrite glass-ui style imports to the single E style path.
+3. Remove imports from retired paths rather than leaving compatibility aliases.
+4. Build each consumer and record the result.
 
-- **Mechanism**: orchestrator-led. Diff E.W0.C baseline vs post-W2 stats per consumer. Diff Playwright screenshot baseline (D-close) vs post-W2 visual state per consumer.
-- **Files**: `docs/tranches/E/audit/W3-bundle-delta.md`.
-- **Sub-gate**: ≥ 30% glass-ui JS reduction in ≥ 2/3 consumers; CSS ≤ 12 kB in ≥ 2/3 consumers; per-route pixel-diff ≤ 0.5%.
+Consumer lanes:
 
-**Hard gate (W3)**: both bundle gates pass + pixel oracle.
+- W2.A `../fourier-analysis/web`
+- W2.B `../words/frontend`
+- W2.C `../bbnf-lang/playground`
 
-### E.W4 — Re-audit + close ceremony (4 + orchestrator)
+Hard gate:
 
-#### E.W4.A — Re-run hardened audit
-- **Sub-gate**: actionable ≤ 5 (D's invariant held).
+- `scripts/validate-consumers.sh` exits 0.
+- `rg 'from ["'\"']@mkbabb/glass-ui["'\"']'` in each consumer returns only W0-approved core imports.
+- Retired style paths are absent from all three consumers.
 
-#### E.W4.B — Final QA sweep
-- **Mechanism**: Playwright walks every route in light + dark + reduced-motion (E uses direct Playwright, not MCP — closes C's deferred CDP gap).
-- **Sub-gate**: zero console errors all modes; consumer builds clean.
+## W3 — Runtime + Bundle Proof
 
-#### E.W4.C — FINAL.md
-- **Sub-gate**: every E.W{0..3} sub-phase has commit hash row.
+Mechanism:
 
-#### E.W4.D — Retro
-- **Sub-gate**: covers (a) Tailwind v4 plugin DX (if W1.C took the plugin path) or postcss split brittleness (if static fallback); (b) consumer migration ergonomics — subpath fatigue measured; (c) per-entry dts behaviour; (d) JS + CSS reduction actuals vs target.
+1. Walk representative local story routes in the in-app browser: current route, dock, rail, search, sidebar, carousel, aurora, and one primitive route.
+2. Capture console-error counts and no-fallback route evidence.
+3. Record package dist sizes and consumer JS/CSS deltas against W0 baselines.
+4. Record results in `docs/tranches/E/audit/W3-runtime-bundle-proof.md`.
 
-#### E.W4.E (orchestrator) — tag `e-close`
+Hard gate:
 
-**Hard gate (W4)**: re-audit clean; FINAL + retro; tag.
+- Local story route proof has zero console errors and no fallback render.
+- Consumer builds remain green after W3 measurement.
+- Bundle/CSS deltas are recorded; no percentage/byte target blocks E close.
 
-## Critical files
+## W4 — Re-Audit + Close Ceremony
 
-| File | Owning sub-phase | Access |
+Mechanism:
+
+1. Re-run the hardened overfitting/export audit on the post-migration package surface.
+2. Run `scripts/ay-close.sh`.
+3. Write `docs/tranches/E/FINAL.md`.
+4. Write `docs/tranches/E/audit/E-retro.md`.
+5. Tag `e-close`.
+
+Hard gate:
+
+- Re-audit actionable count is <= 5, or a named residual tranche is opened before close.
+- `scripts/ay-close.sh` exits 0.
+- `FINAL.md` and retro cite commands, consumer evidence, and commits.
+- `e-close` resolves to the close commit.
+
+## Critical Files
+
+| File | Access | Reason |
 |---|---|---|
-| `src/core/index.ts` | E.W0.A | create |
-| `docs/tranches/E/audit/W0-consumer-imports.md` | E.W0.B | create |
-| `docs/tranches/E/audit/W0-baseline-{fourier,words,bbnf}.txt` | E.W0.C | create |
-| `package.json` | E.W1.A | modify |
-| `vite.config.ts` | E.W1.B | modify |
-| `src/plugin.ts` | E.W1.C | create |
-| `src/index.ts` | E.W1.D | modify (rewrite as shim) |
-| Consumer source + Tailwind entry (×3) | E.W2.A/B/C | modify |
-| `docs/tranches/E/audit/W3-bundle-delta.md` | E.W3 | create |
-| `docs/tranches/E/audit/W4-overfitting-*.md` + integrated | E.W4.A | create |
-| `docs/tranches/E/FINAL.md` | E.W4.C | create |
-| `docs/tranches/E/audit/E-retro.md` | E.W4.D | create |
+| `docs/tranches/E/**` | create/modify | tranche plan, research, challenge, proof, close |
+| `package.json` | modify | package exports, scripts, files/types metadata |
+| `vite.config.ts` | modify | multi-entry build and declaration output |
+| `vite.iter.config.ts` | modify | no-dts build parity with package entries |
+| `vitest.config.ts` | modify if W0 requires | fast test parity |
+| `tsconfig.json` | modify if W0 requires | alias/type path contract |
+| `scripts/verify-export-types.mjs` | modify | export and packed-package verification |
+| `scripts/validate-consumers.sh` | modify if W0 requires | consumer proof |
+| `src/index.ts` | modify | W0-defined core root entry |
+| `src/**/index.ts` | modify | explicit public subpaths |
+| `src/styles/**` | modify | one public style entry |
+| `tests/**` | modify/create | package contract probes and public-surface checks |
+| `../fourier-analysis/web/**` | modify in W2.A | consumer migration |
+| `../words/frontend/**` | modify in W2.B | consumer migration |
+| `../bbnf-lang/playground/**` | modify in W2.C | consumer migration |
 
-## Hard gates summary
+## Explicit Retirements From Old E
 
-| Wave | Gate | Verification artefact |
-|---|---|---|
-| W0 | core allowlist + consumer-import audit + JS/CSS baselines per consumer | file existence + content |
-| W1 | multi-entry build clean; package.json validates; Tailwind plugin (or static fallback) ships; deprecation shim dev-warns only | `npm run build` exit + `npm pack --dry-run` + probe-consumer build |
-| W2 | three consumers migrated; zero console.warn; reduced JS + CSS captured | `rg console.warn` empty; analyze stats |
-| W3 | ≥ 30% JS reduction in ≥ 2/3; CSS ≤ 12 kB in ≥ 2/3; pixel-diff ≤ 0.5% | bundle-delta table; pixel oracle |
-| W4 | re-audit clean; FINAL + retro; tag `e-close` | re-audit table; `git show e-close` |
+- Retired: permanent top-level deprecation shim for non-core symbols.
+- Retired: Tailwind plugin extraction as an E hard deliverable.
+- Retired: static plugin fallback path.
+- Retired: hard JS 30% and CSS 12 kB close gates.
+- Retired: F escape ledger for prop unification, broad a11y expansion, and consumer adoption expansion.
+- Retired: `useClipboard` in the core allowlist unless W0 finds current source.
 
-### Floor-check
+## Brittleness Window
 
-- W3's "≥ 30% JS in ≥ 2/3" gate: A6 estimated 80+ symbols out of ~78 imported (post-D); core ~25 symbols. Tree-shake captures named-import savings; subpath captures module-graph savings. Per-consumer reduction depends on import mix — small consumers see less, large see more. The "2/3 ≥ 30%" gate accommodates asymmetry. Floor estimated > 30% in 2/3 from the import-cluster analysis; gate achievable.
-- W3's "CSS ≤ 12 kB in ≥ 2/3" gate: current dist CSS is 40 kB. Tailwind v4 plugin tree-shake on consumers' actual class usage (from grep across consumer src/) estimates 8-15 kB per consumer; ≤ 12 kB in 2/3 is the conservative target.
+E may temporarily break package imports during W1 before W2 migrations. The window closes before W3:
 
-## Cross-tranche debt
+```yaml
+breaking_changes_during_wave: yes
+suspended_gates:
+  - scripts/validate-consumers.sh may fail after package exports are changed in W1 and before all three consumers are migrated in W2
+  - consumer source imports may temporarily reference retired root or style paths only inside the W1 -> W2 migration window
+restoration_wave: W2
+reason: one-path publication is cleaner than a compatibility shim
+```
 
-**Inherited from D**:
-- ~27 surviving custom packages (post-D delete). Each gets a subpath at E.W1.B.
-- Reduced-motion CDP gap (resolves at E.W4.B with direct Playwright).
-
-**Forwarded to F**:
-- Prop-API unification (`defineComponentBase`, `withProps`).
-- Deeper a11y sweep (focus rings, aria coverage, dark contrast) — uses E's screenshot baseline.
-- Consumer adoption push (move bbnf-lang/playground or fourier-analysis/web to use more glass-ui primitives).
-
-## Escape clause
-
-- **Tailwind v4 plugin DX brittleness at W1.C**: fall back to postcss-extracted static `dist/plugin.css`; plugin formalisation lands as a follow-on commit within E. Not a separate tranche.
-- **Per-entry dts misbehaves**: fallback to single `index.d.ts` with subpath re-exports of types.
-- **Consumer migration breaks non-glass-ui dependency**: out of E's scope; restore one-symbol barrel import, name F as destination. Single-symbol exception.
-- **Bundle reduction < 30% in only 1/3 consumers**: not a failure if ≥ 2 hit the bar. Asymmetry documented.
-- **Diagnostic-loop relinquish**: 3+ iterations without commit → halt + research+plan+redress.
-
-## Comparators
-
-- **radix-ui**: `@radix-ui/react-<primitive>` per-package monorepo. E achieves the same external shape via Node `exports` subpaths — no workspace overhead.
-- **headlessui**: single package; styling left to consumer's Tailwind. Models E.W1.C plugin extraction.
-- **vanilla-extract / panda-css**: token-and-recipe split. Maps onto glass-ui's tokens.css + glass.css split. Panda's `defineRecipe` is structurally what E's `@plugin` becomes.
-- **shadcn-vue**: no npm package — consumers copy. Glass-ui's value is the npm-distribution dimension; subpath publication makes that dimension carry weight.
-
-## Ground rules
-
-Inherited from D (1-13) + bbnf-lang SPEC. E adds invariants 14-21.
-
-- Source tree unchanged; refactors of internal imports happen later.
-- Existing imports keep compiling at E-close (deprecation shim).
-- Consumer reductions (JS + CSS) are the close gates.
-- Per-entry dts.
-- Token CSS independent.
-- Pixel oracle on every D-close baseline route.
-
-## Checklist — ready to dispatch E.W0
-
-- [ ] D-close tag landed.
-- [ ] D's surviving custom packages enumerated (input to E.W1.B entry map).
-- [ ] `docs/tranches/E/E.md` on master.
-- [ ] Worktrees pre-created.
-- [ ] Allow-lists disjoint within W0.
-- [ ] Master clean.
-
-## Checklist — ready to close E
-
-- [ ] Every sub-phase landed with commit hash.
-- [ ] Every invariant (1-21) verified with artefact.
-- [ ] `npm pack --dry-run` shows expected file list.
-- [ ] All 3 consumers built clean post-migration.
-- [ ] JS reduction ≥ 30% in ≥ 2/3.
-- [ ] CSS ≤ 12 kB in ≥ 2/3.
-- [ ] Pixel-diff ≤ 0.5% per route.
-- [ ] FINAL.md + retro committed.
-- [ ] `git tag e-close` placed.
+No close command may run while this window is open.

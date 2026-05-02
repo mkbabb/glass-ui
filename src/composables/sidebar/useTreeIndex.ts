@@ -91,14 +91,12 @@ export function useTreeIndex<T extends TreeNode>(
 }
 
 // ---------------------------------------------------------------------------
-// Legacy pure-function API — delegates to useTreeIndex under the hood
+// Pure-function API — delegates to useTreeIndex under the hood
 // ---------------------------------------------------------------------------
 
 /**
- * Builds a flat index of all nodes in a sidebar tree for O(1) lookup
- * with hierarchy metadata.  Pure function, no Vue reactivity.
- *
- * @deprecated Prefer `useTreeIndex` which also returns helper functions.
+ * Builds a flat index of all nodes in a sidebar tree for O(1) lookup with
+ * hierarchy metadata. Pure function, no Vue reactivity.
  */
 export function buildTreeIndex(roots: SidebarSection[]): Map<string, SidebarIndexEntry> {
     return useTreeIndex(roots).index;
@@ -107,8 +105,8 @@ export function buildTreeIndex(roots: SidebarSection[]): Map<string, SidebarInde
 /**
  * Check if `id` is the active section.
  *
- * Standalone variant kept for backward compatibility — the composable
- * returned by `useTreeIndex` includes the same helper.
+ * Pure-function variant for non-reactive callers. The composable returned by
+ * `useTreeIndex` includes the same helper.
  */
 export function isActive(id: string, activeId: string | null): boolean {
     return id === activeId;
@@ -117,8 +115,8 @@ export function isActive(id: string, activeId: string | null): boolean {
 /**
  * Check if `id` is an ancestor of or equal to `activeId`.
  *
- * Standalone variant kept for backward compatibility — the composable
- * returned by `useTreeIndex` includes the same helper.
+ * Pure-function variant for non-reactive callers. The composable returned by
+ * `useTreeIndex` includes the same helper.
  */
 export function isInActiveChain(
     id: string,
@@ -134,13 +132,11 @@ export function isInActiveChain(
     const target = index.get(id);
     if (!target) return false;
 
-    // Use the generic isDescendant via a one-off useTreeIndex call
-    // to avoid duplicating the recursive logic.
-    return _isDescendantLegacy(activeId, id, index);
+    return isDescendantInIndex(activeId, id, index);
 }
 
-/** Legacy isDescendant that operates on an externally-built index. */
-function _isDescendantLegacy(
+/** Check descendant state against an externally-built index. */
+function isDescendantInIndex(
     childId: string,
     ancestorId: string,
     index: Map<string, SidebarIndexEntry>,
@@ -151,7 +147,7 @@ function _isDescendantLegacy(
     if (!children) return false;
     for (const child of children) {
         if (child.id === childId) return true;
-        if (_isDescendantLegacy(childId, child.id, index)) return true;
+        if (isDescendantInIndex(childId, child.id, index)) return true;
     }
     return false;
 }

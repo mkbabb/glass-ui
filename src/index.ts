@@ -1,9 +1,16 @@
 // @mkbabb/glass-ui — Unified design system
-// Components (shadcn-vue base + custom)
-export * from "./components";
+// Core UI primitives
+export * from "./components/ui";
 
-// Composables
-export * from "./composables";
+// Core composables
+export { useGlobalDark } from "./composables/useGlobalDark";
+export * from "./composables/useInterval";
+export * from "./composables/useKeyboardShortcuts";
+export * from "./composables/useTimer";
+export * from "./composables/useTouchGate";
+export * from "./composables/glass";
+export * from "./composables/motion";
+export * from "./composables/sortable";
 
-// Utilities
+// Core utilities
 export * from "./utils";

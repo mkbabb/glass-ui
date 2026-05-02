@@ -5,28 +5,28 @@ import {
     AlertDescription,
     AlertTitle,
     Badge,
-    BouncyToggle,
     Button,
     Card,
     CardContent,
     CardHeader,
     CardTitle,
-    GlassDock,
     Input,
     Label,
-    MetricBadge,
-    PaperBackdrop,
     Progress,
-    Pulse,
     Separator,
     Skeleton,
-    StatusDot,
     Textarea,
-    ToggleChip,
     badgeVariants,
     buttonVariants,
-    toggleChipVariants,
 } from "@/index";
+import { DarkModeToggle } from "@/controls";
+import { GlassDock } from "@/dock";
+import { MetricBadge } from "@/metric-badge";
+import { PaperBackdrop } from "@/paper-backdrop";
+import { Pulse } from "@/pulse";
+import { StatusDot } from "@/status-dot";
+import { BouncyToggle } from "@/tabs";
+import { ToggleChip, toggleChipVariants } from "@/toggle-chip";
 
 describe("component smoke coverage", () => {
     it("renders Button slot content", () => {
@@ -118,6 +118,9 @@ describe("component smoke coverage", () => {
         });
         expect(wrapper.text()).toContain("42");
         expect(wrapper.text()).toContain("ms");
+        expect(wrapper.classes()).toContain("metric-badge");
+        expect(wrapper.classes()).toContain("items-center");
+        expect(wrapper.classes()).toContain("justify-center");
     });
 
     it("renders MetricBadge placeholder for empty amount", () => {
@@ -166,6 +169,15 @@ describe("component smoke coverage", () => {
             props: { variant: "rail", shape: "rounded" },
         });
         expect(wrapper.classes()).toContain("shape-rounded");
+    });
+
+    it("renders DarkModeToggle with bounded size contract", () => {
+        const wrapper = mount(DarkModeToggle, {
+            props: { size: "sm" },
+        });
+        const button = wrapper.find(".dark-mode-toggle-button");
+        expect(button.exists()).toBe(true);
+        expect(button.attributes("data-size")).toBe("sm");
     });
 
     it("renders ToggleChip slot content", () => {

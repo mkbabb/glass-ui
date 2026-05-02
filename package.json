@@ -10,8 +10,80 @@
             "tokens": [
                 "dist/tokens.d.ts"
             ],
-            "*": [
-                "dist/index.d.ts"
+            "dock": [
+                "dist/dock.d.ts"
+            ],
+            "search": [
+                "dist/search.d.ts"
+            ],
+            "sidebar": [
+                "dist/sidebar.d.ts"
+            ],
+            "controls": [
+                "dist/controls.d.ts"
+            ],
+            "confirm-dialog": [
+                "dist/confirm-dialog.d.ts"
+            ],
+            "infinite-scroll": [
+                "dist/infinite-scroll.d.ts"
+            ],
+            "tabs": [
+                "dist/tabs.d.ts"
+            ],
+            "typewriter": [
+                "dist/typewriter.d.ts"
+            ],
+            "stacked-icons": [
+                "dist/stacked-icons.d.ts"
+            ],
+            "virtual": [
+                "dist/virtual.d.ts"
+            ],
+            "pagination": [
+                "dist/pagination.d.ts"
+            ],
+            "glass-carousel": [
+                "dist/glass-carousel.d.ts"
+            ],
+            "aurora": [
+                "dist/aurora.d.ts"
+            ],
+            "metric-badge": [
+                "dist/metric-badge.d.ts"
+            ],
+            "status-dot": [
+                "dist/status-dot.d.ts"
+            ],
+            "pulse": [
+                "dist/pulse.d.ts"
+            ],
+            "paper-backdrop": [
+                "dist/paper-backdrop.d.ts"
+            ],
+            "toggle-chip": [
+                "dist/toggle-chip.d.ts"
+            ],
+            "glass-panel": [
+                "dist/glass-panel.d.ts"
+            ],
+            "metaballs": [
+                "dist/metaballs.d.ts"
+            ],
+            "sortable-list": [
+                "dist/sortable-list.d.ts"
+            ],
+            "timeline": [
+                "dist/timeline.d.ts"
+            ],
+            "labeled-field": [
+                "dist/labeled-field.d.ts"
+            ],
+            "expandable-container": [
+                "dist/expandable-container.d.ts"
+            ],
+            "icon-tooltip": [
+                "dist/icon-tooltip.d.ts"
             ]
         }
     },
@@ -28,11 +100,110 @@
             "import": "./dist/tokens.js"
         },
         "./styles": "./src/styles/index.css",
-        "./styles/*": "./src/styles/*"
+        "./dock": {
+            "types": "./dist/dock.d.ts",
+            "import": "./dist/dock.js"
+        },
+        "./search": {
+            "types": "./dist/search.d.ts",
+            "import": "./dist/search.js"
+        },
+        "./sidebar": {
+            "types": "./dist/sidebar.d.ts",
+            "import": "./dist/sidebar.js"
+        },
+        "./controls": {
+            "types": "./dist/controls.d.ts",
+            "import": "./dist/controls.js"
+        },
+        "./confirm-dialog": {
+            "types": "./dist/confirm-dialog.d.ts",
+            "import": "./dist/confirm-dialog.js"
+        },
+        "./infinite-scroll": {
+            "types": "./dist/infinite-scroll.d.ts",
+            "import": "./dist/infinite-scroll.js"
+        },
+        "./tabs": {
+            "types": "./dist/tabs.d.ts",
+            "import": "./dist/tabs.js"
+        },
+        "./typewriter": {
+            "types": "./dist/typewriter.d.ts",
+            "import": "./dist/typewriter.js"
+        },
+        "./stacked-icons": {
+            "types": "./dist/stacked-icons.d.ts",
+            "import": "./dist/stacked-icons.js"
+        },
+        "./virtual": {
+            "types": "./dist/virtual.d.ts",
+            "import": "./dist/virtual.js"
+        },
+        "./pagination": {
+            "types": "./dist/pagination.d.ts",
+            "import": "./dist/pagination.js"
+        },
+        "./glass-carousel": {
+            "types": "./dist/glass-carousel.d.ts",
+            "import": "./dist/glass-carousel.js"
+        },
+        "./aurora": {
+            "types": "./dist/aurora.d.ts",
+            "import": "./dist/aurora.js"
+        },
+        "./metric-badge": {
+            "types": "./dist/metric-badge.d.ts",
+            "import": "./dist/metric-badge.js"
+        },
+        "./status-dot": {
+            "types": "./dist/status-dot.d.ts",
+            "import": "./dist/status-dot.js"
+        },
+        "./pulse": {
+            "types": "./dist/pulse.d.ts",
+            "import": "./dist/pulse.js"
+        },
+        "./paper-backdrop": {
+            "types": "./dist/paper-backdrop.d.ts",
+            "import": "./dist/paper-backdrop.js"
+        },
+        "./toggle-chip": {
+            "types": "./dist/toggle-chip.d.ts",
+            "import": "./dist/toggle-chip.js"
+        },
+        "./glass-panel": {
+            "types": "./dist/glass-panel.d.ts",
+            "import": "./dist/glass-panel.js"
+        },
+        "./metaballs": {
+            "types": "./dist/metaballs.d.ts",
+            "import": "./dist/metaballs.js"
+        },
+        "./sortable-list": {
+            "types": "./dist/sortable-list.d.ts",
+            "import": "./dist/sortable-list.js"
+        },
+        "./timeline": {
+            "types": "./dist/timeline.d.ts",
+            "import": "./dist/timeline.js"
+        },
+        "./labeled-field": {
+            "types": "./dist/labeled-field.d.ts",
+            "import": "./dist/labeled-field.js"
+        },
+        "./expandable-container": {
+            "types": "./dist/expandable-container.d.ts",
+            "import": "./dist/expandable-container.js"
+        },
+        "./icon-tooltip": {
+            "types": "./dist/icon-tooltip.d.ts",
+            "import": "./dist/icon-tooltip.js"
+        }
     },
     "files": [
         "dist",
-        "src"
+        "src/styles"
     ],
     "scripts": {
         "dev": "vite",

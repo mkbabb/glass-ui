@@ -25,7 +25,7 @@ export interface SidebarSection extends TreeNode {
     level?: number;
 }
 
-/** Flat index entry for a sidebar section (backward-compatible alias). */
+/** Flat index entry for a sidebar section. */
 export type SidebarIndexEntry = TreeIndexEntry<SidebarSection>;
 
 /** Options for scroll tracking. */

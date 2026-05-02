@@ -417,6 +417,65 @@
         color: var(--foreground);
     }
 
+    .dark-mode-toggle-button {
+        width: var(--dark-mode-toggle-size, 2.25rem);
+        height: var(--dark-mode-toggle-size, 2.25rem);
+        min-width: var(--dark-mode-toggle-size, 2.25rem);
+        min-height: var(--dark-mode-toggle-size, 2.25rem);
+        max-width: var(--dark-mode-toggle-size, 2.25rem);
+        max-height: var(--dark-mode-toggle-size, 2.25rem);
+        aspect-ratio: 1;
+        padding: var(--dark-mode-toggle-padding, 0.375rem);
+        transition:
+            opacity var(--duration-normal) var(--ease-standard),
+            background-color var(--duration-normal) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard);
+    }
+
+    .dark-mode-toggle-button > svg {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .dark-mode-toggle-button:hover,
+    .dark-mode-toggle-button:focus {
+        background: color-mix(in srgb, var(--foreground) 10%, transparent);
+        opacity: 1;
+        outline: none;
+    }
+
+    .dark-mode-toggle-button:focus-visible {
+        box-shadow: var(--focus-ring-shadow);
+    }
+
+    .dark-mode-toggle-button[data-size="sm"] {
+        --dark-mode-toggle-size: 1.75rem;
+        --dark-mode-toggle-padding: 0.25rem;
+    }
+
+    .dark-mode-toggle-button[data-size="md"] {
+        --dark-mode-toggle-size: 2.25rem;
+        --dark-mode-toggle-padding: 0.375rem;
+    }
+
+    .dark-mode-toggle-button[data-size="lg"] {
+        --dark-mode-toggle-size: 2.75rem;
+        --dark-mode-toggle-padding: 0.5rem;
+    }
+
+    .dark-mode-toggle-button[data-size="control"] {
+        --dark-mode-toggle-size: var(--control-size, 2.25rem);
+        --dark-mode-toggle-padding: var(--control-icon-padding, 0.375rem);
+    }
+
+    .dark-mode-toggle-button[data-size="dock"],
+    .glass-dock .dark-mode-toggle-button:not([data-size="sm"]):not([data-size="lg"]):not([data-size="control"]) {
+        --dark-mode-toggle-size: var(--dock-control-size, var(--size-icon-btn));
+        --dark-mode-toggle-padding: var(--dock-icon-padding, 0);
+    }
+
     .dock-tab-button {
         display: inline-flex;
         align-items: center;

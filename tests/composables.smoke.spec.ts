@@ -1,28 +1,34 @@
 import { describe, expect, it, vi } from "vitest";
 import { nextTick, ref } from "vue";
 import {
-    buildIndex,
-    buildSectionLayout,
-    buildTreeIndex,
-    clearSearchCache,
     createGlassFilter,
     destroyGlassFilter,
-    findSectionOffset,
-    fuzzyMatch,
-    isActive,
-    isInActiveChain,
     registerShortcut,
-    resolveActiveSection,
-    resolveSectionWindow,
-    searchIndex,
     useGlassRenderer,
-    useInfiniteScroll,
-    useOffsetPagination,
     useSortable,
     useStaggerReveal,
-    useTreeIndex,
-    useWindowedStore,
 } from "@/index";
+import { useInfiniteScroll } from "@/infinite-scroll";
+import { useOffsetPagination } from "@/pagination";
+import {
+    buildIndex,
+    clearSearchCache,
+    fuzzyMatch,
+    searchIndex,
+} from "@/search";
+import {
+    buildTreeIndex,
+    isActive,
+    isInActiveChain,
+    useTreeIndex,
+} from "@/sidebar";
+import {
+    buildSectionLayout,
+    findSectionOffset,
+    resolveActiveSection,
+    resolveSectionWindow,
+    useWindowedStore,
+} from "@/virtual";
 import { mountComposable } from "./utils/mountComposable";
 
 const sections = [
