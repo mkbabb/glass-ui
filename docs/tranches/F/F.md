@@ -50,7 +50,7 @@ F makes the library easier to change quickly by reducing false surfaces and brit
 
 | Wave | Title | Agents | Mode | Hard Gate | Status |
 |---|---|---:|---|---|---|
-| W0 | Current-state ledgers + challenge | 8 | parallel read-only audit + orchestrator synthesis | ledgers classify package, consumers, components, style, dock, Aurora, story, and velocity; W1-W5 bounds are exact | planned |
+| W0 | Current-state ledgers + challenge | 8 | parallel read-only audit + orchestrator synthesis | ledgers classify package, consumers, components, style, dock, Aurora, story, and velocity; W1-W5 bounds are exact | complete |
 | W1 | Proof substrate + consumer contract enforcement | 4-5 | implementation on scripts/docs plus disjoint consumer lanes | package fixture, static consumer policy, consumer builds, and runtime smoke commands produce artifacts and pass | planned |
 | W2 | Dock, rail, layering, and navigation substrate | 3-4 | implementation on dock/nav files with orchestrator-owned shared styles | vertical dock/layer behavior, z-index, transitions, portal ownership, and blur tokens are proved on dock routes | planned |
 | W3 | Component contracts and Vue idioms | 4-5 | implementation on disjoint component families | unsafe HTML, stale search cache, row identity, lifecycle cleanup, and large-component splits are fixed and tested | planned |
@@ -58,9 +58,9 @@ F makes the library easier to change quickly by reducing false surfaces and brit
 | W5 | Aurora runtime, shader, and studio hardening | 4 | implementation on Aurora library/studio with benchmark evidence | public config matches live shader behavior; capture/live modes, oil flow, thumbnails, and studio splits are proved | planned |
 | W6 | Runtime/profile close and residual audit | 6 + orchestrator | parallel re-audit + close | close command exits 0; residuals are <= 5 or a named next tranche is opened before final | planned |
 
-## W0 Opens First
+## W0 Close
 
-Only W0 is dispatchable at tranche start. W1 through W5 are intentionally specific enough to show direction, but they must be amended from W0 ledgers before implementation. W0 may narrow, reorder, or reject any item that the ledgers disprove.
+W0 closed the planning gate without product/source/config/consumer edits. W1 through W5 are now amended from the W0 ledgers and are dispatchable in order.
 
 ## Critical Paths
 

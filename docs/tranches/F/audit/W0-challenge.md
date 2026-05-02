@@ -49,19 +49,20 @@ Challenge question: does F contain speculative work, hidden deferrals, compatibi
 5. **"Move Aurora to a new renderer because WebGL2 feels old."**
    - Rejected. Current WebGL2 remains the path unless W5 profiling proves a concrete bottleneck and browser support justifies a different runtime.
 
-## Pending W0 Proof
+## W0 Proof Resolved
 
-W0 must resolve these before W1-W5 implementation:
+W0 resolved the implementation blockers into exact ledgers:
 
-- exact active consumer roots and non-core import violations;
-- exact public exports to keep, internalize, or delete;
-- exact unsafe HTML call sites and replacement contracts;
-- exact large components to split, with subcomponent ownership;
-- exact theme variables that fail Tailwind v4 utility generation;
-- exact dock CSS authority to keep;
-- exact Aurora config fields/uniforms that are live, inert, or dead;
-- exact proof commands and artifact locations for close.
+- active consumer roots and non-core import violations: `W0-consumer-public-surface.md`;
+- public exports to keep, internalize, or re-audit: `W0-consumer-public-surface.md`;
+- unsafe HTML call sites and replacement contracts: `W0-component-contracts.md`;
+- large components approved for consumed splits: `W0-component-contracts.md`;
+- Tailwind v4 namespace, token, and utility issues: `W0-style-theme-ledger.md`;
+- dock runtime/style/navigation ownership: `W0-dock-navigation-ledger.md`;
+- Aurora config/uniform/runtime liveness: `W0-aurora-ledger.md`;
+- proof commands and artifact locations: `W0-velocity-ledger.md`;
+- story route/source/configurator substrate: `W0-story-ledger.md`.
 
 ## Result
 
-F is accepted as a tranche plan. Implementation remains blocked until F.W0 ledgers exist and W1-W5 file bounds are amended from them.
+F is accepted as a tranche plan and W0 is closed. Implementation may proceed through W1-W5 in order using the amended ownership. W0 did not find unrelated scope requiring a new tranche before implementation.

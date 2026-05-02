@@ -38,3 +38,33 @@ Open:
 
 - Begin F.W0 with read-only ledgers and challenge update.
 - Amend W1-W5 file ownership from W0 before any implementation dispatch.
+
+## 2026-05-02 - F.W0 Current-State Ledgers Closed
+
+W0 ran the requested parallel audit as a read-only product/source pass and wrote the formal ledgers:
+
+- `audit/W0-plan-lineage.md`
+- `audit/W0-consumer-public-surface.md`
+- `audit/W0-component-contracts.md`
+- `audit/W0-style-theme-ledger.md`
+- `audit/W0-dock-navigation-ledger.md`
+- `audit/W0-aurora-ledger.md`
+- `audit/W0-velocity-ledger.md`
+- `audit/W0-story-ledger.md`
+
+Fast proof observed during W0:
+
+- `npm run iter-check`: pass
+- `npm run iter-test`: pass, 13 files / 233 tests
+- `npm run verify-export-types`: pass
+
+W0 accepted one implementation path:
+
+1. W1 builds durable proof substrate and fixes active consumer drift.
+2. W2 repairs dock/navigation contracts.
+3. W3 repairs component safety/state/lifecycle contracts.
+4. W4 repairs Tailwind/theme/style authority.
+5. W5 repairs Aurora runtime/shader/studio correctness.
+6. W6 re-audits and closes with artifacts.
+
+No source, style, script, test, package, or consumer implementation changes were made in W0. W1 is the next implementation wave.
