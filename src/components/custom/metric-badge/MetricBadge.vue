@@ -21,8 +21,7 @@ withDefaults(
 <template>
   <div
     :class="cn(
-      'metric-badge inline-flex items-center justify-center text-center leading-tight shrink-0 overflow-hidden',
-      'cursor-pointer',
+      'metric-badge cursor-pointer',
       'focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2',
       $props.class,
     )"

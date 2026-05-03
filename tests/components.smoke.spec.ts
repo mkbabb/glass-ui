@@ -120,8 +120,6 @@ describe("component smoke coverage", () => {
         expect(wrapper.text()).toContain("42");
         expect(wrapper.text()).toContain("ms");
         expect(wrapper.classes()).toContain("metric-badge");
-        expect(wrapper.classes()).toContain("items-center");
-        expect(wrapper.classes()).toContain("justify-center");
     });
 
     it("renders MetricBadge placeholder for empty amount", () => {
