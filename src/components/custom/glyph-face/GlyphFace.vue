@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from "vue";
+import type { CSSProperties, HTMLAttributes } from "vue";
 import { computed } from "vue";
 import { cn } from "../../../utils";
 
@@ -19,6 +19,12 @@ import { cn } from "../../../utils";
  * backplate's `--gf-tint` custom property reads it. Defaults to transparent,
  * so `<GlyphFace>` without `active` reads as a plain glyph wrapper — useful
  * as the default for lucide call-sites that may later opt-in to the punch.
+ *
+ * `silhouette` accepts an SVG path d-attribute (the cap then consumes
+ * `clip-path: path('<d>')`) or a raw CSS clip-path expression. When set,
+ * the cap drops `border-radius` and clips to the supplied shape — closes
+ * the residual square-leak path for caps over non-circular silhouettes
+ * (P.W3 audit-D §"Key upstream ask").
  */
 const props = withDefaults(
     defineProps<{
@@ -26,6 +32,12 @@ const props = withDefaults(
         active?: boolean;
         /** CSS color/var for the backplate tint. Defaults transparent. */
         tint?: string;
+        /**
+         * SVG path d-attribute or raw CSS clip-path expression that
+         * masks the cap to a glyph silhouette. When set, the cap is
+         * clipped instead of carrying border-radius.
+         */
+        silhouette?: string;
         class?: HTMLAttributes["class"];
     }>(),
     { active: false },
@@ -33,7 +45,23 @@ const props = withDefaults(
 
 const classes = computed(() => cn("glyph-face", props.class));
 
-const styleVars = computed(() => ({ "--gf-tint": props.tint ?? "transparent" }));
+const styleVars = computed<CSSProperties>(() => {
+    const base: Record<string, string> = {
+        "--gf-tint": props.tint ?? "transparent",
+    };
+    const sil = props.silhouette;
+    if (sil) {
+        // Heuristic: an SVG path d-attribute starts with M or m (move-to);
+        // a raw CSS clip-path expression typically begins with a function
+        // name (`circle(...)`, `polygon(...)`, `inset(...)`, `path(...)`).
+        const trimmed = sil.trim();
+        const looksLikePathD = /^[Mm][\s.,\d-]/.test(trimmed);
+        base["--gf-silhouette"] = looksLikePathD
+            ? `path('${trimmed}')`
+            : trimmed;
+    }
+    return base as CSSProperties;
+});
 </script>
 
 <template>
