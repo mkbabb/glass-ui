@@ -104,5 +104,50 @@ import { Play, RotateCcw, ArrowRight, Check, Settings } from "lucide-vue-next";
                 </GlyphFace>
             </div>
         </section>
+
+        <!-- Three cap modes — the P.W3 sub-A knob set. -->
+        <section class="flex flex-col gap-3">
+            <p class="section-label">cap mode · radius vs silhouette</p>
+            <div class="flex flex-wrap items-end gap-8">
+                <div class="flex flex-col items-center gap-2">
+                    <GlyphFace
+                        active
+                        tint="var(--chart-download)"
+                        class="size-12 text-foreground"
+                    >
+                        <Play :stroke-width="2.5" class="size-6" />
+                    </GlyphFace>
+                    <span class="text-mono-caption text-muted-foreground">default · 50% circle</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                    <GlyphFace
+                        active
+                        tint="var(--chart-download)"
+                        class="size-12 text-foreground"
+                        :style="{ '--gf-cap-radius': '0.5rem' }"
+                    >
+                        <Play :stroke-width="2.5" class="size-6" />
+                    </GlyphFace>
+                    <span class="text-mono-caption text-muted-foreground">rounded-rect · 0.5rem</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                    <GlyphFace
+                        active
+                        tint="var(--chart-download)"
+                        class="size-12 text-foreground"
+                        silhouette="M8 5.14v13.72a1 1 0 0 0 1.55.83l10.23-6.86a1 1 0 0 0 0-1.66L9.55 4.31A1 1 0 0 0 8 5.14z"
+                    >
+                        <Play :stroke-width="2.5" class="size-6" />
+                    </GlyphFace>
+                    <span class="text-mono-caption text-muted-foreground">silhouette · play path</span>
+                </div>
+            </div>
+            <p class="text-mono-caption text-muted-foreground">
+                Default cap is a 50% circle — fixes the visible-square-border
+                bug for circular wrappers. Override via <code>--gf-cap-radius</code>
+                for rounded-rect caps; pass <code>silhouette</code> for
+                path-clipped catch-light over a glyph silhouette.
+            </p>
+        </section>
     </StoryPage>
 </template>
