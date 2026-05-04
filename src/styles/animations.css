@@ -140,3 +140,30 @@
     0%   { background-position: 200% 0; }
     100% { background-position: -200% 0; }
 }
+
+/* ── Sparkle sweep: four-point star traverses a surface diagonally ──
+ *
+ * Reserved for the chassis primary-action hover (dock-tab-button[data-tier="primary"])
+ * and the `Complete!` shimmer cycle. Single keyframe, ~600ms per pass; the
+ * consumer rule sets the duration and easing. Reduced-motion guard at the
+ * consumer site (per surface — not all sparkle uses share the same gate).
+ */
+@keyframes sparkle-sweep {
+    0% {
+        transform: translate(-30%, -30%) scale(0.5);
+        opacity: 0;
+    }
+    25% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate(180%, 180%) scale(1.2);
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    @keyframes sparkle-sweep {
+        0%, 100% { opacity: 0; transform: none; }
+    }
+}
