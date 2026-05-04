@@ -1,0 +1,189 @@
+/* instrument-chassis.css — chassis surface + region dividers + phase cascade.
+ *
+ * Composes the three-region <InstrumentChassis> per W2.7 §1, §2, §3, §11, §16.
+ * The chassis is one glass surface with an engraved-bezel ::before stroke and
+ * a radial-gradient curvature overlay; both persist at all phases (chassis
+ * character, not interactive accent).
+ *
+ * Region dividers compose two 1px lines — top catch-light, bottom under-
+ * shadow — into a hairline groove. This twin-line idiom is the chassis
+ * signature; every divider in the system uses it.
+ *
+ * `--phase-color` cascades from the chassis root via `data-phase`. Phase
+ * label, hero number, and phase progress fill all read it; one mutation at
+ * the chassis level retints every consumer with a single 450ms transition.
+ *
+ * Disco accents (specular swap, sparkle, phase-glow, disco-grain) live on
+ * `.dock-tab-button[data-tier="primary"]` in `dock.css` and on
+ * `.metric-badge[data-just-resolved="true"]` in `utilities.css`. They fire
+ * on hover / phase-finish only. Idle is purely Vignelli.
+ */
+
+@layer components {
+    .instrument-chassis {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background:
+            var(--glass-curvature-overlay, none),
+            var(--glass-bg-default);
+        backdrop-filter: var(--glass-blur-default);
+        -webkit-backdrop-filter: var(--glass-blur-default);
+        border: 1px solid var(--glass-border-default);
+        border-radius: var(--radius-card);
+        box-shadow:
+            var(--glass-shadow-default),
+            inset 0 -0.5px 0 0 rgb(0 0 0 / 0.06);
+        overflow: hidden;
+
+        /* `--phase-color` defaults to muted-foreground at idle. data-phase
+           selectors below retint to the chart hue. Consumers register
+           --chart-* aliases in their preset; tokens.css ships safe defaults. */
+        --phase-color: var(--muted-foreground);
+    }
+
+    .dark .instrument-chassis {
+        background:
+            var(--glass-curvature-overlay-dark, var(--glass-curvature-overlay, none)),
+            var(--glass-bg-default);
+    }
+
+    /* Engraved-bezel inner stroke. Reads as the polished sleeve of an
+       instrument-panel module. Subtle but load-bearing for the disco-skeu
+       reading. */
+    .instrument-chassis::before {
+        content: "";
+        position: absolute;
+        inset: 0.5px;
+        border-radius: calc(var(--radius-card) - 0.5px);
+        border: 1px solid color-mix(in srgb, var(--foreground) 4%, transparent);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .dark .instrument-chassis::before {
+        border-color: color-mix(in srgb, var(--foreground) 6%, transparent);
+    }
+
+    /* Phase-color cascade — single property, full chassis-wide retint. */
+    .instrument-chassis[data-phase="ping"]     { --phase-color: var(--chart-ping, var(--viz-chebyshev)); }
+    .instrument-chassis[data-phase="download"] { --phase-color: var(--chart-download, var(--viz-fourier)); }
+    .instrument-chassis[data-phase="upload"]   { --phase-color: var(--chart-upload, var(--viz-legendre)); }
+    .instrument-chassis[data-phase="complete"] { --phase-color: var(--color-gold); }
+
+    /* Region wrappers ─────────────────────────────────────────── */
+
+    .instrument-strip {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: var(--instrument-strip-gap, 0.75rem);
+        padding:
+            var(--instrument-strip-padding-block, 0.875rem)
+            var(--instrument-strip-padding-inline, 1.25rem);
+        z-index: 2;
+    }
+
+    .instrument-dial {
+        position: relative;
+        display: grid;
+        grid-template-columns: var(--instrument-dial-columns, minmax(0, 1.2fr) 1px minmax(0, 1fr));
+        align-items: center;
+        gap: var(--instrument-dial-gap, 1.5rem);
+        padding:
+            var(--instrument-dial-padding-block, 1.5rem)
+            var(--instrument-dial-padding-inline, 1.5rem);
+        z-index: 2;
+    }
+
+    .instrument-control {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: var(--instrument-control-gap, 0.5rem);
+        padding:
+            var(--instrument-control-padding-block, 0.875rem)
+            var(--instrument-control-padding-inline, 1.25rem);
+        z-index: 2;
+    }
+
+    /* Region dividers — twin-line hairline grooves ─────────────── */
+
+    .region-divider {
+        flex-shrink: 0;
+        position: relative;
+        background: transparent;
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .region-divider--horizontal {
+        display: flex;
+        flex-direction: column;
+        height: 2px;
+        width: 100%;
+    }
+
+    .region-divider--vertical {
+        display: flex;
+        flex-direction: row;
+        width: 2px;
+        height: var(--region-divider-vertical-height, 70%);
+        align-self: center;
+        justify-self: center;
+    }
+
+    .bezel-line {
+        display: block;
+        flex-shrink: 0;
+    }
+
+    .region-divider--horizontal .bezel-line {
+        height: 1px;
+        width: 100%;
+    }
+
+    .region-divider--vertical .bezel-line {
+        width: 1px;
+        height: 100%;
+    }
+
+    .bezel-line.top    { background: rgb(255 255 255 / 0.04); }
+    .bezel-line.bottom { background: rgb(0 0 0 / 0.06); }
+
+    .dark .bezel-line.top    { background: rgb(255 255 255 / 0.06); }
+    .dark .bezel-line.bottom { background: rgb(0 0 0 / 0.18); }
+
+    /* Inner dial divider — same primitive, vertical on desktop. Speedtest
+       slots its <RegionDivider orientation="vertical" class="dial-divider" />
+       between the meter canvas and the readout column; consumers may also
+       compose their own vertical dividers via the same primitive. */
+    .instrument-chassis .dial-divider {
+        align-self: stretch;
+    }
+
+    /* Mobile reflow — dial stacks vertically; the inner divider rotates from
+       a vertical groove (desktop) to a horizontal groove (mobile). Same
+       twin-line idiom, different orientation. */
+    @media (max-width: 720px) {
+        .instrument-chassis .instrument-dial {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto auto auto;
+            gap: var(--instrument-dial-gap-mobile, 1.5rem);
+        }
+
+        .instrument-chassis .instrument-dial .dial-divider,
+        .instrument-chassis .instrument-dial .region-divider--vertical {
+            flex-direction: column;
+            width: 70%;
+            height: 2px;
+            margin-inline: auto;
+        }
+
+        .instrument-chassis .instrument-dial .dial-divider .bezel-line,
+        .instrument-chassis .instrument-dial .region-divider--vertical .bezel-line {
+            width: 100%;
+            height: 1px;
+        }
+    }
+}
