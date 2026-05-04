@@ -312,12 +312,22 @@
        `.glass-dock` via the `--glass-bg-dock` token. */
     --glass-opacity-dock: 0.32;
 
+    /* Chassis-specific opacity. Looser than `default` (0.50) so the
+       <InstrumentChassis> surface reads as glass-over-aurora at its
+       64rem-wide footprint; the default tier stays calibrated for cards.
+       Mirrors the dock-tier pattern (own opacity primitive + composed bg).
+       Light 0.28 sits in the gap between dock (0.32) and a hypothetical
+       wash tier; dark 0.36 mirrors the +0.08 step the dock takes from
+       `glass-bg-medium` (0.65) down to its own 0.32. */
+    --glass-opacity-chassis: 0.28;
+
     /* Composed backgrounds */
     --glass-bg-subtle:   color-mix(in srgb, var(--card) calc(var(--glass-opacity-subtle) * 100%), transparent);
     --glass-bg-default:  color-mix(in srgb, var(--card) calc(var(--glass-opacity-default) * 100%), transparent);
     --glass-bg-medium:   color-mix(in srgb, var(--card) calc(var(--glass-opacity-medium) * 100%), transparent);
     --glass-bg-elevated: color-mix(in srgb, var(--card) calc(var(--glass-opacity-elevated) * 100%), transparent);
     --glass-bg-dock:     color-mix(in srgb, var(--card) calc(var(--glass-opacity-dock) * 100%), transparent);
+    --glass-bg-chassis:  color-mix(in srgb, var(--card) calc(var(--glass-opacity-chassis) * 100%), transparent);
 
     /* Composed borders — foreground-tinted */
     --glass-border-subtle:   color-mix(in srgb, var(--foreground) 8%, transparent);
@@ -328,8 +338,12 @@
     --glass-border:          var(--glass-border-default);
     --glass-border-strong:   var(--glass-border-elevated);
 
-    /* Shared decorative */
-    --glass-grain-opacity: 0.035;
+    /* Shared decorative. Light grain dropped 0.035 → 0.025 in P.W1.B —
+       at the chassis scale the original alpha read as crawl over the new
+       lower-alpha chassis bg; the grain's role is texture, not reading,
+       so it sits at the perceptual floor. Dark companion drops 0.06 →
+       0.045 below to keep the soft-light blend alive without stippling. */
+    --glass-grain-opacity: 0.025;
     --glass-grain-opacity-disco: 0.08;
     --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.25);
 
@@ -346,7 +360,7 @@
        Composed into <InstrumentChassis>'s background stack. */
     --glass-curvature-overlay: radial-gradient(
         ellipse at 50% -20%,
-        hsl(0 0% 100% / 0.04),
+        hsl(0 0% 100% / 0.06),
         transparent 60%
     );
     --glass-curvature-overlay-dark: radial-gradient(
@@ -560,7 +574,8 @@
     --glass-opacity-default:  0.58;
     --glass-opacity-medium:   0.72;
     --glass-opacity-elevated: 0.88;
-    --glass-grain-opacity: 0.06;
+    --glass-opacity-chassis:  0.36;
+    --glass-grain-opacity: 0.045;
     --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.08);
 
     /* Specular + curvature — softened for dark backdrops. Disco-grain stays
