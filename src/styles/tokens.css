@@ -330,7 +330,37 @@
 
     /* Shared decorative */
     --glass-grain-opacity: 0.035;
+    --glass-grain-opacity-disco: 0.08;
     --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.25);
+
+    /* Specular catch-light — 1.5px-tall top-edge highlight that swaps in for
+       --glass-highlight on interactive moments (e.g. primary-action hover).
+       Reads as a real catch-light on a curved surface. The `-dark` companion
+       is overridden inside `.dark`; the named token here is the explicit
+       handle consumers can reference to compose dark-aware layers. */
+    --glass-specular: inset 0 1.5px 0 0 hsl(0 0% 100% / 0.45);
+    --glass-specular-dark: inset 0 1.5px 0 0 hsl(0 0% 100% / 0.30);
+
+    /* Chassis curvature illusion — a subtle radial gradient at the chassis
+       top centre that lifts the surface without committing to literal 3D.
+       Composed into <InstrumentChassis>'s background stack. */
+    --glass-curvature-overlay: radial-gradient(
+        ellipse at 50% -20%,
+        hsl(0 0% 100% / 0.04),
+        transparent 60%
+    );
+    --glass-curvature-overlay-dark: radial-gradient(
+        ellipse at 50% -20%,
+        hsl(0 0% 100% / 0.06),
+        transparent 60%
+    );
+
+    /* Chart palette aliases — speedtest et al. read these for phase tinting.
+       Defaults map to viz-basis hues; consumers can override per app. */
+    --chart-ping:     var(--viz-chebyshev);
+    --chart-download: var(--viz-fourier);
+    --chart-upload:   var(--viz-legendre);
+    --chart-jitter:   var(--viz-amber);
 
     /* Shadow per tier — complete box-shadow lists for glass surface classes */
     --glass-shadow-subtle:   var(--shadow-sm), var(--glass-highlight);
@@ -532,6 +562,15 @@
     --glass-opacity-elevated: 0.88;
     --glass-grain-opacity: 0.06;
     --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.08);
+
+    /* Specular + curvature — softened for dark backdrops. Disco-grain stays
+       at the same opacity ceiling; the dark grain blend already lifts it. */
+    --glass-specular: inset 0 1.5px 0 0 hsl(0 0% 100% / 0.30);
+    --glass-curvature-overlay: radial-gradient(
+        ellipse at 50% -20%,
+        hsl(0 0% 100% / 0.06),
+        transparent 60%
+    );
 
     /* Gold — boosted for dark */
     --gold: hsl(43 74% 55%);
