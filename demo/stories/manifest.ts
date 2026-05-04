@@ -107,6 +107,7 @@ export const CATEGORIES: Category[] = [
             s("primitives", "pulse", "Pulse"),
             s("primitives", "glyph-face", "Glyph Face", "Phase-tinted lucide wrapper with catch-light cap."),
             s("primitives", "dock-group", "Dock Group", "Pill-row shelf — wraps a horizontal cluster of dock-tier consumers in a quieter glass tier than the surrounding chassis."),
+            s("primitives", "disco-glyph", "Disco Glyph", "Faceted SVG glyph primitive — 8-stop linear facet × 165° specular cap, phase-tinted on activation."),
             s("primitives", "separator", "Separator"),
         ],
     },

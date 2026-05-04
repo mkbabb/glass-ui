@@ -39,6 +39,7 @@ export function libraryEntries(rootDir: string) {
         "instrument-chassis": resolve(rootDir, "src/instrument-chassis.ts"),
         "glyph-face": resolve(rootDir, "src/glyph-face.ts"),
         "dock-group": resolve(rootDir, "src/dock-group.ts"),
+        "disco-glyph": resolve(rootDir, "src/disco-glyph.ts"),
     };
 }
 
