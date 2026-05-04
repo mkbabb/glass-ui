@@ -36,6 +36,8 @@ export function libraryEntries(rootDir: string) {
         "labeled-field": resolve(rootDir, "src/labeled-field.ts"),
         "expandable-container": resolve(rootDir, "src/expandable-container.ts"),
         "icon-tooltip": resolve(rootDir, "src/icon-tooltip.ts"),
+        "instrument-chassis": resolve(rootDir, "src/instrument-chassis.ts"),
+        "glyph-face": resolve(rootDir, "src/glyph-face.ts"),
     };
 }
 

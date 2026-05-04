@@ -1,6 +1,6 @@
 {
     "name": "@mkbabb/glass-ui",
-    "version": "0.5.1",
+    "version": "0.6.0",
     "description": "Glassmorphic design system — Vue 3.5 components, reka-ui primitives, Tailwind CSS v4 tokens",
     "license": "MIT",
     "type": "module",
@@ -84,6 +84,12 @@
             ],
             "icon-tooltip": [
                 "dist/icon-tooltip.d.ts"
+            ],
+            "instrument-chassis": [
+                "dist/instrument-chassis.d.ts"
+            ],
+            "glyph-face": [
+                "dist/glyph-face.d.ts"
             ]
         }
     },
@@ -199,6 +205,14 @@
         "./icon-tooltip": {
             "types": "./dist/icon-tooltip.d.ts",
             "import": "./dist/icon-tooltip.js"
+        },
+        "./instrument-chassis": {
+            "types": "./dist/instrument-chassis.d.ts",
+            "import": "./dist/instrument-chassis.js"
+        },
+        "./glyph-face": {
+            "types": "./dist/glyph-face.d.ts",
+            "import": "./dist/glyph-face.js"
         }
     },
     "files": [

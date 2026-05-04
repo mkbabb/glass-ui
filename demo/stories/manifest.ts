@@ -105,6 +105,7 @@ export const CATEGORIES: Category[] = [
             s("primitives", "metric-badge", "Metric Badge"),
             s("primitives", "status-dot", "Status Dot"),
             s("primitives", "pulse", "Pulse"),
+            s("primitives", "glyph-face", "Glyph Face", "Phase-tinted lucide wrapper with catch-light cap."),
             s("primitives", "separator", "Separator"),
         ],
     },
@@ -194,6 +195,7 @@ export const CATEGORIES: Category[] = [
             s("compositions", "auth-shell", "Auth Shell"),
             s("compositions", "settings", "Settings"),
             s("compositions", "empty-states", "Empty States"),
+            s("compositions", "instrument-chassis", "Instrument Chassis", "Three-region chassis with twin-line bezel grooves and phase cascade."),
         ],
     },
 ];

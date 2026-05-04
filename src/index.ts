@@ -2,6 +2,10 @@
 // Core UI primitives
 export * from "./components/ui";
 
+// Custom composites — instrument-cluster chassis (O.W2.7)
+export * from "./components/custom/instrument-chassis";
+export * from "./components/custom/glyph-face";
+
 // Core composables
 export { useGlobalDark } from "./composables/useGlobalDark";
 export * from "./composables/useInterval";
