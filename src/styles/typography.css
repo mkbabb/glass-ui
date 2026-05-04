@@ -306,10 +306,12 @@ body {
     /* Letter-pressed treatment — reads as text engraved into the panel
        surface. Speedtest's idle hero `0` consumes this via
        `.text-hero[data-idle="true"]`; the `text-engraved` utility is the
-       glass-ui contract that any consumer can apply for the same look. */
+       glass-ui contract that any consumer can apply for the same look.
+       Opacity dropped in P.W1.B — the audacious canon mutes by colour
+       (`--muted-foreground`), not by alpha; opacity ≤ 0.4 over a glass
+       surface read as a fade, not as engraving. */
     .text-engraved {
         color: var(--muted-foreground);
-        opacity: 0.4;
         text-shadow:
             0 1px 0 color-mix(in srgb, var(--background) 30%, transparent),
             0 -1px 0 color-mix(in srgb, var(--foreground) 8%, transparent);
