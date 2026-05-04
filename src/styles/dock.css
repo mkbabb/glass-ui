@@ -640,6 +640,79 @@
         color: var(--foreground);
     }
 
+    /* Tier — primary ────────────────────────────────────────────
+     *
+     * Per W2.7 §9, §12, §13, §17. The primary tier composes three at-rest
+     * marks (top-highlight, bottom under-shadow, baseline glass) with three
+     * disco accents on hover (specular swap, sparkle sweep, disco-grain).
+     *
+     * Reservation: disco fires on hover only. At rest the button reads as
+     * a Vignelli-restrained composed glass surface. The `--phase-color`
+     * cascade (provided by `<InstrumentChassis>` via `data-phase`) tints
+     * the disco-grain radial only on hover; idle is neutral.
+     */
+    .dock-tab-button[data-tier="primary"] {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        --dock-tab-min-height: 3rem;
+        padding-inline: 1.5rem;
+        background:
+            color-mix(in srgb, var(--card) 60%, transparent);
+        color: var(--foreground);
+        border: 1px solid var(--glass-border-default);
+        box-shadow:
+            inset 0 0.5px 0 0 rgb(255 255 255 / 0.06),
+            0 0.5px 0 0 rgb(0 0 0 / 0.04),
+            var(--glass-highlight);
+        transition:
+            background var(--duration-fast) var(--ease-standard),
+            color var(--duration-fast) var(--ease-standard),
+            transform var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard);
+    }
+
+    .dock-tab-button[data-tier="primary"]:hover:not(:disabled) {
+        --glass-grain-opacity: var(--glass-grain-opacity-disco, 0.08);
+        background-image:
+            var(--paper-clean-texture),
+            radial-gradient(
+                ellipse at 30% 30%,
+                color-mix(in srgb, var(--phase-color, var(--foreground)) 18%, transparent),
+                transparent 70%
+            ),
+            none;
+        background-blend-mode: overlay, normal, normal;
+        background-size: var(--paper-texture-size), auto, auto;
+        box-shadow:
+            var(--glass-specular),
+            0 0.5px 0 0 rgb(0 0 0 / 0.06);
+    }
+
+    .dock-tab-button[data-tier="primary"]::after {
+        content: "✦";
+        position: absolute;
+        top: 0.25rem;
+        left: 0.5rem;
+        color: hsl(0 0% 100% / 0.7);
+        font-size: 0.75rem;
+        line-height: 1;
+        pointer-events: none;
+        opacity: 0;
+        will-change: transform, opacity;
+    }
+
+    .dock-tab-button[data-tier="primary"]:hover::after {
+        animation: sparkle-sweep 600ms var(--ease-out-expo);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .dock-tab-button[data-tier="primary"]:hover::after {
+            animation: none;
+            opacity: 0;
+        }
+    }
+
     .dock-select-trigger,
     .dock-dropdown-trigger {
         display: inline-flex;

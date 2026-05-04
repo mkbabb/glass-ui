@@ -195,6 +195,19 @@
         box-shadow: var(--focus-ring-shadow);
     }
 
+    /* Phase-finish catch-light — the quieter cousin of --glass-specular.
+       Speedtest toggles `data-just-resolved="true"` on a metric pill once
+       its phase completes; the badge briefly carries a 1px catch-light
+       streak at the top edge. Reads as the pill catching club lighting at
+       the moment its result resolves. */
+    .metric-badge[data-just-resolved="true"] {
+        box-shadow:
+            inset 0 1px 0 0 rgb(255 255 255 / 0.18),
+            var(--metric-badge-shadow,
+                0 1px 6px color-mix(in srgb, var(--shadow-color) 8%, transparent),
+                var(--glass-highlight));
+    }
+
     /* ── Input bar — glassmorphic inline input container ── */
     .input-bar {
         display: flex;
