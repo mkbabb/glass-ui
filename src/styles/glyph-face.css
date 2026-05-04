@@ -1,0 +1,66 @@
+/* glyph-face.css — three-layer composition for <GlyphFace>.
+ *
+ * Per W2.7 §19. Wraps a slotted lucide glyph with a phase-tinted radial
+ * backplate (visible only when [data-active="true"]) and a 165° linear-
+ * gradient catch-light cap. The slotted silhouette stays `currentColor` —
+ * Vignelli-clean — while the disco punch lives in the surrounding layers.
+ *
+ * Self-contained sheet; no token additions beyond what's already in
+ * `tokens.css`. Consumers may override the cap blend mode and backplate
+ * radius with the documented `--gf-*` custom properties.
+ */
+
+@layer components {
+    .glyph-face {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        isolation: isolate;
+        --gf-tint: transparent;
+        --gf-cap-strength: 0.35;
+        --gf-cap-blend: overlay;
+    }
+
+    .glyph-face-backplate {
+        position: absolute;
+        inset: -25%;
+        border-radius: 50%;
+        background: radial-gradient(
+            ellipse at 30% 30%,
+            var(--gf-tint) 0%,
+            transparent 70%
+        );
+        opacity: 0;
+        transition: opacity var(--duration-fast) var(--spring-snappy);
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    .glyph-face[data-active="true"] .glyph-face-backplate {
+        opacity: 1;
+    }
+
+    .glyph-face-cap {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            165deg,
+            rgb(255 255 255 / var(--gf-cap-strength)) 0%,
+            transparent 40%
+        );
+        pointer-events: none;
+        mix-blend-mode: var(--gf-cap-blend);
+        border-radius: inherit;
+    }
+
+    .dark .glyph-face {
+        --gf-cap-strength: 0.22;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .glyph-face-backplate {
+            transition: none;
+        }
+    }
+}
