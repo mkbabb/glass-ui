@@ -106,6 +106,7 @@ export const CATEGORIES: Category[] = [
             s("primitives", "status-dot", "Status Dot"),
             s("primitives", "pulse", "Pulse"),
             s("primitives", "glyph-face", "Glyph Face", "Phase-tinted lucide wrapper with catch-light cap."),
+            s("primitives", "dock-group", "Dock Group", "Pill-row shelf — wraps a horizontal cluster of dock-tier consumers in a quieter glass tier than the surrounding chassis."),
             s("primitives", "separator", "Separator"),
         ],
     },

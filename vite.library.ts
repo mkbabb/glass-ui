@@ -38,6 +38,7 @@ export function libraryEntries(rootDir: string) {
         "icon-tooltip": resolve(rootDir, "src/icon-tooltip.ts"),
         "instrument-chassis": resolve(rootDir, "src/instrument-chassis.ts"),
         "glyph-face": resolve(rootDir, "src/glyph-face.ts"),
+        "dock-group": resolve(rootDir, "src/dock-group.ts"),
     };
 }
 

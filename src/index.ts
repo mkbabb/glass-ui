@@ -5,6 +5,7 @@ export * from "./components/ui";
 // Custom composites — instrument-cluster chassis (O.W2.7)
 export * from "./components/custom/instrument-chassis";
 export * from "./components/custom/glyph-face";
+export * from "./components/custom/dock-group";
 
 // Core composables
 export { useGlobalDark } from "./composables/useGlobalDark";

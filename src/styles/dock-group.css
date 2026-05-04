@@ -1,0 +1,30 @@
+/* dock-group.css — pill-row shelf surface for the chassis dock cluster.
+ *
+ * Composes a quieter glass tier than `--glass-bg-default`: opaque enough
+ * to read as a delta-on-chassis, transparent enough to let the chassis
+ * curvature show through. Per P.W1.B audit-C §4 — first consumer is
+ * speedtest's `<MetricStrip>` pill row; the shape generalises to survey
+ * pill clusters and any future cluster-inside-chassis idiom.
+ */
+
+@layer components {
+    .dock-group {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.375rem 0.625rem;
+        border-radius: var(--radius-pill);
+        background: var(--glass-bg-dock);
+        backdrop-filter: var(--glass-blur-dock);
+        -webkit-backdrop-filter: var(--glass-blur-dock);
+        border: 1px solid var(--glass-border-dock);
+        box-shadow:
+            inset 0 0.5px 0 0 rgb(255 255 255 / 0.05),
+            0 0.5px 0 0 rgb(0 0 0 / 0.04);
+    }
+
+    .dock-group[data-density="audacious"] {
+        padding: 0.5rem 0.875rem;
+        gap: 0.625rem;
+    }
+}
