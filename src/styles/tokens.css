@@ -284,11 +284,13 @@
     --glass-opacity-medium:   0.65;
     --glass-opacity-elevated: 0.80;
 
-    /* Blur primitives */
-    --glass-blur-subtle-radius:   4px;
-    --glass-blur-default-radius:  12px;
-    --glass-blur-medium-radius:   12px;
-    --glass-blur-elevated-radius: 16px;
+    /* Blur primitives. Radii halved in glass-ui v0.4 (speedtest tranche N.W1)
+       to soften the heavy backdrop-filter cast that occluded the aurora and
+       hero typography on consumer surfaces. Dock unchanged — already feather. */
+    --glass-blur-subtle-radius:   2px;
+    --glass-blur-default-radius:  6px;
+    --glass-blur-medium-radius:   6px;
+    --glass-blur-elevated-radius: 8px;
     --glass-blur-dock-radius:     2px;
 
     --glass-blur-subtle:   blur(var(--glass-blur-subtle-radius)) saturate(1.05);
