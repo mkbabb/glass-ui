@@ -20,6 +20,7 @@
         --gf-tint: transparent;
         --gf-cap-strength: 0.35;
         --gf-cap-blend: overlay;
+        --gf-cap-radius: 50%;
     }
 
     .glyph-face-backplate {
@@ -51,7 +52,7 @@
         );
         pointer-events: none;
         mix-blend-mode: var(--gf-cap-blend);
-        border-radius: inherit;
+        border-radius: var(--gf-cap-radius);
     }
 
     .dark .glyph-face {
