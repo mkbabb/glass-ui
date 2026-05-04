@@ -7,7 +7,7 @@ import {
 } from "./composables/dockContext";
 import { useDockState } from "./composables/useDockState";
 
-type DockDensity = "compact" | "comfortable" | "spacious";
+type DockDensity = "compact" | "comfortable" | "spacious" | "audacious";
 let dockInstanceId = 0;
 
 const props = withDefaults(

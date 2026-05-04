@@ -69,6 +69,23 @@
         --dock-tab-padding-inline: var(--dock-density-spacious-tab-padding-inline, 0.875rem);
     }
 
+    /* Audacious density — typography-forward chrome where the dock reads as
+       a primary surface, not a tray. Tab buttons set their own min-height so
+       consumer-bumped fonts no longer drift the button height — the
+       `--dock-tab-min-height` token reserves the row regardless of glyph rise. */
+    .glass-dock.density-audacious {
+        --dock-padding-block: var(--dock-density-audacious-padding-block, 0.875rem);
+        --dock-padding-inline: var(--dock-density-audacious-padding-inline, 1.125rem);
+        --dock-control-size: var(--dock-density-audacious-control-size, 4rem);
+        --dock-layer-height: var(--dock-density-audacious-layer-height, 4rem);
+        --dock-layer-gap: var(--dock-density-audacious-gap, 0.875rem);
+        --dock-trigger-padding-block: var(--dock-density-audacious-trigger-padding-block, 0.625rem);
+        --dock-trigger-padding-inline: var(--dock-density-audacious-trigger-padding-inline, 1rem);
+        --dock-tab-padding-block: var(--dock-density-audacious-tab-padding-block, 0.875rem);
+        --dock-tab-padding-inline: var(--dock-density-audacious-tab-padding-inline, 1.5rem);
+        --dock-tab-min-height: var(--dock-density-audacious-tab-min-height, 3.5rem);
+    }
+
     .glass-dock::after {
         content: "";
         position: absolute;

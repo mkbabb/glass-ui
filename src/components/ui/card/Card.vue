@@ -14,8 +14,11 @@ const props = defineProps<{
      *             Tokens (`--glass-*-cartoon`, `--shadow-cartoon`) fall back
      *             to the default glass tokens, so consumers opting into the
      *             variant without defining tokens get the default look.
+     * 'subtle'  = subtle glass bg + subtle blur, no grain. For cards that
+     *             read as inline workspace chrome rather than primary
+     *             surfaces (review summaries, audacious-canon contexts).
      */
-    variant?: "default" | "pane" | "cartoon";
+    variant?: "default" | "pane" | "cartoon" | "subtle";
     /**
      * Drop the surface shadow without otherwise changing the variant —
      * for cards that read as inline workspace chrome rather than
@@ -41,6 +44,11 @@ const variantClass = computed(() => {
             "border border-[var(--glass-border-subtle)]",
             props.flush ? "" : "shadow-[var(--shadow-card)]",
             "transition-shadow",
+        ].join(" ");
+    if (props.variant === "subtle")
+        return [
+            "scrollbar-hidden glass-subtle rounded-xl text-card-foreground",
+            props.flush ? "" : "shadow-[var(--glass-shadow-subtle)]",
         ].join(" ");
     if (props.variant === "cartoon")
         // Cartoon resolves through `.glass-cartoon` in glass.css — no

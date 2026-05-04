@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
+import { computed } from 'vue'
 import { cn } from '../../../utils'
 
-withDefaults(
+type MetricBadgeSize = 'sm' | 'md' | 'lg'
+
+const props = withDefaults(
   defineProps<{
     amount: string | number | null | undefined
     unit?: string
@@ -10,12 +13,39 @@ withDefaults(
     color?: string
     /** Substitute glyph when amount is empty. */
     placeholder?: string
+    /** Typographic scale. Defaults to `md`; `lg` lifts the badge to the
+     *  audacious typography rung (`text-mono-small` amount, `text-small`
+     *  unit) for hero placements. */
+    size?: MetricBadgeSize
     class?: HTMLAttributes['class']
   }>(),
   {
     placeholder: '—', // em dash
+    size: 'md',
   },
 )
+
+const amountClass = computed(() => {
+  switch (props.size) {
+    case 'sm':
+      return 'text-mono-micro'
+    case 'lg':
+      return 'text-mono-small'
+    default:
+      return 'text-mono-micro'
+  }
+})
+
+const unitClass = computed(() => {
+  switch (props.size) {
+    case 'sm':
+      return 'text-micro'
+    case 'lg':
+      return 'text-small'
+    default:
+      return 'text-micro'
+  }
+})
 </script>
 
 <template>
@@ -25,15 +55,17 @@ withDefaults(
       'focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2',
       $props.class,
     )"
+    :data-size="size"
   >
     <span
-      class="text-mono-micro font-semibold tabular-nums tracking-snug truncate transition-colors"
+      class="font-semibold tabular-nums tracking-snug truncate transition-colors"
+      :class="[amountClass, { 'text-muted-foreground/40': !amount }]"
       :style="amount ? { color } : undefined"
-      :class="{ 'text-muted-foreground/40': !amount }"
     >{{ amount || placeholder }}</span>
     <span
       v-if="unit"
-      class="text-micro font-mono text-muted-foreground shrink-0"
+      class="font-mono text-muted-foreground shrink-0"
+      :class="unitClass"
     >{{ unit }}</span>
   </div>
 </template>

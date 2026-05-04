@@ -301,17 +301,24 @@
        overlay rather than a heavy blurred slab. */
     --glass-blur-dock:     blur(var(--glass-blur-dock-radius)) saturate(1.025);
 
+    /* Dock-specific opacity. Lighter than `medium` (0.65) so the dock reads
+       as a translucent overlay rather than a panel — aurora bleed visible
+       through it. Consumed by `.glass-dock` via the `--glass-bg-dock` token. */
+    --glass-opacity-dock: 0.42;
+
     /* Composed backgrounds */
     --glass-bg-subtle:   color-mix(in srgb, var(--card) calc(var(--glass-opacity-subtle) * 100%), transparent);
     --glass-bg-default:  color-mix(in srgb, var(--card) calc(var(--glass-opacity-default) * 100%), transparent);
     --glass-bg-medium:   color-mix(in srgb, var(--card) calc(var(--glass-opacity-medium) * 100%), transparent);
     --glass-bg-elevated: color-mix(in srgb, var(--card) calc(var(--glass-opacity-elevated) * 100%), transparent);
+    --glass-bg-dock:     color-mix(in srgb, var(--card) calc(var(--glass-opacity-dock) * 100%), transparent);
 
     /* Composed borders — foreground-tinted */
     --glass-border-subtle:   color-mix(in srgb, var(--foreground) 8%, transparent);
     --glass-border-default:  color-mix(in srgb, var(--foreground) 10%, transparent);
     --glass-border-medium:   color-mix(in srgb, var(--foreground) 12%, transparent);
     --glass-border-elevated: color-mix(in srgb, var(--foreground) 15%, transparent);
+    --glass-border-dock:     color-mix(in srgb, var(--foreground) 11%, transparent);
     --glass-border:          var(--glass-border-default);
     --glass-border-strong:   var(--glass-border-elevated);
 
