@@ -2,6 +2,7 @@ export * from "./sortable";
 export { useGlobalDark } from "./useGlobalDark";
 export * from "./useInterval";
 export * from "./useKeyboardShortcuts";
+export * from "./useResizeObserver";
 export * from "./useTimer";
 export * from "./useTouchGate";
 export * from "./glass";

@@ -35,6 +35,7 @@ export * from "./components/custom/swatch";
 export { useGlobalDark } from "./composables/useGlobalDark";
 export * from "./composables/useInterval";
 export * from "./composables/useKeyboardShortcuts";
+export * from "./composables/useResizeObserver";
 export * from "./composables/useTimer";
 export * from "./composables/useTouchGate";
 export * from "./composables/glass";
