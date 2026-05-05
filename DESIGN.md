@@ -163,32 +163,39 @@ Every shadow recipe uses `color-mix(in srgb, var(--shadow-color) N%, transparent
 
 ### Cartoon shadows (offset, layered)
 
-```
---shadow-cartoon-sm: -3px 2px 1px rgba(0,0,0,0.10),
-                      0   3px 1px rgba(0,0,0,0.10),
-                     -3px 3px 1px rgba(0,0,0,0.06);
+Tiered cartoon shadows feed `--shadow-color` through `color-mix` so dark mode and consumer overrides flow through.
 
---shadow-cartoon-md: -4px 3px 1px rgba(0,0,0,0.12),
-                      0   4px 1px rgba(0,0,0,0.12),
-                     -4px 4px 2px rgba(0,0,0,0.08);
-
---shadow-cartoon-lg: -6px 4px 1px rgba(0,0,0,0.12),
-                      0   6px 1px rgba(0,0,0,0.12),
-                     -6px 6px 2px rgba(0,0,0,0.08);
 ```
+--shadow-cartoon-sm: -3px 2px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
+                      0   3px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
+                     -3px 3px 1px color-mix(in srgb, var(--shadow-color)  6%, transparent);
+
+--shadow-cartoon-md: -4px 3px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
+                      0   4px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
+                     -4px 4px 2px color-mix(in srgb, var(--shadow-color)  8%, transparent);
+
+--shadow-cartoon-lg: -6px 4px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
+                      0   6px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
+                     -6px 6px 2px color-mix(in srgb, var(--shadow-color)  8%, transparent);
+```
+
+The single-token `--shadow-cartoon` (default) and `--shadow-cartoon-hover` recipes are `3px 3px 0 0 color-mix(... var(--foreground) 8%, transparent)` and `4px 4px 0 0 color-mix(... var(--foreground) 10%, transparent)` respectively (dark mirror drops the alpha to 6% / 8%).
 
 ### Card flat-offset shadows
 
 ```
---shadow-card:       4px 4px 0px 0px rgba(0,0,0,0.50);
---shadow-card-hover: 5px 5px 0px 0px rgba(0,0,0,0.60);
+--shadow-card: var(--shadow-cartoon);
 ```
+
+Card defaults to the cartoon-tier offset; consumers wanting a heavier hover use `--shadow-cartoon-hover` directly. (`--shadow-card-hover` no longer ships.)
 
 ### Dock shadows
 
 ```
---shadow-dock:           0 4px 20px rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.15);
---shadow-dock-collapsed: 0 2px 12px rgba(0,0,0,0.20), 0 0 0 1px rgba(0,0,0,0.15);
+--shadow-dock:           0 4px 20px color-mix(in srgb, var(--shadow-color) 18%, transparent),
+                         0 0 0 1px  color-mix(in srgb, var(--shadow-color) 10%, transparent);
+--shadow-dock-collapsed: 0 2px 12px color-mix(in srgb, var(--shadow-color) 14%, transparent),
+                         0 0 0 1px  color-mix(in srgb, var(--shadow-color) 10%, transparent);
 ```
 
 ### Glass-tier shadows
@@ -208,10 +215,12 @@ Four tiers compose background opacity, backdrop-blur, border, shadow, grain. Dar
 
 | Tier     | Class              | Light opacity | Dark opacity | Blur                        | Border               | Shadow                   | Use                                 |
 |----------|--------------------|---------------|--------------|-----------------------------|----------------------|--------------------------|-------------------------------------|
-| Subtle   | `.glass-subtle`    | 30%           | 42%          | `blur(4px) saturate(1.05)`  | 8% foreground        | `--glass-shadow-subtle`   | Dock bg, input bg, hover overlays   |
-| Default  | `.glass-default`   | 50%           | 58%          | `blur(8px) saturate(1.2)`   | 10% foreground       | `--glass-shadow-default`  | Cards, containers, select triggers  |
-| Medium   | `.glass-medium`    | 65%           | 72%          | `blur(12px) saturate(1.3)`  | 12% foreground       | `--glass-shadow-medium`   | Popovers, dropdowns, dock expanded  |
-| Elevated | `.glass-elevated`  | 80%           | 88%          | `blur(16px) saturate(1.4)`  | 15% foreground       | `--glass-shadow-elevated` | Dialogs, command palette, modals    |
+| Subtle   | `.glass-subtle`    | 82%           | 90%          | `blur(1px) saturate(1.05)`  | 8% foreground        | `--glass-shadow-subtle`   | Dock bg, input bg, hover overlays   |
+| Default  | `.glass-default`   | 50%           | 58%          | `blur(3px)`                 | 10% foreground       | `--glass-shadow-default`  | Cards, containers, select triggers  |
+| Medium   | `.glass-medium`    | 65%           | 72%          | `blur(3px) saturate(1.3)`   | 12% foreground       | `--glass-shadow-medium`   | Popovers, dropdowns, dock expanded  |
+| Elevated | `.glass-elevated`  | 80%           | 88%          | `blur(4px) saturate(1.4)`   | 15% foreground       | `--glass-shadow-elevated` | Dialogs, command palette, modals    |
+
+Blur radii were halved twice — first in v0.4 (speedtest tranche N.W1), again in v0.5.1 (speedtest tranche O.W2) — to feather the dock + meter card to a barely-perceptible diffusion that lets aurora bleed through cleanly. The `default` tier emits no `saturate()` filter; the other three keep their saturation lift.
 
 ### Tokens per tier
 
@@ -220,7 +229,7 @@ For each tier, `--glass-bg-{tier}` (rgba), `--glass-blur-{tier}` (full filter st
 - Light mode: 3.5% opacity, blend `overlay`
 - Dark mode: 6% opacity, blend `soft-light`
 
-**Dock-specific blur** — `--glass-blur-dock = blur(2px) saturate(1.025)` is its own token (half the subtle weight) so floating and rail docks read as feather-light overlays rather than heavy blurred slabs. `GlassDock` references `var(--glass-blur-dock, var(--glass-blur-subtle))`; consumers can override the dock token at `:root` without touching the four tier blurs.
+**Dock-specific blur** — `--glass-blur-dock = blur(1px) saturate(1.025)` is its own token (matches the subtle radius after the v0.4/v0.5.1 halvings) so floating and rail docks read as feather-light overlays rather than heavy blurred slabs. `GlassDock` references `var(--glass-blur-dock, var(--glass-blur-subtle))`; consumers can override the dock token at `:root` without touching the four tier blurs.
 
 **Chassis-specific opacity** — `--glass-opacity-chassis: 0.28` light / `0.36` dark, composed at `--glass-bg-chassis` (`color-mix(in srgb, var(--card) calc(var(--glass-opacity-chassis) * 100%), transparent)`). Sits between dock (0.32) and default (0.50) so the wide-footprint `<InstrumentChassis>` surface reads as glass-over-aurora rather than an opaque slab. Lands as part of the chassis composition for consumers that compose their own large-surface instrument; the tier is its own opacity primitive (mirrors the dock-tier pattern) and inherits the default-tier `--glass-blur-default` + `--glass-border-default` + `--glass-shadow-default`.
 
@@ -229,8 +238,9 @@ For each tier, `--glass-bg-{tier}` (rgba), `--glass-blur-{tier}` (full filter st
 ### Convenience shorthands
 
 - `.glass-card` — **static surface utility**: `.glass-default` + `border-radius: var(--radius-card)` + offset card shadow. No hover lift; interactive cards live in `<Card>` (which composes its own hover via `.glass-cartoon` / `.cartoon-card` / etc.) or in components that explicitly opt into a hover variant. The `.glass-card:hover` rule was removed because conflating a static surface with an interactive primitive forced every consumer of the utility (badges, pills, panels) to fight off an unwanted lift.
-- `.glass-pill` — `.glass-default` + pill radius + press feedback (scale 0.97 on active)
 - `.glass-cartoon` — **interactive cartoon surface** (Tranche G): cartoon-tier shadow (`--shadow-cartoon-md`), 2px border, hover lift via `--lift-sm` + `--shadow-cartoon-lg`. Token-fall-through to default-tier glass tokens (`--glass-bg-cartoon, var(--glass-bg-default)`) so consumers without cartoon-specific overrides still get a coherent surface. Closes the contract `Card.vue variant="cartoon"` outputs.
+
+(`.glass-pill` was an earlier shorthand that no longer ships — pill geometry composes via `.btn-pill` + a glass tier when needed.)
 
 ### Accessibility fallbacks
 
@@ -303,7 +313,9 @@ Consumers extending beyond display-5 add tokens in their preset — the library 
 
 | Token                 | Value       | At body (px) | Use                  |
 |-----------------------|-------------|--------------|----------------------|
+| `--tracking-tightest` | −0.04em     | −0.64        | Display-mega/ultra   |
 | `--tracking-tight`    | −0.025em    | −0.4         | Headers, display     |
+| `--tracking-snug`     | −0.01em     | −0.16        | Subtle tightening    |
 | `--tracking-normal`   | 0           | 0            | Default body         |
 | `--tracking-wide`     | 0.025em     | 0.4          | Captions, labels     |
 | `--tracking-wider`    | 0.05em      | 0.8          | Uppercase mono       |
@@ -350,30 +362,37 @@ two semantic identities and confused consumers that overrode `--font-serif`
 for branding. It now resolves to its own system stack; consumers override
 per-app for brand sans without touching the serif voice.
 
-`.dock-label` is pinned to `var(--font-display)` so dock typography stays
-consistent regardless of consumer body cascade tweaks.
-
 Fraunces axes available: `wght` (300–700), `opsz`, `WONK` (0–1), `SOFT` (0–100).
 
 ### Semantic typography classes
 
+All five display rungs share `font-weight: var(--font-display-weight)` (= 400). The historical 300/350 ladder predated the warm-cream identity and no longer ships.
+
 | Class                  | Font         | Size                 | Weight | Line    | Tracking  | Axes                        |
 |------------------------|--------------|----------------------|--------|---------|-----------|-----------------------------|
-| `.text-display-5`      | display      | `--type-display-5`   | 300    | 1.1     | tight     | `WONK` 1, `SOFT` 0          |
-| `.text-display-4`      | display      | `--type-display-4`   | 350    | 1.1     | tight     | `WONK` 1, `SOFT` 0          |
-| `.text-display-3`      | display      | `--type-display-3`   | 350    | 1.1     | tight     | `WONK` 1, `SOFT` 0          |
-| `.text-display-2`      | display      | `--type-display-2`   | 350    | 1.1     | tight     | `WONK` 1, `SOFT` 0          |
-| `.text-display`        | display      | `--type-display-1`   | 350    | 1.1     | tight     | `WONK` 1, `SOFT` 0          |
-| `.text-title`          | display      | `--type-title`       | 400    | 1.2     | tight     | —                           |
-| `.text-heading`        | display      | `--type-heading`     | 500    | 1.2     | normal    | —                           |
+| `.text-display-ultra`  | display      | `--type-display-ultra` | 400  | 1.1     | tightest  | `"WONK" 1, "SOFT" 100, "wdth" 115` (literal) |
+| `.text-display-mega`   | display      | `--type-display-mega`  | 400  | 1.1     | tightest  | `"WONK" 1, "SOFT" 100, "wdth" 112` (literal) |
+| `.text-display-5`      | display      | `--type-display-5`   | 400    | 1.1     | tight     | `"WONK" 1, "SOFT" 100, "wdth" 110` (literal) |
+| `.text-display-4`      | display      | `--type-display-4`   | 400    | 1.1     | tight     | `"WONK" 1, "SOFT" 75, "wdth" 108` (literal) |
+| `.text-display-3`      | display      | `--type-display-3`   | 400    | 1.1     | tight     | `"WONK" 1, "SOFT" 50, "wdth" 105` (literal) |
+| `.text-display-2`      | display      | `--type-display-2`   | 400    | 1.1     | tight     | `var(--font-display-2-variation-settings)` = `"WONK" 1, "SOFT" 25, "wdth" 102` |
+| `.text-display`        | display      | `--type-display-1`   | 400    | 1.1     | tight     | `var(--font-display-1-variation-settings)` = `"WONK" 1, "SOFT" 0, "wdth" 100` |
+| `.text-title`          | serif        | `--type-title`       | 700    | 1.2     | tight     | —                           |
+| `.text-heading`        | serif        | `--type-heading`     | 700    | 1.2     | normal    | —                           |
 | `.text-subheading`     | serif        | `--type-subheading`  | 600    | 1.5     | normal    | —                           |
 | `.text-prose`          | serif        | `--type-prose`       | 400    | 1.618   | normal    | —                           |
 | `.text-body`           | serif        | `--type-body`        | 400    | 1.5     | normal    | —                           |
 | `.text-small`          | serif        | `--type-small`       | 400    | 1.4     | normal    | —                           |
-| `.text-caption`        | serif        | `--type-caption`     | 400    | 1.3     | wide      | —                           |
-| `.text-micro`          | serif        | `--type-micro`       | 500    | 1.2     | wide      | —                           |
-| `.text-mono-caption`   | mono         | `--type-caption`     | —      | 1.3     | wider     | `text-transform: uppercase` |
+| `.text-caption`        | serif        | `--type-caption`     | 400    | 1.3     | normal    | italic                      |
+| `.text-micro`          | (inherit)    | `--type-micro`       | —      | 1.25    | —         | —                           |
+| `.text-admin-label`    | mono         | `--type-admin-label` (10 px) | 500 | 1   | caps      | `text-transform: uppercase` |
+| `.text-math`           | serif        | (inherit)            | —      | —       | —         | italic                      |
+| `.text-math-body`      | serif        | `--type-prose`       | —      | 1.618   | —         | italic                      |
+| `.text-mono-caption`   | mono         | `--type-caption`     | 500    | (none)  | wider     | `text-transform: uppercase` |
 | `.text-mono-small`     | mono         | `--type-small`       | —      | 1.4     | normal    | —                           |
+| `.text-mono-micro`     | mono         | `--type-micro`       | —      | 1.25    | 0.025em   | —                           |
+| `.text-pane-title`     | display      | `clamp(2.4rem, 1.8rem + 2vw, 3.33rem)` (≥ 640 px → `--type-display-3`) | 400 | 1.1 | tight | `var(--font-display-variation-settings)` (`"WONK" 1, "SOFT" 0`) |
+| `.text-engraved`       | (inherit)    | (inherit)            | —      | —       | —         | dual inset text-shadow; muted-foreground color |
 | `.section-label`       | mono         | `--type-caption`     | —      | —       | caps      | `text-transform: uppercase`, muted-foreground color |
 
 ### Kinetic typography utilities
@@ -398,9 +417,9 @@ Base class `.btn-pill`:
 - padding `0.5rem 1rem`
 - font-size 1rem
 - gap `0.375rem` (6 px)
-- transition `all 200ms var(--ease-standard)`
+- transition: explicit per-property list at `var(--duration-fast)` `var(--ease-standard)` covering background-color, border-color, box-shadow, color, opacity, transform (no `all`)
 - `:focus-visible` → `outline: none; box-shadow: var(--focus-ring-shadow)`
-- `:disabled` → `opacity: 0.50; pointer-events: none`
+- `:disabled` → `opacity: var(--opacity-disabled)` (0.50); `pointer-events: none`
 - `[aria-pressed="true"]` → 15% primary bg, 30% primary border
 
 ### Variants
@@ -440,10 +459,10 @@ Standalone circular icon button for non-Vue contexts.
 - Background `--glass-bg-subtle`
 - Backdrop-filter `--glass-blur-subtle`
 - Color `var(--muted-foreground)`
-- Hover: 85% bg lighten, 20% foreground border, 15% foreground color, `transform: scale(1.08)`
-- Active: `transform: scale(0.95)`
-- Focus-visible: `box-shadow: var(--focus-ring-shadow)`
-- Disabled: 50% opacity, `cursor: not-allowed`
+- Hover: 85% bg lighten, 20% foreground border, full-opacity foreground color, `transform: scale(var(--scale-hover))`
+- Active: `transform: scale(var(--scale-press))`
+- Focus-visible: `outline: var(--focus-ring-width) solid var(--ring); outline-offset: var(--focus-ring-width)` (outline, not box-shadow)
+- Disabled: `opacity: 0.35` (literal — intentionally heavier than `--opacity-disabled`'s 0.50), `cursor: not-allowed`
 - `.is-active` / `[aria-pressed="true"]`: 10% foreground bg, 25% foreground border
 
 ---
@@ -519,7 +538,6 @@ Density overrides are named by tier, for example
 
 - `.dock-separator` — 1 px vertical divider, 50% dock-h tall, 15% foreground
 - `.dock-spacer` — `flex: 1` for pushing items apart
-- `.dock-label` — inline-flex, 14 px text, muted-foreground; `font-family: var(--font-display)` pinned so dock typography tracks the display voice regardless of consumer body cascade
 - `DarkModeToggle size="control"` follows `--control-size` and `--control-icon-padding`.
 - `DarkModeToggle size="dock"` follows `--dock-control-size` and `--dock-icon-padding`; a toggle placed inside `.glass-dock` defaults to dock sizing unless an explicit `sm`, `lg`, or `control` size is supplied.
 
@@ -570,15 +588,15 @@ Slot-class props (e.g., `ScrollPaneHeader` → `title-class`, `description-class
 
 ## Overlays
 
-| Type             | Components                                  | Tier       | Transition                              | Z-index             |
-|------------------|---------------------------------------------|------------|-----------------------------------------|---------------------|
-| Dialog           | `Dialog`, `DialogContent`                   | elevated   | `dialog-scale`                          | `--z-modal` (80)    |
-| Popover          | `Popover`, `PopoverContent`                 | elevated   | `.popover-animate .slide-in-from-side`  | `--z-popover` (70)  |
-| Dropdown         | `DropdownMenu`, `DropdownMenuContent`       | elevated   | `.popover-animate .slide-in-from-side`  | `--z-popover` (70)  |
-| Sheet            | `Sheet`, `SheetContent`                     | —          | slide from side                         | `--z-modal` (80)    |
-| Hover card       | `HoverCard`, `HoverCardContent`             | —          | `fade-slide`                            | `--z-hovercard` (60)|
-| Tooltip          | `Tooltip` + `TooltipProvider`               | —          | fade                                    | `--z-tooltip` (60)  |
-| Floating panel   | `.floating-panel`                           | medium     | `floating-panel-in`                     | `--z-overlay` (50)  |
+| Type             | Components                                  | Tier       | Transition                              | Z-index              |
+|------------------|---------------------------------------------|------------|-----------------------------------------|----------------------|
+| Dialog           | `Dialog`, `DialogContent`                   | elevated   | `dialog-scale`                          | `--z-modal` (140)    |
+| Popover          | `Popover`, `PopoverContent`                 | elevated   | `.popover-animate .slide-in-from-side`  | `--z-popover` (130)  |
+| Dropdown         | `DropdownMenu`, `DropdownMenuContent`       | elevated   | `.popover-animate .slide-in-from-side`  | `--z-popover` (130)  |
+| Sheet            | `Sheet`, `SheetContent`                     | —          | slide from side                         | `--z-modal` (140)    |
+| Hover card       | `HoverCard`, `HoverCardContent`             | —          | `fade-slide`                            | `--z-hovercard` (120)|
+| Tooltip          | `Tooltip` + `TooltipProvider`               | —          | fade                                    | `--z-tooltip` (120)  |
+| Floating panel   | `.floating-panel`                           | medium     | `floating-panel-in`                     | `--z-overlay` (50)   |
 
 `--popover-offset` (6 px) governs anchor-to-content spacing. `--popover-viewport-pad` (8 px) keeps popovers from viewport edges.
 
@@ -596,7 +614,7 @@ Reusable sets in `transitions.css`. Each defines enter/leave-active + enter-from
 | `fade-slide`      | Opacity + translateY                   | 300 ms `--ease-out`            | 200 ms `--ease-in`              | Dropdown items, list entries   |
 | `expand-fade`     | Opacity + max-height                   | 300 ms `--spring-smooth`       | 300 ms `--ease-in`              | Collapsible sections           |
 | `dialog-scale`    | Opacity + scale + translateY           | 450 ms `--spring-bouncy`       | 300 ms `--ease-standard`        | Modal entrance                 |
-| `pop`             | Scale + opacity                        | 200 ms `--spring-bouncy`       | 200 ms `--ease-out`             | Badge / toast entrance         |
+| `pop`             | Scale + opacity                        | opacity 200 ms `--ease-out` + transform 450 ms `--spring-bouncy` | 200 ms `--ease-out`             | Badge / toast entrance         |
 | `dropdown`        | Opacity + translateY + scale           | 300 ms `--spring-snappy`       | 100 ms opacity-only             | Dropdown menus                 |
 | `tab-fade`        | Opacity                                | 200 ms `--ease-standard`       | 200 ms `--ease-standard`        | Tab content swap               |
 | `pane-swap`       | Opacity + translateX (mode="out-in")   | 300 ms `--spring-smooth`       | 300 ms `--ease-out`             | Pane content swap              |
@@ -638,14 +656,17 @@ classes, including `.gold-shimmer`, live in `utilities.css`.
 ### Icons
 
 ```
---icon-xs: 0.75rem   (12 px)
---icon-sm: 0.875rem  (14 px)
---icon-md: 1rem      (16 px)
---icon-lg: 1.25rem   (20 px)
---icon-xl: 1.5rem    (24 px)
+--icon-xs:   0.75rem   (12 px)
+--icon-sm:   0.875rem  (14 px)
+--icon-md:   1rem      (16 px)
+--icon-lg:   1.25rem   (20 px)
+--icon-xl:   1.5rem    (24 px)
+--icon-2xl:  2rem      (32 px)   /* audacious tier — empty states + section glyphs */
+--icon-3xl:  3rem      (48 px)   /* hero feature glyphs */
+--icon-mega: 4.5rem    (72 px)   /* mascot-scale display icons */
 ```
 
-Utility classes `.icon-xs`..`.icon-xl` set width + height.
+Utility classes `.icon-{xs,sm,md,lg,xl,2xl,3xl,mega}` set width + height (`utilities.css` §Skeuo). Tailwind aliases follow as `--size-icon-{xs..mega}`; `<IconStamp size="…">` consumes the same scale.
 
 ### Input & form constraints
 
@@ -669,13 +690,16 @@ Tailwind exposure: `h-chart-compact`, `h-chart-default`, `h-chart-large`; `min-w
 
 ### Divider colors (for charts, overlays, echarts)
 
-```
---color-divider-subtle: rgba(128, 128, 128, 0.05)
---color-divider-medium: rgba(128, 128, 128, 0.4)
---color-divider-strong: rgba(128, 128, 128, 0.7)
+These are JS constants, not CSS variables. Exposed via `@mkbabb/glass-ui/tokens` for Canvas 2D / echarts consumers that can't resolve CSS at render time:
+
+```ts
+import { chartColors } from "@mkbabb/glass-ui/tokens";
+// chartColors.dividerSubtle  → "rgba(128, 128, 128, 0.05)"
+// chartColors.dividerMedium  → "rgba(128, 128, 128, 0.4)"
+// chartColors.dividerStrong  → "rgba(128, 128, 128, 0.7)"
 ```
 
-Also exposed as literal constants via `@mkbabb/glass-ui/tokens` for Canvas 2D / echarts consumers that can't resolve CSS variables.
+(Older docs referenced `--color-divider-{subtle,medium,strong}` CSS tokens; canon never declared them — only the JS constants exist.)
 
 ### Lift offsets (hover-lift utilities)
 
@@ -687,10 +711,15 @@ Also exposed as literal constants via `@mkbabb/glass-ui/tokens` for Canvas 2D / 
 
 ### Stacking overlaps (StackedIcons)
 
+`--stack-overlap-sm` / `-md` / `-lg` are consumed by `<StackedIconGroup>` but are **consumer-defined** — the library does not declare defaults in `tokens.css`. Consumers set them at the wrapper or at `:root`:
+
 ```
---stack-overlap-sm: 0.375rem (6 px)
---stack-overlap-md: 0.5rem   (8 px)
---stack-overlap-lg: 0.625rem (10 px)
+/* consumer preset */
+:root {
+    --stack-overlap-sm: 0.375rem; /* 6 px */
+    --stack-overlap-md: 0.5rem;   /* 8 px */
+    --stack-overlap-lg: 0.625rem; /* 10 px */
+}
 ```
 
 ### Border opacity scale
@@ -704,9 +733,9 @@ Also exposed as literal constants via `@mkbabb/glass-ui/tokens` for Canvas 2D / 
 ### Animation offsets
 
 ```
---animation-slide-sm: 3px
---animation-slide-md: 6px
---animation-slide-lg: 8px
+--motion-slide-sm: 3px
+--motion-slide-md: 6px
+--motion-slide-lg: 8px
 ```
 
 ### Paper textures
@@ -740,35 +769,57 @@ Consumer-overridable HSL tokens. Light values; dark overrides in `.dark {}`.
 
 ### Status
 
+Canon uses the standard semantic tokens — no `--color-status-*` aliases ship.
+
 ```
---color-status-active:  hsl(142 71% 45%)   /* green */
---color-status-paused:  hsl(48 96% 53%)    /* amber */
---color-status-idle:    var(--muted-foreground)
+--success:           hsl(142 71% 45%)   /* green */
+--warning:           hsl(38 92% 50%)    /* amber */
+--info:              hsl(217 91% 60%)   /* blue */
+--muted-foreground:  /* idle / paused fallback */
 ```
+
+### Accent / section / shadow primitives
+
+`--accent-pink` (`hsl(330 65% 55%)` / dark `hsl(335 55% 65%)`) and `--accent-red` (`hsl(0 72% 50%)` / dark `hsl(0 68% 62%)`) ship as canonical sibling alarm/error hues — live consumers exist in `fourier-analysis/web` (morph viz) and several preset overrides. The `--shadow:` primitive (`hsl(24 10% 10%)` light / `hsl(0 0% 5%)` dark) feeds `--depth-color-shadow` in `.depth-text` and serves as the consumer-overridable foreground-shadow primitive (`bbnf-lang/playground` consumes it 8 times). `--section-heading` was retired in W1 — it had zero in-source consumers.
 
 ### Gold
 
-```
---color-gold:       hsl(43 74% 49%)   /* #D49819 */
---color-gold-light: hsl(51 100% 50%)  /* #FFD900 */
---color-gold-dark:  hsl(34 87% 38%)   /* #B56D11 */
-```
-
-### Rainbow vivid / pastel (7 hues each, 0° → 300°)
-
-`--rainbow-red`, `--rainbow-orange`, `--rainbow-yellow`, `--rainbow-green`, `--rainbow-blue`, `--rainbow-indigo`, `--rainbow-violet`, plus `--rainbow-pastel-*` desaturated counterparts.
-
-### Blue shimmer
+`--gold` is the primitive; `--color-gold` is the `@theme` alias.
 
 ```
---shimmer-blue-dark:  hsl(224 76% 40%)
---shimmer-blue-mid:   hsl(217 91% 60%)
---shimmer-blue-light: hsl(213 94% 68%)
+--gold:       hsl(43 74% 49%)   /* #D49819 */
+--gold-light: hsl(51 100% 50%)  /* #FFD900 */
+--gold-dark:  hsl(34 87% 38%)   /* #B56D11 */
+
+/* @theme aliases for Tailwind utilities */
+--color-gold:       var(--gold);
+--color-gold-light: var(--gold-light);
+--color-gold-dark:  var(--gold-dark);
 ```
 
-### Heatmap (10 levels)
+### Rainbow vivid / pastel (irregular hue distribution)
 
-`--heatmap-{1..10}-bg` and `--heatmap-{1..10}-fg`, pale red → deep red in light mode, inverted in dark mode.
+The hue distribution is not a regular 0° → 300° sweep. Canon hues match the warm-cream palette:
+
+```
+/* vivid */
+--rainbow-red:    hsl(  0 85% 60%)
+--rainbow-orange: hsl( 30 90% 55%)
+--rainbow-yellow: hsl( 55 90% 55%)
+--rainbow-green:  hsl(130 70% 50%)
+--rainbow-blue:   hsl(210 80% 55%)
+--rainbow-indigo: hsl(260 70% 60%)
+--rainbow-violet: hsl(300 75% 60%)
+
+/* pastel */
+--rainbow-pastel-red:    hsl(  0 50% 78%)
+--rainbow-pastel-orange: hsl( 25 55% 76%)
+--rainbow-pastel-yellow: hsl( 50 55% 78%)
+--rainbow-pastel-green:  hsl(130 35% 74%)
+--rainbow-pastel-blue:   hsl(220 45% 76%)
+--rainbow-pastel-indigo: hsl(260 35% 76%)
+--rainbow-pastel-violet: hsl(280 40% 78%)
+```
 
 ---
 
@@ -839,7 +890,13 @@ Motion: `useSpringOrchestrator`, `useStaggerReveal`, `useScrollProgress`, `useAn
 For Canvas 2D, echarts, and other consumers that cannot resolve CSS variables at render time, the library exposes concrete JS/TS constants:
 
 ```ts
-import { chartHeights, chartMargin, chartColors, minWidthInputSm } from "@mkbabb/glass-ui/tokens";
+import {
+    chartHeights,
+    chartMargin,
+    chartColors,
+    minWidthInputSm,
+    NAMED_EASING_BEZIER,
+} from "@mkbabb/glass-ui/tokens";
 
 chartHeights = { compact: 240, default: 360, large: 400 }
 chartMargin  = 20
@@ -849,6 +906,15 @@ chartColors  = {
     dividerStrong: "rgba(128, 128, 128, 0.7)",
 }
 minWidthInputSm = 80
+
+NAMED_EASING_BEZIER = {
+    standard:       [0.4,   0,    0.2,  1],
+    out:            [0,     0,    0.2,  1],
+    in:             [0.4,   0,    1,    1],
+    "out-expo":     [0.16,  1,    0.3,  1],
+    apple:          [0.25,  0.1,  0.25, 1],
+    "apple-spring": [0.175, 0.885, 0.32, 1.275],
+}
 ```
 
 Keep in sync with `tokens.css` when editing CSS tokens.
@@ -960,25 +1026,25 @@ Surface hooks: `.cream-surface` (utilities), `<Card variant="cream">`, `<CreamSu
 
 ### Paper tier
 
-A sibling family to the four glass tiers — no `backdrop-filter`, no compositing tricks. Pure substrate.
+A sibling family to the four glass tiers — no `backdrop-filter`, no compositing tricks. Pure substrate. Tier values inline directly into the four `.paper-N` rules in `paper.css` rather than going through `--paper-bg/-shadow/-border-N` tokens (the per-tier tokens were retired in H.W1 for single-call-site usage).
 
-| Token             | Use                                        |
-|-------------------|--------------------------------------------|
-| `--paper-bg-1..4` | Tier-1 (lightest) through tier-4 (darkest) backgrounds |
-| `--paper-shadow-1..4` | Re-pointed to `--shadow-cartoon-{sm,md}` + `--shadow-elevated` + `--shadow-modal` |
-| `--paper-border-1..4` | Foreground-tinted borders (6/9/12/16% mix)    |
+| Tier       | Background (light → dark)              | Border (foreground-mix) | Shadow                                      |
+|------------|----------------------------------------|-------------------------|---------------------------------------------|
+| `.paper-1` | `var(--cream)` → unchanged             | 6%                      | `var(--shadow-cartoon-sm)`                  |
+| `.paper-2` | `hsl(48 12% 97%)` → `hsl(24 7% 11%)`   | 9% → 12%                | `var(--shadow-cartoon-md)`                  |
+| `.paper-3` | `hsl(48 10% 95%)` → `hsl(24 6% 14%)`   | 12% → 16%               | `var(--shadow-elevated)`                    |
+| `.paper-4` | `hsl(48 8% 92%)`  → `hsl(24 5% 17%)`   | 16% → 22%               | `var(--shadow-modal)`                       |
 
 Surface hooks: `.paper-1`, `.paper-2`, `.paper-3`, `.paper-4`, `.paper-card` (paper-2 + grain overlay + φ-spacing), `.paper-rule` (lined-paper tapered horizontal rule), `<Card variant="paper">`.
 
 ### Cartoon-shadow accent (modern-skeuomorphic axis)
 
-Per G invariant 7: the modern-skeuomorphic axis is delivered by extending the cartoon-shadow family with an accent recipe — not by introducing a bevel pair.
+Per G invariant 7: the modern-skeuomorphic axis is delivered by extending the cartoon-shadow family with an accent recipe — not by introducing a bevel pair. The mix percentage inlines as a literal (`15%` light / `18%` dark — `--cartoon-accent-mix` was retired in H.W1 as a single-call-site token).
 
 | Token                    | Default                | Use                                        |
 |--------------------------|------------------------|--------------------------------------------|
 | `--cartoon-accent-color` | `var(--foreground)`    | Hook for accent-tinted shadow              |
-| `--cartoon-accent-mix`   | `15%` (light) / `18%` (dark) | Color-mix percentage           |
-| `--shadow-cartoon-accent`| `3px 3px 0px 0px color-mix(in srgb, var(--cartoon-accent-color) var(--cartoon-accent-mix), transparent)` | Composed recipe |
+| `--shadow-cartoon-accent`| `3px 3px 0px 0px color-mix(in srgb, var(--cartoon-accent-color) 15%, transparent)` (dark mirror lifts to 18%) | Composed recipe |
 
 Consumers wire by overriding `--cartoon-accent-color` on the wrapper element.
 
@@ -990,12 +1056,21 @@ Per G Design POV: audacious sizes go softer + slightly wider.
 |------------------------|------------------------------------|--------------|
 | `--type-display-mega`  | `clamp(6.854rem, 5rem + 9vw, 11.089rem)`     | φ⁵ |
 | `--type-display-ultra` | `clamp(11.089rem, 8rem + 12vw, 17.944rem)`   | φ⁶ |
-| `--type-formula`       | `var(--type-subheading)`           | Math typography rung |
 | `--tracking-tightest`  | `-0.04em`                          | Display-mega/ultra ladder |
 
-Per-rung Fraunces variation axes (`--font-display-{1..5,mega,ultra}-variation-settings`) tune `WONK`/`SOFT`/`wdth` per size. Audacious sizes step `SOFT` to 100 and `wdth` to 110+; rung-1 keeps SOFT 0 / wdth 100 (canonical Fraunces).
+Per-rung Fraunces variation axes: `--font-display-1-variation-settings` and `--font-display-2-variation-settings` survive as named tokens because each has at least two consumers. Rungs 3..ultra inline their literal axes directly into their `@utility` blocks (the `--font-display-{3,4,5,mega,ultra}-variation-settings` tokens were retired in H.W1 for single-call-site usage). The literal values:
 
-`@utility text-display-{mega,ultra}` and `<DisplayHero size="display-{mega,ultra}">` consume the rungs.
+| Rung    | `WONK` | `SOFT` | `wdth` |
+|---------|--------|--------|--------|
+| display-1 | 1    | 0      | 100    |
+| display-2 | 1    | 25     | 102    |
+| display-3 | 1    | 50     | 105    |
+| display-4 | 1    | 75     | 108    |
+| display-5 | 1    | 100    | 110    |
+| display-mega  | 1 | 100   | 112    |
+| display-ultra | 1 | 100   | 115    |
+
+Audacious sizes step `SOFT` to 100 and `wdth` to 110+; rung-1 keeps SOFT 0 / wdth 100 (canonical Fraunces). `@utility text-display-{mega,ultra}` and `<DisplayHero size="display-{mega,ultra}">` consume the rungs. Math typography uses the existing `--type-subheading` rung directly (the `--type-formula` alias was retired in H.W1).
 
 ### Iconography scale extension
 
@@ -1013,7 +1088,6 @@ Generated `.icon-{xs..mega}` width+height utilities live in `utilities.css`; `<I
 
 | Token / utility         | Use                                          |
 |-------------------------|----------------------------------------------|
-| `--type-formula`        | √φ above body — equivalent to subheading rung |
 | `--space-phi-{1..4}`    | 0.618 / 1 / 1.618 / 2.618 rem golden-ratio rungs |
 | `.math-display`         | KaTeX block container (overflow-x scroll)    |
 | `.math-inline-pill`     | Chip-shaped inline math container            |
@@ -1021,6 +1095,8 @@ Generated `.icon-{xs..mega}` width+height utilities live in `utilities.css`; `<I
 | `.text-formula`         | CM serif italic + tabular-nums + leading-prose |
 | `.production-rule`      | BBNF-style `lhs ::= rhs` formal-grammar typography |
 | `.perf-number`/`.perf-unit` | Numeric + unit pair typography           |
+
+(Math typography sizes off the existing `--type-subheading` rung; the `--type-formula` alias retired in H.W1.)
 
 Components: `<MathSurface>`, `<MathFormula accent="…">`, `<MathGlyph char="…">`.
 
@@ -1048,13 +1124,12 @@ Five moods (`idle | happy | curious | sleepy | excited`) × eleven blended param
 | Utility                    | Notes                                          |
 |----------------------------|------------------------------------------------|
 | `.text-shimmer-gold`       | Single-hue gold gradient (consumes `--gold-{,light,dark}`) |
-| `.text-shimmer-blue`       | Single-hue blue gradient (consumes `--shimmer-blue-{dark,mid,light}`) |
 | `.text-shimmer-vivid`      | Full-rainbow sweep (vivid stops)                  |
 | `.text-shimmer-pastel`     | Full-rainbow sweep (pastel stops)                 |
 
-All four parameterize via `--shimmer-duration` (default `var(--duration-shimmer)`); animation `gold-shimmer-slide` slides the background-position.
+All three parameterize via `--shimmer-duration` (default `var(--duration-shimmer)`); animation `gold-shimmer-slide` slides the background-position.
 
-`--shimmer-blue-{dark,mid,light}` tokens land in `tokens.css` (sibling to `--gold-{,light,dark}`).
+(The `--shimmer-blue-{dark,mid,light}` tokens and `.text-shimmer-blue` utility were retired in H.W1 for failing the ≥ 2-call-site bar.)
 
 ### φ-spacing
 
@@ -1072,21 +1147,28 @@ Mapped via `@theme` block as `--spacing-phi-{1..4}`.
 | Export                  | Use                                         |
 |-------------------------|---------------------------------------------|
 | `chartHeights`, `chartMargin`, `chartColors`, `minWidthInputSm` | Chart geometry primitives (pre-G) |
-| `chartNeutrals`         | `{light,dark} × {foreground,background,muted,border}` hex pairs |
-| `vizColorsHex`          | `{light,dark} × viz-basis` hex pairs        |
-| `spectrumColor(i, total, alpha?)` | Hue-stepping helper for categorical color encoding |
-| `NAMED_EASING_BEZIER`   | Runtime projection of canon `--ease-*` cubic-beziers |
-| `goldenShimmer(ctx, x, y, w, h, position)` | Canvas helper paints horizontally-tiled gold gradient |
+| `NAMED_EASING_BEZIER`   | Runtime projection of canon `--ease-*` cubic-beziers (G addition that survived) |
 
-No new public subpath — all under existing `@mkbabb/glass-ui/tokens`.
+No new public subpath — all under existing `@mkbabb/glass-ui/tokens`. (Four other G runtime helpers — `chartNeutrals`, `vizColorsHex`, `spectrumColor`, `goldenShimmer` — were retired in tranche H.W1 for failing the ≥ 2-call-site bar.)
 
 ### Retired tokens
 
+Retired in tranche G.W1:
+
 - `--section-heading` — truly orphan; retired in W1.
 - `:root[data-typography-preset="brand-uniform-sans"]` block — single-presence orphan.
+
+Retired in tranche H.W1 (all failed the ≥ 2-call-site bar):
+
+- `--paper-bg-{1..4}`, `--paper-shadow-{1..4}`, `--paper-border-{1..4}` (12 tokens) — values inlined into the four `.paper-N` rules.
+- `--cartoon-accent-mix` — value inlined as `15%` (light) / `18%` (dark) into `--shadow-cartoon-accent`.
+- `--type-formula` — math typography uses `--type-subheading` directly.
+- `--shimmer-blue-{dark,mid,light}` (3 tokens) and the `.text-shimmer-blue` utility.
+- Per-rung Fraunces axis tokens for display-3, display-4, display-5, display-mega, display-ultra (5 tokens) — values inlined into each `@utility text-display-N` block. The display-1 + display-2 rung tokens survive as named tokens (each has at least two consumers).
 
 `--accent-pink`, `--accent-red`, and the `--shadow:` alias retained per W0 evidence (live consumer call sites).
 
 ### Retired utility
 
 - `.gold-shimmer` — replaced by `.text-shimmer-gold`. W5 ledgers name the consumer-side rename.
+- `.text-shimmer-blue` — retired in H.W1 alongside its tokens.
