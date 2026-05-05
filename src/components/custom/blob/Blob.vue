@@ -1,6 +1,6 @@
 /* @mkbabb/glass-ui — see docs/tranches/G/blob/SPEC.md */
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref, watch } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import { useMediaQuery } from "@vueuse/core";
 
 import { useBlob } from "../../../composables/blob/useBlob";
@@ -32,6 +32,15 @@ export interface BlobProps {
     tapMood?: BlobMood | null;
     /** Tap-mood duration in ms; default `800`. */
     tapDuration?: number;
+    /** Lazy-mount the renderer until the host element enters the viewport.
+     *  Default `true` — the WebGL2 context is acquired only when needed,
+     *  preventing browser context-cap exhaustion on pages with many blobs.
+     *  Pass `false` for hero specimens you want pre-warmed even off-screen. */
+    lazy?: boolean;
+    /** IntersectionObserver `rootMargin` for the lazy-mount probe. Default
+     *  `"200px"` — the blob renderer warms up shortly before the host
+     *  enters the viewport, hiding any first-frame pop. */
+    lazyMargin?: string;
 }
 
 const props = withDefaults(defineProps<BlobProps>(), {
@@ -44,6 +53,8 @@ const props = withDefaults(defineProps<BlobProps>(), {
     seed: 1618,
     tapMood: null,
     tapDuration: 800,
+    lazy: true,
+    lazyMargin: "200px",
 });
 
 const slots = defineSlots<{
@@ -108,6 +119,9 @@ const colorRef = computed<BlobColorHsl>(() => {
 const configRef = computed(() => props.config);
 const seedValue = computed(() => props.seed);
 
+const hostRef = ref<HTMLElement | null>(null);
+const isMounted = ref<boolean>(!props.lazy);
+
 const { canvasRef, dispose } = useBlob({
     color: colorRef,
     mood: activeMood,
@@ -116,7 +130,35 @@ const { canvasRef, dispose } = useBlob({
     seed: seedValue.value,
 });
 
-onBeforeUnmount(dispose);
+let intersectionObserver: IntersectionObserver | null = null;
+
+onMounted(() => {
+    if (!props.lazy || isMounted.value) return;
+    if (typeof IntersectionObserver !== "function" || !hostRef.value) {
+        isMounted.value = true;
+        return;
+    }
+    intersectionObserver = new IntersectionObserver(
+        (entries) => {
+            for (const entry of entries) {
+                if (entry.isIntersecting) {
+                    isMounted.value = true;
+                    intersectionObserver?.disconnect();
+                    intersectionObserver = null;
+                    return;
+                }
+            }
+        },
+        { rootMargin: props.lazyMargin, threshold: 0 },
+    );
+    intersectionObserver.observe(hostRef.value);
+});
+
+onBeforeUnmount(() => {
+    intersectionObserver?.disconnect();
+    intersectionObserver = null;
+    dispose();
+});
 
 const sizeStyle = computed(() => {
     const value = typeof props.size === "number" ? `${props.size}px` : props.size;
@@ -130,12 +172,14 @@ const colorStyle = computed(() =>
 
 <template>
     <div
+        ref="hostRef"
         :class="cn('blob')"
         :style="{ ...sizeStyle, ...colorStyle }"
         :data-mood="activeMood"
         @pointerdown="onTap"
     >
         <canvas
+            v-if="isMounted"
             ref="canvasRef"
             class="blob-canvas"
             role="presentation"
