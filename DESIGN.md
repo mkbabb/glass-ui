@@ -222,6 +222,10 @@ For each tier, `--glass-bg-{tier}` (rgba), `--glass-blur-{tier}` (full filter st
 
 **Dock-specific blur** — `--glass-blur-dock = blur(2px) saturate(1.025)` is its own token (half the subtle weight) so floating and rail docks read as feather-light overlays rather than heavy blurred slabs. `GlassDock` references `var(--glass-blur-dock, var(--glass-blur-subtle))`; consumers can override the dock token at `:root` without touching the four tier blurs.
 
+**Chassis-specific opacity** — `--glass-opacity-chassis: 0.28` light / `0.36` dark, composed at `--glass-bg-chassis` (`color-mix(in srgb, var(--card) calc(var(--glass-opacity-chassis) * 100%), transparent)`). Sits between dock (0.32) and default (0.50) so the wide-footprint `<InstrumentChassis>` surface reads as glass-over-aurora rather than an opaque slab. Lands as part of the chassis composition for consumers that compose their own large-surface instrument; the tier is its own opacity primitive (mirrors the dock-tier pattern) and inherits the default-tier `--glass-blur-default` + `--glass-border-default` + `--glass-shadow-default`.
+
+**Chassis curvature illusion** — `--glass-curvature-overlay = radial-gradient(ellipse at 50% -20%, hsl(0 0% 100% / 0.06), transparent 60%)`. Composed into the chassis bg stack so the surface lifts very slightly at the top centre; dark companion preserves the same alpha against the lifted dark grain.
+
 ### Convenience shorthands
 
 - `.glass-card` — **static surface utility**: `.glass-default` + `border-radius: var(--radius-card)` + offset card shadow. No hover lift; interactive cards live in `<Card>` (which composes its own hover via `.glass-cartoon` / `.cartoon-card` / etc.) or in components that explicitly opt into a hover variant. The `.glass-card:hover` rule was removed because conflating a static surface with an interactive primitive forced every consumer of the utility (badges, pills, panels) to fight off an unwanted lift.
@@ -379,6 +383,7 @@ Fraunces axes available: `wght` (300–700), `opsz`, `WONK` (0–1), `SOFT` (0�
 - **`.scroll-weight-reveal`** — `animation: weight-reveal linear both; animation-timeline: view(); animation-range: entry 0% cover 30%` (wght 100 → 400 + opacity 0.3 → 1)
 - **`.char-stagger > .char`** — per-char `fade-in` 300 ms `--spring-smooth backwards`; `animation-delay: calc(var(--char-index, 0) * 30ms)`
 - **`.text-glass-legible`** — halo text-shadow `0 0 12px color-mix(in srgb, var(--background) 50%, transparent), 0 0 4px color-mix(in srgb, var(--background) 30%, transparent)`
+- **`.text-engraved`** — letter-pressed treatment that reads as type carved into a glass panel. Mutes by colour (`--muted-foreground`) and composes a dual inset text-shadow (`0 1px 0 background-30%, 0 -1px 0 foreground-8%`); never dims by alpha. Consumers compose with `[data-idle="true"]` or any rest-state hook so the active-state lift is colour-only.
 
 All kinetic utilities respect `prefers-reduced-motion`: transforms eliminated, opacity fades preserved at `--duration-instant`.
 
@@ -458,6 +463,7 @@ The dock is a first-class composable system. Three principles: a dock is a posit
 | `DockPopover`          | Slot-based popover anchor                         | —                                                      | Popover anchored to any dock button             |
 | `DockLayer`            | Grid cell, fades in/out by slot key               | —                                                      | Layer-active switching                          |
 | `DockLayerGroup`       | Grid wrapper, animates width across layers        | —                                                      | Multi-layer dock (expanded / collapsed / compact) |
+| `DockGroup`            | Inline-flex shelf wrapper with `density="compact|comfortable|spacious|audacious"`; renders an inner glass shelf via `data-tier="secondary"` so a pill cluster reads as one shelved row rather than free-floating chips | —                                                      | Pill clusters, secondary-tier control rows      |
 
 ### Geometry
 
@@ -774,7 +780,7 @@ accordion · alert · avatar · badge · button · card · carousel · checkbox 
 
 ### Custom composites (`src/components/custom/`)
 
-animation · aurora · confirm-dialog · controls · **dock** (`GlassDock`, `DockLayer`, `DockLayerGroup`, `DockIconButton`, `DockSelectTrigger`, `DockDropdownTrigger`, `DockPopover`) · expandable-container · form · glass-carousel · glass-panel · icon-tooltip · infinite-scroll · labeled-field · **metric-badge** · metaballs · **pulse** · search · sidebar · sortable-list · stacked-icons · tabs (BouncyTabs, UnderlineTabs, BouncyToggle) · timeline · toggle-chip · typewriter.
+animation · aurora · confirm-dialog · controls · **disco-glyph** (`DiscoGlyph`) · **dock** (`GlassDock`, `DockLayer`, `DockLayerGroup`, `DockGroup`, `DockIconButton`, `DockSelectTrigger`, `DockDropdownTrigger`, `DockPopover`) · expandable-container · form · glass-carousel · glass-panel · **glyph-face** (`GlyphFace`) · icon-tooltip · infinite-scroll · **instrument-chassis** (`InstrumentChassis`, `RegionDivider`) · labeled-field · **metric-badge** · metaballs · **pulse** · search · sidebar · sortable-list · stacked-icons · tabs (BouncyTabs, UnderlineTabs, BouncyToggle) · timeline · toggle-chip · typewriter.
 
 ### Key component specs
 
@@ -782,7 +788,20 @@ animation · aurora · confirm-dialog · controls · **dock** (`GlassDock`, `Doc
 
 **`Pulse`** — `<Pulse :count="3" variant="dots|ring" speed="slow|normal|fast" />`. Dots: count-many 6 × 6 px rounded circles with current-color background, staggered `pulse-dot-bounce` animation (opacity 0.35 → 1 → 0.35, scale 0.8 → 1.2 → 0.8). Ring: 16 × 16 px current-color border with transparent top, linear spin. `--pulse-duration` mapped from `speed` prop to `--duration-slow|panel|fast`. Reduced-motion → animation none, opacity 0.6.
 
-**`MetricBadge`** — `<MetricBadge :amount="str|num" :unit="str" :color="hex" :placeholder="—" />`. Inline-flex, baseline-aligned, `max-w-32`, overflow-hidden. Amount: `text-mono-micro font-semibold tabular-nums`, colored with prop when amount is truthy, muted-foreground/40 when falsy. Unit: `text-micro font-mono text-muted-foreground`. Interactive: `hover:scale-110 hover:shadow-md active:scale-95`.
+**`MetricBadge`** — `<MetricBadge :size="sm|md|lg" :amount="str|num" :unit="str" :color="hex" :placeholder="—" />`. Inline-flex, baseline-aligned, `max-w-32`, overflow-hidden. Amount: `text-mono-micro font-semibold tabular-nums`, colored with prop when amount is truthy, muted-foreground/40 when falsy. Unit: `text-micro font-mono text-muted-foreground`. Interactive: `hover:scale-110 hover:shadow-md active:scale-95`. The `size` prop scales the typographic ladder for the audacious-canon use (consumer-side `useMediaQuery` selects `lg` ≥720, `md` ≥480, `sm` below to fit the mobile carve without clipping).
+
+**`GlyphFace`** — `<GlyphFace :tint="hex|undefined" :active="bool" :silhouette="path-d|clip-path">`. Three-layer wrapper around a slotted lucide glyph: a phase-tinted radial backplate (visible only when `[data-active="true"]`), the slotted silhouette (stays `currentColor` so the Vignelli-clean idle reading holds), and a 165° linear-gradient catch-light cap. Four CSS knobs:
+
+- `--gf-tint` — backplate hue (defaults `transparent`).
+- `--gf-cap-strength` — cap-gradient white-stop alpha (defaults `0.35`; dark companion `0.22`).
+- `--gf-cap-blend` — cap mix-blend-mode (defaults `overlay`).
+- `--gf-cap-radius` — cap clip radius (defaults `50%`).
+
+`silhouette` accepts an SVG path d-attribute or a raw `clip-path` value; when set, `--gf-silhouette` injects into the cap and the cap clips to the glyph silhouette rather than the wrapper bounds — closes the residual square-leak path that capped non-circular wrapped glyphs. Without `active` the wrapper reads as a plain glyph holder and joins clusters that share the same edge-light + cap-radius register.
+
+**`DiscoGlyph`** — `<DiscoGlyph :silhouette="path-d" :viewBox="0 0 24 24" :active="bool" :phaseColor="currentColor">`. Three-layer SVG glyph primitive that paints the silhouette (1) filled `currentColor` so the lucide cascade carries through at idle, (2) overlaid by an 8-stop linear gradient that simulates ~6 facets cutting across the glyph face (driven by `phaseColor`), (3) capped by a 165° catch-light gradient (white at the upper-left, transparent past 40%). `useId()` scopes the gradient ids so multiple glyphs on one page do not collide post-SSR/hydration. Speedtest's disco icons (Play / RotateCcw / ArrowRight / Check) are thin wrappers that pass only the silhouette path.
+
+**`InstrumentChassis`** — `<InstrumentChassis>` with `strip` / `dial` / `control` slots. Composes the chassis CSS once: `--glass-bg-chassis` + `--glass-blur-default` + `--glass-border-default` + `--glass-shadow-default` + the `--glass-curvature-overlay` lift + an engraved-bezel inner stroke + twin-line groove dividers between regions. Consumers render through the slots — speedtest, survey, thank-you all share the same chassis with different region content. `RegionDivider` ships the twin-line groove rule for nested splits.
 
 ### Composables (`src/composables/`)
 
