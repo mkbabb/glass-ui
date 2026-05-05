@@ -1,0 +1,73 @@
+name: stress
+
+# Wβ stress runtime profile capture (H.W5 / R2).
+#
+# Runs the `_internal/blob-stress` story under headless Chromium via Playwright
+# and captures actual measured Performance API numbers per SPEC.md §9. Hard-fails
+# if any threshold (CI-relaxed to 2× reference budget) is violated.
+
+on:
+    pull_request:
+        branches: [master, main]
+    push:
+        branches: [master, main]
+    workflow_dispatch:
+
+jobs:
+    stress:
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: npm
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Install Playwright Chromium
+              run: npx playwright install --with-deps chromium
+
+            - name: Build library
+              run: npm run build
+
+            - name: Capture stress baseline
+              env:
+                  STRESS_CI_RELAX: "1"
+              run: npm run stress
+
+            - name: Upload baseline artifact
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: stress-baseline
+                  path: docs/tranches/H/audit/W5-stress-baseline.md
+
+            - name: Post baseline summary on PR
+              if: github.event_name == 'pull_request' && always()
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      const fs = require('node:fs');
+                      const path = 'docs/tranches/H/audit/W5-stress-baseline.md';
+                      let body;
+                      try {
+                          body = fs.readFileSync(path, 'utf8');
+                      } catch (err) {
+                          body = `Stress baseline could not be read: ${err.message}`;
+                      }
+                      const truncated = body.length > 60000
+                          ? body.slice(0, 60000) + '\n\n…(truncated; see workflow artifact `stress-baseline`)'
+                          : body;
+                      await github.rest.issues.createComment({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: context.payload.pull_request.number,
+                          body: `## Stress baseline (Wβ / SPEC.md §9)\n\n${truncated}`,
+                      });

@@ -71,7 +71,7 @@ const profile = useRAFLoop(
 
         if (timing.now - profileStart >= PROFILE_DURATION_MS) {
             const elapsed = timing.now - profileStart;
-            profileResult.value = {
+            const result: ProfileResult = {
                 frames: profileFrames,
                 meanFrameMs:
                     profileFrames > 0 ? profileSumDelta / profileFrames : 0,
@@ -79,6 +79,11 @@ const profile = useRAFLoop(
                 elapsedMs: elapsed,
                 fps: profileFrames / (elapsed / 1000),
             };
+            profileResult.value = result;
+            // Headless extraction hook (W5 stress capture; H invariant 8).
+            if (typeof window !== "undefined") {
+                (window as unknown as { __blobStressMetrics?: ProfileResult }).__blobStressMetrics = result;
+            }
             profile.stop();
             isProfiling.value = false;
         }
