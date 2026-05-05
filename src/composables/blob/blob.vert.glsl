@@ -1,5 +1,5 @@
-// Provenance: fullscreen-triangle vertex shader from scripts/playground/blob-shader-playground.html (G.Wβ0 reference). gl_VertexID-driven; no buffers, no attributes.
 #version 300 es
+// Fullscreen-triangle vertex shader. gl_VertexID-driven; no buffers, no attributes.
 void main() {
     vec2 p = vec2(
         float((gl_VertexID & 1) << 2) - 1.0,

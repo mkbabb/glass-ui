@@ -1,5 +1,5 @@
-// Provenance: byte-for-byte port of FRAG_SRC in scripts/playground/blob-shader-playground.html (G.Wβ0 reference); SPEC.md §6 with canonical hsl2rgb (8-line) + Ashima/McEwan/Gustavson snoise (24-line, MIT) inlined.
 #version 300 es
+// Metaball SDF shader: SPEC.md §6 with canonical hsl2rgb (8 lines) + Ashima/McEwan/Gustavson snoise (24 lines, MIT) inlined.
 precision highp float;
 
 uniform float uTime;

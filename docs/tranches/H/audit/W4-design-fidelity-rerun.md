@@ -150,5 +150,3 @@ Per the W4 dispatch:
 ## Authority
 
 Per H invariant 5 (idiomatic gestalt > artefact preservation): the design-fidelity bar is now first-class. The 41 NEEDS-REPAIR stories represent G-era debt that survived G's close-ceremony but does not clear the H-binding gestalt criterion. The repair workstream is a named handoff to a future pass, not a silent deferral — this audit document IS the named destination.
-</content>
-</invoke>

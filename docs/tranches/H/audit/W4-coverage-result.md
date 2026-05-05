@@ -86,5 +86,3 @@ No other manifest entries touched.
 ## Authority
 
 Per H invariant 2 (every G-shipped artefact wires-or-retires) and W4.md's hard gate (every surviving G + H artefact has ≥1 story; design-fidelity gate clears every new story; manifest entry lands): coverage is complete.
-</content>
-</invoke>
