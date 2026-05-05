@@ -7,11 +7,12 @@ import {
   type ToastRootEmits,
   type ToastRootProps,
 } from 'reka-ui'
+import { type ToastVariants, toastVariants } from '.'
 import { cn } from '@utils'
 
 interface ToastProps extends ToastRootProps {
   class?: HTMLAttributes['class']
-  variant?: 'default' | 'destructive'
+  variant?: ToastVariants['variant']
   onOpenChange?: ((value: boolean) => void) | undefined
 }
 
@@ -24,7 +25,7 @@ const props = withDefaults(defineProps<ToastProps>(), {
 const emits = defineEmits<ToastEmits>()
 
 const delegatedProps = computed(() => {
-  const { class: _, variant, ...delegated } = props
+  const { class: _, variant: __, ...delegated } = props
   return delegated
 })
 </script>
@@ -33,16 +34,7 @@ const delegatedProps = computed(() => {
   <ToastProvider>
     <ToastRoot
       v-bind="delegatedProps"
-      :class="
-        cn(
-          'group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-xl border p-6 pr-8 shadow-lg transition-[opacity,transform] data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--reka-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--reka-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full',
-          {
-            'bg-background text-foreground border': variant === 'default',
-            'bg-destructive text-destructive-foreground border-destructive': variant === 'destructive',
-          },
-          props.class,
-        )
-      "
+      :class="cn(toastVariants({ variant }), props.class)"
       @update:open="emits('update:open', $event)"
       @escapeKeyDown="emits('escapeKeyDown', $event)"
       @swipeStart="emits('swipeStart', $event)"

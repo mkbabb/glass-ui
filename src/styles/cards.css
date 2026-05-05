@@ -1,5 +1,8 @@
-/* Card utilities — paper texture (cartoon-card + elevated-card removed at C.W5
- * per W0 overfitting audit; Card primitive's variant system covers both styles). */
+/* Card utilities — paper texture + cream surface.
+ *
+ * `.cream-surface` is the warm-cream identity surfaced as a consumable
+ * noun. Composed by `<CreamSurface>` and `<Card variant="cream">`. The
+ * four `.paper-{1..4}` tier classes live in `paper.css`. */
 
 @layer components {
     /* Paper texture overlay */
@@ -12,5 +15,56 @@
 
     :where(.dark) .paper-texture {
         background-blend-mode: screen;
+    }
+
+    /* Cream surface — bg-cream + paper-grain-overlay companion + cream-edge
+       border + cartoon-sm shadow. */
+    .cream-surface {
+        position: relative;
+        isolation: isolate;
+        background: var(--cream);
+        color: var(--cream-foreground);
+        border: 1px solid var(--cream-edge);
+        border-radius: var(--radius-2xl);
+        box-shadow: var(--shadow-cartoon-sm);
+        padding: var(--space-phi-3);
+    }
+
+    .cream-surface::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background-image: var(--paper-grain-texture);
+        background-repeat: repeat;
+        background-size: 60px 60px;
+        opacity: var(--glass-grain-opacity);
+        mix-blend-mode: multiply;
+    }
+
+    :where(.dark) .cream-surface::after,
+    .dark .cream-surface::after {
+        mix-blend-mode: soft-light;
+    }
+
+    .cream-surface[data-tone="warm"] {
+        background: var(--cream-warm);
+    }
+
+    .cream-surface[data-tone="cool"] {
+        background: var(--cream-cool);
+    }
+
+    @media (prefers-reduced-transparency: reduce) {
+        .cream-surface::after {
+            opacity: 0;
+        }
+    }
+
+    @media (prefers-contrast: more) {
+        .cream-surface {
+            border-color: color-mix(in srgb, var(--foreground) 30%, transparent);
+        }
     }
 }

@@ -13,7 +13,7 @@ const props = defineProps<ToggleGroupItemProps & {
   size?: ToggleGroupVariants['size']
 }>()
 
-const context = inject<ToggleGroupVariants>('toggleGroup')
+const context = inject<{ variant?: ToggleGroupVariants['variant']; size?: ToggleGroupVariants['size'] }>('toggleGroup')
 
 const delegatedProps = computed(() => {
   const { class: _, variant, size, ...delegated } = props
@@ -21,14 +21,15 @@ const delegatedProps = computed(() => {
 })
 
 const forwardedProps = useForwardProps(delegatedProps)
+
+const resolvedVariant = computed(() => context?.variant ?? props.variant)
+const resolvedSize = computed(() => context?.size ?? props.size)
 </script>
 
 <template>
   <ToggleGroupItem
-    v-bind="forwardedProps" :class="cn(toggleVariants({
-      variant: context?.variant || variant,
-      size: context?.size || size,
-    }), props.class)"
+    v-bind="forwardedProps"
+    :class="cn(toggleVariants({ variant: resolvedVariant, size: resolvedSize }), props.class)"
   >
     <slot />
   </ToggleGroupItem>

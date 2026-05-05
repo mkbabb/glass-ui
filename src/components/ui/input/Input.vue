@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
 import { useVModel } from '@vueuse/core'
+import { type InputVariants, inputVariants } from '.'
 import { cn } from '@utils'
 
 const props = defineProps<{
   defaultValue?: string | number
   modelValue?: string | number
   class?: HTMLAttributes['class']
+  variant?: InputVariants['variant']
 }>()
 
 const emits = defineEmits<{
@@ -20,5 +22,5 @@ const modelValue = useVModel(props, 'modelValue', emits, {
 </script>
 
 <template>
-  <input v-model="modelValue" :class="cn('input-pill text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium', props.class)">
+  <input v-model="modelValue" :class="cn(inputVariants({ variant }), props.class)">
 </template>

@@ -6,6 +6,7 @@ import {
     ref,
     type Ref,
 } from "vue";
+import { tryOnScopeDispose } from "@vueuse/core";
 
 export interface RAFLoopTiming {
     /** Current frame timestamp from requestAnimationFrame. */
@@ -271,3 +272,4 @@ export function useRAFLoop(
         dispose,
     };
 }
+

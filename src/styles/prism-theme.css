@@ -1,0 +1,151 @@
+/*
+ * prism-theme.css — Prism syntax highlighting theme bridge
+ *
+ * Opt-in stylesheet: consumers import via
+ *   @import "@mkbabb/glass-ui/styles/prism-theme"
+ * AFTER their Prism base CSS import.
+ *
+ * Light/dark mode is automatic through canon's existing .dark cascade —
+ * the rule values resolve via CSS variables (--viz-*, --muted-foreground,
+ * --foreground), so dark-mode hues are sourced from tokens.css §6b dark
+ * overrides without a JS bridge.
+ *
+ * Shiki users: read the same CSS variables via getComputedStyle() at
+ * runtime to construct a JSON theme. Glass-ui does not ship the JSON form;
+ * that's a one-line consumer-side wrapper.
+ *
+ * Tokens consumed: --viz-{fourier,chebyshev,legendre,amber,green},
+ * --foreground, --muted-foreground, --easing-accent, --section-color-*,
+ * --gold-light, --type-caption, --leading-small, --font-mono.
+ */
+
+/* ─── Container styling — `.code-block` / `pre[class*="language-"]` ─── */
+
+pre[class*="language-"],
+code[class*="language-"] {
+    font-family: var(--font-mono);
+    font-size: var(--type-small);
+    line-height: var(--leading-small);
+    color: var(--foreground);
+    background: color-mix(in srgb, var(--foreground) 4%, transparent);
+    text-shadow: none;
+    tab-size: 2;
+    hyphens: none;
+}
+
+pre[class*="language-"] {
+    padding: var(--space-phi-3);
+    margin: var(--space-phi-2) 0;
+    border-radius: var(--radius-lg);
+    overflow: auto;
+    border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
+}
+
+:not(pre) > code[class*="language-"] {
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    white-space: normal;
+}
+
+/* ─── Token mappings ─── */
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: var(--muted-foreground);
+    font-style: italic;
+}
+
+.token.keyword,
+.token.atrule {
+    color: var(--viz-fourier);
+    font-weight: 600;
+}
+
+.token.string,
+.token.char,
+.token.url {
+    color: var(--viz-amber);
+}
+
+.token.number,
+.token.boolean,
+.token.constant,
+.token.symbol {
+    color: var(--viz-chebyshev);
+}
+
+.token.function,
+.token.method,
+.token.class-name {
+    color: var(--viz-legendre);
+}
+
+.token.operator,
+.token.punctuation,
+.token.entity {
+    color: var(--muted-foreground);
+}
+
+.token.tag,
+.token.namespace,
+.token.selector {
+    color: var(--viz-fourier);
+}
+
+.token.attr-name {
+    color: var(--easing-accent);
+}
+
+.token.attr-value {
+    color: var(--viz-amber);
+}
+
+.token.builtin {
+    color: var(--viz-green);
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+    color: var(--gold-light);
+}
+
+.token.deleted {
+    color: var(--accent-red);
+    background: color-mix(in srgb, var(--accent-red) 8%, transparent);
+}
+
+.token.inserted {
+    color: var(--success);
+    background: color-mix(in srgb, var(--success) 8%, transparent);
+}
+
+.token.italic {
+    font-style: italic;
+}
+
+.token.bold {
+    font-weight: 700;
+}
+
+/* ─── Selection styling ─── */
+
+pre[class*="language-"]::selection,
+pre[class*="language-"] ::selection,
+code[class*="language-"]::selection,
+code[class*="language-"] ::selection {
+    background: color-mix(in srgb, var(--easing-accent) 25%, transparent);
+}
+
+/* ─── A11y: prefers-contrast: more ─── */
+
+@media (prefers-contrast: more) {
+    pre[class*="language-"] {
+        border-color: color-mix(in srgb, var(--foreground) 20%, transparent);
+    }
+    .token.comment {
+        color: color-mix(in srgb, var(--muted-foreground) 80%, var(--foreground));
+    }
+}

@@ -99,7 +99,7 @@ Generated from damped spring physics. Use `easing-function: var(--spring-*)` or 
 
 ## Z-Index Stack
 
-Twelve-tier stacking, plus two out-of-band tiers:
+Thirteen-tier stacking, plus three out-of-band tiers. Overlay tier jumps from 50 → 120 so floating chrome (toasts, modals, popovers) clears any consumer content stacking up to 100.
 
 | Token             | Value | Surfaces                             |
 |-------------------|-------|--------------------------------------|
@@ -111,12 +111,13 @@ Twelve-tier stacking, plus two out-of-band tiers:
 | `--z-dock`        | 40    | Docks                                |
 | `--z-panel`       | 45    | Floating editor panels               |
 | `--z-overlay`     | 50    | Full-screen overlays                 |
-| `--z-hovercard`   | 60    | Hover cards                          |
-| `--z-tooltip`     | 60    | Tooltips (coequal with hover cards)  |
-| `--z-popover`     | 70    | Popovers, dropdowns                  |
-| `--z-modal`       | 80    | Dialogs, sheets                      |
-| `--z-fullscreen`  | 90    | Fullscreen takeovers                 |
-| `--z-toast`       | 100   | Toast notifications                  |
+| `--z-hovercard`   | 120   | Hover cards                          |
+| `--z-tooltip`     | 120   | Tooltips (coequal with hover cards)  |
+| `--z-popover`     | 130   | Popovers, dropdowns                  |
+| `--z-modal`       | 140   | Dialogs, sheets                      |
+| `--z-fullscreen`  | 150   | Fullscreen takeovers                 |
+| `--z-toast`       | 160   | Toast notifications                  |
+| `--z-toggle`      | 999   | Floating UI toggles (configurator)   |
 | `--z-max`         | 9999  | Emergency escape hatch               |
 | `--z-debug`       | 99999 | Debug overlays                       |
 
@@ -126,18 +127,19 @@ Twelve-tier stacking, plus two out-of-band tiers:
 
 | Token            | Value              | Pixel (at 16 px base) | Use                        |
 |------------------|--------------------|-----------------------|----------------------------|
-| `--radius`       | 0.5rem             | 8 px                  | Default                    |
+| `--radius`       | 0.625rem           | 10 px                 | Default                    |
+| `--radius-xs`    | 4px                | 4 px                  | Smallest                   |
 | `--radius-sm`    | 4px                | 4 px                  | Tight corners (kbd, badge) |
 | `--radius-md`    | 6px                | 6 px                  | Medium                     |
-| `--radius-lg`    | var(--radius)      | 8 px                  | Interactive                |
+| `--radius-lg`    | var(--radius)      | 10 px                 | Interactive                |
 | `--radius-xl`    | 12px               | 12 px                 | Panels                     |
 | `--radius-2xl`   | 1rem               | 16 px                 | Large cards, dialogs       |
 | `--radius-pill`  | 9999px             | 9999 px               | Pills                      |
 | `--radius-card`  | var(--radius-2xl)  | 16 px                 | Card surfaces              |
 | `--radius-panel` | var(--radius-xl)   | 12 px                 | Panels                     |
 | `--radius-dialog`| var(--radius-2xl)  | 16 px                 | Modal dialogs              |
-| `--radius-input` | var(--radius)      | 8 px                  | Inputs                     |
-| `--radius-button`| var(--radius)      | 8 px                  | Buttons                    |
+| `--radius-input` | var(--radius)      | 10 px                 | Inputs                     |
+| `--radius-button`| var(--radius)      | 10 px                 | Buttons                    |
 | `--radius-badge` | var(--radius-pill) | 9999 px               | Badges                     |
 | `--radius-dock`  | var(--radius-pill) | 9999 px               | Dock container             |
 
@@ -147,13 +149,16 @@ Twelve-tier stacking, plus two out-of-band tiers:
 
 ### Elevation scale
 
+Every shadow recipe uses `color-mix(in srgb, var(--shadow-color) N%, transparent)` so dark mode and consumer-overridden `--shadow-color` flow through automatically.
+
 ```
---shadow-xs:   0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
---shadow-sm:   0 2px 8px rgba(0,0,0,0.06);
---shadow-md:   0 4px 16px rgba(0,0,0,0.08);
---shadow-lg:   0 4px 20px rgba(0,0,0,0.12);
---shadow-xl:   0 8px 24px rgba(0,0,0,0.14);
---shadow-2xl:  0 25px 50px -12px rgba(0,0,0,0.25);
+--shadow-xs:   0 1px 3px color-mix(in srgb, var(--shadow-color) 4%, transparent),
+               0 1px 2px color-mix(in srgb, var(--shadow-color) 6%, transparent);
+--shadow-sm:   0 2px 8px  color-mix(in srgb, var(--shadow-color) 6%, transparent);
+--shadow-md:   0 4px 16px color-mix(in srgb, var(--shadow-color) 8%, transparent);
+--shadow-lg:   0 4px 20px color-mix(in srgb, var(--shadow-color) 12%, transparent);
+--shadow-xl:   0 8px 24px color-mix(in srgb, var(--shadow-color) 14%, transparent);
+--shadow-2xl:  0 25px 50px -12px color-mix(in srgb, var(--shadow-color) 25%, transparent);
 ```
 
 ### Cartoon shadows (offset, layered)
@@ -913,3 +918,156 @@ The story loader is convention-based (`import.meta.glob`) — no router edits re
 ### Configurator
 
 Bottom-right FAB opens a `Sheet` with live controls for preset, font family (serif/sans/display/mono), scale base, hue rotation, grain opacity, density, radius, cartoon shadow, dark mode. Writes to `:root` CSS custom properties, persists to `localStorage['glass-ui-demo-config']`. The *neutral* preset in `demo/presets/neutral.css` showcases the library's range against its warm-cream default.
+
+---
+
+## Tranche G additions
+
+### Cream identity
+
+The library's warm-cream base (hue 48) is now a public surface noun.
+
+| Token                 | Light                | Dark            | Use                                            |
+|-----------------------|----------------------|-----------------|------------------------------------------------|
+| `--cream`             | `var(--neutral-0)`   | `var(--neutral-0)` (warm-charcoal) | Page surface (== `--background`) |
+| `--cream-warm`        | `hsl(40 18% 96%)`    | `hsl(28 6% 8%)` | Warm tonal shift (paper-card, formula-block) |
+| `--cream-cool`        | `hsl(54 8% 97%)`     | `hsl(40 5% 9%)` | Cool tonal shift                              |
+| `--cream-edge`        | `var(--neutral-3)`   | `var(--neutral-3)` | Cream-surface border                       |
+| `--cream-foreground`  | `var(--foreground)`  | `var(--foreground)` | Text on cream                              |
+
+`@theme` aliases: `--color-cream`, `--color-cream-warm`, `--color-cream-cool`, `--color-cream-edge`, `--color-cream-foreground` → Tailwind utilities `bg-cream`, `bg-cream-warm`, etc.
+
+Surface hooks: `.cream-surface` (utilities), `<Card variant="cream">`, `<CreamSurface>`.
+
+### Paper tier
+
+A sibling family to the four glass tiers — no `backdrop-filter`, no compositing tricks. Pure substrate.
+
+| Token             | Use                                        |
+|-------------------|--------------------------------------------|
+| `--paper-bg-1..4` | Tier-1 (lightest) through tier-4 (darkest) backgrounds |
+| `--paper-shadow-1..4` | Re-pointed to `--shadow-cartoon-{sm,md}` + `--shadow-elevated` + `--shadow-modal` |
+| `--paper-border-1..4` | Foreground-tinted borders (6/9/12/16% mix)    |
+
+Surface hooks: `.paper-1`, `.paper-2`, `.paper-3`, `.paper-4`, `.paper-card` (paper-2 + grain overlay + φ-spacing), `.paper-rule` (lined-paper tapered horizontal rule), `<Card variant="paper">`.
+
+### Cartoon-shadow accent (modern-skeuomorphic axis)
+
+Per G invariant 7: the modern-skeuomorphic axis is delivered by extending the cartoon-shadow family with an accent recipe — not by introducing a bevel pair.
+
+| Token                    | Default                | Use                                        |
+|--------------------------|------------------------|--------------------------------------------|
+| `--cartoon-accent-color` | `var(--foreground)`    | Hook for accent-tinted shadow              |
+| `--cartoon-accent-mix`   | `15%` (light) / `18%` (dark) | Color-mix percentage           |
+| `--shadow-cartoon-accent`| `3px 3px 0px 0px color-mix(in srgb, var(--cartoon-accent-color) var(--cartoon-accent-mix), transparent)` | Composed recipe |
+
+Consumers wire by overriding `--cartoon-accent-color` on the wrapper element.
+
+### Display-mega / display-ultra typography rungs
+
+Per G Design POV: audacious sizes go softer + slightly wider.
+
+| Token                  | Value                              | Notes        |
+|------------------------|------------------------------------|--------------|
+| `--type-display-mega`  | `clamp(6.854rem, 5rem + 9vw, 11.089rem)`     | φ⁵ |
+| `--type-display-ultra` | `clamp(11.089rem, 8rem + 12vw, 17.944rem)`   | φ⁶ |
+| `--type-formula`       | `var(--type-subheading)`           | Math typography rung |
+| `--tracking-tightest`  | `-0.04em`                          | Display-mega/ultra ladder |
+
+Per-rung Fraunces variation axes (`--font-display-{1..5,mega,ultra}-variation-settings`) tune `WONK`/`SOFT`/`wdth` per size. Audacious sizes step `SOFT` to 100 and `wdth` to 110+; rung-1 keeps SOFT 0 / wdth 100 (canonical Fraunces).
+
+`@utility text-display-{mega,ultra}` and `<DisplayHero size="display-{mega,ultra}">` consume the rungs.
+
+### Iconography scale extension
+
+| Token         | Value     | Use                              |
+|---------------|-----------|----------------------------------|
+| `--icon-2xl`  | `2rem`    | Empty states, section glyphs     |
+| `--icon-3xl`  | `3rem`    | Hero feature glyphs              |
+| `--icon-mega` | `4.5rem`  | Mascot-scale display icons       |
+
+Generated `.icon-{xs..mega}` width+height utilities live in `utilities.css`; `<IconStamp size="…">` and `--size-icon-{xs..mega}` Tailwind aliases follow.
+
+### Mathematical axis
+
+`math.css` is default-included via the `index.css` cascade. Consumers using `@import "@mkbabb/glass-ui/styles"` get math utilities automatically.
+
+| Token / utility         | Use                                          |
+|-------------------------|----------------------------------------------|
+| `--type-formula`        | √φ above body — equivalent to subheading rung |
+| `--space-phi-{1..4}`    | 0.618 / 1 / 1.618 / 2.618 rem golden-ratio rungs |
+| `.math-display`         | KaTeX block container (overflow-x scroll)    |
+| `.math-inline-pill`     | Chip-shaped inline math container            |
+| `.formula-block`        | Cream-warm + accent left rule + tabular-nums + φ leading |
+| `.text-formula`         | CM serif italic + tabular-nums + leading-prose |
+| `.production-rule`      | BBNF-style `lhs ::= rhs` formal-grammar typography |
+| `.perf-number`/`.perf-unit` | Numeric + unit pair typography           |
+
+Components: `<MathSurface>`, `<MathFormula accent="…">`, `<MathGlyph char="…">`.
+
+### Blob primitive (sub-tranche β)
+
+The Blob is the design language's mascot grammar. Specified in full at `docs/tranches/G/blob/SPEC.md`.
+
+| Token                          | Default       | Use                                        |
+|--------------------------------|---------------|--------------------------------------------|
+| `--blob-color`                 | `var(--easing-accent)` | Per-instance accent (HSL recommended) |
+| `--blob-border-mix`            | `12%` (light) / `16%` (dark) | Edge color-mix percentage |
+| `--blob-border-mix-contrast`   | `24%` / `28%` | Active under `prefers-contrast: more`      |
+| `--blob-grain-opacity`         | `0.04`        | Subtle paper-grain overlay                 |
+| `--blob-chromatic-aberration`  | `0.002`       | WebGL shader uniform; NDC units            |
+| `--blob-cast-shadow-y`         | `0.5rem`      | Cast-shadow y offset                       |
+| `--blob-cast-shadow-blur`      | `1.5rem`      | Cast-shadow blur radius                    |
+| `--blob-cast-shadow-mix`       | `18%` / `24%` | Color-mix percentage of `--blob-color` into `--foreground` |
+
+Cast-shadow contract per SPEC.md §11.3: the `<Blob>` wrapper renders `box-shadow: 0 var(--blob-cast-shadow-y) var(--blob-cast-shadow-blur) color-mix(in srgb, var(--blob-color) var(--blob-cast-shadow-mix), var(--foreground))`.
+
+Five moods (`idle | happy | curious | sleepy | excited`) × eleven blended parameters per `BLOB_MOOD_PARAMS`. Instance-local WebGL2 renderer with Canvas2D fallback; deterministic `mulberry32` PRNG seeding. Five §11 user locks documented.
+
+### Shimmer family
+
+| Utility                    | Notes                                          |
+|----------------------------|------------------------------------------------|
+| `.text-shimmer-gold`       | Single-hue gold gradient (consumes `--gold-{,light,dark}`) |
+| `.text-shimmer-blue`       | Single-hue blue gradient (consumes `--shimmer-blue-{dark,mid,light}`) |
+| `.text-shimmer-vivid`      | Full-rainbow sweep (vivid stops)                  |
+| `.text-shimmer-pastel`     | Full-rainbow sweep (pastel stops)                 |
+
+All four parameterize via `--shimmer-duration` (default `var(--duration-shimmer)`); animation `gold-shimmer-slide` slides the background-position.
+
+`--shimmer-blue-{dark,mid,light}` tokens land in `tokens.css` (sibling to `--gold-{,light,dark}`).
+
+### φ-spacing
+
+| Token            | Value     | Tailwind utility       |
+|------------------|-----------|------------------------|
+| `--space-phi-1`  | `0.618rem` | `p-phi-1`, `gap-phi-1`, etc. |
+| `--space-phi-2`  | `1rem`    | …                      |
+| `--space-phi-3`  | `1.618rem` | …                      |
+| `--space-phi-4`  | `2.618rem` | …                      |
+
+Mapped via `@theme` block as `--spacing-phi-{1..4}`.
+
+### Runtime tokens (under existing `@mkbabb/glass-ui/tokens` subpath)
+
+| Export                  | Use                                         |
+|-------------------------|---------------------------------------------|
+| `chartHeights`, `chartMargin`, `chartColors`, `minWidthInputSm` | Chart geometry primitives (pre-G) |
+| `chartNeutrals`         | `{light,dark} × {foreground,background,muted,border}` hex pairs |
+| `vizColorsHex`          | `{light,dark} × viz-basis` hex pairs        |
+| `spectrumColor(i, total, alpha?)` | Hue-stepping helper for categorical color encoding |
+| `NAMED_EASING_BEZIER`   | Runtime projection of canon `--ease-*` cubic-beziers |
+| `goldenShimmer(ctx, x, y, w, h, position)` | Canvas helper paints horizontally-tiled gold gradient |
+
+No new public subpath — all under existing `@mkbabb/glass-ui/tokens`.
+
+### Retired tokens
+
+- `--section-heading` — truly orphan; retired in W1.
+- `:root[data-typography-preset="brand-uniform-sans"]` block — single-presence orphan.
+
+`--accent-pink`, `--accent-red`, and the `--shadow:` alias retained per W0 evidence (live consumer call sites).
+
+### Retired utility
+
+- `.gold-shimmer` — replaced by `.text-shimmer-gold`. W5 ledgers name the consumer-side rename.

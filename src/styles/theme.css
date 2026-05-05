@@ -19,12 +19,15 @@
     --text-subheading:  var(--type-subheading);
     --text-heading:     var(--type-heading);
     --text-title:       var(--type-title);
-    --text-display:     var(--type-display-1);
-    --text-display-1:   var(--type-display-1);
-    --text-display-2:   var(--type-display-2);
-    --text-display-3:   var(--type-display-3);
-    --text-display-4:   var(--type-display-4);
-    --text-display-5:   var(--type-display-5);
+    --text-display:       var(--type-display-1);
+    --text-display-1:     var(--type-display-1);
+    --text-display-2:     var(--type-display-2);
+    --text-display-3:     var(--type-display-3);
+    --text-display-4:     var(--type-display-4);
+    --text-display-5:     var(--type-display-5);
+    --text-display-mega:  var(--type-display-mega);
+    --text-display-ultra: var(--type-display-ultra);
+    --text-formula:       var(--type-formula);
 
     /* Line heights → leading-* utilities */
     --leading-micro:   var(--type-leading-micro);
@@ -36,12 +39,13 @@
     --leading-display: var(--type-leading-display);
 
     /* Letter spacing → tracking-* utilities */
-    --tracking-tight:  var(--type-tracking-tight);
-    --tracking-snug:   var(--type-tracking-snug);
-    --tracking-normal: var(--type-tracking-normal);
-    --tracking-wide:   var(--type-tracking-wide);
-    --tracking-wider:  var(--type-tracking-wider);
-    --tracking-caps:   var(--type-tracking-caps);
+    --tracking-tightest: -0.04em;
+    --tracking-tight:    var(--type-tracking-tight);
+    --tracking-snug:     var(--type-tracking-snug);
+    --tracking-normal:   var(--type-tracking-normal);
+    --tracking-wide:     var(--type-tracking-wide);
+    --tracking-wider:    var(--type-tracking-wider);
+    --tracking-caps:     var(--type-tracking-caps);
 
     /* ═══════════════════════════════════════════════
        Font families → font-* utilities
@@ -59,6 +63,13 @@
     --color-ring: var(--ring);
     --color-background: var(--background);
     --color-foreground: var(--foreground);
+
+    /* Cream identity — public surface noun (G.W1) */
+    --color-cream:            var(--cream);
+    --color-cream-warm:       var(--cream-warm);
+    --color-cream-cool:       var(--cream-cool);
+    --color-cream-edge:       var(--cream-edge);
+    --color-cream-foreground: var(--cream-foreground);
 
     --color-primary: var(--primary);
     --color-primary-foreground: var(--primary-foreground);
@@ -100,7 +111,6 @@
     --color-section-11: var(--section-color-11);
     --color-section-12: var(--section-color-12);
 
-    --color-section-heading: var(--section-heading);
     --color-accent-pink: var(--accent-pink);
     --color-accent-red:  var(--accent-red);
 
@@ -138,6 +148,19 @@
     --color-rainbow-blue:   var(--rainbow-blue);
     --color-rainbow-indigo: var(--rainbow-indigo);
     --color-rainbow-violet: var(--rainbow-violet);
+
+    --color-rainbow-pastel-red:    var(--rainbow-pastel-red);
+    --color-rainbow-pastel-orange: var(--rainbow-pastel-orange);
+    --color-rainbow-pastel-yellow: var(--rainbow-pastel-yellow);
+    --color-rainbow-pastel-green:  var(--rainbow-pastel-green);
+    --color-rainbow-pastel-blue:   var(--rainbow-pastel-blue);
+    --color-rainbow-pastel-indigo: var(--rainbow-pastel-indigo);
+    --color-rainbow-pastel-violet: var(--rainbow-pastel-violet);
+
+    /* Shimmer-blue triplet — sibling to gold; consumed by W2 .text-shimmer-blue */
+    --color-shimmer-blue-dark:  var(--shimmer-blue-dark);
+    --color-shimmer-blue-mid:   var(--shimmer-blue-mid);
+    --color-shimmer-blue-light: var(--shimmer-blue-light);
 
     /* ═══════════════════════════════════════════════
        Z-index → z-* utilities
@@ -189,6 +212,22 @@
     --min-width-input-sm:   var(--input-min-width-sm);
     --spacing-chart-margin: var(--chart-margin);
 
+    /* φ-spacing scale — golden-ratio rungs (G.W1) */
+    --spacing-phi-1: var(--space-phi-1);
+    --spacing-phi-2: var(--space-phi-2);
+    --spacing-phi-3: var(--space-phi-3);
+    --spacing-phi-4: var(--space-phi-4);
+
+    /* Icon-sized utilities — generates .size-icon-{xs..mega} (G.W1) */
+    --size-icon-xs:   var(--icon-xs);
+    --size-icon-sm:   var(--icon-sm);
+    --size-icon-md:   var(--icon-md);
+    --size-icon-lg:   var(--icon-lg);
+    --size-icon-xl:   var(--icon-xl);
+    --size-icon-2xl:  var(--icon-2xl);
+    --size-icon-3xl:  var(--icon-3xl);
+    --size-icon-mega: var(--icon-mega);
+
     /* ═══════════════════════════════════════════════
        Shadows → shadow-* utilities
        ═══════════════════════════════════════════════ */
@@ -207,9 +246,10 @@
     --shadow-glass-medium:   var(--glass-shadow-medium);
     --shadow-glass-elevated: var(--glass-shadow-elevated);
 
-    --shadow-cartoon-sm: var(--cartoon-shadow-sm);
-    --shadow-cartoon-md: var(--cartoon-shadow-md);
-    --shadow-cartoon-lg: var(--cartoon-shadow-lg);
+    --shadow-cartoon-sm:     var(--cartoon-shadow-sm);
+    --shadow-cartoon-md:     var(--cartoon-shadow-md);
+    --shadow-cartoon-lg:     var(--cartoon-shadow-lg);
+    --shadow-cartoon-accent: var(--shadow-cartoon-accent);
 
     /* ═══════════════════════════════════════════════
        Blur → blur-* and backdrop-blur-* utilities

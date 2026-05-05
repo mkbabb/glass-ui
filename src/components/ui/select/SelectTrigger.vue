@@ -2,13 +2,13 @@
 import { type HTMLAttributes, computed } from 'vue'
 import { SelectIcon, SelectTrigger, type SelectTriggerProps, useForwardProps } from 'reka-ui'
 import { ChevronDown } from 'lucide-vue-next'
+import { type SelectTriggerVariants, selectTriggerVariants } from '.'
 import { cn } from '@utils'
 
 const props = withDefaults(
   defineProps<SelectTriggerProps & {
     class?: HTMLAttributes['class']
-    /** 'default' = glass bg; 'ghost' = transparent, no border/shadow */
-    variant?: 'default' | 'ghost'
+    variant?: SelectTriggerVariants['variant']
   }>(),
   { variant: 'default' },
 )
@@ -20,22 +20,12 @@ const delegatedProps = computed(() => {
 })
 
 const forwardedProps = useForwardProps(delegatedProps)
-
-const variantClass = computed(() =>
-  props.variant === 'ghost'
-    ? 'bg-transparent border-none shadow-none'
-    : 'glass-subtle',
-)
 </script>
 
 <template>
   <SelectTrigger
     v-bind="forwardedProps"
-    :class="cn(
-      variantClass,
-      'flex h-10 w-full items-center justify-between rounded-full px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)] disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 transition-all',
-      props.class,
-    )"
+    :class="cn(selectTriggerVariants({ variant }), props.class)"
   >
     <slot />
     <SelectIcon as-child>

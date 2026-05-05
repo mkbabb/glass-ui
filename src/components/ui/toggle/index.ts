@@ -10,6 +10,10 @@ export const toggleVariants = cva(
         default: 'bg-transparent',
         outline:
           'border border-input bg-transparent hover:bg-accent hover:text-accent-foreground',
+        // `card` — tier-aware toggle: bg-secondary at rest; glass-medium tier
+        // + cartoon-sm shadow + border on `data-[state=on]`.
+        card:
+          'rounded-[var(--radius-lg)] p-[var(--space-phi-2)] bg-[var(--secondary)] border border-transparent transition-[background,box-shadow,border-color] duration-[var(--duration-fast)] ease-[var(--ease-standard)] data-[state=on]:bg-[var(--glass-bg-medium)] data-[state=on]:shadow-[var(--shadow-cartoon-sm)] data-[state=on]:border-border',
       },
       size: {
         default: 'h-10 px-3',

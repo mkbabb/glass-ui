@@ -167,3 +167,56 @@
         0%, 100% { opacity: 0; transform: none; }
     }
 }
+
+/* ── Rainbow drift — animates background-position for `.bg-rainbow` etc. ──
+ * Consumers apply this via `animation: rainbow-drift <duration> linear
+ * infinite` to slide the rainbow gradient continuously across a surface.
+ * Reduced-motion guard halts at 0% (static rainbow). */
+@keyframes rainbow-drift {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    @keyframes rainbow-drift {
+        0%, 100% { background-position: 0% 50%; }
+    }
+}
+
+/* ── Idle bob — gentle vertical bob for hero/idle states. ──
+ * Consumers apply via `animation: idle-bob 3s var(--ease-apple-spring)
+ * infinite` for a breathing presence. */
+@keyframes idle-bob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    @keyframes idle-bob {
+        0%, 100% { transform: none; }
+    }
+}
+
+/* ── Confetti fall — consumed by `.confetti-piece` (utilities.css). Each
+ *    piece falls one viewport-height while rotating ~720° and fading out.
+ *    Duration parameterised via `--confetti-duration` at the consumer.
+ *    Reduced-motion guard collapses to a no-op (static specimen). */
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    @keyframes confetti-fall {
+        0%, 100% { opacity: 1; transform: none; }
+    }
+}

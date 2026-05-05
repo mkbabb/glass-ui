@@ -16,12 +16,16 @@
  * which violates the CSS spec (and some bundlers then drop them).
  */
 
-/* Order matters: tokens first, then theme (for @theme), then component layers */
+/* Order matters: tokens first, then theme (for @theme), then component layers.
+ * math.css is default-included (consumes typography tokens; utility classes
+ * may reference math classes). prism-theme.css is opt-in only — consumers
+ * import it separately via @import "@mkbabb/glass-ui/styles/prism-theme". */
 @import "./tokens.css";
 @import "./typography.css";
 @import "./theme.css";
 @import "./glass.css";
 @import "./paper.css";
+@import "./math.css";
 @import "./dock.css";
 @import "./cards.css";
 @import "./floating-panel.css";

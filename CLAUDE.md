@@ -56,7 +56,7 @@ src/
 │   │   ├── toggle-group/           # ToggleGroup, ToggleGroupItem
 │   │   ├── tooltip/                # Tooltip provider/trigger/content
 │   │   └── index.ts                # barrel: all ui/ exports
-│   ├── custom/                     # 26 custom package dirs; 24 public package barrels
+│   ├── custom/                     # 43+ custom package dirs (post-G); each with its own index.ts. Public surface flows through `src/index.ts` re-exports — no `src/components/custom/index.ts` aggregate barrel.
 │   │   ├── animation/              # internal animation helpers
 │   │   ├── dock/
 │   │   │   ├── GlassDock.vue       # collapsible glass pill, dual-layer grid, horizontal | vertical
@@ -80,8 +80,26 @@ src/
 │   │   ├── sidebar/                # ProgressiveSidebar + component-owned types only
 │   │   ├── sortable-list/          # SortableList + list item helpers
 │   │   ├── toggle-chip/            # segmented chip/cell toggle
-│   │   └── index.ts
-│   └── index.ts                    # barrel: ui/ + custom/
+│   │   ├── cream-surface/          # <CreamSurface> warm-cream substrate (G)
+│   │   ├── display-hero/           # <DisplayHero> audacious display-N + variation (G)
+│   │   ├── flourish-divider/       # <FlourishDivider> rainbow/gold/section divider (G)
+│   │   ├── icon-stamp/             # <IconStamp> stamped/embossed Lucide wrapper (G)
+│   │   ├── math-surface/           # <MathSurface> inline/display/popover math container (G)
+│   │   ├── math-formula/           # <MathFormula> formula block w/ accent left rule (G)
+│   │   ├── math-glyph/             # <MathGlyph> typography-as-icon w/ Fraunces axes (G)
+│   │   ├── timeline/               # KeyframeTimeline family (extended in G)
+│   │   ├── bezier-canvas/          # <BezierCurveCanvas> SVG cubic-bezier editor (G)
+│   │   ├── notification-dot/       # <NotificationDot> small dot indicator (G)
+│   │   ├── keyboard-shortcuts-modal/ # <KeyboardShortcutsModal> orchestration shell (G)
+│   │   ├── tier-badge/             # <TierBadge> Crown/Bookmark glyph w/ tier color (G)
+│   │   ├── like-button/            # <LikeButton> Heart toggle w/ count (G)
+│   │   ├── pipeline-flow/          # <PipelineFlow> vertical/horizontal node chain (G)
+│   │   ├── live-snippet/           # <LiveSnippet> BYO-engine runner shell (G)
+│   │   ├── blob/                   # <Blob> mascot grammar — instance-local WebGL2 (Wβ)
+│   │   ├── swatch/                 # <Swatch> solid/cartoon/watercolor (Wβ)
+│   │   ├── svg-filters/            # <SvgFilters> + <RainbowGradientDef> SVG defs mounts (Wβ)
+│   │   └── (no aggregate index.ts — each package re-exports via src/index.ts)
+│   └── (ui/ has its own barrel; custom/ does not — see src/index.ts)
 ├── composables/
 │   ├── glass/                      # useGlassRenderer + shader assets
 │   ├── motion/                     # useScrollProgress, useSpringOrchestrator, useStaggerReveal
@@ -120,7 +138,7 @@ src/
 
 ## Entry point
 
-`src/index.ts`—re-exports all public components (39 ui package barrels + 24 custom package barrels), 9 top-level composable export groups, and `cn()` utility. `src/components/custom/sidebar/` now exports `ProgressiveSidebar` plus component-owned types only; sidebar state/follow/scroll/tree composables live under `src/composables/sidebar/`.
+`src/index.ts` — re-exports public components (39 ui packages via `./components/ui` aggregate barrel; 43+ custom packages via individual `./components/custom/<pkg>` barrels; no `src/components/custom/index.ts`), composable export groups (`./composables/{glass,motion,sortable,blob,color,monaco,utils}` etc.), individual composable utilities, and the `cn()` utility. `src/components/custom/sidebar/` exports `ProgressiveSidebar` plus component-owned types; sidebar state/follow/scroll/tree composables live under `src/composables/sidebar/`. Runtime tokens (`chartHeights`, `chartColors`, `chartNeutrals`, `vizColorsHex`, `spectrumColor`, `NAMED_EASING_BEZIER`, `goldenShimmer`) ship under the `@mkbabb/glass-ui/tokens` subpath. Per-package subpaths exist for high-traffic primitives (`/dock`, `/aurora`, `/blob` is folded into the main barrel via `./components/custom/blob`); see `vite.library.ts` for the canonical entry list.
 
 ## Dependencies
 

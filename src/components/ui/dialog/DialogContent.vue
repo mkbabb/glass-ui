@@ -17,13 +17,18 @@ const props = withDefaults(
     class?: HTMLAttributes['class'];
     /** Visual variant: "glass" (translucent blur, default) or "opaque" (solid background). */
     variant?: 'glass' | 'opaque';
+    /**
+     * Slot-class for the close-X icon. Replaces consumer `:has(> .lucide-x)`
+     * selectors when restyling the close affordance.
+     */
+    closeIconClass?: HTMLAttributes['class'];
   }>(),
   { variant: 'glass' },
 )
 const emits = defineEmits<DialogContentEmits>()
 
 const delegatedProps = computed(() => {
-  const { class: _, variant: _v, ...delegated } = props
+  const { class: _, variant: _v, closeIconClass: _cic, ...delegated } = props
   return delegated
 })
 
@@ -53,7 +58,7 @@ const variantClasses = computed(() =>
       <DialogClose
         class="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus-visible:shadow-[var(--focus-ring-shadow)] disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
       >
-        <X class="w-4 h-4" />
+        <X :class="cn('w-4 h-4', props.closeIconClass)" />
         <span class="sr-only">Close</span>
       </DialogClose>
     </DialogContent>

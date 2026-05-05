@@ -1,12 +1,19 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
+import { type HTMLAttributes, type ComputedRef, computed, inject } from 'vue'
 import { TabsList, type TabsListProps } from 'reka-ui'
+import { type TabsListVariants, tabsListVariants } from '.'
 import { cn } from '@utils'
 
-const props = defineProps<TabsListProps & { class?: HTMLAttributes['class'] }>()
+const props = defineProps<TabsListProps & {
+  class?: HTMLAttributes['class']
+  variant?: TabsListVariants['variant']
+}>()
+
+const tabsCtx = inject<{ variant: ComputedRef<TabsListVariants['variant']> } | null>('glassTabs', null)
+const resolvedVariant = computed(() => props.variant ?? tabsCtx?.variant.value)
 
 const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
+  const { class: _, variant: __, ...delegated } = props
 
   return delegated
 })
@@ -15,10 +22,7 @@ const delegatedProps = computed(() => {
 <template>
   <TabsList
     v-bind="delegatedProps"
-    :class="cn(
-      'inline-flex h-10 items-center justify-center rounded-md p-1 text-muted-foreground',
-      props.class,
-    )"
+    :class="cn(tabsListVariants({ variant: resolvedVariant }), props.class)"
   >
     <slot />
   </TabsList>

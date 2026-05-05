@@ -14,7 +14,7 @@
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend mode='multiply' in2='SourceGraphic'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-image: var(--paper-grain-texture);
     background-repeat: repeat;
     background-size: 60px 60px;
     opacity: var(--glass-grain-opacity);
@@ -36,7 +36,7 @@
         inset: 0;
         border-radius: inherit;
         pointer-events: none;
-        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend mode='multiply' in2='SourceGraphic'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+        background-image: var(--paper-grain-texture);
         background-repeat: repeat;
         background-size: 60px 60px;
         opacity: var(--glass-grain-opacity);
@@ -50,19 +50,100 @@
 }
 
 /* ═══════════════════════════════════════════════
+   PAPER TIER — sibling family to glass tiers, no backdrop-filter
+   ═══════════════════════════════════════════════ */
+
+@layer components {
+    .paper-1 {
+        background: var(--paper-bg-1);
+        border: 1px solid var(--paper-border-1);
+        box-shadow: var(--paper-shadow-1);
+        border-radius: var(--radius-2xl);
+    }
+
+    .paper-2 {
+        background: var(--paper-bg-2);
+        border: 1px solid var(--paper-border-2);
+        box-shadow: var(--paper-shadow-2);
+        border-radius: var(--radius-2xl);
+    }
+
+    .paper-3 {
+        background: var(--paper-bg-3);
+        border: 1px solid var(--paper-border-3);
+        box-shadow: var(--paper-shadow-3);
+        border-radius: var(--radius-2xl);
+    }
+
+    .paper-4 {
+        background: var(--paper-bg-4);
+        border: 1px solid var(--paper-border-4);
+        box-shadow: var(--paper-shadow-4);
+        border-radius: var(--radius-2xl);
+    }
+
+    .paper-card {
+        position: relative;
+        isolation: isolate;
+        background: var(--paper-bg-2);
+        border: 1px solid var(--paper-border-2);
+        box-shadow: var(--paper-shadow-2);
+        border-radius: var(--radius-2xl);
+        padding: var(--space-phi-3);
+    }
+
+    .paper-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background-image: var(--paper-grain-texture);
+        background-repeat: repeat;
+        background-size: 60px 60px;
+        opacity: var(--glass-grain-opacity);
+        mix-blend-mode: multiply;
+    }
+
+    :where(.dark) .paper-card::after,
+    .dark .paper-card::after {
+        mix-blend-mode: soft-light;
+    }
+
+    .paper-rule {
+        height: 1px;
+        background: linear-gradient(
+            to right,
+            transparent 5%,
+            color-mix(in srgb, var(--foreground) 14%, transparent) 18%,
+            color-mix(in srgb, var(--foreground) 14%, transparent) 82%,
+            transparent 95%
+        );
+        margin-block: var(--space-phi-2);
+    }
+}
+
+/* ═══════════════════════════════════════════════
    A11y — respect user motion + transparency preferences
    ═══════════════════════════════════════════════ */
 @media (prefers-reduced-transparency: reduce) {
     .paper-underpaint,
-    .paper-grain-overlay::after {
+    .paper-grain-overlay::after,
+    .paper-card::after {
         opacity: 0;
     }
 }
 
+@media (prefers-contrast: more) {
+    .paper-1 { border-color: color-mix(in srgb, var(--foreground) 18%, transparent); }
+    .paper-2 { border-color: color-mix(in srgb, var(--foreground) 24%, transparent); }
+    .paper-3 { border-color: color-mix(in srgb, var(--foreground) 30%, transparent); }
+    .paper-4 { border-color: color-mix(in srgb, var(--foreground) 36%, transparent); }
+    .paper-card { border-color: color-mix(in srgb, var(--foreground) 24%, transparent); }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .paper-underpaint {
-        /* Static noise is fine at rest; only kill animated grain shimmer if any.
-           The underpaint is currently a still texture, but guard future motion. */
         animation: none !important;
     }
 }

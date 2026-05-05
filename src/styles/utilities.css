@@ -120,14 +120,239 @@
         -webkit-mask-image: linear-gradient(to bottom, transparent, black var(--mask-fade-width), black calc(100% - var(--mask-fade-width)), transparent);
     }
 
-    /* ── Shimmer text effects ── */
-    .gold-shimmer {
-        background: linear-gradient(90deg, var(--color-gold-dark), var(--color-gold-light), var(--color-gold), var(--color-gold-light), var(--color-gold-dark));
+    /* ── Text-shimmer family — single-hue (gold, blue) + rainbow sweeps
+     *    (vivid, pastel). Each utility shares the gold-shimmer-slide
+     *    keyframe; consumers tune cadence via --shimmer-duration. */
+    .text-shimmer-gold {
+        background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold), var(--gold-light), var(--gold-dark));
         background-size: 250% 100%;
         background-clip: text;
         -webkit-background-clip: text;
         color: transparent;
-        animation: gold-shimmer-slide var(--duration-shimmer) linear infinite;
+        animation: gold-shimmer-slide var(--shimmer-duration, var(--duration-shimmer)) linear infinite;
+    }
+
+    .text-shimmer-blue {
+        background: linear-gradient(90deg, var(--shimmer-blue-dark), var(--shimmer-blue-light), var(--shimmer-blue-mid), var(--shimmer-blue-light), var(--shimmer-blue-dark));
+        background-size: 250% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        animation: gold-shimmer-slide var(--shimmer-duration, var(--duration-shimmer)) linear infinite;
+    }
+
+    .text-shimmer-vivid {
+        background: linear-gradient(90deg, var(--rainbow-red), var(--rainbow-orange), var(--rainbow-yellow), var(--rainbow-green), var(--rainbow-blue), var(--rainbow-indigo), var(--rainbow-violet), var(--rainbow-red));
+        background-size: 200% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        animation: gold-shimmer-slide var(--shimmer-duration, var(--duration-shimmer)) linear infinite;
+    }
+
+    .text-shimmer-pastel {
+        background: linear-gradient(90deg, var(--rainbow-pastel-red), var(--rainbow-pastel-orange), var(--rainbow-pastel-yellow), var(--rainbow-pastel-green), var(--rainbow-pastel-blue), var(--rainbow-pastel-indigo), var(--rainbow-pastel-violet), var(--rainbow-pastel-red));
+        background-size: 200% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        animation: gold-shimmer-slide var(--shimmer-duration, var(--duration-shimmer)) linear infinite;
+    }
+
+    /* ── Rainbow gradient backgrounds ── */
+    .bg-rainbow,
+    .bg-rainbow-vivid {
+        background: linear-gradient(135deg, var(--rainbow-red), var(--rainbow-orange), var(--rainbow-yellow), var(--rainbow-green), var(--rainbow-blue), var(--rainbow-indigo), var(--rainbow-violet));
+        background-size: 200% 200%;
+    }
+
+    .bg-rainbow-pastel {
+        background: linear-gradient(135deg, var(--rainbow-pastel-red), var(--rainbow-pastel-orange), var(--rainbow-pastel-yellow), var(--rainbow-pastel-green), var(--rainbow-pastel-blue), var(--rainbow-pastel-indigo), var(--rainbow-pastel-violet));
+        background-size: 200% 200%;
+    }
+
+    .text-rainbow-pastel {
+        background: linear-gradient(90deg, var(--rainbow-pastel-red), var(--rainbow-pastel-orange), var(--rainbow-pastel-yellow), var(--rainbow-pastel-green), var(--rainbow-pastel-blue), var(--rainbow-pastel-indigo), var(--rainbow-pastel-violet));
+        background-size: 200% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    .rainbow-stroke {
+        stroke: url(#rainbow-gradient);
+    }
+
+    /* ── Flourish stripes (top-of-card accent strip) ── */
+    .flourish-stripe-rainbow {
+        background: linear-gradient(90deg, var(--rainbow-red), var(--rainbow-orange), var(--rainbow-yellow), var(--rainbow-green), var(--rainbow-blue), var(--rainbow-indigo), var(--rainbow-violet));
+        height: 4px;
+    }
+
+    .flourish-stripe-pastel {
+        background: linear-gradient(90deg, var(--rainbow-pastel-red), var(--rainbow-pastel-orange), var(--rainbow-pastel-yellow), var(--rainbow-pastel-green), var(--rainbow-pastel-blue), var(--rainbow-pastel-indigo), var(--rainbow-pastel-violet));
+        height: 4px;
+    }
+
+    .flourish-stripe-gold {
+        background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold), var(--gold-light), var(--gold-dark));
+        height: 4px;
+    }
+
+    /* ── Divider flourish utilities (gold + rainbow + 13 section variants) ── */
+    .divider-flourish-gold {
+        height: 2px;
+        background: linear-gradient(to right, transparent 3%, var(--gold) 50%, transparent 97%);
+    }
+
+    .divider-flourish-rainbow {
+        height: 2px;
+        background: linear-gradient(to right, transparent, var(--rainbow-red), var(--rainbow-orange), var(--rainbow-yellow), var(--rainbow-green), var(--rainbow-blue), var(--rainbow-violet), transparent);
+    }
+
+    .divider-flourish-section-0  { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-0)  50%, transparent 97%); }
+    .divider-flourish-section-1  { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-1)  50%, transparent 97%); }
+    .divider-flourish-section-2  { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-2)  50%, transparent 97%); }
+    .divider-flourish-section-3  { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-3)  50%, transparent 97%); }
+    .divider-flourish-section-4  { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-4)  50%, transparent 97%); }
+    .divider-flourish-section-5  { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-5)  50%, transparent 97%); }
+    .divider-flourish-section-6  { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-6)  50%, transparent 97%); }
+    .divider-flourish-section-7  { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-7)  50%, transparent 97%); }
+    .divider-flourish-section-8  { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-8)  50%, transparent 97%); }
+    .divider-flourish-section-9  { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-9)  50%, transparent 97%); }
+    .divider-flourish-section-10 { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-10) 50%, transparent 97%); }
+    .divider-flourish-section-11 { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-11) 50%, transparent 97%); }
+    .divider-flourish-section-12 { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-12) 50%, transparent 97%); }
+
+    /* ── Inline code chip (silent-failure S6) ── */
+    .code-badge {
+        display: inline-flex;
+        align-items: center;
+        font-family: var(--font-mono);
+        font-size: var(--type-caption);
+        padding: 0.125rem 0.5rem;
+        border-radius: var(--radius-pill);
+        background: color-mix(in srgb, var(--foreground) 8%, transparent);
+        color: var(--foreground);
+        letter-spacing: 0;
+        line-height: 1.4;
+    }
+
+    /* ── Skeuo: stamp + emboss + generated icon-{xs..mega} ── */
+    .icon-stamp {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--icon-stamp-size, var(--icon-md));
+        height: var(--icon-stamp-size, var(--icon-md));
+        border: 2px solid color-mix(in srgb, var(--foreground) var(--icon-stamp-border-mix, 25%), transparent);
+        border-radius: var(--radius-md);
+        background: var(--cream-warm);
+        box-shadow: var(--icon-stamp-shadow, var(--shadow-cartoon-sm));
+        padding: 0.25em;
+        color: var(--icon-stamp-color, currentColor);
+    }
+
+    .icon-emboss {
+        filter:
+            drop-shadow(0 1px 0 color-mix(in srgb, var(--foreground) 25%, transparent))
+            drop-shadow(0 -1px 0 color-mix(in srgb, var(--background) 30%, transparent));
+    }
+
+    .icon-xs   { width: var(--icon-xs);   height: var(--icon-xs);   }
+    .icon-sm   { width: var(--icon-sm);   height: var(--icon-sm);   }
+    .icon-md   { width: var(--icon-md);   height: var(--icon-md);   }
+    .icon-lg   { width: var(--icon-lg);   height: var(--icon-lg);   }
+    .icon-xl   { width: var(--icon-xl);   height: var(--icon-xl);   }
+    .icon-2xl  { width: var(--icon-2xl);  height: var(--icon-2xl);  }
+    .icon-3xl  { width: var(--icon-3xl);  height: var(--icon-3xl);  }
+    .icon-mega { width: var(--icon-mega); height: var(--icon-mega); }
+
+    /* ── Bold/audacious typography ── */
+    .text-display-stat {
+        font-family: var(--font-display);
+        font-size: var(--type-display-1);
+        line-height: 1;
+        letter-spacing: var(--tracking-tightest);
+        font-variant-numeric: tabular-nums;
+        font-variation-settings: var(--font-display-1-variation-settings);
+    }
+
+    .text-prose-lettrine::first-letter {
+        font-family: var(--font-display);
+        font-size: 3.5em;
+        line-height: 0.85;
+        float: left;
+        padding: 0.05em 0.1em 0 0;
+        font-variation-settings: "WONK" 1, "SOFT" 100, "wdth" 105;
+        color: var(--cartoon-accent-color, var(--foreground));
+    }
+
+    /* ── Mono family rounding ── */
+    .text-mono-body {
+        font-family: var(--font-mono);
+        font-size: var(--type-body);
+        line-height: var(--leading-body);
+    }
+
+    .text-mono-prose {
+        font-family: var(--font-mono);
+        font-size: var(--type-prose);
+        line-height: var(--leading-prose);
+    }
+
+    /* ── Misc utilities ── */
+    .section-subtitle {
+        font-family: var(--font-mono);
+        font-size: var(--type-caption);
+        color: var(--muted-foreground);
+        letter-spacing: var(--tracking-snug);
+        text-transform: capitalize;
+    }
+
+    .well-dashed {
+        border: 2px dashed color-mix(in srgb, var(--foreground) 18%, transparent);
+        border-radius: var(--radius-lg);
+        padding: var(--space-phi-3);
+        background: color-mix(in srgb, var(--cream-warm) 50%, transparent);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-phi-2);
+    }
+
+    .touch-gate-target {
+        cursor: pointer;
+        min-height: var(--size-icon-btn);
+        min-width: var(--size-icon-btn);
+    }
+
+    .touch-gate-active {
+        outline: 2px solid var(--ring);
+        transform: scale(0.97);
+    }
+
+    .confetti-piece {
+        position: absolute;
+        width: var(--confetti-size, 0.5rem);
+        height: var(--confetti-size, 0.5rem);
+        background: var(--confetti-color, var(--rainbow-yellow));
+        border-radius: 0;
+        pointer-events: none;
+        animation: confetti-fall var(--confetti-duration, 1.2s) cubic-bezier(0.35, 0.65, 0.5, 1) forwards;
+    }
+
+    .collapse-x {
+        max-width: var(--collapse-x-width, 0);
+        opacity: 0;
+        overflow: hidden;
+        transition:
+            max-width var(--duration-panel) var(--ease-apple-spring),
+            opacity var(--duration-fast) var(--ease-standard);
+    }
+
+    .collapse-x[data-state="open"] {
+        max-width: var(--collapse-x-open-width, 100%);
+        opacity: 1;
     }
 
     /* ── Keyboard key ── */

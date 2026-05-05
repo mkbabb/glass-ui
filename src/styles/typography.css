@@ -31,11 +31,27 @@
     --type-subheading:  1.272rem;  /* 20.4px — √φ */
     --type-heading:     1.618rem;  /* 25.9px — φ */
     --type-title:       2.058rem;  /* 32.9px — φ^(3/2) */
-    --type-display-1:   clamp(1.618rem, 1.2rem + 1.6vw, 2.618rem); /* φ^2 */
-    --type-display-2:   clamp(2.058rem, 1.5rem + 2.2vw, 3.33rem);  /* φ^(5/2) */
-    --type-display-3:   clamp(2.618rem, 2rem + 3vw, 4.236rem);     /* φ^3 */
-    --type-display-4:   clamp(3.33rem, 2.5rem + 4vw, 5.382rem);    /* φ^(7/2) */
-    --type-display-5:   clamp(4.236rem, 3.5rem + 6vw, 6.854rem);   /* φ^4 */
+    --type-display-1:    clamp(1.618rem, 1.2rem + 1.6vw, 2.618rem); /* φ^2 */
+    --type-display-2:    clamp(2.058rem, 1.5rem + 2.2vw, 3.33rem);  /* φ^(5/2) */
+    --type-display-3:    clamp(2.618rem, 2rem + 3vw, 4.236rem);     /* φ^3 */
+    --type-display-4:    clamp(3.33rem, 2.5rem + 4vw, 5.382rem);    /* φ^(7/2) */
+    --type-display-5:    clamp(4.236rem, 3.5rem + 6vw, 6.854rem);   /* φ^4 */
+    --type-display-mega: clamp(6.854rem, 5rem + 9vw, 11.089rem);    /* φ^5 */
+    --type-display-ultra: clamp(11.089rem, 8rem + 12vw, 17.944rem); /* φ^6 */
+
+    /* Math typography — formula rung at √φ above body (== subheading). */
+    --type-formula:    var(--type-subheading);
+
+    /* Per-rung Fraunces variation axes — audacious sizes go softer (SOFT
+       higher) and slightly wider (wdth >100). Each text-display-N utility
+       picks up the matching rung's axis settings. */
+    --font-display-1-variation-settings:     "WONK" 1, "SOFT" 0,   "wdth" 100;
+    --font-display-2-variation-settings:     "WONK" 1, "SOFT" 25,  "wdth" 102;
+    --font-display-3-variation-settings:     "WONK" 1, "SOFT" 50,  "wdth" 105;
+    --font-display-4-variation-settings:     "WONK" 1, "SOFT" 75,  "wdth" 108;
+    --font-display-5-variation-settings:     "WONK" 1, "SOFT" 100, "wdth" 110;
+    --font-display-mega-variation-settings:  "WONK" 1, "SOFT" 100, "wdth" 112;
+    --font-display-ultra-variation-settings: "WONK" 1, "SOFT" 100, "wdth" 115;
 
     /* Line heights */
     --leading-micro: 1.2;
@@ -47,19 +63,13 @@
     --leading-display: 1.1;
 
     /* Letter spacing */
-    --tracking-tight: -0.025em;
-    --tracking-snug: -0.01em;
-    --tracking-normal: 0;
-    --tracking-wide: 0.025em;
-    --tracking-wider: 0.05em;
-    --tracking-caps: 0.1em;
-}
-
-:root[data-typography-preset="brand-uniform-sans"] {
-    --font-serif: var(--font-brand-sans);
-    --font-display: var(--font-brand-sans);
-    --font-display-variation-settings: normal;
-    --font-display-weight: 600;
+    --tracking-tightest: -0.04em;
+    --tracking-tight:    -0.025em;
+    --tracking-snug:     -0.01em;
+    --tracking-normal:   0;
+    --tracking-wide:     0.025em;
+    --tracking-wider:    0.05em;
+    --tracking-caps:     0.1em;
 }
 
 /* ═══════════════════════════════════════════════
@@ -75,13 +85,33 @@ body {
 /* ═══════════════════════════════════════════════
    DISPLAY — Fraunces, WONK=1 SOFT=0, tracking-tight
    ═══════════════════════════════════════════════ */
+@utility text-display-ultra {
+    font-family: var(--font-display);
+    font-size: var(--type-display-ultra);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-tightest);
+    font-optical-sizing: auto;
+    font-variation-settings: var(--font-display-ultra-variation-settings);
+    font-weight: var(--font-display-weight);
+}
+
+@utility text-display-mega {
+    font-family: var(--font-display);
+    font-size: var(--type-display-mega);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-tightest);
+    font-optical-sizing: auto;
+    font-variation-settings: var(--font-display-mega-variation-settings);
+    font-weight: var(--font-display-weight);
+}
+
 @utility text-display-5 {
     font-family: var(--font-display);
     font-size: var(--type-display-5);
     line-height: var(--leading-display);
     letter-spacing: var(--tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: var(--font-display-variation-settings);
+    font-variation-settings: var(--font-display-5-variation-settings);
     font-weight: var(--font-display-weight);
 }
 
@@ -91,7 +121,7 @@ body {
     line-height: var(--leading-display);
     letter-spacing: var(--tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: var(--font-display-variation-settings);
+    font-variation-settings: var(--font-display-4-variation-settings);
     font-weight: var(--font-display-weight);
 }
 
@@ -101,7 +131,7 @@ body {
     line-height: var(--leading-display);
     letter-spacing: var(--tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: var(--font-display-variation-settings);
+    font-variation-settings: var(--font-display-3-variation-settings);
     font-weight: var(--font-display-weight);
 }
 
@@ -111,7 +141,7 @@ body {
     line-height: var(--leading-display);
     letter-spacing: var(--tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: var(--font-display-variation-settings);
+    font-variation-settings: var(--font-display-2-variation-settings);
     font-weight: var(--font-display-weight);
 }
 
@@ -121,7 +151,7 @@ body {
     line-height: var(--leading-display);
     letter-spacing: var(--tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: var(--font-display-variation-settings);
+    font-variation-settings: var(--font-display-1-variation-settings);
     font-weight: var(--font-display-weight);
 }
 

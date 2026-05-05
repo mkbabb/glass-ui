@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, provide, ref, useTemplateRef } from "vue";
-import type { Component } from "vue";
+import { computed, inject, provide, ref, useTemplateRef, watch } from "vue";
+import type { Component, Ref } from "vue";
 import { useDockContext } from "./composables/dockContext";
 import { useLayerTransition } from "./composables/useLayerTransition";
 
@@ -29,6 +29,13 @@ const props = withDefaults(
         showRail?: boolean;
         /** Rail placement relative to the layer stack. */
         railPosition?: "start" | "end";
+        /**
+         * When the resolved value is truthy, the parent dock is held open
+         * via the canonical `keepOpen` / `release` pair — closes the
+         * 3-watcher-hooks-per-consumer drift surfaced in synthesis #41.
+         * Accepts a Ref or a getter for ergonomic call-site composition.
+         */
+        keepOpenWhile?: Ref<boolean> | (() => boolean) | boolean;
     }>(),
     {
         showRail: true,
@@ -70,6 +77,28 @@ provide("dockLayerGroup", {
 function isComponent(icon: unknown): icon is Component {
     return typeof icon === "object" && icon !== null;
 }
+
+// `keepOpenWhile`: auto-bind the canonical keepOpen/release pattern so
+// consumers don't wire 3 watcher hooks per use site.
+const dockKeepOpen = inject<(() => void) | null>("dockKeepOpen", null);
+const dockRelease = inject<(() => void) | null>("dockRelease", null);
+
+const keepOpenResolved = computed(() => {
+    const raw = props.keepOpenWhile;
+    if (raw === undefined) return false;
+    if (typeof raw === "boolean") return raw;
+    if (typeof raw === "function") return Boolean(raw());
+    return Boolean(raw.value);
+});
+
+watch(
+    keepOpenResolved,
+    (v, prev) => {
+        if (v && !prev) dockKeepOpen?.();
+        else if (!v && prev) dockRelease?.();
+    },
+    { immediate: true },
+);
 </script>
 
 <template>

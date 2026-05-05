@@ -19,6 +19,7 @@ import {
     Sparkles,
     LayoutDashboard,
     Wand2,
+    Wrench,
     type LucideIcon,
 } from "lucide-vue-next";
 
@@ -69,6 +70,27 @@ function s(cat: string, id: string, title: string, blurb?: string): Story {
     return { id, title, blurb, component: lazy(cat, id) };
 }
 
+/**
+ * Debug-only category. Surfaced when running under Vite dev (`import.meta.env.DEV`)
+ * so internal stress harnesses (e.g. `_internal/blob-stress`) get a route in
+ * dev without leaking into the published storybook build. The directory glob
+ * still picks up `_internal/*.vue` regardless; `findCategory` and the routing
+ * code consume `CATEGORIES` and therefore observe the gate transparently.
+ */
+const INTERNAL_CATEGORY: Category = {
+    id: "_internal",
+    title: "Internal · Debug",
+    icon: Wrench,
+    stories: [
+        s(
+            "_internal",
+            "blob-stress",
+            "Blob Stress",
+            "Eight-instance Blob harness with rAF profile + visibility-gating proof.",
+        ),
+    ],
+};
+
 export const CATEGORIES: Category[] = [
     {
         id: "foundations",
@@ -77,12 +99,15 @@ export const CATEGORIES: Category[] = [
         stories: [
             s("foundations", "intro", "Intro", "What this storybook is."),
             s("foundations", "colors", "Colors", "Warm cream, 13-stop section palette, viz basis."),
+            s("foundations", "cream", "Cream", "The warm-cream identity, named — light + dark contrast pair."),
+            s("foundations", "golden-ratio", "Golden Ratio", "φ across type, spacing, and radius — the system's secret math."),
+            s("foundations", "flourishes", "Flourishes", "Rainbow, gold, sections, dividers, stripes, shimmer."),
             s("foundations", "typography", "Typography", "Computer Modern, Fraunces, Fira Code — golden-ratio scale."),
+            s("foundations", "icons", "Icons", "Lucide at xs..mega rungs; stamp + emboss frames."),
             s("foundations", "radii", "Radii", "Radius tokens from xs to pill."),
             s("foundations", "shadows", "Shadows", "Cartoon offset, elevated, modal."),
             s("foundations", "motion", "Motion", "Easings, damped spring linear() curves."),
             s("foundations", "paper-glass", "Paper & Glass", "Four glass tiers, paper grain, blend modes."),
-            s("foundations", "icons", "Icons", "Lucide, 2px stroke, semantic sizes."),
         ],
     },
     {
@@ -91,6 +116,7 @@ export const CATEGORIES: Category[] = [
         icon: Shapes,
         stories: [
             s("primitives", "buttons", "Buttons"),
+            s("primitives", "cartoon-controls", "Cartoon Controls", "Modern-skeuo Button + Card recipe with accent-tinted shadow."),
             s("primitives", "inputs", "Inputs"),
             s("primitives", "textarea", "Textarea"),
             s("primitives", "checks", "Checkbox · Radio · Switch"),
@@ -100,14 +126,23 @@ export const CATEGORIES: Category[] = [
             s("primitives", "combobox", "Combobox"),
             s("primitives", "multi-select", "Multi-Select"),
             s("primitives", "toggle", "Toggle · Toggle Group"),
+            s("primitives", "toggle-card", "Toggle Card", "Survey-grade card-toggle picker."),
             s("primitives", "label", "Label"),
             s("primitives", "badge", "Badge"),
+            s("primitives", "badge-tones", "Badge Tones", "Semantic tones with default + override icons."),
+            s("primitives", "color-pill", "Color Pill", "Categorical color encoding — viz, sections, freeform."),
             s("primitives", "metric-badge", "Metric Badge"),
             s("primitives", "status-dot", "Status Dot"),
+            s("primitives", "notification-dot", "Notification Dot", "Top-right unread marker × sizes × glow."),
+            s("primitives", "blob", "Blob", "Living watercolor specimen — five moods, fifteen accents, eight sections of bold-maximalist commitment."),
             s("primitives", "pulse", "Pulse"),
             s("primitives", "glyph-face", "Glyph Face", "Phase-tinted lucide wrapper with catch-light cap."),
-            s("primitives", "dock-group", "Dock Group", "Pill-row shelf — wraps a horizontal cluster of dock-tier consumers in a quieter glass tier than the surrounding chassis."),
             s("primitives", "disco-glyph", "Disco Glyph", "Faceted SVG glyph primitive — 8-stop linear facet × 165° specular cap, phase-tinted on activation."),
+            s("primitives", "dock-group", "Dock Group", "Pill-row shelf — wraps a horizontal cluster of dock-tier consumers in a quieter glass tier than the surrounding chassis."),
+            s("primitives", "icon-stamp", "Icon Stamp", "Frame primitive — stamp / emboss / plain × accents."),
+            s("primitives", "pipeline-flow", "Pipeline Flow", "Glass-pill chain × node tones × connectors."),
+            s("primitives", "live-snippet", "Live Snippet", "BYO-engine runnable shell × four states."),
+            s("primitives", "toast-inverse", "Toast Inverse", "High-contrast acknowledgement variant."),
             s("primitives", "separator", "Separator"),
         ],
     },
@@ -117,6 +152,9 @@ export const CATEGORIES: Category[] = [
         icon: Boxes,
         stories: [
             s("containers", "card", "Card"),
+            s("containers", "cream-card", "Cream Card", "Card variant=\"cream\" + CreamSurface, two-tone warm/cool against paper."),
+            s("containers", "paper-card", "Paper Card", "Card variant=\"paper\" × paper-1..4 tier ladder + .paper-rule lined-paper variation."),
+            s("containers", "well-dashed", "Dashed Well", "Drop-zone + quick-add empty-state pattern using .well-dashed."),
             s("containers", "dialog", "Dialog"),
             s("containers", "sheet", "Sheet"),
             s("containers", "drawer", "Drawer"),
@@ -182,6 +220,10 @@ export const CATEGORIES: Category[] = [
             s("motion", "springs", "Spring Orchestrator"),
             s("motion", "stagger", "Stagger Reveal"),
             s("motion", "scroll-type", "Scroll-driven Type"),
+            s("motion", "display-axes", "Display Axes", "Per-rung Fraunces WONK/SOFT/wdth across display-1..ultra."),
+            s("motion", "bezier-canvas", "Bezier Canvas", "Named-easing presets + interactive cubic-bezier editor."),
+            s("motion", "timeline", "Keyframe Timeline", "KeyframeTimeline + markers + playhead + ruler with golden-ratio phases."),
+            s("motion", "confetti", "Confetti", "Rainbow-palette burst from .confetti-piece, parameterized via CSS vars."),
             s("motion", "typewriter", "Typewriter"),
             s("motion", "metaballs", "Metaballs", "WebGL canvas substrate with support fallback."),
         ],
@@ -191,8 +233,12 @@ export const CATEGORIES: Category[] = [
         title: "Compositions",
         icon: LayoutDashboard,
         stories: [
-            s("compositions", "hero", "Hero"),
-            s("compositions", "math-paper", "Math Paper"),
+            s("compositions", "hero-quiet", "Hero · Quiet", "The restrained hero — paper-and-glass forward."),
+            s("compositions", "audacious-hero", "Hero · Audacious", "DisplayHero display-mega + IconStamp mega + cream surface — the maximalist demo."),
+            s("compositions", "math-paper", "Math Paper", "MathFormula + MathGlyph + MathSurface + CreamSurface + FlourishDivider."),
+            s("compositions", "dictionary-pronunciation", "Dictionary · Pronunciation", "Mono-small IPA + stacked syllable list + section-label dividers."),
+            s("compositions", "prose-block", "Prose Block", "Etymology + definition recipe with mandatory .text-prose-lettrine."),
+            s("compositions", "code-prose", "Code Prose", "Inline .code-badge + Prism-themed pre/code + LiveSnippet runnable."),
             s("compositions", "dashboard", "Dashboard"),
             s("compositions", "auth-shell", "Auth Shell"),
             s("compositions", "settings", "Settings"),
@@ -200,6 +246,7 @@ export const CATEGORIES: Category[] = [
             s("compositions", "instrument-chassis", "Instrument Chassis", "Three-region chassis with twin-line bezel grooves and phase cascade."),
         ],
     },
+    ...(import.meta.env.DEV ? [INTERNAL_CATEGORY] : []),
 ];
 
 export const FLAT_STORIES: FlatStory[] = [

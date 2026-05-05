@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Blob shader playground - G.Wβ0 reference compile</title>
+<!--
+  Reference compile smoke for the Blob fragment shader.
+
+  Imports the GLSL fragment shader from docs/tranches/G/blob/SPEC.md §6 verbatim,
+  with the two canonical N-line helpers (hsl2rgb, snoise) inlined per the spec
+  placeholders. Mounts a 256x256 canvas with a fullscreen-triangle vertex shader
+  driven by gl_VertexID (no buffers). Four dummy sources (one body + three
+  satellites on hardcoded sin/cos paths) feed uSources[8].
+
+  URL params:
+    ?mood=excited|idle    -- defaults to idle.
+    ?ca=<float>           -- override uChromaticAberration (0..0.005).
+
+  No external deps. WebGL2 only.
+
+  Spec authority: docs/tranches/G/blob/SPEC.md (G sub-tranche β).
+-->
+<style>
+  :root { color-scheme: dark; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: hsl(48 14% 96%);
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    color: hsl(220 10% 18%);
+  }
+  body {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    box-sizing: border-box;
+  }
+  main {
+    display: grid;
+    gap: 1rem;
+    justify-items: center;
+  }
+  canvas {
+    image-rendering: pixelated;
+    border: 1px solid hsl(48 12% 86%);
+    box-shadow: 0 0.5rem 1.5rem hsl(48 30% 30% / 0.18);
+    background: hsl(48 18% 96%);
+    border-radius: 0.5rem;
+  }
+  .controls {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    font-size: 0.875rem;
+  }
+  .controls a {
+    color: hsl(220 60% 38%);
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid hsl(220 30% 80%);
+  }
+  .controls a.active { background: hsl(220 60% 38%); color: white; }
+  pre {
+    background: hsl(48 12% 92%);
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    max-width: 60ch;
+    overflow-x: auto;
+  }
+  .label { font-weight: 600; font-size: 0.75rem; letter-spacing: 0.04em; text-transform: uppercase; opacity: 0.7; }
+</style>
+</head>
+<body>
+  <main>
+    <div class="label">Blob shader compile smoke - G.Wβ0</div>
+    <canvas id="blob" width="256" height="256" aria-label="Blob shader output"></canvas>
+    <div class="controls">
+      <span class="label">Mood:</span>
+      <a id="mood-idle" href="?mood=idle">idle</a>
+      <a id="mood-excited" href="?mood=excited">excited</a>
+    </div>
+    <pre id="status">compiling...</pre>
+  </main>
+
+<script type="module">
+"use strict";
+
+// ---------------------------------------------------------------------------
+// SPEC.md §6 fragment shader - verbatim, with the two canonical helpers
+// (hsl2rgb 8-line transform, snoise 24-line simplex noise) inlined.
+//
+// The placeholder comments in SPEC.md §6 ("canonical 8-line transform",
+// "canonical 24-line simplex noise") are filled here from public-domain
+// reference implementations:
+//   - hsl2rgb: standard HSL->RGB transform (Wikipedia / GLSL idiomatic form).
+//   - snoise:  Ashima Arts / McEwan / Stefan Gustavson 2D simplex noise
+//              (https://github.com/ashima/webgl-noise, MIT license).
+//
+// Wβ1 will inline these canonical implementations into the production shader
+// source verbatim. The body of main(), uniform declarations, and core SDF
+// logic are byte-identical to SPEC.md §6.
+// ---------------------------------------------------------------------------
+
+const FRAG_SRC = `#version 300 es
+precision highp float;
+
+uniform float uTime;
+uniform vec2  uResolution;
+uniform vec3  uColor;            // hsl decomposition
+uniform float uSmoothK;
+uniform int   uSourceCount;
+uniform vec4  uSources[8];       // x, y, radius, opacity (NDC)
+
+uniform float uHueRange;
+uniform float uSatShift;
+uniform float uBrightnessShift;
+uniform float uColorNoiseFreq;
+uniform float uColorNoiseSpeed;
+uniform float uChromaticAberration;  // 0.0..0.005
+
+out vec4 fragColor;
+
+float smin(float a, float b, float k) {
+    float h = max(k - abs(a - b), 0.0) / k;
+    return min(a, b) - h * h * h * k * (1.0 / 6.0);
+}
+
+float sdSource(vec2 p, vec2 c, float r) {
+    return length(p - c) - r;
+}
+
+float sdField(vec2 p) {
+    float d = 1e6;
+    for (int i = 0; i < uSourceCount; ++i) {
+        d = smin(d, sdSource(p, uSources[i].xy, uSources[i].z), uSmoothK);
+    }
+    return d;
+}
+
+// canonical 8-line HSL->RGB transform.
+vec3 hsl2rgb(vec3 c) {
+    vec3 rgb = clamp(
+        abs(mod(c.x * 6.0 + vec3(0.0, 4.0, 2.0), 6.0) - 3.0) - 1.0,
+        0.0, 1.0
+    );
+    float l = c.z;
+    float a = c.y * min(l, 1.0 - l);
+    return l + a * (rgb * 2.0 - 1.0);
+}
+
+// canonical 24-line 2D simplex noise (Ashima Arts / McEwan / Gustavson, MIT).
+vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+vec3 permute(vec3 x) { return mod289(((x * 34.0) + 1.0) * x); }
+
+float snoise(vec2 v) {
+    const vec4 C = vec4(0.211324865405187, 0.366025403784439,
+                       -0.577350269189626, 0.024390243902439);
+    vec2 i  = floor(v + dot(v, C.yy));
+    vec2 x0 = v -   i + dot(i, C.xx);
+    vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+    vec4 x12 = x0.xyxy + C.xxzz;
+    x12.xy -= i1;
+    i = mod289(i);
+    vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0))
+                   + i.x + vec3(0.0, i1.x, 1.0));
+    vec3 m = max(0.5 - vec3(dot(x0, x0), dot(x12.xy, x12.xy),
+                                          dot(x12.zw, x12.zw)), 0.0);
+    m = m * m; m = m * m;
+    vec3 x = 2.0 * fract(p * C.www) - 1.0;
+    vec3 h = abs(x) - 0.5;
+    vec3 ox = floor(x + 0.5);
+    vec3 a0 = x - ox;
+    m *= 1.79284291400159 - 0.85373472095314 * (a0 * a0 + h * h);
+    vec3 g;
+    g.x  = a0.x  * x0.x  + h.x  * x0.y;
+    g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+    return 130.0 * dot(m, g);
+}
+
+void main() {
+    vec2 uv = gl_FragCoord.xy / uResolution;
+    vec2 p  = uv * 2.0 - 1.0;
+
+    float d  = sdField(p);
+    float dR = sdField(p + vec2( uChromaticAberration, 0.0));
+    float dB = sdField(p - vec2( uChromaticAberration, 0.0));
+
+    float edgeR = 1.0 - smoothstep(-0.005, 0.005, dR);
+    float edgeG = 1.0 - smoothstep(-0.005, 0.005, d);
+    float edgeB = 1.0 - smoothstep(-0.005, 0.005, dB);
+
+    float n = snoise(uv * uColorNoiseFreq + uTime * uColorNoiseSpeed);
+    vec3 hsl = uColor + vec3(uHueRange / 360.0 * n, uSatShift, uBrightnessShift);
+    vec3 rgb = hsl2rgb(clamp(hsl, vec3(0.0), vec3(1.0)));
+
+    fragColor = vec4(rgb * vec3(edgeR, edgeG, edgeB), max(edgeR, max(edgeG, edgeB)));
+}
+`;
+
+// Fullscreen triangle vertex shader using gl_VertexID -- no buffers, no
+// attributes. Three vertices cover the screen exactly.
+const VERT_SRC = `#version 300 es
+void main() {
+    vec2 p = vec2(
+        float((gl_VertexID & 1) << 2) - 1.0,
+        float((gl_VertexID & 2) << 1) - 1.0
+    );
+    gl_Position = vec4(p, 0.0, 1.0);
+}
+`;
+
+// ---------------------------------------------------------------------------
+// URL params
+// ---------------------------------------------------------------------------
+const params = new URLSearchParams(location.search);
+const mood = params.get("mood") === "excited" ? "excited" : "idle";
+const caOverride = params.get("ca");
+
+// SPEC.md §5 mood parameter table: idle vs excited.
+const MOOD_PARAMS = {
+    idle: {
+        smoothK: 0.191,
+        hueRange: 5,
+        satShift: 0.0,
+        brightnessShift: 0.0,
+        pulseFreq: 0.30,
+        pulseAmp: 0.008,
+        orbitSpeedScale: 1.0,
+        wobbleScale: 1.0,
+    },
+    excited: {
+        smoothK: 0.215,
+        hueRange: 18,
+        satShift: 0.10,
+        brightnessShift: 0.06,
+        pulseFreq: 0.55,
+        pulseAmp: 0.018,
+        orbitSpeedScale: 1.7,
+        wobbleScale: 1.5,
+    },
+};
+const M = MOOD_PARAMS[mood];
+
+document.getElementById(`mood-${mood}`).classList.add("active");
+
+// ---------------------------------------------------------------------------
+// WebGL2 setup
+// ---------------------------------------------------------------------------
+const canvas = document.getElementById("blob");
+const status = document.getElementById("status");
+const gl = canvas.getContext("webgl2", {
+    alpha: true,
+    premultipliedAlpha: true,
+    antialias: false,
+    preserveDrawingBuffer: false,
+});
+
+if (!gl) {
+    status.textContent = "FAIL: WebGL2 unavailable in this browser.";
+    throw new Error("no webgl2");
+}
+
+function compileShader(type, src, label) {
+    const sh = gl.createShader(type);
+    gl.shaderSource(sh, src);
+    gl.compileShader(sh);
+    if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+        const log = gl.getShaderInfoLog(sh);
+        status.textContent = `FAIL [${label}]: ${log}`;
+        throw new Error(log);
+    }
+    const log = gl.getShaderInfoLog(sh);
+    if (log && log.trim()) {
+        // Spec hard-gate: zero warnings.
+        console.warn(`[${label}] shader log:`, log);
+    }
+    return sh;
+}
+
+const vs = compileShader(gl.VERTEX_SHADER, VERT_SRC, "vertex");
+const fs = compileShader(gl.FRAGMENT_SHADER, FRAG_SRC, "fragment");
+
+const prog = gl.createProgram();
+gl.attachShader(prog, vs);
+gl.attachShader(prog, fs);
+gl.linkProgram(prog);
+
+if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+    const log = gl.getProgramInfoLog(prog);
+    status.textContent = `FAIL [link]: ${log}`;
+    throw new Error(log);
+}
+
+// Empty VAO -- WebGL2 requires a VAO bound for gl_VertexID-driven draws.
+const vao = gl.createVertexArray();
+gl.bindVertexArray(vao);
+
+// Uniform locations
+const u = {
+    time: gl.getUniformLocation(prog, "uTime"),
+    res: gl.getUniformLocation(prog, "uResolution"),
+    color: gl.getUniformLocation(prog, "uColor"),
+    smoothK: gl.getUniformLocation(prog, "uSmoothK"),
+    sourceCount: gl.getUniformLocation(prog, "uSourceCount"),
+    sources: gl.getUniformLocation(prog, "uSources[0]"),
+    hueRange: gl.getUniformLocation(prog, "uHueRange"),
+    satShift: gl.getUniformLocation(prog, "uSatShift"),
+    brightnessShift: gl.getUniformLocation(prog, "uBrightnessShift"),
+    colorNoiseFreq: gl.getUniformLocation(prog, "uColorNoiseFreq"),
+    colorNoiseSpeed: gl.getUniformLocation(prog, "uColorNoiseSpeed"),
+    chromaticAberration: gl.getUniformLocation(prog, "uChromaticAberration"),
+};
+
+gl.useProgram(prog);
+gl.uniform2f(u.res, canvas.width, canvas.height);
+// uColor in HSL: hue=0.13 (~gold/amber, hue 47/360), sat=0.55, lightness=0.62.
+gl.uniform3f(u.color, 0.13, 0.55, 0.62);
+gl.uniform1f(u.smoothK, M.smoothK);
+gl.uniform1f(u.hueRange, M.hueRange);
+gl.uniform1f(u.satShift, M.satShift);
+gl.uniform1f(u.brightnessShift, M.brightnessShift);
+gl.uniform1f(u.colorNoiseFreq, 2.0);
+gl.uniform1f(u.colorNoiseSpeed, 0.05);
+gl.uniform1f(
+    u.chromaticAberration,
+    caOverride !== null ? Math.max(0, Math.min(0.005, parseFloat(caOverride))) : 0.002,
+);
+
+// Four dummy sources: one body + three satellites with hardcoded sin/cos paths.
+// SPEC.md §4: bodyRadius=0.25, satelliteRadius=0.13, orbitRadius=0.35.
+function buildSources(t) {
+    const speed = M.orbitSpeedScale;
+    const wobble = M.wobbleScale * 0.04;
+    const orbitR = 0.35;
+    const bodyR = 0.25;
+    const satR = 0.13;
+    const pulse = M.pulseAmp * Math.sin(2 * Math.PI * M.pulseFreq * t);
+    return [
+        // body at origin, breathing
+        [0.0, 0.0, bodyR + pulse, 1.0],
+        // three satellites on golden-ratio-spaced phases
+        [
+            orbitR * Math.cos(speed * t * 0.9 + 0.0) + wobble * Math.sin(t * 1.7),
+            orbitR * Math.sin(speed * t * 0.9 + 0.0) + wobble * Math.cos(t * 1.3),
+            satR,
+            1.0,
+        ],
+        [
+            orbitR * Math.cos(speed * t * 0.7 + 2.094) + wobble * Math.sin(t * 1.1),
+            orbitR * Math.sin(speed * t * 0.7 + 2.094) + wobble * Math.cos(t * 0.9),
+            satR,
+            1.0,
+        ],
+        [
+            orbitR * Math.cos(speed * t * 1.1 + 4.189) + wobble * Math.sin(t * 0.7),
+            orbitR * Math.sin(speed * t * 1.1 + 4.189) + wobble * Math.cos(t * 1.5),
+            satR,
+            1.0,
+        ],
+    ];
+}
+
+const sourceBuf = new Float32Array(8 * 4);
+function uploadSources(sources) {
+    for (let i = 0; i < sources.length; i++) {
+        sourceBuf[i * 4 + 0] = sources[i][0];
+        sourceBuf[i * 4 + 1] = sources[i][1];
+        sourceBuf[i * 4 + 2] = sources[i][2];
+        sourceBuf[i * 4 + 3] = sources[i][3];
+    }
+    gl.uniform1i(u.sourceCount, sources.length);
+    gl.uniform4fv(u.sources, sourceBuf);
+}
+
+gl.viewport(0, 0, canvas.width, canvas.height);
+gl.enable(gl.BLEND);
+gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+
+const t0 = performance.now();
+function frame() {
+    const t = (performance.now() - t0) / 1000;
+    gl.uniform1f(u.time, t);
+    uploadSources(buildSources(t));
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    requestAnimationFrame(frame);
+}
+
+requestAnimationFrame(frame);
+
+status.textContent =
+    `OK: vertex+fragment compiled, program linked, mood=${mood}. ` +
+    `WebGL2 vendor=${gl.getParameter(gl.VENDOR)} renderer=${gl.getParameter(gl.RENDERER)}.`;
+</script>
+</body>
+</html>

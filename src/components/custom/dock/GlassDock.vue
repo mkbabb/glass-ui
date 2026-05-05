@@ -212,6 +212,7 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
     <div
         ref="dockEl"
         class="glass-dock"
+        :data-position="position"
         :class="[
             orientation,
             `variant-${variant}`,
@@ -261,3 +262,9 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
         </template>
     </div>
 </template>
+
+<style>
+.glass-dock[data-position="fixed"] {
+    padding-bottom: env(safe-area-inset-bottom);
+}
+</style>

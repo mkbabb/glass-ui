@@ -14,7 +14,7 @@
                     sizeClass,
                 )
             "
-            :style="dotStyle"
+            :style="outerStyle"
         >
             <span
                 v-if="pulse"
@@ -22,7 +22,17 @@
                 class="absolute inset-0 rounded-full opacity-60 motion-safe:animate-ping"
                 :style="ringStyle"
             />
-            <span class="relative inline-block h-full w-full rounded-full" :style="dotStyle" />
+            <span
+                v-if="variant === 'progress'"
+                aria-hidden="true"
+                class="relative inline-block h-full w-full rounded-full"
+                :style="progressStyle"
+            />
+            <span
+                v-else
+                class="relative inline-block h-full w-full rounded-full"
+                :style="dotStyle"
+            />
         </span>
         <span v-if="label" class="text-xs leading-none text-muted-foreground">
             {{ label }}
@@ -31,10 +41,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, type HTMLAttributes } from "vue";
+import { computed, type CSSProperties, type HTMLAttributes } from "vue";
 import { cn } from "../../../utils/cn";
 
-type Variant = "active" | "paused" | "idle" | "error" | "custom";
+type Variant = "active" | "paused" | "idle" | "error" | "custom" | "progress";
 type Size = "xs" | "sm" | "md";
 
 const props = withDefaults(
@@ -44,12 +54,15 @@ const props = withDefaults(
         pulse?: boolean;
         size?: Size;
         label?: string;
+        /** Progress value in [0, 1]; consumed when `variant="progress"`. */
+        modelValue?: number;
         class?: HTMLAttributes["class"];
     }>(),
     {
         variant: "active",
         pulse: false,
         size: "sm",
+        modelValue: 0,
     },
 );
 
@@ -70,7 +83,10 @@ const resolvedColor = computed(() => {
     if (props.variant === "custom") {
         return props.color ?? "var(--muted-foreground)";
     }
-    const map: Record<Exclude<Variant, "custom">, string> = {
+    if (props.variant === "progress") {
+        return props.color ?? "var(--easing-accent)";
+    }
+    const map: Record<Exclude<Variant, "custom" | "progress">, string> = {
         active: "var(--color-status-active, hsl(142 71% 45%))",
         paused: "var(--color-status-paused, hsl(48 96% 53%))",
         idle: "var(--color-status-idle, var(--muted-foreground))",
@@ -79,6 +95,37 @@ const resolvedColor = computed(() => {
     return map[props.variant];
 });
 
-const dotStyle = computed(() => ({ backgroundColor: resolvedColor.value }));
-const ringStyle = computed(() => ({ backgroundColor: resolvedColor.value }));
+const dotStyle = computed<CSSProperties>(() => ({
+    backgroundColor: resolvedColor.value,
+}));
+
+const ringStyle = computed<CSSProperties>(() => ({
+    backgroundColor: resolvedColor.value,
+}));
+
+const progressClamped = computed(() =>
+    Math.max(0, Math.min(1, props.modelValue ?? 0)),
+);
+
+const outerStyle = computed<CSSProperties | undefined>(() => {
+    if (props.variant !== "progress") {
+        return { backgroundColor: resolvedColor.value };
+    }
+    const p = progressClamped.value;
+    const glowAlphaPct = (25 + p * 45).toFixed(0);
+    const blur = (2 + p * 6).toFixed(1);
+    return {
+        "--dot-p": String(p),
+        "--dot-deg": `${(p * 360).toFixed(2)}deg`,
+        boxShadow: `0 0 ${blur}px color-mix(in srgb, ${resolvedColor.value} ${glowAlphaPct}%, transparent)`,
+    } as CSSProperties;
+});
+
+const progressStyle = computed<CSSProperties>(() => {
+    const c = resolvedColor.value;
+    const track = `color-mix(in srgb, ${c} 18%, transparent)`;
+    return {
+        background: `conic-gradient(from -90deg, ${c} var(--dot-deg, 0deg), ${track} 0)`,
+    };
+});
 </script>

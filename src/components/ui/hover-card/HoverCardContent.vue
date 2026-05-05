@@ -9,7 +9,10 @@ import {
 import { cn } from '@utils'
 
 const props = withDefaults(
-  defineProps<HoverCardContentProps & { class?: HTMLAttributes['class'] }>(),
+  defineProps<HoverCardContentProps & {
+    /** Class merged onto the rendered HoverCard content element. */
+    class?: HTMLAttributes['class'];
+  }>(),
   {
     sideOffset: 4,
   },

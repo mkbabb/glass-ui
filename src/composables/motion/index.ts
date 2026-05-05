@@ -26,3 +26,9 @@ export {
     type PausableRuntime,
     type UseIntersectionPauseOptions,
 } from "./useIntersectionPause";
+export {
+    useCollapse,
+    type UseCollapseOptions,
+    type UseCollapseReturn,
+    type UseCollapseStyle,
+} from "./useCollapse";

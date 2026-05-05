@@ -30,13 +30,26 @@ export const buttonVariants = cva(
         'danger-subtle':
           'bg-destructive/10 text-destructive hover:bg-destructive/20 active:bg-destructive/30 aria-pressed:bg-destructive/25',
         link: 'text-primary underline-offset-4 hover:underline active:opacity-80 active:scale-100',
+        // Modern-skeuo cartoon recipe — cream surface + 2px foreground border +
+        // accent-tinted cartoon shadow (consumes --cartoon-accent-color hook;
+        // defaults to --foreground). Hover lifts -1px and steps up to -md shadow.
+        cartoon:
+          'bg-[var(--cream)] text-[var(--cream-foreground)] border-2 border-[var(--border)] shadow-[var(--shadow-cartoon-accent)] transition-[transform,box-shadow] hover:-translate-y-px hover:shadow-[var(--shadow-cartoon-md)] active:translate-y-0 active:shadow-[var(--shadow-cartoon-sm)]',
+        // Transport playback — rainbow gradient surface + glass top-light +
+        // inset specular highlight via --glass-specular.
+        transport:
+          'bg-rainbow text-white border border-white/20 shadow-[var(--glass-specular),var(--shadow-cartoon-sm)] hover:shadow-[var(--glass-specular),var(--shadow-cartoon-md)]',
+        // Iridescent rainbow — vivid gradient drifting across 200% size.
+        // Animation key `rainbow-drift` ships alongside Lane 3 (D-W3).
+        rainbow:
+          'bg-rainbow-vivid text-white border border-white/15 shadow-[var(--glass-specular),var(--shadow-cartoon-sm)] [background-size:200%_200%] [animation:rainbow-drift_var(--duration-shimmer)_linear_infinite] hover:shadow-[var(--glass-specular),var(--shadow-cartoon-md)]',
       },
       size: {
         default: 'h-10 px-4 py-2',
         xs: 'h-7 rounded-full px-2 text-xs',
         sm: 'h-9 rounded-full px-3',
         lg: 'h-11 rounded-full px-8',
-        icon: 'h-10 w-10 p-0',
+        icon: 'h-[var(--size-icon-btn)] w-[var(--size-icon-btn)] p-0 rounded-full',
       },
     },
     defaultVariants: {
