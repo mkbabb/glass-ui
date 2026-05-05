@@ -1,5 +1,31 @@
+<script lang="ts">
+/**
+ * dockKeepOpenSink — leaf-side declarative dock keep-open primitive.
+ *
+ * Provided by `<DockLayerGroup>`. A leaf consumer (slider thumb,
+ * scrubber, drag handle) calls `acquire()` on pointerdown and
+ * `release(token)` on pointerup / pointercancel; while the sink holds
+ * any token the parent dock stays open.
+ *
+ * The sink wraps `useDockState`'s existing `dockKeepOpen` / `dockRelease`
+ * provide-keys with a `Set<symbol>` of outstanding tokens; the parent
+ * counter is incremented exactly once while the set is non-empty and
+ * decremented exactly once when it drains, so leaf-side double-acquires
+ * or leaks cannot desync the dock's internal ref-count.
+ *
+ * `release(token)` is idempotent — releasing an already-released token
+ * is a no-op.
+ */
+export interface DockKeepOpenSink {
+    acquire(): symbol;
+    release(token: symbol): void;
+}
+
+export const DOCK_KEEP_OPEN_SINK_KEY = "dockKeepOpenSink" as const;
+</script>
+
 <script setup lang="ts">
-import { computed, provide, ref, useTemplateRef } from "vue";
+import { computed, inject, onUnmounted, provide, ref, useTemplateRef } from "vue";
 import type { Component } from "vue";
 import { useDockContext } from "./composables/dockContext";
 import { useLayerTransition } from "./composables/useLayerTransition";
@@ -65,6 +91,50 @@ provide("dockLayerGroup", {
     unregister,
     currentLayerId: currentLayer,
     leavingLayerId: leavingLayer,
+});
+
+// --- dockKeepOpenSink: token-based imperative API for leaf consumers ---
+//
+// Wraps the parent dock's `dockKeepOpen` / `dockRelease` provide-keys
+// (from useDockState) with a Set<symbol> of acquired tokens. While the
+// set is non-empty the parent dock's keepOpen counter is incremented
+// once; when the set drains, the dock is released exactly once. This
+// preserves a 1:1 acquire/release pairing into useDockState's counter
+// even if a consumer leaks (or double-acquires) tokens at the leaf.
+const parentKeepOpen = inject<(() => void) | null>("dockKeepOpen", null);
+const parentRelease = inject<(() => void) | null>("dockRelease", null);
+
+const acquiredTokens = new Set<symbol>();
+let parentHeld = false;
+
+function acquire(): symbol {
+    const token = Symbol("dockKeepOpenToken");
+    acquiredTokens.add(token);
+    if (!parentHeld) {
+        parentHeld = true;
+        parentKeepOpen?.();
+    }
+    return token;
+}
+
+function release(token: symbol): void {
+    if (!acquiredTokens.delete(token)) return; // idempotent
+    if (acquiredTokens.size === 0 && parentHeld) {
+        parentHeld = false;
+        parentRelease?.();
+    }
+}
+
+const sink: DockKeepOpenSink = { acquire, release };
+provide(DOCK_KEEP_OPEN_SINK_KEY, sink);
+
+onUnmounted(() => {
+    // Drain any tokens still held at unmount so the parent counter unwinds.
+    if (parentHeld) {
+        parentHeld = false;
+        parentRelease?.();
+    }
+    acquiredTokens.clear();
 });
 
 function isComponent(icon: unknown): icon is Component {
