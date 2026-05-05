@@ -67,6 +67,17 @@ const popoverContentClasses = computed(() =>
 </template>
 
 <style scoped>
+.math-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-block: var(--space-phi-3);
+    margin-block: var(--space-phi-3);
+}
+
+.math-display :deep(.katex) {
+    font-size: var(--type-math-display, clamp(1.1em, 1em + 1vw, 1.8em));
+}
+
 .math-surface-trigger {
     display: inline-flex;
     align-items: center;

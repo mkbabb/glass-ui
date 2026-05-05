@@ -7,24 +7,11 @@
  * register; this file ships only the typography + container utilities that
  * compose with KaTeX-rendered HTML or with raw math content.
  *
- * Tokens consumed: --type-formula, --type-subheading, --space-phi-{1..4},
- * --cream-warm, --paper-shadow-1, --easing-accent, --foreground,
- * --muted-foreground, --font-serif, --font-mono.
+ * Tokens consumed: --space-phi-{1..4}, --cream-warm, --foreground,
+ * --font-serif.
  */
 
 /* ── Math display containers ── */
-
-.math-display {
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding-block: var(--space-phi-3);
-    margin-block: var(--space-phi-3);
-    /* KaTeX selector: `.math-display .katex` font-size scales with viewport. */
-}
-
-.math-display .katex {
-    font-size: var(--type-math-display, clamp(1.1em, 1em + 1vw, 1.8em));
-}
 
 .math-inline-pill {
     display: inline-flex;
@@ -37,78 +24,9 @@
     font-style: italic;
 }
 
-/* ── Formula block — paper-cream surface + accent-color rule ── */
-
-.formula-block {
-    display: grid;
-    place-items: center;
-    padding: var(--space-phi-4) var(--space-phi-3);
-    background: var(--cream-warm);
-    border-radius: var(--radius-2xl);
-    border-left: 4px solid var(--easing-accent);
-    box-shadow: var(--paper-shadow-1);
-    font-variant-numeric: tabular-nums;
-    line-height: var(--leading-prose);
-}
-
-/* ── Math typography ── */
-
-.text-formula {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: var(--type-formula);
-    font-variant-numeric: tabular-nums;
-    line-height: var(--leading-prose);
-}
-
-/* ── BBNF-style production rule (formal-grammar typography) ── */
-
-.production-rule {
-    display: grid;
-    grid-template-columns: max-content auto;
-    gap: 0 var(--space-phi-1);
-    align-items: baseline;
-    font-family: var(--font-mono);
-    font-size: var(--type-small);
-    line-height: var(--leading-small);
-}
-
-.production-rule .lhs {
-    color: var(--foreground);
-    font-weight: 600;
-}
-
-.production-rule .lhs::after {
-    content: " ::= ";
-    color: var(--muted-foreground);
-    font-weight: 400;
-}
-
-.production-rule .rhs {
-    color: var(--muted-foreground);
-}
-
-/* ── Performance number + unit (numeric+unit pair typography) ── */
-
-.perf-number {
-    font-family: var(--font-mono);
-    font-variant-numeric: tabular-nums;
-    font-weight: 600;
-}
-
-.perf-unit {
-    font-family: var(--font-mono);
-    color: var(--muted-foreground);
-    margin-left: 0.125em;
-}
-
-/* ── A11y: math containers respect prefers-contrast: more ── */
+/* ── A11y: prefers-contrast: more strengthens the inline pill border ── */
 
 @media (prefers-contrast: more) {
-    .formula-block {
-        border-left-width: 6px;
-        border-left-color: var(--foreground);
-    }
     .math-inline-pill {
         border-color: color-mix(in srgb, var(--foreground) 20%, transparent);
     }

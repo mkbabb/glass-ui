@@ -237,3 +237,134 @@ const shimmerUtilities = [
         </section>
     </StoryPage>
 </template>
+
+<style scoped>
+/* Eight design-language explorations exclusive to this foundations story.
+   Each rule was previously a global utility; H.W1 collapsed single-demo
+   utilities to story-local scope per the inline-and-remove pattern. */
+
+.text-shimmer-blue {
+    background: linear-gradient(
+        90deg,
+        hsl(220 80% 35%),
+        hsl(200 100% 75%),
+        hsl(210 90% 55%),
+        hsl(200 100% 75%),
+        hsl(220 80% 35%)
+    );
+    background-size: 250% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: gold-shimmer-slide var(--shimmer-duration, var(--duration-shimmer)) linear infinite;
+}
+
+.text-shimmer-vivid {
+    background: linear-gradient(
+        90deg,
+        var(--rainbow-red),
+        var(--rainbow-orange),
+        var(--rainbow-yellow),
+        var(--rainbow-green),
+        var(--rainbow-blue),
+        var(--rainbow-indigo),
+        var(--rainbow-violet),
+        var(--rainbow-red)
+    );
+    background-size: 200% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: gold-shimmer-slide var(--shimmer-duration, var(--duration-shimmer)) linear infinite;
+}
+
+.text-shimmer-pastel {
+    background: linear-gradient(
+        90deg,
+        var(--rainbow-pastel-red),
+        var(--rainbow-pastel-orange),
+        var(--rainbow-pastel-yellow),
+        var(--rainbow-pastel-green),
+        var(--rainbow-pastel-blue),
+        var(--rainbow-pastel-indigo),
+        var(--rainbow-pastel-violet),
+        var(--rainbow-pastel-red)
+    );
+    background-size: 200% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: gold-shimmer-slide var(--shimmer-duration, var(--duration-shimmer)) linear infinite;
+}
+
+.bg-rainbow-pastel {
+    background: linear-gradient(
+        135deg,
+        var(--rainbow-pastel-red),
+        var(--rainbow-pastel-orange),
+        var(--rainbow-pastel-yellow),
+        var(--rainbow-pastel-green),
+        var(--rainbow-pastel-blue),
+        var(--rainbow-pastel-indigo),
+        var(--rainbow-pastel-violet)
+    );
+    background-size: 200% 200%;
+}
+
+.text-rainbow-pastel {
+    background: linear-gradient(
+        90deg,
+        var(--rainbow-pastel-red),
+        var(--rainbow-pastel-orange),
+        var(--rainbow-pastel-yellow),
+        var(--rainbow-pastel-green),
+        var(--rainbow-pastel-blue),
+        var(--rainbow-pastel-indigo),
+        var(--rainbow-pastel-violet)
+    );
+    background-size: 200% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.flourish-stripe-rainbow {
+    background: linear-gradient(
+        90deg,
+        var(--rainbow-red),
+        var(--rainbow-orange),
+        var(--rainbow-yellow),
+        var(--rainbow-green),
+        var(--rainbow-blue),
+        var(--rainbow-indigo),
+        var(--rainbow-violet)
+    );
+    height: 4px;
+}
+
+.flourish-stripe-pastel {
+    background: linear-gradient(
+        90deg,
+        var(--rainbow-pastel-red),
+        var(--rainbow-pastel-orange),
+        var(--rainbow-pastel-yellow),
+        var(--rainbow-pastel-green),
+        var(--rainbow-pastel-blue),
+        var(--rainbow-pastel-indigo),
+        var(--rainbow-pastel-violet)
+    );
+    height: 4px;
+}
+
+.flourish-stripe-gold {
+    background: linear-gradient(
+        90deg,
+        var(--gold-dark),
+        var(--gold-light),
+        var(--gold),
+        var(--gold-light),
+        var(--gold-dark)
+    );
+    height: 4px;
+}
+</style>

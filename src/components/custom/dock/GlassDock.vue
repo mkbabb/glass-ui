@@ -15,7 +15,7 @@ const props = withDefaults(
         collapseDelay?: number;
         startCollapsed?: boolean;
         fitContent?: boolean;
-        position?: "fixed" | "inline" | "sticky";
+        position?: "inline" | "sticky";
         alwaysExpanded?: boolean;
         /** Allow expanded content to wrap to multiple lines. */
         wrap?: boolean;
@@ -219,9 +219,7 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
             `shape-${shape}`,
             `density-${density}`,
             { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'dock-wrap': wrap },
-            position === 'fixed' ? 'fixed bottom-[var(--dock-pos)] left-1/2 -translate-x-1/2'
-              : position === 'sticky' ? 'dock-sticky'
-              : 'dock-inline',
+            position === 'sticky' ? 'dock-sticky' : 'dock-inline',
         ]"
         @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave($event)"
@@ -263,8 +261,3 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
     </div>
 </template>
 
-<style>
-.glass-dock[data-position="fixed"] {
-    padding-bottom: env(safe-area-inset-bottom);
-}
-</style>

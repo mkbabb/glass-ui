@@ -245,12 +245,11 @@
 
     /* Cartoon-shadow accent recipe — modern-skeuomorphic axis delivered by
        extending the cartoon-shadow family. Consumers tune accent tone by
-       overriding --cartoon-accent-color (default var(--foreground)) and
-       --cartoon-accent-mix (default 15%) on the wrapper element. */
+       overriding --cartoon-accent-color (default var(--foreground)) on the
+       wrapper element. */
     --cartoon-accent-color: var(--foreground);
-    --cartoon-accent-mix:   15%;
     --shadow-cartoon-accent:
-        3px 3px 0px 0px color-mix(in srgb, var(--cartoon-accent-color) var(--cartoon-accent-mix), transparent);
+        3px 3px 0px 0px color-mix(in srgb, var(--cartoon-accent-color) 15%, transparent);
 
     /* Elevation scale */
     --shadow-xs: 0 1px 3px color-mix(in srgb, var(--shadow-color) 4%, transparent),
@@ -487,39 +486,16 @@
     --paper-clean-texture: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
     --paper-aged-texture: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
 
-    /* Paper tier — sibling family to the four glass tiers; no backdrop-filter,
-       no compositing tricks. Pure substrate. */
-    --paper-bg-1:     var(--cream);
-    --paper-bg-2:     hsl(48 12% 97%);
-    --paper-bg-3:     hsl(48 10% 95%);
-    --paper-bg-4:     hsl(48  8% 92%);
-    --paper-shadow-1: var(--shadow-cartoon-sm);
-    --paper-shadow-2: var(--shadow-cartoon-md);
-    --paper-shadow-3: var(--shadow-elevated);
-    --paper-shadow-4: var(--shadow-modal);
-    --paper-border-1: color-mix(in srgb, var(--foreground)  6%, transparent);
-    --paper-border-2: color-mix(in srgb, var(--foreground)  9%, transparent);
-    --paper-border-3: color-mix(in srgb, var(--foreground) 12%, transparent);
-    --paper-border-4: color-mix(in srgb, var(--foreground) 16%, transparent);
-
     /* φ-spacing — golden-ratio rungs for math + audacious composition. */
     --space-phi-1: 0.618rem;
     --space-phi-2: 1rem;
     --space-phi-3: 1.618rem;
     --space-phi-4: 2.618rem;
 
-    /* Shimmer-blue triplet — sibling to --gold-{,-light,-dark}; consumed by
-       the .text-shimmer-blue utility. */
-    --shimmer-blue-dark:  hsl(220 80% 35%);
-    --shimmer-blue-mid:   hsl(210 90% 55%);
-    --shimmer-blue-light: hsl(200 100% 75%);
-
     /* Blob token primitives — consumed by sub-tranche β.
        Per blob/SPEC.md §7 + W1 lock. Each is settable per instance. */
     --blob-color:                var(--easing-accent);
     --blob-border-mix:           12%;
-    --blob-border-mix-contrast:  24%;
-    --blob-grain-opacity:        0.04;
     --blob-chromatic-aberration: 0.002;
     --blob-cast-shadow-y:        0.5rem;
     --blob-cast-shadow-blur:     1.5rem;
@@ -620,28 +596,11 @@
 
     /* Cartoon shadow accent — dark mirror */
     --cartoon-accent-color: var(--foreground);
-    --cartoon-accent-mix:   18%;
     --shadow-cartoon-accent:
-        3px 3px 0px 0px color-mix(in srgb, var(--cartoon-accent-color) var(--cartoon-accent-mix), transparent);
-
-    /* Paper tier — dark mirror */
-    --paper-bg-1:     var(--cream);
-    --paper-bg-2:     hsl(24 7% 11%);
-    --paper-bg-3:     hsl(24 6% 14%);
-    --paper-bg-4:     hsl(24 5% 17%);
-    --paper-border-1: color-mix(in srgb, var(--foreground)  8%, transparent);
-    --paper-border-2: color-mix(in srgb, var(--foreground) 12%, transparent);
-    --paper-border-3: color-mix(in srgb, var(--foreground) 16%, transparent);
-    --paper-border-4: color-mix(in srgb, var(--foreground) 22%, transparent);
-
-    /* Shimmer-blue — dark mirror (boosted) */
-    --shimmer-blue-dark:  hsl(220 70% 50%);
-    --shimmer-blue-mid:   hsl(210 80% 65%);
-    --shimmer-blue-light: hsl(200  90% 80%);
+        3px 3px 0px 0px color-mix(in srgb, var(--cartoon-accent-color) 18%, transparent);
 
     /* Blob primitives — dark mirror (border ramps; aberration unchanged) */
     --blob-border-mix:           16%;
-    --blob-border-mix-contrast:  28%;
     --blob-cast-shadow-mix:      24%;
 
     --viz-fourier:   hsl(6 77% 66%);

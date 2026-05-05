@@ -120,39 +120,11 @@
         -webkit-mask-image: linear-gradient(to bottom, transparent, black var(--mask-fade-width), black calc(100% - var(--mask-fade-width)), transparent);
     }
 
-    /* ── Text-shimmer family — single-hue (gold, blue) + rainbow sweeps
-     *    (vivid, pastel). Each utility shares the gold-shimmer-slide
-     *    keyframe; consumers tune cadence via --shimmer-duration. */
+    /* ── Text-shimmer (gold) — consumes gold-shimmer-slide keyframe;
+     *    consumers tune cadence via --shimmer-duration. */
     .text-shimmer-gold {
         background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold), var(--gold-light), var(--gold-dark));
         background-size: 250% 100%;
-        background-clip: text;
-        -webkit-background-clip: text;
-        color: transparent;
-        animation: gold-shimmer-slide var(--shimmer-duration, var(--duration-shimmer)) linear infinite;
-    }
-
-    .text-shimmer-blue {
-        background: linear-gradient(90deg, var(--shimmer-blue-dark), var(--shimmer-blue-light), var(--shimmer-blue-mid), var(--shimmer-blue-light), var(--shimmer-blue-dark));
-        background-size: 250% 100%;
-        background-clip: text;
-        -webkit-background-clip: text;
-        color: transparent;
-        animation: gold-shimmer-slide var(--shimmer-duration, var(--duration-shimmer)) linear infinite;
-    }
-
-    .text-shimmer-vivid {
-        background: linear-gradient(90deg, var(--rainbow-red), var(--rainbow-orange), var(--rainbow-yellow), var(--rainbow-green), var(--rainbow-blue), var(--rainbow-indigo), var(--rainbow-violet), var(--rainbow-red));
-        background-size: 200% 100%;
-        background-clip: text;
-        -webkit-background-clip: text;
-        color: transparent;
-        animation: gold-shimmer-slide var(--shimmer-duration, var(--duration-shimmer)) linear infinite;
-    }
-
-    .text-shimmer-pastel {
-        background: linear-gradient(90deg, var(--rainbow-pastel-red), var(--rainbow-pastel-orange), var(--rainbow-pastel-yellow), var(--rainbow-pastel-green), var(--rainbow-pastel-blue), var(--rainbow-pastel-indigo), var(--rainbow-pastel-violet), var(--rainbow-pastel-red));
-        background-size: 200% 100%;
         background-clip: text;
         -webkit-background-clip: text;
         color: transparent;
@@ -166,40 +138,7 @@
         background-size: 200% 200%;
     }
 
-    .bg-rainbow-pastel {
-        background: linear-gradient(135deg, var(--rainbow-pastel-red), var(--rainbow-pastel-orange), var(--rainbow-pastel-yellow), var(--rainbow-pastel-green), var(--rainbow-pastel-blue), var(--rainbow-pastel-indigo), var(--rainbow-pastel-violet));
-        background-size: 200% 200%;
-    }
-
-    .text-rainbow-pastel {
-        background: linear-gradient(90deg, var(--rainbow-pastel-red), var(--rainbow-pastel-orange), var(--rainbow-pastel-yellow), var(--rainbow-pastel-green), var(--rainbow-pastel-blue), var(--rainbow-pastel-indigo), var(--rainbow-pastel-violet));
-        background-size: 200% 100%;
-        background-clip: text;
-        -webkit-background-clip: text;
-        color: transparent;
-    }
-
-    .rainbow-stroke {
-        stroke: url(#rainbow-gradient);
-    }
-
-    /* ── Flourish stripes (top-of-card accent strip) ── */
-    .flourish-stripe-rainbow {
-        background: linear-gradient(90deg, var(--rainbow-red), var(--rainbow-orange), var(--rainbow-yellow), var(--rainbow-green), var(--rainbow-blue), var(--rainbow-indigo), var(--rainbow-violet));
-        height: 4px;
-    }
-
-    .flourish-stripe-pastel {
-        background: linear-gradient(90deg, var(--rainbow-pastel-red), var(--rainbow-pastel-orange), var(--rainbow-pastel-yellow), var(--rainbow-pastel-green), var(--rainbow-pastel-blue), var(--rainbow-pastel-indigo), var(--rainbow-pastel-violet));
-        height: 4px;
-    }
-
-    .flourish-stripe-gold {
-        background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold), var(--gold-light), var(--gold-dark));
-        height: 4px;
-    }
-
-    /* ── Divider flourish utilities (gold + rainbow + 13 section variants) ── */
+    /* ── Divider flourish utilities (gold + rainbow + section variants) ── */
     .divider-flourish-gold {
         height: 2px;
         background: linear-gradient(to right, transparent 3%, var(--gold) 50%, transparent 97%);
@@ -210,19 +149,12 @@
         background: linear-gradient(to right, transparent, var(--rainbow-red), var(--rainbow-orange), var(--rainbow-yellow), var(--rainbow-green), var(--rainbow-blue), var(--rainbow-violet), transparent);
     }
 
-    .divider-flourish-section-0  { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-0)  50%, transparent 97%); }
-    .divider-flourish-section-1  { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-1)  50%, transparent 97%); }
-    .divider-flourish-section-2  { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-2)  50%, transparent 97%); }
-    .divider-flourish-section-3  { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-3)  50%, transparent 97%); }
-    .divider-flourish-section-4  { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-4)  50%, transparent 97%); }
-    .divider-flourish-section-5  { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-5)  50%, transparent 97%); }
-    .divider-flourish-section-6  { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-6)  50%, transparent 97%); }
-    .divider-flourish-section-7  { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-7)  50%, transparent 97%); }
-    .divider-flourish-section-8  { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-8)  50%, transparent 97%); }
-    .divider-flourish-section-9  { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-9)  50%, transparent 97%); }
-    .divider-flourish-section-10 { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-10) 50%, transparent 97%); }
-    .divider-flourish-section-11 { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-11) 50%, transparent 97%); }
-    .divider-flourish-section-12 { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-12) 50%, transparent 97%); }
+    .divider-flourish-section-0 { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-0) 50%, transparent 97%); }
+    .divider-flourish-section-2 { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-2) 50%, transparent 97%); }
+    .divider-flourish-section-3 { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-3) 50%, transparent 97%); }
+    .divider-flourish-section-5 { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-5) 50%, transparent 97%); }
+    .divider-flourish-section-6 { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-6) 50%, transparent 97%); }
+    .divider-flourish-section-9 { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-9) 50%, transparent 97%); }
 
     /* ── Inline code chip (silent-failure S6) ── */
     .code-badge {
@@ -288,28 +220,7 @@
         color: var(--cartoon-accent-color, var(--foreground));
     }
 
-    /* ── Mono family rounding ── */
-    .text-mono-body {
-        font-family: var(--font-mono);
-        font-size: var(--type-body);
-        line-height: var(--leading-body);
-    }
-
-    .text-mono-prose {
-        font-family: var(--font-mono);
-        font-size: var(--type-prose);
-        line-height: var(--leading-prose);
-    }
-
     /* ── Misc utilities ── */
-    .section-subtitle {
-        font-family: var(--font-mono);
-        font-size: var(--type-caption);
-        color: var(--muted-foreground);
-        letter-spacing: var(--tracking-snug);
-        text-transform: capitalize;
-    }
-
     .well-dashed {
         border: 2px dashed color-mix(in srgb, var(--foreground) 18%, transparent);
         border-radius: var(--radius-lg);
@@ -318,41 +229,6 @@
         display: flex;
         flex-direction: column;
         gap: var(--space-phi-2);
-    }
-
-    .touch-gate-target {
-        cursor: pointer;
-        min-height: var(--size-icon-btn);
-        min-width: var(--size-icon-btn);
-    }
-
-    .touch-gate-active {
-        outline: 2px solid var(--ring);
-        transform: scale(0.97);
-    }
-
-    .confetti-piece {
-        position: absolute;
-        width: var(--confetti-size, 0.5rem);
-        height: var(--confetti-size, 0.5rem);
-        background: var(--confetti-color, var(--rainbow-yellow));
-        border-radius: 0;
-        pointer-events: none;
-        animation: confetti-fall var(--confetti-duration, 1.2s) cubic-bezier(0.35, 0.65, 0.5, 1) forwards;
-    }
-
-    .collapse-x {
-        max-width: var(--collapse-x-width, 0);
-        opacity: 0;
-        overflow: hidden;
-        transition:
-            max-width var(--duration-panel) var(--ease-apple-spring),
-            opacity var(--duration-fast) var(--ease-standard);
-    }
-
-    .collapse-x[data-state="open"] {
-        max-width: var(--collapse-x-open-width, 100%);
-        opacity: 1;
     }
 
     /* ── Keyboard key ── */

@@ -146,3 +146,17 @@ const tiers: Tier[] = [
         </section>
     </StoryPage>
 </template>
+
+<style scoped>
+.paper-rule {
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        transparent 5%,
+        color-mix(in srgb, var(--foreground) 14%, transparent) 18%,
+        color-mix(in srgb, var(--foreground) 14%, transparent) 82%,
+        transparent 95%
+    );
+    margin-block: var(--space-phi-2);
+}
+</style>

@@ -1,12 +1,12 @@
 import { ref, type Ref } from "vue";
-import fragSource from "./blob.frag.glsl?raw";
-import vertSource from "./blob.vert.glsl?raw";
+import fragSource from "../blob.frag.glsl?raw";
+import vertSource from "../blob.vert.glsl?raw";
 import type {
     BlobColorHsl,
     BlobConfig,
     MetaballSource,
     RendererHandle,
-} from "./types";
+} from "../types";
 
 /**
  * Per-instance WebGL2 renderer for the Blob primitive. Acquires its own
@@ -170,7 +170,7 @@ export function useMetaballRenderer(
         let disposed = false;
         const queued: number[] = [];
 
-        void import("./canvas2d-fallback").then(({ createCanvas2DRenderer }) => {
+        void import("../canvas2d-fallback").then(({ createCanvas2DRenderer }) => {
             if (disposed) return;
             inner = createCanvas2DRenderer(canvas, sources, color, config, isWebGL);
             // Drain any frames the caller fired before the import resolved.

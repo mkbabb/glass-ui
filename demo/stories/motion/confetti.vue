@@ -196,10 +196,15 @@ function celebrateWell(e: MouseEvent) {
 }
 
 .confetti-stage .confetti-piece {
-    /* Override the canon `.confetti-piece` keyframe with a parameterized burst
-       that consumes the per-piece CSS custom properties. The library ships
-       `--confetti-color` + `--confetti-duration`; the story extends with
-       `--confetti-rotate` + `--confetti-drift` for deterministic dispersal. */
+    position: absolute;
+    width: var(--confetti-size, 0.5rem);
+    height: var(--confetti-size, 0.5rem);
+    background: var(--confetti-color, var(--rainbow-yellow));
+    border-radius: 0;
+    pointer-events: none;
+    /* Parameterized burst that consumes per-piece CSS custom properties.
+       --confetti-color + --confetti-duration are story-level; the story extends
+       with --confetti-rotate + --confetti-drift for deterministic dispersal. */
     animation: story-confetti-burst var(--confetti-duration, 1.2s)
         cubic-bezier(0.35, 0.65, 0.5, 1) forwards;
     transform-origin: center;

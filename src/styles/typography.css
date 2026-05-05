@@ -39,19 +39,13 @@
     --type-display-mega: clamp(6.854rem, 5rem + 9vw, 11.089rem);    /* φ^5 */
     --type-display-ultra: clamp(11.089rem, 8rem + 12vw, 17.944rem); /* φ^6 */
 
-    /* Math typography — formula rung at √φ above body (== subheading). */
-    --type-formula:    var(--type-subheading);
-
     /* Per-rung Fraunces variation axes — audacious sizes go softer (SOFT
-       higher) and slightly wider (wdth >100). Each text-display-N utility
-       picks up the matching rung's axis settings. */
-    --font-display-1-variation-settings:     "WONK" 1, "SOFT" 0,   "wdth" 100;
-    --font-display-2-variation-settings:     "WONK" 1, "SOFT" 25,  "wdth" 102;
-    --font-display-3-variation-settings:     "WONK" 1, "SOFT" 50,  "wdth" 105;
-    --font-display-4-variation-settings:     "WONK" 1, "SOFT" 75,  "wdth" 108;
-    --font-display-5-variation-settings:     "WONK" 1, "SOFT" 100, "wdth" 110;
-    --font-display-mega-variation-settings:  "WONK" 1, "SOFT" 100, "wdth" 112;
-    --font-display-ultra-variation-settings: "WONK" 1, "SOFT" 100, "wdth" 115;
+       higher) and slightly wider (wdth >100). The display-1 + display-2
+       rungs survive as named tokens because each has at least two consumers
+       (text-display-stat utility and PipelineFlow.vue respectively); rungs
+       3..ultra inline their axes literally into their @utility blocks. */
+    --font-display-1-variation-settings: "WONK" 1, "SOFT" 0,  "wdth" 100;
+    --font-display-2-variation-settings: "WONK" 1, "SOFT" 25, "wdth" 102;
 
     /* Line heights */
     --leading-micro: 1.2;
@@ -91,7 +85,7 @@ body {
     line-height: var(--leading-display);
     letter-spacing: var(--tracking-tightest);
     font-optical-sizing: auto;
-    font-variation-settings: var(--font-display-ultra-variation-settings);
+    font-variation-settings: "WONK" 1, "SOFT" 100, "wdth" 115;
     font-weight: var(--font-display-weight);
 }
 
@@ -101,7 +95,7 @@ body {
     line-height: var(--leading-display);
     letter-spacing: var(--tracking-tightest);
     font-optical-sizing: auto;
-    font-variation-settings: var(--font-display-mega-variation-settings);
+    font-variation-settings: "WONK" 1, "SOFT" 100, "wdth" 112;
     font-weight: var(--font-display-weight);
 }
 
@@ -111,7 +105,7 @@ body {
     line-height: var(--leading-display);
     letter-spacing: var(--tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: var(--font-display-5-variation-settings);
+    font-variation-settings: "WONK" 1, "SOFT" 100, "wdth" 110;
     font-weight: var(--font-display-weight);
 }
 
@@ -121,7 +115,7 @@ body {
     line-height: var(--leading-display);
     letter-spacing: var(--tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: var(--font-display-4-variation-settings);
+    font-variation-settings: "WONK" 1, "SOFT" 75, "wdth" 108;
     font-weight: var(--font-display-weight);
 }
 
@@ -131,7 +125,7 @@ body {
     line-height: var(--leading-display);
     letter-spacing: var(--tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: var(--font-display-3-variation-settings);
+    font-variation-settings: "WONK" 1, "SOFT" 50, "wdth" 105;
     font-weight: var(--font-display-weight);
 }
 

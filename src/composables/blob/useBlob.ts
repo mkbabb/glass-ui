@@ -18,10 +18,10 @@ import {
 } from "vue";
 
 import { useRAFLoop, type RAFLoopTiming } from "../motion";
-import { useBlobMood } from "./useBlobMood";
-import { useBlobPointer } from "./useBlobPointer";
-import { useBlobSatellites } from "./useBlobSatellites";
-import { useMetaballRenderer } from "./useMetaballRenderer";
+import { useBlobMood } from "./_internal/useBlobMood";
+import { useBlobPointer } from "./_internal/useBlobPointer";
+import { useBlobSatellites } from "./_internal/useBlobSatellites";
+import { useMetaballRenderer } from "./_internal/useMetaballRenderer";
 import {
     BLOB_CONFIG_DEFAULTS,
     type BlobColorHsl,

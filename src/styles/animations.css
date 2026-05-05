@@ -197,26 +197,3 @@
     }
 }
 
-/* ── Confetti fall — consumed by `.confetti-piece` (utilities.css). Each
- *    piece falls one viewport-height while rotating ~720° and fading out.
- *    Duration parameterised via `--confetti-duration` at the consumer.
- *    Reduced-motion guard collapses to a no-op (static specimen). */
-@keyframes confetti-fall {
-    0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-    }
-    80% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(100vh) rotate(720deg);
-        opacity: 0;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    @keyframes confetti-fall {
-        0%, 100% { opacity: 1; transform: none; }
-    }
-}

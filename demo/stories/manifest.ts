@@ -153,7 +153,7 @@ export const CATEGORIES: Category[] = [
         stories: [
             s("containers", "card", "Card"),
             s("containers", "cream-card", "Cream Card", "Card variant=\"cream\" + CreamSurface, two-tone warm/cool against paper."),
-            s("containers", "paper-card", "Paper Card", "Card variant=\"paper\" × paper-1..4 tier ladder + .paper-rule lined-paper variation."),
+            s("containers", "paper-card", "Paper Card", "Card variant=\"paper\" × paper-1..4 tier ladder + lined-paper rule variation."),
             s("containers", "well-dashed", "Dashed Well", "Drop-zone + quick-add empty-state pattern using .well-dashed."),
             s("containers", "dialog", "Dialog"),
             s("containers", "sheet", "Sheet"),
@@ -223,7 +223,7 @@ export const CATEGORIES: Category[] = [
             s("motion", "display-axes", "Display Axes", "Per-rung Fraunces WONK/SOFT/wdth across display-1..ultra."),
             s("motion", "bezier-canvas", "Bezier Canvas", "Named-easing presets + interactive cubic-bezier editor."),
             s("motion", "timeline", "Keyframe Timeline", "KeyframeTimeline + markers + playhead + ruler with golden-ratio phases."),
-            s("motion", "confetti", "Confetti", "Rainbow-palette burst from .confetti-piece, parameterized via CSS vars."),
+            s("motion", "confetti", "Confetti", "Rainbow-palette burst, parameterized via CSS vars."),
             s("motion", "typewriter", "Typewriter"),
             s("motion", "metaballs", "Metaballs", "WebGL canvas substrate with support fallback."),
         ],

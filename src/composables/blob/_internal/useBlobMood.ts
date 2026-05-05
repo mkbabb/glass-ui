@@ -20,7 +20,7 @@ import {
     type Ref,
 } from "vue";
 
-import type { BlobMood } from "./types";
+import type { BlobMood } from "../types";
 
 /**
  * Eleven-parameter mood blend that overlays `BlobConfig`. Every field is

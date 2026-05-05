@@ -1,8 +1,8 @@
-// Public barrel for the Blob composable family. Mood / pointer / satellites /
-// facade composables (`useBlobMood`, `useBlobPointer`, `useBlobSatellites`,
-// `useBlob`, `useWatercolorBlob`) join this barrel in Wβ1 Lane II / III.
+// Public barrel for the Blob composable family. The mood / pointer / satellites
+// / metaball-renderer sub-composables are package-private under `./_internal/`
+// (H.W1.B demote per W0-reconciliation §4); only the facades (`useBlob`,
+// `useWatercolorBlob`) and the shared types ship as public surface.
 
-export { useMetaballRenderer } from "./useMetaballRenderer";
 export {
     BLOB_CONFIG_DEFAULTS,
     type BlobColorHsl,
@@ -11,10 +11,6 @@ export {
     type MetaballSource,
     type RendererHandle,
 } from "./types";
-
-export { BLOB_MOOD_PARAMS, useBlobMood, type MoodParams } from "./useBlobMood";
-export { useBlobPointer, type PointerState } from "./useBlobPointer";
-export { useBlobSatellites } from "./useBlobSatellites";
 
 export {
     useWatercolorBlob,

@@ -35,10 +35,6 @@ export const buttonVariants = cva(
         // defaults to --foreground). Hover lifts -1px and steps up to -md shadow.
         cartoon:
           'bg-[var(--cream)] text-[var(--cream-foreground)] border-2 border-[var(--border)] shadow-[var(--shadow-cartoon-accent)] transition-[transform,box-shadow] hover:-translate-y-px hover:shadow-[var(--shadow-cartoon-md)] active:translate-y-0 active:shadow-[var(--shadow-cartoon-sm)]',
-        // Transport playback — rainbow gradient surface + glass top-light +
-        // inset specular highlight via --glass-specular.
-        transport:
-          'bg-rainbow text-white border border-white/20 shadow-[var(--glass-specular),var(--shadow-cartoon-sm)] hover:shadow-[var(--glass-specular),var(--shadow-cartoon-md)]',
         // Iridescent rainbow — vivid gradient drifting across 200% size.
         // Animation key `rainbow-drift` ships alongside Lane 3 (D-W3).
         rainbow:

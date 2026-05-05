@@ -9,8 +9,8 @@
 
 import { readonly, ref, watchEffect, type Ref } from "vue";
 
-import { mulberry32 } from "../utils/mulberry32";
-import type { BlobConfig, MetaballSource } from "./types";
+import { mulberry32 } from "../../utils/mulberry32";
+import type { BlobConfig, MetaballSource } from "../types";
 import type { MoodParams } from "./useBlobMood";
 
 type Phase = "orbiting" | "merging" | "absorbed" | "emerging";

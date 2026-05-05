@@ -7,7 +7,6 @@ export { default as TabsContent } from './TabsContent.vue'
 export { default as TabsIndicator } from './TabsIndicator.vue'
 
 // `default` keeps the existing list chassis (rounded-md container).
-// `underline` exposes the bottom-border indicator pattern (no background).
 // `pill` exposes a rounded-full container that hosts pill-shaped triggers.
 export const tabsListVariants = cva(
   'inline-flex items-center justify-center text-muted-foreground',
@@ -15,8 +14,6 @@ export const tabsListVariants = cva(
     variants: {
       variant: {
         default: 'h-10 rounded-md p-1',
-        underline:
-          'h-10 gap-2 border-b border-border/60 bg-transparent rounded-none p-0',
         pill: 'h-10 rounded-full bg-[var(--glass-bg-subtle)] border border-[var(--glass-border-default)] p-1 gap-1',
       },
     },
@@ -29,8 +26,7 @@ export const tabsListVariants = cva(
 export type TabsListVariants = VariantProps<typeof tabsListVariants>
 
 // `default` is the rounded-sm trigger (current behaviour).
-// `underline` adds a 2px accent bar on data-[state=active] aligned to the
-// list border-b. `pill` rounds to full and tints on active.
+// `pill` rounds to full and tints on active.
 export const tabsTriggerVariants = cva(
   'inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all duration-[var(--duration-fast)] ease-[var(--ease-standard)] focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)] disabled:pointer-events-none disabled:opacity-50 hover:text-foreground/70',
   {
@@ -38,8 +34,6 @@ export const tabsTriggerVariants = cva(
       variant: {
         default:
           'rounded-sm p-1 px-3 data-[state=active]:text-[var(--active-tab-color,var(--foreground))]',
-        underline:
-          'rounded-none border-b-2 border-transparent px-3 pb-2 pt-1 data-[state=active]:border-[var(--active-tab-color,var(--foreground))] data-[state=active]:text-[var(--active-tab-color,var(--foreground))]',
         pill: 'rounded-full px-3 py-1 data-[state=active]:bg-[var(--glass-bg-medium)] data-[state=active]:text-foreground data-[state=active]:shadow-sm',
       },
     },

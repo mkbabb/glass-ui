@@ -50,46 +50,77 @@
 }
 
 /* ═══════════════════════════════════════════════
-   PAPER TIER — sibling family to glass tiers, no backdrop-filter
+   PAPER TIER — sibling family to glass tiers, no backdrop-filter.
+   Literals are inlined per rung; bg + border step through the warm-cream
+   neutral ramp; shadow steps through the canon cartoon/elevation scale.
    ═══════════════════════════════════════════════ */
 
 @layer components {
     .paper-1 {
-        background: var(--paper-bg-1);
-        border: 1px solid var(--paper-border-1);
-        box-shadow: var(--paper-shadow-1);
+        background: var(--cream);
+        border: 1px solid color-mix(in srgb, var(--foreground) 6%, transparent);
+        box-shadow: var(--shadow-cartoon-sm);
         border-radius: var(--radius-2xl);
     }
 
     .paper-2 {
-        background: var(--paper-bg-2);
-        border: 1px solid var(--paper-border-2);
-        box-shadow: var(--paper-shadow-2);
+        background: hsl(48 12% 97%);
+        border: 1px solid color-mix(in srgb, var(--foreground) 9%, transparent);
+        box-shadow: var(--shadow-cartoon-md);
         border-radius: var(--radius-2xl);
     }
 
     .paper-3 {
-        background: var(--paper-bg-3);
-        border: 1px solid var(--paper-border-3);
-        box-shadow: var(--paper-shadow-3);
+        background: hsl(48 10% 95%);
+        border: 1px solid color-mix(in srgb, var(--foreground) 12%, transparent);
+        box-shadow: var(--shadow-elevated);
         border-radius: var(--radius-2xl);
     }
 
     .paper-4 {
-        background: var(--paper-bg-4);
-        border: 1px solid var(--paper-border-4);
-        box-shadow: var(--paper-shadow-4);
+        background: hsl(48 8% 92%);
+        border: 1px solid color-mix(in srgb, var(--foreground) 16%, transparent);
+        box-shadow: var(--shadow-modal);
         border-radius: var(--radius-2xl);
+    }
+
+    :where(.dark) .paper-2,
+    .dark .paper-2 {
+        background: hsl(24 7% 11%);
+        border-color: color-mix(in srgb, var(--foreground) 12%, transparent);
+    }
+
+    :where(.dark) .paper-3,
+    .dark .paper-3 {
+        background: hsl(24 6% 14%);
+        border-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+    }
+
+    :where(.dark) .paper-4,
+    .dark .paper-4 {
+        background: hsl(24 5% 17%);
+        border-color: color-mix(in srgb, var(--foreground) 22%, transparent);
+    }
+
+    :where(.dark) .paper-1,
+    .dark .paper-1 {
+        border-color: color-mix(in srgb, var(--foreground) 8%, transparent);
     }
 
     .paper-card {
         position: relative;
         isolation: isolate;
-        background: var(--paper-bg-2);
-        border: 1px solid var(--paper-border-2);
-        box-shadow: var(--paper-shadow-2);
+        background: hsl(48 12% 97%);
+        border: 1px solid color-mix(in srgb, var(--foreground) 9%, transparent);
+        box-shadow: var(--shadow-cartoon-md);
         border-radius: var(--radius-2xl);
         padding: var(--space-phi-3);
+    }
+
+    :where(.dark) .paper-card,
+    .dark .paper-card {
+        background: hsl(24 7% 11%);
+        border-color: color-mix(in srgb, var(--foreground) 12%, transparent);
     }
 
     .paper-card::after {
@@ -108,18 +139,6 @@
     :where(.dark) .paper-card::after,
     .dark .paper-card::after {
         mix-blend-mode: soft-light;
-    }
-
-    .paper-rule {
-        height: 1px;
-        background: linear-gradient(
-            to right,
-            transparent 5%,
-            color-mix(in srgb, var(--foreground) 14%, transparent) 18%,
-            color-mix(in srgb, var(--foreground) 14%, transparent) 82%,
-            transparent 95%
-        );
-        margin-block: var(--space-phi-2);
     }
 }
 

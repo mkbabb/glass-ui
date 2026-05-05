@@ -88,4 +88,23 @@ const accentStyle = computed<CSSProperties>(() => {
     color: var(--muted-foreground);
     text-align: center;
 }
+
+.formula-block {
+    display: grid;
+    place-items: center;
+    padding: var(--space-phi-4) var(--space-phi-3);
+    background: var(--cream-warm);
+    border-radius: var(--radius-2xl);
+    border-left: 4px solid var(--easing-accent);
+    box-shadow: var(--shadow-cartoon-sm);
+    font-variant-numeric: tabular-nums;
+    line-height: var(--leading-prose);
+}
+
+@media (prefers-contrast: more) {
+    .formula-block {
+        border-left-width: 6px;
+        border-left-color: var(--foreground);
+    }
+}
 </style>

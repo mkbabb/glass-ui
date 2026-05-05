@@ -114,7 +114,7 @@ const activePhase = computed(() => {
                     <header class="flex items-center justify-between gap-[var(--space-phi-2)]">
                         <div class="flex items-center gap-[var(--space-phi-2)]">
                             <Button
-                                variant="transport"
+                                variant="glass"
                                 size="icon"
                                 :aria-label="playing ? 'Pause' : 'Play'"
                                 @click="togglePlay"

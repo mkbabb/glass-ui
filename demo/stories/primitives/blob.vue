@@ -9,7 +9,7 @@
     5. Multi-instance composition — 9-blob grid, visibility-gated by scroll
     6. Accessibility states   — PRM-frozen / RT-disc / contrast-more border
     7. Watercolor swatch family — sm/md/lg/xl `<Swatch variant="watercolor">`
-    8. <SvgFilters> mount     — single-line consumer reminder
+    8. SVG defs mount         — local filter pack + rainbow-gradient mount
 -->
 <script setup lang="ts">
 import { computed, ref } from "vue";
@@ -17,7 +17,6 @@ import { computed, ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import { Blob } from "@/components/custom/blob";
 import { Swatch } from "@/components/custom/swatch";
-import { RainbowGradientDef, SvgFilters } from "@/components/custom/svg-filters";
 import { CreamSurface } from "@/components/custom/cream-surface";
 import { DisplayHero } from "@/components/custom/display-hero";
 import { FlourishDivider } from "@/components/custom/flourish-divider";
@@ -144,8 +143,66 @@ const WATERCOLORS: {
     <StoryPage>
         <!-- single-mount filter pack + rainbow gradient consumed by every
              section below — proves the §11 lock that consumers mount once -->
-        <SvgFilters />
-        <RainbowGradientDef />
+        <svg
+            class="svg-filters"
+            aria-hidden="true"
+            focusable="false"
+            style="position: absolute; width: 0; height: 0; overflow: hidden"
+        >
+            <defs>
+                <filter id="watercolor" x="-20%" y="-20%" width="140%" height="140%">
+                    <feTurbulence
+                        type="fractalNoise"
+                        baseFrequency="0.02"
+                        numOctaves="2"
+                        seed="1"
+                        result="noise"
+                    />
+                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" />
+                </filter>
+                <filter id="paper-grain" x="0" y="0" width="100%" height="100%">
+                    <feTurbulence
+                        type="fractalNoise"
+                        baseFrequency="0.65"
+                        numOctaves="4"
+                        stitchTiles="stitch"
+                        result="noise"
+                    />
+                    <feColorMatrix in="noise" type="saturate" values="0" />
+                    <feBlend mode="multiply" in2="SourceGraphic" />
+                </filter>
+                <filter id="pencil-wobble" x="-5%" y="-5%" width="110%" height="110%">
+                    <feTurbulence
+                        type="fractalNoise"
+                        baseFrequency="0.05"
+                        numOctaves="3"
+                        seed="2"
+                        result="noise"
+                    />
+                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
+                </filter>
+                <filter id="canvas-grain" x="0" y="0" width="100%" height="100%">
+                    <feTurbulence
+                        type="fractalNoise"
+                        baseFrequency="0.4"
+                        numOctaves="3"
+                        stitchTiles="stitch"
+                        result="noise"
+                    />
+                    <feColorMatrix in="noise" type="saturate" values="0" />
+                    <feBlend mode="multiply" in2="SourceGraphic" />
+                </filter>
+                <linearGradient id="rainbow-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="var(--rainbow-red)" />
+                    <stop offset="16%" stop-color="var(--rainbow-orange)" />
+                    <stop offset="33%" stop-color="var(--rainbow-yellow)" />
+                    <stop offset="50%" stop-color="var(--rainbow-green)" />
+                    <stop offset="66%" stop-color="var(--rainbow-blue)" />
+                    <stop offset="83%" stop-color="var(--rainbow-indigo)" />
+                    <stop offset="100%" stop-color="var(--rainbow-violet)" />
+                </linearGradient>
+            </defs>
+        </svg>
 
         <!-- ── 1. HERO SPECIMEN ────────────────────────────────────────── -->
         <CreamSurface
@@ -613,17 +670,21 @@ const WATERCOLORS: {
             </div>
         </section>
 
-        <!-- ── 8. SVG FILTERS MOUNT REMINDER ───────────────────────────── -->
+        <!-- ── 8. SVG DEFS MOUNT REMINDER ──────────────────────────────── -->
         <section class="flex flex-col gap-2">
             <FlourishDivider tone="gold" />
             <p class="text-prose-lettrine text-foreground/85">
-                <code class="fira-code">&lt;SvgFilters /&gt;</code> is mounted
-                once at app root; everything above consumes it implicitly through
-                CSS <code class="fira-code">filter: url(#watercolor)</code>.
-                <code class="fira-code">&lt;RainbowGradientDef /&gt;</code> is the
-                companion mount for the rainbow stroke utility. Both are exported
-                from <code class="fira-code">@mkbabb/glass-ui</code> and ship a
-                single hidden SVG node each — zero runtime cost beyond the parse.
+                A hidden <code class="fira-code">&lt;svg&gt;</code> at the top of
+                this story mounts the design-system filter pack
+                (<code class="fira-code">#watercolor</code>,
+                <code class="fira-code">#paper-grain</code>,
+                <code class="fira-code">#pencil-wobble</code>,
+                <code class="fira-code">#canvas-grain</code>) plus the
+                <code class="fira-code">#rainbow-gradient</code> linear gradient.
+                Every section above consumes them implicitly through CSS
+                <code class="fira-code">filter: url(#watercolor)</code> and
+                <code class="fira-code">stroke: url(#rainbow-gradient)</code>.
+                Zero runtime cost beyond the parse.
             </p>
         </section>
     </StoryPage>
