@@ -239,9 +239,8 @@ const shimmerUtilities = [
 </template>
 
 <style scoped>
-/* Eight design-language explorations exclusive to this foundations story.
-   Each rule was previously a global utility; H.W1 collapsed single-demo
-   utilities to story-local scope per the inline-and-remove pattern. */
+/* Eight design-language explorations exclusive to this foundations story —
+   gradient surface and shimmer recipes scoped to the demonstration. */
 
 .text-shimmer-blue {
     background: linear-gradient(

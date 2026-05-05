@@ -82,9 +82,9 @@ W1 ran 5 parallel lanes (custom components / composables / CVA / slot-class+fact
 - Zero artefacts remain library-orphan post-W1 (verified by orchestrator-side fresh grep of all retired names)
 - Every retire is a clean break (no shim, no `_v2`, no commented-out code)
 
-**W1 close commit**: `4a3da38`.
+**W1 close commit**: `68e4097`.
 
-**Note**: an unattributed commit `e2ad404 docs(DESIGN): reconcile post-P glass-ui surface — DockGroup, GlyphFace cap knob, DiscoGlyph` landed between W0 close and W1 close (timestamp 03:23:29). The change is a benign cross-repo DESIGN.md sync from speedtest P.W5/close-3 (out of any H wave's bounds). Origin is unclear (possibly an agent commit despite the non-commit directive); per H invariant 3 (no destructive git as recovery), it stays in history. W6's post-close audit will note this in the plan-vs-actual lane.
+**Note**: an unattributed commit `e2ad404 docs(DESIGN): reconcile post-P glass-ui surface — DockGroup, GlyphFace cap knob, DiscoGlyph` landed between W0 close and W1 close (timestamp 03:23:29). The change is a benign cross-repo DESIGN.md sync from speedtest P.W5/close-3 (out of any H wave's bounds). Origin is unclear (possibly an agent commit despite the non-commit directive); per H invariant 3 (no destructive git as recovery), it stays in history. W6's α-audit confirmed the 21 inserted lines are subsumed by W2's eventual sync (W2 expanded DESIGN.md to 1174 lines, containing all e2ad404 content).
 
 ## 2026-05-05 — W2/W3/W4 closed in parallel
 
@@ -105,12 +105,39 @@ W4 (Storybook coverage gaps + design-fidelity rerun) ran single-lane: authored `
 | Wave | Status | Commit |
 |---|---|---|
 | W0 | closed | `97c825e` (lane II submodule: `cc57c91`) |
-| W1 | closed | `4a3da38` |
+| W1 | closed | `68e4097` |
 | W2 | closed | `b4927ae` |
 | W3 | closed | `f3caa9f` |
 | W4 | closed | `28e6c6a` |
-| W5 | open (ready to dispatch) | — |
-| W6 | pending W5 | — |
+| W5 | closed | `13ca1c3` |
+| W6 | closed | (this commit) |
+
+## 2026-05-05 — W6 closed (tranche H FINAL)
+
+W6 ran in this order:
+
+1. **Pre-close orchestrator pass**: build/typecheck green; per-wave commit ledger compiled at `audit/H-pre-close.md`.
+2. **4-agent post-close audit dispatch**: α (plan-vs-actual), β (substrate-without-consumer), γ (doc-drift), δ (idiomatic-gestalt) ran in parallel. Each returned a deliverable at `audit/H-audit-{α,β,γ,δ}-*.md`.
+3. **Findings absorb**: doc-only fixes applied in W6 (CLAUDE.md custom-package list + runtime helpers + composable groups; PROGRESS.md hash; all 7 wave-spec Status lines; H.md Wave Schedule + Cross-tranche debt; 4 recovery-diary leaks scrubbed). Three findings became named-destination residuals: R-NEW-1 (41 pre-G stories needing aesthetic uplift) + R-NEW-2 (`--cartoon-shadow*` round-trip aliases) + R-NEW-3 (3 stale D-tranche evidence-doc Source paths).
+4. **FINAL.md authored** AFTER absorb completion, per the new binding precept (post-close audit returns clean before FINAL is final).
+5. **Lessons-learned reconciliation**: H surfaced no new process-failure incidents; the four G-derived lessons remain the latest entries.
+6. **W6 close commit** records the absorb + audit deliverables + FINAL.md.
+
+The substrate is honest: 0 library-orphans at HEAD; 77 G artefacts retired cleanly; public surface narrowed; DESIGN.md synced; Wβ stress baseline captured; 4 binding precepts promoted to canon; the 4-agent post-close audit pattern is now canonical for future tranches.
+
+## 2026-05-05 — W5 closed
+
+W5 (stress runtime profile capture) ran single-lane. All five phases delivered:
+
+- **Story extension** (one-line additive write at `demo/stories/_internal/blob-stress.vue:84-86`): `window.__blobStressMetrics = result` for headless extraction.
+- **Capture script** (`scripts/stress/blob-stress-capture.mjs`): boots dev server, launches Playwright + Chromium with software WebGL, navigates to `_internal/blob-stress`, clicks Run profile, extracts metrics, writes baseline.
+- **Playwright installed** (devDependency): playwright + @playwright/test + chromium browser binary.
+- **CI workflow** (`.github/workflows/stress.yml`): pull_request + push + workflow_dispatch triggers; checkout/node22/npm ci/playwright install --with-deps/build/`STRESS_CI_RELAX=1 npm run stress`; uploads baseline artifact + posts PR comment; hard-fails on threshold violation.
+- **Local baseline** (Apple M4 Max · 64 GB RAM · Chromium 147): FPS 119.62 (gate ≥ 30) PASS · Memory per instance 0 KB (gate ≤ 256 KB) PASS. Mean frame 8.36 ms / max 25.10 ms (informational).
+
+Per H invariant 8 — stress runtime profile is a hard gate, not a deferral. R2 closes with measured numbers landed.
+
+**W5 close commit**: `13ca1c3`.
 
 ## W1 dispatch input
 

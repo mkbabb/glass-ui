@@ -1,7 +1,7 @@
 // Public barrel for the Blob composable family. The mood / pointer / satellites
-// / metaball-renderer sub-composables are package-private under `./_internal/`
-// (H.W1.B demote per W0-reconciliation §4); only the facades (`useBlob`,
-// `useWatercolorBlob`) and the shared types ship as public surface.
+// / metaball-renderer sub-composables are package-private under `./_internal/`;
+// only the facades (`useBlob`, `useWatercolorBlob`) and the shared types ship
+// as public surface.
 
 export {
     BLOB_CONFIG_DEFAULTS,

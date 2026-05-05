@@ -56,48 +56,47 @@ src/
 │   │   ├── toggle-group/           # ToggleGroup, ToggleGroupItem
 │   │   ├── tooltip/                # Tooltip provider/trigger/content
 │   │   └── index.ts                # barrel: all ui/ exports
-│   ├── custom/                     # 43+ custom package dirs (post-G); each with its own index.ts. Public surface flows through `src/index.ts` re-exports — no `src/components/custom/index.ts` aggregate barrel.
-│   │   ├── animation/              # internal animation helpers
-│   │   ├── dock/
-│   │   │   ├── GlassDock.vue       # collapsible glass pill, dual-layer grid, horizontal | vertical
-│   │   │   ├── DockPopover.vue     # portaled popover for dock items
-│   │   │   ├── DockLayerGroup.vue  # multi-layer container + optional switcher rail
-│   │   │   ├── DockLayer.vue       # named pane inside a DockLayerGroup
-│   │   │   └── index.ts
-│   │   ├── aurora/
-│   │   │   ├── Aurora.vue          # WebGL aurora background
-│   │   │   ├── composables/        # useAurora, color utilities
-│   │   │   └── index.ts
-│   │   ├── controls/
-│   │   │   ├── DarkModeToggle.vue  # animated sun/moon SVG (useGlobalDark)
-│   │   │   └── index.ts
-│   │   ├── form/                   # internal form helpers
+│   ├── custom/                     # 40 custom package dirs; each with its own index.ts. Public surface flows through `src/index.ts` re-exports — no `src/components/custom/index.ts` aggregate barrel.
+│   │   ├── aurora/                 # Aurora WebGL background + composables (useAurora, color utilities)
+│   │   ├── bezier-canvas/          # BezierCurveCanvas — SVG cubic-bezier editor
+│   │   ├── blob/                   # Blob mascot grammar — instance-local WebGL2
+│   │   ├── confirm-dialog/         # ConfirmDialog wrapper
+│   │   ├── controls/               # DarkModeToggle (animated sun/moon SVG via useGlobalDark)
+│   │   ├── cream-surface/          # CreamSurface — warm-cream substrate
+│   │   ├── disco-glyph/            # DiscoGlyph — faceted glyph primitive (P)
+│   │   ├── display-hero/           # DisplayHero — audacious display-N + variation
+│   │   ├── dock/                   # GlassDock + DockPopover + DockLayerGroup + DockLayer + dockKeepOpenSink
+│   │   ├── dock-group/             # DockGroup — pill-row shelf for dock-tier consumers (P)
+│   │   ├── expandable-container/   # ExpandableContainer — animated collapse wrapper
+│   │   ├── flourish-divider/       # FlourishDivider — rainbow/gold/section divider
 │   │   ├── glass-carousel/         # GlassCarousel + useGlassCarousel
-│   │   ├── glass-panel/            # GlassPanel substrate wrapper
-│   │   ├── infinite-scroll/        # InfiniteScroll + current public composable implementation
-│   │   ├── metaballs/              # WebGL metaball substrate
-│   │   ├── search/                 # Fuzzy search exports
+│   │   ├── glass-panel/            # GlassPanel — substrate wrapper
+│   │   ├── glyph-face/             # GlyphFace — phase-tinted lucide wrapper with catch-light cap (O)
+│   │   ├── icon-stamp/             # IconStamp — stamped/embossed Lucide wrapper
+│   │   ├── icon-tooltip/           # IconTooltip — convenience wrapper
+│   │   ├── infinite-scroll/        # InfiniteScroll + composable
+│   │   ├── instrument-chassis/     # InstrumentChassis + RegionDivider — bezel substrate (O)
+│   │   ├── labeled-field/          # LabeledField — form field wrapper
+│   │   ├── live-snippet/           # LiveSnippet — BYO-engine runner shell
+│   │   ├── math-formula/           # MathFormula — formula block w/ accent left rule
+│   │   ├── math-glyph/             # MathGlyph — typography-as-icon w/ Fraunces axes
+│   │   ├── math-surface/           # MathSurface — inline/display/popover math container
+│   │   ├── metaballs/              # Metaballs — WebGL metaball substrate
+│   │   ├── metric-badge/           # MetricBadge — value + unit + density
+│   │   ├── notification-dot/       # NotificationDot — small dot indicator
+│   │   ├── paper-backdrop/         # PaperBackdrop — paper substrate
+│   │   ├── pipeline-flow/          # PipelineFlow — vertical/horizontal node chain
+│   │   ├── pulse/                  # Pulse — animated dot
+│   │   ├── search/                 # Fuzzy search
 │   │   ├── sidebar/                # ProgressiveSidebar + component-owned types only
 │   │   ├── sortable-list/          # SortableList + list item helpers
-│   │   ├── toggle-chip/            # segmented chip/cell toggle
-│   │   ├── cream-surface/          # <CreamSurface> warm-cream substrate (G)
-│   │   ├── display-hero/           # <DisplayHero> audacious display-N + variation (G)
-│   │   ├── flourish-divider/       # <FlourishDivider> rainbow/gold/section divider (G)
-│   │   ├── icon-stamp/             # <IconStamp> stamped/embossed Lucide wrapper (G)
-│   │   ├── math-surface/           # <MathSurface> inline/display/popover math container (G)
-│   │   ├── math-formula/           # <MathFormula> formula block w/ accent left rule (G)
-│   │   ├── math-glyph/             # <MathGlyph> typography-as-icon w/ Fraunces axes (G)
+│   │   ├── stacked-icons/          # StackedIconGroup — overlap stack
+│   │   ├── status-dot/             # StatusDot — semantic status indicator
+│   │   ├── swatch/                 # Swatch — solid/cartoon/watercolor (Wβ)
+│   │   ├── tabs/                   # BouncyTabs / UnderlineTabs / BouncyToggle compositions
 │   │   ├── timeline/               # KeyframeTimeline family (extended in G)
-│   │   ├── bezier-canvas/          # <BezierCurveCanvas> SVG cubic-bezier editor (G)
-│   │   ├── notification-dot/       # <NotificationDot> small dot indicator (G)
-│   │   ├── keyboard-shortcuts-modal/ # <KeyboardShortcutsModal> orchestration shell (G)
-│   │   ├── tier-badge/             # <TierBadge> Crown/Bookmark glyph w/ tier color (G)
-│   │   ├── like-button/            # <LikeButton> Heart toggle w/ count (G)
-│   │   ├── pipeline-flow/          # <PipelineFlow> vertical/horizontal node chain (G)
-│   │   ├── live-snippet/           # <LiveSnippet> BYO-engine runner shell (G)
-│   │   ├── blob/                   # <Blob> mascot grammar — instance-local WebGL2 (Wβ)
-│   │   ├── swatch/                 # <Swatch> solid/cartoon/watercolor (Wβ)
-│   │   ├── svg-filters/            # <SvgFilters> + <RainbowGradientDef> SVG defs mounts (Wβ)
+│   │   ├── toggle-chip/            # ToggleChip — segmented chip/cell toggle
+│   │   ├── typewriter/             # Typewriter — animated text reveal
 │   │   └── (no aggregate index.ts — each package re-exports via src/index.ts)
 │   └── (ui/ has its own barrel; custom/ does not — see src/index.ts)
 ├── composables/
@@ -138,7 +137,7 @@ src/
 
 ## Entry point
 
-`src/index.ts` — re-exports public components (39 ui packages via `./components/ui` aggregate barrel; 43+ custom packages via individual `./components/custom/<pkg>` barrels; no `src/components/custom/index.ts`), composable export groups (`./composables/{glass,motion,sortable,blob,color,monaco,utils}` etc.), individual composable utilities, and the `cn()` utility. `src/components/custom/sidebar/` exports `ProgressiveSidebar` plus component-owned types; sidebar state/follow/scroll/tree composables live under `src/composables/sidebar/`. Runtime tokens (`chartHeights`, `chartColors`, `chartNeutrals`, `vizColorsHex`, `spectrumColor`, `NAMED_EASING_BEZIER`, `goldenShimmer`) ship under the `@mkbabb/glass-ui/tokens` subpath. Per-package subpaths exist for high-traffic primitives (`/dock`, `/aurora`, `/blob` is folded into the main barrel via `./components/custom/blob`); see `vite.library.ts` for the canonical entry list.
+`src/index.ts` — re-exports public components (39 ui packages via `./components/ui` aggregate barrel; 40 custom packages via individual `./components/custom/<pkg>` barrels; no `src/components/custom/index.ts`), composable export groups (`./composables/{glass,motion,sortable,blob,utils}`), individual composable utilities, and the `cn()` utility. `src/components/custom/sidebar/` exports `ProgressiveSidebar` plus component-owned types; sidebar state/follow/scroll/tree composables live under `src/composables/sidebar/`. Runtime tokens (`chartHeights`, `chartColors`, `NAMED_EASING_BEZIER`) ship under the `@mkbabb/glass-ui/tokens` subpath. Per-package subpaths exist for high-traffic primitives (`/dock`, `/aurora`, `/blob` is folded into the main barrel via `./components/custom/blob`); see `vite.library.ts` for the canonical entry list.
 
 ## Dependencies
 

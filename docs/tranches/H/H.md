@@ -53,13 +53,13 @@ H has no sub-tranches. Tranche G's sub-tranche β (Blob primitive) is closed; it
 
 | Wave | Title | Agents | Mode | Hard Gate | Status |
 |---|---|---:|---|---|---|
-| W0 | Reconciliation audit + binding precept update | 2 | parallel: reconciliation audit lane + precept-update lane | reconciliation-audit names every wire-or-retire decision; LESSONS-LEARNED.md + SPEC.md + ORCHESTRATION.md + AGENT_DISPATCH_TEMPLATE.md updated with G's four lessons; orchestrator commits W0 close | open |
-| W1 | Wire-or-retire surface trim | 4-5 | parallel implementation: components / composables / utilities-and-tokens / CVA-branches-and-slot-class / runtime-tokens | every library-orphan reaches verdict (wire / retire / consumer-evidence-doc); typecheck + build green; orchestrator commits W1 close | pending W0 |
-| W2 | DESIGN.md drift completion (R7) | 1 | docs-only on DESIGN.md | 47 remaining W0.β drift rows applied; verify rows 53-56 against current source; orchestrator commits W2 close | pending W0 |
-| W3 | Slider glass-track + dock-keep-open round-trip (R3) | 2 | parallel: dock-keep-open refactor + Slider variant ship | `<Slider variant="glass-track">` mounts with `:keep-dock-open` prop; 5 fourier+EditorControls sites confirmed reachable via consumer ledger; orchestrator commits W3 close | pending W1 |
-| W4 | Storybook coverage gaps + design-fidelity gate re-run | 1-2 | implementation on `demo/stories/{primitives,containers,motion,compositions}/` | every surviving G artefact has ≥1 in-repo story; design-fidelity gate clears every new story; orchestrator commits W4 close | pending W1 |
-| W5 | Wβ stress runtime profile capture (R2) | 1 | implementation on `scripts/stress/` (NEW) + CI workflow | Playwright + Chromium captures actual SPEC.md §9 numbers; `audit/W5-stress-baseline.md` records baselines; CI workflow lands; orchestrator commits W5 close | pending W4 |
-| W6 | Close ceremony + post-close audit | 1 (orchestrator) + 4 audit lanes | implementation on `audit/H-{retro,FINAL}.md` + 4-agent post-close audit | post-close audit returns; FINAL.md authored AFTER audit findings absorbed; LESSONS-LEARNED + close criteria reconciled; tranche commits closed | pending W5 |
+| W0 | Reconciliation audit + binding precept update | 2 | parallel: reconciliation audit lane + precept-update lane | reconciliation-audit names every wire-or-retire decision; LESSONS-LEARNED.md + SPEC.md + ORCHESTRATION.md + AGENT_DISPATCH_TEMPLATE.md updated with G's four lessons; orchestrator commits W0 close | closed (`97c825e`) |
+| W1 | Wire-or-retire surface trim | 5 | parallel implementation: components / composables / utilities-and-tokens / CVA-branches-and-slot-class / runtime-tokens | every library-orphan reaches verdict (wire / retire / consumer-evidence-doc); typecheck + build green; orchestrator commits W1 close | closed (`68e4097`) — 77 retires |
+| W2 | DESIGN.md drift completion (R7) | 1 | docs-only on DESIGN.md | 47 remaining W0.β drift rows applied; verify rows 53-56 against current source; orchestrator commits W2 close | closed (`b4927ae`) — 57/57 rows |
+| W3 | Slider glass-track + dock-keep-open round-trip (R3) | 1 (combined) | combined-lane: dock-keep-open sink + Slider variant ship | `<Slider variant="glass-track">` mounts with `:keep-dock-open` prop wired through `dockKeepOpenSink`; build + typecheck green; orchestrator commits W3 close | closed (`f3caa9f`) |
+| W4 | Storybook coverage gaps + design-fidelity gate re-run | 1 | implementation on `demo/stories/primitives/slider-glass-track.vue` | new story authored; design-fidelity gate rerun (36 PASS / 41 NEEDS-REPAIR / 0 FAIL → R-NEW-1); orchestrator commits W4 close | closed (`28e6c6a`) |
+| W5 | Wβ stress runtime profile capture (R2) | 1 | implementation on `scripts/stress/` + `.github/workflows/stress.yml` | Playwright + Chromium captures actual SPEC.md §9 numbers; `audit/W5-stress-baseline.md` records baselines; CI workflow lands; orchestrator commits W5 close | closed (`13ca1c3`) — FPS 119.62 / Mem/instance 0 KB |
+| W6 | Close ceremony + post-close audit | 1 (orchestrator) + 4 audit lanes | implementation on `audit/H-{retro,FINAL}.md` + 4-agent post-close audit | post-close audit returns; FINAL.md authored AFTER audit findings absorbed; LESSONS-LEARNED + close criteria reconciled; tranche commits closed | in progress |
 
 Total wave count: 7. Wave concurrency: W2 + W3 + W4 + W5 can run in parallel after W1 close (only orchestration ordering is W0 → W1 → {W2 ‖ W3 ‖ W4 ‖ W5} → W6).
 
@@ -83,9 +83,23 @@ Tranche H closes only when all of:
 
 ## Cross-tranche debt and explicit deferrals
 
+### G residuals — disposition at H close
+
+- **R1** DESIGN.md sync — resolved in G pass-2 (916 → 1073 lines). Closed.
+- **R2** Wβ stress runtime profile — **closed in W5** (`13ca1c3`). Local M4 Max baseline + CI workflow + Playwright capture script all landed. FPS 119.62 / Memory per instance 0 KB.
+- **R3** `<Slider variant="glass-track">` + dock keep-open round-trip — **closed in W3** (`f3caa9f`). `dockKeepOpenSink` ships as the canonical leaf-side primitive (replacing the retired `keepOpenWhile` Ref-prop).
 - **R4** `<HarmonicLevelGrid>` / Filmstrip — stays out of scope per ≥2-bar; consumer territory. No destination opened.
 - **R5** Blob Web Worker for state machine — stays deferred per SPEC.md §11.4; trigger is 8+ multi-instance use cases, not a date.
-- **R6 surviving artefacts that have a consumer follow-up tranche IN PROGRESS** — keep-current with evidence docs. The consumer follow-up tranche is the named destination; H's wire-or-retire pass demotes any artefact whose consumer tranche has not opened.
+- **R6** Story-coverage residuals — **closed in W1+W4**. W1 retired the 7 G storyless artefacts (KeyboardShortcutsModal, TierBadge, LikeButton, useCollapse, useContrastSafeAccent, useMonacoTheme, defineDockActionBar); W4 authored the slider-glass-track story for the W3-shipped variant.
+- **R7** 47 W0.β DESIGN.md drift rows — **closed in W2** (`b4927ae`). 57/57 rows resolved (W2 expanded the row scope to include G's pass-2 carryover).
+
+### H residuals — named destinations
+
+- **R-NEW-1** Pre-G story aesthetic uplift — 41 stories returned NEEDS-REPAIR in W4's design-fidelity rerun (pre-G primitive specimen sheets + containers + motion + foundations stories lack the bold-maximalist commitment). Per H invariant 9 ("no new public components or composables") + H scope ("design-fidelity gate is verification, not new commitment"), repair is deferred. **Named destination**: a future tranche workstream — each repair is ~30 lines of `<template>` addition (CreamSurface hero + DisplayHero + FlourishDivider + section threading).
+
+- **R-NEW-2** `--cartoon-shadow*` round-trip aliases (8 tokens at `tokens.css:240-244,289-291` round-tripping through `theme.css:228-245`) — δ audit flagged as library-orphan-as-primitive (zero non-self consumers in src/+demo/). Same pattern applies to sibling `--soft-shadow`, `--elevated-shadow`, `--modal-shadow`, `--card-shadow`, `--dock-shadow{,-collapsed}` aliases. Pre-G rename scaffolding. **Named destination**: a future docs-only tranche or a Tailwind-4-@theme-cleanup pass — retiring the alias direction without breaking @theme's utility-class generation requires a careful pass that's out of H's wire-or-retire scope.
+
+- **R-NEW-3** Stale D-tranche consumer-evidence-doc Source paths — three docs (`animated-number.md`, `use-animated-number-options.md`, `use-animated-number.md`) cite removed speedtest paths (`MetricPillCluster.vue`, `SpeedtestResults.vue`). Artefacts themselves are alive with alternate consumers. β audit flagged. **Named destination**: a docs-only refresh in a future tranche or in speedtest's own follow-up.
 
 ## Brittleness window
 

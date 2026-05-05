@@ -4,7 +4,7 @@ export type { BlobProps } from "./Blob.vue";
 
 // Re-export the types + constants from composables/blob for ergonomic
 // component-package imports. Mood-internal exports (`BLOB_MOOD_PARAMS`,
-// `MoodParams`) are private under `composables/blob/_internal/` per H.W1.B.
+// `MoodParams`) are private under `composables/blob/_internal/`.
 export {
     BLOB_CONFIG_DEFAULTS,
     type BlobColorHsl,
