@@ -86,17 +86,31 @@ W1 ran 5 parallel lanes (custom components / composables / CVA / slot-class+fact
 
 **Note**: an unattributed commit `e2ad404 docs(DESIGN): reconcile post-P glass-ui surface — DockGroup, GlyphFace cap knob, DiscoGlyph` landed between W0 close and W1 close (timestamp 03:23:29). The change is a benign cross-repo DESIGN.md sync from speedtest P.W5/close-3 (out of any H wave's bounds). Origin is unclear (possibly an agent commit despite the non-commit directive); per H invariant 3 (no destructive git as recovery), it stays in history. W6's post-close audit will note this in the plan-vs-actual lane.
 
+## 2026-05-05 — W2/W3/W4 closed in parallel
+
+W2 (DESIGN.md drift completion) ran single-lane — 57/57 drift rows resolved; DESIGN.md 916 → 1174 lines.
+
+W3 (Slider glass-track + dock keep-open sink) ran single combined-lane: `DockKeepOpenSink` imperative API (acquire/release tokens) provided by `<DockLayerGroup>`; `<Slider variant="glass-track">` ships with `:keep-dock-open` prop wired through pointer events; build green at 25s.
+
+W4 (Storybook coverage gaps + design-fidelity rerun) ran single-lane: authored `demo/stories/primitives/slider-glass-track.vue` (3 sections — Hero / Three shapes / Dock round-trip); manifest entry added; design-fidelity rerun scored 77 stories at **36 PASS / 41 NEEDS-REPAIR / 0 FAIL**.
+
+**Scope reveal — 41 NEEDS-REPAIR stories**: pre-G primitive specimen sheets + containers + motion + foundations stories lack the bold-maximalist design-language commitment. Per dispatch protocol W4 halted-and-reported. Per H invariant 9 ("no new public components or composables") + H scope ("design-fidelity gate is verification, not new commitment"), the 41 repair tasks become **R-NEW-1: pre-G story aesthetic uplift** — named-destination residual for a future tranche workstream. Each repair is ~30 lines of `<template>` addition (CreamSurface hero + DisplayHero + FlourishDivider + section threading).
+
+**W2 close commit**: `b4927ae`.
+**W3 close commit**: `f3caa9f`.
+**W4 close commit**: `28e6c6a`.
+
 ## Status
 
 | Wave | Status | Commit |
 |---|---|---|
 | W0 | closed | `97c825e` (lane II submodule: `cc57c91`) |
 | W1 | closed | `4a3da38` |
-| W2 | open (ready to dispatch) | — |
-| W3 | open (ready to dispatch) | — |
-| W4 | open (ready to dispatch) | — |
-| W5 | pending W4 | — |
-| W6 | pending W2 + W3 + W4 + W5 | — |
+| W2 | closed | `b4927ae` |
+| W3 | closed | `f3caa9f` |
+| W4 | closed | `28e6c6a` |
+| W5 | open (ready to dispatch) | — |
+| W6 | pending W5 | — |
 
 ## W1 dispatch input
 
