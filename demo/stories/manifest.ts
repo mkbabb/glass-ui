@@ -121,6 +121,7 @@ export const CATEGORIES: Category[] = [
             s("primitives", "textarea", "Textarea"),
             s("primitives", "checks", "Checkbox · Radio · Switch"),
             s("primitives", "slider", "Slider"),
+            s("primitives", "slider-glass-track", "Slider · Glass Track", "<Slider variant=\"glass-track\"> × three shapes + dock-keep-open round-trip composition (W3, H)."),
             s("primitives", "number-field", "Number Field"),
             s("primitives", "select", "Select"),
             s("primitives", "combobox", "Combobox"),
