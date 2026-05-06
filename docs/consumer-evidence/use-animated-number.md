@@ -7,9 +7,9 @@
 ## Current consumer proof
 
 **Project**: `speedtest`
-**Source path**: `../speedtest/src/components/dashboard/charts/MetricGaugeCards.vue:15`, `../speedtest/src/components/speedtest/SpeedtestResults.vue:91`
-**Use case**: Speedtest smooths dashboard metrics, live pill values, phase progress, and hero result values through `useAnimatedNumber`.
-**Proof**: `rg -n '\buseAnimatedNumber\b' ../speedtest/src/components/dashboard/charts/MetricGaugeCards.vue ../speedtest/src/components/speedtest/MetricPillCluster.vue ../speedtest/src/components/speedtest/SpeedtestResults.vue`
+**Source path**: `../speedtest/src/components/dashboard/charts/MetricGaugeCards.vue:15,56-72`, `../speedtest/src/components/speedtest/Readout.vue:36,106`, `../speedtest/src/components/speedtest/MetricStrip.vue:41,135-149,253`
+**Use case**: Speedtest smooths dashboard summary cards (avg download/upload/ping/jitter + total result count), hero readout (`heroValue` → `heroSmoothed`), live metric strip pills (ping/jitter/download/upload), and phase progress through `useAnimatedNumber`.
+**Proof**: `rg -n '\buseAnimatedNumber\b' ../speedtest/src/components/dashboard/charts/MetricGaugeCards.vue ../speedtest/src/components/speedtest/Readout.vue ../speedtest/src/components/speedtest/MetricStrip.vue`
 
 ## Keep rationale
 

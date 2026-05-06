@@ -15,7 +15,7 @@ npm run typecheck    # vue-tsc --noEmit
 src/
 ├── index.ts                        # barrel: components + composables + utils
 ├── components/
-│   ├── ui/                         # 39 shadcn-vue base component packages (reka-ui)
+│   ├── ui/                         # 37 shadcn-vue base component packages (reka-ui)
 │   │   ├── accordion/              # Accordion + trigger/content wrappers
 │   │   ├── alert/                  # Alert, title, description
 │   │   ├── avatar/                 # Avatar, AvatarImage, AvatarFallback
@@ -35,7 +35,6 @@ src/
 │   │   ├── hover-card/             # HoverCard trigger/content
 │   │   ├── input/                  # Glass-styled input
 │   │   ├── label/                  # Label
-│   │   ├── multi-select/           # Multi-select control
 │   │   ├── notification/           # Notification surface
 │   │   ├── number-field/           # NumberField + subcomponents
 │   │   ├── popover/                # Popover trigger/content
@@ -45,18 +44,17 @@ src/
 │   │   ├── separator/              # Separator (h/v)
 │   │   ├── sheet/                  # Sheet side drawer + subcomponents
 │   │   ├── skeleton/               # Loading skeleton
-│   │   ├── slider/                 # reka-ui SliderRoot wrapper
+│   │   ├── slider/                 # reka-ui SliderRoot wrapper + sliderVariants CVA (default + glass-track)
 │   │   ├── switch/                 # Switch
 │   │   ├── table/                  # Table primitives
 │   │   ├── tabs/                   # Tabs, list, trigger, content
-│   │   ├── tags-input/             # TagsInput + subcomponents
 │   │   ├── textarea/               # Textarea
 │   │   ├── toast/                  # Toast exports
 │   │   ├── toggle/                 # Toggle + toggleVariants CVA
 │   │   ├── toggle-group/           # ToggleGroup, ToggleGroupItem
 │   │   ├── tooltip/                # Tooltip provider/trigger/content
 │   │   └── index.ts                # barrel: all ui/ exports
-│   ├── custom/                     # 40 custom package dirs; each with its own index.ts. Public surface flows through `src/index.ts` re-exports — no `src/components/custom/index.ts` aggregate barrel.
+│   ├── custom/                     # 37 custom package dirs; each with its own index.ts. Public surface flows through `src/index.ts` re-exports — no `src/components/custom/index.ts` aggregate barrel.
 │   │   ├── aurora/                 # Aurora WebGL background + composables (useAurora, color utilities)
 │   │   ├── bezier-canvas/          # BezierCurveCanvas — SVG cubic-bezier editor
 │   │   ├── blob/                   # Blob mascot grammar — instance-local WebGL2
@@ -70,8 +68,8 @@ src/
 │   │   ├── expandable-container/   # ExpandableContainer — animated collapse wrapper
 │   │   ├── flourish-divider/       # FlourishDivider — rainbow/gold/section divider
 │   │   ├── glass-carousel/         # GlassCarousel + useGlassCarousel
-│   │   ├── glass-panel/            # GlassPanel — substrate wrapper
 │   │   ├── glyph-face/             # GlyphFace — phase-tinted lucide wrapper with catch-light cap (O)
+│   │   ├── hover-popover/          # HoverPopover — adaptive side/align hover popover w/ defer-on-leave (Q)
 │   │   ├── icon-stamp/             # IconStamp — stamped/embossed Lucide wrapper
 │   │   ├── icon-tooltip/           # IconTooltip — convenience wrapper
 │   │   ├── infinite-scroll/        # InfiniteScroll + composable
@@ -81,17 +79,14 @@ src/
 │   │   ├── math-formula/           # MathFormula — formula block w/ accent left rule
 │   │   ├── math-glyph/             # MathGlyph — typography-as-icon w/ Fraunces axes
 │   │   ├── math-surface/           # MathSurface — inline/display/popover math container
-│   │   ├── metaballs/              # Metaballs — WebGL metaball substrate
 │   │   ├── metric-badge/           # MetricBadge — value + unit + density
 │   │   ├── notification-dot/       # NotificationDot — small dot indicator
-│   │   ├── paper-backdrop/         # PaperBackdrop — paper substrate
 │   │   ├── pipeline-flow/          # PipelineFlow — vertical/horizontal node chain
 │   │   ├── pulse/                  # Pulse — animated dot
 │   │   ├── search/                 # Fuzzy search
 │   │   ├── sidebar/                # ProgressiveSidebar + component-owned types only
 │   │   ├── sortable-list/          # SortableList + list item helpers
 │   │   ├── stacked-icons/          # StackedIconGroup — overlap stack
-│   │   ├── status-dot/             # StatusDot — semantic status indicator
 │   │   ├── swatch/                 # Swatch — solid/cartoon/watercolor (Wβ)
 │   │   ├── tabs/                   # BouncyTabs / UnderlineTabs / BouncyToggle compositions
 │   │   ├── timeline/               # KeyframeTimeline family (extended in G)
@@ -100,23 +95,37 @@ src/
 │   │   └── (no aggregate index.ts — each package re-exports via src/index.ts)
 │   └── (ui/ has its own barrel; custom/ does not — see src/index.ts)
 ├── composables/
+│   ├── blob/                       # useBlob + shader assets (instance-local WebGL2)
 │   ├── glass/                      # useGlassRenderer + shader assets
-│   ├── motion/                     # useScrollProgress, useSpringOrchestrator, useStaggerReveal
+│   ├── motion/                     # useScrollProgress, useSpringOrchestrator, useStaggerReveal, useAnimatedNumber
 │   ├── pagination/                 # useOffsetPagination
 │   ├── sidebar/                    # useSidebarState, useSidebarFollow, useScrollTracker, useTreeIndex
 │   ├── sortable/                   # useSortable
+│   ├── utils/                      # useDarkModeSync + small helpers
 │   ├── virtual/                    # virtual section/windowed-store helpers
 │   ├── useGlobalDark.ts            # createGlobalState(useDark) + Safari FOUC fix
+│   ├── useInterval.ts              # shared interval cleanup substrate
 │   ├── useKeyboardShortcuts.ts     # singleton registry, Mod aliasing, category groups
-│   └── index.ts                    # 9 top-level public export groups
+│   ├── useResizeObserver.ts        # Vue-scope-aware ResizeObserver wrapper
+│   ├── useTimer.ts                 # shared timer cleanup substrate
+│   ├── useTouchGate.ts             # delayed touch activation helper
+│   └── index.ts                    # 13 top-level public export groups (incl. infinite-scroll re-export from custom/)
 ├── styles/
 │   ├── index.css                   # imports all below in cascade order
-│   ├── tokens.css                  # §1–§10: duration, easing, z-index, radius, shadows, glass, paper, colors
+│   ├── tokens.css                  # §0–§14: theme bridges, duration, easing, z-index, radius, color palette, section palette, viz basis, shadows, glass, animation offsets, sizing, focus, paper, gold, rainbow
 │   ├── theme.css                   # @theme block: Tailwind color/font/radius aliases + dark variant
-│   ├── typography.css              # golden-ratio scale (√φ), semantic classes, font utilities
-│   ├── glass.css                   # .glass-{subtle,default,medium,elevated}, .glass-card, .glass-pill, .glass-btn
-│   ├── dock.css                    # .dock-icon-btn, .dock-select-trigger, .dock-separator, .dock-layer-grid
-│   ├── cards.css                   # .cartoon-card, .elevated-card, .paper-texture
+│   ├── typography.css              # golden-ratio scale (√φ), semantic classes, font utilities (incl. text-mono-{micro,small,caption,prose})
+│   ├── glass.css                   # .glass-{subtle,default,medium,elevated}, .glass-card, .glass-btn
+│   ├── dock.css                    # .dock-icon-button, .dock-select-trigger, .dock-separator, dock substrate
+│   ├── dock-group.css              # DockGroup pill-row shelf
+│   ├── cards.css                   # .paper-texture, .cream-surface
+│   ├── paper.css                   # .paper-{1..4} ladder, .paper-card, .paper-rule
+│   ├── math.css                    # math typography utilities
+│   ├── instrument-chassis.css      # bezel substrate styling
+│   ├── glyph-face.css              # phase-tinted glyph wrapper styling
+│   ├── disco-glyph.css             # faceted glyph primitive styling
+│   ├── hover-popover.css           # adaptive hover-popover styling
+│   ├── prism-theme.css             # Prism.js syntax-highlight token mapping (subpath export)
 │   ├── floating-panel.css          # .floating-panel, .floating-panel-item
 │   ├── transitions.css             # Vue <Transition>: fade, fade-slide, pop, dialog-scale, dropdown, tab-fade
 │   ├── animations.css              # @keyframes: dialog-in/out, floating-panel-in, collapsible, tooltip, shimmer
@@ -137,11 +146,11 @@ src/
 
 ## Entry point
 
-`src/index.ts` — re-exports public components (39 ui packages via `./components/ui` aggregate barrel; 40 custom packages via individual `./components/custom/<pkg>` barrels; no `src/components/custom/index.ts`), composable export groups (`./composables/{glass,motion,sortable,blob,utils}`), individual composable utilities, and the `cn()` utility. `src/components/custom/sidebar/` exports `ProgressiveSidebar` plus component-owned types; sidebar state/follow/scroll/tree composables live under `src/composables/sidebar/`. Runtime tokens (`chartHeights`, `chartColors`, `NAMED_EASING_BEZIER`) ship under the `@mkbabb/glass-ui/tokens` subpath. Per-package subpaths exist for high-traffic primitives (`/dock`, `/aurora`, `/blob` is folded into the main barrel via `./components/custom/blob`); see `vite.library.ts` for the canonical entry list.
+`src/index.ts` — re-exports public components (37 ui packages via `./components/ui` aggregate barrel; 37 custom packages via individual `./components/custom/<pkg>` barrels; no `src/components/custom/index.ts`), composable export groups (`./composables/{glass,motion,sortable,blob,utils}`), individual composable utilities (`useGlobalDark`, `useInterval`, `useKeyboardShortcuts`, `useResizeObserver`, `useTimer`, `useTouchGate`), and the `cn()` utility. `src/components/custom/sidebar/` exports `ProgressiveSidebar` plus component-owned types; sidebar state/follow/scroll/tree composables live under `src/composables/sidebar/`. Runtime tokens (`chartHeights`, `chartMargin`, `chartColors`, `minWidthInputSm`, `NAMED_EASING_BEZIER`) ship under the `@mkbabb/glass-ui/tokens` subpath. Per-package subpaths exist for high-traffic primitives (`/dock`, `/aurora`, `/blob` is folded into the main barrel via `./components/custom/blob`); see `vite.library.ts` for the canonical entry list.
 
 ## Dependencies
 
-All runtime deps are peer:
+All runtime deps are peer (consumer must install):
 
 | Package | Role |
 |---------|------|
@@ -152,8 +161,10 @@ All runtime deps are peer:
 | `class-variance-authority` ^0.7 | Component variant definitions |
 | `clsx` ^2.0 | Conditional class joining |
 | `tailwind-merge` ^3.0 | Class conflict resolution |
-
-Dev-only: `vaul-vue` (drawer), `lucide-vue-next` (icons).
+| `lucide-vue-next` ^0.525 | Icon set (consumed by IconStamp, GlyphFace, dock buttons) |
+| `vaul-vue` ^0.2 | Drawer bottom sheet primitive |
+| `embla-carousel-vue` ^8.0 | Carousel + GlassCarousel substrate |
+| `@mkbabb/keyframes.js` ^2.0 | Motion engine consumed by `useAnimatedNumber` + spring helpers |
 
 ## Path aliases (tsconfig)
 

@@ -7,9 +7,9 @@
 ## Current consumer proof
 
 **Project**: `glass-ui` and `speedtest`
-**Source path**: `src/composables/motion/useAnimatedNumber.ts:58`, `../speedtest/src/components/speedtest/MetricPillCluster.vue:112`
-**Use case**: `useAnimatedNumber` returns the named `AnimatedNumber` contract, and speedtest consumes that return shape through `ReturnType<typeof useAnimatedNumber>["current"]` for its metric pill map.
-**Proof**: `rg -n '\bAnimatedNumber\b|ReturnType<typeof useAnimatedNumber>' src/composables/motion/useAnimatedNumber.ts ../speedtest/src/components/speedtest/MetricPillCluster.vue`
+**Source path**: `src/composables/motion/useAnimatedNumber.ts:58`, `../speedtest/src/components/speedtest/MetricStrip.vue:253`, `../speedtest/src/components/speedtest/Readout.vue:106`
+**Use case**: `useAnimatedNumber` returns the named `AnimatedNumber` contract; speedtest consumes the `current` field of that return shape through destructured bindings (`{ current: smoothedProgress }` in `MetricStrip.vue`, `{ current: heroSmoothed }` in `Readout.vue`) to drive live metric strip and hero readout values.
+**Proof**: `rg -n '\bAnimatedNumber\b|useAnimatedNumber\b' src/composables/motion/useAnimatedNumber.ts ../speedtest/src/components/speedtest/MetricStrip.vue ../speedtest/src/components/speedtest/Readout.vue`
 
 ## Keep rationale
 

@@ -7,9 +7,9 @@
 ## Current consumer proof
 
 **Project**: `glass-ui` and `speedtest`
-**Source path**: `src/composables/motion/useAnimatedNumber.ts:57`, `../speedtest/src/components/speedtest/MetricPillCluster.vue:104`
-**Use case**: `useAnimatedNumber` accepts the named options contract, and speedtest supplies shared damping/snap options for live metric smoothing.
-**Proof**: `rg -n '\bUseAnimatedNumberOptions\b|pillOpts|damping|snapThreshold' src/composables/motion/useAnimatedNumber.ts ../speedtest/src/components/speedtest/MetricPillCluster.vue`
+**Source path**: `src/composables/motion/useAnimatedNumber.ts:57`, `../speedtest/src/components/speedtest/MetricStrip.vue:135-149,255`, `../speedtest/src/components/speedtest/Readout.vue:106-110`, `../speedtest/src/components/dashboard/charts/MetricGaugeCards.vue:56-72`
+**Use case**: `useAnimatedNumber` accepts the named options contract; speedtest supplies the shared `{ damping, snapThreshold }` shape (sourced from `DAMPING.domPill`/`SNAP_THRESHOLD.dom` constants) for live metric pills, hero readout, and dashboard summary cards.
+**Proof**: `rg -n '\bUseAnimatedNumberOptions\b|damping:|snapThreshold:' src/composables/motion/useAnimatedNumber.ts ../speedtest/src/components/speedtest/MetricStrip.vue ../speedtest/src/components/speedtest/Readout.vue ../speedtest/src/components/dashboard/charts/MetricGaugeCards.vue`
 
 ## Keep rationale
 

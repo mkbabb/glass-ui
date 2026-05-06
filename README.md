@@ -4,14 +4,14 @@ Glassmorphic design system for Vue 3.5. Shared components, design tokens, and co
 
 ## Features
 
-- 32 shadcn-vue components (Button, Card, Dialog, Select, Tabs, Popover, Slider, etc.)
+- 37 shadcn-vue components (Button, Card, Dialog, Select, Tabs, Popover, Slider, etc.)
 - Four-tier glassmorphism: `.glass-subtle`, `.glass-default`, `.glass-medium`, `.glass-elevated`
-- Convenience shorthands: `.glass-card`, `.glass-pill`, `.glass-btn`, `.floating-panel`
+- Convenience shorthands: `.glass-card`, `.glass-btn`, `.floating-panel`
 - GlassDock: collapsible glass action bar with a vertical rail variant, layered groups, and ref-counted state
-- Golden-ratio typography scale (√φ ≈ 1.272, 11 stops from micro to display-3)
+- Golden-ratio typography scale (√φ ≈ 1.272, 11 stops from micro to display-3) plus mono utilities (`text-mono-{micro,small,caption,prose}`)
 - Design tokens: duration, easing, z-index, radius (primitive + semantic), shadows, glass tiers, paper textures
 - Vue `<Transition>` class sets, shared `@keyframes`, SVG noise textures
-- Composables: timer, keyboard shortcut, touch gate, dark-mode, glass-renderer, motion, sortable, pagination, and virtual-list substrate
+- Composables: timer, interval, keyboard shortcut, touch gate, dark-mode, resize-observer, glass-renderer, motion, sortable, pagination, virtual-list, sidebar, and infinite-scroll substrate
 
 ## Install
 
@@ -58,7 +58,7 @@ npm run typecheck    # vue-tsc --noEmit
 src/
 ├── index.ts                    # core primitives, core composables, utilities
 ├── components/
-│   ├── ui/                     # 32 shadcn-vue components (reka-ui primitives)
+│   ├── ui/                     # 37 shadcn-vue components (reka-ui primitives)
 │   │   ├── button/             # Primitive + CVA (8 variants, 5 sizes)
 │   │   ├── card/               # Card, CardHeader, CardTitle, CardContent, etc.
 │   │   ├── dialog/             # Dialog, DialogContent, DialogHeader, etc.
@@ -67,31 +67,43 @@ src/
 │   │   ├── popover/            # Popover, PopoverTrigger, PopoverContent
 │   │   ├── dropdown-menu/      # DropdownMenu + 14 subcomponents
 │   │   ├── tooltip/            # Tooltip, TooltipTrigger, TooltipContent
-│   │   ├── slider/             # reka-ui Slider with glass track
+│   │   ├── slider/             # reka-ui Slider with glass-track CVA
 │   │   ├── input/              # Glass-styled input
-│   │   └── ...                 # + 22 more (toggle, switch, checkbox, badge, etc.)
-│   └── custom/
+│   │   └── ...                 # see CLAUDE.md for the full ui/ enumeration
+│   └── custom/                 # 37 custom packages — see CLAUDE.md for the full list
 │       ├── dock/               # GlassDock, DockPopover, DockLayerGroup, rail variant
 │       ├── aurora/             # Aurora WebGL background
-│       └── controls/           # DarkModeToggle
+│       ├── controls/           # DarkModeToggle
+│       └── ...                 # instrument-chassis, glyph-face, math-surface, blob, swatch, …
 ├── composables/
 │   ├── glass/                  # useGlassRenderer, createGlassFilter, destroyGlassFilter
 │   ├── motion/                 # keyframes-backed spring, RAF, animated-number, and pause helpers
-│   ├── pagination/             # useOffsetPagination
+│   ├── pagination/              # useOffsetPagination
+│   ├── sidebar/                 # useSidebarState, useSidebarFollow, useScrollTracker, useTreeIndex
 │   ├── sortable/               # useSortable
 │   ├── virtual/                # virtual section/window helpers
 │   ├── useGlobalDark.ts        # createGlobalState(useDark) + Safari FOUC fix
+│   ├── useInterval.ts          # shared interval cleanup substrate
 │   ├── useKeyboardShortcuts.ts # singleton registry, Mod key aliasing, grouped display
+│   ├── useResizeObserver.ts    # Vue-scope-aware ResizeObserver wrapper
 │   ├── useTimer.ts             # shared timer cleanup substrate
 │   └── useTouchGate.ts         # delayed touch activation helper
 ├── styles/
 │   ├── index.css               # imports all below in order
-│   ├── tokens.css              # design tokens (duration, easing, z-index, radius, shadows, glass, paper)
+│   ├── tokens.css              # design tokens (duration, easing, z-index, radius, shadows, glass, paper, viz, gold, rainbow)
 │   ├── theme.css               # @theme block (Tailwind color/font/radius aliases)
 │   ├── typography.css          # golden-ratio type scale + semantic classes
-│   ├── glass.css               # .glass-{subtle,default,medium,elevated}, .glass-card, .glass-pill, .glass-btn
-│   ├── dock.css                # separators and layer-grid helpers; button styling lives in dock components
-│   ├── cards.css               # .cartoon-card, .elevated-card, .paper-texture
+│   ├── glass.css               # .glass-{subtle,default,medium,elevated}, .glass-card, .glass-btn
+│   ├── dock.css                # .dock-icon-button, .dock-separator, dock substrate styling
+│   ├── dock-group.css          # DockGroup pill-row shelf
+│   ├── cards.css               # .paper-texture, .cream-surface
+│   ├── paper.css               # .paper-{1..4}, .paper-card, .paper-rule
+│   ├── math.css                # math typography utilities
+│   ├── instrument-chassis.css  # bezel substrate styling
+│   ├── glyph-face.css          # phase-tinted glyph wrapper styling
+│   ├── disco-glyph.css         # faceted glyph primitive styling
+│   ├── hover-popover.css       # adaptive hover-popover styling
+│   ├── prism-theme.css         # Prism.js syntax-highlight token mapping
 │   ├── floating-panel.css      # .floating-panel, .floating-panel-item
 │   ├── transitions.css         # Vue <Transition> classes: fade, fade-slide, pop, dialog-scale, dropdown
 │   ├── animations.css          # @keyframes: dialog-in/out, floating-panel-in, collapsible, tooltip, shimmer
@@ -115,7 +127,7 @@ Each tier defines `--glass-{opacity,blur,bg,border,shadow}-{tier}`. Consumers ov
 
 Convenience classes bundle a tier with a shape:
 - `.glass-card` = default tier + `var(--radius-card)`
-- `.glass-pill` = default tier + `var(--radius-pill)`
+- `.glass-btn` = button-shaped glass surface for inline glass actions
 
 ## Design Tokens
 
@@ -129,9 +141,9 @@ Convenience classes bundle a tier with a shape:
 | Radius | `--radius` base + `sm`/`md`/`lg`/`xl`/`2xl`/`pill` | Primitive scale from 0.5rem base |
 | Radius (semantic) | `--radius-card`, `--radius-panel`, `--radius-dialog`, `--radius-input`, `--radius-button`, `--radius-badge`, `--radius-dock` | Aliases into the primitive scale |
 | Shadows | `--shadow-xs` through `--shadow-2xl` | Elevation scale, hsl-based |
-| Shadows (cartoon) | `--shadow-cartoon-sm`/`md`/`lg`, `--shadow-card` | Offset hard shadows |
+| Shadows (cartoon) | `--shadow-cartoon`, `--shadow-cartoon-{hover,sm,md,lg,accent}`, `--shadow-card` | Offset hard shadows; `accent` rung is the warm-cream signature |
 | Glass | `--glass-{opacity,blur,bg,border,shadow}-{subtle,default,medium,elevated}` | 4 tiers, all aligned |
-| Paper | `--paper-clean-texture`, `--paper-aged-texture` | SVG feTurbulence noise |
+| Paper | `--paper-clean-texture`, `.paper-{1..4}` ladder | SVG feTurbulence noise + lined-paper utilities |
 | Colors | Full shadcn HSL-channel palette | Override locally per project |
 
 ## Typography
@@ -153,6 +165,8 @@ Type scale based on √φ ≈ 1.272 (modulated golden ratio). Each step is φ^(n
 | `--type-display-3` | 4.236rem | 68 | `.text-display-3` |
 
 The `@theme` block in `theme.css` maps these to Tailwind's `--font-size-*` tokens, so `text-sm`, `text-lg`, etc. adopt the golden-ratio scale.
+
+Mono utilities (Fira Code) for instrument-tier readouts: `text-mono-micro`, `text-mono-caption`, `text-mono-small`, `text-mono-prose` — each pairs a mono face with a tracking + line-height tuned for its rung.
 
 ## Conventions
 
