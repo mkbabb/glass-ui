@@ -240,8 +240,11 @@
     /* Dual-slot default visibility (R2-spec):
        The library renders both `--full` and `--abbr` siblings whenever both
        props are passed. Default identity is the full label; the abbreviation
-       sits hidden until consumer container-query CSS flips it. */
-    .metric-badge__label--abbr {
+       sits hidden until consumer container-query CSS flips it. The adjacent-
+       sibling selector preserves single-slot back-compat: when a consumer
+       passes only `abbreviation` (no `--full` sibling rendered), the abbr
+       reads at default visibility. */
+    .metric-badge__label--full + .metric-badge__label--abbr {
         display: none;
     }
 
