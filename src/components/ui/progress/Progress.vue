@@ -46,9 +46,13 @@ const rootClass = computed(() =>
 const indicatorClass = computed(() =>
   props.variant === 'gradient'
     ? // Indicator background resolves from --progress-fill (with bg-primary
-      // fallback). Consumers pass arbitrary CSS values (linear-gradient(...),
-      // hex, color-mix, etc.).
-      'h-full w-full flex-1 bg-[var(--progress-fill,theme(colors.primary.DEFAULT))] transition-all'
+      // fallback). Use the `background` shorthand (not `background-color`) so
+      // consumers can pass arbitrary CSS values that include gradients
+      // (`linear-gradient(...)`, `radial-gradient(...)`) alongside flat colors
+      // (hex, oklch, color-mix). Tailwind's `bg-[var(...)]` arbitrary class
+      // emits `background-color`, which silently rejects gradient values
+      // and falls back to transparent — leaving the rail's bg showing through.
+      'h-full w-full flex-1 [background:var(--progress-fill,theme(colors.primary.DEFAULT))] transition-all'
     : 'h-full w-full flex-1 bg-primary transition-all',
 )
 </script>
