@@ -103,6 +103,121 @@ import { MetricBadge } from "@/components/custom/metric-badge";
             </p>
         </section>
 
+        <!-- Inline-label variant — full label preceding the amount. -->
+        <section class="flex flex-col gap-3">
+            <p class="section-label">label · inline</p>
+            <div class="flex flex-wrap items-center gap-3">
+                <MetricBadge
+                    label="Latency"
+                    labelPosition="inline"
+                    :amount="36"
+                    unit="ms"
+                    size="lg"
+                    color="var(--viz-fourier)"
+                />
+                <MetricBadge
+                    label="Jitter"
+                    labelPosition="inline"
+                    :amount="1"
+                    unit="ms"
+                    size="lg"
+                    color="var(--viz-chebyshev)"
+                />
+                <MetricBadge
+                    label="Download"
+                    labelPosition="inline"
+                    :amount="730"
+                    unit="Mbps"
+                    size="lg"
+                    color="var(--viz-legendre)"
+                />
+                <MetricBadge
+                    label="Upload"
+                    labelPosition="inline"
+                    :amount="130"
+                    unit="Mbps"
+                    size="lg"
+                />
+            </div>
+            <p class="text-mono-caption text-muted-foreground">
+                Inline label (uppercase, tracked 0.18em, muted at 80%) sits one tier
+                below the amount. Reads as a single-row labelled telemetry pill.
+            </p>
+        </section>
+
+        <!-- Abbreviation mode — the consumer-side viewport collapse. -->
+        <section class="flex flex-col gap-3">
+            <p class="section-label">abbreviation · narrow viewport</p>
+            <div class="flex flex-wrap items-center gap-2">
+                <MetricBadge
+                    abbreviation="LAT"
+                    labelPosition="inline"
+                    :amount="36"
+                    unit="ms"
+                    size="sm"
+                    color="var(--viz-fourier)"
+                />
+                <MetricBadge
+                    abbreviation="JIT"
+                    labelPosition="inline"
+                    :amount="1"
+                    unit="ms"
+                    size="sm"
+                    color="var(--viz-chebyshev)"
+                />
+                <MetricBadge
+                    abbreviation="DL"
+                    labelPosition="inline"
+                    :amount="730"
+                    unit="Mbps"
+                    size="sm"
+                    color="var(--viz-legendre)"
+                />
+                <MetricBadge
+                    abbreviation="UL"
+                    labelPosition="inline"
+                    :amount="130"
+                    unit="Mbps"
+                    size="sm"
+                />
+            </div>
+            <p class="text-mono-caption text-muted-foreground">
+                Consumer flips between `label` and `abbreviation` props by viewport;
+                the library never branches on width. `abbreviation` wins when both
+                are passed.
+            </p>
+        </section>
+
+        <!-- Stacked-label variant — column orientation for narrow grids. -->
+        <section class="flex flex-col gap-3">
+            <p class="section-label">label · stacked</p>
+            <div class="flex flex-wrap items-start gap-4">
+                <MetricBadge
+                    label="p50"
+                    labelPosition="stacked"
+                    :amount="18"
+                    unit="ms"
+                    size="lg"
+                />
+                <MetricBadge
+                    label="p95"
+                    labelPosition="stacked"
+                    :amount="42"
+                    unit="ms"
+                    size="lg"
+                    color="var(--viz-fourier)"
+                />
+                <MetricBadge
+                    label="p99"
+                    labelPosition="stacked"
+                    :amount="71"
+                    unit="ms"
+                    size="lg"
+                    color="var(--viz-chebyshev)"
+                />
+            </div>
+        </section>
+
         <!-- Stat grid: dashboard-style row. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">stat grid</p>
