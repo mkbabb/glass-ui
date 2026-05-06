@@ -11,9 +11,14 @@ export { default as CardFooter } from "./CardFooter.vue";
  * cardVariants — variant-class map for `<Card>`. Names the surface tier
  * each variant resolves to. `default`, `pane`, `subtle` honor the
  * `flush` prop (drops the surface shadow); `cartoon` resolves its
- * shadow inside `.glass-cartoon`. `cream` and `paper` resolve inside
- * `.cream-surface` / `.paper-card` from cards.css/paper.css — they ship
- * their own shadow + padding + border.
+ * shadow inside `.glass-cartoon`. `paper` resolves inside `.paper-card`
+ * from paper.css — it ships its own shadow + padding + border.
+ *
+ * The cream tier is owned by `<CreamSurface>` (the canonical primitive
+ * per DESIGN.md ## Substrate Hierarchy). Consumers compose
+ * `<Card><CreamSurface>…</CreamSurface></Card>` for card semantics over
+ * the warm-cream substrate, or use `<CreamSurface>` standalone for
+ * full-bleed substrate regions.
  */
 export const cardVariants = cva("scrollbar-hidden text-card-foreground", {
     variants: {
@@ -25,7 +30,6 @@ export const cardVariants = cva("scrollbar-hidden text-card-foreground", {
                 "border border-[var(--glass-border-subtle)] transition-shadow",
             cartoon: "glass-cartoon rounded-xl transition-shadow",
             subtle: "glass-subtle rounded-xl",
-            cream: "cream-surface",
             paper: "paper-card",
         },
     },

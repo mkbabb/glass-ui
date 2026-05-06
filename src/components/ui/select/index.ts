@@ -12,8 +12,9 @@ export { default as SelectScrollUpButton } from './SelectScrollUpButton.vue'
 export { default as SelectScrollDownButton } from './SelectScrollDownButton.vue'
 
 // Trigger CVA — `default` is the existing glass-subtle pill, `ghost` strips
-// chrome (transparent + no border/shadow), `cartoon` matches Button cartoon
-// (cream surface + 2px border + accent-tinted cartoon shadow).
+// chrome (transparent + no border/shadow), `cartoon` composes the canonical
+// `cartoon-surface` utility (cream-warm bg + 2px border + accent shadow) and
+// layers `rounded-md` + Button-style hover-lift + active step-down.
 export const selectTriggerVariants = cva(
   'flex h-10 w-full items-center justify-between px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)] disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 transition-all',
   {
@@ -22,7 +23,7 @@ export const selectTriggerVariants = cva(
         default: 'glass-subtle rounded-full',
         ghost: 'bg-transparent border-none shadow-none rounded-full',
         cartoon:
-          'bg-[var(--cream)] text-[var(--cream-foreground)] border-2 border-[var(--border)] rounded-md shadow-[var(--shadow-cartoon-accent)] hover:-translate-y-px hover:shadow-[var(--shadow-cartoon-md)] active:translate-y-0 active:shadow-[var(--shadow-cartoon-sm)]',
+          'cartoon-surface rounded-md hover:-translate-y-px hover:shadow-[var(--shadow-cartoon-md)] active:translate-y-0 active:shadow-[var(--shadow-cartoon-sm)]',
       },
     },
     defaultVariants: {

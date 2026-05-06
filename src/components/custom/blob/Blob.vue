@@ -203,7 +203,7 @@ const colorStyle = computed(() =>
         0 var(--blob-cast-shadow-y, 0.5rem) var(--blob-cast-shadow-blur, 1.5rem)
         color-mix(
             in srgb,
-            var(--blob-color, var(--easing-accent))
+            var(--blob-color, var(--accent-color))
                 var(--blob-cast-shadow-mix, 18%),
             var(--foreground)
         );

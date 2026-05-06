@@ -30,7 +30,7 @@ export interface MathFormulaProps {
     displayMode?: MathFormulaDisplayMode;
     /** A viz-basis hue name (`fourier`/`chebyshev`/`legendre`/`amber`/`green`)
      *  resolves to `var(--viz-NAME)`; any other string is forwarded verbatim
-     *  as a CSS color. The chosen value drives `--easing-accent`, which the
+     *  as a CSS color. The chosen value drives `--accent-color`, which the
      *  `.formula-block` left rule reads. */
     accent?: MathFormulaAccent;
     /** Class forwarded to the root surface. */
@@ -61,7 +61,7 @@ const accentStyle = computed<CSSProperties>(() => {
     const value = VIZ_BASIS_ACCENTS.has(props.accent)
         ? `var(--viz-${props.accent})`
         : props.accent;
-    return { "--easing-accent": value } as CSSProperties;
+    return { "--accent-color": value } as CSSProperties;
 });
 </script>
 
@@ -95,7 +95,7 @@ const accentStyle = computed<CSSProperties>(() => {
     padding: var(--space-phi-4) var(--space-phi-3);
     background: var(--cream-warm);
     border-radius: var(--radius-2xl);
-    border-left: 4px solid var(--easing-accent);
+    border-left: 4px solid var(--accent-color);
     box-shadow: var(--shadow-cartoon-sm);
     font-variant-numeric: tabular-nums;
     line-height: var(--leading-prose);

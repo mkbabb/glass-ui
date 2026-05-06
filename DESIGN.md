@@ -16,6 +16,83 @@ Four principles govern the library.
 
 ---
 
+## Substrate Hierarchy
+
+Three substrate tiers — paper, cream, glass — each anchor a layered model. Each tier names one canonical primitive (the one consumers reach for by default) plus zero or more surviving alternates whose role is documented and distinct. Multi-path drift (the same recipe reachable via three siblings) is forbidden; layered hierarchy with named roles is permitted.
+
+### Paper
+
+| Path | Role |
+|---|---|
+| `<Card variant="paper">` | **Canonical** chrome-aware paper card — card semantics (header/content/footer slots) plus the `.paper-card` recipe (lined-paper texture, hairline border, cartoon-sm shadow). |
+| `.paper-{1..4}` utility ladder | Un-chromed lined-paper composition utility — four tier rungs for free-form composition areas (story prose, math display blocks, demo specimens) where Card chrome would over-constrain. |
+
+`<PaperBackdrop>` retired in I.W1 (single library-orphan consumer). The two surviving paths serve distinct purposes; consumers pick by whether they want card semantics or raw substrate.
+
+### Cream
+
+| Path | Role |
+|---|---|
+| `<CreamSurface tone="warm\|cool">` | **Canonical** warm-cream substrate component — owns the `.cream-surface` recipe + `data-tone` warm/cool branch. Composes inside `<Card>` for card semantics (`<Card><CreamSurface>…</CreamSurface></Card>`) or stands alone for full-bleed substrate regions. |
+| `.cream-surface` utility | Underlying recipe consumed by `<CreamSurface>`. Direct utility-class use is permitted for ad-hoc compositions but `<CreamSurface>` is the named primitive. |
+
+`<Card variant="cream">` retired in I.W3 — consumers wrap `<CreamSurface>` inside `<Card>` instead of routing the cream substrate through Card's CVA. One special-cased CVA branch removed; the substrate component owns the cream identity. Tone branching (`warm`/`cool`) lives on `<CreamSurface>`, not on `<Card>`.
+
+### Glass
+
+| Path | Role |
+|---|---|
+| `.glass-{subtle,default,medium,elevated}` utility ladder | **Canonical** four-tier opacity / blur / border / shadow ladder. Card defaults composite `glass-default`; Button `glass` / `glass-subtle` variants composite the matching rung; ad-hoc glass surfaces compose the utility directly. |
+| `<Card variant="default\|subtle\|cartoon\|pane">` | Card-semantic entry — applies the glass tier inside Card chrome. `default` = `glass-default`, `subtle` = `glass-subtle`, `cartoon` = `glass-cartoon`, `pane` = explicit subtle-tier with token bypass. |
+
+`<GlassPanel>` retired in I.W1 (single library-orphan consumer). One canonical utility ladder; Card composes it; no separate substrate component.
+
+---
+
+## Story Fidelity Policy
+
+Two story modes coexist; each story commits one or the other deliberately.
+
+### Bold-maximalist (canonical for compositions / containers / motion / primitives)
+
+Every primitive, container, motion, and composition story commits a deliberate gesture visible in <2 s — the design language is on display, not abstracted. `<DisplayHero>` headlines, `<FlourishDivider>` rules, section threading, `cream-surface`/`paper-N` substrate, audacious type and accent color usage. The G design-fidelity gate (`docs/tranches/G/audit/W4-design-fidelity.md` lineage, refined through H W4 + I W4) binds: each story passes when the gestalt registers within two seconds of opening the page.
+
+### Specimen-quiet (foundations only)
+
+Foundations stories (token tables, color palettes, radius / shadow / motion timing showcases) keep specimen-quiet — the utility specification *is* the gesture. A color-palette story doesn't need a hero; the swatches are the content. A shadow story shows shadows on neutral surfaces; layering audacious typography on top would obscure the spec.
+
+The bifurcation is binary by category, not optional per author:
+- **Foundations**: specimen-quiet permitted (and preferred when the story is a token-spec showcase).
+- **Primitives / Containers / Navigation / Data / Feedback / Motion / Compositions**: bold-maximalist required. Each story commits one deliberate gesture (a `<DisplayHero>`, a flourish divider, a substrate-textured surface, an accent-color section thread) visible in <2 s.
+
+R-NEW-1 (the 41-story aesthetic uplift carried in I.W4) lifts the affected primitives/containers/motion/compositions stories from specimen-quiet (their pre-G shape) to bold-maximalist.
+
+---
+
+## Accessibility Posture
+
+The library targets primitive-tier accessibility: every interactive primitive is keyboard-operable, motion respects user preference, and the focus contract is explicit. End-product compliance (WCAG AA contrast against arbitrary consumer themes, AAA where required, screen-reader copy that fits the consumer's domain language) is consumer territory. The library provides primitives that don't get in the way; consumers compose final compliance.
+
+### Library-tier commitments
+
+- **`prefers-reduced-motion` honored throughout.** Every animation that exceeds the instant-feedback duration carries an `@media (prefers-reduced-motion: reduce)` override that stops or shortens the motion. Composables use `useRAFLoop({ respectReducedMotion: true })`. Concrete sites: `src/styles/animations.css` overrides for sparkle-sweep / rainbow-drift / idle-bob; `src/composables/blob/useBlob.ts` PRM gate; component-local `@media` queries in dock / toast / floating-panel transitions.
+- **`prefers-contrast: more` honored on substrate primitives.** `cream-surface` lifts border opacity; glass tiers lift edge contrast.
+- **`prefers-reduced-transparency: reduce` honored on grain overlays.** `cream-surface::after` paper-grain dim-to-zero.
+- **Keyboard navigation delegated to reka-ui.** Every `ui/` compound wrapper (Dialog, Select, DropdownMenu, ContextMenu, Tabs, Tooltip, …) forwards reka-ui's headless primitives, which implement the WAI-ARIA Authoring Practices keyboard model. Custom primitives composed on top of reka-ui inherit; pure-custom primitives (Dock, GlassCarousel, Sortable) ship explicit keyboard handling per package.
+- **ARIA attributes delegated to reka-ui.** Same upstream delegation. `aria-pressed`, `aria-expanded`, `aria-selected`, `role="dialog"`, etc. are managed by reka-ui's primitives. Custom primitives ship the canonical role + state attributes (e.g., `<NotificationDot role="status">`, `<StatusDot aria-label>`) inside the component template.
+- **Focus contract via `.focus-ring` utility** (`src/styles/utilities.css`) — every interactive primitive consumes `.focus-ring` on `:focus-visible`. The ring color tracks `--ring`, the offset tracks `--ring-offset`, both consumer-overridable.
+
+### Consumer-tier (out of scope for the library)
+
+- WCAG AA color contrast against the consumer's theme (the library ships a neutral default palette; consumers tune via token override).
+- Screen-reader copy in the consumer's domain language (the library ships English fallback strings where unavoidable; consumers `aria-label` per locale).
+- Keyboard shortcut conflicts with the consumer's surrounding shell (`useKeyboardShortcuts` provides a registry; consumers resolve conflicts at registration time).
+- Session-level a11y testing (axe / pa11y / Lighthouse runs) — consumers wire CI per their compliance bar.
+
+The posture is binary by tier: library primitives don't introduce a11y violations and provide the affordances upstream a11y depends on; final-product compliance is the consumer's audit.
+
+---
+
 ## Token Architecture
 
 Tokens live in `src/styles/tokens.css` under `:root`, with `.dark` overrides. Consumers wire in this order:

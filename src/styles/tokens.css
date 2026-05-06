@@ -146,8 +146,8 @@
     --neutral-5: hsl(48  6% 45%);   /* L 45 — muted text */
 
     /* Cream namespace — canon warm-cream identity, exposed as a public
-       surface noun for `<CreamSurface>`, `<Card variant="cream">`, and the
-       `.cream-surface` utility. */
+       surface noun for `<CreamSurface>` (canonical primitive) and the
+       `.cream-surface` utility (underlying recipe). */
     --cream:            var(--neutral-0);
     --cream-warm:       hsl(40 18% 96%);
     --cream-cool:       hsl(54  8% 97%);
@@ -209,8 +209,10 @@
     --viz-amber:     var(--section-color-5);
     --viz-green:     var(--section-color-4);
 
-    /* Motion accent (used by easing indicators) */
-    --easing-accent: hsl(248 88% 71%);
+    /* Brand vivid accent — substrate-neutral identity colour consumed by
+       NotificationDot, MathFormula, PipelineFlow, Blob fallback, Timeline
+       markers, prism syntax accent, BezierCanvas stroke. */
+    --accent-color: hsl(248 88% 71%);
 
     /* Semantic UI accents */
     --tier-featured: hsl(45 100% 50%);
@@ -434,7 +436,7 @@
 
     /* Blob token primitives — consumed by sub-tranche β.
        Per blob/SPEC.md §7 + W1 lock. Each is settable per instance. */
-    --blob-color:                var(--easing-accent);
+    --blob-color:                var(--accent-color);
     --blob-border-mix:           12%;
     --blob-chromatic-aberration: 0.002;
     --blob-cast-shadow-y:        0.5rem;

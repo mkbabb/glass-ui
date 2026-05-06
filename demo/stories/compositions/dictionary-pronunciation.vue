@@ -28,7 +28,8 @@ const FVS_DISPLAY_3 = `'WONK' 1, 'SOFT' 75, 'wdth' 108`;
 
 <template>
     <StoryPage>
-        <Card variant="cream" class="relative overflow-hidden">
+        <Card class="relative overflow-hidden p-0">
+            <CreamSurface>
             <!-- Header — eyebrow + IPA in mono small -->
             <header class="flex items-start justify-between gap-[var(--space-phi-2)]">
                 <div>
@@ -160,6 +161,7 @@ const FVS_DISPLAY_3 = `'WONK' 1, 'SOFT' 75, 'wdth' 108`;
                     </ol>
                 </CreamSurface>
             </section>
+            </CreamSurface>
         </Card>
     </StoryPage>
 </template>

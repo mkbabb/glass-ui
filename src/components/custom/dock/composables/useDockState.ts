@@ -1,6 +1,10 @@
-import { ref, watch, onUnmounted, provide, inject } from "vue";
+import { ref, watch, onUnmounted, provide } from "vue";
 import type { Ref } from "vue";
 import { isTeleportedTarget } from "./isTeleportedTarget";
+import {
+    DOCK_KEEP_OPEN_SINK_KEY,
+    createDockKeepOpenSink,
+} from "../_internal/dockKeepOpenSink";
 
 export interface UseDockStateOptions {
     /** Delay before auto-collapse after mouse leaves (ms) */
@@ -221,9 +225,14 @@ export function useDockState(options: UseDockStateOptions) {
         }
     }
 
+    // Token-based keep-open sink for descendant components. Both
+    // `<DockPopover>` (while its panel is expanded) and any
+    // `<Slider :keep-dock-open>` consume the same sink — single
+    // authority, single inject key.
+    const keepOpenSink = createDockKeepOpenSink({ keepOpen, release });
+
     // Provide for descendant components
-    provide("dockKeepOpen", keepOpen);
-    provide("dockRelease", release);
+    provide(DOCK_KEEP_OPEN_SINK_KEY, keepOpenSink);
     provide("dockExpanded", expanded);
 
     // --- Click-away listener ---

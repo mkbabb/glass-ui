@@ -1,5 +1,24 @@
 /* Shared utility classes */
 
+/* ── Cartoon-surface — canonical modern-skeuo recipe (cream-warm bg + 2px
+ *    foreground border + accent-tinted cartoon shadow + transition).
+ *    Composited by Button / Select / Input / NumberField cartoon variants
+ *    instead of each CVA re-asserting six tokens (was a 4× shape-duplicate
+ *    + 2-way colour-divergent in pre-I; cream-warm is canonical going
+ *    forward). State chrome (hover-translate, active-step, focus-visible
+ *    elevation) layered per-consumer Tailwind class. Border-radius left
+ *    unset — Button inherits from `btn-pill`; Select / Input / NumberField
+ *    add `rounded-md` per their chassis. */
+@utility cartoon-surface {
+    background-color: var(--cream-warm);
+    color: var(--cream-foreground);
+    border: 2px solid var(--border);
+    box-shadow: var(--shadow-cartoon-accent);
+    transition:
+        transform var(--duration-fast) var(--ease-standard),
+        box-shadow var(--duration-fast) var(--ease-standard);
+}
+
 @layer components {
     /* ── Popover/dropdown shared animation ── */
     .popover-animate {

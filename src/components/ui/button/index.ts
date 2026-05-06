@@ -30,11 +30,13 @@ export const buttonVariants = cva(
         'danger-subtle':
           'bg-destructive/10 text-destructive hover:bg-destructive/20 active:bg-destructive/30 aria-pressed:bg-destructive/25',
         link: 'text-primary underline-offset-4 hover:underline active:opacity-80 active:scale-100',
-        // Modern-skeuo cartoon recipe — cream surface + 2px foreground border +
-        // accent-tinted cartoon shadow (consumes --cartoon-accent-color hook;
-        // defaults to --foreground). Hover lifts -1px and steps up to -md shadow.
+        // Modern-skeuo cartoon recipe — composes the `cartoon-surface`
+        // utility (canonical cream-warm bg + 2px foreground border +
+        // accent-tinted cartoon shadow) and layers Button's hover-lift +
+        // active step-down. `--cartoon-accent-color` (default `--foreground`)
+        // tunes the shadow tone via wrapper override.
         cartoon:
-          'bg-[var(--cream)] text-[var(--cream-foreground)] border-2 border-[var(--border)] shadow-[var(--shadow-cartoon-accent)] transition-[transform,box-shadow] hover:-translate-y-px hover:shadow-[var(--shadow-cartoon-md)] active:translate-y-0 active:shadow-[var(--shadow-cartoon-sm)]',
+          'cartoon-surface hover:-translate-y-px hover:shadow-[var(--shadow-cartoon-md)] active:translate-y-0 active:shadow-[var(--shadow-cartoon-sm)]',
         // Iridescent rainbow — vivid gradient drifting across 200% size.
         // Animation key `rainbow-drift` ships alongside Lane 3 (D-W3).
         rainbow:

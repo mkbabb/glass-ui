@@ -91,7 +91,7 @@ function presetP2(name: EasingName): Point {
                             color: selected === name
                                 ? 'var(--section-color-3)'
                                 : 'var(--foreground)',
-                            '--easing-accent': selected === name
+                            '--accent-color': selected === name
                                 ? 'var(--section-color-3)'
                                 : 'var(--foreground)',
                         }"
@@ -110,7 +110,7 @@ function presetP2(name: EasingName): Point {
                 <div class="grid items-center gap-[var(--space-phi-4)] lg:grid-cols-[auto_1fr]">
                     <div
                         class="self-center justify-self-center"
-                        :style="{ '--easing-accent': 'var(--section-color-3)' }"
+                        :style="{ '--accent-color': 'var(--section-color-3)' }"
                     >
                         <BezierCurveCanvas
                             v-model:p1="p1"

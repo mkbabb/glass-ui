@@ -15,7 +15,7 @@
  * that's a one-line consumer-side wrapper.
  *
  * Tokens consumed: --viz-{fourier,chebyshev,legendre,amber,green},
- * --foreground, --muted-foreground, --easing-accent, --section-color-*,
+ * --foreground, --muted-foreground, --accent-color, --section-color-*,
  * --gold-light, --type-caption, --leading-small, --font-mono.
  */
 
@@ -95,7 +95,7 @@ pre[class*="language-"] {
 }
 
 .token.attr-name {
-    color: var(--easing-accent);
+    color: var(--accent-color);
 }
 
 .token.attr-value {
@@ -136,7 +136,7 @@ pre[class*="language-"]::selection,
 pre[class*="language-"] ::selection,
 code[class*="language-"]::selection,
 code[class*="language-"] ::selection {
-    background: color-mix(in srgb, var(--easing-accent) 25%, transparent);
+    background: color-mix(in srgb, var(--accent-color) 25%, transparent);
 }
 
 /* ─── A11y: prefers-contrast: more ─── */

@@ -9,4 +9,4 @@ export { default as DockDropdownTrigger } from "./DockDropdownTrigger.vue";
 export {
     DOCK_KEEP_OPEN_SINK_KEY,
     type DockKeepOpenSink,
-} from "./DockLayerGroup.vue";
+} from "./_internal/dockKeepOpenSink";

@@ -19,7 +19,7 @@ export interface TimelineMarkerProps {
     variant?: TimelineMarkerVariant;
     /** Selection state — applies the active styling (no scale jump). */
     selected?: boolean;
-    /** Color override; defaults to `--easing-accent`. */
+    /** Color override; defaults to `--accent-color`. */
     color?: string;
     /** Marker pixel size on the cross-axis. */
     size?: number;
@@ -51,7 +51,7 @@ const markerStyle = computed<CSSProperties>(() => ({
     left: leftPercent.value,
     width: `${props.size}px`,
     height: `${props.size}px`,
-    color: props.color ?? "var(--easing-accent)",
+    color: props.color ?? "var(--accent-color)",
 }));
 
 function onActivate(e: MouseEvent | KeyboardEvent) {

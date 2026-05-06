@@ -6,17 +6,37 @@ export { default as NumberFieldIncrement } from './NumberFieldIncrement.vue'
 export { default as NumberFieldDecrement } from './NumberFieldDecrement.vue'
 export { default as NumberFieldContent } from './NumberFieldContent.vue'
 
-// Root-level CVA — `default` is the bare grid; `cartoon` wraps the input
-// bar with the cream + 2px border + accent-tinted cartoon shadow recipe so
-// the +/- buttons inherit the surface chrome rather than restyling each.
-export const numberFieldVariants = cva(
-  'grid gap-1.5',
+// Root-level CVA — bare grid; the cartoon variant flows to the inner input
+// via provide/inject (see `NumberField.vue` + `NumberFieldInput.vue`),
+// matching the Tabs precedent. The root no longer pushes styles onto
+// descendants via `[&_[data-slot=input]]:` selectors.
+export const numberFieldVariants = cva('grid gap-1.5', {
+  variants: {
+    variant: {
+      default: '',
+      cartoon: '',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+})
+
+export type NumberFieldVariants = VariantProps<typeof numberFieldVariants>
+
+// Input-level CVA — `default` is the bare-chassis field; `cartoon` composes
+// the canonical `cartoon-surface` utility plus field chrome (matches Input
+// cartoon's contract). NumberFieldInput.vue resolves the variant by
+// injecting `glassNumberField` from its NumberField parent.
+export const numberFieldInputVariants = cva(
+  'flex h-10 w-full py-2 text-sm text-center placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
-        default: '',
+        default:
+          'rounded-md border border-input bg-background focus-visible:shadow-[var(--focus-ring-shadow)]',
         cartoon:
-          '[&_[data-slot=input]]:bg-[var(--cream-warm)] [&_[data-slot=input]]:text-[var(--cream-foreground)] [&_[data-slot=input]]:border-2 [&_[data-slot=input]]:border-[var(--border)] [&_[data-slot=input]]:rounded-md [&_[data-slot=input]]:shadow-[var(--shadow-cartoon-accent)] [&_[data-slot=input]]:transition-[transform,box-shadow] [&_[data-slot=input]]:focus-visible:shadow-[var(--shadow-cartoon-md)]',
+          'cartoon-surface rounded-md focus-visible:shadow-[var(--shadow-cartoon-md)]',
       },
     },
     defaultVariants: {
@@ -25,4 +45,4 @@ export const numberFieldVariants = cva(
   },
 )
 
-export type NumberFieldVariants = VariantProps<typeof numberFieldVariants>
+export type NumberFieldInputVariants = VariantProps<typeof numberFieldInputVariants>

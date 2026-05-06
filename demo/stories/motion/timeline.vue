@@ -148,7 +148,7 @@ const activePhase = computed(() => {
                         </div>
                     </header>
 
-                    <div :style="{ '--easing-accent': 'var(--section-color-3)' }">
+                    <div :style="{ '--accent-color': 'var(--section-color-3)' }">
                         <KeyframeTimeline
                             v-model:current-time="currentTime"
                             :duration="DURATION"
@@ -176,7 +176,7 @@ const activePhase = computed(() => {
                         class="relative mt-[var(--space-phi-3)] h-12 rounded-full border border-border"
                         :style="{
                             background: 'color-mix(in srgb, var(--foreground) 5%, transparent)',
-                            '--easing-accent': 'var(--section-color-3)',
+                            '--accent-color': 'var(--section-color-3)',
                         }"
                     >
                         <TimelineMarker
@@ -195,7 +195,7 @@ const activePhase = computed(() => {
                         class="relative mt-[var(--space-phi-3)] h-12 rounded-full border border-border"
                         :style="{
                             background: 'color-mix(in srgb, var(--foreground) 5%, transparent)',
-                            '--easing-accent': 'var(--section-color-7)',
+                            '--accent-color': 'var(--section-color-7)',
                         }"
                     >
                         <TimelineMarker
@@ -225,14 +225,14 @@ const activePhase = computed(() => {
                     class="relative mt-[var(--space-phi-2)] h-14 rounded-[var(--radius-md)] border border-border"
                     :style="{
                         background: 'color-mix(in srgb, var(--foreground) 5%, transparent)',
-                        '--easing-accent': 'var(--section-color-9)',
+                        '--accent-color': 'var(--section-color-9)',
                     }"
                 >
                     <TimelinePlayhead :time="currentTime" :duration="DURATION" />
                 </div>
                 <p class="text-mono-caption mt-[var(--space-phi-2)] text-muted-foreground">
                     Each component is independently consumable. The playhead reads
-                    <code class="fira-code">--easing-accent</code> from its parent surface.
+                    <code class="fira-code">--accent-color</code> from its parent surface.
                 </p>
             </CreamSurface>
         </section>

@@ -17,7 +17,7 @@ export type NotificationDotSize = "xs" | "sm" | "md";
 export interface NotificationDotProps {
     /** Pixel-scaled visual size. */
     size?: NotificationDotSize;
-    /** Color override. Defaults to `--easing-accent`. */
+    /** Color override. Defaults to `--accent-color`. */
     color?: string;
     /** Show outer ping ring (motion-safe only). */
     pulse?: boolean;
@@ -45,7 +45,7 @@ const sizeClass = computed(() => {
 });
 
 const dotStyle = computed<CSSProperties>(() => ({
-    backgroundColor: props.color ?? "var(--easing-accent)",
+    backgroundColor: props.color ?? "var(--accent-color)",
 }));
 </script>
 

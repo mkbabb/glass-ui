@@ -109,7 +109,7 @@ const connectorChar = computed(() => {
     border-radius: var(--radius-xl);
     color: inherit;
     text-decoration: none;
-    border-inline-start: 3px solid var(--pipeline-node-accent, var(--easing-accent));
+    border-inline-start: 3px solid var(--pipeline-node-accent, var(--accent-color));
     transition:
         box-shadow var(--duration-fast) var(--ease-standard),
         transform var(--duration-fast) var(--ease-apple-spring);
@@ -154,6 +154,6 @@ a.pipeline-flow__node:focus-visible {
 
 .pipeline-flow--horizontal .pipeline-flow__node {
     border-inline-start: none;
-    border-block-end: 3px solid var(--pipeline-node-accent, var(--easing-accent));
+    border-block-end: 3px solid var(--pipeline-node-accent, var(--accent-color));
 }
 </style>

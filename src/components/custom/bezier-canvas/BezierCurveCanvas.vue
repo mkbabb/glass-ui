@@ -30,7 +30,7 @@ export interface BezierCurveCanvasProps {
     showProgress?: boolean;
     /** Progress in [0, 1]; consumed when `showProgress`. */
     progress?: number;
-    /** Stroke color override; defaults to `--easing-accent`. */
+    /** Stroke color override; defaults to `--accent-color`. */
     color?: string;
     /** Disable handle drag. */
     readonly?: boolean;
@@ -76,7 +76,7 @@ const viewBox = computed(() => {
     return `${min} ${min} ${size} ${size}`;
 });
 
-const stroke = computed(() => props.color ?? "var(--easing-accent)");
+const stroke = computed(() => props.color ?? "var(--accent-color)");
 
 // Handle radii in viewBox units; scale modestly with overshoot
 const handleRadius = computed(() => 0.04 + overshoot.value * 0.01);

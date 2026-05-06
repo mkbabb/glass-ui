@@ -10,10 +10,10 @@ import { cn } from "@/utils/cn";
 
 <template>
     <StoryPage>
-        <!-- Card variant="cream" — proves the cream noun lands as a Card variant -->
+        <!-- CreamSurface — canonical primitive for the warm-cream tier -->
         <section class="flex flex-col gap-[var(--space-phi-2)]">
-            <p class="section-label">Card variant="cream"</p>
-            <Card variant="cream">
+            <p class="section-label">CreamSurface · canonical warm-cream primitive</p>
+            <CreamSurface>
                 <DisplayHero
                     size="display-3"
                     variation="wonk"
@@ -23,11 +23,11 @@ import { cn } from "@/utils/cn";
                     Cardstock substrate
                 </DisplayHero>
                 <p class="text-prose text-foreground/80">
-                    The cream Card variant resolves to <code class="fira-code">.cream-surface</code> —
-                    warm-cream background, paper-grain overlay, hairline cream-edge border, cartoon-sm
-                    shadow. No per-consumer recipe.
+                    <code class="fira-code">&lt;CreamSurface&gt;</code> is the canonical warm-cream
+                    primitive — warm-cream background, paper-grain overlay, hairline cream-edge
+                    border, cartoon-sm shadow. No per-consumer recipe.
                 </p>
-            </Card>
+            </CreamSurface>
         </section>
 
         <!-- Two-tone (warm/cool) side-by-side -->
@@ -102,33 +102,37 @@ import { cn } from "@/utils/cn";
             </div>
         </section>
 
-        <!-- Card variant="cream" content composition -->
+        <!-- Card chrome over CreamSurface substrate · multi-block content -->
         <section class="flex flex-col gap-[var(--space-phi-2)]">
-            <p class="section-label">Card variant="cream" · multi-block content</p>
+            <p class="section-label">Card chrome over CreamSurface · multi-block content</p>
             <div class="grid gap-[var(--space-phi-3)] md:grid-cols-2">
-                <Card variant="cream">
-                    <CardContent class="p-0">
-                        <p class="text-mono-caption text-muted-foreground">§ 01 · The substrate</p>
-                        <h3 class="text-heading mt-1 mb-[var(--space-phi-2)]">
-                            Warm-cream identity
-                        </h3>
-                        <p class="text-prose text-foreground/80">
-                            Cream isn't a paint color — it's the page. Every other surface composes
-                            translucently against this substrate.
-                        </p>
-                    </CardContent>
+                <Card>
+                    <CreamSurface>
+                        <CardContent class="p-0">
+                            <p class="text-mono-caption text-muted-foreground">§ 01 · The substrate</p>
+                            <h3 class="text-heading mt-1 mb-[var(--space-phi-2)]">
+                                Warm-cream identity
+                            </h3>
+                            <p class="text-prose text-foreground/80">
+                                Cream isn't a paint color — it's the page. Every other surface composes
+                                translucently against this substrate.
+                            </p>
+                        </CardContent>
+                    </CreamSurface>
                 </Card>
-                <Card variant="cream">
-                    <CardContent class="p-0">
-                        <p class="text-mono-caption text-muted-foreground">§ 02 · The signature</p>
-                        <h3 class="text-heading mt-1 mb-[var(--space-phi-2)]">
-                            Cartoon-sm shadow
-                        </h3>
-                        <p class="text-prose text-foreground/80">
-                            2px offset, no blur. The shadow makes the card feel stamped, not floated —
-                            modern skeuomorphism without bevel vocabulary.
-                        </p>
-                    </CardContent>
+                <Card>
+                    <CreamSurface>
+                        <CardContent class="p-0">
+                            <p class="text-mono-caption text-muted-foreground">§ 02 · The signature</p>
+                            <h3 class="text-heading mt-1 mb-[var(--space-phi-2)]">
+                                Cartoon-sm shadow
+                            </h3>
+                            <p class="text-prose text-foreground/80">
+                                2px offset, no blur. The shadow makes the card feel stamped, not floated —
+                                modern skeuomorphism without bevel vocabulary.
+                            </p>
+                        </CardContent>
+                    </CreamSurface>
                 </Card>
             </div>
         </section>

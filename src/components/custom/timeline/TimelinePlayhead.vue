@@ -13,7 +13,7 @@ export interface TimelinePlayheadProps {
     time: number;
     /** Total duration of the parent timeline. Defaults to 1. */
     duration?: number;
-    /** Color override; defaults to `--easing-accent`. */
+    /** Color override; defaults to `--accent-color`. */
     color?: string;
     /** Show the conic-gradient progress dot at the top of the bar. */
     showCap?: boolean;
@@ -34,7 +34,7 @@ const ratio = computed(() => {
 
 const playheadStyle = computed<CSSProperties>(() => ({
     left: `${(ratio.value * 100).toFixed(4)}%`,
-    color: props.color ?? "var(--easing-accent)",
+    color: props.color ?? "var(--accent-color)",
     "--playhead-deg": `${(ratio.value * 360).toFixed(2)}deg`,
 }) as CSSProperties);
 </script>
@@ -57,7 +57,7 @@ const playheadStyle = computed<CSSProperties>(() => ({
     bottom: 0;
     transform: translateX(-50%);
     pointer-events: none;
-    color: var(--easing-accent);
+    color: var(--accent-color);
     display: flex;
     flex-direction: column;
     align-items: center;

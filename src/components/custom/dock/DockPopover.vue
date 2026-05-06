@@ -8,6 +8,10 @@ import { ref, inject, watch, onUnmounted, nextTick, useTemplateRef, type CSSProp
 import type { Ref } from "vue";
 import DockIconButton from "./DockIconButton.vue";
 import { useDockContext } from "./composables/dockContext";
+import {
+    DOCK_KEEP_OPEN_SINK_KEY,
+    type DockKeepOpenSink,
+} from "./_internal/dockKeepOpenSink";
 
 const props = withDefaults(
     defineProps<{
@@ -32,18 +36,30 @@ onUnmounted(() => {
     clearTimer();
     removeClickAwayListener();
     unregisterPopover?.();
+    // Drain any held keep-open token so the parent counter unwinds.
+    if (keepOpenToken !== null && dockSink) {
+        dockSink.release(keepOpenToken);
+        keepOpenToken = null;
+    }
 });
 
-// Hold parent GlassDock open while this popover is expanded
-const dockKeepOpen = inject<(() => void) | null>("dockKeepOpen", null);
-const dockRelease = inject<(() => void) | null>("dockRelease", null);
+// Hold parent GlassDock open while this popover is expanded. Consumes
+// the same `dockKeepOpenSink` provided by `<GlassDock>` that
+// `<Slider :keep-dock-open>` uses — single authority, single inject key.
+const dockSink = inject<DockKeepOpenSink | null>(DOCK_KEEP_OPEN_SINK_KEY, null);
+let keepOpenToken: symbol | null = null;
 
 // Guard: inject parent dock's expanded state
 const dockExpanded = inject<Ref<boolean>>("dockExpanded", ref(true));
 
 watch(expanded, (isExpanded) => {
-    if (isExpanded) dockKeepOpen?.();
-    else dockRelease?.();
+    if (!dockSink) return;
+    if (isExpanded && keepOpenToken === null) {
+        keepOpenToken = dockSink.acquire();
+    } else if (!isExpanded && keepOpenToken !== null) {
+        dockSink.release(keepOpenToken);
+        keepOpenToken = null;
+    }
 });
 
 // Force-close popover when parent dock collapses

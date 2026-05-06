@@ -14,16 +14,17 @@ import { cardVariants, type CardProps } from "./index";
  *              to the default glass tokens, so consumers opting into the
  *              variant without defining tokens get the default look.
  *  - `subtle`  subtle glass bg + subtle blur, no grain
- *  - `cream`   cream-surface noun (warm-cream identity, paper grain overlay,
- *              cream-edge border, cartoon-sm shadow); `.cream-surface` ships
- *              its own padding + radius + shadow recipe
  *  - `paper`   paper-tier sibling to glass; `.paper-card` ships paper-2 bg +
  *              paper-grain-overlay + cartoon shadow, no backdrop-filter
  *
+ * For the warm-cream substrate, compose `<CreamSurface>` inside `<Card>`
+ * (or use `<CreamSurface>` standalone). The cream tier is owned by
+ * `<CreamSurface>` per DESIGN.md ## Substrate Hierarchy.
+ *
  * `plain` collapses to a structural wrapper. `flush` drops the surface
  * shadow on `default` / `pane` / `subtle`; `cartoon` resolves its shadow
- * via `.glass-cartoon` and `cream`/`paper` ship their own — `flush` is a
- * no-op there.
+ * via `.glass-cartoon` and `paper` ships its own — `flush` is a no-op
+ * there.
  */
 const props = defineProps<CardProps>();
 

@@ -3,6 +3,7 @@ import { type HTMLAttributes, computed, inject, onBeforeUnmount } from 'vue'
 import type { SliderRootEmits, SliderRootProps } from 'reka-ui'
 import { SliderRange, SliderRoot, SliderThumb, SliderTrack, useForwardPropsEmits } from 'reka-ui'
 import { cn } from '@utils'
+import { sliderVariants, type SliderVariants } from './index'
 import {
   DOCK_KEEP_OPEN_SINK_KEY,
   type DockKeepOpenSink,
@@ -11,12 +12,13 @@ import {
 const props = defineProps<SliderRootProps & {
   class?: HTMLAttributes['class']
   /**
-   * 'standard'    — glass track + circular thumb (default)
-   * 'spectrum'    — tall track + bar thumb
-   * 'timeline'    — glass scrub track
-   * 'glass-track' — subtle/medium glass track + cartoon-accent thumb
+   * Visual recipe — class-name dispatch through `sliderVariants` CVA.
+   *   `'standard'`    — glass track + circular thumb (default)
+   *   `'spectrum'`    — tall track + bar thumb
+   *   `'timeline'`    — glass scrub track
+   *   `'glass-track'` — subtle/medium glass track + cartoon-accent thumb
    */
-  variant?: 'standard' | 'spectrum' | 'timeline' | 'glass-track'
+  variant?: NonNullable<SliderVariants['variant']>
   /**
    * When mounted inside a `<DockLayerGroup>`, hold the parent dock open
    * while the user is dragging the slider. Calls
@@ -66,12 +68,7 @@ onBeforeUnmount(() => {
 
 <template>
   <SliderRoot
-    :class="cn(
-      'glass-slider',
-      `glass-slider--${v}`,
-      'relative flex w-full touch-none select-none items-center',
-      props.class,
-    )"
+    :class="cn(sliderVariants({ variant: v }), props.class)"
     v-bind="forwarded"
     @pointerdown="onPointerDown"
     @pointerup="onPointerUp"

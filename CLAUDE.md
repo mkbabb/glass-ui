@@ -191,6 +191,32 @@ Beyond the built-in two-layer grid (the default slot + the `collapsed` slot), ri
 
 Each `DockLayer` registers itself with its parent via `provide`/`inject`; the group renders an optional Figma-style switcher rail from the registered descriptors (`showRail` + `railPosition`) and drives crossfade + size FLIP transitions between layers. Only the active layer is interactive—inactive layers receive `inert` and `pointer-events: none`.
 
+## Design Axes
+
+Three named design axes live inside `src/components/`. Each axis has a documented origin tranche, a short identity description, and an enumerated package list. New custom packages declare which axis they belong to (or open a new axis with a tranche-letter origin); axis ownership prevents the silent-addition pattern that introduced the four P-tranche packages without a glass-ui-side wire-or-retire pass.
+
+### Glass tier (origin: tranches C / D)
+
+The four-tier opacity / blur / border / shadow ladder. `.glass-{subtle,default,medium,elevated}` utilities + the `<Card>` defaults composite it. No standalone substrate component (`<GlassPanel>` retired in I.W1). Intent: neutral substrate for content layered over arbitrary backgrounds; the canonical "container" tier.
+
+**Belongs to this axis**: `<Card>` defaults, `.glass-{subtle,default,medium,elevated}` utility ladder, `.glass-cartoon`, `.glass-card`, `.glass-btn` utility classes, `<GlassDock>` substrate. The dock primitives (`<GlassDock>`, `<DockPopover>`, `<DockLayerGroup>`, `<DockLayer>`) sit on the glass tier as their substrate even though their motion + state-machine layers belong to the instrument-cluster axis.
+
+### Design language (origin: tranche G)
+
+The cream / paper / cartoon-shadow / Fraunces-WONK / flourish-divider / display-hero design language. Audacious typography, warm-cream substrate identity, lined-paper texture, cartoon-accent shadow semantics. Intent: editorial / dictionary / math-publication aesthetic with deliberate maximalism.
+
+**Belongs to this axis**: `<CreamSurface>`, `<DisplayHero>`, `<FlourishDivider>`, `<MathSurface>`, `<MathFormula>`, `<MathGlyph>`, `<IconStamp>`, `<NotificationDot>`, `<Swatch>`, `<Typewriter>`, `<Pulse>`. Token surfaces: `--cream{,-warm,-cool,-edge}`, `--cream-foreground`, `.paper-{1..4}` ladder, `--shadow-cartoon{,-sm,-md,-lg,-accent}`, Fraunces variation-axis tokens (`WONK`, `SOFT`, `wdth`, `opsz`).
+
+### Instrument-cluster (origin: tranches F + P)
+
+The bezel-substrate primitives. Faceted / phase-tinted / metric-densified surfaces that read as instrument-panel chassis. Intent: speedtest-style data-heavy interfaces where the glass tier's neutrality and the design-language tier's editorial maximalism are both wrong fits — the substrate itself communicates "instrument, not document".
+
+**Belongs to this axis**: `<InstrumentChassis>`, `<RegionDivider>`, `<GlyphFace>`, `<DiscoGlyph>`, `<DockGroup>`, `<MetricBadge>`, `<HoverPopover>` (Q-tranche addition; instrument-tier popover semantics — adaptive side/align + defer-on-leave). The four P-tranche packages (`instrument-chassis`, `glyph-face`, `disco-glyph`, `dock-group`) plus the Q-tranche `hover-popover` constitute the cross-tranche silent-addition cohort that I.W1 owned for the first time.
+
+### Future tranches
+
+When a new tranche introduces a primitive that doesn't fit any of the three named axes, the tranche plan documents which axis it extends OR names a new axis (with the tranche letter as origin). Single-package new axes are forbidden — a new axis names ≥ 2 packages or it folds into an existing one. The substrate-with-consumer precept applies at the axis level too: an axis with one package and no second-package roadmap is overfitting.
+
 ## Consumer wiring
 
 Projects import styles via CSS, components and composables via JS:
