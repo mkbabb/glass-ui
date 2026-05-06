@@ -39,9 +39,6 @@ const variantClass = computed(() => {
     if (variant === "default" || variant === "pane") {
         return cn(base, "shadow-[var(--shadow-card)]");
     }
-    if (variant === "subtle") {
-        return cn(base, "shadow-[var(--glass-shadow-subtle)]");
-    }
     return base;
 });
 </script>

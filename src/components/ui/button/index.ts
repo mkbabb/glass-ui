@@ -26,7 +26,6 @@ export const buttonVariants = cva(
           'bg-[var(--glass-bg-subtle)] border border-[var(--glass-border-default)] text-foreground backdrop-blur-[var(--glass-blur-subtle)] hover:bg-[var(--glass-bg-medium)] hover:border-[var(--glass-border-medium)] hover:shadow-md active:bg-[var(--glass-bg-elevated)] active:border-[var(--glass-border-elevated)] aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-medium))]',
         'glass-subtle':
           'glass-subtle text-foreground/70 hover:bg-foreground/[0.04] hover:border-[color-mix(in_srgb,var(--foreground)_20%,transparent)] hover:text-foreground active:bg-foreground/[0.08] aria-pressed:bg-foreground/[0.1] aria-pressed:text-foreground',
-        ai: 'bg-amber-500/15 text-amber-700 hover:bg-amber-500/25 active:bg-amber-500/35 dark:text-amber-400 aria-pressed:bg-amber-500/30',
         'danger-subtle':
           'bg-destructive/10 text-destructive hover:bg-destructive/20 active:bg-destructive/30 aria-pressed:bg-destructive/25',
         link: 'text-primary underline-offset-4 hover:underline active:opacity-80 active:scale-100',

@@ -29,7 +29,6 @@ export const cardVariants = cva("scrollbar-hidden text-card-foreground", {
                 "[backdrop-filter:var(--glass-blur-subtle)] " +
                 "border border-[var(--glass-border-subtle)] transition-shadow",
             cartoon: "glass-cartoon rounded-xl transition-shadow",
-            subtle: "glass-subtle rounded-xl",
             paper: "paper-card",
         },
     },

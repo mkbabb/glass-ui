@@ -192,3 +192,7 @@ All runtime deps are peer:
 | `class-variance-authority` ^0.7 | Component variant definitions |
 | `clsx` ^2.0 | Conditional class joining |
 | `tailwind-merge` ^3.0 | Tailwind class conflict resolution |
+| `lucide-vue-next` ^0.500 | Icon set (consumed by IconStamp, GlyphFace, NotificationDot, …) |
+| `vaul-vue` ^0.4 | Bottom-sheet primitive (Drawer) |
+| `embla-carousel-vue` ^8.6 | Carousel engine (Carousel, GlassCarousel) |
+| `@mkbabb/keyframes.js` ^0.5 | Animation keyframe library (springs / orchestration) |

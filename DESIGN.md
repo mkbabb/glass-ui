@@ -79,7 +79,7 @@ The library targets primitive-tier accessibility: every interactive primitive is
 - **`prefers-contrast: more` honored on substrate primitives.** `cream-surface` lifts border opacity; glass tiers lift edge contrast.
 - **`prefers-reduced-transparency: reduce` honored on grain overlays.** `cream-surface::after` paper-grain dim-to-zero.
 - **Keyboard navigation delegated to reka-ui.** Every `ui/` compound wrapper (Dialog, Select, DropdownMenu, ContextMenu, Tabs, Tooltip, …) forwards reka-ui's headless primitives, which implement the WAI-ARIA Authoring Practices keyboard model. Custom primitives composed on top of reka-ui inherit; pure-custom primitives (Dock, GlassCarousel, Sortable) ship explicit keyboard handling per package.
-- **ARIA attributes delegated to reka-ui.** Same upstream delegation. `aria-pressed`, `aria-expanded`, `aria-selected`, `role="dialog"`, etc. are managed by reka-ui's primitives. Custom primitives ship the canonical role + state attributes (e.g., `<NotificationDot role="status">`, `<StatusDot aria-label>`) inside the component template.
+- **ARIA attributes delegated to reka-ui.** Same upstream delegation. `aria-pressed`, `aria-expanded`, `aria-selected`, `role="dialog"`, etc. are managed by reka-ui's primitives. Custom primitives ship the canonical role + state attributes (e.g., `<NotificationDot role="status">`, `<Pulse role="status">`) inside the component template.
 - **Focus contract via `.focus-ring` utility** (`src/styles/utilities.css`) — every interactive primitive consumes `.focus-ring` on `:focus-visible`. The ring color tracks `--ring`, the offset tracks `--ring-offset`, both consumer-overridable.
 
 ### Consumer-tier (out of scope for the library)
@@ -905,11 +905,11 @@ The hue distribution is not a regular 0° → 300° sweep. Canon hues match the 
 
 ### UI primitives (`src/components/ui/`)
 
-accordion · alert · avatar · badge · button · card · carousel · checkbox · collapsible · combobox · command · context-menu · data-table · dialog · drawer · dropdown-menu · hover-card · input · label · multi-select · notification · number-field · popover · progress · radio-group · scroll-area · scroll-pane · select · separator · sheet · skeleton · slider · switch · table · tabs · tags-input · textarea · toast · toggle · toggle-group · tooltip.
+accordion · alert · avatar · badge · button · card · carousel · checkbox · collapsible · combobox · command · context-menu · data-table · dialog · drawer · dropdown-menu · hover-card · input · label · notification · number-field · popover · progress · radio-group · select · separator · sheet · skeleton · slider · switch · table · tabs · textarea · toast · toggle · toggle-group · tooltip.
 
 ### Custom composites (`src/components/custom/`)
 
-animation · aurora · confirm-dialog · controls · **disco-glyph** (`DiscoGlyph`) · **dock** (`GlassDock`, `DockLayer`, `DockLayerGroup`, `DockGroup`, `DockIconButton`, `DockSelectTrigger`, `DockDropdownTrigger`, `DockPopover`) · expandable-container · form · glass-carousel · glass-panel · **glyph-face** (`GlyphFace`) · **hover-popover** (`HoverPopover`) · icon-tooltip · infinite-scroll · **instrument-chassis** (`InstrumentChassis`, `RegionDivider`) · labeled-field · **metric-badge** · metaballs · **pulse** · search · sidebar · sortable-list · stacked-icons · tabs (BouncyTabs, UnderlineTabs, BouncyToggle) · timeline · toggle-chip · typewriter.
+aurora · **bezier-canvas** (`BezierCurveCanvas`) · **blob** (`Blob`) · confirm-dialog · controls · **cream-surface** (`CreamSurface`) · **disco-glyph** (`DiscoGlyph`) · **display-hero** (`DisplayHero`) · **dock** (`GlassDock`, `DockLayer`, `DockLayerGroup`, `DockIconButton`, `DockSelectTrigger`, `DockDropdownTrigger`, `DockPopover`, `DockTabButton`) · **dock-group** (`DockGroup`) · expandable-container · **flourish-divider** (`FlourishDivider`) · glass-carousel · **glyph-face** (`GlyphFace`) · **hover-popover** (`HoverPopover`) · **icon-stamp** (`IconStamp`) · icon-tooltip · infinite-scroll · **instrument-chassis** (`InstrumentChassis`, `RegionDivider`) · labeled-field · **live-snippet** (`LiveSnippet`) · **math-formula** (`MathFormula`) · **math-glyph** (`MathGlyph`) · **math-surface** (`MathSurface`) · **metric-badge** (`MetricBadge`) · **notification-dot** (`NotificationDot`) · **pipeline-flow** (`PipelineFlow`) · **pulse** (`Pulse`) · search · sidebar · sortable-list · stacked-icons · **swatch** (`Swatch`) · tabs (BouncyTabs, UnderlineTabs, BouncyToggle) · timeline · toggle-chip · typewriter.
 
 ### Key component specs
 
@@ -1067,10 +1067,10 @@ When a consumer needs shared styling tweaks, edit glass-ui source — add a vari
 | Category | What it covers |
 |----------|----------------|
 | Foundations | Intro, Colors (core / rainbow / accent / viz-basis), Typography, Radii, Shadows, Motion, Paper & Glass, Icons |
-| Primitives | Buttons, Inputs, Textarea, Checkbox/Radio/Switch, Slider, NumberField, Select, Combobox, Multi-Select, Toggle, Label, Badge, MetricBadge, StatusDot, Pulse, Separator |
+| Primitives | Buttons, Inputs, Textarea, Checkbox/Radio/Switch, Slider, NumberField, Select, Combobox, Toggle, Label, Badge, MetricBadge, Pulse, Separator |
 | Containers | Card, Dialog, Sheet, Drawer, Popover, DropdownMenu, ContextMenu, HoverCard, Tooltip, Alert, Accordion, Collapsible |
 | Navigation | Tabs, BouncyTabs, Dock, DockLayers, Sidebar, Carousel, Command |
-| Data | Table, DataTable, TagsInput, Avatar, SortableList, InfiniteScroll, Timeline |
+| Data | Table, DataTable, Avatar, SortableList, InfiniteScroll, Timeline |
 | Feedback | Toast, Notification, Progress, Skeleton, ConfirmDialog |
 | Motion | Transitions, Spring Orchestrator, Stagger Reveal, Scroll-driven Type, Typewriter |
 | Compositions | Hero, Math-paper, Dashboard, Auth shell, Settings, Empty States, Aurora Playground |

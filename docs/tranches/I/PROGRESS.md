@@ -49,15 +49,34 @@ W1 dispatched in 2 passes due to file-bounds conflicts the spec didn't catch (sr
 
 W1+W2 close commit: pending.
 
+## 2026-05-06 — W3 + W6 + W5 + W4 + W7 close (final)
+
+W3 closed at `987fc41`: 3 lanes (α substrate hierarchy + axis ownership + chronic-deferral assessments; β cartoon recipe hoist + NumberField provide/inject; γ dock keep-open single sink + --easing-accent rename + sliderVariants CVA). Closes architectural tensions C-1, C-5, C-6, C-7, C-9, C-10, C-11 + 5 chronic deferrals.
+
+W6 closed at `63e29e4`: 9 zero-payload subpath candidates KEEP (cross-repo speedtest evidence); bundle-budget gate landed in lint.yml (soft-fail at 92%/94.7% raw/gz JS, 93.3%/92.1% raw/gz CSS); ay-close.sh retired.
+
+W5 closed at `73c40fa`: 24 γ doc-fix items absorbed (21 H-named + 3 since-H additions); 3 W5-named-deferrals handed to W7 close-ceremony.
+
+W4 closed at `864e882`: 32 NEEDS-REPAIR stories repaired with canonical wrapper (CreamSurface + DisplayHero + FlourishDivider + section accent). Pre-W4 41-list: 3 retired in W1 (multi-select, status-dot, metaballs); 3 foundations specimen-quiet permitted by W3.α policy (radii, shadows, motion); leaving 32 in scope.
+
+W7 (this wave) ran the canonical 6-agent post-close audit (α/β/γ/δ/ε/π). Findings absorbed:
+- α (plan-vs-actual): 21/21 chronic items disposed; 3 absorbable findings flagged (β-1, γ-2, γ-3); orchestrator authored α audit doc after lane timeout.
+- β (substrate): 0 runtime library-orphans; 9 sub-bar CVAs without evidence docs flagged; on re-grep, 2 are true orphans (button.ai, card.subtle — RETIRED in W7 absorb), 3 sub-bar with 1 demo consumer (button.danger-subtle, avatar.size.base, avatar.shape.square — evidence docs emitted), 4 actually clear ≥ 2 bar (badgeTone success/warning/info/destructive — KEEP).
+- γ (doc-drift): 5 critical drifts (DESIGN.md catalog phantoms × 4, PROGRESS.md stale × 1) + 3 lower-severity. Absorbed: DESIGN.md UI primitives + Custom composites catalogs synced to actual src/ + storybook category copy stripped of retired primitives + Accessibility Posture body StatusDot example replaced with `<Pulse role="status">` + PROGRESS.md status table updated + README peer-dep table updated to 11 entries.
+- δ (idiomatic gestalt): CLEAN.
+- ε (performance): CLEAN.
+- π (visual runtime): CLEAN — shimmer matrix repair confirmed; W4 wrapper renders without console errors across 5 probed surfaces.
+
+W7 absorb commit pending.
+
 ## Status
 
-| Wave | Status |
-|---|---|
-| W0 | complete |
-| W1 | complete |
-| W2 | complete |
-| W3 | open (ready to dispatch) |
-| W4 | pending W3 |
-| W5 | open (ready to dispatch — parallel with W3) |
-| W6 | open (ready to dispatch — parallel with W3 + W5) |
-| W7 | pending W4 + W5 + W6 |
+| Wave | Status | Commit |
+|---|---|---|
+| W0 | complete | `c3bf0a2` |
+| W1+W2 | complete | `35773c4` |
+| W3 | complete | `987fc41` |
+| W6 | complete | `63e29e4` |
+| W5 | complete | `73c40fa` |
+| W4 | complete | `864e882` |
+| W7 | complete (close ceremony + 6-agent audit + absorb) | (pending) |
