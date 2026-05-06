@@ -237,6 +237,21 @@
         line-height: 1;
     }
 
+    /* Dual-slot default visibility (R2-spec):
+       The library renders both `--full` and `--abbr` siblings whenever both
+       props are passed. Default identity is the full label; the abbreviation
+       sits hidden until consumer container-query CSS flips it. */
+    .metric-badge__label--abbr {
+        display: none;
+    }
+
+    /* sm-tier label tracking — tighter than the md/lg/xl 0.18em rung so the
+       compact register reads as a tighter annotation against the smaller
+       glyph rise. R2-spec D-Rec-2 (audit-D). */
+    .metric-badge[data-size="sm"] .metric-badge__label {
+        letter-spacing: 0.1em;
+    }
+
     /* ── Input bar — glassmorphic inline input container ── */
     .input-bar {
         display: flex;

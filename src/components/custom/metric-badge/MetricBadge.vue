@@ -10,14 +10,16 @@ const props = withDefaults(
   defineProps<{
     amount: string | number | null | undefined
     unit?: string
-    /** Annotation slot rendered before the amount. Tracked uppercase, muted.
-     *  When `abbreviation` is also set, consumers typically branch on
-     *  viewport and pass exactly one of the two; the template renders
-     *  `abbreviation ?? label`. */
+    /** Full annotation slot, rendered as a sibling `<span>` with classnames
+     *  `metric-badge__label metric-badge__label--full`. Tracked uppercase,
+     *  muted. */
     label?: string
-    /** Compact form of `label` for tight viewports. Same render slot;
-     *  abbreviation wins when both are set. The library does NOT branch on
-     *  viewport — that is consumer logic. */
+    /** Compact form of `label`, rendered as a SIBLING `<span>` with
+     *  classnames `metric-badge__label metric-badge__label--abbr`. When both
+     *  `label` and `abbreviation` are set the library renders BOTH siblings;
+     *  consumer container-query CSS toggles which is visible (default:
+     *  `--full` shown, `--abbr` hidden — see utilities.css). The library
+     *  itself never branches on viewport. R2-spec. */
     abbreviation?: string
     /** When set, renders the label slot in `inline` (single row, baseline-
      *  aligned) or `stacked` (column, items flex-start) mode. When unset,
@@ -104,11 +106,18 @@ const showLabel = computed(() =>
     )"
     :data-size="size"
   >
-    <span
-      v-if="showLabel"
-      class="metric-badge__label font-mono uppercase font-medium text-muted-foreground/80 shrink-0"
-      :class="labelClass"
-    >{{ abbreviation ?? label }}</span>
+    <template v-if="showLabel">
+      <span
+        v-if="label"
+        class="metric-badge__label metric-badge__label--full font-mono uppercase font-medium text-muted-foreground/80 shrink-0"
+        :class="labelClass"
+      >{{ label }}</span>
+      <span
+        v-if="abbreviation"
+        class="metric-badge__label metric-badge__label--abbr font-mono uppercase font-medium text-muted-foreground/80 shrink-0"
+        :class="labelClass"
+      >{{ abbreviation }}</span>
+    </template>
     <span
       class="metric-badge__amount font-semibold tabular-nums tracking-snug truncate transition-colors"
       :class="[amountClass, { 'text-muted-foreground/40': !amount }]"
