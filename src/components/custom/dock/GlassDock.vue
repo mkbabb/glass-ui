@@ -78,6 +78,7 @@ provide("glassDockId", dockId);
 const {
     expanded,
     isPinned,
+    isHeld,
     onMouseEnter,
     onMouseLeave,
     onFocusIn,
@@ -211,7 +212,7 @@ watch(visualExpanded, (isExpanded) => {
 
 onBeforeUnmount(clearTransitionTimer);
 
-defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, release });
+defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, keepOpen, release });
 </script>
 
 <template>
@@ -228,6 +229,7 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
               : position === 'sticky' ? 'dock-sticky'
               : 'dock-inline',
         ]"
+        :data-held="isHeld || undefined"
         @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave($event)"
         @focusin="onFocusIn"

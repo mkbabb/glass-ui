@@ -109,6 +109,74 @@ W4.A agent ran `git stash --keep-index --include-untracked` followed by `git sta
 
 W3 Lane B agent reports a separate "external rollback between tool calls" — likely the parallel W4 agents' partial writes intersected with W3's dock work; recovered via Edit tool surgically (no git stash use). No precept violation.
 
+## 2026-05-06 — W5 close
+
+W5 (form primitives + StoryChassis) ran 3 parallel agents (Lane A+C sequenced; Lane B; Lane D).
+
+**Lane A — `sliderVariants` CVA built from scratch** (W0 amendment §F item 7): no `sliderVariants` CVA existed at HEAD; built fresh with 5 variants × 3 sizes:
+- Variants: `standard | spectrum | timeline | glass-pill | glass-cartoon`
+- Sizes: `sm` (4px/12px) | `md` (6px/16px) | `lg` (12px/24px)
+- `Slider.vue` consumes `cn(sliderVariants({ variant, size }))`; emits `data-variant` + `data-size` on root for scoped-CSS substrate recipes.
+- `glass-pill` ships hover halo via `--surface-tint-12`, denser gradient range, `--scale-press-btn` active scale.
+- Bespoke `:focus-visible { outline: none }` strip retired — `.focus-ring` composes from CVA base.
+- Story migrated to a 5×3 matrix demo.
+
+**Lane C — Drag-keep-open visual feedback** (R6 cornerstone-3 contract WIRE):
+- `useDockState` lifts `keepOpenCount` to a reactive ref, derives `isHeld: ComputedRef<boolean>`, provides `dockHeld` alongside the existing `dockKeepOpen`/`dockRelease` callable pair.
+- `<GlassDock>` binds `:data-held` on root; `dock.css` `.glass-dock[data-held]` lifts background to `--glass-bg-floating` + quiets border.
+- `Slider.vue` injects `dockHeld`, acquires/releases the keep-open token across pointerdown → window pointerup/pointercancel; reflects `data-held` on root for halo intensification. New `keepDockOpen` prop (default `true`).
+- This proves the W3 dock-keep-open API surface beyond DockPopover (now a 2-consumer mature substrate).
+
+**Lane B — NumberField pill radius + Button-as-child** (R3 §B + §F):
+- NumberField default `border-radius`: `rounded-md` → `rounded-input` (10px via `--radius-input`).
+- `<NumberFieldIncrement>` + `<NumberFieldDecrement>` compose `<Button asChild variant="ghost" size="icon">` — inherits canonical four-state Button contract (focus-visible, hover, active-press, disabled).
+- I.W3.β provide/inject contract preserved (Tabs precedent); reka-ui primitive's `asChild` merges props/handlers/aria onto Button child.
+- Scope reveal: no cartoon variant CVA at HEAD (W5.md prescription was stale); single-axis number-field at HEAD.
+
+**Lane D — `<StoryChassis>` substrate — DEFERRED** (W0 amendment §F item 8):
+- Step 0 chassis-pattern re-survey at HEAD: **count = 0**.
+- R3-cited primitives `<CreamSurface>`, `<DisplayHero>`, `<FlourishDivider>` don't exist at HEAD (`rg -l` returns 0 hits in `src/`+`demo/`) — substrate Lane D was meant to compose is gone.
+- Existing chassis abstraction is `<StoryPage>` (78/90 stories already migrated upstream).
+- Lane D defers per substrate-without-consumer guard. Audit notes a separate finding: 8 stories use raw `rounded-card border bg-card shadow-cartoon` inline tiles where `<CartoonCard>` is the canonical substrate (forwarded to W7 audit lane β or K-tranche convergence).
+
+Hard-gate verification: `npm run typecheck` green; `npm run build` green; `npm run test` 269/269.
+
+Proof docs: `audit/W5-A-slider-cva-proof.md`, `audit/W5-B-numberfield-proof.md`, `audit/W5-C-drag-keep-open-proof.md`, `audit/W5-D-story-chassis-{survey,proof}.md`.
+
+## 2026-05-06 — W6 close
+
+W6 (data + composition refinement) ran 3 parallel agents (Lane A; Lane B+C.1 combined — same demo/stories/data/search.vue territory; Lane C.2).
+
+**Lane A — Badge size axis + tone reconcile** (R4 §A):
+- `badgeVariants` gains size axis: `sm` (text-xs) | `md` default (text-sm) | `lg` (text-base) — reconciles the row-text vs status-cell baseline drift.
+- Status-cell badge in `demo/stories/data/table.vue` consumes `size="md"` — visual baseline matches `text-sm` row text (finding 15).
+- Tone reconcile: **Option B** (DESIGN.md). `badgeToneVariants` does not exist in canon (R4 cited a non-existent CVA); the section-tone tint recipe (`bg-section-N/15 text-section-N border-section-N/30`) documented in DESIGN.md `## Badges § Section-tone recipe` as the canonical table-cell composition.
+
+**Lane B — FuzzySearch gestalt rewrite** (R4 §B; J invariant 7):
+- `src/components/custom/search/FuzzySearch.vue` collapsed **600 → 158 LOC** (-73.7%, well under ≤200 ceiling).
+- Composes canonical primitives: `<Popover>` + `<PopoverContent portal={false}>` for inline result list; `<Dialog>` + `<DialogContent variant="opaque">` for modal mode; `<Button variant="ghost" size="icon">` for actions; `<Badge variant="secondary">` for type chips; `.input-bar` chrome; `.kbd` for footer hints; `.interactive-item` for result-row hover/focus.
+- Dropped 330-line `<style scoped>` block — every recipe now lives in canonical utilities.
+- Public API preserved (consumer-facing props/events/emits unchanged). Highlight test updated with `attachTo: document.body` + `flushPromises()` for reka-ui pipeline flush.
+
+**Lane C.1 — clearSearchCache rename + danger-subtle Button retire** (R4 §C; J invariant 8):
+- `danger-subtle` Button variant retired (1 consumer, 4.28:1 light / 3.1:1 dark — fails WCAG AA). Subsumed by `destructive` (4.52:1 light / 8.72:1 dark — clears AA, AAA in dark).
+- Demo's clearCache button: `variant="destructive" size="sm"` + `<Trash2>` icon + label "Clear cache".
+- Lib export `clearSearchCache` PRESERVED per R4 §C invariant (3 external consumer trees depend on the lib name); consumer aliases via `import { clearSearchCache as clearCache }`.
+- All consumer-visible identifiers renamed (handler, label, aria, ledger column, last-helper string, row label).
+- `demo/stories/primitives/buttons.vue` dropped `danger-subtle` from `coreVariants` array.
+
+**Lane C.2 — CarouselPager substrate** (R4 §D; J invariant 6 — `<CarouselPager>` is the 3rd named new component):
+- 3 new substrate primitives at `src/components/ui/carousel/`:
+  - `<CarouselPager>` (94 LOC) — chevron prev/next + slide counter via `<Button variant="ghost" size="icon">`; `useCarousel()` integration; orientation-aware icons.
+  - `<CarouselDots>` (78 LOC) — one `role=tab` button per snap; active dot lifts via `--scale-hover` + `bg-foreground`; inactive `bg-[var(--muted-medium)]`; orientation-aware.
+  - `<GlassCarouselPager>` (127 LOC) — audacious variant with cartoon-shadow counter pill + outline-variant chevrons; `#trailing` slot for sibling toggles; loop-aware boundary semantics.
+- Basic pager in `demo/stories/navigation/carousel.vue` retired; consumes `<CarouselPager>` + `<CarouselDots>`.
+- Audacious pager in `demo/stories/containers/glass-carousel.vue:127-157` retired; consumes `<GlassCarouselPager>`.
+
+Hard-gate verification: `npm run typecheck` green; `npm run build` green; `npm run test` 269/269 (FuzzySearch test passes post-rewrite with attachTo+flushPromises).
+
+Proof docs: `audit/W6-A-badge-proof.md`, `audit/W6-B-fuzzy-search-proof.md`, `audit/W6-C1-clearcache-proof.md`, `audit/W6-C2-carousel-pager-proof.md`.
+
 ## Status
 
 | Wave | Status |
@@ -116,8 +184,8 @@ W3 Lane B agent reports a separate "external rollback between tool calls" — li
 | W0 | closed @ d8239f2 |
 | W1 | closed @ c6b7df0 |
 | W2 | closed @ e563d7a |
-| W3 | closed @ commit (this commit) |
-| W4 | closed @ commit (next) |
-| W5 | open (ready to dispatch — depends on W3 dock-keep-open contract) |
-| W6 | open (ready to dispatch — depends on W2 vocabulary) |
-| W7 | pending W5 + W6 |
+| W3 | closed @ deba31d |
+| W4 | closed @ 499326a |
+| W5 | closed @ commit (this commit) |
+| W6 | closed @ commit (next) |
+| W7 | open (ready to close — strengthened 6-agent post-close audit + FINAL.md) |

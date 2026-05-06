@@ -1,5 +1,5 @@
-import { ref, watch, onUnmounted, provide, inject } from "vue";
-import type { Ref } from "vue";
+import { computed, ref, watch, onUnmounted, provide, inject } from "vue";
+import type { ComputedRef, Ref } from "vue";
 import { isTeleportedTarget } from "./isTeleportedTarget";
 
 export interface UseDockStateOptions {
@@ -49,7 +49,12 @@ export function useDockState(options: UseDockStateOptions) {
     const isPinned = ref(initiallyExpanded);
 
     let collapseTimer: ReturnType<typeof setTimeout> | null = null;
-    let keepOpenCount = 0;
+    /* J.W5.C — `keepOpenCount` lifted to a reactive ref so descendants
+       can derive `isHeld` from it. The semantics (≥ 1 token alive
+       suppresses timer-based collapse) are unchanged; reactivity is
+       additive. */
+    const keepOpenCount = ref(0);
+    const isHeld: ComputedRef<boolean> = computed(() => keepOpenCount.value > 0);
     let removeClickAway: (() => void) | null = null;
     let installClickAwayFrame: number | null = null;
     let isCollapsing = false;
@@ -88,7 +93,7 @@ export function useDockState(options: UseDockStateOptions) {
 
     function scheduleCollapse() {
         if (getAlwaysExpanded()) return;
-        if (keepOpenCount > 0) return;
+        if (keepOpenCount.value > 0) return;
         clearTimer();
         collapseTimer = setTimeout(() => {
             dismissOpenOverlays();
@@ -148,7 +153,7 @@ export function useDockState(options: UseDockStateOptions) {
         if (getAlwaysExpanded()) return;
         if (state.value === "hover") {
             // Something is explicitly holding the dock open (dropdown, edit, etc.)
-            if (keepOpenCount > 0) return;
+            if (keepOpenCount.value > 0) return;
             // Mouse moved to a descendant or teleported child (dropdown, popover)
             if (e) {
                 const root = rootEl.value;
@@ -179,7 +184,7 @@ export function useDockState(options: UseDockStateOptions) {
     function onFocusOut(e: FocusEvent) {
         if (getAlwaysExpanded()) return;
         if (state.value !== "hover") return;
-        if (keepOpenCount > 0) return;
+        if (keepOpenCount.value > 0) return;
         const root = e.currentTarget as HTMLElement;
         if (e.relatedTarget && root.contains(e.relatedTarget as Node)) return;
         // Focus moved to a teleported element (dropdown content, select, popover)
@@ -203,18 +208,18 @@ export function useDockState(options: UseDockStateOptions) {
     // --- keepOpen / release (ref-counted child holds) ---
 
     function keepOpen() {
-        keepOpenCount++;
+        keepOpenCount.value++;
         clearTimer();
     }
 
     function release() {
-        keepOpenCount = Math.max(0, keepOpenCount - 1);
-        if (keepOpenCount === 0 && state.value === "hover") {
+        keepOpenCount.value = Math.max(0, keepOpenCount.value - 1);
+        if (keepOpenCount.value === 0 && state.value === "hover") {
             // Grace period: don't collapse immediately after a child releases
             // (e.g., dialog dismissed via Escape). Give the user time to re-engage.
             clearTimer();
             collapseTimer = setTimeout(() => {
-                if (keepOpenCount === 0 && state.value === "hover") {
+                if (keepOpenCount.value === 0 && state.value === "hover") {
                     scheduleCollapse();
                 }
             }, Math.min(collapseDelay, 800));
@@ -225,6 +230,11 @@ export function useDockState(options: UseDockStateOptions) {
     provide("dockKeepOpen", keepOpen);
     provide("dockRelease", release);
     provide("dockExpanded", expanded);
+    /* J.W5.C — `dockHeld` is the reactive flag descendants subscribe to
+       for held-state visual feedback (e.g., Slider thumb halo
+       intensifies, dock substrate tier-shades). The provide key sits
+       alongside the existing `dockKeepOpen`/`dockRelease` pair. */
+    provide<ComputedRef<boolean>>("dockHeld", isHeld);
 
     // --- Click-away listener ---
 
@@ -297,6 +307,7 @@ export function useDockState(options: UseDockStateOptions) {
         state,
         expanded,
         isPinned,
+        isHeld,
         onMouseEnter,
         onMouseLeave,
         onFocusIn,

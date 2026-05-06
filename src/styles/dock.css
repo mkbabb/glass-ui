@@ -202,6 +202,25 @@
         transform: scale(var(--dock-collapsed-hover-scale));
     }
 
+    /* J.W5.C — held-state substrate response.
+     *
+     * When a descendant signals `dockKeepOpen` (e.g. an active slider drag),
+     * `useDockState.isHeld` flips true and the root carries `data-held`.
+     * The dock background lifts a tier (resting → floating-equivalent) and
+     * the border quiets to the floating ring; the change tracks pointer
+     * movement on `--duration-fast` so it reads as a held-cursor cue, not
+     * a state change. The same flag is consumed by descendants (Slider
+     * thumb halo) via `inject("dockHeld")` for cross-substrate coordination.
+     */
+    .glass-dock[data-held] {
+        background: var(--glass-bg-floating, var(--glass-bg-resting));
+        border-color: var(--glass-border-floating, var(--glass-border-resting));
+        transition:
+            background var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard);
+    }
+
     .glass-dock:where(.fixed) {
         z-index: var(--z-dock);
     }
