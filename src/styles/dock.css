@@ -707,6 +707,30 @@
         will-change: transform, opacity;
     }
 
+    /* Q.W3.A.4 — phase-tint backplate halo at the pill wrapper.
+     *
+     * The inner `<GlyphFace>` halo (`.glyph-face-backplate { inset: -25% }`)
+     * gets clipped by the pill's `overflow: hidden`; the halo never escapes
+     * the inner glyph wrapper. This `::before` lifts the phase-tint to the
+     * pill itself so the glow composes with the whole CTA. Scoped to
+     * active phases — at idle / ready the pill stays neutral and inherits
+     * the W2.7 reservation ("disco fires on hover only"). */
+    .dock-tab-button[data-tier="primary"][data-phase]:not([data-phase="ready"]):not([data-phase="idle"])::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: radial-gradient(
+            ellipse at 30% 30%,
+            color-mix(in srgb, var(--phase-color, var(--foreground)) 18%, transparent) 0%,
+            transparent 70%
+        );
+        pointer-events: none;
+        z-index: -1;
+        opacity: 1;
+        transition: opacity var(--duration-fast) var(--ease-standard);
+    }
+
     .dock-tab-button[data-tier="primary"]:hover::after {
         animation: sparkle-sweep 600ms var(--ease-out-expo);
     }
