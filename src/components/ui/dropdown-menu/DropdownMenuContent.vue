@@ -33,7 +33,7 @@ const dockContext = inject<{ id: string } | null>("glassDockContext", null)
       v-bind="forwarded"
       :data-glass-dock-portal="dockContext?.id ? '' : undefined"
       :data-glass-dock-owner="dockContext?.id"
-      :class="cn('dropdown-menu-content z-popover min-w-32 max-h-[60vh] overflow-y-auto rounded-xl border glass-elevated p-1 text-popover-foreground popover-animate slide-in-from-side', props.class)"
+      :class="cn('dropdown-menu-content z-popover min-w-32 max-h-[60vh] overflow-y-auto rounded-xl border glass-floating p-1 text-popover-foreground popover-animate slide-in-from-side', props.class)"
     >
       <slot />
     </DropdownMenuContent>

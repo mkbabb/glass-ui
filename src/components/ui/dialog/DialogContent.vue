@@ -35,7 +35,7 @@ const baseClasses = 'fixed left-1/2 top-1/2 z-modal grid w-full max-w-lg -transl
 const variantClasses = computed(() =>
   props.variant === 'opaque'
     ? 'bg-background border sm:rounded-xl'
-    : 'glass-elevated rounded-xl'
+    : 'glass-floating rounded-xl'
 )
 </script>
 

@@ -126,7 +126,7 @@ function effectiveFont(slot: keyof FontSlots): string {
 
         <SheetContent
             side="right"
-            class="glass-medium w-full sm:max-w-md overflow-y-auto p-0"
+            class="glass-resting w-full sm:max-w-md overflow-y-auto p-0"
         >
             <div class="flex h-full flex-col">
                 <SheetHeader class="px-6 pt-6 pb-4 border-b border-border/40">

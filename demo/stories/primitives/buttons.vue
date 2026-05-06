@@ -20,7 +20,7 @@ const coreVariants = [
     "accent",
     "ghost",
     "glass",
-    "glass-subtle",
+    "glass-wash",
     "ai",
     "danger-subtle",
     "link",

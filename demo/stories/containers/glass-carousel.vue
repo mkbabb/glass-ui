@@ -209,7 +209,7 @@ onMounted(updateOverflow);
                     </p>
                 </div>
                 <Button
-                    variant="glass-subtle"
+                    variant="glass-wash"
                     size="sm"
                     @click="harnessExpanded = !harnessExpanded"
                 >

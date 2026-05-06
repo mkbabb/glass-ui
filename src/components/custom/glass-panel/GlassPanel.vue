@@ -48,10 +48,10 @@ const cssClass = computed(() => {
     // CSS tier
     const variantClass =
         props.variant === "elevated"
-            ? "glass-elevated"
+            ? "glass-floating"
             : props.variant === "medium"
-              ? "glass-medium"
-              : "glass-default";
+              ? "glass-resting"
+              : "glass-resting";
 
     return cn("glass-panel", variantClass, props.class);
 });

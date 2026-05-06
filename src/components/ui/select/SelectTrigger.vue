@@ -24,7 +24,7 @@ const forwardedProps = useForwardProps(delegatedProps)
 const variantClass = computed(() =>
   props.variant === 'ghost'
     ? 'bg-transparent border-none shadow-none'
-    : 'glass-subtle',
+    : 'glass-wash',
 )
 </script>
 

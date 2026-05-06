@@ -30,28 +30,28 @@ interface PanelExample {
 const tiers: Tile[] = [
     {
         tier: "subtle",
-        cls: "glass-subtle",
+        cls: "glass-wash",
         opacityVar: "--glass-opacity-subtle",
         blurVar: "--glass-blur-subtle",
         role: "dock, input bg, hover overlays",
     },
     {
         tier: "default",
-        cls: "glass-default",
+        cls: "glass-resting",
         opacityVar: "--glass-opacity-default",
         blurVar: "--glass-blur-default",
         role: "cards, content containers",
     },
     {
         tier: "medium",
-        cls: "glass-medium",
+        cls: "glass-resting",
         opacityVar: "--glass-opacity-medium",
         blurVar: "--glass-blur-medium",
         role: "popovers, dropdowns, floating panels",
     },
     {
         tier: "elevated",
-        cls: "glass-elevated",
+        cls: "glass-floating",
         opacityVar: "--glass-opacity-elevated",
         blurVar: "--glass-blur-elevated",
         role: "dialogs, command palette, modals",

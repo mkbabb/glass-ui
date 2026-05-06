@@ -45,7 +45,7 @@ const selected = ref<string>("");
                         <button
                             id="cbx"
                             type="button"
-                            class="glass-subtle focus-visible:shadow-[var(--focus-ring-shadow)] flex h-10 w-full items-center justify-between rounded-full px-3 py-2 text-sm outline-none"
+                            class="glass-wash focus-visible:shadow-[var(--focus-ring-shadow)] flex h-10 w-full items-center justify-between rounded-full px-3 py-2 text-sm outline-none"
                         >
                             <span class="truncate">
                                 {{

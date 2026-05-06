@@ -120,7 +120,6 @@ export const CATEGORIES: Category[] = [
         title: "Containers",
         icon: Boxes,
         stories: [
-            s("containers", "card", "Card"),
             s("containers", "dialog", "Dialog"),
             s("containers", "sheet", "Sheet"),
             s("containers", "drawer", "Drawer"),

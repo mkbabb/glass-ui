@@ -85,7 +85,7 @@ function setApi(api: CarouselApi | undefined) {
                             <div
                                 :class="cn(
                                     'flex h-32 flex-col justify-between rounded-[var(--radius-card)] border p-4 transition-colors',
-                                    'glass-subtle',
+                                    'glass-wash',
                                     i === pagerIndex ? 'border-foreground/40' : 'border-border/40 opacity-70'
                                 )"
                             >
