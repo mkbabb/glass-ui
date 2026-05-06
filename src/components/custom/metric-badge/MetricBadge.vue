@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'vue'
 import { computed } from 'vue'
 import { cn } from '../../../utils'
 
-type MetricBadgeSize = 'sm' | 'md' | 'lg'
+type MetricBadgeSize = 'sm' | 'md' | 'lg' | 'xl'
 
 const props = withDefaults(
   defineProps<{
@@ -13,9 +13,10 @@ const props = withDefaults(
     color?: string
     /** Substitute glyph when amount is empty. */
     placeholder?: string
-    /** Typographic scale. Defaults to `md`; `lg` lifts the badge to the
-     *  audacious typography rung (`text-mono-small` amount, `text-small`
-     *  unit) for hero placements. */
+    /** Typographic scale. Defaults to `md`. The ladder reads
+     *  sm 11px / md 12px / lg 14px / xl 18px; `xl` is the audacious-poster
+     *  rung (`text-mono-prose` amount, `text-prose` unit) for hero
+     *  placements that need to read at chassis distance. */
     size?: MetricBadgeSize
     class?: HTMLAttributes['class']
   }>(),
@@ -31,6 +32,8 @@ const amountClass = computed(() => {
       return 'text-mono-micro'
     case 'lg':
       return 'text-mono-small'
+    case 'xl':
+      return 'text-mono-prose'
     default:
       return 'text-mono-micro'
   }
@@ -42,6 +45,8 @@ const unitClass = computed(() => {
       return 'text-micro'
     case 'lg':
       return 'text-small'
+    case 'xl':
+      return 'text-prose'
     default:
       return 'text-micro'
   }
