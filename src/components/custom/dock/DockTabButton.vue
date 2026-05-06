@@ -31,3 +31,14 @@ const classes = computed(() => cn("dock-tab-button", props.class));
         <slot />
     </Primitive>
 </template>
+
+<style>
+/* Density-keyed height knob, parallel to DockIconButton's --dock-control-size.
+   When a parent <GlassDock density="…"> sets `--dock-tab-h` (utilities.css),
+   the tab-button reserves that row even when the glyph + padding sum would
+   ride lower. Default falls through to `--dock-tab-min-height` (kept for
+   audacious-tier callers) and finally to `auto`. R3-spec / audit-E P0-3. */
+.dock-tab-button {
+    min-height: var(--dock-tab-h, var(--dock-tab-min-height, auto));
+}
+</style>

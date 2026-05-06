@@ -252,6 +252,41 @@
         letter-spacing: 0.1em;
     }
 
+    /* ── Dock tab-button density-keyed height (R3-spec / audit-E P0-3) ──
+       The four bare DockIconButton consumers solved their density-keyed
+       height via `--dock-control-size` (set per density tier in dock.css);
+       DockTabButton's analogous knob lives here so the tab-button row no
+       longer free-floats to the glyph + padding sum. Compact density lands
+       at 32px to match the deployed product's bottom-dock height. */
+    .glass-dock.density-compact {
+        --dock-tab-h-compact: 32px;
+        --dock-tab-h: var(--dock-tab-h-compact);
+    }
+    .glass-dock.density-spacious {
+        --dock-tab-h-spacious: 44px;
+        --dock-tab-h: var(--dock-tab-h-spacious);
+    }
+    .glass-dock.density-audacious {
+        --dock-tab-h-audacious: var(--dock-density-audacious-tab-min-height, 3.5rem);
+        --dock-tab-h: var(--dock-tab-h-audacious);
+    }
+
+    /* ── Density-audacious mobile carve (R3-spec / audit-D D-Rec-5) ──
+       The audacious dock dock-label-size knob: at narrow viewports the
+       label glyphs need to compress so the audacious chrome doesn't
+       overflow its host. The token reads `≤16px at <480` and `14–15px at
+       480–719`; consumer dock label spans bind `font-size: var(--dock-label-size)`. */
+    @media (max-width: 479px) {
+        .glass-dock.density-audacious {
+            --dock-label-size: 14px;
+        }
+    }
+    @media (min-width: 480px) and (max-width: 719px) {
+        .glass-dock.density-audacious {
+            --dock-label-size: 15px;
+        }
+    }
+
     /* ── Input bar — glassmorphic inline input container ── */
     .input-bar {
         display: flex;
