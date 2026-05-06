@@ -59,6 +59,58 @@ const STATES: Array<{
             </p>
         </section>
 
+        <!-- Q.W3.A.3 — facetAxis × silhouette aspect. -->
+        <section class="flex flex-col gap-3">
+            <p class="section-label">facetAxis · gradient direction adapts to silhouette</p>
+            <div class="grid grid-cols-3 gap-6">
+                <div class="flex flex-col items-center gap-2">
+                    <div class="size-12 text-foreground">
+                        <DiscoGlyph :silhouette="PLAY" :active="true" phase-color="var(--chart-download)" facet-axis="diagonal" />
+                    </div>
+                    <span class="text-mono-caption text-muted-foreground">play · diagonal (default)</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="size-12 text-foreground">
+                        <DiscoGlyph :silhouette="CHECK" :active="true" phase-color="var(--chart-download)" facet-axis="vertical" />
+                    </div>
+                    <span class="text-mono-caption text-muted-foreground">check · vertical</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="size-12 text-foreground">
+                        <DiscoGlyph :silhouette="ARROW_RIGHT" :active="true" phase-color="var(--chart-download)" facet-axis="vertical" />
+                    </div>
+                    <span class="text-mono-caption text-muted-foreground">arrow-right · vertical</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="size-12 text-foreground">
+                        <DiscoGlyph :silhouette="ROTATE_CCW" :active="true" phase-color="var(--chart-download)" facet-axis="diagonal" />
+                    </div>
+                    <span class="text-mono-caption text-muted-foreground">rotate-ccw · diagonal</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="size-12 text-foreground">
+                        <DiscoGlyph :silhouette="CHECK" :active="true" phase-color="var(--chart-download)" facet-axis="horizontal" />
+                    </div>
+                    <span class="text-mono-caption text-muted-foreground">check · horizontal</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="size-12 text-foreground">
+                        <DiscoGlyph :silhouette="ARROW_RIGHT" :active="true" phase-color="var(--chart-download)" facet-axis="diagonal" />
+                    </div>
+                    <span class="text-mono-caption text-muted-foreground">arrow-right · diagonal (worst)</span>
+                </div>
+            </div>
+            <p class="text-mono-caption text-muted-foreground">
+                The 8-stop gradient cuts perpendicular to <code>facetAxis</code>.
+                Each consumer picks the axis that cuts <i>across</i> its
+                dominant stroke direction — CheckDisco's V-shape and
+                ArrowRightDisco's horizontal shaft both pick vertical;
+                PlayDisco's triangle and RotateCcwDisco's arc stay on the
+                diagonal default. The "arrow-right · diagonal (worst)" cell
+                shows the read this prop closes.
+            </p>
+        </section>
+
         <!-- Multi-glyph SSR-id hygiene check. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">id hygiene · multiple instances</p>
