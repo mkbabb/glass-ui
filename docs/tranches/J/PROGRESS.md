@@ -35,15 +35,36 @@ W0 amendments applied to wave specs by orchestrator at close:
 - **W5.A** — re-cast as "build `sliderVariants` CVA from scratch" (no CVA at HEAD).
 - **W5.D** — chassis-pattern grep added as step 0 (R3's cited story files don't exist at HEAD).
 
+## 2026-05-06 — W1 close
+
+W1 (vocab.γ) shipped substrate-only:
+
+- **25 new tokens** in `src/styles/tokens.css` (light + 6 dark mirrors): `--space-phi-{5,6}`, `--surface-tint-{4,6,8,10,12,15,18,22,25}`, `--overlay-scrim{,-strong,-subtle}`, `--duration-sparkle`, `--{success,warning,info}-foreground`, `--radius-tooltip`, `--muted-{soft,medium}`. Organized into existing §1/§4/§5/§6/§8/§10 sections.
+- **21 `@theme` bridges** in `src/styles/theme.css` (each new token → Tailwind v4 utility).
+- **2 `@utility` blocks** in `src/styles/utilities.css`: `sheet-animate` + `overlay-scrim`.
+- **`cssVar()` composable** at `src/composables/utils/cssVar.ts` + barrel; re-exported through `src/composables/index.ts` and `src/index.ts`.
+
+Conditional dispositions:
+- **W1.4 deferred entirely** — `demo/stories/foundations/flourishes.vue` doesn't exist at HEAD; zero `text-shimmer|bg-rainbow|text-rainbow` consumers; per `feedback_overfitting_audit` substrate-without-consumer guard.
+- **W1.6 N/A** — `paper.css` already contains zero `hsl(48 …)` literals; W1.md prescription was stale planning-branch drift.
+
+Pre-flight grep confirmed all 25 tokens absent at HEAD (zero collision); `--duration-panel` already exists (no W1.3 dep needed).
+
+Hard-gate verification: `npm run typecheck` green; `npm run build` green (18.93s); `npm run test` green (270 tests pass, 18 files); `npm run profile:bundle` ran and updated docs/tranches/F/audit/*.json snapshots (no `profile:budget` script — `profile:bundle` is the canonical name in `package.json`).
+
+Token value choices for orchestrator review (documented in proof doc): `--success-foreground` / `--info-foreground` light = `var(--neutral-0)`, dark = `hsl(48 10% 96%)`; `--warning-foreground` = `hsl(24 10% 10%)` in both modes (warning amber stays dark-on-amber).
+
+W1 incidence: agent briefly ran `git stash` to verify a pre-existing failure mode (a precept violation per LESSONS-LEARNED 2026-05-04 "Never Use Git Stash As Agent Recovery"). Agent recovered surgically via Edit tool; no work lost. Reinforcement noted; will absorb at J close (FINAL.md or LESSONS-LEARNED reinforcement entry if pattern re-appears).
+
 ## Status
 
 | Wave | Status |
 |---|---|
-| W0 | closed @ commit (this commit) |
-| W1 | open (ready to dispatch) |
-| W2 | pending W1 |
-| W3 | pending W1 |
-| W4 | pending W1 |
+| W0 | closed @ d8239f2 |
+| W1 | closed @ commit (this commit) |
+| W2 | open (ready to dispatch) |
+| W3 | open (ready to dispatch — independent of W2) |
+| W4 | open (ready to dispatch — independent of W2/W3) |
 | W5 | pending W3 |
 | W6 | pending W2 |
 | W7 | pending W3 + W4 + W5 + W6 |

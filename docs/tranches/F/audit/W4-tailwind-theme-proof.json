@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-05-02T20:22:17.357Z",
-  "durationMs": 284,
-  "status": "pass",
+  "generatedAt": "2026-05-06T21:51:09.907Z",
+  "durationMs": 187,
+  "status": "fail",
   "command": "npm run proof:theme",
   "tailwind": {
     "probeClasses": [
@@ -29,6 +29,7 @@
       "duration-fast",
       "blur-dock",
       "blur-glass-subtle",
+      "max-w-2xl",
       "animate-dock-in",
       "animate-shimmer"
     ],
@@ -127,6 +128,10 @@
       },
       {
         "className": "blur-glass-subtle",
+        "present": false
+      },
+      {
+        "className": "max-w-2xl",
         "present": true
       },
       {
@@ -188,23 +193,36 @@
         "pass": true
       },
       {
+        "className": "max-w-2xl",
+        "fragment": "max-width: var(--container-2xl)",
+        "rule": "\n    max-width: var(--container-2xl);\n  ",
+        "pass": true
+      },
+      {
         "className": "animate-dock-in",
         "fragment": "animation: var(--animate-dock-in)",
         "rule": "\n    animation: var(--animate-dock-in);\n  ",
         "pass": true
       }
     ],
-    "cssBytes": 166738,
+    "cssBytes": 185692,
     "files": [
-      "dist/assets/index-Ddr0jOfJ.css"
+      "dist/assets/index-0keJExbI.css"
     ]
   },
   "staticChecks": {
     "invalidNamespaces": [],
+    "invalidThemeEntries": [],
     "selfReferences": [],
     "unresolvedUtilityTokens": [],
+    "retiredTokenMatches": [],
     "brittleMatches": [],
-    "dockScopedStyleBlocks": []
+    "dockScopedStyleBlocks": [
+      "src/components/custom/dock/DockTabButton.vue"
+    ]
   },
-  "failures": []
+  "failures": [
+    "dock scoped style block remains in src/components/custom/dock/DockTabButton.vue",
+    "missing generated class .blur-glass-subtle"
+  ]
 }

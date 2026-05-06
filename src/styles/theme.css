@@ -83,6 +83,33 @@
 
     --color-shadow: var(--shadow);
 
+    /* Semantic foregrounds — bg-{success,warning,info}-foreground +
+       text-{success,warning,info}-foreground. Companions to the existing
+       --color-{success,warning,info} bridges below. R5 vocab.γ gap row 4. */
+    --color-success-foreground: var(--success-foreground);
+    --color-warning-foreground: var(--warning-foreground);
+    --color-info-foreground:    var(--info-foreground);
+
+    /* Muted-tinted rungs — bg-muted-soft / bg-muted-medium. */
+    --color-muted-soft:   var(--muted-soft);
+    --color-muted-medium: var(--muted-medium);
+
+    /* Foreground-tint rungs — bg-surface-tint-{4,6,8,10,12,15,18,22,25}. */
+    --color-surface-tint-4:  var(--surface-tint-4);
+    --color-surface-tint-6:  var(--surface-tint-6);
+    --color-surface-tint-8:  var(--surface-tint-8);
+    --color-surface-tint-10: var(--surface-tint-10);
+    --color-surface-tint-12: var(--surface-tint-12);
+    --color-surface-tint-15: var(--surface-tint-15);
+    --color-surface-tint-18: var(--surface-tint-18);
+    --color-surface-tint-22: var(--surface-tint-22);
+    --color-surface-tint-25: var(--surface-tint-25);
+
+    /* Overlay scrims — bg-overlay-scrim{,-strong,-subtle}. */
+    --color-overlay-scrim:        var(--overlay-scrim);
+    --color-overlay-scrim-strong: var(--overlay-scrim-strong);
+    --color-overlay-scrim-subtle: var(--overlay-scrim-subtle);
+
     /* ═══════════════════════════════════════════════
        Colors — section palette (13-stop)
        ═══════════════════════════════════════════════ */
@@ -172,13 +199,14 @@
     --radius-pill: 9999px;
 
     /* Semantic radius — point at primitives from tokens.css; no self-reference */
-    --radius-card:   var(--radius-2xl);
-    --radius-panel:  var(--radius-xl);
-    --radius-dialog: var(--radius-2xl);
-    --radius-input:  var(--radius);
-    --radius-button: var(--radius);
-    --radius-badge:  var(--radius-pill);
-    --radius-dock:   var(--radius-pill);
+    --radius-card:    var(--radius-2xl);
+    --radius-panel:   var(--radius-xl);
+    --radius-dialog:  var(--radius-2xl);
+    --radius-input:   var(--radius);
+    --radius-button:  var(--radius);
+    --radius-badge:   var(--radius-pill);
+    --radius-dock:    var(--radius-pill);
+    --radius-tooltip: var(--radius-lg);
 
     /* ═══════════════════════════════════════════════
        Sizing → h-*, min-w-*, and spacing utilities
@@ -188,6 +216,11 @@
     --height-chart-large:   var(--chart-height-large);
     --min-width-input-sm:   var(--input-min-width-sm);
     --spacing-chart-margin: var(--chart-margin);
+
+    /* Golden-ratio spacing — p-phi-5 / m-phi-6 etc. via Tailwind's spacing
+       utilities. φ² and φ³ rungs for hero/chassis padding ladder. */
+    --spacing-phi-5: var(--space-phi-5);
+    --spacing-phi-6: var(--space-phi-6);
 
     /* ═══════════════════════════════════════════════
        Shadows → shadow-* utilities
@@ -250,6 +283,7 @@
     --transition-duration-panel: var(--duration-panel);
     --transition-duration-xl: var(--duration-xl);
     --transition-duration-xxl: var(--duration-xxl);
+    --transition-duration-sparkle: var(--duration-sparkle);
 
     /* ═══════════════════════════════════════════════
        Animation → animate-* utilities

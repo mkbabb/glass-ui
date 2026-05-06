@@ -8,6 +8,7 @@ export * from "./useTouchGate";
 export * from "./glass";
 export * from "./motion";
 export * from "./pagination";
+export * from "./utils";
 export * from "./virtual";
 export * from "../components/custom/infinite-scroll/composables";
 export * from "./sidebar";

@@ -19,6 +19,7 @@ export * from "./composables/useTouchGate";
 export * from "./composables/glass";
 export * from "./composables/motion";
 export * from "./composables/sortable";
+export * from "./composables/utils";
 
 // Core utilities
 export * from "./utils";

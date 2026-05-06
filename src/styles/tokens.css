@@ -54,6 +54,10 @@
     --duration-shimmer: 5s;
     --duration-shimmer-slow: 8s;
     --duration-popup-swap: 180ms;
+    /* Sparkle micro-event — primary-CTA disco-grain sparkle sweep, success
+       affirmations. R5 vocab.γ gap row 3 (single-site at dock.css:735 today,
+       reserved for J.W2.7 §17 audacious-CTA buildout). */
+    --duration-sparkle: 600ms;
 
     /* ═══════════════════════════════════════════════
        §2  EASING — Spring curves via linear()
@@ -128,6 +132,9 @@
     --radius-button: var(--radius);
     --radius-badge: var(--radius-pill);
     --radius-dock: var(--radius-pill);
+    /* Tooltip alias — semantic handle for the lg rung; consumed by W2 ui/tooltip
+       migration (currently inline `rounded-lg`). R5 vocab.γ gap row 5. */
+    --radius-tooltip: var(--radius-lg);
 
     /* ═══════════════════════════════════════════════
        §5  COLOR PALETTE — Warm cream / muted black
@@ -174,6 +181,28 @@
     --shadow: hsl(24 10% 10%);
     --shadow-color: var(--foreground);
 
+    /* Foreground-tint rungs — canonical handles for the 36+ raw
+       `color-mix(in srgb, var(--foreground) N%, transparent)` sites surveyed
+       in R5 axis-1. Each rung's α is named in its key (4 → 4%, 22 → 22%).
+       Auto-dark via --foreground; no explicit dark mirrors needed. R5
+       vocab.γ gap row 1. Consumers land in W2.B + W3.C. */
+    --surface-tint-4:  color-mix(in srgb, var(--foreground)  4%, transparent);
+    --surface-tint-6:  color-mix(in srgb, var(--foreground)  6%, transparent);
+    --surface-tint-8:  color-mix(in srgb, var(--foreground)  8%, transparent);
+    --surface-tint-10: color-mix(in srgb, var(--foreground) 10%, transparent);
+    --surface-tint-12: color-mix(in srgb, var(--foreground) 12%, transparent);
+    --surface-tint-15: color-mix(in srgb, var(--foreground) 15%, transparent);
+    --surface-tint-18: color-mix(in srgb, var(--foreground) 18%, transparent);
+    --surface-tint-22: color-mix(in srgb, var(--foreground) 22%, transparent);
+    --surface-tint-25: color-mix(in srgb, var(--foreground) 25%, transparent);
+
+    /* Muted-tinted surface rungs — canonical handles for the 9 raw
+       `color-mix(in srgb, var(--muted) N%, transparent)` sites in
+       FuzzySearch / ProgressiveSidebar / BouncyToggle / Slider scoped CSS.
+       Auto-dark via --muted. R5 vocab.γ axis-1 row. Consumers land in W2.B. */
+    --muted-soft:   color-mix(in srgb, var(--muted) 30%, transparent);
+    --muted-medium: color-mix(in srgb, var(--muted) 50%, transparent);
+
     /* ═══════════════════════════════════════════════
        §6  SECTION PALETTE — 13-stop jewel tones (light)
        ═══════════════════════════════════════════════ */
@@ -216,6 +245,15 @@
     --warning:       hsl(38 92% 50%);
     --info:          hsl(217 91% 60%);
     --delete:        hsl(0 70% 55%);
+
+    /* Semantic foregrounds — text/glyph atop --success/--warning/--info plates.
+       Notification.vue currently hardcodes `text-white`/`text-foreground`
+       inline; W2 migrates consumers to read these tokens. Warning carries a
+       dark glyph because the amber plate is too luminous for white. R5
+       vocab.γ gap row 4. */
+    --success-foreground: var(--neutral-0);
+    --warning-foreground: hsl(24 10% 10%);
+    --info-foreground:    var(--neutral-0);
 
     /* ═══════════════════════════════════════════════
        §7  SHADOWS — cartoon offset is the signature
@@ -409,6 +447,16 @@
     --glass-shadow:    var(--glass-shadow-quiet);
     --glass-shadow-lg: var(--glass-shadow-floating);
 
+    /* Overlay scrim rungs — substrate-aware modal/dialog backdrop tints.
+       Three weights cover the deployed range: dialog-scroll (subtle),
+       canonical modal (default), drawer/full-cover (strong). Currently
+       5 raw `bg-black/{40,50,80}` sites across Dialog/Sheet/Drawer/
+       ConfirmDialog hardcode the value; W2.A migrates consumers.
+       R5 vocab.γ gap row 2. */
+    --overlay-scrim:         color-mix(in srgb, var(--shadow-color) 50%, transparent);
+    --overlay-scrim-strong:  color-mix(in srgb, var(--shadow-color) 80%, transparent);
+    --overlay-scrim-subtle:  color-mix(in srgb, var(--shadow-color) 40%, transparent);
+
     /* ═══════════════════════════════════════════════
        §9  ANIMATION OFFSETS
        ═══════════════════════════════════════════════ */
@@ -447,6 +495,15 @@
     --icon-md: 1rem;
     --icon-lg: 1.25rem;
     --icon-xl: 1.5rem;
+
+    /* Golden-ratio spacing rungs — φ² and φ³. Preemptive substrate; W4 hero
+       chassis + W5 StoryChassis migration land the consumers. R3 §A row 1.
+       The 0..4 rungs are not currently named (consumers reach via
+       Tailwind's spacing scale); 5/6 land here because their values fall
+       outside the default ladder and the audacious chassis pattern wants
+       a named handle. */
+    --space-phi-5: 2.618rem; /* φ² */
+    --space-phi-6: 4.236rem; /* φ³ */
 
     /* Dock geometry — consumers may override locally */
     --dock-h: calc(var(--size-icon-btn) + 0.75rem + 3px);
@@ -578,6 +635,14 @@
     --warning:       hsl(38 92% 60%);
     --info:          hsl(217 91% 70%);
     --delete:        hsl(0 70% 62%);
+
+    /* Semantic foregrounds — off-white over dark plates. Mirrors the
+       `--destructive-foreground` dark pattern (hsl 48 10% 90%). The warning
+       glyph stays dark-on-amber; the dark amber rung is luminous enough that
+       a darker glyph still reads (matches light-mode behaviour). */
+    --success-foreground: hsl(48 10% 96%);
+    --warning-foreground: hsl(24 10% 10%);
+    --info-foreground:    hsl(48 10% 96%);
 
     --shadow-cartoon:       3px 3px 0px 0px color-mix(in srgb, var(--foreground) 6%, transparent);
     --shadow-cartoon-hover: 4px 4px 0px 0px color-mix(in srgb, var(--foreground) 8%, transparent);

@@ -410,6 +410,29 @@
 
 }
 
+/* ── Sheet/drawer slide-out animation grammar ──
+   Mirror of `.popover-animate` for sheet/drawer panels. Pairs with
+   `slide-in-from-{top,right,bottom,left}-N` to compose side-keyed entries.
+   The open path uses --duration-panel (slow, deliberate); the close path
+   uses --duration-fast so dismiss feels snappy. R5 vocab.γ gap row 6;
+   consumed by W2.A sheet/drawer migration. */
+@utility sheet-animate {
+    @apply data-[state=open]:animate-in data-[state=closed]:animate-out
+           data-[state=open]:fade-in data-[state=closed]:fade-out
+           data-[state=open]:duration-[var(--duration-panel)]
+           data-[state=closed]:duration-[var(--duration-fast)];
+}
+
+/* ── Modal/dialog scrim ──
+   Substrate-aware backdrop tint at the canonical 50% weight. Pair the
+   `-strong` and `-subtle` variants directly via `bg-overlay-scrim-strong`
+   etc. (Tailwind v4 generates those from the @theme bridges). R5
+   vocab.γ gap row 2; consumed by W2.A overlay convergence (Dialog, Sheet,
+   Drawer, ConfirmDialog, dialog scroll backdrop). */
+@utility overlay-scrim {
+    background-color: var(--overlay-scrim);
+}
+
 /* ── Reduced motion: nuanced — preserve opacity, remove spatial motion ── */
 @media (prefers-reduced-motion: reduce) {
     *:not([data-allow-motion]) {
