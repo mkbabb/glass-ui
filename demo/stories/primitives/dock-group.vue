@@ -3,14 +3,28 @@ import StoryPage from "../StoryPage.vue";
 import { DockGroup } from "@/components/custom/dock-group";
 import { DockIconButton, DockTabButton } from "@/components/custom/dock";
 import MetricBadge from "@/components/custom/metric-badge/MetricBadge.vue";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 import { ArrowLeft, RotateCcw, Square, Settings } from "lucide-vue-next";
 </script>
 
 <template>
     <StoryPage>
+        <CreamSurface tone="warm" class="relative overflow-hidden">
+            <DisplayHero size="display-3" variation="wonk" class="mt-2 mb-2">
+                Instrument-cluster shelf
+            </DisplayHero>
+            <p class="text-prose max-w-prose text-foreground/80">
+                A pill-row substrate for dock-tier consumers. Two densities, mixed tiers — metric
+                badges, icon buttons, and tab buttons cohabit on a single chassis strip.
+            </p>
+            <FlourishDivider tone="section-5" class="mt-[var(--space-phi-3)]" />
+        </CreamSurface>
+
         <!-- Default density · pill row -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">density · compact (default)</p>
+            <p class="section-label" :style="{ color: 'var(--section-color-5)' }">density · compact (default)</p>
             <DockGroup>
                 <MetricBadge :amount="12" unit="ms" size="md" />
                 <MetricBadge :amount="84" unit="Mbps" size="md" />
@@ -21,7 +35,7 @@ import { ArrowLeft, RotateCcw, Square, Settings } from "lucide-vue-next";
 
         <!-- Audacious density · chassis-strip pill row -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">density · audacious</p>
+            <p class="section-label" :style="{ color: 'var(--section-color-5)' }">density · audacious</p>
             <DockGroup density="audacious">
                 <MetricBadge :amount="12" unit="ms" size="lg" />
                 <MetricBadge :amount="84" unit="Mbps" size="lg" />
@@ -32,7 +46,7 @@ import { ArrowLeft, RotateCcw, Square, Settings } from "lucide-vue-next";
 
         <!-- Mixed cluster · icon buttons in a shelf -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">mixed cluster · icon buttons (data-tier=&quot;secondary&quot;)</p>
+            <p class="section-label" :style="{ color: 'var(--section-color-5)' }">mixed cluster · icon buttons (data-tier=&quot;secondary&quot;)</p>
             <DockGroup>
                 <DockIconButton aria-label="Back" data-tier="secondary">
                     <ArrowLeft class="size-4" :stroke-width="2.5" aria-hidden="true" />
@@ -51,7 +65,7 @@ import { ArrowLeft, RotateCcw, Square, Settings } from "lucide-vue-next";
 
         <!-- Dock-tab tier inside the shelf -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">tab buttons · primary tier inside shelf</p>
+            <p class="section-label" :style="{ color: 'var(--section-color-5)' }">tab buttons · primary tier inside shelf</p>
             <DockGroup density="audacious">
                 <DockTabButton data-tier="primary">Start</DockTabButton>
             </DockGroup>

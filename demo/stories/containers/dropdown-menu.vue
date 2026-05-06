@@ -18,6 +18,9 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 
 const panelLayout = ref<"grid" | "list" | "board">("grid");
 const flags = ref({ minimap: true, overlays: false, rulers: true });
@@ -25,9 +28,34 @@ const flags = ref({ minimap: true, overlays: false, rulers: true });
 
 <template>
     <StoryPage>
-        <div class="grid gap-12">
-            <div class="grid gap-4">
-                <h2 class="font-display text-xl">Composed menu</h2>
+        <CreamSurface tone="warm" class="relative overflow-hidden">
+            <p
+                class="section-label"
+                :style="{ color: 'var(--section-color-8)' }"
+            >
+                § 8 · Anchored menus
+            </p>
+            <DisplayHero
+                size="display-3"
+                variation="wonk"
+                class="mt-[var(--space-phi-1)] mb-[var(--space-phi-2)]"
+                :style="{ color: 'var(--section-color-8)' }"
+            >
+                Trigger and panel
+            </DisplayHero>
+            <p class="text-prose max-w-2xl text-foreground/80">
+                Dropdown menu anchors to a button — radio groups, checkbox items,
+                shortcuts, separators, sub-menus. The full reka-ui menu vocabulary in
+                one trigger, glass-tier surface, kebab text on destructive items.
+            </p>
+            <FlourishDivider
+                tone="section-8"
+                class="my-[var(--space-phi-3)]"
+            />
+
+            <div class="grid gap-12">
+                <div class="grid gap-4">
+                    <h2 class="font-display text-xl">Composed menu</h2>
                 <p class="text-sm text-muted-foreground">
                     One trigger, every subcomponent.
                 </p>
@@ -99,6 +127,7 @@ const flags = ref({ minimap: true, overlays: false, rulers: true });
                     overlays = {{ flags.overlays }} · rulers = {{ flags.rulers }}
                 </div>
             </div>
-        </div>
+            </div>
+        </CreamSurface>
     </StoryPage>
 </template>

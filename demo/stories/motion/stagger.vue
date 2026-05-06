@@ -4,6 +4,9 @@ import StoryPage from "../StoryPage.vue";
 import { computed, ref } from "vue";
 import { useStaggerReveal } from "@/composables/motion";
 import { Button } from "@/components/ui/button";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 import { cn } from "@/utils/cn";
 
 const COUNT = 24;
@@ -34,42 +37,70 @@ function setRef(el: Element | null, idx: number): void {
 
 <template>
     <StoryPage>
-        <div class="flex items-center gap-3">
-            <Button variant="secondary" @click="replay">Replay</Button>
-            <span class="text-small text-muted-foreground">
-                45ms stagger, threshold 0.2, <code class="fira-code">once: false</code>.
-            </span>
-        </div>
+        <CreamSurface tone="cool" class="relative overflow-hidden">
+            <header class="flex flex-col items-center gap-[var(--space-phi-2)] text-center">
+                <p
+                    class="section-label"
+                    :style="{ color: 'var(--section-color-7)' }"
+                >
+                    § 7 · viewport-driven reveal
+                </p>
+                <DisplayHero
+                    size="display-3"
+                    variation="wonk"
+                    :style="{ color: 'var(--section-color-7)' }"
+                >
+                    Stagger
+                </DisplayHero>
+                <p class="text-prose max-w-prose text-foreground/80">
+                    24 tiles fade and slide into place as they cross the threshold, each
+                    delayed by 45ms from its predecessor. Scroll past the gap below — the
+                    reveal earns the depth.
+                </p>
+            </header>
 
-        <!-- Extra spacing so the grid starts below the fold on first paint. -->
-        <div aria-hidden="true" class="h-[40vh]" />
+            <FlourishDivider tone="section-7" class="my-[var(--space-phi-3)]" />
 
-        <section
-            :key="replayKey"
-            class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
-        >
-            <div
-                v-for="item in items"
-                :key="item.key"
-                :ref="(el) => setRef(el as Element | null, item.idx)"
-                :class="
-                    cn(
-                        'flex aspect-square flex-col items-center justify-center gap-1 rounded-panel',
-                        'border border-border bg-card shadow-cartoon',
-                        'transition-all duration-normal ease-out',
-                        revealed[item.idx]
-                            ? 'translate-y-0 opacity-100'
-                            : 'translate-y-4 opacity-0',
-                    )
-                "
-            >
-                <span class="font-display text-display-5 text-foreground">
-                    {{ (item.idx + 1).toString().padStart(2, "0") }}
+            <div class="flex items-center gap-3">
+                <Button variant="secondary" @click="replay">Replay</Button>
+                <span class="text-small text-muted-foreground">
+                    45ms stagger, threshold 0.2, <code class="fira-code">once: false</code>.
                 </span>
-                <span class="text-mono-caption text-muted-foreground">slot</span>
             </div>
-        </section>
 
-        <div aria-hidden="true" class="h-[20vh]" />
+            <!-- Extra spacing so the grid starts below the fold on first paint. -->
+            <div aria-hidden="true" class="h-[40vh]" />
+
+            <section
+                :key="replayKey"
+                class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
+            >
+                <div
+                    v-for="item in items"
+                    :key="item.key"
+                    :ref="(el) => setRef(el as Element | null, item.idx)"
+                    :class="
+                        cn(
+                            'flex aspect-square flex-col items-center justify-center gap-1 rounded-panel',
+                            'border border-border bg-card shadow-cartoon',
+                            'transition-all duration-normal ease-out',
+                            revealed[item.idx]
+                                ? 'translate-y-0 opacity-100'
+                                : 'translate-y-4 opacity-0',
+                        )
+                    "
+                >
+                    <span
+                        class="font-display text-display-5"
+                        :style="{ color: 'var(--section-color-7)' }"
+                    >
+                        {{ (item.idx + 1).toString().padStart(2, "0") }}
+                    </span>
+                    <span class="text-mono-caption text-muted-foreground">slot</span>
+                </div>
+            </section>
+
+            <div aria-hidden="true" class="h-[20vh]" />
+        </CreamSurface>
     </StoryPage>
 </template>

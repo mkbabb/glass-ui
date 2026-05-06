@@ -7,6 +7,9 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 import { Bold, Italic, Underline, Save, Share2 } from "lucide-vue-next";
 
 type Side = "top" | "right" | "bottom" | "left";
@@ -16,9 +19,35 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
 <template>
     <StoryPage>
         <TooltipProvider :delay-duration="150">
-            <div class="grid gap-12">
-                <div class="grid gap-4">
-                    <h2 class="font-display text-xl">Icon toolbar</h2>
+            <CreamSurface tone="warm" class="relative overflow-hidden">
+                <p
+                    class="section-label"
+                    :style="{ color: 'var(--section-color-12)' }"
+                >
+                    § 12 · Hover labels
+                </p>
+                <DisplayHero
+                    size="display-3"
+                    variation="wonk"
+                    class="mt-[var(--space-phi-1)] mb-[var(--space-phi-2)]"
+                    :style="{ color: 'var(--section-color-12)' }"
+                >
+                    Tiny annotations
+                </DisplayHero>
+                <p class="text-prose max-w-2xl text-foreground/80">
+                    Tooltip is the smallest floating primitive — single-line label on
+                    hover. Canonical use is the icon-button toolbar where the glyph
+                    needs words. Sparingly on labelled buttons; only when the tip
+                    carries non-redundant info.
+                </p>
+                <FlourishDivider
+                    tone="section-12"
+                    class="my-[var(--space-phi-3)]"
+                />
+
+                <div class="grid gap-12">
+                    <div class="grid gap-4">
+                        <h2 class="font-display text-xl">Icon toolbar</h2>
                     <p class="text-sm text-muted-foreground">
                         Canonical use case — every icon gets a label.
                     </p>
@@ -102,6 +131,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                     </div>
                 </div>
             </div>
+            </CreamSurface>
         </TooltipProvider>
     </StoryPage>
 </template>

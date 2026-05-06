@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { Badge } from "@/components/ui/badge";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 import { cn } from "@/utils/cn";
 
 const coreVariants: { variant: "default" | "secondary" | "destructive" | "outline"; label: string }[] = [
@@ -19,9 +22,20 @@ const vizBadges: { cls: string; label: string }[] = [
 
 <template>
     <StoryPage>
+        <CreamSurface tone="warm" class="relative overflow-hidden">
+            <DisplayHero size="display-3" variation="wonk" class="mt-2 mb-2">
+                Badge primitives
+            </DisplayHero>
+            <p class="text-prose max-w-prose text-foreground/80">
+                Variant sweep, viz-basis fills, dot leaders, and size overrides — the bare
+                <code class="fira-code">Badge</code> chassis before tone overlays land.
+            </p>
+            <FlourishDivider tone="section-1" class="mt-[var(--space-phi-3)]" />
+        </CreamSurface>
+
         <!-- Built-in variants. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">variants</p>
+            <p class="section-label" :style="{ color: 'var(--section-color-1)' }">variants</p>
             <div class="flex flex-wrap items-center gap-3">
                 <Badge
                     v-for="v in coreVariants"
@@ -35,7 +49,7 @@ const vizBadges: { cls: string; label: string }[] = [
 
         <!-- Viz-basis badges. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">viz-basis via inline fill</p>
+            <p class="section-label" :style="{ color: 'var(--section-color-1)' }">viz-basis via inline fill</p>
             <div class="flex flex-wrap items-center gap-3">
                 <Badge
                     v-for="v in vizBadges"
@@ -49,10 +63,13 @@ const vizBadges: { cls: string; label: string }[] = [
 
         <!-- Icon + text compositions. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">with leading dot</p>
+            <p class="section-label" :style="{ color: 'var(--section-color-1)' }">with leading dot</p>
             <div class="flex flex-wrap items-center gap-3">
                 <Badge variant="outline" class="gap-1.5">
-                    <span class="h-1.5 w-1.5 rounded-full bg-viz-fourier" />
+                    <span
+                        class="h-1.5 w-1.5 rounded-full"
+                        :style="{ background: 'var(--section-color-1)' }"
+                    />
                     Active
                 </Badge>
                 <Badge variant="outline" class="gap-1.5">
@@ -72,7 +89,7 @@ const vizBadges: { cls: string; label: string }[] = [
 
         <!-- Sizes via utility overrides. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">size overrides</p>
+            <p class="section-label" :style="{ color: 'var(--section-color-1)' }">size overrides</p>
             <div class="flex flex-wrap items-center gap-3">
                 <Badge class="px-1.5 py-0 text-micro">micro</Badge>
                 <Badge>default</Badge>

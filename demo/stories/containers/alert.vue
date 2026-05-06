@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 import {
     Info,
     CircleAlert,
@@ -12,7 +15,33 @@ import {
 
 <template>
     <StoryPage>
-        <div class="grid gap-8">
+        <CreamSurface tone="warm" class="relative overflow-hidden">
+            <p
+                class="section-label"
+                :style="{ color: 'var(--section-color-2)' }"
+            >
+                § 2 · Banners
+            </p>
+            <DisplayHero
+                size="display-3"
+                variation="wonk"
+                class="mt-[var(--space-phi-1)] mb-[var(--space-phi-2)]"
+                :style="{ color: 'var(--section-color-2)' }"
+            >
+                Heads-up notices
+            </DisplayHero>
+            <p class="text-prose max-w-2xl text-foreground/80">
+                Alerts thread an icon column, a title rung, and prose copy through a
+                CVA grid. Default tone uses muted ink; destructive / warn / info /
+                success tint the border, the title, and the icon together so the
+                semantic axis collapses to one variant.
+            </p>
+            <FlourishDivider
+                tone="section-2"
+                class="my-[var(--space-phi-3)]"
+            />
+
+            <div class="grid gap-8">
             <div class="grid gap-3">
                 <h2 class="font-display text-xl">Default</h2>
                 <Alert>
@@ -91,6 +120,7 @@ import {
                     </AlertDescription>
                 </Alert>
             </div>
-        </div>
+            </div>
+        </CreamSurface>
     </StoryPage>
 </template>

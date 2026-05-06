@@ -8,14 +8,43 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { IconTooltip } from "@/components/custom/icon-tooltip";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 import { Info, CircleHelp, Sparkles } from "lucide-vue-next";
 </script>
 
 <template>
     <StoryPage>
-        <div class="grid gap-12">
-            <div class="grid gap-4">
-                <h2 class="font-display text-xl">Profile preview</h2>
+        <CreamSurface tone="warm" class="relative overflow-hidden">
+            <p
+                class="section-label"
+                :style="{ color: 'var(--section-color-9)' }"
+            >
+                § 9 · Hover preview
+            </p>
+            <DisplayHero
+                size="display-3"
+                variation="wonk"
+                class="mt-[var(--space-phi-1)] mb-[var(--space-phi-2)]"
+                :style="{ color: 'var(--section-color-9)' }"
+            >
+                Peek without commit
+            </DisplayHero>
+            <p class="text-prose max-w-2xl text-foreground/80">
+                Hover-card is the inline-link preview — author profile on @-mention,
+                metric explainer on a stat, attribution pop on a citation. Tunes
+                delay-duration to feel like a peek; the IconTooltip preset shrinks
+                that to label-only Fraunces body.
+            </p>
+            <FlourishDivider
+                tone="section-9"
+                class="my-[var(--space-phi-3)]"
+            />
+
+            <div class="grid gap-12">
+                <div class="grid gap-4">
+                    <h2 class="font-display text-xl">Profile preview</h2>
                 <p class="text-sm text-muted-foreground">
                     Hover the underlined trigger.
                 </p>
@@ -80,6 +109,7 @@ import { Info, CircleHelp, Sparkles } from "lucide-vue-next";
                     </IconTooltip>
                 </div>
             </div>
-        </div>
+            </div>
+        </CreamSurface>
     </StoryPage>
 </template>

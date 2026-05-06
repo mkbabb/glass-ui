@@ -7,6 +7,9 @@ import {
     CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Button } from "@/components/ui/button";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 import { ChevronDown } from "lucide-vue-next";
 
 const open = ref(true);
@@ -14,9 +17,34 @@ const open = ref(true);
 
 <template>
     <StoryPage>
-        <div class="grid gap-12">
-            <div class="grid gap-4">
-                <h2 class="font-display text-xl">Basic</h2>
+        <CreamSurface tone="warm" class="relative overflow-hidden">
+            <p
+                class="section-label"
+                :style="{ color: 'var(--section-color-4)' }"
+            >
+                § 4 · Reveal
+            </p>
+            <DisplayHero
+                size="display-3"
+                variation="wonk"
+                class="mt-[var(--space-phi-1)] mb-[var(--space-phi-2)]"
+                :style="{ color: 'var(--section-color-4)' }"
+            >
+                Show more
+            </DisplayHero>
+            <p class="text-prose max-w-2xl text-foreground/80">
+                Collapsible — a single trigger + a single content panel. No
+                accordion grouping; just an inline overflow primitive that toggles
+                its child without re-mount.
+            </p>
+            <FlourishDivider
+                tone="section-4"
+                class="my-[var(--space-phi-3)]"
+            />
+
+            <div class="grid gap-12">
+                <div class="grid gap-4">
+                    <h2 class="font-display text-xl">Basic</h2>
                 <p class="text-sm text-muted-foreground">
                     Open — <code class="font-mono text-xs">{{ open }}</code>.
                 </p>
@@ -92,6 +120,7 @@ const open = ref(true);
                     </CollapsibleTrigger>
                 </Collapsible>
             </div>
-        </div>
+            </div>
+        </CreamSurface>
     </StoryPage>
 </template>

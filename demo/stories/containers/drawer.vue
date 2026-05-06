@@ -12,6 +12,9 @@ import {
     DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 
 const snap = ref<number | string | null>(0.4);
 const snapPoints = [0.25, 0.4, 0.7, 1] as const;
@@ -19,9 +22,34 @@ const snapPoints = [0.25, 0.4, 0.7, 1] as const;
 
 <template>
     <StoryPage>
-        <div class="grid gap-12">
-            <div class="grid gap-4">
-                <h2 class="font-display text-xl">Snap points</h2>
+        <CreamSurface tone="warm" class="relative overflow-hidden">
+            <p
+                class="section-label"
+                :style="{ color: 'var(--section-color-7)' }"
+            >
+                § 7 · Bottom sheet
+            </p>
+            <DisplayHero
+                size="display-3"
+                variation="wonk"
+                class="mt-[var(--space-phi-1)] mb-[var(--space-phi-2)]"
+                :style="{ color: 'var(--section-color-7)' }"
+            >
+                Snap from below
+            </DisplayHero>
+            <p class="text-prose max-w-2xl text-foreground/80">
+                Drawer rises from the bottom edge — snap-points, drag handle, optional
+                non-modal mode. Powered by vaul-vue and tuned to the cartoon-shadow
+                tier so the lift feels canon, not generic mobile.
+            </p>
+            <FlourishDivider
+                tone="section-7"
+                class="my-[var(--space-phi-3)]"
+            />
+
+            <div class="grid gap-12">
+                <div class="grid gap-4">
+                    <h2 class="font-display text-xl">Snap points</h2>
                 <p class="text-sm text-muted-foreground">
                     Four snap positions: 25%, 40%, 70%, 100%. Current snap —
                     <code class="font-mono text-xs">{{ String(snap) }}</code>.
@@ -97,6 +125,7 @@ const snapPoints = [0.25, 0.4, 0.7, 1] as const;
                     </Drawer>
                 </div>
             </div>
-        </div>
+            </div>
+        </CreamSurface>
     </StoryPage>
 </template>

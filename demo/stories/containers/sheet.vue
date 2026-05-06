@@ -14,6 +14,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 
 type Side = "top" | "right" | "bottom" | "left";
 const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
@@ -21,9 +24,34 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
 
 <template>
     <StoryPage>
-        <div class="grid gap-12">
-            <div class="grid gap-4">
-                <h2 class="font-display text-xl">Four sides</h2>
+        <CreamSurface tone="warm" class="relative overflow-hidden">
+            <p
+                class="section-label"
+                :style="{ color: 'var(--section-color-11)' }"
+            >
+                § 11 · Edge panels
+            </p>
+            <DisplayHero
+                size="display-3"
+                variation="wonk"
+                class="mt-[var(--space-phi-1)] mb-[var(--space-phi-2)]"
+                :style="{ color: 'var(--section-color-11)' }"
+            >
+                Slides from the side
+            </DisplayHero>
+            <p class="text-prose max-w-2xl text-foreground/80">
+                Sheet enters from any of four edges — top / right / bottom / left. The
+                canonical detail-pane: multi-field inspector, configurator, side editor.
+                Hosts the demo configurator on the right rail behind the comma shortcut.
+            </p>
+            <FlourishDivider
+                tone="section-11"
+                class="my-[var(--space-phi-3)]"
+            />
+
+            <div class="grid gap-12">
+                <div class="grid gap-4">
+                    <h2 class="font-display text-xl">Four sides</h2>
                 <p class="text-sm text-muted-foreground">
                     Each trigger opens its own sheet — identical body, different
                     <code class="font-mono text-xs">side</code> prop.
@@ -89,6 +117,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                     </li>
                 </ul>
             </div>
-        </div>
+            </div>
+        </CreamSurface>
     </StoryPage>
 </template>

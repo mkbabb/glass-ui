@@ -6,6 +6,9 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 
 const faq = [
     {
@@ -33,9 +36,34 @@ const faq = [
 
 <template>
     <StoryPage>
-        <div class="grid gap-12">
-            <div class="grid gap-4">
-                <h2 class="font-display text-xl">Single</h2>
+        <CreamSurface tone="warm" class="relative overflow-hidden">
+            <p
+                class="section-label"
+                :style="{ color: 'var(--section-color-1)' }"
+            >
+                § 1 · Disclosure
+            </p>
+            <DisplayHero
+                size="display-3"
+                variation="wonk"
+                class="mt-[var(--space-phi-1)] mb-[var(--space-phi-2)]"
+                :style="{ color: 'var(--section-color-1)' }"
+            >
+                Folded answers
+            </DisplayHero>
+            <p class="text-prose max-w-2xl text-foreground/80">
+                Accordion — single or multiple — exposes folded prose with a hairline
+                row rule. The trigger rotates its caret on open, the content reveals
+                with a tuned cubic-bezier, and the keyboard model is reka-ui canon.
+            </p>
+            <FlourishDivider
+                tone="section-1"
+                class="my-[var(--space-phi-3)]"
+            />
+
+            <div class="grid gap-12">
+                <div class="grid gap-4">
+                    <h2 class="font-display text-xl">Single</h2>
                 <p class="text-sm text-muted-foreground">
                     <code class="font-mono text-xs">type="single"</code> with
                     <code class="font-mono text-xs">collapsible</code> allows
@@ -73,6 +101,7 @@ const faq = [
                     </AccordionItem>
                 </Accordion>
             </div>
-        </div>
+            </div>
+        </CreamSurface>
     </StoryPage>
 </template>

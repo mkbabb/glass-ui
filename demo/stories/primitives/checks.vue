@@ -5,6 +5,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 
 const tos = ref(true);
 const marketing = ref(false);
@@ -19,8 +22,19 @@ const airplane = ref(false);
 
 <template>
     <StoryPage>
+        <CreamSurface tone="warm" class="relative overflow-hidden">
+            <DisplayHero size="display-3" variation="wonk" class="mt-2 mb-2">
+                Three ways to say yes
+            </DisplayHero>
+            <p class="text-prose max-w-prose text-foreground/80">
+                Checkbox for terms, radio for one-of-N, switch for instant effect — and the
+                indeterminate / disabled states each contract honours.
+            </p>
+            <FlourishDivider tone="section-3" class="mt-[var(--space-phi-3)]" />
+        </CreamSurface>
+
         <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Checkbox</h2>
+            <h2 class="text-subheading" :style="{ color: 'var(--section-color-3)' }">Checkbox</h2>
             <p class="text-small text-muted-foreground">
                 Standard, indeterminate, and disabled.
             </p>
@@ -45,7 +59,7 @@ const airplane = ref(false);
         </section>
 
         <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">RadioGroup</h2>
+            <h2 class="text-subheading" :style="{ color: 'var(--section-color-3)' }">RadioGroup</h2>
             <p class="text-small text-muted-foreground">
                 One-of-N. Inline layout with labels for hit-targets.
             </p>
@@ -76,7 +90,7 @@ const airplane = ref(false);
         </section>
 
         <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Switch</h2>
+            <h2 class="text-subheading" :style="{ color: 'var(--section-color-3)' }">Switch</h2>
             <p class="text-small text-muted-foreground">
                 Immediate-effect toggle. Prefer over checkbox when the change is instant.
             </p>

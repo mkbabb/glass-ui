@@ -8,6 +8,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 
 type Side = "top" | "right" | "bottom" | "left";
 const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
@@ -15,9 +18,34 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
 
 <template>
     <StoryPage>
-        <div class="grid gap-12">
-            <div class="grid gap-4">
-                <h2 class="font-display text-xl">Form pod</h2>
+        <CreamSurface tone="warm" class="relative overflow-hidden">
+            <p
+                class="section-label"
+                :style="{ color: 'var(--section-color-10)' }"
+            >
+                § 10 · Form pods
+            </p>
+            <DisplayHero
+                size="display-3"
+                variation="wonk"
+                class="mt-[var(--space-phi-1)] mb-[var(--space-phi-2)]"
+                :style="{ color: 'var(--section-color-10)' }"
+            >
+                Anchored editors
+            </DisplayHero>
+            <p class="text-prose max-w-2xl text-foreground/80">
+                Popover floats a small, click-anchored panel — typical use is a two-or-three-field
+                editor that doesn't deserve a dialog. Side prop sets the preferred edge;
+                Floating UI flips when the viewport is tight.
+            </p>
+            <FlourishDivider
+                tone="section-10"
+                class="my-[var(--space-phi-3)]"
+            />
+
+            <div class="grid gap-12">
+                <div class="grid gap-4">
+                    <h2 class="font-display text-xl">Form pod</h2>
                 <p class="text-sm text-muted-foreground">
                     A typical two-field editor anchored to a button.
                 </p>
@@ -107,6 +135,7 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                     </Popover>
                 </div>
             </div>
-        </div>
+            </div>
+        </CreamSurface>
     </StoryPage>
 </template>

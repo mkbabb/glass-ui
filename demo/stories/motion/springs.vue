@@ -8,6 +8,9 @@ import type { TimingFunction } from "@mkbabb/keyframes.js";
 import { useSpringOrchestrator } from "@/composables/motion";
 import type { SpringSnapshot } from "@/composables/motion";
 import { Button } from "@/components/ui/button";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 import { Label } from "@/components/ui/label";
 import {
     Select,
@@ -105,79 +108,104 @@ function reset(): void {
 
 <template>
     <StoryPage>
-        <section class="flex flex-col gap-6">
-            <!-- Controls -->
-            <div class="flex flex-wrap items-end gap-4">
-                <div class="flex flex-col gap-2 w-56">
-                    <Label for="spring-preset">Preset</Label>
-                    <Select v-model="preset">
-                        <SelectTrigger id="spring-preset">
-                            <SelectValue placeholder="Pick a preset" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem
-                                v-for="(p, id) in presets"
-                                :key="id"
-                                :value="id"
-                            >
-                                {{ p.label }}
-                            </SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
-
-                <Button variant="default" @click="play">Play</Button>
-                <Button variant="secondary" @click="reset">Reset</Button>
-
-                <p class="text-small text-muted-foreground ml-auto max-w-xs">
-                    {{ presets[preset].blurb }}
+        <CreamSurface tone="warm" class="relative overflow-hidden">
+            <header class="flex flex-col items-center gap-[var(--space-phi-2)] text-center">
+                <p
+                    class="section-label"
+                    :style="{ color: 'var(--section-color-2)' }"
+                >
+                    § 2 · damped harmonic motion
                 </p>
-            </div>
+                <DisplayHero
+                    size="display-3"
+                    variation="wonk"
+                    :style="{ color: 'var(--section-color-2)' }"
+                >
+                    Spring physics
+                </DisplayHero>
+                <p class="text-prose max-w-prose text-foreground/80">
+                    Closed-form damped-spring positions parameterized by stiffness and damping
+                    drive translateX, rotate, and hue from one snapshot to another. Four
+                    canon presets — and the math underneath stays first-class.
+                </p>
+            </header>
 
-            <!-- Stage -->
-            <div
-                :class="
-                    cn(
-                        'relative h-48 overflow-hidden rounded-card border border-border/60 bg-background/40',
-                        'paper-grain-overlay',
-                    )
-                "
-            >
+            <FlourishDivider tone="section-2" class="my-[var(--space-phi-3)]" />
+
+            <section class="flex flex-col gap-6">
+                <!-- Controls -->
+                <div class="flex flex-wrap items-end gap-4">
+                    <div class="flex flex-col gap-2 w-56">
+                        <Label for="spring-preset">Preset</Label>
+                        <Select v-model="preset">
+                            <SelectTrigger id="spring-preset">
+                                <SelectValue placeholder="Pick a preset" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem
+                                    v-for="(p, id) in presets"
+                                    :key="id"
+                                    :value="id"
+                                >
+                                    {{ p.label }}
+                                </SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+
+                    <Button variant="default" @click="play">Play</Button>
+                    <Button variant="secondary" @click="reset">Reset</Button>
+
+                    <p class="text-small text-muted-foreground ml-auto max-w-xs">
+                        {{ presets[preset].blurb }}
+                    </p>
+                </div>
+
+                <!-- Stage -->
                 <div
-                    ref="card"
                     :class="
                         cn(
-                            'absolute left-6 top-1/2 h-20 w-28 -translate-y-1/2 rounded-panel',
-                            'flex items-center justify-center text-small font-medium text-white',
-                            'shadow-cartoon',
+                            'relative h-48 overflow-hidden rounded-card border border-border/60 bg-background/40',
+                            'paper-grain-overlay',
                         )
                     "
-                    :style="{
-                        transform:
-                            'translate(var(--demo-x, 0px), -50%) rotate(var(--demo-rotate, 0deg))',
-                        backgroundColor: 'hsl(var(--demo-hue, 12) 70% 52%)',
-                    }"
                 >
-                    spring
+                    <div
+                        ref="card"
+                        :class="
+                            cn(
+                                'absolute left-6 top-1/2 h-20 w-28 -translate-y-1/2 rounded-panel',
+                                'flex items-center justify-center text-small font-medium text-white',
+                                'shadow-cartoon',
+                            )
+                        "
+                        :style="{
+                            transform:
+                                'translate(var(--demo-x, 0px), -50%) rotate(var(--demo-rotate, 0deg))',
+                            backgroundColor: 'hsl(var(--demo-hue, 12) 70% 52%)',
+                        }"
+                    >
+                        spring
+                    </div>
                 </div>
-            </div>
 
-            <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
-                <div
-                    v-for="(label, key) in { x: 'translateX', rotate: 'rotate', hue: 'hue' }"
-                    :key="key"
-                    :class="
-                        cn(
-                            'flex flex-col gap-1 rounded-panel border border-border/60 bg-card/60 p-3',
-                        )
-                    "
-                >
-                    <span class="text-mono-caption text-muted-foreground">{{ label }}</span>
-                    <span class="fira-code text-small text-foreground">
-                        {{ from[key as Keys] }} &rarr; {{ to[key as Keys] }}
-                    </span>
+                <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
+                    <div
+                        v-for="(label, key) in { x: 'translateX', rotate: 'rotate', hue: 'hue' }"
+                        :key="key"
+                        :class="
+                            cn(
+                                'flex flex-col gap-1 rounded-panel border border-border/60 bg-card/60 p-3',
+                            )
+                        "
+                    >
+                        <span class="text-mono-caption text-muted-foreground">{{ label }}</span>
+                        <span class="fira-code text-small text-foreground">
+                            {{ from[key as Keys] }} &rarr; {{ to[key as Keys] }}
+                        </span>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </CreamSurface>
     </StoryPage>
 </template>

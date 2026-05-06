@@ -2,6 +2,9 @@
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Card, CardContent } from "@/components/ui/card";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 import { Separator } from "@/components/ui/separator";
 import {
     LabeledInput,
@@ -69,189 +72,218 @@ const groups: Record<string, Group> = {
 
 <template>
     <StoryPage>
-        <div class="flex flex-col gap-10 max-w-3xl">
-            <!-- Account -->
-            <section class="flex flex-col gap-4">
-                <div class="flex flex-col gap-1">
-                    <span
-                        class="section-label text-admin-label"
-                        :style="{ color: `var(--section-color-${groups.account.section}, inherit)` }"
-                    >
-                        {{ groups.account.label }}
-                    </span>
-                    <p class="text-small text-muted-foreground">{{ groups.account.blurb }}</p>
-                </div>
-                <Card class="border-2 border-foreground/10">
-                    <CardContent class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]">
-                        <LabeledInput
-                            v-model="displayName"
-                            label="Display name"
-                            tooltip="Shown on your profile and in comments."
-                        />
-                        <LabeledInput
-                            v-model="email"
-                            label="Email"
-                            type="email"
-                            tooltip="Used for sign-in and account recovery."
-                        />
-                    </CardContent>
-                </Card>
-            </section>
+        <CreamSurface tone="warm" class="relative overflow-hidden">
+            <header class="flex flex-col items-center gap-[var(--space-phi-2)] text-center">
+                <p
+                    class="section-label"
+                    :style="{ color: 'var(--section-color-11)' }"
+                >
+                    § 11 · preferences
+                </p>
+                <DisplayHero
+                    size="display-mega"
+                    variation="wonk"
+                    :style="{ color: 'var(--section-color-11)' }"
+                >
+                    Settings
+                </DisplayHero>
+                <p class="text-prose max-w-prose text-foreground/80">
+                    Four labelled-field groups — account, appearance, notifications,
+                    accessibility — each carrying its own section accent. The
+                    <code class="fira-code">LabeledInput</code> /
+                    <code class="fira-code">LabeledSelect</code> /
+                    <code class="fira-code">LabeledSlider</code> /
+                    <code class="fira-code">LabeledSwitch</code> family is the gesture;
+                    the chassis stays out of the way.
+                </p>
+            </header>
 
-            <Separator />
+            <FlourishDivider tone="section-11" class="my-[var(--space-phi-3)]" />
 
-            <!-- Appearance -->
-            <section class="flex flex-col gap-4">
-                <div class="flex flex-col gap-1">
-                    <span
-                        class="section-label text-admin-label"
-                        :style="{
-                            color: `var(--section-color-${groups.appearance.section}, inherit)`,
-                        }"
-                    >
-                        {{ groups.appearance.label }}
-                    </span>
-                    <p class="text-small text-muted-foreground">{{ groups.appearance.blurb }}</p>
-                </div>
-                <Card class="border-2 border-foreground/10">
-                    <CardContent
-                        :class="cn(
-                            'grid grid-cols-[minmax(10rem,14rem)_1fr] items-center',
-                            'gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]',
-                        )"
-                    >
-                        <LabeledSelect
-                            :model-value="theme"
-                            :is-open="themeOpen"
-                            :items="themeOptions"
-                            label="Theme"
-                            tooltip="Controls the overall colour and contrast."
-                            @update:model-value="(v: string) => (theme = v as typeof themeOptions[number])"
-                            @update:open="(v: boolean) => (themeOpen = v)"
-                        />
-                        <LabeledSelect
-                            :model-value="bodyFont"
-                            :is-open="bodyFontOpen"
-                            :items="fontOptions"
-                            label="Body font"
-                            tooltip="Typeface used for long-form reading."
-                            @update:model-value="(v: string) => (bodyFont = v as typeof fontOptions[number])"
-                            @update:open="(v: boolean) => (bodyFontOpen = v)"
-                        />
-                        <LabeledSelect
-                            :model-value="density"
-                            :is-open="densityOpen"
-                            :items="densityOptions"
-                            label="Density"
-                            tooltip="Padding scale for every container."
-                            @update:model-value="(v: string) => (density = v as typeof densityOptions[number])"
-                            @update:open="(v: boolean) => (densityOpen = v)"
-                        />
-                        <LabeledSlider
-                            v-model="baseSize"
-                            label="Base size"
-                            tooltip="Root font size in pixels."
-                            :min="12"
-                            :max="20"
-                            :step="1"
-                        />
-                        <LabeledSlider
-                            v-model="radius"
-                            label="Radius"
-                            tooltip="Corner rounding in pixels."
-                            :min="0"
-                            :max="16"
-                            :step="1"
-                        />
-                        <LabeledSlider
-                            v-model="grain"
-                            label="Grain"
-                            tooltip="Paper-texture opacity × 100."
-                            :min="0"
-                            :max="10"
-                            :step="0.5"
-                        />
-                        <LabeledSwitch
-                            :checked="cartoonShadow"
-                            label="Cartoon shadows"
-                            tooltip="3px offset card shadow signature."
-                            @update:checked="(v: boolean) => (cartoonShadow = v)"
-                        />
-                        <LabeledSwitch
-                            :checked="paperGrain"
-                            label="Paper underpaint"
-                            tooltip="SVG turbulence layer fixed behind content."
-                            @update:checked="(v: boolean) => (paperGrain = v)"
-                        />
-                    </CardContent>
-                </Card>
-            </section>
+            <div class="flex flex-col gap-10 max-w-3xl mx-auto">
+                <!-- Account -->
+                <section class="flex flex-col gap-4">
+                    <div class="flex flex-col gap-1">
+                        <span
+                            class="section-label text-admin-label"
+                            :style="{ color: `var(--section-color-${groups.account.section}, inherit)` }"
+                        >
+                            {{ groups.account.label }}
+                        </span>
+                        <p class="text-small text-muted-foreground">{{ groups.account.blurb }}</p>
+                    </div>
+                    <Card class="border-2 border-foreground/10">
+                        <CardContent class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]">
+                            <LabeledInput
+                                v-model="displayName"
+                                label="Display name"
+                                tooltip="Shown on your profile and in comments."
+                            />
+                            <LabeledInput
+                                v-model="email"
+                                label="Email"
+                                type="email"
+                                tooltip="Used for sign-in and account recovery."
+                            />
+                        </CardContent>
+                    </Card>
+                </section>
 
-            <Separator />
+                <Separator />
 
-            <!-- Notifications -->
-            <section class="flex flex-col gap-4">
-                <div class="flex flex-col gap-1">
-                    <span
-                        class="section-label text-admin-label"
-                        :style="{
-                            color: `var(--section-color-${groups.notifications.section}, inherit)`,
-                        }"
-                    >
-                        {{ groups.notifications.label }}
-                    </span>
-                    <p class="text-small text-muted-foreground">{{ groups.notifications.blurb }}</p>
-                </div>
-                <Card class="border-2 border-foreground/10">
-                    <CardContent class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]">
-                        <LabeledSwitch
-                            :checked="emailAlerts"
-                            label="Email alerts"
-                            tooltip="Deploys, incidents, and security events."
-                            @update:checked="(v: boolean) => (emailAlerts = v)"
-                        />
-                        <LabeledSwitch
-                            :checked="desktopNotifs"
-                            label="Desktop notifications"
-                            tooltip="Native OS notifications while the app is open."
-                            @update:checked="(v: boolean) => (desktopNotifs = v)"
-                        />
-                        <LabeledSwitch
-                            :checked="weeklyDigest"
-                            label="Weekly digest"
-                            tooltip="Friday morning summary of the week's activity."
-                            @update:checked="(v: boolean) => (weeklyDigest = v)"
-                        />
-                    </CardContent>
-                </Card>
-            </section>
+                <!-- Appearance -->
+                <section class="flex flex-col gap-4">
+                    <div class="flex flex-col gap-1">
+                        <span
+                            class="section-label text-admin-label"
+                            :style="{
+                                color: `var(--section-color-${groups.appearance.section}, inherit)`,
+                            }"
+                        >
+                            {{ groups.appearance.label }}
+                        </span>
+                        <p class="text-small text-muted-foreground">{{ groups.appearance.blurb }}</p>
+                    </div>
+                    <Card class="border-2 border-foreground/10">
+                        <CardContent
+                            :class="cn(
+                                'grid grid-cols-[minmax(10rem,14rem)_1fr] items-center',
+                                'gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]',
+                            )"
+                        >
+                            <LabeledSelect
+                                :model-value="theme"
+                                :is-open="themeOpen"
+                                :items="themeOptions"
+                                label="Theme"
+                                tooltip="Controls the overall colour and contrast."
+                                @update:model-value="(v: string) => (theme = v as typeof themeOptions[number])"
+                                @update:open="(v: boolean) => (themeOpen = v)"
+                            />
+                            <LabeledSelect
+                                :model-value="bodyFont"
+                                :is-open="bodyFontOpen"
+                                :items="fontOptions"
+                                label="Body font"
+                                tooltip="Typeface used for long-form reading."
+                                @update:model-value="(v: string) => (bodyFont = v as typeof fontOptions[number])"
+                                @update:open="(v: boolean) => (bodyFontOpen = v)"
+                            />
+                            <LabeledSelect
+                                :model-value="density"
+                                :is-open="densityOpen"
+                                :items="densityOptions"
+                                label="Density"
+                                tooltip="Padding scale for every container."
+                                @update:model-value="(v: string) => (density = v as typeof densityOptions[number])"
+                                @update:open="(v: boolean) => (densityOpen = v)"
+                            />
+                            <LabeledSlider
+                                v-model="baseSize"
+                                label="Base size"
+                                tooltip="Root font size in pixels."
+                                :min="12"
+                                :max="20"
+                                :step="1"
+                            />
+                            <LabeledSlider
+                                v-model="radius"
+                                label="Radius"
+                                tooltip="Corner rounding in pixels."
+                                :min="0"
+                                :max="16"
+                                :step="1"
+                            />
+                            <LabeledSlider
+                                v-model="grain"
+                                label="Grain"
+                                tooltip="Paper-texture opacity × 100."
+                                :min="0"
+                                :max="10"
+                                :step="0.5"
+                            />
+                            <LabeledSwitch
+                                :checked="cartoonShadow"
+                                label="Cartoon shadows"
+                                tooltip="3px offset card shadow signature."
+                                @update:checked="(v: boolean) => (cartoonShadow = v)"
+                            />
+                            <LabeledSwitch
+                                :checked="paperGrain"
+                                label="Paper underpaint"
+                                tooltip="SVG turbulence layer fixed behind content."
+                                @update:checked="(v: boolean) => (paperGrain = v)"
+                            />
+                        </CardContent>
+                    </Card>
+                </section>
 
-            <Separator />
+                <Separator />
 
-            <!-- Accessibility -->
-            <section class="flex flex-col gap-4">
-                <div class="flex flex-col gap-1">
-                    <span
-                        class="section-label text-admin-label"
-                        :style="{
-                            color: `var(--section-color-${groups.accessibility.section}, inherit)`,
-                        }"
-                    >
-                        {{ groups.accessibility.label }}
-                    </span>
-                    <p class="text-small text-muted-foreground">{{ groups.accessibility.blurb }}</p>
-                </div>
-                <Card class="border-2 border-foreground/10">
-                    <CardContent class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]">
-                        <LabeledSwitch
-                            :checked="reducedMotion"
-                            label="Reduce motion"
-                            tooltip="Override prefers-reduced-motion for this session."
-                            @update:checked="(v: boolean) => (reducedMotion = v)"
-                        />
-                    </CardContent>
-                </Card>
-            </section>
-        </div>
+                <!-- Notifications -->
+                <section class="flex flex-col gap-4">
+                    <div class="flex flex-col gap-1">
+                        <span
+                            class="section-label text-admin-label"
+                            :style="{
+                                color: `var(--section-color-${groups.notifications.section}, inherit)`,
+                            }"
+                        >
+                            {{ groups.notifications.label }}
+                        </span>
+                        <p class="text-small text-muted-foreground">{{ groups.notifications.blurb }}</p>
+                    </div>
+                    <Card class="border-2 border-foreground/10">
+                        <CardContent class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]">
+                            <LabeledSwitch
+                                :checked="emailAlerts"
+                                label="Email alerts"
+                                tooltip="Deploys, incidents, and security events."
+                                @update:checked="(v: boolean) => (emailAlerts = v)"
+                            />
+                            <LabeledSwitch
+                                :checked="desktopNotifs"
+                                label="Desktop notifications"
+                                tooltip="Native OS notifications while the app is open."
+                                @update:checked="(v: boolean) => (desktopNotifs = v)"
+                            />
+                            <LabeledSwitch
+                                :checked="weeklyDigest"
+                                label="Weekly digest"
+                                tooltip="Friday morning summary of the week's activity."
+                                @update:checked="(v: boolean) => (weeklyDigest = v)"
+                            />
+                        </CardContent>
+                    </Card>
+                </section>
+
+                <Separator />
+
+                <!-- Accessibility -->
+                <section class="flex flex-col gap-4">
+                    <div class="flex flex-col gap-1">
+                        <span
+                            class="section-label text-admin-label"
+                            :style="{
+                                color: `var(--section-color-${groups.accessibility.section}, inherit)`,
+                            }"
+                        >
+                            {{ groups.accessibility.label }}
+                        </span>
+                        <p class="text-small text-muted-foreground">{{ groups.accessibility.blurb }}</p>
+                    </div>
+                    <Card class="border-2 border-foreground/10">
+                        <CardContent class="grid grid-cols-[minmax(10rem,14rem)_1fr] items-center gap-x-[calc(1.5rem_+_var(--density-gap,0rem))] gap-y-[calc(1.25rem_+_var(--density-gap,0rem))] p-[calc(1.5rem_+_var(--density-pad,0rem))]">
+                            <LabeledSwitch
+                                :checked="reducedMotion"
+                                label="Reduce motion"
+                                tooltip="Override prefers-reduced-motion for this session."
+                                @update:checked="(v: boolean) => (reducedMotion = v)"
+                            />
+                        </CardContent>
+                    </Card>
+                </section>
+            </div>
+        </CreamSurface>
     </StoryPage>
 </template>

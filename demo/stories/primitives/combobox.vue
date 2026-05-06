@@ -14,6 +14,9 @@ import {
     ComboboxTrigger,
 } from "@/components/ui/combobox";
 import { Label } from "@/components/ui/label";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 
 interface Option {
     value: string;
@@ -37,8 +40,19 @@ const selected = ref<string>("");
 
 <template>
     <StoryPage>
+        <CreamSurface tone="warm" class="relative overflow-hidden">
+            <DisplayHero size="display-3" variation="wonk" class="mt-2 mb-2">
+                Filter, group, choose
+            </DisplayHero>
+            <p class="text-prose max-w-prose text-foreground/80">
+                A glass-pill anchor over a grouped, filterable list — basis functions and palette
+                tokens cohabit, separated only by section heading.
+            </p>
+            <FlourishDivider tone="section-4" class="mt-[var(--space-phi-3)]" />
+        </CreamSurface>
+
         <section class="flex flex-col gap-3 max-w-sm">
-            <Label for="cbx">Basis or palette</Label>
+            <Label for="cbx" :style="{ color: 'var(--section-color-4)' }">Basis or palette</Label>
             <Combobox v-model="selected" by="value">
                 <ComboboxAnchor class="w-full">
                     <ComboboxTrigger as-child>
@@ -93,7 +107,8 @@ const selected = ref<string>("");
                 </ComboboxList>
             </Combobox>
             <p class="text-mono-caption text-muted-foreground">
-                selected · {{ selected || "—" }}
+                selected ·
+                <span :style="{ color: 'var(--section-color-4)' }">{{ selected || "—" }}</span>
             </p>
         </section>
     </StoryPage>

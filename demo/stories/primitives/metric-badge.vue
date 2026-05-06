@@ -1,13 +1,27 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { MetricBadge } from "@/components/custom/metric-badge";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 </script>
 
 <template>
     <StoryPage>
+        <CreamSurface tone="warm" class="relative overflow-hidden">
+            <DisplayHero size="display-3" variation="wonk" class="mt-2 mb-2">
+                Numbers, with a unit
+            </DisplayHero>
+            <p class="text-prose max-w-prose text-foreground/80">
+                Amount + unit + optional viz tint. Four sizes, an em-dash placeholder for nulls,
+                and inline-prose composition for instrument-cluster narration.
+            </p>
+            <FlourishDivider tone="section-8" class="mt-[var(--space-phi-3)]" />
+        </CreamSurface>
+
         <!-- Basic amounts + units. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">amount · unit</p>
+            <p class="section-label" :style="{ color: 'var(--section-color-8)' }">amount · unit</p>
             <div class="flex flex-wrap items-center gap-6">
                 <MetricBadge :amount="128" unit="ms" />
                 <MetricBadge :amount="'42.0'" unit="fps" />
@@ -18,7 +32,7 @@ import { MetricBadge } from "@/components/custom/metric-badge";
 
         <!-- Coloured amount via the `color` prop. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">viz-colored amounts</p>
+            <p class="section-label" :style="{ color: 'var(--section-color-8)' }">viz-colored amounts</p>
             <div class="flex flex-wrap items-center gap-6">
                 <MetricBadge
                     :amount="12"
@@ -40,7 +54,7 @@ import { MetricBadge } from "@/components/custom/metric-badge";
 
         <!-- Empty + custom placeholder. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">empty states</p>
+            <p class="section-label" :style="{ color: 'var(--section-color-8)' }">empty states</p>
             <div class="flex flex-wrap items-center gap-6">
                 <MetricBadge :amount="null" unit="ms" />
                 <MetricBadge :amount="undefined" unit="%" placeholder="n/a" />
@@ -53,7 +67,7 @@ import { MetricBadge } from "@/components/custom/metric-badge";
 
         <!-- Size ladder: 11px / 12px / 14px / 18px. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">size ladder · sm 11 · md 12 · lg 14 · xl 18</p>
+            <p class="section-label" :style="{ color: 'var(--section-color-8)' }">size ladder · sm 11 · md 12 · lg 14 · xl 18</p>
             <div
                 class="grid grid-cols-4 gap-6 rounded-card border border-border bg-card p-6"
             >
@@ -92,7 +106,7 @@ import { MetricBadge } from "@/components/custom/metric-badge";
 
         <!-- Inline prose composition. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">inline in prose</p>
+            <p class="section-label" :style="{ color: 'var(--section-color-8)' }">inline in prose</p>
             <p class="text-prose max-w-2xl text-foreground">
                 The layout shipped in
                 <MetricBadge :amount="320" unit="kb" color="var(--viz-fourier)" />,
@@ -105,7 +119,7 @@ import { MetricBadge } from "@/components/custom/metric-badge";
 
         <!-- Stat grid: dashboard-style row. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">stat grid</p>
+            <p class="section-label" :style="{ color: 'var(--section-color-8)' }">stat grid</p>
             <div
                 class="grid grid-cols-2 gap-6 rounded-card border border-border bg-card p-6 sm:grid-cols-4"
             >

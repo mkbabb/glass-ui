@@ -2,6 +2,9 @@
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Button } from "@/components/ui/button";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 import { cn } from "@/utils/cn";
 
 const pressed = ref(false);
@@ -31,8 +34,20 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
 
 <template>
     <StoryPage>
+        <CreamSurface tone="warm" class="relative overflow-hidden">
+            <DisplayHero size="display-3" variation="wonk" class="mt-2 mb-2">
+                Button vocabulary
+            </DisplayHero>
+            <p class="text-prose max-w-prose text-foreground/80">
+                Eleven variants. Four sizes. The four-state contract. Cartoon shadows, viz fills,
+                and the bare <code class="fira-code">.glass-btn</code> utility — the whole
+                <code class="fira-code">buttonVariants</code> CVA on display.
+            </p>
+            <FlourishDivider tone="section-2" class="mt-[var(--space-phi-3)]" />
+        </CreamSurface>
+
         <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Variants</h2>
+            <h2 class="text-subheading" :style="{ color: 'var(--section-color-2)' }">Variants</h2>
             <p class="text-small text-muted-foreground">
                 Every <code class="fira-code">buttonVariants</code> entry at default size.
             </p>
@@ -42,7 +57,7 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
         </section>
 
         <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Sizes</h2>
+            <h2 class="text-subheading" :style="{ color: 'var(--section-color-2)' }">Sizes</h2>
             <p class="text-small text-muted-foreground">
                 Default variant across the size scale.
             </p>
@@ -52,7 +67,7 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
         </section>
 
         <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Four-state contract</h2>
+            <h2 class="text-subheading" :style="{ color: 'var(--section-color-2)' }">Four-state contract</h2>
             <p class="text-small text-muted-foreground">
                 Rest, hover, active, disabled, and <code class="fira-code">aria-pressed</code>.
                 Hover and active emerge from pointer interaction — shown simulated for reference.
@@ -73,7 +88,7 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
         </section>
 
         <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Raw .glass-btn utility</h2>
+            <h2 class="text-subheading" :style="{ color: 'var(--section-color-2)' }">Raw .glass-btn utility</h2>
             <p class="text-small text-muted-foreground">
                 Circular icon button from <code class="fira-code">glass.css</code>, rendered
                 bare. Supports <code class="fira-code">aria-pressed</code> and
@@ -90,7 +105,7 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
         </section>
 
         <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Chromatic · viz basis</h2>
+            <h2 class="text-subheading" :style="{ color: 'var(--section-color-2)' }">Chromatic · viz basis</h2>
             <p class="text-small text-muted-foreground">
                 Fourier / Chebyshev / Legendre — the three basis hues the library exposes as
                 <code class="fira-code">bg-viz-*</code> utilities.
@@ -107,7 +122,7 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
         </section>
 
         <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Cartoon shadow</h2>
+            <h2 class="text-subheading" :style="{ color: 'var(--section-color-2)' }">Cartoon shadow</h2>
             <p class="text-small text-muted-foreground">
                 The library&rsquo;s signature treatment: a hard offset shadow plus a 1px translate
                 on hover. Default card shadow already points at

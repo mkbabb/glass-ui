@@ -4,6 +4,9 @@ import { ref } from "vue";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SearchBar } from "@/components/custom/search";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 
 const plain = ref("");
 const withLabel = ref("");
@@ -14,8 +17,20 @@ const pillBare = ref("");
 
 <template>
     <StoryPage>
+        <CreamSurface tone="warm" class="relative overflow-hidden">
+            <DisplayHero size="display-3" variation="wonk" class="mt-2 mb-2">
+                Inputs and the field contract
+            </DisplayHero>
+            <p class="text-prose max-w-prose text-foreground/80">
+                Bare <code class="fira-code">Input</code>, label-paired field, error treatment,
+                disabled lock, the <code class="fira-code">SearchBar</code> shorthand, and the
+                raw <code class="fira-code">.input-pill</code> utility.
+            </p>
+            <FlourishDivider tone="section-6" class="mt-[var(--space-phi-3)]" />
+        </CreamSurface>
+
         <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Default</h2>
+            <h2 class="text-subheading" :style="{ color: 'var(--section-color-6)' }">Default</h2>
             <p class="text-small text-muted-foreground">
                 Bare <code class="fira-code">Input</code>, no label.
             </p>
@@ -25,7 +40,7 @@ const pillBare = ref("");
         </section>
 
         <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">With label</h2>
+            <h2 class="text-subheading" :style="{ color: 'var(--section-color-6)' }">With label</h2>
             <p class="text-small text-muted-foreground">
                 <code class="fira-code">Label</code> + <code class="fira-code">Input</code>,
                 explicit <code class="fira-code">for</code> binding.
@@ -37,7 +52,7 @@ const pillBare = ref("");
         </section>
 
         <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">With error</h2>
+            <h2 class="text-subheading" :style="{ color: 'var(--section-color-6)' }">With error</h2>
             <p class="text-small text-muted-foreground">
                 Error messaging lives below the field and borrows the
                 <code class="fira-code">destructive</code> token.
@@ -58,7 +73,7 @@ const pillBare = ref("");
         </section>
 
         <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">Disabled</h2>
+            <h2 class="text-subheading" :style="{ color: 'var(--section-color-6)' }">Disabled</h2>
             <p class="text-small text-muted-foreground">
                 <code class="fira-code">disabled</code> attribute dims opacity and blocks pointer events.
             </p>
@@ -73,7 +88,7 @@ const pillBare = ref("");
         </section>
 
         <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">SearchBar</h2>
+            <h2 class="text-subheading" :style="{ color: 'var(--section-color-6)' }">SearchBar</h2>
             <p class="text-small text-muted-foreground">
                 <code class="fira-code">SearchBar</code> from
                 <code class="fira-code">@/components/custom/search</code>, icon baked in.
@@ -84,7 +99,7 @@ const pillBare = ref("");
         </section>
 
         <section class="flex flex-col gap-4">
-            <h2 class="text-subheading">.input-pill utility</h2>
+            <h2 class="text-subheading" :style="{ color: 'var(--section-color-6)' }">.input-pill utility</h2>
             <p class="text-small text-muted-foreground">
                 Raw <code class="fira-code">.input-pill</code> from
                 <code class="fira-code">glass.css</code>, no component wrapper.

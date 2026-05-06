@@ -9,6 +9,9 @@ import {
     CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 import { cn } from "@/utils/cn";
 
 interface Accent {
@@ -27,9 +30,35 @@ const accents: Accent[] = [
 
 <template>
     <StoryPage>
-        <div class="grid gap-12">
-            <div class="grid gap-4">
-                <h2 class="font-display text-xl">Default</h2>
+        <CreamSurface tone="warm" class="relative overflow-hidden">
+            <p
+                class="section-label"
+                :style="{ color: 'var(--section-color-3)' }"
+            >
+                § 3 · Cards
+            </p>
+            <DisplayHero
+                size="display-3"
+                variation="wonk"
+                class="mt-[var(--space-phi-1)] mb-[var(--space-phi-2)]"
+                :style="{ color: 'var(--section-color-3)' }"
+            >
+                Stacked surfaces
+            </DisplayHero>
+            <p class="text-prose max-w-2xl text-foreground/80">
+                Card chrome composes header / content / footer slots over the canon
+                glass tier ladder. Default lifts on cartoon shadow; cartoon variant
+                widens the border + lift; pane drops the surface shadow; and section
+                accents thread the 13-stop palette through the left rail.
+            </p>
+            <FlourishDivider
+                tone="section-3"
+                class="my-[var(--space-phi-3)]"
+            />
+
+            <div class="grid gap-12">
+                <div class="grid gap-4">
+                    <h2 class="font-display text-xl">Default</h2>
                 <p class="text-sm text-muted-foreground">
                     Cartoon shadow, hover-lift through <code class="font-mono text-xs">transition-shadow</code>.
                 </p>
@@ -177,6 +206,7 @@ const accents: Accent[] = [
                     </p>
                 </div>
             </div>
-        </div>
+            </div>
+        </CreamSurface>
     </StoryPage>
 </template>

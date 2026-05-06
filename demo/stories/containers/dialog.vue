@@ -15,6 +15,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ConfirmDialog } from "@/components/custom/confirm-dialog";
+import { CreamSurface } from "@/components/custom/cream-surface";
+import { DisplayHero } from "@/components/custom/display-hero";
+import { FlourishDivider } from "@/components/custom/flourish-divider";
 
 const confirmOpen = ref(false);
 const confirming = ref(false);
@@ -31,9 +34,35 @@ function onConfirm() {
 
 <template>
     <StoryPage>
-        <div class="grid gap-12">
-            <div class="grid gap-4">
-                <h2 class="font-display text-xl">Standard dialog</h2>
+        <CreamSurface tone="warm" class="relative overflow-hidden">
+            <p
+                class="section-label"
+                :style="{ color: 'var(--section-color-6)' }"
+            >
+                § 6 · Modals
+            </p>
+            <DisplayHero
+                size="display-3"
+                variation="wonk"
+                class="mt-[var(--space-phi-1)] mb-[var(--space-phi-2)]"
+                :style="{ color: 'var(--section-color-6)' }"
+            >
+                Floating focus
+            </DisplayHero>
+            <p class="text-prose max-w-2xl text-foreground/80">
+                Dialog scrims the page, traps focus, and floats a glass card with
+                header / body / footer slots. ConfirmDialog is the destructive-action
+                preset — async loading, semantic emit, kebab tone — folded over the
+                same primitive.
+            </p>
+            <FlourishDivider
+                tone="section-6"
+                class="my-[var(--space-phi-3)]"
+            />
+
+            <div class="grid gap-12">
+                <div class="grid gap-4">
+                    <h2 class="font-display text-xl">Standard dialog</h2>
                 <p class="text-sm text-muted-foreground">
                     Glass variant with a form body and a cancel/submit footer.
                 </p>
@@ -120,6 +149,7 @@ function onConfirm() {
                     />
                 </div>
             </div>
-        </div>
+            </div>
+        </CreamSurface>
     </StoryPage>
 </template>
