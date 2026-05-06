@@ -1,49 +1,65 @@
 /* Glass utilities — glassmorphism surface classes referencing --glass-* tokens */
 
 @layer components {
-    /* ── Four-tier surface classes (visual only, no geometry) ── */
+    /* ── Five-tier surface ladder (v0.8.0; visual only, no geometry) ──
+       Tier semantics, alpha-monotonic per R3-spec §A:
+         wash      ~0.30α  + light blur      (was `subtle`)
+         quiet     ~0.50α  + medium blur     (the missing rung)
+         resting   ~0.65α  + canonical blur  (was `default`; the speedtest plate)
+         floating  ~0.80α  + heavier blur    (was `elevated`)
+         overlay   ~0.95α  + heaviest blur   (NEW; modal-over-modal) */
 
-    .glass-subtle {
+    .glass-wash {
         position: relative;
-        background: var(--glass-bg-subtle);
-        backdrop-filter: var(--glass-blur-subtle);
-        -webkit-backdrop-filter: var(--glass-blur-subtle);
-        border: 1px solid var(--glass-border-subtle);
-        box-shadow: var(--glass-shadow-subtle);
+        background: var(--glass-bg-wash);
+        backdrop-filter: var(--glass-blur-wash);
+        -webkit-backdrop-filter: var(--glass-blur-wash);
+        border: 1px solid var(--glass-border-wash);
+        box-shadow: var(--glass-shadow-wash);
     }
 
-    .glass-default {
+    .glass-quiet {
         position: relative;
-        background: var(--glass-bg-default);
-        backdrop-filter: var(--glass-blur-default);
-        -webkit-backdrop-filter: var(--glass-blur-default);
-        border: 1px solid var(--glass-border-default);
-        box-shadow: var(--glass-shadow-default);
+        background: var(--glass-bg-quiet);
+        backdrop-filter: var(--glass-blur-quiet);
+        -webkit-backdrop-filter: var(--glass-blur-quiet);
+        border: 1px solid var(--glass-border-quiet);
+        box-shadow: var(--glass-shadow-quiet);
     }
 
-    .glass-medium {
+    .glass-resting {
         position: relative;
-        background: var(--glass-bg-medium);
-        backdrop-filter: var(--glass-blur-medium);
-        -webkit-backdrop-filter: var(--glass-blur-medium);
-        border: 1px solid var(--glass-border-medium);
-        box-shadow: var(--glass-shadow-medium);
+        background: var(--glass-bg-resting);
+        backdrop-filter: var(--glass-blur-resting);
+        -webkit-backdrop-filter: var(--glass-blur-resting);
+        border: 1px solid var(--glass-border-resting);
+        box-shadow: var(--glass-shadow-resting);
     }
 
-    .glass-elevated {
+    .glass-floating {
         position: relative;
-        background: var(--glass-bg-elevated);
-        backdrop-filter: var(--glass-blur-elevated);
-        -webkit-backdrop-filter: var(--glass-blur-elevated);
-        border: 1px solid var(--glass-border-elevated);
-        box-shadow: var(--glass-shadow-elevated);
+        background: var(--glass-bg-floating);
+        backdrop-filter: var(--glass-blur-floating);
+        -webkit-backdrop-filter: var(--glass-blur-floating);
+        border: 1px solid var(--glass-border-floating);
+        box-shadow: var(--glass-shadow-floating);
+    }
+
+    .glass-overlay {
+        position: relative;
+        background: var(--glass-bg-overlay);
+        backdrop-filter: var(--glass-blur-overlay);
+        -webkit-backdrop-filter: var(--glass-blur-overlay);
+        border: 1px solid var(--glass-border-overlay);
+        box-shadow: var(--glass-shadow-overlay);
     }
 
     /* Grain noise overlay — reuses paper texture SVG, no extra assets */
-    .glass-subtle::after,
-    .glass-default::after,
-    .glass-medium::after,
-    .glass-elevated::after {
+    .glass-wash::after,
+    .glass-quiet::after,
+    .glass-resting::after,
+    .glass-floating::after,
+    .glass-overlay::after {
         content: '';
         position: absolute;
         inset: 0;
@@ -56,10 +72,11 @@
         mix-blend-mode: overlay;
     }
 
-    .dark .glass-subtle::after,
-    .dark .glass-default::after,
-    .dark .glass-medium::after,
-    .dark .glass-elevated::after {
+    .dark .glass-wash::after,
+    .dark .glass-quiet::after,
+    .dark .glass-resting::after,
+    .dark .glass-floating::after,
+    .dark .glass-overlay::after {
         mix-blend-mode: soft-light;
     }
 
@@ -70,26 +87,25 @@
        or in components that explicitly opt into a hover variant. */
     .glass-card {
         position: relative;
-        background: var(--glass-bg-default);
-        backdrop-filter: var(--glass-blur-default);
-        -webkit-backdrop-filter: var(--glass-blur-default);
-        border: 1px solid var(--glass-border-default);
+        background: var(--glass-bg-quiet);
+        backdrop-filter: var(--glass-blur-quiet);
+        -webkit-backdrop-filter: var(--glass-blur-quiet);
+        border: 1px solid var(--glass-border-quiet);
         border-radius: var(--radius-card);
         box-shadow: var(--shadow-card);
         contain: layout style;
     }
 
     /* Cartoon surface — interactive card with cartoon-tier shadow + hover lift.
-       Card.vue's variant="cartoon" outputs class="glass-cartoon"; this rule
-       closes that contract. Token-fall-through to default-tier glass tokens
-       so consumers without cartoon-specific glass tokens still get a coherent
-       surface. */
+       <CartoonCard> outputs class="glass-cartoon"; this rule closes that
+       contract. Token fall-through to quiet-tier glass tokens so consumers
+       without cartoon-specific glass tokens still get a coherent surface. */
     .glass-cartoon {
         position: relative;
-        background: var(--glass-bg-cartoon, var(--glass-bg-default));
-        backdrop-filter: var(--glass-blur-cartoon, var(--glass-blur-default));
-        -webkit-backdrop-filter: var(--glass-blur-cartoon, var(--glass-blur-default));
-        border: 2px solid var(--glass-border-cartoon, var(--glass-border-default));
+        background: var(--glass-bg-cartoon, var(--glass-bg-quiet));
+        backdrop-filter: var(--glass-blur-cartoon, var(--glass-blur-quiet));
+        -webkit-backdrop-filter: var(--glass-blur-cartoon, var(--glass-blur-quiet));
+        border: 2px solid var(--glass-border-cartoon, var(--glass-border-quiet));
         border-radius: var(--radius-card);
         box-shadow: var(--shadow-cartoon-md);
         contain: layout style;
@@ -111,9 +127,9 @@
         width: var(--size-icon-btn);
         height: var(--size-icon-btn);
         border-radius: var(--radius-pill);
-        border: 1.5px solid var(--glass-border-subtle);
-        background: var(--glass-bg-subtle);
-        backdrop-filter: var(--glass-blur-subtle);
+        border: 1.5px solid var(--glass-border-wash);
+        background: var(--glass-bg-wash);
+        backdrop-filter: var(--glass-blur-wash);
         color: var(--muted-foreground);
         transition:
             background var(--duration-fast) var(--ease-standard),
@@ -185,9 +201,9 @@
 
         height: 2.5rem;
         border-radius: var(--radius-pill);
-        border: 1.5px solid var(--glass-border-subtle);
-        background: var(--glass-bg-default);
-        backdrop-filter: var(--glass-blur-subtle);
+        border: 1.5px solid var(--glass-border-wash);
+        background: var(--glass-bg-quiet);
+        backdrop-filter: var(--glass-blur-wash);
         padding: 0 1rem;
         font-size: 1rem;
         color: var(--foreground);
@@ -218,14 +234,16 @@
 /* ── Accessibility: reduced transparency ────────── */
 @media (prefers-reduced-transparency: reduce) {
     :root {
-        --glass-opacity-subtle: 1;
-        --glass-opacity-default: 1;
-        --glass-opacity-medium: 1;
-        --glass-opacity-elevated: 1;
-        --glass-blur-subtle: none;
-        --glass-blur-default: none;
-        --glass-blur-medium: none;
-        --glass-blur-elevated: none;
+        --glass-opacity-wash: 1;
+        --glass-opacity-quiet: 1;
+        --glass-opacity-resting: 1;
+        --glass-opacity-floating: 1;
+        --glass-opacity-overlay: 1;
+        --glass-blur-wash: none;
+        --glass-blur-quiet: none;
+        --glass-blur-resting: none;
+        --glass-blur-floating: none;
+        --glass-blur-overlay: none;
         --glass-blur-dock: none;
         --glass-grain-opacity: 0;
         --glass-highlight: 0 0 0 0 transparent;
@@ -235,26 +253,30 @@
 /* ── Accessibility: high contrast ───────────────── */
 @media (prefers-contrast: more) {
     :root {
-        --glass-opacity-subtle: 0.88;
-        --glass-opacity-default: 0.92;
-        --glass-opacity-medium: 0.96;
-        --glass-opacity-elevated: 1;
+        --glass-opacity-wash: 0.85;
+        --glass-opacity-quiet: 0.90;
+        --glass-opacity-resting: 0.94;
+        --glass-opacity-floating: 0.98;
+        --glass-opacity-overlay: 1;
     }
 }
 
 /* ── @supports fallbacks for non-backdrop-filter browsers ── */
 @layer components {
     @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-        .glass-subtle {
+        .glass-wash {
+            background: color-mix(in srgb, var(--card) 80%, transparent);
+        }
+        .glass-quiet {
             background: color-mix(in srgb, var(--card) 88%, transparent);
         }
-        .glass-default {
-            background: color-mix(in srgb, var(--card) 92%, transparent);
+        .glass-resting {
+            background: color-mix(in srgb, var(--card) 94%, transparent);
         }
-        .glass-medium {
-            background: color-mix(in srgb, var(--card) 96%, transparent);
+        .glass-floating {
+            background: color-mix(in srgb, var(--card) 98%, transparent);
         }
-        .glass-elevated {
+        .glass-overlay {
             background: var(--card);
         }
         .glass-btn {

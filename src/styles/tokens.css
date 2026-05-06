@@ -243,8 +243,11 @@
     --shadow-xl: 0 8px 24px color-mix(in srgb, var(--shadow-color) 14%, transparent);
     --shadow-2xl: 0 25px 50px -12px color-mix(in srgb, var(--shadow-color) 25%, transparent);
 
-    /* Card = cartoon by default */
-    --shadow-card:       var(--shadow-cartoon);
+    /* Card = soft drop plate by default. The cartoon offset is a brand-flavoured
+       variant (a sticker look), not the canonical card shape. Consumers wanting
+       the cartoon look opt into <CartoonCard> or .glass-cartoon, which read
+       --shadow-cartoon directly. R3-spec §F.1, S.W4. */
+    --shadow-card:       var(--shadow-md);
     --card-shadow:       var(--shadow-card);
 
     /* Dock shadows */
@@ -274,33 +277,48 @@
     --cartoon-shadow-lg: var(--shadow-cartoon-lg);
 
     /* ═══════════════════════════════════════════════
-       §8  GLASSMORPHISM — Four-tier surface system
-       Opacities raised for warm-cream base.
+       §8  GLASSMORPHISM — Five-tier surface ladder (v0.8.0)
+
+       Tier semantics, alpha-monotonic:
+         wash      ~0.30α  + light blur      (was `subtle`)
+         quiet     ~0.50α  + medium blur     (the formerly missing rung)
+         resting   ~0.65α  + canonical blur  (was `default`; the speedtest plate)
+         floating  ~0.80α  + heavier blur    (was `elevated`)
+         overlay   ~0.95α  + heaviest blur   (NEW; modal-over-modal)
+
+       v0.8.0 retires the four-tier `subtle | default | medium | elevated`
+       ladder outright. No legacy aliases. Consumers migrate at the same
+       breaking change. R3-spec §A.
        ═══════════════════════════════════════════════ */
 
     /* Opacity primitives */
-    --glass-opacity-subtle:   0.82;
-    --glass-opacity-default:  0.50;
-    --glass-opacity-medium:   0.65;
-    --glass-opacity-elevated: 0.80;
+    --glass-opacity-wash:     0.30;
+    --glass-opacity-quiet:    0.50;
+    --glass-opacity-resting:  0.65;
+    --glass-opacity-floating: 0.80;
+    --glass-opacity-overlay:  0.95;
 
     /* Blur primitives. Halved twice — first in glass-ui v0.4 (speedtest
        tranche N.W1), again in v0.5.1 (speedtest tranche O.W2) — because the
        first cut still read as a heavy slab against the aurora wash on
-       consumer surfaces. The new radii feather the dock + meter card to a
+       consumer surfaces. The radii here feather the dock + meter card to a
        barely-perceptible diffusion that lets aurora bleed through cleanly
-       and keeps hero typography crisp at the meter scale. */
-    --glass-blur-subtle-radius:   1px;
-    --glass-blur-default-radius:  3px;
-    --glass-blur-medium-radius:   3px;
-    --glass-blur-elevated-radius: 4px;
+       and keeps hero typography crisp at the meter scale. v0.8.0 lifts
+       the resting blur to 12px so the speedtest plate reads as a glass
+       diffusion without a consumer-side override (R3-spec §A line 26). */
+    --glass-blur-wash-radius:     1px;
+    --glass-blur-quiet-radius:    3px;
+    --glass-blur-resting-radius:  12px;
+    --glass-blur-floating-radius: 16px;
+    --glass-blur-overlay-radius:  24px;
     --glass-blur-dock-radius:     1px;
 
-    --glass-blur-subtle:   blur(var(--glass-blur-subtle-radius)) saturate(1.05);
-    --glass-blur-default:  blur(var(--glass-blur-default-radius));
-    --glass-blur-medium:   blur(var(--glass-blur-medium-radius)) saturate(1.3);
-    --glass-blur-elevated: blur(var(--glass-blur-elevated-radius)) saturate(1.4);
-    /* Dock-specific: half the subtle weight so the dock reads as a feather-light
+    --glass-blur-wash:     blur(var(--glass-blur-wash-radius)) saturate(1.05);
+    --glass-blur-quiet:    blur(var(--glass-blur-quiet-radius));
+    --glass-blur-resting:  blur(var(--glass-blur-resting-radius)) saturate(1.05);
+    --glass-blur-floating: blur(var(--glass-blur-floating-radius)) saturate(1.4);
+    --glass-blur-overlay:  blur(var(--glass-blur-overlay-radius)) saturate(1.5);
+    /* Dock-specific: half the wash weight so the dock reads as a feather-light
        overlay rather than a heavy blurred slab. */
     --glass-blur-dock:     blur(var(--glass-blur-dock-radius)) saturate(1.025);
 
@@ -322,21 +340,23 @@
     --glass-opacity-chassis: 0.28;
 
     /* Composed backgrounds */
-    --glass-bg-subtle:   color-mix(in srgb, var(--card) calc(var(--glass-opacity-subtle) * 100%), transparent);
-    --glass-bg-default:  color-mix(in srgb, var(--card) calc(var(--glass-opacity-default) * 100%), transparent);
-    --glass-bg-medium:   color-mix(in srgb, var(--card) calc(var(--glass-opacity-medium) * 100%), transparent);
-    --glass-bg-elevated: color-mix(in srgb, var(--card) calc(var(--glass-opacity-elevated) * 100%), transparent);
+    --glass-bg-wash:     color-mix(in srgb, var(--card) calc(var(--glass-opacity-wash) * 100%), transparent);
+    --glass-bg-quiet:    color-mix(in srgb, var(--card) calc(var(--glass-opacity-quiet) * 100%), transparent);
+    --glass-bg-resting:  color-mix(in srgb, var(--card) calc(var(--glass-opacity-resting) * 100%), transparent);
+    --glass-bg-floating: color-mix(in srgb, var(--card) calc(var(--glass-opacity-floating) * 100%), transparent);
+    --glass-bg-overlay:  color-mix(in srgb, var(--card) calc(var(--glass-opacity-overlay) * 100%), transparent);
     --glass-bg-dock:     color-mix(in srgb, var(--card) calc(var(--glass-opacity-dock) * 100%), transparent);
     --glass-bg-chassis:  color-mix(in srgb, var(--card) calc(var(--glass-opacity-chassis) * 100%), transparent);
 
     /* Composed borders — foreground-tinted */
-    --glass-border-subtle:   color-mix(in srgb, var(--foreground) 8%, transparent);
-    --glass-border-default:  color-mix(in srgb, var(--foreground) 10%, transparent);
-    --glass-border-medium:   color-mix(in srgb, var(--foreground) 12%, transparent);
-    --glass-border-elevated: color-mix(in srgb, var(--foreground) 15%, transparent);
+    --glass-border-wash:     color-mix(in srgb, var(--foreground) 8%, transparent);
+    --glass-border-quiet:    color-mix(in srgb, var(--foreground) 10%, transparent);
+    --glass-border-resting:  color-mix(in srgb, var(--foreground) 12%, transparent);
+    --glass-border-floating: color-mix(in srgb, var(--foreground) 15%, transparent);
+    --glass-border-overlay:  color-mix(in srgb, var(--foreground) 18%, transparent);
     --glass-border-dock:     color-mix(in srgb, var(--foreground) 11%, transparent);
-    --glass-border:          var(--glass-border-default);
-    --glass-border-strong:   var(--glass-border-elevated);
+    --glass-border:          var(--glass-border-quiet);
+    --glass-border-strong:   var(--glass-border-floating);
 
     /* Shared decorative. Light grain dropped 0.035 → 0.025 in P.W1.B —
        at the chassis scale the original alpha read as crawl over the new
@@ -377,14 +397,17 @@
     --chart-jitter:   var(--viz-amber);
 
     /* Shadow per tier — complete box-shadow lists for glass surface classes */
-    --glass-shadow-subtle:   var(--shadow-sm), var(--glass-highlight);
-    --glass-shadow-default:  var(--shadow-md), var(--glass-highlight);
-    --glass-shadow-medium:   var(--shadow-lg), var(--glass-highlight);
-    --glass-shadow-elevated: var(--shadow-xl),
+    --glass-shadow-wash:     var(--shadow-sm), var(--glass-highlight);
+    --glass-shadow-quiet:    var(--shadow-md), var(--glass-highlight);
+    --glass-shadow-resting:  var(--shadow-lg), var(--glass-highlight);
+    --glass-shadow-floating: var(--shadow-xl),
         0 0 0 0.5px color-mix(in srgb, var(--shadow-color) 5%, transparent),
         var(--glass-highlight);
-    --glass-shadow:    var(--glass-shadow-default);
-    --glass-shadow-lg: var(--glass-shadow-elevated);
+    --glass-shadow-overlay:  var(--shadow-2xl),
+        0 0 0 0.5px color-mix(in srgb, var(--shadow-color) 8%, transparent),
+        var(--glass-highlight);
+    --glass-shadow:    var(--glass-shadow-quiet);
+    --glass-shadow-lg: var(--glass-shadow-floating);
 
     /* ═══════════════════════════════════════════════
        §9  ANIMATION OFFSETS
@@ -569,11 +592,14 @@
     --shadow-cartoon-color-hover:      rgb(255 255 255 / 0.10);
     --shadow-cartoon-color-hover-soft: rgb(255 255 255 / 0.05);
 
-    /* Glass opacity + grain for dark */
-    --glass-opacity-subtle:   0.90;
-    --glass-opacity-default:  0.58;
-    --glass-opacity-medium:   0.72;
-    --glass-opacity-elevated: 0.88;
+    /* Glass opacity + grain for dark — five-tier ladder, alpha-monotonic.
+       Each rung lifts ~0.08 from its light counterpart so the dark surfaces
+       carry comparable read-weight against the deeper canvas. */
+    --glass-opacity-wash:     0.38;
+    --glass-opacity-quiet:    0.58;
+    --glass-opacity-resting:  0.72;
+    --glass-opacity-floating: 0.88;
+    --glass-opacity-overlay:  0.96;
     --glass-opacity-chassis:  0.36;
     --glass-grain-opacity: 0.045;
     --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.08);
