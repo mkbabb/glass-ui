@@ -105,9 +105,10 @@ import { Play, RotateCcw, ArrowRight, Check, Settings } from "lucide-vue-next";
             </div>
         </section>
 
-        <!-- Three cap modes — the P.W3 sub-A knob set. -->
+        <!-- Three cap modes — Q.W3.A.1 invert: cap clips to silhouette by
+             default; no silhouette → no cap; explicit silhouette opts in. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">cap mode · radius vs silhouette</p>
+            <p class="section-label">cap mode · silhouette × no-silhouette × override blend</p>
             <div class="flex flex-wrap items-end gap-8">
                 <div class="flex flex-col items-center gap-2">
                     <GlyphFace
@@ -117,18 +118,7 @@ import { Play, RotateCcw, ArrowRight, Check, Settings } from "lucide-vue-next";
                     >
                         <Play :stroke-width="2.5" class="size-6" />
                     </GlyphFace>
-                    <span class="text-mono-caption text-muted-foreground">default · 50% circle</span>
-                </div>
-                <div class="flex flex-col items-center gap-2">
-                    <GlyphFace
-                        active
-                        tint="var(--chart-download)"
-                        class="size-12 text-foreground"
-                        :style="{ '--gf-cap-radius': '0.5rem' }"
-                    >
-                        <Play :stroke-width="2.5" class="size-6" />
-                    </GlyphFace>
-                    <span class="text-mono-caption text-muted-foreground">rounded-rect · 0.5rem</span>
+                    <span class="text-mono-caption text-muted-foreground">no silhouette · no cap</span>
                 </div>
                 <div class="flex flex-col items-center gap-2">
                     <GlyphFace
@@ -141,12 +131,26 @@ import { Play, RotateCcw, ArrowRight, Check, Settings } from "lucide-vue-next";
                     </GlyphFace>
                     <span class="text-mono-caption text-muted-foreground">silhouette · play path</span>
                 </div>
+                <div class="flex flex-col items-center gap-2">
+                    <GlyphFace
+                        active
+                        tint="var(--chart-download)"
+                        class="size-12 text-foreground"
+                        silhouette="M8 5.14v13.72a1 1 0 0 0 1.55.83l10.23-6.86a1 1 0 0 0 0-1.66L9.55 4.31A1 1 0 0 0 8 5.14z"
+                        :style="{ '--gf-cap-blend': 'overlay' }"
+                    >
+                        <Play :stroke-width="2.5" class="size-6" />
+                    </GlyphFace>
+                    <span class="text-mono-caption text-muted-foreground">silhouette · override blend overlay</span>
+                </div>
             </div>
             <p class="text-mono-caption text-muted-foreground">
-                Default cap is a 50% circle — fixes the visible-square-border
-                bug for circular wrappers. Override via <code>--gf-cap-radius</code>
-                for rounded-rect caps; pass <code>silhouette</code> for
-                path-clipped catch-light over a glyph silhouette.
+                Q.W3 inverts the cap default: the cap renders nothing unless a
+                silhouette resolves (via prop or via provide/inject from a
+                DiscoGlyph descendant). Default <code>mix-blend-mode</code> is
+                <code>screen</code> — composes correctly against translucent
+                dock substrates. Consumers needing the metallic-overlay punch
+                set <code>--gf-cap-blend: overlay</code> explicitly.
             </p>
         </section>
     </StoryPage>
