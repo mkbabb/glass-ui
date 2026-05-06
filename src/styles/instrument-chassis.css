@@ -148,8 +148,16 @@
         height: 100%;
     }
 
-    .bezel-line.top    { background: rgb(255 255 255 / 0.04); }
-    .bezel-line.bottom { background: rgb(0 0 0 / 0.06); }
+    /* Q.W4.A — bezel-line α lift in light mode per audit-A4 §1 row 2-3 +
+       §11 #2-#3 + §12 Action 2. The 0.04 / 0.06 light-mode pair was
+       calibrated against a flat bg; under the saturated-aurora chassis
+       composition the catch-light + under-shadow read as one slightly
+       darker pixel, and the twin-line groove fails its job. Bumping to
+       0.10 / 0.12 holds the divider against the bleed without committing
+       to the dark-mode pair's contrast (the dark mode already runs at
+       0.06 / 0.18 against a low-light bg). */
+    .bezel-line.top    { background: rgb(255 255 255 / 0.10); }
+    .bezel-line.bottom { background: rgb(0 0 0 / 0.12); }
 
     .dark .bezel-line.top    { background: rgb(255 255 255 / 0.06); }
     .dark .bezel-line.bottom { background: rgb(0 0 0 / 0.18); }
