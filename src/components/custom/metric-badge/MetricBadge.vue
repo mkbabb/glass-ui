@@ -30,12 +30,14 @@ const amountClass = computed(() => {
   switch (props.size) {
     case 'sm':
       return 'text-mono-micro'
+    case 'md':
+      return 'text-mono-caption'
     case 'lg':
       return 'text-mono-small'
     case 'xl':
       return 'text-mono-prose'
     default:
-      return 'text-mono-micro'
+      return 'text-mono-caption'
   }
 })
 
@@ -43,12 +45,14 @@ const unitClass = computed(() => {
   switch (props.size) {
     case 'sm':
       return 'text-micro'
+    case 'md':
+      return 'text-caption'
     case 'lg':
       return 'text-small'
     case 'xl':
       return 'text-prose'
     default:
-      return 'text-micro'
+      return 'text-caption'
   }
 })
 </script>
