@@ -1,70 +1,56 @@
 <script setup lang="ts">
-import { computed, type HTMLAttributes } from "vue";
-import { cn } from '@utils';
+import type { HTMLAttributes } from "vue";
+import { Primitive, type PrimitiveProps } from "reka-ui";
+import { cn } from "@utils";
 
-const props = defineProps<{
+/**
+ * The five-tier glass surface ladder. Maps 1:1 to `.glass-{tier}` in glass.css
+ * after the v0.8.0 R3-spec rename:
+ *
+ *   wash     — lightest (~0.30α)        : inline workspace chrome, scroll-pane host
+ *   quiet    — light    (~0.50α)        : ambient panels, secondary surfaces
+ *   resting  — canonical (~0.65α)       : the protagonist plate (default)
+ *   floating — heavy   (~0.80α)         : popover-class, login surfaces
+ *   overlay  — heaviest (~0.95α + blur) : modal-on-modal, dialog over content
+ */
+export type CardTier = "wash" | "quiet" | "resting" | "floating" | "overlay";
+
+interface Props extends PrimitiveProps {
+    /** Surface tier; selects one rung of the glass ladder. Default `resting`. */
+    tier?: CardTier;
+    /** Surface drop shadow via `--shadow-card`. Off for cards nested inside cards. */
+    shadow?: boolean;
+    /** `::after` paper-grain overlay. Off for scroll panes (the grain conflicts
+     *  with overflow:auto repaints). */
+    grain?: boolean;
     class?: HTMLAttributes["class"];
-    /** When true, renders as a plain structural wrapper with no border, shadow, or background.
-     *  Used when a Card is nested inside another card or serves as a layout container. */
-    plain?: boolean;
-    /**
-     * 'default' = glass bg + grain overlay + shadow
-     * 'pane'    = translucent bg + blur, no grain (for scroll panes)
-     * 'cartoon' = translucent bg + heavier blur + drop shadow, no grain.
-     *             Tokens (`--glass-*-cartoon`, `--shadow-cartoon`) fall back
-     *             to the default glass tokens, so consumers opting into the
-     *             variant without defining tokens get the default look.
-     * 'subtle'  = subtle glass bg + subtle blur, no grain. For cards that
-     *             read as inline workspace chrome rather than primary
-     *             surfaces (review summaries, audacious-canon contexts).
-     */
-    variant?: "default" | "pane" | "cartoon" | "subtle";
-    /**
-     * Drop the surface shadow without otherwise changing the variant —
-     * for cards that read as inline workspace chrome rather than
-     * floating panels (e.g. an editor pane that lives inside another
-     * cartoon card and would otherwise stack a second drop shadow on
-     * the parent's). Applies to `default` and `pane`; the `cartoon`
-     * variant resolves its shadow via `.glass-cartoon` in glass.css
-     * and is unaffected.
-     */
-    flush?: boolean;
-}>();
+}
 
-const variantClass = computed(() => {
-    if (props.plain) return "scrollbar-hidden rounded-xl";
-    if (props.variant === "pane")
-        // Pane uses glass background + blur without the ::after grain overlay,
-        // which conflicts with overflow:auto scroll containers. The shadow
-        // class is dropped when `flush` is set so the consumer doesn't need
-        // an `!important` override to remove it.
-        return [
-            "scrollbar-hidden rounded-xl text-card-foreground",
-            "bg-[var(--glass-bg-subtle)] [backdrop-filter:var(--glass-blur-subtle)]",
-            "border border-[var(--glass-border-subtle)]",
-            props.flush ? "" : "shadow-[var(--shadow-card)]",
-            "transition-shadow",
-        ].join(" ");
-    if (props.variant === "subtle")
-        return [
-            "scrollbar-hidden glass-subtle rounded-xl text-card-foreground",
-            props.flush ? "" : "shadow-[var(--glass-shadow-subtle)]",
-        ].join(" ");
-    if (props.variant === "cartoon")
-        // Cartoon resolves through `.glass-cartoon` in glass.css — no
-        // Tailwind arbitrary-value gymnastics, no comma-in-var parsing
-        // traps. Consumers override the cartoon tokens at :root to
-        // reskin every cartoon surface at once.
-        return "scrollbar-hidden glass-cartoon rounded-xl text-card-foreground transition-shadow";
-    return [
-        "scrollbar-hidden glass-default rounded-xl text-card-foreground",
-        props.flush ? "" : "shadow-[var(--shadow-card)]",
-    ].join(" ");
+const props = withDefaults(defineProps<Props>(), {
+    tier: "resting",
+    shadow: true,
+    grain: true,
+    as: "div",
 });
 </script>
 
 <template>
-    <div :class="cn(variantClass, props.class)">
+    <Primitive
+        data-slot="card"
+        :data-tier="tier"
+        :data-grain="grain"
+        :as="as"
+        :as-child="asChild"
+        :class="
+            cn(
+                'rounded-xl text-card-foreground scrollbar-hidden',
+                `glass-${tier}`,
+                shadow && 'shadow-[var(--shadow-card)]',
+                !grain && '[&::after]:hidden',
+                props.class,
+            )
+        "
+    >
         <slot />
-    </div>
+    </Primitive>
 </template>
