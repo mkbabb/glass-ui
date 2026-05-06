@@ -1,4 +1,4 @@
-import { mount } from "@vue/test-utils";
+import { flushPromises, mount } from "@vue/test-utils";
 import { computed, nextTick, ref } from "vue";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import FuzzySearch from "../FuzzySearch.vue";
@@ -17,7 +17,7 @@ function item(id: string, label: string): SearchableItem {
 }
 
 describe("FuzzySearch highlighting", () => {
-    it("renders highlighted labels without interpreting item HTML", () => {
+    it("renders highlighted labels without interpreting item HTML", async () => {
         const malicious = item("malicious", '<img src=x onerror="alert(1)">Alpha');
         const result: SearchResult = {
             item: malicious,
@@ -37,12 +37,19 @@ describe("FuzzySearch highlighting", () => {
             open: vi.fn(),
         };
 
-        const wrapper = mount(FuzzySearch, { props: { state } });
-        const label = wrapper.find(".fuzzy-search-label");
+        // FuzzySearch composes <Popover>; the inline result list renders within
+        // the wrapper subtree (portal={false}), so wrapper.find() resolves it.
+        const wrapper = mount(FuzzySearch, { props: { state }, attachTo: document.body });
+        await flushPromises();
+        await nextTick();
 
+        const label = wrapper.find(".fuzzy-search-label");
+        expect(label.exists()).toBe(true);
         expect(label.text()).toContain('<img src=x onerror="alert(1)">Alpha');
         expect(label.element.querySelector("img")).toBeNull();
         expect(label.find("mark").text()).toBe("img");
+
+        wrapper.unmount();
     });
 });
 

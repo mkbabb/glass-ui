@@ -4,9 +4,9 @@ import { ref } from "vue";
 import {
     Carousel,
     CarouselContent,
+    CarouselDots,
     CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
+    CarouselPager,
     type CarouselApi,
 } from "@/components/ui/carousel";
 import { cn } from "@/utils/cn";
@@ -29,12 +29,11 @@ const stories = [
     { category: "Navigation", id: "dock" },
 ];
 
-const pagerApi = ref<CarouselApi>();
 const pagerIndex = ref(0);
 
 function setApi(api: CarouselApi | undefined) {
-    pagerApi.value = api;
     if (!api) return;
+    pagerIndex.value = api.selectedScrollSnap();
     api.on("select", () => {
         pagerIndex.value = api.selectedScrollSnap();
     });
@@ -44,8 +43,16 @@ function setApi(api: CarouselApi | undefined) {
 <template>
     <StoryPage>
         <section class="flex flex-col gap-3">
-            <h2 class="text-sm font-semibold text-muted-foreground">Basic horizontal pager</h2>
-            <div class="relative mx-auto w-full max-w-md">
+            <h2 class="text-sm font-semibold text-muted-foreground">Carousel pager + dots substrate</h2>
+            <p class="text-sm text-muted-foreground">
+                <code class="rounded bg-muted px-1">&lt;CarouselPager&gt;</code> composes
+                <code class="rounded bg-muted px-1">&lt;Button variant="ghost" size="icon"&gt;</code> chevrons
+                with a "X / N" counter pill;
+                <code class="rounded bg-muted px-1">&lt;CarouselDots&gt;</code> renders a dot per snap with
+                the active rung lifted via <code class="rounded bg-muted px-1">--scale-hover</code>. Both
+                wire to the embla API via <code class="rounded bg-muted px-1">useCarousel()</code>.
+            </p>
+            <div class="relative mx-auto flex w-full max-w-md flex-col gap-4">
                 <Carousel class="rounded-[var(--radius-card)] border border-border/40 bg-card/30 p-4">
                     <CarouselContent>
                         <CarouselItem v-for="s in slides" :key="s.title">
@@ -58,8 +65,10 @@ function setApi(api: CarouselApi | undefined) {
                             </div>
                         </CarouselItem>
                     </CarouselContent>
-                    <CarouselPrevious />
-                    <CarouselNext />
+                    <div class="mt-4 flex items-center justify-between gap-3">
+                        <CarouselDots />
+                        <CarouselPager />
+                    </div>
                 </Carousel>
             </div>
         </section>
@@ -99,21 +108,11 @@ function setApi(api: CarouselApi | undefined) {
                             </div>
                         </CarouselItem>
                     </CarouselContent>
-                    <CarouselPrevious class="-left-3" />
-                    <CarouselNext class="-right-3" />
+                    <CarouselDots class="absolute inset-x-0 -bottom-6 justify-center" />
                 </Carousel>
 
-                <div class="mt-4 flex items-center justify-center gap-1.5">
-                    <button
-                        v-for="(_, i) in stories"
-                        :key="i"
-                        :class="cn(
-                            'h-1.5 rounded-full transition-all',
-                            i === pagerIndex ? 'w-6 bg-foreground' : 'w-1.5 bg-muted-foreground/40 hover:bg-muted-foreground/70'
-                        )"
-                        :aria-label="`Go to slide ${i + 1}`"
-                        @click="pagerApi?.scrollTo(i)"
-                    />
+                <div class="mt-8 flex items-center justify-center">
+                    <CarouselPager />
                 </div>
             </div>
         </section>

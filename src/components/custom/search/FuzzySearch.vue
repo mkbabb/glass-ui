@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { ref, watch, nextTick } from "vue";
+import { ref, watch, nextTick, computed } from "vue";
 import { Search, X, Maximize2, Minimize2 } from "lucide-vue-next";
+import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover";
+import { Dialog, DialogContent } from "../../ui/dialog";
+import { Button } from "../../ui/button";
+import { Badge } from "../../ui/badge";
 import { fuzzyMatch } from "./composables/fuzzySearchIndex";
 import type { FuzzySearchState, SearchableItem, SearchResult } from "./composables/types";
 
@@ -11,590 +15,144 @@ const props = withDefaults(
         placeholder?: string;
         typeLabel?: (item: SearchableItem) => string;
     }>(),
-    {
-        variant: "sidebar",
-        placeholder: "Search\u2026",
-    },
+    { variant: "sidebar", placeholder: "Search…" },
 );
 
 const inputRef = ref<HTMLInputElement | null>(null);
-const resultsRef = ref<HTMLElement | null>(null);
 const modalInputRef = ref<HTMLInputElement | null>(null);
 
-// Scroll selected result into view
-watch(
-    () => props.state.selectedIndex.value,
-    () => {
-        nextTick(() => {
-            const container = props.state.isExpanded.value
-                ? document.querySelector(".fuzzy-search-modal-results")
-                : resultsRef.value;
-            const el = container?.querySelector(".is-selected");
-            el?.scrollIntoView({ block: "nearest" });
-        });
-    },
-);
+const inlineOpen = computed({
+    get: () =>
+        props.state.isOpen.value &&
+        !props.state.isExpanded.value &&
+        props.state.results.value.length > 0,
+    set: (open: boolean) => { if (!open) props.state.close(); },
+});
 
-// Auto-focus input when opened
-watch(
-    () => props.state.isOpen.value,
-    (open) => {
-        if (open) nextTick(() => inputRef.value?.focus());
-    },
-);
+watch(() => props.state.selectedIndex.value, () => {
+    nextTick(() => document.querySelector(".fuzzy-search-result.is-selected")
+        ?.scrollIntoView({ block: "nearest" }));
+});
+watch(() => props.state.isOpen.value, (open) => {
+    if (open) nextTick(() => inputRef.value?.focus());
+});
+watch(() => props.state.isExpanded.value, (expanded) => {
+    if (expanded) nextTick(() => modalInputRef.value?.focus());
+});
 
-// Focus modal input when expanded
-watch(
-    () => props.state.isExpanded.value,
-    (expanded) => {
-        if (expanded) nextTick(() => modalInputRef.value?.focus());
-    },
-);
-
-function focus() {
-    inputRef.value?.focus();
-}
-
+function focus() { inputRef.value?.focus(); }
 defineExpose({ focus });
 
-function resultLabel(r: SearchResult): string {
-    return r.item.label || r.item.text.slice(0, 120);
-}
+function resultLabel(r: SearchResult) { return r.item.label || r.item.text.slice(0, 120); }
+function getTypeLabel(r: SearchResult) { return props.typeLabel ? props.typeLabel(r.item) : (r.item.type ?? ""); }
 
-function getTypeLabel(r: SearchResult): string {
-    if (props.typeLabel) return props.typeLabel(r.item);
-    return r.item.type ?? "";
-}
-
-interface HighlightSegment {
-    text: string;
-    matched: boolean;
-}
-
-/**
- * Highlight matched characters using fuzzy match indices.
- * Re-runs fuzzyMatch on the display label for precise positions.
- */
+interface HighlightSegment { text: string; matched: boolean }
 function highlightFuzzySegments(text: string, query: string): HighlightSegment[] {
     if (!text) return [];
-
     const tokens = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
     if (tokens.length === 0) return [{ text, matched: false }];
-
     const textLc = text.toLowerCase();
     const matchSet = new Set<number>();
-
     for (const token of tokens) {
         const m = fuzzyMatch(token, textLc);
-        if (m) {
-            for (const idx of m.matches) matchSet.add(idx);
-        }
+        if (m) for (const idx of m.matches) matchSet.add(idx);
     }
-
     if (matchSet.size === 0) return [{ text, matched: false }];
-
     const segments: HighlightSegment[] = [];
     let start = 0;
     let matched = matchSet.has(0);
-
     for (let i = 1; i < text.length; i++) {
-        const nextMatched = matchSet.has(i);
-        if (nextMatched !== matched) {
+        const next = matchSet.has(i);
+        if (next !== matched) {
             segments.push({ text: text.slice(start, i), matched });
             start = i;
-            matched = nextMatched;
+            matched = next;
         }
     }
-
     segments.push({ text: text.slice(start), matched });
     return segments;
 }
+
+const MARK_CLASS = "rounded-sm bg-[hsl(var(--rainbow-pastel-yellow,50_100%_60%)/0.35)] px-px text-inherit";
 </script>
 
 <template>
-    <div class="fuzzy-search" :class="`fuzzy-search--${variant}`">
-        <!-- Inline input -->
-        <div class="fuzzy-search-input-wrap">
-            <Search class="fuzzy-search-icon" />
-            <input
-                ref="inputRef"
-                type="text"
-                class="fuzzy-search-input"
-                :placeholder="placeholder"
-                :value="state.query.value"
-                @input="state.query.value = ($event.target as HTMLInputElement).value"
-                @keydown="state.onKeydown"
-                @focus="state.isOpen.value = true"
-            />
-            <button
-                v-if="state.query.value && state.results.value.length > 0"
-                class="fuzzy-search-action-btn"
-                @click="state.toggleExpanded()"
-                :title="state.isExpanded.value ? 'Collapse' : 'Expand'"
-            >
-                <Maximize2 v-if="!state.isExpanded.value" class="h-3 w-3" />
-                <Minimize2 v-else class="h-3 w-3" />
-            </button>
-            <button
-                v-if="state.query.value"
-                class="fuzzy-search-action-btn"
-                @click="state.close()"
-                title="Clear search"
-            >
-                <X class="h-3 w-3" />
-            </button>
-        </div>
-
-        <!-- Inline dropdown (non-expanded) -->
-        <Transition name="fuzzy-search-dropdown">
-            <div
-                v-if="state.isOpen.value && !state.isExpanded.value && state.results.value.length > 0"
-                ref="resultsRef"
-                class="fuzzy-search-results"
-            >
-                <button
-                    v-for="(r, i) in state.results.value"
-                    :key="`${r.item.id}-${r.item.type}-${i}`"
-                    class="fuzzy-search-result"
-                    :class="{ 'is-selected': i === state.selectedIndex.value }"
-                    @click="state.selectResult(r)"
-                    @mouseenter="state.selectedIndex.value = i"
-                >
-                    <span v-if="getTypeLabel(r)" class="fuzzy-search-badge" :data-type="r.item.type">
-                        {{ getTypeLabel(r) }}
-                    </span>
-                    <span class="fuzzy-search-label">
-                        <template
-                            v-for="(segment, segmentIndex) in highlightFuzzySegments(resultLabel(r), state.query.value)"
-                            :key="segmentIndex"
-                        >
-                            <mark v-if="segment.matched">{{ segment.text }}</mark>
-                            <span v-else>{{ segment.text }}</span>
+    <div class="fuzzy-search relative" :class="`fuzzy-search--${variant}`">
+        <Popover v-model:open="inlineOpen">
+            <PopoverTrigger as-child>
+                <div class="input-bar" :class="variant === 'floating' && '!border-none !bg-transparent !p-0 !rounded-none'">
+                    <Search class="h-3.5 w-3.5 shrink-0 text-muted-foreground/70" />
+                    <input
+                        ref="inputRef" type="text" class="input-bar-field text-sm" :placeholder="placeholder"
+                        :value="state.query.value"
+                        @input="state.query.value = ($event.target as HTMLInputElement).value"
+                        @keydown="state.onKeydown" @focus="state.isOpen.value = true"
+                    />
+                    <Button v-if="state.query.value && state.results.value.length > 0"
+                        type="button" variant="ghost" size="icon" class="!h-6 !w-6"
+                        :title="state.isExpanded.value ? 'Collapse' : 'Expand'" @click="state.toggleExpanded()">
+                        <Maximize2 v-if="!state.isExpanded.value" class="h-3 w-3" />
+                        <Minimize2 v-else class="h-3 w-3" />
+                    </Button>
+                    <Button v-if="state.query.value" type="button" variant="ghost" size="icon" class="!h-6 !w-6"
+                        title="Clear search" @click="state.close()">
+                        <X class="h-3 w-3" />
+                    </Button>
+                </div>
+            </PopoverTrigger>
+            <PopoverContent align="start" :side-offset="4" :portal="false"
+                class="w-[var(--reka-popover-trigger-width)] max-h-[50vh] overflow-y-auto overscroll-contain p-1"
+                @open-auto-focus="(e: Event) => e.preventDefault()">
+                <button v-for="(r, i) in state.results.value" :key="`${r.item.id}-${r.item.type}-${i}`" type="button"
+                    class="fuzzy-search-result interactive-item flex w-full items-baseline gap-1.5 px-2 py-1.5 text-left text-sm"
+                    :class="{ 'is-selected bg-muted/50': i === state.selectedIndex.value }"
+                    @click="state.selectResult(r)" @mouseenter="state.selectedIndex.value = i">
+                    <Badge v-if="getTypeLabel(r)" variant="secondary" class="shrink-0 text-[0.6rem] font-bold uppercase tracking-wider">{{ getTypeLabel(r) }}</Badge>
+                    <span class="fuzzy-search-label flex-1 min-w-0 truncate text-foreground/85">
+                        <template v-for="(seg, j) in highlightFuzzySegments(resultLabel(r), state.query.value)" :key="j">
+                            <mark v-if="seg.matched" :class="MARK_CLASS">{{ seg.text }}</mark>
+                            <span v-else>{{ seg.text }}</span>
                         </template>
                     </span>
                 </button>
-            </div>
-        </Transition>
+            </PopoverContent>
+        </Popover>
 
-        <!-- Backdrop for inline dropdown (floating variant only) -->
-        <div
-            v-if="variant === 'floating' && state.isOpen.value && !state.isExpanded.value && state.results.value.length > 0"
-            class="fuzzy-search-backdrop"
-            @click="state.close()"
-        />
-
-        <!-- Expanded modal -->
-        <Teleport to="body">
-            <Transition name="fuzzy-search-modal">
-                <div
-                    v-if="state.isExpanded.value"
-                    class="fuzzy-search-modal-overlay"
-                    @click.self="state.toggleExpanded()"
-                >
-                    <div class="fuzzy-search-modal" @click.stop>
-                        <!-- Modal header -->
-                        <div class="fuzzy-search-modal-header">
-                            <Search class="fuzzy-search-modal-icon" />
-                            <input
-                                ref="modalInputRef"
-                                type="text"
-                                class="fuzzy-search-modal-input"
-                                :placeholder="placeholder"
-                                :value="state.query.value"
-                                @input="state.query.value = ($event.target as HTMLInputElement).value"
-                                @keydown="state.onKeydown"
-                            />
-                            <button
-                                class="fuzzy-search-action-btn"
-                                @click="state.toggleExpanded()"
-                                title="Collapse"
-                            >
-                                <Minimize2 class="h-3.5 w-3.5" />
-                            </button>
-                            <button
-                                class="fuzzy-search-action-btn"
-                                @click="state.close()"
-                                title="Close"
-                            >
-                                <X class="h-3.5 w-3.5" />
-                            </button>
-                        </div>
-
-                        <!-- Modal results -->
-                        <div class="fuzzy-search-modal-results" v-if="state.results.value.length > 0">
-                            <button
-                                v-for="(r, i) in state.results.value"
-                                :key="`modal-${r.item.id}-${r.item.type}-${i}`"
-                                class="fuzzy-search-result fuzzy-search-modal-result"
-                                :class="{ 'is-selected': i === state.selectedIndex.value }"
-                                @click="state.selectResult(r)"
-                                @mouseenter="state.selectedIndex.value = i"
-                            >
-                                <span v-if="getTypeLabel(r)" class="fuzzy-search-badge" :data-type="r.item.type">
-                                    {{ getTypeLabel(r) }}
-                                </span>
-                                <span class="fuzzy-search-label">
-                                    <template
-                                        v-for="(segment, segmentIndex) in highlightFuzzySegments(resultLabel(r), state.query.value)"
-                                        :key="segmentIndex"
-                                    >
-                                        <mark v-if="segment.matched">{{ segment.text }}</mark>
-                                        <span v-else>{{ segment.text }}</span>
-                                    </template>
-                                </span>
-                            </button>
-                        </div>
-                        <div v-else class="fuzzy-search-modal-empty">
-                            No results
-                        </div>
-
-                        <!-- Modal footer -->
-                        <div class="fuzzy-search-modal-footer">
-                            <span class="fuzzy-search-modal-hint">
-                                <kbd>&uarr;</kbd><kbd>&darr;</kbd> navigate
-                            </span>
-                            <span class="fuzzy-search-modal-hint">
-                                <kbd>&crarr;</kbd> select
-                            </span>
-                            <span class="fuzzy-search-modal-hint">
-                                <kbd>esc</kbd> close
-                            </span>
-                        </div>
-                    </div>
+        <Dialog v-model:open="state.isExpanded.value">
+            <DialogContent variant="opaque"
+                class="!max-w-[36rem] !top-[12vh] !translate-y-0 max-h-[70vh] !p-0 overflow-hidden flex flex-col gap-0"
+                @open-auto-focus="(e: Event) => e.preventDefault()">
+                <div class="flex items-center gap-2 border-b border-border/50 px-3.5 py-3">
+                    <Search class="h-4 w-4 shrink-0 text-muted-foreground/70" />
+                    <input ref="modalInputRef" type="text" class="input-bar-field flex-1 text-base" :placeholder="placeholder"
+                        :value="state.query.value"
+                        @input="state.query.value = ($event.target as HTMLInputElement).value"
+                        @keydown="state.onKeydown" />
+                    <Button type="button" variant="ghost" size="icon" class="!h-7 !w-7" title="Collapse" @click="state.toggleExpanded()">
+                        <Minimize2 class="h-3.5 w-3.5" />
+                    </Button>
                 </div>
-            </Transition>
-        </Teleport>
+                <div v-if="state.results.value.length > 0" class="flex-1 min-h-0 overflow-y-auto overscroll-contain p-1.5">
+                    <button v-for="(r, i) in state.results.value" :key="`modal-${r.item.id}-${r.item.type}-${i}`" type="button"
+                        class="fuzzy-search-result interactive-item flex w-full items-baseline gap-1.5 px-2.5 py-2 text-left"
+                        :class="{ 'is-selected bg-muted/50': i === state.selectedIndex.value }"
+                        @click="state.selectResult(r)" @mouseenter="state.selectedIndex.value = i">
+                        <Badge v-if="getTypeLabel(r)" variant="secondary" class="shrink-0 text-[0.65rem] font-bold uppercase tracking-wider">{{ getTypeLabel(r) }}</Badge>
+                        <span class="fuzzy-search-label flex-1 min-w-0 truncate text-base text-foreground/85">
+                            <template v-for="(seg, j) in highlightFuzzySegments(resultLabel(r), state.query.value)" :key="j">
+                                <mark v-if="seg.matched" :class="MARK_CLASS">{{ seg.text }}</mark>
+                                <span v-else>{{ seg.text }}</span>
+                            </template>
+                        </span>
+                    </button>
+                </div>
+                <div v-else class="px-4 py-8 text-center text-muted-foreground/60">No results</div>
+                <div class="flex items-center gap-4 border-t border-border/50 px-3.5 py-2 text-mono-caption text-muted-foreground/60">
+                    <span class="flex items-center gap-1"><kbd class="kbd">&uarr;</kbd><kbd class="kbd">&darr;</kbd> navigate</span>
+                    <span class="flex items-center gap-1"><kbd class="kbd">&crarr;</kbd> select</span>
+                    <span class="flex items-center gap-1"><kbd class="kbd">esc</kbd> close</span>
+                </div>
+            </DialogContent>
+        </Dialog>
     </div>
 </template>
-
-<style scoped>
-.fuzzy-search {
-    position: relative;
-}
-
-.fuzzy-search-input-wrap {
-    display: flex;
-    align-items: center;
-    gap: 0.375rem;
-    border: 1.5px solid color-mix(in srgb, var(--border) 60%, transparent);
-    border-radius: var(--radius-pill);
-    background: color-mix(in srgb, var(--muted) 30%, transparent);
-    padding: 0.35rem 0.625rem;
-    transition:
-        border-color var(--duration-fast) var(--ease-standard),
-        background var(--duration-fast) var(--ease-standard),
-        box-shadow var(--duration-fast) var(--ease-standard);
-}
-
-.fuzzy-search-input-wrap:focus-within {
-    border-color: color-mix(in srgb, var(--ring) 40%, transparent);
-    background: var(--background);
-    box-shadow: var(--focus-ring-shadow);
-}
-
-.fuzzy-search-icon {
-    width: 0.8rem;
-    height: 0.8rem;
-    flex-shrink: 0;
-    color: color-mix(in srgb, var(--muted-foreground) 50%, transparent);
-}
-
-.fuzzy-search-input {
-    flex: 1;
-    min-width: 0;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-size: 0.78rem;
-    color: var(--foreground);
-    font-family: inherit;
-}
-
-.fuzzy-search-input::placeholder {
-    color: color-mix(in srgb, var(--muted-foreground) 45%, transparent);
-}
-
-.fuzzy-search-action-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.15rem;
-    border: none;
-    background: none;
-    color: color-mix(in srgb, var(--muted-foreground) 45%, transparent);
-    cursor: pointer;
-    border-radius: var(--radius-sm);
-    transition: color var(--duration-fast), background var(--duration-fast);
-}
-
-.fuzzy-search-action-btn:hover {
-    color: var(--foreground);
-    background: color-mix(in srgb, var(--muted) 50%, transparent);
-}
-
-/* ── Inline dropdown ───────────────────────────────────── */
-.fuzzy-search-results {
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    right: 0;
-    z-index: var(--z-popover);
-    max-height: 50vh;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    background: color-mix(in srgb, var(--background) 97%, transparent);
-    backdrop-filter: blur(12px);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    padding: 0.25rem;
-}
-
-.fuzzy-search-result {
-    display: flex;
-    align-items: baseline;
-    gap: 0.375rem;
-    width: 100%;
-    padding: 0.35rem 0.5rem;
-    border: none;
-    background: none;
-    cursor: pointer;
-    text-align: left;
-    border-radius: var(--radius-sm);
-    transition: background var(--duration-instant) var(--ease-standard);
-}
-
-.fuzzy-search-result:hover,
-.fuzzy-search-result.is-selected {
-    background: color-mix(in srgb, var(--muted) 50%, transparent);
-}
-
-.fuzzy-search-badge {
-    flex-shrink: 0;
-    font-size: 0.6rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    padding: 0.1rem 0.3rem;
-    border-radius: var(--radius-sm);
-    background: var(--muted);
-    color: color-mix(in srgb, var(--muted-foreground) 70%, transparent);
-    line-height: 1;
-}
-
-.fuzzy-search-label {
-    flex: 1;
-    min-width: 0;
-    font-size: 0.875rem;
-    color: color-mix(in srgb, var(--foreground) 85%, transparent);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    line-height: 1.4;
-}
-
-.fuzzy-search-label mark {
-    background: hsl(50 100% 60% / 0.35);
-    color: inherit;
-    border-radius: var(--radius-sm);
-    padding: 0 1px;
-}
-
-.fuzzy-search-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: calc(var(--z-popover) - 5);
-}
-
-/* ── Sidebar variant ───────────────────────────────────── */
-.fuzzy-search--sidebar {
-    margin-bottom: 0.5rem;
-}
-
-/* ── Floating variant ──────────────────────────────────── */
-.fuzzy-search--floating .fuzzy-search-input-wrap {
-    border: none;
-    border-radius: 0;
-    background: transparent;
-    padding: 0;
-}
-
-.fuzzy-search--floating .fuzzy-search-input {
-    font-size: 1rem;
-}
-
-.fuzzy-search--floating .fuzzy-search-results {
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
-    top: 100%;
-    max-height: 60vh;
-}
-
-/* ── Inline dropdown transition ────────────────────────── */
-.fuzzy-search-dropdown-enter-active,
-.fuzzy-search-dropdown-leave-active {
-    transition:
-        opacity var(--duration-fast) var(--ease-standard),
-        transform var(--duration-fast) var(--ease-out-expo);
-}
-
-.fuzzy-search-dropdown-enter-from,
-.fuzzy-search-dropdown-leave-to {
-    opacity: 0;
-    transform: translateY(-4px);
-}
-
-/* ── Modal overlay + panel ─────────────────────────────── */
-.fuzzy-search-modal-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: var(--z-modal);
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: min(12vh, 6rem);
-    background: color-mix(in srgb, var(--background) 55%, transparent);
-    backdrop-filter: blur(6px);
-}
-
-.fuzzy-search-modal {
-    width: min(36rem, calc(100vw - 2rem));
-    max-height: 70vh;
-    display: flex;
-    flex-direction: column;
-    border-radius: var(--radius-xl);
-    border: 1.5px solid var(--border);
-    background: var(--background);
-    box-shadow: var(--shadow-xl);
-    overflow: hidden;
-}
-
-.fuzzy-search-modal-header {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 0.875rem;
-    border-bottom: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
-}
-
-.fuzzy-search-modal-icon {
-    width: 1rem;
-    height: 1rem;
-    flex-shrink: 0;
-    color: color-mix(in srgb, var(--muted-foreground) 50%, transparent);
-}
-
-.fuzzy-search-modal-input {
-    flex: 1;
-    min-width: 0;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-size: 1rem;
-    color: var(--foreground);
-    font-family: inherit;
-}
-
-.fuzzy-search-modal-input::placeholder {
-    color: color-mix(in srgb, var(--muted-foreground) 40%, transparent);
-}
-
-.fuzzy-search-modal-results {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    padding: 0.375rem;
-}
-
-.fuzzy-search-modal-result {
-    padding: 0.5rem 0.625rem;
-}
-
-.fuzzy-search-modal-result .fuzzy-search-badge {
-    font-size: 0.65rem;
-    padding: 0.125rem 0.375rem;
-}
-
-.fuzzy-search-modal-result .fuzzy-search-label {
-    font-size: 1rem;
-}
-
-.fuzzy-search-modal-empty {
-    padding: 2rem 1rem;
-    text-align: center;
-    color: color-mix(in srgb, var(--muted-foreground) 50%, transparent);
-    font-size: 1rem;
-}
-
-.fuzzy-search-modal-footer {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.5rem 0.875rem;
-    border-top: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
-}
-
-.fuzzy-search-modal-hint {
-    font-size: 0.875rem;
-    font-family: var(--font-mono, monospace);
-    color: color-mix(in srgb, var(--muted-foreground) 45%, transparent);
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-}
-
-.fuzzy-search-modal-hint kbd {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 1.25rem;
-    height: 1.125rem;
-    padding: 0 0.25rem;
-    border-radius: var(--radius-sm);
-    border: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
-    background: color-mix(in srgb, var(--muted) 40%, transparent);
-    font-size: 0.6rem;
-    line-height: 1;
-}
-
-/* ── Modal transition ──────────────────────────────────── */
-.fuzzy-search-modal-enter-active {
-    transition: opacity 0.2s var(--ease-standard);
-}
-
-.fuzzy-search-modal-enter-active .fuzzy-search-modal {
-    transition:
-        opacity 0.2s var(--ease-standard),
-        transform 0.25s var(--ease-out-expo);
-}
-
-.fuzzy-search-modal-leave-active {
-    transition: opacity var(--duration-fast) var(--ease-standard);
-}
-
-.fuzzy-search-modal-leave-active .fuzzy-search-modal {
-    transition:
-        opacity var(--duration-fast) var(--ease-standard),
-        transform var(--duration-fast) var(--ease-in);
-}
-
-.fuzzy-search-modal-enter-from {
-    opacity: 0;
-}
-
-.fuzzy-search-modal-enter-from .fuzzy-search-modal {
-    opacity: 0;
-    transform: scale(0.96) translateY(-8px);
-}
-
-.fuzzy-search-modal-leave-to {
-    opacity: 0;
-}
-
-.fuzzy-search-modal-leave-to .fuzzy-search-modal {
-    opacity: 0;
-    transform: scale(0.97) translateY(-4px);
-}
-</style>

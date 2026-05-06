@@ -13,7 +13,7 @@ import {
     FuzzySearch,
     SearchBar,
     buildIndex,
-    clearSearchCache,
+    clearSearchCache as clearCache,
     fuzzyMatch,
     searchIndex,
     useFuzzySearch,
@@ -61,7 +61,7 @@ const rowSeeds = [
     ["buildIndex helper", "helper", "Builds lowercased index entries from the 50-row sample dataset.", "wired", "Search", ["buildIndex", "index"]],
     ["searchIndex helper", "helper", "Scores multi-token fuzzy queries and returns ordered search results.", "proof", "Search", ["searchIndex", "score"]],
     ["fuzzyMatch scorer", "helper", "Subsequence matching with bonuses for prefixes, separators, and consecutive runs.", "proof", "Search", ["fuzzyMatch", "score"]],
-    ["clearSearchCache control", "helper", "Flushes cached search results after dataset or route state changes.", "wired", "Search", ["clearSearchCache", "cache"]],
+    ["clearCache control", "helper", "Flushes cached search results after dataset or route state changes.", "wired", "Search", ["clearCache", "cache"]],
     ["Glass panel substrate", "component", "Glass renderer consumer row with tiered surface tokens and filter state.", "consumer", "Foundations", ["glass", "panel"]],
     ["Metaball canvas proof", "component", "Motion substrate row for live canvas support and fallback readouts.", "triage", "Motion", ["metaball", "canvas"]],
     ["Dock dropdown trigger", "component", "Navigation package trigger row for dock-scoped menus.", "wired", "Navigation", ["dock", "dropdown"]],
@@ -197,10 +197,10 @@ function runFuzzyMatch() {
 }
 
 function runClearCache() {
-    clearSearchCache();
+    clearCache();
     manualResults.value = [];
     clearCalls.value += 1;
-    lastHelper.value = "clearSearchCache flushed cached helper results";
+    lastHelper.value = "clearCache flushed cached helper results";
 }
 
 function typeLabel(item: SearchableItem): string {
@@ -315,9 +315,16 @@ function formatMatches(indices: number[]): string {
                         <Sparkles class="mr-2 h-4 w-4" />
                         fuzzyMatch
                     </Button>
-                    <Button type="button" variant="danger-subtle" size="sm" data-testid="clear-cache-button" @click="runClearCache">
+                    <Button
+                        type="button"
+                        variant="destructive"
+                        size="sm"
+                        data-testid="clear-cache-button"
+                        aria-label="Clear search cache"
+                        @click="runClearCache"
+                    >
                         <Trash2 class="mr-2 h-4 w-4" />
-                        clearSearchCache
+                        Clear cache
                     </Button>
                 </div>
 
@@ -368,7 +375,7 @@ function formatMatches(indices: number[]): string {
                         <dd class="fira-code" data-testid="fuzzy-match-calls">{{ matchCalls }}</dd>
                     </div>
                     <div>
-                        <dt class="text-muted-foreground">clearSearchCache</dt>
+                        <dt class="text-muted-foreground">clearCache</dt>
                         <dd class="fira-code" data-testid="clear-cache-calls">{{ clearCalls }}</dd>
                     </div>
                 </dl>

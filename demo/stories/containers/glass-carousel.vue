@@ -3,6 +3,7 @@ import { computed, nextTick, onMounted, ref } from "vue";
 import { ChevronLeft, ChevronRight } from "lucide-vue-next";
 import StoryPage from "../StoryPage.vue";
 import { Button } from "@/components/ui/button";
+import { GlassCarouselPager } from "@/components/ui/carousel";
 import {
     GlassCarousel,
     GlassCarouselItem,
@@ -68,14 +69,6 @@ function goToSlide(index: number) {
     activeIndex.value = wrapSlideIndex(index);
 }
 
-function goPrevious() {
-    goToSlide(activeIndex.value - 1);
-}
-
-function goNext() {
-    goToSlide(activeIndex.value + 1);
-}
-
 const harnessRoot = ref<HTMLElement | null>(null);
 const harnessViewport = ref<HTMLElement | null>(null);
 const harnessOrientation = ref<"horizontal" | "vertical">("horizontal");
@@ -124,37 +117,23 @@ onMounted(updateOverflow);
                         {{ activeSlide.title }}
                     </p>
                 </div>
-                <div class="flex items-center gap-2">
-                    <Button
-                        variant="outline"
-                        size="icon"
-                        aria-label="Previous glass carousel slide"
-                        @click="goPrevious"
-                    >
-                        <ChevronLeft class="size-4" />
-                    </Button>
-                    <span
-                        class="rounded-pill border border-border bg-card px-3 py-1 text-mono-caption"
-                        data-glass-carousel-index
-                    >
-                        {{ activeIndex + 1 }} / {{ slides.length }}
-                    </span>
-                    <Button
-                        variant="outline"
-                        size="icon"
-                        aria-label="Next glass carousel slide"
-                        @click="goNext"
-                    >
-                        <ChevronRight class="size-4" />
-                    </Button>
-                    <Button
-                        variant="glass"
-                        size="sm"
-                        @click="carouselExpanded = !carouselExpanded"
-                    >
-                        {{ carouselExpanded ? "Collapse" : "Expand" }}
-                    </Button>
-                </div>
+                <GlassCarouselPager
+                    :index="activeIndex"
+                    :total="slides.length"
+                    loop
+                    data-glass-carousel-pager
+                    @select="goToSlide"
+                >
+                    <template #trailing>
+                        <Button
+                            variant="glass"
+                            size="sm"
+                            @click="carouselExpanded = !carouselExpanded"
+                        >
+                            {{ carouselExpanded ? "Collapse" : "Expand" }}
+                        </Button>
+                    </template>
+                </GlassCarouselPager>
             </div>
 
             <div class="rounded-card border border-border bg-card/40 p-4 shadow-cartoon">

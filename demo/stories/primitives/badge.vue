@@ -70,14 +70,41 @@ const vizBadges: { cls: string; label: string }[] = [
             </div>
         </section>
 
-        <!-- Sizes via utility overrides. -->
+        <!-- Size axis (sm / md / lg). -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">size overrides</p>
+            <p class="section-label">size axis</p>
             <div class="flex flex-wrap items-center gap-3">
-                <Badge class="px-1.5 py-0 text-micro">micro</Badge>
-                <Badge>default</Badge>
-                <Badge class="px-3 py-1 text-sm">large</Badge>
+                <Badge size="sm">sm · text-xs</Badge>
+                <Badge size="md">md · text-sm (default)</Badge>
+                <Badge size="lg">lg · text-base</Badge>
             </div>
+        </section>
+
+        <!-- Size axis × variant matrix. -->
+        <section class="flex flex-col gap-3">
+            <p class="section-label">size × variant</p>
+            <div class="flex flex-col gap-3">
+                <div
+                    v-for="v in coreVariants"
+                    :key="v.variant"
+                    class="flex flex-wrap items-center gap-3"
+                >
+                    <Badge :variant="v.variant" size="sm">sm</Badge>
+                    <Badge :variant="v.variant" size="md">md</Badge>
+                    <Badge :variant="v.variant" size="lg">lg</Badge>
+                    <span class="text-mono-caption text-muted-foreground">{{ v.label }}</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Inline-with-text alignment proof (md matches text-sm baseline). -->
+        <section class="flex flex-col gap-3">
+            <p class="section-label">baseline alignment in text-sm context</p>
+            <p class="text-sm">
+                Row text aligned with
+                <Badge variant="outline" size="md">size="md"</Badge>
+                badge — baselines coincide because the badge inherits text-sm leading-5.
+            </p>
         </section>
     </StoryPage>
 </template>

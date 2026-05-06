@@ -74,6 +74,7 @@ const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", c
                             <TableCell>
                                 <Badge
                                     variant="outline"
+                                    size="md"
                                     :class="cn('capitalize', statusTone(row.status))"
                                 >
                                     {{ row.status }}

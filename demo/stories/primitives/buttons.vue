@@ -22,7 +22,6 @@ const coreVariants = [
     "glass",
     "glass-wash",
     "ai",
-    "danger-subtle",
     "link",
 ] as const;
 

@@ -430,6 +430,43 @@ Standalone circular icon button for non-Vue contexts.
 - Border 1.5px `--glass-border-subtle`
 - Background `--glass-bg-subtle`
 - Backdrop-filter `--glass-blur-subtle`
+
+---
+
+## Badges
+
+### `Badge` CVA component
+
+Pill primitive for inline metadata, status chips, and count indicators. CVA root composes `focus-ring inline-flex items-center rounded-full border font-semibold transition-colors`; the `variant` axis paints fill+border and the `size` axis governs typography + padding.
+
+### Variants
+
+| Variant       | Rest                                                  |
+|---------------|-------------------------------------------------------|
+| `default`     | Primary bg, primary-foreground text, transparent border |
+| `secondary`   | Secondary bg, secondary-foreground text                |
+| `destructive` | Destructive bg, destructive-foreground text            |
+| `outline`     | Foreground text on transparent fill, border-from-context |
+
+### Sizes (J.W6 size axis)
+
+| Size  | Typography           | Padding         | Use                                                        |
+|-------|----------------------|-----------------|------------------------------------------------------------|
+| `sm`  | `text-xs leading-4`  | `px-2 py-0.5`   | Sits inside `text-xs` rows or compact inline metadata      |
+| `md`  | `text-sm leading-5`  | `px-2.5 py-1`   | **Default.** Aligns baseline-to-baseline with `text-sm` row text — canonical for table status cells |
+| `lg`  | `text-base leading-6`| `px-3 py-1.5`   | Standalone callouts inside `text-base` body copy           |
+
+The `md` default matches the baseline of the most common surrounding context (table rows + card body — both `text-sm`). Consumers nesting a Badge inside an explicitly compact context (`text-xs` mono cells, dense filter rows) opt down to `size="sm"`.
+
+### Section-tone recipe (table status cells)
+
+Tables and tag-input chips frequently need a per-section tinted chip whose hue tracks `--section-color-N`. The canonical recipe — composed by demo consumers (`stories/data/table.vue`, `stories/data/tags-input.vue`) — is the triplet:
+
+```
+bg-section-N/15 text-section-N border-section-N/30
+```
+
+paired with `<Badge variant="outline" size="md">`. The `outline` variant supplies the focus-ring/border substrate and yields foreground text; the section triplet then overrides fill, foreground, and border with the section-tinted hue. The recipe is intentionally **not** lifted into a `tone` axis on `badgeVariants` — the section-N family is a 13-rung tinted ladder, not a 4-state semantic tone (`success/warning/destructive/info`), and a CVA-side enumeration would be overfit to the current demo consumers (1 src consumer count). When a second consumer surfaces with semantic tone needs (success/warning/destructive/info), introduce a `tone` axis at that point.
 - Color `var(--muted-foreground)`
 - Hover: 85% bg lighten, 20% foreground border, 15% foreground color, `transform: scale(1.08)`
 - Active: `transform: scale(0.95)`
