@@ -231,9 +231,9 @@
         "proof:runtime": "node scripts/proof-runtime.mjs",
         "proof:theme": "node scripts/proof-theme-style.mjs",
         "profile:bundle": "node scripts/profile-bundle.mjs",
+        "profile:budget": "GLASS_UI_BUDGET_MODE=1 GLASS_UI_BUDGET_SKIP_BUILD=1 node scripts/profile-bundle.mjs",
         "profile:aurora": "node scripts/profile-aurora.mjs",
         "stress": "node scripts/stress/blob-stress-capture.mjs",
-        "ay-close": "scripts/ay-close.sh",
         "validate-consumers": "scripts/validate-consumers.sh"
     },
     "engines": {

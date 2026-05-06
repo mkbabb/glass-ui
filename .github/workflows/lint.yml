@@ -54,3 +54,30 @@ jobs:
 
             - name: Test
               run: npm run test
+
+    bundle-budget:
+        # Soft-fail per tranche I invariant 8: the workflow records the
+        # regression but does not block the PR. Hard-fail promotion is
+        # named for a future tranche.
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        continue-on-error: true
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: npm
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Build
+              run: npm run build
+
+            - name: Bundle budget
+              run: npm run profile:budget
