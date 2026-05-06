@@ -777,7 +777,9 @@ animation · aurora · confirm-dialog · controls · **dock** (`GlassDock`, `Doc
 
 **`Pulse`** — `<Pulse :count="3" variant="dots|ring" speed="slow|normal|fast" />`. Dots: count-many 6 × 6 px rounded circles with current-color background, staggered `pulse-dot-bounce` animation (opacity 0.35 → 1 → 0.35, scale 0.8 → 1.2 → 0.8). Ring: 16 × 16 px current-color border with transparent top, linear spin. `--pulse-duration` mapped from `speed` prop to `--duration-slow|panel|fast`. Reduced-motion → animation none, opacity 0.6.
 
-**`MetricBadge`** — `<MetricBadge :size="sm|md|lg|xl" :amount="str|num" :unit="str" :color="hex" :placeholder="—" />`. Inline-flex, baseline-aligned, `max-w-32`, overflow-hidden. Amount: `text-mono-micro font-semibold tabular-nums` at sm (11px), `text-mono-caption` at md (12px), `text-mono-small` at lg (14px), `text-mono-prose` at xl (18px) — the audacious-canon-plus-one ladder per Q.W2.B; colored with prop when amount is truthy, muted-foreground/40 when falsy. Unit: `text-micro font-mono text-muted-foreground` (sm/md/lg) lifting to `text-prose font-mono` at xl. Interactive: `hover:scale-110 hover:shadow-md active:scale-95`. The `size` prop scales the typographic ladder for the audacious-canon use (consumer-side `useMediaQuery` selects `xl` ≥1200, `lg` ≥480, `sm` below to fit the mobile carve without clipping).
+**`MetricBadge`** — `<MetricBadge :size="sm|md|lg|xl" :amount="str|num" :unit="str" :color="hex" :placeholder="—" :label?="str" :abbreviation?="str" />`. Inline-flex, baseline-aligned, `max-w-32`, overflow-hidden. Amount: `text-mono-micro font-semibold tabular-nums` at sm (11px), `text-mono-caption` at md (12px), `text-mono-small` at lg (14px), `text-mono-prose` at xl (18px) — the audacious-canon-plus-one ladder per Q.W2.B; colored with prop when amount is truthy, muted-foreground/40 when falsy. Unit: `text-micro font-mono text-muted-foreground` (sm/md/lg) lifting to `text-prose font-mono` at xl. Interactive: `hover:scale-110 hover:shadow-md active:scale-95`. The `size` prop scales the typographic ladder for the audacious-canon use (consumer-side `useMediaQuery` selects `xl` ≥1200, `lg` ≥480, `sm` below to fit the mobile carve without clipping).
+
+**v0.7.2 inline-label / abbreviation extension** (R.W4 consumer-driven, no breaking change). When `label` is set, the badge renders `[label][space][amount][space][unit]` inside the same container. The label is `font-mono` Fira Code uppercase tracking 0.18em at the badge's unit-tier size (one tier below the amount), colour `var(--muted-foreground)` at 80% — never the amount's `color` prop, because the label is the schedule annotation and the amount is the readout (Vignelli typographic asymmetry). When `abbreviation` is also set, consumers can swap to it via their own viewport branching (`useMediaQuery("(max-width: 479px)")` is the canonical pattern for the 3-letter mobile collapse `LAT 36 ms` / `JIT 1` / `DL 730` / `UL 130`); the library exposes both modes but does NOT branch on viewport — that's consumer logic per glass-ui's first principle (component owns visual contract; consumer owns layout decisions). Both `label` and `abbreviation` are `undefined`-default; pre-v0.7.2 consumers render unchanged. Hover popovers stay valid for description copy ("Network latency — lower is better") because the label-on-pill answers "what is this number" and the popover answers "what does it mean".
 
 **`GlyphFace`** — `<GlyphFace :tint="hex|undefined" :active="bool" :silhouette="path-d|clip-path">`. Three-layer wrapper around a slotted lucide glyph: a phase-tinted radial backplate (visible only when `[data-active="true"]`), the slotted silhouette (stays `currentColor` so the Vignelli-clean idle reading holds), and a 165° linear-gradient catch-light cap. Four CSS knobs:
 
@@ -793,6 +795,27 @@ animation · aurora · confirm-dialog · controls · **dock** (`GlassDock`, `Doc
 **`HoverPopover`** — `<HoverPopover content="..." :side="auto" :align="auto">`. Hover-triggered popover-tier label with adaptive `side`/`align` (auto-flips off viewport edges); 250ms open / 150ms defer-on-leave timer. Composed via reka-ui HoverCard primitives; popover-tier substrate for chassis dock consumers (SettingsCog tooltip; ActionCluster Back / Stop / Retake hover-labels).
 
 **`InstrumentChassis`** — `<InstrumentChassis>` with `strip` / `dial` / `control` slots. Composes the chassis CSS once: `--glass-bg-chassis` + `--glass-blur-default` + `--glass-border-default` + `--glass-shadow-default` + the `--glass-curvature-overlay` lift + an engraved-bezel inner stroke + twin-line groove dividers between regions. Consumers render through the slots — speedtest, survey, thank-you all share the same chassis with different region content. `RegionDivider` ships the twin-line groove rule for nested splits. Q.W4.A lifted the light-mode bezel-line α from 0.04 / 0.06 to 0.10 / 0.12 so the divider reads against saturated-aurora bleed; dark-mode pair (0.06 / 0.18) stays. Lands on `o-w2_7-instrument-chassis` and cherry-picks into `release/0.7.x` as v0.7.1 patch.
+
+### Library-only primitives (post-R consumer state)
+
+`InstrumentChassis`, `RegionDivider`, `GlyphFace`, and `DiscoGlyph` are
+first-class library primitives with their own demo stories
+(`demo/stories/compositions/instrument-chassis.vue`,
+`demo/stories/primitives/glyph-face.vue`, plus the `_internal/blob-stress.vue`
+that exercises `MetricBadge` at scale). The speedtest project consumed them
+during O.W2.7 → Q.W4 but stops consuming them at R.W1 — speedtest now
+composes its UI from `MetricPillCluster` + `SpeedtestResults` + `Dock`
+against the deployed three-flow-box shape (see speedtest `DESIGN.md`
+`## Tranche-R revisions` for the full ledger). The library exports stay;
+the demo stories stay; downstream consumers other than speedtest remain
+free to compose them. The primitives' API contracts above are unchanged
+post-R — this subsection records the consumer-state shift, not a library
+change.
+
+The `MetricBadge.label + abbreviation` extension above (v0.7.2) is the only
+library-side R-tranche landing. It ships as a non-breaking minor on the
+`release/0.7.x` line; no v0.8.0 cut required by R itself. Consumers on
+v0.7.0 / v0.7.1 keep working unchanged.
 
 ### Composables (`src/composables/`)
 
