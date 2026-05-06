@@ -1,5 +1,7 @@
 import { ref, onMounted } from "vue";
 
+import { useResizeObserver } from "../useResizeObserver";
+
 export type GlassTier = "svg-filter" | "css" | "fallback";
 
 /**
@@ -120,7 +122,9 @@ export interface GlassFilterState {
     svgEl: SVGSVGElement;
     dispCanvas: HTMLCanvasElement;
     specCanvas: HTMLCanvasElement;
-    observer: ResizeObserver | null;
+    /** Returns from `useResizeObserver`. Called by `destroyGlassFilter` to
+     *  disconnect the resize observer attached to the host element. */
+    stopResizeObserver: () => void;
 }
 
 /**
@@ -202,29 +206,37 @@ export function createGlassFilter(
         0 4px 16px rgba(0,0,0,0.08)
     `;
 
-    // Resize handler
-    const observer = new ResizeObserver(() => {
-        const r = el.getBoundingClientRect();
-        const w = Math.max(Math.ceil(r.width / 4), 32);
-        const h = Math.max(Math.ceil(r.height / 4), 32);
-        generateDisplacementMap(dispCanvas, w, h, refraction);
-        generateSpecularMap(specCanvas, w, h);
+    // Resize handler — createGlassFilter runs imperatively (outside a Vue
+    // effect-scope), so we wrap el in a Ref and capture the returned stop()
+    // for destroyGlassFilter to call. rafBatch:false / threshold:0 preserves
+    // the original "every entry triggers map regeneration" cadence that the
+    // displacement-map pipeline expects.
+    const elRef = ref<HTMLElement | null>(el);
+    const { stop: stopResizeObserver } = useResizeObserver(
+        elRef,
+        () => {
+            const r = el.getBoundingClientRect();
+            const w = Math.max(Math.ceil(r.width / 4), 32);
+            const h = Math.max(Math.ceil(r.height / 4), 32);
+            generateDisplacementMap(dispCanvas, w, h, refraction);
+            generateSpecularMap(specCanvas, w, h);
 
-        // Update SVG feImage hrefs
-        const feImages = svg.querySelectorAll("feImage");
-        if (feImages[0]) feImages[0].setAttribute("href", dispCanvas.toDataURL());
-        if (feImages[1]) feImages[1].setAttribute("href", specCanvas.toDataURL());
-    });
-    observer.observe(el);
+            // Update SVG feImage hrefs
+            const feImages = svg.querySelectorAll("feImage");
+            if (feImages[0]) feImages[0].setAttribute("href", dispCanvas.toDataURL());
+            if (feImages[1]) feImages[1].setAttribute("href", specCanvas.toDataURL());
+        },
+        { rafBatch: false, threshold: 0 },
+    );
 
-    return { filterId: id, svgEl: svg, dispCanvas, specCanvas, observer };
+    return { filterId: id, svgEl: svg, dispCanvas, specCanvas, stopResizeObserver };
 }
 
 /**
  * Remove a glass filter and clean up DOM elements.
  */
 export function destroyGlassFilter(state: GlassFilterState) {
-    state.observer?.disconnect();
+    state.stopResizeObserver();
     state.svgEl.remove();
     state.dispCanvas.remove();
     state.specCanvas.remove();

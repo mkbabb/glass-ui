@@ -1,4 +1,5 @@
 import { ref, reactive, isReactive, onMounted, onBeforeUnmount, watch, type Ref, type ShallowRef } from "vue";
+import { useResizeObserver } from "../../../composables/useResizeObserver";
 import { VERTEX_SHADER, FRAGMENT_SHADER } from "./shaders";
 import { DEFAULT_METABALL_CONFIG, type MetaballConfig } from "./types";
 
@@ -70,7 +71,6 @@ export function useMetaballs(
     let program: WebGLProgram | null = null;
     let rafId: number | null = null;
     let startTime = 0;
-    let observer: ResizeObserver | null = null;
 
     // Single location per uniform array
     let uResolution: WebGLUniformLocation | null = null;
@@ -148,8 +148,6 @@ export function useMetaballs(
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
         resize();
-        observer = new ResizeObserver(resize);
-        observer.observe(canvas);
 
         startTime = performance.now();
         rafId = requestAnimationFrame(render);
@@ -238,11 +236,18 @@ export function useMetaballs(
 
     function dispose() {
         if (rafId !== null) cancelAnimationFrame(rafId);
-        observer?.disconnect();
+        // ResizeObserver auto-disposes via useResizeObserver's onScopeDispose.
         if (gl && program) gl.deleteProgram(program);
         program = null;
         gl = null;
     }
+
+    // Canvas DPR-resync needs every entry — rafBatch:false / threshold:0
+    // preserves the original "every observer tick triggers resize" behavior.
+    useResizeObserver(canvasRef, () => resize(), {
+        rafBatch: false,
+        threshold: 0,
+    });
 
     onMounted(init);
     onBeforeUnmount(dispose);

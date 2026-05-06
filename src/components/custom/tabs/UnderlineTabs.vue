@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, onUnmounted, nextTick, type HTMLAttributes } from "vue";
+import { ref, watch, onMounted, nextTick, type HTMLAttributes } from "vue";
+import { useResizeObserver } from "../../../composables/useResizeObserver";
 import { cn } from "../../../utils";
 
 export interface TabOption {
@@ -41,18 +42,12 @@ function select(value: string) {
 watch(() => props.modelValue, () => nextTick(updateUnderline));
 watch(() => props.options, () => nextTick(updateUnderline), { deep: true });
 
-let resizeObserver: ResizeObserver | null = null;
+// Defaults (rafBatch + 0.5px threshold) coalesce drag-resize storms — the
+// underline only needs the latest geometry per frame.
+useResizeObserver(containerRef, () => updateUnderline());
 
 onMounted(() => {
     nextTick(updateUnderline);
-    if (containerRef.value) {
-        resizeObserver = new ResizeObserver(() => updateUnderline());
-        resizeObserver.observe(containerRef.value);
-    }
-});
-
-onUnmounted(() => {
-    resizeObserver?.disconnect();
 });
 </script>
 

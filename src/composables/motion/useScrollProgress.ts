@@ -1,6 +1,7 @@
 // Scroll-driven 0..1 progress for an element entering/exiting the viewport.
-import { onBeforeUnmount, onMounted, ref, unref, watch } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, unref, watch } from "vue";
 import type { MaybeRef, Ref } from "vue";
+import { useResizeObserver } from "../useResizeObserver";
 
 interface ScrollProgressConfig {
     /** Element whose vertical position maps to 0..1. */
@@ -30,7 +31,6 @@ export function useScrollProgress(
     const progress = ref(0);
 
     let rafId = 0;
-    let resizeObserver: ResizeObserver | null = null;
 
     function computeProgress(): void {
         const el = unref(options.target);
@@ -56,32 +56,31 @@ export function useScrollProgress(
         });
     }
 
+    // Re-init mapping when the observed element resizes. The parent
+    // schedule() already rAF-coalesces and computeProgress short-circuits
+    // when the target is null, so we want every observer entry through —
+    // no extra coalescing or threshold gating in the composable.
+    const targetRef = computed(() => unref(options.target));
+    useResizeObserver(targetRef, () => schedule(), {
+        rafBatch: false,
+        threshold: 0,
+    });
+
     onMounted(() => {
         computeProgress();
         window.addEventListener("scroll", schedule, { passive: true });
         window.addEventListener("resize", schedule, { passive: true });
-        const el = unref(options.target);
-        if (el && typeof ResizeObserver !== "undefined") {
-            resizeObserver = new ResizeObserver(schedule);
-            resizeObserver.observe(el);
-        }
     });
 
     watch(
         () => unref(options.target),
-        (el, prev) => {
-            if (prev && resizeObserver) resizeObserver.unobserve(prev);
-            if (el && resizeObserver) resizeObserver.observe(el);
-            schedule();
-        },
+        () => schedule(),
     );
 
     onBeforeUnmount(() => {
         window.removeEventListener("scroll", schedule);
         window.removeEventListener("resize", schedule);
         if (rafId) cancelAnimationFrame(rafId);
-        resizeObserver?.disconnect();
-        resizeObserver = null;
     });
 
     return progress;

@@ -9,6 +9,8 @@
  * runtime flips Y at the uniform boundary (see AUTHOR_Y_ORIGIN_IS_TOP marks).
  */
 
+import { ref } from "vue";
+import { useResizeObserver } from "../../../../composables/useResizeObserver";
 import { VERTEX_SRC } from "../shaders/aurora.vert";
 import { FRAGMENT_SRC } from "../shaders/aurora.frag";
 import { flattenPalette } from "./color";
@@ -181,8 +183,16 @@ export function createAurora(
         gl!.useProgram(prog);
     }
 
-    const ro = new ResizeObserver(() => resize());
-    ro.observe(canvas);
+    // createAurora runs outside a Vue effect-scope (called imperatively by
+    // consumers) — useResizeObserver returns its own `stop()`, which we call
+    // from `dispose()` below. rafBatch:false / threshold:0 preserves the
+    // original "every entry triggers DPR-resync" behavior.
+    const canvasRef = ref<HTMLCanvasElement | null>(canvas);
+    const { stop: stopResizeObserver } = useResizeObserver(
+        canvasRef,
+        () => resize(),
+        { rafBatch: false, threshold: 0 },
+    );
     // Belt and suspenders — initial layout can race the first frame.
     requestAnimationFrame(() => {
         resize();
@@ -359,7 +369,7 @@ export function createAurora(
     function dispose() {
         running = false;
         cancelAnimationFrame(raf);
-        ro.disconnect();
+        stopResizeObserver();
         gl!.deleteProgram(prog);
         gl!.deleteShader(vs);
         gl!.deleteShader(fs);

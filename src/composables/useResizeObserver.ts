@@ -18,7 +18,8 @@ export interface UseResizeObserverOptions {
     /**
      * Skip dispatch if every observed dimension delta is below this
      * threshold (in CSS pixels). Helps dodge sub-pixel resize-drag storms.
-     * Default: 0.5.
+     * Default: 0.5. Negative or NaN values clamp to 0; `Infinity` silences
+     * the callback entirely (intentional escape hatch).
      */
     threshold?: number;
     /**
@@ -45,6 +46,12 @@ export interface UseResizeObserverControls {
  * caller wiring an expensive re-init (canvas DPR-resync, layout
  * remeasure) doesn't pay for every drag-resize step.
  *
+ * Initial-dispatch contract: the element's bounding box is captured at
+ * `observe()` time and the first ResizeObserver entry is gated against
+ * that snapshot. The callback fires only when a real change exceeds
+ * threshold — it does NOT fire once on mount. Callers needing an
+ * initial measurement should read it inline before wiring the observer.
+ *
  * Safe to call outside setup/effect scopes. In a scope it auto-cleans
  * on disposal; outside a scope callers use the returned `stop()`
  * explicitly. Mirrors the auto-disposal pattern of `useTimer` and
@@ -59,7 +66,12 @@ export function useResizeObserver<T extends Element>(
     callback: (rect: DOMRectReadOnly, entry: ResizeObserverEntry) => void,
     options: UseResizeObserverOptions = {},
 ): UseResizeObserverControls {
-    const threshold = options.threshold ?? 0.5;
+    const rawThreshold = options.threshold ?? 0.5;
+    // Clamp negatives + NaN to 0; preserve Infinity as the documented
+    // "never fire" escape hatch.
+    const threshold = Number.isNaN(rawThreshold)
+        ? 0
+        : Math.max(0, rawThreshold);
     const rafBatch = options.rafBatch ?? true;
     const box = options.box;
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, watch, computed, onMounted, onUnmounted, nextTick, type HTMLAttributes } from "vue";
+import { ref, watch, computed, onMounted, nextTick, type HTMLAttributes } from "vue";
+import { useResizeObserver } from "../../../composables/useResizeObserver";
 import { cn } from "../../../utils";
 import {
     Tooltip,
@@ -155,18 +156,12 @@ watch(() => props.options, () => nextTick(updateSliders), { deep: true });
 
 // ── Lifecycle ──
 
-let resizeObserver: ResizeObserver | null = null;
+// Defaults (rafBatch + 0.5px threshold) coalesce drag-resize storms — the
+// slider only needs the latest geometry per frame.
+useResizeObserver(containerRef, () => updateSliders());
 
 onMounted(() => {
     nextTick(updateSliders);
-    if (containerRef.value) {
-        resizeObserver = new ResizeObserver(() => updateSliders());
-        resizeObserver.observe(containerRef.value);
-    }
-});
-
-onUnmounted(() => {
-    resizeObserver?.disconnect();
 });
 </script>
 

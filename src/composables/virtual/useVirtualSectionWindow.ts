@@ -9,6 +9,7 @@ import {
     type MaybeRefOrGetter,
     type Ref,
 } from "vue";
+import { useResizeObserver } from "../useResizeObserver";
 import type { FlatSection } from "./virtualSectionLayout";
 import {
     buildSectionLayout,
@@ -86,7 +87,6 @@ export function useVirtualSectionWindow<T extends FlatSection>(
     let scrollRaf = 0;
     let recalcRaf = 0;
     let warmTimer = 0;
-    let containerResizeObserver: ResizeObserver | null = null;
 
     function getViewportHeight(): number {
         return Math.max(
@@ -225,15 +225,14 @@ export function useVirtualSectionWindow<T extends FlatSection>(
         return findSectionOffset(layout.value, id);
     }
 
-    function attachContainerObserver(container: HTMLElement | null) {
-        containerResizeObserver?.disconnect();
-        containerResizeObserver = null;
-        if (!container || typeof ResizeObserver === "undefined") return;
-        containerResizeObserver = new ResizeObserver(() => {
-            scheduleRecalculate();
-        });
-        containerResizeObserver.observe(container);
-    }
+    // scheduleRecalculate() already rAF-coalesces internally; bypass the
+    // composable's batching to avoid double-frames and pass through every
+    // entry (threshold 0) since sub-pixel container changes can still
+    // affect spacer math at small viewport heights.
+    useResizeObserver(options.scrollContainer, () => scheduleRecalculate(), {
+        rafBatch: false,
+        threshold: 0,
+    });
 
     function handleScroll() {
         if (scrollRaf) return;
@@ -252,7 +251,8 @@ export function useVirtualSectionWindow<T extends FlatSection>(
         }
         currentContainer = scrollTarget;
         currentContainer.addEventListener("scroll", handleScroll, { passive: true });
-        attachContainerObserver(container);
+        // Container resize observer is wired declaratively against
+        // options.scrollContainer above — see useResizeObserver call.
         scheduleRecalculate();
     }
 
@@ -279,21 +279,15 @@ export function useVirtualSectionWindow<T extends FlatSection>(
         { immediate: true },
     );
 
-    // Also observe the content element for resize (e.g. images loading above)
-    let contentResizeObserver: ResizeObserver | null = null;
+    // Also observe the content element for resize (e.g. images loading above).
+    // The composable's internal watcher handles ref-target swaps, so we just
+    // forward `options.contentEl` directly. Same coalescing rationale as the
+    // container observer: scheduleRecalculate already rAF-batches.
     if (options.contentEl) {
-        watch(
-            options.contentEl,
-            (el) => {
-                contentResizeObserver?.disconnect();
-                contentResizeObserver = null;
-                if (el && typeof ResizeObserver !== "undefined") {
-                    contentResizeObserver = new ResizeObserver(() => scheduleRecalculate());
-                    contentResizeObserver.observe(el);
-                }
-            },
-            { immediate: true },
-        );
+        useResizeObserver(options.contentEl, () => scheduleRecalculate(), {
+            rafBatch: false,
+            threshold: 0,
+        });
     }
 
     onMounted(() => {
@@ -308,8 +302,8 @@ export function useVirtualSectionWindow<T extends FlatSection>(
         if (currentContainer) {
             currentContainer.removeEventListener("scroll", handleScroll);
         }
-        containerResizeObserver?.disconnect();
-        contentResizeObserver?.disconnect();
+        // ResizeObservers (container + content) auto-dispose via
+        // useResizeObserver's onScopeDispose hook.
         elementMap.clear();
     });
 

@@ -1,6 +1,7 @@
 import { ref, type Ref } from "vue";
 import fragSource from "../blob.frag.glsl?raw";
 import vertSource from "../blob.vert.glsl?raw";
+import { useResizeObserver } from "../../useResizeObserver";
 import type {
     BlobColorHsl,
     BlobConfig,
@@ -301,26 +302,28 @@ export function useMetaballRenderer(
        canvas's rendered CSS size × devicePixelRatio. Without this, a
        responsive `<Blob>` renders at its initial buffer resolution and
        blurs as the viewport scales. uResolution self-corrects on the next
-       render() call. */
-    const resizeObserver =
-        typeof ResizeObserver === "function"
-            ? new ResizeObserver((entries) => {
-                  for (const entry of entries) {
-                      const target = entry.target as HTMLCanvasElement;
-                      const dpr = window.devicePixelRatio ?? 1;
-                      const cssW = entry.contentRect.width;
-                      const cssH = entry.contentRect.height;
-                      const w = Math.max(1, Math.round(cssW * dpr));
-                      const h = Math.max(1, Math.round(cssH * dpr));
-                      if (target.width !== w) target.width = w;
-                      if (target.height !== h) target.height = h;
-                  }
-              })
-            : null;
-    resizeObserver?.observe(canvas);
+       render() call. rafBatch:false / threshold:0 preserves every entry's
+       DPR-resync; useMetaballRenderer runs imperatively, so we capture
+       stop() for the dispose() contract below. The canvas Ref the factory
+       receives as its first argument is exactly the target useResizeObserver
+       wants — re-pass it directly. */
+    const { stop: stopResizeObserver } = useResizeObserver(
+        canvasRef,
+        (_rect, entry) => {
+            const target = entry.target as HTMLCanvasElement;
+            const dpr = window.devicePixelRatio ?? 1;
+            const cssW = entry.contentRect.width;
+            const cssH = entry.contentRect.height;
+            const w = Math.max(1, Math.round(cssW * dpr));
+            const h = Math.max(1, Math.round(cssH * dpr));
+            if (target.width !== w) target.width = w;
+            if (target.height !== h) target.height = h;
+        },
+        { rafBatch: false, threshold: 0 },
+    );
 
     function dispose(): void {
-        resizeObserver?.disconnect();
+        stopResizeObserver();
         canvas?.removeEventListener(
             "webglcontextlost",
             onContextLost as EventListener,
