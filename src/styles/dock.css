@@ -660,6 +660,16 @@
         position: relative;
         isolation: isolate;
         overflow: hidden;
+        /* Q.W2.A integration — establish an inline-size container so that
+           `text-hero` (and other cqi-driven type utilities) resolve against
+           the button's own width rather than an outer ancestor. Without
+           this, `text-hero`'s 55cqi clamps to its 18rem ceiling (288px) at
+           1920×1080 and the longest label ("New Test") overflows by ~447px
+           per Q.W2.A's live probe. With container-type local, the cqi
+           resolves to 55% of the button width (~138px on a 250px button),
+           which clamps under the 4rem floor — landing the rung's peak
+           target ~60-90px the audacious-canon-plus-one register asks for. */
+        container-type: inline-size;
         --dock-tab-min-height: 4rem;
         padding-inline: 1.5rem;
         background:
