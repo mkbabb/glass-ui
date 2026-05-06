@@ -199,29 +199,30 @@ Twelve-tier stacking, plus two out-of-band tiers:
 
 ## Glass Surfaces
 
-Four tiers compose background opacity, backdrop-blur, border, shadow, grain. Dark mode boosts opacity and shifts grain blend (`overlay` → `soft-light`) for legibility.
+Five tiers compose background opacity, backdrop-blur, border, shadow, grain. Dark mode boosts opacity and shifts grain blend (`overlay` → `soft-light`) for legibility. v0.8.0 renamed and extended the ladder: the prior four-rung ladder (subtle / default / medium / elevated) becomes a five-rung ladder (wash / quiet / resting / floating / overlay) — `quiet` is a new mid-low rung, `overlay` is a new modal-over-modal rung, and the others are renamed for tier semantics rather than utility-class register.
 
-| Tier     | Class              | Light opacity | Dark opacity | Blur                        | Border               | Shadow                   | Use                                 |
-|----------|--------------------|---------------|--------------|-----------------------------|----------------------|--------------------------|-------------------------------------|
-| Subtle   | `.glass-subtle`    | 30%           | 42%          | `blur(4px) saturate(1.05)`  | 8% foreground        | `--glass-shadow-subtle`   | Dock bg, input bg, hover overlays   |
-| Default  | `.glass-default`   | 50%           | 58%          | `blur(8px) saturate(1.2)`   | 10% foreground       | `--glass-shadow-default`  | Cards, containers, select triggers  |
-| Medium   | `.glass-medium`    | 65%           | 72%          | `blur(12px) saturate(1.3)`  | 12% foreground       | `--glass-shadow-medium`   | Popovers, dropdowns, dock expanded  |
-| Elevated | `.glass-elevated`  | 80%           | 88%          | `blur(16px) saturate(1.4)`  | 15% foreground       | `--glass-shadow-elevated` | Dialogs, command palette, modals    |
+| Tier      | Class               | Light opacity | Dark opacity | Blur                          | Border               | Shadow                     | Use                                 |
+|-----------|---------------------|---------------|--------------|-------------------------------|----------------------|----------------------------|-------------------------------------|
+| Wash      | `.glass-wash`       | 30%           | 38%          | `blur(1px) saturate(1.05)`    | 8% foreground        | `--glass-shadow-wash`      | Dock bg, input bg, hover overlays   |
+| Quiet     | `.glass-quiet`      | 50%           | 58%          | `blur(3px)`                   | 10% foreground       | `--glass-shadow-quiet`     | Inline workspace chrome             |
+| Resting   | `.glass-resting`    | 65%           | 72%          | `blur(12px) saturate(1.05)`   | 12% foreground       | `--glass-shadow-resting`   | Cards, the canonical plate          |
+| Floating  | `.glass-floating`   | 80%           | 88%          | `blur(16px) saturate(1.4)`    | 15% foreground       | `--glass-shadow-floating`  | Popovers, tooltips, dropdowns       |
+| Overlay   | `.glass-overlay`    | 95%           | 96%          | `blur(24px) saturate(1.5)`    | 18% foreground       | `--glass-shadow-overlay`   | Dialogs, command palette, modals    |
 
 ### Tokens per tier
 
-For each tier, `--glass-bg-{tier}` (rgba), `--glass-blur-{tier}` (full filter string), `--glass-border-{tier}` (color-mix result), `--glass-shadow-{tier}` (box-shadow). Grain overlay:
+For each tier, `--glass-bg-{tier}` (rgba), `--glass-blur-{tier}` (full filter string), `--glass-border-{tier}` (color-mix result), `--glass-shadow-{tier}` (box-shadow), `--glass-blur-{tier}-radius` (raw blur radius). Grain overlay:
 
 - Light mode: 3.5% opacity, blend `overlay`
 - Dark mode: 6% opacity, blend `soft-light`
 
-**Dock-specific blur** — `--glass-blur-dock = blur(2px) saturate(1.025)` is its own token (half the subtle weight) so floating and rail docks read as feather-light overlays rather than heavy blurred slabs. `GlassDock` references `var(--glass-blur-dock, var(--glass-blur-subtle))`; consumers can override the dock token at `:root` without touching the four tier blurs.
+**Dock-specific blur** — `--glass-blur-dock = blur(1px) saturate(1.025)` is its own token (matching the wash weight) so floating and rail docks read as feather-light overlays rather than heavy blurred slabs. `GlassDock` references `var(--glass-blur-dock, var(--glass-blur-wash))`; consumers can override the dock token at `:root` without touching the five tier blurs.
 
 ### Convenience shorthands
 
-- `.glass-card` — **static surface utility**: `.glass-default` + `border-radius: var(--radius-card)` + offset card shadow. No hover lift; interactive cards live in `<Card>` (which composes its own hover via `.glass-cartoon` / `.cartoon-card` / etc.) or in components that explicitly opt into a hover variant. The `.glass-card:hover` rule was removed because conflating a static surface with an interactive primitive forced every consumer of the utility (badges, pills, panels) to fight off an unwanted lift.
-- `.glass-pill` — `.glass-default` + pill radius + press feedback (scale 0.97 on active)
-- `.glass-cartoon` — **interactive cartoon surface** (Tranche G): cartoon-tier shadow (`--shadow-cartoon-md`), 2px border, hover lift via `--lift-sm` + `--shadow-cartoon-lg`. Token-fall-through to default-tier glass tokens (`--glass-bg-cartoon, var(--glass-bg-default)`) so consumers without cartoon-specific overrides still get a coherent surface. Closes the contract `Card.vue variant="cartoon"` outputs.
+- `.glass-card` — **static surface utility**: `.glass-resting` + `border-radius: var(--radius-card)` + offset card shadow. No hover lift; interactive cards live in `<Card>` (which composes its own hover via `.glass-cartoon` / `.cartoon-card` / etc.) or in components that explicitly opt into a hover variant.
+- `.glass-pill` — `.glass-resting` + pill radius + press feedback (scale 0.97 on active)
+- `.glass-cartoon` — **interactive cartoon surface** (Tranche G): cartoon-tier shadow (`--shadow-cartoon-md`), 2px border, hover lift via `--lift-sm` + `--shadow-cartoon-lg`. Token-fall-through to resting-tier glass tokens (`--glass-bg-cartoon, var(--glass-bg-resting)`) so consumers without cartoon-specific overrides still get a coherent surface. Carried by the `<CartoonCard>` sibling primitive (v0.8.0).
 
 ### Accessibility fallbacks
 
@@ -403,8 +404,8 @@ Base class `.btn-pill`:
 | `secondary`      | Secondary bg                                           | `bg-secondary/80`               |
 | `accent`         | `.btn-pill-accent` (opaque theme accent)               | 90% opacity                     |
 | `ghost`          | Transparent, 85% foreground                            | 12% foreground bg               |
-| `glass`          | `.glass-subtle` + default border                       | `--glass-shadow-default`        |
-| `glass-subtle`   | `.glass-subtle`                                        | 60% border                      |
+| `glass`          | `.glass-wash` + default border                         | `--glass-shadow-resting`        |
+| `glass-wash`     | `.glass-wash`                                          | 60% border                      |
 | `ai`             | amber-500/15 bg, amber-700 text                        | amber-500/25                    |
 | `danger-subtle`  | destructive/10 bg, destructive text                    | destructive/20                  |
 | `link`           | Text-only, underline on hover                          | underline                       |
@@ -526,20 +527,25 @@ Three orthogonal vocabularies. Never mix.
 
 ### Surface tier (glass)
 
-Applied to floating surfaces: `Card`, `PopoverContent`, `DropdownMenuContent`, `HoverCardContent`, `DialogContent`, `SheetContent`, `Tooltip`, `.floating-panel`. Set via component prop `variant="subtle" | "default" | "medium" | "elevated"` or direct class.
+Applied to floating surfaces. v0.8.0 retired the four-rung `variant="subtle | default | medium | elevated"` enum on `Card` in favour of a `tier` prop naming a single class on the five-rung canon `wash | quiet | resting | floating | overlay`. Adjacent surface-bearing primitives (`PopoverContent`, `DropdownMenuContent`, `HoverCardContent`, `DialogContent`, `SheetContent`, `TooltipContent`, `.floating-panel`) hard-code `glass-floating` directly because the popover family always wants the elevated rung; they don't need a `tier` prop.
+
+```vue
+<Card>...</Card>                              <!-- default tier="resting" -->
+<Card tier="floating">...</Card>              <!-- explicit elevated rung -->
+<Card tier="resting" as="section">...</Card>  <!-- polymorphic root via reka-ui Primitive -->
+<Card :shadow="false">...</Card>              <!-- nested: drop the surface shadow -->
+<Card :grain="false">...</Card>               <!-- drop the ::after grain overlay -->
+```
+
+`<ScrollPane>` and `<CartoonCard>` are sibling primitives lifted from the retired `variant="pane"` and `variant="cartoon"` rungs. `<ScrollPane>` is `glass-wash` + `overflow:auto` + `scrollbar-hidden` + grain disabled (the grain overlay conflicts with overflow:auto repaint). `<CartoonCard>` resolves through `.glass-cartoon`.
 
 ### Semantic variant (intent)
 
-Used on `Button`: `primary | secondary | ghost | outline | destructive | accent | link | ai | danger-subtle | glass | glass-subtle`. Scoped to intent, independent of elevation. A ghost button sits flat on any tier.
+Used on `Button`: `primary | secondary | ghost | outline | destructive | accent | link | ai | danger-subtle | glass | glass-wash`. Scoped to intent, independent of elevation. A ghost button sits flat on any tier.
 
 ### Structural variant (geometry)
 
-**Card variants**:
-- `default` — glass-default surface + card shadow
-- `pane` — glass-subtle surface, no grain (scroll-container safe)
-- `cartoon` — pop-art aesthetic, offset shadow, accent border on hover
-- `plain` — no surface styling, structural wrapper only
-- `flush` — drops surface shadow (for nested cards)
+`Card` no longer carries a structural `variant` enum (v0.8.0). Cards distinguish their structural register via the new `tier` prop (the surface ladder) plus the `<ScrollPane>` and `<CartoonCard>` sibling primitives (the structural lifts).
 
 **Slider variants**: all share tokens `--slider-track-bg`, `--slider-track-height`, `--slider-thumb-bg`, `--slider-thumb-size`, `--slider-thumb-border-color`, `--slider-range-bg`, `--slider-thumb-shadow`. Restyle on a wrapper, never via `:deep()`.
 
