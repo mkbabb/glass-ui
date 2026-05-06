@@ -56,13 +56,13 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     overflow: hidden;
     border-radius: var(--radius-pill);
     height: var(--slider-track-height, 0.375rem);
-    background: var(--slider-track-bg, color-mix(in srgb, var(--muted) 50%, transparent));
+    background: var(--slider-track-bg, var(--muted-medium));
 }
 
 .slider-range {
     position: absolute;
     height: 100%;
-    background: var(--slider-range-bg, color-mix(in srgb, var(--foreground) 25%, transparent));
+    background: var(--slider-range-bg, var(--surface-tint-25));
 }
 
 .slider-thumb {
@@ -107,20 +107,20 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 /* ── Variant: timeline (glass scrub track, disc thumb) ── */
 .glass-slider--timeline .slider-track {
     height: var(--slider-track-height, 1.5rem);
-    background: var(--slider-track-bg, color-mix(in srgb, var(--foreground) 5%, transparent));
-    backdrop-filter: var(--glass-blur-subtle);
-    -webkit-backdrop-filter: var(--glass-blur-subtle);
+    background: var(--slider-track-bg, var(--surface-tint-6));
+    backdrop-filter: var(--glass-blur-wash);
+    -webkit-backdrop-filter: var(--glass-blur-wash);
 }
 
 .glass-slider--timeline .slider-range {
-    background: var(--slider-range-bg, color-mix(in srgb, var(--foreground) 7%, transparent));
+    background: var(--slider-range-bg, var(--surface-tint-8));
     border-radius: var(--radius-pill);
 }
 
 .glass-slider--timeline .slider-thumb {
     width: var(--slider-thumb-size, 1.5rem);
     height: var(--slider-thumb-size, 1.5rem);
-    background: var(--slider-thumb-bg, color-mix(in srgb, var(--foreground) 15%, transparent));
+    background: var(--slider-thumb-bg, var(--surface-tint-15));
     border: none;
     box-shadow: none;
 }

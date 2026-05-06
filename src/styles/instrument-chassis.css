@@ -27,12 +27,12 @@
         background:
             var(--glass-curvature-overlay, none),
             var(--glass-bg-chassis);
-        backdrop-filter: var(--glass-blur-default);
-        -webkit-backdrop-filter: var(--glass-blur-default);
-        border: 1px solid var(--glass-border-default);
+        backdrop-filter: var(--glass-blur-quiet);
+        -webkit-backdrop-filter: var(--glass-blur-quiet);
+        border: 1px solid var(--glass-border-quiet);
         border-radius: var(--radius-card);
         box-shadow:
-            var(--glass-shadow-default),
+            var(--glass-shadow-quiet),
             inset 0 -0.5px 0 0 rgb(0 0 0 / 0.06);
         overflow: hidden;
 

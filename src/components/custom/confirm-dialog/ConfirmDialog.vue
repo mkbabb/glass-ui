@@ -2,14 +2,14 @@
     <Transition name="fade">
         <div
             v-if="open"
-            class="absolute inset-0 z-popover grid place-items-center bg-black/50 rounded-2xl"
+            class="absolute inset-0 z-popover grid place-items-center bg-overlay-scrim rounded-dialog"
             @click.self="!loading && (open = false)"
             @keydown.escape="!loading && (open = false)"
         >
             <Transition name="confirm-panel" appear>
                 <div
                     v-if="open"
-                    class="w-[calc(100%-2rem)] sm:max-w-sm bg-card text-card-foreground border border-border rounded-2xl shadow-lg"
+                    class="w-[calc(100%-2rem)] sm:max-w-sm bg-card text-card-foreground border border-border rounded-dialog shadow-lg"
                 >
                     <div class="p-6 grid gap-4">
                         <div class="grid gap-2">
@@ -83,6 +83,6 @@ function onConfirm() {
 .confirm-panel-enter-from,
 .confirm-panel-leave-to {
     opacity: 0;
-    transform: scale(0.95);
+    transform: scale(var(--scale-press));
 }
 </style>

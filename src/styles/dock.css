@@ -26,7 +26,7 @@
     }
 
     .glass-dock {
-        --dock-surface-blur: var(--glass-blur-dock, var(--glass-blur-subtle));
+        --dock-surface-blur: var(--glass-blur-dock, var(--glass-blur-wash));
         --dock-vertical-max-height: calc(100vh - var(--dock-viewport-block-gutter, 2rem));
         --dock-wrap-max-width: calc(100vw - var(--dock-viewport-inline-gutter, 1rem));
         --dock-separator-height: calc(var(--dock-h, var(--size-icon-btn)) * 0.5);
@@ -38,10 +38,10 @@
         white-space: nowrap;
         overflow: hidden;
         padding: var(--dock-padding-block, 0.375rem) var(--dock-padding-inline, 0.5rem);
-        background: var(--glass-bg-dock, var(--glass-bg-medium));
+        background: var(--glass-bg-dock, var(--glass-bg-resting));
         backdrop-filter: var(--dock-surface-blur);
         -webkit-backdrop-filter: var(--dock-surface-blur);
-        border: 1.5px solid var(--glass-border-dock, var(--glass-border-medium));
+        border: 1.5px solid var(--glass-border-dock, var(--glass-border-resting));
         box-shadow: var(--shadow-dock-override, var(--shadow-dock));
     }
 
@@ -144,8 +144,8 @@
 
     .glass-dock.variant-rail {
         padding: var(--dock-rail-padding, var(--dock-padding-inline, 0.5rem));
-        background: var(--glass-bg-dock, var(--glass-bg-subtle));
-        border-color: var(--glass-border-dock, var(--glass-border-subtle));
+        background: var(--glass-bg-dock, var(--glass-bg-wash));
+        border-color: var(--glass-border-dock, var(--glass-border-wash));
     }
 
     .glass-dock.variant-rail.shape-pill {
@@ -160,8 +160,8 @@
         cursor: pointer;
         padding: var(--dock-collapsed-padding, var(--dock-padding-block, 0.375rem));
         justify-content: center;
-        background: var(--glass-bg-subtle);
-        border-color: var(--glass-border-elevated);
+        background: var(--glass-bg-wash);
+        border-color: var(--glass-border-floating);
         box-shadow: var(--shadow-dock-collapsed);
     }
 
@@ -171,8 +171,8 @@
     }
 
     .glass-dock.collapsed:hover {
-        background: var(--glass-bg-subtle);
-        border-color: var(--glass-border-elevated);
+        background: var(--glass-bg-wash);
+        border-color: var(--glass-border-floating);
         box-shadow: var(--shadow-dock);
         transform: scale(var(--dock-collapsed-hover-scale));
     }
@@ -462,7 +462,7 @@
         --dock-popover-offset: var(--popover-offset, 6px);
         --dock-popover-viewport-pad: var(--popover-viewport-pad, 8px);
         --dock-popover-trigger-z: var(--z-controls);
-        --dock-popover-panel-blur: var(--glass-blur-elevated);
+        --dock-popover-panel-blur: var(--glass-blur-floating);
         --dock-popover-enter-scale: 0.85;
         --dock-popover-leave-scale: 0.95;
         --dock-popover-enter-shift: 0.5rem;
@@ -488,12 +488,12 @@
         gap: var(--dock-popover-gap, 0.125rem);
         padding: var(--dock-popover-padding, 0.25rem);
         z-index: var(--z-popover);
-        background: var(--glass-bg-elevated);
+        background: var(--glass-bg-floating);
         backdrop-filter: var(--dock-popover-panel-blur);
         -webkit-backdrop-filter: var(--dock-popover-panel-blur);
-        border: 1px solid var(--glass-border-elevated);
+        border: 1px solid var(--glass-border-floating);
         border-radius: var(--radius-panel);
-        box-shadow: var(--glass-shadow-elevated);
+        box-shadow: var(--glass-shadow-floating);
     }
 
     .dock-popover > .pop-up-enter-active,
@@ -665,7 +665,7 @@
         background:
             color-mix(in srgb, var(--card) 60%, transparent);
         color: var(--foreground);
-        border: 1px solid var(--glass-border-default);
+        border: 1px solid var(--glass-border-quiet);
         box-shadow:
             inset 0 0.5px 0 0 rgb(255 255 255 / 0.06),
             0 0.5px 0 0 rgb(0 0 0 / 0.04),
@@ -755,7 +755,7 @@
     .dock-tab-button[data-tier="secondary"],
     .dock-icon-button[data-tier="secondary"] {
         background: color-mix(in srgb, var(--card) 50%, transparent);
-        border: 1px solid var(--glass-border-default);
+        border: 1px solid var(--glass-border-quiet);
         box-shadow:
             inset 0 0.5px 0 0 rgb(255 255 255 / 0.06),
             0 0.5px 0 0 rgb(0 0 0 / 0.04),

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, computed, onMounted, onUnmounted, nextTick, type HTMLAttributes } from "vue";
 import { cn } from "../../../utils";
+import { cssVar } from "../../../composables/utils";
 import {
     Tooltip,
     TooltipContent,
@@ -103,19 +104,29 @@ function updateSliders() {
 // ── Button press animation (Web Animations API) ──
 
 function animatePress(btn: HTMLElement) {
+    // Honor reduced-motion preference — skip the bounce entirely.
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return;
+    }
+
     // Cancel any in-flight press animations on this button
     btn.getAnimations().forEach((a) => a.cancel());
+
+    // WAAPI keyframes can't dereference custom properties; resolve at runtime.
+    const easing = cssVar("--ease-apple-spring") || "cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+    const press = cssVar("--scale-press") || "0.95";
+    const hover = cssVar("--scale-hover") || "1.08";
 
     btn.animate(
         [
             { transform: "scale(1)" },
-            { transform: "scale(0.93)", offset: 0.25 },
-            { transform: "scale(1.02)", offset: 0.7 },
+            { transform: `scale(${press})`, offset: 0.25 },
+            { transform: `scale(${hover})`, offset: 0.7 },
             { transform: "scale(1)" },
         ],
         {
             duration: 200,
-            easing: "cubic-bezier(0.175, 0.885, 0.32, 1.275)", // --spring-bouncy (Web Animations API needs literal value)
+            easing,
         },
     );
 }
@@ -251,7 +262,7 @@ onUnmounted(() => {
     grid-auto-columns: 1fr;
     padding: 0.1875rem;
     border-radius: 0.4375rem;
-    background: color-mix(in srgb, var(--muted) 50%, transparent);
+    background: var(--muted-medium);
 }
 
 @media (min-width: 640px) {
@@ -320,7 +331,7 @@ onUnmounted(() => {
 /* ── Pill variant ── */
 .bouncy-toggle--pill {
     border-radius: var(--radius-pill);
-    background: color-mix(in srgb, var(--foreground) 5%, transparent);
+    background: var(--surface-tint-6);
     padding: 0.125rem;
     gap: 0.125rem;
 }

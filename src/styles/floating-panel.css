@@ -5,12 +5,12 @@
         position: fixed;
         z-index: var(--z-overlay);
         border-radius: var(--radius-panel);
-        border: 1px solid var(--glass-border-medium);
-        background: var(--glass-bg-medium);
-        backdrop-filter: var(--glass-blur-medium);
-        -webkit-backdrop-filter: var(--glass-blur-medium);
+        border: 1px solid var(--glass-border-resting);
+        background: var(--glass-bg-resting);
+        backdrop-filter: var(--glass-blur-resting);
+        -webkit-backdrop-filter: var(--glass-blur-resting);
         color: var(--popover-foreground);
-        box-shadow: var(--glass-shadow-medium);
+        box-shadow: var(--glass-shadow-resting);
         pointer-events: auto;
         animation: floating-panel-in var(--duration-fast) var(--ease-out);
     }

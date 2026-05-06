@@ -29,31 +29,31 @@ interface PanelExample {
 
 const tiers: Tile[] = [
     {
-        tier: "subtle",
+        tier: "wash",
         cls: "glass-wash",
-        opacityVar: "--glass-opacity-subtle",
-        blurVar: "--glass-blur-subtle",
+        opacityVar: "--glass-opacity-wash",
+        blurVar: "--glass-blur-wash",
         role: "dock, input bg, hover overlays",
     },
     {
-        tier: "default",
-        cls: "glass-resting",
-        opacityVar: "--glass-opacity-default",
-        blurVar: "--glass-blur-default",
-        role: "cards, content containers",
+        tier: "quiet",
+        cls: "glass-quiet",
+        opacityVar: "--glass-opacity-quiet",
+        blurVar: "--glass-blur-quiet",
+        role: "ambient panels, secondary surfaces",
     },
     {
-        tier: "medium",
+        tier: "resting",
         cls: "glass-resting",
-        opacityVar: "--glass-opacity-medium",
-        blurVar: "--glass-blur-medium",
-        role: "popovers, dropdowns, floating panels",
+        opacityVar: "--glass-opacity-resting",
+        blurVar: "--glass-blur-resting",
+        role: "cards, popovers, dropdowns, floating panels",
     },
     {
-        tier: "elevated",
+        tier: "floating",
         cls: "glass-floating",
-        opacityVar: "--glass-opacity-elevated",
-        blurVar: "--glass-blur-elevated",
+        opacityVar: "--glass-opacity-floating",
+        blurVar: "--glass-blur-floating",
         role: "dialogs, command palette, modals",
     },
 ];
@@ -133,7 +133,7 @@ onMounted(() => {
                     :class="
                         cn(
                             t.cls,
-                            'paper-grain-overlay relative flex h-48 flex-col justify-between rounded-card border border-[var(--glass-border-default)] p-5'
+                            'paper-grain-overlay relative flex h-48 flex-col justify-between rounded-card border border-[var(--glass-border-quiet)] p-5'
                         )
                     "
                 >

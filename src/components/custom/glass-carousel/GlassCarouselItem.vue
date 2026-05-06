@@ -64,21 +64,21 @@ const emit = defineEmits<{
 }
 
 .glass-carousel-item:hover {
-    background: color-mix(in srgb, var(--foreground) 6%, transparent);
+    background: var(--surface-tint-6);
     color: var(--foreground);
     transform: scale(1.03);
 }
 
 .glass-carousel-item:active {
-    transform: scale(0.95);
+    transform: scale(var(--scale-press));
 }
 
 .glass-carousel-item--active {
-    background: color-mix(in srgb, var(--foreground) 8%, transparent);
+    background: var(--surface-tint-8);
     color: var(--foreground);
 }
 
 .glass-carousel-item--active:hover {
-    background: color-mix(in srgb, var(--foreground) 10%, transparent);
+    background: var(--surface-tint-10);
 }
 </style>

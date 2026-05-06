@@ -131,7 +131,7 @@ defineExpose({
     overflow: hidden;
     padding: 0.375rem;
     background: transparent;
-    border: 1px solid var(--glass-border-subtle);
+    border: 1px solid var(--glass-border-wash);
     transition:
         height var(--duration-normal) var(--spring-snappy),
         width var(--duration-normal) var(--spring-snappy),
@@ -145,7 +145,7 @@ defineExpose({
 }
 
 .glass-carousel:hover {
-    box-shadow: var(--glass-shadow-subtle);
+    box-shadow: var(--glass-shadow-wash);
 }
 
 .glass-carousel--no-transition {

@@ -56,15 +56,34 @@ Token value choices for orchestrator review (documented in proof doc): `--succes
 
 W1 incidence: agent briefly ran `git stash` to verify a pre-existing failure mode (a precept violation per LESSONS-LEARNED 2026-05-04 "Never Use Git Stash As Agent Recovery"). Agent recovered surgically via Edit tool; no work lost. Reinforcement noted; will absorb at J close (FINAL.md or LESSONS-LEARNED reinforcement entry if pattern re-appears).
 
+## 2026-05-06 — W2 close
+
+W2 (vocab.α + β) ran two parallel lanes against the W1 substrate.
+
+**Lane A — overlay convergence**: 23 files migrated. Step 0 absorbed v0.8.0 token-cleanup miss (19/21 stale `--glass-{bg,blur,border,shadow}-{subtle,default,medium,elevated}` references retired in Lane A's bounds; Lane A also caught 9 additional refs in `hover-popover.css` + `instrument-chassis.css` that W0 §F item 1 missed). 9 overlays consume `popover-animate slide-in-from-side`; 8 overlays use semantic radius (`rounded-panel/dialog/card/tooltip`); 5 modal scrims use `bg-overlay-scrim{,-strong,-subtle}`; ComboboxList composes `glass-floating` (single class, dropping inline tokens + duplicate backdrop-filter); Sheet uses `.sheet-animate`; Drawer/Sheet reconciled to `--z-modal`. Step 7 (Card pane variant disposition) DROPPED per W0 §F item 4. Proof: `audit/W2-A-overlay-proof.md`.
+
+**Lane B — interactive reach-in**: 28 files migrated. focus-ring 16→0 (all CVAs consume `.focus-ring`); scale(0.9N) 3→0 (excl. FuzzySearch — W6.B owns); `--ease-apple-spring` consumed at 3 sites (UnderlineTabs CSS + BouncyToggle WAAPI via `cssVar()` + `prefers-reduced-motion` early-out); `--muted-medium` consumed at 4 sites; `--surface-tint-N` consumed at 13 sites; transition-all → named property lists at 7 sites; Skeleton keyframe deduplicated onto `shimmer-sweep`. Step 7 (`.section-label` Configurator migration) DEFERRED per dispatch coordination — W4.A renames the file to `PresetEditor.vue`. FuzzySearch sites SKIPPED per W6.B coordination (4 muted + 2 scale + 1 foreground-85% sites). Proof: `audit/W2-B-interactive-proof.md`.
+
+**SR-1 absorbed by orchestrator** (W0 §F item 1 residual — Lane A flagged 3 stale token references surviving in cross-lane file bounds): `src/components/ui/button/index.ts:26` (`glass` button variant — 7 stale token refs migrated to wash/quiet/resting/floating); `src/components/ui/slider/Slider.vue:111-112` (timeline variant scoped CSS — `--glass-blur-subtle` ×2 → `--glass-blur-wash`). Mechanical token-name remap; consumes the existing v0.8.0 token canon.
+
+**Sub-tranche K candidates flagged by Lane B** (out-of-scope for J):
+- `--muted-40` rung (ProgressiveSidebar:209) — gap in `--muted-{soft,medium}` family
+- `--surface-tint-{40,70,85}` rungs — gap in `--surface-tint-N` family
+- `--text-tint-N` family — analog to surface-tint but for foreground tonality
+
+These are deferred to a future tranche per the substrate-without-consumer guard.
+
+Hard-gate verification: typecheck green; build green (19.65s); test 270/270 pass; rg confirms 0 raw `bg-black/{40,50,80}` + 0 stale glass-{bg,blur,border,shadow}-{subtle,default,medium,elevated} + 0 raw `focus-visible:shadow-[var(--focus-ring-shadow)]` repeats.
+
 ## Status
 
 | Wave | Status |
 |---|---|
 | W0 | closed @ d8239f2 |
-| W1 | closed @ commit (this commit) |
-| W2 | open (ready to dispatch) |
-| W3 | open (ready to dispatch — independent of W2) |
-| W4 | open (ready to dispatch — independent of W2/W3) |
+| W1 | closed @ c6b7df0 |
+| W2 | closed @ commit (this commit) |
+| W3 | open (ready to dispatch — 1 agent / 3 lanes; lanes share dock.css) |
+| W4 | open (ready to dispatch — 3 parallel agents) |
 | W5 | pending W3 |
-| W6 | pending W2 |
+| W6 | pending W2 → now ready |
 | W7 | pending W3 + W4 + W5 + W6 |

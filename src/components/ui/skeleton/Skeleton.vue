@@ -25,7 +25,9 @@ const props = withDefaults(
 </template>
 
 <style scoped>
-/* Sliding gradient sweep. Honors reduced-motion. */
+/* Sliding gradient sweep. Composes shimmer-sweep keyframe from
+ * src/styles/animations.css (same -200% → 200% background-position
+ * direction). Honors reduced-motion. */
 .skeleton-shimmer {
     background: linear-gradient(
         90deg,
@@ -34,12 +36,7 @@ const props = withDefaults(
         var(--muted) 75%
     );
     background-size: 200% 100%;
-    animation: skeleton-shimmer-slide 1.5s linear infinite;
-}
-
-@keyframes skeleton-shimmer-slide {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
+    animation: shimmer-sweep 1.5s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {

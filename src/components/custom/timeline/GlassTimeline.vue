@@ -120,9 +120,9 @@ function onTrackKeydown(e: KeyboardEvent) {
     width: 100%;
     height: 24px;
     border-radius: var(--radius-pill);
-    background: color-mix(in srgb, var(--foreground) 5%, transparent);
-    backdrop-filter: var(--glass-blur-subtle);
-    -webkit-backdrop-filter: var(--glass-blur-subtle);
+    background: var(--surface-tint-6);
+    backdrop-filter: var(--glass-blur-wash);
+    -webkit-backdrop-filter: var(--glass-blur-wash);
     cursor: pointer;
     touch-action: none;
     overflow: hidden;
@@ -132,7 +132,7 @@ function onTrackKeydown(e: KeyboardEvent) {
 
 .glass-track:hover,
 .glass-track:focus-visible {
-    background: color-mix(in srgb, var(--foreground) 8%, transparent);
+    background: var(--surface-tint-8);
 }
 
 .glass-track:focus-visible {
@@ -144,7 +144,7 @@ function onTrackKeydown(e: KeyboardEvent) {
     top: 0;
     left: 0;
     bottom: 0;
-    background: color-mix(in srgb, var(--foreground) 7%, transparent);
+    background: var(--surface-tint-8);
     border-radius: var(--radius-pill);
     pointer-events: none;
 }
@@ -156,7 +156,7 @@ function onTrackKeydown(e: KeyboardEvent) {
     width: 6px;
     height: 16px;
     border-radius: var(--radius-sm);
-    background: color-mix(in srgb, var(--foreground) 25%, transparent);
+    background: var(--surface-tint-25);
     opacity: 0;
     pointer-events: none;
     transition: opacity var(--duration-fast) var(--ease-standard),

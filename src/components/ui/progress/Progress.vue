@@ -52,8 +52,8 @@ const indicatorClass = computed(() =>
       // (hex, oklch, color-mix). Tailwind's `bg-[var(...)]` arbitrary class
       // emits `background-color`, which silently rejects gradient values
       // and falls back to transparent — leaving the rail's bg showing through.
-      'h-full w-full flex-1 [background:var(--progress-fill,theme(colors.primary.DEFAULT))] transition-all'
-    : 'h-full w-full flex-1 bg-primary transition-all',
+      'h-full w-full flex-1 [background:var(--progress-fill,theme(colors.primary.DEFAULT))] transition-transform'
+    : 'h-full w-full flex-1 bg-primary transition-transform',
 )
 </script>
 

@@ -38,7 +38,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 <template>
   <DialogPortal>
     <DialogOverlay
-      class="fixed inset-0 z-overlay bg-black/50 [backdrop-filter:var(--glass-blur-subtle)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+      class="fixed inset-0 z-overlay bg-overlay-scrim [backdrop-filter:var(--glass-blur-wash)] sheet-animate"
     />
     <DialogContent
       :class="cn(sheetVariants({ side }), props.class)"
@@ -47,7 +47,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
       <slot />
 
       <DialogClose
-        class="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus-visible:shadow-[var(--focus-ring-shadow)] disabled:pointer-events-none data-[state=open]:bg-secondary"
+        class="focus-ring absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 disabled:pointer-events-none data-[state=open]:bg-secondary"
       >
         <X class="w-4 h-4 text-muted-foreground" />
       </DialogClose>

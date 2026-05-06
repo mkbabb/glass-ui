@@ -17,7 +17,7 @@ const forwarded = useForwardPropsEmits(props, emits)
     <DrawerOverlay />
     <DrawerContent
       v-bind="forwarded" :class="cn(
-        'fixed inset-x-0 bottom-0 z-overlay mt-24 flex h-auto flex-col rounded-t-[var(--radius-panel)] border bg-background',
+        'fixed inset-x-0 bottom-0 z-modal mt-24 flex h-auto flex-col rounded-t-[var(--radius-panel)] border bg-background',
         props.class,
       )"
     >

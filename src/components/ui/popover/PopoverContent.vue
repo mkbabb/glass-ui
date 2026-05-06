@@ -41,7 +41,7 @@ const dockContext = inject<{ id: string } | null>("glassDockContext", null)
       :data-glass-dock-owner="dockContext?.id"
       :class="
         cn(
-          'z-popover w-72 rounded-xl border glass-floating [backdrop-filter:var(--glass-blur-floating)] p-4 text-popover-foreground shadow-md outline-none popover-animate slide-in-from-side',
+          'z-popover w-72 rounded-panel border glass-floating p-4 text-popover-foreground shadow-md outline-none popover-animate slide-in-from-side',
           props.class,
         )
       "
@@ -56,7 +56,7 @@ const dockContext = inject<{ id: string } | null>("glassDockContext", null)
     :data-glass-dock-owner="dockContext?.id"
     :class="
       cn(
-        'z-popover w-72 rounded-xl border glass-floating [backdrop-filter:var(--glass-blur-floating)] p-4 text-popover-foreground shadow-md outline-none popover-animate slide-in-from-side',
+        'z-popover w-72 rounded-panel border glass-floating p-4 text-popover-foreground shadow-md outline-none popover-animate slide-in-from-side',
         props.class,
       )
     "

@@ -119,7 +119,7 @@ defineExpose({ sidebarNav });
     scroll-padding-bottom: var(--sidebar-bottom-inset);
     touch-action: pan-y;
     padding: 0.625rem 0.625rem var(--sidebar-bottom-inset);
-    border: 2px solid color-mix(in srgb, var(--foreground) 15%, transparent);
+    border: 2px solid var(--surface-tint-15);
 }
 
 .sidebar-header {
@@ -162,7 +162,7 @@ defineExpose({ sidebarNav });
 .sidebar-top-btn:hover {
     color: var(--foreground);
     border-color: var(--border);
-    background: color-mix(in srgb, var(--muted) 50%, transparent);
+    background: var(--muted-medium);
 }
 
 .sidebar-list {
@@ -195,7 +195,7 @@ defineExpose({ sidebarNav });
 
 .sidebar-link:hover {
     color: var(--foreground);
-    background: color-mix(in srgb, var(--muted) 50%, transparent);
+    background: var(--muted-medium);
 }
 
 .sidebar-link.is-active {

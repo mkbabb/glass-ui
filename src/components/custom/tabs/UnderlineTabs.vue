@@ -87,8 +87,8 @@ onUnmounted(() => {
     background: var(--foreground);
     border-radius: var(--radius-sm);
     transition:
-        transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
-        width 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform var(--duration-normal) var(--ease-apple-spring),
+        width var(--duration-normal) var(--ease-apple-spring);
 }
 
 .underline-tab {

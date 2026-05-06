@@ -15,9 +15,8 @@ export { default as ToggleChip } from "./ToggleChip.vue";
  */
 export const toggleChipVariants = cva(
     [
-        "select-none cursor-pointer outline-none",
+        "focus-ring select-none cursor-pointer outline-none",
         "font-sans transition-colors duration-150 ease-out",
-        "focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)]",
         "disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed",
     ].join(" "),
     {

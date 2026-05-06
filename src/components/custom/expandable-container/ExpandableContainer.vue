@@ -2,7 +2,7 @@
     <!-- Normal mode: render inline -->
     <div v-if="!open" class="relative" v-bind="$attrs">
         <button
-            class="absolute z-10 rounded-lg bg-card/70 [backdrop-filter:var(--glass-blur-subtle)] p-1.5 text-muted-foreground hover:text-foreground transition-colors shadow-sm border border-border/40"
+            class="absolute z-10 rounded-lg bg-card/70 [backdrop-filter:var(--glass-blur-wash)] p-1.5 text-muted-foreground hover:text-foreground transition-colors shadow-sm border border-border/40"
             :class="buttonPosition === 'left' ? 'left-2 top-2' : 'right-2 top-2'"
             title="Fullscreen"
             @click="open = true"
@@ -19,7 +19,7 @@
             class="fixed inset-0 z-modal flex flex-col bg-background"
         >
             <button
-                class="absolute z-10 rounded-lg bg-card/70 [backdrop-filter:var(--glass-blur-subtle)] p-2 text-muted-foreground hover:text-foreground transition-colors shadow-sm border border-border/40"
+                class="absolute z-10 rounded-lg bg-card/70 [backdrop-filter:var(--glass-blur-wash)] p-2 text-muted-foreground hover:text-foreground transition-colors shadow-sm border border-border/40"
                 :class="buttonPosition === 'left' ? 'left-3 top-3' : 'right-3 top-3'"
                 title="Exit fullscreen"
                 @click="open = false"
