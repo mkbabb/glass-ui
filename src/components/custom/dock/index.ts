@@ -1,5 +1,4 @@
 export { default as GlassDock } from "./GlassDock.vue";
-export { default as DockPopover } from "./DockPopover.vue";
 export { default as DockLayerGroup } from "./DockLayerGroup.vue";
 export { default as DockLayer } from "./DockLayer.vue";
 export { default as DockIconButton } from "./DockIconButton.vue";

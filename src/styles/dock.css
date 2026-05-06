@@ -8,7 +8,6 @@
 @layer components {
     :where(
         .glass-dock,
-        .dock-popover,
         .dock-layer-stack,
         .dock-layer-item-host,
         .dock-layer-tab,
@@ -21,13 +20,16 @@
         --dock-motion-fast: var(--duration-fast) var(--ease-standard);
         --dock-motion-standard: var(--duration-normal) var(--ease-standard);
         --dock-motion-resize: var(--duration-normal) var(--spring-snappy);
-        --dock-motion-popover-enter: var(--duration-slow) var(--spring-snappy);
-        --dock-motion-popover-leave: var(--duration-fast) var(--ease-out);
     }
 
     .glass-dock {
         --dock-surface-blur: var(--glass-blur-dock, var(--glass-blur-wash));
-        --dock-vertical-max-height: calc(100vh - var(--dock-viewport-block-gutter, 2rem));
+        /* J.W3.C — vertical-rail max-block + horizontal max-inline caps
+           live as semantic tokens (defaults in `tokens.css`). When
+           content exceeds the cap, the appropriate axis container
+           scrolls with a mask-fade. Consumers override per-instance by
+           setting `--dock-max-block-size` / `--dock-max-inline-size`
+           on a `.glass-dock` directly. */
         --dock-wrap-max-width: calc(100vw - var(--dock-viewport-inline-gutter, 1rem));
         --dock-separator-height: calc(var(--dock-h, var(--size-icon-btn)) * 0.5);
         --dock-collapsed-hover-scale: var(--scale-hover-dock);
@@ -37,6 +39,7 @@
         border-radius: var(--radius-dock);
         white-space: nowrap;
         overflow: hidden;
+        max-inline-size: var(--dock-max-inline-size);
         padding: var(--dock-padding-block, 0.375rem) var(--dock-padding-inline, 0.5rem);
         background: var(--glass-bg-dock, var(--glass-bg-resting));
         backdrop-filter: var(--dock-surface-blur);
@@ -103,9 +106,13 @@
         mix-blend-mode: soft-light;
     }
 
+    /* J.W3.A — horizontal docks transition padding/shadow/transform/background/border
+       only. Width is driven by the inner `.dock-layers` FLIP via
+       `useLayerTransition`; pinning it here would race the FLIP and
+       reintroduce the `width: auto` non-interpolation diagnosed in
+       R1+R6. */
     .glass-dock:not(.vertical) {
         transition:
-            width var(--dock-motion-resize),
             padding var(--dock-motion-resize),
             box-shadow var(--dock-motion-standard),
             transform var(--dock-motion-resize),
@@ -113,6 +120,13 @@
             border-color var(--dock-motion-standard);
     }
 
+    /* J.W3.C — vertical rails cap block-size at `--dock-max-block-size`
+       and overflow-y scroll when content exceeds the cap. The
+       previously-suppressed scrollbar (`scrollbar-width: none`) is
+       replaced with `thin` so users see the affordance at narrow
+       viewports (R6 cornerstone-2: rail content was clipping silently
+       at <600px tall). A `scroll-fade-y` mask-image feathers the top +
+       bottom edges so the boundary doesn't cliff. */
     .glass-dock.vertical {
         display: inline-flex;
         flex-direction: column;
@@ -122,10 +136,25 @@
         white-space: normal;
         width: auto;
         height: auto;
-        max-height: var(--dock-vertical-max-height);
+        max-block-size: var(--dock-max-block-size);
         overflow-x: hidden;
         overflow-y: auto;
-        scrollbar-width: none;
+        scrollbar-width: thin;
+        scrollbar-color: color-mix(in srgb, var(--muted-foreground) 25%, transparent) transparent;
+        mask-image: linear-gradient(
+            to bottom,
+            transparent,
+            black var(--mask-fade-width),
+            black calc(100% - var(--mask-fade-width)),
+            transparent
+        );
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            transparent,
+            black var(--mask-fade-width),
+            black calc(100% - var(--mask-fade-width)),
+            transparent
+        );
         padding: var(--dock-vertical-padding, var(--dock-padding-block, 0.375rem));
         border-radius: var(--radius-dock);
         transition:
@@ -136,10 +165,6 @@
             transform var(--dock-motion-resize),
             background var(--dock-motion-standard),
             border-color var(--dock-motion-standard);
-    }
-
-    .glass-dock.vertical::-webkit-scrollbar {
-        display: none;
     }
 
     .glass-dock.variant-rail {
@@ -192,8 +217,53 @@
         margin: 0 auto;
     }
 
+    /* J.W3.A — outer collapsed↔expanded pair drives width via FLIP.
+       `useLayerTransition` measures the natural width before/after the
+       slot swap and animates `width` between fixed pixel values via
+       the `--dock-motion-resize` spring; this eliminates the
+       `width: auto` non-interpolation diagnosed in R1+R6. The two
+       layers stack on a CSS grid (1/1 area) and crossfade opacity
+       in step with the FLIP. Spatial motion (width) is automatically
+       suppressed by the global `prefers-reduced-motion` gate in
+       `utilities.css` (which strips width from transition-property).
+       Opacity transitions remain — the 0.1s shortened cadence in PRM
+       still reads as a snap.
+
+       J.W3.C — when the active layer's natural width exceeds
+       `--dock-max-inline-size`, the dock root clips and the layer
+       scrolls horizontally with a mask-fade. `min-width: 0` lets the
+       grid item shrink under the cap (default min-content is the
+       child's intrinsic width which would prevent the clamp). */
     .dock-layers {
         display: grid;
+        min-width: 0;
+        transition: width var(--dock-motion-resize);
+    }
+
+    /* Horizontal dock content scrolls along the inline axis when the
+       active layer's natural width exceeds the dock's content area
+       (which the parent's `--dock-max-inline-size` cap clamps). The
+       `:not(.dock-wrap)` exclusion preserves the wrap-flow path —
+       wrap docks bypass scrolling entirely; their `.dock-layer--full`
+       breaks to multiple rows. */
+    .glass-dock.expanded:not(.dock-wrap) > .dock-layers {
+        overflow-x: auto;
+        scrollbar-width: thin;
+        scrollbar-color: color-mix(in srgb, var(--muted-foreground) 25%, transparent) transparent;
+        mask-image: linear-gradient(
+            to right,
+            transparent,
+            black var(--mask-fade-width),
+            black calc(100% - var(--mask-fade-width)),
+            transparent
+        );
+        -webkit-mask-image: linear-gradient(
+            to right,
+            transparent,
+            black var(--mask-fade-width),
+            black calc(100% - var(--mask-fade-width)),
+            transparent
+        );
     }
 
     .dock-layer {
@@ -203,16 +273,20 @@
         grid-area: 1 / 1;
         gap: var(--dock-layer-gap, 0.375rem);
         height: var(--dock-layer-height, 2.5rem);
+        transition: opacity var(--dock-motion-fast);
     }
 
     .dock-layer.layer-active {
+        opacity: 1;
         pointer-events: auto;
+        position: relative;
     }
 
     .dock-layer:not(.layer-active) {
+        opacity: 0;
         pointer-events: none;
         position: absolute;
-        visibility: hidden;
+        inset: 0;
     }
 
     .glass-dock.expanded {
@@ -458,77 +532,12 @@
         color: var(--foreground);
     }
 
-    .dock-popover {
-        --dock-popover-offset: var(--popover-offset, 6px);
-        --dock-popover-viewport-pad: var(--popover-viewport-pad, 8px);
-        --dock-popover-trigger-z: var(--z-controls);
-        --dock-popover-panel-blur: var(--glass-blur-floating);
-        --dock-popover-enter-scale: 0.85;
-        --dock-popover-leave-scale: 0.95;
-        --dock-popover-enter-shift: 0.5rem;
-        --dock-popover-leave-shift: 0.25rem;
-        position: relative;
-        display: flex;
-        align-items: center;
-        flex-shrink: 0;
-    }
-
-    .dock-popover > .popover-trigger {
-        z-index: var(--dock-popover-trigger-z);
-        position: relative;
-    }
-
-    .dock-popover > .popover-panel {
-        position: absolute;
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        pointer-events: auto;
-        overflow: hidden;
-        gap: var(--dock-popover-gap, 0.125rem);
-        padding: var(--dock-popover-padding, 0.25rem);
-        z-index: var(--z-popover);
-        background: var(--glass-bg-floating);
-        backdrop-filter: var(--dock-popover-panel-blur);
-        -webkit-backdrop-filter: var(--dock-popover-panel-blur);
-        border: 1px solid var(--glass-border-floating);
-        border-radius: var(--radius-panel);
-        box-shadow: var(--glass-shadow-floating);
-    }
-
-    .dock-popover > .pop-up-enter-active,
-    .dock-popover > .pop-down-enter-active {
-        transition:
-            opacity var(--dock-motion-fast),
-            transform var(--dock-motion-popover-enter);
-    }
-
-    .dock-popover > .pop-up-leave-active,
-    .dock-popover > .pop-down-leave-active {
-        transition:
-            opacity var(--dock-motion-popover-leave),
-            transform var(--dock-motion-popover-leave);
-    }
-
-    .dock-popover > .pop-up-enter-from {
-        opacity: 0;
-        transform: scale(var(--dock-popover-enter-scale)) translateY(var(--dock-popover-enter-shift));
-    }
-
-    .dock-popover > .pop-up-leave-to {
-        opacity: 0;
-        transform: scale(var(--dock-popover-leave-scale)) translateY(var(--dock-popover-leave-shift));
-    }
-
-    .dock-popover > .pop-down-enter-from {
-        opacity: 0;
-        transform: scale(var(--dock-popover-enter-scale)) translateY(calc(var(--dock-popover-enter-shift) * -1));
-    }
-
-    .dock-popover > .pop-down-leave-to {
-        opacity: 0;
-        transform: scale(var(--dock-popover-leave-scale)) translateY(calc(var(--dock-popover-leave-shift) * -1));
-    }
+    /* J.W3.B — `.dock-popover` substrate + `pop-up-*` / `pop-down-*`
+       Vue Transition keyframes retired. Hover-driven dock popovers
+       compose `<HoverPopover keep-dock-open>`, which inherits reka-ui
+       HoverCard's collision-avoidance + the canonical
+       `popover-animate` motion vocabulary. Click-anchored popovers
+       (no dock-keep semantics) compose `<Popover>` directly. */
 
     .dark-mode-toggle-button {
         width: var(--dark-mode-toggle-size, 2.25rem);

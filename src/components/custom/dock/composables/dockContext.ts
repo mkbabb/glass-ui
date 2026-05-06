@@ -1,17 +1,19 @@
-import { inject, provide, type ComputedRef, type Ref } from "vue";
+import { inject, provide, type ComputedRef } from "vue";
 
 export type DockOrientation = "horizontal" | "vertical";
 
-export interface DockPopoverRegistration {
-    expanded: Ref<boolean>;
-    scheduleCollapse(delay: number): void;
-}
-
+/**
+ * Dock context surfaces the dock id + orientation to descendants.
+ *
+ * J.W3.B — `registerPopover` / `closeOtherPopovers` retired. Hover-driven
+ * dock popovers compose `<HoverPopover keep-dock-open>` whose open/close
+ * cadence is owned by reka-ui's HoverCard primitives; cooperative
+ * dismissal between sibling popovers is no longer needed (HoverCard's
+ * pointer-leave timer handles the cluster transit case).
+ */
 export interface DockContext {
     id: string;
     orientation: ComputedRef<DockOrientation>;
-    registerPopover(popover: DockPopoverRegistration): () => void;
-    closeOtherPopovers(popover: DockPopoverRegistration): void;
 }
 
 const DOCK_CONTEXT_KEY = "glassDockContext";

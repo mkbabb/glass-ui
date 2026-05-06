@@ -9,9 +9,9 @@ import {
     GlassDock,
     DockIconButton,
     DockDropdownTrigger,
-    DockPopover,
     DockSelectTrigger,
 } from "@/components/custom/dock";
+import { HoverPopover } from "@/components/custom/hover-popover";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -172,56 +172,70 @@ function togglePlay() {
         <section class="flex flex-col gap-3">
             <h2 class="text-sm font-semibold text-muted-foreground">With popover triggers</h2>
             <p class="text-sm text-muted-foreground">
-                DockPopover pins the parent dock open while active, auto-flips direction, and click-closes.
+                <code class="rounded bg-muted px-1">HoverPopover keep-dock-open</code> pins the parent
+                dock open while the popover is visible. reka-ui's HoverCard primitives handle
+                hover-trigger, defer-on-leave, and adaptive side/align collision avoidance.
             </p>
             <div class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
                 <GlassDock always-expanded>
                     <DockIconButton aria-label="New"><Plus class="h-4 w-4" /></DockIconButton>
 
-                    <DockPopover direction="down">
+                    <HoverPopover side="bottom" align="center" keep-dock-open>
                         <template #trigger>
-                            <Share2 class="h-4 w-4" />
+                            <DockIconButton aria-label="Share">
+                                <Share2 class="h-4 w-4" />
+                            </DockIconButton>
                         </template>
-                        <div class="flex min-w-44 flex-col gap-1 p-1">
-                            <p class="px-2 py-1 text-[10px] uppercase tracking-wider text-muted-foreground">Share</p>
-                            <button class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted">Copy link</button>
-                            <button class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted">Email</button>
-                            <button class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted">Embed</button>
-                        </div>
-                    </DockPopover>
+                        <template #content>
+                            <div class="flex min-w-44 flex-col gap-1 p-1">
+                                <p class="px-2 py-1 text-[10px] uppercase tracking-wider text-muted-foreground">Share</p>
+                                <button class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted">Copy link</button>
+                                <button class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted">Email</button>
+                                <button class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted">Embed</button>
+                            </div>
+                        </template>
+                    </HoverPopover>
 
-                    <DockPopover direction="down" align="end">
+                    <HoverPopover side="bottom" align="end" keep-dock-open>
                         <template #trigger>
-                            <Download class="h-4 w-4" />
+                            <DockIconButton aria-label="Export">
+                                <Download class="h-4 w-4" />
+                            </DockIconButton>
                         </template>
-                        <div class="flex min-w-44 flex-col gap-1 p-1">
-                            <p class="px-2 py-1 text-[10px] uppercase tracking-wider text-muted-foreground">Export</p>
-                            <button class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted">PNG</button>
-                            <button class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted">SVG</button>
-                            <button class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted">PDF</button>
-                        </div>
-                    </DockPopover>
+                        <template #content>
+                            <div class="flex min-w-44 flex-col gap-1 p-1">
+                                <p class="px-2 py-1 text-[10px] uppercase tracking-wider text-muted-foreground">Export</p>
+                                <button class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted">PNG</button>
+                                <button class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted">SVG</button>
+                                <button class="rounded px-2 py-1.5 text-left text-sm hover:bg-muted">PDF</button>
+                            </div>
+                        </template>
+                    </HoverPopover>
 
                     <div class="dock-separator" />
 
-                    <DockPopover direction="down">
+                    <HoverPopover side="bottom" align="center" keep-dock-open>
                         <template #trigger>
-                            <div class="flex items-center gap-1">
-                                <span class="text-xs">Track</span>
-                                <ChevronDown class="h-3 w-3 opacity-60" />
+                            <DockIconButton aria-label="Track">
+                                <span class="flex items-center gap-1">
+                                    <span class="text-xs">Track</span>
+                                    <ChevronDown class="h-3 w-3 opacity-60" />
+                                </span>
+                            </DockIconButton>
+                        </template>
+                        <template #content>
+                            <div class="flex min-w-44 flex-col gap-1 p-1">
+                                <button
+                                    v-for="t in tracks"
+                                    :key="t"
+                                    :class="['rounded px-2 py-1.5 text-left text-sm hover:bg-muted', track === t && 'bg-muted font-medium']"
+                                    @click="track = t"
+                                >
+                                    {{ t }}
+                                </button>
                             </div>
                         </template>
-                        <div class="flex min-w-44 flex-col gap-1 p-1">
-                            <button
-                                v-for="t in tracks"
-                                :key="t"
-                                :class="['rounded px-2 py-1.5 text-left text-sm hover:bg-muted', track === t && 'bg-muted font-medium']"
-                                @click="track = t"
-                            >
-                                {{ t }}
-                            </button>
-                        </div>
-                    </DockPopover>
+                    </HoverPopover>
                 </GlassDock>
             </div>
         </section>

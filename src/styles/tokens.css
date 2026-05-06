@@ -349,16 +349,26 @@
     --glass-blur-resting-radius:  12px;
     --glass-blur-floating-radius: 16px;
     --glass-blur-overlay-radius:  24px;
-    --glass-blur-dock-radius:     1px;
+    /* J.W3.C — dock blur dropped to 0px (was 1px). Per R1 §C: at 1px
+       radius the radius itself is barely perceptible but still triggers
+       compositor blur on every dock paint. The aurora-bleed-through
+       chromatic effect that read as "blur" was carried by the
+       saturate(1.025) chromatic punch + 32% bg opacity, not the radius.
+       Dropping radius + saturate yields a purely opacity-driven dock
+       (which `prefers-reduced-transparency` already maps to via
+       `glass.css:229`). User finding 3 closes here. */
+    --glass-blur-dock-radius:     0px;
 
     --glass-blur-wash:     blur(var(--glass-blur-wash-radius)) saturate(1.05);
     --glass-blur-quiet:    blur(var(--glass-blur-quiet-radius));
     --glass-blur-resting:  blur(var(--glass-blur-resting-radius)) saturate(1.05);
     --glass-blur-floating: blur(var(--glass-blur-floating-radius)) saturate(1.4);
     --glass-blur-overlay:  blur(var(--glass-blur-overlay-radius)) saturate(1.5);
-    /* Dock-specific: half the wash weight so the dock reads as a feather-light
-       overlay rather than a heavy blurred slab. */
-    --glass-blur-dock:     blur(var(--glass-blur-dock-radius)) saturate(1.025);
+    /* Dock blur composes blur() only — no saturate. With the radius at
+       0px the dock relies on `--glass-bg-dock` (32% card opacity) for
+       its translucent register; the aurora bleeds cleanly without the
+       chromatic punch. */
+    --glass-blur-dock:     blur(var(--glass-blur-dock-radius));
 
     /* Dock-specific opacity. Lighter than `medium` (0.65) so the dock reads
        as a translucent overlay rather than a panel — aurora bleed visible
@@ -472,6 +482,15 @@
 
     /* Layout tokens */
     --mask-fade-width: 1rem;
+    /* J.W3.C — dock content overflow caps. When dock content exceeds
+       these dimensions, the inner `.dock-layers` (horizontal) /
+       `.glass-dock.vertical` (rail) container scrolls with a
+       `.scroll-fade-{x,y}` mask-fade so the boundary feathers rather
+       than cliffs. Defaults clamp to 80vw / 80vh capped at sensible
+       desktop widths; consumers override per-dock by setting either
+       token directly on a `.glass-dock` instance. User findings 1 + 5a. */
+    --dock-max-inline-size: min(80vw, 64rem);
+    --dock-max-block-size: min(80vh, 48rem);
     --max-width-input: 24rem;
     --input-min-width-sm: 5rem;
     --min-width-input-sm: var(--input-min-width-sm);

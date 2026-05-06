@@ -10,5 +10,4 @@ export {
     useDockContext,
     type DockContext,
     type DockOrientation,
-    type DockPopoverRegistration,
 } from "./dockContext";

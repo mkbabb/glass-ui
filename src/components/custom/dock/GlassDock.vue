@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from "vue";
+import { computed, onBeforeUnmount, onMounted, provide, ref, useTemplateRef, watch } from "vue";
 import { useTouchGate } from "../../../composables/useTouchGate";
-import {
-    provideDockContext,
-    type DockPopoverRegistration,
-} from "./composables/dockContext";
+import { provideDockContext } from "./composables/dockContext";
 import { useDockState } from "./composables/useDockState";
+import { useLayerTransition } from "./composables/useLayerTransition";
 
 type DockDensity = "compact" | "comfortable" | "spacious" | "audacious";
 let dockInstanceId = 0;
@@ -53,6 +51,7 @@ const props = withDefaults(
 );
 
 const dockEl = useTemplateRef<HTMLElement>("dockEl");
+const layersEl = useTemplateRef<HTMLElement>("layersEl");
 const variant = computed(() => props.variant);
 const shape = computed(() => props.shape);
 const orientation = computed(() => props.variant === "rail" ? "vertical" : props.orientation);
@@ -63,30 +62,18 @@ const fitContent = computed(() => props.fitContent || props.variant === "rail");
 const isTransitioning = ref(false);
 const touchGate = useTouchGate(props.collapseDelay);
 const dockId = `glass-dock-${++dockInstanceId}`;
-const popovers = new Set<DockPopoverRegistration>();
 let transitionTimer: ReturnType<typeof setTimeout> | null = null;
-
-function registerPopover(popover: DockPopoverRegistration): () => void {
-    popovers.add(popover);
-    return () => {
-        popovers.delete(popover);
-    };
-}
-
-function closeOtherPopovers(popover: DockPopoverRegistration): void {
-    for (const registered of popovers) {
-        if (registered !== popover && registered.expanded.value) {
-            registered.scheduleCollapse(0);
-        }
-    }
-}
 
 provideDockContext({
     id: dockId,
     orientation,
-    registerPopover,
-    closeOtherPopovers,
 });
+
+/* J.W3.B — string-keyed dock id for `<HoverPopover keep-dock-open>`.
+   The portal-marker attrs (`data-glass-dock-portal` /
+   `data-glass-dock-owner`) opt portaled HoverCard content into the
+   dock's click-away allowlist via `isTeleportedTarget`. */
+provide("glassDockId", dockId);
 
 const {
     expanded,
@@ -109,6 +96,25 @@ const {
 });
 
 const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
+
+/* J.W3.A cornerstone — compose `useLayerTransition` for the outer
+   collapsed↔expanded pair (horizontal docks only — vertical rails
+   render a single slot, no layer pair to crossfade). The composable
+   captures the natural width before/after the slot swap and animates
+   width between fixed pixel values via the `--dock-motion-resize`
+   spring, eliminating the `width: auto` non-interpolation that caused
+   the binary jerk diagnosed in R1+R6. The same primitive already
+   drives `<DockLayerGroup>`'s inner pair — both crossfades now share
+   one mechanism. */
+const outerActiveLayer = computed<"full" | "summary">(() =>
+    visualExpanded.value ? "full" : "summary",
+);
+const outerLayerAxis = computed<"horizontal" | "vertical">(() => "horizontal");
+const { onTransitionEnd: onLayersTransitionEnd } = useLayerTransition({
+    containerEl: layersEl,
+    activeLayer: outerActiveLayer,
+    axis: outerLayerAxis,
+});
 
 function parseTimeMs(value: string): number {
     const trimmed = value.trim();
@@ -234,13 +240,14 @@ defineExpose({ expanded, isPinned, isTransitioning, expand, collapse, keepOpen, 
     >
         <!--
             Horizontal docks use the built-in two-layer pattern (full +
-            collapsed summary) with CSS-grid stacking and fade-swap
-            transitions. Vertical docks are tool palettes: they don't
-            collapse into a summary icon, and hosting a DockLayerGroup
-            inside demands a direct single-slot body with no nested grid.
+            collapsed summary) with CSS-grid stacking and FLIP-driven
+            width crossfade transitions. Vertical docks are tool palettes:
+            they don't collapse into a summary icon, and hosting a
+            DockLayerGroup inside demands a direct single-slot body with
+            no nested grid.
         -->
         <template v-if="orientation === 'horizontal'">
-            <div class="dock-layers">
+            <div ref="layersEl" class="dock-layers" @transitionend="onLayersTransitionEnd">
                 <div
                     :class="['dock-layer dock-layer--full', { 'layer-active': visualExpanded }]"
                     :inert="!expanded || undefined"

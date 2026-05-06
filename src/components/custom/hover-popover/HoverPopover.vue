@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue";
-import { computed } from "vue";
+import { computed, inject, ref, watch } from "vue";
 import {
     HoverCardContent,
     HoverCardPortal,
@@ -27,6 +27,13 @@ import { cn } from "../../../utils";
  * Composition rests on reka-ui's HoverCard primitives so the
  * collision-avoidance + open/close timer machinery come for free; this
  * component is mostly a tighter substrate + a label-shaped default.
+ *
+ * J.W3.B — `keepDockOpen` extends the primitive with the dock-keep
+ * sink contract. While the popover is open inside a `<GlassDock>`,
+ * the dock's collapse timer is suppressed via the parent-provided
+ * `dockKeepOpen` / `dockRelease` callbacks. No-op outside a dock
+ * context — the inject fallbacks are `null`, so non-dock consumers
+ * pay nothing.
  */
 
 const props = withDefaults(
@@ -53,6 +60,18 @@ const props = withDefaults(
         sideOffset?: number;
         /** Class merged onto the rendered HoverPopover content element. */
         class?: HTMLAttributes["class"];
+        /**
+         * J.W3.B — when mounted inside a `<GlassDock>`, hold the parent
+         * dock open while this popover is visible. Hooks the
+         * `dockKeepOpen` / `dockRelease` provide/inject contract and
+         * is a no-op outside a dock context. The dock's collapse timer
+         * is ref-counted so multiple keep-open holds compose cleanly.
+         * Also marks the portaled HoverCard content with
+         * `data-glass-dock-portal` + `data-glass-dock-owner` so the
+         * dock's click-away handler treats clicks inside the popover
+         * as "inside the dock".
+         */
+        keepDockOpen?: boolean;
     }>(),
     {
         side: "top",
@@ -60,6 +79,7 @@ const props = withDefaults(
         openDelay: 250,
         closeDelay: 150,
         sideOffset: 6,
+        keepDockOpen: false,
     },
 );
 
@@ -69,10 +89,43 @@ const contentClass = computed(() =>
         props.class,
     ),
 );
+
+/* J.W3.B — dock-keep-open sink. Track open state via reka's
+   `v-model:open`; while the popover is visible AND `keepDockOpen` is
+   set, hold the parent dock open via the provide/inject contract
+   `<GlassDock>` ships through `useDockState`. Outside a dock context
+   the injects fall back to null and the watcher is a no-op. */
+const isOpen = ref(false);
+const dockKeepOpen = inject<(() => void) | null>("dockKeepOpen", null);
+const dockRelease = inject<(() => void) | null>("dockRelease", null);
+const dockId = inject<string | null>("glassDockId", null);
+let isHeld = false;
+
+watch(isOpen, (open) => {
+    if (!props.keepDockOpen) return;
+    if (open && !isHeld) {
+        dockKeepOpen?.();
+        isHeld = true;
+    } else if (!open && isHeld) {
+        dockRelease?.();
+        isHeld = false;
+    }
+});
+
+/* Portaled HoverCard content lives outside the dock root, so the
+   dock's click-away handler would otherwise treat clicks inside the
+   popover as outside-dismiss. Marking the rendered content with the
+   dock-portal attrs opts the portal into the dock's
+   `isTeleportedTarget` allowlist. */
+const portalAttrs = computed(() =>
+    props.keepDockOpen && dockId
+        ? { "data-glass-dock-portal": "", "data-glass-dock-owner": dockId }
+        : {},
+);
 </script>
 
 <template>
-    <HoverCardRoot :open-delay="openDelay" :close-delay="closeDelay">
+    <HoverCardRoot v-model:open="isOpen" :open-delay="openDelay" :close-delay="closeDelay">
         <HoverCardTrigger as-child>
             <slot name="trigger">
                 <slot />
@@ -85,6 +138,7 @@ const contentClass = computed(() =>
                 :side-offset="sideOffset"
                 :avoid-collisions="true"
                 :class="contentClass"
+                v-bind="portalAttrs"
             >
                 <slot name="content">
                     <span class="hover-popover-label">{{ content }}</span>
