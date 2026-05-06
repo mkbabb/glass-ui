@@ -1,17 +1,54 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { computed, reactive, ref } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 import {
     DEFAULT_METABALL_CONFIG,
     MetaballCanvas,
-    useMetaballs,
     type MetaballConfig,
 } from "@/components/custom/metaballs";
-import { cn } from "@/utils/cn";
+import {
+    Configurator,
+    ConfiguratorLayer,
+    ConfiguratorRow,
+    useConfiguratorState,
+    type ConfiguratorPreset,
+} from "@/components/custom/configurator";
+import { Slider } from "@/components/ui/slider";
+import {
+    NumberField,
+    NumberFieldContent,
+    NumberFieldDecrement,
+    NumberFieldIncrement,
+    NumberFieldInput,
+} from "@/components/ui/number-field";
+import { Button } from "@/components/ui/button";
+import { BouncyToggle } from "@/components/custom/tabs";
+import { RotateCcw } from "lucide-vue-next";
 
-const directCanvas = ref<HTMLCanvasElement | null>(null);
+/**
+ * Metaballs configurator story — full <Configurator> consumption.
+ *
+ * R2 §C named a 7-axis blob split: falloff, count, radius, color/hue/luminance,
+ * isoLevel, motionMode, noise. The metaballs API has no separate noise channel
+ * (the deterministic phi/sqrt2/sqrt3 oscillation IS the motion source); noise
+ * folds into Motion. The 7th axis surfaces as Output (background alpha) so all
+ * tunable knobs are reachable. Mapping table lives in the W4-C proof doc.
+ *
+ *   R2 axis              metaballs prop          Configurator layer
+ *   ────────────────     ─────────────────       ──────────────────
+ *   falloff           →  edgeSoftness         →  Falloff
+ *   count             →  blobCount            →  Count
+ *   radius            →  baseRadius           →  Radius
+ *   color/hue/lum     →  colors[]             →  Color
+ *   isoLevel          →  threshold            →  IsoLevel
+ *   motionMode+noise  →  speed, orbitAmplitude →  Motion
+ *   (axis 7 added)    →  bgAlpha              →  Output
+ */
 
-const componentConfig = {
+// ─── Presets ──────────────────────────────────────────────────────────────
+
+const SUNSET: Required<MetaballConfig> = {
+    ...DEFAULT_METABALL_CONFIG,
     blobCount: 10,
     speed: 0.1,
     threshold: 0.92,
@@ -20,9 +57,9 @@ const componentConfig = {
     colors: ["#E31937", "#FF8A3D", "#FFD166", "#4ECDC4", "#5C7AEA"],
     bgAlpha: 0.04,
     edgeSoftness: 0.38,
-} satisfies MetaballConfig;
+};
 
-const directConfig = reactive({
+const COOL: Required<MetaballConfig> = {
     ...DEFAULT_METABALL_CONFIG,
     blobCount: 7,
     speed: 0.16,
@@ -32,157 +69,373 @@ const directConfig = reactive({
     colors: ["#2DD4BF", "#38BDF8", "#A78BFA", "#F472B6"],
     bgAlpha: 0.12,
     edgeSoftness: 0.42,
+};
+
+const MONO: Required<MetaballConfig> = {
+    ...DEFAULT_METABALL_CONFIG,
+    blobCount: 12,
+    speed: 0.06,
+    threshold: 1.05,
+    baseRadius: 0.10,
+    orbitAmplitude: 0.32,
+    colors: ["#0F172A", "#1E293B", "#334155", "#475569"],
+    bgAlpha: 0.08,
+    edgeSoftness: 0.22,
+};
+
+const PRESETS: ConfiguratorPreset<Required<MetaballConfig>>[] = [
+    { key: "sunset", label: "Sunset", sub: "warm · 10 blobs",   config: SUNSET },
+    { key: "cool",   label: "Cool",   sub: "pastel · 7 blobs",  config: COOL },
+    { key: "mono",   label: "Mono",   sub: "slate · 12 blobs",  config: MONO },
+];
+
+const studio = useConfiguratorState<Required<MetaballConfig>>({
+    presets: PRESETS,
+    initialPreset: "sunset",
 });
 
-const { isSupported } = useMetaballs(directCanvas, directConfig);
+// `studio.config` is reactive — bind it directly to <MetaballCanvas>.
+const cfg = studio.config;
 
-const supportState = computed(() =>
-    isSupported.value ? "WebGL supported" : "WebGL unavailable",
+// Template-friendly computed unwrappers (vue-tsc tracks ComputedRef at the
+// binding boundary; the template-side auto-unwrap is runtime-only).
+const activePresetKey = computed(() => studio.activePreset.value ?? "");
+const isDirtyConfig = computed(() => studio.isDirty.value);
+
+// ─── Color stops (free-text editing per stop) ─────────────────────────────
+
+const colorDraft = reactive(cfg.colors.map((c) => ({ value: c })));
+
+watch(
+    () => cfg.colors,
+    (next) => {
+        // Resync the local draft when a preset switch replaces the array.
+        colorDraft.length = 0;
+        for (const c of next) colorDraft.push({ value: c });
+    },
+    { deep: false },
 );
 
-const renderingState = computed(() =>
-    isSupported.value ? "canvas shader render" : "fallback content",
-);
+function commitColor(index: number, value: string) {
+    if (index < 0 || index >= cfg.colors.length) return;
+    cfg.colors[index] = value;
+    colorDraft[index]!.value = value;
+}
 
-const readouts = computed(() => [
-    { label: "useMetaballs support", value: supportState.value },
-    { label: "direct rendering", value: renderingState.value },
-    { label: "blob count", value: String(directConfig.blobCount) },
-    { label: "edge softness", value: String(directConfig.edgeSoftness) },
-]);
+function addColor() {
+    cfg.colors.push("#cccccc");
+    colorDraft.push({ value: "#cccccc" });
+}
+
+function removeColor(index: number) {
+    if (cfg.colors.length <= 1) return;
+    cfg.colors.splice(index, 1);
+    colorDraft.splice(index, 1);
+}
+
+// ─── Slider helpers (Reka sliders model number[]) ─────────────────────────
+
+function sliderModel(value: number): number[] {
+    return [value];
+}
+
+function commitSlider(field: keyof Required<MetaballConfig>, value: number[] | number) {
+    const v = Array.isArray(value) ? value[0] : value;
+    if (typeof v !== "number") return;
+    (cfg as unknown as Record<string, unknown>)[field as string] = v;
+}
+
+// ─── Motion preset toggle (still / drift / orbit) ─────────────────────────
+
+const motionMode = computed<string>(() => {
+    if (cfg.speed < 0.04) return "still";
+    if (cfg.speed < 0.12) return "drift";
+    return "orbit";
+});
+
+const motionOptions = [
+    { label: "Still", value: "still" },
+    { label: "Drift", value: "drift" },
+    { label: "Orbit", value: "orbit" },
+];
+
+function setMotionMode(value: string | string[]) {
+    const v = Array.isArray(value) ? value[0] : value;
+    switch (v) {
+        case "still":
+            cfg.speed = 0.02;
+            cfg.orbitAmplitude = 0.12;
+            break;
+        case "drift":
+            cfg.speed = 0.08;
+            cfg.orbitAmplitude = 0.24;
+            break;
+        case "orbit":
+            cfg.speed = 0.18;
+            cfg.orbitAmplitude = 0.34;
+            break;
+    }
+}
+
+// ─── Stage support readout ────────────────────────────────────────────────
+
+const canvasRef = ref<InstanceType<typeof MetaballCanvas> | null>(null);
+
+const isSupported = computed(() => canvasRef.value?.isSupported ?? true);
+const isReducedMotion = computed(
+    () => canvasRef.value?.isReducedMotion ?? false,
+);
+const isReducedTransparency = computed(
+    () => canvasRef.value?.isReducedTransparency ?? false,
+);
 </script>
 
 <template>
     <StoryPage content-class="gap-8">
-        <section
-            data-testid="metaballs-story"
-            :class="
-                cn(
-                    'relative min-h-[28rem] overflow-hidden rounded-card border border-border/60 p-6 md:p-8',
-                    'bg-[radial-gradient(circle_at_20%_20%,color-mix(in_srgb,var(--viz-fourier)_30%,transparent),transparent_34%),radial-gradient(circle_at_85%_25%,color-mix(in_srgb,var(--viz-topology)_28%,transparent),transparent_30%),linear-gradient(135deg,var(--background),color-mix(in_srgb,var(--card)_78%,var(--background)))]',
-                )
-            "
+        <Configurator
+            :presets="PRESETS"
+            :active-preset="activePresetKey"
+            scroll-mode="auto"
+            class="min-h-[36rem]"
+            @select-preset="studio.selectPreset"
+            @reset="studio.resetCurrent"
         >
-            <MetaballCanvas :config="componentConfig">
-                <template #fallback>
-                    <div
-                        data-testid="metaball-component-fallback"
-                        class="absolute inset-x-5 top-5 rounded-panel border border-border/70 bg-card/90 p-4 shadow-cartoon"
+            <!-- ── Stage ─────────────────────────────────────────── -->
+            <template #stage>
+                <div
+                    data-testid="metaballs-stage"
+                    class="relative h-full min-h-[28rem] w-full overflow-hidden bg-[radial-gradient(circle_at_20%_20%,color-mix(in_srgb,var(--viz-fourier)_30%,transparent),transparent_34%),radial-gradient(circle_at_85%_25%,color-mix(in_srgb,var(--viz-topology)_28%,transparent),transparent_30%),linear-gradient(135deg,var(--background),color-mix(in_srgb,var(--card)_78%,var(--background)))]"
+                >
+                    <MetaballCanvas
+                        v-if="isSupported"
+                        ref="canvasRef"
+                        :config="cfg"
                     >
-                        <p class="text-small font-medium text-foreground">
-                            MetaballCanvas fallback
-                        </p>
-                        <p class="text-small text-muted-foreground">
-                            WebGL is unavailable, so the component rendered its fallback slot.
-                        </p>
-                    </div>
-                </template>
-            </MetaballCanvas>
+                        <template #fallback>
+                            <div
+                                data-testid="metaballs-fallback"
+                                class="absolute inset-x-5 top-5 rounded-panel border border-border/70 bg-card/90 p-4 shadow-cartoon"
+                            >
+                                <p class="text-small font-medium text-foreground">
+                                    MetaballCanvas fallback
+                                </p>
+                                <p class="text-small text-muted-foreground">
+                                    WebGL is unavailable; the canvas rendered its
+                                    fallback slot.
+                                </p>
+                            </div>
+                        </template>
+                    </MetaballCanvas>
 
-            <div class="relative z-10 flex min-h-[22rem] flex-col justify-between gap-8">
-                <div class="max-w-xl">
-                    <p class="text-admin-label text-muted-foreground">
-                        MetaballCanvas · WebGL substrate
-                    </p>
-                    <h2 class="text-title text-foreground">Metaballs</h2>
-                    <p class="text-prose mt-2 text-muted-foreground">
-                        Fixed canvas renderer with an explicit fallback slot, paired with
-                        a direct composable probe below.
-                    </p>
-                </div>
-
-                <div
-                    data-testid="metaballs-support-readout"
-                    class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
-                >
                     <div
-                        v-for="item in readouts"
-                        :key="item.label"
-                        class="rounded-panel border border-border/60 bg-card/70 p-3 shadow-cartoon-sm backdrop-blur-sm"
+                        class="pointer-events-none absolute bottom-3 left-3 flex flex-col gap-1 text-mono-caption uppercase tracking-widest text-foreground/60"
                     >
-                        <p class="text-mono-caption text-muted-foreground">
-                            {{ item.label }}
-                        </p>
-                        <p class="text-small text-foreground">{{ item.value }}</p>
+                        <span>{{ activePresetKey }} · {{ motionMode }}</span>
+                        <span v-if="isReducedMotion" class="text-warning">
+                            reduced-motion · single frame
+                        </span>
+                        <span v-if="isReducedTransparency" class="text-warning">
+                            reduced-transparency · solid bg
+                        </span>
                     </div>
                 </div>
-            </div>
-        </section>
+            </template>
 
-        <section class="grid grid-cols-1 gap-5 lg:grid-cols-[1.2fr_0.8fr]">
-            <div
-                :class="
-                    cn(
-                        'relative h-80 overflow-hidden rounded-card border border-border/60 bg-background/60',
-                        'shadow-cartoon',
-                    )
-                "
-            >
-                <canvas
-                    v-show="isSupported"
-                    ref="directCanvas"
-                    data-testid="metaballs-direct-canvas"
-                    aria-label="useMetaballs direct canvas"
-                    class="absolute inset-0 h-full w-full"
-                />
+            <!-- ── Footer (reset) ───────────────────────────────── -->
+            <template #footer="{ reset }">
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-mono-caption text-muted-foreground">
+                        {{ isDirtyConfig ? "modified" : "preset" }}
+                    </span>
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        :disabled="!isDirtyConfig"
+                        @click="reset"
+                    >
+                        <RotateCcw class="mr-1 h-3 w-3" />
+                        Reset
+                    </Button>
+                </div>
+            </template>
 
-                <div
-                    v-if="!isSupported"
-                    data-testid="metaballs-direct-fallback"
-                    class="absolute inset-4 flex flex-col justify-center rounded-panel border border-border/70 bg-card/90 p-5"
+            <!-- ── Controls (7 axis layers) ─────────────────────── -->
+            <ConfiguratorLayer label="Falloff" sub="edgeSoftness">
+                <ConfiguratorRow
+                    label="Edge softness"
+                    name="edgeSoftness"
+                    description="Smoothstep range at the threshold boundary; lower = sharper edges."
                 >
-                    <p class="text-subheading text-foreground">WebGL unavailable</p>
-                    <p class="text-small text-muted-foreground">
-                        The direct useMetaballs probe rendered fallback content instead
-                        of leaving the stage empty.
-                    </p>
-                </div>
-
-                <div
-                    class="absolute bottom-4 left-4 right-4 rounded-panel border border-border/60 bg-card/75 p-3 backdrop-blur-sm"
-                >
-                    <p class="text-small text-foreground">
-                        direct useMetaballs · {{ supportState }}
-                    </p>
-                    <p class="text-mono-caption text-muted-foreground">
-                        {{ renderingState }}
-                    </p>
-                </div>
-            </div>
-
-            <div class="flex flex-col justify-between gap-4 rounded-card border border-border/60 bg-card/60 p-5">
-                <div>
-                    <p class="text-admin-label text-muted-foreground">Shader inputs</p>
-                    <h3 class="text-subheading text-foreground">Composable config</h3>
-                </div>
-                <dl class="grid grid-cols-2 gap-3 text-small">
-                    <div class="rounded-panel border border-border/60 bg-background/50 p-3">
-                        <dt class="text-mono-caption text-muted-foreground">speed</dt>
-                        <dd class="text-foreground">{{ directConfig.speed }}</dd>
-                    </div>
-                    <div class="rounded-panel border border-border/60 bg-background/50 p-3">
-                        <dt class="text-mono-caption text-muted-foreground">threshold</dt>
-                        <dd class="text-foreground">{{ directConfig.threshold }}</dd>
-                    </div>
-                    <div class="rounded-panel border border-border/60 bg-background/50 p-3">
-                        <dt class="text-mono-caption text-muted-foreground">radius</dt>
-                        <dd class="text-foreground">{{ directConfig.baseRadius }}</dd>
-                    </div>
-                    <div class="rounded-panel border border-border/60 bg-background/50 p-3">
-                        <dt class="text-mono-caption text-muted-foreground">amplitude</dt>
-                        <dd class="text-foreground">{{ directConfig.orbitAmplitude }}</dd>
-                    </div>
-                </dl>
-                <div class="flex flex-wrap gap-2">
-                    <span
-                        v-for="color in directConfig.colors"
-                        :key="color"
-                        class="h-6 w-6 rounded-full border border-border/70 shadow-cartoon-sm"
-                        :style="{ backgroundColor: color }"
-                        :aria-label="`Metaball color ${color}`"
+                    <Slider
+                        :model-value="sliderModel(cfg.edgeSoftness)"
+                        :min="0"
+                        :max="1"
+                        :step="0.01"
+                        aria-label="Edge softness"
+                        @update:model-value="commitSlider('edgeSoftness', $event ?? [])"
                     />
-                </div>
-            </div>
-        </section>
+                </ConfiguratorRow>
+            </ConfiguratorLayer>
+
+            <ConfiguratorLayer label="Count" sub="blobCount">
+                <ConfiguratorRow
+                    label="Blob count"
+                    name="blobCount"
+                    description="Number of metaballs (capped at 16 by the shader uniform array)."
+                >
+                    <NumberField
+                        v-model="cfg.blobCount"
+                        :min="1"
+                        :max="16"
+                        :step="1"
+                    >
+                        <NumberFieldContent>
+                            <NumberFieldDecrement />
+                            <NumberFieldInput />
+                            <NumberFieldIncrement />
+                        </NumberFieldContent>
+                    </NumberField>
+                </ConfiguratorRow>
+            </ConfiguratorLayer>
+
+            <ConfiguratorLayer label="Radius" sub="baseRadius">
+                <ConfiguratorRow
+                    label="Base radius"
+                    name="baseRadius"
+                    description="Base size as a fraction of viewport (0.05 = 5% of width)."
+                >
+                    <Slider
+                        :model-value="sliderModel(cfg.baseRadius)"
+                        :min="0.04"
+                        :max="0.3"
+                        :step="0.005"
+                        aria-label="Base radius"
+                        @update:model-value="commitSlider('baseRadius', $event ?? [])"
+                    />
+                </ConfiguratorRow>
+            </ConfiguratorLayer>
+
+            <ConfiguratorLayer label="Color" sub="colors[]">
+                <ConfiguratorRow
+                    label="Color stops"
+                    name="colors[]"
+                    description="CSS color strings cycle across the blob count."
+                >
+                    <div class="flex w-full flex-col gap-2">
+                        <div
+                            v-for="(stop, index) in colorDraft"
+                            :key="index"
+                            class="flex items-center gap-2"
+                        >
+                            <input
+                                type="color"
+                                :value="stop.value"
+                                class="focus-ring h-7 w-9 cursor-pointer rounded border border-border/40 bg-transparent"
+                                :aria-label="`Color stop ${index + 1}`"
+                                @input="commitColor(index, ($event.target as HTMLInputElement).value)"
+                            />
+                            <span class="text-mono-caption text-muted-foreground/80">
+                                {{ stop.value }}
+                            </span>
+                            <button
+                                type="button"
+                                class="focus-ring ml-auto rounded px-1 text-mono-caption text-muted-foreground/60 hover:text-destructive"
+                                :disabled="cfg.colors.length <= 1"
+                                :aria-label="`Remove color stop ${index + 1}`"
+                                @click="removeColor(index)"
+                            >
+                                remove
+                            </button>
+                        </div>
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            class="self-start"
+                            :disabled="cfg.colors.length >= 8"
+                            @click="addColor"
+                        >
+                            + Add color
+                        </Button>
+                    </div>
+                </ConfiguratorRow>
+            </ConfiguratorLayer>
+
+            <ConfiguratorLayer label="IsoLevel" sub="threshold">
+                <ConfiguratorRow
+                    label="Threshold"
+                    name="threshold"
+                    description="Density threshold for surface rendering; higher = sharper iso."
+                >
+                    <Slider
+                        :model-value="sliderModel(cfg.threshold)"
+                        :min="0.5"
+                        :max="2"
+                        :step="0.01"
+                        aria-label="Threshold"
+                        @update:model-value="commitSlider('threshold', $event ?? [])"
+                    />
+                </ConfiguratorRow>
+            </ConfiguratorLayer>
+
+            <ConfiguratorLayer label="Motion" sub="speed · orbitAmplitude">
+                <ConfiguratorRow
+                    label="Mode"
+                    name="motionMode"
+                    description="Composite preset over speed + orbitAmplitude."
+                >
+                    <BouncyToggle
+                        :options="motionOptions"
+                        :model-value="motionMode"
+                        class="w-full"
+                        @update:model-value="setMotionMode"
+                    />
+                </ConfiguratorRow>
+                <ConfiguratorRow
+                    label="Speed"
+                    name="speed"
+                    description="Animation speed multiplier."
+                >
+                    <Slider
+                        :model-value="sliderModel(cfg.speed)"
+                        :min="0"
+                        :max="0.4"
+                        :step="0.005"
+                        aria-label="Speed"
+                        @update:model-value="commitSlider('speed', $event ?? [])"
+                    />
+                </ConfiguratorRow>
+                <ConfiguratorRow
+                    label="Orbit amplitude"
+                    name="orbitAmplitude"
+                    description="Drift radius as fraction of viewport."
+                >
+                    <Slider
+                        :model-value="sliderModel(cfg.orbitAmplitude)"
+                        :min="0"
+                        :max="0.5"
+                        :step="0.01"
+                        aria-label="Orbit amplitude"
+                        @update:model-value="commitSlider('orbitAmplitude', $event ?? [])"
+                    />
+                </ConfiguratorRow>
+            </ConfiguratorLayer>
+
+            <ConfiguratorLayer label="Output" sub="bgAlpha">
+                <ConfiguratorRow
+                    label="Background alpha"
+                    name="bgAlpha"
+                    description="0 = fully transparent canvas. Honored unless prefers-reduced-transparency lifts to 1.0."
+                >
+                    <Slider
+                        :model-value="sliderModel(cfg.bgAlpha)"
+                        :min="0"
+                        :max="1"
+                        :step="0.01"
+                        aria-label="Background alpha"
+                        @update:model-value="commitSlider('bgAlpha', $event ?? [])"
+                    />
+                </ConfiguratorRow>
+            </ConfiguratorLayer>
+        </Configurator>
     </StoryPage>
 </template>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { cn } from "@/utils/cn";
+import { Configurator } from "@/components/custom/configurator";
 import { ExpandableContainer } from "@/components/custom/expandable-container";
 import { registerShortcut } from "@/composables/useKeyboardShortcuts";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -18,6 +19,13 @@ import { usePresetThumbnails } from "./aurora/usePresetThumbnails";
  * row, so the dock's content height (which varies per layer) cannot leak
  * into the stage size — eliminates the wave-1 "canvas grows on layer
  * switch" defect at the source.
+ *
+ * Chrome composes `<Configurator>` (J.W4.A) — the canonical studio shell
+ * (`stage` / `controls` slots + `scrollMode="auto"` + glass-floating
+ * substrate). The studio state stays in `useAuroraStudio` because aurora
+ * needs per-preset live clones (preserving slider edits across preset
+ * switches), which differs from `useConfiguratorState`'s single-config
+ * baseline-restore semantics.
  *
  * Fullscreen is owned by `ExpandableContainer` (corner button + Esc + body
  * scroll-lock + Teleport-to-body); the slot re-mounts in fullscreen, so
@@ -88,28 +96,27 @@ const hintText = computed(() => [
                 />
                 <ExpandableContainer button-position="left">
                     <template #default="{ fullscreen }">
-                        <div
+                        <Configurator
+                            scroll-mode="never"
                             :class="cn(
-                                'relative flex overflow-hidden bg-card',
+                                'aurora-studio',
                                 fullscreen
-                                    ? 'h-screen w-screen'
-                                    : 'h-[min(78vh,720px)] rounded-card border border-border shadow-cartoon',
+                                    ? 'h-screen w-screen rounded-none border-0'
+                                    : 'h-[min(78vh,720px)] shadow-cartoon',
                             )"
                         >
-                            <div class="relative flex-1 min-w-0">
+                            <template #stage>
                                 <AuroraStage :config="studio.currentConfig.value" />
-                            </div>
-                            <aside
-                                class="flex w-[340px] flex-shrink-0 flex-col border-l border-border/60 bg-background/20"
-                            >
+                            </template>
+                            <template #controls>
                                 <AuroraConfigDock
                                     :config="studio.currentConfig.value"
                                     :active-layer="activeLayer"
                                     @update:active-layer="(v: string) => (activeLayer = v)"
                                     @reset="studio.resetCurrent"
                                 />
-                            </aside>
-                        </div>
+                            </template>
+                        </Configurator>
                     </template>
                 </ExpandableContainer>
             </div>
@@ -121,3 +128,11 @@ const hintText = computed(() => [
         </section>
     </TooltipProvider>
 </template>
+
+<style scoped>
+/* `prefers-reduced-transparency` honor is canonical: the studio shell
+ * composes `<Configurator>` which uses `glass-floating` substrate, and
+ * `src/styles/glass.css`'s PRT @media block lifts every
+ * `--glass-opacity-{tier}` to 1 (opaque) under reduced-transparency.
+ * No demo-local override needed — the substrate carries the contract. */
+</style>

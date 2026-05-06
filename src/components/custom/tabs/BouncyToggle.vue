@@ -23,12 +23,24 @@ export interface BouncyToggleProps {
     multiSelect?: boolean;
     /** "default" = subtle muted slider; "pill" = solid foreground pill */
     variant?: "default" | "pill";
+    /**
+     * Tab-row overflow handling.
+     * - `"none"` (default) — inline-grid with `1fr` tracks; tabs share width
+     *   and clip when content exceeds the parent.
+     * - `"scroll"` — flex row with intrinsic-width tracks + `.scroll-fade-mask`
+     *   + `.scrollbar-hidden`; tab text never truncates and overflowing tabs
+     *   scroll horizontally with edge fades.
+     * - `"auto"` — flex row with intrinsic widths and a horizontal scroll
+     *   fallback (no fade); useful when the parent already owns the affordance.
+     */
+    overflow?: "none" | "scroll" | "auto";
     class?: HTMLAttributes["class"];
 }
 
 const props = withDefaults(defineProps<BouncyToggleProps>(), {
     multiSelect: false,
     variant: "default",
+    overflow: "none",
 });
 
 const emit = defineEmits<{
@@ -41,6 +53,8 @@ const buttonRefs = ref<HTMLElement[]>([]);
 // ── Computed state ──
 
 const isPill = computed(() => props.variant === "pill");
+const isScroll = computed(() => props.overflow === "scroll");
+const isAuto = computed(() => props.overflow === "auto");
 
 const activeValues = computed<string[]>(() => {
     if (props.multiSelect) {
@@ -186,6 +200,8 @@ onUnmounted(() => {
         ref="containerRef"
         :class="cn(
             isPill ? 'bouncy-toggle bouncy-toggle--pill' : 'bouncy-toggle',
+            isScroll && 'bouncy-toggle--scroll scroll-fade-mask scrollbar-hidden',
+            isAuto && 'bouncy-toggle--auto scrollbar-hidden',
             props.class,
         )"
     >
@@ -359,5 +375,21 @@ onUnmounted(() => {
 
 .bouncy-btn--pill.is-active {
     color: var(--background);
+}
+
+/* ── Overflow variants ──
+ * `--scroll` and `--auto` swap the inline-grid (1fr tracks share width and
+ * truncate labels) for a flex row with intrinsic-width tracks, so tab text is
+ * never clipped. The container scrolls horizontally; the absolute-positioned
+ * slider tracks scroll content because it is positioned relative to this root.
+ */
+.bouncy-toggle--scroll,
+.bouncy-toggle--auto {
+    display: flex;
+    grid-auto-flow: unset;
+    grid-auto-columns: unset;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
 }
 </style>

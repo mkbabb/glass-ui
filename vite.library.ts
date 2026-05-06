@@ -41,6 +41,7 @@ export function libraryEntries(rootDir: string) {
         "dock-group": resolve(rootDir, "src/dock-group.ts"),
         "disco-glyph": resolve(rootDir, "src/disco-glyph.ts"),
         "hover-popover": resolve(rootDir, "src/hover-popover.ts"),
+        configurator: resolve(rootDir, "src/configurator.ts"),
     };
 }
 

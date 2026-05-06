@@ -13,9 +13,12 @@ const props = withDefaults(defineProps<{
     modelValue: string;
     /** "default" = subtle muted slider; "pill" = solid foreground pill */
     variant?: "default" | "pill";
+    /** Tab-row overflow — see `<BouncyToggle>`. */
+    overflow?: "none" | "scroll" | "auto";
     class?: HTMLAttributes["class"];
 }>(), {
     variant: "default",
+    overflow: "none",
 });
 
 const emit = defineEmits<{
@@ -32,6 +35,7 @@ function onUpdate(value: string | string[]) {
         :options="(options as ToggleOption[])"
         :model-value="modelValue"
         :variant="variant"
+        :overflow="overflow"
         :class="props.class"
         :multi-select="false"
         @update:model-value="onUpdate"

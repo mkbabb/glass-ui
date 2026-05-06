@@ -2,6 +2,16 @@ import { ref, reactive, isReactive, onMounted, onBeforeUnmount, watch, type Ref,
 import { VERTEX_SHADER, FRAGMENT_SHADER } from "./shaders";
 import { DEFAULT_METABALL_CONFIG, type MetaballConfig } from "./types";
 
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+const REDUCED_TRANSPARENCY_QUERY = "(prefers-reduced-transparency: reduce)";
+
+function matchesMedia(query: string): boolean {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+        return false;
+    }
+    return window.matchMedia(query).matches;
+}
+
 function hexToRgb(hex: string): [number, number, number] {
     hex = hex.replace("#", "");
     if (hex.length === 3) hex = hex.split("").map((c) => c + c).join("");
@@ -72,6 +82,15 @@ export function useMetaballs(
     let startTime = 0;
     let observer: ResizeObserver | null = null;
 
+    // Accessibility: prefers-reduced-motion pauses orbit accumulation and
+    // pins a single deterministic frame; prefers-reduced-transparency lifts
+    // the effective background alpha so the canvas reads as a solid surface
+    // instead of translucent atmosphere over whatever sits behind it.
+    let reducedMotionMq: MediaQueryList | null = null;
+    let reducedTransparencyMq: MediaQueryList | null = null;
+    const isReducedMotion = ref(matchesMedia(REDUCED_MOTION_QUERY));
+    const isReducedTransparency = ref(matchesMedia(REDUCED_TRANSPARENCY_QUERY));
+
     // Single location per uniform array
     let uResolution: WebGLUniformLocation | null = null;
     let uBlobCount: WebGLUniformLocation | null = null;
@@ -123,7 +142,7 @@ export function useMetaballs(
         gl.uniform1i(uBlobCount, cfg.blobCount);
         gl.uniform1f(uThreshold, cfg.threshold);
         gl.uniform1f(uEdgeSoftness, cfg.edgeSoftness);
-        gl.uniform1f(uBgAlpha, cfg.bgAlpha);
+        gl.uniform1f(uBgAlpha, effectiveBgAlpha());
 
         // Fill colors array
         for (let i = 0; i < MAX_BLOBS; i++) {
@@ -151,8 +170,38 @@ export function useMetaballs(
         observer = new ResizeObserver(resize);
         observer.observe(canvas);
 
+        // Wire reduced-motion / reduced-transparency listeners so live OS
+        // toggles propagate without remount. Initial state was sampled into
+        // the refs at composable-call time.
+        if (typeof window !== "undefined" && typeof window.matchMedia === "function") {
+            reducedMotionMq = window.matchMedia(REDUCED_MOTION_QUERY);
+            reducedMotionMq.addEventListener("change", onReducedMotionChange);
+            reducedTransparencyMq = window.matchMedia(REDUCED_TRANSPARENCY_QUERY);
+            reducedTransparencyMq.addEventListener("change", onReducedTransparencyChange);
+        }
+
         startTime = performance.now();
         rafId = requestAnimationFrame(render);
+    }
+
+    function onReducedMotionChange(event: MediaQueryListEvent) {
+        isReducedMotion.value = event.matches;
+        // Re-anchor startTime so unfreezing doesn't catapult the blobs through
+        // accumulated paused time on the next frame.
+        if (!event.matches) startTime = performance.now();
+    }
+
+    function onReducedTransparencyChange(event: MediaQueryListEvent) {
+        isReducedTransparency.value = event.matches;
+    }
+
+    function effectiveBgAlpha(): number {
+        // Reduced-transparency: floor bgAlpha at 1.0 so the canvas reads as a
+        // solid surface, not as a translucent layer over the host page. The
+        // metaball blobs still composite via SRC_ALPHA blending — they just
+        // sit on a fully opaque background instead of letting whatever is
+        // behind the canvas bleed through.
+        return isReducedTransparency.value ? 1 : cfg.bgAlpha;
     }
 
     function resize() {
@@ -186,7 +235,12 @@ export function useMetaballs(
 
     function render(now: number) {
         if (!gl || !program) return;
-        const t = (now - startTime) * 0.001 * cfg.speed;
+        // Reduced-motion: freeze the time cursor at startTime so the blobs
+        // hold a single deterministic frame instead of orbiting. The render
+        // loop continues so live config edits (slider drags) still re-paint,
+        // but no t-driven motion accumulates.
+        const effectiveNow = isReducedMotion.value ? startTime : now;
+        const t = (effectiveNow - startTime) * 0.001 * cfg.speed;
         const amp = cfg.orbitAmplitude;
 
         for (let i = 0; i < cfg.blobCount; i++) {
@@ -218,7 +272,7 @@ export function useMetaballs(
         gl.uniform1i(uBlobCount, cfg.blobCount);
         gl.uniform1f(uThreshold, cfg.threshold);
         gl.uniform1f(uEdgeSoftness, cfg.edgeSoftness);
-        gl.uniform1f(uBgAlpha, cfg.bgAlpha);
+        gl.uniform1f(uBgAlpha, effectiveBgAlpha());
 
         // Re-upload colors (handles live color picker changes)
         for (let i = 0; i < MAX_BLOBS; i++) {
@@ -239,6 +293,10 @@ export function useMetaballs(
     function dispose() {
         if (rafId !== null) cancelAnimationFrame(rafId);
         observer?.disconnect();
+        reducedMotionMq?.removeEventListener("change", onReducedMotionChange);
+        reducedTransparencyMq?.removeEventListener("change", onReducedTransparencyChange);
+        reducedMotionMq = null;
+        reducedTransparencyMq = null;
         if (gl && program) gl.deleteProgram(program);
         program = null;
         gl = null;
@@ -248,5 +306,5 @@ export function useMetaballs(
     onBeforeUnmount(dispose);
     watch(canvasRef, (el) => { if (el) { dispose(); init(); } });
 
-    return { isSupported };
+    return { isSupported, isReducedMotion, isReducedTransparency };
 }

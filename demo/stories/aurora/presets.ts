@@ -373,6 +373,58 @@ const CRAYON_RAINBOW = cfg({
     paperGrain: 0.011,
 });
 
+// ── SPEEDTEST ─────────────────────────────────────────────────────────────
+// Six-hue OKLCH palette mapped to six nuclei. Soft drifting backdrop ported
+// verbatim from `../speedtest/src/config/auroraConfig.ts` (the live config
+// used by the speedtest dashboard). The reactive light/dark + idle/running
+// alpha fork stays in the speedtest repo; this preset ships the static
+// `alpha: 0.26` baseline so consumers can see the canvas at the same tone
+// the user sees at first paint of the speedtest landing page.
+const SPEEDTEST = cfg({
+    palette: [
+        { L: 0.72, C: 0.22, h: 300 }, // --aurora-1 purple (#c084fc)
+        { L: 0.74, C: 0.14, h: 245 }, // --aurora-2 blue (#60a5fa)
+        { L: 0.72, C: 0.22, h: 345 }, // --aurora-3 pink (#f472b6)
+        { L: 0.78, C: 0.16, h: 160 }, // --aurora-4 emerald (#34d399)
+        { L: 0.84, C: 0.18, h: 85 },  // --aurora-5 amber (#fbbf24)
+        { L: 0.70, C: 0.18, h: 285 }, // --aurora-6 violet (#a78bfa)
+    ],
+    nuclei: [
+        { x: 0.18, y: 0.22, radius: 0.55, paletteBias: 0.0, valueBias:  0.04, driftRadius: 0.020, driftPhase: 0.3 },
+        { x: 0.80, y: 0.30, radius: 0.52, paletteBias: 0.2, valueBias:  0.00, driftRadius: 0.020, driftPhase: 1.7 },
+        { x: 0.50, y: 0.18, radius: 0.48, paletteBias: 0.4, valueBias:  0.02, driftRadius: 0.020, driftPhase: 3.4 },
+        { x: 0.72, y: 0.78, radius: 0.55, paletteBias: 0.6, valueBias: -0.02, driftRadius: 0.018, driftPhase: 0.9 },
+        { x: 0.22, y: 0.82, radius: 0.50, paletteBias: 0.8, valueBias:  0.02, driftRadius: 0.022, driftPhase: 2.1 },
+        { x: 0.55, y: 0.58, radius: 0.58, paletteBias: 1.0, valueBias:  0.00, driftRadius: 0.015, driftPhase: 4.6 },
+    ],
+    softmaxBeta: 3.2,
+    valueVariance: 0.08,
+    warpAmount: 0.38,
+    warpScale: 1.6,
+    warpDrift: 0.02,
+    warpMode: "fbm",
+    noiseOctaves: 4,
+    medium: "smooth",
+    flow: { pattern: "none", focalX: 0.5, focalY: 0.5, angle: 0, curl: 0 },
+    strokeAmount: 0,
+    strokeScale: 140,
+    strokeAnisotropy: 0.7,
+    strokeLayers: 1,
+    strokeMode: "oil",
+    wetEdge: 0,
+    granulation: 0,
+    impasto: 0,
+    brokenColor: 0,
+    canvasGrain: 0,
+    nucleiDrift: 0.04,
+    paletteDrift: 0.02,
+    breathDepth: 0.08,
+    breathPeriod: 42,
+    saturation: 0.85,
+    paperGrain: 0,
+    alpha: 0.26,
+});
+
 // ── CRAYON_OCEAN ──────────────────────────────────────────────────────────
 // Oil-pastel cool palette — blues/greens/violets with creamy tooth.
 const CRAYON_OCEAN = cfg({
@@ -425,6 +477,7 @@ export const PRESETS = {
     CRAYON_SUNSET,
     CRAYON_RAINBOW,
     CRAYON_OCEAN,
+    SPEEDTEST,
 } as const;
 
 export type PresetKey = keyof typeof PRESETS;
@@ -447,6 +500,7 @@ export const PRESET_META: Record<PresetKey, PresetMeta> = {
     CRAYON_SUNSET:  { label: "Pastel Sunset", sub: "creamy · warm",                medium: "oil" },
     CRAYON_RAINBOW: { label: "Pastel Rainbow",sub: "creamy · full spectrum",       medium: "oil" },
     CRAYON_OCEAN:   { label: "Pastel Ocean",  sub: "creamy · cool",                medium: "oil" },
+    SPEEDTEST:      { label: "Speedtest",     sub: "smooth · 6 nuclei · 6-hue",    medium: "smooth" },
 };
 
 export const PRESET_KEYS = Object.keys(PRESETS) as PresetKey[];

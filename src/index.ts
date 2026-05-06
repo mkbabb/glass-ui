@@ -9,6 +9,9 @@ export * from "./components/custom/dock-group";
 export * from "./components/custom/disco-glyph";
 export * from "./components/custom/hover-popover";
 
+// Custom composites — configurator primitive (J.W4.A)
+export * from "./components/custom/configurator";
+
 // Core composables
 export { useGlobalDark } from "./composables/useGlobalDark";
 export * from "./composables/useInterval";

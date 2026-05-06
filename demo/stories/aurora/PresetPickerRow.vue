@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { cn } from "@/utils/cn";
+import { Skeleton } from "@/components/ui/skeleton";
 import { PRESET_KEYS, PRESET_META, type PresetKey } from "./presets";
 
 defineProps<{
@@ -52,13 +53,26 @@ function onKey(e: KeyboardEvent, key: PresetKey) {
                 @click="onPick(key)"
                 @keydown="(e) => onKey(e, key)"
             >
-                <div class="aspect-[16/10] w-full overflow-hidden rounded-t-card bg-muted">
+                <!--
+                  Thumbnail well. `bg-transparent` + Skeleton placeholder
+                  replaces the prior `bg-muted` strip that read as a top
+                  black bar in dark-mode during the cold-load thumbnail
+                  bake (R2 §B). `usePresetThumbnails` seeds `thumbs[key]`
+                  to "" until the bake resolves, so the v-if/v-else swap
+                  is the loading-state signal.
+                -->
+                <div class="aspect-[16/10] w-full overflow-hidden rounded-t-card bg-transparent">
                     <img
                         v-if="thumbs[key]"
                         :src="thumbs[key]"
                         alt=""
                         class="block h-full w-full object-cover"
                         draggable="false"
+                    />
+                    <Skeleton
+                        v-else
+                        variant="shimmer"
+                        class="h-full w-full rounded-none"
                     />
                 </div>
                 <div class="flex flex-col gap-0.5 px-3 py-2">

@@ -15,7 +15,7 @@ import {
     useRegisteredShortcuts,
 } from "@/composables/useKeyboardShortcuts";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
-import { Configurator } from "../configurator";
+import { PresetEditor } from "../configurator";
 import CategoryRail from "./CategoryRail.vue";
 import StoryPager from "./StoryPager.vue";
 
@@ -85,8 +85,8 @@ onMounted(() => {
         </div>
     </div>
 
-    <!-- Live token configurator — opened by FAB or `,` shortcut -->
-    <Configurator />
+    <!-- Live token preset editor — opened by FAB or `,` shortcut -->
+    <PresetEditor />
 
     <!-- Keyboard shortcut help dialog -->
     <Dialog v-model:open="showHelp">

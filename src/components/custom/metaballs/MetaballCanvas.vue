@@ -8,9 +8,12 @@ const props = defineProps<{
 }>();
 
 const canvasRef = ref<HTMLCanvasElement | null>(null);
-const { isSupported } = useMetaballs(canvasRef, props.config);
+const { isSupported, isReducedMotion, isReducedTransparency } = useMetaballs(
+    canvasRef,
+    props.config,
+);
 
-defineExpose({ isSupported });
+defineExpose({ isSupported, isReducedMotion, isReducedTransparency });
 </script>
 
 <template>

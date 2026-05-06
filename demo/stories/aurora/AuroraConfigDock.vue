@@ -48,23 +48,30 @@ function activeLayerProxy(next: string) {
           Pill-tab switcher above the layer stack. DockLayerGroup keeps its
           crossfade transition but its built-in icon rail is hidden via
           `:show-rail="false"` — full labels in a pill row are clearer than
-          a column of single-letter glyphs.
+          a column of single-letter glyphs. `overflow="scroll"` swaps the
+          inline-grid for an intrinsic-width flex row so 6 tabs in a 300px
+          parent don't truncate (R2 §A — was clipping "Nuclei").
         -->
         <div class="border-b border-border/40 px-3 py-2">
             <BouncyTabs
                 :options="[...layerOptions]"
                 :model-value="activeLayer"
                 variant="pill"
-                class="overflow-x-auto scrollbar-hidden"
+                overflow="scroll"
                 @update:model-value="activeLayerProxy"
             />
         </div>
         <!--
-          Layer content scrolls vertically. `min-h-0` lets the flex item
-          shrink below intrinsic content height; `overflow-y-auto` keeps
-          tall layers from pushing the panel taller than the stage frame.
+          Layer content scrolls vertically + clips horizontally so a wide
+          layer body (e.g. PaletteLayer's 344px min-w) does not bleed
+          through the Configurator aside's translucent edge into the
+          aurora canvas (R2 §A). `scroll-fade-y` indicates scroll
+          affordance. The outer `<Configurator scroll-mode="never">`
+          (aurora.vue) cedes scroll ownership to this host so the
+          BouncyTabs row can stick at the top while the layer body
+          scrolls beneath.
         -->
-        <div class="flex-1 min-h-0 overflow-y-auto">
+        <div class="flex-1 min-h-0 overflow-y-auto overflow-x-clip scroll-fade-y scrollbar-hidden">
             <DockLayerGroup
                 :active="activeLayer"
                 @update:active="activeLayerProxy"
