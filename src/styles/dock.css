@@ -599,6 +599,11 @@
         border: none;
         background: transparent;
         border-radius: var(--dock-control-radius, var(--radius-pill));
+        /* Default font-size carries through to text-only tab content; consumers
+           wrapping content in an explicit type utility (e.g. `text-hero`,
+           `text-display`) on an inner <span> win because Tailwind v4 ships
+           @utility blocks in @layer utilities, which ranks above @layer
+           components — so this declaration is a fallback, not a ceiling. */
         font-size: var(--type-small);
         line-height: 1;
         color: var(--muted-foreground);
