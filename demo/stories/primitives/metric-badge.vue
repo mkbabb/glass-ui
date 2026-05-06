@@ -188,6 +188,65 @@ import { MetricBadge } from "@/components/custom/metric-badge";
             </p>
         </section>
 
+        <!-- Dual-slot — both label AND abbreviation passed simultaneously.
+             The library renders both as sibling spans (`__label--full` +
+             `__label--abbr`); the consumer's container-query CSS toggles
+             which is visible. Default visibility (without a consumer
+             container query) is the full label; the abbreviation sits
+             hidden until a `@container … (max-width: …)` rule flips it. -->
+        <section class="flex flex-col gap-3">
+            <p class="section-label">dual-slot · label + abbreviation siblings (R2-spec)</p>
+            <div class="flex flex-wrap items-center gap-3">
+                <MetricBadge
+                    label="LATENCY"
+                    abbreviation="LAT"
+                    labelPosition="inline"
+                    :amount="36"
+                    unit="ms"
+                    size="lg"
+                    color="var(--viz-fourier)"
+                />
+                <MetricBadge
+                    label="JITTER"
+                    abbreviation="JIT"
+                    labelPosition="inline"
+                    :amount="1"
+                    unit="ms"
+                    size="lg"
+                    color="var(--viz-chebyshev)"
+                />
+                <MetricBadge
+                    label="DOWNLOAD"
+                    abbreviation="DL"
+                    labelPosition="inline"
+                    :amount="730"
+                    unit="Mbps"
+                    size="lg"
+                    color="var(--viz-legendre)"
+                />
+                <MetricBadge
+                    label="UPLOAD"
+                    abbreviation="UL"
+                    labelPosition="inline"
+                    :amount="130"
+                    unit="Mbps"
+                    size="lg"
+                />
+            </div>
+            <p class="text-mono-caption text-muted-foreground">
+                Both <code>label</code> and <code>abbreviation</code> render as
+                siblings: <code>.metric-badge__label--full</code> +
+                <code>.metric-badge__label--abbr</code>. The library default
+                hides <code>--abbr</code>; consumers wrap the cluster in a
+                <code>container-type: inline-size</code> subject and add
+                <code>@container (max-width: 600px) {'{'}
+                .metric-badge__label--full {'{'} display: none {'}'}
+                .metric-badge__label--abbr {'{'} display: inline {'}'} {'}'}
+                </code> to flip visibility off the cluster's own width — no
+                viewport coupling, no JS branch.
+            </p>
+        </section>
+
         <!-- Stacked-label variant — column orientation for narrow grids. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">label · stacked</p>
