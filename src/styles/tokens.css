@@ -336,14 +336,11 @@
     --glass-opacity-floating: 0.80;
     --glass-opacity-overlay:  0.95;
 
-    /* Blur primitives. Halved twice — first in glass-ui v0.4 (speedtest
-       tranche N.W1), again in v0.5.1 (speedtest tranche O.W2) — because the
-       first cut still read as a heavy slab against the aurora wash on
-       consumer surfaces. The radii here feather the dock + meter card to a
-       barely-perceptible diffusion that lets aurora bleed through cleanly
-       and keeps hero typography crisp at the meter scale. v0.8.0 lifts
-       the resting blur to 12px so the speedtest plate reads as a glass
-       diffusion without a consumer-side override (R3-spec §A line 26). */
+    /* Blur primitives. The radii here feather the dock + meter card to a
+       barely-perceptible diffusion that lets the substrate behind it bleed
+       through cleanly while keeping hero typography crisp at meter scale.
+       The resting blur sits at 12px so a glass plate reads as a diffusion
+       without consumer-side override. */
     --glass-blur-wash-radius:     1px;
     --glass-blur-quiet-radius:    3px;
     --glass-blur-resting-radius:  12px;
@@ -370,12 +367,11 @@
        chromatic punch. */
     --glass-blur-dock:     blur(var(--glass-blur-dock-radius));
 
-    /* Dock-specific opacity. Lighter than `medium` (0.65) so the dock reads
-       as a translucent overlay rather than a panel — aurora bleed visible
-       through it. Dropped from 0.42 → 0.32 in v0.5.1 (speedtest O.W2)
-       alongside the blur halving so the chrome doesn't read as the dominant
-       surface against the freshly-feathered backdrop. Consumed by
-       `.glass-dock` via the `--glass-bg-dock` token. */
+    /* Dock-specific opacity. Lighter than `resting` (0.65) so the dock reads
+       as a translucent overlay rather than a panel — backdrop bleed visible
+       through it. Sits at 0.32 alongside the feathered blur radii so the
+       chrome doesn't read as the dominant surface. Consumed by `.glass-dock`
+       via the `--glass-bg-dock` token. */
     --glass-opacity-dock: 0.32;
 
     /* Chassis-specific opacity. Looser than `default` (0.50) so the

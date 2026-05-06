@@ -2,14 +2,14 @@
 // Core UI primitives
 export * from "./components/ui";
 
-// Custom composites — instrument-cluster chassis (O.W2.7)
+// Custom composites — instrument-cluster chassis
 export * from "./components/custom/instrument-chassis";
 export * from "./components/custom/glyph-face";
 export * from "./components/custom/dock-group";
 export * from "./components/custom/disco-glyph";
 export * from "./components/custom/hover-popover";
 
-// Custom composites — configurator primitive (J.W4.A)
+// Custom composites — configurator primitive
 export * from "./components/custom/configurator";
 
 // Core composables

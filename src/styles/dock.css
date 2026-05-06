@@ -760,7 +760,7 @@
     }
 
     .dock-tab-button[data-tier="primary"]:hover::after {
-        animation: sparkle-sweep 600ms var(--ease-out-expo);
+        animation: sparkle-sweep var(--duration-sparkle) var(--ease-out-expo);
     }
 
     @media (prefers-reduced-motion: reduce) {

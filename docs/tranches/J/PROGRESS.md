@@ -177,6 +177,51 @@ Hard-gate verification: `npm run typecheck` green; `npm run build` green; `npm r
 
 Proof docs: `audit/W6-A-badge-proof.md`, `audit/W6-B-fuzzy-search-proof.md`, `audit/W6-C1-clearcache-proof.md`, `audit/W6-C2-carousel-pager-proof.md`.
 
+## 2026-05-06 — W7 close ceremony
+
+W7 ran the strengthened 6-agent post-close audit (α/β/γ/δ/ε/π) per W0 precept update — first tranche to use the strengthened pattern.
+
+**Audit summary** (each lane wrote `audit/J-audit-{α,β,γ,δ,ε,π}-*.md`):
+
+- **α plan-vs-actual**: 12/12 J invariants satisfied (5 MET, 7 MET-WITH-AMENDMENT per W0 §F); 9/10 close criteria met (the 10th is the audit itself, by definition); 0 MISSED, 0 OUT-OF-SPEC. Top P1 findings: 2 git-stash violations during W1 + W4.A; W2 per-story consumption sweep deferred (W7 δ ran it); 3 historical-context recovery-diary hits (γ adjudicated).
+- **β substrate-without-consumer + visual-load-bearing-ness**: 11 sub-bar rows; **1 P0 visual REGRESSION** — `<CarouselPager>` runtime mount error at `/navigation/carousel` (`useCarousel must be used within a <Carousel />`); `<CarouselDots>` collateral; `<GlassCarouselPager>` not-probed. Plus 1 P1 — `.overlay-scrim` @utility shadowed by canonical `bg-overlay-scrim` Tailwind utility (0 consumers reach the @utility definition).
+- **γ doc-drift**: DESIGN 7 + CLAUDE 11 + README 7 drift items; wave-spec status lines stale; recovery-diary scrub strict violation (3 hits in src/).
+- **δ idiomatic gestalt + per-story consumption sweep**: 14 bypass findings (2 MEDIUM, 12 LOW, 0 HIGH); top concerns: `dock.css:763` hardcodes `600ms` (W1 token bypass); `demo/configurator/PresetEditor*.vue` re-assemble focus-ring + scale recipes inline; `cssVar()` 1 consumer (≤ ≥ 2 bar); `--{success,warning,info}-foreground` 0 consumers (substrate-without-immediate-consumer).
+- **ε performance**: bundle delta **−37,861 B raw / −6,199 B gzip (-8.33% / -5.19%)** vs pre-J baseline (FuzzySearch rewrite + W2 vocab consolidation + DockPopover retire); 269/269 tests; build 17.59s; **P1 — bundle-budget gate dropped during v0.8.0 consolidation** (would PASS at current numbers; needs re-land for I invariant 8 enforcement); P2 — configurator subpath missing from `typesVersions["*"]`; ay-close + stress-harness reappearance flagged.
+- **π visual-runtime (multi-viewport)**: 27 screenshots across 11 stories × 3 viewports; dock collapse 20-frame sample confirms continuous interpolation (no jerk); HoverPopover open ~250ms; clearCache button **6.55 : 1** contrast (was 3.0 pre-J — finding 17 verified); Slider thumb **16.5 : 1**; Badge variants AAA in dark. **P0** — same `/navigation/carousel` blank render as β. **P1** — top story-pager dock at 375 viewport overflows by 4px (truncates label). **P2** — GlassCarousel audacious pager chevrons at x=1050 unreachable on mobile.
+
+**W7 absorbs** (orchestrator-direct edits within close commit):
+
+1. **P0 carousel demo bug** (β + π): `demo/stories/navigation/carousel.vue:114-116` — moved `<CarouselPager>` inside its `<Carousel>` parent (was outside, causing the `useCarousel must be used within a <Carousel />` injection error).
+2. **Recovery-diary scrub** (γ + α): cleaned 3 historical-context hits — `src/index.ts:5,12` (dropped `(O.W2.7)` + `(J.W4.A)` annotations), `src/styles/tokens.css:339-342` (rewrote blur-token history comment without tranche citations), `src/styles/tokens.css:370-376` (rewrote dock-opacity history comment without tranche citations). Final scrub: zero hits in src/ + demo/.
+3. **dock.css token consumption** (δ): `src/styles/dock.css:763` — `600ms` → `var(--duration-sparkle)`.
+4. **PresetEditor raw-recipe convergence** (δ): `demo/configurator/PresetEditor.vue:118` + `demo/configurator/PresetEditorField.vue:35` — replaced raw `focus-visible:shadow-[var(--focus-ring-shadow)]` + `active:scale-[0.97]` with canonical `.focus-ring` + `--scale-press-btn` consumption.
+5. **Wave-spec status lines** (γ): `docs/tranches/J/waves/W{0..7}.md` — every `**Status**` line updated to `closed @ <commit>` (W7 → `in-progress`).
+6. **J.md Wave Schedule status column** (γ): every row's status updated to closed-with-commit.
+7. **DESIGN.md drift**: removed `danger-subtle` from Button variant table + semantic-variant doc; removed `DockPopover` from dock components table + catalog; added `Configurator` family to catalog; expanded Slider section with size axis + glass-pill / glass-cartoon variants + keepDockOpen prop documentation; added retirement note.
+8. **package.json**: added `./configurator` subpath to exports + typesVersions.
+
+**Residuals carried forward** (not absorbed in W7; named destinations):
+
+- **CLAUDE.md major refresh** — file-tree section + subpath section + Design Axes section need J-state alignment (11 drift items per γ). Defer to a doc-only commit (CLAUDE.md is documentation of structure, not gating).
+- **README.md drift** — 7 drift items; defer.
+- **Bundle-budget gate re-land** — I invariant 8 enforcement; `npm run profile:budget` script + GitHub workflow job + BUDGETS table. Should land as a follow-up commit before next tranche (would PASS at current numbers per ε).
+- **5 demo stories raw `focus-visible:shadow-[var(--focus-ring-shadow)]`** — vocab.γ residue; sub-tranche K candidate.
+- **3 demo `--surface-tint` bypasses** — vocab.γ residue; K candidate.
+- **`motion/stagger.vue:59` `transition-all` survivor** — single site; K residue.
+- **`--{success,warning,info}-foreground` 0 consumers** — W1 substrate-without-immediate-consumer; either wire (Notification.vue refit) or formally retire in K.
+- **`cssVar()` ≥ 2 bar** — 1 consumer (BouncyToggle); add second consumer in K (e.g., other WAAPI sites) or retire.
+- **`.overlay-scrim` @utility** — shadowed by canonical Tailwind utility; retire in K.
+- **Top story-pager dock 4px overflow at 375 viewport** — π P1; mobile-viewport refinement; K candidate.
+- **GlassCarousel audacious pager chevrons unreachable on mobile** — π P2; K candidate.
+- **Stress harness retire decision** — ε P2; either restore (per I.W6) or formally retire.
+- **`ay-close` reappearance** — ε P2; cross-ref with v0.8.0 consolidation history.
+- **Audacious primary-CTA variant** — formally deferred to K per J.md cross-tranche debt section.
+
+**Process incidents (precept reinforcement candidates)**:
+
+Two `git stash` violations during J despite the LESSONS-LEARNED 2026-05-04 binding rule. Both agents recovered surgically with no data loss; net impact zero. Worth a precept reinforcement entry — pattern recurrence suggests dispatch-template clause needs sharper teeth (e.g., "If you find yourself reaching for `git stash`, halt and report instead").
+
 ## Status
 
 | Wave | Status |
@@ -186,6 +231,6 @@ Proof docs: `audit/W6-A-badge-proof.md`, `audit/W6-B-fuzzy-search-proof.md`, `au
 | W2 | closed @ e563d7a |
 | W3 | closed @ deba31d |
 | W4 | closed @ 499326a |
-| W5 | closed @ commit (this commit) |
-| W6 | closed @ commit (next) |
-| W7 | open (ready to close — strengthened 6-agent post-close audit + FINAL.md) |
+| W5 | closed @ 3a4371d |
+| W6 | closed @ 76525e1 |
+| W7 | closed @ commit (this commit) — strengthened 6-agent audit ran; findings absorbed; FINAL.md authored |

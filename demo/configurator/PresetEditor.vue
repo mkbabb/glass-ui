@@ -114,8 +114,8 @@ function effectiveFont(slot: keyof FontSlots): string {
                 type="button"
                 :class="
                     cn(
-                        'glass-btn fixed bottom-6 right-6 z-dock inline-flex h-12 w-12 items-center justify-center rounded-full text-foreground shadow-lg transition-transform',
-                        'hover:scale-[1.04] active:scale-[0.97] focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)]',
+                        'glass-btn focus-ring fixed bottom-6 right-6 z-dock inline-flex h-12 w-12 items-center justify-center rounded-full text-foreground shadow-lg transition-transform',
+                        'hover:scale-[var(--scale-hover)] active:scale-[var(--scale-press-btn)]',
                     )
                 "
                 aria-label="Open configurator"

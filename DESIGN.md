@@ -407,8 +407,9 @@ Base class `.btn-pill`:
 | `glass`          | `.glass-wash` + default border                         | `--glass-shadow-resting`        |
 | `glass-wash`     | `.glass-wash`                                          | 60% border                      |
 | `ai`             | amber-500/15 bg, amber-700 text                        | amber-500/25                    |
-| `danger-subtle`  | destructive/10 bg, destructive text                    | destructive/20                  |
 | `link`           | Text-only, underline on hover                          | underline                       |
+
+`destructive` is the canonical "danger" variant (clears WCAG AA). The prior `danger-subtle` variant retired in J.W6 — the 4.28:1 contrast failed AA; subsumed by `destructive` (4.52:1+).
 
 All variants scale 0.97 on `:active`.
 
@@ -488,7 +489,6 @@ The dock is a first-class composable system. Three principles: a dock is a posit
 | `DockIconButton`       | Fixed square `--size-icon-btn` (40 × 40 px); `compact` prop auto-sizes to content | Bg darken + `--scale-hover-dock` (1.1)       | Icon-only buttons inside a dock                 |
 | `DockSelectTrigger`    | Variable width, text + chevron                    | Bg darken only (no scale — anchors popover)            | `<Select>` triggers inside a dock               |
 | `DockDropdownTrigger`  | Variable width, text + icon + chevron             | Bg darken + scale (1.1)                                | `<DropdownMenu>` triggers inside a dock         |
-| `DockPopover`          | Slot-based popover anchor                         | —                                                      | Popover anchored to any dock button             |
 | `DockLayer`            | Grid cell, fades in/out by slot key               | —                                                      | Layer-active switching                          |
 | `DockLayerGroup`       | Grid wrapper, animates width across layers        | —                                                      | Multi-layer dock (expanded / collapsed / compact) |
 
@@ -578,19 +578,29 @@ Applied to floating surfaces. v0.8.0 retired the four-rung `variant="subtle | de
 
 ### Semantic variant (intent)
 
-Used on `Button`: `primary | secondary | ghost | outline | destructive | accent | link | ai | danger-subtle | glass | glass-wash`. Scoped to intent, independent of elevation. A ghost button sits flat on any tier.
+Used on `Button`: `primary | secondary | ghost | outline | destructive | accent | link | ai | glass | glass-wash`. Scoped to intent, independent of elevation. A ghost button sits flat on any tier. (`danger-subtle` retired in J.W6 — `destructive` is the canonical danger variant; the prior 4.28:1 contrast failed WCAG AA.)
 
 ### Structural variant (geometry)
 
 `Card` no longer carries a structural `variant` enum (v0.8.0). Cards distinguish their structural register via the new `tier` prop (the surface ladder) plus the `<ScrollPane>` and `<CartoonCard>` sibling primitives (the structural lifts).
 
-**Slider variants**: all share tokens `--slider-track-bg`, `--slider-track-height`, `--slider-thumb-bg`, `--slider-thumb-size`, `--slider-thumb-border-color`, `--slider-range-bg`, `--slider-thumb-shadow`. Restyle on a wrapper, never via `:deep()`.
+**Slider variants**: shipped via `sliderVariants` CVA (J.W5.A) with both a `variant` axis and a `size` axis. All share tokens `--slider-track-bg`, `--slider-track-height`, `--slider-thumb-bg`, `--slider-thumb-size`, `--slider-thumb-border-color`, `--slider-range-bg`, `--slider-thumb-shadow`. Restyle on a wrapper, never via `:deep()`.
 
-| Variant     | Track height | Thumb size       | Use                       |
-|-------------|--------------|------------------|---------------------------|
-| `standard`  | 6 px muted/50 | 14 px circle    | Default                   |
-| `spectrum`  | 24 px secondary | thin bar      | Range selection           |
-| `timeline`  | 24 px glass-blurred | 24 px disc| Video/timeline scrubbing  |
+| Variant         | Track                       | Thumb                                | Use                              |
+|-----------------|-----------------------------|--------------------------------------|----------------------------------|
+| `standard`      | 6 px muted/50               | 14 px circle                         | Default                          |
+| `spectrum`      | 24 px secondary             | thin bar                             | Range selection                  |
+| `timeline`      | 24 px glass-blurred         | 24 px disc                           | Video/timeline scrubbing         |
+| `glass-pill`    | pill substrate w/ gradient  | halo on hover (`--surface-tint-12`)  | Audacious primary control        |
+| `glass-cartoon` | cartoon-surface track       | cartoon-shadow disc                  | Editorial / paper-design context |
+
+| Size  | Track height | Thumb size | Use                   |
+|-------|--------------|------------|-----------------------|
+| `sm`  | 4 px         | 12 px      | Density-tight UIs     |
+| `md`  | 6 px         | 16 px      | Default               |
+| `lg`  | 12 px        | 24 px      | Hero / featured       |
+
+`<Slider>` also exposes `keepDockOpen` (default `true`) which acquires a dock-keep-open token for the duration of a drag gesture and reflects the dock's `data-held` flag on its root for thumb-halo intensification.
 
 ### Theming discipline
 
@@ -812,7 +822,7 @@ accordion · alert · avatar · badge · button · card · carousel · checkbox 
 
 ### Custom composites (`src/components/custom/`)
 
-animation · aurora · confirm-dialog · controls · **dock** (`GlassDock`, `DockLayer`, `DockLayerGroup`, `DockIconButton`, `DockSelectTrigger`, `DockDropdownTrigger`, `DockPopover`) · expandable-container · form · glass-carousel · glass-panel · icon-tooltip · infinite-scroll · labeled-field · **metric-badge** · metaballs · **pulse** · search · sidebar · sortable-list · stacked-icons · tabs (BouncyTabs, UnderlineTabs, BouncyToggle) · timeline · toggle-chip · typewriter.
+animation · aurora · **configurator** (`Configurator`, `ConfiguratorLayer`, `ConfiguratorRow`, `useConfiguratorState`) · confirm-dialog · controls · **dock** (`GlassDock`, `DockLayer`, `DockLayerGroup`, `DockIconButton`, `DockSelectTrigger`, `DockDropdownTrigger`) · expandable-container · form · glass-carousel · glass-panel · icon-tooltip · infinite-scroll · labeled-field · **metric-badge** · metaballs · **pulse** · search · sidebar · sortable-list · stacked-icons · tabs (BouncyTabs, UnderlineTabs, BouncyToggle) · timeline · toggle-chip · typewriter. (`DockPopover` retired in J.W3 — `<HoverPopover keep-dock-open>` provides hover-driven popover semantics inside docks.)
 
 ### Key component specs
 

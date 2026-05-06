@@ -109,11 +109,10 @@ function setApi(api: CarouselApi | undefined) {
                         </CarouselItem>
                     </CarouselContent>
                     <CarouselDots class="absolute inset-x-0 -bottom-6 justify-center" />
+                    <div class="mt-8 flex items-center justify-center">
+                        <CarouselPager />
+                    </div>
                 </Carousel>
-
-                <div class="mt-8 flex items-center justify-center">
-                    <CarouselPager />
-                </div>
             </div>
         </section>
 

@@ -32,7 +32,7 @@ const emit = defineEmits<{ reset: [] }>();
             <button
                 v-if="canReset"
                 type="button"
-                class="inline-flex h-6 w-6 items-center justify-center rounded-full text-muted-foreground/60 transition-colors hover:text-foreground hover:bg-foreground/5 focus-visible:outline-none focus-visible:shadow-[0_0_0_2px_color-mix(in_srgb,var(--ring)_30%,transparent)] active:scale-[0.97]"
+                class="focus-ring inline-flex h-6 w-6 items-center justify-center rounded-full text-muted-foreground/60 transition-colors hover:text-foreground hover:bg-foreground/5 active:scale-[var(--scale-press-btn)]"
                 :aria-label="`Reset ${label}`"
                 @click="emit('reset')"
             >
