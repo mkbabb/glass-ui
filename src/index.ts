@@ -7,6 +7,7 @@ export * from "./components/custom/instrument-chassis";
 export * from "./components/custom/glyph-face";
 export * from "./components/custom/dock-group";
 export * from "./components/custom/disco-glyph";
+export * from "./components/custom/hover-popover";
 
 // G.W3 design-language primitives
 export * from "./components/custom/cream-surface";

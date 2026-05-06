@@ -40,6 +40,7 @@ export function libraryEntries(rootDir: string) {
         "glyph-face": resolve(rootDir, "src/glyph-face.ts"),
         "dock-group": resolve(rootDir, "src/dock-group.ts"),
         "disco-glyph": resolve(rootDir, "src/disco-glyph.ts"),
+        "hover-popover": resolve(rootDir, "src/hover-popover.ts"),
     };
 }
 
