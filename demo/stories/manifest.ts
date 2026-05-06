@@ -91,6 +91,9 @@ export const CATEGORIES: Category[] = [
         icon: Shapes,
         stories: [
             s("primitives", "buttons", "Buttons"),
+            s("primitives", "card", "Card", "Five-tier glass surface — wash · quiet · resting · floating · overlay; polymorphic root via reka-ui Primitive."),
+            s("primitives", "scroll-pane", "Scroll Pane", "Wash-tier surface tuned for overflow:auto hosts; sibling primitive lifted from the retired Card variant=pane."),
+            s("primitives", "cartoon-card", "Cartoon Card", "Cartoon-register surface with offset-stamp shadow and hover-lift; sibling primitive lifted from the retired Card variant=cartoon."),
             s("primitives", "inputs", "Inputs"),
             s("primitives", "textarea", "Textarea"),
             s("primitives", "checks", "Checkbox · Radio · Switch"),
