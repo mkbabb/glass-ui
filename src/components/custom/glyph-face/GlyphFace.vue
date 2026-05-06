@@ -14,12 +14,12 @@ import { GlyphFaceSilhouetteKey } from "./keys";
  *      so the glyph reads Vignelli-clean; the disco punch is in the
  *      backplate + cap layers.
  *   3. cap — 165° linear-gradient pseudo with `mix-blend-mode: screen`
- *      (Q.W3 default; consumers may override to `overlay` for the
+ *      by default (consumers may override to `overlay` for the
  *      metallic-punch substrate). Reads as a single specular hot-spot
  *      in the upper-left, painted only against the slotted silhouette.
  *
- * Q.W3.A.1 inversion: cap clips to silhouette by default. Three resolution
- * paths populate `--gf-silhouette`:
+ * Cap clips to silhouette by default. Three resolution paths populate
+ * `--gf-silhouette`:
  *   - explicit `silhouette` prop on this component (path d-attr or raw
  *     `clip-path` expression);
  *   - provide/inject from a `<DiscoGlyph>` descendant — the disco

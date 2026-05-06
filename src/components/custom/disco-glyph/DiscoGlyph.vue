@@ -11,7 +11,7 @@ import { GlyphFaceSilhouetteKey } from "../glyph-face/keys";
  *   2. facet — an 8-stop linear gradient that simulates ~6 facets cutting
  *      across the glyph face. `phaseColor` (default `currentColor`) drives
  *      the hue; in active states a phase var (`--phase-color` or similar)
- *      reads through. Q.W3.A.3: gradient axis adapts to silhouette via
+ *      reads through. The gradient axis adapts to silhouette via
  *      `facetAxis` so each consumer picks the axis that cuts *across* its
  *      dominant stroke direction (CheckDisco's V-shape calls for vertical;
  *      ArrowRightDisco's horizontal shaft also vertical; PlayDisco's
@@ -20,8 +20,8 @@ import { GlyphFaceSilhouetteKey } from "../glyph-face/keys";
  *      transparent past 40%; the polished-metal hot-spot a real disco
  *      glyph would carry under club lighting.
  *
- * Q.W3.A.1 silhouette hand-off: when wrapped in a `<GlyphFace>`, this
- * primitive publishes its `silhouette` prop upward via the
+ * Silhouette hand-off: when wrapped in a `<GlyphFace>`, this primitive
+ * publishes its `silhouette` prop upward via the
  * `GlyphFaceSilhouetteKey` injection slot, so the GlyphFace cap clips
  * to the disco silhouette without the wrapping consumer (PrimaryAction)
  * needing to mirror the path on every glyph swap. The provide/inject
@@ -48,9 +48,9 @@ const props = withDefaults(
          * Axis along which the facet gradient runs. The 8 stops cut
          * perpendicular to this axis, so a diagonal axis gives diagonal
          * facets, vertical gives horizontal facets across the glyph,
-         * etc. Q.W3.A.3 default stays diagonal; consumers picking an
-         * axis that cuts across the silhouette's dominant stroke
-         * sharpen the facet read at small render sizes.
+         * etc. The default stays diagonal; consumers picking an axis
+         * that cuts across the silhouette's dominant stroke sharpen the
+         * facet read at small render sizes.
          */
         facetAxis?: "diagonal" | "horizontal" | "vertical";
     }>(),

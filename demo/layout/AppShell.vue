@@ -7,7 +7,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-import { PaperBackdrop } from "@/components/custom/paper-backdrop";
 import {
     formatCombo,
     formatComboParts,
@@ -57,8 +56,6 @@ onMounted(() => {
 </script>
 
 <template>
-    <PaperBackdrop class="fixed inset-0 -z-10 bg-background" />
-
     <div class="relative flex min-h-screen text-foreground">
         <CategoryRail />
 

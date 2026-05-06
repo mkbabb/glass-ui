@@ -1,0 +1,56 @@
+name: lint
+
+# Recovery-diary scrub gate + typecheck. Fails the workflow when source
+# files in src/ or demo/ leak tranche-history annotations
+# (H.W*, G.W*, O.W*, P.W*, Q.W*, pass-N, silent-failure, scope-reveal,
+# user-direction, stash-regression). Tranche-history belongs in
+# docs/tranches/, not in source comments.
+
+on:
+    pull_request:
+        branches: [master, main]
+    push:
+        branches: [master, main]
+    workflow_dispatch:
+
+jobs:
+    recovery-diary-scrub:
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Install ripgrep
+              run: sudo apt-get update && sudo apt-get install -y ripgrep
+
+            - name: Reject recovery-diary annotations in src/ + demo/
+              run: |
+                  if rg -n 'H\.W[0-9]|G\.W[0-9]|O\.W[0-9]|P\.W[0-9]|Q\.W[0-9]|pass-[1-9]|silent.failure|scope.reveal|user.direction|stash.regression' src/ demo/; then
+                      echo "::error::Recovery-diary annotations found in src/ or demo/. Tranche-history belongs in docs/tranches/."
+                      exit 1
+                  fi
+
+    typecheck:
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: npm
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Typecheck
+              run: npm run typecheck
+
+            - name: Test
+              run: npm run test

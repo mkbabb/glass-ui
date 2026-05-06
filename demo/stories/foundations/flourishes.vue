@@ -198,7 +198,7 @@ const shimmerUtilities = [
                     <p class="text-mono-caption mb-2 text-muted-foreground">
                         .{{ s.label }}
                     </p>
-                    <p :class="cn(s.cls, 'text-display-3')">{{ s.sample }}</p>
+                    <p :class="[s.cls, 'text-display-3']">{{ s.sample }}</p>
                 </div>
             </div>
         </section>

@@ -105,8 +105,8 @@ import { Play, RotateCcw, ArrowRight, Check, Settings } from "lucide-vue-next";
             </div>
         </section>
 
-        <!-- Three cap modes — Q.W3.A.1 invert: cap clips to silhouette by
-             default; no silhouette → no cap; explicit silhouette opts in. -->
+        <!-- Three cap modes — cap clips to silhouette by default; no
+             silhouette → no cap; explicit silhouette opts in. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">cap mode · silhouette × no-silhouette × override blend</p>
             <div class="flex flex-wrap items-end gap-8">
@@ -145,12 +145,12 @@ import { Play, RotateCcw, ArrowRight, Check, Settings } from "lucide-vue-next";
                 </div>
             </div>
             <p class="text-mono-caption text-muted-foreground">
-                Q.W3 inverts the cap default: the cap renders nothing unless a
-                silhouette resolves (via prop or via provide/inject from a
-                DiscoGlyph descendant). Default <code>mix-blend-mode</code> is
-                <code>screen</code> — composes correctly against translucent
-                dock substrates. Consumers needing the metallic-overlay punch
-                set <code>--gf-cap-blend: overlay</code> explicitly.
+                The cap renders nothing unless a silhouette resolves (via
+                prop or via provide/inject from a DiscoGlyph descendant).
+                Default <code>mix-blend-mode</code> is <code>screen</code> —
+                composes correctly against translucent dock substrates.
+                Consumers needing the metallic-overlay punch set
+                <code>--gf-cap-blend: overlay</code> explicitly.
             </p>
         </section>
     </StoryPage>

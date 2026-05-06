@@ -338,9 +338,8 @@ body {
        surface. Speedtest's idle hero `0` consumes this via
        `.text-hero[data-idle="true"]`; the `text-engraved` utility is the
        glass-ui contract that any consumer can apply for the same look.
-       Opacity dropped in P.W1.B — the audacious canon mutes by colour
-       (`--muted-foreground`), not by alpha; opacity ≤ 0.4 over a glass
-       surface read as a fade, not as engraving. */
+       Mutes via `--muted-foreground` (colour) rather than alpha — opacity
+       ≤ 0.4 over a glass surface reads as a fade, not as engraving. */
     .text-engraved {
         color: var(--muted-foreground);
         text-shadow:

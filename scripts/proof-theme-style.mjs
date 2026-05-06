@@ -57,7 +57,7 @@ const cssAssertions = [
     ["leading-display", "line-height: var(--leading-display)"],
     ["tracking-caps", "letter-spacing: var(--tracking-caps)"],
     ["bg-gold", "background-color: var(--color-gold)"],
-    ["shadow-card", "var(--card-shadow)"],
+    ["shadow-card", "var(--shadow-cartoon)"],
     ["rounded-card", "border-radius: var(--radius-card)"],
     ["z-dock", "z-index: var(--z-index-dock)"],
     ["max-w-2xl", "max-width: var(--container-2xl)"],

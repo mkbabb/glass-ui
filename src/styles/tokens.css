@@ -49,11 +49,8 @@
     --duration-panel: 0.55s;
     --duration-xl: 1s;
     --duration-xxl: 1.5s;
-    --duration-linger: 2.5s;
     --duration-shimmer-fast: 3s;
     --duration-shimmer: 5s;
-    --duration-shimmer-slow: 8s;
-    --duration-popup-swap: 180ms;
 
     /* ═══════════════════════════════════════════════
        §2  EASING — Spring curves via linear()
@@ -106,7 +103,6 @@
     --z-toast: 160;
     --z-toggle: 999;
     --z-max: 9999;
-    --z-debug: 99999;
 
     /* ═══════════════════════════════════════════════
        §4  BORDER RADIUS — 0.625rem base (warm-cream identity)
@@ -200,10 +196,9 @@
     --section-color-11: hsl(187 58% 39%);   /* ocean      */
     --section-color-12: hsl(256 44% 52%);   /* periwinkle */
 
-    /* Accent colors — sibling alarm/error hues. Live consumers exist in
-       fourier-analysis/web (morph viz) and several preset overrides. */
-    --accent-pink: hsl(330 65% 55%);
-    --accent-red:  hsl(0 72% 50%);
+    /* Accent red — alarm/error hue. Live consumers exist in fourier-analysis/
+       web (morph viz) and several preset overrides. */
+    --accent-red: hsl(0 72% 50%);
 
     /* ═══════════════════════════════════════════════
        §6b VIZ BASIS — core brand hues
@@ -228,67 +223,34 @@
 
     /* ═══════════════════════════════════════════════
        §7  SHADOWS — cartoon offset is the signature
+
+       Canonical shadow recipes (cartoon family / soft / elevated / modal /
+       card / dock / cartoon-accent / cartoon-{sm,md,lg}) live in theme.css's
+       @theme block so Tailwind v4 generates the matching `.shadow-*`
+       utilities. Dark-mode overrides for those recipes ride the cascade via
+       the `.dark` block at the bottom of this file.
+
+       This section keeps the supporting primitives (cartoon-accent driver
+       colour, generic elevation scale, cartoon-shadow colour primitives)
+       that don't require a Tailwind utility namespace.
        ═══════════════════════════════════════════════ */
-    --shadow-cartoon:       3px 3px 0px 0px color-mix(in srgb, var(--foreground) 8%, transparent);
-    --shadow-cartoon-hover: 4px 4px 0px 0px color-mix(in srgb, var(--foreground) 10%, transparent);
-    --shadow-soft:          0 4px 12px rgba(0, 0, 0, 0.1);
-    --shadow-elevated:      0 8px 24px rgba(0, 0, 0, 0.12);
-    --shadow-modal:
-        4px 4px 0px 0px color-mix(in srgb, var(--foreground) 8%, transparent),
-        0 24px 64px color-mix(in srgb, var(--foreground) 12%, transparent);
 
-    --cartoon-shadow:       var(--shadow-cartoon);
-    --cartoon-shadow-hover: var(--shadow-cartoon-hover);
-    --soft-shadow:          var(--shadow-soft);
-    --elevated-shadow:      var(--shadow-elevated);
-    --modal-shadow:         var(--shadow-modal);
-
-    /* Cartoon-shadow accent recipe — modern-skeuomorphic axis delivered by
-       extending the cartoon-shadow family. Consumers tune accent tone by
+    /* Cartoon-shadow accent recipe driver — consumers tune accent tone by
        overriding --cartoon-accent-color (default var(--foreground)) on the
-       wrapper element. */
+       wrapper element. The canonical --shadow-cartoon-accent that consumes
+       this driver lives in theme.css @theme. */
     --cartoon-accent-color: var(--foreground);
-    --shadow-cartoon-accent:
-        3px 3px 0px 0px color-mix(in srgb, var(--cartoon-accent-color) 15%, transparent);
 
-    /* Elevation scale */
-    --shadow-xs: 0 1px 3px color-mix(in srgb, var(--shadow-color) 4%, transparent),
-        0 1px 2px color-mix(in srgb, var(--shadow-color) 6%, transparent);
+    /* Elevation scale — generic shadow primitives (`var(--shadow-md)` etc.
+       are referenced from scoped component CSS; not bridged through @theme). */
     --shadow-sm: 0 2px 8px color-mix(in srgb, var(--shadow-color) 6%, transparent);
     --shadow-md: 0 4px 16px color-mix(in srgb, var(--shadow-color) 8%, transparent);
     --shadow-lg: 0 4px 20px color-mix(in srgb, var(--shadow-color) 12%, transparent);
     --shadow-xl: 0 8px 24px color-mix(in srgb, var(--shadow-color) 14%, transparent);
-    --shadow-2xl: 0 25px 50px -12px color-mix(in srgb, var(--shadow-color) 25%, transparent);
-
-    /* Card = cartoon by default */
-    --shadow-card:       var(--shadow-cartoon);
-    --card-shadow:       var(--shadow-card);
-
-    /* Dock shadows */
-    --shadow-dock:           0 4px 20px color-mix(in srgb, var(--shadow-color) 18%, transparent), 0 0 0 1px color-mix(in srgb, var(--shadow-color) 10%, transparent);
-    --shadow-dock-collapsed: 0 2px 12px color-mix(in srgb, var(--shadow-color) 14%, transparent), 0 0 0 1px color-mix(in srgb, var(--shadow-color) 10%, transparent);
-    --dock-shadow:           var(--shadow-dock);
-    --dock-shadow-collapsed: var(--shadow-dock-collapsed);
 
     /* Cartoon shadow color primitives (kept for tiered cartoon utilities) */
-    --shadow-cartoon-color:             rgb(0 0 0 / 0.12);
-    --shadow-cartoon-color-soft:        rgb(0 0 0 / 0.06);
-    --shadow-cartoon-color-hover:       rgb(0 0 0 / 0.16);
-    --shadow-cartoon-color-hover-soft:  rgb(0 0 0 / 0.08);
-
-    /* Tiered cartoon shadows */
-    --shadow-cartoon-sm: -3px 2px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
-        0 3px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
-        -3px 3px 1px color-mix(in srgb, var(--shadow-color) 6%, transparent);
-    --shadow-cartoon-md: -4px 3px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
-        0 4px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
-        -4px 4px 2px color-mix(in srgb, var(--shadow-color) 8%, transparent);
-    --shadow-cartoon-lg: -6px 4px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
-        0 6px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
-        -6px 6px 2px color-mix(in srgb, var(--shadow-color) 8%, transparent);
-    --cartoon-shadow-sm: var(--shadow-cartoon-sm);
-    --cartoon-shadow-md: var(--shadow-cartoon-md);
-    --cartoon-shadow-lg: var(--shadow-cartoon-lg);
+    --shadow-cartoon-color:      rgb(0 0 0 / 0.12);
+    --shadow-cartoon-color-soft: rgb(0 0 0 / 0.06);
 
     /* ═══════════════════════════════════════════════
        §8  GLASSMORPHISM — Four-tier surface system
@@ -301,10 +263,7 @@
     --glass-opacity-medium:   0.65;
     --glass-opacity-elevated: 0.80;
 
-    /* Blur primitives. Halved twice — first in glass-ui v0.4 (speedtest
-       tranche N.W1), again in v0.5.1 (speedtest tranche O.W2) — because the
-       first cut still read as a heavy slab against the aurora wash on
-       consumer surfaces. The new radii feather the dock + meter card to a
+    /* Blur primitives. The radii feather the dock + meter card to a
        barely-perceptible diffusion that lets aurora bleed through cleanly
        and keeps hero typography crisp at the meter scale. */
     --glass-blur-subtle-radius:   1px;
@@ -323,9 +282,8 @@
 
     /* Dock-specific opacity. Lighter than `medium` (0.65) so the dock reads
        as a translucent overlay rather than a panel — aurora bleed visible
-       through it. Dropped from 0.42 → 0.32 in v0.5.1 (speedtest O.W2)
-       alongside the blur halving so the chrome doesn't read as the dominant
-       surface against the freshly-feathered backdrop. Consumed by
+       through it. Sits below the blur weight so the chrome doesn't read as
+       the dominant surface against the feathered backdrop. Consumed by
        `.glass-dock` via the `--glass-bg-dock` token. */
     --glass-opacity-dock: 0.32;
 
@@ -353,24 +311,20 @@
     --glass-border-elevated: color-mix(in srgb, var(--foreground) 15%, transparent);
     --glass-border-dock:     color-mix(in srgb, var(--foreground) 11%, transparent);
     --glass-border:          var(--glass-border-default);
-    --glass-border-strong:   var(--glass-border-elevated);
 
-    /* Shared decorative. Light grain dropped 0.035 → 0.025 in P.W1.B —
-       at the chassis scale the original alpha read as crawl over the new
-       lower-alpha chassis bg; the grain's role is texture, not reading,
-       so it sits at the perceptual floor. Dark companion drops 0.06 →
-       0.045 below to keep the soft-light blend alive without stippling. */
+    /* Shared decorative. Light grain sits at the perceptual floor (the
+       grain's role is texture, not reading) so the chassis bg can run thin
+       without the noise reading as crawl. Dark companion lifts to 0.045 to
+       keep the soft-light blend alive without stippling. */
     --glass-grain-opacity: 0.025;
     --glass-grain-opacity-disco: 0.08;
     --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.25);
 
     /* Specular catch-light — 1.5px-tall top-edge highlight that swaps in for
        --glass-highlight on interactive moments (e.g. primary-action hover).
-       Reads as a real catch-light on a curved surface. The `-dark` companion
-       is overridden inside `.dark`; the named token here is the explicit
-       handle consumers can reference to compose dark-aware layers. */
+       Reads as a real catch-light on a curved surface. The dark variant lives
+       inline in the `.dark` block below. */
     --glass-specular: inset 0 1.5px 0 0 hsl(0 0% 100% / 0.45);
-    --glass-specular-dark: inset 0 1.5px 0 0 hsl(0 0% 100% / 0.30);
 
     /* Chassis curvature illusion — a subtle radial gradient at the chassis
        top centre that lifts the surface without committing to literal 3D.
@@ -400,15 +354,11 @@
     --glass-shadow-elevated: var(--shadow-xl),
         0 0 0 0.5px color-mix(in srgb, var(--shadow-color) 5%, transparent),
         var(--glass-highlight);
-    --glass-shadow:    var(--glass-shadow-default);
-    --glass-shadow-lg: var(--glass-shadow-elevated);
+    --glass-shadow: var(--glass-shadow-default);
 
     /* ═══════════════════════════════════════════════
        §9  ANIMATION OFFSETS
        ═══════════════════════════════════════════════ */
-    --motion-slide-sm: 3px;
-    --motion-slide-md: 6px;
-    --motion-slide-lg: 8px;
     --popover-offset: 0.375rem;
 
     /* Hover lift offsets */
@@ -427,11 +377,6 @@
     --chart-margin: 1.25rem;
     --paper-texture-size: 200px 200px;
 
-    /* Border opacity scale */
-    --border-opacity-light:  0.15;
-    --border-opacity-medium: 0.25;
-    --border-opacity-strong: 0.6;
-
     /* ═══════════════════════════════════════════════
        §10 SIZING
        ═══════════════════════════════════════════════ */
@@ -447,11 +392,6 @@
 
     /* Dock geometry — consumers may override locally */
     --dock-h: calc(var(--size-icon-btn) + 0.75rem + 3px);
-    --dock-margin: 0.5rem;
-    --dock-menubar-reserve: 4rem;
-
-    /* Component font override (consumers override locally) */
-    --select-font: inherit;
 
     /* ═══════════════════════════════════════════════
        §11 INTERACTIVE SCALES & FOCUS
@@ -584,8 +524,7 @@
     --section-color-11: hsl(187 63% 65%);
     --section-color-12: hsl(256 60% 74%);
 
-    --accent-pink: hsl(335 55% 65%);
-    --accent-red:  hsl(0 68% 62%);
+    --accent-red: hsl(0 68% 62%);
 
     /* Cream namespace — dark mirror */
     --cream:            var(--neutral-0);
@@ -625,10 +564,8 @@
         4px 4px 0px 0px color-mix(in srgb, var(--foreground) 6%, transparent),
         0 24px 64px color-mix(in srgb, var(--foreground) 18%, transparent);
 
-    --shadow-cartoon-color:            rgb(255 255 255 / 0.07);
-    --shadow-cartoon-color-soft:       rgb(255 255 255 / 0.03);
-    --shadow-cartoon-color-hover:      rgb(255 255 255 / 0.10);
-    --shadow-cartoon-color-hover-soft: rgb(255 255 255 / 0.05);
+    --shadow-cartoon-color:      rgb(255 255 255 / 0.07);
+    --shadow-cartoon-color-soft: rgb(255 255 255 / 0.03);
 
     /* Glass opacity + grain for dark */
     --glass-opacity-subtle:   0.90;

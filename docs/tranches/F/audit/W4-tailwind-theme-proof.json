@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-02T20:22:17.357Z",
-  "durationMs": 284,
+  "generatedAt": "2026-05-06T02:55:20.565Z",
+  "durationMs": 173,
   "status": "pass",
   "command": "npm run proof:theme",
   "tailwind": {
@@ -29,6 +29,7 @@
       "duration-fast",
       "blur-dock",
       "blur-glass-subtle",
+      "max-w-2xl",
       "animate-dock-in",
       "animate-shimmer"
     ],
@@ -130,6 +131,10 @@
         "present": true
       },
       {
+        "className": "max-w-2xl",
+        "present": true
+      },
+      {
         "className": "animate-dock-in",
         "present": true
       },
@@ -171,8 +176,8 @@
       },
       {
         "className": "shadow-card",
-        "fragment": "var(--card-shadow)",
-        "rule": "\n    --tw-shadow: var(--card-shadow);\n    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n  ",
+        "fragment": "var(--shadow-cartoon)",
+        "rule": "\n    --tw-shadow: var(--shadow-cartoon);\n    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n  ",
         "pass": true
       },
       {
@@ -188,21 +193,29 @@
         "pass": true
       },
       {
+        "className": "max-w-2xl",
+        "fragment": "max-width: var(--container-2xl)",
+        "rule": "\n    max-width: var(--container-2xl);\n  ",
+        "pass": true
+      },
+      {
         "className": "animate-dock-in",
         "fragment": "animation: var(--animate-dock-in)",
         "rule": "\n    animation: var(--animate-dock-in);\n  ",
         "pass": true
       }
     ],
-    "cssBytes": 166738,
+    "cssBytes": 205382,
     "files": [
-      "dist/assets/index-Ddr0jOfJ.css"
+      "dist/assets/index-Be96HX3a.css"
     ]
   },
   "staticChecks": {
     "invalidNamespaces": [],
+    "invalidThemeEntries": [],
     "selfReferences": [],
     "unresolvedUtilityTokens": [],
+    "retiredTokenMatches": [],
     "brittleMatches": [],
     "dockScopedStyleBlocks": []
   },

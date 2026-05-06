@@ -11,9 +11,9 @@ export { default as CardFooter } from "./CardFooter.vue";
  * cardVariants — variant-class map for `<Card>`. Names the surface tier
  * each variant resolves to. `default`, `pane`, `subtle` honor the
  * `flush` prop (drops the surface shadow); `cartoon` resolves its
- * shadow inside `.glass-cartoon`. `cream` and `paper` (G.W3) resolve
- * inside `.cream-surface` / `.paper-card` from cards.css/paper.css —
- * they ship their own shadow + padding + border.
+ * shadow inside `.glass-cartoon`. `cream` and `paper` resolve inside
+ * `.cream-surface` / `.paper-card` from cards.css/paper.css — they ship
+ * their own shadow + padding + border.
  */
 export const cardVariants = cva("scrollbar-hidden text-card-foreground", {
     variants: {

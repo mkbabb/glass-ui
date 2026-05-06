@@ -707,14 +707,14 @@
         will-change: transform, opacity;
     }
 
-    /* Q.W3.A.4 — phase-tint backplate halo at the pill wrapper.
+    /* Phase-tint backplate halo at the pill wrapper.
      *
      * The inner `<GlyphFace>` halo (`.glyph-face-backplate { inset: -25% }`)
      * gets clipped by the pill's `overflow: hidden`; the halo never escapes
      * the inner glyph wrapper. This `::before` lifts the phase-tint to the
      * pill itself so the glow composes with the whole CTA. Scoped to
      * active phases — at idle / ready the pill stays neutral and inherits
-     * the W2.7 reservation ("disco fires on hover only"). */
+     * the chassis reservation ("disco fires on hover only"). */
     .dock-tab-button[data-tier="primary"][data-phase]:not([data-phase="ready"]):not([data-phase="idle"])::before {
         content: "";
         position: absolute;
@@ -748,9 +748,9 @@
      * edge-shadow skeu vocabulary at quieter weight: no disco accent, no
      * sparkle, no curvature radial. Composes for icon-button consumers
      * (chassis ActionCluster, SettingsCog) where the surface needs a
-     * glass-tier read but not the audacious primary punch. Per P.W1.B
-     * audit-C §3 — closes the four bare `<DockIconButton>` consumer sites
-     * (cog + back + retake + stop) without redefining the family.
+     * glass-tier read but not the audacious primary punch — closes the
+     * four bare `<DockIconButton>` consumer sites (cog + back + retake +
+     * stop) without redefining the family.
      */
     .dock-tab-button[data-tier="secondary"],
     .dock-icon-button[data-tier="secondary"] {

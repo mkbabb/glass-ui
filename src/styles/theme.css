@@ -63,7 +63,7 @@
     --color-background: var(--background);
     --color-foreground: var(--foreground);
 
-    /* Cream identity — public surface noun (G.W1) */
+    /* Cream identity — public surface noun */
     --color-cream:            var(--cream);
     --color-cream-warm:       var(--cream-warm);
     --color-cream-cool:       var(--cream-cool);
@@ -110,8 +110,7 @@
     --color-section-11: var(--section-color-11);
     --color-section-12: var(--section-color-12);
 
-    --color-accent-pink: var(--accent-pink);
-    --color-accent-red:  var(--accent-red);
+    --color-accent-red: var(--accent-red);
 
     /* ═══════════════════════════════════════════════
        Colors — viz basis
@@ -206,13 +205,13 @@
     --min-width-input-sm:   var(--input-min-width-sm);
     --spacing-chart-margin: var(--chart-margin);
 
-    /* φ-spacing scale — golden-ratio rungs (G.W1) */
+    /* φ-spacing scale — golden-ratio rungs */
     --spacing-phi-1: var(--space-phi-1);
     --spacing-phi-2: var(--space-phi-2);
     --spacing-phi-3: var(--space-phi-3);
     --spacing-phi-4: var(--space-phi-4);
 
-    /* Icon-sized utilities — generates .size-icon-{xs..mega} (G.W1) */
+    /* Icon-sized utilities — generates .size-icon-{xs..mega} */
     --size-icon-xs:   var(--icon-xs);
     --size-icon-sm:   var(--icon-sm);
     --size-icon-md:   var(--icon-md);
@@ -224,26 +223,45 @@
 
     /* ═══════════════════════════════════════════════
        Shadows → shadow-* utilities
+
+       Glass tier surfaces bridge through @theme (source names differ from
+       utility names so plain @theme entries reference the underlying
+       --glass-shadow-* primitives without self-reference). Shadow recipes
+       whose source name matches the utility name (cartoon family / soft /
+       elevated / modal / card / dock) live in their canonical form here in
+       @theme directly — Tailwind v4 emits both the utility class and the
+       :root declaration, and dark-mode overrides land via tokens.css `.dark`.
        ═══════════════════════════════════════════════ */
-    --shadow-cartoon:       var(--cartoon-shadow);
-    --shadow-cartoon-hover: var(--cartoon-shadow-hover);
-    --shadow-soft:          var(--soft-shadow);
-    --shadow-elevated:      var(--elevated-shadow);
-    --shadow-modal:         var(--modal-shadow);
-
-    --shadow-card:           var(--card-shadow);
-    --shadow-dock:           var(--dock-shadow);
-    --shadow-dock-collapsed: var(--dock-shadow-collapsed);
-
     --shadow-glass-subtle:   var(--glass-shadow-subtle);
     --shadow-glass-default:  var(--glass-shadow-default);
     --shadow-glass-medium:   var(--glass-shadow-medium);
     --shadow-glass-elevated: var(--glass-shadow-elevated);
 
-    --shadow-cartoon-sm:     var(--cartoon-shadow-sm);
-    --shadow-cartoon-md:     var(--cartoon-shadow-md);
-    --shadow-cartoon-lg:     var(--cartoon-shadow-lg);
-    --shadow-cartoon-accent: var(--shadow-cartoon-accent);
+    --shadow-cartoon:       3px 3px 0px 0px color-mix(in srgb, var(--foreground) 8%, transparent);
+    --shadow-cartoon-hover: 4px 4px 0px 0px color-mix(in srgb, var(--foreground) 10%, transparent);
+    --shadow-soft:          0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-elevated:      0 8px 24px rgba(0, 0, 0, 0.12);
+    --shadow-modal:
+        4px 4px 0px 0px color-mix(in srgb, var(--foreground) 8%, transparent),
+        0 24px 64px color-mix(in srgb, var(--foreground) 12%, transparent);
+
+    --shadow-card: var(--shadow-cartoon);
+
+    --shadow-dock:           0 4px 20px color-mix(in srgb, var(--shadow-color) 18%, transparent), 0 0 0 1px color-mix(in srgb, var(--shadow-color) 10%, transparent);
+    --shadow-dock-collapsed: 0 2px 12px color-mix(in srgb, var(--shadow-color) 14%, transparent), 0 0 0 1px color-mix(in srgb, var(--shadow-color) 10%, transparent);
+
+    --shadow-cartoon-sm: -3px 2px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
+        0 3px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
+        -3px 3px 1px color-mix(in srgb, var(--shadow-color) 6%, transparent);
+    --shadow-cartoon-md: -4px 3px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
+        0 4px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
+        -4px 4px 2px color-mix(in srgb, var(--shadow-color) 8%, transparent);
+    --shadow-cartoon-lg: -6px 4px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
+        0 6px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent),
+        -6px 6px 2px color-mix(in srgb, var(--shadow-color) 8%, transparent);
+
+    --shadow-cartoon-accent:
+        3px 3px 0px 0px color-mix(in srgb, var(--cartoon-accent-color) 15%, transparent);
 
     /* ═══════════════════════════════════════════════
        Blur → blur-* and backdrop-blur-* utilities
@@ -297,6 +315,7 @@
     --animate-gold-shimmer: gold-shimmer-slide var(--duration-shimmer) linear infinite;
     --animate-shake: shake 0.5s ease-in-out;
 }
+
 
 /* Class-based dark mode */
 @variant dark (&:where(.dark, .dark *));

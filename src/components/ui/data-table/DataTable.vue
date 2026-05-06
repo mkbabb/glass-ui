@@ -180,7 +180,6 @@ function sortIndicator(col: DataTableColumn<T>): string {
                             cn(
                                 getAlignClass(col.align),
                                 col.sortable && 'cursor-pointer select-none',
-                                col.headerClass,
                             )
                         "
                         @click="toggleSort(col)"

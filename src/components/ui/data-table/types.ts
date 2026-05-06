@@ -15,8 +15,6 @@ export interface DataTableColumn<T = any> {
     align?: "left" | "center" | "right";
     /** Additional CSS classes for the column cells */
     class?: string;
-    /** Additional CSS classes for the header cell */
-    headerClass?: string;
 }
 
 export interface DataTableSort {

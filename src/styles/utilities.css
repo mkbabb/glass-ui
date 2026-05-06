@@ -121,14 +121,14 @@
     }
 
     /* ── Text-shimmer (gold) — consumes gold-shimmer-slide keyframe;
-     *    consumers tune cadence via --shimmer-duration. */
+     *    cadence comes from the canonical --duration-shimmer token. */
     .text-shimmer-gold {
         background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold), var(--gold-light), var(--gold-dark));
         background-size: 250% 100%;
         background-clip: text;
         -webkit-background-clip: text;
         color: transparent;
-        animation: gold-shimmer-slide var(--shimmer-duration, var(--duration-shimmer)) linear infinite;
+        animation: gold-shimmer-slide var(--duration-shimmer) linear infinite;
     }
 
     /* ── Rainbow gradient backgrounds ── */
@@ -155,20 +155,6 @@
     .divider-flourish-section-5 { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-5) 50%, transparent 97%); }
     .divider-flourish-section-6 { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-6) 50%, transparent 97%); }
     .divider-flourish-section-9 { height: 2px; background: linear-gradient(to right, transparent 3%, var(--section-color-9) 50%, transparent 97%); }
-
-    /* ── Inline code chip ── */
-    .code-badge {
-        display: inline-flex;
-        align-items: center;
-        font-family: var(--font-mono);
-        font-size: var(--type-caption);
-        padding: 0.125rem 0.5rem;
-        border-radius: var(--radius-pill);
-        background: color-mix(in srgb, var(--foreground) 8%, transparent);
-        color: var(--foreground);
-        letter-spacing: 0;
-        line-height: 1.4;
-    }
 
     /* ── Skeuo: stamp + emboss + generated icon-{xs..mega} ── */
     .icon-stamp {

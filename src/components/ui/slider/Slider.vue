@@ -14,7 +14,7 @@ const props = defineProps<SliderRootProps & {
    * 'standard'    — glass track + circular thumb (default)
    * 'spectrum'    — tall track + bar thumb
    * 'timeline'    — glass scrub track
-   * 'glass-track' — subtle/medium glass track + cartoon-accent thumb (G R3)
+   * 'glass-track' — subtle/medium glass track + cartoon-accent thumb
    */
   variant?: 'standard' | 'spectrum' | 'timeline' | 'glass-track'
   /**
@@ -40,7 +40,7 @@ const delegatedProps = computed(() => {
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
-// --- dock keep-open wiring (R3) ---
+// --- dock keep-open wiring ---
 const dockSink = inject<DockKeepOpenSink | null>(DOCK_KEEP_OPEN_SINK_KEY, null)
 let activeToken: symbol | null = null
 
@@ -167,7 +167,7 @@ onBeforeUnmount(() => {
     box-shadow: none;
 }
 
-/* ── Variant: glass-track (G R3) ──
+/* ── Variant: glass-track ──
    Subtle glass-bg-subtle at rest (4px); lifts to medium (6px) on hover.
    Cartoon-shadow-accent on the thumb when actively dragged. */
 .glass-slider--glass-track .slider-track {

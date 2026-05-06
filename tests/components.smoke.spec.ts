@@ -23,9 +23,7 @@ import {
 import { DarkModeToggle } from "@/controls";
 import { DockLayer, DockLayerGroup, GlassDock } from "@/dock";
 import { MetricBadge } from "@/metric-badge";
-import { PaperBackdrop } from "@/paper-backdrop";
 import { Pulse } from "@/pulse";
-import { StatusDot } from "@/status-dot";
 import { BouncyToggle } from "@/tabs";
 import { ToggleChip, toggleChipVariants } from "@/toggle-chip";
 
@@ -127,17 +125,6 @@ describe("component smoke coverage", () => {
         expect(wrapper.text()).toBe("n/a");
     });
 
-    it("renders StatusDot label", () => {
-        expect(mount(StatusDot, { props: { label: "Live" } }).text()).toContain("Live");
-    });
-
-    it("renders custom StatusDot color", () => {
-        const wrapper = mount(StatusDot, {
-            props: { variant: "custom", color: "rgb(1, 2, 3)" },
-        });
-        expect(wrapper.html()).toContain("rgb(1, 2, 3)");
-    });
-
     it("renders Pulse dots according to count", () => {
         const wrapper = mount(Pulse, { props: { count: 4 } });
         expect(wrapper.findAll(".pulse-dot")).toHaveLength(4);
@@ -146,11 +133,6 @@ describe("component smoke coverage", () => {
     it("renders Pulse ring variant", () => {
         const wrapper = mount(Pulse, { props: { variant: "ring" } });
         expect(wrapper.find(".pulse-ring").exists()).toBe(true);
-    });
-
-    it("applies PaperBackdrop opacity", () => {
-        const wrapper = mount(PaperBackdrop, { props: { opacity: 0.5 } });
-        expect(wrapper.attributes("style")).toContain("opacity: 0.5");
     });
 
     it("renders the GlassDock rail variant", () => {

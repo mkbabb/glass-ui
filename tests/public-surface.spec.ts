@@ -7,20 +7,16 @@ import * as Controls from "@/controls";
 import * as Dock from "@/dock";
 import * as ExpandableContainerSurface from "@/expandable-container";
 import * as GlassCarouselSurface from "@/glass-carousel";
-import * as GlassPanelSurface from "@/glass-panel";
 import * as IconTooltipSurface from "@/icon-tooltip";
 import * as InfiniteScrollSurface from "@/infinite-scroll";
 import * as LabeledFieldSurface from "@/labeled-field";
-import * as MetaballsSurface from "@/metaballs";
 import * as MetricBadgeSurface from "@/metric-badge";
 import * as Pagination from "@/pagination";
-import * as PaperBackdropSurface from "@/paper-backdrop";
 import * as PulseSurface from "@/pulse";
 import * as Search from "@/search";
 import * as Sidebar from "@/sidebar";
 import * as SortableListSurface from "@/sortable-list";
 import * as StackedIconsSurface from "@/stacked-icons";
-import * as StatusDotSurface from "@/status-dot";
 import * as TabsSurface from "@/tabs";
 import * as TimelineSurface from "@/timeline";
 import * as ToggleChipSurface from "@/toggle-chip";
@@ -47,7 +43,6 @@ const uiRuntimeExports = [
     "HoverCard",
     "Input",
     "Label",
-    "MultiSelect",
     "Notification",
     "NumberField",
     "Popover",
@@ -61,7 +56,6 @@ const uiRuntimeExports = [
     "Switch",
     "Table",
     "Tabs",
-    "TagsInput",
     "Textarea",
     "Toast",
     "Toggle",
@@ -123,12 +117,8 @@ const subpathRuntimeExports = [
     { subpath: "aurora", surface: Aurora, name: "Aurora" },
     { subpath: "aurora", surface: Aurora, name: "useAurora" },
     { subpath: "metric-badge", surface: MetricBadgeSurface, name: "MetricBadge" },
-    { subpath: "status-dot", surface: StatusDotSurface, name: "StatusDot" },
     { subpath: "pulse", surface: PulseSurface, name: "Pulse" },
-    { subpath: "paper-backdrop", surface: PaperBackdropSurface, name: "PaperBackdrop" },
     { subpath: "toggle-chip", surface: ToggleChipSurface, name: "ToggleChip" },
-    { subpath: "glass-panel", surface: GlassPanelSurface, name: "GlassPanel" },
-    { subpath: "metaballs", surface: MetaballsSurface, name: "MetaballCanvas" },
     { subpath: "sortable-list", surface: SortableListSurface, name: "SortableList" },
     { subpath: "timeline", surface: TimelineSurface, name: "GlassTimeline" },
     { subpath: "labeled-field", surface: LabeledFieldSurface, name: "LabeledInput" },
@@ -145,9 +135,7 @@ const nonCoreRootRetirements = [
     "ConfirmDialog",
     "InfiniteScroll",
     "MetricBadge",
-    "StatusDot",
     "Pulse",
-    "PaperBackdrop",
     "UnderlineTabs",
     "BouncyToggle",
     "TypewriterText",
@@ -155,8 +143,6 @@ const nonCoreRootRetirements = [
     "ToggleChip",
     "GlassCarousel",
     "Aurora",
-    "GlassPanel",
-    "MetaballCanvas",
     "SortableList",
     "GlassTimeline",
     "LabeledInput",
@@ -177,6 +163,7 @@ const exactSubpathRuntimeSurfaces = [
         subpath: "dock",
         surface: Dock,
         names: [
+            "DOCK_KEEP_OPEN_SINK_KEY",
             "DockDropdownTrigger",
             "DockIconButton",
             "DockLayer",

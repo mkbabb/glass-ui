@@ -107,7 +107,6 @@ export const CATEGORIES: Category[] = [
             s("foundations", "radii", "Radii", "Radius tokens from xs to pill."),
             s("foundations", "shadows", "Shadows", "Cartoon offset, elevated, modal."),
             s("foundations", "motion", "Motion", "Easings, damped spring linear() curves."),
-            s("foundations", "paper-glass", "Paper & Glass", "Four glass tiers, paper grain, blend modes."),
         ],
     },
     {
@@ -125,7 +124,6 @@ export const CATEGORIES: Category[] = [
             s("primitives", "number-field", "Number Field"),
             s("primitives", "select", "Select"),
             s("primitives", "combobox", "Combobox"),
-            s("primitives", "multi-select", "Multi-Select"),
             s("primitives", "toggle", "Toggle · Toggle Group"),
             s("primitives", "toggle-card", "Toggle Card", "Survey-grade card-toggle picker."),
             s("primitives", "label", "Label"),
@@ -133,7 +131,6 @@ export const CATEGORIES: Category[] = [
             s("primitives", "badge-tones", "Badge Tones", "Semantic tones with default + override icons."),
             s("primitives", "color-pill", "Color Pill", "Categorical color encoding — viz, sections, freeform."),
             s("primitives", "metric-badge", "Metric Badge"),
-            s("primitives", "status-dot", "Status Dot"),
             s("primitives", "notification-dot", "Notification Dot", "Top-right unread marker × sizes × glow."),
             s("primitives", "blob", "Blob", "Living watercolor specimen — five moods, fifteen accents, eight sections of bold-maximalist commitment."),
             s("primitives", "pulse", "Pulse"),
@@ -193,7 +190,6 @@ export const CATEGORIES: Category[] = [
         stories: [
             s("data", "table", "Table"),
             s("data", "data-table", "Data Table"),
-            s("data", "tags-input", "Tags Input"),
             s("data", "avatar", "Avatar"),
             s("data", "sortable-list", "Sortable List"),
             s("data", "infinite-scroll", "Infinite Scroll"),
@@ -227,7 +223,6 @@ export const CATEGORIES: Category[] = [
             s("motion", "timeline", "Keyframe Timeline", "KeyframeTimeline + markers + playhead + ruler with golden-ratio phases."),
             s("motion", "confetti", "Confetti", "Rainbow-palette burst, parameterized via CSS vars."),
             s("motion", "typewriter", "Typewriter"),
-            s("motion", "metaballs", "Metaballs", "WebGL canvas substrate with support fallback."),
         ],
     },
     {

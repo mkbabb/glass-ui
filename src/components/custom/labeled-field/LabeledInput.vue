@@ -1,10 +1,10 @@
 <template>
     <IconTooltip :text="tooltip">
-        <label :class="labelClass ?? 'font-display text-lg text-muted-foreground cursor-help'">{{ label }}</label>
+        <label class="font-display text-lg text-muted-foreground cursor-help">{{ label }}</label>
     </IconTooltip>
     <Input
         :type="type ?? 'string'"
-        :class="inputClass ?? 'fira-code'"
+        class="fira-code"
         :model-value="modelValue"
         @change="(e: Event) => emit('update:modelValue', (e.target as HTMLInputElement).value)"
     />
@@ -18,8 +18,6 @@ defineProps<{
     modelValue: string | number;
     label: string;
     tooltip: string;
-    labelClass?: string;
-    inputClass?: string;
     type?: string;
 }>();
 

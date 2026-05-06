@@ -164,12 +164,8 @@ import { useOffsetPagination } from "@mkbabb/glass-ui/pagination";
 import { GlassCarousel, GlassCarouselItem } from "@mkbabb/glass-ui/glass-carousel";
 import { Aurora, useAurora } from "@mkbabb/glass-ui/aurora";
 import { MetricBadge } from "@mkbabb/glass-ui/metric-badge";
-import { StatusDot } from "@mkbabb/glass-ui/status-dot";
 import { Pulse } from "@mkbabb/glass-ui/pulse";
-import { PaperBackdrop } from "@mkbabb/glass-ui/paper-backdrop";
 import { ToggleChip } from "@mkbabb/glass-ui/toggle-chip";
-import { GlassPanel } from "@mkbabb/glass-ui/glass-panel";
-import { MetaballCanvas } from "@mkbabb/glass-ui/metaballs";
 import { SortableList } from "@mkbabb/glass-ui/sortable-list";
 import { GlassTimeline } from "@mkbabb/glass-ui/timeline";
 import { LabeledInput } from "@mkbabb/glass-ui/labeled-field";
@@ -183,12 +179,12 @@ const runtimeSymbols = [
   ConfirmDialog, InfiniteScroll, useInfiniteScroll, UnderlineTabs, BouncyTabs, BouncyToggle,
   TypewriterText, useTypewriter, StackedIconGroup, useWindowedStore,
   useVirtualSectionWindow, useOffsetPagination, GlassCarousel, GlassCarouselItem,
-  Aurora, useAurora, MetricBadge, StatusDot, Pulse, PaperBackdrop, ToggleChip,
-  GlassPanel, MetaballCanvas, SortableList, GlassTimeline, LabeledInput,
+  Aurora, useAurora, MetricBadge, Pulse, ToggleChip,
+  SortableList, GlassTimeline, LabeledInput,
   ExpandableContainer, IconTooltip,
 ];
 
-if (runtimeSymbols.length < 45) throw new Error("packed fixture did not load expected symbols");
+if (runtimeSymbols.length < 41) throw new Error("packed fixture did not load expected symbols");
 `,
     );
 

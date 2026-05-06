@@ -2,33 +2,33 @@
 // Core UI primitives
 export * from "./components/ui";
 
-// Custom composites — instrument-cluster chassis (O.W2.7)
+// Instrument-cluster chassis + glyph-face / disco-glyph / dock-group cluster
 export * from "./components/custom/instrument-chassis";
 export * from "./components/custom/glyph-face";
 export * from "./components/custom/dock-group";
 export * from "./components/custom/disco-glyph";
 export * from "./components/custom/hover-popover";
 
-// G.W3 design-language primitives
+// Design-language primitives
 export * from "./components/custom/cream-surface";
 export * from "./components/custom/display-hero";
 export * from "./components/custom/flourish-divider";
 export * from "./components/custom/icon-stamp";
 
-// G.W3 math + iconographic typography primitives
+// Math + iconographic typography primitives
 export * from "./components/custom/math-surface";
 export * from "./components/custom/math-formula";
 export * from "./components/custom/math-glyph";
 
-// G.W3 motion + small custom components
+// Motion + small custom components
 export * from "./components/custom/bezier-canvas";
 export * from "./components/custom/notification-dot";
 
-// G.W3 tooling (post Q21+Q22 user direction)
+// Tooling primitives
 export * from "./components/custom/pipeline-flow";
 export * from "./components/custom/live-snippet";
 
-// G.Wβ2 sub-tranche β components
+// Blob + swatch primitives
 export * from "./components/custom/blob";
 export * from "./components/custom/swatch";
 
@@ -43,7 +43,7 @@ export * from "./composables/glass";
 export * from "./composables/motion";
 export * from "./composables/sortable";
 
-// G.Wβ1 + G.W3 composables
+// Blob shader composables + general utilities
 export * from "./composables/blob";
 export * from "./composables/utils";
 
