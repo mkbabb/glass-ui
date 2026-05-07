@@ -12,6 +12,10 @@ export {
     type AnimatedNumber,
     type UseAnimatedNumberOptions,
 } from "./useAnimatedNumber";
+export {
+    useAnimatedNumberMap,
+    type UseAnimatedNumberMapOptions,
+} from "./useAnimatedNumberMap";
 export { useDarkModeSync } from "./useDarkModeSync";
 export {
     useRAFLoop,
