@@ -25,7 +25,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     v-bind="forwarded"
     :class="
       cn(
-        'z-popover min-w-32 overflow-hidden rounded-panel border bg-popover glass-floating p-1 text-popover-foreground shadow-md popover-animate slide-in-from-side',
+        'z-popover min-w-32 overflow-hidden rounded-panel border glass-floating p-1 text-popover-foreground popover-animate slide-in-from-side',
         props.class,
       )
     "

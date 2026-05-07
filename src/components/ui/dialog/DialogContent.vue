@@ -29,8 +29,10 @@ const delegatedProps = computed(() => {
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
-// Center fade + zoom only — no slide animation.
-const baseClasses = 'fixed left-1/2 top-1/2 z-modal grid w-full max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 p-6 shadow-xl duration-[var(--duration-normal)] popover-animate'
+// Center fade + zoom only — no slide animation. The glass-floating tier
+// (composed via `variantClasses` below) paints `--glass-shadow-floating`;
+// the prior `shadow-xl` literal clobbered it (audit U.W0.C-a §5.2).
+const baseClasses = 'fixed left-1/2 top-1/2 z-modal grid w-full max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 p-6 duration-[var(--duration-normal)] popover-animate'
 
 const variantClasses = computed(() =>
   props.variant === 'opaque'
