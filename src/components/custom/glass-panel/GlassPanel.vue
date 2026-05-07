@@ -9,6 +9,28 @@ import {
 } from "../../../composables/glass/useGlassRenderer";
 import { cn } from "../../../utils/cn";
 
+/**
+ * Surface-tier vocabulary for the CSS rendering branch. Mirrors the v0.8
+ * five-rung ladder declared in `tokens.css §8` and consumed by the
+ * `.glass-{wash,quiet,resting,floating,overlay}` utility classes.
+ *
+ * v0.8.6 — `default | medium | elevated` retired (per audit U.W0.C-b §21).
+ */
+export type GlassPanelVariant =
+    | "wash"
+    | "quiet"
+    | "resting"
+    | "floating"
+    | "overlay";
+
+const VARIANT_CLASS: Record<GlassPanelVariant, string> = {
+    wash: "glass-wash",
+    quiet: "glass-quiet",
+    resting: "glass-resting",
+    floating: "glass-floating",
+    overlay: "glass-overlay",
+};
+
 export interface GlassPanelProps {
     /** Force a specific rendering tier */
     tier?: GlassTier;
@@ -18,8 +40,8 @@ export interface GlassPanelProps {
     refraction?: number;
     /** Chromatic aberration strength 0-1 (default: 0) */
     chromaticAberration?: boolean;
-    /** Glass variant for CSS tier */
-    variant?: "default" | "medium" | "elevated";
+    /** Glass surface tier for the CSS rendering branch (v0.8 5-rung ladder). */
+    variant?: GlassPanelVariant;
     /** Additional classes */
     class?: string;
 }
@@ -28,7 +50,7 @@ const props = withDefaults(defineProps<GlassPanelProps>(), {
     blur: 16,
     refraction: 0.3,
     chromaticAberration: false,
-    variant: "default",
+    variant: "resting",
 });
 
 const panelRef = ref<HTMLElement | null>(null);
@@ -45,15 +67,8 @@ const cssClass = computed(() => {
         return cn("glass-panel glass-panel--fallback", props.class);
     }
 
-    // CSS tier
-    const variantClass =
-        props.variant === "elevated"
-            ? "glass-floating"
-            : props.variant === "medium"
-              ? "glass-resting"
-              : "glass-resting";
-
-    return cn("glass-panel", variantClass, props.class);
+    // CSS tier — composes the canonical 5-rung surface ladder.
+    return cn("glass-panel", VARIANT_CLASS[props.variant], props.class);
 });
 
 let filterState: GlassFilterState | null = null;
@@ -87,12 +102,15 @@ onBeforeUnmount(() => {
 }
 
 .glass-panel--svg {
-    /* Background tint for SVG filter tier */
-    background: color-mix(in srgb, var(--card) 15%, transparent);
+    /* SVG-filter substrate: lightest canonical glass tint so the
+       displacement map dominates the surface read. */
+    background: var(--glass-bg-wash);
 }
 
 .glass-panel--fallback {
-    background: color-mix(in srgb, var(--card) 92%, transparent);
-    border: 1px solid color-mix(in srgb, var(--border) 35%, transparent);
+    /* No-backdrop-filter fallback: the floating tier reads as the
+       opaque substrate consumers expect when blur is unavailable. */
+    background: var(--glass-bg-floating);
+    border: 1px solid var(--glass-border-floating);
 }
 </style>
