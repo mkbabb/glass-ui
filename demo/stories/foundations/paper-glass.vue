@@ -13,7 +13,14 @@ interface Tile {
     role: string;
 }
 
-type GlassPanelVariant = "default" | "medium" | "elevated";
+// v0.8 5-rung surface ladder. The retired v0.7 vocabulary
+// (`default | medium | elevated`) was excised in v0.8.6.
+type GlassPanelVariant =
+    | "wash"
+    | "quiet"
+    | "resting"
+    | "floating"
+    | "overlay";
 
 interface PanelExample {
     id: string;
@@ -56,41 +63,48 @@ const tiers: Tile[] = [
         blurVar: "--glass-blur-floating",
         role: "dialogs, command palette, modals",
     },
+    {
+        tier: "overlay",
+        cls: "glass-overlay",
+        opacityVar: "--glass-opacity-overlay",
+        blurVar: "--glass-blur-overlay",
+        role: "scrims, modal substrates, sheet backings",
+    },
 ];
 
 const panelExamples: PanelExample[] = [
     {
-        id: "css-medium",
+        id: "css-resting",
         title: "CSS frost layer",
         tier: "css",
-        variant: "medium",
-        rendering: "backdrop-filter blur + tokenized medium glass",
+        variant: "resting",
+        rendering: "backdrop-filter blur + tokenized resting glass",
         blur: 14,
         refraction: 0.18,
         chromaticAberration: false,
-        accent: "var(--viz-topology)",
+        accent: "var(--viz-fourier)",
     },
     {
-        id: "svg-elevated",
+        id: "svg-floating",
         title: "Refractive lens",
         tier: "svg-filter",
-        variant: "elevated",
-        rendering: "SVG displacement map + elevated glass shell",
+        variant: "floating",
+        rendering: "SVG displacement map + floating glass shell",
         blur: 18,
         refraction: 0.42,
         chromaticAberration: true,
         accent: "var(--viz-fourier)",
     },
     {
-        id: "fallback-default",
+        id: "fallback-quiet",
         title: "Fallback plate",
         tier: "fallback",
-        variant: "default",
+        variant: "quiet",
         rendering: "opaque token surface for unsupported backdrop filters",
         blur: 8,
         refraction: 0,
         chromaticAberration: false,
-        accent: "var(--viz-recursion)",
+        accent: "var(--viz-chebyshev)",
     },
 ];
 
@@ -174,7 +188,7 @@ onMounted(() => {
                 :class="
                     cn(
                         'relative overflow-hidden rounded-card border border-border/60 p-5 md:p-7',
-                        'bg-[linear-gradient(135deg,color-mix(in_srgb,var(--viz-fourier)_24%,transparent),transparent_36%),radial-gradient(circle_at_80%_20%,color-mix(in_srgb,var(--viz-topology)_25%,transparent),transparent_32%),var(--background)]',
+                        'bg-[linear-gradient(135deg,color-mix(in_srgb,var(--viz-fourier)_24%,transparent),transparent_36%),radial-gradient(circle_at_80%_20%,color-mix(in_srgb,var(--viz-chebyshev)_25%,transparent),transparent_32%),var(--background)]',
                     )
                 "
             >
