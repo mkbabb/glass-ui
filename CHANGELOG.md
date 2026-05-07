@@ -1,5 +1,30 @@
 # Changelog
 
+## v0.8.5 — 2026-05-07
+
+### Fix — backdrop-filter Lightning CSS dedup
+
+The W2-W6 stacked surface ladder authored both unprefixed `backdrop-filter` and the legacy `-webkit-backdrop-filter` declaration on every glass-tier rule. Lightning CSS in the consumer's Tailwind v4 pipeline deduped the pair and kept the **prefixed** form only — modern Chromium then dropped that legacy alias from the CSSOM, leaving every `.glass-{wash,quiet,resting,floating,overlay}` rule **without** an applied `backdrop-filter` at runtime.
+
+Live evidence captured at `https://speedtest.friday.institute/`:
+- `.glass-resting` rule shipped with `-webkit-backdrop-filter: var(--glass-blur-resting)`
+- `getComputedStyle(card).backdropFilter === "none"` and `.webkitBackdropFilter === "none"`
+- The translucent fill survived (still consuming `--glass-bg-resting`); only the 12px blur was missing
+
+Fix: drop the manual `-webkit-backdrop-filter` from every glass-tier rule in `src/styles/{glass,floating-panel,dock,hover-popover,instrument-chassis,dock-group,utilities}.css`. Single-source-of-truth authoring lets Lightning CSS / autoprefixer emit the legacy form when browserslist requires it.
+
+The `@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)))` feature-detection check at `glass.css:267` keeps both form names in its parenthesised support-query (a feature-name reference, not a declaration; safe).
+
+Files swept:
+- `src/styles/glass.css` (8 paired declarations across the 5-rung ladder + `.glass-card` + `.glass-cartoon`)
+- `src/styles/floating-panel.css`
+- `src/styles/dock.css`
+- `src/styles/hover-popover.css`
+- `src/styles/instrument-chassis.css`
+- `src/styles/dock-group.css`
+- `src/styles/utilities.css`
+
+
 ## v0.8.4 — 2026-05-07
 
 Composable promotion — three patterns the speedtest consumer carried inline now land in the library so any consumer reaches them through one import. Tranche T audit F-architectural-gestalt §"Library gaps" wave W6.

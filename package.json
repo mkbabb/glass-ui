@@ -1,6 +1,6 @@
 {
     "name": "@mkbabb/glass-ui",
-    "version": "0.8.4",
+    "version": "0.8.5",
     "description": "Glassmorphic design system — Vue 3.5 components, reka-ui primitives, Tailwind CSS v4 tokens",
     "license": "MIT",
     "type": "module",
@@ -300,7 +300,9 @@
         "profile:bundle": "node scripts/profile-bundle.mjs",
         "profile:aurora": "node scripts/profile-aurora.mjs",
         "ay-close": "scripts/ay-close.sh",
-        "validate-consumers": "scripts/validate-consumers.sh"
+        "validate-consumers": "scripts/validate-consumers.sh",
+        "release": "bash scripts/release.sh",
+        "prepublishOnly": "npm run build && npm test"
     },
     "engines": {
         "node": ">=22"

@@ -9,11 +9,18 @@
          floating  ~0.80α  + heavier blur    (was `elevated`)
          overlay   ~0.95α  + heaviest blur   (NEW; modal-over-modal) */
 
+    /* The five-rung surface ladder declares the unprefixed
+       `backdrop-filter` only. Lightning CSS / autoprefixer in the
+       consumer's pipeline emits the `-webkit-` legacy form when
+       browserslist targets demand it. Authoring both forms manually
+       caused Lightning CSS in Tailwind v4 to dedup-and-keep-prefixed,
+       which modern Chromium then dropped from the CSSOM (the prefixed
+       alias is parser-rejected post-Chrome 113). Single-source-of-truth
+       authorship lets the build pipeline deliver the right matrix. */
     .glass-wash {
         position: relative;
         background: var(--glass-bg-wash);
         backdrop-filter: var(--glass-blur-wash);
-        -webkit-backdrop-filter: var(--glass-blur-wash);
         border: 1px solid var(--glass-border-wash);
         box-shadow: var(--glass-shadow-wash);
     }
@@ -22,7 +29,6 @@
         position: relative;
         background: var(--glass-bg-quiet);
         backdrop-filter: var(--glass-blur-quiet);
-        -webkit-backdrop-filter: var(--glass-blur-quiet);
         border: 1px solid var(--glass-border-quiet);
         box-shadow: var(--glass-shadow-quiet);
     }
@@ -31,7 +37,6 @@
         position: relative;
         background: var(--glass-bg-resting);
         backdrop-filter: var(--glass-blur-resting);
-        -webkit-backdrop-filter: var(--glass-blur-resting);
         border: 1px solid var(--glass-border-resting);
         box-shadow: var(--glass-shadow-resting);
     }
@@ -40,7 +45,6 @@
         position: relative;
         background: var(--glass-bg-floating);
         backdrop-filter: var(--glass-blur-floating);
-        -webkit-backdrop-filter: var(--glass-blur-floating);
         border: 1px solid var(--glass-border-floating);
         box-shadow: var(--glass-shadow-floating);
     }
@@ -49,7 +53,6 @@
         position: relative;
         background: var(--glass-bg-overlay);
         backdrop-filter: var(--glass-blur-overlay);
-        -webkit-backdrop-filter: var(--glass-blur-overlay);
         border: 1px solid var(--glass-border-overlay);
         box-shadow: var(--glass-shadow-overlay);
     }
@@ -89,7 +92,6 @@
         position: relative;
         background: var(--glass-bg-quiet);
         backdrop-filter: var(--glass-blur-quiet);
-        -webkit-backdrop-filter: var(--glass-blur-quiet);
         border: 1px solid var(--glass-border-quiet);
         border-radius: var(--radius-card);
         box-shadow: var(--shadow-card);
@@ -104,7 +106,6 @@
         position: relative;
         background: var(--glass-bg-cartoon, var(--glass-bg-quiet));
         backdrop-filter: var(--glass-blur-cartoon, var(--glass-blur-quiet));
-        -webkit-backdrop-filter: var(--glass-blur-cartoon, var(--glass-blur-quiet));
         border: 2px solid var(--glass-border-cartoon, var(--glass-border-quiet));
         border-radius: var(--radius-card);
         box-shadow: var(--shadow-cartoon-md);
