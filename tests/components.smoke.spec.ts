@@ -13,6 +13,7 @@ import {
     CardTitle,
     Input,
     Label,
+    MetricPill,
     Progress,
     Separator,
     Skeleton,
@@ -149,6 +150,43 @@ describe("component smoke coverage", () => {
         expect(unit.exists()).toBe(true);
         expect(amount.text()).toBe("730");
         expect(unit.text()).toBe("Mbps");
+    });
+
+    it("renders MetricPill with stacked-label defaults baked in", () => {
+        const wrapper = mount(MetricPill, {
+            props: {
+                label: "DOWNLOAD",
+                amount: 730,
+                unit: "Mbps",
+                color: "var(--viz-fourier)",
+            },
+        });
+        const root = wrapper.find(".metric-badge");
+        expect(root.exists()).toBe(true);
+        expect(root.classes()).toContain("metric-pill");
+        expect(root.classes()).toContain("metric-pill--density-spacious");
+        expect(root.classes()).toContain("metric-badge--label-stacked");
+        expect(root.attributes("data-size")).toBe("lg");
+        const fullLabel = root.find(".metric-badge__label--full");
+        expect(fullLabel.text()).toBe("DOWNLOAD");
+        const row = root.find(".metric-badge__row");
+        expect(row.exists()).toBe(true);
+        expect(row.find(".metric-badge__amount").text()).toBe("730");
+        expect(row.find(".metric-badge__unit").text()).toBe("Mbps");
+    });
+
+    it("forwards MetricPill density override onto the modifier class", () => {
+        const wrapper = mount(MetricPill, {
+            props: {
+                label: "LATENCY",
+                amount: 36,
+                unit: "ms",
+                density: "comfortable",
+            },
+        });
+        const root = wrapper.find(".metric-badge");
+        expect(root.classes()).toContain("metric-pill--density-comfortable");
+        expect(root.classes()).not.toContain("metric-pill--density-spacious");
     });
 
     it("keeps MetricBadge inline mode flat (no row wrapper)", () => {

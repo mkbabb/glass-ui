@@ -18,6 +18,7 @@ export * from "./dropdown-menu";
 export * from "./hover-card";
 export * from "./input";
 export * from "./label";
+export * from "./metric-pill";
 export * from "./multi-select";
 export * from "./notification";
 export * from "./number-field";
