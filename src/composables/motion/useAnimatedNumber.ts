@@ -69,28 +69,60 @@ export function useAnimatedNumber(
     options: UseAnimatedNumberOptions = {},
 ): AnimatedNumber {
     const mode = options.mode ?? "absolute";
-    const normalizeValue =
-        mode === "progress" ? clampProgress : (value: number) => value;
-    const initial = normalizeValue(options.initial ?? 0);
-    const current = ref(initial);
+
+    // Progress mode: keep the underlying SmoothProgress in [0, 1] (the only
+    // range its clamp supports) and scale at the consumer-facing boundary.
+    // This prevents stale `currentValue` from sitting outside the contract
+    // domain across phase boundaries — when the target drops from 100 to 0
+    // the smoother damps from 1 → 0, never carrying a stale 100 that would
+    // animate the displayed value backward through the rail.
+    // (Per audit U.W0.A5 §1: "the composable should keep the smoother in
+    // `[0, 1]` and only multiply at the consumer-facing read".)
+    const PROGRESS_SCALE = 100;
+    const toInternal =
+        mode === "progress"
+            ? (value: number) => clampProgress(value) / PROGRESS_SCALE
+            : (value: number) => value;
+    const fromInternal =
+        mode === "progress"
+            ? (value: number) => value * PROGRESS_SCALE
+            : (value: number) => value;
+
+    const initialExternal = mode === "progress"
+        ? clampProgress(options.initial ?? 0)
+        : (options.initial ?? 0);
+    const initialInternal = toInternal(initialExternal);
+    const current = ref(initialExternal);
     const isAnimating = ref(false);
     const defaultDamping =
         mode === "progress" ? DAMPING.domProgress : DAMPING.domHero;
     const defaultSnapThreshold =
         mode === "progress" ? SNAP_THRESHOLD.domProgress : SNAP_THRESHOLD.dom;
 
+    // Progress mode threshold lives in the [0, 100] domain; rescale to the
+    // smoother's [0, 1] internal contract.
+    const internalSnapThreshold =
+        mode === "progress"
+            ? (options.snapThreshold ?? defaultSnapThreshold) / PROGRESS_SCALE
+            : (options.snapThreshold ?? defaultSnapThreshold);
+
     const smootherOpts: Partial<SmoothProgressOptions> = {
         damping: options.damping ?? defaultDamping,
-        snapThreshold: options.snapThreshold ?? defaultSnapThreshold,
-        targetEpsilon: options.targetEpsilon ?? 0,
-        initial,
-        clamp: mode === "progress" ? false : (options.clamp ?? false),
+        snapThreshold: internalSnapThreshold,
+        targetEpsilon:
+            mode === "progress"
+                ? (options.targetEpsilon ?? 0) / PROGRESS_SCALE
+                : (options.targetEpsilon ?? 0),
+        initial: initialInternal,
+        // Progress mode clamps internally — the [0, 1] smoother range is the
+        // exact mirror of the [0, 100] external contract.
+        clamp: mode === "progress" ? true : (options.clamp ?? false),
         respectReducedMotion: options.respectReducedMotion !== false,
     };
     const smoother = shallowRef(new SmoothProgress(smootherOpts));
 
     smoother.value.play((value) => {
-        current.value = normalizeValue(value);
+        current.value = fromInternal(value);
         isAnimating.value = !smoother.value.settled;
         options.onValue?.(current.value);
     });
@@ -99,7 +131,7 @@ export function useAnimatedNumber(
         () => toValue(target),
         (nextTarget) => {
             if (nextTarget == null) return;
-            smoother.value.setTarget(normalizeValue(nextTarget));
+            smoother.value.setTarget(toInternal(nextTarget));
         },
         { immediate: true },
     );
@@ -119,12 +151,13 @@ export function useAnimatedNumber(
         isAnimating: readonly(isAnimating),
         snap: () => {
             smoother.value.snap();
-            current.value = normalizeValue(smoother.value.current);
+            current.value = fromInternal(smoother.value.current);
             isAnimating.value = false;
         },
         reset: (value) => {
-            smoother.value.reset(normalizeValue(value ?? 0));
-            current.value = normalizeValue(smoother.value.current);
+            const next = value ?? 0;
+            smoother.value.reset(toInternal(next));
+            current.value = fromInternal(smoother.value.current);
             isAnimating.value = false;
         },
         dispose,
