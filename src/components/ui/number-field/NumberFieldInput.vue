@@ -4,5 +4,5 @@ import { cn } from '../../../utils'
 </script>
 
 <template>
-  <NumberFieldInput data-slot="input" :class="cn('focus-ring flex h-10 w-full rounded-input border border-input bg-background py-2 text-sm text-center placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50')" />
+  <NumberFieldInput data-slot="input" :class="cn('focus-ring flex h-10 w-full rounded-input border border-input bg-background py-2 text-sm text-center placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-disabled')" />
 </template>

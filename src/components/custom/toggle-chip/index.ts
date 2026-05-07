@@ -17,7 +17,7 @@ export const toggleChipVariants = cva(
     [
         "focus-ring select-none cursor-pointer outline-none",
         "font-sans transition-colors duration-150 ease-out",
-        "disabled:opacity-50 disabled:pointer-events-none disabled:cursor-not-allowed",
+        "disabled:opacity-disabled disabled:pointer-events-none disabled:cursor-not-allowed",
     ].join(" "),
     {
         variants: {

@@ -298,6 +298,22 @@
     --animate-shimmer-sweep: shimmer-sweep var(--duration-shimmer) ease-in-out infinite;
     --animate-gold-shimmer: gold-shimmer-slide var(--duration-shimmer) linear infinite;
     --animate-shake: shake 0.5s ease-in-out;
+
+    /* ═══════════════════════════════════════════════
+       Opacity → opacity-* utilities
+
+       Bridges the canonical `--opacity-disabled` (0.5) and
+       `--opacity-icon-muted` (0.8) rungs from tokens.css §11. Tailwind
+       v4 generates `opacity-disabled` / `opacity-icon-muted` utilities
+       (and the `disabled:opacity-disabled` modifier form) from these
+       @theme declarations; the values match tokens.css line 550-551.
+
+       Consumers replace 18+ hardcoded `disabled:opacity-50` literals
+       across the primitive slice with `disabled:opacity-disabled`.
+       (Per audit U.W0.C-a §1.2 / §gap.4 — U12.)
+       ═══════════════════════════════════════════════ */
+    --opacity-disabled:   0.5;
+    --opacity-icon-muted: 0.8;
 }
 
 /* Class-based dark mode */
