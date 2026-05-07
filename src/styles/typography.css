@@ -37,22 +37,11 @@
     --type-display-4:   clamp(3.33rem, 2.5rem + 4vw, 5.382rem);    /* φ^(7/2) */
     --type-display-5:   clamp(4.236rem, 3.5rem + 6vw, 6.854rem);   /* φ^4 */
 
-    /* Line heights */
-    --leading-micro: 1.2;
-    --leading-caption: 1.3;
-    --leading-small: 1.4;
-    --leading-body: 1.5;
-    --leading-prose: 1.618;
-    --leading-heading: 1.2;
-    --leading-display: 1.1;
-
-    /* Letter spacing */
-    --tracking-tight: -0.025em;
-    --tracking-snug: -0.01em;
-    --tracking-normal: 0;
-    --tracking-wide: 0.025em;
-    --tracking-wider: 0.05em;
-    --tracking-caps: 0.1em;
+    /* Line heights & letter spacing live at tokens.css §0 as the canonical
+       --type-leading-* / --type-tracking-* rungs. theme.css bridges them
+       to Tailwind's `leading-*` / `tracking-*` utilities. The duplicate
+       --leading-* / --tracking-* declarations that previously sat here
+       were retired in v0.8.6 (audit U.W0.C-c §1.1 / Union 2). */
 }
 
 :root[data-typography-preset="brand-uniform-sans"] {
@@ -69,7 +58,7 @@ body {
     font-family: var(--font-serif);
     color: var(--foreground);
     font-size: var(--type-body);
-    line-height: var(--leading-body);
+    line-height: var(--type-leading-body);
 }
 
 /* ═══════════════════════════════════════════════
@@ -78,8 +67,8 @@ body {
 @utility text-display-5 {
     font-family: var(--font-display);
     font-size: var(--type-display-5);
-    line-height: var(--leading-display);
-    letter-spacing: var(--tracking-tight);
+    line-height: var(--type-leading-display);
+    letter-spacing: var(--type-tracking-tight);
     font-optical-sizing: auto;
     font-variation-settings: var(--font-display-variation-settings);
     font-weight: var(--font-display-weight);
@@ -88,8 +77,8 @@ body {
 @utility text-display-4 {
     font-family: var(--font-display);
     font-size: var(--type-display-4);
-    line-height: var(--leading-display);
-    letter-spacing: var(--tracking-tight);
+    line-height: var(--type-leading-display);
+    letter-spacing: var(--type-tracking-tight);
     font-optical-sizing: auto;
     font-variation-settings: var(--font-display-variation-settings);
     font-weight: var(--font-display-weight);
@@ -98,8 +87,8 @@ body {
 @utility text-display-3 {
     font-family: var(--font-display);
     font-size: var(--type-display-3);
-    line-height: var(--leading-display);
-    letter-spacing: var(--tracking-tight);
+    line-height: var(--type-leading-display);
+    letter-spacing: var(--type-tracking-tight);
     font-optical-sizing: auto;
     font-variation-settings: var(--font-display-variation-settings);
     font-weight: var(--font-display-weight);
@@ -108,8 +97,8 @@ body {
 @utility text-display-2 {
     font-family: var(--font-display);
     font-size: var(--type-display-2);
-    line-height: var(--leading-display);
-    letter-spacing: var(--tracking-tight);
+    line-height: var(--type-leading-display);
+    letter-spacing: var(--type-tracking-tight);
     font-optical-sizing: auto;
     font-variation-settings: var(--font-display-variation-settings);
     font-weight: var(--font-display-weight);
@@ -118,8 +107,8 @@ body {
 @utility text-display {
     font-family: var(--font-display);
     font-size: var(--type-display-1);
-    line-height: var(--leading-display);
-    letter-spacing: var(--tracking-tight);
+    line-height: var(--type-leading-display);
+    letter-spacing: var(--type-tracking-tight);
     font-optical-sizing: auto;
     font-variation-settings: var(--font-display-variation-settings);
     font-weight: var(--font-display-weight);
@@ -131,50 +120,50 @@ body {
 @utility text-title {
     font-family: var(--font-serif);
     font-size: var(--type-title);
-    line-height: var(--leading-heading);
-    letter-spacing: var(--tracking-tight);
+    line-height: var(--type-leading-heading);
+    letter-spacing: var(--type-tracking-tight);
     font-weight: 700;
 }
 
 @utility text-heading {
     font-family: var(--font-serif);
     font-size: var(--type-heading);
-    line-height: var(--leading-heading);
+    line-height: var(--type-leading-heading);
     font-weight: 700;
 }
 
 @utility text-subheading {
     font-family: var(--font-serif);
     font-size: var(--type-subheading);
-    line-height: var(--leading-body);
+    line-height: var(--type-leading-body);
     font-weight: 600;
 }
 
 @utility text-prose {
     font-family: var(--font-serif);
     font-size: var(--type-prose);
-    line-height: var(--leading-prose);
+    line-height: var(--type-leading-prose);
     font-weight: 400;
 }
 
 @utility text-body {
     font-family: var(--font-serif);
     font-size: var(--type-body);
-    line-height: var(--leading-body);
+    line-height: var(--type-leading-body);
     font-weight: 400;
 }
 
 @utility text-small {
     font-family: var(--font-serif);
     font-size: var(--type-small);
-    line-height: var(--leading-small);
+    line-height: var(--type-leading-small);
     font-weight: 400;
 }
 
 @utility text-caption {
     font-family: var(--font-serif);
     font-size: var(--type-caption);
-    line-height: var(--leading-caption);
+    line-height: var(--type-leading-caption);
     font-style: italic;
     font-weight: 400;
 }
@@ -192,7 +181,7 @@ body {
     font-size: var(--type-admin-label);
     line-height: 1;
     text-transform: uppercase;
-    letter-spacing: var(--tracking-caps);
+    letter-spacing: var(--type-tracking-caps);
     font-weight: 500;
 }
 
@@ -207,7 +196,7 @@ body {
 @utility text-math-body {
     font-family: var(--font-serif);
     font-size: var(--type-prose);
-    line-height: var(--leading-prose);
+    line-height: var(--type-leading-prose);
     font-style: italic;
 }
 
@@ -217,7 +206,7 @@ body {
 @utility text-mono-caption {
     font-family: var(--font-mono);
     font-size: var(--type-caption);
-    letter-spacing: var(--tracking-wider);
+    letter-spacing: var(--type-tracking-wider);
     text-transform: uppercase;
     font-weight: 500;
 }
@@ -225,13 +214,13 @@ body {
 @utility text-mono-small {
     font-family: var(--font-mono);
     font-size: var(--type-small);
-    line-height: var(--leading-small);
+    line-height: var(--type-leading-small);
 }
 
 @utility text-mono-prose {
     font-family: var(--font-mono);
     font-size: var(--type-prose);
-    line-height: var(--leading-prose);
+    line-height: var(--type-leading-prose);
     letter-spacing: 0.02em;
 }
 
@@ -276,8 +265,8 @@ body {
     .text-pane-title {
         font-family: var(--font-display);
         font-size: clamp(2.4rem, 1.8rem + 2vw, 3.33rem);
-        line-height: var(--leading-display);
-        letter-spacing: var(--tracking-tight);
+        line-height: var(--type-leading-display);
+        letter-spacing: var(--type-tracking-tight);
         font-weight: var(--font-display-weight);
         font-optical-sizing: auto;
         font-variation-settings: var(--font-display-variation-settings);
@@ -295,7 +284,7 @@ body {
         font-size: var(--type-caption);
         color: var(--muted-foreground);
         text-transform: uppercase;
-        letter-spacing: var(--tracking-caps);
+        letter-spacing: var(--type-tracking-caps);
     }
 
     /* Font-feature helpers */
