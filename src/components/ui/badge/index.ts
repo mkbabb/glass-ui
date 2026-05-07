@@ -14,6 +14,16 @@ export const badgeVariants = cva(
         destructive:
           'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
         outline: 'text-foreground',
+        // Status-tier variants — consume the canonical `--success / --warning
+        // / --info` plate + `--{success,warning,info}-foreground` glyph
+        // tokens (declared at tokens.css:244-256). Per audit U.W0.B-b
+        // §"glass-ui gaps".
+        success:
+          'border-transparent bg-success text-success-foreground hover:bg-success/80',
+        warning:
+          'border-transparent bg-warning text-warning-foreground hover:bg-warning/80',
+        info:
+          'border-transparent bg-info text-info-foreground hover:bg-info/80',
       },
       size: {
         sm: 'text-xs leading-4 px-2 py-0.5',
