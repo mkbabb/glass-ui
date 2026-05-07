@@ -39,6 +39,10 @@ const rootClass = computed(() =>
         "cursor-pointer border-0 bg-transparent",
         "rounded-[var(--radius-pill)]",
         "opacity-80",
+        // Canonical focus-visible affordance for an interactive button —
+        // pulls the `--focus-ring-shadow` recipe via the shared utility.
+        // Per audit U.W0.C-b axis 3 #16.
+        "focus-ring",
         attrs.class as string | undefined
     )
 );
