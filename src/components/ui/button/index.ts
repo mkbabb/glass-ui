@@ -6,7 +6,7 @@ export const buttonVariants = cva(
   // Base: compose with btn-pill from glass.css.
   // Four-state contract enforced per variant below; shared base locks down
   // focus-visible ring, disabled geometry, and press scale via tokens.
-  'btn-pill focus-ring whitespace-nowrap text-sm font-medium cursor-pointer active:scale-[var(--scale-press-btn)] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)]',
+  'btn-pill focus-ring whitespace-nowrap text-sm font-medium cursor-pointer active:scale-[var(--scale-press-btn)] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-disabled',
   {
     variants: {
       variant: {
