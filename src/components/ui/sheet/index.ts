@@ -10,7 +10,10 @@ export { default as SheetDescription } from './SheetDescription.vue'
 export { default as SheetFooter } from './SheetFooter.vue'
 
 export const sheetVariants = cva(
-  'fixed z-modal gap-4 glass-floating p-6 transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500',
+  // Composes the canonical `sheet-animate` utility (utilities.css:449-454)
+  // for the data-state animation pair — the prior literal `duration-300/-500`
+  // bypassed the canon (audit U.W0.C-a §2.3).
+  'fixed z-modal gap-4 glass-floating p-6 transition ease-in-out sheet-animate',
   {
     variants: {
       side: {
