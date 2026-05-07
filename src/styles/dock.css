@@ -38,7 +38,6 @@
         align-items: center;
         border-radius: var(--radius-dock);
         white-space: nowrap;
-        overflow: hidden;
         max-inline-size: var(--dock-max-inline-size);
         padding: var(--dock-padding-block, 0.375rem) var(--dock-padding-inline, 0.5rem);
         background: var(--glass-bg-dock, var(--glass-bg-resting));
@@ -46,6 +45,18 @@
         -webkit-backdrop-filter: var(--dock-surface-blur);
         border: 1.5px solid var(--glass-border-dock, var(--glass-border-resting));
         box-shadow: var(--shadow-dock-override, var(--shadow-dock));
+    }
+
+    /* T.W2.T1 — `overflow: hidden` is the default shell, but the
+       container-query host path (`<GlassDock containerName="…">`) must
+       allow descendants to wrap and report intrinsic widths past the
+       padding box. Inline-style on the SFC sets `overflow: visible` for
+       that path; this rule grants the default clip to every dock that
+       is NOT a container-query host. The `data-container-name` attribute
+       is the structural marker (set by the SFC when `containerName` is
+       passed). */
+    .glass-dock:not([data-container-name]) {
+        overflow: hidden;
     }
 
     .glass-dock.density-compact {
