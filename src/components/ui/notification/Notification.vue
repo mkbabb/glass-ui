@@ -48,11 +48,17 @@ defineEmits<{
   remove: [id: string]
 }>()
 
+// Status foregrounds: consume the canonical `--{success,destructive,warning,info}-foreground`
+// tokens (declared at tokens.css:254-256, 669-671) instead of baking
+// `text-white` light-mode glyph colour. The warning rung is dark-on-amber
+// — `--warning-foreground` is `hsl(24 10% 10%)` — so the literal `text-white`
+// previously misread against the luminous amber plate.
+// (Per audit U.W0.C-a §1.4 / §7.2 / §gap.5.)
 const notificationClasses = {
-  success: 'bg-success/90 text-white',
-  error: 'bg-destructive/90 text-white',
-  warning: 'bg-warning/90 text-white',
-  info: 'bg-info/90 text-white',
+  success: 'bg-success/90 text-success-foreground',
+  error: 'bg-destructive/90 text-destructive-foreground',
+  warning: 'bg-warning/90 text-warning-foreground',
+  info: 'bg-info/90 text-info-foreground',
 }
 
 const notificationIcons = {
