@@ -27,6 +27,26 @@ export interface UseStaggerOptions {
     initialDelayMs?: number;
     /** Auto-start on creation. Default true. */
     immediate?: boolean;
+    /**
+     * When true, honour `prefers-reduced-motion: reduce` by flipping every
+     * slot true synchronously instead of cascading the timeline. Mirrors
+     * the canonical opt-in on `useAnimatedNumber` and the global
+     * `transitions.css` / `utilities.css` reduced-motion brackets. SSR
+     * environments (no `window.matchMedia`) treat the option as a no-op.
+     * Default true.
+     */
+    respectReducedMotion?: boolean;
+}
+
+/** Feature-detect reduced-motion preference. SSR-safe (returns false). */
+function prefersReducedMotion(): boolean {
+    if (
+        typeof window === "undefined" ||
+        typeof window.matchMedia !== "function"
+    ) {
+        return false;
+    }
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
 export interface UseStaggerControls {
@@ -52,6 +72,7 @@ export function useStagger(options: UseStaggerOptions): UseStaggerControls {
     const delayMs = options.delayMs ?? 80;
     const initialDelayMs = options.initialDelayMs ?? 0;
     const immediate = options.immediate !== false;
+    const respectReducedMotion = options.respectReducedMotion !== false;
 
     const revealed = ref<boolean[]>(new Array(itemCount).fill(false));
     const isComplete = ref<boolean>(itemCount === 0);
@@ -68,10 +89,23 @@ export function useStagger(options: UseStaggerOptions): UseStaggerControls {
         isComplete.value = itemCount === 0;
     }
 
+    function flushAll(): void {
+        revealed.value = new Array(itemCount).fill(true);
+        isComplete.value = true;
+    }
+
     function start(): void {
         reset();
         if (itemCount === 0) {
             isComplete.value = true;
+            return;
+        }
+        // Reduced-motion: short-circuit the cascade so every slot reveals
+        // synchronously. The cue is honoured as "instant", matching the
+        // canonical brackets in `transitions.css:144` / `utilities.css:467`.
+        // (Per audit U.W0.A5 §"library gaps".)
+        if (respectReducedMotion && prefersReducedMotion()) {
+            flushAll();
             return;
         }
         for (let i = 0; i < itemCount; i++) {
