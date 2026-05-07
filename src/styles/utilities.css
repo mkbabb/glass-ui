@@ -230,6 +230,19 @@
         gap: var(--metric-badge-label-gap-stacked, 0.0625rem);
         max-width: var(--metric-badge-label-max-width, none);
         text-align: left;
+        min-height: var(--metric-badge-min-height-stacked, 2.625rem);
+        padding-block: var(--metric-badge-padding-block-stacked, 0.375rem);
+    }
+
+    /* T.W2.T2 — stacked variant pairs amount + unit on a single row (row 2)
+       below the label (row 1). The `.metric-badge__row` wrapper baseline-
+       aligns the value and unit so the quantity reads as one phrase, not as
+       three siblings split across three rows (the pre-T behaviour the
+       audit B-spec §2.1 flagged). */
+    .metric-badge--label-stacked .metric-badge__row {
+        display: inline-flex;
+        align-items: baseline;
+        gap: var(--metric-badge-row-gap-stacked, 0.25rem);
     }
 
     .metric-badge__label {

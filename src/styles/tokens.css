@@ -525,6 +525,17 @@
     --dock-margin: 0.5rem;
     --dock-menubar-reserve: 4rem;
 
+    /* MetricBadge — stacked variant geometry. The 2-row stacked layout
+       (label / value+unit) wants a taller floor than the inline pill so the
+       label has breathing room above the baseline pair. T.W2.T2 +
+       audit B-spec §3.2 vertical-rhythm table land 42px (2.625rem) as the
+       min-height with 6px (0.375rem) block padding. The inline ladder
+       keeps its tight defaults via `--metric-badge-min-height` /
+       `--metric-badge-padding-block` (declared inline at the
+       `.metric-badge` selector). */
+    --metric-badge-min-height-stacked: 2.625rem;
+    --metric-badge-padding-block-stacked: 0.375rem;
+
     /* Component font override (consumers override locally) */
     --select-font: inherit;
 
