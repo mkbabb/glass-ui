@@ -170,6 +170,30 @@ describe("component smoke coverage", () => {
         expect(wrapper.classes()).toContain("shape-rounded");
     });
 
+    it("emits container-query host attributes when GlassDock has containerName", () => {
+        const wrapper = mount(GlassDock, {
+            props: { containerName: "pill-cluster", alwaysExpanded: true },
+            slots: { default: "<span>child</span>" },
+        });
+        const root = wrapper.find(".glass-dock");
+        expect(root.attributes("data-container-name")).toBe("pill-cluster");
+        const style = root.attributes("style") ?? "";
+        expect(style).toContain("container-type: inline-size");
+        expect(style).toContain("container-name: pill-cluster");
+        expect(style).toContain("overflow: visible");
+    });
+
+    it("preserves the default overflow shell when GlassDock has no containerName", () => {
+        const wrapper = mount(GlassDock, {
+            props: { alwaysExpanded: true },
+            slots: { default: "<span>child</span>" },
+        });
+        const root = wrapper.find(".glass-dock");
+        expect(root.attributes("data-container-name")).toBeUndefined();
+        const style = root.attributes("style") ?? "";
+        expect(style).not.toContain("container-type");
+    });
+
     it("lets DockLayerGroup inherit vertical rail orientation", async () => {
         const wrapper = mount({
             components: { DockLayer, DockLayerGroup, GlassDock },

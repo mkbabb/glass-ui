@@ -35,6 +35,19 @@ const props = withDefaults(
          * dock control sizing. Root CSS variables can override each density.
          */
         density?: DockDensity;
+        /**
+         * When set, the dock root establishes an inline-size container query
+         * subject (`container-type: inline-size; container-name: <value>`)
+         * and lifts its `overflow: hidden` clip so descendants can wrap or
+         * report intrinsic widths at narrow viewports. Consumers query the
+         * named container via `@container <value> (...)` rules.
+         *
+         * Without this prop the dock retains its default `overflow: hidden`
+         * shell — the pre-T behaviour. T.B audit §1.3 cornerstone: the
+         * cluster's container subject must live on the dock primitive, never
+         * on a descendant whose intrinsic size the dock relies on.
+         */
+        containerName?: string;
     }>(),
     {
         collapseDelay: 2000,
@@ -49,6 +62,15 @@ const props = withDefaults(
         density: "comfortable",
     },
 );
+
+const containerStyle = computed<Record<string, string> | undefined>(() => {
+    if (!props.containerName) return undefined;
+    return {
+        "container-type": "inline-size",
+        "container-name": props.containerName,
+        overflow: "visible",
+    };
+});
 
 const dockEl = useTemplateRef<HTMLElement>("dockEl");
 const layersEl = useTemplateRef<HTMLElement>("layersEl");
@@ -230,6 +252,8 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
               : 'dock-inline',
         ]"
         :data-held="isHeld || undefined"
+        :data-container-name="containerName || undefined"
+        :style="containerStyle"
         @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave($event)"
         @focusin="onFocusIn"
