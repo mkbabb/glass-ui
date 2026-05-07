@@ -23,7 +23,7 @@ export const buttonVariants = cva(
         ghost:
           'bg-transparent text-foreground/70 hover:bg-foreground/8 hover:text-foreground active:bg-foreground/12 aria-pressed:bg-foreground/10 aria-pressed:text-foreground',
         glass:
-          'bg-[var(--glass-bg-wash)] border border-[var(--glass-border-quiet)] text-foreground backdrop-blur-[var(--glass-blur-wash)] hover:bg-[var(--glass-bg-resting)] hover:border-[var(--glass-border-resting)] hover:shadow-md active:bg-[var(--glass-bg-floating)] active:border-[var(--glass-border-floating)] aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting))]',
+          'glass-wash text-foreground hover:bg-[var(--glass-bg-resting)] hover:border-[var(--glass-border-resting)] active:bg-[var(--glass-bg-floating)] active:border-[var(--glass-border-floating)] aria-pressed:bg-[color-mix(in_srgb,var(--foreground)_10%,var(--glass-bg-resting))]',
         'glass-wash':
           'glass-wash text-foreground/70 hover:bg-foreground/[0.04] hover:border-[var(--surface-tint-22)] hover:text-foreground active:bg-foreground/[0.08] aria-pressed:bg-foreground/[0.1] aria-pressed:text-foreground',
         ai: 'bg-amber-500/15 text-amber-700 hover:bg-amber-500/25 active:bg-amber-500/35 dark:text-amber-400 aria-pressed:bg-amber-500/30',
