@@ -1,5 +1,113 @@
 # Changelog
 
+## v0.8.6 — 2026-05-07
+
+The U-tranche W1 cohort — fifteen load-bearing patches surfaced by the
+14-agent W0 audit (cohorts A through C). Drives the speedtest progress
+overflow fix, retires the last v0.7-vocab custom citizen, and lifts
+several primitives onto the canon they advertise.
+
+### Composable repairs
+
+- **`useAnimatedNumber` — progress mode no longer overshoots backward
+  through the rail.** Audit U.W0.A5 §1 isolated the smoking gun at line
+  87: `clamp: false` for progress mode let `SmoothProgress.currentValue`
+  hold a stale 100 across phase boundaries, then damp 100 → 0 when the
+  consumer's target dropped to the next phase's first-tick value. The
+  composable now keeps the underlying smoother in `[0, 1]` and scales
+  at the consumer-facing boundary, so the smoother's internal clamp is
+  the exact mirror of the `[0, 100]` external contract.
+- **`useStagger` — `prefers-reduced-motion` short-circuit.** Per audit
+  A5 §"library gaps", the timer cascade ran unconditionally. The
+  composable now defaults to honouring `prefers-reduced-motion: reduce`
+  with a synchronous flush of every reveal slot. Opt out via
+  `respectReducedMotion: false`.
+
+### Primitive repairs
+
+- **`GlassPanel` — retired-tier migration (v0.7 → v0.8 5-rung ladder).**
+  Audit C-b axis 4 #21. The last custom citizen still shipping
+  `default | medium | elevated` migrates to
+  `wash | quiet | resting | floating | overlay`. Default is now `resting`
+  (matches the prior `default → glass-resting` resolution exactly).
+  Scoped fallback CSS adopts canonical `--glass-bg-{wash,floating}` and
+  `--glass-border-floating` handles instead of raw `color-mix(--card N%, ...)`.
+- **Popover-class `shadow-md` retire (7 components).** Audit C-a §1 +
+  §5.2 / U10. PopoverContent, SelectContent, ComboboxList,
+  ContextMenu{,Sub}Content, DialogContent (`shadow-xl`), CommandDialog
+  (`shadow-lg`) all double-stacked Tailwind shadow utilities atop
+  `.glass-floating`, clobbering the canonical `--glass-shadow-floating`.
+  The literal shadow drops; the canon paints.
+- **`ContextMenu*Content` — drop opaque `bg-popover` over glass-floating.**
+  Audit C-a §2.2 / §gap.10. The opaque `bg-popover` declaration negated
+  the `glass-floating` translucent background.
+- **Notification — status-color foreground tokens.** Audit C-a §1.4 /
+  §7.2 / §gap.5 (and U11). The four-row variant map now consumes
+  `text-{success,warning,info,destructive}-foreground` instead of
+  baking `text-white` (which misread against the luminous amber plate
+  particularly).
+- **`Button.glass` — canonical `.glass-wash` composition.** Audit C-a
+  §2.1. The variant re-implemented `.glass-wash` inline AND mixed tiers
+  (bg-wash + border-quiet — self-contradictory). Compresses onto the
+  canonical class.
+- **`Sheet` — canonical `.sheet-animate` adoption.** Audit C-a §2.3 /
+  §7. The `sheet-animate` utility was authored explicitly for Sheet
+  but bypassed via raw `data-[state]:duration-300/-500`.
+- **`Badge` — `success | warning | info` variants.** Audit B-b
+  §"glass-ui gaps". The semantic-colour CVA branches now compose the
+  canonical `--success / --warning / --info` plates with their
+  `--*-foreground` glyph counterparts.
+- **`DarkModeToggle` — focus-visible affordance.** Audit C-b axis 3
+  #16. Composes `focus-ring` so keyboard navigation paints
+  `--focus-ring-shadow` over the pill geometry.
+
+### Foundation repairs
+
+- **Typography ladder dedup — `--type-leading-*` / `--type-tracking-*`
+  canonical.** Audit C-c §1.1 / Union 2 (and U13). `typography.css`
+  declared duplicate `--leading-*` / `--tracking-*` tokens with the
+  same numeric values as the canonical `--type-*` rungs. Retires the
+  duplicates and migrates every in-file `@utility text-*` consumer to
+  the `--type-*` form. theme.css continues to bridge the
+  `--leading-*` / `--tracking-*` Tailwind utilities through the canon.
+- **Cartoon-shadow dual-system collapse.** Audit C-c §1.3 / Union 1
+  (and U14). The token-driven `--shadow-cartoon-{sm,md,lg}` rungs
+  (auto-darking via `--shadow-color`) were silently shadowed at every
+  consumer site by the `utilities.css` `.shadow-cartoon-*` class set
+  reading raw `--shadow-cartoon-color{,-soft}` literals (pure
+  black/white). The utility-class shadows now consume the token rungs;
+  the bezel border + translateY stamp geometry stays.
+- **`metric-badge` + `input-bar` adopt the canonical glass tier.**
+  Audit C-c §7.2. Both utilities painted raw
+  `color-mix(--card N%, transparent)` plates with hand-rolled
+  `backdrop-filter` — bypassing the 5-tier ladder and silently
+  no-op'ing the PRT / no-backdrop-filter fallbacks. metric-badge now
+  composes `--glass-bg-quiet` (rest) → `--glass-bg-resting` (hover);
+  input-bar composes `--glass-bg-floating` + `--glass-blur-floating`.
+- **`--opacity-disabled` Tailwind bridge + sweep.** Audit C-a §1.2 /
+  §gap.4 / U12. theme.css adds the `--opacity-disabled` (0.5) and
+  `--opacity-icon-muted` (0.8) bridges so consumers compose
+  `disabled:opacity-disabled` instead of literal `disabled:opacity-50`.
+  The 11 ui/ + custom/ sites that hardcoded the literal — plus the
+  Button base composing the arbitrary `disabled:opacity-[var(--opacity-disabled)]`
+  form — sweep onto the canonical utility.
+
+### Demo
+
+- **`foundations/paper-glass.vue` — 5-tier completion + retired-vocab
+  fix.** Audit C-d §4.2 / §1.1. Adds the missing `overlay` tier to the
+  ladder enumeration; migrates the embedded `GlassPanelVariant` type
+  to the v0.8 vocabulary; swaps the invalid `--viz-topology` /
+  `--viz-recursion` accents for declared `--viz-{chebyshev,fourier}`.
+
+### Verification
+
+- `npm run typecheck` exit 0
+- `npm run build` exit 0
+- `npm test` 291/291 (was 288/288; +3 regression tests across
+  `useAnimatedNumber` and `useStagger`)
+- `dist/index.d.ts` re-exported with the v0.8.6 surface
+
 ## v0.8.5 — 2026-05-07
 
 ### Fix — backdrop-filter Lightning CSS dedup
