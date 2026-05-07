@@ -47,6 +47,7 @@ const uiRuntimeExports = [
     "HoverCard",
     "Input",
     "Label",
+    "MetricPill",
     "MultiSelect",
     "Notification",
     "NumberField",

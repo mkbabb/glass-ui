@@ -106,6 +106,7 @@ export const CATEGORIES: Category[] = [
             s("primitives", "label", "Label"),
             s("primitives", "badge", "Badge"),
             s("primitives", "metric-badge", "Metric Badge"),
+            s("primitives", "metric-pill", "Metric Pill", "Stacked taller-fatter pill — `MetricBadge` with `labelPosition=stacked` + `density=spacious` + `size=lg` baked in. Composes inside a `GlassDock containerName=…` host."),
             s("primitives", "status-dot", "Status Dot"),
             s("primitives", "pulse", "Pulse"),
             s("primitives", "glyph-face", "Glyph Face", "Phase-tinted lucide wrapper with catch-light cap."),

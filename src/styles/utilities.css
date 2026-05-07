@@ -245,6 +245,24 @@
         gap: var(--metric-badge-row-gap-stacked, 0.25rem);
     }
 
+    /* T.W2.T3 — MetricPill density modifiers. The pill is a thin composition
+       over MetricBadge with `labelPosition="stacked"` defaults; the density
+       knob adjusts block padding + horizontal padding so the pill reads at
+       the right register for its dock host. `spacious` is the default
+       (chassis-strip rhythm), `comfortable` keeps the tighter compact
+       register for densely-packed dock clusters. The selectors compose with
+       `.metric-badge--label-stacked` so the inline ladder remains untouched
+       — these are stacked-only refinements. */
+    .metric-pill--density-spacious.metric-badge--label-stacked {
+        --metric-badge-padding-block-stacked: 0.5rem;
+        --metric-badge-padding-inline: 0.75rem;
+    }
+
+    .metric-pill--density-comfortable.metric-badge--label-stacked {
+        --metric-badge-padding-block-stacked: 0.25rem;
+        --metric-badge-padding-inline: 0.5rem;
+    }
+
     .metric-badge__label {
         letter-spacing: 0.18em;
         line-height: 1;
