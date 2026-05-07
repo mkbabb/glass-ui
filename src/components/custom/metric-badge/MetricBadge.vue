@@ -118,15 +118,35 @@ const showLabel = computed(() =>
         :class="labelClass"
       >{{ abbreviation }}</span>
     </template>
-    <span
-      class="metric-badge__amount font-semibold tabular-nums tracking-snug truncate transition-colors"
-      :class="[amountClass, { 'text-muted-foreground/40': !amount }]"
-      :style="amount ? { color } : undefined"
-    >{{ amount || placeholder }}</span>
-    <span
-      v-if="unit"
-      class="metric-badge__unit font-mono text-muted-foreground shrink-0"
-      :class="unitClass"
-    >{{ unit }}</span>
+    <!-- T.W2.T2 — when stacked, amount + unit share row 2 baseline-aligned via
+         `.metric-badge__row`; the column flow then lays exactly two rows
+         (label / value+unit). Inline mode keeps the flat sibling order so the
+         single-row baseline reads unbroken. -->
+    <template v-if="labelPosition === 'stacked'">
+      <span class="metric-badge__row">
+        <span
+          class="metric-badge__amount font-semibold tabular-nums tracking-snug truncate transition-colors"
+          :class="[amountClass, { 'text-muted-foreground/40': !amount }]"
+          :style="amount ? { color } : undefined"
+        >{{ amount || placeholder }}</span>
+        <span
+          v-if="unit"
+          class="metric-badge__unit font-mono text-muted-foreground shrink-0"
+          :class="unitClass"
+        >{{ unit }}</span>
+      </span>
+    </template>
+    <template v-else>
+      <span
+        class="metric-badge__amount font-semibold tabular-nums tracking-snug truncate transition-colors"
+        :class="[amountClass, { 'text-muted-foreground/40': !amount }]"
+        :style="amount ? { color } : undefined"
+      >{{ amount || placeholder }}</span>
+      <span
+        v-if="unit"
+        class="metric-badge__unit font-mono text-muted-foreground shrink-0"
+        :class="unitClass"
+      >{{ unit }}</span>
+    </template>
   </div>
 </template>

@@ -127,6 +127,45 @@ describe("component smoke coverage", () => {
         expect(wrapper.text()).toBe("n/a");
     });
 
+    it("wraps amount + unit in a single row when MetricBadge labelPosition is stacked", () => {
+        const wrapper = mount(MetricBadge, {
+            props: {
+                label: "DOWNLOAD",
+                labelPosition: "stacked",
+                amount: 730,
+                unit: "Mbps",
+                size: "lg",
+            },
+        });
+        const root = wrapper.find(".metric-badge");
+        expect(root.classes()).toContain("metric-badge--label-stacked");
+        const fullLabel = root.find(".metric-badge__label--full");
+        expect(fullLabel.exists()).toBe(true);
+        const row = root.find(".metric-badge__row");
+        expect(row.exists()).toBe(true);
+        const amount = row.find(".metric-badge__amount");
+        const unit = row.find(".metric-badge__unit");
+        expect(amount.exists()).toBe(true);
+        expect(unit.exists()).toBe(true);
+        expect(amount.text()).toBe("730");
+        expect(unit.text()).toBe("Mbps");
+    });
+
+    it("keeps MetricBadge inline mode flat (no row wrapper)", () => {
+        const wrapper = mount(MetricBadge, {
+            props: {
+                label: "Latency",
+                labelPosition: "inline",
+                amount: 36,
+                unit: "ms",
+                size: "lg",
+            },
+        });
+        expect(wrapper.find(".metric-badge__row").exists()).toBe(false);
+        expect(wrapper.find(".metric-badge__amount").exists()).toBe(true);
+        expect(wrapper.find(".metric-badge__unit").exists()).toBe(true);
+    });
+
     it("renders StatusDot label", () => {
         expect(mount(StatusDot, { props: { label: "Live" } }).text()).toContain("Live");
     });
