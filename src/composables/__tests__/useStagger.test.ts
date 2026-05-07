@@ -109,4 +109,73 @@ describe("useStagger", () => {
 
         unmount();
     });
+
+    // Regression test for the audit U.W0.A5 §"library gaps" finding: when
+    // the user has `prefers-reduced-motion: reduce` set, the staggered
+    // cascade must short-circuit to a synchronous reveal of every slot.
+    it("flushes every slot synchronously when prefers-reduced-motion: reduce", () => {
+        vi.useFakeTimers();
+        const matchMediaSpy = vi
+            .spyOn(window, "matchMedia")
+            .mockImplementation((query) => ({
+                matches: query === "(prefers-reduced-motion: reduce)",
+                media: query,
+                onchange: null,
+                addListener: () => {},
+                removeListener: () => {},
+                addEventListener: () => {},
+                removeEventListener: () => {},
+                dispatchEvent: () => false,
+            }));
+
+        const { result, unmount } = mountComposable(() =>
+            useStagger({
+                items: 4,
+                delayMs: 80,
+                initialDelayMs: 80,
+                immediate: true,
+            }),
+        );
+
+        // No timer advance — the cascade should already be complete.
+        expect(result.revealed.value).toEqual([true, true, true, true]);
+        expect(result.isComplete.value).toBe(true);
+
+        unmount();
+        matchMediaSpy.mockRestore();
+    });
+
+    it("respects respectReducedMotion=false to bypass the PRM short-circuit", () => {
+        vi.useFakeTimers();
+        const matchMediaSpy = vi
+            .spyOn(window, "matchMedia")
+            .mockImplementation((query) => ({
+                matches: query === "(prefers-reduced-motion: reduce)",
+                media: query,
+                onchange: null,
+                addListener: () => {},
+                removeListener: () => {},
+                addEventListener: () => {},
+                removeEventListener: () => {},
+                dispatchEvent: () => false,
+            }));
+
+        const { result, unmount } = mountComposable(() =>
+            useStagger({
+                items: 3,
+                delayMs: 80,
+                initialDelayMs: 80,
+                immediate: true,
+                respectReducedMotion: false,
+            }),
+        );
+
+        // PRM honoured but explicitly disabled: cascade ticks through timers.
+        expect(result.revealed.value).toEqual([false, false, false]);
+        vi.advanceTimersByTime(80);
+        expect(result.revealed.value[0]).toBe(true);
+
+        unmount();
+        matchMediaSpy.mockRestore();
+    });
 });
