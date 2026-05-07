@@ -19,15 +19,15 @@ import {
     Textarea,
     badgeVariants,
     buttonVariants,
-} from "@/index";
-import { DarkModeToggle } from "@/controls";
-import { DockLayer, DockLayerGroup, GlassDock } from "@/dock";
-import { MetricBadge } from "@/metric-badge";
-import { PaperBackdrop } from "@/paper-backdrop";
-import { Pulse } from "@/pulse";
-import { StatusDot } from "@/status-dot";
-import { BouncyToggle } from "@/tabs";
-import { ToggleChip, toggleChipVariants } from "@/toggle-chip";
+} from "../src/index";
+import { DarkModeToggle } from "../src/controls";
+import { DockLayer, DockLayerGroup, GlassDock } from "../src/dock";
+import { MetricBadge } from "../src/metric-badge";
+import { PaperBackdrop } from "../src/paper-backdrop";
+import { Pulse } from "../src/pulse";
+import { StatusDot } from "../src/status-dot";
+import { BouncyToggle } from "../src/tabs";
+import { ToggleChip, toggleChipVariants } from "../src/toggle-chip";
 
 describe("component smoke coverage", () => {
     it("renders Button slot content", () => {

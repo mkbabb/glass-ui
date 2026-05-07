@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { StatusDot } from "@/components/custom/status-dot";
+import { StatusDot } from "../../../src/components/custom/status-dot";
 
 type Variant = "active" | "paused" | "idle" | "error" | "custom";
 type Size = "xs" | "sm" | "md";

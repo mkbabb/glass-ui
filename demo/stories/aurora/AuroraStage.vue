@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Aurora, useCursorInteraction } from "@/components/custom/aurora";
-import type { AuroraConfig } from "@/components/custom/aurora";
+import { Aurora, useCursorInteraction } from "../../../src/components/custom/aurora";
+import type { AuroraConfig } from "../../../src/components/custom/aurora";
 import NucleiOverlay from "./NucleiOverlay.vue";
 
 /**

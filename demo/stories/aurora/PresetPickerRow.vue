@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { cn } from "@/utils/cn";
-import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "../../../src/utils/cn";
+import { Skeleton } from "../../../src/components/ui/skeleton";
 import { PRESET_KEYS, PRESET_META, type PresetKey } from "./presets";
 
 defineProps<{

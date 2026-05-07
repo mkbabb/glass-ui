@@ -10,8 +10,8 @@ import {
     DrawerHeader,
     DrawerTitle,
     DrawerTrigger,
-} from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
+} from "../../../src/components/ui/drawer";
+import { Button } from "../../../src/components/ui/button";
 
 const snap = ref<number | string | null>(0.4);
 const snapPoints = [0.25, 0.4, 0.7, 1] as const;

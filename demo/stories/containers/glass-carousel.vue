@@ -2,13 +2,13 @@
 import { computed, nextTick, onMounted, ref } from "vue";
 import { ChevronLeft, ChevronRight } from "lucide-vue-next";
 import StoryPage from "../StoryPage.vue";
-import { Button } from "@/components/ui/button";
-import { GlassCarouselPager } from "@/components/ui/carousel";
+import { Button } from "../../../src/components/ui/button";
+import { GlassCarouselPager } from "../../../src/components/ui/carousel";
 import {
     GlassCarousel,
     GlassCarouselItem,
     useGlassCarousel,
-} from "@/components/custom/glass-carousel";
+} from "../../../src/components/custom/glass-carousel";
 
 interface Slide {
     id: string;

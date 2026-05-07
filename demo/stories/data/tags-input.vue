@@ -7,9 +7,9 @@ import {
     TagsInputItem,
     TagsInputItemDelete,
     TagsInputItemText,
-} from "@/components/ui/tags-input";
-import { Label } from "@/components/ui/label";
-import { cn } from "@/utils/cn";
+} from "../../../src/components/ui/tags-input";
+import { Label } from "../../../src/components/ui/label";
+import { cn } from "../../../src/utils/cn";
 
 // Prefilled tags — reka-ui accepts v-model:modelValue on TagsInputRoot.
 const skills = ref<string[]>(["Vue", "TypeScript", "Tailwind", "reka-ui"]);

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { LabeledSlider } from "@/components/custom/labeled-field";
-import type { AuroraConfig } from "@/components/custom/aurora";
+import { LabeledSlider } from "../../../../src/components/custom/labeled-field";
+import type { AuroraConfig } from "../../../../src/components/custom/aurora";
 
 defineProps<{
     config: AuroraConfig;

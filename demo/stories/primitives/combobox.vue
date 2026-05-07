@@ -12,8 +12,8 @@ import {
     ComboboxItemIndicator,
     ComboboxList,
     ComboboxTrigger,
-} from "@/components/ui/combobox";
-import { Label } from "@/components/ui/label";
+} from "../../../src/components/ui/combobox";
+import { Label } from "../../../src/components/ui/label";
 
 interface Option {
     value: string;

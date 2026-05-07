@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/utils/cn";
+import { Badge } from "../../../src/components/ui/badge";
+import { cn } from "../../../src/utils/cn";
 
 const coreVariants: { variant: "default" | "secondary" | "destructive" | "outline"; label: string }[] = [
     { variant: "default", label: "default" },

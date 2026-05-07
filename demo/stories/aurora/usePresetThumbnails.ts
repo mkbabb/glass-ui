@@ -1,5 +1,5 @@
 import { onBeforeUnmount, onMounted, ref, type Ref } from "vue";
-import { createAurora, type AuroraConfig } from "@/components/custom/aurora";
+import { createAurora, type AuroraConfig } from "../../../src/components/custom/aurora";
 import { PRESET_KEYS, PRESETS, type PresetKey } from "./presets";
 
 /**

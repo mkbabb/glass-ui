@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { WithClassAsProps } from "./interface";
 import { onMounted, ref, watch } from "vue";
-import { cn } from "@utils";
+import { cn } from "../../../utils";
 import { useCarousel } from "./useCarousel";
 
 const props = defineProps<WithClassAsProps>();

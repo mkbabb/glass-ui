@@ -17,7 +17,7 @@ import {
 import { Button } from '../button'
 import { Badge } from '../badge'
 import { Check, ChevronDown, X } from 'lucide-vue-next'
-import { cn } from '@utils'
+import { cn } from '../../../utils'
 
 export interface MultiSelectOption {
   value: string

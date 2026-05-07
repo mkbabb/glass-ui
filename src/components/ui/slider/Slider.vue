@@ -2,7 +2,7 @@
 import { type HTMLAttributes, type ComputedRef, computed, inject, onBeforeUnmount } from 'vue'
 import type { SliderRootEmits, SliderRootProps } from 'reka-ui'
 import { SliderRange, SliderRoot, SliderThumb, SliderTrack, useForwardPropsEmits } from 'reka-ui'
-import { cn } from '@utils'
+import { cn } from '../../../utils'
 import { sliderVariants, type SliderVariants } from './index'
 
 const props = defineProps<SliderRootProps & {

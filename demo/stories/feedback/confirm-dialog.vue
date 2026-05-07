@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
-import { Button } from "@/components/ui/button";
-import { ConfirmDialog } from "@/components/custom/confirm-dialog";
+import { Button } from "../../../src/components/ui/button";
+import { ConfirmDialog } from "../../../src/components/custom/confirm-dialog";
 import { Trash2, LogOut, Archive, CheckCircle2 } from "lucide-vue-next";
 
 const destructiveOpen = ref(false);

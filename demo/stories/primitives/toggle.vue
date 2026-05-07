@@ -2,9 +2,9 @@
 import StoryPage from "../StoryPage.vue";
 import { computed, ref } from "vue";
 import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight } from "lucide-vue-next";
-import { Toggle } from "@/components/ui/toggle";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { ToggleChip } from "@/components/custom/toggle-chip";
+import { Toggle } from "../../../src/components/ui/toggle";
+import { ToggleGroup, ToggleGroupItem } from "../../../src/components/ui/toggle-group";
+import { ToggleChip } from "../../../src/components/custom/toggle-chip";
 
 const bold = ref<boolean>(false);
 const marks = ref<string[]>(["bold"]);

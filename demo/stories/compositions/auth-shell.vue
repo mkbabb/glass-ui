@@ -2,12 +2,12 @@
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Lock, ShieldCheck, Sparkles, Users } from "lucide-vue-next";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { cn } from "@/utils/cn";
+import { Button } from "../../../src/components/ui/button";
+import { Checkbox } from "../../../src/components/ui/checkbox";
+import { Input } from "../../../src/components/ui/input";
+import { Label } from "../../../src/components/ui/label";
+import { Separator } from "../../../src/components/ui/separator";
+import { cn } from "../../../src/utils/cn";
 
 const wonkSettings = '"WONK" 1, "SOFT" 0';
 

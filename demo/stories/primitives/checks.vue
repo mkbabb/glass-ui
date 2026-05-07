@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
-import { Checkbox } from "@/components/ui/checkbox";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
+import { Checkbox } from "../../../src/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "../../../src/components/ui/radio-group";
+import { Switch } from "../../../src/components/ui/switch";
+import { Label } from "../../../src/components/ui/label";
 
 const tos = ref(true);
 const marketing = ref(false);

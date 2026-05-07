@@ -3,8 +3,8 @@ import StoryPage from "../StoryPage.vue";
 // Fraunces display text animates font-variation-settings + weight based on the
 // scroll progress of a target element. Drives WONK 0→1, SOFT 0→100, wght 300→700.
 import { computed, ref } from "vue";
-import { useScrollProgress } from "@/composables/motion";
-import { cn } from "@/utils/cn";
+import { useScrollProgress } from "../../../src/composables/motion";
+import { cn } from "../../../src/utils/cn";
 
 const target = ref<HTMLElement | null>(null);
 

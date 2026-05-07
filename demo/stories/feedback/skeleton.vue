@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "../../../src/components/ui/skeleton";
 </script>
 
 <template>

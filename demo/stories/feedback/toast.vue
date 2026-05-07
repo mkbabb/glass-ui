@@ -2,7 +2,7 @@
 import StoryPage from "../StoryPage.vue";
 import { h } from "vue";
 import { ToastProvider, ToastViewport } from "reka-ui";
-import { Button } from "@/components/ui/button";
+import { Button } from "../../../src/components/ui/button";
 import {
     Toast,
     ToastAction,
@@ -10,7 +10,7 @@ import {
     ToastDescription,
     ToastTitle,
     useToast,
-} from "@/components/ui/toast";
+} from "../../../src/components/ui/toast";
 import { CheckCircle2, AlertTriangle, XCircle, Info } from "lucide-vue-next";
 
 const { toasts, toast } = useToast();

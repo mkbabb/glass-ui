@@ -8,20 +8,20 @@ import {
     SheetHeader,
     SheetTitle,
     SheetTrigger,
-} from "@/components/ui/sheet";
-import { Slider } from "@/components/ui/slider";
-import { Switch } from "@/components/ui/switch";
+} from "../../src/components/ui/sheet";
+import { Slider } from "../../src/components/ui/slider";
+import { Switch } from "../../src/components/ui/switch";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/utils/cn";
+} from "../../src/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "../../src/components/ui/radio-group";
+import { Label } from "../../src/components/ui/label";
+import { Button } from "../../src/components/ui/button";
+import { cn } from "../../src/utils/cn";
 import { PRESETS } from "../presets/manifest";
 import {
     FONT_OPTIONS,

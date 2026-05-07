@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
-import { Slider, type SliderVariants } from "@/components/ui/slider";
-import { cn } from "@/utils/cn";
+import { Slider, type SliderVariants } from "../../../src/components/ui/slider";
+import { cn } from "../../../src/utils/cn";
 
 const volume = ref<number[]>([42]);
 const balance = ref<number[]>([65]);

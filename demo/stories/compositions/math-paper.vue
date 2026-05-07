@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { cn } from "@/utils/cn";
+import { cn } from "../../../src/utils/cn";
 
 const sectionAccent = "var(--section-color-3, hsl(265 65% 62%))";
 const fourierAccent = "var(--viz-fourier, hsl(358 72% 52%))";

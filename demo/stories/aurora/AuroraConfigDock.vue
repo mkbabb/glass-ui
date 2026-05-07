@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { RefreshCw } from "lucide-vue-next";
-import { Button } from "@/components/ui/button";
-import { BouncyTabs } from "@/components/custom/tabs";
-import { DockLayerGroup, DockLayer } from "@/components/custom/dock";
-import type { AuroraConfig } from "@/components/custom/aurora";
+import { Button } from "../../../src/components/ui/button";
+import { BouncyTabs } from "../../../src/components/custom/tabs";
+import { DockLayerGroup, DockLayer } from "../../../src/components/custom/dock";
+import type { AuroraConfig } from "../../../src/components/custom/aurora";
 import CompositionLayer from "./config/CompositionLayer.vue";
 import FlowLayer from "./config/FlowLayer.vue";
 import MediumLayer from "./config/MediumLayer.vue";

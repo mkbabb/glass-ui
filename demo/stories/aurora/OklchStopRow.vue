@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { X, GripVertical } from "lucide-vue-next";
-import { Slider } from "@/components/ui/slider";
-import { hexToOklchStop, oklchStopToHex, type OklchStop } from "@/components/custom/aurora";
+import { Slider } from "../../../src/components/ui/slider";
+import { hexToOklchStop, oklchStopToHex, type OklchStop } from "../../../src/components/custom/aurora";
 
 /**
  * One palette-stop row: drag handle + swatch + inline L/C/h sliders + delete.

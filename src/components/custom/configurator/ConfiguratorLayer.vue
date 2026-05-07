@@ -5,8 +5,8 @@ import {
     Collapsible,
     CollapsibleContent,
     CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "@/utils/cn";
+} from "../../ui/collapsible";
+import { cn } from "../../../utils/cn";
 
 /**
  * <ConfiguratorLayer> — collapsible section inside a <Configurator>'s

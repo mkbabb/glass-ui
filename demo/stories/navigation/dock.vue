@@ -10,8 +10,8 @@ import {
     DockIconButton,
     DockDropdownTrigger,
     DockSelectTrigger,
-} from "@/components/custom/dock";
-import { HoverPopover } from "@/components/custom/hover-popover";
+} from "../../../src/components/custom/dock";
+import { HoverPopover } from "../../../src/components/custom/hover-popover";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -19,13 +19,13 @@ import {
     DropdownMenuRadioGroup,
     DropdownMenuRadioItem,
     DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
+} from "../../../src/components/ui/dropdown-menu";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectValue,
-} from "@/components/ui/select";
+} from "../../../src/components/ui/select";
 
 const playing = ref(false);
 const track = ref("The Garden");
@@ -109,7 +109,7 @@ function togglePlay() {
         <section class="flex flex-col gap-3" data-testid="dock-trigger-story">
             <h2 class="text-sm font-semibold text-muted-foreground">Select and dropdown triggers</h2>
             <div class="flex flex-col items-center gap-3 rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
-                <!-- import { DockSelectTrigger, DockDropdownTrigger } from "@/components/custom/dock"; -->
+                <!-- import { DockSelectTrigger, DockDropdownTrigger } from "../../../src/components/custom/dock"; -->
                 <GlassDock always-expanded fit-content>
                     <Select v-model="dockView">
                         <DockSelectTrigger

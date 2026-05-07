@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
-import { BouncyTabs, type TabOption } from "@/components/custom/tabs";
+import { BouncyTabs, type TabOption } from "../../../src/components/custom/tabs";
 
 const viewMode = ref("grid");
 const viewOptions: TabOption[] = [

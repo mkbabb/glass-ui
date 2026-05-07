@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { cn } from "@/utils/cn";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { cn } from "../../src/utils/cn";
+import { TooltipProvider } from "../../src/components/ui/tooltip";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 
 interface StoryPageProps {

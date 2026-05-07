@@ -17,22 +17,22 @@ import {
     fuzzyMatch,
     searchIndex,
     useFuzzySearch,
-} from "@/components/custom/search";
+} from "../../../src/components/custom/search";
 import type {
     SearchIndex,
     SearchResult,
     SearchableItem,
-} from "@/components/custom/search";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+} from "../../../src/components/custom/search";
+import { Badge } from "../../../src/components/ui/badge";
+import { Button } from "../../../src/components/ui/button";
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+} from "../../../src/components/ui/card";
+import { Input } from "../../../src/components/ui/input";
 
 type SearchStatus = "wired" | "proof" | "consumer" | "triage";
 

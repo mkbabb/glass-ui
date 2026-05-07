@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { DiscoGlyph } from "@/components/custom/disco-glyph";
+import { DiscoGlyph } from "../../../src/components/custom/disco-glyph";
 
 const PLAY = "M8 5.14v13.72a1 1 0 0 0 1.55.83l10.23-6.86a1 1 0 0 0 0-1.66L9.55 4.31A1 1 0 0 0 8 5.14z";
 const ROTATE_CCW = "M3 12a9 9 0 1 0 3.51-7.13H3v6h6V8.07A7 7 0 1 1 5 12h-2z";

@@ -11,9 +11,9 @@ import {
     LayoutDashboard,
     Navigation as NavigationIcon,
 } from "lucide-vue-next";
-import { DockIconButton, GlassDock } from "@/components/custom/dock";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { cn } from "@/utils/cn";
+import { DockIconButton, GlassDock } from "../../../src/components/custom/dock";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../../../src/components/ui/tooltip";
+import { cn } from "../../../src/utils/cn";
 
 interface Entry {
     id: string;

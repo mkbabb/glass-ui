@@ -5,18 +5,18 @@ import StoryPage from "../StoryPage.vue";
 // presets expressed as explicit TimingFunction lambdas (damped-spring closed form).
 import { computed, ref, shallowRef } from "vue";
 import type { TimingFunction } from "@mkbabb/keyframes.js";
-import { useSpringOrchestrator } from "@/composables/motion";
-import type { SpringSnapshot } from "@/composables/motion";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+import { useSpringOrchestrator } from "../../../src/composables/motion";
+import type { SpringSnapshot } from "../../../src/composables/motion";
+import { Button } from "../../../src/components/ui/button";
+import { Label } from "../../../src/components/ui/label";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select";
-import { cn } from "@/utils/cn";
+} from "../../../src/components/ui/select";
+import { cn } from "../../../src/utils/cn";
 
 // ── Spring presets ────────────────────────────────────────────────────────────
 // Closed-form damped spring position over t∈[0,1]. We normalize so f(0)=0, f(1)=1.

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { toRef } from "vue";
 import { Plus } from "lucide-vue-next";
-import { Button } from "@/components/ui/button";
-import { SortableList, SortableItem } from "@/components/custom/sortable-list";
-import type { AuroraConfig } from "@/components/custom/aurora";
-import { MAX_STOPS } from "@/components/custom/aurora";
+import { Button } from "../../../../src/components/ui/button";
+import { SortableList, SortableItem } from "../../../../src/components/custom/sortable-list";
+import type { AuroraConfig } from "../../../../src/components/custom/aurora";
+import { MAX_STOPS } from "../../../../src/components/custom/aurora";
 import OklchStopRow from "../OklchStopRow.vue";
 import { usePaletteStops } from "./usePaletteStops";
 

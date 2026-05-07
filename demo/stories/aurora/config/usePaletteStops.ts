@@ -1,6 +1,6 @@
 import { computed, type Ref } from "vue";
-import type { AuroraConfig, OklchStop } from "@/components/custom/aurora";
-import { MAX_STOPS } from "@/components/custom/aurora";
+import type { AuroraConfig, OklchStop } from "../../../../src/components/custom/aurora";
+import { MAX_STOPS } from "../../../../src/components/custom/aurora";
 
 interface StopRef {
     sid: string;

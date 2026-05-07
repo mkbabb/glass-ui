@@ -4,10 +4,10 @@ import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from "../../../src/components/ui/popover";
+import { Button } from "../../../src/components/ui/button";
+import { Input } from "../../../src/components/ui/input";
+import { Label } from "../../../src/components/ui/label";
 
 type Side = "top" | "right" | "bottom" | "left";
 const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;

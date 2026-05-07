@@ -5,10 +5,10 @@ import {
     InstrumentChassis,
     RegionDivider,
     type InstrumentChassisPhase,
-} from "@/components/custom/instrument-chassis";
-import { GlyphFace } from "@/components/custom/glyph-face";
-import { MetricBadge } from "@/components/custom/metric-badge";
-import { DockIconButton, DockTabButton } from "@/components/custom/dock";
+} from "../../../src/components/custom/instrument-chassis";
+import { GlyphFace } from "../../../src/components/custom/glyph-face";
+import { MetricBadge } from "../../../src/components/custom/metric-badge";
+import { DockIconButton, DockTabButton } from "../../../src/components/custom/dock";
 import {
     ArrowLeft,
     RotateCcw,

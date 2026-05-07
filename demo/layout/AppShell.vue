@@ -6,14 +6,14 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-} from "@/components/ui/dialog";
-import { PaperBackdrop } from "@/components/custom/paper-backdrop";
+} from "../../src/components/ui/dialog";
+import { PaperBackdrop } from "../../src/components/custom/paper-backdrop";
 import {
     formatCombo,
     formatComboParts,
     registerShortcut,
     useRegisteredShortcuts,
-} from "@/composables/useKeyboardShortcuts";
+} from "../../src/composables/useKeyboardShortcuts";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 import { PresetEditor } from "../configurator";
 import CategoryRail from "./CategoryRail.vue";

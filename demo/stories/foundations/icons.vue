@@ -24,7 +24,7 @@ import {
     Zap,
 } from "lucide-vue-next";
 import type { Component } from "vue";
-import { cn } from "@/utils/cn";
+import { cn } from "../../../src/utils/cn";
 
 interface IconRow {
     name: string;

@@ -7,8 +7,8 @@ import {
     NumberFieldDecrement,
     NumberFieldIncrement,
     NumberFieldInput,
-} from "@/components/ui/number-field";
-import { Label } from "@/components/ui/label";
+} from "../../../src/components/ui/number-field";
+import { Label } from "../../../src/components/ui/label";
 
 const quantity = ref<number>(3);
 const tip = ref<number>(0.18);

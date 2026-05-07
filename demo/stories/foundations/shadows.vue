@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { cn } from "@/utils/cn";
+import { cn } from "../../../src/utils/cn";
 
 const shadows: { cls: string; label: string }[] = [
     { cls: "shadow-xs", label: "xs" },

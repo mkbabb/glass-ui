@@ -8,9 +8,9 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/utils/cn";
+} from "../../../src/components/ui/table";
+import { Badge } from "../../../src/components/ui/badge";
+import { cn } from "../../../src/utils/cn";
 
 interface Invoice {
     id: string;

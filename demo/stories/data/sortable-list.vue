@@ -7,8 +7,8 @@ import {
     SortableItem,
     SortableHandle,
     SORTABLE_CONTEXT,
-} from "@/components/custom/sortable-list";
-import { cn } from "@/utils/cn";
+} from "../../../src/components/custom/sortable-list";
+import { cn } from "../../../src/utils/cn";
 
 interface Task {
     id: string;

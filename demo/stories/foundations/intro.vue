@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { cn } from "@/utils/cn";
+import { cn } from "../../../src/utils/cn";
 
 // Anchor links to every category — resolved by the router via the manifest.
 const categories: { slug: string; title: string; blurb: string }[] = [

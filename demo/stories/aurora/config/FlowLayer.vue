@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { BouncyTabs } from "@/components/custom/tabs";
-import { LabeledSlider } from "@/components/custom/labeled-field";
-import type { AuroraConfig, FlowPattern } from "@/components/custom/aurora";
+import { BouncyTabs } from "../../../../src/components/custom/tabs";
+import { LabeledSlider } from "../../../../src/components/custom/labeled-field";
+import type { AuroraConfig, FlowPattern } from "../../../../src/components/custom/aurora";
 import { flowPatternOptions } from "./options";
 
 const props = defineProps<{

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref, computed } from "vue";
-import { GlassTimeline } from "@/components/custom/timeline";
-import { cn } from "@/utils/cn";
+import { GlassTimeline } from "../../../src/components/custom/timeline";
+import { cn } from "../../../src/utils/cn";
 
 interface TimelineEvent {
     id: string;

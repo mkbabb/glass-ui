@@ -2,7 +2,7 @@
 import { type HTMLAttributes, computed } from 'vue'
 import { TagsInputItem, type TagsInputItemProps, useForwardProps } from 'reka-ui'
 
-import { cn } from '@utils'
+import { cn } from '../../../utils'
 
 const props = defineProps<TagsInputItemProps & { class?: HTMLAttributes['class'] }>()
 

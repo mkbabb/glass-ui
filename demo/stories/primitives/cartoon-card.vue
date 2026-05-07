@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { CartoonCard } from "@/components/ui/cartoon-card";
-import { Button } from "@/components/ui/button";
+import { CartoonCard } from "../../../src/components/ui/cartoon-card";
+import { Button } from "../../../src/components/ui/button";
 
 interface Accent {
     id: string;

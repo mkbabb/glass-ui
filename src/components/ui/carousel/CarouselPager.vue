@@ -2,7 +2,7 @@
 import type { WithClassAsProps } from "./interface";
 import { computed, onMounted, ref, watch } from "vue";
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from "lucide-vue-next";
-import { cn } from "@utils";
+import { cn } from "../../../utils";
 import { Button } from "../button";
 import { useCarousel } from "./useCarousel";
 

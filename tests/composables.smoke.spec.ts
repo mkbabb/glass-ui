@@ -7,28 +7,28 @@ import {
     useGlassRenderer,
     useSortable,
     useStaggerReveal,
-} from "@/index";
-import { useInfiniteScroll } from "@/infinite-scroll";
-import { useOffsetPagination } from "@/pagination";
+} from "../src/index";
+import { useInfiniteScroll } from "../src/infinite-scroll";
+import { useOffsetPagination } from "../src/pagination";
 import {
     buildIndex,
     clearSearchCache,
     fuzzyMatch,
     searchIndex,
-} from "@/search";
+} from "../src/search";
 import {
     buildTreeIndex,
     isActive,
     isInActiveChain,
     useTreeIndex,
-} from "@/sidebar";
+} from "../src/sidebar";
 import {
     buildSectionLayout,
     findSectionOffset,
     resolveActiveSection,
     resolveSectionWindow,
     useWindowedStore,
-} from "@/virtual";
+} from "../src/virtual";
 import { mountComposable } from "./utils/mountComposable";
 
 const sections = [

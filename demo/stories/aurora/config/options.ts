@@ -3,7 +3,7 @@ import type {
     FlowPattern,
     StrokeMode,
     WarpMode,
-} from "@/components/custom/aurora";
+} from "../../../../src/components/custom/aurora";
 
 type TabOption<T extends string> = {
     label: string;

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ArrowDownRight, ArrowUpRight, Activity, AlertTriangle, CheckCircle2, Clock } from "lucide-vue-next";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "../../../src/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "../../../src/components/ui/card";
 import {
     Table,
     TableBody,
@@ -10,8 +10,8 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/ui/table";
-import { cn } from "@/utils/cn";
+} from "../../../src/components/ui/table";
+import { cn } from "../../../src/utils/cn";
 
 type Trend = "up" | "down" | "flat";
 

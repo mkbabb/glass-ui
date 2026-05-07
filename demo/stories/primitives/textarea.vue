@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+import { Textarea } from "../../../src/components/ui/textarea";
+import { Label } from "../../../src/components/ui/label";
 
 const plain = ref("");
 const resizable = ref(

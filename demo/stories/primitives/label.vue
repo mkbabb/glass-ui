@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Switch } from "@/components/ui/switch";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "../../../src/components/ui/label";
+import { Input } from "../../../src/components/ui/input";
+import { Checkbox } from "../../../src/components/ui/checkbox";
+import { Switch } from "../../../src/components/ui/switch";
+import { RadioGroup, RadioGroupItem } from "../../../src/components/ui/radio-group";
 
 const email = ref<string>("");
 const agree = ref<boolean>(false);

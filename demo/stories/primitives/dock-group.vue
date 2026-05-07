@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { DockGroup } from "@/components/custom/dock-group";
-import { DockIconButton, DockTabButton } from "@/components/custom/dock";
-import MetricBadge from "@/components/custom/metric-badge/MetricBadge.vue";
+import { DockGroup } from "../../../src/components/custom/dock-group";
+import { DockIconButton, DockTabButton } from "../../../src/components/custom/dock";
+import MetricBadge from "../../../src/components/custom/metric-badge/MetricBadge.vue";
 import { ArrowLeft, RotateCcw, Square, Settings } from "lucide-vue-next";
 </script>
 

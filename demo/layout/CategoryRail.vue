@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { DockIconButton, GlassDock } from "@/components/custom/dock";
+import { DockIconButton, GlassDock } from "../../src/components/custom/dock";
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { cn } from "@/utils/cn";
+} from "../../src/components/ui/tooltip";
+import { cn } from "../../src/utils/cn";
 import { CATEGORIES, FLAT_STORIES } from "../stories/manifest";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 

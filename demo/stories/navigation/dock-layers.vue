@@ -2,8 +2,8 @@
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Package, Layers, Library, FileText, ChevronLeft, ChevronRight } from "lucide-vue-next";
-import { GlassDock, DockIconButton, DockLayerGroup, DockLayer } from "@/components/custom/dock";
-import { cn } from "@/utils/cn";
+import { GlassDock, DockIconButton, DockLayerGroup, DockLayer } from "../../../src/components/custom/dock";
+import { cn } from "../../../src/utils/cn";
 
 type LayerId = "root" | "assets" | "layers" | "libs";
 

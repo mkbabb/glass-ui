@@ -2,9 +2,9 @@
 import StoryPage from "../StoryPage.vue";
 // Stagger reveal grid — 24 cards fade/slide-in as they enter the viewport.
 import { computed, ref } from "vue";
-import { useStaggerReveal } from "@/composables/motion";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/utils/cn";
+import { useStaggerReveal } from "../../../src/composables/motion";
+import { Button } from "../../../src/components/ui/button";
+import { cn } from "../../../src/utils/cn";
 
 const COUNT = 24;
 

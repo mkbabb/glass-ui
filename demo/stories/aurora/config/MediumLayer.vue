@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { BouncyTabs } from "@/components/custom/tabs";
+import { BouncyTabs } from "../../../../src/components/custom/tabs";
 import type {
     AuroraConfig,
     AuroraMedium,
     StrokeMode,
-} from "@/components/custom/aurora";
+} from "../../../../src/components/custom/aurora";
 import {
     mediumOptions,
     noiseOctavesOptions,

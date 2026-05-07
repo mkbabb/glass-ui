@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { ScrollPane } from "@/components/ui/scroll-pane";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { ScrollPane } from "../../../src/components/ui/scroll-pane";
+import { Card, CardHeader, CardTitle, CardContent } from "../../../src/components/ui/card";
 
 const longList = Array.from({ length: 24 }, (_, i) => ({
     id: i + 1,

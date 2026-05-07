@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RotateCcw } from "lucide-vue-next";
-import { Label } from "@/components/ui/label";
-import { cn } from "@/utils/cn";
+import { Label } from "../../src/components/ui/label";
+import { cn } from "../../src/utils/cn";
 
 interface Props {
     label: string;

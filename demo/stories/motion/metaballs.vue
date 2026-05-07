@@ -5,24 +5,24 @@ import {
     DEFAULT_METABALL_CONFIG,
     MetaballCanvas,
     type MetaballConfig,
-} from "@/components/custom/metaballs";
+} from "../../../src/components/custom/metaballs";
 import {
     Configurator,
     ConfiguratorLayer,
     ConfiguratorRow,
     useConfiguratorState,
     type ConfiguratorPreset,
-} from "@/components/custom/configurator";
-import { Slider } from "@/components/ui/slider";
+} from "../../../src/components/custom/configurator";
+import { Slider } from "../../../src/components/ui/slider";
 import {
     NumberField,
     NumberFieldContent,
     NumberFieldDecrement,
     NumberFieldIncrement,
     NumberFieldInput,
-} from "@/components/ui/number-field";
-import { Button } from "@/components/ui/button";
-import { BouncyToggle } from "@/components/custom/tabs";
+} from "../../../src/components/ui/number-field";
+import { Button } from "../../../src/components/ui/button";
+import { BouncyToggle } from "../../../src/components/custom/tabs";
 import { RotateCcw } from "lucide-vue-next";
 
 /**

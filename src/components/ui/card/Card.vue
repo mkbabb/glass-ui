@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue";
 import { Primitive, type PrimitiveProps } from "reka-ui";
-import { cn } from "@utils";
+import { cn } from "../../../utils";
 
 /**
  * The five-tier glass surface ladder. Maps 1:1 to `.glass-{tier}` in glass.css

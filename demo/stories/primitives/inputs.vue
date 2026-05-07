@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { SearchBar } from "@/components/custom/search";
+import { Input } from "../../../src/components/ui/input";
+import { Label } from "../../../src/components/ui/label";
+import { SearchBar } from "../../../src/components/custom/search";
 
 const plain = ref("");
 const withLabel = ref("");

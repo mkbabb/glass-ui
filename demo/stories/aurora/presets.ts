@@ -11,8 +11,8 @@
  * DEFAULT_AURORA_CONFIG.
  */
 
-import type { AuroraConfig, AuroraMedium } from "@/components/custom/aurora";
-import { DEFAULT_AURORA_CONFIG } from "@/components/custom/aurora";
+import type { AuroraConfig, AuroraMedium } from "../../../src/components/custom/aurora";
+import { DEFAULT_AURORA_CONFIG } from "../../../src/components/custom/aurora";
 
 type PresetOverrides = Partial<AuroraConfig>;
 

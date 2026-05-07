@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
-import { InfiniteScroll } from "@/components/custom/infinite-scroll";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/utils/cn";
+import { InfiniteScroll } from "../../../src/components/custom/infinite-scroll";
+import { Badge } from "../../../src/components/ui/badge";
+import { cn } from "../../../src/utils/cn";
 
 interface Event {
     id: number;

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { Separator } from "@/components/ui/separator";
+import { Separator } from "../../../src/components/ui/separator";
 </script>
 
 <template>

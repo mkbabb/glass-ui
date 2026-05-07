@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { GlassDock, DockTabButton } from "@/components/custom/dock";
+import { GlassDock, DockTabButton } from "../../src/components/custom/dock";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 
 const { current } = useStoryNavigation();

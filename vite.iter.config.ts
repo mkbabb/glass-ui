@@ -2,7 +2,6 @@ import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
 import { defineConfig } from "vite";
 import {
-    libraryAliases,
     libraryEntries,
     libraryExternal,
     libraryFileName,
@@ -14,9 +13,6 @@ export default defineConfig({
         tailwindcss(),
         vue(),
     ],
-    resolve: {
-        alias: libraryAliases(__dirname),
-    },
     build: {
         sourcemap: false,
         lib: {

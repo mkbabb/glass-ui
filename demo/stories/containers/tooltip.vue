@@ -5,8 +5,8 @@ import {
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Button } from "@/components/ui/button";
+} from "../../../src/components/ui/tooltip";
+import { Button } from "../../../src/components/ui/button";
 import { Bold, Italic, Underline, Save, Share2 } from "lucide-vue-next";
 
 type Side = "top" | "right" | "bottom" | "left";

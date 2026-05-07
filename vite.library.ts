@@ -1,12 +1,5 @@
 import { resolve } from "node:path";
 
-export function libraryAliases(rootDir: string) {
-    return {
-        "@": resolve(rootDir, "src"),
-        "@utils": resolve(rootDir, "src/utils"),
-    };
-}
-
 export function libraryEntries(rootDir: string) {
     return {
         index: resolve(rootDir, "src/index.ts"),

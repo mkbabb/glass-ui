@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { onMounted, ref } from "vue";
-import { GlassPanel } from "@/components/custom/glass-panel";
-import { useGlassRenderer, type GlassTier } from "@/composables/glass";
-import { cn } from "@/utils/cn";
+import { GlassPanel } from "../../../src/components/custom/glass-panel";
+import { useGlassRenderer, type GlassTier } from "../../../src/composables/glass";
+import { cn } from "../../../src/utils/cn";
 
 interface Tile {
     tier: string;

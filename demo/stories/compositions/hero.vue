@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ArrowRight, Sparkles } from "lucide-vue-next";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { cn } from "@/utils/cn";
+import { Button } from "../../../src/components/ui/button";
+import { Card, CardContent } from "../../../src/components/ui/card";
+import { cn } from "../../../src/utils/cn";
 
 const wonkSettings = '"WONK" 1, "SOFT" 0';
 

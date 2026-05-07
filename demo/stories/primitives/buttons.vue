@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/utils/cn";
+import { Button } from "../../../src/components/ui/button";
+import { cn } from "../../../src/utils/cn";
 
 const pressed = ref(false);
 

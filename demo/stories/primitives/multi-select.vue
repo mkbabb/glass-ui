@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
-import { MultiSelect, type MultiSelectOption } from "@/components/ui/multi-select";
-import { Label } from "@/components/ui/label";
+import { MultiSelect, type MultiSelectOption } from "../../../src/components/ui/multi-select";
+import { Label } from "../../../src/components/ui/label";
 
 const bases: MultiSelectOption[] = [
     { value: "fourier", label: "Fourier" },

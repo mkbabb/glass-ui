@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T">
 import { computed, type HTMLAttributes } from "vue";
-import { cn } from "@/utils/cn";
+import { cn } from "../../../utils/cn";
 
 /**
  * Scroll behavior for the controls column.

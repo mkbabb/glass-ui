@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { BouncyTabs } from "@/components/custom/tabs";
-import { LabeledSlider } from "@/components/custom/labeled-field";
-import type { AuroraConfig, WarpMode } from "@/components/custom/aurora";
+import { BouncyTabs } from "../../../../src/components/custom/tabs";
+import { LabeledSlider } from "../../../../src/components/custom/labeled-field";
+import type { AuroraConfig, WarpMode } from "../../../../src/components/custom/aurora";
 import { warpModeOptions } from "./options";
 
 const props = defineProps<{

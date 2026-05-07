@@ -5,8 +5,8 @@ import {
     Collapsible,
     CollapsibleContent,
     CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { Button } from "@/components/ui/button";
+} from "../../../src/components/ui/collapsible";
+import { Button } from "../../../src/components/ui/button";
 import { ChevronDown } from "lucide-vue-next";
 
 const open = ref(true);

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { onMounted, onUnmounted, ref } from "vue";
-import { Progress } from "@/components/ui/progress";
-import { Button } from "@/components/ui/button";
+import { Progress } from "../../../src/components/ui/progress";
+import { Button } from "../../../src/components/ui/button";
 
 const determinate = ref(42);
 

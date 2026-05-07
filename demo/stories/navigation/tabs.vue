@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { cn } from "@/utils/cn";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../../src/components/ui/tabs";
+import { cn } from "../../../src/utils/cn";
 
 const defaultTab = ref("overview");
 const pillTab = ref("daily");

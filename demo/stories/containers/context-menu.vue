@@ -12,7 +12,7 @@ import {
     ContextMenuSeparator,
     ContextMenuShortcut,
     ContextMenuTrigger,
-} from "@/components/ui/context-menu";
+} from "../../../src/components/ui/context-menu";
 
 const tone = ref<"warm" | "cool" | "neutral">("warm");
 const showGrid = ref(true);

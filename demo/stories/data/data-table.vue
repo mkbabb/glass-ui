@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { computed, ref } from "vue";
-import { DataTable } from "@/components/ui/data-table";
-import type { DataTableColumn, DataTableSort } from "@/components/ui/data-table";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/utils/cn";
+import { DataTable } from "../../../src/components/ui/data-table";
+import type { DataTableColumn, DataTableSort } from "../../../src/components/ui/data-table";
+import { Input } from "../../../src/components/ui/input";
+import { cn } from "../../../src/utils/cn";
 
 interface Repo {
     _id: string;

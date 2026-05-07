@@ -14,7 +14,7 @@ import {
     CommandList,
     CommandSeparator,
     CommandShortcut,
-} from "@/components/ui/command";
+} from "../../../src/components/ui/command";
 
 const selected = ref<string | null>(null);
 const query = ref("");

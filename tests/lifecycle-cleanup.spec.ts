@@ -1,9 +1,9 @@
 import { mount } from "@vue/test-utils";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { nextTick, ref } from "vue";
-import ExpandableContainer from "@/components/custom/expandable-container/ExpandableContainer.vue";
-import TypewriterText from "@/components/custom/typewriter/TypewriterText.vue";
-import { useGlassCarousel } from "@/components/custom/glass-carousel/useGlassCarousel";
+import ExpandableContainer from "../src/components/custom/expandable-container/ExpandableContainer.vue";
+import TypewriterText from "../src/components/custom/typewriter/TypewriterText.vue";
+import { useGlassCarousel } from "../src/components/custom/glass-carousel/useGlassCarousel";
 import { mountComposable } from "./utils/mountComposable";
 
 afterEach(() => {

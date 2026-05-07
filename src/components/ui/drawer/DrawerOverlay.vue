@@ -2,7 +2,7 @@
 import { DrawerOverlay } from 'vaul-vue'
 import type { DialogOverlayProps } from 'reka-ui'
 import { type HtmlHTMLAttributes, computed } from 'vue'
-import { cn } from '@utils'
+import { cn } from '../../../utils'
 
 const props = defineProps<DialogOverlayProps & { class?: HtmlHTMLAttributes['class'] }>()
 

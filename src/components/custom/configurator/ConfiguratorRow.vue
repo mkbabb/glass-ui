@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue";
 import { RotateCcw } from "lucide-vue-next";
-import { Label } from "@/components/ui/label";
-import { cn } from "@/utils/cn";
+import { Label } from "../../ui/label";
+import { cn } from "../../../utils/cn";
 
 /**
  * <ConfiguratorRow> — labeled control row for a single field inside a

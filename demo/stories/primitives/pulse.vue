@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { Pulse } from "@/components/custom/pulse";
+import { Pulse } from "../../../src/components/custom/pulse";
 </script>
 
 <template>

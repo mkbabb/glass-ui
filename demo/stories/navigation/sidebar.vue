@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref, computed } from "vue";
-import { ProgressiveSidebar, type SidebarSection } from "@/components/custom/sidebar";
-import { useSidebarState } from "@/composables/sidebar";
+import { ProgressiveSidebar, type SidebarSection } from "../../../src/components/custom/sidebar";
+import { useSidebarState } from "../../../src/composables/sidebar";
 
 const sections: SidebarSection[] = [
     {

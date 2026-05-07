@@ -10,7 +10,7 @@ import {
   useForwardPropsEmits,
 } from 'reka-ui'
 import { X } from 'lucide-vue-next'
-import { cn } from '@utils'
+import { cn } from '../../../utils'
 
 const props = defineProps<DialogContentProps & {
   class?: HTMLAttributes['class']

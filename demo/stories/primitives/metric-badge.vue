@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { MetricBadge } from "@/components/custom/metric-badge";
+import { MetricBadge } from "../../../src/components/custom/metric-badge";
 </script>
 
 <template>

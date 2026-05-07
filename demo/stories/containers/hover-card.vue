@@ -4,10 +4,10 @@ import {
     HoverCard,
     HoverCardContent,
     HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { IconTooltip } from "@/components/custom/icon-tooltip";
+} from "../../../src/components/ui/hover-card";
+import { Avatar, AvatarFallback, AvatarImage } from "../../../src/components/ui/avatar";
+import { Button } from "../../../src/components/ui/button";
+import { IconTooltip } from "../../../src/components/custom/icon-tooltip";
 import { Info, CircleHelp, Sparkles } from "lucide-vue-next";
 </script>
 

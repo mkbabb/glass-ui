@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
-import { Button } from "@/components/ui/button";
-import { Notification } from "@/components/ui/notification";
+import { Button } from "../../../src/components/ui/button";
+import { Notification } from "../../../src/components/ui/notification";
 
 interface Item {
     id: string;

@@ -10,8 +10,8 @@ import {
     SelectSeparator,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
+} from "../../../src/components/ui/select";
+import { Label } from "../../../src/components/ui/label";
 
 const font = ref<string>("computer-modern");
 const basis = ref<string>("fourier");

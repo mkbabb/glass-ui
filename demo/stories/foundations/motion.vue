@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
-import { cn } from "@/utils/cn";
+import { cn } from "../../../src/utils/cn";
 
 interface Curve {
     id: string;

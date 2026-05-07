@@ -3,8 +3,8 @@ import StoryPage from "../StoryPage.vue";
 // Gallery of the Vue <Transition> class-sets shipped in `src/styles/transitions.css`.
 // Each card hosts one v-if toggle + a sample element wearing that transition's classes.
 import { ref } from "vue";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/utils/cn";
+import { Button } from "../../../src/components/ui/button";
+import { cn } from "../../../src/utils/cn";
 
 interface Demo {
     id: string;

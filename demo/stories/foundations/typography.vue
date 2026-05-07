@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { cn } from "@/utils/cn";
+import { cn } from "../../../src/utils/cn";
 
 // Ladder order: display → body → admin rail.
 const ladder: { cls: string; label: string; sample: string }[] = [

@@ -16,8 +16,8 @@ import {
     DropdownMenuSubContent,
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+} from "../../../src/components/ui/dropdown-menu";
+import { Button } from "../../../src/components/ui/button";
 
 const panelLayout = ref<"grid" | "list" | "board">("grid");
 const flags = ref({ minimap: true, overlays: false, rulers: true });

@@ -8,8 +8,8 @@ import {
     CarouselItem,
     CarouselPager,
     type CarouselApi,
-} from "@/components/ui/carousel";
-import { cn } from "@/utils/cn";
+} from "../../../src/components/ui/carousel";
+import { cn } from "../../../src/utils/cn";
 
 const slides = [
     { hue: 24, title: "Warm Cream", note: "base surface" },

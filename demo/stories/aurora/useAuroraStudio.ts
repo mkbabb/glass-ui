@@ -1,5 +1,5 @@
 import { computed, reactive, ref, type ComputedRef, type Ref } from "vue";
-import type { AuroraConfig } from "@/components/custom/aurora";
+import type { AuroraConfig } from "../../../src/components/custom/aurora";
 import { PRESETS, PRESET_KEYS, PRESET_META, type PresetKey, type PresetMeta } from "./presets";
 
 /**
