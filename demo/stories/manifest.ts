@@ -19,6 +19,7 @@ import {
     Sparkles,
     LayoutDashboard,
     Wand2,
+    Cog,
     type LucideIcon,
 } from "lucide-vue-next";
 
@@ -188,6 +189,16 @@ export const CATEGORIES: Category[] = [
             s("motion", "scroll-type", "Scroll-driven Type"),
             s("motion", "typewriter", "Typewriter"),
             s("motion", "metaballs", "Metaballs", "WebGL canvas substrate with support fallback."),
+        ],
+    },
+    {
+        id: "composables",
+        title: "Composables",
+        icon: Cog,
+        stories: [
+            s("composables", "use-token-color", "useTokenColor", "Reactive read of a CSS custom property — re-resolves on dark-mode transitions."),
+            s("composables", "use-stagger", "useStagger", "Fixed-count timed reveal cascade — one-shot timeline with cleanup-safe timers."),
+            s("composables", "use-animated-number-map", "useAnimatedNumberMap", "N-up useAnimatedNumber fan-out behind a Record-returning composable."),
         ],
     },
     {

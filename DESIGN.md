@@ -675,6 +675,44 @@ classes, including `.gold-shimmer`, live in `utilities.css`.
 
 ---
 
+## Composables
+
+Library-tier composables decompose into three rough registers. The first register exposes platform primitives behind a Vue-shaped seam (timers, intersection, resize, dark mode). The second wraps `@mkbabb/keyframes.js` motion primitives so consumers don't reach into the engine directly. The third wraps cross-cutting orchestration patterns that consumers were rolling by hand.
+
+| Composable | Register | Purpose |
+|---|---|---|
+| `useGlobalDark` | platform | Single shared dark-mode ref + toggle. |
+| `useInterval` / `useTimer` | platform | Lifecycle-clean `setInterval` / `setTimeout` wrappers. |
+| `useResizeObserver` | platform | ResizeObserver behind `onScopeDispose`. |
+| `useTouchGate` | platform | Pointer-event coalescing for touch + mouse. |
+| `useKeyboardShortcuts` | platform | Scoped keybinding registration. |
+| `useTokenColor` | platform | Reactive read of a CSS custom property; re-resolves on dark-mode transitions. Replaces ad-hoc `getComputedStyle(html).getPropertyValue("--xxx")` reads in canvas + Aurora consumers. |
+| `useStagger` | orchestration | Fixed-count timed reveal cascade — `revealed.value[i]` flips true at `initialDelayMs + i * delayMs`. Distinct from `useStaggerReveal`: that one gates on IntersectionObserver thresholds; this one fires on a pure timer. The two compose. |
+| `useStaggerReveal` | orchestration | IntersectionObserver-gated entrance choreography for grids and lists. |
+| `useAnimatedNumber` | motion | Hysteresis-smoothed live numeric tracking via keyframes.js `SmoothProgress`. |
+| `useAnimatedNumberMap` | motion | N-up `useAnimatedNumber` fan-out behind a `Record<K, ComputedRef<number \| null>>`. Replaces hand-rolled per-key smoother arrays where consumers can't run the composable inside a `v-for`. |
+| `useSpringOrchestrator` | motion | Multi-spring snapshot engine for choreographed transitions. |
+| `useRAFLoop` | motion | rAF loop with start/stop/dispose + per-frame timing. |
+| `useDarkModeSync` | motion | Reactive bridge between `useGlobalDark` and animation engine state. |
+| `useScrollProgress` | motion | Scroll-position-driven progress ref. |
+| `useIntersectionPause` | motion | Pause/resume long-running animation when target is offscreen. |
+| `useGlassRenderer` | glass | Glass-surface renderer wiring (filter, mask, backdrop). |
+| `useSidebarFollow` / `useTreeIndex` / etc. | sidebar | Sidebar layout + active-section tracking. |
+| `useOffsetPagination` | pagination | Page-state machine for paginated data. |
+| `useInfiniteScroll` | data | Infinite scroll engine wired to a backing source. |
+| `useSortable` | data | SortableJS wrapper preserving Vue reactivity. |
+
+### When to add a new composable
+
+Reach for a new composable when:
+1. The pattern duplicates across two or more consumers (the "lifts on first duplication" rule).
+2. The consumer wraps a library primitive in a hand-rolled scheduler / fan-out / lifecycle loop. That's a library gap; fix it upstream.
+3. The platform API needs an `onScopeDispose` cleanup pair to be safe inside Vue components.
+
+The composables registry is consumed via the root `@mkbabb/glass-ui` barrel for cross-domain primitives, or via path-specific entries (e.g. `@mkbabb/glass-ui/sidebar`) for domain-bounded composables.
+
+---
+
 ## Layout & Sizing Tokens
 
 ### Icons
