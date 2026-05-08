@@ -84,6 +84,9 @@ export const CATEGORIES: Category[] = [
             s("foundations", "motion", "Motion", "Easings, damped spring linear() curves."),
             s("foundations", "paper-glass", "Paper & Glass", "Four glass tiers, paper grain, blend modes."),
             s("foundations", "icons", "Icons", "Lucide, 2px stroke, semantic sizes."),
+            s("foundations", "surface-tints", "Surface Tints", "9-rung tint scale + V.W3 tier aliases (quiet / floating / modal)."),
+            s("foundations", "overlays-scrims", "Overlays & Scrims", "Three scrim weights + ModalOverlay + motion / lift offsets."),
+            s("foundations", "chart-chassis-palette", "Chart & Chassis Palette", "Chart aliases (ping / download / upload / jitter) + chassis-tier opacities + specular tokens."),
         ],
     },
     {
