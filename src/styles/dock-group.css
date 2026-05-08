@@ -20,6 +20,19 @@
         box-shadow: var(--border-hairline);
     }
 
+    /* Four-rung canonical density rail (V.W3.T1) — `compact` is the default
+       (the un-suffixed `.dock-group` rule above); `comfortable` and `spacious`
+       step up gap + padding before the audacious chassis-strip rung. */
+    .dock-group[data-density="comfortable"] {
+        padding: 0.4375rem 0.75rem;
+        gap: 0.5625rem;
+    }
+
+    .dock-group[data-density="spacious"] {
+        padding: 0.5rem 0.8125rem;
+        gap: 0.5rem;
+    }
+
     .dock-group[data-density="audacious"] {
         padding: 0.5rem 0.875rem;
         gap: 0.625rem;

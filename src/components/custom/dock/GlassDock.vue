@@ -245,12 +245,12 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
             orientation,
             `variant-${variant}`,
             `shape-${shape}`,
-            `density-${density}`,
             { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'dock-wrap': wrap },
             position === 'fixed' ? 'fixed bottom-[var(--dock-pos)] left-1/2 -translate-x-1/2'
               : position === 'sticky' ? 'dock-sticky'
               : 'dock-inline',
         ]"
+        :data-density="density"
         :data-held="isHeld || undefined"
         :data-container-name="containerName || undefined"
         :style="containerStyle"

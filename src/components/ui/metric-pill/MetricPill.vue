@@ -48,13 +48,7 @@ const props = withDefaults(
     },
 );
 
-const composedClass = computed(() =>
-    cn(
-        "metric-pill",
-        `metric-pill--density-${props.density}`,
-        props.class,
-    ),
-);
+const composedClass = computed(() => cn("metric-pill", props.class));
 </script>
 
 <template>
@@ -68,5 +62,6 @@ const composedClass = computed(() =>
         :size="size"
         :label-position="labelPosition"
         :class="composedClass"
+        :data-density="density"
     />
 </template>

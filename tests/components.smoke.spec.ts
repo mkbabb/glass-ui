@@ -164,7 +164,7 @@ describe("component smoke coverage", () => {
         const root = wrapper.find(".metric-badge");
         expect(root.exists()).toBe(true);
         expect(root.classes()).toContain("metric-pill");
-        expect(root.classes()).toContain("metric-pill--density-spacious");
+        expect(root.attributes("data-density")).toBe("spacious");
         expect(root.classes()).toContain("metric-badge--label-stacked");
         expect(root.attributes("data-size")).toBe("lg");
         const fullLabel = root.find(".metric-badge__label--full");
@@ -175,7 +175,7 @@ describe("component smoke coverage", () => {
         expect(row.find(".metric-badge__unit").text()).toBe("Mbps");
     });
 
-    it("forwards MetricPill density override onto the modifier class", () => {
+    it("forwards MetricPill density override onto data-density (canonical rail)", () => {
         const wrapper = mount(MetricPill, {
             props: {
                 label: "LATENCY",
@@ -185,8 +185,9 @@ describe("component smoke coverage", () => {
             },
         });
         const root = wrapper.find(".metric-badge");
-        expect(root.classes()).toContain("metric-pill--density-comfortable");
+        expect(root.attributes("data-density")).toBe("comfortable");
         expect(root.classes()).not.toContain("metric-pill--density-spacious");
+        expect(root.classes()).not.toContain("metric-pill--density-comfortable");
     });
 
     it("keeps MetricBadge inline mode flat (no row wrapper)", () => {
@@ -228,6 +229,27 @@ describe("component smoke coverage", () => {
     it("applies PaperBackdrop opacity", () => {
         const wrapper = mount(PaperBackdrop, { props: { opacity: 0.5 } });
         expect(wrapper.attributes("style")).toContain("opacity: 0.5");
+    });
+
+    it("V.W3.T1 — density-rail probe: GlassDock + DockGroup + MetricPill all expose data-density on root", async () => {
+        // GlassDock — default density is "comfortable"
+        const dock = mount(GlassDock, { slots: { default: "<button>Tool</button>" } });
+        expect(dock.find(".glass-dock").attributes("data-density")).toBe("comfortable");
+        expect(dock.find(".glass-dock").classes()).not.toContain("density-comfortable");
+
+        // DockGroup — default is undefined; explicit "comfortable" sets the attr
+        const { default: DockGroup } = await import("../src/components/custom/dock-group/DockGroup.vue");
+        const group = mount(DockGroup, {
+            props: { density: "comfortable" },
+            slots: { default: "<span>child</span>" },
+        });
+        expect(group.find(".dock-group").attributes("data-density")).toBe("comfortable");
+
+        // MetricPill — default is "spacious"; passing "comfortable" sets the attr on root
+        const pill = mount(MetricPill, {
+            props: { label: "PING", amount: 12, unit: "ms", density: "comfortable" },
+        });
+        expect(pill.find(".metric-badge").attributes("data-density")).toBe("comfortable");
     });
 
     it("renders the GlassDock rail variant", () => {

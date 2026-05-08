@@ -14,11 +14,12 @@
  * `<MetricStrip>` pill row is the first consumer; survey + inspector
  * groupings line up behind it.
  *
- * Density is opt-in — `compact` (default) for tighter clusters, `audacious`
- * for chassis-strip rows where the audacious typographic register wants
- * matching shelf padding.
+ * Density is opt-in — the four-rung canonical rail (V.W3.T1):
+ * `compact` (default) for tighter clusters, `comfortable` for the standard
+ * register, `spacious` for breathing room, `audacious` for chassis-strip
+ * rows where the audacious typographic register wants matching shelf padding.
  */
 defineProps<{
-    density?: "compact" | "audacious";
+    density?: "compact" | "comfortable" | "spacious" | "audacious";
 }>();
 </script>

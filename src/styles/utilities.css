@@ -277,12 +277,12 @@
        register for densely-packed dock clusters. The selectors compose with
        `.metric-badge--label-stacked` so the inline ladder remains untouched
        — these are stacked-only refinements. */
-    .metric-pill--density-spacious.metric-badge--label-stacked {
+    .metric-pill[data-density="spacious"].metric-badge--label-stacked {
         --metric-badge-padding-block-stacked: 0.5rem;
         --metric-badge-padding-inline: 0.75rem;
     }
 
-    .metric-pill--density-comfortable.metric-badge--label-stacked {
+    .metric-pill[data-density="comfortable"].metric-badge--label-stacked {
         --metric-badge-padding-block-stacked: 0.25rem;
         --metric-badge-padding-inline: 0.5rem;
     }
@@ -316,15 +316,19 @@
        DockTabButton's analogous knob lives here so the tab-button row no
        longer free-floats to the glyph + padding sum. Compact density lands
        at 32px to match the deployed product's bottom-dock height. */
-    .glass-dock.density-compact {
+    .glass-dock[data-density="compact"] {
         --dock-tab-h-compact: 32px;
         --dock-tab-h: var(--dock-tab-h-compact);
     }
-    .glass-dock.density-spacious {
+    .glass-dock[data-density="comfortable"] {
+        --dock-tab-h-comfortable: 38px;
+        --dock-tab-h: var(--dock-tab-h-comfortable);
+    }
+    .glass-dock[data-density="spacious"] {
         --dock-tab-h-spacious: 44px;
         --dock-tab-h: var(--dock-tab-h-spacious);
     }
-    .glass-dock.density-audacious {
+    .glass-dock[data-density="audacious"] {
         --dock-tab-h-audacious: var(--dock-density-audacious-tab-min-height, 3.5rem);
         --dock-tab-h: var(--dock-tab-h-audacious);
     }
@@ -335,12 +339,12 @@
        overflow its host. The token reads `≤16px at <480` and `14–15px at
        480–719`; consumer dock label spans bind `font-size: var(--dock-label-size)`. */
     @media (max-width: 479px) {
-        .glass-dock.density-audacious {
+        .glass-dock[data-density="audacious"] {
             --dock-label-size: 14px;
         }
     }
     @media (min-width: 480px) and (max-width: 719px) {
-        .glass-dock.density-audacious {
+        .glass-dock[data-density="audacious"] {
             --dock-label-size: 15px;
         }
     }

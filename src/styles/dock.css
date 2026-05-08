@@ -58,7 +58,7 @@
         overflow: hidden;
     }
 
-    .glass-dock.density-compact {
+    .glass-dock[data-density="compact"] {
         --dock-padding-block: var(--dock-density-compact-padding-block, 0.25rem);
         --dock-padding-inline: var(--dock-density-compact-padding-inline, 0.375rem);
         --dock-control-size: var(--dock-density-compact-control-size, 2rem);
@@ -70,7 +70,23 @@
         --dock-tab-padding-inline: var(--dock-density-compact-tab-padding-inline, 0.625rem);
     }
 
-    .glass-dock.density-spacious {
+    /* Comfortable density — the GlassDock default. Sits between compact and
+       spacious. Patches the missing rung (V.W3.T1 — B5 §2.1 amendment: the
+       4-rung prop type used to fall through to the unpatched root for the
+       comfortable default). */
+    .glass-dock[data-density="comfortable"] {
+        --dock-padding-block: var(--dock-density-comfortable-padding-block, 0.375rem);
+        --dock-padding-inline: var(--dock-density-comfortable-padding-inline, 0.5rem);
+        --dock-control-size: var(--dock-density-comfortable-control-size, 2.5rem);
+        --dock-layer-height: var(--dock-density-comfortable-layer-height, 2.5rem);
+        --dock-layer-gap: var(--dock-density-comfortable-gap, 0.375rem);
+        --dock-trigger-padding-block: var(--dock-density-comfortable-trigger-padding-block, 0.25rem);
+        --dock-trigger-padding-inline: var(--dock-density-comfortable-trigger-padding-inline, 0.5rem);
+        --dock-tab-padding-block: var(--dock-density-comfortable-tab-padding-block, 0.4375rem);
+        --dock-tab-padding-inline: var(--dock-density-comfortable-tab-padding-inline, 0.75rem);
+    }
+
+    .glass-dock[data-density="spacious"] {
         --dock-padding-block: var(--dock-density-spacious-padding-block, 0.5rem);
         --dock-padding-inline: var(--dock-density-spacious-padding-inline, 0.75rem);
         --dock-control-size: var(--dock-density-spacious-control-size, 2.75rem);
@@ -86,7 +102,7 @@
        a primary surface, not a tray. Tab buttons set their own min-height so
        consumer-bumped fonts no longer drift the button height — the
        `--dock-tab-min-height` token reserves the row regardless of glyph rise. */
-    .glass-dock.density-audacious {
+    .glass-dock[data-density="audacious"] {
         --dock-padding-block: var(--dock-density-audacious-padding-block, 0.5rem);
         --dock-padding-inline: var(--dock-density-audacious-padding-inline, 0.875rem);
         --dock-control-size: var(--dock-density-audacious-control-size, 4rem);
