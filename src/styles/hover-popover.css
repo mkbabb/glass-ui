@@ -30,44 +30,15 @@
         outline: none;
     }
 
-    .hover-popover-panel[data-state="open"] {
-        animation: hover-popover-in var(--duration-fast, 160ms) var(--ease-out, ease-out);
-    }
-
-    .hover-popover-panel[data-state="closed"] {
-        animation: hover-popover-out var(--duration-fast, 160ms) var(--ease-in, ease-in);
-    }
-
     .hover-popover-label {
         display: inline-block;
     }
-
-    @keyframes hover-popover-in {
-        from {
-            opacity: 0;
-            transform: scale(0.96);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-
-    @keyframes hover-popover-out {
-        from {
-            opacity: 1;
-            transform: scale(1);
-        }
-        to {
-            opacity: 0;
-            transform: scale(0.97);
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .hover-popover-panel[data-state="open"],
-        .hover-popover-panel[data-state="closed"] {
-            animation: none;
-        }
-    }
 }
+
+/* The data-state animation grammar canonicalises onto `.popover-animate`
+   (V.W3.T9 / A5 §5.8). Authors compose `class="hover-popover-panel popover-animate"`
+   on the panel root so the canonical fade + zoom-95 entry/exit grammar
+   replaces the bespoke `hover-popover-in/out` keyframes that lived here.
+   The `prefers-reduced-motion` carve is handled at the canonical site
+   (`utilities.css`'s reduced-motion block) so it cascades to all four
+   popover-animation consumers automatically. */

@@ -11,6 +11,10 @@
         color: var(--popover-foreground);
         box-shadow: var(--glass-shadow-resting);
         pointer-events: auto;
-        animation: floating-panel-in var(--duration-fast) var(--ease-out);
+        /* V.W3.T9 — animation grammar routes through the canonical
+           Tailwind `animate-floating-panel-in` utility (defined in
+           `theme.css` as `--animate-floating-panel-in`), NOT the raw
+           `animation:` shorthand that bypassed the cascade. */
+        @apply animate-floating-panel-in;
     }
 }

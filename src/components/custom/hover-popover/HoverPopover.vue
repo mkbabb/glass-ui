@@ -85,7 +85,7 @@ const props = withDefaults(
 
 const contentClass = computed(() =>
     cn(
-        "z-popover hover-popover-panel",
+        "z-popover hover-popover-panel popover-animate",
         props.class,
     ),
 );
