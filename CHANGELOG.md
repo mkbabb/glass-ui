@@ -1,5 +1,126 @@
 # Changelog
 
+## v0.9.0 — 2026-05-08
+
+The V-tranche bundled release — V.W2 foundation polish + V.W3 structural
+unions + V.W4 storybook + composables expansion. Consolidates twenty-plus
+load-bearing patches surfaced by the 14-agent W0 audit cohort and the
+R-tranche refining synthesis.
+
+### Foundation polish (V.W2)
+
+- **Icon-size tokens minted** — `--icon-2xl: 2rem`, `--icon-3xl: 2.5rem`,
+  `--icon-hero: 3.5rem` complete the icon-size rung set; `theme.css`
+  bridges the new tokens through `@theme` so consumers compose
+  `size-icon-2xl`, `size-icon-3xl`, `size-icon-hero` Tailwind utilities.
+- **`--z-behind: -10`** — Aurora background-tier z-index for elements
+  that intentionally render below the document flow.
+- **Notification + Slider canonical glass-blur** — both primitives adopt
+  the canonical per-tier glass-blur tokens.
+- **Notification + Toast canonical tier shadows** — retire literal
+  `shadow-lg` overrides in favour of the canonical tier-shadow tokens.
+- **Card + Label titles** → typography ladder (admin-label / display-N).
+- **Avatar / Badge / Button / Toggle radius sweep** — remaining raw
+  radius literals migrate onto the `--radius-*` token rungs.
+- **Resource hints + .browserslistrc floor** — `<link rel="preconnect">`
+  for `api.fontshare.com` lands in the demo shell; `.browserslistrc`
+  declares the canonical baseline.
+- **`.gold-shimmer` PRM bracket** — wraps the slide animation in a
+  `prefers-reduced-motion: no-preference` bracket per R1 §3 + R4 §5.1.
+
+### Structural unions (V.W3)
+
+- **`<ModalOverlay>` collapses 3 scrim declarations onto a shared SFC** —
+  AlertDialogOverlay + DialogOverlay + SheetOverlay compose the new
+  primitive reading `--overlay-scrim` (with `tier='strong'` for the
+  destructive variant).
+- **`menuItemVariants` CVA collapses 9 primitives** — DropdownMenuItem,
+  ContextMenuItem, SelectItem, ComboboxItem, CommandItem and their
+  Sub variants share a single CVA recipe with `data-[disabled]`,
+  `data-[highlighted]`, and `data-[state=checked]` branches.
+- **`.popover-content` utility** — collapses 2 W1-survivor popover hosts
+  onto a single shared utility.
+- **`<LabeledField>` parent SFC + `.labeled-field-label` utility** —
+  the four labeled-field wrappers (Input / Select / Slider / Switch)
+  now compose a single parent that owns the IconTooltip + label
+  layer; the four wrappers stay as 3-line forwarders for back-compat.
+- **`<Section>` sectioning primitive over the typography ladder** —
+  semantic sectioning host that paints the canonical
+  `text-display-N`/`text-title`/`text-prose` typography pairings.
+- **Active-state vocabulary canon** — BouncyToggle + UnderlineTabs adopt
+  `aria-pressed` / `data-active` per R4 §2.4 reconcile.
+- **Density-rail unification** — GlassDock + DockGroup + MetricPill
+  unify on `data-density` attribute + a CVA-driven density token set
+  (StackedIconGroup intentionally excluded per B5 §2.1 — size-axis only).
+- **Popover-animation grammar** — `popover-animate` + `slide-in-from-side`
+  standardised on `@utility`; HoverPopover + the floating-panel host
+  unify on the canon.
+- **Surface-tint tier aliases** — `--surface-tint-quiet/floating/modal`
+  bridge the 9-rung numeric scale into named tiers consumed by
+  component-level styles.
+
+### Storybook + composables expansion (V.W4)
+
+- **5 chassis primitives** — `<StorySection>`, `<ShowcaseFrame>`,
+  `<DockShowcaseFrame>`, `<TokenLadder>`, `<ToneSwatch>` collapse the
+  ~233-site demo-host duplication. `<ShowcaseFrame>` carries a 5-rung
+  `pad` knob (xs=p-3 / sm=p-4 / md=p-5 / lg=p-6 / xl=p-10) including
+  the p-4 most-frequent close-variant.
+- **`useStoryDemo` composable** — canonical play / reset / status
+  harness for storybook demos. Mirrors `useStagger`'s timer-set
+  discipline: cleanup callbacks registered inside the play handler
+  fire on `reset()` AND `onScopeDispose`. Async-aware. Generic over
+  the live-state shape.
+- **9 missing primitive entries** — configurator, controls/DarkModeToggle,
+  expandable-container, icon-tooltip, labeled-field, paper-backdrop,
+  stacked-icons, toggle-chip, glass-panel.
+- **Toaster.vue story** — the `ui/toast/Toaster.vue` drop-in primitive
+  that consumers (the speedtest, the demo itself) compose at the layout
+  root. Per B4 §3.3 — A4 missed `ui/`-orphan primitives.
+- **Badge `success | warning | info` variants demo** — the v0.8.6 CVA
+  branches gain a dedicated `semantic tones` row in the badge story.
+- **23 composable storybook entries** — useGlobalDark (with singleton
+  invariant demo per B4 §3.5), useKeyboardShortcuts (registerShortcut
+  + useRegisteredShortcuts pair), useResizeObserver, useGlassRenderer,
+  useAnimatedNumber, useDarkModeSync, useIntersectionPause, useRAFLoop,
+  useScrollProgress, useSpringOrchestrator, useStaggerReveal,
+  useOffsetPagination, useVirtualSectionWindow, useWindowedStore,
+  useSortable, useScrollTracker, useSidebarFollow, useSidebarState,
+  useTreeIndex, useTouchGate, useTimer, useInterval, useInfiniteScroll,
+  plus the new useStoryDemo entry. Per R4 §4.3 — all 23 are publicly
+  exported (no internal-only composables in the cohort).
+- **3 token-tour foundation pages** — Surface Tints (9-rung tint scale +
+  V.W3 tier aliases), Overlays & Scrims (three scrim weights + motion
+  + lift offsets), Chart & Chassis Palette (chart aliases + chassis-tier
+  opacities + specular tokens; resolves the pre-V `--viz-topology` /
+  `--viz-recursion` non-existent token references).
+- **Toast story tone migration** — retires raw `bg-emerald-*` /
+  `bg-amber-*` / `bg-red-*` Tailwind ladders for the canonical
+  `--success` / `--warning` / `--destructive` token plates.
+- **Storybook smoke gate** — `tests/stories.smoke.spec.ts` asserts every
+  manifest entry resolves to a valid component (no MissingStory
+  placeholder), catching manifest-vs-file drift in the existing test
+  suite.
+
+### Test surface
+
+- 24 test files / 311 tests pass (was 22 / 301 at v0.8.6 baseline).
+- New: `useStoryDemo.spec.ts` (6 tests covering cleanup-on-reset,
+  cleanup-on-unmount, state-resets-to-initial, sync-status-cycle,
+  async-status-cycle, no-op-without-handler).
+- New: `stories.smoke.spec.ts` (4 tests over the manifest).
+
+### Migration notes
+
+- Consumers of `<DialogOverlay>` / `<SheetOverlay>` / `<AlertDialogOverlay>`
+  see no API changes — these primitives now compose the new
+  `<ModalOverlay>` internally.
+- `<LabeledInput|Select|Slider|Switch>` consumers see no API changes —
+  the four wrappers now forward to the new `<LabeledField>` parent.
+- Demo-side authors should compose the new `<StorySection>` and
+  `<ShowcaseFrame>` primitives in new stories; existing stories will
+  migrate progressively in a future cleanup pass.
+
 ## v0.8.6 — 2026-05-07
 
 The U-tranche W1 cohort — fifteen load-bearing patches surfaced by the
