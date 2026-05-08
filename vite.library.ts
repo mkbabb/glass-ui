@@ -51,7 +51,6 @@ export const libraryExternal = [
     "@mkbabb/keyframes.js",
     "class-variance-authority",
     "clsx",
-    "tailwind-merge",
     "embla-carousel-vue",
     "lucide-vue-next",
     "vaul-vue",
