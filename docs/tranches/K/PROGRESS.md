@@ -59,7 +59,8 @@ K plan was revised in place:
 | W7 | pending W1 | absorbs Lighthouse P0-1 Configurator recursion fix |
 | WV | pending W0 (parallel with W1) | NEW — V-tranche post-hoc plan-folder write-up |
 | WP | pending W1 | NEW — Lighthouse perf + a11y cohort (5 P1s) |
-| W8 | pending W3 + W4 + W5 + W6 + W7 + WV + WP | close ceremony with 7-agent strengthened audit (ι integrity-sweep) |
+| WS | pending W1 (parallel with W6) | NEW (2026-05-08 post-speedtest-W) — vueuse SCC trap fix; v0.9.3 candidate; absorbs speedtest W3.b.1 DEFERRED |
+| W8 | pending W3 + W4 + W5 + W6 + W7 + WV + WP + WS | close ceremony with 7-agent strengthened audit (ι integrity-sweep) |
 
 ## Inbound from speedtest W tranche
 
@@ -69,3 +70,20 @@ The speedtest W tranche will dispatch the following work into glass-ui (NOT K-at
 - **glass-ui v0.9.2** (speedtest W3.perf.B.T5): `src/utils/cn.ts` refactor — replace `tailwind-merge` with `clsx` + hand-rolled deduplicator; expected ~10-18 KB gz savings on speedtest's eager bundle.
 
 K W4 bundle-budget gate must land BEFORE speedtest W3.perf.B.T5 to baseline cleanly. K W3 demo lane EXCLUDES the 13 raw triplet sweep (speedtest W2.T10 owns).
+
+## 2026-05-08 (post-W close at speedtest tag `w-close`) — speedtest-W feedback absorbed
+
+Speedtest tranche W closed at speedtest commit `5703521b` / tag `w-close`. The 47-commit cohort landed v0.9.1 + v0.9.2 inbound work as planned, plus a single follow-up finding routed back to glass-ui:
+
+- **W3.b.1 vueuse manualChunk DEFERRED** (speedtest commit `aade571`, disposition at `/Users/mkbabb/Programming/speedtest/docs/tranches/W/artefacts/W3/b1/disposition.md`). Speedtest agent verified that adding a `vueuse` manualChunk to `vite.config.ts` regresses the V.W1.T7 SCC class — Rollup hoists Vue runtime + `@vue/shared` + `@vue/reactivity` + `@vue/runtime-core` into the new vueuse leaf chunk to satisfy both consumers, and Vite emits `<link rel="modulepreload">` for the eager critical path. The eager-bundle target (≤ 140 KB gz on speedtest's `/`) cannot be hit without addressing this trap upstream; speedtest landed at 222.9 KB gz (W3.c bundle-post-W3.html).
+
+K absorbs this finding as **K.WS** (NEW wave) per `docs/tranches/K/waves/W-S.md`. The wave delivers v0.9.3 — additive subpath exports for vueuse-bearing components (Input/Textarea/Combobox*) + composables (useGlobalDark, useKeyboardShortcuts) — so consumers like speedtest's worker can import lightweight composables (`useInterval`, `useTimer`) from the root barrel without dragging vueuse + Vue runtime into the eager critical path. Phase 1 is additive only; root-barrel REMOVALS (breaking change) defer to L tranche / v1.0.
+
+Cross-repo precept: K is now responsible for an **outbound** dispatch (v0.9.3 → speedtest re-link), distinct from K's prior **inbound** dispatches from speedtest W (v0.9.1 + v0.9.2). The cross-tranche-debt matrix in K.md "Cross-repo coordination" §7 documents the routing.
+
+Other speedtest W close-state items routed elsewhere:
+
+- Operator-tier rows (R1-R5, R7) DOC-STAGED on credential boundaries (npm token, CF dashboard, host SSH, IAM) — operator-side, NOT K-attributed.
+- Live deploy DOC-STAGED on `CLOUDFLARE_API_TOKEN` — operator-side, NOT K-attributed.
+- Speedtest `.metric-display` --digit-count CLS residual — speedtest-side (`SpeedtestResults.vue`), NOT a glass-ui concern.
+- Glass-ui v0.9.1 + v0.9.2 origin tag push: ALREADY DONE (`git ls-remote --tags origin | grep v0.9.[12]` returns both refs at 32ae156 + cc30e74). The W FINAL.md note about "DOC-STAGED on npm token" was inaccurate; the git tag push needs no npm token. **No outstanding tag-push work.**
