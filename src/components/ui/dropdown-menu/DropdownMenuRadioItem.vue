@@ -26,7 +26,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
   <DropdownMenuRadioItem
     v-bind="forwarded"
     :class="cn(
-      'relative flex cursor-default select-none items-center rounded-lg py-1.5 pl-7 pr-2 text-sm outline-none transition-colors focus:bg-foreground/[0.06] focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      'relative flex cursor-default select-none items-center rounded-lg py-1.5 pl-7 pr-2 text-sm outline-none transition-colors focus:bg-foreground/[0.06] focus:text-accent-foreground data-[disabled]:cursor-not-allowed data-[disabled]:pointer-events-none data-[disabled]:opacity-disabled',
       props.class,
     )"
   >
