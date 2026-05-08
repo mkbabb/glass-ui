@@ -18,6 +18,7 @@ export * from "./composables/useInterval";
 export * from "./composables/useKeyboardShortcuts";
 export * from "./composables/useResizeObserver";
 export * from "./composables/useStagger";
+export * from "./composables/useStoryDemo";
 export * from "./composables/useTimer";
 export * from "./composables/useTokenColor";
 export * from "./composables/useTouchGate";

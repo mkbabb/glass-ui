@@ -4,6 +4,7 @@ export * from "./useInterval";
 export * from "./useKeyboardShortcuts";
 export * from "./useResizeObserver";
 export * from "./useStagger";
+export * from "./useStoryDemo";
 export * from "./useTimer";
 export * from "./useTokenColor";
 export * from "./useTouchGate";
