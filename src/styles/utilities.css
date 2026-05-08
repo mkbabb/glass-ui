@@ -6,6 +6,22 @@
         @apply data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95;
     }
 
+    /* ── Popover-content recipe (V.W3.T3 / A5 §3.2) ─────────────────
+       Canonical recipe for floating-tier portal containers
+       (PopoverContent, DropdownMenuContent, SelectContent, etc.).
+       Covers radius + outline + popover-foreground; consumers compose
+       this with `.glass-floating` (bg + blur + border + shadow), with
+       `.popover-animate` (data-state animation), and with the per-host
+       z-rung. The floating-tier shadow comes from
+       `--glass-shadow-floating` via `.glass-floating`, replacing the
+       `shadow-md`/`shadow-lg` literals that bypassed the canonical
+       cascade. */
+    .popover-content {
+        border-radius: var(--radius-panel);
+        color: var(--popover-foreground);
+        outline: none;
+    }
+
     .slide-in-from-side {
         @apply data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2;
     }
