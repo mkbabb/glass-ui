@@ -232,9 +232,9 @@ onUnmounted(() => {
                             :ref="(el) => { if (el) buttonRefs[idx] = el as HTMLElement }"
                             :class="[
                                 isPill ? 'bouncy-btn bouncy-btn--pill' : 'bouncy-btn',
-                                { 'is-active': isActive(option.value) },
                                 option.disabled && 'is-disabled',
                             ]"
+                            :aria-pressed="isActive(option.value) ? 'true' : 'false'"
                             :disabled="option.disabled"
                             @click="select(option.value, idx)"
                         >
@@ -255,9 +255,9 @@ onUnmounted(() => {
                 :ref="(el) => { if (el) buttonRefs[idx] = el as HTMLElement }"
                 :class="[
                     isPill ? 'bouncy-btn bouncy-btn--pill' : 'bouncy-btn',
-                    { 'is-active': isActive(option.value) },
                     option.disabled && 'is-disabled',
                 ]"
+                :aria-pressed="isActive(option.value) ? 'true' : 'false'"
                 :disabled="option.disabled"
                 @click="select(option.value, idx)"
             >
@@ -333,7 +333,7 @@ onUnmounted(() => {
     }
 }
 
-.bouncy-btn.is-active {
+.bouncy-btn[aria-pressed="true"] {
     color: var(--foreground);
 }
 
@@ -373,7 +373,7 @@ onUnmounted(() => {
     }
 }
 
-.bouncy-btn--pill.is-active {
+.bouncy-btn--pill[aria-pressed="true"] {
     color: var(--background);
 }
 

@@ -57,14 +57,15 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div ref="containerRef" :class="cn('underline-tabs', props.class)">
+    <div ref="containerRef" role="tablist" :class="cn('underline-tabs', props.class)">
         <div class="underline-indicator" :style="underlineStyle" />
         <button
             v-for="(option, idx) in options"
             :key="option.value"
             :ref="(el) => { if (el) buttonRefs[idx] = el as HTMLElement }"
             class="underline-tab"
-            :class="{ 'is-active': modelValue === option.value }"
+            role="tab"
+            :aria-selected="modelValue === option.value ? 'true' : 'false'"
             @click="select(option.value)"
         >
             {{ option.label }}
@@ -109,7 +110,7 @@ onUnmounted(() => {
     color: color-mix(in srgb, var(--foreground) 70%, transparent);
 }
 
-.underline-tab.is-active {
+.underline-tab[aria-selected="true"] {
     color: var(--foreground);
 }
 </style>
