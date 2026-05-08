@@ -1,5 +1,55 @@
 # Changelog
 
+## v0.9.2 — 2026-05-08
+
+W.W3.b.2 patch — two library-internal fixes that unblock the speedtest
+W3 perf push: a browser-safety repair on the root barrel and an A5 §3
+Split 6 swap of `tailwind-merge` for a hand-rolled deduplicator.
+
+### FIX
+
+- **Root barrel no longer re-exports `./freshness`** (the build-blocker).
+  `src/freshness.ts` imports `node:fs` / `node:path` / `node:url`; Vite's
+  browser bundler externalises these as `__vite-browser-external` and
+  fails when a consumer's worker pulls anything off `@mkbabb/glass-ui`'s
+  root export. The speedtest worker at `src/utils/speedtest/index.ts:1`
+  was hitting this path: the symptom was
+  `"existsSync" is not exported by "__vite-browser-external"` during
+  `npm run build`. The fix removes line 19's `export * from "./freshness"`
+  from `src/index.ts` and leaves the helper reachable at the subpath
+  `@mkbabb/glass-ui/freshness` (`exports["./freshness"]` was minted in
+  v0.9.1). The library-external list in `vite.library.ts` keeps the
+  Node-builtin externals so the subpath still bundles correctly.
+
+### PERF
+
+- **`cn()` swaps `tailwind-merge` for `clsx` + a hand-rolled deduplicator**
+  per A5 §3 Split 6 and `feedback_library_gaps.md`. `tailwind-merge`
+  ships ~22 KB gzipped of full Tailwind config tables to resolve every
+  conflict pair across the framework; glass-ui exercises a small,
+  enumerable subset. The replacement walks the joined class string
+  left-to-right, computes each token's bucket via a ~30-rule regex
+  table (font-size, font-weight, padding axes, margin axes, gap, sizing,
+  bg-color, text-color, border-color, border-width, ring, rounded,
+  display, position, overflow, flex, items, justify, opacity, z-index,
+  cursor, shadow), and keeps the last-write per `(prefix-scope|bucket)`
+  pair. Variant prefixes (`hover:`, `md:`, `dark:`) scope the bucket so
+  `text-sm md:text-lg` keeps both tokens. Estimated consumer-side delta:
+  −10 to −18 KB gzipped on the speedtest entry chunk after re-link
+  (A5 §3 Split 6).
+
+### TEST
+
+- **18 new `cn.test.ts` cases** (5 variadic + clsx normalisation,
+  13 conflict-pair last-wins) at `src/utils/__tests__/cn.test.ts`.
+  Suite total moves from 322/322 (W2 close) to 340/340.
+
+### CHORE
+
+- `package.json`: `tailwind-merge` removed from `peerDependencies` +
+  `devDependencies`; `clsx` retained.
+- `vite.library.ts`: `tailwind-merge` removed from `libraryExternal`.
+
 ## v0.9.1 — 2026-05-08
 
 W.W2 patch — ScrollingText lift + freshness-gate substrate + Section
