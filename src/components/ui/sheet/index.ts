@@ -1,5 +1,11 @@
 import { type VariantProps, cva } from 'class-variance-authority'
 
+// V.W2 T4 — empty-wrapper decisions:
+// Sheet / SheetTrigger / SheetClose are pure forwarding wrappers around
+// reka-ui's DialogRoot / DialogTrigger / DialogClose (Sheet renames Dialog
+// for semantic clarity). Per B3 §2.6: Vue SFCs cannot be 1-line re-exports.
+// Decision: KEEP all three — the wrapper provides the Sheet/Dialog rename
+// at compile time and forwards props/emits with reka-ui's typed pattern.
 export { default as Sheet } from './Sheet.vue'
 export { default as SheetTrigger } from './SheetTrigger.vue'
 export { default as SheetClose } from './SheetClose.vue'
