@@ -12,6 +12,9 @@ export * from "./components/custom/hover-popover";
 // Custom composites — configurator primitive
 export * from "./components/custom/configurator";
 
+// Custom composites — overflow-marquee primitive
+export * from "./components/custom/scrolling-text";
+
 // Core composables
 export { useGlobalDark } from "./composables/useGlobalDark";
 export * from "./composables/useInterval";

@@ -35,6 +35,7 @@ export function libraryEntries(rootDir: string) {
         "disco-glyph": resolve(rootDir, "src/disco-glyph.ts"),
         "hover-popover": resolve(rootDir, "src/hover-popover.ts"),
         configurator: resolve(rootDir, "src/configurator.ts"),
+        "scrolling-text": resolve(rootDir, "src/scrolling-text.ts"),
     };
 }
 
