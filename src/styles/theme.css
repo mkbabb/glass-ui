@@ -105,6 +105,16 @@
     --color-surface-tint-22: var(--surface-tint-22);
     --color-surface-tint-25: var(--surface-tint-25);
 
+    /* Surface-tint tier aliases (V.W3.T10) — semantic names mapped to
+       the canonical numeric scale. Lets consumers compose
+       `bg-surface-tint-quiet|floating|modal` without picking a numeric
+       rung; the alias resolves to the rung that matches the surface
+       tier's canonical opacity. Quiet ≈ 6% (light backdrop tint),
+       floating ≈ 12% (panel-tier tint), modal ≈ 18% (heavy modal tint). */
+    --color-surface-tint-quiet:    var(--surface-tint-6);
+    --color-surface-tint-floating: var(--surface-tint-12);
+    --color-surface-tint-modal:    var(--surface-tint-18);
+
     /* Overlay scrims — bg-overlay-scrim{,-strong,-subtle}. */
     --color-overlay-scrim:        var(--overlay-scrim);
     --color-overlay-scrim-strong: var(--overlay-scrim-strong);
