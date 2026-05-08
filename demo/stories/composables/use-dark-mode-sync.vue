@@ -1,0 +1,41 @@
+<script setup lang="ts">
+// useDarkModeSync — re-runs onSync on dark-mode transitions.
+import { ref } from "vue";
+import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
+import ShowcaseFrame from "../ShowcaseFrame.vue";
+import { Button } from "../../../src/components/ui/button";
+import { useDarkModeSync } from "../../../src/composables/motion/useDarkModeSync";
+import { useGlobalDark } from "../../../src/composables/useGlobalDark";
+
+const syncCount = ref(0);
+const lastSync = ref<string>("(never)");
+
+useDarkModeSync(() => {
+    syncCount.value += 1;
+    lastSync.value = new Date().toISOString().slice(11, 23);
+});
+
+const { isDark, toggleDark } = useGlobalDark();
+</script>
+
+<template>
+    <StoryPage>
+        <StorySection
+            label="re-runs on dark-mode transition"
+            blurb="The canonical glue for token-reading compositions. When the theme flips, the registered onSync callback fires, so consumers can re-resolve CSS custom properties or remount canvas paints."
+        >
+            <ShowcaseFrame pad="lg">
+                <div class="flex flex-col gap-4">
+                    <Button @click="toggleDark">
+                        Toggle (theme: {{ isDark ? "dark" : "light" }})
+                    </Button>
+                    <div class="grid grid-cols-2 gap-3 text-sm">
+                        <div>sync count: <code class="fira-code">{{ syncCount }}</code></div>
+                        <div>last: <code class="fira-code">{{ lastSync }}</code></div>
+                    </div>
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
+    </StoryPage>
+</template>
