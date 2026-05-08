@@ -127,6 +127,7 @@ export const CATEGORIES: Category[] = [
             s("primitives", "dock-group", "Dock Group", "Pill-row shelf — wraps a horizontal cluster of dock-tier consumers in a quieter glass tier than the surrounding chassis."),
             s("primitives", "disco-glyph", "Disco Glyph", "Faceted SVG glyph primitive — 8-stop linear facet × 165° specular cap, phase-tinted on activation."),
             s("primitives", "separator", "Separator"),
+            s("primitives", "section", "Section", "Sectioning landmark over the typography ladder — title / description / tone (heading · title · subheading · label) / gap (tight · regular · loose)."),
         ],
     },
     {
@@ -176,6 +177,7 @@ export const CATEGORIES: Category[] = [
             s("data", "infinite-scroll", "Infinite Scroll"),
             s("data", "timeline", "Timeline"),
             s("data", "search", "Fuzzy Search"),
+            s("data", "scrolling-text", "Scrolling Text", "Overflow-detection-driven horizontal marquee for inline text — IPv6 addresses, org names, entity IDs."),
         ],
     },
     {
