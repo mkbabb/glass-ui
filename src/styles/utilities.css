@@ -6,6 +6,19 @@
         @apply data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95;
     }
 
+    /* ── Labeled-field label (V.W3.T5 / A5 §5.5) ────────────────────
+       Canonical recipe for `<LabeledField>`'s tooltip-wrapped label
+       layer. Four sibling wrappers (LabeledInput, LabeledSelect,
+       LabeledSlider, LabeledSwitch) used to repeat this literal across
+       their templates; promoting it to a utility lets the parent SFC
+       own one canonical declaration. */
+    .labeled-field-label {
+        font-family: var(--font-display);
+        font-size: var(--type-body);
+        color: var(--muted-foreground);
+        cursor: help;
+    }
+
     /* ── Popover-content recipe (V.W3.T3 / A5 §3.2) ─────────────────
        Canonical recipe for floating-tier portal containers
        (PopoverContent, DropdownMenuContent, SelectContent, etc.).

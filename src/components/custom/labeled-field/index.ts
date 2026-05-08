@@ -1,3 +1,4 @@
+export { default as LabeledField } from "./LabeledField.vue";
 export { default as LabeledInput } from "./LabeledInput.vue";
 export { default as LabeledSelect } from "./LabeledSelect.vue";
 export { default as LabeledSlider } from "./LabeledSlider.vue";

@@ -1,17 +1,16 @@
 <template>
-    <IconTooltip :text="tooltip">
-        <label :class="labelClass ?? 'font-display text-base text-muted-foreground cursor-help'">{{ label }}</label>
-    </IconTooltip>
-    <div class="flex items-center">
-        <Switch
-            :checked="checked"
-            @update:checked="(v: boolean) => emit('update:checked', v)"
-        />
-    </div>
+    <LabeledField :label="label" :tooltip="tooltip" :label-class="labelClass">
+        <div class="flex items-center">
+            <Switch
+                :checked="checked"
+                @update:checked="(v: boolean) => emit('update:checked', v)"
+            />
+        </div>
+    </LabeledField>
 </template>
 
 <script setup lang="ts">
-import { IconTooltip } from "../icon-tooltip";
+import LabeledField from "./LabeledField.vue";
 import { Switch } from "../../ui/switch";
 
 defineProps<{

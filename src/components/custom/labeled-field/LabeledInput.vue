@@ -1,17 +1,16 @@
 <template>
-    <IconTooltip :text="tooltip">
-        <label :class="labelClass ?? 'font-display text-lg text-muted-foreground cursor-help'">{{ label }}</label>
-    </IconTooltip>
-    <Input
-        :type="type ?? 'string'"
-        :class="inputClass ?? 'fira-code'"
-        :model-value="modelValue"
-        @change="(e: Event) => emit('update:modelValue', (e.target as HTMLInputElement).value)"
-    />
+    <LabeledField :label="label" :tooltip="tooltip" :label-class="labelClass">
+        <Input
+            :type="type ?? 'string'"
+            :class="inputClass ?? 'fira-code'"
+            :model-value="modelValue"
+            @change="(e: Event) => emit('update:modelValue', (e.target as HTMLInputElement).value)"
+        />
+    </LabeledField>
 </template>
 
 <script setup lang="ts">
-import { IconTooltip } from "../icon-tooltip";
+import LabeledField from "./LabeledField.vue";
 import { Input } from "../../ui/input";
 
 defineProps<{
