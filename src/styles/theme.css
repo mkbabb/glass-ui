@@ -169,6 +169,7 @@
     /* ═══════════════════════════════════════════════
        Z-index → z-* utilities
        ═══════════════════════════════════════════════ */
+    --z-index-behind: var(--z-behind);
     --z-index-background: var(--z-background);
     --z-index-content: var(--z-content);
     --z-index-controls: var(--z-controls);
@@ -221,6 +222,18 @@
        utilities. φ² and φ³ rungs for hero/chassis padding ladder. */
     --spacing-phi-5: var(--space-phi-5);
     --spacing-phi-6: var(--space-phi-6);
+
+    /* V.W2 T13 — Icon-size ladder bridge → `size-icon-*`/`h-icon-*`/`w-icon-*`
+       utilities. Consumers can compose via `class="size-icon-2xl"` etc.
+       directly without the `size-[var(--icon-2xl)]` arbitrary-property form. */
+    --spacing-icon-xs:  var(--icon-xs);
+    --spacing-icon-sm:  var(--icon-sm);
+    --spacing-icon-md:  var(--icon-md);
+    --spacing-icon-lg:  var(--icon-lg);
+    --spacing-icon-xl:  var(--icon-xl);
+    --spacing-icon-2xl: var(--icon-2xl);
+    --spacing-icon-3xl: var(--icon-3xl);
+    --spacing-icon-hero: var(--icon-hero);
 
     /* ═══════════════════════════════════════════════
        Shadows → shadow-* utilities
