@@ -151,8 +151,8 @@
     }
 
     .glass-btn:focus-visible {
-        outline: var(--focus-ring-width) solid var(--ring);
-        outline-offset: var(--focus-ring-width);
+        outline: none;
+        box-shadow: var(--focus-ring-shadow);
     }
 
     .glass-btn:disabled {
