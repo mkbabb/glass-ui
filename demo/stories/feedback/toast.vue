@@ -66,15 +66,18 @@ function fireWithAction() {
     });
 }
 
+// Migrated from raw Tailwind palette literals (bg-emerald-*, etc.) to the
+// canonical --success / --warning / --destructive token plates established
+// in v0.8.6. Per V.W4.T14 + B4 §3.2.
 const toneClass: Record<string, string> = {
     default:
         "border-border/70 bg-card/95 text-foreground [&_[data-tone-icon]]:text-muted-foreground",
     success:
-        "border-emerald-500/40 bg-emerald-50/90 text-emerald-950 dark:border-emerald-400/40 dark:bg-emerald-950/70 dark:text-emerald-50 [&_[data-tone-icon]]:text-emerald-600 dark:[&_[data-tone-icon]]:text-emerald-300",
+        "border-success/40 bg-success/15 text-success-foreground [&_[data-tone-icon]]:text-success",
     warning:
-        "border-amber-500/40 bg-amber-50/90 text-amber-950 dark:border-amber-400/40 dark:bg-amber-950/70 dark:text-amber-50 [&_[data-tone-icon]]:text-amber-600 dark:[&_[data-tone-icon]]:text-amber-300",
+        "border-warning/40 bg-warning/15 text-warning-foreground [&_[data-tone-icon]]:text-warning",
     error:
-        "border-red-500/50 bg-red-50/90 text-red-950 dark:border-red-400/40 dark:bg-red-950/70 dark:text-red-50 [&_[data-tone-icon]]:text-red-600 dark:[&_[data-tone-icon]]:text-red-300",
+        "border-destructive/50 bg-destructive/15 text-destructive-foreground [&_[data-tone-icon]]:text-destructive",
 };
 
 const toneIcon: Record<string, typeof CheckCircle2> = {
