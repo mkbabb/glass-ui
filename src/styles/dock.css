@@ -705,8 +705,7 @@
         color: var(--foreground);
         border: 1px solid var(--glass-border-quiet);
         box-shadow:
-            inset 0 0.5px 0 0 rgb(255 255 255 / 0.06),
-            0 0.5px 0 0 rgb(0 0 0 / 0.04),
+            var(--border-hairline),
             var(--glass-highlight);
         transition:
             background var(--duration-fast) var(--ease-standard),
@@ -795,8 +794,7 @@
         background: color-mix(in srgb, var(--card) 50%, transparent);
         border: 1px solid var(--glass-border-quiet);
         box-shadow:
-            inset 0 0.5px 0 0 rgb(255 255 255 / 0.06),
-            0 0.5px 0 0 rgb(0 0 0 / 0.04),
+            var(--border-hairline),
             var(--glass-highlight);
     }
 

@@ -403,6 +403,14 @@
     --glass-grain-opacity-disco: 0.08;
     --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.25);
 
+    /* Hairline-accent — 0.5px catch-light + under-shadow pair.
+       Single token composes the canonical 2-stop hairline used by dock,
+       dock-group, instrument-chassis. The `.hairline-accent` utility
+       (utilities.css §hairline) adopts these via `box-shadow:`. */
+    --hairline-catch-light: inset 0 0.5px 0 0 rgb(255 255 255 / 0.06);
+    --hairline-under-shadow: 0 0.5px 0 0 rgb(0 0 0 / 0.04);
+    --border-hairline: var(--hairline-catch-light), var(--hairline-under-shadow);
+
     /* Specular catch-light — 1.5px-tall top-edge highlight that swaps in for
        --glass-highlight on interactive moments (e.g. primary-action hover).
        Reads as a real catch-light on a curved surface. The `-dark` companion
@@ -679,6 +687,10 @@
     --glass-opacity-chassis:  0.36;
     --glass-grain-opacity: 0.045;
     --glass-highlight: inset 0 0.5px 0 0 hsl(0 0% 100% / 0.08);
+
+    /* Hairline-accent dark mirror — see light counterpart at line ~404. */
+    --hairline-catch-light: inset 0 0.5px 0 0 rgb(255 255 255 / 0.05);
+    --hairline-under-shadow: 0 0.5px 0 0 rgb(0 0 0 / 0.06);
 
     /* Specular + curvature — softened for dark backdrops. Disco-grain stays
        at the same opacity ceiling; the dark grain blend already lifts it. */

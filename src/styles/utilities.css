@@ -30,6 +30,15 @@
         box-shadow: var(--focus-ring-shadow);
     }
 
+    /* ── Hairline-accent — 0.5px catch-light + under-shadow pair ──
+       Composes the canonical `--border-hairline` token (tokens.css §
+       Glass-decorative). Adopt at any surface that wants the canonical
+       2-stop hairline (dock surfaces, dock-group, instrument-chassis).
+       Auto-mirrors in dark via the .dark token override. */
+    .hairline-accent {
+        box-shadow: var(--border-hairline);
+    }
+
     /* ── Interactive item (hover bg + focus ring + active scale) ── */
     .interactive-item {
         border-radius: var(--radius-lg);
