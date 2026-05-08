@@ -6,6 +6,17 @@
         @apply data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95;
     }
 
+    /* ── Section description (V.W3.T7) ──────────────────────────────
+       Canonical recipe for the `<Section>` primitive's description
+       paragraph. Composes the body type + muted-foreground color in
+       one declaration so consumers don't fight twMerge's
+       typography-class collapse. */
+    .section-description {
+        font-size: var(--type-body);
+        color: var(--muted-foreground);
+        line-height: 1.5;
+    }
+
     /* ── Labeled-field label (V.W3.T5 / A5 §5.5) ────────────────────
        Canonical recipe for `<LabeledField>`'s tooltip-wrapped label
        layer. Four sibling wrappers (LabeledInput, LabeledSelect,

@@ -15,6 +15,7 @@ import {
     Label,
     MetricPill,
     Progress,
+    Section,
     Separator,
     Skeleton,
     Textarea,
@@ -229,6 +230,26 @@ describe("component smoke coverage", () => {
     it("applies PaperBackdrop opacity", () => {
         const wrapper = mount(PaperBackdrop, { props: { opacity: 0.5 } });
         expect(wrapper.attributes("style")).toContain("opacity: 0.5");
+    });
+
+    it("V.W3.T7 — Section composes typography ladder via tone variant", () => {
+        const wrapper = mount(Section, {
+            props: { title: "Audio settings", description: "Configure inputs and outputs.", tone: "heading" },
+            slots: { default: "<div>body</div>" },
+        });
+        expect(wrapper.find("section").exists()).toBe(true);
+        expect(wrapper.find("h2").text()).toBe("Audio settings");
+        expect(wrapper.find("h2").classes()).toContain("text-heading");
+        expect(wrapper.find("p").text()).toBe("Configure inputs and outputs.");
+        expect(wrapper.find("p").classes()).toContain("section-description");
+        expect(wrapper.text()).toContain("body");
+    });
+
+    it("V.W3.T7 — Section tone='label' composes the .section-label class", () => {
+        const wrapper = mount(Section, {
+            props: { title: "MICROPHONE LEVELS", tone: "label" },
+        });
+        expect(wrapper.find("h2").classes()).toContain("section-label");
     });
 
     it("V.W3.T1 — density-rail probe: GlassDock + DockGroup + MetricPill all expose data-density on root", async () => {
