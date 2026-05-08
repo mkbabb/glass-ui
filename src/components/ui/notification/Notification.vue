@@ -7,7 +7,7 @@
     <div
       v-for="notification in notifications"
       :key="notification.id"
-      class="flex items-center gap-3 rounded-panel px-4 py-3 shadow-elevated [backdrop-filter:var(--glass-blur-wash)]"
+      class="glass-wash flex items-center gap-3 rounded-panel px-4 py-3 shadow-elevated"
       :class="[
         notificationClasses[notification.type],
         'min-w-[300px] max-w-[500px]'

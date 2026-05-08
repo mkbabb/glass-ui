@@ -169,8 +169,8 @@ const isHeld = computed(() => dockHeld?.value === true)
 .glass-slider[data-variant="timeline"] .slider-track {
     height: calc(var(--slider-thumb-size, 1rem) * 1.5);
     background: var(--slider-track-bg, var(--surface-tint-6));
-    backdrop-filter: var(--glass-blur-wash);
-    -webkit-backdrop-filter: var(--glass-blur-wash);
+    backdrop-filter: var(--glass-blur-quiet);
+    -webkit-backdrop-filter: var(--glass-blur-quiet);
 }
 
 .glass-slider[data-variant="timeline"] .slider-range {
@@ -188,8 +188,8 @@ const isHeld = computed(() => dockHeld?.value === true)
 .glass-slider[data-variant="glass-pill"] .slider-track {
     height: calc(var(--slider-thumb-size, 1rem) * 0.875);
     background: var(--surface-tint-6);
-    backdrop-filter: var(--glass-blur-wash);
-    -webkit-backdrop-filter: var(--glass-blur-wash);
+    backdrop-filter: var(--glass-blur-quiet);
+    -webkit-backdrop-filter: var(--glass-blur-quiet);
     border: 1px solid var(--surface-tint-8);
 }
 
