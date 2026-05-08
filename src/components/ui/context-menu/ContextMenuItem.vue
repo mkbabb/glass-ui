@@ -7,6 +7,7 @@ import {
   useForwardPropsEmits,
 } from 'reka-ui'
 import { cn } from '../../../utils'
+import { menuItemVariants } from '../_shared/menuItemVariants'
 
 const props = defineProps<ContextMenuItemProps & { class?: HTMLAttributes['class'], inset?: boolean }>()
 const emits = defineEmits<ContextMenuItemEmits>()
@@ -24,8 +25,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
   <ContextMenuItem
     v-bind="forwarded"
     :class="cn(
-      'relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:cursor-not-allowed data-[disabled]:pointer-events-none data-[disabled]:opacity-disabled',
-      inset && 'pl-8',
+      menuItemVariants({ indicator: inset ? 'start-wide' : 'none' }),
       props.class,
     )"
   >

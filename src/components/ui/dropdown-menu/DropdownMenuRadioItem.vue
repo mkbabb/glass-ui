@@ -8,6 +8,7 @@ import {
   useForwardPropsEmits,
 } from 'reka-ui'
 import { cn } from '../../../utils'
+import { menuItemVariants } from '../_shared/menuItemVariants'
 
 const props = defineProps<DropdownMenuRadioItemProps & { class?: HTMLAttributes['class'] }>()
 
@@ -26,7 +27,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
   <DropdownMenuRadioItem
     v-bind="forwarded"
     :class="cn(
-      'relative flex cursor-default select-none items-center rounded-lg py-1.5 pl-7 pr-2 text-sm outline-none transition-colors focus:bg-foreground/[0.06] focus:text-accent-foreground data-[disabled]:cursor-not-allowed data-[disabled]:pointer-events-none data-[disabled]:opacity-disabled',
+      menuItemVariants({ indicator: 'start' }),
       props.class,
     )"
   >

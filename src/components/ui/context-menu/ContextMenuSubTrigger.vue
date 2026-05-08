@@ -7,6 +7,7 @@ import {
 } from 'reka-ui'
 import { ChevronRight } from 'lucide-vue-next'
 import { cn } from '../../../utils'
+import { menuItemVariants } from '../_shared/menuItemVariants'
 
 const props = defineProps<ContextMenuSubTriggerProps & { class?: HTMLAttributes['class'], inset?: boolean }>()
 
@@ -23,8 +24,7 @@ const forwardedProps = useForwardProps(delegatedProps)
   <ContextMenuSubTrigger
     v-bind="forwardedProps"
     :class="cn(
-      'flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground',
-      inset && 'pl-8',
+      menuItemVariants({ indicator: inset ? 'start-wide' : 'none' }),
       props.class,
     )"
   >

@@ -8,6 +8,7 @@ import {
   useForwardProps,
 } from 'reka-ui'
 import { cn } from '../../../utils'
+import { menuItemVariants } from '../_shared/menuItemVariants'
 
 const props = defineProps<SelectItemProps & { class?: HTMLAttributes['class']; hideIndicator?: boolean }>()
 
@@ -25,8 +26,7 @@ const forwardedProps = useForwardProps(delegatedProps)
     v-bind="forwardedProps"
     :class="
       cn(
-        'relative flex w-full cursor-default select-none items-center rounded-lg py-1.5 pr-2 outline-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground data-[disabled]:cursor-not-allowed data-[disabled]:pointer-events-none data-[disabled]:opacity-disabled',
-        hideIndicator ? 'pl-2' : 'pl-7',
+        menuItemVariants({ indicator: hideIndicator ? 'none' : 'start' }),
         props.class,
       )
     "

@@ -9,6 +9,7 @@ import {
 } from 'reka-ui'
 import { Check } from 'lucide-vue-next'
 import { cn } from '../../../utils'
+import { menuItemVariants } from '../_shared/menuItemVariants'
 
 const props = defineProps<DropdownMenuCheckboxItemProps & { class?: HTMLAttributes['class'] }>()
 const emits = defineEmits<DropdownMenuCheckboxItemEmits>()
@@ -25,8 +26,8 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 <template>
   <DropdownMenuCheckboxItem
     v-bind="forwarded"
-    :class=" cn(
-      'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:cursor-not-allowed data-[disabled]:pointer-events-none data-[disabled]:opacity-disabled',
+    :class="cn(
+      menuItemVariants({ indicator: 'start-wide' }),
       props.class,
     )"
   >

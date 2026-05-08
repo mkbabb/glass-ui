@@ -60,9 +60,11 @@
     .interactive-item:active {
         transform: scale(0.98);
     }
-    .interactive-item:disabled {
+    .interactive-item:disabled,
+    .interactive-item[data-disabled] {
         pointer-events: none;
         opacity: var(--opacity-disabled);
+        cursor: not-allowed;
     }
 
     /* ── Status dot indicator ── */
