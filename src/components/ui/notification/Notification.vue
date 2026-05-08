@@ -7,7 +7,7 @@
     <div
       v-for="notification in notifications"
       :key="notification.id"
-      class="flex items-center gap-3 rounded-lg px-4 py-3 shadow-lg [backdrop-filter:var(--glass-blur-wash)]"
+      class="flex items-center gap-3 rounded-panel px-4 py-3 shadow-lg [backdrop-filter:var(--glass-blur-wash)]"
       :class="[
         notificationClasses[notification.type],
         'min-w-[300px] max-w-[500px]'
@@ -22,7 +22,7 @@
       </p>
       <button
         @click="$emit('remove', notification.id)"
-        class="rounded-md p-1 transition-colors hover:bg-white/10"
+        class="rounded-button p-1 transition-colors hover:bg-white/10"
       >
         <X class="h-4 w-4" />
       </button>

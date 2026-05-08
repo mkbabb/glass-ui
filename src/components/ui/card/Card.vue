@@ -43,7 +43,7 @@ const props = withDefaults(defineProps<Props>(), {
         :as-child="asChild"
         :class="
             cn(
-                'rounded-xl text-card-foreground scrollbar-hidden',
+                'rounded-card text-card-foreground scrollbar-hidden',
                 `glass-${tier}`,
                 shadow && 'shadow-[var(--shadow-card)]',
                 !grain && '[&::after]:hidden',

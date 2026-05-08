@@ -22,7 +22,7 @@ const { orientation, canScrollNext, scrollNext } = useCarousel()
     data-slot="carousel-next"
     :disabled="!canScrollNext"
     :class="cn(
-      'absolute h-[var(--carousel-nav-size)] w-[var(--carousel-nav-size)] rounded-full',
+      'absolute h-[var(--carousel-nav-size)] w-[var(--carousel-nav-size)] rounded-pill',
       orientation === 'horizontal'
         ? 'top-1/2 -translate-y-1/2 right-[calc(-1*var(--carousel-nav-offset))]'
         : 'left-1/2 -translate-x-1/2 rotate-90 bottom-[calc(-1*var(--carousel-nav-offset))]',

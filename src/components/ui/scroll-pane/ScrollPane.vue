@@ -31,7 +31,7 @@ const props = withDefaults(defineProps<Props>(), {
         :as-child="asChild"
         :class="
             cn(
-                'glass-wash rounded-xl text-card-foreground scrollbar-hidden overflow-auto',
+                'glass-wash rounded-panel text-card-foreground scrollbar-hidden overflow-auto',
                 '[&::after]:hidden transition-shadow',
                 shadow && 'shadow-[var(--shadow-card)]',
                 props.class,

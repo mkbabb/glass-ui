@@ -32,7 +32,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
   >
     <span class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
       <DropdownMenuItemIndicator>
-        <span class="inline-block w-2 h-2 rounded-full bg-current"></span>
+        <span class="inline-block w-2 h-2 rounded-pill bg-current"></span>
       </DropdownMenuItemIndicator>
     </span>
     <slot />

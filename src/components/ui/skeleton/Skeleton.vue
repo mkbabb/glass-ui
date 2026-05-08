@@ -16,7 +16,7 @@ const props = withDefaults(
 <template>
   <div
     :class="cn(
-      'rounded-md bg-muted',
+      'rounded-input bg-muted',
       variant === 'pulse' && 'animate-pulse',
       variant === 'shimmer' && 'skeleton-shimmer',
       props.class,

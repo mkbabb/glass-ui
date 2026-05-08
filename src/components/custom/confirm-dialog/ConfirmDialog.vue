@@ -23,7 +23,7 @@
                         <div class="flex justify-end gap-2">
                             <Button
                                 variant="outline"
-                                class="cursor-pointer rounded-full"
+                                class="cursor-pointer rounded-pill"
                                 :disabled="loading"
                                 @click="open = false"
                             >
@@ -31,7 +31,7 @@
                             </Button>
                             <Button
                                 :variant="destructive ? 'destructive' : 'default'"
-                                class="cursor-pointer gap-1.5 rounded-full"
+                                class="cursor-pointer gap-1.5 rounded-pill"
                                 :disabled="loading"
                                 @click="onConfirm"
                             >

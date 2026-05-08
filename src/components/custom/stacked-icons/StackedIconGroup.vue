@@ -12,7 +12,7 @@
             <div
                 :class="[
                     sizeClass,
-                    'relative flex items-center justify-center rounded-full transform-gpu',
+                    'relative flex items-center justify-center rounded-pill transform-gpu',
                     'transition-[transform,box-shadow,opacity] duration-[var(--duration-fast)] ease-[var(--spring-snappy)]',
                     i > 0 ? overlapClass : '',
                     expandOnHover && i > 0
@@ -32,7 +32,7 @@
             v-if="overflowCount > 0"
             :class="[
                 sizeClass,
-                'relative flex items-center justify-center rounded-full',
+                'relative flex items-center justify-center rounded-pill',
                 'border-2 border-background bg-[color-mix(in_srgb,var(--background)_96%,transparent)] text-xs font-semibold text-muted-foreground/60 shadow-cartoon-sm',
                 'transform-gpu transition-[background-color,color,transform,box-shadow] duration-[var(--duration-fast)] ease-[var(--spring-snappy)]',
                 'hover:bg-background hover:text-muted-foreground hover:shadow-cartoon-md',

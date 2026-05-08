@@ -10,7 +10,7 @@
         <span
             :class="
                 cn(
-                    'relative inline-flex shrink-0 rounded-full',
+                    'relative inline-flex shrink-0 rounded-pill',
                     sizeClass,
                 )
             "
@@ -19,10 +19,10 @@
             <span
                 v-if="pulse"
                 aria-hidden="true"
-                class="absolute inset-0 rounded-full opacity-60 motion-safe:animate-ping"
+                class="absolute inset-0 rounded-pill opacity-60 motion-safe:animate-ping"
                 :style="ringStyle"
             />
-            <span class="relative inline-block h-full w-full rounded-full" :style="dotStyle" />
+            <span class="relative inline-block h-full w-full rounded-pill" :style="dotStyle" />
         </span>
         <span v-if="label" class="text-xs leading-none text-muted-foreground">
             {{ label }}

@@ -39,8 +39,8 @@ const rootClass = computed(() =>
   props.variant === 'gradient'
     ? // Rail bg comes from --progress-track (with bg-secondary fallback) so
       // consumers can paint phase-specific track colors without :deep().
-      'relative h-4 w-full overflow-hidden rounded-full bg-[var(--progress-track,theme(colors.secondary.DEFAULT))]'
-    : 'relative h-4 w-full overflow-hidden rounded-full bg-secondary',
+      'relative h-4 w-full overflow-hidden rounded-pill bg-[var(--progress-track,theme(colors.secondary.DEFAULT))]'
+    : 'relative h-4 w-full overflow-hidden rounded-pill bg-secondary',
 )
 
 const indicatorClass = computed(() =>

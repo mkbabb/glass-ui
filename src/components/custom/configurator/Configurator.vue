@@ -128,7 +128,7 @@ const controlsScrollClass = computed(() => {
                             :aria-selected="p.key === activePreset"
                             :class="
                                 cn(
-                                    'focus-ring shrink-0 rounded-full border px-3 py-1 text-xs font-medium transition-colors',
+                                    'focus-ring shrink-0 rounded-pill border px-3 py-1 text-xs font-medium transition-colors',
                                     p.key === activePreset
                                         ? 'border-foreground/40 bg-foreground text-background'
                                         : 'border-border/40 bg-card/40 text-foreground hover:bg-card/70',

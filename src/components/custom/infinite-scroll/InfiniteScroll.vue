@@ -45,8 +45,9 @@ defineExpose({ sentinelRef });
         <!-- Loading indicator -->
         <div v-if="isLoading" class="flex justify-center py-4">
             <slot name="loading">
+                <!-- rounded-pill on a square box is the circular spinner ring -->
                 <div
-                    class="h-5 w-5 animate-spin rounded-full border-2 border-muted-foreground border-t-transparent"
+                    class="h-5 w-5 animate-spin rounded-pill border-2 border-muted-foreground border-t-transparent"
                 />
             </slot>
         </div>

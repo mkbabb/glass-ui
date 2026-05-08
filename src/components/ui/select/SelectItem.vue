@@ -33,7 +33,7 @@ const forwardedProps = useForwardProps(delegatedProps)
   >
     <span v-if="!hideIndicator" class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
       <SelectItemIndicator>
-        <span class="inline-block w-2 h-2 rounded-full" style="background-color: var(--select-dot-color, currentColor)"></span>
+        <span class="inline-block w-2 h-2 rounded-pill" style="background-color: var(--select-dot-color, currentColor)"></span>
       </SelectItemIndicator>
     </span>
 

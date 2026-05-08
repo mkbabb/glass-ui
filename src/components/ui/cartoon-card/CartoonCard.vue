@@ -26,7 +26,7 @@ const props = defineProps<Props>();
         :as-child="asChild"
         :class="
             cn(
-                'glass-cartoon rounded-xl text-card-foreground scrollbar-hidden transition-shadow',
+                'glass-cartoon rounded-card text-card-foreground scrollbar-hidden transition-shadow',
                 props.class,
             )
         "
