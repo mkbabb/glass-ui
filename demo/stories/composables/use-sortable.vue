@@ -17,7 +17,7 @@ import ShowcaseFrame from "../ShowcaseFrame.vue";
             blurb="Returns container + registerItem + isDragging + dragId + dragPosition + dropIndex. Spread the container binding on the host element; call registerItem(item, getId) to obtain a per-row binding (ref + dataAttrs + class + onPointerdown). Live primitive demo: Data / Sortable List."
         >
             <ShowcaseFrame pad="md" tier="quiet">
-                <pre class="fira-code text-sm overflow-x-auto"><code>const { container, registerItem, isDragging, dragId, dropIndex } = useSortable&lt;T&gt;({
+                <pre v-pre class="fira-code text-sm overflow-x-auto"><code>const { container, registerItem, isDragging, dragId, dropIndex } = useSortable&lt;T&gt;({
   items,
   getId: (item) =&gt; item.id,
   group: "lists",                      // optional cross-list group id

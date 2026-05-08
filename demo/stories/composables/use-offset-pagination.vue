@@ -39,19 +39,19 @@ pager.loadPage(1);
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="row in pager.items" :key="row.id" class="border-b border-border/40">
+                            <tr v-for="row in pager.items.value" :key="row.id" class="border-b border-border/40">
                                 <td class="py-1.5 pr-4"><code class="fira-code">{{ row.id }}</code></td>
                                 <td class="py-1.5">{{ row.label }}</td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="flex items-center gap-3">
-                        <Button :disabled="!pager.hasPrev" @click="pager.prevPage">prev</Button>
+                        <Button :disabled="!pager.hasPrev.value" @click="() => pager.prevPage()">prev</Button>
                         <span class="text-sm">
                             page <code class="fira-code">{{ pager.page }}</code> of
                             <code class="fira-code">{{ pager.pageCount }}</code>
                         </span>
-                        <Button :disabled="!pager.hasNext" @click="pager.nextPage">next</Button>
+                        <Button :disabled="!pager.hasNext.value" @click="() => pager.nextPage()">next</Button>
                         <span class="ml-auto text-mono-caption text-muted-foreground">
                             total: {{ pager.total }} · loading: {{ pager.loading }}
                         </span>

@@ -12,7 +12,7 @@ import ShowcaseFrame from "../ShowcaseFrame.vue";
             blurb="Infinite-scroll engine sitting under the InfiniteScroll primitive. Pairs an IntersectionObserver sentinel with a fetch loop; gates concurrent fetches so the consumer only ever sees one in-flight request per direction."
         >
             <ShowcaseFrame pad="md" tier="quiet">
-                <pre class="fira-code text-sm overflow-x-auto"><code>const { items, loading, error, loadMore, reset } = useInfiniteScroll({
+                <pre v-pre class="fira-code text-sm overflow-x-auto"><code>const { items, loading, error, loadMore, reset } = useInfiniteScroll({
   fetchPage: async (cursor) =&gt; ({ items: [...], next: nextCursor }),
   threshold: 0.5,
 });</code></pre>

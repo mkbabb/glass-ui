@@ -46,7 +46,7 @@ const siteB = useGlobalDark();
             blurb="Returns { isDark, toggleDark, disableTransitions, setDisableTransitions }. Mirrors color-scheme to <html> style for Safari cascade reliability."
         >
             <ShowcaseFrame pad="md" tier="quiet">
-                <pre class="fira-code text-sm overflow-x-auto"><code>const { isDark, toggleDark, disableTransitions, setDisableTransitions }
+                <pre v-pre class="fira-code text-sm overflow-x-auto"><code>const { isDark, toggleDark, disableTransitions, setDisableTransitions }
   = useGlobalDark();</code></pre>
             </ShowcaseFrame>
         </StorySection>

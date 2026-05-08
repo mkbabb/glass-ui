@@ -12,7 +12,7 @@ import ShowcaseFrame from "../ShowcaseFrame.vue";
             blurb="Backs the canonical grouped-headers flat-list layout (think 'recent / older / archived' contact lists). Pairs scrollContainer + items + estimated heights; emits the visible window range + scroll offset for sticky headers."
         >
             <ShowcaseFrame pad="md" tier="quiet">
-                <pre class="fira-code text-sm overflow-x-auto"><code>const { window, activeSection, layout } = useVirtualSectionWindow({
+                <pre v-pre class="fira-code text-sm overflow-x-auto"><code>const { window, activeSection, layout } = useVirtualSectionWindow({
   items: () =&gt; flatItems,            // FlatSection[] (depth + parentId + estimatedHeight)
   scrollContainer,                   // Ref&lt;HTMLElement | null&gt;
   contentEl,                         // optional wrapper for offset accounting

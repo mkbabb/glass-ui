@@ -61,7 +61,9 @@ const cfg = useConfiguratorState<Cfg>({
                                 v-model="cfg.config.spread"
                                 :min="0"
                                 :max="100"
+                                :step="1"
                                 label="spread"
+                                tooltip="Field spread, 0-100."
                             />
                         </ConfiguratorRow>
                         <ConfiguratorRow label="Bloom">
@@ -69,11 +71,17 @@ const cfg = useConfiguratorState<Cfg>({
                                 v-model="cfg.config.bloom"
                                 :min="0"
                                 :max="100"
+                                :step="1"
                                 label="bloom"
+                                tooltip="Diffusion radius."
                             />
                         </ConfiguratorRow>
                         <ConfiguratorRow label="Grain">
-                            <LabeledSwitch v-model="cfg.config.grain" label="grain" />
+                            <LabeledSwitch
+                                v-model:checked="cfg.config.grain"
+                                label="grain"
+                                tooltip="Layer the paper grain overlay."
+                            />
                         </ConfiguratorRow>
                     </template>
                 </Configurator>
@@ -85,7 +93,7 @@ const cfg = useConfiguratorState<Cfg>({
             blurb="useConfiguratorState<T> returns config + activePreset + isDirty + selectPreset + resetCurrent + cyclePreset. Generic over the live shape T; structuredClone-based by default with optional cloner / equality hooks."
         >
             <ShowcaseFrame pad="md" tier="quiet">
-                <pre class="fira-code text-sm overflow-x-auto"><code>const cfg = useConfiguratorState&lt;T&gt;({
+                <pre v-pre class="fira-code text-sm overflow-x-auto"><code>const cfg = useConfiguratorState&lt;T&gt;({
   presets,                  // readonly ConfiguratorPreset&lt;T&gt;[]
   initialPreset: "default", // optional preset key
 });

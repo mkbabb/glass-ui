@@ -10,11 +10,10 @@ const target = ref<HTMLElement | null>(null);
 const size = ref<{ width: number; height: number }>({ width: 0, height: 0 });
 const callbackCount = ref(0);
 
-useResizeObserver(target, (entry) => {
-    const rect = entry.contentRect;
+useResizeObserver(target, (rect) => {
     size.value = { width: Math.round(rect.width), height: Math.round(rect.height) };
     callbackCount.value += 1;
-}, { rafBatch: true });
+});
 </script>
 
 <template>

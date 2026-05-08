@@ -55,7 +55,7 @@ demo.onPlay(async (cleanup) => {
             blurb="Generic over T. Returns { state: Ref<T>, status: ComputedRef<'idle'|'running'|'complete'>, onPlay, play, reset }."
         >
             <ShowcaseFrame pad="md" tier="quiet">
-                <pre class="fira-code text-sm overflow-x-auto"><code>const { state, status, onPlay, play, reset } = useStoryDemo&lt;boolean[]&gt;(
+                <pre v-pre class="fira-code text-sm overflow-x-auto"><code>const { state, status, onPlay, play, reset } = useStoryDemo&lt;boolean[]&gt;(
   new Array(8).fill(false),
 );
 

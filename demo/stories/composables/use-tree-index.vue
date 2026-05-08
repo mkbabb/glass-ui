@@ -12,7 +12,7 @@ import ShowcaseFrame from "../ShowcaseFrame.vue";
             blurb="Returns a Map&lt;id, TreeIndexEntry&gt; — every node carries depth + parentId + rootId + rootIndex. Backs sidebar nav, ToC, and any UI that needs O(1) tree-position queries. Companion helpers: buildTreeIndex (pure), isActive(id, activeId), isInActiveChain(id, activeId)."
         >
             <ShowcaseFrame pad="md" tier="quiet">
-                <pre class="fira-code text-sm overflow-x-auto"><code>const index = useTreeIndex&lt;MyNode&gt;(roots, {
+                <pre v-pre class="fira-code text-sm overflow-x-auto"><code>const index = useTreeIndex&lt;MyNode&gt;(roots, {
   getChildren: (n) =&gt; n.kids,    // optional accessor
 });
 

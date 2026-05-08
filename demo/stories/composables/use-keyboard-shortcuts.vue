@@ -45,16 +45,16 @@ const shortcuts = useRegisteredShortcuts();
                     <table class="w-full border-collapse text-sm">
                         <thead>
                             <tr class="border-b border-border text-left">
-                                <th class="py-2 pr-4">combo</th>
+                                <th class="py-2 pr-4">combo (raw)</th>
                                 <th class="py-2 pr-4">label</th>
                                 <th class="py-2">group</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="s in shortcuts" :key="s.combo" class="border-b border-border/40">
-                                <td class="py-1.5 pr-4"><code class="fira-code">{{ s.combo }}</code></td>
-                                <td class="py-1.5 pr-4">{{ s.label }}</td>
-                                <td class="py-1.5 text-muted-foreground">{{ s.group }}</td>
+                            <tr v-for="s in shortcuts" :key="s.raw" class="border-b border-border/40">
+                                <td class="py-1.5 pr-4"><code class="fira-code">{{ s.raw }}</code></td>
+                                <td class="py-1.5 pr-4">{{ s.options.label ?? "—" }}</td>
+                                <td class="py-1.5 text-muted-foreground">{{ s.options.group ?? "—" }}</td>
                             </tr>
                         </tbody>
                     </table>

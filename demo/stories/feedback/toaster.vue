@@ -43,7 +43,7 @@ function fireToast() {
             blurb="Drop a single <Toaster /> at your layout root. Anywhere in the tree, useToast() returns { toast, dismiss, toasts }. The Toaster itself manages the ToastProvider context + viewport."
         >
             <ShowcaseFrame pad="md" tier="quiet">
-                <pre class="fira-code text-sm overflow-x-auto"><code>// App.vue
+                <pre v-pre class="fira-code text-sm overflow-x-auto"><code>// App.vue
 &lt;template&gt;
   &lt;router-view /&gt;
   &lt;Toaster /&gt;

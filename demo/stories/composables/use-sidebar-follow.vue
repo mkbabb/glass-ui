@@ -12,7 +12,7 @@ import ShowcaseFrame from "../ShowcaseFrame.vue";
             blurb="Drives the sticky-while-scrolling + follow-the-active-section behaviour for nested sidebars. Pairs with useScrollTracker for active-state and useTreeIndex for the section graph."
         >
             <ShowcaseFrame pad="md" tier="quiet">
-                <pre class="fira-code text-sm overflow-x-auto"><code>const { offsetTop, isFollowing } = useSidebarFollow({
+                <pre v-pre class="fira-code text-sm overflow-x-auto"><code>const { offsetTop, isFollowing } = useSidebarFollow({
   sidebar: sidebarEl,
   activeSection: scrollTracker.activeId,
   followMargin: 24,

@@ -12,7 +12,7 @@ import ShowcaseFrame from "../ShowcaseFrame.vue";
             blurb="Single-call combiner of the three sidebar primitives. Pass a tree config + scroll container; receive { activeId, isExpanded, expand, collapse, toggle, isInActiveChain } as the canonical sidebar API surface."
         >
             <ShowcaseFrame pad="md" tier="quiet">
-                <pre class="fira-code text-sm overflow-x-auto"><code>const sidebar = useSidebarState({
+                <pre v-pre class="fira-code text-sm overflow-x-auto"><code>const sidebar = useSidebarState({
   tree,                // TreeNode[]
   scrollContainer,
   expandActiveAncestors: true,
