@@ -181,6 +181,7 @@ export const CATEGORIES: Category[] = [
         icon: Bell,
         stories: [
             s("feedback", "toast", "Toast"),
+            s("feedback", "toaster", "Toaster", "Drop-in <ToastProvider> wrapper composed at the layout root."),
             s("feedback", "notification", "Notification"),
             s("feedback", "progress", "Progress"),
             s("feedback", "skeleton", "Skeleton"),
