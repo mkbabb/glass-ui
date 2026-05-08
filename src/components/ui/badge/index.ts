@@ -3,7 +3,7 @@ import { type VariantProps, cva } from 'class-variance-authority'
 export { default as Badge } from './Badge.vue'
 
 export const badgeVariants = cva(
-  'focus-ring inline-flex items-center rounded-full border font-semibold transition-colors',
+  'focus-ring inline-flex items-center rounded-badge border font-semibold transition-colors',
   {
     variants: {
       variant: {

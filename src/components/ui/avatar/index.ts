@@ -14,8 +14,12 @@ export const avatarVariant = cva(
         lg: 'h-32 w-32 text-5xl',
       },
       shape: {
-        circle: 'rounded-full',
-        square: 'rounded-md',
+        // Avatar `circle`: `rounded-pill` paints the canonical pill radius
+        // through the `--radius-pill` token. The literal `rounded-full` would
+        // also work but `rounded-pill` keeps the consumer site monotonic with
+        // the rest of the v0.8.6 radius vocabulary.
+        circle: 'rounded-pill',
+        square: 'rounded-input',
       },
     },
   },
