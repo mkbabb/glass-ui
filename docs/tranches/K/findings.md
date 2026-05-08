@@ -37,6 +37,16 @@ Captured from the conversation chain that opened J and continues into K. Each di
 
 > Recap ALL of our prompts and requests hitherto and ensure they've been addressed.
 
+## 2026-05-08 directives (revision iteration)
+
+> Update the plan pursuant to the various changes found in the last several commits, since plan authorship. Include a lighthouse optimization audit, done now, and folded herein.
+
+— K plan revised in place; reconciliation + Lighthouse audits committed under `audit/K-reconciliation-2026-05-08.md` + `audit/K-lighthouse-2026-05-08.md` + 6 raw Lighthouse reports under `audit/lighthouse-2026-05-08/`; W2 retired, W1/W3/W4/W5/W7 revised, WV + WP added, K close prerequisites + invariants amended.
+
+> Further, read over the following and modify your plan accordingly — the speedtest wave shall be executed in a bit. What glass-ui items are already addressed? `/Users/mkbabb/Programming/speedtest/docs/tranches/W`
+
+— Surveyed speedtest W.W2 + W.W3.perf.B.T5 glass-ui-side items at HEAD. Zero items addressed; one partial (39 of ~226 demo StorySection adoptions; 13 raw `rounded-card border bg-card shadow-cartoon` triplet survivors). K.md "Cross-repo coordination — speedtest W tranche inbound" section added; K W3 demo bounds reduced (excludes the 13 sweep, owned by speedtest W2.T10); K W4 ordering constraint added (bundle-budget gate must land before speedtest W3.perf.B.T5 to baseline cleanly).
+
 ## Distillation — K binding-constraint surface
 
 1. **Indefatigability** — orchestrator does not yield without explicit user authorization or environmental blocker.
