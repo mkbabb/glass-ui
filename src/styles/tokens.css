@@ -49,11 +49,8 @@
     --duration-panel: 0.55s;
     --duration-xl: 1s;
     --duration-xxl: 1.5s;
-    --duration-linger: 2.5s;
     --duration-shimmer-fast: 3s;
     --duration-shimmer: 5s;
-    --duration-shimmer-slow: 8s;
-    --duration-popup-swap: 180ms;
     /* Sparkle micro-event — primary-CTA disco-grain sparkle sweep, success
        affirmations. R5 vocab.γ gap row 3 (single-site at dock.css:735 today,
        reserved for J.W2.7 §17 audacious-CTA buildout). */
@@ -234,9 +231,6 @@
     --viz-amber:     var(--section-color-5);
     --viz-green:     var(--section-color-4);
 
-    /* Motion accent (used by easing indicators) */
-    --easing-accent: hsl(248 88% 71%);
-
     /* Semantic UI accents */
     --tier-featured: hsl(45 100% 50%);
     --tier-saved:    hsl(210 100% 60%);
@@ -297,8 +291,6 @@
     /* Cartoon shadow color primitives (kept for tiered cartoon utilities) */
     --shadow-cartoon-color:             rgb(0 0 0 / 0.12);
     --shadow-cartoon-color-soft:        rgb(0 0 0 / 0.06);
-    --shadow-cartoon-color-hover:       rgb(0 0 0 / 0.16);
-    --shadow-cartoon-color-hover-soft:  rgb(0 0 0 / 0.08);
 
     /* Tiered cartoon shadows */
     --shadow-cartoon-sm: -3px 2px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
@@ -466,11 +458,6 @@
     /* ═══════════════════════════════════════════════
        §9  ANIMATION OFFSETS
        ═══════════════════════════════════════════════ */
-    --motion-slide-sm: 3px;
-    --motion-slide-md: 6px;
-    --motion-slide-lg: 8px;
-    --popover-offset: 0.375rem;
-
     /* Hover lift offsets */
     --lift-sm: -1px;
     --lift-md: -2px;
@@ -680,8 +667,6 @@
 
     --shadow-cartoon-color:            rgb(255 255 255 / 0.07);
     --shadow-cartoon-color-soft:       rgb(255 255 255 / 0.03);
-    --shadow-cartoon-color-hover:      rgb(255 255 255 / 0.10);
-    --shadow-cartoon-color-hover-soft: rgb(255 255 255 / 0.05);
 
     /* Glass opacity + grain for dark — five-tier ladder, alpha-monotonic.
        Each rung lifts ~0.08 from its light counterpart so the dark surfaces
