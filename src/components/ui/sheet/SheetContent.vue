@@ -5,13 +5,13 @@ import {
   DialogContent,
   type DialogContentEmits,
   type DialogContentProps,
-  DialogOverlay,
   DialogPortal,
   useForwardPropsEmits,
 } from 'reka-ui'
 import { X } from 'lucide-vue-next'
 import { type SheetVariants, sheetVariants } from '.'
 import { cn } from '../../../utils'
+import ModalOverlay from '../_shared/ModalOverlay.vue'
 
 interface SheetContentProps extends DialogContentProps {
   class?: HTMLAttributes['class']
@@ -37,9 +37,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
 <template>
   <DialogPortal>
-    <DialogOverlay
-      class="fixed inset-0 z-overlay bg-overlay-scrim [backdrop-filter:var(--glass-blur-wash)] sheet-animate"
-    />
+    <ModalOverlay scrim="glass" animate="fade" layout="centered" />
     <DialogContent
       :class="cn(sheetVariants({ side }), props.class)"
       v-bind="{ ...forwarded, ...$attrs }"
