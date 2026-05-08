@@ -10,6 +10,7 @@ export default defineConfig({
             "src/**/*.{test,spec}.{ts,tsx}",
             "src/**/*.{test,spec}.vue",
             "tests/**/*.{test,spec}.{ts,tsx}",
+            "scripts/**/*.{test,spec}.{ts,tsx}",
         ],
         setupFiles: ["./tests/setup.ts"],
     },

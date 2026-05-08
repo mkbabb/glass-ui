@@ -36,6 +36,7 @@ export function libraryEntries(rootDir: string) {
         "hover-popover": resolve(rootDir, "src/hover-popover.ts"),
         configurator: resolve(rootDir, "src/configurator.ts"),
         "scrolling-text": resolve(rootDir, "src/scrolling-text.ts"),
+        freshness: resolve(rootDir, "src/freshness.ts"),
     };
 }
 
@@ -54,6 +55,10 @@ export const libraryExternal = [
     "embla-carousel-vue",
     "lucide-vue-next",
     "vaul-vue",
+    // Node built-ins consumed by `src/freshness.ts` (consumer-side helper only).
+    "node:fs",
+    "node:path",
+    "node:url",
 ];
 
 export const libraryGlobals = {

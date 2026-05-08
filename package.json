@@ -105,6 +105,9 @@
             ],
             "scrolling-text": [
                 "dist/scrolling-text.d.ts"
+            ],
+            "freshness": [
+                "dist/freshness.d.ts"
             ]
         }
     },
@@ -282,6 +285,11 @@
             "development": "./src/scrolling-text.ts",
             "types": "./dist/scrolling-text.d.ts",
             "import": "./dist/scrolling-text.js"
+        },
+        "./freshness": {
+            "development": "./src/freshness.ts",
+            "types": "./dist/freshness.d.ts",
+            "import": "./dist/freshness.js"
         }
     },
     "files": [
@@ -290,7 +298,9 @@
     ],
     "scripts": {
         "dev": "vite",
+        "prebuild": "node scripts/freshness-gate.mjs --pre",
         "build": "vite build",
+        "prepare": "test -f dist/glass-ui.js || npm run build",
         "typecheck": "vue-tsc --noEmit",
         "test": "vitest run",
         "verify-export-types": "node scripts/verify-export-types.mjs",
@@ -331,6 +341,7 @@
     "devDependencies": {
         "@mkbabb/keyframes.js": "file:../keyframes.js",
         "@tailwindcss/postcss": "^4.1.11",
+        "@types/node": "^24.0.0",
         "@tailwindcss/vite": "^4.2.2",
         "@vitejs/plugin-vue": "^6.0.0",
         "@vue/test-utils": "^2.4.10",

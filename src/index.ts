@@ -15,6 +15,9 @@ export * from "./components/custom/configurator";
 // Custom composites — overflow-marquee primitive
 export * from "./components/custom/scrolling-text";
 
+// Freshness-gate consumer helper — A3 §4.3 / V.FINAL.md:104-106 stale-dist closer
+export * from "./freshness";
+
 // Core composables
 export { useGlobalDark } from "./composables/useGlobalDark";
 export * from "./composables/useInterval";
