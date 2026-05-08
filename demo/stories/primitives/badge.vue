@@ -10,6 +10,12 @@ const coreVariants: { variant: "default" | "secondary" | "destructive" | "outlin
     { variant: "outline", label: "outline" },
 ];
 
+const semanticVariants: { variant: "success" | "warning" | "info"; label: string }[] = [
+    { variant: "success", label: "success" },
+    { variant: "warning", label: "warning" },
+    { variant: "info", label: "info" },
+];
+
 const vizBadges: { cls: string; label: string }[] = [
     { cls: "bg-viz-fourier text-white", label: "fourier" },
     { cls: "bg-viz-chebyshev text-white", label: "chebyshev" },
@@ -94,6 +100,35 @@ const vizBadges: { cls: string; label: string }[] = [
                     <Badge :variant="v.variant" size="lg">lg</Badge>
                     <span class="text-mono-caption text-muted-foreground">{{ v.label }}</span>
                 </div>
+            </div>
+        </section>
+
+        <!-- v0.8.6 semantic-tone variants: success / warning / info. -->
+        <section class="flex flex-col gap-3">
+            <p class="section-label">semantic tones (v0.8.6)</p>
+            <p class="text-mono-caption text-muted-foreground">
+                Compose --success / --warning / --info plates with their --*-foreground glyph counterparts.
+                Pair with status-dot for richer pulse compositions.
+            </p>
+            <div class="flex flex-wrap items-center gap-3">
+                <Badge
+                    v-for="v in semanticVariants"
+                    :key="v.variant"
+                    :variant="v.variant"
+                >
+                    {{ v.label }}
+                </Badge>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+                <Badge
+                    v-for="v in semanticVariants"
+                    :key="v.variant"
+                    :variant="v.variant"
+                    class="gap-1.5"
+                >
+                    <span class="size-1.5 rounded-full bg-current" />
+                    {{ v.label }} with dot
+                </Badge>
             </div>
         </section>
 
