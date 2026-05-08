@@ -1,5 +1,73 @@
 # Changelog
 
+## v0.9.1 — 2026-05-08
+
+W.W2 patch — ScrollingText lift + freshness-gate substrate + Section
+storybook + opportunistic StorySection migration sweep. Six glass-ui
+commits + two cross-repo commits (keyframes.js + value.js) close the
+post-V drift surfaced by audit A3.
+
+### NEW
+
+- **`<ScrollingText>` overflow-marquee primitive** lifted from the
+  speedtest consumer per A3 §3.1. Subpath: `@mkbabb/glass-ui/scrolling-text`.
+  Mirrors the typewriter / pulse / status-dot custom-composite shape.
+  Test coverage: 3 vitest cases against the `data-overflows` boolean
+  threshold (delta > 1 px).
+- **`<Section>` storybook entry** at `demo/stories/primitives/section.vue`
+  closes the V.W3.T7 unification primitive's missing demo (A3 §5.1).
+  Exercises tone (heading · title · subheading · label) × gap (tight ·
+  regular · loose) plus the custom header slot.
+- **`<ScrollingText>` storybook entry** at `demo/stories/data/scrolling-text.vue`
+  shows the overflow threshold across narrow / mid / wide hosts using
+  long IPv6 + org-name samples.
+
+### INFRASTRUCTURE
+
+- **`scripts/freshness-gate.mjs` + `prebuild` hook** close the V.W8
+  stale-dist drift class per A3 §4.3 / V.FINAL.md:104-106. Strict-mode
+  invocation (CI / hard-gate) exits 1 when newest src mtime exceeds
+  `dist/glass-ui.js` or `dist/index.d.ts`. `--pre` permissive mode warns
+  and exits 0 so the upcoming `vite build` can rebuild without the gate
+  blocking it.
+- **`prepare: test -f dist/glass-ui.js || npm run build`** lifecycle hook
+  (npm-canonical build-on-install path).
+- **`assertDistFresh()` helper** exported from `@mkbabb/glass-ui/freshness`
+  for downstream `vite.config.ts` consumer wiring (W3 wires speedtest;
+  W2 ships the helper alone). 1 vitest sanity case in
+  `scripts/__tests__/freshness-gate.test.ts`.
+- **`@types/node` + tsconfig `types: ["vite/client", "node"]`** added so
+  the freshness module typechecks. `node:fs` / `node:path` / `node:url`
+  added to vite's `libraryExternal` list (Node-only consumer helper —
+  must not be bundled into the browser ESM output).
+- **Cross-repo prebuild gate** mirrors land at `keyframes.js@<HEAD>`
+  (branch `w.w2.1-keyframes-prebuild`, scripts/freshness-gate.mjs +
+  `prebuild` script — `prepare` already present) and `value.js@<HEAD>`
+  (branch `w.w2.1-value-js-prebuild`, scripts/freshness-gate.mjs +
+  `prebuild` + `prepare`). Per A3 §4.4 same-bug-class. Version bumps +
+  publish ceremonies are owned by W5.T1 (value.js) / W5.T2 (keyframes.js).
+
+### MIGRATIONS
+
+- **StorySection sweep** — opportunistic mechanical migration of 16
+  `<section class="flex flex-col gap-3"><p class="section-label">…</p>`
+  pairs onto `<StorySection :label="…">` across 5 stories:
+  `feedback/progress.vue` (4 sites), `feedback/skeleton.vue` (3),
+  `primitives/pulse.vue` (4), `primitives/status-dot.vue` (2),
+  `primitives/separator.vue` (4 top-level; nested label-paragraphs
+  inside the 4th section's sub-divs left as-is — those are inner-row
+  labels, not section heads). Bound by W2.md §Format budget; further
+  sites roll forward to the next opportunistic touch.
+
+### CONSUMER MIGRATION (speedtest)
+
+- `src/components/AppSettingsButton.vue:81` rewrites
+  `import ScrollingText from "@src/components/ScrollingText.vue"` →
+  `import { ScrollingText } from "@mkbabb/glass-ui"` (named import —
+  ScrollingText now ships from the root barrel + `/scrolling-text`
+  subpath). Deletes `src/components/ScrollingText.vue` (115 LOC).
+  Five template-level call-sites unchanged.
+
 ## v0.9.0 — 2026-05-08
 
 The V-tranche bundled release — V.W2 foundation polish + V.W3 structural
