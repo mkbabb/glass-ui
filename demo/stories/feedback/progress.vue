@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { onMounted, onUnmounted, ref } from "vue";
 import { Progress } from "../../../src/components/ui/progress";
 import { Button } from "../../../src/components/ui/button";
@@ -34,8 +35,7 @@ onUnmounted(stopAnimated);
 
 <template>
     <StoryPage>
-        <section class="flex flex-col gap-3">
-            <p class="section-label">determinate</p>
+        <StorySection label="determinate">
             <div class="flex flex-col gap-3">
                 <div class="flex items-center justify-between">
                     <p class="font-mono text-xs text-muted-foreground">
@@ -60,10 +60,9 @@ onUnmounted(stopAnimated);
                 </div>
                 <Progress :model-value="determinate" />
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <p class="section-label">animated (loop)</p>
+        <StorySection label="animated (loop)">
             <p class="font-mono text-xs text-muted-foreground">
                 Auto-advancing driver resets at 100. The bar below overrides its
                 fill with <code>[&amp;>[data-state=loading]]:bg-viz-fourier</code>
@@ -73,10 +72,9 @@ onUnmounted(stopAnimated);
                 :model-value="animated"
                 class="[&>[data-state=loading]]:bg-viz-fourier"
             />
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <p class="section-label">indeterminate</p>
+        <StorySection label="indeterminate">
             <p class="font-mono text-xs text-muted-foreground">
                 No <code>model-value</code> passed — the fill pulses to signal
                 unknown duration. Honours <code>prefers-reduced-motion</code>
@@ -85,15 +83,14 @@ onUnmounted(stopAnimated);
             <Progress
                 class="motion-safe:[&>[data-state=loading]]:animate-pulse [&>[data-state=loading]]:bg-primary/60"
             />
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <p class="section-label">sizes</p>
+        <StorySection label="sizes">
             <div class="grid gap-4">
                 <Progress :model-value="62" class="h-1.5" />
                 <Progress :model-value="62" />
                 <Progress :model-value="62" class="h-6" />
             </div>
-        </section>
+        </StorySection>
     </StoryPage>
 </template>

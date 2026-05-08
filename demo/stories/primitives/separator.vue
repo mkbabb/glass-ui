@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { Separator } from "../../../src/components/ui/separator";
 </script>
 
 <template>
     <StoryPage>
         <!-- Plain horizontal. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">horizontal</p>
+        <StorySection label="horizontal">
             <div class="rounded-card border border-border bg-card p-6">
                 <p class="text-small text-foreground">
                     Paragraph above the rule.
@@ -17,21 +17,19 @@ import { Separator } from "../../../src/components/ui/separator";
                     Paragraph below.
                 </p>
             </div>
-        </section>
+        </StorySection>
 
         <!-- Horizontal with label. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">horizontal · labelled</p>
+        <StorySection label="horizontal · labelled">
             <div class="rounded-card border border-border bg-card p-6">
                 <p class="text-small text-foreground">Draft</p>
                 <Separator class="my-6" label="or" />
                 <p class="text-small text-foreground">Published</p>
             </div>
-        </section>
+        </StorySection>
 
         <!-- Vertical separators in a flex row. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">vertical · flex row</p>
+        <StorySection label="vertical · flex row">
             <div
                 class="flex h-12 items-center rounded-card border border-border bg-card px-4"
             >
@@ -43,11 +41,10 @@ import { Separator } from "../../../src/components/ui/separator";
                 <Separator orientation="vertical" class="mx-4" />
                 <span class="text-small text-foreground">Changelog</span>
             </div>
-        </section>
+        </StorySection>
 
         <!-- Section-label copy pattern. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">section-label copy pattern</p>
+        <StorySection label="section-label copy pattern">
             <div
                 class="flex flex-col gap-6 rounded-card border border-border bg-card p-6"
             >
@@ -72,6 +69,6 @@ import { Separator } from "../../../src/components/ui/separator";
                     </p>
                 </div>
             </div>
-        </section>
+        </StorySection>
     </StoryPage>
 </template>

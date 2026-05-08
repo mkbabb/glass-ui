@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { Skeleton } from "../../../src/components/ui/skeleton";
 </script>
 
 <template>
     <StoryPage>
-        <section class="flex flex-col gap-3">
-            <p class="section-label">variants</p>
+        <StorySection label="variants">
             <div class="grid gap-4 sm:grid-cols-2">
                 <div class="flex flex-col gap-2">
                     <p class="font-mono text-xs text-muted-foreground">pulse</p>
@@ -21,10 +21,9 @@ import { Skeleton } from "../../../src/components/ui/skeleton";
                     <Skeleton variant="shimmer" class="h-4 w-2/3" />
                 </div>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <p class="section-label">card skeleton</p>
+        <StorySection label="card skeleton">
             <div class="grid gap-6 sm:grid-cols-2">
                 <div
                     class="flex flex-col gap-4 rounded-xl border border-border/60 bg-card/60 p-5 shadow-sm"
@@ -70,10 +69,9 @@ import { Skeleton } from "../../../src/components/ui/skeleton";
                     </div>
                 </div>
             </div>
-        </section>
+        </StorySection>
 
-        <section class="flex flex-col gap-3">
-            <p class="section-label">list rows</p>
+        <StorySection label="list rows">
             <div class="flex flex-col gap-3 rounded-xl border border-border/60 bg-card/60 p-4">
                 <div
                     v-for="row in 4"
@@ -88,6 +86,6 @@ import { Skeleton } from "../../../src/components/ui/skeleton";
                     <Skeleton variant="shimmer" class="h-3 w-10" />
                 </div>
             </div>
-        </section>
+        </StorySection>
     </StoryPage>
 </template>

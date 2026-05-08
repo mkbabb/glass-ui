@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { StatusDot } from "../../../src/components/custom/status-dot";
 
 type Variant = "active" | "paused" | "idle" | "error" | "custom";
@@ -19,8 +20,7 @@ const sizes: Size[] = ["xs", "sm", "md"];
 <template>
     <StoryPage>
         <!-- Matrix: variant × size, pulse off. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">matrix · no pulse</p>
+        <StorySection label="matrix · no pulse">
             <div class="overflow-x-auto">
                 <table class="min-w-max border-separate border-spacing-x-8 border-spacing-y-4">
                     <thead>
@@ -52,11 +52,10 @@ const sizes: Size[] = ["xs", "sm", "md"];
                     </tbody>
                 </table>
             </div>
-        </section>
+        </StorySection>
 
         <!-- Matrix: pulse on. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">matrix · with pulse</p>
+        <StorySection label="matrix · with pulse">
             <div class="overflow-x-auto">
                 <table class="min-w-max border-separate border-spacing-x-8 border-spacing-y-4">
                     <thead>
@@ -92,6 +91,6 @@ const sizes: Size[] = ["xs", "sm", "md"];
             <p class="text-mono-caption text-muted-foreground">
                 Pulse halo respects <code class="fira-code">prefers-reduced-motion</code>.
             </p>
-        </section>
+        </StorySection>
     </StoryPage>
 </template>

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
+import StorySection from "../StorySection.vue";
 import { Pulse } from "../../../src/components/custom/pulse";
 </script>
 
 <template>
     <StoryPage>
         <!-- Dots: vary speed and count. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">dots variant</p>
+        <StorySection label="dots variant">
             <div class="flex flex-wrap items-center gap-8">
                 <div class="flex flex-col items-center gap-2">
                     <Pulse variant="dots" speed="slow" :count="3" class="text-foreground" />
@@ -26,11 +26,10 @@ import { Pulse } from "../../../src/components/custom/pulse";
                     <span class="text-mono-caption text-muted-foreground">5 dots</span>
                 </div>
             </div>
-        </section>
+        </StorySection>
 
         <!-- Ring: speed variants. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">ring variant</p>
+        <StorySection label="ring variant">
             <div class="flex flex-wrap items-center gap-8">
                 <div class="flex flex-col items-center gap-2">
                     <Pulse variant="ring" speed="slow" class="text-foreground" />
@@ -45,28 +44,26 @@ import { Pulse } from "../../../src/components/custom/pulse";
                     <span class="text-mono-caption text-muted-foreground">fast</span>
                 </div>
             </div>
-        </section>
+        </StorySection>
 
         <!-- currentColor demo — tint by setting text color. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">currentColor tint</p>
+        <StorySection label="currentColor tint">
             <div class="flex flex-wrap items-center gap-8">
                 <Pulse variant="dots" class="text-viz-fourier" />
                 <Pulse variant="dots" class="text-viz-chebyshev" />
                 <Pulse variant="dots" class="text-viz-legendre" />
                 <Pulse variant="ring" class="text-viz-fourier" />
             </div>
-        </section>
+        </StorySection>
 
         <!-- Inline in a status line. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">inline usage</p>
+        <StorySection label="inline usage">
             <div
                 class="flex items-center gap-3 rounded-card border border-border bg-card px-4 py-3"
             >
                 <Pulse variant="dots" class="text-viz-chebyshev" />
                 <span class="text-small text-foreground">Computing projection…</span>
             </div>
-        </section>
+        </StorySection>
     </StoryPage>
 </template>
