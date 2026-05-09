@@ -86,7 +86,7 @@ src/
 │   │                           # separator, sheet, switch, table, tabs, tags-input, textarea,
 │   │                           # toast, toggle, toggle-group, tooltip
 │   └── custom/                 # 28 custom composites
-│       ├── aurora/             # Aurora WebGL background + useAuroraStudio
+│       ├── aurora/             # Aurora WebGL background + useAurora composable
 │       ├── configurator/       # Configurator + Layer + Row + useConfiguratorState
 │       ├── dock/               # GlassDock, DockLayer, DockLayerGroup, DockIconButton,
 │       │                       # DockTabButton, DockSelectTrigger, DockDropdownTrigger
@@ -154,7 +154,7 @@ Beyond the root barrel, the library exposes per-package subpaths for vueuse-bear
 ```ts
 import { GlassDock, DockLayerGroup, DockLayer } from "@mkbabb/glass-ui/dock";
 import { DarkModeToggle } from "@mkbabb/glass-ui/controls";
-import { Aurora, useAuroraStudio } from "@mkbabb/glass-ui/aurora";
+import { Aurora, useAurora } from "@mkbabb/glass-ui/aurora";
 import { Configurator, useConfiguratorState } from "@mkbabb/glass-ui/configurator";
 import { HoverPopover } from "@mkbabb/glass-ui/hover-popover";
 import { InstrumentChassis, RegionDivider } from "@mkbabb/glass-ui/instrument-chassis";

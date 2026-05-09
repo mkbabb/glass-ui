@@ -62,7 +62,11 @@ K plan was revised in place:
 | WV | CLOSED 2026-05-09 `14266b5` | docs/tranches/V/ post-hoc write-up satisfies K invariant 3 |
 | WP | CLOSED 2026-05-09 `8ec320b` | viz contrast + 2 label-name drops + Skeleton compositor + Fonts async + font-display: swap |
 | WS | CLOSED 2026-05-09 `a598b90` | v0.9.3 ships additive subpath; **SCC trap stays open** — Phase 2 routed to L/v1.0; cross-repo annotation at speedtest `6f412d89` |
-| W8 | in progress | close ceremony — pre-close pass complete; 7-agent strengthened audit dispatched |
+| W8 | CLOSED 2026-05-09 | pre-close pass + 7-agent strengthened audit (α/β/γ/δ/ε/π/ι) + cleanup absorption (γ D1+D2+D5 + F-ε-1 ay-close + F-ε-2 viz-contrast) + 2 LESSONS-LEARNED + FINAL.md |
+
+## Tranche K — CLOSED
+
+K closes clean per `docs/tranches/K/FINAL.md`. All 16 binding invariants satisfied (with documented PARTIAL annotations on 6 + 7 → 2 LESSONS-LEARNED at precept submodule `d4ada55`). 12 active wave commits + W2 retired-with-V-attribution + W8 close. v0.9.3 tagged + pushed. Successor: **L**.
 
 ## Inbound from speedtest W tranche
 

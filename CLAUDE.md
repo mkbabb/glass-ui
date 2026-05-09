@@ -63,8 +63,7 @@ src/
 │   │   ├── tooltip/                # Tooltip provider/trigger/content (rounded-tooltip token)
 │   │   └── index.ts                # barrel: all ui/ exports
 │   ├── custom/                     # 30 custom package dirs; 28 public package barrels
-│   │   ├── animation/              # internal animation helpers
-│   │   ├── aurora/                 # Aurora WebGL background + useAuroraStudio (parallel chrome — see Configurator)
+│   │   ├── aurora/                 # Aurora WebGL background + useAurora composable (note: useAuroraStudio is demo-private at demo/stories/aurora/useAuroraStudio.ts — see Configurator)
 │   │   ├── configurator/           # Configurator + ConfiguratorLayer + ConfiguratorRow + useConfiguratorState
 │   │   ├── confirm-dialog/         # ConfirmDialog
 │   │   ├── controls/
@@ -82,7 +81,6 @@ src/
 │   │   │   └── index.ts
 │   │   ├── dock-group/             # DockGroup chassis-strip wrapper
 │   │   ├── expandable-container/   # ExpandableContainer
-│   │   ├── form/                   # internal form helpers
 │   │   ├── glass-carousel/         # GlassCarousel + useGlassCarousel
 │   │   ├── glass-panel/            # GlassPanel substrate wrapper
 │   │   ├── glyph-face/             # GlyphFace 3-layer wrapper (phase-tinted backplate + cap)
@@ -194,7 +192,7 @@ import { Button, Card, Skeleton } from "@mkbabb/glass-ui";
 
 import { GlassDock, DockLayer, DockLayerGroup } from "@mkbabb/glass-ui/dock";
 import { DarkModeToggle } from "@mkbabb/glass-ui/controls";
-import { Aurora, useAuroraStudio } from "@mkbabb/glass-ui/aurora";
+import { Aurora, useAurora } from "@mkbabb/glass-ui/aurora";
 import {
     Configurator,
     ConfiguratorLayer,

@@ -921,7 +921,7 @@ _shared (`<ModalOverlay>`, `menuItemVariants` CVA — V.W3) · accordion · aler
 
 ### Custom composites (`src/components/custom/`)
 
-animation · aurora · **configurator** (`Configurator`, `ConfiguratorLayer`, `ConfiguratorRow`, `useConfiguratorState`) · confirm-dialog · controls · **disco-glyph** · **dock** (`GlassDock`, `DockLayer`, `DockLayerGroup`, `DockIconButton`, `DockTabButton`, `DockSelectTrigger`, `DockDropdownTrigger`) · **dock-group** · expandable-container · form · glass-carousel · glass-panel · **glyph-face** · **hover-popover** · icon-tooltip · infinite-scroll · **instrument-chassis** · **labeled-field** · **metric-badge** · metaballs · **paper-backdrop** · **pulse** · **scrolling-text** · search · sidebar · sortable-list · stacked-icons · **status-dot** · tabs (BouncyTabs, UnderlineTabs, BouncyToggle) · timeline · toggle-chip · typewriter.
+aurora · **configurator** (`Configurator`, `ConfiguratorLayer`, `ConfiguratorRow`, `useConfiguratorState`) · confirm-dialog · controls · **disco-glyph** · **dock** (`GlassDock`, `DockLayer`, `DockLayerGroup`, `DockIconButton`, `DockTabButton`, `DockSelectTrigger`, `DockDropdownTrigger`) · **dock-group** · expandable-container · glass-carousel · glass-panel · **glyph-face** · **hover-popover** · icon-tooltip · infinite-scroll · **instrument-chassis** · **labeled-field** · **metric-badge** · metaballs · **paper-backdrop** · **pulse** · **scrolling-text** · search · sidebar · sortable-list · stacked-icons · **status-dot** · tabs (BouncyTabs, UnderlineTabs, BouncyToggle) · timeline · toggle-chip · typewriter.
 
 ### Key component specs
 
