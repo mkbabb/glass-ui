@@ -82,7 +82,7 @@ const claims = [
                 </p>
 
                 <div class="flex flex-wrap items-center gap-3 pt-2">
-                    <Button size="lg" class="gap-2">
+                    <Button size="lg" variant="primary-audacious" class="gap-2">
                         Start building
                         <ArrowRight class="size-4" aria-hidden="true" />
                     </Button>

@@ -553,6 +553,78 @@
     background-color: var(--overlay-scrim);
 }
 
+/* ── Audacious primary CTA recipe (K.W6 HEADLINE) ────────────────────
+   Lifted from `dock.css` `.dock-tab-button[data-tier="primary"]` per
+   K.W6 spec §3 (Option B — drop phase-tinting from the canonical
+   variant; phase-tint stays as a dock-local extension). Composes three
+   at-rest marks (top-highlight via --glass-highlight, bottom under-shadow
+   via --border-hairline, baseline glass via --card surface) with three
+   disco accents on hover (specular swap via --glass-specular, sparkle
+   sweep via the ::after star, disco-grain via --paper-clean-texture
+   blended with a --primary radial). Reservation: disco fires on hover
+   only — at rest the button reads as a Vignelli-restrained composed
+   glass surface.
+
+   Pair with `bg-primary text-primary-foreground` for the canonical
+   Button variant; the utility owns the texture/highlight/sparkle
+   composition only. */
+@utility btn-audacious {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid var(--glass-border-quiet);
+    box-shadow:
+        var(--border-hairline),
+        var(--glass-highlight);
+    transition:
+        background var(--duration-fast) var(--ease-standard),
+        color var(--duration-fast) var(--ease-standard),
+        transform var(--duration-fast) var(--ease-standard),
+        box-shadow var(--duration-fast) var(--ease-standard);
+
+    /* Hover composition: paper-grain texture overlaid on a soft
+       --primary radial, with the specular catch-light replacing the
+       resting hairline highlight. The radial uses --primary at 18%
+       — same alpha rung the dock primary tier consumes for phase
+       tinting, just bound to the canonical CTA color instead. */
+    &:hover:not(:disabled) {
+        background-image:
+            var(--paper-clean-texture),
+            radial-gradient(
+                ellipse at 30% 30%,
+                color-mix(in srgb, var(--primary) 18%, transparent),
+                transparent 70%
+            );
+        background-blend-mode: overlay, normal;
+        background-size: var(--paper-texture-size), auto;
+        box-shadow:
+            var(--glass-specular),
+            0 0.5px 0 0 rgb(0 0 0 / 0.06);
+    }
+
+    /* Sparkle glyph — hidden at rest, animated on hover. The star
+       sweeps diagonally from top-left to bottom-right per the canonical
+       sparkle-sweep keyframe (animations.css). */
+    &::after {
+        content: "✦";
+        position: absolute;
+        top: 0.25rem;
+        left: 0.5rem;
+        color: hsl(0 0% 100% / 0.7);
+        font-size: 0.75rem;
+        line-height: 1;
+        pointer-events: none;
+        opacity: 0;
+        will-change: transform, opacity;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        &:hover::after {
+            animation: sparkle-sweep var(--duration-sparkle) var(--ease-out-expo);
+        }
+    }
+}
+
 /* ── Reduced motion: nuanced — preserve opacity, remove spatial motion ── */
 @media (prefers-reduced-motion: reduce) {
     *:not([data-allow-motion]) {

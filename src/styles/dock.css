@@ -709,27 +709,28 @@
      * a Vignelli-restrained composed glass surface. The `--phase-color`
      * cascade (provided by `<InstrumentChassis>` via `data-phase`) tints
      * the disco-grain radial only on hover; idle is neutral.
+     *
+     * K.W6 Lane B — the canonical disco-grain + sparkle-sweep + specular
+     * recipe lifted to `@utility btn-audacious` (utilities.css). The Vue
+     * <DockTabButton> attaches `btn-audacious` automatically when the
+     * consumer passes `data-tier="primary"`. The dock-local rules below
+     * are STRICTLY the dock extension: structural shell (padding, base
+     * surface tint, min-height) + phase-tint extensions (hover radial
+     * uses `--phase-color`, plus the `[data-phase]` `::before` halo).
      */
     .dock-tab-button[data-tier="primary"] {
-        position: relative;
-        isolation: isolate;
-        overflow: hidden;
         --dock-tab-min-height: 4rem;
         padding-inline: 1.5rem;
         background:
             color-mix(in srgb, var(--card) 60%, transparent);
         color: var(--foreground);
-        border: 1px solid var(--glass-border-quiet);
-        box-shadow:
-            var(--border-hairline),
-            var(--glass-highlight);
-        transition:
-            background var(--duration-fast) var(--ease-standard),
-            color var(--duration-fast) var(--ease-standard),
-            transform var(--duration-fast) var(--ease-standard),
-            box-shadow var(--duration-fast) var(--ease-standard);
     }
 
+    /* Phase-tint hover override — same disco-grain composition as
+     * `btn-audacious`, but the radial uses `--phase-color` (instrument-
+     * cluster axis) instead of the canonical `--primary`. The `--paper-
+     * clean-texture` overlay and `--glass-specular` shadow stack are
+     * inherited from the underlying `btn-audacious` utility. */
     .dock-tab-button[data-tier="primary"]:hover:not(:disabled) {
         --glass-grain-opacity: var(--glass-grain-opacity-disco, 0.08);
         background-image:
@@ -738,26 +739,9 @@
                 ellipse at 30% 30%,
                 color-mix(in srgb, var(--phase-color, var(--foreground)) 18%, transparent),
                 transparent 70%
-            ),
-            none;
-        background-blend-mode: overlay, normal, normal;
-        background-size: var(--paper-texture-size), auto, auto;
-        box-shadow:
-            var(--glass-specular),
-            0 0.5px 0 0 rgb(0 0 0 / 0.06);
-    }
-
-    .dock-tab-button[data-tier="primary"]::after {
-        content: "✦";
-        position: absolute;
-        top: 0.25rem;
-        left: 0.5rem;
-        color: hsl(0 0% 100% / 0.7);
-        font-size: 0.75rem;
-        line-height: 1;
-        pointer-events: none;
-        opacity: 0;
-        will-change: transform, opacity;
+            );
+        background-blend-mode: overlay, normal;
+        background-size: var(--paper-texture-size), auto;
     }
 
     /* Q.W3.A.4 — phase-tint backplate halo at the pill wrapper.
@@ -782,17 +766,6 @@
         z-index: -1;
         opacity: 1;
         transition: opacity var(--duration-fast) var(--ease-standard);
-    }
-
-    .dock-tab-button[data-tier="primary"]:hover::after {
-        animation: sparkle-sweep var(--duration-sparkle) var(--ease-out-expo);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .dock-tab-button[data-tier="primary"]:hover::after {
-            animation: none;
-            opacity: 0;
-        }
     }
 
     /* Tier — secondary ──────────────────────────────────────────

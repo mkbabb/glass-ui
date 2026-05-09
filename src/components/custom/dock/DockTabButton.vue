@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, type HTMLAttributes } from "vue";
+import { computed, useAttrs, type HTMLAttributes } from "vue";
 import { Primitive } from "reka-ui";
 import { cn } from "../../../utils";
 
@@ -13,6 +13,12 @@ import { cn } from "../../../utils";
  * Use `as-child` to render as a <RouterLink> or <a>: the active state
  * automatically activates when the rendered element carries
  * aria-current="page" (which RouterLink sets).
+ *
+ * K.W6 Lane B — when the consumer attaches `data-tier="primary"`, the
+ * button composes the canonical `btn-audacious` utility (the lifted
+ * disco-grain + sparkle-sweep + specular-highlight recipe at
+ * `utilities.css`). `dock.css` retains the dock-local phase-tinting +
+ * structural shell on top of the canonical recipe.
  */
 const props = withDefaults(
     defineProps<{
@@ -23,7 +29,12 @@ const props = withDefaults(
     { as: "button", asChild: false },
 );
 
-const classes = computed(() => cn("dock-tab-button", props.class));
+const attrs = useAttrs();
+const isPrimaryTier = computed(() => attrs["data-tier"] === "primary");
+
+const classes = computed(() =>
+    cn("dock-tab-button", isPrimaryTier.value && "btn-audacious", props.class),
+);
 </script>
 
 <template>

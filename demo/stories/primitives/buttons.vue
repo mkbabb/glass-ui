@@ -41,6 +41,23 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
         </section>
 
         <section class="flex flex-col gap-4">
+            <h2 class="text-subheading">Audacious primary CTA</h2>
+            <p class="text-small text-muted-foreground">
+                The K.W6 HEADLINE variant. Disco-grain + specular highlight at rest,
+                sparkle-sweep on hover. Recipe lifted from
+                <code class="fira-code">dock.css</code>'s
+                <code class="fira-code">data-tier="primary"</code> with phase-tinting
+                dropped — the canonical variant is bound to <code class="fira-code">--primary</code>.
+                Reduced-motion suppresses the sparkle.
+            </p>
+            <div class="flex flex-wrap items-center gap-3">
+                <Button variant="primary-audacious" size="lg">Launch sequence</Button>
+                <Button variant="primary-audacious">Get started</Button>
+                <Button variant="primary-audacious" disabled>Disabled</Button>
+            </div>
+        </section>
+
+        <section class="flex flex-col gap-4">
             <h2 class="text-subheading">Sizes</h2>
             <p class="text-small text-muted-foreground">
                 Default variant across the size scale.
