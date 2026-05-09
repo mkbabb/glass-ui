@@ -396,22 +396,35 @@ Base class `.btn-pill`:
 
 ### Variants
 
-| Variant          | Rest                                                   | Hover                           |
-|------------------|--------------------------------------------------------|---------------------------------|
-| `default`        | Primary bg, foreground text                            | `bg-primary/90`                 |
-| `destructive`    | Destructive bg, destructive-foreground text            | `bg-destructive/90`             |
-| `outline`        | Border 70%, bg 60%, foreground text                    | 60% accent bg, 90% border       |
-| `secondary`      | Secondary bg                                           | `bg-secondary/80`               |
-| `accent`         | `.btn-pill-accent` (opaque theme accent)               | 90% opacity                     |
-| `ghost`          | Transparent, 85% foreground                            | 12% foreground bg               |
-| `glass`          | `.glass-wash` + default border                         | `--glass-shadow-resting`        |
-| `glass-wash`     | `.glass-wash`                                          | 60% border                      |
-| `ai`             | amber-500/15 bg, amber-700 text                        | amber-500/25                    |
-| `link`           | Text-only, underline on hover                          | underline                       |
+| Variant              | Rest                                                                                            | Hover                                                       |
+|----------------------|-------------------------------------------------------------------------------------------------|-------------------------------------------------------------|
+| `default`            | Primary bg, primary-foreground text                                                             | `bg-primary/90`                                             |
+| `primary-audacious`  | Primary bg + `@utility btn-audacious` recipe (disco-grain + sparkle-sweep + specular-highlight) | `scale-[var(--scale-hover)]` + recipe-internal hue lift     |
+| `destructive`        | Destructive bg, destructive-foreground text                                                     | `bg-destructive/90`                                         |
+| `outline`            | Border 70%, bg 60%, foreground text                                                             | 60% accent bg, 90% border                                   |
+| `secondary`          | Secondary bg                                                                                    | `bg-secondary/80`                                           |
+| `accent`             | `.btn-pill-accent` (opaque theme accent)                                                        | 90% opacity                                                 |
+| `ghost`              | Transparent, 85% foreground                                                                     | 12% foreground bg                                           |
+| `glass`              | `.glass-wash` + default border                                                                  | `--glass-shadow-resting`                                    |
+| `glass-wash`         | `.glass-wash`                                                                                   | 60% border                                                  |
+| `ai`                 | amber-500/15 bg, amber-700 text                                                                 | amber-500/25                                                |
+| `link`               | Text-only, underline on hover                                                                   | underline                                                   |
 
-`destructive` is the canonical "danger" variant (clears WCAG AA). The prior `danger-subtle` variant retired in J.W6 — the 4.28:1 contrast failed AA; subsumed by `destructive` (4.52:1+).
+`destructive` is the canonical "danger" variant (clears WCAG AA).
 
-All variants scale 0.97 on `:active`.
+#### `primary-audacious` — K W6 architectural transposition (K HEADLINE)
+
+K W6 lifted the disco-grain + sparkle-sweep + specular-highlight composite from `dock.css` (where it had lived under `.dock-tab-button[data-tier="primary"]`) into a canonical `@utility btn-audacious` in `src/styles/utilities.css`. The composite reads:
+
+- **Disco-grain texture** — radial gradient noise band over the primary fill, anchored to `--primary` so the recipe inherits theme hue automatically.
+- **Sparkle-sweep glyph** — `@keyframes sparkle-sweep` (already in `animations.css:151`) drives a diagonal specular streak across the button face on a long cadence, PRM-gated via `prefers-reduced-motion: no-preference` (matches the `.gold-shimmer` precedent).
+- **Specular-highlight backplate** — soft white-stop highlight at upper-left composing against the disco-grain layer for the "polished plastic" reading.
+
+Existing tokens consumed: `--primary`, `--shadow-cartoon`, `--surface-tint-*`, `--scale-press-btn`, `--scale-hover`, `--duration-sparkle`, `--ease-apple-spring`. No new keyframes were introduced.
+
+**Phase-color decoupling — Option B (per K W6 decision per Rε E3 recommendation)**: the canonical `@utility btn-audacious` recipe binds the radial to `--primary`, NOT to `--phase-color`. The recipe is reusable from any audacious primary-CTA context without inheriting an instrument-chassis phase cascade. The dock primary tier composes the canonical recipe via class-list inclusion (`btn-audacious` on `.dock-tab-button[data-tier="primary"]`) AND retains a dock-local extension that overrides the radial with `--phase-color` when a dock descendant of `<InstrumentChassis>` sets the phase variable. This keeps the canonical recipe axis-agnostic (≥ 2 consumer bar met: `<Button variant="primary-audacious">` + dock primary tier) while preserving the chassis-aware phase-tint flourish where it earns its keep.
+
+All variants scale `var(--scale-press-btn)` on `:active`.
 
 ### Sizes
 
@@ -556,6 +569,24 @@ Density overrides are named by tier, for example
 - `DockLayer` owns active/leaving panes through `.dock-layer-item-host`.
 - `useLayerTransition` performs the FLIP size animation for layer swaps.
 
+### Orientation
+
+`GlassDock` accepts `orientation?: "horizontal" | "vertical"` (default `"horizontal"`). Horizontal docks animate `width` on expand/collapse and lay children out in a row; vertical docks animate `height` and stack children in a column. The prop is threaded through `useDockTransition` as its `axis` ref — both `useDockTransition` and `useLayerTransition` are axis-aware, keying their FLIP logic off a computed `dim` (`"width" | "height"`) rather than a hardcoded dimension. Vertical consumers just set the prop; no other consumer changes are required.
+
+### Multi-layer composition
+
+Beyond the built-in two-layer grid (the default slot + the `collapsed` slot), richer docks compose `DockLayerGroup` with one or more `DockLayer` children. Each `DockLayer` registers itself with its parent via `provide`/`inject`; the group renders an optional Figma-style switcher rail from the registered descriptors (`showRail` + `railPosition`) and drives crossfade + size FLIP transitions between layers. Only the active layer is interactive — inactive layers receive `inert` and `pointer-events: none`.
+
+```vue
+<GlassDock orientation="vertical">
+    <DockLayerGroup v-model:active="tab" orientation="vertical">
+        <DockLayer id="assets" label="Assets" :icon="Package">…</DockLayer>
+        <DockLayer id="layers" label="Layers" :icon="Layers">…</DockLayer>
+        <DockLayer id="libs" label="Libraries" :icon="Library">…</DockLayer>
+    </DockLayerGroup>
+</GlassDock>
+```
+
 ---
 
 ## Variant Taxonomy
@@ -578,7 +609,7 @@ Applied to floating surfaces. v0.8.0 retired the four-rung `variant="subtle | de
 
 ### Semantic variant (intent)
 
-Used on `Button`: `primary | secondary | ghost | outline | destructive | accent | link | ai | glass | glass-wash`. Scoped to intent, independent of elevation. A ghost button sits flat on any tier. (`danger-subtle` retired in J.W6 — `destructive` is the canonical danger variant; the prior 4.28:1 contrast failed WCAG AA.)
+Used on `Button`: `default | primary-audacious | secondary | ghost | outline | destructive | accent | link | ai | glass | glass-wash`. Scoped to intent, independent of elevation. A ghost button sits flat on any tier. `primary-audacious` (K W6) composes the canonical `@utility btn-audacious` recipe over the primary intent — see `## Buttons → primary-audacious` for the disco-grain + sparkle-sweep + specular-highlight composite and the phase-color decoupling decision (Option B). `destructive` is the canonical danger variant.
 
 ### Structural variant (geometry)
 
@@ -600,13 +631,43 @@ Used on `Button`: `primary | secondary | ghost | outline | destructive | accent 
 | `md`  | 6 px         | 16 px      | Default               |
 | `lg`  | 12 px        | 24 px      | Hero / featured       |
 
-`<Slider>` also exposes `keepDockOpen` (default `true`) which acquires a dock-keep-open token for the duration of a drag gesture and reflects the dock's `data-held` flag on its root for thumb-halo intensification.
+### Slider keep-dock-open contract
+
+`<Slider>` exposes `keepDockOpen?: boolean` (default `true`). When a Slider is a descendant of a `<GlassDock>`, the contract is bidirectional and pointer-anchored:
+
+1. **Acquire** — `pointerdown` on the slider thumb injects a `dockKeepOpen` token via the dock's `useDockState` provide tree. While the token is held, the dock's idle-collapse timer is suspended.
+2. **Release** — `pointerup` / `pointercancel` (attached at window scope so the gesture survives the cursor leaving the dock) drops the token.
+3. **Visual binding** — the Slider subscribes to the dock's reactive `dockHeld` flag (the OR-reduction of all currently-held tokens) and reflects it via `data-held` on its root, intensifying the thumb-halo via a denser `--surface-tint` rung in scoped CSS.
+4. **Substrate response** — `.glass-dock[data-held]` in `src/styles/dock.css` tier-shades the dock background up while any descendant holds a token.
+
+The cross-substrate proof story lives at `demo/stories/compositions/dock-with-slider.vue` (K W7) — three cells exercising the contract: standard slider (Volume), `glass-pill` variant (Brightness), and a multi-slider mixer demonstrating multi-token reference-counting.
+
+**Slider-only contract — Option B per K W7 decision**: `<NumberField>` is NOT a consumer of `keepDockOpen`. NumberField interactions are keyboard- and discrete-button (chevron tap) — they have no continuous-interaction window for which keep-open matters. The K plan originally floated an Option A where NumberField also acquired the token; W7 picked Option B (Slider-only) on the rationale that the contract's load-bearing semantics are pointer-drag + thumb-halo intensification — neither of which applies to NumberField. The contract is documented as Slider-only; future consumers must demonstrate a pointer-anchored continuous-interaction model before joining.
 
 ### Theming discipline
 
 When a consumer needs to override component internals, the first resort is a documented CSS custom property. `:deep()` is a last resort — it indicates a missing token or slot-class prop.
 
 Slot-class props (e.g., `ScrollPaneHeader` → `title-class`, `description-class`) expose internal elements for controlled styling.
+
+---
+
+## Configurator
+
+The configurator family is the canonical chrome for live token / preset editing in storybook + consumer admin surfaces. Four primitives compose:
+
+- `<Configurator>` — outer shell (FAB + sheet + persistence).
+- `<ConfiguratorLayer>` — labelled group of related rows (typography, glass tier, density, etc.).
+- `<ConfiguratorRow>` — single labelled control (slider, select, color, switch).
+- `useConfiguratorState` — reactive preset state (active key, draft buffer, commit / reset / cycle, persistence).
+
+The family reaches the ≥ 2-consumer bar via:
+1. `demo/stories/motion/metaballs.vue` (`useConfiguratorState` with the metaballs preset cohort).
+2. `demo/stories/primitives/configurator.vue` (V-tranche fb38034 — primitive-side story consuming `<ConfiguratorRow>` + `useConfiguratorState`).
+
+**Configurator P0 absorb (K W7)**: `useConfiguratorState.ts:85-87` previously declared `let activeKey: string | undefined` — non-reactive — so `studio.activePreset` returned a stale computed value and templates binding it never updated when `selectPreset` mutated the local. K W7 replaced the plain `let` with `const activeKey = ref<string | undefined>(...)`; `selectPreset` / `resetCurrent` / `cyclePreset` mutate `activeKey.value`. The "Maximum recursive updates exceeded" runtime error on `/motion/metaballs` (Lighthouse P0-1) is gone. A bidirectional `colorDraft ↔ cfg.colors` watch-write loop in `metaballs.vue` was eliminated by Strategy 1 (KISS — drop `colorDraft` entirely; iterate `cfg.colors` directly via `studio.config`).
+
+**Aurora chrome retains parallel implementation — Option-B-with-rationale (K cross-tranche debt)**: `<Aurora>` exposes `useAuroraStudio` + `<AuroraConfigDock>` rather than composing `useConfiguratorState`. The aurora preset model has per-preset clone semantics that don't fit the configurator family's draft-buffer commit cycle (aurora previews mutate the live preset directly, then commits write-through to the named preset slot). Unification under `useConfiguratorState` would require a generalisation we can't justify against current consumers; the parallel chrome is documented as an Option-B retain rather than a covered debt. Deferred to L if Option-A unification is ever desired.
 
 ---
 
@@ -856,15 +917,15 @@ Consumer-overridable HSL tokens. Light values; dark overrides in `.dark {}`.
 
 ### UI primitives (`src/components/ui/`)
 
-accordion · alert · avatar · badge · button · card · carousel · checkbox · collapsible · combobox · command · context-menu · data-table · dialog · drawer · dropdown-menu · hover-card · input · label · multi-select · notification · number-field · popover · progress · radio-group · scroll-area · scroll-pane · select · separator · sheet · skeleton · slider · switch · table · tabs · tags-input · textarea · toast · toggle · toggle-group · tooltip.
+_shared (`<ModalOverlay>`, `menuItemVariants` CVA — V.W3) · accordion · alert · avatar · badge · button · card · carousel · cartoon-card · checkbox · collapsible · combobox · command · context-menu · data-table · dialog · drawer · dropdown-menu · hover-card · input · label · metric-pill · multi-select · notification · number-field · popover · progress · radio-group · scroll-pane · section · select · separator · sheet · skeleton · slider · switch · table · tabs · tags-input · textarea · toast · toggle · toggle-group · tooltip.
 
 ### Custom composites (`src/components/custom/`)
 
-animation · aurora · **configurator** (`Configurator`, `ConfiguratorLayer`, `ConfiguratorRow`, `useConfiguratorState`) · confirm-dialog · controls · **dock** (`GlassDock`, `DockLayer`, `DockLayerGroup`, `DockIconButton`, `DockSelectTrigger`, `DockDropdownTrigger`) · expandable-container · form · glass-carousel · glass-panel · icon-tooltip · infinite-scroll · labeled-field · **metric-badge** · metaballs · **pulse** · search · sidebar · sortable-list · stacked-icons · tabs (BouncyTabs, UnderlineTabs, BouncyToggle) · timeline · toggle-chip · typewriter. (`DockPopover` retired in J.W3 — `<HoverPopover keep-dock-open>` provides hover-driven popover semantics inside docks.)
+animation · aurora · **configurator** (`Configurator`, `ConfiguratorLayer`, `ConfiguratorRow`, `useConfiguratorState`) · confirm-dialog · controls · **disco-glyph** · **dock** (`GlassDock`, `DockLayer`, `DockLayerGroup`, `DockIconButton`, `DockTabButton`, `DockSelectTrigger`, `DockDropdownTrigger`) · **dock-group** · expandable-container · form · glass-carousel · glass-panel · **glyph-face** · **hover-popover** · icon-tooltip · infinite-scroll · **instrument-chassis** · **labeled-field** · **metric-badge** · metaballs · **paper-backdrop** · **pulse** · **scrolling-text** · search · sidebar · sortable-list · stacked-icons · **status-dot** · tabs (BouncyTabs, UnderlineTabs, BouncyToggle) · timeline · toggle-chip · typewriter.
 
 ### Key component specs
 
-**`Skeleton`** — `<Skeleton variant="pulse" | "shimmer" class="..." />`. Pulse: `animate-pulse rounded-md bg-muted`. Shimmer: sliding gradient sweep 90°, from `var(--muted)` at 25% / 75% to `color-mix(in srgb, var(--muted-foreground) 30%, transparent)` at 50%, `background-size: 200% 100%`, 1.5 s linear loop. Reduced-motion disables animation.
+**`Skeleton`** — `<Skeleton variant="pulse" | "shimmer" class="..." />`. Pulse: `animate-pulse rounded-md bg-muted`. Shimmer (K WP migration): a transform-only `::after` overlay with `transform: translateX(-100% → 100%)` over 1.5 s linear loop, `will-change: transform`. Visual fidelity preserved (1.5 s sweep cadence, `--muted-foreground` highlight band over `bg-muted` base). The migration moves the sweep off `background-position` (which forced main-thread paint per frame) onto compositor-friendly transform-only animation — addresses Lighthouse P1-4 (non-composited animation). Reduced-motion gate preserved.
 
 **`Pulse`** — `<Pulse :count="3" variant="dots|ring" speed="slow|normal|fast" />`. Dots: count-many 6 × 6 px rounded circles with current-color background, staggered `pulse-dot-bounce` animation (opacity 0.35 → 1 → 0.35, scale 0.8 → 1.2 → 0.8). Ring: 16 × 16 px current-color border with transparent top, linear spin. `--pulse-duration` mapped from `speed` prop to `--duration-slow|panel|fast`. Reduced-motion → animation none, opacity 0.6.
 
@@ -889,7 +950,9 @@ animation · aurora · **configurator** (`Configurator`, `ConfiguratorLayer`, `C
 
 **`DiscoGlyph`** — `<DiscoGlyph :silhouette="path-d" :viewBox="0 0 24 24" :active="bool" :phaseColor="currentColor" :facetAxis="diagonal|horizontal|vertical">`. Three-layer SVG glyph primitive that paints the silhouette (1) filled `currentColor` so the lucide cascade carries through at idle, (2) overlaid by an 8-stop linear gradient that simulates ~6 facets cutting across the glyph face — gradient axis follows `facetAxis` so each consumer picks the direction that cuts across its dominant stroke (CheckDisco / ArrowRightDisco vertical, PlayDisco / RotateCcwDisco diagonal), (3) capped by a 165° catch-light gradient (white at the upper-left, transparent past 40%). `useId()` scopes the gradient ids so multiple glyphs on one page do not collide post-SSR/hydration. Hands silhouette upward via `provide(GlyphFaceSilhouetteKey)` for wrapping GlyphFace cap consumption. Speedtest's disco icons (Play / RotateCcw / ArrowRight / Check) are thin wrappers that pass only the silhouette path + facet axis.
 
-**`HoverPopover`** — `<HoverPopover content="..." :side="auto" :align="auto">`. Hover-triggered popover-tier label with adaptive `side`/`align` (auto-flips off viewport edges); 250ms open / 150ms defer-on-leave timer. Composed via reka-ui HoverCard primitives; popover-tier substrate for chassis dock consumers (SettingsCog tooltip; ActionCluster Back / Stop / Retake hover-labels).
+**`HoverPopover`** — `<HoverPopover content="..." :hover-open-delay="250" :close-delay="150" :side="auto" :align="auto">`. Hover-triggered popover-tier label with adaptive `side`/`align` (auto-flips off viewport edges). Composed via reka-ui HoverCard primitives; popover-tier substrate for chassis dock consumers (SettingsCog tooltip; ActionCluster Back / Stop / Retake hover-labels).
+
+The `hoverOpenDelay` prop (default `250`ms) is the public API name as of K W1 (renamed from a prior generic name in J close). Rationale: reka-ui's HoverCard primitive exposes a generic `open-delay` for hover-card-family components; the glass-ui wrapper specialises hover-popover semantics (lighter, dock-internal label tier — distinct from the heavier hover-card register). The hover-popover-specific name disambiguates from the generic primitive's API at consumer call-sites and matches the `closeDelay` sibling. The rename is a clean break per K invariant 1 (no legacy aliases); the J FINAL named prop now matches the shipped API.
 
 **`InstrumentChassis`** — `<InstrumentChassis>` with `strip` / `dial` / `control` slots. Composes the chassis CSS once: `--glass-bg-chassis` + `--glass-blur-default` + `--glass-border-default` + `--glass-shadow-default` + the `--glass-curvature-overlay` lift + an engraved-bezel inner stroke + twin-line groove dividers between regions. Consumers render through the slots — speedtest, survey, thank-you all share the same chassis with different region content. `RegionDivider` ships the twin-line groove rule for nested splits. Q.W4.A lifted the light-mode bezel-line α from 0.04 / 0.06 to 0.10 / 0.12 so the divider reads against saturated-aurora bleed; dark-mode pair (0.06 / 0.18) stays. Lands on `o-w2_7-instrument-chassis` and cherry-picks into `release/0.7.x` as v0.7.1 patch.
 
@@ -916,9 +979,34 @@ v0.7.0 / v0.7.1 keep working unchanged.
 
 ### Composables (`src/composables/`)
 
-Dock: `useDockState`, `useLayerTransition`. Sorting: `useSortable`. Sidebar: `useTreeIndex`, `useScrollTracker`, `useSidebarFollow`, `useSidebarState`, `buildTreeIndex`. Effects: `useGlobalDark`, `useKeyboardShortcuts`. Infinite scroll: `useInfiniteScroll`.
+23 public composables ship at v0.9.0, organised across 6 sub-trees + 8 top-level files:
 
-Motion: `useSpringOrchestrator`, `useStaggerReveal`, `useScrollProgress`, `useAnimatedNumber`, `useDarkModeSync`. `useAnimatedNumber` wraps keyframes.js `SmoothProgress.play` to expose a reactive hysteresis-smoothed value for live numeric tracking (hero values, pill amounts, progress bars). Not a typewriter — the target glides toward a moving signal via exponential damping. `useDarkModeSync` (Tranche G) encapsulates the two-step `nextTick → requestAnimationFrame` dance required to react to dark-mode toggles in code that reads computed CSS variables (canvas renderers etc.).
+**Dock** (under `src/components/custom/dock/composables/`): `useDockState`, `useLayerTransition`. Both axis-aware via the `axis` ref (see Dock → Orientation).
+
+**Sortable**: `useSortable`.
+
+**Sidebar**: `useTreeIndex`, `useScrollTracker`, `useSidebarFollow`, `useSidebarState`, `buildTreeIndex`.
+
+**Effects**: `useGlobalDark`, `useKeyboardShortcuts`, `useTouchGate`, `useTimer`, `useInterval`, `useResizeObserver`.
+
+**Infinite scroll** (under `src/components/custom/infinite-scroll/composables/`): `useInfiniteScroll`.
+
+**Motion** (`src/composables/motion/`): `useSpringOrchestrator`, `useStaggerReveal`, `useScrollProgress`, `useAnimatedNumber`, `useAnimatedNumberMap`, `useDarkModeSync`, `useRAFLoop`, `useIntersectionPause`. `useAnimatedNumber` wraps keyframes.js `SmoothProgress.play` to expose a reactive hysteresis-smoothed value for live numeric tracking (hero values, pill amounts, progress bars). Not a typewriter — the target glides toward a moving signal via exponential damping. `useAnimatedNumberMap` (v0.8.4 promotion) is the N-up fan-out behind a Record-returning composable. `useDarkModeSync` (Tranche G) encapsulates the two-step `nextTick → requestAnimationFrame` dance required to react to dark-mode toggles in code that reads computed CSS variables (canvas renderers etc.).
+
+**Glass renderer** (`src/composables/glass/`): `useGlassRenderer`, `createGlassFilter`, `destroyGlassFilter`. WebGL + WebGPU substrate.
+
+**Pagination**: `useOffsetPagination`.
+
+**Virtual list** (`src/composables/virtual/`): `useVirtualSectionWindow`, `useWindowedStore`, `virtualSectionLayout`.
+
+**v0.8.4 promotions** (lifted from speedtest per V.W2):
+- **`useTokenColor`** (`a4959ef`) — read CSS custom property as `ComputedRef` with theme-aware fallback. Supersedes the retired `cssVar` helper for the WAAPI-adjacent reactive-read use case.
+- **`useStagger`** (`4e28520`) — one-shot staggered reveal-flag array with cleanup-safe timer set; PRM brackets via `prefers-reduced-motion`.
+- **`useAnimatedNumberMap`** (`16df6db`) — covered above under Motion.
+
+**`useStoryDemo`** (V.W4 227e1b0) — canonical play / reset / status harness with cleanup discipline. Demo-side primitive used across composable storybook entries; exported from the public composables barrel for consumer consumption.
+
+**`cssVar` retire** (K W3.A) — `cssVar.ts` retired. The single in-tree consumer (BouncyToggle) inlined a 5-line `readToken(name, fallback)` helper at click-time (no reactivity needed). `useTokenColor` (above) supersedes for reactive use cases.
 
 ### Progress component variants (Tranche G)
 
@@ -963,6 +1051,80 @@ minWidthInputSm = 80
 ```
 
 Keep in sync with `tokens.css` when editing CSS tokens.
+
+---
+
+## Subpath surface
+
+The library is shipped as a single root barrel (`@mkbabb/glass-ui`) plus a fan of
+subpath entry points. Most subpaths exist for **substrate isolation** (one
+component family, one dist chunk, one .d.ts) so consumers can import individual
+primitives without dragging the rest of the surface through the tree-shaker.
+A subset exists for a stronger reason — **dependency isolation** — where the
+subpath separates a chunk that pulls heavyweight peer-deps from the rest of the
+library.
+
+### Substrate-isolation subpaths (the default shape)
+
+`./tokens`, `./dock`, `./search`, `./sidebar`, `./controls`, `./confirm-dialog`,
+`./infinite-scroll`, `./tabs`, `./typewriter`, `./stacked-icons`, `./virtual`,
+`./pagination`, `./glass-carousel`, `./aurora`, `./configurator`,
+`./metric-badge`, `./status-dot`, `./pulse`, `./paper-backdrop`, `./toggle-chip`,
+`./glass-panel`, `./metaballs`, `./sortable-list`, `./timeline`,
+`./labeled-field`, `./expandable-container`, `./icon-tooltip`,
+`./instrument-chassis`, `./glyph-face`, `./dock-group`, `./disco-glyph`,
+`./hover-popover`, `./scrolling-text`, `./freshness`. Each maps to a
+`src/<name>.ts` barrel and a `dist/<name>.{js,d.ts}` artefact. Used to scope a
+component family or a small handful of primitives.
+
+`./styles` is the shared CSS bundle (sole CSS subpath; consumers wire it via
+`@import "@mkbabb/glass-ui/styles"`).
+
+### vueuse-bearing subpaths (since v0.9.3)
+
+| Subpath | Purpose | vueuse symbols |
+|---|---|---|
+| `@mkbabb/glass-ui/forms` | Input, Textarea, Combobox\* family | `useVModel`, `reactiveOmit` |
+| `@mkbabb/glass-ui/composables/dark` | `useGlobalDark` | `createGlobalState`, `useDark`, `useToggle` |
+| `@mkbabb/glass-ui/composables/keyboard` | `registerShortcut`, `useRegisteredShortcuts`, `formatCombo`, `formatComboParts`, `isMac`, types | `createGlobalState`, `useEventListener` |
+
+Consumers that intend to apply a Rollup `manualChunks: { "vueuse":
+["@vueuse/core", "@vueuse/shared"] }` rule should reach for these symbols via
+the subpaths rather than the root barrel. The root barrel currently re-exports
+all three (Phase 1 of the SCC trap fix is additive); Phase 2 (v1.0) removes the
+root-barrel re-exports.
+
+```ts
+// v0.9.3+ recommended shape (and v1.0 required shape)
+import { Input, Textarea, Combobox } from "@mkbabb/glass-ui/forms";
+import { useGlobalDark } from "@mkbabb/glass-ui/composables/dark";
+import { registerShortcut } from "@mkbabb/glass-ui/composables/keyboard";
+```
+
+The mechanism behind the carve: when a consumer's entry chunk depends on Vue
+AND a manualChunks rule pulls vueuse to a leaf, Rollup hoists `@vue/shared` +
+`@vue/reactivity` + `@vue/runtime-core` into the vueuse bucket to satisfy both
+consumers. The entry chunk then imports from the vueuse leaf to access Vue,
+and Vite emits `<link rel="modulepreload">` to keep the eager critical path
+warm. The trap is the same SCC-hoist mechanism V.W1.T7 retired vue-echarts
+to escape; the vueuse subpath shape is the upstream fix for the same bug class.
+See `docs/tranches/K/waves/W-S.md` and the bundle-evidence transcript at
+`docs/tranches/K/audit/W-S-bundle-evidence.md`.
+
+### Subpath authoring rules
+
+- One `src/<name>.ts` per `exports[<name>]` entry. Multi-segment subpaths use
+  matching directory shape (`exports["./composables/dark"]` ↔
+  `src/composables/dark.ts` ↔ `dist/composables/dark.{js,d.ts}`).
+- `vite.library.ts` `libraryEntries(rootDir)` lists the entry name keyed by
+  the file basename minus extension (or the multi-segment dir/name for nested
+  subpaths). The corresponding `package.json` `exports` + `typesVersions`
+  entries must be added in the same commit.
+- Subpaths re-export named symbols only; no default exports anywhere in the
+  library.
+- Subpaths must NOT introduce a new peer-dependency: the substrate cost of a
+  subpath is the same as the root barrel (one peer-dep, one Vue runtime). The
+  only thing a subpath isolates is the *consumer-side bundle graph*.
 
 ---
 
