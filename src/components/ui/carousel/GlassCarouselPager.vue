@@ -84,6 +84,16 @@ const NextIcon = computed(() =>
             cn(
                 'inline-flex items-center gap-2',
                 orientation === 'vertical' && 'flex-col',
+                /*
+                   K.W5 — at 375 viewport the chevron + counter +
+                   trailing-slot row overflows when consumers attach
+                   trailing affordances (J π audit: chevrons measured
+                   at x=1050). Allow the row to wrap at narrow widths
+                   so all controls remain reachable without horizontal
+                   scroll. The wrap only fires below md (≤ 767px),
+                   leaving the canonical desktop row untouched.
+                */
+                'max-md:flex-wrap max-md:justify-center max-md:gap-2',
                 props.class
             )
         "

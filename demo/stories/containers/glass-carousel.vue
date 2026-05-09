@@ -108,8 +108,18 @@ onMounted(updateOverflow);
 
 <template>
     <StoryPage content-class="gap-12">
-        <section class="grid gap-4">
-            <div class="flex flex-wrap items-end justify-between gap-3">
+        <!--
+           K.W5 — `grid` tracks default to `auto`, so the inner carousel's
+           intrinsic min-content (8 slides × `min-w-[13rem]`) inflates the
+           track width past the article's 260px clamp at 375 viewport. The
+           grandparent grid item at `<section class="mt-8 flex flex-col">`
+           expands to 1196px, pushing the pager off-screen at x=1050.
+           `min-w-0` restores the grid track to `minmax(0, auto)` semantics
+           so the carousel stays inside its container and the pager renders
+           at the audited position.
+        -->
+        <section class="grid gap-4 min-w-0">
+            <div class="flex flex-wrap items-end justify-between gap-3 min-w-0">
                 <div class="grid gap-1">
                     <h2 class="text-subheading">GlassCarousel pager</h2>
                     <p class="text-small text-muted-foreground">
@@ -136,12 +146,12 @@ onMounted(updateOverflow);
                 </GlassCarouselPager>
             </div>
 
-            <div class="rounded-card border border-border bg-card/40 p-4 shadow-cartoon">
+            <div class="rounded-card border border-border bg-card/40 p-4 shadow-cartoon min-w-0">
                 <GlassCarousel
                     orientation="horizontal"
                     :expanded="carouselExpanded"
                     snap="mandatory"
-                    class="w-full"
+                    class="w-full min-w-0"
                     data-glass-carousel
                 >
                     <GlassCarouselItem

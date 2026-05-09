@@ -52,7 +52,14 @@ const entries = computed<PagerEntry[]>(() =>
 
 <style scoped>
 .story-pager-dock {
-    max-width: min(80vw, 56rem);
+    /*
+       K.W5 — viewport-relative `min(80vw, 56rem)` overflowed by 4px at
+       375×667 because `80vw` ignores the CategoryRail's left occupancy
+       (J π audit: width=300, x=79, right=379). Bind the cap to the
+       parent's available width via `100%` so the dock can never exceed
+       its content area regardless of the rail width.
+    */
+    max-width: min(100%, 56rem);
 }
 
 .story-pager-row {
