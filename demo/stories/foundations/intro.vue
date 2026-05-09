@@ -63,10 +63,9 @@ const categories: { slug: string; title: string; blurb: string }[] = [
                     :href="`#/${cat.slug}`"
                     :class="
                         cn(
-                            'group relative flex flex-col gap-[calc(0.5rem_+_var(--density-gap,0rem))] rounded-card border border-border bg-card p-[calc(1.25rem_+_var(--density-pad,0rem))]',
+                            'group relative focus-ring flex flex-col gap-[calc(0.5rem_+_var(--density-gap,0rem))] rounded-card border border-border bg-card p-[calc(1.25rem_+_var(--density-pad,0rem))]',
                             'shadow-[var(--shadow-card)] transition-transform duration-normal ease-out',
                             'hover:-translate-x-px hover:-translate-y-px hover:shadow-[var(--story-card-shadow-hover)]',
-                            'focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)]',
                         )
                     "
                     style="--story-card-shadow-hover: var(--shadow-card-hover, var(--shadow-cartoon-hover));"

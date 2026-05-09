@@ -30,7 +30,7 @@ const activeFlatId = computed<string | null>(() => {
             <!-- Brand wordmark — lives once, at the top of the rail -->
             <RouterLink
                 to="/"
-                class="mb-1 flex h-10 w-10 items-center justify-center rounded-full focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)]"
+                class="focus-ring mb-1 flex h-10 w-10 items-center justify-center rounded-full"
                 aria-label="glass-ui home"
             >
                 <span

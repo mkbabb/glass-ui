@@ -24,7 +24,7 @@ const { register, revealed } = useStaggerReveal({ staggerMs: 80, threshold: 0.2 
                                 v-for="i in 9"
                                 :key="i"
                                 :ref="(el) => register(el as HTMLElement, i - 1)"
-                                class="rounded-md border border-border bg-background p-6 transition-all duration-500"
+                                class="rounded-md border border-border bg-background p-6 transition-[transform,opacity] duration-500"
                                 :class="revealed[i - 1] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
                             >
                                 <code class="fira-code">slot {{ i }}</code>

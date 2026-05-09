@@ -55,10 +55,9 @@ const shadows: { cls: string; label: string }[] = [
                     type="button"
                     :class="
                         cn(
-                            'glass-card flex h-32 w-56 flex-col items-start justify-between rounded-card border border-border p-5 text-left',
+                            'glass-card focus-ring flex h-32 w-56 flex-col items-start justify-between rounded-card border border-border p-5 text-left',
                             'shadow-cartoon transition-transform duration-fast ease-out',
-                            'hover:-translate-x-px hover:-translate-y-px hover:shadow-cartoon-hover',
-                            'focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)]'
+                            'hover:-translate-x-px hover:-translate-y-px hover:shadow-cartoon-hover'
                         )
                     "
                 >

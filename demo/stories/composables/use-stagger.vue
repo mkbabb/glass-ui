@@ -42,7 +42,7 @@ const { revealed, start, reset, isComplete } = useStagger({
                 <div
                     v-for="(flag, idx) in revealed"
                     :key="idx"
-                    class="flex aspect-square flex-col items-center justify-center rounded-panel border border-border bg-card transition-all duration-normal ease-out"
+                    class="flex aspect-square flex-col items-center justify-center rounded-panel border border-border bg-card transition-[transform,opacity] duration-normal ease-out"
                     :class="
                         flag
                             ? 'translate-y-0 opacity-100'

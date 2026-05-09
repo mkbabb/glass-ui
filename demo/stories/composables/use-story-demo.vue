@@ -40,7 +40,7 @@ demo.onPlay(async (cleanup) => {
                         <div
                             v-for="(flag, idx) in demo.state.value"
                             :key="idx"
-                            class="flex aspect-square items-center justify-center rounded-md border border-border bg-card transition-all duration-300"
+                            class="flex aspect-square items-center justify-center rounded-md border border-border bg-card transition-[transform,opacity] duration-300"
                             :class="flag ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-30'"
                         >
                             <span class="font-mono text-sm">{{ idx + 1 }}</span>

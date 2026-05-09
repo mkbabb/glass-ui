@@ -195,7 +195,7 @@ onMounted(() => {
                 <div
                     class="absolute inset-0 opacity-45"
                     aria-hidden="true"
-                    style="background-image: linear-gradient(90deg, color-mix(in srgb, var(--foreground) 8%, transparent) 1px, transparent 1px), linear-gradient(color-mix(in srgb, var(--foreground) 8%, transparent) 1px, transparent 1px); background-size: 34px 34px;"
+                    style="background-image: linear-gradient(90deg, var(--surface-tint-8) 1px, transparent 1px), linear-gradient(var(--surface-tint-8) 1px, transparent 1px); background-size: 34px 34px;"
                 />
 
                 <div class="relative grid grid-cols-1 gap-4 lg:grid-cols-3">

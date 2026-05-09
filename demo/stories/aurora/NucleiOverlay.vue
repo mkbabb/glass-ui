@@ -65,7 +65,7 @@ const items = computed(() =>
                 height: n.height,
                 transform: n.transform,
                 background:
-                    'radial-gradient(ellipse, transparent 60%, color-mix(in srgb, var(--foreground) 22%, transparent) 85%, transparent 100%)',
+                    'radial-gradient(ellipse, transparent 60%, var(--surface-tint-22) 85%, transparent 100%)',
             }"
         >
             <!-- Counter-rotate so the index reads upright regardless of nucleus angle. -->

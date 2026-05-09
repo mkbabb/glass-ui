@@ -46,7 +46,7 @@ function back() {
                             <button
                                 v-for="l in layers"
                                 :key="l.id"
-                                class="inline-flex items-center gap-1 rounded-[var(--radius-pill)] px-2 py-1 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-shadow)]"
+                                class="focus-ring inline-flex items-center gap-1 rounded-[var(--radius-pill)] px-2 py-1 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                                 :aria-label="l.label"
                                 :data-testid="`dock-layer-open-${l.id}`"
                                 @click="open(l.id)"

@@ -56,7 +56,7 @@ function setRef(el: Element | null, idx: number): void {
                     cn(
                         'flex aspect-square flex-col items-center justify-center gap-1 rounded-panel',
                         'border border-border bg-card shadow-cartoon',
-                        'transition-all duration-normal ease-out',
+                        'transition-[transform,opacity] duration-normal ease-out',
                         revealed[item.idx]
                             ? 'translate-y-0 opacity-100'
                             : 'translate-y-4 opacity-0',
