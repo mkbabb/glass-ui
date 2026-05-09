@@ -22,10 +22,22 @@
         <link rel="dns-prefetch" href="https://api.fontshare.com" />
         <link rel="dns-prefetch" href="https://cdn.fontshare.com" />
 
+        <!-- Async-load the Fraunces stylesheet so it doesn't block first paint
+             (K.WP P1-5). `media="print"` makes the browser fetch but skip
+             render-blocking; the onload swaps it back to `all`. The <noscript>
+             path keeps non-JS clients functional. -->
         <link
             href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&display=swap"
             rel="stylesheet"
+            media="print"
+            onload="this.media='all'"
         />
+        <noscript>
+            <link
+                href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&display=swap"
+                rel="stylesheet"
+            />
+        </noscript>
     </head>
     <body>
         <div id="app"></div>

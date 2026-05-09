@@ -49,7 +49,6 @@ function onKey(e: KeyboardEvent, key: PresetKey) {
                 )"
                 :style="{ width: '200px' }"
                 :aria-pressed="key === current"
-                :aria-label="`Preset: ${PRESET_META[key].label}`"
                 @click="onPick(key)"
                 @keydown="(e) => onKey(e, key)"
             >

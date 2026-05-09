@@ -115,7 +115,7 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
                 <Button
                     v-for="v in vizButtons"
                     :key="v.id"
-                    :class="cn(v.bg, 'text-white shadow-cartoon hover:shadow-cartoon-hover hover:-translate-x-px hover:-translate-y-px')"
+                    :class="cn(v.bg, 'text-foreground shadow-cartoon hover:shadow-cartoon-hover hover:-translate-x-px hover:-translate-y-px')"
                 >
                     {{ v.label }}
                 </Button>

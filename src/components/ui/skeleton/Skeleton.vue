@@ -25,22 +25,40 @@ const props = withDefaults(
 </template>
 
 <style scoped>
-/* Sliding gradient sweep. Composes shimmer-sweep keyframe from
- * src/styles/animations.css (same -200% → 200% background-position
- * direction). Honors reduced-motion. */
+/* Sliding gradient sweep. Compositor-friendly: animates `transform` on an
+ * absolutely-positioned `::after` rather than `background-position` on the
+ * host (transform composites to GPU; background-position runs on main
+ * thread). K.WP P1-4: 18 simultaneous shimmer skeletons on /aurora pushed
+ * TBT to 120ms vs 10ms baseline; transform-only keyframe eliminates that
+ * main-thread cost. Honors reduced-motion. */
 .skeleton-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+
+.skeleton-shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
     background: linear-gradient(
         90deg,
-        var(--muted) 25%,
+        transparent 0%,
         color-mix(in srgb, var(--muted-foreground) 30%, transparent) 50%,
-        var(--muted) 75%
+        transparent 100%
     );
-    background-size: 200% 100%;
-    animation: shimmer-sweep 1.5s linear infinite;
+    transform: translateX(-100%);
+    animation: skeleton-shimmer-slide 1.5s linear infinite;
+    will-change: transform;
+}
+
+@keyframes skeleton-shimmer-slide {
+    to {
+        transform: translateX(100%);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .skeleton-shimmer {
+    .skeleton-shimmer::after {
         animation: none;
     }
 }

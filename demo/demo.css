@@ -1,6 +1,57 @@
 /* Font imports must be first so the bundler hoists them above all rules. */
 @import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,0..100,0..1&family=Fira+Code:wght@300..700&display=swap");
-@import url("https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css");
+
+/* Computer Modern Serif — declared inline (rather than via the upstream
+ * dreampulse fonts.css aggregate) so we can attach `font-display: swap`
+ * (K.WP P1-6). The aggregate @import pulled ~12 family CSS files of which
+ * only Serif is consumed; this trims the request count too. */
+@font-face {
+    font-family: "Computer Modern Serif";
+    src:
+        url("https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/font/Serif/cmunrm.woff")
+            format("woff"),
+        url("https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/font/Serif/cmunrm.ttf")
+            format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Computer Modern Serif";
+    src:
+        url("https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/font/Serif/cmunbx.woff")
+            format("woff"),
+        url("https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/font/Serif/cmunbx.ttf")
+            format("truetype");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Computer Modern Serif";
+    src:
+        url("https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/font/Serif/cmunti.woff")
+            format("woff"),
+        url("https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/font/Serif/cmunti.ttf")
+            format("truetype");
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Computer Modern Serif";
+    src:
+        url("https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/font/Serif/cmunbi.woff")
+            format("woff"),
+        url("https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/font/Serif/cmunbi.ttf")
+            format("truetype");
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
 
 @import "tailwindcss" source("../demo");
 @import "tw-animate-css";

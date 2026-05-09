@@ -135,7 +135,6 @@ function togglePlay() {
                     <DropdownMenu>
                         <DockDropdownTrigger
                             type="button"
-                            aria-label="Dock command"
                             data-testid="dock-dropdown-trigger"
                         >
                             <Settings class="h-4 w-4" />
