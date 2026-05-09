@@ -252,6 +252,7 @@ export const CATEGORIES: Category[] = [
             s("compositions", "settings", "Settings"),
             s("compositions", "empty-states", "Empty States"),
             s("compositions", "instrument-chassis", "Instrument Chassis", "Three-region chassis with twin-line bezel grooves and phase cascade."),
+            s("compositions", "dock-with-slider", "Dock with Slider", "Cross-substrate `keep-dock-open` contract — slider thumb-halo + dock substrate response while dragging."),
         ],
     },
 ];

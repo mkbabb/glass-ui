@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { computed, reactive, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import {
     DEFAULT_METABALL_CONFIG,
     MetaballCanvas,
@@ -103,34 +103,30 @@ const activePresetKey = computed(() => studio.activePreset.value ?? "");
 const isDirtyConfig = computed(() => studio.isDirty.value);
 
 // ─── Color stops (free-text editing per stop) ─────────────────────────────
-
-const colorDraft = reactive(cfg.colors.map((c) => ({ value: c })));
-
-watch(
-    () => cfg.colors,
-    (next) => {
-        // Resync the local draft when a preset switch replaces the array.
-        colorDraft.length = 0;
-        for (const c of next) colorDraft.push({ value: c });
-    },
-    { deep: false },
-);
+//
+// K.W7 Step 0 Part B — `colorDraft` was a redundant reactive mirror of
+// `cfg.colors`, kept in sync via a `watch(() => cfg.colors)` block that
+// rebuilt the draft on preset switches, and `commitColor` wrote to BOTH
+// `cfg.colors[index]` and `colorDraft[index].value`. Combined with
+// `applyPreset` reassigning every key on the reactive proxy on preset
+// switch, this produced a write-write loop that Vue's scheduler flagged
+// as "Maximum recursive updates exceeded" (Lighthouse 2026-05-08 P0-1).
+//
+// Fix (Strategy 1, KISS): drop `colorDraft` entirely and bind the UI
+// directly to `cfg.colors[index]` — `cfg` is already a reactive proxy.
 
 function commitColor(index: number, value: string) {
     if (index < 0 || index >= cfg.colors.length) return;
     cfg.colors[index] = value;
-    colorDraft[index]!.value = value;
 }
 
 function addColor() {
     cfg.colors.push("#cccccc");
-    colorDraft.push({ value: "#cccccc" });
 }
 
 function removeColor(index: number) {
     if (cfg.colors.length <= 1) return;
     cfg.colors.splice(index, 1);
-    colorDraft.splice(index, 1);
 }
 
 // ─── Slider helpers (Reka sliders model number[]) ─────────────────────────
@@ -323,19 +319,19 @@ const isReducedTransparency = computed(
                 >
                     <div class="flex w-full flex-col gap-2">
                         <div
-                            v-for="(stop, index) in colorDraft"
+                            v-for="(color, index) in cfg.colors"
                             :key="index"
                             class="flex items-center gap-2"
                         >
                             <input
                                 type="color"
-                                :value="stop.value"
+                                :value="color"
                                 class="focus-ring h-7 w-9 cursor-pointer rounded border border-border/40 bg-transparent"
                                 :aria-label="`Color stop ${index + 1}`"
                                 @input="commitColor(index, ($event.target as HTMLInputElement).value)"
                             />
                             <span class="text-mono-caption text-muted-foreground/80">
-                                {{ stop.value }}
+                                {{ color }}
                             </span>
                             <button
                                 type="button"

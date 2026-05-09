@@ -15,7 +15,7 @@
 // The composable does NOT persist; consumers wire localStorage / URL state
 // externally if needed.
 
-import { reactive, computed, type ComputedRef } from "vue";
+import { reactive, ref, computed, type ComputedRef } from "vue";
 import type { ConfiguratorPreset } from "./Configurator.vue";
 
 export interface ConfiguratorStateOptions<T> {
@@ -82,13 +82,23 @@ export function useConfiguratorState<T extends object>(
     // `reactive` typing on a generic T requires the cast; equivalent to
     // `reactive<T>(initialConfig)` in non-generic contexts.
     const config = reactive(initialConfig) as T;
-    let activeKey: string | undefined = initialKey;
+    /* K.W7 — `activeKey` is a `ref` so the `activePreset` computed (and any
+       template / consumer reading `studio.activePreset.value`) re-evaluates
+       on `selectPreset` / `cyclePreset` / `resetCurrent`. Prior to this
+       fix `activeKey` was a plain `let` binding wrapped in a `computed` with
+       no reactive dependency — the computed cached its first read forever,
+       so consumers reading `activePreset.value` saw stale data. Combined
+       with the metaballs `colorDraft ↔ cfg.colors` watch-write loop this
+       produced "Maximum recursive updates exceeded" on `/motion/metaballs`
+       (Lighthouse 2026-05-08 P0-1). */
+    const activeKey = ref<string | undefined>(initialKey);
 
-    const activePreset = computed<string | undefined>(() => activeKey);
+    const activePreset = computed<string | undefined>(() => activeKey.value);
 
     const isDirty = computed(() => {
-        if (!activeKey) return false;
-        const preset = presets.find((p) => p.key === activeKey);
+        const key = activeKey.value;
+        if (!key) return false;
+        const preset = presets.find((p) => p.key === key);
         if (!preset) return false;
         return !equals(config, preset.config);
     });
@@ -114,19 +124,21 @@ export function useConfiguratorState<T extends object>(
     function selectPreset(key: string): void {
         const preset = getPreset(key);
         if (!preset) return;
-        activeKey = key;
+        activeKey.value = key;
         applyPreset(preset);
     }
 
     function resetCurrent(): void {
-        if (!activeKey) return;
-        const preset = getPreset(activeKey);
+        const key = activeKey.value;
+        if (!key) return;
+        const preset = getPreset(key);
         if (preset) applyPreset(preset);
     }
 
     function cyclePreset(): void {
         if (presets.length === 0) return;
-        const idx = activeKey ? presets.findIndex((p) => p.key === activeKey) : -1;
+        const key = activeKey.value;
+        const idx = key ? presets.findIndex((p) => p.key === key) : -1;
         const next = presets[(idx + 1) % presets.length]!;
         selectPreset(next.key);
     }
