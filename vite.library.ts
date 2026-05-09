@@ -37,6 +37,9 @@ export function libraryEntries(rootDir: string) {
         configurator: resolve(rootDir, "src/configurator.ts"),
         "scrolling-text": resolve(rootDir, "src/scrolling-text.ts"),
         freshness: resolve(rootDir, "src/freshness.ts"),
+        forms: resolve(rootDir, "src/forms.ts"),
+        "composables/dark": resolve(rootDir, "src/composables/dark.ts"),
+        "composables/keyboard": resolve(rootDir, "src/composables/keyboard.ts"),
     };
 }
 

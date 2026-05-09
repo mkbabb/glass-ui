@@ -1,5 +1,89 @@
 # Changelog
 
+## v0.9.3 — 2026-05-09 — vueuse SCC trap (Phase 1: additive subpath split)
+
+K.W-S patch — additive subpath carve for the vueuse-bearing surface of
+glass-ui. Closes the upstream half of the speedtest W3.b.1 vueuse
+manualChunk deferral; the trap-breaking fix lands in Phase 2 (root-barrel
+removal, breaking, scheduled for v1.0).
+
+### ADDED
+
+- **`@mkbabb/glass-ui/forms`** subpath barrel at `src/forms.ts`. Re-exports
+  `Input`, `Textarea`, the full `Combobox*` family (Combobox, ComboboxAnchor,
+  ComboboxCancel, ComboboxEmpty, ComboboxGroup, ComboboxInput, ComboboxItem,
+  ComboboxItemIndicator, ComboboxList, ComboboxSeparator, ComboboxTrigger,
+  ComboboxViewport). These are the form primitives that import `useVModel` /
+  `reactiveOmit` from `@vueuse/core` and so propagate the vueuse → Vue
+  runtime SCC into any consumer that reaches them through the root barrel.
+- **`@mkbabb/glass-ui/composables/dark`** subpath barrel at
+  `src/composables/dark.ts`. Re-exports `useGlobalDark` (`createGlobalState`
+  + `useDark` + `useToggle` consumer).
+- **`@mkbabb/glass-ui/composables/keyboard`** subpath barrel at
+  `src/composables/keyboard.ts`. Re-exports the keyboard-shortcuts registry
+  surface (`registerShortcut`, `useRegisteredShortcuts`, `formatCombo`,
+  `formatComboParts`, `isMac`, type aliases).
+
+### WHY
+
+The speedtest W3.b.1 disposition surfaced a Strongly-Connected-Components
+(SCC) trap in Rollup: when a consumer applies a `"vueuse": ["@vueuse/core",
+"@vueuse/shared"]` `manualChunks` rule and ALSO depends on Vue elsewhere
+(e.g. App.vue, router), Rollup hoists `@vue/shared` + `@vue/reactivity` +
+`@vue/runtime-core` into the vueuse leaf to satisfy both consumers. The
+entry chunk then imports from vueuse to access Vue, and Vite emits a
+`<link rel="modulepreload">` to satisfy the eager dependency — the same
+mechanism V.W1.T7 retired for vue-echarts. Net: the consumer's eager
+critical path *grows* despite the manualChunk's intent.
+
+The architecturally-correct fix is to keep vueuse-bearing surfaces off
+the consumer's tree-shake walk unless they explicitly reach for them.
+Phase 1 ADDS the subpath barrels without REMOVING the root-barrel
+re-exports — that's the additive prerequisite that lets Phase 2 (the
+breaking removal at v1.0) land without surprising consumers.
+
+### MIGRATION
+
+Root-barrel imports keep working at v0.9.3:
+
+```ts
+// Still resolves at v0.9.3 (Phase 1 keeps backward compat)
+import { Input, Textarea, Combobox, useGlobalDark, registerShortcut } from "@mkbabb/glass-ui";
+```
+
+Consumers that want to apply a vueuse manualChunk should migrate to the
+subpath shape ahead of v1.0:
+
+```ts
+// v0.9.3 recommended shape (and v1.0 required shape)
+import { Input, Textarea, Combobox } from "@mkbabb/glass-ui/forms";
+import { useGlobalDark } from "@mkbabb/glass-ui/composables/dark";
+import { registerShortcut } from "@mkbabb/glass-ui/composables/keyboard";
+```
+
+### KNOWN LIMITATION
+
+Phase 1 alone does NOT close the SCC trap. The K.W-S evidence transcript
+(`docs/tranches/K/audit/W-S-bundle-evidence.md`) confirms that with v0.9.3
+linked in the speedtest consumer and a `"vueuse": ["@vueuse/core",
+"@vueuse/shared"]` manualChunk applied, the entry chunk drops 30.78 KB gz
+but a new 33.58 KB gz vueuse leaf appears with `@vue/shared` +
+`@vue/reactivity` + `@vue/runtime-core` hoisted in, dragging the modulepreload
+directive back into `dist/index.html`. Net eager-path: regression of ~2 KB.
+
+The trap-breaking fix completes at Phase 2: REMOVE the vueuse-bearing
+re-exports from `src/index.ts` (and `src/components/ui/index.ts` for the
+form primitives + carousel internals). That's a breaking change scheduled
+for v1.0 / L tranche.
+
+### CHORE
+
+- `package.json`: version bump 0.9.2 → 0.9.3; `exports["./forms"]`,
+  `exports["./composables/dark"]`, `exports["./composables/keyboard"]`
+  added; matching `typesVersions` entries.
+- `vite.library.ts`: `libraryEntries` extended with the three new entry
+  points.
+
 ## v0.9.2 — 2026-05-08
 
 W.W3.b.2 patch — two library-internal fixes that unblock the speedtest
