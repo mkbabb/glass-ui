@@ -49,18 +49,20 @@ K plan was revised in place:
 
 | Wave | Status | Notes |
 |---|---|---|
-| W0 | CLOSED 2026-05-09 | Lane I `audit/W0-reconciliation.md` thin pointer + state addendum; Lane II precept submodule update at `fdc020c` (worktree-isolation + hardened agent git clause + 4 lessons-learned including V shadow-execution); parent pin bumped |
-| W1 | open (ready to dispatch) | reduced scope: `hoverOpenDelay` decision only |
-| W2 | RETIRED | 4/5 absorbed by V-tranche; residuals (`cssVar()`, `.overlay-scrim` @utility) absorb into W3 |
-| W3 | pending W1 | counts updated; 13 demo triplet survivors EXCLUDED (speedtest W2.T10 owns) |
-| W4 | open (ready to dispatch — parallel with W1) | doc-drift LARGER now; budget gate must land before speedtest W3.perf.B.T5 (v0.9.2) |
-| W5 | pending W1 | step 1 STRUCK (CarouselPager bug premise wrong) |
-| W6 | open (ready to dispatch — parallel with W1) | K HEADLINE — entirely OPEN |
-| W7 | pending W1 | absorbs Lighthouse P0-1 Configurator recursion fix |
-| WV | open (ready to dispatch — parallel with W1) | NEW — V-tranche post-hoc plan-folder write-up |
-| WP | pending W1 | NEW — Lighthouse perf + a11y cohort (5 P1s) |
-| WS | pending W1 (parallel with W6) | NEW (2026-05-08 post-speedtest-W) — vueuse SCC trap fix; v0.9.3 candidate; absorbs speedtest W3.b.1 DEFERRED |
-| W8 | pending W3 + W4 + W5 + W6 + W7 + WV + WP + WS | close ceremony with 7-agent strengthened audit (ι integrity-sweep) |
+| W0 | CLOSED 2026-05-09 `f5cdd53` | precept submodule `6b8437a → fdc020c` (worktree-isolation + hardened agent git clause + 4 lessons-learned) |
+| W1 | CLOSED 2026-05-09 `563b200` | `openDelay → hoverOpenDelay` rename per Option B; demo cell with 3 cadence states |
+| W2 | RETIRED | 4/5 absorbed by V-tranche; residuals folded into W3.A |
+| W3.A | CLOSED 2026-05-09 `76fff65` | 9 src color-mix → surface-tint; CarouselDots transition-all decomposed; cssVar() retired; .overlay-scrim deleted |
+| W3.B | CLOSED 2026-05-09 `11a30d3` | 5 focus-ring + 2 surface-tint + 4 transition-all migrations; 13 raw triplet sweep EXCLUDED (speedtest W2.T10) |
+| W4.B | CLOSED 2026-05-09 `8a04a2b` | profile:budget script + workflow + ay-close retire + meta-description |
+| W4.A | CLOSED 2026-05-09 `36305da` | comprehensive CLAUDE/README/DESIGN walk; sibling-wave doc absorption |
+| W5 | CLOSED 2026-05-09 `12abb09` | story-pager max-width + GlassCarouselPager mobile flex-wrap + glass-carousel min-w-0 |
+| W6 (HEADLINE) | CLOSED 2026-05-09 `154d1d2` | Button variant=primary-audacious + @utility btn-audacious; phase-color Option B; ≥ 3 consumers |
+| W7 | CLOSED 2026-05-09 `2197596` | Configurator P0 fix (activeKey reactive + colorDraft loop broken); dock-with-slider story; Slider-only Option B |
+| WV | CLOSED 2026-05-09 `14266b5` | docs/tranches/V/ post-hoc write-up satisfies K invariant 3 |
+| WP | CLOSED 2026-05-09 `8ec320b` | viz contrast + 2 label-name drops + Skeleton compositor + Fonts async + font-display: swap |
+| WS | CLOSED 2026-05-09 `a598b90` | v0.9.3 ships additive subpath; **SCC trap stays open** — Phase 2 routed to L/v1.0; cross-repo annotation at speedtest `6f412d89` |
+| W8 | in progress | close ceremony — pre-close pass complete; 7-agent strengthened audit dispatched |
 
 ## Inbound from speedtest W tranche
 
