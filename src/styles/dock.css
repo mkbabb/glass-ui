@@ -393,7 +393,7 @@
         width: 1px;
         height: var(--dock-separator-height);
         margin: 0 0.375rem;
-        background: color-mix(in srgb, var(--foreground) 15%, transparent);
+        background: var(--surface-tint-15);
     }
 
     .dock-spacer {
@@ -608,7 +608,7 @@
 
     .dark-mode-toggle-button:hover,
     .dark-mode-toggle-button:focus {
-        background: color-mix(in srgb, var(--foreground) 10%, transparent);
+        background: var(--surface-tint-10);
         opacity: 1;
         outline: none;
     }
@@ -672,7 +672,7 @@
     }
 
     .dock-tab-button:hover:not(:disabled) {
-        background: color-mix(in srgb, var(--foreground) 8%, transparent);
+        background: var(--surface-tint-8);
         color: var(--foreground);
     }
 
@@ -695,7 +695,7 @@
     }
 
     .dock-tab-button:is(.is-active, .active, [aria-current="page"], [aria-pressed="true"]) {
-        background: color-mix(in srgb, var(--foreground) 10%, transparent);
+        background: var(--surface-tint-10);
         color: var(--foreground);
     }
 

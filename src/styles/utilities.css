@@ -543,16 +543,6 @@
            data-[state=closed]:duration-[var(--duration-fast)];
 }
 
-/* ── Modal/dialog scrim ──
-   Substrate-aware backdrop tint at the canonical 50% weight. Pair the
-   `-strong` and `-subtle` variants directly via `bg-overlay-scrim-strong`
-   etc. (Tailwind v4 generates those from the @theme bridges). R5
-   vocab.γ gap row 2; consumed by W2.A overlay convergence (Dialog, Sheet,
-   Drawer, ConfirmDialog, dialog scroll backdrop). */
-@utility overlay-scrim {
-    background-color: var(--overlay-scrim);
-}
-
 /* ── Audacious primary CTA recipe (K.W6 HEADLINE) ────────────────────
    Lifted from `dock.css` `.dock-tab-button[data-tier="primary"]` per
    K.W6 spec §3 (Option B — drop phase-tinting from the canonical

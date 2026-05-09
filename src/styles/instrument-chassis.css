@@ -55,13 +55,13 @@
         position: absolute;
         inset: 0.5px;
         border-radius: calc(var(--radius-card) - 0.5px);
-        border: 1px solid color-mix(in srgb, var(--foreground) 4%, transparent);
+        border: 1px solid var(--surface-tint-4);
         pointer-events: none;
         z-index: 1;
     }
 
     .dark .instrument-chassis::before {
-        border-color: color-mix(in srgb, var(--foreground) 6%, transparent);
+        border-color: var(--surface-tint-6);
     }
 
     /* Phase-color cascade — single property, full chassis-wide retint. */

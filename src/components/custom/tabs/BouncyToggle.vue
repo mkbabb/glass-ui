@@ -1,13 +1,24 @@
 <script setup lang="ts">
 import { ref, watch, computed, onMounted, onUnmounted, nextTick, type HTMLAttributes } from "vue";
 import { cn } from "../../../utils";
-import { cssVar } from "../../../composables/utils";
 import {
     Tooltip,
     TooltipContent,
     TooltipTrigger,
     TooltipProvider,
 } from "../../ui/tooltip";
+
+// WAAPI keyframes can't dereference custom properties — resolve literals at
+// runtime via the cascade root. Inlined per K.W3.A.4 (cssVar() retire);
+// `useTokenColor` is reactive (subscribes to dark-mode flips) which is
+// overhead the click-time WAAPI press read does not need.
+function readToken(name: string, fallback: string): string {
+    if (typeof document === "undefined") return fallback;
+    return (
+        getComputedStyle(document.documentElement).getPropertyValue(name).trim() ||
+        fallback
+    );
+}
 
 export interface ToggleOption {
     label: string;
@@ -127,9 +138,9 @@ function animatePress(btn: HTMLElement) {
     btn.getAnimations().forEach((a) => a.cancel());
 
     // WAAPI keyframes can't dereference custom properties; resolve at runtime.
-    const easing = cssVar("--ease-apple-spring") || "cubic-bezier(0.175, 0.885, 0.32, 1.275)";
-    const press = cssVar("--scale-press") || "0.95";
-    const hover = cssVar("--scale-hover") || "1.08";
+    const easing = readToken("--ease-apple-spring", "cubic-bezier(0.175, 0.885, 0.32, 1.275)");
+    const press = readToken("--scale-press", "0.95");
+    const hover = readToken("--scale-hover", "1.08");
 
     btn.animate(
         [

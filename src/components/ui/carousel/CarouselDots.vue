@@ -59,7 +59,7 @@ onMounted(syncIndex);
             :aria-label="`Go to slide ${i}`"
             :data-active="i - 1 === selectedIndex ? '' : undefined"
             data-slot="carousel-dot"
-            class="focus-ring rounded-pill cursor-pointer transition-all duration-[var(--duration-fast)]"
+            class="focus-ring rounded-pill cursor-pointer transition-[background-color,transform,width,height,box-shadow] duration-[var(--duration-fast)]"
             :class="
                 cn(
                     orientation === 'vertical' ? 'w-1.5' : 'h-1.5',
