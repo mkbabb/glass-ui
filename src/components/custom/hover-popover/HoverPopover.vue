@@ -47,9 +47,11 @@ const props = withDefaults(
         /**
          * ms before opening on hover. Defaults 250 — same as IconTooltip's
          * TooltipProvider cadence so the two read in unison across the
-         * dock cluster.
+         * dock cluster. Hover-popover-specific (vs. the generic reka-ui
+         * `open-delay`) so deeper-nested popovers can extend the defer
+         * without colliding with sibling cadence vocabulary.
          */
-        openDelay?: number;
+        hoverOpenDelay?: number;
         /**
          * ms before closing on hover-leave. The "defer-on-leave" timer
          * the dispatch packet calls for; ~150ms gives the pointer time
@@ -76,7 +78,7 @@ const props = withDefaults(
     {
         side: "top",
         align: "center",
-        openDelay: 250,
+        hoverOpenDelay: 250,
         closeDelay: 150,
         sideOffset: 6,
         keepDockOpen: false,
@@ -125,7 +127,7 @@ const portalAttrs = computed(() =>
 </script>
 
 <template>
-    <HoverCardRoot v-model:open="isOpen" :open-delay="openDelay" :close-delay="closeDelay">
+    <HoverCardRoot v-model:open="isOpen" :open-delay="hoverOpenDelay" :close-delay="closeDelay">
         <HoverCardTrigger as-child>
             <slot name="trigger">
                 <slot />

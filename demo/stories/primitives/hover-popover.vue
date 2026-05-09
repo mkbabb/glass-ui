@@ -67,5 +67,26 @@ import { Settings, ArrowLeft, RotateCcw, Square } from "lucide-vue-next";
                 </HoverPopover>
             </div>
         </section>
+
+        <section class="flex flex-col gap-3">
+            <p class="section-label">hover-open-delay · nested cadence</p>
+            <div class="flex flex-wrap items-center gap-6">
+                <HoverPopover content="default · 250ms" side="top">
+                    <Button variant="outline">default</Button>
+                </HoverPopover>
+                <HoverPopover content="snappy · 80ms" side="top" :hover-open-delay="80">
+                    <Button variant="outline">snappy</Button>
+                </HoverPopover>
+                <HoverPopover content="deferred · 500ms" side="top" :hover-open-delay="500">
+                    <Button variant="outline">deferred</Button>
+                </HoverPopover>
+            </div>
+            <p class="text-mono-caption text-muted-foreground">
+                <code class="rounded bg-muted px-1">hoverOpenDelay</code> tunes
+                the open-defer timer. Snappy reads support cluster-tier hover
+                affordances; deferred reads suit deeper-nested popovers where
+                the longer wait avoids accidental fire on transit.
+            </p>
+        </section>
     </StoryPage>
 </template>
