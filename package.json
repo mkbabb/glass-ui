@@ -316,8 +316,8 @@
         "proof:runtime": "node scripts/proof-runtime.mjs",
         "proof:theme": "node scripts/proof-theme-style.mjs",
         "profile:bundle": "node scripts/profile-bundle.mjs",
+        "profile:budget": "node scripts/profile-bundle.mjs --enforce",
         "profile:aurora": "node scripts/profile-aurora.mjs",
-        "ay-close": "scripts/ay-close.sh",
         "validate-consumers": "scripts/validate-consumers.sh",
         "release": "bash scripts/release.sh",
         "prepublishOnly": "npm run build && npm test"

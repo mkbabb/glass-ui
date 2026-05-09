@@ -12,9 +12,34 @@ import { extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("../", import.meta.url)));
-const auditDir = resolve(root, "docs/tranches/F/audit");
-const artifactPath = resolve(process.env.GLASS_UI_BUNDLE_ARTIFACT ?? resolve(auditDir, "W1-bundle-profile.json"));
+const auditDir = resolve(root, "docs/tranches/K/audit");
+const artifactPath = resolve(
+    process.env.GLASS_UI_BUNDLE_ARTIFACT ??
+        resolve(auditDir, "W4-bundle-profile.json"),
+);
 const startedAt = Date.now();
+
+// Bundle budget — enforced via `npm run profile:budget` (passes --enforce).
+// `npm run profile:bundle` keeps its measurement-only contract and prints the
+// same report without exiting non-zero on FAIL.
+//
+// Numbers chosen against K W4 baseline (2026-05-09 build):
+//   glass-ui.js   raw 146_129 / gz 25_928
+//   glass-ui.css  raw  22_359 / gz  4_420
+// with ~30% headroom per K invariant 12 + Rβ A13 disposition. Speedtest
+// W3.perf.B.T5 (cn() refactor → v0.9.2) is expected to compress glass-ui.js
+// by ~10–18 KB gz; the gate is intentionally re-baselined at K W8 close
+// after that ship per K W4 sequencing.
+const BUDGETS = {
+    "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
+    "dist/glass-ui.css": { raw: 29_000, gzip: 5_750 },
+};
+
+const args = new Set(process.argv.slice(2));
+const skipBuild =
+    args.has("--skip-build") || process.env.GLASS_UI_BUDGET_SKIP_BUILD === "1";
+const budgetMode =
+    args.has("--enforce") || process.env.GLASS_UI_BUDGET_MODE === "1";
 
 function walk(dir) {
     if (!existsSync(dir)) return [];
@@ -36,8 +61,9 @@ function runBuild() {
     return Date.now() - started;
 }
 
-const buildDurationMs = runBuild();
-const files = walk(resolve(root, "dist"))
+const buildDurationMs = skipBuild ? 0 : runBuild();
+const distRoot = resolve(root, "dist");
+const files = walk(distRoot)
     .map((file) => {
         const contents = readFileSync(file);
         return {
@@ -62,16 +88,55 @@ const totals = files.reduce(
     { bytes: 0, gzipBytes: 0, byExt: {} },
 );
 
+// Budget evaluation — independent of artefact emission. Emits a per-file
+// PASS/FAIL line and a final summary. Exits non-zero only when --enforce
+// (or GLASS_UI_BUDGET_MODE=1) is set, so `profile:bundle` keeps its
+// measurement-only contract.
+const budgetReport = [];
+let anyBudgetExceeded = false;
+
+for (const [path, budget] of Object.entries(BUDGETS)) {
+    const entry = files.find((f) => f.file === path);
+    if (!entry) {
+        budgetReport.push({
+            file: path,
+            status: "MISSING",
+            raw: null,
+            gzip: null,
+            budgetRaw: budget.raw,
+            budgetGzip: budget.gzip,
+        });
+        anyBudgetExceeded = true;
+        continue;
+    }
+    const rawOk = entry.bytes <= budget.raw;
+    const gzipOk = entry.gzipBytes <= budget.gzip;
+    const status = rawOk && gzipOk ? "PASS" : "FAIL";
+    if (status === "FAIL") anyBudgetExceeded = true;
+    budgetReport.push({
+        file: path,
+        status,
+        raw: entry.bytes,
+        gzip: entry.gzipBytes,
+        budgetRaw: budget.raw,
+        budgetGzip: budget.gzip,
+        rawHeadroom: budget.raw - entry.bytes,
+        gzipHeadroom: budget.gzip - entry.gzipBytes,
+    });
+}
+
 mkdirSync(auditDir, { recursive: true });
 writeFileSync(
     artifactPath,
     `${JSON.stringify(
         {
             generatedAt: new Date().toISOString(),
-            status: "pass",
-            command: "npm run iter-build",
+            status: anyBudgetExceeded ? "fail" : "pass",
+            command: budgetMode ? "npm run profile:budget" : "npm run profile:bundle",
             buildDurationMs,
             durationMs: Date.now() - startedAt,
+            budgets: BUDGETS,
+            budgetReport,
             totals,
             files,
         },
@@ -81,3 +146,25 @@ writeFileSync(
 );
 
 console.log(`Bundle profile written: ${artifactPath}`);
+
+// Print budget report. Always emitted (including from profile:bundle), but
+// only --enforce / profile:budget exits non-zero on FAIL. Format is
+// rg-friendly so the CI log filter can pick it up without parsing JSON.
+console.log("");
+console.log("Bundle budget report:");
+for (const row of budgetReport) {
+    if (row.status === "MISSING") {
+        console.log(`  [MISSING] ${row.file} — expected entry not in dist/`);
+        continue;
+    }
+    const pct = (n, d) => `${((n / d) * 100).toFixed(1)}%`;
+    console.log(
+        `  [${row.status}] ${row.file} — raw ${row.raw} / ${row.budgetRaw} (${pct(row.raw, row.budgetRaw)}); gzip ${row.gzip} / ${row.budgetGzip} (${pct(row.gzip, row.budgetGzip)})`,
+    );
+}
+
+if (budgetMode && anyBudgetExceeded) {
+    console.error("");
+    console.error("Bundle budget exceeded — see report above.");
+    process.exit(1);
+}
