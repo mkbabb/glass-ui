@@ -26,7 +26,7 @@ Open commit lands: `L.md`, `findings.md`, `waves/W{0..8}.md`, `dispatch/AGENT.md
 |---|---|---|
 | W0 | CLOSED (TBD commit) | Lane I `audit/W0-reconciliation.md` (~115 entries, 49 L-bound) + Lane II precept submodule (5 lessons + 3 SPEC + 1 dispatch field + 1 ORCHESTRATION clause) + Lane III subpath dts publication gap fixed (flat-entry rebinding + impl-lift) + Lane IV `coordination/speedtest-Y.md` + v0.9.4 tagged + pushed |
 | W1 (HEADLINE) | CLOSED (TBD commit) | Phase 2 root-barrel + `src/api/` + flat `/dark` `/keyboard` `/carousel` subpaths; v1.0 tag |
-| W2 | pending W1 | modularization sweep — composables/ restructure + cohesion + import shape |
+| W2 | CLOSED (TBD commit) | modularization sweep — composables/ restructured into 8 coherent sub-trees (dark/keyboard/reactive/dom/motion/glass/sortable/sidebar); cherry-pick rationale + cascade docs landed |
 | W3 | CLOSED (TBD commit) | composable + primitive second-consumer fidelity audit; 3 retired composables + DockShowcaseFrame retired; 3 primitives wired (DiscoGlyph + DockGroup + InstrumentChassis) |
 | W4 | CLOSED (TBD commit) | mobile-viewport finishing + π residuals; dock-group 375 overflow fixed; 26/27 viewport probe cells PASS |
 | W5 | pending W2 + W3 | doc cohort + production-demo-build + MIGRATION.md |

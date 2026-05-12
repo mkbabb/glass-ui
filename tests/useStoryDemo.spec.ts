@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { useStoryDemo } from "../src/composables/useStoryDemo";
+import { useStoryDemo } from "../demo/composables/useStoryDemo";
 import { mountComposable } from "./utils/mountComposable";
 
 afterEach(() => {

@@ -21,7 +21,7 @@ import {
     type MaybeRefOrGetter,
     type Ref,
 } from "vue";
-import { useGlobalDark } from "./useGlobalDark";
+import { useGlobalDark } from "../dark";
 
 export interface UseTokenColorOptions {
     /** Element to resolve the property against. Defaults to `<html>`. */

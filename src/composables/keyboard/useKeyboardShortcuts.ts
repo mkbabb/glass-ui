@@ -5,14 +5,10 @@
 // so consumers that don't reach for it don't drag vueuse into the entry
 // chunk via the SCC trap (see `docs/tranches/K/waves/W-S.md`).
 //
-// L.W0 Lane III — implementation lifted INTO the subpath barrel to collapse
-// the re-export indirection that confused `vite-plugin-dts` + `rollupTypes`
-// nested-entry path resolution. With the implementation directly here,
-// the rolled dts emission at `dist/composables/keyboard.d.ts` inlines the
-// full declarations rather than falling back to a broken `'../src/...'`
-// stub.
-//
-// Root-barrel re-export stays in place during Phase 1 (v0.9.3 additive).
+// L.W2 — Implementation lives at `src/composables/keyboard/useKeyboardShortcuts.ts`;
+// the sub-tree's `index.ts` re-exports it, and the flat
+// `@mkbabb/glass-ui/keyboard` subpath barrel (`src/keyboard.ts`) resolves
+// through that sub-tree index.
 import { createGlobalState, useEventListener } from "@vueuse/core";
 import {
     computed,

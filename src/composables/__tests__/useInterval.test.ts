@@ -1,6 +1,6 @@
 import { effectScope } from "vue";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { useInterval, type UseIntervalControls } from "../useInterval";
+import { useInterval, type UseIntervalControls } from "../reactive/useInterval";
 
 interface ConsoleWarnSpy {
     mock: {

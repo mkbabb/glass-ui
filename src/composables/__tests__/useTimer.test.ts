@@ -1,6 +1,6 @@
 import { effectScope } from "vue";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { useTimer, type UseTimerControls } from "../useTimer";
+import { useTimer, type UseTimerControls } from "../reactive/useTimer";
 
 interface ConsoleWarnSpy {
     mock: {

@@ -5,13 +5,9 @@
 // apply a vueuse manualChunk can do so without the root barrel forcing
 // vueuse into the eager critical path.
 //
-// L.W0 Lane III — implementation lifted INTO the subpath barrel to collapse
-// the re-export indirection that confused `vite-plugin-dts` + `rollupTypes`
-// nested-entry path resolution. With the implementation directly here,
-// the rolled dts emission at `dist/composables/dark.d.ts` inlines the full
-// declarations rather than falling back to a broken `'../src/...'` stub.
-//
-// Root-barrel re-export stays in place during Phase 1 (v0.9.3 additive).
+// L.W2 — Implementation lives at `src/composables/dark/useGlobalDark.ts`;
+// the sub-tree's `index.ts` re-exports it, and the flat `@mkbabb/glass-ui/dark`
+// subpath barrel (`src/dark.ts`) resolves through that sub-tree index.
 import { createGlobalState, useDark, useToggle } from "@vueuse/core";
 import { ref, watch } from "vue";
 

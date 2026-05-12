@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import { ref, useTemplateRef, watchEffect, type HTMLAttributes } from "vue";
-import { useResizeObserver } from "../../../composables/useResizeObserver";
+import { useResizeObserver } from "../../../composables/dom/useResizeObserver";
 import { cn } from "../../../utils/cn";
 
 /**

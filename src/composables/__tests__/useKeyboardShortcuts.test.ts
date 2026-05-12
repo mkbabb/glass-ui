@@ -5,7 +5,7 @@ import {
     isMac,
     registerShortcut,
     useRegisteredShortcuts,
-} from "../useKeyboardShortcuts";
+} from "../keyboard";
 
 describe("useKeyboardShortcuts", () => {
     const cleanups: Array<() => void> = [];

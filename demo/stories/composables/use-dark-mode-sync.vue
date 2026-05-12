@@ -6,7 +6,7 @@ import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { Button } from "../../../src/components/ui/button";
 import { useDarkModeSync } from "../../../src/composables/motion/useDarkModeSync";
-import { useGlobalDark } from "../../../src/composables/useGlobalDark";
+import { useGlobalDark } from "../../../src/composables/dark";
 
 const syncCount = ref(0);
 const lastSync = ref<string>("(never)");

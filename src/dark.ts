@@ -6,7 +6,8 @@
 // nested form was the lone exception introduced as a W0 Lane III transitional
 // shape. L invariant 4 retires the nested form with no legacy alias.
 //
-// Implementation home remains `src/composables/dark.ts` (per W0 Lane III lift);
-// this file is a thin re-export so the file structure stays coherent and W2's
-// modularization sweep has a known re-organization target.
+// L.W2 — Implementation home is the `src/composables/dark/` sub-tree (the
+// `useGlobalDark.ts` leaf re-exported by `dark/index.ts`). This file is a
+// thin re-export that resolves through the sub-tree index, so the public
+// flat subpath stays decoupled from the internal directory layout.
 export { useGlobalDark } from "./composables/dark";

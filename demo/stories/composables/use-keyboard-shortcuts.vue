@@ -7,7 +7,7 @@ import ShowcaseFrame from "../ShowcaseFrame.vue";
 import {
     registerShortcut,
     useRegisteredShortcuts,
-} from "../../../src/composables/useKeyboardShortcuts";
+} from "../../../src/composables/keyboard";
 
 const lastTrigger = ref<string>("(none yet)");
 

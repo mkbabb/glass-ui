@@ -17,6 +17,11 @@
 // the demo is animating" ref, reset to `initial` on every `reset()`. For
 // boolean or simple-counter demos pass `false` / `0`; for richer shapes
 // pass the initial object literal.
+//
+// L.W2 — Demo-private per CLAUDE.md "Demo storybook chassis (demo-private)".
+// Moved out of `src/composables/` into `demo/composables/`; not exported from
+// the library. Tests live at `tests/useStoryDemo.spec.ts` and reach this
+// directly via relative path.
 
 import {
     computed,

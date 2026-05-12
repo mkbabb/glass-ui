@@ -215,9 +215,9 @@ const typeSurfaceChecks = [
     ["src/composables/motion/useAnimatedNumber.ts", "AnimatedNumber"],
     ["src/composables/motion/useAnimatedNumber.ts", "UseAnimatedNumberOptions"],
     ["src/composables/motion/useSpringOrchestrator.ts", "SpringSnapshot"],
-    ["src/composables/keyboard.ts", "ShortcutOptions"],
-    ["src/composables/keyboard.ts", "RegisteredShortcut"],
-    ["src/composables/useTouchGate.ts", "TouchGateReturn"],
+    ["src/composables/keyboard/useKeyboardShortcuts.ts", "ShortcutOptions"],
+    ["src/composables/keyboard/useKeyboardShortcuts.ts", "RegisteredShortcut"],
+    ["src/composables/dom/useTouchGate.ts", "TouchGateReturn"],
     ["src/composables/sortable/useSortable.ts", "UseSortableReturn"],
 ];
 

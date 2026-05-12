@@ -30,3 +30,8 @@ export {
     type PausableRuntime,
     type UseIntersectionPauseOptions,
 } from "./useIntersectionPause";
+export {
+    useStagger,
+    type UseStaggerOptions,
+    type UseStaggerControls,
+} from "./useStagger";

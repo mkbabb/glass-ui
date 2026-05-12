@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, provide, ref, useTemplateRef, watch } from "vue";
-import { useTouchGate } from "../../../composables/useTouchGate";
+import { useTouchGate } from "../../../composables/dom/useTouchGate";
 import { provideDockContext } from "./composables/dockContext";
 import { useDockState } from "./composables/useDockState";
 import { useLayerTransition } from "./composables/useLayerTransition";

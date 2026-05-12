@@ -13,7 +13,7 @@ import {
     formatComboParts,
     registerShortcut,
     useRegisteredShortcuts,
-} from "../../src/composables/useKeyboardShortcuts";
+} from "../../src/composables/keyboard";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 import { PresetEditor } from "../configurator";
 import CategoryRail from "./CategoryRail.vue";

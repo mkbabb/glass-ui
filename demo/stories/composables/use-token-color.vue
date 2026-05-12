@@ -2,8 +2,8 @@
 // useTokenColor — reactive read of a CSS custom property.
 import { computed, ref } from "vue";
 import StoryPage from "../StoryPage.vue";
-import { useTokenColor } from "../../../src/composables/useTokenColor";
-import { useGlobalDark } from "../../../src/composables/useGlobalDark";
+import { useTokenColor } from "../../../src/composables/dom/useTokenColor";
+import { useGlobalDark } from "../../../src/composables/dark";
 import { Button } from "../../../src/components/ui/button";
 
 const tokens = [

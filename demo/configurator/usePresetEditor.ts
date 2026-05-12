@@ -9,7 +9,7 @@
 // (or create) the global singleton.
 
 import { reactive, watch, type Ref } from "vue";
-import { useGlobalDark } from "../../src/composables/useGlobalDark";
+import { useGlobalDark } from "../../src/composables/dark";
 import { PRESETS, type PresetId } from "../presets/manifest";
 
 // ─── Types ────────────────────────────────────────────────────────────────

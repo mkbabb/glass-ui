@@ -3,7 +3,7 @@
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
-import { useTouchGate } from "../../../src/composables/useTouchGate";
+import { useTouchGate } from "../../../src/composables/dom/useTouchGate";
 
 const gate = useTouchGate(3000);
 </script>

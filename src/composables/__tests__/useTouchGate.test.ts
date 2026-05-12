@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { useTouchGate } from "../useTouchGate";
+import { useTouchGate } from "../dom/useTouchGate";
 
 describe("useTouchGate", () => {
     afterEach(() => {

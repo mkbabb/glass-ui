@@ -1,6 +1,27 @@
 // @mkbabb/glass-ui — Unified design system (v1.0 curated public surface)
 //
 // L.W1 Lane A — vueuse SCC trap closure (Phase 2; intentional v1.0 break).
+// L.W2 Lane B — cohesion + import-shape annotations (cherry-pick rationale).
+//
+// ── Import shape canon ───────────────────────────────────────────────────
+//
+// The library exposes consumers via three layers:
+//
+//   1. ROOT barrel (`@mkbabb/glass-ui`) — vueuse-free curated surface;
+//      the per-package list below. This file IS that barrel.
+//   2. Per-package SUBPATHS (`@mkbabb/glass-ui/<pkg>`) — 35 + 4 active
+//      entries, every public component package reachable via flat name
+//      (verified at L.W2 Lane B via `npm run verify-export-types` and
+//      runtime probe in `docs/tranches/L/audit/W2-B-cohesion-import-shape-proof.md`).
+//   3. API discovery layer (`@mkbabb/glass-ui/api`) — pure-types/constants
+//      re-export aggregator (L.W1 Lane B; see `src/api/index.ts`).
+//
+// All subpath barrels at top level (`src/<flat>.ts`) follow the same shape:
+// `export * from "./components/<dir>"` (or composition thereof). Lane C of
+// W1 added `src/dark.ts` + `src/keyboard.ts` + `src/carousel.ts` to retire
+// the nested `composables/dark` + `composables/keyboard` v0.9.x subpaths.
+//
+// ── vueuse-bearing exclusions ────────────────────────────────────────────
 //
 // This root barrel is **vueuse-free**: it does NOT re-export any symbol whose
 // implementation imports `@vueuse/core`. Consumers reach vueuse-bearing
@@ -25,6 +46,32 @@
 // every vueuse-bearing leaf. Phase 2 removes the leaves from the root walk.
 // See `docs/tranches/L/research/Rε-architectural-transpositions.md` §B.1 and
 // `docs/tranches/L/waves/W1.md` for full context.
+//
+// ── Custom-package cherry-pick rationale (Rε §B.2.2 → L.W2 disposition) ───
+//
+// Of the 30 packages in `src/components/custom/`, this root barrel re-exports
+// 7 (`instrument-chassis`, `glyph-face`, `dock-group`, `disco-glyph`,
+// `hover-popover`, `configurator`, `scrolling-text`). The other 23 reach
+// consumers ONLY via their dedicated subpath (`@mkbabb/glass-ui/dock`,
+// `/aurora`, `/sidebar`, ...).
+//
+// Acceptance bar for root-barrel inclusion:
+//   (a) vueuse-free at every transitive import (closes SCC trap);
+//   (b) single-component or small primitive package (no nested composables
+//       sub-tree, no WebGL substrate); AND
+//   (c) composes tightly with the `ui/` primitives in compositions
+//       — i.e. consumers reach for it alongside `<Button>`, `<Card>`, etc.
+//       rather than as a stand-alone bundle.
+//
+// The 23 excluded packages fail one or more of those criteria:
+//   - vueuse-bearing internals (sidebar, glass-carousel, infinite-scroll);
+//   - large composite chassis with nested composables (dock, aurora,
+//     configurator domain helpers); OR
+//   - vertical/themed substrate (metaballs, paper-backdrop, search).
+// Consumers of those packages explicitly opt into them via subpath, keeping
+// the root barrel's transitive-import graph tight per the tree-shaking
+// gestalt in `docs/tranches/L/research/Rε-architectural-transpositions.md`
+// §B.2.2 (HEADLINE-aligned curation).
 //
 // Brittleness window: `breaking_changes_during_wave: yes`; consumer-facing
 // migration documented in `MIGRATION.md` (L.W5).
@@ -98,15 +145,15 @@ export * from "./components/custom/scrolling-text";
 // from the root barrel — they are vueuse-bearing SCC-trap leaves.
 // Consumers use the `@mkbabb/glass-ui/dark` and `@mkbabb/glass-ui/keyboard`
 // subpaths (Lane C; flat naming per L.W1).
-export * from "./composables/useInterval";
-export * from "./composables/useResizeObserver";
-export * from "./composables/useStagger";
-export * from "./composables/useStoryDemo";
-export * from "./composables/useTimer";
-export * from "./composables/useTokenColor";
-export * from "./composables/useTouchGate";
-export * from "./composables/glass";
+//
+// L.W2 — Sub-tree restructure: reactive/ (useInterval + useTimer), dom/
+// (useResizeObserver + useTouchGate + useTokenColor), motion/ (includes
+// useStagger), glass/, sortable/. `useStoryDemo` was demoted to demo-private
+// per CLAUDE.md.
+export * from "./composables/reactive";
+export * from "./composables/dom";
 export * from "./composables/motion";
+export * from "./composables/glass";
 export * from "./composables/sortable";
 
 // Core utilities

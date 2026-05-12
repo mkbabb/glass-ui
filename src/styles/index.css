@@ -16,7 +16,50 @@
  * which violates the CSS spec (and some bundlers then drop them).
  */
 
-/* Order matters: tokens first, then theme (for @theme), then component layers */
+/*
+ * Cascade order — load order is load-bearing. Each layer references the one
+ * above it via CSS custom properties or selector cascade; reordering breaks
+ * fallbacks. Documented at L.W2 Lane B per Rε §B.5.1.
+ *
+ *   1. tokens.css            — CSS custom properties (color, easing, glass,
+ *                              paper, shadow, surface-tint rungs). Source-of-
+ *                              record for every visual axis.
+ *   2. typography.css        — golden-ratio scale (√φ); semantic type classes.
+ *                              Pure values, no token consumption.
+ *   3. theme.css             — @theme block (Tailwind aliases). Reads tokens
+ *                              from (1) so MUST come after them; defines the
+ *                              `dark` variant selector consumed by the cascade.
+ *   4. glass.css             — .glass-{wash,quiet,resting,floating,overlay}
+ *                              5-rung ladder + .glass-card / -pill / -btn.
+ *                              Consumes tokens (1) + theme aliases (3).
+ *   5. paper.css             — paper underpaint + grain overlay utilities.
+ *                              Pairs with (4) for paper-on-glass compositions.
+ *   6. dock.css              — .dock-icon-btn, .dock-select-trigger, etc.
+ *                              Component utility layer; consumes (1) + (3).
+ *   7. cards.css             — .cartoon-card, .elevated-card, .paper-texture.
+ *                              Component utility layer.
+ *   8. floating-panel.css    — .floating-panel + .floating-panel-item.
+ *                              Component utility layer.
+ *   9. transitions.css       — Vue <Transition> classes (fade, fade-slide,
+ *                              pop, dialog-scale, dropdown, tab-fade).
+ *  10. animations.css        — @keyframes for components consumed via
+ *                              `animation:` properties in (9) and component
+ *                              <style> blocks.
+ *  11. utilities.css         — focus-ring, btn-press, btn-audacious (K W6),
+ *                              rainbow-text, touch-gate. Consumes earlier
+ *                              animations + tokens.
+ *  12. instrument-chassis.css — P-tranche component CSS (chassis bezel +
+ *                              groove dividers). Loaded after utilities so
+ *                              component-local recipes can override.
+ *  13. glyph-face.css        — P-tranche component CSS (cap + backplate).
+ *  14. dock-group.css        — P-tranche component CSS (chassis-strip).
+ *  15. disco-glyph.css       — P-tranche component CSS (layered fills).
+ *  16. hover-popover.css     — V.W3 popover-animation grammar.
+ *
+ * Per-package component CSS lives at (12)-(16) (loaded after utilities so
+ * component-local recipes can override). New per-package CSS files append
+ * to that tail.
+ */
 @import "./tokens.css";
 @import "./typography.css";
 @import "./theme.css";

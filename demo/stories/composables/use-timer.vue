@@ -5,8 +5,8 @@ import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { Button } from "../../../src/components/ui/button";
-import { useTimer } from "../../../src/composables/useTimer";
-import { useInterval } from "../../../src/composables/useInterval";
+import { useTimer } from "../../../src/composables/reactive/useTimer";
+import { useInterval } from "../../../src/composables/reactive/useInterval";
 
 const fired = ref(0);
 const ticks = ref(0);

@@ -62,7 +62,7 @@ function releaseBodyOverflowLock() {
 <script setup lang="ts">
 import { onMounted, onUnmounted, watch } from "vue";
 import { Maximize2, Minimize2 } from "lucide-vue-next";
-import { registerShortcut } from "../../../composables/useKeyboardShortcuts";
+import { registerShortcut } from "../../../composables/keyboard";
 
 defineOptions({ inheritAttrs: false });
 

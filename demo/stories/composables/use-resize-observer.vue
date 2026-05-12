@@ -4,7 +4,7 @@ import { ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
-import { useResizeObserver } from "../../../src/composables/useResizeObserver";
+import { useResizeObserver } from "../../../src/composables/dom/useResizeObserver";
 
 const target = ref<HTMLElement | null>(null);
 const size = ref<{ width: number; height: number }>({ width: 0, height: 0 });

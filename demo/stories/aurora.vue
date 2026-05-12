@@ -3,7 +3,7 @@ import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { cn } from "../../src/utils/cn";
 import { Configurator } from "../../src/components/custom/configurator";
 import { ExpandableContainer } from "../../src/components/custom/expandable-container";
-import { registerShortcut } from "../../src/composables/useKeyboardShortcuts";
+import { registerShortcut } from "../../src/composables/keyboard";
 import { TooltipProvider } from "../../src/components/ui/tooltip";
 import PresetPickerRow from "./aurora/PresetPickerRow.vue";
 import AuroraStage from "./aurora/AuroraStage.vue";

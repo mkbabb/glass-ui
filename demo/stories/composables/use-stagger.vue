@@ -2,7 +2,7 @@
 // useStagger — fixed-count timed reveal cascade.
 import { ref } from "vue";
 import StoryPage from "../StoryPage.vue";
-import { useStagger } from "../../../src/composables/useStagger";
+import { useStagger } from "../../../src/composables/motion/useStagger";
 import { Button } from "../../../src/components/ui/button";
 
 const COUNT = 8;

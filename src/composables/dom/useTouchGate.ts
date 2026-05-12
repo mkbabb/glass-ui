@@ -1,5 +1,5 @@
 import { getCurrentScope, onScopeDispose, ref, type Ref } from "vue";
-import { useTimer } from "./useTimer";
+import { useTimer } from "../reactive/useTimer";
 
 interface GateProxy {
     isActive: () => boolean;

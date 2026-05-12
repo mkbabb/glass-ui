@@ -6,7 +6,7 @@ import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { Button } from "../../../src/components/ui/button";
-import { useGlobalDark } from "../../../src/composables/useGlobalDark";
+import { useGlobalDark } from "../../../src/composables/dark";
 
 // Two parallel call-sites. Both should report identical state.
 const siteA = useGlobalDark();

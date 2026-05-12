@@ -11,7 +11,7 @@
  * this for canvas meter renderer reinitialization.
  */
 import { nextTick, watch } from "vue";
-import { useGlobalDark } from "../useGlobalDark";
+import { useGlobalDark } from "../dark";
 
 export function useDarkModeSync(onSync: () => void): void {
     const { isDark } = useGlobalDark();

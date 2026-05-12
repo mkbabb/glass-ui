@@ -5,7 +5,7 @@ import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { Button } from "../../../src/components/ui/button";
-import { useInterval } from "../../../src/composables/useInterval";
+import { useInterval } from "../../../src/composables/reactive/useInterval";
 
 const ticks = ref(0);
 

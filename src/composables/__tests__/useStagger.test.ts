@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { useStagger } from "../useStagger";
+import { useStagger } from "../motion/useStagger";
 import { mountComposable } from "../../../tests/utils/mountComposable";
 
 describe("useStagger", () => {

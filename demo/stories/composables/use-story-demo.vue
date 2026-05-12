@@ -5,7 +5,7 @@ import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { Button } from "../../../src/components/ui/button";
-import { useStoryDemo } from "../../../src/composables/useStoryDemo";
+import { useStoryDemo } from "../../../demo/composables/useStoryDemo";
 
 const demo = useStoryDemo<boolean[]>(new Array(8).fill(false));
 
