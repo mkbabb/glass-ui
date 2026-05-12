@@ -27,10 +27,10 @@ Open commit lands: `L.md`, `findings.md`, `waves/W{0..8}.md`, `dispatch/AGENT.md
 | W0 | CLOSED (TBD commit) | Lane I `audit/W0-reconciliation.md` (~115 entries, 49 L-bound) + Lane II precept submodule (5 lessons + 3 SPEC + 1 dispatch field + 1 ORCHESTRATION clause) + Lane III subpath dts publication gap fixed (flat-entry rebinding + impl-lift) + Lane IV `coordination/speedtest-Y.md` + v0.9.4 tagged + pushed |
 | W1 (HEADLINE) | CLOSED (TBD commit) | Phase 2 root-barrel + `src/api/` + flat `/dark` `/keyboard` `/carousel` subpaths; v1.0 tag |
 | W2 | pending W1 | modularization sweep — composables/ restructure + cohesion + import shape |
-| W3 | pending W1 (parallel with W4) | composable + primitive second-consumer fidelity audit |
-| W4 | pending W1 (parallel with W3) | mobile-viewport finishing + π residuals from K |
+| W3 | CLOSED (TBD commit) | composable + primitive second-consumer fidelity audit; 3 retired composables + DockShowcaseFrame retired; 3 primitives wired (DiscoGlyph + DockGroup + InstrumentChassis) |
+| W4 | CLOSED (TBD commit) | mobile-viewport finishing + π residuals; dock-group 375 overflow fixed; 26/27 viewport probe cells PASS |
 | W5 | pending W2 + W3 | doc cohort + production-demo-build + MIGRATION.md |
-| W6 | pending W1 (parallel with W3+W4) | Lighthouse cohort completion (P2 carry-forwards) |
+| W6 | CLOSED (TBD commit) | Lighthouse cohort completion; 4 K-absorbed re-verified; robots.txt deferred to W5; Vue runtime + cache-ttl formal-retired |
 | W7 | pending W3 + W4 + W5 + W6 | keyframes lift + aurora chrome Option-A unification |
 | W8 | pending W7 | close ceremony — 7-agent strengthened audit + ι integrity-sweep + FINAL.md |
 
@@ -80,6 +80,51 @@ Speedtest opens tranche Y in parallel with L. 6 active Y-prefixed worktrees incl
 - Speedtest entry-chunk gz: 171.5 KB (was 204 KB at speedtest X close pre-Phase-1; -32.5 KB drop exceeds ≥ 15 KB hard-gate target).
 - Speedtest build: PASS in 9.83s.
 - Y.A3 typing-publication unblocked at glass-ui v0.9.4 (W0 Lane III); v1.0 transposes the consumer-facing subpath surface to its canonical shape.
+
+## 2026-05-11 — W3 + W4 + W6 close (TBD orchestrator commit; 4 parallel agents)
+
+**W3 — second-consumer fidelity** (Lane A composables + Lane B primitives; coordinated via MIGRATION.md + CHANGELOG.md append):
+
+Lane A composable dispositions (after cross-repo speedtest grep at wave open):
+
+| Composable | Decision | Consumer evidence |
+|---|---|---|
+| useRAFLoop | WIRE-RETAIN | speedtest useMeterRenderer.ts canvas render loop + demo + test |
+| useIntersectionPause | WIRE-RETAIN | speedtest useAuroraPolicy.ts aurora reduced-motion gating + demo + test |
+| useDarkModeSync | WIRE-RETAIN | speedtest SpeedtestMeter.vue + useEChartsTheme.ts (2 sites) + demo |
+| useOffsetPagination | RETIRE | 0 speedtest consumers; demo-only |
+| useVirtualSectionWindow | RETIRE | 0 speedtest consumers; demo-only |
+| useWindowedStore | RETIRE | 0 speedtest consumers; demo-only |
+| virtualSectionLayout helpers | RETIRE | support substrate for retired parents |
+
+Cross-repo grep INVALIDATED the Rε A5 "0 prod consumers → WIRE into Pulse/Typewriter" hypothesis; the 3 motion composables already satisfy ≥ 2 consumers naturally.
+
+Lane B primitive dispositions:
+
+| Primitive | Decision | Wire-site / Rationale |
+|---|---|---|
+| DiscoGlyph | WIRE | live facet-swatch row in foundations/chart-chassis-palette.vue (8-stop gradient bind) |
+| DockGroup | WIRE | KPI pill-row shelf in compositions/dashboard.vue (4 MetricBadge cells) |
+| InstrumentChassis | WIRE | live mini-chassis in foundations/chart-chassis-palette.vue (4 chassis-token compose) |
+| DockShowcaseFrame | RETIRE | 0 consumers at HEAD (orphaned since V.W4); demo-private file deleted |
+
+W3 file count: 17 (10 deletions including 2 src/composables sub-tree removals + 2 subpath barrels + 3 demo stories; 7 edits to barrels/manifests/tests/scripts; MIGRATION.md created with both lanes' sections; W3-A + W3-B proof docs).
+
+`@mkbabb/glass-ui/pagination` and `@mkbabb/glass-ui/virtual` subpaths fully removed from `package.json` exports + typesVersions + `vite.library.ts` libraryEntries (cleaner v1.0 surface).
+
+**W4 — mobile-viewport finishing**: K R1 residual analyzed — the StoryPager inner-tab-row fix had already landed at K W5 commit `12abb09` (`.story-pager-row` overflow-x auto + scrollbar-width none). The actual K W8 π-1 residual was a `MetricBadge size="lg"` `0.8ms` chip overflow in the audacious DockGroup row at `/primitives/dock-group` (sw=399 at 375 viewport). Fix: `demo/stories/primitives/dock-group.vue` wraps the audacious DockGroup in a `<div class="dock-group-audacious-scroll">` with scoped `overflow-x: auto; scrollbar-width: none` (mirrors StoryPager idiom). DockGroup substrate untouched (its inline-flex sizing is correct for chassis-strip consumers). Post-fix at 375: body.scrollWidth = 375 exactly.
+
+Multi-viewport probe: 9 surfaces × 3 viewports = 27 cells; 26 PASS, 1 pre-documented K-residual (Aurora -inset-6 blur-2xl decorative bloom = sw=383 at 375; K W8 π-2 P3 cosmetic non-blocker; no new W8 ι entry needed). 0 console errors across all surfaces. L W1 root-barrel curation introduced 0 visual regressions.
+
+**W6 — Lighthouse cohort completion**: 4 K-absorbed P1 fixes re-verified clean at HEAD (viz-basis contrast text-zinc-900; aurora chip aria-label; dock dropdown aria-label; Skeleton compositor + fonts async + font-display). P2-1 meta-description CLEARED. robots.txt: Option B (defer to W5 Lane B atomic decision; W5 owns production-demo-build binary). P2-3 + P2-4 formal-retire-as-not-our-scope (Vue upstream; production hosting cache headers). Lighthouse re-run at HEAD: Perf 54 / A11y 100 / BP 100 (96 metaballs) / SEO 91 across 4 routes. A11y +6 net (buttons 94 → 100). 0 L W1 regressions.
+
+**Open question routed to W7 / W8** (W6 surfaced; W6 file bounds disallow src/demo touches): F-ε-3 Configurator recursion error re-reproduced at /motion/metaballs Lighthouse re-run. K W8 had marked this as "false-positive" (stale dev-server cache). L W6 re-reproduction suggests K W8's disposition was PARTIAL. Route: L W7 (which touches Configurator with `cloneMode: 'per-preset'` extension) absorbs OR L W8 ι integrity-sweep documents as M-tranche carry-forward.
+
+**Verification post-W3+W4+W6**:
+- `npm run typecheck` clean.
+- `npm test` 330/330 PASS (was 357 pre-retires; -27 tests retired with pagination + virtual).
+- `npm run profile:budget` PASS: 124.8K raw / 22.4K gz (66.6% headroom; unchanged vs W1 close — retirements are demo + small composables).
+- `npm run build` succeeds (~32s).
 
 ## Brittleness window
 
