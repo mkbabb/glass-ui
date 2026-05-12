@@ -629,7 +629,7 @@ Used on `Button`: `default | primary-audacious | secondary | ghost | outline | d
 |-----------------|-----------------------------|--------------------------------------|----------------------------------|
 | `standard`      | 6 px muted/50               | 14 px circle                         | Default                          |
 | `spectrum`      | 24 px secondary             | thin bar                             | Range selection                  |
-| `timeline`      | 24 px glass-blurred         | 24 px disc                           | Video/timeline scrubbing         |
+| `timeline`      | 24 px glass-blurred         | 24 px disc                           | Video/timeline scrubbing (slider variant — see also the standalone `<GlassTimeline>` primitive below) |
 | `glass-pill`    | pill substrate w/ gradient  | halo on hover (`--surface-tint-12`)  | Audacious primary control        |
 | `glass-cartoon` | cartoon-surface track       | cartoon-shadow disc                  | Editorial / paper-design context |
 
@@ -657,6 +657,87 @@ The cross-substrate proof story lives at `demo/stories/compositions/dock-with-sl
 When a consumer needs to override component internals, the first resort is a documented CSS custom property. `:deep()` is a last resort — it indicates a missing token or slot-class prop.
 
 Slot-class props (e.g., `ScrollPaneHeader` → `title-class`, `description-class`) expose internal elements for controlled styling.
+
+---
+
+## Timeline Primitive
+
+`<GlassTimeline>` is the canonical primitive for time-axis displays: scrubbing, multi-phase progress, and per-section status indication. Three variants form an orthogonal taxonomy. **Note**: the `timeline` slider variant in the table above is a *separate* primitive (a `<Slider>` with the timeline visual treatment for video-style scrubbing); `<GlassTimeline>` is a standalone Vue component with its own variant enum.
+
+### `variant="scrubber"` (default; pre-Z baseline)
+
+Single-track normalized 0..1 scrubber with full keyboard a11y: `role="slider"` + arrow-key step (0.01) + shift-arrow step (0.1). Optional tooltip caret via `:label` prop. Pointer + keyboard models converge on the same `update:modelValue` event surface.
+
+```vue
+<GlassTimeline v-model="position" label="0:23 / 4:12" />
+```
+
+### `variant="segmented"` (Z.W2.T1)
+
+Adjacent gradient bands — N rectangles in a row, one per phase, with boundary dots emitting `hover` + `click` events. Per-segment gradient (either `{from, to}` pair or raw CSS gradient string), lifecycle state (`pending | active | completed`), and optional payload surface via the events. Used by multi-phase progress UIs where each phase is conceptually independent.
+
+```vue
+<GlassTimeline
+  variant="segmented"
+  :segments="phases"
+  @hover="onPhaseHover"
+  @click="onPhaseClick"
+/>
+```
+
+### `variant="continuous"` (AA.W1.T1)
+
+ONE rounded-pill rail substrate with N absolute-positioned region children spanning prev-boundary → current-boundary. Same `TimelineSegment[]` data shape as `segmented` — only the rendering geometry differs. Visual: 1 pill with N internal gradient regions + optional seam dividers at boundaries + boundary dots overlaid at each region's right edge. Used by multi-phase progress UIs where the phases are conceptually one progression bar (the speedtest ping → download → upload pipeline is the canonical consumer).
+
+```vue
+<GlassTimeline
+  variant="continuous"
+  :segments="phases"
+  @hover="onPhaseHover"
+  @click="onPhaseClick"
+/>
+```
+
+### `TimelineSegment` data shape
+
+```ts
+interface TimelineSegment {
+    key: string;                                          // stable id; emitted on hover/click
+    label: string;                                        // display name; surfaces in dot aria-label
+    state: "pending" | "active" | "completed";            // lifecycle — drives fill + dot affordance
+    progress?: number;                                    // 0..1, overrides state-default fill
+    gradient?: { from: string; to: string } | string;    // `{from,to}` pair or raw CSS gradient
+    value?: unknown;                                      // hover/click event payload
+    weight?: number;                                      // continuous-variant width share (default 1)
+}
+```
+
+`weight` is only honoured by the `continuous` variant (region widths are computed as `weight / sum(weights)`); the `segmented` variant distributes via CSS flex (`--timeline-segment-flex`).
+
+### Tokens (`§16 TIMELINE`)
+
+| Token | Default | Use |
+|---|---|---|
+| `--timeline-scrubber-height`            | `0.5rem`           | Scrubber-variant rail height |
+| `--timeline-segmented-height`           | `0.625rem`         | Segmented-variant rail height |
+| `--timeline-continuous-height`          | `0.75rem`          | Continuous-variant rail height |
+| `--timeline-dot-size`                   | `0.875rem`         | Boundary dot diameter (segmented + continuous) |
+| `--timeline-segment-flex`               | `1 1 0`            | Per-cell flex distribution (segmented) |
+| `--timeline-continuous-seam-opacity`    | `0.25`             | Continuous inter-region 1px divider opacity (`0` to suppress) |
+| `--timeline-continuous-seam-color`      | `color-mix(...)`   | Seam tint (composes from opacity by default) |
+| `--timeline-segment-default-gradient`   | wash → mid wash    | Fallback gradient when `segment.gradient` is omitted |
+| `--timeline-segment-gradient-ping`      | (chart-ping)       | Per-phase canonical default — `ping` |
+| `--timeline-segment-gradient-download`  | (chart-download)   | Per-phase canonical default — `download` |
+| `--timeline-segment-gradient-upload`    | (chart-upload)     | Per-phase canonical default — `upload` |
+| `--timeline-segment-gradient-jitter`    | (chart-jitter)     | Per-phase canonical default — `jitter` |
+
+### A11y contract
+
+- **Scrubber**: `role="slider"` + `aria-valuemin/max/now` + keyboard arrow-key step. `aria-valuenow` is always rendered as a numeric attribute (the binding coerces via `Number(modelValue ?? 0)`; AA.W1.T2 / A4 §S-16 fix). Defaults to `0` when `modelValue` is `undefined` or `null`.
+- **Segmented**: `role="group"` on the wrapper, per-dot `<button>` with composed `aria-label` (`"{label}: {state}"`). Per-segment payload surfaces via the `hover` + `click` events.
+- **Continuous**: `role="group"` on the wrapper + `role="progressbar"` on the track with `aria-valuemin="0"`, `aria-valuemax=N` (segment count), `aria-valuenow` derived from completed-segment-count + fractional active progress (rounded to 2 decimals). `aria-label` from `:ariaLabel` prop, or derived from segment labels.
+
+All variants respect `prefers-reduced-motion: reduce` by collapsing band / region / dot transitions to `0.01ms`.
 
 ---
 
