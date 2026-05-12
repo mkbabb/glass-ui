@@ -176,6 +176,7 @@ export const CATEGORIES: Category[] = [
             s("data", "sortable-list", "Sortable List"),
             s("data", "infinite-scroll", "Infinite Scroll"),
             s("data", "timeline", "Timeline"),
+            s("data", "timeline-segmented", "Timeline (segmented)", "Multi-phase progress timeline with per-segment gradients + hover/click boundary dots (Z.W2 / A2 §B5)."),
             s("data", "search", "Fuzzy Search"),
             s("data", "scrolling-text", "Scrolling Text", "Overflow-detection-driven horizontal marquee for inline text — IPv6 addresses, org names, entity IDs."),
         ],
