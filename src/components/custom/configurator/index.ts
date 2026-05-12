@@ -7,6 +7,7 @@ export type {
 } from "./Configurator.vue";
 export {
     useConfiguratorState,
+    type ConfiguratorCloneMode,
     type ConfiguratorState,
     type ConfiguratorStateOptions,
 } from "./useConfiguratorState";

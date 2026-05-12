@@ -1,14 +1,24 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { cn } from "../../src/utils/cn";
-import { Configurator } from "../../src/components/custom/configurator";
+import {
+    Configurator,
+    useConfiguratorState,
+    type ConfiguratorPreset,
+} from "../../src/components/custom/configurator";
 import { ExpandableContainer } from "../../src/components/custom/expandable-container";
 import { registerShortcut } from "../../src/composables/keyboard";
 import { TooltipProvider } from "../../src/components/ui/tooltip";
+import type { AuroraConfig } from "../../src/components/custom/aurora";
 import PresetPickerRow from "./aurora/PresetPickerRow.vue";
 import AuroraStage from "./aurora/AuroraStage.vue";
 import AuroraConfigDock from "./aurora/AuroraConfigDock.vue";
-import { useAuroraStudio } from "./aurora/useAuroraStudio";
+import {
+    PRESETS,
+    PRESET_KEYS,
+    PRESET_META,
+    type PresetKey,
+} from "./aurora/presets";
 import { usePresetThumbnails } from "./aurora/usePresetThumbnails";
 
 /**
@@ -22,17 +32,47 @@ import { usePresetThumbnails } from "./aurora/usePresetThumbnails";
  *
  * Chrome composes `<Configurator>` (J.W4.A) — the canonical studio shell
  * (`stage` / `controls` slots + `scrollMode="auto"` + glass-floating
- * substrate). The studio state stays in `useAuroraStudio` because aurora
- * needs per-preset live clones (preserving slider edits across preset
- * switches), which differs from `useConfiguratorState`'s single-config
- * baseline-restore semantics.
+ * substrate).
+ *
+ * State composes `useConfiguratorState<AuroraConfig>` with
+ * `cloneMode: "per-preset"` (L.W7 Lane B Option-A unification — Rε §A.8).
+ * Per-preset clone semantics preserve slider edits when the user switches
+ * presets and returns; previously this lived in a parallel
+ * `useAuroraStudio` composable. Aurora is now the second consumer of the
+ * canonical Configurator state primitive (the first being
+ * `demo/stories/motion/metaballs.vue`), closing the K-tranche
+ * cross-tranche-debt item.
  *
  * Fullscreen is owned by `ExpandableContainer` (corner button + Esc + body
  * scroll-lock + Teleport-to-body); the slot re-mounts in fullscreen, so
  * `AuroraStage` spins up a fresh GL context but the studio state survives.
  */
 
-const studio = useAuroraStudio("OPENAI_SKY");
+// Build the canonical ConfiguratorPreset descriptors from the authored
+// PRESETS + PRESET_META tables. Each descriptor's `config` is the immutable
+// baseline; useConfiguratorState owns the per-preset live clones.
+const AURORA_PRESETS: ConfiguratorPreset<AuroraConfig>[] = PRESET_KEYS.map((key) => ({
+    key,
+    label: PRESET_META[key].label,
+    sub: PRESET_META[key].sub,
+    config: PRESETS[key],
+}));
+
+const studio = useConfiguratorState<AuroraConfig>({
+    presets: AURORA_PRESETS,
+    initialPreset: "OPENAI_SKY",
+    cloneMode: "per-preset",
+});
+
+const currentKey = computed<PresetKey>(
+    () => (studio.activePreset.value ?? "OPENAI_SKY") as PresetKey,
+);
+const currentMeta = computed(() => PRESET_META[currentKey.value]);
+
+function selectPreset(key: PresetKey) {
+    studio.selectPreset(key);
+}
+
 const thumbs = usePresetThumbnails({ widthCss: 320, heightCss: 200 });
 
 const activeLayer = ref<string>("medium");
@@ -66,6 +106,11 @@ const hintText = computed(() => [
     "alt-click to spawn a nucleus · shift-click or right-click a ring to remove.",
     "Drag a nucleus ring to move it. Arrow keys cycle presets · expand for fullscreen.",
 ]);
+
+// Silence the unused-binding warning if currentMeta isn't referenced in
+// the template below — kept for parity with the prior useAuroraStudio API
+// surface in case consumer-side debug overlays read it.
+void currentMeta;
 </script>
 
 <template>
@@ -73,9 +118,9 @@ const hintText = computed(() => [
         <section class="flex flex-col gap-8">
             <!-- Preset picker — visible row of baked thumbnails. -->
             <PresetPickerRow
-                :current="studio.current.value"
+                :current="currentKey"
                 :thumbs="thumbs.thumbs.value"
-                @select="studio.selectPreset"
+                @select="selectPreset"
             />
 
             <!--
@@ -106,11 +151,11 @@ const hintText = computed(() => [
                             )"
                         >
                             <template #stage>
-                                <AuroraStage :config="studio.currentConfig.value" />
+                                <AuroraStage :config="studio.config" />
                             </template>
                             <template #controls>
                                 <AuroraConfigDock
-                                    :config="studio.currentConfig.value"
+                                    :config="studio.config"
                                     :active-layer="activeLayer"
                                     @update:active-layer="(v: string) => (activeLayer = v)"
                                     @reset="studio.resetCurrent"

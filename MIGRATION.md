@@ -428,6 +428,26 @@ union narrowing.
 
 New at v1.0. See §1.2 above.
 
+### `useConfiguratorState` gained `cloneMode` option
+
+`useConfiguratorState<T>(options)` accepts a new `cloneMode?: "commit-on-write" | "per-preset"` option (default `"commit-on-write"` — unchanged behaviour for existing consumers).
+
+```ts
+import {
+    useConfiguratorState,
+    type ConfiguratorCloneMode,
+} from "@mkbabb/glass-ui/configurator";
+
+// per-preset: edits persist per-slot across preset switches.
+const studio = useConfiguratorState<MyConfig>({
+    presets,
+    initialPreset: "default",
+    cloneMode: "per-preset",
+});
+```
+
+The L W7 Lane B Option-A unification (Rε §A.8) routed aurora's per-preset clone semantics through the canonical primitive; `useAuroraStudio` was demo-private and retired. `cyclePreset` also accepts an optional `direction?: 1 | -1` (default `1`) so consumers can map `ArrowLeft` / `ArrowRight` keyboard handlers cleanly. Purely additive — no consumer migration required.
+
 ---
 
 ## Recommended new surfaces (best-practice, not strict migration)

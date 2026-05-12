@@ -662,12 +662,20 @@ The configurator family is the canonical chrome for live token / preset editing 
 - `useConfiguratorState` — reactive preset state (active key, draft buffer, commit / reset / cycle, persistence).
 
 The family reaches the ≥ 2-consumer bar via:
-1. `demo/stories/motion/metaballs.vue` (`useConfiguratorState` with the metaballs preset cohort).
+1. `demo/stories/motion/metaballs.vue` (`useConfiguratorState` with the metaballs preset cohort — `cloneMode: "commit-on-write"` default).
 2. `demo/stories/primitives/configurator.vue` (V-tranche fb38034 — primitive-side story consuming `<ConfiguratorRow>` + `useConfiguratorState`).
+3. `demo/stories/aurora.vue` (L.W7 Lane B — `cloneMode: "per-preset"` consumer; absorbed the retired `useAuroraStudio` parallel chrome).
+
+**Clone modes**. `useConfiguratorState<T>` ships two clone-mode strategies via the `cloneMode` option:
+
+- `"commit-on-write"` (default) — single live `config` reactive object. `selectPreset(key)` overwrites `config` with that preset's baseline; edits do NOT persist across preset switches. Matches metaballs' shape.
+- `"per-preset"` — each preset slot holds an independent live clone. `selectPreset(key)` snapshots the current `config` into the outgoing slot, then loads the incoming slot's clone into `config`. Edits persist per slot across switches. Matches aurora's shape (slider edits survive a preset round-trip).
+
+`defaultClone` calls `toRaw(value)` before `structuredClone` so Vue reactive proxies snapshot cleanly; JSON-clone is the fallback for shapes `structuredClone` rejects. Consumers can override via `options.clone`.
 
 **Configurator P0 absorb (K W7)**: `useConfiguratorState.ts:85-87` previously declared `let activeKey: string | undefined` — non-reactive — so `studio.activePreset` returned a stale computed value and templates binding it never updated when `selectPreset` mutated the local. K W7 replaced the plain `let` with `const activeKey = ref<string | undefined>(...)`; `selectPreset` / `resetCurrent` / `cyclePreset` mutate `activeKey.value`. The "Maximum recursive updates exceeded" runtime error on `/motion/metaballs` (Lighthouse P0-1) is gone. A bidirectional `colorDraft ↔ cfg.colors` watch-write loop in `metaballs.vue` was eliminated by Strategy 1 (KISS — drop `colorDraft` entirely; iterate `cfg.colors` directly via `studio.config`).
 
-**Aurora chrome retains parallel implementation — Option-B-with-rationale (K cross-tranche debt)**: `<Aurora>` exposes `useAuroraStudio` + `<AuroraConfigDock>` rather than composing `useConfiguratorState`. The aurora preset model has per-preset clone semantics that don't fit the configurator family's draft-buffer commit cycle (aurora previews mutate the live preset directly, then commits write-through to the named preset slot). Unification under `useConfiguratorState` would require a generalisation we can't justify against current consumers; the parallel chrome is documented as an Option-B retain rather than a covered debt. Deferred to L if Option-A unification is ever desired.
+**Aurora chrome Option-A unification (L W7 Lane B — Rε §A.8)**: the prior `useAuroraStudio` + per-preset clone map collapsed into a `cloneMode: "per-preset"` consumer of the canonical `useConfiguratorState<AuroraConfig>`. Closes K cross-tranche-debt item; retires the Option-B-with-rationale note. Aurora is now the second consumer of the canonical state primitive (third overall counting `primitives/configurator.vue`). F-ε-3 (`/motion/metaballs` recursion warning surfaced under L W6 Lighthouse) probed clean post-unification under the 2-preset-swap + 4-color-mutation reproduction pattern — see `docs/tranches/L/audit/W7-B-aurora-option-a-unification-proof.md`.
 
 ---
 

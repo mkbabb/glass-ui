@@ -243,18 +243,8 @@ defineExpose({
     font-weight: 100;
 }
 
+/* Keyframe typewriter-blink lives in src/styles/animations.css */
 .tw-cursor--blink {
-    animation: tw-cursor-blink 1.06s step-end infinite;
-}
-
-@keyframes tw-cursor-blink {
-    0%,
-    50% {
-        opacity: 1;
-    }
-    51%,
-    100% {
-        opacity: 0;
-    }
+    animation: typewriter-blink 1.06s step-end infinite;
 }
 </style>

@@ -31,7 +31,7 @@ Open commit lands: `L.md`, `findings.md`, `waves/W{0..8}.md`, `dispatch/AGENT.md
 | W4 | CLOSED (TBD commit) | mobile-viewport finishing + π residuals; dock-group 375 overflow fixed; 26/27 viewport probe cells PASS |
 | W5 | CLOSED (TBD commit) | doc cohort (CLAUDE/README/DESIGN/CHANGELOG aligned); MIGRATION.md 430 LOC / 17 breaks; K R3 19 status-line bumps; K R4 Option A (surface-tint rungs); production-demo-build Option B (formal retire) |
 | W6 | CLOSED (TBD commit) | Lighthouse cohort completion; 4 K-absorbed re-verified; robots.txt deferred to W5; Vue runtime + cache-ttl formal-retired |
-| W7 | pending W3 + W4 + W5 + W6 | keyframes lift + aurora chrome Option-A unification |
+| W7 | CLOSED (TBD commit) | 3 keyframes lifted to animations.css; useConfiguratorState<T> gained cloneMode='per-preset' + toRaw clone hardening; useAuroraStudio retired; F-ε-3 cleaned under Playwright |
 | W8 | pending W7 | close ceremony — 7-agent strengthened audit + ι integrity-sweep + FINAL.md |
 
 ## Inbound from speedtest Y tranche

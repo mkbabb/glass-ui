@@ -53,6 +53,7 @@ const durationVar = computed(() => ({
 </template>
 
 <style scoped>
+/* Keyframes pulse-dot-bounce + pulse-ring-spin live in src/styles/animations.css */
 .pulse-dot {
     display: inline-block;
     width: 0.375rem;
@@ -64,11 +65,6 @@ const durationVar = computed(() => ({
     animation-delay: calc(var(--pulse-index, 0) * (var(--pulse-duration) * 0.3));
 }
 
-@keyframes pulse-dot-bounce {
-    0%, 80%, 100% { opacity: 0.35; transform: scale(0.8); }
-    40%           { opacity: 1;    transform: scale(1.2); }
-}
-
 .pulse-ring {
     display: inline-block;
     width: 1rem;
@@ -77,10 +73,6 @@ const durationVar = computed(() => ({
     border: 2px solid currentColor;
     border-top-color: transparent;
     animation: pulse-ring-spin var(--pulse-duration) linear infinite;
-}
-
-@keyframes pulse-ring-spin {
-    to { transform: rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {

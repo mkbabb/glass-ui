@@ -167,3 +167,33 @@
         0%, 100% { opacity: 0; transform: none; }
     }
 }
+
+/* ── Pulse dot bounce: dots variant of <Pulse> ──
+ *
+ * Three-dot loading indicator. Opacity 0.35 ↔ 1, scale 0.8 ↔ 1.2. Consumer
+ * (.pulse-dot in Pulse.vue) sets duration via --pulse-duration and staggers
+ * via animation-delay using --pulse-index.
+ */
+@keyframes pulse-dot-bounce {
+    0%, 80%, 100% { opacity: 0.35; transform: scale(0.8); }
+    40%           { opacity: 1;    transform: scale(1.2); }
+}
+
+/* ── Pulse ring spin: ring variant of <Pulse> ──
+ *
+ * Continuous-rotation spinner. Consumer (.pulse-ring in Pulse.vue) sets
+ * duration via --pulse-duration.
+ */
+@keyframes pulse-ring-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ── Typewriter cursor blink: cursor for <TypewriterText> ──
+ *
+ * Hard-edged step blink (50/50 duty). Consumer (.tw-cursor--blink in
+ * TypewriterText.vue) sets the 1.06s step-end timing.
+ */
+@keyframes typewriter-blink {
+    0%, 50%   { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
