@@ -285,6 +285,18 @@
     --shadow-xl: 0 8px 24px color-mix(in srgb, var(--shadow-color) 14%, transparent);
     --shadow-2xl: 0 25px 50px -12px color-mix(in srgb, var(--shadow-color) 25%, transparent);
 
+    /* Z.W2.T3a — uniform-cast shadow rung. Offset 0 / 0, no directional
+       Y bias. Use case: dock-hosted icons (e.g. the speedtest settings
+       gear) where the surrounding dock shadow's downward cast reads as
+       a per-icon right-edge halo on the rightmost child (A2 §B7). The
+       uniform variant carries the same color-mix recipe family as the
+       sized rungs (`--shadow-md`, `--shadow-lg`) so the perceived
+       elevation is a peer, not a sibling. Consumers compose via
+       `--shadow-dock-override: var(--shadow-uniform)` per-instance, or
+       attach to per-icon-button stacks where directional cast is wrong-
+       shape. Documented in DESIGN.md token table. */
+    --shadow-uniform: 0 0 12px color-mix(in srgb, var(--shadow-color) 8%, transparent);
+
     /* Card = soft drop plate by default. The cartoon offset is a brand-flavoured
        variant (a sticker look), not the canonical card shape. Consumers wanting
        the cartoon look opt into <CartoonCard> or .glass-cartoon, which read
