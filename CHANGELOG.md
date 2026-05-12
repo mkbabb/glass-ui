@@ -1,5 +1,39 @@
 # Changelog
 
+## v1.0.4 — 2026-05-12 — M.W0 (Carousel subpath substrate alignment with MIGRATION.md §1.2)
+
+Fix the `@mkbabb/glass-ui/carousel` subpath to match the contract that
+MIGRATION.md §1.2 promises. From v1.0.0 through v1.0.3, `src/carousel.ts`
+re-exported only `useCarousel + CarouselApi` — but the migration guide
+told consumers to import the entire `Carousel*` component family from
+`/carousel` (Carousel, CarouselContent, CarouselDots, CarouselItem,
+CarouselNext, CarouselPager, CarouselPrevious, GlassCarouselPager,
+plus useCarousel + CarouselApi). The components were reachable only
+through the root barrel via `components/ui/carousel/`'s own package
+barrel, which contradicted L invariant 6 (vueuse-bearing surfaces live
+on subpaths) — every `Carousel*.vue` injects `useCarousel`, which
+composes `createInjectionState` from `@vueuse/core`.
+
+Surfaced at M.W0 Lane III by the words/frontend migration attempt
+(`import { Carousel, CarouselApi } from "@mkbabb/glass-ui/carousel"`
+failed to resolve the components). The fix is single-file: extend
+`src/carousel.ts` to re-export the entire family from the
+`components/ui/carousel/` package barrel.
+
+No root-barrel changes — root stays vueuse-free per L's Phase 2 SCC
+trap closure. Single canonical home: `src/components/ui/carousel/index.ts`.
+
+Bundle delta: `dist/carousel.js` 0.21 kB → 13.24 kB (gzipped 2.35 kB);
+this is correct sizing, since the components now ship with their
+subpath surface rather than dead-coding on root-barrel consumers.
+
+### Fixed
+
+- `@mkbabb/glass-ui/carousel` now exports the full `Carousel*` component
+  family, matching MIGRATION.md §1.2's documented contract. Consumers
+  migrating from v0.9.x per the migration guide can now resolve every
+  named symbol from the canonical subpath.
+
 ## v1.0.3 — 2026-05-12 — AA.W3.5 (Audacious display tier — mega / hero / audacious)
 
 Typography-only canon extension routed from the speedtest AA-tranche

@@ -1,17 +1,25 @@
-// @mkbabb/glass-ui/carousel — vueuse-bearing carousel composable (v1.0 subpath)
+// @mkbabb/glass-ui/carousel — vueuse-bearing carousel surface (v1.0 subpath)
 //
-// L.W1 Lane C — new public subpath for `useCarousel` (the embla-carousel-vue
-// + `createInjectionState`-based composable that powers `<Carousel>` and the
-// `Carousel*` family). The composable was previously reachable only via the
-// root barrel (`@mkbabb/glass-ui` re-exports it through the `ui/carousel/`
-// package), which drags `@vueuse/core` into the consumer's tree-shake walk —
-// the same SCC trap Phase 2 closes for `useGlobalDark` / `registerShortcut`.
+// L.W1 Lane C introduced this subpath to host `useCarousel`. M.W0 Lane V
+// (v1.0.4) extends it to mirror MIGRATION.md §1.2's contract — the entire
+// `Carousel*` component family lives here because every `Carousel*.vue`
+// injects `useCarousel`, which composes `createInjectionState` from
+// `@vueuse/core`. Keeping the components on the root barrel would have
+// dragged the vueuse SCC into every consumer's tree-shake walk, defeating
+// the Phase 2 root-barrel curation that L.W1 closed for the dark/keyboard
+// surfaces.
 //
-// Lane A removes `useCarousel` from the root-barrel re-export chain; consumers
-// reach it here. The component package `<Carousel>` + subcomponents remain on
-// the root barrel (they re-export `useCarousel` internally only for their own
-// `provide`/`inject` wiring, not as a public surface).
-//
-// Implementation home: `src/components/ui/carousel/useCarousel.ts`.
-export { useCarousel } from "./components/ui/carousel/useCarousel";
+// Single canonical home: `src/components/ui/carousel/index.ts` (the package
+// barrel). The root barrel does NOT re-export this family.
+export {
+    Carousel,
+    CarouselContent,
+    CarouselDots,
+    CarouselItem,
+    CarouselNext,
+    CarouselPager,
+    CarouselPrevious,
+    GlassCarouselPager,
+    useCarousel,
+} from "./components/ui/carousel";
 export type { CarouselApi } from "./components/ui/carousel";

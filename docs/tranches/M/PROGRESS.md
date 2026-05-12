@@ -16,11 +16,22 @@ Initial open commit `64105c6` proposed a 9-wave plan with `@mkbabb/dev-kit` as t
 
 | Wave | Status | Notes |
 |---|---|---|
-| W0 | open (planning-only at M open; awaits user dispatch authorization) | 4 parallel lanes — recon + precept reconcile + words+bbnf-buddy retired-subpath fix + fourier-analysis retired-subpath fix; optional glass-ui v1.0.1 if substrate warrants |
-| W1 (HEADLINE) | pending W0 | per-consumer v1.0 standardization sweep — 6 per-consumer lanes in 2 batches (keyframes.js / value.js / fourier-analysis / words / bbnf-buddy / speedtest-post-Y) |
+| W0 | **CLOSED 2026-05-12** | 5 lanes executed (I recon + II precept reconcile + III words+bbnf-buddy + IV fourier-analysis + V CONSTELLATION ratify + v1.0.4 carousel patch); precept reconciled at `08a2e9c` on origin/main; retired-subpath drift = 0 across all 3 broken consumers; glass-ui v1.0.4 patches MIGRATION.md §1.2 carousel-subpath contract |
+| W1 (HEADLINE) | open (next) | per-consumer v1.0 standardization sweep — 6 per-consumer lanes in 2 batches (keyframes.js / value.js / fourier-analysis / words / bbnf-buddy / speedtest-post-Y); absorbs W0-surfaced broader-drift residuals |
 | W2 | pending W1 (parallel with W3) | substrate residuals — F-ε-3 + api/ extensions + L cosmetic absorb |
 | W3 | pending W1 (parallel with W2) | stale-repo retire-or-refresh (vite-plugin-shebang + mathanim + fourier-animate) + doc cohort across constellation |
 | W4 | pending W2 + W3 | close ceremony — 7-agent strengthened audit + cross-constellation ι reflog scan + FINAL.md |
+
+## 2026-05-12 — W0 close
+
+5 lanes executed in parallel:
+- **Lane I (Explore agent, read-only)**: `docs/tranches/M/audit/W0-reconciliation.md` — 42 findings CONFIRMED across Rα/β/γ/δ/ε/ζ; constellation snapshot per repo at HEAD.
+- **Lane II (orchestrator-solo)**: precept submodule REAUDIT-stream reconciliation. Strategy (d) full re-baseline via cumulative-diff apply + 3-way merge resolution in 4 files (LESSONS-LEARNED.md / ORCHESTRATION.md / AGENT_DISPATCH_TEMPLATE.md / SPEC.md). M.Rδ P1 (`git checkout <path>` extension) + P3 (MULTI-WRITER mode) + P6 (dual ceiling) integrated inline at conflict-resolution. Result: precept submodule `08a2e9c` on origin/main; backup branch `m-w0-pre-rebaseline @ b51047d` retained.
+- **Lane III (claude agent, cross-repo)**: `docs/tranches/M/audit/W0-Lane-III-retired-subpath-words-bbnf-proof.md` — words/frontend: 3 retired-subpath imports transposed to local `@/composables/virtual/` (v0.9.4 reference impls; pure, vueuse-free); package.json pin re-pointed `file:./glass-ui` → `file:../../glass-ui`; 6 root-barrel vueuse-bearing imports migrated to subpaths. bbnf-buddy: 0 retired-subpath imports (Rα §A.5 plan claim was incorrect); 2 root-barrel `useGlobalDark` migrated to `/dark`.
+- **Lane IV (claude agent, cross-repo)**: `docs/tranches/M/audit/W0-Lane-IV-retired-subpath-fourier-proof.md` — fourier-analysis/web: 2 `useOffsetPagination` migrated via local 60-LOC fork of v0.9.3 reference (vueuse signature was a workaround, not a 1:1 swap); 1 `useGlobalDark` migrated to `/dark`.
+- **Lane V (orchestrator-direct)**: surfaced glass-ui substrate defect at MIGRATION.md §1.2 (`/carousel` subpath only re-exported `useCarousel + CarouselApi`, not the full Carousel* component family); fixed in `src/carousel.ts`; CHANGELOG v1.0.4 entry; package.json bumped to 1.0.4. CONSTELLATION.md §1 + §9 updated with W0 close state.
+
+Cross-repo writes (per CONSTELLATION.md §6 MULTI-WRITER mode + ORCHESTRATION.md cross-repo commit policy): all 3 peer repos (words/frontend, bbnf-buddy, fourier-analysis/web) were found to hold substantial pre-existing in-flight v1.0 migration work outside the strict M.W0 Lane III/IV scope (user's prior session work, blended with agent edits in shared files like words `frontend/src/App.vue`). Per the cross-repo commit policy's contention-zone rule, peer-repo commits are DEFERRED to M.W1 per-consumer lanes — each lane will absorb both the agent's M.W0 retired-subpath fix AND the user's in-flight migration work into one coherent per-consumer commit per consumer. The peer-repo working trees remain dirty between waves; M.W1 Lanes C/D/E own the eventual commits.
 
 ## Cross-repo coordination
 

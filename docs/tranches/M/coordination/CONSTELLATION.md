@@ -11,20 +11,20 @@ This is the canonical cross-repo manifest. It supersedes the per-peer `coordinat
 
 | Repo | Path | Vue? | glass-ui pin | keyframes.js pin | Tranche stream | Last tranche close | Active tranche | Status |
 |---|---|---|---|---|---|---|---|---|
-| **glass-ui** | `/Users/mkbabb/Programming/glass-ui` | n/a (library) | n/a (origin) | `^2.0.0` peer | C → L (current) | L `3e4d472` (v1.0.0) | M (this) | active |
+| **glass-ui** | `/Users/mkbabb/Programming/glass-ui` | n/a (library) | n/a (origin) | `^2.0.0` peer | C → L → M | L `3e4d472` (v1.0.0); AA layered v1.0.1→v1.0.3 (timeline+typography); M.W0 patches `src/carousel.ts` substrate defect | M (this) | active; v1.0.4 patch at W0 close |
 | **speedtest** | `/Users/mkbabb/Programming/speedtest` | yes | `file:../glass-ui` | n/a | A → Y (current) | X `5dcc2505` | Y (in flight) | active; coordinate |
 | **keyframes.js** | `/Users/mkbabb/Programming/keyframes.js` | yes (own + demo) | `file:../glass-ui` | self (`@mkbabb/keyframes.js@2.0.0`) | A → H (last per `keyframes-wt-H-W2-verify`) | H (verify FINAL.md) | none active | dormant |
 | **value.js** | `/Users/mkbabb/Programming/value.js` | yes (demo) | `file:../glass-ui` | `file:../keyframes.js` | unknown | unknown | none active | dormant — pin v0.5.1 |
-| **words** (frontend) | `/Users/mkbabb/Programming/words/frontend` | yes | `file:./glass-ui` (BROKEN symlink) | `^2.0.0` | unknown | unknown | none active | **BROKEN at v1.0** — 3 retired-subpath imports |
-| **fourier-analysis** (web) | `/Users/mkbabb/Programming/fourier-analysis/web` | yes | `file:../../glass-ui` | `^2.0.0` | unknown | unknown | none active | **BROKEN at v1.0** — 2 retired-subpath imports |
-| **bbnf-buddy** | `/Users/mkbabb/Programming/bbnf-buddy` | yes | `file:../glass-ui` | `file:../keyframes.js` | unknown | unknown | none active | active consumer; verify v1.0 compat |
+| **words** (frontend) | `/Users/mkbabb/Programming/words/frontend` | yes | `file:../../glass-ui` (FIXED at M.W0) | `^2.0.0` | unknown | unknown | M.W1 Lane D | M.W0 closed retired-subpath drift; M.W1 absorbs broader v1.0 drift (`glass-subtle`, Carousel/buttonVariants) |
+| **fourier-analysis** (web) | `/Users/mkbabb/Programming/fourier-analysis/web` | yes | `file:../../glass-ui` | `^2.0.0` | unknown | unknown | M.W1 Lane C | M.W0 closed retired-subpath drift; M.W1 absorbs DockPopover→HoverPopover rename + full v1.0 audit |
+| **bbnf-buddy** | `/Users/mkbabb/Programming/bbnf-buddy` | yes | `file:../glass-ui` | `file:../keyframes.js` | unknown | unknown | M.W1 Lane E | M.W0 verified zero retired-subpath imports (plan claim incorrect); root-barrel `useGlobalDark` migrated to `/dark`; M.W1 absorbs broader v1.0 drift (~14 surfaces) |
 | **bbnf-lang** | `/Users/mkbabb/Programming/bbnf-lang` | no (no glass-ui dep) | n/a | n/a | AA → BD (50+; deepest tranche-format adopter per M.Rε) | BD (verify) | possibly active | tranche-format origin; shares precept submodule |
 | **mkb-utils** | `/Users/mkbabb/Programming/mkb-utils` | no | n/a | n/a | unknown | unknown | none | utility lib; verify scope |
 | **vite-plugin-shebang** | `/Users/mkbabb/Programming/vite-plugin-shebang` | n/a (plugin) | n/a | n/a | unknown | unknown | none | stale (Vite 4); retire-or-refresh in M.W5 |
 | **mathanim** | `/Users/mkbabb/Programming/mathanim` | unknown | n/a | n/a | unknown | unknown | none | stale (TS 4.1); verify scope; retire-or-refresh in M.W5 |
 | **fourier-animate** | `/Users/mkbabb/Programming/fourier-animate` | unknown (no package.json?) | n/a | n/a | unknown | unknown | none | verify — possibly Python-only; formal out-of-constellation if so |
 | **parse-that** | `/Users/mkbabb/Programming/parse-that` | no | n/a | n/a | unknown | unknown | none | likely bbnf-lang dep; verify scope |
-| **precepts** (submodule) | `/Users/mkbabb/Programming/glass-ui/docs/precepts` | n/a | n/a | n/a | submodule shared across repos | tranche-stream local `b51047d`; origin/main `26297c9` (15-commit REAUDIT divergence) | M.W0 reconcile | **DIVERGED** |
+| **precepts** (submodule) | `/Users/mkbabb/Programming/glass-ui/docs/precepts` | n/a | n/a | n/a | submodule shared across repos | reconciled at M.W0 — `08a2e9c` on origin/main | M.W0 reconcile **CLOSED** | RECONCILED |
 
 ## §2 — Cross-repo touchpoint map
 
@@ -125,11 +125,21 @@ Zero unauthorized agent mutations is the canonical clean criterion.
 
 ## §9 — Constellation residuals (M-bound; not exhaustive — see Rβ ledger)
 
-- **N1 (P0)**: words consumer v1.0 break — broken `glass-ui` symlink + 3 retired-subpath imports. M.W0 Lane III absorbs.
-- **N4 (P0)**: precept submodule push divergence — 6 local vs 15 origin/main commits. M.W0 Lane II absorbs.
+### W0 close state (2026-05-12)
+
+- **N1 (P0) — CLOSED**: words consumer v1.0 retired-subpath drift fixed (3 `/virtual` imports transposed to local `@/composables/virtual/`; package.json pin re-pointed to `file:../../glass-ui`). M.W1 Lane D absorbs the residual `glass-subtle` button-variant baseline drift.
+- **N4 (P0) — CLOSED**: precept submodule REAUDIT-stream reconciled — `08a2e9c` on origin/main (cumulative tranche-stream G→L diff applied with 3-way merge resolution + M.Rδ P1/P3/P6 extensions integrated). Backup branch `m-w0-pre-rebaseline @ b51047d` retained locally.
+- **N-fourier (P0) — CLOSED**: fourier-analysis/web v1.0 retired-subpath drift fixed (2 `useOffsetPagination` imports + 1 `useGlobalDark` migrated; local 60-LOC reference impl forked from v0.9.3 source).
+- **N-bbnf-buddy verify — CLOSED**: bbnf-buddy verified ZERO retired-subpath imports at HEAD (Rα §A.5 plan claim was incorrect; nothing to migrate on the retired-subpath axis); 2 `useGlobalDark` root-barrel imports migrated to `/dark`.
+- **N-carousel-defect (P0) — CLOSED at v1.0.4**: glass-ui `src/carousel.ts` only exposed `useCarousel + CarouselApi`; MIGRATION.md §1.2 contract promised the full `Carousel*` component family on `/carousel`. Fixed in orchestrator-direct edit; v1.0.4 patch.
+
+### Carry-forward to W1
+
 - **N12-N13 (P1)**: keyframes.js + value.js consumer-side v1.0 audit (unverified — file-link masking). M.W1 Lanes A + B absorb.
 - **N17-N24 (P1)**: cross-cutting modularization-debt cohort. M.W1 per-consumer lanes DISPOSITION each duplication (mostly KEEP-AS-IS or DOCUMENT-AS-DIFFERENT per KISS; no new package invented).
-- **Plus**: fourier-analysis 2 retired imports (M.W0 Lane IV) + bbnf-buddy verify state (M.W0 Lane III).
+- **N-words-broader (P1)**: words/frontend ~3 sites of `glass-subtle` button-variant referenced but absent from v1.0 `buttonVariants` CVA — pre-existing baseline drift. M.W1 Lane D absorbs.
+- **N-bbnf-buddy-broader (P1)**: bbnf-buddy ~14 surfaces of broader v1.0 root-barrel drift (GlassDock, DockIconButton, BouncyTabs, ScrollArea→ScrollPane rename, ToggleChip, SortableList family, DarkModeToggle, plus `useLeaveTimer` phantom dep). M.W1 Lane E absorbs.
+- **N-fourier-dockpopover (P1)**: fourier-analysis/web `DockPopover` references in `CanvasControlsDock.vue` + `EditorControlsDock.vue` (renamed to `HoverPopover` at J). M.W1 Lane C absorbs.
 
 ## §10 — Authority
 
