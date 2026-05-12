@@ -13,8 +13,6 @@ export function libraryEntries(rootDir: string) {
         tabs: resolve(rootDir, "src/tabs.ts"),
         typewriter: resolve(rootDir, "src/typewriter.ts"),
         "stacked-icons": resolve(rootDir, "src/stacked-icons.ts"),
-        virtual: resolve(rootDir, "src/virtual.ts"),
-        pagination: resolve(rootDir, "src/pagination.ts"),
         "glass-carousel": resolve(rootDir, "src/glass-carousel.ts"),
         aurora: resolve(rootDir, "src/aurora.ts"),
         "metric-badge": resolve(rootDir, "src/metric-badge.ts"),

@@ -10,7 +10,5 @@ export * from "./useTokenColor";
 export * from "./useTouchGate";
 export * from "./glass";
 export * from "./motion";
-export * from "./pagination";
-export * from "./virtual";
 export * from "../components/custom/infinite-scroll/composables";
 export * from "./sidebar";

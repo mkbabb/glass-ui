@@ -11,6 +11,8 @@ import {
     TableHeader,
     TableRow,
 } from "../../../src/components/ui/table";
+import { DockGroup } from "../../../src/components/custom/dock-group";
+import { MetricBadge } from "../../../src/components/custom/metric-badge";
 import { cn } from "../../../src/utils/cn";
 
 type Trend = "up" | "down" | "flat";
@@ -93,6 +95,14 @@ const trendClasses: Record<Trend, string> = {
             </aside>
 
             <main class="flex flex-col gap-[calc(1.5rem_+_var(--density-gap,0rem))]">
+                <!-- KPI strip — DockGroup pill-row shelf for compact metric clusters. -->
+                <DockGroup density="comfortable" class="self-start">
+                    <MetricBadge :amount="42" unit="active" size="md" />
+                    <MetricBadge :amount="1.2" unit="k r/min" size="md" />
+                    <MetricBadge :amount="128" unit="ms p95" size="md" />
+                    <MetricBadge :amount="0.04" unit="% err" size="md" />
+                </DockGroup>
+
                 <div class="grid grid-cols-2 gap-[calc(1rem_+_var(--density-gap,0rem))] 2xl:grid-cols-4">
                     <Card
                         v-for="metric in metrics"

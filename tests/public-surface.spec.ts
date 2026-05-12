@@ -18,7 +18,6 @@ import * as Keyboard from "../src/keyboard";
 import * as LabeledFieldSurface from "../src/labeled-field";
 import * as MetaballsSurface from "../src/metaballs";
 import * as MetricBadgeSurface from "../src/metric-badge";
-import * as Pagination from "../src/pagination";
 import * as PaperBackdropSurface from "../src/paper-backdrop";
 import * as PulseSurface from "../src/pulse";
 import * as Search from "../src/search";
@@ -30,7 +29,6 @@ import * as TabsSurface from "../src/tabs";
 import * as TimelineSurface from "../src/timeline";
 import * as ToggleChipSurface from "../src/toggle-chip";
 import * as TypewriterSurface from "../src/typewriter";
-import * as Virtual from "../src/virtual";
 
 const uiRuntimeExports = [
     "Accordion",
@@ -114,9 +112,6 @@ const subpathRuntimeExports = [
     { subpath: "typewriter", surface: TypewriterSurface, name: "TypewriterText" },
     { subpath: "typewriter", surface: TypewriterSurface, name: "useTypewriter" },
     { subpath: "stacked-icons", surface: StackedIconsSurface, name: "StackedIconGroup" },
-    { subpath: "virtual", surface: Virtual, name: "useWindowedStore" },
-    { subpath: "virtual", surface: Virtual, name: "useVirtualSectionWindow" },
-    { subpath: "pagination", surface: Pagination, name: "useOffsetPagination" },
     { subpath: "glass-carousel", surface: GlassCarouselSurface, name: "GlassCarousel" },
     { subpath: "glass-carousel", surface: GlassCarouselSurface, name: "GlassCarouselItem" },
     { subpath: "aurora", surface: Aurora, name: "Aurora" },
@@ -179,9 +174,6 @@ const nonCoreRootRetirements = [
     "useDockState",
     "useLayerTransition",
     "isTeleportedTarget",
-    "useWindowedStore",
-    "useVirtualSectionWindow",
-    "useOffsetPagination",
     "useTreeIndex",
     "buildTreeIndex",
     // L.W1 — root-barrel Phase 2 retirements (vueuse-bearing SCC closure)
@@ -227,9 +219,6 @@ const typeSurfaceChecks = [
     ["src/composables/keyboard.ts", "RegisteredShortcut"],
     ["src/composables/useTouchGate.ts", "TouchGateReturn"],
     ["src/composables/sortable/useSortable.ts", "UseSortableReturn"],
-    ["src/composables/virtual/virtualSectionLayout.ts", "ForcedSectionWindowRange"],
-    ["src/composables/virtual/virtualSectionLayout.ts", "SectionLayout"],
-    ["src/composables/virtual/virtualSectionLayout.ts", "SectionWindowRange"],
 ];
 
 const rootStyleChecks = [

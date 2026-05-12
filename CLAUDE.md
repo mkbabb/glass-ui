@@ -263,9 +263,10 @@ Each `DockLayer` registers itself with its parent via `provide`/`inject`; the gr
 
 - `<StorySection>` (V.W4 deff97a) — label + body sectioning chassis.
 - `<ShowcaseFrame>` (V.W4 8136baf) — pad knob over the rounded-card showcase chassis. Replaces the `rounded-card border bg-card shadow-cartoon` triplet across ~25-30 demo sites.
-- `<DockShowcaseFrame>` (V.W4 60fd745) — chassis-aware showcase for 13 dock sites.
 - `<TokenLadder>` + `<ToneSwatch>` (V.W4 cfbcb48) — token-tour primitives.
 - `useStoryDemo` (V.W4 227e1b0) — canonical play/reset/status harness with cleanup discipline.
+
+`<DockShowcaseFrame>` retired at L.W3 (zero consumers; substrate-without-consumer-binary invariant). Dock-tier demos use raw chassis recipes or `<ShowcaseFrame>` directly.
 
 ## Consumer wiring
 

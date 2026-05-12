@@ -35,6 +35,85 @@ path.
   consumer's root-barrel tree-shake walk — the same SCC-trap mechanism
   that motivates the `/dark` + `/keyboard` carve.
 
+<!-- Lane A appends its W3 composable wire-or-retire section here. -->
+
+### BREAKING — W3 retirements (Lane A — composables)
+
+L.W3 Lane A — second-consumer fidelity audit per L invariant 8
+(substrate-without-consumer binary at v1.0 freeze). Six composables in
+scope; three WIRED via cross-repo speedtest consumption; three retired.
+
+- **`useOffsetPagination` REMOVED** — 0 production consumers (no src/
+  site; no speedtest consumer). Demo-only at v0.9.x. Consumers roll their
+  own offset pagination with `ref()` + a `fetchFn`-driven loader (the
+  retired implementation was 60 LOC; copy from v0.9.3 source if needed).
+- **`useVirtualSectionWindow` REMOVED** — 0 production consumers.
+  Consumers use `@tanstack/vue-virtual` or a hand-rolled
+  IntersectionObserver windower.
+- **`useWindowedStore` REMOVED** — 0 production consumers. A sliding-
+  window resident store is a `ref<T[]>` plus an eviction policy.
+- **`virtualSectionLayout` helpers REMOVED** — `buildSectionLayout`,
+  `findSectionOffset`, `resolveActiveSection`, `resolveSectionWindow` and
+  the associated `FlatSection` / `SectionLayout` / `SectionWindowRange` /
+  `ForcedSectionWindowRange` types. Pure-function support substrate for
+  `useVirtualSectionWindow`; retires with its parent.
+- **`@mkbabb/glass-ui/pagination` subpath REMOVED** — entry deleted from
+  `package.json` exports + typesVersions and from `vite.library.ts`
+  libraryEntries.
+- **`@mkbabb/glass-ui/virtual` subpath REMOVED** — entry deleted (housed
+  the three virtual composables).
+
+### KEPT — W3 Lane A (cross-repo wired)
+
+- **`useRAFLoop` retained** — speedtest's `useMeterRenderer.ts` consumes
+  it for the canvas render loop (`@mkbabb/glass-ui` root barrel). Plus
+  demo + test coverage. ≥ 2 consumers; no migration required.
+- **`useIntersectionPause` retained** — speedtest's `useAuroraPolicy.ts`
+  composes it with reduced-motion gating for the aurora background. Plus
+  demo + test coverage.
+- **`useDarkModeSync` retained** — speedtest's `SpeedtestMeter.vue` plus
+  `dashboard/composables/useEChartsTheme.ts` consume it for canvas /
+  ECharts theme re-init after dark-mode toggles. Plus demo coverage.
+
+### BREAKING — W3 retirements (Lane B — primitives)
+
+L.W3 Lane B — second-consumer fidelity audit per L invariant 8
+(substrate-without-consumer binary at v1.0 freeze). All four primitives
+in scope (`<DiscoGlyph>`, `<DockGroup>`, `<InstrumentChassis>`,
+`<DockShowcaseFrame>`) reached the wave at exactly 1 consumer (the
+self-named primitive demo). The disposition matrix:
+
+- **`<DockShowcaseFrame>` REMOVED** — the demo-private dock-context
+  showcase chassis (V.W4) had zero consumers besides its own definition
+  file at HEAD; `rg "DockShowcaseFrame" demo/` returned only
+  `demo/stories/DockShowcaseFrame.vue` itself. Per Rε A3 verdict, the
+  file is retired. Dock stories at HEAD compose raw chassis recipes or
+  the canonical `<ShowcaseFrame>` directly; non-dock contexts already
+  use `<ShowcaseFrame>` exclusively. The component was never on the
+  library public surface (demo-private), so no `src/` source / barrel
+  / package.json export changes are required.
+
+### ADDED — Lane B (primitive second-consumer wiring)
+
+- **`<DiscoGlyph>` 2nd consumer** wired into
+  `demo/stories/foundations/chart-chassis-palette.vue`. The chart-palette
+  ladder now sits alongside live `<DiscoGlyph>` swatches — each chart
+  token (`--chart-{ping,download,upload,jitter}`) drives the 8-stop
+  facet gradient. Consumers verify the chart palette reads at glyph
+  scale in one place.
+- **`<DockGroup>` 2nd consumer** wired into
+  `demo/stories/compositions/dashboard.vue` as the dashboard's KPI
+  pill-row shelf. Composes `<MetricBadge>` cells under a comfortable
+  density rung — the canonical chassis-strip pattern DockGroup was
+  designed for, now exercised in a non-primitive composition site.
+- **`<InstrumentChassis>` 2nd consumer** wired into
+  `demo/stories/foundations/chart-chassis-palette.vue` as a live
+  mini-chassis under the chassis-tier-tokens token ladder. The four
+  chassis tokens (`--glass-bg-dock`, `--glass-bg-chassis`, the
+  curvature overlay, the specular) now read in composition immediately
+  below the swatch row. The compositions/instrument-chassis.vue page
+  remains the dial-state interactive consumer.
+
 ## v0.9.4 — 2026-05-11 — subpath dts publication gap (K.WS regression patch)
 
 L.W0 Lane III patch — fixes a typing-publication gap surfaced by the K.WS
