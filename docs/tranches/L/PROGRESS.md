@@ -24,15 +24,15 @@ Open commit lands: `L.md`, `findings.md`, `waves/W{0..8}.md`, `dispatch/AGENT.md
 
 | Wave | Status | Notes |
 |---|---|---|
-| W0 | CLOSED (TBD commit) | Lane I `audit/W0-reconciliation.md` (~115 entries, 49 L-bound) + Lane II precept submodule (5 lessons + 3 SPEC + 1 dispatch field + 1 ORCHESTRATION clause) + Lane III subpath dts publication gap fixed (flat-entry rebinding + impl-lift) + Lane IV `coordination/speedtest-Y.md` + v0.9.4 tagged + pushed |
-| W1 (HEADLINE) | CLOSED (TBD commit) | Phase 2 root-barrel + `src/api/` + flat `/dark` `/keyboard` `/carousel` subpaths; v1.0 tag |
-| W2 | CLOSED (TBD commit) | modularization sweep — composables/ restructured into 8 coherent sub-trees (dark/keyboard/reactive/dom/motion/glass/sortable/sidebar); cherry-pick rationale + cascade docs landed |
-| W3 | CLOSED (TBD commit) | composable + primitive second-consumer fidelity audit; 3 retired composables + DockShowcaseFrame retired; 3 primitives wired (DiscoGlyph + DockGroup + InstrumentChassis) |
-| W4 | CLOSED (TBD commit) | mobile-viewport finishing + π residuals; dock-group 375 overflow fixed; 26/27 viewport probe cells PASS |
-| W5 | CLOSED (TBD commit) | doc cohort (CLAUDE/README/DESIGN/CHANGELOG aligned); MIGRATION.md 430 LOC / 17 breaks; K R3 19 status-line bumps; K R4 Option A (surface-tint rungs); production-demo-build Option B (formal retire) |
-| W6 | CLOSED (TBD commit) | Lighthouse cohort completion; 4 K-absorbed re-verified; robots.txt deferred to W5; Vue runtime + cache-ttl formal-retired |
-| W7 | CLOSED (TBD commit) | 3 keyframes lifted to animations.css; useConfiguratorState<T> gained cloneMode='per-preset' + toRaw clone hardening; useAuroraStudio retired; F-ε-3 cleaned under Playwright |
-| W8 | pending W7 | close ceremony — 7-agent strengthened audit + ι integrity-sweep + FINAL.md |
+| W0 | CLOSED `b75ebb2` | Lane I `audit/W0-reconciliation.md` (~115 entries, 49 L-bound) + Lane II precept submodule `b51047d` (5 lessons + 3 SPEC + 1 dispatch field + 1 ORCHESTRATION clause; push deferred) + Lane III subpath dts publication gap fixed (flat-entry rebinding + impl-lift) + Lane IV `coordination/speedtest-Y.md` + v0.9.4 tagged + pushed |
+| W1 (HEADLINE) | CLOSED `d1de94b` + `fa6e6c7` | Phase 2 root-barrel + `src/api/` + flat `/dark` `/keyboard` `/carousel` subpaths; v1.0.0 tagged + pushed; speedtest re-link `98f88325` |
+| W2 | CLOSED `aace84e` | modularization sweep — composables/ restructured into 8 coherent sub-trees (dark/keyboard/reactive/dom/motion/glass/sortable/sidebar); cherry-pick rationale + cascade docs landed |
+| W3 | CLOSED `f481ba2` | composable + primitive second-consumer fidelity audit; 3 retired composables + DockShowcaseFrame retired; 3 primitives wired (DiscoGlyph + DockGroup + InstrumentChassis) |
+| W4 | CLOSED `1c1788f` | mobile-viewport finishing + π residuals; dock-group 375 overflow fixed; 26/27 viewport probe cells PASS |
+| W5 | CLOSED `efb802a` | doc cohort (CLAUDE/README/DESIGN/CHANGELOG aligned); MIGRATION.md 430 LOC / 17 breaks; K R3 19 status-line bumps; K R4 Option A (surface-tint rungs); production-demo-build Option B (formal retire) |
+| W6 | CLOSED `ae4cad5` | Lighthouse cohort completion; 4 K-absorbed re-verified; robots.txt deferred to W5; Vue runtime + cache-ttl formal-retired |
+| W7 | CLOSED `59b7b56` | 3 keyframes lifted to animations.css; useConfiguratorState<T> gained cloneMode='per-preset' + toRaw clone hardening; useAuroraStudio retired; F-ε-3 Playwright-clean; Lighthouse-OPEN routed to M-tranche |
+| W8 | CLOSED (this commit) | 7-agent strengthened audit (α/β/γ/δ/ε/π/ι); γ FAIL-WITH-FIXES absorbed (2 P0 + 7 P1 doc-only fixes); FINAL.md authored; L-residuals.md catalogues 4 P2 + 12+ P3 + 2 permanent-defer + 1 process M-bound; ι reflog scan canonical CLEAN |
 
 ## Inbound from speedtest Y tranche
 

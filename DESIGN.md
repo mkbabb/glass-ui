@@ -767,7 +767,6 @@ Library-tier composables decompose into three rough registers. The first registe
 | `useIntersectionPause` | motion | Pause/resume long-running animation when target is offscreen. |
 | `useGlassRenderer` | glass | Glass-surface renderer wiring (filter, mask, backdrop). |
 | `useSidebarFollow` / `useTreeIndex` / etc. | sidebar | Sidebar layout + active-section tracking. |
-| `useOffsetPagination` | pagination | Page-state machine for paginated data. |
 | `useInfiniteScroll` | data | Infinite scroll engine wired to a backing source. |
 | `useSortable` | data | SortableJS wrapper preserving Vue reactivity. |
 

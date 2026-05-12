@@ -70,7 +70,7 @@ src/
 │   │   ├── tooltip/                # Tooltip provider/trigger/content (rounded-tooltip token)
 │   │   └── index.ts                # barrel: all ui/ exports
 │   ├── custom/                     # 30 custom package dirs; 28 public package barrels
-│   │   ├── aurora/                 # Aurora WebGL background + useAurora composable (note: useAuroraStudio is demo-private at demo/stories/aurora/useAuroraStudio.ts — see Configurator)
+│   │   ├── aurora/                 # Aurora WebGL background + useAurora composable (aurora chrome consumes useConfiguratorState<AuroraConfig> with cloneMode='per-preset' — see Configurator; L.W7 Lane B retired the prior parallel useAuroraStudio chrome)
 │   │   ├── configurator/           # Configurator + ConfiguratorLayer + ConfiguratorRow + useConfiguratorState
 │   │   ├── confirm-dialog/         # ConfirmDialog
 │   │   ├── controls/

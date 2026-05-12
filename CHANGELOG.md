@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.0.0 — unreleased — L.W1 HEADLINE (root-barrel Phase 2 + curated surface + api/ discovery + subpath flatten)
+## v1.0.0 — 2026-05-11 — L.W1 HEADLINE (root-barrel Phase 2 + curated surface + api/ discovery + subpath flatten)
 
 L.W1 HEADLINE — bundles four architectural transpositions into the v1.0
 cohort: (A) root-barrel Phase 2 strips vueuse-bearing re-exports to close
@@ -9,8 +9,56 @@ constants; (C) flat subpath rename for the v0.9.x nested composables
 subpaths + new `/carousel` subpath; (D) self-contained dts verified for
 every public subpath.
 
-See `MIGRATION.md` (authored in L.W5) for the consumer-facing migration
-path.
+Cross-repo verification (canonical L.W1 hard gate (f)): speedtest re-link
+`98f88325` lands 15 import-site migrations. speedtest `dist/index.html`
+modulepreload directives: 0 (canonical SCC-trap closure; was 1 at K close).
+Speedtest entry-chunk gz: 171.5 KB (down from speedtest X close 204 KB
+pre-Phase-1 baseline; -32.5 KB drop exceeds the ≥ 15 KB W1 hard-gate (f)
+target). Glass-ui `dist/glass-ui.js` gz: 22.4 KB (was 33.6 KB at K close;
+-11.2 KB; 66.6% bundle-budget headroom).
+
+See `MIGRATION.md` for the consumer-facing migration path.
+
+### BREAKING — Lane A (root-barrel curation; vueuse-bearing SCC trap closure)
+
+Root barrel re-exports stripped — consumers must import from explicit subpaths:
+
+- **`Input`, `Textarea`, all `Combobox*` family** — moved off root barrel; use
+  `@mkbabb/glass-ui/forms`. Vueuse-bearing form primitives that pulled the
+  vueuse runtime into the entry chunk via the SCC walk.
+- **`Carousel`, `CarouselContent`, `CarouselDots`, `CarouselItem`,
+  `CarouselNext`, `CarouselPager`, `CarouselPrevious`, `GlassCarouselPager`,
+  `useCarousel`, `CarouselApi`** — moved off root barrel; use
+  `@mkbabb/glass-ui/carousel` (NEW v1.0 subpath; see Lane C below).
+- **`useGlobalDark`** — moved off root barrel; use `@mkbabb/glass-ui/dark`
+  (NEW v1.0 flat subpath; see Lane C below).
+- **`useKeyboardShortcuts`, `registerShortcut`, `useRegisteredShortcuts`,
+  `formatCombo`, `formatComboParts`, `isMac`, `ShortcutOptions`,
+  `RegisteredShortcut`, `ShortcutCombo`, `ShortcutEventType`** — moved off
+  root barrel; use `@mkbabb/glass-ui/keyboard` (NEW v1.0 flat subpath).
+
+The root barrel curation replaces the single `export * from "./components/ui"`
+wildcard with 40 explicit per-package re-exports, omitting the 4 vueuse-bearing
+packages (`input/`, `textarea/`, `combobox/`, `carousel/`). The result: the
+root barrel is vueuse-free at every transitive import. `grep '@vueuse'
+dist/glass-ui.js` returns empty post-fix.
+
+Cherry-pick rationale for the 7 `custom/` packages still on the root barrel
+(`instrument-chassis`, `glyph-face`, `dock-group`, `disco-glyph`,
+`hover-popover`, `configurator`, `scrolling-text`) documented inline in
+`src/index.ts` header (L.W2 Lane B annotation).
+
+### ADDED — Lane B (`src/api/` discovery layer)
+
+- **`@mkbabb/glass-ui/api`** (NEW subpath) — single-file aggregator
+  re-exporting 32 canonical public symbols (24 types + 8 constants/runtime
+  values) from canonical homes across 5 domain groupings: Aurora (12 types
+  + 3 constants), Configurator (4 types), Metaballs (1 type + 1 constant),
+  Surface enums (CardTier, InstrumentChassisPhase, ToastVariant), CVA
+  variants (8 types across Alert/Avatar/Badge/Button/Sheet/Slider/Toggle +
+  ToggleChip). `dist/api.js` 220 B (runtime constants; types erase);
+  `dist/api.d.ts` 12,513 B / 32 export declarations / zero broken
+  `'../src/...'` refs.
 
 ### BREAKING — Lane C (subpath flatten)
 
@@ -204,6 +252,44 @@ carry-forwards from K.
   L W6 Lighthouse re-run reproduces. Routed to L W7 (touches Configurator with
   `cloneMode: 'per-preset'` extension) OR L W8 ι integrity-sweep as M-tranche
   carry-forward.
+
+### L.W7 — Substrate cohesion (keyframes lift + aurora chrome Option-A unification)
+
+#### Lane A — Keyframes lift to canonical animations.css
+
+- 3 inline keyframes lifted from component `<style scoped>` blocks to
+  `src/styles/animations.css`: `pulse-dot-bounce`, `pulse-ring-spin`,
+  `typewriter-blink` (renamed from `tw-cursor-blink`; kebab-case canonical).
+- `Pulse.vue` -7 lines; `TypewriterText.vue` -11 lines.
+- `ScrollingText.vue`'s `scrolling-text-pan` remains inline (out of Lane A
+  bounds; documented exception).
+
+#### Lane B — Aurora chrome Option-A unification (closes K cross-tranche-debt)
+
+- **`useConfiguratorState<T>` API gains `cloneMode?: 'commit-on-write' |
+  'per-preset'` option** (default `'commit-on-write'` — metaballs preserved).
+  `per-preset` semantics: each preset slot holds an independent live clone
+  seeded from baseline; `selectPreset` snapshots the outgoing slot via
+  `toRaw` + clone then loads incoming slot into reactive `config`;
+  `resetCurrent` re-clones from preset definition.
+- **`useConfiguratorState<T>` API gains `cyclePreset(direction?: 1 | -1)`**
+  for keyboard handlers.
+- **Real bug fix surfaced during lane**: `defaultClone` hardened with `toRaw`
+  to unwrap Vue reactive proxies before `structuredClone` (which throws
+  `DataCloneError` on a Proxy).
+- **`ConfiguratorCloneMode` type exported** from configurator barrel.
+- **`useAuroraStudio` REMOVED** (Option I disposition). Aurora chrome
+  (`demo/stories/aurora.vue`) now consumes `useConfiguratorState<AuroraConfig>`
+  with `cloneMode: 'per-preset'`. The previously demo-private
+  `useAuroraStudio.ts` parallel-chrome implementation retires.
+- Configurator family second-consumer maturity: ACHIEVED. 3 consumers at HEAD
+  (metaballs commit-on-write; aurora per-preset; primitives/configurator demo
+  catalog). K cross-tranche-debt for configurator-family fidelity CLOSED.
+- F-ε-3 (Configurator recursion warning at `/motion/metaballs`): Playwright
+  probe post-Lane-B clean (zero "Maximum recursive updates exceeded" errors).
+  Lighthouse re-reproduction still surfaces under specific load timing —
+  routed to M-tranche for further investigation. Not a v1.0 release blocker
+  (Best-practices Lighthouse score 96; non-blocking advisory).
 
 ### L.W5 — Doc cohort + K residual absorption (Lane A)
 
