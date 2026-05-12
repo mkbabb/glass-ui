@@ -617,6 +617,70 @@
     --rainbow-pastel-blue: hsl(220 45% 76%);
     --rainbow-pastel-indigo: hsl(260 35% 76%);
     --rainbow-pastel-violet: hsl(280 40% 78%);
+
+    /* ═══════════════════════════════════════════════
+       §16 TIMELINE
+       Timeline primitive tokens. All three variants (scrubber +
+       segmented + continuous) compose these. Both segmented + continuous
+       arrays carry the same `TimelineSegment[]` data shape; only the
+       rendering geometry differs. See DESIGN.md `## Timeline Primitive`.
+       ═══════════════════════════════════════════════ */
+
+    /* Heights — per-variant rail thickness */
+    --timeline-scrubber-height: 0.5rem;       /*  8px — single-track scrubber */
+    --timeline-segmented-height: 0.625rem;    /* 10px — N adjacent bands */
+    --timeline-continuous-height: 0.75rem;    /* 12px — ONE pill, N regions */
+
+    /* Geometry — shared across all variants */
+    --timeline-dot-size: 0.875rem;            /* 14px — boundary dot diameter */
+    --timeline-segment-flex: 1 1 0;           /* per-cell flex distribution (segmented) */
+
+    /* Continuous-variant specific — seam dividers between regions.
+       Set `--timeline-continuous-seam-opacity: 0` to suppress the
+       inter-region 1px dividers entirely. Default `0.25` reads as a
+       subtle hairline; the `--timeline-continuous-seam-color` knob lets
+       consumers override the seam tint independently of opacity. */
+    --timeline-continuous-seam-opacity: 0.25;
+    --timeline-continuous-seam-color: color-mix(
+        in srgb,
+        var(--foreground) calc(var(--timeline-continuous-seam-opacity) * 100%),
+        transparent
+    );
+
+    /* Per-segment default gradient fallback — applied when a segment
+       omits its `gradient` field. Consumers can override per-phase via
+       the `--timeline-segment-gradient-{key}` knobs below. */
+    --timeline-segment-default-gradient: linear-gradient(
+        90deg,
+        var(--surface-tint-15),
+        var(--surface-tint-25)
+    );
+
+    /* Per-phase gradient defaults — paint the canonical chart palette
+       at the gradient leading edge, fading to a 60%-opacity tail. The
+       speedtest consumer wires these via `gradient: "var(--timeline-segment-gradient-ping)"`
+       per segment; the same names work for any consumer who follows the
+       ping/download/upload/jitter taxonomy. */
+    --timeline-segment-gradient-ping: linear-gradient(
+        90deg,
+        var(--chart-ping),
+        color-mix(in srgb, var(--chart-ping) 60%, transparent)
+    );
+    --timeline-segment-gradient-download: linear-gradient(
+        90deg,
+        var(--chart-download),
+        color-mix(in srgb, var(--chart-download) 60%, transparent)
+    );
+    --timeline-segment-gradient-upload: linear-gradient(
+        90deg,
+        var(--chart-upload),
+        color-mix(in srgb, var(--chart-upload) 60%, transparent)
+    );
+    --timeline-segment-gradient-jitter: linear-gradient(
+        90deg,
+        var(--chart-jitter),
+        color-mix(in srgb, var(--chart-jitter) 60%, transparent)
+    );
 }
 
 /* ═══════════════════════════════════════════════
