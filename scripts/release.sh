@@ -66,6 +66,22 @@ if [[ ! -f dist/index.d.ts ]]; then
     exit 1
 fi
 
+# L.W0 — Subpath-resolve probe. Every published subpath must resolve at
+# runtime (the K.WS regression that produced v0.9.4 was a silent dts
+# publication gap; this probe is its compensating guardrail).
+echo "[release] Probing subpath imports..."
+for sp in forms composables/dark composables/keyboard tokens dock; do
+    echo "  Probing @mkbabb/glass-ui/$sp"
+    node -e "
+        import('@mkbabb/glass-ui/$sp').then((m) => {
+            console.log('    exports:', Object.keys(m).length);
+        }).catch((e) => {
+            console.error('    FAIL:', e.message);
+            process.exit(1);
+        });
+    " || { echo "  ERROR: subpath $sp resolve failed" >&2; exit 1; }
+done
+
 # Lightweight surface gate — if dist drifted from package.json's exports
 # in surprising ways, surface it here. The check is opt-in via env var
 # because the export set evolves over time; cheap to invoke.

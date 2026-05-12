@@ -24,7 +24,7 @@ Open commit lands: `L.md`, `findings.md`, `waves/W{0..8}.md`, `dispatch/AGENT.md
 
 | Wave | Status | Notes |
 |---|---|---|
-| W0 | open (ready to dispatch) | Lane I reconciliation + Lane II precept-submodule + Lane III subpath typing-gap P0 (v0.9.4 patch) |
+| W0 | CLOSED (TBD commit) | Lane I `audit/W0-reconciliation.md` (~115 entries, 49 L-bound) + Lane II precept submodule (5 lessons + 3 SPEC + 1 dispatch field + 1 ORCHESTRATION clause) + Lane III subpath dts publication gap fixed (flat-entry rebinding + impl-lift) + Lane IV `coordination/speedtest-Y.md` + v0.9.4 tagged + pushed |
 | W1 (HEADLINE) | pending W0 | Phase 2 + curated barrel + `src/api/` + subpath flatten; v1.0 tag |
 | W2 | pending W1 | modularization sweep — composables/ restructure + cohesion + import shape |
 | W3 | pending W1 (parallel with W4) | composable + primitive second-consumer fidelity audit |
@@ -38,10 +38,18 @@ Open commit lands: `L.md`, `findings.md`, `waves/W{0..8}.md`, `dispatch/AGENT.md
 
 Speedtest opens tranche Y in parallel with L. 6 active Y-prefixed worktrees including `y-a3-glass-ui` (speedtest's glass-ui-side audit lane).
 
-**Coordination protocol** (L W0 publishes `docs/tranches/L/coordination/speedtest-Y.md`):
+**Coordination protocol** (L W0 published `docs/tranches/L/coordination/speedtest-Y.md`):
 - speedtest Y.A3 is reader-only + recommender-only during L flight.
 - L absorbs any Y.A3 recommendations at L W0 OR formally re-defers to M with named destination.
 - No cross-repo source commits except L W0 v0.9.4 patch (subpath typing-gap fix) + L W1 close v1.0 release + speedtest re-link cycle.
+
+## 2026-05-11 — W0 close (TBD orchestrator commit)
+
+3 parallel lanes returned green:
+- **Lane I** (reconciliation): authored `audit/W0-reconciliation.md` cataloguing ~115 entries across the 6 research deliverables + K residuals + K cross-tranche debt + Rζ 47 directives. 49 L-bound dispositions distributed across W0..W8; peak parallelism 6 agents. 2 P0 silent misses confirmed at HEAD (Rα P0-1 typing gap → L.W0 Lane III; Rα P0-2 SCC trap → L.W1 HEADLINE). 7 orchestrator-blocking open questions surfaced; defaults absorbed per L research recommendations (W3 NumberField ship-with-doc; W2 useStoryDemo demo-private move; src/<flat> subpath barrels ACCEPT-AS-IS; demo-build retire; surface-tint rungs Option A; Configurator fixture DEFER-TO-M; Y.A3 protocol locked).
+- **Lane II** (precept submodule): 4 files modified in `docs/precepts/instructions/` — 5 new 2026-05-11 LESSONS-LEARNED entries (harness-level revert; subpath typing probe; cross-repo annotation push asymmetry; DEGRADED-restoration binding; coordination/ artefact class); 3 new SPEC clauses (ι reflog scan in close; coordination/ artefact class; DEGRADED-runtime-outcome binding); 1 new dispatch field (`worktree_diff_verification`); 1 new ORCHESTRATION clause (Cross-repo commit policy).
+- **Lane III** (subpath dts publication gap P0): diagnosed root cause as `vite-plugin-dts` `rollupTypes` nested-entry stub-emission. Fix: flat-entry rebinding (`composables/dark` → `dark-subpath` + `composables/keyboard` → `keyboard-subpath` in `vite.library.ts`; `package.json` `exports` + `typesVersions` map public subpath `@mkbabb/glass-ui/composables/{dark,keyboard}` to flat dist files) PLUS implementation lift (`src/composables/dark.ts` + `keyboard.ts` now hold canonical implementations; legacy `useGlobalDark.ts` + `useKeyboardShortcuts.ts` are 1-line re-export shims preserving 18 importers). v0.9.4 release: `package.json` bumped; `CHANGELOG.md` v0.9.4 entry; `scripts/release.sh` new subpath-resolve probe block (10 subpaths probed before tag). VERIFIED: dist self-contained; typecheck green; build green at 8GB heap (~33s); synthetic-consumer `tsc --noEmit` probe clean.
+- **Lane IV** (orchestrator-authored): `docs/tranches/L/coordination/speedtest-Y.md` ships with 7 sections covering wave-timeline touchpoints + writer-vs-reader boundary + push-or-handoff disposition table + conflict-resolution path + shared telemetry indicators.
 
 ## Brittleness window
 

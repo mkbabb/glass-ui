@@ -1,5 +1,44 @@
 # Changelog
 
+## v0.9.4 — 2026-05-11 — subpath dts publication gap (K.WS regression patch)
+
+L.W0 Lane III patch — fixes a typing-publication gap surfaced by the K.WS
+additive subpath split (v0.9.3). At v0.9.3, consumer `vue-tsc` could not
+resolve `@mkbabb/glass-ui/composables/dark` or
+`@mkbabb/glass-ui/composables/keyboard` because the published
+`dist/composables/{dark,keyboard}.d.ts` files emitted a broken
+`export * from '../src/composables/<name>'` re-export — and glass-ui does
+not ship `dist/src/`, so the path resolved to nothing. Consumers got
+`TS2305: Module has no exported member`.
+
+### FIXED
+
+- **Subpath dts publication gap** — `vite-plugin-dts` `rollupTypes: true`
+  has a pathing bug for nested entry-keys (containing `/`): the
+  synthetic-stub-then-rollup flow writes a broken `'../src/...'` re-export
+  at `dist/<key>.d.ts` and the rolled-up self-contained dts at
+  `dist/<basename>.d.ts`. Cohesion fix: rebound the two nested entry-keys
+  (`composables/dark`, `composables/keyboard`) to flat dist names
+  (`dark-subpath`, `keyboard-subpath`) in `vite.library.ts`. The
+  consumer-facing subpaths `@mkbabb/glass-ui/composables/{dark,keyboard}`
+  are preserved verbatim via `package.json` `exports` + `typesVersions`
+  pointing to the flat dist outputs.
+  Source implementations were also lifted into the subpath barrels
+  (`src/composables/{dark,keyboard}.ts`) — the legacy
+  `src/composables/{useGlobalDark,useKeyboardShortcuts}.ts` files become
+  one-line re-export shims that keep all internal `./useGlobalDark` and
+  `./useKeyboardShortcuts` imports compiling without churn.
+  (L.W1 will flatten the consumer-facing subpath names to
+  `./dark` / `./keyboard` as the final breaking gestalt.)
+
+### ADDED
+
+- **`scripts/release.sh` subpath-probe block** — runs a `node -e
+  "import('@mkbabb/glass-ui/<sp>')"` resolve check for every published
+  subpath after `npm run build` and before `git tag`. Aborts the release
+  if any subpath fails to resolve. Closes the silent-miss class that
+  produced the K.WS publication gap.
+
 ## v0.9.3 — 2026-05-09 — vueuse SCC trap (Phase 1: additive subpath split)
 
 K.W-S patch — additive subpath carve for the vueuse-bearing surface of

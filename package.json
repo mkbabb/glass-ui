@@ -1,6 +1,6 @@
 {
     "name": "@mkbabb/glass-ui",
-    "version": "0.9.3",
+    "version": "0.9.4",
     "description": "Glassmorphic design system — Vue 3.5 components, reka-ui primitives, Tailwind CSS v4 tokens",
     "license": "MIT",
     "type": "module",
@@ -113,10 +113,10 @@
                 "dist/forms.d.ts"
             ],
             "composables/dark": [
-                "dist/composables/dark.d.ts"
+                "dist/dark-subpath.d.ts"
             ],
             "composables/keyboard": [
-                "dist/composables/keyboard.d.ts"
+                "dist/keyboard-subpath.d.ts"
             ]
         }
     },
@@ -307,13 +307,13 @@
         },
         "./composables/dark": {
             "development": "./src/composables/dark.ts",
-            "types": "./dist/composables/dark.d.ts",
-            "import": "./dist/composables/dark.js"
+            "types": "./dist/dark-subpath.d.ts",
+            "import": "./dist/dark-subpath.js"
         },
         "./composables/keyboard": {
             "development": "./src/composables/keyboard.ts",
-            "types": "./dist/composables/keyboard.d.ts",
-            "import": "./dist/composables/keyboard.js"
+            "types": "./dist/keyboard-subpath.d.ts",
+            "import": "./dist/keyboard-subpath.js"
         }
     },
     "files": [

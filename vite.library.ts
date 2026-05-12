@@ -38,8 +38,15 @@ export function libraryEntries(rootDir: string) {
         "scrolling-text": resolve(rootDir, "src/scrolling-text.ts"),
         freshness: resolve(rootDir, "src/freshness.ts"),
         forms: resolve(rootDir, "src/forms.ts"),
-        "composables/dark": resolve(rootDir, "src/composables/dark.ts"),
-        "composables/keyboard": resolve(rootDir, "src/composables/keyboard.ts"),
+        // L.W0 Lane III — nested entry-keys (containing `/`) trigger a bug in
+        // vite-plugin-dts where the synthetic per-entry stub at `dist/<key>.d.ts`
+        // emits a broken `'../src/...'` re-export instead of an inlined dts.
+        // The fix: flat entry-keys here, with `package.json` `exports` mapping
+        // the public subpath `./composables/dark` to the flat dist output.
+        // (L.W1 will flatten the consumer-facing subpath to `./dark` /
+        // `./keyboard` as the final breaking gestalt.)
+        "dark-subpath": resolve(rootDir, "src/composables/dark.ts"),
+        "keyboard-subpath": resolve(rootDir, "src/composables/keyboard.ts"),
     };
 }
 
