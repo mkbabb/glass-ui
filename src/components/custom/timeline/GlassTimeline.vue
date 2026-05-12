@@ -364,7 +364,7 @@ const continuousAriaLabel = computed<string>(() => {
             class="glass-track"
             role="slider"
             tabindex="0"
-            :aria-valuenow="modelValue"
+            :aria-valuenow="Number(modelValue ?? 0)"
             aria-valuemin="0"
             aria-valuemax="1"
             aria-label="Timeline"
