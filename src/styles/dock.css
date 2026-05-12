@@ -146,13 +146,18 @@
             border-color var(--dock-motion-standard);
     }
 
-    /* J.W3.C — vertical rails cap block-size at `--dock-max-block-size`
-       and overflow-y scroll when content exceeds the cap. The
-       previously-suppressed scrollbar (`scrollbar-width: none`) is
-       replaced with `thin` so users see the affordance at narrow
-       viewports (R6 cornerstone-2: rail content was clipping silently
-       at <600px tall). A `scroll-fade-y` mask-image feathers the top +
-       bottom edges so the boundary doesn't cliff. */
+    /* Z.W2.T2 — vertical rails grow-to-fit + clamp, no scroll. Per A2 §B6
+       + A4 special-focus: canon-intent is grow-and-wrap, not scroll. The
+       prior `overflow-y: auto` produced the "dock scrolls when it
+       shouldn't" regression at narrow viewports; the right escape is to
+       let descendants wrap to multiple rows (consumers opt-in via
+       `dock-wrap`) or to clamp via `--dock-max-block-size` and let the
+       cap fail visibly rather than mask the overflow as a scroll
+       affordance. The mask-fade is retained as a visual reservation
+       around the cap edge; content that would have scrolled now reads
+       past the fade so the canon-intent (visible overflow) holds.
+       J.W3.C (prior shape: auto + mask-fade) is superseded by this rule;
+       the mask-image is a cosmetic feather, not a scroll affordance. */
     .glass-dock.vertical {
         display: inline-flex;
         flex-direction: column;
@@ -163,10 +168,8 @@
         width: auto;
         height: auto;
         max-block-size: var(--dock-max-block-size);
-        overflow-x: hidden;
-        overflow-y: auto;
-        scrollbar-width: thin;
-        scrollbar-color: color-mix(in srgb, var(--muted-foreground) 25%, transparent) transparent;
+        overflow-x: visible;
+        overflow-y: visible;
         mask-image: linear-gradient(
             to bottom,
             transparent,
@@ -285,16 +288,16 @@
         transition: width var(--dock-motion-resize);
     }
 
-    /* Horizontal dock content scrolls along the inline axis when the
-       active layer's natural width exceeds the dock's content area
-       (which the parent's `--dock-max-inline-size` cap clamps). The
-       `:not(.dock-wrap)` exclusion preserves the wrap-flow path —
-       wrap docks bypass scrolling entirely; their `.dock-layer--full`
-       breaks to multiple rows. */
+    /* Z.W2.T2 — horizontal dock content grows visibly when the active
+       layer's natural width exceeds the dock's content area. Per
+       A2 §B6 + A4 special-focus: the canon-intent for the bottom dock
+       is grow-to-fit; consumers needing wrap opt into `dock-wrap`. The
+       prior `overflow-x: auto` produced the user-reported "dock scrolls
+       when it shouldn't" — the wrong escape valve. The mask-fade
+       remains as a cosmetic feather at the cap edge for visual symmetry
+       with the vertical rule, not as a scroll affordance. */
     .glass-dock.expanded:not(.dock-wrap) > .dock-layers {
-        overflow-x: auto;
-        scrollbar-width: thin;
-        scrollbar-color: color-mix(in srgb, var(--muted-foreground) 25%, transparent) transparent;
+        overflow-x: visible;
         mask-image: linear-gradient(
             to right,
             transparent,
@@ -351,9 +354,12 @@
         overflow: visible;
     }
 
+    /* Z.W2.T2 — always-expanded vertical rails inherit the same
+       grow-to-fit + visible contract. The prior auto pair re-introduced
+       the scroll affordance that A2 §B6 rejected. */
     .glass-dock.vertical.always-expanded {
-        overflow-x: hidden;
-        overflow-y: auto;
+        overflow-x: visible;
+        overflow-y: visible;
     }
 
     .glass-dock.dock-wrap {
