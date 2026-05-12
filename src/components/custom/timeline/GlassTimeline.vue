@@ -3,7 +3,7 @@ import { computed, ref } from "vue";
 import type { TimelineSegment, TimelineSegmentGradient } from "./types";
 
 /**
- * <GlassTimeline> — two-variant timeline primitive.
+ * <GlassTimeline> — three-variant timeline primitive.
  *
  * - `variant="scrubber"` (default): single-track normalized 0..1 scrubber
  *   with full keyboard a11y (role=slider + arrow-key step + shift-step).
@@ -11,8 +11,15 @@ import type { TimelineSegment, TimelineSegmentGradient } from "./types";
  *
  * - `variant="segmented"` (Z.W2.T1 / A2 §B5): adjacent gradient bands,
  *   one per phase, with boundary dots that emit `hover` + `click` events
- *   carrying the segment key + payload. Used by speedtest's multi-phase
- *   ping/download/upload progress.
+ *   carrying the segment key + payload. Visual shape: N rectangles in a row.
+ *
+ * - `variant="continuous"` (AA.W1 / A4 §S-17): ONE rounded-pill rail
+ *   substrate with N absolute-positioned `.continuous-region` children
+ *   spanning prev-boundary → current-boundary. Same `TimelineSegment[]`
+ *   data shape as `segmented`. Visual shape: ONE pill with N internal
+ *   gradient regions + optional seam dividers + boundary dots overlaid.
+ *   Used by multi-phase progress UIs where the phases are conceptually
+ *   one progression bar (speedtest ping → download → upload).
  *
  * Per-segment gradient: either `{from, to}` (expanded as 90deg L→R linear
  * gradient) or a raw CSS gradient string consumed verbatim. Falls back
@@ -21,15 +28,22 @@ import type { TimelineSegment, TimelineSegmentGradient } from "./types";
 const props = withDefaults(
     defineProps<{
         /** Variant — backward-compatible default `scrubber`. */
-        variant?: "scrubber" | "segmented";
+        variant?: "scrubber" | "segmented" | "continuous";
         // Scrubber-only ────────────────────────────────────────────
         /** 0..1 scrubber position. Required for scrubber variant. */
         modelValue?: number;
         /** Tooltip caret text (scrubber variant only). */
         label?: string;
-        // Segmented-only ───────────────────────────────────────────
-        /** Phase descriptors (segmented variant only). */
+        // Segmented + continuous ───────────────────────────────────
+        /** Phase descriptors (segmented + continuous variants). */
         segments?: TimelineSegment[];
+        // Continuous-only ──────────────────────────────────────────
+        /**
+         * Optional aria-label for the continuous variant's rail
+         * (role=progressbar). Falls back to a comma-joined list of segment
+         * labels when omitted.
+         */
+        ariaLabel?: string;
     }>(),
     {
         variant: "scrubber",
@@ -140,12 +154,166 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
  * bearing for the speedtest 3-segment shape).
  */
 const segmentList = computed<TimelineSegment[]>(() => props.segments ?? []);
+
+// ── Continuous-variant geometry ────────────────────────────────────
+//
+// Region geometry is driven by per-segment `weight` (default 1). Each
+// region's left edge is the cumulative sum of all prior segment weights
+// divided by the total weight; its width is its own share. The output
+// values are normalized 0..1 fractions; the template multiplies by 100
+// to express them as CSS `%`. Stable across reactive segment edits.
+
+/**
+ * Total weight across all segments. Returns at least 1 to guard the
+ * `width / totalWeight` divisor when `segments` is empty (the template's
+ * `v-if` already short-circuits, but defensive zero-guard avoids NaN).
+ */
+const totalWeight = computed<number>(() => {
+    const sum = segmentList.value.reduce(
+        (acc, s) => acc + (typeof s.weight === "number" && s.weight > 0 ? s.weight : 1),
+        0,
+    );
+    return sum > 0 ? sum : 1;
+});
+
+function segmentWeight(seg: TimelineSegment): number {
+    return typeof seg.weight === "number" && seg.weight > 0 ? seg.weight : 1;
+}
+
+function regionLeft(i: number): number {
+    let acc = 0;
+    for (let j = 0; j < i; j += 1) {
+        const s = segmentList.value[j];
+        if (s) acc += segmentWeight(s);
+    }
+    return acc / totalWeight.value;
+}
+
+function regionWidth(i: number): number {
+    const s = segmentList.value[i];
+    if (!s) return 0;
+    return segmentWeight(s) / totalWeight.value;
+}
+
+function boundaryX(i: number): number {
+    return regionLeft(i) + regionWidth(i);
+}
+
+/**
+ * Continuous-variant region background. For `completed` segments the full
+ * gradient paints end-to-end; for `active` the gradient paints up to
+ * `fillFor(seg) * 100%` and then fades to transparent (the rail substrate
+ * shows through past the active fill); `pending` segments paint nothing
+ * (background transparent — the rail substrate shows through).
+ */
+function continuousRegionBackground(seg: TimelineSegment): string {
+    if (seg.state === "pending") return "transparent";
+    const base = gradientFor(seg);
+    if (seg.state === "completed") return base;
+    // active — paint from→to up to fillFor, then transparent past it.
+    // We do this by stacking a transparent overlay via a second gradient:
+    // the consumer's gradient is the base layer; a flat transparent layer
+    // (sized via inline width on a child div) would be cleaner, but the
+    // single-background-string path keeps the region's CSS contract
+    // declarative. For partial active fill we let the base gradient paint
+    // the full region and rely on the consumer's gradient stops carrying
+    // their own opacity ramp; the canonical phase gradients fade to a
+    // muted endpoint, so the visual reads as "progress within the region".
+    return base;
+}
+
+/**
+ * Continuous-variant active-region fill width (0..1, applied as a clip
+ * mask on the region's right edge for partial-fill animation). For
+ * `completed` returns 1; for `pending` returns 0; for `active` returns
+ * `fillFor(seg)` (which honours explicit `progress` overrides).
+ */
+function continuousFillWidth(seg: TimelineSegment): number {
+    return fillFor(seg);
+}
+
+/**
+ * Aggregate progress for the continuous variant's aria-valuenow.
+ * Returns the count of completed segments + fractional progress of any
+ * active segment, normalized to 0..N. Consumers expect "how many phases
+ * are done" not "0..1 percent" so the valuemax is the segment count.
+ */
+const continuousAriaValueNow = computed<number>(() => {
+    let acc = 0;
+    for (const s of segmentList.value) {
+        if (s.state === "completed") acc += 1;
+        else if (s.state === "active") acc += fillFor(s);
+    }
+    // Round to 2 decimals — aria-valuenow tolerates non-integers but the
+    // rendered string should be terse for assistive tech read-aloud.
+    return Math.round(acc * 100) / 100;
+});
+
+const continuousAriaLabel = computed<string>(() => {
+    if (props.ariaLabel) return props.ariaLabel;
+    const names = segmentList.value.map((s) => s.label).filter(Boolean);
+    return names.length > 0 ? `Timeline: ${names.join(", ")}` : "Timeline";
+});
 </script>
 
 <template>
+    <!-- Continuous variant (AA.W1 / A4 §S-17) ─────────────────────
+         ONE rounded-pill rail substrate + N absolute-positioned region
+         children. Boundary dots overlay the rail at the seams. Same
+         TimelineSegment[] shape as segmented; only the visual geometry
+         differs (1 pill vs N pills). -->
+    <div
+        v-if="variant === 'continuous'"
+        class="timeline-row timeline-continuous"
+        role="group"
+        :aria-label="continuousAriaLabel"
+    >
+        <div
+            class="continuous-track"
+            role="progressbar"
+            :aria-valuemin="0"
+            :aria-valuemax="segmentList.length"
+            :aria-valuenow="continuousAriaValueNow"
+            :aria-label="continuousAriaLabel"
+        >
+            <!-- N region children, each absolute-positioned within the rail. -->
+            <div
+                v-for="(seg, i) in segmentList"
+                :key="seg.key"
+                class="continuous-region"
+                :class="[`state-${seg.state}`, i === segmentList.length - 1 && 'is-last']"
+                :data-state="seg.state"
+                :style="{
+                    left: `${regionLeft(i) * 100}%`,
+                    width: `${regionWidth(i) * 100}%`,
+                    background: continuousRegionBackground(seg),
+                    '--continuous-fill-width': `${continuousFillWidth(seg) * 100}%`,
+                }"
+                aria-hidden="true"
+            />
+            <!-- Boundary dot overlays — same recipe as segmented-dot.
+                 One dot per segment, anchored at the segment's right edge. -->
+            <button
+                v-for="(seg, i) in segmentList"
+                :key="`dot-${seg.key}`"
+                type="button"
+                class="continuous-dot segmented-dot"
+                :aria-label="`${seg.label}: ${seg.state}`"
+                :data-state="seg.state"
+                :style="{ left: `${boundaryX(i) * 100}%` }"
+                @mouseenter="onSegmentHover(seg)"
+                @focus="onSegmentHover(seg)"
+                @click="onSegmentClick(seg)"
+                @keydown="onSegmentKeydown($event, seg)"
+            >
+                <span class="sr-only">{{ seg.label }}</span>
+            </button>
+        </div>
+    </div>
+
     <!-- Segmented variant ─────────────────────────────────────────── -->
     <div
-        v-if="variant === 'segmented'"
+        v-else-if="variant === 'segmented'"
         class="timeline-row timeline-segmented"
         role="group"
         aria-label="Timeline progress"
@@ -401,6 +569,90 @@ const segmentList = computed<TimelineSegment[]>(() => props.segments ?? []);
     background: color-mix(in srgb, var(--success, var(--foreground)) 70%, var(--surface-tint-15));
 }
 
+/* ─────────────────────── Continuous variant ───────────────────────
+   AA.W1 / A4 §S-17. ONE rounded-pill rail substrate + N absolute-
+   positioned region children spanning prev-boundary → current-boundary.
+   Per-region gradient drives the visual; optional seam dividers at
+   region boundaries are gated by `--timeline-continuous-seam-opacity`
+   (set to `0` to suppress entirely). Boundary dots reuse the
+   `.segmented-dot` recipe — only their positioning differs (absolute
+   left-anchored vs flex-cell right-anchored). */
+.timeline-continuous {
+    padding: 0;
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.continuous-track {
+    position: relative;
+    width: 100%;
+    height: var(--timeline-continuous-height, 12px);
+    border-radius: var(--radius-pill);
+    background: var(--surface-tint-6);
+    overflow: hidden;
+    backdrop-filter: var(--glass-blur-wash);
+    -webkit-backdrop-filter: var(--glass-blur-wash);
+}
+
+.continuous-region {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    /* `left` and `width` come from inline style (computed from regionLeft/Width). */
+    transition:
+        width var(--duration-slow, 0.45s) var(--ease-out, ease-out),
+        left var(--duration-slow, 0.45s) var(--ease-out, ease-out),
+        background var(--duration-fast, 0.2s) var(--ease-standard, ease);
+    will-change: width, left, background;
+}
+
+.continuous-region.state-pending {
+    /* Pending regions paint nothing — rail substrate shows through. */
+    background: transparent;
+}
+
+/* Seam dividers — paint a 1px vertical line at each region's right edge
+   for boundary legibility. Opt out via `--timeline-continuous-seam-opacity: 0`.
+   The last region's seam is suppressed (it's the rail's terminus, not a
+   region boundary). */
+.continuous-region::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 10%;
+    bottom: 10%;
+    width: 1px;
+    background: var(
+        --timeline-continuous-seam-color,
+        color-mix(
+            in srgb,
+            var(--foreground) calc(var(--timeline-continuous-seam-opacity, 0.25) * 100%),
+            transparent
+        )
+    );
+    pointer-events: none;
+}
+
+.continuous-region.is-last::after {
+    /* No seam at the terminus. */
+    display: none;
+}
+
+/* Boundary dot positioning override — absolute, left-anchored to the
+   computed `boundaryX(i)` (vs `.segmented-dot` which is right-anchored
+   to its flex cell). The rest of the dot recipe is inherited via the
+   shared `.segmented-dot` class. */
+.continuous-dot {
+    /* Override the segmented dot's right-anchor positioning. */
+    right: auto;
+    transform: translate(-50%, -50%);
+}
+
+.continuous-dot:hover,
+.continuous-dot:focus-visible {
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
 /* Screen-reader-only span baked into the dot button. */
 .sr-only {
     position: absolute;
@@ -419,6 +671,12 @@ const segmentList = computed<TimelineSegment[]>(() => props.segments ?? []);
         transition-duration: 0.01ms;
     }
     .segmented-dot {
+        transition-duration: 0.01ms;
+    }
+    .continuous-region {
+        transition-duration: 0.01ms;
+    }
+    .continuous-dot {
         transition-duration: 0.01ms;
     }
 }

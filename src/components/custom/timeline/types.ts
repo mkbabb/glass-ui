@@ -1,10 +1,12 @@
 /**
- * Timeline primitive types — segmented variant.
+ * Timeline primitive types — segmented + continuous variants.
  *
- * Per Z.W2.T1 / A2 §B5 + A4 §special-focus. The default `scrubber` variant
+ * Per Z.W2.T1 / A2 §B5 + AA.W1 / A4 §S-17. The default `scrubber` variant
  * (single-track YouTube-style scrubber) keeps its original numeric model;
- * the new `segmented` variant accepts an array of phase descriptors and
- * renders adjacent gradient bands with hover/click dots.
+ * `segmented` (Z.W2) renders adjacent gradient bands with hover/click dots;
+ * `continuous` (AA.W1) renders ONE pill rail with N absolute-positioned
+ * region children. Both array-variants consume the same `TimelineSegment[]`
+ * data shape — only the rendering geometry differs.
  */
 
 /** Per-segment lifecycle. Drives fill + dot states. */
@@ -48,4 +50,11 @@ export interface TimelineSegment {
      * objects, or `null` for pending segments.
      */
     value?: unknown;
+    /**
+     * Optional relative weight for the `continuous` variant region width
+     * (default `1` — equal share). Per-segment widths are computed as
+     * `weight / sum(weights)`. Ignored by the `segmented` variant (which
+     * uses CSS flex distribution via `--timeline-segment-flex`).
+     */
+    weight?: number;
 }
