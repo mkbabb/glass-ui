@@ -83,19 +83,15 @@ This is the canonical cross-repo manifest. It supersedes the per-peer `coordinat
 | parse-that | likely bbnf-lang dep; reader-only | reader-only |
 | precepts (submodule) | M.W0 reconciliation lane | orchestrator-solo (no agents) |
 
-## §5 — Cross-repo wave-timeline expectations
+## §5 — Cross-repo wave-timeline expectations (revised; KISS 5-wave plan)
 
 | M wave | Cross-repo action |
 |---|---|
-| W0 | precept reconciliation; retired-subpath drift fix in words + fourier-analysis + bbnf-buddy |
-| W1 HEADLINE | `@mkbabb/dev-kit` carve-out + npm publish |
-| W2 | constellation cohesion + namespace canon; CONSTELLATION.md upgrade from inventory to binding contract |
-| W3 | glass-ui substrate residuals (no cross-repo) |
-| W4 | per-consumer standardization sweep — keyframes.js + value.js + words + fourier-analysis + bbnf-buddy + mkb-utils + bbnf-lang precept-only |
-| W5 | retire-or-refresh decisions for vite-plugin-shebang + mathanim + fourier-animate |
-| W6 | doc cohort across constellation |
-| W7 | substrate cohesion finishing |
-| W8 | close ceremony + ι reflog scan across ALL constellation reflogs |
+| W0 | precept reconciliation; retired-subpath drift fix in words + fourier-analysis + bbnf-buddy; optional glass-ui v1.0.1 patch |
+| W1 HEADLINE | per-consumer v1.0 standardization sweep — keyframes.js + value.js + fourier-analysis + words + bbnf-buddy + speedtest-post-Y |
+| W2 | glass-ui substrate residuals (F-ε-3 + api/ extensions + L cosmetic; no cross-repo) |
+| W3 | stale-repo retire-or-refresh (vite-plugin-shebang + mathanim + fourier-animate) + doc cohort across constellation |
+| W4 | close ceremony + ι reflog scan across ALL constellation reflogs |
 
 ## §6 — Push-or-handoff disposition policy (per L W0 ORCHESTRATION clause + M.Rδ P3 extension)
 
@@ -103,9 +99,8 @@ This is the canonical cross-repo manifest. It supersedes the per-peer `coordinat
 |---|---|---|---|
 | user-authorized constellation-wide M.W0 sweep (e.g., retired-subpath fix in words/fourier/bbnf-buddy) | user M-open directive | M orchestrator | M orchestrator pushes (one commit per repo) |
 | precept submodule reconciliation | user-authorized at M.W0 | M orchestrator solo | push only after merge-conflict resolution; coordinate with bbnf-lang orchestrator if active |
-| `@mkbabb/dev-kit` package authoring | user M-open directive | M orchestrator | npm publish per release flow |
-| consumer-repo M.W4 lane edits (per-consumer migrations) | implicit M.W4 scope | M orchestrator | push per-consumer |
-| speedtest-side mid-Y edits | Y orchestrator's call | Y orchestrator (same user) | Y orchestrator pushes; M.W4 coordinates handoff |
+| consumer-repo M.W1 lane edits (per-consumer migrations) | implicit M.W1 scope | M orchestrator | push per-consumer |
+| speedtest-side mid-Y edits | Y orchestrator's call | Y orchestrator (same user) | Y orchestrator pushes; M.W1 Lane F coordinates handoff |
 | bbnf-lang tranche-stream cross-tranche-debt items | bbnf-lang orchestrator's call | bbnf-lang orchestrator | not pushed by M orchestrator |
 
 ## §7 — Conflict resolution path
@@ -118,23 +113,23 @@ If M's plan conflicts with another in-flight tranche (Y, bbnf-lang's current):
 
 If precept-submodule reconciliation fails (merge conflicts unresolved), defer the reconciliation push and document in M.W0 close OR escalate to M.W8 ι integrity-sweep.
 
-## §8 — Reflog scan extension (M.W8 ι lane)
+## §8 — Reflog scan extension (M.W4 ι lane)
 
-Per L W0 SPEC clause (ι reflog scan canonical), M.W8 ι extends to scan reflogs across:
+Per L W0 SPEC clause (ι reflog scan canonical), M.W4 ι extends to scan reflogs across:
 - glass-ui (M flight window)
 - speedtest (M flight window — coordinate with Y close timing)
 - precepts submodule (M flight window)
-- Every consumer repo M.W4 touched (per-repo reflog window)
+- Every consumer repo M.W1 touched (per-repo reflog window)
 
 Zero unauthorized agent mutations is the canonical clean criterion.
 
 ## §9 — Constellation residuals (M-bound; not exhaustive — see Rβ ledger)
 
-- **N1 (P0)**: words consumer v1.0 break — broken `glass-ui` symlink + 3 retired-subpath imports.
-- **N4 (P0)**: precept submodule push divergence — 6 local vs 15 origin/main commits.
-- **N12-N13 (P1)**: keyframes.js + value.js consumer-side v1.0 audit (unverified — file-link masking).
-- **N17-N24 (P1)**: cross-cutting modularization-debt cohort (cn / dark / tokens / animation / build-config duplication).
-- **Plus**: fourier-analysis 2 retired imports + bbnf-buddy verify state.
+- **N1 (P0)**: words consumer v1.0 break — broken `glass-ui` symlink + 3 retired-subpath imports. M.W0 Lane III absorbs.
+- **N4 (P0)**: precept submodule push divergence — 6 local vs 15 origin/main commits. M.W0 Lane II absorbs.
+- **N12-N13 (P1)**: keyframes.js + value.js consumer-side v1.0 audit (unverified — file-link masking). M.W1 Lanes A + B absorb.
+- **N17-N24 (P1)**: cross-cutting modularization-debt cohort. M.W1 per-consumer lanes DISPOSITION each duplication (mostly KEEP-AS-IS or DOCUMENT-AS-DIFFERENT per KISS; no new package invented).
+- **Plus**: fourier-analysis 2 retired imports (M.W0 Lane IV) + bbnf-buddy verify state (M.W0 Lane III).
 
 ## §10 — Authority
 
