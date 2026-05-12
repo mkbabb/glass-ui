@@ -25,7 +25,7 @@ Open commit lands: `L.md`, `findings.md`, `waves/W{0..8}.md`, `dispatch/AGENT.md
 | Wave | Status | Notes |
 |---|---|---|
 | W0 | CLOSED (TBD commit) | Lane I `audit/W0-reconciliation.md` (~115 entries, 49 L-bound) + Lane II precept submodule (5 lessons + 3 SPEC + 1 dispatch field + 1 ORCHESTRATION clause) + Lane III subpath dts publication gap fixed (flat-entry rebinding + impl-lift) + Lane IV `coordination/speedtest-Y.md` + v0.9.4 tagged + pushed |
-| W1 (HEADLINE) | pending W0 | Phase 2 + curated barrel + `src/api/` + subpath flatten; v1.0 tag |
+| W1 (HEADLINE) | CLOSED (TBD commit) | Phase 2 root-barrel + `src/api/` + flat `/dark` `/keyboard` `/carousel` subpaths; v1.0 tag |
 | W2 | pending W1 | modularization sweep — composables/ restructure + cohesion + import shape |
 | W3 | pending W1 (parallel with W4) | composable + primitive second-consumer fidelity audit |
 | W4 | pending W1 (parallel with W3) | mobile-viewport finishing + π residuals from K |
@@ -50,6 +50,29 @@ Speedtest opens tranche Y in parallel with L. 6 active Y-prefixed worktrees incl
 - **Lane II** (precept submodule): 4 files modified in `docs/precepts/instructions/` — 5 new 2026-05-11 LESSONS-LEARNED entries (harness-level revert; subpath typing probe; cross-repo annotation push asymmetry; DEGRADED-restoration binding; coordination/ artefact class); 3 new SPEC clauses (ι reflog scan in close; coordination/ artefact class; DEGRADED-runtime-outcome binding); 1 new dispatch field (`worktree_diff_verification`); 1 new ORCHESTRATION clause (Cross-repo commit policy).
 - **Lane III** (subpath dts publication gap P0): diagnosed root cause as `vite-plugin-dts` `rollupTypes` nested-entry stub-emission. Fix: flat-entry rebinding (`composables/dark` → `dark-subpath` + `composables/keyboard` → `keyboard-subpath` in `vite.library.ts`; `package.json` `exports` + `typesVersions` map public subpath `@mkbabb/glass-ui/composables/{dark,keyboard}` to flat dist files) PLUS implementation lift (`src/composables/dark.ts` + `keyboard.ts` now hold canonical implementations; legacy `useGlobalDark.ts` + `useKeyboardShortcuts.ts` are 1-line re-export shims preserving 18 importers). v0.9.4 release: `package.json` bumped; `CHANGELOG.md` v0.9.4 entry; `scripts/release.sh` new subpath-resolve probe block (10 subpaths probed before tag). VERIFIED: dist self-contained; typecheck green; build green at 8GB heap (~33s); synthetic-consumer `tsc --noEmit` probe clean.
 - **Lane IV** (orchestrator-authored): `docs/tranches/L/coordination/speedtest-Y.md` ships with 7 sections covering wave-timeline touchpoints + writer-vs-reader boundary + push-or-handoff disposition table + conflict-resolution path + shared telemetry indicators.
+
+## 2026-05-11 — W1 HEADLINE close (TBD orchestrator commit)
+
+3 worktree-isolated lanes returned green; orchestrator integrated additive package.json + vite.library.ts diffs; absorbed 13 expected v1.0 test breaks via subpath import migration:
+
+- **Lane A** (root-barrel curation): `src/index.ts` strips vueuse-bearing re-exports. Strategy was to replace the single `export * from "./components/ui"` wildcard with 40 explicit per-package re-exports, omitting the 4 vueuse-bearing packages (`input/`, `textarea/`, `combobox/`, `carousel/`) PLUS removing the `useGlobalDark`, `useKeyboardShortcuts`, `useCarousel` family re-exports from the root barrel. Total ~30 runtime/type exports removed from root. SCC trap closure verified glass-ui-side: `grep "from '@vueuse'" dist/glass-ui.js` returns empty. Proof: `audit/W1-A-root-barrel-curation-proof.md`.
+- **Lane B** (`src/api/` discovery layer): single-file `src/api/index.ts` re-exports 32 canonical public symbols (24 types + 8 constants/runtime values) across 5 domain groupings (Aurora, Configurator, Metaballs, Surface enums, CVA variants). `dist/api.js` 220 B (runtime constants; types erase); `dist/api.d.ts` 12,513 B / 32 export declarations / zero broken `'../src/...'` refs. Proof: `audit/W1-B-api-discovery-layer-proof.md`.
+- **Lane C** (subpath flatten + `/carousel`): 3 NEW top-level barrels — `src/dark.ts`, `src/keyboard.ts`, `src/carousel.ts`. Retires v0.9.x transitional shapes `dark-subpath` + `keyboard-subpath` from `vite.library.ts`; removes `./composables/{dark,keyboard}` from `package.json` exports + typesVersions. Adds canonical `./dark`, `./keyboard`, `./carousel`. v1.0 CHANGELOG entry covers all breakers. Proof: `audit/W1-C-subpath-flatten-proof.md`.
+
+**Test absorptions** (orchestrator close-pass):
+- `tests/public-surface.spec.ts`: removed Input/Textarea/Combobox/Carousel/useCarousel/useGlobalDark/isMac/formatCombo/formatComboParts/registerShortcut/useRegisteredShortcuts from `uiRuntimeExports` + `composableRuntimeExports`. Added them to `subpathRuntimeExports` (forms/carousel/dark/keyboard surfaces) AND to `nonCoreRootRetirements` (asserts the symbols are NO LONGER on root). Added Api surface with constants probe.
+- `tests/components.smoke.spec.ts`: Input + Textarea imports retargeted from `../src/index` to `../src/forms`.
+- `tests/composables.smoke.spec.ts`: registerShortcut import retargeted from `../src/index` to `../src/keyboard`.
+
+**Verification**:
+- `npm run typecheck` clean.
+- `NODE_OPTIONS=--max-old-space-size=8192 npm run build` succeeds (~31s).
+- `npm test`: 357/357 PASS.
+- `npm run profile:budget` PASS: glass-ui.js raw 124.8K / 33.7K gz budget (66.6% headroom; -13.6K raw / -3.0K gz vs W0 close).
+- `dist/{dark,keyboard,carousel,api}.{js,d.ts}` self-contained.
+- `bash scripts/release.sh v1.0.0` — typecheck + test + build + 7-subpath probe (forms/api/dark/keyboard/carousel/tokens/dock) + tag (orchestrator runs at close).
+
+**Bundle-budget glass-ui-side baseline post-L W1**: ~65K raw / ~11K gz cumulative drop from K close (189K raw / 33.6K gz). The wave hard-gate's ≥ 15 KB speedtest-side entry-chunk drop is the canonical SCC-trap closure proof — owned by post-tag speedtest re-link cycle.
 
 ## Brittleness window
 

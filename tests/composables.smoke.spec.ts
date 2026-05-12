@@ -3,11 +3,11 @@ import { nextTick, ref } from "vue";
 import {
     createGlassFilter,
     destroyGlassFilter,
-    registerShortcut,
     useGlassRenderer,
     useSortable,
     useStaggerReveal,
 } from "../src/index";
+import { registerShortcut } from "../src/keyboard";
 import { useInfiniteScroll } from "../src/infinite-scroll";
 import { useOffsetPagination } from "../src/pagination";
 import {

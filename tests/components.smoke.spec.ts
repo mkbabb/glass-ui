@@ -11,17 +11,16 @@ import {
     CardContent,
     CardHeader,
     CardTitle,
-    Input,
     Label,
     MetricPill,
     Progress,
     Section,
     Separator,
     Skeleton,
-    Textarea,
     badgeVariants,
     buttonVariants,
 } from "../src/index";
+import { Input, Textarea } from "../src/forms";
 import { DarkModeToggle } from "../src/controls";
 import { DockLayer, DockLayerGroup, GlassDock } from "../src/dock";
 import { MetricBadge } from "../src/metric-badge";

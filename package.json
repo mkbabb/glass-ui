@@ -1,6 +1,6 @@
 {
     "name": "@mkbabb/glass-ui",
-    "version": "0.9.4",
+    "version": "1.0.0",
     "description": "Glassmorphic design system — Vue 3.5 components, reka-ui primitives, Tailwind CSS v4 tokens",
     "license": "MIT",
     "type": "module",
@@ -112,11 +112,17 @@
             "forms": [
                 "dist/forms.d.ts"
             ],
-            "composables/dark": [
-                "dist/dark-subpath.d.ts"
+            "api": [
+                "dist/api.d.ts"
             ],
-            "composables/keyboard": [
-                "dist/keyboard-subpath.d.ts"
+            "dark": [
+                "dist/dark.d.ts"
+            ],
+            "keyboard": [
+                "dist/keyboard.d.ts"
+            ],
+            "carousel": [
+                "dist/carousel.d.ts"
             ]
         }
     },
@@ -305,15 +311,25 @@
             "types": "./dist/forms.d.ts",
             "import": "./dist/forms.js"
         },
-        "./composables/dark": {
-            "development": "./src/composables/dark.ts",
-            "types": "./dist/dark-subpath.d.ts",
-            "import": "./dist/dark-subpath.js"
+        "./api": {
+            "development": "./src/api/index.ts",
+            "types": "./dist/api.d.ts",
+            "import": "./dist/api.js"
         },
-        "./composables/keyboard": {
-            "development": "./src/composables/keyboard.ts",
-            "types": "./dist/keyboard-subpath.d.ts",
-            "import": "./dist/keyboard-subpath.js"
+        "./dark": {
+            "development": "./src/dark.ts",
+            "types": "./dist/dark.d.ts",
+            "import": "./dist/dark.js"
+        },
+        "./keyboard": {
+            "development": "./src/keyboard.ts",
+            "types": "./dist/keyboard.d.ts",
+            "import": "./dist/keyboard.js"
+        },
+        "./carousel": {
+            "development": "./src/carousel.ts",
+            "types": "./dist/carousel.d.ts",
+            "import": "./dist/carousel.js"
         }
     },
     "files": [

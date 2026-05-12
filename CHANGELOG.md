@@ -1,5 +1,40 @@
 # Changelog
 
+## v1.0.0 — unreleased — L.W1 HEADLINE (root-barrel Phase 2 + curated surface + api/ discovery + subpath flatten)
+
+L.W1 HEADLINE — bundles four architectural transpositions into the v1.0
+cohort: (A) root-barrel Phase 2 strips vueuse-bearing re-exports to close
+the SCC trap; (B) `src/api/` discovery layer for canonical public types +
+constants; (C) flat subpath rename for the v0.9.x nested composables
+subpaths + new `/carousel` subpath; (D) self-contained dts verified for
+every public subpath.
+
+See `MIGRATION.md` (authored in L.W5) for the consumer-facing migration
+path.
+
+### BREAKING — Lane C (subpath flatten)
+
+- **`@mkbabb/glass-ui/composables/dark` REMOVED** — use
+  `@mkbabb/glass-ui/dark`. The nested form was a v0.9.x transitional
+  shape introduced at the W0 Lane III dts-publication-gap fix; v1.0
+  flattens it to match every other public subpath (`/forms`, `/dock`,
+  `/configurator`, ...). Per L invariant 4, no legacy alias is shipped.
+- **`@mkbabb/glass-ui/composables/keyboard` REMOVED** — use
+  `@mkbabb/glass-ui/keyboard`. Same rationale.
+- **`dist/dark-subpath.{js,d.ts}` + `dist/keyboard-subpath.{js,d.ts}`
+  artefacts retire** — the v0.9.4 transitional dist filenames are
+  replaced by canonical `dist/dark.{js,d.ts}` + `dist/keyboard.{js,d.ts}`.
+
+### ADDED — Lane C (carousel subpath)
+
+- **`@mkbabb/glass-ui/carousel`** subpath barrel at `src/carousel.ts`.
+  Re-exports `useCarousel` (the embla-carousel-vue + `createInjectionState`
+  composable that powers `<Carousel>` and the `Carousel*` family) plus the
+  `CarouselApi` type. `useCarousel` imports `createInjectionState` from
+  `@vueuse/core`, so isolating it on its own subpath keeps it off the
+  consumer's root-barrel tree-shake walk — the same SCC-trap mechanism
+  that motivates the `/dark` + `/keyboard` carve.
+
 ## v0.9.4 — 2026-05-11 — subpath dts publication gap (K.WS regression patch)
 
 L.W0 Lane III patch — fixes a typing-publication gap surfaced by the K.WS

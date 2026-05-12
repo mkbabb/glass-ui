@@ -1,15 +1,20 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
+import * as Api from "../src/api";
 import * as Aurora from "../src/aurora";
+import * as CarouselSurface from "../src/carousel";
 import * as ConfirmDialogSurface from "../src/confirm-dialog";
 import * as Glass from "../src/index";
 import * as Controls from "../src/controls";
+import * as Dark from "../src/dark";
 import * as Dock from "../src/dock";
 import * as ExpandableContainerSurface from "../src/expandable-container";
+import * as Forms from "../src/forms";
 import * as GlassCarouselSurface from "../src/glass-carousel";
 import * as GlassPanelSurface from "../src/glass-panel";
 import * as IconTooltipSurface from "../src/icon-tooltip";
 import * as InfiniteScrollSurface from "../src/infinite-scroll";
+import * as Keyboard from "../src/keyboard";
 import * as LabeledFieldSurface from "../src/labeled-field";
 import * as MetaballsSurface from "../src/metaballs";
 import * as MetricBadgeSurface from "../src/metric-badge";
@@ -34,10 +39,8 @@ const uiRuntimeExports = [
     "Badge",
     "Button",
     "Card",
-    "Carousel",
     "Checkbox",
     "Collapsible",
-    "Combobox",
     "Command",
     "ContextMenu",
     "DataTable",
@@ -45,7 +48,6 @@ const uiRuntimeExports = [
     "Drawer",
     "DropdownMenu",
     "HoverCard",
-    "Input",
     "Label",
     "MetricPill",
     "MultiSelect",
@@ -63,20 +65,17 @@ const uiRuntimeExports = [
     "Table",
     "Tabs",
     "TagsInput",
-    "Textarea",
     "Toast",
     "Toggle",
     "ToggleGroup",
     "Tooltip",
 ];
 
+// L.W1 — vueuse-bearing form primitives (Input, Textarea, Combobox*) and the
+// Carousel family moved to the `/forms` + `/carousel` subpaths; the dark-mode
+// + keyboard composables moved to `/dark` + `/keyboard`. Root barrel no
+// longer re-exports any vueuse-bearing symbol (SCC trap closure).
 const composableRuntimeExports = [
-    "useGlobalDark",
-    "isMac",
-    "formatCombo",
-    "formatComboParts",
-    "registerShortcut",
-    "useRegisteredShortcuts",
     "useTouchGate",
     "useTimer",
     "useInterval",
@@ -134,6 +133,21 @@ const subpathRuntimeExports = [
     { subpath: "labeled-field", surface: LabeledFieldSurface, name: "LabeledInput" },
     { subpath: "expandable-container", surface: ExpandableContainerSurface, name: "ExpandableContainer" },
     { subpath: "icon-tooltip", surface: IconTooltipSurface, name: "IconTooltip" },
+    // L.W1 — vueuse-bearing subpaths (new in v1.0)
+    { subpath: "forms", surface: Forms, name: "Input" },
+    { subpath: "forms", surface: Forms, name: "Textarea" },
+    { subpath: "forms", surface: Forms, name: "Combobox" },
+    { subpath: "forms", surface: Forms, name: "ComboboxInput" },
+    { subpath: "carousel", surface: CarouselSurface, name: "useCarousel" },
+    { subpath: "dark", surface: Dark, name: "useGlobalDark" },
+    { subpath: "keyboard", surface: Keyboard, name: "registerShortcut" },
+    { subpath: "keyboard", surface: Keyboard, name: "useRegisteredShortcuts" },
+    { subpath: "keyboard", surface: Keyboard, name: "formatCombo" },
+    { subpath: "keyboard", surface: Keyboard, name: "isMac" },
+    // L.W1 — api/ discovery layer (canonical constants; types erase)
+    { subpath: "api", surface: Api, name: "MAX_NUCLEI" },
+    { subpath: "api", surface: Api, name: "MAX_STOPS" },
+    { subpath: "api", surface: Api, name: "DEFAULT_AURORA_CONFIG" },
 ] as const;
 
 const nonCoreRootRetirements = [
@@ -170,6 +184,21 @@ const nonCoreRootRetirements = [
     "useOffsetPagination",
     "useTreeIndex",
     "buildTreeIndex",
+    // L.W1 — root-barrel Phase 2 retirements (vueuse-bearing SCC closure)
+    "Input",
+    "Textarea",
+    "Combobox",
+    "ComboboxInput",
+    "ComboboxRoot",
+    "Carousel",
+    "CarouselItem",
+    "useCarousel",
+    "useGlobalDark",
+    "isMac",
+    "formatCombo",
+    "formatComboParts",
+    "registerShortcut",
+    "useRegisteredShortcuts",
 ];
 
 const exactSubpathRuntimeSurfaces = [

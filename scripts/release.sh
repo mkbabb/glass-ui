@@ -70,7 +70,7 @@ fi
 # runtime (the K.WS regression that produced v0.9.4 was a silent dts
 # publication gap; this probe is its compensating guardrail).
 echo "[release] Probing subpath imports..."
-for sp in forms composables/dark composables/keyboard tokens dock; do
+for sp in forms api dark keyboard carousel tokens dock; do
     echo "  Probing @mkbabb/glass-ui/$sp"
     node -e "
         import('@mkbabb/glass-ui/$sp').then((m) => {

@@ -38,15 +38,15 @@ export function libraryEntries(rootDir: string) {
         "scrolling-text": resolve(rootDir, "src/scrolling-text.ts"),
         freshness: resolve(rootDir, "src/freshness.ts"),
         forms: resolve(rootDir, "src/forms.ts"),
-        // L.W0 Lane III — nested entry-keys (containing `/`) trigger a bug in
-        // vite-plugin-dts where the synthetic per-entry stub at `dist/<key>.d.ts`
-        // emits a broken `'../src/...'` re-export instead of an inlined dts.
-        // The fix: flat entry-keys here, with `package.json` `exports` mapping
-        // the public subpath `./composables/dark` to the flat dist output.
-        // (L.W1 will flatten the consumer-facing subpath to `./dark` /
-        // `./keyboard` as the final breaking gestalt.)
-        "dark-subpath": resolve(rootDir, "src/composables/dark.ts"),
-        "keyboard-subpath": resolve(rootDir, "src/composables/keyboard.ts"),
+        api: resolve(rootDir, "src/api/index.ts"),
+        // L.W1 Lane C — flat top-level subpath barrels for the vueuse-bearing
+        // composables. The v0.9.x transitional `dark-subpath` / `keyboard-subpath`
+        // dist filenames retire here in favour of canonical flat names matching
+        // every other subpath. `useCarousel` joins the set as a new public
+        // subpath (Lane A removes it from the root barrel re-export chain).
+        dark: resolve(rootDir, "src/dark.ts"),
+        keyboard: resolve(rootDir, "src/keyboard.ts"),
+        carousel: resolve(rootDir, "src/carousel.ts"),
     };
 }
 
