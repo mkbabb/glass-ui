@@ -84,6 +84,29 @@ Per `coordination/` artefact convention, list of recommendations Y has surfaced 
 
 (empty at L W0 open — populate at each subsequent L wave as Y publishes recommendations)
 
+## §6.5 — L.W1 verification ledger (cross-repo SCC trap closure)
+
+At glass-ui L.W1 close (2026-05-11, glass-ui `d1de94b` + tag `v1.0.0`):
+
+| Indicator | Pre-Phase-1 (X close) | Phase-1 + manualChunk (X.W3.c re-probe, K.WS) | Phase-2 v1.0 (L.W1 close) | Delta |
+|---|---|---|---|---|
+| `dist/index.html` modulepreload directives | n/a | 1 | **0** | **canonical SCC closure** |
+| Entry chunk gz (speedtest) | 204 KB | 139.7 KB (with manualChunk + +1.92 KB regression vs P0) | **171.5 KB** | -32.5 KB vs X close |
+| Glass-ui `dist/glass-ui.js` gz | 33.6 KB (K close) | — | **22.4 KB** | -11.2 KB |
+| Glass-ui `dist/glass-ui.js` raw | 189 KB (K close) | — | **124.8 KB** | -65 KB |
+| Glass-ui bundle-budget gate | PASS at K | — | **PASS** at 66.6% headroom | — |
+| Subpath dts publication for `/dark` `/keyboard` `/api` `/carousel` | broken (K.WS regression) | broken | **self-contained** | gap closed |
+
+Speedtest re-link commit: `98f88325` (`feat(deps): adopt glass-ui v1.0`). 15 speedtest src/ files migrated to v1.0 subpath surface:
+- `Input` + `Textarea` → `@mkbabb/glass-ui/forms` (10 sites)
+- `useGlobalDark` → `@mkbabb/glass-ui/dark` (2 sites)
+- `registerShortcut` → `@mkbabb/glass-ui/keyboard` (2 sites, including 1 test mock)
+- (other retired symbols not consumed at speedtest HEAD — `Combobox*`, `Carousel*`, `useCarousel`, `useRegisteredShortcuts`, `formatCombo`, `isMac`, `useKeyboardShortcuts`)
+
+Y.A3 typing-publication unblocking confirmed: speedtest build PASS in 9.83s; consumer-side resolution of subpath-published types via vue-tsc clean (verified upstream at glass-ui's release.sh subpath probe + synthetic-consumer tsc probe).
+
+The L.W1 HEADLINE thesis (4 architectural transpositions bundled — root-barrel Phase 2 + `src/api/` + subpath flatten + dts publication coherent) is canonically proven by this cross-repo verification ledger.
+
 ## §7 — End-of-L disposition
 
 At L W8 close:

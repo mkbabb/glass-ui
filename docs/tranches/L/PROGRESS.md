@@ -74,6 +74,13 @@ Speedtest opens tranche Y in parallel with L. 6 active Y-prefixed worktrees incl
 
 **Bundle-budget glass-ui-side baseline post-L W1**: ~65K raw / ~11K gz cumulative drop from K close (189K raw / 33.6K gz). The wave hard-gate's ≥ 15 KB speedtest-side entry-chunk drop is the canonical SCC-trap closure proof — owned by post-tag speedtest re-link cycle.
 
+**Cross-repo SCC-trap closure verified** (canonical W1 hard gate (f) — see `coordination/speedtest-Y.md` §6.5):
+- Speedtest re-link commit `98f88325` (`feat(deps): adopt glass-ui v1.0`). 15 speedtest src/ files migrated to v1.0 subpath surface.
+- speedtest `dist/index.html` modulepreload directives: 0 (was 1 at K close X.W3.c re-probe).
+- Speedtest entry-chunk gz: 171.5 KB (was 204 KB at speedtest X close pre-Phase-1; -32.5 KB drop exceeds ≥ 15 KB hard-gate target).
+- Speedtest build: PASS in 9.83s.
+- Y.A3 typing-publication unblocked at glass-ui v0.9.4 (W0 Lane III); v1.0 transposes the consumer-facing subpath surface to its canonical shape.
+
 ## Brittleness window
 
 **W1 will declare** `breaking_changes_during_wave: yes` (v1.0 breaks v0.9.x root-barrel imports for vueuse-bearing symbols). `restoration_wave: N/A` — v1.0 IS the restoration; the migration guide is the user-facing path.
