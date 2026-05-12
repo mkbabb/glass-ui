@@ -36,6 +36,14 @@
     --type-display-3:   clamp(2.618rem, 2rem + 3vw, 4.236rem);     /* φ^3 */
     --type-display-4:   clamp(3.33rem, 2.5rem + 4vw, 5.382rem);    /* φ^(7/2) */
     --type-display-5:   clamp(4.236rem, 3.5rem + 6vw, 6.854rem);   /* φ^4 */
+    /* Audacious display tier (v1.0.3). Extends the φ-ladder three rungs
+       beyond display-5 for poster-type consumers (speedtest hero,
+       dashboard pane titles when the consumer wants the number to win).
+       Same vw-axis as display-1..5 — consumer-agnostic. Brand-uniform-
+       sans preset still overrides via the existing :root override. */
+    --type-display-mega:       clamp(5.382rem, 4rem + 9vw, 11.089rem);   /* φ^(9/2) — peak 177px */
+    --type-display-hero:       clamp(6.854rem, 4.5rem + 12vw, 17.942rem); /* φ^5    — peak 287px */
+    --type-display-audacious:  clamp(8.728rem, 5rem + 16vw, 22rem);      /* φ^(11/2) — peak 352px (fast.com peg) */
 
     /* Line heights & letter spacing live at tokens.css §0 as the canonical
        --type-leading-* / --type-tracking-* rungs. theme.css bridges them
@@ -64,6 +72,36 @@ body {
 /* ═══════════════════════════════════════════════
    DISPLAY — Fraunces, WONK=1 SOFT=0, tracking-tight
    ═══════════════════════════════════════════════ */
+@utility text-display-audacious {
+    font-family: var(--font-display);
+    font-size: var(--type-display-audacious);
+    line-height: var(--type-leading-display);
+    letter-spacing: var(--type-tracking-tight);
+    font-optical-sizing: auto;
+    font-variation-settings: var(--font-display-variation-settings);
+    font-weight: var(--font-display-weight);
+}
+
+@utility text-display-hero {
+    font-family: var(--font-display);
+    font-size: var(--type-display-hero);
+    line-height: var(--type-leading-display);
+    letter-spacing: var(--type-tracking-tight);
+    font-optical-sizing: auto;
+    font-variation-settings: var(--font-display-variation-settings);
+    font-weight: var(--font-display-weight);
+}
+
+@utility text-display-mega {
+    font-family: var(--font-display);
+    font-size: var(--type-display-mega);
+    line-height: var(--type-leading-display);
+    letter-spacing: var(--type-tracking-tight);
+    font-optical-sizing: auto;
+    font-variation-settings: var(--font-display-variation-settings);
+    font-weight: var(--font-display-weight);
+}
+
 @utility text-display-5 {
     font-family: var(--font-display);
     font-size: var(--type-display-5);
