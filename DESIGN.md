@@ -156,6 +156,14 @@ Twelve-tier stacking, plus two out-of-band tiers:
 --shadow-2xl:  0 25px 50px -12px rgba(0,0,0,0.25);
 ```
 
+### Uniform-cast shadow (offset 0)
+
+```
+--shadow-uniform: 0 0 12px color-mix(in srgb, var(--shadow-color) 8%, transparent);
+```
+
+Offset-0 elevation token, no directional Y bias. Use case: dock-hosted icons (rightmost child of a horizontal dock pill, where the dock's `--shadow-dock` `0 4px 20px` downward cast reads as a per-icon right-edge halo). Consumers compose via `--shadow-dock-override: var(--shadow-uniform)` per-instance, or attach to per-icon-button shadow stacks where directional cast is wrong-shape. Same color-mix recipe family as the sized rungs above; reads as a peer elevation. Added Z.W2.T3a per A2 §B7.
+
 ### Cartoon shadows (offset, layered)
 
 ```
