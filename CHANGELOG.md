@@ -1,5 +1,133 @@
 # Changelog
 
+## v1.0.2 — 2026-05-12 — AA.W1 (Timeline continuous variant + a11y defence + §16 TIMELINE tokens + canon-truth)
+
+Five-task glass-ui canon augmentation routed from the speedtest
+AA-tranche A4 audit. The headline is the third `<GlassTimeline>`
+variant (`continuous`) — ONE rounded-pill rail with N region children,
+matching the user's B1 directive ("one continuous bar with multiple
+sections") that the Z.W2 segmented variant doesn't fit. Backward-
+compatible: scrubber + segmented paths unchanged.
+
+### New — `<GlassTimeline variant="continuous">`
+
+Per A4 §S-17. Adds a third variant to `<GlassTimeline>` alongside
+`scrubber` (default; pre-Z) and `segmented` (Z.W2). Visual shape:
+ONE rounded-pill rail substrate + N absolute-positioned
+`.continuous-region` children spanning prev-boundary → current-
+boundary. Each region paints its own gradient (pending = transparent,
+active = consumer gradient, completed = full gradient); optional 1px
+seam dividers at region boundaries are gated by
+`--timeline-continuous-seam-opacity`; boundary dots overlay the rail
+at each region's right edge using the existing `.segmented-dot` recipe.
+
+Same `TimelineSegment[]` data shape as the segmented variant — the
+only new field is the optional `weight: number` for non-uniform
+region widths (continuous variant only; segmented uses CSS flex).
+Same event surface (`@hover` + `@click` with `{ key, segment }`
+payload). Same `prefers-reduced-motion` collapse.
+
+ARIA: `role="group"` on the wrapper + `role="progressbar"` on the
+track with `aria-valuemin="0"`, `aria-valuemax=N`, `aria-valuenow`
+derived from completed-segment-count + fractional active progress.
+`aria-label` from the new `:ariaLabel` prop, or derived from segment
+labels.
+
+The speedtest consumer (AA.W2) is one prop-value flip away from
+canonical adoption — `variant="segmented"` → `variant="continuous"`
+plus retiring the `.completion-segments` private CSS.
+
+- `src/components/custom/timeline/GlassTimeline.vue` — third variant
+  template branch + region geometry helpers + continuous CSS recipe
+- `src/components/custom/timeline/types.ts` — `TimelineSegment.weight`
+  optional field
+
+### Fixed — scrubber `aria-valuenow` coercion (axe-zero close)
+
+Per A4 §S-16. The W5 axe scan found the scrubber's `aria-valuenow`
+missing from the rendered DOM (Vue omits attributes whose binding
+evaluates to `undefined` / `null`), triggering the `aria-required-attr`
+rule CRITICAL. The fix coerces the binding via
+`Number(modelValue ?? 0)` — guarantees a numeric `aria-valuenow="0"`
+renders even when consumers pass `undefined` / `null` / a string.
+
+Three regression specs at
+`src/components/custom/timeline/__tests__/aria-valuenow.test.ts`:
+- `modelValue: undefined` → renders `aria-valuenow="0"`
+- `modelValue: null` → renders `aria-valuenow="0"`
+- `modelValue: 0.5` → renders `aria-valuenow="0.5"`
+
+Test count: 330 → 333.
+
+### New — `§16 TIMELINE` token block
+
+Per A4 §S-15. The `--timeline-*` parametric overrides have been
+referenced in scoped CSS since Z.W2 (12px defaults), but never
+declared in `tokens.css` — so consumers couldn't discover the API via
+canon. The new continuous variant adds three more knobs that need
+first-class declarations alongside their siblings. Added a `§16
+TIMELINE` block in `src/styles/tokens.css` (after `§14 RAINBOW PALETTE`,
+before the `:root` close):
+
+- Heights — `--timeline-scrubber-height`, `--timeline-segmented-height`,
+  `--timeline-continuous-height`
+- Geometry — `--timeline-dot-size`, `--timeline-segment-flex`
+- Continuous-specific — `--timeline-continuous-seam-opacity`,
+  `--timeline-continuous-seam-color`
+- Per-segment gradients — `--timeline-segment-default-gradient`,
+  `--timeline-segment-gradient-{ping,download,upload,jitter}`
+
+### Fixed — var() fallback canon-truth
+
+Per A4 §S-14. The segmented variant's CSS declared its `.segmented-band`
+transitions with `var(--duration-slow, 0.55s)` + `var(--duration-fast, 0.18s)`
+fallback values that disagreed with canon (`--duration-slow: 0.45s`,
+`--duration-fast: 0.2s`). The fallbacks were dead code inside a
+canonical consumer (the rungs always resolve), but they encoded an
+incorrect dictionary about canon values — a maintainer could believe
+the wrong rung. Aligned both fallbacks to canon-truth.
+
+### Docs — `## Timeline Primitive` section
+
+Per A4 §design-md. `DESIGN.md` confusingly named `timeline` as a
+slider variant (the 24px glass-blurred / 24px disc scrubber) without
+documenting that `<GlassTimeline>` is a separate Vue primitive with
+its own variant taxonomy. Added a `## Timeline Primitive` section
+after `## Variant Taxonomy` documenting:
+
+- The `<GlassTimeline>` Vue primitive (NOT the slider variant)
+- Three variants: scrubber + segmented + continuous (visual + use-case per)
+- `TimelineSegment` shape including the new `weight` field
+- Full token API (§16 TIMELINE, 11 declared rungs)
+- ARIA + a11y guarantees per variant
+
+Added a cross-reference parenthetical to the slider table row so
+readers landing on the slider docs first find the primitive.
+
+### Refined — storybook chart-token migration
+
+Per A4 §C-10. `demo/stories/data/timeline-segmented.vue` painted
+gradient endpoints as raw hex literals (`#5B8DEF` / `#CC2233` /
+`#E09030`), bypassing the canonical `--chart-{ping,download,upload}`
+tokens. As the adoption oracle for the segmented + continuous
+variants, the story led consumers to copy hex-literal patterns instead
+of composing via canon. Migrated all three phase gradients to
+`var(--chart-*)` references; removed a dead `var(--accent, #5B8DEF)`
+hex fallback at the detail-pane border.
+
+Added `demo/stories/data/timeline-continuous.vue` mirroring the
+segmented story (3 phases + advance/reset controls + per-segment
+legend) but using `variant="continuous"`. Registered in
+`demo/stories/manifest.ts` under the data category.
+
+### Verification
+
+- 28 test files, 333/333 tests passing (was 330 pre-AA)
+- `vue-tsc --noEmit --project tsconfig.src.json` clean
+- `git diff --check` clean
+
+---
+
 ## v1.0.1 — 2026-05-12 — Z.W2 (Timeline segmented variant + dock overflow contract + shadow-uniform token)
 
 Three independent canon refinements bundled under one minor patch, driven
