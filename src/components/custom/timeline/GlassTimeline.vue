@@ -520,8 +520,8 @@ const continuousAriaLabel = computed<string>(() => {
     inset: 0;
     width: 0%;
     transition:
-        width var(--duration-slow, 0.55s) var(--ease-out, ease-out),
-        background var(--duration-fast, 0.18s) var(--ease-standard, ease);
+        width var(--duration-slow, 0.45s) var(--ease-out, ease-out),
+        background var(--duration-fast, 0.2s) var(--ease-standard, ease);
     will-change: width;
 }
 
