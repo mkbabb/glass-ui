@@ -114,6 +114,119 @@ self-named primitive demo). The disposition matrix:
   below the swatch row. The compositions/instrument-chassis.vue page
   remains the dial-state interactive consumer.
 
+### Production demo build — formal retire (L.W5 Lane B Option B)
+
+K cross-tranche-debt deferred to L: "Production demo build — Lighthouse
+audit surfaced `npm run build` is library-mode; no `vite.demo.config.ts`
+for a static demo build. Defer to L (decide: ship static demo deploy
+target OR formally retire demo as a deploy target)."
+
+**Disposition at L.W5 Lane B**: Option B — formally retire the demo
+storybook as a deploy target. The demo is dev-mode-only; Lighthouse
+audits run against the dev server with the documented dev-mode caveat;
+consumer-deploy concerns (CloudFlare Pages, Vercel, GitHub Pages,
+cache-TTL) live in consumer repos. Speedtest's demo build chain is the
+canonical reference for consumers that need a static deploy target.
+
+No new build script, no `vite.demo.config.ts`, no `dist-demo/` output.
+`npm run build` remains library-mode only. Documented in MIGRATION.md
+§"Production demo build" for consumer awareness.
+
+### L.W2 — Composables restructure (Lane A)
+
+L.W2 Lane A restructures `src/composables/` into eight coherent sub-trees per
+Rε §B.1.3 + §B.2.7. The pre-L flat top-level files are absorbed into the
+matching domain sub-trees; the legacy `useGlobalDark.ts` + `useKeyboardShortcuts.ts`
+shims retire alongside their pre-W0 impl files.
+
+- **NEW sub-tree** `src/composables/reactive/` — `useInterval`, `useTimer`.
+- **NEW sub-tree** `src/composables/dom/` — `useResizeObserver`, `useTouchGate`, `useTokenColor`.
+- **PROMOTED** `src/composables/dark/` — `useGlobalDark` (sub-tree with `index.ts` barrel; flat
+  `/dark` subpath continues to re-export through it).
+- **PROMOTED** `src/composables/keyboard/` — keyboard-shortcuts registry (sub-tree with
+  `index.ts` barrel; flat `/keyboard` subpath continues to re-export through it).
+- **ABSORBED** `useStagger.ts` → `src/composables/motion/useStagger.ts` (alongside
+  `useStaggerReveal` which already lived there).
+- **DEMOTED** `useStoryDemo.ts` → `demo/composables/useStoryDemo.ts` (demo-private;
+  no longer on library public surface per Rε §B.2.8).
+- 11 file moves; 24 importer-graph edits (4 src/, 13 demo/, 8 tests, 3 barrels).
+
+### L.W2 — Cohesion + import-shape annotations (Lane B)
+
+L.W2 Lane B documents the cherry-pick rationale + cascade-order rules in source.
+Pure documentation; zero runtime delta.
+
+- `src/index.ts` header comment block — extends the L.W1 curated-surface intro to
+  enumerate (a) the three-layer import shape (root barrel · per-package subpaths · `/api`
+  discovery layer) and (b) the acceptance bar for root-barrel inclusion (vueuse-free
+  + small primitive + ui/-composability) + names the 23 excluded custom packages.
+- `src/styles/index.css` cascade-order block — 40-line per-layer rationale block
+  documenting all 16 CSS imports + their dependencies. Cascade unchanged.
+
+### W4 — Mobile-viewport finishing
+
+L.W4 closes K residual R1 (StoryPager inner-tab overflow at 375). The inner-tab
+fix landed at K W5 commit `12abb09` (already at HEAD); the actual R1-shaped offender
+was the K W8 π-1 finding — an audacious DockGroup `size="lg"` MetricBadge chip
+overflowing the 375 viewport by 24 px at `/primitives/dock-group`.
+
+- **Fix**: `demo/stories/primitives/dock-group.vue` wraps the audacious DockGroup in
+  a `<div class="dock-group-audacious-scroll">` with scoped `overflow-x: auto;
+  scrollbar-width: none`. Mirrors the StoryPager idiom. DockGroup substrate untouched
+  (its inline-flex sizing is correct for chassis-strip consumers like speedtest's
+  `MetricStrip`; the audacious row is intended for wider contexts).
+- **Post-fix probe at 375×667**: `body.scrollWidth = 375 = viewport`. Multi-viewport
+  sweep across 9 surfaces × 3 viewports = 27 cells; 26 PASS + 1 pre-documented
+  K-residual (Aurora -inset-6 decorative bloom +8 px at 375; K W8 π-2 cosmetic
+  non-blocker; carries forward in K residuals ledger, not a new W8 ι entry).
+
+### W6 — Lighthouse cohort completion
+
+L.W6 re-verifies the K-absorbed Lighthouse cohort and dispositions the 4 P2
+carry-forwards from K.
+
+- **K-absorbed fixes re-verified clean at HEAD post-L-W1**: viz-basis dark-mode
+  contrast (`/primitives/buttons` A11y 100), preset chip aria-label (`/aurora`),
+  dropdown aria-label (`/navigation/dock`), Skeleton compositor + Fraunces async +
+  Computer Modern `font-display: swap`. Net A11y delta: `/primitives/buttons`
+  94 → 100. SEO held at 91. 0 L W1 regressions.
+- **P2-2 `robots.txt`** — Option B: deferred to W5 Lane B (atomic with the
+  production-demo-build binary disposition; W5 Lane B chose Option B —
+  formally retire demo as deploy target — so robots.txt is retire-as-not-applicable).
+- **P2-3 `uses-passive-event-listeners`** — RETIRE-AS-NOT-OUR-SCOPE. Source is
+  `@vue/runtime-dom` (Vue framework upstream). Carries forward to L FINAL.md
+  ledger as upstream-Vue-debt.
+- **P2-4 `uses-long-cache-ttl`** — RETIRE-AS-NOT-OUR-SCOPE. Production hosting
+  layer concern; consumers wire prod cache headers via their deploy target.
+  Carries forward to L FINAL.md ledger as consumer-deploy concern.
+- **OPEN — F-ε-3 Configurator recursion** at `/motion/metaballs` reproduced under
+  Lighthouse Headless Chrome; K W8 had dispositioned as "false-positive" but
+  L W6 Lighthouse re-run reproduces. Routed to L W7 (touches Configurator with
+  `cloneMode: 'per-preset'` extension) OR L W8 ι integrity-sweep as M-tranche
+  carry-forward.
+
+### L.W5 — Doc cohort + K residual absorption (Lane A)
+
+L.W5 Lane A closes the v1.0 doc cohort + absorbs K residuals R3 + R4.
+
+- **CLAUDE.md / README.md / DESIGN.md aligned with v1.0 HEAD** — composables tree
+  reflects the L.W2 8-sub-tree restructure; Subpath surface section enumerates the
+  flat v1.0 surface (38 flat subpaths + `/styles` + `/api`); custom-package
+  cherry-pick rationale, naming-pair disambiguation (`dock` vs `dock-group`;
+  `glass-carousel` vs `carousel`), and CSS cascade order all documented.
+- **K R3 absorbed** — wave-spec status lines bumped from "open / pending /
+  planned" to "CLOSED `<commit>`" across `docs/tranches/K/waves/W*.md` (matching
+  K PROGRESS.md commit hashes) and the closed `docs/tranches/L/waves/W{0..6}.md`.
+- **K R4 absorbed (Option A — define new rungs)** — new `--surface-tint-{35,40,70}`
+  rungs in `src/styles/tokens.css` + `src/styles/theme.css` Tailwind bridge.
+  4 P1 sites migrated to canonical tokens: `Slider.vue:163` (slider thumb border),
+  `GlassTimeline.vue:172` (timeline thumb hover background),
+  `UnderlineTabs.vue:110` (tab hover color), `glass.css:220` (input-pill
+  placeholder). Canonical token vocabulary now covers every literal
+  `color-mix(in srgb, var(--foreground) N%, transparent)` site at HEAD.
+- **MIGRATION.md** — Lane B authors the canonical v0.9.x → v1.0 migration path.
+  Cited from CHANGELOG v1.0 header.
+
 ## v0.9.4 — 2026-05-11 — subpath dts publication gap (K.WS regression patch)
 
 L.W0 Lane III patch — fixes a typing-publication gap surfaced by the K.WS

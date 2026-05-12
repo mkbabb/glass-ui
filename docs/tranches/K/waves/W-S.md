@@ -3,7 +3,7 @@
 **Opens after**: K W1 close (and ideally after K W6 lands the audacious primary-CTA so the headline is in place before this consumer-facing surface change).
 **Agents**: 1 (sequential — surface inventory → barrel split → consumer re-validation).
 **Hard gate**: speedtest's `dist/index.html` carries zero `<link rel="modulepreload">` AFTER applying a vueuse manualChunk in its `vite.config.ts`; speedtest entry chunk gzip drops by ≥ 15 KB net (eager critical path, including the new vueuse leaf chunk); zero substantive PNG diff in the speedtest 9-cell visual-regression matrix.
-**Status**: planned.
+**Status**: CLOSED `a598b90` (v0.9.3 ships additive subpath — Phase 1 only; **SCC trap stays open** with KNOWN LIMITATION; Phase 2 routed to L/v1.0; cross-repo annotation at speedtest `6f412d89`). Phase 2 SCC closure landed at L.W1 HEADLINE (v1.0). Status-line bumped at L.W5 Lane A (K R3).
 
 ## Cross-repo provenance
 

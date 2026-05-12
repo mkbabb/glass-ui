@@ -5,16 +5,23 @@ Shared glassmorphic design system: Vue 3.5 components, CSS design tokens, compos
 ## Build
 
 ```
-npm run build           # library → dist/glass-ui.js + glass-ui.css + index.d.ts
-npm run typecheck       # vue-tsc --noEmit
-npm run profile:budget  # bundle-budget gate (re-landed K W4 Lane B); --enforce mode in CI
+npm run build              # library → dist/glass-ui.js + glass-ui.css + index.d.ts + per-subpath chunks
+npm run typecheck          # vue-tsc --noEmit
+npm run profile:budget     # bundle-budget gate (re-landed K W4 Lane B); --enforce mode in CI
+npm run verify-export-types # subpath dts publication probe (L W0 Lane III release-script clause)
 ```
 
 ## Structure
 
 ```
 src/
-├── index.ts                        # barrel: components + composables + utils
+├── index.ts                        # v1.0 curated public barrel (vueuse-free) — Phase 2 SCC closure (L.W1 Lane A)
+├── api/                            # `@mkbabb/glass-ui/api` discovery layer — types + constants only (L.W1 Lane B)
+│   └── index.ts                    # 32 canonical public symbols (24 types + 8 constants)
+├── dark.ts                         # `@mkbabb/glass-ui/dark` flat subpath (L.W1 Lane C; vueuse-bearing)
+├── keyboard.ts                     # `@mkbabb/glass-ui/keyboard` flat subpath (L.W1 Lane C; vueuse-bearing)
+├── carousel.ts                     # `@mkbabb/glass-ui/carousel` flat subpath (L.W1 Lane C; vueuse-bearing)
+├── forms.ts                        # `@mkbabb/glass-ui/forms` subpath (K.WS Phase 1; preserved)
 ├── components/
 │   ├── ui/                         # 44 shadcn-vue base component packages + _shared (reka-ui)
 │   │   ├── _shared/                # ModalOverlay (V.W3 43bee82) + menuItemVariants CVA (V.W3 6e6916e)
@@ -105,25 +112,24 @@ src/
 │   │   ├── typewriter/             # TypewriterText
 │   │   └── index.ts
 │   └── index.ts                    # barrel: ui/ + custom/
-├── composables/                    # 23 v0.9.0 public composables across 6 sub-trees + 8 top-level files
-│   ├── glass/                      # useGlassRenderer + WebGL/WebGPU shader assets
+├── composables/                    # v1.0 public composables — 8 coherent sub-trees (L.W2 Lane A restructure)
+│   ├── dark/                       # useGlobalDark (subpath canonical home — /dark; vueuse-bearing)
+│   ├── keyboard/                   # useKeyboardShortcuts + registerShortcut + useRegisteredShortcuts
+│   │                               # + formatCombo + formatComboParts + isMac + types
+│   │                               # (subpath canonical home — /keyboard; vueuse-bearing)
+│   ├── reactive/                   # useInterval, useTimer
+│   ├── dom/                        # useResizeObserver, useTouchGate, useTokenColor
 │   ├── motion/                     # useScrollProgress, useSpringOrchestrator, useStaggerReveal,
-│   │                               # useAnimatedNumber, useAnimatedNumberMap (v0.8.4 promotion),
+│   │                               # useAnimatedNumber, useAnimatedNumberMap, useStagger,
 │   │                               # useDarkModeSync, useRAFLoop, useIntersectionPause
-│   ├── pagination/                 # useOffsetPagination
-│   ├── sidebar/                    # useSidebarState, useSidebarFollow, useScrollTracker, useTreeIndex
+│   ├── glass/                      # useGlassRenderer + WebGL/WebGPU shader assets
 │   ├── sortable/                   # useSortable
-│   ├── virtual/                    # useVirtualSectionWindow, useWindowedStore + virtualSectionLayout
-│   ├── useGlobalDark.ts            # createGlobalState(useDark) + Safari FOUC fix
-│   ├── useInterval.ts              # shared interval cleanup
-│   ├── useKeyboardShortcuts.ts     # singleton registry, Mod aliasing, category groups
-│   ├── useResizeObserver.ts        # shared ResizeObserver substrate
-│   ├── useStagger.ts               # one-shot staggered reveal-flag array (v0.8.4 promotion from speedtest)
-│   ├── useStoryDemo.ts             # canonical play/reset/status harness with cleanup discipline (V.W4)
-│   ├── useTimer.ts                 # shared timer cleanup substrate
-│   ├── useTokenColor.ts            # CSS-custom-property → ComputedRef with theme-aware fallback (v0.8.4 — supersedes retired cssVar helper per K W3.A)
-│   ├── useTouchGate.ts             # delayed touch-activation helper
-│   └── index.ts                    # public barrel — 9 top-level export groups
+│   ├── sidebar/                    # useSidebarState, useSidebarFollow, useScrollTracker, useTreeIndex
+│   └── index.ts                    # internal barrel — re-exports all 8 sub-trees + co-located
+│                                   # infinite-scroll composable. Root barrel (`src/index.ts`)
+│                                   # filters out dark/ + keyboard/ (vueuse-bearing) and consumes
+│                                   # the vueuse-free leaves only; consumers reach dark/keyboard
+│                                   # via flat `@mkbabb/glass-ui/dark` and `@mkbabb/glass-ui/keyboard`.
 ├── styles/
 │   ├── index.css                   # imports all below in cascade order
 │   ├── tokens.css                  # §1–§10: duration, easing, z-index, radius, shadows, glass, paper, colors
@@ -158,7 +164,7 @@ src/
 
 ## Entry point
 
-`src/index.ts`—re-exports public components (44 ui package barrels + 28 custom package barrels), 9 top-level composable export groups, and `cn()`. `src/components/custom/sidebar/` exports `ProgressiveSidebar` plus component-owned types only; sidebar state/follow/scroll/tree composables live under `src/composables/sidebar/`.
+`src/index.ts` is the **v1.0 curated public barrel** — vueuse-free per L.W1 Lane A SCC trap closure. It re-exports the 40 vueuse-free `ui/` package barrels (4 vueuse-bearing packages — `input/`, `textarea/`, `combobox/`, `carousel/` — are reachable only via subpath), 7 cherry-picked `custom/` packages (`instrument-chassis`, `glyph-face`, `dock-group`, `disco-glyph`, `hover-popover`, `configurator`, `scrolling-text`), the vueuse-free composable sub-trees (`motion/`, `reactive/`, `dom/`, `glass/`, `sortable/`), and `cn()`. The cherry-pick rationale is documented inline in `src/index.ts` (header comment block; L.W2 Lane B). The remaining 23 `custom/` packages reach consumers only via their dedicated subpath (`@mkbabb/glass-ui/dock`, `/aurora`, `/sidebar`, ...). Sidebar state/follow/scroll/tree composables live under `src/composables/sidebar/`; component-owned types stay in `src/components/custom/sidebar/types.ts`.
 
 ## Dependencies
 
@@ -185,11 +191,35 @@ All runtime deps are peer:
 
 ## Subpath surface
 
-The library exports a vueuse-FREE root barrel plus per-package subpaths for vueuse-bearing components, large composites, and namespace-isolated composables. Active subpath exports per `package.json`:
+v1.0 (L.W1) closed the vueuse SCC trap with a Phase 2 root-barrel curation. The shape is now three layers — a vueuse-FREE root barrel, 38 flat per-package subpaths, and a pure types/constants `@mkbabb/glass-ui/api` discovery layer.
 
 ```ts
+// Root barrel — vueuse-FREE curated surface
 import { Button, Card, Skeleton } from "@mkbabb/glass-ui";
 
+// v1.0 NEW — vueuse-bearing surfaces moved to flat subpaths (L.W1 Lane C)
+import { useGlobalDark } from "@mkbabb/glass-ui/dark";
+import {
+    useKeyboardShortcuts,
+    registerShortcut,
+    formatCombo,
+    isMac,
+} from "@mkbabb/glass-ui/keyboard";
+import { useCarousel } from "@mkbabb/glass-ui/carousel";
+import { Input, Textarea, Combobox } from "@mkbabb/glass-ui/forms";   // K.WS Phase 1 (preserved)
+
+// v1.0 NEW — discovery layer for canonical public types + constants (L.W1 Lane B)
+import type {
+    AuroraConfig,
+    ButtonVariants,
+    CardTier,
+    ConfiguratorState,
+    MetaballConfig,
+    SliderVariants,
+} from "@mkbabb/glass-ui/api";
+import { DEFAULT_AURORA_CONFIG, MAX_NUCLEI, MAX_STOPS } from "@mkbabb/glass-ui/api";
+
+// Per-package subpaths — substrate isolation (one component family per dist chunk)
 import { GlassDock, DockLayer, DockLayerGroup } from "@mkbabb/glass-ui/dock";
 import { DarkModeToggle } from "@mkbabb/glass-ui/controls";
 import { Aurora, useAurora } from "@mkbabb/glass-ui/aurora";
@@ -203,23 +233,35 @@ import { HoverPopover } from "@mkbabb/glass-ui/hover-popover";
 import { Sidebar } from "@mkbabb/glass-ui/sidebar";
 import { GlassCarousel } from "@mkbabb/glass-ui/glass-carousel";
 // + tokens, search, confirm-dialog, infinite-scroll, tabs, typewriter, stacked-icons,
-//   virtual, pagination, metric-badge, status-dot, pulse, paper-backdrop, toggle-chip,
-//   glass-panel, metaballs, sortable-list, timeline, labeled-field, expandable-container,
-//   icon-tooltip, instrument-chassis, glyph-face, dock-group, disco-glyph, scrolling-text,
-//   freshness
+//   metric-badge, status-dot, pulse, paper-backdrop, toggle-chip, glass-panel,
+//   metaballs, sortable-list, timeline, labeled-field, expandable-container,
+//   icon-tooltip, instrument-chassis, glyph-face, dock-group, disco-glyph,
+//   scrolling-text, freshness
 ```
 
-CSS imports the unified bundle via `@mkbabb/glass-ui/styles`. The K WS additive subpath split (vueuse-bearing composables + Input/Textarea/Combobox*) ships under v0.9.3 — additive only; root-barrel removal defers to L / v1.0 per WS.W1 disposition.
+CSS imports the unified bundle via `@mkbabb/glass-ui/styles`. Per `package.json` exports + `typesVersions["*"]`, v1.0 ships **38 flat subpaths** plus `/styles` and `/api`; verified at L.W2 Lane B via `npm run verify-export-types` (the release-script probe added at L.W0 Lane III).
+
+The v0.9.x nested subpaths `@mkbabb/glass-ui/composables/dark` + `@mkbabb/glass-ui/composables/keyboard` were RETIRED at v1.0 — L invariant 4 (no backwards-compat aliases). Consumers migrate via one-line rename per call site; see `MIGRATION.md`. The `@mkbabb/glass-ui/pagination` and `@mkbabb/glass-ui/virtual` subpaths were RETIRED at L.W3 (0 production consumers; substrate-without-consumer-binary invariant).
+
+### Subpath naming pairs (canonical)
+
+Two name-pairs flag substrate boundaries; consumers pick the right one per the use case:
+
+- `@mkbabb/glass-ui/dock` (GlassDock + DockLayer + DockLayerGroup + button/select/dropdown triggers) vs `@mkbabb/glass-ui/dock-group` (DockGroup chassis-strip wrapper — DIFFERENT primitive; not part of the GlassDock composite).
+- `@mkbabb/glass-ui/glass-carousel` (custom-styled `<GlassCarousel>` composite) vs `@mkbabb/glass-ui/carousel` (vueuse-bearing `useCarousel` composable + embla-carousel-vue `CarouselApi` type — the underlying primitive `<Carousel>` family wraps this).
 
 ## Design Axes
 
-The library binds these axes at K close:
+The library binds these axes at v1.0 (L close):
 
 1. **Token-first** (J invariant) — every visual behaviour is a CSS custom property; no consumer edits library source for styling.
 2. **Component over CSS class** (J invariant) — interactive elements bundle the four-state contract; static patterns are CSS classes.
-3. **Visual-load-bearing-ness** (J invariant 10) — substrate-without-consumer is binary at every close; primitives ship only when ≥ 2 consumers (or are formally retired with rationale).
+3. **Visual-load-bearing-ness** (J invariant 10) — substrate-without-consumer is binary at every close; primitives ship only when ≥ 2 consumers (or are formally retired with rationale). L invariant 8 freezes this at v1.0.
 4. **No tranche-letter shadow execution** (K invariant 3) — work cohorts spanning ≥ 1 release ship under a `docs/tranches/<LETTER>/` plan folder. The V-tranche post-hoc write-up under `docs/tranches/V/` (K WV) closes the precept loop retroactively.
 5. **Hardened agent git clause** (K W0 — `docs/precepts/instructions/tranche/AGENT_DISPATCH_TEMPLATE.md`) — agents NEVER stage / commit / stash / checkout / reset / restore. Read-only git only; orchestrator owns the index.
+6. **vueuse-FREE root barrel** (L.W1 HEADLINE) — the root barrel re-exports no symbol whose implementation imports `@vueuse/core`. The 4 vueuse-bearing surfaces reach consumers via flat subpaths: `/forms` (Input/Textarea/Combobox\*), `/dark` (useGlobalDark), `/keyboard` (keyboard-shortcuts registry), `/carousel` (useCarousel + Carousel\*). This is the canonical SCC-trap closure shape for downstream Rollup `manualChunks` consumers.
+7. **Subpath publication is binary** (L.W0 Lane III) — `scripts/release.sh` runs `node -e 'import("@mkbabb/glass-ui/<sp>")' + tsc consumer-probe` for every published subpath before `git tag`. Closes the K.WS silent-miss class.
+8. **Migration guide is binding** (L invariant 16) — v1.0 ships with `MIGRATION.md` documenting the canonical v0.9.x → v1.0 migration path. No legacy aliases.
 
 ## Component architecture
 
@@ -264,9 +306,9 @@ Each `DockLayer` registers itself with its parent via `provide`/`inject`; the gr
 - `<StorySection>` (V.W4 deff97a) — label + body sectioning chassis.
 - `<ShowcaseFrame>` (V.W4 8136baf) — pad knob over the rounded-card showcase chassis. Replaces the `rounded-card border bg-card shadow-cartoon` triplet across ~25-30 demo sites.
 - `<TokenLadder>` + `<ToneSwatch>` (V.W4 cfbcb48) — token-tour primitives.
-- `useStoryDemo` (V.W4 227e1b0) — canonical play/reset/status harness with cleanup discipline.
+- `useStoryDemo` (V.W4 227e1b0; demoted to demo-private at L.W2 Lane A — now at `demo/composables/useStoryDemo.ts`, no longer on the library public surface) — canonical play/reset/status harness with cleanup discipline.
 
-`<DockShowcaseFrame>` retired at L.W3 (zero consumers; substrate-without-consumer-binary invariant). Dock-tier demos use raw chassis recipes or `<ShowcaseFrame>` directly.
+`<DockShowcaseFrame>` retired at L.W3 Lane B (zero consumers at HEAD; substrate-without-consumer-binary invariant per L invariant 8). Dock-tier demos use raw chassis recipes or `<ShowcaseFrame>` directly.
 
 ## Consumer wiring
 

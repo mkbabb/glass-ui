@@ -3,7 +3,7 @@
 **Opens after**: W0 close.
 **Agents**: 1 (sequential historical write-up; docs-only).
 **Hard gate**: `docs/tranches/V/V.md` authored against `0666be6..23ce73c` commit cohort; `waves/V.W{2,3,4}.md` per release; `FINAL.md` with absorbed-by-V ledger; precept invariant 3 (no tranche-letter shadow execution) satisfied retroactively.
-**Status**: pending W0.
+**Status**: CLOSED `14266b5` (docs/tranches/V/ post-hoc write-up; K invariant 3 satisfied retroactively). Status-line bumped at L.W5 Lane A (K R3).
 
 ## Purpose
 

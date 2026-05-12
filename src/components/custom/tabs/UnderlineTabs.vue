@@ -107,7 +107,7 @@ onUnmounted(() => {
 }
 
 .underline-tab:hover {
-    color: color-mix(in srgb, var(--foreground) 70%, transparent);
+    color: var(--surface-tint-70);
 }
 
 .underline-tab[aria-selected="true"] {

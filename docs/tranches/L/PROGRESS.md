@@ -29,7 +29,7 @@ Open commit lands: `L.md`, `findings.md`, `waves/W{0..8}.md`, `dispatch/AGENT.md
 | W2 | CLOSED (TBD commit) | modularization sweep — composables/ restructured into 8 coherent sub-trees (dark/keyboard/reactive/dom/motion/glass/sortable/sidebar); cherry-pick rationale + cascade docs landed |
 | W3 | CLOSED (TBD commit) | composable + primitive second-consumer fidelity audit; 3 retired composables + DockShowcaseFrame retired; 3 primitives wired (DiscoGlyph + DockGroup + InstrumentChassis) |
 | W4 | CLOSED (TBD commit) | mobile-viewport finishing + π residuals; dock-group 375 overflow fixed; 26/27 viewport probe cells PASS |
-| W5 | pending W2 + W3 | doc cohort + production-demo-build + MIGRATION.md |
+| W5 | CLOSED (TBD commit) | doc cohort (CLAUDE/README/DESIGN/CHANGELOG aligned); MIGRATION.md 430 LOC / 17 breaks; K R3 19 status-line bumps; K R4 Option A (surface-tint rungs); production-demo-build Option B (formal retire) |
 | W6 | CLOSED (TBD commit) | Lighthouse cohort completion; 4 K-absorbed re-verified; robots.txt deferred to W5; Vue runtime + cache-ttl formal-retired |
 | W7 | pending W3 + W4 + W5 + W6 | keyframes lift + aurora chrome Option-A unification |
 | W8 | pending W7 | close ceremony — 7-agent strengthened audit + ι integrity-sweep + FINAL.md |

@@ -11,7 +11,7 @@ Glassmorphic design system for Vue 3.5. Shared components, design tokens, and co
 - Golden-ratio typography scale (√φ ≈ 1.272, 11+ stops from micro to display-5)
 - Design tokens: duration, easing, z-index (incl. `--z-behind`), radius (primitive + semantic), shadows, glass tiers, paper textures, surface-tint 9-rung family with `quiet | floating | modal` aliases
 - Vue `<Transition>` class sets, shared `@keyframes` (`sparkle-sweep`, `dock-in`, `dialog-in`, etc.), SVG noise textures
-- 23 public composables: motion (spring, RAF, animated-number, animated-number-map, stagger reveal, intersection pause, dark-mode sync, scroll progress), glass renderer, sortable, sidebar tree/follow/scroll, virtual-list substrate, pagination, infinite scroll, timer/interval/resize, token color, story demo harness, keyboard shortcuts, touch gate, global dark
+- Public composables across 8 sub-trees (L.W2 restructure): `motion/` (spring, RAF, animated-number, animated-number-map, stagger, stagger reveal, intersection pause, dark-mode sync, scroll progress), `glass/` (renderer + WebGL/WebGPU shader assets), `sortable/`, `sidebar/` (tree/follow/scroll/state), `dom/` (resize observer, touch gate, token color), `reactive/` (timer/interval), `dark/` (global dark — flat `/dark` subpath), `keyboard/` (shortcuts registry — flat `/keyboard` subpath)
 - Bundle-budget gate (`npm run profile:budget`) re-landed K W4 Lane B; CI workflow at `.github/workflows/lint.yml`
 
 ## Install
@@ -23,11 +23,24 @@ npm install @mkbabb/glass-ui
 ## Usage
 
 ```ts
-import { Button, Card, Dialog, useKeyboardShortcuts } from "@mkbabb/glass-ui";
+// v1.0 — vueuse-FREE root barrel
+import { Button, Card, Dialog } from "@mkbabb/glass-ui";
+
+// v1.0 — vueuse-bearing flat subpaths
+import { useGlobalDark } from "@mkbabb/glass-ui/dark";
+import { useKeyboardShortcuts, registerShortcut } from "@mkbabb/glass-ui/keyboard";
+import { useCarousel } from "@mkbabb/glass-ui/carousel";
+import { Input, Textarea, Combobox } from "@mkbabb/glass-ui/forms";
+
+// Per-package subpaths
 import { GlassDock, DockLayerGroup, DockLayer } from "@mkbabb/glass-ui/dock";
 import { DarkModeToggle } from "@mkbabb/glass-ui/controls";
 import { Configurator, useConfiguratorState } from "@mkbabb/glass-ui/configurator";
 import { HoverPopover } from "@mkbabb/glass-ui/hover-popover";
+
+// v1.0 — canonical public types + constants
+import type { AuroraConfig, ButtonVariants, CardTier } from "@mkbabb/glass-ui/api";
+import { DEFAULT_AURORA_CONFIG, MAX_NUCLEI } from "@mkbabb/glass-ui/api";
 ```
 
 ```vue
@@ -107,24 +120,18 @@ src/
 │                               # glass-panel, icon-tooltip, infinite-scroll, paper-backdrop,
 │                               # search, sidebar, sortable-list, stacked-icons, status-dot,
 │                               # toggle-chip
-├── composables/                # 23 public composables across 6 sub-trees + 8 top-level files
-│   ├── glass/                  # useGlassRenderer, createGlassFilter, destroyGlassFilter (WebGL/WebGPU)
+├── composables/                # public composables across 8 coherent sub-trees (L.W2 Lane A restructure)
+│   ├── dark/                   # useGlobalDark (flat `/dark` subpath; vueuse-bearing)
+│   ├── keyboard/               # useKeyboardShortcuts + registerShortcut + useRegisteredShortcuts
+│   │                           # + formatCombo + formatComboParts + isMac (flat `/keyboard` subpath)
+│   ├── reactive/               # useInterval, useTimer
+│   ├── dom/                    # useResizeObserver, useTouchGate, useTokenColor
 │   ├── motion/                 # useSpringOrchestrator, useStaggerReveal, useScrollProgress,
-│   │                           # useAnimatedNumber, useAnimatedNumberMap, useDarkModeSync,
-│   │                           # useRAFLoop, useIntersectionPause
-│   ├── pagination/             # useOffsetPagination
-│   ├── sidebar/                # useSidebarState, useSidebarFollow, useScrollTracker, useTreeIndex
+│   │                           # useAnimatedNumber, useAnimatedNumberMap, useStagger,
+│   │                           # useDarkModeSync, useRAFLoop, useIntersectionPause
+│   ├── glass/                  # useGlassRenderer, createGlassFilter, destroyGlassFilter (WebGL/WebGPU)
 │   ├── sortable/               # useSortable
-│   ├── virtual/                # useVirtualSectionWindow, useWindowedStore + virtualSectionLayout
-│   ├── useGlobalDark.ts        # createGlobalState(useDark) + Safari FOUC fix
-│   ├── useInterval.ts          # shared interval cleanup
-│   ├── useKeyboardShortcuts.ts # singleton registry, Mod aliasing, grouped display
-│   ├── useResizeObserver.ts    # shared ResizeObserver substrate
-│   ├── useStagger.ts           # one-shot staggered reveal-flag array
-│   ├── useStoryDemo.ts         # canonical play/reset/status harness with cleanup discipline
-│   ├── useTimer.ts             # shared timer cleanup substrate
-│   ├── useTokenColor.ts        # CSS-custom-property → ComputedRef with theme-aware fallback
-│   └── useTouchGate.ts         # delayed touch-activation helper
+│   └── sidebar/                # useSidebarState, useSidebarFollow, useScrollTracker, useTreeIndex
 ├── styles/
 │   ├── index.css               # imports all below in order
 │   ├── tokens.css              # design tokens (duration, easing, z-index, radius, shadows, glass, paper, surface-tint)
@@ -149,9 +156,26 @@ src/
 
 ## Subpath imports
 
-Beyond the root barrel, the library exposes per-package subpaths for vueuse-bearing components, large composites, and namespace-isolated composables:
+Beyond the root barrel, the library ships **38 flat per-package subpaths** plus the `/styles` CSS bundle. v1.0 (L.W1) adds three vueuse-bearing surfaces as flat top-level subpaths (`/dark`, `/keyboard`, `/carousel`) and a pure-types-and-constants `/api` discovery layer.
 
 ```ts
+// v1.0 vueuse-bearing subpaths (closed the SCC trap; root barrel no longer
+// re-exports these symbols)
+import { useGlobalDark } from "@mkbabb/glass-ui/dark";
+import { useKeyboardShortcuts, registerShortcut } from "@mkbabb/glass-ui/keyboard";
+import { useCarousel } from "@mkbabb/glass-ui/carousel";
+import { Input, Textarea, Combobox } from "@mkbabb/glass-ui/forms";
+
+// v1.0 discovery layer — pure types + constants
+import type {
+    AuroraConfig,
+    ButtonVariants,
+    CardTier,
+    ConfiguratorState,
+    MetaballConfig,
+} from "@mkbabb/glass-ui/api";
+
+// Per-package subpaths — substrate isolation
 import { GlassDock, DockLayerGroup, DockLayer } from "@mkbabb/glass-ui/dock";
 import { DarkModeToggle } from "@mkbabb/glass-ui/controls";
 import { Aurora, useAurora } from "@mkbabb/glass-ui/aurora";
@@ -163,7 +187,9 @@ import { GlassCarousel } from "@mkbabb/glass-ui/glass-carousel";
 import { ScrollingText } from "@mkbabb/glass-ui/scrolling-text";
 ```
 
-See `package.json` `exports` for the full subpath map (29 active subpaths plus `/styles` and `/tokens`).
+See `package.json` `exports` for the full subpath map (38 flat subpaths plus `/styles`). Resolution is verified at every release by `scripts/release.sh`'s synthetic-consumer probe (L.W0 Lane III).
+
+v1.0 retired the nested v0.9.x subpaths `@mkbabb/glass-ui/composables/dark` + `@mkbabb/glass-ui/composables/keyboard` (flattened to `/dark` + `/keyboard`) and the demo-only `@mkbabb/glass-ui/pagination` + `@mkbabb/glass-ui/virtual` subpaths (zero production consumers; L.W3 wire-or-retire). See `MIGRATION.md` for the consumer-facing migration path.
 
 ## Glass Token System
 

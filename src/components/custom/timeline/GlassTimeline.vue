@@ -169,6 +169,6 @@ function onTrackKeydown(e: KeyboardEvent) {
     opacity: 1;
     width: 8px;
     height: 18px;
-    background: color-mix(in srgb, var(--foreground) 40%, transparent);
+    background: var(--surface-tint-40);
 }
 </style>

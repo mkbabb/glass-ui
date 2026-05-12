@@ -3,7 +3,7 @@
 **Opens after**: W1 close.
 **Agents**: 1 (sequential demo-side fixes).
 **Hard gate**: 5 P1 + 1 P2 Lighthouse findings absorbed; Lighthouse re-run at W8 close confirms each fix.
-**Status**: pending W1.
+**Status**: CLOSED `8ec320b` (viz contrast + 2 label-name drops + Skeleton compositor + Fonts async + font-display: swap). Status-line bumped at L.W5 Lane A (K R3).
 
 ## Purpose
 

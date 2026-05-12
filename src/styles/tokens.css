@@ -195,6 +195,13 @@
     --surface-tint-18: color-mix(in srgb, var(--foreground) 18%, transparent);
     --surface-tint-22: color-mix(in srgb, var(--foreground) 22%, transparent);
     --surface-tint-25: color-mix(in srgb, var(--foreground) 25%, transparent);
+    /* Higher-α rungs added at L.W5 (absorbs K R4 — 4 P1 sites whose
+       literal `color-mix(in srgb, var(--foreground) {35,40,70}%, transparent)`
+       expressions bypassed the canonical token family). See `docs/tranches/L/
+       audit/W5-A-doc-cohort-proof.md`. */
+    --surface-tint-35: color-mix(in srgb, var(--foreground) 35%, transparent);
+    --surface-tint-40: color-mix(in srgb, var(--foreground) 40%, transparent);
+    --surface-tint-70: color-mix(in srgb, var(--foreground) 70%, transparent);
 
     /* Muted-tinted surface rungs — canonical handles for the 9 raw
        `color-mix(in srgb, var(--muted) N%, transparent)` sites in

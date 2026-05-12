@@ -160,7 +160,7 @@ const isHeld = computed(() => dockHeld?.value === true)
 .glass-slider[data-variant="spectrum"] .slider-thumb {
     width: calc(var(--slider-thumb-size, 1rem) * 0.75);
     height: 100%;
-    border-color: var(--slider-thumb-border-color, color-mix(in srgb, var(--foreground) 40%, transparent));
+    border-color: var(--slider-thumb-border-color, var(--surface-tint-40));
     background: transparent;
     box-shadow: none;
 }

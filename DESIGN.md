@@ -979,34 +979,41 @@ v0.7.0 / v0.7.1 keep working unchanged.
 
 ### Composables (`src/composables/`)
 
-23 public composables ship at v0.9.0, organised across 6 sub-trees + 8 top-level files:
+v1.0 restructures composables into **eight coherent sub-trees** per L.W2 Lane A (Rε §B.1.3 + §B.2.7 + §B.2.8). The pre-L flat top-level files (`useGlobalDark.ts`, `useKeyboardShortcuts.ts`, `useInterval.ts`, `useTimer.ts`, `useResizeObserver.ts`, `useTouchGate.ts`, `useTokenColor.ts`, `useStagger.ts`, `useStoryDemo.ts`) all moved under coherent sub-trees; `useStoryDemo` demoted to demo-private at `demo/composables/useStoryDemo.ts`.
 
-**Dock** (under `src/components/custom/dock/composables/`): `useDockState`, `useLayerTransition`. Both axis-aware via the `axis` ref (see Dock → Orientation).
+**Dock** (component-internal, under `src/components/custom/dock/composables/`): `useDockState`, `useLayerTransition`. Both axis-aware via the `axis` ref (see Dock → Orientation). Not on the public surface.
 
-**Sortable**: `useSortable`.
+**Sortable** (`src/composables/sortable/`): `useSortable`.
 
-**Sidebar**: `useTreeIndex`, `useScrollTracker`, `useSidebarFollow`, `useSidebarState`, `buildTreeIndex`.
+**Sidebar** (`src/composables/sidebar/`): `useTreeIndex`, `useScrollTracker`, `useSidebarFollow`, `useSidebarState`, `buildTreeIndex`.
 
-**Effects**: `useGlobalDark`, `useKeyboardShortcuts`, `useTouchGate`, `useTimer`, `useInterval`, `useResizeObserver`.
+**Dark** (`src/composables/dark/`): `useGlobalDark`. Vueuse-bearing; reach via flat `@mkbabb/glass-ui/dark` subpath. Not on the root barrel (L.W1 Phase 2 SCC closure).
 
-**Infinite scroll** (under `src/components/custom/infinite-scroll/composables/`): `useInfiniteScroll`.
+**Keyboard** (`src/composables/keyboard/`): `useKeyboardShortcuts` + `registerShortcut` + `useRegisteredShortcuts` + `formatCombo` + `formatComboParts` + `isMac` + types. Vueuse-bearing; reach via flat `@mkbabb/glass-ui/keyboard` subpath.
 
-**Motion** (`src/composables/motion/`): `useSpringOrchestrator`, `useStaggerReveal`, `useScrollProgress`, `useAnimatedNumber`, `useAnimatedNumberMap`, `useDarkModeSync`, `useRAFLoop`, `useIntersectionPause`. `useAnimatedNumber` wraps keyframes.js `SmoothProgress.play` to expose a reactive hysteresis-smoothed value for live numeric tracking (hero values, pill amounts, progress bars). Not a typewriter — the target glides toward a moving signal via exponential damping. `useAnimatedNumberMap` (v0.8.4 promotion) is the N-up fan-out behind a Record-returning composable. `useDarkModeSync` (Tranche G) encapsulates the two-step `nextTick → requestAnimationFrame` dance required to react to dark-mode toggles in code that reads computed CSS variables (canvas renderers etc.).
+**Reactive** (`src/composables/reactive/`): `useInterval`, `useTimer`. Vue-scope-aware timer/interval primitives.
+
+**DOM** (`src/composables/dom/`): `useResizeObserver`, `useTouchGate`, `useTokenColor`. DOM observers + cascade bridges.
+
+**Infinite scroll** (co-located under `src/components/custom/infinite-scroll/composables/`): `useInfiniteScroll`. Re-exported from the internal `src/composables/index.ts` barrel.
+
+**Motion** (`src/composables/motion/`): `useSpringOrchestrator`, `useStaggerReveal`, `useScrollProgress`, `useAnimatedNumber`, `useAnimatedNumberMap`, `useStagger`, `useDarkModeSync`, `useRAFLoop`, `useIntersectionPause`. `useAnimatedNumber` wraps keyframes.js `SmoothProgress.play` to expose a reactive hysteresis-smoothed value for live numeric tracking (hero values, pill amounts, progress bars). Not a typewriter — the target glides toward a moving signal via exponential damping. `useAnimatedNumberMap` (v0.8.4 promotion) is the N-up fan-out behind a Record-returning composable. `useDarkModeSync` (Tranche G) encapsulates the two-step `nextTick → requestAnimationFrame` dance required to react to dark-mode toggles in code that reads computed CSS variables (canvas renderers etc.).
 
 **Glass renderer** (`src/composables/glass/`): `useGlassRenderer`, `createGlassFilter`, `destroyGlassFilter`. WebGL + WebGPU substrate.
-
-**Pagination**: `useOffsetPagination`.
-
-**Virtual list** (`src/composables/virtual/`): `useVirtualSectionWindow`, `useWindowedStore`, `virtualSectionLayout`.
 
 **v0.8.4 promotions** (lifted from speedtest per V.W2):
 - **`useTokenColor`** (`a4959ef`) — read CSS custom property as `ComputedRef` with theme-aware fallback. Supersedes the retired `cssVar` helper for the WAAPI-adjacent reactive-read use case.
 - **`useStagger`** (`4e28520`) — one-shot staggered reveal-flag array with cleanup-safe timer set; PRM brackets via `prefers-reduced-motion`.
 - **`useAnimatedNumberMap`** (`16df6db`) — covered above under Motion.
 
-**`useStoryDemo`** (V.W4 227e1b0) — canonical play / reset / status harness with cleanup discipline. Demo-side primitive used across composable storybook entries; exported from the public composables barrel for consumer consumption.
-
 **`cssVar` retire** (K W3.A) — `cssVar.ts` retired. The single in-tree consumer (BouncyToggle) inlined a 5-line `readToken(name, fallback)` helper at click-time (no reactivity needed). `useTokenColor` (above) supersedes for reactive use cases.
+
+**v1.0 retires** (L.W3 Lane A — second-consumer fidelity audit per L invariant 8):
+- `useOffsetPagination` — 0 production consumers; demo-only at v0.9.x. `@mkbabb/glass-ui/pagination` subpath removed.
+- `useVirtualSectionWindow` + `useWindowedStore` + `virtualSectionLayout` helpers — 0 production consumers. `@mkbabb/glass-ui/virtual` subpath removed.
+- `useStoryDemo` — moved to `demo/composables/useStoryDemo.ts` (demo-private; no longer on library public surface).
+
+The three motion composables flagged in K cross-tranche debt (`useRAFLoop`, `useIntersectionPause`, `useDarkModeSync`) all WIRED at L.W3 via cross-repo speedtest consumption (`useMeterRenderer.ts` + `useAuroraPolicy.ts` + `SpeedtestMeter.vue` + `useEChartsTheme.ts`); ≥ 2 consumers per L invariant 8.
 
 ### Progress component variants (Tranche G)
 
@@ -1056,75 +1063,64 @@ Keep in sync with `tokens.css` when editing CSS tokens.
 
 ## Subpath surface
 
-The library is shipped as a single root barrel (`@mkbabb/glass-ui`) plus a fan of
-subpath entry points. Most subpaths exist for **substrate isolation** (one
-component family, one dist chunk, one .d.ts) so consumers can import individual
-primitives without dragging the rest of the surface through the tree-shaker.
-A subset exists for a stronger reason — **dependency isolation** — where the
-subpath separates a chunk that pulls heavyweight peer-deps from the rest of the
-library.
+v1.0 (L.W1 HEADLINE) closes the vueuse SCC trap with **Phase 2 root-barrel curation** + a **flat subpath surface**. The library ships under three import shapes — the curated root barrel, 38 flat per-package subpaths, and a pure types/constants `/api` discovery layer.
 
-### Substrate-isolation subpaths (the default shape)
+### The three layers
 
-`./tokens`, `./dock`, `./search`, `./sidebar`, `./controls`, `./confirm-dialog`,
-`./infinite-scroll`, `./tabs`, `./typewriter`, `./stacked-icons`, `./virtual`,
-`./pagination`, `./glass-carousel`, `./aurora`, `./configurator`,
-`./metric-badge`, `./status-dot`, `./pulse`, `./paper-backdrop`, `./toggle-chip`,
-`./glass-panel`, `./metaballs`, `./sortable-list`, `./timeline`,
-`./labeled-field`, `./expandable-container`, `./icon-tooltip`,
-`./instrument-chassis`, `./glyph-face`, `./dock-group`, `./disco-glyph`,
-`./hover-popover`, `./scrolling-text`, `./freshness`. Each maps to a
-`src/<name>.ts` barrel and a `dist/<name>.{js,d.ts}` artefact. Used to scope a
-component family or a small handful of primitives.
+1. **Root barrel `@mkbabb/glass-ui`** — vueuse-FREE curated surface. Re-exports 40 `ui/` packages (the 4 vueuse-bearing — `input/`, `textarea/`, `combobox/`, `carousel/` — are intentionally absent) plus 7 cherry-picked `custom/` packages (`instrument-chassis`, `glyph-face`, `dock-group`, `disco-glyph`, `hover-popover`, `configurator`, `scrolling-text`) plus the vueuse-free composable sub-trees. Acceptance bar for root-barrel inclusion is documented inline in `src/index.ts` (header comment block; L.W2 Lane B).
 
-`./styles` is the shared CSS bundle (sole CSS subpath; consumers wire it via
-`@import "@mkbabb/glass-ui/styles"`).
+2. **Per-package flat subpaths** — `./tokens`, `./dock`, `./search`, `./sidebar`, `./controls`, `./confirm-dialog`, `./infinite-scroll`, `./tabs`, `./typewriter`, `./stacked-icons`, `./glass-carousel`, `./aurora`, `./configurator`, `./metric-badge`, `./status-dot`, `./pulse`, `./paper-backdrop`, `./toggle-chip`, `./glass-panel`, `./metaballs`, `./sortable-list`, `./timeline`, `./labeled-field`, `./expandable-container`, `./icon-tooltip`, `./instrument-chassis`, `./glyph-face`, `./dock-group`, `./disco-glyph`, `./hover-popover`, `./scrolling-text`, `./freshness`. Each maps to a `src/<name>.ts` barrel and a `dist/<name>.{js,d.ts}` artefact.
 
-### vueuse-bearing subpaths (since v0.9.3)
+3. **API discovery layer `@mkbabb/glass-ui/api`** — pure types + constants re-export aggregator. Ships 32 canonical public symbols (24 types + 8 constants) across Aurora, Configurator, Metaballs, Surface enums (`CardTier`, `InstrumentChassisPhase`, `ToastVariant`), and CVA variants (`ButtonVariants`, `SliderVariants`, etc.). Pure-additive; types erase at build so consumer JS pays 0 B for type-only imports. See `src/api/index.ts`.
+
+`./styles` is the shared CSS bundle (sole CSS subpath; consumers wire it via `@import "@mkbabb/glass-ui/styles"`).
+
+### vueuse-bearing subpaths (v1.0 flat shape)
 
 | Subpath | Purpose | vueuse symbols |
 |---|---|---|
 | `@mkbabb/glass-ui/forms` | Input, Textarea, Combobox\* family | `useVModel`, `reactiveOmit` |
-| `@mkbabb/glass-ui/composables/dark` | `useGlobalDark` | `createGlobalState`, `useDark`, `useToggle` |
-| `@mkbabb/glass-ui/composables/keyboard` | `registerShortcut`, `useRegisteredShortcuts`, `formatCombo`, `formatComboParts`, `isMac`, types | `createGlobalState`, `useEventListener` |
-
-Consumers that intend to apply a Rollup `manualChunks: { "vueuse":
-["@vueuse/core", "@vueuse/shared"] }` rule should reach for these symbols via
-the subpaths rather than the root barrel. The root barrel currently re-exports
-all three (Phase 1 of the SCC trap fix is additive); Phase 2 (v1.0) removes the
-root-barrel re-exports.
+| `@mkbabb/glass-ui/dark` | `useGlobalDark` | `createGlobalState`, `useDark`, `useToggle` |
+| `@mkbabb/glass-ui/keyboard` | `registerShortcut`, `useRegisteredShortcuts`, `formatCombo`, `formatComboParts`, `isMac`, types | `createGlobalState`, `useEventListener` |
+| `@mkbabb/glass-ui/carousel` | `useCarousel` + `CarouselApi` (the embla-carousel-vue + `createInjectionState` composable powering `<Carousel>` and the `Carousel*` family) | `createInjectionState` |
 
 ```ts
-// v0.9.3+ recommended shape (and v1.0 required shape)
+// v1.0 required shape
 import { Input, Textarea, Combobox } from "@mkbabb/glass-ui/forms";
-import { useGlobalDark } from "@mkbabb/glass-ui/composables/dark";
-import { registerShortcut } from "@mkbabb/glass-ui/composables/keyboard";
+import { useGlobalDark } from "@mkbabb/glass-ui/dark";
+import { registerShortcut } from "@mkbabb/glass-ui/keyboard";
+import { useCarousel } from "@mkbabb/glass-ui/carousel";
 ```
 
-The mechanism behind the carve: when a consumer's entry chunk depends on Vue
-AND a manualChunks rule pulls vueuse to a leaf, Rollup hoists `@vue/shared` +
-`@vue/reactivity` + `@vue/runtime-core` into the vueuse bucket to satisfy both
-consumers. The entry chunk then imports from the vueuse leaf to access Vue,
-and Vite emits `<link rel="modulepreload">` to keep the eager critical path
-warm. The trap is the same SCC-hoist mechanism V.W1.T7 retired vue-echarts
-to escape; the vueuse subpath shape is the upstream fix for the same bug class.
-See `docs/tranches/K/waves/W-S.md` and the bundle-evidence transcript at
-`docs/tranches/K/audit/W-S-bundle-evidence.md`.
+The mechanism behind the carve: when a consumer's entry chunk depends on Vue AND a manualChunks rule pulls vueuse to a leaf, Rollup hoists `@vue/shared` + `@vue/reactivity` + `@vue/runtime-core` into the vueuse bucket to satisfy both consumers. The entry chunk then imports from the vueuse leaf to access Vue, and Vite emits `<link rel="modulepreload">` to keep the eager critical path warm. The trap is the same SCC-hoist mechanism V.W1.T7 retired vue-echarts to escape; the vueuse subpath shape is the upstream fix for the same bug class. K.WS Phase 1 (v0.9.3) shipped the additive subpaths; **L.W1 Phase 2 (v1.0) removed the root-barrel re-exports** to actually close the trap. Speedtest dist/index.html modulepreload directives = 0 (was 1 at K close); speedtest entry-chunk gz dropped 32.5 KB. See `docs/tranches/L/audit/W1-A-root-barrel-curation-proof.md` for the v1.0 closure evidence + bundle deltas.
+
+### Naming-pair disambiguation
+
+Two pairs of subpath names sit close enough to confuse consumers; each names a different primitive:
+
+- `@mkbabb/glass-ui/dock` exports `GlassDock` + `DockLayer` + `DockLayerGroup` + the dock-button family. `@mkbabb/glass-ui/dock-group` exports `DockGroup` — a different primitive (a chassis-strip wrapper, not part of the `GlassDock` composite).
+- `@mkbabb/glass-ui/glass-carousel` exports `<GlassCarousel>` + `useGlassCarousel` (the custom-styled glass carousel composite). `@mkbabb/glass-ui/carousel` exports `useCarousel` + `CarouselApi` (the embla-carousel-vue primitive that the `<Carousel>` family wraps).
+
+### v1.0 subpath retirements (L invariant 4 — no legacy aliases)
+
+- `@mkbabb/glass-ui/composables/dark` REMOVED — use `@mkbabb/glass-ui/dark` (flat).
+- `@mkbabb/glass-ui/composables/keyboard` REMOVED — use `@mkbabb/glass-ui/keyboard` (flat).
+- `@mkbabb/glass-ui/pagination` REMOVED — `useOffsetPagination` retired (L.W3 Lane A; 0 production consumers).
+- `@mkbabb/glass-ui/virtual` REMOVED — `useVirtualSectionWindow` + `useWindowedStore` + `virtualSectionLayout` retired (L.W3 Lane A; 0 production consumers).
+
+The retirements break v0.9.x consumer shapes per L's v1.0-cohort identity (L invariant 16); `MIGRATION.md` ships the canonical migration path.
 
 ### Subpath authoring rules
 
-- One `src/<name>.ts` per `exports[<name>]` entry. Multi-segment subpaths use
-  matching directory shape (`exports["./composables/dark"]` ↔
-  `src/composables/dark.ts` ↔ `dist/composables/dark.{js,d.ts}`).
-- `vite.library.ts` `libraryEntries(rootDir)` lists the entry name keyed by
-  the file basename minus extension (or the multi-segment dir/name for nested
-  subpaths). The corresponding `package.json` `exports` + `typesVersions`
-  entries must be added in the same commit.
-- Subpaths re-export named symbols only; no default exports anywhere in the
-  library.
-- Subpaths must NOT introduce a new peer-dependency: the substrate cost of a
-  subpath is the same as the root barrel (one peer-dep, one Vue runtime). The
-  only thing a subpath isolates is the *consumer-side bundle graph*.
+- One `src/<name>.ts` per `exports[<name>]` entry. Every public subpath is **flat** post-L.W1 (no nested `composables/dark` shapes); flat entry-keys avoid the `vite-plugin-dts` `rollupTypes` nested-entry stub-emission bug surfaced at K.WS (L.W0 Lane III diagnostic).
+- `vite.library.ts` `libraryEntries(rootDir)` lists the entry name keyed by the file basename minus extension. The corresponding `package.json` `exports` + `typesVersions` entries must be added in the same commit.
+- Subpaths re-export named symbols only; no default exports anywhere in the library.
+- Subpaths must NOT introduce a new peer-dependency: the substrate cost of a subpath is the same as the root barrel (one peer-dep, one Vue runtime). The only thing a subpath isolates is the *consumer-side bundle graph*.
+- **Publication gate** (L invariant 18): `scripts/release.sh` runs `node -e 'import("@mkbabb/glass-ui/<sp>")'` + `npm run verify-export-types` for every published subpath BEFORE `git tag`. Closes the K.WS silent-miss class.
+
+### CSS cascade (`src/styles/index.css`)
+
+The 16 `@import` statements in `src/styles/index.css` are documented inline (L.W2 Lane B): tokens → typography → theme → glass → paper → component utilities → component CSS tail. Each layer depends on the prior layer's tokens. Per-file role + dependencies are recorded as comments in the cascade.
 
 ---
 
