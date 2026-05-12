@@ -6,11 +6,12 @@ import type { TimelineSegment } from "../../../src/components/custom/timeline";
 import { cn } from "../../../src/utils/cn";
 
 /**
- * Segmented variant — Z.W2.T1 / A2 §B5. Adjacent gradient bands with
- * boundary dots that emit `hover` + `click` events. Demo shape mirrors
- * the speedtest 3-phase progression (ping → download → upload); each
- * segment carries its own gradient endpoint pair and a payload surfaced
- * via the events.
+ * Continuous variant — AA.W1.T1 / A4 §S-17. ONE rounded-pill rail
+ * substrate with N absolute-positioned region children. Same
+ * TimelineSegment[] shape as segmented; per-region gradient endpoints
+ * use the canonical `--chart-*` tokens (per A4 §C-10 precedent — never
+ * hex literals in storybook oracles). Demo mirrors the speedtest
+ * 3-phase progression (ping → download → upload).
  */
 
 interface DemoSegmentPayload {
@@ -78,10 +79,9 @@ const detail = computed<DemoSegmentPayload | null>(() => {
     return (seg.value as DemoSegmentPayload | undefined) ?? null;
 });
 
-// Toy state-cycling helper — flips the second segment forward so
-// reviewers see the band animate from 0 → 0.6 → 1 + the next segment
-// activating. Not a load-bearing demo concern; just makes the story
-// interactive without a contrived "Start" button.
+// State-cycling helper — flips the active segment forward so reviewers
+// see the region animate from 0 → 0.6 → 1 + the next segment activating.
+// Same advance/reset shape as the segmented story for parity.
 function advance() {
     const dl = segments.value[1];
     const ul = segments.value[2];
@@ -113,7 +113,7 @@ function reset() {
     <StoryPage>
         <div>
             <p class="text-admin-label mb-4 text-muted-foreground">
-                Segmented variant — multi-phase progress (Z.W2.T1)
+                Continuous variant — ONE rail, N regions (AA.W1.T1)
             </p>
 
             <div
@@ -123,11 +123,12 @@ function reset() {
                     )
                 "
             >
-                <!-- Segmented timeline -->
+                <!-- Continuous timeline -->
                 <div class="px-1">
                     <GlassTimeline
-                        variant="segmented"
+                        variant="continuous"
                         :segments="segments"
+                        aria-label="Speedtest progress: ping, download, upload"
                         @hover="onHover"
                         @click="onClick"
                     />
@@ -165,7 +166,7 @@ function reset() {
                     v-else
                     class="rounded-md border border-dashed border-border bg-background p-4 text-small text-muted-foreground"
                 >
-                    Hover or click a segment dot to inspect the phase payload.
+                    Hover or click a boundary dot to inspect the phase payload.
                 </div>
 
                 <!-- Controls -->

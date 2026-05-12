@@ -177,6 +177,7 @@ export const CATEGORIES: Category[] = [
             s("data", "infinite-scroll", "Infinite Scroll"),
             s("data", "timeline", "Timeline"),
             s("data", "timeline-segmented", "Timeline (segmented)", "Multi-phase progress timeline with per-segment gradients + hover/click boundary dots (Z.W2 / A2 §B5)."),
+            s("data", "timeline-continuous", "Timeline (continuous)", "ONE rounded-pill rail substrate with N absolute-positioned region children — same TimelineSegment[] shape as segmented, different geometry (AA.W1 / A4 §S-17)."),
             s("data", "search", "Fuzzy Search"),
             s("data", "scrolling-text", "Scrolling Text", "Overflow-detection-driven horizontal marquee for inline text — IPv6 addresses, org names, entity IDs."),
         ],
