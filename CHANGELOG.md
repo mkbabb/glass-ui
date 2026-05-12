@@ -1,5 +1,50 @@
 # Changelog
 
+## v1.0.3 — 2026-05-12 — AA.W3.5 (Audacious display tier — mega / hero / audacious)
+
+Typography-only canon extension routed from the speedtest AA-tranche
+pre-W3.5 SYNTHESIS.md. The user's third and fourth AA interrupts asked
+for fast.com-scale audacity ("Font is still far too small on desktop
+and mobile for the speedtest. This should be large and audacious,
+redolent of fast.com; complete text should be larger, too." +
+"Ensure you use the dynamic and proper glass-ui typography sizing,
+too, for all of the large audacious items."). Glass-ui owns the
+ceiling canon — speedtest's cqi + digit-count + DPI-scale overlays
+peg against it via `var(--type-display-*)`.
+
+### New — `--type-display-mega/-hero/-audacious` + matching utilities
+
+Three new rungs above `--type-display-5` continue the φ-ladder unbroken:
+
+- `--type-display-mega:       clamp(5.382rem, 4rem + 9vw, 11.089rem)`   /* φ^(9/2) — peak 177px */
+- `--type-display-hero:       clamp(6.854rem, 4.5rem + 12vw, 17.942rem)` /* φ^5    — peak 287px */
+- `--type-display-audacious:  clamp(8.728rem, 5rem + 16vw, 22rem)`      /* φ^(11/2) — peak 352px */
+
+Plus `.text-display-mega`, `.text-display-hero`, `.text-display-audacious`
+utility classes mirroring the existing `.text-display-5` shape — Fraunces
+with `WONK=1 / SOFT=0` and `--font-display-weight` by default; the
+`data-typography-preset="brand-uniform-sans"` :root override still maps
+`--font-display` → `var(--font-brand-sans)` so consumers in the brand-
+uniform-sans register get their stack at the audacious size without
+intervention.
+
+Same vw-axis as `--type-display-1..5` — consumer-agnostic. Consumers
+that need container-query precision (speedtest hero, where the column
+width drives the size) wrap their own clamp with these tokens as the
+ceiling: `clamp(6rem, calc(38cqi * ...), var(--type-display-audacious))`.
+
+Speedtest AA.W3.5 is the first consumer (hero pill-stack VALUE ceiling
+→ audacious; result-row VALUE + idle placeholder ceilings → hero;
+complete-headline ceiling → mega). DESIGN.md "## Audacious display
+tier" section documents the canon — peak px values, intended uses
+(speedtest hero, dashboard pane titles when the consumer wants the
+number to win), opt-out paths.
+
+- `src/styles/typography.css` — three new `:root` token declarations +
+  three new `@utility` blocks
+- `DESIGN.md` — "## Audacious display tier" sub-section appended to the
+  "## Typography" section + size-tokens table rows added
+
 ## v1.0.2 — 2026-05-12 — AA.W1 (Timeline continuous variant + a11y defence + §16 TIMELINE tokens + canon-truth)
 
 Five-task glass-ui canon augmentation routed from the speedtest

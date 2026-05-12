@@ -284,8 +284,48 @@ Scale: golden-ratio (√φ ≈ 1.272), base 1rem (16 px).
 | `--type-display-3`  | clamp(2.618rem, 2rem + 3vw, 4.236rem)     | 41.9–67.8   | `text-6xl`| Extra-large display          |
 | `--type-display-4`  | clamp(3.33rem, 2.5rem + 4vw, 5.382rem)    | 53.3–86.1   | —         | Splash (custom)              |
 | `--type-display-5`  | clamp(4.236rem, 3.5rem + 6vw, 6.854rem)   | 67.8–109.7  | —         | Mega hero (custom)           |
+| `--type-display-mega`      | clamp(5.382rem, 4rem + 9vw, 11.089rem)   | 86.1–177.4  | —         | Poster: section / pane title (v1.0.3) |
+| `--type-display-hero`      | clamp(6.854rem, 4.5rem + 12vw, 17.942rem) | 109.7–287.1 | —        | Poster: page hero / metric value (v1.0.3) |
+| `--type-display-audacious` | clamp(8.728rem, 5rem + 16vw, 22rem)      | 139.6–352   | —         | Fast.com-scale single number (v1.0.3) |
 
-Consumers extending beyond display-5 add tokens in their preset — the library exposes the mechanism, not every conceivable step.
+Consumers extending beyond display-audacious add tokens in their preset — the library exposes the mechanism, not every conceivable step.
+
+### Audacious display tier (`--type-display-mega` / `-hero` / `-audacious`)
+
+Added in **v1.0.3** (AA.W3.5). Three rungs above `display-5` for
+poster-type consumers — the speedtest hero number, dashboard pane
+titles where the consumer wants the number/title to win the visual
+hierarchy, marketing-surface headlines. Same vw-axis as
+`display-1..5`, so the size is consumer-agnostic; a consumer that
+needs container-query precision (e.g. speedtest's `.metric-col`
+container) wraps its own clamp with these tokens as the ceiling:
+
+```css
+/* speedtest SpeedtestResults.vue:763 — cqi axis with audacious ceiling */
+font-size: clamp(6rem, calc(38cqi * 3 / max(3, var(--digit-count))), var(--type-display-audacious));
+```
+
+The φ-ladder progression (`√φ ≈ 1.272` between steps) continues
+unbroken — every rung is one consistent step up the scale. Peak
+sizes (at viewport ≥ 1440):
+
+- `display-mega` → 177.4 px (φ^9/2 — pane titles, section heads)
+- `display-hero` → 287.1 px (φ^5 — hero numbers, metric values)
+- `display-audacious` → 352 px (φ^11/2 — fast.com peg for a single hero number)
+
+The matching `.text-display-mega`, `.text-display-hero`,
+`.text-display-audacious` utilities mirror the `.text-display-5`
+shape — Fraunces with `WONK=1 / SOFT=0` and `var(--font-display-weight)`
+by default; the `data-typography-preset="brand-uniform-sans"`
+:root override still maps `--font-display` → `var(--font-brand-sans)`
+so consumers in the brand-uniform-sans register get their stack at
+the audacious size without any extra wiring.
+
+Opt-out: consumers that want their own ceiling can ignore the tokens
+entirely (and the existing `display-1..5` rungs remain) — the
+audacious tier is additive, not a default. Consumers that consume
+the tokens but want a smaller ceiling can reset them locally:
+`:root { --type-display-audacious: 12rem; }`.
 
 ### Line height
 
@@ -359,6 +399,9 @@ Fraunces axes available: `wght` (300–700), `opsz`, `WONK` (0–1), `SOFT` (0�
 
 | Class                  | Font         | Size                 | Weight | Line    | Tracking  | Axes                        |
 |------------------------|--------------|----------------------|--------|---------|-----------|-----------------------------|
+| `.text-display-audacious` | display   | `--type-display-audacious` | display-weight | 1.1 | tight | `WONK` 1, `SOFT` 0     |
+| `.text-display-hero`   | display      | `--type-display-hero` | display-weight | 1.1 | tight | `WONK` 1, `SOFT` 0          |
+| `.text-display-mega`   | display      | `--type-display-mega` | display-weight | 1.1 | tight | `WONK` 1, `SOFT` 0          |
 | `.text-display-5`      | display      | `--type-display-5`   | 300    | 1.1     | tight     | `WONK` 1, `SOFT` 0          |
 | `.text-display-4`      | display      | `--type-display-4`   | 350    | 1.1     | tight     | `WONK` 1, `SOFT` 0          |
 | `.text-display-3`      | display      | `--type-display-3`   | 350    | 1.1     | tight     | `WONK` 1, `SOFT` 0          |
