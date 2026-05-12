@@ -1,5 +1,65 @@
 # Changelog
 
+## v1.0.1 — 2026-05-12 — Z.W2 (Timeline segmented variant + dock overflow contract + shadow-uniform token)
+
+Three independent canon refinements bundled under one minor patch, driven
+by the speedtest Z-tranche A2/A4 audit cohort. No breaking changes; the
+scrubber-mode `GlassTimeline` API is preserved verbatim.
+
+### New — `<GlassTimeline variant="segmented">`
+
+Per A2 §B5. The pre-Z.W2 `GlassTimeline` was a single-track scrubber; the
+new `segmented` variant accepts a `segments` array (`TimelineSegment[]`)
+and renders adjacent gradient bands with boundary dots that emit `hover`
+and `click` events. Per-segment gradient via a `{from, to}` pair (expanded
+to `linear-gradient(90deg, from, to)`) or a raw CSS gradient string. Per-
+segment lifecycle (`pending` / `active` / `completed`) drives a canonical
+fill mapping (0 / 0.5 / 1) that consumers may override via the optional
+`progress` field. Boundary dots are real `<button>` elements with full
+keyboard semantics (Enter / Space activate; native focus-visible ring).
+
+- `src/components/custom/timeline/GlassTimeline.vue` — `variant` prop;
+  segmented render path; scrubber path untouched
+- `src/components/custom/timeline/types.ts` — `TimelineSegment` + gradient + state types (NEW)
+- `src/components/custom/timeline/index.ts` — re-export the types
+- `demo/stories/data/timeline-segmented.vue` — 3-segment storybook story (NEW)
+
+Speedtest consumes this primitive for multi-phase ping/download/upload
+progress (Z.W2.T4).
+
+### Refined — Dock overflow contract (B6)
+
+Per A2 §B6 + A4 special-focus. The canon-intent for dock overflow is
+grow-to-fit + clamp + wrap-as-opt-in, not scroll. The pre-Z dock CSS
+applied `overflow-{x,y}: auto` to both the vertical rail and the
+horizontal `.dock-layers` content. Z.W2.T2 flips both to `visible`; the
+mask-fade gradients are retained as cosmetic feathers at the cap edge,
+not as scroll affordances. Consumers needing wrap behaviour opt into
+`.dock-wrap`.
+
+- `src/styles/dock.css` L156-194 — vertical rail: `overflow-{x,y}: visible`
+- `src/styles/dock.css` L294-312 — horizontal expanded: `overflow-x: visible`
+- `src/styles/dock.css` L354-358 — always-expanded vertical: `overflow-{x,y}: visible`
+
+### Added — `--shadow-uniform` token (B7 routing)
+
+Per A4 §special-focus. An offset-0 / no-directional-Y elevation rung for
+dock-hosted icons where the dock's `--shadow-dock` downward cast reads
+as a per-icon right-edge halo on the rightmost child. Consumers compose
+via `--shadow-dock-override: var(--shadow-uniform)` per-instance or attach
+to per-icon-button shadow stacks. Same color-mix recipe family as the
+sized rungs; peer elevation, not sibling.
+
+- `src/styles/tokens.css` — `--shadow-uniform: 0 0 12px color-mix(...)`
+- `DESIGN.md` — token table entry under §Shadows
+
+### Verification
+
+- Test suite: 27/27 files, 330/330 tests passing (no test deltas)
+- `vue-tsc --noEmit` clean
+- All existing dock stories render — the overflow change is conservative
+  (clip-as-default removed; canonical grow-to-fit re-asserted)
+
 ## v1.0.0 — 2026-05-11 — L.W1 HEADLINE (root-barrel Phase 2 + curated surface + api/ discovery + subpath flatten)
 
 L.W1 HEADLINE — bundles four architectural transpositions into the v1.0
