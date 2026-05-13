@@ -43,6 +43,31 @@ Speedtest's AB.W1.T2 consumes the token to repair B1 (card-too-tall
 occlusion) + B10 (mobile/desktop fit) + H3 (mobile-375 CLS 0.926 → ≤ 0.15)
 at the chassis level.
 
+### Added — `.dock-label` typography utility (AB.W1.T5)
+
+New `@utility dock-label` (typography.css) — canonical register for
+text labels INSIDE `.dock-tab-button` (Start, Next, Submit, Done, New
+Test, survey labels). Composes:
+
+- `font-family: var(--font-serif)` — picks up the consumer's
+  brand-uniform-sans preset when set
+- `font-size: var(--dock-label-size, var(--type-subheading))` — composes
+  the audacious-dock label-size knob (utilities.css §audacious mobile
+  carve declares `--dock-label-size: 14-15px` at narrow viewports);
+  desktop falls back to `--type-subheading`
+- `line-height: var(--type-leading-body)`
+- `font-weight: 500` — medium rung; present but not bold
+
+Rationale: `.text-heading` is the heading register and carries
+`font-weight: 700`. Consumers were applying `.text-heading` to dock
+labels (Start, Next, …), which read as literal bold inside a dock pill.
+The user mandate is "the Start text should not be bold", redressed to
+every bottom-dock text label. `.dock-label` is the explicit canonical
+register so `.text-heading` keeps its semantic weight contract.
+
+Speedtest's AB.W1.T5 swaps `text-heading` → `dock-label` across every
+DockTabButton text span (B8).
+
 ## v1.0.5 — 2026-05-12 — M.W2 (F-ε-3 Configurator recursion fix + `src/api/` canonical-type promotions + L cosmetic residuals absorb)
 
 Three-lane substrate close: F-ε-3 Configurator recursion CLOSED via source

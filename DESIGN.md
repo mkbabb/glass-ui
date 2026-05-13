@@ -610,7 +610,15 @@ Density overrides are named by tier, for example
 
 - `.dock-separator` — 1 px vertical divider, 50% dock-h tall, 15% foreground
 - `.dock-spacer` — `flex: 1` for pushing items apart
-- `.dock-label` — inline-flex, 14 px text, muted-foreground; `font-family: var(--font-display)` pinned so dock typography tracks the display voice regardless of consumer body cascade
+- `.dock-label` (typography.css `@utility` — AB.W1.T5) — canonical register
+  for text labels INSIDE `.dock-tab-button` (Start, Next, Submit, Done, New
+  Test, survey labels). `font-family: var(--font-serif)` picks up the
+  consumer's brand-uniform-sans preset; `font-size: var(--dock-label-size,
+  var(--type-subheading))` composes the audacious-dock label-size knob
+  (14–15px at narrow viewports, falls back to `--type-subheading` at
+  desktop); `font-weight: 500` (medium rung — present but NOT bold). Use
+  this instead of `.text-heading` for dock control labels; `.text-heading`
+  is the heading register and reads as literal bold inside a dock pill.
 - `DarkModeToggle size="control"` follows `--control-size` and `--control-icon-padding`.
 - `DarkModeToggle size="dock"` follows `--dock-control-size` and `--dock-icon-padding`; a toggle placed inside `.glass-dock` defaults to dock sizing unless an explicit `sm`, `lg`, or `control` size is supplied.
 

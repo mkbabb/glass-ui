@@ -177,6 +177,29 @@ body {
     font-weight: 600;
 }
 
+/* AB.W1.T5 — canonical dock control label register.
+   Use case: text labels INSIDE `.dock-tab-button` (Start, Next, Submit,
+   Done, New Test, survey labels). The dock-tab-button shell itself owns
+   `--type-small` as a fallback, but consumers wanting an emphatic label
+   character (slightly larger than the body small register) reach for
+   `.dock-label` rather than `.text-heading` — `.text-heading` is the
+   heading register and carries `font-weight: 700`, which reads as
+   literal bold inside a dock pill (the user mandate is "the start text
+   should not be bold", redressed to every bottom-dock label).
+
+   Composes the audacious-dock `--dock-label-size` knob when set
+   (utilities.css §audacious mobile carve declares `--dock-label-size:
+   14-15px` at narrow viewports); falls back to `--type-subheading` so
+   the register stays one rung above body-small at desktop. Weight 500
+   sits at the medium rung — present but not bold. */
+@utility dock-label {
+    font-family: var(--font-serif);
+    font-size: var(--dock-label-size, var(--type-subheading));
+    line-height: var(--type-leading-body);
+    font-weight: 500;
+    letter-spacing: var(--type-tracking-normal);
+}
+
 @utility text-prose {
     font-family: var(--font-serif);
     font-size: var(--type-prose);
