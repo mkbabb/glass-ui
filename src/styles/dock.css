@@ -216,7 +216,10 @@
         justify-content: center;
         background: var(--glass-bg-wash);
         border-color: var(--glass-border-floating);
-        box-shadow: var(--shadow-dock-collapsed);
+        /* Idiomatic override path: the consumer-supplied
+           `--shadow-dock-override` variable engages in every dock state
+           (was: base only, leaking through here in collapsed). */
+        box-shadow: var(--shadow-dock-override, var(--shadow-dock-collapsed));
     }
 
     .glass-dock.collapsed .dock-layer--summary {
@@ -227,7 +230,7 @@
     .glass-dock.collapsed:hover {
         background: var(--glass-bg-wash);
         border-color: var(--glass-border-floating);
-        box-shadow: var(--shadow-dock);
+        box-shadow: var(--shadow-dock-override, var(--shadow-dock));
         transform: scale(var(--dock-collapsed-hover-scale));
     }
 

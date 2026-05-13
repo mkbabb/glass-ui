@@ -353,8 +353,22 @@
     --card-shadow:       var(--shadow-card);
 
     /* Dock shadows */
-    --shadow-dock:           0 4px 20px color-mix(in srgb, var(--shadow-color) 18%, transparent), 0 0 0 1px color-mix(in srgb, var(--shadow-color) 10%, transparent);
-    --shadow-dock-collapsed: 0 2px 12px color-mix(in srgb, var(--shadow-color) 14%, transparent), 0 0 0 1px color-mix(in srgb, var(--shadow-color) 10%, transparent);
+    /* User 2026-05-13 (third + fourth report). The dock previously layered:
+         1) directional `0 4px 20px` drop  → retired (third report; the Y-
+            offset concentrated on the pill's rounded right cap and read as
+            a right-edge halo on the rightmost child).
+         2) `0 0 0 1px` hairline outer ring → retired (fourth report; in
+            dark mode the 10% cream-white ring traced the right-cap arc and
+            still read as a shadow even after the directional drop was
+            gone).
+       The dock's own `border: 1.5px solid var(--glass-border-dock)` already
+       provides silhouette definition, so the outer ring was redundant. The
+       canonical dock shadow is now a single omnidirectional glow in the
+       `--shadow-md`/`--shadow-lg` family. Per-instance directional drop
+       can still be reinstated via `--shadow-dock-override` (consumed by
+       every `.glass-dock` state selector — see dock.css). */
+    --shadow-dock:           0 0 20px color-mix(in srgb, var(--shadow-color) 14%, transparent);
+    --shadow-dock-collapsed: 0 0 12px color-mix(in srgb, var(--shadow-color) 12%, transparent);
     --dock-shadow:           var(--shadow-dock);
     --dock-shadow-collapsed: var(--shadow-dock-collapsed);
 
