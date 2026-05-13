@@ -20,7 +20,7 @@ Initial open commit `64105c6` proposed a 9-wave plan with `@mkbabb/dev-kit` as t
 | W1 (HEADLINE) | **CLOSED 2026-05-12** at `0e0a9a9` | 6 per-consumer lanes executed (A keyframes.js / B value.js / C fourier-analysis / D words / E bbnf-buddy / F speedtest-post-Y); 5 per-consumer commits landed (keyframes + value local-only on WIP branches; fourier + words pushed to origin/master; bbnf-buddy local-only — no origin remote); speedtest handoff DONE (Y closed long ago — speedtest already past Z + AA tranches) |
 | W2 | **CLOSED 2026-05-12** | 3 lanes (A F-ε-3 CLOSED via source fix + B api/ extensions: 5 types promoted to v1.0.5 surface + C 9/11 cosmetic residuals absorbed) |
 | W3 | **CLOSED 2026-05-12** | 2 lanes (A 3 stale-repo dispositions: 2 FORMAL-RETIRE + 1 MOVE-OUT-OF-CONSTELLATION + B doc cohort: 11 glass-ui docs refreshed) |
-| W4 | pending W2 + W3 | close ceremony — 7-agent strengthened audit + cross-constellation ι reflog scan + FINAL.md |
+| W4 | **CLOSED 2026-05-12** | 7 audit lanes (α plan-vs-actual CLEAN / β substrate-without-consumer 3 N-deferred / γ doc-drift 3 in-W4 absorbed / δ idiomatic-gestalt CLEAN / ε performance PASS / π visual-runtime PASS 30 probes / ι integrity-sweep CLEAN); precept LESSONS-LEARNED 4th-recurrence stash-pattern entry `46d6cfb`; FINAL.md authored |
 
 ## 2026-05-12 — W0 close
 
@@ -141,10 +141,53 @@ Proof at `docs/tranches/M/audit/W3-Lane-B-doc-cohort-proof.md`.
 
 - **W1 declares** `breaking_changes_during_wave: per-consumer yes/no`. Each consumer-migration may surface its own consumer-side issues. NO reserve wave (KISS) — residuals absorbed inline OR named-deferred to N.
 
-## Provisional carry-forward to N
+## 2026-05-12 — W4 close (close ceremony + 7-agent strengthened post-close audit)
 
-To be enumerated at M.W4 close.
+7 read-only audit lanes dispatched in parallel (per M.Rδ P6 dual-ceiling — read-only audit waves may reach 7 lanes; implementation waves stay capped at 6):
 
-## Awaiting dispatch authorization
+- **α plan-vs-actual** (`audit/M-audit-alpha-plan-vs-actual.md`): CLEAN; 0 discrepancies; all 4 closed waves executed per plan; 8 git commits + 2 release tags verified; 20 M invariants held.
+- **β substrate-without-consumer** (`audit/M-audit-beta-substrate-without-consumer.md`): 143/150 symbols pass-the-bar (95.3%); 7 sub-bar candidates surfaced (1 RETIRE recommendation for `/freshness`; 6 WIRE-or-defer). 3 items N-deferred (N-1 `/freshness`; N-2 `DiscoGlyph`; N-3 `useGlassAlpha`).
+- **γ doc-drift** (`audit/M-audit-gamma-doc-drift.md`): 8 findings (5 P0 + 2 P1 + 1 P3); ALL doc-only. 3 in-W4 absorbed (W2.md/W3.md status lines + CLAUDE.md carousel substrate note). Others either turned out to be non-issues on re-check (CLAUDE.md/README.md component counts were accurate; γ misread) or named-deferred (N-8).
+- **δ idiomatic-gestalt + per-story sweep** (`audit/M-audit-delta-idiomatic-gestalt.md`): CLEAN; 0 P0 non-gestalt issues; 3 informational items (N-4 / N-5 / N-6) N-deferred.
+- **ε performance** (`audit/M-audit-epsilon-performance.md`): PASS all gates; bundle 125.1 kB / 22.25 kB gz (65.8% headroom); 38/38 dts files self-contained; F-ε-3 fixture 6/6 PASS; 339/339 full suite PASS; verify-export-types exit 0.
+- **π visual-runtime** (`audit/M-audit-pi-visual-runtime.md`): PASS; 10 surfaces × 3 viewports = 30 probes; 0 console errors; 0 regressions; 100% WCAG AA. 1 pre-existing P2 dock-layer item (N-5) flagged as out-of-scope.
+- **ι integrity-sweep + cross-constellation reflog scan** (`audit/M-audit-iota-integrity-sweep.md`): CLEAN; cross-constellation scan across 9 repos (glass-ui + speedtest + precept submodule + 5 per-consumer + bbnf-lang); 3 disclosed `git stash` violations all recovered (orphan stash dropped); zero unauthorized agent mutations.
 
-Per M-open user directive M7 ("This is for a tranche development session, not an implementation one"), the open commits land the planning substrate only. Implementation dispatch awaits explicit user directive analogous to K + L pattern.
+### In-W4 absorbs
+
+| Finding | Disposition |
+|---|---|
+| γ — W2.md status line "pending" | Bumped to CLOSED `13e8d9e` |
+| γ — W3.md status line "IN-PROGRESS" | Bumped to CLOSED `13e8d9e` |
+| γ — CLAUDE.md carousel substrate note | Updated to reflect v1.0.4 full Carousel family on `/carousel` |
+| ι — `git stash` 4th-recurrence anti-pattern | Precept LESSONS-LEARNED 2026-05-12 entry on precepts/main `46d6cfb`; two close-time enforcement vectors codified |
+
+### Audit artifacts authored (W4)
+
+- `docs/tranches/M/audit/M-audit-alpha-plan-vs-actual.md`
+- `docs/tranches/M/audit/M-audit-beta-substrate-without-consumer.md`
+- `docs/tranches/M/audit/M-audit-gamma-doc-drift.md` (orchestrator-authored from Explore-agent return)
+- `docs/tranches/M/audit/M-audit-delta-idiomatic-gestalt.md` (orchestrator-authored from Explore-agent return)
+- `docs/tranches/M/audit/M-audit-epsilon-performance.md`
+- `docs/tranches/M/audit/M-audit-pi-visual-runtime.md`
+- `docs/tranches/M/audit/M-audit-iota-integrity-sweep.md`
+- `docs/tranches/M/audit/M-residuals.md`
+- `docs/tranches/M/audit/M-retro.md`
+- `docs/tranches/M/FINAL.md`
+
+## Carry-forward to N
+
+8 named residuals enumerated in `docs/tranches/M/audit/M-residuals.md`:
+
+- N-1 (P1 substrate): `/freshness` subpath retire-or-wire
+- N-2 (P1 substrate): `DiscoGlyph` production-consumer audit
+- N-3 (P1 substrate): `useGlassAlpha` internal-usage check
+- N-4 (P2 fast-follow): 26 pre-existing AA timeline-story typecheck errors
+- N-5 (P1 fast-follow): Dock-layer substrate regression (NEW)
+- N-6 (P3 fast-follow): Demo carousel/metaballs story import-path harmonisation
+- N-7 (P2 cross-tranche-debt): per-consumer CHANGELOG / MIGRATION proposals
+- N-8 (P3 cosmetic): `_shared` package naming clarity
+
+## Dispatch authorization + close
+
+Implementation dispatch authorized at 2026-05-12 ("begin and continue the current tranche... do not relinquish control... until you have completed the plan IN TOTALITY"). M closed at W4 within a single calendar day; all 4 implementation waves + W4 close ceremony delivered. See `docs/tranches/M/FINAL.md` for the canonical close artifact.
