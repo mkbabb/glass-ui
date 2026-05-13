@@ -197,3 +197,30 @@
     0%, 50%   { opacity: 1; }
     51%, 100% { opacity: 0; }
 }
+
+/* ── Ambient pulse: aura variant of <Pulse> ──
+ *
+ * Slow breathing cycle for the surface-scope `Pulse variant="aura"`.
+ * Tokens at tokens.css §AMBIENT MOTION drive the duration/scale/easing
+ * so consumers do not redefine the rhythm per site. The breath travels
+ * from scale-min @ opacity-min → scale-max @ opacity-max → back, with
+ * a 6s default cycle. The Pulse.vue scoped block consumes this keyframe
+ * directly; consumer-side rules must not re-declare it.
+ *
+ * Reduced-motion fallback is in Pulse.vue (animation: none + static
+ * mid-cycle render) — the keyframe itself doesn't gate, but it COULD
+ * collapse here if a future consumer composes `ambient-pulse` outside
+ * the Pulse primitive. The current contract: every aura caller goes
+ * through <Pulse variant="aura">.
+ */
+@keyframes ambient-pulse {
+    0%,
+    100% {
+        transform: scale(var(--animate-ambient-pulse-scale-min, 1));
+        opacity: var(--pulse-aura-opacity-min, 0.55);
+    }
+    50% {
+        transform: scale(var(--animate-ambient-pulse-scale-max, 1.15));
+        opacity: var(--pulse-aura-opacity-max, 0.95);
+    }
+}

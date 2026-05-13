@@ -89,6 +89,54 @@
     --ease-accelerate: var(--ease-in);
 
     /* ═══════════════════════════════════════════════
+       §2.A AMBIENT MOTION — Pulse aura tokens (AB.W3.T1)
+
+       Parameterise the breathing rhythm for `<Pulse variant="aura">`
+       so consumers don't re-author the cycle per site. The 6s
+       duration is the canon ambient-pulse rate (matches the dial's
+       idle breathing). Scale 1.0 ↔ 1.15 reads as a quiet halo at
+       intensity="normal"; the Pulse component remaps min/max from
+       its `intensity` prop ('subtle' = 1.06; 'vivid' = 1.22).
+
+       Opacity min/max scope is `--pulse-aura-opacity-{min,max}` —
+       the aura ALWAYS keeps a visible halo (min 0.55) so the colour
+       stays read at the trough; the peak goes to 0.95 so the breath
+       reads as a soft swell, not a fade-in-fade-out.
+
+       Reduced motion: Pulse.vue's scoped @media bracket forces
+       `animation: none` and parks at the min stop. Depth + colour
+       remain visible; the breath cycle disables.
+       ═══════════════════════════════════════════════ */
+    --animate-ambient-pulse-duration: 6s;
+    --animate-ambient-pulse-scale-min: 1.0;
+    --animate-ambient-pulse-scale-max: 1.15;
+    --animate-ambient-pulse-easing: var(--ease-apple);
+
+    /* Aura opacity range — keep the trough visible (the colour reads
+       at every phase of the cycle). Consumers may override per site
+       (e.g. the completion one-shot uses min=0 to fade out). */
+    --pulse-aura-opacity-min: 0.55;
+    --pulse-aura-opacity-max: 0.95;
+
+    /* ═══════════════════════════════════════════════
+       §2.B SECTIONED PROGRESS — phase-bus rail (AB.W3.T2)
+
+       The sectioned `<Progress variant="sectioned">` exposes one
+       height knob + one track tint knob. Defaults size the rail at
+       0.875rem (14px) — the W3 spec minimum (≥ 14px mobile, ≥ 18px
+       desktop). Consumers override the height per breakpoint via the
+       same token name on the consumer-side surface.
+
+       The bar reads as a recessed glass channel: inner top
+       catch-light + lower inner shadow + small outer drop. The
+       depth lives entirely in the Progress.vue scoped block; this
+       token only parameterises the rail BACKGROUND and HEIGHT —
+       depth shadows compose from the existing --shadow-color rung.
+       ═══════════════════════════════════════════════ */
+    --progress-sectioned-height: 0.875rem;
+    --progress-sectioned-track: var(--secondary);
+
+    /* ═══════════════════════════════════════════════
        §3  Z-INDEX SCALE
        ═══════════════════════════════════════════════ */
     /* V.W2 T12 — Aurora background tier (sits behind --z-background).
