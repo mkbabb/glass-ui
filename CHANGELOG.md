@@ -68,6 +68,101 @@ register so `.text-heading` keeps its semantic weight contract.
 Speedtest's AB.W1.T5 swaps `text-heading` → `dock-label` across every
 DockTabButton text span (B8).
 
+### Changed — GlassTimeline continuous variant Option C structural split (AB.W2.T4)
+
+Per A4 §nested-interactive + A6 §"glass-ui M tranche". The continuous
+variant's `.continuous-track[role="progressbar"]` previously nested
+focusable `<button class="continuous-dot">` descendants, which trips
+the axe `nested-interactive` rule (serious; WCAG 2.0 A — 4.1.2).
+The W2 fix restructures the rail and the marker buttons into
+SIBLINGS:
+
+```html
+<div class="continuous-track-wrap">
+  <div role="progressbar" aria-valuemin="0" aria-valuemax="N"
+       aria-valuenow="..." class="continuous-track">
+    <div class="continuous-region state-completed">
+      <div class="continuous-region-fill" />  <!-- paints --continuous-fill-width -->
+    </div>
+    ...
+  </div>
+  <ul role="list" class="continuous-markers">
+    <li role="listitem">
+      <HoverPopover><button class="continuous-dot" /></HoverPopover>
+    </li>
+    ...
+  </ul>
+</div>
+```
+
+The non-interactive `progressbar` rail reports aggregate progress to
+AT; the sibling marker `<ul role="list">` carries the per-phase
+interactive buttons. Both axe-clean. The marker overlay also lives
+outside the rail's `overflow: hidden` clip, so the dots' outer 14 px
+box paints in full — closing the AA-carry-forward `nested-interactive`
+violation AND the B2.a perceived-off-centre visual artefact in a
+single DOM rewrite.
+
+### Changed — GlassTimeline continuous-dot perceived centering (AB.W2.T1 / A4 §B2)
+
+Three coupled fixes restore the dot's perceived centre to its math
+centre on the rail:
+
+- Opaque dot background (`var(--background)`) so the rail seam line no
+  longer bleeds through the translucent fill.
+- Symmetric `box-shadow: 0 0 4px ...` (was directional `0 1px 2px`)
+  so the dot's centre of mass aligns with the math centre.
+- `box-sizing: border-box` so the 2 px border lives inside the 14 px
+  box.
+- Marker `<li>` uses `display: flex` + `line-height: 0` to collapse
+  the default list-item line-box, which otherwise introduced a 1 px
+  vertical drift between the translate anchor and the dot's geometric
+  middle.
+
+### Added — `popoverContent` slot + `currentSegmentKey` prop (AB.W2.T2 / T3)
+
+The continuous variant now wraps each marker button in `<HoverPopover>`
+(opt-out via `disablePopover`). Hover surfaces a color-coded popover
+carrying `{ label, value, description, state }` from the segment's
+`value` payload. Consumers override the body via the scoped
+`#popoverContent` slot:
+
+```vue
+<GlassTimeline variant="continuous" :segments="..." :current-segment-key="key">
+  <template #popoverContent="{ segment }">
+    <div :style="{ '--popover-tint': segment.gradient.to }">…</div>
+  </template>
+</GlassTimeline>
+```
+
+The popover's `--popover-tint` reads the segment's gradient endpoint by
+default; the body's left-rule border picks up that tint so the
+popover reads as "this phase's data".
+
+`currentSegmentKey?: string` stamps `data-current="true"` on the
+matching marker and `data-completed="true"` on every completed marker
+(derived from per-segment `state`). The data hooks are stable
+substrates for consumer "show CURRENT phase, not stale hover" panel
+logic (B2.b) and for the AB.W3 raised-rivet phase-bus echo styling.
+
+### Added — `update:open` passthrough on `<HoverPopover>` (AB.W2)
+
+`<HoverPopover>` now supports `v-model:open` and emits `update:open`
+when reka-ui's internal HoverCardRoot open state changes. The
+cadence honors `hoverOpenDelay` and `closeDelay`, so consumers
+receive the same debounced signal the popover itself reads. This
+lets the timeline drive its `hover` / `hoverEnd` events from the
+popover open state instead of raw `@mouseenter` / `@mouseleave` on
+the trigger, which fired too eagerly when the popover content
+overlapped the trigger (popover-on-hover jitter).
+
+### Added — `<GlassTimeline>` `hoverEnd` event
+
+Continuous + segmented variants now emit `hoverEnd` on the segment
+the pointer left, mirroring `hover`. Consumers blend hover-over-current
+in the panel via `effective = hovered ?? current`. The new event is
+additive (existing `hover` semantics unchanged).
+
 ## v1.0.5 — 2026-05-12 — M.W2 (F-ε-3 Configurator recursion fix + `src/api/` canonical-type promotions + L cosmetic residuals absorb)
 
 Three-lane substrate close: F-ε-3 Configurator recursion CLOSED via source
