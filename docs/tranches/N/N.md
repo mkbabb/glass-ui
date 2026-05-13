@@ -1,90 +1,101 @@
-# N — Mobile-aware substrate + bidirectional style discipline
+# N — KISS pruning + targeted refinement (post-v1.0.5 hardening)
 
 **Tranche letter**: N.
 **Successor to**: M (closed `54a8acb`; v1.0.4 + v1.0.5 published; precept submodule `46d6cfb`).
-**Cohort identity**: mobile-aware substrate + dock subsystem refinement + bidirectional style discipline. First tranche to formalize the 7-axis bidirectional style-audit canon as binding tranche-open research (per N10).
+**Cohort identity**: KISS pruning + targeted mobile/dock/typography refinement. First tranche to canonicalize the bidirectional style-audit + overfitting-audit fan-out as binding tranche-open research.
 **Mode**: planning-only at this open (per user N-open directive "This is NOT an implementation phase. Tranche development only.").
 **Open**: 2026-05-12.
+**Revised**: 2026-05-12 (user KISS revision: pivot from addition-focused to pruning-focused; original 5-wave plan superseded by lean 4-wave plan).
 
-## §1 — Thesis
+## §1 — Thesis (REVISED per user KISS directive)
 
-N is the **mobile-aware substrate + dock subsystem + style-discipline tranche**. Four substrate threads bound by the user's N-open directives:
+N is the **KISS pruning + targeted refinement tranche**. The HEADLINE (W0) is the prune-batch: 5 V3 retire-with-rationale items + 3 demo-privatization moves. Total **−8 items removed from glass-ui public surface** with zero consumer-side breakage (zero usage = zero risk).
 
-1. **Storybook mobile perfection** (N6) — refining glass-ui's own demo presentation on mobile; configurators (Aurora, Metaballs, and any future) deeply audited for spacing/padding/density expressiveness.
-2. **Dock subsystem refinement** (N7 + N8) — blur reduction audit (already at compositor floor; verify perceptual baseline) + new first-class facilities for dock collapse (icon mode + mobile-arrow primitive with springy/squish/blob/glass aesthetic).
-3. **Glass panels frosted-default + typography** (N9) — verify `"resting"` default tier renders as canonical translucent + frosted; promote `text-micro` from token-only to `@utility`; sweep ad-hoc `text-[Xrem]` literals.
-4. **Bidirectional style discipline** (N10 + N11) — codify the 7-axis style-audit canon as a binding tranche-open research artefact + 6-agent consumer post-migration audit (already executed at N open via Rγ + Rδ).
+Per user revised directive: "We should be conservative with additions and removals, only folding in new genuinely useful primitives. Removing any dead or unusued ones, contrived ones."
 
-No new packages invented (KISS lesson from M). Per V2 (NO workarounds) + V3 (NO legacy code) + V4 (architectural transpositions): the gestalt move at N is *refining glass-ui's expressiveness on mobile + dock + typography*, not abstracting library tooling.
+The constellation audit (6 parallel N11 lanes + 1 unified overfitting audit; 7 read-only agents) returned a healthy verdict — **94% keep rate across 172 enumerated artefacts**. The library is NOT over-engineered relative to its consumer base. The prune is the canonical V3 (NO legacy code) + L invariant 8 (substrate-without-consumer binary) cleanup, not a major refactor.
 
-Substrate threads also absorb 9 M-residuals (per Rβ): retire-with-rationale for J-6 + J-11 + `/freshness` + `useGlassAlpha` (V3 substrate-without-consumer binary); absorb dock-layer regression (N-5) + drag-keep-open story (J-14) at N.W2; absorb demo import-path harmonisation (N-6) + Aurora bloom (L-P3-3) at N.W3; absorb AA timeline typecheck errors (N-4) + DiscoGlyph production audit (N-2) at N.W4.
+Targeted refinements (N6 mobile / N7 dock blur audit / N9 typography sweep) ship as supporting work; the N8 new `<DockMobileToggle>` primitive is **DEFERRED pending user authorization** because it introduces a new public-surface component (against KISS posture).
 
-## §2 — Binding invariants
+## §2 — Binding invariants (REVISED)
 
-Inherits M's 20 invariants (per Rζ §2 verification). Extends:
+Inherits M's 20 invariants. Extends:
 
-1-20. All 20 V-invariants from M held at HEAD (per Rζ §2 table).
-21. **NEW @ N — Bidirectional style-audit canonical** — the 7-axis bidirectional style audit per `docs/audits/style-audit.md` runs at every tranche open as a binding research artefact. Self-audit + consumer-audit fan-out per the canon's "When to run" section. Codify in `tranche/SPEC.md` Research section at N close.
-22. **NEW @ N — Mobile-density axis on Configurator + ConfiguratorRow** — the `<Configurator>` substrate must support viewport-aware density (mobile / compact / comfortable / spacious) as a canonical CVA branch. ConfiguratorRow's spacing tokens must surface mobile carve-outs.
-23. **NEW @ N — Dock collapse primitive completeness** — `<GlassDock>` collapse facilities must include both (a) canonical icon-mode collapse via `collapsed` slot AND (b) `<DockMobileToggle>` primitive for the springy/squish/blob/glass mobile-arrow aesthetic.
-24. **NEW @ N — Typography utility-promotion gate** — every `--type-*` token that is used semantically across consumers must surface as a `@utility text-*` class. `text-micro` is the canonical first instance; the gate verifies at every tranche close that no `--type-*` token lacks a paired `@utility`.
+1-20. All 20 V-invariants from M held at HEAD (verified at Rζ §2).
+21. **NEW @ N — Bidirectional style-audit + overfitting-audit canonical at tranche open** — 7-axis style audit per `docs/audits/style-audit.md` + overfitting audit per `docs/audits/overfitting-audit.md` runs at every tranche open as binding research. N codifies this in `tranche/SPEC.md` Research section.
+22. **NEW @ N — KISS pruning binary** — at every tranche close, any item flagged `delete-unused` OR `library-orphan` by the overfitting audit (per canon's verdict precedence) is RETIRED that tranche unless a documented forward-compat case justifies it. "Delete it" is the default; "keep" requires a named consumer-evidence file under `docs/consumer-evidence/`.
+23. **NEW @ N — Demo-privatization protocol** — substrate that's 100% demo-only at tranche close moves from `src/components/custom/<x>/` to `demo/_internal/<x>/`. Subpath exports removed. Codified in `tranche/SPEC.md` Document Set.
 
-## §3 — Wave schedule (5 waves)
+## §3 — Wave schedule (REVISED to 4 waves — KISS)
 
 | Wave | Opens after | Lanes | Hard gate (TL;DR) | Brittleness |
 |---|---|---|---|---|
-| W0 | open | 4 parallel (I retire-batch + II Rζ-precept-codify + III dock-blur-perceptual-audit + IV CONSTELLATION ratify + optional v1.0.6 patch) | V3 retire-batch absorbs (J-6 + J-11 + /freshness + useGlassAlpha); precept submodule advanced with N invariants 21-24; dock blur perceptual baseline documented; CONSTELLATION ratified | no |
-| **W1 HEADLINE** | W0 close | 3 lanes (A glass-panel-frosted-verify + B text-micro @utility promotion + C ad-hoc typography sweep) | GlassPanel default tier rendering matches canonical "translucent + frosted"; `@utility text-micro` published; ad-hoc `text-[Xrem]` literals across demo+src swept | yes (typography sweep) |
-| W2 | W1 close (parallel with W3) | 3 lanes (A DockMobileToggle component + B dock-icon-mode primitive completeness + C dock-layer regression N-5 fix + J-14 demo) | `<DockMobileToggle>` lands on `/dock` subpath with springy/squish animation; icon-mode primitive verified; dock-layer regression closed | yes (dock substrate) |
-| W3 | W1 close (parallel with W2) | 3 lanes (A Configurator mobile density + B storybook viewport meta + responsive root + C configurator-mobile + dock-mobile-toggle stories) | Configurator density CVA branch ships; demo/index.html viewport-meta + responsive root; 2 new mobile-proof stories | yes (storybook substrate) |
-| W4 | W2 + W3 close | 1 orch + 7 audit lanes (α/β/γ/δ/ε/π/ι) | 7 lanes return clean; N11 consumer-audit lane explicitly N-bound (6-agent constellation sweep per directive); FINAL.md authored; cross-constellation reflog clean | no |
+| **W0 HEADLINE** | open | 3 parallel (A V3 retire-batch + B demo-privatize batch + C precept-canonicalize invariants 21-23) | 5 A-items deleted; 3 B-items moved to `demo/_internal/`; precept submodule `46d6cfb → next` with invariants 21-23 + KISS pruning binary; subpath exports updated; v1.0.6 patch tag | no |
+| **W1** | W0 close | 3 lanes (A glass-panel frosted-default verify + B `@utility text-micro` promotion + C typography literal sweep) | GlassPanel `"resting"` rendering verified at 3 viewports; `text-micro` ships; ad-hoc `text-[Xrem]` swept across demo+src | yes (typography sweep brittleness) |
+| **W2** | W1 close (parallel with W3) | 2 lanes (A storybook viewport-meta + responsive root + B Configurator mobile density CVA + mobile-proof story) | `demo/index.html` viewport-meta; ConfiguratorRow density CVA branch ships; 1 mobile-proof story (configurator-mobile); dock-blur perceptual audit (N7; likely no-op) | yes (minor; CVA introduction) |
+| **W3** | W1 close (parallel with W2) | (NONE — folded into W2; KISS revision dropped this wave) | — | — |
+| **W4** | W2 close | 1 orch + 7 audit lanes (α/β/γ/δ/ε/π/ι) + 6-agent N11 consumer-audit-fan-out (re-run post-N substrate) | 7 audit lanes + 6 consumer audits return clean; FINAL.md authored; cross-constellation reflog clean | no |
+
+**Critical path**: W0 → W1 → W2 → W4. 3 sequential edges. Peak parallelism at W4 (1 orch + 13 read-only audit + consumer lanes = within dual ceiling per V7).
+
+**Deferred to future tranche (per user KISS posture)**:
+- **N8** `<DockMobileToggle>` new primitive — pending explicit user authorization that the primitive is "genuinely useful". May be re-introduced at O tranche if user signals.
+- **N-5** dock-layer regression fix — folded into N.W2 Lane A storybook polish IF the regression intersects the configurator mobile work; otherwise DEFER to O.
+- **J-14** drag-keep-open story demo — story-only work; DEFER to O cosmetic batch.
 
 ## §4 — Cross-repo coordination
 
-Per `docs/tranches/N/coordination/CONSTELLATION.md` (carries forward from M close):
+Per `docs/tranches/N/coordination/CONSTELLATION.md`:
 
-- glass-ui: primary; M close `54a8acb` at v1.0.5; v1.0.6 candidate at W0 (if substrate delta warrants); next minor version (v1.1.0) at W4 if N9 frosted-tier ships.
-- speedtest: AA closed; handoff DONE at M.W1 Lane F; no N-scope writes expected.
-- words / fourier-analysis / bbnf-buddy: M.W1 migrated to v1.0; N.W4 consumer audit will re-verify; no N-scope writes unless audit surfaces blockers.
-- keyframes.js / value.js: WIP-branch commits pending user push; cross-tranche debt; N may NOT push these.
-- precepts submodule: `46d6cfb` at M close; N.W0 advances with invariants 21-24 codified.
+- glass-ui: primary; M close `54a8acb` at v1.0.5; v1.0.6 tag at W0 close (prune batch substrate delta).
+- speedtest / words / fourier-analysis / bbnf-buddy / keyframes.js / value.js: M.W1-migrated; N.W4 6-agent consumer audit re-verifies post-N substrate; no N-scope writes.
+- precepts submodule: `46d6cfb` at M close; N.W0 advances with invariants 21-23.
 
 ## §5 — Critical path
 
-W0 → W1 → (W2 ∥ W3) → W4. 4 sequential edges; peak parallelism at W2+W3 (6 implementation lanes within ceiling) + W4 (1 orch + 7 read-only audit lanes per dual-ceiling V7).
+W0 → W1 → W2 → W4. 3 sequential edges; peak parallelism at W0 (3 lanes) + W4 (1 orch + 7 read-only audit + 6 consumer audits = 14 read-only agents within V7 dual ceiling for audit waves).
 
 ## §6 — Risk register
 
-1. **N7 dock blur**: likely no-op since dock blur is at compositor floor (0px). Perceptual audit may surface that user's "too blurred" perception is the TOP-dock stacking context with `<body>` aurora backdrop, NOT the dock filter. Mitigation: W0 Lane III investigates + documents.
-2. **N8 DockMobileToggle**: new primitive could regress existing `collapsed`-slot consumers. Mitigation: W2 Lane B verifies icon-mode primitive completeness in parallel; W2 Lane C explicitly absorbs N-5 dock-layer regression.
-3. **N9 typography sweep**: large scope (381 typography drift instances aggregated across consumers per Rδ). Mitigation: W1 Lane C scopes the sweep to demo + library src/ only; consumer-side adoption is via N.W4 consumer audit recommendations.
-4. **N10/N11 ordering**: user directive "alongside, thereupon" sequences N11 AFTER N10. Mitigation: N10 already executed at N open (Rγ + Rδ deliverables); N11 is the W4 6-agent consumer audit.
-5. **No reserve wave (KISS lesson from M)**: residuals absorbed inline OR named-deferred to O tranche.
+1. **W0 A-batch retirements**: zero risk (zero-usage items). PASS.
+2. **W0 B-batch demo-privatization**: removes 3 subpath exports from `package.json`. Consumers that adopted these subpaths (none verified per overfitting audit) would break. Mitigation: rg-verify zero consumer adoption before delete; CHANGELOG entry documents the move.
+3. **W1 typography sweep**: large absorb of ad-hoc `text-[Xrem]` literals. Mitigation: per-story verification at close; semantic literal replacements only.
+4. **N7 dock blur perceptual audit**: likely no-op (compositor floor); if user perception is real, surface as W2 absorb.
+5. **N8 deferral**: ALL user N-open mobile-arrow directive work deferred. Need user signal before re-introducing.
+6. **W4 N11 consumer re-audit**: 6-agent fan-out (read-only) may surface post-N consumer-side drift introduced by N.W0/W1/W2; absorb inline or named-defer to O.
 
 ## §7 — Provisional v1.x release plan
 
-- **W0 close** → v1.0.6 patch IF substrate delta warrants (retire-batch is mostly subpath retirements; modest patch).
-- **W1 close** → v1.1.0 minor IF N9 frosted-tier ships as new tier (architectural option-dependent; W1 Lane A decides).
-- **W2+W3 close** → v1.2.0 minor (new `<DockMobileToggle>` primitive + Configurator mobile density CVA branch).
-- **W4 close** → final M-flight tag if substrate delta accumulated.
+- **W0 close** → **v1.0.6** patch (prune batch substrate delta; 8 items removed from public surface).
+- **W1 close** → **v1.0.7** patch IF text-micro utility + typography sweep land coherently (additive-only changes).
+- **W2 close** → **v1.0.8** patch (mobile density CVA + viewport-meta; additive only).
+- **W4 close** → final N-flight tag aggregating all v1.0.x patches.
 
 ## §8 — Carry-forward to O tranche
 
-(Populates at W4 close.)
+(Populates at W4 close. Provisional candidates:)
+- C-batch deferred items (disco-glyph, status-dot, glass-carousel) re-evaluation
+- N8 `<DockMobileToggle>` new primitive (if user signals)
+- E-batch reverse-overfitting watch (dock family if 2nd consumer doesn't emerge)
+- L-vue-passive-listeners + L-cache-ttl (PERMANENT-DEFER chronic out-of-scope items)
 
 ## §9 — Authority
 
-Plan substrate at N open:
-- This file (`N.md`)
-- `findings.md` (verbatim user N-open directive)
-- `dispatch/AGENT.md` (extends M dispatch template)
-- `PROGRESS.md` (initial state)
-- `waves/W{0..4}.md` (5 wave specs)
-- `coordination/CONSTELLATION.md` (carries from M close)
-- `research/R{alpha,beta,gamma,delta,epsilon,zeta}*.md` (6 research deliverables; ~3500 LOC combined)
+Plan substrate at N open (REVISED):
+- This file (`N.md`) — REVISED to KISS pruning-focus
+- `findings.md` — verbatim user N-open + KISS-revision directives
+- `dispatch/AGENT.md` — extends M dispatch template with N invariants 21-23
+- `PROGRESS.md` — initial + KISS-revision entry
+- `waves/W{0,1,2,4}.md` — 4 wave specs (W3 dropped; folded into W2)
+- `coordination/CONSTELLATION.md` — carries from M close
+- `research/R{α-ζ}*.md` — 6 research deliverables (open-time research)
+- `audit/N11-Lane-{a..f}-*.md` — 6 consumer audit deliverables (N-revision research; KISS audit fan-out)
+- `audit/N-W4-overfitting-audit.md` — unified overfitting audit (KISS revision)
+- `audit/N-prune-ledger.md` — synthesized A/B/C/D/E/F/G prune ledger
 
-Per N-open user directive, implementation dispatch awaits future explicit user authorization (analogous to K/L/M pattern). The plan substrate at this open is binding for the future dispatch.
+Per N-open user directive ("This is NOT an implementation phase. Tranche development only."), implementation dispatch awaits future explicit user authorization analogous to K/L/M pattern.
 
 ## §10 — Revision history
 
-- 2026-05-12 open commit (this commit): initial 5-wave plan with mobile-aware substrate + dock subsystem refinement + style-discipline HEADLINE.
+- 2026-05-12 initial open commit `cbe2d13`: 5-wave plan with mobile-aware substrate + dock subsystem refinement + style-discipline HEADLINE. Pre-KISS-revision.
+- 2026-05-12 KISS revision (this file): per user directive ("KISS. Audit for any components, classes, items that have ONE consumer or use case. Prune any overfitting. Conservative with additions and removals."). Pivoted plan from addition-focused (4 substrate threads + new primitive) to pruning-focused (A+B prune batch HEADLINE; N6/N7/N9 supporting; N8 new-primitive DEFERRED). Dropped W3 (folded into W2). Net library surface change at N close: **−8 items**. Six consumer audits + unified overfitting audit executed at this revision; 7 deliverables landed in `audit/`.

@@ -52,6 +52,26 @@ Alongside, thereupon, a 6 agent audit (after the above) of all of our consumers 
 - **N10** — Bidirectional 7-axis style audit per `docs/audits/style-audit.md` (canonical prompt body). Self-audit (glass-ui) + consumer-audit (each migrated consumer) fan-out.
 - **N11** — 6-agent audit of consumers post-migration, looking for the above + errors thereof. THIS HAPPENS AFTER N10 (sequential per user's "Alongside, thereupon").
 
+## 2026-05-12 — N KISS revision (user)
+
+After initial 5-wave plan commit `cbe2d13`, user issued:
+
+```
+KISS. And further, ensure that our consumer audits with 6 agents in parallel were completed. And audit for any components, classes, items that have ONE consumer or use case. We want to prune any overfitting. Explicate and challenege every item herein this library. What can be removed? We should be conservative with additions and removals, only folding in new genuinely useful primitives. Removing any dead or unusued ones, contrived ones.
+```
+
+## N-revision directives
+
+- **NR1**: KISS — re-evaluate every plan-proposed addition against KISS posture.
+- **NR2**: 6-agent parallel consumer audits — execute properly (the original Rδ was a single-agent fan-out across consumers; user wants 6 PARALLEL agents).
+- **NR3**: Single-consumer / one-use-case overfitting audit — surface candidates per the overfitting-audit canon at `docs/audits/overfitting-audit.md`.
+- **NR4**: Explicate and challenge EVERY item — defend each library surface item or prune it.
+- **NR5**: Conservative with additions AND removals — only fold in NEW GENUINELY useful primitives; remove dead/unused/contrived.
+
 ## Disposition
 
-N is a PLANNING-ONLY tranche per user N-open directive ("This is NOT an implementation phase. Tranche development only."). The plan substrate (`N.md`, `findings.md`, `dispatch/AGENT.md`, `PROGRESS.md`, `waves/W*.md`, `coordination/CONSTELLATION.md`, `research/R{α-ζ}*.md`) lands at this open. Implementation dispatch awaits a future explicit user directive (analogous to K, L, M pattern).
+N is a PLANNING-ONLY tranche per user N-open directive ("This is NOT an implementation phase. Tranche development only."). The plan substrate landed at `cbe2d13`. KISS revision now ships the consumer audit + overfitting audit deliverables + a revised plan that pivots from addition-focused to pruning-focused.
+
+7 read-only audit agents dispatched at KISS revision (6 consumer + 1 unified overfitting). All deliverables landed in `docs/tranches/N/audit/`. Synthesized prune ledger at `docs/tranches/N/audit/N-prune-ledger.md`. Revised N plan at `docs/tranches/N/N.md` §10 revision history.
+
+Implementation dispatch awaits future explicit user directive (analogous to K, L, M pattern).
