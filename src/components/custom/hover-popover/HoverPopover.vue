@@ -36,10 +36,30 @@ import { cn } from "../../../utils";
  * pay nothing.
  */
 
+const emit = defineEmits<{
+    /**
+     * AB.W2 — open-state passthrough.
+     *
+     * Surfaces reka-ui's internal HoverCardRoot open state to
+     * consumers via `v-model:open`. Cadence honors `hoverOpenDelay`
+     * and `closeDelay`, so consumers receive the SAME debounced
+     * signal the popover itself reads (no double-firing on pointer
+     * skim across the trigger edge). Use this to drive a sibling
+     * "hovered" highlight without manually hooking @mouseenter on
+     * the trigger element — the latter fires too eagerly when the
+     * popover content overlaps the trigger.
+     */
+    "update:open": [open: boolean];
+}>();
+
 const props = withDefaults(
     defineProps<{
         /** Convenience: label text. Slot wins if both supplied. */
         content?: string;
+        /** AB.W2 — externally-controlled open state. Two-way bound via
+         *  `v-model:open`. Leave undefined for the default uncontrolled
+         *  cadence (reka-ui drives the open state internally). */
+        open?: boolean;
         /** Side relative to trigger. Defaults `top` (tooltip register). */
         side?: "top" | "right" | "bottom" | "left";
         /** Alignment along the side. Defaults `center`. */
@@ -96,8 +116,25 @@ const contentClass = computed(() =>
    `v-model:open`; while the popover is visible AND `keepDockOpen` is
    set, hold the parent dock open via the provide/inject contract
    `<GlassDock>` ships through `useDockState`. Outside a dock context
-   the injects fall back to null and the watcher is a no-op. */
-const isOpen = ref(false);
+   the injects fall back to null and the watcher is a no-op.
+
+   AB.W2 — `v-model:open` passthrough. The local `isOpen` ref doubles
+   as the source of truth for both the dock-keep-open watcher AND the
+   `update:open` event surface. When the consumer two-way-binds the
+   `open` prop, the watcher on `props.open` syncs the external value
+   into the internal ref so reka-ui's HoverCardRoot reads from one
+   place. */
+const isOpen = ref(props.open ?? false);
+
+watch(() => props.open, (next) => {
+    if (typeof next === "boolean" && next !== isOpen.value) {
+        isOpen.value = next;
+    }
+});
+
+watch(isOpen, (next) => {
+    emit("update:open", next);
+});
 const dockKeepOpen = inject<(() => void) | null>("dockKeepOpen", null);
 const dockRelease = inject<(() => void) | null>("dockRelease", null);
 const dockId = inject<string | null>("glassDockId", null);
