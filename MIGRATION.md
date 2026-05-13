@@ -396,7 +396,7 @@ canonical import shape.
 
 ### `@mkbabb/glass-ui/api` — type + constant discovery layer
 
-32 canonical public symbols (24 types + 8 runtime constants) re-exported
+32 canonical public symbols (28 types + 4 runtime constants) re-exported
 from their existing homes. Recommended for consumer-side type discovery
 without coupling to a specific component's runtime entry point:
 
@@ -419,7 +419,7 @@ import {
 } from "@mkbabb/glass-ui/api";
 ```
 
-The `/api` subpath has zero JS payload for types-only consumers — all 24
+The `/api` subpath has zero JS payload for types-only consumers — all 28
 type aliases erase at build, leaving only the 4 constants in the runtime
 chunk. Use it freely for prop-forwarding wrappers, fixture typings, and
 union narrowing.

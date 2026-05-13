@@ -47,13 +47,13 @@ withDefaults(defineProps<TokenLadderProps>(), {
         "
     >
         <template v-for="row in rows" :key="row.label">
-            <div :class="cn(row.cls, sampleClass)">
+            <div :class="cn('min-w-0', row.cls, sampleClass)">
                 <slot name="sample" :row="row">{{ sampleText }}</slot>
             </div>
-            <code class="fira-code text-mono-caption text-foreground">
+            <code class="fira-code text-mono-caption text-foreground min-w-0 break-all">
                 {{ row.label }}
             </code>
-            <span class="text-mono-caption text-muted-foreground">
+            <span class="text-mono-caption text-muted-foreground min-w-0 break-words">
                 {{ row.hint ?? "" }}
             </span>
         </template>

@@ -1202,7 +1202,7 @@ Keep in sync with `tokens.css` when editing CSS tokens.
 
 ## Subpath surface
 
-v1.0 (L.W1 HEADLINE) closes the vueuse SCC trap with **Phase 2 root-barrel curation** + a **flat subpath surface**. The library ships under three import shapes — the curated root barrel, 38 flat per-package subpaths, and a pure types/constants `/api` discovery layer.
+v1.0 (L.W1 HEADLINE) closes the vueuse SCC trap with **Phase 2 root-barrel curation** + a **flat subpath surface**. The library ships under three import shapes — the curated root barrel, 37 flat JS subpaths (32 component packages + `/forms` + `/dark` + `/keyboard` + `/carousel` + `/api`), and the `/styles` CSS bundle (38 `package.json` exports entries total).
 
 ### The three layers
 
@@ -1210,7 +1210,7 @@ v1.0 (L.W1 HEADLINE) closes the vueuse SCC trap with **Phase 2 root-barrel curat
 
 2. **Per-package flat subpaths** — `./tokens`, `./dock`, `./search`, `./sidebar`, `./controls`, `./confirm-dialog`, `./infinite-scroll`, `./tabs`, `./typewriter`, `./stacked-icons`, `./glass-carousel`, `./aurora`, `./configurator`, `./metric-badge`, `./status-dot`, `./pulse`, `./paper-backdrop`, `./toggle-chip`, `./glass-panel`, `./metaballs`, `./sortable-list`, `./timeline`, `./labeled-field`, `./expandable-container`, `./icon-tooltip`, `./instrument-chassis`, `./glyph-face`, `./dock-group`, `./disco-glyph`, `./hover-popover`, `./scrolling-text`, `./freshness`. Each maps to a `src/<name>.ts` barrel and a `dist/<name>.{js,d.ts}` artefact.
 
-3. **API discovery layer `@mkbabb/glass-ui/api`** — pure types + constants re-export aggregator. Ships 32 canonical public symbols (24 types + 8 constants) across Aurora, Configurator, Metaballs, Surface enums (`CardTier`, `InstrumentChassisPhase`, `ToastVariant`), and CVA variants (`ButtonVariants`, `SliderVariants`, etc.). Pure-additive; types erase at build so consumer JS pays 0 B for type-only imports. See `src/api/index.ts`.
+3. **API discovery layer `@mkbabb/glass-ui/api`** — pure types + constants re-export aggregator. Ships 32 canonical public symbols (28 types + 4 constants) across Aurora, Configurator, Metaballs, Surface enums (`CardTier`, `InstrumentChassisPhase`, `ToastVariant`), and CVA variants (`ButtonVariants`, `SliderVariants`, etc.). Pure-additive; types erase at build so consumer JS pays 0 B for type-only imports. See `src/api/index.ts`.
 
 `./styles` is the shared CSS bundle (sole CSS subpath; consumers wire it via `@import "@mkbabb/glass-ui/styles"`).
 
@@ -1221,7 +1221,7 @@ v1.0 (L.W1 HEADLINE) closes the vueuse SCC trap with **Phase 2 root-barrel curat
 | `@mkbabb/glass-ui/forms` | Input, Textarea, Combobox\* family | `useVModel`, `reactiveOmit` |
 | `@mkbabb/glass-ui/dark` | `useGlobalDark` | `createGlobalState`, `useDark`, `useToggle` |
 | `@mkbabb/glass-ui/keyboard` | `registerShortcut`, `useRegisteredShortcuts`, `formatCombo`, `formatComboParts`, `isMac`, types | `createGlobalState`, `useEventListener` |
-| `@mkbabb/glass-ui/carousel` | `useCarousel` + `CarouselApi` (the embla-carousel-vue + `createInjectionState` composable powering `<Carousel>` and the `Carousel*` family) | `createInjectionState` |
+| `@mkbabb/glass-ui/carousel` | `useCarousel` + `CarouselApi` PLUS the full `Carousel*` component family — `Carousel`, `CarouselContent`, `CarouselDots`, `CarouselItem`, `CarouselNext`, `CarouselPager`, `CarouselPrevious`, `GlassCarouselPager` (substrate aligned with MIGRATION.md §1.2 at v1.0.4 / M.W0; pre-v1.0.4 only re-exported the composable + type) | `createInjectionState` (via `useCarousel`); every `Carousel*.vue` injects it |
 
 ```ts
 // v1.0 required shape

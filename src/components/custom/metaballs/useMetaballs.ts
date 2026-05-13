@@ -61,6 +61,51 @@ function linkProgram(gl: WebGLRenderingContext, vs: WebGLShader, fs: WebGLShader
 const MAX_BLOBS = 16;
 
 /**
+ * Probe WebGL availability synchronously WITHOUT touching the consumer's
+ * canvas ref. Creates a throwaway canvas, attempts `getContext('webgl')`,
+ * and reports the result. Used at composable-call time so `isSupported`
+ * starts at the correct value rather than flipping `true → false` on
+ * first mount.
+ *
+ * # M.W2 Lane A (F-ε-3 fix) — break the mount/unmount cycle
+ *
+ * Previously `isSupported` started `true`, and `init()` flipped it to
+ * `false` only after the canvas DOM mounted and `getContext('webgl')`
+ * returned null (which happens in headless Chrome with `--disable-gpu`,
+ * the exact Lighthouse audit configuration). Consumer stories use
+ * `<MetaballCanvas v-if="isSupported" ref="canvasRef">`. When the inner
+ * ref flipped `false`, the outer v-if also re-evaluated. With the story's
+ * `?? true` fallback on `canvasRef.value?.isSupported`, the unmount path
+ * reset isSupported back to `true`, re-mounting the component → looped
+ * indefinitely until Vue's scheduler tripped the recursion cap on the
+ * surrounding `<Configurator>`.
+ *
+ * Synchronous detection lets `useMetaballs` report the truth up-front:
+ * if WebGL is unsupported, `isSupported` starts `false`, the consumer
+ * v-if reads `false → never mounts inner ref → never cycles`.
+ */
+/**
+ * Synchronous WebGL availability probe. Exported as `isWebGLSupported` so
+ * consumers can gate their own UI on WebGL availability at setup time
+ * WITHOUT introducing a mount/unmount cycle through the MetaballCanvas
+ * component instance. See the F-ε-3 disposition in MetaballCanvas.vue
+ * for the cycle this avoids.
+ */
+export function isWebGLSupported(): boolean {
+    if (typeof document === "undefined") return false;
+    try {
+        const probe = document.createElement("canvas");
+        const ctx = probe.getContext("webgl", { failIfMajorPerformanceCaveat: false });
+        return !!ctx;
+    } catch {
+        return false;
+    }
+}
+
+// Backwards-compatible local alias — historical call sites in this file.
+const probeWebGLSupport = isWebGLSupported;
+
+/**
  * WebGL metaball composable.
  *
  * Uses uniform3fv with pre-allocated Float32Arrays for zero-allocation
@@ -74,7 +119,9 @@ export function useMetaballs(
     const cfg = (config && isReactive(config))
         ? config as Required<MetaballConfig>
         : reactive({ ...DEFAULT_METABALL_CONFIG, ...config }) as Required<MetaballConfig>;
-    const isSupported = ref(true);
+    // Seed isSupported synchronously from a throwaway-canvas probe. See
+    // probeWebGLSupport() docstring for the F-ε-3 cycle this avoids.
+    const isSupported = ref(probeWebGLSupport());
 
     let gl: WebGLRenderingContext | null = null;
     let program: WebGLProgram | null = null;
@@ -109,14 +156,22 @@ export function useMetaballs(
         if (!canvas) return;
 
         gl = canvas.getContext("webgl", { alpha: true, premultipliedAlpha: false });
-        if (!gl) { isSupported.value = false; return; }
+        // probeWebGLSupport() already gated on getContext; the in-init
+        // checks below remain as defensive bails (e.g., context lost
+        // post-probe), but they MUST NOT flip `isSupported.value = false`
+        // post-probe — that mutation is what historically created the
+        // mount/unmount cycle when a consumer composes
+        // `<MetaballCanvas v-if="isSupported" ref="canvasRef">` with a
+        // `?? true` fallback on the exposed ref. See F-ε-3 disposition
+        // in docs/tranches/M/audit/W2-Lane-A-F-eps-3-proof.md.
+        if (!gl) return;
 
         const vs = compileShader(gl, gl.VERTEX_SHADER, VERTEX_SHADER);
         const fs = compileShader(gl, gl.FRAGMENT_SHADER, FRAGMENT_SHADER);
-        if (!vs || !fs) { isSupported.value = false; return; }
+        if (!vs || !fs) return;
 
         program = linkProgram(gl, vs, fs);
-        if (!program) { isSupported.value = false; return; }
+        if (!program) return;
 
         gl.useProgram(program);
 

@@ -4,7 +4,7 @@ Glassmorphic design system for Vue 3.5. Shared components, design tokens, and co
 
 ## Features
 
-- 44 shadcn-vue / reka-ui base components plus 28 custom composites (Button — incl. `primary-audacious` — Card, Dialog, Select, Tabs, Popover, Slider, NumberField, Section, ScrollPane, CartoonCard, MetricBadge, MetricPill, etc.)
+- 43 shadcn-vue / reka-ui base components plus 30 custom composites (Button — incl. `primary-audacious` — Card, Dialog, Select, Tabs, Popover, Slider, NumberField, Section, ScrollPane, CartoonCard, MetricBadge, MetricPill, etc.)
 - Five-tier glassmorphism: `.glass-wash`, `.glass-quiet`, `.glass-resting`, `.glass-floating`, `.glass-overlay` (the v0.8.0 ladder; replaces the prior subtle/default/medium/elevated naming)
 - Convenience shorthands: `.glass-card`, `.glass-pill`, `.glass-btn`, `.floating-panel`, `.glass-cartoon`, `@utility btn-audacious`
 - `GlassDock`: collapsible glass action bar with horizontal + vertical orientations, `containerName` prop, layered `DockLayerGroup`/`DockLayer` panes, density rail, ref-counted keep-open state
@@ -83,7 +83,7 @@ npm run profile:budget  # bundle-budget gate (--enforce in CI)
 src/
 ├── index.ts                    # core primitives, core composables, utilities (vueuse-FREE root barrel)
 ├── components/
-│   ├── ui/                     # 44 shadcn-vue components (reka-ui primitives) + _shared
+│   ├── ui/                     # 43 shadcn-vue components (reka-ui primitives) + _shared (44 dirs total)
 │   │   ├── _shared/            # ModalOverlay (V.W3), menuItemVariants CVA (V.W3)
 │   │   ├── button/             # Primitive + CVA (11 variants incl. primary-audacious; 5 sizes)
 │   │   ├── card/               # Card + CartoonCard + ScrollPane sibling primitives
@@ -98,7 +98,7 @@ src/
 │   │                           # number-field, popover, progress, radio-group, select,
 │   │                           # separator, sheet, switch, table, tabs, tags-input, textarea,
 │   │                           # toast, toggle, toggle-group, tooltip
-│   └── custom/                 # 28 custom composites
+│   └── custom/                 # 30 custom composites
 │       ├── aurora/             # Aurora WebGL background + useAurora composable
 │       ├── configurator/       # Configurator + Layer + Row + useConfiguratorState
 │       ├── dock/               # GlassDock, DockLayer, DockLayerGroup, DockIconButton,
@@ -156,7 +156,7 @@ src/
 
 ## Subpath imports
 
-Beyond the root barrel, the library ships **38 flat per-package subpaths** plus the `/styles` CSS bundle. v1.0 (L.W1) adds three vueuse-bearing surfaces as flat top-level subpaths (`/dark`, `/keyboard`, `/carousel`) and a pure-types-and-constants `/api` discovery layer.
+Beyond the root barrel, the library ships **37 flat JS subpaths** (32 component packages + `/api` + `/forms` + `/dark` + `/keyboard` + `/carousel`) plus the `/styles` CSS bundle (38 entries total in `package.json` exports). v1.0 (L.W1) adds three vueuse-bearing surfaces as flat top-level subpaths (`/dark`, `/keyboard`, `/carousel`) and a pure-types-and-constants `/api` discovery layer.
 
 ```ts
 // v1.0 vueuse-bearing subpaths (closed the SCC trap; root barrel no longer
@@ -187,7 +187,7 @@ import { GlassCarousel } from "@mkbabb/glass-ui/glass-carousel";
 import { ScrollingText } from "@mkbabb/glass-ui/scrolling-text";
 ```
 
-See `package.json` `exports` for the full subpath map (38 flat subpaths plus `/styles`). Resolution is verified at every release by `scripts/release.sh`'s synthetic-consumer probe (L.W0 Lane III).
+See `package.json` `exports` for the full subpath map (37 flat JS subpaths plus `/styles`). Resolution is verified at every release by `scripts/release.sh`'s synthetic-consumer probe (L.W0 Lane III).
 
 v1.0 retired the nested v0.9.x subpaths `@mkbabb/glass-ui/composables/dark` + `@mkbabb/glass-ui/composables/keyboard` (flattened to `/dark` + `/keyboard`) and the demo-only `@mkbabb/glass-ui/pagination` + `@mkbabb/glass-ui/virtual` subpaths (zero production consumers; L.W3 wire-or-retire). See `MIGRATION.md` for the consumer-facing migration path.
 

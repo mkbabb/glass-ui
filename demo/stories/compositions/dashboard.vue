@@ -71,7 +71,7 @@ const trendClasses: Record<Trend, string> = {
 <template>
     <StoryPage>
         <div class="grid gap-[calc(1.5rem_+_var(--density-gap,0rem))] lg:grid-cols-[16rem_1fr_18rem]">
-            <aside class="flex flex-col gap-[calc(0.75rem_+_var(--density-gap,0rem))]">
+            <aside class="flex flex-col gap-[calc(0.75rem_+_var(--density-gap,0rem))] min-w-0">
                 <span class="text-admin-label section-label">System</span>
                 <Card class="border-2 border-foreground/10">
                     <CardContent class="flex flex-col divide-y divide-border/50 p-0">
@@ -87,21 +87,30 @@ const trendClasses: Record<Trend, string> = {
                                 }"
                                 aria-hidden="true"
                             />
-                            <span class="text-small flex-1">{{ item.label }}</span>
+                            <span class="text-small flex-1 min-w-0 break-words">{{ item.label }}</span>
                             <span class="text-mono-caption">{{ item.state }}</span>
                         </div>
                     </CardContent>
                 </Card>
             </aside>
 
-            <main class="flex flex-col gap-[calc(1.5rem_+_var(--density-gap,0rem))]">
-                <!-- KPI strip — DockGroup pill-row shelf for compact metric clusters. -->
-                <DockGroup density="comfortable" class="self-start">
-                    <MetricBadge :amount="42" unit="active" size="md" />
-                    <MetricBadge :amount="1.2" unit="k r/min" size="md" />
-                    <MetricBadge :amount="128" unit="ms p95" size="md" />
-                    <MetricBadge :amount="0.04" unit="% err" size="md" />
-                </DockGroup>
+            <main class="flex flex-col gap-[calc(1.5rem_+_var(--density-gap,0rem))] min-w-0">
+                <!-- KPI strip — DockGroup pill-row shelf for compact metric clusters.
+                     The substrate DockGroup is inline-flex nowrap by design;
+                     at narrow viewports the 4-chip row exceeds the column.
+                     Wrap in a `min-w-0 overflow-x-auto` shell with hidden
+                     scrollbar so the row stays visually intact while the
+                     parent column never overflows. Mirrors the
+                     `.dock-group-audacious-scroll` idiom from
+                     `demo/stories/primitives/dock-group.vue`. -->
+                <div class="kpi-strip-scroll min-w-0">
+                    <DockGroup density="comfortable" class="self-start">
+                        <MetricBadge :amount="42" unit="active" size="md" />
+                        <MetricBadge :amount="1.2" unit="k r/min" size="md" />
+                        <MetricBadge :amount="128" unit="ms p95" size="md" />
+                        <MetricBadge :amount="0.04" unit="% err" size="md" />
+                    </DockGroup>
+                </div>
 
                 <div class="grid grid-cols-2 gap-[calc(1rem_+_var(--density-gap,0rem))] 2xl:grid-cols-4">
                     <Card
@@ -119,8 +128,8 @@ const trendClasses: Record<Trend, string> = {
                                 {{ metric.label }}
                             </CardTitle>
                         </CardHeader>
-                        <CardContent class="flex items-end justify-between pt-0">
-                            <span class="text-display font-display tabular-nums">
+                        <CardContent class="flex flex-wrap items-end justify-between gap-2 pt-0">
+                            <span class="text-display font-display tabular-nums min-w-0 break-all">
                                 {{ metric.value }}
                             </span>
                             <Badge
@@ -189,7 +198,7 @@ const trendClasses: Record<Trend, string> = {
                 </Card>
             </main>
 
-            <aside class="flex flex-col gap-[calc(0.75rem_+_var(--density-gap,0rem))]">
+            <aside class="flex flex-col gap-[calc(0.75rem_+_var(--density-gap,0rem))] min-w-0">
                 <span class="text-admin-label section-label flex items-center gap-2">
                     <Activity class="size-3" aria-hidden="true" /> Activity
                 </span>
@@ -208,11 +217,11 @@ const trendClasses: Record<Trend, string> = {
                                     }"
                                     aria-hidden="true"
                                 />
-                                <div class="flex flex-col gap-1">
+                                <div class="flex flex-col gap-1 min-w-0">
                                     <span class="fira-code text-xs text-muted-foreground">
                                         {{ event.time }}
                                     </span>
-                                    <span class="text-small leading-snug">{{ event.text }}</span>
+                                    <span class="text-small leading-snug break-words">{{ event.text }}</span>
                                 </div>
                             </li>
                         </ol>
@@ -222,3 +231,18 @@ const trendClasses: Record<Trend, string> = {
         </div>
     </StoryPage>
 </template>
+
+<style scoped>
+.kpi-strip-scroll {
+    /* M.W2 Lane C — clip the KPI DockGroup (inline-flex + nowrap by substrate
+       design) to the parent column. Horizontal scroll keeps the row visually
+       intact while body scrollWidth never exceeds the viewport. Hidden
+       scrollbar matches the StoryPager + `.dock-group-audacious-scroll`
+       idiom. */
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.kpi-strip-scroll::-webkit-scrollbar {
+    display: none;
+}
+</style>

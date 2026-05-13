@@ -1,5 +1,125 @@
 # Changelog
 
+## v1.0.5 — 2026-05-12 — M.W2 (F-ε-3 Configurator recursion fix + `src/api/` canonical-type promotions + L cosmetic residuals absorb)
+
+Three-lane substrate close: F-ε-3 Configurator recursion CLOSED via source
+fix (Lane A); 5 canonical types promoted to the discovery surface
+(Lane B); 9 of 11 L cosmetic residuals absorbed (Lane C). Full per-lane
+detail in `docs/tranches/M/audit/W2-Lane-{A,B,C}-*-proof.md`.
+
+### Fixed — F-ε-3 Configurator recursion (Lane A)
+
+L.Rε A.8 + L.W7 Lane B catalogued a Lighthouse-only "Maximum recursive
+updates exceeded" at `/motion/metaballs` that did not reproduce under
+Playwright. M.W2 Lane A authored a methodical Vitest fixture
+(`tests/configurator-recursion.spec.ts`) that surfaced THREE causal
+layers, all repaired:
+
+1. **(primary)** reka-ui `<CollapsibleContent>` + `<Presence>`
+   height-measurement watcher graph race under Lighthouse cold-load
+   discipline; `getComputedStyle` + `getBoundingClientRect` reads
+   inside `watch([isOpen, presentRef.value?.present])` re-trigger
+   non-convergently across 7 ConfiguratorLayer instances. Fix:
+   `src/components/custom/configurator/ConfiguratorLayer.vue` replaces
+   the reka-ui `<Collapsible>` composition with a CSS-only
+   `grid-template-rows: 0fr ↔ 1fr` reveal — no JS watchers, no
+   DOM-measurement, no recursion surface.
+
+2. **(secondary)** Vue 3 Boolean prop coercion forced
+   `props.open === false` (instead of `undefined`) when no `:open`
+   passed, short-circuiting `ref(props.open ?? props.defaultOpen)`.
+   Fix: `withDefaults({ open: undefined })` in ConfiguratorLayer.
+
+3. **(tertiary)** `MetaballCanvas.isSupported` was a reactive ref that
+   flipped `true → false` after WebGL init failed (Lighthouse runs
+   with `--disable-gpu`); the metaballs story's
+   `<MetaballCanvas v-if="canvasRef?.isSupported ?? true">` pattern
+   then created an asymmetric mount/unmount cycle hitting Vue's
+   100-iteration recursion cap. Fix:
+   `src/components/custom/metaballs/useMetaballs.ts` adds a synchronous
+   `isWebGLSupported()` probe; `isSupported` is seeded at composable-call
+   time and never re-mutated. `defineExpose` no longer ships
+   `isSupported` from `MetaballCanvas.vue`. New canonical consumer probe
+   `isWebGLSupported` exported from `src/components/custom/metaballs/index.ts`.
+
+Verification: Vitest fixture 6/6 PASS; full test suite 29 files / 339
+tests PASS. Lighthouse@12.8.2 against `/motion/metaballs` with
+`--headless=new --disable-gpu`: `errors-in-console` score 0 → 1; items
+1 → 0; BP category 0.96. Puppeteer cross-verification at 1.5Mbps/750Kbps
++ 4× CPU throttle: pageerror count 15+ → 0; `[Vue warn]` traces
+14+ → 0.
+
+### Added — `@mkbabb/glass-ui/api` (Lane B)
+
+Extend the `@mkbabb/glass-ui/api` discovery layer with 5 canonical types
+that were excluded at L.W1 Lane B (32-symbol launch). The promotions
+absorb L-residuals.md P3 carry-forwards + L.W7 Lane B fallout + AA-tranche
+timeline primitive surface — every promotion has consumer evidence on
+the canonical public surface today.
+
+Surface count: 32 → 37 (29 types + 8 constants).
+
+- `GlassPanelVariant` — 5-rung glass-ladder vocabulary (`wash | quiet |
+  resting | floating | overlay`). Lane B-original W1-B Open Q1 path-a
+  closure: the canonical home `src/components/custom/glass-panel/index.ts`
+  now re-exports the type from the SFC alongside `GlassPanelProps` so the
+  symbol is on the public-package barrel before api/ re-exports it. The
+  demo's `foundations/paper-glass.vue` had locally redeclared this exact
+  union since v0.8.6 — promotion deletes that duplicate at consumer side.
+- `ConfiguratorCloneMode` — `"commit-on-write" | "per-preset"` union
+  driving the Configurator slot model. Shipped at L.W7 Lane B aurora
+  unification (aurora chrome pins `'per-preset'`). The Configurator
+  `index.ts` already exported it; api/ now completes the cluster
+  alongside `ConfiguratorPreset`, `ConfiguratorScrollMode`,
+  `ConfiguratorState`, `ConfiguratorStateOptions`.
+- `TimelineSegment` + `TimelineSegmentGradient` + `TimelineSegmentState`
+  — segment data shape from the AA-tranche timeline primitive. Consumers
+  building timeline preset arrays type fixtures against these. The
+  `TimelineSegmentState` lifecycle enum is the timeline analog of
+  `ToastVariant` (status-tier vocabulary).
+
+### Fixed — `src/components/custom/glass-panel/index.ts`
+
+- Canonical-home barrel now re-exports `GlassPanelVariant` from
+  `GlassPanel.vue`. Closes the W1-B audit's single-canonical-home
+  oversight (the SFC exported the type but the package barrel did not,
+  so api/ couldn't reach it without breaking the
+  re-export-from-canonical-home invariant).
+
+### Refined — L cosmetic residuals absorb (Lane C)
+
+9 of 11 cataloged L cosmetic residuals absorbed (≥80% target met):
+
+- **F-π-1** — `demo/stories/TokenLadder.vue` 375 viewport overflow.
+- **F-π-2** — `demo/stories/compositions/dashboard.vue` 375+1024 viewport
+  overflows.
+- **F-π-3 + G13** — `demo/stories/aurora.vue` overflow + cosmetic.
+- **G16** — `demo/stories/primitives/dock-group.vue` polish.
+- **G17** — `demo/stories/composables/use-story-demo.vue` polish.
+- **G4** — `src/composables/motion/index.ts` barrel style alignment with
+  the rest of the composables/ tree.
+- **G14** — `src/components/ui/_shared/ModalOverlay.vue` `layout="edge"`
+  comment wording clarification.
+
+1 NO-CHANGE-REQUIRED (forms.ts Textarea hypothesis disproven at lane
+investigation); 1 deferred to Lane B coordination (GlassPanelVariant —
+handled at Lane B per above). Viewport fixes Playwright-verified at 3
+viewports.
+
+### Verification
+
+- `dist/api.d.ts` self-contained: 0 `'../src/...'` refs; size 12,513 B →
+  ~16 KB (38 `export declare` lines).
+- `npm run verify-export-types`: PASS (`./api` resolves).
+- Synthetic-consumer probe at `/tmp/glass-ui-mw2b-probe/` typechecks
+  cleanly on positive narrowing for all 5 new types; negative-control
+  errors correctly flag invalid literals (`"elevated"`,  `"overwrite"`,
+  `"skipped"`).
+- Runtime probe `import("@mkbabb/glass-ui/api")` keys unchanged
+  (4 constants — the 5 promotions are type-only, erase at build).
+- Full library typecheck (src/ side) + Vitest suite (29 files / 339
+  tests + new `tests/configurator-recursion.spec.ts` 6/6) all PASS.
+
 ## v1.0.4 — 2026-05-12 — M.W0 (Carousel subpath substrate alignment with MIGRATION.md §1.2)
 
 Fix the `@mkbabb/glass-ui/carousel` subpath to match the contract that

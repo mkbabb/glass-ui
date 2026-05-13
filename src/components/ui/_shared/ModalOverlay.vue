@@ -13,9 +13,11 @@ import { cn } from "../../../utils";
  *   (`bg-overlay-scrim-strong`) | `clear` (`bg-overlay-scrim-subtle`)
  * - `animate`: `fade` (default — composes `.sheet-animate`) | `scale`
  *   | `slide` | `none` (Drawer / vaul-vue case)
- * - `layout`: `centered` (default flat overlay) | `edge` (legacy alias)
- *   | `scroll` (the DialogScrollContent pattern: grid place-items-center
- *   overflow-y-auto so content scrolls inside the scrim)
+ * - `layout`: `centered` (default flat overlay) | `edge` (reserved alias —
+ *   maps to no-op today; held for future right/bottom edge-pinned overlays
+ *   per A5 §4.4 forward-reservation) | `scroll` (the DialogScrollContent
+ *   pattern: grid place-items-center overflow-y-auto so content scrolls
+ *   inside the scrim)
  *
  * Drawer / vaul-vue stays carved per A5 §4.4 — its transform-driven motion
  * conflicts with `.sheet-animate`'s data-state animation, and the
@@ -41,8 +43,8 @@ interface ModalOverlayProps {
      * Layout — `centered` is the default flat overlay. `scroll` adds
      * `grid place-items-center overflow-y-auto` so content scrolls inside
      * the scrim (DialogScrollContent's "scrollable centred dialog" pattern).
-     * `edge` is an alias for `centered` reserved for future right/bottom
-     * edge-pinned overlays.
+     * `edge` is a forward-reserved alias that maps to no-op today (held for
+     * future right/bottom edge-pinned overlays per A5 §4.4).
      */
     layout?: "centered" | "edge" | "scroll";
 }

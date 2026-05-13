@@ -2,8 +2,8 @@
 
 **Artefact class**: `coordination/CONSTELLATION.md` (NEW at M; per L.Rδ §G.6 + M.Rδ P2 precept proposal).
 **Scope**: every repo under user control that participates in the `@mkbabb/*` namespace OR consumes/produces glass-ui artefacts OR shares precept submodule.
-**Date**: 2026-05-12 (M open).
-**Authoring authority**: M orchestrator (glass-ui-side).
+**Date**: 2026-05-12 (M open) — refreshed at M.W3 Lane B (post-W1 + W2 + W3 close).
+**Authoring authority**: M orchestrator (glass-ui-side); refreshes at each M wave close.
 
 This is the canonical cross-repo manifest. It supersedes the per-peer `coordination/<peer-letter>.md` pattern (L W0 introduced for single-peer; M extends for multi-peer). Per-peer files become §-references into this manifest going forward.
 
@@ -11,8 +11,8 @@ This is the canonical cross-repo manifest. It supersedes the per-peer `coordinat
 
 | Repo | Path | Vue? | glass-ui pin | keyframes.js pin | Tranche stream | Last tranche close | Active tranche | Status |
 |---|---|---|---|---|---|---|---|---|
-| **glass-ui** | `/Users/mkbabb/Programming/glass-ui` | n/a (library) | n/a (origin) | `^2.0.0` peer | C → L → M | L `3e4d472` (v1.0.0); AA layered v1.0.1→v1.0.3 (timeline+typography); M.W0 patches `src/carousel.ts` substrate defect | M (this) | active; v1.0.4 patch at W0 close |
-| **speedtest** | `/Users/mkbabb/Programming/speedtest` | yes | `file:../glass-ui` | n/a | A → Y → Z → AA → pre-AB | AA (verify) | none active in M scope | M.W0/W1 verified glass-ui v1.0.4 consumption clean; M.W1 Lane F HANDOFF DONE |
+| **glass-ui** | `/Users/mkbabb/Programming/glass-ui` | n/a (library) | n/a (origin) | `^2.0.0` peer | C → L → M | L `3e4d472` (v1.0.0); AA layered v1.0.1→v1.0.3 (timeline+typography); M.W0 patches `src/carousel.ts` substrate defect → v1.0.4 | M (this); W0 + W1 CLOSED; W2 + W3 closing | active; v1.0.4 (W0); v1.0.5-pending (W2 api/extensions + F-ε-3 fix + cosmetic absorb) |
+| **speedtest** | `/Users/mkbabb/Programming/speedtest` | yes | `file:../glass-ui` | n/a | A → Y → Z → AA → pre-AB | AA closed (per AA/FINAL.md at speedtest); Y closed long ago | none active in M scope | M.W0/W1 verified glass-ui v1.0.4 consumption clean; M.W1 Lane F HANDOFF DONE (`docs/tranches/M/audit/W1-Lane-F-speedtest-post-Y-proof.md`) |
 | **keyframes.js** | `/Users/mkbabb/Programming/keyframes.js` | yes (own + demo) | `file:../glass-ui` | self (`@mkbabb/keyframes.js@2.0.0`) | A → H → pre-W (`w.w2.1-keyframes-prebuild`) | H (verify FINAL.md) | M.W1 Lane A | M.W1 commit `b788205` on user WIP branch (local-only) |
 | **value.js** | `/Users/mkbabb/Programming/value.js` | yes (demo) | `file:../glass-ui` | `file:../keyframes.js` | unknown → pre-W (`w.w2.1-value-js-prebuild`) | unknown | M.W1 Lane B | M.W1 commit on user WIP branch (local-only) |
 | **words** (frontend) | `/Users/mkbabb/Programming/words/frontend` | yes | `file:../../glass-ui` (FIXED at M.W0) | `^2.0.0` | unknown | unknown | M.W1 Lane D CLOSED | M.W1 commit `0f16925` on master + pushed; glass-subtle→glass-wash + virtual local fork + full v1.0 absorb |
@@ -20,9 +20,9 @@ This is the canonical cross-repo manifest. It supersedes the per-peer `coordinat
 | **bbnf-buddy** | `/Users/mkbabb/Programming/bbnf-buddy` | yes | `file:../glass-ui` | `file:../keyframes.js` | unknown | unknown | M.W1 Lane E CLOSED | M.W1 commit `e06d629` on master (no origin remote — local-only); 22 sites migrated to v1.0 per-package subpaths + ScrollArea→ScrollPane + useLeaveTimer local impl |
 | **bbnf-lang** | `/Users/mkbabb/Programming/bbnf-lang` | no (no glass-ui dep) | n/a | n/a | AA → BD (50+; deepest tranche-format adopter per M.Rε) | BD (verify) | possibly active | tranche-format origin; shares precept submodule |
 | **mkb-utils** | `/Users/mkbabb/Programming/mkb-utils` | no | n/a | n/a | unknown | unknown | none | utility lib; verify scope |
-| **vite-plugin-shebang** | `/Users/mkbabb/Programming/vite-plugin-shebang` | n/a (plugin) | n/a | n/a | unknown | unknown | none | stale (Vite 4); retire-or-refresh in M.W5 |
-| **mathanim** | `/Users/mkbabb/Programming/mathanim` | unknown | n/a | n/a | unknown | unknown | none | stale (TS 4.1); verify scope; retire-or-refresh in M.W5 |
-| **fourier-animate** | `/Users/mkbabb/Programming/fourier-animate` | unknown (no package.json?) | n/a | n/a | unknown | unknown | none | verify — possibly Python-only; formal out-of-constellation if so |
+| **vite-plugin-shebang** | `/Users/mkbabb/Programming/vite-plugin-shebang` | n/a (plugin) | n/a | n/a | unknown | unknown | none | retired @ M.W3 — FORMAL-RETIRE (soft); 1 dormant consumer (mailtyphoon ^0.1.6); npm tombstone |
+| **mathanim** | `/Users/mkbabb/Programming/mathanim` | n/a (demo site) | n/a | n/a | unknown | unknown | none | retired @ M.W3 — FORMAL-RETIRE; dormant 5y; 0 consumers; demo-only (not npm-published) |
+| **fourier-animate** | `/Users/mkbabb/Programming/fourier-animate` | n/a (Python) | n/a | n/a | unknown | unknown | none | out-of-constellation-scope @ M.W3 — Python-only (Poetry); structurally outside @mkbabb/* Node namespace |
 | **parse-that** | `/Users/mkbabb/Programming/parse-that` | no | n/a | n/a | unknown | unknown | none | likely bbnf-lang dep; verify scope |
 | **precepts** (submodule) | `/Users/mkbabb/Programming/glass-ui/docs/precepts` | n/a | n/a | n/a | submodule shared across repos | reconciled at M.W0 — `08a2e9c` on origin/main | M.W0 reconcile **CLOSED** | RECONCILED |
 
@@ -77,9 +77,9 @@ This is the canonical cross-repo manifest. It supersedes the per-peer `coordinat
 | bbnf-buddy | active consumer; verify v1.0 + tranche adoption | yes |
 | bbnf-lang | own tranche stream (AA-BD); shared precept submodule | reader-only on source; coordinate on precept submodule reconciliation |
 | mkb-utils | utility lib; consider adopt into constellation | yes (with user-authorized scope) |
-| vite-plugin-shebang | stale; retire-or-refresh decision in M.W5 | yes |
-| mathanim | stale; retire-or-refresh in M.W5 | yes |
-| fourier-animate | verify scope first | reader-only until scope verified |
+| vite-plugin-shebang | retired @ M.W3 (FORMAL-RETIRE soft); no further writes | no |
+| mathanim | retired @ M.W3 (FORMAL-RETIRE); no further writes | no |
+| fourier-animate | out-of-constellation @ M.W3 (Python-only) | not applicable (out of scope) |
 | parse-that | likely bbnf-lang dep; reader-only | reader-only |
 | precepts (submodule) | M.W0 reconciliation lane | orchestrator-solo (no agents) |
 
@@ -132,6 +132,15 @@ Zero unauthorized agent mutations is the canonical clean criterion.
 - **N-fourier (P0) — CLOSED**: fourier-analysis/web v1.0 retired-subpath drift fixed (2 `useOffsetPagination` imports + 1 `useGlobalDark` migrated; local 60-LOC reference impl forked from v0.9.3 source).
 - **N-bbnf-buddy verify — CLOSED**: bbnf-buddy verified ZERO retired-subpath imports at HEAD (Rα §A.5 plan claim was incorrect; nothing to migrate on the retired-subpath axis); 2 `useGlobalDark` root-barrel imports migrated to `/dark`.
 - **N-carousel-defect (P0) — CLOSED at v1.0.4**: glass-ui `src/carousel.ts` only exposed `useCarousel + CarouselApi`; MIGRATION.md §1.2 contract promised the full `Carousel*` component family on `/carousel`. Fixed in orchestrator-direct edit; v1.0.4 patch.
+
+### W3 close state — Lane A stale-repo dispositions (2026-05-12)
+
+- **vite-plugin-shebang — FORMAL-RETIRE (soft)**: last activity 2023-11-13; Vite-4 era. Consumer-graph reveals **1 dormant consumer** (mailtyphoon `^0.1.6`, last active 2024-01) — corrects M.Rε §A "zero active consumers" claim. Disposition: keep published 0.1.6 as a tombstone; no Vite-5 bump; no source-tree changes. CONSTELLATION §1+§4 updated.
+- **mathanim — FORMAL-RETIRE**: last activity 2021-02-16 (5y dormant); TS 4.1 / ESLint 7 / Prettier 2; depends on two stale `github:` direct refs (mkbabb/animation.js, mkbabb/yajr). Identity is a demo site (`main: confetti.js`), not a library. **0 downstream consumers**; not npm-published. Disposition: documentation-only retirement. CONSTELLATION §1+§4 updated.
+- **fourier-animate — MOVE-OUT-OF-CONSTELLATION**: Python project (Poetry; matplotlib/numpy/scipy/opencv); no package.json; structurally outside `@mkbabb/*` Node namespace. Last activity 2022-07-28 (orthogonal to disposition). Disposition: scope clarification — out-of-constellation. CONSTELLATION §1+§4 updated.
+- **Escalations open** (see W3 Lane A proof § Open questions): (1) physical repo relocation (rename to `.archive/` or move out of `Programming/`) — not executed without user authorization; (2) optional `npm deprecate vite-plugin-shebang@<=0.1.6` — not executed (would noise mailtyphoon installs).
+
+Full audit: [`audit/W3-Lane-A-stale-repo-decisions-proof.md`](../audit/W3-Lane-A-stale-repo-decisions-proof.md).
 
 ### Carry-forward to W1
 

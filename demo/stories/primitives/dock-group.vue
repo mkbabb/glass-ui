@@ -2,7 +2,7 @@
 import StoryPage from "../StoryPage.vue";
 import { DockGroup } from "../../../src/components/custom/dock-group";
 import { DockIconButton, DockTabButton } from "../../../src/components/custom/dock";
-import MetricBadge from "../../../src/components/custom/metric-badge/MetricBadge.vue";
+import { MetricBadge } from "../../../src/components/custom/metric-badge";
 import { ArrowLeft, RotateCcw, Square, Settings } from "lucide-vue-next";
 </script>
 

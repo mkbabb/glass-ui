@@ -1,37 +1,15 @@
-// Barrel for motion composables backed by @mkbabb/keyframes.js.
-export { DAMPING, SNAP_THRESHOLD } from "./constants";
-export {
-    useSpringOrchestrator,
-    type SpringSnapshot,
-} from "./useSpringOrchestrator";
-export { useStaggerReveal } from "./useStaggerReveal";
-export { useScrollProgress } from "./useScrollProgress";
-export {
-    useAnimatedNumber,
-    type AnimatedNumberMode,
-    type AnimatedNumber,
-    type UseAnimatedNumberOptions,
-} from "./useAnimatedNumber";
-export {
-    useAnimatedNumberMap,
-    type UseAnimatedNumberMapOptions,
-} from "./useAnimatedNumberMap";
-export { useDarkModeSync } from "./useDarkModeSync";
-export {
-    useRAFLoop,
-    type RAFLoopCallback,
-    type RAFLoopControls,
-    type RAFLoopTiming,
-    type UseRAFLoopOptions,
-} from "./useRAFLoop";
-export {
-    useIntersectionPause,
-    type IntersectionPauseControls,
-    type PausableRuntime,
-    type UseIntersectionPauseOptions,
-} from "./useIntersectionPause";
-export {
-    useStagger,
-    type UseStaggerOptions,
-    type UseStaggerControls,
-} from "./useStagger";
+// Sub-tree barrel for motion composables backed by @mkbabb/keyframes.js.
+//
+// Shape harmonised with sibling sub-trees (dark/, keyboard/, reactive/, dom/)
+// — every leaf is `export *`-rolled so the barrel is a thin pass-through with
+// no curation. Types are co-exported beside their runtime symbols at each leaf.
+export * from "./constants";
+export * from "./useSpringOrchestrator";
+export * from "./useStaggerReveal";
+export * from "./useScrollProgress";
+export * from "./useAnimatedNumber";
+export * from "./useAnimatedNumberMap";
+export * from "./useDarkModeSync";
+export * from "./useRAFLoop";
+export * from "./useIntersectionPause";
+export * from "./useStagger";

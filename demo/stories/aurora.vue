@@ -37,8 +37,8 @@ import { usePresetThumbnails } from "./aurora/usePresetThumbnails";
  * State composes `useConfiguratorState<AuroraConfig>` with
  * `cloneMode: "per-preset"` (L.W7 Lane B Option-A unification — Rε §A.8).
  * Per-preset clone semantics preserve slider edits when the user switches
- * presets and returns; previously this lived in a parallel
- * `useAuroraStudio` composable. Aurora is now the second consumer of the
+ * presets and returns; previously this lived in a parallel state machine
+ * (retired at L.W7 Lane B). Aurora is now the second consumer of the
  * canonical Configurator state primitive (the first being
  * `demo/stories/motion/metaballs.vue`), closing the K-tranche
  * cross-tranche-debt item.
@@ -108,7 +108,7 @@ const hintText = computed(() => [
 ]);
 
 // Silence the unused-binding warning if currentMeta isn't referenced in
-// the template below — kept for parity with the prior useAuroraStudio API
+// the template below — kept for parity with the prior parallel state-machine
 // surface in case consumer-side debug overlays read it.
 void currentMeta;
 </script>
@@ -129,8 +129,11 @@ void currentMeta;
               both inline and fullscreen modes, with the height authority
               swapping from a constrained `min(78vh,720px)` to `h-full`.
             -->
-            <div class="relative">
-                <!-- Pastel wash behind the inline frame, mirrors intro.vue. -->
+            <div class="relative overflow-clip">
+                <!-- Pastel wash behind the inline frame, mirrors intro.vue.
+                     `overflow-clip` on the host keeps the bloom decorative
+                     without leaking horizontal overflow at narrow viewports
+                     (L K-residual π-2 / aurora 375 +8 px absorb — M.W2 Lane C). -->
                 <div
                     aria-hidden="true"
                     class="absolute -inset-6 -z-10 rounded-card opacity-60 blur-2xl"
