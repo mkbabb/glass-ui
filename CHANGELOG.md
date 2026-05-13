@@ -1,5 +1,48 @@
 # Changelog
 
+## Unreleased — AB in-flight (target: v1.1.0 at AB.W4 close)
+
+The AB tranche accumulates four cross-repo lanes (chassis token + GlassTimeline
+structural split + Pulse aura + dock-icon shadow override + sectioned
+Progress) against this trunk. The version bump lands once at W4 close per the
+single-v1.1.0 directive; this section reads as the cumulative AB Living-UI
+canon refinement.
+
+### Added — `--chassis-max-block-size` (AB.W1.T1)
+
+New layout-tier guardrail token for consumer app-chassis cards (e.g. the
+speedtest `.results-card`):
+
+```css
+--chassis-max-block-size: calc(
+    100dvh
+    - var(--dock-footer-space, 5.75rem)
+    - var(--page-padding-top, 0rem)
+    - 1rem
+);
+```
+
+The token expresses the maximum block size a centred consumer card may
+consume while preserving the inline dock footprint. It composes consumer-owned
+fallbacks (`--dock-footer-space` is the consumer's `dock-h + dock-inset +
+card-edge-inset` sum) so the calc evaluates correctly inside any consumer.
+
+Discipline (DESIGN.md `## Chassis sizing — dock-adjusted viewport` carries
+the full statement):
+
+- Consumers centre cards inside the **dock-adjusted viewport** (the area
+  above the dock), then clamp internal regions to that area.
+- Internal regions (meter / readout / timeline) must yield in order before
+  scroll appears: meter shrinks first, then readout, then timeline.
+- `overflow-y: auto` is a documented fallback, not the primary passing
+  path. Clamp-first / no-scroll-first is the canon.
+- The token reserves a ≥ 1rem visible gap above the dock — the user mandate
+  is "the card should not occlude the dock".
+
+Speedtest's AB.W1.T2 consumes the token to repair B1 (card-too-tall
+occlusion) + B10 (mobile/desktop fit) + H3 (mobile-375 CLS 0.926 → ≤ 0.15)
+at the chassis level.
+
 ## v1.0.5 — 2026-05-12 — M.W2 (F-ε-3 Configurator recursion fix + `src/api/` canonical-type promotions + L cosmetic residuals absorb)
 
 Three-lane substrate close: F-ε-3 Configurator recursion CLOSED via source

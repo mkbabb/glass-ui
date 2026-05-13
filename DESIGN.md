@@ -936,6 +936,44 @@ Utility classes `.icon-xs`..`.icon-xl` set width + height.
 --min-width-input-sm:  var(--input-min-width-sm)
 ```
 
+### Chassis sizing — dock-adjusted viewport (AB.W1)
+
+```
+--chassis-max-block-size: calc(
+    100dvh
+    - var(--dock-footer-space, 5.75rem)
+    - var(--page-padding-top, 0rem)
+    - 1rem
+)
+```
+
+A guardrail for consumer-app chassis cards (e.g. speedtest's
+`.results-card`). The recipe subtracts the consumer-owned
+`--dock-footer-space` (dock height + dock inset + card-edge inset) and
+`--page-padding-top` from the dynamic viewport, then keeps one further
+rem of breathing room so the card never butts the dock — the user
+mandate is `≥ 1rem visible gap above dock`.
+
+Consumers should:
+
+1. **Centre the card vertically inside the dock-adjusted viewport.**
+   The dock-adjusted viewport is `100dvh − dock-footer-space − page-padding-top`;
+   the chassis lives above the dock, not behind it.
+
+2. **Clamp internal regions to that area before any scroll falls out.**
+   In a meter-and-readout chassis the yielding order is:
+   meter → readout → timeline → (last resort) `overflow-y: auto` with
+   `scrollbar-gutter: stable both-edges` + scroll-shadow guards.
+
+3. **Treat scroll as a documented fallback, never the primary passing
+   path.** Clamp-first / no-scroll-first is the canon. If `overflow-y:
+   auto` is needed it must be after every internal region has reached
+   its minimum.
+
+Speedtest's AB.W1.T2 consumes the token to repair B1 (chassis-too-tall
+occlusion), B10 (mobile/desktop fit) and H3 (mobile-375 CLS 0.926 → ≤
+0.15) at the chassis level.
+
 ### Chart dimensions (consumer-facing tokens)
 
 ```
