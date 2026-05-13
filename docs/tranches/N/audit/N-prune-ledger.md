@@ -1,102 +1,144 @@
-# N — Prune Ledger (KISS-conservative)
+# N — Wire Ledger (CORRECTED; replaces prune ledger)
 
-Synthesized from 6 N11 consumer audits + 1 N-W4 overfitting audit. Per user N-revision directive: KISS; conservative on both additions and removals; only fold in GENUINELY useful primitives; remove dead/unused/contrived items.
+**REVISION HISTORY**:
+- 2026-05-12 first draft (prune-focused): proposed 5 retires + 3 demo-privatizations.
+- 2026-05-13 corrected after user feedback ("useTouchGate is used, or it should be... Metaballs, paper-backdrop, typewriter should be used elsewhere too"): verdict reversal — these primitives are UNDER-WIRED, not contrived. The right move is WIRE, not retire.
 
-## Read this first
+Synthesized from 6 N11 consumer audits + 1 overfitting audit + 1 wiring-target audit. Per user revised KISS+wiring directive: only retire what's TRULY contrived (none surfaced); WIRE the rest into their proper sites.
 
-- Total artefacts enumerated: **172** (43 UI + 30 custom + 12 composables + 14 CSS + 73 internal modules)
-- Cross-slice verdict distribution: 94 keep / 33 keep-current / 1 inline-and-remove / 3 demo-only-private / 1 delete-unused / 0 library-orphan
-- **Conservative retention rate: 94%** (only 5 + 3 prune candidates surfaced from 172 artefacts)
+## Prior audit errors (process failures)
 
-This is the LEAN ledger. The full audit is at `N-W4-overfitting-audit.md`; the per-consumer audits are at `N11-Lane-{a..f}-*.md`.
+The overfitting audit produced 3 incorrect verdicts:
 
-## A — RETIRE (zero usage; V3 NO legacy code)
-
-| ID | Item | Slice | Evidence | Action | Wave |
-|---|---|---|---|---|---|
-| **A1** | `useGlassAlpha` | composables/glass/ | rg = 0 sites constellation-wide | Delete `src/composables/glass/useGlassAlpha.ts` + barrel export | N.W0 |
-| **A2** | `/freshness` subpath + `src/freshness.ts` | subpath | rg = 0 sites constellation-wide; V.W3 wire-claim never landed; keep `scripts/freshness-gate.mjs` CLI as internal-only | Delete src/freshness.ts; remove from package.json `exports`; remove dist target | N.W0 |
-| **A3** | `--{success,warning,info}-foreground` tokens (J-6 chronic) | styles/tokens.css §6 | substrate-without-consumer; deferred since J; never wired | Delete from tokens.css + theme.css bridge | N.W0 |
-| **A4** | Stress harness (J-11 chronic) | (ε P2; verify location) | substrate-without-consumer; deferred since J | Verify location + delete if present | N.W0 |
-| **A5** | `useTouchGate` | composables/dom/ | rg = 1 (self-definition only); not used anywhere | Inline at definition if salvage value OR delete | N.W0 (inline-and-remove verdict) |
-
-**A-batch totals**: 5 items. All trivial deletions with zero risk to consumers (zero usage means zero breakage).
-
-## B — DEMO-PRIVATIZE (not retire; reclassify; not on library surface)
-
-| ID | Item | Slice | Evidence | Action | Wave |
-|---|---|---|---|---|---|
-| **B1** | `metaballs` | custom/metaballs/ | 0 external consumers; 3 demo-only sites; WebGL visual substrate | Move to `demo/_internal/metaballs/`; remove from `package.json` exports + subpath; remove `src/components/custom/metaballs/` from glass-ui surface | N.W1 |
-| **B2** | `paper-backdrop` | custom/paper-backdrop/ | 0 external consumers; design-specific backdrop | Same: move to `demo/_internal/paper-backdrop/`; surface removal | N.W1 |
-| **B3** | `typewriter` | custom/typewriter/ | 0 external consumers; niche animation effect | Same: move to `demo/_internal/typewriter/`; surface removal | N.W1 |
-
-**B-batch totals**: 3 items. Substrate moves from library surface to demo-private. Removes ~3 subpaths from `package.json` exports and reduces dist chunk count.
-
-## C — DEFER (conditional; not pruning at N)
-
-| ID | Item | Slice | Reason for defer |
+| Item | Prior verdict | Actual state | Correction |
 |---|---|---|---|
-| **C1** | `disco-glyph` | custom/disco-glyph/ | 4 sites; N-2 production-consumer audit deferred from M; check user signal before retire (visual-load-bearing in dock UI per Rβ N-2) |
-| **C2** | `status-dot` | custom/status-dot/ | 2 sites (ultra-low); semantic but candidate for consolidation into `icon-tooltip` or `status-icon` pattern; needs consumer feedback before merge |
-| **C3** | `glass-carousel` | custom/glass-carousel/ | 4 sites (subpath-only); niche themed-carousel variant; defer until 2nd consumer pattern emerges or carousel+glass.css recipe proves sufficient |
-| **C4** | 6 dock-family components ONLY consumed by speedtest (per N11/f) | custom/dock/ | reverse-overfitting candidate; speedtest is canonical consumer; defer to AB+ if no 2nd consumer emerges |
-| **C5** | `useLeaveTimer` in bbnf-buddy (per N11/c) | (bbnf-local) | LOCAL to bbnf-buddy; not glass-ui surface; inlineable per V3 but harmless as-is; consumer-side decision; M's "no push to consumers from glass-ui" applies |
+| `useGlassAlpha` | `delete-unused` (rg=0) | **HALLUCINATION** — does not exist in codebase. Actual composable is `useGlassRenderer` (in use by GlassPanel.vue). | Remove from ledger |
+| J-6 `--{success,warning,info}-foreground` tokens | `delete-unused` (zero consumers; J chronic) | **FALSE POSITIVE** — tokens exist in tokens.css + theme.css; in use | Remove from ledger |
+| J-11 stress harness | `delete-unused` | **MOOT** — no harness substrate found in codebase; already retired or never existed | Remove from ledger |
+| `useTouchGate` | `inline-and-remove` (rg=1 self-only) | **MISSED CONSUMER** — actually used by `GlassDock.vue:85` (a 2nd consumer); audit counted only the self-definition site | Re-verdict: KEEP + WIRE into more primitives |
 
-## D — KEEP, NO ACTION (substantive but low-reach with semantic value)
+**Process failure**: the overfitting audit's rg counts were imprecise; it missed legitimate consumers and hallucinated non-existent items. Codify as a LESSONS-LEARNED entry at N close: every audit verdict must cite the exact rg invocation AND the orchestrator must spot-verify the top 5 retire candidates before committing to retirement. Per LESSONS-LEARNED 2026-05-04 "Empty Returns Are Failed Dispatches" + 2026-05-06 "Read-Only Audits Miss Runtime + tailwind-merge Interactions" — extend to "Read-Only Audits Miss Composable Wirings Without Spot-Verification".
 
-Per the overfitting audit's "keep-current" verdict — 33 items in this class. Examples:
-- `cartoon-card`, `metric-pill`, `notification`, `scroll-pane`, `tags-input`, `toggle-group` (UI; 3 sites each; design-cohesion + re-exported public surface)
-- `dock-group`, `instrument-chassis`, `stacked-icons`, `scrolling-text`, `metric-badge`, `pulse`, `glass-panel` (custom; design-specific composites)
-- `useInterval`, `useResizeObserver`, `useTokenColor`, `useSidebar`, `useSortable`, `useKeyboardShortcuts`, `useCarousel` (composables with single-domain semantic value)
+## A — WIRE batch (5 primitives × N wire-targets each; conservative per KISS)
 
-**Disposition**: KEEP all. Per KISS + L invariant 8: "≥ 2 consumers OR formally retired" — these all pass. Reverse-overfitting risk is monitored but not yet load-bearing for retirement.
+Per `audit/N-wiring-targets.md`: 28 wire-target sites surfaced across 5 primitives. Per KISS posture, N picks the HIGHEST-VALUE strategic wires (~5-8 sites); defers broader wiring to O or beyond.
 
-## E — REVERSE-OVERFITTING WATCH (glass-ui shipped for a single consumer)
+### A1 — `useTouchGate`
 
-Per N11/f speedtest reverse-overfitting probe:
-- **Dock family** (`GlassDock`, `DockLayer`, `DockLayerGroup`, `DockIconButton`, `DockTabButton`, `DockSelectTrigger`): designed for speedtest's three-layer UI; 0 adoption by other consumers; NOT pruning yet (speedtest IS the canonical consumer; reverse-overfitting is acceptable for canonical-consumer-driven substrate)
+Existing consumer: `GlassDock.vue` (verified at line 85).
 
-**N-disposition**: WATCH; no action at N. If by O tranche no 2nd dock-consumer emerges, consider moving dock family to `@mkbabb/glass-ui/speedtest` namespace OR formal-retire.
+Wire-target primitives (per audit; 8 new sites):
+- **WIRE**: Slider, Select, DropdownMenu, Combobox, NumberField, Popover, TagsInput, MultiSelect
+- NOT-APPLICABLE: Switch, Toggle, ToggleChip, ContextMenu, HoverCard, IconTooltip (instantaneous tap; no scroll conflict)
 
-## F — N-NEW DIRECTIVE re-evaluation (KISS revision)
+**N strategic wire**: Slider only (the canonical pointer-event-bearing primitive; aligns with the existing "Slider keep-dock-open contract" per CLAUDE.md). Other 7 deferred to O.
 
-Per user KISS revision, ALL N-new directive additions need re-justification:
+### A2 — `metaballs`
+
+Existing consumer: `demo/stories/motion/metaballs.vue` only.
+
+Wire-target sites:
+- glass-ui demo: `compositions/hero.vue` (primary), `compositions/dashboard.vue` (optional)
+- Consumers: speedtest dashboard hero, fourier-analysis math hero, keyframes.js easing hero
+
+**N strategic wire**: `demo/stories/compositions/hero.vue` ambient backdrop wire. Demonstrates the primitive in the canonical composition story. Other 6 deferred to O / consumer-side per-consumer tranches.
+
+### A3 — `paper-backdrop`
+
+Existing consumer: demo-only.
+
+Wire-target sites:
+- Card variant + CartoonCard
+- Section landmark (`src/components/ui/section/Section.vue`)
+- Prose/Markdown containers
+- speedtest dashboard backdrop, fourier-analysis math hero backdrop
+
+**N strategic wire**: Section landmark — adds an optional `backdrop="paper"` prop on `<Section>` which composes PaperBackdrop. Single library-side wire; demonstrates the primitive on a canonical composition primitive. Other 5 deferred to O.
+
+### A4 — `typewriter`
+
+Existing consumer: `demo/stories/motion/typewriter.vue` only.
+
+Wire-target sites:
+- `demo/stories/compositions/hero.vue` headline
+- Per-consumer hero composites
+
+**N strategic wire**: `demo/stories/compositions/hero.vue` headline wire. Demonstrates typewriter in the canonical hero story. Other 4 deferred to O / per-consumer.
+
+### A5 — `/freshness` (assertDistFresh)
+
+Existing consumer: zero (V.W3 wire-claim never landed).
+
+Wire-target sites: 6 consumer vite.config.ts files.
+
+**N strategic wire**: speedtest vite.config.ts ONLY (closes the V.W3 wire-claim that was the canonical first-consumer plan). Other 5 deferred to O per-consumer.
+
+## B — KEEP (no action; per KISS + V3 + L invariant 8)
+
+Per the corrected audit, the originally-flagged "demo-only" items (metaballs, paper-backdrop, typewriter) are reclassified to under-wired (A2/A3/A4 above). Demo-privatization batch retracted.
+
+## C — DEFER (5 items; needs more signal; no action at N)
+
+Unchanged from first ledger:
+- C1 `disco-glyph` — N-2 production audit deferred
+- C2 `status-dot` — consolidation candidate
+- C3 `glass-carousel` — niche themed-carousel; defer
+- C4 6 dock-family components ONLY consumed by speedtest — reverse-overfitting WATCH
+- C5 bbnf-buddy `useLeaveTimer` inline candidate (consumer-local; not glass-ui surface)
+
+## D — KEEP (33 items; substantive but low-reach; semantic value)
+
+Unchanged from first ledger. The 33 keep-current items have semantic value + are re-exported on public surface; conservative posture per KISS = KEEP.
+
+## E — REVERSE-OVERFITTING WATCH
+
+Unchanged from first ledger. 6 dock-family components used ONLY by speedtest — speedtest IS the canonical consumer; WATCH for AB+ if no 2nd consumer emerges.
+
+## F — N-new directives revisited (verdict-corrected)
 
 | ID | Original directive | Revised disposition |
 |---|---|---|
-| **N6** Storybook mobile + configurators | KEEP — small targeted improvements (viewport meta + ConfiguratorRow mobile density CVA). NO new component invented. |
-| **N7** Dock blur reduction | KEEP minimal — perceptual audit (W0 Lane III); likely no-op since dock blur is at compositor floor (0px). NO new tokens unless audit surfaces a gap. |
-| **N8** `<DockMobileToggle>` new primitive | **RECONSIDER per KISS** — new component for "mobile arrows springy/squish/blob/glass". Per user KISS directive: "conservative with additions ... only fold in new GENUINELY useful primitives". Decision: defer to user. The component is GENUINELY USEFUL for mobile UX, but introduces a new primitive with single consumer (the demo proof-of-concept). Either (a) keep as part of N if user authorizes new primitive OR (b) defer to O with confirmed multi-consumer demand. |
-| **N9** Glass panels frosted-default + typography | KEEP — verify-only on glass-panel default (no new tier); promote `text-micro` `@utility` (NO new token; promotes existing `--type-micro`); typography sweep is PRUNING ad-hoc literals to canonical class. |
-| **N10** Bidirectional style audit | EXECUTED at N open via Rγ + Rδ + N11 consumer-audit-fan-out (6 parallel agents now complete) + overfitting audit. Codify the practice in precept canon as invariant 21. NO further wave-work needed beyond the codification. |
-| **N11** 6-agent consumer post-migration audit | EXECUTED at this revision; all 6 audits + overfitting audit landed. Findings drive this prune ledger. |
+| **N6** Storybook mobile + configurators | KEEP per W2 plan |
+| **N7** Dock blur reduction | KEEP per W2 plan (likely no-op audit) |
+| **N8** `<DockMobileToggle>` new primitive | RECONSIDER per user feedback. The user has signaled "new primitives" are acceptable IF genuinely useful. Mobile-arrow primitive IS load-bearing per the user's verbatim N-open. Re-include? Pending explicit user clarification — keep DEFERRED for now since user did not explicitly authorize this primitive in the KISS revision. |
+| **N9** Glass panels frosted-default + typography | KEEP per W1 plan |
+| **N10** Bidirectional style audit | EXECUTED at N open via Rγ + Rδ + this corrected ledger |
+| **N11** 6-agent consumer post-migration audit | EXECUTED at KISS revision; corrections surfaced + ledger revised |
 
-## G — Cross-cutting cosmetic absorbs (LOW-RISK CLEANUP at N)
+## G — Cosmetic absorbs (LOW-RISK CLEANUP at N)
 
-These are tiny doc/cosmetic items absorbed inline at the relevant wave:
-- M-residuals N-6 (demo carousel/metaballs import-path harmonisation) → N.W1 demo privatization absorbs
-- M-residuals N-8 (`_shared` package naming clarity) → N.W1 docs absorb
-- M-residuals N-4 (26 pre-existing AA timeline-story typecheck errors) → N.W1 typography sweep absorbs
-- L-P3-3 (Aurora `-inset-6` bloom) → N.W1 demo polish absorb
-- bbnf-buddy `useLeaveTimer` inline candidate (per N11/c) → DEFER (consumer-side; M's "no push to consumers from glass-ui" applies)
-- value.js `header-ribbon/` orphan (per N11/e) → DEFER (consumer-side)
+Unchanged from first ledger:
+- M-residuals N-4 (26 AA timeline typecheck errors) → N.W1 absorb
+- M-residuals N-6 (demo carousel/metaballs import-path harmonisation) → N.W1 demo polish
+- M-residuals N-8 (`_shared` package naming clarity) → N.W1 docs
+
+## H — Audit-failure LESSONS-LEARNED entry (N-new)
+
+Per V20 (NO silent deferrals) + the corrections enumerated above, codify at precept submodule:
+
+**Title**: "Audit verdicts require spot-verification before commitment to retirement"
+
+**Rule**: Before authoring a wave-spec that retires `delete-unused` or `library-orphan` items per an overfitting audit, the orchestrator MUST spot-verify (a) the item EXISTS at the cited path and (b) the rg count is accurate by re-running the audit's grep invocation. Hallucinations (non-existent items flagged for retirement) + missed consumers (rg counts that undercount real usage) are integrity-sweep blockers.
+
+**Check**: precept SPEC.md Close section, add a clause: "Any retirement absorbed in W0 cites the spot-verification result alongside the original audit's verdict."
 
 ## Summary
 
 | Category | Count | Disposition |
 |---|---|---|
-| A — RETIRE (zero usage; V3) | 5 | N.W0 delete |
-| B — DEMO-PRIVATIZE (move out of library surface) | 3 | N.W1 reclassify |
-| C — DEFER (conditional; needs more signal) | 5 | DEFER to O |
-| D — KEEP, no action (semantic value with low-reach) | 33 | KEEP |
-| E — REVERSE-OVERFITTING WATCH (dock family) | 6 components | WATCH |
-| F — N-new directives revisited | 6 | 4 keep / 1 reconsider (N8) / 1 codify-only |
-| G — Cosmetic absorbs | 6 | inline at appropriate wave |
+| A — WIRE (5 primitives × 1 strategic site each at N; 23 sites deferred) | 5 wires | **N.W0 absorb** |
+| B — KEEP (originally demo-privatize; reverted) | 0 actions | reclassified to A2/A3/A4 |
+| C — DEFER (5 items) | 5 | DEFER to O |
+| D — KEEP (33 items, low-reach semantic value) | 33 | KEEP |
+| E — WATCH (reverse-overfitting; 6 dock items) | 6 | WATCH |
+| F — N-new directives revisited (6 items) | 6 | KEEP per plan |
+| G — Cosmetic absorbs (3 M-residuals) | 3 | inline at appropriate wave |
+| H — Audit-failure LESSONS-LEARNED | 1 precept entry | N.W0 codify |
 
-**Net library surface change at N close**: −5 items (A-batch deletions) + −3 items moved demo-private (B-batch) = **−8 items removed from glass-ui public surface**. Plus 0–1 new component (N8 if authorized).
+**Net library surface change at N close**: **0 deletions + 0 retirements + 5 strategic wires** of existing primitives into proper sites. Pure additive wiring; zero new primitives invented; KISS-aligned.
 
 ## Verdict
 
-The library is HEALTHY. 94% keep rate means glass-ui is NOT over-engineered relative to its consumer constellation. The 8-item prune (A + B batches) is the proper KISS application: delete genuine orphans, privatize what was never library-grade. Everything else has earned its place.
+The original "prune ledger" was wrong in spirit (overfitting audit failures) but the corrected wire ledger is the right move: the library has NO contrived items to retire. It has 5 under-wired primitives + 23 deferred-wire-targets. N picks 5 strategic wires; defers the rest to O. Conservative; gestalt; per V3 + V4 + KISS.
 
-The N tranche plan should be revised to be PRUNING-FORWARD (A-batch + B-batch as the HEADLINE) with the original N6/N7/N9 directives as supporting work and N8 (new DockMobileToggle component) deferred or re-justified per the user's KISS directive.
+The audit-failure LESSONS-LEARNED entry hardens the process so future tranches don't retire hallucinated items.

@@ -21,22 +21,23 @@ Open commits land the planning substrate only per the user N-open directive ("Th
 
 The 7-axis bidirectional style audit at `docs/audits/style-audit.md` was executed via the Rγ + Rδ research lanes (N10 directive). The N11 directive (6-agent consumer post-migration audit) runs sequentially AFTER N10 — scheduled for N.W4 audit lane.
 
-## Status (REVISED per KISS directive)
+## Status (RE-REVISED per user wiring correction)
 
 | Wave | Status | Notes |
 |---|---|---|
-| W0 HEADLINE | open (planning-only; awaits dispatch) | KISS prune batch — 3 lanes (A 5-item retire / B 3-item demo-privatize / C precept canonicalize invariants 21-23); v1.0.6 patch tag |
+| W0 HEADLINE | open (planning-only; awaits dispatch) | Strategic wire batch — 3 lanes (A 5 strategic wires / B precept canonicalize invariants 21-23 / C audit-failure LESSONS-LEARNED entry); v1.0.6 patch tag |
 | W1 | pending W0 | 3 lanes — glass-panel-frosted-default VERIFY (no new tier) + `@utility text-micro` promotion (no new token) + typography literal sweep + N-4 AA timeline absorb |
 | W2 | pending W1 (W3 folded into W2 per KISS revision) | 2 lanes — storybook viewport-meta + Configurator mobile density CVA + N7 dock-blur perceptual audit (likely no-op) |
 | ~~W3~~ | DROPPED per KISS revision | folded into W2 |
 | W4 | pending W2 | close ceremony — 7-agent strengthened audit + N11 6-agent consumer re-audit (post-N substrate) + FINAL.md + cross-constellation ι reflog scan |
 
-**Deferred per KISS directive (require user authorization)**:
-- N8 `<DockMobileToggle>` new primitive
-- N-5 dock-layer regression fix (DEFER to O unless intersects W2 work)
-- J-14 drag-keep-open story (DEFER to O cosmetic batch)
+**Deferred** (require user authorization OR insufficient signal):
+- N8 `<DockMobileToggle>` new primitive — DEFER pending user authorization
+- N-5 dock-layer regression fix — DEFER to O unless intersects W2 work
+- J-14 drag-keep-open story — DEFER to O cosmetic batch
+- 23 broader wire-targets (per `audit/N-wiring-targets.md`) — DEFER to O / per-consumer tranches
 
-**Net library surface change at N close**: −5 items deleted (A-batch) + −3 items demo-privatized (B-batch) = **−8 items removed from glass-ui public surface**. ZERO new primitives unless user authorizes N8.
+**Net library surface change at N close**: **0 retirements + 0 demo-privatizations + 5 strategic wires** of existing primitives into proper sites. Pure additive wiring; zero new primitives invented; KISS-aligned.
 
 ## Cross-repo coordination
 
@@ -73,9 +74,49 @@ After initial 5-wave plan commit `cbe2d13`, user issued KISS revision (see `find
 
 `audit/N-prune-ledger.md` — 8-item prune batch (5 retire + 3 demo-privatize) becomes N.W0 HEADLINE.
 
-### Plan revised
+### Plan revised (initial KISS pivot)
 
-N.md §1 thesis pivoted to "KISS pruning + targeted refinement". 5-wave → 4-wave (W3 dropped; folded into W2). New invariants 21-23 added. N8 new `<DockMobileToggle>` primitive DEFERRED pending explicit user authorization.
+N.md §1 thesis pivoted to "KISS pruning + targeted refinement". 5-wave → 4-wave (W3 dropped; folded into W2). New invariants 21-23 added (originally KISS-pruning + demo-privatize protocol).
+
+## 2026-05-13 — N wiring re-revision (user correction)
+
+After KISS-pruning revision, user issued correction:
+
+> useTouchGate is used, or it should be, within items like in keyframes.js's input sliders, dropdowns, etc? These should be used in our sliders, dropdowns, etc. Meatballs, paper-backdrop, and typewriter should be used elsewhere, too.
+
+### Wiring-target audit executed (1 read-only agent)
+
+`docs/tranches/N/audit/N-wiring-targets.md` — 28 wire-target sites surfaced across 5 primitives.
+
+### Audit failures surfaced + corrected
+
+The prior overfitting audit produced 3 errors:
+1. **HALLUCINATION**: `useGlassAlpha` cited as `delete-unused`; does not exist in codebase (actual composable is `useGlassRenderer`).
+2. **FALSE POSITIVE**: J-6 `--{success,warning,info}-foreground` tokens flagged for retirement; actually exist + in use.
+3. **MISSED CONSUMER**: `useTouchGate` counted as rg=1 (self-only); actually used by `GlassDock.vue:85` (rg should have been ≥ 2).
+
+### Verdict reversal
+
+- A-batch retirements: RETRACTED. 1 hallucination + 2 false positives + 1 missed-consumer + 1 wiring-target-exists = 0 truly-contrived items.
+- B-batch demo-privatizations: RETRACTED. metaballs / paper-backdrop / typewriter are under-wired, not contrived.
+- New disposition: 5 strategic wires (1 per primitive) at N.W0 HEADLINE; 23 broader targets DEFER to O.
+
+### N invariants re-revised
+
+- Invariant 22 RE-AUTHORED: now "audit-verdict spot-verification gate" (audit-failure prevention), not "KISS pruning binary".
+- Invariant 23 RE-AUTHORED: now "wire-before-retire posture", not "demo-privatization protocol".
+
+### Plan re-revised
+
+N.md §1 thesis pivoted to "strategic wiring + targeted refinement". W0 HEADLINE pivoted from "prune batch" to "strategic wire batch". W1/W2/W4 unchanged. Net library surface change: 0 retirements + 0 demo-privatizations + 5 strategic wires.
+
+### Audit-failure LESSONS-LEARNED entry
+
+Codify at precept submodule (N.W0 Lane C): "Audit verdicts require spot-verification before commitment to retirement". Future tranches MUST spot-verify retire-batch candidates before committing.
+
+### Audit artifact updated
+
+`audit/N-prune-ledger.md` REWRITTEN as wire ledger (verdict-corrected with full revision history preamble).
 
 ## Awaiting dispatch authorization
 
