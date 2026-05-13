@@ -1,12 +1,32 @@
 # Changelog
 
-## Unreleased — AB in-flight (target: v1.1.0 at AB.W4 close)
+## 1.1.0 — 2026-05-13 — AB Living-UI canon (chassis token + timeline structural split + Pulse aura + sectioned Progress + dock-shadow consumer canon)
 
-The AB tranche accumulates four cross-repo lanes (chassis token + GlassTimeline
-structural split + Pulse aura + dock-icon shadow override + sectioned
-Progress) against this trunk. The version bump lands once at W4 close per the
-single-v1.1.0 directive; this section reads as the cumulative AB Living-UI
-canon refinement.
+The AB tranche accumulated five cross-repo lanes against this trunk and ships
+as a single v1.1.0 bump per the user 2026-05-13 directive. The version is a
+deliberate **minor** rather than a sequence of patches because the cumulative
+surface adds API:
+
+- New layout-tier guardrail token `--chassis-max-block-size` (AB.W1.T1)
+- New `<GlassTimeline>` Option C structural split (`progressbar` ↔ marker
+  sibling), `popoverContent` slot, `currentSegmentKey`, `hoverEnd` event
+  (AB.W2.T1–T4); new `<HoverPopover>` `v-model:open` + `update:open`
+- New `<Pulse variant="aura">` ambient halo + `--animate-ambient-pulse-*`
+  ambient-motion token block + `@keyframes ambient-pulse` (AB.W3.T1)
+- New `<Progress variant="sectioned">` with per-segment colour cells +
+  spring active fill + transition-gradient seams + reduced-motion contract
+  + `--progress-sectioned-*` token block (AB.W3.T2)
+- AB.W4 closes the Z.W2 honesty bomb on B5 (dock-shadow override) by
+  shipping the **consumer canon** with a verified Playwright-probe trail —
+  no glass-ui canon edit was needed; the existing `--shadow-dock-override`
+  on `.glass-dock` (`dock.css:46`) + `--shadow-uniform` token
+  (`tokens.css:346`) already comprise the canon. The W4 close documents
+  the consumer recipe for any future dock-hosted icon that catches the
+  rightmost taper of the directional dock shadow.
+
+This is the AB Living-UI canon: every primitive in the cluster (chassis +
+timeline + Pulse + Progress + dock) now reads as **living** under capped
+ambient motion + reduced-motion contracts + state-aware visual register.
 
 ### Added — `--chassis-max-block-size` (AB.W1.T1)
 
@@ -260,6 +280,45 @@ Continuous + segmented variants now emit `hoverEnd` on the segment
 the pointer left, mirroring `hover`. Consumers blend hover-over-current
 in the panel via `effective = hovered ?? current`. The new event is
 additive (existing `hover` semantics unchanged).
+
+### Documented — dock-shadow consumer canon (AB.W4 — B5 honesty close)
+
+Z.W2 (canon since v1.0.1) shipped two coupled primitives for consumers
+that need to neutralize the dock's directional drop shadow on a per-
+icon basis:
+
+- `--shadow-dock-override` — consumed by `.glass-dock` at
+  `dock.css:46` (`box-shadow: var(--shadow-dock-override,
+  var(--shadow-dock))`).
+- `--shadow-uniform` — uniform omnidirectional shadow recipe in the
+  `--shadow-md`/`--shadow-lg` color-mix family
+  (`tokens.css:346`).
+
+Z.W2's documentation gestured at the pairing but did NOT publish the
+canonical consumer recipe. AB.W4's audit (the A2 "honesty bomb" — Z.W2
+declared B5 RESOLVED but the two-layer fix silently no-op'd because no
+consumer ever composed the override) confirmed both halves of the
+contract are healthy on the canon side; the gap was the consumer
+recipe.
+
+**Consumer recipe — when a dock-hosted icon catches the rightmost or
+leftmost taper of `.glass-dock`'s directional drop shadow:**
+
+```vue
+<GlassDock
+  :style="{ '--shadow-dock-override': 'var(--shadow-uniform)' }"
+  shape="pill"
+  ...
+>
+  <!-- dock children, including the icon that catches the taper -->
+</GlassDock>
+```
+
+Speedtest's AB.W4 commits the recipe at `src/components/dock/Dock.vue`
+to close B5 (settings gear right-edge halo). No glass-ui-side changes
+needed; the canon was complete since v1.0.1. This is documented as
+**v1.1.0-class canon refinement** because the live consumer recipe is
+now part of the published surface, not just an inline token comment.
 
 ## v1.0.5 — 2026-05-12 — M.W2 (F-ε-3 Configurator recursion fix + `src/api/` canonical-type promotions + L cosmetic residuals absorb)
 
