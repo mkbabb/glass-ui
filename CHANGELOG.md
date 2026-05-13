@@ -43,6 +43,104 @@ Speedtest's AB.W1.T2 consumes the token to repair B1 (card-too-tall
 occlusion) + B10 (mobile/desktop fit) + H3 (mobile-375 CLS 0.926 → ≤ 0.15)
 at the chassis level.
 
+### Added — `<Pulse variant="aura">` ambient surface-scope halo (AB.W3.T1)
+
+Third Pulse variant alongside `dots` + `ring`. Paints an
+absolutely-positioned radial-gradient halo inside its host surface; the
+host owns `position: relative` + `border-radius` and the aura inherits
+both. The breath cycle drives scale + opacity off the new
+`--animate-ambient-pulse-*` tokens.
+
+API additions (backward-compatible — `variant`/`speed`/`count`/`class`
+unchanged):
+
+```ts
+type PulseVariant = 'dots' | 'ring' | 'aura';
+type PulseIntensity = 'subtle' | 'normal' | 'vivid';
+
+interface PulseProps {
+    variant?: PulseVariant;
+    intensity?: PulseIntensity; // aura-only — scale-max amplitude
+    once?: boolean;             // aura-only — single-breath then settle
+    // ...existing props
+}
+```
+
+Tokens published at `styles/tokens.css` §2.A AMBIENT MOTION:
+
+```css
+--animate-ambient-pulse-duration: 6s;
+--animate-ambient-pulse-scale-min: 1.0;
+--animate-ambient-pulse-scale-max: 1.15;
+--animate-ambient-pulse-easing: var(--ease-apple);
+--pulse-aura-opacity-min: 0.55;
+--pulse-aura-opacity-max: 0.95;
+```
+
+Plus a shared `@keyframes ambient-pulse` in `styles/animations.css`.
+
+Reduced-motion: `Pulse.vue`'s scoped `@media (prefers-reduced-motion:
+reduce)` bracket forces `animation: none` + parks at the min stop.
+Depth + colour stay visible; only the breath cycle disables.
+
+The aura host is composed by the consumer — speedtest adopts at 5
+capped surfaces (Start button idle, idle hero pill, complete-headline
+one-shot, active result-row value, timeline current-stage panel). The
+primitive itself does NOT mount on a card/chassis surface; that
+reservation rule lives at the consumer side.
+
+### Added — `<Progress variant="sectioned">` phase-bus primitive (AB.W3.T2)
+
+Third Progress variant alongside `default` + `gradient`. The canonical
+**phase-bus** primitive — N colour-coded cells with gradient seams
+between siblings, an active cell spring-grown fill, a living catch-
+light sweep, and recessed glass-channel depth on the rail.
+
+API additions:
+
+```ts
+export interface ProgressSegment {
+    key: string;
+    label?: string;
+    color: string;           // CSS colour (hex, oklch, color-mix, var())
+    state?: 'pending' | 'active' | 'completed';
+    weight?: number;         // default 1 (equal share)
+}
+
+interface ProgressProps {
+    variant?: 'default' | 'gradient' | 'sectioned';
+    segments?: ProgressSegment[];          // sectioned only
+    currentSegmentKey?: string | null;     // sectioned only
+    activeProgress?: number;               // sectioned only — 0..1 fill of active cell
+}
+```
+
+Per-cell visual register:
+- **pending** — frosted colour tint @12% opacity
+- **active** — frosted tint @18% + spring-fill from leading edge + `mix-blend-mode: overlay` catch-light sweep traversing every 1.8s
+- **completed** — saturated fill at 100% across the cell
+
+Seams between adjacent cells paint as a small gradient blend (`--seam-from`
+→ `--seam-to`) at `mix-blend-mode: screen` so the joins read as living
+glass joints, not hard CSS stripes.
+
+Rail depth via `inset` + `outer` box-shadow + the `--shadow-color`
+token: top catch-light strip, lower inner shadow, small outer drop.
+Token knobs at `tokens.css` §2.B SECTIONED PROGRESS:
+
+```css
+--progress-sectioned-height: 0.875rem;       /* 14px — W3 spec minimum */
+--progress-sectioned-track: var(--secondary);
+```
+
+Reduced-motion: sweep + width transition disable; saturation + state
+distinctions stay visible.
+
+Speedtest's `MeterColumn.vue` consumes the sectioned variant at the
+under-meter `.phase-progress` rail. Width 92% of the meter column;
+height 14px mobile / 18px desktop (≥720px). DPI variant collapses to
+2 cells via the consumer's visible-metric filter.
+
 ### Added — `.dock-label` typography utility (AB.W1.T5)
 
 New `@utility dock-label` (typography.css) — canonical register for
