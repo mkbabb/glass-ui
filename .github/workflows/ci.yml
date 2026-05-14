@@ -1,0 +1,47 @@
+# O.W5 Lane E — PR-time gate matrix expansion.
+# Predecessor: .github/workflows/lint.yml (K W4 Lane B; bundle-budget only).
+# Renamed to ci.yml here per W5.md §Lane E "single source of truth" goal:
+# every PR closes on the same gate matrix the release path runs.
+#
+# Gate matrix (matches release.sh post-W5 Lane B+D shape):
+#   1. typecheck            — vue-tsc --noEmit
+#   2. test                 — vitest run
+#   3. build                — vite build (needed for verify-export-types + profile:budget)
+#   4. verify-export-types  — subpath dts publication probe (L.W0 Lane III)
+#   5. profile:budget       — bundle-budget enforcement (K W4 Lane B re-land)
+#
+# Fail-fast: `set -e` is implicit in `run:` steps; any non-zero exit aborts the job.
+# Heap bump: build step gets NODE_OPTIONS=--max-old-space-size=8192 per W1 observation
+# (vue-tsc + vite together exceed the default 4 GB heap on this codebase).
+
+name: ci
+
+on:
+    pull_request:
+        branches: [master]
+    push:
+        branches: [master]
+
+jobs:
+    gates:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+            - run: npm ci
+            - name: typecheck
+              run: npm run typecheck
+            - name: test
+              run: npm run test
+            - name: build
+              env:
+                  NODE_OPTIONS: --max-old-space-size=8192
+              run: npm run build
+            - name: verify-export-types
+              run: npm run verify-export-types
+            - name: profile:budget
+              env:
+                  GLASS_UI_BUDGET_SKIP_BUILD: "1"
+              run: npm run profile:budget

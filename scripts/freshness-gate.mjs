@@ -21,9 +21,10 @@
  * up, so any source-side edit anywhere bumps the bundle's mtime on a
  * fresh build.
  */
-import { readdirSync, statSync, existsSync } from "node:fs";
+import { statSync, existsSync } from "node:fs";
 import { resolve, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { walkNewestMtime } from "./freshness-walk.mjs";
 
 function defaultRoot() {
     // Resolve the package root from this script's URL when invoked as a
@@ -35,38 +36,6 @@ function defaultRoot() {
         return resolve(fileURLToPath(new URL("../", url)));
     }
     return process.cwd();
-}
-
-const SRC_EXT = new Set([".ts", ".vue", ".tsx"]);
-const SKIP_DIRS = new Set(["__tests__", "tests", "node_modules", "dist"]);
-
-function walkNewestMtime(dir) {
-    let newest = 0;
-    let newestPath = "";
-    if (!existsSync(dir)) return { mtimeMs: 0, path: "" };
-    const entries = readdirSync(dir, { withFileTypes: true });
-    for (const entry of entries) {
-        if (SKIP_DIRS.has(entry.name)) continue;
-        const full = join(dir, entry.name);
-        if (entry.isDirectory()) {
-            const r = walkNewestMtime(full);
-            if (r.mtimeMs > newest) {
-                newest = r.mtimeMs;
-                newestPath = r.path;
-            }
-        } else if (entry.isFile()) {
-            const dot = entry.name.lastIndexOf(".");
-            if (dot < 0) continue;
-            const ext = entry.name.slice(dot);
-            if (!SRC_EXT.has(ext)) continue;
-            const m = statSync(full).mtimeMs;
-            if (m > newest) {
-                newest = m;
-                newestPath = full;
-            }
-        }
-    }
-    return { mtimeMs: newest, path: newestPath };
 }
 
 /**

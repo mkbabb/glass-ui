@@ -1,6 +1,6 @@
 {
     "name": "@mkbabb/glass-ui",
-    "version": "1.3.0",
+    "version": "1.3.1",
     "description": "Glassmorphic design system — Vue 3.5 components, reka-ui primitives, Tailwind CSS v4 tokens",
     "license": "MIT",
     "type": "module",
@@ -339,6 +339,7 @@
         "proof:consumers:build": "bash scripts/proof-consumers-build.sh",
         "proof:runtime": "node scripts/proof-runtime.mjs",
         "proof:theme": "node scripts/proof-theme-style.mjs",
+        "proof:all": "npm run proof:package && npm run proof:theme && npm run proof:consumers:static && npm run proof:consumers:build && npm run proof:runtime",
         "profile:bundle": "node scripts/profile-bundle.mjs",
         "profile:budget": "node scripts/profile-bundle.mjs --enforce",
         "profile:aurora": "node scripts/profile-aurora.mjs",

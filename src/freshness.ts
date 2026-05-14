@@ -7,51 +7,16 @@
  * at a glass-ui clone whose `dist/` is older than `src/`, the function
  * throws with a human-readable message naming the offending source file.
  *
- * The prebuild CLI at `scripts/freshness-gate.mjs` carries the same
- * mtime-walk algorithm; the duplication is documented at
- * `docs/tranches/O/research/Repsilon-pipeline-orchestration.md` and
- * folded into O.W5 Lane C (DRY extract to a shared `scripts/freshness-walk.mjs`).
+ * The mtime tree-walk algorithm is single-sourced at
+ * `scripts/freshness-walk.mjs` (canonical home — also consumed by the
+ * prebuild CLI at `scripts/freshness-gate.mjs`). Static import below;
+ * Vite bundles the .mjs body into `dist/freshness.js`. O.W5 Lane C
+ * (DRY extract; closes Rε §"freshness DRY verdict").
  */
-import { readdirSync, statSync, existsSync } from "node:fs";
+import { statSync, existsSync } from "node:fs";
 import { resolve, join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-
-const SRC_EXT = new Set([".ts", ".vue", ".tsx"]);
-const SKIP_DIRS = new Set(["__tests__", "tests", "node_modules", "dist"]);
-
-interface NewestResult {
-    mtimeMs: number;
-    path: string;
-}
-
-function walkNewestMtime(dir: string): NewestResult {
-    let newest = 0;
-    let newestPath = "";
-    if (!existsSync(dir)) return { mtimeMs: 0, path: "" };
-    const entries = readdirSync(dir, { withFileTypes: true });
-    for (const entry of entries) {
-        if (SKIP_DIRS.has(entry.name)) continue;
-        const full = join(dir, entry.name);
-        if (entry.isDirectory()) {
-            const r = walkNewestMtime(full);
-            if (r.mtimeMs > newest) {
-                newest = r.mtimeMs;
-                newestPath = r.path;
-            }
-        } else if (entry.isFile()) {
-            const dot = entry.name.lastIndexOf(".");
-            if (dot < 0) continue;
-            const ext = entry.name.slice(dot);
-            if (!SRC_EXT.has(ext)) continue;
-            const m = statSync(full).mtimeMs;
-            if (m > newest) {
-                newest = m;
-                newestPath = full;
-            }
-        }
-    }
-    return { mtimeMs: newest, path: newestPath };
-}
+import { walkNewestMtime } from "../scripts/freshness-walk.mjs";
 
 export interface AssertDistFreshOptions {
     /**

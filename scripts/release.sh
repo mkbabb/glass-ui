@@ -5,23 +5,33 @@
 # Usage:
 #   bash scripts/release.sh v0.8.5
 #
-# What it does:
+# What it does (post O.W5 Lane B + Lane D consolidation):
 #   1. Reads the version arg (must match the form `vX.Y.Z`).
 #   2. Verifies `package.json.version` matches (sans the `v` prefix).
 #   3. Ensures the working tree is clean (no uncommitted changes).
-#   4. Runs typecheck + tests.
-#   5. Runs `npm run build` so the `dist/` artefact is regenerated
-#      against the tagged source. (The W5-flagged dist-freshness gotcha
-#      retired by always rebuilding before tag.)
-#   6. Verifies the dist exports include the expected public surface
-#      (a smoke check on `dist/index.d.ts`).
-#   7. Commits the dist if dirty (release commits typically include
-#      regenerated `dist/` so consumers reading via `import` get the
-#      tagged artefact).
-#   8. Tags the release with an annotated tag.
+#   4. Runs the upstream gate matrix:
+#        a) typecheck                — fail-fast on type errors
+#        b) build                    — produces dist/ for gates below
+#        c) verify-export-types      — subpath publication binary gate
+#                                      (L.W0 Lane III; supersedes the
+#                                      former env-gated bash probe loop)
+#        d) profile:budget --enforce — bundle-budget gate
+#   5. Performs a post-build smoke check on `dist/index.d.ts`.
+#   6. Tags the release with an annotated tag.
 #
-# Aborts on any failure. The `prepublishOnly` hook is a safety net for
-# anyone running `npm publish`; this script is the canonical path.
+# Aborts on any failure.
+#
+# Single-source-of-truth split (O.W5 Lane D):
+#   release.sh       → typecheck + build + verify-export-types + profile:budget
+#   prepublishOnly   → build + test
+#
+# `prepublishOnly` re-runs the build defensively so that `npm publish`
+# invoked directly (without release.sh) still produces a fresh dist.
+# `npm test` runs exactly once, owned by `prepublishOnly`. The previous
+# script ran typecheck + test + build all inline AND prepublishOnly
+# re-ran build + test, producing 3 redundant invocations. The new shape
+# eliminates the test duplication (was 2x → now 1x) and keeps the
+# defensive build redundancy with documented rationale.
 
 set -euo pipefail
 
@@ -53,12 +63,34 @@ if [[ -n "$(git status --porcelain)" ]]; then
     exit 1
 fi
 
-echo "[release] typecheck + test..."
+# Upstream gate matrix — release-only gates. `prepublishOnly` owns
+# test (and re-runs build defensively at publish time). The legacy
+# 7-subpath hardcoded bash probe loop was retired at O.W5 Lane B;
+# `verify-export-types` enumerates every subpath from package.json
+# and subsumes the loop's coverage.
+
+echo "[release] typecheck..."
 npm run typecheck
-npm test
 
 echo "[release] Building dist artefact..."
-npm run build
+# vite:dts walks the full TS surface and OOMs under Node's default 4 GB
+# heap on this codebase; bump to 8 GB for the release build. Reproducible
+# at HEAD per the O.W5 Lane B+D observation. Folded as a release-script
+# concern (rather than baked into the npm script) to keep dev-loop builds
+# at default heap.
+NODE_OPTIONS="${NODE_OPTIONS:-} --max-old-space-size=8192" npm run build
+
+# L.W0 Lane III — subpath publication is binary. `verify-export-types`
+# probes every published subpath (from package.json's `exports`) for
+# dts + import target presence and runs a tsc consumer probe. The
+# prior env-gate (`GLASS_UI_RELEASE_SURFACE_GUARD`) was retired at
+# O.W5 Lane B: per the L.W0 invariant, this gate MUST run on every
+# release.
+echo "[release] verify-export-types (subpath publication binary gate)..."
+npm run verify-export-types
+
+echo "[release] profile:budget (bundle-budget enforce)..."
+npm run profile:budget
 
 echo "[release] Smoke check on dist/index.d.ts..."
 if [[ ! -f dist/index.d.ts ]]; then
@@ -66,32 +98,10 @@ if [[ ! -f dist/index.d.ts ]]; then
     exit 1
 fi
 
-# L.W0 — Subpath-resolve probe. Every published subpath must resolve at
-# runtime (the K.WS regression that produced v0.9.4 was a silent dts
-# publication gap; this probe is its compensating guardrail).
-echo "[release] Probing subpath imports..."
-for sp in forms api dark keyboard carousel tokens dock; do
-    echo "  Probing @mkbabb/glass-ui/$sp"
-    node -e "
-        import('@mkbabb/glass-ui/$sp').then((m) => {
-            console.log('    exports:', Object.keys(m).length);
-        }).catch((e) => {
-            console.error('    FAIL:', e.message);
-            process.exit(1);
-        });
-    " || { echo "  ERROR: subpath $sp resolve failed" >&2; exit 1; }
-done
-
-# Lightweight surface gate — if dist drifted from package.json's exports
-# in surprising ways, surface it here. The check is opt-in via env var
-# because the export set evolves over time; cheap to invoke.
-if [[ -n "${GLASS_UI_RELEASE_SURFACE_GUARD:-}" ]]; then
-    npm run verify-export-types
-fi
-
 echo "[release] Tagging $VERSION..."
 git tag -a "$VERSION" -m "glass-ui $VERSION"
 
 echo "[release] Done. Tag $VERSION created."
-echo "  Push with:  git push origin $VERSION"
-echo "  Push branch: git push origin master"
+echo "  Publish with: npm publish    # prepublishOnly = build + test (defensive)"
+echo "  Push tag:     git push origin $VERSION"
+echo "  Push branch:  git push origin master"

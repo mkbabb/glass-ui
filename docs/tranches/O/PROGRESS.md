@@ -257,3 +257,31 @@ Two semver-visible renames (avatarVariant + useDarkModeSync) warrant minor signa
 ### Open windows for W5
 
 W5 opens after this commit lands. Five lanes per `docs/tranches/O/waves/W5.md` (proof:all cohort runner + verify-export-types unconditional in release.sh + freshness DRY extract + release.sh ↔ prepublishOnly dedup + CI gates expansion).
+
+## 2026-05-14 — W5 close (v1.3.1)
+
+Pipeline orchestration consolidation. Orchestrator merged Lane B + Lane D at dispatch time (both touched scripts/release.sh — bound conflict).
+
+### Lane disposition
+
+| Lane | Mode | Disposition | Proof |
+|---|---|---|---|
+| A — proof:all cohort runner | agent-dispatched (worktree) | LANDED — single npm-script chain (Option A); 5 proof:* scripts sequenced cheap → expensive. | `audit/W5-Lane-A-proof-all-runner-proof.md` |
+| B+D — release.sh consolidation | agent-dispatched (worktree; merged at dispatch) | LANDED — env-gate retired (verify-export-types unconditional); hardcoded subpath loop dropped; npm test ownership consolidated to prepublishOnly; profile:budget added to release.sh gate matrix. Orchestrator absorbed heap-bump `NODE_OPTIONS=--max-old-space-size=8192` at integration (vite:dts plugin OOMs under default 4GB). | `audit/W5-Lane-BD-release-consolidation-proof.md` |
+| C — Freshness DRY extract | agent-dispatched (worktree) | LANDED — `scripts/freshness-walk.mjs` (+`.d.mts` sidecar) canonical home; both `scripts/freshness-gate.mjs` + `src/freshness.ts` import via Path A (static import). Algorithmic divergence audit: byte-identical pre-extract; faithful merge. | `audit/W5-Lane-C-freshness-dry-proof.md` |
+| E — CI gates expansion | agent-dispatched (worktree) | LANDED — `.github/workflows/lint.yml` → `ci.yml`; 5-step matrix (typecheck + test + build + verify-export-types + profile:budget). Heap-bump scoped to build step. | `audit/W5-Lane-E-ci-expansion-proof.md` |
+
+### Hard gate evidence
+
+- (a) proof:all ships + chains 5 scripts ✓.
+- (b) verify-export-types unconditional in release.sh ✓; hardcoded loop dropped ✓.
+- (c) walkNewestMtime canonical at scripts/freshness-walk.mjs ✓; both consumers import canonical ✓.
+- (d) release.sh + prepublishOnly single-source-of-truth ✓ (test 2× → 1×; build 2× with documented rationale).
+- (e) CI workflow 5-step matrix; PR-time matches release-time ✓.
+- (f) typecheck ✓ ; test 348/348 ✓ ; build 652 modules ✓ ; profile:budget PASS ✓ ; verify-export-types PASS ✓ ; `bash -n scripts/release.sh` SYNTAX OK ✓.
+- (g) 5 lane proof docs (4 agent + 1 orchestrator-absorb addendum in B+D).
+- (h) v1.3.1 patch tag.
+
+### Open windows for W6
+
+W6 opens after this commit lands. Four lanes per `docs/tranches/O/waves/W6.md` (4 substrate promotions: useClipboard + HeaderRibbon + dock-icon-button token ladder + scale-on-hover utility + speedtest AC.W6 dependency cohort).

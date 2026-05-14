@@ -1,5 +1,88 @@
 # Changelog
 
+## 1.3.1 — 2026-05-14 — O.W5 (pipeline orchestration consolidation)
+
+Internal-only. Five Rε-flagged orchestration improvements + canonical
+single-source-of-truth gate-matrix.
+
+### Added — `npm run proof:all` cohort runner (Lane A)
+
+Top-level script chains the 5 `proof:*` scripts:
+`proof:package` → `proof:theme` → `proof:consumers:static` →
+`proof:consumers:build` → `proof:runtime`. Fail-fast via `&&`. CI
+should cherry-pick the sibling-independent subset (`proof:package` +
+`proof:theme` + `proof:consumers:static`) per agent's open-question;
+folded to P-tranche candidate.
+
+### Changed — `release.sh` single-source-of-truth (Lane B+D)
+
+- `verify-export-types` is unconditional (env-gate `GLASS_UI_RELEASE_SURFACE_GUARD`
+  retired; L.W0 Lane III invariant).
+- Hardcoded 7-subpath bash probe loop dropped — superseded by
+  `verify-export-types.mjs` (enumerates all 38 subpaths from
+  `package.json.exports`).
+- `npm test` ownership consolidated to `prepublishOnly` — no longer
+  invoked from `release.sh`.
+- `npm run profile:budget` added to the unconditional gate matrix.
+- Build step inside `release.sh` runs with
+  `NODE_OPTIONS=--max-old-space-size=8192` (the vite:dts plugin's
+  pre-existing OOM at default 4GB heap; orchestrator absorb at
+  integration).
+
+Canonical gate matrix:
+
+| Owner | Steps |
+|---|---|
+| `release.sh` | typecheck → build (heap-bumped) → verify-export-types → profile:budget → tag |
+| `prepublishOnly` | build + test |
+
+Net duplication: `test` 2× → 1×; `build` remains 2× with documented
+rationale (release.sh build is prerequisite for the
+verify-export-types + profile:budget gates; prepublishOnly build is
+defensive for the standalone publish path).
+
+### Changed — Freshness DRY extract (Lane C)
+
+`walkNewestMtime` lifted to canonical home
+`scripts/freshness-walk.mjs` (+ `.d.mts` sidecar for tsc resolution).
+Both consumers — `scripts/freshness-gate.mjs` (prebuild CLI) AND
+`src/freshness.ts` (runtime helper) — now import from the canonical
+module. Closes Rα E3 docstring drift + Rε pipeline-orchestration
+DRY verdict.
+
+Path A (static import) chosen over dynamic-import per the dispatch's
+recommendation. Static import + `.d.mts` sidecar resolves cleanly
+under `moduleResolution: "bundler"`; `assertDistFresh()` stays
+synchronous for cross-repo callers (speedtest `vite.config.ts`,
+bbnf-buddy startup-hook).
+
+Algorithmic divergence audit: pre-extract diff was TS type
+annotations only; walk logic byte-identical. Canonical extract is
+a faithful merge.
+
+### Changed — CI gate matrix expanded (Lane E)
+
+`.github/workflows/lint.yml` → `.github/workflows/ci.yml`. Expanded
+from bundle-budget-only to a 5-step matrix matching the release-time
+gates: typecheck → test → build → verify-export-types →
+profile:budget. PR-time and release-time now close on the same
+gate matrix.
+
+Heap bump (`NODE_OPTIONS=--max-old-space-size=8192`) scoped to the
+build step only. Profile:budget step opts out of its internal
+rebuild via `GLASS_UI_BUDGET_SKIP_BUILD=1` (the dedicated build
+step's output is reused).
+
+### Verification
+
+- `npm run typecheck` — PASS.
+- `npm test` — 348 / 30 green.
+- `npm run build` — 652 modules (+1 from `freshness-walk.mjs`).
+- `npm run profile:budget` — PASS (raw 67.3% / 93.3%; gzip 68.1% /
+  91.7%).
+- `npm run verify-export-types` — PASS.
+- `bash -n scripts/release.sh` — SYNTAX OK.
+
 ## 1.3.0 — 2026-05-14 — O.W4 (/api discovery gaps + leaky abstractions + service boundaries)
 
 Minor bump signal: two semver-visible renames (`avatarVariant` →
