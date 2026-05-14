@@ -1,5 +1,99 @@
 # Changelog
 
+## 1.4.1 — 2026-05-14 — O.W7 close (13-lane audit fan-out + γ BLOCKER absorb + FINAL.md)
+
+O tranche close ceremony. 7 strengthened audit lanes (α/β/γ/δ/ε/π/ι) +
+6 N11-style consumer re-audits (O11/a-f) dispatched in 2 parallel
+waves within the V7 dual-ceiling.
+
+### Fixed — `@mkbabb/glass-ui/header-ribbon` subpath publication (γ BLOCKER absorb)
+
+The W6 close commit `25e1b5a` shipped `dist/header-ribbon.js` but the
+W6 Lane A proof doc's claim that `package.json.exports["./header-ribbon"]`
++ `typesVersions["*"]["header-ribbon"]` writes landed was vacuous —
+the integration missed both entries. `verify-export-types` reported
+PASS because it enumerates `package.json.exports` and skipped the
+unwired subpath. External consumers at v1.4.0 attempting
+`import { HeaderRibbon } from "@mkbabb/glass-ui/header-ribbon"` would
+have failed with `ERR_PACKAGE_PATH_NOT_EXPORTED`.
+
+This is a regression of L invariant 7 (subpath publication binary)
+that O.W5 Lane B+D specifically retired the env-gate to prevent. The
+W7 γ audit caught it; β audit independently corroborated; absorbed
+inline at W7 close. Verified post-absorb:
+
+- `package.json.exports["./header-ribbon"]` present (development +
+  types + import targets).
+- `package.json.typesVersions["*"]["header-ribbon"]` present.
+- `dist/header-ribbon.d.ts` now emitted (1.7 KB).
+- `verify-export-types` PASS (all 39 exports including
+  `/header-ribbon` resolve).
+
+### Fixed — Doc-counter drifts (γ MINORs)
+
+- `CLAUDE.md:20` /api symbol count refreshed: "32 canonical public
+  symbols" → "53 canonical public symbols (49 types + 4 constants)".
+- `CLAUDE.md:72` custom-package count: 30 → 31 (header-ribbon added).
+- `CLAUDE.md:168` subpath count: "23 remaining custom packages" → 24
+  (`/header-ribbon` added).
+- `CLAUDE.md:243` subpath count: "37 flat JS subpaths" → 38 (post
+  header-ribbon).
+- `src/api/index.ts` preamble arithmetic: "29 types + 8 constants" →
+  "33 types + 4 constants" (M.W2 typo); "41 types + 8 constants" →
+  "45 types + 4 constants" (O.W4 typo). Added O.W6 promotion note:
+  surface count 49 → 53 (49 types + 4 constants).
+
+### Documented — FINAL.md
+
+`docs/tranches/O/FINAL.md` authored per K → L → M → N close-honesty
+pattern. Cites every wave-close commit + audit verdict + cross-walk
+to O-directives O1-O18 + named-destination per carry-forward to P.
+
+### Audit verdict matrix
+
+7 strengthened audit lanes:
+
+- α plan-vs-actual: CLEAN.
+- β substrate-without-consumer: MINOR-flags (1 BLOCKER → absorbed
+  inline + 4 single-consumer flags → P carry).
+- γ doc-drift: 1 BLOCKER + 5 MINORs → all absorbed inline except γ-M5
+  (frozen historical CHANGELOG entry → P-deferral acceptable).
+- δ idiomatic-gestalt: CLEAN with MINORs (P carry).
+- ε performance: FAVOURABLE-NEUTRAL (build-time −80ms; CSS budget
+  rebaseline candidate at P).
+- π visual-runtime: TOOLING-DEFERRED (Chrome MCP not connected; 2nd
+  consecutive deferral; P escalation flagged).
+- ι integrity-sweep: CLEAN (zero orphan stash; zero unauthorized
+  commits; precept submodule advance authorized; cross-constellation
+  reflog scan green).
+
+6 consumer re-audit lanes:
+
+- O11/a words/frontend: CLEAN (builds at v1.4.0).
+- O11/b fourier-analysis: MINOR (2 silent legacy dock-key injects;
+  carry to P).
+- O11/c bbnf-buddy: CLEAN (dock-DI binary-transparent verified).
+- O11/d keyframes.js: CLEAN.
+- O11/e value.js: BLOCKER (consumer-side; pre-existing avatar typo +
+  2 silent dock-key injects; value.js on WIP branch — READER-ONLY at
+  O per CONSTELLATION.md; carry to P cross-repo wave).
+- O11/f speedtest: CLEAN (A5 wire intact; AC.W6 cohort handoff
+  complete; 1 deliverable [Fira Code woff2] pending orchestrator
+  network-fetch).
+
+### Verification
+
+- `npm run typecheck` — PASS.
+- `npm test` — 348 / 30 green.
+- `npm run build` — 659 modules; `dist/header-ribbon.{js,d.ts}` both
+  emit at v1.4.1.
+- `npm run profile:budget` — PASS (CSS 95.7% raw — rebaseline
+  candidate flagged for P).
+- `npm run verify-export-types` — PASS (39 exports including
+  `/header-ribbon`).
+- `git stash list` — empty across glass-ui + 6 consumer repos +
+  precept submodule.
+
 ## 1.4.0 — 2026-05-14 — O.W6 HEADLINE (constellation-level substrate promotions + speedtest AC.W6 cohort)
 
 Minor bump signal. Four cross-walked promotions clear the ≥ 2-consumer

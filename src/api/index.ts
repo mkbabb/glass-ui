@@ -34,7 +34,7 @@
 // re-export added in lockstep), `ConfiguratorCloneMode` (W1-B Open Q3;
 // shipped at L.W7 Lane B), `TimelineSegment` + `TimelineSegmentGradient` +
 // `TimelineSegmentState` (AA-tranche timeline primitive canonical data
-// shape). Surface count 32 → 37 (29 types + 8 constants).
+// shape). Surface count 32 → 37 (33 types + 4 constants).
 //
 // O.W4 Lane A extensions (v1.2.4 or v1.3.0): 12 type promotions closing the
 // 3 Rγ /api discovery gaps —
@@ -48,7 +48,13 @@
 //     shape — paired with `ToastVariant`), `MenuItemVariants` (CVA-derived
 //     union from `ui/_shared/`; canonical home for the 11-site menu-item
 //     four-state contract).
-// Surface count 37 → 49 (41 types + 8 constants).
+// Surface count 37 → 49 (45 types + 4 constants).
+//
+// O.W6 Lane A extensions (v1.4.0): 4 type promotions for the useClipboard +
+// HeaderRibbon canonical primitives (`UseClipboardOptions`, `UseClipboardReturn`,
+// `HeaderRibbonPosition`, `HeaderRibbonProps`). Surface count 49 → 53 (49
+// types + 4 constants). HeaderRibbon ships subpath-only; useClipboard is
+// root-barrel re-exported (vueuse-free).
 
 // ── Aurora ─────────────────────────────────────────────────────────────────
 // Substrate config + family, plus numeric ceilings the consumer needs to

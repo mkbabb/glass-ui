@@ -17,7 +17,7 @@ npm run verify-export-types # subpath dts publication probe (L W0 Lane III relea
 src/
 ├── index.ts                        # v1.0 curated public barrel (vueuse-free) — Phase 2 SCC closure (L.W1 Lane A)
 ├── api/                            # `@mkbabb/glass-ui/api` discovery layer — types + constants only (L.W1 Lane B)
-│   └── index.ts                    # 32 canonical public symbols (28 types + 4 constants)
+│   └── index.ts                    # 53 canonical public symbols (49 types + 4 constants) — M.W2 + O.W4 + O.W6 extensions
 ├── dark.ts                         # `@mkbabb/glass-ui/dark` flat subpath (L.W1 Lane C; vueuse-bearing)
 ├── keyboard.ts                     # `@mkbabb/glass-ui/keyboard` flat subpath (L.W1 Lane C; vueuse-bearing)
 ├── carousel.ts                     # `@mkbabb/glass-ui/carousel` flat subpath (L.W1 Lane C; vueuse-bearing; v1.0.4 ships full `Carousel*` family per MIGRATION.md §1.2)
@@ -69,7 +69,7 @@ src/
 │   │   ├── toggle-group/           # ToggleGroup, ToggleGroupItem
 │   │   ├── tooltip/                # Tooltip provider/trigger/content (rounded-tooltip token)
 │   │   └── index.ts                # barrel: all ui/ exports
-│   ├── custom/                     # 30 custom package dirs (every dir has a package barrel)
+│   ├── custom/                     # 31 custom package dirs (every dir has a package barrel)
 │   │   ├── aurora/                 # Aurora WebGL background + useAurora composable (aurora chrome consumes useConfiguratorState<AuroraConfig> with cloneMode='per-preset' — see Configurator; L.W7 Lane B retired the prior parallel useAuroraStudio chrome)
 │   │   ├── configurator/           # Configurator + ConfiguratorLayer + ConfiguratorRow + useConfiguratorState
 │   │   ├── confirm-dialog/         # ConfirmDialog
@@ -91,6 +91,7 @@ src/
 │   │   ├── glass-carousel/         # GlassCarousel + useGlassCarousel
 │   │   ├── glass-panel/            # GlassPanel substrate wrapper
 │   │   ├── glyph-face/             # GlyphFace 3-layer wrapper (phase-tinted backplate + cap)
+│   │   ├── header-ribbon/          # HeaderRibbon — hover-tracking ribbon (O.W6 Lane A; subpath /header-ribbon)
 │   │   ├── hover-popover/          # HoverPopover with hoverOpenDelay prop (renamed from openDelay — K W1)
 │   │   ├── icon-tooltip/           # IconTooltip
 │   │   ├── infinite-scroll/        # InfiniteScroll + composable
@@ -164,7 +165,7 @@ src/
 
 ## Entry point
 
-`src/index.ts` is the **v1.0 curated public barrel** — vueuse-free per L.W1 Lane A SCC trap closure. It re-exports the 40 vueuse-free `ui/` package barrels (4 vueuse-bearing packages — `input/`, `textarea/`, `combobox/`, `carousel/` — are reachable only via subpath), 7 cherry-picked `custom/` packages (`instrument-chassis`, `glyph-face`, `dock-group`, `disco-glyph`, `hover-popover`, `configurator`, `scrolling-text`), the vueuse-free composable sub-trees (`motion/`, `reactive/`, `dom/`, `glass/`, `sortable/`), and `cn()`. The cherry-pick rationale is documented inline in `src/index.ts` (header comment block; L.W2 Lane B). The remaining 23 `custom/` packages reach consumers only via their dedicated subpath (`@mkbabb/glass-ui/dock`, `/aurora`, `/sidebar`, ...). Sidebar state/follow/scroll/tree composables live under `src/composables/sidebar/`; component-owned types stay in `src/components/custom/sidebar/types.ts`.
+`src/index.ts` is the **v1.0 curated public barrel** — vueuse-free per L.W1 Lane A SCC trap closure. It re-exports the 40 vueuse-free `ui/` package barrels (4 vueuse-bearing packages — `input/`, `textarea/`, `combobox/`, `carousel/` — are reachable only via subpath), 7 cherry-picked `custom/` packages (`instrument-chassis`, `glyph-face`, `dock-group`, `disco-glyph`, `hover-popover`, `configurator`, `scrolling-text`), the vueuse-free composable sub-trees (`motion/`, `reactive/`, `dom/`, `glass/`, `sortable/`), and `cn()`. The cherry-pick rationale is documented inline in `src/index.ts` (header comment block; L.W2 Lane B). The remaining 24 `custom/` packages reach consumers only via their dedicated subpath (`@mkbabb/glass-ui/dock`, `/aurora`, `/sidebar`, `/header-ribbon`, ...). Sidebar state/follow/scroll/tree composables live under `src/composables/sidebar/`; component-owned types stay in `src/components/custom/sidebar/types.ts`.
 
 ## Dependencies
 
@@ -239,7 +240,7 @@ import { GlassCarousel } from "@mkbabb/glass-ui/glass-carousel";
 //   scrolling-text, freshness
 ```
 
-CSS imports the unified bundle via `@mkbabb/glass-ui/styles`. Per `package.json` exports + `typesVersions["*"]`, v1.0 ships **37 flat JS subpaths** (32 component packages + `/api` + `/forms` + `/dark` + `/keyboard` + `/carousel`) plus the `/styles` CSS bundle (38 entries total in `package.json` exports, excluding `./` root + `./package.json`); verified at L.W2 Lane B via `npm run verify-export-types` (the release-script probe added at L.W0 Lane III).
+CSS imports the unified bundle via `@mkbabb/glass-ui/styles`. Per `package.json` exports + `typesVersions["*"]`, v1.4.0 ships **38 flat JS subpaths** (33 component packages + `/api` + `/forms` + `/dark` + `/keyboard` + `/carousel`) plus the `/styles` CSS bundle (39 entries total in `package.json` exports, excluding `./` root + `./package.json`); verified by `npm run verify-export-types` (release-script probe per L.W0 Lane III; unconditional since O.W5 Lane B+D).
 
 The v0.9.x nested subpaths `@mkbabb/glass-ui/composables/dark` + `@mkbabb/glass-ui/composables/keyboard` were RETIRED at v1.0 — L invariant 4 (no backwards-compat aliases). Consumers migrate via one-line rename per call site; see `MIGRATION.md`. The `@mkbabb/glass-ui/pagination` and `@mkbabb/glass-ui/virtual` subpaths were RETIRED at L.W3 (0 production consumers; substrate-without-consumer-binary invariant).
 

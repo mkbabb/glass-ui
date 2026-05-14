@@ -320,3 +320,32 @@ Four-lane wave dispatched in parallel agent-worktrees. Tokens.css overlap reconc
 ### Open windows for W7
 
 W7 opens after this commit lands. Close ceremony per `docs/tranches/O/waves/W7.md` — 7 strengthened audit lanes (α/β/γ/δ/ε/π/ι) + 6-agent N11-style consumer re-audit (O11/a-f). FINAL.md authored.
+
+## 2026-05-14 — W7 close (v1.4.1)
+
+13 audit lanes (7 strengthened + 6 consumer re-audit) dispatched in 2 parallel waves. 1 BLOCKER caught + absorbed inline; 1 consumer-side BLOCKER documented as cross-repo carry-forward to P.
+
+### Audit verdicts
+
+See FINAL.md §3 for full matrix. Summary:
+- 7 strengthened: 1 BLOCKER (γ HeaderRibbon packaging — absorbed inline) + 5 CLEAN/MINOR + 1 TOOLING-DEFERRED (π).
+- 6 consumer re-audit: 4 CLEAN + 1 MINOR (O11/b carry to P) + 1 BLOCKER (O11/e value.js consumer-side carry to P).
+
+### Inline absorbs at W7 close
+
+- `package.json` — added missing `./header-ribbon` exports + typesVersions entries (BLOCKER absorb per γ + β audits).
+- `CLAUDE.md` — refreshed doc-counters (/api 32 → 53; custom dirs 30 → 31; subpaths 37 → 38; remaining 23 → 24).
+- `src/api/index.ts` — corrected the 8-constants → 4-constants typo at M.W2 + O.W4 preamble; added O.W6 promotion note.
+
+### Hard gate
+
+(a) 7 strengthened audit lanes CLEAN/MINOR ✓ (1 BLOCKER absorbed inline).
+(b) 6 consumer re-audit lanes verify non-regression ✓ (1 BLOCKER is consumer-side; carry to P).
+(c) FINAL.md authored ✓.
+(d) ι sweep CLEAN ✓ (zero orphan stash; zero unauthorized commits).
+(e) typecheck ✓ ; test 348/348 ✓ ; build 659 modules ✓ ; profile:budget PASS ✓ ; verify-export-types PASS ✓.
+(f) Final aggregate tag v1.4.1.
+
+### Final disposition — O CLEAN at v1.4.1
+
+8 waves landed in one calendar day under indefatigable user authorization. P opens at user discretion with 7 carry-forwards named-destinations (1 visual-runtime + 1 CSS budget + 1 DI completion + 1 demo cohort + 1 GlassScrubber + 1 banned-word + 1 frozen-historical).

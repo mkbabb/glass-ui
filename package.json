@@ -1,6 +1,6 @@
 {
     "name": "@mkbabb/glass-ui",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "description": "Glassmorphic design system — Vue 3.5 components, reka-ui primitives, Tailwind CSS v4 tokens",
     "license": "MIT",
     "type": "module",
@@ -96,6 +96,9 @@
             ],
             "configurator": [
                 "dist/configurator.d.ts"
+            ],
+            "header-ribbon": [
+                "dist/header-ribbon.d.ts"
             ],
             "scrolling-text": [
                 "dist/scrolling-text.d.ts"
@@ -194,6 +197,11 @@
             "development": "./src/configurator.ts",
             "types": "./dist/configurator.d.ts",
             "import": "./dist/configurator.js"
+        },
+        "./header-ribbon": {
+            "development": "./src/header-ribbon.ts",
+            "types": "./dist/header-ribbon.d.ts",
+            "import": "./dist/header-ribbon.js"
         },
         "./metric-badge": {
             "development": "./src/metric-badge.ts",
