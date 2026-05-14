@@ -1,5 +1,40 @@
 # Changelog
 
+## 1.2.0 — 2026-05-14 — O.W0 (AB post-hoc plan folder + precept invariants 24-27 + cosmetic legacy excise)
+
+O tranche W0 HEADLINE. Three parallel lanes:
+
+- **Lane A** — AB tranche post-hoc plan folder authored at
+  `docs/tranches/AB/` (AB.md + 4 wave specs + FINAL.md + PROGRESS.md +
+  coordination/CONSTELLATION.md). Closes the K-invariant-3 shadow-execution
+  recurrence: AB shipped v1.0.5 → v1.1.0 with ~9 commits but no
+  `docs/tranches/AB/` plan folder; the retrospective traces every
+  commit + reconstructs the per-wave thesis (Living UI canon — chassis +
+  timeline + Pulse + Progress + dock-shadow).
+- **Lane B** — Precept submodule advanced `b8af314` → `46ee7e9`. Four
+  new invariants codified (24 fail-explicit on library-internal contract
+  violations; 25 typed-key + helper-pair DI canonical shape; 26 test-file
+  relocation outside src/; 27 tooling-side stash enforcement). LL entry
+  `2026-05-14 - Audit + DI + Test-Hygiene + Tooling-Stash` documents
+  origin in the O round-1 backend audit.
+- **Lane C** — 7 src/ files: cosmetic legacy excise (Rα E1-E4 + K7-K9).
+  `probeWebGLSupport` alias retired (3 call-sites renamed to
+  `isWebGLSupported`); `freshness.ts` docstring rewritten to match the
+  actual single-pure-TS-walk impl; 5 "back-compat" comment rewords
+  across Pulse / Progress / GlassTimeline / LabeledField / Section /
+  composables/index.ts. Two surviving `back-compat` mentions
+  (`tokens.css:198`, `utilities.css:355`) are intentional explanatory
+  prose about design choices. Net −14 src/ LOC; comment-only.
+
+### Verification
+
+- `npm run typecheck` — PASS.
+- `npm test` — 348 tests / 30 files green.
+- `npm run build` — 640 modules transformed; dist artefacts fresh.
+- `npm run profile:budget` — PASS for both raw (67.2% / 90.2%) and
+  gzip (67.9% / 90.7%). Bundle profile unchanged from N close (cosmetic
+  edits + plan-folder additions do not affect dist).
+
 ## 1.1.4 — 2026-05-14 — N close (13-audit fan-out + β absorbs + γ doc-drift fix + FINAL.md)
 
 N tranche close ceremony. 7 strengthened audit lanes (α/β/γ/δ/ε/π/ι) +

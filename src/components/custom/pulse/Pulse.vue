@@ -5,7 +5,7 @@ import { cn } from '../../../utils'
 
 /**
  * Pulse — three variants:
- *  - `dots`  : three-glyph loading indicator (default; back-compat)
+ *  - `dots`  : three-glyph loading indicator (default)
  *  - `ring`  : single ring spinner
  *  - `aura`  : ambient surface-scope halo (AB.W3.T1). Paints an
  *              absolutely-positioned radial gradient that breathes

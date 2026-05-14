@@ -80,3 +80,13 @@
 - **O-N-5** union candidate `<GlassScrubber>` / `Slider variant="timeline-glass"`: glass-ui-side substrate; fourier-analysis side adoption is consumer wave.
 - **O-N-6** keyframes.js 84 % UI-scaffolding overfitting: consumer-owned cleanup; orchestrator READER-ONLY.
 - **O-N-7** words/frontend press-scale ladder: glass-ui-side token tier; consumer adopts at later cohort.
+
+## §6 — W0 close addendum (2026-05-14)
+
+| Repo | W0 disposition |
+|---|---|
+| glass-ui | W0 close commit lands `docs/tranches/AB/` + precept pointer bump (`b8af314` → `46ee7e9`) + 8 cosmetic-excise src/ edits + v1.2.0 tag. |
+| precepts (submodule) | Advanced `b8af314` → `46ee7e9`; 4 new invariants (24-27) + LL entry. Pushed independently. |
+| AB tranche (retrospective) | Post-hoc plan folder authored at `docs/tranches/AB/`; closes K-invariant-3 shadow-execution recurrence. |
+| speedtest | READER-ONLY at W0. AB.W3 canonical-consumer status RE-CONFIRMED by O11/f β audit; the post-hoc AB FINAL.md cites this in its cross-tranche debt section. |
+| All other consumers | No-op at W0 (cosmetic-excise + plan-folder additions are not consumer-visible). |

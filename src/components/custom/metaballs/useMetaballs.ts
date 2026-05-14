@@ -102,9 +102,6 @@ export function isWebGLSupported(): boolean {
     }
 }
 
-// Backwards-compatible local alias — historical call sites in this file.
-const probeWebGLSupport = isWebGLSupported;
-
 /**
  * WebGL metaball composable.
  *
@@ -119,9 +116,9 @@ export function useMetaballs(
     const cfg = (config && isReactive(config))
         ? config as Required<MetaballConfig>
         : reactive({ ...DEFAULT_METABALL_CONFIG, ...config }) as Required<MetaballConfig>;
-    // Seed isSupported synchronously from a throwaway-canvas probe. See
-    // probeWebGLSupport() docstring for the F-ε-3 cycle this avoids.
-    const isSupported = ref(probeWebGLSupport());
+    // Seed isSupported synchronously from a throwaway-canvas probe — sidesteps
+    // the SSR / pre-mount fault where a real canvas isn't yet on the document.
+    const isSupported = ref(isWebGLSupported());
 
     let gl: WebGLRenderingContext | null = null;
     let program: WebGLProgram | null = null;
@@ -156,7 +153,7 @@ export function useMetaballs(
         if (!canvas) return;
 
         gl = canvas.getContext("webgl", { alpha: true, premultipliedAlpha: false });
-        // probeWebGLSupport() already gated on getContext; the in-init
+        // isWebGLSupported() already gated on getContext; the in-init
         // checks below remain as defensive bails (e.g., context lost
         // post-probe), but they MUST NOT flip `isSupported.value = false`
         // post-probe — that mutation is what historically created the

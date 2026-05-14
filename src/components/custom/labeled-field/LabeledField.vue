@@ -20,7 +20,7 @@ import { cn } from "../../../utils";
  * (LabeledInput, LabeledSelect, LabeledSlider, LabeledSwitch) used to repeat
  * across their templates. The form control composes via `<slot />`.
  *
- * The four wrappers stay intact for back-compat (per the B5 §5.5 keep-wrappers
+ * The four wrappers stay intact for API ergonomics (per the B5 §5.5 keep-wrappers
  * path) but now compose `<LabeledField>` internally — the canonical recipe
  * lives in one place. Consumers may also import `<LabeledField>` directly
  * if they want full control of the slot.

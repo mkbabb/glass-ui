@@ -108,8 +108,35 @@ After both rounds return, the orchestrator synthesizes findings into:
 
 Each wave-spec at `docs/tranches/O/waves/W*.md`.
 
-## Awaiting dispatch authorization
+## 2026-05-14 — W0 HEADLINE close (v1.2.0)
 
-Per O-open user directive ("This is NOT an implementation phase. Tranche development only."), the planning substrate landed at this open commit. Implementation dispatch awaits explicit future user directive analogous to K/L/M/N pattern.
+Implementation dispatch authorized per user directive ("Begin and continue the current tranche ... continue indefatigably ... NO quick solutions, NO workarounds: idiomatic, gestalt approaches.").
 
-When dispatch authorized: W0 HEADLINE opens — 3 parallel lanes (AB plan folder retrospective + precept canonicalize + cosmetic legacy excise).
+### Three parallel lanes landed
+
+| Lane | Mode | Disposition | Proof |
+|---|---|---|---|
+| A — AB post-hoc plan folder | agent-dispatched (worktree-isolated) | LANDED — `docs/tranches/AB/` authored: `AB.md` + 4 wave specs + `FINAL.md` + `PROGRESS.md` + `coordination/CONSTELLATION.md`. Closes K-invariant-3 shadow-execution recurrence (AB shipped v1.0.5 → v1.1.0 with ~9 commits but no plan folder; retrospective traces every commit). | `audit/W0-Lane-A-AB-post-hoc-proof.md` |
+| B — Precept submodule advance | orchestrator-solo (per M.W0 Lane II precedent) | LANDED — precept `b8af314` → `46ee7e9` pushed to origin/main. 4 new invariants codified (24 fail-explicit / 25 typed-key DI / 26 test-files-outside-src / 27 tooling-side stash). LL entry `2026-05-14 - Audit + DI + Test-Hygiene + Tooling-Stash`. Glass-ui submodule pointer bumped at W0 close commit. | `audit/W0-Lane-B-precept-canonicalize-proof.md` |
+| C — Cosmetic legacy excise | orchestrator-direct | LANDED — Rα E1-E4 + K7-K9 cohort. `probeWebGLSupport` alias retired (3 callsites renamed); 5 "back-compat" comment rewords; `freshness.ts` docstring rewritten. `back-compat` mention count: 9 → 2 (both intentional design statements; satisfies W0 hard gate ≤ 2). Net −14 src/ LOC; comment-only. | `audit/W0-Lane-C-cosmetic-excise-proof.md` |
+
+### Hard gate evidence
+
+- (a) AB plan folder authored at `docs/tranches/AB/` ✓.
+- (b) Precept submodule advances `b8af314` → `46ee7e9` with invariants 24-27 + LL entry; pushed ✓; glass-ui pointer bumped ✓.
+- (c) Cosmetic legacy excised; `back-compat` count = 2 ≤ 2 ✓.
+- (d) `npm run typecheck` ✓; `npm test` 348/348 green ✓; `npm run build` 640 modules ✓; `npm run profile:budget` PASS (raw 67.2% / 90.2%; gzip 67.9% / 90.7%) ✓.
+- (e) v1.2.0 minor tag pushed.
+
+### Files
+
+- `src/` 8 files edited (comment-only).
+- `docs/tranches/AB/` NEW folder (Lane A authorship).
+- `docs/precepts/` submodule advanced (Lane B; pushed independently).
+- `docs/tranches/O/audit/` 3 lane proof docs.
+- `CHANGELOG.md` v1.2.0 entry.
+- `package.json` 1.1.4 → 1.2.0.
+
+### Open windows for W1
+
+W1 opens after this commit lands. Five lanes (4 fail-explicit migrations + 18 test-file relocation per `docs/tranches/O/waves/W1.md`).

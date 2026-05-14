@@ -21,8 +21,8 @@ import { PaperBackdrop } from "../../custom/paper-backdrop";
  * typography ladder. For glass-surface-as-section, wrap inside `<Card>`.
  *
  * Migrates the `.section-label` typography utility (mono-caps caption)
- * into the `tone="label"` variant, keeping the existing class as a
- * back-compat utility.
+ * into the `tone="label"` variant, keeping the existing class for
+ * direct consumption (10 word-frontend consumer sites; L invariant 8).
  *
  * N.W0 Lane A3 — `backdrop` prop wires `<PaperBackdrop>` as an optional
  * scoped layer behind header + description + content. Default `"none"`

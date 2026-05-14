@@ -1,21 +1,16 @@
 /**
  * Freshness gate helper — re-exported for consumer-side `vite.config.ts`
- * wiring. Closes the V.W8 stale-dist drift class.
+ * wiring. Closes the stale-dist drift class.
  *
  * Consumers import `assertDistFresh()` and invoke it from their
  * `vite.config.ts` (or any startup hook). When a workspace symlink points
  * at a glass-ui clone whose `dist/` is older than `src/`, the function
  * throws with a human-readable message naming the offending source file.
  *
- * The gate's authoritative implementation lives at
- * `scripts/freshness-gate.mjs` so it can run as a `prebuild` script
- * without requiring a TypeScript loader. This module re-imports the same
- * mtime-walk via dynamic import + a tiny pure-TS fallback that matches
- * the script's algorithm. The CLI path remains canonical; this helper
- * is the structural fix per A3 §4.3 / V.FINAL.md:104-106.
- *
- * NOTE: The W3 wave wires this into `speedtest/vite.config.ts`. W2 only
- * ships the helper.
+ * The prebuild CLI at `scripts/freshness-gate.mjs` carries the same
+ * mtime-walk algorithm; the duplication is documented at
+ * `docs/tranches/O/research/Repsilon-pipeline-orchestration.md` and
+ * folded into O.W5 Lane C (DRY extract to a shared `scripts/freshness-walk.mjs`).
  */
 import { readdirSync, statSync, existsSync } from "node:fs";
 import { resolve, join, dirname } from "node:path";

@@ -45,10 +45,10 @@ const props = withDefaults(
     ProgressRootProps & {
       class?: HTMLAttributes['class']
       /**
-       * 'default'    = bg-secondary rail + bg-primary indicator (back-compat).
+       * 'default'    = bg-secondary rail + bg-primary indicator.
        * 'gradient'   = rail respects --progress-track; indicator
        *                respects --progress-fill (free-form CSS, including
-       *                gradients). Same back-compat shape from v1.0.x.
+       *                gradients). Default variant from v1.0.x.
        * 'sectioned'  = phase-bus (AB.W3.T2). Renders N colour-coded cells
        *                with gradient seams between siblings; the active
        *                cell carries a spring fill driven by

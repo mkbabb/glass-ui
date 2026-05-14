@@ -49,7 +49,7 @@ import type { TimelineSegment, TimelineSegmentGradient } from "./types";
  */
 const props = withDefaults(
     defineProps<{
-        /** Variant — backward-compatible default `scrubber`. */
+        /** Variant — default `scrubber`. */
         variant?: "scrubber" | "segmented" | "continuous";
         // Scrubber-only ────────────────────────────────────────────
         /** 0..1 scrubber position. Required for scrubber variant. */
@@ -544,7 +544,7 @@ function popoverPayloadFor(seg: TimelineSegment): DefaultPopoverPayload {
         </div>
     </div>
 
-    <!-- Scrubber variant (default; backward-compatible) ──────────── -->
+    <!-- Scrubber variant (default) ────────────────────────────── -->
     <div v-else class="timeline-row">
         <div v-if="label" class="timeline-caret" :style="{ left: (modelValue * 100) + '%' }">
             <span class="caret-value fira-code">{{ label }}</span>
