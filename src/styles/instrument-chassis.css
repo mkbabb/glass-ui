@@ -37,8 +37,19 @@
 
         /* `--phase-color` defaults to muted-foreground at idle. data-phase
            selectors below retint to the chart hue. Consumers register
-           --chart-* aliases in their preset; tokens.css ships safe defaults. */
+           --chart-* aliases in their preset; tokens.css ships safe defaults.
+
+           `--phase-color-label` is the WCAG companion (AC.W6c F1.V-04). It
+           pairs with `--phase-color` 1:1 — same `data-phase` cascade, but
+           routes through `--chart-{phase}-label` (L≈0.40 in OKLCH) so
+           text-on-background callsites clear the 4.5:1 contrast floor.
+           Canvas / fill / gradient consumers continue to read `--phase-color`
+           (saturated brand register, correct against the meter dial).
+           Label / text consumers read `--phase-color-label` with the
+           untinted token as a fallback so an unhydrated subtree still
+           paints something readable. */
         --phase-color: var(--muted-foreground);
+        --phase-color-label: var(--muted-foreground);
     }
 
     .dark .instrument-chassis {
@@ -64,11 +75,26 @@
         border-color: var(--surface-tint-6);
     }
 
-    /* Phase-color cascade — single property, full chassis-wide retint. */
-    .instrument-chassis[data-phase="ping"]     { --phase-color: var(--chart-ping, var(--viz-chebyshev)); }
-    .instrument-chassis[data-phase="download"] { --phase-color: var(--chart-download, var(--viz-fourier)); }
-    .instrument-chassis[data-phase="upload"]   { --phase-color: var(--chart-upload, var(--viz-legendre)); }
-    .instrument-chassis[data-phase="complete"] { --phase-color: var(--color-gold); }
+    /* Phase-color cascade — single property, full chassis-wide retint.
+       `--phase-color-label` mirrors the cascade through the WCAG companion
+       tokens (AC.W6c F1.V-04). The label register falls back to the canvas
+       hue so a consumer that hasn't migrated its labels still paints. */
+    .instrument-chassis[data-phase="ping"] {
+        --phase-color: var(--chart-ping, var(--viz-chebyshev));
+        --phase-color-label: var(--chart-ping-label, var(--chart-ping, var(--viz-chebyshev)));
+    }
+    .instrument-chassis[data-phase="download"] {
+        --phase-color: var(--chart-download, var(--viz-fourier));
+        --phase-color-label: var(--chart-download-label, var(--chart-download, var(--viz-fourier)));
+    }
+    .instrument-chassis[data-phase="upload"] {
+        --phase-color: var(--chart-upload, var(--viz-legendre));
+        --phase-color-label: var(--chart-upload-label, var(--chart-upload, var(--viz-legendre)));
+    }
+    .instrument-chassis[data-phase="complete"] {
+        --phase-color: var(--color-gold);
+        --phase-color-label: var(--color-gold-dark, var(--color-gold));
+    }
 
     /* Region wrappers ─────────────────────────────────────────── */
 

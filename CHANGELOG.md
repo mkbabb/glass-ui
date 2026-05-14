@@ -1,5 +1,44 @@
 # Changelog
 
+## 1.5.1 — 2026-05-14 — chassis `--phase-color-label` cascade (speedtest AC.W6c)
+
+Patch-level extension to the `<InstrumentChassis>` `data-phase` cascade.
+The WCAG companion `--chart-{phase}-label` tokens added at v1.4.0
+(Lane D / AC.W6c F1.V-04) now have a parallel chassis-level cascade
+`--phase-color-label` that pairs 1:1 with `--phase-color`. Text-on-
+background callsites inside the chassis subtree (phase label, hero
+number, climax row tints) consume the label register; canvas / fill /
+gradient consumers continue to read `--phase-color`. Both fall back
+through the canvas hue when the consumer hasn't migrated yet.
+
+### Changed — `src/styles/instrument-chassis.css`
+
+- Idle defaults declare `--phase-color-label: var(--muted-foreground)`
+  alongside the existing `--phase-color` default — symmetric pair at
+  rest.
+- `data-phase="{ping,download,upload}"` cascade adds the parallel
+  `--phase-color-label: var(--chart-{phase}-label, var(--chart-{phase}, ...))`
+  declaration so each phase retints both registers in a single CSS
+  mutation.
+- `data-phase="complete"` routes the label to `--color-gold-dark`
+  (the darker rung of the gold trio) so the post-complete "Complete!"
+  headline tinting clears body-text contrast against the light card.
+
+### Verification
+
+- `npm run typecheck` — PASS.
+- `npm test` — 348 / 30 green (no behavioural delta).
+
+### Consumer adoption
+
+speedtest's AC.W6c follow-on wires the inline `--phase-color-label`
+binding on per-row hosts (where `metric.color` was the prior canvas-
+register hex), promotes `MetricDef.colorVarLabel`, and migrates the
+chassis-subtree label CSS callsites (`.text-metric-label`,
+`.text-hero[data-idle="false"]`, `.result-row[data-color-tinted]
+.result-value/-unit`) from `var(--phase-color)` to
+`var(--phase-color-label, var(--phase-color))`.
+
 ## 1.5.0 — 2026-05-14 — OFL font self-host subsystem (speedtest AC.W6b)
 
 The font subsystem migrates from "consumer wires fonts" to "library
