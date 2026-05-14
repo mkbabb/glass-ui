@@ -303,6 +303,12 @@ Every interactive element implements the four-state contract plus focus and togg
 
 Scale: golden-ratio (√φ ≈ 1.272), base 1rem (16 px).
 
+### Self-host font policy
+
+Glass-ui self-hosts its font subsystem under `src/assets/fonts/`. Faces must ship under an OFL-1.1-compatible (or equivalent) license that permits redistribution + subsetting + bundling. The library exposes a `--font-brand-{sans,serif,mono}` cascade so consumers wire their preset typography (e.g. speedtest's Path-D substitute display sans + Fira Code mono) without re-introducing third-party CDN dependencies on the LCP-critical path.
+
+Speedtest AC.W6b will populate the candidate matrix; this subsection is the canonical policy anchor.
+
 ### Size tokens
 
 | Token               | Value                                     | Px (at 16)  | Tailwind  | Use                          |
