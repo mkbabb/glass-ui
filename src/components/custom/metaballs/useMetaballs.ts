@@ -37,9 +37,15 @@ function compileShader(gl: WebGLRenderingContext, type: number, source: string):
     gl.shaderSource(shader, source);
     gl.compileShader(shader);
     if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        console.error("Shader compile:", gl.getShaderInfoLog(shader));
+        // O.W1 Lane B (invariant 24) — library-owned shader source; compile
+        // failure is an internal contract violation, not a browser-API
+        // degradation. Fail explicitly so the bug surfaces.
+        const log = gl.getShaderInfoLog(shader);
+        const stage = type === gl.VERTEX_SHADER ? "vertex" : "fragment";
         gl.deleteShader(shader);
-        return null;
+        throw new Error(
+            `[glass-ui:metaballs] ${stage} shader compile failure: ${log}`,
+        );
     }
     return shader;
 }
@@ -51,9 +57,14 @@ function linkProgram(gl: WebGLRenderingContext, vs: WebGLShader, fs: WebGLShader
     gl.attachShader(program, fs);
     gl.linkProgram(program);
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-        console.error("Program link:", gl.getProgramInfoLog(program));
+        // O.W1 Lane B (invariant 24) — library-owned shader source; program
+        // link failure is an internal contract violation, not a browser-API
+        // degradation. Fail explicitly so the bug surfaces.
+        const log = gl.getProgramInfoLog(program);
         gl.deleteProgram(program);
-        return null;
+        throw new Error(
+            `[glass-ui:metaballs] program link failure: ${log}`,
+        );
     }
     return program;
 }
@@ -165,10 +176,10 @@ export function useMetaballs(
 
         const vs = compileShader(gl, gl.VERTEX_SHADER, VERTEX_SHADER);
         const fs = compileShader(gl, gl.FRAGMENT_SHADER, FRAGMENT_SHADER);
-        if (!vs || !fs) return;
+        if (!vs || !fs) return; // caught upstream — defensive (compileShader throws on COMPILE_STATUS=false post O.W1 Lane B)
 
         program = linkProgram(gl, vs, fs);
-        if (!program) return;
+        if (!program) return; // caught upstream — defensive (linkProgram throws on LINK_STATUS=false post O.W1 Lane B)
 
         gl.useProgram(program);
 

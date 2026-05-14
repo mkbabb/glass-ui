@@ -1,8 +1,8 @@
 import { mount, type VueWrapper } from "@vue/test-utils";
 import { defineComponent, h, markRaw, type Component, type PropType } from "vue";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import DataTable from "./DataTable.vue";
-import type { DataTableColumn } from "./types";
+import DataTable from "../DataTable.vue";
+import type { DataTableColumn } from "../types";
 
 interface Row {
     _id?: string;

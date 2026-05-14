@@ -140,3 +140,32 @@ Implementation dispatch authorized per user directive ("Begin and continue the c
 ### Open windows for W1
 
 W1 opens after this commit lands. Five lanes (4 fail-explicit migrations + 18 test-file relocation per `docs/tranches/O/waves/W1.md`).
+
+## 2026-05-14 — W1 close (v1.2.1)
+
+Five-lane fail-explicit + hygiene wave. All hard gates met.
+
+### Lane disposition
+
+| Lane | Mode | Disposition | Proof |
+|---|---|---|---|
+| A — Aurora init fail-explicit (F1) | agent-dispatched (worktree) | LANDED — `onInitError` callback added to `<Aurora>` + `useAurora` + `runtimeOptions`; library-owned shader sub-paths in `runtime.ts` also migrated (Lane-B-flagged absorb). MIGRATION.md note authored. Speedtest cross-repo audit READ-ONLY; W6 cohort. | `audit/W1-Lane-A-aurora-fail-explicit-proof.md` |
+| B — WebGL shader throws (F2+F3) | agent-dispatched (worktree) | LANDED — 4 sites migrated (metaballs compile + link + frost compile + link); caller bail-outs preserved with `// caught upstream — defensive` annotation. | `audit/W1-Lane-B-shader-throw-proof.md` |
+| C — Configurator clone Path A (F4) | orchestrator-direct | LANDED — `structuredClone` failure throws with cause + escape-hatch. JSON-fallback retired. Decision doc authored. | `audit/W1-Lane-C-clone-decision.md` |
+| D — Typewriter unreachable throw (F5) | orchestrator-direct | LANDED — 3-line throw replaces defensive bail with named invariant-violation message. | `audit/W1-Lane-D-typewriter-throw-proof.md` |
+| E — Test-file canonical shape | agent-dispatched (worktree) | NO-OP — 18 files already at `__tests__/` canonical shape; verdict reversed via proof doc. ABSORB: 3 `.spec.ts` siblings (`MultiSelect`, `DataTable`, `ProgressiveSidebar`) relocated to `__tests__/` + renamed `.test.ts`. | `audit/W1-Lane-E-test-relocation-proof.md` |
+
+### Hard gate evidence
+
+- (a) Aurora `onInitError` prop ships + MIGRATION.md note ✓; speedtest cross-repo audit READ-ONLY ✓ (W6 cohort).
+- (b) 4 shader sites throw ✓.
+- (c) Configurator decision doc landed; Path A chose ✓.
+- (d) Typewriter throws ✓.
+- (e) Test files canonical ✓ (substrate already at shape per Lane E verdict; 3 .spec.ts absorbed).
+- (f) `npm run typecheck` ✓ ; `npm test` 348/348 ✓ ; `npm run build` 640 modules ✓ (heap-bumped; folded to O.W5 candidate); `npm run profile:budget` PASS ✓; `npm run verify-export-types` PASS ✓.
+- (g) 5 lane proof docs ✓ + 1 decision doc.
+- (h) v1.2.1 patch tag.
+
+### Open windows for W2
+
+W2 opens after this commit lands. Three lanes per `docs/tranches/O/waves/W2.md` (dock subsystem typed-key + helper-pair canonicalization + DockLayer/ToggleGroup DRIFT cleanup + 5 in-library consumer-site migrations).

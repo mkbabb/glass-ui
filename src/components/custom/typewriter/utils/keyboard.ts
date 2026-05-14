@@ -207,7 +207,8 @@ export function pickTypoChar(intendedChar: string): string {
         }
     }
 
-    // Should not reach here, but fallback
-    const last = pool[pool.length - 1].char;
-    return isUpper ? last.toUpperCase() : last;
+    throw new Error(
+        "[typewriter:weighted-pool] pool exhausted without selection — " +
+        "invariant violation; ADJACENCY_MAP integrity check needed.",
+    );
 }

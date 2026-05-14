@@ -84,17 +84,24 @@ function defaultClone<T>(value: T): T {
     // plain objects so this path is safe for both reactive snapshots and
     // immutable preset baselines.
     const raw = toRaw(value);
-    if (typeof structuredClone === "function") {
-        try {
-            return structuredClone(raw);
-        } catch {
-            // Fall through to JSON-based clone for values that nested-walk
-            // into non-cloneable shapes (functions, symbols, DOM nodes,
-            // class instances). Consumers can override `clone` if even
-            // JSON-clone is insufficient.
-        }
+    if (typeof structuredClone !== "function") {
+        throw new Error(
+            "[glass-ui:configurator] structuredClone is unavailable in this runtime. " +
+            "Pass a custom clone via ConfiguratorStateOptions.clone for environments " +
+            "without structured-clone support.",
+        );
     }
-    return JSON.parse(JSON.stringify(raw)) as T;
+    try {
+        return structuredClone(raw);
+    } catch (err) {
+        throw new Error(
+            "[glass-ui:configurator] structuredClone failed: " +
+            (err instanceof Error ? err.message : String(err)) +
+            ". Preset values must be structured-cloneable (no functions, symbols, " +
+            "DOM nodes, or class instances). Pass a custom clone via " +
+            "ConfiguratorStateOptions.clone if the data shape requires it.",
+        );
+    }
 }
 
 function defaultEquals<T>(a: T, b: T): boolean {

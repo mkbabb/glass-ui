@@ -40,8 +40,18 @@ export function useAurora(
         try {
             inst = createAurora(canvas, getCfg(), runtimeOptions);
         } catch (err) {
-            console.warn("[Aurora]", err);
-            return;
+            // Per O invariant 24: library-internal contract violations
+            // (WebGL2 unavailable, shader compile/link failure) fail
+            // explicitly. If the consumer provided `onInitError`, hand
+            // the error off and leave the canvas unmounted (silent-fallback
+            // opt-in). Otherwise rethrow so the failure surfaces to the
+            // consumer's error boundary / dev console.
+            const error = err instanceof Error ? err : new Error(String(err));
+            if (runtimeOptions.onInitError) {
+                runtimeOptions.onInitError(error);
+                return;
+            }
+            throw error;
         }
 
         reducedMq = window.matchMedia("(prefers-reduced-motion: reduce)");

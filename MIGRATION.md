@@ -450,6 +450,91 @@ The L W7 Lane B Option-A unification (Rε §A.8) routed aurora's per-preset clon
 
 ---
 
+## v1.2.1 — Aurora init fail-explicit (O.W1 Lane A)
+
+Per O invariant 24 (library-internal contract violations throw; browser-API
+degradation paths remain befitting silent fallbacks), `<Aurora>` init failure
+is now **fail-explicit**.
+
+### Before (≤ v1.2.0)
+
+```ts
+// useAurora's onMounted try/catch:
+try {
+    inst = createAurora(canvas, getCfg(), runtimeOptions);
+} catch (err) {
+    console.warn("[Aurora]", err);   // silent — surface renders nothing
+    return;
+}
+```
+
+A `createAurora` failure (WebGL2 unavailable, shader compile/link failure)
+logged a warning to the console and rendered an empty `<canvas>`. The
+consumer received no surface signal beyond the dev-console warn.
+
+### After (≥ v1.2.1)
+
+`createAurora` is glass-ui-internal; its failure is an internal contract
+violation. The composable now rethrows by default so the failure surfaces to
+the consumer's error boundary (or dev console as an uncaught exception). To
+opt back into the prior silent-warn behaviour, pass `onInitError`:
+
+```vue
+<template>
+    <Aurora
+        :config="auroraConfig"
+        :on-init-error="(err) => console.warn('[Aurora]', err)"
+    />
+</template>
+```
+
+The callback is invoked with the caught `Error`; the canvas stays unmounted
+(matching the prior silent-fallback shape). The prop is also threadable via
+`runtimeOptions.onInitError` for consumers passing a fully-composed
+`AuroraRuntimeOptions` object (e.g. thumbnail-baking pipelines):
+
+```ts
+import type { AuroraRuntimeOptions } from "@mkbabb/glass-ui/api";
+
+const runtimeOptions: AuroraRuntimeOptions = {
+    mode: "capture",
+    preserveDrawingBuffer: true,
+    onInitError: (err) => myErrorBus.report("aurora-init", err),
+};
+```
+
+The top-level prop wins when both are set.
+
+### Why the change
+
+Per Rα FAIL-EXPLICITLY F1 (`docs/tranches/O/research/Ralpha-legacy-code.md:85`)
+and O invariant 24:
+
+- Library-internal contract (shader compile / factory init / WebGL2 unavailable)
+  → throw.
+- Browser-API degradation (pointer-capture failure / reduced-motion preference)
+  → silent fallback with rationale.
+
+Silent-warn concealed bugs in shader edits, masked WebGL2-context-cap
+exhaustion (Chromium ~8/page), and left consumers debugging "why is my canvas
+blank" without a signal. The throw forces the bug to the surface where the
+consumer can decide how to handle it.
+
+### Migration cost
+
+`grep` your codebase for `<Aurora` and `useAurora(`:
+
+- If you depend on the prior render-nothing-and-warn behaviour, add
+  `onInitError={(err) => console.warn("[Aurora]", err)}` to your `<Aurora>`
+  call site.
+- If you have an error boundary upstream and want the failure to surface
+  there, no change needed.
+- Speedtest's single `<Aurora>` call site (`src/App.vue:5`) inherits the
+  fail-explicit default — the consumer-side disposition is coordinated at
+  the cross-repo cohort wave (O.W6).
+
+---
+
 ## Recommended new surfaces (best-practice, not strict migration)
 
 Even where a root-barrel import still works at v1.0, prefer per-package

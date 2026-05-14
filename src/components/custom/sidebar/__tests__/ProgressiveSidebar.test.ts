@@ -1,8 +1,8 @@
 import { mount } from "@vue/test-utils";
 import { computed, ref } from "vue";
 import { describe, expect, it, vi } from "vitest";
-import ProgressiveSidebar from "./ProgressiveSidebar.vue";
-import type { SidebarState } from "./types";
+import ProgressiveSidebar from "../ProgressiveSidebar.vue";
+import type { SidebarState } from "../types";
 
 function createState(): SidebarState {
     const activeId = ref<string | null>(null);

@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { defineComponent, h } from "vue";
 import { describe, expect, it } from "vitest";
-import MultiSelect from "./MultiSelect.vue";
+import MultiSelect from "../MultiSelect.vue";
 
 describe("MultiSelect", () => {
     it("renders string icons as text instead of raw HTML", () => {

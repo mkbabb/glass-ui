@@ -1,5 +1,73 @@
 # Changelog
 
+## 1.2.1 — 2026-05-14 — O.W1 (fail-explicit migrations + test-file canonical shape)
+
+Five-lane wave per docs/tranches/O/waves/W1.md. Four library-internal
+contract-violation paths migrate from silent `console.warn` /
+`console.error` + return-null to `throw new Error(...)` per invariant 24
+(codified at O.W0 / precept `46ee7e9`). Test-file shape verified canonical;
+3 stragglers absorbed.
+
+### Changed — Aurora init now throws (Lane A; F1)
+
+`useAurora` / `<Aurora>` no longer silently swallow `createAurora`
+failures. Either the new `onInitError?: (err: Error) => void` callback
+prop / `runtimeOptions.onInitError` receives the error AND the canvas
+stays unmounted, or the error throws. Documented in MIGRATION.md with
+the explicit silent-warn opt-back-in recipe. Speedtest (the deep Aurora
+consumer) cross-repo audit done READ-ONLY — no in-place consumer wire at
+this wave; folded to O.W6 cross-repo cohort if needed.
+
+### Changed — WebGL shader compile + link failures throw (Lane B; F2 + F3)
+
+4 sites across `useMetaballs.ts` (shader compile + program link) and
+`composables/glass/webgl/frostShader.ts` (compile + link) replaced.
+Library-owned shader sources are internal-contract failure modes. Error
+messages name the substrate + operation:
+`[glass-ui:metaballs] vertex shader compile failure: ...`,
+`[glass-ui:frost] program link failure: ...`. Caller-side bail-out
+`if (!x) return` checks preserved with `// caught upstream — defensive`
+comments where the throw makes the branch unreachable.
+
+### Changed — Configurator `structuredClone` failures throw (Lane C; F4 Path A)
+
+`useConfiguratorState`'s `defaultClone` retired the silent
+`JSON.parse(JSON.stringify(...))` fall-through. `structuredClone`
+failures (or runtime unavailability) now throw with a named cause and
+the explicit `ConfiguratorStateOptions.clone` escape-hatch in the message.
+Most preset shapes (plain objects, arrays, primitives, `Date`, `Map`,
+`Set`) are structured-cloneable and need no migration. Decision doc:
+`docs/tranches/O/audit/W1-Lane-C-clone-decision.md`.
+
+### Changed — Typewriter weighted-pool invariant throws (Lane D; F5)
+
+The defensive "should not reach here" fallback at
+`src/components/custom/typewriter/utils/keyboard.ts:210` replaced with a
+named throw. The branch is reachable only if the ADJACENCY_MAP
+integrity guarantee is violated; surfacing the violation diagnostically
+beats silent recovery.
+
+### Hygiene — Test-file canonical shape (Lane E + absorb)
+
+Per invariant 26 (codified at O.W0). The Rα-flagged 18 `*.test.ts` files
+were already at canonical `src/<pkg>/__tests__/*.test.ts` per the
+Vue / Vite / Vitest convention — NO-OP. 3 sibling `*.spec.ts` files
+(`MultiSelect`, `DataTable`, `ProgressiveSidebar`) absorbed at W1
+close: relocated to `__tests__/` and renamed `.spec.ts` → `.test.ts`
+for naming-convention parity. 21 test files now follow one shape.
+
+### Verification
+
+- `npm run typecheck` — PASS.
+- `npm test` — 348 tests / 30 files green (unchanged from N close).
+- `npm run build` — 640 modules transformed; declaration build green
+  with bumped heap (`NODE_OPTIONS=--max-old-space-size=8192`; the
+  vite:dts heap-limit issue is pre-existing — folded to O.W5 Lane A
+  / E candidate).
+- `npm run profile:budget` — PASS (raw 67.2% / 90.2%; gzip 67.9% /
+  90.7%); bundle profile bit-identical to v1.2.0.
+- `npm run verify-export-types` — PASS.
+
 ## 1.2.0 — 2026-05-14 — O.W0 (AB post-hoc plan folder + precept invariants 24-27 + cosmetic legacy excise)
 
 O tranche W0 HEADLINE. Three parallel lanes:

@@ -142,7 +142,7 @@ export function createFrostProgram(
 ): WebGLProgram | null {
     const vertShader = compileShader(gl, gl.VERTEX_SHADER, VERTEX_SHADER);
     const fragShader = compileShader(gl, gl.FRAGMENT_SHADER, FRAGMENT_SHADER);
-    if (!vertShader || !fragShader) return null;
+    if (!vertShader || !fragShader) return null; // caught upstream — defensive (compileShader throws on COMPILE_STATUS=false post O.W1 Lane B)
 
     const program = gl.createProgram();
     if (!program) return null;
@@ -152,12 +152,14 @@ export function createFrostProgram(
     gl.linkProgram(program);
 
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-        console.error(
-            "glass-ui: frost shader link error:",
-            gl.getProgramInfoLog(program),
-        );
+        // O.W1 Lane B (invariant 24) — library-owned shader source; program
+        // link failure is an internal contract violation, not a browser-API
+        // degradation. Fail explicitly so the bug surfaces.
+        const log = gl.getProgramInfoLog(program);
         gl.deleteProgram(program);
-        return null;
+        throw new Error(
+            `[glass-ui:frost] program link failure: ${log}`,
+        );
     }
 
     return program;
@@ -175,12 +177,15 @@ function compileShader(
     gl.compileShader(shader);
 
     if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        console.error(
-            "glass-ui: shader compile error:",
-            gl.getShaderInfoLog(shader),
-        );
+        // O.W1 Lane B (invariant 24) — library-owned shader source; compile
+        // failure is an internal contract violation, not a browser-API
+        // degradation. Fail explicitly so the bug surfaces.
+        const log = gl.getShaderInfoLog(shader);
+        const stage = type === gl.VERTEX_SHADER ? "vertex" : "fragment";
         gl.deleteShader(shader);
-        return null;
+        throw new Error(
+            `[glass-ui:frost] ${stage} shader compile failure: ${log}`,
+        );
     }
 
     return shader;

@@ -43,6 +43,18 @@ export type AuroraRuntimeMode = "live" | "capture";
 export interface AuroraRuntimeOptions {
     mode?: AuroraRuntimeMode;
     preserveDrawingBuffer?: boolean;
+    /**
+     * Init-failure handler. When `createAurora` throws (WebGL2 unavailable,
+     * shader compile/link failure — library-internal contract violations per
+     * O invariant 24), `useAurora` rethrows by default so the surface signal
+     * reaches the consumer's error boundary / dev console. Provide this
+     * callback to opt back into silent handling (e.g. log + render nothing).
+     *
+     * NOTE: this is the `useAurora` Vue-wrapper contract; the imperative
+     * `createAurora(...)` runtime throws unconditionally on init failure.
+     * The callback is invoked only at the Vue-onMounted seam.
+     */
+    onInitError?: (err: Error) => void;
 }
 
 function shouldPreserveDrawingBuffer(options: AuroraRuntimeOptions): boolean {
