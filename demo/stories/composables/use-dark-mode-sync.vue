@@ -1,17 +1,17 @@
 <script setup lang="ts">
-// useDarkModeSync — re-runs onSync on dark-mode transitions.
+// installDarkModeSync — re-runs onSync on dark-mode transitions.
 import { ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { Button } from "../../../src/components/ui/button";
-import { useDarkModeSync } from "../../../src/composables/motion/useDarkModeSync";
+import { installDarkModeSync } from "../../../src/composables/motion/installDarkModeSync";
 import { useGlobalDark } from "../../../src/composables/dark";
 
 const syncCount = ref(0);
 const lastSync = ref<string>("(never)");
 
-useDarkModeSync(() => {
+installDarkModeSync(() => {
     syncCount.value += 1;
     lastSync.value = new Date().toISOString().slice(11, 23);
 });

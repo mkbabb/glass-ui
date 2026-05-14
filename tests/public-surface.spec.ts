@@ -84,7 +84,7 @@ const composableRuntimeExports = [
     "useStaggerReveal",
     "useScrollProgress",
     "useAnimatedNumber",
-    "useDarkModeSync",
+    "installDarkModeSync",
     "useSortable",
 ];
 

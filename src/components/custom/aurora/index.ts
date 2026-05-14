@@ -1,5 +1,7 @@
 export { default as Aurora } from "./Aurora.vue";
 export { useAurora } from "./composables/useAurora";
+// O.W4 Lane B — Fix 2 (Rγ L2): named return shape for useAurora.
+export type { UseAuroraReturn } from "./composables/useAurora";
 export { useCursorInteraction } from "./composables/useCursorInteraction";
 export { createAurora } from "./composables/runtime";
 export type { AuroraRuntimeMode, AuroraRuntimeOptions } from "./composables/runtime";

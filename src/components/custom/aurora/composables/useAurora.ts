@@ -4,6 +4,28 @@ import { asGetter, type ConfigSource } from "./configSource";
 import type { AuroraConfig, AuroraInstance } from "../presets";
 
 /**
+ * Public return shape of {@link useAurora}.
+ *
+ * O.W4 Lane B — Fix 2 (Rγ L2): authored to replace the previous anonymous
+ * inline-typed literal. Parallels sibling composable return interfaces
+ * (`ConfiguratorState<T>`, `SidebarState`, `UseSortableReturn`); consumers
+ * can now annotate variables holding `useAurora` results without reaching
+ * for `ReturnType<typeof useAurora>`.
+ *
+ * NOT a /api discovery-surface candidate (per /api preamble: composable
+ * option/return types change with implementation). Exposed only via the
+ * `@mkbabb/glass-ui/aurora` package barrel.
+ */
+export interface UseAuroraReturn {
+    setCursor: (x: number, y: number, strength?: number) => void;
+    clearCursor: () => void;
+    setCursorRadius: (r: number) => void;
+    renderAt: (t: number) => void;
+    pause: () => void;
+    resume: () => void;
+}
+
+/**
  * Vue-side wrapper for the imperative `createAurora` runtime.
  *
  * Accepts the config as a plain object, a ref, or a getter. Internally we
@@ -17,14 +39,7 @@ export function useAurora(
     canvasRef: Ref<HTMLCanvasElement | null>,
     configSource: ConfigSource<AuroraConfig>,
     runtimeOptions: AuroraRuntimeOptions = {},
-): {
-    setCursor: (x: number, y: number, strength?: number) => void;
-    clearCursor: () => void;
-    setCursorRadius: (r: number) => void;
-    renderAt: (t: number) => void;
-    pause: () => void;
-    resume: () => void;
-} {
+): UseAuroraReturn {
     const getCfg = asGetter(configSource);
     let inst: AuroraInstance | null = null;
     let stopWatch: (() => void) | null = null;

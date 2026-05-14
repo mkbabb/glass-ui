@@ -999,6 +999,30 @@ The composables registry is consumed via the root `@mkbabb/glass-ui` barrel for 
 
 ---
 
+## Module-scope process-singleton registries (canonical pattern)
+
+A small number of library-owned subsystems coordinate cross-instance
+state through module-scope registries:
+
+- `gateRegistry` (touch-gate)
+- `instances` (sortable lists)
+- `activeTimers` (typewriter ambient animations)
+- `toasts` (useToast queue + `toastTimeouts` Map)
+
+These assume ONE library copy per JS process — the common case for a
+peer-dep'd library where the bundler dedupes the package. Multi-library-
+copy environments (rare; e.g., a consumer that bundles two different
+glass-ui versions into one page) would observe state divergence between
+the copies. Per Rδ verification: no DI-able alternative is cleaner; the
+process-singleton pattern is canonical for these substrates.
+
+The `useToast` subsystem additionally preserves shadcn-vue parity, so
+consumers migrating from shadcn-vue retain a drop-in compatible API.
+See `docs/tranches/O/audit/W4-Lane-C-useToast-decision.md` for the
+disposition rationale.
+
+---
+
 ## Layout & Sizing Tokens
 
 ### Icons

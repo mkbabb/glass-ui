@@ -9,7 +9,7 @@ export * from "./useStaggerReveal";
 export * from "./useScrollProgress";
 export * from "./useAnimatedNumber";
 export * from "./useAnimatedNumberMap";
-export * from "./useDarkModeSync";
+export * from "./installDarkModeSync";
 export * from "./useRAFLoop";
 export * from "./useIntersectionPause";
 export * from "./useStagger";

@@ -535,6 +535,53 @@ consumer can decide how to handle it.
 
 ---
 
+## v1.3.0 — `avatarVariant` → `avatarVariants` (O.W4 Lane C)
+
+Renamed for consistency with every other CVA variants const in the library
+(`buttonVariants`, `toggleVariants`, `badgeVariants`, `sliderVariants`,
+`menuItemVariants`, ...). The singular `avatarVariant` was the only
+non-pluralized CVA constant in the codebase. One-line consumer migration:
+
+```ts
+// Before
+import { avatarVariant } from "@mkbabb/glass-ui";
+// After
+import { avatarVariants } from "@mkbabb/glass-ui";
+```
+
+The `AvatarVariants` type alias is unchanged. Cross-repo audit
+(`words`, `fourier-analysis`, `bbnf-buddy`, `keyframes.js`, `value.js`,
+`speedtest`) found one passthrough re-export site
+(`value.js/demo/@/components/ui/avatar/index.ts`); coordinated at O.W6
+cross-repo cohort wave. No other production call sites use the symbol
+across the constellation.
+
+---
+
+## v1.3.0 — `useDarkModeSync` → `installDarkModeSync` (O.W4 Lane B)
+
+Renamed because the composable doesn't follow the canonical `useFoo`
+contract — it returns `void` after installing a `watch` side-effect.
+The new name names the side-effect plainly (it installs a sync between
+two darkness sources; it does not return a reactive handle). One-line
+consumer migration:
+
+```ts
+// Before
+import { useDarkModeSync } from "@mkbabb/glass-ui";
+useDarkModeSync(localIsDark);
+// After
+import { installDarkModeSync } from "@mkbabb/glass-ui";
+installDarkModeSync(localIsDark);
+```
+
+Cross-repo audit found 3 references in speedtest
+(`src/components/speedtest/SpeedtestMeter.vue`,
+`src/components/dashboard/composables/useEChartsTheme.ts`); coordinated
+at O.W6 cross-repo cohort. No other constellation references.
+
+---
+
 ## Recommended new surfaces (best-practice, not strict migration)
 
 Even where a root-barrel import still works at v1.0, prefer per-package

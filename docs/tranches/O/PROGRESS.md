@@ -227,3 +227,33 @@ Three god-module splits per Rβ; all lanes ran agent-dispatched in worktrees in 
 ### Open windows for W4
 
 W4 opens after this commit lands. Three lanes per `docs/tranches/O/waves/W4.md` (/api discovery gaps + leaky abstractions + service-boundary inconsistencies; semver-visible avatarVariant rename).
+
+## 2026-05-14 — W4 close (v1.3.0 minor)
+
+Three-lane wave dispatched in parallel agent-worktrees. All bounds disjoint; integration clean.
+
+### Lane disposition
+
+| Lane | Mode | Disposition | Proof |
+|---|---|---|---|
+| A — /api discovery gaps | agent-dispatched (worktree) | LANDED — 12 types promoted (6 sidebar + 5 search + 3 triad); surface count 37 → 49. NEW `src/components/ui/_shared/index.ts` barrel (runtime-private; `/api`-only). | `audit/W4-Lane-A-api-promotions-proof.md` |
+| B — Leaky abstractions | agent-dispatched (worktree) | LANDED — 3 fixes (dock barrel re-export + UseAuroraReturn interface + useDarkModeSync→installDarkModeSync rename). Cross-repo audit: speedtest has 3 references; coordinated at W6. | `audit/W4-Lane-B-leaky-abstraction-fixes-proof.md` |
+| C — Service boundaries | agent-dispatched (worktree) | LANDED — avatarVariant→avatarVariants rename + useToast KEEP-with-rationale + module-scope registries documented. | `audit/W4-Lane-C-service-boundaries-proof.md` + `audit/W4-Lane-C-useToast-decision.md` |
+
+### Tag cadence — v1.3.0 minor
+
+Two semver-visible renames (avatarVariant + useDarkModeSync) warrant minor signal per L invariant 16. Both have ≤ 3 consumer-side sites across the constellation; both ship as one-line consumer migrations documented in MIGRATION.md. Per the user's "NO backwards-compat aliases" preference, no legacy shims ship; consumers migrate via the named-rename path.
+
+### Hard gate evidence
+
+- (a) /api gains 12 types ✓ (verify-export-types PASS).
+- (b) 3 leaky abstractions fixed ✓.
+- (c) avatarVariant rename + useToast decision + module-registries documented ✓.
+- (d) Cross-repo audit landed: avatarVariant — 1 passthrough barrel in value.js; useDarkModeSync — 3 sites in speedtest; coordinated at W6.
+- (e) typecheck ✓ ; test 348/348 ✓ ; build 651 modules ✓ ; profile:budget PASS ✓ ; verify-export-types PASS ✓.
+- (f) 3 lane proof docs + 1 decision doc.
+- (g) v1.3.0 minor tag.
+
+### Open windows for W5
+
+W5 opens after this commit lands. Five lanes per `docs/tranches/O/waves/W5.md` (proof:all cohort runner + verify-export-types unconditional in release.sh + freshness DRY extract + release.sh ↔ prepublishOnly dedup + CI gates expansion).

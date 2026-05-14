@@ -9,11 +9,20 @@
  *
  * Then the consumer callback can safely re-read theme tokens. Speedtest uses
  * this for canvas meter renderer reinitialization.
+ *
+ * O.W4 Lane B — Fix 3 (Rγ L3): renamed from `useDarkModeSync` →
+ * `installDarkModeSync`. The previous `use*` naming implied a controlled
+ * facade (reactive return + cleanup token); the function is a one-shot
+ * side-effect installer that returns `void`. The new name signals shape
+ * accurately. SEMVER-VISIBLE rename per L invariant 4 (no backwards-compat
+ * aliases); consumers update via one-line rename per call site (see
+ * MIGRATION.md). Cross-repo audit at O.W4 Lane B identified speedtest as
+ * the only external consumer.
  */
 import { nextTick, watch } from "vue";
 import { useGlobalDark } from "../dark";
 
-export function useDarkModeSync(onSync: () => void): void {
+export function installDarkModeSync(onSync: () => void): void {
     const { isDark } = useGlobalDark();
     watch(isDark, () => {
         nextTick(() => {

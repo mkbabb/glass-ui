@@ -222,7 +222,7 @@ export const CATEGORIES: Category[] = [
             s("composables", "use-resize-observer", "useResizeObserver", "Threshold + rafBatch options for sub-pixel resize storms."),
             s("composables", "use-glass-renderer", "useGlassRenderer", "Detection cascade: SVG-filter → CSS backdrop-filter → fallback."),
             s("composables", "use-animated-number", "useAnimatedNumber", "Single-ref smoothed numeric tracker (absolute / progress modes)."),
-            s("composables", "use-dark-mode-sync", "useDarkModeSync", "Re-runs onSync on dark-mode transitions; canonical glue for token-reading compositions."),
+            s("composables", "use-dark-mode-sync", "installDarkModeSync", "Re-runs onSync on dark-mode transitions; canonical glue for token-reading compositions."),
             s("composables", "use-intersection-pause", "useIntersectionPause", "Pause a runtime when target scrolls offscreen or document.hidden flips."),
             s("composables", "use-raf-loop", "useRAFLoop", "Scope-aware rAF loop with start/stop/pause/resume/dispose."),
             s("composables", "use-scroll-progress", "useScrollProgress", "Map a target's scroll position in the viewport to [0, 1]."),

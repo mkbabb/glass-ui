@@ -22,10 +22,12 @@
 //
 // NOT in scope (defer to component-specific subpaths):
 //
-//   - Composable option/return types (change with implementation).
-//   - Sidebar / Search / Carousel domain types — those have their own
-//     dedicated subpaths and aren't cross-cutting enough to surface here.
-//   - Dock orientation/state — component-internal; not on public surface.
+//   - Composable option/return types EXCEPT canonical return-shape interfaces
+//     (`ConfiguratorState`, `SidebarState`, `FuzzySearchState`) which consumers
+//     pin against when typing component wrappers or fixtures.
+//   - Carousel domain types — vueuse-bearing per-subpath only.
+//   - Dock orientation/state — component-internal; not on public surface
+//     (closed at O.W4 Lane B against the dock barrel itself).
 //
 // M.W2 Lane B extensions (v1.0.5): 5 promotions absorbing L-residuals + L.W7
 // fallout — `GlassPanelVariant` (W1-B Open Q1 path-a; canonical barrel
@@ -33,6 +35,20 @@
 // shipped at L.W7 Lane B), `TimelineSegment` + `TimelineSegmentGradient` +
 // `TimelineSegmentState` (AA-tranche timeline primitive canonical data
 // shape). Surface count 32 → 37 (29 types + 8 constants).
+//
+// O.W4 Lane A extensions (v1.2.4 or v1.3.0): 12 type promotions closing the
+// 3 Rγ /api discovery gaps —
+//   - Sidebar domain (6 types): `SidebarState` (composable-return canon,
+//     parallels `ConfiguratorState<T>`), `SidebarSection`, `TreeNode`,
+//     `TreeIndexEntry`, `SidebarIndexEntry`, `ScrollTrackerOptions`.
+//   - Search domain (5 types): `SearchableItem`, `SearchResult`,
+//     `FuzzySearchState`, `UseFuzzySearchOptions`, `SearchIndex`.
+//   - Props / variants triad (3 types): `GlassPanelProps` (sibling of the
+//     already-promoted `GlassPanelVariant`), `ToastType` (the toast row
+//     shape — paired with `ToastVariant`), `MenuItemVariants` (CVA-derived
+//     union from `ui/_shared/`; canonical home for the 11-site menu-item
+//     four-state contract).
+// Surface count 37 → 49 (41 types + 8 constants).
 
 // ── Aurora ─────────────────────────────────────────────────────────────────
 // Substrate config + family, plus numeric ceilings the consumer needs to
@@ -112,3 +128,48 @@ export type { SheetVariants } from "../components/ui/sheet";
 export type { SliderVariants } from "../components/ui/slider";
 export type { ToggleVariants } from "../components/ui/toggle";
 export type { ToggleChipVariants } from "../components/custom/toggle-chip";
+// `MenuItemVariants` — CVA-derived union for the 11-site menu/picker item
+// four-state contract (command / dropdown-menu / context-menu / combobox /
+// select). Sourced from `_shared/` which is private-to-ui/ at runtime; the
+// barrel exists so `/api` can pin the canonical type shape.
+export type { MenuItemVariants } from "../components/ui/_shared";
+
+// ── Sidebar domain ─────────────────────────────────────────────────────────
+// Composable-return canon (`SidebarState`) parallels `ConfiguratorState<T>`.
+// `SidebarSection` is the row shape; `TreeNode` + `TreeIndexEntry` +
+// `SidebarIndexEntry` describe the flat-index lookup; `ScrollTrackerOptions`
+// pins the `useSidebarFollow` option shape consumers customise root-margin
+// against. Promoted O.W4 Lane A per Rγ §3.3 A1.
+export type {
+    ScrollTrackerOptions,
+    SidebarIndexEntry,
+    SidebarSection,
+    SidebarState,
+    TreeIndexEntry,
+    TreeNode,
+} from "../components/custom/sidebar";
+
+// ── Search domain ──────────────────────────────────────────────────────────
+// `SearchableItem` is the input shape consumers feed `buildIndex` /
+// `useFuzzySearch`; `SearchResult` carries scored matches; `FuzzySearchState`
+// is the composable-return canon; `UseFuzzySearchOptions` parameterises the
+// reactive composable; `SearchIndex` is the prebuilt-index handle the
+// imperative `searchIndex(...)` accepts. Promoted O.W4 Lane A per Rγ §3.3 A2.
+export type {
+    FuzzySearchState,
+    SearchableItem,
+    SearchIndex,
+    SearchResult,
+    UseFuzzySearchOptions,
+} from "../components/custom/search";
+
+// ── Props triad ────────────────────────────────────────────────────────────
+// `GlassPanelProps` — the props shape sibling of the already-promoted
+// `GlassPanelVariant`; consumers wrapping `<GlassPanel>` (chrome composers,
+// preset panels) type their forwarded prop bag against this. `ToastType`
+// is the canonical toast row shape (aliased from `Toast` on the toast
+// barrel — `Toast` itself is the SFC default-export, so the row shape
+// flows as `ToastType` per shadcn-vue parity); paired with the
+// already-promoted `ToastVariant` enum. Promoted O.W4 Lane A per Rγ §3.3 A3.
+export type { GlassPanelProps } from "../components/custom/glass-panel";
+export type { ToastType } from "../components/ui/toast";

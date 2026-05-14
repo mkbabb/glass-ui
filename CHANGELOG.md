@@ -1,5 +1,90 @@
 # Changelog
 
+## 1.3.0 — 2026-05-14 — O.W4 (/api discovery gaps + leaky abstractions + service boundaries)
+
+Minor bump signal: two semver-visible renames (`avatarVariant` →
+`avatarVariants`, `useDarkModeSync` → `installDarkModeSync`) ship
+alongside 12 additive `/api` type promotions. Bumping to v1.3.0
+rather than v1.2.4 acknowledges the renames at the version
+boundary, even though both are mechanical one-line consumer
+migrations and the constellation audit found ≤ 3 sites total per
+rename.
+
+### Added — 12 `/api` discovery types (Lane A)
+
+Surface count 37 → 49 (41 types + 8 constants):
+
+- **Sidebar domain (6)**: `SidebarState`, `SidebarSection`,
+  `TreeNode`, `TreeIndexEntry`, `SidebarIndexEntry`,
+  `ScrollTrackerOptions`.
+- **Search domain (5)**: `SearchableItem`, `SearchResult`,
+  `FuzzySearchState`, `UseFuzzySearchOptions`, `SearchIndex`.
+- **Props/variants triad (3)**: `GlassPanelProps`, `ToastType`,
+  `MenuItemVariants`.
+
+`MenuItemVariants` required a NEW `src/components/ui/_shared/index.ts`
+barrel — runtime-private; exists only so `/api` can pin the type from
+a stable home. The new barrel is NOT added to `ui/index.ts` (its
+runtime visibility is unchanged from pre-W4).
+
+### Changed — Leaky abstraction fixes (Lane B)
+
+- `UseDockStateOptions` + `DockState` re-exported from
+  `src/components/custom/dock/index.ts` — consumers can now type
+  wrappers around `useDockState` via the published `@mkbabb/glass-ui/dock`
+  surface.
+- `UseAuroraReturn` interface authored; replaces the inline-typed
+  return literal of `useAurora`. Re-exported from the aurora package
+  barrel (not promoted to `/api` per the preamble's composable-return
+  exclusion).
+- `useDarkModeSync` renamed to `installDarkModeSync` — names the
+  side-effect plainly (installs a `watch`; returns `void`). The
+  `useFoo` contract implies a reactive return; this composable doesn't
+  satisfy that contract.
+
+### Changed — `avatarVariant` → `avatarVariants` (Lane C)
+
+CVA-constant naming consistency. Every other variants const in the
+library is plural (`buttonVariants`, `toggleVariants`, etc.); the
+singular `avatarVariant` was the lone outlier. `AvatarVariants` type
+alias unchanged. Cross-repo audit: zero production call sites across
+the constellation; one passthrough re-export barrel in
+value.js/demo/@/components/ui/avatar/ — coordinated at O.W6.
+
+### Documented — Module-scope process-singleton registries (Lane C)
+
+`DESIGN.md` gains a new section cataloguing the 4 module-scope
+registries (`gateRegistry`, sortable `instances`, typewriter
+`activeTimers`, `useToast` queue) as a canonical pattern. Per Rδ:
+no DI-able alternative is cleaner; the process-singleton pattern is
+canonical for these subsystems.
+
+### Decision — `useToast` KEEP-with-rationale (Lane C)
+
+`useToast` retains its shadcn-vue-parity module-scope queue. Decision
+doc: `docs/tranches/O/audit/W4-Lane-C-useToast-decision.md`. Path B
+(refactor to DI via `<Toaster>` root) flagged for future consideration
+but not authorized.
+
+### Verification
+
+- `npm run typecheck` — PASS.
+- `npm test` — 348 / 30 green.
+- `npm run build` — 651 modules; declaration build (heap-bumped).
+- `npm run profile:budget` — PASS (raw 67.3% / 93.3%; gzip 68.1% /
+  91.7%).
+- `npm run verify-export-types` — PASS (all 12 new `/api` types
+  resolve from `dist/api.d.ts`).
+
+### Cross-repo coordination
+
+Both renames + the 12 type promotions defer their consumer-side
+adoption to O.W6 cross-repo cohort wave per CONSTELLATION.md:
+
+- `avatarVariant` rename — 1 passthrough re-export site
+  (`value.js/demo/@/components/ui/avatar/`).
+- `useDarkModeSync` rename — 3 sites in speedtest.
+
 ## 1.2.3 — 2026-05-14 — O.W3 (god-module cohesion splits)
 
 Three Rβ-flagged god-modules (1049 + 884 + 657 LOC) split into
