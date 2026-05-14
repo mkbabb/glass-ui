@@ -153,7 +153,7 @@ function effectiveFont(slot: keyof FontSlots): string {
                                 <RadioGroupItem :value="p.id" class="mt-0.5" />
                                 <div class="flex-1 min-w-0">
                                     <div class="text-sm font-medium">{{ p.label }}</div>
-                                    <div class="text-[0.6875rem] text-muted-foreground mt-0.5">
+                                    <div class="text-micro text-muted-foreground mt-0.5">
                                         {{ p.description }}
                                     </div>
                                 </div>
@@ -164,7 +164,7 @@ function effectiveFont(slot: keyof FontSlots): string {
                                 <RadioGroupItem value="custom" class="mt-0.5" />
                                 <div class="flex-1 min-w-0">
                                     <div class="text-sm font-medium">Custom</div>
-                                    <div class="text-[0.6875rem] text-muted-foreground mt-0.5">
+                                    <div class="text-micro text-muted-foreground mt-0.5">
                                         Any field you touch flips the preset to custom.
                                     </div>
                                 </div>
@@ -172,7 +172,7 @@ function effectiveFont(slot: keyof FontSlots): string {
                         </RadioGroup>
                         <p
                             v-if="cfg.effective('preset') === 'custom'"
-                            class="text-[0.6875rem] text-muted-foreground/80 italic"
+                            class="text-micro text-muted-foreground/80 italic"
                         >
                             Based on {{ presetLabel("default") }} with local overrides.
                         </p>
@@ -343,7 +343,7 @@ function effectiveFont(slot: keyof FontSlots): string {
                 </div>
 
                 <div class="flex items-center justify-between gap-2 px-6 py-4 border-t border-border/40">
-                    <Label class="text-[0.6875rem] font-mono text-muted-foreground/70">
+                    <Label class="text-micro font-mono text-muted-foreground/70">
                         glass-ui-demo-config
                     </Label>
                     <Button variant="ghost" size="sm" @click="cfg.reset">

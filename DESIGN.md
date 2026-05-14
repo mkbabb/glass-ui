@@ -213,7 +213,7 @@ Five tiers compose background opacity, backdrop-blur, border, shadow, grain. Dar
 |-----------|---------------------|---------------|--------------|-------------------------------|----------------------|----------------------------|-------------------------------------|
 | Wash      | `.glass-wash`       | 30%           | 38%          | `blur(1px) saturate(1.05)`    | 8% foreground        | `--glass-shadow-wash`      | Dock bg, input bg, hover overlays   |
 | Quiet     | `.glass-quiet`      | 50%           | 58%          | `blur(3px)`                   | 10% foreground       | `--glass-shadow-quiet`     | Inline workspace chrome             |
-| Resting   | `.glass-resting`    | 65%           | 72%          | `blur(12px) saturate(1.05)`   | 12% foreground       | `--glass-shadow-resting`   | Cards, the canonical plate          |
+| Resting   | `.glass-resting`    | 65%           | 72%          | `blur(12px) saturate(1.05)`   | 12% foreground       | `--glass-shadow-resting`   | Cards, the canonical plate; **`<GlassPanel>` default** (canonical translucent + frosted)          |
 | Floating  | `.glass-floating`   | 80%           | 88%          | `blur(16px) saturate(1.4)`    | 15% foreground       | `--glass-shadow-floating`  | Popovers, tooltips, dropdowns       |
 | Overlay   | `.glass-overlay`    | 95%           | 96%          | `blur(24px) saturate(1.5)`    | 18% foreground       | `--glass-shadow-overlay`   | Dialogs, command palette, modals    |
 
@@ -225,6 +225,27 @@ For each tier, `--glass-bg-{tier}` (rgba), `--glass-blur-{tier}` (full filter st
 - Dark mode: 6% opacity, blend `soft-light`
 
 **Dock-specific blur** — `--glass-blur-dock = blur(1px) saturate(1.025)` is its own token (matching the wash weight) so floating and rail docks read as feather-light overlays rather than heavy blurred slabs. `GlassDock` references `var(--glass-blur-dock, var(--glass-blur-wash))`; consumers can override the dock token at `:root` without touching the five tier blurs.
+
+### Canonical translucent + frosted (N.W1 Lane A — `<GlassPanel>` default)
+
+`<GlassPanel>` (`src/components/custom/glass-panel/GlassPanel.vue`) defaults
+to `variant="resting"`, which composes the `.glass-resting` recipe above:
+**65% background opacity + 12 px backdrop-blur + 1.05 saturation + 12%
+foreground border + grain overlay**. This is the canonical
+"translucent + frosted" surface; consumers asking for "the translucent
+frosted panel" should reach for `<GlassPanel>` (or `<Card>` for the
+cartoon-shadowed sibling) without a tier override. No additional tier
+ships at v1.1.1 — per the N KISS posture (V2 + V4 + wire-before-retire),
+the existing resting rung already satisfies the brief; we verify the
+rendering rather than invent.
+
+Per N invariant 22 (audit-verdict spot-verification gate), this lane
+verified at HEAD: `GlassPanel.vue`'s `VARIANT_CLASS.resting`
+binding (line ~19) → `.glass-resting` utility → token recipe in
+`src/styles/glass.css`. The grain overlay `::after` rule renders via
+`paper-grain-overlay` composition. Visual inspection at consumer
+build-time is the canonical verification path; library-side rendering
+verification is asynchronous (Playwright-MCP or equivalent).
 
 ### Convenience shorthands
 

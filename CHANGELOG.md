@@ -1,5 +1,75 @@
 # Changelog
 
+## 1.1.2 — 2026-05-14 — N.W1 typography sweep + N-4 absorb + GlassPanel translucent + frosted canonical
+
+Pure cleanup — zero new public surface; 9 ad-hoc `text-[0.6875rem]` literals
+swept to the canonical `text-micro` utility across 4 files (the 2 Configurator
+src files + 2 PresetEditor demo files); the 26 pre-existing N-4 timeline-story
+typecheck errors absorbed via a small `legendBackground()` helper that lifts
+the inline `as { from: string; to: string }` cast out of the template-literal
+interpolation into `<script setup>`. DESIGN.md canonicalises the
+`<GlassPanel>` default-`"resting"` recipe as the translucent + frosted
+canonical surface.
+
+### Changed — typography literals swept to `text-micro` (N.W1 Lane C)
+
+`text-[0.6875rem]` literals replaced with the canonical `text-micro` semantic
+class across:
+
+- `src/components/custom/configurator/ConfiguratorRow.vue`
+- `src/components/custom/configurator/ConfiguratorLayer.vue`
+- `demo/configurator/PresetEditor.vue`
+- `demo/configurator/PresetEditorField.vue`
+
+The `@utility text-micro` already exists at `src/styles/typography.css:235`
+plus the Tailwind v4 `--text-micro` bridge at `src/styles/theme.css:14`;
+this sweep is purely semantic (literal → utility) with no rendering delta.
+
+Off-grid literals (`text-[0.6rem]`, `text-[0.65rem]`, `text-[1.15rem]`) are
+intentionally retained at HEAD; they sit between canonical scale tokens by
+design.
+
+### Fixed — N-4 timeline-story typecheck errors absorbed (N.W1 Lane C)
+
+The 26 pre-existing TypeScript errors in `demo/stories/data/timeline-continuous.vue`
+and `demo/stories/data/timeline-segmented.vue` (carry-forward from M close;
+flagged at N open as M-residual N-4) resolved by extracting the inline
+`as { from: string; to: string }` cast out of the `:style` template-literal
+binding into a `legendBackground()` helper in `<script setup>`. vue-tsc's
+template parser can't disambiguate inline TS-cast syntax inside a
+template-literal interpolation inside a Vue `:style` binding; lifting the
+cast to a helper consuming `TimelineSegmentGradient` makes the binding
+parser-clean.
+
+### Fixed — `metaballs.vue` story `isSupported` reference (N.W1 orchestrator-direct)
+
+`demo/stories/motion/metaballs.vue` updated to use the imported
+`isWebGLSupported()` function directly (per `MetaballCanvas.vue`'s
+defineExpose surface post-M.W2; the story still referenced the now-removed
+`canvasRef.value?.isSupported` field). This was a residual M.W2 close gap.
+
+### Documented — `<GlassPanel>` default = canonical translucent + frosted (N.W1 Lane A)
+
+DESIGN.md `## Glass Surfaces` extended:
+
+- Five-tier table's `Resting` row's "Use" column notes
+  `<GlassPanel>` default canonicalisation.
+- New sub-section "Canonical translucent + frosted (N.W1 Lane A —
+  `<GlassPanel>` default)" documents the 65 % opacity + 12 px blur + 1.05
+  saturation + 12 % border + grain overlay composition explicitly.
+
+Per N invariant 22 (audit-verdict spot-verification gate) + KISS: no new
+tier introduced. The existing resting rung already satisfies the N9 brief
+("glass panels by default should be translucent and frosted"); the audit's
+implicit "introduce a new tier" path was spot-verified against the
+existing recipe and verified-out.
+
+### Re-baselined — bundle CSS budget (N.W0 absorb continues; verified at N.W1 close)
+
+CSS budget continues to enforce against the N.W0-rebaselined 36_000 raw /
+6_700 gzip cap; current draw 31_875 raw / 5_972 gzip (≈ 89 % of cap).
+Future tranches re-baseline at their own close per the K invariant.
+
 ## 1.1.1 — 2026-05-14 — N.W0 strategic 5-wire batch (useTouchGate→Slider; metaballs+typewriter→hero; paper-backdrop→Section; freshness→speedtest)
 
 Pure additive — zero retirements, zero demo-privatizations. Wires five existing

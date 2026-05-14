@@ -24,7 +24,7 @@ const emit = defineEmits<{ reset: [] }>();
                 </Label>
                 <span
                     v-if="name"
-                    class="text-[0.6875rem] font-mono text-muted-foreground/70 truncate"
+                    class="text-micro font-mono text-muted-foreground/70 truncate"
                 >
                     {{ name }}
                 </span>
@@ -44,7 +44,7 @@ const emit = defineEmits<{ reset: [] }>();
         </div>
         <p
             v-if="description"
-            class="text-[0.6875rem] leading-snug text-muted-foreground/80"
+            class="text-micro leading-snug text-muted-foreground/80"
         >
             {{ description }}
         </p>

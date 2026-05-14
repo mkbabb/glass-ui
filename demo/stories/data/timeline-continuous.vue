@@ -2,7 +2,10 @@
 import StoryPage from "../StoryPage.vue";
 import { ref, computed } from "vue";
 import { GlassTimeline } from "../../../src/components/custom/timeline";
-import type { TimelineSegment } from "../../../src/components/custom/timeline";
+import type {
+    TimelineSegment,
+    TimelineSegmentGradient,
+} from "../../../src/components/custom/timeline";
 import { cn } from "../../../src/utils/cn";
 
 /**
@@ -107,6 +110,21 @@ function reset() {
     selected.value = null;
     hovered.value = null;
 }
+
+/**
+ * Legend swatch background. Lifted out of the template binding so the
+ * inline `{ from, to }` type assertion doesn't clash with vue-tsc's
+ * template parser (N.W1 Lane C / N-4 absorb). Mirrors the primitive's
+ * own `gradientFor` resolver shape.
+ */
+function legendBackground(seg: TimelineSegment): string {
+    const g = seg.gradient;
+    if (g && typeof g === "object") {
+        const pair = g as TimelineSegmentGradient;
+        return `linear-gradient(90deg, ${pair.from}, ${pair.to})`;
+    }
+    return "var(--surface-tint-15)";
+}
 </script>
 
 <template>
@@ -202,12 +220,7 @@ function reset() {
                 >
                     <span
                         class="block h-3 w-12 rounded-full"
-                        :style="{
-                            background:
-                                typeof seg.gradient === 'object' && seg.gradient !== null
-                                    ? `linear-gradient(90deg, ${(seg.gradient as { from: string; to: string }).from}, ${(seg.gradient as { from: string; to: string }).to})`
-                                    : 'var(--surface-tint-15)',
-                        }"
+                        :style="{ background: legendBackground(seg) }"
                     />
                     <div class="flex min-w-0 flex-1 flex-col">
                         <span class="text-small font-medium">{{ seg.label }}</span>

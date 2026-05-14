@@ -41,7 +41,7 @@ const emit = defineEmits<{
                 </Label>
                 <span
                     v-if="name"
-                    class="truncate text-[0.6875rem] font-mono text-muted-foreground/70"
+                    class="truncate text-micro font-mono text-muted-foreground/70"
                 >
                     {{ name }}
                 </span>
@@ -61,7 +61,7 @@ const emit = defineEmits<{
         </div>
         <p
             v-if="description"
-            class="text-[0.6875rem] leading-snug text-muted-foreground/80"
+            class="text-micro leading-snug text-muted-foreground/80"
         >
             {{ description }}
         </p>

@@ -117,7 +117,7 @@ const stateAttr = computed(() => (internalOpen.value ? "open" : "closed"));
                 <span class="text-sm font-semibold text-foreground">{{ label }}</span>
                 <span
                     v-if="sub"
-                    class="truncate text-[0.6875rem] font-mono text-muted-foreground/70"
+                    class="truncate text-micro font-mono text-muted-foreground/70"
                 >
                     {{ sub }}
                 </span>

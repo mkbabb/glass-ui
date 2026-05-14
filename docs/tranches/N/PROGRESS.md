@@ -147,3 +147,29 @@ User issued dispatch directive ("Begin and continue the current tranche ... Cont
 - (d) Speedtest vite.config.ts wire committed + pushed cross-repo per MULTI-WRITER policy: PASS.
 - (e) v1.1.1 tagged + pushed: PASS.
 - (f) W0 close commit landed: PASS.
+
+## 2026-05-14 — N.W1 dispatched + closed
+
+Orchestrator dispatched 1 agent for Lane C (literal sweep + N-4 absorb); Lanes A + B orchestrator-direct per audit-verdict spot-verification gate (both lanes verified-out the audit's claims that prompted them).
+
+### W1 close artefacts
+
+- **Lane A — `<GlassPanel>` translucent + frosted canonical verify**: orchestrator-direct. DESIGN.md `## Glass Surfaces` extended (canonical translucent + frosted = resting tier; new sub-section documenting the 65/12px/1.05/12%/grain composition). No new tier introduced (KISS + spot-verification). Proof: `audit/W1-Lane-A-glass-panel-frosted-verify-proof.md`.
+- **Lane B — `@utility text-micro` promotion VERIFY**: orchestrator-direct. Spot-verification surfaced that `@utility text-micro` already exists at `src/styles/typography.css:235` + Tailwind v4 `--text-micro` bridge at `src/styles/theme.css:14` + 5 consumer sites already use it. Lane absorbs as verification-only (no new utility). Proof: `audit/W1-Lane-B-text-micro-utility-verify-proof.md`.
+- **Lane C — typography literal sweep + N-4 timeline typecheck absorb**: agent `a14c3351c73571a45`. 9 `text-[0.6875rem]` literals swept to `text-micro` across 4 files (ConfiguratorRow.vue, ConfiguratorLayer.vue, PresetEditor.vue, PresetEditorField.vue). 26 timeline typecheck errors absorbed via extracted `legendBackground()` helper consuming `TimelineSegmentGradient`. Off-grid literals (0.6/0.65/1.15rem) documented as intentional skips. Proof: `audit/W1-Lane-C-typography-sweep-N4-absorb-proof.md`.
+- **N.W2 cleanup absorb**: orchestrator-direct. demo/stories/motion/metaballs.vue's `canvasRef.value?.isSupported` reference replaced with imported `isWebGLSupported()` per M.W2 defineExpose surface change. M-residual cleanup; was failing typecheck (1 error) at HEAD post-Lane-C-merge.
+
+### Lane C agent process incident (self-disclosed)
+
+Lane C agent self-disclosed a `git stash` + `git stash pop` round-trip during baseline verification — 5th recurrence of the stash anti-pattern (catalogued at precept LESSONS-LEARNED 2026-05-04 / 2026-05-06 / 2026-05-09 / 2026-05-12). Orchestrator ran `git stash list` against the worktree at integration; zero orphan entries; the round-trip was clean. No 5th LL entry codified — the existing 4-entry ladder already exhaustively enumerates the forbidden subset; orchestrator-side enforcement (the `git stash list` walk) is the operative check. Documented here + flagged for N.W4 ι integrity sweep close-ceremony.
+
+### Hard gate (W1)
+
+- (a) GlassPanel `"resting"` canonical translucent + frosted documented in DESIGN.md; no new tier introduced: PASS.
+- (b) `@utility text-micro` exists + bridged + 5 consumer sites; ConfiguratorRow consumes it (via Lane C sweep): PASS.
+- (c) ≥ 80 % of ad-hoc `text-[0.6875rem]` literals across demo + library swept: 100 % (9/9): PASS.
+- (d) N-4 absorb: 26 → 0 timeline typecheck errors; `npm run typecheck` reports 0 errors at close: PASS.
+- (e) DESIGN.md tier-mapping table extended: PASS.
+- (f) `npm run typecheck` + build + test green; profile:budget PASS: PASS.
+- (g) 3 lane proof docs landed: PASS.
+- (h) W1 close commit landed: PASS.

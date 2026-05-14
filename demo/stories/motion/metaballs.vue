@@ -4,6 +4,7 @@ import { computed, ref } from "vue";
 import {
     DEFAULT_METABALL_CONFIG,
     MetaballCanvas,
+    isWebGLSupported,
     type MetaballConfig,
 } from "../../../src/components/custom/metaballs";
 import {
@@ -177,7 +178,11 @@ function setMotionMode(value: string | string[]) {
 
 const canvasRef = ref<InstanceType<typeof MetaballCanvas> | null>(null);
 
-const isSupported = computed(() => canvasRef.value?.isSupported ?? true);
+// M.W2 close removed `isSupported` from `MetaballCanvas`'s defineExpose
+// (the synchronous probe is the canonical surface — see
+// `docs/tranches/M/audit/W2-Lane-A-F-eps-3-proof.md`). Use the imported
+// helper directly.
+const isSupported = computed(() => isWebGLSupported());
 const isReducedMotion = computed(
     () => canvasRef.value?.isReducedMotion ?? false,
 );
