@@ -305,9 +305,64 @@ Scale: golden-ratio (√φ ≈ 1.272), base 1rem (16 px).
 
 ### Self-host font policy
 
-Glass-ui self-hosts its font subsystem under `src/assets/fonts/`. Faces must ship under an OFL-1.1-compatible (or equivalent) license that permits redistribution + subsetting + bundling. The library exposes a `--font-brand-{sans,serif,mono}` cascade so consumers wire their preset typography (e.g. speedtest's Path-D substitute display sans + Fira Code mono) without re-introducing third-party CDN dependencies on the LCP-critical path.
+Glass-ui self-hosts its font subsystem under `src/fonts/`. Faces must ship under an OFL-1.1-compatible (or equivalent) license that permits redistribution + subsetting + bundling. The library exposes a `--font-brand-{sans,serif,mono}` cascade so consumers wire their preset typography (the brand display sans, the canonical mono) without re-introducing third-party CDN dependencies on the LCP-critical path.
 
-Speedtest AC.W6b will populate the candidate matrix; this subsection is the canonical policy anchor.
+#### Canonical face families (v1.5.0)
+
+The library ships two OFL face families as bundled woff2 assets. Both pair their primary face with a paired calibrated `... Fallback` face that wraps the platform's system stack via `local()` + Capsize-derived `size-adjust` / `ascent-override` / `descent-override` overrides; the swap from fallback to primary is geometry-neutral, zero CLS contribution.
+
+| Family                  | Role                  | License | Subsets         | `font-display` | Path                                                 |
+|-------------------------|-----------------------|---------|-----------------|----------------|------------------------------------------------------|
+| **Plus Jakarta Sans**   | Brand display sans    | OFL 1.1 | latin, latin-ext| `optional`     | `src/fonts/plus-jakarta-sans/*.woff2`                |
+| **Fira Code**           | Canonical mono        | OFL 1.1 | latin, latin-ext| `swap`         | `src/fonts/fira-code/*.woff2`                        |
+
+Both are variable fonts — a single woff2 per subset covers the full wght axis (Plus Jakarta Sans: 200..800; Fira Code: 300..700). The `font-display` policy differs by register: `optional` for the LCP-critical display sans (paint never blocks on font); `swap` for the post-LCP mono (FOUT acceptable; geometry stays no-shift via the fallback face).
+
+The OFL license file ships next to the binaries (`OFL.txt` per family) and the canonical attribution lives in `CHANGELOG.md` v1.5.0.
+
+#### Path D candidate matrix — Plus Jakarta Sans selection rationale
+
+The brand display sans family was selected by speedtest's AC.W6b 5-way visual-fidelity test against the pre-substitution General Sans baseline (Fontshare ITF-FFL) at 1200×766 hero size + 96 px body sample. Five OFL-1.1 candidates were evaluated:
+
+| # | Candidate            | Source                          | Notes                                                                |
+|---|----------------------|---------------------------------|----------------------------------------------------------------------|
+| 1 | **Plus Jakarta Sans**| Tokotype / Gumpita Rahayu       | **Selected.** Geometric humanist; closest character match to General Sans; well-tested at hero sizes; variable wght 200..800. |
+| 2 | Onest                | IndianTypeFoundry               | Geometric humanist; mild width contrast; reads slightly wider.       |
+| 3 | Manrope              | Mikhail Sharanda                | More geometric; tighter letter-spacing; diverges from General Sans's humanist warmth. |
+| 4 | Inter                | RSMS                            | Modern grotesque; very neutral; loses brand audacity.                |
+| 5 | Geist                | Vercel                          | Modern grotesque; very crisp; too geometric for the brand.           |
+
+Plus Jakarta Sans matched General Sans's "4" open-top + "9" hook-tail + "2" rounded-curl + "8" balanced-lobe gestures at hero size; the "Mbps" lowercase register tracked near-identically. Receipts at `speedtest/docs/tranches/AC/artefacts/W6b/visual-fidelity/`.
+
+#### Capsize metric calibration
+
+For each primary face, the paired `... Fallback` face's metric overrides are derived programmatically via `@capsizecss/core`'s `createFontStack` against the bundled latin woff2 + the appropriate system fallback chain. The methodology is:
+
+1. Read the primary face's `unitsPerEm` + `ascent` + `descent` + `xWidthAvg` from the bundled woff2 (`@capsizecss/unpack`).
+2. Compare against the system fallback's metrics (from `@capsizecss/metrics/{appleSystem,segoeUI,roboto,arial,robotoMono}`).
+3. Emit `size-adjust` (scales the fallback's x-width to the primary's), `ascent-override` (sets the fallback's ascent to the primary's normalized ratio), `descent-override` (same for descent).
+
+The four sans fallbacks (per platform) + the unified mono fallback are listed in `CHANGELOG.md` v1.5.0 with their derived values. All values sit within the W6b Triumvirate gate `0.95 ≤ size-adjust ≤ 1.13`; the `-apple-system` rung is the upper edge because Plus Jakarta Sans runs slightly wider than San Francisco at the same px (112.36% — within tolerance, well below the 1.20 threshold that signals a face mismatch).
+
+#### Consumer activation
+
+Consumers default to the library's pre-existing `--font-stack-sans` ("Helvetica Neue" → Arial Nova → Arial → system-ui → sans-serif). To engage the bundled Plus Jakarta Sans face, override `--font-brand-sans` at the consumer's `:root`:
+
+```css
+:root {
+    --font-brand-sans: "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif;
+    --font-display: var(--font-brand-sans);
+    --font-serif:   var(--font-brand-sans);
+}
+```
+
+Combined with `[data-typography-preset="brand-uniform-sans"]` on `<html>` (or the equivalent direct token override at `:root`), the display + serif voices collapse to Plus Jakarta Sans across the consumer's surface.
+
+The canonical mono (`--font-mono` / `--font-stack-mono`) ships with `"Fira Code"` first by default — every glass-ui consumer gets the self-hosted mono without any wiring beyond importing `@mkbabb/glass-ui/styles`.
+
+#### Forward-compatibility
+
+Future tranches should not re-introduce non-OFL display sans-serif at glass-ui. The OFL gate is the canonical contract — adding a face means picking an OFL family + running the visual-fidelity test against the existing brand display + landing the Capsize calibration. Non-OFL licenses (Fontshare ITF-FFL, Adobe Type EULA, Monotype commercial) are out per the project's "no third-party CDN dependency on the LCP-critical path" + "no transport-restricted distribution" precepts.
 
 ### Size tokens
 

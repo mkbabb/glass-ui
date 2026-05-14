@@ -1,5 +1,6 @@
 /*
  * typography.css — Computer Modern body + Fraunces display + Fira Code mono
+ *                + Plus Jakarta Sans (brand display fallback face, OFL 1.1)
  *
  * Golden-ratio scale (√φ ≈ 1.272). Computer Modern is primary for body,
  * headings, prose, and math. Fraunces is reserved for ornamental display
@@ -8,16 +9,196 @@
  * Semantic type classes expose both Tailwind-friendly utility names
  * (`.text-display-*`, `.text-body`, `.text-admin-label`) and feature
  * utilities (`.cm-serif`, `.fira-code`, `.fourier-f`).
+ *
+ * AC.W6b (v1.5.0) — self-host font subsystem
+ * ────────────────────────────────────────────
+ * Glass-ui ships two OFL-1.1 face families as bundled woff2 assets under
+ * `src/fonts/`:
+ *
+ *   - **Plus Jakarta Sans** (latin + latin-ext, variable wght 200..800).
+ *     Selected as the brand display sans-serif substitute via AC.W6b's
+ *     5-way visual-fidelity test against pre-substitution General Sans
+ *     baseline at 1200×766 hero size. Closest character match among the
+ *     OFL candidate menu (Plus Jakarta Sans / Onest / Manrope / Inter /
+ *     Geist). Carries `font-display: optional` so paint never blocks on
+ *     the LCP-critical hero font.
+ *
+ *   - **Fira Code** (latin + latin-ext, variable wght 300..700). The
+ *     canonical glass-ui mono. OFL — full self-host permitted. Carries
+ *     `font-display: swap` (post-LCP register; visual swap acceptable).
+ *
+ * Both ship with Capsize-calibrated `size-adjust` / `ascent-override` /
+ * `descent-override` metric overrides on the matching fallback faces so
+ * the swap (system → primary) is geometry-neutral; CLS contribution
+ * from the font-load is zero by construction.
+ *
+ * Consumers map `--font-brand-sans` / `--font-display` / `--font-mono`
+ * to reference these self-hosted families and get the full gestalt-2
+ * stack (self-host + optional + size-adjust + metric overrides) at the
+ * substrate layer without re-introducing third-party CDN dependencies
+ * on the LCP-critical path.
  */
 
+/* ═══════════════════════════════════════════════
+   OFL FACE FILES — Plus Jakarta Sans (brand display)
+   ═══════════════════════════════════════════════ */
+
+/* Plus Jakarta Sans — Latin subset (basic Latin + ASCII punctuation +
+   common diacritics). Variable font: a single woff2 covers wght 200..800.
+   `font-display: optional` keeps the LCP off the font-load critical path
+   — combined with the calibrated fallback face below, the swap is no-shift
+   on geometry and never disrupts paint. */
+@font-face {
+    font-family: "Plus Jakarta Sans";
+    font-style: normal;
+    font-weight: 200 800;
+    font-display: optional;
+    src: url("../fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2") format("woff2");
+    unicode-range:
+        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Plus Jakarta Sans — Latin-ext subset (extended Latin diacritics, IPA,
+   wider Latin script). Carried because speedtest's ISP-name register
+   may surface non-ASCII Latin (e.g., Spectrum, Frontier, AT&T variants
+   transliterated). Lazy: only loads if a glyph in the range renders. */
+@font-face {
+    font-family: "Plus Jakarta Sans";
+    font-style: normal;
+    font-weight: 200 800;
+    font-display: optional;
+    src: url("../fonts/plus-jakarta-sans/plus-jakarta-sans-latin-ext.woff2") format("woff2");
+    unicode-range:
+        U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+        U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF,
+        U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Plus Jakarta Sans — calibrated fallback face.
+   Wraps the platform's system sans-serif (San Francisco / Segoe UI /
+   Roboto / Arial) and overrides its metrics to match Plus Jakarta Sans's
+   x-width + ascent + descent. While the primary face hasn't arrived
+   (font-display: optional → renders in fallback if not in cache within
+   the 100ms block window), the fallback paints at Plus Jakarta's
+   geometry — the swap is metrically neutral, no CLS contribution.
+
+   The four values (size-adjust + ascent-override + descent-override per
+   system face) were derived programmatically via @capsizecss/core's
+   `createFontStack` against the bundled latin woff2 (AC.W6b Capsize
+   calibration; receipts at docs/tranches/AC/artefacts/W6b/). */
+@font-face {
+    font-family: "Plus Jakarta Sans Fallback";
+    src: local("System Font"), local(".SFNS-Regular"), local(".SFNSText-Regular"),
+         local("-apple-system");
+    ascent-override: 92.3784%;
+    descent-override: 19.7572%;
+    size-adjust: 112.3639%;
+}
+@font-face {
+    font-family: "Plus Jakarta Sans Fallback";
+    src: local("Segoe UI"), local("SegoeUI");
+    ascent-override: 98.3348%;
+    descent-override: 21.0311%;
+    size-adjust: 105.5577%;
+}
+@font-face {
+    font-family: "Plus Jakarta Sans Fallback";
+    src: local("Roboto Regular"), local("Roboto-Regular");
+    ascent-override: 98.6597%;
+    descent-override: 21.1006%;
+    size-adjust: 105.2101%;
+}
+@font-face {
+    font-family: "Plus Jakarta Sans Fallback";
+    src: local("Arial"), local("ArialMT");
+    ascent-override: 98.8763%;
+    descent-override: 21.147%;
+    line-gap-override: 0%;
+    size-adjust: 104.9796%;
+}
+
+/* ═══════════════════════════════════════════════
+   OFL FACE FILES — Fira Code (canonical mono)
+   ═══════════════════════════════════════════════ */
+
+/* Fira Code — Latin subset (ASCII + ligatures + box-drawing prereqs).
+   Variable font: a single woff2 covers wght 300..700. `font-display:
+   swap` is acceptable here because Fira Code is post-LCP (mono-register
+   admin labels + tabular numerics render below the fold; FOUT is a
+   minor visual blip, not a layout shift since the system mono fallback
+   matches geometry via the calibrated fallback face below). */
+@font-face {
+    font-family: "Fira Code";
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url("../fonts/fira-code/fira-code-latin.woff2") format("woff2");
+    unicode-range:
+        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Fira Code — Latin-ext subset. Carried for parity with the sans
+   coverage (admin labels may surface non-ASCII strings on
+   internationalized variants). */
+@font-face {
+    font-family: "Fira Code";
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url("../fonts/fira-code/fira-code-latin-ext.woff2") format("woff2");
+    unicode-range:
+        U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+        U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF,
+        U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Fira Code — calibrated fallback face. Wraps the platform mono stack
+   (SF Mono / Menlo / Consolas / Courier New) with Capsize-derived
+   metric overrides referenced against Roboto Mono (the only mono entry
+   in `@capsizecss/metrics`; the platform monos cluster within ~2% of
+   Roboto Mono's metrics, so the override holds across the chain).
+   size-adjust ≈ 1.0 means Fira Code's x-width matches the system mono
+   exactly — the swap is geometrically transparent. */
+@font-face {
+    font-family: "Fira Code Fallback";
+    src: local("SF Mono"), local("SFMono-Regular"), local("Menlo"),
+         local("Consolas"), local("Courier New"), local("Roboto Mono Regular");
+    ascent-override: 99.0161%;
+    descent-override: 32.2052%;
+    size-adjust: 99.9837%;
+}
+
 :root {
-    /* Font stacks */
+    /* Font stacks.
+
+       Per AC.W6b (v1.5.0): the self-hosted OFL face files declared above
+       expose two new family names: `"Plus Jakarta Sans"` (brand display
+       sans — Path D substitute) + `"Fira Code"` (canonical mono). Both
+       families pair with their respective `"... Fallback"` faces (which
+       wrap the system fallback via `local()` + Capsize-calibrated
+       metric overrides — the swap is no-shift on geometry).
+
+       - `--font-brand-sans` ships its neutral default
+         (`"Helvetica Neue" → Arial Nova → Arial → system-ui → sans-serif`).
+         Consumers opting into Plus Jakarta Sans via the `brand-uniform-sans`
+         preset override this token at `:root` to:
+         `"Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif`.
+
+       - `--font-mono` references `"Fira Code"` first so the self-hosted
+         face engages by default for every glass-ui consumer; the
+         calibrated `"Fira Code Fallback"` covers the swap window, then
+         legacy `"Fira Mono"` + the generic `monospace` backstop the
+         chain for browsers that reject local() lookups. */
     --font-serif: "Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif;
     /* Independent brand/system sans stack; consumers override once for uniform sans. */
     --font-brand-sans: "Helvetica Neue", "Arial Nova", Arial, system-ui, sans-serif;
     --font-sans: var(--font-brand-sans);
     --font-display: "Fraunces", Georgia, serif;
-    --font-mono: "Fira Code", "Fira Mono", monospace;
+    --font-mono: "Fira Code", "Fira Code Fallback", "Fira Mono", monospace;
     --font-display-variation-settings: "WONK" 1, "SOFT" 0;
     --font-display-weight: 400;
 

@@ -22,7 +22,12 @@
     --font-stack-display: "Fraunces", Georgia, serif;
     --font-stack-serif: "Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif;
     --font-stack-sans: "Helvetica Neue", "Arial Nova", Arial, system-ui, sans-serif;
-    --font-stack-mono: "Fira Code", "Fira Mono", monospace;
+    /* AC.W6b (v1.5.0) — self-hosted Fira Code engages by default for
+       every glass-ui consumer. The calibrated "Fira Code Fallback"
+       face (declared in typography.css) wraps the system mono stack
+       with metric overrides so the `font-display: swap` window is
+       geometry-neutral. */
+    --font-stack-mono: "Fira Code", "Fira Code Fallback", "Fira Mono", monospace;
 
     --type-leading-micro: 1.2;
     --type-leading-caption: 1.3;
