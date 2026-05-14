@@ -1,4 +1,4 @@
-import { computed, ref, watch, onUnmounted, provide, inject } from "vue";
+import { computed, ref, watch, onUnmounted } from "vue";
 import type { ComputedRef, Ref } from "vue";
 import { isTeleportedTarget } from "./isTeleportedTarget";
 
@@ -226,15 +226,14 @@ export function useDockState(options: UseDockStateOptions) {
         }
     }
 
-    // Provide for descendant components
-    provide("dockKeepOpen", keepOpen);
-    provide("dockRelease", release);
-    provide("dockExpanded", expanded);
-    /* J.W5.C — `dockHeld` is the reactive flag descendants subscribe to
-       for held-state visual feedback (e.g., Slider thumb halo
-       intensifies, dock substrate tier-shades). The provide key sits
-       alongside the existing `dockKeepOpen`/`dockRelease` pair. */
-    provide<ComputedRef<boolean>>("dockHeld", isHeld);
+    /* O.W2 Lane A — descendant DI moved up-stack to `<GlassDock>` so the
+       canonical typed `DOCK_CONTEXT_KEY` provide composes `keepOpen` +
+       `release` + `isHeld` + `id` + `orientation` in one site. The prior
+       `provide("dockKeepOpen"|"dockRelease"|"dockHeld"|"dockExpanded")`
+       quartet here is retired; `<GlassDock>` keeps the 3 legacy string
+       provides through W2 close as a transitional dual-provide for the
+       5 not-yet-migrated consumer sites. `dockExpanded` is gone (zero
+       downstream consumers per Rδ audit). */
 
     // --- Click-away listener ---
 

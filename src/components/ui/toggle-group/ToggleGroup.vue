@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import type { VariantProps } from 'class-variance-authority'
-import { type HTMLAttributes, computed, provide } from 'vue'
+import { type HTMLAttributes, computed } from 'vue'
 import { ToggleGroupRoot, type ToggleGroupRootEmits, type ToggleGroupRootProps, useForwardPropsEmits } from 'reka-ui'
-import type { toggleVariants } from '../toggle'
+import { provideToggleGroupContext, type ToggleGroupVariants } from './toggleGroupContext'
 import { cn } from '../../../utils'
-
-type ToggleGroupVariants = VariantProps<typeof toggleVariants>
 
 const props = defineProps<ToggleGroupRootProps & {
   class?: HTMLAttributes['class']
@@ -14,7 +11,7 @@ const props = defineProps<ToggleGroupRootProps & {
 }>()
 const emits = defineEmits<ToggleGroupRootEmits>()
 
-provide('toggleGroup', {
+provideToggleGroupContext({
   variant: props.variant,
   size: props.size,
 })

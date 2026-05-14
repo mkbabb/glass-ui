@@ -242,7 +242,8 @@
      * the border quiets to the floating ring; the change tracks pointer
      * movement on `--duration-fast` so it reads as a held-cursor cue, not
      * a state change. The same flag is consumed by descendants (Slider
-     * thumb halo) via `inject("dockHeld")` for cross-substrate coordination.
+     * thumb halo) via `useOptionalDockContext().held` for cross-substrate
+     * coordination (typed-key canonical shape; O.W2 invariant 25).
      */
     .glass-dock[data-held] {
         background: var(--glass-bg-floating, var(--glass-bg-resting));

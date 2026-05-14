@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, inject, onBeforeUnmount, onMounted } from "vue";
-import type { Component, Ref } from "vue";
+import { computed, onBeforeUnmount, onMounted } from "vue";
+import type { Component } from "vue";
+import { useDockLayerGroupContext } from "./composables/dockLayerContext";
 
 /**
  * <DockLayer> — a named content pane inside a <DockLayerGroup>.
@@ -9,6 +10,10 @@ import type { Component, Ref } from "vue";
  * so the group can both render a switcher rail (using each layer's
  * label/icon) and coordinate crossfade transitions when the active
  * layer changes.
+ *
+ * O.W2 Lane A — typed-key DI via `useDockLayerGroupContext()` (strict;
+ * throws when used outside `<DockLayerGroup>`). Replaces the prior
+ * `inject("dockLayerGroup", null) + manual !group throw` shape.
  */
 const props = defineProps<{
     /** Stable identifier — referenced by the parent group's `active` v-model. */
@@ -19,18 +24,7 @@ const props = defineProps<{
     icon?: Component | string;
 }>();
 
-interface DockLayerGroupContext {
-    register(desc: { id: string; label?: string; icon?: Component | string }): void;
-    unregister(id: string): void;
-    currentLayerId: Ref<string>;
-    leavingLayerId: Ref<string | null>;
-}
-
-const group = inject<DockLayerGroupContext | null>("dockLayerGroup", null);
-
-if (!group) {
-    throw new Error("<DockLayer> must be used inside <DockLayerGroup>");
-}
+const group = useDockLayerGroupContext();
 
 onMounted(() => {
     group.register({

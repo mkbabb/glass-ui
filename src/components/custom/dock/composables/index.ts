@@ -8,6 +8,16 @@ export { isTeleportedTarget } from "./isTeleportedTarget";
 export {
     provideDockContext,
     useDockContext,
+    useOptionalDockContext,
+    DOCK_CONTEXT_KEY,
     type DockContext,
     type DockOrientation,
 } from "./dockContext";
+export {
+    provideDockLayerGroupContext,
+    useDockLayerGroupContext,
+    useOptionalDockLayerGroupContext,
+    DOCK_LAYER_GROUP_KEY,
+    type DockLayerDescriptor,
+    type DockLayerGroupContext,
+} from "./dockLayerContext";

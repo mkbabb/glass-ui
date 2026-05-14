@@ -86,17 +86,6 @@ const touchGate = useTouchGate(props.collapseDelay);
 const dockId = `glass-dock-${++dockInstanceId}`;
 let transitionTimer: ReturnType<typeof setTimeout> | null = null;
 
-provideDockContext({
-    id: dockId,
-    orientation,
-});
-
-/* J.W3.B — string-keyed dock id for `<HoverPopover keep-dock-open>`.
-   The portal-marker attrs (`data-glass-dock-portal` /
-   `data-glass-dock-owner`) opt portaled HoverCard content into the
-   dock's click-away allowlist via `isTeleportedTarget`. */
-provide("glassDockId", dockId);
-
 const {
     expanded,
     isPinned,
@@ -117,6 +106,29 @@ const {
     isTransitioning,
     dockId,
 });
+
+/* O.W2 Lane A — canonical typed-key dock context (invariant 25).
+   The 6 prior string-keyed dock provides collapse into this single
+   typed provide. `dockExpanded` is retired (zero downstream consumers);
+   `glassDockId` is dedup'd with `context.id`. */
+provideDockContext({
+    id: dockId,
+    orientation,
+    keepOpen,
+    release,
+    held: isHeld,
+});
+
+/* O.W2 transitional — Lane B/C migrate consumers; retire at W2 close.
+   Legacy string-key provides preserve runtime behaviour for the 5
+   not-yet-migrated consumer sites (Slider, HoverPopover, Popover,
+   Select, DropdownMenu). The brittleness window declared in W2.md
+   (`breaking_changes_during_wave: yes`) is the dual-provide state. */
+provide("dockKeepOpen", keepOpen);
+provide("dockRelease", release);
+provide("dockHeld", isHeld);
+provide("glassDockId", dockId);
+provide("glassDockContext", { id: dockId });
 
 const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
 

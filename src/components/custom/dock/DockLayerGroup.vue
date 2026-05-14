@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import { computed, provide, ref, useTemplateRef } from "vue";
+import { computed, ref, useTemplateRef } from "vue";
 import type { Component } from "vue";
-import { useDockContext } from "./composables/dockContext";
+import { useOptionalDockContext } from "./composables/dockContext";
+import {
+    provideDockLayerGroupContext,
+    type DockLayerDescriptor,
+} from "./composables/dockLayerContext";
 import { useLayerTransition } from "./composables/useLayerTransition";
 
 /**
@@ -15,11 +19,6 @@ import { useLayerTransition } from "./composables/useLayerTransition";
  *     <DockLayer id="layers" label="Layers" :icon="LayersIcon">...</DockLayer>
  *   </DockLayerGroup>
  */
-interface DockLayerDescriptor {
-    id: string;
-    label?: string;
-    icon?: Component | string;
-}
 
 const props = withDefaults(
     defineProps<{
@@ -37,7 +36,7 @@ const props = withDefaults(
 );
 
 const activeLayer = defineModel<string>("active", { required: true });
-const dock = useDockContext();
+const dock = useOptionalDockContext();
 
 const layers = ref<DockLayerDescriptor[]>([]);
 const containerEl = useTemplateRef<HTMLElement>("containerEl");
@@ -60,7 +59,7 @@ const { onTransitionEnd, currentLayer, leavingLayer } = useLayerTransition({
     axis,
 });
 
-provide("dockLayerGroup", {
+provideDockLayerGroupContext({
     register,
     unregister,
     currentLayerId: currentLayer,
