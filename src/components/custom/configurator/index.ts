@@ -6,6 +6,10 @@ export type {
     ConfiguratorScrollMode,
 } from "./Configurator.vue";
 export {
+    CONFIGURATOR_DENSITY_KEY,
+    type ConfiguratorDensity,
+} from "./density";
+export {
     useConfiguratorState,
     type ConfiguratorCloneMode,
     type ConfiguratorState,

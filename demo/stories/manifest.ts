@@ -100,6 +100,7 @@ export const CATEGORIES: Category[] = [
             s("primitives", "cartoon-card", "Cartoon Card", "Cartoon-register surface with offset-stamp shadow and hover-lift; sibling primitive lifted from the retired Card variant=cartoon."),
             s("primitives", "glass-panel", "Glass Panel", "Five-rung glass tier ladder over a renderer-tier detection cascade (svg-filter / css / fallback)."),
             s("primitives", "configurator", "Configurator", "Studio-tier preset + layers + scroll-mode primitive; floating glass substrate."),
+            s("primitives", "configurator-mobile", "Configurator (mobile density)", "Density axis (N.W2 Lane A) — `mobile` vs `comfortable` rungs side-by-side; provide/inject from `<Configurator>` to `<ConfiguratorRow>`."),
             s("primitives", "dark-mode-toggle", "Dark Mode Toggle", "5-rung size axis (sm · md · lg · control · dock); composes useGlobalDark."),
             s("primitives", "expandable-container", "Expandable Container", "In-place vs Teleport-to-body fullscreen with body-overflow lock-depth."),
             s("primitives", "icon-tooltip", "Icon Tooltip", "Auto-provider tooltip for label co-location with display typography baked in."),

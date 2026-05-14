@@ -1,6 +1,10 @@
 <script setup lang="ts" generic="T">
-import { computed, type HTMLAttributes } from "vue";
+import { computed, provide, type HTMLAttributes } from "vue";
 import { cn } from "../../../utils/cn";
+import {
+    CONFIGURATOR_DENSITY_KEY,
+    type ConfiguratorDensity,
+} from "./density";
 
 /**
  * Scroll behavior for the controls column.
@@ -53,13 +57,26 @@ const props = withDefaults(
         activeLayer?: string;
         /** Scroll behavior for the controls column. Default: `auto`. */
         scrollMode?: ConfiguratorScrollMode;
+        /**
+         * Row-level density axis (N.W2 Lane A). Cascades to descendant
+         * `<ConfiguratorRow>` children via provide/inject. A row may
+         * override locally by setting its own `density` prop (prop wins
+         * over inject). Default `"comfortable"` preserves the prior
+         * `gap-1.5 py-2` recipe exactly.
+         */
+        density?: ConfiguratorDensity;
         /** Optional outer container override. */
         class?: HTMLAttributes["class"];
     }>(),
     {
         scrollMode: "auto",
+        density: "comfortable",
     },
 );
+
+// Provide the density to descendant <ConfiguratorRow>s. Rows still accept
+// their own `density` prop; the prop wins over inject (see ConfiguratorRow).
+provide(CONFIGURATOR_DENSITY_KEY, computed(() => props.density));
 
 const emit = defineEmits<{
     /** Fired when the user picks a preset chip from the default `presets` slot. */

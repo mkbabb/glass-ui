@@ -173,3 +173,31 @@ Lane C agent self-disclosed a `git stash` + `git stash pop` round-trip during ba
 - (f) `npm run typecheck` + build + test green; profile:budget PASS: PASS.
 - (g) 3 lane proof docs landed: PASS.
 - (h) W1 close commit landed: PASS.
+
+## 2026-05-14 — N.W2 dispatched + closed
+
+Orchestrator dispatched 1 agent for Lane A (density CVA + tokens + mobile story); Lane B (N7 dock-blur audit) orchestrator-direct.
+
+### W2 close artefacts
+
+- **Lane A — Configurator density CVA**: agent `a2eebb12684774740`. `<Configurator>` + `<ConfiguratorRow>` gain `density` axis ("mobile" | "compact" | "comfortable" | "spacious"; default "comfortable"); provide/inject propagation; prop-wins-over-inject. 8 density tokens (4 gap + 4 padding-block rungs). New `density.ts` module + package re-export. Mobile proof story (`demo/stories/primitives/configurator-mobile.vue`) registered in manifest. CSS delta +596 bytes (well under rebaselined cap). Proof: `audit/W2-Lane-A-configurator-density-CVA-proof.md`.
+- **Lane B — N7 dock-blur perceptual audit (NO-OP)**: orchestrator-direct. Source-of-truth verified the dock substrate's `backdrop-filter` is at compositor floor (`--glass-blur-dock-radius: 0px`); no top-dock-specific recipe exists; user perception traces to page-composition stacking. DESIGN.md extended with source-of-truth comparison table + NO-OP rationale. Proof: `audit/W2-Lane-B-dock-blur-N7-audit-proof.md`.
+
+### Audit false-positives surfaced (per N invariant 22)
+
+The pre-N.W2 wave-spec assumed two add-paths that were already true at HEAD:
+
+- **viewport-meta**: W2.md says "Add `demo/index.html`" but viewport-meta has lived at `./index.html:5` (`<meta name="viewport" content="width=device-width, initial-scale=1.0">`) since project inception. No-op for the viewport-meta task; Lane A re-scoped to density-only.
+- **dock-blur**: W2.md Lane B says "audit + possible cascade adjustment" — audit lands NO-OP per the J.W3.C-era floor already in place.
+
+Both false-positives caught at orchestrator-side spot-verification before agent dispatch. Per invariant 22 cycle: audit → spot-verify → narrow agent scope to actual delta.
+
+### Hard gate (W2)
+
+- (a) `demo/index.html` viewport-meta + responsive root: PASS (already in place at `./index.html:5` pre-N).
+- (b) ConfiguratorRow density CVA branch ships; configurator-mobile story renders: PASS.
+- (c) Lane B audit proof doc + NO-OP rationale in DESIGN.md: PASS.
+- (d) `npm run typecheck` + build + test green; profile:budget PASS: PASS (CSS 32_471 / 36_000 raw = 90.2 %; JS 67.2 %).
+- (e) Visual-runtime probe at 3 viewports (Playwright-MCP disconnected this session; verified statically via source-of-truth): PARTIAL — runtime probe deferred to N.W4 close-ceremony π lane if needed.
+- (f) 2 lane proof docs: PASS.
+- (g) W2 close commit landed: PASS.

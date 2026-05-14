@@ -1,5 +1,70 @@
 # Changelog
 
+## 1.1.3 — 2026-05-14 — N.W2 Configurator density CVA + N7 dock-blur audit (NO-OP)
+
+Additive density axis on `<Configurator>` + `<ConfiguratorRow>`; 8 new
+density tokens; mobile proof-of-concept story. N7 dock-blur perceptual
+audit closes NO-OP — the dock filter is at the compositor floor; user
+perception traces to page-composition stacking, not library substrate.
+
+### Added — Configurator density axis (N.W2 Lane A)
+
+`<Configurator>` gains `density?: "mobile" | "compact" | "comfortable" | "spacious"`
+(default `"comfortable"`). The Configurator provides density to its
+descendant rows via `provide`/`inject` (key `CONFIGURATOR_DENSITY_KEY`);
+`<ConfiguratorRow>` exposes the same `density` prop and resolves
+`props.density ?? injectedDensity?.value`, emitting `data-density` on its
+root. **Prop wins over inject** — direct row-level override is supported.
+
+A bare `<ConfiguratorRow>` outside any Configurator (no inject, no prop)
+emits no `data-density` attribute and preserves the pre-N.W2 `gap-1.5 py-2`
+visual exactly. The default is back-compatible at every consumer.
+
+New tokens (in `src/styles/tokens.css`):
+
+```css
+--configurator-row-gap-mobile:       0.25rem;
+--configurator-row-gap-compact:      0.3125rem;
+--configurator-row-gap-comfortable:  0.375rem;
+--configurator-row-gap-spacious:     0.75rem;
+--configurator-row-padding-block-mobile:       0.25rem;
+--configurator-row-padding-block-compact:      0.375rem;
+--configurator-row-padding-block-comfortable:  0.5rem;
+--configurator-row-padding-block-spacious:     0.875rem;
+```
+
+ConfiguratorRow's scoped CSS binds each density rung via attribute
+selectors. CSS delta: +596 bytes raw.
+
+New module: `src/components/custom/configurator/density.ts` carries the
+type + provide key for cross-module sharing. Re-exported via the package
+barrel.
+
+Proof story: `demo/stories/primitives/configurator-mobile.vue` (89
+lines) demonstrates the same configurator content side-by-side at
+`density="mobile"` vs `density="comfortable"`. Registered in
+`demo/stories/manifest.ts`.
+
+### Documented — N7 dock-blur perceptual audit NO-OP (N.W2 Lane B)
+
+User feedback at N open ("top dock blur is a bit much") source-of-truth-
+audited. The dock substrate's `backdrop-filter` is already at compositor
+floor (`--glass-blur-dock-radius: 0px`, J.W3.C; the radius drop + dropped
+`saturate()` channel). Source-of-truth comparison table now lives in
+DESIGN.md `## Glass Surfaces` — dock is the lightest surface in the
+entire ladder.
+
+The user's perception is real, but the source is page-composition
+stacking (aurora / metaballs backdrops admitted through the dock's 32 %
+`--glass-bg-dock` opacity), not the dock substrate. The library token
+holds the floor; further reduction requires consumer-side intervention
+(lower aurora opacity, increase `--glass-bg-dock`, or move dock from
+over-aurora to over-flat-bg).
+
+NO-OP for this wave. No token change; no cascade adjustment. Audit
+lands in `docs/tranches/N/audit/W2-Lane-B-dock-blur-N7-audit-proof.md`
++ DESIGN.md for posterity.
+
 ## 1.1.2 — 2026-05-14 — N.W1 typography sweep + N-4 absorb + GlassPanel translucent + frosted canonical
 
 Pure cleanup — zero new public surface; 9 ad-hoc `text-[0.6875rem]` literals
