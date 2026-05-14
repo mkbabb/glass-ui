@@ -1,5 +1,130 @@
 # Changelog
 
+## 1.5.0 — 2026-05-14 — OFL font self-host subsystem (speedtest AC.W6b)
+
+The font subsystem migrates from "consumer wires fonts" to "library
+ships canonical OFL faces with calibrated fallbacks". Closes the
+speedtest AC.W6b Path D substitution that retires the Fontshare CDN
+dependency from the speedtest LCP-critical path. Single substrate
+change (typography.css + `src/fonts/`), zero primitive churn.
+
+### Added — Plus Jakarta Sans bundled face (Path D OFL substitute)
+
+Plus Jakarta Sans (Tokotype / Gumpita Rahayu, OFL 1.1) ships as the
+canonical brand display sans family at `src/fonts/plus-jakarta-sans/`:
+
+- `plus-jakarta-sans-latin.woff2` — 27 KB variable (wght 200..800)
+- `plus-jakarta-sans-latin-ext.woff2` — 22 KB variable (wght 200..800)
+- `OFL.txt` — SIL Open Font License 1.1 attribution
+
+Plus Jakarta Sans was selected per speedtest's AC.W6b 5-way visual-
+fidelity test against the pre-substitution General Sans baseline at
+1200×766 hero size + 96 px body sample. The other four OFL candidates
+(Onest, Manrope, Inter, Geist) read either too geometric (Manrope) or
+too neutral (Inter, Geist) at hero size; Plus Jakarta Sans lands
+closest to General Sans's geometric-humanist character with similar
+audacity — the brand precept ("essentially equivalent") is honored.
+
+Receipts: `docs/tranches/AC/artefacts/W6b/visual-fidelity/` (full-page
+6-candidate comparison + 1200×766 hero pair at the canonical reference
+size).
+
+The `@font-face` declaration uses `font-display: optional` so the
+LCP element never blocks on font arrival. The paired Capsize-calibrated
+"Plus Jakarta Sans Fallback" face (declared in `src/styles/typography.css`)
+wraps the system sans stack via `local()` with metric overrides — the
+swap from fallback to primary is geometry-neutral, zero CLS contribution.
+
+Capsize calibration (per `@capsizecss/core` against the bundled latin
+woff2; receipts in `docs/tranches/AC/artefacts/W6b/`):
+
+| Fallback         | size-adjust | ascent-override | descent-override |
+|------------------|-------------|-----------------|------------------|
+| `-apple-system`  | 112.3639%   | 92.3784%        | 19.7572%         |
+| Segoe UI         | 105.5577%   | 98.3348%        | 21.0311%         |
+| Roboto           | 105.2101%   | 98.6597%        | 21.1006%         |
+| Arial            | 104.9796%   | 98.8763%        | 21.1470%         |
+
+All four overrides sit within the W6b Triumvirate gate (0.95 ≤ size-
+adjust ≤ 1.13 — the apple-system value is the upper edge because Plus
+Jakarta Sans runs slightly wider than San Francisco at the same px).
+
+### Added — Fira Code bundled face (OFL self-host)
+
+Fira Code (Nikita Prokopov, OFL 1.1) ships at `src/fonts/fira-code/`:
+
+- `fira-code-latin.woff2` — 36 KB variable (wght 300..700)
+- `fira-code-latin-ext.woff2` — 13 KB variable (wght 300..700)
+- `OFL.txt` — SIL Open Font License 1.1 attribution
+
+Fira Code retires the Google Fonts CDN round-trip from every glass-ui
+consumer (audit AC.W6b GU-FONT §1.1 measured ~258 ms wasted on desktop
++ ~810 ms on mobile for the Fira Code CSS fetch). `font-display: swap`
+is preserved because Fira Code is post-LCP (mono-register admin labels
++ tabular numerics render below the fold; FOUT is a minor visual blip,
+not a layout shift).
+
+Capsize calibration:
+
+| Fallback                       | size-adjust | ascent-override | descent-override |
+|--------------------------------|-------------|-----------------|------------------|
+| SF Mono / Menlo / Consolas /   | 99.9837%    | 99.0161%        | 32.2052%         |
+| Courier New / Roboto Mono      |             |                 |                  |
+
+size-adjust ≈ 1.00 means Fira Code's x-width matches the system mono
+exactly — the swap is geometrically transparent across the chain.
+
+### Changed — `src/styles/typography.css` preamble + face declarations
+
+Eight new `@font-face` blocks land at the top of `typography.css`:
+2× Plus Jakarta Sans primary (latin + latin-ext, both variable
+200..800), 4× Plus Jakarta Sans Fallback (one per system-sans backstop
+to keep the local() chain selective), 2× Fira Code primary (latin +
+latin-ext, both variable 300..700), 1× Fira Code Fallback. The file
+preamble documents the substrate canon + the Capsize methodology.
+
+### Changed — `src/styles/tokens.css` `--font-stack-mono` cascade
+
+`--font-stack-mono` (the theme-bridge token consumed by Tailwind's
+`font-mono` utility) now leads with the bundled `"Fira Code"` family
++ the calibrated `"Fira Code Fallback"` face — every glass-ui consumer
+gets the self-hosted mono by default without any consumer-side wiring.
+
+### Changed — `DESIGN.md` `### Self-host font policy` section
+
+The W6a-r1 skeleton subsection (commit `4660a0d`) is replaced by the
+fully-populated v1.5.0 policy:
+
+- The Path D candidate matrix (5 candidates evaluated; Plus Jakarta
+  Sans selected with rationale).
+- The Capsize calibration methodology (`@capsizecss/core createFontStack`
+  against the bundled latin woff2; per-face size-adjust + ascent-
+  override + descent-override matrix).
+- The `font-display` policy (`optional` for LCP-critical display;
+  `swap` for post-LCP mono).
+- The license attribution + OFL.txt locations.
+- The forward-compatibility note: future tranches should not
+  re-introduce non-OFL display sans-serif at glass-ui (`feedback_fonts`
+  project-memory canon).
+
+### Compatibility
+
+- Speedtest AC.W6b retires the Fontshare CDN `<link>` + the "General
+  Sans Fallback" `@font-face` (now upstream as "Plus Jakarta Sans
+  Fallback") at `speedtest/index.html` + `speedtest/styles/style.css`.
+  Speedtest's consumer-side `tokens.css` overrides `--font-brand-sans`
+  to `"Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui,
+  sans-serif` — the brand-uniform-sans preset cascade routes display
+  + serif through this stack.
+- Other glass-ui consumers (the demo, downstream libraries) keep the
+  pre-existing Helvetica Neue default at `--font-stack-sans`; no
+  unrelated visual changes. The OFL face files are net-additive.
+- Bundle delta: ~98 KB woff2 across both families (lazy-loaded by
+  unicode-range; only the in-use subset transfers). Speedtest cohort
+  expects a net LCP improvement vs the prior Fontshare CDN path (no
+  third-party connect + handshake; font self-host inside the same
+  origin's HTTP/2 multiplex).
+
 ## 1.4.1 — 2026-05-14 — O.W7 close (13-lane audit fan-out + γ BLOCKER absorb + FINAL.md)
 
 O tranche close ceremony. 7 strengthened audit lanes (α/β/γ/δ/ε/π/ι) +
