@@ -65,5 +65,24 @@ import { Pulse } from "../../../src/components/custom/pulse";
                 <span class="text-small text-foreground">Computing projection…</span>
             </div>
         </StorySection>
+
+        <!-- Aura variant (AB.W3.T1 — surface-scope ambient halo). N.W4 β
+             absorb: glass-ui-side canonical consumer for the aura recipe. -->
+        <StorySection label="aura variant (ambient halo)">
+            <div class="flex flex-wrap items-center gap-8">
+                <div class="flex flex-col items-center gap-2">
+                    <Pulse variant="aura" speed="slow" class="text-viz-fourier" />
+                    <span class="text-mono-caption text-muted-foreground">slow · fourier</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                    <Pulse variant="aura" speed="normal" class="text-viz-chebyshev" />
+                    <span class="text-mono-caption text-muted-foreground">normal · chebyshev</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                    <Pulse variant="aura" speed="fast" class="text-viz-legendre" />
+                    <span class="text-mono-caption text-muted-foreground">fast · legendre</span>
+                </div>
+            </div>
+        </StorySection>
     </StoryPage>
 </template>

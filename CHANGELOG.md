@@ -1,5 +1,44 @@
 # Changelog
 
+## 1.1.4 — 2026-05-14 — N close (13-audit fan-out + β absorbs + γ doc-drift fix + FINAL.md)
+
+N tranche close ceremony. 7 strengthened audit lanes (α/β/γ/δ/ε/π/ι) +
+6 N11 consumer re-audits dispatched in parallel (13 read-only agents
+within the dual-ceiling per V7). All audits CLEAN or MINOR; β's
+recommended absorbs landed inline; γ's BLOCKER-class CHANGELOG token-
+name drift fixed inline.
+
+### Fixed — CHANGELOG v1.1.3 token-name drift (γ BLOCKER)
+
+The v1.1.3 entry listed Configurator padding-block tokens as
+`--configurator-row-padding-block-*`; the actual shipped names in
+`tokens.css` are `--configurator-row-py-*`. Consumers copy-pasting the
+prior changelog would have authored invalid CSS. Fixed inline.
+
+### Added — Pulse `variant="aura"` + Progress `variant="sectioned"` demo stories (β absorb)
+
+The β substrate-without-consumer audit caught that the AB.W3 Pulse-aura
++ Progress-sectioned variants shipped without glass-ui-side demo
+consumers (the pulse + progress stories only exercised the pre-AB
+variants). N.W4 absorbs:
+
+- `demo/stories/primitives/pulse.vue` gains an "aura variant (ambient
+  halo)" story section showing 3 speed × 3 viz-basis colour cells.
+- `demo/stories/feedback/progress.vue` gains a "sectioned variant
+  (phase bus)" story section using `ProgressSegment[]` with 4 phases
+  (pings / jitter / download / upload) mirroring the speedtest
+  phase-bus pattern.
+
+Closes the AB.W3 substrate-without-glass-ui-consumer gap; speedtest
+remains the canonical cross-constellation consumer.
+
+### Documented — FINAL.md
+
+`docs/tranches/N/FINAL.md` authored. Cites every wave-close commit +
+audit verdict; enumerates 8 O-deferred items (Playwright runtime
+probe; 23 broader wire-targets; γ CLAUDE.md cosmetic drifts; δ MINOR
+notes; new union candidate from N11/b; consumer-side cleanup waves).
+
 ## 1.1.3 — 2026-05-14 — N.W2 Configurator density CVA + N7 dock-blur audit (NO-OP)
 
 Additive density axis on `<Configurator>` + `<ConfiguratorRow>`; 8 new
@@ -27,10 +66,10 @@ New tokens (in `src/styles/tokens.css`):
 --configurator-row-gap-compact:      0.3125rem;
 --configurator-row-gap-comfortable:  0.375rem;
 --configurator-row-gap-spacious:     0.75rem;
---configurator-row-padding-block-mobile:       0.25rem;
---configurator-row-padding-block-compact:      0.375rem;
---configurator-row-padding-block-comfortable:  0.5rem;
---configurator-row-padding-block-spacious:     0.875rem;
+--configurator-row-py-mobile:        0.25rem;
+--configurator-row-py-compact:       0.375rem;
+--configurator-row-py-comfortable:   0.5rem;
+--configurator-row-py-spacious:      0.875rem;
 ```
 
 ConfiguratorRow's scoped CSS binds each density rung via attribute

@@ -2,8 +2,23 @@
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import { onMounted, onUnmounted, ref } from "vue";
-import { Progress } from "../../../src/components/ui/progress";
+import {
+    Progress,
+    type ProgressSegment,
+} from "../../../src/components/ui/progress";
 import { Button } from "../../../src/components/ui/button";
+
+// N.W4 β absorb — sectioned variant canonical demo. Mirrors the
+// phase-bus speedtest pattern (4 phases: pings / jitter / download / upload)
+// with one phase active to demonstrate the spring active-fill seam.
+const phaseSegments: ProgressSegment[] = [
+    { key: "pings", label: "Pings", color: "var(--viz-fourier)", state: "completed" },
+    { key: "jitter", label: "Jitter", color: "var(--viz-chebyshev)", state: "completed" },
+    { key: "download", label: "Download", color: "var(--viz-legendre)", state: "active" },
+    { key: "upload", label: "Upload", color: "var(--surface-tint-40)", state: "pending" },
+];
+const phaseActive = ref<string>("download");
+const phaseProgress = ref<number>(58);
 
 const determinate = ref(42);
 
@@ -91,6 +106,23 @@ onUnmounted(stopAnimated);
                 <Progress :model-value="62" />
                 <Progress :model-value="62" class="h-6" />
             </div>
+        </StorySection>
+
+        <!-- AB.W3.T2 — sectioned variant (per-segment colour cells +
+             spring active fill + transition-gradient seams). N.W4 β
+             absorb: glass-ui-side canonical consumer for the recipe. -->
+        <StorySection label="sectioned variant (phase bus)">
+            <p class="font-mono text-xs text-muted-foreground">
+                Per-segment colour cells + spring active-fill overlay. Mirrors the
+                speedtest phase-bus shape (pings / jitter / download / upload).
+            </p>
+            <Progress
+                variant="sectioned"
+                :segments="phaseSegments"
+                :current-segment-key="phaseActive"
+                :model-value="phaseProgress"
+                class="h-3"
+            />
         </StorySection>
     </StoryPage>
 </template>
