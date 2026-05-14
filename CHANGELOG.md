@@ -1,5 +1,95 @@
 # Changelog
 
+## 1.1.1 — 2026-05-14 — N.W0 strategic 5-wire batch (useTouchGate→Slider; metaballs+typewriter→hero; paper-backdrop→Section; freshness→speedtest)
+
+Pure additive — zero retirements, zero demo-privatizations. Wires five existing
+primitives into their canonical consumer sites; closes the V.W3 freshness
+wire-claim cross-repo; codifies three new tranche precepts (RESEARCH angles 7+8,
+SPEC audit-verdict spot-verification gate, README wire-before-retire edict);
+codifies the audit-verdict spot-verification LESSONS-LEARNED entry (precept
+submodule `46d6cfb → b8af314`).
+
+The wave's planning substrate landed across three revisions (initial addition
+→ KISS prune → wiring pivot) per the user wiring correction
+("useTouchGate is used, or it should be ... Metaballs, paper-backdrop, typewriter
+should be used elsewhere too"); the five wires close that revision cleanly.
+
+### Added — `useTouchGate` → `<Slider>` (N.W0 Lane A1)
+
+`<Slider>` now mirrors the canonical `useTouchGate` consumer pattern from
+`GlassDock.vue` on top of its existing `dockKeepOpen` contract. On touch
+devices the first tap activates the slider (gate behavior); off-control
+taps deactivate via the shared global listener; the gate's active window
+also acquires the existing `dockKeepOpen` token so an enclosing
+`<GlassDock>` observes the touch gesture as held. Root reflects gate state
+via `data-touch-active` (additional attribute alongside `data-held`).
+Desktop pointers are unaffected — the gate no-ops when `isTouchDevice` is
+false.
+
+This is the canonical 2nd consumer of `useTouchGate` (GlassDock is the
+1st); the audit-verdict spot-verification gate caught the original audit's
+miscount that flagged this primitive for retirement, and wired it instead
+per the wire-before-retire precept.
+
+### Added — `<Section backdrop="paper">` (N.W0 Lane A3)
+
+`<Section>` gains an additive `backdrop?: "none" | "paper"` prop (default
+`"none"`). When `backdrop="paper"`, the `<section>` becomes a
+`relative isolate` stacking context with `<PaperBackdrop>` pinned
+`!absolute inset-0` behind header + content. Existing Section API
+preserved verbatim; consumers that don't set `backdrop` see zero change.
+
+This is the canonical library wire for `<PaperBackdrop>` (previously
+demo-only); demonstrates the primitive as a generally-reusable substrate.
+
+### Added — hero composition ambient backdrop + typewriter headline (N.W0 Lane A2+A4)
+
+`demo/stories/compositions/hero.vue` gains:
+
+- An ambient `<MetaballCanvas>` layer behind the existing radial-gradient
+  background, gated by `isWebGLSupported() && !prefersReducedMotion`.
+  5-blob config tuned to complement (not compete with) the warm-palette
+  gradients. Scoped `:deep(canvas)` rule re-targets the upstream
+  viewport-pinned canvas to the hero frame.
+- A `<TypewriterText>` headline split around the static italic-f
+  signature glyph — segment 1 types first, segment 2 starts on
+  `@complete` of segment 1 with a brief `startDelay`. The italic-f
+  remains anchored as static markup; reduced-motion fallback renders
+  the verbatim original h2 with zero diff.
+
+Demonstrates the canonical ambient-backdrop + animated-headline
+composition pattern for downstream consumer hero composites.
+
+### Added — `assertDistFresh()` wired into speedtest (N.W0 Lane A5)
+
+Closes the V.W3 wire-claim: `speedtest/vite.config.ts` now imports
+`assertDistFresh` from `@mkbabb/glass-ui/freshness` and invokes it at
+config evaluation, failing-closed when the `file:../glass-ui` symlink
+points at a stale `dist/`. Cross-repo write per MULTI-WRITER mode.
+
+### Codified — three precept canonicalizations (N.W0 Lane B; precept submodule `46d6cfb → b8af314`)
+
+- `tranche/RESEARCH.md` §"Canonical Angles" extends from 6 → 8 angles:
+  bidirectional style audit (angle 7) + overfitting audit (angle 8) are
+  canonical at every tranche that ships substrate work in a design system
+  or library-with-consumers shape.
+- `tranche/SPEC.md` §"Close" gains a new sub-section
+  "Audit-verdict spot-verification gate": before authoring a wave-spec
+  that retires items per an overfitting audit, the orchestrator MUST
+  spot-verify (item exists; rg count accurate through alias paths;
+  zero-consumer claim resolves through CSS / dynamic-import paths).
+- `instructions/README.md` §"Edicts" gains "Wire before retire":
+  under-wired primitives default to WIRE, not RETIRE; retirement
+  requires explicit "no proper wiring target exists" rationale.
+
+### Codified — audit-verdict LESSONS-LEARNED entry (N.W0 Lane C)
+
+`docs/precepts/instructions/LESSONS-LEARNED.md` 2026-05-13 entry:
+"Audit Verdicts Require Spot-Verification". Catalogues the 3 audit
+failures from the N KISS-revision overfitting audit (1 hallucination
+on `useGlassAlpha`; 2 false positives on J-6 tokens; 1 missed consumer
+on `useTouchGate`); reverses the prune verdict to 5 strategic wires.
+
 ## 1.1.0 — 2026-05-13 — AB Living-UI canon (chassis token + timeline structural split + Pulse aura + sectioned Progress + dock-shadow consumer canon)
 
 The AB tranche accumulated five cross-repo lanes against this trunk and ships

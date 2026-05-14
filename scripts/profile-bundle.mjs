@@ -30,9 +30,19 @@ const startedAt = Date.now();
 // W3.perf.B.T5 (cn() refactor → v0.9.2) is expected to compress glass-ui.js
 // by ~10–18 KB gz; the gate is intentionally re-baselined at K W8 close
 // after that ship per K W4 sequencing.
+//
+// N.W0 re-baseline (v1.1.1): AB tranche shipped ~10 KB of load-bearing CSS
+// (AB.W1.T1 `--chassis-max-block-size` token block; AB.W3.T1 Pulse aura
+// recipe + `--animate-ambient-pulse-*` block; AB.W3.T2 Progress sectioned
+// recipe + `--progress-sectioned-*` block; AB.W3 dock-shadow consumer
+// canon) without re-baselining the budget at AB close — a precept gap the
+// N.W0 audit-verdict spot-verification gate surfaces. Bumping CSS budget
+// to 36_000 raw / 6_700 gzip (≈ 13 % headroom over current draw of
+// 31_875 raw / 5_972 gzip) restores a passing gate without papering over
+// the AB additions; future tranches re-baseline at their own close.
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
-    "dist/glass-ui.css": { raw: 29_000, gzip: 5_750 },
+    "dist/glass-ui.css": { raw: 36_000, gzip: 6_700 },
 };
 
 const args = new Set(process.argv.slice(2));

@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { type HTMLAttributes, type ComputedRef, computed, inject, onBeforeUnmount } from 'vue'
+import { type HTMLAttributes, type ComputedRef, computed, inject, onBeforeUnmount, useTemplateRef, watch } from 'vue'
 import type { SliderRootEmits, SliderRootProps } from 'reka-ui'
 import { SliderRange, SliderRoot, SliderThumb, SliderTrack, useForwardPropsEmits } from 'reka-ui'
 import { cn } from '../../../utils'
+import { useTouchGate } from '../../../composables/dom/useTouchGate'
 import { sliderVariants, type SliderVariants } from './index'
 
 const props = defineProps<SliderRootProps & {
@@ -75,19 +76,77 @@ function onPointerDown() {
   window.addEventListener('pointercancel', onUp)
 }
 
+/* N.W0 Lane A1 — useTouchGate wire. Mirrors the canonical consumer
+   pattern at `src/components/custom/dock/GlassDock.vue:85` (instantiate
+   the gate, wire `touchstart`/`touchmove`/`touchend` on the root, and
+   reflect `isActive` as a data attribute). On touch devices the first
+   tap activates the slider; off-control taps deactivate via the shared
+   global listener. Desktop pointers are unaffected — the gate is a
+   no-op when `isTouchDevice` is false. While the touch gate is active
+   we also acquire the existing `dockKeepOpen` token so an enclosing
+   dock observes the gesture and won't auto-collapse mid-touch. */
+const sliderRootRef = useTemplateRef<{ $el: HTMLElement } | HTMLElement | null>('sliderRootRef')
+const touchGate = useTouchGate()
+
+function getRootEl(): HTMLElement | null {
+  const ref = sliderRootRef.value
+  if (!ref) return null
+  if (ref instanceof HTMLElement) return ref
+  return (ref.$el as HTMLElement | undefined) ?? null
+}
+
+function onTouchStart(event: TouchEvent): void {
+  const root = getRootEl()
+  const touch = event.touches[0]
+  if (!root || !touch) return
+
+  if (!touchGate.handleTouchStart(root, touch.clientY)) {
+    // Gate is pending activation — swallow this initial tap so the
+    // SliderRoot doesn't treat it as a drag while the gate decides
+    // (matches the canonical GlassDock pattern).
+    event.preventDefault()
+    event.stopPropagation()
+  }
+}
+
+function onTouchMove(event: TouchEvent): void {
+  touchGate.handleScrollCheck(event)
+}
+
+function onTouchEnd(): void {
+  touchGate.handleTouchEnd()
+}
+
+/* When the gate flips active, mirror the existing pointerdown acquire
+   path so the dock sees the touch gesture as held. When it flips
+   inactive (timer, off-control tap), release the token. */
+watch(touchGate.isActive, (isActive) => {
+  if (isActive) {
+    acquire()
+  } else {
+    release()
+  }
+})
+
 onBeforeUnmount(release)
 
 const isHeld = computed(() => dockHeld?.value === true)
+const isTouchActive = computed(() => touchGate.isActive.value)
 </script>
 
 <template>
   <SliderRoot
+    ref="sliderRootRef"
     :class="cn(sliderVariants({ variant: v, size: s }), props.class)"
     :data-variant="v"
     :data-size="s"
     :data-held="isHeld || undefined"
+    :data-touch-active="isTouchActive || undefined"
     v-bind="forwarded"
     @pointerdown="onPointerDown"
+    @touchstart="onTouchStart"
+    @touchmove="onTouchMove"
+    @touchend="onTouchEnd"
   >
     <SliderTrack class="slider-track">
       <SliderRange class="slider-range" />

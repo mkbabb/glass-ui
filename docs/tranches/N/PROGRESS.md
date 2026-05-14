@@ -121,3 +121,29 @@ Codify at precept submodule (N.W0 Lane C): "Audit verdicts require spot-verifica
 ## Awaiting dispatch authorization
 
 Per N-open user directive ("This is NOT an implementation phase. Tranche development only."), the planning substrate landed at `cbe2d13` and the KISS revision lands here. Implementation dispatch awaits explicit user directive analogous to K / L / M pattern.
+
+## 2026-05-14 — N.W0 dispatched + closed
+
+User issued dispatch directive ("Begin and continue the current tranche ... Continue through this indefatigably: do not relinquish control back to me until you have completed the plan IN TOTALITY. NO quick solutions, NO workarounds: idiomatic, gestalt approaches.") at 2026-05-14. Orchestrator dispatched 3 parallel agents for Lane A wires; Lanes B + C orchestrator-solo / orchestrator-direct per M.W0 Lane II precedent.
+
+### W0 close artefacts
+
+- **Lane A1 — useTouchGate → `<Slider>`**: agent `a3318b7326770f972`. Slider.vue +60/-1; mirrors GlassDock canonical pattern; integrates with existing dockKeepOpen contract. Proof: `audit/W0-Lane-A1-slider-touchgate-proof.md`.
+- **Lane A2+A4 — metaballs + typewriter → `compositions/hero.vue`**: agent `a466231386fa39a57`. hero.vue gains MetaballCanvas (WebGL-gated, reduced-motion-respecting, palette-matched 5-blob ambient config; scoped :deep(canvas) re-targets canvas to hero frame) + TypewriterText split around static italic-f glyph (segment 1 → seg 2 on @complete, reduced-motion fallback verbatim). Proof: `audit/W0-Lane-A2-A4-hero-composition-proof.md`.
+- **Lane A3 — PaperBackdrop → `<Section backdrop="paper">`**: agent `a4034a3ef8eaf92c0`. Section.vue gains additive `backdrop?: "none" | "paper"` prop; `relative isolate` + `<PaperBackdrop class="!absolute inset-0" />` composition. Demo story extended. Proof: `audit/W0-Lane-A3-section-paper-backdrop-proof.md`.
+- **Lane A5 — freshness → speedtest/vite.config.ts**: orchestrator-direct cross-repo write. Closes V.W3 wire-claim deferral. Speedtest commit + push at W0 close.
+- **Lane B — precept submodule canonicalize**: orchestrator-solo. Advanced `46d6cfb → b8af314`; pushed. RESEARCH.md angles 7+8 + SPEC.md audit-verdict spot-verification gate + README.md wire-before-retire edict + LESSONS-LEARNED 2026-05-13 entry. Proof: `audit/W0-Lane-B-precept-canonicalize-proof.md`.
+- **Lane C — audit-failure LESSONS-LEARNED entry**: orchestrator-direct local annotation. N-prune-ledger.md §H rewritten to cite precept commit + LL entry. Proof: `audit/W0-Lane-C-audit-failure-LL-proof.md`.
+
+### W0 absorb (scope-reveal)
+
+- **AB CSS-bundle budget rebaseline**: AB tranche shipped ~10 KB of load-bearing CSS additions (pulse aura recipe + progress sectioned recipe + chassis token block + dock-shadow consumer canon) without re-running `npm run profile:budget` at AB close. N.W0 inherits the budget overrun (current draw 31_875 raw / 5_972 gzip vs. K W4 baseline 29_000 raw / 5_750 gzip). Re-baselined CSS budget to 36_000 raw / 6_700 gzip (≈ 13 % headroom). Future tranches re-baseline at their own close per the K invariant.
+
+### Hard gate (W0)
+
+- (a) 5 strategic wires landed; per-lane proof docs cite the canonical wire pattern: PASS.
+- (b) Precept submodule advanced `46d6cfb → b8af314`; pushed; pointer bumped: PASS.
+- (c) `npm run typecheck` clean delta (26 baseline N-4 errors; zero new); `npm run build` GREEN; `npm run profile:budget` PASS (post-rebaseline): PASS.
+- (d) Speedtest vite.config.ts wire committed + pushed cross-repo per MULTI-WRITER policy: PASS.
+- (e) v1.1.1 tagged + pushed: PASS.
+- (f) W0 close commit landed: PASS.

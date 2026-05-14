@@ -112,15 +112,23 @@ Unchanged from first ledger:
 - M-residuals N-6 (demo carousel/metaballs import-path harmonisation) → N.W1 demo polish
 - M-residuals N-8 (`_shared` package naming clarity) → N.W1 docs
 
-## H — Audit-failure LESSONS-LEARNED entry (N-new)
+## H — Audit-failure LESSONS-LEARNED entry (N-new) — CODIFIED at N.W0 Lane B+C
 
-Per V20 (NO silent deferrals) + the corrections enumerated above, codify at precept submodule:
+Per V20 (NO silent deferrals) + the corrections enumerated above, codified at precept submodule:
 
-**Title**: "Audit verdicts require spot-verification before commitment to retirement"
+- **Precept commit**: `b8af314` (`feat(spec+style): canonicalize bidirectional audit + spot-verification gate + wire-before-retire (glass-ui N.W0 Lane B)`).
+- **LESSONS-LEARNED entry**: `## 2026-05-13 - Audit Verdicts Require Spot-Verification` (`docs/precepts/instructions/LESSONS-LEARNED.md`).
+- **SPEC.md gate**: §"Audit-verdict spot-verification gate" appended to §"Close" sub-tree.
+- **README.md edict**: "Wire before retire." added to §"Edicts".
+- **RESEARCH.md angles**: 7 (bidirectional style audit) + 8 (overfitting audit) added to §"Canonical Angles".
 
-**Rule**: Before authoring a wave-spec that retires `delete-unused` or `library-orphan` items per an overfitting audit, the orchestrator MUST spot-verify (a) the item EXISTS at the cited path and (b) the rg count is accurate by re-running the audit's grep invocation. Hallucinations (non-existent items flagged for retirement) + missed consumers (rg counts that undercount real usage) are integrity-sweep blockers.
+**Title** (LL entry): "Audit Verdicts Require Spot-Verification".
 
-**Check**: precept SPEC.md Close section, add a clause: "Any retirement absorbed in W0 cites the spot-verification result alongside the original audit's verdict."
+**Rule** (LL entry): Before authoring a wave-spec that retires `delete-unused` / `library-orphan` / `inline-and-remove` items per an overfitting audit, the orchestrator MUST spot-verify: (a) the item EXISTS at the cited path; (b) the cited rg count is accurate by re-running the audit's grep verbatim through any re-export alias paths; (c) "zero consumers" claims resolve through CSS-only / dynamic-import paths. The wave-spec cites the spot-verification commit before retirement is authorized. Concurrent posture: WIRE BEFORE RETIRE — under-wired primitives default to wire, not retire.
+
+**Check** (LL entry): SPEC.md §"Audit-verdict spot-verification gate" + README.md §"Edicts" wire-before-retire bullet + close-ceremony ι lane confirms every retirement cites the spot-verification result. Future audit-generated prune ledgers MUST include a "spot-verified by orchestrator" column adjacent to each cited verdict.
+
+**Local proof docs**: `audit/W0-Lane-B-precept-canonicalize-proof.md` (cross-repo codification) + `audit/W0-Lane-C-audit-failure-LL-proof.md` (local annotation).
 
 ## Summary
 

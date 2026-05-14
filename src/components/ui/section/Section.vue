@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue";
 import { cn } from "../../../utils";
+import { PaperBackdrop } from "../../custom/paper-backdrop";
 
 /**
  * Section — thin sectioning primitive that consumes the typography ladder
@@ -22,6 +23,16 @@ import { cn } from "../../../utils";
  * Migrates the `.section-label` typography utility (mono-caps caption)
  * into the `tone="label"` variant, keeping the existing class as a
  * back-compat utility.
+ *
+ * N.W0 Lane A3 — `backdrop` prop wires `<PaperBackdrop>` as an optional
+ * scoped layer behind header + description + content. Default `"none"`
+ * preserves prior behavior (purely additive). When `backdrop="paper"`,
+ * the `<section>` becomes a `relative isolate` stacking context and the
+ * paper layer is pinned `!absolute inset-0` (overriding the underpaint's
+ * default `position: fixed`); `paper-underpaint`'s own `z-index: -1` plus
+ * the `isolation: isolate` boundary keep the grain behind header + content
+ * (which paint at the default stacking order) without leaking below the
+ * section's own stacking context.
  */
 
 interface Props {
@@ -33,6 +44,13 @@ interface Props {
     tone?: "heading" | "title" | "subheading" | "label";
     /** Stacking gap between header / description / content blocks. */
     gap?: "tight" | "regular" | "loose";
+    /**
+     * Optional substrate layer behind the section content.
+     * - `"none"` (default): no backdrop; section is a layout-only landmark.
+     * - `"paper"`: composes `<PaperBackdrop>` absolutely-positioned behind the
+     *   content. Section becomes a relative-positioned stacking context.
+     */
+    backdrop?: "none" | "paper";
     titleClass?: HTMLAttributes["class"];
     descriptionClass?: HTMLAttributes["class"];
     class?: HTMLAttributes["class"];
@@ -41,6 +59,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
     tone: "heading",
     gap: "regular",
+    backdrop: "none",
 });
 
 const toneClass = {
@@ -58,7 +77,20 @@ const gapClass = {
 </script>
 
 <template>
-    <section :class="cn('flex flex-col', gapClass[props.gap], props.class)">
+    <section
+        :class="
+            cn(
+                'flex flex-col',
+                gapClass[props.gap],
+                props.backdrop === 'paper' && 'relative isolate',
+                props.class,
+            )
+        "
+    >
+        <PaperBackdrop
+            v-if="props.backdrop === 'paper'"
+            class="!absolute inset-0"
+        />
         <header v-if="title || $slots.header" class="flex flex-col gap-1">
             <slot name="header">
                 <h2 :class="cn(toneClass[props.tone], props.titleClass)">{{ title }}</h2>

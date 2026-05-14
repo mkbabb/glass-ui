@@ -85,5 +85,25 @@ const gaps = ["tight", "regular", "loose"] as const;
                 </p>
             </Section>
         </StorySection>
+
+        <!-- Paper backdrop (N.W0 Lane A3). -->
+        <StorySection
+            label='backdrop="paper" · scoped paper-grain substrate'
+            blurb="When backdrop=&quot;paper&quot;, the Section becomes a relative-positioned stacking context with PaperBackdrop pinned absolute behind header + content. Default is backdrop=&quot;none&quot; (purely additive)."
+        >
+            <div class="rounded-card border border-border overflow-hidden">
+                <Section
+                    backdrop="paper"
+                    title="Paper-grain section"
+                    description="The grain texture sits behind the typography ladder; header, lede, and body content all paint above the substrate."
+                    class="p-6"
+                >
+                    <p class="text-prose text-muted-foreground max-w-prose">
+                        Body content slot — composes any flow element underneath the
+                        heading and lede, layered above the paper grain.
+                    </p>
+                </Section>
+            </div>
+        </StorySection>
     </StoryPage>
 </template>

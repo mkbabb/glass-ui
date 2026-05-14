@@ -54,7 +54,7 @@
 | Repo | N role | N orchestrator may write? |
 |---|---|---|
 | glass-ui | primary; N is its tranche | yes |
-| speedtest | no active tranche in N scope | READER-ONLY (audit only at N.W4 N11) |
+| speedtest | own AC tranche in flight (independent); N writes `vite.config.ts` only for A5 freshness wire | WRITER (A5 line only); READER-ONLY for AC-tranche surfaces |
 | keyframes.js | M.W1-migrated; user WIP-branch unfinished | READER-ONLY (audit only; no push) |
 | value.js | M.W1-migrated; user WIP-branch unfinished | READER-ONLY (audit only; no push) |
 | words (frontend) | M.W1-migrated to v1.0 | READER-ONLY (audit only at N.W4 N11; no W1-style sweep again) |
@@ -72,7 +72,7 @@
 
 | N wave | Cross-repo action |
 |---|---|
-| W0 | precept submodule advance (invariants 21-24); no consumer writes |
+| W0 | precept submodule advance (`46d6cfb → b8af314`; invariants 21-23 + audit-failure LL); A5 cross-repo write to `speedtest/vite.config.ts` (freshness wire, V.W3 deferred-claim closure); v1.1.1 patch tag |
 | W1 HEADLINE | glass-ui only (frosted-verify + text-micro promotion + typography sweep); no cross-repo |
 | W2 | glass-ui only (DockMobileToggle + icon-mode + dock-layer regression); no cross-repo |
 | W3 | glass-ui only (Configurator mobile density + stories); no cross-repo |
