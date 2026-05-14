@@ -169,3 +169,36 @@ Five-lane fail-explicit + hygiene wave. All hard gates met.
 ### Open windows for W2
 
 W2 opens after this commit lands. Three lanes per `docs/tranches/O/waves/W2.md` (dock subsystem typed-key + helper-pair canonicalization + DockLayer/ToggleGroup DRIFT cleanup + 5 in-library consumer-site migrations).
+
+## 2026-05-14 — W2 HEADLINE close (v1.2.2)
+
+Load-bearing dock DI canonicalization. Two intermediate commits (Lane A first; B+C+close together).
+
+### Lane disposition
+
+| Lane | Mode | Commit | Disposition | Proof |
+|---|---|---|---|---|
+| A — Dock typed-context + helper-pair | agent-dispatched (worktree) | `ba546c7` (intermediate) | LANDED — DockContext expanded {id, orientation, keepOpen, release, held}; DOCK_CONTEXT_KEY Symbol; strict + optional helpers; DockLayer + ToggleGroup DRIFT atomic. 5 transitional dual-provides preserved through W2 close. | `audit/W2-Lane-A-dock-typed-context-proof.md` |
+| B — Slider migration | agent-dispatched (worktree) | W2 close commit | LANDED — 3 raw injects → 1 useOptionalDockContext() call. Slider verified against canonical shape via `git show ba546c7`. | `audit/W2-Lane-B-slider-migration-proof.md` |
+| C — 4 popover-family migrations | agent-dispatched (worktree) | W2 close commit | LANDED — HoverPopover + PopoverContent + SelectContent + DropdownMenuContent → useOptionalDockContext(). Orchestrator reconciled Lane C's stale-worktree-base shape drift at integration (Lane C branched from origin/master pre-Lane-A-push; saw old DockContext shape; orchestrator rewrote useDockContext() → useOptionalDockContext() at integration). | `audit/W2-Lane-C-popover-migrations-proof.md` |
+
+### Worktree.baseRef lesson (process incident — not a precept violation)
+
+Lanes B + C dispatched after Lane A's intermediate commit (`ba546c7`) but the Agent tool's worktree.baseRef setting branched their worktrees from `origin/master` (which was at `827b6ae` — Lane A not yet pushed). Lane B verified canonical via `git show ba546c7:` and migrated correctly; Lane C didn't verify + used the stale shape. Orchestrator reconciled at integration. Process candidate: push intermediate commits before dispatching downstream lanes, OR explicitly set worktree.baseRef=head when dispatching mid-wave. Folded to LL ledger candidate at W7.
+
+### Hard gate evidence
+
+- (a) `dockContext.ts` ships typed-key + helper pair ✓.
+- (b) GlassDock provides single typed context ✓; `dockExpanded` retired ✓; `glassDockId` dedup'd with `context.id` ✓.
+- (c) 5 consumer sites migrated to `useOptionalDockContext()` ✓.
+- (d) DockLayer + ToggleGroup DRIFT cleanup landed ✓.
+- (e) Cross-substrate proof story renders identically (visual contract preserved; runtime verification deferred to W7 π lane).
+- (f) typecheck ✓; test 348/348 ✓; build 642 modules ✓; profile:budget PASS ✓; verify-export-types PASS ✓.
+- (g) Speedtest BINARY-TRANSPARENT (no consumer-side reach-in — verified at O11/f audit).
+- (h) 3 lane proof docs.
+- (i) DESIGN.md `## Dock subsystem` sub-section authored.
+- (j) v1.2.2 patch tag.
+
+### Open windows for W3
+
+W3 opens after this commit lands. Three lanes per `docs/tranches/O/waves/W3.md` (3 god-module cohesion splits — GlassTimeline 1049 / profile-aurora 884 / usePresetEditor 657).

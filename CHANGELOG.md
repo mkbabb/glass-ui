@@ -1,5 +1,88 @@
 # Changelog
 
+## 1.2.2 — 2026-05-14 — O.W2 HEADLINE (dock subsystem DI canonicalization)
+
+Load-bearing architectural transposition per invariant 25 (typed-key +
+helper-pair DI canonical shape; codified at O.W0 / precept `46ee7e9`).
+The dock subsystem migrates from 6 string-keyed provides across 3
+idioms to one typed `InjectionKey<DockContext>` with paired strict /
+optional consumer helpers. Net `provide()` call count in `GlassDock.vue`:
+6 → 1.
+
+### Changed — Dock typed-context (Lane A)
+
+`src/components/custom/dock/composables/dockContext.ts` gains:
+
+- `DOCK_CONTEXT_KEY: InjectionKey<DockContext>` (Symbol-based; not a
+  string).
+- Expanded `DockContext = { id, orientation, keepOpen, release, held }`
+  — absorbs the 4 prior string-key provides (`dockKeepOpen`,
+  `dockRelease`, `dockHeld`, `glassDockId`); `dockExpanded`
+  PERMANENTLY RETIRED (rg-verified zero consumers per Rδ audit).
+- `useDockContext()` — strict; throws "called outside <GlassDock>"
+  when no parent provider exists.
+- `useOptionalDockContext()` — befitting silent default; returns
+  `DockContext | null`.
+
+DockLayer ↔ DockLayerGroup migration: new
+`src/components/custom/dock/composables/dockLayerContext.ts` with the
+same typed-key + helper-pair shape. ToggleGroup ↔ ToggleGroupItem
+migration: new `src/components/ui/toggle-group/toggleGroupContext.ts`
+applying the same pattern.
+
+### Changed — 5 in-library consumer migrations (Lanes B + C)
+
+All five reach-into-dock-state sites migrate to
+`useOptionalDockContext()`:
+
+- `<Slider>` (Lane B): keep-dock-open + held-halo contract preserved;
+  callsites rewritten to `dock?.keepOpen()` / `dock?.release()` /
+  `dock?.held.value`.
+- `<HoverPopover>` (Lane C): 3 raw injects (`dockKeepOpen`,
+  `dockRelease`, `glassDockId`) consolidated into one
+  `useOptionalDockContext()` call.
+- `<PopoverContent>` / `<SelectContent>` / `<DropdownMenuContent>`
+  (Lane C): each migrate `inject("glassDockContext")` to
+  `useOptionalDockContext()`; portal-attribute access pattern
+  unchanged (`dockContext?.id`).
+
+### Removed — 5 transitional dual-provides (W2 close sweep)
+
+The W2 brittleness window (`breaking_changes_during_wave: yes` per
+W2.md) ran from Lane A landing (`ba546c7`) through close. During
+that window `<GlassDock>` provided BOTH the new typed context AND 5
+legacy string-keys (`dockKeepOpen`, `dockRelease`, `dockHeld`,
+`glassDockId`, `glassDockContext`) so Lanes B + C could land
+without runtime regression in their worktree-isolated branches.
+The close commit retires all 5 transitional provides.
+
+### Updated — DESIGN.md `## Dock` section
+
+New sub-section "Dock subsystem — typed-context DI shape" documents
+the canonical DockContext shape + the strict/optional helper pair.
+Cross-references the parallel patterns in dockLayerContext.ts +
+toggleGroupContext.ts.
+
+### Verification
+
+- `npm run typecheck` — PASS.
+- `npm test` — 348 tests / 30 files green (no regression; cross-substrate
+  proof story `demo/stories/compositions/dock-with-slider.vue` renders
+  identically).
+- `npm run build` — 642 modules transformed (+2 new context.ts files).
+- `npm run profile:budget` — PASS (raw 67.3% / 90.2%; gzip 68.1% /
+  90.7%).
+- `npm run verify-export-types` — PASS.
+- Residual string-key audit: zero `inject("dock*"|"glassDock*")` calls
+  in `src/`; remaining mentions are template refs, HTML data
+  attributes, and documentation cross-references.
+
+### Cross-repo
+
+Speedtest is BINARY-TRANSPARENT to this refactor (per O11/f β audit:
+zero consumer-side reach-in to retired keys). No cross-repo coordination
+required at W2; verified at W7 close ceremony.
+
 ## 1.2.1 — 2026-05-14 — O.W1 (fail-explicit migrations + test-file canonical shape)
 
 Five-lane wave per docs/tranches/O/waves/W1.md. Four library-internal

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed, inject } from 'vue'
+import { type HTMLAttributes, computed } from 'vue'
 import {
   DropdownMenuContent,
   type DropdownMenuContentEmits,
@@ -8,6 +8,7 @@ import {
   useForwardPropsEmits,
 } from 'reka-ui'
 import { cn } from '../../../utils'
+import { useOptionalDockContext } from "../../custom/dock/composables/dockContext"
 
 const props = withDefaults(
   defineProps<DropdownMenuContentProps & { class?: HTMLAttributes['class'] }>(),
@@ -24,7 +25,7 @@ const delegatedProps = computed(() => {
 })
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
-const dockContext = inject<{ id: string } | null>("glassDockContext", null)
+const dockContext = useOptionalDockContext()
 </script>
 
 <template>

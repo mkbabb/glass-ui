@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue";
-import { computed, inject, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import {
     HoverCardContent,
     HoverCardPortal,
@@ -8,6 +8,7 @@ import {
     HoverCardTrigger,
 } from "reka-ui";
 import { cn } from "../../../utils";
+import { useOptionalDockContext } from "../dock/composables/dockContext";
 
 /**
  * <HoverPopover> — hover-triggered floating label.
@@ -135,18 +136,20 @@ watch(() => props.open, (next) => {
 watch(isOpen, (next) => {
     emit("update:open", next);
 });
-const dockKeepOpen = inject<(() => void) | null>("dockKeepOpen", null);
-const dockRelease = inject<(() => void) | null>("dockRelease", null);
-const dockId = inject<string | null>("glassDockId", null);
+/* O.W2 Lane C — `dockId` + keep-open / release callables consolidated under
+   the canonical typed-context helper. Outside a `<GlassDock>` the helper
+   returns `null` and every `dock?.…` access is a no-op (befitting silent
+   default per invariant 25). */
+const dock = useOptionalDockContext();
 let isHeld = false;
 
 watch(isOpen, (open) => {
     if (!props.keepDockOpen) return;
     if (open && !isHeld) {
-        dockKeepOpen?.();
+        dock?.keepOpen();
         isHeld = true;
     } else if (!open && isHeld) {
-        dockRelease?.();
+        dock?.release();
         isHeld = false;
     }
 });
@@ -157,8 +160,8 @@ watch(isOpen, (open) => {
    dock-portal attrs opts the portal into the dock's
    `isTeleportedTarget` allowlist. */
 const portalAttrs = computed(() =>
-    props.keepDockOpen && dockId
-        ? { "data-glass-dock-portal": "", "data-glass-dock-owner": dockId }
+    props.keepDockOpen && dock?.id
+        ? { "data-glass-dock-portal": "", "data-glass-dock-owner": dock.id }
         : {},
 );
 </script>

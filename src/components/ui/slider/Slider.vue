@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { type HTMLAttributes, type ComputedRef, computed, inject, onBeforeUnmount, useTemplateRef, watch } from 'vue'
+import { type HTMLAttributes, computed, onBeforeUnmount, useTemplateRef, watch } from 'vue'
 import type { SliderRootEmits, SliderRootProps } from 'reka-ui'
 import { SliderRange, SliderRoot, SliderThumb, SliderTrack, useForwardPropsEmits } from 'reka-ui'
 import { cn } from '../../../utils'
 import { useTouchGate } from '../../../composables/dom/useTouchGate'
+import { useOptionalDockContext } from '../../custom/dock/composables/dockContext'
 import { sliderVariants, type SliderVariants } from './index'
 
 const props = defineProps<SliderRootProps & {
@@ -39,25 +40,27 @@ const delegatedProps = computed(() => {
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
 /* J.W5.C — dock-keep-open wiring. The slider subscribes to the dock's
-   reactive `dockHeld` flag (provided by `useDockState` alongside the
-   existing `dockKeepOpen`/`dockRelease` callable pair) and reflects it
-   on the root via `data-held` for the thumb-halo intensification recipe
-   in scoped CSS. We also acquire/release a token of our own around the
+   reactive `held` flag (surfaced on the canonical typed `DockContext`
+   alongside the `keepOpen`/`release` callable pair) and reflects it on
+   the root via `data-held` for the thumb-halo intensification recipe in
+   scoped CSS. We also acquire/release a token of our own around the
    drag gesture so the surrounding dock observes us as held — that
-   crossover is what proves the API surface beyond a single consumer. */
-const dockKeep = inject<(() => void) | null>('dockKeepOpen', null)
-const dockRelease = inject<(() => void) | null>('dockRelease', null)
-const dockHeld = inject<ComputedRef<boolean> | null>('dockHeld', null)
+   crossover is what proves the API surface beyond a single consumer.
+   O.W2 Lane B — migrated from 3 raw string-key injects to a single
+   `useOptionalDockContext()` call (befitting silent default: Slider may
+   render outside a `<GlassDock>`, in which case `dock` is null and all
+   `dock?.` calls are no-ops). */
+const dock = useOptionalDockContext()
 
 let acquired = false
 function acquire() {
   if (!keepDockOpen.value || acquired) return
-  dockKeep?.()
+  dock?.keepOpen()
   acquired = true
 }
 function release() {
   if (!acquired) return
-  dockRelease?.()
+  dock?.release()
   acquired = false
 }
 
@@ -130,7 +133,7 @@ watch(touchGate.isActive, (isActive) => {
 
 onBeforeUnmount(release)
 
-const isHeld = computed(() => dockHeld?.value === true)
+const isHeld = computed(() => dock?.held.value === true)
 const isTouchActive = computed(() => touchGate.isActive.value)
 </script>
 

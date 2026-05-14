@@ -226,14 +226,11 @@ export function useDockState(options: UseDockStateOptions) {
         }
     }
 
-    /* O.W2 Lane A — descendant DI moved up-stack to `<GlassDock>` so the
+    /* O.W2 — descendant DI moved up-stack to `<GlassDock>` so the
        canonical typed `DOCK_CONTEXT_KEY` provide composes `keepOpen` +
-       `release` + `isHeld` + `id` + `orientation` in one site. The prior
-       `provide("dockKeepOpen"|"dockRelease"|"dockHeld"|"dockExpanded")`
-       quartet here is retired; `<GlassDock>` keeps the 3 legacy string
-       provides through W2 close as a transitional dual-provide for the
-       5 not-yet-migrated consumer sites. `dockExpanded` is gone (zero
-       downstream consumers per Rδ audit). */
+       `release` + `isHeld` + `id` + `orientation` in one site.
+       `dockExpanded` is permanently retired (zero downstream consumers
+       per Rδ). */
 
     // --- Click-away listener ---
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, provide, ref, useTemplateRef, watch } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from "vue";
 import { useTouchGate } from "../../../composables/dom/useTouchGate";
 import { provideDockContext } from "./composables/dockContext";
 import { useDockState } from "./composables/useDockState";
@@ -107,10 +107,12 @@ const {
     dockId,
 });
 
-/* O.W2 Lane A — canonical typed-key dock context (invariant 25).
-   The 6 prior string-keyed dock provides collapse into this single
-   typed provide. `dockExpanded` is retired (zero downstream consumers);
-   `glassDockId` is dedup'd with `context.id`. */
+/* O.W2 — canonical typed-key dock context (invariant 25). The 6 prior
+   string-keyed dock provides (`glassDockContext`, `glassDockId`,
+   `dockKeepOpen`, `dockRelease`, `dockHeld`, `dockExpanded`) collapse
+   into this single typed provide. `dockExpanded` is retired (zero
+   downstream consumers per Rδ); `glassDockId` is dedup'd with
+   `context.id`. */
 provideDockContext({
     id: dockId,
     orientation,
@@ -118,17 +120,6 @@ provideDockContext({
     release,
     held: isHeld,
 });
-
-/* O.W2 transitional — Lane B/C migrate consumers; retire at W2 close.
-   Legacy string-key provides preserve runtime behaviour for the 5
-   not-yet-migrated consumer sites (Slider, HoverPopover, Popover,
-   Select, DropdownMenu). The brittleness window declared in W2.md
-   (`breaking_changes_during_wave: yes`) is the dual-provide state. */
-provide("dockKeepOpen", keepOpen);
-provide("dockRelease", release);
-provide("dockHeld", isHeld);
-provide("glassDockId", dockId);
-provide("glassDockContext", { id: dockId });
 
 const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
 

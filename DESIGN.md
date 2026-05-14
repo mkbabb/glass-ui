@@ -581,6 +581,43 @@ paired with `<Badge variant="outline" size="md">`. The `outline` variant supplie
 
 The dock is a first-class composable system. Three principles: a dock is a positioned container; buttons inside a dock are dock-specific components; layered content is orchestrated by `DockLayer` / `DockLayerGroup`.
 
+### Dock subsystem — typed-context DI shape (O.W2; invariant 25)
+
+`<GlassDock>` surfaces its state to descendants through one typed
+provide: `DOCK_CONTEXT_KEY: InjectionKey<DockContext>`. The 6 prior
+string-keyed provides (`glassDockContext`, `glassDockId`,
+`dockKeepOpen`, `dockRelease`, `dockHeld`, `dockExpanded`) collapse
+into this single context. `dockExpanded` is permanently retired
+(no downstream consumers).
+
+```ts
+interface DockContext {
+    id: string;
+    orientation: ComputedRef<"horizontal" | "vertical">;
+    keepOpen: () => void;
+    release: () => void;
+    held: ComputedRef<boolean>;
+}
+```
+
+Two paired helpers expose the context:
+
+- `useDockContext()` — strict. Throws when called outside a
+  `<GlassDock>`. Use for primitives that MUST live inside a dock
+  (e.g., a custom dock-internal control).
+- `useOptionalDockContext()` — befitting silent default. Returns
+  `DockContext | null`. Use for primitives that MAY render outside
+  a dock (Slider, HoverPopover, PopoverContent, SelectContent,
+  DropdownMenuContent — every one of them composes the optional
+  helper because each can render standalone).
+
+This shape is the canonical reference for invariant 25
+(typed-key + helper-pair DI). The same pattern lives at
+`src/components/custom/dock/composables/dockLayerContext.ts`
+(DockLayer ↔ DockLayerGroup) and
+`src/components/ui/toggle-group/toggleGroupContext.ts`
+(ToggleGroup ↔ ToggleGroupItem).
+
 ### Components
 
 | Component              | Shape                                             | Hover                                                  | Use                                             |
