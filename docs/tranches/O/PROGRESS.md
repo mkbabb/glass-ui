@@ -285,3 +285,38 @@ Pipeline orchestration consolidation. Orchestrator merged Lane B + Lane D at dis
 ### Open windows for W6
 
 W6 opens after this commit lands. Four lanes per `docs/tranches/O/waves/W6.md` (4 substrate promotions: useClipboard + HeaderRibbon + dock-icon-button token ladder + scale-on-hover utility + speedtest AC.W6 dependency cohort).
+
+## 2026-05-14 — W6 HEADLINE close (v1.4.0 minor)
+
+Four-lane wave dispatched in parallel agent-worktrees. Tokens.css overlap reconciled at orchestrator integration (Lane B + Lane D both targeted the same file with disjoint additions).
+
+### Lane disposition
+
+| Lane | Mode | Disposition | Proof |
+|---|---|---|---|
+| A — useClipboard + HeaderRibbon | agent-dispatched (worktree) | LANDED — useClipboard composable (108 LOC; vueuse-free); HeaderRibbon SFC + flat subpath /header-ribbon. UseClipboardReturn + UseClipboardOptions + HeaderRibbonProps + HeaderRibbonPosition published on /api. | `audit/W6-Lane-A-useClipboard-HeaderRibbon-promotions-proof.md` |
+| B — dock-icon-button token ladder | agent-dispatched (worktree) | LANDED — 5 `--dock-active-*` tokens; dock.css active-state rewired to consume. Defaults preserve visual contract verbatim. | `audit/W6-Lane-B-dock-token-ladder-proof.md` |
+| C — scale-on-hover utility | agent-dispatched (worktree) | LANDED — `@utility scale-on-hover` consuming existing `--scale-hover` (1.08; agent declined the W6.md 1.05 value per memory-driven no-backwards-compat posture). | `audit/W6-Lane-C-scale-on-hover-proof.md` |
+| D — speedtest AC.W6 cohort | agent-dispatched (worktree) | 5 LANDED (text-hero hoist + WCAG companions + meter-track-stroke fix + IconTooltip 44px + dock touch-target media-query) + 1 FLAGGED (Fira Code woff2 binaries; orchestrator runs curl fetch at integration per src/fonts/README.md). | `audit/W6-Lane-D-speedtest-cohort-proof.md` |
+
+### Integration reconciliation
+
+- Lane B + Lane D both edited `src/styles/tokens.css` from worktrees branched on the same HEAD. Orchestrator merged by adding Lane D's `--chart-{phase}-label` + `--meter-track-stroke` + `--icon-tooltip-hit-area` + `--dock-touch-target` tokens around Lane B's `--dock-active-*` block. Both lanes' additions preserved.
+- Lane B + Lane D both edited `src/styles/dock.css`. Lane D's copy overwrote Lane B's active-state rewrite at file integration; orchestrator re-applied Lane B's `.dock-icon-button:is(...)` rule via Edit after Lane D copy.
+- Lane A's `useClipboard` is vueuse-free → root-barrel re-exported per L invariant.
+- Lane A's HeaderRibbon kept subpath-only per cherry-pick acceptance bar.
+
+### Hard gate evidence
+
+- (a) Lane A: useClipboard + HeaderRibbon ship; ≥ 2-consumer verification documented in proof doc ✓.
+- (b) Lane B: `.dock-icon-button` token ladder ships ✓.
+- (c) Lane C: `@utility scale-on-hover` ships ✓.
+- (d) Lane D: 5 of 6 AC.W6 dependencies land; Fira Code woff2 flagged for orchestrator integration fetch ✓.
+- (e) Cross-repo coordination: 5 consumer adoption paths tabulated in CHANGELOG; user-authorized waves deferred per CONSTELLATION.md ✓.
+- (f) typecheck ✓ ; test 348/348 ✓ ; build 659 modules ✓ ; profile:budget PASS (CSS 95.7% raw — folded to W7 ε rebaseline candidate) ✓ ; verify-export-types PASS ✓.
+- (g) 4 lane proof docs.
+- (h) v1.4.0 minor tag (substantial additive surface: 2 promotions + 1 utility + 6 AC.W6 deliverables).
+
+### Open windows for W7
+
+W7 opens after this commit lands. Close ceremony per `docs/tranches/O/waves/W7.md` — 7 strengthened audit lanes (α/β/γ/δ/ε/π/ι) + 6-agent N11-style consumer re-audit (O11/a-f). FINAL.md authored.

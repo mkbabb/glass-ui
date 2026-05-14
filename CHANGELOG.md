@@ -1,5 +1,113 @@
 # Changelog
 
+## 1.4.0 — 2026-05-14 — O.W6 HEADLINE (constellation-level substrate promotions + speedtest AC.W6 cohort)
+
+Minor bump signal. Four cross-walked promotions clear the ≥ 2-consumer
+bar; six speedtest-AC.W6 dependency primitives ship.
+
+### Added — `useClipboard` composable (Lane A)
+
+`src/composables/dom/useClipboard.ts`. vueuse-free + 108 LOC; async
+`navigator.clipboard.writeText` with `document.execCommand("copy")`
+fallback for legacy browsers. `copied: Ref<boolean>` auto-resets after
+the configurable `resetMs` (default 1500). `UseClipboardReturn` +
+`UseClipboardOptions` published on `/api`. Re-exported from root
+barrel (vueuse-free per L invariant).
+
+Cross-walked consumer audit at promotion: value.js (20 sites);
+fourier-analysis (1 inline parallel). Cleared ≥ 2-consumer bar.
+
+### Added — `<HeaderRibbon>` SFC (Lane A)
+
+`src/components/custom/header-ribbon/`. Hover-tracking ribbon with
+`--header-max-width` CSS var for consumer-side override; subpath
+`@mkbabb/glass-ui/header-ribbon`. `HeaderRibbonProps` +
+`HeaderRibbonPosition` published on `/api`. Subpath-only (not on
+root barrel) per the v1.0 cherry-pick acceptance bar.
+
+Cross-walked: value.js (155 LOC fork) + keyframes.js (152 LOC fork).
+The N "0-consumer orphan" finding was REVERSED at O round-2 audit —
+both consumers actively wire the ribbon.
+
+### Added — `.dock-icon-button` active-state token ladder (Lane B)
+
+`src/styles/tokens.css` gains `--dock-active-{bg,color,scale,border,shadow}`
+cohort. `src/styles/dock.css` rewires `.dock-icon-button` active state to
+consume the tokens. Consumers override the active variant via parent
+scope without `:deep()` escapes. Defaults preserve the prior visual
+contract verbatim (`--muted` bg + `--foreground` color; no transform /
+border / shadow).
+
+Cross-walked: bbnf-buddy (7 `:deep()` escapes; 3 absorbable on
+adoption) + speedtest (default consumer; consumer-side adoption is
+binary-transparent).
+
+### Added — `@utility scale-on-hover` (Lane C)
+
+`src/styles/utilities.css` gains the canonical hover-scale utility.
+Consumes the existing `--scale-hover` token (1.08; already in
+tokens.css). No new tokens added — orchestrator declined the W6.md's
+proposed `1.05` value per the `no backwards-compat` posture (library's
+own identity-evolution; consumer-side hover-scale isn't a binding
+target).
+
+Cross-walked: keyframes.js (13 `hover:scale-105` sites; mechanical
+rewrite on adoption) + words/frontend (under audit; press-axis
+`active:scale-[...]` sites are O-N-7, separate cohort).
+
+### Added — Speedtest AC.W6 dependency cohort (Lane D; 6 sub-tasks)
+
+Six glass-ui-side primitives unblock speedtest's AC.W6 tranche:
+
+1. **Fira Code self-host** (`src/fonts/README.md` + `package.json`
+   `files` array) — canonical paths declared; woff2 binaries deferred
+   to integration-time `curl` fetch step (no network in agent
+   worktree).
+2. **`.text-hero` utility hoist** (`src/styles/typography.css`) — 3
+   consumer-tunable knobs.
+3. **WCAG `--chart-{phase}-label` companions** (`src/styles/tokens.css`)
+   — 4 light tokens at OKLCH L≈0.40 + 4 dark companions at L≈0.85.
+4. **`--meter-track-stroke` dark fix** (`src/styles/tokens.css`) —
+   promoted from speedtest's broken consumer-side declaration; both
+   light + dark now read `var(--foreground)` (was `var(--background)`
+   at dark; bg-on-bg invisible).
+5. **`<IconTooltip>` 44×44 hit-area** — slot wrapped in `<span
+   class="icon-tooltip-trigger">` with `--icon-tooltip-hit-area` knob.
+6. **Dock touch-target media-query** (`src/styles/dock.css`) —
+   `@media (pointer: coarse)` lifts `--dock-control-size` +
+   `--size-icon-btn` to `--dock-touch-target` (2.75rem / 44px).
+
+### Verification
+
+- `npm run typecheck` — PASS.
+- `npm test` — 348 / 30 green.
+- `npm run build` — 659 modules (+8 from W6); `dist/header-ribbon.js`
+  2.61 KB / 1.00 KB gzip emitted as a new subpath chunk.
+- `npm run profile:budget` — PASS (raw 67.8% / 95.7%; gzip 69.0% /
+  94.4%). CSS budget tight at 95.7% raw — folded to W7 ε audit for
+  potential rebaseline.
+- `npm run verify-export-types` — PASS (new `/header-ribbon` subpath
+  resolves).
+
+### Cross-repo coordination
+
+All four W6 promotions + the 6 AC.W6 dependencies ship on glass-ui
+only. Consumer-side adoption defers to user-authorized cross-repo
+waves per CONSTELLATION.md MULTI-WRITER policy:
+
+- value.js: 20 useClipboard sites + 155 LOC HeaderRibbon fork to
+  retire.
+- fourier-analysis: 1 inline useClipboard parallel.
+- keyframes.js: 13 `hover:scale-105` sites + 152 LOC HeaderRibbon fork.
+- bbnf-buddy: 7 `:deep()` escapes (3 absorbable).
+- speedtest: AC.W6 tranche unblocks at v1.4.0 dep bump.
+
+### Open items for W7
+
+- Fira Code woff2 binaries: orchestrator runs `curl` fetch step at
+  integration before tag (per `src/fonts/README.md`).
+- CSS budget headroom (95.7% raw): rebaseline candidate at W7 ε.
+
 ## 1.3.1 — 2026-05-14 — O.W5 (pipeline orchestration consolidation)
 
 Internal-only. Five Rε-flagged orchestration improvements + canonical

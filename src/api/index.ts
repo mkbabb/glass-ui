@@ -173,3 +173,26 @@ export type {
 // already-promoted `ToastVariant` enum. Promoted O.W4 Lane A per Rγ §3.3 A3.
 export type { GlassPanelProps } from "../components/custom/glass-panel";
 export type { ToastType } from "../components/ui/toast";
+
+// ── Clipboard ──────────────────────────────────────────────────────────────
+// `UseClipboardReturn` — canonical composable-return shape paralleling
+// `ConfiguratorState` / `SidebarState` / `FuzzySearchState`. Consumers
+// wrapping `useClipboard` (e.g. a domain-specific copy button factory)
+// pin against this rather than redeclaring `{ copied, copy }`.
+// `UseClipboardOptions` ships paired so consumers can forward the
+// `resetMs` knob from a wrapper. Promoted O.W6 Lane A per O11/e cross-walk
+// (value.js 20 sites + fourier-analysis 1 inline site).
+export type {
+    UseClipboardOptions,
+    UseClipboardReturn,
+} from "../composables/dom/useClipboard";
+
+// ── HeaderRibbon ───────────────────────────────────────────────────────────
+// `HeaderRibbonProps` — props shape consumers forward when wrapping
+// `<HeaderRibbon>` (e.g. domain-themed header strips). `HeaderRibbonPosition`
+// is the alignment enum (`'left' | 'right'`). Promoted O.W6 Lane A per
+// O11/e cross-walk (value.js + keyframes.js consumer copies).
+export type {
+    HeaderRibbonPosition,
+    HeaderRibbonProps,
+} from "../components/custom/header-ribbon";

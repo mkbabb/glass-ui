@@ -82,6 +82,44 @@ body {
     font-weight: var(--font-display-weight);
 }
 
+/* O.W6 Lane D — `.text-hero` consumer-recipe hoist (speedtest AC.W6
+   cohort, T_GU-HERO).
+
+   The poster-type hero register. Composes the existing audacious ladder:
+   ceiling pegs to `--type-display-audacious` (φ^(11/2) — peak 352px, the
+   fast.com peg) so consumers reading this utility against the type-scale
+   get the canonical ceiling without re-declaring it.
+
+   Three knobs let consumers tune without forking the recipe:
+   - `--text-hero-size`: total clamp (default = canonical cap). Speedtest
+     overrides this to `clamp(3rem, 45cqi, var(--type-display-audacious))`
+     for its container-query metric column.
+   - `--text-hero-leading`: line-height; default 0.84 matches speedtest's
+     AB.W1.T3 tight-leading baseline.
+   - `--text-hero-tracking`: letter-spacing; default -0.03em (poster-type
+     register — tighter than `--type-tracking-tight`).
+
+   `font-weight: 300` (poster-type) and `font-feature-settings: ss01,
+   tnum, lnum` lock the numeric/stylistic-set baseline; consumers that
+   need different features re-declare locally. The utility is otherwise
+   substrate-only — consumer-side data-attribute registers (e.g.,
+   speedtest's `.text-hero[data-idle]` colour cascade) compose ON TOP of
+   this base. */
+@utility text-hero {
+    font-family: var(--font-display);
+    font-size: var(--text-hero-size, var(--type-display-audacious));
+    line-height: var(--text-hero-leading, 0.84);
+    letter-spacing: var(--text-hero-tracking, -0.03em);
+    font-weight: 300;
+    font-feature-settings: "ss01", "tnum", "lnum";
+    font-variant-numeric: tabular-nums lining-nums;
+    font-optical-sizing: auto;
+    font-variation-settings: var(--font-display-variation-settings);
+    display: inline-block;
+    max-inline-size: 100%;
+    white-space: nowrap;
+}
+
 @utility text-display-hero {
     font-family: var(--font-display);
     font-size: var(--type-display-hero);

@@ -582,9 +582,18 @@
         cursor: not-allowed;
     }
 
+    /* O.W6 Lane B — token-ladder active paint. Defaults match the prior
+       hardcoded recipe (--muted bg + --foreground color, no transform / border
+       / shadow). Consumers override the active variant via the
+       `--dock-active-{bg,color,scale,border,shadow}` cohort scoped to a parent
+       (e.g. bbnf-buddy `ToolsLayer.vue` audacious active treatment) — no
+       `:deep()` escapes required. See tokens.css §10 (dock geometry block). */
     .dock-icon-button:is(.is-active, .active, [aria-expanded="true"], [aria-pressed="true"]) {
-        background: var(--muted);
-        color: var(--foreground);
+        background: var(--dock-active-bg);
+        color: var(--dock-active-color);
+        transform: scale(var(--dock-active-scale));
+        border: var(--dock-active-border);
+        box-shadow: var(--dock-active-shadow);
     }
 
     /* J.W3.B — `.dock-popover` substrate + `pop-up-*` / `pop-down-*`
@@ -909,6 +918,30 @@
 
         .glass-dock.dock-wrap .dock-separator {
             display: block;
+        }
+    }
+
+    /* O.W6 Lane D — Touch-target floor (speedtest AC.W6 F2.AA-03 / WCAG
+       2.5.5). On coarse-pointer devices (touch), every dock-control's
+       width/height floor lifts to the 44px WCAG target-size minimum.
+       The lift composes via `--dock-control-size` (the canonical knob
+       every dock-control surface — `.dock-icon-button`,
+       `.dock-tab-button`, `.dock-select-trigger`, `.dock-dropdown-trigger`
+       — already consumes) so the cascade reaches every control without
+       per-selector re-declaration. `--size-icon-btn` lifts in lockstep
+       so bare icon-button surfaces outside the dock (e.g.,
+       `.dark-mode-toggle-button[data-size="dock"]` and any consumer
+       that wires `var(--size-icon-btn)` for trigger sizing) inherit
+       the same floor.
+
+       Density overrides (`[data-density="compact"]` etc.) still win
+       inside `@layer components` ordering — consumers that explicitly
+       opt into compact density on touch devices get their compact size
+       back. The media-query only lifts the *default* path. */
+    @media (pointer: coarse) {
+        .glass-dock {
+            --dock-control-size: var(--dock-touch-target, 2.75rem);
+            --size-icon-btn: var(--dock-touch-target, 2.75rem);
         }
     }
 }

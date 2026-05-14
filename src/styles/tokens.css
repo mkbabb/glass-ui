@@ -524,6 +524,38 @@
     --chart-upload:   var(--viz-legendre);
     --chart-jitter:   var(--viz-amber);
 
+    /* O.W6 Lane D — WCAG companion `--chart-{phase}-label` tokens
+       (speedtest AC.W6c.T2 — F1.V-04 closure).
+
+       The canvas-side hues above preserve their saturated brand register
+       (correct against the meter dial); the COMPANION tokens darken to
+       L≈0.40 so phase-label text on `--background` clears the WCAG 2.1
+       AA-body 4.5:1 contrast floor. Mirrors the two-token discipline
+       already established by `--meter-{background-color,track-stroke}`:
+       one token feeds the canvas/visual, the second feeds the label
+       text.
+
+       Light-mode L≈0.40 in OKLCH preserves the hue rotation while
+       dropping luminance enough for body contrast; dark-mode flips to
+       L≈0.85 against the dark canvas. Consumers reach these via
+       `color: var(--chart-ping-label)` (etc.) on label elements ONLY —
+       chart strokes/fills continue to read `--chart-ping`. */
+    --chart-ping-label:     oklch(0.40 0.18 230);
+    --chart-download-label: oklch(0.40 0.20 22);
+    --chart-upload-label:   oklch(0.40 0.20 305);
+    --chart-jitter-label:   oklch(0.40 0.16 55);
+
+    /* O.W6 Lane D — Meter track stroke (speedtest AC.W6c.T3 — F1.V-02
+       closure). Promoted from speedtest's consumer-side declaration so
+       glass-ui owns the canonical light + dark values. The light-mode
+       value reads opaque foreground (composes through canvas
+       `globalAlpha` in consumer renderers; e.g., speedtest's `rings.ts`
+       `globalAlpha = 0.22` lands the phantom-track at the perceptual
+       sweet-spot). The dark-mode companion lives under `.dark` below
+       and ALSO reads `var(--foreground)` — the prior speedtest value
+       `var(--background)` rendered bg-on-bg invisible at dark mode. */
+    --meter-track-stroke: var(--foreground);
+
     /* Shadow per tier — complete box-shadow lists for glass surface classes */
     --glass-shadow-wash:     var(--shadow-sm), var(--glass-highlight);
     --glass-shadow-quiet:    var(--shadow-md), var(--glass-highlight);
@@ -635,6 +667,36 @@
     --dock-h: calc(var(--size-icon-btn) + 0.75rem + 3px);
     --dock-margin: 0.5rem;
     --dock-menubar-reserve: 4rem;
+
+    /* Dock active-state ladder (O.W6 Lane B)
+       Token-overridable active paint for `.dock-icon-button`. Promoted
+       from hardcoded `background: var(--muted); color: var(--foreground)`
+       per bbnf-buddy O11/c R1: 7 `:deep()` escapes at `ToolsLayer.vue`
+       redefine bg/color/scale/border/shadow on the active variant; the
+       ladder absorbs ~3 of 7 at a stroke. Defaults preserve the prior
+       visual contract (no transform, no border, no shadow) — overrides
+       take effect per-instance via `:root` or a parent scope, e.g.
+       `.tools-layer { --dock-active-scale: 1.2; --dock-active-bg: …; }`.
+       ≥ 2-consumer coverage: bbnf-buddy ToolsLayer (override consumer) +
+       speedtest dock (default consumer). */
+    --dock-active-bg: var(--muted);
+    --dock-active-color: var(--foreground);
+    --dock-active-scale: 1;
+    --dock-active-border: none;
+    --dock-active-shadow: none;
+
+    /* O.W6 Lane D — IconTooltip 44×44 hit-area floor (WCAG 2.5.5 target
+       size; speedtest AC.W6 F2.AA-03). The default sits at the WCAG floor;
+       consumers shrink locally (e.g., dense table-row hosts) by re-
+       declaring this token on the IconTooltip's parent element. */
+    --icon-tooltip-hit-area: 44px;
+
+    /* O.W6 Lane D — Dock touch-target floor. Mirrors the IconTooltip
+       hit-area but for the dock-control surface. The base value tracks
+       the desktop default (`--size-icon-btn`); the
+       `@media (pointer: coarse)` block at `dock.css` lifts it to the
+       WCAG 2.5.5 floor on touch devices. */
+    --dock-touch-target: 2.75rem; /* 44px */
 
     /* MetricBadge — stacked variant geometry. The 2-row stacked layout
        (label / value+unit) wants a taller floor than the inline pill so the
@@ -845,6 +907,19 @@
     --viz-legendre:  hsl(286 58% 72%);
     --viz-amber:     var(--section-color-5);
     --viz-green:     var(--section-color-4);
+
+    /* O.W6 Lane D — WCAG companion labels lift to L≈0.85 against the
+       deep dark canvas; same two-token discipline as light mode (canvas
+       hue preserved at `--chart-*`; only the label register shifts). */
+    --chart-ping-label:     oklch(0.85 0.12 230);
+    --chart-download-label: oklch(0.85 0.14 22);
+    --chart-upload-label:   oklch(0.85 0.14 305);
+    --chart-jitter-label:   oklch(0.85 0.12 55);
+
+    /* O.W6 Lane D — Meter track stroke dark companion. Mirrors `:root`
+       (was speedtest's consumer-side `var(--background)` — bg-on-bg
+       invisible at dark mode; F1.V-02 closure). */
+    --meter-track-stroke: var(--foreground);
 
     --tier-featured: hsl(45 100% 60%);
     --tier-saved:    hsl(210 100% 70%);
