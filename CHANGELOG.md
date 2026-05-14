@@ -1,5 +1,65 @@
 # Changelog
 
+## 1.2.3 — 2026-05-14 — O.W3 (god-module cohesion splits)
+
+Three Rβ-flagged god-modules (1049 + 884 + 657 LOC) split into
+cohesive sub-modules. Public API surfaces unchanged.
+
+### Changed — `<GlassTimeline>` 1049 LOC → dispatcher + 3 variant SFCs (Lane A)
+
+`src/components/custom/timeline/GlassTimeline.vue` rewritten as a
+123-LOC dispatcher; the three variants (scrubber / segmented /
+continuous) become standalone SFCs. Shared geometry math lifts to
+`geometry.ts`.
+
+- `ScrubberTimeline.vue` (191) — `<GlassTimeline variant="scrubber">`.
+- `SegmentedTimeline.vue` (225) — `<GlassTimeline variant="segmented">`.
+- `ContinuousTimeline.vue` (607) — `<GlassTimeline variant="continuous">`;
+  preserves the non-scoped `<style>` block for HoverCardPortal per Rβ
+  contract.
+- `geometry.ts` (187) — shared math + factory functions.
+
+Consumer-side `<GlassTimeline variant="...">` renders identically.
+
+Bundle delta: `dist/timeline.js` 11.27 → 13.66 KB raw / 3.14 → 3.77
+KB gzip (+21% per-chunk, +2.4 KB absolute). Above W3.md's 5%
+per-chunk threshold; orchestrator accepts as the decomposition cost
+— global budget gates remain well under cap (`glass-ui.js` 67.3% raw
+/ 68.1% gzip; `glass-ui.css` 93.3% raw / 91.7% gzip).
+
+### Changed — `scripts/profile-aurora.mjs` 884 LOC → harness extracted (Lane B)
+
+The 433-line `harnessSource()` template-string extracted to
+`scripts/aurora-profile/harness-browser.mjs` (Option B template-string
+export). Main entry shrinks to 462 LOC orchestration-only. Cross-
+reference for W5 pipeline-orchestration cleanup (orchestrator-side
+refactor lives there; this lane was the structural split).
+
+### Changed — `demo/configurator/usePresetEditor.ts` 657 LOC → 6 sub-modules (Lane C)
+
+5 concerns split across:
+
+- `demo/configurator/preset-editor/types.ts` (97)
+- `demo/configurator/preset-editor/defaults.ts` (90)
+- `demo/configurator/preset-editor/css-writers.ts` (53)
+- `demo/configurator/preset-editor/persistence.ts` (139)
+- `demo/configurator/preset-editor/stylesheet-swap.ts` (53)
+- `demo/configurator/preset-editor/store.ts` (313)
+
+`demo/configurator/usePresetEditor.ts` becomes a 24-LOC façade
+re-exporting the public surface through `./preset-editor/store`.
+Demo-private; no library API impact.
+
+### Verification
+
+- `npm run typecheck` — PASS.
+- `npm test` — 348 / 30 green; 11 timeline-specific tests pass through
+  the new dispatcher.
+- `npm run build` — 651 modules transformed (+9 from W3 splits).
+- `npm run profile:budget` — PASS (raw 67.3% / 93.3%; gzip 68.1% /
+  91.7%).
+- `npm run verify-export-types` — PASS.
+
 ## 1.2.2 — 2026-05-14 — O.W2 HEADLINE (dock subsystem DI canonicalization)
 
 Load-bearing architectural transposition per invariant 25 (typed-key +

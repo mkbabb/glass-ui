@@ -202,3 +202,28 @@ Lanes B + C dispatched after Lane A's intermediate commit (`ba546c7`) but the Ag
 ### Open windows for W3
 
 W3 opens after this commit lands. Three lanes per `docs/tranches/O/waves/W3.md` (3 god-module cohesion splits — GlassTimeline 1049 / profile-aurora 884 / usePresetEditor 657).
+
+## 2026-05-14 — W3 close (v1.2.3)
+
+Three god-module splits per Rβ; all lanes ran agent-dispatched in worktrees in parallel.
+
+### Lane disposition
+
+| Lane | Mode | Disposition | Bundle delta | Proof |
+|---|---|---|---|---|
+| A — GlassTimeline split | agent-dispatched | LANDED — 1049 → 123 dispatcher + 3 variant SFCs (191 + 225 + 607) + geometry.ts (187). Continuous SFC preserves non-scoped style for HoverCardPortal. | timeline.js +21% per-chunk (+2.4 KB absolute); global budget gates PASS | `audit/W3-Lane-A-timeline-split-proof.md` |
+| B — profile-aurora harness extract | agent-dispatched | LANDED — 884 → 462 main + 446 LOC harness-browser.mjs extract (Option B template-string export); call-site preserved via thin getter | n/a (script-only) | `audit/W3-Lane-B-profile-aurora-harness-extract-proof.md` |
+| C — usePresetEditor split | agent-dispatched | LANDED — 657 → 24 façade + 6 sub-modules totalling 745 LOC (types + defaults + css-writers + persistence + stylesheet-swap + store) | n/a (demo-only) | `audit/W3-Lane-C-preset-editor-split-proof.md` |
+
+### Hard gate evidence
+
+- (a) 3 files split into cohesive sub-modules per Rβ rationale ✓.
+- (b) Consumer-side imports unchanged ✓ (`@mkbabb/glass-ui/timeline` package barrel byte-identical; demo/configurator imports through the façade).
+- (c) typecheck ✓ ; test 348/348 ✓ ; build 651 modules ✓ ; profile:budget PASS ✓ (per-chunk timeline.js +21% accepted as decomposition cost; global gates remain well under cap).
+- (d) verify-export-types PASS ✓.
+- (e) 3 lane proof docs ✓.
+- (f) v1.2.3 patch tag.
+
+### Open windows for W4
+
+W4 opens after this commit lands. Three lanes per `docs/tranches/O/waves/W4.md` (/api discovery gaps + leaky abstractions + service-boundary inconsistencies; semver-visible avatarVariant rename).
