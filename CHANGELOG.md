@@ -1,5 +1,20 @@
 # Changelog
 
+> **AC.W6 cohort cross-reference (speedtest tranche AC; closes AC.W6e).** The
+> v1.5.0 + v1.5.1 + v1.6.0 minor/patch trio ships as the AC.W6 cohort against
+> speedtest's tranche AC. Each glass-ui release pairs 1:1 with a speedtest
+> wave; the cohort consolidates as a single narrative, not as one v1.2.0
+> mega-bump. Cross-reference map:
+>
+> | glass-ui tag | speedtest wave | Theme |
+> |---|---|---|
+> | `v1.1.0` (retro, `a28560f`) | AB.W4 close | AB Living-UI canon (retroactive anchor; W6a) |
+> | `v1.5.0` (`8246e07`) | AC.W6b | OFL font self-host subsystem — Plus Jakarta Sans + Fira Code |
+> | `v1.5.1` (`099910d`) | AC.W6c | Chassis `--phase-color-label` cascade for WCAG label register |
+> | `v1.6.0` (`e238862`) | AC.W6d | Primitive expansions — MetricRow + MetricStack + AnimatedDigit + `::before` -15px hit-area |
+>
+> Speedtest reference: `docs/tranches/AC/AC.md` §AC.W6 + `docs/tranches/AC/waves/W6{a,b,c,d,e}-*.md`. Tags v1.5.0 + v1.5.1 placed retroactively at AC.W6e close.
+
 ## 1.6.0 — 2026-05-14 — primitive expansions cohort (speedtest AC.W6d)
 
 Minor-level expansion shipping three new custom primitives + a WCAG 2.5.5 hit-area gestalt-fix + a documented custom-prop cascade pattern.
