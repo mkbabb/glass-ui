@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from "vue";
+import type { Component, HTMLAttributes } from "vue";
 import { computed } from "vue";
 import { cn } from "../../../utils";
 
@@ -22,11 +22,18 @@ import { cn } from "../../../utils";
  * `.results-stack` rules absorb directly. Consumers configure their phase
  * colours per row + describe their digit-counts so the value clamp shrinks
  * proportionally as 4-digit values arrive.
+ *
+ * The `as` prop lets the stack render as a Vue `<TransitionGroup>` (with
+ * `tag="div"`) when the consumer needs per-row enter/leave animation
+ * while preserving the immediate-child subgrid contract. Pass the
+ * component (e.g. `TransitionGroup`) plus the relevant transition props
+ * (`name`, `appear`, etc.) — they're forwarded via `v-bind="$attrs"`.
  */
 
 type MetricStackVariant = string | undefined;
+type MetricStackAs = string | Component;
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
         /**
          * Container-name handle for the inline-size container. Children
@@ -47,20 +54,29 @@ withDefaults(
          * a sane height even before the rows hydrate.
          */
         rows?: number;
+        /**
+         * Render-as tag. Defaults to `"div"`. Pass a Vue component
+         * (e.g. `TransitionGroup`) when per-row enter/leave animation is
+         * required and the subgrid contract must hold (the rendered root
+         * is the grid container; rows are immediate children).
+         */
+        as?: MetricStackAs;
         class?: HTMLAttributes["class"];
     }>(),
     {
         containerName: "metric-stack",
         rows: 4,
+        as: "div",
     },
 );
 
-const classes = computed(() => cn("metric-stack", "results-stack"));
+const classes = computed(() => cn("metric-stack", "results-stack", props.class));
 </script>
 
 <template>
-    <div
-        :class="cn(classes, $props.class)"
+    <component
+        :is="as"
+        :class="classes"
         :data-variant="variant"
         :style="{
             '--metric-stack-rows': String(rows),
@@ -68,7 +84,7 @@ const classes = computed(() => cn("metric-stack", "results-stack"));
         }"
     >
         <slot />
-    </div>
+    </component>
 </template>
 
 <style scoped>
