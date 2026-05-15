@@ -1,6 +1,6 @@
 {
     "name": "@mkbabb/glass-ui",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "description": "Glassmorphic design system — Vue 3.5 components, reka-ui primitives, Tailwind CSS v4 tokens",
     "license": "MIT",
     "type": "module",
@@ -126,6 +126,12 @@
             ],
             "animated-digit": [
                 "dist/animated-digit.d.ts"
+            ],
+            "metric-cell": [
+                "dist/metric-cell.d.ts"
+            ],
+            "responsive-tabs": [
+                "dist/responsive-tabs.d.ts"
             ]
         }
     },
@@ -223,6 +229,16 @@
             "development": "./src/animated-digit.ts",
             "types": "./dist/animated-digit.d.ts",
             "import": "./dist/animated-digit.js"
+        },
+        "./metric-cell": {
+            "development": "./src/metric-cell.ts",
+            "types": "./dist/metric-cell.d.ts",
+            "import": "./dist/metric-cell.js"
+        },
+        "./responsive-tabs": {
+            "development": "./src/responsive-tabs.ts",
+            "types": "./dist/responsive-tabs.d.ts",
+            "import": "./dist/responsive-tabs.js"
         },
         "./status-dot": {
             "development": "./src/status-dot.ts",

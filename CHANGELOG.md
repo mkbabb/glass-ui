@@ -1,10 +1,11 @@
 # Changelog
 
-> **AC.W6 cohort cross-reference (speedtest tranche AC; closes AC.W6e).** The
-> v1.5.0 + v1.5.1 + v1.6.0 minor/patch trio ships as the AC.W6 cohort against
-> speedtest's tranche AC. Each glass-ui release pairs 1:1 with a speedtest
-> wave; the cohort consolidates as a single narrative, not as one v1.2.0
-> mega-bump. Cross-reference map:
+> **AC.W6 + AC.W8e cohort cross-reference (speedtest tranche AC).** The
+> v1.5.0 + v1.5.1 + v1.6.0 minor/patch trio shipped as the AC.W6 cohort;
+> v1.7.0 adds the AC.W8e AB+1-subset substrate (two new primitives + a
+> toggle-variant addition). Each glass-ui release pairs 1:1 with a
+> speedtest wave; the cohort consolidates as one continuous narrative.
+> Cross-reference map:
 >
 > | glass-ui tag | speedtest wave | Theme |
 > |---|---|---|
@@ -12,8 +13,52 @@
 > | `v1.5.0` (`8246e07`) | AC.W6b | OFL font self-host subsystem — Plus Jakarta Sans + Fira Code |
 > | `v1.5.1` (`099910d`) | AC.W6c | Chassis `--phase-color-label` cascade for WCAG label register |
 > | `v1.6.0` (`e238862`) | AC.W6d | Primitive expansions — MetricRow + MetricStack + AnimatedDigit + `::before` -15px hit-area |
+> | `v1.7.0` | AC.W8e | AB+1 substrate — `<MetricCell>` + `<ResponsiveTabs>` + `<ToggleGroupItem variant="card">` |
 >
-> Speedtest reference: `docs/tranches/AC/AC.md` §AC.W6 + `docs/tranches/AC/waves/W6{a,b,c,d,e}-*.md`. Tags v1.5.0 + v1.5.1 placed retroactively at AC.W6e close.
+> Speedtest reference: `docs/tranches/AC/AC.md` §AC.W6 + §AC.W8 + `docs/tranches/AC/waves/W6{a,b,c,d,e}-*.md` + `docs/tranches/AC/waves/W8.md`. Tags v1.5.0 + v1.5.1 placed retroactively at AC.W6e close.
+
+## 1.7.0 — 2026-05-14 — AB+1 substrate cohort (speedtest AC.W8e)
+
+Minor-level expansion shipping two new custom primitives + a `<ToggleGroupItem>` `variant="card"` addition. Substrate for the AB+1 style-system debt 5-of-9 subset routed since AB.W5; each primitive collapses a duplicated consumer-side recipe onto a single library consume.
+
+**New primitives**:
+
+- `<MetricCell>` — compact metric card (icon-on-label, stacked value + unit) on a wash-tier glass surface. Promoted from speedtest's `<ResultDetailSheet>` 4-card grid; the 11-class glass-wash + p-3 + text-mono-prose composition becomes one prop-driven consume. Three appearance variants: `dashboard` (default, wash + p-3 + `text-mono-prose`), `compact` (wash + p-2 + `text-mono-small`), `bare` (no surface; consumers host inside a pre-styled panel). Subpath: `@mkbabb/glass-ui/metric-cell`.
+
+- `<ResponsiveTabs>` — single consume that swaps between `<Select>` (mobile) and `<UnderlineTabs>` (desktop) via `window.matchMedia` at a configurable breakpoint (default `640px` = Tailwind `sm:`). Promoted from speedtest's 3-site duplicated mobile-Select / desktop-UnderlineTabs pair (AdminDataView, AdminDashboardLayout, PublicDashboardLayout). Accepts `desktopOptions` for the cases where a tab is mobile-only (e.g. an inline-filters tab that lives in a desktop sidebar). Subpath: `@mkbabb/glass-ui/responsive-tabs`.
+
+**Variant addition**:
+
+- `<ToggleGroupItem variant="card">` — extends the CVA `variant` union with a `card` register that bakes the glass-card surface (hover-quiet fill, `data-state="on"` selected fill + border + shadow, `active:scale-95` press, focus ring). Promoted from speedtest's `<FlowSelector>` 17-class glass-card recipe; consumers reach for the variant rather than re-declaring the surface at each call site. Composes with the existing glass-token cascade (`--glass-bg-quiet`, `--glass-border-quiet`, `--glass-shadow-quiet`) so retinting flows through tokens rather than per-consumer Tailwind utility overrides.
+
+### Changed — `src/components/ui/toggle/index.ts`
+
+- `toggleVariants` CVA gains the `card` entry under the `variant` union. Existing `default` and `outline` variants unchanged; no consumer regression on the existing variants (CVA's default-variant resolution preserves prior behaviour for omitted `variant=` consumers).
+
+### Added — `src/components/custom/metric-cell/`
+
+- `MetricCell.vue` + `index.ts` + the `metric-cell.ts` flat subpath barrel.
+
+### Added — `src/components/custom/responsive-tabs/`
+
+- `ResponsiveTabs.vue` + `index.ts` + the `responsive-tabs.ts` flat subpath barrel.
+
+### Added — `package.json` + `vite.library.ts`
+
+- New `./metric-cell` and `./responsive-tabs` entries in `exports` + `typesVersions`; new entries in `libraryEntries()` so Vite builds the dist artefacts.
+
+### Verification
+
+- `npm run typecheck` — PASS.
+- `npm run build` — PASS (44 entry chunks emitted; v1.7.0 adds `metric-cell.{js,d.ts}` + `responsive-tabs.{js,d.ts}`).
+
+### Consumer adoption
+
+speedtest's AC.W8e wave consumes the trio at:
+- `<FlowSelector>` migrates to `<ToggleGroupItem variant="card">` (17 → 0 consumer classes on the surface).
+- `<ResultDetailSheet>` 4 sites consume `<MetricCell>` direct (44 → 0 consumer classes on the cards).
+- `<AdminDataView>` + `<AdminDashboardLayout>` + `<PublicDashboardLayout>` 3 sites consume `<ResponsiveTabs>` (dual sm:hidden / hidden sm:block mounts → single matchMedia-driven consume).
+
 
 ## 1.6.0 — 2026-05-14 — primitive expansions cohort (speedtest AC.W6d)
 
