@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.6.0 — 2026-05-14 — primitive expansions cohort (speedtest AC.W6d)
+
+Minor-level expansion shipping three new custom primitives + a WCAG 2.5.5 hit-area gestalt-fix + a documented custom-prop cascade pattern.
+
+**New primitives**:
+- `<MetricRow>` — single-metric row with phase-color binding + value/unit/state subgrid contract. Speedtest's per-metric callsites collapse onto this primitive instead of re-rolling the row interior at each consumer.
+- `<MetricStack>` — 4-track subgrid composer of `<MetricRow>` children. Owns the inline-size container, the `--result-row-scale` knob, and row min-block-size pre-allocation. Optional `as` prop renders as `<TransitionGroup>` for per-row enter/leave while preserving the immediate-child subgrid contract.
+- `<AnimatedDigit>` — keyframes.js-backed digit animator with the speedtest-canonical hero clamp shape (single hard ceiling, decimal-place-aware).
+
+**Hit-area + touch-target**:
+- Timeline + dock primitives now ship a `::before { inset: -15px }` hit-area extension so the underlying interactive element passes WCAG 2.5.5 (44×44 exact) without changing visual geometry. The -15px inset is the gestalt fix (speedtest AC-r3-r-3 §14 confirmed -14px from F2 audit yielded 42×42 off-by-one).
+
+**Custom-prop cascade pattern**:
+- DESIGN.md now documents the canonical `:deep`-retire pattern: primitives expose `--<primitive>-<token>` CSS custom properties at their root; consumers retint via the root CSS variable rather than reaching inside scoped styles. The pattern lets the consumer surface stay shallow + decoupled from the primitive's internal selector tree.
+
+**Residual** (deferred to AC.W8c / W6d-residual or AC+1):
+- `<ChassisCard>`, `<ProgressSegment>`, `<DataTableWithActions>`, `<ConfirmDialog>` enhancements
+- `(pointer: coarse)` media-query touch-target augmentation
+
 ## 1.5.1 — 2026-05-14 — chassis `--phase-color-label` cascade (speedtest AC.W6c)
 
 Patch-level extension to the `<InstrumentChassis>` `data-phase` cascade.
