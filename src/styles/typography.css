@@ -409,13 +409,15 @@ body {
    Composes the audacious-dock `--dock-label-size` knob when set
    (utilities.css §audacious mobile carve declares `--dock-label-size:
    14-15px` at narrow viewports); falls back to `--type-subheading` so
-   the register stays one rung above body-small at desktop. Weight 500
-   sits at the medium rung — present but not bold. */
+   the register stays one rung above body-small at desktop. Weight 400
+   (regular) per the standing precept: Plus Jakarta Sans at the dock
+   pill size reads visually heavier than the numeric weight implies, so
+   the regular rung is the correct register for the not-bold posture. */
 @utility dock-label {
     font-family: var(--font-serif);
     font-size: var(--dock-label-size, var(--type-subheading));
     line-height: var(--type-leading-body);
-    font-weight: 500;
+    font-weight: 400;
     letter-spacing: var(--type-tracking-normal);
 }
 
