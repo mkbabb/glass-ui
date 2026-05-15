@@ -2,6 +2,25 @@ import { type VariantProps, cva } from 'class-variance-authority'
 
 export { default as Toggle } from './Toggle.vue'
 
+/**
+ * `card` variant — AC.W8e (glass-ui v1.7.0).
+ *
+ * Hoist of speedtest FlowSelector's 17-class glass-card recipe. The pattern
+ * (icon-over-label-over-description on a `.glass-card` surface, hover quiet
+ * fill, `data-state="on"` selected fill + border, active scale press) is
+ * generic enough that other consumers (survey wizards, mode pickers,
+ * settings picker grids) will hit the same shape. The variant bakes:
+ *  - the quiet glass surface ladder (`.glass-card` base + hover/selected
+ *    `--glass-{bg,border,shadow}-quiet` tier composition)
+ *  - the column-stack interior (`flex-col`, `gap-4`, `p-8`, `text-center`)
+ *  - `data-state="on"` + `:hover` contracts threaded through glass tokens,
+ *    not raw `bg-accent` (which would shadow the card surface)
+ *  - the active-press scale (`active:scale-95`) for tactile affordance
+ *
+ * Reads through `.glass-card` so consumers retint via the existing glass
+ * token cascade (`--glass-bg-quiet`, `--glass-border-quiet`, etc.) rather
+ * than re-declaring the surface at the consumer.
+ */
 export const toggleVariants = cva(
   'focus-ring inline-flex items-center justify-center rounded-button text-sm font-medium transition-colors hover:bg-muted hover:text-muted-foreground disabled:pointer-events-none disabled:opacity-disabled data-[state=on]:bg-accent data-[state=on]:text-accent-foreground',
   {
@@ -10,6 +29,8 @@ export const toggleVariants = cva(
         default: 'bg-transparent',
         outline:
           'border border-input bg-transparent hover:bg-accent hover:text-accent-foreground',
+        card:
+          'glass-card h-auto w-full transform-gpu cursor-pointer flex-col gap-4 p-8 text-center transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-fast ease-standard hover:bg-[var(--glass-bg-quiet)] hover:text-foreground active:scale-95 data-[state=on]:border-[var(--glass-border-quiet)] data-[state=on]:bg-[var(--glass-bg-quiet)] data-[state=on]:text-foreground data-[state=on]:shadow-[var(--glass-shadow-quiet)]',
       },
       size: {
         default: 'h-10 px-3',
