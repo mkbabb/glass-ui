@@ -16,6 +16,8 @@ export function libraryEntries(rootDir: string) {
         "glass-carousel": resolve(rootDir, "src/glass-carousel.ts"),
         aurora: resolve(rootDir, "src/aurora.ts"),
         "metric-badge": resolve(rootDir, "src/metric-badge.ts"),
+        "metric-stack": resolve(rootDir, "src/metric-stack.ts"),
+        "animated-digit": resolve(rootDir, "src/animated-digit.ts"),
         "status-dot": resolve(rootDir, "src/status-dot.ts"),
         pulse: resolve(rootDir, "src/pulse.ts"),
         "paper-backdrop": resolve(rootDir, "src/paper-backdrop.ts"),
