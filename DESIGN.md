@@ -843,6 +843,28 @@ When a consumer needs to override component internals, the first resort is a doc
 
 Slot-class props (e.g., `ScrollPaneHeader` → `title-class`, `description-class`) expose internal elements for controlled styling.
 
+### Custom-property cascade pattern (AC.W6d)
+
+The canonical mechanism for letting a consumer retint or reshape a primitive's internals without `:deep()` is a **declarative custom-property cascade**: the primitive declares a token at the surface it owns (with a default value), and the consumer overrides that token at any ancestor in the cascade. Vue's scoped-CSS isolation is irrelevant to custom properties — they walk the DOM tree freely.
+
+**Three-rung anatomy:**
+
+1. **Primitive owns the consumption point**: the primitive's internal CSS reads `var(--token-name, <default>)`. The default keeps the primitive useful out of the box.
+2. **Primitive surfaces the token in DESIGN.md**: a token row in the component's section, with the property name, accepted value type, and default. This is the contract.
+3. **Consumer overrides via inline style OR a wrapper class**: `<Primitive :style="{ '--token-name': '...' }">` or `.consumer-wrap { --token-name: ...; }`. Either form reaches every descendant via the cascade.
+
+**Worked example — MetricRow per-row phase tint.** The primitive's value cell consumes `var(--phase-color)`; the consumer sets `--phase-color: <hex>` on each row via the `phaseColor` prop (which serializes to the inline style). No `:deep` reach, no slot-class plumb — the cascade alone carries the override.
+
+**Worked example — Timeline continuous-fill opacity.** `<ContinuousTimeline>` reads `var(--timeline-continuous-fill-opacity, 1)` on its internal `.continuous-region-fill` selector. The consumer sets the variable on the wrapping context (`.timeline-wrap { --timeline-continuous-fill-opacity: 0.74; }`) and the cascade flows into the primitive's internal selectors. Replaces the prior `:deep(.continuous-region-fill) { opacity: ... }` workaround.
+
+**When the cascade pattern fails (and `:deep` is genuinely warranted):**
+
+- The primitive doesn't yet declare the cascading token. **Fix the primitive** — add the token + DESIGN.md row + a CHANGELOG entry; the consumer's `:deep` is a symptom, not a solution.
+- The property must address a structural slot (e.g., a specific child's `grid-template-rows`). **Add a slot-class prop** (per the `ScrollPaneHeader` precedent) — that's the cascade analogue for class-based overrides.
+- The override needs to traverse a portal boundary (e.g., reka-ui's `HoverCardPortal`). **Use a non-scoped `<style>` block** in the primitive's SFC that targets the portaled class (the `.timeline-popover` precedent in `ContinuousTimeline.vue`).
+
+The acceptance bar for adding a new custom-property cascade is two-fold: (a) the override is single-property (a token, not a structural rewrite), and (b) the primitive has at least one consumer demonstrating the override path. The cohort shipped at v1.6.0 — `--phase-color` on `MetricRow`, `--digit-count` on `AnimatedDigit`/`MetricRow`, `--timeline-dot-size-touch` on the timeline dots — each cleared both bars.
+
 ---
 
 ## Timeline Primitive
@@ -906,7 +928,9 @@ interface TimelineSegment {
 | `--timeline-scrubber-height`            | `0.5rem`           | Scrubber-variant rail height |
 | `--timeline-segmented-height`           | `0.625rem`         | Segmented-variant rail height |
 | `--timeline-continuous-height`          | `0.75rem`          | Continuous-variant rail height |
-| `--timeline-dot-size`                   | `0.875rem`         | Boundary dot diameter (segmented + continuous) |
+| `--timeline-dot-size`                   | `0.875rem`         | Boundary dot diameter (segmented + continuous; pointer: fine) |
+| `--timeline-dot-size-touch`             | `1.25rem`          | Boundary dot diameter under `@media (pointer: coarse)` |
+| `--timeline-touch-target`               | `44px`             | WCAG 2.5.5 target-size floor for the dot `::before` hit-area (AC.W6d F2.I-04) |
 | `--timeline-segment-flex`               | `1 1 0`            | Per-cell flex distribution (segmented) |
 | `--timeline-continuous-seam-opacity`    | `0.25`             | Continuous inter-region 1px divider opacity (`0` to suppress) |
 | `--timeline-continuous-seam-color`      | `color-mix(...)`   | Seam tint (composes from opacity by default) |
@@ -928,6 +952,8 @@ interface TimelineSegment {
 The continuous variant's event surface adds `hoverEnd` (mirror of `hover`) so consumers can blend hover-over-current in panels via `effective = hovered ?? current`. The events fire from the HoverPopover's debounced `update:open` cadence (inherits `hoverOpenDelay` + `closeDelay`), eliminating the pointer-skim flicker the raw `@mouseenter`/`@mouseleave` model produced when the popover content overlapped the trigger.
 
 All variants respect `prefers-reduced-motion: reduce` by collapsing band / region / dot transitions to `0.01ms`.
+
+**Target-size compliance (AC.W6d F2.I-04 — WCAG 2.5.5 AAA)**: each interactive dot (segmented + continuous) paints at 14px visible diameter under `pointer: fine` but grows an invisible `::before` halo extending the pointer hit-area to 44 × 44 (`inset: -15px` against the 14px box: `14 + 15 + 15 = 44`). Under `@media (pointer: coarse)` the visible dot promotes to `--timeline-dot-size-touch` (default 20px) and the halo's inset recomputes via `calc((var(--timeline-touch-target) - var(--timeline-dot-size-touch)) / -2)` so the total hit-area stays at 44 × 44 across the lifted geometry. Consumers that override the touch token receive a halo that tracks the override automatically.
 
 ---
 
@@ -1284,6 +1310,10 @@ aurora · **configurator** (`Configurator`, `ConfiguratorLayer`, `ConfiguratorRo
 **v0.8.3 stacked refinement** (T.W2 audit-B-spec). When `labelPosition === "stacked"`, the template wraps `<span class="metric-badge__amount">` + `<span class="metric-badge__unit">` in a single `<span class="metric-badge__row">`. Layout becomes 2 rows: row 1 label/abbreviation, row 2 amount + unit baseline-aligned via `display: inline-flex; align-items: baseline; gap: 0.25rem`. The pre-T 3-row layout (label / amount / unit on three rows) was the bug, not the contract — the value+unit pair reads as one quantity. Inline mode keeps the flat sibling order so the single-row baseline reads unbroken. Two new tokens land in `tokens.css`: `--metric-badge-min-height-stacked: 2.625rem` (taller floor for breathing room above the baseline pair) and `--metric-badge-padding-block-stacked: 0.375rem`. Existing `labelPosition="stacked"` consumers were zero — the refinement is safe.
 
 **`MetricPill`** (v0.8.3, T.W2) — `<MetricPill :amount="str|num" :unit="str" :label="str" :abbreviation="str" :color="hex" :size="sm|md|lg|xl" :labelPosition="inline|stacked" :density="comfortable|spacious" :placeholder="—" />`. Composition-only over `<MetricBadge>` with `labelPosition="stacked"` + `density="spacious"` + `size="lg"` defaults. The pill lands at the 2.625rem floor declared by `--metric-badge-min-height-stacked`; row 1 carries the label, row 2 baseline-aligns amount + unit. The `density` prop is the dock-tier knob lifted onto the pill: `spacious` (default) widens block padding for chassis-strip rhythm; `comfortable` keeps the tighter compact register where pills nest in a denser dock. The CSS modifier (`.metric-pill--density-{value}`) adjusts the local metric-badge padding tokens; the underlying badge stays unchanged. Per audit-B's T1 lock: composition only, no parallel logic vs `<MetricBadge>` — visual changes to the underlying badge surface compose here without divergence.
+
+**`MetricStack` + `MetricRow`** (v1.6.0, AC.W6d) — `<MetricStack :container-name="metric-stack" :variant="dpi" :rows="4">` shell hosts an N-row stack of `<MetricRow :icon :label :value :unit :phase-color :digit-count :color-tinted :active>`. Promotes the speedtest `ResultStack` canon to library scope; the stack owns the 4-track subgrid template (`icon | label | value | unit`), the inline-size container with consumer-named handle, the `--result-row-scale` knob (`data-variant="dpi"` shifts to 1.25), and the `min-block-size` pre-allocation scaled against `--metric-stack-rows`. Each row carries the audacious-poster value clamp keyed by `--digit-count` (`3 / max(3, n)` shrink so 4-digit values stay in cell), the tabular-nums + ss01 + lnum font-feature register on the value cell, the optional `aura` slot host with `position: relative` + `inset: 0` mounting, and the per-row `--phase-color` cascade. Three slots — `icon`, `label`, `unit`, `value`, `aura`, `description` — let consumers override any cell while keeping the layout. Subpath: `@mkbabb/glass-ui/metric-stack` (no root-barrel export per the L.W2 curation; the primitive ships single-component subpath only).
+
+**`AnimatedDigit`** (v1.6.0, AC.W6d) — `<AnimatedDigit :value="num|null" :format="(n) ⇒ str" :placeholder="—" :digit-count :mode="absolute|progress" :damping>`. Wraps `useAnimatedNumber` + the tabular-nums + ss01 + lnum register so consumers stop hand-wiring those rules per site. The composable damps the displayed number toward the target via the SmoothProgress engine; reduced-motion collapses the damping to instant. Publishes `--digit-count` to the host inline style — the derived count tracks the rendered string length so MetricRow's clamp math reads from a single source of truth (no consumer-side digit-count plumbing). `data-is-animating` mirrors the underlying state for consumer-side hooks (e.g., the active-row aura gating). Subpath: `@mkbabb/glass-ui/animated-digit`.
 
 **`GlassDock` containerName prop** (v0.8.3, T.W2) — optional `containerName?: string`. When set, the dock root emits inline `container-type: inline-size; container-name: <value>; overflow: visible` plus a `data-container-name` structural marker. The base `overflow: hidden` shell gates on `:not([data-container-name])` so non-host docks keep the default clip — a backward-compatible extension. Consumers query the named container via `@container <value> (...)` rules without wrapping the dock in a sibling subject. Lifts the container subject onto the primitive (audit-B §1.3 gestalt move): a container subject must be a peer or ancestor of the dock, never an interior descendant whose intrinsic size the dock relies on (CSS Containment L3 §3.2). Replaces the W3-stash workaround that put `container-type: inline-size` on the cluster itself, which collapsed the dock to 0 width.
 
