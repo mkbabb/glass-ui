@@ -181,6 +181,39 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
         box-shadow var(--duration-fast) var(--ease-standard);
 }
 
+/* AC.W6d F2.I-04 — WCAG 2.5.5 target-size compliance.
+   The 14px dot grows an invisible 44×44 pointer hit-area via a
+   `::before` pseudo: `inset: -15px` extends 15px on each side
+   (14 + 15 + 15 = 44px exactly), satisfying WCAG 2.5.5 (level AAA)
+   without disturbing the visible dot geometry. The pseudo inherits
+   `pointer-events: auto` from the button so taps + clicks within the
+   44×44 region register on the dot. The coarse-pointer media query
+   below promotes the visible dot too, so finger-precision users see
+   a wider visible affordance. */
+.segmented-dot::before {
+    content: "";
+    position: absolute;
+    inset: -15px;
+    border-radius: inherit;
+}
+
+@media (pointer: coarse) {
+    .segmented-dot {
+        /* On coarse-pointer devices, lift the visible dot to the
+           --timeline-dot-size-touch token (default 20px) — the visible
+           glyph reads more confidently under finger occlusion while the
+           ::before halo still extends to 44×44. */
+        width: var(--timeline-dot-size-touch, var(--timeline-dot-size, 20px));
+        height: var(--timeline-dot-size-touch, var(--timeline-dot-size, 20px));
+    }
+    .segmented-dot::before {
+        /* Recompute inset against the lifted dot so the total stays
+           44×44: (44 - dot-size) / 2. For the default 20px dot the
+           inset becomes -12px (20 + 12 + 12 = 44). */
+        inset: calc((var(--timeline-touch-target, 44px) - var(--timeline-dot-size-touch, 20px)) / -2);
+    }
+}
+
 .segmented-dot:hover,
 .segmented-dot:focus-visible {
     background: var(--surface-tint-40);

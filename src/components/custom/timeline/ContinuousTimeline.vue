@@ -499,6 +499,31 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
     transform: scale(1.2);
 }
 
+/* AC.W6d F2.I-04 — WCAG 2.5.5 target-size hit-area at the continuous
+   variant. The dot is 14px (default) painted at the inner centre of the
+   marker `<li>`. A `::before` pseudo extends the pointer-receptive area
+   to 44×44 (14 + 15 + 15) without enlarging the visible dot. The pseudo
+   inherits the button's pointer-events so taps within the halo register.
+   Coarse-pointer devices promote the visible dot via
+   --timeline-dot-size-touch + recompute the inset so the halo stays at
+   44×44 across the lifted geometry. */
+.continuous-dot::before {
+    content: "";
+    position: absolute;
+    inset: -15px;
+    border-radius: inherit;
+}
+
+@media (pointer: coarse) {
+    .continuous-dot {
+        width: var(--timeline-dot-size-touch, var(--timeline-dot-size, 20px));
+        height: var(--timeline-dot-size-touch, var(--timeline-dot-size, 20px));
+    }
+    .continuous-dot::before {
+        inset: calc((var(--timeline-touch-target, 44px) - var(--timeline-dot-size-touch, 20px)) / -2);
+    }
+}
+
 /* AB.W2.T3 — `data-current` marks the active phase regardless of hover
    state. Per-phase color hooks (`data-state` + the segment's gradient
    tint) survive the structural split so W3 can paint the raised-rivet

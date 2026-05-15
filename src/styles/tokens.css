@@ -800,7 +800,14 @@
     --timeline-continuous-height: 0.75rem;    /* 12px — ONE pill, N regions */
 
     /* Geometry — shared across all variants */
-    --timeline-dot-size: 0.875rem;            /* 14px — boundary dot diameter */
+    --timeline-dot-size: 0.875rem;            /* 14px — boundary dot diameter (pointer: fine) */
+    --timeline-dot-size-touch: 1.25rem;       /* 20px — boundary dot diameter (pointer: coarse) */
+    --timeline-touch-target: 44px;            /* AC.W6d F2.I-04 — WCAG 2.5.5 target-size floor.
+                                                 The `::before` halo around each dot extends to
+                                                 this dimension so finger-precision users meet
+                                                 the (target-size: 44×44 minimum) clause without
+                                                 the visible dot growing to that footprint at
+                                                 pointer: fine. */
     --timeline-segment-flex: 1 1 0;           /* per-cell flex distribution (segmented) */
 
     /* Continuous-variant specific — seam dividers between regions.
