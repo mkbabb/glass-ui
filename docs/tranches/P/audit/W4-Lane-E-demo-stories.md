@@ -1,11 +1,11 @@
-# P.W4 Lane E — Demo stories for W6 promotions + W3 stub stories
+# P.W4 Lane E—Demo stories for W6 promotions + W3 stub stories
 
 ## §1 Scope
 
 Author 7 demo stories under `demo/stories/`:
 
-- **4 stories** for the O.W6 substrate promotions — `useClipboard`, `<HeaderRibbon>`, dock-icon-button `--dock-active-*` token ladder, `@utility scale-on-hover`.
-- **3 stub stories** for the P.W3 substrate promotions — `<Slider variant="glass-scrubber">`, `<ProgressiveSidebarSection>`, `<PaperBackdrop>` texture-system.
+- **4 stories** for the O.W6 substrate promotions—`useClipboard`, `<HeaderRibbon>`, dock-icon-button `--dock-active-*` token ladder, `@utility scale-on-hover`.
+- **3 stub stories** for the P.W3 substrate promotions—`<Slider variant="glass-scrubber">`, `<ProgressiveSidebarSection>`, `<PaperBackdrop>` texture-system.
 
 Each story composes the canonical `<StorySection>` + `<ShowcaseFrame>` + `useStoryDemo` chassis per V.W4 demo-chassis precedent.
 
@@ -21,24 +21,24 @@ Each story composes the canonical `<StorySection>` + `<ShowcaseFrame>` + `useSto
 | `navigation/progressive-sidebar-section` | `demo/stories/navigation/progressive-sidebar-section.vue` | `<ProgressiveSidebarSection>` from `src/components/custom/sidebar/` (P.W3 Lane B) | `StoryPage` + `StorySection` + `ShowcaseFrame` + `<ProgressiveSidebar>` |
 | `foundations/paper-backdrop-texture-system` | `demo/stories/foundations/paper-backdrop-texture-system.vue` | `<PaperBackdrop>` from `src/components/custom/paper-backdrop/` (P.W3 Lane C) | `StoryPage` + `StorySection` + `ShowcaseFrame` |
 
-The `useStoryDemo` import was not pulled into any of the 7 stories — none require the play / reset / status state machine. The 7 demos are direct-state harnesses (refs flipped by user input or hover). This matches the V.W4 chassis precedent — `useStoryDemo` is only adopted by stories whose play handler is non-trivial (timed cascade / async reveal / cleanup-bearing). Recipe-only demos shape themselves from `<StorySection>` + `<ShowcaseFrame>` alone (e.g. `primitives/paper-backdrop.vue` precedent).
+The `useStoryDemo` import was not pulled into any of the 7 stories—none require the play / reset / status state machine. The 7 demos are direct-state harnesses (refs flipped by user input or hover). This matches the V.W4 chassis precedent—`useStoryDemo` is only adopted by stories whose play handler is non-trivial (timed cascade / async reveal / cleanup-bearing). Recipe-only demos shape themselves from `<StorySection>` + `<ShowcaseFrame>` alone (e.g. `primitives/paper-backdrop.vue` precedent).
 
 ## §3 Manifest registration
 
 `demo/stories/manifest.ts` updated:
 
-- **Appended rows** into existing categories — `foundations` (+1 row), `navigation` (+1 row), `composables` (+1 row).
-- **4 new categories** created — `custom`, `dock`, `utilities`, `sliders` — each with one row, inserted before the `compositions` category.
-- **3 new lucide-vue-next icon imports** — `SlidersHorizontal`, `Anchor`, `Paintbrush`.
+- **Appended rows** into existing categories—`foundations` (+1 row), `navigation` (+1 row), `composables` (+1 row).
+- **4 new categories** created—`custom`, `dock`, `utilities`, `sliders`—each with one row, inserted before the `compositions` category.
+- **3 new lucide-vue-next icon imports**—`SlidersHorizontal`, `Anchor`, `Paintbrush`.
 
-`import.meta.glob<{ default: Component }>("./*/*.vue")` covers the new `custom/`, `dock/`, `utilities/`, `sliders/` directories without further wiring — the lazy loader picks the SFCs up automatically.
+`import.meta.glob<{ default: Component }>("./*/*.vue")` covers the new `custom/`, `dock/`, `utilities/`, `sliders/` directories without further wiring—the lazy loader picks the SFCs up automatically.
 
 ## §4 Verification
 
 ```
 $ npm run typecheck
 > vue-tsc --noEmit
-(clean — no diagnostics)
+(clean—no diagnostics)
 
 $ npm test
 Test Files  32 passed (32)
@@ -46,7 +46,7 @@ Test Files  32 passed (32)
   Duration  2.37s
 ```
 
-Both gates pass. `npm run build` deliberately not run (W4 ceiling — 3 sibling agents may be running in parallel; binding constraint).
+Both gates pass. `npm run build` deliberately not run (W4 ceiling—3 sibling agents may be running in parallel; binding constraint).
 
 ## §5 Operational compliance
 

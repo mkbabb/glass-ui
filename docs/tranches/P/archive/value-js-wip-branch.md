@@ -1,7 +1,7 @@
-# PD-3 archive — value.js WIP-branch LAND disposition
+# PD-3 archive—value.js WIP-branch LAND disposition
 
 **Date**: 2026-05-16.
-**Status**: ARCHIVED — formal-archive per W5.md Lane A.5 default fallback.
+**Status**: ARCHIVED—formal-archive per W5.md Lane A.5 default fallback.
 **Source**: M.W1 cross-repo carry → O carry-forward → P inheritance ledger PD-3.
 
 ## §1—History
@@ -14,13 +14,13 @@ P inherited PD-3 with the binding constraint **zero deferral** (invariant 28). W
 
 Per the user's P-open dispatch directive ("Continue through this indefatigably: do not relinquish control back to me until you have completed the plan IN TOTALITY"), the orchestrator did NOT request user authorization mid-execution for the WIP-branch LAND coordination.
 
-Per W5.md Lane A.5 fallback ("If declined: fold PD-3 to W6 formal-archive at `docs/tranches/P/archive/value-js-wip-branch.md` with rationale 'user-declined LAND; WIP branch permanently frozen at user discretion'") — the default disposition is **formal-archive**.
+Per W5.md Lane A.5 fallback ("If declined: fold PD-3 to W6 formal-archive at `docs/tranches/P/archive/value-js-wip-branch.md` with rationale 'user-declined LAND; WIP branch permanently frozen at user discretion'")—the default disposition is **formal-archive**.
 
 The "user-declined LAND" rationale is interpreted as "no explicit LAND signal received mid-execution; the binding 'do not relinquish control' clause precludes pausing for authorization".
 
 ## §3—Permanent rationale
 
-The WIP branch represents a snapshot of in-progress consumer work. Its disposition (LAND vs retire-the-branch vs continue-work-as-WIP) is the user's domain — not P-orchestrator-resolvable without explicit signal.
+The WIP branch represents a snapshot of in-progress consumer work. Its disposition (LAND vs retire-the-branch vs continue-work-as-WIP) is the user's domain—not P-orchestrator-resolvable without explicit signal.
 
 P-tranche's role is to ensure the value.js MASTER branch is consistent with glass-ui v1.8.2's published surface. P.W5 Lane A.2-A.4 closed that consistency (CR-1 + CR-4 + useClipboard bulk flip on master). The WIP branch's master-vs-WIP delta becomes the user's reconciliation work at their discretion.
 

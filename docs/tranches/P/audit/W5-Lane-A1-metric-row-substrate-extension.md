@@ -6,7 +6,7 @@
 
 ## §1—Scope
 
-Per the W5 Lane E partial-completion report § E.3: `<MetricRow>` value clamp floors at `4.5rem` (audacious-poster register; speedtest-bound). The words/frontend consumer's compact metric cells need `text-title` (~1.5rem) to `text-4xl` (~2.25rem) — order-of-magnitude smaller register.
+Per the W5 Lane E partial-completion report § E.3: `<MetricRow>` value clamp floors at `4.5rem` (audacious-poster register; speedtest-bound). The words/frontend consumer's compact metric cells need `text-title` (~1.5rem) to `text-4xl` (~2.25rem)—order-of-magnitude smaller register.
 
 Per P invariant 28 (zero deferral) + the user's "no quick solutions; idiomatic, gestalt approaches" directive: glass-ui-side substrate extension is the canonical absorb (rather than deferring the consumer adoption to a successor wave).
 
@@ -56,15 +56,15 @@ Or per-row scoping (`.metric-card--compact { --metric-row-value-clamp-min: ... }
 
 ## §4—Verification
 
-- `npm run typecheck` — PASS.
-- `npm run build` — PASS (29.94 s).
-- `npm run verify-export-types` — PASS.
-- `npm run profile:budget` — PASS (CSS 89.0% raw / 90.2% gzip; the 4 new fallback tokens are inline `var(name, default)` references with no token declarations added — zero raw bytes beyond the longer var() expressions).
-- `npm test` — PASS (32 files / 367 tests; +2 from useClipboard+copyToClipboard surface-lock additions at v1.8.2).
+- `npm run typecheck`—PASS.
+- `npm run build`—PASS (29.94 s).
+- `npm run verify-export-types`—PASS.
+- `npm run profile:budget`—PASS (CSS 89.0% raw / 90.2% gzip; the 4 new fallback tokens are inline `var(name, default)` references with no token declarations added—zero raw bytes beyond the longer var() expressions).
+- `npm test`—PASS (32 files / 367 tests; +2 from useClipboard+copyToClipboard surface-lock additions at v1.8.2).
 
 ## §5—P invariant compliance
 
-- **P invariant 4 (idiomatic gestalt)**: the absorb is the canonical custom-property cascade pattern — no compact-variant prop, no `--metric-row-mode` mode union, no SFC fork. Defaults preserve audacious-poster bit-for-bit.
+- **P invariant 4 (idiomatic gestalt)**: the absorb is the canonical custom-property cascade pattern—no compact-variant prop, no `--metric-row-mode` mode union, no SFC fork. Defaults preserve audacious-poster bit-for-bit.
 - **P invariant 5 (NO LEGACY CODE)**: no shim, no variant alias, no migration path beyond the CSS-var override.
 - **P invariant 28 (zero deferral)**: E.3 closes at this absorb. Consumer-side adoption is consumer-orchestrator-tranche-owned (per CONSTELLATION.md §6) but the substrate gap is filled.
 

@@ -19,7 +19,7 @@ The `build` script prefixes `NODE_OPTIONS=--max-old-space-size=8192` (P.W4 Lane 
 src/
 ├── index.ts                        # v1.0 curated public barrel (vueuse-free)—Phase 2 SCC closure (L.W1 Lane A)
 ├── api/                            # `@mkbabb/glass-ui/api` discovery layer—types + constants only (L.W1 Lane B)
-│   └── index.ts                    # 55 canonical public symbols (51 types + 4 constants)—M.W2 + O.W4 + O.W6 extensions; P.W0 resync
+│   └── index.ts                    # 66 canonical public symbols (62 types + 4 constants)—M.W2 + O.W4 + O.W6 + P.W1 + P.W2 + P.W3 extensions; P.W0 + P.W6 resyncs
 ├── dark.ts                         # `@mkbabb/glass-ui/dark` flat subpath (L.W1 Lane C; vueuse-bearing)
 ├── keyboard.ts                     # `@mkbabb/glass-ui/keyboard` flat subpath (L.W1 Lane C; vueuse-bearing)
 ├── carousel.ts                     # `@mkbabb/glass-ui/carousel` flat subpath (L.W1 Lane C; vueuse-bearing; v1.0.4 ships full `Carousel*` family per MIGRATION.md §1.2)

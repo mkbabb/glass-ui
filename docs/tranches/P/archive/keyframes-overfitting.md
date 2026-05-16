@@ -1,7 +1,7 @@
-# keyframes.js 84% UI-scaffolding overfitting — formal classification
+# keyframes.js 84% UI-scaffolding overfitting—formal classification
 
 **Date**: 2026-05-16.
-**Status**: ARCHIVED — formal CONSUMER-ORCHESTRATOR-OWNED classification.
+**Status**: ARCHIVED—formal CONSUMER-ORCHESTRATOR-OWNED classification.
 **Source**: P11/d (keyframes.js consumer audit).
 
 ## §1—Scope
@@ -13,7 +13,7 @@ Per P11/d: ≈ 84% of keyframes.js's surface area is UI scaffolding (demo / conf
 
 ## §2—Disposition
 
-Classification: **CONSUMER-ORCHESTRATOR-OWNED** — the UI-scaffolding portion of keyframes.js is the consumer-orchestrator's (keyframes.js's own tranche's) concern, not glass-ui's. P confirms the classification + retires the carry.
+Classification: **CONSUMER-ORCHESTRATOR-OWNED**—the UI-scaffolding portion of keyframes.js is the consumer-orchestrator's (keyframes.js's own tranche's) concern, not glass-ui's. P confirms the classification + retires the carry.
 
 P.W5 Lane C did absorb the CR-3 cross-repo writes (HeaderRibbon retire + scale-on-hover migration + Fira Code CDN drop) which incidentally touched UI-scaffolding code. Those writes were P-scope per the CR-3 carry. Further UI-scaffolding cleanup is keyframes.js-orchestrator-owned.
 

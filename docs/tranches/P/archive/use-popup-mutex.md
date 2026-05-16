@@ -1,7 +1,7 @@
-# usePopupMutex archive — formal retire (consumer-private)
+# usePopupMutex archive—formal retire (consumer-private)
 
 **Date**: 2026-05-16.
-**Status**: ARCHIVED — formal classification.
+**Status**: ARCHIVED—formal classification.
 **Source**: P11/e §6 (value.js consumer audit; single-consumer composable specific to color-picker dock).
 
 ## §1—Scope
@@ -12,7 +12,7 @@ Per Pβ's overfitting-audit criterion + N invariant 8 (substrate-without-consume
 
 ## §2—Disposition
 
-Classification: **CONSUMER-PRIVATE** — the composable is correctly scoped to value.js. Glass-ui has no role in absorbing or re-shipping it. The pattern (mutual-exclusion popup state) is too domain-specific (color-picker dock surfaces) to canonicalize as glass-ui substrate.
+Classification: **CONSUMER-PRIVATE**—the composable is correctly scoped to value.js. Glass-ui has no role in absorbing or re-shipping it. The pattern (mutual-exclusion popup state) is too domain-specific (color-picker dock surfaces) to canonicalize as glass-ui substrate.
 
 The consumer's tranche (when value.js opens its next planning round) owns the decision to keep / inline / restructure usePopupMutex.
 

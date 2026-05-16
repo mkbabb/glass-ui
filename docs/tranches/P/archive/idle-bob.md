@@ -1,7 +1,7 @@
-# idle-bob archive — formal RETIRE-as-inline (consumer-private)
+# idle-bob archive—formal RETIRE-as-inline (consumer-private)
 
 **Date**: 2026-05-16.
-**Status**: ARCHIVED — formal RETIRE-as-inline classification.
+**Status**: ARCHIVED—formal RETIRE-as-inline classification.
 **Source**: P11/d (keyframes.js consumer audit; 1 site at `CubeTarget.vue:139-146`).
 
 ## §1—Scope

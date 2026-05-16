@@ -1,4 +1,4 @@
-# words/frontend cohort E.3 + E.4 + E.5 — substrate-pending vs consumer-design-pending dispositions
+# words/frontend cohort E.3 + E.4 + E.5—substrate-pending vs consumer-design-pending dispositions
 
 **Date**: 2026-05-16.
 **Status**: 3 mixed dispositions per the W5 Lane E pragmatic-scope-mitigation clause.
@@ -8,9 +8,9 @@
 
 W5 Lane E (words/frontend) landed 2 of 5 sub-tasks: Fira Code CDN drop (E.1) + scale-on-hover 15-site migration (E.2). The remaining 3 surfaced specific substrate-API + consumer-design tensions documented below + dispositioned per P invariant 28 (zero deferral; each item exits W5 with explicit disposition).
 
-## §2—E.3 MetricRow / MetricStack adoption — ADDRESSED with substrate extension
+## §2—E.3 MetricRow / MetricStack adoption—ADDRESSED with substrate extension
 
-**Tension**: `<MetricRow>` value clamp floors at `4.5rem` (audacious-poster register; speedtest-bound). Consumer needs `text-title` (~1.5rem) to `text-4xl` (~2.25rem) for compact metric cells — order-of-magnitude smaller register.
+**Tension**: `<MetricRow>` value clamp floors at `4.5rem` (audacious-poster register; speedtest-bound). Consumer needs `text-title` (~1.5rem) to `text-4xl` (~2.25rem) for compact metric cells—order-of-magnitude smaller register.
 
 **Disposition**: **ADDRESSED at W5 close via substrate extension.** `src/components/custom/metric-stack/MetricRow.vue` updated to route the clamp endpoints through CSS-var tokens with audacious-poster defaults preserved bit-for-bit:
 
@@ -33,11 +33,11 @@ Consumers shrinking the register override at `:root` or per-row:
 }
 ```
 
-Canonical custom-property cascade per DESIGN.md texture-system pattern. Words/frontend's compact-register adoption now unblocked — the consumer-side wave (theirs, not P-orchestrator's) executes the per-cell consume.
+Canonical custom-property cascade per DESIGN.md texture-system pattern. Words/frontend's compact-register adoption now unblocked—the consumer-side wave (theirs, not P-orchestrator's) executes the per-cell consume.
 
 **Status**: ADDRESSED (glass-ui substrate ship at W5 close).
 
-## §3—E.4 ProgressiveSidebar slotted-chassis adoption — ARCHIVED as CONSUMER-DESIGN-PENDING
+## §3—E.4 ProgressiveSidebar slotted-chassis adoption—ARCHIVED as CONSUMER-DESIGN-PENDING
 
 **Tension**: words/frontend's `WordlistProgressiveSidebar` (319 LOC) carries consumer-specific surface elements that don't yet have a tight fit with the slotted-chassis API: `themed-card` visual continuity vs chassis `<aside>`, Popover-trigger fit inside `<ProgressiveSidebarSection>`, preamble content placement (wordlist summary + mastery bar), `SidebarState` driver construction for the TOC-mode sibling.
 
@@ -47,7 +47,7 @@ If a future consumer-side tranche surfaces a specific gap (e.g., a `<SectionPopo
 
 **Status**: ARCHIVED-CONSUMER-DESIGN-PENDING. Carry exits P-close per invariant 28.
 
-## §4—E.5 PaperBackdrop /api adoption — ARCHIVED as CONSUMER-ORCHESTRATOR-OWNED
+## §4—E.5 PaperBackdrop /api adoption—ARCHIVED as CONSUMER-ORCHESTRATOR-OWNED
 
 **Tension**: words/frontend ships 503 LOC of texture-system substrate (162 useTextureSystem + 341 texture components) + 71 LOC Card.vue + 112 LOC ThemedCard.vue + 9 `<ThemedCard>` call sites + 2 `texture-paper-clean` PWA sites. Migration to PaperBackdrop /api cascades through 4-frequency / 3-intensity / 4-blendMode register collapse.
 
@@ -74,4 +74,4 @@ Zero P-residuals exit at close.
 - `docs/tranches/P/audit/W5-Lane-E-words-frontend.md` (the lane proof doc with sub-task diff detail).
 - `docs/tranches/P/coordination/CONSTELLATION.md` §6.
 
-## §7—Status: COMPOSITE — E.3 ADDRESSED; E.4 + E.5 ARCHIVED-PERMANENT.
+## §7—Status: COMPOSITE—E.3 ADDRESSED; E.4 + E.5 ARCHIVED-PERMANENT.

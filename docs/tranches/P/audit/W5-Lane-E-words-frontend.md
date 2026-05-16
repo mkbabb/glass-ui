@@ -241,7 +241,7 @@ Per W5.md hard-gate (g): "Each consumer's `npm run build` GREEN post-write." Lan
 
 | Sub-task | Status | Residual |
 |---|---|---|
-| E.1 Fira Code CDN drop | **COMPLETED** | — |
+| E.1 Fira Code CDN drop | **COMPLETED** |—|
 | E.2 scale-on-hover migration | **COMPLETED** | 12 sites kept literal (3 `group-hover`, 2 `scale-125`, 4 `disabled:hover:scale-100` paired, 3 `transition-transform duration-fast group-hover:scale-110` inline-SVG). All non-migrations rationalized in §3. |
 | E.3 MetricRow / MetricStack adoption | **FLAGGED** | Substrate API mismatch—needs `--metric-row-value-font-size` + `--metric-row-label-*` escape hatch OR `compact` variant prop. Successor: P.W?+1 substrate iteration. |
 | E.4 ProgressiveSidebar slotted-chassis adoption | **FLAGGED** | Speculative API decisions: visual continuity, Popover-trigger pattern fit, preamble content placement, SidebarState construction. Successor: P.W?+1 substrate-design wave. |

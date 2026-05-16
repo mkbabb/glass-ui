@@ -17,6 +17,83 @@
 >
 > Speedtest reference: `docs/tranches/AC/AC.md` §AC.W6 + §AC.W8 + `docs/tranches/AC/waves/W6{a,b,c,d,e}-*.md` + `docs/tranches/AC/waves/W8.md`. Tags v1.5.0 + v1.5.1 placed retroactively at AC.W6e close.
 
+## 1.8.4—2026-05-16—P.W6 close (13-lane audit + PD-1/PD-2 archive + precept submodule advance + FINAL.md) — P CLOSED
+
+Aggregate close ship for the P tranche. Documentation + audit ledger + precept invariants 28/29 + FINAL.md. Zero source-API changes; the only code-adjacent edit is the CLAUDE.md /api count resync (66 / 62 types + 4 constants).
+
+### 13-lane audit (6 consolidated agent deliverables)
+
+| Lane | Agent deliverable | Verdict |
+|---|---|---|
+| α plan-vs-actual | `W6-audit-alpha-beta.md` | CLEAN |
+| β substrate-without-consumer | `W6-audit-alpha-beta.md` | CLEAN |
+| γ doc-drift | `W6-audit-gamma-delta.md` | MINOR (absorbed inline) |
+| δ idiomatic-gestalt | `W6-audit-gamma-delta.md` | MINOR (absorbed inline) |
+| ε performance | `W6-audit-epsilon-pi-iota.md` | CLEAN |
+| π visual-runtime | `W6-audit-epsilon-pi-iota.md` | ATTEMPTED + ARCHIVED-permanent (`archive/visual-runtime-tooling.md`) |
+| ι integrity-sweep | `W6-audit-epsilon-pi-iota.md` | CLEAN |
+| P11/a words/frontend | `W6-P11-Lane-ab-rerun.md` | CLEAN |
+| P11/b fourier-analysis | `W6-P11-Lane-ab-rerun.md` | CLEAN |
+| P11/c bbnf-buddy | `W6-P11-Lane-cd-rerun.md` | CLEAN |
+| P11/d keyframes.js | `W6-P11-Lane-cd-rerun.md` | CLEAN |
+| P11/e value.js | `W6-P11-Lane-ef-rerun.md` | CLEAN |
+| P11/f speedtest | `W6-P11-Lane-ef-rerun.md` | CLEAN |
+
+13 lanes / 11 CLEAN + 2 MINOR / 0 BLOCKER. Both MINOR findings absorbed inline at this close: CLAUDE.md /api count refreshed 55 → 66 (62 types + 4 constants); precept submodule advance committed at submodule HEAD `3310a8c` (was authored-not-committed at audit time).
+
+### Formal-archive ledger (9 entries)
+
+- `archive/vue-passive-listeners.md` — PD-1 PERMANENT.
+- `archive/cache-ttl.md` — PD-2 PERMANENT.
+- `archive/value-js-wip-branch.md` — PD-3 PERMANENT (W5.md A.5 fallback).
+- `archive/use-popup-mutex.md` — CONSUMER-PRIVATE.
+- `archive/idle-bob.md` — CONSUMER-PRIVATE.
+- `archive/keyframes-overfitting.md` — CONSUMER-ORCHESTRATOR-OWNED.
+- `archive/bbnf-buddy-53-findings.md` — CONSUMER-SIDE-CARRY.
+- `archive/words-frontend-substrate-pending.md` — MIXED (E.3 ADDRESSED via substrate extension at v1.8.3; E.4 + E.5 ARCHIVED).
+- `archive/visual-runtime-tooling.md` — π lane 3-strike formal-archive.
+
+### Precept submodule advance
+
+`docs/precepts` advances from HEAD `46ee7e9` (O.W0 close) → `3310a8c` (P close):
+
+- `tranche/SPEC.md §Close` — invariant 28 (zero deferral at tranche close) codified.
+- `tranche/SPEC.md §"Retrospective Discipline"` — invariant 29 (AB+1 retrospective discipline) added.
+- `LESSONS-LEARNED.md` — 3 entries appended (51 + 52 + 53; the LL ledger advances 50 → 53).
+
+### FINAL.md
+
+Authored at `docs/tranches/P/FINAL.md` per the close-honesty checklist. 38 inheritance-ledger items dispositioned; zero P-residuals exit close. Per-wave landing summary + audit verdict matrix + hard-gate checklist + version cadence + authority section + permanent-archive index.
+
+### Inheritance-ledger summary (re-stated at close)
+
+- 7 O internal carry-forwards: 7 ADDRESSED.
+- 7 O cross-repo carry-forwards: 5 ADDRESSED + 2 RETIRED-at-open.
+- 3 PERMANENT-DEFER items: 3 ARCHIVED-PERMANENT (PERMANENT-DEFER classification itself RETIRES at P).
+- AB+1 shadow-execution cohort: ADDRESSED (retrospective at `docs/tranches/AB+1/`).
+- 14 new P-audit debts: 14 ADDRESSED.
+- W5 Lane E flagged: E.3 ADDRESSED via substrate extension; E.4 + E.5 ARCHIVED.
+- Pβ overfitting classification: 2 archive entries.
+
+**Total**: 38 inheritance items dispositioned. **Zero P-residuals.**
+
+### Verification
+
+All 8 gates GREEN at v1.8.4:
+- `npm run typecheck` — PASS.
+- `npm run build` — PASS (heap-bump baked at v1.8.1).
+- `npm run verify-export-types` — PASS.
+- `npm run profile:budget` — PASS (CSS 89.0% raw / 90.2% gzip; ε agent flagged gzip headroom thin at 9.8% remaining; flagged for successor-tranche awareness).
+- `npm test` — PASS (32 files / 367 tests).
+- `npm run audit:stash` — PASS (clean).
+- `npm run proof:package` — PASS.
+- `npm run proof:theme` — PASS.
+
+### P tranche CLOSED
+
+Final aggregate tag: v1.8.4. Glass-ui-side carry to successor tranche: ZERO P-residuals. Future tranches open with a clean ledger.
+
+
 ## 1.8.3—2026-05-16—P.W5 close (cross-repo MULTI-WRITER batch + MetricRow substrate extension + archive ledger)
 
 Patch ship. The W5 close glass-ui-side bundle absorbs the cross-repo dispatch's inline-surfaced substrate gap + the formal-retirement archive ledger.

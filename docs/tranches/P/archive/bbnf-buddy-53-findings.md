@@ -1,7 +1,7 @@
-# bbnf-buddy 53-finding ledger — formal classification
+# bbnf-buddy 53-finding ledger—formal classification
 
 **Date**: 2026-05-16.
-**Status**: ARCHIVED — formal CONSUMER-SIDE-CARRY classification.
+**Status**: ARCHIVED—formal CONSUMER-SIDE-CARRY classification.
 **Source**: P11/c (bbnf-buddy consumer audit; zero progression since O.W7).
 
 ## §1—Scope
@@ -10,7 +10,7 @@ Per P11/c: the bbnf-buddy consumer carries a 53-finding internal ledger of clean
 
 ## §2—Disposition
 
-Classification: **CONSUMER-SIDE-CARRY** — the 53 findings are bbnf-buddy's own internal cleanup ledger, not glass-ui-cross-walk items. Glass-ui-side is READER-ONLY for these.
+Classification: **CONSUMER-SIDE-CARRY**—the 53 findings are bbnf-buddy's own internal cleanup ledger, not glass-ui-cross-walk items. Glass-ui-side is READER-ONLY for these.
 
 P.W5 Lane D did absorb CR-5 (the 1 :deep() retire) + the useLeaveTimer retire-as-inline. Those were the items the glass-ui-side surface unblocked or directly enabled. The other ~51 findings are bbnf-buddy-orchestrator-owned.
 
