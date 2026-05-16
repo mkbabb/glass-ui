@@ -320,6 +320,13 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
        hover scale uplift). Pure layout — paints nothing itself. */
     padding-block: calc(var(--timeline-dot-size, 14px) * 0.6);
     margin-block: calc(var(--timeline-dot-size, 14px) * -0.6);
+    /* Consumer opacity knob — speedtest paints the bottom timeline as a
+       quieter echo of the under-meter phase bus (default 1; the consumer
+       sets `--continuous-fill-opacity: 0.74` and lifts to 1 on hover via
+       the cascade). Decouples consumer-side dim from this primitive's
+       internal selector tree (retires the prior `:deep()` reach). */
+    opacity: var(--continuous-fill-opacity, 1);
+    transition: opacity var(--duration-normal, 0.3s) var(--ease-out, ease-out);
 }
 
 .continuous-track {
