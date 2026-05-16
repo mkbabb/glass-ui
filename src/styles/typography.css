@@ -191,7 +191,7 @@
        - `--font-mono` references `"Fira Code"` first so the self-hosted
          face engages by default for every glass-ui consumer; the
          calibrated `"Fira Code Fallback"` covers the swap window, then
-         legacy `"Fira Mono"` + the generic `monospace` backstop the
+         fallback `"Fira Mono"` + the generic `monospace` backstop the
          chain for browsers that reject local() lookups. */
     --font-serif: "Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif;
     /* Independent brand/system sans stack; consumers override once for uniform sans. */

@@ -131,3 +131,36 @@ W1 opens — 3 parallel lanes per `waves/W1.md`:
 - Lane A: /api Props promotion sweep (8 types; surface 55 → 63).
 - Lane B: dock barrel re-export (P11/b CR-2 prerequisite).
 - Lane C: 2 cosmetic "legacy" comment rephrases.
+
+## 2026-05-16 — P.W1 close
+
+### Lane execution
+
+| Lane | Shape | Verdict |
+|---|---|---|
+| A | Agent-dispatched (general-purpose; 30-min cap; ~5-min runtime) | COMPLETED — 8 type promotions (`MetricCellProps` + `MetricCellAppearance` + `MetricStackProps` + `MetricRowProps` + `AnimatedDigitProps` + `AnimatedDigitMode` + `ResponsiveTabsProps` + `StackedIconGroupProps`); 5 SFCs refactored from inline-Props to named interfaces; surface 55 → 63 |
+| B | Orchestrator-direct (additive re-export; 12 LOC) | COMPLETED — `src/components/custom/dock/index.ts` re-exports DOCK_CONTEXT_KEY + 3 helpers + 2 types; P11/b CR-2 fourier-analysis prereq unblocked |
+| C | Orchestrator-direct (2 comment swaps) | COMPLETED — GlassTimeline.vue + typography.css "legacy" → accurate naming |
+
+### Surface-lock test update
+
+The `tests/public-surface.spec.ts` exact-runtime-surface check for the `dock` subpath flagged the 4 new runtime symbols added at Lane B (`DOCK_CONTEXT_KEY`, `provideDockContext`, `useDockContext`, `useOptionalDockContext`). Test expectations updated to include these — canonical surface-lock pattern (the test exists to catch unintended surface drift, not to forbid intentional growth).
+
+### Inheritance ledger absorption at W1
+
+| P ID | Item | Status |
+|---|---|---|
+| Pα B2 / Pγ.1 | AB+1 cohort skipped Props-export canon | ADDRESSED (Lane A) |
+| Pγ (Rγ baseline) | StackedIconGroupProps missed at O.W4 | ADDRESSED (Lane A) |
+| P11/b CR-2-prereq | Dock subpath does not publish DI helpers | ADDRESSED (Lane B) |
+| Pα A7-x + A9-x | 2 cosmetic "legacy" comments | ADDRESSED (Lane C) |
+
+Per P invariant 28 (zero deferral): zero P-residuals exit W1.
+
+### Next dispatch
+
+W2 opens — 4 parallel lanes per `waves/W2.md`:
+- Lane A: CONFIGURATOR_DENSITY_KEY paired-helper completion (optional-only per Pδ intent).
+- Lane B: SORTABLE_CONTEXT paired-helper completion (strict-only per Pδ intent).
+- Lane C: GlyphFaceSilhouetteKey paired-helper completion + UPPER_SNAKE_CASE rename (optional-only per Pδ intent; clean break per P invariant 5).
+- Lane D: UseDockStateReturn interface annotation + /api promotion.

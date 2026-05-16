@@ -11,3 +11,19 @@ export { default as DockDropdownTrigger } from "./DockDropdownTrigger.vue";
 // and `DockState` were exported only from `./composables/index.ts`, which is
 // not reachable through the `@mkbabb/glass-ui/dock` subpath.
 export type { UseDockStateOptions, DockState } from "./composables";
+
+// P.W1 Lane B — Fix 2 (P11/b CR-2 prerequisite): re-export the dock-context
+// canonical DI primitives so consumers can migrate from the retired
+// pre-O.W2 string keys (`"dockKeepOpen"` / `"dockRelease"`) to the typed-key
+// helpers without reaching for the deep-import path. fourier-analysis's 2
+// silent `inject<...>("dockKeepOpen", null)` sites at SliderControl.vue + GlassTimeline.vue
+// (which silently no-op at v1.7.0; functional regression on scrub gestures)
+// migrate via `useOptionalDockContext()` once this re-export ships.
+export {
+    DOCK_CONTEXT_KEY,
+    useDockContext,
+    useOptionalDockContext,
+    provideDockContext,
+    type DockContext,
+    type DockOrientation,
+} from "./composables/dockContext";

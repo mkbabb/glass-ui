@@ -49,45 +49,44 @@ type IconLike = Component | FunctionalComponent | object | null;
  * + smaller padding so the cell composes inside dense grids.
  */
 
-type MetricCellAppearance = "dashboard" | "compact" | "bare";
+export type MetricCellAppearance = "dashboard" | "compact" | "bare";
 
-const props = withDefaults(
-    defineProps<{
-        /**
-         * Optional lucide icon component. Renders at 14px stroke-2 inside
-         * the label row. Pass `null` to omit; the `icon` slot overrides.
-         */
-        icon?: IconLike;
-        /** Stroke width for the lucide icon. Defaults to 2. */
-        iconStrokeWidth?: number;
-        /** Icon pixel size — defaults to 14 (matches `text-micro` cap height). */
-        iconSize?: number;
-        /** Label text — reads through the `label` slot when set. */
-        label?: string;
-        /** Value — primary metric. Reads through the `value` slot when set. */
-        value?: string | number | null | undefined;
-        /** Unit suffix appended after the value (e.g. "Mbps", "ms"). */
-        unit?: string;
-        /** Placeholder glyph when value is empty/null. Defaults to em-dash. */
-        placeholder?: string;
-        /**
-         * Visual register.
-         * - `dashboard` (default) — wash-tier surface, `text-mono-prose`
-         *   value, `p-3`.
-         * - `compact` — wash-tier surface, `text-mono-small` value, `p-2`.
-         * - `bare` — no surface, no padding; the cell composes inside a
-         *   pre-styled host.
-         */
-        appearance?: MetricCellAppearance;
-        class?: HTMLAttributes["class"];
-    }>(),
-    {
-        placeholder: "—",
-        iconSize: 14,
-        iconStrokeWidth: 2,
-        appearance: "dashboard",
-    },
-);
+export interface MetricCellProps {
+    /**
+     * Optional lucide icon component. Renders at 14px stroke-2 inside
+     * the label row. Pass `null` to omit; the `icon` slot overrides.
+     */
+    icon?: IconLike;
+    /** Stroke width for the lucide icon. Defaults to 2. */
+    iconStrokeWidth?: number;
+    /** Icon pixel size — defaults to 14 (matches `text-micro` cap height). */
+    iconSize?: number;
+    /** Label text — reads through the `label` slot when set. */
+    label?: string;
+    /** Value — primary metric. Reads through the `value` slot when set. */
+    value?: string | number | null | undefined;
+    /** Unit suffix appended after the value (e.g. "Mbps", "ms"). */
+    unit?: string;
+    /** Placeholder glyph when value is empty/null. Defaults to em-dash. */
+    placeholder?: string;
+    /**
+     * Visual register.
+     * - `dashboard` (default) — wash-tier surface, `text-mono-prose`
+     *   value, `p-3`.
+     * - `compact` — wash-tier surface, `text-mono-small` value, `p-2`.
+     * - `bare` — no surface, no padding; the cell composes inside a
+     *   pre-styled host.
+     */
+    appearance?: MetricCellAppearance;
+    class?: HTMLAttributes["class"];
+}
+
+const props = withDefaults(defineProps<MetricCellProps>(), {
+    placeholder: "—",
+    iconSize: 14,
+    iconStrokeWidth: 2,
+    appearance: "dashboard",
+});
 
 const rootClass = computed(() => {
     switch (props.appearance) {

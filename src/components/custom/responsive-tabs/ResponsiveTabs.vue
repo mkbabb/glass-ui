@@ -39,40 +39,39 @@ import { UnderlineTabs, type TabOption } from "../tabs";
  * exposes one model so the consumer doesn't bind two.
  */
 
-const props = withDefaults(
-    defineProps<{
-        /** Tab options — shared between mobile select + desktop tabs. */
-        options: TabOption[];
-        /**
-         * Optional subset for desktop tabs. If a consumer has a mobile-only
-         * tab (e.g. speedtest AdminDataView's "Filters" tab which is
-         * desktop-sidebar-rendered), pass the desktop-relevant subset here.
-         * Falls back to `options` when unset.
-         */
-        desktopOptions?: TabOption[] | null;
-        /**
-         * Currently-active value. Bound through `v-model`; the consumer
-         * receives `update:modelValue` whenever either control changes.
-         */
-        modelValue: string;
-        /**
-         * CSS length string for the media query breakpoint. Mobile-control
-         * (Select) below; desktop-control (UnderlineTabs) at/above.
-         * Defaults to `"640px"` (Tailwind `sm:`).
-         */
-        breakpoint?: string;
-        /** Class merged onto both controls' chrome. */
-        class?: HTMLAttributes["class"];
-        /** Class merged onto the desktop UnderlineTabs only. */
-        desktopClass?: HTMLAttributes["class"];
-        /** Class merged onto the mobile SelectTrigger only. */
-        mobileTriggerClass?: HTMLAttributes["class"];
-    }>(),
-    {
-        breakpoint: "640px",
-        desktopOptions: null,
-    },
-);
+export interface ResponsiveTabsProps {
+    /** Tab options — shared between mobile select + desktop tabs. */
+    options: TabOption[];
+    /**
+     * Optional subset for desktop tabs. If a consumer has a mobile-only
+     * tab (e.g. speedtest AdminDataView's "Filters" tab which is
+     * desktop-sidebar-rendered), pass the desktop-relevant subset here.
+     * Falls back to `options` when unset.
+     */
+    desktopOptions?: TabOption[] | null;
+    /**
+     * Currently-active value. Bound through `v-model`; the consumer
+     * receives `update:modelValue` whenever either control changes.
+     */
+    modelValue: string;
+    /**
+     * CSS length string for the media query breakpoint. Mobile-control
+     * (Select) below; desktop-control (UnderlineTabs) at/above.
+     * Defaults to `"640px"` (Tailwind `sm:`).
+     */
+    breakpoint?: string;
+    /** Class merged onto both controls' chrome. */
+    class?: HTMLAttributes["class"];
+    /** Class merged onto the desktop UnderlineTabs only. */
+    desktopClass?: HTMLAttributes["class"];
+    /** Class merged onto the mobile SelectTrigger only. */
+    mobileTriggerClass?: HTMLAttributes["class"];
+}
+
+const props = withDefaults(defineProps<ResponsiveTabsProps>(), {
+    breakpoint: "640px",
+    desktopOptions: null,
+});
 
 const emit = defineEmits<{
     "update:modelValue": [value: string];

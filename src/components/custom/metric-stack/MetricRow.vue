@@ -29,61 +29,60 @@ import { cn } from "../../../utils";
  * instead pass props.
  */
 
-const props = withDefaults(
-    defineProps<{
-        /**
-         * Optional lucide icon component (e.g. `MoveDown`). Renders inside
-         * the icon track at 16×16 by default. Pass `null` to omit; the
-         * slot named `icon` overrides.
-         */
-        icon?: Component | null;
-        /** Stroke width for the lucide icon. */
-        iconStrokeWidth?: number;
-        /** Icon pixel size — defaults to 16. */
-        iconSize?: number;
-        /** Label text — reads through the label slot when set. */
-        label?: string;
-        /** Value text (the audacious-poster hero number). */
-        value?: string | number | null | undefined;
-        /** Unit suffix — reads through the unit slot when set. */
-        unit?: string;
-        /** Placeholder glyph when value is empty/null. Defaults to "—". */
-        placeholder?: string;
-        /**
-         * Per-row phase colour. Sets `--phase-color` inline so descendant
-         * tints (value, unit, aura) consume the colour through the cascade.
-         * Consumers that wire tints through Tailwind tokens may pass
-         * `var(--chart-download)` etc.
-         */
-        phaseColor?: string;
-        /**
-         * Digit-count knob for the value clamp. The value cell shrinks as
-         * `3 / max(3, digitCount)` so 4-digit values still fit the cell.
-         * Pass the rendered string length; defaults to 3.
-         */
-        digitCount?: number;
-        /**
-         * When `true`, descendant value + unit promote from the neutral
-         * `--foreground` colour to `var(--phase-color)`. Drives the
-         * post-complete colour-tint cascade.
-         */
-        colorTinted?: boolean;
-        /**
-         * When `true`, the `aura` slot becomes visible. Consumers wire
-         * this to their active-row gating (e.g. the metric being sampled).
-         */
-        active?: boolean;
-        class?: HTMLAttributes["class"];
-    }>(),
-    {
-        placeholder: "—",
-        iconSize: 16,
-        iconStrokeWidth: 2,
-        digitCount: 3,
-        colorTinted: false,
-        active: false,
-    },
-);
+export interface MetricRowProps {
+    /**
+     * Optional lucide icon component (e.g. `MoveDown`). Renders inside
+     * the icon track at 16×16 by default. Pass `null` to omit; the
+     * slot named `icon` overrides.
+     */
+    icon?: Component | null;
+    /** Stroke width for the lucide icon. */
+    iconStrokeWidth?: number;
+    /** Icon pixel size — defaults to 16. */
+    iconSize?: number;
+    /** Label text — reads through the label slot when set. */
+    label?: string;
+    /** Value text (the audacious-poster hero number). */
+    value?: string | number | null | undefined;
+    /** Unit suffix — reads through the unit slot when set. */
+    unit?: string;
+    /** Placeholder glyph when value is empty/null. Defaults to "—". */
+    placeholder?: string;
+    /**
+     * Per-row phase colour. Sets `--phase-color` inline so descendant
+     * tints (value, unit, aura) consume the colour through the cascade.
+     * Consumers that wire tints through Tailwind tokens may pass
+     * `var(--chart-download)` etc.
+     */
+    phaseColor?: string;
+    /**
+     * Digit-count knob for the value clamp. The value cell shrinks as
+     * `3 / max(3, digitCount)` so 4-digit values still fit the cell.
+     * Pass the rendered string length; defaults to 3.
+     */
+    digitCount?: number;
+    /**
+     * When `true`, descendant value + unit promote from the neutral
+     * `--foreground` colour to `var(--phase-color)`. Drives the
+     * post-complete colour-tint cascade.
+     */
+    colorTinted?: boolean;
+    /**
+     * When `true`, the `aura` slot becomes visible. Consumers wire
+     * this to their active-row gating (e.g. the metric being sampled).
+     */
+    active?: boolean;
+    class?: HTMLAttributes["class"];
+}
+
+const props = withDefaults(defineProps<MetricRowProps>(), {
+    placeholder: "—",
+    iconSize: 16,
+    iconStrokeWidth: 2,
+    digitCount: 3,
+    colorTinted: false,
+    active: false,
+});
 
 const rowStyle = computed(() => ({
     ...(props.phaseColor ? { "--phase-color": props.phaseColor } : {}),

@@ -30,45 +30,41 @@ import { cn } from "../../../utils";
  * (`name`, `appear`, etc.) — they're forwarded via `v-bind="$attrs"`.
  */
 
-type MetricStackVariant = string | undefined;
-type MetricStackAs = string | Component;
+export interface MetricStackProps {
+    /**
+     * Container-name handle for the inline-size container. Children
+     * can `@container <name>` against this for responsive
+     * promotion (e.g. the description row appearing at ≥ 32rem).
+     */
+    containerName?: string;
+    /**
+     * Variant tag mirrored to a `data-variant` attribute. Optional;
+     * consumers use it to differentiate row-count + scale multipliers
+     * (e.g. speedtest's `dpi` variant lifts `--result-row-scale: 1.25`).
+     */
+    variant?: string;
+    /**
+     * Row count for the min-block-size pre-allocation. Defaults to 4
+     * (the speedtest 4-metric default). The pre-allocation clamp reads
+     * `clamp(4rem * rows, 48cqi, 7rem * rows)` so the panel reserves
+     * a sane height even before the rows hydrate.
+     */
+    rows?: number;
+    /**
+     * Render-as tag. Defaults to `"div"`. Pass a Vue component
+     * (e.g. `TransitionGroup`) when per-row enter/leave animation is
+     * required and the subgrid contract must hold (the rendered root
+     * is the grid container; rows are immediate children).
+     */
+    as?: string | Component;
+    class?: HTMLAttributes["class"];
+}
 
-const props = withDefaults(
-    defineProps<{
-        /**
-         * Container-name handle for the inline-size container. Children
-         * can `@container <name>` against this for responsive
-         * promotion (e.g. the description row appearing at ≥ 32rem).
-         */
-        containerName?: string;
-        /**
-         * Variant tag mirrored to a `data-variant` attribute. Optional;
-         * consumers use it to differentiate row-count + scale multipliers
-         * (e.g. speedtest's `dpi` variant lifts `--result-row-scale: 1.25`).
-         */
-        variant?: MetricStackVariant;
-        /**
-         * Row count for the min-block-size pre-allocation. Defaults to 4
-         * (the speedtest 4-metric default). The pre-allocation clamp reads
-         * `clamp(4rem * rows, 48cqi, 7rem * rows)` so the panel reserves
-         * a sane height even before the rows hydrate.
-         */
-        rows?: number;
-        /**
-         * Render-as tag. Defaults to `"div"`. Pass a Vue component
-         * (e.g. `TransitionGroup`) when per-row enter/leave animation is
-         * required and the subgrid contract must hold (the rendered root
-         * is the grid container; rows are immediate children).
-         */
-        as?: MetricStackAs;
-        class?: HTMLAttributes["class"];
-    }>(),
-    {
-        containerName: "metric-stack",
-        rows: 4,
-        as: "div",
-    },
-);
+const props = withDefaults(defineProps<MetricStackProps>(), {
+    containerName: "metric-stack",
+    rows: 4,
+    as: "div",
+});
 
 const classes = computed(() => cn("metric-stack", "results-stack", props.class));
 </script>

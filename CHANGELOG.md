@@ -17,6 +17,63 @@
 >
 > Speedtest reference: `docs/tranches/AC/AC.md` §AC.W6 + §AC.W8 + `docs/tranches/AC/waves/W6{a,b,c,d,e}-*.md` + `docs/tranches/AC/waves/W8.md`. Tags v1.5.0 + v1.5.1 placed retroactively at AC.W6e close.
 
+## 1.7.1 — 2026-05-16 — P.W1 (/api Props promotion + dock barrel re-export + cosmetic comment rephrase)
+
+Patch-level cohesion release. Three parallel lanes; all additive at the consumer surface (zero shape breaks).
+
+### Lane A — `/api` Props promotion sweep (8 types; surface 55 → 63)
+
+The AB+1 primitive cohort (`MetricCell`, `MetricStack`, `MetricRow`, `AnimatedDigit`, `ResponsiveTabs`) plus the Rγ-baseline carryover `StackedIconGroup` reach the `@mkbabb/glass-ui/api` discovery layer:
+
+- **AB+1 primitives (7 types)**: `MetricCellProps`, `MetricCellAppearance` (`"dashboard" | "compact" | "bare"`), `MetricStackProps`, `MetricRowProps`, `AnimatedDigitProps`, `AnimatedDigitMode` (`"absolute" | "progress"`), `ResponsiveTabsProps`.
+- **StackedIconGroup (1 type)**: `StackedIconGroupProps<TItem>` — Rγ baseline carryover missed at the O.W4 Lane A triad.
+
+Five SFCs refactored from inline `defineProps<{...}>` to named `export interface FooProps` (HeaderRibbon O.W6 precedent) — per P invariant 5, the inline anonymous form is REPLACED, not preserved alongside.
+
+Surface count: 55 (post-W0 resync) → 63 (59 types + 4 constants).
+
+### Lane B — Dock barrel re-export (P11/b CR-2 prerequisite)
+
+`src/components/custom/dock/index.ts` gains an additive re-export block exposing the dock-context canonical DI primitives on the `@mkbabb/glass-ui/dock` subpath:
+
+```ts
+export {
+    DOCK_CONTEXT_KEY,
+    useDockContext,
+    useOptionalDockContext,
+    provideDockContext,
+    type DockContext,
+    type DockOrientation,
+} from "./composables/dockContext";
+```
+
+Prior to W1, these were reachable only via deep import (`src/components/custom/dock/composables/dockContext`) — blocking the fourier-analysis migration of 2 silent `inject<...>("dockKeepOpen", null)` sites that have been no-op since O.W2 retired the legacy string keys. The migration target is now subpath-reachable; consumer-side cross-walk lands at P.W5 Lane B.
+
+### Lane C — Cosmetic "legacy" comment rephrase (2 sites)
+
+Two source-comment word swaps; zero runtime impact. Per P invariant 5 (NO LEGACY CODE), the substrate at HEAD contains no actual legacy artefact — the comments mis-described their referents:
+
+- `src/components/custom/timeline/GlassTimeline.vue:88`: "legacy monolith" → "pre-O.W3 monolithic source" (the 1049-LOC pre-O.W3 source the W3 split replaced).
+- `src/styles/typography.css:194`: "legacy `Fira Mono`" → "fallback `Fira Mono`" (Fira Mono is the documented fallback tier in the `--font-mono` cascade, not deprecated).
+
+### Verification
+
+- `npm run typecheck` — PASS (zero diagnostics).
+- `NODE_OPTIONS=--max-old-space-size=8192 npm run build` — PASS.
+- `npm run verify-export-types` — PASS (all targets + type resolutions valid).
+- `npm run profile:budget` — PASS (CSS 38_006 / 42_000 raw = 90.5%; gzip 7_094 / 7_400 = 95.9% — comfortably under the P.W0 rebaseline).
+- `npm test` — PASS (32 files / 361 tests; surface-lock test in `tests/public-surface.spec.ts` updated to include the 4 new dock-context runtime symbols).
+
+### Inheritance ledger absorbed at W1
+
+| P ID | Item | Status |
+|---|---|---|
+| Pα B2 / Pγ.1 | AB+1 cohort skipped Props-export canon | ADDRESSED (Lane A — 7 promotions) |
+| Pγ (Rγ baseline) | StackedIconGroupProps missed at O.W4 | ADDRESSED (Lane A — 1 promotion) |
+| P11/b CR-2-prereq | Dock subpath does not publish DI helpers | ADDRESSED (Lane B) |
+| Pα A7-x + A9-x | 2 cosmetic "legacy" comments | ADDRESSED (Lane C) |
+
+
 ## 1.7.0 — 2026-05-14 — AB+1 substrate cohort (speedtest AC.W8e); P.W0 Lane B ceremonial tag
 
 Minor-level expansion shipping two new custom primitives + a `<ToggleGroupItem>` `variant="card"` addition. Substrate for the AB+1 style-system debt 5-of-9 subset routed since AB.W5; each primitive collapses a duplicated consumer-side recipe onto a single library consume.

@@ -66,6 +66,20 @@
 // The 2-type delta is bookkeeping (historical add-counts vs. actual
 // exported-symbol enumeration); the P.W0 resync names the canonical at-HEAD
 // count.
+//
+// P.W1 Lane A extensions (v1.7.1): 8 type promotions for the AB+1 primitive
+// cohort per Pγ §"AB+1 cohort skipped the Props-export canon" —
+//   - MetricCell domain (2 types): `MetricCellProps` + `MetricCellAppearance`
+//     (the `"dashboard" | "compact" | "bare"` visual register).
+//   - MetricStack domain (2 types): `MetricStackProps` + `MetricRowProps`
+//     (the layout shell + row Props pair).
+//   - AnimatedDigit domain (2 types): `AnimatedDigitProps` +
+//     `AnimatedDigitMode` (the `"absolute" | "progress"` damping axis).
+//   - ResponsiveTabs (1 type): `ResponsiveTabsProps` (parallels
+//     `BouncyToggleProps`).
+//   - StackedIconGroup (1 type, Rγ baseline carryover): `StackedIconGroupProps`
+//     — flagged by Rγ §2.3, missed at O.W4 Lane A triad.
+// Surface count 55 → 63 (59 types + 4 constants).
 
 // ── Aurora ─────────────────────────────────────────────────────────────────
 // Substrate config + family, plus numeric ceilings the consumer needs to
@@ -213,3 +227,37 @@ export type {
     HeaderRibbonPosition,
     HeaderRibbonProps,
 } from "../components/custom/header-ribbon";
+
+// ── AB+1 primitives ────────────────────────────────────────────────────────
+// AC.W6d + AC.W8e cohort (v1.5.0 → v1.7.0) Props/variant types — promoted
+// P.W1 Lane A per Pγ §"AB+1 cohort skipped the Props-export canon".
+// `MetricCellAppearance` is the visual register enum (`"dashboard" |
+// "compact" | "bare"`) parallel to `GlassPanelVariant`; `MetricCellProps`
+// is the Props shape consumers forward when wrapping `<MetricCell>`.
+// `MetricStackProps` + `MetricRowProps` cover the layout shell + row pair
+// (both lift their inline `defineProps<{...}>` shapes to named interfaces
+// matching the HeaderRibbon precedent). `AnimatedDigitMode` is the damping
+// axis (`"absolute" | "progress"`) forwarded into `useAnimatedNumber`;
+// `AnimatedDigitProps` is the consume-side shape. `ResponsiveTabsProps`
+// parallels `BouncyToggleProps` — single shape for the matchMedia-driven
+// Select-or-Tabs swap.
+export type {
+    MetricCellAppearance,
+    MetricCellProps,
+} from "../components/custom/metric-cell";
+export type {
+    MetricRowProps,
+    MetricStackProps,
+} from "../components/custom/metric-stack";
+export type {
+    AnimatedDigitMode,
+    AnimatedDigitProps,
+} from "../components/custom/animated-digit";
+export type { ResponsiveTabsProps } from "../components/custom/responsive-tabs";
+
+// ── StackedIconGroup ───────────────────────────────────────────────────────
+// `StackedIconGroupProps<TItem>` — Rγ baseline carryover (§2.3); missed at
+// the O.W4 Lane A Props/variants triad. The barrel already exports the
+// type; P.W1 Lane A adds the `/api` re-export so consumers wiring stacked
+// avatar/icon strips can pin the generic shape from the discovery layer.
+export type { StackedIconGroupProps } from "../components/custom/stacked-icons";

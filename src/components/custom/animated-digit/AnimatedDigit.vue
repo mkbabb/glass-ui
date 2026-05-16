@@ -29,28 +29,29 @@ import { useAnimatedNumber } from "../../../composables/motion/useAnimatedNumber
  *    `useAnimatedNumber`.
  */
 
-const props = withDefaults(
-    defineProps<{
-        value: number | null | undefined;
-        format?: (v: number) => string;
-        placeholder?: string;
-        /**
-         * Override the auto-derived digit-count. When unset the primitive
-         * publishes the formatted-string length to `--digit-count` so
-         * MetricRow's clamp math reads from a single source of truth.
-         */
-        digitCount?: number;
-        /** Tag forwarded to `useAnimatedNumber`. */
-        mode?: "absolute" | "progress";
-        /** Damping factor; forwarded to `useAnimatedNumber`. */
-        damping?: number;
-        class?: HTMLAttributes["class"];
-    }>(),
-    {
-        placeholder: "—",
-        mode: "absolute",
-    },
-);
+export type AnimatedDigitMode = "absolute" | "progress";
+
+export interface AnimatedDigitProps {
+    value: number | null | undefined;
+    format?: (v: number) => string;
+    placeholder?: string;
+    /**
+     * Override the auto-derived digit-count. When unset the primitive
+     * publishes the formatted-string length to `--digit-count` so
+     * MetricRow's clamp math reads from a single source of truth.
+     */
+    digitCount?: number;
+    /** Tag forwarded to `useAnimatedNumber`. */
+    mode?: AnimatedDigitMode;
+    /** Damping factor; forwarded to `useAnimatedNumber`. */
+    damping?: number;
+    class?: HTMLAttributes["class"];
+}
+
+const props = withDefaults(defineProps<AnimatedDigitProps>(), {
+    placeholder: "—",
+    mode: "absolute",
+});
 
 const animated = useAnimatedNumber(() => props.value ?? null, {
     mode: props.mode,

@@ -197,7 +197,12 @@ const exactSubpathRuntimeSurfaces = [
     {
         subpath: "dock",
         surface: Dock,
+        // P.W1 Lane B added the dock-context canonical DI primitives so
+        // consumers can migrate from the retired pre-O.W2 string keys
+        // without reaching for the deep-import path. The DOCK_CONTEXT_KEY
+        // symbol + 3 helpers join the SFC default-exports here.
         names: [
+            "DOCK_CONTEXT_KEY",
             "DockDropdownTrigger",
             "DockIconButton",
             "DockLayer",
@@ -205,6 +210,9 @@ const exactSubpathRuntimeSurfaces = [
             "DockSelectTrigger",
             "DockTabButton",
             "GlassDock",
+            "provideDockContext",
+            "useDockContext",
+            "useOptionalDockContext",
         ],
     },
 ] as const;

@@ -85,8 +85,8 @@ const emit = defineEmits<{
 <template>
     <!-- Continuous variant — delegates to <ContinuousTimeline>. Forwards
          the popoverContent slot so consumers can override the popover
-         body via the same `#popoverContent` slot name as the legacy
-         monolith. -->
+         body via the same `#popoverContent` slot name as the pre-O.W3
+         monolithic source. -->
     <ContinuousTimeline
         v-if="variant === 'continuous'"
         :segments="props.segments"
