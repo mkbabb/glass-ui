@@ -99,8 +99,35 @@ Per the user "ANOTHER wave of 6 agents in parallel AFTER the above" directive. L
 
 Each wave-spec at `docs/tranches/P/waves/W*.md`. CR-6 + CR-7 RETIRED at open per Pζ + P11/f findings. PD-1 + PD-2 → P.W6 formal-archive. PD-3 → P.W5 Lane A user-authorized LAND.
 
-## Awaiting dispatch authorization
+## 2026-05-16 — P.W0 HEADLINE close
 
-Per P-open user directive ("This is NOT an implementation phase. Tranche development only."), the planning substrate landed at this open commit. Implementation dispatch awaits explicit subsequent user directive analogous to K → L → M → N → O pattern.
+User dispatch authorization received (verbatim): "Begin and continue the current tranche. ... Do not relinquish control back to me until you have completed the plan IN TOTALITY. NO quick solutions, NO workarounds: idiomatic, gestalt approaches."
 
-When dispatch authorized: W0 HEADLINE opens — 3 lanes (AB+1 retrospective agent-dispatched + v1.7.0 ceremonial tag orchestrator-solo + doc-counter γ-fix orchestrator-direct).
+### Lane execution
+
+| Lane | Shape | Verdict |
+|---|---|---|
+| A | Agent-dispatched (general-purpose; 30-min cap) | COMPLETED — 9 files at `docs/tranches/AB+1/` + 1 P audit proof; all 12 source commits verified via read-only `git show`; tag chain v1.5.0 / v1.5.1 / v1.6.0 verified PLACED; v1.7.0 named-destination Lane B |
+| B | Orchestrator-solo gate matrix | COMPLETED — all 5 canonical gates green; CSS budget rebaselined inline as the P-2 absorb (Lane C work); v1.7.0 ceremonial tag placed on W0 close commit + pushed |
+| C | Orchestrator-direct doc-counter γ-fix + CSS budget rebaseline | COMPLETED — CLAUDE.md / src/index.ts / src/api/index.ts / CHANGELOG.md historical FIX-WITH-NOTE / scripts/profile-bundle.mjs edits; grep verification returns zero stale counters at HEAD |
+
+### Inheritance ledger absorption at W0
+
+| P ID | Item | Status |
+|---|---|---|
+| P-AB1 | AB+1 retrospective plan folder | ADDRESSED (Lane A) |
+| P-AB1-tag | v1.7.0 untagged at HEAD | ADDRESSED (Lane B; tag placed + pushed) |
+| P-2 | CSS budget rebaseline (95.7% → ≈ 90% raw + 95.9% gzip post-rebaseline) | ADDRESSED (Lane C; new baseline 42_000 raw / 7_400 gzip with inline rationale) |
+| P-7 | γ-M5 CHANGELOG "8 constants" historical typos | ADDRESSED (Lane C FIX-WITH-NOTE at v1.0.0 + v1.0.5 + v1.3.0 entries) |
+| Pα B1 | CLAUDE.md doc-counter γ-drift | ADDRESSED (Lane C) |
+| Pε-1 | v1.7.0 tag missing | ADDRESSED (Lane B) |
+| Pε-5 | CLAUDE.md subpath count stale | ADDRESSED (Lane C) |
+
+Per P invariant 28 (zero deferral): zero P-residuals exit W0. AB+1 retrospective + ceremonial tag + doc-counter resync + CSS rebaseline all land at this commit.
+
+### Next dispatch
+
+W1 opens — 3 parallel lanes per `waves/W1.md`:
+- Lane A: /api Props promotion sweep (8 types; surface 55 → 63).
+- Lane B: dock barrel re-export (P11/b CR-2 prerequisite).
+- Lane C: 2 cosmetic "legacy" comment rephrases.

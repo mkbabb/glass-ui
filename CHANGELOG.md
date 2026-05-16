@@ -17,9 +17,11 @@
 >
 > Speedtest reference: `docs/tranches/AC/AC.md` §AC.W6 + §AC.W8 + `docs/tranches/AC/waves/W6{a,b,c,d,e}-*.md` + `docs/tranches/AC/waves/W8.md`. Tags v1.5.0 + v1.5.1 placed retroactively at AC.W6e close.
 
-## 1.7.0 — 2026-05-14 — AB+1 substrate cohort (speedtest AC.W8e)
+## 1.7.0 — 2026-05-14 — AB+1 substrate cohort (speedtest AC.W8e); P.W0 Lane B ceremonial tag
 
 Minor-level expansion shipping two new custom primitives + a `<ToggleGroupItem>` `variant="card"` addition. Substrate for the AB+1 style-system debt 5-of-9 subset routed since AB.W5; each primitive collapses a duplicated consumer-side recipe onto a single library consume.
+
+The `package.json` bump landed at commit `b201b03` without a git tag; **P.W0 Lane B is the ceremonial tagging round** that runs the canonical gate matrix (typecheck + build + verify-export-types + profile:budget + test) before pushing `v1.7.0`. P.W0 also lands the AB+1 retrospective at `docs/tranches/AB+1/` (Lane A) + the doc-counter γ-fix and CSS bundle-budget rebaseline (Lane C — see below).
 
 **New primitives**:
 
@@ -58,6 +60,24 @@ speedtest's AC.W8e wave consumes the trio at:
 - `<FlowSelector>` migrates to `<ToggleGroupItem variant="card">` (17 → 0 consumer classes on the surface).
 - `<ResultDetailSheet>` 4 sites consume `<MetricCell>` direct (44 → 0 consumer classes on the cards).
 - `<AdminDataView>` + `<AdminDashboardLayout>` + `<PublicDashboardLayout>` 3 sites consume `<ResponsiveTabs>` (dual sm:hidden / hidden sm:block mounts → single matchMedia-driven consume).
+
+### P.W0 Lane C — doc-counter resync + bundle-budget rebaseline
+
+The AB+1 cohort accumulated documentation drift across CLAUDE.md, `src/index.ts`, and `src/api/index.ts` because the per-tag releases (v1.5.0 / v1.5.1 / v1.6.0 / v1.7.0) shipped without a `docs/tranches/<LETTER>/` plan folder — the third K-invariant-3 shadow-execution recurrence (V → AB → AB+1). P.W0 Lane A authors the retrospective; Lane C resyncs the counters.
+
+Doc-counter fixes:
+- `CLAUDE.md:20` — `/api` surface "53 canonical public symbols (49 types + 4 constants)" → "55 canonical public symbols (51 types + 4 constants)" (the 2-type drift surfaced at the P-open Pγ audit).
+- `CLAUDE.md:72` — custom-package dir count "31" → "35" (AB+1 added `animated-digit/`, `metric-cell/`, `metric-stack/`, `responsive-tabs/`).
+- `CLAUDE.md:195` + `:243` — subpath count "38 flat JS subpaths" → "42"; "39 entries total" → "43"; "v1.4.0 ships" → "v1.7.0 ships". Directory tree gains the 4 AB+1 custom-package entries.
+- `src/index.ts:52` — "30 packages in `src/components/custom/`" → "35 packages"; "the other 23 reach consumers ONLY via their dedicated subpath" → "the other 28".
+- `src/api/index.ts` — adds a P.W0 Lane C resync block documenting the canonical at-HEAD surface count (55 / 51 types + 4 constants).
+- Historical CHANGELOG entries at v1.0.0 + v1.0.5 + v1.3.0 — "8 constants" arithmetic typos corrected with editorial notes per P invariant 28 FIX-WITH-NOTE.
+
+CSS bundle-budget rebaseline (`scripts/profile-bundle.mjs`):
+- Prior baseline: 36_000 raw / 6_700 gzip (N.W0 v1.1.1 rebaseline against the AB tranche additions).
+- Current draw at v1.7.0: 38_006 raw / 7_096 gzip — over both budgets due to AC.W6b OFL font face declarations + AC.W6c phase-color-label cascade + AC.W6d timeline `::before` 44×44 + MetricRow/Stack/AnimatedDigit recipes + AC.W8e MetricCell + ResponsiveTabs + ToggleGroupItem card variant + the `--continuous-fill-opacity` cascade (commit `b8a61ec`).
+- New baseline: 42_000 raw / 7_400 gzip (≈ 10 % headroom).
+- Rebaseline rationale captured inline in `scripts/profile-bundle.mjs`.
 
 
 ## 1.6.0 — 2026-05-14 — primitive expansions cohort (speedtest AC.W6d)
@@ -540,7 +560,7 @@ rename.
 
 ### Added — 12 `/api` discovery types (Lane A)
 
-Surface count 37 → 49 (41 types + 8 constants):
+Surface count 37 → 49 (41 types + 4 constants — historical arithmetic typo corrected at P.W0 Lane C; the constant count never changed from the 4 Aurora + Metaballs constants):
 
 - **Sidebar domain (6)**: `SidebarState`, `SidebarSection`,
   `TreeNode`, `TreeIndexEntry`, `SidebarIndexEntry`,
@@ -1500,7 +1520,7 @@ absorb L-residuals.md P3 carry-forwards + L.W7 Lane B fallout + AA-tranche
 timeline primitive surface — every promotion has consumer evidence on
 the canonical public surface today.
 
-Surface count: 32 → 37 (29 types + 8 constants).
+Surface count: 32 → 37 (29 types + 4 constants — historical arithmetic typo corrected at P.W0 Lane C).
 
 - `GlassPanelVariant` — 5-rung glass-ladder vocabulary (`wash | quiet |
   resting | floating | overlay`). Lane B-original W1-B Open Q1 path-a
@@ -1881,8 +1901,9 @@ Cherry-pick rationale for the 7 `custom/` packages still on the root barrel
 ### ADDED — Lane B (`src/api/` discovery layer)
 
 - **`@mkbabb/glass-ui/api`** (NEW subpath) — single-file aggregator
-  re-exporting 32 canonical public symbols (24 types + 8 constants/runtime
-  values) from canonical homes across 5 domain groupings: Aurora (12 types
+  re-exporting 32 canonical public symbols (24 types + 4 constants/runtime
+  values; the original entry said `8` — corrected at P.W0 Lane C) from
+  canonical homes across 5 domain groupings: Aurora (12 types
   + 3 constants), Configurator (4 types), Metaballs (1 type + 1 constant),
   Surface enums (CardTier, InstrumentChassisPhase, ToastVariant), CVA
   variants (8 types across Alert/Avatar/Badge/Button/Sheet/Slider/Toggle +

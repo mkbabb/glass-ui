@@ -40,9 +40,24 @@ const startedAt = Date.now();
 // to 36_000 raw / 6_700 gzip (≈ 13 % headroom over current draw of
 // 31_875 raw / 5_972 gzip) restores a passing gate without papering over
 // the AB additions; future tranches re-baseline at their own close.
+//
+// P.W0 Lane C re-baseline (v1.7.0 ceremonial close): the AB+1 shadow-execution
+// cohort (v1.5.0 → v1.7.0; speedtest AC.W6 + W8e driven) shipped CSS without
+// re-baselining the budget at its tag boundaries — a recurrence of the AB
+// gap the N.W0 audit caught. AC.W6b OFL font self-host face declarations,
+// AC.W6c `--phase-color-label` cascade, AC.W6d timeline `::before` 44×44
+// hit-area + MetricRow/MetricStack/AnimatedDigit styles, AC.W8e MetricCell +
+// ResponsiveTabs + ToggleGroupItem card variant, plus the b8a61ec
+// `--continuous-fill-opacity` cascade collectively grew CSS draw from
+// 31_875 raw / 5_972 gzip (N.W0 baseline) to 38_006 raw / 7_096 gzip
+// (P.W0 measurement). Bumping CSS budget to 42_000 raw / 7_400 gzip
+// (≈ 10 % headroom over current draw) restores a passing gate without
+// papering over the AB+1 additions. Future tranches re-baseline at their
+// own close per the invariant-29 AB+1 retrospective discipline (codified at
+// P.W6).
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
-    "dist/glass-ui.css": { raw: 36_000, gzip: 6_700 },
+    "dist/glass-ui.css": { raw: 42_000, gzip: 7_400 },
 };
 
 const args = new Set(process.argv.slice(2));

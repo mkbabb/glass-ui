@@ -49,9 +49,9 @@
 //
 // ── Custom-package cherry-pick rationale (Rε §B.2.2 → L.W2 disposition) ───
 //
-// Of the 30 packages in `src/components/custom/`, this root barrel re-exports
+// Of the 35 packages in `src/components/custom/`, this root barrel re-exports
 // 7 (`instrument-chassis`, `glyph-face`, `dock-group`, `disco-glyph`,
-// `hover-popover`, `configurator`, `scrolling-text`). The other 23 reach
+// `hover-popover`, `configurator`, `scrolling-text`). The other 28 reach
 // consumers ONLY via their dedicated subpath (`@mkbabb/glass-ui/dock`,
 // `/aurora`, `/sidebar`, ...).
 //
@@ -67,7 +67,8 @@
 //   - vueuse-bearing internals (sidebar, glass-carousel, infinite-scroll);
 //   - large composite chassis with nested composables (dock, aurora,
 //     configurator domain helpers); OR
-//   - vertical/themed substrate (metaballs, paper-backdrop, search).
+//   - vertical/themed substrate (metaballs, paper-backdrop, search,
+//     animated-digit, metric-cell, metric-stack, responsive-tabs).
 // Consumers of those packages explicitly opt into them via subpath, keeping
 // the root barrel's transitive-import graph tight per the tree-shaking
 // gestalt in `docs/tranches/L/research/Rε-architectural-transpositions.md`

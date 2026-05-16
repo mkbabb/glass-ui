@@ -55,6 +55,17 @@
 // `HeaderRibbonPosition`, `HeaderRibbonProps`). Surface count 49 → 53 (49
 // types + 4 constants). HeaderRibbon ships subpath-only; useClipboard is
 // root-barrel re-exported (vueuse-free).
+//
+// P.W0 Lane C resync (v1.7.0 ceremonial close): canonical surface at HEAD is
+// 55 (51 types + 4 constants). The 2-type drift between the O.W6 running
+// tally (53) and the actual HEAD count surfaced at the P-open Pγ audit; the
+// AB+1 cohort (v1.5.0 → v1.7.0) shipped 4 new custom primitives
+// (`AnimatedDigit`, `MetricCell`, `MetricStack`, `ResponsiveTabs` — also
+// `MetricRow` which lives in ui/) but did NOT promote their Props/variant
+// types to /api. Those promotions land at P.W1 Lane A (surface 55 → 63).
+// The 2-type delta is bookkeeping (historical add-counts vs. actual
+// exported-symbol enumeration); the P.W0 resync names the canonical at-HEAD
+// count.
 
 // ── Aurora ─────────────────────────────────────────────────────────────────
 // Substrate config + family, plus numeric ceilings the consumer needs to

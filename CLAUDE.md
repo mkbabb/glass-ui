@@ -17,7 +17,7 @@ npm run verify-export-types # subpath dts publication probe (L W0 Lane III relea
 src/
 ├── index.ts                        # v1.0 curated public barrel (vueuse-free) — Phase 2 SCC closure (L.W1 Lane A)
 ├── api/                            # `@mkbabb/glass-ui/api` discovery layer — types + constants only (L.W1 Lane B)
-│   └── index.ts                    # 53 canonical public symbols (49 types + 4 constants) — M.W2 + O.W4 + O.W6 extensions
+│   └── index.ts                    # 55 canonical public symbols (51 types + 4 constants) — M.W2 + O.W4 + O.W6 extensions; P.W0 resync
 ├── dark.ts                         # `@mkbabb/glass-ui/dark` flat subpath (L.W1 Lane C; vueuse-bearing)
 ├── keyboard.ts                     # `@mkbabb/glass-ui/keyboard` flat subpath (L.W1 Lane C; vueuse-bearing)
 ├── carousel.ts                     # `@mkbabb/glass-ui/carousel` flat subpath (L.W1 Lane C; vueuse-bearing; v1.0.4 ships full `Carousel*` family per MIGRATION.md §1.2)
@@ -69,7 +69,8 @@ src/
 │   │   ├── toggle-group/           # ToggleGroup, ToggleGroupItem
 │   │   ├── tooltip/                # Tooltip provider/trigger/content (rounded-tooltip token)
 │   │   └── index.ts                # barrel: all ui/ exports
-│   ├── custom/                     # 31 custom package dirs (every dir has a package barrel)
+│   ├── custom/                     # 35 custom package dirs (every dir has a package barrel)
+│   │   ├── animated-digit/         # AnimatedDigit single-glyph reel (AB+1 / AC.W6d ergonomics)
 │   │   ├── aurora/                 # Aurora WebGL background + useAurora composable (aurora chrome consumes useConfiguratorState<AuroraConfig> with cloneMode='per-preset' — see Configurator; L.W7 Lane B retired the prior parallel useAuroraStudio chrome)
 │   │   ├── configurator/           # Configurator + ConfiguratorLayer + ConfiguratorRow + useConfiguratorState
 │   │   ├── confirm-dialog/         # ConfirmDialog
@@ -99,8 +100,11 @@ src/
 │   │   ├── labeled-field/          # LabeledField parent + 4 wrappers (LabeledInput/Select/Slider/Switch)
 │   │   ├── metaballs/              # WebGL metaball substrate (Configurator-recursion P0 absorbed — K W7)
 │   │   ├── metric-badge/           # MetricBadge primitive
+│   │   ├── metric-cell/            # MetricCell compact metric card (AB+1 / AC.W8e — wash-tier glass surface)
+│   │   ├── metric-stack/           # MetricStack vertical metric grouping (AB+1 / AC.W6d — `as` prop TransitionGroup support)
 │   │   ├── paper-backdrop/         # PaperBackdrop
 │   │   ├── pulse/                  # Pulse (dots / ring) loading indicator
+│   │   ├── responsive-tabs/        # ResponsiveTabs matchMedia Select↔UnderlineTabs swap (AB+1 / AC.W8e)
 │   │   ├── scrolling-text/         # ScrollingText overflow-marquee (lifted from speedtest — v0.9.1)
 │   │   ├── search/                 # Fuzzy search exports
 │   │   ├── sidebar/                # ProgressiveSidebar + component-owned types only
@@ -192,7 +196,7 @@ All runtime deps are peer:
 
 ## Subpath surface
 
-v1.0 (L.W1) closed the vueuse SCC trap with a Phase 2 root-barrel curation. The shape is now three layers — a vueuse-FREE root barrel, 38 flat per-package subpaths, and a pure types/constants `@mkbabb/glass-ui/api` discovery layer.
+v1.0 (L.W1) closed the vueuse SCC trap with a Phase 2 root-barrel curation. The shape is now three layers — a vueuse-FREE root barrel, 42 flat per-package subpaths, and a pure types/constants `@mkbabb/glass-ui/api` discovery layer.
 
 ```ts
 // Root barrel — vueuse-FREE curated surface
@@ -240,7 +244,7 @@ import { GlassCarousel } from "@mkbabb/glass-ui/glass-carousel";
 //   scrolling-text, freshness
 ```
 
-CSS imports the unified bundle via `@mkbabb/glass-ui/styles`. Per `package.json` exports + `typesVersions["*"]`, v1.4.0 ships **38 flat JS subpaths** (33 component packages + `/api` + `/forms` + `/dark` + `/keyboard` + `/carousel`) plus the `/styles` CSS bundle (39 entries total in `package.json` exports, excluding `./` root + `./package.json`); verified by `npm run verify-export-types` (release-script probe per L.W0 Lane III; unconditional since O.W5 Lane B+D).
+CSS imports the unified bundle via `@mkbabb/glass-ui/styles`. Per `package.json` exports + `typesVersions["*"]`, v1.7.0 ships **42 flat JS subpaths** (37 component packages + `/api` + `/forms` + `/dark` + `/keyboard` + `/carousel`) plus the `/styles` CSS bundle (43 entries total in `package.json` exports, excluding `./` root + `./package.json`); verified by `npm run verify-export-types` (release-script probe per L.W0 Lane III; unconditional since O.W5 Lane B+D).
 
 The v0.9.x nested subpaths `@mkbabb/glass-ui/composables/dark` + `@mkbabb/glass-ui/composables/keyboard` were RETIRED at v1.0 — L invariant 4 (no backwards-compat aliases). Consumers migrate via one-line rename per call site; see `MIGRATION.md`. The `@mkbabb/glass-ui/pagination` and `@mkbabb/glass-ui/virtual` subpaths were RETIRED at L.W3 (0 production consumers; substrate-without-consumer-binary invariant).
 
