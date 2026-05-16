@@ -39,7 +39,6 @@ export function libraryEntries(rootDir: string) {
         "header-ribbon": resolve(rootDir, "src/header-ribbon.ts"),
         configurator: resolve(rootDir, "src/configurator.ts"),
         "scrolling-text": resolve(rootDir, "src/scrolling-text.ts"),
-        freshness: resolve(rootDir, "src/freshness.ts"),
         forms: resolve(rootDir, "src/forms.ts"),
         api: resolve(rootDir, "src/api/index.ts"),
         // L.W1 Lane C — flat top-level subpath barrels for the vueuse-bearing
@@ -67,10 +66,6 @@ export const libraryExternal = [
     "embla-carousel-vue",
     "lucide-vue-next",
     "vaul-vue",
-    // Node built-ins consumed by `src/freshness.ts` (consumer-side helper only).
-    "node:fs",
-    "node:path",
-    "node:url",
 ];
 
 export const libraryGlobals = {

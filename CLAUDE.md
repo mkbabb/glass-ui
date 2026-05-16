@@ -243,10 +243,10 @@ import { GlassCarousel } from "@mkbabb/glass-ui/glass-carousel";
 //   metric-badge, status-dot, pulse, paper-backdrop, toggle-chip, glass-panel,
 //   metaballs, sortable-list, timeline, labeled-field, expandable-container,
 //   icon-tooltip, instrument-chassis, glyph-face, dock-group, disco-glyph,
-//   scrolling-text, freshness
+//   scrolling-text
 ```
 
-CSS imports the unified bundle via `@mkbabb/glass-ui/styles`. Per `package.json` exports + `typesVersions["*"]`, v1.7.0 ships **42 flat JS subpaths** (37 component packages + `/api` + `/forms` + `/dark` + `/keyboard` + `/carousel`) plus the `/styles` CSS bundle (43 entries total in `package.json` exports, excluding `./` root + `./package.json`); verified by `npm run verify-export-types` (release-script probe per L.W0 Lane III; unconditional since O.W5 Lane B+D).
+CSS imports the unified bundle via `@mkbabb/glass-ui/styles`. Per `package.json` exports + `typesVersions["*"]`, glass-ui ships **41 flat JS subpaths** (36 component packages + `/api` + `/forms` + `/dark` + `/keyboard` + `/carousel`) plus the `/styles` CSS bundle (43 entries total in `package.json` exports including `./` root + `/styles`). The `./freshness` subpath retired at AD.W4 (Decision 5): the runtime stale-dist gate is superseded by the canonical `"development"` conditional-exports branch already in place — dev consumers resolve to `src/` directly, so a stale `dist/` cannot mislead them. Verified by `npm run verify-export-types` (release-script probe per L.W0 Lane III; unconditional since O.W5 Lane B+D).
 
 The v0.9.x nested subpaths `@mkbabb/glass-ui/composables/dark` + `@mkbabb/glass-ui/composables/keyboard` were RETIRED at v1.0—L invariant 4 (no backwards-compat aliases). Consumers migrate via one-line rename per call site; see `MIGRATION.md`. The `@mkbabb/glass-ui/pagination` and `@mkbabb/glass-ui/virtual` subpaths were RETIRED at L.W3 (0 production consumers; substrate-without-consumer-binary invariant).
 

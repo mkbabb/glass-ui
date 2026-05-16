@@ -103,9 +103,6 @@
             "scrolling-text": [
                 "dist/scrolling-text.d.ts"
             ],
-            "freshness": [
-                "dist/freshness.d.ts"
-            ],
             "forms": [
                 "dist/forms.d.ts"
             ],
@@ -325,11 +322,6 @@
             "types": "./dist/scrolling-text.d.ts",
             "import": "./dist/scrolling-text.js"
         },
-        "./freshness": {
-            "development": "./src/freshness.ts",
-            "types": "./dist/freshness.d.ts",
-            "import": "./dist/freshness.js"
-        },
         "./forms": {
             "development": "./src/forms.ts",
             "types": "./dist/forms.d.ts",
@@ -363,7 +355,6 @@
     ],
     "scripts": {
         "dev": "vite",
-        "prebuild": "node scripts/freshness-gate.mjs --pre",
         "build": "NODE_OPTIONS=--max-old-space-size=8192 vite build",
         "prepare": "test -f dist/glass-ui.js || npm run build",
         "typecheck": "vue-tsc --noEmit",
