@@ -17,6 +17,51 @@
 >
 > Speedtest reference: `docs/tranches/AC/AC.md` §AC.W6 + §AC.W8 + `docs/tranches/AC/waves/W6{a,b,c,d,e}-*.md` + `docs/tranches/AC/waves/W8.md`. Tags v1.5.0 + v1.5.1 placed retroactively at AC.W6e close.
 
+## 1.8.2—2026-05-16—P.W5 Lane A.1 (`copyToClipboard` bare co-export; glass-ui-side prereq for value.js Path B)
+
+Patch-level ship. Single glass-ui-side artefact unblocks the P.W5 cross-repo MULTI-WRITER batch.
+
+### `copyToClipboard` bare co-export (Path B)
+
+Per P11/e §"useClipboard Path A vs B—RECOMMEND PATH B" + W5.md Lane A.1. value.js's 19 call sites of `copyToClipboard(text): Promise<boolean>` couldn't bulk-flip to `useClipboard()` because the surface shapes diverge (`useClipboard()` returns `{ copied, copy }`, not a bare function).
+
+Path B: add an additive bare co-export from `src/composables/dom/useClipboard.ts`:
+
+```ts
+export async function copyToClipboard(
+    text: string,
+    options?: UseClipboardOptions,
+): Promise<boolean>
+```
+
+Auto-flows to the root barrel via the existing `export * from "./useClipboard"` chain.
+
+Refactor: the composite copy-path helpers (`writeViaClipboardApi` + `writeViaExecCommand`) lifted from `useClipboard()`'s closure to module-scope. Both surface shapes (`useClipboard()` composable + `copyToClipboard()` bare function) share one implementation. `useClipboard()`'s internal `copy()` delegates to `copyToClipboard()` for the copy attempt + layers the reactive `copied` flip + auto-reset window on top.
+
+`tests/public-surface.spec.ts` `composableRuntimeExports` extended with `useClipboard` + `copyToClipboard` to lock the root-barrel runtime surface.
+
+### Consumer migration
+
+value.js's 19 sites bulk-flip via 1-line import rewrite per call site at P.W5 Lane A.4 (post-v1.8.2 ship):
+
+```diff
+- import { copyToClipboard } from "@/composables/useClipboard";
++ import { copyToClipboard } from "@mkbabb/glass-ui";
+```
+
+The local consumer-side composable retires at the same write.
+
+### Verification
+
+All 8 gates PASS: typecheck + build (Lane A bake; no env prep) + verify-export-types + profile:budget (CSS unchanged; JS +42 raw / +20 gzip) + test (365/365) + audit:stash + proof:package + proof:theme.
+
+### Inheritance ledger absorbed at W5 Lane A.1
+
+| P ID | Item | Status |
+|---|---|---|
+| P11/e Path B | useClipboard bare co-export prereq | ADDRESSED (glass-ui-side ship; consumer-side migration at W5 Lane A.4) |
+
+
 ## 1.8.1—2026-05-16—P.W4 (pipeline + style + demo + µ-split absorbs)
 
 Patch-level cohort. Six lanes (four agent-dispatched + two orchestrator-direct) cohesively absorb the Pε pipeline carry, the corpus-wide style-precept sweep, the demo-tier coverage debt, and the µ-split decision. Plus three inline absorbs catching stale gates surfaced by Lane B's CI integration.

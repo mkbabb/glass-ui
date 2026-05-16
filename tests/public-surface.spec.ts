@@ -86,6 +86,13 @@ const composableRuntimeExports = [
     "useAnimatedNumber",
     "installDarkModeSync",
     "useSortable",
+    // O.W6 Lane A — useClipboard composable promotion.
+    // P.W5 Lane A.1 — copyToClipboard bare co-export (Path B). Both must
+    // remain root-barrel reachable so value.js's 19-site bulk import flip
+    // can rename from `useClipboard from "../composables/useClipboard"`
+    // → `copyToClipboard from "@mkbabb/glass-ui"`.
+    "useClipboard",
+    "copyToClipboard",
 ];
 
 const subpathRuntimeExports = [
