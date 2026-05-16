@@ -1,7 +1,7 @@
-# O.W1 Lane A — Aurora init fail-explicit (F1 migration)
+# O.W1 Lane A—Aurora init fail-explicit (F1 migration)
 
 **Status**: LANDED in worktree (orchestrator-pending integration).
-**Scope**: F1 — `useAurora` init failure → throw-by-default, with
+**Scope**: F1—`useAurora` init failure → throw-by-default, with
 `onInitError` opt-in for silent fallback.
 **Invariant**: O invariant 24 (library-internal contract violations throw;
 browser-API degradation paths remain befitting silent fallbacks).
@@ -30,7 +30,7 @@ Consumer-visible surface:
 - New `AuroraRuntimeOptions` field: `onInitError?: (err: Error) => void`
   (automatically published via `@mkbabb/glass-ui/api` since
   `AuroraRuntimeOptions` is already on that barrel).
-- The imperative `createAurora(...)` runtime remains unchanged — it
+- The imperative `createAurora(...)` runtime remains unchanged—it
   unconditionally throws on init failure (it has no Vue-lifecycle seam to
   inject the callback at). The `useAurora` Vue-wrapper is the seam.
 
@@ -43,10 +43,10 @@ prop.
 
 ### Semver disposition
 
-Patch (v1.2.1) — additive prop. Behavior change is consumer-visible (silent
+Patch (v1.2.1)—additive prop. Behavior change is consumer-visible (silent
 → throw) but on a code path that previously rendered nothing; the migration
 path is one prop addition for opt-in silent. Documented in MIGRATION.md
-under "v1.2.1 — Aurora init fail-explicit (O.W1 Lane A)".
+under "v1.2.1—Aurora init fail-explicit (O.W1 Lane A)".
 
 ---
 
@@ -64,7 +64,7 @@ under "v1.2.1 — Aurora init fail-explicit (O.W1 Lane A)".
 
 Extended `AuroraRuntimeOptions` interface with `onInitError?: (err: Error)
 => void`. Inline doc-comment notes that the callback is the
-`useAurora` Vue-wrapper contract — `createAurora(...)` itself remains
+`useAurora` Vue-wrapper contract—`createAurora(...)` itself remains
 unconditionally throw-on-init-failure.
 
 ### `src/components/custom/aurora/composables/useAurora.ts` (+11 / -3)
@@ -97,7 +97,7 @@ contract.
 
 ### `MIGRATION.md` (+85 lines)
 
-New top-level section "v1.2.1 — Aurora init fail-explicit (O.W1 Lane
+New top-level section "v1.2.1—Aurora init fail-explicit (O.W1 Lane
 A)" inserted between the v1.0 "New surfaces" cohort and "Recommended
 new surfaces". Documents:
 
@@ -154,7 +154,7 @@ $ grep -n "AuroraRuntimeOptions" src/api/index.ts
 ```
 
 Adding `onInitError` to `AuroraRuntimeOptions` is automatically published
-via the existing `/api` re-export — no `src/api/index.ts` change needed.
+via the existing `/api` re-export—no `src/api/index.ts` change needed.
 
 ### Worktree diff stat
 
@@ -172,25 +172,25 @@ $ git -C /Users/mkbabb/Programming/glass-ui/.claude/worktrees/agent-a1db1aac7aa7
 
 ## § Cross-repo audit (speedtest, READ-ONLY)
 
-Per W1.md §"Lane A — F1" item 4 — speedtest is the deep Aurora consumer.
+Per W1.md §"Lane A—F1" item 4—speedtest is the deep Aurora consumer.
 Audit findings (grep over `/Users/mkbabb/Programming/speedtest/{src,demo}`):
 
 ### `Aurora\b` call sites
 
-- `src/App.vue:127` — `import { Aurora } from "@mkbabb/glass-ui/aurora";`
-- `src/App.vue:5` — `<Aurora ref="auroraRef" :config="auroraConfig" />`
+- `src/App.vue:127`—`import { Aurora } from "@mkbabb/glass-ui/aurora";`
+- `src/App.vue:5`—`<Aurora ref="auroraRef" :config="auroraConfig" />`
   (single render site; no `onInitError` wired).
-- `src/composables/useAuroraPolicy.ts:2,5` — doc-comment mentions; no
+- `src/composables/useAuroraPolicy.ts:2,5`—doc-comment mentions; no
   import.
-- `src/config/auroraConfig.ts:3` — `import type { AuroraConfig } from
+- `src/config/auroraConfig.ts:3`—`import type { AuroraConfig } from
   "@mkbabb/glass-ui/aurora";` (type-only).
-- `src/__tests__/App.{resume,surveyEntry,abandon}.test.ts` — stub
+- `src/__tests__/App.{resume,surveyEntry,abandon}.test.ts`—stub
   references; render nothing (`render: () => null` or `template: "<div
   />"`); the fail-explicit change does not reach the stubbed paths.
 
 ### `useAurora\b` call sites
 
-- Zero — speedtest never calls the composable directly. The library's
+- Zero—speedtest never calls the composable directly. The library's
   SFC owns the composable; speedtest only renders `<Aurora>`.
 
 ### Disposition for speedtest
@@ -201,14 +201,14 @@ The single live consumer (`src/App.vue:5`) renders Aurora without an
 follow-up paths (decision deferred to the cross-repo cohort wave, W1.md
 gate `a`):
 
-1. **Accept the throw** — if speedtest has an upstream error boundary or
+1. **Accept the throw**—if speedtest has an upstream error boundary or
    the failure mode is acceptable as a hard fail, no consumer-side
    change is needed. The fail-explicit signal reaches the consumer's
    error handler.
-2. **Opt back into silent-warn** — one-line:
+2. **Opt back into silent-warn**—one-line:
    `<Aurora :on-init-error="(err) => console.warn('[Aurora]', err)" ...>`
    matches the pre-v1.2.1 behaviour exactly.
-3. **Custom report** — wire `onInitError` to speedtest's telemetry
+3. **Custom report**—wire `onInitError` to speedtest's telemetry
    surface (e.g. the diagnostic-event bus referenced in
    `useAuroraPolicy.ts`).
 
@@ -221,7 +221,7 @@ speedtest tree.
 ## § Open questions for orchestrator
 
 1. **Merge-semantics for `runtimeOptions.onInitError` vs top-level
-   `onInitError`** — currently the top-level prop wins. Alternative
+   `onInitError`**—currently the top-level prop wins. Alternative
    shape: ignore the top-level prop entirely if `runtimeOptions` is
    provided (treat `runtimeOptions` as the canonical full options
    bundle, no prop-level overrides). The current shape is more
@@ -229,7 +229,7 @@ speedtest tree.
    more "principle-of-one-canonical-surface". Defer to orchestrator
    choice; current shape documented in MIGRATION.md.
 
-2. **No `init-error` Vue event** — the Rα research doc (`docs/tranches/O/
+2. **No `init-error` Vue event**—the Rα research doc (`docs/tranches/O/
    research/Ralpha-legacy-code.md:181`) mentions emitting a Vue event
    as an alternative shape. Callback-prop was chosen for symmetry with
    the existing `setCursor` / `clearCursor` imperative API surface and
@@ -237,13 +237,13 @@ speedtest tree.
    Confirm this disposition.
 
 3. **Should `AuroraRuntimeOptions.onInitError` be promoted to a
-   sibling export from `@mkbabb/glass-ui/api`?** — currently it's a
+   sibling export from `@mkbabb/glass-ui/api`?**—currently it's a
    field on `AuroraRuntimeOptions` (already exported); no new top-level
    type. If a `OnAuroraInitError = (err: Error) => void` type alias is
    useful for consumers (e.g. typed handler factories), promote it. No
    action taken in this lane.
 
-4. **Demo coverage** — no demo story showcases the `onInitError`
+4. **Demo coverage**—no demo story exercises the `onInitError`
    contract. A minimal demo would force-fail (mock `WebGL2RenderingContext`
    unavailable) and surface the throw vs silent-callback paths. Defer
    to demo-cohort or a follow-up Lane.
@@ -277,7 +277,7 @@ $ git -C /Users/mkbabb/Programming/glass-ui/.claude/worktrees/agent-a1db1aac7aa7
  4 files changed, 125 insertions(+), 4 deletions(-)
 ```
 
-Worktree changes match the Lane A bound exactly — no stray edits to other
+Worktree changes match the Lane A bound exactly—no stray edits to other
 W1 lanes' files (`metaballs/useMetaballs.ts`, `frostShader.ts`,
 `useConfiguratorState.ts`, `typewriter/utils/keyboard.ts`, any
 `*.test.ts`). Per the closing rule, **no git mutation has been performed**
@@ -285,5 +285,5 @@ W1 lanes' files (`metaballs/useMetaballs.ts`, `frostShader.ts`,
 four modified paths.
 
 Proof doc itself is the fifth artefact in this lane (this file,
-`docs/tranches/O/audit/W1-Lane-A-aurora-fail-explicit-proof.md`) — also
+`docs/tranches/O/audit/W1-Lane-A-aurora-fail-explicit-proof.md`)—also
 left as unstaged in the worktree.

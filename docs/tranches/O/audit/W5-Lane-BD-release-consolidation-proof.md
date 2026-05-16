@@ -1,4 +1,4 @@
-# O.W5 Lane B + D — release.sh consolidation proof
+# O.W5 Lane B + D—release.sh consolidation proof
 
 Combined lanes per orchestrator dispatch (both touch `scripts/release.sh`; atomic execution).
 
@@ -7,7 +7,7 @@ Combined lanes per orchestrator dispatch (both touch `scripts/release.sh`; atomi
 
 ## § Disposition
 
-### Part 1 (Lane B) — `verify-export-types` unconditional
+### Part 1 (Lane B)—`verify-export-types` unconditional
 
 Before (release.sh:88–90):
 
@@ -21,7 +21,7 @@ After: env-gate removed; `verify-export-types` runs unconditionally on every rel
 
 Also removed: the hardcoded `for sp in forms api dark keyboard carousel tokens dock` bash probe loop (release.sh:72–83). `verify-export-types.mjs` enumerates EVERY subpath in `package.json.exports` (38 entries at HEAD) and per-subpath verifies (a) the `types` target exists, (b) the `import` target exists, (c) the dts file is consumable via a tsc probe. The 7-entry hardcoded loop was a strict subset of the canonical script's coverage.
 
-### Part 2 (Lane D) — Dedup with `prepublishOnly`
+### Part 2 (Lane D)—Dedup with `prepublishOnly`
 
 **Original gate orchestration** (pre-O.W5):
 
@@ -44,7 +44,7 @@ Also removed: the hardcoded `for sp in forms api dark keyboard carousel tokens d
 | test | NO | YES | prepublishOnly only |
 | tag | YES | NO | release.sh only |
 
-**Net change:** `test` is no longer double-invoked. `build` remains double-invoked, but with explicit rationale documented inline: (a) `release.sh` build is the gate-matrix prerequisite (verify-export-types needs dts on disk; profile:budget reads bundle sizes from dist); (b) `prepublishOnly` build is defensive — anyone running `npm publish` standalone (without `release.sh`) still gets a fresh dist.
+**Net change:** `test` is no longer double-invoked. `build` remains double-invoked, but with explicit rationale documented inline: (a) `release.sh` build is the gate-matrix prerequisite (verify-export-types needs dts on disk; profile:budget reads bundle sizes from dist); (b) `prepublishOnly` build is defensive—anyone running `npm publish` standalone (without `release.sh`) still gets a fresh dist.
 
 ### Final chosen shape (recorded for posterity)
 
@@ -61,9 +61,9 @@ release.sh  → typecheck → build → verify-export-types → profile:budget �
 
 **Why not push build into prepublishOnly only?** The gates `verify-export-types` and `profile:budget` need dist on disk BEFORE `npm publish` runs. If we move build to prepublishOnly only, the release-time gates run against stale or missing dist, defeating the gate's purpose. Keeping build in `release.sh` lets the gates fail-fast against a fresh artifact; the prepublishOnly build is the defensive re-run for the (rare) standalone publish path.
 
-**Why not run gates from inside prepublishOnly?** prepublishOnly runs during `npm publish`. If a gate fails, the publish flow has already begun (locked metadata, etc.). Better to gate upstream — fail before publish begins.
+**Why not run gates from inside prepublishOnly?** prepublishOnly runs during `npm publish`. If a gate fails, the publish flow has already begun (locked metadata, etc.). Better to gate upstream—fail before publish begins.
 
-**Why not eliminate prepublishOnly entirely and have release.sh own everything?** prepublishOnly is the npm-canonical hook — it protects against the case where someone runs `npm publish` directly (CI misconfig, ad-hoc operator, etc.). Removing it removes a safety net.
+**Why not eliminate prepublishOnly entirely and have release.sh own everything?** prepublishOnly is the npm-canonical hook—it protects against the case where someone runs `npm publish` directly (CI misconfig, ad-hoc operator, etc.). Removing it removes a safety net.
 
 ## § File changes summary
 
@@ -81,7 +81,7 @@ release.sh  → typecheck → build → verify-export-types → profile:budget �
 
 **No change.** The existing `"prepublishOnly": "npm run build && npm test"` already matches the chosen canonical shape (build + test owned by prepublishOnly). The dispatch's alternative suggestion (`"npm run typecheck && npm run test && npm run build"`) was explicitly de-recommended by the dispatch itself ("Actually a cleaner approach: `prepublishOnly = build + test`. Don't double-run typecheck.").
 
-The `"release": "bash scripts/release.sh"` script is unchanged — the script path is the same; its internals are what changed.
+The `"release": "bash scripts/release.sh"` script is unchanged—the script path is the same; its internals are what changed.
 
 ## § Verification
 
@@ -112,15 +112,15 @@ $ npm run typecheck            → exit 0
 $ NODE_OPTIONS="--max-old-space-size=8192" npm run build  → exit 0
 $ npm run verify-export-types  → exit 0   (after fresh build)
 $ npm run profile:budget       → exit 0
-  [PASS] dist/glass-ui.js — raw 127787 / 190000 (67.3%); gzip 22942 / 33700 (68.1%)
-  [PASS] dist/glass-ui.css — raw 33590 / 36000 (93.3%); gzip 6142 / 6700 (91.7%)
+  [PASS] dist/glass-ui.js—raw 127787 / 190000 (67.3%); gzip 22942 / 33700 (68.1%)
+  [PASS] dist/glass-ui.css—raw 33590 / 36000 (93.3%); gzip 6142 / 6700 (91.7%)
 ```
 
 `npm publish` NOT executed (would side-effect publish to npm). `git tag` NOT executed (would mutate repo; agent git clause forbids).
 
 ### Negative-path confirmation (verify-export-types)
 
-When dist is missing/stale, `verify-export-types` fails fast with the expected "Missing package export targets" error and exit code 1 — confirming the gate is load-bearing, not vestigial.
+When dist is missing/stale, `verify-export-types` fails fast with the expected "Missing package export targets" error and exit code 1—confirming the gate is load-bearing, not vestigial.
 
 ### Build memory note
 
@@ -145,8 +145,8 @@ $ git -C <worktree> diff --stat
 
 Files in worktree (no git mutations performed):
 
-- `scripts/release.sh` — modified (gate orchestration restructure).
-- `docs/tranches/O/audit/W5-Lane-BD-release-consolidation-proof.md` — new (this file).
+- `scripts/release.sh`—modified (gate orchestration restructure).
+- `docs/tranches/O/audit/W5-Lane-BD-release-consolidation-proof.md`—new (this file).
 
 Bounds respected:
 - No `proof:*` script touched (Lane A).

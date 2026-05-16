@@ -1,10 +1,10 @@
-# O.W7 — O11/d keyframes.js consumer re-audit (post-O close-lane re-run)
+# O.W7—O11/d keyframes.js consumer re-audit (post-O close-lane re-run)
 
 ## Preamble
 
-**Scope:** `/Users/mkbabb/Programming/keyframes.js/` @ `7561af3` on `master` (v2.1.0 — AB.W6 settle release). Working tree CLEAN; no commits since the O11/d baseline (`docs/tranches/O/audit/O11-Lane-d-keyframes-js.md`, 2026-05-14 morning).
+**Scope:** `/Users/mkbabb/Programming/keyframes.js/` @ `7561af3` on `master` (v2.1.0—AB.W6 settle release). Working tree CLEAN; no commits since the O11/d baseline (`docs/tranches/O/audit/O11-Lane-d-keyframes-js.md`, 2026-05-14 morning).
 
-**Glass-ui reference:** `/Users/mkbabb/Programming/glass-ui/` @ O.W7 close-lane (post-W6 — `scale-on-hover` utility landed; HeaderRibbon promotion landed).
+**Glass-ui reference:** `/Users/mkbabb/Programming/glass-ui/` @ O.W7 close-lane (post-W6—`scale-on-hover` utility landed; HeaderRibbon promotion landed).
 
 **Baseline:** O11/d (this morning). All five sub-questions in the W7 dispatch are post-O re-verifications, not new-question discoveries.
 
@@ -14,7 +14,7 @@
 
 ---
 
-## Section 1 — Per-finding disposition
+## Section 1—Per-finding disposition
 
 ### 1.1 `hover:scale-105` count + scale-on-hover utility adoption (W6 Lane C carryforward)
 
@@ -34,7 +34,7 @@ demo/app/scenes/CubeScene.vue                                                   
 TOTAL                                                                           13
 ```
 
-**Glass-ui canonical at HEAD:** `@utility scale-on-hover` lives at `src/styles/utilities.css` (W6 Lane C land — confirmed):
+**Glass-ui canonical at HEAD:** `@utility scale-on-hover` lives at `src/styles/utilities.css` (W6 Lane C land—confirmed):
 
 ```css
 @utility scale-on-hover {
@@ -65,13 +65,13 @@ TOTAL                                                                           
 - 1 marginal (`calendar`)
 - 4 active-consumed (`button`, `form`, `chart`, `label`)
 
-Per CONSTELLATION.md §6: keyframes.js orchestrates its own tranche stream — glass-ui is READER-ONLY. **No glass-ui-side action required or available.** Gate is consumer-orchestrator-blocked; remains so at O close.
+Per CONSTELLATION.md §6: keyframes.js orchestrates its own tranche stream—glass-ui is READER-ONLY. **No glass-ui-side action required or available.** Gate is consumer-orchestrator-blocked; remains so at O close.
 
-**Disposition:** **CARRY-FORWARD TO P** (consumer-owned). Glass-ui's role is unchanged at O close — reader, not actor. The O11/d Section 3.2 light-weight precept proposal (L2 — "shadcn-vue init scaffolding hygiene") is unlanded at O close; carry the precept-tier proposal to P.
+**Disposition:** **CARRY-FORWARD TO P** (consumer-owned). Glass-ui's role is unchanged at O close—reader, not actor. The O11/d Section 3.2 light-weight precept proposal (L2—"shadcn-vue init scaffolding hygiene") is unlanded at O close; carry the precept-tier proposal to P.
 
 ### 1.3 idle-bob ad-hoc disposition
 
-**Site at HEAD:** `demo/cube/CubeTarget.vue:139-146` — UNCHANGED.
+**Site at HEAD:** `demo/cube/CubeTarget.vue:139-146`—UNCHANGED.
 
 ```css
 .idle-hover {
@@ -94,19 +94,19 @@ Documented carry-forward path (per O11/d): wraps under N7 `@motion-gate` / `.mot
 **glass-ui canonical at HEAD:**
 - Path: `src/components/custom/header-ribbon/HeaderRibbon.vue` (155 LOC) + `types.ts` (10 LOC) + `index.ts` (2 LOC) = 167 LOC.
 - Subpath: `@mkbabb/glass-ui/header-ribbon` (verified in `package.json` exports).
-- /api surface: `HeaderRibbonProps`, `HeaderRibbonPosition` types (verified — surface 49 → 53).
+- /api surface: `HeaderRibbonProps`, `HeaderRibbonPosition` types (verified—surface 49 → 53).
 
 **keyframes.js fork at HEAD:**
 - Path: `demo/@/components/custom/header-ribbon/HeaderRibbon.vue` (152 LOC) + `index.ts` (1 LOC).
 - Consumed by `demo/@/components/custom/editor-shell/EditorShell.vue:70` (1 import site).
 
 **Fork-vs-canonical divergence (diff probe):**
-- Behavioral parity: yes — both implement the same mouseenter/mouseleave + hover-guard + pinned/toggled anchor state machine. The "isMouseOver hover-tracking guard" is explicitly labeled in glass-ui's canonical as "the keyframes.js refinement" — confirming the upstream promotion landed the keyframes.js variant verbatim.
+- Behavioral parity: yes—both implement the same mouseenter/mouseleave + hover-guard + pinned/toggled anchor state machine. The "isMouseOver hover-tracking guard" is explicitly labeled in glass-ui's canonical as "the keyframes.js refinement"—confirming the upstream promotion landed the keyframes.js variant verbatim.
 - Surface differences (cosmetic):
-  - Template: `z-dock` (fork) vs `z-[var(--z-dock)]` (canonical) — semantic identical, canonical uses arbitrary-value form for explicitness.
-  - `<slot name="..."></slot>` (fork) vs `<slot name="..." />` (canonical) — Vue self-closing canonicalization.
-  - Inline anonymous prop type (fork) vs `HeaderRibbonProps` import from `./types` (canonical) — extracted type module.
-  - `function clearHoverTimeout()` (fork) vs `function clearHoverTimeout(): void` (canonical) — explicit return type.
+  - Template: `z-dock` (fork) vs `z-[var(--z-dock)]` (canonical)—semantic identical, canonical uses arbitrary-value form for explicitness.
+  - `<slot name="..."></slot>` (fork) vs `<slot name="..." />` (canonical)—Vue self-closing canonicalization.
+  - Inline anonymous prop type (fork) vs `HeaderRibbonProps` import from `./types` (canonical)—extracted type module.
+  - `function clearHoverTimeout()` (fork) vs `function clearHoverTimeout(): void` (canonical)—explicit return type.
 
 **Migration path (1 file, 1 import-rewrite):**
 
@@ -118,7 +118,7 @@ Documented carry-forward path (per O11/d): wraps under N7 `@motion-gate` / `.mot
 
 Then `rm -r demo/@/components/custom/header-ribbon/` (153 LOC reduction).
 
-**Disposition:** **HIGH-VALUE ADOPTION OPPORTUNITY for P.** The promotion is glass-ui-ready; the consumer hasn't migrated yet. 1 import-rewrite + 1 dir delete. Cohort with the `scale-on-hover` adoption (same migration wave; same EditorShell.vue file even — both touch `editor-shell/` and have 1 site each in `EditorShell.vue`).
+**Disposition:** **HIGH-VALUE ADOPTION OPPORTUNITY for P.** The promotion is glass-ui-ready; the consumer hasn't migrated yet. 1 import-rewrite + 1 dir delete. Cohort with the `scale-on-hover` adoption (same migration wave; same EditorShell.vue file even—both touch `editor-shell/` and have 1 site each in `EditorShell.vue`).
 
 ### 1.5 Renames audit (avatarVariants + installDarkModeSync)
 
@@ -128,7 +128,7 @@ Then `rm -r demo/@/components/custom/header-ribbon/` (153 LOC reduction).
 
 ---
 
-## Section 2 — Substrate non-regression
+## Section 2—Substrate non-regression
 
 **Subpath consumption at HEAD** (verified via `rg "from \"@mkbabb/glass-ui" demo/`):
 
@@ -145,9 +145,9 @@ Then `rm -r demo/@/components/custom/header-ribbon/` (153 LOC reduction).
 
 8 canonical subpaths; **zero retired-subpath drift** (`rg "composables/dark|composables/keyboard|/virtual\b|/pagination\b" demo/` → 0 hits).
 
-**O.W2 dock typed-context refactor impact:** `rg "DockContextKey|injectDockContext|provideDockContext" demo/` → 0 hits. keyframes.js consumes the public `GlassDock` / `DockLayer` / `DockLayerGroup` / `DockIconButton` / `DockSelectTrigger` API surface only — BINARY-TRANSPARENT to the internal DI canonicalization. **Zero regression.**
+**O.W2 dock typed-context refactor impact:** `rg "DockContextKey|injectDockContext|provideDockContext" demo/` → 0 hits. keyframes.js consumes the public `GlassDock` / `DockLayer` / `DockLayerGroup` / `DockIconButton` / `DockSelectTrigger` API surface only—BINARY-TRANSPARENT to the internal DI canonicalization. **Zero regression.**
 
-**O.W3 god-module-split impact:** keyframes.js does not consume the W3-split modules directly (timeline-split, profile-aurora-harness, preset-editor — all are glass-ui-internal). **Zero regression.**
+**O.W3 god-module-split impact:** keyframes.js does not consume the W3-split modules directly (timeline-split, profile-aurora-harness, preset-editor—all are glass-ui-internal). **Zero regression.**
 
 **O.W4 /api expansion impact:** keyframes.js does not consume `@mkbabb/glass-ui/api` at HEAD. The /api surface is opt-in; adoption opportunity (e.g., `HeaderRibbonProps` typing) carries forward to P.
 
@@ -157,37 +157,37 @@ Then `rm -r demo/@/components/custom/header-ribbon/` (153 LOC reduction).
 
 ---
 
-## Section 3 — Adoption opportunities
+## Section 3—Adoption opportunities
 
-Ranked by leverage (LOC reduction × site count × cohesion):
+Ranked by impact (LOC reduction × site count × cohesion):
 
-### 3.1 HIGH — HeaderRibbon canonical adoption
+### 3.1 HIGH—HeaderRibbon canonical adoption
 
 - **Glass-ui readiness:** LANDED at W6 Lane A. Canonical subpath + /api types live.
 - **Migration cost:** 1 import-rewrite + 1 dir delete (153 LOC removed from keyframes.js).
 - **Cohesion:** the canonical is the keyframes.js variant verbatim with surface polish (typed import, self-closing slots, explicit return types). Risk near zero.
 - **Recommended cohort:** P-tier consumer adoption wave (keyframes.js orchestrator).
 
-### 3.2 HIGH — `scale-on-hover` utility adoption
+### 3.2 HIGH—`scale-on-hover` utility adoption
 
 - **Glass-ui readiness:** LANDED at W6 Lane C. CSS-only; ships in `@mkbabb/glass-ui/styles` bundle which keyframes.js already imports.
 - **Migration cost:** 10 files / 13 class-rename edits. 0 JS / import changes.
-- **Cohesion:** every site already wraps the scaled element in `transition-transform`; the utility canonicalizes the recipe. Some sites use compound state (`hover:scale-105 active:scale-95`) — those need finer-grained selection or token-level migration (per O11/d Section 4 + O-N-7 carry-forward).
+- **Cohesion:** every site already wraps the scaled element in `transition-transform`; the utility canonicalizes the recipe. Some sites use compound state (`hover:scale-105 active:scale-95`)—those need finer-grained selection or token-level migration (per O11/d Section 4 + O-N-7 carry-forward).
 - **Recommended cohort:** Same P-tier wave as 3.1 (HeaderRibbon).
 
-### 3.3 MEDIUM — /api type adoption
+### 3.3 MEDIUM—/api type adoption
 
 - **Glass-ui readiness:** LANDED at W4 + W6 (49 → 53 surface). Opt-in.
-- **Migration cost:** light — adds `import type { HeaderRibbonProps } from "@mkbabb/glass-ui/api"` after 3.1 lands; benefits IDE inference + future-proofing if HeaderRibbon evolves.
+- **Migration cost:** light—adds `import type { HeaderRibbonProps } from "@mkbabb/glass-ui/api"` after 3.1 lands; benefits IDE inference + future-proofing if HeaderRibbon evolves.
 - **Recommended cohort:** Follow-on after 3.1 (same wave).
 
-### 3.4 LOW — 84 % UI-scaffolding cleanup
+### 3.4 LOW—84 % UI-scaffolding cleanup
 
 - **Glass-ui readiness:** N/A (consumer-owned per CONSTELLATION.md §6).
 - **Migration cost:** 23-path `rm -r` + 0 import-rewrites required (per O11/d §3.3 import-graph proof).
 - **Recommended cohort:** keyframes.js orchestrator wave; light-weight precept candidate (L2 carry-forward) for the constellation.
 
-### 3.5 LOW — idle-bob `prefers-reduced-motion` gating
+### 3.5 LOW—idle-bob `prefers-reduced-motion` gating
 
 - **Glass-ui readiness:** unlanded (N7 token-tier utility proposal carry-forward).
 - **Migration cost:** dependent on N7 shape; either consumer-local `@media (prefers-reduced-motion: reduce)` wrap, or glass-ui `@utility motion-safe` adoption once landed.
@@ -195,21 +195,21 @@ Ranked by leverage (LOC reduction × site count × cohesion):
 
 ---
 
-## Section 4 — Verdict
+## Section 4—Verdict
 
 **CLEAN.**
 
 - All five W7 dispatch sub-questions verified at HEAD; no new findings beyond O11/d.
 - Subpath migration health 100 %; zero retired-subpath drift; renames NO-IMPACT.
 - O-tranche substrate refactors (W2 dock-DI / W3 god-module-splits / W4 /api expansion / W6 four promotions) are all BINARY-TRANSPARENT or NO-IMPACT to keyframes.js.
-- Two HIGH-leverage adoption opportunities (HeaderRibbon + `scale-on-hover`) ready for P-tier consumer wave; both glass-ui-LANDED, awaiting consumer-orchestrator dispatch.
+- Two high-impact adoption opportunities (HeaderRibbon + `scale-on-hover`) ready for P-tier consumer wave; both glass-ui-LANDED, awaiting consumer-orchestrator dispatch.
 - Carry-bound items (84 % scaffolding; idle-bob; `hover:scale-105` regression) unchanged in shape; all consumer-owned or token-tier-deferred per established disposition.
 
 No BLOCKER; no MINOR. Substrate is clean across the close-lane window. Adoption opportunities documented for P.
 
 ---
 
-## Section 5 — Carry-forward to P (per-item named destination)
+## Section 5—Carry-forward to P (per-item named destination)
 
 | Item | Disposition | Destination |
 |---|---|---|
@@ -225,4 +225,4 @@ No BLOCKER; no MINOR. Substrate is clean across the close-lane window. Adoption 
 
 ---
 
-**Audit signature:** O.W7 O11/d re-run — CLEAN. 13 hover:scale-105 sites unchanged; 25 ui dirs (84 % overfitting) unchanged; idle-bob ad-hoc unchanged; HeaderRibbon fork (152 LOC) unchanged; avatarVariants + installDarkModeSync renames NO-IMPACT (zero usage). Two HIGH-leverage P-tier adoption opportunities cataloged: (1) HeaderRibbon canonical (153 LOC reduction; 1 import-rewrite), (2) scale-on-hover utility (10 files / 13 class-rename edits; 0 JS changes). Substrate non-regression CLEAN; O-tranche refactors BINARY-TRANSPARENT to keyframes.js.
+**Audit signature:** O.W7 O11/d re-run—CLEAN. 13 hover:scale-105 sites unchanged; 25 ui dirs (84 % overfitting) unchanged; idle-bob ad-hoc unchanged; HeaderRibbon fork (152 LOC) unchanged; avatarVariants + installDarkModeSync renames NO-IMPACT (zero usage). Two high-impact P-tier adoption opportunities cataloged: (1) HeaderRibbon canonical (153 LOC reduction; 1 import-rewrite), (2) scale-on-hover utility (10 files / 13 class-rename edits; 0 JS changes). Substrate non-regression CLEAN; O-tranche refactors BINARY-TRANSPARENT to keyframes.js.

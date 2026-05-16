@@ -110,7 +110,11 @@ try {
                     "embla-carousel-vue": dependencyVersion("embla-carousel-vue"),
                     "lucide-vue-next": dependencyVersion("lucide-vue-next"),
                     "reka-ui": dependencyVersion("reka-ui"),
-                    "tailwind-merge": dependencyVersion("tailwind-merge"),
+                    // P.W4 Lane C (Pε-4): `tailwind-merge` retired at v0.9.2;
+                    // `cn()` ships its own deduplicator. The synthetic
+                    // consumer manifest no longer declares it — the proof
+                    // verifies consumers DON'T need `tailwind-merge` in their
+                    // deps to consume glass-ui.
                     tailwindcss: dependencyVersion("tailwindcss"),
                     "vaul-vue": dependencyVersion("vaul-vue"),
                     vue: dependencyVersion("vue"),
@@ -147,10 +151,17 @@ try {
     writeFileSync(
         join(tmp, "probe.ts"),
         `
-import { Button, Card, Dialog, Tooltip, cn, useGlobalDark, useInterval } from "@mkbabb/glass-ui";
+// P.W4 Lane B inline-absorb (Pε-3 dependency): probe.ts updated to the
+// L.W1 vueuse-FREE root-barrel shape (useGlobalDark reaches consumers
+// via /dark; root no longer re-exports it). DockPopover was a stale
+// reference (the symbol never existed on the dock barrel at HEAD); replaced
+// with DockDropdownTrigger (canonical compound), so the probe verifies
+// the actual published surface rather than a phantom.
+import { Button, Card, Dialog, Tooltip, cn, useInterval } from "@mkbabb/glass-ui";
+import { useGlobalDark } from "@mkbabb/glass-ui/dark";
 import { chartHeights } from "@mkbabb/glass-ui/tokens";
 import "@mkbabb/glass-ui/styles";
-import { GlassDock, DockIconButton, DockPopover, DockLayerGroup } from "@mkbabb/glass-ui/dock";
+import { GlassDock, DockIconButton, DockDropdownTrigger, DockLayerGroup } from "@mkbabb/glass-ui/dock";
 import { FuzzySearch, useFuzzySearch } from "@mkbabb/glass-ui/search";
 import { ProgressiveSidebar, buildTreeIndex, useTreeIndex } from "@mkbabb/glass-ui/sidebar";
 import { DarkModeToggle } from "@mkbabb/glass-ui/controls";
@@ -176,7 +187,7 @@ import { IconTooltip } from "@mkbabb/glass-ui/icon-tooltip";
 
 const runtimeSymbols = [
   Button, Card, Dialog, Tooltip, cn, useGlobalDark, useInterval, chartHeights,
-  GlassDock, DockIconButton, DockPopover, DockLayerGroup, FuzzySearch, useFuzzySearch,
+  GlassDock, DockIconButton, DockDropdownTrigger, DockLayerGroup, FuzzySearch, useFuzzySearch,
   ProgressiveSidebar, buildTreeIndex, useTreeIndex, DarkModeToggle,
   ConfirmDialog, InfiniteScroll, useInfiniteScroll, UnderlineTabs, BouncyTabs, BouncyToggle,
   TypewriterText, useTypewriter, StackedIconGroup, GlassCarousel, GlassCarouselItem,

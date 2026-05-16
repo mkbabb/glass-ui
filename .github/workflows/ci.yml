@@ -45,3 +45,17 @@ jobs:
               env:
                   GLASS_UI_BUDGET_SKIP_BUILD: "1"
               run: npm run profile:budget
+            # P.W4 Lane B (Pε-3): sibling-independent proof:* subset.
+            # proof:consumers:build + proof:runtime are SKIPPED in CI because
+            # they walk sibling `../<consumer>` paths that don't exist on the
+            # GitHub Actions runner. The 3 included gates total ~3 s wall and
+            # close the "did glass-ui's package surface drift?" question every
+            # PR.
+            - name: proof:package
+              run: npm run proof:package
+            - name: proof:theme
+              run: npm run proof:theme
+            - name: proof:consumers:static
+              run: npm run proof:consumers:static
+            - name: audit:stash
+              run: npm run audit:stash

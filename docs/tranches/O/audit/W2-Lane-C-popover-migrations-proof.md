@@ -1,7 +1,7 @@
-# O.W2 Lane C — Popover-family consumer-site migrations to typed dock context
+# O.W2 Lane C—Popover-family consumer-site migrations to typed dock context
 
 **Wave**: O.W2 (Dock subsystem DI canonical-shape migration)
-**Lane**: C — 4 popover-family consumer-site migrations
+**Lane**: C—4 popover-family consumer-site migrations
 **Status**: complete; typecheck + 348 tests green; worktree changes ready for orchestrator merge.
 
 ## Scope
@@ -30,9 +30,9 @@ export function useDockContext(): DockContext | null {
 }
 ```
 
-That is, a single helper whose silent-default semantics already match the lane-spec's `useOptionalDockContext` shape (returns `null` outside `<GlassDock>`). No strict-throw variant ships at HEAD. This lane uses `useDockContext()` accordingly — the resulting consumer-site behaviour is identical to the dispatch's described `dock?.id` access pattern.
+That is, a single helper whose silent-default semantics already match the lane-spec's `useOptionalDockContext` shape (returns `null` outside `<GlassDock>`). No strict-throw variant ships at HEAD. This lane uses `useDockContext()` accordingly—the resulting consumer-site behaviour is identical to the dispatch's described `dock?.id` access pattern.
 
-`DockContext` at HEAD is `{ id: string; orientation: ComputedRef<DockOrientation> }`. Lane A did **not** consolidate `dockKeepOpen` / `dockRelease` / `dockHeld` onto the typed context — those remain raw string-keyed injects provided by `useDockState.ts`. The HoverPopover migration handles this asymmetry (see §HoverPopover below).
+`DockContext` at HEAD is `{ id: string; orientation: ComputedRef<DockOrientation> }`. Lane A did **not** consolidate `dockKeepOpen` / `dockRelease` / `dockHeld` onto the typed context—those remain raw string-keyed injects provided by `useDockState.ts`. The HoverPopover migration handles this asymmetry (see §HoverPopover below).
 
 ## Disposition (per-file before / after)
 
@@ -64,7 +64,7 @@ import { useDockContext } from "../dock/composables/dockContext";
 
 // ...
 
-/* O.W2 Lane C — `dockId` migrated to the canonical typed-context helper
+/* O.W2 Lane C—`dockId` migrated to the canonical typed-context helper
    (`useDockContext()` returning `DockContext | null`). The `dockKeepOpen`
    / `dockRelease` callables remain raw injects pending a Lane A extension
    that surfaces them on `DockContext` (currently the typed context
@@ -94,7 +94,7 @@ const portalAttrs = computed(() =>
 );
 ```
 
-`dockKeepOpen?.()` / `dockRelease?.()` call sites unchanged — those callables are not on `DockContext` and remain raw injects.
+`dockKeepOpen?.()` / `dockRelease?.()` call sites unchanged—those callables are not on `DockContext` and remain raw injects.
 
 `inject` is still imported (still used for the two callable injects). The unused `string | null` type alias for `dockId` is gone.
 
@@ -118,7 +118,7 @@ import { useDockContext } from '../../custom/dock/composables/dockContext'
 const dockContext = useDockContext()
 ```
 
-Template references `dockContext?.id` — unchanged; the new helper returns `DockContext | null` and `.id` is still the read field.
+Template references `dockContext?.id`—unchanged; the new helper returns `DockContext | null` and `.id` is still the read field.
 
 `inject` import removed (no other usage).
 
@@ -159,8 +159,8 @@ Templates touch **zero** characters in PopoverContent / SelectContent / Dropdown
 
 ## Verification
 
-- `npm run typecheck` — green (vue-tsc --noEmit, no errors).
-- `npm test` — 30 files, 348 tests, all passing (run duration 2.47s).
+- `npm run typecheck`—green (vue-tsc --noEmit, no errors).
+- `npm test`—30 files, 348 tests, all passing (run duration 2.47s).
 - `git -C <worktree> diff --stat`:
 
   ```
@@ -172,8 +172,8 @@ Templates touch **zero** characters in PopoverContent / SelectContent / Dropdown
   ```
 
 - Behavioural equivalence:
-  - INSIDE `<GlassDock>` — `dockContext?.id` (PopoverContent / SelectContent / DropdownMenuContent) and `dock?.id` (HoverPopover) resolve to the dock's id; `data-glass-dock-portal=""` and `data-glass-dock-owner="<dockId>"` attributes emit exactly as before. The injection key is the same string (`"glassDockContext"` — Lane A's `dockContext.ts` declares `const DOCK_CONTEXT_KEY = "glassDockContext"`), and `provideDockContext({ id, orientation })` in `GlassDock.vue` supplies a context whose `.id` is the dock's id.
-  - OUTSIDE `<GlassDock>` — `useDockContext()` returns `null` (silent default), `dockContext?.id` / `dock?.id` are `undefined`, and the `data-glass-dock-portal` / `data-glass-dock-owner` attributes do NOT emit (the `v-bind` with `undefined` values is a no-op in Vue). Matches prior behaviour.
+  - INSIDE `<GlassDock>`—`dockContext?.id` (PopoverContent / SelectContent / DropdownMenuContent) and `dock?.id` (HoverPopover) resolve to the dock's id; `data-glass-dock-portal=""` and `data-glass-dock-owner="<dockId>"` attributes emit exactly as before. The injection key is the same string (`"glassDockContext"`—Lane A's `dockContext.ts` declares `const DOCK_CONTEXT_KEY = "glassDockContext"`), and `provideDockContext({ id, orientation })` in `GlassDock.vue` supplies a context whose `.id` is the dock's id.
+  - OUTSIDE `<GlassDock>`—`useDockContext()` returns `null` (silent default), `dockContext?.id` / `dock?.id` are `undefined`, and the `data-glass-dock-portal` / `data-glass-dock-owner` attributes do NOT emit (the `v-bind` with `undefined` values is a no-op in Vue). Matches prior behaviour.
 
 - HoverPopover specific:
   - `dock?.id` replaces `dockId` for the dock-portal opt-in attributes.
@@ -181,12 +181,12 @@ Templates touch **zero** characters in PopoverContent / SelectContent / Dropdown
 
 ## Open questions for orchestrator
 
-1. **`dockKeepOpen` / `dockRelease` not on `DockContext`.** Lane A's `dockContext.ts` only consolidated `{ id, orientation }`. The Wave plan's invariant 25 implicitly asks for ALL six legacy keys (`dockKeepOpen`, `dockRelease`, `dockHeld`, `dockExpanded`, `glassDockId`, `glassDockContext`) to fold into the typed context. Lane B (Slider) will face the same asymmetry — `dockKeepOpen` / `dockRelease` / `dockHeld` are not yet on `DockContext`. Three options:
-   - **(a)** Lane A reopens to extend `DockContext` with `keepOpen` / `release` / `held` (matches the dispatch packet's `dock?.keepOpen()` / `dock?.release()` / `dock.held` shape). Lane C re-migrates the two HoverPopover callables. **Recommended** — closes invariant 25 properly.
+1. **`dockKeepOpen` / `dockRelease` not on `DockContext`.** Lane A's `dockContext.ts` only consolidated `{ id, orientation }`. The Wave plan's invariant 25 implicitly asks for ALL six legacy keys (`dockKeepOpen`, `dockRelease`, `dockHeld`, `dockExpanded`, `glassDockId`, `glassDockContext`) to fold into the typed context. Lane B (Slider) will face the same asymmetry—`dockKeepOpen` / `dockRelease` / `dockHeld` are not yet on `DockContext`. Three options:
+   - **(a)** Lane A reopens to extend `DockContext` with `keepOpen` / `release` / `held` (matches the dispatch packet's `dock?.keepOpen()` / `dock?.release()` / `dock.held` shape). Lane C re-migrates the two HoverPopover callables. **Recommended**—closes invariant 25 properly.
    - **(b)** Lane B / Lane C wrap their own callable-side injects via a small adapter inside each consumer. Defers the consolidation; leaves the inconsistency visible.
    - **(c)** Author a follow-up W2.1 to consolidate. Lane C as shipped is correct under (b)+(c).
-2. **`provide("glassDockId", dockId)` in `GlassDock.vue` (line 98) is now dead.** With HoverPopover's `dockId` migrated, `glassDockId` has zero consumers. The W2 plan calls for dedup'ing it with `glassDockContext.id` (hard gate (b)). Lane A's worktree may or may not have removed the legacy `provide` — Lane C did not touch dock files per bounds. Orchestrator: please verify Lane A removes the `provide("glassDockId", ...)` call when merging.
-3. **`useOptionalDockContext()` naming.** Dispatch spec called for `useOptionalDockContext()`; Lane A landed a single `useDockContext()` that returns `DockContext | null`. The behaviour is identical to the dispatch's intent. If a strict-throw helper is later required, it can ship as `useStrictDockContext()` (or rename the current helper and add a sibling) without touching Lane C consumers — they only need silent-default semantics.
+2. **`provide("glassDockId", dockId)` in `GlassDock.vue` (line 98) is now dead.** With HoverPopover's `dockId` migrated, `glassDockId` has zero consumers. The W2 plan calls for dedup'ing it with `glassDockContext.id` (hard gate (b)). Lane A's worktree may or may not have removed the legacy `provide`—Lane C did not touch dock files per bounds. Orchestrator: please verify Lane A removes the `provide("glassDockId", ...)` call when merging.
+3. **`useOptionalDockContext()` naming.** Dispatch spec called for `useOptionalDockContext()`; Lane A landed a single `useDockContext()` that returns `DockContext | null`. The behaviour is identical to the dispatch's intent. If a strict-throw helper is later required, it can ship as `useStrictDockContext()` (or rename the current helper and add a sibling) without touching Lane C consumers—they only need silent-default semantics.
 
 ## Worktree diff verification
 

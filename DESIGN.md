@@ -8,9 +8,9 @@ Four principles govern the library.
 
 **Token-first.** Every visual behavior is a CSS custom property. Consumers override via a preset CSS file imported after the library. No consumer edits library source for styling. Visual parity between consumers is a side effect of token discipline.
 
-**Component over CSS class.** Interactive elements are Vue components, not utility-class recipes. Components bundle their four-state contract — you cannot forget a hover variant, a focus ring, a disabled style. Static patterns (glass surfaces, typography, decorative utilities) are CSS classes.
+**Component over CSS class.** Interactive elements are Vue components, not utility-class recipes. Components bundle their four-state contract—you cannot forget a hover variant, a focus ring, a disabled style. Static patterns (glass surfaces, typography, decorative utilities) are CSS classes.
 
-**Four-state interactive contract.** Every interactive element implements rest, hover, active, and disabled states. Focus-visible adds a ring. `aria-pressed` / `.is-active` adds semantic toggling. Scale, color, and opacity compose — never hardcoded transforms scattered across components.
+**Four-state interactive contract.** Every interactive element implements rest, hover, active, and disabled states. Focus-visible adds a ring. `aria-pressed` / `.is-active` adds semantic toggling. Scale, color, and opacity compose—never hardcoded transforms scattered across components.
 
 **Orthogonal variants.** Surface tier (opacity + blur + border + shadow) is independent of semantic variant (intent) is independent of structural variant (shape geometry). A ghost Button sits flat on any Card variant. These axes never collapse into one vocabulary.
 
@@ -53,7 +53,7 @@ Dock internals: `--duration-popup-swap` 180ms.
 
 ## Easing
 
-### Spring curves (`linear()` — modern CSS)
+### Spring curves (`linear()`—modern CSS)
 
 Generated from damped spring physics. Use `easing-function: var(--spring-*)` or Tailwind `ease-spring-*`.
 
@@ -90,7 +90,7 @@ Generated from damped spring physics. Use `easing-function: var(--spring-*)` or 
 
 ### Cubic-bezier (fallback, exits, non-spring)
 
-- `--ease-standard`: `cubic-bezier(0.4, 0, 0.2, 1)` — decelerate
+- `--ease-standard`: `cubic-bezier(0.4, 0, 0.2, 1)`—decelerate
 - `--ease-out`: `cubic-bezier(0, 0, 0.2, 1)`
 - `--ease-in`: `cubic-bezier(0.4, 0, 1, 1)`
 - `--ease-out-expo`: `cubic-bezier(0.16, 1, 0.3, 1)`
@@ -207,7 +207,7 @@ Offset-0 elevation token, no directional Y bias. Use case: dock-hosted icons (ri
 
 ## Glass Surfaces
 
-Five tiers compose background opacity, backdrop-blur, border, shadow, grain. Dark mode boosts opacity and shifts grain blend (`overlay` → `soft-light`) for legibility. v0.8.0 renamed and extended the ladder: the prior four-rung ladder (subtle / default / medium / elevated) becomes a five-rung ladder (wash / quiet / resting / floating / overlay) — `quiet` is a new mid-low rung, `overlay` is a new modal-over-modal rung, and the others are renamed for tier semantics rather than utility-class register.
+Five tiers compose background opacity, backdrop-blur, border, shadow, grain. Dark mode boosts opacity and shifts grain blend (`overlay` → `soft-light`) for legibility. v0.8.0 renamed and extended the ladder: the prior four-rung ladder (subtle / default / medium / elevated) becomes a five-rung ladder (wash / quiet / resting / floating / overlay)—`quiet` is a new mid-low rung, `overlay` is a new modal-over-modal rung, and the others are renamed for tier semantics rather than utility-class register.
 
 | Tier      | Class               | Light opacity | Dark opacity | Blur                          | Border               | Shadow                     | Use                                 |
 |-----------|---------------------|---------------|--------------|-------------------------------|----------------------|----------------------------|-------------------------------------|
@@ -224,9 +224,9 @@ For each tier, `--glass-bg-{tier}` (rgba), `--glass-blur-{tier}` (full filter st
 - Light mode: 3.5% opacity, blend `overlay`
 - Dark mode: 6% opacity, blend `soft-light`
 
-**Dock-specific blur** — `--glass-blur-dock` is its own token so floating and rail docks read as feather-light overlays rather than heavy blurred slabs. As of J.W3.C the radius is `0px` (compositor floor) + the `saturate()` channel is omitted; the dock's translucent register is carried by `--glass-bg-dock` (32 % card opacity) bleeding the backdrop through. `GlassDock` references `var(--glass-blur-dock, var(--glass-blur-wash))`; consumers can override the dock token at `:root` without touching the five tier blurs.
+**Dock-specific blur**—`--glass-blur-dock` is its own token so floating and rail docks read as feather-light overlays rather than heavy blurred slabs. As of J.W3.C the radius is `0px` (compositor floor) + the `saturate()` channel is omitted; the dock's translucent register is carried by `--glass-bg-dock` (32 % card opacity) bleeding the backdrop through. `GlassDock` references `var(--glass-blur-dock, var(--glass-blur-wash))`; consumers can override the dock token at `:root` without touching the five tier blurs.
 
-### N7 dock-blur perceptual audit (N.W2 Lane B — NO-OP)
+### N7 dock-blur perceptual audit (N.W2 Lane B—NO-OP)
 
 User feedback at N open suggested "top dock blur is a bit much, and generally our dock blurs need to be resolved to be more subtle." Source-of-truth audit at HEAD:
 
@@ -235,13 +235,13 @@ User feedback at N open suggested "top dock blur is a bit much, and generally ou
 | `.glass-dock` (any dock; horizontal or vertical) | `blur(var(--glass-blur-dock-radius))` | **`0px`** |
 | `.glass-wash`, `.glass-quiet`, ..., `.glass-overlay` | `blur(<tier-radius>) saturate(<tier-factor>)` | `1` / `3` / `12` / `16` / `24` px |
 
-The dock filter contributes ZERO blur — the compositor still emits a backdrop-filter pass (the property is set + composes the `saturate(1.05)` from `--glass-blur-wash` if the dock token is missing, but with the dock token present the `saturate` channel is also omitted), but the radius is at the floor. Any perceived dock blur visible at the page level is contributed by the **backdrop** the dock sits over (e.g., `<Aurora>` or `<MetaballCanvas>` ambient layer); the dock is purely a translucent plate of `--glass-bg-dock` (32 % opacity) admitting backdrop pixels through.
+The dock filter contributes ZERO blur—the compositor still emits a backdrop-filter pass (the property is set + composes the `saturate(1.05)` from `--glass-blur-wash` if the dock token is missing, but with the dock token present the `saturate` channel is also omitted), but the radius is at the floor. Any perceived dock blur visible at the page level is contributed by the **backdrop** the dock sits over (e.g., `<Aurora>` or `<MetaballCanvas>` ambient layer); the dock is purely a translucent plate of `--glass-bg-dock` (32 % opacity) admitting backdrop pixels through.
 
 Per N invariant 22 (audit-verdict spot-verification gate): the user's perception was real, but the source is the page-composition stacking, not the dock substrate. The right adjustment lives at the consumer site (reduce backdrop blur per-page; or lower aurora opacity; or use `<Aurora>`'s tone controls), not at the library token. The library token already holds the floor.
 
 NO-OP for N.W2 Lane B. No token change; no cascade adjustment. The audit lands here for posterity.
 
-### Canonical translucent + frosted (N.W1 Lane A — `<GlassPanel>` default)
+### Canonical translucent + frosted (N.W1 Lane A—`<GlassPanel>` default)
 
 `<GlassPanel>` (`src/components/custom/glass-panel/GlassPanel.vue`) defaults
 to `variant="resting"`, which composes the `.glass-resting` recipe above:
@@ -250,7 +250,7 @@ foreground border + grain overlay**. This is the canonical
 "translucent + frosted" surface; consumers asking for "the translucent
 frosted panel" should reach for `<GlassPanel>` (or `<Card>` for the
 cartoon-shadowed sibling) without a tier override. No additional tier
-ships at v1.1.1 — per the N KISS posture (V2 + V4 + wire-before-retire),
+ships at v1.1.1—per the N KISS posture (V2 + V4 + wire-before-retire),
 the existing resting rung already satisfies the brief; we verify the
 rendering rather than invent.
 
@@ -264,9 +264,9 @@ verification is asynchronous (Playwright-MCP or equivalent).
 
 ### Convenience shorthands
 
-- `.glass-card` — **static surface utility**: `.glass-resting` + `border-radius: var(--radius-card)` + offset card shadow. No hover lift; interactive cards live in `<Card>` (which composes its own hover via `.glass-cartoon` / `.cartoon-card` / etc.) or in components that explicitly opt into a hover variant.
-- `.glass-pill` — `.glass-resting` + pill radius + press feedback (scale 0.97 on active)
-- `.glass-cartoon` — **interactive cartoon surface** (Tranche G): cartoon-tier shadow (`--shadow-cartoon-md`), 2px border, hover lift via `--lift-sm` + `--shadow-cartoon-lg`. Token-fall-through to resting-tier glass tokens (`--glass-bg-cartoon, var(--glass-bg-resting)`) so consumers without cartoon-specific overrides still get a coherent surface. Carried by the `<CartoonCard>` sibling primitive (v0.8.0).
+- `.glass-card`—**static surface utility**: `.glass-resting` + `border-radius: var(--radius-card)` + offset card shadow. No hover lift; interactive cards live in `<Card>` (which composes its own hover via `.glass-cartoon` / `.cartoon-card` / etc.) or in components that explicitly opt into a hover variant.
+- `.glass-pill`—`.glass-resting` + pill radius + press feedback (scale 0.97 on active)
+- `.glass-cartoon`—**interactive cartoon surface** (Tranche G): cartoon-tier shadow (`--shadow-cartoon-md`), 2px border, hover lift via `--lift-sm` + `--shadow-cartoon-lg`. Token-fall-through to resting-tier glass tokens (`--glass-bg-cartoon, var(--glass-bg-resting)`) so consumers without cartoon-specific overrides still get a coherent surface. Carried by the `<CartoonCard>` sibling primitive (v0.8.0).
 
 ### Accessibility fallbacks
 
@@ -282,20 +282,37 @@ Every interactive element implements the four-state contract plus focus and togg
 
 | State                     | Behavior                         | Token                                                            |
 |---------------------------|----------------------------------|------------------------------------------------------------------|
-| Rest                      | Default appearance               | —                                                                |
+| Rest                      | Default appearance               |—                                                               |
 | Hover                     | Scale up, or bg tint             | `--scale-hover` (1.08) · `--scale-hover-dock` (1.1)              |
-| Active / pressed          | Scale down                       | `--scale-press` (0.95) · `--scale-press-btn` (0.97) · `--scale-press-dock` (0.92) |
+| Active / pressed          | Scale down                       | `--scale-press` (0.95) · `--scale-press-btn` (0.97; aliases `--scale-press-sm`) · `--scale-press-dock` (0.92) · 4-rung ladder `--scale-press-{xs,sm,md,lg}` (0.98 / 0.97 / 0.96 / 0.95) |
 | Disabled                  | Reduced opacity, no pointer events | `--opacity-disabled` (0.50)                                    |
 | Focus-visible             | Ring + glow                      | `--focus-ring-shadow`: 0 0 0 2px rgba(ring, 0.30), 0 0 8px rgba(ring, 0.15) |
 | `aria-pressed` / `.is-active` | Tinted bg, full-opacity text | Component-scoped                                                 |
 
 ### Composable base classes
 
-- `.btn-interactive` — scale-based four-state + focus ring
-- `.interactive-item` — bg-tint four-state (50% accent) + focus ring
-- `.active-scale` — atomic `:active { transform: scale(0.97) }`
-- `.disabled-base` — atomic `:disabled { opacity + pointer-events }`
-- `.focus-ring` — atomic `:focus-visible { box-shadow: var(--focus-ring-shadow) }`
+- `.btn-interactive`—scale-based four-state + focus ring
+- `.interactive-item`—bg-tint four-state (50% accent) + focus ring
+- `.active-scale`—atomic `:active { transform: scale(0.97) }`
+- `.disabled-base`—atomic `:disabled { opacity + pointer-events }`
+- `.focus-ring`—atomic `:focus-visible { box-shadow: var(--focus-ring-shadow) }`
+
+### Press-scale ladder (P.W4 Lane D)
+
+`--scale-press-{xs,sm,md,lg}` parametrises the four canonical press
+amplitudes (0.98 / 0.97 / 0.96 / 0.95). Use the rung that matches the
+register of the interactive surface:
+
+| Rung | Value | Use case |
+|------|-------|----------|
+| `--scale-press-xs` | 0.98 | Subtle press for dense / heavily-used surfaces (table-row buttons, recent items, grid cells) |
+| `--scale-press-sm` | 0.97 | Canonical button press; aliased as `--scale-press-btn` for the prior call sites |
+| `--scale-press-md` | 0.96 | Slightly deeper press for review / decision actions |
+| `--scale-press-lg` | 0.95 | Deepest press for controls panels and primary CTAs |
+
+Consumers reach for these tokens rather than redeclaring arbitrary
+`active:scale-[X.XX]` literals. The ladder absorbs words/frontend's
+9-site distribution (P11/a §I4) without consumer-side drift.
 
 ---
 
@@ -316,11 +333,11 @@ The library ships two OFL face families as bundled woff2 assets. Both pair their
 | **Plus Jakarta Sans**   | Brand display sans    | OFL 1.1 | latin, latin-ext| `optional`     | `src/fonts/plus-jakarta-sans/*.woff2`                |
 | **Fira Code**           | Canonical mono        | OFL 1.1 | latin, latin-ext| `swap`         | `src/fonts/fira-code/*.woff2`                        |
 
-Both are variable fonts — a single woff2 per subset covers the full wght axis (Plus Jakarta Sans: 200..800; Fira Code: 300..700). The `font-display` policy differs by register: `optional` for the LCP-critical display sans (paint never blocks on font); `swap` for the post-LCP mono (FOUT acceptable; geometry stays no-shift via the fallback face).
+Both are variable fonts—a single woff2 per subset covers the full wght axis (Plus Jakarta Sans: 200..800; Fira Code: 300..700). The `font-display` policy differs by register: `optional` for the LCP-critical display sans (paint never blocks on font); `swap` for the post-LCP mono (FOUT acceptable; geometry stays no-shift via the fallback face).
 
 The OFL license file ships next to the binaries (`OFL.txt` per family) and the canonical attribution lives in `CHANGELOG.md` v1.5.0.
 
-#### Path D candidate matrix — Plus Jakarta Sans selection rationale
+#### Path D candidate matrix—Plus Jakarta Sans selection rationale
 
 The brand display sans family was selected by speedtest's AC.W6b 5-way visual-fidelity test against the pre-substitution General Sans baseline (Fontshare ITF-FFL) at 1200×766 hero size + 96 px body sample. Five OFL-1.1 candidates were evaluated:
 
@@ -342,7 +359,7 @@ For each primary face, the paired `... Fallback` face's metric overrides are der
 2. Compare against the system fallback's metrics (from `@capsizecss/metrics/{appleSystem,segoeUI,roboto,arial,robotoMono}`).
 3. Emit `size-adjust` (scales the fallback's x-width to the primary's), `ascent-override` (sets the fallback's ascent to the primary's normalized ratio), `descent-override` (same for descent).
 
-The four sans fallbacks (per platform) + the unified mono fallback are listed in `CHANGELOG.md` v1.5.0 with their derived values. All values sit within the W6b Triumvirate gate `0.95 ≤ size-adjust ≤ 1.13`; the `-apple-system` rung is the upper edge because Plus Jakarta Sans runs slightly wider than San Francisco at the same px (112.36% — within tolerance, well below the 1.20 threshold that signals a face mismatch).
+The four sans fallbacks (per platform) + the unified mono fallback are listed in `CHANGELOG.md` v1.5.0 with their derived values. All values sit within the W6b Triumvirate gate `0.95 ≤ size-adjust ≤ 1.13`; the `-apple-system` rung is the upper edge because Plus Jakarta Sans runs slightly wider than San Francisco at the same px (112.36%—within tolerance, well below the 1.20 threshold that signals a face mismatch).
 
 #### Consumer activation
 
@@ -358,11 +375,11 @@ Consumers default to the library's pre-existing `--font-stack-sans` ("Helvetica 
 
 Combined with `[data-typography-preset="brand-uniform-sans"]` on `<html>` (or the equivalent direct token override at `:root`), the display + serif voices collapse to Plus Jakarta Sans across the consumer's surface.
 
-The canonical mono (`--font-mono` / `--font-stack-mono`) ships with `"Fira Code"` first by default — every glass-ui consumer gets the self-hosted mono without any wiring beyond importing `@mkbabb/glass-ui/styles`.
+The canonical mono (`--font-mono` / `--font-stack-mono`) ships with `"Fira Code"` first by default—every glass-ui consumer gets the self-hosted mono without any wiring beyond importing `@mkbabb/glass-ui/styles`.
 
 #### Forward-compatibility
 
-Future tranches should not re-introduce non-OFL display sans-serif at glass-ui. The OFL gate is the canonical contract — adding a face means picking an OFL family + running the visual-fidelity test against the existing brand display + landing the Capsize calibration. Non-OFL licenses (Fontshare ITF-FFL, Adobe Type EULA, Monotype commercial) are out per the project's "no third-party CDN dependency on the LCP-critical path" + "no transport-restricted distribution" precepts.
+Future tranches should not re-introduce non-OFL display sans-serif at glass-ui. The OFL gate is the canonical contract—adding a face means picking an OFL family + running the visual-fidelity test against the existing brand display + landing the Capsize calibration. Non-OFL licenses (Fontshare ITF-FFL, Adobe Type EULA, Monotype commercial) are out per the project's "no third-party CDN dependency on the LCP-critical path" + "no transport-restricted distribution" precepts.
 
 ### Size tokens
 
@@ -379,18 +396,18 @@ Future tranches should not re-introduce non-OFL display sans-serif at glass-ui. 
 | `--type-display-1`  | clamp(1.618rem, 1.2rem + 1.6vw, 2.618rem) | 25.9–41.9   | `text-4xl`| Display                      |
 | `--type-display-2`  | clamp(2.058rem, 1.5rem + 2.2vw, 3.33rem)  | 32.9–53.3   | `text-5xl`| Large display                |
 | `--type-display-3`  | clamp(2.618rem, 2rem + 3vw, 4.236rem)     | 41.9–67.8   | `text-6xl`| Extra-large display          |
-| `--type-display-4`  | clamp(3.33rem, 2.5rem + 4vw, 5.382rem)    | 53.3–86.1   | —         | Splash (custom)              |
-| `--type-display-5`  | clamp(4.236rem, 3.5rem + 6vw, 6.854rem)   | 67.8–109.7  | —         | Mega hero (custom)           |
-| `--type-display-mega`      | clamp(5.382rem, 4rem + 9vw, 11.089rem)   | 86.1–177.4  | —         | Poster: section / pane title (v1.0.3) |
-| `--type-display-hero`      | clamp(6.854rem, 4.5rem + 12vw, 17.942rem) | 109.7–287.1 | —        | Poster: page hero / metric value (v1.0.3) |
-| `--type-display-audacious` | clamp(8.728rem, 5rem + 16vw, 22rem)      | 139.6–352   | —         | Fast.com-scale single number (v1.0.3) |
+| `--type-display-4`  | clamp(3.33rem, 2.5rem + 4vw, 5.382rem)    | 53.3–86.1   |—        | Splash (custom)              |
+| `--type-display-5`  | clamp(4.236rem, 3.5rem + 6vw, 6.854rem)   | 67.8–109.7  |—        | Mega hero (custom)           |
+| `--type-display-mega`      | clamp(5.382rem, 4rem + 9vw, 11.089rem)   | 86.1–177.4  |—        | Poster: section / pane title (v1.0.3) |
+| `--type-display-hero`      | clamp(6.854rem, 4.5rem + 12vw, 17.942rem) | 109.7–287.1 |—       | Poster: page hero / metric value (v1.0.3) |
+| `--type-display-audacious` | clamp(8.728rem, 5rem + 16vw, 22rem)      | 139.6–352   |—        | Fast.com-scale single number (v1.0.3) |
 
-Consumers extending beyond display-audacious add tokens in their preset — the library exposes the mechanism, not every conceivable step.
+Consumers extending beyond display-audacious add tokens in their preset—the library exposes the mechanism, not every conceivable step.
 
 ### Audacious display tier (`--type-display-mega` / `-hero` / `-audacious`)
 
 Added in **v1.0.3** (AA.W3.5). Three rungs above `display-5` for
-poster-type consumers — the speedtest hero number, dashboard pane
+poster-type consumers—the speedtest hero number, dashboard pane
 titles where the consumer wants the number/title to win the visual
 hierarchy, marketing-surface headlines. Same vw-axis as
 `display-1..5`, so the size is consumer-agnostic; a consumer that
@@ -398,28 +415,28 @@ needs container-query precision (e.g. speedtest's `.metric-col`
 container) wraps its own clamp with these tokens as the ceiling:
 
 ```css
-/* speedtest SpeedtestResults.vue:763 — cqi axis with audacious ceiling */
+/* speedtest SpeedtestResults.vue:763—cqi axis with audacious ceiling */
 font-size: clamp(6rem, calc(38cqi * 3 / max(3, var(--digit-count))), var(--type-display-audacious));
 ```
 
 The φ-ladder progression (`√φ ≈ 1.272` between steps) continues
-unbroken — every rung is one consistent step up the scale. Peak
+unbroken—every rung is one consistent step up the scale. Peak
 sizes (at viewport ≥ 1440):
 
-- `display-mega` → 177.4 px (φ^9/2 — pane titles, section heads)
-- `display-hero` → 287.1 px (φ^5 — hero numbers, metric values)
-- `display-audacious` → 352 px (φ^11/2 — fast.com peg for a single hero number)
+- `display-mega` → 177.4 px (φ^9/2—pane titles, section heads)
+- `display-hero` → 287.1 px (φ^5—hero numbers, metric values)
+- `display-audacious` → 352 px (φ^11/2—fast.com peg for a single hero number)
 
 The matching `.text-display-mega`, `.text-display-hero`,
 `.text-display-audacious` utilities mirror the `.text-display-5`
-shape — Fraunces with `WONK=1 / SOFT=0` and `var(--font-display-weight)`
+shape—Fraunces with `WONK=1 / SOFT=0` and `var(--font-display-weight)`
 by default; the `data-typography-preset="brand-uniform-sans"`
 :root override still maps `--font-display` → `var(--font-brand-sans)`
 so consumers in the brand-uniform-sans register get their stack at
 the audacious size without any extra wiring.
 
 Opt-out: consumers that want their own ceiling can ignore the tokens
-entirely (and the existing `display-1..5` rungs remain) — the
+entirely (and the existing `display-1..5` rungs remain)—the
 audacious tier is additive, not a default. Consumers that consume
 the tokens but want a smaller ceiling can reset them locally:
 `:root { --type-display-audacious: 12rem; }`.
@@ -504,25 +521,25 @@ Fraunces axes available: `wght` (300–700), `opsz`, `WONK` (0–1), `SOFT` (0�
 | `.text-display-3`      | display      | `--type-display-3`   | 350    | 1.1     | tight     | `WONK` 1, `SOFT` 0          |
 | `.text-display-2`      | display      | `--type-display-2`   | 350    | 1.1     | tight     | `WONK` 1, `SOFT` 0          |
 | `.text-display`        | display      | `--type-display-1`   | 350    | 1.1     | tight     | `WONK` 1, `SOFT` 0          |
-| `.text-title`          | display      | `--type-title`       | 400    | 1.2     | tight     | —                           |
-| `.text-heading`        | display      | `--type-heading`     | 500    | 1.2     | normal    | —                           |
-| `.text-subheading`     | serif        | `--type-subheading`  | 600    | 1.5     | normal    | —                           |
-| `.text-prose`          | serif        | `--type-prose`       | 400    | 1.618   | normal    | —                           |
-| `.text-body`           | serif        | `--type-body`        | 400    | 1.5     | normal    | —                           |
-| `.text-small`          | serif        | `--type-small`       | 400    | 1.4     | normal    | —                           |
-| `.text-caption`        | serif        | `--type-caption`     | 400    | 1.3     | wide      | —                           |
-| `.text-micro`          | serif        | `--type-micro`       | 500    | 1.2     | wide      | —                           |
-| `.text-mono-caption`   | mono         | `--type-caption`     | —      | 1.3     | wider     | `text-transform: uppercase` |
-| `.text-mono-small`     | mono         | `--type-small`       | —      | 1.4     | normal    | —                           |
-| `.section-label`       | mono         | `--type-caption`     | —      | —       | caps      | `text-transform: uppercase`, muted-foreground color |
+| `.text-title`          | display      | `--type-title`       | 400    | 1.2     | tight     |—                          |
+| `.text-heading`        | display      | `--type-heading`     | 500    | 1.2     | normal    |—                          |
+| `.text-subheading`     | serif        | `--type-subheading`  | 600    | 1.5     | normal    |—                          |
+| `.text-prose`          | serif        | `--type-prose`       | 400    | 1.618   | normal    |—                          |
+| `.text-body`           | serif        | `--type-body`        | 400    | 1.5     | normal    |—                          |
+| `.text-small`          | serif        | `--type-small`       | 400    | 1.4     | normal    |—                          |
+| `.text-caption`        | serif        | `--type-caption`     | 400    | 1.3     | wide      |—                          |
+| `.text-micro`          | serif        | `--type-micro`       | 500    | 1.2     | wide      |—                          |
+| `.text-mono-caption`   | mono         | `--type-caption`     |—     | 1.3     | wider     | `text-transform: uppercase` |
+| `.text-mono-small`     | mono         | `--type-small`       |—     | 1.4     | normal    |—                          |
+| `.section-label`       | mono         | `--type-caption`     |—     |—      | caps      | `text-transform: uppercase`, muted-foreground color |
 
 ### Kinetic typography utilities
 
-- **`.text-breathe`** — `animation: weight-breathe 4s ease-in-out infinite` (wght 300 → 500 → 300)
-- **`.text-wonk-hover`** — rest `font-variation-settings: "WONK" 0, "SOFT" 100`; hover toggles to `"WONK" 1, "SOFT" 0`; transition 450 ms `--spring-smooth`
-- **`.scroll-weight-reveal`** — `animation: weight-reveal linear both; animation-timeline: view(); animation-range: entry 0% cover 30%` (wght 100 → 400 + opacity 0.3 → 1)
-- **`.char-stagger > .char`** — per-char `fade-in` 300 ms `--spring-smooth backwards`; `animation-delay: calc(var(--char-index, 0) * 30ms)`
-- **`.text-glass-legible`** — halo text-shadow `0 0 12px color-mix(in srgb, var(--background) 50%, transparent), 0 0 4px color-mix(in srgb, var(--background) 30%, transparent)`
+- **`.text-breathe`**—`animation: weight-breathe 4s ease-in-out infinite` (wght 300 → 500 → 300)
+- **`.text-wonk-hover`**—rest `font-variation-settings: "WONK" 0, "SOFT" 100`; hover toggles to `"WONK" 1, "SOFT" 0`; transition 450 ms `--spring-smooth`
+- **`.scroll-weight-reveal`**—`animation: weight-reveal linear both; animation-timeline: view(); animation-range: entry 0% cover 30%` (wght 100 → 400 + opacity 0.3 → 1)
+- **`.char-stagger > .char`**—per-char `fade-in` 300 ms `--spring-smooth backwards`; `animation-delay: calc(var(--char-index, 0) * 30ms)`
+- **`.text-glass-legible`**—halo text-shadow `0 0 12px color-mix(in srgb, var(--background) 50%, transparent), 0 0 4px color-mix(in srgb, var(--background) 30%, transparent)`
 
 All kinetic utilities respect `prefers-reduced-motion`: transforms eliminated, opacity fades preserved at `--duration-instant`.
 
@@ -560,17 +577,17 @@ Base class `.btn-pill`:
 
 `destructive` is the canonical "danger" variant (clears WCAG AA).
 
-#### `primary-audacious` — K W6 architectural transposition (K HEADLINE)
+#### `primary-audacious`—K W6 architectural transposition (K HEADLINE)
 
 K W6 lifted the disco-grain + sparkle-sweep + specular-highlight composite from `dock.css` (where it had lived under `.dock-tab-button[data-tier="primary"]`) into a canonical `@utility btn-audacious` in `src/styles/utilities.css`. The composite reads:
 
-- **Disco-grain texture** — radial gradient noise band over the primary fill, anchored to `--primary` so the recipe inherits theme hue automatically.
-- **Sparkle-sweep glyph** — `@keyframes sparkle-sweep` (already in `animations.css:151`) drives a diagonal specular streak across the button face on a long cadence, PRM-gated via `prefers-reduced-motion: no-preference` (matches the `.gold-shimmer` precedent).
-- **Specular-highlight backplate** — soft white-stop highlight at upper-left composing against the disco-grain layer for the "polished plastic" reading.
+- **Disco-grain texture**—radial gradient noise band over the primary fill, anchored to `--primary` so the recipe inherits theme hue automatically.
+- **Sparkle-sweep glyph**—`@keyframes sparkle-sweep` (already in `animations.css:151`) drives a diagonal specular streak across the button face on a long cadence, PRM-gated via `prefers-reduced-motion: no-preference` (matches the `.gold-shimmer` precedent).
+- **Specular-highlight backplate**—soft white-stop highlight at upper-left composing against the disco-grain layer for the "polished plastic" reading.
 
 Existing tokens consumed: `--primary`, `--shadow-cartoon`, `--surface-tint-*`, `--scale-press-btn`, `--scale-hover`, `--duration-sparkle`, `--ease-apple-spring`. No new keyframes were introduced.
 
-**Phase-color decoupling — Option B (per K W6 decision per Rε E3 recommendation)**: the canonical `@utility btn-audacious` recipe binds the radial to `--primary`, NOT to `--phase-color`. The recipe is reusable from any audacious primary-CTA context without inheriting an instrument-chassis phase cascade. The dock primary tier composes the canonical recipe via class-list inclusion (`btn-audacious` on `.dock-tab-button[data-tier="primary"]`) AND retains a dock-local extension that overrides the radial with `--phase-color` when a dock descendant of `<InstrumentChassis>` sets the phase variable. This keeps the canonical recipe axis-agnostic (≥ 2 consumer bar met: `<Button variant="primary-audacious">` + dock primary tier) while preserving the chassis-aware phase-tint flourish where it earns its keep.
+**Phase-color decoupling—Option B (per K W6 decision per Rε E3 recommendation)**: the canonical `@utility btn-audacious` recipe binds the radial to `--primary`, NOT to `--phase-color`. The recipe is reusable from any audacious primary-CTA context without inheriting an instrument-chassis phase cascade. The dock primary tier composes the canonical recipe via class-list inclusion (`btn-audacious` on `.dock-tab-button[data-tier="primary"]`) AND retains a dock-local extension that overrides the radial with `--phase-color` when a dock descendant of `<InstrumentChassis>` sets the phase variable. This keeps the canonical recipe axis-agnostic (≥ 2 consumer bar met: `<Button variant="primary-audacious">` + dock primary tier) while preserving the chassis-aware phase-tint flourish where it earns its keep.
 
 All variants scale `var(--scale-press-btn)` on `:active`.
 
@@ -615,20 +632,20 @@ Pill primitive for inline metadata, status chips, and count indicators. CVA root
 | Size  | Typography           | Padding         | Use                                                        |
 |-------|----------------------|-----------------|------------------------------------------------------------|
 | `sm`  | `text-xs leading-4`  | `px-2 py-0.5`   | Sits inside `text-xs` rows or compact inline metadata      |
-| `md`  | `text-sm leading-5`  | `px-2.5 py-1`   | **Default.** Aligns baseline-to-baseline with `text-sm` row text — canonical for table status cells |
+| `md`  | `text-sm leading-5`  | `px-2.5 py-1`   | **Default.** Aligns baseline-to-baseline with `text-sm` row text—canonical for table status cells |
 | `lg`  | `text-base leading-6`| `px-3 py-1.5`   | Standalone callouts inside `text-base` body copy           |
 
-The `md` default matches the baseline of the most common surrounding context (table rows + card body — both `text-sm`). Consumers nesting a Badge inside an explicitly compact context (`text-xs` mono cells, dense filter rows) opt down to `size="sm"`.
+The `md` default matches the baseline of the most common surrounding context (table rows + card body—both `text-sm`). Consumers nesting a Badge inside an explicitly compact context (`text-xs` mono cells, dense filter rows) opt down to `size="sm"`.
 
 ### Section-tone recipe (table status cells)
 
-Tables and tag-input chips frequently need a per-section tinted chip whose hue tracks `--section-color-N`. The canonical recipe — composed by demo consumers (`stories/data/table.vue`, `stories/data/tags-input.vue`) — is the triplet:
+Tables and tag-input chips frequently need a per-section tinted chip whose hue tracks `--section-color-N`. The canonical recipe—composed by demo consumers (`stories/data/table.vue`, `stories/data/tags-input.vue`)—is the triplet:
 
 ```
 bg-section-N/15 text-section-N border-section-N/30
 ```
 
-paired with `<Badge variant="outline" size="md">`. The `outline` variant supplies the focus-ring/border substrate and yields foreground text; the section triplet then overrides fill, foreground, and border with the section-tinted hue. The recipe is intentionally **not** lifted into a `tone` axis on `badgeVariants` — the section-N family is a 13-rung tinted ladder, not a 4-state semantic tone (`success/warning/destructive/info`), and a CVA-side enumeration would be overfit to the current demo consumers (1 src consumer count). When a second consumer surfaces with semantic tone needs (success/warning/destructive/info), introduce a `tone` axis at that point.
+paired with `<Badge variant="outline" size="md">`. The `outline` variant supplies the focus-ring/border substrate and yields foreground text; the section triplet then overrides fill, foreground, and border with the section-tinted hue. The recipe is intentionally **not** lifted into a `tone` axis on `badgeVariants`—the section-N family is a 13-rung tinted ladder, not a 4-state semantic tone (`success/warning/destructive/info`), and a CVA-side enumeration would be overfit to the current demo consumers (1 src consumer count). When a second consumer surfaces with semantic tone needs (success/warning/destructive/info), introduce a `tone` axis at that point.
 - Color `var(--muted-foreground)`
 - Hover: 85% bg lighten, 20% foreground border, 15% foreground color, `transform: scale(1.08)`
 - Active: `transform: scale(0.95)`
@@ -642,7 +659,7 @@ paired with `<Badge variant="outline" size="md">`. The `outline` variant supplie
 
 The dock is a first-class composable system. Three principles: a dock is a positioned container; buttons inside a dock are dock-specific components; layered content is orchestrated by `DockLayer` / `DockLayerGroup`.
 
-### Dock subsystem — typed-context DI shape (O.W2; invariant 25)
+### Dock subsystem—typed-context DI shape (O.W2; invariant 25)
 
 `<GlassDock>` surfaces its state to descendants through one typed
 provide: `DOCK_CONTEXT_KEY: InjectionKey<DockContext>`. The 6 prior
@@ -663,13 +680,13 @@ interface DockContext {
 
 Two paired helpers expose the context:
 
-- `useDockContext()` — strict. Throws when called outside a
+- `useDockContext()`—strict. Throws when called outside a
   `<GlassDock>`. Use for primitives that MUST live inside a dock
   (e.g., a custom dock-internal control).
-- `useOptionalDockContext()` — befitting silent default. Returns
+- `useOptionalDockContext()`—befitting silent default. Returns
   `DockContext | null`. Use for primitives that MAY render outside
   a dock (Slider, HoverPopover, PopoverContent, SelectContent,
-  DropdownMenuContent — every one of them composes the optional
+  DropdownMenuContent—every one of them composes the optional
   helper because each can render standalone).
 
 This shape is the canonical reference for invariant 25
@@ -683,12 +700,12 @@ This shape is the canonical reference for invariant 25
 
 | Component              | Shape                                             | Hover                                                  | Use                                             |
 |------------------------|---------------------------------------------------|--------------------------------------------------------|-------------------------------------------------|
-| `GlassDock`            | Pill container, height ≈ 55 px                    | —                                                      | Outer dock surface                              |
+| `GlassDock`            | Pill container, height ≈ 55 px                    |—                                                     | Outer dock surface                              |
 | `DockIconButton`       | Fixed square `--size-icon-btn` (40 × 40 px); `compact` prop auto-sizes to content | Bg darken + `--scale-hover-dock` (1.1)       | Icon-only buttons inside a dock                 |
-| `DockSelectTrigger`    | Variable width, text + chevron                    | Bg darken only (no scale — anchors popover)            | `<Select>` triggers inside a dock               |
+| `DockSelectTrigger`    | Variable width, text + chevron                    | Bg darken only (no scale—anchors popover)            | `<Select>` triggers inside a dock               |
 | `DockDropdownTrigger`  | Variable width, text + icon + chevron             | Bg darken + scale (1.1)                                | `<DropdownMenu>` triggers inside a dock         |
-| `DockLayer`            | Grid cell, fades in/out by slot key               | —                                                      | Layer-active switching                          |
-| `DockLayerGroup`       | Grid wrapper, animates width across layers        | —                                                      | Multi-layer dock (expanded / collapsed / compact) |
+| `DockLayer`            | Grid cell, fades in/out by slot key               |—                                                     | Layer-active switching                          |
+| `DockLayerGroup`       | Grid wrapper, animates width across layers        |—                                                     | Multi-layer dock (expanded / collapsed / compact) |
 
 ### Geometry
 
@@ -701,20 +718,20 @@ This shape is the canonical reference for invariant 25
 
 ### Position prop
 
-- `fixed` — viewport-anchored (`fixed bottom-[--dock-pos] left-1/2 -translate-x-1/2`)
-- `inline` — flow-anchored (`margin: 0 auto`)
-- `sticky` — scroll-container anchored (`position: sticky; top: 0`)
+- `fixed`—viewport-anchored (`fixed bottom-[--dock-pos] left-1/2 -translate-x-1/2`)
+- `inline`—flow-anchored (`margin: 0 auto`)
+- `sticky`—scroll-container anchored (`position: sticky; top: 0`)
 
 ### Other props
 
-- `always-expanded` — disable idle-collapse
-- `collapse-delay` — auto-collapse timer (default 2000 ms)
-- `start-collapsed` — initial state
-- `fit-content` — adapt width to content vs stretch
-- `wrap` — multi-line responsive dock (mobile rounded-rect, desktop pill)
-- `orientation` — `horizontal` (default) or `vertical`
-- `density` — `compact | comfortable | spacious`; controls padding, gaps, layer height, and inherited dock control sizing through root-overridable CSS variables
-- `<template #collapsed>` — summary content shown when compacted
+- `always-expanded`—disable idle-collapse
+- `collapse-delay`—auto-collapse timer (default 2000 ms)
+- `start-collapsed`—initial state
+- `fit-content`—adapt width to content vs stretch
+- `wrap`—multi-line responsive dock (mobile rounded-rect, desktop pill)
+- `orientation`—`horizontal` (default) or `vertical`
+- `density`—`compact | comfortable | spacious`; controls padding, gaps, layer height, and inherited dock control sizing through root-overridable CSS variables
+- `<template #collapsed>`—summary content shown when compacted
 
 ### Density variables
 
@@ -742,15 +759,15 @@ Density overrides are named by tier, for example
 
 ### Utilities
 
-- `.dock-separator` — 1 px vertical divider, 50% dock-h tall, 15% foreground
-- `.dock-spacer` — `flex: 1` for pushing items apart
-- `.dock-label` (typography.css `@utility` — AB.W1.T5) — canonical register
+- `.dock-separator`—1 px vertical divider, 50% dock-h tall, 15% foreground
+- `.dock-spacer`—`flex: 1` for pushing items apart
+- `.dock-label` (typography.css `@utility`—AB.W1.T5)—canonical register
   for text labels INSIDE `.dock-tab-button` (Start, Next, Submit, Done, New
   Test, survey labels). `font-family: var(--font-serif)` picks up the
   consumer's brand-uniform-sans preset; `font-size: var(--dock-label-size,
   var(--type-subheading))` composes the audacious-dock label-size knob
   (14–15px at narrow viewports, falls back to `--type-subheading` at
-  desktop); `font-weight: 500` (medium rung — present but NOT bold). Use
+  desktop); `font-weight: 500` (medium rung—present but NOT bold). Use
   this instead of `.text-heading` for dock control labels; `.text-heading`
   is the heading register and reads as literal bold inside a dock pill.
 - `DarkModeToggle size="control"` follows `--control-size` and `--control-icon-padding`.
@@ -764,11 +781,11 @@ Density overrides are named by tier, for example
 
 ### Orientation
 
-`GlassDock` accepts `orientation?: "horizontal" | "vertical"` (default `"horizontal"`). Horizontal docks animate `width` on expand/collapse and lay children out in a row; vertical docks animate `height` and stack children in a column. The prop is threaded through `useDockTransition` as its `axis` ref — both `useDockTransition` and `useLayerTransition` are axis-aware, keying their FLIP logic off a computed `dim` (`"width" | "height"`) rather than a hardcoded dimension. Vertical consumers just set the prop; no other consumer changes are required.
+`GlassDock` accepts `orientation?: "horizontal" | "vertical"` (default `"horizontal"`). Horizontal docks animate `width` on expand/collapse and lay children out in a row; vertical docks animate `height` and stack children in a column. The prop is threaded through `useDockTransition` as its `axis` ref—both `useDockTransition` and `useLayerTransition` are axis-aware, keying their FLIP logic off a computed `dim` (`"width" | "height"`) rather than a hardcoded dimension. Vertical consumers just set the prop; no other consumer changes are required.
 
 ### Multi-layer composition
 
-Beyond the built-in two-layer grid (the default slot + the `collapsed` slot), richer docks compose `DockLayerGroup` with one or more `DockLayer` children. Each `DockLayer` registers itself with its parent via `provide`/`inject`; the group renders an optional Figma-style switcher rail from the registered descriptors (`showRail` + `railPosition`) and drives crossfade + size FLIP transitions between layers. Only the active layer is interactive — inactive layers receive `inert` and `pointer-events: none`.
+Beyond the built-in two-layer grid (the default slot + the `collapsed` slot), richer docks compose `DockLayerGroup` with one or more `DockLayer` children. Each `DockLayer` registers itself with its parent via `provide`/`inject`; the group renders an optional Figma-style switcher rail from the registered descriptors (`showRail` + `railPosition`) and drives crossfade + size FLIP transitions between layers. Only the active layer is interactive—inactive layers receive `inert` and `pointer-events: none`.
 
 ```vue
 <GlassDock orientation="vertical">
@@ -802,7 +819,7 @@ Applied to floating surfaces. v0.8.0 retired the four-rung `variant="subtle | de
 
 ### Semantic variant (intent)
 
-Used on `Button`: `default | primary-audacious | secondary | ghost | outline | destructive | accent | link | ai | glass | glass-wash`. Scoped to intent, independent of elevation. A ghost button sits flat on any tier. `primary-audacious` (K W6) composes the canonical `@utility btn-audacious` recipe over the primary intent — see `## Buttons → primary-audacious` for the disco-grain + sparkle-sweep + specular-highlight composite and the phase-color decoupling decision (Option B). `destructive` is the canonical danger variant.
+Used on `Button`: `default | primary-audacious | secondary | ghost | outline | destructive | accent | link | ai | glass | glass-wash`. Scoped to intent, independent of elevation. A ghost button sits flat on any tier. `primary-audacious` (K W6) composes the canonical `@utility btn-audacious` recipe over the primary intent—see `## Buttons → primary-audacious` for the disco-grain + sparkle-sweep + specular-highlight composite and the phase-color decoupling decision (Option B). `destructive` is the canonical danger variant.
 
 ### Structural variant (geometry)
 
@@ -814,7 +831,7 @@ Used on `Button`: `default | primary-audacious | secondary | ghost | outline | d
 |-----------------|-----------------------------|--------------------------------------|----------------------------------|
 | `standard`      | 6 px muted/50               | 14 px circle                         | Default                          |
 | `spectrum`      | 24 px secondary             | thin bar                             | Range selection                  |
-| `timeline`      | 24 px glass-blurred         | 24 px disc                           | Video/timeline scrubbing (slider variant — see also the standalone `<GlassTimeline>` primitive below) |
+| `timeline`      | 24 px glass-blurred         | 24 px disc                           | Video/timeline scrubbing (slider variant—see also the standalone `<GlassTimeline>` primitive below) |
 | `glass-pill`    | pill substrate w/ gradient  | halo on hover (`--surface-tint-12`)  | Audacious primary control        |
 | `glass-cartoon` | cartoon-surface track       | cartoon-shadow disc                  | Editorial / paper-design context |
 
@@ -828,24 +845,24 @@ Used on `Button`: `default | primary-audacious | secondary | ghost | outline | d
 
 `<Slider>` exposes `keepDockOpen?: boolean` (default `true`). When a Slider is a descendant of a `<GlassDock>`, the contract is bidirectional and pointer-anchored:
 
-1. **Acquire** — `pointerdown` on the slider thumb injects a `dockKeepOpen` token via the dock's `useDockState` provide tree. While the token is held, the dock's idle-collapse timer is suspended.
-2. **Release** — `pointerup` / `pointercancel` (attached at window scope so the gesture survives the cursor leaving the dock) drops the token.
-3. **Visual binding** — the Slider subscribes to the dock's reactive `dockHeld` flag (the OR-reduction of all currently-held tokens) and reflects it via `data-held` on its root, intensifying the thumb-halo via a denser `--surface-tint` rung in scoped CSS.
-4. **Substrate response** — `.glass-dock[data-held]` in `src/styles/dock.css` tier-shades the dock background up while any descendant holds a token.
+1. **Acquire**—`pointerdown` on the slider thumb injects a `dockKeepOpen` token via the dock's `useDockState` provide tree. While the token is held, the dock's idle-collapse timer is suspended.
+2. **Release**—`pointerup` / `pointercancel` (attached at window scope so the gesture survives the cursor leaving the dock) drops the token.
+3. **Visual binding**—the Slider subscribes to the dock's reactive `dockHeld` flag (the OR-reduction of all currently-held tokens) and reflects it via `data-held` on its root, intensifying the thumb-halo via a denser `--surface-tint` rung in scoped CSS.
+4. **Substrate response**—`.glass-dock[data-held]` in `src/styles/dock.css` tier-shades the dock background up while any descendant holds a token.
 
-The cross-substrate proof story lives at `demo/stories/compositions/dock-with-slider.vue` (K W7) — three cells exercising the contract: standard slider (Volume), `glass-pill` variant (Brightness), and a multi-slider mixer demonstrating multi-token reference-counting.
+The cross-substrate proof story lives at `demo/stories/compositions/dock-with-slider.vue` (K W7)—three cells exercising the contract: standard slider (Volume), `glass-pill` variant (Brightness), and a multi-slider mixer demonstrating multi-token reference-counting.
 
-**Slider-only contract — Option B per K W7 decision**: `<NumberField>` is NOT a consumer of `keepDockOpen`. NumberField interactions are keyboard- and discrete-button (chevron tap) — they have no continuous-interaction window for which keep-open matters. The K plan originally floated an Option A where NumberField also acquired the token; W7 picked Option B (Slider-only) on the rationale that the contract's load-bearing semantics are pointer-drag + thumb-halo intensification — neither of which applies to NumberField. The contract is documented as Slider-only; future consumers must demonstrate a pointer-anchored continuous-interaction model before joining.
+**Slider-only contract—Option B per K W7 decision**: `<NumberField>` is NOT a consumer of `keepDockOpen`. NumberField interactions are keyboard- and discrete-button (chevron tap)—they have no continuous-interaction window for which keep-open matters. The K plan originally floated an Option A where NumberField also acquired the token; W7 picked Option B (Slider-only) on the rationale that the contract's load-bearing semantics are pointer-drag + thumb-halo intensification—neither of which applies to NumberField. The contract is documented as Slider-only; future consumers must demonstrate a pointer-anchored continuous-interaction model before joining.
 
 ### Theming discipline
 
-When a consumer needs to override component internals, the first resort is a documented CSS custom property. `:deep()` is a last resort — it indicates a missing token or slot-class prop.
+When a consumer needs to override component internals, the first resort is a documented CSS custom property. `:deep()` is a last resort—it indicates a missing token or slot-class prop.
 
 Slot-class props (e.g., `ScrollPaneHeader` → `title-class`, `description-class`) expose internal elements for controlled styling.
 
 ### Custom-property cascade pattern (AC.W6d)
 
-The canonical mechanism for letting a consumer retint or reshape a primitive's internals without `:deep()` is a **declarative custom-property cascade**: the primitive declares a token at the surface it owns (with a default value), and the consumer overrides that token at any ancestor in the cascade. Vue's scoped-CSS isolation is irrelevant to custom properties — they walk the DOM tree freely.
+The canonical mechanism for letting a consumer retint or reshape a primitive's internals without `:deep()` is a **declarative custom-property cascade**: the primitive declares a token at the surface it owns (with a default value), and the consumer overrides that token at any ancestor in the cascade. Vue's scoped-CSS isolation is irrelevant to custom properties—they walk the DOM tree freely.
 
 **Three-rung anatomy:**
 
@@ -853,17 +870,17 @@ The canonical mechanism for letting a consumer retint or reshape a primitive's i
 2. **Primitive surfaces the token in DESIGN.md**: a token row in the component's section, with the property name, accepted value type, and default. This is the contract.
 3. **Consumer overrides via inline style OR a wrapper class**: `<Primitive :style="{ '--token-name': '...' }">` or `.consumer-wrap { --token-name: ...; }`. Either form reaches every descendant via the cascade.
 
-**Worked example — MetricRow per-row phase tint.** The primitive's value cell consumes `var(--phase-color)`; the consumer sets `--phase-color: <hex>` on each row via the `phaseColor` prop (which serializes to the inline style). No `:deep` reach, no slot-class plumb — the cascade alone carries the override.
+**Worked example—MetricRow per-row phase tint.** The primitive's value cell consumes `var(--phase-color)`; the consumer sets `--phase-color: <hex>` on each row via the `phaseColor` prop (which serializes to the inline style). No `:deep` reach, no slot-class plumb—the cascade alone carries the override.
 
-**Worked example — Timeline continuous-fill opacity.** `<ContinuousTimeline>` reads `var(--timeline-continuous-fill-opacity, 1)` on its internal `.continuous-region-fill` selector. The consumer sets the variable on the wrapping context (`.timeline-wrap { --timeline-continuous-fill-opacity: 0.74; }`) and the cascade flows into the primitive's internal selectors. Replaces the prior `:deep(.continuous-region-fill) { opacity: ... }` workaround.
+**Worked example—Timeline continuous-fill opacity.** `<ContinuousTimeline>` reads `var(--timeline-continuous-fill-opacity, 1)` on its internal `.continuous-region-fill` selector. The consumer sets the variable on the wrapping context (`.timeline-wrap { --timeline-continuous-fill-opacity: 0.74; }`) and the cascade flows into the primitive's internal selectors. Replaces the prior `:deep(.continuous-region-fill) { opacity: ... }` workaround.
 
 **When the cascade pattern fails (and `:deep` is genuinely warranted):**
 
-- The primitive doesn't yet declare the cascading token. **Fix the primitive** — add the token + DESIGN.md row + a CHANGELOG entry; the consumer's `:deep` is a symptom, not a solution.
-- The property must address a structural slot (e.g., a specific child's `grid-template-rows`). **Add a slot-class prop** (per the `ScrollPaneHeader` precedent) — that's the cascade analogue for class-based overrides.
+- The primitive doesn't yet declare the cascading token. **Fix the primitive**—add the token + DESIGN.md row + a CHANGELOG entry; the consumer's `:deep` is a symptom, not a solution.
+- The property must address a structural slot (e.g., a specific child's `grid-template-rows`). **Add a slot-class prop** (per the `ScrollPaneHeader` precedent)—that's the cascade analogue for class-based overrides.
 - The override needs to traverse a portal boundary (e.g., reka-ui's `HoverCardPortal`). **Use a non-scoped `<style>` block** in the primitive's SFC that targets the portaled class (the `.timeline-popover` precedent in `ContinuousTimeline.vue`).
 
-The acceptance bar for adding a new custom-property cascade is two-fold: (a) the override is single-property (a token, not a structural rewrite), and (b) the primitive has at least one consumer demonstrating the override path. The cohort shipped at v1.6.0 — `--phase-color` on `MetricRow`, `--digit-count` on `AnimatedDigit`/`MetricRow`, `--timeline-dot-size-touch` on the timeline dots — each cleared both bars.
+The acceptance bar for adding a new custom-property cascade is two-fold: (a) the override is single-property (a token, not a structural rewrite), and (b) the primitive has at least one consumer demonstrating the override path. The cohort shipped at v1.6.0—`--phase-color` on `MetricRow`, `--digit-count` on `AnimatedDigit`/`MetricRow`, `--timeline-dot-size-touch` on the timeline dots—each cleared both bars.
 
 ---
 
@@ -881,7 +898,7 @@ Single-track normalized 0..1 scrubber with full keyboard a11y: `role="slider"` +
 
 ### `variant="segmented"` (Z.W2.T1)
 
-Adjacent gradient bands — N rectangles in a row, one per phase, with boundary dots emitting `hover` + `click` events. Per-segment gradient (either `{from, to}` pair or raw CSS gradient string), lifecycle state (`pending | active | completed`), and optional payload surface via the events. Used by multi-phase progress UIs where each phase is conceptually independent.
+Adjacent gradient bands—N rectangles in a row, one per phase, with boundary dots emitting `hover` + `click` events. Per-segment gradient (either `{from, to}` pair or raw CSS gradient string), lifecycle state (`pending | active | completed`), and optional payload surface via the events. Used by multi-phase progress UIs where each phase is conceptually independent.
 
 ```vue
 <GlassTimeline
@@ -894,7 +911,7 @@ Adjacent gradient bands — N rectangles in a row, one per phase, with boundary 
 
 ### `variant="continuous"` (AA.W1.T1)
 
-ONE rounded-pill rail substrate with N absolute-positioned region children spanning prev-boundary → current-boundary. Same `TimelineSegment[]` data shape as `segmented` — only the rendering geometry differs. Visual: 1 pill with N internal gradient regions + optional seam dividers at boundaries + boundary dots overlaid at each region's right edge. Used by multi-phase progress UIs where the phases are conceptually one progression bar (the speedtest ping → download → upload pipeline is the canonical consumer).
+ONE rounded-pill rail substrate with N absolute-positioned region children spanning prev-boundary → current-boundary. Same `TimelineSegment[]` data shape as `segmented`—only the rendering geometry differs. Visual: 1 pill with N internal gradient regions + optional seam dividers at boundaries + boundary dots overlaid at each region's right edge. Used by multi-phase progress UIs where the phases are conceptually one progression bar (the speedtest ping → download → upload pipeline is the canonical consumer).
 
 ```vue
 <GlassTimeline
@@ -911,7 +928,7 @@ ONE rounded-pill rail substrate with N absolute-positioned region children spann
 interface TimelineSegment {
     key: string;                                          // stable id; emitted on hover/click
     label: string;                                        // display name; surfaces in dot aria-label
-    state: "pending" | "active" | "completed";            // lifecycle — drives fill + dot affordance
+    state: "pending" | "active" | "completed";            // lifecycle—drives fill + dot affordance
     progress?: number;                                    // 0..1, overrides state-default fill
     gradient?: { from: string; to: string } | string;    // `{from,to}` pair or raw CSS gradient
     value?: unknown;                                      // hover/click event payload
@@ -935,17 +952,17 @@ interface TimelineSegment {
 | `--timeline-continuous-seam-opacity`    | `0.25`             | Continuous inter-region 1px divider opacity (`0` to suppress) |
 | `--timeline-continuous-seam-color`      | `color-mix(...)`   | Seam tint (composes from opacity by default) |
 | `--timeline-segment-default-gradient`   | wash → mid wash    | Fallback gradient when `segment.gradient` is omitted |
-| `--timeline-segment-gradient-ping`      | (chart-ping)       | Per-phase canonical default — `ping` |
-| `--timeline-segment-gradient-download`  | (chart-download)   | Per-phase canonical default — `download` |
-| `--timeline-segment-gradient-upload`    | (chart-upload)     | Per-phase canonical default — `upload` |
-| `--timeline-segment-gradient-jitter`    | (chart-jitter)     | Per-phase canonical default — `jitter` |
+| `--timeline-segment-gradient-ping`      | (chart-ping)       | Per-phase canonical default—`ping` |
+| `--timeline-segment-gradient-download`  | (chart-download)   | Per-phase canonical default—`download` |
+| `--timeline-segment-gradient-upload`    | (chart-upload)     | Per-phase canonical default—`upload` |
+| `--timeline-segment-gradient-jitter`    | (chart-jitter)     | Per-phase canonical default—`jitter` |
 
 ### A11y contract
 
 - **Scrubber**: `role="slider"` + `aria-valuemin/max/now` + keyboard arrow-key step. `aria-valuenow` is always rendered as a numeric attribute (the binding coerces via `Number(modelValue ?? 0)`; AA.W1.T2 / A4 §S-16 fix). Defaults to `0` when `modelValue` is `undefined` or `null`.
 - **Segmented**: `role="group"` on the wrapper, per-dot `<button>` with composed `aria-label` (`"{label}: {state}"`). Per-segment payload surfaces via the `hover` + `click` events.
 - **Continuous**: `role="group"` on the wrapper, plus an **Option C structural split** (AB.W2.T4 / A4 §nested-interactive) under the wrapper:
-  - `.continuous-track[role="progressbar"]` with `aria-valuemin="0"`, `aria-valuemax=N`, `aria-valuenow` derived from completed-segment-count + fractional active progress (rounded to 2 decimals). The rail is **non-interactive** — it carries no focusable descendants, satisfying axe `nested-interactive` (serious; WCAG 2.0 A — 4.1.2). Each region renders a `.continuous-region-fill` child that paints the per-phase gradient up to the inline `--continuous-fill-width` (load-bearing: the var actually paints, it is not merely computed; W3 will lean on this substrate for the phase-bus echo).
+  - `.continuous-track[role="progressbar"]` with `aria-valuemin="0"`, `aria-valuemax=N`, `aria-valuenow` derived from completed-segment-count + fractional active progress (rounded to 2 decimals). The rail is **non-interactive**—it carries no focusable descendants, satisfying axe `nested-interactive` (serious; WCAG 2.0 A—4.1.2). Each region renders a `.continuous-region-fill` child that paints the per-phase gradient up to the inline `--continuous-fill-width` (load-bearing: the var actually paints, it is not merely computed; W3 will lean on this substrate for the phase-bus echo).
   - `.continuous-markers[role="list"]` carries the interactive `<button class="continuous-dot">` markers as `<li role="listitem">` siblings. Each button has composed `aria-label` (`"{label}: {state}"`), per-segment data hooks (`data-state`, `data-current`, `data-completed`), and a `<HoverPopover>` wrap that surfaces `{ label, value, description, state }` on hover (color-coded via the segment's gradient endpoint).
   - The `currentSegmentKey?: string` prop stamps `data-current="true"` on the matching marker so consumers (panel rendering, W3 raised-rivet styling) can distinguish active phase from transient hovered phase without DOM surgery. Hover affects only the floating popover; the data-current marker survives hover-leave.
 
@@ -953,7 +970,7 @@ The continuous variant's event surface adds `hoverEnd` (mirror of `hover`) so co
 
 All variants respect `prefers-reduced-motion: reduce` by collapsing band / region / dot transitions to `0.01ms`.
 
-**Target-size compliance (AC.W6d F2.I-04 — WCAG 2.5.5 AAA)**: each interactive dot (segmented + continuous) paints at 14px visible diameter under `pointer: fine` but grows an invisible `::before` halo extending the pointer hit-area to 44 × 44 (`inset: -15px` against the 14px box: `14 + 15 + 15 = 44`). Under `@media (pointer: coarse)` the visible dot promotes to `--timeline-dot-size-touch` (default 20px) and the halo's inset recomputes via `calc((var(--timeline-touch-target) - var(--timeline-dot-size-touch)) / -2)` so the total hit-area stays at 44 × 44 across the lifted geometry. Consumers that override the touch token receive a halo that tracks the override automatically.
+**Target-size compliance (AC.W6d F2.I-04—WCAG 2.5.5 AAA)**: each interactive dot (segmented + continuous) paints at 14px visible diameter under `pointer: fine` but grows an invisible `::before` halo extending the pointer hit-area to 44 × 44 (`inset: -15px` against the 14px box: `14 + 15 + 15 = 44`). Under `@media (pointer: coarse)` the visible dot promotes to `--timeline-dot-size-touch` (default 20px) and the halo's inset recomputes via `calc((var(--timeline-touch-target) - var(--timeline-dot-size-touch)) / -2)` so the total hit-area stays at 44 × 44 across the lifted geometry. Consumers that override the touch token receive a halo that tracks the override automatically.
 
 ---
 
@@ -961,26 +978,26 @@ All variants respect `prefers-reduced-motion: reduce` by collapsing band / regio
 
 The configurator family is the canonical chrome for live token / preset editing in storybook + consumer admin surfaces. Four primitives compose:
 
-- `<Configurator>` — outer shell (FAB + sheet + persistence).
-- `<ConfiguratorLayer>` — labelled group of related rows (typography, glass tier, density, etc.).
-- `<ConfiguratorRow>` — single labelled control (slider, select, color, switch).
-- `useConfiguratorState` — reactive preset state (active key, draft buffer, commit / reset / cycle, persistence).
+- `<Configurator>`—outer shell (FAB + sheet + persistence).
+- `<ConfiguratorLayer>`—labelled group of related rows (typography, glass tier, density, etc.).
+- `<ConfiguratorRow>`—single labelled control (slider, select, color, switch).
+- `useConfiguratorState`—reactive preset state (active key, draft buffer, commit / reset / cycle, persistence).
 
 The family reaches the ≥ 2-consumer bar via:
-1. `demo/stories/motion/metaballs.vue` (`useConfiguratorState` with the metaballs preset cohort — `cloneMode: "commit-on-write"` default).
-2. `demo/stories/primitives/configurator.vue` (V-tranche fb38034 — primitive-side story consuming `<ConfiguratorRow>` + `useConfiguratorState`).
-3. `demo/stories/aurora.vue` (L.W7 Lane B — `cloneMode: "per-preset"` consumer; absorbed the retired `useAuroraStudio` parallel chrome).
+1. `demo/stories/motion/metaballs.vue` (`useConfiguratorState` with the metaballs preset cohort—`cloneMode: "commit-on-write"` default).
+2. `demo/stories/primitives/configurator.vue` (V-tranche fb38034—primitive-side story consuming `<ConfiguratorRow>` + `useConfiguratorState`).
+3. `demo/stories/aurora.vue` (L.W7 Lane B—`cloneMode: "per-preset"` consumer; absorbed the retired `useAuroraStudio` parallel chrome).
 
 **Clone modes**. `useConfiguratorState<T>` ships two clone-mode strategies via the `cloneMode` option:
 
-- `"commit-on-write"` (default) — single live `config` reactive object. `selectPreset(key)` overwrites `config` with that preset's baseline; edits do NOT persist across preset switches. Matches metaballs' shape.
-- `"per-preset"` — each preset slot holds an independent live clone. `selectPreset(key)` snapshots the current `config` into the outgoing slot, then loads the incoming slot's clone into `config`. Edits persist per slot across switches. Matches aurora's shape (slider edits survive a preset round-trip).
+- `"commit-on-write"` (default)—single live `config` reactive object. `selectPreset(key)` overwrites `config` with that preset's baseline; edits do NOT persist across preset switches. Matches metaballs' shape.
+- `"per-preset"`—each preset slot holds an independent live clone. `selectPreset(key)` snapshots the current `config` into the outgoing slot, then loads the incoming slot's clone into `config`. Edits persist per slot across switches. Matches aurora's shape (slider edits survive a preset round-trip).
 
 `defaultClone` calls `toRaw(value)` before `structuredClone` so Vue reactive proxies snapshot cleanly; JSON-clone is the fallback for shapes `structuredClone` rejects. Consumers can override via `options.clone`.
 
-**Configurator P0 absorb (K W7)**: `useConfiguratorState.ts:85-87` previously declared `let activeKey: string | undefined` — non-reactive — so `studio.activePreset` returned a stale computed value and templates binding it never updated when `selectPreset` mutated the local. K W7 replaced the plain `let` with `const activeKey = ref<string | undefined>(...)`; `selectPreset` / `resetCurrent` / `cyclePreset` mutate `activeKey.value`. The "Maximum recursive updates exceeded" runtime error on `/motion/metaballs` (Lighthouse P0-1) is gone. A bidirectional `colorDraft ↔ cfg.colors` watch-write loop in `metaballs.vue` was eliminated by Strategy 1 (KISS — drop `colorDraft` entirely; iterate `cfg.colors` directly via `studio.config`).
+**Configurator P0 absorb (K W7)**: `useConfiguratorState.ts:85-87` previously declared `let activeKey: string | undefined`—non-reactive—so `studio.activePreset` returned a stale computed value and templates binding it never updated when `selectPreset` mutated the local. K W7 replaced the plain `let` with `const activeKey = ref<string | undefined>(...)`; `selectPreset` / `resetCurrent` / `cyclePreset` mutate `activeKey.value`. The "Maximum recursive updates exceeded" runtime error on `/motion/metaballs` (Lighthouse P0-1) is gone. A bidirectional `colorDraft ↔ cfg.colors` watch-write loop in `metaballs.vue` was eliminated by Strategy 1 (KISS—drop `colorDraft` entirely; iterate `cfg.colors` directly via `studio.config`).
 
-**Aurora chrome Option-A unification (L W7 Lane B — Rε §A.8)**: the prior `useAuroraStudio` + per-preset clone map collapsed into a `cloneMode: "per-preset"` consumer of the canonical `useConfiguratorState<AuroraConfig>`. Closes K cross-tranche-debt item; retires the Option-B-with-rationale note. Aurora is now the second consumer of the canonical state primitive (third overall counting `primitives/configurator.vue`). F-ε-3 (`/motion/metaballs` recursion warning surfaced under L W6 Lighthouse) probed clean post-unification under the 2-preset-swap + 4-color-mutation reproduction pattern — see `docs/tranches/L/audit/W7-B-aurora-option-a-unification-proof.md`.
+**Aurora chrome Option-A unification (L W7 Lane B—Rε §A.8)**: the prior `useAuroraStudio` + per-preset clone map collapsed into a `cloneMode: "per-preset"` consumer of the canonical `useConfiguratorState<AuroraConfig>`. Closes K cross-tranche-debt item; retires the Option-B-with-rationale note. Aurora is now the second consumer of the canonical state primitive (third overall counting `primitives/configurator.vue`). F-ε-3 (`/motion/metaballs` recursion warning surfaced under L W6 Lighthouse) probed clean post-unification under the 2-preset-swap + 4-color-mutation reproduction pattern—see `docs/tranches/L/audit/W7-B-aurora-option-a-unification-proof.md`.
 
 ---
 
@@ -991,9 +1008,9 @@ The family reaches the ≥ 2-consumer bar via:
 | Dialog           | `Dialog`, `DialogContent`                   | elevated   | `dialog-scale`                          | `--z-modal` (80)    |
 | Popover          | `Popover`, `PopoverContent`                 | elevated   | `.popover-animate .slide-in-from-side`  | `--z-popover` (70)  |
 | Dropdown         | `DropdownMenu`, `DropdownMenuContent`       | elevated   | `.popover-animate .slide-in-from-side`  | `--z-popover` (70)  |
-| Sheet            | `Sheet`, `SheetContent`                     | —          | slide from side                         | `--z-modal` (80)    |
-| Hover card       | `HoverCard`, `HoverCardContent`             | —          | `fade-slide`                            | `--z-hovercard` (60)|
-| Tooltip          | `Tooltip` + `TooltipProvider`               | —          | fade                                    | `--z-tooltip` (60)  |
+| Sheet            | `Sheet`, `SheetContent`                     |—         | slide from side                         | `--z-modal` (80)    |
+| Hover card       | `HoverCard`, `HoverCardContent`             |—         | `fade-slide`                            | `--z-hovercard` (60)|
+| Tooltip          | `Tooltip` + `TooltipProvider`               |—         | fade                                    | `--z-tooltip` (60)  |
 | Floating panel   | `.floating-panel`                           | medium     | `floating-panel-in`                     | `--z-overlay` (50)  |
 
 `--popover-offset` (6 px) governs anchor-to-content spacing. `--popover-viewport-pad` (8 px) keeps popovers from viewport edges.
@@ -1025,27 +1042,27 @@ All transitions respect `prefers-reduced-motion`: fades preserved at 150 ms, tra
 
 ### Keyframe entrance animations
 
-- `floating-panel-in` — opacity 0 → 1, blur 4px → 0, scale 0.96 → 1
-- `dialog-in` — opacity + scale(0.95) + translateY(8 px)
-- `scale-in` — opacity + scale(0.95)
-- `fade-in` — opacity + translateY(6 px)
-- `slide-up` — opacity + translateY(16 px)
-- `dock-in` — opacity + translateY(14 px) + scale(0.96); opt-in via `.dock-in` utility on a dock wrapper (panel duration, `--spring-snappy`)
+- `floating-panel-in`—opacity 0 → 1, blur 4px → 0, scale 0.96 → 1
+- `dialog-in`—opacity + scale(0.95) + translateY(8 px)
+- `scale-in`—opacity + scale(0.95)
+- `fade-in`—opacity + translateY(6 px)
+- `slide-up`—opacity + translateY(16 px)
+- `dock-in`—opacity + translateY(14 px) + scale(0.96); opt-in via `.dock-in` utility on a dock wrapper (panel duration, `--spring-snappy`)
 
 ### Kinetic typography keyframes
 
-- `weight-breathe` — font-variation-settings wght 300 → 500 → 300 over 4 s (ease-in-out)
-- `weight-reveal` — wght 100 → 400, opacity 0.3 → 1 (scroll-timeline driven)
-- `gold-shimmer-slide` — `background-position: 200% → -200%` over 6 s linear
+- `weight-breathe`—font-variation-settings wght 300 → 500 → 300 over 4 s (ease-in-out)
+- `weight-reveal`—wght 100 → 400, opacity 0.3 → 1 (scroll-timeline driven)
+- `gold-shimmer-slide`—`background-position: 200% → -200%` over 6 s linear
 
 `animations.css` owns shimmer keyframes only. Text shimmer utility
 classes, including `.gold-shimmer`, live in `utilities.css`.
 
 ### Utility animations
 
-- `rainbow-hue` — hue-rotate 0 → 360°
-- `shimmer-sweep` — background-position sweep
-- `shake` — translateX ±4 px over 0.5 s
+- `rainbow-hue`—hue-rotate 0 → 360°
+- `shimmer-sweep`—background-position sweep
+- `shake`—translateX ±4 px over 0.5 s
 
 ---
 
@@ -1061,7 +1078,7 @@ Library-tier composables decompose into three rough registers. The first registe
 | `useTouchGate` | platform | Pointer-event coalescing for touch + mouse. |
 | `useKeyboardShortcuts` | platform | Scoped keybinding registration. |
 | `useTokenColor` | platform | Reactive read of a CSS custom property; re-resolves on dark-mode transitions. Replaces ad-hoc `getComputedStyle(html).getPropertyValue("--xxx")` reads in canvas + Aurora consumers. |
-| `useStagger` | orchestration | Fixed-count timed reveal cascade — `revealed.value[i]` flips true at `initialDelayMs + i * delayMs`. Distinct from `useStaggerReveal`: that one gates on IntersectionObserver thresholds; this one fires on a pure timer. The two compose. |
+| `useStagger` | orchestration | Fixed-count timed reveal cascade—`revealed.value[i]` flips true at `initialDelayMs + i * delayMs`. Distinct from `useStaggerReveal`: that one gates on IntersectionObserver thresholds; this one fires on a pure timer. The two compose. |
 | `useStaggerReveal` | orchestration | IntersectionObserver-gated entrance choreography for grids and lists. |
 | `useAnimatedNumber` | motion | Hysteresis-smoothed live numeric tracking via keyframes.js `SmoothProgress`. |
 | `useAnimatedNumberMap` | motion | N-up `useAnimatedNumber` fan-out behind a `Record<K, ComputedRef<number \| null>>`. Replaces hand-rolled per-key smoother arrays where consumers can't run the composable inside a `v-for`. |
@@ -1095,8 +1112,15 @@ state through module-scope registries:
 - `instances` (sortable lists)
 - `activeTimers` (typewriter ambient animations)
 - `toasts` (useToast queue + `toastTimeouts` Map)
+- `generatedRowIds` (DataTable; `src/components/ui/data-table/DataTable.vue:61`—`WeakMap<object, symbol>` keying per-row-id stability across re-renders; GC'd with row objects)
+- `warnedRowIdentityIssues` (DataTable; `src/components/ui/data-table/DataTable.vue:62`—`Set<string>` suppressing DEV warnings to once-per-row-kind across the process)
 
-These assume ONE library copy per JS process — the common case for a
+Plus two vueuse-wrapped registries on the `/dark` and `/keyboard`
+subpaths (`useGlobalDark`, `useShortcutRegistry`)—these use vueuse's
+`createGlobalState` primitive rather than raw module-state, and are
+SCC-carved into their own subpaths per L.W1 Lane C.
+
+These assume ONE library copy per JS process—the common case for a
 peer-dep'd library where the bundler dedupes the package. Multi-library-
 copy environments (rare; e.g., a consumer that bundles two different
 glass-ui versions into one page) would observe state divergence between
@@ -1133,7 +1157,7 @@ Utility classes `.icon-xs`..`.icon-xl` set width + height.
 --min-width-input-sm:  var(--input-min-width-sm)
 ```
 
-### Chassis sizing — dock-adjusted viewport (AB.W1)
+### Chassis sizing—dock-adjusted viewport (AB.W1)
 
 ```
 --chassis-max-block-size: calc(
@@ -1148,7 +1172,7 @@ A guardrail for consumer-app chassis cards (e.g. speedtest's
 `.results-card`). The recipe subtracts the consumer-owned
 `--dock-footer-space` (dock height + dock inset + card-edge inset) and
 `--page-padding-top` from the dynamic viewport, then keeps one further
-rem of breathing room so the card never butts the dock — the user
+rem of breathing room so the card never butts the dock—the user
 mandate is `≥ 1rem visible gap above dock`.
 
 Consumers should:
@@ -1238,13 +1262,13 @@ Classes `.paper-texture` and `.paper-texture-aged` apply the overlay with `multi
 
 ## Texture system
 
-The canonical paper-texture substrate is two composable `@utility` declarations plus one wrapper SFC. Consumers never reach inside scoped styles to retint texture — they override the `--paper-*` CSS custom properties at `:root`, which cascades through the utilities transparently.
+The canonical paper-texture substrate is two composable `@utility` declarations plus one wrapper SFC. Consumers never reach inside scoped styles to retint texture—they override the `--paper-*` CSS custom properties at `:root`, which cascades through the utilities transparently.
 
 ### Substrate
 
-- `<PaperBackdrop>` (`src/components/custom/paper-backdrop/PaperBackdrop.vue`) — the wrapper SFC. Props: `opacity?: number | string`, `frequency?: "clean" | "aged"`, `class?`. Renders a single `<div class="paper-underpaint" aria-hidden="true">`; the `frequency="aged"` prop swaps `backgroundImage` to `var(--paper-aged-texture)` inline.
-- `paper-underpaint` (`src/styles/paper.css:12`) — `@utility` declaration. `position: fixed; inset: 0; z-index: -1; pointer-events: none` plus the canonical feTurbulence-noise SVG data-url at 60 × 60 tile. Bound to `--glass-grain-opacity` for the alpha rung and `multiply` / `soft-light` blend (light / dark mode).
-- `paper-grain-overlay` (`src/styles/paper.css:29`) — `@utility` declaration. `::after` overlay variant for individual surfaces (the underpaint is fullscreen-fixed; the overlay is a card-shaped pseudo-element). Same texture / opacity / blend cascade.
+- `<PaperBackdrop>` (`src/components/custom/paper-backdrop/PaperBackdrop.vue`)—the wrapper SFC. Props: `opacity?: number | string`, `frequency?: "clean" | "aged"`, `class?`. Renders a single `<div class="paper-underpaint" aria-hidden="true">`; the `frequency="aged"` prop swaps `backgroundImage` to `var(--paper-aged-texture)` inline.
+- `paper-underpaint` (`src/styles/paper.css:12`)—`@utility` declaration. `position: fixed; inset: 0; z-index: -1; pointer-events: none` plus the canonical feTurbulence-noise SVG data-url at 60 × 60 tile. Bound to `--glass-grain-opacity` for the alpha rung and `multiply` / `soft-light` blend (light / dark mode).
+- `paper-grain-overlay` (`src/styles/paper.css:29`)—`@utility` declaration. `::after` overlay variant for individual surfaces (the underpaint is fullscreen-fixed; the overlay is a card-shaped pseudo-element). Same texture / opacity / blend cascade.
 
 ### Custom-property cascade pattern
 
@@ -1261,16 +1285,16 @@ Consumers retint texture via `:root` overrides:
 }
 ```
 
-The cascade parallels the `--phase-color-*` substrate documented at AC.W6c / v1.5.1 — consumers never edit library source; they declare overrides at `:root` (or a scoped ancestor) and the utilities cascade through. Per the J invariant (token-first), no consumer needs to fork `PaperBackdrop.vue` to add a third frequency — they ship `--paper-handmade-texture: url(...)` at `:root` and apply `class="paper-grain-overlay"` with an inline `style="background-image: var(--paper-handmade-texture)"` override.
+The cascade parallels the `--phase-color-*` substrate documented at AC.W6c / v1.5.1—consumers never edit library source; they declare overrides at `:root` (or a scoped ancestor) and the utilities cascade through. Per the J invariant (token-first), no consumer needs to fork `PaperBackdrop.vue` to add a third frequency—they ship `--paper-handmade-texture: url(...)` at `:root` and apply `class="paper-grain-overlay"` with an inline `style="background-image: var(--paper-handmade-texture)"` override.
 
-### Migration path — consumers shipping a parallel `useTextureSystem` composable
+### Migration path—consumers shipping a parallel `useTextureSystem` composable
 
 Per P11/a §G3 + §I2, words/frontend ships ~500 LOC of parallel substrate at HEAD: `useTextureSystem.ts` (162 LOC) + `TextureCard.vue` / `TextureBackground.vue` / `TextureOverlay.vue` (341 LOC). The composable + 3 SFCs reconstruct the `--paper-clean-texture` / `--paper-aged-texture` switching plus blend-mode + intensity register that the canonical substrate already covers. The migration shape:
 
 1. Drop `useTextureSystem.ts` + the 3 texture SFCs (~500 LOC).
 2. Replace `<TextureCard>` / `<TextureBackground>` / `<TextureOverlay>` call sites with raw `class="paper-grain-overlay"` (per-surface overlay) or `<PaperBackdrop>` (fullscreen substrate). The `frequency` prop replaces the `:type="clean | aged"` consumer-side switch.
-3. Override `--paper-*-texture` / `--glass-grain-opacity` at `:root` (or a scoped ancestor) when retinting is needed — consumers stop dispatching `setTextureType('aged')` programmatically and start declaring tone in CSS.
-4. The local `texture-paper-{clean,aged,handmade,kraft}` Tailwind plugin block (in consumer-side `tailwind.config.ts`) collapses to two utilities — `paper-underpaint` and `paper-grain-overlay` — both already shipped via `@import '@mkbabb/glass-ui/styles'`.
+3. Override `--paper-*-texture` / `--glass-grain-opacity` at `:root` (or a scoped ancestor) when retinting is needed—consumers stop dispatching `setTextureType('aged')` programmatically and start declaring tone in CSS.
+4. The local `texture-paper-{clean,aged,handmade,kraft}` Tailwind plugin block (in consumer-side `tailwind.config.ts`) collapses to two utilities—`paper-underpaint` and `paper-grain-overlay`—both already shipped via `@import '@mkbabb/glass-ui/styles'`.
 
 Pin against the canonical types from the `/api` discovery layer:
 
@@ -1338,7 +1362,7 @@ Consumer-overridable HSL tokens. Light values; dark overrides in `.dark {}`.
 
 ### UI primitives (`src/components/ui/`)
 
-_shared (`<ModalOverlay>`, `menuItemVariants` CVA — V.W3) · accordion · alert · avatar · badge · button · card · carousel · cartoon-card · checkbox · collapsible · combobox · command · context-menu · data-table · dialog · drawer · dropdown-menu · hover-card · input · label · metric-pill · multi-select · notification · number-field · popover · progress · radio-group · scroll-pane · section · select · separator · sheet · skeleton · slider · switch · table · tabs · tags-input · textarea · toast · toggle · toggle-group · tooltip.
+_shared (`<ModalOverlay>`, `menuItemVariants` CVA—V.W3) · accordion · alert · avatar · badge · button · card · carousel · cartoon-card · checkbox · collapsible · combobox · command · context-menu · data-table · dialog · drawer · dropdown-menu · hover-card · input · label · metric-pill · multi-select · notification · number-field · popover · progress · radio-group · scroll-pane · section · select · separator · sheet · skeleton · slider · switch · table · tabs · tags-input · textarea · toast · toggle · toggle-group · tooltip.
 
 ### Custom composites (`src/components/custom/`)
 
@@ -1346,40 +1370,40 @@ aurora · **configurator** (`Configurator`, `ConfiguratorLayer`, `ConfiguratorRo
 
 ### Key component specs
 
-**`Skeleton`** — `<Skeleton variant="pulse" | "shimmer" class="..." />`. Pulse: `animate-pulse rounded-md bg-muted`. Shimmer (K WP migration): a transform-only `::after` overlay with `transform: translateX(-100% → 100%)` over 1.5 s linear loop, `will-change: transform`. Visual fidelity preserved (1.5 s sweep cadence, `--muted-foreground` highlight band over `bg-muted` base). The migration moves the sweep off `background-position` (which forced main-thread paint per frame) onto compositor-friendly transform-only animation — addresses Lighthouse P1-4 (non-composited animation). Reduced-motion gate preserved.
+**`Skeleton`**—`<Skeleton variant="pulse" | "shimmer" class="..." />`. Pulse: `animate-pulse rounded-md bg-muted`. Shimmer (K WP migration): a transform-only `::after` overlay with `transform: translateX(-100% → 100%)` over 1.5 s linear loop, `will-change: transform`. Visual fidelity preserved (1.5 s sweep cadence, `--muted-foreground` highlight band over `bg-muted` base). The migration moves the sweep off `background-position` (which forced main-thread paint per frame) onto compositor-friendly transform-only animation—addresses Lighthouse P1-4 (non-composited animation). Reduced-motion gate preserved.
 
-**`Pulse`** — `<Pulse :count="3" variant="dots|ring" speed="slow|normal|fast" />`. Dots: count-many 6 × 6 px rounded circles with current-color background, staggered `pulse-dot-bounce` animation (opacity 0.35 → 1 → 0.35, scale 0.8 → 1.2 → 0.8). Ring: 16 × 16 px current-color border with transparent top, linear spin. `--pulse-duration` mapped from `speed` prop to `--duration-slow|panel|fast`. Reduced-motion → animation none, opacity 0.6.
+**`Pulse`**—`<Pulse :count="3" variant="dots|ring" speed="slow|normal|fast" />`. Dots: count-many 6 × 6 px rounded circles with current-color background, staggered `pulse-dot-bounce` animation (opacity 0.35 → 1 → 0.35, scale 0.8 → 1.2 → 0.8). Ring: 16 × 16 px current-color border with transparent top, linear spin. `--pulse-duration` mapped from `speed` prop to `--duration-slow|panel|fast`. Reduced-motion → animation none, opacity 0.6.
 
-**`MetricBadge`** — `<MetricBadge :size="sm|md|lg|xl" :amount="str|num" :unit="str" :color="hex" :placeholder="—" :label?="str" :abbreviation?="str" />`. Inline-flex, baseline-aligned, `max-w-32`, overflow-hidden. Amount: `text-mono-micro font-semibold tabular-nums` at sm (11px), `text-mono-caption` at md (12px), `text-mono-small` at lg (14px), `text-mono-prose` at xl (18px) — the audacious-canon-plus-one ladder per Q.W2.B; colored with prop when amount is truthy, muted-foreground/40 when falsy. Unit: `text-micro font-mono text-muted-foreground` (sm/md/lg) lifting to `text-prose font-mono` at xl. Interactive: `hover:scale-110 hover:shadow-md active:scale-95`. The `size` prop scales the typographic ladder for the audacious-canon use (consumer-side `useMediaQuery` selects `xl` ≥1200, `lg` ≥480, `sm` below to fit the mobile carve without clipping).
+**`MetricBadge`**—`<MetricBadge :size="sm|md|lg|xl" :amount="str|num" :unit="str" :color="hex" :placeholder="—" :label?="str" :abbreviation?="str" />`. Inline-flex, baseline-aligned, `max-w-32`, overflow-hidden. Amount: `text-mono-micro font-semibold tabular-nums` at sm (11px), `text-mono-caption` at md (12px), `text-mono-small` at lg (14px), `text-mono-prose` at xl (18px)—the audacious-canon-plus-one ladder per Q.W2.B; colored with prop when amount is truthy, muted-foreground/40 when falsy. Unit: `text-micro font-mono text-muted-foreground` (sm/md/lg) lifting to `text-prose font-mono` at xl. Interactive: `hover:scale-110 hover:shadow-md active:scale-95`. The `size` prop scales the typographic ladder for the audacious-canon use (consumer-side `useMediaQuery` selects `xl` ≥1200, `lg` ≥480, `sm` below to fit the mobile carve without clipping).
 
-**v0.7.2 inline-label / abbreviation extension** (R.W4 consumer-driven, no breaking change). When `label` is set, the badge renders `[label][space][amount][space][unit]` inside the same container. The label is `font-mono` Fira Code uppercase tracking 0.18em at the badge's unit-tier size (one tier below the amount), colour `var(--muted-foreground)` at 80% — never the amount's `color` prop, because the label is the schedule annotation and the amount is the readout (Vignelli typographic asymmetry). When `abbreviation` is also set, consumers can swap to it via their own viewport branching (`useMediaQuery("(max-width: 479px)")` is the canonical pattern for the 3-letter mobile collapse `LAT 36 ms` / `JIT 1` / `DL 730` / `UL 130`); the library exposes both modes but does NOT branch on viewport — that's consumer logic per glass-ui's first principle (component owns visual contract; consumer owns layout decisions). Both `label` and `abbreviation` are `undefined`-default; pre-v0.7.2 consumers render unchanged. Hover popovers stay valid for description copy ("Network latency — lower is better") because the label-on-pill answers "what is this number" and the popover answers "what does it mean".
+**v0.7.2 inline-label / abbreviation extension** (R.W4 consumer-driven, no breaking change). When `label` is set, the badge renders `[label][space][amount][space][unit]` inside the same container. The label is `font-mono` Fira Code uppercase tracking 0.18em at the badge's unit-tier size (one tier below the amount), colour `var(--muted-foreground)` at 80%—never the amount's `color` prop, because the label is the schedule annotation and the amount is the readout (Vignelli typographic asymmetry). When `abbreviation` is also set, consumers can swap to it via their own viewport branching (`useMediaQuery("(max-width: 479px)")` is the canonical pattern for the 3-letter mobile collapse `LAT 36 ms` / `JIT 1` / `DL 730` / `UL 130`); the library exposes both modes but does NOT branch on viewport—that's consumer logic per glass-ui's first principle (component owns visual contract; consumer owns layout decisions). Both `label` and `abbreviation` are `undefined`-default; pre-v0.7.2 consumers render unchanged. Hover popovers stay valid for description copy ("Network latency—lower is better") because the label-on-pill answers "what is this number" and the popover answers "what does it mean".
 
-**v0.8.3 stacked refinement** (T.W2 audit-B-spec). When `labelPosition === "stacked"`, the template wraps `<span class="metric-badge__amount">` + `<span class="metric-badge__unit">` in a single `<span class="metric-badge__row">`. Layout becomes 2 rows: row 1 label/abbreviation, row 2 amount + unit baseline-aligned via `display: inline-flex; align-items: baseline; gap: 0.25rem`. The pre-T 3-row layout (label / amount / unit on three rows) was the bug, not the contract — the value+unit pair reads as one quantity. Inline mode keeps the flat sibling order so the single-row baseline reads unbroken. Two new tokens land in `tokens.css`: `--metric-badge-min-height-stacked: 2.625rem` (taller floor for breathing room above the baseline pair) and `--metric-badge-padding-block-stacked: 0.375rem`. Existing `labelPosition="stacked"` consumers were zero — the refinement is safe.
+**v0.8.3 stacked refinement** (T.W2 audit-B-spec). When `labelPosition === "stacked"`, the template wraps `<span class="metric-badge__amount">` + `<span class="metric-badge__unit">` in a single `<span class="metric-badge__row">`. Layout becomes 2 rows: row 1 label/abbreviation, row 2 amount + unit baseline-aligned via `display: inline-flex; align-items: baseline; gap: 0.25rem`. The pre-T 3-row layout (label / amount / unit on three rows) was the bug, not the contract—the value+unit pair reads as one quantity. Inline mode keeps the flat sibling order so the single-row baseline reads unbroken. Two new tokens land in `tokens.css`: `--metric-badge-min-height-stacked: 2.625rem` (taller floor for breathing room above the baseline pair) and `--metric-badge-padding-block-stacked: 0.375rem`. Existing `labelPosition="stacked"` consumers were zero—the refinement is safe.
 
-**`MetricPill`** (v0.8.3, T.W2) — `<MetricPill :amount="str|num" :unit="str" :label="str" :abbreviation="str" :color="hex" :size="sm|md|lg|xl" :labelPosition="inline|stacked" :density="comfortable|spacious" :placeholder="—" />`. Composition-only over `<MetricBadge>` with `labelPosition="stacked"` + `density="spacious"` + `size="lg"` defaults. The pill lands at the 2.625rem floor declared by `--metric-badge-min-height-stacked`; row 1 carries the label, row 2 baseline-aligns amount + unit. The `density` prop is the dock-tier knob lifted onto the pill: `spacious` (default) widens block padding for chassis-strip rhythm; `comfortable` keeps the tighter compact register where pills nest in a denser dock. The CSS modifier (`.metric-pill--density-{value}`) adjusts the local metric-badge padding tokens; the underlying badge stays unchanged. Per audit-B's T1 lock: composition only, no parallel logic vs `<MetricBadge>` — visual changes to the underlying badge surface compose here without divergence.
+**`MetricPill`** (v0.8.3, T.W2)—`<MetricPill :amount="str|num" :unit="str" :label="str" :abbreviation="str" :color="hex" :size="sm|md|lg|xl" :labelPosition="inline|stacked" :density="comfortable|spacious" :placeholder="—" />`. Composition-only over `<MetricBadge>` with `labelPosition="stacked"` + `density="spacious"` + `size="lg"` defaults. The pill lands at the 2.625rem floor declared by `--metric-badge-min-height-stacked`; row 1 carries the label, row 2 baseline-aligns amount + unit. The `density` prop is the dock-tier knob lifted onto the pill: `spacious` (default) widens block padding for chassis-strip rhythm; `comfortable` keeps the tighter compact register where pills nest in a denser dock. The CSS modifier (`.metric-pill--density-{value}`) adjusts the local metric-badge padding tokens; the underlying badge stays unchanged. Per audit-B's T1 lock: composition only, no parallel logic vs `<MetricBadge>`—visual changes to the underlying badge surface compose here without divergence.
 
-**`MetricStack` + `MetricRow`** (v1.6.0, AC.W6d) — `<MetricStack :container-name="metric-stack" :variant="dpi" :rows="4">` shell hosts an N-row stack of `<MetricRow :icon :label :value :unit :phase-color :digit-count :color-tinted :active>`. Promotes the speedtest `ResultStack` canon to library scope; the stack owns the 4-track subgrid template (`icon | label | value | unit`), the inline-size container with consumer-named handle, the `--result-row-scale` knob (`data-variant="dpi"` shifts to 1.25), and the `min-block-size` pre-allocation scaled against `--metric-stack-rows`. Each row carries the audacious-poster value clamp keyed by `--digit-count` (`3 / max(3, n)` shrink so 4-digit values stay in cell), the tabular-nums + ss01 + lnum font-feature register on the value cell, the optional `aura` slot host with `position: relative` + `inset: 0` mounting, and the per-row `--phase-color` cascade. Three slots — `icon`, `label`, `unit`, `value`, `aura`, `description` — let consumers override any cell while keeping the layout. Subpath: `@mkbabb/glass-ui/metric-stack` (no root-barrel export per the L.W2 curation; the primitive ships single-component subpath only).
+**`MetricStack` + `MetricRow`** (v1.6.0, AC.W6d)—`<MetricStack :container-name="metric-stack" :variant="dpi" :rows="4">` shell hosts an N-row stack of `<MetricRow :icon :label :value :unit :phase-color :digit-count :color-tinted :active>`. Promotes the speedtest `ResultStack` canon to library scope; the stack owns the 4-track subgrid template (`icon | label | value | unit`), the inline-size container with consumer-named handle, the `--result-row-scale` knob (`data-variant="dpi"` shifts to 1.25), and the `min-block-size` pre-allocation scaled against `--metric-stack-rows`. Each row carries the audacious-poster value clamp keyed by `--digit-count` (`3 / max(3, n)` shrink so 4-digit values stay in cell), the tabular-nums + ss01 + lnum font-feature register on the value cell, the optional `aura` slot host with `position: relative` + `inset: 0` mounting, and the per-row `--phase-color` cascade. Three slots—`icon`, `label`, `unit`, `value`, `aura`, `description`—let consumers override any cell while keeping the layout. Subpath: `@mkbabb/glass-ui/metric-stack` (no root-barrel export per the L.W2 curation; the primitive ships single-component subpath only).
 
-**`AnimatedDigit`** (v1.6.0, AC.W6d) — `<AnimatedDigit :value="num|null" :format="(n) ⇒ str" :placeholder="—" :digit-count :mode="absolute|progress" :damping>`. Wraps `useAnimatedNumber` + the tabular-nums + ss01 + lnum register so consumers stop hand-wiring those rules per site. The composable damps the displayed number toward the target via the SmoothProgress engine; reduced-motion collapses the damping to instant. Publishes `--digit-count` to the host inline style — the derived count tracks the rendered string length so MetricRow's clamp math reads from a single source of truth (no consumer-side digit-count plumbing). `data-is-animating` mirrors the underlying state for consumer-side hooks (e.g., the active-row aura gating). Subpath: `@mkbabb/glass-ui/animated-digit`.
+**`AnimatedDigit`** (v1.6.0, AC.W6d)—`<AnimatedDigit :value="num|null" :format="(n) ⇒ str" :placeholder="—" :digit-count :mode="absolute|progress" :damping>`. Wraps `useAnimatedNumber` + the tabular-nums + ss01 + lnum register so consumers stop hand-wiring those rules per site. The composable damps the displayed number toward the target via the SmoothProgress engine; reduced-motion collapses the damping to instant. Publishes `--digit-count` to the host inline style—the derived count tracks the rendered string length so MetricRow's clamp math reads from a single source of truth (no consumer-side digit-count plumbing). `data-is-animating` mirrors the underlying state for consumer-side hooks (e.g., the active-row aura gating). Subpath: `@mkbabb/glass-ui/animated-digit`.
 
-**`GlassDock` containerName prop** (v0.8.3, T.W2) — optional `containerName?: string`. When set, the dock root emits inline `container-type: inline-size; container-name: <value>; overflow: visible` plus a `data-container-name` structural marker. The base `overflow: hidden` shell gates on `:not([data-container-name])` so non-host docks keep the default clip — a backward-compatible extension. Consumers query the named container via `@container <value> (...)` rules without wrapping the dock in a sibling subject. Lifts the container subject onto the primitive (audit-B §1.3 gestalt move): a container subject must be a peer or ancestor of the dock, never an interior descendant whose intrinsic size the dock relies on (CSS Containment L3 §3.2). Replaces the W3-stash workaround that put `container-type: inline-size` on the cluster itself, which collapsed the dock to 0 width.
+**`GlassDock` containerName prop** (v0.8.3, T.W2)—optional `containerName?: string`. When set, the dock root emits inline `container-type: inline-size; container-name: <value>; overflow: visible` plus a `data-container-name` structural marker. The base `overflow: hidden` shell gates on `:not([data-container-name])` so non-host docks keep the default clip—a backward-compatible extension. Consumers query the named container via `@container <value> (...)` rules without wrapping the dock in a sibling subject. Lifts the container subject onto the primitive (audit-B §1.3 gestalt move): a container subject must be a peer or ancestor of the dock, never an interior descendant whose intrinsic size the dock relies on (CSS Containment L3 §3.2). Replaces the W3-stash workaround that put `container-type: inline-size` on the cluster itself, which collapsed the dock to 0 width.
 
-**`GlyphFace`** — `<GlyphFace :tint="hex|undefined" :active="bool" :silhouette="path-d|clip-path">`. Three-layer wrapper around a slotted lucide glyph: a phase-tinted radial backplate (visible only when `[data-active="true"]`), the slotted silhouette (stays `currentColor` so the Vignelli-clean idle reading holds), and a 165° linear-gradient catch-light cap. Four CSS knobs:
+**`GlyphFace`**—`<GlyphFace :tint="hex|undefined" :active="bool" :silhouette="path-d|clip-path">`. Three-layer wrapper around a slotted lucide glyph: a phase-tinted radial backplate (visible only when `[data-active="true"]`), the slotted silhouette (stays `currentColor` so the Vignelli-clean idle reading holds), and a 165° linear-gradient catch-light cap. Four CSS knobs:
 
-- `--gf-tint` — backplate hue (defaults `transparent`).
-- `--gf-cap-strength` — cap-gradient white-stop alpha (defaults `0.55`; dark companion `0.35`). Q.W3 raised from `0.35` to compose against translucent dock substrates.
-- `--gf-cap-blend` — cap mix-blend-mode (defaults `screen` post-Q.W3; consumers needing the metallic-overlay punch override to `overlay`).
-- `--gf-cap-radius` — cap clip radius (defaults `50%`).
+- `--gf-tint`—backplate hue (defaults `transparent`).
+- `--gf-cap-strength`—cap-gradient white-stop alpha (defaults `0.55`; dark companion `0.35`). Q.W3 raised from `0.35` to compose against translucent dock substrates.
+- `--gf-cap-blend`—cap mix-blend-mode (defaults `screen` post-Q.W3; consumers needing the metallic-overlay punch override to `overlay`).
+- `--gf-cap-radius`—cap clip radius (defaults `50%`).
 
-`silhouette` is the default cap-clip mode (Q.W3 inverted: clip-to-silhouette is the default; no-silhouette renders no cap, dropping the wrapper-rectangle fallback). DiscoGlyph hands silhouette upward via `provideGlyphFaceSilhouette()` / `useOptionalGlyphFaceSilhouette()` (P.W2 Lane C — typed `GLYPH_FACE_SILHOUETTE_KEY` paired helpers) so wrapping GlyphFace cascades reach the disco-glyph silhouette without per-consumer prop plumb. Without `active` the wrapper reads as a plain glyph holder and joins clusters that share the same edge-light + cap-radius register.
+`silhouette` is the default cap-clip mode (Q.W3 inverted: clip-to-silhouette is the default; no-silhouette renders no cap, dropping the wrapper-rectangle fallback). DiscoGlyph hands silhouette upward via `provideGlyphFaceSilhouette()` / `useOptionalGlyphFaceSilhouette()` (P.W2 Lane C—typed `GLYPH_FACE_SILHOUETTE_KEY` paired helpers) so wrapping GlyphFace cascades reach the disco-glyph silhouette without per-consumer prop plumb. Without `active` the wrapper reads as a plain glyph holder and joins clusters that share the same edge-light + cap-radius register.
 
-**`DiscoGlyph`** — `<DiscoGlyph :silhouette="path-d" :viewBox="0 0 24 24" :active="bool" :phaseColor="currentColor" :facetAxis="diagonal|horizontal|vertical">`. Three-layer SVG glyph primitive that paints the silhouette (1) filled `currentColor` so the lucide cascade carries through at idle, (2) overlaid by an 8-stop linear gradient that simulates ~6 facets cutting across the glyph face — gradient axis follows `facetAxis` so each consumer picks the direction that cuts across its dominant stroke (CheckDisco / ArrowRightDisco vertical, PlayDisco / RotateCcwDisco diagonal), (3) capped by a 165° catch-light gradient (white at the upper-left, transparent past 40%). `useId()` scopes the gradient ids so multiple glyphs on one page do not collide post-SSR/hydration. Hands silhouette upward via `useOptionalGlyphFaceSilhouette()` (typed `GLYPH_FACE_SILHOUETTE_KEY`; P.W2 Lane C helper) for wrapping GlyphFace cap consumption. Speedtest's disco icons (Play / RotateCcw / ArrowRight / Check) are thin wrappers that pass only the silhouette path + facet axis.
+**`DiscoGlyph`**—`<DiscoGlyph :silhouette="path-d" :viewBox="0 0 24 24" :active="bool" :phaseColor="currentColor" :facetAxis="diagonal|horizontal|vertical">`. Three-layer SVG glyph primitive that paints the silhouette (1) filled `currentColor` so the lucide cascade carries through at idle, (2) overlaid by an 8-stop linear gradient that simulates ~6 facets cutting across the glyph face—gradient axis follows `facetAxis` so each consumer picks the direction that cuts across its dominant stroke (CheckDisco / ArrowRightDisco vertical, PlayDisco / RotateCcwDisco diagonal), (3) capped by a 165° catch-light gradient (white at the upper-left, transparent past 40%). `useId()` scopes the gradient ids so multiple glyphs on one page do not collide post-SSR/hydration. Hands silhouette upward via `useOptionalGlyphFaceSilhouette()` (typed `GLYPH_FACE_SILHOUETTE_KEY`; P.W2 Lane C helper) for wrapping GlyphFace cap consumption. Speedtest's disco icons (Play / RotateCcw / ArrowRight / Check) are thin wrappers that pass only the silhouette path + facet axis.
 
-**`HoverPopover`** — `<HoverPopover content="..." :hover-open-delay="250" :close-delay="150" :side="auto" :align="auto">`. Hover-triggered popover-tier label with adaptive `side`/`align` (auto-flips off viewport edges). Composed via reka-ui HoverCard primitives; popover-tier substrate for chassis dock consumers (SettingsCog tooltip; ActionCluster Back / Stop / Retake hover-labels).
+**`HoverPopover`**—`<HoverPopover content="..." :hover-open-delay="250" :close-delay="150" :side="auto" :align="auto">`. Hover-triggered popover-tier label with adaptive `side`/`align` (auto-flips off viewport edges). Composed via reka-ui HoverCard primitives; popover-tier substrate for chassis dock consumers (SettingsCog tooltip; ActionCluster Back / Stop / Retake hover-labels).
 
-The `hoverOpenDelay` prop (default `250`ms) is the public API name as of K W1 (renamed from a prior generic name in J close). Rationale: reka-ui's HoverCard primitive exposes a generic `open-delay` for hover-card-family components; the glass-ui wrapper specialises hover-popover semantics (lighter, dock-internal label tier — distinct from the heavier hover-card register). The hover-popover-specific name disambiguates from the generic primitive's API at consumer call-sites and matches the `closeDelay` sibling. The rename is a clean break per K invariant 1 (no legacy aliases); the J FINAL named prop now matches the shipped API.
+The `hoverOpenDelay` prop (default `250`ms) is the public API name as of K W1 (renamed from a prior generic name in J close). Rationale: reka-ui's HoverCard primitive exposes a generic `open-delay` for hover-card-family components; the glass-ui wrapper specialises hover-popover semantics (lighter, dock-internal label tier—distinct from the heavier hover-card register). The hover-popover-specific name disambiguates from the generic primitive's API at consumer call-sites and matches the `closeDelay` sibling. The rename is a clean break per K invariant 1 (no legacy aliases); the J FINAL named prop now matches the shipped API.
 
-**`InstrumentChassis`** — `<InstrumentChassis>` with `strip` / `dial` / `control` slots. Composes the chassis CSS once: `--glass-bg-chassis` + `--glass-blur-default` + `--glass-border-default` + `--glass-shadow-default` + the `--glass-curvature-overlay` lift + an engraved-bezel inner stroke + twin-line groove dividers between regions. Consumers render through the slots — speedtest, survey, thank-you all share the same chassis with different region content. `RegionDivider` ships the twin-line groove rule for nested splits. Q.W4.A lifted the light-mode bezel-line α from 0.04 / 0.06 to 0.10 / 0.12 so the divider reads against saturated-aurora bleed; dark-mode pair (0.06 / 0.18) stays. Lands on `o-w2_7-instrument-chassis` and cherry-picks into `release/0.7.x` as v0.7.1 patch.
+**`InstrumentChassis`**—`<InstrumentChassis>` with `strip` / `dial` / `control` slots. Composes the chassis CSS once: `--glass-bg-chassis` + `--glass-blur-default` + `--glass-border-default` + `--glass-shadow-default` + the `--glass-curvature-overlay` lift + an engraved-bezel inner stroke + twin-line groove dividers between regions. Consumers render through the slots—speedtest, survey, thank-you all share the same chassis with different region content. `RegionDivider` ships the twin-line groove rule for nested splits. Q.W4.A lifted the light-mode bezel-line α from 0.04 / 0.06 to 0.10 / 0.12 so the divider reads against saturated-aurora bleed; dark-mode pair (0.06 / 0.18) stays. Lands on `o-w2_7-instrument-chassis` and cherry-picks into `release/0.7.x` as v0.7.1 patch.
 
 ### Library-only primitives (post-R consumer state)
 
@@ -1388,13 +1412,13 @@ first-class library primitives with their own demo stories
 (`demo/stories/compositions/instrument-chassis.vue`,
 `demo/stories/primitives/glyph-face.vue`, plus the `_internal/blob-stress.vue`
 that exercises `MetricBadge` at scale). The speedtest project consumed them
-during O.W2.7 → Q.W4 but stops consuming them at R.W1 — speedtest now
+during O.W2.7 → Q.W4 but stops consuming them at R.W1—speedtest now
 composes its UI from `MetricPillCluster` + `SpeedtestResults` + `Dock`
 against the deployed three-flow-box shape (see speedtest `DESIGN.md`
 `## Tranche-R revisions` for the full ledger). The library exports stay;
 the demo stories stay; downstream consumers other than speedtest remain
 free to compose them. The primitives' API contracts above are unchanged
-post-R — this subsection records the consumer-state shift, not a library
+post-R—this subsection records the consumer-state shift, not a library
 change.
 
 The `MetricBadge.label + abbreviation` extension above (v0.7.2) is the only
@@ -1422,21 +1446,21 @@ v1.0 restructures composables into **eight coherent sub-trees** per L.W2 Lane A 
 
 **Infinite scroll** (co-located under `src/components/custom/infinite-scroll/composables/`): `useInfiniteScroll`. Re-exported from the internal `src/composables/index.ts` barrel.
 
-**Motion** (`src/composables/motion/`): `useSpringOrchestrator`, `useStaggerReveal`, `useScrollProgress`, `useAnimatedNumber`, `useAnimatedNumberMap`, `useStagger`, `useDarkModeSync`, `useRAFLoop`, `useIntersectionPause`. `useAnimatedNumber` wraps keyframes.js `SmoothProgress.play` to expose a reactive hysteresis-smoothed value for live numeric tracking (hero values, pill amounts, progress bars). Not a typewriter — the target glides toward a moving signal via exponential damping. `useAnimatedNumberMap` (v0.8.4 promotion) is the N-up fan-out behind a Record-returning composable. `useDarkModeSync` (Tranche G) encapsulates the two-step `nextTick → requestAnimationFrame` dance required to react to dark-mode toggles in code that reads computed CSS variables (canvas renderers etc.).
+**Motion** (`src/composables/motion/`): `useSpringOrchestrator`, `useStaggerReveal`, `useScrollProgress`, `useAnimatedNumber`, `useAnimatedNumberMap`, `useStagger`, `useDarkModeSync`, `useRAFLoop`, `useIntersectionPause`. `useAnimatedNumber` wraps keyframes.js `SmoothProgress.play` to expose a reactive hysteresis-smoothed value for live numeric tracking (hero values, pill amounts, progress bars). Not a typewriter—the target glides toward a moving signal via exponential damping. `useAnimatedNumberMap` (v0.8.4 promotion) is the N-up fan-out behind a Record-returning composable. `useDarkModeSync` (Tranche G) encapsulates the two-step `nextTick → requestAnimationFrame` dance required to react to dark-mode toggles in code that reads computed CSS variables (canvas renderers etc.).
 
 **Glass renderer** (`src/composables/glass/`): `useGlassRenderer`, `createGlassFilter`, `destroyGlassFilter`. WebGL + WebGPU substrate.
 
 **v0.8.4 promotions** (lifted from speedtest per V.W2):
-- **`useTokenColor`** (`a4959ef`) — read CSS custom property as `ComputedRef` with theme-aware fallback. Supersedes the retired `cssVar` helper for the WAAPI-adjacent reactive-read use case.
-- **`useStagger`** (`4e28520`) — one-shot staggered reveal-flag array with cleanup-safe timer set; PRM brackets via `prefers-reduced-motion`.
-- **`useAnimatedNumberMap`** (`16df6db`) — covered above under Motion.
+- **`useTokenColor`** (`a4959ef`)—read CSS custom property as `ComputedRef` with theme-aware fallback. Supersedes the retired `cssVar` helper for the WAAPI-adjacent reactive-read use case.
+- **`useStagger`** (`4e28520`)—one-shot staggered reveal-flag array with cleanup-safe timer set; PRM brackets via `prefers-reduced-motion`.
+- **`useAnimatedNumberMap`** (`16df6db`)—covered above under Motion.
 
-**`cssVar` retire** (K W3.A) — `cssVar.ts` retired. The single in-tree consumer (BouncyToggle) inlined a 5-line `readToken(name, fallback)` helper at click-time (no reactivity needed). `useTokenColor` (above) supersedes for reactive use cases.
+**`cssVar` retire** (K W3.A)—`cssVar.ts` retired. The single in-tree consumer (BouncyToggle) inlined a 5-line `readToken(name, fallback)` helper at click-time (no reactivity needed). `useTokenColor` (above) supersedes for reactive use cases.
 
-**v1.0 retires** (L.W3 Lane A — second-consumer fidelity audit per L invariant 8):
-- `useOffsetPagination` — 0 production consumers; demo-only at v0.9.x. `@mkbabb/glass-ui/pagination` subpath removed.
-- `useVirtualSectionWindow` + `useWindowedStore` + `virtualSectionLayout` helpers — 0 production consumers. `@mkbabb/glass-ui/virtual` subpath removed.
-- `useStoryDemo` — moved to `demo/composables/useStoryDemo.ts` (demo-private; no longer on library public surface).
+**v1.0 retires** (L.W3 Lane A—second-consumer fidelity audit per L invariant 8):
+- `useOffsetPagination`—0 production consumers; demo-only at v0.9.x. `@mkbabb/glass-ui/pagination` subpath removed.
+- `useVirtualSectionWindow` + `useWindowedStore` + `virtualSectionLayout` helpers—0 production consumers. `@mkbabb/glass-ui/virtual` subpath removed.
+- `useStoryDemo`—moved to `demo/composables/useStoryDemo.ts` (demo-private; no longer on library public surface).
 
 The three motion composables flagged in K cross-tranche debt (`useRAFLoop`, `useIntersectionPause`, `useDarkModeSync`) all WIRED at L.W3 via cross-repo speedtest consumption (`useMeterRenderer.ts` + `useAuroraPolicy.ts` + `SpeedtestMeter.vue` + `useEChartsTheme.ts`); ≥ 2 consumers per L invariant 8.
 
@@ -1460,7 +1484,7 @@ The three motion composables flagged in K cross-tranche debt (`useRAFLoop`, `use
   ```
 
   Replaces the `:deep(> *) { background: var(--progress-fill) }` workaround
-  speedtest had been carrying — first-class API instead of breaking
+  speedtest had been carrying—first-class API instead of breaking
   component encapsulation.
 
 ---
@@ -1488,15 +1512,15 @@ Keep in sync with `tokens.css` when editing CSS tokens.
 
 ## Subpath surface
 
-v1.0 (L.W1 HEADLINE) closes the vueuse SCC trap with **Phase 2 root-barrel curation** + a **flat subpath surface**. The library ships under three import shapes — the curated root barrel, 37 flat JS subpaths (32 component packages + `/forms` + `/dark` + `/keyboard` + `/carousel` + `/api`), and the `/styles` CSS bundle (38 `package.json` exports entries total).
+v1.0 (L.W1 HEADLINE) closes the vueuse SCC trap with **Phase 2 root-barrel curation** + a **flat subpath surface**. The library ships under three import shapes—the curated root barrel, 37 flat JS subpaths (32 component packages + `/forms` + `/dark` + `/keyboard` + `/carousel` + `/api`), and the `/styles` CSS bundle (38 `package.json` exports entries total).
 
 ### The three layers
 
-1. **Root barrel `@mkbabb/glass-ui`** — vueuse-FREE curated surface. Re-exports 40 `ui/` packages (the 4 vueuse-bearing — `input/`, `textarea/`, `combobox/`, `carousel/` — are intentionally absent) plus 7 cherry-picked `custom/` packages (`instrument-chassis`, `glyph-face`, `dock-group`, `disco-glyph`, `hover-popover`, `configurator`, `scrolling-text`) plus the vueuse-free composable sub-trees. Acceptance bar for root-barrel inclusion is documented inline in `src/index.ts` (header comment block; L.W2 Lane B).
+1. **Root barrel `@mkbabb/glass-ui`**—vueuse-FREE curated surface. Re-exports 40 `ui/` packages (the 4 vueuse-bearing—`input/`, `textarea/`, `combobox/`, `carousel/`—are intentionally absent) plus 7 cherry-picked `custom/` packages (`instrument-chassis`, `glyph-face`, `dock-group`, `disco-glyph`, `hover-popover`, `configurator`, `scrolling-text`) plus the vueuse-free composable sub-trees. Acceptance bar for root-barrel inclusion is documented inline in `src/index.ts` (header comment block; L.W2 Lane B).
 
-2. **Per-package flat subpaths** — `./tokens`, `./dock`, `./search`, `./sidebar`, `./controls`, `./confirm-dialog`, `./infinite-scroll`, `./tabs`, `./typewriter`, `./stacked-icons`, `./glass-carousel`, `./aurora`, `./configurator`, `./metric-badge`, `./status-dot`, `./pulse`, `./paper-backdrop`, `./toggle-chip`, `./glass-panel`, `./metaballs`, `./sortable-list`, `./timeline`, `./labeled-field`, `./expandable-container`, `./icon-tooltip`, `./instrument-chassis`, `./glyph-face`, `./dock-group`, `./disco-glyph`, `./hover-popover`, `./scrolling-text`, `./freshness`. Each maps to a `src/<name>.ts` barrel and a `dist/<name>.{js,d.ts}` artefact.
+2. **Per-package flat subpaths**—`./tokens`, `./dock`, `./search`, `./sidebar`, `./controls`, `./confirm-dialog`, `./infinite-scroll`, `./tabs`, `./typewriter`, `./stacked-icons`, `./glass-carousel`, `./aurora`, `./configurator`, `./metric-badge`, `./status-dot`, `./pulse`, `./paper-backdrop`, `./toggle-chip`, `./glass-panel`, `./metaballs`, `./sortable-list`, `./timeline`, `./labeled-field`, `./expandable-container`, `./icon-tooltip`, `./instrument-chassis`, `./glyph-face`, `./dock-group`, `./disco-glyph`, `./hover-popover`, `./scrolling-text`, `./freshness`. Each maps to a `src/<name>.ts` barrel and a `dist/<name>.{js,d.ts}` artefact.
 
-3. **API discovery layer `@mkbabb/glass-ui/api`** — pure types + constants re-export aggregator. Ships 32 canonical public symbols (28 types + 4 constants) across Aurora, Configurator, Metaballs, Surface enums (`CardTier`, `InstrumentChassisPhase`, `ToastVariant`), and CVA variants (`ButtonVariants`, `SliderVariants`, etc.). Pure-additive; types erase at build so consumer JS pays 0 B for type-only imports. See `src/api/index.ts`.
+3. **API discovery layer `@mkbabb/glass-ui/api`**—pure types + constants re-export aggregator. Ships 32 canonical public symbols (28 types + 4 constants) across Aurora, Configurator, Metaballs, Surface enums (`CardTier`, `InstrumentChassisPhase`, `ToastVariant`), and CVA variants (`ButtonVariants`, `SliderVariants`, etc.). Pure-additive; types erase at build so consumer JS pays 0 B for type-only imports. See `src/api/index.ts`.
 
 `./styles` is the shared CSS bundle (sole CSS subpath; consumers wire it via `@import "@mkbabb/glass-ui/styles"`).
 
@@ -1507,7 +1531,7 @@ v1.0 (L.W1 HEADLINE) closes the vueuse SCC trap with **Phase 2 root-barrel curat
 | `@mkbabb/glass-ui/forms` | Input, Textarea, Combobox\* family | `useVModel`, `reactiveOmit` |
 | `@mkbabb/glass-ui/dark` | `useGlobalDark` | `createGlobalState`, `useDark`, `useToggle` |
 | `@mkbabb/glass-ui/keyboard` | `registerShortcut`, `useRegisteredShortcuts`, `formatCombo`, `formatComboParts`, `isMac`, types | `createGlobalState`, `useEventListener` |
-| `@mkbabb/glass-ui/carousel` | `useCarousel` + `CarouselApi` PLUS the full `Carousel*` component family — `Carousel`, `CarouselContent`, `CarouselDots`, `CarouselItem`, `CarouselNext`, `CarouselPager`, `CarouselPrevious`, `GlassCarouselPager` (substrate aligned with MIGRATION.md §1.2 at v1.0.4 / M.W0; pre-v1.0.4 only re-exported the composable + type) | `createInjectionState` (via `useCarousel`); every `Carousel*.vue` injects it |
+| `@mkbabb/glass-ui/carousel` | `useCarousel` + `CarouselApi` PLUS the full `Carousel*` component family—`Carousel`, `CarouselContent`, `CarouselDots`, `CarouselItem`, `CarouselNext`, `CarouselPager`, `CarouselPrevious`, `GlassCarouselPager` (substrate aligned with MIGRATION.md §1.2 at v1.0.4 / M.W0; pre-v1.0.4 only re-exported the composable + type) | `createInjectionState` (via `useCarousel`); every `Carousel*.vue` injects it |
 
 ```ts
 // v1.0 required shape
@@ -1523,15 +1547,15 @@ The mechanism behind the carve: when a consumer's entry chunk depends on Vue AND
 
 Two pairs of subpath names sit close enough to confuse consumers; each names a different primitive:
 
-- `@mkbabb/glass-ui/dock` exports `GlassDock` + `DockLayer` + `DockLayerGroup` + the dock-button family. `@mkbabb/glass-ui/dock-group` exports `DockGroup` — a different primitive (a chassis-strip wrapper, not part of the `GlassDock` composite).
+- `@mkbabb/glass-ui/dock` exports `GlassDock` + `DockLayer` + `DockLayerGroup` + the dock-button family. `@mkbabb/glass-ui/dock-group` exports `DockGroup`—a different primitive (a chassis-strip wrapper, not part of the `GlassDock` composite).
 - `@mkbabb/glass-ui/glass-carousel` exports `<GlassCarousel>` + `useGlassCarousel` (the custom-styled glass carousel composite). `@mkbabb/glass-ui/carousel` exports `useCarousel` + `CarouselApi` (the embla-carousel-vue primitive that the `<Carousel>` family wraps).
 
-### v1.0 subpath retirements (L invariant 4 — no legacy aliases)
+### v1.0 subpath retirements (L invariant 4—no legacy aliases)
 
-- `@mkbabb/glass-ui/composables/dark` REMOVED — use `@mkbabb/glass-ui/dark` (flat).
-- `@mkbabb/glass-ui/composables/keyboard` REMOVED — use `@mkbabb/glass-ui/keyboard` (flat).
-- `@mkbabb/glass-ui/pagination` REMOVED — `useOffsetPagination` retired (L.W3 Lane A; 0 production consumers).
-- `@mkbabb/glass-ui/virtual` REMOVED — `useVirtualSectionWindow` + `useWindowedStore` + `virtualSectionLayout` retired (L.W3 Lane A; 0 production consumers).
+- `@mkbabb/glass-ui/composables/dark` REMOVED—use `@mkbabb/glass-ui/dark` (flat).
+- `@mkbabb/glass-ui/composables/keyboard` REMOVED—use `@mkbabb/glass-ui/keyboard` (flat).
+- `@mkbabb/glass-ui/pagination` REMOVED—`useOffsetPagination` retired (L.W3 Lane A; 0 production consumers).
+- `@mkbabb/glass-ui/virtual` REMOVED—`useVirtualSectionWindow` + `useWindowedStore` + `virtualSectionLayout` retired (L.W3 Lane A; 0 production consumers).
 
 The retirements break v0.9.x consumer shapes per L's v1.0-cohort identity (L invariant 16); `MIGRATION.md` ships the canonical migration path.
 
@@ -1592,21 +1616,21 @@ The 16 `@import` statements in `src/styles/index.css` are documented inline (L.W
 export { Button, buttonVariants, type ButtonVariants } from "@mkbabb/glass-ui";
 ```
 
-When a consumer needs shared styling tweaks, edit glass-ui source — add a variant to the CVA definition or a new CSS class. Consumer-side `:deep()` overrides signal that a token, slot-class prop, or variant is missing.
+When a consumer needs shared styling tweaks, edit glass-ui source—add a variant to the CVA definition or a new CSS class. Consumer-side `:deep()` overrides signal that a token, slot-class prop, or variant is missing.
 
 
 ---
 
 ## Storybook (demo)
 
-`npm run dev` launches a multi-page Vue storybook at the repo root. Use it as the canonical view of every primitive in its natural habitat — no synthetic isolation, live against real tokens.
+`npm run dev` launches a multi-page Vue storybook at the repo root. Use it as the canonical view of every primitive in its natural habitat—no synthetic isolation, live against real tokens.
 
 ### Navigation
 
-- **Vertical `GlassDock` rail** (left) — `variant="rail"` with tooltip-backed category icons. Click an icon to swap categories.
-- **Horizontal `Carousel` pager** (top of content) — chips for every story in the active category.
+- **Vertical `GlassDock` rail** (left)—`variant="rail"` with tooltip-backed category icons. Click an icon to swap categories.
+- **Horizontal `Carousel` pager** (top of content)—chips for every story in the active category.
 - **Keyboard**: `[` / `]` prev/next story · `{` / `}` prev/next category · `,` toggle configurator · `?` keyboard help.
-- URL scheme `/:category/:story` with browser history — every page is linkable.
+- URL scheme `/:category/:story` with browser history—every page is linkable.
 
 ### Categories
 
@@ -1626,7 +1650,7 @@ When a consumer needs shared styling tweaks, edit glass-ui source — add a vari
 1. Create `demo/stories/<category>/<id>.vue`.
 2. Append the row to the matching category in `demo/stories/manifest.ts` (helper `s(cat, id, title, blurb?)`).
 
-The story loader is convention-based (`import.meta.glob`) — no router edits required.
+The story loader is convention-based (`import.meta.glob`)—no router edits required.
 
 ### Configurator
 

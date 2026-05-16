@@ -741,7 +741,21 @@
     --scale-hover-dock: 1.1;
     --scale-press: 0.95;
     --scale-press-dock: 0.92;
-    --scale-press-btn: 0.97;
+
+    /* Press-scale ladder—canonical 4-rung values for active/pressed
+       states (P.W4 Lane D; O-N-7 + P11/a §I4 close). words/frontend
+       carries 9 `active:scale-[X.XX]` sites at 4 distinct arbitrary
+       values (0.95 / 0.96 / 0.97 / 0.98); the ladder absorbs the
+       distribution without consumer-side literals. Consumers reach
+       for these rather than redeclaring inline scales. `xs` is the
+       lightest press, `lg` the deepest. `--scale-press-btn` aliases
+       `--scale-press-md` so the canonical button-press value stays
+       reachable under its prior name. */
+    --scale-press-xs: 0.98;
+    --scale-press-sm: 0.97;
+    --scale-press-md: 0.96;
+    --scale-press-lg: 0.95;
+    --scale-press-btn: var(--scale-press-sm);
     --opacity-disabled: 0.5;
     --opacity-icon-muted: 0.8;
 

@@ -1,6 +1,6 @@
-# O.W5 Lane E — CI gate expansion proof
+# O.W5 Lane E—CI gate expansion proof
 
-**Lane**: E — CI gates expansion
+**Lane**: E—CI gates expansion
 **Bounds**: `.github/workflows/lint.yml` → `.github/workflows/ci.yml` (rename + expand)
 **Status**: gate matrix expanded; PR-time gates match release-time gates
 
@@ -10,7 +10,7 @@
 
 `.github/workflows/lint.yml` → `.github/workflows/ci.yml`.
 
-W5.md §Lane E suggests the rename ("`rename to ci.yml`?"). Rationale: the workflow name no longer reflects its scope. With four canonical gates (typecheck, test, verify-export-types, profile:budget) plus the build step they require, "lint" is a misnomer. "ci" matches the workflow's actual role — the PR-time gate matrix.
+W5.md §Lane E suggests the rename ("`rename to ci.yml`?"). Rationale: the workflow name no longer reflects its scope. With four canonical gates (typecheck, test, verify-export-types, profile:budget) plus the build step they require, "lint" is a misnomer. "ci" matches the workflow's actual role—the PR-time gate matrix.
 
 The old `lint.yml` is deleted; the new `ci.yml` is created. No alias, no shim (L invariant 4).
 
@@ -26,7 +26,7 @@ Per W5.md §Lane E goal: "every PR closes on the same gate matrix the release pa
 | 4 | verify-export-types | `npm run verify-export-types` | subpath dts publication probe (L.W0 Lane III) |
 | 5 | profile:budget | `GLASS_UI_BUDGET_SKIP_BUILD=1 npm run profile:budget` | bundle-budget enforcement (K W4 Lane B re-land) |
 
-The build step (gate 3) is not itself a "gate" in the W5.md list — it is a prerequisite for gates 4 and 5. The order is: fast checks first (typecheck, test), then the build, then the post-build probes. Any non-zero exit aborts the job (`set -e` is implicit in `run:` steps).
+The build step (gate 3) is not itself a "gate" in the W5.md list—it is a prerequisite for gates 4 and 5. The order is: fast checks first (typecheck, test), then the build, then the post-build probes. Any non-zero exit aborts the job (`set -e` is implicit in `run:` steps).
 
 **Alignment with release path**: post-W5 Lane B+D, `scripts/release.sh` will run typecheck + test + build + verify-export-types + profile:budget (Lane B removes the `GLASS_UI_RELEASE_SURFACE_GUARD` env-gate; Lane D dedupes vs `prepublishOnly`). The CI gate matrix here matches that release matrix one-to-one.
 
@@ -41,7 +41,7 @@ The `build` step sets `NODE_OPTIONS=--max-old-space-size=8192` per the W1 observ
 + .github/workflows/ci.yml     (53 lines, 5-gate matrix)
 ```
 
-### Before — `lint.yml` (K W4 Lane B shape)
+### Before—`lint.yml` (K W4 Lane B shape)
 
 ```yaml
 name: lint
@@ -63,7 +63,7 @@ jobs:
             - run: GLASS_UI_BUDGET_SKIP_BUILD=1 npm run profile:budget
 ```
 
-### After — `ci.yml` (O.W5 Lane E shape)
+### After—`ci.yml` (O.W5 Lane E shape)
 
 Header comment block documents lineage, gate matrix, fail-fast posture, and the
 heap-bump rationale (so future readers don't have to re-derive it from W1).
@@ -96,7 +96,7 @@ Each gate ran cleanly on local checkout (Node 22.15.0; macOS Darwin 25.4.0):
 ```
 $ npm run typecheck
 > vue-tsc --noEmit
-(no diagnostics — exit 0)
+(no diagnostics—exit 0)
 
 $ npm run test --silent
  Test Files  30 passed (30)
@@ -107,14 +107,14 @@ $ npm run verify-export-types
 (prints 38 export entries with resolved dts + js paths; exit 0)
 
 $ npm run profile:budget
-[PASS] dist/glass-ui.js   — raw 127787 / 190000 (67.3%); gzip 22942 / 33700 (68.1%)
-[PASS] dist/glass-ui.css  — raw  33590 /  36000 (93.3%); gzip  6142 /  6700 (91.7%)
+[PASS] dist/glass-ui.js  —raw 127787 / 190000 (67.3%); gzip 22942 / 33700 (68.1%)
+[PASS] dist/glass-ui.css —raw  33590 /  36000 (93.3%); gzip  6142 /  6700 (91.7%)
 (exit 0)
 ```
 
 Local `profile:budget` ran without `GLASS_UI_BUDGET_SKIP_BUILD=1`, so it did
 its own build internally. In CI we set the env var because a dedicated build
-step ran upstream — this avoids the double-build documented in Rε §2.4.
+step ran upstream—this avoids the double-build documented in Rε §2.4.
 
 ### Timing observations (local)
 
@@ -132,13 +132,13 @@ be `npm ci` + the cold `build`, both of which are unavoidable.
 
 ## Open questions for orchestrator
 
-1. **`prepublishOnly` alignment**: Lane D plans to make `release.sh` run typecheck + verify-export-types + profile:budget upstream of `npm publish`, with `prepublishOnly` doing build + test. The CI matrix here covers all five gates in one job. Should CI also adopt the Lane D split (publish-time gates vs release-time gates), or keep the single-job shape? Recommendation: keep single-job CI — CI runs ARE the publish-time gates from a pull request's perspective.
+1. **`prepublishOnly` alignment**: Lane D plans to make `release.sh` run typecheck + verify-export-types + profile:budget upstream of `npm publish`, with `prepublishOnly` doing build + test. The CI matrix here covers all five gates in one job. Should CI also adopt the Lane D split (publish-time gates vs release-time gates), or keep the single-job shape? Recommendation: keep single-job CI—CI runs ARE the publish-time gates from a pull request's perspective.
 
 2. **`proof:*` in CI**: Rε §4.1 Layer E suggests including `proof:consumers:static` and `proof:theme` in CI. This lane intentionally scopes only to the four W5.md §Lane E gates. If the orchestrator wants `proof:*` in CI, that is a follow-on (and depends on Lane A's `proof:all` cohort runner shape).
 
 3. **Workflow filename precedent**: this repo has no other `.github/workflows/` files. Future workflows (release automation, scheduled benchmarks, etc.) should sit alongside `ci.yml` with their own role-named files. No existing precedent overridden.
 
-4. **Caching `npm ci`**: not added in this lane. The `actions/setup-node@v4` supports `cache: 'npm'` which would shave ~30-60 s off cold runs. Deferring to a future hardening pass — the W5.md bounds for this lane are narrow.
+4. **Caching `npm ci`**: not added in this lane. The `actions/setup-node@v4` supports `cache: 'npm'` which would shave ~30-60 s off cold runs. Deferring to a future hardening pass—the W5.md bounds for this lane are narrow.
 
 ## Worktree diff verification
 
@@ -152,13 +152,13 @@ $ git status --porcelain
 
 Within bounds:
 
-- `.github/workflows/lint.yml` — deleted (renamed to ci.yml per task).
-- `.github/workflows/ci.yml` — new (this lane).
-- `docs/tranches/O/audit/W5-Lane-E-ci-expansion-proof.md` — new (this proof doc).
+- `.github/workflows/lint.yml`—deleted (renamed to ci.yml per task).
+- `.github/workflows/ci.yml`—new (this lane).
+- `docs/tranches/O/audit/W5-Lane-E-ci-expansion-proof.md`—new (this proof doc).
 
 Out of bounds but pre-existing:
 
-- `docs/tranches/K/audit/W4-bundle-profile.json` — was already modified at the
+- `docs/tranches/K/audit/W4-bundle-profile.json`—was already modified at the
   start of the conversation per the gitStatus snapshot. My local
   `profile:budget` gate-verification run re-touched it (it is `profile:budget`'s
   output artefact). Not part of Lane E semantics; orchestrator owns disposition.

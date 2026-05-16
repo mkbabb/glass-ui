@@ -1,6 +1,6 @@
-# P.W2 Lane A — `CONFIGURATOR_DENSITY_KEY` paired helpers
+# P.W2 Lane A—`CONFIGURATOR_DENSITY_KEY` paired helpers
 
-**Wave**: P.W2 — Invariant-25 paired-helper completion + UseDockStateReturn.
+**Wave**: P.W2—Invariant-25 paired-helper completion + UseDockStateReturn.
 **Lane**: A (CONFIGURATOR_DENSITY_KEY paired helpers, P-3a).
 **Mode**: read-only git; edit in-place per orchestrator dispatch.
 **Status**: COMPLETED.
@@ -13,9 +13,9 @@ Author paired helpers for `CONFIGURATOR_DENSITY_KEY` per invariant 25 + Pδ §2.
 
 **Pδ §2.2 verbatim disposition** (authoritative):
 
-> `CONFIGURATOR_DENSITY_KEY` — currently the consumer (`ConfiguratorRow.vue:62`) uses raw `inject(CONFIGURATOR_DENSITY_KEY, undefined)` then prop-over-inject precedence on `props.density ?? injectedDensity?.value`. The semantics are **optional** (the row can render bare; density falls through to `undefined` which maps to no `data-density` attr — bit-for-bit-preserved pre-N.W2 visual). The canonical P-wave fix is to author `provideConfiguratorDensity(density: ComputedRef<ConfiguratorDensity>)` + `useOptionalConfiguratorDensity(): ComputedRef<ConfiguratorDensity> | undefined`. **No strict counterpart needed** (rows can render bare).
+> `CONFIGURATOR_DENSITY_KEY`—currently the consumer (`ConfiguratorRow.vue:62`) uses raw `inject(CONFIGURATOR_DENSITY_KEY, undefined)` then prop-over-inject precedence on `props.density ?? injectedDensity?.value`. The semantics are **optional** (the row can render bare; density falls through to `undefined` which maps to no `data-density` attr—bit-for-bit-preserved pre-N.W2 visual). The canonical P-wave fix is to author `provideConfiguratorDensity(density: ComputedRef<ConfiguratorDensity>)` + `useOptionalConfiguratorDensity(): ComputedRef<ConfiguratorDensity> | undefined`. **No strict counterpart needed** (rows can render bare).
 
-Lane ships **optional-only** per intent. No `useConfiguratorDensity()` strict counterpart — it would be dead code (every consumer can render bare; nothing tolerates a throw). The wave-plan template's both-helper shape is overridden by Pδ's audit-grounded "per intent" clause of invariant 25.
+Lane ships **optional-only** per intent. No `useConfiguratorDensity()` strict counterpart—it would be dead code (every consumer can render bare; nothing tolerates a throw). The wave-plan template's both-helper shape is overridden by Pδ's audit-grounded "per intent" clause of invariant 25.
 
 The optional helper returns `ComputedRef<ConfiguratorDensity> | null` (matching the canonical O.W2 `useOptionalDockContext()` shape: `inject(KEY, null)`). The consumer null-coalesces to `undefined` at the resolution site (`?? undefined`) so the `:data-density` v-bind emits no attribute in the bare-row case. This is the same effective semantics as the prior `inject(KEY, undefined)`; the helper hides the inject call behind a typed wrapper.
 
@@ -25,10 +25,10 @@ The optional helper returns `ComputedRef<ConfiguratorDensity> | null` (matching 
 
 ### 2.1 `src/components/custom/configurator/density.ts`
 
-- Switched the `vue` import from type-only to value+type — `inject`, `provide`, plus `ComputedRef` + `InjectionKey`.
-- Kept `CONFIGURATOR_DENSITY_KEY` symbol untouched (invariant 4 — no rename).
-- Added `provideConfiguratorDensity(density: ComputedRef<ConfiguratorDensity>): void` — wraps `provide(CONFIGURATOR_DENSITY_KEY, density)`.
-- Added `useOptionalConfiguratorDensity(): ComputedRef<ConfiguratorDensity> | null` — wraps `inject(CONFIGURATOR_DENSITY_KEY, null)`.
+- Switched the `vue` import from type-only to value+type—`inject`, `provide`, plus `ComputedRef` + `InjectionKey`.
+- Kept `CONFIGURATOR_DENSITY_KEY` symbol untouched (invariant 4—no rename).
+- Added `provideConfiguratorDensity(density: ComputedRef<ConfiguratorDensity>): void`—wraps `provide(CONFIGURATOR_DENSITY_KEY, density)`.
+- Added `useOptionalConfiguratorDensity(): ComputedRef<ConfiguratorDensity> | null`—wraps `inject(CONFIGURATOR_DENSITY_KEY, null)`.
 - Added an optional-only intent comment block citing Pδ §2.2 + invariant 25 "per intent" clause.
 
 ### 2.2 `src/components/custom/configurator/Configurator.vue`
@@ -47,9 +47,9 @@ The optional helper returns `ComputedRef<ConfiguratorDensity> | null` (matching 
 
 ### 2.4 `src/components/custom/configurator/index.ts`
 
-- Re-exported `provideConfiguratorDensity` + `useOptionalConfiguratorDensity` from the barrel for parity with the existing `CONFIGURATOR_DENSITY_KEY` export (Step 4 of dispatch — barrel already exported the key, so helpers ride the same export block).
+- Re-exported `provideConfiguratorDensity` + `useOptionalConfiguratorDensity` from the barrel for parity with the existing `CONFIGURATOR_DENSITY_KEY` export (Step 4 of dispatch—barrel already exported the key, so helpers ride the same export block).
 
-NO `/api` promotion (Step 5 of dispatch — composable-helper functions are component-internal per invariant 25).
+NO `/api` promotion (Step 5 of dispatch—composable-helper functions are component-internal per invariant 25).
 
 ---
 
@@ -76,7 +76,7 @@ The chain `props.density ?? injected?.value ?? undefined` is semantically equiva
 
 ## §4 Verification (gate output)
 
-### 4.1 `npm run typecheck` — PASS
+### 4.1 `npm run typecheck`—PASS
 
 ```
 > @mkbabb/glass-ui@1.7.1 typecheck
@@ -85,7 +85,7 @@ The chain `props.density ?? injected?.value ?? undefined` is semantically equiva
 
 (zero output; clean exit.)
 
-### 4.2 `npm test` — PASS (361/361)
+### 4.2 `npm test`—PASS (361/361)
 
 ```
  Test Files  32 passed (32)
@@ -93,9 +93,9 @@ The chain `props.density ?? injected?.value ?? undefined` is semantically equiva
    Duration  2.75s
 ```
 
-### 4.3 `NODE_OPTIONS=--max-old-space-size=8192 npm run build` — non-deterministic dts-plugin failure (foreign-lane interference)
+### 4.3 `NODE_OPTIONS=--max-old-space-size=8192 npm run build`—non-deterministic dts-plugin failure (foreign-lane interference)
 
-Outside the strict Lane A scope: the working tree at lane-execution time contained foreign edits from sibling lanes B (sortable-list helpers) + C (glyph-face helpers + symbol rename to `GLYPH_FACE_SILHOUETTE_KEY`) + D (`UseDockStateReturn` annotation + dock barrel re-export). With ALL four lanes' edits in the tree, `vite-plugin-dts` (api-extractor backend) emits a non-deterministic "Internal Error" on every retry — observed failure modes across four attempts:
+Outside the strict Lane A scope: the working tree at lane-execution time contained foreign edits from sibling lanes B (sortable-list helpers) + C (glyph-face helpers + symbol rename to `GLYPH_FACE_SILHOUETTE_KEY`) + D (`UseDockStateReturn` annotation + dock barrel re-export). With ALL four lanes' edits in the tree, `vite-plugin-dts` (api-extractor backend) emits a non-deterministic "Internal Error" on every retry—observed failure modes across four attempts:
 
 1. `The referenced path was not found: /Users/mkbabb/Programming/glass-ui/dist/src/components/custom/sidebar/types.d.ts`
 2. `Unable to follow symbol for "nextTick"`
@@ -120,9 +120,9 @@ The build failure is therefore a `vite-plugin-dts`/api-extractor stability bug s
 
 Invariant 25 closes at `CONFIGURATOR_DENSITY_KEY` with:
 
-- Provide helper: `provideConfiguratorDensity(density)` — SHIPPED.
-- Optional consumer helper: `useOptionalConfiguratorDensity()` — SHIPPED.
-- Strict consumer helper: NOT SHIPPED — would be dead code per Pδ §2.2 (no callsite can tolerate a throw; `<ConfiguratorRow>` is a first-class bare-render primitive).
+- Provide helper: `provideConfiguratorDensity(density)`—SHIPPED.
+- Optional consumer helper: `useOptionalConfiguratorDensity()`—SHIPPED.
+- Strict consumer helper: NOT SHIPPED—would be dead code per Pδ §2.2 (no callsite can tolerate a throw; `<ConfiguratorRow>` is a first-class bare-render primitive).
 
 This deviates from the W2.md spec's "strict + optional" template but follows the wave-plan dispatch's audit-grounded clause: "optional-only per intent; strict counterpart omitted as dead code per Pδ §2.2".
 
@@ -130,9 +130,9 @@ Helper-completion table for the site:
 
 | Key | Provide helper | Strict consumer helper | Optional consumer helper | Disposition |
 |---|---|---|---|---|
-| `CONFIGURATOR_DENSITY_KEY` | `provideConfiguratorDensity()` | — (dead code per intent) | `useOptionalConfiguratorDensity()` | **OPTIONAL-ONLY (per intent)** |
+| `CONFIGURATOR_DENSITY_KEY` | `provideConfiguratorDensity()` |—(dead code per intent) | `useOptionalConfiguratorDensity()` | **OPTIONAL-ONLY (per intent)** |
 
-This matches the canonical helper-pair shape pattern established by `TOGGLE_GROUP_KEY` (`provideToggleGroupContext` + `useOptionalToggleGroupContext` — strict omitted because `<ToggleGroupItem>` renders bare; see Pδ §2.1).
+This matches the canonical helper-pair shape pattern established by `TOGGLE_GROUP_KEY` (`provideToggleGroupContext` + `useOptionalToggleGroupContext`—strict omitted because `<ToggleGroupItem>` renders bare; see Pδ §2.1).
 
 ---
 
@@ -144,4 +144,4 @@ COMPLETED.
 - 2 new helpers shipped (provide + optional) per intent.
 - Barrel re-export added for parity with the pre-existing `CONFIGURATOR_DENSITY_KEY` export.
 - No `/api` promotion (per invariant 25 internal-helper clause).
-- typecheck PASS; tests PASS (361/361); build-in-isolation PASS; build-with-foreign-lanes FAIL (pre-existing api-extractor instability, unrelated to Lane A — verified by stash-toggle experiment).
+- typecheck PASS; tests PASS (361/361); build-in-isolation PASS; build-with-foreign-lanes FAIL (pre-existing api-extractor instability, unrelated to Lane A—verified by stash-toggle experiment).

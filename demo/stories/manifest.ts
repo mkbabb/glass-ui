@@ -20,6 +20,9 @@ import {
     LayoutDashboard,
     Wand2,
     Cog,
+    SlidersHorizontal,
+    Anchor,
+    Paintbrush,
     type LucideIcon,
 } from "lucide-vue-next";
 
@@ -87,6 +90,7 @@ export const CATEGORIES: Category[] = [
             s("foundations", "surface-tints", "Surface Tints", "9-rung tint scale + V.W3 tier aliases (quiet / floating / modal)."),
             s("foundations", "overlays-scrims", "Overlays & Scrims", "Three scrim weights + ModalOverlay + motion / lift offsets."),
             s("foundations", "chart-chassis-palette", "Chart & Chassis Palette", "Chart aliases (ping / download / upload / jitter) + chassis-tier opacities + specular tokens."),
+            s("foundations", "paper-backdrop-texture-system", "Paper Backdrop Texture System", "`<PaperBackdrop>` frequency register (clean / aged) + cascade-overridable --paper-* tokens (P.W3 Lane C)."),
         ],
     },
     {
@@ -163,6 +167,7 @@ export const CATEGORIES: Category[] = [
             s("navigation", "sidebar", "Sidebar"),
             s("navigation", "carousel", "Carousel"),
             s("navigation", "command", "Command Palette"),
+            s("navigation", "progressive-sidebar-section", "Progressive Sidebar Section", "Slotted-mode SECTION primitive in isolation — state, scroll-spy active cascade, header composition (P.W3 Lane B)."),
         ],
     },
     {
@@ -238,6 +243,39 @@ export const CATEGORIES: Category[] = [
             s("composables", "use-interval", "useInterval", "Scope-aware setInterval — companion of useTimer."),
             s("composables", "use-story-demo", "useStoryDemo", "Canonical play/reset/status harness for storybook demos (V.W4)."),
             s("composables", "use-infinite-scroll", "useInfiniteScroll", "Scroll-driven incremental load engine under the InfiniteScroll primitive."),
+            s("composables", "use-clipboard", "useClipboard", "Reactive clipboard copy with auto-resetting `copied` flag + execCommand fallback (O.W6 Lane A)."),
+        ],
+    },
+    {
+        id: "custom",
+        title: "Custom",
+        icon: Anchor,
+        stories: [
+            s("custom", "header-ribbon", "Header Ribbon", "Hover-tracking ribbon anchor — position=left|right, hideTimeoutMs, pin/toggle (O.W6 Lane A)."),
+        ],
+    },
+    {
+        id: "dock",
+        title: "Dock",
+        icon: Boxes,
+        stories: [
+            s("dock", "icon-button-token-ladder", "Icon Button Token Ladder", "--dock-active-{bg,color,scale,border,shadow} cohort — token-only override pattern (O.W6 Lane B)."),
+        ],
+    },
+    {
+        id: "utilities",
+        title: "Utilities",
+        icon: Paintbrush,
+        stories: [
+            s("utilities", "scale-on-hover", "Scale on Hover", "`@utility scale-on-hover` over `--scale-hover` — per-scope override cascade (O.W6 Lane C)."),
+        ],
+    },
+    {
+        id: "sliders",
+        title: "Sliders",
+        icon: SlidersHorizontal,
+        stories: [
+            s("sliders", "glass-scrubber", "Glass Scrubber", "`<Slider variant=\"glass-scrubber\">` — tall scrub track + grab-friendly thin-bar thumb (P.W3 Lane A)."),
         ],
     },
     {

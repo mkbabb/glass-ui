@@ -1,4 +1,4 @@
-# O.W4 Lane C — `useToast` disposition decision
+# O.W4 Lane C—`useToast` disposition decision
 
 **Verdict**: KEEP-with-rationale (Path A).
 **Source under review**: `src/components/ui/toast/use-toast.ts`.
@@ -14,13 +14,13 @@ through a private `dispatch()` reducer).
 
 Every call site to `useToast()` in any component anywhere in the process
 shares the same queue. There is no `<Toaster>` root, no `provide()`, no
-injection — the queue lives in module scope.
+injection—the queue lives in module scope.
 
-## Path A — KEEP-with-rationale (RECOMMENDED, EXECUTED)
+## Path A—KEEP-with-rationale (RECOMMENDED, EXECUTED)
 
 - **shadcn-vue parity**: the shadcn-vue reference implementation uses
   exactly this module-scope-queue shape. Consumers migrating from
-  shadcn-vue retain a drop-in compatible API — `import { useToast } from
+  shadcn-vue retain a drop-in compatible API—`import { useToast } from
   "@mkbabb/glass-ui"` matches `import { useToast } from "@/components/ui/
   toast/use-toast"` semantically. This is high-value migration ergonomics.
 - **Rδ verification**: no DI-able alternative is cleaner. The toast queue
@@ -35,7 +35,7 @@ injection — the queue lives in module scope.
 - **No source change**: `use-toast.ts` is unchanged at O.W4 close. The
   disposition is doc-only.
 
-## Path B — REFACTOR to DI (NOT EXECUTED; flagged for orchestrator)
+## Path B—REFACTOR to DI (NOT EXECUTED; flagged for orchestrator)
 
 Provide a Toaster context via the `<Toaster>` root + `useToast()` injects:
 
@@ -64,7 +64,7 @@ function useToast() {
    a bare `toast(props)` callable (no composable required, no component
    tree). Path B requires either (a) demoting `toast()` to a method on
    the injected facade or (b) routing the bare callable through a
-   module-scope ref to the injected queue — re-introducing the
+   module-scope ref to the injected queue—re-introducing the
    process-singleton dependency Path B claims to eliminate.
 3. **Zero observable benefit at the constellation cohort**: no consumer
    reports queue-state divergence; no test exercises multi-library-copy
@@ -90,7 +90,7 @@ process-singleton registries"). No source change to `use-toast.ts`.
 
 User authorization NOT needed for Path A (no source-shape change).
 If Path B becomes warranted at a future tranche, the orchestrator
-authorizes via an explicit Lane brief — semver-major cut required.
+authorizes via an explicit Lane brief—semver-major cut required.
 
 ## Cross-cutting alignment
 

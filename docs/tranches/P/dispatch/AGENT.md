@@ -1,4 +1,4 @@
-# P tranche — agent dispatch template
+# P tranche—agent dispatch template
 
 Extends O's dispatch template (`docs/tranches/O/dispatch/AGENT.md`) with P-tranche specifics.
 
@@ -15,15 +15,15 @@ NO mutating git. Forbidden subset:
 
 The orchestrator owns the index, the working tree mutation discipline, and all push operations in every repo.
 
-**6th-recurrence-window note**: precept LL ledger carries 5 codified entries through `2026-05-14`. The next recurrence triggers tooling-side enforcement (invariant 27 codified at O.W0 Lane B) — a `scripts/audit-stash-list.mjs` fail-closed step. P close ι lane MUST verify the audit script exists + is callable, OR author it as a wave deliverable.
+**6th-recurrence-window note**: precept LL ledger carries 5 codified entries through `2026-05-14`. The next recurrence triggers tooling-side enforcement (invariant 27 codified at O.W0 Lane B)—a `scripts/audit-stash-list.mjs` fail-closed step. P close ι lane MUST verify the audit script exists + is callable, OR author it as a wave deliverable.
 
 ## ZERO DEFERRAL (NEW @ P; binding)
 
 P operates under a new binding constraint not present at K → L → M → N → O: every item in the inheritance ledger (per `findings.md §2`) lands in P, retires formally with rationale, or is explicitly archived with permanent-out-of-scope justification.
 
-- "Deferral with named-destination" — the canonical close-path at prior tranches — is **retired at P**.
-- "PERMANENT-DEFER" classifications inherited from L (PD-1 + PD-2) — investigated + dispositioned during P; no PD survives close.
-- Cross-repo carry-forwards — addressed via MULTI-WRITER per-repo lanes OR formal user-directed hand-off (with user-authorized cross-repo write commit in the same wave).
+- "Deferral with named-destination"—the canonical close-path at prior tranches—is **retired at P**.
+- "PERMANENT-DEFER" classifications inherited from L (PD-1 + PD-2)—investigated + dispositioned during P; no PD survives close.
+- Cross-repo carry-forwards—addressed via MULTI-WRITER per-repo lanes OR formal user-directed hand-off (with user-authorized cross-repo write commit in the same wave).
 
 Per close-honesty checklist: every FINAL.md claim grounded in commit + artefact; every "DEFERRED" status word REPLACED by ADDRESSED / RETIRED / ARCHIVED.
 
@@ -62,11 +62,11 @@ At each wave close, the orchestrator runs `git -C <worktree-path> diff --stat` t
 
 **User-authorized scope expansion at P**: per "No more deferrals" directive, P-wave cross-repo writes are authorized for every CR-* item in the inheritance ledger:
 
-- CR-1 + CR-4 (value.js fixes + adoption sweeps) — value.js's WIP branch sync (PD-3 absorb) may also unlock the master-branch push window per user signal.
-- CR-2 (fourier-analysis) — 2 dock-key injects + 3 useClipboard parallels.
-- CR-3 (keyframes.js) — HeaderRibbon adoption + scale-on-hover migration.
-- CR-5 (bbnf-buddy) — 1-line :deep() retirement.
-- CR-6 (speedtest) — AC tranche cohort coordination; status-review-then-action.
+- CR-1 + CR-4 (value.js fixes + adoption sweeps)—value.js's WIP branch sync (PD-3 absorb) may also unlock the master-branch push window per user signal.
+- CR-2 (fourier-analysis)—2 dock-key injects + 3 useClipboard parallels.
+- CR-3 (keyframes.js)—HeaderRibbon adoption + scale-on-hover migration.
+- CR-5 (bbnf-buddy)—1-line :deep() retirement.
+- CR-6 (speedtest)—AC tranche cohort coordination; status-review-then-action.
 
 **DEFERRED-PUSH retired at P**: peer-repo writes that previously documented "no push" status as a defer-path now require explicit RETIRE or LAND. The orchestrator authors a user-authorization request inline in the wave dispatch when a cross-repo write surfaces.
 

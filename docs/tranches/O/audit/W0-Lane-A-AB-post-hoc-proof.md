@@ -1,4 +1,4 @@
-# O.W0 Lane A — AB retrospective plan-folder post-hoc proof
+# O.W0 Lane A—AB retrospective plan-folder post-hoc proof
 
 **Lane**: O.W0 Lane A (doc-only).
 **Hard cap**: 20 minutes.
@@ -30,7 +30,7 @@ Net authoring: 9 files at `docs/tranches/AB/` (8) + `docs/tranches/O/audit/` (1)
 
 ### Per-commit cross-walk
 
-Source-of-truth: `git log 54a8acb..a28560f --format='%H %ai %s'` returned 13 commits (10 substrate/docs + 1 release + 2 post-v1.1.0 N-doc commits). The 2 N-doc commits (`5bdc981` + `78974c0`) appear in the range but are N.W0 KISS-revision + wiring-revision docs that landed AFTER `a28560f` v1.1.0 close — they belong to N, NOT AB. Filtered out per the AB.* commit-subject discipline. The dock-shadow coda `2b3727f` lands AFTER `a28560f` v1.1.0; bundled retrospectively as the AB.W4 substrate-refinement coda per the user's task brief.
+Source-of-truth: `git log 54a8acb..a28560f --format='%H %ai %s'` returned 13 commits (10 substrate/docs + 1 release + 2 post-v1.1.0 N-doc commits). The 2 N-doc commits (`5bdc981` + `78974c0`) appear in the range but are N.W0 KISS-revision + wiring-revision docs that landed AFTER `a28560f` v1.1.0 close—they belong to N, NOT AB. Filtered out per the AB.* commit-subject discipline. The dock-shadow coda `2b3727f` lands AFTER `a28560f` v1.1.0; bundled retrospectively as the AB.W4 substrate-refinement coda per the user's task brief.
 
 Verified AB substrate-cohort = 11 commits (8 features + 2 docs + 1 release; +1 post-close coda):
 
@@ -76,25 +76,25 @@ Current HEAD baseline (same file, post-N.W0 rebaseline): 36_000 raw / 6_700 gzip
 
 AB-side delta documented in `FINAL.md §3`: ~+9.3 KB raw / ~+1 KB gzip from chassis token + dock-label utility + Pulse aura recipe + Progress sectioned recipe + animations; ~-0.2 KB raw from dock-shadow coda net reduction.
 
-The rebaseline lives at `scripts/profile-bundle.mjs` (referenced in N.W0 PROGRESS); the AB-side ORIGIN of the rebaseline is now canonically documented in `AB/FINAL.md §3` — closes the K-invariant-3 prior-orphan.
+The rebaseline lives at `scripts/profile-bundle.mjs` (referenced in N.W0 PROGRESS); the AB-side ORIGIN of the rebaseline is now canonically documented in `AB/FINAL.md §3`—closes the K-invariant-3 prior-orphan.
 
 ## § Open questions for orchestrator
 
-1. **AB substrate-refinement coda (`2b3727f`) attribution** — the user's task brief explicitly groups `2b3727f` as AB.W4. The commit is dated 2026-05-13 17:45 EDT, ~17 hours AFTER `a28560f` v1.1.0 release at 00:26 same day. I bundled it as the AB.W4 substrate-refinement coda per the brief; the FINAL.md notes the timing explicitly. **Question**: should the coda be split into a half-wave AB.W4.b spec, or remain bundled in W4.md as authored? Current authoring choice: bundled in W4.md to match the task brief framing.
+1. **AB substrate-refinement coda (`2b3727f`) attribution**—the user's task brief explicitly groups `2b3727f` as AB.W4. The commit is dated 2026-05-13 17:45 EDT, ~17 hours AFTER `a28560f` v1.1.0 release at 00:26 same day. I bundled it as the AB.W4 substrate-refinement coda per the brief; the FINAL.md notes the timing explicitly. **Question**: should the coda be split into a half-wave AB.W4.b spec, or remain bundled in W4.md as authored? Current authoring choice: bundled in W4.md to match the task brief framing.
 
-2. **Speedtest constellation letter at AB** — I documented speedtest as "concurrent AB" per the canonical-consumer relationship. The speedtest tranche stream + tranche letters were not directly accessible to this lane (no speedtest worktree). **Question**: should the speedtest letter at AB-time be confirmed via a speedtest-side audit invocation, or is the relationship sufficiently sourced from the per-substrate wire claims in glass-ui commit bodies?
+2. **Speedtest constellation letter at AB**—I documented speedtest as "concurrent AB" per the canonical-consumer relationship. The speedtest tranche stream + tranche letters were not directly accessible to this lane (no speedtest worktree). **Question**: should the speedtest letter at AB-time be confirmed via a speedtest-side audit invocation, or is the relationship sufficiently sourced from the per-substrate wire claims in glass-ui commit bodies?
 
-3. **Bundle-budget figures** — `FINAL.md §3` estimates the AB-side CSS delta at ~+9.3 KB raw / ~+1 KB gzip. The N.W0 actual delta from K W4 baseline (29_000 → 31_875 raw / 5_750 → 5_972 gzip per N PROGRESS) is +2_875 raw / +222 gzip — meaningfully smaller than my estimate. The +10 KB figure in the task brief ("AB shipped roughly +10KB CSS") may include other tranche additions between K W4 and N.W0. **Question**: should `FINAL.md §3` cite the exact 2_875 raw / 222 gzip overrun figure (N-baseline delta from K baseline) rather than the ~+10 KB approximation? Current authoring uses the brief's framing as a rough net figure.
+3. **Bundle-budget figures**—`FINAL.md §3` estimates the AB-side CSS delta at ~+9.3 KB raw / ~+1 KB gzip. The N.W0 actual delta from K W4 baseline (29_000 → 31_875 raw / 5_750 → 5_972 gzip per N PROGRESS) is +2_875 raw / +222 gzip—meaningfully smaller than my estimate. The +10 KB figure in the task brief ("AB shipped roughly +10KB CSS") may include other tranche additions between K W4 and N.W0. **Question**: should `FINAL.md §3` cite the exact 2_875 raw / 222 gzip overrun figure (N-baseline delta from K baseline) rather than the ~+10 KB approximation? Current authoring uses the brief's framing as a rough net figure.
 
-4. **AB audit folder** — I created and then removed an empty `docs/tranches/AB/audit/` directory because the post-hoc proof doc lives in `docs/tranches/O/audit/` per the task brief. **Question**: should an empty `audit/` directory exist for shape consistency with N's structure, or is its absence acceptable since AB ran no audits at the time?
+4. **AB audit folder**—I created and then removed an empty `docs/tranches/AB/audit/` directory because the post-hoc proof doc lives in `docs/tranches/O/audit/` per the task brief. **Question**: should an empty `audit/` directory exist for shape consistency with N's structure, or is its absence acceptable since AB ran no audits at the time?
 
-5. **CHANGELOG canonical anchor** — `FINAL.md §1` cites specific +line counts for CHANGELOG entries (95 lines for AB.W2, 96 for AB.W3, 67 for AB.W4). These are sourced from `git show --stat` output. **Question**: should these be re-verified against the actual published CHANGELOG.md at HEAD, or accepted as commit-level metadata?
+5. **CHANGELOG canonical anchor**—`FINAL.md §1` cites specific +line counts for CHANGELOG entries (95 lines for AB.W2, 96 for AB.W3, 67 for AB.W4). These are sourced from `git show --stat` output. **Question**: should these be re-verified against the actual published CHANGELOG.md at HEAD, or accepted as commit-level metadata?
 
 ## § Worktree diff verification
 
 ```
 $ git -C /Users/mkbabb/Programming/glass-ui/.claude/worktrees/agent-a96b8cb936f774711 diff --stat
-(no output — all authored files are untracked, not modified)
+(no output—all authored files are untracked, not modified)
 
 $ git -C /Users/mkbabb/Programming/glass-ui/.claude/worktrees/agent-a96b8cb936f774711 status --short
 ?? docs/tranches/AB/

@@ -45,7 +45,11 @@ const probeClasses = [
     "duration-panel",
     "duration-fast",
     "blur-dock",
-    "blur-glass-subtle",
+    // P.W4 Lane B inline-absorb: "blur-glass-subtle" was a pre-L.W1 utility
+    // retired when the 5-rung glass-blur ladder (wash / quiet / resting /
+    // floating / overlay) shipped at v1.0. The proof now verifies the
+    // canonical resting-tier class as the default rung.
+    "blur-glass-resting",
     "max-w-2xl",
     "animate-dock-in",
     "animate-shimmer",

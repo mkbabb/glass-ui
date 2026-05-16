@@ -1,7 +1,7 @@
-# P.W2 Lane B — `SORTABLE_CONTEXT` paired helpers
+# P.W2 Lane B—`SORTABLE_CONTEXT` paired helpers
 
 **Status**: COMPLETED.
-**Lane**: P.W2 Lane B (Invariant-25 paired-helper completion — sortable subsystem).
+**Lane**: P.W2 Lane B (Invariant-25 paired-helper completion—sortable subsystem).
 **Files touched**: 4 (`context.ts` + `SortableList.vue` + `SortableItem.vue` + `index.ts`).
 
 ---
@@ -10,10 +10,10 @@
 
 Per `docs/tranches/P/research/Pdelta-di-patterns-post-O.md` §2.2:
 
-> `SORTABLE_CONTEXT` — currently the consumer (`SortableItem.vue:29-34`) uses raw
+> `SORTABLE_CONTEXT`—currently the consumer (`SortableItem.vue:29-34`) uses raw
 > `inject(SORTABLE_CONTEXT)` + an inline `if (!sortable) throw new Error(...)`.
 > The semantics are **strict** by intent. The canonical P-wave fix is to author
-> `provideSortableContext()` + `useSortableContext()` (strict — moves the inline
+> `provideSortableContext()` + `useSortableContext()` (strict—moves the inline
 > throw into the helper). **No optional counterpart needed** (`<SortableItem>`
 > is meaningless without a list).
 
@@ -39,9 +39,9 @@ following the Pδ §6.2 naming canon used for `useDockContext` /
 ### `src/components/custom/sortable-list/context.ts`
 
 - Added `inject, provide` to the runtime import (was type-only `InjectionKey`).
-- Added `provideSortableContext(sortable: UseSortableReturn): void` — wraps the
+- Added `provideSortableContext(sortable: UseSortableReturn): void`—wraps the
   raw `provide(SORTABLE_CONTEXT, sortable)` call.
-- Added `useSortableContext(): UseSortableReturn` — strict; throws when used
+- Added `useSortableContext(): UseSortableReturn`—strict; throws when used
   outside `<SortableList>`. Throw message preserves the `[glass-ui:sortable]`
   prefix + the runtime-debugging string `"<SortableItem> must be used inside
   <SortableList>"` from the prior inline form.
@@ -99,7 +99,7 @@ The runtime-debugging payload (the `<SortableItem> must be used inside
 <SortableList>` clause) is preserved verbatim. The package-prefix is upgraded
 from `[glass-ui]` → `[glass-ui:sortable]` to match the canonical
 `[glass-ui:<subsystem>]` shape used by `useDockContext` and other O.W2
-helpers — strictly additive context for runtime grepping; no consumer-visible
+helpers—strictly additive context for runtime grepping; no consumer-visible
 regression.
 
 Per Pδ R2: the stack frame for the throw now points at
@@ -133,7 +133,7 @@ Test Files  32 passed (32)
 (exit 0)
 ```
 
-All three gates green. No test changes — existing 361-test suite covers the
+All three gates green. No test changes—existing 361-test suite covers the
 SortableList ↔ SortableItem cooperation surface via the existing component
 specs.
 
@@ -144,14 +144,14 @@ specs.
 Strict-only per intent; optional counterpart omitted as invalid per Pδ §2.2.
 
 Invariant 25 requires that every typed `InjectionKey<T>` site ship the
-helper-pair shape APPROPRIATE TO ITS INTENT — not a uniform strict + optional
+helper-pair shape APPROPRIATE TO ITS INTENT—not a uniform strict + optional
 pair at every site. The "per intent" clause governs:
 
 - `DOCK_CONTEXT_KEY` ships strict + optional (cross-substrate consumers may
   render outside the dock).
 - `TOGGLE_GROUP_KEY` ships optional-only (`<ToggleGroupItem>` may render
   bare).
-- `SORTABLE_CONTEXT` ships strict-only — `<SortableItem>` has no valid
+- `SORTABLE_CONTEXT` ships strict-only—`<SortableItem>` has no valid
   bare-render path. An optional helper would be unreachable substrate per
   invariant 8.
 

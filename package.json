@@ -1,6 +1,6 @@
 {
     "name": "@mkbabb/glass-ui",
-    "version": "1.8.0",
+    "version": "1.8.1",
     "description": "Glassmorphic design system — Vue 3.5 components, reka-ui primitives, Tailwind CSS v4 tokens",
     "license": "MIT",
     "type": "module",
@@ -364,7 +364,7 @@
     "scripts": {
         "dev": "vite",
         "prebuild": "node scripts/freshness-gate.mjs --pre",
-        "build": "vite build",
+        "build": "NODE_OPTIONS=--max-old-space-size=8192 vite build",
         "prepare": "test -f dist/glass-ui.js || npm run build",
         "typecheck": "vue-tsc --noEmit",
         "test": "vitest run",

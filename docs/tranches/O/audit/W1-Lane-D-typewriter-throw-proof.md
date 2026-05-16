@@ -1,4 +1,4 @@
-# O.W1 Lane D — Typewriter unreachable throw (F5)
+# O.W1 Lane D—Typewriter unreachable throw (F5)
 
 **Status**: landed.
 **Lane mode**: orchestrator-direct (single 3-line change; no worktree warranted).
@@ -6,7 +6,7 @@
 
 ## § Disposition
 
-Per W1.md Lane D + Rα F5 finding: `src/components/custom/typewriter/utils/keyboard.ts:210-212` was the self-flagged "should not reach here" defensive bail returning the last entry of the weighted-pool as a "fallback". The bail is reachable only if the weighted-pool walk fails to select — which mathematically cannot occur given a non-empty pool with positive weights. The branch was a library-internal invariant violation; per invariant 24 it must throw.
+Per W1.md Lane D + Rα F5 finding: `src/components/custom/typewriter/utils/keyboard.ts:210-212` was the self-flagged "should not reach here" defensive bail returning the last entry of the weighted-pool as a "fallback". The bail is reachable only if the weighted-pool walk fails to select—which mathematically cannot occur given a non-empty pool with positive weights. The branch was a library-internal invariant violation; per invariant 24 it must throw.
 
 Before:
 
@@ -20,7 +20,7 @@ After:
 
 ```ts
 throw new Error(
-    "[typewriter:weighted-pool] pool exhausted without selection — " +
+    "[typewriter:weighted-pool] pool exhausted without selection—" +
     "invariant violation; ADJACENCY_MAP integrity check needed.",
 );
 ```

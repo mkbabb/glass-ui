@@ -1,7 +1,7 @@
-# P.W3 Lane B — ProgressiveSidebar slotted-chassis split (HEADLINE)
+# P.W3 Lane B—ProgressiveSidebar slotted-chassis split (HEADLINE)
 
 **Date**: 2026-05-16
-**Lane**: P.W3 HEADLINE Lane B — chassis + slotted-section split.
+**Lane**: P.W3 HEADLINE Lane B—chassis + slotted-section split.
 **Bounds**: `src/components/custom/sidebar/ProgressiveSidebar.vue` (refactor) +
 `src/components/custom/sidebar/ProgressiveSidebarSection.vue` (NEW) +
 `src/components/custom/sidebar/context.ts` (NEW DI module) +
@@ -12,10 +12,10 @@
 
 ---
 
-## § 1 — Scope
+## § 1—Scope
 
 Per `docs/tranches/P/audit/P11-Lane-a-words-frontend.md` §3.3 (G2 carry,
-HIGH-leverage HEADLINE-class). words/frontend ships 469 LOC of parallel
+high-impact HEADLINE-class). words/frontend ships 469 LOC of parallel
 sidebar implementation:
 
 ```
@@ -26,14 +26,14 @@ $ wc -l src/components/custom/navigation/*.vue
 ```
 
 The library's `<ProgressiveSidebar>` was state-driven only (TOC mode: render
-`state.sections` as a 3-level tree). The wordlist consumer is NOT a TOC — it
+`state.sections` as a 3-level tree). The wordlist consumer is NOT a TOC—it
 composes filter / sort / tags sections with bespoke bodies. The library had
 no slotted-chassis composition path; the consumer reinvented one.
 
 P.W3 Lane B closes the gap. The chassis now supports two composition modes:
 
 1. **TOC mode** (existing): `state: SidebarState` drives 3-level tree
-   rendering. Bit-for-bit preserved — existing demo + test continue to
+   rendering. Bit-for-bit preserved—existing demo + test continue to
    exercise this path unchanged.
 2. **Slotted mode** (NEW): omit `state`; place `<ProgressiveSidebarSection>`
    children in the default slot. The chassis installs a DI context;
@@ -41,11 +41,11 @@ P.W3 Lane B closes the gap. The chassis now supports two composition modes:
    via the `active` prop.
 
 The split absorbs the words/frontend chassis at P.W5 Lane E (cross-repo
-write) — ~469 LOC → ~80 LOC at adoption.
+write)—~469 LOC → ~80 LOC at adoption.
 
 ---
 
-## § 2 — Split-boundary rationale
+## § 2—Split-boundary rationale
 
 **Chassis owns** (`ProgressiveSidebar.vue`):
 - Root `<aside>` + sticky / drawer surface composition (`progressive-sidebar--sticky` / `--drawer`).
@@ -56,7 +56,7 @@ write) — ~469 LOC → ~80 LOC at adoption.
 - DI installation of `ProgressiveSidebarContext` for slotted-mode children.
 
 **Section owns** (`ProgressiveSidebarSection.vue`):
-- Per-section identity (`id` prop — required).
+- Per-section identity (`id` prop—required).
 - Per-section header (icon + label composition; OR `#header` slot for full custom replacement).
 - Default slot for the section body content.
 - `onMounted` registration with the chassis via `useOptionalProgressiveSidebarContext()`.
@@ -69,7 +69,7 @@ write) — ~469 LOC → ~80 LOC at adoption.
 - Typed-key `PROGRESSIVE_SIDEBAR_CONTEXT_KEY` (per invariant-25; mirrors the
   W2 Lane B `SortableList` + O.W2 `DockLayerGroup` precedents).
 - Paired helpers: `provideProgressiveSidebarContext` + `useProgressiveSidebarContext`
-  (strict — throws outside chassis) + `useOptionalProgressiveSidebarContext`
+  (strict—throws outside chassis) + `useOptionalProgressiveSidebarContext`
   (befitting silent default; sections may render standalone in tests).
 
 The split is clean: a section knows only its own identity + the chassis
@@ -78,9 +78,9 @@ slotted sections (mutually exclusive `v-if="state"` / `v-else <slot />`).
 
 ---
 
-## § 3 — New SFC API
+## § 3—New SFC API
 
-### `<ProgressiveSidebar>` — extended
+### `<ProgressiveSidebar>`—extended
 
 ```ts
 interface Props {
@@ -98,14 +98,14 @@ interface Emits {
 
 interface Slots {
     search?: () => unknown;  // unchanged
-    default?: () => unknown;  // NEW — slotted-mode body
+    default?: () => unknown;  // NEW—slotted-mode body
 }
 
 // defineExpose
 { sidebarNav: Ref<HTMLElement | null> }  // unchanged
 ```
 
-### `<ProgressiveSidebarSection>` — NEW
+### `<ProgressiveSidebarSection>`—NEW
 
 ```ts
 interface Props {
@@ -120,7 +120,7 @@ interface Slots {
 }
 ```
 
-### `ProgressiveSidebarContext` — NEW DI surface
+### `ProgressiveSidebarContext`—NEW DI surface
 
 ```ts
 interface ProgressiveSidebarSectionDescriptor {
@@ -153,11 +153,11 @@ for code that explicitly requires chassis presence.
 
 ---
 
-## § 4 — Existing test preservation
+## § 4—Existing test preservation
 
 The pre-existing test (XSS-prevention via `renderTitle` returning HTML
 that must render as text) is **bit-for-bit preserved**. The test was
-re-grouped under a `describe("ProgressiveSidebar — TOC mode")` block;
+re-grouped under a `describe("ProgressiveSidebar—TOC mode")` block;
 its assertions, fixture, and expected text are unchanged:
 
 ```ts
@@ -167,7 +167,7 @@ expect(wrapper.text()).toContain("<mark><img src=x onerror=alert(1)>Intro</mark>
 expect(wrapper.text()).toContain("<mark><strong>Child</strong></mark>");
 ```
 
-The TOC-mode rendering path in the chassis is unchanged — the `v-if="state"`
+The TOC-mode rendering path in the chassis is unchanged—the `v-if="state"`
 branch reproduces the prior `<template>` block verbatim (the `@click`
 handlers are factored into `handleToggle` / `handleNavigate` thin local
 wrappers, but the behaviour is identical: they call `state.toggleSection`
@@ -190,31 +190,31 @@ added BELOW the existing TOC story; the original mount call is unmodified).
    known to the context registry; unmount one → DOM count drops to 1.
    The test reads the installed context via a `Probe` setup-helper that
    injects `PROGRESSIVE_SIDEBAR_CONTEXT_KEY`.
-3. `"marks the active section via context.isActive cascade"` — verifies
+3. `"marks the active section via context.isActive cascade"`—verifies
    the `active` prop propagates through the context to per-section
    `data-active` attributes.
-4. `"<ProgressiveSidebarSection> — renders without a chassis (optional-context fallback)"` —
+4. `"<ProgressiveSidebarSection>—renders without a chassis (optional-context fallback)"` —
    verifies the optional-context shape is sound: a section rendered
    outside `<ProgressiveSidebar>` mounts cleanly with no active state.
 
 ---
 
-## § 5 — ≥ 2-consumer verification
+## § 5—≥ 2-consumer verification
 
 Per N invariant 23 (wire-before-retire) + P invariant 28 (zero-deferral).
 The slotted-chassis substrate clears the 2-consumer bar at landing:
 
 | # | Consumer | Site | LOC absorbed | Status |
 |---|----------|------|--------------|--------|
-| 1 | **words/frontend** `WordlistProgressiveSidebar.vue` | `/Users/mkbabb/Programming/words/frontend/src/components/custom/navigation/WordlistProgressiveSidebar.vue` | ~319 LOC (chassis) + ~150 LOC (parallel ProgressiveSidebar.vue) = ~469 LOC parallel implementation absorbs at adoption | **SCHEDULED P.W5 Lane E** (cross-repo write). Chassis shape verified at audit: dashboard + per-wordlist modes both decompose into 3 sections (Filters / Sort / Tags) — exactly the slotted-chassis composition shape. |
-| 2 | **glass-ui demo** `demo/stories/navigation/sidebar.vue` | this PR — slotted-mode story added below the existing TOC story | story-tier (~50 LOC of demo body) | **LANDED at this commit**. The slotted demo composes 3 sections (Filters / Sort / Tags) with `lucide-vue-next` icons; demonstrates `active` prop binding + per-section `data-active` cascade. |
+| 1 | **words/frontend** `WordlistProgressiveSidebar.vue` | `/Users/mkbabb/Programming/words/frontend/src/components/custom/navigation/WordlistProgressiveSidebar.vue` | ~319 LOC (chassis) + ~150 LOC (parallel ProgressiveSidebar.vue) = ~469 LOC parallel implementation absorbs at adoption | **SCHEDULED P.W5 Lane E** (cross-repo write). Chassis shape verified at audit: dashboard + per-wordlist modes both decompose into 3 sections (Filters / Sort / Tags)—exactly the slotted-chassis composition shape. |
+| 2 | **glass-ui demo** `demo/stories/navigation/sidebar.vue` | this PR—slotted-mode story added below the existing TOC story | story-tier (~50 LOC of demo body) | **LANDED at this commit**. The slotted demo composes 3 sections (Filters / Sort / Tags) with `lucide-vue-next` icons; demonstrates `active` prop binding + per-section `data-active` cascade. |
 
 Optional 3rd consumer (per W3.md Lane B note): `bbnf-buddy`'s `ToolsLayer.vue`
-navigation sidebar shape — verified at O.W7 §3.5 (per P11/a §3.3). Not
+navigation sidebar shape—verified at O.W7 §3.5 (per P11/a §3.3). Not
 required for the 2-consumer bar; P.W5 cross-walk will surface the third
 adoption candidate.
 
-The substrate is **NOT** SCC-trapped — `context.ts` imports only `vue`
+The substrate is **NOT** SCC-trapped—`context.ts` imports only `vue`
 primitives (no `@vueuse/core`); `ProgressiveSidebarSection.vue` imports
 only `vue` + the local context module. The package barrel (`/sidebar`
 subpath) continues to satisfy the root-barrel curation rule (vueuse-free
@@ -223,7 +223,7 @@ the root barrel per the L.W1 Lane A SCC-trap closure).
 
 ---
 
-## § 6 — Verification
+## § 6—Verification
 
 ### Typecheck (per `Build` section of CLAUDE.md)
 
@@ -231,7 +231,7 @@ the root barrel per the L.W1 Lane A SCC-trap closure).
 $ npm run typecheck
 > @mkbabb/glass-ui@1.7.2 typecheck
 > vue-tsc --noEmit
-# (clean — no output, exit 0)
+# (clean—no output, exit 0)
 ```
 
 ### Test suite
@@ -260,29 +260,29 @@ NOT run mid-task per operational constraint. Orchestrator runs build +
 
 ---
 
-## § 7 — Hardened-git-clause + no-build-mid-task compliance
+## § 7—Hardened-git-clause + no-build-mid-task compliance
 
 | Constraint | Status |
 |------------|--------|
-| No `git stash` (any form) | **OK** — zero stash invocations this lane. |
-| No `npm run build` mid-task | **OK** — only `npm run typecheck` + `npm test` run. The orchestrator runs build at W3 close. |
-| No mutating git (commit / stage / checkout / reset / restore / stash) | **OK** — read-only `git` access only; the index belongs to the orchestrator. |
-| ≥ 2 sites or exported or private demo helper (overfitting audit) | **OK** — `ProgressiveSidebarSection` is exported via `index.ts` (subpath surface), composed by the new slotted demo (consumer #2), and scheduled for words/frontend adoption at P.W5 Lane E (consumer #1). The context typed-key + helpers are exported per invariant-25 paired-helpers precedent. |
-| No backwards-compat aliases | **OK** — TOC-mode behaviour is bit-for-bit preserved without aliasing; the existing test continues to pass on the unchanged TOC-mode render branch. Slotted mode is additive; no shim layer. |
+| No `git stash` (any form) | **OK**—zero stash invocations this lane. |
+| No `npm run build` mid-task | **OK**—only `npm run typecheck` + `npm test` run. The orchestrator runs build at W3 close. |
+| No mutating git (commit / stage / checkout / reset / restore / stash) | **OK**—read-only `git` access only; the index belongs to the orchestrator. |
+| ≥ 2 sites or exported or private demo helper (overfitting audit) | **OK**—`ProgressiveSidebarSection` is exported via `index.ts` (subpath surface), composed by the new slotted demo (consumer #2), and scheduled for words/frontend adoption at P.W5 Lane E (consumer #1). The context typed-key + helpers are exported per invariant-25 paired-helpers precedent. |
+| No backwards-compat aliases | **OK**—TOC-mode behaviour is bit-for-bit preserved without aliasing; the existing test continues to pass on the unchanged TOC-mode render branch. Slotted mode is additive; no shim layer. |
 
 ---
 
-## § 8 — Status
+## § 8—Status
 
 **COMPLETED.**
 
 Files touched:
-- `/Users/mkbabb/Programming/glass-ui/src/components/custom/sidebar/ProgressiveSidebar.vue` — refactor (TOC mode preserved bit-for-bit; slotted-mode branch added; DI context installed; props `state` becomes optional; props `active` + emit `update:active` added).
-- `/Users/mkbabb/Programming/glass-ui/src/components/custom/sidebar/ProgressiveSidebarSection.vue` — NEW (90 LOC).
-- `/Users/mkbabb/Programming/glass-ui/src/components/custom/sidebar/context.ts` — NEW (72 LOC; typed-key + 3 paired helpers).
-- `/Users/mkbabb/Programming/glass-ui/src/components/custom/sidebar/index.ts` — extended (re-exports `ProgressiveSidebarSection` + context typed-key + 3 helpers + 2 types).
-- `/Users/mkbabb/Programming/glass-ui/src/components/custom/sidebar/__tests__/ProgressiveSidebar.test.ts` — extended (existing test preserved verbatim under new `describe` block; +4 NEW tests for slotted mode + standalone section).
-- `/Users/mkbabb/Programming/glass-ui/demo/stories/navigation/sidebar.vue` — extended (slotted-mode story added below the existing TOC story; consumer #2 of the slotted chassis).
+- `/Users/mkbabb/Programming/glass-ui/src/components/custom/sidebar/ProgressiveSidebar.vue`—refactor (TOC mode preserved bit-for-bit; slotted-mode branch added; DI context installed; props `state` becomes optional; props `active` + emit `update:active` added).
+- `/Users/mkbabb/Programming/glass-ui/src/components/custom/sidebar/ProgressiveSidebarSection.vue`—NEW (90 LOC).
+- `/Users/mkbabb/Programming/glass-ui/src/components/custom/sidebar/context.ts`—NEW (72 LOC; typed-key + 3 paired helpers).
+- `/Users/mkbabb/Programming/glass-ui/src/components/custom/sidebar/index.ts`—extended (re-exports `ProgressiveSidebarSection` + context typed-key + 3 helpers + 2 types).
+- `/Users/mkbabb/Programming/glass-ui/src/components/custom/sidebar/__tests__/ProgressiveSidebar.test.ts`—extended (existing test preserved verbatim under new `describe` block; +4 NEW tests for slotted mode + standalone section).
+- `/Users/mkbabb/Programming/glass-ui/demo/stories/navigation/sidebar.vue`—extended (slotted-mode story added below the existing TOC story; consumer #2 of the slotted chassis).
 
 Net: 1 SFC refactor + 1 NEW SFC + 1 NEW DI module + 1 barrel update + test
 expansion + demo expansion. ~469 LOC of words/frontend parallel implementation

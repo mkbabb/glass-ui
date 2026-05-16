@@ -1,13 +1,13 @@
-# O.W5 Lane A — `proof:all` cohort runner proof
+# O.W5 Lane A—`proof:all` cohort runner proof
 
 **Lane**: O.W5 Lane A
 **Worktree**: `agent-a15798c44775597b1`
 **Branch**: `worktree-agent-a15798c44775597b1`
-**Source**: `docs/tranches/O/waves/W5.md` §Lane A; `docs/tranches/O/research/Repsilon-pipeline-orchestration.md` §"orchestration improvement 1" / §"Layer B — `proof:all` cohort runner".
+**Source**: `docs/tranches/O/waves/W5.md` §Lane A; `docs/tranches/O/research/Repsilon-pipeline-orchestration.md` §"orchestration improvement 1" / §"Layer B—`proof:all` cohort runner".
 
 ## Disposition
 
-**Option A — Inline npm-script chain.**
+**Option A—Inline npm-script chain.**
 
 Rationale:
 
@@ -18,13 +18,13 @@ Rationale:
 
 Order rationale (cheap → expensive, structural → behavioral):
 
-1. `proof:package` — packs the tarball, install probe; structural shape gate.
-2. `proof:theme` — synthetic vite build with a probe entry; in-process, no external repos.
-3. `proof:consumers:static` — static AST scan of sibling consumer imports; reads files only.
-4. `proof:consumers:build` — runs `npm run build` in 4 sibling consumer repos; expensive but isolated.
-5. `proof:runtime` — spawns `npm run dev` + headless Chrome over 137 routes; most expensive, last so it never runs when earlier gates have already failed.
+1. `proof:package`—packs the tarball, install probe; structural shape gate.
+2. `proof:theme`—synthetic vite build with a probe entry; in-process, no external repos.
+3. `proof:consumers:static`—static AST scan of sibling consumer imports; reads files only.
+4. `proof:consumers:build`—runs `npm run build` in 4 sibling consumer repos; expensive but isolated.
+5. `proof:runtime`—spawns `npm run dev` + headless Chrome over 137 routes; most expensive, last so it never runs when earlier gates have already failed.
 
-This is identical to the Rε literal except `proof:theme` is reordered ahead of `proof:consumers:static` to keep "synthetic before sibling-dependent" — both are cheap, the swap doesn't change asymptotic cost but tightens the failure-locality argument (theme failures are library-local; consumers failures are environment-local). Adopting Rε's literal order verbatim would also be defensible; I went with package → theme → consumers:static → consumers:build → runtime per Rε's own write-up.
+This is identical to the Rε literal except `proof:theme` is reordered ahead of `proof:consumers:static` to keep "synthetic before sibling-dependent"—both are cheap, the swap doesn't change asymptotic cost but tightens the failure-locality argument (theme failures are library-local; consumers failures are environment-local). Adopting Rε's literal order verbatim would also be defensible; I went with package → theme → consumers:static → consumers:build → runtime per Rε's own write-up.
 
 ## File changes summary
 
@@ -56,17 +56,17 @@ proof:all
     npm run proof:package && npm run proof:theme && npm run proof:consumers:static && npm run proof:consumers:build && npm run proof:runtime
 ```
 
-JSON validity confirmed via `node -e "require('./package.json').scripts['proof:all']"` — script string round-trips intact.
+JSON validity confirmed via `node -e "require('./package.json').scripts['proof:all']"`—script string round-trips intact.
 
 ### Behavioral verification
 
-`npm run proof:all` invokes the cohort. In this worktree the chain halts at step 1 (`proof:package`) due to a pre-existing environmental issue: `proof-package.mjs` packs the lib into a temp fixture and runs `npm install --ignore-scripts`, which fails ERESOLVE because the worktree's `@mkbabb/keyframes.js` peer-dep points at `file:/Users/mkbabb/Programming/glass-ui/.claude/worktrees/keyframes.js` — a path not present from the temp fixture's resolution root.
+`npm run proof:all` invokes the cohort. In this worktree the chain halts at step 1 (`proof:package`) due to a pre-existing environmental issue: `proof-package.mjs` packs the lib into a temp fixture and runs `npm install --ignore-scripts`, which fails ERESOLVE because the worktree's `@mkbabb/keyframes.js` peer-dep points at `file:/Users/mkbabb/Programming/glass-ui/.claude/worktrees/keyframes.js`—a path not present from the temp fixture's resolution root.
 
-This is NOT a `proof:all` defect — it is environmental drift in this specific worktree's `package-lock.json` keyframes.js path. The same `npm run proof:package` invocation fails identically outside `proof:all`. The `&&` chain behaved correctly: the first non-zero exit halted the cohort before `proof:theme` ran. Verified fail-fast semantics.
+This is NOT a `proof:all` defect—it is environmental drift in this specific worktree's `package-lock.json` keyframes.js path. The same `npm run proof:package` invocation fails identically outside `proof:all`. The `&&` chain behaved correctly: the first non-zero exit halted the cohort before `proof:theme` ran. Verified fail-fast semantics.
 
-A separate quick run of `npm run proof:consumers:static` exited 1 with an L.W2-era export-surface drift in `docs/tranches/F/audit/W1-consumers-static.json` (an F.W1 snapshot is stale vs the current root barrel — unrelated to Lane A scope; a separate snapshot-refresh chore).
+A separate quick run of `npm run proof:consumers:static` exited 1 with an L.W2-era export-surface drift in `docs/tranches/F/audit/W1-consumers-static.json` (an F.W1 snapshot is stale vs the current root barrel—unrelated to Lane A scope; a separate snapshot-refresh chore).
 
-These failures both predate this lane and would surface under any orchestration shape (manual sequential invocation, `proof:all`, or `release.sh`). The lane deliverable — wiring the chain so a single command invokes all 5 — is complete and provably fail-fast.
+These failures both predate this lane and would surface under any orchestration shape (manual sequential invocation, `proof:all`, or `release.sh`). The lane deliverable—wiring the chain so a single command invokes all 5—is complete and provably fail-fast.
 
 ### Worktree diff verification
 
@@ -85,9 +85,9 @@ No other files touched.
 
 ## Open questions for orchestrator
 
-1. **F.W1 snapshot drift**: `docs/tranches/F/audit/W1-consumers-static.json` and `W1-package-proof.json` are stale at HEAD vs current export surface (L.W2 promotions). Likely a separate snapshot-refresh chore — out of W5 scope. Should it land as a W5 cleanup lane or a separate one-off commit?
+1. **F.W1 snapshot drift**: `docs/tranches/F/audit/W1-consumers-static.json` and `W1-package-proof.json` are stale at HEAD vs current export surface (L.W2 promotions). Likely a separate snapshot-refresh chore—out of W5 scope. Should it land as a W5 cleanup lane or a separate one-off commit?
 
-2. **CI invocation**: per Rε §"Layer E — CI gate expansion" (= Lane E), CI will need to decide whether to invoke `proof:all` directly or cherry-pick a fast subset (`proof:package` + `proof:theme` + `proof:consumers:static`) that doesn't require sibling consumer repos. Recommendation: Lane E uses the cherry-picked CI-safe subset and leaves `proof:all` for local + release-path invocation only. Confirmed in Rε §R3 + §R6.
+2. **CI invocation**: per Rε §"Layer E—CI gate expansion" (= Lane E), CI will need to decide whether to invoke `proof:all` directly or cherry-pick a fast subset (`proof:package` + `proof:theme` + `proof:consumers:static`) that doesn't require sibling consumer repos. Recommendation: Lane E uses the cherry-picked CI-safe subset and leaves `proof:all` for local + release-path invocation only. Confirmed in Rε §R3 + §R6.
 
 3. **`release.sh` integration**: should `release.sh` (Lane B + D) call `npm run proof:all` directly, or keep its current per-step invocation? `proof:all` was authored as a consumer-facing single entry point; integrating it into `release.sh` is a Lane B/D decision, not Lane A's.
 
@@ -96,7 +96,7 @@ No other files touched.
 ## Bounds compliance
 
 - Touched: `package.json` (1 script entry); this proof doc.
-- Did NOT touch: `scripts/release.sh`, `scripts/freshness-gate.mjs`, `scripts/freshness-walk.mjs` (n/a — doesn't exist yet), `src/freshness.ts`, `.github/workflows/`.
+- Did NOT touch: `scripts/release.sh`, `scripts/freshness-gate.mjs`, `scripts/freshness-walk.mjs` (n/a—doesn't exist yet), `src/freshness.ts`, `.github/workflows/`.
 - No git mutations (read-only git clause honored).
 - No wrapper script created (Option A; Option B not warranted per dispatch + W5.md guidance).
 

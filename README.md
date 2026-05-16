@@ -4,14 +4,14 @@ Glassmorphic design system for Vue 3.5. Shared components, design tokens, and co
 
 ## Features
 
-- 43 shadcn-vue / reka-ui base components plus 30 custom composites (Button — incl. `primary-audacious` — Card, Dialog, Select, Tabs, Popover, Slider, NumberField, Section, ScrollPane, CartoonCard, MetricBadge, MetricPill, etc.)
+- 43 shadcn-vue / reka-ui base components plus 30 custom composites (Button—incl. `primary-audacious`—Card, Dialog, Select, Tabs, Popover, Slider, NumberField, Section, ScrollPane, CartoonCard, MetricBadge, MetricPill, etc.)
 - Five-tier glassmorphism: `.glass-wash`, `.glass-quiet`, `.glass-resting`, `.glass-floating`, `.glass-overlay` (the v0.8.0 ladder; replaces the prior subtle/default/medium/elevated naming)
 - Convenience shorthands: `.glass-card`, `.glass-pill`, `.glass-btn`, `.floating-panel`, `.glass-cartoon`, `@utility btn-audacious`
 - `GlassDock`: collapsible glass action bar with horizontal + vertical orientations, `containerName` prop, layered `DockLayerGroup`/`DockLayer` panes, density rail, ref-counted keep-open state
 - Golden-ratio typography scale (√φ ≈ 1.272, 11+ stops from micro to display-5)
 - Design tokens: duration, easing, z-index (incl. `--z-behind`), radius (primitive + semantic), shadows, glass tiers, paper textures, surface-tint 9-rung family with `quiet | floating | modal` aliases
 - Vue `<Transition>` class sets, shared `@keyframes` (`sparkle-sweep`, `dock-in`, `dialog-in`, etc.), SVG noise textures
-- Public composables across 8 sub-trees (L.W2 restructure): `motion/` (spring, RAF, animated-number, animated-number-map, stagger, stagger reveal, intersection pause, dark-mode sync, scroll progress), `glass/` (renderer + WebGL/WebGPU shader assets), `sortable/`, `sidebar/` (tree/follow/scroll/state), `dom/` (resize observer, touch gate, token color), `reactive/` (timer/interval), `dark/` (global dark — flat `/dark` subpath), `keyboard/` (shortcuts registry — flat `/keyboard` subpath)
+- Public composables across 8 sub-trees (L.W2 restructure): `motion/` (spring, RAF, animated-number, animated-number-map, stagger, stagger reveal, intersection pause, dark-mode sync, scroll progress), `glass/` (renderer + WebGL/WebGPU shader assets), `sortable/`, `sidebar/` (tree/follow/scroll/state), `dom/` (resize observer, touch gate, token color), `reactive/` (timer/interval), `dark/` (global dark—flat `/dark` subpath), `keyboard/` (shortcuts registry—flat `/keyboard` subpath)
 - Bundle-budget gate (`npm run profile:budget`) re-landed K W4 Lane B; CI workflow at `.github/workflows/lint.yml`
 
 ## Install
@@ -23,10 +23,10 @@ npm install @mkbabb/glass-ui
 ## Usage
 
 ```ts
-// v1.0 — vueuse-FREE root barrel
+// v1.0—vueuse-FREE root barrel
 import { Button, Card, Dialog } from "@mkbabb/glass-ui";
 
-// v1.0 — vueuse-bearing flat subpaths
+// v1.0—vueuse-bearing flat subpaths
 import { useGlobalDark } from "@mkbabb/glass-ui/dark";
 import { useKeyboardShortcuts, registerShortcut } from "@mkbabb/glass-ui/keyboard";
 import { useCarousel } from "@mkbabb/glass-ui/carousel";
@@ -38,7 +38,7 @@ import { DarkModeToggle } from "@mkbabb/glass-ui/controls";
 import { Configurator, useConfiguratorState } from "@mkbabb/glass-ui/configurator";
 import { HoverPopover } from "@mkbabb/glass-ui/hover-popover";
 
-// v1.0 — canonical public types + constants
+// v1.0—canonical public types + constants
 import type { AuroraConfig, ButtonVariants, CardTier } from "@mkbabb/glass-ui/api";
 import { DEFAULT_AURORA_CONFIG, MAX_NUCLEI } from "@mkbabb/glass-ui/api";
 ```
@@ -104,7 +104,7 @@ src/
 │       ├── dock/               # GlassDock, DockLayer, DockLayerGroup, DockIconButton,
 │       │                       # DockTabButton, DockSelectTrigger, DockDropdownTrigger
 │       ├── dock-group/         # DockGroup chassis-strip wrapper
-│       ├── hover-popover/      # HoverPopover (hoverOpenDelay prop — K W1 rename)
+│       ├── hover-popover/      # HoverPopover (hoverOpenDelay prop—K W1 rename)
 │       ├── instrument-chassis/ # InstrumentChassis + RegionDivider
 │       ├── glyph-face/         # GlyphFace 3-layer wrapper
 │       ├── disco-glyph/        # DiscoGlyph 3-layer SVG glyph primitive
@@ -112,7 +112,7 @@ src/
 │       ├── metaballs/          # Metaballs WebGL substrate
 │       ├── metric-badge/       # MetricBadge primitive
 │       ├── pulse/              # Dots / ring loading indicator
-│       ├── scrolling-text/     # Overflow-marquee primitive (lifted from speedtest — v0.9.1)
+│       ├── scrolling-text/     # Overflow-marquee primitive (lifted from speedtest—v0.9.1)
 │       ├── tabs/               # BouncyTabs, UnderlineTabs, BouncyToggle
 │       ├── timeline/           # GlassTimeline
 │       ├── typewriter/         # TypewriterText
@@ -151,7 +151,7 @@ src/
 │   ├── animations.css          # @keyframes: dialog-in/out, floating-panel-in, collapsible, tooltip, shimmer, sparkle-sweep
 │   └── utilities.css           # focus-ring, btn-press, btn-audacious, rainbow-text, touch-gate, etc.
 └── utils/
-    └── cn.ts                   # clsx + hand-rolled deduplicator (v0.9.2 — replaces tailwind-merge)
+    └── cn.ts                   # clsx + hand-rolled deduplicator (v0.9.2—replaces tailwind-merge)
 ```
 
 ## Subpath imports
@@ -166,7 +166,7 @@ import { useKeyboardShortcuts, registerShortcut } from "@mkbabb/glass-ui/keyboar
 import { useCarousel } from "@mkbabb/glass-ui/carousel";
 import { Input, Textarea, Combobox } from "@mkbabb/glass-ui/forms";
 
-// v1.0 discovery layer — pure types + constants
+// v1.0 discovery layer—pure types + constants
 import type {
     AuroraConfig,
     ButtonVariants,
@@ -175,7 +175,7 @@ import type {
     MetaballConfig,
 } from "@mkbabb/glass-ui/api";
 
-// Per-package subpaths — substrate isolation
+// Per-package subpaths—substrate isolation
 import { GlassDock, DockLayerGroup, DockLayer } from "@mkbabb/glass-ui/dock";
 import { DarkModeToggle } from "@mkbabb/glass-ui/controls";
 import { Aurora, useAurora } from "@mkbabb/glass-ui/aurora";

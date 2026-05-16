@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-05-06T21:51:09.907Z",
-  "durationMs": 187,
-  "status": "fail",
+  "generatedAt": "2026-05-16T19:56:26.052Z",
+  "durationMs": 192,
+  "status": "pass",
   "command": "npm run proof:theme",
   "tailwind": {
     "probeClasses": [
@@ -28,7 +28,7 @@
       "duration-panel",
       "duration-fast",
       "blur-dock",
-      "blur-glass-subtle",
+      "blur-glass-resting",
       "max-w-2xl",
       "animate-dock-in",
       "animate-shimmer"
@@ -127,8 +127,8 @@
         "present": true
       },
       {
-        "className": "blur-glass-subtle",
-        "present": false
+        "className": "blur-glass-resting",
+        "present": true
       },
       {
         "className": "max-w-2xl",
@@ -205,9 +205,9 @@
         "pass": true
       }
     ],
-    "cssBytes": 185692,
+    "cssBytes": 206592,
     "files": [
-      "dist/assets/index-0keJExbI.css"
+      "dist/assets/index-B8KOx0yE.css"
     ]
   },
   "staticChecks": {
@@ -217,12 +217,7 @@
     "unresolvedUtilityTokens": [],
     "retiredTokenMatches": [],
     "brittleMatches": [],
-    "dockScopedStyleBlocks": [
-      "src/components/custom/dock/DockTabButton.vue"
-    ]
+    "dockScopedStyleBlocks": []
   },
-  "failures": [
-    "dock scoped style block remains in src/components/custom/dock/DockTabButton.vue",
-    "missing generated class .blur-glass-subtle"
-  ]
+  "failures": []
 }

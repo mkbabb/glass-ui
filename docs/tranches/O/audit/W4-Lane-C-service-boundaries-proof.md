@@ -1,13 +1,13 @@
-# O.W4 Lane C — service-boundary inconsistencies proof
+# O.W4 Lane C—service-boundary inconsistencies proof
 
-**Lane**: O.W4 Lane C — service-boundary inconsistencies (3 fixes).
+**Lane**: O.W4 Lane C—service-boundary inconsistencies (3 fixes).
 **Scope**: avatarVariant rename + useToast disposition + module-scope registries doc.
 **Bounds**: avatar package, MIGRATION.md, DESIGN.md, 2 new audit docs.
 **Status**: LANDED.
 
 ## Disposition
 
-### Fix 1 — `avatarVariant` → `avatarVariants` (consistency rename)
+### Fix 1—`avatarVariant` → `avatarVariants` (consistency rename)
 
 Renamed the singular CVA const to the plural form used by every other CVA
 variants const in the library. Type alias `AvatarVariants` is unchanged
@@ -36,10 +36,10 @@ variants const in the library. Type alias `AvatarVariants` is unchanged
 + <AvatarRoot :class="cn(avatarVariants({ size, shape }), props.class)">
 ```
 
-**MIGRATION.md note**: added under `## v1.2.4 — \`avatarVariant\` →
+**MIGRATION.md note**: added under `## v1.2.4—\`avatarVariant\` →
 \`avatarVariants\` (O.W4 Lane C)`. One-line consumer migration documented.
 
-### Fix 2 — `useToast` disposition decision
+### Fix 2—`useToast` disposition decision
 
 Verdict: **KEEP-with-rationale** (shadcn-vue parity preserved; module-scope
 queue is canonical for the process-singleton pattern). NO source change to
@@ -48,7 +48,7 @@ queue is canonical for the process-singleton pattern). NO source change to
 (KEEP, executed) vs Path B (REFACTOR to DI, flagged for orchestrator if a
 multi-library-copy scenario emerges; semver-major cut required).
 
-### Fix 3 — Module-scope registries canonical documentation
+### Fix 3—Module-scope registries canonical documentation
 
 Added new section `## Module-scope process-singleton registries (canonical
 pattern)` to DESIGN.md after the Composables section (before Layout & Sizing
@@ -72,7 +72,7 @@ Cross-references the useToast decision doc.
 
 ## Verification
 
-### `npm run typecheck` — PASS
+### `npm run typecheck`—PASS
 
 ```
 > @mkbabb/glass-ui@1.2.3 typecheck
@@ -80,7 +80,7 @@ Cross-references the useToast decision doc.
 (exit 0, no diagnostics)
 ```
 
-### `npm test` — PASS
+### `npm test`—PASS
 
 ```
 > @mkbabb/glass-ui@1.2.3 test
@@ -95,9 +95,9 @@ Cross-references the useToast decision doc.
 
 Library-internal (within glass-ui worktree):
 
-- `src/components/ui/avatar/index.ts` — only `avatarVariants` (plural) present.
-- `src/components/ui/avatar/Avatar.vue` — only `avatarVariants` (plural) present.
-- Demo + tests — zero singular occurrences.
+- `src/components/ui/avatar/index.ts`—only `avatarVariants` (plural) present.
+- `src/components/ui/avatar/Avatar.vue`—only `avatarVariants` (plural) present.
+- Demo + tests—zero singular occurrences.
 
 ```
 $ rg 'avatarVariant\b' src demo tests
@@ -121,10 +121,10 @@ Per W4.md hard gate (d), audited the 6 consumer repos for
 | `fourier-analysis` | 0 | no avatar usage |
 | `bbnf-buddy` | 0 | no avatar usage |
 | `keyframes.js` | 0 | no avatar usage |
-| `value.js` | 1 | **re-export barrel only** — see below |
+| `value.js` | 1 | **re-export barrel only**—see below |
 | `speedtest` | 0 | no avatar usage |
 
-**Finding — `value.js` re-export barrel** (`value.js/demo/@/components/ui/avatar/index.ts:1`):
+**Finding—`value.js` re-export barrel** (`value.js/demo/@/components/ui/avatar/index.ts:1`):
 
 ```ts
 export { Avatar, AvatarImage, AvatarFallback, avatarVariant, type AvatarVariants } from "@mkbabb/glass-ui";
@@ -133,7 +133,7 @@ export { Avatar, AvatarImage, AvatarFallback, avatarVariant, type AvatarVariants
 This is a passthrough barrel matching the canonical consumer wiring
 pattern documented in CLAUDE.md (§Consumer wiring). No downstream call
 site in `value.js` actually invokes `avatarVariant` directly (verified
-via `rg avatarVariant value.js` — only this one line matches).
+via `rg avatarVariant value.js`—only this one line matches).
 
 **Impact**: at v1.2.4 upgrade, the re-export line will fail to type-check
 (`avatarVariant` no longer exists on `@mkbabb/glass-ui` root barrel).

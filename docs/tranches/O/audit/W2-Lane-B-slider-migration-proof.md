@@ -1,16 +1,16 @@
-# O.W2 Lane B — Slider `useOptionalDockContext()` migration proof
+# O.W2 Lane B—Slider `useOptionalDockContext()` migration proof
 
 **Wave**: O.W2
 **Lane**: B (Slider keep-dock-open contract migration)
 **Worktree**: `worktree-agent-a81c077695ffe399a`
 **Worktree base**: `827b6ae` (W1 close, v1.2.1)
-**Lane A dependency commit**: `ba546c7` (sibling worktree — NOT in this branch's tree)
+**Lane A dependency commit**: `ba546c7` (sibling worktree—NOT in this branch's tree)
 **Bounds**: `src/components/ui/slider/Slider.vue` + this proof doc
 **Invariant**: 25 (typed-key + helper-pair canonical DI shape)
 
-## § Disposition — before/after diff for the 3 inject migrations
+## § Disposition—before/after diff for the 3 inject migrations
 
-### Migration 1 — `dockKeepOpen` callable
+### Migration 1—`dockKeepOpen` callable
 
 **Before** (string-key inject + optional-chain call site):
 
@@ -36,7 +36,7 @@ function acquire() {
 }
 ```
 
-### Migration 2 — `dockRelease` callable
+### Migration 2—`dockRelease` callable
 
 **Before**:
 
@@ -61,7 +61,7 @@ function release() {
 }
 ```
 
-### Migration 3 — `dockHeld` reactive flag
+### Migration 3—`dockHeld` reactive flag
 
 **Before**:
 
@@ -80,7 +80,7 @@ const isHeld = computed(() => dock?.held.value === true)
 
 ### Net shape change
 
-3 string-key `inject()` call sites collapse into 1 `useOptionalDockContext()` call. The 3 call-site invocations rewrite to property-access on the optional-chained context binding (`dock?.keepOpen()`, `dock?.release()`, `dock?.held.value`). No behavioral semantics shift — `inject` with default `null` and `useOptionalDockContext()` both return `DockContext | null`, and the optional-chain idiom is preserved across all three call sites.
+3 string-key `inject()` call sites collapse into 1 `useOptionalDockContext()` call. The 3 call-site invocations rewrite to property-access on the optional-chained context binding (`dock?.keepOpen()`, `dock?.release()`, `dock?.held.value`). No behavioral semantics shift—`inject` with default `null` and `useOptionalDockContext()` both return `DockContext | null`, and the optional-chain idiom is preserved across all three call sites.
 
 ## § File changes summary
 
@@ -93,7 +93,7 @@ const isHeld = computed(() => dock?.held.value === true)
 - Removed: `inject` from `vue`, `ComputedRef` type from `vue`.
 - Added: `useOptionalDockContext` from `'../../custom/dock/composables/dockContext'`.
 
-**No structural changes**: the `acquire()`/`release()` reference-count discipline, the `watch(touchGate.isActive)` mirror wire, the `onBeforeUnmount(release)` cleanup, the `onPointerDown` window-scoped `pointerup`/`pointercancel` listener, the `data-held` and `data-touch-active` attribute reflection — all preserved verbatim. Only the inject layer renamed.
+**No structural changes**: the `acquire()`/`release()` reference-count discipline, the `watch(touchGate.isActive)` mirror wire, the `onBeforeUnmount(release)` cleanup, the `onPointerDown` window-scoped `pointerup`/`pointercancel` listener, the `data-held` and `data-touch-active` attribute reflection—all preserved verbatim. Only the inject layer renamed.
 
 ## § Verification
 
@@ -124,7 +124,7 @@ src/components/ui/slider/Slider.vue(7,10): error TS2305: Module
 'useOptionalDockContext'.
 ```
 
-**Expected failure — cross-lane dependency**: this worktree branches from `827b6ae` (W1 close); Lane A's typed-context expansion landed at sibling commit `ba546c7` on a separate worktree and is NOT in this branch's tree. Verified the published shape via `git show ba546c7:src/components/custom/dock/composables/dockContext.ts`:
+**Expected failure—cross-lane dependency**: this worktree branches from `827b6ae` (W1 close); Lane A's typed-context expansion landed at sibling commit `ba546c7` on a separate worktree and is NOT in this branch's tree. Verified the published shape via `git show ba546c7:src/components/custom/dock/composables/dockContext.ts`:
 
 ```ts
 export function useOptionalDockContext(): DockContext | null {
@@ -150,7 +150,7 @@ Cross-checking each call site against the dispatch's required behavior contract:
 |---|---|---|---|
 | pointer-drag `acquire()` | `dockKeep?.()` | `dock?.keepOpen()` | preserved (same callable, renamed) |
 | pointerup/pointercancel `release()` | `dockRelease?.()` | `dock?.release()` | preserved |
-| TouchGate `watch(isActive)` mirror | `acquire()` / `release()` | unchanged — calls migrated helpers | preserved |
+| TouchGate `watch(isActive)` mirror | `acquire()` / `release()` | unchanged—calls migrated helpers | preserved |
 | `isHeld` computed for `data-held` | `dockHeld?.value === true` | `dock?.held.value === true` | preserved |
 | INSIDE `<GlassDock>` | `inject` returns provided callables/ref | `dock` returns `DockContext`; all methods callable | preserved |
 | OUTSIDE `<GlassDock>` | `inject(..., null)` returns null; `?.()` no-ops | `useOptionalDockContext()` returns null; `dock?.` no-ops; halo does NOT intensify | preserved (befitting silent default per invariant 25) |
@@ -161,7 +161,7 @@ The pointer-drag/touch-gate/cleanup wiring is structurally identical; only the i
 
 ## § Cross-substrate proof story status
 
-**File**: `demo/stories/compositions/dock-with-slider.vue` (UNTOUCHED — outside Lane B bounds).
+**File**: `demo/stories/compositions/dock-with-slider.vue` (UNTOUCHED—outside Lane B bounds).
 
 **Visual contract verification** (deferred to W7 π lane if MCP tooling reconnects):
 
@@ -175,7 +175,7 @@ Runtime probe via MCP browser tooling is not available in this lane window; visu
 
 1. **Cross-lane integration sequencing**: this worktree's typecheck will only pass green once Lane A (`ba546c7`) is merged. Lane A's commit message explicitly calls out a "transitional dual-provide window" preserving the 5 legacy string-keys (`dockKeepOpen`, `dockRelease`, `dockHeld`, `glassDockId`, `glassDockContext`) at `GlassDock.vue` for Lane B + Lane C consumer-migration. At W2 close, after Lane B + Lane C merge, the orchestrator should run the **transitional-provide sweep** to remove those 5 string-keys from `GlassDock.vue` (Lane A's own scope; Lane B does not touch `GlassDock.vue`).
 
-2. **Speedtest binary-transparency spot-check**: dispatch notes speedtest does NOT inject any dock key per O11/f, so the migration is automatic. Suggest the orchestrator confirm at W2 close via `rg "inject\\((['\"])dock" speedtest-clone/` (or equivalent) yielding 0 results — this is a 1-line verification and closes invariant gate (g).
+2. **Speedtest binary-transparency spot-check**: dispatch notes speedtest does NOT inject any dock key per O11/f, so the migration is automatic. Suggest the orchestrator confirm at W2 close via `rg "inject\\((['\"])dock" speedtest-clone/` (or equivalent) yielding 0 results—this is a 1-line verification and closes invariant gate (g).
 
 3. **Cross-substrate visual proof story re-render**: the dispatch defers runtime verification to W7 π lane if MCP reconnects. The story file is verbatim-compatible across the migration (no public API surface changed for `<Slider>` or `<GlassDock>`), so visual regression is not expected. Flag for re-shoot at W7.
 
@@ -195,4 +195,4 @@ Plus this proof doc (`docs/tranches/O/audit/W2-Lane-B-slider-migration-proof.md`
 
 ## § Hardened-agent git clause compliance
 
-No mutating git ran. Only `git log`, `git show`, `git status`, `git diff`, `git branch -a`, `git merge-base` — read-only inspection. Orchestrator owns the index at W2 close.
+No mutating git ran. Only `git log`, `git show`, `git status`, `git diff`, `git branch -a`, `git merge-base`—read-only inspection. Orchestrator owns the index at W2 close.

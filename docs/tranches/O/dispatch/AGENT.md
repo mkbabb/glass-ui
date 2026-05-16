@@ -1,4 +1,4 @@
-# O tranche — agent dispatch template
+# O tranche—agent dispatch template
 
 Extends N's dispatch template (`docs/tranches/N/dispatch/AGENT.md`) with O-tranche specifics.
 
@@ -15,7 +15,7 @@ NO mutating git. Forbidden subset:
 
 The orchestrator owns the index, the working tree mutation discipline, and all push operations in every repo.
 
-**6th-recurrence-window note**: precept LL ledger now carries 4 codified entries (`2026-05-04`, `-06`, `-09`, `-12`) on the stash anti-pattern. N.W1 Lane C self-disclosed a 5th occurrence (clean round-trip; documented). If a 6th occurs at O dispatch, codify a 5th LL entry — the prose ladder is no longer sufficient; future enforcement may need tooling-side (pre-commit hook or harness-level block).
+**6th-recurrence-window note**: precept LL ledger now carries 4 codified entries (`2026-05-04`, `-06`, `-09`, `-12`) on the stash anti-pattern. N.W1 Lane C self-disclosed a 5th occurrence (clean round-trip; documented). If a 6th occurs at O dispatch, codify a 5th LL entry—the prose ladder is no longer sufficient; future enforcement may need tooling-side (pre-commit hook or harness-level block).
 
 ## Repo-relative paths in worktrees (binding per K W8 LESSONS-LEARNED #1)
 
@@ -31,7 +31,7 @@ At O: every research-agent verdict that proposes a removal / inline / migration 
 
 Codified at precept `instructions/README.md §"Edicts"` via N.W0 Lane B (commit `b8af314`). Under-wired primitives default to WIRE, not RETIRE. Retirement requires explicit "no proper wiring target exists" rationale recorded in the prune / wire ledger.
 
-At O: legacy-code audit findings are still candidates for excision (per directive O1) — but if the audited surface is _under-wired_ rather than _legacy_, the disposition is WIRE, not RETIRE. The two failure modes are distinct: legacy = obsolete code path requiring active maintenance burden; under-wired = useful-shaped substrate with low consumer count. Per the N precedent (useTouchGate caught as undercounted, not legacy), the audit MUST distinguish.
+At O: legacy-code audit findings are still candidates for excision (per directive O1)—but if the audited surface is _under-wired_ rather than _legacy_, the disposition is WIRE, not RETIRE. The two failure modes are distinct: legacy = obsolete code path requiring active maintenance burden; under-wired = useful-shaped substrate with low consumer count. Per the N precedent (useTouchGate caught as undercounted, not legacy), the audit MUST distinguish.
 
 ## Worktree-diff verification (orchestrator close-step)
 
@@ -77,7 +77,7 @@ Every dispatched agent authors a proof doc at `docs/tranches/O/audit/<round>-<la
 - § File changes summary (applies to implementation lanes only; research lanes return audit deliverable)
 - § Verification (typecheck / test / build status; or for research: read-command + rg invocations cited)
 - § Open questions for orchestrator
-- § Worktree diff verification output (or: "this lane is read-only — no diff")
+- § Worktree diff verification output (or: "this lane is read-only—no diff")
 
 ## O-specific deliverable shape (research lanes)
 

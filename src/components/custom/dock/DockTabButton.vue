@@ -43,13 +43,9 @@ const classes = computed(() =>
     </Primitive>
 </template>
 
-<style>
-/* Density-keyed height knob, parallel to DockIconButton's --dock-control-size.
-   When a parent <GlassDock density="…"> sets `--dock-tab-h` (utilities.css),
-   the tab-button reserves that row even when the glyph + padding sum would
-   ride lower. Default falls through to `--dock-tab-min-height` (kept for
-   audacious-tier callers) and finally to `auto`. R3-spec / audit-E P0-3. */
-.dock-tab-button {
-    min-height: var(--dock-tab-h, var(--dock-tab-min-height, auto));
-}
-</style>
+<!-- P.W4 Lane B inline-absorb: prior scoped styles migrated to
+     src/styles/dock.css (`.dock-tab-button` rule). The density-keyed
+     `--dock-tab-h` token fallback chain lives at the canonical dock-styles
+     home — no per-SFC scoped block. Closes the proof-theme dock-scoped-
+     block forbid. -->
+
