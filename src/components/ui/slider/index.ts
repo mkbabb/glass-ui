@@ -12,11 +12,14 @@ export { default as Slider } from './Slider.vue'
  * (`--slider-track-height`, `--slider-thumb-size`) the SFC defaults read.
  *
  * Variants:
- *   standard      — glass track + circular thumb (baseline)
- *   spectrum      — tall muted track + thin bar thumb
- *   timeline      — glass-wash scrub track with disc thumb
- *   glass-pill    — pill-shape track + glass-wash substrate + halo thumb
- *   glass-cartoon — cartoon-bordered thumb + 2px-border track + cartoon shadow
+ *   standard       — glass track + circular thumb (baseline)
+ *   spectrum       — tall muted track + thin bar thumb
+ *   timeline       — glass-wash scrub track with disc thumb
+ *   glass-pill     — pill-shape track + glass-wash substrate + halo thumb
+ *   glass-cartoon  — cartoon-bordered thumb + 2px-border track + cartoon shadow
+ *   glass-scrubber — tall scrub track + grab-friendly thin-bar thumb;
+ *                    canonicalizes the fourier-analysis 3-site shadow recipe
+ *                    (GlassTimeline / SliderControl / ConvergenceTimeline)
  *
  * Sizes:
  *   sm — 4px track / 12px thumb
@@ -34,6 +37,7 @@ export const sliderVariants = cva(
         timeline: '',
         'glass-pill': '',
         'glass-cartoon': '',
+        'glass-scrubber': '',
       },
       size: {
         sm: '[--slider-track-height:0.25rem] [--slider-thumb-size:0.75rem]',

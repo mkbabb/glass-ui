@@ -17,6 +17,80 @@
 >
 > Speedtest reference: `docs/tranches/AC/AC.md` §AC.W6 + §AC.W8 + `docs/tranches/AC/waves/W6{a,b,c,d,e}-*.md` + `docs/tranches/AC/waves/W8.md`. Tags v1.5.0 + v1.5.1 placed retroactively at AC.W6e close.
 
+## 1.8.0 — 2026-05-16 — P.W3 HEADLINE (substrate promotions — GlassScrubber + ProgressiveSidebar slotted-chassis + PaperBackdrop /api)
+
+Minor-level cohort. Three parallel substrate promotions clear the ≥ 2-consumer bar per N invariant 23 wire-before-retire. The architectural transposition the P tranche is built around.
+
+### Lane A — `<Slider variant="glass-scrubber">` (P-5 carry; fourier-analysis substrate)
+
+`src/components/ui/slider/index.ts` `sliderVariants` CVA gains a 6th `variant` entry (`glass-scrubber`). `src/components/ui/slider/Slider.vue` scoped CSS adds `[data-variant="glass-scrubber"]` block targeting `.slider-track` / `.slider-range` / `.slider-thumb` with scrubber-canonical geometry:
+
+- Track: 1.25 rem (20 px median of fourier-analysis's 3 sites' 16/20/24 px), `--surface-tint-6` resting → `--surface-tint-8` hover, `--glass-blur-quiet` backdrop-filter.
+- Range: `--surface-tint-8` resting → `--surface-tint-15` hover, pill radius.
+- Thumb: 6×16 px thin bar, hidden at rest (opacity:0), materializes on hover / focus / `[data-held]` / `[data-touch-active]` and grows to 8×18 px with `--surface-tint-40`.
+- Focus ring: `0 0 0 2px color-mix(in srgb, var(--ring) 40%, transparent)` — matches the 3 recipes verbatim.
+
+All paints compose existing substrate tokens (`--surface-tint-N`, `--ring`, `--glass-blur-quiet`, `--radius-pill`, `--duration-fast`, `--ease-standard`, `--scale-press-btn`). Zero hardcoded colors. No new tokens shipped — divergence axes route through inline `var(--slider-scrub-*, default)` per the existing slider scoped-CSS pattern.
+
+**≥ 2-consumer verification**: 3 fourier-analysis sites (GlassTimeline + SliderControl + ConvergenceTimeline) — 562 LOC shadow recipe absorbable to ~140 LOC at the `<Slider variant="glass-scrubber">` consume. Consumer-side cross-walk lands at P.W5 Lane B.
+
+### Lane B — ProgressiveSidebar slotted-chassis split (P11/a G2 HEADLINE)
+
+`src/components/custom/sidebar/ProgressiveSidebar.vue` refactored to support two mutually-exclusive composition modes:
+
+1. **TOC mode** (existing): `state: SidebarState` drives 3-level tree rendering. Bit-for-bit preserved — the v0.x XSS-prevention test continues to exercise this path unchanged.
+2. **Slotted mode** (NEW): omit `state`; place `<ProgressiveSidebarSection>` children in the default slot. The chassis installs a DI context; sections register on mount via the new typed-key + helper-pair pattern.
+
+New artefacts:
+- `src/components/custom/sidebar/ProgressiveSidebarSection.vue` (NEW SFC) — slotted section primitive with `id` + `label` + `icon` props + `#header` + default slots + optional-context DI registration.
+- `src/components/custom/sidebar/context.ts` (NEW DI module) — `PROGRESSIVE_SIDEBAR_CONTEXT_KEY` + `provideProgressiveSidebarContext` + strict `useProgressiveSidebarContext()` + befitting `useOptionalProgressiveSidebarContext()`. Mirrors P.W2 Lane B `SortableList` + O.W2 `DockLayerGroup` precedents per invariant 25.
+
+`src/components/custom/sidebar/index.ts` re-exports the section SFC + context primitives + helper pair.
+
+Test coverage: existing XSS-prevention test preserved verbatim; +4 NEW tests cover slotted rendering, DI register/unregister lifecycle, active-section cascade, and standalone-section optional-context fallback. Test count 361 → 365.
+
+**≥ 2-consumer verification**:
+1. words/frontend `WordlistProgressiveSidebar.vue` (319 LOC) + co-located `ProgressiveSidebar.vue` (150 LOC) = 469 LOC parallel implementation; consumer-side absorption at P.W5 Lane E.
+2. glass-ui demo `demo/stories/navigation/sidebar.vue` — slotted-mode story landed at this commit (Filters + Sort + Tags sections; consumer #2 LANDS at this wave, not deferred).
+
+### Lane C — PaperBackdrop /api promotion + texture-system DESIGN.md
+
+`src/components/custom/paper-backdrop/PaperBackdrop.vue`: inline `defineProps` lifted to `export interface PaperBackdropProps` (HeaderRibbon precedent matching P.W1 Lane A's 5-SFC pattern). `export type PaperBackdropFrequency = "clean" | "aged"` shipped with JSDoc.
+
+`src/api/index.ts` gains a "Paper / texture" section re-exporting `PaperBackdropProps` + `PaperBackdropFrequency`. Surface count 64 → **66** (62 types + 4 constants).
+
+`DESIGN.md` adds a "Texture system" section (lines 1239-1290) documenting:
+- Substrate of choice: `<PaperBackdrop>` + `paper-underpaint` + `paper-grain-overlay` utilities.
+- Custom-property cascade pattern: consumers retint texture via `--paper-*` CSS variables at `:root` rather than reaching inside scoped styles (parallel to `--phase-color-*` per AC.W6c).
+- 4-step migration path for consumers retiring parallel `useTextureSystem` implementations.
+
+**≥ 2-consumer verification**:
+1. words/frontend — 503 LOC parallel implementation (`useTextureSystem.ts` 162 LOC + 3 texture SFCs 341 LOC); cross-walk lands at P.W5 Lane E.
+2. glass-ui demo — 9 production-binary call sites at HEAD (AppShell substrate + 4 paper-backdrop story instances + 6 paper-grain-overlay utility consumers).
+
+### CSS budget re-baseline (W3 close)
+
+Lane A's glass-scrubber variant + Lane B's slotted-chassis chassis added scoped-CSS draw. Pre-W3 budget (P.W0 baseline: 42_000 raw / 7_400 gzip) flagged 97.3% raw / 99.9% gzip — the gzip cap would FAIL on the next byte. Bumped to **46_000 raw / 8_200 gzip** (≈ 11% headroom raw + ≈ 11% headroom gzip) at W3 close per the canonical "tranche-close re-baseline against substrate additions" pattern. Post-rebaseline: 88.9% raw / 90.2% gzip — healthy headroom. Rationale captured inline in `scripts/profile-bundle.mjs`.
+
+### Verification
+
+- `npm run typecheck` — PASS.
+- `NODE_OPTIONS=--max-old-space-size=8192 npm run build` — PASS (28.55 s).
+- `npm run verify-export-types` — PASS.
+- `npm run profile:budget` — PASS (post-rebaseline).
+- `npm test` — PASS (32 files / 365 tests; +4 from Lane B coverage).
+- `node scripts/audit-stash-list.mjs` — PASS (clean; zero stash entries; the W2 fail-closed gate continues to hold).
+
+### Inheritance ledger absorbed at W3
+
+| P ID | Item | Status |
+|---|---|---|
+| P-5 | GlassScrubber substrate (3 fourier-analysis sites) | ADDRESSED (Lane A) |
+| P11/a G2 | ProgressiveSidebar slotted-chassis split | ADDRESSED (Lane B) |
+| P11/a G3 + I2 | PaperBackdrop /api promotion + texture-system migration | ADDRESSED (Lane C) |
+| P-2 (recurrent) | CSS budget re-baseline at substrate-promotion close | ADDRESSED (W3 close re-baseline) |
+
+
 ## 1.7.2 — 2026-05-16 — P.W2 (invariant-25 paired-helper completion + UseDockStateReturn + stash-audit script)
 
 Patch-level cohesion release. Four parallel lanes + one inline absorb; additive at the consumer surface.

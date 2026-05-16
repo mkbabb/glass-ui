@@ -1,89 +1,179 @@
 <script setup lang="ts">
-import { ref } from "vue";
+/**
+ * `<ProgressiveSidebar>` — sticky / drawer sidebar chassis.
+ *
+ * Two composition modes:
+ *
+ *  1. **TOC mode** (state-driven). Pass `state: SidebarState`. The chassis
+ *     renders `state.sections` as a 3-level tree (section → sub → sub-sub)
+ *     with the historical scroll-spy + expand/collapse behaviour. This is
+ *     the existing v1.x shape; the demo at `demo/stories/navigation/sidebar.vue`
+ *     and the test at `__tests__/ProgressiveSidebar.test.ts` continue to
+ *     exercise this mode bit-for-bit.
+ *
+ *  2. **Slotted mode** (chassis-only). Omit `state`. Place
+ *     `<ProgressiveSidebarSection>` children in the default slot. The
+ *     chassis installs a DI context; sections register on mount and the
+ *     chassis tracks the active section id externally (via `v-model:active`).
+ *     This is the P.W3 Lane B addition that absorbs words/frontend's
+ *     `WordlistProgressiveSidebar` and similar non-TOC sidebars.
+ *
+ * The two modes are mutually exclusive: TOC mode renders state.sections and
+ * does not install the context; slotted mode renders the default slot and
+ * installs the context. Consumers pick one shape per chassis.
+ */
+import { computed, ref } from "vue";
 import { ChevronUp } from "lucide-vue-next";
-import type { SidebarState } from "./types";
+import type { SidebarSection, SidebarState } from "./types";
+import {
+    provideProgressiveSidebarContext,
+    type ProgressiveSidebarContext,
+    type ProgressiveSidebarSectionDescriptor,
+} from "./context";
 
 const props = withDefaults(
     defineProps<{
-        state: SidebarState;
+        /** TOC-mode driver. When omitted, the chassis operates in slotted mode. */
+        state?: SidebarState;
         mode?: "sticky" | "drawer";
         renderTitle?: (title: string) => string;
+        /** Slotted-mode active section id (v-model). */
+        active?: string | null;
     }>(),
     {
+        state: undefined,
         mode: "sticky",
         renderTitle: (title: string) => title,
+        active: null,
     },
 );
 
+defineEmits<{
+    "update:active": [id: string | null];
+}>();
+
 defineSlots<{
-    search?: () => any;
+    search?: () => unknown;
+    /** Slotted-mode body (typically `<ProgressiveSidebarSection>` children). */
+    default?: () => unknown;
 }>();
 
 const sidebarNav = ref<HTMLElement | null>(null);
 defineExpose({ sidebarNav });
+
+const isSlottedMode = computed(() => props.state === undefined);
+
+// Slotted-mode DI: track registered descriptors so the chassis can
+// (a) surface active-section status to descendants, and (b) expose the
+// section registry for future scroll-spy lifting per N invariant 23.
+const registry = ref(new Map<string, ProgressiveSidebarSectionDescriptor>());
+
+const activeSectionId = computed<string | null>(() => props.active ?? null);
+
+const sidebarContext: ProgressiveSidebarContext = {
+    register(desc) {
+        registry.value.set(desc.id, desc);
+    },
+    unregister(id) {
+        registry.value.delete(id);
+    },
+    activeSectionId,
+    isActive(id) {
+        return activeSectionId.value === id;
+    },
+};
+
+// Install the context unconditionally — sections may also render in TOC
+// mode without ill effect (the context is inert if no sections register),
+// but the operational use case is slotted-mode. Keeping it unconditional
+// avoids a Vue ordering pitfall where consumers might wrap a TOC chassis
+// around incidental sections.
+provideProgressiveSidebarContext(sidebarContext);
+
+function scrollToTop() {
+    props.state?.scrollToTop();
+}
+
+function handleToggle(section: SidebarSection) {
+    props.state?.toggleSection(section.id);
+}
+
+function handleNavigate(id: string) {
+    props.state?.navigateTo(id);
+}
 </script>
 
 <template>
     <aside class="progressive-sidebar" :class="`progressive-sidebar--${mode}`">
         <nav ref="sidebarNav" class="sidebar-nav scrollbar-thin">
             <slot name="search" />
-            <div class="sidebar-header">
-                <p class="sidebar-label">Contents</p>
-                <button
-                    class="sidebar-top-btn"
-                    @click="state.scrollToTop()"
-                    title="Scroll to top"
-                >
-                    <ChevronUp class="h-3 w-3" />
-                </button>
-            </div>
-            <ol class="sidebar-list">
-                <li v-for="section in state.sections" :key="section.id">
+
+            <!-- TOC mode: data-driven from state.sections -->
+            <template v-if="state">
+                <div class="sidebar-header">
+                    <p class="sidebar-label">Contents</p>
                     <button
-                        :data-toc-id="section.id"
-                        @click="state.toggleSection(section.id)"
-                        class="sidebar-link"
-                        :class="{ 'is-active': state.activeRootId.value === section.id }"
+                        class="sidebar-top-btn"
+                        @click="scrollToTop"
+                        title="Scroll to top"
                     >
-                        <span>{{ renderTitle(section.title) }}</span>
+                        <ChevronUp class="h-3 w-3" />
                     </button>
-                    <!-- Subsections (animated expand) -->
-                    <div
-                        v-if="section.children"
-                        class="sidebar-sublist-wrapper"
-                        :class="{ 'is-expanded': state.isExpanded(section.id) }"
-                    >
-                        <ol class="sidebar-sublist">
-                            <li v-for="sub in section.children" :key="sub.id">
-                                <button
-                                    :data-toc-id="sub.id"
-                                    @click="state.navigateTo(sub.id)"
-                                    class="sidebar-link sidebar-sublink"
-                                    :class="{ 'is-active-sub': state.isActive(sub.id) || state.isInActiveChain(sub.id) }"
-                                >
-                                    <span>{{ renderTitle(sub.title) }}</span>
-                                </button>
-                                <!-- Sub-subsections -->
-                                <ol
-                                    v-if="sub.children && state.isInActiveChain(sub.id)"
-                                    class="sidebar-subsublist"
-                                >
-                                    <li v-for="subsub in sub.children" :key="subsub.id">
-                                        <button
-                                            :data-toc-id="subsub.id"
-                                            @click="state.navigateTo(subsub.id)"
-                                            class="sidebar-link sidebar-subsublink"
-                                            :class="{ 'is-active-sub': state.isActive(subsub.id) }"
-                                        >
-                                            <span>{{ renderTitle(subsub.title) }}</span>
-                                        </button>
-                                    </li>
-                                </ol>
-                            </li>
-                        </ol>
-                    </div>
-                </li>
-            </ol>
+                </div>
+                <ol class="sidebar-list">
+                    <li v-for="section in state.sections" :key="section.id">
+                        <button
+                            :data-toc-id="section.id"
+                            @click="handleToggle(section)"
+                            class="sidebar-link"
+                            :class="{ 'is-active': state.activeRootId.value === section.id }"
+                        >
+                            <span>{{ renderTitle(section.title) }}</span>
+                        </button>
+                        <!-- Subsections (animated expand) -->
+                        <div
+                            v-if="section.children"
+                            class="sidebar-sublist-wrapper"
+                            :class="{ 'is-expanded': state.isExpanded(section.id) }"
+                        >
+                            <ol class="sidebar-sublist">
+                                <li v-for="sub in section.children" :key="sub.id">
+                                    <button
+                                        :data-toc-id="sub.id"
+                                        @click="handleNavigate(sub.id)"
+                                        class="sidebar-link sidebar-sublink"
+                                        :class="{ 'is-active-sub': state.isActive(sub.id) || state.isInActiveChain(sub.id) }"
+                                    >
+                                        <span>{{ renderTitle(sub.title) }}</span>
+                                    </button>
+                                    <!-- Sub-subsections -->
+                                    <ol
+                                        v-if="sub.children && state.isInActiveChain(sub.id)"
+                                        class="sidebar-subsublist"
+                                    >
+                                        <li v-for="subsub in sub.children" :key="subsub.id">
+                                            <button
+                                                :data-toc-id="subsub.id"
+                                                @click="handleNavigate(subsub.id)"
+                                                class="sidebar-link sidebar-subsublink"
+                                                :class="{ 'is-active-sub': state.isActive(subsub.id) }"
+                                            >
+                                                <span>{{ renderTitle(subsub.title) }}</span>
+                                            </button>
+                                        </li>
+                                    </ol>
+                                </li>
+                            </ol>
+                        </div>
+                    </li>
+                </ol>
+            </template>
+
+            <!-- Slotted mode: chassis-only; consumers compose
+                 <ProgressiveSidebarSection> children. -->
+            <template v-else>
+                <slot />
+            </template>
         </nav>
     </aside>
 </template>

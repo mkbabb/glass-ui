@@ -29,9 +29,12 @@ const keepDockOpen = computed(() => props.keepDockOpen ?? true)
 
 const delegatedProps = computed(() => {
   const { class: _, variant: __, size: ___, keepDockOpen: ____, ...delegated } = props
-  // Timeline + glass-pill carry the thumb inside the track; reka-ui's
-  // `contain` alignment matches the visual intent (no overshoot).
-  if ((v.value === 'timeline' || v.value === 'glass-pill') && !delegated.thumbAlignment) {
+  // Timeline + glass-pill + glass-scrubber carry the thumb inside the track;
+  // reka-ui's `contain` alignment matches the visual intent (no overshoot).
+  if (
+    (v.value === 'timeline' || v.value === 'glass-pill' || v.value === 'glass-scrubber')
+    && !delegated.thumbAlignment
+  ) {
     delegated.thumbAlignment = 'contain'
   }
   return delegated
@@ -316,5 +319,68 @@ const isTouchActive = computed(() => touchGate.isActive.value)
 
 .glass-slider[data-variant="glass-cartoon"]:active .slider-thumb {
     box-shadow: var(--shadow-cartoon-accent, var(--shadow-cartoon-sm));
+}
+
+/* ── Variant: glass-scrubber (P.W3 Lane A; canonicalizes the fourier-analysis
+   3-site shadow recipe — GlassTimeline / SliderControl / ConvergenceTimeline,
+   562 LOC / 82% overlap). Tall scrub track + grab-friendly thin-bar thumb
+   that materializes on hover/focus + scrub-active state. All paints compose
+   substrate tokens (--surface-tint-N + --ring); consumers retint per site
+   via the --slider-scrub-* token block in tokens.css. ── */
+.glass-slider[data-variant="glass-scrubber"] .slider-track {
+    height: var(--slider-scrub-track-height, 1.25rem);
+    background: var(--slider-scrub-track-bg, var(--surface-tint-6));
+    backdrop-filter: var(--slider-scrub-backdrop, var(--glass-blur-quiet));
+    -webkit-backdrop-filter: var(--slider-scrub-backdrop, var(--glass-blur-quiet));
+    cursor: pointer;
+}
+
+.glass-slider[data-variant="glass-scrubber"]:hover .slider-track,
+.glass-slider[data-variant="glass-scrubber"] .slider-track:focus-within {
+    background: var(--slider-scrub-track-bg-hover, var(--surface-tint-8));
+}
+
+.glass-slider[data-variant="glass-scrubber"] .slider-range {
+    background: var(--slider-scrub-range-bg, var(--surface-tint-8));
+    border-radius: var(--radius-pill);
+}
+
+.glass-slider[data-variant="glass-scrubber"]:hover .slider-range {
+    background: var(--slider-scrub-range-bg-hover, var(--surface-tint-15));
+}
+
+/* Thin-bar thumb — hidden by default; opacity + size lift on hover/focus.
+   The hover lift matches the 3 recipes' grab-affordance pattern. */
+.glass-slider[data-variant="glass-scrubber"] .slider-thumb {
+    width: var(--slider-scrub-thumb-width, 0.375rem);
+    height: var(--slider-scrub-thumb-height, 1rem);
+    border: none;
+    border-radius: 2px;
+    background: var(--slider-scrub-thumb-bg, var(--surface-tint-25));
+    box-shadow: none;
+    opacity: 0;
+    transition:
+        opacity var(--duration-fast) var(--ease-standard),
+        width var(--duration-fast) var(--ease-standard),
+        height var(--duration-fast) var(--ease-standard),
+        background var(--duration-fast) var(--ease-standard),
+        transform var(--duration-fast) var(--ease-standard);
+}
+
+.glass-slider[data-variant="glass-scrubber"]:hover .slider-thumb,
+.glass-slider[data-variant="glass-scrubber"] .slider-thumb:focus-visible,
+.glass-slider[data-variant="glass-scrubber"][data-held] .slider-thumb,
+.glass-slider[data-variant="glass-scrubber"][data-touch-active] .slider-thumb {
+    opacity: 1;
+    width: var(--slider-scrub-thumb-width-hover, 0.5rem);
+    height: var(--slider-scrub-thumb-height-hover, 1.125rem);
+    background: var(--slider-scrub-thumb-bg-hover, var(--surface-tint-40));
+}
+
+/* Scrub-active state (pointer down) — the press-scale on the baseline
+   .slider-thumb rule still applies; we additionally lift the halo via the
+   ring token to match the 3-site `:focus-visible` ring recipe. */
+.glass-slider[data-variant="glass-scrubber"] .slider-track:focus-visible {
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--ring) 40%, transparent);
 }
 </style>

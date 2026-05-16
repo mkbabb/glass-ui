@@ -2,11 +2,21 @@
 import { computed, type HTMLAttributes } from "vue";
 import { cn } from "../../../utils";
 
-interface PaperBackdropProps {
+/**
+ * Turbulence-texture register on `<PaperBackdrop>`. `"clean"` is the default
+ * 0.65-baseFrequency / 4-octave grain; `"aged"` swaps to the 0.5-baseFrequency
+ * / 5-octave variant via the `--paper-aged-texture` CSS custom property.
+ * Consumers extend the register by adding their own `--paper-*-texture` vars
+ * at `:root` and applying via raw `class="paper-grain-overlay"` plus an inline
+ * `style` override — the texture-system canonical cascade per DESIGN.md.
+ */
+export type PaperBackdropFrequency = "clean" | "aged";
+
+export interface PaperBackdropProps {
     /** Override grain opacity (defaults to --glass-grain-opacity). */
     opacity?: number | string;
     /** Override turbulence frequency (advisory only — swaps the texture var). */
-    frequency?: "clean" | "aged";
+    frequency?: PaperBackdropFrequency;
     /** Additional class names. */
     class?: HTMLAttributes["class"];
 }

@@ -1236,6 +1236,53 @@ Classes `.paper-texture` and `.paper-texture-aged` apply the overlay with `multi
 
 ---
 
+## Texture system
+
+The canonical paper-texture substrate is two composable `@utility` declarations plus one wrapper SFC. Consumers never reach inside scoped styles to retint texture — they override the `--paper-*` CSS custom properties at `:root`, which cascades through the utilities transparently.
+
+### Substrate
+
+- `<PaperBackdrop>` (`src/components/custom/paper-backdrop/PaperBackdrop.vue`) — the wrapper SFC. Props: `opacity?: number | string`, `frequency?: "clean" | "aged"`, `class?`. Renders a single `<div class="paper-underpaint" aria-hidden="true">`; the `frequency="aged"` prop swaps `backgroundImage` to `var(--paper-aged-texture)` inline.
+- `paper-underpaint` (`src/styles/paper.css:12`) — `@utility` declaration. `position: fixed; inset: 0; z-index: -1; pointer-events: none` plus the canonical feTurbulence-noise SVG data-url at 60 × 60 tile. Bound to `--glass-grain-opacity` for the alpha rung and `multiply` / `soft-light` blend (light / dark mode).
+- `paper-grain-overlay` (`src/styles/paper.css:29`) — `@utility` declaration. `::after` overlay variant for individual surfaces (the underpaint is fullscreen-fixed; the overlay is a card-shaped pseudo-element). Same texture / opacity / blend cascade.
+
+### Custom-property cascade pattern
+
+Consumers retint texture via `:root` overrides:
+
+```css
+:root {
+    /* Swap the texture image data-url. */
+    --paper-clean-texture: url("data:image/svg+xml,...");
+    --paper-aged-texture:  url("data:image/svg+xml,...");
+
+    /* Or recolor the grain blend strength (used by both utilities). */
+    --glass-grain-opacity: 0.18;
+}
+```
+
+The cascade parallels the `--phase-color-*` substrate documented at AC.W6c / v1.5.1 — consumers never edit library source; they declare overrides at `:root` (or a scoped ancestor) and the utilities cascade through. Per the J invariant (token-first), no consumer needs to fork `PaperBackdrop.vue` to add a third frequency — they ship `--paper-handmade-texture: url(...)` at `:root` and apply `class="paper-grain-overlay"` with an inline `style="background-image: var(--paper-handmade-texture)"` override.
+
+### Migration path — consumers shipping a parallel `useTextureSystem` composable
+
+Per P11/a §G3 + §I2, words/frontend ships ~500 LOC of parallel substrate at HEAD: `useTextureSystem.ts` (162 LOC) + `TextureCard.vue` / `TextureBackground.vue` / `TextureOverlay.vue` (341 LOC). The composable + 3 SFCs reconstruct the `--paper-clean-texture` / `--paper-aged-texture` switching plus blend-mode + intensity register that the canonical substrate already covers. The migration shape:
+
+1. Drop `useTextureSystem.ts` + the 3 texture SFCs (~500 LOC).
+2. Replace `<TextureCard>` / `<TextureBackground>` / `<TextureOverlay>` call sites with raw `class="paper-grain-overlay"` (per-surface overlay) or `<PaperBackdrop>` (fullscreen substrate). The `frequency` prop replaces the `:type="clean | aged"` consumer-side switch.
+3. Override `--paper-*-texture` / `--glass-grain-opacity` at `:root` (or a scoped ancestor) when retinting is needed — consumers stop dispatching `setTextureType('aged')` programmatically and start declaring tone in CSS.
+4. The local `texture-paper-{clean,aged,handmade,kraft}` Tailwind plugin block (in consumer-side `tailwind.config.ts`) collapses to two utilities — `paper-underpaint` and `paper-grain-overlay` — both already shipped via `@import '@mkbabb/glass-ui/styles'`.
+
+Pin against the canonical types from the `/api` discovery layer:
+
+```ts
+import type { PaperBackdropFrequency, PaperBackdropProps } from "@mkbabb/glass-ui/api";
+import { PaperBackdrop } from "@mkbabb/glass-ui/paper-backdrop";
+```
+
+The `PaperBackdropFrequency` union is the canonical surface enum; consumers exposing a domain-specific texture knob (e.g. a settings panel "Texture: clean / aged") type their prop against this rather than redeclaring `"clean" | "aged"` locally.
+
+---
+
 ## Default Color Palette
 
 Consumer-overridable HSL tokens. Light values; dark overrides in `.dark {}`.

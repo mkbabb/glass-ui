@@ -50,14 +50,23 @@ const startedAt = Date.now();
 // ResponsiveTabs + ToggleGroupItem card variant, plus the b8a61ec
 // `--continuous-fill-opacity` cascade collectively grew CSS draw from
 // 31_875 raw / 5_972 gzip (N.W0 baseline) to 38_006 raw / 7_096 gzip
-// (P.W0 measurement). Bumping CSS budget to 42_000 raw / 7_400 gzip
-// (≈ 10 % headroom over current draw) restores a passing gate without
-// papering over the AB+1 additions. Future tranches re-baseline at their
-// own close per the invariant-29 AB+1 retrospective discipline (codified at
-// P.W6).
+// (P.W0 measurement). Bumped CSS budget to 42_000 raw / 7_400 gzip
+// (≈ 10 % headroom over current draw) — superseded by the P.W3 baseline
+// below.
+//
+// P.W3 close re-baseline (v1.8.0 substrate-promotion minor): Lane A's
+// `glass-scrubber` Slider variant + Lane B's ProgressiveSidebar slotted-
+// chassis split added scoped-CSS draw to the bundle. Current draw at HEAD:
+// 40_882 raw / 7_396 gzip (97.3% raw, 99.9% gzip against the prior P.W0
+// baseline — the gzip cap would FAIL on the next byte). Bumping CSS budget
+// to 46_000 raw / 8_200 gzip (≈ 11% headroom raw + ≈ 11% headroom gzip)
+// restores the canonical headroom without papering over the substrate
+// promotions. The bump cadence (N.W0 → P.W0 → P.W3) is the canonical
+// "tranche-close re-baseline against substrate additions" pattern per
+// invariant-29 AB+1 retrospective discipline (codified at P.W6 close).
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
-    "dist/glass-ui.css": { raw: 42_000, gzip: 7_400 },
+    "dist/glass-ui.css": { raw: 46_000, gzip: 8_200 },
 };
 
 const args = new Set(process.argv.slice(2));

@@ -211,3 +211,49 @@ W3 HEADLINE opens — 3 parallel substrate-promotion lanes per `waves/W3.md`:
 - Lane C: PaperBackdrop /api promotion + texture-system DESIGN.md doc.
 
 v1.8.0 minor tag (3 substrate promotions = substantial additive surface).
+
+## 2026-05-16 — P.W3 HEADLINE close
+
+### Lane execution (3 parallel agents)
+
+| Lane | Verdict | Headline |
+|---|---|---|
+| A | COMPLETED | `<Slider variant="glass-scrubber">` shipped; 6th CVA variant entry; scoped CSS composing existing substrate tokens; zero hardcoded colors. 3 fourier-analysis sites count as 3 consumers of the variant primitive |
+| B | COMPLETED | ProgressiveSidebar refactored to dual-mode (TOC + slotted); new `<ProgressiveSidebarSection>` SFC + new `context.ts` DI module per invariant 25; +4 new tests (361 → 365); 2nd consumer (demo story) landed at this wave |
+| C | COMPLETED | PaperBackdropProps + PaperBackdropFrequency promoted to /api (surface 64 → 66); DESIGN.md texture-system section authored (4-step migration path); 2nd consumer (glass-ui demo at 9 production-binary call sites) verified |
+
+Operational compliance across all 3 lanes:
+- ZERO `git stash` recurrences (the new W2-shipped audit script is the canonical gate).
+- ZERO mid-task `npm run build` invocations (orchestrator integrates at close).
+- Bounds disjoint across slider/ + sidebar/ + paper-backdrop/.
+
+### CSS budget re-baseline at W3 close (P-2 absorb)
+
+W3's substrate promotions pushed CSS to 97.3% raw / 99.9% gzip against the P.W0 baseline. Re-baselined at W3 close to 46_000 raw / 8_200 gzip (≈ 11% headroom each); current draw 40_882 raw / 7_396 gzip = 88.9% / 90.2%. Inline rationale captured at `scripts/profile-bundle.mjs`. P-2's "verify at every W close" carry-forward continues to hold.
+
+### Inheritance ledger absorption at W3
+
+| P ID | Item | Status |
+|---|---|---|
+| P-5 | GlassScrubber substrate (3 fourier-analysis sites) | ADDRESSED (Lane A) |
+| P11/a G2 | ProgressiveSidebar slotted-chassis split | ADDRESSED (Lane B; +4 tests) |
+| P11/a G3 + I2 | PaperBackdrop /api promotion + texture-system migration | ADDRESSED (Lane C; surface 64 → 66) |
+| P-2 (recurrent) | CSS budget re-baseline | ADDRESSED at W3 close (≈ 11% headroom restored) |
+
+Per P invariant 28 (zero deferral): zero P-residuals exit W3. All 3 substrate promotions clear the ≥ 2-consumer bar at landing per N invariant 23.
+
+### Gate matrix at W3 close
+
+All 6 canonical gates PASS — typecheck + build (28.55s) + verify-export-types + profile:budget (post-rebaseline) + test (365/365) + audit:stash (clean).
+
+### Next dispatch
+
+W4 opens — 5 parallel lanes + 1 inline absorb per `waves/W4.md`:
+- Lane A: Heap-bump root-cause OR bake (Pε-2).
+- Lane B: CI proof:* subset (Pε-3).
+- Lane C: tailwind-merge cruft retire (Pε-4).
+- Lane D: Style precept sweep + module-registries doc + press-scale ladder (P-6 + Pγ.4 + O-N-7).
+- Lane E: Demo stories for W6 promotions (P-4).
+- Lane F: Formal µ-split retirements (Pβ).
+
+v1.8.1 patch tag (internal pipeline + style + demo additions).

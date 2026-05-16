@@ -86,6 +86,16 @@
 // "useDockState inline return" by naming the inferred return shape and
 // re-exporting from the `/dock` subpath barrel + the `/api` discovery layer.
 // Surface count 63 → 64 (60 types + 4 constants).
+//
+// P.W3 Lane C extensions (v1.8.0): 2 type promotions for the paper-backdrop
+// / texture-system substrate per P11/a §G3 + §I2. `PaperBackdropProps` lifts
+// the inline `defineProps<{...}>` shape to a named interface (matching the
+// HeaderRibbon precedent applied to the AB+1 cohort at P.W1 Lane A);
+// `PaperBackdropFrequency` is the `"clean" | "aged"` turbulence-texture
+// register parallel to `MetricCellAppearance` / `AnimatedDigitMode`. The
+// canonical texture-system pattern (consumer retints via `--paper-*-texture`
+// CSS custom properties at `:root`) is documented in DESIGN.md "Texture
+// system" section. Surface count 64 → 66 (62 types + 4 constants).
 
 // ── Aurora ─────────────────────────────────────────────────────────────────
 // Substrate config + family, plus numeric ceilings the consumer needs to
@@ -277,3 +287,20 @@ export type { StackedIconGroupProps } from "../components/custom/stacked-icons";
 // the `/dock` subpath barrel only (component-internal arg + state-enum;
 // O.W4 Lane B disposition preserved).
 export type { UseDockStateReturn } from "../components/custom/dock";
+
+// ── Paper / texture ────────────────────────────────────────────────────────
+// `PaperBackdropProps` — the Props shape consumers forward when wrapping
+// `<PaperBackdrop>` (e.g. app-shell substrate composers). `PaperBackdropFrequency`
+// is the turbulence-register enum (`"clean" | "aged"`) parallel to
+// `MetricCellAppearance` / `AnimatedDigitMode`. Promoted P.W3 Lane C per
+// P11/a §G3 + §I2 — the consumer-side cleanup wave (words/frontend at P.W5
+// Lane E) retires ~500 LOC of parallel `useTextureSystem` + 3 TextureCard /
+// TextureBackground / TextureOverlay SFCs in favour of the canonical
+// `<PaperBackdrop>` + `paper-underpaint` / `paper-grain-overlay` utility
+// composition. The texture-system canonical pattern (CSS custom-property
+// cascade via `--paper-*-texture` vars at `:root`) is documented in DESIGN.md
+// "Texture system" section.
+export type {
+    PaperBackdropFrequency,
+    PaperBackdropProps,
+} from "../components/custom/paper-backdrop";
