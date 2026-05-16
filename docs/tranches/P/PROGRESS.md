@@ -164,3 +164,50 @@ W2 opens — 4 parallel lanes per `waves/W2.md`:
 - Lane B: SORTABLE_CONTEXT paired-helper completion (strict-only per Pδ intent).
 - Lane C: GlyphFaceSilhouetteKey paired-helper completion + UPPER_SNAKE_CASE rename (optional-only per Pδ intent; clean break per P invariant 5).
 - Lane D: UseDockStateReturn interface annotation + /api promotion.
+
+## 2026-05-16 — P.W2 close
+
+### Lane execution (4 parallel agents)
+
+| Lane | Verdict | Headline |
+|---|---|---|
+| A | COMPLETED | `provideConfiguratorDensity` + `useOptionalConfiguratorDensity` shipped (optional-only per Pδ §2.2 intent); call-site migrations preserve pre-N.W2 `data-density` visual bit-for-bit |
+| B | COMPLETED | `provideSortableContext` + `useSortableContext` shipped (strict-only per Pδ §2.2 intent); throw payload preserved; package-prefix upgraded `[glass-ui]` → `[glass-ui:sortable]` |
+| C | COMPLETED | `GlyphFaceSilhouetteKey` → `GLYPH_FACE_SILHOUETTE_KEY` rename (clean break per P invariant 5); `provideGlyphFaceSilhouette` + `useOptionalGlyphFaceSilhouette` shipped (optional-only per intent) |
+| D | COMPLETED | `UseDockStateReturn` 13-field interface authored; `useDockState()` annotated; promoted to `/api` (surface 63 → 64) |
+
+### Inline absorb — stash anti-pattern 6th + 7th recurrences
+
+Lane C + Lane D both self-reported `git stash + git stash pop` build-isolation violations of the hardened agent git clause. Per O invariant 27 (tooling-side enforcement at next recurrence) AND P invariant 28 (zero deferral), the audit script's authorship is **accelerated from the W6 named-destination to W2 close**:
+
+- Authored `scripts/audit-stash-list.mjs` — fail-closed gate verifying `git stash list` returns empty.
+- Added `package.json.scripts.audit:stash` for ergonomic invocation.
+- Cleared stale `stash@{0}` (mid-flight agent capture; subset of HEAD diffs verified before drop) via orchestrator-authority `git stash drop`.
+- LL ledger advance from 5 → 7 to be codified at P.W6 Lane B precept submodule advance.
+
+Audit doc: `docs/tranches/P/audit/W2-stash-anti-pattern-absorb.md`.
+
+### Inheritance ledger absorption at W2
+
+| P ID | Item | Status |
+|---|---|---|
+| P-3a | CONFIGURATOR_DENSITY_KEY paired helpers | ADDRESSED (Lane A) |
+| P-3b | SORTABLE_CONTEXT paired helpers | ADDRESSED (Lane B) |
+| P-3c | GlyphFaceSilhouetteKey paired helpers + rename | ADDRESSED (Lane C) |
+| Pγ.3 | useDockState inline return | ADDRESSED (Lane D) |
+| O invariant 27 audit script | scripts/audit-stash-list.mjs | ADDRESSED at W2 (accelerated from W6) |
+
+Per P invariant 28 (zero deferral): zero P-residuals exit W2. The accelerated audit-script ship is the canonical "absorb when trigger fires" pattern.
+
+### Gate matrix at W2 close
+
+All 5 canonical gates + the new audit:stash gate PASS at HEAD (post-stash-drop).
+
+### Next dispatch
+
+W3 HEADLINE opens — 3 parallel substrate-promotion lanes per `waves/W3.md`:
+- Lane A: GlassScrubber Slider variant (3 fourier-analysis sites consume).
+- Lane B: ProgressiveSidebar slotted-chassis split + `<ProgressiveSidebarSection>` NEW SFC.
+- Lane C: PaperBackdrop /api promotion + texture-system DESIGN.md doc.
+
+v1.8.0 minor tag (3 substrate promotions = substantial additive surface).

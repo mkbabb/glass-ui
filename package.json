@@ -1,6 +1,6 @@
 {
     "name": "@mkbabb/glass-ui",
-    "version": "1.7.1",
+    "version": "1.7.2",
     "description": "Glassmorphic design system — Vue 3.5 components, reka-ui primitives, Tailwind CSS v4 tokens",
     "license": "MIT",
     "type": "module",
@@ -369,6 +369,7 @@
         "typecheck": "vue-tsc --noEmit",
         "test": "vitest run",
         "verify-export-types": "node scripts/verify-export-types.mjs",
+        "audit:stash": "node scripts/audit-stash-list.mjs",
         "iter-check": "vue-tsc --noEmit --project tsconfig.src.json",
         "iter-build": "vite build --config vite.iter.config.ts",
         "iter-test": "vitest run --reporter=verbose",

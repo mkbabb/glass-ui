@@ -20,6 +20,42 @@ export interface UseDockStateOptions {
 export type DockState = "collapsed" | "hover" | "pinned";
 
 /**
+ * Canonical return shape for `useDockState`. Named per the O.W6 Lane A
+ * `UseClipboardReturn` precedent + P.W2 Lane D (Pγ.3 "useDockState inline
+ * return"); freezes today's surface so consumers wrapping `<GlassDock>` (or
+ * authoring a custom dock chassis) can type the composable handle from `/api`
+ * or the `/dock` subpath without reaching for `ReturnType<typeof useDockState>`.
+ */
+export interface UseDockStateReturn {
+    /** Three-state machine: `"collapsed" | "hover" | "pinned"`. */
+    state: Ref<DockState>;
+    /** `true` whenever `state !== "collapsed"` — derived ref. */
+    expanded: Ref<boolean>;
+    /** `true` whenever `state === "pinned"` — derived ref. */
+    isPinned: Ref<boolean>;
+    /** `true` whenever at least one child token holds the dock open via `keepOpen`. */
+    isHeld: ComputedRef<boolean>;
+    /** Mouseenter handler — transitions `collapsed → hover`. */
+    onMouseEnter: () => void;
+    /** Mouseleave handler — schedules `hover → collapsed` after `collapseDelay`. */
+    onMouseLeave: (e?: MouseEvent) => void;
+    /** Focusin handler — transitions `collapsed → hover` (keyboard parity with mouse). */
+    onFocusIn: () => void;
+    /** Focusout handler — schedules `hover → collapsed` when focus leaves the dock. */
+    onFocusOut: (e: FocusEvent) => void;
+    /** Click handler on the collapsed layer — transitions to `pinned`. */
+    onClickCollapsed: () => void;
+    /** Increment hold ref-count; suppresses timer-based collapse. */
+    keepOpen: () => void;
+    /** Decrement hold ref-count; allows timer-based collapse when count reaches 0. */
+    release: () => void;
+    /** Imperative open — forces `state = "hover"` (no-op when `alwaysExpanded`). */
+    expand: () => void;
+    /** Imperative close — forces `state = "collapsed"` (no-op when `alwaysExpanded`). */
+    collapse: () => void;
+}
+
+/**
  * Dock state machine with three states and ref-counted child holds.
  *
  * ```
@@ -37,7 +73,7 @@ export type DockState = "collapsed" | "hover" | "pinned";
  * are treated as "inside the dock" for mouse/focus/click-away purposes.
  * ```
  */
-export function useDockState(options: UseDockStateOptions) {
+export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     const { collapseDelay = 2500, rootEl, alwaysExpanded = false, isTransitioning, dockId, onStateChange } = options;
 
     const getAlwaysExpanded = () =>

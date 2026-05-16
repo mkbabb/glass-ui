@@ -23,9 +23,9 @@
  * Slots:
  *   - default — list rows wrapped in `<SortableItem>` components.
  */
-import { provide, toRef, type Component, type Ref } from "vue";
+import { toRef, type Component, type Ref } from "vue";
 import { useSortable, type SortableId } from "../../../composables/sortable";
-import { SORTABLE_CONTEXT } from "./context";
+import { provideSortableContext } from "./context";
 
 const props = withDefaults(
     defineProps<{
@@ -77,7 +77,7 @@ const sortable = useSortable<T>({
     onInsert: (index, item) => emit("insert", index, item),
 });
 
-provide(SORTABLE_CONTEXT, sortable);
+provideSortableContext(sortable);
 
 defineExpose({
     isDragging: sortable.isDragging,

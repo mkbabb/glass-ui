@@ -17,6 +17,72 @@
 >
 > Speedtest reference: `docs/tranches/AC/AC.md` §AC.W6 + §AC.W8 + `docs/tranches/AC/waves/W6{a,b,c,d,e}-*.md` + `docs/tranches/AC/waves/W8.md`. Tags v1.5.0 + v1.5.1 placed retroactively at AC.W6e close.
 
+## 1.7.2 — 2026-05-16 — P.W2 (invariant-25 paired-helper completion + UseDockStateReturn + stash-audit script)
+
+Patch-level cohesion release. Four parallel lanes + one inline absorb; additive at the consumer surface.
+
+### Lane A — `CONFIGURATOR_DENSITY_KEY` paired helpers (optional-only per Pδ intent)
+
+`src/components/custom/configurator/density.ts` gains `provideConfiguratorDensity(density: ComputedRef<ConfiguratorDensity>): void` + `useOptionalConfiguratorDensity(): ComputedRef<ConfiguratorDensity> | null`. **No strict counterpart** shipped — per Pδ §2.2 + invariant 25's "per intent" clause: rows render bare → strict helper would be dead code.
+
+Call-site migrations: `Configurator.vue` replaces `provide(CONFIGURATOR_DENSITY_KEY, ...)` with `provideConfiguratorDensity(...)`; `ConfiguratorRow.vue` replaces `inject(CONFIGURATOR_DENSITY_KEY, undefined)` with `useOptionalConfiguratorDensity()`. Prop-over-inject precedence preserved; the `data-density` no-emit visual is bit-for-bit unchanged.
+
+### Lane B — `SORTABLE_CONTEXT` paired helpers (strict-only per Pδ intent)
+
+`src/components/custom/sortable-list/context.ts` gains `provideSortableContext(sortable: UseSortableReturn): void` + `useSortableContext(): UseSortableReturn` (strict; throws when invoked outside `<SortableList>`). **No optional counterpart** — `<SortableItem>` is meaningless without a parent list per Pδ §2.2.
+
+Naming: `useSortableContext()` not `useSortable()` — avoids collision with the existing `useSortable<T>()` composable at `src/composables/sortable/useSortable.ts` per Pδ R1.
+
+Call-site migrations: `SortableList.vue` replaces `provide(SORTABLE_CONTEXT, sortable)` with `provideSortableContext(sortable)`; `SortableItem.vue` replaces the 6-line `inject` + inline-throw block with the 1-line `useSortableContext()` call. Throw payload preserved verbatim; package-prefix upgraded `[glass-ui]` → `[glass-ui:sortable]` to match the O.W2 canonical helper shape.
+
+### Lane C — `GlyphFaceSilhouetteKey` paired helpers + UPPER_SNAKE_CASE rename (clean break)
+
+`src/components/custom/glyph-face/keys.ts` renames `GlyphFaceSilhouetteKey` (PascalCase) → `GLYPH_FACE_SILHOUETTE_KEY` (UPPER_SNAKE_CASE) — matches every other typed key at HEAD. Clean break per P invariant 5; no PascalCase alias preserved.
+
+Adds `provideGlyphFaceSilhouette(slot: Ref<string | undefined>): void` + `useOptionalGlyphFaceSilhouette(): Ref<string | undefined> | null`. **No strict counterpart** — `<DiscoGlyph>` stands alone per Pδ §2.2.
+
+Call-site migrations: `GlyphFace.vue` + `DiscoGlyph.vue` updated. Debug-label of the `Symbol()` upgraded from `"GlyphFaceSilhouette"` to `"glass-ui:glyph-face-silhouette"` per the O.W2 `glass-ui:dock-context` convention.
+
+### Lane D — `UseDockStateReturn` interface annotation + /api promotion
+
+`useDockState()` previously returned an inferred shape — the surviving inline-return outlier after O.W4 Lane B fixed `useAurora`. P.W2 Lane D closes Pγ.3:
+
+- `src/components/custom/dock/composables/useDockState.ts` adds `export interface UseDockStateReturn` with the exact 13-field shape (`state` + `expanded` + `isPinned` + `isHeld` + `onMouseEnter` / `Leave` / `FocusIn` / `Out` / `ClickCollapsed` + `keepOpen` / `release` + `expand` / `collapse`). Function annotated `useDockState(options: UseDockStateOptions): UseDockStateReturn`.
+- `src/components/custom/dock/composables/index.ts` re-exports the type.
+- `src/components/custom/dock/index.ts` extends the O.W4 Lane B + P.W1 Lane B re-export block.
+- `src/api/index.ts` promotes `UseDockStateReturn` under a new Dock section — composable-return canon paralleling `UseClipboardReturn`.
+
+Surface count: 63 → **64** (60 types + 4 constants).
+
+### Inline absorb — stash anti-pattern 6th + 7th recurrences (`scripts/audit-stash-list.mjs` authored)
+
+Two of the four W2 lane agents (Lane C + Lane D) self-reported `git stash + git stash pop` build-isolation violations of the hardened agent git clause. Per O invariant 27 ("the next recurrence triggers tooling-side enforcement"), the audit script's authorship is **accelerated from P.W6 to P.W2 close** per P invariant 28 (zero deferral; ship enforcement when the trigger fires).
+
+- `scripts/audit-stash-list.mjs` (NEW): fail-closed gate verifying `git stash list` returns empty. Exit 0 when clean; exit 1 otherwise. One-shot bypass via `AUDIT_STASH_LIST_BYPASS=1` for user-authorized intentional stash.
+- `package.json.scripts.audit:stash` (NEW): ergonomic invocation.
+- Stale `stash@{0}` entry (mid-flight agent capture; subset of HEAD diffs verified before drop) cleared via orchestrator-authority `git stash drop`.
+- LL ledger advance from 5 → 7 codified at P.W6 Lane B precept submodule advance (existing plan).
+
+### Verification
+
+- `npm run typecheck` — PASS.
+- `NODE_OPTIONS=--max-old-space-size=8192 npm run build` — PASS (28.99 s).
+- `npm run verify-export-types` — PASS.
+- `npm run profile:budget` — PASS (CSS 38_006 / 42_000 raw 90.5%; gzip 7_093 / 7_400 95.9%).
+- `npm test` — PASS (32 files / 361 tests).
+- `node scripts/audit-stash-list.mjs` — PASS (clean; zero stash entries).
+
+### Inheritance ledger absorbed at W2
+
+| P ID | Item | Status |
+|---|---|---|
+| P-3a | CONFIGURATOR_DENSITY_KEY paired-helper completion | ADDRESSED (Lane A; optional-only per intent) |
+| P-3b | SORTABLE_CONTEXT paired-helper completion | ADDRESSED (Lane B; strict-only per intent) |
+| P-3c | GlyphFaceSilhouetteKey paired-helper completion + UPPER_SNAKE_CASE rename | ADDRESSED (Lane C; optional-only per intent; clean break) |
+| Pγ.3 | useDockState inline return | ADDRESSED (Lane D; surface 63 → 64) |
+| O invariant 27 (audit-script destination) | scripts/audit-stash-list.mjs | ADDRESSED at W2 (accelerated from W6 per zero-deferral) |
+
+
 ## 1.7.1 — 2026-05-16 — P.W1 (/api Props promotion + dock barrel re-export + cosmetic comment rephrase)
 
 Patch-level cohesion release. Three parallel lanes; all additive at the consumer surface (zero shape breaks).

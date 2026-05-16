@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, inject, useId, watch } from "vue";
-import { GlyphFaceSilhouetteKey } from "../glyph-face/keys";
+import { computed, useId, watch } from "vue";
+import { useOptionalGlyphFaceSilhouette } from "../glyph-face/keys";
 
 /**
  * <DiscoGlyph> — faceted SVG glyph primitive.
@@ -22,7 +22,7 @@ import { GlyphFaceSilhouetteKey } from "../glyph-face/keys";
  *
  * Q.W3.A.1 silhouette hand-off: when wrapped in a `<GlyphFace>`, this
  * primitive publishes its `silhouette` prop upward via the
- * `GlyphFaceSilhouetteKey` injection slot, so the GlyphFace cap clips
+ * `GLYPH_FACE_SILHOUETTE_KEY` injection slot, so the GlyphFace cap clips
  * to the disco silhouette without the wrapping consumer (PrimaryAction)
  * needing to mirror the path on every glyph swap. The provide/inject
  * path is reactive — GlyphFace re-reads when the descendant's
@@ -79,7 +79,7 @@ const facetAxisCoords = computed(() => {
 });
 
 /** Hand silhouette upward to a wrapping <GlyphFace>, if any. */
-const slot = inject(GlyphFaceSilhouetteKey, null);
+const slot = useOptionalGlyphFaceSilhouette();
 if (slot) {
     watch(
         () => props.silhouette,

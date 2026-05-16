@@ -1,2 +1,6 @@
 export { default as GlyphFace } from "./GlyphFace.vue";
-export { GlyphFaceSilhouetteKey } from "./keys";
+export {
+    GLYPH_FACE_SILHOUETTE_KEY,
+    provideGlyphFaceSilhouette,
+    useOptionalGlyphFaceSilhouette,
+} from "./keys";

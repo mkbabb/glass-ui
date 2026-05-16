@@ -10,7 +10,10 @@ export { default as DockDropdownTrigger } from "./DockDropdownTrigger.vue";
 // type wrappers around the published surface. Previously `UseDockStateOptions`
 // and `DockState` were exported only from `./composables/index.ts`, which is
 // not reachable through the `@mkbabb/glass-ui/dock` subpath.
-export type { UseDockStateOptions, DockState } from "./composables";
+//
+// P.W2 Lane D (Pγ.3): `UseDockStateReturn` joins the cohort — the named
+// composable-return shape paralleling `UseClipboardReturn` / `UseAuroraReturn`.
+export type { UseDockStateOptions, UseDockStateReturn, DockState } from "./composables";
 
 // P.W1 Lane B — Fix 2 (P11/b CR-2 prerequisite): re-export the dock-context
 // canonical DI primitives so consumers can migrate from the retired

@@ -1,8 +1,8 @@
 <script setup lang="ts" generic="T">
-import { computed, provide, type HTMLAttributes } from "vue";
+import { computed, type HTMLAttributes } from "vue";
 import { cn } from "../../../utils/cn";
 import {
-    CONFIGURATOR_DENSITY_KEY,
+    provideConfiguratorDensity,
     type ConfiguratorDensity,
 } from "./density";
 
@@ -76,7 +76,7 @@ const props = withDefaults(
 
 // Provide the density to descendant <ConfiguratorRow>s. Rows still accept
 // their own `density` prop; the prop wins over inject (see ConfiguratorRow).
-provide(CONFIGURATOR_DENSITY_KEY, computed(() => props.density));
+provideConfiguratorDensity(computed(() => props.density));
 
 const emit = defineEmits<{
     /** Fired when the user picks a preset chip from the default `presets` slot. */

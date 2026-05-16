@@ -12,9 +12,9 @@
  * the `as` prop if they need a semantic element (`<li>`, etc).
  * The binding spread works on any native element.
  */
-import { inject, computed, type Component } from "vue";
+import { computed, type Component } from "vue";
 import type { SortableId } from "../../../composables/sortable";
-import { SORTABLE_CONTEXT } from "./context";
+import { useSortableContext } from "./context";
 
 const props = withDefaults(
     defineProps<{
@@ -26,12 +26,7 @@ const props = withDefaults(
     { as: "div" },
 );
 
-const sortable = inject(SORTABLE_CONTEXT);
-if (!sortable) {
-    throw new Error(
-        "[glass-ui] <SortableItem> must be used inside <SortableList>",
-    );
-}
+const sortable = useSortableContext();
 
 const binding = computed(() => sortable.registerItem(props.id));
 const isBeingDragged = computed(() => sortable.dragId.value === props.id);

@@ -80,6 +80,12 @@
 //   - StackedIconGroup (1 type, Rγ baseline carryover): `StackedIconGroupProps`
 //     — flagged by Rγ §2.3, missed at O.W4 Lane A triad.
 // Surface count 55 → 63 (59 types + 4 constants).
+//
+// P.W2 Lane D extensions (v1.7.2): 1 type promotion — `UseDockStateReturn`
+// (composable-return canon paralleling `UseClipboardReturn`). Closes Pγ.3
+// "useDockState inline return" by naming the inferred return shape and
+// re-exporting from the `/dock` subpath barrel + the `/api` discovery layer.
+// Surface count 63 → 64 (60 types + 4 constants).
 
 // ── Aurora ─────────────────────────────────────────────────────────────────
 // Substrate config + family, plus numeric ceilings the consumer needs to
@@ -261,3 +267,13 @@ export type { ResponsiveTabsProps } from "../components/custom/responsive-tabs";
 // type; P.W1 Lane A adds the `/api` re-export so consumers wiring stacked
 // avatar/icon strips can pin the generic shape from the discovery layer.
 export type { StackedIconGroupProps } from "../components/custom/stacked-icons";
+
+// ── Dock ───────────────────────────────────────────────────────────────────
+// `UseDockStateReturn` — canonical composable-return shape paralleling
+// `UseClipboardReturn` / `UseAuroraReturn`. Consumers wrapping `<GlassDock>`
+// or authoring a custom dock chassis pin against this rather than
+// redeclaring the state-machine handle. Promoted P.W2 Lane D per Pγ.3
+// "useDockState inline return". `UseDockStateOptions` + `DockState` ship via
+// the `/dock` subpath barrel only (component-internal arg + state-enum;
+// O.W4 Lane B disposition preserved).
+export type { UseDockStateReturn } from "../components/custom/dock";

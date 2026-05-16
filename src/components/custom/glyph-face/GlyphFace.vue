@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { CSSProperties, HTMLAttributes } from "vue";
-import { computed, provide, ref } from "vue";
+import { computed, ref } from "vue";
 import { cn } from "../../../utils";
-import { GlyphFaceSilhouetteKey } from "./keys";
+import { provideGlyphFaceSilhouette } from "./keys";
 
 /**
  * <GlyphFace> — phase-tinted lucide wrapper with catch-light cap.
@@ -24,7 +24,7 @@ import { GlyphFaceSilhouetteKey } from "./keys";
  *     `clip-path` expression);
  *   - provide/inject from a `<DiscoGlyph>` descendant — the disco
  *     primitive publishes its `silhouette` upward via the
- *     `GlyphFaceSilhouetteKey` symbol, so wrappers around the four
+ *     `GLYPH_FACE_SILHOUETTE_KEY` symbol, so wrappers around the four
  *     speedtest disco icons inherit the silhouette without a
  *     consumer-side prop plumb;
  *   - lucide consumers pass the silhouette explicitly via the
@@ -65,7 +65,7 @@ const props = withDefaults(
  * `glyphFor(state)` swap).
  */
 const injectedSilhouette = ref<string | undefined>(undefined);
-provide(GlyphFaceSilhouetteKey, injectedSilhouette);
+provideGlyphFaceSilhouette(injectedSilhouette);
 
 const classes = computed(() => cn("glyph-face", props.class));
 

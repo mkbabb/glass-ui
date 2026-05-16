@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, inject, type HTMLAttributes } from "vue";
+import { computed, type HTMLAttributes } from "vue";
 import { RotateCcw } from "lucide-vue-next";
 import { Label } from "../../ui/label";
 import { cn } from "../../../utils/cn";
 import {
-    CONFIGURATOR_DENSITY_KEY,
+    useOptionalConfiguratorDensity,
     type ConfiguratorDensity,
 } from "./density";
 
@@ -58,10 +58,13 @@ const emit = defineEmits<{
 }>();
 
 // Prop wins over inject. Inject is a ComputedRef so reactive density
-// swaps (e.g., viewport-driven host) propagate without remount.
-const injectedDensity = inject(CONFIGURATOR_DENSITY_KEY, undefined);
+// swaps (e.g., viewport-driven host) propagate without remount. The
+// optional helper returns `null` when no ancestor `<Configurator>`;
+// the trailing `?? undefined` keeps the `:data-density` binding from
+// emitting an attribute in the bare-row case (pre-N.W2 visual).
+const injectedDensity = useOptionalConfiguratorDensity();
 const resolvedDensity = computed<ConfiguratorDensity | undefined>(
-    () => props.density ?? injectedDensity?.value,
+    () => props.density ?? injectedDensity?.value ?? undefined,
 );
 </script>
 

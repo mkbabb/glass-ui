@@ -7,6 +7,8 @@ export type {
 } from "./Configurator.vue";
 export {
     CONFIGURATOR_DENSITY_KEY,
+    provideConfiguratorDensity,
+    useOptionalConfiguratorDensity,
     type ConfiguratorDensity,
 } from "./density";
 export {
