@@ -171,17 +171,25 @@ const rowStyle = computed(() => ({
    proportionally as digits accrue. The text-align is left so the value
    sits at the LEFT edge of its track (reading order: label → value →
    unit). The aura slot mounts at position: absolute; the host is
-   relative so the inset resolves locally. */
+   relative so the inset resolves locally.
+
+   P.W5 Lane E.3 (substrate extension): the clamp endpoints route through
+   `--metric-row-value-clamp-{min,max}` tokens so consumers shrinking the
+   register (e.g. words/frontend's compact metric cells targeting
+   text-title…text-4xl ≈ 1.5rem…2.25rem) can retint at `:root` or per-row
+   without forking the SFC. Defaults preserve the audacious-poster
+   behaviour bit-for-bit (4.5rem → var(--type-display-hero)).
+   Canonical custom-property cascade per DESIGN.md texture-system pattern. */
 .metric-row__value {
     --digit-count: 3;
     position: relative;
     font-size: clamp(
-        4.5rem,
+        var(--metric-row-value-clamp-min, 4.5rem),
         calc(
             34cqi * var(--result-row-scale, 1) * 3 /
                 max(3, var(--digit-count))
         ),
-        var(--type-display-hero)
+        var(--metric-row-value-clamp-max, var(--type-display-hero))
     );
     line-height: 0.95;
     font-weight: 400;
@@ -196,9 +204,9 @@ const rowStyle = computed(() => ({
 
 .metric-row__unit {
     font-size: clamp(
-        1.5rem,
+        var(--metric-row-unit-clamp-min, 1.5rem),
         calc(6cqi * var(--result-row-scale, 1)),
-        3.25rem
+        var(--metric-row-unit-clamp-max, 3.25rem)
     );
     line-height: 1;
     font-weight: 500;

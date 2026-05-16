@@ -17,6 +17,96 @@
 >
 > Speedtest reference: `docs/tranches/AC/AC.md` §AC.W6 + §AC.W8 + `docs/tranches/AC/waves/W6{a,b,c,d,e}-*.md` + `docs/tranches/AC/waves/W8.md`. Tags v1.5.0 + v1.5.1 placed retroactively at AC.W6e close.
 
+## 1.8.3—2026-05-16—P.W5 close (cross-repo MULTI-WRITER batch + MetricRow substrate extension + archive ledger)
+
+Patch ship. The W5 close glass-ui-side bundle absorbs the cross-repo dispatch's inline-surfaced substrate gap + the formal-retirement archive ledger.
+
+### MetricRow clamp-endpoint substrate extension (E.3 unblock)
+
+Per the W5 Lane E partial-completion report § E.3: `<MetricRow>` value clamp floored at `4.5rem` (audacious-poster register; speedtest-bound) — words/frontend's compact metric cells need order-of-magnitude smaller register (text-title to text-4xl). Per P invariant 28 + idiomatic-gestalt: substrate extension shipped inline at W5 close rather than deferring consumer adoption.
+
+`src/components/custom/metric-stack/MetricRow.vue` value + unit clamp endpoints routed through CSS-var tokens with audacious-poster defaults preserved bit-for-bit:
+
+```css
+.metric-row__value {
+    font-size: clamp(
+        var(--metric-row-value-clamp-min, 4.5rem),
+        ...,
+        var(--metric-row-value-clamp-max, var(--type-display-hero))
+    );
+}
+.metric-row__unit {
+    font-size: clamp(
+        var(--metric-row-unit-clamp-min, 1.5rem),
+        ...,
+        var(--metric-row-unit-clamp-max, 3.25rem)
+    );
+}
+```
+
+Consumers shrinking the register override at `:root` or per-row scope. Canonical custom-property cascade per DESIGN.md texture-system pattern.
+
+### `@mkbabb/value.js` devDep declaration
+
+Per the W5 close gate verification: glass-ui's tests transitively import keyframes.js@2.1.0's dist, which imports `@mkbabb/value.js`. Without value.js installed glass-ui's test runner fails on import-time resolution. Declared as glass-ui devDep (`file:../value.js`) so the transitive-resolution boundary is explicit + reliable.
+
+### Archive ledger (Lane F)
+
+Five archive entries at `docs/tranches/P/archive/`:
+- `value-js-wip-branch.md` — PD-3 formal-archive (WIP-branch LAND fold per W5.md A.5 fallback).
+- `use-popup-mutex.md` — CONSUMER-PRIVATE.
+- `idle-bob.md` — CONSUMER-PRIVATE (RETIRE-as-inline at keyframes.js).
+- `keyframes-overfitting.md` — CONSUMER-ORCHESTRATOR-OWNED.
+- `bbnf-buddy-53-findings.md` — CONSUMER-SIDE-CARRY.
+
+Plus `words-frontend-substrate-pending.md` documenting the E.3 / E.4 / E.5 mixed dispositions (E.3 ADDRESSED with this substrate ship; E.4 + E.5 ARCHIVED).
+
+### Cross-repo MULTI-WRITER commits (this close ceremony)
+
+| Repo | Commit | Status |
+|---|---|---|
+| fourier-analysis | `4df1a06` | pushed origin/master |
+| keyframes.js | `2183f32` | pushed origin/master |
+| bbnf-buddy | `dafb99f` | local only (no remote) |
+| words/frontend | `5c1b2b8` | pushed origin/master |
+| value.js | `755b3cd` | local only on `w.w2.1-value-js-prebuild` WIP branch; NOT pushed per PD-3 archive disposition |
+
+### Verification
+
+All 8 W5 close gates PASS at glass-ui:
+- `npm run typecheck` — PASS.
+- `npm run build` — PASS (29.94 s; Lane A bake).
+- `npm run verify-export-types` — PASS.
+- `npm run profile:budget` — PASS (CSS 89.0% raw / 90.2% gzip).
+- `npm test` — PASS (32 files / 367 tests; +2 from W5 Lane A.1 surface-lock additions).
+- `npm run audit:stash` — PASS (clean; zero stash entries).
+- `npm run proof:package` — PASS (Lane B inline absorbs).
+- `npm run proof:theme` — PASS (Lane B inline absorbs).
+
+### Inheritance ledger absorbed at W5
+
+| P ID | Item | Status |
+|---|---|---|
+| CR-1 | value.js v1.7.0 adoption fix | ADDRESSED (Lane A; demo/@/* on WIP branch) |
+| CR-2 | fourier-analysis dock injects + useClipboard + HoverCard | ADDRESSED (Lane B; pushed) |
+| CR-3 | keyframes.js HeaderRibbon + scale-on-hover + Fira Code CDN drop | ADDRESSED (Lane C; pushed) |
+| CR-4 | value.js HeaderRibbon retire + 19→17 useClipboard bulk flip | ADDRESSED (Lane A; WIP branch) |
+| CR-5 | bbnf-buddy ToolsLayer :deep retire | ADDRESSED (Lane D; local) |
+| P11/c useLeaveTimer | RETIRE-as-inline | ADDRESSED (Lane D; local) |
+| P11/a E.1 | Fira Code CDN drop (words/frontend) | ADDRESSED (Lane E; pushed) |
+| P11/a E.2 | scale-on-hover (words/frontend) | ADDRESSED (Lane E; 15 sites; pushed) |
+| P11/a E.3 | MetricRow compact register | ADDRESSED (substrate extension at this close) |
+| P11/a E.4 | ProgressiveSidebar adoption | ARCHIVED-CONSUMER-DESIGN-PENDING |
+| P11/a E.5 | PaperBackdrop adoption | ARCHIVED-CONSUMER-ORCHESTRATOR-OWNED |
+| PD-3 | value.js WIP-branch LAND | ARCHIVED-PERMANENT (W5.md A.5 fallback) |
+| Pβ usePopupMutex | single-consumer composable | ARCHIVED-CONSUMER-PRIVATE |
+| Pβ idle-bob | single-site utility | ARCHIVED-CONSUMER-PRIVATE |
+| P11/d 84% overfitting | keyframes.js consumer-orchestrator-owned | ARCHIVED-CONSUMER-ORCHESTRATOR-OWNED |
+| P11/c 53-finding ledger | bbnf-buddy consumer-side | ARCHIVED-CONSUMER-SIDE-CARRY |
+
+Per P invariant 28: zero P-residuals exit W5. Every inheritance-ledger item is ADDRESSED or ARCHIVED-with-rationale.
+
+
 ## 1.8.2—2026-05-16—P.W5 Lane A.1 (`copyToClipboard` bare co-export; glass-ui-side prereq for value.js Path B)
 
 Patch-level ship. Single glass-ui-side artefact unblocks the P.W5 cross-repo MULTI-WRITER batch.
