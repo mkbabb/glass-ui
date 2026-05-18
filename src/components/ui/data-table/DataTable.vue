@@ -1,5 +1,6 @@
 <script setup lang="ts" generic="T extends Record<string, any>">
-import { computed, useSlots } from "vue";
+import { computed, ref, useSlots } from "vue";
+import { useElementSize } from "@vueuse/core";
 import {
     Table,
     TableBody,
@@ -28,6 +29,24 @@ const props = withDefaults(
         sort?: DataTableSort;
         infinite?: boolean;
         hasMore?: boolean;
+        /**
+         * When true, the table collapses to a stacked card-per-row
+         * projection once its own container measures below
+         * `cardBreakpoint`. A dense multi-column table has no responsive
+         * story at narrow widths — a horizontal-scroll wrapper leaves
+         * half the columns invisible. The card projection keeps every
+         * field reachable: the first column becomes the card header
+         * (with the row-actions menu docked beside it), every other
+         * column renders as a label/value pair below. At/above the
+         * breakpoint the unchanged tabular layout renders.
+         */
+        responsive?: boolean;
+        /**
+         * Container-width (CSS px) below which `responsive` swaps to the
+         * card projection. Container-driven (not viewport-driven) so a
+         * table inside a narrow column collapses at any viewport width.
+         */
+        cardBreakpoint?: number;
         class?: string;
     }>(),
     {
@@ -35,6 +54,8 @@ const props = withDefaults(
         rowKey: "_id",
         infinite: false,
         hasMore: false,
+        responsive: false,
+        cardBreakpoint: 640,
     },
 );
 
@@ -48,6 +69,16 @@ const emit = defineEmits<{
 const slots = useSlots();
 const hasRowActions = computed(() => !!slots["row-actions"]);
 const hasRowContextMenu = computed(() => !!slots["row-context-menu"]);
+
+// Container-driven card mode — ResizeObserver-backed via `useElementSize`,
+// the same seam the chart components use to bridge a `@container`-style
+// intent into a JS boolean. `width > 0` guards the pre-measure frame so
+// the table never flashes the card layout before its width is known.
+const rootRef = ref<HTMLElement | null>(null);
+const { width: rootWidth } = useElementSize(rootRef);
+const isCard = computed(
+    () => props.responsive && rootWidth.value > 0 && rootWidth.value < props.cardBreakpoint,
+);
 
 const skeletonRows = computed(() =>
     Array.from({ length: Math.min(props.pageSize, 5) }, (_, i) => i),
@@ -139,7 +170,7 @@ const rowEntries = computed<RowEntry<T>[]>(() => {
 function getCellValue(row: T, col: DataTableColumn<T>): string {
     const raw = getNestedValue(row, col.key);
     if (col.formatter) return col.formatter(raw, row);
-    return raw == null ? "\u2014" : String(raw);
+    return raw == null ? "—" : String(raw);
 }
 
 function getAlignClass(align?: string): string {
@@ -163,14 +194,125 @@ function toggleSort(col: DataTableColumn<T>) {
 
 function sortIndicator(col: DataTableColumn<T>): string {
     if (!col.sortable) return "";
-    if (props.sort?.key !== col.key) return " \u2195";
-    return props.sort.direction === "asc" ? " \u2191" : " \u2193";
+    if (props.sort?.key !== col.key) return " ↕";
+    return props.sort.direction === "asc" ? " ↑" : " ↓";
 }
+
+// ── Card-projection column split ──────────────────────────────────────
+//
+// The first column is the card's header line; the rest become the
+// label/value body. Splitting once (computed) keeps the template flat.
+const headerColumn = computed<DataTableColumn<T> | undefined>(
+    () => props.columns[0],
+);
+const bodyColumns = computed<DataTableColumn<T>[]>(() => props.columns.slice(1));
 </script>
 
 <template>
-    <div :class="cn('overflow-hidden', props.class)">
-        <Table>
+    <div ref="rootRef" :class="cn('overflow-hidden', props.class)">
+        <!-- ── Card projection (responsive, narrow container) ────────── -->
+        <template v-if="isCard">
+            <!-- Loading skeleton -->
+            <div v-if="isLoading && rows.length === 0" class="flex flex-col gap-2">
+                <div
+                    v-for="i in skeletonRows"
+                    :key="'skel-card-' + i"
+                    class="rounded-lg border border-border p-3"
+                >
+                    <Skeleton class="mb-2 h-4 w-1/2" />
+                    <Skeleton class="h-3 w-3/4" />
+                </div>
+            </div>
+
+            <!-- Data cards -->
+            <div v-else-if="rows.length > 0" class="flex flex-col gap-2">
+                <template v-for="entry in rowEntries" :key="entry.key">
+                    <component
+                        :is="hasRowContextMenu ? ContextMenu : 'div'"
+                    >
+                        <component
+                            :is="hasRowContextMenu ? ContextMenuTrigger : 'div'"
+                            :as-child="hasRowContextMenu ? true : undefined"
+                        >
+                            <div
+                                class="cursor-pointer rounded-lg border border-border p-3 transition-colors hover:bg-muted/40"
+                                @click="emit('select', entry.row)"
+                            >
+                                <!-- Header line — first column + actions -->
+                                <div class="flex items-start justify-between gap-2">
+                                    <div class="min-w-0 font-medium">
+                                        <component
+                                            v-if="headerColumn?.component"
+                                            :is="headerColumn.component"
+                                            :value="getNestedValue(entry.row, headerColumn.key)"
+                                            :row="entry.row"
+                                        />
+                                        <template v-else-if="headerColumn">
+                                            {{ getCellValue(entry.row, headerColumn) }}
+                                        </template>
+                                    </div>
+                                    <div
+                                        v-if="hasRowActions"
+                                        class="shrink-0"
+                                        @click.stop
+                                    >
+                                        <slot name="row-actions" :row="entry.row" />
+                                    </div>
+                                </div>
+
+                                <!-- Body — every other column as label/value -->
+                                <dl
+                                    v-if="bodyColumns.length > 0"
+                                    class="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1"
+                                >
+                                    <template
+                                        v-for="col in bodyColumns"
+                                        :key="col.key"
+                                    >
+                                        <dt class="text-muted-foreground">
+                                            {{ col.label }}
+                                        </dt>
+                                        <dd
+                                            :class="
+                                                cn(
+                                                    'min-w-0 break-words',
+                                                    col.align === 'right' && 'text-right',
+                                                    col.class,
+                                                )
+                                            "
+                                        >
+                                            <component
+                                                v-if="col.component"
+                                                :is="col.component"
+                                                :value="getNestedValue(entry.row, col.key)"
+                                                :row="entry.row"
+                                            />
+                                            <template v-else>
+                                                {{ getCellValue(entry.row, col) }}
+                                            </template>
+                                        </dd>
+                                    </template>
+                                </dl>
+                            </div>
+                        </component>
+                        <ContextMenuContent v-if="hasRowContextMenu">
+                            <slot name="row-context-menu" :row="entry.row" />
+                        </ContextMenuContent>
+                    </component>
+                </template>
+            </div>
+
+            <!-- Empty state -->
+            <div
+                v-else
+                class="rounded-lg border border-border p-6 text-center text-muted-foreground"
+            >
+                <slot name="empty">No results found</slot>
+            </div>
+        </template>
+
+        <!-- ── Tabular layout (default + wide container) ─────────────── -->
+        <Table v-else>
             <TableHeader>
                 <TableRow class="text-muted-foreground">
                     <TableHead

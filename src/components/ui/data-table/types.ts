@@ -47,4 +47,13 @@ export interface DataTableProps<T = any> {
     infinite?: boolean;
     /** Whether more data is available (for infinite scroll mode) */
     hasMore?: boolean;
+    /**
+     * When true, the table collapses to a stacked card-per-row
+     * projection once its container measures below `cardBreakpoint` —
+     * the responsive story for a dense multi-column table at narrow
+     * widths. At/above the breakpoint the tabular layout renders.
+     */
+    responsive?: boolean;
+    /** Container-width (CSS px) below which `responsive` swaps to cards. Defaults to 640. */
+    cardBreakpoint?: number;
 }
