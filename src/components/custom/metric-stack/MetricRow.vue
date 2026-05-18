@@ -154,12 +154,22 @@ const rowStyle = computed(() => ({
     grid-row: 1;
 }
 
+/* AE.W1 Cluster A — the label clamp routes through the same
+   `--metric-row-label-clamp-{min,cqi,max}` token family as the value
+   clamp. In the compact `result` register the label — not the value —
+   is the binding row-height term (uppercase + a tall line-box), so a
+   consumer that opts the value register down must be able to tame the
+   label in lockstep. Defaults preserve the audacious-poster label
+   behaviour bit-for-bit (1.125rem → 5cqi → 2.75rem). */
 .metric-row__label {
     text-transform: uppercase;
     font-size: clamp(
-        1.125rem,
-        calc(5cqi * var(--result-row-scale, 1)),
-        2.75rem
+        var(--metric-row-label-clamp-min, 1.125rem),
+        calc(
+            var(--metric-row-label-clamp-cqi, 5cqi) *
+                var(--result-row-scale, 1)
+        ),
+        var(--metric-row-label-clamp-max, 2.75rem)
     );
     letter-spacing: 0.18em;
     font-weight: 500;

@@ -151,10 +151,16 @@ const classes = computed(() => cn("metric-stack", "results-stack", props.class))
    poster register is preserved bit-for-bit for every other consumer. */
 .metric-stack[data-register="result"] {
     --metric-row-value-clamp-min: 2rem;
-    --metric-row-value-clamp-cqi: 11cqi;
-    --metric-row-value-clamp-max: 3.5rem;
+    --metric-row-value-clamp-cqi: 9cqi;
+    --metric-row-value-clamp-max: 3rem;
     --metric-row-unit-clamp-min: 0.875rem;
-    --metric-row-unit-clamp-max: 1.5rem;
+    --metric-row-unit-clamp-max: 1.375rem;
+    /* The label is the binding row-height term in this register
+       (uppercase, a tall line-box). Tame it so the value clamp leads
+       the row height and 4 (or 2, dpi) rows seat inside the card. */
+    --metric-row-label-clamp-min: 0.9375rem;
+    --metric-row-label-clamp-cqi: 3cqi;
+    --metric-row-label-clamp-max: 1.375rem;
 
     /* Re-derive the CLS pre-allocation against the compact register. The
        default `clamp(4rem×rows, 48cqi, 7rem×rows)` floor is sized for the
