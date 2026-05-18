@@ -84,8 +84,74 @@ The consumer breakage is **NOT a glass-ui substrate regression**. It is a **cros
 
 2 NEW invariants at Q: 30 (cross-repo dev-resolution contract) + 31 (component props fail-explicit). π visual-runtime lane RE-ACTIVATES from archived → binding canonical (Playwright confirmed online).
 
+## 2026-05-18 — Audit-augmentation round-2 (cosmetic-regression cohort)
+
+User opens round-2: keyframes.js demo broken (timeline, play button non-rainbow, hero bold); audit all consumers with 6 parallel agents; fold-in vs revert per finding; augment wave set. Strict planning-only.
+
+6 read-only agents dispatched in parallel:
+
+| Agent | Charter | Verdict |
+|---|---|---|
+| Qη | keyframes.js cosmetic forensics (HEADLINE) | 9 regressions; 2 substrate REVERT (rainbow utilities + typography `:root` literal) + 4 consumer FOLD-IN |
+| Qθ | value.js cosmetic sweep | 0 P0/P1 cosmetic; post-P shadow cohort touches ZERO value.js surface; 2 cohort commits net-positive |
+| Qι | bbnf-buddy cosmetic sweep | 17 findings; F-1 HEADLINE 12-token `preset.css` retired-override + F-3 7th stale Card site (fleet 18) |
+| Qκ | fourier + words/frontend cosmetic | 14 findings; cluster phantom `.glass-{subtle,medium}` 13 sites across 2 consumers |
+| Qλ | speedtest + 43×6 cross-tranche matrix | 0 P0/P1 speedtest; 3 clusters cross 3-consumer threshold; cluster C2 = canonical N-class blind-spot |
+| Qμ | Playwright re-probe (binding) | 37 screenshots; 6 NEW findings; **Mμ-5 reframes value.js BLOCKER (picker 0×0, NOT Card-shadow)**; Mμ-4 confirms rainbow missing |
+
+### Round synthesis
+
+`research/Qsynthesis-cosmetic-augmentation.md` authored. 12 new IDs at `Q-cos-*` + 1 new invariant 32 (phantom-class corpus-grep gate) + 1 new chronic-defer item Q-chron-3 (5th-instance "codification without gate" recurrence pattern).
+
+### Wave augmentation
+
+Surgical edits to existing wave specs (no new wave inserted — keeps tag cadence intact):
+
+| Wave | Pre-aug lanes | Post-aug lanes |
+|---|---|---|
+| W0 | 3 | 3 (no change) |
+| W1 | 7 (A-G) | 10 (A-J — added Lane H keyframes cosmetic fold-ins, Lane I value.js picker fix, Lane J fourier export fix) |
+| W2 | 3 (A-C) | 3 (broadened grep) **— PENDING-REVISION per user audit-aug round-2 pivot: pane variant should be folded back as substrate, not migrated away from** |
+| W3 | 4 (A-D) | 6 (A-F — added Lane E rainbow re-promote, Lane F typography `:root` literal retire) |
+| W4 | 5 (A-E) | 9 (A-I — added Lane F cluster-C2 sweep, Lanes G/H/I bbnf-buddy preset.css + `:deep` retreat + cartoon-shadow lift) |
+| W5 | 7 audit + 6 re-audit | augmented re-probe checklist + invariant 32 codification + Q-chron-3 LL entry |
+
+### User pivot round-3 (2026-05-18) — pane fold-back + no-defer + timeline re-audit
+
+User correction received mid-augmentation: "value.js's card pane variants are critical, and should see usage in speedtest, no? Ensure. The pane variant should properly be folded back in, or an idiomatic solution derived. Look to our past commits for that item — this has existed before." Plus: "No deferrals of auditing."
+
+3 read-only audit agents dispatched in parallel:
+
+| Agent | Charter | Verdict |
+|---|---|---|
+| Qν | speedtest Card-variant + pane-equivalent scan | **WEAK-REJECT direct pivot** — 0 `<Card variant>` sites; speedtest got the `5d914df9` S.W4 sweep value.js+bbnf-buddy missed; chart-heavy not editor-chrome-heavy |
+| Qξ | Card pane-variant git history forensics | **PATH D — pane was lifted, not deleted**. `e8380d7` introduced; `3a43a8f` retired the enum BUT **same-day companion commit `e017d53` shipped `<ScrollPane>` (for `pane`) + `<CartoonCard>` (for `cartoon`) as sibling primitives**. `CHANGELOG.md` v0.8.0 documents canonical migration. `tier="wash"` is partial-faithful; `<ScrollPane>` is faithful |
+| Qο | keyframes timeline re-audit (no defer) | **REVERT substrate (HIGH confidence)** — root cause is NEW Q-cos-13 IconTooltip wrap-span (`25e1b5a` O.W6 Lane D `inline-flex; min-width: 44px`) breaking `w-full` descendants in grid cells. PlaybackRibbon Slider collapses to 16px nub. NOT timeline tokens / NOT play-button — Qη + Qμ both searched wrong substrate |
+
+### Round-3 wave delta
+
+1 new Q ID (Q-cos-13 = IconTooltip width-stretch substrate revert; W3 Lane G NEW). W2 migration target REDIRECTED (no ID change; same 18-site fleet, target = `<ScrollPane>` / `<CartoonCard>` not `tier="wash"`). Q-cos-4 keyframes timeline RESOLVED as a manifestation of Q-cos-13 (no longer defer to W5).
+
+| Wave | Round-2 lanes | Round-3 lanes | Net delta |
+|---|---|---|---|
+| W2 | 3 (target was `tier="wash"`) | 3 (target REDIRECTED to `<ScrollPane>` / `<CartoonCard>`) | 0 lane count; target revised |
+| W3 | 6 (A-F) | 7 (A-G) | +1 lane (Lane G IconTooltip revert) |
+
+### Cumulative wave delta vs round-1 Q open
+
+| Wave | Round-1 lanes | Final post-round-3 lanes |
+|---|---|---|
+| W0 | 3 | 3 |
+| W1 | 7 | 10 |
+| W2 | 3 | 3 (target redirected) |
+| W3 | 4 | 7 |
+| W4 | 5 | 9 |
+| W5 | 7 audit + 6 re-audit | 7 audit + 6 re-audit + invariant 32 + LL entry + augmented checklist |
+
+Plus 2 new invariants (30 + 31 from round-1; 32 from round-2). 13 Q-cos-* IDs total (Q-cos-1 through Q-cos-13). 1 chronic-defer item Q-chron-3.
+
 ## Awaiting dispatch authorization
 
-Per the Q-open user directive ("This is NOT an implementation phase. Tranche development only."), the planning substrate landed at the Q-open commit. Implementation dispatch awaits explicit subsequent user directive per the K → L → M → N → O → P precedent.
+Per the Q-open user directive + the audit-aug round-2 directive ("NO implementation, this is tranche development"), the augmented planning substrate landed atop the Q-open commit. Implementation dispatch awaits explicit subsequent user directive per the K → L → M → N → O → P precedent.
 
 When dispatch authorized: W0 HEADLINE opens — 3 lanes (post-P retrospective `docs/tranches/AB+2/` + dev-resolution contract + proof-gate script).
