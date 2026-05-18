@@ -242,3 +242,38 @@ Plus: W1 Lane C + W2 Lane B + W4-Lane-F-value.js-portion RETIRE (value.js Tranch
 ### Why round-4's attributions matter
 
 Across the 4 audit rounds the root-cause model was overturned twice — round-1 blamed a glass-ui substrate regression; round-2 found a cross-repo resolution desync + consumer staleness; round-3 found two genuine substrate reverts; round-4 found the keyframes demo is ~95% consumer-side and `<ScrollPane>` should never have been a component. The lesson (W6 LL entry): a large user-reported regression batch is worth iterative Playwright-binding audit rounds — each deeper probe corrected the prior round's attribution. The user's three pivots ("pane has existed before", "no deferrals", "is it befitting a component") each surfaced a real architectural error the prior round had codified.
+
+## Round-5 audit returns (CartoonCard adjudication + full fleet migration map, 2026-05-18)
+
+The user extended the ScrollPane question to CartoonCard — "CartoonCard should likely just be a variant, too, no?" — and asked for the full consumer-migration map folded in, with complete wave specs.
+
+2 read-only agents (Qχ/ψ).
+
+### Qχ — CartoonCard architecture: DEMOTE-TO-VARIANT
+
+- 36 LOC, **zero own props**, zero behaviour — thinner than the already-demoted ScrollPane (which had a `shadow` prop). A constant function `(slot) => <div class="<constant>">`.
+- The round-4 Qπ aside ("the lift was correct for CartoonCard — off-ladder tokens") is OVERTURNED. Half-true: cartoon IS off the opacity-monotonic glass ladder (2px border + offset-stamp shadow + hover-lift — a Memphis register). But FALSE that it owns surface tokens — `--glass-{bg,blur,border}-cartoon` are never defined anywhere in `src/`; the `var(…, --glass-bg-quiet)` fall-throughs are dead code. Cartoon's bg/blur/border ARE the `quiet` rung; its real delta is exactly 3 orthogonal decorations.
+- 1 consumer at HEAD (own demo story) — fails L invariant 8, identically to ScrollPane.
+- **VERDICT: DEMOTE.** Fold cartoon into Card as a new orthogonal prop `surface="glass" | "cartoon"` — NOT a `tier` rung (a `tier="cartoon"` would force/override sibling props — the same API-corruption Qξ rejected for `pane`). `surface` is orthogonal exactly as `shadow`/`grain` are. Qπ conflated "off the *ladder*" (true) with "off Card's *API*" (false — Card's API is wider than the ladder).
+- `<ScrollPane>` + `<CartoonCard>` were the only two components lifted out of Card's `variant` enum at `e017d53`; both adjudicated styling-only-without-consumer; they retire together (W3 Lane H).
+
+### Qψ — fleet cartoon-usage scan: 21 sites, Q owns all
+
+- 29 in-scope hits across 6 consumers + glass-ui demo. COMPONENT 5 (all glass-ui demo-private), STALE-VARIANT 1, RAW-CLASS 20, TOKEN-ONLY 3.
+- **1 STALE-VARIANT** — bbnf-buddy `AnimationWorkspace.vue:157` `<Card variant="cartoon">`.
+- **20 RAW-CLASS** — all fourier-analysis, `class="cartoon-card"` across 10 files. The `.cartoon-card` class was deleted from glass-ui at **C.W5 `304ac78`**; fourier defines no local recipe — dead CSS, a live cosmetic regression. Another invariant-33 instance (cleanup-deletion without corpus-grep).
+- 0 of the 21 sites owned by any consumer tranche — Q owns all 21.
+- Migration: bbnf-buddy 1 → W4 Lane G; fourier 20 → W4 Lane F.2.
+
+### Round-5 net delta
+
+| Q ID | Item | Wave | Verdict |
+|---|---|---|---|
+| Q-cos-22 | `<CartoonCard>` DEMOTE — fold cartoon as Card `surface` prop; retire `cartoon-card/` jointly with `<ScrollPane>` | W3 (Lane B re-model + Lane H.2) | DEMOTE substrate |
+| Q-cos-23 | fourier-analysis 20 dead `class="cartoon-card"` sites (C.W5 `304ac78` deletion) | W4 (Lane F.2) | FOLD-IN consumer |
+
+Plus: Q-cos-10 retargeted W2→W4 Lane G (the bbnf-buddy cartoon site needs W3's `surface` prop). W2 Lane A posture fixed to dev-WARN. Q.md §4 gains a "Full consumer-migration map" — every pane/cartoon/scroll-pane site across all 7 repos placed.
+
+### The Card API at Q close
+
+`variant` was retired at `3a43a8f` and stays retired. The audit rounds prove the post-`3a43a8f` decomposition was *almost* right — three orthogonal axes (`tier` / `shadow` / `grain`) — but the two `variant` values that became components (`pane`→ScrollPane, `cartoon`→CartoonCard) were over-lifted. Q closes the decomposition properly: `pane` is `tier="wash" :grain="false"` (a plain config — no new API), `cartoon` is the new orthogonal `surface` prop. Final Card API: `tier` + `shadow` + `grain` + `surface`. No `variant`. No sibling components. The user's two questions ("befitting a component?") drove the substrate to its correct gestalt.

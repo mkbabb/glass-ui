@@ -44,7 +44,7 @@ Round-1 opened 6 waves (W0-W5). Audit-aug round-4 inserted **W5 keyframes.js dem
 | **W0 HEADLINE** | open | Post-P shadow-cohort retrospective (`docs/tranches/AB+2/`) + cross-repo dev-resolution contract authored + `scripts/proof-resolution-contract.mjs` gate + precept edict draft | v1.8.5 (gate script + contract doc) |
 | **W1 HEADLINE** | W0 close | Fleet-wide consumer un-break — keyframes.js `exports` fix + 5-consumer `resolve.conditions` sweep + glass-ui phantom-devDep retiral + value.js picker 0×0 (Lane I) + fourier export (Lane J). Lane C RETIRED — value.js Tranche A.W0 already shipped the value.js un-break | v1.8.6 (glass-ui devDep retiral) |
 | **W2** | W1 close | Card cohesion — glass-ui `Card` props fail-explicit (invariant 31) + bbnf-buddy 7-site `<Card variant=>` migration to `<Card tier="wash" :grain="false">` / `<CartoonCard>`. value.js Lane B RETIRED — Tranche A.W1 already migrated to the canonical recipe | v1.8.7 |
-| **W3** | W2 close | Core-feature cohesion transpositions + cosmetic substrate REVERTs — dock `data-density` + `cards.css` glass-cartoon relocation + dropdown scoped-style + `beec35e` dock-dedup + token-home drift + **Lane E rainbow `@utility` re-promote** (Q-cos-3) + **Lane F typography `:root` literal retire** (Q-cos-2) + **Lane G IconTooltip width-stretch revert** (Q-cos-13) + **Lane H `<ScrollPane>` DEMOTE-to-Card-recipe** (Q-cos-14) | v1.9.0 minor (substrate transposition + reverts + component retire) |
+| **W3** | W2 close | Core-feature cohesion transpositions + cosmetic substrate REVERTs — dock `data-density` + dropdown scoped-style + `beec35e` dock-dedup + token-home drift + **Lane B cartoon-surface re-model** (`.glass-cartoon` → `@utility cartoon-surface`, dead-token drop) + **Lane E rainbow `@utility` re-promote** (Q-cos-3) + **Lane F typography `:root` literal retire** (Q-cos-2) + **Lane G IconTooltip width-stretch revert** (Q-cos-13) + **Lane H `<ScrollPane>` + `<CartoonCard>` DEMOTE** (Q-cos-14 + Q-cos-22; Card gains `surface` prop) | v1.9.0 minor (substrate transposition + reverts + 2 component retires) |
 | **W4** | W3 close | Style + token co-location + consumer cosmetic sweep — metric-stack token-dialect promotion + `-webkit-backdrop-filter` single-source + transitions.css `@layer` + `--scale-press-*` disposition + CSS budget rebaseline + cosmetic sweep + **Lane F cluster-C2 phantom-class fleet sweep** (value.js portion retired) + **Lanes G/H/I bbnf-buddy preset.css + `:deep` retreat + cartoon-shadow lift** | v1.9.1 |
 | **W5** | W3 close (may overlap W4) | **keyframes.js demo restoration + idiomatic glass-ui upgrade** — scene-transition crash fix + cleanup-commit CSS-deletion restoration + hero cosmetic + idiomatic glass-ui adoption sweep + layout/clipping fixes + dead-code purge + playground (Q-cos-15 … Q-cos-21) | keyframes.js version bump (consumer-side wave; no glass-ui ship) |
 | **W6 close** | W5 close | Strengthened audit (7 lanes) + consumer re-audit (6) + visual-runtime re-probe (π BINDING — Playwright) + FINAL.md + precept advance (invariants 30-33 + π lane re-activation) | aggregate final |
@@ -123,7 +123,7 @@ Round-1 opened 6 waves (W0-W5). Audit-aug round-4 inserted **W5 keyframes.js dem
 | Q-cos-7 | Cluster C2 — phantom `.glass-{subtle,medium}` 13-site fleet (fourier 9 + words 4 + keyframes 3 + value 2 verify-at-open) | W4 (Lane F) | FOLD-IN consumer + pairs with invariant 32 codification at W5 |
 | Q-cos-8 | bbnf-buddy `preset.css` 12 retired-token overrides — silent no-op fleet-wide | W4 (Lane G) | FOLD-IN consumer |
 | Q-cos-9 | bbnf-buddy `SelectionInfo.vue:238` retired `--glass-border-subtle` fallback | W4 (Lane G) | FOLD-IN consumer |
-| Q-cos-10 | bbnf-buddy `AnimationWorkspace.vue:157` 7th stale Card site (`'default' | 'cartoon'`) — broadens W2 grep | W2 (broadened grep; **migration redirected to `<CartoonCard>` per round-3 Qξ Path D**) | FOLD-IN consumer + tightens invariant 31 |
+| Q-cos-10 | bbnf-buddy `AnimationWorkspace.vue:157` 7th stale Card site (`'default' | 'cartoon'`) | **W4 Lane G** (round-5: migrates to `<Card :surface=>` — needs W3's `surface` prop; sequenced out of W2) | FOLD-IN consumer + tightens invariant 31 |
 | Q-cos-13 | **NEW @ audit-aug round-3** — glass-ui IconTooltip `<span class="icon-tooltip-trigger">` wrap-span (`display: inline-flex; min-width: 44px`) breaks `w-full` descendants; keyframes PlaybackRibbon Slider collapses to 16px nub (the user-named "timeline not correct" symptom) | W3 (NEW Lane G) | **REVERT substrate** (commit `25e1b5a` O.W6 Lane D); re-implement WCAG 44×44 via padding/contents path per Lane G |
 | Q-cos-11 | bbnf-buddy `preset.css:191-194` `--shadow-cartoon` lift-scale incomplete (missing `-md`/`-lg` rungs) | W4 (Lane I) | FOLD-IN consumer |
 | Q-cos-12 | bbnf-buddy 3-file `:deep()` retreat (EmotionStateSelect ToggleChip + EditorPanel ScrollPane + ToolsLayer dock-icon-button) | W4 (Lane H) | FOLD-IN consumer + possible substrate referrals Q.Rh-1 / Q.Rh-2 |
@@ -132,7 +132,7 @@ Round-1 opened 6 waves (W0-W5). Audit-aug round-4 inserted **W5 keyframes.js dem
 
 | Q ID | Item | Wave | Verdict |
 |---|---|---|---|
-| Q-cos-14 | `<ScrollPane>` DEMOTE — 43-line styling-only component, 1 consumer (own demo story), fails L invariant 8; retire to `<Card tier="wash" :grain="false">` recipe | W3 (Lane H) | **DEMOTE substrate** (component → Card config; clean break, no alias) |
+| Q-cos-14 | `<ScrollPane>` DEMOTE — 43-line styling-only component, 1 consumer (own demo story), fails L invariant 8; retire to `<Card tier="wash" :grain="false">` recipe | W3 (Lane H.1) | **DEMOTE substrate** (component → Card config; clean break, no alias) |
 | Q-cos-15 | keyframes `App.vue:106` `<Transition mode="out-in">` wrapping `<KeepAlive>` wrapping `defineAsyncComponent` crashes the renderer (`getNextHostNode` null-deref) — masks t-value scrubber + bezier editor + presets + duration control + square/amiga/easing cold deep-link | W5 (Lane A) | FOLD-IN consumer (`<Suspense>` restructure) |
 | Q-cos-16 | keyframes rotations-dropdown option-dots paint transparent — consumer `17adae2` "cleanup" deleted demo-local `.status-dot--*` colour classes | W5 (Lane B) | FOLD-IN consumer (adopt glass-ui `<StatusDot>` component) |
 | Q-cos-17 | keyframes dead code — `demo/{boxes,balls,simple}` orphaned+unrunnable; standalone `demo/{amiga,cube,square}` dupes; `SceneNav.vue` orphan; 25 orphaned `@/components/ui/` shadow dirs | W5 (Lane F) | FOLD-IN consumer (purge) |
@@ -140,6 +140,13 @@ Round-1 opened 6 waves (W0-W5). Audit-aug round-4 inserted **W5 keyframes.js dem
 | Q-cos-19 | keyframes square-scene controls panel overlays+clips the animation stage at 390/820px; bezier selector clipped (the user-named symptom) | W5 (Lane E) | FOLD-IN consumer (responsive grid) |
 | Q-cos-20 | keyframes playground is a non-functional shell — empty canvas, no Assets tab, no controls (`AssetViewport`/`AssetLayerPanel` query null) | W5 (Lane F) | FOLD-IN consumer (feature-completion — not a regression; nothing lost) |
 | Q-cos-21 | keyframes `glass-subtle→glass-wash` un-migrated rename (controls-pane tabs no glass surface) + missing root `bg-background` (transparent checkerboard) | W5 (Lane B) | FOLD-IN consumer |
+
+### Cosmetic regression cohort — audit-aug round-5 (Qχ/ψ)
+
+| Q ID | Item | Wave | Verdict |
+|---|---|---|---|
+| Q-cos-22 | `<CartoonCard>` DEMOTE — 36-line styling-only component, 0 own props, 1 consumer; the `--glass-*-cartoon` tokens its doc-comment claims are never defined in `src/` (cartoon's bg/blur/border ARE the `quiet` rung). Fold in as a new orthogonal `Card surface="glass"\|"cartoon"` prop; retire `cartoon-card/` jointly with `<ScrollPane>` | W3 (Lane B re-model + Lane H.2 retire) | **DEMOTE substrate** (component → Card `surface` prop; clean break, no alias) |
+| Q-cos-23 | fourier-analysis 20 `class="cartoon-card"` sites (10 files) are dead CSS — `.cartoon-card` was deleted from glass-ui at C.W5 `304ac78`; the cartoon surface renders silently absent. 0 sites owned by any fourier tranche | W4 (Lane F.2) | FOLD-IN consumer (migrate to `<Card surface="cartoon">` / `.cartoon-surface`) |
 
 ### value.js de-scoping — audit-aug round-4 (Qφ)
 
@@ -161,6 +168,27 @@ Round-1 opened 6 waves (W0-W5). Audit-aug round-4 inserted **W5 keyframes.js dem
 | keyframes "many other problems" | "bezier selector small/clipped, t-value scrubber doesn't work, rotations dropdown no progress circles, many style losses — PROPER and IDIOMATIC upgrade, no loss of feature" | Qρ/σ/τ: ~95% consumer-side. One `App.vue` `<Transition>`+async crash masks four features; two "cleanup" commits deleted load-bearing CSS. NEW wave W5 — keyframes.js demo restoration + idiomatic glass-ui upgrade | W5 (new wave, 6 lanes) |
 
 Qν (speedtest scan) returned WEAK-REJECT for the direct pane-fold-back pivot: speedtest has 0 `<Card variant>` sites (it received the `5d914df9` S.W4 sweep value.js + bbnf-buddy missed) and is chart-and-meter-heavy, not editor-chrome-heavy. The user's intuition was directionally right (pane exists; pane is critical) — but Qπ's round-4 adjudication concluded the architectural answer is a Card recipe, not a component (the `e017d53` `<ScrollPane>` lift was itself the overreach).
+
+### Round-5 user-pivot resolution (audit-aug 2026-05-18)
+
+| Q ID | User question | Round-5 resolution | Final wave |
+|---|---|---|---|
+| Q-cos-22 (CartoonCard) | "CartoonCard should likely just be a variant, too, no?" | Qχ: YES — DEMOTE. CartoonCard is 36 lines, 0 own props, 1 consumer; even thinner than ScrollPane. Its claimed `--glass-*-cartoon` tokens are never defined — cartoon's surface IS the `quiet` rung + 3 decorations. Folds in as a new orthogonal `Card surface` prop (NOT a `tier` rung — that would corrupt the API). Qπ's round-4 "the lift was correct for CartoonCard" aside OVERTURNED. `<ScrollPane>` + `<CartoonCard>` retire together (lifted together at `e017d53`) | W3 (Lane B + Lane H.2) |
+| "ensure all consumers properly migrated" | "ensure all consumers are properly migrated in these changes, folded into the tranche" | Qψ exhaustive fleet scan: 21 cartoon migration sites (1 bbnf-buddy stale-variant + 20 fourier dead `class="cartoon-card"`); 0 owned by any consumer tranche — Q owns all 21. fourier's 20 are dead CSS (`.cartoon-card` deleted at C.W5). All folded: bbnf-buddy → W4 Lane G, fourier → W4 Lane F.2 | W4 (Lane F.2 + Lane G) |
+
+The pane + cartoon + ScrollPane fleet migration is now FULLY specified across the waves — every consumer site has a wave, a lane, and a target. See §4 "Full consumer-migration map" below.
+
+### Full consumer-migration map (audit-aug round-5 — every consumer site placed)
+
+| Consumer | pane sites | cartoon sites | scroll-pane sites | Wave/lane | Notes |
+|---|---|---|---|---|---|
+| value.js | 11 (10 `pane` + 1 `tier="resting"`) | 0 | 0 | — | Already migrated by value.js Tranche A.W1 to the canonical recipe; Q does nothing |
+| bbnf-buddy | 6 `<Card variant="pane">` | 1 `<Card variant="cartoon">` | 0 | W2 Lane C (pane) + W4 Lane G (cartoon) | cartoon site sequenced to W4 — needs W3's `surface` prop |
+| fourier-analysis | 0 | 20 `class="cartoon-card"` (dead — C.W5) | 0 | W4 Lane F.2 | migrate to `<Card surface="cartoon">` / `.cartoon-surface` |
+| speedtest | 0 | 0 | 0 | — | Got the `5d914df9` S.W4 tier-API sweep |
+| keyframes.js | 0 | 0 | 0 | — | (keyframes restoration is W5 — unrelated to pane/cartoon) |
+| words/frontend | 0 | 0 | 0 | — | — |
+| glass-ui demo | — | 5 `<CartoonCard>` story | 1 `<ScrollPane>` story | W3 Lane H | both stories folded into the Card story |
 
 ### Round-3 user-pivot resolution (audit-aug 2026-05-18) — SUPERSEDED by round-4 for the ScrollPane target
 
@@ -186,11 +214,13 @@ Per `coordination/CONSTELLATION.md`. The Q remediation is fleet-wide cross-repo:
 6. **W4 ∥ W5 parallel execution** — W4 (glass-ui + fourier/words/bbnf-buddy) and W5 (keyframes.js only) touch disjoint repos and may run concurrently; the orchestrator must hold the keyframes.js lane out of W4 (no W4 write touches keyframes.js — verified: W4 Lane F's keyframes phantom-class sites cohort INTO W5's `glass-subtle→glass-wash` migration, not W4).
 7. **value.js cross-repo coordination** — value.js's tranche team requested Q not write value.js; Q.W1 Lane I (picker 0×0) is the one retained write. The orchestrator confirms the path with the user at W1 open (Qφ §6).
 8. **W5 playground scope** — the keyframes playground is a non-functional shell; "restoration" there is feature-completion, not regression-repair. W5 Lane F sizes it honestly; if it exceeds the wave envelope it files a specified follow-on (not an open TODO — invariant 28 binds).
+9. **W2→W4 bbnf-buddy `variant=` window** — bbnf-buddy's 1 `cartoon` Card-variant site stays on the stale `variant=` API from W2 close to W4 close (it needs W3's `surface` prop). W2 Lane A's invariant-31 fix ships as a dev-WARN, not a typecheck-hard-reject, so bbnf-buddy's build stays GREEN across the window. The typed-reject hardening lands at W6 once the fleet is `variant=`-free.
+10. **W3 intra-wave ordering** — Lane H.2 (`<CartoonCard>` retire + Card `surface` prop) depends on Lane B (`.cartoon-surface` utility). Lane B lands before Lane H within W3; the other W3 lanes (A/C/D/E/F/G) are bounds-disjoint and parallel.
 
 ## §7 — Authority
 
 Plan substrate at Q open: this file + `findings.md` + `PROGRESS.md` + `dispatch/AGENT.md` + `coordination/CONSTELLATION.md` + `research/Q{α-ζ}*.md` (6 round-1) + `audit/Q1{1,2}-*.md` (2 round-2) + `research/screenshots/` (12 Playwright captures) + `waves/W{0-5}.md`.
 
-**Audit-augmentation rounds 2-4 substrate (2026-05-18, post-open user directives)**: `research/Q{η,θ,ι,κ,λ,μ,ν,ξ,ο,π,ρ,σ,τ,υ,φ}-*.md` (15 audit deliverables across 3 rounds) + `research/Qsynthesis-cosmetic-augmentation.md` (rolling synthesis) + Playwright screenshots `research/screenshots/q-{mu,omicron,rho,sigma,tau}-*.png` + W0-W6/Q.md/PROGRESS.md surgical augmentation. Round-4 inserted W5 (keyframes.js demo restoration) + renumbered the close to W6. 21 Q-cos-* IDs; invariants 30-33; Q-chron 1-4.
+**Audit-augmentation rounds 2-5 substrate (2026-05-18, post-open user directives)**: `research/Q{η,θ,ι,κ,λ,μ,ν,ξ,ο,π,ρ,σ,τ,υ,φ,χ,ψ}-*.md` (17 audit deliverables across 4 rounds) + `research/Qsynthesis-cosmetic-augmentation.md` (rolling synthesis) + Playwright screenshots `research/screenshots/q-{mu,omicron,rho,sigma,tau}-*.png` + W0-W6/Q.md/PROGRESS.md surgical augmentation. Round-4 inserted W5 (keyframes.js demo restoration) + renumbered the close to W6. Round-5 adjudicated `<CartoonCard>` (DEMOTE) + the full fleet cartoon-migration map. 23 Q-cos-* IDs; invariants 30-33; Q-chron 1-4.
 
 Per the Q-open user directive ("This is NOT an implementation phase. Tranche development only.") + the audit-aug round-2 directive ("NO implementation, this is tranche development"), implementation dispatch awaits explicit subsequent user directive per the K → L → M → N → O → P precedent.

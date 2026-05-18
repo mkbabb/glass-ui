@@ -188,6 +188,31 @@ User directives: (1) is `<ScrollPane>` "truly befitting" as a component vs a Car
 
 21 Q-cos-* IDs (Q-cos-1 … Q-cos-21). 4 new invariants (30-33). 4 chronic-defer items (Q-chron 1-4; Q-chron-1 CLOSED). 15 audit deliverables across rounds 2-4 (Qη … Qφ). value.js Q-writing lanes mostly retired as already-done-by-Tranche-A — plan hygiene, not lost work.
 
+## 2026-05-18 — Audit-augmentation round-5 (CartoonCard adjudication + full fleet cartoon-migration map)
+
+User directives: (1) "CartoonCard should likely just be a variant, too, no?"; (2) ensure all consumers properly migrated, folded into the tranche; (3) FULL wave spec, no implementation.
+
+2 read-only agents dispatched in parallel:
+
+| Agent | Charter | Verdict |
+|---|---|---|
+| Qχ | `<CartoonCard>` architecture adjudication | **DEMOTE-TO-VARIANT** — 36 lines, 0 own props, 1 consumer; thinner than ScrollPane. The `--glass-*-cartoon` tokens its doc-comment claims are never defined in `src/` — cartoon's surface IS `quiet` + 3 decorations. Fold in as a new orthogonal `Card surface` prop. Qπ's round-4 "lift was correct for CartoonCard" aside OVERTURNED |
+| Qψ | CartoonCard fleet-wide usage scan | 21 migration sites: 1 bbnf-buddy `<Card variant="cartoon">` + 20 fourier `class="cartoon-card"` (dead — `.cartoon-card` deleted at C.W5 `304ac78`). 0 owned by any consumer tranche; Q owns all 21 |
+
+### Round-5 wave delta
+
+- **W2** — Lane C scoped to bbnf-buddy's 6 `pane` sites only; the 1 `cartoon` site sequenced to W4 Lane G (needs W3's `surface` prop). Lane A posture fixed to dev-WARN (avoids a W2→W4 typecheck-red window). W2: 2 lanes.
+- **W3** — Lane B re-scoped: `.glass-cartoon` → `@utility cartoon-surface` + drop the dead `--glass-*-cartoon` fall-through tokens. Lane H expanded: retires `<ScrollPane>` AND `<CartoonCard>` jointly (lifted together at `e017d53`), adds Card's orthogonal `surface` prop. Intra-wave ordering: Lane B before Lane H.
+- **W4** — Lane F.2 absorbs fourier's 20 dead `.cartoon-card` sites (a second phantom-class family). Lane G absorbs bbnf-buddy's 1 cartoon site migration. The fleet `<Card variant=>`-zero + `.cartoon-card`-zero asserts become W4 gates.
+- **NEW Q-cos-22** (CartoonCard DEMOTE) + **Q-cos-23** (fourier 20 dead cartoon-card). Q-cos-10 retargeted to W4 Lane G.
+- **Q.md §4** — NEW "Full consumer-migration map" table: every pane/cartoon/scroll-pane site across all 7 repos placed in a wave + lane + target.
+
+### Cumulative wave structure — post-round-5 (7 waves; FULL spec)
+
+23 Q-cos-* IDs (Q-cos-1 … Q-cos-23). 4 invariants (30-33). 4 chronic-defer (Q-chron 1-4; Q-chron-1 CLOSED). 17 audit deliverables across rounds 2-5 (Qη … Qψ).
+
+Both component lifts from `e017d53` (`<ScrollPane>` + `<CartoonCard>`) DEMOTE — the only two components glass-ui lifted out of Card's `variant` enum, both adjudicated styling-only-without-consumer. The Card API converges to three orthogonal axes (`tier` / `shadow` / `grain`) plus the new `surface` axis; `variant` stays retired.
+
 ## Awaiting dispatch authorization
 
 Per the Q-open user directive + the audit-aug round-2/3/4 directives ("NO implementation, this is tranche development"), the augmented planning substrate landed atop the Q-open commit. Implementation dispatch awaits explicit subsequent user directive per the K → L → M → N → O → P precedent.
