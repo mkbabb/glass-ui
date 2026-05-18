@@ -6,8 +6,10 @@ import { cn } from "../../../utils";
 /**
  * MetricRow — a single row inside <MetricStack>.
  *
- * Reads four subgrid tracks from the parent stack: icon | label | value |
- * unit. The optional description slot promotes to a full-row block at
+ * Reads three subgrid tracks from the parent stack: icon | label | value.
+ * The value track carries a baseline-aligned inline group of value + unit
+ * so the row reads "240 Mbps" as one typographic lockup, not two grid
+ * cells. The optional description slot promotes to a full-row block at
  * `@container metric-stack (min-width: 32rem)`.
  *
  * Owns:
@@ -120,22 +122,23 @@ const rowStyle = computed(() => ({
                         : value
                 }}</slot>
             </span>
+            <slot name="unit">
+                <span
+                    v-if="unit"
+                    class="metric-row__unit result-unit font-mono italic text-muted-foreground"
+                    >{{ unit }}</span
+                >
+            </slot>
         </span>
-        <slot name="unit">
-            <span
-                class="metric-row__unit result-unit font-mono italic text-muted-foreground"
-                >{{ unit }}</span
-            >
-        </slot>
         <slot name="description" />
     </div>
 </template>
 
 <style scoped>
-/* Subgrid inheritance — the row reads the parent stack's 4 tracks.
+/* Subgrid inheritance — the row reads the parent stack's 3 tracks.
    `grid-template-rows: auto auto` opens row 2 for the optional
    description slot; `grid-auto-flow: row dense` lets the description
-   self-promote to a full-row span without re-ordering the row-1 quartet. */
+   self-promote to a full-row span without re-ordering the row-1 trio. */
 .metric-row {
     display: grid;
     grid-template-columns: subgrid;
@@ -148,8 +151,7 @@ const rowStyle = computed(() => ({
 
 .metric-row > .metric-row__icon,
 .metric-row > .metric-row__label,
-.metric-row > .metric-row__value,
-.metric-row > .metric-row__unit {
+.metric-row > .metric-row__value {
     align-self: baseline;
     grid-row: 1;
 }
@@ -201,6 +203,13 @@ const rowStyle = computed(() => ({
 .metric-row__value {
     --digit-count: 3;
     position: relative;
+    /* D7 — value + unit conjoin into ONE baseline-aligned inline group
+       inside this single track, so "240" + "Mbps" reads as one lockup
+       rather than two grid cells. `gap` is the hairline between number
+       and unit. */
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--metric-row-value-unit-gap, 0.25em);
     font-size: clamp(
         var(--metric-row-value-clamp-min, 4.5rem),
         calc(
@@ -221,6 +230,9 @@ const rowStyle = computed(() => ({
     min-width: 0;
 }
 
+/* The unit is now an inline member of the value lockup, baseline-aligned
+   against the number. It keeps its own (smaller) clamp so it reads a
+   tier below the value it qualifies. */
 .metric-row__unit {
     font-size: clamp(
         var(--metric-row-unit-clamp-min, 1.5rem),

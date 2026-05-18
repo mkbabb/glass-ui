@@ -109,12 +109,12 @@ const showLabel = computed(() =>
     <template v-if="showLabel">
       <span
         v-if="label"
-        class="metric-badge__label metric-badge__label--full font-mono uppercase font-medium text-muted-foreground/80 shrink-0"
+        class="metric-badge__label metric-badge__label--full font-mono uppercase text-muted-foreground/80 shrink-0"
         :class="labelClass"
       >{{ label }}</span>
       <span
         v-if="abbreviation"
-        class="metric-badge__label metric-badge__label--abbr font-mono uppercase font-medium text-muted-foreground/80 shrink-0"
+        class="metric-badge__label metric-badge__label--abbr font-mono uppercase text-muted-foreground/80 shrink-0"
         :class="labelClass"
       >{{ abbreviation }}</span>
     </template>
@@ -150,3 +150,15 @@ const showLabel = computed(() =>
     </template>
   </div>
 </template>
+
+<style scoped>
+/* The label weight routes through `--metric-badge-label-weight` so a
+   consumer can retint it without a `:deep()` reach, mirroring the
+   `--metric-row-*` token family in metric-stack/. Default is a fine
+   weight (300) — the annotation sits quieter than the value it
+   qualifies; consumers wanting the prior medium register set the token
+   to 500. */
+.metric-badge__label {
+    font-weight: var(--metric-badge-label-weight, 300);
+}
+</style>

@@ -107,9 +107,9 @@ const indicatorClass = computed(() => {
     return 'absolute inset-0 pointer-events-none opacity-0'
   }
   if (props.variant === 'gradient') {
-    return 'h-full w-full flex-1 [background:var(--progress-fill,theme(colors.primary.DEFAULT))] transition-transform'
+    return 'h-full w-full flex-1 rounded-pill [background:var(--progress-fill,theme(colors.primary.DEFAULT))] transition-transform'
   }
-  return 'h-full w-full flex-1 bg-primary transition-transform'
+  return 'h-full w-full flex-1 rounded-pill bg-primary transition-transform'
 })
 
 // ── Sectioned segment geometry ─────────────────────────────────────
@@ -307,6 +307,14 @@ const effectiveModelValue = computed(() =>
     position: absolute;
     left: 0;
     inset-block: 0;
+    /* The fill is anchored at the cell's leading edge and grows by
+       `width`; its incrementing (trailing) edge sits mid-cell where the
+       rail's `rounded-pill` mask has no curvature, so it would render
+       squared. Round only that incrementing edge so the fill front
+       reads as a pill cap — the leading edge stays square to seat flush
+       against the prior cell / rail terminus. */
+    border-start-end-radius: var(--radius-pill);
+    border-end-end-radius: var(--radius-pill);
     background: linear-gradient(
         180deg,
         color-mix(in srgb, var(--cell-color) 95%, white 12%) 0%,
