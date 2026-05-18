@@ -32,20 +32,24 @@ Per the user directive ("idiomatic, gestalt approaches ... architectural transpo
 1-29. All 29 invariants from P inherited (V 1-20; N 21-23; O 24-27; P 28-29).
 30. **NEW @ Q — Cross-repo dev-resolution contract.** Every `@mkbabb/*` package's `package.json` `exports` declares the canonical condition set; every consumer's resolver config declares explicit `resolve.conditions` and carries ZERO hard `dist/` aliases to sibling `@mkbabb/*` packages. The contract is glass-ui-owned, documented at the precept submodule, and mechanically gated by `scripts/proof-resolution-contract.mjs`. Codify at Q close.
 31. **NEW @ Q — Component props fail-explicit.** Component primitives do not silently swallow unknown props. A consumer passing a prop the component does not declare gets a dev-mode warning (or a typed-rejection at the `defineProps` boundary). Extends O invariant 24 (fail-explicit) from composables to the component-prop surface. Codify at Q close.
-32. **NEW @ Q (audit-aug round-2) — Phantom-class corpus-grep gate.** When a CSS class is RETIRED from glass-ui, the retiral lands with (a) an entry in `.retired-classes.txt` (or equivalent registry), and (b) a fleet-wide grep across every `@mkbabb/*` consumer + glass-ui's own demo via `scripts/proof-phantom-classes.mjs`. The gate exits non-zero on any match. Mirrors invariants 29 + 30 + the P.W2 stash-script — every NEW invariant ships with its tooling gate at the same tranche. Codified at W5 after W4 Lane F demonstrates the manual sweep.
+32. **NEW @ Q (audit-aug round-2) — Phantom-class corpus-grep gate.** When a CSS class is RETIRED from glass-ui, the retiral lands with (a) an entry in `.retired-classes.txt` (or equivalent registry), and (b) a fleet-wide grep across every `@mkbabb/*` consumer + glass-ui's own demo via `scripts/proof-phantom-classes.mjs`. The gate exits non-zero on any match. Mirrors invariants 29 + 30 + the P.W2 stash-script — every NEW invariant ships with its tooling gate at the same tranche. Codified at W6 after W4 Lane F demonstrates the manual sweep.
+33. **NEW @ Q (audit-aug round-4) — Dead-code removal corpus-grep gate.** Generalises invariant 32 from RETIRED-class-names to ALL "remove unused" / "cleanup" commits, substrate AND consumer. Any commit deleting a CSS class, token, utility, or component runs a fleet-wide corpus grep first; a commit whose message contains "clean up", "remove unused", "remove overlap", or "delete orphan" carries a mandatory grep-evidence line in its body. Motivated by 3 same-pattern instances: substrate `b0debec` D.W2.D ("delete zero-site orphans" missed keyframes.js's `.rainbow-*`) + consumer `17adae2` + `c7f7c96` (keyframes.js "clean up styles" deleted load-bearing demo-local `.status-dot--*` + `.rainbow-*`). The `proof-phantom-classes.mjs` gate extends to a pre-deletion mode. Codified at W6 alongside 32.
 
-## §3 — Wave schedule (6 waves)
+## §3 — Wave schedule (7 waves)
+
+Round-1 opened 6 waves (W0-W5). Audit-aug round-4 inserted **W5 keyframes.js demo restoration** and renumbered the close wave to **W6**.
 
 | Wave | Opens after | Headline | Tag |
 |---|---|---|---|
 | **W0 HEADLINE** | open | Post-P shadow-cohort retrospective (`docs/tranches/AB+2/`) + cross-repo dev-resolution contract authored + `scripts/proof-resolution-contract.mjs` gate + precept edict draft | v1.8.5 (gate script + contract doc) |
-| **W1 HEADLINE** | W0 close | Fleet-wide consumer un-break — keyframes.js `exports` fix + value.js hard-alias retire + value.js dist-clobber fix + glass-ui phantom-devDep retiral + 5-consumer `resolve.conditions` sweep | v1.8.6 (glass-ui devDep retiral) |
-| **W2** | W1 close | Card cohesion — glass-ui `Card` props fail-explicit (invariant 31) + **fleet of 18 sites migrated to `<ScrollPane>` / `<CartoonCard>` sibling primitives** (REVISED at audit-aug round-3 per Qξ Path D: `pane` was LIFTED at `3a43a8f` companion commit `e017d53`, not deleted) | v1.8.7 |
-| **W3** | W2 close | Core-feature cohesion transpositions + cosmetic substrate REVERTs — dock `data-density` split-brain consolidation + `cards.css` glass-cartoon relocation + dropdown scoped-style + `beec35e` dock-duplication consolidation + token-home drift + **Lane E rainbow + btn-interactive `@utility` re-promote** (Q-cos-3) + **Lane F typography `:root` literal retire** (Q-cos-2) + **Lane G IconTooltip width-stretch revert** (Q-cos-13; audit-aug round-3) | v1.9.0 minor (substrate transposition + reverts) |
-| **W4** | W3 close | Style + token co-location + consumer cosmetic sweep — metric-stack private-token-dialect promotion to tokens.css + `-webkit-backdrop-filter` single-source + transitions.css `@layer` fix + `--scale-press-*` disposition + CSS budget rebaseline + legacy cosmetic sweep + **Lane F cluster-C2 phantom-class fleet sweep** + **Lanes G/H/I bbnf-buddy preset.css + `:deep` retreat + cartoon-shadow lift** | v1.9.1 |
-| **W5 close** | W4 close | Strengthened audit (7 lanes) + consumer re-audit + visual-runtime re-probe (π BINDING — Playwright) + FINAL.md + precept advance (invariants 30-31 + π lane re-activation) | aggregate final |
+| **W1 HEADLINE** | W0 close | Fleet-wide consumer un-break — keyframes.js `exports` fix + 5-consumer `resolve.conditions` sweep + glass-ui phantom-devDep retiral + value.js picker 0×0 (Lane I) + fourier export (Lane J). Lane C RETIRED — value.js Tranche A.W0 already shipped the value.js un-break | v1.8.6 (glass-ui devDep retiral) |
+| **W2** | W1 close | Card cohesion — glass-ui `Card` props fail-explicit (invariant 31) + bbnf-buddy 7-site `<Card variant=>` migration to `<Card tier="wash" :grain="false">` / `<CartoonCard>`. value.js Lane B RETIRED — Tranche A.W1 already migrated to the canonical recipe | v1.8.7 |
+| **W3** | W2 close | Core-feature cohesion transpositions + cosmetic substrate REVERTs — dock `data-density` + `cards.css` glass-cartoon relocation + dropdown scoped-style + `beec35e` dock-dedup + token-home drift + **Lane E rainbow `@utility` re-promote** (Q-cos-3) + **Lane F typography `:root` literal retire** (Q-cos-2) + **Lane G IconTooltip width-stretch revert** (Q-cos-13) + **Lane H `<ScrollPane>` DEMOTE-to-Card-recipe** (Q-cos-14) | v1.9.0 minor (substrate transposition + reverts + component retire) |
+| **W4** | W3 close | Style + token co-location + consumer cosmetic sweep — metric-stack token-dialect promotion + `-webkit-backdrop-filter` single-source + transitions.css `@layer` + `--scale-press-*` disposition + CSS budget rebaseline + cosmetic sweep + **Lane F cluster-C2 phantom-class fleet sweep** (value.js portion retired) + **Lanes G/H/I bbnf-buddy preset.css + `:deep` retreat + cartoon-shadow lift** | v1.9.1 |
+| **W5** | W3 close (may overlap W4) | **keyframes.js demo restoration + idiomatic glass-ui upgrade** — scene-transition crash fix + cleanup-commit CSS-deletion restoration + hero cosmetic + idiomatic glass-ui adoption sweep + layout/clipping fixes + dead-code purge + playground (Q-cos-15 … Q-cos-21) | keyframes.js version bump (consumer-side wave; no glass-ui ship) |
+| **W6 close** | W5 close | Strengthened audit (7 lanes) + consumer re-audit (6) + visual-runtime re-probe (π BINDING — Playwright) + FINAL.md + precept advance (invariants 30-33 + π lane re-activation) | aggregate final |
 
-**Critical path**: W0 → W1 → W2 → W3 → W4 → W5. The dev-resolution contract (W0) MUST precede the consumer un-break (W1) — W1's fixes conform to the contract W0 defines.
+**Critical path**: W0 → W1 → W2 → W3 → {W4 ∥ W5} → W6. The dev-resolution contract (W0) MUST precede the consumer un-break (W1). W5 (keyframes restoration) opens after W3 — it consumes the W3 substrate reverts (rainbow re-promote + IconTooltip revert) — and may run in parallel with W4 (disjoint repos: W4 = glass-ui + fourier/words/bbnf-buddy; W5 = keyframes.js only).
 
 ## §4 — Inheritance ledger absorption (every item; zero deferral)
 
@@ -101,9 +105,10 @@ Per the user directive ("idiomatic, gestalt approaches ... architectural transpo
 
 | Q ID | Item | Wave | Verdict |
 |---|---|---|---|
-| Q-chron-1 | PD-3 (value.js WIP-vs-master split) RE-OPENS — P wrote to WIP; user reports value.js broken | W1 | ADDRESS (the un-break forces the WIP-vs-master resolution) |
-| Q-chron-2 | π visual-runtime lane — Playwright now available; archived purely on tooling-unavailability | W5 | RE-ACTIVATE (archived → binding canonical close lane) |
-| Q-chron-3 | **NEW @ audit-aug round-2** — "codification without gate is necessary-but-not-sufficient" recurrence pattern (5th instance at phantom-class M-class blind-spot, after K-invariant-3 stash + K-invariant-3 K-invariant-3-recurrence + invariant 30 + invariant 31) | W5 | DOCUMENT (LL entry; itself becomes a precept: every new invariant ships with gate same-tranche) |
+| Q-chron-1 | PD-3 (value.js WIP-vs-master split) — **CLOSED at audit-aug round-4** (Qφ): the WIP branch is a strict ancestor of master; value.js Tranche A.W0 absorbed it. No split exists. Delete the WIP branch | W1 | CLOSED — no action beyond branch deletion |
+| Q-chron-2 | π visual-runtime lane — Playwright now available; archived purely on tooling-unavailability | W6 | RE-ACTIVATE (archived → binding canonical close lane) |
+| Q-chron-3 | **NEW @ audit-aug round-2** — "codification without gate is necessary-but-not-sufficient" recurrence pattern (5th instance at phantom-class M-class blind-spot, after K-invariant-3 stash + K-invariant-3 K-invariant-3-recurrence + invariant 30 + invariant 31) | W6 | DOCUMENT (LL entry; itself becomes a precept: every new invariant ships with gate same-tranche) |
+| Q-chron-4 | **NEW @ audit-aug round-4** — "cleanup commit deletes load-bearing artefact" pattern: substrate `b0debec` + consumer `17adae2` + `c7f7c96`. Motivates invariant 33 (dead-code-removal corpus-grep gate) | W6 | DOCUMENT (LL entry) + invariant 33 codified |
 
 ### Cosmetic regression cohort (audit-aug round-2 — Qη/θ/ι/κ/λ/μ)
 
@@ -123,7 +128,41 @@ Per the user directive ("idiomatic, gestalt approaches ... architectural transpo
 | Q-cos-11 | bbnf-buddy `preset.css:191-194` `--shadow-cartoon` lift-scale incomplete (missing `-md`/`-lg` rungs) | W4 (Lane I) | FOLD-IN consumer |
 | Q-cos-12 | bbnf-buddy 3-file `:deep()` retreat (EmotionStateSelect ToggleChip + EditorPanel ScrollPane + ToolsLayer dock-icon-button) | W4 (Lane H) | FOLD-IN consumer + possible substrate referrals Q.Rh-1 / Q.Rh-2 |
 
-### Round-3 user-pivot resolution (audit-aug 2026-05-18)
+### Cosmetic regression cohort — audit-aug round-4 (Qπ/ρ/σ/τ/υ/φ)
+
+| Q ID | Item | Wave | Verdict |
+|---|---|---|---|
+| Q-cos-14 | `<ScrollPane>` DEMOTE — 43-line styling-only component, 1 consumer (own demo story), fails L invariant 8; retire to `<Card tier="wash" :grain="false">` recipe | W3 (Lane H) | **DEMOTE substrate** (component → Card config; clean break, no alias) |
+| Q-cos-15 | keyframes `App.vue:106` `<Transition mode="out-in">` wrapping `<KeepAlive>` wrapping `defineAsyncComponent` crashes the renderer (`getNextHostNode` null-deref) — masks t-value scrubber + bezier editor + presets + duration control + square/amiga/easing cold deep-link | W5 (Lane A) | FOLD-IN consumer (`<Suspense>` restructure) |
+| Q-cos-16 | keyframes rotations-dropdown option-dots paint transparent — consumer `17adae2` "cleanup" deleted demo-local `.status-dot--*` colour classes | W5 (Lane B) | FOLD-IN consumer (adopt glass-ui `<StatusDot>` component) |
+| Q-cos-17 | keyframes dead code — `demo/{boxes,balls,simple}` orphaned+unrunnable; standalone `demo/{amiga,cube,square}` dupes; `SceneNav.vue` orphan; 25 orphaned `@/components/ui/` shadow dirs | W5 (Lane F) | FOLD-IN consumer (purge) |
+| Q-cos-18 | keyframes idiomatic glass-ui adoption — hand-rolled scrubber/bezier-canvas/duration-slider/status-dots replaced with glass-ui primitives, zero feature loss | W5 (Lane D) | FOLD-IN consumer (idiomatic upgrade) |
+| Q-cos-19 | keyframes square-scene controls panel overlays+clips the animation stage at 390/820px; bezier selector clipped (the user-named symptom) | W5 (Lane E) | FOLD-IN consumer (responsive grid) |
+| Q-cos-20 | keyframes playground is a non-functional shell — empty canvas, no Assets tab, no controls (`AssetViewport`/`AssetLayerPanel` query null) | W5 (Lane F) | FOLD-IN consumer (feature-completion — not a regression; nothing lost) |
+| Q-cos-21 | keyframes `glass-subtle→glass-wash` un-migrated rename (controls-pane tabs no glass surface) + missing root `bg-background` (transparent checkerboard) | W5 (Lane B) | FOLD-IN consumer |
+
+### value.js de-scoping — audit-aug round-4 (Qφ)
+
+| Q ID | Round-4 disposition |
+|---|---|
+| Q-break-1…5 (value.js portion) | value.js Tranche A.W0 already shipped all 5; Q.W1 Lane C RETIRES |
+| Q-card-1 (value.js 11 sites) | value.js Tranche A.W1 (`92fe64d`) already migrated to `tier="wash" :shadow="false" :grain="false"` = the round-4 canonical target; Q.W2 Lane B RETIRES |
+| Q-cos-7 (value.js phantom-class portion) | value.js A.W1 Lane B already fixed the 3 undefined classes; Q.W4 Lane F value.js portion RETIRES (re-grep confirms at W4 open) |
+| Q-chron-1 (WIP-vs-master) | CLOSED — the WIP branch `w.w2.1-value-js-prebuild` is a strict ANCESTOR of master (merge-base, 21 commits behind); value.js A.W0 absorbed it. Delete the WIP branch as plan hygiene |
+| Q-cos-6 (picker 0×0) | SURVIVES — un-owned by any value.js wave; Q.W1 Lane I, the one real value.js write Q retains (cross-repo coordination gate per Qφ §6) |
+
+### Round-4 user-pivot resolution (audit-aug 2026-05-18)
+
+| Q ID | User question/pivot | Round-4 resolution | Final wave |
+|---|---|---|---|
+| Q-cos-14 (ScrollPane) | "is it truly befitting to have an entire component, rather than a card variant? Is the logic/styling worthy?" | Qπ: NO — `<ScrollPane>` is 43 lines, 0 behaviour, 1 consumer; DEMOTE to `<Card tier="wash" :grain="false">`. The W2 target re-pivots a THIRD time — this is the settled one. `<ScrollPane>` retires at W3 Lane H | W2 (target) + W3 (Lane H retire) |
+| speedtest "ensure migrated" | "ensure speedtest is migrated too" | Qυ: speedtest has 0 `<Card variant>` sites + 0 AF/AG tranche collisions — nothing to migrate. The 2 hand-rolled candidates are intentionally-not-panes. No work | (none) |
+| value.js "ensure migrated" + "account for the latest value.js tranche" | "ensure value.js migrated; don't duplicate work" | Qφ: value.js Tranche A.W0+A.W1 already shipped the un-break + the 11-site migration (to the round-4 canonical recipe). Q's value.js-writing lanes RETIRE except the picker 0×0 | W1 Lane I (picker only) |
+| keyframes "many other problems" | "bezier selector small/clipped, t-value scrubber doesn't work, rotations dropdown no progress circles, many style losses — PROPER and IDIOMATIC upgrade, no loss of feature" | Qρ/σ/τ: ~95% consumer-side. One `App.vue` `<Transition>`+async crash masks four features; two "cleanup" commits deleted load-bearing CSS. NEW wave W5 — keyframes.js demo restoration + idiomatic glass-ui upgrade | W5 (new wave, 6 lanes) |
+
+Qν (speedtest scan) returned WEAK-REJECT for the direct pane-fold-back pivot: speedtest has 0 `<Card variant>` sites (it received the `5d914df9` S.W4 sweep value.js + bbnf-buddy missed) and is chart-and-meter-heavy, not editor-chrome-heavy. The user's intuition was directionally right (pane exists; pane is critical) — but Qπ's round-4 adjudication concluded the architectural answer is a Card recipe, not a component (the `e017d53` `<ScrollPane>` lift was itself the overreach).
+
+### Round-3 user-pivot resolution (audit-aug 2026-05-18) — SUPERSEDED by round-4 for the ScrollPane target
 
 | Q ID | User pivot | Round-3 resolution | Final wave |
 |---|---|---|---|
@@ -140,15 +179,18 @@ Per `coordination/CONSTELLATION.md`. The Q remediation is fleet-wide cross-repo:
 ## §6 — Risk register
 
 1. **keyframes.js `exports` fix is the fleet keystone** — one `package.json` change unblocks 5 consumers; it MUST land first (W1) + be verified against all 5 before the per-consumer sweeps.
-2. **value.js WIP-vs-master** — P.W5 wrote to the WIP branch; Q-chron-1 forces the resolution. W1 Lane must determine the canonical branch before writing.
+2. ~~value.js WIP-vs-master~~ — CLOSED at audit-aug round-4 (Qφ): the WIP branch is a master ancestor; no split exists. No risk remains.
 3. **CSS budget rebaseline ordering** — Q-sty-6 rebaselines AFTER the W4 token promotions so it happens once (Qγ recommendation).
 4. **invariant-29 recurrence** — the 4th K-invariant-3 instance happened after codification. W0 must produce a real tooling gate (analog of the P.W2 stash-script escalation), not another prose edict.
-5. **π re-activation depends on Playwright stability** — W5 confirms the tooling holds across a second probe before codifying π as binding.
+5. **π re-activation depends on Playwright stability** — W6 confirms the tooling holds across a final probe before codifying π as binding (4 probes by then: Qζ + Qμ + Qρ/σ/τ + W6).
+6. **W4 ∥ W5 parallel execution** — W4 (glass-ui + fourier/words/bbnf-buddy) and W5 (keyframes.js only) touch disjoint repos and may run concurrently; the orchestrator must hold the keyframes.js lane out of W4 (no W4 write touches keyframes.js — verified: W4 Lane F's keyframes phantom-class sites cohort INTO W5's `glass-subtle→glass-wash` migration, not W4).
+7. **value.js cross-repo coordination** — value.js's tranche team requested Q not write value.js; Q.W1 Lane I (picker 0×0) is the one retained write. The orchestrator confirms the path with the user at W1 open (Qφ §6).
+8. **W5 playground scope** — the keyframes playground is a non-functional shell; "restoration" there is feature-completion, not regression-repair. W5 Lane F sizes it honestly; if it exceeds the wave envelope it files a specified follow-on (not an open TODO — invariant 28 binds).
 
 ## §7 — Authority
 
 Plan substrate at Q open: this file + `findings.md` + `PROGRESS.md` + `dispatch/AGENT.md` + `coordination/CONSTELLATION.md` + `research/Q{α-ζ}*.md` (6 round-1) + `audit/Q1{1,2}-*.md` (2 round-2) + `research/screenshots/` (12 Playwright captures) + `waves/W{0-5}.md`.
 
-**Audit-augmentation round-2 substrate (2026-05-18, post-open user directive)**: `research/Q{η,θ,ι,κ,λ,μ}-*.md` (6 new audit deliverables) + `research/Qsynthesis-cosmetic-augmentation.md` (round synthesis) + 37 additional Playwright screenshots at `research/screenshots/q-mu-*.png` + W1/W2/W3/W4/W5/Q.md/PROGRESS.md surgical augmentation. W2 marked PENDING-REVISION pending pane-variant pivot resolution.
+**Audit-augmentation rounds 2-4 substrate (2026-05-18, post-open user directives)**: `research/Q{η,θ,ι,κ,λ,μ,ν,ξ,ο,π,ρ,σ,τ,υ,φ}-*.md` (15 audit deliverables across 3 rounds) + `research/Qsynthesis-cosmetic-augmentation.md` (rolling synthesis) + Playwright screenshots `research/screenshots/q-{mu,omicron,rho,sigma,tau}-*.png` + W0-W6/Q.md/PROGRESS.md surgical augmentation. Round-4 inserted W5 (keyframes.js demo restoration) + renumbered the close to W6. 21 Q-cos-* IDs; invariants 30-33; Q-chron 1-4.
 
 Per the Q-open user directive ("This is NOT an implementation phase. Tranche development only.") + the audit-aug round-2 directive ("NO implementation, this is tranche development"), implementation dispatch awaits explicit subsequent user directive per the K → L → M → N → O → P precedent.

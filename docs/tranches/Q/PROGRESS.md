@@ -150,8 +150,46 @@ User correction received mid-augmentation: "value.js's card pane variants are cr
 
 Plus 2 new invariants (30 + 31 from round-1; 32 from round-2). 13 Q-cos-* IDs total (Q-cos-1 through Q-cos-13). 1 chronic-defer item Q-chron-3.
 
+## 2026-05-18 — Audit-augmentation round-4 (ScrollPane adjudication + keyframes deep audit + consumer-tranche reconciliation)
+
+User directives: (1) is `<ScrollPane>` "truly befitting" as a component vs a Card variant; (2) ensure speedtest + value.js migrated, accounting for their own latest tranches to avoid duplicate work; (3) the keyframes.js demo is broken well beyond the timeline — bezier selector clipped, t-value scrubber non-functional, rotations dropdown missing progress circles, "many other style losses" — a PROPER and IDIOMATIC glass-ui upgrade with no loss of feature/functionality.
+
+6 read-only agents dispatched in parallel:
+
+| Agent | Charter | Verdict |
+|---|---|---|
+| Qπ | `<ScrollPane>` architecture adjudication | **DEMOTE-TO-VARIANT** — 43 lines, 100% styling-only, 1 consumer; fails L invariant 8; expressible as `<Card tier="wash" :grain="false">`. The W2 target re-pivots a THIRD time (final); `<ScrollPane>` retires |
+| Qρ | keyframes easing scene + playground | t-value scrubber sound but never mounts — `App.vue:106` `<Transition>`+`<KeepAlive>`+async crashes the renderer. **Zero substrate fixes**; playground is a non-functional shell |
+| Qσ | keyframes animation scenes | engine + 4 scenes functionally sound; same `<Transition>`+async crash on cold deep-link; dead-code layer. **Zero substrate fixes** |
+| Qτ | keyframes shared chrome | rotations dropdown dots transparent — consumer `17adae2` cleanup commit deleted demo-local `.status-dot--*` classes; same anti-pattern as substrate `b0debec`. `ProgressRing` substrate-gap candidate (provisional) |
+| Qυ | speedtest tranche reconciliation | 0 pane sites; 0 AF/AG collisions — speedtest needs no migration; got the `5d914df9` S.W4 tier-API sweep |
+| Qφ | value.js tranche/WIP reconciliation | value.js Tranche A.W0+A.W1 already shipped Q's W1 Lane C + W2 Lane B + W4-C2; WIP is a master ancestor (Q-chron-1 CLOSED). Only the picker 0×0 is un-owned |
+
+### Round-4 wave delta
+
+- **W2 target FINAL** — `<Card variant="pane">` → `<Card tier="wash" :grain="false">` (NOT `<ScrollPane>`; Qπ DEMOTE). value.js Lane B RETIRES (A.W1 already did it, to the canonical recipe). bbnf-buddy Lane C stands (7 sites).
+- **W1 Lane C RETIRES** — value.js A.W0 shipped the un-break. Lane I (picker 0×0) survives as the one value.js write. W1: 10→9 lanes (8 proof docs).
+- **W3 +Lane H** — `<ScrollPane>` package retirement (component → Card recipe). W3: 7→8 lanes.
+- **W4 Lane F** — value.js phantom-class portion retires (A.W1 Lane B did it).
+- **NEW W5 — keyframes.js demo restoration** (6 lanes: scene-transition crash fix, cleanup-commit CSS restoration, hero cosmetic, idiomatic glass-ui adoption, layout fixes, dead-code purge + playground). Close wave renumbered W5→**W6**.
+- **NEW invariant 33** — dead-code-removal corpus-grep gate (generalises 32 to all "cleanup" commits, substrate + consumer). **NEW Q-chron-4** — "cleanup commit deletes load-bearing artefact" pattern.
+
+### Cumulative wave structure — post-round-4 (7 waves)
+
+| Wave | Round-1 | Final |
+|---|---|---|
+| W0 | 3 | 3 |
+| W1 | 7 | 9 (Lane C retired) |
+| W2 | 3 | 2 (Lane B retired; target final) |
+| W3 | 4 | 8 |
+| W4 | 5 | 9 (value.js portion of Lane F retired) |
+| W5 | (was close) | **NEW — keyframes.js demo restoration, 6 lanes** |
+| W6 | — | close (was W5; renumbered) |
+
+21 Q-cos-* IDs (Q-cos-1 … Q-cos-21). 4 new invariants (30-33). 4 chronic-defer items (Q-chron 1-4; Q-chron-1 CLOSED). 15 audit deliverables across rounds 2-4 (Qη … Qφ). value.js Q-writing lanes mostly retired as already-done-by-Tranche-A — plan hygiene, not lost work.
+
 ## Awaiting dispatch authorization
 
-Per the Q-open user directive + the audit-aug round-2 directive ("NO implementation, this is tranche development"), the augmented planning substrate landed atop the Q-open commit. Implementation dispatch awaits explicit subsequent user directive per the K → L → M → N → O → P precedent.
+Per the Q-open user directive + the audit-aug round-2/3/4 directives ("NO implementation, this is tranche development"), the augmented planning substrate landed atop the Q-open commit. Implementation dispatch awaits explicit subsequent user directive per the K → L → M → N → O → P precedent.
 
 When dispatch authorized: W0 HEADLINE opens — 3 lanes (post-P retrospective `docs/tranches/AB+2/` + dev-resolution contract + proof-gate script).

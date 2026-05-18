@@ -189,3 +189,56 @@ W2 strategy revised (no new ID):
 - `<Card variant="pane">` 17 sites → **`<ScrollPane>`** (was: `<Card tier="wash" :shadow="false">`).
 - `<Card variant="cartoon">` 1 site → **`<CartoonCard>`** (was: same).
 - Invariant 31 fail-explicit ships as the orthogonal dev-warn gate.
+
+> **SUPERSEDED by round-4** — Qπ's adjudication retired `<ScrollPane>`. The final W2 target is `<Card tier="wash" :grain="false">`. See the round-4 section below.
+
+## Round-4 audit returns (user-pivot follow-on, 2026-05-18)
+
+The user raised three points: (1) is `<ScrollPane>` "truly befitting" as a component, or should `pane` be a Card variant — "is the logic/styling worthy of component like that?"; (2) ensure speedtest + value.js are migrated, accounting for their own latest tranches so Q does not duplicate work; (3) the keyframes.js demo is broken well beyond the timeline — bezier selector clipped, t-value scrubber non-functional, rotations dropdown missing progress circles, "many other style losses" — wanting a PROPER and IDIOMATIC glass-ui upgrade with no loss of feature or functionality.
+
+6 read-only audit agents dispatched (Qπ/ρ/σ/τ/υ/φ).
+
+### Qπ — `<ScrollPane>` architecture: DEMOTE-TO-VARIANT (the pivotal round-4 finding)
+
+- `<ScrollPane>` is 43 lines — 11 script, 16 template, 0 style, 8 doc-comment. 100% styling-only: no `ref`, no lifecycle, no observer, no scroll state, no ARIA, no four-state contract. The "scroll" in the name is aspirational — it owns a static `overflow-auto` class; the browser owns scrolling.
+- **1 consumer** at HEAD — its own demo story. Zero library consumers, zero compositions. Fails L invariant 8 (substrate-without-consumer) outright.
+- Field-for-field expressible as `<Card tier="wash" :grain="false">` — Card already exposes the `grain` prop round-3's Qξ thought made `tier="wash"` only "partial-faithful". Qξ MISSED the `grain` prop. CVA cost to express as a Card config: zero.
+- The `3a43a8f`/`e017d53` lift was correct for `CartoonCard` (genuinely off-ladder tokens) but WRONG for ScrollPane — `wash` IS a ladder rung Card already exposes.
+- Side finding: ScrollPane ships an a11y regression — `scrollbar-hidden` + `overflow-auto` with no `tabindex` is a scroll container that cannot be keyboard-scrolled.
+- **VERDICT: DEMOTE.** The W2 migration target re-pivots a THIRD and final time: `<Card variant="pane">` → `<Card tier="wash" :grain="false">`. `<ScrollPane>` retires (W3 Lane H NEW) — clean break, no alias.
+
+The user's instinct ("is it truly befitting to have an entire component") was correct. The `<ScrollPane>` lift was the overreach; round-3 then mistook the overreach for the canonical answer.
+
+### Qρ/σ/τ — keyframes.js demo: ~95% consumer-side
+
+- **Qρ** (easing + playground): the t-value scrubber's pointer logic is sound — it never works because `EasingTarget` never mounts. `App.vue:106` wraps `<Transition mode="out-in">` around `<KeepAlive>` around `defineAsyncComponent`, crashing the renderer (`getNextHostNode` null-deref) on the transition leave hook. One bug masks the scrubber + bezier editor + presets + duration control. Playground is a non-functional shell. **Zero substrate fixes.**
+- **Qσ** (animation scenes): engine + 4 live scenes functionally sound; same `<Transition>`+async crash on cold deep-link; a layer of un-swept dead code (`demo/{boxes,balls,bench,simple}` + standalone scene dupes). **Zero substrate fixes.**
+- **Qτ** (shared chrome): the rotations-dropdown option-dots paint transparent — consumer `17adae2` "clean up styles, remove glass-ui overlap" deleted demo-local `.status-dot--*` colour classes (glass-ui ships only the colourless base `.status-dot`). `c7f7c96` deleted demo-local `.rainbow-*` + a preset import → black play button. The `@/components/ui` shadow layer is NOT a drift amplifier (live primitives import glass-ui directly; the 25 `ui/` dirs are dead). `ProgressRing` substrate-gap candidate flagged PROVISIONAL.
+
+Unifying observation: the keyframes demo breakage is one `<Transition>`+async crash + a pair of "cleanup" commits that deleted load-bearing CSS — the EXACT anti-pattern as the substrate-side `b0debec` D.W2.D. Three instances of "cleanup deletes load-bearing artefact" → **NEW invariant 33** (dead-code-removal corpus-grep gate, generalising invariant 32) + **Q-chron-4**.
+
+### Qυ/φ — consumer-tranche reconciliation: Q de-scopes
+
+- **Qυ** (speedtest): 0 `<Card variant>` sites, 0 AF/AG-tranche collisions. speedtest got the `5d914df9` S.W4 tier-API sweep value.js + bbnf-buddy missed. Nothing to migrate. Q.W1 Lane G (resolver sweep) should land before AG's implementation GO — soundness preference, not a blocker.
+- **Qφ** (value.js): value.js's own Tranche A already shipped most of what Q planned — A.W0 the un-break (= Q.W1 Lane C), A.W1 the 11-site Card migration to `tier="wash" :shadow="false" :grain="false"` (= the round-4 canonical target — A.W1 even caught the `:grain="false"` the Q plan omitted), A.W1 Lane B the phantom-class fix (= Q.W4-C2 value.js portion). The WIP branch is a strict master ancestor — Q-chron-1 CLOSED. Only the picker 0×0 (Mμ-5) is un-owned — Q.W1 Lane I retains it.
+
+### Round-4 net delta
+
+| Q ID | Item | Wave | Verdict |
+|---|---|---|---|
+| Q-cos-14 | `<ScrollPane>` DEMOTE — retire to `<Card tier="wash" :grain="false">` recipe | W3 (Lane H NEW) | DEMOTE substrate |
+| Q-cos-15 | keyframes `App.vue` `<Transition>`+`<KeepAlive>`+async renderer crash | W5 (Lane A) | FOLD-IN consumer |
+| Q-cos-16 | keyframes rotations-dropdown `.status-dot--*` deletion (`17adae2`) | W5 (Lane B) | FOLD-IN consumer (adopt `<StatusDot>`) |
+| Q-cos-17 | keyframes dead-code purge | W5 (Lane F) | FOLD-IN consumer |
+| Q-cos-18 | keyframes idiomatic glass-ui adoption sweep | W5 (Lane D) | FOLD-IN consumer |
+| Q-cos-19 | keyframes square-scene + bezier-selector clipping | W5 (Lane E) | FOLD-IN consumer |
+| Q-cos-20 | keyframes playground non-functional shell | W5 (Lane F) | FOLD-IN consumer (feature-completion) |
+| Q-cos-21 | keyframes `glass-subtle→glass-wash` + missing `bg-background` | W5 (Lane B) | FOLD-IN consumer |
+| Q-inv-33 | dead-code-removal corpus-grep gate | W6 | NEW invariant |
+| Q-chron-4 | "cleanup commit deletes load-bearing artefact" pattern | W6 | DOCUMENT |
+
+Plus: W1 Lane C + W2 Lane B + W4-Lane-F-value.js-portion RETIRE (value.js Tranche A did them). Q-chron-1 CLOSED. NEW wave W5 (keyframes restoration, 6 lanes); close renumbered W5→W6. 21 Q-cos-* IDs total; invariants 30-33; Q-chron 1-4.
+
+### Why round-4's attributions matter
+
+Across the 4 audit rounds the root-cause model was overturned twice — round-1 blamed a glass-ui substrate regression; round-2 found a cross-repo resolution desync + consumer staleness; round-3 found two genuine substrate reverts; round-4 found the keyframes demo is ~95% consumer-side and `<ScrollPane>` should never have been a component. The lesson (W6 LL entry): a large user-reported regression batch is worth iterative Playwright-binding audit rounds — each deeper probe corrected the prior round's attribution. The user's three pivots ("pane has existed before", "no deferrals", "is it befitting a component") each surfaced a real architectural error the prior round had codified.
