@@ -9,8 +9,10 @@ import { cn } from "../../../utils";
  * Owns:
  *  - container-query host (`container-type: inline-size`) with a configurable
  *    `container-name` so each row can rebind layout against the same name.
- *  - 4-column subgrid track template (`icon | label | value | unit`). All
- *    rows inherit via `grid-template-columns: subgrid`.
+ *  - 3-column subgrid track template (`icon | label | value`). All
+ *    rows inherit via `grid-template-columns: subgrid`. The value+unit
+ *    lockup lives inside the `value` track as one baseline-aligned
+ *    inline group — the row reads "240 Mbps" as one typographic unit.
  *  - the `--phase-color` cascade origin — consumers can retint individual
  *    rows by setting `--phase-color` at the row-level inline style.
  *  - the audacious-poster row register (the value clamp + tabular-nums
@@ -116,8 +118,7 @@ const classes = computed(() => cn("metric-stack", "results-stack", props.class))
     grid-template-columns:
         [icon] minmax(0, auto)
         [label] minmax(0, auto)
-        [value] minmax(0, auto)
-        [unit] minmax(0, auto);
+        [value] minmax(0, auto);
     row-gap: clamp(0.25rem, 1cqi, 0.75rem);
     column-gap: clamp(0.5rem, 2cqi, 1.25rem);
     --result-row-scale: 1;

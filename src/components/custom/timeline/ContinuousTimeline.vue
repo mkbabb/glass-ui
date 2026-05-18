@@ -239,6 +239,15 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
                                 @keydown="onSegmentKeydown($event, seg)"
                             >
                                 <span class="sr-only">{{ seg.label }}</span>
+                                <svg
+                                    v-if="seg.state === 'completed'"
+                                    class="continuous-dot-check"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M5 13l4 4L19 7" />
+                                </svg>
                             </button>
                         </template>
                         <template #content>
@@ -295,6 +304,15 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
                         @keydown="onSegmentKeydown($event, seg)"
                     >
                         <span class="sr-only">{{ seg.label }}</span>
+                        <svg
+                            v-if="seg.state === 'completed'"
+                            class="continuous-dot-check"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            aria-hidden="true"
+                        >
+                            <path d="M5 13l4 4L19 7" />
+                        </svg>
                     </button>
                 </li>
             </ul>
@@ -432,6 +450,19 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
 /* Completed regions: paint the full gradient end-to-end. */
 .continuous-region.state-completed > .continuous-region-fill {
     width: 100%;
+}
+
+/* AF.W1 (D12) — active regions paint a partial-width fill, so the fill's
+   incrementing (trailing) edge sits mid-region where the rail's
+   `rounded-pill` mask has no curvature and would render squared. Round
+   that incrementing edge so the live fill front reads as a pill cap.
+   This composes with the is-first/is-last terminus rounding above —
+   an active first region keeps its rounded leading edge AND gains a
+   rounded incrementing edge; an active interior region rounds only the
+   incrementing edge. */
+.continuous-region.state-active > .continuous-region-fill {
+    border-start-end-radius: var(--radius-pill);
+    border-end-end-radius: var(--radius-pill);
 }
 
 /* Pending regions: no fill paint (substrate shows through). */
@@ -629,6 +660,72 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
     );
 }
 
+/* AF.W1 (A4 §C1) — completion-tick affordance. When a segment reaches
+   `state === "completed"` the dot draws a self-drawing check: the path
+   sweeps in via `stroke-dashoffset` while the dot punches a one-beat
+   overshoot pop. This is the badge grammar (staged, self-drawing, one
+   overshoot, reduced-motion end-state) at miniature scale, built into
+   the primitive so consumers get the affordance for free. The stroke
+   colour reads `--timeline-dot-check-color` (default the completed
+   tint) so a consumer can retint without a `:deep()` reach. */
+.continuous-dot-check {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.continuous-dot-check path {
+    fill: none;
+    stroke: var(
+        --timeline-dot-check-color,
+        var(--timeline-dot-tint-completed, var(--success, var(--foreground)))
+    );
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    /* Path length of `M5 13l4 4L19 7` ≈ 28 units; a 32-unit dash fully
+       covers it. The mark starts fully hidden (offset = dash) and the
+       keyframe sweeps the offset to 0 so the check writes itself on. */
+    stroke-dasharray: 32;
+    stroke-dashoffset: 32;
+    animation:
+        continuous-dot-check-draw var(--duration-slow, 0.45s)
+            var(--ease-out, ease-out) var(--duration-fast, 0.2s) forwards;
+}
+
+/* The dot itself plays a one-beat overshoot pop as the check lands —
+   the single overshoot of the badge grammar. No fill mode: once the
+   pop settles the dot releases the transform so the hover scale (and
+   any future transform) is unobstructed. */
+.continuous-dot[data-completed] {
+    animation: continuous-dot-pop var(--duration-normal, 0.3s)
+        var(--ease-apple-spring, cubic-bezier(0.2, 0.9, 0.25, 1.2));
+}
+
+@keyframes continuous-dot-check-draw {
+    from {
+        stroke-dashoffset: 32;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes continuous-dot-pop {
+    0% {
+        transform: scale(0.82);
+    }
+    60% {
+        transform: scale(1.12);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 /* Screen-reader-only span baked into the dot button. */
 .sr-only {
     position: absolute;
@@ -651,6 +748,16 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
     }
     .continuous-dot {
         transition-duration: 0.01ms;
+    }
+    /* Completion tick collapses to its drawn end-state — the check is
+       fully present, the pop is retired. The affirmation survives
+       motion-off; only the motion goes. */
+    .continuous-dot[data-completed] {
+        animation: none;
+    }
+    .continuous-dot-check path {
+        animation: none;
+        stroke-dashoffset: 0;
     }
 }
 </style>
