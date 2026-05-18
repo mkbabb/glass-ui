@@ -153,11 +153,15 @@
        let descendants wrap to multiple rows (consumers opt-in via
        `dock-wrap`) or to clamp via `--dock-max-block-size` and let the
        cap fail visibly rather than mask the overflow as a scroll
-       affordance. The mask-fade is retained as a visual reservation
-       around the cap edge; content that would have scrolled now reads
-       past the fade so the canon-intent (visible overflow) holds.
-       J.W3.C (prior shape: auto + mask-fade) is superseded by this rule;
-       the mask-image is a cosmetic feather, not a scroll affordance. */
+       affordance.
+
+       The edge-fade `mask-image` retired here in lockstep with the
+       horizontal `.dock-layers` rule. With grow-to-fit + visible
+       overflow the rail never scrolls, so a scroll-feather mask has
+       nothing to feather — it only bled a transparent ramp onto the
+       top and bottom rail items, casting a stray directional shadow
+       on those edge controls. J.W3.C's auto + mask-fade shape is fully
+       superseded: grow-to-fit is the whole contract, no feather. */
     .glass-dock.vertical {
         display: inline-flex;
         flex-direction: column;
@@ -170,20 +174,6 @@
         max-block-size: var(--dock-max-block-size);
         overflow-x: visible;
         overflow-y: visible;
-        mask-image: linear-gradient(
-            to bottom,
-            transparent,
-            black var(--mask-fade-width),
-            black calc(100% - var(--mask-fade-width)),
-            transparent
-        );
-        -webkit-mask-image: linear-gradient(
-            to bottom,
-            transparent,
-            black var(--mask-fade-width),
-            black calc(100% - var(--mask-fade-width)),
-            transparent
-        );
         padding: var(--dock-vertical-padding, var(--dock-padding-block, 0.375rem));
         border-radius: var(--radius-dock);
         transition:
@@ -297,25 +287,20 @@
        A2 §B6 + A4 special-focus: the canon-intent for the bottom dock
        is grow-to-fit; consumers needing wrap opt into `dock-wrap`. The
        prior `overflow-x: auto` produced the user-reported "dock scrolls
-       when it shouldn't" — the wrong escape valve. The mask-fade
-       remains as a cosmetic feather at the cap edge for visual symmetry
-       with the vertical rule, not as a scroll affordance. */
+       when it shouldn't" — the wrong escape valve.
+
+       The edge-fade `mask-image` retired here. Once Z.W2.T2 made the
+       dock grow-to-fit, content is never clipped and never scrolls, so
+       the mask had nothing left to feather — it was kept only "for
+       visual symmetry" with the vertical rule. In practice the 1rem
+       transparent ramp at each edge bled onto the first and last dock
+       items: the rightmost control (e.g. a settings cog) had its outer
+       edge faded into the glass backdrop, which read as a stray
+       directional shadow on that item. A scroll-affordance feather on
+       a surface that never scrolls is pure cosmetic damage, so it is
+       removed at the root rather than masked per-consumer. */
     .glass-dock.expanded:not(.dock-wrap) > .dock-layers {
         overflow-x: visible;
-        mask-image: linear-gradient(
-            to right,
-            transparent,
-            black var(--mask-fade-width),
-            black calc(100% - var(--mask-fade-width)),
-            transparent
-        );
-        -webkit-mask-image: linear-gradient(
-            to right,
-            transparent,
-            black var(--mask-fade-width),
-            black calc(100% - var(--mask-fade-width)),
-            transparent
-        );
     }
 
     .dock-layer {
