@@ -3,9 +3,10 @@ import { computed } from "vue";
 import HoverPopover from "../hover-popover/HoverPopover.vue";
 import {
     continuousFillWidth,
-    continuousRegionBackground,
     createContinuousGeometry,
     popoverPayloadFor,
+    stitchedRailGradient,
+    stitchedRegionWindow,
 } from "./geometry";
 import type { TimelineSegment } from "./types";
 
@@ -85,6 +86,17 @@ const segmentList = computed<TimelineSegment[]>(() => props.segments ?? []);
 const { regionLeft, regionWidth, boundaryX, continuousAriaValueNow } =
     createContinuousGeometry(segmentList);
 
+/**
+ * AC.W9 (Lane B / B2) — the ONE rail-spanning stitched gradient. The
+ * `continuous` variant is conceptually a single progression bar; every
+ * region windows into THIS gradient so the phase hues cross-fade
+ * smoothly across the boundaries with no per-region seam. Recomputed
+ * only when the segment set / weights / colours change.
+ */
+const railGradient = computed<string>(() =>
+    stitchedRailGradient(segmentList.value),
+);
+
 const continuousAriaLabel = computed<string>(() => {
     if (props.ariaLabel) return props.ariaLabel;
     const names = segmentList.value.map((s) => s.label).filter(Boolean);
@@ -152,19 +164,30 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
                 :aria-label="continuousAriaLabel"
             >
                 <!-- N region children, each absolute-positioned within the rail.
-                     The region's inline `--continuous-fill-width` is the LIVE
-                     binding for the active-fill paint (consumed by
-                     `.continuous-region-fill` below). -->
+                     AC.W9 (B2) — each region WINDOWS into the one shared
+                     `--stitch-gradient` (the rail-spanning stitched
+                     gradient) via `background-size` / `background-
+                     position-x`, so the phase hues cross-fade smoothly
+                     across the boundaries — one continuous bar, no seam.
+                     `--continuous-fill-width` is the LIVE binding for the
+                     active-fill paint (consumed by `.continuous-region-
+                     fill` below). -->
                 <div
                     v-for="(seg, i) in segmentList"
                     :key="seg.key"
                     class="continuous-region"
-                    :class="[`state-${seg.state}`, i === segmentList.length - 1 && 'is-last']"
+                    :class="[
+                        `state-${seg.state}`,
+                        i === 0 && 'is-first',
+                        i === segmentList.length - 1 && 'is-last',
+                    ]"
                     :data-state="seg.state"
                     :style="{
                         left: `${regionLeft(i) * 100}%`,
                         width: `${regionWidth(i) * 100}%`,
-                        '--region-gradient': continuousRegionBackground(seg),
+                        '--stitch-gradient': railGradient,
+                        '--stitch-size-x': stitchedRegionWindow(regionLeft(i), regionWidth(i)).sizeX,
+                        '--stitch-pos-x': stitchedRegionWindow(regionLeft(i), regionWidth(i)).positionX,
                         '--continuous-fill-width': `${continuousFillWidth(seg) * 100}%`,
                     }"
                     aria-hidden="true"
@@ -352,13 +375,17 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
     will-change: width, left, background;
 }
 
-/* AB.W2.T4 — fill child paints the per-phase gradient (carried via
-   the inline `--region-gradient` CSS var on the parent) up to
-   `--continuous-fill-width`. The substrate gestalt: gradient lives on
-   the CSS var; the fill child clips the gradient to the active
-   progress fraction; completed regions get a full-width fill child
-   that composes to 100% paint; pending regions paint nothing. The
-   parent region itself does NOT paint a background — the fill child
+/* AC.W9 (B2) — fill child WINDOWS into the ONE rail-spanning stitched
+   gradient. The gradient (`--stitch-gradient`) is identical across every
+   region; each region scales it up by `--stitch-size-x` (= 1 / region
+   width) and offsets it by `--stitch-pos-x` so its slice aligns with the
+   rail-fraction it occupies. The hues therefore cross-fade smoothly
+   through every boundary — one continuous bar, no per-region seam.
+
+   The fill child clips the windowed gradient to `--continuous-fill-
+   width`: completed regions get a full-width fill (100%); active regions
+   paint the current progress fraction; pending regions paint nothing.
+   The parent region itself does NOT paint a background — the fill child
    is the single source of paint. */
 .continuous-region {
     /* No own background — the fill child paints. */
@@ -369,12 +396,37 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
     position: absolute;
     inset: 0;
     width: var(--continuous-fill-width, 0%);
-    background: var(--region-gradient, transparent);
-    /* Inherit the rail's pill rounding via clip. */
-    border-radius: inherit;
+    background-image: var(--stitch-gradient, none);
+    /* Window into the rail-spanning gradient: scale the gradient to the
+       full rail (size-x = 1 / regionWidth) and offset so this region's
+       slice is the visible one. background-repeat:no-repeat keeps the
+       single gradient instance; the size/position do the windowing. */
+    background-size: var(--stitch-size-x, 100%) 100%;
+    background-position-x: var(--stitch-pos-x, 0%);
+    background-position-y: center;
+    background-repeat: no-repeat;
     transition: width var(--duration-slow, 0.45s) var(--ease-out, ease-out);
     will-change: width;
     pointer-events: none;
+}
+
+/* AC.W9 (B2) — proper rounded ends. The fill child's corners must NOT
+   blanket-inherit the rail's pill radius (that rounds interior regions'
+   fills on all four corners, leaving the rail's true leading + trailing
+   edges squared off where a partial fill or a state seam lands). The
+   rail terminus rounding is anchored to the FIRST region's leading edge
+   and the LAST region's trailing edge; interior regions stay square so
+   the stitched fill reads as one unbroken bar. */
+.continuous-region-fill {
+    border-radius: 0;
+}
+.continuous-region.is-first > .continuous-region-fill {
+    border-start-start-radius: var(--radius-pill);
+    border-end-start-radius: var(--radius-pill);
+}
+.continuous-region.is-last > .continuous-region-fill {
+    border-start-end-radius: var(--radius-pill);
+    border-end-end-radius: var(--radius-pill);
 }
 
 /* Completed regions: paint the full gradient end-to-end. */
@@ -385,7 +437,7 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
 /* Pending regions: no fill paint (substrate shows through). */
 .continuous-region.state-pending > .continuous-region-fill {
     width: 0;
-    background: transparent;
+    background-image: none;
 }
 
 /* Seam dividers — paint a 1px vertical line at each region's right edge
@@ -483,7 +535,14 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
 
 /* Boundary dot — the marker button. Inherits the dot recipe from
    `.segmented-dot` above (radius, border, transition) but overrides the
-   layout-coupled positioning (no flex-cell parent anymore). */
+   layout-coupled positioning (no flex-cell parent anymore).
+
+   AC.W9 (B3) — the dot is a GLASS primitive: a translucent tinted fill
+   over a backdrop blur with a hairline ring, not an opaque puck. The
+   glass treatment is the resting recipe; the per-state rules below only
+   re-tint the same glass (they no longer paint an opaque solid). All
+   knobs are CSS custom properties so consumers can tune the tint /
+   blur / ring without reaching into this scope. */
 .continuous-dot {
     position: relative;
     right: auto;
@@ -491,13 +550,19 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
        positioning via its own `transform`). The dot is intrinsically
        sized; we drop the segmented-dot's translate transform. */
     transform: none;
-    /* AB.W2.T1 (A4 §B2 + A2 §B2.a) — opaque background so the rail
-       does not bleed through; symmetric `box-shadow` so the perceived
-       centre coincides with the math centre; `box-sizing: border-box`
-       (inherited from segmented-dot) keeps the 2px border inside the
-       14px box. */
-    background: var(--background, white);
-    box-shadow: 0 0 4px color-mix(in srgb, var(--shadow-color) 22%, transparent);
+    /* Glass fill: a translucent tint (NOT opaque) so the rail's hue
+       reads faintly through the dot — the glass-design idiom. The 2px
+       border becomes a hairline glass ring. */
+    background: var(--timeline-dot-fill, var(--surface-tint-12));
+    backdrop-filter: var(--timeline-dot-blur, var(--glass-blur-quiet));
+    -webkit-backdrop-filter: var(--timeline-dot-blur, var(--glass-blur-quiet));
+    border-color: var(--timeline-dot-ring, var(--glass-border-floating));
+    /* Symmetric soft shadow so the perceived centre coincides with the
+       math centre; a faint inner highlight gives the glass its convex
+       lensing read. */
+    box-shadow:
+        0 0 4px color-mix(in srgb, var(--shadow-color) 22%, transparent),
+        inset 0 1px 1px color-mix(in srgb, var(--foreground) 8%, transparent);
 }
 
 .continuous-dot:hover,
@@ -532,22 +597,35 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
 }
 
 /* AB.W2.T3 — `data-current` marks the active phase regardless of hover
-   state. Per-phase color hooks (`data-state` + the segment's gradient
-   tint) survive the structural split so W3 can paint the raised-rivet
-   echo without DOM surgery. */
+   state. AC.W9 (B3) — the per-state rules re-tint the SAME glass dot;
+   they no longer paint an opaque solid. The tint is a translucent wash
+   over the glass fill so the dot stays glassy (backdrop blur + ring
+   intact) while still reading its lifecycle state. Consumers override
+   the tint colour via `--timeline-dot-tint-current` /
+   `--timeline-dot-tint-completed`. */
 .continuous-dot[data-current] {
     background: color-mix(
         in srgb,
-        var(--accent, var(--foreground)) 30%,
-        var(--background, white)
+        var(--timeline-dot-tint-current, var(--accent, var(--foreground))) 22%,
+        var(--surface-tint-12)
+    );
+    border-color: color-mix(
+        in srgb,
+        var(--timeline-dot-tint-current, var(--accent, var(--foreground))) 40%,
+        var(--glass-border-floating)
     );
 }
 
 .continuous-dot[data-state="completed"] {
     background: color-mix(
         in srgb,
-        var(--success, var(--foreground)) 30%,
-        var(--background, white)
+        var(--timeline-dot-tint-completed, var(--success, var(--foreground))) 22%,
+        var(--surface-tint-12)
+    );
+    border-color: color-mix(
+        in srgb,
+        var(--timeline-dot-tint-completed, var(--success, var(--foreground))) 40%,
+        var(--glass-border-floating)
     );
 }
 

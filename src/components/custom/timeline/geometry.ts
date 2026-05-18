@@ -134,18 +134,93 @@ export function createContinuousGeometry(segments: Ref<TimelineSegment[]>): {
     };
 }
 
-// ─── Continuous-variant region background ────────────────────────────────
+// ─── Continuous-variant STITCHED rail gradient ───────────────────────────
+//
+// The `continuous` variant is conceptually ONE progression bar — the
+// phases are a single journey, not adjacent independent bands. Painting
+// each region with its own `{from,to}` gradient produces a hard seam at
+// every boundary, which contradicts the variant's name + intent. The
+// stitched model paints a SINGLE rail-spanning gradient: each phase's
+// resolved colour is a stop anchored at that phase's boundary, and the
+// hues blend smoothly across the seams. Each region then windows into
+// the same whole-rail gradient via `background-size` / `background-
+// position-x`, so the colour is continuous across the bar with no
+// per-region discontinuity.
 
 /**
- * Continuous-variant region background. For `completed` segments the full
- * gradient paints end-to-end; for `active` the gradient paints up to
- * `fillFor(seg) * 100%` and then fades to transparent (the rail substrate
- * shows through past the active fill); `pending` segments paint nothing
- * (background transparent — the rail substrate shows through).
+ * Resolve a segment's single representative colour for the stitched rail
+ * gradient. A `{from,to}` pair contributes its `to` (the saturated end —
+ * the canonical phase hue); a raw CSS string falls back to the default
+ * segment token (raw strings are not parseable into a single stop).
  */
-export function continuousRegionBackground(seg: TimelineSegment): string {
-    if (seg.state === "pending") return "transparent";
-    return gradientFor(seg);
+function stitchColorFor(seg: TimelineSegment): string {
+    if (seg.gradient && typeof seg.gradient === "object") {
+        return (seg.gradient as TimelineSegmentGradient).to;
+    }
+    return "var(--timeline-segment-default-gradient-color, var(--surface-tint-25))";
+}
+
+/**
+ * Build the ONE rail-spanning stitched gradient for the continuous
+ * variant. Each phase's colour is anchored as a stop at the CENTRE of
+ * its weight-share so the pure hue sits mid-phase and the hues cross-
+ * fade smoothly through every boundary. The first and last stops are
+ * pinned to 0% / 100% so the bar's ends saturate fully (no washed
+ * leading/trailing edge). Returns a `linear-gradient(90deg, …)` string
+ * sized to the FULL rail width.
+ */
+export function stitchedRailGradient(segments: TimelineSegment[]): string {
+    if (segments.length === 0) {
+        return "var(--timeline-segment-default-gradient, linear-gradient(90deg, var(--surface-tint-15), var(--surface-tint-25)))";
+    }
+    if (segments.length === 1) {
+        const c = stitchColorFor(segments[0]!);
+        return `linear-gradient(90deg, ${c}, ${c})`;
+    }
+    const total = segments.reduce((acc, s) => acc + segmentWeight(s), 0) || 1;
+    const stops: string[] = [];
+    let acc = 0;
+    segments.forEach((seg, i) => {
+        const w = segmentWeight(seg);
+        const centre = (acc + w / 2) / total;
+        // Pin the first/last representative stop to the rail extremes so
+        // the ends saturate; interior stops sit at their phase centre.
+        const pos =
+            i === 0 ? 0 : i === segments.length - 1 ? 1 : centre;
+        stops.push(`${stitchColorFor(seg)} ${(pos * 100).toFixed(3)}%`);
+        acc += w;
+    });
+    return `linear-gradient(90deg, ${stops.join(", ")})`;
+}
+
+/**
+ * Per-region windowing parameters for the stitched rail gradient. The
+ * region paints the FULL-rail gradient (`stitchedRailGradient`) but only
+ * its own slice is visible inside the region box. To window correctly
+ * the region's `background-size-x` is scaled to `1 / regionWidth` of the
+ * region box (so the full gradient spans `regionWidth` of the rail) and
+ * the `background-position-x` is offset so the region's left edge aligns
+ * with the rail-fraction `regionLeft`.
+ *
+ * `sizeX`     — CSS `background-size` x value, e.g. `"333.333%"`.
+ * `positionX` — CSS `background-position` x value, e.g. `"50%"`.
+ *
+ * background-position interpolates the image's `(size - box)` overflow,
+ * so the position fraction is `regionLeft / (1 - regionWidth)` (guarded
+ * for the degenerate single-region `regionWidth == 1` case).
+ */
+export function stitchedRegionWindow(
+    regionLeft: number,
+    regionWidth: number,
+): { sizeX: string; positionX: string } {
+    const w = regionWidth > 0 ? regionWidth : 1;
+    const sizeX = `${(100 / w).toFixed(3)}%`;
+    const overflow = 1 - w;
+    const positionX =
+        overflow > 1e-6
+            ? `${((regionLeft / overflow) * 100).toFixed(3)}%`
+            : "0%";
+    return { sizeX, positionX };
 }
 
 /**
