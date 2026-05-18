@@ -310,17 +310,31 @@
         grid-area: 1 / 1;
         gap: var(--dock-layer-gap, 0.375rem);
         height: var(--dock-layer-height, 2.5rem);
-        transition: opacity var(--dock-motion-fast);
+        /* Mirrors the `.dock-layer-item-host` paint contract: the delayed
+           `visibility` transition holds an inactive layer `visible` through
+           the opacity crossfade, then hides it. */
+        transition:
+            opacity var(--dock-motion-fast),
+            visibility 0s linear var(--duration-fast);
     }
 
     .dock-layer.layer-active {
         opacity: 1;
+        /* Visible immediately — no deferred `visibility`. */
+        visibility: visible;
         pointer-events: auto;
         position: relative;
+        transition:
+            opacity var(--dock-motion-fast),
+            visibility 0s;
     }
 
     .dock-layer:not(.layer-active) {
         opacity: 0;
+        /* Inactive layer: out of paint AND hit-test, but still in layout
+           flow. `opacity:0` alone leaves the box answering
+           `elementFromPoint()` — the dead-control hazard this rule retires. */
+        visibility: hidden;
         pointer-events: none;
         position: absolute;
         inset: 0;
@@ -488,23 +502,43 @@
         white-space: nowrap;
         gap: var(--dock-layer-gap, 0.375rem);
         opacity: 0;
+        /* A fully-inactive layer is hidden from paint AND from hit-testing.
+           `opacity:0` alone leaves the box answering `elementFromPoint()`,
+           which is how an inactive layer's "Next" button intercepts clicks
+           meant for the active one. `visibility:hidden` removes it from
+           both paint and hit-test while KEEPING it in layout flow, so the
+           FLIP width measurement in `useLayerTransition` still reads its
+           geometry (where `display:none` would zero it). */
+        visibility: hidden;
         pointer-events: none;
         position: absolute;
         inset: 0;
-        transition: opacity var(--dock-motion-fast);
+        /* The delayed `visibility` transition holds the box `visible` for
+           the length of the opacity crossfade, then flips it `hidden` — so
+           a layer that is mid-leave still paints through its fade-out. */
+        transition:
+            opacity var(--dock-motion-fast),
+            visibility 0s linear var(--duration-fast);
     }
 
     .dock-layer-item-host.is-active {
         opacity: 1;
+        visibility: visible;
         pointer-events: auto;
         position: relative;
         inset: auto;
         width: max-content;
         min-width: 0;
+        /* The active layer shows immediately — no deferred `visibility`. */
+        transition:
+            opacity var(--dock-motion-fast),
+            visibility 0s;
     }
 
     .dock-layer-item-host.is-leaving {
         opacity: 0;
+        /* The leaving layer stays painted through the opacity fade-out. */
+        visibility: visible;
         pointer-events: none;
     }
 

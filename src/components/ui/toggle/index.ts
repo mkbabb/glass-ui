@@ -30,7 +30,7 @@ export const toggleVariants = cva(
         outline:
           'border border-input bg-transparent hover:bg-accent hover:text-accent-foreground',
         card:
-          'glass-card h-auto w-full transform-gpu cursor-pointer flex-col gap-4 p-8 text-center transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-fast ease-standard hover:bg-[var(--glass-bg-quiet)] hover:text-foreground active:scale-95 data-[state=on]:border-[var(--glass-border-quiet)] data-[state=on]:bg-[var(--glass-bg-quiet)] data-[state=on]:text-foreground data-[state=on]:shadow-[var(--glass-shadow-quiet)]',
+          'glass-card w-full transform-gpu cursor-pointer flex-col gap-4 p-8 text-center transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-fast ease-standard hover:bg-[var(--glass-bg-quiet)] hover:text-foreground active:scale-95 data-[state=on]:border-[var(--glass-border-quiet)] data-[state=on]:bg-[var(--glass-bg-quiet)] data-[state=on]:text-foreground data-[state=on]:shadow-[var(--glass-shadow-quiet)]',
       },
       size: {
         default: 'h-10 px-3',
@@ -38,6 +38,15 @@ export const toggleVariants = cva(
         lg: 'h-11 px-5',
       },
     },
+    compoundVariants: [
+      // The `card` variant is intrinsic-height by contract: it sizes to its
+      // icon-over-label-over-description stack. The `size` axis governs the
+      // *text/inline* toggle scale and must not impose a fixed `height` on a
+      // card. CVA emits `compoundVariants` classes after the `variants`
+      // classes, so this `h-auto` wins the source-order race against the
+      // size token's `h-10`/`h-9`/`h-11` and the card sizes to its content.
+      { variant: 'card', size: ['default', 'sm', 'lg'], class: 'h-auto' },
+    ],
     defaultVariants: {
       variant: 'default',
       size: 'default',
