@@ -179,14 +179,23 @@ const rowStyle = computed(() => ({
    text-title…text-4xl ≈ 1.5rem…2.25rem) can retint at `:root` or per-row
    without forking the SFC. Defaults preserve the audacious-poster
    behaviour bit-for-bit (4.5rem → var(--type-display-hero)).
-   Canonical custom-property cascade per DESIGN.md texture-system pattern. */
+   Canonical custom-property cascade per DESIGN.md texture-system pattern.
+
+   AE.W1 Cluster A: the clamp's MIDDLE arm — the `cqi` coefficient — is
+   the BINDING term against a wide container (~34cqi of a ~660px stack
+   resolves to ~225px, defeating any consumer that only retunes the
+   endpoints). Route that coefficient through `--metric-row-value-clamp-cqi`
+   too, default `34cqi`, so a consumer can opt the whole register down to
+   a compact form. The default preserves the audacious-poster behaviour
+   bit-for-bit; this is purely an additive, back-compatible knob. */
 .metric-row__value {
     --digit-count: 3;
     position: relative;
     font-size: clamp(
         var(--metric-row-value-clamp-min, 4.5rem),
         calc(
-            34cqi * var(--result-row-scale, 1) * 3 /
+            var(--metric-row-value-clamp-cqi, 34cqi) *
+                var(--result-row-scale, 1) * 3 /
                 max(3, var(--digit-count))
         ),
         var(--metric-row-value-clamp-max, var(--type-display-hero))

@@ -44,6 +44,22 @@ export interface MetricStackProps {
      */
     variant?: string;
     /**
+     * Typographic register, mirrored to a `data-register` attribute.
+     *
+     *  - `"audacious"` (default) — the poster-scale hero register: the
+     *    value clamp peaks at `--type-display-hero` (~287px). This is the
+     *    register for a single giant number the user watches climb. The
+     *    default writes NOTHING, so every existing consumer is untouched.
+     *  - `"result"` — a compact, scannable ledger register: the value
+     *    clamp peaks at `3.5rem`, the binding `cqi` arm drops to `11cqi`.
+     *    This is the register for a multi-row stack of FINISHED values
+     *    (e.g. speedtest's complete-screen `ResultStack`), where all rows
+     *    plus surrounding chrome must seat inside a bounded card. The
+     *    `min-block-size` pre-allocation re-derives to match the compact
+     *    rows so the stack reserves no dead air.
+     */
+    register?: "audacious" | "result";
+    /**
      * Row count for the min-block-size pre-allocation. Defaults to 4
      * (the speedtest 4-metric default). The pre-allocation clamp reads
      * `clamp(4rem * rows, 48cqi, 7rem * rows)` so the panel reserves
@@ -64,6 +80,7 @@ const props = withDefaults(defineProps<MetricStackProps>(), {
     containerName: "metric-stack",
     rows: 4,
     as: "div",
+    register: "audacious",
 });
 
 const classes = computed(() => cn("metric-stack", "results-stack", props.class));
@@ -74,6 +91,7 @@ const classes = computed(() => cn("metric-stack", "results-stack", props.class))
         :is="as"
         :class="classes"
         :data-variant="variant"
+        :data-register="register"
         :style="{
             '--metric-stack-rows': String(rows),
             containerName: containerName,
@@ -120,5 +138,35 @@ const classes = computed(() => cn("metric-stack", "results-stack", props.class))
    2-row stack reads at 1.25× to compensate for the missing rows. */
 .metric-stack[data-variant="dpi"] {
     --result-row-scale: 1.25;
+}
+
+/* Compact result register (AE.W1 Cluster A). The default `audacious`
+   register is the poster-scale hero clamp — correct for a single giant
+   number the user watches climb, wrong for a multi-row ledger of
+   finished values that must seat inside a bounded card. The `result`
+   register retunes all three clamp arms — including the binding `cqi`
+   middle arm — down to a compact, scannable register so a 4-row (or
+   2-row, dpi) stack fits the chassis budget with zero clip and zero
+   scroll. The `audacious` default writes none of these tokens, so the
+   poster register is preserved bit-for-bit for every other consumer. */
+.metric-stack[data-register="result"] {
+    --metric-row-value-clamp-min: 2rem;
+    --metric-row-value-clamp-cqi: 11cqi;
+    --metric-row-value-clamp-max: 3.5rem;
+    --metric-row-unit-clamp-min: 0.875rem;
+    --metric-row-unit-clamp-max: 1.5rem;
+
+    /* Re-derive the CLS pre-allocation against the compact register. The
+       default `clamp(4rem×rows, 48cqi, 7rem×rows)` floor is sized for the
+       poster rows; under the result register the rows are ~2.75-4.5rem
+       tall, so the pre-allocation shrinks to match — otherwise the stack
+       reserves a poster-height floor for compact content and the surplus
+       reads as dead air. Scales with `--metric-stack-rows` so the 2-row
+       dpi stack reserves proportionally less than the 4-row default. */
+    min-block-size: clamp(
+        calc(2.75rem * var(--metric-stack-rows, 4)),
+        28cqi,
+        calc(4.5rem * var(--metric-stack-rows, 4))
+    );
 }
 </style>

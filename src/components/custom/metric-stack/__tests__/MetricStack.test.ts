@@ -28,6 +28,24 @@ describe("MetricStack", () => {
         expect(root.attributes("style") || "").toContain("--metric-stack-rows: 4");
         expect(root.attributes("style") || "").toContain("metric-stack");
     });
+
+    it("defaults the register to 'audacious' (the poster-scale hero clamp)", () => {
+        const wrapper = mount(MetricStack);
+        const root = wrapper.get(".metric-stack");
+        expect(root.attributes("data-register")).toBe("audacious");
+    });
+
+    it("mirrors the 'result' register to a data-register attribute", () => {
+        // The compact result register opts a multi-row ledger of finished
+        // values down from the poster clamp so it seats inside a bounded
+        // card — the `[data-register="result"]` selector carries the
+        // retuned clamp tokens.
+        const wrapper = mount(MetricStack, {
+            props: { register: "result" },
+        });
+        const root = wrapper.get(".metric-stack");
+        expect(root.attributes("data-register")).toBe("result");
+    });
 });
 
 describe("MetricRow", () => {
