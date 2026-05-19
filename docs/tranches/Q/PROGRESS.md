@@ -314,3 +314,24 @@ Tag: v1.9.1.
 | close | `b721a0c` | keyframes.js → 2.1.1; `dist/` untracked (gitignored pre-ignore fossil — contract hygiene) |
 
 Substrate-gap referral **Q.Rh-3** filed (ProgressRing/CircularProgress, provisional — W6 evaluates against the ≥2-consumer test). keyframes.js build + typecheck + gh-pages GREEN.
+
+## 2026-05-18 — W6 close (v1.9.2) — Q CLOSED
+
+13-lane strengthened audit + 6 consumer re-audits + π re-probe + precept advance + FINAL.md. 9 agents.
+
+| Lane group | Verdict |
+|---|---|
+| α plan-vs-actual / β substrate-without-consumer | MINOR — all 49 Q IDs ADDRESSED/RETIRED; 3 MINOR bookkeeping items |
+| γ doc-drift / δ idiomatic-gestalt | MINOR — 2 CLAUDE.md numerals fixed inline (42-entry matrix, 37 ui/ barrels); δ CLEAN |
+| ε performance / ι integrity-sweep | CLEAN — bundle within budget; zero agent-attributed mutating git across 7 repos |
+| π visual-runtime | BUILD-VERIFICATION FLOOR — Chrome extension disconnected this session; no pixel confirmation; every fix confirmed present in source + all apps build/boot |
+| 6 consumer re-audits | 5 PASS + 1 FAIL→FIXED — speedtest `<ScrollPane>` BLOCKER caught + fixed in-wave |
+| phantom-class gate | glass-ui + 5 consumers CLEAN; fourier 31 sites pending the handoff patch |
+
+**W6 in-wave remediation** (strengthened audit caught real gaps): speedtest 6-SFC `<ScrollPane>`→`<Card tier="wash">` migration (`d8a004dc`); words/frontend 11-site `glass-default`/`glass-elevated` phantom sweep (`8c82f2b`); keyframes.js gh-pages `outDir` split (`19d1a1b`); the fourier handoff patch corrected to 31 sites.
+
+Precept submodule advanced `3c32fae` (invariants 30-33 + π re-activation + 5 LL entries), pushed; glass-ui pointer bumped. `docs/tranches/Q/FINAL.md` authored — honest residuals declared (fourier + value.js handoff patches; π build-floor; local consumer commits; Q.Rh-1/Q.Rh-3 forward referrals).
+
+Gate: typecheck + build + vitest 379/379 + audit:stash + proof:resolution + proof:theme + profile:budget GREEN.
+
+Tag: v1.9.2. **Q CLOSED.**

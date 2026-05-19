@@ -17,6 +17,15 @@
 >
 > Speedtest reference: `docs/tranches/AC/AC.md` §AC.W6 + §AC.W8 + `docs/tranches/AC/waves/W6{a,b,c,d,e}-*.md` + `docs/tranches/AC/waves/W8.md`. Tags v1.5.0 + v1.5.1 placed retroactively at AC.W6e close.
 
+## 1.9.2—2026-05-18—Q.W6 close (strengthened audit + phantom-class gate + precept advance) — Q CLOSED
+
+Aggregate close ship for the Q tranche. 13-lane W6 audit + 6 consumer re-audits + FINAL.md.
+
+- **invariant-32/33 gate**: `scripts/proof-phantom-classes.mjs` + `.retired-classes.txt` registry — a fail-closed corpus-grep gate for retired CSS class names across the `@mkbabb/*` fleet; `--pre-deletion` mode for cleanup commits. `proof:phantom-classes` npm script + CI wiring.
+- **strengthened audit caught + fixed three real gaps in-wave**: a speedtest BLOCKER (5 dashboard SFCs imported the W3-retired `<ScrollPane>` — migrated to the Card recipe), words/frontend's 8 residual `glass-default`/`glass-elevated` phantom-class sites, and a keyframes.js gh-pages `outDir` clobber.
+- **precept submodule advance** (`3c32fae`): invariants 30-33 codified; `cross-repo-dev-resolution.md` canonical; 5 LESSONS-LEARNED entries; the π visual-runtime lane re-activated (contingent — canonical-when-tooling-available).
+- Q close report: `docs/tranches/Q/FINAL.md`.
+
 ## 1.9.1—2026-05-18—Q.W4 close (style/token co-location + CSS budget rebaseline)
 
 Patch ship. Token co-location + cascade hygiene.

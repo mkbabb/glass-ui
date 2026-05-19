@@ -1,12 +1,18 @@
 From: Q.W4 Lane F — fleet-wide phantom-class consumer sweep
 Subject: [PATCH] fix(cosmetic): retire .glass-{subtle,medium} + .cartoon-card phantom classes
 
-Q.W4 Lane F — fourier-analysis portion. 29 sites across 22 files.
+Q.W4 Lane F — fourier-analysis portion. 31 sites across 23 files.
+(Corrected at Q.W6: the W6 phantom-class corpus-grep gate caught 2
+`.glass-elevated` sites the original 29-site patch missed — see F.1.)
 
-  F.1  9 phantom-glass sites — `.glass-subtle` -> `.glass-wash` (5),
-       `.glass-medium` -> `.glass-quiet` (4). Classes retired from glass-ui
-       at the v0.8.0 ladder rename (`eb9c44c`) / never canonical. Straight
-       template class rename.
+  F.1  11 phantom-glass sites — `.glass-subtle` -> `.glass-wash` (5),
+       `.glass-medium` -> `.glass-quiet` (4), `.glass-elevated` ->
+       `.glass-floating` (2). Classes retired from glass-ui at the v0.8.0
+       ladder rename (`eb9c44c`) / never canonical. Straight template
+       class rename. The 2 `.glass-elevated` sites (PaperSearchDropdown
+       `.paper-search-results`, EquationView `.coeff-popover`) are both
+       floating-overlay surfaces; `floating` is the canonical v0.8.0
+       rename target for the `elevated` ladder rung.
 
   F.2  20 `.cartoon-card` sites across 10 files. The `.cartoon-card`
        *glass-ui* recipe was deleted at C.W5 (`304ac78`); fourier carries a
@@ -73,6 +79,18 @@ diff --git a/web/src/components/paper/MobileFloatingToc.vue b/web/src/components
                  >
                      <!-- Scroll to top -->
                      <button
+diff --git a/web/src/components/paper/search/PaperSearchDropdown.vue b/web/src/components/paper/search/PaperSearchDropdown.vue
+--- a/web/src/components/paper/search/PaperSearchDropdown.vue
++++ b/web/src/components/paper/search/PaperSearchDropdown.vue
+@@ -35,7 +35,7 @@
+         <div
+             v-if="search.isOpen.value && !search.isExpanded.value && search.results.value.length > 0"
+             ref="resultsRef"
+-            class="paper-search-results glass-elevated"
++            class="paper-search-results glass-floating"
+         >
+             <button
+                 v-for="(r, i) in search.results.value"
 diff --git a/web/src/components/visualization/FullscreenViewer.vue b/web/src/components/visualization/FullscreenViewer.vue
 --- a/web/src/components/visualization/FullscreenViewer.vue
 +++ b/web/src/components/visualization/FullscreenViewer.vue
@@ -460,6 +478,15 @@ diff --git a/web/src/components/equation/EquationView.vue b/web/src/components/e
 +                        class="relative eq-card"
                          @mousemove="(e) => onCoeffMove(e, eqCardRef)"
                          @mouseleave="onCoeffLeave"
+@@ -255,7 +259,7 @@
+                         <Transition name="pop">
+                             <div
+                                 v-if="hoveredCoeff && popoverHtml"
+-                                class="coeff-popover glass-elevated"
++                                class="coeff-popover glass-floating"
+                                 :style="{ left: `${popoverPos.x}px`, top: `${popoverPos.y}px` }"
+                             >
+                                 <div class="coeff-popover-inner" v-html="popoverHtml" />
 @@ -298,7 +302,7 @@
                      </div>
 

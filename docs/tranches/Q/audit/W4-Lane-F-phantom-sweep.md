@@ -95,7 +95,7 @@ applies the patch with `git apply --recount --3way`. Verified clean with
 `git apply --check --recount` against the worktree at Q.W4 — all 22 files,
 all hunks apply.
 
-### 3.2 F.1 — phantom-glass per-site spec (9 sites, 7 files)
+### 3.2 F.1 — phantom-glass per-site spec (11 sites, 9 files)
 
 All straight template class renames; no import changes.
 
@@ -105,17 +105,26 @@ All straight template class renames; no import changes.
 | 2 | `paper/MobileFloatingToc.vue:94` | `.floating-toc-bar--search` (search mode) | `glass-medium` | `glass-quiet` |
 | 3 | `paper/MobileFloatingToc.vue:101` | `.floating-toc-bar` (normal mode `<button>`) | `glass-medium` | `glass-quiet` |
 | 4 | `paper/MobileFloatingToc.vue:117` | `.floating-toc-dropdown` | `glass-medium` | `glass-quiet` |
-| 5 | `visualization/FullscreenViewer.vue:54` | `.fs-close` `<button>` | `glass-subtle` | `glass-wash` |
-| 6 | `visualization/EquationPanel.vue:67` | `.eq-panel` root | `glass-subtle` | `glass-wash` |
-| 7 | `visualization/gallery/GallerySearchBar.vue:74` | `.filter-panel` filter drawer | `glass-medium` | `glass-quiet` |
-| 8 | `equation/convergence/ConvergenceLegend.vue:17` | `.legend-overlay` root | `glass-subtle` | `glass-wash` |
-| 9 | `equation/EquationModeToggle.vue:8` | `.eq-toggle` root | `glass-subtle` | `glass-wash` |
+| 5 | `paper/search/PaperSearchDropdown.vue:38` | `.paper-search-results` inline-search dropdown | `glass-elevated` | `glass-floating` |
+| 6 | `visualization/FullscreenViewer.vue:54` | `.fs-close` `<button>` | `glass-subtle` | `glass-wash` |
+| 7 | `visualization/EquationPanel.vue:67` | `.eq-panel` root | `glass-subtle` | `glass-wash` |
+| 8 | `visualization/gallery/GallerySearchBar.vue:74` | `.filter-panel` filter drawer | `glass-medium` | `glass-quiet` |
+| 9 | `equation/convergence/ConvergenceLegend.vue:17` | `.legend-overlay` root | `glass-subtle` | `glass-wash` |
+| 10 | `equation/EquationModeToggle.vue:8` | `.eq-toggle` root | `glass-subtle` | `glass-wash` |
+| 11 | `equation/EquationView.vue:259` | `.coeff-popover` per-coefficient popover | `glass-elevated` | `glass-floating` |
 
 `subtle → wash` (5): all are lightweight inline chrome (page chip, close
 button, panel surface, legend overlay, toggle housing) — `wash` (~0.30α) is
 the faithful lightest-rung replacement. `medium → quiet` (4): all are
 popover/dropdown-class floating surfaces (TOC bars + dropdown, filter drawer)
-— `quiet` (~0.50α), matching the words W-1 mapping.
+— `quiet` (~0.50α), matching the words W-1 mapping. `elevated → floating` (2):
+both are floating-overlay surfaces (the inline search-results dropdown and the
+per-coefficient hover popover) — `floating` is the canonical v0.8.0 rename
+target for the `elevated` ladder rung. **The 2 `elevated` sites were missed by
+the original W4 Lane F 29-site spec — `glass-elevated` was outside the cluster-C2
+`.glass-{subtle,medium}` scope; the Q.W6 phantom-class corpus-grep gate
+(invariant 32) caught them and this spec is corrected to the true 11-site
+phantom-glass count.**
 
 ### 3.3 F.2 — cartoon-card per-site spec (20 sites, 10 files)
 
@@ -178,11 +187,22 @@ The unified diff is written to:
 docs/tranches/Q/audit/W4-Lane-F-fourier.patch
 ```
 
-22 files, 29 sites (9 phantom-glass + 20 cartoon-card). Validated:
+23 files, 31 sites (11 phantom-glass + 20 cartoon-card). Validated:
 
 ```
-git apply --check --recount  →  CLEAN — all 22 files, all hunks apply
+git apply --check --recount  →  CLEAN — all 23 files, all hunks apply
 ```
+
+**Q.W6 correction**: the original W4 Lane F deliverable was 22 files / 29
+sites (9 phantom-glass + 20 cartoon-card). The Q.W6 phantom-class corpus-grep
+gate (`scripts/proof-phantom-classes.mjs`, invariant 32) re-scanned the fourier
+working tree across the full four-name `glass-{subtle,default,medium,elevated}`
+ladder and found 2 `glass-elevated` sites the cluster-C2-scoped W4 spec did not
+enumerate — `paper/search/PaperSearchDropdown.vue:38` (`.paper-search-results`)
+and `equation/EquationView.vue:259` (`.coeff-popover`). Both are migrated
+`glass-elevated → glass-floating` (the v0.8.0 ladder-rename target). The patch
+now covers all 31 sites; the EquationView file-diff gained one hunk, and a new
+`PaperSearchDropdown.vue` file-diff was added.
 
 **Handoff to the fourier team** (the orchestrator relays this):
 
@@ -228,9 +248,9 @@ correctly documents the C.W5 removal of `.cartoon-card` + `.elevated-card`.
 |-------|--------|
 | `grep -rn 'glass-\(subtle\|medium\)' words/frontend/src` | 0 hits (exit 1) — PASS |
 | `npm run build` in words/frontend (vue-tsc + vite) | GREEN — typecheck clean, dist built |
-| fourier patch `git apply --check --recount` | CLEAN — all 22 files apply — PASS |
-| fourier spec coverage | 29/29 sites (9 phantom-glass + 20 cartoon-card) — complete |
-| fourier patch site count vs Qκ/Qψ research | 9 phantom-glass (Qκ F-1+F-2) + 20 cartoon-card (Qψ) — exact match |
+| fourier patch `git apply --check --recount` | CLEAN — all 23 files apply — PASS (Q.W6-corrected) |
+| fourier spec coverage | 31/31 sites (11 phantom-glass + 20 cartoon-card) — complete |
+| fourier patch site count vs corpus-grep gate | 11 phantom-glass + 20 cartoon-card = 31 — matches `proof:phantom-classes` gate count (Q.W6) |
 | glass-ui `index.css:39` doc-comment | already `.cartoon-surface, .paper-texture` (W3 Lane H, `511146f`) — PASS |
 
 ---
@@ -242,8 +262,9 @@ correctly documents the C.W5 removal of `.cartoon-card` + `.elevated-card`.
 - **words/frontend**: 4 `.glass-medium` sites migrated to `.glass-quiet`,
   applied to the clean tree; build + typecheck GREEN. Ready for the
   orchestrator to commit.
-- **fourier-analysis**: 29-site migration (9 phantom-glass + 20 cartoon-card,
-  22 files) authored as a verified unified-diff patch + complete per-site
+- **fourier-analysis**: 31-site migration (11 phantom-glass + 20 cartoon-card,
+  23 files; Q.W6-corrected from the original 29/22) authored as a verified
+  unified-diff patch + complete per-site
   spec. No fourier tree write — patch deliverable handed off for the fourier
   team to apply after committing their WIP.
 - The patch apply-base is the fourier working tree, not HEAD — a documented,

@@ -67,3 +67,12 @@ jobs:
             # and will fail until Q.W1 adds the key — at which point this gate turns green.
             - name: proof:resolution
               run: npm run proof:resolution
+            # Q.W6 — phantom-class corpus-grep gate (invariants 32 + 33).
+            # Greps every name in `.retired-classes.txt` across glass-ui's own
+            # src/ + demo/ AND every @mkbabb/* consumer. Sibling consumer repos
+            # do not exist on the GH Actions runner — their roots are skipped
+            # gracefully (existsSync guard); the glass-ui src/+demo/ sweep DOES
+            # run every PR and closes the "did a retired class leak back into
+            # the substrate or its demo?" question.
+            - name: proof:phantom-classes
+              run: npm run proof:phantom-classes
