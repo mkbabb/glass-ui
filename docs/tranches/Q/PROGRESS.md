@@ -232,3 +232,23 @@ Implementation dispatch authorized. W0 opened — 3 lanes, agent-dispatched para
 Gate matrix: typecheck + build + vitest (372/372) + audit:stash GREEN. `proof:resolution` expected-FAIL at W0 (fleet mid-desync; W1 makes it pass). Precept submodule file authored, held uncommitted until W6 codification.
 
 Tag: v1.8.5.
+
+## 2026-05-18 — W1 HEADLINE close (v1.8.6)
+
+Fleet-wide consumer un-break. keyframes.js keystone landed FIRST + verified, then 6 parallel lanes (disjoint repos).
+
+| Lane | Repo | Outcome |
+|---|---|---|
+| A+H | keyframes.js | `exports["."]` 4-key shape (`default` key added); self-alias dropped; `resolve.conditions` + `fs.allow`. Build + typecheck GREEN. Committed `6af80ad` |
+| B | glass-ui | `@mkbabb/value.js` phantom devDep retired (grep-proven zero imports); `default` exports key; `resolve.conditions` in vite + vitest config. typecheck + vitest 372/372 GREEN |
+| D | fourier-analysis | resolver sweep; Lane J premise STALE — fourier has zero `extractAnimationOptions` / `@mkbabb/value.js` usage; real dep was keyframes.js (fixed by keystone). Build GREEN, dev-server renders. Committed `926ca6a` |
+| E | bbnf-buddy | resolver sweep. Build + typecheck GREEN (3 keyframes TS2307 → 0). Committed `a0db827` |
+| F | words/frontend | mode-aware resolver sweep. Build + typecheck GREEN. Committed `e05e5bf` |
+| G | speedtest | resolver sweep + dead manualChunks `@mkbabb/*` branch removal. Build + typecheck GREEN. Committed `b33f58b0` |
+| I | value.js | picker 0×0 root-caused (a11y `<main>` landmark broke the percentage-height chain) + fixed via `.pane-main` flex-stretch idiom; `default` exports key. Build GREEN. Lane J: `extractAnimationOptions` confirmed already exported (value.js Tranche A) |
+
+**value.js commit deferred-to-coordination**: value.js master carries 58 files of the value.js team's uncommitted in-flight tranche work (`App.vue` a11y pass entangled with the picker fix). Per risk-7 (value.js team requested Q not write value.js), the W1 picker + `default`-key fix is APPLIED + VERIFIED but handed over as a patch (`docs/tranches/Q/audit/W1-Lane-I-valuejs.patch`) rather than committed — committing would entangle the team's work. The WIP branch `w.w2.1-value-js-prebuild` is left in place (deleting another team's branch is out of Q's cross-repo scope; Q-chron-1's *finding* — WIP is a master-ancestor — stands).
+
+Gate: `proof:resolution` PASS (was expected-FAIL at W0); typecheck + build + vitest 372/372 + audit:stash GREEN. Consumer repos committed locally; not pushed (cross-repo push held).
+
+Tag: v1.8.6.

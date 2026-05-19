@@ -61,3 +61,19 @@ The retrospective folder + tranche attribution is a Q wave deliverable. The coho
 | round-2 | 6-agent consumer audit (read-only) |
 | implementation waves | TBD per Q.md synthesis; the consumer-breakage remediation is the headline — substrate fix at glass-ui + consumer re-writes |
 | close | strengthened audit + consumer re-audit + visual-runtime re-probe + FINAL.md |
+
+## §6 — Q.W1 close — fleet un-break state (2026-05-18)
+
+The cross-repo dev-resolution desync is closed. `proof:resolution` PASSES across the constellation.
+
+| Repo | W1 commit | State |
+|---|---|---|
+| glass-ui | (W1 close) | phantom devDep retired; publisher `default` key; resolver config |
+| keyframes.js | `6af80ad` | fleet keystone — `exports` 4-key shape; build GREEN |
+| fourier-analysis | `926ca6a` | resolver sweep; builds + paints |
+| bbnf-buddy | `a0db827` | resolver sweep; builds |
+| words/frontend | `e05e5bf` | resolver sweep; builds |
+| speedtest | `b33f58b0` | resolver sweep + manualChunks cleanup; builds |
+| value.js | (patch — uncommitted) | picker 0×0 fixed + `default` key APPLIED; handed over as `W1-Lane-I-valuejs.patch` — value.js team owns the commit (58-file in-flight tree) |
+
+All 6 consumer repos build + typecheck GREEN. Consumer commits are local (not pushed — cross-repo push held pending explicit authorization).

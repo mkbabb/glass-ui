@@ -1,0 +1,105 @@
+diff --git a/demo/@/styles/style.css b/demo/@/styles/style.css
+index 3bde292..dcc29ff 100644
+--- a/demo/@/styles/style.css
++++ b/demo/@/styles/style.css
+@@ -119,8 +119,27 @@
+     }
+ }
+ 
+-.pane-container {
++/* The a11y <nav> / <main> landmarks are the direct grid items of .app-layout.
++ * .pane-main owns grid row 2 and re-establishes the definite-height context
++ * .pane-container's `height: 100%` resolves against. Without it the bare
++ * <main> is auto-height (the lg+ `align-items: start` suppresses the stretch),
++ * the percentage-height chain collapses, and the pane renders 0×0. */
++.app-layout > nav {
++    grid-row: 1;
++}
++.pane-main {
+     grid-row: 2;
++    /* Fill the 1fr track regardless of the lg+ `align-items: start`, so the
++     * downstream percentage-height chain has a definite basis. */
++    align-self: stretch;
++    display: flex;
++    flex-direction: column;
++    /* flex-min-size idiom — let the column shrink inside the grid track. */
++    min-height: 0;
++    min-width: 0;
++}
++
++.pane-container {
+     display: grid;
+     grid-template-columns: 1fr;
+     gap: 1rem;
+@@ -130,6 +149,7 @@
+     position: relative;
+     height: 100%;
+     max-height: var(--content-max-h);
++    min-height: 0;
+ }
+ @media (min-width: 1024px) {
+     .pane-container {
+diff --git a/demo/color-picker/App.vue b/demo/color-picker/App.vue
+index 7e1f85a..7c5ca48 100644
+--- a/demo/color-picker/App.vue
++++ b/demo/color-picker/App.vue
+@@ -2,20 +2,27 @@
+     <SvgFilters />
+ 
+     <div class="app-layout">
++        <!-- W5-a11y: decorative aurora canvas — hidden from AT -->
+         <canvas
+             ref="atmosphereCanvas"
+             class="absolute inset-0 w-full h-full pointer-events-none"
++            aria-hidden="true"
+         />
+-        <Dock
+-            :link-copied="linkCopied"
+-            :edit-target="activeEditTarget"
+-            :action-bar="colorPickerRef?.actionBarContext ?? null"
+-            :generic-action-bar="genericActionBar"
+-            @share-link="shareLink"
+-            @commit-edit="colorPickerRef?.commitEdit(); viewManager.mobilePaneIndex.value = 1"
+-            @cancel-edit="colorPickerRef?.cancelEdit(); viewManager.mobilePaneIndex.value = 1"
+-        />
+-
++        <!-- W5-a11y: nav landmark for the dock -->
++        <nav aria-label="Application navigation">
++            <Dock
++                :link-copied="linkCopied"
++                :edit-target="activeEditTarget"
++                :action-bar="colorPickerRef?.actionBarContext ?? null"
++                :generic-action-bar="genericActionBar"
++                @share-link="shareLink"
++                @commit-edit="colorPickerRef?.commitEdit(); viewManager.mobilePaneIndex.value = 1"
++                @cancel-edit="colorPickerRef?.cancelEdit(); viewManager.mobilePaneIndex.value = 1"
++            />
++        </nav>
++
++        <!-- W5-a11y: main landmark for pane content -->
++        <main class="pane-main" aria-label="Color tool panes">
+         <!-- Two-pane grid -->
+         <div
+             :class="[
+@@ -61,6 +68,7 @@
+                 />
+             </div>
+         </div>
++        </main>
+     </div>
+ 
+     <!-- Global modals -->
+diff --git a/package.json b/package.json
+index 81d6587..c559ebe 100644
+--- a/package.json
++++ b/package.json
+@@ -23,7 +23,8 @@
+         ".": {
+             "development": "./src/index.ts",
+             "types": "./dist/index.d.ts",
+-            "import": "./dist/value.js"
++            "import": "./dist/value.js",
++            "default": "./dist/value.js"
+         }
+     },
+     "files": [

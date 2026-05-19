@@ -1,6 +1,6 @@
 {
     "name": "@mkbabb/glass-ui",
-    "version": "1.8.5",
+    "version": "1.8.6",
     "description": "Glassmorphic design system — Vue 3.5 components, reka-ui primitives, Tailwind CSS v4 tokens",
     "license": "MIT",
     "type": "module",
@@ -139,7 +139,8 @@
         ".": {
             "development": "./src/index.ts",
             "types": "./dist/index.d.ts",
-            "import": "./dist/glass-ui.js"
+            "import": "./dist/glass-ui.js",
+            "default": "./dist/glass-ui.js"
         },
         "./tokens": {
             "development": "./src/tokens.ts",
@@ -398,7 +399,6 @@
     },
     "devDependencies": {
         "@mkbabb/keyframes.js": "file:../keyframes.js",
-        "@mkbabb/value.js": "file:../value.js",
         "@tailwindcss/postcss": "^4.1.11",
         "@tailwindcss/vite": "^4.2.2",
         "@types/node": "^24.0.0",
