@@ -2,6 +2,7 @@
 import type { HTMLAttributes } from "vue";
 import { Primitive, type PrimitiveProps } from "reka-ui";
 import { cn } from "../../../utils";
+import { useStalePropWarning } from "../_shared/useStalePropWarning";
 
 /**
  * The five-tier glass surface ladder. Maps 1:1 to `.glass-{tier}` in glass.css
@@ -32,6 +33,12 @@ const props = withDefaults(defineProps<Props>(), {
     grain: true,
     as: "div",
 });
+
+// invariant 31 — dev-WARN on stale prop names (`variant`, `flush`). Card's
+// surface is driven entirely by `tier`/`shadow`/`grain`; a swallowed
+// `variant="pane"` silently falls back to `tier:"resting" + shadow:true`
+// (the Qα R3 hard-drop-shadow regression). Production builds are silent.
+useStalePropWarning("Card");
 </script>
 
 <template>

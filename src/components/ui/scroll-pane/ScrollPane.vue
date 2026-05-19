@@ -2,6 +2,7 @@
 import type { HTMLAttributes } from "vue";
 import { Primitive, type PrimitiveProps } from "reka-ui";
 import { cn } from "../../../utils";
+import { useStalePropWarning } from "../_shared/useStalePropWarning";
 
 /**
  * Scroll pane — sibling primitive replacing the retired `<Card variant="pane">`.
@@ -22,6 +23,12 @@ const props = withDefaults(defineProps<Props>(), {
     shadow: true,
     as: "div",
 });
+
+// invariant 31 — dev-WARN on stale prop names. ScrollPane is the
+// replacement primitive for the retired `<Card variant="pane" flush>`; a
+// consumer mid-migration who keeps `variant=`/`flush` would have it
+// silently swallowed. Production builds are silent.
+useStalePropWarning("ScrollPane");
 </script>
 
 <template>

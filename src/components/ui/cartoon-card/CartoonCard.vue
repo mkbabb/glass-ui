@@ -2,6 +2,7 @@
 import type { HTMLAttributes } from "vue";
 import { Primitive, type PrimitiveProps } from "reka-ui";
 import { cn } from "../../../utils";
+import { useStalePropWarning } from "../_shared/useStalePropWarning";
 
 /**
  * Cartoon card — sibling primitive replacing the retired `<Card variant="cartoon">`.
@@ -17,6 +18,12 @@ interface Props extends PrimitiveProps {
 }
 
 const props = defineProps<Props>();
+
+// invariant 31 — dev-WARN on stale prop names. CartoonCard is the
+// replacement primitive for the retired `<Card variant="cartoon">`; a
+// consumer mid-migration who keeps `variant=`/`flush` would have it
+// silently swallowed. Production builds are silent.
+useStalePropWarning("CartoonCard");
 </script>
 
 <template>

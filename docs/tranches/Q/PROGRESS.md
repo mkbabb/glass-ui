@@ -252,3 +252,16 @@ Fleet-wide consumer un-break. keyframes.js keystone landed FIRST + verified, the
 Gate: `proof:resolution` PASS (was expected-FAIL at W0); typecheck + build + vitest 372/372 + audit:stash GREEN. Consumer repos committed locally; not pushed (cross-repo push held).
 
 Tag: v1.8.6.
+
+## 2026-05-18 — W2 close (v1.8.7)
+
+Card cohesion. 2 lanes, parallel (glass-ui + bbnf-buddy).
+
+| Lane | Outcome |
+|---|---|
+| A | `Card` props fail-explicit (invariant 31, dev-WARN posture). Shared `_shared/useStalePropWarning.ts` composable — `STALE_PROP_RECIPES` extensible const + `import.meta.env.DEV`-gated `console.warn` naming prop/component/canonical-recipe. Sibling audit: Class A (swallowed prop NAME) = Card + ScrollPane + CartoonCard, all 3 fixed; Class B (bad value to declared `variant`) = 11 primitives, already TS-guarded, out of scope. +5 tests. typecheck + vitest 377/377 GREEN |
+| C | bbnf-buddy 6 `<Card variant="pane" flush>` sites → `<Card tier="wash" :shadow="false" :grain="false">` (+ `class="p-0"` on the 3 CardContent-bearing sites). No `overflow-auto`/`tabindex` needed — no Card root is itself a scroll region. 7th cartoon site untouched (W4 Lane G). Build + typecheck GREEN; `variant="pane"` grep ZERO |
+
+Note: W2 Lane A's dev-WARN was added to ScrollPane + CartoonCard too — both are retired at W3 Lane H; the shared composable persists. bbnf-buddy committed `<lane-C>` (local).
+
+Gate: typecheck + build + vitest 377 + audit:stash + proof:resolution GREEN. Tag: v1.8.7.
