@@ -265,3 +265,22 @@ Card cohesion. 2 lanes, parallel (glass-ui + bbnf-buddy).
 Note: W2 Lane A's dev-WARN was added to ScrollPane + CartoonCard too — both are retired at W3 Lane H; the shared composable persists. bbnf-buddy committed `<lane-C>` (local).
 
 Gate: typecheck + build + vitest 377 + audit:stash + proof:resolution GREEN. Tag: v1.8.7.
+
+## 2026-05-18 — W3 close (v1.9.0 minor)
+
+Core-feature cohesion + substrate REVERTs + component DEMOTE. 8 lanes, 2 batches (batch-1 A/B/D/F/G parallel, batch-2 C/E/H parallel — Lane B before Lane H per the cartoon-surface ordering).
+
+| Lane | Outcome |
+|---|---|
+| A | dock `data-density` block migrated utilities.css → dock.css; cascade-order dependency removed |
+| B | `.glass-cartoon` → decoration-only `@utility cartoon-surface` in cards.css; dead `--glass-*-cartoon` phantom tokens dropped; glass.css holds only the 5-rung ladder |
+| C | dropdown scoped-style → `floating-panel.css` (menu family uniformly global-CSS; `var(--dropdown-menu-font, inherit)` preserved); `beec35e` dock hit-test duplication consolidated (both `.dock-layer` + `.dock-layer-item-host` are LIVE — the commit's "legacy" label was wrong; shared contract de-duplicated, neither deleted) |
+| D | token-home rule authored in DESIGN.md (`§<feature>` block in tokens.css; recipes consume from the feature stylesheet) |
+| E | `.rainbow-vivid` + `.rainbow-pastel` + `.btn-interactive` re-promoted as `@utility` recipes; D.W2.D `b0debec` audit-gap diagnosed (corpus omitted keyframes.js) |
+| F | redundant `typography.css` `:root` font-stack literals retired (`6ce14e5`); consumer `@theme` overrides flow through unshadowed |
+| G | IconTooltip `inline-flex` wrap-span retired (Path C — gestalt); WCAG 44×44 routed through each callsite's own contract; orphan `--icon-tooltip-hit-area` token retired |
+| H | `<ScrollPane>` + `<CartoonCard>` retired (clean break); Card gains orthogonal `surface` prop; barrels/CLAUDE.md/`api` updated (`ui/` 44→42 dirs); both demo stories folded into the Card story (+ the ScrollPane `tabindex="0"` a11y fix) |
+
+Gate: typecheck + build + vitest 379/379 + audit:stash + proof:resolution + proof:theme GREEN. Playwright visual probe consolidated into the W6 binding π re-probe.
+
+Tag: v1.9.0.

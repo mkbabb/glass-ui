@@ -17,6 +17,26 @@
 >
 > Speedtest reference: `docs/tranches/AC/AC.md` §AC.W6 + §AC.W8 + `docs/tranches/AC/waves/W6{a,b,c,d,e}-*.md` + `docs/tranches/AC/waves/W8.md`. Tags v1.5.0 + v1.5.1 placed retroactively at AC.W6e close.
 
+## 1.9.0—2026-05-18—Q.W3 close (core-feature cohesion + substrate REVERTs + component DEMOTE)
+
+Minor ship. Substrate transposition + three consumer-recovery reverts + two component retirements.
+
+- **Component DEMOTE**: `<ScrollPane>` + `<CartoonCard>` retired (both styling-only, zero-behaviour, single-consumer — fail L invariant 8; lifted out of Card's `variant` enum together at `e017d53`, retire together). `Card` gains an orthogonal `surface?: "glass" | "cartoon"` prop (default `"glass"`). `ui/` package count 43 → 41. Clean break — no aliases.
+- **Substrate REVERTs** (consumer-recovery): `.rainbow-vivid` / `.rainbow-pastel` / `.btn-interactive` re-promoted as `@utility` recipes (the `b0debec` D.W2.D retiral missed keyframes.js); redundant `typography.css` `:root` font-stack literals retired (`6ce14e5` shadowed consumer `@theme` overrides); IconTooltip `inline-flex` wrap-span retired (`25e1b5a` broke `w-full` descendants — keyframes PlaybackRibbon Slider) — WCAG 44×44 routed through each callsite's own contract.
+- **Cohesion**: dock `data-density` consolidated to `dock.css` (cascade-order dependency removed); `.glass-cartoon` re-modelled → decoration-only `@utility cartoon-surface` in `cards.css` (dead `--glass-*-cartoon` phantom tokens dropped); dropdown scoped-style migrated to `floating-panel.css` (menu family now uniformly global-CSS); `beec35e` dock hit-test duplication consolidated; token-home rule documented in DESIGN.md.
+
+## 1.8.7—2026-05-18—Q.W2 close (Card props fail-explicit + bbnf-buddy variant migration)
+
+`Card` (and siblings) dev-WARN on unknown/stale props via `_shared/useStalePropWarning.ts` (invariant 31, dev-WARN posture — `import.meta.env.DEV`-gated, production-silent). bbnf-buddy's 6 `<Card variant="pane">` sites migrated to the canonical `tier="wash" :shadow="false" :grain="false"` recipe.
+
+## 1.8.6—2026-05-18—Q.W1 close (fleet-wide consumer un-break)
+
+The `@mkbabb/value.js` phantom devDep (P.W5 band-aid) retired; glass-ui's `exports["."]` gains the `default` terminal key; explicit `resolve.conditions` in vite + vitest config. Pairs with the keyframes.js `exports` keystone fix + a 5-consumer resolver sweep that closed the cross-repo dev-resolution desync.
+
+## 1.8.5—2026-05-18—Q.W0 close (cross-repo dev-resolution contract + proof gate)
+
+`scripts/proof-resolution-contract.mjs` fail-closed gate + `proof:resolution` npm script + CI wiring. Contract documented at `docs/precepts/cross-repo-dev-resolution.md`. Post-P shadow-cohort retrospective authored at `docs/tranches/AB+2/`.
+
 ## 1.8.4—2026-05-16—P.W6 close (13-lane audit + PD-1/PD-2 archive + precept submodule advance + FINAL.md) — P CLOSED
 
 Aggregate close ship for the P tranche. Documentation + audit ledger + precept invariants 28/29 + FINAL.md. Zero source-API changes; the only code-adjacent edit is the CLAUDE.md /api count resync (66 / 62 types + 4 constants).

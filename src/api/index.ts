@@ -158,7 +158,7 @@ export type {
 // overlay) parallel to `CardTier` — distinct because GlassPanel paints the
 // glass substrate directly while Card composes the same ladder via the
 // `tier` prop.
-export type { CardTier } from "../components/ui/card";
+export type { CardTier, CardSurface } from "../components/ui/card";
 export type { GlassPanelVariant } from "../components/custom/glass-panel";
 export type { InstrumentChassisPhase } from "../components/custom/instrument-chassis";
 export type { ToastVariant } from "../components/ui/toast";

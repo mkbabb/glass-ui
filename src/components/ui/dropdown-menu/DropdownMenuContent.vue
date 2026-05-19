@@ -40,9 +40,3 @@ const dockContext = useOptionalDockContext()
     </DropdownMenuContent>
   </DropdownMenuPortal>
 </template>
-
-<style scoped>
-.dropdown-menu-content {
-    font-family: var(--dropdown-menu-font, inherit);
-}
-</style>

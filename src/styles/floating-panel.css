@@ -18,3 +18,17 @@
         @apply animate-floating-panel-in;
     }
 }
+
+/* Dropdown-menu font knob (Q.W3 Lane C / Qβ-F3).
+   Migrated out of the lone scoped `<style>` blocks on
+   `DropdownMenuContent.vue` + `DropdownMenuSubContent.vue` — those were the
+   only scoped styles in an otherwise fully-global menu family, so the family
+   is now uniformly global-CSS. The `--dropdown-menu-font` token is the
+   consumer-facing knob (value.js overrides it to `var(--font-mono)`); the
+   `, inherit` fall-through MUST be preserved verbatim per the Qθ binding
+   constraint. Unlayered, like the retired scoped block — no other rule sets
+   `font-family` on these surfaces, so the cascade effect is identical. */
+.dropdown-menu-content,
+.dropdown-sub-content {
+    font-family: var(--dropdown-menu-font, inherit);
+}

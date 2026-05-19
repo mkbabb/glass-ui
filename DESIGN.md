@@ -28,6 +28,36 @@ Tokens live in `src/styles/tokens.css` under `:root`, with `.dark` overrides. Co
 @variant dark (&:where(.dark, .dark *));
 ```
 
+### Feature token home rule (Q-coh-4)
+
+**Feature tokens live in `tokens.css` under a `§<feature>` block. Feature recipes consume them from the feature's own stylesheet.**
+
+Rationale: tokens.css is the single consumer-overridable contract surface. When a feature's knobs are in tokens.css and its recipes are in the feature's CSS file, every override site is predictable—consumers know to look in tokens.css, and the feature stylesheet is free of raw literals. Splitting token assignments between tokens.css and a second file (utilities.css, dock.css, etc.) creates a cascade-order dependency that is silent and fragile; the W3 dock split-brain (Qβ-F1 / Qβ-F4) is the canonical failure mode.
+
+The rule has two parts:
+
+1. **Token definition belongs in `tokens.css`** under the named `§<feature>` block (`§16 TIMELINE`, `§10 DOCK GEOMETRY`, etc.). This is the single place consumers override.
+2. **Recipe consumption belongs in the feature's stylesheet** (`dock.css`, `cards.css`, the feature SFC's non-scoped `<style>` block for portal contracts, etc.). The recipe reads `var(--feature-token)` from the cascade; it never hardcodes the value.
+
+**Worked example — timeline vs. dock drift.** Timeline is the model:
+
+```
+tokens.css     §16 TIMELINE      ← --timeline-dot-size, --timeline-scrubber-height, …
+GlassTimeline.vue (scoped)       ← reads var(--timeline-dot-size) etc.; no literals
+```
+
+The pre-Q3 dock was the violation:
+
+```
+tokens.css     §10 DOCK GEOMETRY ← --dock-active-*, --dock-touch-target
+dock.css       (density rungs)   ← --dock-padding-*, --dock-control-size, …
+utilities.css  (density rungs)   ← --dock-tab-h-*, --dock-label-size  ← SPLIT-BRAIN
+```
+
+W3 Lane A consolidates the utilities.css density assignments into dock.css, making dock match the timeline shape.
+
+**Forward reference — W4 token promotions.** The metric-stack value-clamp tokens (`--metric-stack-value-clamp-*`) and the timeline dot-fill tokens (`--timeline-dot-fill`, `--timeline-dot-stroke`) that land in W4 are required to follow this rule: they define in tokens.css under the relevant `§<feature>` block, and the feature stylesheet or SFC reads them. No new tokens may be assigned inside utilities.css or a secondary feature file.
+
 ---
 
 ## Duration

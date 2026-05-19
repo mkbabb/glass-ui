@@ -14,18 +14,24 @@ import { IconTooltip } from "../../../src/components/custom/icon-tooltip";
     <StoryPage>
         <StorySection
             label="canonical pattern"
-            blurb="A wrapper around <Tooltip> with auto-provider + baked-in font-display + text-base content typography. The trigger is the slotted icon; the text prop drives the floating label."
+            blurb="A wrapper around <Tooltip> with auto-provider + baked-in font-display + text-base content typography. The slotted child IS the trigger — a bare decorative glyph carries its own WCAG 2.5.5 (44×44) hit-area via a min-h-11 min-w-11 inline-flex host."
         >
             <ShowcaseFrame pad="lg">
                 <div class="flex items-center gap-6">
                     <IconTooltip text="Spread controls how widely the field disperses.">
-                        <Info class="size-icon-sm text-muted-foreground" />
+                        <span class="inline-flex min-h-11 min-w-11 cursor-help items-center justify-center">
+                            <Info class="size-icon-sm text-muted-foreground" />
+                        </span>
                     </IconTooltip>
                     <IconTooltip text="Bloom is the diffusion radius of the highlight.">
-                        <HelpCircle class="size-icon-md text-muted-foreground" />
+                        <span class="inline-flex min-h-11 min-w-11 cursor-help items-center justify-center">
+                            <HelpCircle class="size-icon-md text-muted-foreground" />
+                        </span>
                     </IconTooltip>
                     <IconTooltip text="Reduces motion when the user prefers it.">
-                        <AlertTriangle class="size-icon-lg text-warning" />
+                        <span class="inline-flex min-h-11 min-w-11 cursor-help items-center justify-center">
+                            <AlertTriangle class="size-icon-lg text-warning" />
+                        </span>
                     </IconTooltip>
                 </div>
             </ShowcaseFrame>

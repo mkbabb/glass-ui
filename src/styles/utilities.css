@@ -366,44 +366,11 @@
         letter-spacing: 0.1em;
     }
 
-    /* ── Dock tab-button density-keyed height (R3-spec / audit-E P0-3) ──
-       The four bare DockIconButton consumers solved their density-keyed
-       height via `--dock-control-size` (set per density tier in dock.css);
-       DockTabButton's analogous knob lives here so the tab-button row no
-       longer free-floats to the glyph + padding sum. Compact density lands
-       at 32px to match the deployed product's bottom-dock height. */
-    .glass-dock[data-density="compact"] {
-        --dock-tab-h-compact: 32px;
-        --dock-tab-h: var(--dock-tab-h-compact);
-    }
-    .glass-dock[data-density="comfortable"] {
-        --dock-tab-h-comfortable: 38px;
-        --dock-tab-h: var(--dock-tab-h-comfortable);
-    }
-    .glass-dock[data-density="spacious"] {
-        --dock-tab-h-spacious: 44px;
-        --dock-tab-h: var(--dock-tab-h-spacious);
-    }
-    .glass-dock[data-density="audacious"] {
-        --dock-tab-h-audacious: var(--dock-density-audacious-tab-min-height, 3.5rem);
-        --dock-tab-h: var(--dock-tab-h-audacious);
-    }
-
-    /* ── Density-audacious mobile carve (R3-spec / audit-D D-Rec-5) ──
-       The audacious dock dock-label-size knob: at narrow viewports the
-       label glyphs need to compress so the audacious chrome doesn't
-       overflow its host. The token reads `≤16px at <480` and `14–15px at
-       480–719`; consumer dock label spans bind `font-size: var(--dock-label-size)`. */
-    @media (max-width: 479px) {
-        .glass-dock[data-density="audacious"] {
-            --dock-label-size: 14px;
-        }
-    }
-    @media (min-width: 480px) and (max-width: 719px) {
-        .glass-dock[data-density="audacious"] {
-            --dock-label-size: 15px;
-        }
-    }
+    /* Q.W3 Lane A — the `.glass-dock[data-density="…"]` density rungs that
+       set `--dock-tab-h` + `--dock-label-size` were consolidated into
+       `dock.css` (their canonical dock-styles home). They formerly lived
+       here and resolved only by the index.css import order (utilities.css
+       after dock.css); the cascade-order dependency is now gone. */
 
     /* ── Input bar — glassmorphic inline input container ──
        Composes the canonical `floating` glass rung (--glass-bg-floating
@@ -629,6 +596,94 @@
         &:hover::after {
             animation: sparkle-sweep var(--duration-sparkle) var(--ease-out-expo);
         }
+    }
+}
+
+/* ── Rainbow gradient backgrounds (Q.W3 Lane E re-promote) ──────────────
+   `.rainbow-vivid` + `.rainbow-pastel` paint a left-to-right 7-stop spectrum
+   from the canonical `--rainbow-*` / `--rainbow-pastel-*` token families
+   (tokens.css §14). They were retired at `b0debec` (D.W2.D, 2026-04-30)
+   under a zero-consumer audit that did not include keyframes.js in its
+   sweep corpus — keyframes.js's `AnimationMenuBar.vue` round play button
+   composes `rainbow-vivid` (playing) / `rainbow-pastel` (idle) and silently
+   lost its gradient when the recipes left the library. The `--rainbow-*`
+   color tokens survived the retiral; only the class recipes were dropped.
+
+   Re-promoted as `@utility` recipes — the token half is canonical, so the
+   class form that paints it belongs alongside it. Not a backwards-compat
+   alias: it is a substrate REVERT, the revert IS the consumer rediscovery
+   (≥ 1 consumer exists post-revert, satisfying L invariant 8). Faithful
+   to the pre-`b0debec` recipe bodies. */
+@utility rainbow-vivid {
+    background: linear-gradient(
+        to right,
+        var(--rainbow-red),
+        var(--rainbow-orange),
+        var(--rainbow-yellow),
+        var(--rainbow-green),
+        var(--rainbow-blue),
+        var(--rainbow-indigo),
+        var(--rainbow-violet)
+    );
+}
+
+@utility rainbow-pastel {
+    background: linear-gradient(
+        to right,
+        var(--rainbow-pastel-red),
+        var(--rainbow-pastel-orange),
+        var(--rainbow-pastel-yellow),
+        var(--rainbow-pastel-green),
+        var(--rainbow-pastel-blue),
+        var(--rainbow-pastel-indigo),
+        var(--rainbow-pastel-violet)
+    );
+}
+
+/* ── Interactive-button four-state recipe (Q.W3 Lane E re-promote) ───────
+   `.btn-interactive` carries the canonical "Button-with-spring-hover"
+   four-state contract — transition + hover-scale (`--scale-hover`) +
+   active-press (`--scale-press`) + disabled-opacity (`--opacity-disabled`)
+   + focus-ring fade-in. Same shape as `.btn-audacious` (a composition-only
+   recipe a Button variant opts into). Retired at `b0debec` (D.W2.D)
+   alongside the rainbow recipes under the same incomplete audit corpus;
+   keyframes.js consumes it at 7 sites (CubeScene, EasingScene, demo/cube,
+   AnimationControlsGroup RIBBON_BUTTON_CLASS, PlaybackRibbon Reverse).
+
+   The Button primitive's own variants emit the four states except
+   `hover:scale-*` — `.btn-interactive` is the canonical opt-in that adds
+   the spring-hover lift. Faithful to the pre-`b0debec` recipe body. */
+@utility btn-interactive {
+    transition:
+        background-color var(--duration-fast) var(--ease-standard),
+        color var(--duration-fast) var(--ease-standard),
+        transform var(--duration-fast) var(--ease-standard),
+        opacity var(--duration-fast) var(--ease-standard);
+
+    &:hover {
+        transform: scale(var(--scale-hover));
+    }
+
+    &:active {
+        transform: scale(var(--scale-press));
+    }
+
+    &:disabled {
+        opacity: var(--opacity-disabled);
+        pointer-events: none;
+    }
+
+    &:focus-visible {
+        box-shadow: var(--focus-ring-shadow);
+        outline: none;
+        /* Fade in; base state has no box-shadow transition → instant
+           removal */
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            color var(--duration-fast) var(--ease-standard),
+            transform var(--duration-fast) var(--ease-standard),
+            opacity var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard);
     }
 }
 

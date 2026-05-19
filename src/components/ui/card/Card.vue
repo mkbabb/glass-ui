@@ -16,9 +16,24 @@ import { useStalePropWarning } from "../_shared/useStalePropWarning";
  */
 export type CardTier = "wash" | "quiet" | "resting" | "floating" | "overlay";
 
+/**
+ * Surface decoration register — orthogonal to `tier`/`shadow`/`grain`.
+ *
+ *   glass    — the tier's plain glass rung (default)
+ *   cartoon  — the Memphis-sticker decoration layered on top of the resolved
+ *              tier: 2px border, offset-stamp shadow, hover-lift. Composes onto
+ *              ANY tier; the retired `<CartoonCard>` was `tier="quiet" surface="cartoon"`.
+ */
+export type CardSurface = "glass" | "cartoon";
+
 interface Props extends PrimitiveProps {
     /** Surface tier; selects one rung of the glass ladder. Default `resting`. */
     tier?: CardTier;
+    /** Surface decoration register. `glass` (default) renders the tier's glass
+     *  rung; `cartoon` overlays the `cartoon-surface` decoration utility (2px
+     *  border, offset-stamp shadow, hover-lift). Orthogonal to `tier`/`shadow`/
+     *  `grain` — exactly like `shadow` and `grain`; NOT a `tier` rung. */
+    surface?: CardSurface;
     /** Surface drop shadow via `--shadow-card`. Off for cards nested inside cards. */
     shadow?: boolean;
     /** `::after` paper-grain overlay. Off for scroll panes (the grain conflicts
@@ -29,6 +44,7 @@ interface Props extends PrimitiveProps {
 
 const props = withDefaults(defineProps<Props>(), {
     tier: "resting",
+    surface: "glass",
     shadow: true,
     grain: true,
     as: "div",
@@ -45,6 +61,7 @@ useStalePropWarning("Card");
     <Primitive
         data-slot="card"
         :data-tier="tier"
+        :data-surface="surface"
         :data-grain="grain"
         :as="as"
         :as-child="asChild"
@@ -52,7 +69,8 @@ useStalePropWarning("Card");
             cn(
                 'rounded-card text-card-foreground scrollbar-hidden',
                 `glass-${tier}`,
-                shadow && 'shadow-[var(--shadow-card)]',
+                surface === 'cartoon' && 'cartoon-surface',
+                shadow && surface === 'glass' && 'shadow-[var(--shadow-card)]',
                 !grain && '[&::after]:hidden',
                 props.class,
             )

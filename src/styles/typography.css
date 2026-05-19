@@ -173,7 +173,18 @@
 }
 
 :root {
-    /* Font stacks.
+    /* Font family tokens.
+
+       `--font-serif`, `--font-display`, and `--font-mono` are NOT declared
+       here. Their canonical source-of-truth lives in tokens.css
+       (`--font-stack-serif`, `--font-stack-display`, `--font-stack-mono`),
+       bridged to Tailwind utilities via the `@theme` block in theme.css
+       (`--font-serif: var(--font-stack-serif)` etc.). Declaring them here
+       as `:root` literals would shadow any consumer `@theme` override because
+       un-layered `:root` declarations win over `@layer theme { :root }` in
+       the Tailwind v4 cascade. The Q.W3 Lane F substrate revert (commit
+       retiring the L.W1 `6ce14e5` fossil) removes those literals so the
+       tokens.css→theme.css bridge is the single resolution path.
 
        Per AC.W6b (v1.5.0): the self-hosted OFL face files declared above
        expose two new family names: `"Plus Jakarta Sans"` (brand display
@@ -193,12 +204,9 @@
          calibrated `"Fira Code Fallback"` covers the swap window, then
          fallback `"Fira Mono"` + the generic `monospace` backstop the
          chain for browsers that reject local() lookups. */
-    --font-serif: "Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif;
     /* Independent brand/system sans stack; consumers override once for uniform sans. */
     --font-brand-sans: "Helvetica Neue", "Arial Nova", Arial, system-ui, sans-serif;
     --font-sans: var(--font-brand-sans);
-    --font-display: "Fraunces", Georgia, serif;
-    --font-mono: "Fira Code", "Fira Code Fallback", "Fira Mono", monospace;
     --font-display-variation-settings: "WONK" 1, "SOFT" 0;
     --font-display-weight: 400;
 

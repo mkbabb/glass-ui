@@ -351,9 +351,10 @@
     --shadow-uniform: 0 0 12px color-mix(in srgb, var(--shadow-color) 8%, transparent);
 
     /* Card = soft drop plate by default. The cartoon offset is a brand-flavoured
-       variant (a sticker look), not the canonical card shape. Consumers wanting
-       the cartoon look opt into <CartoonCard> or .glass-cartoon, which read
-       --shadow-cartoon directly. R3-spec §F.1, S.W4. */
+       decoration (a sticker look), not the canonical card shape. Consumers
+       wanting the cartoon look pass <Card surface="cartoon">, which composes the
+       `.cartoon-surface` utility (it reads --shadow-cartoon directly). R3-spec
+       §F.1, S.W4; Q.W3 Lane H. */
     --shadow-card:       var(--shadow-md);
     --card-shadow:       var(--shadow-card);
 
@@ -690,11 +691,11 @@
     --dock-active-border: none;
     --dock-active-shadow: none;
 
-    /* O.W6 Lane D — IconTooltip 44×44 hit-area floor (WCAG 2.5.5 target
-       size; speedtest AC.W6 F2.AA-03). The default sits at the WCAG floor;
-       consumers shrink locally (e.g., dense table-row hosts) by re-
-       declaring this token on the IconTooltip's parent element. */
-    --icon-tooltip-hit-area: 44px;
+    /* Q.W3 Lane G (Q-cos-13) — the O.W6 Lane D `--icon-tooltip-hit-area`
+       token retired here. IconTooltip no longer owns a wrap-span; the
+       slotted child carries its own WCAG 2.5.5 hit-area (interactive
+       children via their four-state contract, bare glyphs via a
+       `min-h-11 min-w-11` host). No orphaned token left behind. */
 
     /* O.W6 Lane D — Dock touch-target floor. Mirrors the IconTooltip
        hit-area but for the dock-control surface. The base value tracks

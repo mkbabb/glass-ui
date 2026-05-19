@@ -1,22 +1,27 @@
 <template>
     <TooltipProvider :delay-duration="250">
         <Tooltip>
-            <TooltipTrigger as-child>
-                <!--
-                    O.W6 Lane D — 44×44 minimum hit-area enforcement
-                    (speedtest AC.W6 F2.AA-03 / WCAG 2.5.5 target size).
+            <!--
+                Q.W3 Lane G (Q-cos-13) — the slotted child IS the trigger.
 
-                    The icon visual stays its natural size (whatever the
-                    slotted glyph renders at); this span expands the
-                    trigger's hit-area to 44×44 minimum via inline-flex
-                    centering + `--icon-tooltip-hit-area` (default 44px).
-                    Consumers can shrink the hit-area locally by setting
-                    `--icon-tooltip-hit-area: <smaller>` on the parent
-                    element (e.g., dense table-row hosts).
-                -->
-                <span class="icon-tooltip-trigger">
-                    <slot />
-                </span>
+                O.W6 Lane D wrapped the slot in a `<span class="icon-tooltip-
+                trigger">` styled `inline-flex; min-width/min-height: 44px`
+                to force a WCAG 2.5.5 (44×44) hit-area. That span turned the
+                slotted child into a flex item, which strips `width:100%`
+                semantics — keyframes.js PlaybackRibbon's `<Slider
+                variant="timeline">` collapsed to a 16px thumb-only nub.
+
+                Path C revert: no wrap-span. `as-child` forwards the
+                trigger props directly onto the slotted element, so a
+                stretching child (Slider/Input) keeps its `w-full` and an
+                interactive child (Button) keeps its own four-state +
+                ≥44px target contract. Bare decorative glyphs that need a
+                hit-area carry it themselves (utility on the glyph) — the
+                same per-component padding/min-size contract every other
+                interactive primitive owns.
+            -->
+            <TooltipTrigger as-child>
+                <slot />
             </TooltipTrigger>
             <TooltipContent class="font-display text-base">{{ text }}</TooltipContent>
         </Tooltip>
@@ -35,13 +40,3 @@ defineProps<{
     text: string;
 }>();
 </script>
-
-<style scoped>
-.icon-tooltip-trigger {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: var(--icon-tooltip-hit-area, 44px);
-    min-height: var(--icon-tooltip-hit-area, 44px);
-}
-</style>

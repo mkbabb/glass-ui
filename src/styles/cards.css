@@ -1,5 +1,9 @@
-/* Card utilities — paper texture (cartoon-card + elevated-card removed at C.W5
- * per W0 overfitting audit; Card primitive's variant system covers both styles). */
+/* Card-feature styles — the coherent home for card surface decorations.
+ * `.cartoon-card` + `.elevated-card` recipe classes were removed at C.W5 per the
+ * W0 overfitting audit (Card's tier system covers both). `cartoon-surface` is the
+ * Q.W3 Lane B re-model of the former `.glass-cartoon` recipe: a decoration-only
+ * utility (no tier of its own), relocated here from glass.css — which now holds
+ * only the 5-rung glass ladder. */
 
 @layer components {
     /* Paper texture overlay */
@@ -12,5 +16,29 @@
 
     :where(.dark) .paper-texture {
         background-blend-mode: screen;
+    }
+}
+
+/* ── Cartoon surface decoration ───────────────────────────────────
+   The Memphis-sticker register. Composes ON TOP of a glass tier — it is
+   NOT itself a tier. The former `.glass-cartoon` recipe declared
+   `var(--glass-bg-cartoon, var(--glass-bg-quiet))` etc., but the
+   `--glass-{bg,blur,border}-cartoon` tokens were never defined anywhere
+   in src/ (Qχ §2): the fall-through always resolved to the `quiet` rung.
+   That phantom-token layer is dropped — background / backdrop-filter /
+   border-color come from the `glass-${tier}` class the host already
+   applies. `cartoon-surface` carries ONLY the three real deltas over a
+   bare tier: a 2px border weight, an offset-stamp shadow, and a
+   hover-lift. <Card surface="cartoon"> layers it onto its resolved tier. */
+@utility cartoon-surface {
+    border-width: 2px;
+    box-shadow: var(--shadow-cartoon-md);
+    transition:
+        transform var(--duration-normal) var(--ease-apple-spring),
+        box-shadow var(--duration-normal) var(--ease-apple);
+
+    &:hover:not(:disabled) {
+        transform: translate(var(--lift-sm), var(--lift-sm));
+        box-shadow: var(--shadow-cartoon-lg);
     }
 }

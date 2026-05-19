@@ -28,9 +28,3 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     <slot />
   </DropdownMenuSubContent>
 </template>
-
-<style scoped>
-.dropdown-sub-content {
-    font-family: var(--dropdown-menu-font, inherit);
-}
-</style>

@@ -2,8 +2,8 @@
 //
 // Vue 3.5 lets undeclared attributes fall through to a component's root
 // element by default. For a primitive whose surface is driven entirely by
-// declared props (`Card`'s `tier`/`shadow`/`grain`, `ScrollPane`'s `shadow`,
-// …), a consumer who passes a STALE prop name — one the primitive used to
+// declared props (`Card`'s `tier`/`surface`/`shadow`/`grain`), a consumer who
+// passes a STALE prop name — one the primitive used to
 // expose, or never did — gets it silently swallowed as an inert DOM attr.
 // The primitive then renders its defaults, and the consumer sees a wrong
 // surface with no diagnostic (the Qα R3 silent-swallow attribution: a
@@ -36,7 +36,7 @@ import { useAttrs, watchEffect } from "vue";
  */
 export const STALE_PROP_RECIPES = {
     /** Pre-glass-ui `Card` API axis. Never existed on the glass-ui `Card`. */
-    variant: 'variant="pane" → tier="wash" :grain="false"  (variant="cartoon" → use <CartoonCard>)',
+    variant: 'variant="pane" → tier="wash" :grain="false"  (variant="cartoon" → surface="cartoon")',
     /** bbnf-buddy `<Card variant="pane" flush>` — `flush` was never a glass-ui prop. */
     flush: 'flush → class="p-0"  (padding is a consumer utility, not a Card prop)',
 } as const;

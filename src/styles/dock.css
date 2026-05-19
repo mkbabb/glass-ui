@@ -115,6 +115,50 @@
         --dock-tab-min-height: var(--dock-density-audacious-tab-min-height, 3.5rem);
     }
 
+    /* Dock tab-button density-keyed height (R3-spec / audit-E P0-3;
+       consolidated into dock.css at Q.W3 Lane A — formerly split into
+       utilities.css and surviving only by import-cascade accident).
+       The four bare DockIconButton consumers solve their density-keyed
+       height via `--dock-control-size` (set per density tier above);
+       DockTabButton's analogous `--dock-tab-h` knob lives in the same
+       density rungs so the tab-button row no longer free-floats to the
+       glyph + padding sum. Compact density lands at 32px to match the
+       deployed product's bottom-dock height. The `.dock-tab-button` rule
+       (further down this file) consumes `--dock-tab-h`. */
+    .glass-dock[data-density="compact"] {
+        --dock-tab-h-compact: 32px;
+        --dock-tab-h: var(--dock-tab-h-compact);
+    }
+    .glass-dock[data-density="comfortable"] {
+        --dock-tab-h-comfortable: 38px;
+        --dock-tab-h: var(--dock-tab-h-comfortable);
+    }
+    .glass-dock[data-density="spacious"] {
+        --dock-tab-h-spacious: 44px;
+        --dock-tab-h: var(--dock-tab-h-spacious);
+    }
+    .glass-dock[data-density="audacious"] {
+        --dock-tab-h-audacious: var(--dock-density-audacious-tab-min-height, 3.5rem);
+        --dock-tab-h: var(--dock-tab-h-audacious);
+    }
+
+    /* Density-audacious mobile carve (R3-spec / audit-D D-Rec-5;
+       consolidated into dock.css at Q.W3 Lane A). At narrow viewports
+       the audacious-dock label glyphs compress so the audacious chrome
+       doesn't overflow its host: `≤14px at <480` and `15px at 480–719`.
+       Consumer dock label spans bind `font-size: var(--dock-label-size)`
+       (typography.css `.dock-label` recipe is the canonical consumer). */
+    @media (max-width: 479px) {
+        .glass-dock[data-density="audacious"] {
+            --dock-label-size: 14px;
+        }
+    }
+    @media (min-width: 480px) and (max-width: 719px) {
+        .glass-dock[data-density="audacious"] {
+            --dock-label-size: 15px;
+        }
+    }
+
     .glass-dock::after {
         content: "";
         position: absolute;
@@ -303,6 +347,60 @@
         overflow-x: visible;
     }
 
+    /* ── Layer crossfade + hit-test contract (shared) ──────────────────
+       Two dock-layer surfaces stack on a 1/1 CSS grid and crossfade:
+       `.dock-layer` (GlassDock's built-in collapsed↔expanded pair) and
+       `.dock-layer-item-host` (a DockLayer inside a DockLayerGroup). They
+       differ only in base layout — the active/inactive/leaving paint +
+       hit-test semantics are identical, so the contract is expressed ONCE
+       here over both state vocabularies (`.layer-active` / `.is-active` /
+       `.is-leaving`) rather than copied per rule-set (Q-coh-5 — `beec35e`
+       patched the `visibility` fix into two parallel copies).
+
+       An inactive layer must leave the paint AND hit-test tree: `opacity:0`
+       alone leaves the box answering `elementFromPoint()`, so an inactive
+       layer's button intercepts clicks meant for the active one.
+       `visibility:hidden` removes it from both while KEEPING it in layout
+       flow, so the FLIP width measurement in `useLayerTransition` still
+       reads its geometry (`display:none` would zero it). The delayed
+       `visibility` transition holds a leaving layer `visible` for the
+       length of the opacity crossfade, then flips it `hidden`. */
+    .dock-layer,
+    .dock-layer-item-host {
+        transition:
+            opacity var(--dock-motion-fast),
+            visibility 0s linear var(--duration-fast);
+    }
+
+    .dock-layer:not(.layer-active),
+    .dock-layer-item-host:not(.is-active):not(.is-leaving) {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    .dock-layer.layer-active,
+    .dock-layer-item-host.is-active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        /* The active layer shows immediately — no deferred `visibility`. */
+        transition:
+            opacity var(--dock-motion-fast),
+            visibility 0s;
+    }
+
+    /* A leaving layer is inactive for hit-testing but still painted
+       through its fade-out. (`.dock-layer` has no separate leaving state —
+       its `:not(.layer-active)` rule above covers the crossfade-out via the
+       delayed `visibility` transition.) */
+    .dock-layer-item-host.is-leaving {
+        opacity: 0;
+        visibility: visible;
+        pointer-events: none;
+    }
+
+    /* ── Base layout — distinct per surface ─────────────────────────── */
     .dock-layer {
         display: flex;
         align-items: center;
@@ -310,32 +408,13 @@
         grid-area: 1 / 1;
         gap: var(--dock-layer-gap, 0.375rem);
         height: var(--dock-layer-height, 2.5rem);
-        /* Mirrors the `.dock-layer-item-host` paint contract: the delayed
-           `visibility` transition holds an inactive layer `visible` through
-           the opacity crossfade, then hides it. */
-        transition:
-            opacity var(--dock-motion-fast),
-            visibility 0s linear var(--duration-fast);
     }
 
     .dock-layer.layer-active {
-        opacity: 1;
-        /* Visible immediately — no deferred `visibility`. */
-        visibility: visible;
-        pointer-events: auto;
         position: relative;
-        transition:
-            opacity var(--dock-motion-fast),
-            visibility 0s;
     }
 
     .dock-layer:not(.layer-active) {
-        opacity: 0;
-        /* Inactive layer: out of paint AND hit-test, but still in layout
-           flow. `opacity:0` alone leaves the box answering
-           `elementFromPoint()` — the dead-control hazard this rule retires. */
-        visibility: hidden;
-        pointer-events: none;
         position: absolute;
         inset: 0;
     }
@@ -495,51 +574,24 @@
             height var(--dock-motion-resize);
     }
 
+    /* Base layout — the crossfade + hit-test contract is shared with
+       `.dock-layer` above (see "Layer crossfade + hit-test contract"). The
+       default state is inactive: absolute + inset:0. */
     .dock-layer-item-host {
         grid-area: 1 / 1;
         display: flex;
         align-items: center;
         white-space: nowrap;
         gap: var(--dock-layer-gap, 0.375rem);
-        opacity: 0;
-        /* A fully-inactive layer is hidden from paint AND from hit-testing.
-           `opacity:0` alone leaves the box answering `elementFromPoint()`,
-           which is how an inactive layer's "Next" button intercepts clicks
-           meant for the active one. `visibility:hidden` removes it from
-           both paint and hit-test while KEEPING it in layout flow, so the
-           FLIP width measurement in `useLayerTransition` still reads its
-           geometry (where `display:none` would zero it). */
-        visibility: hidden;
-        pointer-events: none;
         position: absolute;
         inset: 0;
-        /* The delayed `visibility` transition holds the box `visible` for
-           the length of the opacity crossfade, then flips it `hidden` — so
-           a layer that is mid-leave still paints through its fade-out. */
-        transition:
-            opacity var(--dock-motion-fast),
-            visibility 0s linear var(--duration-fast);
     }
 
     .dock-layer-item-host.is-active {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
         position: relative;
         inset: auto;
         width: max-content;
         min-width: 0;
-        /* The active layer shows immediately — no deferred `visibility`. */
-        transition:
-            opacity var(--dock-motion-fast),
-            visibility 0s;
-    }
-
-    .dock-layer-item-host.is-leaving {
-        opacity: 0;
-        /* The leaving layer stays painted through the opacity fade-out. */
-        visibility: visible;
-        pointer-events: none;
     }
 
     .dock-icon-button {
@@ -687,12 +739,15 @@
         flex-shrink: 0;
         /* P.W4 Lane B inline-absorb: the `--dock-tab-h` density-keyed height
            knob (parallel to DockIconButton's --dock-control-size) merged
-           here from the prior DockTabButton.vue scoped style block. When a
-           parent <GlassDock density="…"> sets `--dock-tab-h` (utilities.css),
-           the tab-button reserves that row even when the glyph + padding sum
-           would ride lower. Falls through to `--dock-tab-min-height` (kept
-           for audacious-tier callers) and finally to `auto`. R3-spec / audit-
-           E P0-3. */
+           here from the prior DockTabButton.vue scoped style block. The
+           density rungs that set `--dock-tab-h` per tier live in this same
+           file (the `.glass-dock[data-density="…"]` blocks above) — Q.W3
+           Lane A consolidated them out of utilities.css, closing the
+           cascade-order split-brain. When a parent <GlassDock density="…">
+           sets `--dock-tab-h`, the tab-button reserves that row even when
+           the glyph + padding sum would ride lower. Falls through to
+           `--dock-tab-min-height` (kept for audacious-tier callers) and
+           finally to `auto`. R3-spec / audit-E P0-3. */
         min-height: var(--dock-tab-h, var(--dock-tab-min-height, auto));
         padding-inline: var(--dock-tab-padding-inline, 0.75rem);
         padding-block: var(--dock-tab-padding-block, 0.375rem);

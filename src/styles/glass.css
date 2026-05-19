@@ -98,28 +98,6 @@
         contain: layout style;
     }
 
-    /* Cartoon surface — interactive card with cartoon-tier shadow + hover lift.
-       <CartoonCard> outputs class="glass-cartoon"; this rule closes that
-       contract. Token fall-through to quiet-tier glass tokens so consumers
-       without cartoon-specific glass tokens still get a coherent surface. */
-    .glass-cartoon {
-        position: relative;
-        background: var(--glass-bg-cartoon, var(--glass-bg-quiet));
-        backdrop-filter: var(--glass-blur-cartoon, var(--glass-blur-quiet));
-        border: 2px solid var(--glass-border-cartoon, var(--glass-border-quiet));
-        border-radius: var(--radius-card);
-        box-shadow: var(--shadow-cartoon-md);
-        contain: layout style;
-        transition:
-            transform var(--duration-normal) var(--ease-apple-spring),
-            box-shadow var(--duration-normal) var(--ease-apple);
-    }
-
-    .glass-cartoon:hover:not(:disabled) {
-        transform: translate(var(--lift-sm), var(--lift-sm));
-        box-shadow: var(--shadow-cartoon-lg);
-    }
-
     /* ── Glassmorphic circular icon button ── */
 
     .glass-btn {

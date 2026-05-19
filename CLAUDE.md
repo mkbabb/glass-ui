@@ -25,7 +25,7 @@ src/
 ├── carousel.ts                     # `@mkbabb/glass-ui/carousel` flat subpath (L.W1 Lane C; vueuse-bearing; v1.0.4 ships full `Carousel*` family per MIGRATION.md §1.2)
 ├── forms.ts                        # `@mkbabb/glass-ui/forms` subpath (K.WS Phase 1; preserved)
 ├── components/
-│   ├── ui/                         # 43 shadcn-vue base component packages + _shared (reka-ui)—44 dirs total
+│   ├── ui/                         # 41 shadcn-vue base component packages + _shared (reka-ui)—42 dirs total
 │   │   ├── _shared/                # ModalOverlay (V.W3 43bee82) + menuItemVariants CVA (V.W3 6e6916e)
 │   │   ├── accordion/              # Accordion + trigger/content wrappers
 │   │   ├── alert/                  # Alert, title, description
@@ -34,7 +34,6 @@ src/
 │   │   ├── button/                 # Primitive + buttonVariants CVA (incl. primary-audacious—K W6)
 │   │   ├── card/                   # Card, header/title/description/content/footer
 │   │   ├── carousel/               # Carousel primitives
-│   │   ├── cartoon-card/           # CartoonCard sibling of Card (cartoon glass tier)
 │   │   ├── checkbox/               # Checkbox
 │   │   ├── collapsible/            # Collapsible root/trigger/content
 │   │   ├── combobox/               # Combobox shell
@@ -54,7 +53,6 @@ src/
 │   │   ├── popover/                # Popover trigger/content
 │   │   ├── progress/               # Progress bar (default + gradient variant)
 │   │   ├── radio-group/            # RadioGroup, RadioGroupItem
-│   │   ├── scroll-pane/            # ScrollPane (glass-wash + scrollbar-hidden + grain disabled)
 │   │   ├── section/                # Section sectioning landmark (V.W3 d2247c8)—composes typography ladder
 │   │   ├── select/                 # Select public compound wrappers
 │   │   ├── separator/              # Separator (h/v)
@@ -149,7 +147,7 @@ src/
 │   ├── glyph-face.css              # GlyphFace cap + backplate cascade
 │   ├── hover-popover.css           # popover-animation grammar (V.W3)
 │   ├── instrument-chassis.css      # chassis bezel + groove dividers + region rules
-│   ├── cards.css                   # .cartoon-card, .elevated-card, .paper-texture
+│   ├── cards.css                   # .paper-texture + @utility cartoon-surface (decoration-only; layers on a glass tier)
 │   ├── paper.css                   # paper-underpaint + paper-grain-overlay utilities
 │   ├── floating-panel.css          # .floating-panel, .floating-panel-item
 │   ├── transitions.css             # Vue <Transition>: fade, fade-slide, pop, dialog-scale, dropdown, tab-fade
