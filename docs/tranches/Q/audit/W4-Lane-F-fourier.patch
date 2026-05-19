@@ -1,0 +1,537 @@
+From: Q.W4 Lane F — fleet-wide phantom-class consumer sweep
+Subject: [PATCH] fix(cosmetic): retire .glass-{subtle,medium} + .cartoon-card phantom classes
+
+Q.W4 Lane F — fourier-analysis portion. 29 sites across 22 files.
+
+  F.1  9 phantom-glass sites — `.glass-subtle` -> `.glass-wash` (5),
+       `.glass-medium` -> `.glass-quiet` (4). Classes retired from glass-ui
+       at the v0.8.0 ladder rename (`eb9c44c`) / never canonical. Straight
+       template class rename.
+
+  F.2  20 `.cartoon-card` sites across 10 files. The `.cartoon-card`
+       *glass-ui* recipe was deleted at C.W5 (`304ac78`); fourier carries a
+       LOCAL `.cartoon-card` recipe in `web/src/style.css` (added post-Qψ).
+       This patch migrates the 20 call-sites to the idiomatic glass-ui
+       component-over-class form:
+         - genuine card surfaces  -> `<Card surface="cartoon">`  (18 sites)
+         - decoration on a non-card element -> `cartoon-surface` utility
+           class (2 sites: MorphShapePreview `<button>`, BasisCanvas
+           canvas-host `<div>`).
+       After this lands the local `web/src/style.css` `.cartoon-card` block
+       (4 rules, ~20 lines) is dead and fourier should delete it — see the
+       handoff note in W4-Lane-F-phantom-sweep.md.
+
+APPLY-BASE: this diff is computed against the fourier-analysis WORKING TREE
+as of glass-ui Q.W4 (fourier worktree carries ~100 files of in-flight WIP;
+the 9 phantom-glass sites exist ONLY in that WIP, not at committed HEAD
+926ca6a). The fourier team applies this AFTER committing their WIP:
+  git apply --recount --3way docs/.../W4-Lane-F-fourier.patch
+(`--recount` tolerates hand-authored hunk line-count drift; verified clean
+with `git apply --check --recount` against the fourier worktree at Q.W4.)
+A HEAD-targeted patch is infeasible (the phantom-glass corpus is not at HEAD).
+
+---
+
+diff --git a/web/src/components/paper/PaperView.vue b/web/src/components/paper/PaperView.vue
+--- a/web/src/components/paper/PaperView.vue
++++ b/web/src/components/paper/PaperView.vue
+@@ -332,7 +332,7 @@
+
+         <!-- Bottom overlay: page indicator (left) + back button (right) -->
+         <div class="paper-bottom-overlay">
+-            <div class="overlay-page glass-subtle fira-code">
++            <div class="overlay-page glass-wash fira-code">
+                 pg {{ currentPage }}<span class="overlay-page-sep">/</span>{{ totalPages }}
+             </div>
+
+diff --git a/web/src/components/paper/MobileFloatingToc.vue b/web/src/components/paper/MobileFloatingToc.vue
+--- a/web/src/components/paper/MobileFloatingToc.vue
++++ b/web/src/components/paper/MobileFloatingToc.vue
+@@ -91,7 +91,7 @@
+     <div class="floating-toc lg:hidden">
+         <div class="floating-toc-anchor">
+             <!-- Search mode: input replaces section title -->
+-            <div v-if="searchActive" class="floating-toc-bar floating-toc-bar--search glass-medium">
++            <div v-if="searchActive" class="floating-toc-bar floating-toc-bar--search glass-quiet">
+                 <PaperSearch ref="mobileSearchRef" :search="search" variant="floating" />
+                 <button class="floating-toc-search-close" @click="closeMobileSearch" title="Close search">
+                     <X class="h-4 w-4" />
+@@ -98,7 +98,7 @@
+             </div>
+             <!-- Normal mode: section title + search icon -->
+-            <button v-else class="floating-toc-bar glass-medium" @click="floatingTocOpen = !floatingTocOpen">
++            <button v-else class="floating-toc-bar glass-quiet" @click="floatingTocOpen = !floatingTocOpen">
+                 <span class="floating-toc-section cm-serif">
+                     <span class="fira-code text-xs opacity-50">{{ currentSection?.number }}.</span>
+                     {{ currentSection?.title }}
+@@ -114,7 +114,7 @@
+                 <div
+                     v-if="floatingTocOpen"
+                     ref="dropdownRef"
+-                    class="floating-toc-dropdown glass-medium"
++                    class="floating-toc-dropdown glass-quiet"
+                 >
+                     <!-- Scroll to top -->
+                     <button
+diff --git a/web/src/components/visualization/FullscreenViewer.vue b/web/src/components/visualization/FullscreenViewer.vue
+--- a/web/src/components/visualization/FullscreenViewer.vue
++++ b/web/src/components/visualization/FullscreenViewer.vue
+@@ -51,7 +51,7 @@
+             <div v-if="show" class="fs-backdrop" @click.self="emit('close')">
+                 <div class="fs-container">
+                     <!-- Close button -->
+-                    <button class="fs-close glass-subtle" @click="emit('close')">
++                    <button class="fs-close glass-wash" @click="emit('close')">
+                         <Minimize2 class="h-5 w-5" />
+                     </button>
+
+diff --git a/web/src/components/visualization/EquationPanel.vue b/web/src/components/visualization/EquationPanel.vue
+--- a/web/src/components/visualization/EquationPanel.vue
++++ b/web/src/components/visualization/EquationPanel.vue
+@@ -64,7 +64,7 @@
+ </script>
+
+ <template>
+-    <div class="eq-panel glass-subtle">
++    <div class="eq-panel glass-wash">
+         <div class="flex items-center justify-between gap-2">
+             <span class="text-sm font-medium text-foreground">Equation</span>
+             <div class="flex items-center gap-2">
+diff --git a/web/src/components/visualization/gallery/GallerySearchBar.vue b/web/src/components/visualization/gallery/GallerySearchBar.vue
+--- a/web/src/components/visualization/gallery/GallerySearchBar.vue
++++ b/web/src/components/visualization/gallery/GallerySearchBar.vue
+@@ -71,7 +71,7 @@
+         <!-- Filter drawer (overlaid, does not affect flow) -->
+         <Transition name="filter-drawer">
+             <div v-if="showFilters" class="filter-anchor">
+-                <div class="filter-panel glass-medium">
++                <div class="filter-panel glass-quiet">
+                     <div class="flex items-center gap-2">
+                         <Select
+                             :model-value="tierFilter"
+diff --git a/web/src/components/equation/convergence/ConvergenceLegend.vue b/web/src/components/equation/convergence/ConvergenceLegend.vue
+--- a/web/src/components/equation/convergence/ConvergenceLegend.vue
++++ b/web/src/components/equation/convergence/ConvergenceLegend.vue
+@@ -14,7 +14,7 @@
+ </script>
+
+ <template>
+-    <div v-if="harmonics.length" class="legend-overlay glass-subtle">
++    <div v-if="harmonics.length" class="legend-overlay glass-wash">
+         <div class="legend-entry" :class="{ 'is-hovered': hoveredCurve === 'sum' }"
+             @pointerenter="emit('hover', 'sum')" @pointerleave="emit('leave')">
+             <span class="legend-dot legend-dot--golden" />
+diff --git a/web/src/components/equation/EquationModeToggle.vue b/web/src/components/equation/EquationModeToggle.vue
+--- a/web/src/components/equation/EquationModeToggle.vue
++++ b/web/src/components/equation/EquationModeToggle.vue
+@@ -5,7 +5,7 @@
+ </script>
+
+ <template>
+-    <div class="eq-toggle glass-subtle">
++    <div class="eq-toggle glass-wash">
+         <button
+             class="eq-toggle-btn"
+             :class="{ 'is-active': model === 'sigma' }"
+diff --git a/web/src/components/visualization/ContourSettings.vue b/web/src/components/visualization/ContourSettings.vue
+--- a/web/src/components/visualization/ContourSettings.vue
++++ b/web/src/components/visualization/ContourSettings.vue
+@@ -13,6 +13,7 @@
+     SelectContent,
+     SelectItem,
+     SelectTrigger,
++    Card,
+ } from "@mkbabb/glass-ui";
+ import { Wand2, ChevronRight, RotateCcw, RefreshCw } from "lucide-vue-next";
+ import { Tooltip } from "@/components/ui/tooltip";
+@@ -184,7 +185,7 @@
+ </script>
+
+ <template>
+-    <div class="cartoon-card px-3 py-2">
++    <Card surface="cartoon" class="px-3 py-2">
+         <CollapsibleSection title="Contour" subtitle="edge extraction settings" :default-open="false">
+             <template #actions>
+@@ -312,7 +313,7 @@
+             </div>
+         </Transition>
+-    </div>
++    </Card>
+ </template>
+diff --git a/web/src/components/visualization/BasisSelector.vue b/web/src/components/visualization/BasisSelector.vue
+--- a/web/src/components/visualization/BasisSelector.vue
++++ b/web/src/components/visualization/BasisSelector.vue
+@@ -2,6 +2,7 @@
+ import { ref, watch, computed } from "vue";
+ import CollapsibleSection from "@/components/ui/CollapsibleSection.vue";
+ import { Tooltip } from "@/components/ui/tooltip";
++import { Card } from "@mkbabb/glass-ui";
+ import { VIZ_COLORS } from "@/lib/colors";
+ import { basisDisplay } from "./lib/basis-display";
+ import { RotateCcw } from "lucide-vue-next";
+@@ -106,7 +107,7 @@
+
+ <template>
+-    <div class="cartoon-card px-3 py-2">
++    <Card surface="cartoon" class="px-3 py-2">
+         <CollapsibleSection title="Decomposition" subtitle="basis & resolution" :default-open="true">
+             <template #actions>
+                 <button
+@@ -186,5 +187,5 @@
+             </div>
+         </CollapsibleSection>
+-    </div>
++    </Card>
+ </template>
+diff --git a/web/src/components/visualization/BasisCanvas.vue b/web/src/components/visualization/BasisCanvas.vue
+--- a/web/src/components/visualization/BasisCanvas.vue
++++ b/web/src/components/visualization/BasisCanvas.vue
+@@ -475,7 +475,7 @@
+ <template>
+     <div
+         ref="containerRef"
+-        class="canvas-container cartoon-card"
++        class="canvas-container cartoon-surface"
+         @mousemove="hover.onMouseMove"
+         @mouseleave="hover.onMouseLeave"
+         @click="hover.onClick"
+diff --git a/web/src/components/visualization/EditorToolsPanel.vue b/web/src/components/visualization/EditorToolsPanel.vue
+--- a/web/src/components/visualization/EditorToolsPanel.vue
++++ b/web/src/components/visualization/EditorToolsPanel.vue
+@@ -2,6 +2,7 @@
+ import { Wand2, Minimize2, Magnet } from "lucide-vue-next";
+ import { VIZ_COLORS } from "@/lib/colors";
+ import CollapsibleSection from "@/components/ui/CollapsibleSection.vue";
++import { Card } from "@mkbabb/glass-ui";
+
+ const props = defineProps<{
+     magnetRadius: number;
+@@ -15,7 +16,7 @@
+ </script>
+
+ <template>
+-    <div class="cartoon-card px-3 py-2">
++    <Card surface="cartoon" class="px-3 py-2">
+         <CollapsibleSection title="Tools" subtitle="contour refinement" :default-open="true">
+             <div class="flex flex-col gap-2 pt-1">
+                 <button class="tool-btn" @click="emit('smooth')"
+@@ -58,5 +59,5 @@
+             </div>
+         </CollapsibleSection>
+-    </div>
++    </Card>
+ </template>
+diff --git a/web/src/components/visualization/ImageUpload.vue b/web/src/components/visualization/ImageUpload.vue
+--- a/web/src/components/visualization/ImageUpload.vue
++++ b/web/src/components/visualization/ImageUpload.vue
+@@ -4,6 +4,7 @@
+ import { useImageUpload } from "./composables/useImageUpload";
+ import { thumbnailUrl } from "@/lib/api";
+ import { ImagePlus, Upload, ImageOff } from "lucide-vue-next";
++import { Card } from "@mkbabb/glass-ui";
+
+ const store = useWorkspaceStore();
+ const fileInput = ref<HTMLInputElement>();
+@@ -35,8 +36,8 @@
+
+ <template>
+-    <div
+-        class="cartoon-card px-3 py-2 relative"
++    <Card
++        surface="cartoon"
++        class="px-3 py-2 relative"
+         @drop="handleDrop"
+         @dragover="handleDragOver"
+         @dragenter="handleDragEnter"
+         @dragleave="handleDragLeave"
+@@ -123,5 +124,5 @@
+             @change="handleFileSelect"
+         />
+-    </div>
++    </Card>
+ </template>
+diff --git a/web/src/components/visualization/ContourPreview.vue b/web/src/components/visualization/ContourPreview.vue
+--- a/web/src/components/visualization/ContourPreview.vue
++++ b/web/src/components/visualization/ContourPreview.vue
+@@ -2,6 +2,7 @@
+ import { computed } from "vue";
+ import { type Point2D, closedSplinePath } from "@/lib/contourEditing";
+ import CollapsibleSection from "@/components/ui/CollapsibleSection.vue";
++import { Card } from "@mkbabb/glass-ui";
+
+ const props = defineProps<{
+     points: Point2D[] | undefined;
+@@ -30,7 +31,7 @@
+
+ <template>
+-    <div class="cartoon-card px-3 py-2">
++    <Card surface="cartoon" class="px-3 py-2">
+         <CollapsibleSection title="Preview" subtitle="live contour shape" :default-open="true">
+             <div class="flex items-center justify-center p-2">
+                 <svg
+@@ -50,5 +51,5 @@
+             </div>
+         </CollapsibleSection>
+-    </div>
++    </Card>
+ </template>
+diff --git a/web/src/components/visualization/CoefficientsPanel.vue b/web/src/components/visualization/CoefficientsPanel.vue
+--- a/web/src/components/visualization/CoefficientsPanel.vue
++++ b/web/src/components/visualization/CoefficientsPanel.vue
+@@ -4,6 +4,7 @@
+ import { ChevronDown, ChevronUp } from "lucide-vue-next";
+ import CollapsibleSection from "@/components/ui/CollapsibleSection.vue";
+ import { Tooltip } from "@/components/ui/tooltip";
++import { Card } from "@mkbabb/glass-ui";
+ import FrequencyGraph from "@/components/equation/FrequencyGraph.vue";
+
+ const store = useWorkspaceStore();
+@@ -37,7 +38,7 @@
+
+ <template>
+-    <div class="cartoon-card px-3 py-2">
++    <Card surface="cartoon" class="px-3 py-2">
+         <CollapsibleSection title="Coefficients" subtitle="Fourier spectrum" :default-open="false">
+             <div class="pt-1">
+                 <!-- Frequency graph -->
+@@ -114,5 +115,5 @@
+             </div>
+         </CollapsibleSection>
+-    </div>
++    </Card>
+ </template>
+diff --git a/web/src/components/visualization/VisualizationView.vue b/web/src/components/visualization/VisualizationView.vue
+--- a/web/src/components/visualization/VisualizationView.vue
++++ b/web/src/components/visualization/VisualizationView.vue
+@@ -10,6 +10,7 @@
+ import { Upload } from "lucide-vue-next";
+ import { Tooltip } from "@/components/ui/tooltip";
+ import { useGalleryStore } from "@/stores/gallery";
++import { Card } from "@mkbabb/glass-ui";
+ import { useToast } from "@/composables/useToast";
+ import ImageUpload from "./ImageUpload.vue";
+ import ContourSettings from "./ContourSettings.vue";
+@@ -157,7 +158,7 @@
+         <!-- Error (no workspace) -->
+         <div v-else-if="store.error && !store.imageSlug" class="flex items-center justify-center flex-1">
+-            <div class="mx-auto max-w-md cartoon-card p-6 text-center space-y-3">
++            <Card surface="cartoon" class="mx-auto max-w-md p-6 text-center space-y-3">
+                 <p class="text-sm font-medium text-foreground">Could not load workspace</p>
+                 <p class="text-xs text-muted-foreground fira-code break-all">{{ store.error }}</p>
+                 <Tooltip text="Go back to upload a new image">
+@@ -167,7 +168,7 @@
+                         Start fresh
+                     </button>
+                 </Tooltip>
+-            </div>
++            </Card>
+         </div>
+diff --git a/web/src/components/equation/EqCoefficientsPanel.vue b/web/src/components/equation/EqCoefficientsPanel.vue
+--- a/web/src/components/equation/EqCoefficientsPanel.vue
++++ b/web/src/components/equation/EqCoefficientsPanel.vue
+@@ -3,6 +3,7 @@
+ import { ChevronDown, ChevronUp } from "lucide-vue-next";
+ import CollapsibleSection from "@/components/ui/CollapsibleSection.vue";
+ import { Tooltip } from "@/components/ui/tooltip";
++import { Card } from "@mkbabb/glass-ui";
+ import type { BasisComponent } from "@/lib/types";
+
+ const props = defineProps<{
+@@ -37,7 +38,7 @@
+
+ <template>
+-    <div class="cartoon-card px-3 py-2">
++    <Card surface="cartoon" class="px-3 py-2">
+         <CollapsibleSection title="Coefficients" subtitle="Fourier spectrum" :default-open="false">
+             <div class="pt-1">
+                 <div class="flex items-center justify-end mb-2">
+@@ -108,5 +109,5 @@
+             </div>
+         </CollapsibleSection>
+-    </div>
++    </Card>
+ </template>
+diff --git a/web/src/components/equation/InfoCard.vue b/web/src/components/equation/InfoCard.vue
+--- a/web/src/components/equation/InfoCard.vue
++++ b/web/src/components/equation/InfoCard.vue
+@@ -2,6 +2,7 @@
+ import { computed } from "vue";
+ import { Info } from "lucide-vue-next";
+ import { TIER_INFO, energyColor } from "@/lib/equation/notation";
++import { Card } from "@mkbabb/glass-ui";
+ import type { EquationTier } from "@/lib/equation/types";
+
+ const props = defineProps<{
+@@ -14,7 +15,7 @@
+ </script>
+
+ <template>
+-    <div class="cartoon-card px-3 py-2 space-y-2">
++    <Card surface="cartoon" class="px-3 py-2 space-y-2">
+         <div class="flex items-center gap-2 flex-wrap">
+             <span
+                 class="inline-flex items-center px-2 py-0.5 rounded-full text-sm font-semibold
+@@ -35,5 +36,5 @@
+             <Info class="h-3.5 w-3.5 shrink-0 mt-0.5" />
+             <p>{{ info.description }}</p>
+         </div>
+-    </div>
++    </Card>
+ </template>
+diff --git a/web/src/components/equation/FunctionInput.vue b/web/src/components/equation/FunctionInput.vue
+--- a/web/src/components/equation/FunctionInput.vue
++++ b/web/src/components/equation/FunctionInput.vue
+@@ -6,6 +6,7 @@
+ import CollapsibleSection from "@/components/ui/CollapsibleSection.vue";
+ import SliderControl from "@/components/ui/SliderControl.vue";
+ import { Tooltip } from "@/components/ui/tooltip";
++import { Card } from "@mkbabb/glass-ui";
+ import NotationPills from "./NotationPills.vue";
+
+ const props = defineProps<{
+@@ -89,7 +90,7 @@
+     <div class="space-y-3">
+         <!-- Function definition -->
+-        <div class="cartoon-card px-3 py-2">
++        <Card surface="cartoon" class="px-3 py-2">
+             <CollapsibleSection title="Function" subtitle="f(x)" :default-open="true">
+                 <div class="space-y-3 pt-1">
+                     <div>
+@@ -165,9 +166,9 @@
+             </CollapsibleSection>
+-        </div>
++        </Card>
+
+         <!-- Controls -->
+-        <div class="cartoon-card px-3 py-2">
++        <Card surface="cartoon" class="px-3 py-2">
+             <CollapsibleSection title="Controls" subtitle="harmonics & display" :default-open="true">
+                 <div class="space-y-3 pt-1">
+                     <div class="flex items-end gap-2">
+@@ -218,5 +219,5 @@
+             </CollapsibleSection>
+-        </div>
++        </Card>
+     </div>
+ </template>
+diff --git a/web/src/components/equation/EquationView.vue b/web/src/components/equation/EquationView.vue
+--- a/web/src/components/equation/EquationView.vue
++++ b/web/src/components/equation/EquationView.vue
+@@ -8,6 +8,7 @@
+ import { HoverCard, HoverCardTrigger, HoverCardContent } from "@mkbabb/glass-ui";
++import { Card } from "@mkbabb/glass-ui";
+ import { Info } from "lucide-vue-next";
+
+ import { UnderlineTabs } from "@mkbabb/glass-ui/tabs";
+@@ -225,10 +226,10 @@
+
+                 <!-- Error (no prior result) -->
+                 <div v-else-if="error && !result" class="flex items-center justify-center flex-1">
+-                    <div class="cartoon-card p-4 max-w-md text-center">
++                    <Card surface="cartoon" class="p-4 max-w-md text-center">
+                         <p class="text-sm font-medium text-foreground mb-1">Computation failed</p>
+                         <p class="text-sm text-muted-foreground fira-code">{{ error }}</p>
+-                    </div>
++                    </Card>
+                 </div>
+
+                 <!-- Results -->
+                 <template v-else-if="result">
+                     <!-- Re-compute status banners -->
+-                    <div v-if="computing" class="cartoon-card px-3 py-2 flex items-center gap-2 text-sm shrink-0">
++                    <Card v-if="computing" surface="cartoon" class="px-3 py-2 flex items-center gap-2 text-sm shrink-0">
+                         <div class="size-3.5 animate-spin rounded-full border-[1.5px] border-border border-t-primary" />
+                         <span class="text-muted-foreground fira-code">Recomputing…</span>
+-                    </div>
+-                    <div v-else-if="error" class="cartoon-card px-3 py-2 flex items-center gap-2 text-sm border-red-500/30 bg-red-500/5 shrink-0">
++                    </Card>
++                    <Card v-else-if="error" surface="cartoon" class="px-3 py-2 flex items-center gap-2 text-sm border-red-500/30 bg-red-500/5 shrink-0">
+                         <span class="font-medium text-red-400">Error:</span>
+                         <span class="text-muted-foreground fira-code truncate">{{ error }}</span>
+-                    </div>
++                    </Card>
+
+                     <!-- Equation card -->
+-                    <div
++                    <Card
+                         ref="eqCardRef"
+-                        class="cartoon-card relative eq-card"
++                        surface="cartoon"
++                        class="relative eq-card"
+                         @mousemove="(e) => onCoeffMove(e, eqCardRef)"
+                         @mouseleave="onCoeffLeave"
+@@ -298,7 +302,7 @@
+                     </div>
+
+                     <!-- Convergence plot -->
+-                    <div class="cartoon-card px-3 py-2 flex-1 min-h-0 flex flex-col">
++                    <Card surface="cartoon" class="px-3 py-2 flex-1 min-h-0 flex flex-col">
+                         <ConvergencePlot
+                             class="flex-1"
+                             :original-points="result.original_points"
+@@ -307,7 +311,7 @@
+                             :domain="[domainStart, domainEnd]"
+                             :expression="expression"
+                         />
+-                    </div>
++                    </Card>
+                 </template>
+diff --git a/web/src/components/morph/MorphShapePreview.vue b/web/src/components/morph/MorphShapePreview.vue
+--- a/web/src/components/morph/MorphShapePreview.vue
++++ b/web/src/components/morph/MorphShapePreview.vue
+@@ -1,7 +1,7 @@
+ <template>
+     <div class="demo-stage">
+         <div class="stage-row">
+-            <button class="morph-button cartoon-card" @click="$emit('toggle')" :disabled="disabled">
++            <button class="morph-button cartoon-surface" @click="$emit('toggle')" :disabled="disabled">
+                 <FourierMorphSvg
+                     :path="currentPath"
+                     :stroke-width="4.5"
+diff --git a/web/src/components/morph/HarmonicLevelGrid.vue b/web/src/components/morph/HarmonicLevelGrid.vue
+--- a/web/src/components/morph/HarmonicLevelGrid.vue
++++ b/web/src/components/morph/HarmonicLevelGrid.vue
+@@ -1,5 +1,5 @@
+ <template>
+-    <div class="cartoon-card levels-card">
++    <Card surface="cartoon" class="levels-card">
+         <h3 class="card-title">Harmonic Levels</h3>
+
+         <div class="levels-controls">
+@@ -79,11 +79,13 @@
+             </button>
+         </div>
+-    </div>
++    </Card>
+ </template>
+
+ <script setup lang="ts">
++import { Card } from "@mkbabb/glass-ui";
+ import { sliderStyle } from "@/composables/useMorphConfig";
+ import { VIZ_COLORS } from "@/lib/colors";
+ import type { FourierShape } from "@/lib/svg-fourier";
+ import { interpolateAtHarmonicLevel, pointsToSvgPath } from "@/lib/svg-fourier";
+diff --git a/web/src/components/morph/MorphPhaseConfig.vue b/web/src/components/morph/MorphPhaseConfig.vue
+--- a/web/src/components/morph/MorphPhaseConfig.vue
++++ b/web/src/components/morph/MorphPhaseConfig.vue
+@@ -1,5 +1,5 @@
+ <template>
+-    <div class="cartoon-card config-card">
++    <Card surface="cartoon" class="config-card">
+         <h3 class="config-card-title">{{ title }}</h3>
+         <p class="config-card-desc">{{ description }}</p>
+
+@@ -58,9 +58,10 @@
+                 </SelectContent>
+             </Select>
+         </div>
+-    </div>
++    </Card>
+ </template>
+
+ <script setup lang="ts">
+ import {
++    Card,
+     Select,
+     SelectTrigger,
+     SelectContent,

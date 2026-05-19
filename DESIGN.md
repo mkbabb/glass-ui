@@ -314,7 +314,7 @@ Every interactive element implements the four-state contract plus focus and togg
 |---------------------------|----------------------------------|------------------------------------------------------------------|
 | Rest                      | Default appearance               |—                                                               |
 | Hover                     | Scale up, or bg tint             | `--scale-hover` (1.08) · `--scale-hover-dock` (1.1)              |
-| Active / pressed          | Scale down                       | `--scale-press` (0.95) · `--scale-press-btn` (0.97; aliases `--scale-press-sm`) · `--scale-press-dock` (0.92) · 4-rung ladder `--scale-press-{xs,sm,md,lg}` (0.98 / 0.97 / 0.96 / 0.95) |
+| Active / pressed          | Scale down                       | `--scale-press` (0.95) · `--scale-press-btn` (0.97; aliases `--scale-press-sm`) · `--scale-press-dock` (0.92) |
 | Disabled                  | Reduced opacity, no pointer events | `--opacity-disabled` (0.50)                                    |
 | Focus-visible             | Ring + glow                      | `--focus-ring-shadow`: 0 0 0 2px rgba(ring, 0.30), 0 0 8px rgba(ring, 0.15) |
 | `aria-pressed` / `.is-active` | Tinted bg, full-opacity text | Component-scoped                                                 |
@@ -327,22 +327,21 @@ Every interactive element implements the four-state contract plus focus and togg
 - `.disabled-base`—atomic `:disabled { opacity + pointer-events }`
 - `.focus-ring`—atomic `:focus-visible { box-shadow: var(--focus-ring-shadow) }`
 
-### Press-scale ladder (P.W4 Lane D)
+### Press-scale tokens
 
-`--scale-press-{xs,sm,md,lg}` parametrises the four canonical press
-amplitudes (0.98 / 0.97 / 0.96 / 0.95). Use the rung that matches the
-register of the interactive surface:
+Three press amplitudes ship: `--scale-press` (0.95, the generic
+pressed scale), `--scale-press-sm` (0.97, the canonical button press —
+aliased as `--scale-press-btn` for the button + slider recipes), and
+`--scale-press-dock` (0.92, the dock-control press). Consumers reach
+for these rather than redeclaring arbitrary `active:scale-[X.XX]`
+literals.
 
-| Rung | Value | Use case |
-|------|-------|----------|
-| `--scale-press-xs` | 0.98 | Subtle press for dense / heavily-used surfaces (table-row buttons, recent items, grid cells) |
-| `--scale-press-sm` | 0.97 | Canonical button press; aliased as `--scale-press-btn` for the prior call sites |
-| `--scale-press-md` | 0.96 | Slightly deeper press for review / decision actions |
-| `--scale-press-lg` | 0.95 | Deepest press for controls panels and primary CTAs |
-
-Consumers reach for these tokens rather than redeclaring arbitrary
-`active:scale-[X.XX]` literals. The ladder absorbs words/frontend's
-9-site distribution (P11/a §I4) without consumer-side drift.
+The P.W4 4-rung `--scale-press-{xs,sm,md,lg}` ladder was retired at
+Q.W4 Lane D: the `xs`/`md`/`lg` rungs were minted as preemptive
+consumer-facing substrate for a words/frontend `active:scale-[X.XX]`
+absorption that never landed — a fleet-wide grep found zero
+`var(--scale-press-{xs,md,lg})` consumers. Substrate-without-consumer
+is binary (N invariant 23); the unused rungs are gone.
 
 ---
 

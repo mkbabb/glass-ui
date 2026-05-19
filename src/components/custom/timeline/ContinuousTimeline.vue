@@ -572,8 +572,9 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
    over a backdrop blur with a hairline ring, not an opaque puck. The
    glass treatment is the resting recipe; the per-state rules below only
    re-tint the same glass (they no longer paint an opaque solid). All
-   knobs are CSS custom properties so consumers can tune the tint /
-   blur / ring without reaching into this scope. */
+   knobs are CSS custom properties declared in tokens.css §16 TIMELINE
+   so consumers can tune the tint / blur / ring without reaching into
+   this scope. */
 .continuous-dot {
     position: relative;
     right: auto;
@@ -583,11 +584,12 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
     transform: none;
     /* Glass fill: a translucent tint (NOT opaque) so the rail's hue
        reads faintly through the dot — the glass-design idiom. The 2px
-       border becomes a hairline glass ring. */
-    background: var(--timeline-dot-fill, var(--surface-tint-12));
-    backdrop-filter: var(--timeline-dot-blur, var(--glass-blur-quiet));
-    -webkit-backdrop-filter: var(--timeline-dot-blur, var(--glass-blur-quiet));
-    border-color: var(--timeline-dot-ring, var(--glass-border-floating));
+       border becomes a hairline glass ring. The unprefixed
+       backdrop-filter is authored alone — Lightning CSS emits the
+       -webkit- form per the glass.css single-source policy. */
+    background: var(--timeline-dot-fill);
+    backdrop-filter: var(--timeline-dot-blur);
+    border-color: var(--timeline-dot-ring);
     /* Symmetric soft shadow so the perceived centre coincides with the
        math centre; a faint inner highlight gives the glass its convex
        lensing read. */
@@ -637,12 +639,12 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
 .continuous-dot[data-current] {
     background: color-mix(
         in srgb,
-        var(--timeline-dot-tint-current, var(--accent, var(--foreground))) 22%,
+        var(--timeline-dot-tint-current) 22%,
         var(--surface-tint-12)
     );
     border-color: color-mix(
         in srgb,
-        var(--timeline-dot-tint-current, var(--accent, var(--foreground))) 40%,
+        var(--timeline-dot-tint-current) 40%,
         var(--glass-border-floating)
     );
 }
@@ -650,12 +652,12 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
 .continuous-dot[data-state="completed"] {
     background: color-mix(
         in srgb,
-        var(--timeline-dot-tint-completed, var(--success, var(--foreground))) 22%,
+        var(--timeline-dot-tint-completed) 22%,
         var(--surface-tint-12)
     );
     border-color: color-mix(
         in srgb,
-        var(--timeline-dot-tint-completed, var(--success, var(--foreground))) 40%,
+        var(--timeline-dot-tint-completed) 40%,
         var(--glass-border-floating)
     );
 }
@@ -679,10 +681,7 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
 
 .continuous-dot-check path {
     fill: none;
-    stroke: var(
-        --timeline-dot-check-color,
-        var(--timeline-dot-tint-completed, var(--success, var(--foreground)))
-    );
+    stroke: var(--timeline-dot-check-color);
     stroke-width: 3;
     stroke-linecap: round;
     stroke-linejoin: round;

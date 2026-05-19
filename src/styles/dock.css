@@ -70,10 +70,8 @@
         --dock-tab-padding-inline: var(--dock-density-compact-tab-padding-inline, 0.625rem);
     }
 
-    /* Comfortable density — the GlassDock default. Sits between compact and
-       spacious. Patches the missing rung (V.W3.T1 — B5 §2.1 amendment: the
-       4-rung prop type used to fall through to the unpatched root for the
-       comfortable default). */
+    /* Comfortable density — the GlassDock default. Sits between compact
+       and spacious. */
     .glass-dock[data-density="comfortable"] {
         --dock-padding-block: var(--dock-density-comfortable-padding-block, 0.375rem);
         --dock-padding-inline: var(--dock-density-comfortable-padding-inline, 0.5rem);

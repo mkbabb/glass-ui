@@ -743,19 +743,19 @@
     --scale-press: 0.95;
     --scale-press-dock: 0.92;
 
-    /* Press-scale ladder—canonical 4-rung values for active/pressed
-       states (P.W4 Lane D; O-N-7 + P11/a §I4 close). words/frontend
-       carries 9 `active:scale-[X.XX]` sites at 4 distinct arbitrary
-       values (0.95 / 0.96 / 0.97 / 0.98); the ladder absorbs the
-       distribution without consumer-side literals. Consumers reach
-       for these rather than redeclaring inline scales. `xs` is the
-       lightest press, `lg` the deepest. `--scale-press-btn` aliases
-       `--scale-press-md` so the canonical button-press value stays
-       reachable under its prior name. */
-    --scale-press-xs: 0.98;
+    /* Press-scale — the canonical button-press value. `--scale-press-btn`
+       is the named handle the button + slider recipes consume.
+
+       Q.W4 Lane D (Q-sty-5) retired the P.W4 `--scale-press-{xs,md,lg}`
+       rungs: the ladder was minted as preemptive consumer-facing
+       substrate for a words/frontend `active:scale-[X.XX]` absorption
+       that never landed — a fleet-wide grep (words/frontend, fourier,
+       bbnf-buddy, speedtest, keyframes.js + glass-ui src/) found zero
+       `var(--scale-press-{xs,md,lg})` consumers. Substrate-without-
+       consumer is binary (N invariant 23 / L invariant 8); the three
+       unused rungs are gone. `sm` is retained — `--scale-press-btn`
+       aliases it. */
     --scale-press-sm: 0.97;
-    --scale-press-md: 0.96;
-    --scale-press-lg: 0.95;
     --scale-press-btn: var(--scale-press-sm);
     --opacity-disabled: 0.5;
     --opacity-icon-muted: 0.8;
@@ -825,6 +825,26 @@
                                                  pointer: fine. */
     --timeline-segment-flex: 1 1 0;           /* per-cell flex distribution (segmented) */
 
+    /* Boundary-dot glass knobs (Q.W4 Lane B — promoted from
+       ContinuousTimeline.vue SFC fallbacks; `3cb70db` minted these as a
+       private dialect). The continuous-variant dot is a GLASS primitive:
+       a translucent tinted fill over a backdrop blur with a hairline
+       ring. These knobs let consumers retune the resting glass + the
+       per-state tints without a `:deep()` reach.
+         fill            — resting translucent fill
+         blur            — backdrop blur tier behind the dot
+         ring            — hairline glass ring (border-color)
+         tint-current    — wash colour for the active-phase dot
+         tint-completed  — wash colour for the completed-phase dot
+         check-color     — completion-tick stroke (defaults to the
+                           completed tint) */
+    --timeline-dot-fill: var(--surface-tint-12);
+    --timeline-dot-blur: var(--glass-blur-quiet);
+    --timeline-dot-ring: var(--glass-border-floating);
+    --timeline-dot-tint-current: var(--accent, var(--foreground));
+    --timeline-dot-tint-completed: var(--success, var(--foreground));
+    --timeline-dot-check-color: var(--timeline-dot-tint-completed);
+
     /* Continuous-variant specific — seam dividers between regions.
        Set `--timeline-continuous-seam-opacity: 0` to suppress the
        inter-region 1px dividers entirely. Default `0.25` reads as a
@@ -871,6 +891,46 @@
         var(--chart-jitter),
         color-mix(in srgb, var(--chart-jitter) 60%, transparent)
     );
+
+    /* ═══════════════════════════════════════════════
+       §17 METRIC
+
+       MetricRow / MetricStack value-clamp dialect. The post-P
+       `9ba68ca` + `d244dd5` commits introduced this 8-token family
+       (plus the P.W5 Lane A.1 MetricRow clamp work) as a private SFC
+       dialect — the defaults lived as `var(…, fallback)` literals
+       scattered across MetricRow.vue / MetricStack.vue, never
+       discoverable or `:root`-overridable. Q.W4 Lane A promotes the
+       whole family here per the DESIGN.md feature-token-home rule;
+       the SFCs now consume them bare.
+
+       The declared values ARE the `audacious` poster register — the
+       hero-scale clamp for a single giant number the user watches
+       climb. MetricStack's `[data-register="result"]` scoped selector
+       legitimately overrides this register-locally for the compact
+       multi-row ledger; that override now retunes a globally declared
+       default rather than minting a fallback.
+
+       Three clamp arms each: `min` (floor), `cqi` (the binding
+       container-query middle term), `max` (ceiling). value + label
+       carry all three; unit carries min/max only (its cqi coefficient
+       is a fixed 6cqi, not consumer-tuned).
+       ═══════════════════════════════════════════════ */
+
+    /* Value register — audacious-poster hero clamp */
+    --metric-row-value-clamp-min: 4.5rem;
+    --metric-row-value-clamp-cqi: 34cqi;
+    --metric-row-value-clamp-max: var(--type-display-hero);
+
+    /* Unit register — one tier below the value it qualifies */
+    --metric-row-unit-clamp-min: 1.5rem;
+    --metric-row-unit-clamp-max: 3.25rem;
+
+    /* Label register — uppercase, the binding row-height term in the
+       compact `result` register */
+    --metric-row-label-clamp-min: 1.125rem;
+    --metric-row-label-clamp-cqi: 5cqi;
+    --metric-row-label-clamp-max: 2.75rem;
 }
 
 /* ═══════════════════════════════════════════════

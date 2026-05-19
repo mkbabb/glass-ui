@@ -130,7 +130,6 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
     background: var(--surface-tint-6);
     overflow: hidden;
     backdrop-filter: var(--glass-blur-wash);
-    -webkit-backdrop-filter: var(--glass-blur-wash);
 }
 
 .segmented-cell {

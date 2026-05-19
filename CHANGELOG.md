@@ -17,6 +17,15 @@
 >
 > Speedtest reference: `docs/tranches/AC/AC.md` §AC.W6 + §AC.W8 + `docs/tranches/AC/waves/W6{a,b,c,d,e}-*.md` + `docs/tranches/AC/waves/W8.md`. Tags v1.5.0 + v1.5.1 placed retroactively at AC.W6e close.
 
+## 1.9.1—2026-05-18—Q.W4 close (style/token co-location + CSS budget rebaseline)
+
+Patch ship. Token co-location + cascade hygiene.
+
+- **Token promotion**: the 8-token metric-stack `--metric-row-*-clamp-*` private SFC dialect promoted to `tokens.css §metric`; the 6 `--timeline-dot-*` knobs promoted to `§timeline` — both now `:root`-overridable per the W3 token-home rule.
+- **Cascade hygiene**: manual `-webkit-backdrop-filter` prefixes retired across 4 SFCs (routed through the `glass.css` single-source mechanism); `transitions.css` wrapped in `@layer components` (was the last unlayered class sheet).
+- **Substrate-without-consumer**: `--scale-press-{xs,md,lg}` retired (zero fleet consumers; `sm`/`btn`/`dock` kept).
+- **CSS budget** rebaselined to ≈10% headroom (CSS draw 43,340 raw / 7,780 gzip).
+
 ## 1.9.0—2026-05-18—Q.W3 close (core-feature cohesion + substrate REVERTs + component DEMOTE)
 
 Minor ship. Substrate transposition + three consumer-recovery reverts + two component retirements.

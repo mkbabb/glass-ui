@@ -139,7 +139,6 @@ function onTrackKeydown(e: KeyboardEvent) {
     border-radius: var(--radius-pill);
     background: var(--surface-tint-6);
     backdrop-filter: var(--glass-blur-wash);
-    -webkit-backdrop-filter: var(--glass-blur-wash);
     cursor: pointer;
     touch-action: none;
     overflow: hidden;

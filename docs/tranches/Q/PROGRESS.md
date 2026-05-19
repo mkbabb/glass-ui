@@ -284,3 +284,20 @@ Core-feature cohesion + substrate REVERTs + component DEMOTE. 8 lanes, 2 batches
 Gate: typecheck + build + vitest 379/379 + audit:stash + proof:resolution + proof:theme GREEN. Playwright visual probe consolidated into the W6 binding π re-probe.
 
 Tag: v1.9.0.
+
+## 2026-05-18 — W4 close (v1.9.1)
+
+Style/token co-location + consumer cosmetic sweep. 3 agents (glass-ui A-E, bbnf-buddy G/H/I, consumer phantom-sweep F).
+
+| Lane(s) | Outcome |
+|---|---|
+| A/B | metric-stack 8-token dialect → `tokens.css §metric`; timeline 6 `--timeline-dot-*` knobs → `§timeline` |
+| C | manual `-webkit-backdrop-filter` retired across 4 SFCs (single-source via glass.css); `transitions.css` wrapped in `@layer components` |
+| D | `--scale-press-{xs,md,lg}` RETIRED (zero fleet consumers — words/frontend P.W4-D landing never happened); CSS budget rebaselined (CSS 43340 raw / 7780 gzip; budget → 48000/8650, ≈10% headroom) |
+| E | cosmetic comment sweep (test-file wording, dock.css archaeology) |
+| F | words/frontend 4 `.glass-medium` → `.glass-quiet` (committed `0cd458f`); fourier 29-site phantom+cartoon migration authored as `W4-Lane-F-fourier.patch` (fourier's ~100-file in-flight tree — patch handed over, not committed into the dirty tree) |
+| G/H/I | bbnf-buddy `eb842af` — preset.css canonical-ladder rewrite + 12 retired-token overrides fixed; last fleet `<Card variant=>` site → `<Card :surface=>`; `:deep()` retreat (EditorPanel ScrollPane→div repairs a broken import; ToolsLayer `--dock-control-*`); `--shadow-cartoon-{md,lg}` lift rungs restored. Substrate referral **Q.Rh-1** filed (ToggleChip active-state token cohort); Q.Rh-2 dissolved on inspection |
+
+Gate: typecheck + build + vitest 379/379 + profile:budget (CSS 90.3%/89.9%) + audit:stash + proof:resolution + proof:theme GREEN. Fleet `<Card variant=>` corpus ZERO. fourier phantom-sweep grep-zero pends the patch application (W6 re-audit).
+
+Tag: v1.9.1.

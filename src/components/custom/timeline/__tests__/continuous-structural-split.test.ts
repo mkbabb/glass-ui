@@ -151,8 +151,9 @@ describe("GlassTimeline continuous — Option C structural split", () => {
         // The default continuous variant wraps each dot in HoverPopover so
         // the popover's `update:open` cadence drives the hover events (the
         // pointer-skim flicker fix). The bare-fallback path (popover
-        // disabled) still uses raw mouseenter/mouseleave so legacy consumers
-        // see the same event surface. This test exercises that fallback.
+        // disabled) still uses raw mouseenter/mouseleave so popover-disabled
+        // consumers see the same event surface. This test exercises that
+        // fallback.
         const wrapper = mount(GlassTimeline, {
             props: {
                 variant: "continuous",

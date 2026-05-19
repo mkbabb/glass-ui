@@ -64,9 +64,20 @@ const startedAt = Date.now();
 // promotions. The bump cadence (N.W0 → P.W0 → P.W3) is the canonical
 // "tranche-close re-baseline against substrate additions" pattern per
 // invariant-29 AB+1 retrospective discipline (codified at P.W6 close).
+//
+// Q.W4 close re-baseline (v1.9.1 patch — Q-sty-6): the post-P shadow
+// cohort pushed CSS draw to 42_667 raw / 7_674 gzip (93.6% gzip — below
+// the ε-thin threshold) without rebaselining the budget. Q.W4 Lanes A+B
+// promoted the metric-stack + timeline-dot private token dialects into
+// tokens.css §17 METRIC / §16 TIMELINE — net-additive on raw bytes (the
+// declared defaults outweigh the shed SFC `var()` fallbacks). Settled
+// post-W4 draw: 43_340 raw / 7_780 gzip. Rebaselining ONCE, post-token-
+// promotion, to 48_000 raw / 8_650 gzip (≈ 10% headroom on both axes)
+// per the canonical tranche-close cadence. The growth is load-bearing
+// (token co-location is not deletable behaviour); REBASELINE not reduce.
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
-    "dist/glass-ui.css": { raw: 46_000, gzip: 8_200 },
+    "dist/glass-ui.css": { raw: 48_000, gzip: 8_650 },
 };
 
 const args = new Set(process.argv.slice(2));

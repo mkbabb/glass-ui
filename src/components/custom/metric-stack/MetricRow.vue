@@ -161,17 +161,18 @@ const rowStyle = computed(() => ({
    clamp. In the compact `result` register the label — not the value —
    is the binding row-height term (uppercase + a tall line-box), so a
    consumer that opts the value register down must be able to tame the
-   label in lockstep. Defaults preserve the audacious-poster label
-   behaviour bit-for-bit (1.125rem → 5cqi → 2.75rem). */
+   label in lockstep. Defaults live in tokens.css §17 METRIC (the
+   audacious-poster register); MetricStack's `[data-register="result"]`
+   selector retunes them register-locally. */
 .metric-row__label {
     text-transform: uppercase;
     font-size: clamp(
-        var(--metric-row-label-clamp-min, 1.125rem),
+        var(--metric-row-label-clamp-min),
         calc(
-            var(--metric-row-label-clamp-cqi, 5cqi) *
+            var(--metric-row-label-clamp-cqi) *
                 var(--result-row-scale, 1)
         ),
-        var(--metric-row-label-clamp-max, 2.75rem)
+        var(--metric-row-label-clamp-max)
     );
     letter-spacing: 0.18em;
     font-weight: 500;
@@ -189,17 +190,17 @@ const rowStyle = computed(() => ({
    `--metric-row-value-clamp-{min,max}` tokens so consumers shrinking the
    register (e.g. words/frontend's compact metric cells targeting
    text-title…text-4xl ≈ 1.5rem…2.25rem) can retint at `:root` or per-row
-   without forking the SFC. Defaults preserve the audacious-poster
-   behaviour bit-for-bit (4.5rem → var(--type-display-hero)).
-   Canonical custom-property cascade per DESIGN.md texture-system pattern.
+   without forking the SFC.
 
    AE.W1 Cluster A: the clamp's MIDDLE arm — the `cqi` coefficient — is
    the BINDING term against a wide container (~34cqi of a ~660px stack
    resolves to ~225px, defeating any consumer that only retunes the
-   endpoints). Route that coefficient through `--metric-row-value-clamp-cqi`
-   too, default `34cqi`, so a consumer can opt the whole register down to
-   a compact form. The default preserves the audacious-poster behaviour
-   bit-for-bit; this is purely an additive, back-compatible knob. */
+   endpoints). The `--metric-row-value-clamp-cqi` token routes that
+   coefficient too, so a consumer can opt the whole register down.
+
+   Q.W4 Lane A: the full `--metric-row-*-clamp-*` family is declared in
+   tokens.css §17 METRIC (audacious-poster register defaults); this
+   recipe consumes them bare. */
 .metric-row__value {
     --digit-count: 3;
     position: relative;
@@ -211,13 +212,13 @@ const rowStyle = computed(() => ({
     align-items: baseline;
     gap: var(--metric-row-value-unit-gap, 0.25em);
     font-size: clamp(
-        var(--metric-row-value-clamp-min, 4.5rem),
+        var(--metric-row-value-clamp-min),
         calc(
-            var(--metric-row-value-clamp-cqi, 34cqi) *
+            var(--metric-row-value-clamp-cqi) *
                 var(--result-row-scale, 1) * 3 /
                 max(3, var(--digit-count))
         ),
-        var(--metric-row-value-clamp-max, var(--type-display-hero))
+        var(--metric-row-value-clamp-max)
     );
     line-height: 0.95;
     font-weight: 400;
@@ -235,9 +236,9 @@ const rowStyle = computed(() => ({
    tier below the value it qualifies. */
 .metric-row__unit {
     font-size: clamp(
-        var(--metric-row-unit-clamp-min, 1.5rem),
+        var(--metric-row-unit-clamp-min),
         calc(6cqi * var(--result-row-scale, 1)),
-        var(--metric-row-unit-clamp-max, 3.25rem)
+        var(--metric-row-unit-clamp-max)
     );
     line-height: 1;
     font-weight: 500;

@@ -235,7 +235,6 @@ const isTouchActive = computed(() => touchGate.isActive.value)
     height: calc(var(--slider-thumb-size, 1rem) * 1.5);
     background: var(--slider-track-bg, var(--surface-tint-6));
     backdrop-filter: var(--glass-blur-quiet);
-    -webkit-backdrop-filter: var(--glass-blur-quiet);
 }
 
 .glass-slider[data-variant="timeline"] .slider-range {
@@ -254,7 +253,6 @@ const isTouchActive = computed(() => touchGate.isActive.value)
     height: calc(var(--slider-thumb-size, 1rem) * 0.875);
     background: var(--surface-tint-6);
     backdrop-filter: var(--glass-blur-quiet);
-    -webkit-backdrop-filter: var(--glass-blur-quiet);
     border: 1px solid var(--surface-tint-8);
 }
 
@@ -331,7 +329,6 @@ const isTouchActive = computed(() => touchGate.isActive.value)
     height: var(--slider-scrub-track-height, 1.25rem);
     background: var(--slider-scrub-track-bg, var(--surface-tint-6));
     backdrop-filter: var(--slider-scrub-backdrop, var(--glass-blur-quiet));
-    -webkit-backdrop-filter: var(--slider-scrub-backdrop, var(--glass-blur-quiet));
     cursor: pointer;
 }
 

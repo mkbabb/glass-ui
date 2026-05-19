@@ -1,194 +1,204 @@
-/* Reusable Vue <Transition> class sets */
+/* Reusable Vue <Transition> class sets.
+ *
+ * Q.W4 Lane C (Q-sty-4): these class rules are wrapped in
+ * `@layer components` so they share the cascade layer of every other
+ * recipe sheet. Unlayered rules land in the implicit unlayered origin,
+ * which outranks every `@layer` block at equal specificity — an
+ * asymmetry that let a Vue <Transition> class silently outrank a
+ * `@layer components` recipe. `animations.css` stays unlayered (pure
+ * `@keyframes`, layer-agnostic by spec). */
 
-/* ── Fade (symmetric, fast) ── */
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity var(--duration-fast) var(--ease-standard);
-}
-.fade-enter-from,
-.fade-leave-to {
-    opacity: 0;
-}
-
-/* ── Fade-slide (spring in, accelerate out) ── */
-.fade-slide-enter-active {
-    transition:
-        opacity var(--duration-normal) var(--ease-out),
-        transform var(--duration-normal) var(--spring-smooth);
-}
-.fade-slide-leave-active {
-    transition:
-        opacity var(--duration-fast) var(--ease-in),
-        transform var(--duration-fast) var(--ease-in);
-}
-.fade-slide-enter-from {
-    opacity: 0;
-    transform: translateY(-4px);
-}
-.fade-slide-leave-to {
-    opacity: 0;
-    transform: translateY(4px);
-}
-
-/* ── Dialog scale (bouncy spring in, ease out) ── */
-.dialog-scale-enter-active {
-    transition:
-        opacity var(--duration-slow) var(--ease-out),
-        transform var(--duration-slow) var(--spring-bouncy);
-}
-.dialog-scale-leave-active {
-    transition:
-        opacity var(--duration-normal) var(--ease-standard),
-        transform var(--duration-normal) var(--ease-standard);
-}
-.dialog-scale-enter-from {
-    opacity: 0;
-    transform: scale(0.95) translateY(8px);
-}
-.dialog-scale-leave-to {
-    opacity: 0;
-    transform: scale(0.95) translateY(8px);
-}
-
-/* ── Spring pop (bouncy in, fast out) ── */
-.pop-enter-active {
-    transition:
-        opacity var(--duration-fast) var(--ease-out),
-        transform var(--duration-slow) var(--spring-bouncy);
-}
-.pop-leave-active {
-    transition:
-        opacity var(--duration-fast) var(--ease-out),
-        transform var(--duration-fast) var(--ease-out);
-}
-.pop-enter-from {
-    opacity: 0;
-    transform: scale(0.9);
-}
-.pop-leave-to {
-    opacity: 0;
-    transform: scale(0.95);
-}
-
-/* ── Dropdown (fast opacity + snappy spring transform) ── */
-.dropdown-enter-active {
-    transition:
-        opacity var(--duration-instant) var(--ease-out),
-        transform var(--duration-normal) var(--spring-snappy);
-}
-.dropdown-leave-active {
-    transition:
-        opacity var(--duration-instant) var(--ease-standard),
-        transform var(--duration-fast) var(--ease-standard);
-}
-.dropdown-enter-from,
-.dropdown-leave-to {
-    opacity: 0;
-    transform: scale(0.96) translateY(4px);
-}
-
-/* ── Tab fade ── */
-.tab-fade-enter-active,
-.tab-fade-leave-active {
-    transition: opacity var(--duration-fast) var(--ease-standard);
-}
-.tab-fade-enter-from,
-.tab-fade-leave-to {
-    opacity: 0;
-}
-
-/* ── Pane swap (horizontal content replacement, mode="out-in") ── */
-.pane-swap-enter-active {
-    transition:
-        opacity var(--duration-normal) var(--ease-out),
-        transform var(--duration-normal) var(--spring-smooth);
-}
-.pane-swap-leave-active {
-    transition:
-        opacity var(--duration-normal) var(--ease-out),
-        transform var(--duration-normal) var(--ease-out);
-}
-.pane-swap-enter-from {
-    opacity: 0;
-    transform: translateX(0.75rem);
-}
-.pane-swap-leave-to {
-    opacity: 0;
-    transform: translateX(-0.75rem);
-}
-
-/* ── Metric swap (compact number/value crossfade) ── */
-.metric-swap-enter-active {
-    transition:
-        opacity var(--duration-normal) var(--ease-out),
-        transform var(--duration-normal) var(--spring-smooth);
-}
-.metric-swap-leave-active {
-    transition:
-        opacity var(--duration-fast) var(--ease-standard),
-        transform var(--duration-fast) var(--ease-standard);
-}
-.metric-swap-enter-from,
-.metric-swap-leave-to {
-    opacity: 0;
-    transform: translateY(0.375rem) scale(0.95);
-}
-
-/* ── Dock entrance utility ── */
-.dock-in {
-    animation: dock-in var(--duration-panel) var(--spring-snappy) both;
-    transform-origin: center bottom;
-}
-
-/* ── Reduced motion: preserve fades, remove transform/scale motion ── */
-@media (prefers-reduced-motion: reduce) {
+@layer components {
+    /* ── Fade (symmetric, fast) ── */
     .fade-enter-active,
-    .fade-leave-active,
-    .tab-fade-enter-active,
-    .tab-fade-leave-active,
-    .pane-swap-enter-active,
-    .pane-swap-leave-active,
-    .metric-swap-enter-active,
-    .metric-swap-leave-active {
-        /* Fades are safe — keep them but shorten */
-        transition-duration: 0.1s !important;
+    .fade-leave-active {
+        transition: opacity var(--duration-fast) var(--ease-standard);
+    }
+    .fade-enter-from,
+    .fade-leave-to {
+        opacity: 0;
     }
 
-    .fade-slide-enter-active,
-    .fade-slide-leave-active,
-    .dialog-scale-enter-active,
-    .dialog-scale-leave-active,
-    .pop-enter-active,
-    .pop-leave-active,
-    .dropdown-enter-active,
-    .dropdown-leave-active,
-    .pane-swap-enter-active,
-    .pane-swap-leave-active,
-    .metric-swap-enter-active,
-    .metric-swap-leave-active {
-        /* Keep opacity transition, eliminate transform motion */
-        transition-property: opacity !important;
-        transition-duration: 0.15s !important;
-        animation-duration: 0.01ms !important;
+    /* ── Fade-slide (spring in, accelerate out) ── */
+    .fade-slide-enter-active {
+        transition:
+            opacity var(--duration-normal) var(--ease-out),
+            transform var(--duration-normal) var(--spring-smooth);
+    }
+    .fade-slide-leave-active {
+        transition:
+            opacity var(--duration-fast) var(--ease-in),
+            transform var(--duration-fast) var(--ease-in);
+    }
+    .fade-slide-enter-from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    .fade-slide-leave-to {
+        opacity: 0;
+        transform: translateY(4px);
     }
 
-    .fade-slide-enter-from,
-    .fade-slide-leave-to,
-    .dialog-scale-enter-from,
-    .dialog-scale-leave-to,
-    .pop-enter-from,
-    .pop-leave-to,
+    /* ── Dialog scale (bouncy spring in, ease out) ── */
+    .dialog-scale-enter-active {
+        transition:
+            opacity var(--duration-slow) var(--ease-out),
+            transform var(--duration-slow) var(--spring-bouncy);
+    }
+    .dialog-scale-leave-active {
+        transition:
+            opacity var(--duration-normal) var(--ease-standard),
+            transform var(--duration-normal) var(--ease-standard);
+    }
+    .dialog-scale-enter-from {
+        opacity: 0;
+        transform: scale(0.95) translateY(8px);
+    }
+    .dialog-scale-leave-to {
+        opacity: 0;
+        transform: scale(0.95) translateY(8px);
+    }
+
+    /* ── Spring pop (bouncy in, fast out) ── */
+    .pop-enter-active {
+        transition:
+            opacity var(--duration-fast) var(--ease-out),
+            transform var(--duration-slow) var(--spring-bouncy);
+    }
+    .pop-leave-active {
+        transition:
+            opacity var(--duration-fast) var(--ease-out),
+            transform var(--duration-fast) var(--ease-out);
+    }
+    .pop-enter-from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    .pop-leave-to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    /* ── Dropdown (fast opacity + snappy spring transform) ── */
+    .dropdown-enter-active {
+        transition:
+            opacity var(--duration-instant) var(--ease-out),
+            transform var(--duration-normal) var(--spring-snappy);
+    }
+    .dropdown-leave-active {
+        transition:
+            opacity var(--duration-instant) var(--ease-standard),
+            transform var(--duration-fast) var(--ease-standard);
+    }
     .dropdown-enter-from,
-    .dropdown-leave-to,
-    .pane-swap-enter-from,
-    .pane-swap-leave-to,
+    .dropdown-leave-to {
+        opacity: 0;
+        transform: scale(0.96) translateY(4px);
+    }
+
+    /* ── Tab fade ── */
+    .tab-fade-enter-active,
+    .tab-fade-leave-active {
+        transition: opacity var(--duration-fast) var(--ease-standard);
+    }
+    .tab-fade-enter-from,
+    .tab-fade-leave-to {
+        opacity: 0;
+    }
+
+    /* ── Pane swap (horizontal content replacement, mode="out-in") ── */
+    .pane-swap-enter-active {
+        transition:
+            opacity var(--duration-normal) var(--ease-out),
+            transform var(--duration-normal) var(--spring-smooth);
+    }
+    .pane-swap-leave-active {
+        transition:
+            opacity var(--duration-normal) var(--ease-out),
+            transform var(--duration-normal) var(--ease-out);
+    }
+    .pane-swap-enter-from {
+        opacity: 0;
+        transform: translateX(0.75rem);
+    }
+    .pane-swap-leave-to {
+        opacity: 0;
+        transform: translateX(-0.75rem);
+    }
+
+    /* ── Metric swap (compact number/value crossfade) ── */
+    .metric-swap-enter-active {
+        transition:
+            opacity var(--duration-normal) var(--ease-out),
+            transform var(--duration-normal) var(--spring-smooth);
+    }
+    .metric-swap-leave-active {
+        transition:
+            opacity var(--duration-fast) var(--ease-standard),
+            transform var(--duration-fast) var(--ease-standard);
+    }
     .metric-swap-enter-from,
     .metric-swap-leave-to {
-        transform: none !important;
+        opacity: 0;
+        transform: translateY(0.375rem) scale(0.95);
     }
 
+    /* ── Dock entrance utility ── */
     .dock-in {
-        animation-duration: 0.01ms !important;
-        transform: none !important;
+        animation: dock-in var(--duration-panel) var(--spring-snappy) both;
+        transform-origin: center bottom;
+    }
+
+    /* ── Reduced motion: preserve fades, remove transform/scale motion ── */
+    @media (prefers-reduced-motion: reduce) {
+        .fade-enter-active,
+        .fade-leave-active,
+        .tab-fade-enter-active,
+        .tab-fade-leave-active,
+        .pane-swap-enter-active,
+        .pane-swap-leave-active,
+        .metric-swap-enter-active,
+        .metric-swap-leave-active {
+            /* Fades are safe — keep them but shorten */
+            transition-duration: 0.1s !important;
+        }
+
+        .fade-slide-enter-active,
+        .fade-slide-leave-active,
+        .dialog-scale-enter-active,
+        .dialog-scale-leave-active,
+        .pop-enter-active,
+        .pop-leave-active,
+        .dropdown-enter-active,
+        .dropdown-leave-active,
+        .pane-swap-enter-active,
+        .pane-swap-leave-active,
+        .metric-swap-enter-active,
+        .metric-swap-leave-active {
+            /* Keep opacity transition, eliminate transform motion */
+            transition-property: opacity !important;
+            transition-duration: 0.15s !important;
+            animation-duration: 0.01ms !important;
+        }
+
+        .fade-slide-enter-from,
+        .fade-slide-leave-to,
+        .dialog-scale-enter-from,
+        .dialog-scale-leave-to,
+        .pop-enter-from,
+        .pop-leave-to,
+        .dropdown-enter-from,
+        .dropdown-leave-to,
+        .pane-swap-enter-from,
+        .pane-swap-leave-to,
+        .metric-swap-enter-from,
+        .metric-swap-leave-to {
+            transform: none !important;
+        }
+
+        .dock-in {
+            animation-duration: 0.01ms !important;
+            transform: none !important;
+        }
     }
 }
