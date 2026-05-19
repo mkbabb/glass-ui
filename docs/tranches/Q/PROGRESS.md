@@ -218,3 +218,17 @@ Both component lifts from `e017d53` (`<ScrollPane>` + `<CartoonCard>`) DEMOTE �
 Per the Q-open user directive + the audit-aug round-2/3/4 directives ("NO implementation, this is tranche development"), the augmented planning substrate landed atop the Q-open commit. Implementation dispatch awaits explicit subsequent user directive per the K → L → M → N → O → P precedent.
 
 When dispatch authorized: W0 HEADLINE opens — 3 lanes (post-P retrospective `docs/tranches/AB+2/` + dev-resolution contract + proof-gate script).
+
+## 2026-05-18 — W0 HEADLINE close (v1.8.5)
+
+Implementation dispatch authorized. W0 opened — 3 lanes, agent-dispatched parallel (shared tree, bounds-disjoint).
+
+| Lane | Artefact | Verdict |
+|---|---|---|
+| A | `docs/tranches/AB+2/` retrospective (AB+2.md + 3 sub-wave specs + FINAL.md + PROGRESS.md + CONSTELLATION.md) | 7/7 post-P commits accounted; 3-sub-wave reconstruction T1/T2/T3; cohort accrued NO tag |
+| B | `docs/precepts/cross-repo-dev-resolution.md` precept edict + invariant-29 recurrence diagnosis | 4-key publisher shape (`development`/`types`/`import`/`default`); `default` keystone was universally absent; codification necessary-but-not-sufficient |
+| C | `scripts/proof-resolution-contract.mjs` fail-closed gate + `proof:resolution` script + ci.yml wiring | W0 baseline: FAIL (exit 1) — 3 publisher violations (glass-ui/keyframes.js/value.js all missing `default`), 0 consumer violations |
+
+Gate matrix: typecheck + build + vitest (372/372) + audit:stash GREEN. `proof:resolution` expected-FAIL at W0 (fleet mid-desync; W1 makes it pass). Precept submodule file authored, held uncommitted until W6 codification.
+
+Tag: v1.8.5.

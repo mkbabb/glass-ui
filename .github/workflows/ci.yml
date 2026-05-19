@@ -59,3 +59,11 @@ jobs:
               run: npm run proof:consumers:static
             - name: audit:stash
               run: npm run audit:stash
+            # Q.W0 Lane C: cross-repo dev-resolution contract gate.
+            # Checks publisher exports["."] 4-key shape + absence of hard dist/ aliases.
+            # Sibling repos (keyframes.js, value.js, ...) do not exist on the GH Actions
+            # runner, so the publisher checks for those repos are skipped gracefully.
+            # The glass-ui publisher check (missing "default" terminal key) DOES run
+            # and will fail until Q.W1 adds the key — at which point this gate turns green.
+            - name: proof:resolution
+              run: npm run proof:resolution
