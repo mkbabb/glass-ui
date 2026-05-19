@@ -108,6 +108,31 @@ export function flattenPalette(
     return buf;
 }
 
+/**
+ * Derive a cheap CSS `linear-gradient` from an Aurora palette — the static
+ * first-frame placeholder painted under the WebGL canvas while the runtime
+ * arms (see `useAurora`'s deferred init / Aurora.vue's placeholder element).
+ *
+ * The shader interpolates the same OKLCh stops in linear sRGB; here we render
+ * each stop as a gamma-sRGB hex so the browser's gradient compositor produces
+ * a visually-adjacent approximation with zero JS and zero GPU on first paint.
+ * A diagonal axis (135deg) reads as atmospheric depth rather than a flat band.
+ *
+ * Single-stop palettes degrade to a flat fill; an empty palette yields
+ * `transparent` so the placeholder is simply invisible (the canvas still
+ * fades in over it once armed).
+ */
+export function paletteToCssGradient(stops: OklchStop[]): string {
+    if (stops.length === 0) return "transparent";
+    if (stops.length === 1) return oklchStopToHex(stops[0]!);
+    const n = stops.length;
+    const segments = stops.map((stop, i) => {
+        const pct = Math.round((i / (n - 1)) * 100);
+        return `${oklchStopToHex(stop)} ${pct}%`;
+    });
+    return `linear-gradient(135deg, ${segments.join(", ")})`;
+}
+
 export function oklchStopToHex(s: OklchStop): string {
     const [r, g, b] = oklchToRgb(s.L, s.C, s.h);
     const toHex = (v: number) => v.toString(16).padStart(2, "0");

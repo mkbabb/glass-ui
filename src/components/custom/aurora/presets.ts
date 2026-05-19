@@ -116,6 +116,15 @@ export interface AuroraCursorApi {
 }
 
 export interface AuroraInstance extends AuroraCursorApi {
+    /**
+     * Run the expensive WebGL init — context creation, shader compile + GPU
+     * link, first uniform upload, rAF arm. Idempotent. On the `"eager"` /
+     * capture `initStrategy` `createAurora` already calls this before
+     * returning; on `"deferred"` the consumer (e.g. `useAurora`) invokes it
+     * past first paint. Throws on WebGL2/compile/link failure (O invariant
+     * 24). A no-op once armed or once `dispose()` has run.
+     */
+    arm(): void;
     update(cfg: AuroraConfig): void;
     /** Render a single deterministic frame at time `t` (seconds). Used for thumbnail bakes. */
     renderAt(timeSec: number): void;

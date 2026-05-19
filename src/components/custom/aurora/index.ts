@@ -26,4 +26,5 @@ export {
     hexToOklchStop,
     oklchStopToHex,
     oklchToLinear,
+    paletteToCssGradient,
 } from "./composables/color";
