@@ -1,33 +1,46 @@
 #!/usr/bin/env node
-// Q.W0 Lane C — Cross-repo dev-resolution contract gate.
+// Cross-repo dev-resolution contract gate.
 //
 // History:
 //   - AD.W4 introduced the `"development"` conditional-exports branch across the
-//     `@mkbabb/*` family. The flip was applied to every publisher `package.json`
-//     exports map and never to the resolver side (consumer Vite configs).
-//   - Q12 §2 diagnosed the desync: publisher side uniform and correct; consumer
-//     side has zero explicit `default` terminal key and one hostile fossil alias
-//     (value.js vite.config.ts line 30 — pre-AD.W4 era; since removed).
-//   - Q12 §6.2 recommended this fail-closed proof script.
-//   - Q.W0 Lane C authors it. Fleet is mid-desync at W0 — the script is EXPECTED
-//     to FAIL. W1 makes it pass.
+//     `@mkbabb/*` family — workspace-linked consumers resolved a sibling's live
+//     `src/` in dev mode.
+//   - Tranche Q (Q.W0 Lane C) authored this gate for contract-v1: it ASSERTED
+//     the 4-key `development → types → import → default` exports shape.
+//   - The AG glass-ui-core wave (2026-05-19) rewrites this gate for
+//     contract-v2. The user directed the `development` condition be entirely
+//     abrogated: consumers resolve `dist/`; every publisher exposes a
+//     `build:watch` that keeps `dist/` fresh. The gate is INVERTED — it now
+//     FORBIDS the very condition it once required (a fail-closed
+//     anti-regression) and additionally REQUIRES the `build:watch` script.
 //
-// Contract (Q12 §3.1):
-//   Publisher half — every `@mkbabb/*` `package.json` `exports["."]` MUST declare,
-//   in this key order: development → types → import → default.
-//   All four keys required; `default` was the missing terminal fallback.
-//
+// Contract-v2 (docs/precepts/cross-repo-dev-resolution.md §2):
+//   Publisher half — every `@mkbabb/*` `package.json` `exports["."]` MUST
+//   declare the 3-key shape `types → import → default` and MUST NOT carry a
+//   `development` key (anywhere in the exports map — root or subpath).
+//   Watch-build — every `@mkbabb/*` publisher MUST declare a `build:watch`
+//   script so consumer dev-orchestration can keep `dist/` fresh.
 //   Consumer half — no `@mkbabb/*` consumer Vite config may carry a hard
 //   `resolve.alias` whose key matches `@mkbabb/*` and whose value points at a
-//   `dist/` path of a sibling repo. A `dist/` alias defeats the conditional-exports
-//   mechanism entirely (it bypasses the `exports` map).
+//   `dist/` path. A `dist/` alias shadows the `exports` map (which under
+//   contract-v2 already resolves `dist/` — the alias is a redundant fossil).
 //
 // Checks performed:
-//   1. Publisher check — every tracked `@mkbabb/*` publisher package declares the
-//      4-key shape in `exports["."]`.
-//   2. Consumer check — every consumer's Vite config file(s) are text-scanned for
-//      `resolve.alias` entries that key on `@mkbabb/*` and whose value string
-//      contains `dist/`. Regex-based static scan — conservative (no JS eval).
+//   1. Publisher exports shape — every tracked `@mkbabb/*` publisher's
+//      `exports["."]` declares the 3-key shape AND no `exports` entry (root or
+//      subpath) carries a `development` key.
+//   2. Watch-build presence — every publisher `package.json` declares a
+//      `build:watch` script.
+//   3. Consumer check — every consumer's Vite config file(s) are text-scanned
+//      for `resolve.alias` entries that key on `@mkbabb/*` and whose value
+//      string contains `dist/`. Regex-based static scan — conservative.
+//
+// Migration note: the AG glass-ui-core wave rewrites this gate together with
+// glass-ui's own `exports`/`scripts`, so the gate is GREEN for glass-ui at
+// that wave's close. The sibling consumers (keyframes.js, value.js) and the
+// four leaf consumers still carry contract-v1 shape until the AG-GU
+// fleet-migration waves (GU0/GU2/GU4); the gate is EXPECTED RED for those
+// repos until then — the intended contract-v1→v2 inversion transient.
 //
 // Exit 0 → clean (all checks pass).
 // Exit 1 → violation(s) found; each named with repo + file + line.
@@ -49,7 +62,8 @@ const PARENT = resolve(ROOT, "..");
 
 /**
  * Publisher packages — `@mkbabb/*` libraries that are workspace-linked between
- * sibling repos and therefore must declare the full 4-key exports shape.
+ * sibling repos. Under contract-v2 each must declare the 3-key exports shape,
+ * carry no `development` key, and expose a `build:watch` script.
  * These are the repos that appear as `file:` deps in other repos' package.json.
  *
  * Format: { id: string, dir: string }
@@ -113,8 +127,18 @@ const CONSUMER_REPOS = [
 // Helpers
 // ---------------------------------------------------------------------------
 
-/** The canonical 4-key order the contract requires for every exports["."] */
-const REQUIRED_EXPORT_KEYS = ["development", "types", "import", "default"];
+/**
+ * The canonical 3-key shape contract-v2 requires for every exports["."].
+ * `development` is deliberately ABSENT — its presence is a violation (the gate
+ * forbids what contract-v1 once required).
+ */
+const REQUIRED_EXPORT_KEYS = ["types", "import", "default"];
+
+/** The condition key contract-v2 abrogates — forbidden anywhere in `exports`. */
+const FORBIDDEN_EXPORT_KEY = "development";
+
+/** The script every `@mkbabb/*` publisher must declare under contract-v2. */
+const REQUIRED_PUBLISHER_SCRIPT = "build:watch";
 
 /**
  * Regex to detect a hard `@mkbabb/*` alias whose value string contains `dist/`.
@@ -134,8 +158,23 @@ const MKBABB_ALIAS_KEY_RE = /["']@mkbabb\/[^"']+["']\s*:/;
 const DIST_VALUE_RE = /["'`][^"'`]*dist\/[^"'`]*["'`]/;
 
 /**
+ * Recursively collect every conditional-exports key name that appears anywhere
+ * in an `exports` map — root, subpath, or nested condition object. Used to
+ * assert the `development` key is absent across the WHOLE map, not just root.
+ */
+function collectExportConditionKeys(node, acc) {
+    if (!node || typeof node !== "object" || Array.isArray(node)) return acc;
+    for (const [key, value] of Object.entries(node)) {
+        // Subpath keys start with "." — they are paths, not condition keys.
+        if (!key.startsWith(".")) acc.add(key);
+        collectExportConditionKeys(value, acc);
+    }
+    return acc;
+}
+
+/**
  * Scan a Vite config file for `@mkbabb/*` aliases whose value references `dist/`.
- * Returns an array of { line: number, text: string } violations.
+ * Returns an array of { line: number, key: string, text: string } violations.
  */
 function scanViteConfigForDistAliases(filePath) {
     const violations = [];
@@ -160,7 +199,7 @@ function scanViteConfigForDistAliases(filePath) {
 }
 
 // ---------------------------------------------------------------------------
-// Check 1 — Publisher exports["."] shape
+// Check 1+2 — Publisher exports["."] shape + build:watch script
 // ---------------------------------------------------------------------------
 
 function checkPublisherPackages() {
@@ -201,30 +240,41 @@ function checkPublisherPackages() {
                 line: null,
                 message: `exports["."] is missing or not an object`,
             });
-            continue;
-        }
-
-        for (const key of REQUIRED_EXPORT_KEYS) {
-            if (typeof exportsRoot[key] !== "string") {
-                violations.push({
-                    repo: pkg.id,
-                    file: "package.json",
-                    line: null,
-                    message: `exports["."] missing required key "${key}" (found keys: ${Object.keys(exportsRoot).join(", ")})`,
-                });
+        } else {
+            // Required 3-key shape — types, import, default all present.
+            for (const key of REQUIRED_EXPORT_KEYS) {
+                if (typeof exportsRoot[key] !== "string") {
+                    violations.push({
+                        repo: pkg.id,
+                        file: "package.json",
+                        line: null,
+                        message: `exports["."] missing required key "${key}" (found keys: ${Object.keys(exportsRoot).join(", ")})`,
+                    });
+                }
             }
         }
 
-        // Key order check — conditional-exports is first-match-wins; `development`
-        // must be first so it takes precedence over `import`/`default`.
-        const actualKeys = Object.keys(exportsRoot);
-        const firstRequired = actualKeys.find((k) => REQUIRED_EXPORT_KEYS.includes(k));
-        if (firstRequired && firstRequired !== "development") {
+        // Contract-v2 anti-regression — the `development` condition is
+        // abrogated. It must NOT appear anywhere in the exports map (root or
+        // any subpath). The gate forbids what contract-v1 once required.
+        const conditionKeys = collectExportConditionKeys(parsed.exports, new Set());
+        if (conditionKeys.has(FORBIDDEN_EXPORT_KEY)) {
             violations.push({
                 repo: pkg.id,
                 file: "package.json",
                 line: null,
-                message: `exports["."] key order wrong — "development" must come first (found: ${actualKeys.join(", ")})`,
+                message: `exports map carries a forbidden "${FORBIDDEN_EXPORT_KEY}" condition key — contract-v2 abrogates it; collapse the entry to the 3-key shape (types/import/default)`,
+            });
+        }
+
+        // Watch-build — contract-v2 §2.3: every publisher exposes build:watch.
+        const scripts = parsed.scripts ?? {};
+        if (typeof scripts[REQUIRED_PUBLISHER_SCRIPT] !== "string") {
+            violations.push({
+                repo: pkg.id,
+                file: "package.json",
+                line: null,
+                message: `missing required "${REQUIRED_PUBLISHER_SCRIPT}" script — contract-v2 §2.3 requires every @mkbabb/* publisher to expose an incremental watch build that keeps dist/ fresh`,
             });
         }
     }
@@ -233,7 +283,7 @@ function checkPublisherPackages() {
 }
 
 // ---------------------------------------------------------------------------
-// Check 2 — Consumer Vite configs: no hard @mkbabb/* dist/ alias
+// Check 3 — Consumer Vite configs: no hard @mkbabb/* dist/ alias
 // ---------------------------------------------------------------------------
 
 function checkConsumerViteConfigs() {
@@ -272,12 +322,12 @@ const consumerViolations = checkConsumerViteConfigs();
 const allViolations = [...publisherViolations, ...consumerViolations];
 
 if (allViolations.length === 0) {
-    console.log("[proof:resolution] PASS — dev-resolution contract satisfied across the constellation");
+    console.log("[proof:resolution] PASS — contract-v2 dev-resolution contract satisfied across the constellation");
     process.exit(0);
 }
 
 // Fail — print each violation with repo + file + line
-console.error("[proof:resolution] FAIL — dev-resolution contract violations found:\n");
+console.error("[proof:resolution] FAIL — contract-v2 dev-resolution contract violations found:\n");
 
 let publisherCount = 0;
 let consumerCount = 0;
@@ -303,12 +353,14 @@ console.error(
     `Summary: ${publisherCount} publisher violation(s), ${consumerCount} consumer violation(s).`,
 );
 console.error("");
-console.error("Publisher fix (Q12 §3.3): add \"default\": \"./dist/<name>.js\" as the terminal");
-console.error("  key in every @mkbabb/* package's exports[\".\"] map.");
-console.error("Consumer fix (Q12 §3.1): remove hard dist/ aliases from resolve.alias —");
-console.error("  bare specifiers resolve through the exports map via the file: symlink.");
+console.error("Publisher fix (contract-v2 §2.1/§2.3): collapse every exports entry to the");
+console.error("  3-key shape (types/import/default) — delete every \"development\" key — and");
+console.error("  declare a \"build:watch\" script in package.json.");
+console.error("Consumer fix (contract-v2 §2.4): remove hard dist/ aliases from resolve.alias —");
+console.error("  bare specifiers resolve through the exports map to dist/ via the file: symlink.");
 console.error("");
-console.error("See docs/precepts/cross-repo-dev-resolution.md for the full contract.");
-console.error("W1 makes this gate pass; W0 documents the expected-fail baseline.");
+console.error("See docs/precepts/cross-repo-dev-resolution.md for the full contract-v2.");
+console.error("Fleet-green is staged: glass-ui passes at the AG glass-ui-core wave close;");
+console.error("the sibling + leaf consumers migrate in AG-GU0/GU2/GU4 — RED for them is expected.");
 
 process.exit(1);
