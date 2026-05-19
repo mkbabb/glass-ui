@@ -61,6 +61,36 @@
        reserved for J.W2.7 §17 audacious-CTA buildout). */
     --duration-sparkle: 600ms;
 
+    /* AH.W5-e (FA-8 §4d) — motion-duration + staged-reveal canon.
+
+       Six duration tokens + three delay tokens promoted from raw literals
+       at speedtest's celebratory-reveal SFCs (SpeedtestResults, ThankYou,
+       ResultStack, CompleteBadge). Unified under the `--motion-*`
+       namespace (parallel to `--motion-ease-*`) so all motion tokens
+       cluster at one canon — duration + easing arm together. */
+
+    /* Staged-entrance pairing — opacity + transform Vue <Transition> arms
+       in the celebratory headline + result-row reveals. Partners with
+       `--motion-ease-staged-entrance` / `--motion-ease-overshoot`. */
+    --motion-duration-staged: 320ms;
+
+    /* One-shot celebratory shimmer — gold-headline shimmer animation
+       duration + staging delay. Shared canon so the speedtest results
+       headline and the thank-you headline stay in lockstep. */
+    --motion-duration-complete-shimmer: 2.4s;
+    --motion-delay-complete-shimmer: 220ms;
+
+    /* CompleteBadge staged-reveal cluster — the disc / ring / check curve
+       fires at three asymmetric durations + delays per the A4-AF staged-
+       variety design intent. Promoting the magic numbers makes the
+       staged-variety visible at the canon. */
+    --motion-duration-badge-disc: 420ms;
+    --motion-duration-badge-ring: 560ms;
+    --motion-duration-badge-check: 380ms;
+    --motion-delay-badge-disc: 80ms;
+    --motion-delay-badge-ring: 220ms;
+    --motion-delay-badge-check: 460ms;
+
     /* ═══════════════════════════════════════════════
        §2  EASING — Spring curves via linear()
 
