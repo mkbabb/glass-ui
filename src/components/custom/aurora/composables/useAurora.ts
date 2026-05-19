@@ -46,8 +46,8 @@ export interface UseAuroraReturn {
  * idle — a library-owned, post-paint deferral (memory `feedback_library_gaps`:
  * a consumer must never wrap a library primitive in a scheduler; glass-ui owns
  * the scheduling). `requestIdleCallback` is the idiomatic primitive; Safari
- * (no `requestIdleCallback`) falls back to `requestAnimationFrame` chained to
- * a `setTimeout(0)` macrotask, which likewise lands after the commit.
+ * (no `requestIdleCallback`) falls back to a double `requestAnimationFrame`
+ * chained to a `setTimeout(0)` macrotask, which likewise lands after the commit.
  *
  * Returns a cancel function so an unmount before the callback fires tears the
  * pending work down cleanly.
@@ -64,16 +64,21 @@ function scheduleAfterFirstPaint(task: () => void): () => void {
         });
         return () => window.cancelIdleCallback?.(handle);
     }
-    // Safari fallback: rAF runs just before the next paint; the nested
-    // setTimeout(0) defers one macrotask further, past the paint commit.
+    // Safari fallback: a single rAF callback runs *before* the frame's paint
+    // commit — too early. A second rAF lands at the start of the next frame,
+    // strictly after the prior frame committed; the nested setTimeout(0)
+    // yields one more macrotask so the arm work does not compete with paint.
     let raf = 0;
     let timer: ReturnType<typeof setTimeout> | undefined;
     let cancelled = false;
     raf = requestAnimationFrame(() => {
         if (cancelled) return;
-        timer = setTimeout(() => {
-            if (!cancelled) task();
-        }, 0);
+        raf = requestAnimationFrame(() => {
+            if (cancelled) return;
+            timer = setTimeout(() => {
+                if (!cancelled) task();
+            }, 0);
+        });
     });
     return () => {
         cancelled = true;
