@@ -301,3 +301,16 @@ Style/token co-location + consumer cosmetic sweep. 3 agents (glass-ui A-E, bbnf-
 Gate: typecheck + build + vitest 379/379 + profile:budget (CSS 90.3%/89.9%) + audit:stash + proof:resolution + proof:theme GREEN. Fleet `<Card variant=>` corpus ZERO. fourier phantom-sweep grep-zero pends the patch application (W6 re-audit).
 
 Tag: v1.9.1.
+
+## 2026-05-18 — W5 close (keyframes.js demo restoration; consumer-side, no glass-ui ship)
+
+6 lanes, 3 sequential agent-groups (W5's lanes are dependency-chained — Lane A unblocks all).
+
+| Lane | keyframes.js commit | Outcome |
+|---|---|---|
+| A | `84f1659` | scene-transition renderer crash eliminated — `<Suspense>` inserted as the async boundary (Transition > KeepAlive > Suspense > async); every scene mounts on cold deep-link; route drift resolved |
+| B/C/E | `5861d18` | rotations dropdown + TopDock selects → glass-ui `<StatusDot>`; play button → `.rainbow-pastel` `@utility`; `glass-subtle`→`glass-wash`; root `bg-background`; hero `font-bold` dropped + `text-2xs`→`text-admin-label`; square-scene controls-layout grid gains a stage track at 390/820px |
+| D/F | `e073dac` | t-value scrubber → `<Slider variant="glass-scrubber">`; bezier canvas → `<GlassPanel variant="wash">`; duration slider → `<Slider size="sm">` (all feature-parity verified, zero loss); dead-code purge (demo/{boxes,balls,simple,bench}, standalone cube/amiga/square App.vue dupes, SceneNav, SimpleScene, 24 orphaned ui/ dirs); playground completed in-wave |
+| close | `b721a0c` | keyframes.js → 2.1.1; `dist/` untracked (gitignored pre-ignore fossil — contract hygiene) |
+
+Substrate-gap referral **Q.Rh-3** filed (ProgressRing/CircularProgress, provisional — W6 evaluates against the ≥2-consumer test). keyframes.js build + typecheck + gh-pages GREEN.
