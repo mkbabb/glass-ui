@@ -57,11 +57,12 @@
 //
 // ── Custom-package cherry-pick rationale (Rε §B.2.2 → L.W2 disposition) ───
 //
-// Of the 35 packages in `src/components/custom/`, this root barrel re-exports
-// 7 (`instrument-chassis`, `glyph-face`, `dock-group`, `disco-glyph`,
+// Of the 34 packages in `src/components/custom/`, this root barrel re-exports
+// 6 (`instrument-chassis`, `glyph-face`, `disco-glyph`,
 // `hover-popover`, `configurator`, `scrolling-text`). The other 28 reach
 // consumers ONLY via their dedicated subpath (`@mkbabb/glass-ui/dock`,
-// `/aurora`, `/sidebar`, ...).
+// `/aurora`, `/sidebar`, ...). (AI.W5-γ — `dock-group` retired; root-barrel
+// count drops from 7 to 6, custom-package count from 35 to 34.)
 //
 // Acceptance bar for root-barrel inclusion:
 //   (a) vueuse-free at every transitive import (closes SCC trap);
@@ -130,7 +131,6 @@ export * from "./components/ui/tooltip";
 // Custom composites — instrument-cluster chassis
 export * from "./components/custom/instrument-chassis";
 export * from "./components/custom/glyph-face";
-export * from "./components/custom/dock-group";
 export * from "./components/custom/disco-glyph";
 export * from "./components/custom/hover-popover";
 

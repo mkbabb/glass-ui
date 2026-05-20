@@ -11,7 +11,6 @@ import {
     TableHeader,
     TableRow,
 } from "../../../src/components/ui/table";
-import { DockGroup } from "../../../src/components/custom/dock-group";
 import { MetricBadge } from "../../../src/components/custom/metric-badge";
 import { cn } from "../../../src/utils/cn";
 
@@ -95,21 +94,18 @@ const trendClasses: Record<Trend, string> = {
             </aside>
 
             <main class="flex flex-col gap-[calc(1.5rem_+_var(--density-gap,0rem))] min-w-0">
-                <!-- KPI strip — DockGroup pill-row shelf for compact metric clusters.
-                     The substrate DockGroup is inline-flex nowrap by design;
-                     at narrow viewports the 4-chip row exceeds the column.
-                     Wrap in a `min-w-0 overflow-x-auto` shell with hidden
-                     scrollbar so the row stays visually intact while the
-                     parent column never overflows. Mirrors the
-                     `.dock-group-audacious-scroll` idiom from
-                     `demo/stories/primitives/dock-group.vue`. -->
+                <!-- KPI strip — inline-flex pill row (AI.W5-γ: was DockGroup;
+                     the substrate retired at the wave with zero production
+                     consumers across the constellation). The same inline-flex
+                     + nowrap shape survives at the demo level via an inline
+                     `flex` cluster on a `min-w-0 overflow-x-auto` shell. -->
                 <div class="kpi-strip-scroll min-w-0">
-                    <DockGroup density="comfortable" class="self-start">
+                    <div class="kpi-strip-row inline-flex items-center gap-[0.5625rem] self-start">
                         <MetricBadge :amount="42" unit="active" size="md" />
                         <MetricBadge :amount="1.2" unit="k r/min" size="md" />
                         <MetricBadge :amount="128" unit="ms p95" size="md" />
                         <MetricBadge :amount="0.04" unit="% err" size="md" />
-                    </DockGroup>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-[calc(1rem_+_var(--density-gap,0rem))] 2xl:grid-cols-4">
@@ -234,11 +230,11 @@ const trendClasses: Record<Trend, string> = {
 
 <style scoped>
 .kpi-strip-scroll {
-    /* M.W2 Lane C — clip the KPI DockGroup (inline-flex + nowrap by substrate
-       design) to the parent column. Horizontal scroll keeps the row visually
-       intact while body scrollWidth never exceeds the viewport. Hidden
-       scrollbar matches the StoryPager + `.dock-group-audacious-scroll`
-       idiom. */
+    /* M.W2 Lane C — clip the KPI strip (inline-flex + nowrap by composition)
+       to the parent column. Horizontal scroll keeps the row visually intact
+       while body scrollWidth never exceeds the viewport. Hidden scrollbar
+       matches the StoryPager idiom. (AI.W5-γ — the prior DockGroup substrate
+       retired at the wave; the inline-flex pill row survives.) */
     overflow-x: auto;
     scrollbar-width: none;
 }

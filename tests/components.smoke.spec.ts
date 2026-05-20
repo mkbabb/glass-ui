@@ -251,19 +251,17 @@ describe("component smoke coverage", () => {
         expect(wrapper.find("h2").classes()).toContain("section-label");
     });
 
-    it("V.W3.T1 — density-rail probe: GlassDock + DockGroup + MetricPill all expose data-density on root", async () => {
+    it("V.W3.T1 — density-rail probe: GlassDock + MetricPill expose data-density on root", () => {
+        // AI.W5-γ — the prior DockGroup arm of this probe retires alongside
+        // the SFC archive (zero production consumers; Path B per G-AI-D26).
+        // The V.W3.T1 four-rung density rail still binds for the surviving
+        // pair (GlassDock + MetricPill); future cluster-inside-chassis idioms
+        // resurrect via composition, not a dedicated SFC.
+
         // GlassDock — default density is "comfortable"
         const dock = mount(GlassDock, { slots: { default: "<button>Tool</button>" } });
         expect(dock.find(".glass-dock").attributes("data-density")).toBe("comfortable");
         expect(dock.find(".glass-dock").classes()).not.toContain("density-comfortable");
-
-        // DockGroup — default is undefined; explicit "comfortable" sets the attr
-        const { default: DockGroup } = await import("../src/components/custom/dock-group/DockGroup.vue");
-        const group = mount(DockGroup, {
-            props: { density: "comfortable" },
-            slots: { default: "<span>child</span>" },
-        });
-        expect(group.find(".dock-group").attributes("data-density")).toBe("comfortable");
 
         // MetricPill — default is "spacious"; passing "comfortable" sets the attr on root
         const pill = mount(MetricPill, {
