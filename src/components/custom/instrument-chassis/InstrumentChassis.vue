@@ -9,6 +9,7 @@ export type InstrumentChassisPhase =
     | "ping"
     | "download"
     | "upload"
+    | "jitter"
     | "complete";
 
 /**

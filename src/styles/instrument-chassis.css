@@ -118,8 +118,13 @@
         --phase-tint-amount: var(--phase-tint-peak);
     }
     .instrument-chassis[data-phase="upload"] {
-        --phase-color: var(--chart-upload, var(--viz-legendre));
-        --phase-color-label: var(--chart-upload-label, var(--chart-upload, var(--viz-legendre)));
+        --phase-color: var(--chart-upload, var(--viz-amber));
+        --phase-color-label: var(--chart-upload-label, var(--chart-upload, var(--viz-amber)));
+        --phase-tint-amount: var(--phase-tint-peak);
+    }
+    .instrument-chassis[data-phase="jitter"] {
+        --phase-color: var(--chart-jitter, var(--viz-legendre));
+        --phase-color-label: var(--chart-jitter-label, var(--chart-jitter, var(--viz-legendre)));
         --phase-tint-amount: var(--phase-tint-peak);
     }
     .instrument-chassis[data-phase="complete"] {
