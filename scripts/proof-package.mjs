@@ -163,7 +163,10 @@ import { chartHeights } from "@mkbabb/glass-ui/tokens";
 import "@mkbabb/glass-ui/styles";
 import { GlassDock, DockIconButton, DockDropdownTrigger, DockLayerGroup } from "@mkbabb/glass-ui/dock";
 import { FuzzySearch, useFuzzySearch } from "@mkbabb/glass-ui/search";
-import { ProgressiveSidebar, buildTreeIndex, useTreeIndex } from "@mkbabb/glass-ui/sidebar";
+// AI.W5-delta — ProgressiveSidebar SFC retired (Path B per G-AI-D26); the
+// /sidebar subpath now surfaces composables only. The probe verifies the
+// composables continue to resolve through the subpath after the SFC retire.
+import { buildTreeIndex, useTreeIndex } from "@mkbabb/glass-ui/sidebar";
 import { DarkModeToggle } from "@mkbabb/glass-ui/controls";
 import { ConfirmDialog } from "@mkbabb/glass-ui/confirm-dialog";
 import { InfiniteScroll, useInfiniteScroll } from "@mkbabb/glass-ui/infinite-scroll";
@@ -188,7 +191,7 @@ import { IconTooltip } from "@mkbabb/glass-ui/icon-tooltip";
 const runtimeSymbols = [
   Button, Card, Dialog, Tooltip, cn, useGlobalDark, useInterval, chartHeights,
   GlassDock, DockIconButton, DockDropdownTrigger, DockLayerGroup, FuzzySearch, useFuzzySearch,
-  ProgressiveSidebar, buildTreeIndex, useTreeIndex, DarkModeToggle,
+  buildTreeIndex, useTreeIndex, DarkModeToggle,
   ConfirmDialog, InfiniteScroll, useInfiniteScroll, UnderlineTabs, BouncyTabs, BouncyToggle,
   TypewriterText, useTypewriter, StackedIconGroup, GlassCarousel, GlassCarouselItem,
   Aurora, useAurora, MetricBadge, StatusDot, Pulse, PaperBackdrop, ToggleChip,
