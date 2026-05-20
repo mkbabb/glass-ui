@@ -107,7 +107,8 @@ const subpathRuntimeExports = [
     { subpath: "dock", surface: Dock, name: "DockDropdownTrigger" },
     { subpath: "search", surface: Search, name: "FuzzySearch" },
     { subpath: "search", surface: Search, name: "useFuzzySearch" },
-    { subpath: "sidebar", surface: Sidebar, name: "ProgressiveSidebar" },
+    // AI.W5-δ — `ProgressiveSidebar` SFC retired (Path B archive per
+    // G-AI-D26). The `./sidebar` subpath now surfaces composables only.
     { subpath: "sidebar", surface: Sidebar, name: "useScrollTracker" },
     { subpath: "sidebar", surface: Sidebar, name: "useSidebarFollow" },
     { subpath: "sidebar", surface: Sidebar, name: "useTreeIndex" },

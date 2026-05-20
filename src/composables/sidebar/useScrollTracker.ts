@@ -12,7 +12,7 @@ import type {
     TreeNode,
     TreeIndexEntry,
     ScrollTrackerOptions,
-} from "../../components/custom/sidebar/types";
+} from "./types";
 
 export function useScrollTracker<T extends TreeNode>(
     roots: MaybeRefOrGetter<T[]>,

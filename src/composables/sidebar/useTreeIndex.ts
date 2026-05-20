@@ -3,7 +3,7 @@ import type {
     TreeIndexEntry,
     SidebarSection,
     SidebarIndexEntry,
-} from "../../components/custom/sidebar/types";
+} from "./types";
 
 // ---------------------------------------------------------------------------
 // Generic composable — builds index + provides helpers with `getChildren` support

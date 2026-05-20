@@ -194,7 +194,7 @@ export type {
     SidebarState,
     TreeIndexEntry,
     TreeNode,
-} from "../components/custom/sidebar";
+} from "../composables/sidebar";
 
 // ── Search domain ──────────────────────────────────────────────────────────
 // `SearchableItem` is the input shape consumers feed `buildIndex` /

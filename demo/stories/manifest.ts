@@ -161,10 +161,8 @@ export const CATEGORIES: Category[] = [
             s("navigation", "dock", "Dock"),
             s("navigation", "dock-layers", "Dock Layers"),
             s("navigation", "rail", "Dock Rail", "Vertical GlassDock variant behind the demo's category nav."),
-            s("navigation", "sidebar", "Sidebar"),
             s("navigation", "carousel", "Carousel"),
             s("navigation", "command", "Command Palette"),
-            s("navigation", "progressive-sidebar-section", "Progressive Sidebar Section", "Slotted-mode SECTION primitive in isolation — state, scroll-spy active cascade, header composition (P.W3 Lane B)."),
         ],
     },
     {

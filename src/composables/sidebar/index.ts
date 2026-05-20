@@ -11,4 +11,4 @@ export type {
     SidebarIndexEntry,
     SidebarState,
     ScrollTrackerOptions,
-} from "../../components/custom/sidebar/types";
+} from "./types";

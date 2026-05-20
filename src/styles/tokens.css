@@ -348,8 +348,10 @@
 
     /* Muted-tinted surface rungs — canonical handles for the 9 raw
        `color-mix(in srgb, var(--muted) N%, transparent)` sites in
-       FuzzySearch / ProgressiveSidebar / BouncyToggle / Slider scoped CSS.
-       Auto-dark via --muted. R5 vocab.γ axis-1 row. Consumers land in W2.B. */
+       FuzzySearch / BouncyToggle / Slider scoped CSS. (AI.W5-δ — the
+       ProgressiveSidebar consumer retired at the wave; the canonical token
+       rung lives on for the remaining consumers.) Auto-dark via --muted.
+       R5 vocab.γ axis-1 row. */
     --muted-soft:   color-mix(in srgb, var(--muted) 30%, transparent);
     --muted-medium: color-mix(in srgb, var(--muted) 50%, transparent);
 
