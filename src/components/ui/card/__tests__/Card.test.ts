@@ -120,6 +120,76 @@ describe("Card", () => {
     });
 });
 
+// AI.W1-α — additive `shrink` modifier on <CardHeader> binds the 3-lane
+// scroll-driven choreography (header padding / title font-size / description
+// grid-row) to the `--card-scroll` named timeline. The default (shrink
+// absent) is byte-identical to the pre-W1 thin static wrapper — that path
+// is exercised by the existing Card tests above via `<CardHeader>`.
+describe("CardHeader — shrink modifier (AI.W1-α)", () => {
+    it("renders the default thin static wrapper when shrink is absent", () => {
+        const wrapper = mount({
+            components: { CardHeader, CardTitle },
+            template: `
+                <CardHeader class="default-header">
+                    <CardTitle>Account</CardTitle>
+                </CardHeader>
+            `,
+        });
+
+        const root = wrapper.get(".default-header");
+        const classes = root.classes();
+        expect(classes).toContain("flex");
+        expect(classes).toContain("p-6");
+        // The shrink class binding stays off — no choreography arms.
+        expect(classes).not.toContain("card-header--shrink");
+        // Slot hook stays at canonical name.
+        expect(root.attributes("data-slot")).toBe("card-header");
+    });
+
+    it("applies the card-header--shrink class when shrink=true", () => {
+        const wrapper = mount({
+            components: { CardHeader, CardTitle },
+            template: `
+                <CardHeader shrink class="shrink-header">
+                    <CardTitle>Account</CardTitle>
+                </CardHeader>
+            `,
+        });
+
+        const root = wrapper.get(".shrink-header");
+        const classes = root.classes();
+        expect(classes).toContain("card-header--shrink");
+        // Default layout classes still apply — the prop is additive.
+        expect(classes).toContain("flex");
+        expect(classes).toContain("p-6");
+    });
+
+    it("renders <CardTitle> + <CardDescription> with canonical data-slot hooks the shrink choreography selects on", async () => {
+        const { CardDescription } = await import("../index");
+        const wrapper = mount({
+            components: { CardHeader, CardTitle, CardDescription },
+            template: `
+                <CardHeader shrink>
+                    <CardTitle>Account</CardTitle>
+                    <CardDescription>Billing summary</CardDescription>
+                </CardHeader>
+            `,
+        });
+
+        // The two child slots emit the data-slot hooks the scoped shrink
+        // choreography keys on (`[data-slot="card-title"]` +
+        // `[data-slot="card-description"]`). The hooks survive consumer
+        // `class=` overrides because they are attribute selectors, not
+        // class selectors.
+        expect(
+            wrapper.find('[data-slot="card-title"]').exists(),
+        ).toBe(true);
+        expect(
+            wrapper.find('[data-slot="card-description"]').exists(),
+        ).toBe(true);
+    });
+});
+
 // invariant 31 (component props fail-explicit) — dev-WARN posture (Q.W2 Lane A).
 describe("Card — stale-prop dev-warning", () => {
     let warnSpy: ReturnType<typeof vi.spyOn>;

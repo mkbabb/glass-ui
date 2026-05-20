@@ -2,7 +2,7 @@
 import type { HTMLAttributes } from "vue";
 import { computed } from "vue";
 import { cn } from "../../../utils";
-import RegionDivider from "./RegionDivider.vue";
+import ChassisDivider from "./ChassisDivider.vue";
 
 export type InstrumentChassisPhase =
     | "ready"
@@ -15,7 +15,7 @@ export type InstrumentChassisPhase =
  * <InstrumentChassis> — single glass surface composing strip / dial / control
  * regions, glued together by twin-line hairline grooves.
  *
- * Three slots compose vertically with two `<RegionDivider>` instances between
+ * Three slots compose vertically with two `<ChassisDivider>` instances between
  * them. The chassis owns the `--phase-color` cascade via `data-phase`; phase
  * label, hero number, and phase progress fill all read it through one CSS
  * custom property, no per-element listener wiring.
@@ -43,11 +43,11 @@ const classes = computed(() => cn("instrument-chassis", props.class));
         <header class="instrument-strip">
             <slot name="strip" />
         </header>
-        <RegionDivider orientation="horizontal" />
+        <ChassisDivider orientation="horizontal" />
         <main class="instrument-dial">
             <slot name="dial" />
         </main>
-        <RegionDivider orientation="horizontal" />
+        <ChassisDivider orientation="horizontal" />
         <footer class="instrument-control">
             <slot name="control" />
         </footer>

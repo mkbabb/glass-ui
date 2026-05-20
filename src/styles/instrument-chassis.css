@@ -132,9 +132,9 @@
         z-index: 2;
     }
 
-    /* Region dividers — twin-line hairline grooves ─────────────── */
+    /* Chassis dividers — twin-line hairline grooves ─────────────── */
 
-    .region-divider {
+    .chassis-divider {
         flex-shrink: 0;
         position: relative;
         background: transparent;
@@ -142,18 +142,18 @@
         pointer-events: none;
     }
 
-    .region-divider--horizontal {
+    .chassis-divider--horizontal {
         display: flex;
         flex-direction: column;
         height: 2px;
         width: 100%;
     }
 
-    .region-divider--vertical {
+    .chassis-divider--vertical {
         display: flex;
         flex-direction: row;
         width: 2px;
-        height: var(--region-divider-vertical-height, 70%);
+        height: var(--chassis-divider-vertical-height, 70%);
         align-self: center;
         justify-self: center;
     }
@@ -163,12 +163,12 @@
         flex-shrink: 0;
     }
 
-    .region-divider--horizontal .bezel-line {
+    .chassis-divider--horizontal .bezel-line {
         height: 1px;
         width: 100%;
     }
 
-    .region-divider--vertical .bezel-line {
+    .chassis-divider--vertical .bezel-line {
         width: 1px;
         height: 100%;
     }
@@ -188,7 +188,7 @@
     .dark .bezel-line.bottom { background: rgb(0 0 0 / 0.18); }
 
     /* Inner dial divider — same primitive, vertical on desktop. Speedtest
-       slots its <RegionDivider orientation="vertical" class="dial-divider" />
+       slots its <ChassisDivider orientation="vertical" class="dial-divider" />
        between the meter canvas and the readout column; consumers may also
        compose their own vertical dividers via the same primitive. */
     .instrument-chassis .dial-divider {
@@ -206,7 +206,7 @@
         }
 
         .instrument-chassis .instrument-dial .dial-divider,
-        .instrument-chassis .instrument-dial .region-divider--vertical {
+        .instrument-chassis .instrument-dial .chassis-divider--vertical {
             flex-direction: column;
             width: 70%;
             height: 2px;
@@ -214,7 +214,7 @@
         }
 
         .instrument-chassis .instrument-dial .dial-divider .bezel-line,
-        .instrument-chassis .instrument-dial .region-divider--vertical .bezel-line {
+        .instrument-chassis .instrument-dial .chassis-divider--vertical .bezel-line {
             width: 100%;
             height: 1px;
         }

@@ -3,7 +3,7 @@ import { computed, ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import {
     InstrumentChassis,
-    RegionDivider,
+    ChassisDivider,
     type InstrumentChassisPhase,
 } from "../../../src/components/custom/instrument-chassis";
 import { GlyphFace } from "../../../src/components/custom/glyph-face";
@@ -192,7 +192,7 @@ const primaryGlyph = computed<{ icon: LucideIcon; label: string }>(() => {
                         />
                         <div class="dial-center" />
                     </div>
-                    <RegionDivider orientation="vertical" class="dial-divider" />
+                    <ChassisDivider orientation="vertical" class="dial-divider" />
                     <div class="readout-column">
                         <span
                             class="text-admin-label transition-colors"

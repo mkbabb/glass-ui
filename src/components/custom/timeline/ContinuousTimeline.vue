@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import HoverPopover from "../hover-popover/HoverPopover.vue";
 import {
     continuousFillWidth,
@@ -42,6 +42,17 @@ import type { TimelineSegment } from "./types";
  * bottom of THIS SFC because HoverCardPortal escapes scoped CSS. The
  * rules must live in a component that participates in the continuous
  * render path; this is that component.
+ *
+ * AI.W1-δ `#detail` slot (post-RD-3 §4): the continuous variant emits an
+ * optional `#detail` scoped slot rendered as a sibling of the rail wrap,
+ * payload-rich with `{ segment, source, currentKey, hoveredKey }`. The
+ * primitive owns the effective-segment resolution (hovered ?? current);
+ * consumers own the choreography (e.g., a `<Transition mode="out-in">`
+ * fade-swap keyed on the segment's stable key). The slot mount carries
+ * a `min-height` reservation via `--timeline-detail-min-height` so
+ * idle ↔ active transitions do not reflow the surrounding layout.
+ * Speedtest's `PhaseTimelineDetailPanel` is the canonical consumer
+ * (absorbed in AI.W1-δ).
  */
 const props = withDefaults(
     defineProps<{
@@ -103,11 +114,47 @@ const continuousAriaLabel = computed<string>(() => {
     return names.length > 0 ? `Timeline: ${names.join(", ")}` : "Timeline";
 });
 
+/**
+ * AI.W1-δ — primitive-side hovered-key tracking. The continuous variant
+ * owns the hovered-segment state (the previously consumer-side
+ * `hoveredSegmentKey` ref that lived in speedtest's PhaseTimeline.vue
+ * migrates inward). The `#detail` slot then receives both the current
+ * key AND the hovered key in its scoped payload, and the primitive
+ * computes the `effectiveSegment` (hovered overrides current) +
+ * `detailSource` (`"hovered"` / `"current"` / `"idle"`) so consumers do
+ * not re-derive them per-render. Hover trumps current — the panel
+ * affordance behaves as "tell me about this transient marker", with the
+ * current-phase reading restored on hover-leave.
+ */
+const hoveredKey = ref<string | null>(null);
+
+const effectiveSegment = computed<TimelineSegment | null>(() => {
+    const list = segmentList.value;
+    if (list.length === 0) return null;
+    const key = hoveredKey.value ?? props.currentSegmentKey ?? null;
+    if (key == null) return null;
+    return list.find((s) => s.key === key) ?? null;
+});
+
+const detailSource = computed<"hovered" | "current" | "idle">(() => {
+    if (hoveredKey.value != null) return "hovered";
+    if (props.currentSegmentKey != null) return "current";
+    return "idle";
+});
+
 function onSegmentHover(seg: TimelineSegment) {
+    hoveredKey.value = seg.key;
     emit("hover", { key: seg.key, segment: seg });
 }
 
 function onSegmentLeave(seg: TimelineSegment) {
+    // Only clear the hovered key if THIS segment is the currently-tracked
+    // hover — a fast skim from segment A's popover to segment B's trigger
+    // can fire leave-of-A after enter-of-B; gating on key equality
+    // preserves B's hover state through that interleaving.
+    if (hoveredKey.value === seg.key) {
+        hoveredKey.value = null;
+    }
     emit("hoverEnd", { key: seg.key, segment: seg });
 }
 
@@ -316,6 +363,25 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
                     </button>
                 </li>
             </ul>
+        </div>
+
+        <!-- AI.W1-δ `#detail` slot — payload-rich scoped slot consumers
+             mount inline to surface a per-segment detail row (label,
+             value, description, etc.) keyed to the effective segment
+             (hovered ?? current). Primitive owns the resolution; the
+             consumer owns the choreography (e.g., a `<Transition
+             mode="out-in">` fade-swap keyed on the segment's stable
+             key). The wrap reserves `--timeline-detail-min-height` so
+             idle ↔ active transitions do not reflow the surrounding
+             layout. -->
+        <div v-if="$slots.detail" class="continuous-detail">
+            <slot
+                name="detail"
+                :segment="effectiveSegment"
+                :source="detailSource"
+                :current-key="props.currentSegmentKey ?? null"
+                :hovered-key="hoveredKey"
+            />
         </div>
     </div>
 </template>
@@ -723,6 +789,18 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
     100% {
         transform: scale(1);
     }
+}
+
+/* AI.W1-δ `#detail` slot mount — sibling of `.continuous-track-wrap`.
+   Reserves `--timeline-detail-min-height` so idle ↔ active transitions
+   keyed by the consumer (`<Transition mode="out-in">`) do not reflow
+   the surrounding layout. Consumers override the reservation per-host
+   by setting `--timeline-detail-min-height` on the wrapping context.
+   The primitive paints nothing inside the wrap — the consumer's slot
+   body composes the visual. */
+.continuous-detail {
+    min-height: var(--timeline-detail-min-height, 1.25rem);
+    margin-block-start: 0.25rem;
 }
 
 /* Screen-reader-only span baked into the dot button. */

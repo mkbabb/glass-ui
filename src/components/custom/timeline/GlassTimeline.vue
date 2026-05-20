@@ -100,6 +100,12 @@ const emit = defineEmits<{
         <template #popoverContent="slotProps">
             <slot name="popoverContent" v-bind="slotProps" />
         </template>
+        <!-- AI.W1-δ — forward the `#detail` scoped slot on the continuous
+             variant only (option γ per post-RD-3 §3). The scrubber +
+             segmented variants do not carry this surface. -->
+        <template v-if="$slots.detail" #detail="slotProps">
+            <slot name="detail" v-bind="slotProps" />
+        </template>
     </ContinuousTimeline>
 
     <!-- Segmented variant — delegates to <SegmentedTimeline>. -->

@@ -185,6 +185,26 @@
         -webkit-mask-image: linear-gradient(to bottom, transparent, black var(--mask-fade-width), black calc(100% - var(--mask-fade-width)), transparent);
     }
 
+    /* ── Card scroll-timeline host (AI.W1-α) ───────────────────────────────
+       Canonical scroll-overflow host that emits the `--card-scroll` named
+       scroll-timeline consumed by `<CardHeader shrink>`. Apply to the
+       scroll-overflow ancestor (typically the `<Card>` itself OR a wrapper
+       inside it that carries `overflow-y: auto`).
+
+       `contain: layout style paint` isolates the named timeline so child
+       animations respond to THIS host's scroll only — not to portal-
+       triggered layout shifts in ancestor containers (the load-bearing
+       isolation guarantee the value.js `PaneHeader.vue:18-29` comment
+       called out and the AI.W1 spec §1.2 ratified as canon).
+
+       Disambiguated from `.scroll-fade-*` (mask-image fade gradient at
+       the container's leading/trailing edge) — `.card-scroll-host` does
+       NOT paint any visual; it only emits the timeline. */
+    .card-scroll-host {
+        contain: layout style paint;
+        scroll-timeline: --card-scroll block;
+    }
+
     /* ── Shimmer text effects ──
        The text-fill + background-clip composition is load-bearing visual
        (the gold gradient itself); only the `animation:` line is wrapped in

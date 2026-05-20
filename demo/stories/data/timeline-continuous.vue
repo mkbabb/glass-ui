@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { GlassTimeline } from "../../../src/components/custom/timeline";
 import type {
     TimelineSegment,
@@ -15,6 +15,16 @@ import { cn } from "../../../src/utils/cn";
  * use the canonical `--chart-*` tokens (per A4 §C-10 precedent — never
  * hex literals in storybook oracles). Demo mirrors the speedtest
  * 3-phase progression (ping → download → upload).
+ *
+ * AI.W1-δ — the story exercises the `#detail` scoped slot the primitive
+ * gained at AI.W1. The slot payload `{ segment, source, currentKey,
+ * hoveredKey }` resolves on the primitive side (`hovered ?? current` —
+ * hover trumps current; the current-phase reading restores on hover-
+ * leave). The slot body composes a `<Transition mode="out-in">` keyed
+ * on the segment's stable `key` for fade-swap on segment change. The
+ * two-keyed-children shape (`v-if="segment"` + `v-else` idle) is the
+ * load-bearing detail; a single `v-if` inside the Transition would
+ * silently break the choreography.
  */
 
 interface DemoSegmentPayload {
@@ -65,22 +75,22 @@ const segments = ref<TimelineSegment[]>([
     },
 ]);
 
-const hovered = ref<TimelineSegment | null>(null);
-const selected = ref<TimelineSegment | null>(null);
-
-function onHover(payload: { key: string; segment: TimelineSegment }) {
-    hovered.value = payload.segment;
-}
+// AI.W1-δ — the current-segment key threads to the primitive via
+// `current-segment-key`. Consumers no longer track `hoveredKey` locally —
+// the primitive owns it and surfaces it through the slot payload.
+const currentSegmentKey = ref<string>("download");
 
 function onClick(payload: { key: string; segment: TimelineSegment }) {
-    selected.value = payload.segment;
+    // Click stamps a sticky selection — consumers compose `current-segment-key`
+    // with their own click-stick semantics. (Speedtest's PhaseTimeline does
+    // this for the running route.)
+    currentSegmentKey.value = payload.segment.key;
 }
 
-const detail = computed<DemoSegmentPayload | null>(() => {
-    const seg = selected.value ?? hovered.value;
+function payloadFor(seg: TimelineSegment | null): DemoSegmentPayload | null {
     if (!seg) return null;
     return (seg.value as DemoSegmentPayload | undefined) ?? null;
-});
+}
 
 // State-cycling helper — flips the active segment forward so reviewers
 // see the region animate from 0 → 0.6 → 1 + the next segment activating.
@@ -91,10 +101,14 @@ function advance() {
     if (!dl || !ul) return;
     if (dl.state === "active" && (dl.progress ?? 0) < 1) {
         dl.progress = Math.min(1, (dl.progress ?? 0) + 0.2);
-        if ((dl.progress ?? 0) >= 1) dl.state = "completed";
+        if ((dl.progress ?? 0) >= 1) {
+            dl.state = "completed";
+            currentSegmentKey.value = "upload";
+        }
     } else if (dl.state === "completed" && ul.state === "pending") {
         ul.state = "active";
         ul.progress = 0.1;
+        currentSegmentKey.value = "upload";
     } else if (ul.state === "active") {
         ul.progress = Math.min(1, (ul.progress ?? 0) + 0.2);
         if ((ul.progress ?? 0) >= 1) ul.state = "completed";
@@ -107,8 +121,7 @@ function reset() {
         { ...segments.value[1]!, state: "active", progress: 0.6 },
         { ...segments.value[2]!, state: "pending", progress: undefined },
     ];
-    selected.value = null;
-    hovered.value = null;
+    currentSegmentKey.value = "download";
 }
 
 /**
@@ -141,50 +154,72 @@ function legendBackground(seg: TimelineSegment): string {
                     )
                 "
             >
-                <!-- Continuous timeline -->
-                <div class="px-1">
+                <!-- Continuous timeline + AI.W1-δ #detail slot. The
+                     `:current-segment-key` binding threads in the active
+                     phase; the slot payload's `segment` resolves to the
+                     hovered marker when hover is live, falling back to
+                     `current` otherwise. The `<Transition mode="out-in">`
+                     fade-swap keys on `segment.key` so consecutive
+                     segments animate cleanly; the idle branch is the
+                     keyed `<div key="detail-idle">` sibling per Vue's
+                     two-keyed-children requirement. -->
+                <div class="continuous-detail-host px-1">
                     <GlassTimeline
                         variant="continuous"
                         :segments="segments"
+                        :current-segment-key="currentSegmentKey"
                         aria-label="Speedtest progress: ping, download, upload"
-                        @hover="onHover"
                         @click="onClick"
-                    />
-                </div>
-
-                <!-- Active phase detail (hover or click) -->
-                <div
-                    v-if="detail"
-                    class="flex items-start gap-3 rounded-md border-l-[3px] bg-background p-4"
-                    :style="{
-                        borderLeftColor:
-                            detail.state === 'completed'
-                                ? 'var(--success)'
-                                : detail.state === 'active'
-                                  ? 'var(--accent)'
-                                  : 'var(--muted-foreground)',
-                    }"
-                >
-                    <div class="flex min-w-0 flex-col gap-1">
-                        <span class="text-admin-label flex items-center gap-2">
-                            {{ detail.label }}
-                            <span
-                                class="text-mono-caption uppercase tracking-wider text-muted-foreground"
-                            >
-                                {{ detail.state }}
-                            </span>
-                        </span>
-                        <span class="text-heading font-medium">{{ detail.value }}</span>
-                        <span class="text-small text-muted-foreground">
-                            {{ detail.description }}
-                        </span>
-                    </div>
-                </div>
-                <div
-                    v-else
-                    class="rounded-md border border-dashed border-border bg-background p-4 text-small text-muted-foreground"
-                >
-                    Hover or click a boundary dot to inspect the phase payload.
+                    >
+                        <template #detail="{ segment, source }">
+                            <Transition name="phase-detail" mode="out-in">
+                                <div
+                                    v-if="segment"
+                                    :key="`detail-${segment.key}`"
+                                    :data-source="source"
+                                    class="phase-detail flex items-start gap-3 rounded-md border-l-[3px] bg-background p-4"
+                                    :style="{
+                                        borderLeftColor:
+                                            segment.state === 'completed'
+                                                ? 'var(--success)'
+                                                : segment.state === 'active'
+                                                  ? 'var(--accent)'
+                                                  : 'var(--muted-foreground)',
+                                    }"
+                                >
+                                    <div class="flex min-w-0 flex-col gap-1">
+                                        <span class="text-admin-label flex items-center gap-2">
+                                            {{ payloadFor(segment)?.label ?? segment.label }}
+                                            <span
+                                                class="text-mono-caption uppercase tracking-wider text-muted-foreground"
+                                            >
+                                                {{ segment.state }}
+                                            </span>
+                                            <span
+                                                v-if="source === 'hovered'"
+                                                class="text-mono-caption uppercase tracking-wider text-muted-foreground"
+                                            >
+                                                · hover
+                                            </span>
+                                        </span>
+                                        <span class="text-heading font-medium">
+                                            {{ payloadFor(segment)?.value ?? "—" }}
+                                        </span>
+                                        <span class="text-small text-muted-foreground">
+                                            {{ payloadFor(segment)?.description ?? "" }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div
+                                    v-else
+                                    key="detail-idle"
+                                    class="phase-detail-idle rounded-md border border-dashed border-border bg-background p-4 text-small text-muted-foreground"
+                                >
+                                    Hover or click a boundary dot to inspect the phase payload.
+                                </div>
+                            </Transition>
+                        </template>
+                    </GlassTimeline>
                 </div>
 
                 <!-- Controls -->
@@ -236,3 +271,29 @@ function legendBackground(seg: TimelineSegment): string {
         </div>
     </StoryPage>
 </template>
+
+<style scoped>
+/* AI.W1-δ — fade-swap choreography for the #detail slot. The
+   transition name `phase-detail` keys both the leave and the enter
+   so segment-to-segment swaps (and active ↔ idle swaps) animate
+   identically. PRM users skip the cross-fade. */
+.phase-detail-enter-active,
+.phase-detail-leave-active {
+    transition:
+        opacity 180ms var(--ease-standard),
+        transform 180ms var(--ease-standard);
+}
+
+.phase-detail-enter-from,
+.phase-detail-leave-to {
+    opacity: 0;
+    transform: translateY(2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .phase-detail-enter-active,
+    .phase-detail-leave-active {
+        transition-duration: 0.01ms;
+    }
+}
+</style>

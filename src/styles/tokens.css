@@ -388,6 +388,14 @@
     --shadow-card:       var(--shadow-md);
     --card-shadow:       var(--shadow-card);
 
+    /* AI.W1-α — sticky CardHeader background. Parameterises the
+       `bg-card/60` literal value.js's PaneHeader.vue carried so the
+       glass-ui canon owns the recipe. The scroll-driven `<CardHeader
+       shrink>` choreography reads this token for its sticky-header
+       backdrop tint; consumers retune per-app by overriding the
+       variable at any ancestor. Auto-dark via `--card`. */
+    --card-header-bg:    color-mix(in srgb, var(--card) 60%, transparent);
+
     /* Dock shadows */
     /* User 2026-05-13 (third + fourth report). The dock previously layered:
          1) directional `0 4px 20px` drop  → retired (third report; the Y-

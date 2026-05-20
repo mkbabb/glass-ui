@@ -854,6 +854,40 @@ Used on `Button`: `default | primary-audacious | secondary | ghost | outline | d
 
 `Card` no longer carries a structural `variant` enum (v0.8.0). Cards distinguish their structural register via the new `tier` prop (the surface ladder) plus the `<ScrollPane>` and `<CartoonCard>` sibling primitives (the structural lifts).
 
+### `<CardHeader shrink>` — scroll-driven 3-lane choreography (AI.W1-α)
+
+`<CardHeader>` carries an additive `shrink?: boolean` modifier. When `shrink` is true, the header binds to the `--card-scroll` named scroll-timeline and runs a 3-lane choreography as the host scrolls:
+
+1. **Header padding shrink** (0..120px scroll range) — top/bottom padding collapses from `1rem`/`0.5rem` to `0.5rem`/`0.25rem`.
+2. **Title font-size shrink** (0..120px) — `[data-slot="card-title"]` glyph scales from `var(--type-heading)` down to `var(--type-prose)`.
+3. **Description grid-row collapse** (0..80px — the faster fade) — `[data-slot="card-description"]` collapses its `1fr` → `0fr` grid row while fading opacity → 0; the slot retires entirely past the 80px boundary.
+
+The selectors hook on `[data-slot="card-title"]` + `[data-slot="card-description"]` so consumer `class=` overrides cannot suppress the choreography. The default `shrink=false` path is byte-identical to the pre-W1 thin static wrapper — the existing 5+ consumers see no change.
+
+**Required ancestor**: the choreography reads the `--card-scroll` named timeline, which is emitted by the canonical `.card-scroll-host` utility. Apply `.card-scroll-host` to the scroll-overflow ancestor (typically the `<Card>` host's scroll wrapper). Without that ancestor the named timeline never emits and the choreography sits idle — silent no-op, no crash.
+
+```vue
+<Card tier="wash" :shadow="false" :grain="false" class="card-scroll-host overflow-y-auto">
+  <CardHeader shrink class="sticky top-0 z-1 backdrop-blur-md">
+    <CardTitle>Account</CardTitle>
+    <CardDescription>Billing summary</CardDescription>
+  </CardHeader>
+  <CardContent>...</CardContent>
+</Card>
+```
+
+The sticky-position + backdrop-blur classes (and the `--card-header-bg` tint token) stay consumer-side — the SFC composes the choreography; the host card composes the surface.
+
+**Named timeline + tokens**
+
+| Symbol | Type | Default | Use |
+|---|---|---|---|
+| `--card-scroll` | named scroll-timeline | (emitted by `.card-scroll-host`) | The timeline `<CardHeader shrink>` binds to. `block` axis. |
+| `--card-header-bg` | color | `color-mix(in srgb, var(--card) 60%, transparent)` | Canonical sticky-header backdrop tint. Auto-dark via `--card`. |
+| `.card-scroll-host` | `@utility` | (in `utilities.css`) | The scroll-overflow host that emits `--card-scroll` + isolates it via `contain: layout style paint`. |
+
+**PRM contract**: the scoped CSS forces `animation-duration: 0.01ms` on all three lanes under `@media (prefers-reduced-motion: reduce)`. Reduced-motion users see the rest-state (full padding, full title size, full description visibility); the scroll-timeline degrades gracefully when the user has no scrolled offset — the explicit PRM bracket belt-and-braces the contract.
+
 **Slider variants**: shipped via `sliderVariants` CVA (J.W5.A) with both a `variant` axis and a `size` axis. All share tokens `--slider-track-bg`, `--slider-track-height`, `--slider-thumb-bg`, `--slider-thumb-size`, `--slider-thumb-border-color`, `--slider-range-bg`, `--slider-thumb-shadow`. Restyle on a wrapper, never via `:deep()`.
 
 | Variant         | Track                       | Thumb                                | Use                              |
@@ -967,6 +1001,44 @@ interface TimelineSegment {
 
 `weight` is only honoured by the `continuous` variant (region widths are computed as `weight / sum(weights)`); the `segmented` variant distributes via CSS flex (`--timeline-segment-flex`).
 
+### `#detail` slot — continuous variant only (AI.W1-δ)
+
+The `continuous` variant emits an optional `#detail` scoped slot rendered as a sibling of the rail wrap. The primitive owns the effective-segment resolution (`hovered ?? current` — hover trumps current; the current-phase reading restores on hover-leave) so consumers do not re-derive the binding per render. Slot payload:
+
+```ts
+{
+  segment:    TimelineSegment | null;      // the effective segment (hovered ?? current; null when idle)
+  source:     "hovered" | "current" | "idle";
+  currentKey: string | null;               // the original currentSegmentKey prop (null when unset)
+  hoveredKey: string | null;               // the transient hovered marker key (null when no hover)
+}
+```
+
+Consumers own the choreography. The canonical shape is a Vue `<Transition mode="out-in">` keyed on the segment's stable `key`, swapping the active-segment body with an idle placeholder:
+
+```vue
+<GlassTimeline variant="continuous" :segments="phases" :current-segment-key="active.key" ...>
+  <template #detail="{ segment, source }">
+    <Transition name="phase-detail" mode="out-in">
+      <div v-if="segment" :key="`detail-${segment.key}`" :data-source="source">
+        <span class="phase-detail-label">{{ segment.label }}</span>
+        <span class="phase-detail-value">{{ segment.value }}</span>
+        <span class="phase-detail-state">{{ segment.state }}</span>
+      </div>
+      <div v-else key="detail-idle" class="phase-detail-idle">
+        Waiting…
+      </div>
+    </Transition>
+  </template>
+</GlassTimeline>
+```
+
+**Two-keyed-children shape (load-bearing)**: Vue's `<Transition mode="out-in">` requires the two branches to be siblings of the `<Transition>` element, not a single `v-if` block. A naive refactor to one `v-if` inside the Transition silently breaks the fade-swap on segment-key change. The two-branch shape (`v-if="segment"` + `v-else` idle) is the canonical recipe — replicate it verbatim.
+
+**Variant scope**: continuous-only per option γ (post-RD-3 §3). The scrubber + segmented variants do not carry the `#detail` slot. Consumers needing a similar surface on those variants must compose their own panel; the slot's payload shape (`{ segment, source, currentKey, hoveredKey }`) is the recommended pattern to copy.
+
+**Height reservation**: the mount carries `min-height: var(--timeline-detail-min-height, 1.25rem)` so idle ↔ active transitions do not reflow the surrounding layout. Consumers override via the cascade (`.timeline-wrap { --timeline-detail-min-height: 4rem; }`).
+
 ### Tokens (`§16 TIMELINE`)
 
 | Token | Default | Use |
@@ -985,6 +1057,7 @@ interface TimelineSegment {
 | `--timeline-segment-gradient-download`  | (chart-download)   | Per-phase canonical default—`download` |
 | `--timeline-segment-gradient-upload`    | (chart-upload)     | Per-phase canonical default—`upload` |
 | `--timeline-segment-gradient-jitter`    | (chart-jitter)     | Per-phase canonical default—`jitter` |
+| `--timeline-detail-min-height`          | `1.25rem`          | Continuous `#detail` slot mount min-height (idle ↔ active transition reflow guard; AI.W1-δ) |
 
 ### A11y contract
 

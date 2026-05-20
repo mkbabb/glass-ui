@@ -9,6 +9,7 @@ const props = defineProps<{
 
 <template>
     <h3
+        data-slot="card-title"
         :class="
             cn(
                 'text-heading leading-none tracking-tight',

@@ -4,7 +4,7 @@ import { computed } from "vue";
 import { cn } from "../../../utils";
 
 /**
- * <RegionDivider> — twin-line hairline groove, the chassis signature detail.
+ * <ChassisDivider> — twin-line hairline groove, the chassis signature detail.
  *
  * Two 1px lines stacked: top reads as a sub-pixel catch-light, bottom as a
  * sub-pixel under-shadow. Together they describe a hairline groove between
@@ -17,6 +17,11 @@ import { cn } from "../../../utils";
  * Mobile inverts the dial-region divider via the chassis stylesheet's
  * `@media (max-width: 720px)` rule; the orientation prop carries no
  * runtime cost there.
+ *
+ * AI.W1-γ host-prefix alignment: renamed from `RegionDivider` →
+ * `ChassisDivider` so the instrument-chassis family's signature detail
+ * carries the family-root prefix (matching `InstrumentChassis`,
+ * `instrument-chassis.css`).
  */
 const props = withDefaults(
     defineProps<{
@@ -27,7 +32,7 @@ const props = withDefaults(
 );
 
 const classes = computed(() =>
-    cn("region-divider", `region-divider--${props.orientation}`, props.class),
+    cn("chassis-divider", `chassis-divider--${props.orientation}`, props.class),
 );
 </script>
 
