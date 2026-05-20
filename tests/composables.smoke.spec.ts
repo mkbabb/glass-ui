@@ -5,8 +5,11 @@ import {
     destroyGlassFilter,
     useGlassRenderer,
     useSortable,
-    useStaggerReveal,
 } from "../src/index";
+// AI.W3 R3 — motion composables moved off the root barrel into the /motion
+// flat subpath (keyframes.js SCC trap closure). Smoke test reaches the new
+// subpath directly via `src/motion` (mirrors the `src/keyboard` shape below).
+import { useStaggerReveal } from "../src/motion";
 import { registerShortcut } from "../src/keyboard";
 import { useInfiniteScroll } from "../src/infinite-scroll";
 import {

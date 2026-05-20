@@ -110,7 +110,9 @@ const rootContractFiles = [
     "src/composables/useTimer.ts",
     "src/composables/useTouchGate.ts",
     "src/composables/glass/index.ts",
-    "src/composables/motion/index.ts",
+    // AI.W1 R3 — `composables/motion/index.ts` retired from the root barrel.
+    // The keyframes.js-bearing motion composables ship via the `/motion` flat
+    // subpath (mirrors the `/dark` + `/keyboard` SCC-trap closure shape).
     "src/composables/sortable/index.ts",
     "src/utils/index.ts",
 ].map((file) => resolve(root, file));

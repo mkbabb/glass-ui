@@ -1182,13 +1182,13 @@ Library-tier composables decompose into three rough registers. The first registe
 | `useTokenColor` | platform | Reactive read of a CSS custom property; re-resolves on dark-mode transitions. Replaces ad-hoc `getComputedStyle(html).getPropertyValue("--xxx")` reads in canvas + Aurora consumers. |
 | `useStagger` | orchestration | Fixed-count timed reveal cascade—`revealed.value[i]` flips true at `initialDelayMs + i * delayMs`. Distinct from `useStaggerReveal`: that one gates on IntersectionObserver thresholds; this one fires on a pure timer. The two compose. |
 | `useStaggerReveal` | orchestration | IntersectionObserver-gated entrance choreography for grids and lists. |
-| `useAnimatedNumber` | motion | Hysteresis-smoothed live numeric tracking via keyframes.js `SmoothProgress`. |
-| `useAnimatedNumberMap` | motion | N-up `useAnimatedNumber` fan-out behind a `Record<K, ComputedRef<number \| null>>`. Replaces hand-rolled per-key smoother arrays where consumers can't run the composable inside a `v-for`. |
-| `useSpringOrchestrator` | motion | Multi-spring snapshot engine for choreographed transitions. |
-| `useRAFLoop` | motion | rAF loop with start/stop/dispose + per-frame timing. |
-| `useDarkModeSync` | motion | Reactive bridge between `useGlobalDark` and animation engine state. |
-| `useScrollProgress` | motion | Scroll-position-driven progress ref. |
-| `useIntersectionPause` | motion | Pause/resume long-running animation when target is offscreen. |
+| `useAnimatedNumber` | motion (`/motion`) | Hysteresis-smoothed live numeric tracking via keyframes.js `SmoothProgress`. |
+| `useAnimatedNumberMap` | motion (`/motion`) | N-up `useAnimatedNumber` fan-out behind a `Record<K, ComputedRef<number \| null>>`. Replaces hand-rolled per-key smoother arrays where consumers can't run the composable inside a `v-for`. |
+| `useSpringOrchestrator` | motion (`/motion`) | Multi-spring snapshot engine for choreographed transitions. |
+| `useRAFLoop` | motion (`/motion`) | rAF loop with start/stop/dispose + per-frame timing. |
+| `useDarkModeSync` | motion (`/motion`) | Reactive bridge between `useGlobalDark` and animation engine state. |
+| `useScrollProgress` | motion (`/motion`) | Scroll-position-driven progress ref. |
+| `useIntersectionPause` | motion (`/motion`) | Pause/resume long-running animation when target is offscreen. |
 | `useGlassRenderer` | glass | Glass-surface renderer wiring (filter, mask, backdrop). |
 | `useSidebarFollow` / `useTreeIndex` / etc. | sidebar | Sidebar layout + active-section tracking. |
 | `useInfiniteScroll` | data | Infinite scroll engine wired to a backing source. |
@@ -1202,6 +1202,32 @@ Reach for a new composable when:
 3. The platform API needs an `onScopeDispose` cleanup pair to be safe inside Vue components.
 
 The composables registry is consumed via the root `@mkbabb/glass-ui` barrel for cross-domain primitives, or via path-specific entries (e.g. `@mkbabb/glass-ui/sidebar`) for domain-bounded composables.
+
+**Heavy-peer-bearing subpaths (canon).** Three composable families are
+carved off the root barrel into flat subpaths so consumers opt into the
+heavy peers explicitly and bundlers shake them when unused:
+
+| Subpath | Heavy peer | Symbols | Closure ref |
+|---|---|---|---|
+| `@mkbabb/glass-ui/forms` + `/dark` + `/keyboard` + `/carousel` | `@vueuse/core` | `Input`, `Textarea`, `Combobox*`, `useGlobalDark`, `useKeyboardShortcuts`, `registerShortcut`, `formatCombo`, `useCarousel`, `Carousel*` | L.W1 Lane C (vueuse SCC trap closure, v1.0) |
+| `@mkbabb/glass-ui/motion` | `@mkbabb/keyframes.js` | `useSpringOrchestrator`, `useAnimatedNumber`, `useAnimatedNumberMap`, `useStagger`, `useStaggerReveal`, `useScrollProgress`, `useRAFLoop`, `useIntersectionPause`, `installDarkModeSync`, `DAMPING`, `SNAP_THRESHOLD` (+ types `RAFLoopTiming`, `PausableRuntime`, `AnimatedNumber`, `UseAnimatedNumberOptions`, `SpringSnapshot`) | AI.W3 R3 (keyframes static-reach closure, v2.0) |
+
+Acceptance bar for adding a new heavy-peer subpath: (a) the peer's
+transitive footprint is ≥ ~30 KB gz in the consumer's entry chunk, AND
+(b) at least one cross-repo consumer reaches glass-ui without touching
+the peer (so the carve genuinely shakes bytes off that consumer). The
+canon is small on purpose — `forms`/`dark`/`keyboard`/`carousel`/`motion`
+are the only carve-outs to date; every other public composable rides the
+root barrel.
+
+The motion subpath additionally rolls in keyframes-free composables
+(`useStagger`, `useStaggerReveal`, `useScrollProgress`, `useRAFLoop`,
+`useIntersectionPause`, `installDarkModeSync`) because the sub-tree's
+`index.ts` walks every leaf with `export *` — Rollup treats the
+sub-tree as one SCC, so the move is all-or-nothing. The motion subpath
+is the canonical home for every kinetic composable; consumers reach
+`/motion` for any kinetic primitive regardless of whether it currently
+touches keyframes.js.
 
 ---
 
@@ -1548,7 +1574,7 @@ v1.0 restructures composables into **eight coherent sub-trees** per L.W2 Lane A 
 
 **Infinite scroll** (co-located under `src/components/custom/infinite-scroll/composables/`): `useInfiniteScroll`. Re-exported from the internal `src/composables/index.ts` barrel.
 
-**Motion** (`src/composables/motion/`): `useSpringOrchestrator`, `useStaggerReveal`, `useScrollProgress`, `useAnimatedNumber`, `useAnimatedNumberMap`, `useStagger`, `useDarkModeSync`, `useRAFLoop`, `useIntersectionPause`. `useAnimatedNumber` wraps keyframes.js `SmoothProgress.play` to expose a reactive hysteresis-smoothed value for live numeric tracking (hero values, pill amounts, progress bars). Not a typewriter—the target glides toward a moving signal via exponential damping. `useAnimatedNumberMap` (v0.8.4 promotion) is the N-up fan-out behind a Record-returning composable. `useDarkModeSync` (Tranche G) encapsulates the two-step `nextTick → requestAnimationFrame` dance required to react to dark-mode toggles in code that reads computed CSS variables (canvas renderers etc.).
+**Motion** (`src/composables/motion/` → public subpath `@mkbabb/glass-ui/motion`, v2.0+): `useSpringOrchestrator`, `useStaggerReveal`, `useScrollProgress`, `useAnimatedNumber`, `useAnimatedNumberMap`, `useStagger`, `installDarkModeSync` (renamed from `useDarkModeSync` at O.W4 Lane B), `useRAFLoop`, `useIntersectionPause`. `useAnimatedNumber` wraps keyframes.js `SmoothProgress.play` to expose a reactive hysteresis-smoothed value for live numeric tracking (hero values, pill amounts, progress bars). Not a typewriter—the target glides toward a moving signal via exponential damping. `useAnimatedNumberMap` (v0.8.4 promotion) is the N-up fan-out behind a Record-returning composable. `installDarkModeSync` (Tranche G) encapsulates the two-step `nextTick → requestAnimationFrame` dance required to react to dark-mode toggles in code that reads computed CSS variables (canvas renderers etc.). The whole sub-tree retires from the root barrel at v2.0 (AI.W3 R3) — consumers reach `@mkbabb/glass-ui/motion` to opt into the `@mkbabb/keyframes.js` static reach.
 
 **Glass renderer** (`src/composables/glass/`): `useGlassRenderer`, `createGlassFilter`, `destroyGlassFilter`. WebGL + WebGPU substrate.
 

@@ -18,6 +18,7 @@ import * as Keyboard from "../src/keyboard";
 import * as LabeledFieldSurface from "../src/labeled-field";
 import * as MetaballsSurface from "../src/metaballs";
 import * as MetricBadgeSurface from "../src/metric-badge";
+import * as Motion from "../src/motion";
 import * as PaperBackdropSurface from "../src/paper-backdrop";
 import * as PulseSurface from "../src/pulse";
 import * as Search from "../src/search";
@@ -73,6 +74,12 @@ const uiRuntimeExports = [
 // Carousel family moved to the `/forms` + `/carousel` subpaths; the dark-mode
 // + keyboard composables moved to `/dark` + `/keyboard`. Root barrel no
 // longer re-exports any vueuse-bearing symbol (SCC trap closure).
+//
+// AI.W1 R3 — keyframes.js-bearing motion composables (`useSpringOrchestrator`,
+// `useStaggerReveal`, `useScrollProgress`, `useAnimatedNumber`,
+// `useAnimatedNumberMap`, `useStagger`, `useRAFLoop`, `useIntersectionPause`,
+// `installDarkModeSync`, `DAMPING`, `SNAP_THRESHOLD`) moved to `/motion`.
+// Root barrel no longer reaches `@mkbabb/keyframes.js` statically.
 const composableRuntimeExports = [
     "useTouchGate",
     "useTimer",
@@ -80,11 +87,6 @@ const composableRuntimeExports = [
     "useGlassRenderer",
     "createGlassFilter",
     "destroyGlassFilter",
-    "useSpringOrchestrator",
-    "useStaggerReveal",
-    "useScrollProgress",
-    "useAnimatedNumber",
-    "installDarkModeSync",
     "useSortable",
     // O.W6 Lane A — useClipboard composable promotion.
     // P.W5 Lane A.1 — copyToClipboard bare co-export (Path B). Both must
@@ -150,6 +152,18 @@ const subpathRuntimeExports = [
     { subpath: "api", surface: Api, name: "MAX_NUCLEI" },
     { subpath: "api", surface: Api, name: "MAX_STOPS" },
     { subpath: "api", surface: Api, name: "DEFAULT_AURORA_CONFIG" },
+    // AI.W1 R3 — keyframes.js-bearing motion composables (new in v2.0)
+    { subpath: "motion", surface: Motion, name: "useSpringOrchestrator" },
+    { subpath: "motion", surface: Motion, name: "useAnimatedNumber" },
+    { subpath: "motion", surface: Motion, name: "useAnimatedNumberMap" },
+    { subpath: "motion", surface: Motion, name: "useStagger" },
+    { subpath: "motion", surface: Motion, name: "useStaggerReveal" },
+    { subpath: "motion", surface: Motion, name: "useScrollProgress" },
+    { subpath: "motion", surface: Motion, name: "useRAFLoop" },
+    { subpath: "motion", surface: Motion, name: "useIntersectionPause" },
+    { subpath: "motion", surface: Motion, name: "installDarkModeSync" },
+    { subpath: "motion", surface: Motion, name: "DAMPING" },
+    { subpath: "motion", surface: Motion, name: "SNAP_THRESHOLD" },
 ] as const;
 
 const nonCoreRootRetirements = [
@@ -198,6 +212,18 @@ const nonCoreRootRetirements = [
     "formatComboParts",
     "registerShortcut",
     "useRegisteredShortcuts",
+    // AI.W1 R3 — root-barrel keyframes.js SCC closure (motion subpath surgery)
+    "useSpringOrchestrator",
+    "useAnimatedNumber",
+    "useAnimatedNumberMap",
+    "useStagger",
+    "useStaggerReveal",
+    "useScrollProgress",
+    "useRAFLoop",
+    "useIntersectionPause",
+    "installDarkModeSync",
+    "DAMPING",
+    "SNAP_THRESHOLD",
 ];
 
 const exactSubpathRuntimeSurfaces = [

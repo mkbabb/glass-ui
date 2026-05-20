@@ -49,6 +49,12 @@ export function libraryEntries(rootDir: string) {
         dark: resolve(rootDir, "src/dark.ts"),
         keyboard: resolve(rootDir, "src/keyboard.ts"),
         carousel: resolve(rootDir, "src/carousel.ts"),
+        // AI.W1 R3 — flat top-level subpath barrel for the keyframes.js-bearing
+        // motion composables. Mirrors the Lane C closure shape: a heavy peer
+        // (`@mkbabb/keyframes.js`, ~102 KB raw) gets carved off the root barrel
+        // so consumers opt into it explicitly and bundlers shake it from
+        // unrelated entry chunks. Closes AI-CARRY-GLASS-UI-KEYFRAMES-EDGE.
+        motion: resolve(rootDir, "src/motion.ts"),
     };
 }
 

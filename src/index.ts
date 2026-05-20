@@ -21,25 +21,33 @@
 // W1 added `src/dark.ts` + `src/keyboard.ts` + `src/carousel.ts` to retire
 // the nested `composables/dark` + `composables/keyboard` v0.9.x subpaths.
 //
-// ── vueuse-bearing exclusions ────────────────────────────────────────────
+// ── Heavy-peer exclusions (vueuse + keyframes.js) ────────────────────────
 //
-// This root barrel is **vueuse-free**: it does NOT re-export any symbol whose
-// implementation imports `@vueuse/core`. Consumers reach vueuse-bearing
-// symbols via explicit subpaths so bundlers can shake them when unused:
+// This root barrel is **vueuse-free** AND **keyframes.js-free**: it does
+// NOT re-export any symbol whose implementation imports `@vueuse/core` OR
+// `@mkbabb/keyframes.js`. Consumers reach heavy-peer-bearing symbols via
+// explicit subpaths so bundlers can shake them when unused:
 //
-//   Symbol(s)                                  Subpath
-//   -----------------------------------------  -------------------------------
-//   Input, Textarea, Combobox*                 @mkbabb/glass-ui/forms
-//   useGlobalDark                              @mkbabb/glass-ui/dark          (flat; L.W1 Lane C)
-//   useKeyboardShortcuts, registerShortcut,    @mkbabb/glass-ui/keyboard      (flat; L.W1 Lane C)
+//   Symbol(s)                                  Subpath                        Peer
+//   -----------------------------------------  -----------------------------  ---------------------
+//   Input, Textarea, Combobox*                 @mkbabb/glass-ui/forms         @vueuse/core
+//   useGlobalDark                              @mkbabb/glass-ui/dark          @vueuse/core (L.W1 Lane C)
+//   useKeyboardShortcuts, registerShortcut,    @mkbabb/glass-ui/keyboard      @vueuse/core (L.W1 Lane C)
 //   formatCombo, formatComboParts, isMac,
 //   useRegisteredShortcuts, ShortcutOptions,
 //   RegisteredShortcut, ShortcutCombo,
 //   ShortcutEventType
-//   Carousel, CarouselContent, CarouselDots,   @mkbabb/glass-ui/carousel      (flat; L.W1 Lane C)
+//   Carousel, CarouselContent, CarouselDots,   @mkbabb/glass-ui/carousel      @vueuse/core (L.W1 Lane C)
 //   CarouselItem, CarouselNext, CarouselPager,
 //   CarouselPrevious, GlassCarouselPager,
 //   useCarousel, CarouselApi
+//   useSpringOrchestrator, useAnimatedNumber,  @mkbabb/glass-ui/motion        @mkbabb/keyframes.js (AI.W1 R3)
+//   useAnimatedNumberMap, useStagger,
+//   useStaggerReveal, useScrollProgress,
+//   useRAFLoop, useIntersectionPause,
+//   installDarkModeSync, DAMPING,
+//   SNAP_THRESHOLD, RAFLoopTiming,
+//   PausableRuntime
 //
 // Mechanism: K.WS Phase 1 (additive subpaths at v0.9.3) did NOT close the SCC
 // trap because Rollup still walked `export * from "./components/ui"` through
@@ -142,9 +150,17 @@ export * from "./components/custom/scrolling-text";
 // (useResizeObserver + useTouchGate + useTokenColor), motion/ (includes
 // useStagger), glass/, sortable/. `useStoryDemo` was demoted to demo-private
 // per CLAUDE.md.
+//
+// AI.W1 R3 — `composables/motion` retires from the root barrel for the same
+// reason `composables/dark` + `composables/keyboard` retired in L.W1 Lane C:
+// it statically reaches a heavy peer (`@mkbabb/keyframes.js` — NumericAnimation
+// + SmoothProgress engines, ~102 KB raw / ~34 KB gz) that the bundler walks
+// transitively into every consumer's entry chunk, even consumers that only
+// reach for `Card` or `Button`. The motion composables are now reachable via
+// `@mkbabb/glass-ui/motion` (BREAKING — see MIGRATION.md + CHANGELOG.md).
+// Closes AI-CARRY-GLASS-UI-KEYFRAMES-EDGE.
 export * from "./composables/reactive";
 export * from "./composables/dom";
-export * from "./composables/motion";
 export * from "./composables/glass";
 export * from "./composables/sortable";
 

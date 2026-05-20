@@ -1,4 +1,11 @@
-# MIGRATION—v0.9.x → v1.0
+# MIGRATION—v0.9.x → v1.0 → v2.0
+
+> **v2.0.0 (AI.W1 R3)**—the motion composables move off the root barrel to
+> the new `@mkbabb/glass-ui/motion` flat subpath, closing the
+> AI-CARRY-GLASS-UI-KEYFRAMES-EDGE 4-tranche chronic. See the **v2.0.0**
+> section below for the full symbol list + codemod hints. Same SCC-trap
+> closure shape as L.W1 Lane C — different heavy peer
+> (`@mkbabb/keyframes.js` instead of `@vueuse/core`).
 
 v1.0 is the L-tranche cohort release. It freezes the public API and lands four
 architectural transpositions that BREAK v0.9.x consumer shapes:
@@ -447,6 +454,136 @@ const studio = useConfiguratorState<MyConfig>({
 ```
 
 The L W7 Lane B Option-A unification (Rε §A.8) routed aurora's per-preset clone semantics through the canonical primitive; `useAuroraStudio` was demo-private and retired. `cyclePreset` also accepts an optional `direction?: 1 | -1` (default `1`) so consumers can map `ArrowLeft` / `ArrowRight` keyboard handlers cleanly. Purely additive—no consumer migration required.
+
+---
+
+## v2.0.0—Motion subpath surgery (AI.W1 R3)
+
+v2.0.0 closes the **AI-CARRY-GLASS-UI-KEYFRAMES-EDGE** chronic (4-tranche
+deferral from AI). The root barrel statically reached `@mkbabb/keyframes.js`
+through `composables/motion`, which forced every consumer's entry chunk to
+carry the ~102 KB raw / ~34 KB gz `keyframes-*.js` chunk even when the
+consumer only imported `<Card>` or `<Button>`. The motion composables now
+live on the `@mkbabb/glass-ui/motion` flat subpath. The root barrel is
+keyframes.js-free.
+
+The shape mirrors the L.W1 Lane C SCC-trap closure that carved `/dark`,
+`/keyboard`, and `/carousel` off the root barrel for the vueuse-bearing
+surface. Same precedent, different heavy peer.
+
+### Symbols moved—root barrel → `/motion`
+
+```ts
+// Before (≤ v1.9.x)
+import {
+    Card,
+    DAMPING,
+    SNAP_THRESHOLD,
+    useAnimatedNumber,
+    useAnimatedNumberMap,
+    useSpringOrchestrator,
+    useStagger,
+    useStaggerReveal,
+    useScrollProgress,
+    useRAFLoop,
+    useIntersectionPause,
+    installDarkModeSync,
+    type RAFLoopTiming,
+    type PausableRuntime,
+} from "@mkbabb/glass-ui";
+
+// After (≥ v2.0.0)—split the import statement
+import { Card } from "@mkbabb/glass-ui";
+import {
+    DAMPING,
+    SNAP_THRESHOLD,
+    useAnimatedNumber,
+    useAnimatedNumberMap,
+    useSpringOrchestrator,
+    useStagger,
+    useStaggerReveal,
+    useScrollProgress,
+    useRAFLoop,
+    useIntersectionPause,
+    installDarkModeSync,
+    type RAFLoopTiming,
+    type PausableRuntime,
+} from "@mkbabb/glass-ui/motion";
+```
+
+### Symbols inventory
+
+The following 11 runtime exports + 2 type exports move from root → `/motion`:
+
+| Symbol | Kind |
+|---|---|
+| `useSpringOrchestrator` | composable (keyframes.js `NumericAnimation`) |
+| `useAnimatedNumber` | composable (keyframes.js `SmoothProgress`) |
+| `useAnimatedNumberMap` | composable (depends on `useAnimatedNumber`) |
+| `useStagger` | composable (timer-driven; no keyframes reach but rides the same barrel) |
+| `useStaggerReveal` | composable (IO-driven; same) |
+| `useScrollProgress` | composable (scroll-driven; same) |
+| `useRAFLoop` | composable (rAF wrapper; same) |
+| `useIntersectionPause` | composable (IO + animation pause; same) |
+| `installDarkModeSync` | composable (motion engine ↔ dark-mode bridge) |
+| `DAMPING` | constant |
+| `SNAP_THRESHOLD` | constant |
+| `RAFLoopTiming` | type |
+| `PausableRuntime` | type |
+| `AnimatedNumber` | type (also reachable via `/api`) |
+| `UseAnimatedNumberOptions` | type (also reachable via `/api`) |
+| `SpringSnapshot` | type (also reachable via `/api`) |
+
+### Why the entire motion barrel moves (not just the keyframes-touching subset)
+
+Only `useSpringOrchestrator` + `useAnimatedNumber` (and `useAnimatedNumberMap`
+transitively) statically reach `@mkbabb/keyframes.js`. The rest of the motion
+sub-tree (`useStagger`, `useStaggerReveal`, `useScrollProgress`, `useRAFLoop`,
+`useIntersectionPause`, `installDarkModeSync`) is keyframes-free. Conceptually
+the keyframes-free composables could stay on the root barrel.
+
+In practice the sub-tree's `index.ts` rolls up every leaf with `export *`, so
+Rollup walks the entire sub-tree as one SCC at root-barrel build time. Either
+the whole sub-tree moves or none of it does — splitting it would require a
+second internal sub-barrel (`motion-keyframes/` vs `motion-pure/`), which is
+the wrong shape. The motion subpath is the canonical home for every kinetic
+composable; consumers reach `/motion` for any kinetic primitive regardless of
+whether that specific primitive happens to touch the engine today.
+
+### Codemod hints
+
+```bash
+# Find every site that needs migration:
+rg 'from "@mkbabb/glass-ui"' src/ | rg 'useStagger|useAnimatedNumber|useSpringOrchestrator|useStaggerReveal|useScrollProgress|useRAFLoop|useIntersectionPause|installDarkModeSync|DAMPING|SNAP_THRESHOLD|RAFLoopTiming|PausableRuntime'
+```
+
+For mixed imports (e.g. `import { Card, useAnimatedNumber } from "@mkbabb/glass-ui"`),
+split into two import statements: `Card` stays on root, the motion symbols
+move to `/motion`. There is no auto-codemod shipped — the diffs are mechanical
+1-line edits per site and easier to apply by hand than to write a robust
+transform for (the import-statement-splitting case requires AST awareness).
+
+### Verification
+
+After the migration, `dist/glass-ui.js` must NOT contain a static import of
+`@mkbabb/keyframes.js`. Verify with:
+
+```bash
+grep -c "@mkbabb/keyframes" node_modules/@mkbabb/glass-ui/dist/glass-ui.js
+# Expected: 0
+grep -c "@mkbabb/keyframes" node_modules/@mkbabb/glass-ui/dist/motion.js
+# Expected: ≥ 1 (NumericAnimation + SmoothProgress reach)
+```
+
+Consumer bundle graphs should show the `keyframes-*.js` chunk dropping off
+routes that don't use motion composables. The carry retires per route.
+
+### No back-compat shim
+
+Per precept 1 (NO workarounds) + precept 2 (NO legacy code) + L invariant 4
+(no backwards-compat shims), v2.0.0 ships no root-barrel alias for the moved
+symbols. Pinning to `^1.9.3` remains supported on the v1.x patch stream if a
+consumer cannot migrate immediately.
 
 ---
 
