@@ -70,6 +70,17 @@ const props = withDefaults(
        * 0; post-active cells render at full saturation as "completed".
        */
       activeProgress?: number
+      /**
+       * AI.W4-M.1 — indeterminate sweep. When true, the gradient
+       * variant's rail runs a slow left-to-right gradient pan
+       * (`--motion-duration-progress-indeterminate`, 4s default) and
+       * the indicator hides. Reka's ProgressRoot already supports the
+       * indeterminate shape via a null modelValue; the prop here is
+       * an explicit opt-in for consumers that want the sweep without
+       * managing the modelValue lifecycle. PRM retires the sweep to
+       * a static rail.
+       */
+      indeterminate?: boolean
     }
   >(),
   {
@@ -78,12 +89,49 @@ const props = withDefaults(
     segments: () => [],
     currentSegmentKey: null,
     activeProgress: 0,
+    indeterminate: false,
   },
 )
 
 const delegatedProps = computed(() => {
-  const { class: _, variant: _v, segments: _s, currentSegmentKey: _c, activeProgress: _a, ...delegated } = props
+  const { class: _, variant: _v, segments: _s, currentSegmentKey: _c, activeProgress: _a, indeterminate: _i, ...delegated } = props
   return delegated
+})
+
+// ── AI.W4-M.1 lifecycle state attr ────────────────────────────────
+// `data-lifecycle` is glass-ui's W4 lifecycle hook. reka-ui already
+// emits its own `data-state` (`'loading' | 'indeterminate' |
+// 'complete'`) on both the root and the indicator — we layer a
+// distinct attribute so the two read paths don't collide. The W4
+// gestalt cares about FOUR phases (idle / loading / progressing /
+// complete) rather than reka's three (the "progressing" register is
+// the typical 5..99% body of a real metric; "loading" is the rising-
+// edge intake pulse band; "idle" is the at-rest plate).
+//
+// Drives: intake pulse (loading rising edge), crescendo brightening
+// (≥85% modelValue, via the typed --progress-crescendo), and the
+// discharge flash (complete). Sectioned/indeterminate variants opt
+// out of the lifecycle — their motion stories are owned elsewhere.
+const lifecycleState = computed<'idle' | 'loading' | 'progressing' | 'complete'>(() => {
+  if (props.variant === 'sectioned' || props.indeterminate) return 'idle'
+  const value = props.modelValue ?? 0
+  if (value <= 0) return 'idle'
+  if (value >= 100) return 'complete'
+  if (value < 5) return 'loading'
+  return 'progressing'
+})
+
+// `--progress-crescendo` typed CSS variable — typed at the tokens.css
+// §18 @property registration. Past 85% the leading-edge gradient
+// stop brightens proportionally; below 85% the typed variable stays
+// at 0% (the @property initial-value). Inline style binding so the
+// computed percentage interpolates via the typed-property contract.
+const crescendoStyle = computed(() => {
+  if (props.variant !== 'gradient' || props.indeterminate) return undefined
+  const value = props.modelValue ?? 0
+  if (value < 85) return { '--progress-crescendo': '0%' }
+  const ramp = ((value - 85) / 15) * 100
+  return { '--progress-crescendo': `${Math.min(100, Math.max(0, ramp))}%` }
 })
 
 const rootClass = computed(() => {
@@ -94,7 +142,7 @@ const rootClass = computed(() => {
     return 'relative h-[var(--progress-sectioned-height,0.875rem)] w-full overflow-hidden rounded-pill progress-sectioned-rail'
   }
   if (props.variant === 'gradient') {
-    return 'relative h-4 w-full overflow-hidden rounded-pill bg-[var(--progress-track,theme(colors.secondary.DEFAULT))]'
+    return 'relative h-4 w-full overflow-hidden rounded-pill bg-[var(--progress-track,theme(colors.secondary.DEFAULT))] progress-gradient-rail'
   }
   return 'relative h-4 w-full overflow-hidden rounded-pill bg-secondary'
 })
@@ -186,10 +234,19 @@ const effectiveModelValue = computed(() =>
     v-bind="delegatedProps"
     :model-value="effectiveModelValue"
     :class="cn(rootClass, props.class)"
+    :data-lifecycle="lifecycleState"
+    :data-indeterminate="indeterminate || undefined"
   >
     <ProgressIndicator
       :class="indicatorClass"
-      :style="variant === 'sectioned' ? undefined : `transform: translateX(-${100 - (props.modelValue ?? 0)}%);`"
+      :style="
+        variant === 'sectioned'
+          ? undefined
+          : {
+              transform: `translateX(-${100 - (props.modelValue ?? 0)}%)`,
+              ...(crescendoStyle ?? {}),
+            }
+      "
     />
 
     <!-- Sectioned cells — paint after the indicator so the cells sit on top
@@ -241,6 +298,119 @@ const effectiveModelValue = computed(() =>
 </template>
 
 <style scoped>
+/* ─────────────────────── AI.W4-M.1 — Progress lifecycle gestalt ───────────────────────
+
+   Three rules layer on the `gradient` variant to ship the mandate-
+   explicit progress motion grammar:
+
+   • Intake pulse — the rail background opacity ramps 0.6 → 1.0 → 0.85
+     over 220ms on the rising-edge of `[data-state="loading"]`. Reads
+     as "the bar woke up". One-shot keyframe (no loop); the rail
+     settles at its resting opacity.
+
+   • Crescendo — the indicator's leading-edge gradient stop brightens
+     past 85% modelValue. The typed `--progress-crescendo` percentage
+     interpolates smoothly via the `@property` registration in
+     tokens.css §18; the gradient stop reads the typed value through a
+     `color-mix` and shifts toward `hsl(0 0% 100%)`. Reads as "the
+     metric is closing in on the peak".
+
+   • Discharge flash — at 100% the indicator runs a one-shot 240ms
+     brightness/saturation flash. Reads as "the metric arrived; the
+     fill discharges its potential". Single keyframe; no loop.
+
+   • Indeterminate sweep — when `[data-indeterminate]` is set, the rail
+     hosts a 4s left-to-right gradient pan; the indicator hides via the
+     `display: none` rule below. PRM retires the sweep to a static rail.
+
+   PRM brackets at the bottom of the block.
+─────────────────────────────────────────────────────────────────────────────── */
+.progress-gradient-rail[data-lifecycle="loading"] {
+    animation: progress-intake-pulse var(--motion-duration-progress-intake, 220ms)
+        var(--motion-ease-standard, ease-out) 1;
+}
+
+.progress-gradient-rail[data-lifecycle="complete"] [data-state="complete"] {
+    /* Discharge flash targets the indicator. The indicator carries
+       reka's `data-state="complete"` when modelValue hits max; the
+       parent rail's `data-lifecycle="complete"` gates the rule so a
+       sibling indeterminate sweep cannot accidentally trigger the
+       flash. */
+    animation: progress-discharge-flash var(--motion-duration-progress-crescendo, 240ms)
+        var(--motion-ease-standard, ease-out) 1;
+}
+
+.progress-gradient-rail[data-indeterminate] {
+    background: linear-gradient(
+        90deg,
+        var(--progress-track, var(--secondary)) 0%,
+        color-mix(in srgb, var(--progress-fill, var(--primary)) 60%, var(--progress-track, var(--secondary))) 50%,
+        var(--progress-track, var(--secondary)) 100%
+    );
+    background-size: 200% 100%;
+    animation: progress-indeterminate-sweep
+        var(--motion-duration-progress-indeterminate, 4s) linear infinite;
+}
+
+.progress-gradient-rail[data-indeterminate] > * {
+    /* Hide the indicator while the rail itself paints the sweep. */
+    display: none;
+}
+
+/* Crescendo — the leading-edge gradient stop brightens past 85%. The
+   indicator paints a `linear-gradient` overlay on top of its
+   `--progress-fill` background: a transparent body with a white
+   leading-edge cap whose alpha equals `--progress-crescendo` (typed
+   `<percentage>`, registered at tokens.css §18). Below 85% the typed
+   variable sits at 0% so the overlay is transparent and the fill
+   reads at its consumer-declared colour. The right-aligned linear-
+   gradient hugs the indicator's leading edge under the
+   `translateX(-N%)` transform reka applies (the gradient origin
+   stays anchored to the indicator's right edge, which is the visible
+   metric front). */
+.progress-gradient-rail[data-lifecycle="progressing"] [data-state],
+.progress-gradient-rail[data-lifecycle="complete"] [data-state="complete"] {
+    background-image:
+        linear-gradient(
+            to right,
+            transparent 0%,
+            transparent 80%,
+            color-mix(in srgb, hsl(0 0% 100%) var(--progress-crescendo, 0%), transparent) 100%
+        );
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-blend-mode: screen;
+}
+
+@keyframes progress-intake-pulse {
+    0%   { background-color: color-mix(in srgb, var(--progress-track, var(--secondary)) 60%, transparent); }
+    50%  { background-color: var(--progress-track, var(--secondary)); }
+    100% { background-color: color-mix(in srgb, var(--progress-track, var(--secondary)) 85%, transparent); }
+}
+
+@keyframes progress-discharge-flash {
+    0%   { filter: brightness(1) saturate(1); }
+    40%  { filter: brightness(1.25) saturate(1.15); }
+    100% { filter: brightness(1) saturate(1); }
+}
+
+@keyframes progress-indeterminate-sweep {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .progress-gradient-rail[data-lifecycle="loading"],
+    .progress-gradient-rail[data-lifecycle="complete"] [data-state="complete"] {
+        animation: none;
+    }
+    .progress-gradient-rail[data-indeterminate] {
+        animation: none;
+        background-size: 100% 100%;
+        background-position: 0 0;
+    }
+}
+
 /* ─────────────────────── Sectioned phase-bus rail (AB.W3.T2) ───────────────────────
 
    The rail itself reads as a machined channel: a top catch-light

@@ -574,7 +574,8 @@
         background var(--duration-fast) var(--ease-standard),
         color var(--duration-fast) var(--ease-standard),
         transform var(--duration-fast) var(--ease-standard),
-        box-shadow var(--duration-fast) var(--ease-standard);
+        box-shadow var(--duration-fast) var(--ease-standard),
+        --ripple-radius var(--motion-duration-ripple, 340ms) var(--ease-out-expo);
 
     /* Hover composition: paper-grain texture overlaid on a soft
        --primary radial, with the specular catch-light replacing the
@@ -596,6 +597,39 @@
             0 0.5px 0 0 rgb(0 0 0 / 0.06);
     }
 
+    /* AI.W4-M.2 (Q5 — G-AI-D27 ratified) — press-ripple via a typed
+       `--ripple-radius` length custom property. The `::before`
+       element paints a radial gradient whose stop radius equals the
+       typed length; the `:active` rule sets the length to the cap
+       (`--ripple-radius-max`, 12rem), and the host's transition
+       (above) interpolates the radius via the @property registration
+       (tokens.css §18). Release returns the length to its 0px initial
+       value and the ripple retires. The ripple paints at z-index 0
+       (above the host's background, below the slot content which sits
+       in the default 0 stacking context but with text inheriting the
+       slot's foreground colour). */
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        border-radius: inherit;
+        background: radial-gradient(
+            circle at center,
+            color-mix(in srgb, var(--primary-foreground, hsl(0 0% 100%)) 35%, transparent) 0,
+            color-mix(in srgb, var(--primary-foreground, hsl(0 0% 100%)) 18%, transparent)
+                calc(var(--ripple-radius, 0px) * 0.55),
+            transparent var(--ripple-radius, 0px)
+        );
+        transition: inherit;
+        will-change: background;
+    }
+
+    &:active:not(:disabled) {
+        --ripple-radius: var(--ripple-radius-max, 12rem);
+    }
+
     /* Sparkle glyph — hidden at rest, animated on hover. The star
        sweeps diagonally from top-left to bottom-right per the canonical
        sparkle-sweep keyframe (animations.css). */
@@ -610,11 +644,27 @@
         pointer-events: none;
         opacity: 0;
         will-change: transform, opacity;
+        z-index: 1;
     }
 
     @media (prefers-reduced-motion: no-preference) {
         &:hover::after {
             animation: sparkle-sweep var(--duration-sparkle) var(--ease-out-expo);
+        }
+    }
+
+    /* PRM bracket — the press-ripple retires; the press still reads
+       via the audacious recipe's transform/scale beat (the ripple is
+       affirmation atop affirmation). */
+    @media (prefers-reduced-motion: reduce) {
+        transition:
+            background var(--duration-fast) var(--ease-standard),
+            color var(--duration-fast) var(--ease-standard),
+            transform var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard);
+
+        &:active:not(:disabled) {
+            --ripple-radius: 0px;
         }
     }
 }

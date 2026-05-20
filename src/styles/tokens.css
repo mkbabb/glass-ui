@@ -172,6 +172,66 @@
     --progress-sectioned-track: var(--secondary);
 
     /* ═══════════════════════════════════════════════
+       §2.C ANIMATION EXPRESSIVENESS — AI.W4 grammar
+       (publisher-side; consumer-side companions live in speedtest)
+
+       Three idiom families compose the W4 wave:
+
+       • Progress lifecycle (M.1) — the under-meter / survey progress bar
+         rides an intake pulse on rising-edge, a crescendo brightening at
+         ≥85%, and a one-shot discharge flash at 100%. The crescendo is a
+         typed CSS variable (`@property --progress-crescendo`) so the
+         indicator's leading-edge gradient stop interpolates smoothly.
+
+       • Chassis phase-tint companion (M.1) — the `--phase-color` cross-
+         fade established by the chassis cascade gains an amount companion
+         (`@property --phase-tint-amount`) so the chassis backdrop "warms
+         toward" the active phase. Both typed vars interpolate together
+         across the speedtest-owned `--motion-duration-phase-handoff`
+         window; the chassis reads the consumer-tuned clock with a safe
+         600ms default so a non-speedtest consumer still gets the cross-
+         fade shape.
+
+       • Audacious button press-ripple (M.2 Q5 — ratified G-AI-D27) — the
+         `btn-audacious` utility gains an in-place `@property --ripple-
+         radius` ripple emanating from the pressed surface. Single typed
+         length, ramps 0 → max over the ripple duration, retires on
+         release. Q3 (needle micro-jitter) + Q4 (DockLayerGroup sympath-
+         etic motion) were pruned at G-AI-D27 — no tokens reserved.
+
+       All three families coexist with the existing `--motion-*` /
+       `--phase-*` cluster. Speedtest re-uses these tokens at the existing
+       --motion-duration-phase-handoff (consumer-side, 600ms). PRM brackets
+       live alongside each consumer rule. */
+
+    /* Progress lifecycle — typed crescendo + segment-local durations */
+    --motion-duration-progress-intake: 220ms;       /* rising-edge pulse */
+    --motion-duration-progress-crescendo: 240ms;    /* leading-edge brighten */
+    --motion-duration-progress-indeterminate: 4s;   /* indeterminate sweep period */
+
+    /* Chassis depth-of-tint peak — the amount `--phase-tint-amount`
+       interpolates toward when a phase is active. Subtle by intent;
+       a 6% color-mix reads as "warmth toward the phase" without
+       overwhelming the chassis chrome's resting register. */
+    --phase-tint-peak: 6%;
+
+    /* Audacious button press-ripple — geometry + duration. The ripple
+       radius caps at 12rem so an oversized button doesn't paint a
+       transparent halo beyond its bounds (the parent's `overflow:
+       hidden` clips the visible region; the cap keeps the gradient
+       falloff well-defined). */
+    --ripple-radius-max: 12rem;
+    --motion-duration-ripple: 340ms;
+
+    /* Skeleton breath variant — the M.3 "known-imminent" loading
+       register. 6s cycle (the canon ambient rate) so a known-imminent
+       skeleton breathes in lockstep with the dial and the Pulse aura.
+       Coexists with the 1.5s shimmer (sliding gradient) and the
+       Tailwind animate-pulse (2s, short-wait) variants — distinct
+       temporal registers per use-case. */
+    --skeleton-breath-duration: 6s;
+
+    /* ═══════════════════════════════════════════════
        §3  Z-INDEX SCALE
        ═══════════════════════════════════════════════ */
     /* V.W2 T12 — Aurora background tier (sits behind --z-background).
@@ -1102,4 +1162,56 @@
     --gold: hsl(43 74% 55%);
     --gold-light: hsl(51 100% 55%);
     --gold-dark: hsl(34 87% 45%);
+}
+
+/* ═══════════════════════════════════════════════
+   §18 TYPED CSS PROPERTIES — Houdini @property registrations
+   (AI.W4 grammar — adjacent to §2.C tokens above)
+
+   Three typed custom properties register with the CSS Houdini @property
+   API so transitions interpolate VALUES (percentage / length) rather
+   than the textual representation. Unregistered fallback is safe — the
+   `initial-value` provides a sensible default for any consumer that
+   imports this stylesheet on a browser that doesn't yet support the
+   typed @property registration (the cross-fade collapses to the
+   initial value, then re-paints at the new state).
+
+   Browser support: Chromium 85+, Safari 16.4+, Firefox 128+. The
+   speedtest deployment target sits well within the floor.
+
+   • --progress-crescendo (percentage) — the leading-edge brightness
+     ramp on `<Progress variant="gradient">` past 85% modelValue.
+     `inherits: false` because the value is consumed at one
+     declaration only (the gradient stop calculation); inheriting
+     would let an unrelated ancestor accidentally drive a sibling
+     progress bar.
+
+   • --phase-tint-amount (percentage) — the chassis depth-of-tint
+     companion to `--phase-color`. `inherits: true` because the
+     value cascades from the chassis root through every region
+     wrapper that reads it for a sympathetic tint (matches the
+     `--phase-color` inheritance pattern).
+
+   • --ripple-radius (length) — the `btn-audacious` press ripple
+     radial. `inherits: false` because each button owns its own
+     ripple state (a hovered parent must not push a ripple-radius
+     onto a non-pressed child).
+   ═══════════════════════════════════════════════ */
+
+@property --progress-crescendo {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 0%;
+}
+
+@property --phase-tint-amount {
+    syntax: "<percentage>";
+    inherits: true;
+    initial-value: 0%;
+}
+
+@property --ripple-radius {
+    syntax: "<length>";
+    inherits: false;
+    initial-value: 0px;
 }

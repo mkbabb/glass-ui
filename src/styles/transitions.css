@@ -149,6 +149,47 @@
         transform-origin: center bottom;
     }
 
+    /* ── Toast contract (AI.W4-M.3 doc; no source motion change) ──
+     *
+     * `<Toast>` (reka-ui-backed `ToastRoot`, see
+     * `components/ui/toast/Toast.vue`) consumes reka's
+     * `tw-animate-css` choreography directly through the
+     * `data-[state=open]:animate-in` / `data-[state=closed]:animate-out`
+     * + `data-[state=open]:slide-in-from-{top,bottom}-full` +
+     * `data-[state=closed]:fade-out-80 / slide-out-to-right-full`
+     * class chain. The contract that emerges from those defaults is
+     * the canonical entrance / dwell / exit grammar:
+     *
+     *   • ENTRANCE — slide-in from the viewport edge (top on mobile,
+     *     bottom on desktop ≥ sm), opacity 0 → 1, ~200ms with the
+     *     `tw-animate-css` ease-out curve. The slide direction is the
+     *     viewport origin so the toast reads as "arriving from
+     *     somewhere", not as "popping in from nowhere".
+     *
+     *   • DWELL — no motion. The toast sits at its rest position for
+     *     the consumer-specified `duration` (default 5000ms via
+     *     `use-toast.ts` `TOAST_REMOVE_DELAY`). The dwell is the
+     *     READING window; any motion here competes with the user's
+     *     read.
+     *
+     *   • EXIT — fade-out (opacity 1 → 0.2) combined with a
+     *     slide-out-to-right (the canonical "swipe-end-mimicking"
+     *     direction), ~150ms. The right-out direction lets a
+     *     timeout-driven exit feel like a swipe even when the user
+     *     didn't swipe; consistency with the swipe-end gesture
+     *     (`data-[swipe=end]`).
+     *
+     * Per the FD2 §4 rule (HANDOFF-AS-DRAIN-THEN-FILL): the toast
+     * itself does NOT drain-then-fill (single notification, single
+     * surface). The grammar is single-event entrance + dwell + exit;
+     * the next toast (if any) enters on its own contract.
+     *
+     * PRM is honoured at the `@media (prefers-reduced-motion: reduce)`
+     * block below — the slide motion retires; the fade-in/out
+     * remains. No source change in W4; this comment block IS the
+     * documentation closure for the W4-M.3 toast contract row.
+     */
+
     /* ── Reduced motion: preserve fades, remove transform/scale motion ── */
     @media (prefers-reduced-motion: reduce) {
         .fade-enter-active,

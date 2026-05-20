@@ -24,9 +24,26 @@
         position: relative;
         display: flex;
         flex-direction: column;
+        /* AI.W4-M.1 — chassis tint companion. The backdrop composes the
+           resting glass plate with a `color-mix` toward `--phase-color`
+           by `--phase-tint-amount`. At idle the typed amount sits at 0%
+           (initial-value from tokens.css §18) so the surface reads the
+           pure resting plate; the [data-phase] selectors below ramp the
+           amount toward `--phase-tint-peak` (6% default), and the
+           transition interpolates the typed percentage over the speed-
+           test-owned phase-handoff clock. Fallback 600ms keeps a non-
+           speedtest consumer's chassis cross-fading smoothly even
+           without the consumer-side token declared. */
         background:
             var(--glass-curvature-overlay, none),
-            var(--glass-bg-chassis);
+            color-mix(
+                in oklab,
+                var(--glass-bg-chassis),
+                var(--phase-color, var(--muted-foreground)) var(--phase-tint-amount, 0%)
+            );
+        transition: --phase-tint-amount
+            var(--motion-duration-phase-handoff, 600ms)
+            var(--motion-ease-standard);
         backdrop-filter: var(--glass-blur-quiet);
         border: 1px solid var(--glass-border-quiet);
         border-radius: var(--radius-card);
@@ -55,7 +72,11 @@
     .dark .instrument-chassis {
         background:
             var(--glass-curvature-overlay-dark, var(--glass-curvature-overlay, none)),
-            var(--glass-bg-chassis);
+            color-mix(
+                in oklab,
+                var(--glass-bg-chassis),
+                var(--phase-color, var(--muted-foreground)) var(--phase-tint-amount, 0%)
+            );
     }
 
     /* Engraved-bezel inner stroke. Reads as the polished sleeve of an
@@ -78,22 +99,42 @@
     /* Phase-color cascade — single property, full chassis-wide retint.
        `--phase-color-label` mirrors the cascade through the WCAG companion
        tokens (AC.W6c F1.V-04). The label register falls back to the canvas
-       hue so a consumer that hasn't migrated its labels still paints. */
+       hue so a consumer that hasn't migrated its labels still paints.
+
+       AI.W4-M.1 — `--phase-tint-amount` lifts to `--phase-tint-peak`
+       (6% default) on every active phase, including `complete`. The chassis
+       backdrop reads the typed amount in its `color-mix` recipe above; the
+       transition interpolates over the phase-handoff clock so the warmth
+       cross-fades alongside the hue. Idle returns to 0% by inheritance
+       (the typed @property initial-value). */
     .instrument-chassis[data-phase="ping"] {
         --phase-color: var(--chart-ping, var(--viz-chebyshev));
         --phase-color-label: var(--chart-ping-label, var(--chart-ping, var(--viz-chebyshev)));
+        --phase-tint-amount: var(--phase-tint-peak);
     }
     .instrument-chassis[data-phase="download"] {
         --phase-color: var(--chart-download, var(--viz-fourier));
         --phase-color-label: var(--chart-download-label, var(--chart-download, var(--viz-fourier)));
+        --phase-tint-amount: var(--phase-tint-peak);
     }
     .instrument-chassis[data-phase="upload"] {
         --phase-color: var(--chart-upload, var(--viz-legendre));
         --phase-color-label: var(--chart-upload-label, var(--chart-upload, var(--viz-legendre)));
+        --phase-tint-amount: var(--phase-tint-peak);
     }
     .instrument-chassis[data-phase="complete"] {
         --phase-color: var(--color-gold);
         --phase-color-label: var(--color-gold-dark, var(--color-gold));
+        --phase-tint-amount: var(--phase-tint-peak);
+    }
+
+    /* PRM bracket — the typed-property transition retires; the chassis
+       still cross-fades hue + amount instantaneously on phase change
+       (the discrete state IS the affirmation). */
+    @media (prefers-reduced-motion: reduce) {
+        .instrument-chassis {
+            transition: none;
+        }
     }
 
     /* Region wrappers ─────────────────────────────────────────── */
