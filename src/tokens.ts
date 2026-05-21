@@ -31,3 +31,28 @@ export const chartColors = {
 
 /** Default form-select minimum width (px). Matches `--min-width-input-sm`. */
 export const minWidthInputSm = 80;
+
+/**
+ * Stagger increments (ms) — TS mirror of the `--motion-stagger-*` canon
+ * promoted at AJ-W4-κ. Use these for animation cascades driven from JS
+ * (e.g. echarts `animationDelay: (idx) => idx * motionStagger.default`,
+ * Vue inline-style binding) so the JS-driven cascade and CSS-driven
+ * cascade resolve to the same value. The three named tiers correspond
+ * to `--motion-stagger-tight | --motion-stagger-default | --motion-stagger-relaxed`
+ * in `styles/tokens.css`:
+ *
+ *   - `tight` (40ms)    — dense row cascades (StatsCards row strip,
+ *                         results-table `:nth-child` delays)
+ *   - `default` (80ms)  — canonical row stagger (ResultStack, bar
+ *                         entrance, useStagger default)
+ *   - `relaxed` (120ms) — wider series cascades (TimeSeriesChart)
+ *
+ * Retires per-consumer constants (SERIES_STAGGER_MS, BAR_STAGGER_MS,
+ * STATS_CARD_STAGGER_MS) into single-source token reads. Per A5 §8.9 +
+ * AJ-W4-κ.
+ */
+export const motionStagger = {
+    tight: 40,
+    default: 80,
+    relaxed: 120,
+} as const;

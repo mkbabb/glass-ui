@@ -106,6 +106,47 @@
     --motion-delay-badge-ring: 220ms;
     --motion-delay-badge-check: 460ms;
 
+    /* AJ-W4-κ — staggered-reveal increment canon (per A5 §8.9). Promotes
+       the scattered per-consumer constants
+       (`STATS_CARD_STAGGER_MS = 40` in MetricGaugeCards,
+        `BAR_STAGGER_MS = 80` in DistributionChart,
+        `SERIES_STAGGER_MS = 120` in TimeSeriesChart,
+        `useStagger` default 80ms) to one shared canon so a per-row /
+       per-cell / per-bar cascade across consumer surfaces reads at one
+       of three named tiers.
+
+       The three tiers are perceptually distinct registers:
+         • tight (40ms) — dense row cascades where the gap between
+           consecutive reveals should be sub-perceptual (StatsCards row
+           strip, results-table rows under their `:nth-child(N+1)` delays)
+         • default (80ms) — the canonical row-stagger rhythm (the
+           speedtest ResultStack row-tint sweep, the DistributionChart
+           bar entrance — both already at 80ms). Aliased as `default`
+           to match `useStagger`'s built-in fallback so consumers
+           omitting `delayMs` resolve to the same token.
+         • relaxed (120ms) — wider cascades where each reveal carries
+           its own attention budget (TimeSeriesChart series entrance)
+
+       The FD2 §6 rule-1 "shared period multiple" canon for ambient
+       cycles extends here to staggers: at 40/80/120ms, the default
+       (80ms) is the LCM of tight (40) AND a 2/3 of relaxed (120)
+       — a tight cascade beating against a default cascade syncs on
+       every-other-reveal, and a default cascade against a relaxed
+       cascade syncs on every-three-reveals. Consumers that nest
+       multiple cascades on adjacent surfaces should pick adjacent
+       tiers so the cross-beats stay quiet.
+
+       Consumers can read these tokens directly from inline-style
+       calc() expressions (`animation-delay: calc(var(--motion-stagger-default) * var(--row-index))`)
+       or via JS by resolving the CSS custom property at runtime
+       (`getComputedStyle(document.documentElement).getPropertyValue('--motion-stagger-default')`).
+       The latter shape collapses the speedtest TS-side constants
+       (SERIES_STAGGER_MS, BAR_STAGGER_MS, STATS_CARD_STAGGER_MS) into
+       single-source token reads. */
+    --motion-stagger-tight: 40ms;
+    --motion-stagger-default: 80ms;
+    --motion-stagger-relaxed: 120ms;
+
     /* ═══════════════════════════════════════════════
        §2  EASING — Spring curves via linear()
 

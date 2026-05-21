@@ -21,7 +21,19 @@ import {
 export interface UseStaggerOptions {
     /** Count of staggered slots. Each slot maps to one boolean in `revealed`. */
     items: number;
-    /** Delay between consecutive reveals. Default 80ms. */
+    /**
+     * Delay between consecutive reveals.
+     *
+     * Default 80ms — mirrors the `--motion-stagger-default` token in
+     * `tokens.css` (AJ-W4-κ canon). Consumers driving per-row CSS
+     * `animation-delay` cascades on the same surface should also read
+     * `--motion-stagger-default` so the JS-driven cascade (this composable)
+     * and the CSS-driven cascade stay in lockstep.
+     *
+     * The two adjacent canon tiers are:
+     *   - `--motion-stagger-tight: 40ms` — dense row cascades
+     *   - `--motion-stagger-relaxed: 120ms` — wide series cascades
+     */
     delayMs?: number;
     /** Delay before the first reveal fires. Default 0. */
     initialDelayMs?: number;
