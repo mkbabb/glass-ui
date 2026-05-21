@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import { ref, type Component } from "vue";
-import { Search } from "lucide-vue-next";
+import { Search } from "@lucide/vue";
 import { cn } from "../../../utils";
 
 const props = withDefaults(

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RefreshCw } from "lucide-vue-next";
+import { RefreshCw } from "@lucide/vue";
 import { Button } from "../../../src/components/ui/button";
 import { BouncyTabs } from "../../../src/components/custom/tabs";
 import { DockLayerGroup, DockLayer } from "../../../src/components/custom/dock";

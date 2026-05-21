@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { computed, ref } from "vue";
-import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight } from "lucide-vue-next";
+import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight } from "@lucide/vue";
 import { Toggle } from "../../../src/components/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "../../../src/components/ui/toggle-group";
 import { ToggleChip } from "../../../src/components/custom/toggle-chip";

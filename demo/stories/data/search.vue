@@ -8,7 +8,7 @@ import {
     Search,
     Sparkles,
     Trash2,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 import {
     FuzzySearch,
     SearchBar,

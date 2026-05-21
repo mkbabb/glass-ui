@@ -6,7 +6,7 @@
 // resets after `resetMs`. Demo shows the canonical "copy → confirm → reset"
 // loop plus a `resetMs` ladder so consumers see the timing knob.
 import { ref } from "vue";
-import { Check, Copy } from "lucide-vue-next";
+import { Check, Copy } from "@lucide/vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";

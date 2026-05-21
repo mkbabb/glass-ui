@@ -11,7 +11,7 @@ import {
     ToastTitle,
     useToast,
 } from "../../../src/components/ui/toast";
-import { CheckCircle2, AlertTriangle, XCircle, Info } from "lucide-vue-next";
+import { CheckCircle2, AlertTriangle, XCircle, Info } from "@lucide/vue";
 
 const { toasts, toast } = useToast();
 

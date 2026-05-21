@@ -7,7 +7,7 @@ import {
   type ContextMenuRadioItemProps,
   useForwardPropsEmits,
 } from 'reka-ui'
-import { Circle } from 'lucide-vue-next'
+import { Circle } from "@lucide/vue"
 import { cn } from '../../../utils'
 import { menuItemVariants } from '../_shared/menuItemVariants'
 

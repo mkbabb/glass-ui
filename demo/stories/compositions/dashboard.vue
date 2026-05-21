@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { ArrowDownRight, ArrowUpRight, Activity, AlertTriangle, CheckCircle2, Clock } from "lucide-vue-next";
+import { ArrowDownRight, ArrowUpRight, Activity, AlertTriangle, CheckCircle2, Clock } from "@lucide/vue";
 import { Badge } from "../../../src/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../src/components/ui/card";
 import {

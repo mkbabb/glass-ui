@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { WithClassAsProps } from "./interface";
 import { computed, onMounted, ref, watch } from "vue";
-import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from "lucide-vue-next";
+import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from "@lucide/vue";
 import { cn } from "../../../utils";
 import { Button } from "../button";
 import { useCarousel } from "./useCarousel";

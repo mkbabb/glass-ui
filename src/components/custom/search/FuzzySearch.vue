@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, nextTick, computed } from "vue";
-import { Search, X, Maximize2, Minimize2 } from "lucide-vue-next";
+import { Search, X, Maximize2, Minimize2 } from "@lucide/vue";
 import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover";
 import { Dialog, DialogContent } from "../../ui/dialog";
 import { Button } from "../../ui/button";

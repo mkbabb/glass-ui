@@ -16,7 +16,7 @@ import {
 } from '../popover'
 import { Button } from '../button'
 import { Badge } from '../badge'
-import { Check, ChevronDown, X } from 'lucide-vue-next'
+import { Check, ChevronDown, X } from "@lucide/vue"
 import { cn } from '../../../utils'
 
 export interface MultiSelectOption {

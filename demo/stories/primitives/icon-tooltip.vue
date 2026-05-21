@@ -6,7 +6,7 @@
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
-import { Info, HelpCircle, AlertTriangle } from "lucide-vue-next";
+import { Info, HelpCircle, AlertTriangle } from "@lucide/vue";
 import { IconTooltip } from "../../../src/components/custom/icon-tooltip";
 </script>
 

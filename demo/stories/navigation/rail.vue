@@ -10,7 +10,7 @@ import {
     Sparkles,
     LayoutDashboard,
     Navigation as NavigationIcon,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 import { DockIconButton, GlassDock } from "../../../src/components/custom/dock";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../../src/components/ui/tooltip";
 import { cn } from "../../../src/utils/cn";

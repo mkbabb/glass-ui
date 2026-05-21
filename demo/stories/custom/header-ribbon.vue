@@ -5,7 +5,7 @@
 // as a `fixed` overlay; the demo simulates a positioned host using an
 // `overflow-hidden` framed showcase so the fixed ribbon stays bounded.
 import { ref } from "vue";
-import { Bell, GitBranch, Pin, Search } from "lucide-vue-next";
+import { Bell, GitBranch, Pin, Search } from "@lucide/vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";

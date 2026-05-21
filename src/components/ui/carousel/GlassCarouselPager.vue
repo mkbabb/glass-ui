@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue";
-import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown } from "lucide-vue-next";
+import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown } from "@lucide/vue";
 import { computed } from "vue";
 import { cn } from "../../../utils";
 import { Button } from "../button";

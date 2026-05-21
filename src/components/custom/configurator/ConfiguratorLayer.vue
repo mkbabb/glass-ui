@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, useId, watch, type HTMLAttributes } from "vue";
-import { ChevronDown } from "lucide-vue-next";
+import { ChevronDown } from "@lucide/vue";
 import { cn } from "../../../utils/cn";
 
 /**

@@ -7,7 +7,7 @@ import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { ToggleChip } from "../../../src/toggle-chip";
-import { Triangle, Square, Circle, Hexagon } from "lucide-vue-next";
+import { Triangle, Square, Circle, Hexagon } from "@lucide/vue";
 
 const tags = ref<Record<string, boolean>>({
     bone: true,

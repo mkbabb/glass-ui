@@ -4,7 +4,7 @@ import { ref } from "vue";
 import {
     Home, Search, Bell, Settings, Plus, Share2, Download,
     ChevronDown, Play, Pause, SkipBack, SkipForward,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 import {
     GlassDock,
     DockIconButton,

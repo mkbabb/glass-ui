@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Plus } from "lucide-vue-next";
+import { Plus } from "@lucide/vue";
 import { Button } from "../../../../src/components/ui/button";
 import { LabeledSlider } from "../../../../src/components/custom/labeled-field";
 import type { AuroraConfig } from "../../../../src/components/custom/aurora";

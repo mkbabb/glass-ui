@@ -8,7 +8,7 @@ import {
     SearchX,
     TriangleAlert,
     type LucideIcon,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 import { Button } from "../../../src/components/ui/button";
 import { Card, CardContent } from "../../../src/components/ui/card";
 import { cn } from "../../../src/utils/cn";

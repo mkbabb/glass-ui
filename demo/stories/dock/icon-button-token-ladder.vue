@@ -6,7 +6,7 @@
 // demo shows each token's default plus 2 override scopes — the canonical
 // "default + override at parent scope" cascade from O11/c R1.
 import { ref } from "vue";
-import { Home, Layers, Search, Settings, Star } from "lucide-vue-next";
+import { Home, Layers, Search, Settings, Star } from "@lucide/vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";

@@ -4,7 +4,7 @@ import { ref } from "vue";
 import {
     FileText, Settings, User, Palette, Moon, Sun, Search, Plus,
     GitBranch, Package, Command as CommandIcon,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 import {
     Command,
     CommandEmpty,

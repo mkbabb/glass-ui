@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { CheckCircle, XCircle, AlertCircle, Info, X } from 'lucide-vue-next'
+import { CheckCircle, XCircle, AlertCircle, Info, X } from "@lucide/vue"
 
 interface Notification {
   id: string

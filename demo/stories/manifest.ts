@@ -24,7 +24,7 @@ import {
     Anchor,
     Paintbrush,
     type LucideIcon,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 
 export interface Story {
     id: string;

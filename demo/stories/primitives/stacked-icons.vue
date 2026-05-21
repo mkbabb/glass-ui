@@ -5,7 +5,7 @@ import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { StackedIconGroup } from "../../../src/stacked-icons";
-import { Heart, Star, Bookmark, Flag, Pin, Bell, Sparkles } from "lucide-vue-next";
+import { Heart, Star, Bookmark, Flag, Pin, Bell, Sparkles } from "@lucide/vue";
 
 interface Avatar {
     id: string;

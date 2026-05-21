@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref } from "vue";
-import { ChevronLeft, ChevronRight } from "lucide-vue-next";
+import { ChevronLeft, ChevronRight } from "@lucide/vue";
 import StoryPage from "../StoryPage.vue";
 import { Button } from "../../../src/components/ui/button";
 import { GlassCarouselPager } from "../../../src/components/ui/carousel";

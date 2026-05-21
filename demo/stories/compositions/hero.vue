@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-import { ArrowRight, Sparkles } from "lucide-vue-next";
+import { ArrowRight, Sparkles } from "@lucide/vue";
 import { computed, ref } from "vue";
 import { Button } from "../../../src/components/ui/button";
 import { Card, CardContent } from "../../../src/components/ui/card";

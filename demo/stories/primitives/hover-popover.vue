@@ -2,7 +2,7 @@
 import StoryPage from "../StoryPage.vue";
 import { HoverPopover } from "../../../src/components/custom/hover-popover";
 import { Button } from "../../../src/components/ui/button";
-import { Settings, ArrowLeft, RotateCcw, Square } from "lucide-vue-next";
+import { Settings, ArrowLeft, RotateCcw, Square } from "@lucide/vue";
 </script>
 
 <template>

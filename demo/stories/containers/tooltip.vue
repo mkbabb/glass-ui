@@ -7,7 +7,7 @@ import {
     TooltipTrigger,
 } from "../../../src/components/ui/tooltip";
 import { Button } from "../../../src/components/ui/button";
-import { Bold, Italic, Underline, Save, Share2 } from "lucide-vue-next";
+import { Bold, Italic, Underline, Save, Share2 } from "@lucide/vue";
 
 type Side = "top" | "right" | "bottom" | "left";
 const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;

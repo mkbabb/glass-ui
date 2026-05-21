@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RotateCcw } from "lucide-vue-next";
+import { RotateCcw } from "@lucide/vue";
 import { Label } from "../../src/components/ui/label";
 import { cn } from "../../src/utils/cn";
 

@@ -31,7 +31,7 @@ import {
     Sun,
     SlidersHorizontal,
     Music,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 import { GlassDock, DockIconButton } from "../../../src/components/custom/dock";
 import { Slider } from "../../../src/components/ui/slider";
 

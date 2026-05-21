@@ -8,7 +8,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "../../../src/components/ui/avatar";
 import { Button } from "../../../src/components/ui/button";
 import { IconTooltip } from "../../../src/components/custom/icon-tooltip";
-import { Info, CircleHelp, Sparkles } from "lucide-vue-next";
+import { Info, CircleHelp, Sparkles } from "@lucide/vue";
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { X, GripVertical } from "lucide-vue-next";
+import { X, GripVertical } from "@lucide/vue";
 import { Slider } from "../../../src/components/ui/slider";
 import { hexToOklchStop, oklchStopToHex, type OklchStop } from "../../../src/components/custom/aurora";
 

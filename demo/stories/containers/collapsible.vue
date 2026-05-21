@@ -7,7 +7,7 @@ import {
     CollapsibleTrigger,
 } from "../../../src/components/ui/collapsible";
 import { Button } from "../../../src/components/ui/button";
-import { ChevronDown } from "lucide-vue-next";
+import { ChevronDown } from "@lucide/vue";
 
 const open = ref(true);
 </script>

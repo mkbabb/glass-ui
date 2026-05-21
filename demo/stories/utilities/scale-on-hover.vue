@@ -5,7 +5,7 @@
 // `hover:scale-105`-style arbitrary-scale recipes across consumers
 // (13 sites in keyframes.js demo + 9 in words/frontend). Transition
 // + easing bind to --duration-fast + --ease-standard.
-import { Heart, Sparkles, Star, Zap } from "lucide-vue-next";
+import { Heart, Sparkles, Star, Zap } from "@lucide/vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";

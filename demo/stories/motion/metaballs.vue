@@ -24,7 +24,7 @@ import {
 } from "../../../src/components/ui/number-field";
 import { Button } from "../../../src/components/ui/button";
 import { BouncyToggle } from "../../../src/components/custom/tabs";
-import { RotateCcw } from "lucide-vue-next";
+import { RotateCcw } from "@lucide/vue";
 
 /**
  * Metaballs configurator story — full <Configurator> consumption.

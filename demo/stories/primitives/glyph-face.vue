@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { GlyphFace } from "../../../src/components/custom/glyph-face";
-import { Play, RotateCcw, ArrowRight, Check, Settings } from "lucide-vue-next";
+import { Play, RotateCcw, ArrowRight, Check, Settings } from "@lucide/vue";
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { toRef } from "vue";
-import { Plus } from "lucide-vue-next";
+import { Plus } from "@lucide/vue";
 import { Button } from "../../../../src/components/ui/button";
 import { SortableList, SortableItem } from "../../../../src/components/custom/sortable-list";
 import type { AuroraConfig } from "../../../../src/components/custom/aurora";

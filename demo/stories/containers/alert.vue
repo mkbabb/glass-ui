@@ -7,7 +7,7 @@ import {
     TriangleAlert,
     CircleCheck,
     Sparkles,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 </script>
 
 <template>

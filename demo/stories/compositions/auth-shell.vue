@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
-import { Lock, ShieldCheck, Sparkles, Users } from "lucide-vue-next";
+import { Lock, ShieldCheck, Sparkles, Users } from "@lucide/vue";
 import { Button } from "../../../src/components/ui/button";
 import { Checkbox } from "../../../src/components/ui/checkbox";
 import { Input } from "../../../src/components/ui/input";

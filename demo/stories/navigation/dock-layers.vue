@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
-import { Package, Layers, Library, FileText, ChevronLeft, ChevronRight } from "lucide-vue-next";
+import { Package, Layers, Library, FileText, ChevronLeft, ChevronRight } from "@lucide/vue";
 import { GlassDock, DockIconButton, DockLayerGroup, DockLayer } from "../../../src/components/custom/dock";
 import { cn } from "../../../src/utils/cn";
 

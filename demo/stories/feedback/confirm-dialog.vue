@@ -3,7 +3,7 @@ import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Button } from "../../../src/components/ui/button";
 import { ConfirmDialog } from "../../../src/components/custom/confirm-dialog";
-import { Trash2, LogOut, Archive, CheckCircle2 } from "lucide-vue-next";
+import { Trash2, LogOut, Archive, CheckCircle2 } from "@lucide/vue";
 
 const destructiveOpen = ref(false);
 const destructiveLoading = ref(false);

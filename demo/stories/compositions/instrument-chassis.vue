@@ -15,7 +15,7 @@ import {
     Play,
     Settings,
     type LucideIcon,
-} from "lucide-vue-next";
+} from "@lucide/vue";
 
 type PhaseOption = { value: InstrumentChassisPhase; label: string };
 
