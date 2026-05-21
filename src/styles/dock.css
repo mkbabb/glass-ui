@@ -242,6 +242,64 @@
         border-radius: var(--radius-xl);
     }
 
+    /* AJ-W1-δ — `instrument-strip` variant (per G-AJ-D7 Path 1).
+     *
+     * The speedtest survey cockpit's vertical rail needs chassis-strip
+     * aesthetics, not the dock-rail's stadium-pill chrome. Adopts the
+     * surface vocabulary of the `<InstrumentChassis>` family so the
+     * strip reads as a journey-station slot — the same surface the
+     * speedtest + complete + thankyou stations ride.
+     *
+     * The variant intentionally inherits the rail variant's vertical
+     * layout (orientation: vertical; flex-direction: column) — the
+     * orientation + fitContent computeds in GlassDock.vue branch on
+     * `variant === "instrument-strip"` alongside the existing rail
+     * branch. Only the surface vocabulary changes vs the rail:
+     *   - Border-radius drops from `--radius-pill` to `--radius-card`
+     *     (matches `<InstrumentChassis> { border-radius: var(--radius-card) }`).
+     *   - Background plate routes through `--glass-bg-chassis` (0.28α
+     *     per tokens.css §V) instead of `--glass-bg-wash`.
+     *   - Border routes through `--glass-border-quiet` to match the
+     *     chassis primitive's at-rest stroke.
+     *   - Box-shadow routes through `--glass-shadow-quiet` plus the
+     *     inset-bottom hairline matching the chassis primitive
+     *     (instrument-chassis.css:42-45).
+     *
+     * The `.shape-pill` / `.shape-rounded` class hooks are still emitted
+     * by the template but no rule binds them under
+     * `.variant-instrument-strip` — chassis-strip carries ONE canonical
+     * border-radius (`--radius-card`), per the chassis family. */
+    .glass-dock.variant-instrument-strip {
+        padding: var(--dock-instrument-strip-padding, var(--dock-padding-inline, 0.75rem));
+        background: var(--glass-bg-chassis, var(--glass-bg-wash));
+        border: 1px solid var(--glass-border-quiet, var(--glass-border-resting));
+        border-radius: var(--radius-card);
+        box-shadow:
+            var(--glass-shadow-quiet, var(--shadow-dock)),
+            inset 0 -0.5px 0 0 rgb(0 0 0 / 0.06);
+    }
+
+    /* Engraved-bezel inner stroke — matches `<InstrumentChassis>::before`
+     * (instrument-chassis.css:85-93). The chassis-strip silhouette without
+     * this stroke reads as a flat plate; with it the strip reads as the
+     * polished sleeve of an instrument-panel module. The `::before`
+     * z-index sits above the chassis backdrop but below the slotted
+     * content (the MetricBadge stack), matching the chassis primitive's
+     * z-order. The host `.glass-dock` is already `position: relative`. */
+    .glass-dock.variant-instrument-strip::before {
+        content: "";
+        position: absolute;
+        inset: 0.5px;
+        border-radius: calc(var(--radius-card) - 0.5px);
+        border: 1px solid var(--surface-tint-4);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .dark .glass-dock.variant-instrument-strip::before {
+        border-color: var(--surface-tint-6);
+    }
+
     .glass-dock.collapsed {
         cursor: pointer;
         padding: var(--dock-collapsed-padding, var(--dock-padding-block, 0.375rem));

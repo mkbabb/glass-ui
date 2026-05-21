@@ -18,10 +18,28 @@ const props = withDefaults(
         /** Allow expanded content to wrap to multiple lines. */
         wrap?: boolean;
         /**
-         * Visual/behavioral preset. `dock` is the horizontal floating dock;
-         * `rail` is the vertical icon rail variant used by app chrome.
+         * Visual/behavioral preset.
+         *   `dock`             — the horizontal floating dock (default).
+         *   `rail`             — the vertical icon rail variant used by
+         *                        app chrome (stadium-pill silhouette,
+         *                        `--glass-bg-wash` plate).
+         *   `instrument-strip` — vertical chassis-strip mode for consumer
+         *                        cockpits composing an instrument-cluster
+         *                        gauge column (the speedtest
+         *                        SurveyResultDock consumer). Drops the
+         *                        rail variant's `--radius-pill` extreme
+         *                        and adopts the `<InstrumentChassis>`
+         *                        family's surface vocabulary
+         *                        (`--radius-card` border-radius,
+         *                        `--glass-bg-chassis` background,
+         *                        `--glass-border-quiet` border,
+         *                        `--glass-shadow-quiet` shadow, plus an
+         *                        engraved-bezel `::before` inner stroke
+         *                        matching `InstrumentChassis::before`).
+         *                        No new tokens — lifts the existing
+         *                        chassis vocabulary. AJ-W1-δ / G-AJ-D7.
          */
-        variant?: "dock" | "rail";
+        variant?: "dock" | "rail" | "instrument-strip";
         /** Corner treatment for vertical rail/tool-palette docks. */
         shape?: "pill" | "rounded";
         /**
@@ -76,10 +94,18 @@ const dockEl = useTemplateRef<HTMLElement>("dockEl");
 const layersEl = useTemplateRef<HTMLElement>("layersEl");
 const variant = computed(() => props.variant);
 const shape = computed(() => props.shape);
-const orientation = computed(() => props.variant === "rail" ? "vertical" : props.orientation);
+const orientation = computed(() =>
+    props.variant === "rail" || props.variant === "instrument-strip"
+        ? "vertical"
+        : props.orientation,
+);
 const density = computed(() => props.density);
 const alwaysExpanded = computed(() => props.alwaysExpanded || orientation.value === "vertical");
-const fitContent = computed(() => props.fitContent || props.variant === "rail");
+const fitContent = computed(() =>
+    props.fitContent ||
+    props.variant === "rail" ||
+    props.variant === "instrument-strip",
+);
 
 const isTransitioning = ref(false);
 const touchGate = useTouchGate(props.collapseDelay);
