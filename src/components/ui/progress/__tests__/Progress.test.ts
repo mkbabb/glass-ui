@@ -139,4 +139,52 @@ describe("Progress", () => {
             expect(indicator.attributes("style")).toContain("--progress-crescendo: 100%");
         });
     });
+
+    // AJ-W4-ε — disable-crescendo opts out of the publisher-side crescendo
+    // overlay. Cleaner than the consumer-side `--progress-crescendo: 0%`
+    // override that the prop replaces. The opt-out gates two contracts:
+    //   (a) the typed-property style binding pins `--progress-crescendo: 0%`
+    //   (b) the `[data-crescendo="disabled"]` attribute retires the CSS
+    //       overlay rule entirely (a `:not()` guard on the selector)
+    describe("AJ-W4-ε disable-crescendo prop", () => {
+        it("does NOT emit data-crescendo by default", () => {
+            const wrapper = mount(Progress, {
+                props: { modelValue: 90, variant: "gradient" },
+            });
+            expect(
+                wrapper.find('[role="progressbar"]').attributes("data-crescendo"),
+            ).toBeUndefined();
+        });
+
+        it("emits data-crescendo=\"disabled\" when disable-crescendo is true", () => {
+            const wrapper = mount(Progress, {
+                props: { modelValue: 90, variant: "gradient", disableCrescendo: true },
+            });
+            expect(
+                wrapper.find('[role="progressbar"]').attributes("data-crescendo"),
+            ).toBe("disabled");
+        });
+
+        it("pins --progress-crescendo at 0% past 85% modelValue when disable-crescendo is true", () => {
+            // Without opt-out, modelValue 92 would emit ~46% crescendo (see
+            // the prior `emits a positive --progress-crescendo past 85%`
+            // test). With opt-out, the typed property MUST pin at 0%.
+            const wrapper = mount(Progress, {
+                props: { modelValue: 92, variant: "gradient", disableCrescendo: true },
+            });
+            const indicator = wrapper.find('[style*="translateX"]');
+            expect(indicator.attributes("style")).toContain("--progress-crescendo: 0%");
+        });
+
+        it("pins --progress-crescendo at 0% even at modelValue 100 when disable-crescendo is true", () => {
+            // The complete-state cap rule (`[data-lifecycle="complete"]
+            // [data-state="complete"]`) would normally drive 100%
+            // crescendo; the opt-out collapses that to 0%.
+            const wrapper = mount(Progress, {
+                props: { modelValue: 100, variant: "gradient", disableCrescendo: true },
+            });
+            const indicator = wrapper.find('[style*="translateX"]');
+            expect(indicator.attributes("style")).toContain("--progress-crescendo: 0%");
+        });
+    });
 });

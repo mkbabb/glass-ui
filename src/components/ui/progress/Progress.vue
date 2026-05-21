@@ -81,6 +81,33 @@ const props = withDefaults(
        * a static rail.
        */
       indeterminate?: boolean
+      /**
+       * AJ-W4-ε — opt out of the publisher-side crescendo overlay. The
+       * gradient variant's lifecycle paints a screen-blended white cap
+       * on the leading edge past 85% modelValue (the typed
+       * `--progress-crescendo` percentage interpolates the cap alpha).
+       * Consumers that bake their own leading-edge brightening into
+       * `--progress-fill` (e.g. speedtest's under-meter bar, whose
+       * gradient stops at 80%/100% paint a `color-mix` white tail
+       * directly into the fill) would otherwise double-brighten the
+       * same edge.
+       *
+       * The pre-W4-ε migration shape was a consumer-side typed-property
+       * override (`--progress-crescendo: 0%` in the consumer's scoped
+       * CSS) — correct in behaviour but visually noisier than a
+       * declarative prop. `:disable-crescendo="true"` collapses the
+       * publisher overlay cleanly: the crescendo rule keys off
+       * `data-crescendo="disabled"` so the screen-blended cap layer
+       * never paints, and the typed style binding pins
+       * `--progress-crescendo: 0%` so any downstream rule that
+       * `var()`s the typed property reads the floor.
+       *
+       * The intake-pulse + discharge-flash still fire — those are
+       * temporal envelopes on the rail / indicator (not gradient
+       * overlays), so a consumer that wants the lifecycle envelopes
+       * but not the crescendo cap can opt into this surgically.
+       */
+      disableCrescendo?: boolean
     }
   >(),
   {
@@ -90,11 +117,12 @@ const props = withDefaults(
     currentSegmentKey: null,
     activeProgress: 0,
     indeterminate: false,
+    disableCrescendo: false,
   },
 )
 
 const delegatedProps = computed(() => {
-  const { class: _, variant: _v, segments: _s, currentSegmentKey: _c, activeProgress: _a, indeterminate: _i, ...delegated } = props
+  const { class: _, variant: _v, segments: _s, currentSegmentKey: _c, activeProgress: _a, indeterminate: _i, disableCrescendo: _dc, ...delegated } = props
   return delegated
 })
 
@@ -126,8 +154,16 @@ const lifecycleState = computed<'idle' | 'loading' | 'progressing' | 'complete'>
 // stop brightens proportionally; below 85% the typed variable stays
 // at 0% (the @property initial-value). Inline style binding so the
 // computed percentage interpolates via the typed-property contract.
+//
+// AJ-W4-ε — `:disable-crescendo` pins the typed property at 0% so
+// any downstream `var()` consumer reads the floor; the CSS overlay
+// rule below additionally gates on `data-crescendo="disabled"` so
+// the screen-blended cap never paints in the first place. The two
+// gates compose defensively: the typed-property floor is the
+// belt, the data-attr selector is the suspenders.
 const crescendoStyle = computed(() => {
   if (props.variant !== 'gradient' || props.indeterminate) return undefined
+  if (props.disableCrescendo) return { '--progress-crescendo': '0%' }
   const value = props.modelValue ?? 0
   if (value < 85) return { '--progress-crescendo': '0%' }
   const ramp = ((value - 85) / 15) * 100
@@ -236,6 +272,7 @@ const effectiveModelValue = computed(() =>
     :class="cn(rootClass, props.class)"
     :data-lifecycle="lifecycleState"
     :data-indeterminate="indeterminate || undefined"
+    :data-crescendo="disableCrescendo ? 'disabled' : undefined"
   >
     <ProgressIndicator
       :class="indicatorClass"
@@ -371,9 +408,19 @@ const effectiveModelValue = computed(() =>
    gradient hugs the indicator's leading edge under the
    `translateX(-N%)` transform reka applies (the gradient origin
    stays anchored to the indicator's right edge, which is the visible
-   metric front). */
-.progress-gradient-rail[data-lifecycle="progressing"] [data-state],
-.progress-gradient-rail[data-lifecycle="complete"] [data-state="complete"] {
+   metric front).
+
+   AJ-W4-ε — the `:not([data-crescendo="disabled"])` guard retires the
+   overlay entirely when the consumer opts out via the
+   `disable-crescendo` prop. Consumers that bake their own leading-
+   edge brightening into `--progress-fill` (the speedtest under-meter
+   bar's color-mix tail at the 80-100% stop is the canonical case)
+   would otherwise double-brighten the same edge under the screen
+   blend; the data-attribute opt-out is the cleaner gestalt than the
+   consumer-side `--progress-crescendo: 0%` override that the prop
+   replaces. */
+.progress-gradient-rail[data-lifecycle="progressing"]:not([data-crescendo="disabled"]) [data-state],
+.progress-gradient-rail[data-lifecycle="complete"]:not([data-crescendo="disabled"]) [data-state="complete"] {
     background-image:
         linear-gradient(
             to right,
