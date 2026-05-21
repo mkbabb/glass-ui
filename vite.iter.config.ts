@@ -21,7 +21,7 @@ export default defineConfig({
             fileName: libraryFileName,
             formats: ["es"],
         },
-        rollupOptions: {
+        rolldownOptions: {
             external: libraryExternal,
             output: {
                 globals: libraryGlobals,
