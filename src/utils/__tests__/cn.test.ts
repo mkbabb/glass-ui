@@ -114,3 +114,62 @@ describe("cn — conflict-pair deduplication (last-write-wins)", () => {
         );
     });
 });
+
+describe("cn — AJ.W3-η typography utility ≠ text-color bucket", () => {
+    // Regression suite for A3 §5.D-11 — dashboard map "DL" chip text
+    // invisibility. The Button `default` variant emits
+    // `text-primary-foreground`; the consumer adds `text-micro` (a
+    // glass-ui typography utility, NOT a colour). Previously both
+    // matched the catch-all `^text-/` rule under one `text-color`
+    // bucket, so `text-micro` (later token) shadowed the colour →
+    // bg-primary on bg-primary → invisible. After the fix the typography
+    // utilities live in a separate `font-size` bucket and colour
+    // coexists with size.
+    it("text-micro does NOT shadow text-primary-foreground", () => {
+        const out = cn("bg-primary text-primary-foreground", "text-micro");
+        expect(out).toContain("text-primary-foreground");
+        expect(out).toContain("text-micro");
+        expect(out).toContain("bg-primary");
+    });
+
+    it("Button-default variant + consumer text-micro (the §5.D-11 shape)", () => {
+        // Mirrors the cn() call inside Button.vue:
+        //   cn(buttonVariants({ variant: 'default' }), 'h-7 px-1 text-micro')
+        const variantClasses =
+            "bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80";
+        const consumerClasses = "h-7 px-1 text-micro";
+        const out = cn(variantClasses, consumerClasses);
+        expect(out).toContain("text-primary-foreground");
+        expect(out).toContain("text-micro");
+    });
+
+    it("text-display utilities don't shadow colour utilities either", () => {
+        const out = cn("text-foreground", "text-display");
+        expect(out).toContain("text-foreground");
+        expect(out).toContain("text-display");
+    });
+
+    it("text-body coexists with text-muted-foreground", () => {
+        const out = cn("text-muted-foreground", "text-body");
+        expect(out).toContain("text-muted-foreground");
+        expect(out).toContain("text-body");
+    });
+
+    it("two typography utilities still last-write-wins (text-micro → text-body)", () => {
+        // Same bucket (`font-size`); later token wins.
+        expect(cn("text-micro", "text-body")).toBe("text-body");
+    });
+
+    it("text-sm (standard tw font-size) still coexists with text-primary-foreground", () => {
+        // Regression of the original `font-size` rule — must not regress.
+        const out = cn("text-primary-foreground", "text-sm");
+        expect(out).toContain("text-primary-foreground");
+        expect(out).toContain("text-sm");
+    });
+
+    it("text-mono-caption (mono variant typography) coexists with colour", () => {
+        const out = cn("text-foreground/70", "text-mono-caption");
+        expect(out).toContain("text-foreground/70");
+        expect(out).toContain("text-mono-caption");
+    });
+});

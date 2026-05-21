@@ -44,6 +44,22 @@ const RULES: ReadonlyArray<readonly [string, RegExp]> = [
     // Font-size — listed BEFORE text-color so `text-sm` doesn't get
     // mis-bucketed as a colour.
     ["font-size", /^text-(xs|sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|8xl|9xl)$/],
+    // Glass-ui typography utilities (`text-micro`, `text-display*`,
+    // `text-title`, `text-hero`, `text-body`, `text-caption`,
+    // `text-mono-*`, etc. — see `styles/typography.css`). These are
+    // size/leading/font-family recipes, NOT colour utilities; bucketing
+    // them as `font-size` (separate from `text-color`) lets the colour
+    // utility from a `cva` variant (e.g. Button `default` →
+    // `text-primary-foreground`) coexist with a consumer's typography
+    // utility (`text-micro`) instead of shadowing it. This conflict-bucket
+    // fix is the publisher-side resolution for AJ.W3-η / A3 §5.D-11
+    // (dashboard map "DL" chip text invisibility — `text-micro` from
+    // the consumer was clobbering `text-primary-foreground` from the
+    // Button variant under the previous catch-all `text-color` bucket).
+    [
+        "font-size",
+        /^text-(micro|small|caption|body|prose|admin-label|heading|subheading|title|display|display-hero|display-mega|display-audacious|display-2|display-3|display-4|display-5|hero|math|math-body|mono-caption|mono-small|mono-prose|mono-micro)$/,
+    ],
     [
         "font-weight",
         /^font-(thin|extralight|light|normal|medium|semibold|bold|extrabold|black)$/,
@@ -53,7 +69,7 @@ const RULES: ReadonlyArray<readonly [string, RegExp]> = [
     ["text-align", /^text-(left|center|right|justify|start|end)$/],
     ["text-transform", /^(uppercase|lowercase|capitalize|normal-case)$/],
     ["text-decoration", /^(underline|overline|line-through|no-underline)$/],
-    ["text-color", /^text-/], // catch-all colour bucket; runs AFTER size/align
+    ["text-color", /^text-/], // catch-all colour bucket; runs AFTER size/align/typography
 
     // ── Spacing — padding ─────────────────────────────────────────
     ["padding-x", /^px-/],
