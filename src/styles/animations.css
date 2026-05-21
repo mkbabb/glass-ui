@@ -225,6 +225,38 @@
     }
 }
 
+/* ── Scrim breath: gentle opacity oscillation for portaled dialog scrims ──
+ *
+ * Canon keyframe for the `--scrim-animation: scrim-breath 6s ease-in-out
+ * infinite` shorthand that CellularWarningDialog (and any DialogContent
+ * consumer that opts in) writes onto the portaled overlay via
+ * `<ModalOverlay scrim-animation="…">`. The cascade rule below
+ * (`[data-scrim-animation]`) consumes the shorthand; this keyframe
+ * resolves the animation-name half of that shorthand.
+ *
+ * Amplitude is ~6% (0.92 → 0.98), slow enough to read as breath rather
+ * than throb. The var() fallbacks let a consumer retune the band
+ * (`--scrim-opacity-min` / `--scrim-opacity-max`) without re-declaring
+ * the keyframe. Duration + easing live in the shorthand the consumer
+ * writes — not here — so the rhythm stays composable.
+ *
+ * Reduced-motion fallback is double-gated: the cascade rule below sets
+ * `animation: none` under PRM (primary gate), AND the keyframe itself
+ * collapses to a flat opacity under PRM (defensive — protects future
+ * consumers that compose `scrim-breath` outside `[data-scrim-animation]`).
+ * Mirrors the `sparkle-sweep` PRM convention above.
+ */
+@keyframes scrim-breath {
+    0%, 100% { opacity: var(--scrim-opacity-min, 0.92); }
+    50%      { opacity: var(--scrim-opacity-max, 0.98); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    @keyframes scrim-breath {
+        0%, 100% { opacity: var(--scrim-opacity-min, 0.92); }
+    }
+}
+
 /* ── Scrim animation cascade (AJ-W4-δ) ─────────────────────────────────
  *
  * reka-ui's DialogPortal teleports the overlay outside the consumer's
