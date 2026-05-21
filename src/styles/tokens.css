@@ -1096,6 +1096,67 @@
     --metric-row-label-clamp-min: 1.125rem;
     --metric-row-label-clamp-cqi: 5cqi;
     --metric-row-label-clamp-max: 2.75rem;
+
+    /* ═══════════════════════════════════════════════
+       §2.D INSTRUMENT-CLUSTER COMPOSITION RHYTHM —
+       AK.W3 / FD1 TRANSPOSITION 5 absorb.
+
+       The under-meter progress bar nests INTO the dial's painted-disc
+       bound (FD2 §5.2) and any two stacked progress rails inside a
+       cluster share the same vertical rhythm token. Both tokens were
+       authored speedtest-local (`AJ.W3-α`, `AJ.W3-μ.3`) but the design
+       intent is library-canon: the instrument-chassis family owns the
+       under-meter / progress-cluster grammar, so the tokens absorb here
+       at AK.W3. Speedtest reads transitively through the canon.
+
+       • `--meter-progress-gap` — meter ↔ per-phase progress-bar gap for
+         the post-nest composition (kept for any pre-existing consumer
+         that still reads the BELOW-meter geometry).
+       • `--meter-progress-inset` — the negative-margin inset that pulls
+         the under-meter bar INTO the unpainted ring lane around the
+         dial canvas (~4% of meter-size, two-thirds of the way through
+         the lane). Consumed at `.phase-progress` with `margin-block-
+         start: calc(-1 * var(--meter-progress-inset))`.
+       • `--progress-stack-gap` — vertical rhythm between any two stacked
+         progress rails inside one cluster (the under-meter bar cluster
+         + the global PhaseTimeline siblinged at W3-β).
+
+       The `--meter-size` reference inside the inset clamp resolves
+       against the consumer's own `--meter-size` declaration; when no
+       consumer ships one (a non-speedtest demo of the chassis), the
+       inline fallback of 200px keeps the calc well-defined. */
+    --meter-progress-gap: clamp(0.125rem, 0.5cqi, 0.375rem);
+    --meter-progress-inset: calc(var(--meter-size, 200px) * 0.04);
+    --progress-stack-gap: clamp(0.375rem, 0.8cqi, 0.75rem);
+
+    /* ═══════════════════════════════════════════════
+       §2.E CELEBRATION-TIER REGISTER — AK.W3 / FD1
+       TRANSPOSITION 5 absorb.
+
+       The celebration cluster (speedtest "Complete!" headline,
+       ThankYou's "Thanks for taking the time" headline) is a SHARED
+       peak across multiple consumer surfaces. Before AK.W3 these
+       tokens were speedtest-local (`AJ.W3-μ.4`, W2-C headline-parity)
+       but the design intent is library-canon: any glass-ui consumer
+       composing a "completion" / "thank-you" surface should reach
+       for the same row-rhythm + headline-ceiling pair.
+
+       • `--celebration-row-rhythm` — gap between the celebration
+         cluster's rows (cqi-axis so the rhythm tracks the card's
+         intrinsic width).
+       • `--text-celebration-headline-size` — the SINGLE designed peak
+         both celebration surfaces clamp toward (the W2-C unification).
+         cqi-axis so the size tracks each card's intrinsic width.
+       • `--complete-headline-size` — the per-consumer FONT-SIZE HOOK
+         that `CompleteHeadline.vue` reads (`font-size:
+         var(--complete-headline-size, …)`). Each consumer assigns the
+         canon clamp (`--text-celebration-headline-size`) to this hook
+         at the container so the headline pegs at the shared peak.
+         The default falls back to a smaller hero-rung clamp for
+         consumers that haven't opted into the celebration ceiling. */
+    --celebration-row-rhythm: clamp(0.5rem, 1.6cqi, 1rem);
+    --text-celebration-headline-size: clamp(2.5rem, 12cqi, 9rem);
+    --complete-headline-size: clamp(2.25rem, 11cqi, 4rem);
 }
 
 /* ═══════════════════════════════════════════════
