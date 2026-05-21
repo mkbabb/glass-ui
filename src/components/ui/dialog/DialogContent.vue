@@ -17,13 +17,35 @@ const props = withDefaults(
     class?: HTMLAttributes['class'];
     /** Visual variant: "glass" (translucent blur, default) or "opaque" (solid background). */
     variant?: 'glass' | 'opaque';
+    /**
+     * Optional CSS `animation` shorthand forwarded to the portaled scrim
+     * via the `--scrim-animation` typed cascade variable. reka-ui's
+     * `DialogPortal` teleports the `DialogOverlay` outside the consumer's
+     * component subtree, so a scoped `--scrim-animation` declaration on a
+     * parent of `<Dialog>` never reaches the overlay — the publisher owns
+     * the bridge.
+     *
+     * Pass a complete `animation` shorthand (e.g. `"scrim-breath 6s
+     * ease-in-out infinite"`); the rule
+     * `[data-scrim-animation] { animation: var(--scrim-animation, none) }`
+     * in `animations.css` consumes it on the portaled overlay element.
+     * Composes with the default `animate="fade"` enter/exit (distinct
+     * selectors: `[data-state]` keys the fade, `[data-scrim-animation]`
+     * keys the breath — no cascade fight).
+     *
+     * Reduced-motion: the global `@media (prefers-reduced-motion: reduce)`
+     * bracket in `animations.css` retires the breath automatically.
+     *
+     * AJ-W4-δ.
+     */
+    scrimAnimation?: string;
   }>(),
   { variant: 'glass' },
 )
 const emits = defineEmits<DialogContentEmits>()
 
 const delegatedProps = computed(() => {
-  const { class: _, variant: _v, ...delegated } = props
+  const { class: _, variant: _v, scrimAnimation: _sa, ...delegated } = props
   return delegated
 })
 
@@ -43,7 +65,12 @@ const variantClasses = computed(() =>
 
 <template>
   <DialogPortal>
-    <ModalOverlay scrim="glass" animate="fade" layout="centered" />
+    <ModalOverlay
+      scrim="glass"
+      animate="fade"
+      layout="centered"
+      :scrim-animation="props.scrimAnimation"
+    />
     <DialogContent
       v-bind="forwarded"
       :class="cn(baseClasses, variantClasses, props.class)"

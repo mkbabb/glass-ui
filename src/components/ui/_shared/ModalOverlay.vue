@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from "vue";
+import { computed, type CSSProperties, type HTMLAttributes } from "vue";
 import { DialogOverlay } from "reka-ui";
 import { cn } from "../../../utils";
 
@@ -18,6 +18,16 @@ import { cn } from "../../../utils";
  *   per A5 §4.4 forward-reservation) | `scroll` (the DialogScrollContent
  *   pattern: grid place-items-center overflow-y-auto so content scrolls
  *   inside the scrim)
+ * - `scrimAnimation` (AJ-W4-δ): a CSS `animation` shorthand value forwarded
+ *   to the portaled overlay element via the typed `--scrim-animation`
+ *   cascade variable. Consumers that need a long-running scrim-breath
+ *   (e.g. CellularWarningDialog's slow opacity pulse) cannot reach the
+ *   portaled overlay through their scoped CSS — reka-ui's DialogPortal
+ *   teleports it outside the consumer's component subtree. The publisher
+ *   owns the bridge: the prop value lands as `--scrim-animation` on the
+ *   overlay's inline style, and the rule
+ *   `[data-scrim-animation] { animation: var(--scrim-animation, none) }`
+ *   in the canonical animations.css consumes it.
  *
  * Drawer / vaul-vue stays carved per A5 §4.4 — its transform-driven motion
  * conflicts with `.sheet-animate`'s data-state animation, and the
@@ -47,6 +57,24 @@ interface ModalOverlayProps {
      * future right/bottom edge-pinned overlays per A5 §4.4).
      */
     layout?: "centered" | "edge" | "scroll";
+    /**
+     * Optional CSS `animation` shorthand applied to the portaled overlay
+     * via the `--scrim-animation` typed cascade variable. Pairs with the
+     * `[data-scrim-animation] { animation: var(--scrim-animation, none) }`
+     * rule in `animations.css` so consumers can drive a long-running
+     * scrim-breath without owning the portal traversal. Composes with the
+     * `animate="fade"` data-state enter/exit (the fade rides
+     * `tw-animate-css` keyframes on `data-[state]`; the scrim-breath
+     * rides the typed variable on `data-scrim-animation` — distinct
+     * selectors, no cascade fight).
+     *
+     * Example: `scrimAnimation="scrim-breath 6s ease-in-out infinite"`
+     * — pairs with a `@keyframes scrim-breath` declared at the consumer
+     * (or in `animations.css` if the rhythm is canonical).
+     *
+     * AJ-W4-δ.
+     */
+    scrimAnimation?: string;
 }
 
 const props = withDefaults(defineProps<ModalOverlayProps>(), {
@@ -73,6 +101,19 @@ const layoutClass = {
     edge: "",
     scroll: "grid place-items-center overflow-y-auto",
 } as const;
+
+/**
+ * AJ-W4-δ — inject the typed `--scrim-animation` cascade variable so the
+ * canonical animations.css rule can consume it. We bypass the broken
+ * portal cascade by writing the variable directly to the overlay's inline
+ * style; the `data-scrim-animation` attribute keys the consuming rule so
+ * the variable does nothing unless the consumer opts in (no surprise
+ * animations on the default scrim).
+ */
+const scrimStyle = computed<CSSProperties | undefined>(() => {
+    if (!props.scrimAnimation) return undefined;
+    return { "--scrim-animation": props.scrimAnimation } as CSSProperties;
+});
 </script>
 
 <template>
@@ -86,6 +127,8 @@ const layoutClass = {
                 props.class,
             )
         "
+        :style="scrimStyle"
+        :data-scrim-animation="props.scrimAnimation ? '' : undefined"
     >
         <slot />
     </DialogOverlay>

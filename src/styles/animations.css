@@ -224,3 +224,43 @@
         opacity: var(--pulse-aura-opacity-max, 0.95);
     }
 }
+
+/* ── Scrim animation cascade (AJ-W4-δ) ─────────────────────────────────
+ *
+ * reka-ui's DialogPortal teleports the overlay outside the consumer's
+ * component subtree, so a consumer-side scoped `--scrim-animation`
+ * declaration on a parent of `<Dialog>` never reaches the portaled
+ * `<DialogOverlay>`. The publisher closes the gap: `<ModalOverlay
+ * scrim-animation="…">` writes the value to the typed `--scrim-animation`
+ * cascade variable on the overlay's inline style + tags the element with
+ * `data-scrim-animation`, and this rule consumes the variable.
+ *
+ * The rule lives in animations.css (global, not scoped) precisely because
+ * the portaled element sits outside any scoped-style boundary. The
+ * `data-scrim-animation` attribute selector is opt-in: only overlays that
+ * pass the prop receive an animation declaration, so the default scrim
+ * (which relies on `tw-animate-css`'s data-state fade) stays untouched.
+ *
+ * The two animation grammars compose cleanly:
+ *   - `[data-state]` keys the `tw-animate-css` enter/exit fade
+ *     (open → fade-in, closed → fade-out)
+ *   - `[data-scrim-animation]` keys this long-running scrim-breath
+ *     (independent rhythm, runs while the dialog is open)
+ *
+ * Distinct selectors → no cascade fight. The breath plays underneath the
+ * data-state fade because the latter wins via shorter-lived specificity
+ * during transitions; the former resumes once the data-state transition
+ * settles.
+ *
+ * Reduced-motion contract: PRM users retire the breath. The fallback
+ * resolves to `none` via the var() default + the @media block below.
+ */
+[data-scrim-animation] {
+    animation: var(--scrim-animation, none);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-scrim-animation] {
+        animation: none;
+    }
+}
