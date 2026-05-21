@@ -112,4 +112,34 @@ describe("MetricRow", () => {
         });
         expect(wrapper.text()).toContain("desc");
     });
+
+    it("accepts the `--metric-row-unit-color` knob to demote the unit color (AJ-W1-γ-pub)", () => {
+        // Consumer demotes the UNIT register to muted-foreground while the
+        // VALUE register stays bound to --phase-color. The knob cascades
+        // through MetricRow's inline `--phase-color` setter so a single
+        // tinted row can carry a saturated value + a neutral unit per
+        // DESIGN.md §1387-1389. Default behaviour (no knob set) keeps both
+        // VALUE + UNIT bound to --phase-color — verified by the prior
+        // tests above continuing to pass.
+        const wrapper = mount(MetricRow, {
+            props: {
+                value: "240",
+                unit: "Mbps",
+                phaseColor: "rgb(200, 31, 46)",
+                colorTinted: true,
+            },
+            attrs: {
+                style: "--metric-row-unit-color: rgb(115, 115, 115)",
+            },
+        });
+        const row = wrapper.get(".metric-row");
+        const style = row.attributes("style") || "";
+        // Both the phase-color setter (from the prop) and the
+        // consumer-supplied unit-color override land on the row root, so
+        // the cascade resolves the value cell at `--phase-color` and the
+        // unit cell at `--metric-row-unit-color`.
+        expect(style).toContain("--phase-color: rgb(200, 31, 46)");
+        expect(style).toContain("--metric-row-unit-color: rgb(115, 115, 115)");
+        expect(row.attributes("data-color-tinted")).toBe("true");
+    });
 });

@@ -247,9 +247,25 @@ const rowStyle = computed(() => ({
     white-space: nowrap;
 }
 
-.metric-row[data-color-tinted="true"] .metric-row__value,
+/* AJ-W1-γ-pub — split the VALUE / UNIT color cascade so consumers can
+   demote the unit register independently of the value register. The
+   default for both stays `var(--phase-color)` so existing single-rung
+   consumers (words/frontend metric cells, plus the prior speedtest
+   complete-state ResultStack) continue to read the unified colour —
+   ZERO breakage for any consumer that doesn't set the new knob.
+
+   Speedtest's W1-γ ResultStack consumer sets
+   `--metric-row-unit-color: var(--muted-foreground)` inline to restore
+   the canon UNIT rung (DESIGN.md §1387-1389 — LABEL desaturated, VALUE
+   saturated, UNIT muted-foreground italic). Future consumers that want
+   the analogous value-register override can opt into
+   `--metric-row-value-color` per the same cascade-variable contract. */
+.metric-row[data-color-tinted="true"] .metric-row__value {
+    color: var(--metric-row-value-color, var(--phase-color));
+}
+
 .metric-row[data-color-tinted="true"] .metric-row__unit {
-    color: var(--phase-color);
+    color: var(--metric-row-unit-color, var(--phase-color));
 }
 
 .metric-row__icon {
