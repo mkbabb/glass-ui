@@ -1,3 +1,26 @@
+/**
+ * Layout register for `<MetaballCanvas>`'s canvas root.
+ *
+ * `"viewport"` (default) — the canvas paints as a viewport-cover backdrop:
+ * `position: fixed; inset: 0; z-index: -10`. Use this for hero / storybook /
+ * standalone-page backdrops where the Metaballs surface IS the page substrate.
+ *
+ * `"local"` — the publisher drops the viewport-cover utility trio (`fixed`,
+ * `inset-0`, `-z-10`) so the canvas reads as a plain inline element sized via
+ * `inline-size: 100%; block-size: 100%`. The consumer owns `position`,
+ * `inset`, `z-index`, and any clipping (e.g. `border-radius: 50%`) via a
+ * scoped rule on a class merged onto the canvas root. Use this when the
+ * Metaballs is a LOCAL backdrop pinned behind a sibling element (a badge,
+ * a dial, a card region) — not a viewport-cover.
+ *
+ * The shader math already honestly handles arbitrary aspect ratios (the
+ * fragment shader applies `aspect = u_resolution.x / u_resolution.y`), so
+ * the new register is purely a CSS positioning concern — no shader edits.
+ *
+ * AJ-W1-β.
+ */
+export type MetaballPositioning = "viewport" | "local";
+
 export interface MetaballConfig {
     /** Number of blobs (default 8, max 16 for shader uniform limit) */
     blobCount?: number;

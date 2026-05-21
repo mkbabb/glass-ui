@@ -1,17 +1,58 @@
 <script setup lang="ts">
-import { readonly, ref } from "vue";
+import { computed, readonly, ref } from "vue";
 import { useMetaballs } from "./useMetaballs";
-import type { MetaballConfig } from "./types";
+import type { MetaballConfig, MetaballPositioning } from "./types";
 
-const props = defineProps<{
-    config?: MetaballConfig;
-}>();
+const props = withDefaults(
+    defineProps<{
+        config?: MetaballConfig;
+        /**
+         * Layout register for the canvas root.
+         *
+         * `"viewport"` (default) — the canvas paints as a viewport-cover
+         * backdrop: `position: fixed; inset: 0; z-index: -10`. Use this for
+         * hero / storybook / standalone-page backdrops where the Metaballs
+         * surface IS the page substrate.
+         *
+         * `"local"` — the publisher drops the viewport-cover utility trio
+         * (`fixed`, `inset-0`, `-z-10`); the canvas reads as a plain inline
+         * element sized via `inline-size: 100%; block-size: 100%`. The
+         * consumer owns `position`, `inset`, `z-index`, and any clipping
+         * (e.g. `border-radius: 50%`) via a scoped rule on a class merged
+         * onto the canvas root. Use this when the Metaballs is a LOCAL
+         * backdrop pinned behind a sibling element (a badge, a dial, a card
+         * region) — not a viewport-cover.
+         *
+         * AJ-W1-β.
+         */
+        positioning?: MetaballPositioning;
+    }>(),
+    {
+        positioning: "viewport",
+    },
+);
 
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 const { isSupported, isReducedMotion, isReducedTransparency } = useMetaballs(
     canvasRef,
     props.config,
 );
+
+/**
+ * AJ-W1-β — class-binding swaps the viewport-cover trio on/off based on the
+ * `positioning` register. The `pointer-events-none h-full w-full` base stays
+ * in BOTH modes — those utilities encode that the canvas is decorative
+ * substrate (not pointer-interactive) and fills its container (the layout
+ * slot the consumer provides). The `fixed inset-0 -z-10` trio is the
+ * viewport-cover register that the `"local"` mode retires so the consumer's
+ * scoped CSS becomes the sole source of layout truth (no cascade fight).
+ */
+const canvasClasses = computed(() => {
+    const base = "pointer-events-none h-full w-full";
+    return props.positioning === "viewport"
+        ? `${base} fixed inset-0 -z-10`
+        : base;
+});
 
 /**
  * # M.W2 Lane A (F-ε-3 fix) — break the consumer-side mount/unmount cycle
@@ -61,7 +102,7 @@ defineExpose({
     <canvas
         v-if="isSupported"
         ref="canvasRef"
-        class="pointer-events-none fixed inset-0 -z-10 h-full w-full"
+        :class="canvasClasses"
     />
     <slot v-else name="fallback" />
 </template>

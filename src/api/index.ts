@@ -137,7 +137,14 @@ export type {
 
 // ── Metaballs ──────────────────────────────────────────────────────────────
 // Substrate config + default — parallel pattern to Aurora.
-export type { MetaballConfig } from "../components/custom/metaballs";
+// AJ-W1-β — `MetaballPositioning` literal-union surfaces the canvas-root
+// layout register (`"viewport"` viewport-cover backdrop vs `"local"`
+// consumer-owned positioning) so consumer wrappers can type the prop
+// without reaching into the deep import path.
+export type {
+    MetaballConfig,
+    MetaballPositioning,
+} from "../components/custom/metaballs";
 export { DEFAULT_METABALL_CONFIG } from "../components/custom/metaballs";
 
 // ── Timeline ───────────────────────────────────────────────────────────────
