@@ -8,8 +8,11 @@
 //   - useViewportReady — two-stage IntersectionObserver + requestIdleCallback
 //                        gate for lazy-mount of heavy widgets (AJ.W6-α; speedtest
 //                        useChartReady promotion).
+//   - useBreakpoint    — reactive `matchMedia` wrapper (AJ.W6-β; speedtest
+//                        useBreakpoint promotion).
 export * from "./useResizeObserver";
 export * from "./useTouchGate";
 export * from "./useTokenColor";
 export * from "./useClipboard";
 export * from "./useViewportReady";
+export * from "./useBreakpoint";
