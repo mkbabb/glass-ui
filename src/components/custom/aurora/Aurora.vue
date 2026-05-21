@@ -28,12 +28,45 @@ import type { AuroraConfig } from "./presets";
  * 24): synchronously on the eager path, on the microtask queue on the
  * deferred path. Pass `onInitError` to handle the error and leave the canvas
  * unmounted instead — the canonical opt-in path back to silent fallback.
+ *
+ * `opacityCeiling` (A3 §6.R-9, G-AK-D11) is the outer compositing envelope:
+ * `1.0` (default) for hero surfaces, `~0.5` for quiet content-over-aurora
+ * routes where form/text density would otherwise compete with the drift.
+ * It applies uniformly to the placeholder and the canvas so the cross-fade
+ * rides under the clamped ceiling and the shader's per-pixel `alpha`
+ * remains an orthogonal authoring concern.
  */
-const props = defineProps<{
-    config: AuroraConfig;
-    runtimeOptions?: AuroraRuntimeOptions;
-    onInitError?: (err: Error) => void;
-}>();
+const props = withDefaults(
+    defineProps<{
+        config: AuroraConfig;
+        runtimeOptions?: AuroraRuntimeOptions;
+        onInitError?: (err: Error) => void;
+        /**
+         * Per-route aurora saturation clamp (A3 §6.R-9 / G-AK-D11).
+         *
+         * The shader's `alpha` config field is per-pixel pigment opacity inside
+         * the painted image. `opacityCeiling` is the *outer envelope* — the
+         * maximum compositing opacity the aurora surface (placeholder +
+         * canvas) is allowed to reach against page content. It applies
+         * uniformly to both layers via the `--aurora-opacity-ceiling` custom
+         * property so the cross-fade preserves the clamped ceiling.
+         *
+         * Defaults to `1.0` (the dial route — full brand register). Quiet
+         * content-over-aurora routes (survey, thankyou, admin-login) opt in
+         * to `0.5` so the drift recedes behind form/text density. Clamped to
+         * `[0, 1]` defensively.
+         */
+        opacityCeiling?: number;
+    }>(),
+    { opacityCeiling: 1 },
+);
+
+// Clamp defensively — out-of-range values would otherwise leak straight
+// into the CSS custom property and either invert (negative) or over-
+// composite (>1). The clamp keeps the contract honest at the boundary.
+const clampedOpacityCeiling = computed(() =>
+    Math.max(0, Math.min(1, props.opacityCeiling)),
+);
 
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 // Top-level `onInitError` prop wins over `runtimeOptions.onInitError` —
@@ -76,7 +109,10 @@ defineExpose({
       class (`fixed inset-0`, etc.) lands on this root unobstructed — no
       `relative`/`fixed` collision.
     -->
-    <div class="aurora-root block h-full w-full overflow-hidden">
+    <div
+        class="aurora-root block h-full w-full overflow-hidden"
+        :style="{ '--aurora-opacity-ceiling': clampedOpacityCeiling }"
+    >
         <!--
           Static gradient placeholder — the cheap first frame. Sits under the
           canvas; remains as the WebGL2-unavailable fallback (HA4 §1.5).
@@ -111,13 +147,21 @@ defineExpose({
     grid-area: 1 / 1;
 }
 
+/* Per-route saturation clamp (A3 §6.R-9). The ceiling applies uniformly to
+   placeholder and canvas so the cross-fade rides under the same envelope
+   and pre-armed first frames don't violate the clamp. Defaults to 1 when
+   the custom property is unset (consumer that never reads the prop). */
+.aurora-root > .aurora-placeholder {
+    opacity: var(--aurora-opacity-ceiling, 1);
+}
+
 .aurora-canvas {
     opacity: 0;
     transition: opacity 600ms ease-out;
 }
 
 .aurora-canvas--armed {
-    opacity: 1;
+    opacity: var(--aurora-opacity-ceiling, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
