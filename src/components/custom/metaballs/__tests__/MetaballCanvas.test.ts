@@ -1,6 +1,6 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it, vi } from "vitest";
-import { ref } from "vue";
+import { nextTick, ref, type Ref } from "vue";
 
 import type { MetaballPositioning } from "../types";
 
@@ -19,13 +19,30 @@ import type { MetaballPositioning } from "../types";
  * element for class-string assertions. The composable's runtime mechanics
  * (shader compile, RAF loop) are exercised by the configurator-recursion
  * spec; this suite is scoped to the publisher prop contract.
+ *
+ * AJ-W4-γ — the mock exposes a writable `isRetired` ref + records the
+ * `onRetire` callback so the duration-prop test can simulate the envelope
+ * completion declaratively (without spinning a real rAF loop).
  */
+let mockIsRetired: Ref<boolean>;
+let lastOnRetire: (() => void) | undefined;
+let lastDuration: number | null | undefined;
+
 vi.mock("../useMetaballs", () => ({
-    useMetaballs: () => ({
-        isSupported: ref(true),
-        isReducedMotion: ref(false),
-        isReducedTransparency: ref(false),
-    }),
+    useMetaballs: (_canvasRef: unknown, _config: unknown, options?: {
+        duration?: number | null;
+        onRetire?: () => void;
+    }) => {
+        mockIsRetired = ref(false);
+        lastOnRetire = options?.onRetire;
+        lastDuration = options?.duration ?? null;
+        return {
+            isSupported: ref(true),
+            isReducedMotion: ref(false),
+            isReducedTransparency: ref(false),
+            isRetired: mockIsRetired,
+        };
+    },
     isWebGLSupported: () => true,
 }));
 
@@ -102,5 +119,62 @@ describe("MetaballCanvas positioning prop (AJ-W1-β)", () => {
 
         expect(w1.get("canvas").classes()).toContain("fixed");
         expect(w2.get("canvas").classes()).not.toContain("fixed");
+    });
+});
+
+describe("MetaballCanvas duration prop (AJ-W4-γ)", () => {
+    it("defaults `:duration` to null — composable receives a null envelope (ambient backdrop semantics)", () => {
+        mount(MetaballCanvas);
+        expect(lastDuration).toBeNull();
+    });
+
+    it("forwards `:duration` to the composable so the envelope clock arms inside the rAF loop", () => {
+        mount(MetaballCanvas, { props: { duration: 3000 } });
+        expect(lastDuration).toBe(3000);
+    });
+
+    it("renders the canvas while `isRetired` is false", () => {
+        const wrapper = mount(MetaballCanvas, { props: { duration: 3000 } });
+        expect(wrapper.find("canvas").exists()).toBe(true);
+    });
+
+    it("unmounts the `<canvas>` element when the envelope flips `isRetired` true", async () => {
+        const wrapper = mount(MetaballCanvas, { props: { duration: 3000 } });
+        expect(wrapper.find("canvas").exists()).toBe(true);
+
+        // Simulate the envelope completion — the composable would flip
+        // `isRetired` from inside its rAF loop; here we drive it directly.
+        mockIsRetired.value = true;
+        await nextTick();
+
+        expect(wrapper.find("canvas").exists()).toBe(false);
+    });
+
+    it("emits `retire` when the composable's `onRetire` callback fires", async () => {
+        const wrapper = mount(MetaballCanvas, { props: { duration: 3000 } });
+        expect(wrapper.emitted("retire")).toBeUndefined();
+
+        // The SFC bridges the composable's `onRetire` callback into a
+        // single `emit("retire")` — invoking the captured callback
+        // exercises the wire without needing a real rAF tick.
+        lastOnRetire?.();
+        await nextTick();
+
+        expect(wrapper.emitted("retire")).toBeDefined();
+        expect(wrapper.emitted("retire")).toHaveLength(1);
+    });
+
+    it("renders the fallback slot once retired so consumers can paint a calm end-state", async () => {
+        const wrapper = mount(MetaballCanvas, {
+            props: { duration: 3000 },
+            slots: { fallback: '<div class="bloom-aftermath">retired</div>' },
+        });
+        expect(wrapper.find(".bloom-aftermath").exists()).toBe(false);
+
+        mockIsRetired.value = true;
+        await nextTick();
+
+        expect(wrapper.find("canvas").exists()).toBe(false);
+        expect(wrapper.find(".bloom-aftermath").exists()).toBe(true);
     });
 });

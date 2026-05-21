@@ -26,16 +26,70 @@ const props = withDefaults(
          * AJ-W1-β.
          */
         positioning?: MetaballPositioning;
+        /**
+         * Auto-retire envelope in milliseconds. When set (a finite, non-null
+         * positive number), the canvas measures elapsed time inside the
+         * existing `requestAnimationFrame` render loop and self-destructs
+         * once the envelope fires: the GL resources dispose, the loop
+         * halts, the `<canvas>` element unmounts via the internal
+         * `!isRetired` guard, and the SFC emits `retire`.
+         *
+         * Default `null` — the loop runs indefinitely until unmount (the
+         * canonical "ambient backdrop" semantics).
+         *
+         * The envelope retires the consumer-side `setTimeout` pattern that
+         * predates this prop:
+         *
+         *     const bloomActive = ref(false);
+         *     let timer = setTimeout(() => { bloomActive = false; }, 3000);
+         *     <MetaballCanvas v-if="bloomActive" :config="…" />
+         *
+         * is now:
+         *
+         *     <MetaballCanvas v-if="shown" :duration="3000"
+         *         :config="…" @retire="shown = false" />
+         *
+         * — declarative envelope, no consumer-side timer. The retirement
+         * is irreversible inside a single mount instance; a re-armable
+         * bloom toggles the parent `v-if` to remount the canvas.
+         *
+         * Precept 10 honesty: the elapsed check rides the rAF loop (no
+         * `setTimeout`); reduced-motion users still see the envelope
+         * complete in wall-clock time (the freeze affects orbit phase,
+         * not the retirement clock).
+         *
+         * AJ-W4-γ.
+         */
+        duration?: number | null;
     }>(),
     {
         positioning: "viewport",
+        duration: null,
     },
 );
 
+const emit = defineEmits<{
+    /**
+     * Fired exactly once when the `:duration` auto-retire envelope completes.
+     * Parents bridge this into a `v-if` flag (e.g. `@retire="shown = false"`)
+     * so the mount/unmount cycle closes without owning a duplicate timer.
+     * The event does NOT fire on unmount-driven dispose (only on the
+     * envelope completion) — that boundary keeps the parent's `v-if`
+     * unaffected if the consumer retracts the canvas before duration elapses.
+     *
+     * AJ-W4-γ.
+     */
+    (event: "retire"): void;
+}>();
+
 const canvasRef = ref<HTMLCanvasElement | null>(null);
-const { isSupported, isReducedMotion, isReducedTransparency } = useMetaballs(
+const { isSupported, isReducedMotion, isReducedTransparency, isRetired } = useMetaballs(
     canvasRef,
     props.config,
+    {
+        duration: props.duration,
+        onRetire: () => emit("retire"),
+    },
 );
 
 /**
@@ -99,8 +153,15 @@ defineExpose({
 </script>
 
 <template>
+    <!-- AJ-W4-γ — the `!isRetired` guard unmounts the `<canvas>` once the
+         auto-retire envelope fires, releasing the WebGL context with the
+         element. The `<slot name="fallback">` paths under the unsupported
+         and retired branches keep the slot contract honest for both
+         degradations (no WebGL OR retired-by-duration) — though typical
+         duration-driven consumers leave the fallback slot empty so the
+         space simply reclaims on retire. -->
     <canvas
-        v-if="isSupported"
+        v-if="isSupported && !isRetired"
         ref="canvasRef"
         :class="canvasClasses"
     />

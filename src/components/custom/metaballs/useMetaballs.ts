@@ -114,6 +114,41 @@ export function isWebGLSupported(): boolean {
 }
 
 /**
+ * Options for `useMetaballs` — keyword bag separated from the positional
+ * `config` so the composable stays additive across releases. Callers that
+ * don't need lifecycle envelopes can omit the argument entirely.
+ *
+ * AJ-W4-γ.
+ */
+export interface UseMetaballsOptions {
+    /**
+     * Auto-retire envelope. When provided, the composable measures elapsed
+     * time inside the existing `requestAnimationFrame` render loop (NOT a
+     * `setTimeout` — precept 10 binds motion idioms to rAF / CSS keyframes
+     * / keyframes.js timing), and once `(now - startTime) >= duration`,
+     * disposes the GL resources, halts the loop, flips `isRetired.value =
+     * true`, and invokes `onRetire?.()` exactly once. `null` (the default)
+     * keeps the loop running indefinitely until `dispose()` fires on
+     * unmount — the canonical "ambient backdrop" semantics.
+     *
+     * The retirement is irreversible inside a single composable instance.
+     * Consumers that want a re-armable bloom should toggle a parent `v-if`
+     * (the SFC remount path re-invokes `useMetaballs`, re-arming the
+     * envelope). The MetaballCanvas SFC emits a `retire` event when the
+     * envelope fires so a parent `v-model:shown` or `v-if` watcher can
+     * complete the mount/unmount cycle without owning a duplicate timer.
+     */
+    duration?: number | null;
+    /**
+     * Fired exactly once when the auto-retire envelope reaches `duration`.
+     * Idempotent at the composable layer — `dispose()` clears the loop
+     * before any second invocation could fire. Use this to bridge into the
+     * SFC's `emit("retire")` so parents can drop their `v-if` flag.
+     */
+    onRetire?: () => void;
+}
+
+/**
  * WebGL metaball composable.
  *
  * Uses uniform3fv with pre-allocated Float32Arrays for zero-allocation
@@ -122,6 +157,7 @@ export function isWebGLSupported(): boolean {
 export function useMetaballs(
     canvasRef: Ref<HTMLCanvasElement | null> | ShallowRef<HTMLCanvasElement | null>,
     config?: MetaballConfig,
+    options?: UseMetaballsOptions,
 ) {
     // Use passed reactive directly if available, otherwise create new
     const cfg = (config && isReactive(config))
@@ -130,6 +166,16 @@ export function useMetaballs(
     // Seed isSupported synchronously from a throwaway-canvas probe — sidesteps
     // the SSR / pre-mount fault where a real canvas isn't yet on the document.
     const isSupported = ref(isWebGLSupported());
+
+    // AJ-W4-γ — auto-retire envelope. `isRetired` flips true exactly once
+    // when the duration envelope completes inside the render loop. The
+    // MetaballCanvas SFC unmounts the `<canvas>` element via `v-if` when
+    // `isRetired` is true, so the GPU pipeline frees and the WebGL context
+    // tears down with the element. Parents may bridge through the SFC's
+    // `retire` event to complete their own `v-if` flag.
+    const isRetired = ref(false);
+    const duration = options?.duration ?? null;
+    const onRetire = options?.onRetire;
 
     let gl: WebGLRenderingContext | null = null;
     let program: WebGLProgram | null = null;
@@ -298,6 +344,21 @@ export function useMetaballs(
 
     function render(now: number) {
         if (!gl || !program) return;
+        // AJ-W4-γ — auto-retire envelope. The elapsed-time check runs inside
+        // the existing rAF loop (zero additional timers), so the retirement
+        // is honestly frame-aligned. PRM short-circuits to elapsed=0 above
+        // (the `effectiveNow = startTime` freeze) — under reduced motion the
+        // envelope still completes in wall-clock time because the elapsed
+        // check uses the rAF-supplied `now`, not the motion-frozen
+        // `effectiveNow`. This is intentional: PRM users still want the
+        // bloom to retire (no permanent canvas residence) — they just don't
+        // want the blobs orbiting during the dwell window.
+        if (duration !== null && now - startTime >= duration && !isRetired.value) {
+            isRetired.value = true;
+            dispose();
+            onRetire?.();
+            return;
+        }
         // Reduced-motion: freeze the time cursor at startTime so the blobs
         // hold a single deterministic frame instead of orbiting. The render
         // loop continues so live config edits (slider drags) still re-paint,
@@ -369,5 +430,5 @@ export function useMetaballs(
     onBeforeUnmount(dispose);
     watch(canvasRef, (el) => { if (el) { dispose(); init(); } });
 
-    return { isSupported, isReducedMotion, isReducedTransparency };
+    return { isSupported, isReducedMotion, isReducedTransparency, isRetired };
 }
