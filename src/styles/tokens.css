@@ -79,6 +79,21 @@
        headline and the thank-you headline stay in lockstep. */
     --motion-duration-complete-shimmer: 2.4s;
     --motion-delay-complete-shimmer: 220ms;
+    /* AJ.W2-ζ canon checkpoint — the gold-headline shimmer at
+       CompleteHeadline + ThankYou reads these two tokens under a
+       one-shot CSS animation. The gradient (background-size: 240% 100%
+       with --color-gold-light at 46%), the @keyframes
+       (gold-headline-shimmer: background-position 120% 0 → -120% 0),
+       and the animation declaration are mutually consistent: at 2.4s
+       duration + 220ms delay the bright band traverses the headline
+       glyphs cleanly. A regression that drops either token to 0ms /
+       unset / 0 would silently collapse the celebratory shimmer to an
+       imperceptible blow-through (live regression P1-12 surfaced this
+       risk; investigation closed at the publisher as a verify — both
+       values resolve correctly today). These two values are LOAD-
+       BEARING. Do not retire / zero / un-publish without an explicit
+       decision + companion consumer-side migration at speedtest's
+       CompleteHeadline.vue + ThankYou.vue. */
 
     /* CompleteBadge staged-reveal cluster — the disc / ring / check curve
        fires at three asymmetric durations + delays per the A4-AF staged-
