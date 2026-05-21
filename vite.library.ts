@@ -55,6 +55,35 @@ export function libraryEntries(rootDir: string) {
         // so consumers opt into it explicitly and bundlers shake it from
         // unrelated entry chunks. Closes AI-CARRY-GLASS-UI-KEYFRAMES-EDGE.
         motion: resolve(rootDir, "src/motion.ts"),
+        // AK.W3 — per-family sub-barrel entries for the `ui/` primitive families
+        // already re-exported from the root barrel. The flat-name subpath lets a
+        // consumer opt INTO precisely the families it uses (e.g. `Button`,
+        // `Dialog`), so bundlers shake every other primitive's transitive graph
+        // out of the entry chunk. Pattern: each `src/<family>.ts` is a single-
+        // line `export * from "./components/ui/<family>"` mirror. Closes
+        // AJ-CARRY-GLASS-UI-SUB-BARREL-PUBLISHING. Per AK-A7 §2.4 W3 + A1 §3.3.4.
+        button: resolve(rootDir, "src/button.ts"),
+        card: resolve(rootDir, "src/card.ts"),
+        dialog: resolve(rootDir, "src/dialog.ts"),
+        sheet: resolve(rootDir, "src/sheet.ts"),
+        badge: resolve(rootDir, "src/badge.ts"),
+        separator: resolve(rootDir, "src/separator.ts"),
+        label: resolve(rootDir, "src/label.ts"),
+        slider: resolve(rootDir, "src/slider.ts"),
+        collapsible: resolve(rootDir, "src/collapsible.ts"),
+        progress: resolve(rootDir, "src/progress.ts"),
+        "toggle-group": resolve(rootDir, "src/toggle-group.ts"),
+        "hover-card": resolve(rootDir, "src/hover-card.ts"),
+        tooltip: resolve(rootDir, "src/tooltip.ts"),
+        toast: resolve(rootDir, "src/toast.ts"),
+        notification: resolve(rootDir, "src/notification.ts"),
+        // AK.W3 — composable sub-barrels. `reactive` (useInterval + useTimer)
+        // and `dom` (useResizeObserver + useTouchGate + useTokenColor +
+        // useBreakpoint + useClipboard + useViewportReady) are already re-
+        // exported from the root barrel as part of the vueuse-free curated
+        // surface; the flat subpath lets a consumer reach just that subtree.
+        reactive: resolve(rootDir, "src/reactive.ts"),
+        dom: resolve(rootDir, "src/dom.ts"),
     };
 }
 
