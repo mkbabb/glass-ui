@@ -132,6 +132,8 @@ export interface AuroraInstance {
 
 `createAurora(canvas, config, options?): AuroraInstance` is the imperative core. Live runtimes default to `{ preserveDrawingBuffer: false }`; capture runtimes pass `{ mode: "capture" }` or an explicit `preserveDrawingBuffer` override. `useAurora(ref, config, options?)` is the Vue wrapper that watches config deeply and updates uniforms on change.
 
+The `<Aurora>` SFC also accepts a `:opacity-ceiling` prop (`number`, default `1.0`, clamped `[0, 1]`) — the *outer compositing envelope* applied uniformly to the placeholder and the canvas via `--aurora-opacity-ceiling`. Distinct from `config.alpha` (per-pixel pigment opacity inside the shader): the ceiling is a per-route saturation clamp for content-over-aurora surfaces (forms, text-dense panels) so the drift recedes behind page content without altering the painted image. Hero surfaces stay at `1.0`; quiet routes opt in to `0.5` or thereabouts.
+
 Per memory rule "Presets in consumers": the 11 authored themes (Sky, Dawn, Meadow, Deliberative, Day9, Oil Impasto, Oil Gestural, Oil Van Gogh, Crayon Sunset, Crayon Rainbow, Crayon Ocean) live at `demo/stories/aurora/presets.ts`, not here.
 
 ## 6. Spec deltas (v4 → v4.1)
@@ -141,6 +143,7 @@ Per memory rule "Presets in consumers": the 11 authored themes (Sky, Dawn, Meado
 - **Δ03 Cursor API** — `setCursor(x, y, strength)` / `clearCursor()` / `setCursorRadius(r)`. Palette zones DO rotate near cursor despite the draft invariant saying otherwise; this is a deliberate reversal driven by reference-image fidelity.
 - **Δ04 `strokeMode` under `medium: "oil"`** — `oil` default (balanced bristle), `knife` (razor edges, flat, heavy impasto), `crayon` (anisotropic tooth noise multiplied into base, NOT stroke-based), `chunky` (thick gestural bristle).
 - **Δ05 live/capture runtime modes** — live canvases avoid capture-only drawing-buffer preservation; capture and thumbnail bakes opt into it explicitly and use `renderAt()` as a draw-only call.
+- **Δ06 `opacity-ceiling` prop (A3 §6.R-9 / G-AK-D11)** — per-route outer compositing clamp. The drift overwhelms form/text density at full saturation on quiet content-over-aurora routes (survey, thankyou, admin-login); consumers opt these routes in to `0.5` while hero surfaces stay at the `1.0` default. Bound as `--aurora-opacity-ceiling` on the root and consumed by both the placeholder and the armed-canvas opacity, so the cross-fade and the pre-armed paint ride under the same envelope. Distinct from `config.alpha`, which gates per-pixel pigment opacity inside the shader.
 
 ## 7. Load-bearing implementation notes
 
