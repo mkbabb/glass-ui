@@ -315,9 +315,13 @@ const effectiveModelValue = computed(() =>
      `color-mix` and shifts toward `hsl(0 0% 100%)`. Reads as "the
      metric is closing in on the peak".
 
-   • Discharge flash — at 100% the indicator runs a one-shot 240ms
-     brightness/saturation flash. Reads as "the metric arrived; the
-     fill discharges its potential". Single keyframe; no loop.
+   • Discharge glow — at 100% the indicator's leading edge brightens
+     toward 95% white via a localized inset box-shadow that decays
+     back to rest over 220-240ms. Reads as "the metric arrived; the
+     metric-front celebrates" — a localized celebratory discharge at
+     the leading edge under reka's `translateX(-N%)` transform, not a
+     global brightness pass on the whole bar (AJ.W2-ε; FD2 §3.1
+     proposal 1). Single keyframe; no loop.
 
    • Indeterminate sweep — when `[data-indeterminate]` is set, the rail
      hosts a 4s left-to-right gradient pan; the indicator hides via the
@@ -331,12 +335,12 @@ const effectiveModelValue = computed(() =>
 }
 
 .progress-gradient-rail[data-lifecycle="complete"] [data-state="complete"] {
-    /* Discharge flash targets the indicator. The indicator carries
+    /* Discharge glow targets the indicator. The indicator carries
        reka's `data-state="complete"` when modelValue hits max; the
        parent rail's `data-lifecycle="complete"` gates the rule so a
        sibling indeterminate sweep cannot accidentally trigger the
-       flash. */
-    animation: progress-discharge-flash var(--motion-duration-progress-crescendo, 240ms)
+       glow. */
+    animation: progress-discharge-glow var(--motion-duration-progress-crescendo, 240ms)
         var(--motion-ease-standard, ease-out) 1;
 }
 
@@ -383,15 +387,37 @@ const effectiveModelValue = computed(() =>
 }
 
 @keyframes progress-intake-pulse {
-    0%   { background-color: color-mix(in srgb, var(--progress-track, var(--secondary)) 60%, transparent); }
-    50%  { background-color: var(--progress-track, var(--secondary)); }
-    100% { background-color: color-mix(in srgb, var(--progress-track, var(--secondary)) 85%, transparent); }
+    /* AJ.W2-ε refinement — opacity modulation, NOT background-color
+       modulation. The rail's resting background carries the
+       --progress-track color at chassis-glass register; pulsing the
+       opacity 0.6→1.0→0.85 reads as a visible breathing-pulse on
+       the translucent rail, whereas the prior color-mix modulation
+       read as a subtle hue-shift (FD1 §6.6; FD2 §3.1 proposal 1). */
+    0%   { opacity: 0.6; }
+    50%  { opacity: 1.0; }
+    100% { opacity: 0.85; }
 }
 
-@keyframes progress-discharge-flash {
-    0%   { filter: brightness(1) saturate(1); }
-    40%  { filter: brightness(1.25) saturate(1.15); }
-    100% { filter: brightness(1) saturate(1); }
+@keyframes progress-discharge-glow {
+    /* AJ.W2-ε refinement — leading-edge glow, NOT global filter pass.
+       The indicator paints a localized `box-shadow` glow on the right
+       edge (the metric-front under the translateX(-N%) reka
+       transform) that brightens toward 95% white then decays. Reads
+       as "the metric ARRIVED" — a celebratory localized discharge —
+       rather than the prior global brightness flash (FD1 §6.6; FD2
+       §3.1 proposal 1). */
+    0% {
+        box-shadow: inset -0.25rem 0 0.5rem -0.125rem
+            color-mix(in srgb, hsl(0 0% 100%) 0%, transparent);
+    }
+    40% {
+        box-shadow: inset -0.25rem 0 0.75rem -0.125rem
+            color-mix(in srgb, hsl(0 0% 100%) 95%, transparent);
+    }
+    100% {
+        box-shadow: inset -0.25rem 0 0.5rem -0.125rem
+            color-mix(in srgb, hsl(0 0% 100%) 0%, transparent);
+    }
 }
 
 @keyframes progress-indeterminate-sweep {
