@@ -131,6 +131,7 @@ export * from "./components/ui/tooltip";
 
 // Custom composites — instrument-cluster chassis
 export * from "./components/custom/instrument-chassis";
+export * from "./components/custom/instrument-rail";
 export * from "./components/custom/glyph-face";
 export * from "./components/custom/disco-glyph";
 export * from "./components/custom/hover-popover";

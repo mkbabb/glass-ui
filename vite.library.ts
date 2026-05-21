@@ -32,6 +32,7 @@ export function libraryEntries(rootDir: string) {
         "expandable-container": resolve(rootDir, "src/expandable-container.ts"),
         "icon-tooltip": resolve(rootDir, "src/icon-tooltip.ts"),
         "instrument-chassis": resolve(rootDir, "src/instrument-chassis.ts"),
+        "instrument-rail": resolve(rootDir, "src/instrument-rail.ts"),
         "glyph-face": resolve(rootDir, "src/glyph-face.ts"),
         "disco-glyph": resolve(rootDir, "src/disco-glyph.ts"),
         "hover-popover": resolve(rootDir, "src/hover-popover.ts"),

@@ -52,9 +52,13 @@
  *  12. instrument-chassis.css — P-tranche component CSS (chassis bezel +
  *                              groove dividers). Loaded after utilities so
  *                              component-local recipes can override.
- *  13. glyph-face.css        — P-tranche component CSS (cap + backplate).
- *  14. disco-glyph.css       — P-tranche component CSS (layered fills).
- *  15. hover-popover.css     — V.W3 popover-animation grammar.
+ *  13. instrument-rail.css   — AK-W2-α cockpit-ratio rail (flex-basis 1/φ²
+ *                              binding + bezel hairlines + sibling divider
+ *                              rule). Composes alongside instrument-chassis;
+ *                              shares the bezel-line twin-pixel idiom.
+ *  14. glyph-face.css        — P-tranche component CSS (cap + backplate).
+ *  15. disco-glyph.css       — P-tranche component CSS (layered fills).
+ *  16. hover-popover.css     — V.W3 popover-animation grammar.
  *
  * Per-package component CSS lives at (12)-(16) (loaded after utilities so
  * component-local recipes can override). New per-package CSS files append
@@ -72,6 +76,7 @@
 @import "./animations.css";
 @import "./utilities.css";
 @import "./instrument-chassis.css";
+@import "./instrument-rail.css";
 @import "./glyph-face.css";
 @import "./disco-glyph.css";
 @import "./hover-popover.css";
