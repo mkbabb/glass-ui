@@ -15,15 +15,17 @@
 // Asymmetry note (the latent oversight this subpath retires): the L.W1 Lane C
 // closure curated the vueuse-bearing surface into its own subpath but left the
 // keyframes-bearing surface on the root barrel. The motion sub-tree's barrel
-// (`composables/motion/index.ts`) re-exports `useSpringOrchestrator`,
-// `useAnimatedNumber`, `useAnimatedNumberMap`, `useStagger`, `useStaggerReveal`,
-// `useScrollProgress`, `useRAFLoop`, `useIntersectionPause`, `installDarkModeSync`
-// + `constants` (DAMPING, SNAP_THRESHOLD, RAFLoopTiming type, etc.). Only
-// `useSpringOrchestrator` + `useAnimatedNumber` (and `useAnimatedNumberMap` via
-// `useAnimatedNumber`) actually import from `@mkbabb/keyframes.js`, but the
-// barrel ships them together because the bundler walks the sub-tree's
-// `export *` chain as one SCC anyway — separating keyframes-touching from
-// keyframes-adjacent composables here would be a fictitious distinction.
+// (`composables/motion/index.ts`) re-exports `useNumericTransition` (formerly
+// `useSpringOrchestrator`, renamed at AL.W9-δ; deprecation shim retained for
+// one minor), `useAnimatedNumber`, `useAnimatedNumberMap`, `useStagger`,
+// `useStaggerReveal`, `useScrollProgress`, `useRAFLoop`, `useIntersectionPause`,
+// `installDarkModeSync` + `constants` (DAMPING, SNAP_THRESHOLD, RAFLoopTiming
+// type, etc.). Only `useNumericTransition` + `useAnimatedNumber` (and
+// `useAnimatedNumberMap` via `useAnimatedNumber`) actually import from
+// `@mkbabb/keyframes.js`, but the barrel ships them together because the
+// bundler walks the sub-tree's `export *` chain as one SCC anyway — separating
+// keyframes-touching from keyframes-adjacent composables here would be a
+// fictitious distinction.
 //
 // L.W2 — Implementation home is the `src/composables/motion/` sub-tree. This
 // file is a thin re-export that resolves through the sub-tree's `index.ts`,
@@ -31,8 +33,9 @@
 // layout (same pattern as `/dark` and `/keyboard`).
 //
 // BREAKING (v2.0.0): consumers that previously reached `useStagger`,
-// `useAnimatedNumber`, `useAnimatedNumberMap`, `useSpringOrchestrator`,
-// `useStaggerReveal`, `useScrollProgress`, `useRAFLoop`, `useIntersectionPause`,
+// `useAnimatedNumber`, `useAnimatedNumberMap`, `useNumericTransition` (formerly
+// `useSpringOrchestrator`; see AL.W9-δ rename note above), `useStaggerReveal`,
+// `useScrollProgress`, `useRAFLoop`, `useIntersectionPause`,
 // `installDarkModeSync`, `DAMPING`, `SNAP_THRESHOLD`, `RAFLoopTiming`,
 // `PausableRuntime`, etc. through `@mkbabb/glass-ui` must migrate to
 // `@mkbabb/glass-ui/motion`. See MIGRATION.md and CHANGELOG.md for the full

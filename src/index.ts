@@ -41,7 +41,7 @@
 //   CarouselItem, CarouselNext, CarouselPager,
 //   CarouselPrevious, GlassCarouselPager,
 //   useCarousel, CarouselApi
-//   useSpringOrchestrator, useAnimatedNumber,  @mkbabb/glass-ui/motion        @mkbabb/keyframes.js (AI.W1 R3)
+//   useNumericTransition, useAnimatedNumber,   @mkbabb/glass-ui/motion        @mkbabb/keyframes.js (AI.W1 R3)
 //   useAnimatedNumberMap, useStagger,
 //   useStaggerReveal, useScrollProgress,
 //   useRAFLoop, useIntersectionPause,

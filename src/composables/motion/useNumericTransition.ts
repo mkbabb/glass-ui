@@ -1,0 +1,109 @@
+// Numeric-transition orchestrator wrapping keyframes.js NumericAnimation for
+// CSS-var / transform / channel-tuple interpolation.
+//
+// NOT spring physics — this composable interpolates between two numeric
+// snapshots over a fixed duration via an easing function (linear / cubic
+// bezier / keyframes.js timing-function names). True spring physics
+// (mass / stiffness / damping / overshoot) lives in `useSpring` (W9-β),
+// which owns the reserved "spring" name in the composable surface.
+//
+// Renamed at AL.W9-δ from `useSpringOrchestrator` to reflect what the
+// composable actually does. A one-minor-version re-export shim at
+// `./useSpringOrchestrator.ts` keeps the old name resolvable for any
+// downstream consumer that hasn't migrated; the shim retires at the next
+// major version bump.
+import { NumericAnimation } from "@mkbabb/keyframes.js";
+import type {
+    NumericAnimationOptions,
+    TimingFunction,
+    TimingFunctionNames,
+} from "@mkbabb/keyframes.js";
+import { onBeforeUnmount, ref, shallowRef } from "vue";
+
+export type SpringSnapshot<K extends string> = Record<K, number>;
+
+export interface UseNumericTransitionOptions<K extends string> {
+    /** Named numeric endpoints to interpolate between. */
+    from: SpringSnapshot<K>;
+    to: SpringSnapshot<K>;
+    /** Playback duration in ms. */
+    duration: number;
+    /** keyframes.js timing function — string name or explicit function. */
+    timingFunction?: TimingFunction | TimingFunctionNames;
+    /** Per-frame consumer. Receives the same zero-allocation record each tick. */
+    onFrame?: (values: SpringSnapshot<K>) => void;
+}
+
+/**
+ * Drive a numeric transition between two snapshots — e.g. CSS variable
+ * values, element transforms, or color channel tuples. Wraps keyframes.js's
+ * `NumericAnimation`, which handles easing, binary-search segment lookup,
+ * and zero-allocation playback.
+ *
+ * The caller owns how values map to the DOM: provide `onFrame` and write
+ * the record into `element.style.setProperty`, a `ref`, or wherever. This
+ * composable never touches the DOM directly — it's the orchestrator, not
+ * the renderer.
+ *
+ * For physics-based motion (mass / stiffness / damping), use `useSpring`.
+ */
+export function useNumericTransition<K extends string>(
+    options: UseNumericTransitionOptions<K>,
+) {
+    const progress = ref(0);
+    const playing = ref(false);
+
+    const { from, to, duration, timingFunction, onFrame } = options;
+
+    const numericOpts: NumericAnimationOptions = {
+        duration,
+        timingFunction,
+    };
+
+    const animation = shallowRef(
+        new NumericAnimation<SpringSnapshot<K>>([from, to], numericOpts),
+    );
+
+    async function start(): Promise<void> {
+        if (playing.value) {
+            animation.value.stop();
+        }
+        playing.value = true;
+        progress.value = 0;
+
+        try {
+            await animation.value.play((values) => {
+                // NumericAnimation.at(p) sets result in place; mirror progress
+                // by reading any key and rescaling via the linear segment —
+                // but simplest: compute elapsed via rAF is owned by keyframes.
+                // We advance progress lazily: the onFrame cadence is rAF.
+                onFrame?.(values);
+                // Progress is derived from comparison; keyframes.js doesn't
+                // expose it directly, so fall back to linear interp of first key.
+                const keys = Object.keys(from) as K[];
+                if (keys.length > 0) {
+                    const k = keys[0]!;
+                    const span = to[k] - from[k];
+                    if (span !== 0) {
+                        const current = values[k] - from[k];
+                        progress.value = Math.max(0, Math.min(1, current / span));
+                    }
+                }
+            });
+            progress.value = 1;
+        } finally {
+            playing.value = false;
+        }
+    }
+
+    function stop(): void {
+        animation.value.stop();
+        playing.value = false;
+    }
+
+    onBeforeUnmount(() => {
+        stop();
+    });
+
+    return { start, stop, progress, playing };
+}
