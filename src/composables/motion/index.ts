@@ -5,6 +5,7 @@
 // no curation. Types are co-exported beside their runtime symbols at each leaf.
 export * from "./constants";
 export * from "./useSpring";
+export * from "./useSpringMount";
 export * from "./useSpringPress";
 export * from "./useNumericTransition";
 // AL.W9-δ — `useSpringOrchestrator` renamed to `useNumericTransition`; the
