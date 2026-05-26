@@ -159,10 +159,18 @@
        (response, ζ) pair to its serialized curve.
 
        iOS-canonical (response, dampingFraction) per AL-X4 §3:
-         smooth: (0.50s, ζ=0.86)  — gentle settle, no overshoot
+         smooth: (0.50s, ζ=0.86)  — gentle settle, sub-perceptual overshoot ~0.5%
          snappy: (0.35s, ζ=0.85)  — quick crisp, micro-overshoot
          bouncy: (0.50s, ζ=0.65)  — emphatic overshoot ~7%
          gentle: (0.70s, ζ=1.00)  — patient critically-damped
+
+       Note on `smooth`: at ζ=0.86 the analytic solver produces a peak
+       of 1.00498 (+0.5%) at the 24% slot — mathematically present but
+       sub-perceptual. I keep ζ=0.86 rather than promoting to ζ=1.0
+       because true critical damping is `gentle`'s register, and
+       `smooth` wants a slightly faster visual settle than `gentle`'s
+       patient curve. The 0.5% peak does not read as overshoot to the
+       eye but does narrowly distinguish `smooth` from `gentle`.
        ═══════════════════════════════════════════════ */
     --spring-smooth: linear(0, 0.28457 4.000%, 0.65230 8.000%, 0.87172 12.000%, 0.96754 16.000%, 0.99893 20.000%, 1.00498 24.000%, 1.00384 28.000%, 1.00194 32.000%, 1.00074 36.000%, 1.00020 40.000%, 1.00002 44.000%, 1.00000 48.000%, 1.00000 52.000%, 1.00000 56.000%, 1.00000 60.000%, 1.00000 64.000%, 1.00000 68.000%, 1.00000 72.000%, 1.00000 76.000%, 1.00000 80.000%, 1.00000 84.000%, 1.00000 88.000%, 1.00000 92.000%, 1.00000 96.000%, 1);
     --spring-snappy: linear(0, 0.28596 4.000%, 0.65665 8.000%, 0.87711 12.000%, 0.97191 16.000%, 1.00162 20.000%, 1.00627 24.000%, 1.00431 28.000%, 1.00203 32.000%, 1.00071 36.000%, 1.00015 40.000%, 0.99998 44.000%, 1.00000 48.000%, 1.00000 52.000%, 1.00000 56.000%, 1.00000 60.000%, 1.00000 64.000%, 1.00000 68.000%, 1.00000 72.000%, 1.00000 76.000%, 1.00000 80.000%, 1.00000 84.000%, 1.00000 88.000%, 1.00000 92.000%, 1.00000 96.000%, 1);
