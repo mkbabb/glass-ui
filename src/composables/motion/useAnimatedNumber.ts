@@ -1,6 +1,6 @@
 // Hysteresis-smoothed live numeric tracking via keyframes.js SmoothProgress.
 //
-// Mirrors useSpringOrchestrator's composable-first motion idiom: the
+// Mirrors useNumericTransition's composable-first motion idiom: the
 // keyframes.js engine owns the rAF loop; this composable exposes a reactive
 // smoothed `current` ref, wires setTarget on source changes, and handles
 // reduced motion.
