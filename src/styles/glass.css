@@ -25,12 +25,24 @@
         box-shadow: var(--glass-shadow-wash);
     }
 
+    /* AL-W10 SLIM under-shadow wiring (tokens.css §AL-W10 SLIM —
+       UNDER-SHADOW recipe rungs). Each tier composes its canonical
+       iOS Liquid Glass under-shadow (a 0.5px dark hairline along the
+       bottom edge reading as glass thickness) as a NON-INSET layer
+       PREPENDED to the existing `--glass-shadow-*` recipe — the under-
+       shadow lays the floor; the existing shadow stack lays the lift.
+         quiet   → `--glass-under-shadow-quiet`   (0 2px 8px -1px α0.04)
+         resting → `--glass-under-shadow-default` (0 4px 16px -2px α0.08)
+         floating→ `--glass-under-shadow-vivid`   (0 8px 32px -4px α0.12)
+       `.glass-wash` is sub-perceptual; `.glass-overlay` is modal-heavy
+       — neither composes an under-shadow rung (Y4/Y6/Y7 SLIM retention).
+       Spine tier wires its own rung at instrument-chassis.css. */
     .glass-quiet {
         position: relative;
         background: var(--glass-bg-quiet);
         backdrop-filter: var(--glass-blur-quiet);
         border: 1px solid var(--glass-border-quiet);
-        box-shadow: var(--glass-shadow-quiet);
+        box-shadow: var(--glass-under-shadow-quiet), var(--glass-shadow-quiet);
     }
 
     .glass-resting {
@@ -38,7 +50,7 @@
         background: var(--glass-bg-resting);
         backdrop-filter: var(--glass-blur-resting);
         border: 1px solid var(--glass-border-resting);
-        box-shadow: var(--glass-shadow-resting);
+        box-shadow: var(--glass-under-shadow-default), var(--glass-shadow-resting);
     }
 
     .glass-floating {
@@ -46,7 +58,7 @@
         background: var(--glass-bg-floating);
         backdrop-filter: var(--glass-blur-floating);
         border: 1px solid var(--glass-border-floating);
-        box-shadow: var(--glass-shadow-floating);
+        box-shadow: var(--glass-under-shadow-vivid), var(--glass-shadow-floating);
     }
 
     .glass-overlay {
