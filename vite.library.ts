@@ -84,6 +84,19 @@ export function libraryEntries(rootDir: string) {
         // surface; the flat subpath lets a consumer reach just that subtree.
         reactive: resolve(rootDir, "src/reactive.ts"),
         dom: resolve(rootDir, "src/dom.ts"),
+        // AL.W4 — sub-barrel publishing phase 2 (per A4 R5 + G-AL-D7 ABSORB).
+        // Six remaining `ui/` primitive families speedtest still imports from
+        // the root barrel: Popover, Select, DataTable, DropdownMenu,
+        // ContextMenu, Command. Same pattern as AK.W3: each `src/<family>.ts`
+        // is a single-line `export * from "./components/ui/<family>"` mirror.
+        // Closes AL-CARRY-REMAINING-ROOT-BARREL-IMPORTS (AL-SEED §5). Forecast
+        // ~10-20 KB additional plateau cut at consumer migration (Wave 4).
+        popover: resolve(rootDir, "src/popover.ts"),
+        select: resolve(rootDir, "src/select.ts"),
+        "data-table": resolve(rootDir, "src/data-table.ts"),
+        "dropdown-menu": resolve(rootDir, "src/dropdown-menu.ts"),
+        "context-menu": resolve(rootDir, "src/context-menu.ts"),
+        command: resolve(rootDir, "src/command.ts"),
     };
 }
 
