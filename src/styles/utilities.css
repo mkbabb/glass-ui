@@ -121,6 +121,31 @@
         cursor: not-allowed;
     }
 
+    /* ── Tap-squish — universal press-state choreography ──
+       AL-W10 SLIM (X6 §M-1 + Y7 §3 + DESIGN.md §L3). Every interactive
+       surface that wants the iOS tap-squish idiom composes this class;
+       the press scales to `--scale-press` (0.96, the canonical iOS
+       `.regular` control rung) and the spring carries the return via
+       `--spring-snappy` (the §L3 release-spring contract). Single
+       canonical rung — NOT a 3-rung ladder. Outliers (button `0.97`,
+       dock control `0.92`) consume their own scale tokens directly.
+
+       PRM bracket retires the press transform entirely; under reduced
+       motion the surface acknowledges press via the consumer's own
+       hover/active bg-tint cascade. */
+    .tap-squish {
+        transition: transform var(--duration-fast) var(--spring-snappy);
+        transform-origin: center center;
+    }
+    .tap-squish:active {
+        transform: scale(var(--scale-press));
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .tap-squish:active {
+            transform: none;
+        }
+    }
+
     /* ── Status dot indicator ── */
     .status-dot {
         display: inline-block;

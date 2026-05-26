@@ -463,7 +463,7 @@ Every interactive element implements the four-state contract plus focus and togg
 |---------------------------|----------------------------------|------------------------------------------------------------------|
 | Rest                      | Default appearance               |—                                                               |
 | Hover                     | Scale up, or bg tint             | `--scale-hover` (1.08) · `--scale-hover-dock` (1.1)              |
-| Active / pressed          | Scale down                       | `--scale-press` (0.95) · `--scale-press-btn` (0.97; aliases `--scale-press-sm`) · `--scale-press-dock` (0.92) |
+| Active / pressed          | Scale down                       | `--scale-press` (0.96, the canonical iOS rung — see §L3) · `--scale-press-btn` (0.97; aliases `--scale-press-sm`) · `--scale-press-dock` (0.92) |
 | Disabled                  | Reduced opacity, no pointer events | `--opacity-disabled` (0.50)                                    |
 | Focus-visible             | Ring + glow                      | `--focus-ring-shadow`: 0 0 0 2px rgba(ring, 0.30), 0 0 8px rgba(ring, 0.15) |
 | `aria-pressed` / `.is-active` | Tinted bg, full-opacity text | Component-scoped                                                 |
@@ -478,12 +478,27 @@ Every interactive element implements the four-state contract plus focus and togg
 
 ### Press-scale tokens
 
-Three press amplitudes ship: `--scale-press` (0.95, the generic
-pressed scale), `--scale-press-sm` (0.97, the canonical button press —
-aliased as `--scale-press-btn` for the button + slider recipes), and
-`--scale-press-dock` (0.92, the dock-control press). Consumers reach
-for these rather than redeclaring arbitrary `active:scale-[X.XX]`
-literals.
+Three press amplitudes ship — one canonical and two outliers. I name
+the canon at §L3 (the iOS `.regular` control rung); the table below
+records the substrate values the canon resolves to.
+
+- **`--scale-press` (0.96)** — **canonical Liquid Glass press.** The
+  single rung every primitive should reach for unless it has a
+  documented reason. This is the iOS `.regular` control rung; §L3
+  ratifies it as the universal tap-squish target and routes the
+  `.tap-squish` utility through this token. Buttons, sliders, cards,
+  chips, list rows — anything that wants press feedback consumes
+  `var(--scale-press)`.
+- **`--scale-press-sm` (0.97; aliased as `--scale-press-btn`)** —
+  sub-canonical, slightly softer. The legacy button + slider recipes
+  consume the `-btn` alias; this exists for surfaces where the full
+  0.96 squish reads as too dramatic (small inline controls, dense
+  toolbar rungs). New surfaces should NOT reach for `-sm` without
+  cause — default to `--scale-press` per §L3.
+- **`--scale-press-dock` (0.92)** — deeper press for the dock-control
+  register; compensates for the smaller hit target so the squish reads
+  at the same perceptual weight as the canonical 0.96 rung on a larger
+  surface.
 
 The P.W4 4-rung `--scale-press-{xs,sm,md,lg}` ladder was retired at
 Q.W4 Lane D: the `xs`/`md`/`lg` rungs were minted as preemptive
@@ -491,6 +506,11 @@ consumer-facing substrate for a words/frontend `active:scale-[X.XX]`
 absorption that never landed — a fleet-wide grep found zero
 `var(--scale-press-{xs,md,lg})` consumers. Substrate-without-consumer
 is binary (N invariant 23); the unused rungs are gone.
+
+The AL-W10 SLIM reconciliation (audit G-W1-2 / G-W1-4 F-2) lifted
+`--scale-press` from 0.95 → 0.96 so the token value matches the §L3
+canonical rung; the older "generic pressed scale" framing here is
+retired in favour of the explicit canon-vs-outlier distinction above.
 
 ---
 

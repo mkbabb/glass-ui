@@ -964,11 +964,20 @@
        ═══════════════════════════════════════════════ */
     --scale-hover: 1.08;
     --scale-hover-dock: 1.1;
-    --scale-press: 0.95;
+    --scale-press: 0.96;
     --scale-press-dock: 0.92;
 
-    /* Press-scale — the canonical button-press value. `--scale-press-btn`
-       is the named handle the button + slider recipes consume.
+    /* Press-scale — the canonical iOS Liquid Glass press value.
+       `--scale-press` (0.96) is the canonical rung every primitive
+       should reach for unless it has a documented reason — see
+       DESIGN.md §L3. `--scale-press-btn` (aliased to `--scale-press-sm`,
+       0.97) is the slightly-softer rung the legacy button + slider
+       recipes consume.
+
+       AL-W10 SLIM reconciliation (per audit G-W1-2 / G-W1-4 F-2):
+       the prior `--scale-press: 0.95` value drifted from the §L3
+       canonical 0.96 rung; the canon-amend lifts the token to match
+       the iOS `.regular` control rung the precept ratifies.
 
        Q.W4 Lane D (Q-sty-5) retired the P.W4 `--scale-press-{xs,md,lg}`
        rungs: the ladder was minted as preemptive consumer-facing
@@ -1186,7 +1195,7 @@
        inline fallback of 200px keeps the calc well-defined. */
     --meter-progress-gap: clamp(0.125rem, 0.5cqi, 0.375rem);
     --meter-progress-inset: calc(var(--meter-size, 200px) * 0.04);
-    --progress-stack-gap: clamp(0.375rem, 0.8cqi, 0.75rem);
+    --progress-stack-gap: clamp(0.1875rem, 0.4cqi, 0.375rem);
 
     /* ═══════════════════════════════════════════════
        §2.E CELEBRATION-TIER REGISTER — AK.W3 / FD1
