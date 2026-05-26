@@ -206,7 +206,6 @@ export const CATEGORIES: Category[] = [
             s("motion", "stagger", "Stagger Reveal"),
             s("motion", "scroll-type", "Scroll-driven Type"),
             s("motion", "typewriter", "Typewriter"),
-            s("motion", "metaballs", "Metaballs", "WebGL canvas substrate with support fallback."),
         ],
     },
     {

@@ -1,24 +1,30 @@
 /**
  * F-ε-3 — Configurator recursion methodical reproduction fixture (M.W2 Lane A).
  *
- * Lighthouse reproducibly surfaces "Maximum recursive updates exceeded in
- * component <Configurator>" at /motion/metaballs (cf. L-audit-ε-performance.md
- * § 4, L.W6 § 5). Playwright does not. The recursion is load-timing-dependent
- * — driven by the watcher-graph / computed-side-effect ordering Vue's
- * scheduler exercises under stricter cold-load discipline.
+ * Lighthouse reproducibly surfaced "Maximum recursive updates exceeded in
+ * component <Configurator>" at a multi-axis configurator route (cf.
+ * L-audit-ε-performance.md § 4, L.W6 § 5). Playwright did not. The recursion
+ * is load-timing-dependent — driven by the watcher-graph / computed-side-
+ * effect ordering Vue's scheduler exercises under stricter cold-load
+ * discipline.
  *
- * The fixture below mirrors the metaballs story shape (configurator state
- * with commit-on-write clone-mode, BouncyToggle-driven motionMode computed
- * derived from cfg.speed, color-stop v-for binding directly to cfg.colors[i])
- * and exercises:
+ * The fixture below exercises a multi-axis configurator host (configurator
+ * state with commit-on-write clone-mode, BouncyToggle-driven derived
+ * computed from a numeric axis, list v-for binding directly to a reactive
+ * array) and asserts:
  *
- *   - N=8 preset swaps across 3 presets (sunset / cool / mono)
- *   - M=12 color-stop mutations interleaved with preset swaps
- *   - 6 setMotionMode toggles (still / drift / orbit) — exercises the
- *     motionMode computed write-back path
+ *   - N=8 preset swaps across 3 presets (warm / cool / mono)
+ *   - M=12 list-item mutations interleaved with preset swaps
+ *   - 6 setDerivedMode toggles (still / drift / orbit) — exercises the
+ *     derivedMode computed write-back path
  *
  * Vue's scheduler emits "Maximum recursive updates exceeded" via console.warn
  * (NOT throw); the fixture hooks console.warn and asserts zero hits.
+ *
+ * AL.W4 — the original repro pinned the MetaballConfig shape from the
+ * (now retired) `/metaballs` subpath. Replaced with a local fixture shape
+ * (`AxisConfig`) preserving the exact 7-axis topology (falloff/count/
+ * radius/colors[]/threshold/speed+orbit/bgAlpha) that drove the recursion.
  */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -40,16 +46,30 @@ import {
     useConfiguratorState,
     type ConfiguratorPreset,
 } from "../src/components/custom/configurator";
-import {
-    DEFAULT_METABALL_CONFIG,
-    type MetaballConfig,
-} from "../src/components/custom/metaballs";
 import { BouncyToggle } from "../src/components/custom/tabs";
 
-// ─── Presets (mirrors demo/stories/motion/metaballs.vue) ──────────────────
+// ─── Fixture shape (local; replaces the retired MetaballConfig) ───────────
 
-const SUNSET: Required<MetaballConfig> = {
-    ...DEFAULT_METABALL_CONFIG,
+/**
+ * 7-axis configurator fixture shape. Preserves the exact reactive topology
+ * the F-ε-3 repro depends on: a numeric `speed` axis driving a downstream
+ * `derivedMode` computed, a `colors` array exercised by v-for + push/splice,
+ * and the falloff/count/radius/threshold/bgAlpha scalar knobs.
+ */
+interface AxisConfig {
+    blobCount: number;
+    speed: number;
+    threshold: number;
+    baseRadius: number;
+    orbitAmplitude: number;
+    colors: string[];
+    bgAlpha: number;
+    edgeSoftness: number;
+}
+
+// ─── Presets (3-preset topology — warm / cool / mono) ─────────────────────
+
+const WARM: AxisConfig = {
     blobCount: 10,
     speed: 0.1,
     threshold: 0.92,
@@ -60,8 +80,7 @@ const SUNSET: Required<MetaballConfig> = {
     edgeSoftness: 0.38,
 };
 
-const COOL: Required<MetaballConfig> = {
-    ...DEFAULT_METABALL_CONFIG,
+const COOL: AxisConfig = {
     blobCount: 7,
     speed: 0.16,
     threshold: 0.86,
@@ -72,8 +91,7 @@ const COOL: Required<MetaballConfig> = {
     edgeSoftness: 0.42,
 };
 
-const MONO: Required<MetaballConfig> = {
-    ...DEFAULT_METABALL_CONFIG,
+const MONO: AxisConfig = {
     blobCount: 12,
     speed: 0.06,
     threshold: 1.05,
@@ -84,26 +102,26 @@ const MONO: Required<MetaballConfig> = {
     edgeSoftness: 0.22,
 };
 
-const PRESETS: ConfiguratorPreset<Required<MetaballConfig>>[] = [
-    { key: "sunset", label: "Sunset", sub: "warm · 10 blobs", config: SUNSET },
-    { key: "cool", label: "Cool", sub: "pastel · 7 blobs", config: COOL },
-    { key: "mono", label: "Mono", sub: "slate · 12 blobs", config: MONO },
+const PRESETS: ConfiguratorPreset<AxisConfig>[] = [
+    { key: "warm", label: "Warm", sub: "warm · 10 stops", config: WARM },
+    { key: "cool", label: "Cool", sub: "pastel · 7 stops", config: COOL },
+    { key: "mono", label: "Mono", sub: "slate · 12 stops", config: MONO },
 ];
 
-// ─── Test host mirroring demo/stories/motion/metaballs.vue ────────────────
+// ─── Test host (multi-axis configurator reactive shape) ──────────────────
 
 /**
- * Mirrors the metaballs story's reactive shape *exactly* up to the
- * MetaballCanvas (we drop the WebGL substrate — happy-dom has no real
- * gl context, but the recursion is in the Configurator/Vue reactivity
- * graph above MetaballCanvas, not inside it).
+ * Mirrors a multi-axis configurator host's reactive shape exactly. The
+ * recursion lives in the Configurator/Vue reactivity graph; this fixture
+ * deliberately drops any visual substrate (no WebGL, no DOM-heavy panel)
+ * so the test isolates the watcher-graph behaviour.
  */
-const MetaballConfiguratorHost = defineComponent({
-    name: "MetaballConfiguratorHost",
+const MultiAxisConfiguratorHost = defineComponent({
+    name: "MultiAxisConfiguratorHost",
     setup(_, { expose }) {
-        const studio = useConfiguratorState<Required<MetaballConfig>>({
+        const studio = useConfiguratorState<AxisConfig>({
             presets: PRESETS,
-            initialPreset: "sunset",
+            initialPreset: "warm",
         });
 
         const cfg = studio.config;
@@ -124,23 +142,23 @@ const MetaballConfiguratorHost = defineComponent({
             cfg.colors.splice(index, 1);
         }
 
-        function commitSlider(field: keyof Required<MetaballConfig>, value: number) {
+        function commitSlider(field: keyof AxisConfig, value: number) {
             (cfg as unknown as Record<string, unknown>)[field as string] = value;
         }
 
-        const motionMode = computed<string>(() => {
+        const derivedMode = computed<string>(() => {
             if (cfg.speed < 0.04) return "still";
             if (cfg.speed < 0.12) return "drift";
             return "orbit";
         });
 
-        const motionOptions = [
+        const derivedOptions = [
             { label: "Still", value: "still" },
             { label: "Drift", value: "drift" },
             { label: "Orbit", value: "orbit" },
         ];
 
-        function setMotionMode(value: string | string[]) {
+        function setDerivedMode(value: string | string[]) {
             const v = Array.isArray(value) ? value[0] : value;
             switch (v) {
                 case "still":
@@ -163,12 +181,12 @@ const MetaballConfiguratorHost = defineComponent({
             cfg,
             activePresetKey,
             isDirtyConfig,
-            motionMode,
+            derivedMode,
             commitColor,
             addColor,
             removeColor,
             commitSlider,
-            setMotionMode,
+            setDerivedMode,
         });
 
         return () =>
@@ -184,7 +202,7 @@ const MetaballConfiguratorHost = defineComponent({
                 {
                     stage: () =>
                         h("div", { "data-testid": "stage" }, [
-                            h("span", `${activePresetKey.value} · ${motionMode.value}`),
+                            h("span", `${activePresetKey.value} · ${derivedMode.value}`),
                         ]),
                     footer: () =>
                         h("div", isDirtyConfig.value ? "modified" : "preset"),
@@ -245,12 +263,12 @@ const MetaballConfiguratorHost = defineComponent({
                             () =>
                                 h(
                                     ConfiguratorRow,
-                                    { label: "Mode", name: "motionMode" },
+                                    { label: "Mode", name: "derivedMode" },
                                     () =>
                                         h(BouncyToggle, {
-                                            options: motionOptions,
-                                            modelValue: motionMode.value,
-                                            "onUpdate:modelValue": setMotionMode,
+                                            options: derivedOptions,
+                                            modelValue: derivedMode.value,
+                                            "onUpdate:modelValue": setDerivedMode,
                                         }),
                                 ),
                         ),
@@ -398,22 +416,22 @@ async function safeNextTick(probe: RecursionProbe): Promise<void> {
 // ─── Tests ────────────────────────────────────────────────────────────────
 
 type HostExpose = {
-    studio: ReturnType<typeof useConfiguratorState<Required<MetaballConfig>>>;
-    cfg: Required<MetaballConfig>;
+    studio: ReturnType<typeof useConfiguratorState<AxisConfig>>;
+    cfg: AxisConfig;
     activePresetKey: { value: string };
     isDirtyConfig: { value: boolean };
-    motionMode: { value: string };
+    derivedMode: { value: string };
     commitColor: (i: number, v: string) => void;
     addColor: () => void;
     removeColor: (i: number) => void;
     commitSlider: (
-        field: keyof Required<MetaballConfig>,
+        field: keyof AxisConfig,
         value: number,
     ) => void;
-    setMotionMode: (v: string | string[]) => void;
+    setDerivedMode: (v: string | string[]) => void;
 };
 
-describe("F-ε-3 — Configurator recursion (metaballs cold-start)", () => {
+describe("F-ε-3 — Configurator recursion (multi-axis cold-start)", () => {
     let probe: RecursionProbe;
 
     beforeEach(() => {
@@ -425,7 +443,7 @@ describe("F-ε-3 — Configurator recursion (metaballs cold-start)", () => {
     });
 
     it("does not recurse on mount (cold-start with watcher graph live)", async () => {
-        const { unmount } = probe.mount(MetaballConfiguratorHost);
+        const { unmount } = probe.mount(MultiAxisConfiguratorHost);
         await safeNextTick(probe);
         await safeNextTick(probe);
         await safeNextTick(probe);
@@ -435,10 +453,10 @@ describe("F-ε-3 — Configurator recursion (metaballs cold-start)", () => {
     });
 
     it("does not recurse across N=8 preset swaps", async () => {
-        const { vm, unmount } = probe.mount(MetaballConfiguratorHost);
+        const { vm, unmount } = probe.mount(MultiAxisConfiguratorHost);
         await safeNextTick(probe);
 
-        const keys = ["cool", "mono", "sunset", "cool", "mono", "sunset", "cool", "mono"];
+        const keys = ["cool", "mono", "warm", "cool", "mono", "warm", "cool", "mono"];
         for (const k of keys) {
             (vm as unknown as HostExpose).studio.selectPreset(k);
             await safeNextTick(probe);
@@ -449,7 +467,7 @@ describe("F-ε-3 — Configurator recursion (metaballs cold-start)", () => {
     });
 
     it("does not recurse across M=12 color mutations interleaved with preset swaps", async () => {
-        const { vm, unmount } = probe.mount(MetaballConfiguratorHost);
+        const { vm, unmount } = probe.mount(MultiAxisConfiguratorHost);
         await safeNextTick(probe);
         const h = vm as unknown as HostExpose;
 
@@ -465,7 +483,7 @@ describe("F-ε-3 — Configurator recursion (metaballs cold-start)", () => {
             () => h.commitColor(3, "#ffffff"),
             () => h.addColor(),
             () => h.commitColor(4, "#deadbe"),
-            () => h.studio.selectPreset("sunset"),
+            () => h.studio.selectPreset("warm"),
         ];
 
         for (const op of colorOps) {
@@ -477,14 +495,14 @@ describe("F-ε-3 — Configurator recursion (metaballs cold-start)", () => {
         unmount();
     });
 
-    it("does not recurse across setMotionMode toggles (computed write-back path)", async () => {
-        const { vm, unmount } = probe.mount(MetaballConfiguratorHost);
+    it("does not recurse across setDerivedMode toggles (computed write-back path)", async () => {
+        const { vm, unmount } = probe.mount(MultiAxisConfiguratorHost);
         await safeNextTick(probe);
         const h = vm as unknown as HostExpose;
 
         const modes = ["still", "drift", "orbit", "still", "drift", "orbit"];
         for (const m of modes) {
-            h.setMotionMode(m);
+            h.setDerivedMode(m);
             await safeNextTick(probe);
         }
 
@@ -498,16 +516,16 @@ describe("F-ε-3 — Configurator recursion (metaballs cold-start)", () => {
         // forces Vue's scheduler to interleave the watcher graph with new
         // mutations — the precise condition Lighthouse's network-idle gate
         // exposes that Playwright's first-paint exit does not.
-        const { vm, unmount } = probe.mount(MetaballConfiguratorHost);
+        const { vm, unmount } = probe.mount(MultiAxisConfiguratorHost);
         const h = vm as unknown as HostExpose;
 
         // Burst before any flush — no `await nextTick()` between ops.
         h.studio.selectPreset("cool");
         h.studio.selectPreset("mono");
         h.commitColor(0, "#deadbe");
-        h.setMotionMode("orbit");
-        h.studio.selectPreset("sunset");
-        h.setMotionMode("still");
+        h.setDerivedMode("orbit");
+        h.studio.selectPreset("warm");
+        h.setDerivedMode("still");
         h.commitColor(1, "#cafe00");
         h.studio.selectPreset("cool");
 

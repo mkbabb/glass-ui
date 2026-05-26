@@ -15,7 +15,7 @@
 //     surface (i.e. exported from a package's `index.ts` or named-subpath barrel).
 //   - Variant-prop types (`*Variants`) for the four-state component contract.
 //   - Domain shapes that consumers type fixtures + presets against (Aurora,
-//     Configurator, Metaballs).
+//     Configurator).
 //   - Semantic surface enums (`CardTier`, `InstrumentChassisPhase`,
 //     `ToastVariant`).
 //   - Aurora numeric ceilings + default config (consumers building presets).
@@ -123,8 +123,8 @@ export {
 
 // ── Configurator ───────────────────────────────────────────────────────────
 // Preset descriptor + state-machine return shape. Consumers building generic
-// configurator wrappers (e.g. aurora chrome, metaballs chrome) type against
-// these. `ConfiguratorCloneMode` (M.W2 Lane B) drives the per-preset vs.
+// configurator wrappers (e.g. aurora chrome) type against these.
+// `ConfiguratorCloneMode` (M.W2 Lane B) drives the per-preset vs.
 // commit-on-write disposition — the aurora chrome pins `'per-preset'`; new
 // chrome consumers narrow against this union when picking their slot model.
 export type {
@@ -134,18 +134,6 @@ export type {
     ConfiguratorState,
     ConfiguratorStateOptions,
 } from "../components/custom/configurator";
-
-// ── Metaballs ──────────────────────────────────────────────────────────────
-// Substrate config + default — parallel pattern to Aurora.
-// AJ-W1-β — `MetaballPositioning` literal-union surfaces the canvas-root
-// layout register (`"viewport"` viewport-cover backdrop vs `"local"`
-// consumer-owned positioning) so consumer wrappers can type the prop
-// without reaching into the deep import path.
-export type {
-    MetaballConfig,
-    MetaballPositioning,
-} from "../components/custom/metaballs";
-export { DEFAULT_METABALL_CONFIG } from "../components/custom/metaballs";
 
 // ── Timeline ───────────────────────────────────────────────────────────────
 // Segment data shape consumers type fixture arrays + preset descriptors

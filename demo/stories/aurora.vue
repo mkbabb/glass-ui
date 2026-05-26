@@ -38,10 +38,8 @@ import { usePresetThumbnails } from "./aurora/usePresetThumbnails";
  * `cloneMode: "per-preset"` (L.W7 Lane B Option-A unification — Rε §A.8).
  * Per-preset clone semantics preserve slider edits when the user switches
  * presets and returns; previously this lived in a parallel state machine
- * (retired at L.W7 Lane B). Aurora is now the second consumer of the
- * canonical Configurator state primitive (the first being
- * `demo/stories/motion/metaballs.vue`), closing the K-tranche
- * cross-tranche-debt item.
+ * (retired at L.W7 Lane B). Aurora consumes the canonical Configurator
+ * state primitive, closing the K-tranche cross-tranche-debt item.
  *
  * Fullscreen is owned by `ExpandableContainer` (corner button + Esc + body
  * scroll-lock + Teleport-to-body); the slot re-mounts in fullscreen, so

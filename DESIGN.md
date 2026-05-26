@@ -125,7 +125,7 @@ Disney's 12 principles of animation are the canonical taxonomy for UI motion; iO
 | 2 | **Anticipation** | Sheet pulls back ~4px before sliding up; pull-to-refresh tug | Sheet + Drawer entrance recipes |
 | 4 | **Straight-ahead vs. pose-to-pose** | Gestures = spring (straight-ahead); transitions = keyframe (pose-to-pose) | Decision lives in §L2 spring-vs-ease rule |
 | 5 | **Follow-through / overlapping action** | Icon rotates *after* parent sheet finishes presenting | Composition discipline; see `useSpringOrchestrator` chaining |
-| 12 | **Appeal** | Distinctive personality — Liquid Glass refraction, blob morphs | `<Aurora>` + `<Metaballs>` + the K W6 disco-grain + sparkle-sweep recipe |
+| 12 | **Appeal** | Distinctive personality — Liquid Glass refraction, blob morphs | `<Aurora>` + the K W6 disco-grain + sparkle-sweep recipe |
 
 **Weak tier — we don't ship these.** I am explicit: these Disney principles do not have first-class glass-ui substrate, and a consumer reaching for them is reaching outside the library:
 
@@ -146,7 +146,7 @@ Each bracket disables a specific subsystem rather than degrading the entire voca
 | User preference | Subsystem disabled | Glass-ui behavior |
 |---|---|---|
 | `prefers-reduced-transparency` | Transparency / blur | Surface α → 1.0; `backdrop-filter` → none; grain → 0; rim → solid border. Glass becomes opaque tinted surface; legibility floor guaranteed. |
-| `prefers-reduced-motion` | Springs + morphs + ambient motion | Springs → `--ease-standard` (no overshoot); rubber-band → cross-fade; `<Aurora>` + `<Metaballs>` pause via `useIntersectionPause` siblings; tilt-gyro and shimmer off; tap-squish duration → instant or replaced with subtle opacity cue. |
+| `prefers-reduced-motion` | Springs + morphs + ambient motion | Springs → `--ease-standard` (no overshoot); rubber-band → cross-fade; `<Aurora>` pauses via `useIntersectionPause` siblings; tilt-gyro and shimmer off; tap-squish duration → instant or replaced with subtle opacity cue. |
 | `prefers-contrast: more` | Vibrancy + thin rim | Rim opacity → 1.0; rim width × 2; text color → max contrast (`--text-strong` floor); vibrancy / saturation boost off; contrast ratio guaranteed against the worst-case underlying content (WCAG 4.5:1 against any backdrop pixel, not just the midtone). |
 
 **Worst-case contrast.** The contrast requirement on glass surfaces is NOT against the midtone backdrop — it is against the **worst-case** underlying content. A glass surface over `<Aurora>` must hold WCAG 4.5:1 against the brightest pixel Aurora can paint AND against the darkest. The §Glass Surfaces accessibility fallback rules + the §Default Color Palette text-color tokens encode this floor; primitives composing glass over kinetic backdrops must verify the floor at consumer build-time (Playwright-MCP visual contrast probe is the canonical verification path).
@@ -414,7 +414,7 @@ User feedback at N open suggested "top dock blur is a bit much, and generally ou
 | `.glass-dock` (any dock; horizontal or vertical) | `blur(var(--glass-blur-dock-radius))` | **`0px`** |
 | `.glass-wash`, `.glass-quiet`, ..., `.glass-overlay` | `blur(<tier-radius>) saturate(<tier-factor>)` | `1` / `3` / `12` / `16` / `24` px |
 
-The dock filter contributes ZERO blur—the compositor still emits a backdrop-filter pass (the property is set + composes the `saturate(1.05)` from `--glass-blur-wash` if the dock token is missing, but with the dock token present the `saturate` channel is also omitted), but the radius is at the floor. Any perceived dock blur visible at the page level is contributed by the **backdrop** the dock sits over (e.g., `<Aurora>` or `<MetaballCanvas>` ambient layer); the dock is purely a translucent plate of `--glass-bg-dock` (32 % opacity) admitting backdrop pixels through.
+The dock filter contributes ZERO blur—the compositor still emits a backdrop-filter pass (the property is set + composes the `saturate(1.05)` from `--glass-blur-wash` if the dock token is missing, but with the dock token present the `saturate` channel is also omitted), but the radius is at the floor. Any perceived dock blur visible at the page level is contributed by the **backdrop** the dock sits over (e.g., the `<Aurora>` ambient layer); the dock is purely a translucent plate of `--glass-bg-dock` (32 % opacity) admitting backdrop pixels through.
 
 Per N invariant 22 (audit-verdict spot-verification gate): the user's perception was real, but the source is the page-composition stacking, not the dock substrate. The right adjustment lives at the consumer site (reduce backdrop blur per-page; or lower aurora opacity; or use `<Aurora>`'s tone controls), not at the library token. The library token already holds the floor.
 
@@ -1255,13 +1255,14 @@ The configurator family is the canonical chrome for live token / preset editing 
 - `useConfiguratorState`—reactive preset state (active key, draft buffer, commit / reset / cycle, persistence).
 
 The family reaches the ≥ 2-consumer bar via:
-1. `demo/stories/motion/metaballs.vue` (`useConfiguratorState` with the metaballs preset cohort—`cloneMode: "commit-on-write"` default).
-2. `demo/stories/primitives/configurator.vue` (V-tranche fb38034—primitive-side story consuming `<ConfiguratorRow>` + `useConfiguratorState`).
-3. `demo/stories/aurora.vue` (L.W7 Lane B—`cloneMode: "per-preset"` consumer; absorbed the retired `useAuroraStudio` parallel chrome).
+1. `demo/stories/primitives/configurator.vue` (V-tranche fb38034—primitive-side story consuming `<ConfiguratorRow>` + `useConfiguratorState`).
+2. `demo/stories/aurora.vue` (L.W7 Lane B—`cloneMode: "per-preset"` consumer; absorbed the retired `useAuroraStudio` parallel chrome).
+
+(A third consumer, `demo/stories/motion/metaballs.vue`, retired at AL.W4 alongside the MetaballCanvas publisher per G-W3-3 §6.)
 
 **Clone modes**. `useConfiguratorState<T>` ships two clone-mode strategies via the `cloneMode` option:
 
-- `"commit-on-write"` (default)—single live `config` reactive object. `selectPreset(key)` overwrites `config` with that preset's baseline; edits do NOT persist across preset switches. Matches metaballs' shape.
+- `"commit-on-write"` (default)—single live `config` reactive object. `selectPreset(key)` overwrites `config` with that preset's baseline; edits do NOT persist across preset switches.
 - `"per-preset"`—each preset slot holds an independent live clone. `selectPreset(key)` snapshots the current `config` into the outgoing slot, then loads the incoming slot's clone into `config`. Edits persist per slot across switches. Matches aurora's shape (slider edits survive a preset round-trip).
 
 `defaultClone` calls `toRaw(value)` before `structuredClone` so Vue reactive proxies snapshot cleanly; JSON-clone is the fallback for shapes `structuredClone` rejects. Consumers can override via `options.clone`.
@@ -1663,7 +1664,7 @@ _shared (`<ModalOverlay>`, `menuItemVariants` CVA—V.W3) · accordion · alert 
 
 ### Custom composites (`src/components/custom/`)
 
-aurora · **configurator** (`Configurator`, `ConfiguratorLayer`, `ConfiguratorRow`, `useConfiguratorState`) · confirm-dialog · controls · **disco-glyph** · **dock** (`GlassDock`, `DockLayer`, `DockLayerGroup`, `DockIconButton`, `DockTabButton`, `DockSelectTrigger`, `DockDropdownTrigger`) · **dock-group** · expandable-container · glass-carousel · glass-panel · **glyph-face** · **hover-popover** · icon-tooltip · infinite-scroll · **instrument-chassis** · **labeled-field** · **metric-badge** · metaballs · **paper-backdrop** · **pulse** · **scrolling-text** · search · sidebar · sortable-list · stacked-icons · **status-dot** · tabs (BouncyTabs, UnderlineTabs, BouncyToggle) · timeline · toggle-chip · typewriter.
+aurora · **configurator** (`Configurator`, `ConfiguratorLayer`, `ConfiguratorRow`, `useConfiguratorState`) · confirm-dialog · controls · **disco-glyph** · **dock** (`GlassDock`, `DockLayer`, `DockLayerGroup`, `DockIconButton`, `DockTabButton`, `DockSelectTrigger`, `DockDropdownTrigger`) · **dock-group** · expandable-container · glass-carousel · glass-panel · **glyph-face** · **hover-popover** · icon-tooltip · infinite-scroll · **instrument-chassis** · **labeled-field** · **metric-badge** · **paper-backdrop** · **pulse** · **scrolling-text** · search · sidebar · sortable-list · stacked-icons · **status-dot** · tabs (BouncyTabs, UnderlineTabs, BouncyToggle) · timeline · toggle-chip · typewriter.
 
 ### Key component specs
 
@@ -1817,9 +1818,9 @@ v1.0 (L.W1 HEADLINE) closes the vueuse SCC trap with **Phase 2 root-barrel curat
 
 1. **Root barrel `@mkbabb/glass-ui`**—vueuse-FREE curated surface. Re-exports 40 `ui/` packages (the 4 vueuse-bearing—`input/`, `textarea/`, `combobox/`, `carousel/`—are intentionally absent) plus 7 cherry-picked `custom/` packages (`instrument-chassis`, `glyph-face`, `dock-group`, `disco-glyph`, `hover-popover`, `configurator`, `scrolling-text`) plus the vueuse-free composable sub-trees. Acceptance bar for root-barrel inclusion is documented inline in `src/index.ts` (header comment block; L.W2 Lane B).
 
-2. **Per-package flat subpaths**—`./tokens`, `./dock`, `./search`, `./sidebar`, `./controls`, `./confirm-dialog`, `./infinite-scroll`, `./tabs`, `./typewriter`, `./stacked-icons`, `./glass-carousel`, `./aurora`, `./configurator`, `./metric-badge`, `./status-dot`, `./pulse`, `./paper-backdrop`, `./toggle-chip`, `./glass-panel`, `./metaballs`, `./sortable-list`, `./timeline`, `./labeled-field`, `./expandable-container`, `./icon-tooltip`, `./instrument-chassis`, `./glyph-face`, `./dock-group`, `./disco-glyph`, `./hover-popover`, `./scrolling-text`. Each maps to a `src/<name>.ts` barrel and a `dist/<name>.{js,d.ts}` artefact. (The `./freshness` subpath retired at AD.W4 per Decision 5 — superseded by the canonical `"development"` conditional-exports branch.)
+2. **Per-package flat subpaths**—`./tokens`, `./dock`, `./search`, `./sidebar`, `./controls`, `./confirm-dialog`, `./infinite-scroll`, `./tabs`, `./typewriter`, `./stacked-icons`, `./glass-carousel`, `./aurora`, `./configurator`, `./metric-badge`, `./status-dot`, `./pulse`, `./paper-backdrop`, `./toggle-chip`, `./glass-panel`, `./sortable-list`, `./timeline`, `./labeled-field`, `./expandable-container`, `./icon-tooltip`, `./instrument-chassis`, `./glyph-face`, `./dock-group`, `./disco-glyph`, `./hover-popover`, `./scrolling-text`. Each maps to a `src/<name>.ts` barrel and a `dist/<name>.{js,d.ts}` artefact. (The `./freshness` subpath retired at AD.W4 per Decision 5 — superseded by the canonical `"development"` conditional-exports branch. The `./metaballs` subpath retired at AL.W4 per G-W3-3 §6 zero-consumer verification across the constellation.)
 
-3. **API discovery layer `@mkbabb/glass-ui/api`**—pure types + constants re-export aggregator. Ships 32 canonical public symbols (28 types + 4 constants) across Aurora, Configurator, Metaballs, Surface enums (`CardTier`, `InstrumentChassisPhase`, `ToastVariant`), and CVA variants (`ButtonVariants`, `SliderVariants`, etc.). Pure-additive; types erase at build so consumer JS pays 0 B for type-only imports. See `src/api/index.ts`.
+3. **API discovery layer `@mkbabb/glass-ui/api`**—pure types + constants re-export aggregator. Ships canonical public symbols across Aurora, Configurator, Surface enums (`CardTier`, `InstrumentChassisPhase`, `ToastVariant`), and CVA variants (`ButtonVariants`, `SliderVariants`, etc.). Pure-additive; types erase at build so consumer JS pays 0 B for type-only imports. See `src/api/index.ts`.
 
 `./styles` is the shared CSS bundle (sole CSS subpath; consumers wire it via `@import "@mkbabb/glass-ui/styles"`).
 

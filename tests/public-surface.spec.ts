@@ -20,7 +20,6 @@ import * as IconTooltipSurface from "../src/icon-tooltip";
 import * as InfiniteScrollSurface from "../src/infinite-scroll";
 import * as Keyboard from "../src/keyboard";
 import * as LabeledFieldSurface from "../src/labeled-field";
-import * as MetaballsSurface from "../src/metaballs";
 import * as MetricBadgeSurface from "../src/metric-badge";
 import * as Motion from "../src/motion";
 import * as PaperBackdropSurface from "../src/paper-backdrop";
@@ -140,7 +139,6 @@ const subpathRuntimeExports = [
     { subpath: "paper-backdrop", surface: PaperBackdropSurface, name: "PaperBackdrop" },
     { subpath: "toggle-chip", surface: ToggleChipSurface, name: "ToggleChip" },
     { subpath: "glass-panel", surface: GlassPanelSurface, name: "GlassPanel" },
-    { subpath: "metaballs", surface: MetaballsSurface, name: "MetaballCanvas" },
     { subpath: "sortable-list", surface: SortableListSurface, name: "SortableList" },
     { subpath: "timeline", surface: TimelineSurface, name: "GlassTimeline" },
     { subpath: "labeled-field", surface: LabeledFieldSurface, name: "LabeledInput" },
@@ -226,7 +224,6 @@ const nonCoreRootRetirements = [
     "GlassCarousel",
     "Aurora",
     "GlassPanel",
-    "MetaballCanvas",
     "SortableList",
     "GlassTimeline",
     "LabeledInput",

@@ -25,7 +25,6 @@ export function libraryEntries(rootDir: string) {
         "paper-backdrop": resolve(rootDir, "src/paper-backdrop.ts"),
         "toggle-chip": resolve(rootDir, "src/toggle-chip.ts"),
         "glass-panel": resolve(rootDir, "src/glass-panel.ts"),
-        metaballs: resolve(rootDir, "src/metaballs.ts"),
         "sortable-list": resolve(rootDir, "src/sortable-list.ts"),
         timeline: resolve(rootDir, "src/timeline.ts"),
         "labeled-field": resolve(rootDir, "src/labeled-field.ts"),

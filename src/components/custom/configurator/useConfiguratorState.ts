@@ -19,8 +19,7 @@
 //
 // `cloneMode: "commit-on-write"` (default) — a single live `config` reactive
 // object. `selectPreset(key)` overwrites `config` with that preset's baseline;
-// edits to `config` are NOT retained when the user switches away. Matches the
-// metaballs storybook shape.
+// edits to `config` are NOT retained when the user switches away.
 //
 // `cloneMode: "per-preset"` — each preset slot holds an independent live
 // clone. `selectPreset(key)` saves the current `config` snapshot into the
@@ -50,10 +49,9 @@ export interface ConfiguratorStateOptions<T> {
      */
     readonly equals?: (a: T, b: T) => boolean;
     /**
-     * Clone-mode strategy. Default `"commit-on-write"` (metaballs shape:
-     * single live config; preset switch overwrites). Use `"per-preset"`
-     * (aurora shape: per-preset clone map; edits persist per slot across
-     * switches).
+     * Clone-mode strategy. Default `"commit-on-write"` (single live config;
+     * preset switch overwrites). Use `"per-preset"` (aurora shape:
+     * per-preset clone map; edits persist per slot across switches).
      */
     readonly cloneMode?: ConfiguratorCloneMode;
 }

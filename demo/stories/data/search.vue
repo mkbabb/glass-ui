@@ -63,7 +63,6 @@ const rowSeeds = [
     ["fuzzyMatch scorer", "helper", "Subsequence matching with bonuses for prefixes, separators, and consecutive runs.", "proof", "Search", ["fuzzyMatch", "score"]],
     ["clearCache control", "helper", "Flushes cached search results after dataset or route state changes.", "wired", "Search", ["clearCache", "cache"]],
     ["Glass panel substrate", "component", "Glass renderer consumer row with tiered surface tokens and filter state.", "consumer", "Foundations", ["glass", "panel"]],
-    ["Metaball canvas proof", "component", "Motion substrate row for live canvas support and fallback readouts.", "triage", "Motion", ["metaball", "canvas"]],
     ["Dock dropdown trigger", "component", "Navigation package trigger row for dock-scoped menus.", "wired", "Navigation", ["dock", "dropdown"]],
     ["Dock select trigger", "component", "Navigation package trigger row for dock-scoped selection controls.", "wired", "Navigation", ["dock", "select"]],
     ["Carousel item slot", "component", "Container package item row with active index and slide slots.", "triage", "Containers", ["carousel", "slot"]],

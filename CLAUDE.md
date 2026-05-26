@@ -98,7 +98,6 @@ src/
 │   │   ├── infinite-scroll/        # InfiniteScroll + composable
 │   │   ├── instrument-chassis/     # InstrumentChassis + RegionDivider
 │   │   ├── labeled-field/          # LabeledField parent + 4 wrappers (LabeledInput/Select/Slider/Switch)
-│   │   ├── metaballs/              # WebGL metaball substrate (Configurator-recursion P0 absorbed—K W7)
 │   │   ├── metric-badge/           # MetricBadge primitive
 │   │   ├── metric-cell/            # MetricCell compact metric card (AB+1 / AC.W8e—wash-tier glass surface)
 │   │   ├── metric-stack/           # MetricStack vertical metric grouping (AB+1 / AC.W6d—`as` prop TransitionGroup support)
@@ -219,7 +218,6 @@ import type {
     ButtonVariants,
     CardTier,
     ConfiguratorState,
-    MetaballConfig,
     SliderVariants,
 } from "@mkbabb/glass-ui/api";
 import { DEFAULT_AURORA_CONFIG, MAX_NUCLEI, MAX_STOPS } from "@mkbabb/glass-ui/api";
@@ -239,7 +237,7 @@ import { Sidebar } from "@mkbabb/glass-ui/sidebar";
 import { GlassCarousel } from "@mkbabb/glass-ui/glass-carousel";
 // + tokens, search, confirm-dialog, infinite-scroll, tabs, typewriter, stacked-icons,
 //   metric-badge, status-dot, pulse, paper-backdrop, toggle-chip, glass-panel,
-//   metaballs, sortable-list, timeline, labeled-field, expandable-container,
+//   sortable-list, timeline, labeled-field, expandable-container,
 //   icon-tooltip, instrument-chassis, glyph-face, dock-group, disco-glyph,
 //   scrolling-text
 ```

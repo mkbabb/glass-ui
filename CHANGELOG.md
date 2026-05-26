@@ -17,6 +17,17 @@
 >
 > Speedtest reference: `docs/tranches/AC/AC.md` §AC.W6 + §AC.W8 + `docs/tranches/AC/waves/W6{a,b,c,d,e}-*.md` + `docs/tranches/AC/waves/W8.md`. Tags v1.5.0 + v1.5.1 placed retroactively at AC.W6e close.
 
+## AL.W4 Lane D—2026-05-26—MetaballCanvas publisher retire (G-W3-3 §6 zero-consumer)
+
+The G-W3-3 audit verified zero live consumers of the `@mkbabb/glass-ui/metaballs` subpath across the constellation (speedtest, glass-ui internal, value.js, bbnf-buddy, words). The publisher had been kept after AK retired the speedtest consumer; AL.W4 Lane D retires the publisher now that the consumer cohort is empty. Discharges **AL-CARRY-METABALLS-PUBLISHER-CONSUMERS** (AL-SEED.md §5 row 2).
+
+- **Source retired** — `src/components/custom/metaballs/` deleted in full (`MetaballCanvas.vue`, `useMetaballs.ts`, `shaders.ts`, `types.ts`, `index.ts`, `__tests__/MetaballCanvas.test.ts`).
+- **Sub-barrel + dist artefacts retired** — `src/metaballs.ts` deleted; the `metaballs` entry retires from `vite.library.ts`; the `./metaballs` `exports` row + `metaballs` `typesVersions` row retire from `package.json`; `dist/metaballs.{js,d.ts}` no longer emit.
+- **API discovery layer retired** — `src/api/index.ts` drops the `MetaballConfig` + `MetaballPositioning` type re-exports + the `DEFAULT_METABALL_CONFIG` constant re-export + the Metaballs scope-criteria parenthetical.
+- **Tests realigned** — `tests/public-surface.spec.ts` drops the `MetaballsSurface` import + the `metaballs` subpath assertion + the `MetaballCanvas` non-core-root retirement pin. `tests/configurator-recursion.spec.ts` inlines a local `AxisConfig` fixture (preserving the exact 7-axis topology that drove the F-ε-3 repro) so the Configurator-recursion test no longer depends on the retired metaballs publisher; the host renames to `MultiAxisConfiguratorHost`.
+- **Demo retires** — `demo/stories/motion/metaballs.vue` deleted; the manifest row retires; `demo/stories/compositions/hero.vue` drops the ambient metaballs backdrop (the warm-palette radial gradients carry the hero composition unaided); `demo/stories/data/search.vue` drops the `Metaball canvas proof` fixture row; the `aurora.vue` doc-string consumer-list refers to the canonical Configurator primitive without naming the retired story.
+- **Docs realigned** — `README.md`, `CLAUDE.md`, `MIGRATION.md`, `DESIGN.md` lose live references to MetaballCanvas / Metaballs / MetaballConfig / DEFAULT_METABALL_CONFIG. Historical bug-fix lineage (K W7 Configurator P0 absorb; L W7 Lane B Aurora unification) survives — the route name `/motion/metaballs` is load-bearing context for those narratives. DESIGN.md gains a "(The `./metaballs` subpath retired at AL.W4)" parenthetical on the subpath enumeration.
+
 ## AI.W5 Phase 1—2026-05-20—Engineering hygiene + chassis chronics + 2-component VERIFY-then-DECIDE archives (publisher writes)
 
 The first phase of the AI.W5 wave — glass-ui-side publisher writes only. Speedtest-consumer follow-ons (apologetic-comment retire at `ChartsView.vue`, `chassisPhase` switch simplification, ToastProvider retire, typed dev-handle bridge) land in Phase 2 per precept 13's XR sub-protocol. Spec: `speedtest/docs/tranches/AI/artefacts/W5-spec.md`. Ratified user disposition: G-AI-D26 (Path B archive for both DockGroup and ProgressiveSidebar families; composables retained for the latter).

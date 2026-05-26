@@ -109,7 +109,6 @@ src/
 │       ├── glyph-face/         # GlyphFace 3-layer wrapper
 │       ├── disco-glyph/        # DiscoGlyph 3-layer SVG glyph primitive
 │       ├── labeled-field/      # LabeledField parent + 4 wrappers
-│       ├── metaballs/          # Metaballs WebGL substrate
 │       ├── metric-badge/       # MetricBadge primitive
 │       ├── pulse/              # Dots / ring loading indicator
 │       ├── scrolling-text/     # Overflow-marquee primitive (lifted from speedtest—v0.9.1)
@@ -172,7 +171,6 @@ import type {
     ButtonVariants,
     CardTier,
     ConfiguratorState,
-    MetaballConfig,
 } from "@mkbabb/glass-ui/api";
 
 // Per-package subpaths—substrate isolation

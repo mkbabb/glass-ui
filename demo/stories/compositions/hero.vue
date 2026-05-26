@@ -1,14 +1,9 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 import { ArrowRight, Sparkles } from "@lucide/vue";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { Button } from "../../../src/components/ui/button";
 import { Card, CardContent } from "../../../src/components/ui/card";
-import {
-    MetaballCanvas,
-    isWebGLSupported,
-    type MetaballConfig,
-} from "../../../src/components/custom/metaballs";
 import { TypewriterText } from "../../../src/components/custom/typewriter";
 import { cn } from "../../../src/utils/cn";
 
@@ -16,8 +11,8 @@ const wonkSettings = '"WONK" 1, "SOFT" 0';
 
 // ─── Motion gate ─────────────────────────────────────────────────────────
 // Synchronous probe: SSR-safe (returns false if window absent), feeds the
-// MetaballCanvas v-if AND the TypewriterText v-if. Reduced-motion → both
-// animations collapse to static fallbacks (radial gradients + static h2).
+// TypewriterText v-if. Reduced-motion → static h2 fallback (radial
+// gradients carry the static case).
 const prefersReducedMotion = (() => {
     if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
         return false;
@@ -25,46 +20,7 @@ const prefersReducedMotion = (() => {
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 })();
 
-const showMetaballs = computed(
-    () => isWebGLSupported() && !prefersReducedMotion,
-);
 const animateHeadline = !prefersReducedMotion;
-
-// Ambient metaballs config — tuned to COMPLEMENT, not compete with, the
-// hero's three warm-palette radial gradients. Strategy:
-//   - colors: pulled from the same warm/cool palette as the radial stops
-//     (--section-color-0 → ember/peach, --section-color-2 → amber,
-//     --section-color-5 → cyan-blue). Hard-coded hex (not CSS vars) because
-//     the WebGL composable resolves colors at init via canvas getImageData
-//     — CSS vars would resolve once and miss theme transitions; the demo
-//     does not theme-toggle the hero, so static hex is correct here.
-//   - blobCount 5 (down from default 8) — fewer blobs at large radii read
-//     as broad atmosphere, not as discrete glowing dots.
-//   - baseRadius 0.22 (vs default 0.12) — large blobs blend into the
-//     gradient backdrop instead of punching through as feature elements.
-//   - speed 0.04 (half default 0.08) — slow drift; ambient, not animated.
-//   - orbitAmplitude 0.22 (vs default 0.3) — gentle motion, stays near
-//     centre so blobs don't sweep across text.
-//   - bgAlpha 0 — fully transparent background, layered ABOVE the radial
-//     gradients (no flat fill).
-//   - threshold 0.85 + edgeSoftness 0.5 — softer edges so blobs feather
-//     into the gradient floor without crisp metaball silhouettes.
-const heroMetaballConfig: MetaballConfig = {
-    blobCount: 5,
-    speed: 0.04,
-    threshold: 0.85,
-    baseRadius: 0.22,
-    orbitAmplitude: 0.22,
-    edgeSoftness: 0.5,
-    bgAlpha: 0,
-    colors: [
-        "#F4A593", // section-color-0 ember/peach
-        "#F5C76E", // section-color-2 amber
-        "#7CC0DB", // section-color-5 cyan-blue
-        "#E89B7E", // ember mid
-        "#F0B65A", // amber mid
-    ],
-};
 
 // ─── Typewriter prose segments ──────────────────────────────────────────
 // The hero h2 splits around the italic-f signature glyph:
@@ -133,24 +89,6 @@ const claims = [
                 `,
             }"
         >
-            <!--
-                Ambient metaballs backdrop (N.W0 A2 wire). Sits ABOVE the
-                radial gradients on the bg-image cascade but BELOW the
-                content layer (content is z-10; canvas is -z-10 hardcoded
-                in MetaballCanvas.vue and contained to the hero frame via
-                the .hero-frame :deep(canvas) override below). Renders
-                only when WebGL is supported AND prefers-reduced-motion
-                is FALSE — radial gradients alone carry the static case.
-                Subtle opacity (60%) keeps blobs ambient rather than
-                foreground-competing.
-            -->
-            <MetaballCanvas
-                v-if="showMetaballs"
-                :config="heroMetaballConfig"
-                aria-hidden="true"
-                class="hero-metaballs"
-            />
-
             <div class="relative z-10 flex flex-col gap-8 max-w-4xl">
                 <div class="flex items-center gap-3">
                     <Sparkles class="size-4 text-muted-foreground" aria-hidden="true" />
@@ -264,26 +202,3 @@ const claims = [
         </Card>
     </StoryPage>
 </template>
-
-<style scoped>
-/*
- * MetaballCanvas ships its <canvas> with hardcoded `position: fixed;
- * inset: 0; -z-10` (viewport-pinned, suitable for full-page substrates
- * like the canonical metaballs story). For the hero ambient-backdrop
- * use case we need the canvas contained to the hero frame so it
- * paints behind the hero card content only — not the entire viewport.
- *
- * Scoped :deep(canvas) re-targets the canvas to `position: absolute`
- * within `.hero-frame` (which already establishes a containing block
- * via `relative isolate`). The `-z-10` from the upstream class still
- * applies (-z-10 vs the content's z-10 keeps the cascade correct).
- *
- * Opacity 0.6 dials the metaballs back to ambient — the radial
- * gradients carry the primary aesthetic; metaballs add subtle motion.
- */
-.hero-frame :deep(canvas) {
-    position: absolute;
-    opacity: 0.6;
-    mix-blend-mode: soft-light;
-}
-</style>

@@ -414,14 +414,13 @@ import type {
     FlowPattern, OklchStop, StrokeMode, WarpMode,
     ConfiguratorPreset, ConfiguratorState, ConfiguratorStateOptions,
     ConfiguratorScrollMode,
-    MetaballConfig,
     CardTier, InstrumentChassisPhase, ToastVariant,
     AlertVariants, AvatarVariants, BadgeVariants, ButtonVariants,
     SheetVariants, SliderVariants, ToggleVariants, ToggleChipVariants,
 } from "@mkbabb/glass-ui/api";
 
 import {
-    DEFAULT_AURORA_CONFIG, DEFAULT_METABALL_CONFIG,
+    DEFAULT_AURORA_CONFIG,
     MAX_NUCLEI, MAX_STOPS,
 } from "@mkbabb/glass-ui/api";
 ```
