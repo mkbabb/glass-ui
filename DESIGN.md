@@ -16,6 +16,155 @@ Four principles govern the library.
 
 ---
 
+## Liquid Glass design language
+
+The four philosophy pillars describe HOW we ship the library. This section describes WHAT we ship — the design language those pillars carry. It is iOS-aligned (Liquid Glass material + spring physics + dynamic surface life) and idiomatic to the web (CSS custom properties, `backdrop-filter`, `linear()` easings, `@property`-typed interpolation).
+
+Five precepts compose the language. Each precept is canonical: when a primitive ships a surface, motion, tap response, motion tier, or a11y bracket, it consumes from this vocabulary rather than minting its own.
+
+### §L1 — Liquid Glass
+
+Liquid Glass is the iOS 26 material — a real-time refractive surface, not a Gaussian frost. Traditional `UIBlurEffect` *scattered* light through a convolution; Liquid Glass *bends and concentrates* light, closer to physical glass than to plastic. We adopt that mental model: glass-ui surfaces are lensing layers, not blur swatches.
+
+**The six-layer composite.** Every glass surface composes six optical layers. A primitive that omits one reads as iOS-7-flat, not iOS-26-liquid. We require all six (or the documented degraded fallback under §L5):
+
+1. **Backdrop blur + saturation** — the refraction proxy. `backdrop-filter: blur(<r>) saturate(<f>)` per tier. The saturation channel matters as much as the blur radius; it carries the "concentrated light" reading.
+2. **Surface tint (rgba background)** — the light-vs-dark admit-through. Light-mode and dark-mode tints differ; the dark-mode tint is denser to compensate for the lower contrast floor.
+3. **Edge rim (border)** — the boundary halo that holds the surface against its backdrop. `border: 1px solid var(--glass-border-<tier>)`. Carried by the per-tier border opacity.
+4. **Inner shadow / catch-light** — the upper-edge specular streak (`inset 0 0.5px 0 0 hsl(0 0% 100% / 0.25)` via `--glass-highlight`) that reads as "this surface has an edge that catches the room light."
+5. **Drop shadow** — adaptive depth shadow under the tile; depth scales with z-elevation. Per-tier `--glass-shadow-<tier>`.
+6. **Grain overlay** — the micro-texture (`paper-grain-overlay`, 3.5% in light / 6% in dark, `overlay` → `soft-light` blend) that prevents the surface from reading as flat-shaded plastic.
+
+The substrate values live in `tokens.css §11..§14` and `glass.css`; the consumer composition is `.glass-<tier>` + `paper-grain-overlay` + (optionally) the K W6 `btn-audacious` dynamic-refraction recipe for the animated end of the canon. See §Glass Surfaces for the token table.
+
+**The seven tiers.** I promulgate seven glass tiers as the canonical surface ladder. Each tier names what the surface IS in the composition, not which utility class it happens to use. The light-α / blur / border / shadow values cascade through §Glass Surfaces:
+
+| Tier | Class | Role | When it lands | iOS analogue |
+|---|---|---|---|---|
+| **Wash** | `.glass-wash` | Permeable veil over a kinetic backdrop | Dock substrate, input chrome, hover bg — anywhere the backdrop must read through | TabBar / Toolbar |
+| **Quiet** | `.glass-quiet` | Inline workspace chrome — present but recessive | Sidebar, inline panel, secondary chrome | Sidebar / inline panel |
+| **Resting** | `.glass-resting` | Canonical translucent + frosted plate; the default a primitive reaches for | Cards, sheets, the `<GlassPanel>` default surface | Sheet / Card |
+| **Floating** | `.glass-floating` | Elevated transient surface | Popovers, tooltips, dropdowns, context menus | Popover / ContextMenu |
+| **Overlay** | `.glass-overlay` | Modal-over-modal; takeover surface | Dialogs, command palette, action sheets | Dialog / Action Sheet |
+| **Dock** | `.glass-dock` | Translucent plate over backdrop motion; `blur(0)` floor by design so the backdrop's blur reads through | DynamicIsland / Dock / floating action bar | DynamicIsland / Dock |
+| **Chassis** | `.glass-chassis` (via `<InstrumentChassis>`) | Engraved-bezel composition substrate hosting multi-region content | A meter + readout pair, a survey + flow-status pair, any multi-region instrument | NavigationStack container |
+
+The table above is the **vocabulary**. When I describe a primitive's surface I name the tier ("popover content is `floating`"; "dock is `dock`"; "modal is `overlay`"), and the reader knows the entire substrate cascade those words invoke.
+
+**Tier selection rule.** Reach for the lowest tier that still meets the legibility floor. A surface that does not need to admit backdrop pixels should NOT use `wash` — use `resting`. A surface that does not need elevation depth should NOT use `floating` — use `resting`. The ladder is monotone in visual weight; over-reach (every card as `floating`) is the canonical anti-pattern.
+
+**Glass cannot sample glass.** Two overlapping `backdrop-filter` surfaces produce a black/incorrect composite — each layer's filter sees the other's filter output, not the underlying content. Overlapping glass surfaces must share a single composition container (the iOS equivalent is `GlassEffectContainer`). At glass-ui this means: monotone Z-stack per §Composition (Aurora → Dock → Card → Modal), never two `.glass-<tier>` surfaces directly overlapping at the same z-tier without a parent container managing the composite.
+
+### §L2 — Spring Physics
+
+I promulgate spring physics as the canonical motion vocabulary. A spring describes feeling: response time + damping + overshoot. The substrate exposes both an **API canon** (the parameters consumers reason about) and three **named presets** (the curves consumers reach for).
+
+**API canon — `response` + `dampingFraction`.** The SwiftUI Generation-A API (`spring(response:dampingFraction:blendDuration:)`) is the lingua franca; we adopt the same parameter names so iOS-fluent consumers don't context-switch:
+
+- `response` — time to reach target (seconds). Lower = faster. Tap responses sit at `0.35s`; sheet entrances at `0.5s`; sidebar slides at `0.55s`.
+- `dampingFraction` — `0` = pure bounce, `1` = critically damped. Tap responses sit at `0.8`; sheets at `0.85`; bouncy reveals at `0.65`; ambient transitions at `0.85+`.
+- `blendDuration` — cross-fade window when interrupting another animation. Defaults to `0`; only matters for gesture-velocity continuity.
+
+The keyframes.js `useSpringOrchestrator` composable (§Composables) accepts both this physical API and the perceptual API (`{ duration, bounce }`, iOS-17+); the CSS-only path consumes the three `linear()`-spring curves below.
+
+**Three canonical springs.** The iOS-17 named-preset trio is the workhorse vocabulary; each names a **feeling**, not a curve shape:
+
+| Preset | ζ (damping) | Bounce | Overshoot | Feels like | When it lands |
+|---|---|---|---|---|---|
+| `--spring-smooth` | 1.0 | 0.0 | 0% | "Sustained glide" | Pane swap, metric crossfade, sheet present, list reorder — anywhere the system speaks calmly |
+| `--spring-snappy` | 0.65 | 0.15 | ~7% | "Confident tap" | Tap release, toggle flip, dropdown enter, dock layer swap — anywhere the user just touched a pixel |
+| `--spring-bouncy` | 0.45 | 0.30 | ~20% | "Playful arrival" | Sheet entrance, modal entrance, toast arrival, blob morph, celebratory reveal |
+
+The `--spring-gentle` curve (ζ=0.85, < 1% overshoot) lives alongside as the patient-settle variant for scroll-driven choreography and ambient transitions; it is the smooth-bouncy bridge for cases where `smooth` reads as too inert. See §Easing → Spring curves for the full `linear()` interpolation values.
+
+**Two cubic-bezier fallbacks** coexist as the substrate-cheap path for micro-interactions and the iOS-native decelerate register:
+
+- `--motion-ease-apple-spring` (`cubic-bezier(0.175, 0.885, 0.32, 1.275)`) — single-step elastic overshoot for switches and micro-hovers that don't want the multi-stop `linear()` cost.
+- `--ease-standard` (`cubic-bezier(0.4, 0, 0.2, 1)`) — calm decelerate; the default for non-spring exits and time-bound system-driven motion.
+
+**Spring selection rule — "if the user's finger touched a pixel, use a spring."** A press-release is `snappy` (the user demanded the motion). A sheet entrance is `bouncy` (the surface arrived to greet). A pane swap is `smooth` (sustained, no overshoot). System-driven time-bound motion (progress bars, auto-advancing carousels, scripted onboarding) uses `--ease-standard`, not a spring — those are observer motions, not driver motions. When unsure, default to `snappy`: it is the iOS workhorse.
+
+### §L3 — Tap Choreography
+
+Every interactive primitive squishes on press. Tap-squish is `transform: scale()`, not opacity, not bg-tint — opacity flips and bg-tints are interactive-rest indicators, not press feedback. No primitive may ship a press-feedback that is NOT squish-press.
+
+**Canonical rung — 0.96.** The single canonical press-scale is `0.96` (the iOS `.regular` control rung). Consumers reach for `--scale-press` and get the canonical squish. The substrate ships two adjacent rungs for outlier cases, but the default — and the rung every primitive should pick unless it has a documented reason — is `0.96`:
+
+- `--scale-press` (0.96) — **canonical**. The single rung consumers reach for.
+- `--scale-press-btn` (0.97; aliased `--scale-press-sm`) — slightly softer; legacy button + slider rung kept for back-compat.
+- `--scale-press-dock` (0.92) — deeper; dock-control rung that compensates for the smaller hit target.
+
+**The choreography.** A tap is a three-phase sequence, all carried by tokens:
+
+1. **Press (`:active`).** Surface scales to `--scale-press` (0.96) immediately. Touch-point illumination optional: a radial-gradient white at 0.15 α, ~60px radius, centered on touch — the iOS "your finger landed here" cue. Hold-without-release ≥ 1s engages shimmer (1.5s loop, 0.08 α sweep).
+2. **Release.** Spring carries the return: `--spring-snappy` on a `scale(0.96 → 1)` keyframe. Duration ~`response: 0.35s`, `dampingFraction: 0.8`. The ~7% overshoot reads as the surface "popping" back, not just untransforming.
+3. **Settle.** Spring damps to rest; no residual transform. Hover state (if applicable) resumes from rest, not from the press transform.
+
+The `useTouchGate` composable mediates the pointer / touch event distinction so the squish fires on touchstart (immediate) on touch devices and on pointerdown (with hover-aware delay) on hover devices. The `useSpringOrchestrator` composable carries the release.
+
+**Tap-squish is universal.** Buttons squish. Sliders squish. Dock controls squish (deeper, per `--scale-press-dock`). Cards that opt into interactivity squish. Custom chips squish. A primitive that wants press feedback consumes the squish-press recipe; it does not invent a new press metaphor.
+
+### §L4 — Motion Tiers
+
+Disney's 12 principles of animation are the canonical taxonomy for UI motion; iOS embodies a specific subset, and glass-ui exposes the substrate to honor that subset. The principles split into three tiers: **strong** (every primitive ships them), **medium** (composition idioms exercise them), and **weak** (we don't pretend to ship them; they live at the consumer or the design tool).
+
+**Strong tier — these are non-negotiable.** Every primitive shipping motion must honor:
+
+| # | Principle | iOS embodiment | Glass-ui substrate |
+|---|---|---|---|
+| 1 | **Squash & stretch** | Button press → scale 0.96; bounces back | `--scale-press` + `--spring-snappy` (see §L3) |
+| 6 | **Slow in / slow out** | All non-spring animations use ease-in-out decelerate | `--ease-standard` (`cubic-bezier(0.4, 0, 0.2, 1)`) |
+| 9 | **Timing** | Tap < 250ms; transition 400–600ms; modal 500–800ms | `--duration-fast` / `--duration-base` / `--duration-slow` (see §Duration) |
+| 10 | **Exaggeration** | Spring overshoot (bounce > 0); pull-to-refresh elastic stretch | `--spring-snappy` / `--spring-bouncy` (see §L2) |
+| 11 | **Solid drawing** | Glass depth shadow conveys z-elevation; tier hierarchy enforces it | The §L1 seven-tier ladder + `--z-*` stack (see §Z-Index Stack) |
+
+**Medium tier — composition idioms exercise these.** They are not primitive-level; they are scene-level. A primitive does not "ship" anticipation, but a composition recipe (sheet entrance, pull-to-refresh, modal swipe-dismiss) does:
+
+| # | Principle | iOS embodiment | Composition site |
+|---|---|---|---|
+| 2 | **Anticipation** | Sheet pulls back ~4px before sliding up; pull-to-refresh tug | Sheet + Drawer entrance recipes |
+| 4 | **Straight-ahead vs. pose-to-pose** | Gestures = spring (straight-ahead); transitions = keyframe (pose-to-pose) | Decision lives in §L2 spring-vs-ease rule |
+| 5 | **Follow-through / overlapping action** | Icon rotates *after* parent sheet finishes presenting | Composition discipline; see `useSpringOrchestrator` chaining |
+| 12 | **Appeal** | Distinctive personality — Liquid Glass refraction, blob morphs | `<Aurora>` + `<Metaballs>` + the K W6 disco-grain + sparkle-sweep recipe |
+
+**Weak tier — we don't ship these.** I am explicit: these Disney principles do not have first-class glass-ui substrate, and a consumer reaching for them is reaching outside the library:
+
+| # | Principle | Why we don't ship it |
+|---|---|---|
+| 3 | **Staging** | A scene-level concern — backdrop dim + non-focal desaturate live in the consumer's composition, not in a library primitive |
+| 7 | **Arc** | A path-shape concern — modal entries follow straight + spring; curved-arc trajectories are a custom-keyframe lift the consumer owns |
+| 8 | **Secondary action** | A composition-cascade concern — the consumer orchestrates icon-morph-while-badge-updates; no primitive bundles a secondary-action contract |
+
+A consumer building scene-level choreography (staged onboarding, arc-trajectory hero animation, secondary-action chains) should compose the library's strong + medium substrate manually rather than wait for a library primitive that will not arrive.
+
+### §L5 — Accessibility brackets
+
+Apple's HIG mandates three a11y fallbacks for Liquid Glass; glass-ui inherits the mandate. **All three are non-negotiable.** A primitive that ships a glass surface or a spring motion without honoring all three is incomplete.
+
+Each bracket disables a specific subsystem rather than degrading the entire vocabulary uniformly. The tokens honor the media queries automatically — consumers do not roll their own checks.
+
+| User preference | Subsystem disabled | Glass-ui behavior |
+|---|---|---|
+| `prefers-reduced-transparency` | Transparency / blur | Surface α → 1.0; `backdrop-filter` → none; grain → 0; rim → solid border. Glass becomes opaque tinted surface; legibility floor guaranteed. |
+| `prefers-reduced-motion` | Springs + morphs + ambient motion | Springs → `--ease-standard` (no overshoot); rubber-band → cross-fade; `<Aurora>` + `<Metaballs>` pause via `useIntersectionPause` siblings; tilt-gyro and shimmer off; tap-squish duration → instant or replaced with subtle opacity cue. |
+| `prefers-contrast: more` | Vibrancy + thin rim | Rim opacity → 1.0; rim width × 2; text color → max contrast (`--text-strong` floor); vibrancy / saturation boost off; contrast ratio guaranteed against the worst-case underlying content (WCAG 4.5:1 against any backdrop pixel, not just the midtone). |
+
+**Worst-case contrast.** The contrast requirement on glass surfaces is NOT against the midtone backdrop — it is against the **worst-case** underlying content. A glass surface over `<Aurora>` must hold WCAG 4.5:1 against the brightest pixel Aurora can paint AND against the darkest. The §Glass Surfaces accessibility fallback rules + the §Default Color Palette text-color tokens encode this floor; primitives composing glass over kinetic backdrops must verify the floor at consumer build-time (Playwright-MCP visual contrast probe is the canonical verification path).
+
+**No silent degradation.** A glass surface MUST NOT silently fall back when `prefers-reduced-transparency` is on without also retiring the grain + the catch-light + the saturate boost — those layers are the refraction; without the blur they read as decorative noise on a solid plate. The §Glass Surfaces "Accessibility fallbacks" rules carry the cascade; primitives consume those rules by composing the tier classes (`.glass-<tier>`) rather than by hand-rolling the layer recipe.
+
+**Cross-references.** The substrate values for the five precepts live elsewhere in this document:
+
+- §L1 Glass tier values → §Glass Surfaces (token table + accessibility fallbacks)
+- §L2 Spring curve values → §Easing → Spring curves
+- §L3 Press / lift / focus scales → §Interactive States
+- §L4 Duration tokens → §Duration; z-stack → §Z-Index Stack; motion primitives → §Motion + §Composables
+- §L5 A11y fallback rules → §Glass Surfaces → Accessibility fallbacks
+
+A primitive's section in this document SHOULD name which tier (§L1), which spring (§L2), which tap rung (§L3), which Disney tier (§L4), and which a11y bracket (§L5) it consumes. Specs that ship without naming their precept-level vocabulary are incomplete.
+
+---
+
 ## Token Architecture
 
 Tokens live in `src/styles/tokens.css` under `:root`, with `.dark` overrides. Consumers wire in this order:
