@@ -4,6 +4,8 @@
 // — every leaf is `export *`-rolled so the barrel is a thin pass-through with
 // no curation. Types are co-exported beside their runtime symbols at each leaf.
 export * from "./constants";
+export * from "./useSpring";
+export * from "./useSpringPress";
 export * from "./useSpringOrchestrator";
 export * from "./useStaggerReveal";
 export * from "./useScrollProgress";
