@@ -96,6 +96,47 @@
         border-color: var(--surface-tint-6);
     }
 
+    /* ─────────────────────────────────────────────────────────────
+       AL-W1-α augmented — spine variant (HOUSING register)
+
+       Per AL-X5 §4.1 + Y7. The `variant="spine"` chassis is the
+       polished SLEEVE that frames an inner card on quiet-content
+       App-level mounts. NOT glass:
+         - opacity 0 (no plate; `--glass-spine-opacity` is the canon)
+         - NO backdrop-filter (housing is not refracting)
+         - hairline outer stroke at `--glass-spine-border`
+         - interior radial vignette (`--glass-spine-vignette`) that
+           reads the phase-color cascade through `color-mix()` at
+           ~8% opacity — the housing breathes with the active phase
+           without competing with the inner card's saturated register
+         - tight under-shadow rim via `--glass-under-shadow-spine`
+         - inset from viewport by `clamp(0.5rem, 2vw, 1.25rem)` so
+           the chassis edge sits BEYOND the inner card's outer edge
+         - retires the engraved-bezel `::before` (the spine carries
+           its own stroke at the outer edge; the inner bezel would
+           collide with the inner card's hairline ring)
+
+       The phase cascade above (`[data-phase="…"]`) is orthogonal —
+       the `--phase-color` retint reaches the spine vignette via the
+       `color-mix(in oklab, var(--phase-color) 8%, transparent)` recipe
+       at `--glass-spine-vignette`. One mutation at the chassis level
+       still retints every consumer.
+       ───────────────────────────────────────────────────────────── */
+    .instrument-chassis[data-variant="spine"] {
+        background: var(--glass-spine-vignette);
+        backdrop-filter: none;
+        border: 1px solid var(--glass-spine-border);
+        box-shadow: var(--glass-under-shadow-spine);
+        margin: clamp(0.5rem, 2vw, 1.25rem);
+    }
+
+    /* The engraved-bezel inner stroke is a `"glass"`-variant feature —
+       retire it at the spine variant so the hairline outer stroke reads
+       alone (the inner card paints its own inner ring). */
+    .instrument-chassis[data-variant="spine"]::before {
+        display: none;
+    }
+
     /* Phase-color cascade — single property, full chassis-wide retint.
        `--phase-color-label` mirrors the cascade through the WCAG companion
        tokens (AC.W6c F1.V-04). The label register falls back to the canvas

@@ -597,8 +597,15 @@
        Quiet tier (above) lifted 3px → 10px on the same perceptual-
        register reset (FD1 §4 target range 10-12px; 10px is the lower
        end). The MetricBadge pills + InstrumentChassis-internal cells
-       now read as translucent gauge rather than flat tint. */
-    --glass-blur-dock-radius:     14px;
+       now read as translucent gauge rather than flat tint.
+
+       AL-W3-α (T10 per A-synthesis §1.5): retune 14px → 11px with a
+       paired opacity lift 0.32 → 0.42 (below). The user mandate at
+       AL-time was "slight blur" + "refined glassyness" — at 11px /
+       0.42 the dock reads as a CRISPER GLASS PILL (the iOS Control
+       Center register), not a feathered watercolour wash. Holds the
+       register at the lower blur radius. */
+    --glass-blur-dock-radius:     11px;
 
     --glass-blur-wash:     blur(var(--glass-blur-wash-radius)) saturate(1.05);
     --glass-blur-quiet:    blur(var(--glass-blur-quiet-radius));
@@ -614,10 +621,15 @@
 
     /* Dock-specific opacity. Lighter than `resting` (0.65) so the dock reads
        as a translucent overlay rather than a panel — backdrop bleed visible
-       through it. Sits at 0.32 alongside the feathered blur radii so the
-       chrome doesn't read as the dominant surface. Consumed by `.glass-dock`
-       via the `--glass-bg-dock` token. */
-    --glass-opacity-dock: 0.32;
+       through it. Consumed by `.glass-dock` via the `--glass-bg-dock` token.
+
+       AL-W3-α (T10 per A-synthesis §1.5): retune 0.32 → 0.42 paired with
+       the dock blur radius drop (14px → 11px above). The user mandate at
+       AL-time was "slight blur" + "refined glassyness" — the +0.10 opacity
+       lift HOLDS the surface register against the tightened blur, so the
+       dock still reads as a clearly painted chrome rather than dissociating
+       into a frosted ghost. */
+    --glass-opacity-dock: 0.42;
 
     /* Chassis-specific opacity. Looser than `default` (0.50) so the
        <InstrumentChassis> surface reads as glass-over-aurora at its
@@ -737,6 +749,53 @@
         var(--glass-highlight);
     --glass-shadow:    var(--glass-shadow-quiet);
     --glass-shadow-lg: var(--glass-shadow-floating);
+
+    /* ─────────────────────────────────────────────────────────────
+       AL-W1-α augmented — SPINE 8th tier (HOUSING register)
+
+       Closes the AK W2 chassis-spine architectural underclaim per
+       AL-X5 §4.1. The spine register is a polished SLEEVE, not glass:
+       NO backdrop-filter, NO plate opacity, hairline outer stroke,
+       interior radial vignette that subtly carries the phase-color
+       cascade. Consumed exclusively by `<InstrumentChassis variant="spine">`
+       at App-level mount paths (quiet-content routes).
+
+       The 4 tokens here cover the minimum viable substrate the SLIM
+       Y4/Y6/Y7 retention set ratified. The 35 rejected axes (saturate
+       band, edge-light per tier, depth-shadow per tier, tier-up macro)
+       stay rejected per the conservative-creation mandate.
+       ───────────────────────────────────────────────────────────── */
+    --glass-spine-opacity: 0;
+    --glass-spine-blur: 0px;
+    --glass-spine-border: var(--surface-tint-8);
+    --glass-spine-vignette: radial-gradient(
+        ellipse at 50% 0%,
+        color-mix(in oklab, var(--phase-color, var(--surface-tint-8)) 8%, transparent),
+        transparent 60%
+    );
+
+    /* ─────────────────────────────────────────────────────────────
+       AL-W10 SLIM — UNDER-SHADOW recipe rungs
+
+       Per AL-X5 §4 + Y7 §3. iOS Liquid Glass surfaces carry a 0.5px
+       dark hairline along the bottom edge (reads as under-shadow /
+       glass thickness). The substrate `--hairline-under-shadow`
+       already publishes one quiet rung; the four-rung ladder here
+       names the SLIM retention set (Y4 §3.2 / Y6 §4.3) — `quiet`,
+       `default`, `vivid`, `spine` cover the consumer landings without
+       multiplying tokens per tier. The 3 hand-rolled literals at
+       `instrument-chassis.css:52`, `dock.css:279`, `dock.css:952`
+       retire to these.
+
+       Composes as a NON-INSET box-shadow layer alongside the existing
+       `--glass-shadow-*` recipe (the inset under-shadow stays at the
+       hand-rolled literal where it's load-bearing on chassis-internal
+       surfaces).
+       ───────────────────────────────────────────────────────────── */
+    --glass-under-shadow-quiet:   0 2px 8px -1px oklch(0 0 0 / 0.04);
+    --glass-under-shadow-default: 0 4px 16px -2px oklch(0 0 0 / 0.08);
+    --glass-under-shadow-vivid:   0 8px 32px -4px oklch(0 0 0 / 0.12);
+    --glass-under-shadow-spine:   0 1px 0 0 oklch(0 0 0 / 0.06);
 
     /* Overlay scrim rungs — substrate-aware modal/dialog backdrop tints.
        Three weights cover the deployed range: dialog-scroll (subtle),
