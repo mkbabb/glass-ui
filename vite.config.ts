@@ -1,6 +1,9 @@
+import { cpSync, existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { resolve } from "node:path";
+
 import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import dts from "vite-plugin-dts";
 import {
     libraryEntries,
@@ -8,6 +11,99 @@ import {
     libraryFileName,
     libraryGlobals,
 } from "./vite.library";
+
+/**
+ * publishStyleAssets — fourier A.W2.f (cross-repo dev-resolution
+ * contract-v2 publisher-half hygiene).
+ *
+ * The `./styles` export in package.json formerly published the raw
+ * source `./src/styles/index.css`, whose `@font-face` rules reference
+ * `url("../fonts/<family>/<face>.woff2")` (relative to `src/styles/`).
+ * Under contract-v2 (docs/precepts/cross-repo-dev-resolution.md §2.1)
+ * every exports key MUST point into `dist/`; consumers no longer widen
+ * `server.fs.allow` into a sibling's `src/` (§2.2 STRUCK), so font URLs
+ * that resolve out of `src/fonts/` return 403 from the consumer's Vite.
+ *
+ * Two architectural responses were possible:
+ *
+ *   - Option A — copy `src/fonts/` to `dist/fonts/`, preserve relative
+ *     `url()` form. Structural blocker: Vite resolves CSS `url()`
+ *     against the file's `realpath`, which under the consumer's
+ *     `file:` symlink lands at `/Users/.../glass-ui/dist/fonts/...` —
+ *     OUTSIDE the consumer's project root, so the `/@fs/` channel
+ *     gates on `server.fs.allow` and still 403s. Package-specifier
+ *     URLs (`url("@mkbabb/glass-ui/fonts/...")`) likewise fail —
+ *     Vite's CSS pipeline does not resolve bare specifiers in `url()`
+ *     the way it does in `@import`. The relative URL is structurally
+ *     locked to the sibling's realpath; no source rewrite escapes it.
+ *
+ *   - Option B — inline the woff2 files as `data:font/woff2;base64,…`
+ *     URIs in the published CSS at build time. The font request layer
+ *     vanishes entirely; the `fs.allow` triangle dissolves. CSS-payload
+ *     cost is bounded — total font corpus is 124 KB raw across two
+ *     families (Plus Jakarta Sans latin + latin-ext, variable wght
+ *     200..800; Fira Code latin + latin-ext, variable wght 300..700) →
+ *     ~165 KB base64-encoded, gzips to ~120 KB. Within the inline-asset
+ *     register for a once-loaded design-system CSS.
+ *
+ * Option B chosen — A's blocker is the symlink-realpath axis of Vite's
+ * resolver, not a glass-ui internal. The dist CSS is also self-contained
+ * for cdn / npm-published consumption: no out-of-tree font requests, no
+ * preload-coordination guesswork on the consumer side.
+ *
+ * The plugin: cpSync `src/styles/` → `dist/styles/`, then walk each
+ * `*.css` file and substitute every `url("../fonts/<rel>")` with a
+ * `data:` URI built from `readFileSync("src/fonts/<rel>")`. `src/fonts/`
+ * is also cpSync'd to `dist/fonts/` so the `./fonts/*` exports subpath
+ * (added below) covers any future per-asset consumer that wants the raw
+ * woff2 — `@font-face` consumers transparently bypass it.
+ */
+function publishStyleAssets(): Plugin {
+    return {
+        name: "glass-ui:publish-style-assets",
+        apply: "build",
+        closeBundle() {
+            const root = __dirname;
+            const srcFonts = resolve(root, "src/fonts");
+            const distFonts = resolve(root, "dist/fonts");
+            const srcStyles = resolve(root, "src/styles");
+            const distStyles = resolve(root, "dist/styles");
+
+            if (existsSync(srcFonts)) {
+                cpSync(srcFonts, distFonts, { recursive: true });
+            }
+            if (existsSync(srcStyles)) {
+                cpSync(srcStyles, distStyles, { recursive: true });
+            }
+
+            // Inline every `url(... .woff2)` reference in the published
+            // CSS as a base64 data URI sourced from `src/fonts/`. The
+            // URL form expected here is the canonical authored shape:
+            // `url("@mkbabb/glass-ui/fonts/<family>/<face>.woff2")`.
+            // Resolves the relative path against `srcFonts`, encodes,
+            // rewrites in place.
+            if (!existsSync(distStyles)) return;
+            const cssFiles = readdirSync(distStyles).filter((f) =>
+                f.endsWith(".css"),
+            );
+            const urlRe = /url\(\s*["']?@mkbabb\/glass-ui\/fonts\/([^"')\s]+)["']?\s*\)/g;
+            for (const file of cssFiles) {
+                const path = resolve(distStyles, file);
+                const src = readFileSync(path, "utf-8");
+                let touched = false;
+                const rewritten = src.replace(urlRe, (_match, rel: string) => {
+                    const fontPath = resolve(srcFonts, rel);
+                    if (!existsSync(fontPath)) return _match;
+                    const buf = readFileSync(fontPath);
+                    const b64 = buf.toString("base64");
+                    touched = true;
+                    return `url("data:font/woff2;base64,${b64}")`;
+                });
+                if (touched) writeFileSync(path, rewritten, "utf-8");
+            }
+        },
+    };
+}
 
 export default defineConfig({
     plugins: [
@@ -17,6 +113,7 @@ export default defineConfig({
             tsconfigPath: "./tsconfig.src.json",
             rollupTypes: true,
         }),
+        publishStyleAssets(),
     ],
     // Cross-repo dev-resolution contract-v2
     // (docs/precepts/cross-repo-dev-resolution.md §2).
