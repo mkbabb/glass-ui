@@ -3,11 +3,15 @@ import { readFileSync } from "node:fs";
 import * as Api from "../src/api";
 import * as Aurora from "../src/aurora";
 import * as CarouselSurface from "../src/carousel";
+import * as CommandSurface from "../src/command";
 import * as ConfirmDialogSurface from "../src/confirm-dialog";
+import * as ContextMenuSurface from "../src/context-menu";
 import * as Glass from "../src/index";
 import * as Controls from "../src/controls";
 import * as Dark from "../src/dark";
+import * as DataTableSurface from "../src/data-table";
 import * as Dock from "../src/dock";
+import * as DropdownMenuSurface from "../src/dropdown-menu";
 import * as ExpandableContainerSurface from "../src/expandable-container";
 import * as Forms from "../src/forms";
 import * as GlassCarouselSurface from "../src/glass-carousel";
@@ -20,8 +24,10 @@ import * as MetaballsSurface from "../src/metaballs";
 import * as MetricBadgeSurface from "../src/metric-badge";
 import * as Motion from "../src/motion";
 import * as PaperBackdropSurface from "../src/paper-backdrop";
+import * as PopoverSurface from "../src/popover";
 import * as PulseSurface from "../src/pulse";
 import * as Search from "../src/search";
+import * as SelectSurface from "../src/select";
 import * as Sidebar from "../src/sidebar";
 import * as SortableListSurface from "../src/sortable-list";
 import * as StackedIconsSurface from "../src/stacked-icons";
@@ -170,6 +176,34 @@ const subpathRuntimeExports = [
     { subpath: "motion", surface: Motion, name: "installDarkModeSync" },
     { subpath: "motion", surface: Motion, name: "DAMPING" },
     { subpath: "motion", surface: Motion, name: "SNAP_THRESHOLD" },
+    // AL.W4 — sub-barrel publishing phase 2 (G-AL-D7 ABSORB). Six remaining
+    // `ui/` primitive families speedtest still imports from the root barrel
+    // get flat-name subpaths so consumers can shake unrelated families out
+    // of the entry chunk. Closes AL-CARRY-REMAINING-ROOT-BARREL-IMPORTS.
+    { subpath: "popover", surface: PopoverSurface, name: "Popover" },
+    { subpath: "popover", surface: PopoverSurface, name: "PopoverTrigger" },
+    { subpath: "popover", surface: PopoverSurface, name: "PopoverContent" },
+    { subpath: "select", surface: SelectSurface, name: "Select" },
+    { subpath: "select", surface: SelectSurface, name: "SelectContent" },
+    { subpath: "select", surface: SelectSurface, name: "SelectItem" },
+    { subpath: "select", surface: SelectSurface, name: "SelectTrigger" },
+    { subpath: "select", surface: SelectSurface, name: "SelectValue" },
+    { subpath: "data-table", surface: DataTableSurface, name: "DataTable" },
+    { subpath: "data-table", surface: DataTableSurface, name: "DataTablePagination" },
+    { subpath: "dropdown-menu", surface: DropdownMenuSurface, name: "DropdownMenu" },
+    { subpath: "dropdown-menu", surface: DropdownMenuSurface, name: "DropdownMenuContent" },
+    { subpath: "dropdown-menu", surface: DropdownMenuSurface, name: "DropdownMenuItem" },
+    { subpath: "dropdown-menu", surface: DropdownMenuSurface, name: "DropdownMenuTrigger" },
+    { subpath: "dropdown-menu", surface: DropdownMenuSurface, name: "DropdownMenuPortal" },
+    { subpath: "context-menu", surface: ContextMenuSurface, name: "ContextMenu" },
+    { subpath: "context-menu", surface: ContextMenuSurface, name: "ContextMenuContent" },
+    { subpath: "context-menu", surface: ContextMenuSurface, name: "ContextMenuItem" },
+    { subpath: "context-menu", surface: ContextMenuSurface, name: "ContextMenuTrigger" },
+    { subpath: "command", surface: CommandSurface, name: "Command" },
+    { subpath: "command", surface: CommandSurface, name: "CommandDialog" },
+    { subpath: "command", surface: CommandSurface, name: "CommandInput" },
+    { subpath: "command", surface: CommandSurface, name: "CommandList" },
+    { subpath: "command", surface: CommandSurface, name: "CommandItem" },
 ] as const;
 
 const nonCoreRootRetirements = [
