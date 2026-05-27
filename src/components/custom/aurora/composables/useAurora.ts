@@ -12,6 +12,21 @@ import { useIntersectionPause } from "../../../../composables/motion/useIntersec
 import type { AuroraConfig, AuroraInstance } from "../presets";
 
 /**
+ * Adaptive-substrate options threaded down from `Aurora.vue` (AM.W1). The
+ * render mode is the RESOLVED concrete substrate (`"auto"` already collapsed
+ * to `"webgl"`/`"css"` at the component boundary via `resolveRenderMode`).
+ */
+export interface UseAuroraAdaptiveOptions {
+    /**
+     * Resolved render substrate. `"css"` short-circuits the WebGL arm schedule
+     * entirely — no webgl2 context is ever created; the `Aurora.vue`
+     * placeholder stays the permanent surface. `"webgl"` (default) arms the
+     * deferred WebGL path as before.
+     */
+    renderMode?: "webgl" | "css";
+}
+
+/**
  * Public return shape of {@link useAurora}.
  *
  * O.W4 Lane B — Fix 2 (Rγ L2): authored to replace the previous anonymous
@@ -110,8 +125,13 @@ export function useAurora(
     canvasRef: Ref<HTMLCanvasElement | null>,
     configSource: ConfigSource<AuroraConfig>,
     runtimeOptions: AuroraRuntimeOptions = {},
+    adaptiveOptions: UseAuroraAdaptiveOptions = {},
 ): UseAuroraReturn {
     const getCfg = asGetter(configSource);
+    // `"css"` (resolved by `Aurora.vue`) means: never arm the WebGL path. The
+    // construction below is skipped and the placeholder is the permanent
+    // surface. `"webgl"` (default) arms the deferred path exactly as before.
+    const cssOnly = adaptiveOptions.renderMode === "css";
     let inst: AuroraInstance | null = null;
     let stopWatch: (() => void) | null = null;
     let stopArmWatch: (() => void) | null = null;
@@ -180,6 +200,13 @@ export function useAurora(
     onMounted(() => {
         const canvas = canvasRef.value;
         if (!canvas) return;
+
+        // Adaptive substrate `"css"` (AM.W1): never arm WebGL. We skip runtime
+        // construction, the intersection gate, and the idle arm schedule
+        // entirely — `inst` stays null, `isArmed` stays false, and `Aurora.vue`
+        // keeps the `paletteToCssGradient` placeholder as the permanent warm
+        // wash. No webgl2 context is ever created on this path.
+        if (cssOnly) return;
 
         // Construction is cheap on the deferred path (no GL work yet) and
         // throws on the eager path exactly as before — invariant 24 holds

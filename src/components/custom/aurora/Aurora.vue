@@ -3,7 +3,8 @@ import { computed, ref } from "vue";
 import { useAurora } from "./composables/useAurora";
 import { paletteToCssGradient } from "./composables/color";
 import type { AuroraRuntimeOptions } from "./composables/runtime";
-import type { AuroraConfig } from "./presets";
+import { DEFAULT_AURORA_CONFIG, type AuroraConfig } from "./presets";
+import { resolveRenderMode, type AuroraRenderMode } from "./renderMode";
 
 /**
  * Aurora — a painterly WebGL2 background.
@@ -38,9 +39,32 @@ import type { AuroraConfig } from "./presets";
  */
 const props = withDefaults(
     defineProps<{
-        config: AuroraConfig;
+        /**
+         * Aurora field configuration (palette, nuclei, warp, media). Optional —
+         * omit it and the canonical `DEFAULT_AURORA_CONFIG` painterly look
+         * renders (gap 11, AM.W1). Pass a full config to author a custom field,
+         * or a preset object from `./presets`. The default is supplied via a
+         * `withDefaults` factory so each mount gets its own (un-shared) object.
+         */
+        config?: AuroraConfig;
         runtimeOptions?: AuroraRuntimeOptions;
         onInitError?: (err: Error) => void;
+        /**
+         * Adaptive render substrate (AM.W1; `aurora-lazy-init §3.1`). Aurora is
+         * NEVER retired — the warm wash always composites; only the substrate
+         * adapts:
+         *   - `"webgl"` — arm the WebGL path (still deferred to idle past first
+         *     paint via the `initStrategy:"deferred"` default).
+         *   - `"css"`   — never arm WebGL; the `paletteToCssGradient` placeholder
+         *     stays the permanent surface (the warm wash composites, it just
+         *     does not animate).
+         *   - `"auto"` (default) — resolve to `"css"` on low-power /
+         *     reduced-motion / save-data devices (`hardwareConcurrency <= 4` OR
+         *     `prefers-reduced-motion: reduce` OR `connection.saveData`), else
+         *     `"webgl"`. Resolved once at setup; SSR / missing-API safe (assumes
+         *     capable → `"webgl"` when the probes are unavailable).
+         */
+        renderMode?: AuroraRenderMode;
         /**
          * Per-route aurora saturation clamp (A3 §6.R-9 / G-AK-D11).
          *
@@ -58,8 +82,20 @@ const props = withDefaults(
          */
         opacityCeiling?: number;
     }>(),
-    { opacityCeiling: 1 },
+    {
+        opacityCeiling: 1,
+        // Factory so every mount gets its own config object rather than
+        // sharing (and risk-mutating) the canonical module-level default.
+        config: () => DEFAULT_AURORA_CONFIG,
+        renderMode: "auto",
+    },
 );
+
+// Resolve the adaptive render substrate ONCE at setup (aurora-lazy-init §3.1).
+// `"auto"` collapses to `"css"`/`"webgl"` per device tier here so the arm gate
+// downstream sees a concrete substrate; `"webgl"`/`"css"` pass through. SSR /
+// missing-API safe inside `resolveRenderMode`.
+const resolvedRenderMode = resolveRenderMode(props.renderMode);
 
 // Clamp defensively — out-of-range values would otherwise leak straight
 // into the CSS custom property and either invert (negative) or over-
@@ -80,7 +116,11 @@ const mergedRuntimeOptions = computed<AuroraRuntimeOptions>(() => ({
 // Pass a getter so `watch` tracks prop swaps (preset switch) as well as
 // deep mutations (slider edits). If we passed `props.config` directly the
 // watch would bind to the initial object and miss reference changes.
-const api = useAurora(canvasRef, () => props.config, mergedRuntimeOptions.value);
+// Thread the resolved substrate into the composable so `"css"` short-circuits
+// the WebGL arm schedule entirely (no webgl2 context is ever created).
+const api = useAurora(canvasRef, () => props.config, mergedRuntimeOptions.value, {
+    renderMode: resolvedRenderMode,
+});
 
 // Cheap static first frame — a CSS gradient derived from the same palette
 // stops the shader interpolates. Zero JS, zero GPU; paints before the WebGL
