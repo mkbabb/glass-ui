@@ -696,6 +696,92 @@
     }
 }
 
+/* ── Gold CTA shimmer modifier — AN.R0 D9 ───────────────────────────────
+   `btn-audacious-gold` extends `btn-audacious` with a gold sweep shimmer
+   on hover. Pair as `btn-audacious btn-audacious-gold` (or use the Button
+   `variant="gold-audacious"` which composes both). The hover shimmer is a
+   translucent linear-gradient sweep (low alpha — tasteful, not garish)
+   that slides left-to-right via the existing `gold-shimmer-slide` keyframe
+   (animations.css). The gold gradient uses the canonical `--color-gold-*`
+   token triad (tokens.css §13).
+
+   Design register:
+   • PRM no-preference: shimmer sweeps continuously at `--duration-shimmer`
+     rate; the sparkle-sweep (from btn-audacious) coexists on hover.
+   • PRM reduce: static gold tint shows on hover; no animation.
+   • The gold shimmer is a background-image layer ABOVE the existing
+     btn-audacious paper-grain + primary-radial layers, blended with
+     `overlay` so the glass substrate reads through at partial opacity.
+   • The `::before` ripple and `::after` sparkle from btn-audacious are
+     unchanged; this modifier only retunes the hover background layers.
+   • Consumer applies: `<Button variant="gold-audacious">Next →</Button>` */
+@utility btn-audacious-gold {
+    /* At rest: a faint warm gold tint over the glass surface reads as "warm
+       glass" without announcing the hover state prematurely. */
+    background-image:
+        linear-gradient(
+            135deg,
+            color-mix(in srgb, var(--color-gold) 8%, transparent),
+            color-mix(in srgb, var(--color-gold-light) 5%, transparent) 50%,
+            color-mix(in srgb, var(--color-gold) 8%, transparent)
+        );
+
+    /* Hover: replace the audacious primary-radial with a gold sweep shimmer.
+       The shimmer gradient rides above the paper-grain texture; the `overlay`
+       blend-mode concentrates the gold on bright grain facets and recedes on
+       dark ones — the same lens metaphor as the btn-audacious primary radial. */
+    &:hover:not(:disabled) {
+        background-image:
+            var(--paper-clean-texture),
+            linear-gradient(
+                90deg,
+                transparent 0%,
+                color-mix(in srgb, var(--color-gold-dark) 22%, transparent) 25%,
+                color-mix(in srgb, var(--color-gold-light) 30%, transparent) 50%,
+                color-mix(in srgb, var(--color-gold-dark) 22%, transparent) 75%,
+                transparent 100%
+            );
+        background-blend-mode: overlay, normal;
+        background-size: var(--paper-texture-size), 250% 100%;
+        background-position: 0 0, 100% 0;
+        box-shadow:
+            var(--glass-specular),
+            0 0 0 1px color-mix(in srgb, var(--color-gold) 30%, transparent),
+            0 0.5px 0 0 rgb(0 0 0 / 0.06);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        &:hover:not(:disabled) {
+            animation: btn-gold-bg-sweep var(--duration-shimmer) linear infinite;
+        }
+    }
+}
+
+/* Background-position sweep for the gold CTA hover shimmer.
+   Distinct from `gold-shimmer-slide` (which animates background-position for
+   a text-clip gradient). This variant sweeps the `background-position` of the
+   250% wide gradient across the button's bounding box. */
+@keyframes btn-gold-bg-sweep {
+    0%   { background-position: 0 0, 100% 0; }
+    100% { background-position: 0 0, -100% 0; }
+}
+
+/* ── Table density utilities — AN.R0 ─────────────────────────────────────
+   `table-cell` and `table-head` replace the former Tailwind `p-4` / `h-12`
+   literals in TableCell.vue / TableHead.vue. Both read `--table-density`
+   (tokens.css §19) so a single CSS-var assignment on a wrapping element
+   scales all row padding + header height simultaneously. Default density=1
+   resolves to the identical geometry as the previous Tailwind literals. */
+@utility table-cell {
+    padding-inline: var(--table-cell-px, 1rem);
+    padding-block: var(--table-cell-py, 1rem);
+}
+
+@utility table-head {
+    height: var(--table-head-h, 3rem);
+    padding-inline: var(--table-head-px, 1rem);
+}
+
 /* ── Rainbow gradient backgrounds (Q.W3 Lane E re-promote) ──────────────
    `.rainbow-vivid` + `.rainbow-pastel` paint a left-to-right 7-stop spectrum
    from the canonical `--rainbow-*` / `--rainbow-pastel-*` token families

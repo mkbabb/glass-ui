@@ -58,6 +58,22 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
         </section>
 
         <section class="flex flex-col gap-4">
+            <h2 class="text-subheading">Gold audacious CTA</h2>
+            <p class="text-small text-muted-foreground">
+                AN.R0 D9 — primary-CTA with gold sweep shimmer on hover.
+                Reuses the <code class="fira-code">btn-audacious</code> glass substrate
+                (sparkle + ripple) plus a translucent gold gradient sweep via
+                <code class="fira-code">btn-audacious-gold</code>. Reduced-motion suppresses
+                the sweep; static gold tint remains.
+            </p>
+            <div class="flex flex-wrap items-center gap-3">
+                <Button variant="gold-audacious" size="lg">Next →</Button>
+                <Button variant="gold-audacious">Submit</Button>
+                <Button variant="gold-audacious" disabled>Disabled</Button>
+            </div>
+        </section>
+
+        <section class="flex flex-col gap-4">
             <h2 class="text-subheading">Sizes</h2>
             <p class="text-small text-muted-foreground">
                 Default variant across the size scale.

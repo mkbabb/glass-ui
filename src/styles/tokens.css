@@ -1272,6 +1272,32 @@
     --celebration-row-rhythm: clamp(0.5rem, 1.6cqi, 1rem);
     --text-celebration-headline-size: clamp(2.5rem, 12cqi, 9rem);
     --complete-headline-size: clamp(2.25rem, 11cqi, 4rem);
+
+    /* ═══════════════════════════════════════════════
+       §19 TABLE DENSITY
+
+       A single unitless knob `--table-density` scales the cell
+       padding and header row height of the Table / DataTable
+       primitive. Default `1` is backward-compatible (resolves to
+       the same `1rem` cell padding and `3rem` header height as the
+       pre-knob hardcoded values). Consumers set this on a wrapping
+       element or on `:root` to tune density for their context:
+
+         • 0.75 — compact admin table (tighter rows, more data/screen)
+         • 1    — default (unchanged)
+         • 1.25 — comfortable / touch-friendly rows
+
+       The derived tokens are read by the `table-cell` and `table-head`
+       CSS utilities (utilities.css) which TableCell.vue and TableHead.vue
+       consume instead of the former Tailwind `p-4` / `h-12` literals.
+       Changing `--table-density` cascades instantly via CSS inheritance —
+       no JS prop is needed.
+       ═══════════════════════════════════════════════ */
+    --table-density: 1;
+    --table-cell-px: calc(1rem * var(--table-density));
+    --table-cell-py: calc(1rem * var(--table-density));
+    --table-head-h: calc(3rem * var(--table-density));
+    --table-head-px: calc(1rem * var(--table-density));
 }
 
 /* ═══════════════════════════════════════════════
