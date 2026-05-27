@@ -4,7 +4,6 @@ import { resolve } from "node:path";
 import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
 import { defineConfig, type Plugin } from "vite";
-import dts from "vite-plugin-dts";
 import {
     libraryEntries,
     libraryExternal,
@@ -109,10 +108,14 @@ export default defineConfig({
     plugins: [
         tailwindcss(),
         vue(),
-        dts({
-            tsconfigPath: "./tsconfig.src.json",
-            rollupTypes: true,
-        }),
+        // TypeScript declarations are emitted out-of-band by the repo-native
+        // `vue-tsc` (the `emit-types` script, run as the second half of
+        // `build`), NOT by an in-Vite dts plugin. `vite-plugin-dts` bundled its
+        // own api-extractor whose internal TypeScript pin can drift from the
+        // repo's `typescript` (TS 6.x), and it dominated build time
+        // (~62% of the ~2½min build). `vue-tsc --project tsconfig.build.json`
+        // emits the same flat per-entry `.d.ts` set into `dist/` in ~16s with
+        // no version-coupling. See `tsconfig.build.json` + `package.json` build.
         publishStyleAssets(),
     ],
     // Cross-repo dev-resolution contract-v2

@@ -104,7 +104,7 @@
                 "dist/forms.d.ts"
             ],
             "api": [
-                "dist/api.d.ts"
+                "dist/api/index.d.ts"
             ],
             "dark": [
                 "dist/dark.d.ts"
@@ -358,7 +358,7 @@
             "import": "./dist/forms.js"
         },
         "./api": {
-            "types": "./dist/api.d.ts",
+            "types": "./dist/api/index.d.ts",
             "import": "./dist/api.js"
         },
         "./dark": {
@@ -477,7 +477,7 @@
     ],
     "scripts": {
         "dev": "vite",
-        "build": "NODE_OPTIONS=--max-old-space-size=8192 vite build",
+        "build": "NODE_OPTIONS=--max-old-space-size=8192 vite build && npm run emit-types",
         "build:watch": "NODE_OPTIONS=--max-old-space-size=8192 vite build --watch",
         "prepare": "test -f dist/glass-ui.js || npm run build",
         "typecheck": "vue-tsc --noEmit",
@@ -488,7 +488,7 @@
         "iter-build": "vite build --config vite.iter.config.ts",
         "iter-test": "vitest run --reporter=verbose",
         "iter-test-watch": "vitest --watch",
-        "emit-types": "vue-tsc --declaration --emitDeclarationOnly --outDir dist/types --project tsconfig.json --noEmit false",
+        "emit-types": "vue-tsc --project tsconfig.build.json",
         "iter": "npm run iter-check && npm run iter-build && npm run iter-test",
         "proof:package": "node scripts/proof-package.mjs",
         "proof:consumers:static": "node scripts/proof-consumers-static.mjs",
@@ -544,7 +544,6 @@
         "typescript": "^6.0.3",
         "vaul-vue": "^0.4.0",
         "vite": "^8.0.13",
-        "vite-plugin-dts": "^4.5.4",
         "vitest": "^4.1.7",
         "vue": "^3.5.34",
         "vue-router": "^4.6.4",
