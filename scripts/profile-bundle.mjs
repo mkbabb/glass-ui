@@ -133,6 +133,50 @@ const totals = files.reduce(
     { bytes: 0, gzipBytes: 0, byExt: {} },
 );
 
+// Per-subpath gzipped-size disclosure (gap 14). Every `dist/<name>.js` chunk
+// is classified as a published library ENTRY (a subpath the consumer imports
+// — `aurora.js`, `dock.js`, the root `glass-ui.js`, …) or a SHARED leaf (a
+// Rolldown-extracted hashed chunk like `DialogContent-Cr7pJCiA.js` that
+// several entries reference). The entry set is read authoritatively from the
+// `package.json` exports' `import` targets — not pattern-matched — so a
+// hyphenated subpath name (`glass-carousel`, `paper-backdrop`) is never
+// mistaken for a content-hashed leaf. The split tells a consumer the cost of
+// an import choice: the standalone weight of the subpath + whatever shared
+// leaves it drags in. The data was already gzipped above (`:111`); this only
+// surfaces it as a published table — additive + informational, it does NOT
+// touch the glass-ui.js / glass-ui.css enforce gate.
+const pkg = JSON.parse(readFileSync(resolve(root, "package.json"), "utf8"));
+const entryFiles = new Set();
+for (const cond of Object.values(pkg.exports ?? {})) {
+    const target = cond && typeof cond === "object" ? cond.import : undefined;
+    if (typeof target === "string" && target.endsWith(".js")) {
+        entryFiles.add(target.replace(/^\.\//, ""));
+    }
+}
+const distName = (f) => f.file.replace(/^dist\//, "");
+const subpathEntries = files
+    .filter((f) => f.ext === ".js" && f.file.startsWith("dist/"))
+    .map((f) => ({
+        name: distName(f),
+        kind: entryFiles.has(f.file) ? "entry" : "shared",
+        bytes: f.bytes,
+        gzipBytes: f.gzipBytes,
+    }))
+    .sort((a, b) => b.gzipBytes - a.gzipBytes);
+
+const subpathTotals = subpathEntries.reduce(
+    (acc, e) => {
+        acc[e.kind].bytes += e.bytes;
+        acc[e.kind].gzipBytes += e.gzipBytes;
+        acc[e.kind].files += 1;
+        return acc;
+    },
+    {
+        entry: { bytes: 0, gzipBytes: 0, files: 0 },
+        shared: { bytes: 0, gzipBytes: 0, files: 0 },
+    },
+);
+
 // Budget evaluation — independent of artefact emission. Emits a per-file
 // PASS/FAIL line and a final summary. Exits non-zero only when --enforce
 // (or GLASS_UI_BUDGET_MODE=1) is set, so `profile:bundle` keeps its
@@ -183,6 +227,8 @@ writeFileSync(
             budgets: BUDGETS,
             budgetReport,
             totals,
+            subpathTotals,
+            subpathTable: subpathEntries,
             files,
         },
         null,
@@ -191,6 +237,54 @@ writeFileSync(
 );
 
 console.log(`Bundle profile written: ${artifactPath}`);
+
+// Per-subpath gzipped-size table — published as a markdown artefact (so a
+// consumer can read it from the repo / a release asset) AND echoed to stdout.
+// Sorted largest-gzip first. The `kind` column flags whether the chunk is a
+// publishable subpath ENTRY or a SHARED leaf pulled in transitively.
+const fmtKiB = (n) => `${(n / 1024).toFixed(1)} KiB`;
+const subpathMarkdownPath = resolve(auditDir, "W4-subpath-sizes.md");
+const mdRows = subpathEntries.map(
+    (e) =>
+        `| \`dist/${e.name}\` | ${e.kind} | ${e.bytes} (${fmtKiB(e.bytes)}) | ${e.gzipBytes} (${fmtKiB(e.gzipBytes)}) |`,
+);
+writeFileSync(
+    subpathMarkdownPath,
+    [
+        "# Per-subpath gzipped-size table",
+        "",
+        `Generated ${new Date().toISOString()} by \`scripts/profile-bundle.mjs\`.`,
+        "Every `dist/*.js` chunk, sorted largest-gzip first. `entry` = a",
+        "publishable subpath a consumer imports; `shared` = a Rolldown-extracted",
+        "leaf several entries reference. Informational — not gated.",
+        "",
+        "| Chunk | Kind | Raw | Gzip |",
+        "|---|---|---|---|",
+        ...mdRows,
+        "",
+        `**Entries** — ${subpathTotals.entry.files} files, ${subpathTotals.entry.bytes} raw / ${subpathTotals.entry.gzipBytes} gzip.`,
+        `**Shared** — ${subpathTotals.shared.files} files, ${subpathTotals.shared.bytes} raw / ${subpathTotals.shared.gzipBytes} gzip.`,
+        "",
+    ].join("\n"),
+);
+console.log(`Per-subpath size table written: ${subpathMarkdownPath}`);
+
+console.log("");
+console.log("Per-subpath gzipped-size table (largest gzip first):");
+console.log(
+    `  ${"chunk".padEnd(38)} ${"kind".padEnd(7)} ${"raw".padStart(10)} ${"gzip".padStart(10)}`,
+);
+for (const e of subpathEntries) {
+    console.log(
+        `  ${`dist/${e.name}`.padEnd(38)} ${e.kind.padEnd(7)} ${fmtKiB(e.bytes).padStart(10)} ${fmtKiB(e.gzipBytes).padStart(10)}`,
+    );
+}
+console.log(
+    `  ${"— entries".padEnd(38)} ${String(subpathTotals.entry.files).padEnd(7)} ${fmtKiB(subpathTotals.entry.bytes).padStart(10)} ${fmtKiB(subpathTotals.entry.gzipBytes).padStart(10)}`,
+);
+console.log(
+    `  ${"— shared".padEnd(38)} ${String(subpathTotals.shared.files).padEnd(7)} ${fmtKiB(subpathTotals.shared.bytes).padStart(10)} ${fmtKiB(subpathTotals.shared.gzipBytes).padStart(10)}`,
+);
 
 // Print budget report. Always emitted (including from profile:bundle), but
 // only --enforce / profile:budget exits non-zero on FAIL. Format is
