@@ -37,14 +37,14 @@ const PRESETS = [
     {
         name: "snappy",
         response: 0.35,
-        dampingFraction: 0.85,
-        comment: "quick crisp, micro-overshoot",
+        dampingFraction: 0.65,
+        comment: "quick crisp, overshoot ~+6.8%",
     },
     {
         name: "bouncy",
         response: 0.5,
-        dampingFraction: 0.65,
-        comment: "emphatic overshoot ~7%",
+        dampingFraction: 0.45,
+        comment: "emphatic overshoot ~+20.5%",
     },
     {
         name: "gentle",
@@ -55,11 +55,22 @@ const PRESETS = [
 ];
 
 /**
- * 24 intermediate samples + 2 endpoints = 26 stops. Matches the sample
- * count used in keyframes.js's `springLinearStops` default; the curves
- * are stable past the first peak even at ζ=0.65 (the bouncy floor).
+ * 48 intermediate samples + 2 endpoints = 50 stops.
+ *
+ * Raised from 24 in AM-W2-α: the Path A retune drops `bouncy` to ζ=0.45,
+ * which produces a sharper/earlier/higher first peak (analytic overshoot
+ * 1 + exp(-ζπ/√(1-ζ²)) = 1.20535 at ~13.8% progress). At SAMPLE_COUNT=24
+ * the uniform 4%-apart grid straddles that peak and clips it to ~1.1833 —
+ * under-representing the overshoot by ~2pp, a faithfulness defect (the
+ * `linear()` must represent the solver, not a clipped approximation).
+ *
+ * At 48 samples (~2% grid) both retuned peaks land within their targets:
+ * bouncy 1.2048 (≈analytic 1.2054) and snappy 1.0680 (≈analytic 1.0681) —
+ * verified empirically against the keyframes.js solver. The old comment's
+ * claim that 24 was "stable past the first peak even at the bouncy floor"
+ * was true only for the old ζ=0.65 bouncy; it is stale under Path A.
  */
-const SAMPLE_COUNT = 24;
+const SAMPLE_COUNT = 48;
 
 function generateBlock() {
     const lines = PRESETS.map((preset) => {

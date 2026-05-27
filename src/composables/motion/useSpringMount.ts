@@ -31,10 +31,15 @@ import { useSpring, type SpringRef } from "./useSpring";
 /** Named iOS spring presets (mirrors X1 §2.3 / tokens.css §2). */
 export type SpringPreset = "smooth" | "snappy" | "bouncy" | "gentle";
 
+// MUST stay in lockstep with the PRESETS table in
+// `scripts/regen-spring-tokens.mjs` (the CSS `--spring-*` tokens) — both
+// encode the same iOS-canonical (response, ζ) pairs. Retuned in AM-W2-α
+// (Path A): snappy ζ 0.85→0.65 (overshoot ~+6.8%), bouncy ζ 0.65→0.45
+// (overshoot ~+20.5%); smooth + gentle unchanged.
 const SPRING_PRESETS: Record<SpringPreset, { response: number; dampingFraction: number }> = {
     smooth: { response: 0.5, dampingFraction: 0.86 },
-    snappy: { response: 0.35, dampingFraction: 0.85 },
-    bouncy: { response: 0.5, dampingFraction: 0.65 },
+    snappy: { response: 0.35, dampingFraction: 0.65 },
+    bouncy: { response: 0.5, dampingFraction: 0.45 },
     gentle: { response: 0.7, dampingFraction: 1.0 },
 };
 
