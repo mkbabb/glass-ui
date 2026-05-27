@@ -45,7 +45,11 @@
             var(--motion-duration-phase-handoff, 600ms)
             var(--motion-ease-standard);
         backdrop-filter: var(--glass-blur-quiet);
-        border: 1px solid var(--glass-border-quiet);
+        /* AK-FD1 §2.4 — glass-variant outer border softened one rung down the
+           foreground-tinted border ladder (quiet 10% → wash 8%) so it reads at
+           the intended resting-glass register. The spine variant carries its
+           own `--glass-spine-border` (re-declared below) and is unaffected. */
+        border: 1px solid var(--glass-border-wash);
         border-radius: var(--radius-card);
         box-shadow:
             var(--glass-shadow-quiet),
