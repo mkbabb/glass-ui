@@ -147,7 +147,10 @@ try {
             2,
         )}\n`,
     );
-    writeFileSync(join(tmp, "global.d.ts"), "declare module '*.css';\n");
+    writeFileSync(
+        join(tmp, "global.d.ts"),
+        "declare module '*.css';\ndeclare module '@mkbabb/glass-ui/styles';\n",
+    );
     writeFileSync(
         join(tmp, "probe.ts"),
         `
@@ -181,7 +184,6 @@ import { Pulse } from "@mkbabb/glass-ui/pulse";
 import { PaperBackdrop } from "@mkbabb/glass-ui/paper-backdrop";
 import { ToggleChip } from "@mkbabb/glass-ui/toggle-chip";
 import { GlassPanel } from "@mkbabb/glass-ui/glass-panel";
-import { MetaballCanvas } from "@mkbabb/glass-ui/metaballs";
 import { SortableList } from "@mkbabb/glass-ui/sortable-list";
 import { GlassTimeline } from "@mkbabb/glass-ui/timeline";
 import { LabeledInput } from "@mkbabb/glass-ui/labeled-field";
@@ -195,7 +197,7 @@ const runtimeSymbols = [
   ConfirmDialog, InfiniteScroll, useInfiniteScroll, UnderlineTabs, BouncyTabs, BouncyToggle,
   TypewriterText, useTypewriter, StackedIconGroup, GlassCarousel, GlassCarouselItem,
   Aurora, useAurora, MetricBadge, StatusDot, Pulse, PaperBackdrop, ToggleChip,
-  GlassPanel, MetaballCanvas, SortableList, GlassTimeline, LabeledInput,
+  GlassPanel, SortableList, GlassTimeline, LabeledInput,
   ExpandableContainer, IconTooltip,
 ];
 

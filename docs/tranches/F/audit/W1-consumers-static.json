@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-20T21:48:47.376Z",
+  "generatedAt": "2026-05-27T02:33:34.264Z",
   "rootContractFiles": [
     "src/components/ui/index.ts",
     "src/composables/useGlobalDark.ts",
@@ -318,7 +318,6 @@
     "DialogTitle",
     "DialogTrigger",
     "DiscoGlyph",
-    "DockGroup",
     "Drawer",
     "DrawerClose",
     "DrawerContent",
@@ -356,6 +355,9 @@
     "Input",
     "InstrumentChassis",
     "InstrumentChassisPhase",
+    "InstrumentChassisVariant",
+    "InstrumentRail",
+    "InstrumentRailProps",
     "Label",
     "MetricPill",
     "MultiSelect",
@@ -436,6 +438,7 @@
     "TooltipProvider",
     "TooltipTrigger",
     "TouchGateReturn",
+    "UseBreakpointControls",
     "UseClipboardOptions",
     "UseClipboardReturn",
     "UseIntervalControls",
@@ -447,6 +450,8 @@
     "UseTimerOptions",
     "UseTokenColorControls",
     "UseTokenColorOptions",
+    "UseViewportReadyControls",
+    "UseViewportReadyOptions",
     "alertVariants",
     "avatarVariants",
     "badgeVariants",
@@ -460,6 +465,7 @@
     "sliderVariants",
     "toast",
     "toggleVariants",
+    "useBreakpoint",
     "useCarousel",
     "useClipboard",
     "useConfiguratorState",
@@ -472,7 +478,8 @@
     "useTimer",
     "useToast",
     "useTokenColor",
-    "useTouchGate"
+    "useTouchGate",
+    "useViewportReady"
   ],
   "rootSurfaceFailures": {
     "unexpectedRootExports": [
@@ -488,14 +495,17 @@
       "ConfiguratorState",
       "ConfiguratorStateOptions",
       "DiscoGlyph",
-      "DockGroup",
       "GLYPH_FACE_SILHOUETTE_KEY",
       "GlyphFace",
       "HoverPopover",
       "InstrumentChassis",
       "InstrumentChassisPhase",
+      "InstrumentChassisVariant",
+      "InstrumentRail",
+      "InstrumentRailProps",
       "ScrollingText",
       "TouchGateReturn",
+      "UseBreakpointControls",
       "UseClipboardOptions",
       "UseClipboardReturn",
       "UseIntervalControls",
@@ -506,8 +516,11 @@
       "UseTimerOptions",
       "UseTokenColorControls",
       "UseTokenColorOptions",
+      "UseViewportReadyControls",
+      "UseViewportReadyOptions",
       "provideConfiguratorDensity",
       "provideGlyphFaceSilhouette",
+      "useBreakpoint",
       "useClipboard",
       "useConfiguratorState",
       "useInterval",
@@ -516,7 +529,8 @@
       "useResizeObserver",
       "useTimer",
       "useTokenColor",
-      "useTouchGate"
+      "useTouchGate",
+      "useViewportReady"
     ],
     "missingRootExports": []
   },
@@ -524,7 +538,7 @@
     {
       "consumer": "fourier-analysis/web",
       "path": "/Users/mkbabb/Programming/fourier-analysis/web",
-      "filesScanned": 154,
+      "filesScanned": 150,
       "status": "fail",
       "failures": [
         {
@@ -575,9 +589,1524 @@
     {
       "consumer": "speedtest",
       "path": "/Users/mkbabb/Programming/speedtest",
-      "filesScanned": 32959,
+      "filesScanned": 47588,
       "status": "fail",
       "failures": [
+        {
+          "file": ".claude/worktrees/agent-a0a51a10dbf92f36e/src/components/AppSettingsButton.vue",
+          "line": 96,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a0a51a10dbf92f36e/src/components/dashboard/ResultDetailSheet.vue",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a0a51a10dbf92f36e/src/components/speedtest/CompleteBadge.vue",
+          "line": 74,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a0a51a10dbf92f36e/src/components/speedtest/MeterColumn.vue",
+          "line": 66,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a0a51a10dbf92f36e/src/components/speedtest/composables/meter/meterGeometry.ts",
+          "line": 28,
+          "type": "non-core-root-symbol",
+          "symbol": "useResizeObserver",
+          "message": "useResizeObserver must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a0a51a10dbf92f36e/src/components/speedtest/composables/meter/useMeterTokenColors.ts",
+          "line": 19,
+          "type": "non-core-root-symbol",
+          "symbol": "useTokenColor",
+          "message": "useTokenColor must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a0a51a10dbf92f36e/src/components/speedtest/composables/useAutoStart.ts",
+          "line": 2,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a0a51a10dbf92f36e/src/composables/useGeolocation.ts",
+          "line": 1,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a0a51a10dbf92f36e/src/composables/useIPInfo.ts",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a0a51a10dbf92f36e/src/stores/useSessionExpiryStore.ts",
+          "line": 24,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a0a51a10dbf92f36e/styles/style.css",
+          "line": 11,
+          "type": "invalid-style-path",
+          "directive": "import",
+          "specifier": "@mkbabb/glass-ui/styles.css",
+          "message": "The only public stylesheet path is @mkbabb/glass-ui/styles."
+        },
+        {
+          "file": ".claude/worktrees/agent-a0a51a10dbf92f36e/styles/style.css",
+          "line": 20,
+          "type": "source-relative-style",
+          "specifier": "../../glass-ui/src",
+          "message": "Style tooling must not source glass-ui/src from consumers."
+        },
+        {
+          "file": ".claude/worktrees/agent-a10bd320760e43abe/src/components/AppSettingsButton.vue",
+          "line": 96,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a10bd320760e43abe/src/components/dashboard/ResultDetailSheet.vue",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a10bd320760e43abe/src/components/speedtest/CompleteBadge.vue",
+          "line": 73,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a10bd320760e43abe/src/components/speedtest/MeterColumn.vue",
+          "line": 67,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a10bd320760e43abe/src/components/speedtest/composables/meter/meterGeometry.ts",
+          "line": 28,
+          "type": "non-core-root-symbol",
+          "symbol": "useResizeObserver",
+          "message": "useResizeObserver must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a10bd320760e43abe/src/components/speedtest/composables/meter/useMeterTokenColors.ts",
+          "line": 19,
+          "type": "non-core-root-symbol",
+          "symbol": "useTokenColor",
+          "message": "useTokenColor must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a10bd320760e43abe/src/components/speedtest/composables/useAutoStart.ts",
+          "line": 2,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a10bd320760e43abe/src/composables/useGeolocation.ts",
+          "line": 1,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a10bd320760e43abe/src/composables/useIPInfo.ts",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a10bd320760e43abe/src/stores/useSessionExpiryStore.ts",
+          "line": 24,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a10bd320760e43abe/styles/style.css",
+          "line": 11,
+          "type": "invalid-style-path",
+          "directive": "import",
+          "specifier": "@mkbabb/glass-ui/styles.css",
+          "message": "The only public stylesheet path is @mkbabb/glass-ui/styles."
+        },
+        {
+          "file": ".claude/worktrees/agent-a10bd320760e43abe/styles/style.css",
+          "line": 20,
+          "type": "source-relative-style",
+          "specifier": "../../glass-ui/src",
+          "message": "Style tooling must not source glass-ui/src from consumers."
+        },
+        {
+          "file": ".claude/worktrees/agent-a17e3761fe792e587/src/components/AppSettingsButton.vue",
+          "line": 96,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a17e3761fe792e587/src/components/dashboard/ResultDetailSheet.vue",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a17e3761fe792e587/src/components/speedtest/CompleteBadge.vue",
+          "line": 74,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a17e3761fe792e587/src/components/speedtest/MeterColumn.vue",
+          "line": 66,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a17e3761fe792e587/src/components/speedtest/composables/meter/meterGeometry.ts",
+          "line": 28,
+          "type": "non-core-root-symbol",
+          "symbol": "useResizeObserver",
+          "message": "useResizeObserver must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a17e3761fe792e587/src/components/speedtest/composables/meter/useMeterTokenColors.ts",
+          "line": 19,
+          "type": "non-core-root-symbol",
+          "symbol": "useTokenColor",
+          "message": "useTokenColor must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a17e3761fe792e587/src/components/speedtest/composables/useAutoStart.ts",
+          "line": 2,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a17e3761fe792e587/src/composables/useGeolocation.ts",
+          "line": 1,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a17e3761fe792e587/src/composables/useIPInfo.ts",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a17e3761fe792e587/src/stores/useSessionExpiryStore.ts",
+          "line": 24,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a17e3761fe792e587/styles/style.css",
+          "line": 11,
+          "type": "invalid-style-path",
+          "directive": "import",
+          "specifier": "@mkbabb/glass-ui/styles.css",
+          "message": "The only public stylesheet path is @mkbabb/glass-ui/styles."
+        },
+        {
+          "file": ".claude/worktrees/agent-a17e3761fe792e587/styles/style.css",
+          "line": 20,
+          "type": "source-relative-style",
+          "specifier": "../../glass-ui/src",
+          "message": "Style tooling must not source glass-ui/src from consumers."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3be0f7164ff4fb5c/src/components/AppSettingsButton.vue",
+          "line": 96,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3be0f7164ff4fb5c/src/components/dashboard/ResultDetailSheet.vue",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3be0f7164ff4fb5c/src/components/speedtest/CompleteBadge.vue",
+          "line": 74,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3be0f7164ff4fb5c/src/components/speedtest/MeterColumn.vue",
+          "line": 66,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3be0f7164ff4fb5c/src/components/speedtest/composables/meter/meterGeometry.ts",
+          "line": 28,
+          "type": "non-core-root-symbol",
+          "symbol": "useResizeObserver",
+          "message": "useResizeObserver must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3be0f7164ff4fb5c/src/components/speedtest/composables/meter/useMeterTokenColors.ts",
+          "line": 19,
+          "type": "non-core-root-symbol",
+          "symbol": "useTokenColor",
+          "message": "useTokenColor must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3be0f7164ff4fb5c/src/components/speedtest/composables/useAutoStart.ts",
+          "line": 2,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3be0f7164ff4fb5c/src/composables/useGeolocation.ts",
+          "line": 1,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3be0f7164ff4fb5c/src/composables/useIPInfo.ts",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3be0f7164ff4fb5c/src/stores/useSessionExpiryStore.ts",
+          "line": 24,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3be0f7164ff4fb5c/styles/style.css",
+          "line": 11,
+          "type": "invalid-style-path",
+          "directive": "import",
+          "specifier": "@mkbabb/glass-ui/styles.css",
+          "message": "The only public stylesheet path is @mkbabb/glass-ui/styles."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3be0f7164ff4fb5c/styles/style.css",
+          "line": 20,
+          "type": "source-relative-style",
+          "specifier": "../../glass-ui/src",
+          "message": "Style tooling must not source glass-ui/src from consumers."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3f52e85cb114b5c4/src/components/AppSettingsButton.vue",
+          "line": 96,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3f52e85cb114b5c4/src/components/dashboard/ResultDetailSheet.vue",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3f52e85cb114b5c4/src/components/speedtest/CompleteBadge.vue",
+          "line": 74,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3f52e85cb114b5c4/src/components/speedtest/MeterColumn.vue",
+          "line": 66,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3f52e85cb114b5c4/src/components/speedtest/composables/meter/meterGeometry.ts",
+          "line": 28,
+          "type": "non-core-root-symbol",
+          "symbol": "useResizeObserver",
+          "message": "useResizeObserver must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3f52e85cb114b5c4/src/components/speedtest/composables/meter/useMeterTokenColors.ts",
+          "line": 19,
+          "type": "non-core-root-symbol",
+          "symbol": "useTokenColor",
+          "message": "useTokenColor must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3f52e85cb114b5c4/src/components/speedtest/composables/useAutoStart.ts",
+          "line": 2,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3f52e85cb114b5c4/src/composables/useGeolocation.ts",
+          "line": 1,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3f52e85cb114b5c4/src/composables/useIPInfo.ts",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3f52e85cb114b5c4/src/stores/useSessionExpiryStore.ts",
+          "line": 24,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3f52e85cb114b5c4/styles/style.css",
+          "line": 11,
+          "type": "invalid-style-path",
+          "directive": "import",
+          "specifier": "@mkbabb/glass-ui/styles.css",
+          "message": "The only public stylesheet path is @mkbabb/glass-ui/styles."
+        },
+        {
+          "file": ".claude/worktrees/agent-a3f52e85cb114b5c4/styles/style.css",
+          "line": 20,
+          "type": "source-relative-style",
+          "specifier": "../../glass-ui/src",
+          "message": "Style tooling must not source glass-ui/src from consumers."
+        },
+        {
+          "file": ".claude/worktrees/agent-a52e7e94ef21b2d56/src/components/admin/AdminDataSourceToggle.vue",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "useBreakpoint",
+          "message": "useBreakpoint must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a52e7e94ef21b2d56/src/components/speedtest/CompleteBadge.vue",
+          "line": 75,
+          "type": "non-core-root-symbol",
+          "symbol": "useBreakpoint",
+          "message": "useBreakpoint must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a52e7e94ef21b2d56/src/components/speedtest/CompleteBadge.vue",
+          "line": 77,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a52e7e94ef21b2d56/src/components/speedtest/MeterColumn.vue",
+          "line": 83,
+          "type": "non-core-root-symbol",
+          "symbol": "useBreakpoint",
+          "message": "useBreakpoint must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a52e7e94ef21b2d56/src/components/speedtest/MeterColumn.vue",
+          "line": 77,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a52e7e94ef21b2d56/src/components/speedtest/composables/meter/meterGeometry.ts",
+          "line": 28,
+          "type": "non-core-root-symbol",
+          "symbol": "useResizeObserver",
+          "message": "useResizeObserver must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a52e7e94ef21b2d56/src/components/speedtest/composables/meter/useMeterTokenColors.ts",
+          "line": 19,
+          "type": "non-core-root-symbol",
+          "symbol": "useTokenColor",
+          "message": "useTokenColor must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a52e7e94ef21b2d56/src/components/speedtest/composables/useAutoStart.ts",
+          "line": 2,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a52e7e94ef21b2d56/src/components/survey/SurveyWizard.vue",
+          "line": 193,
+          "type": "non-core-root-symbol",
+          "symbol": "useBreakpoint",
+          "message": "useBreakpoint must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a52e7e94ef21b2d56/src/composables/useGeolocation.ts",
+          "line": 1,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a52e7e94ef21b2d56/src/composables/useIPInfo.ts",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a52e7e94ef21b2d56/src/stores/useSessionExpiryStore.ts",
+          "line": 24,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a52e7e94ef21b2d56/src/views/AdminOverviewView.vue",
+          "line": 109,
+          "type": "non-core-root-symbol",
+          "symbol": "useViewportReady",
+          "message": "useViewportReady must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a52e7e94ef21b2d56/src/views/ChartsView.vue",
+          "line": 107,
+          "type": "non-core-root-symbol",
+          "symbol": "useViewportReady",
+          "message": "useViewportReady must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a52e7e94ef21b2d56/styles/style.css",
+          "line": 11,
+          "type": "invalid-style-path",
+          "directive": "import",
+          "specifier": "@mkbabb/glass-ui/styles.css",
+          "message": "The only public stylesheet path is @mkbabb/glass-ui/styles."
+        },
+        {
+          "file": ".claude/worktrees/agent-a52e7e94ef21b2d56/styles/style.css",
+          "line": 20,
+          "type": "source-relative-style",
+          "specifier": "../../glass-ui/src",
+          "message": "Style tooling must not source glass-ui/src from consumers."
+        },
+        {
+          "file": ".claude/worktrees/agent-a6f38466f20d273d6/src/components/admin/AdminDataSourceToggle.vue",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "useBreakpoint",
+          "message": "useBreakpoint must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a6f38466f20d273d6/src/components/speedtest/CompleteBadge.vue",
+          "line": 75,
+          "type": "non-core-root-symbol",
+          "symbol": "useBreakpoint",
+          "message": "useBreakpoint must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a6f38466f20d273d6/src/components/speedtest/CompleteBadge.vue",
+          "line": 77,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a6f38466f20d273d6/src/components/speedtest/MeterColumn.vue",
+          "line": 83,
+          "type": "non-core-root-symbol",
+          "symbol": "useBreakpoint",
+          "message": "useBreakpoint must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a6f38466f20d273d6/src/components/speedtest/MeterColumn.vue",
+          "line": 77,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a6f38466f20d273d6/src/components/speedtest/composables/meter/meterGeometry.ts",
+          "line": 28,
+          "type": "non-core-root-symbol",
+          "symbol": "useResizeObserver",
+          "message": "useResizeObserver must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a6f38466f20d273d6/src/components/speedtest/composables/meter/useMeterTokenColors.ts",
+          "line": 19,
+          "type": "non-core-root-symbol",
+          "symbol": "useTokenColor",
+          "message": "useTokenColor must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a6f38466f20d273d6/src/components/speedtest/composables/useAutoStart.ts",
+          "line": 2,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a6f38466f20d273d6/src/components/survey/SurveyWizard.vue",
+          "line": 193,
+          "type": "non-core-root-symbol",
+          "symbol": "useBreakpoint",
+          "message": "useBreakpoint must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a6f38466f20d273d6/src/composables/useGeolocation.ts",
+          "line": 1,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a6f38466f20d273d6/src/composables/useIPInfo.ts",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a6f38466f20d273d6/src/stores/useSessionExpiryStore.ts",
+          "line": 24,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a6f38466f20d273d6/src/views/AdminOverviewView.vue",
+          "line": 109,
+          "type": "non-core-root-symbol",
+          "symbol": "useViewportReady",
+          "message": "useViewportReady must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a6f38466f20d273d6/src/views/ChartsView.vue",
+          "line": 107,
+          "type": "non-core-root-symbol",
+          "symbol": "useViewportReady",
+          "message": "useViewportReady must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a6f38466f20d273d6/styles/style.css",
+          "line": 11,
+          "type": "invalid-style-path",
+          "directive": "import",
+          "specifier": "@mkbabb/glass-ui/styles.css",
+          "message": "The only public stylesheet path is @mkbabb/glass-ui/styles."
+        },
+        {
+          "file": ".claude/worktrees/agent-a6f38466f20d273d6/styles/style.css",
+          "line": 20,
+          "type": "source-relative-style",
+          "specifier": "../../glass-ui/src",
+          "message": "Style tooling must not source glass-ui/src from consumers."
+        },
+        {
+          "file": ".claude/worktrees/agent-a71f9ddfd932d7af8/src/components/speedtest/CompleteBadge.vue",
+          "line": 76,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a71f9ddfd932d7af8/src/components/speedtest/MeterColumn.vue",
+          "line": 77,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a71f9ddfd932d7af8/src/components/speedtest/composables/meter/meterGeometry.ts",
+          "line": 28,
+          "type": "non-core-root-symbol",
+          "symbol": "useResizeObserver",
+          "message": "useResizeObserver must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a71f9ddfd932d7af8/src/components/speedtest/composables/meter/useMeterTokenColors.ts",
+          "line": 19,
+          "type": "non-core-root-symbol",
+          "symbol": "useTokenColor",
+          "message": "useTokenColor must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a71f9ddfd932d7af8/src/components/speedtest/composables/useAutoStart.ts",
+          "line": 2,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a71f9ddfd932d7af8/src/composables/useGeolocation.ts",
+          "line": 1,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a71f9ddfd932d7af8/src/composables/useIPInfo.ts",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a71f9ddfd932d7af8/src/stores/useSessionExpiryStore.ts",
+          "line": 24,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a71f9ddfd932d7af8/styles/style.css",
+          "line": 11,
+          "type": "invalid-style-path",
+          "directive": "import",
+          "specifier": "@mkbabb/glass-ui/styles.css",
+          "message": "The only public stylesheet path is @mkbabb/glass-ui/styles."
+        },
+        {
+          "file": ".claude/worktrees/agent-a71f9ddfd932d7af8/styles/style.css",
+          "line": 20,
+          "type": "source-relative-style",
+          "specifier": "../../glass-ui/src",
+          "message": "Style tooling must not source glass-ui/src from consumers."
+        },
+        {
+          "file": ".claude/worktrees/agent-a813b019cb9ac6a90/src/components/AppSettingsButton.vue",
+          "line": 96,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a813b019cb9ac6a90/src/components/dashboard/ResultDetailSheet.vue",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a813b019cb9ac6a90/src/components/speedtest/CompleteBadge.vue",
+          "line": 74,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a813b019cb9ac6a90/src/components/speedtest/MeterColumn.vue",
+          "line": 66,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a813b019cb9ac6a90/src/components/speedtest/composables/meter/meterGeometry.ts",
+          "line": 28,
+          "type": "non-core-root-symbol",
+          "symbol": "useResizeObserver",
+          "message": "useResizeObserver must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a813b019cb9ac6a90/src/components/speedtest/composables/meter/useMeterTokenColors.ts",
+          "line": 19,
+          "type": "non-core-root-symbol",
+          "symbol": "useTokenColor",
+          "message": "useTokenColor must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a813b019cb9ac6a90/src/components/speedtest/composables/useAutoStart.ts",
+          "line": 2,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a813b019cb9ac6a90/src/composables/useGeolocation.ts",
+          "line": 1,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a813b019cb9ac6a90/src/composables/useIPInfo.ts",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a813b019cb9ac6a90/src/stores/useSessionExpiryStore.ts",
+          "line": 24,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a813b019cb9ac6a90/styles/style.css",
+          "line": 11,
+          "type": "invalid-style-path",
+          "directive": "import",
+          "specifier": "@mkbabb/glass-ui/styles.css",
+          "message": "The only public stylesheet path is @mkbabb/glass-ui/styles."
+        },
+        {
+          "file": ".claude/worktrees/agent-a813b019cb9ac6a90/styles/style.css",
+          "line": 20,
+          "type": "source-relative-style",
+          "specifier": "../../glass-ui/src",
+          "message": "Style tooling must not source glass-ui/src from consumers."
+        },
+        {
+          "file": ".claude/worktrees/agent-a8bcbc1f136d33ade/src/components/AppSettingsButton.vue",
+          "line": 96,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a8bcbc1f136d33ade/src/components/dashboard/ResultDetailSheet.vue",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a8bcbc1f136d33ade/src/components/speedtest/CompleteBadge.vue",
+          "line": 74,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a8bcbc1f136d33ade/src/components/speedtest/MeterColumn.vue",
+          "line": 66,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a8bcbc1f136d33ade/src/components/speedtest/composables/meter/meterGeometry.ts",
+          "line": 28,
+          "type": "non-core-root-symbol",
+          "symbol": "useResizeObserver",
+          "message": "useResizeObserver must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a8bcbc1f136d33ade/src/components/speedtest/composables/meter/useMeterTokenColors.ts",
+          "line": 19,
+          "type": "non-core-root-symbol",
+          "symbol": "useTokenColor",
+          "message": "useTokenColor must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a8bcbc1f136d33ade/src/components/speedtest/composables/useAutoStart.ts",
+          "line": 2,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a8bcbc1f136d33ade/src/composables/useGeolocation.ts",
+          "line": 1,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a8bcbc1f136d33ade/src/composables/useIPInfo.ts",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a8bcbc1f136d33ade/src/stores/useSessionExpiryStore.ts",
+          "line": 24,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a8bcbc1f136d33ade/styles/style.css",
+          "line": 11,
+          "type": "invalid-style-path",
+          "directive": "import",
+          "specifier": "@mkbabb/glass-ui/styles.css",
+          "message": "The only public stylesheet path is @mkbabb/glass-ui/styles."
+        },
+        {
+          "file": ".claude/worktrees/agent-a8bcbc1f136d33ade/styles/style.css",
+          "line": 20,
+          "type": "source-relative-style",
+          "specifier": "../../glass-ui/src",
+          "message": "Style tooling must not source glass-ui/src from consumers."
+        },
+        {
+          "file": ".claude/worktrees/agent-a95d40b6dff6ebe0b/src/components/AppSettingsButton.vue",
+          "line": 96,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a95d40b6dff6ebe0b/src/components/dashboard/ResultDetailSheet.vue",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a95d40b6dff6ebe0b/src/components/speedtest/CompleteBadge.vue",
+          "line": 74,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a95d40b6dff6ebe0b/src/components/speedtest/MeterColumn.vue",
+          "line": 66,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-a95d40b6dff6ebe0b/src/components/speedtest/composables/meter/meterGeometry.ts",
+          "line": 28,
+          "type": "non-core-root-symbol",
+          "symbol": "useResizeObserver",
+          "message": "useResizeObserver must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a95d40b6dff6ebe0b/src/components/speedtest/composables/meter/useMeterTokenColors.ts",
+          "line": 19,
+          "type": "non-core-root-symbol",
+          "symbol": "useTokenColor",
+          "message": "useTokenColor must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a95d40b6dff6ebe0b/src/components/speedtest/composables/useAutoStart.ts",
+          "line": 2,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a95d40b6dff6ebe0b/src/composables/useGeolocation.ts",
+          "line": 1,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a95d40b6dff6ebe0b/src/composables/useIPInfo.ts",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a95d40b6dff6ebe0b/src/stores/useSessionExpiryStore.ts",
+          "line": 24,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-a95d40b6dff6ebe0b/styles/style.css",
+          "line": 11,
+          "type": "invalid-style-path",
+          "directive": "import",
+          "specifier": "@mkbabb/glass-ui/styles.css",
+          "message": "The only public stylesheet path is @mkbabb/glass-ui/styles."
+        },
+        {
+          "file": ".claude/worktrees/agent-a95d40b6dff6ebe0b/styles/style.css",
+          "line": 20,
+          "type": "source-relative-style",
+          "specifier": "../../glass-ui/src",
+          "message": "Style tooling must not source glass-ui/src from consumers."
+        },
+        {
+          "file": ".claude/worktrees/agent-ab7ee80d0fd57dd55/src/components/admin/AdminDataSourceToggle.vue",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "useBreakpoint",
+          "message": "useBreakpoint must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ab7ee80d0fd57dd55/src/components/speedtest/CompleteBadge.vue",
+          "line": 75,
+          "type": "non-core-root-symbol",
+          "symbol": "useBreakpoint",
+          "message": "useBreakpoint must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ab7ee80d0fd57dd55/src/components/speedtest/CompleteBadge.vue",
+          "line": 77,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-ab7ee80d0fd57dd55/src/components/speedtest/MeterColumn.vue",
+          "line": 83,
+          "type": "non-core-root-symbol",
+          "symbol": "useBreakpoint",
+          "message": "useBreakpoint must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ab7ee80d0fd57dd55/src/components/speedtest/MeterColumn.vue",
+          "line": 77,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-ab7ee80d0fd57dd55/src/components/speedtest/composables/meter/meterGeometry.ts",
+          "line": 28,
+          "type": "non-core-root-symbol",
+          "symbol": "useResizeObserver",
+          "message": "useResizeObserver must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ab7ee80d0fd57dd55/src/components/speedtest/composables/meter/useMeterTokenColors.ts",
+          "line": 19,
+          "type": "non-core-root-symbol",
+          "symbol": "useTokenColor",
+          "message": "useTokenColor must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ab7ee80d0fd57dd55/src/components/speedtest/composables/useAutoStart.ts",
+          "line": 2,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ab7ee80d0fd57dd55/src/components/survey/SurveyWizard.vue",
+          "line": 193,
+          "type": "non-core-root-symbol",
+          "symbol": "useBreakpoint",
+          "message": "useBreakpoint must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ab7ee80d0fd57dd55/src/composables/useGeolocation.ts",
+          "line": 1,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ab7ee80d0fd57dd55/src/composables/useIPInfo.ts",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ab7ee80d0fd57dd55/src/stores/useSessionExpiryStore.ts",
+          "line": 24,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ab7ee80d0fd57dd55/src/views/AdminOverviewView.vue",
+          "line": 109,
+          "type": "non-core-root-symbol",
+          "symbol": "useViewportReady",
+          "message": "useViewportReady must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ab7ee80d0fd57dd55/src/views/ChartsView.vue",
+          "line": 107,
+          "type": "non-core-root-symbol",
+          "symbol": "useViewportReady",
+          "message": "useViewportReady must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ab7ee80d0fd57dd55/styles/style.css",
+          "line": 11,
+          "type": "invalid-style-path",
+          "directive": "import",
+          "specifier": "@mkbabb/glass-ui/styles.css",
+          "message": "The only public stylesheet path is @mkbabb/glass-ui/styles."
+        },
+        {
+          "file": ".claude/worktrees/agent-ab7ee80d0fd57dd55/styles/style.css",
+          "line": 20,
+          "type": "source-relative-style",
+          "specifier": "../../glass-ui/src",
+          "message": "Style tooling must not source glass-ui/src from consumers."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac1bff6bfbeb06561/src/components/AppSettingsButton.vue",
+          "line": 96,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac1bff6bfbeb06561/src/components/dashboard/ResultDetailSheet.vue",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac1bff6bfbeb06561/src/components/speedtest/CompleteBadge.vue",
+          "line": 76,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac1bff6bfbeb06561/src/components/speedtest/MeterColumn.vue",
+          "line": 77,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac1bff6bfbeb06561/src/components/speedtest/composables/meter/meterGeometry.ts",
+          "line": 28,
+          "type": "non-core-root-symbol",
+          "symbol": "useResizeObserver",
+          "message": "useResizeObserver must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac1bff6bfbeb06561/src/components/speedtest/composables/meter/useMeterTokenColors.ts",
+          "line": 19,
+          "type": "non-core-root-symbol",
+          "symbol": "useTokenColor",
+          "message": "useTokenColor must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac1bff6bfbeb06561/src/components/speedtest/composables/useAutoStart.ts",
+          "line": 2,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac1bff6bfbeb06561/src/composables/useGeolocation.ts",
+          "line": 1,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac1bff6bfbeb06561/src/composables/useIPInfo.ts",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac1bff6bfbeb06561/src/stores/useSessionExpiryStore.ts",
+          "line": 24,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac1bff6bfbeb06561/styles/style.css",
+          "line": 11,
+          "type": "invalid-style-path",
+          "directive": "import",
+          "specifier": "@mkbabb/glass-ui/styles.css",
+          "message": "The only public stylesheet path is @mkbabb/glass-ui/styles."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac1bff6bfbeb06561/styles/style.css",
+          "line": 20,
+          "type": "source-relative-style",
+          "specifier": "../../glass-ui/src",
+          "message": "Style tooling must not source glass-ui/src from consumers."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac31f4b92389b89f2/src/components/AppSettingsButton.vue",
+          "line": 96,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac31f4b92389b89f2/src/components/dashboard/ResultDetailSheet.vue",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac31f4b92389b89f2/src/components/speedtest/CompleteBadge.vue",
+          "line": 76,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac31f4b92389b89f2/src/components/speedtest/MeterColumn.vue",
+          "line": 77,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac31f4b92389b89f2/src/components/speedtest/composables/meter/meterGeometry.ts",
+          "line": 28,
+          "type": "non-core-root-symbol",
+          "symbol": "useResizeObserver",
+          "message": "useResizeObserver must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac31f4b92389b89f2/src/components/speedtest/composables/meter/useMeterTokenColors.ts",
+          "line": 19,
+          "type": "non-core-root-symbol",
+          "symbol": "useTokenColor",
+          "message": "useTokenColor must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac31f4b92389b89f2/src/components/speedtest/composables/useAutoStart.ts",
+          "line": 2,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac31f4b92389b89f2/src/composables/useGeolocation.ts",
+          "line": 1,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac31f4b92389b89f2/src/composables/useIPInfo.ts",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac31f4b92389b89f2/src/stores/useSessionExpiryStore.ts",
+          "line": 24,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac31f4b92389b89f2/styles/style.css",
+          "line": 11,
+          "type": "invalid-style-path",
+          "directive": "import",
+          "specifier": "@mkbabb/glass-ui/styles.css",
+          "message": "The only public stylesheet path is @mkbabb/glass-ui/styles."
+        },
+        {
+          "file": ".claude/worktrees/agent-ac31f4b92389b89f2/styles/style.css",
+          "line": 20,
+          "type": "source-relative-style",
+          "specifier": "../../glass-ui/src",
+          "message": "Style tooling must not source glass-ui/src from consumers."
+        },
+        {
+          "file": ".claude/worktrees/agent-ad37acea01b8a1aee/src/components/AppSettingsButton.vue",
+          "line": 96,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ad37acea01b8a1aee/src/components/dashboard/ResultDetailSheet.vue",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ad37acea01b8a1aee/src/components/speedtest/CompleteBadge.vue",
+          "line": 74,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-ad37acea01b8a1aee/src/components/speedtest/MeterColumn.vue",
+          "line": 66,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-ad37acea01b8a1aee/src/components/speedtest/composables/meter/meterGeometry.ts",
+          "line": 28,
+          "type": "non-core-root-symbol",
+          "symbol": "useResizeObserver",
+          "message": "useResizeObserver must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ad37acea01b8a1aee/src/components/speedtest/composables/meter/useMeterTokenColors.ts",
+          "line": 19,
+          "type": "non-core-root-symbol",
+          "symbol": "useTokenColor",
+          "message": "useTokenColor must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ad37acea01b8a1aee/src/components/speedtest/composables/useAutoStart.ts",
+          "line": 2,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ad37acea01b8a1aee/src/composables/useGeolocation.ts",
+          "line": 1,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ad37acea01b8a1aee/src/composables/useIPInfo.ts",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ad37acea01b8a1aee/src/stores/useSessionExpiryStore.ts",
+          "line": 24,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-ad37acea01b8a1aee/styles/style.css",
+          "line": 11,
+          "type": "invalid-style-path",
+          "directive": "import",
+          "specifier": "@mkbabb/glass-ui/styles.css",
+          "message": "The only public stylesheet path is @mkbabb/glass-ui/styles."
+        },
+        {
+          "file": ".claude/worktrees/agent-ad37acea01b8a1aee/styles/style.css",
+          "line": 20,
+          "type": "source-relative-style",
+          "specifier": "../../glass-ui/src",
+          "message": "Style tooling must not source glass-ui/src from consumers."
+        },
+        {
+          "file": ".claude/worktrees/agent-adab4d6ab142b5e7e/src/components/AppSettingsButton.vue",
+          "line": 96,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-adab4d6ab142b5e7e/src/components/dashboard/ResultDetailSheet.vue",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-adab4d6ab142b5e7e/src/components/speedtest/CompleteBadge.vue",
+          "line": 73,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-adab4d6ab142b5e7e/src/components/speedtest/MeterColumn.vue",
+          "line": 67,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-adab4d6ab142b5e7e/src/components/speedtest/composables/meter/meterGeometry.ts",
+          "line": 28,
+          "type": "non-core-root-symbol",
+          "symbol": "useResizeObserver",
+          "message": "useResizeObserver must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-adab4d6ab142b5e7e/src/components/speedtest/composables/meter/useMeterTokenColors.ts",
+          "line": 19,
+          "type": "non-core-root-symbol",
+          "symbol": "useTokenColor",
+          "message": "useTokenColor must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-adab4d6ab142b5e7e/src/components/speedtest/composables/useAutoStart.ts",
+          "line": 2,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-adab4d6ab142b5e7e/src/composables/useGeolocation.ts",
+          "line": 1,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-adab4d6ab142b5e7e/src/composables/useIPInfo.ts",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-adab4d6ab142b5e7e/src/stores/useSessionExpiryStore.ts",
+          "line": 24,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-adab4d6ab142b5e7e/styles/style.css",
+          "line": 11,
+          "type": "invalid-style-path",
+          "directive": "import",
+          "specifier": "@mkbabb/glass-ui/styles.css",
+          "message": "The only public stylesheet path is @mkbabb/glass-ui/styles."
+        },
+        {
+          "file": ".claude/worktrees/agent-adab4d6ab142b5e7e/styles/style.css",
+          "line": 20,
+          "type": "source-relative-style",
+          "specifier": "../../glass-ui/src",
+          "message": "Style tooling must not source glass-ui/src from consumers."
+        },
+        {
+          "file": ".claude/worktrees/agent-afb50efcef7383e32/src/components/AppSettingsButton.vue",
+          "line": 96,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-afb50efcef7383e32/src/components/dashboard/ResultDetailSheet.vue",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "ScrollingText",
+          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-afb50efcef7383e32/src/components/speedtest/CompleteBadge.vue",
+          "line": 74,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-afb50efcef7383e32/src/components/speedtest/MeterColumn.vue",
+          "line": 66,
+          "type": "unknown-package-subpath",
+          "specifier": "@mkbabb/glass-ui/metaballs",
+          "message": "@mkbabb/glass-ui/metaballs is not declared in package exports."
+        },
+        {
+          "file": ".claude/worktrees/agent-afb50efcef7383e32/src/components/speedtest/composables/meter/meterGeometry.ts",
+          "line": 28,
+          "type": "non-core-root-symbol",
+          "symbol": "useResizeObserver",
+          "message": "useResizeObserver must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-afb50efcef7383e32/src/components/speedtest/composables/meter/useMeterTokenColors.ts",
+          "line": 19,
+          "type": "non-core-root-symbol",
+          "symbol": "useTokenColor",
+          "message": "useTokenColor must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-afb50efcef7383e32/src/components/speedtest/composables/useAutoStart.ts",
+          "line": 2,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-afb50efcef7383e32/src/composables/useGeolocation.ts",
+          "line": 1,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-afb50efcef7383e32/src/composables/useIPInfo.ts",
+          "line": 3,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-afb50efcef7383e32/src/stores/useSessionExpiryStore.ts",
+          "line": 24,
+          "type": "non-core-root-symbol",
+          "symbol": "useTimer",
+          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
+        },
+        {
+          "file": ".claude/worktrees/agent-afb50efcef7383e32/styles/style.css",
+          "line": 11,
+          "type": "invalid-style-path",
+          "directive": "import",
+          "specifier": "@mkbabb/glass-ui/styles.css",
+          "message": "The only public stylesheet path is @mkbabb/glass-ui/styles."
+        },
+        {
+          "file": ".claude/worktrees/agent-afb50efcef7383e32/styles/style.css",
+          "line": 20,
+          "type": "source-relative-style",
+          "specifier": "../../glass-ui/src",
+          "message": "Style tooling must not source glass-ui/src from consumers."
+        },
         {
           "file": ".claude/worktrees/keyframes.js/demo/@/components/custom/animation-controls/controls/AnimationVisualizer.vue",
           "line": 42,
@@ -591,195 +2120,6 @@
           "type": "non-core-root-symbol",
           "symbol": "useTouchGate",
           "message": "useTouchGate must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/AppSettingsButton.vue",
-          "line": 96,
-          "type": "non-core-root-symbol",
-          "symbol": "ScrollingText",
-          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/dashboard/ResultDetailSheet.vue",
-          "line": 3,
-          "type": "non-core-root-symbol",
-          "symbol": "ScrollingText",
-          "message": "ScrollingText must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/dashboard/charts/MetricGaugeCards.vue",
-          "line": 21,
-          "type": "non-core-root-symbol",
-          "symbol": "DAMPING",
-          "message": "DAMPING must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/dashboard/charts/MetricGaugeCards.vue",
-          "line": 21,
-          "type": "non-core-root-symbol",
-          "symbol": "SNAP_THRESHOLD",
-          "message": "SNAP_THRESHOLD must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/dashboard/charts/MetricGaugeCards.vue",
-          "line": 21,
-          "type": "non-core-root-symbol",
-          "symbol": "useAnimatedNumber",
-          "message": "useAnimatedNumber must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/dashboard/composables/useEChartsTheme.ts",
-          "line": 3,
-          "type": "non-core-root-symbol",
-          "symbol": "installDarkModeSync",
-          "message": "installDarkModeSync must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/speedtest/MeterColumn.vue",
-          "line": 40,
-          "type": "non-core-root-symbol",
-          "symbol": "DAMPING",
-          "message": "DAMPING must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/speedtest/MeterColumn.vue",
-          "line": 40,
-          "type": "non-core-root-symbol",
-          "symbol": "SNAP_THRESHOLD",
-          "message": "SNAP_THRESHOLD must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/speedtest/MeterColumn.vue",
-          "line": 40,
-          "type": "non-core-root-symbol",
-          "symbol": "useAnimatedNumber",
-          "message": "useAnimatedNumber must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/speedtest/MeterColumn.vue",
-          "line": 40,
-          "type": "non-core-root-symbol",
-          "symbol": "installDarkModeSync",
-          "message": "installDarkModeSync must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/speedtest/ResultStack.vue",
-          "line": 62,
-          "type": "non-core-root-symbol",
-          "symbol": "useStagger",
-          "message": "useStagger must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/speedtest/composables/__tests__/useMeterRenderer.handoff.test.ts",
-          "line": 47,
-          "type": "non-core-root-symbol",
-          "symbol": "RAFLoopTiming",
-          "message": "RAFLoopTiming must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/speedtest/composables/meter/meterGeometry.ts",
-          "line": 28,
-          "type": "non-core-root-symbol",
-          "symbol": "useResizeObserver",
-          "message": "useResizeObserver must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/speedtest/composables/meter/useMeterTokenColors.ts",
-          "line": 19,
-          "type": "non-core-root-symbol",
-          "symbol": "useTokenColor",
-          "message": "useTokenColor must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/speedtest/composables/useAutoStart.ts",
-          "line": 2,
-          "type": "non-core-root-symbol",
-          "symbol": "useTimer",
-          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/speedtest/composables/useMeterRenderer.ts",
-          "line": 20,
-          "type": "non-core-root-symbol",
-          "symbol": "DAMPING",
-          "message": "DAMPING must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/speedtest/composables/useMeterRenderer.ts",
-          "line": 20,
-          "type": "non-core-root-symbol",
-          "symbol": "SNAP_THRESHOLD",
-          "message": "SNAP_THRESHOLD must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/speedtest/composables/useMeterRenderer.ts",
-          "line": 20,
-          "type": "non-core-root-symbol",
-          "symbol": "useRAFLoop",
-          "message": "useRAFLoop must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/speedtest/composables/useMeterRenderer.ts",
-          "line": 21,
-          "type": "non-core-root-symbol",
-          "symbol": "RAFLoopTiming",
-          "message": "RAFLoopTiming must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/speedtest/composables/useMetricResult.ts",
-          "line": 30,
-          "type": "non-core-root-symbol",
-          "symbol": "DAMPING",
-          "message": "DAMPING must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/speedtest/composables/useMetricResult.ts",
-          "line": 30,
-          "type": "non-core-root-symbol",
-          "symbol": "SNAP_THRESHOLD",
-          "message": "SNAP_THRESHOLD must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/components/speedtest/composables/useMetricResult.ts",
-          "line": 30,
-          "type": "non-core-root-symbol",
-          "symbol": "useAnimatedNumberMap",
-          "message": "useAnimatedNumberMap must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/composables/useAuroraPolicy.ts",
-          "line": 11,
-          "type": "non-core-root-symbol",
-          "symbol": "useIntersectionPause",
-          "message": "useIntersectionPause must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/composables/useAuroraPolicy.ts",
-          "line": 12,
-          "type": "non-core-root-symbol",
-          "symbol": "PausableRuntime",
-          "message": "PausableRuntime must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/composables/useGeolocation.ts",
-          "line": 1,
-          "type": "non-core-root-symbol",
-          "symbol": "useTimer",
-          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/composables/useIPInfo.ts",
-          "line": 3,
-          "type": "non-core-root-symbol",
-          "symbol": "useTimer",
-          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
-        },
-        {
-          "file": "src/stores/useSessionExpiryStore.ts",
-          "line": 24,
-          "type": "non-core-root-symbol",
-          "symbol": "useTimer",
-          "message": "useTimer must import from an explicit @mkbabb/glass-ui subpath."
         },
         {
           "file": "styles/style.css",

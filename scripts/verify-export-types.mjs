@@ -13,7 +13,22 @@ const exportedTypeSubpaths = new Map();
 
 for (const [name, value] of Object.entries(pkg.exports ?? {})) {
     if (name.includes("*")) {
-        failures.push(`Wildcard package export is not allowed: ${name}`);
+        // A trailing `/*` directory wildcard exposes static assets (e.g.
+        // `./fonts/*` → `./dist/fonts/*`, the self-referential @font-face url()
+        // target the build resolves before inlining to base64). It is not a
+        // type-bearing module, so it is exempt from the prohibition — verify
+        // its base directory exists instead. Only module-pattern wildcards
+        // (`*.js`, `*.ts`), which would break subpath type resolution, are
+        // forbidden.
+        const target = typeof value === "string" ? value : "";
+        if (!target.endsWith("/*")) {
+            failures.push(`Wildcard package export is not allowed: ${name}`);
+            continue;
+        }
+        const baseDir = resolve(root, target.slice(0, -1));
+        if (!existsSync(baseDir)) {
+            missing.push(`${name}: ${target} (base dir absent)`);
+        }
         continue;
     }
 
@@ -73,7 +88,19 @@ const compilerOptions = {
 
 const probeFile = resolve(root, ".tmp/package-probe.ts");
 for (const exportName of exportNames) {
-    if (exportName === "./styles") continue;
+    // CSS-asset exports (the `./styles` bundle + the `./styles.css` alias) are
+    // resolved by the consumer's CSS/bundler layer, not by TypeScript module
+    // resolution — exempt them from the TS-resolvability probe.
+    const exportValue = pkg.exports[exportName];
+    const exportTarget =
+        typeof exportValue === "string"
+            ? exportValue
+            : (exportValue?.import ?? exportValue?.default ?? "");
+    // Asset exports — the `./styles` bundle, the `./styles.css` alias, and the
+    // `./fonts/*` asset wildcard — are resolved by the consumer's CSS/bundler
+    // layer, not TypeScript module resolution; exempt them from the TS probe.
+    if (exportName === "./styles" || exportName.includes("*") || exportTarget.endsWith(".css"))
+        continue;
     const specifier = exportName === "." ? pkg.name : `${pkg.name}/${exportName.slice(2)}`;
     const resolution = ts.resolveModuleName(specifier, probeFile, compilerOptions, ts.sys).resolvedModule;
     if (!resolution?.resolvedFileName || !existsSync(resolution.resolvedFileName)) {
