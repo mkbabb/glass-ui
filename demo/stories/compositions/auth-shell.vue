@@ -65,7 +65,7 @@ const trustBadges = [
                         Build warm, audacious interfaces. Skip the cold gradient canvas.
                     </h2>
                     <p class="text-prose text-muted-foreground">
-                        Paper textures, cartoon shadows, Fraunces display, Computer Modern body. A
+                        Paper textures, cartoon shadows, Plus Jakarta Sans display + body. A
                         design system that looks like someone actually cared — because someone did.
                     </p>
                 </div>

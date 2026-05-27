@@ -98,7 +98,7 @@ const viz: { id: string; glyph: string; label: string; sub: string }[] = [
                 <!--
                    Viz tile treatment: rounded card, top-only accent border traced
                    via ::before clip-path analogue (we emulate with a sibling div),
-                   and a big ornamental glyph in Fraunces WONK italic.
+                   and a big ornamental glyph in the Plus Jakarta Sans display italic.
                 -->
                 <div
                     v-for="t in viz"

@@ -59,8 +59,8 @@ import { Info, CircleHelp, Sparkles } from "@lucide/vue";
                 <h2 class="font-display text-xl">Icon tooltips</h2>
                 <p class="text-sm text-muted-foreground">
                     <code class="font-mono text-xs">IconTooltip</code> is a
-                    preset of the tooltip primitive — Fraunces body text, hover
-                    on an icon button.
+                    preset of the tooltip primitive — Plus Jakarta Sans body text,
+                    hover on an icon button.
                 </p>
                 <div class="flex items-center gap-3">
                     <IconTooltip text="Inline help">

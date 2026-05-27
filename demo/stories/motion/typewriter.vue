@@ -39,7 +39,7 @@ function restart(): void {
 
 <template>
     <StoryPage>
-        <!-- Hero display: Fraunces display type hosting the rotating phrase. -->
+        <!-- Hero display: Plus Jakarta Sans display type hosting the rotating phrase. -->
         <section
             :class="
                 cn(

@@ -1,5 +1,12 @@
 <!doctype html>
-<html lang="en">
+<!-- AM-W7-η — the demo dogfoods the published brand faces. The
+     `brand-uniform-sans` typography preset is the canonical consumer opt-in
+     (it's exactly what the speedtest consumer sets): it cascades
+     `--font-display`/`--font-serif` from the library so the display/serif
+     utilities resolve to the published Plus Jakarta Sans face that demo.css
+     loads + maps via the `--font-brand-sans` override. No off-canon
+     Fraunces / Computer Modern / Fontshare faces, no third-party CDN. -->
+<html lang="en" data-typography-preset="brand-uniform-sans">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,34 +17,12 @@
         <link rel="icon" href="data:," />
         <title>glass-ui Feature Demo</title>
 
-        <!-- Resource hints for font hosts (V.W2 T18). Mirrors the speedtest
-             consumer's recipe; api.fontshare.com is preconnected alongside
-             cdn.fontshare.com so stylesheet + woff2 hosts share the warm-up. -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
-        <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-        <link rel="dns-prefetch" href="https://api.fontshare.com" />
-        <link rel="dns-prefetch" href="https://cdn.fontshare.com" />
-
-        <!-- Async-load the Fraunces stylesheet so it doesn't block first paint
-             (K.WP P1-5). `media="print"` makes the browser fetch but skip
-             render-blocking; the onload swaps it back to `all`. The <noscript>
-             path keeps non-JS clients functional. -->
-        <link
-            href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&display=swap"
-            rel="stylesheet"
-            media="print"
-            onload="this.media='all'"
-        />
-        <noscript>
-            <link
-                href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&display=swap"
-                rel="stylesheet"
-            />
-        </noscript>
+        <!-- Brand faces (Plus Jakarta Sans + Fira Code) are the PUBLISHED
+             corpus — self-hosted woff2 loaded by demo.css's @font-face rules
+             from `src/fonts/` (the same binaries the `./styles/fonts` export
+             ships). No external font-host preconnect/stylesheet wiring is
+             needed; the demo dogfoods exactly what a consumer of
+             `@mkbabb/glass-ui/styles/fonts` receives. -->
     </head>
     <body>
         <div id="app"></div>

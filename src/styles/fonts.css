@@ -32,6 +32,40 @@
  * plugin walks EVERY `dist/styles/*.css` (not just index's transitive
  * closure), so the inline rewrite applies here exactly as it did when these
  * faces lived in typography.css. No `url()` resolves out of `dist/`.
+ *
+ * AM-W7-δ separate-files refinement — DEFERRED (base64 KEPT). The W1-close
+ * audit proposed de-base64ing THIS file to dist-relative
+ * `url("../fonts/<face>.woff2")` (referencing the already-shipped
+ * `dist/fonts/*` woff2 via the `./fonts/*` export), so the browser would
+ * fetch only the USED faces — unicode-range-deferring the ~35 KB latin-ext
+ * pair + gaining per-face HTTP caching. That refinement is STRUCTURALLY
+ * BLOCKED by the consumer's font-delivery idiom, verified at AM-W7-δ:
+ *
+ *   speedtest's W1-α.2 consumer loads this file via a Vite `?url` import
+ *   (`import fontsHref from "@mkbabb/glass-ui/styles/fonts?url"`), which
+ *   emits fonts.css VERBATIM as a content-hashed asset into the consumer's
+ *   OWN `dist/assets/fonts-<hash>.css` and injects it as an async `<link>`.
+ *   `?url` does NOT parse the CSS or follow its `url()` refs — so the
+ *   referenced woff2 are NEVER copied across the package boundary into the
+ *   consumer's dist (confirmed: zero `*.woff2` in speedtest/dist). A
+ *   dist-relative `url("../fonts/…")` inside the emitted
+ *   `/assets/fonts-<hash>.css` would resolve at runtime to `/fonts/…` on
+ *   the CONSUMER's origin, which has no such file → 404 on every face,
+ *   broken fonts. (This is the same symlink-realpath axis that defeated
+ *   "Option A" for the publisher in vite.config.ts → publishStyleAssets;
+ *   the `?url` consumer path inherits it.) The CSP also gates here:
+ *   `font-src 'self' data:` admits the `data:` URI but the dist-relative
+ *   file would not be present on `'self'`.
+ *
+ *   Base64 keeps the face request layer entirely self-contained: the woff2
+ *   travel INSIDE the emitted CSS, so the async `<link>` is the only
+ *   network fetch and it works regardless of how the consumer re-emits the
+ *   file. The unicode-range split below is preserved either way — it still
+ *   defers latin-ext glyph SHAPING — but with base64 the latin-ext bytes
+ *   ship in the (once-cached, off-critical-path) CSS rather than as a lazy
+ *   separate request. Working fonts > the marginal lazy-fetch win. Revisit
+ *   only if a consumer adopts a delivery that DOES bundle/copy `url()`
+ *   targets across the boundary (e.g. a real `@import` of the dist file).
  */
 
 /* ═══════════════════════════════════════════════

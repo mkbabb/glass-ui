@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
-// Fraunces display text animates font-variation-settings + weight based on the
-// scroll progress of a target element. Drives WONK 0→1, SOFT 0→100, wght 300→700.
+// The brand display face (Plus Jakarta Sans) animates font-variation-settings
+// + weight based on the scroll progress of a target element. The live axis on
+// the published face is wght 300→700; the WONK/SOFT/opsz readouts demonstrate
+// the axis-driving machinery (they apply on any display face exposing those
+// optional axes).
 import { computed, ref } from "vue";
 import { useScrollProgress } from "../../../src/composables/motion";
 import { cn } from "../../../src/utils/cn";

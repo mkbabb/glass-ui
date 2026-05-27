@@ -22,8 +22,8 @@ const densityOptions = ["Cozy", "Comfortable", "Compact"] as const;
 const density = ref<(typeof densityOptions)[number]>("Comfortable");
 const densityOpen = ref(false);
 
-const fontOptions = ["Computer Modern", "Fraunces", "General Sans", "System"] as const;
-const bodyFont = ref<(typeof fontOptions)[number]>("Computer Modern");
+const fontOptions = ["Plus Jakarta Sans", "Fira Code", "System"] as const;
+const bodyFont = ref<(typeof fontOptions)[number]>("Plus Jakarta Sans");
 const bodyFontOpen = ref(false);
 
 const baseSize = ref(16);

@@ -50,7 +50,7 @@ const claims = [
     {
         eyebrow: "§ 02",
         title: "Audacious type",
-        body: "Fraunces display at WONK 1, Computer Modern body, golden-ratio scale from 11px micro to 110px hero.",
+        body: "Plus Jakarta Sans display + body, golden-ratio scale from 11px micro to 110px hero.",
     },
     {
         eyebrow: "§ 03",
@@ -158,7 +158,7 @@ const claims = [
                 <p class="text-prose max-w-2xl">
                     Glass-UI pairs Vue 3.5 primitives with a warm-cream, paper-textured visual
                     identity. Every surface composes translucent glass over a grain underpaint; every
-                    heading is set in Fraunces WONK; every card carries a cartoon shadow by default.
+                    heading is set in Plus Jakarta Sans display; every card carries a cartoon shadow by default.
                 </p>
 
                 <div class="flex flex-wrap items-center gap-3 pt-2">

@@ -1203,9 +1203,17 @@
        under-meter / progress-cluster grammar, so the tokens absorb here
        at AK.W3. Speedtest reads transitively through the canon.
 
-       • `--meter-progress-gap` — meter ↔ per-phase progress-bar gap for
-         the post-nest composition (kept for any pre-existing consumer
-         that still reads the BELOW-meter geometry).
+       AM-W7-δ — `--meter-progress-gap` RETIRED (dead-canon). It was
+       absorbed pre-emptively at AK.W3 for a post-nest "meter ↔ per-phase
+       progress-bar gap" composition that never materialised: speedtest's
+       bar uses the negative `--meter-progress-inset` instead, and a
+       fleet grep (glass-ui src/ + demo + speedtest) found ZERO `var()`
+       consumers (only doc references in pre-AL/pre-AK audits flagging it
+       as G-AL-D-METER-PROGRESS-GAP-DEAD-CANON, routed to retire). Per
+       NO-legacy-code it is removed rather than kept as speculative
+       forward-compat reservation; a future glass-ui Meter primitive that
+       needs the gap re-authors it at its real consumer.
+
        • `--meter-progress-inset` — the negative-margin inset that pulls
          the under-meter bar INTO the unpainted ring lane around the
          dial canvas (~4% of meter-size, two-thirds of the way through
@@ -1219,7 +1227,6 @@
        against the consumer's own `--meter-size` declaration; when no
        consumer ships one (a non-speedtest demo of the chassis), the
        inline fallback of 200px keeps the calc well-defined. */
-    --meter-progress-gap: clamp(0.125rem, 0.5cqi, 0.375rem);
     --meter-progress-inset: calc(var(--meter-size, 200px) * 0.04);
     --progress-stack-gap: clamp(0.1875rem, 0.4cqi, 0.375rem);
 

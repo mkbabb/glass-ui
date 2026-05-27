@@ -7,13 +7,13 @@ const ladder: { cls: string; label: string; sample: string }[] = [
     { cls: "text-display-5", label: "display-5", sample: "Golden" },
     { cls: "text-display-4", label: "display-4", sample: "Audacious" },
     { cls: "text-display-3", label: "display-3", sample: "Ornament" },
-    { cls: "text-display-2", label: "display-2", sample: "Fraunces WONK" },
+    { cls: "text-display-2", label: "display-2", sample: "Plus Jakarta" },
     { cls: "text-display", label: "display", sample: "Display" },
     { cls: "text-title", label: "title", sample: "Section title" },
     { cls: "text-heading", label: "heading", sample: "Subsection head" },
     { cls: "text-subheading", label: "subheading", sample: "Card title" },
-    { cls: "text-prose", label: "prose", sample: "Long-form reading sits at prose — φ line-height, CM serif." },
-    { cls: "text-body", label: "body", sample: "Body copy uses Computer Modern at 1rem, 1.5 leading." },
+    { cls: "text-prose", label: "prose", sample: "Long-form reading sits at prose — φ line-height, Plus Jakarta Sans." },
+    { cls: "text-body", label: "body", sample: "Body copy uses Plus Jakarta Sans at 1rem, 1.5 leading." },
     { cls: "text-small", label: "small", sample: "Metadata and secondary body copy." },
     { cls: "text-caption", label: "caption", sample: "Caption · labels · hints" },
     { cls: "text-micro", label: "micro", sample: "Micro: badges, fine print" },
@@ -51,7 +51,7 @@ const ladder: { cls: string; label: string; sample: string }[] = [
             <p class="text-admin-label text-muted-foreground">Signature glyph</p>
             <div class="fourier-f text-display-5 leading-none italic">ℱ</div>
             <p class="text-small text-muted-foreground">
-                <code class="fira-code">.fourier-f</code> — Fraunces WONK italic, viz-fourier red.
+                <code class="fira-code">.fourier-f</code> — Plus Jakarta Sans display italic, viz-fourier red.
             </p>
         </div>
     </StoryPage>

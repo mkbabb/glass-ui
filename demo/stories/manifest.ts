@@ -81,7 +81,7 @@ export const CATEGORIES: Category[] = [
         stories: [
             s("foundations", "intro", "Intro", "What this storybook is."),
             s("foundations", "colors", "Colors", "Warm cream, 13-stop section palette, viz basis."),
-            s("foundations", "typography", "Typography", "Computer Modern, Fraunces, Fira Code — golden-ratio scale."),
+            s("foundations", "typography", "Typography", "Plus Jakarta Sans + Fira Code — golden-ratio scale."),
             s("foundations", "radii", "Radii", "Radius tokens from xs to pill."),
             s("foundations", "shadows", "Shadows", "Cartoon offset, elevated, modal."),
             s("foundations", "motion", "Motion", "Easings, damped spring linear() curves."),

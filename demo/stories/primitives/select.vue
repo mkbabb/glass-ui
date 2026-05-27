@@ -13,7 +13,7 @@ import {
 } from "../../../src/components/ui/select";
 import { Label } from "../../../src/components/ui/label";
 
-const font = ref<string>("computer-modern");
+const font = ref<string>("plus-jakarta-sans");
 const basis = ref<string>("fourier");
 const density = ref<string>("");
 </script>
@@ -29,15 +29,15 @@ const density = ref<string>("");
                 </SelectTrigger>
                 <SelectContent>
                     <SelectGroup>
-                        <SelectLabel>Serif</SelectLabel>
-                        <SelectItem value="computer-modern">Computer Modern</SelectItem>
-                        <SelectItem value="fraunces">Fraunces</SelectItem>
+                        <SelectLabel>Display + serif</SelectLabel>
+                        <SelectItem value="plus-jakarta-sans">Plus Jakarta Sans</SelectItem>
+                        <SelectItem value="plus-jakarta-sans-fallback">Plus Jakarta Sans Fallback</SelectItem>
                     </SelectGroup>
                     <SelectSeparator />
                     <SelectGroup>
                         <SelectLabel>Sans</SelectLabel>
                         <SelectItem value="inter">Inter</SelectItem>
-                        <SelectItem value="general-sans">General Sans</SelectItem>
+                        <SelectItem value="system-ui">System UI</SelectItem>
                     </SelectGroup>
                     <SelectSeparator />
                     <SelectGroup>

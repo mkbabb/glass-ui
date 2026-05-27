@@ -15,7 +15,7 @@ export const PRESETS: readonly PresetDef[] = [
     {
         id: "default",
         label: "Glass-UI default",
-        description: "Warm cream, Computer Modern, cartoon shadows.",
+        description: "Warm cream, Plus Jakarta Sans, cartoon shadows.",
         cssHref: null,
     },
     {

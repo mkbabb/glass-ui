@@ -31,13 +31,10 @@ const categories: { slug: string; title: string; blurb: string }[] = [
                 glass-ui · storybook
             </p>
 
-            <!-- Brand wordmark: Fraunces WONK ℱ + CM serif " glass-ui". -->
+            <!-- Brand wordmark: ℱ ornament + brand serif " glass-ui", both
+                 set in the published Plus Jakarta Sans display face. -->
             <div class="mb-10 flex items-baseline gap-1 font-display">
-                <span
-                    class="fourier-f text-display-3 italic"
-                    style="font-variation-settings: 'WONK' 1, 'SOFT' 0;"
-                    >ℱ</span
-                >
+                <span class="fourier-f text-display-3 italic">ℱ</span>
                 <span class="cm-serif text-display-2 text-foreground"> glass-ui</span>
             </div>
 
@@ -46,10 +43,10 @@ const categories: { slug: string; title: string; blurb: string }[] = [
             </h1>
 
             <p class="text-prose max-w-2xl text-foreground/80">
-                A design system built around warm cream, cartoon offset shadows, Computer
-                Modern for prose, and Fraunces for ornament. Tailwind-native, Vue 3.5,
-                reka-ui primitives under the hood. Every token reachable as a utility;
-                every component honest about its four states.
+                A design system built around warm cream, cartoon offset shadows, and
+                the published Plus Jakarta Sans brand face for prose and ornament.
+                Tailwind-native, Vue 3.5, reka-ui primitives under the hood. Every token
+                reachable as a utility; every component honest about its four states.
             </p>
         </section>
 

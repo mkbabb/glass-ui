@@ -1,56 +1,85 @@
-/* Font imports must be first so the bundler hoists them above all rules. */
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,0..100,0..1&family=Fira+Code:wght@300..700&display=swap");
+/*
+ * AM-W7-η — the demo dogfoods the PUBLISHED brand faces.
+ *
+ * Previously the demo pulled brand text from a Fraunces (Google Fonts) +
+ * Computer Modern Serif (dreampulse CDN) + Fontshare legacy stack — none
+ * of which glass-ui ships, and all of which violate the brand-font canon.
+ * The canonical published faces are Plus Jakarta Sans (brand display +
+ * serif, OFL 1.1) + Fira Code (mono), shipped via the `./styles/fonts`
+ * export (`dist/styles/fonts.css`). The demo now loads exactly those faces
+ * so it shows a consumer precisely what `@mkbabb/glass-ui/styles/fonts`
+ * delivers — no third-party CDN, no off-canon families.
+ *
+ * The published `src/styles/fonts.css` `@font-face` rules reference the
+ * woff2 via the `url("@mkbabb/glass-ui/fonts/…")` package-specifier shape
+ * that the publish-time `publishStyleAssets` plugin base64-inlines at
+ * library build. That bare-specifier `url()` does NOT resolve in the
+ * demo's Vite dev/preview context (Vite's CSS pipeline doesn't resolve
+ * bare specifiers in `url()` — the very Option-A blocker documented in
+ * vite.config.ts). So the demo re-declares the SAME faces (identical
+ * family names, weight axes, unicode-range subsetting, and font-display
+ * registers as fonts.css) but points at the source woff2 by a demo-
+ * resolvable relative path — `../src/fonts/<family>/<face>.woff2`. These
+ * are the SAME binaries the publish step inlines, so the demo renders the
+ * published corpus byte-for-byte. The relative-path declaration lives in
+ * the demo (NOT in the shipped fonts.css), keeping the publisher contract
+ * untouched while the demo dogfoods the real faces. Font declarations
+ * must be first so the bundler hoists them above all rules.
+ */
 
-/* Computer Modern Serif — declared inline (rather than via the upstream
- * dreampulse fonts.css aggregate) so we can attach `font-display: swap`
- * (K.WP P1-6). The aggregate @import pulled ~12 family CSS files of which
- * only Serif is consumed; this trims the request count too. */
+/* ── Plus Jakarta Sans (brand display + serif) — published OFL 1.1 face,
+   variable wght 200..800. `font-display: optional` mirrors fonts.css. */
 @font-face {
-    font-family: "Computer Modern Serif";
-    src:
-        url("https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/font/Serif/cmunrm.woff")
-            format("woff"),
-        url("https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/font/Serif/cmunrm.ttf")
-            format("truetype");
-    font-weight: normal;
+    font-family: "Plus Jakarta Sans";
     font-style: normal;
-    font-display: swap;
+    font-weight: 200 800;
+    font-display: optional;
+    src: url("../src/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2")
+        format("woff2");
+    unicode-range:
+        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
-    font-family: "Computer Modern Serif";
-    src:
-        url("https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/font/Serif/cmunbx.woff")
-            format("woff"),
-        url("https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/font/Serif/cmunbx.ttf")
-            format("truetype");
-    font-weight: bold;
+    font-family: "Plus Jakarta Sans";
     font-style: normal;
+    font-weight: 200 800;
+    font-display: optional;
+    src: url("../src/fonts/plus-jakarta-sans/plus-jakarta-sans-latin-ext.woff2")
+        format("woff2");
+    unicode-range:
+        U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+        U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF,
+        U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ── Fira Code (canonical mono) — published OFL face, variable wght
+   300..700. `font-display: swap` mirrors fonts.css (post-LCP register). */
+@font-face {
+    font-family: "Fira Code";
+    font-style: normal;
+    font-weight: 300 700;
     font-display: swap;
+    src: url("../src/fonts/fira-code/fira-code-latin.woff2") format("woff2");
+    unicode-range:
+        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
-    font-family: "Computer Modern Serif";
-    src:
-        url("https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/font/Serif/cmunti.woff")
-            format("woff"),
-        url("https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/font/Serif/cmunti.ttf")
-            format("truetype");
-    font-weight: normal;
-    font-style: italic;
+    font-family: "Fira Code";
+    font-style: normal;
+    font-weight: 300 700;
     font-display: swap;
-}
-
-@font-face {
-    font-family: "Computer Modern Serif";
-    src:
-        url("https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/font/Serif/cmunbi.woff")
-            format("woff"),
-        url("https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/font/Serif/cmunbi.ttf")
-            format("truetype");
-    font-weight: bold;
-    font-style: italic;
-    font-display: swap;
+    src: url("../src/fonts/fira-code/fira-code-latin-ext.woff2")
+        format("woff2");
+    unicode-range:
+        U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+        U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF,
+        U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
 @import "tailwindcss" source("../demo");
@@ -58,6 +87,19 @@
 @import "../src/styles/index.css";
 
 @variant dark (&:where(.dark, .dark *));
+
+/* Brand opt-in — mirror the canonical consumer recipe (speedtest's
+   `data-typography-preset="brand-uniform-sans"` + `--font-brand-sans`
+   override). The preset cascades `--font-display`/`--font-serif` from the
+   library; overriding `--font-brand-sans` to the published Plus Jakarta
+   Sans chain makes the display/serif/sans utilities all resolve to the
+   brand display face (with its Capsize-calibrated fallback). `--font-mono`
+   already resolves to "Fira Code" through the library default stack. */
+:root {
+    --font-brand-sans:
+        "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui,
+        sans-serif;
+}
 
 html {
     background: var(--background);
