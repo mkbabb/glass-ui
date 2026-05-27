@@ -364,6 +364,7 @@
            2 → 3  : 8 L   (chip → hover / highlight)
            3 → 4  : 12 L  (highlight → subtle border)
            4 → 5  : 25 L  (border → muted text, contrast jump)
+           5 → 6  : 10 L  (muted text → strong-muted text, secondary register)
 
        Semantic aliases re-point into the scale — no back-compat shims.
        ═══════════════════════════════════════════════ */
@@ -373,6 +374,15 @@
     --neutral-3: hsl(48  8% 82%);   /* L 82 — hover / highlight bg */
     --neutral-4: hsl(48  7% 70%);   /* L 70 — subtle border */
     --neutral-5: hsl(48  6% 40%);   /* L 40 — muted text (WCAG AA: 5.23:1 vs L98 page / 4.91:1 vs L95 muted) */
+    /* W7-α' (AK-FD1) — strong-muted text rung. One principled ladder step
+       (10 L darker, the 5→6 cadence above) past muted text toward
+       --foreground (L10). Sits at the 1/3 point of the L40→L10 muted→primary
+       gap: legible secondary text that reads less-faint than muted but not as
+       assertive as primary. By-COLOUR per the canon (a neutral step, not an
+       alpha mute); hue held at 48, sat nudged 6→7 toward --foreground's 10.
+       WCAG AA: 7.79:1 vs L98 page / 7.31:1 vs L95 muted (cf. neutral-5's
+       5.23:1) — comfortably above the 4.5:1 body floor. */
+    --neutral-6: hsl(48  7% 30%);   /* L 30 — strong-muted text (secondary register) */
 
     --background: var(--neutral-0);
     --foreground: hsl(24 10% 10%);
@@ -383,6 +393,10 @@
 
     --muted: var(--neutral-1);
     --muted-foreground: var(--neutral-5);
+    /* W7-α' (AK-FD1) — one rung less-faint than --muted-foreground for
+       secondary text that reads too-faint at the muted rung over resting
+       glass (CardDescription). By-colour neutral step, not alpha. */
+    --muted-foreground-strong: var(--neutral-6);
     --secondary: var(--neutral-2);
     --secondary-foreground: var(--foreground);
     --accent: var(--neutral-3);
@@ -1272,6 +1286,12 @@
     --neutral-3: hsl(24 5% 22%);   /* L 22 — hover / highlight */
     --neutral-4: hsl(24 5% 34%);   /* L 34 — subtle border */
     --neutral-5: hsl(48 5% 62%);   /* L 62 — muted text (WCAG AA: 7.39:1 vs L6 page / 6.58:1 vs L11 muted) */
+    /* W7-α' (AK-FD1) — strong-muted text. Same principled ladder step as
+       light, mirrored: 10 L LIGHTER than muted (62→72) toward --foreground
+       (L90), the 1/3 point of the L62→L90 muted→primary gap. By-colour; hue
+       48, sat nudged 5→6. WCAG AA: 9.86:1 vs L6 page / 8.78:1 vs L11 muted
+       (cf. neutral-5's 7.39:1). */
+    --neutral-6: hsl(48 6% 72%);   /* L 72 — strong-muted text (secondary register) */
 
     --background: var(--neutral-0);
     --foreground: hsl(48 10% 90%);
@@ -1282,6 +1302,9 @@
 
     --muted: var(--neutral-1);
     --muted-foreground: var(--neutral-5);
+    /* W7-α' (AK-FD1) — strong-muted secondary text. Auto-tracks the dark
+       neutral-6 rung above; by-colour, not alpha. */
+    --muted-foreground-strong: var(--neutral-6);
     --secondary: var(--neutral-2);
     --secondary-foreground: var(--foreground);
     --accent: var(--neutral-3);
