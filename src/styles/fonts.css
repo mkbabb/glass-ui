@@ -1,0 +1,109 @@
+/*
+ * fonts.css — payload-bearing @font-face declarations (OFL woff2 faces)
+ *
+ * AM-W1-α (entry-path weight split) — these are the ONLY @font-face rules
+ * that carry a font binary. At publish time the build plugin
+ * (vite.config.ts → publishStyleAssets) base64-inlines each
+ * `url("@mkbabb/glass-ui/fonts/<family>/<face>.woff2")` into a
+ * `data:font/woff2;base64,…` URI sourced from `src/fonts/`. That payload
+ * is ~99 KB gzipped — over half of the entire `./styles` critical CSS
+ * weight.
+ *
+ * This file is DELIBERATELY NOT `@import`ed by `styles/index.css`. The
+ * critical first-paint entry path (`@mkbabb/glass-ui/styles`) therefore no
+ * longer carries the font binary. Consumers import the faces once,
+ * separately and off the critical path:
+ *
+ *   @import "@mkbabb/glass-ui/styles";        (critical — no font payload)
+ *   @import "@mkbabb/glass-ui/styles/fonts";  (font corpus, loaded once)
+ *
+ * The calibrated `local()` fallback faces (San Francisco / Segoe UI /
+ * Roboto / Arial for the sans; SF Mono / Menlo / … for the mono) carry NO
+ * payload and remain in `typography.css` on the critical path — they are
+ * what paints during the `font-display: optional`/`swap` window, so they
+ * are genuinely first-paint critical. The metric overrides on those
+ * fallback faces (Capsize-calibrated; AC.W6b) reference the exact
+ * geometry of the faces declared here, so the split is purely a
+ * load-order/weight concern: the cascade is identical once both files load.
+ *
+ * Contract-v2 (docs/precepts/cross-repo-dev-resolution.md §2.1): this file
+ * is published into `dist/styles/fonts.css` and is reachable via the
+ * `./styles/fonts` exports key → `./dist/styles/fonts.css`. The build
+ * plugin walks EVERY `dist/styles/*.css` (not just index's transitive
+ * closure), so the inline rewrite applies here exactly as it did when these
+ * faces lived in typography.css. No `url()` resolves out of `dist/`.
+ */
+
+/* ═══════════════════════════════════════════════
+   OFL FACE FILES — Plus Jakarta Sans (brand display)
+   ═══════════════════════════════════════════════ */
+
+/* Plus Jakarta Sans — Latin subset (basic Latin + ASCII punctuation +
+   common diacritics). Variable font: a single woff2 covers wght 200..800.
+   `font-display: optional` keeps the LCP off the font-load critical path
+   — combined with the calibrated fallback face in typography.css, the swap
+   is no-shift on geometry and never disrupts paint. */
+@font-face {
+    font-family: "Plus Jakarta Sans";
+    font-style: normal;
+    font-weight: 200 800;
+    font-display: optional;
+    src: url("@mkbabb/glass-ui/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2") format("woff2");
+    unicode-range:
+        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Plus Jakarta Sans — Latin-ext subset (extended Latin diacritics, IPA,
+   wider Latin script). Carried because speedtest's ISP-name register
+   may surface non-ASCII Latin (e.g., Spectrum, Frontier, AT&T variants
+   transliterated). Lazy: only loads if a glyph in the range renders. */
+@font-face {
+    font-family: "Plus Jakarta Sans";
+    font-style: normal;
+    font-weight: 200 800;
+    font-display: optional;
+    src: url("@mkbabb/glass-ui/fonts/plus-jakarta-sans/plus-jakarta-sans-latin-ext.woff2") format("woff2");
+    unicode-range:
+        U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+        U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF,
+        U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ═══════════════════════════════════════════════
+   OFL FACE FILES — Fira Code (canonical mono)
+   ═══════════════════════════════════════════════ */
+
+/* Fira Code — Latin subset (ASCII + ligatures + box-drawing prereqs).
+   Variable font: a single woff2 covers wght 300..700. `font-display:
+   swap` is acceptable here because Fira Code is post-LCP (mono-register
+   admin labels + tabular numerics render below the fold; FOUT is a
+   minor visual blip, not a layout shift since the system mono fallback
+   matches geometry via the calibrated fallback face in typography.css). */
+@font-face {
+    font-family: "Fira Code";
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url("@mkbabb/glass-ui/fonts/fira-code/fira-code-latin.woff2") format("woff2");
+    unicode-range:
+        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Fira Code — Latin-ext subset. Carried for parity with the sans
+   coverage (admin labels may surface non-ASCII strings on
+   internationalized variants). */
+@font-face {
+    font-family: "Fira Code";
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url("@mkbabb/glass-ui/fonts/fira-code/fira-code-latin-ext.woff2") format("woff2");
+    unicode-range:
+        U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+        U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF,
+        U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}

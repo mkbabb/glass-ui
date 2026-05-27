@@ -4,16 +4,26 @@
  * Import this in your project's main CSS file:
  *   @import "tailwindcss";
  *   @import "tw-animate-css";
- *   @import "@mkbabb/glass-ui/styles";
+ *   @import "@mkbabb/glass-ui/styles";        (critical — no font payload)
+ *   @import "@mkbabb/glass-ui/styles/fonts";  (OFL woff2 corpus, loaded once)
  *   (then add your project-specific token overrides locally)
  */
 
 /*
- * NOTE: Font imports (Fraunces, Fira Code, Computer Modern) are issued by
- * the consumer's root CSS so they land at the top of the cascade. See
- * demo/demo.css for the canonical example. Importing @import url(...) from
- * here would put them after @import "tailwindcss" in the consumer's output,
- * which violates the CSS spec (and some bundlers then drop them).
+ * FONT PAYLOAD SPLIT (AM-W1-α). The payload-bearing @font-face faces
+ * (Plus Jakarta Sans + Fira Code woff2, base64-inlined at publish into
+ * ~99 KB gzipped) are NOT imported here — they live in `fonts.css`,
+ * reachable via the `@mkbabb/glass-ui/styles/fonts` export. This keeps the
+ * critical first-paint `./styles` entry free of the font binary. The
+ * calibrated `local()` fallback faces (with Capsize metric overrides) DO
+ * stay on this critical path inside typography.css — they paint during the
+ * `font-display: optional`/`swap` window with zero CLS, so the deferred
+ * real-face import never causes a layout shift.
+ *
+ * NOTE: Font @import url(...) lines are NOT issued from here (and never
+ * were) — doing so would put them after @import "tailwindcss" in the
+ * consumer's output, which violates the CSS spec (and some bundlers then
+ * drop them). The split above is by separate export subpath, not @import.
  */
 
 /*

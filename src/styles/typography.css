@@ -43,38 +43,13 @@
    OFL FACE FILES — Plus Jakarta Sans (brand display)
    ═══════════════════════════════════════════════ */
 
-/* Plus Jakarta Sans — Latin subset (basic Latin + ASCII punctuation +
-   common diacritics). Variable font: a single woff2 covers wght 200..800.
-   `font-display: optional` keeps the LCP off the font-load critical path
-   — combined with the calibrated fallback face below, the swap is no-shift
-   on geometry and never disrupts paint. */
-@font-face {
-    font-family: "Plus Jakarta Sans";
-    font-style: normal;
-    font-weight: 200 800;
-    font-display: optional;
-    src: url("@mkbabb/glass-ui/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2") format("woff2");
-    unicode-range:
-        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
-        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* Plus Jakarta Sans — Latin-ext subset (extended Latin diacritics, IPA,
-   wider Latin script). Carried because speedtest's ISP-name register
-   may surface non-ASCII Latin (e.g., Spectrum, Frontier, AT&T variants
-   transliterated). Lazy: only loads if a glyph in the range renders. */
-@font-face {
-    font-family: "Plus Jakarta Sans";
-    font-style: normal;
-    font-weight: 200 800;
-    font-display: optional;
-    src: url("@mkbabb/glass-ui/fonts/plus-jakarta-sans/plus-jakarta-sans-latin-ext.woff2") format("woff2");
-    unicode-range:
-        U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
-        U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF,
-        U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
+/* The payload-bearing "Plus Jakarta Sans" faces (latin + latin-ext woff2)
+   live in `fonts.css`, reachable via the `@mkbabb/glass-ui/styles/fonts`
+   export. They are split off the critical entry path so `./styles` (first
+   paint) does not carry the ~99 KB-gzipped base64 font binary. Consumers
+   import `…/styles/fonts` once, separately. The calibrated `local()`
+   fallback face below carries NO payload and stays on the critical path —
+   it is what paints during the `font-display: optional` window. */
 
 /* Plus Jakarta Sans — calibrated fallback face.
    Wraps the platform's system sans-serif (San Francisco / Segoe UI /
@@ -123,38 +98,11 @@
    OFL FACE FILES — Fira Code (canonical mono)
    ═══════════════════════════════════════════════ */
 
-/* Fira Code — Latin subset (ASCII + ligatures + box-drawing prereqs).
-   Variable font: a single woff2 covers wght 300..700. `font-display:
-   swap` is acceptable here because Fira Code is post-LCP (mono-register
-   admin labels + tabular numerics render below the fold; FOUT is a
-   minor visual blip, not a layout shift since the system mono fallback
-   matches geometry via the calibrated fallback face below). */
-@font-face {
-    font-family: "Fira Code";
-    font-style: normal;
-    font-weight: 300 700;
-    font-display: swap;
-    src: url("@mkbabb/glass-ui/fonts/fira-code/fira-code-latin.woff2") format("woff2");
-    unicode-range:
-        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
-        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* Fira Code — Latin-ext subset. Carried for parity with the sans
-   coverage (admin labels may surface non-ASCII strings on
-   internationalized variants). */
-@font-face {
-    font-family: "Fira Code";
-    font-style: normal;
-    font-weight: 300 700;
-    font-display: swap;
-    src: url("@mkbabb/glass-ui/fonts/fira-code/fira-code-latin-ext.woff2") format("woff2");
-    unicode-range:
-        U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
-        U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF,
-        U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
+/* The payload-bearing "Fira Code" faces (latin + latin-ext woff2) live in
+   `fonts.css`, reachable via the `@mkbabb/glass-ui/styles/fonts` export —
+   split off the critical entry path (see the Plus Jakarta note above). The
+   calibrated `local()` fallback face below carries NO payload and stays on
+   the critical path; it covers the `font-display: swap` window. */
 
 /* Fira Code — calibrated fallback face. Wraps the platform mono stack
    (SF Mono / Menlo / Consolas / Courier New) with Capsize-derived
