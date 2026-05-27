@@ -8,47 +8,51 @@ Status vocabulary — PENDING / MET / MISS / ARCHIVED (2-consumer-gated, named r
 
 ## AM.W0 — Packaging + token-AA + forms-a11y root fixes
 
-- **Opens:** TBD
-- **Closes:** TBD
-- **Agents:** 2 disjoint (W0.1 packaging+token / W0.2 forms+dock a11y)
+- **Opens:** 2026-05-26
+- **Closes:** 2026-05-26
+- **Agents:** 2 disjoint (W0.1 packaging+token `5befe07` / W0.2 forms+dock a11y `222a90c`)
 
 ### Events
 
-- _(none yet)_
+- 2 parallel agents dispatched (disjoint: package.json+tokens.css ‖ number-field/). Both clean.
+- Orchestrator refined NumberFieldInput to `v-bind="$attrs"` (avoids dropping non-aria consumer attrs).
+- Integration: `typecheck` exit 0; `build` exit 0 in 36.31s; `dist/aurora.js` (49.9 KB) stays out of `dist/glass-ui.js` (36 KB) — per-subpath shake confirmed.
 
 ### Gates
 
 | # | Gate | Status | Evidence |
 |---|---|---|---|
-| 1 | `npm run typecheck` + `npm run build` clean | PENDING |—|
-| 2 | `tw-animate-css` in `peerDependencies` (+ optionalPeerDependencies hint); fresh-consumer Tailwind-v4 build clean | PENDING |—|
-| 3 | `--muted-foreground` light rung ≥ 4.5:1 vs `--neutral-0`; dark companion clears its plate | PENDING |—|
-| 4 | `<NumberFieldInput>` forwards `aria-label`/`aria-labelledby` from a `NumberField` prop (`inheritAttrs:false` + explicit forward) | PENDING |—|
-| 5 | GlassDock trigger-aria contract exposed + documented (Slider unchanged) | PENDING |—|
-| 6 | `audit/W0-token-contrast.md` + `audit/W0-forms-a11y.md` authored | PENDING |—|
+| 1 | `npm run typecheck` + `npm run build` clean | MET | typecheck exit 0; build exit 0 (36.31s) |
+| 2 | `tw-animate-css` in `peerDependencies` (+ optionalPeerDependencies hint); fresh-consumer Tailwind-v4 build clean | MET | `package.json:520` peer + `:523-525` optional; commit `5befe07` |
+| 3 | `--muted-foreground` light rung ≥ 4.5:1 vs `--neutral-0`; dark companion clears its plate | MET | light L45→L40 = 5.23:1 vs page / 4.91:1 vs muted; dark L60→L62 = 7.39:1; `audit/W0-token-contrast.md` |
+| 4 | `<NumberFieldInput>` forwards `aria-label`/`aria-labelledby` to the inner input (`inheritAttrs:false` + `v-bind="$attrs"`) | MET | `NumberFieldInput.vue` v-binds $attrs → reka Primitive(as=input); `audit/W0-forms-a11y.md` |
+| 5 | GlassDock trigger-aria contract re-derived + documented (Slider unchanged) | MET | dock root presentational (no aria-expanded); contract → AM.W2 doc; `audit/W0-forms-a11y.md` |
+| 6 | `audit/W0-token-contrast.md` + `audit/W0-forms-a11y.md` authored | MET | both present; commit `442460d` |
 
 ---
 
 ## AM.W1 — Aurora ergonomics + adaptive render-mode
 
-- **Opens:** TBD
-- **Closes:** TBD
+- **Opens:** 2026-05-26
+- **Closes:** 2026-05-26
 - **Agents:** 1
 
 ### Events
 
-- _(none yet)_
+- Single agent; new `renderMode.ts` (type + `resolveRenderMode` device-tier resolver, SSR-safe) + Aurora.vue config-default + arm-gate threading via useAurora 4th param.
+- Integration: `typecheck` exit 0; `build` exit 0 (1m1s); `dist/aurora.js` 50.5 KB.
+- Optional hardening (`prefers-reduced-transparency` §5, chunked `arm()` §3.2) ARCHIVED to a future Aurora wave — no consumer binary forces them; chunked arm would breach the W1 "don't touch arm internals" bound.
 
 ### Gates
 
 | # | Gate | Status | Evidence |
 |---|---|---|---|
-| 1 | `npm run typecheck` + `npm run build` clean | PENDING |—|
-| 2 | `<Aurora>` `config` optional, defaults to `DEFAULT_AURORA_CONFIG` (omit config → canonical look) | PENDING |—|
-| 3 | `renderMode: "webgl" \| "css" \| "auto"` prop, default `"auto"`; `"css"` never arms WebGL yet paints the palette | PENDING |—|
-| 4 | `"auto"` gates on device tier (`hardwareConcurrency ≤ 4` / `prefers-reduced-motion` / `saveData` → `"css"`) | PENDING |—|
-| 5 | warm wash composites under every branch; `initStrategy:"deferred"` lazy path intact (Aurora never retired) | PENDING |—|
-| 6 | `audit/W1-aurora-rendermode.md` authored (runtime probe) | PENDING |—|
+| 1 | `npm run typecheck` + `npm run build` clean | MET | typecheck 0; build 0 (1m1s) |
+| 2 | `<Aurora>` `config` optional, defaults to `DEFAULT_AURORA_CONFIG` (omit config → canonical look) | MET | `withDefaults({ config: () => DEFAULT_AURORA_CONFIG })`; factory avoids shared mutation |
+| 3 | `renderMode: "webgl" \| "css" \| "auto"` prop, default `"auto"`; `"css"` never arms WebGL yet paints the palette | MET | `cssOnly` short-circuits `onMounted` before `createAurora`; webgl2 context lives in `arm()` only |
+| 4 | `"auto"` gates on device tier (`hardwareConcurrency ≤ 4` / `prefers-reduced-motion` / `saveData` → `"css"`) | MET | `resolveRenderMode()` in `renderMode.ts`; SSR/missing-API → `"webgl"` |
+| 5 | warm wash composites under every branch; `initStrategy:"deferred"` lazy path intact (Aurora never retired) | MET | `paletteToCssGradient` placeholder never unmounted; reduced-motion freeze + intersection/idle schedule untouched |
+| 6 | `audit/W1-aurora-rendermode.md` authored (runtime probe) | MET | present |
 
 ---
 
