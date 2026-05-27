@@ -58,24 +58,26 @@ Status vocabulary — PENDING / MET / MISS / ARCHIVED (2-consumer-gated, named r
 
 ## AM.W2 — Chunk-strategy confirmation + size disclosure + consumer-wiring docs
 
-- **Opens:** TBD
-- **Closes:** TBD
+- **Opens:** 2026-05-26
+- **Closes:** 2026-05-26
 - **Agents:** 1
 
 ### Events
 
-- _(none yet)_
+- profile-bundle.mjs extended (+94 lines): per-subpath table classifies each `dist/*.js` as entry (from package.json exports) vs shared Rolldown leaf; emits to artifact JSON + `docs/tranches/K/audit/W4-subpath-sizes.md` + stdout.
+- Root-barrel shake: static import-graph walk — glass-ui.js reaches 58 chunks, `aurora.js` NOT among them (16 KiB-gzip Aurora WebGL chunk fully shaken out).
+- CLAUDE.md: 5 sections added (Tabs/ToggleGroup matrix, GlassDock aria contract, tw-animate-css requirement, subpath-import discipline, Vite 8 manualChunks recipe).
 
 ### Gates
 
 | # | Gate | Status | Evidence |
 |---|---|---|---|
-| 1 | `profile-bundle.mjs` emits a per-subpath gzipped-size table | PENDING |—|
-| 2 | `profile:budget --enforce` green | PENDING |—|
-| 3 | `dist/glass-ui.js` does not transitively reach Aurora's standalone chunk (root-barrel shake proof) | PENDING |—|
-| 4 | CLAUDE.md §Consumer wiring — Vite 8 `manualChunks` recipe added | PENDING |—|
-| 5 | CLAUDE.md — subpath-import discipline note + Tabs-vs-ToggleGroup decision matrix added | PENDING |—|
-| 6 | `audit/W2-bundle-disclosure.md` authored | PENDING |—|
+| 1 | `profile-bundle.mjs` emits a per-subpath gzipped-size table | MET | 65 entries + 65 shared; `W4-subpath-sizes.md` |
+| 2 | `profile:budget --enforce` green | MET | glass-ui.js 25.2% / glass-ui.css 90.3% of gzip budget — both PASS |
+| 3 | `dist/glass-ui.js` does not transitively reach Aurora's standalone chunk | MET | import-graph walk: 58 reached, aurora.js absent; `audit/W2-bundle-disclosure.md` |
+| 4 | CLAUDE.md §Consumer wiring — Vite 8 `manualChunks` recipe added | MET | glass-ui→vueuse→vendor order + advancedChunks caveat |
+| 5 | CLAUDE.md — subpath-import discipline + Tabs-vs-ToggleGroup matrix + tw-animate-css + dock aria | MET | all 5 sections present |
+| 6 | `audit/W2-bundle-disclosure.md` authored | MET | present |
 
 ---
 
