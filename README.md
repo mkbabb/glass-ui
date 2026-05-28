@@ -270,3 +270,12 @@ All runtime deps are peer:
 | `lucide-vue-next` ^0.525 | Icon set |
 | `vaul-vue` ^0.2 | Drawer primitives |
 | `@mkbabb/keyframes.js` ^2.0 | Spring/keyframe runtime |
+
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md). The README shape follows the perimeter-level
+[canonical README shape](./docs/precepts/canonical-readme-shape.md).
+
+## License
+
+[MIT](./LICENSE) © 2026 Mike Babb.

@@ -1,0 +1,52 @@
+# release — publish @mkbabb/glass-ui to npm on a v*.*.* tag (G.W5 Sub-wave C).
+#
+# Trigger: a pushed tag matching v*.*.* (cut by the changesets Version
+# Packages PR merge, or hand-cut). The job re-runs the full release gate
+# matrix before publishing so a tag can never ship an artifact that the
+# CI gate would have rejected:
+#   build (8 GB heap) → typecheck → test → verify-export-types
+#   → profile:budget → proof:package + proof:theme + proof:resolution.
+#
+# Publish auth: NPM_TOKEN repository secret (automation token, publish
+# scope). The publish step runs only on tag refs — push/PR never reach it.
+name: release
+
+on:
+    push:
+        tags:
+            - "v*.*.*"
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  registry-url: "https://registry.npmjs.org"
+            - run: npm ci
+            - name: build
+              env:
+                  NODE_OPTIONS: --max-old-space-size=8192
+              run: npm run build
+            - name: typecheck
+              run: npm run typecheck
+            - name: test
+              run: npm run test
+            - name: verify-export-types
+              run: npm run verify-export-types
+            - name: profile:budget
+              env:
+                  GLASS_UI_BUDGET_SKIP_BUILD: "1"
+              run: npm run profile:budget
+            - name: proof:package
+              run: npm run proof:package
+            - name: proof:theme
+              run: npm run proof:theme
+            - name: proof:resolution
+              run: npm run proof:resolution
+            - name: publish
+              run: npm publish --access public
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
