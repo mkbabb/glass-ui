@@ -310,6 +310,22 @@ The `GlassDock` root is **presentational**—a `<div class="glass-dock">` carryi
 
 `<Slider>` exposes `keepDockOpen?: boolean` (default `true`). When a Slider is a descendant of a `<GlassDock>`, pointer-drag acquires a `dockKeepOpen` token for the duration of the gesture (preventing idle-collapse) AND the Slider subscribes to the dock's `dockHeld` computed and reflects it via `data-held` on its root for thumb-halo intensification. The contract is bidirectional and pointer-anchored—the Slider is the only consumer (Option B per K W7); keyboard- and discrete-button interactions on `<NumberField>` are not eligible because they have no continuous-interaction window. The cross-substrate proof story lives at `demo/stories/compositions/dock-with-slider.vue`.
 
+### Drawer modes (detented · live-behind)
+
+`<Drawer>` gains an additive `mode?: "modal" | "live-behind"` prop (default `"modal"`; AN.W3). The default modal sheet is unchanged—focus-trapped, page-behind `aria-hidden`, iOS scale-down backdrop. `mode="live-behind"` bundles three live-behind defaults at once—`modal: false` + `shouldScaleBackground: false` + `snapPoints: [0.12, 0.5, 1]`—so the peek/half/full bottom sheet over a live, still-interactive surface is a single-prop opt-in rather than three props the consumer has to remember. Every value the mode supplies is still overridable by an explicit prop (the mode only fills `props.x ?? modeDefault`). `DrawerContent` carries a companion `showOverlay?: boolean` (default `true`); the live-behind pattern passes `:show-overlay="false"` so the painted scrim does not occlude the surface behind. `Drawer*` stays on the **root barrel**—the W3 additions are prop/type-only (no vueuse dependency, no heavy isolated chunk), so no `/drawer` subpath is warranted; the `DrawerMode` type is co-exported from `src/components/ui/drawer/index.ts`.
+
+vaul-vue owns the snap MATH (the drag-release spring, the `data-vaul-*` state attributes, `transition: transform .5s cubic-bezier(.32,.72,0,1)`); glass-ui owns the LOOK in `src/styles/drawer.css` (cascade rung 17, imported by `src/styles/index.css` so `/styles` ships it). The grammar is `.glass-drawer` (the glass sheet surface—`[data-vaul-snap-points="true"]` fills viewport height so a snap fraction reads as that fraction OF THE VIEWPORT), `.glass-drawer-handle`/`.glass-drawer-grip` (the rounded peek handle cycling peek → half → full), and `.glass-drawer-snap-rule` (an opt-in hairline a consumer adds to a detent-boundary separator). Every visual axis reads a `--drawer-*` custom property; consumers retune by overriding the rungs. **Upstream limitation (not a glass-ui bug):** vaul-vue does not reliably re-snap an ALREADY-OPEN sheet from an external `activeSnapPoint` write—its `activeSnapPoint` controllable shadows external prop writes once the gesture machinery has run. A programmatic detent set lands as the OPENING detent (which works); live re-snapping of an open sheet is a vaul-vue upstream fix. See `docs/tranches/AN/audit/W3-drawer-detents.md` §A.limitation.
+
+### Role contracts on intrinsic primitives
+
+`StatusDot` and `SortableHandle` are `<span>`-rooted primitives; a bare `<span aria-label>` with no role trips axe's `aria-prohibited-attr` rule (AN.W4). `StatusDot` now emits `role="img"` ONLY when the consumer binds `aria-label` (the decorative case stays role-free). `SortableHandle` on its default `as="span"` grip emits `role="button"` + `tabindex="0"` (the drag-affordance role); overriding `as="button"` drops both since the host tag carries them natively. Both reach the consumer's `:aria-label` via native single-root attr fall-through.
+
+**NumberField label-binding contract.** axe's `label` rule fires on the inner `<input role="spinbutton">`, not on the NumberField group wrapper. Bind the accessible name on `<NumberFieldInput>` via one of three channels—`aria-label`, `aria-labelledby`, or a sibling `<Label for>` → `<NumberFieldInput id>`—each of which `NumberFieldInput.vue` (`inheritAttrs:false` + `v-bind="$attrs"`) lands on the focusable input. A `role="group"` wrapper carrying an `aria-label` does NOT propagate the name to the input; name the field itself for axe `label` compliance.
+
+### InstrumentChassis phase canon
+
+The `InstrumentChassisPhase` union (`ready | ping | download | upload | jitter | complete`) carries `"ping"` as the canonical generic-active phase—use it for any active-but-unspecialised state (scoring, validating, processing). The union does NOT carry a per-domain `"scoring"` member; a consumer maps its domain-active state onto `"ping"` (AN.W6—a speculative `"scoring"` member with no consumer would be overfit substrate). A phase-canon test enforces the union.
+
 ## Demo storybook chassis (demo-private)
 
 `demo/stories/` ships canonical chassis primitives that are NOT exported from the library. Stories migrate to these instead of raw recipe triplets:
@@ -329,6 +345,7 @@ Projects import styles via CSS, components and composables via JS:
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "@mkbabb/glass-ui/styles";
+@source "../node_modules/@mkbabb/glass-ui/dist";   /* template-utility content-scan */
 @variant dark (&:where(.dark, .dark *));
 
 /* then override tokens locally */
@@ -339,6 +356,8 @@ Projects import styles via CSS, components and composables via JS:
 ```
 
 **`tw-animate-css` is required for the animation grammar.** glass-ui's CSS `@apply`s the `animate-in`/`animate-out`/`fade-*`/`zoom-*` data-state utilities that Dialog, Sheet, Popover, and DropdownMenu emit; Tailwind v4 flags these as unknown utilities without the plugin. Consumers of those primitives must `npm install tw-animate-css` and add `@import "tw-animate-css";` to their CSS (shown above). It ships as an `optionalPeerDependency` so package tooling surfaces the hint without forcing a hard install on Button-only consumers; the `@import` is the binding requirement for anyone touching the animated surfaces.
+
+**glass-ui's component templates emit Tailwind utility classes that the consumer's content-scan must reach.** The library's compiled templates (`dist/*.js` render functions) reference layout utilities (`h-full`, `w-full`, `shrink-0`, `flex-col`, …) and CVA variant classes (`text-destructive-foreground`, `rounded-pill`, …) as plain class strings. Tailwind v4 only generates a utility it FINDS during content scanning, and a consumer scanning only its own `src/` never sees glass-ui's. Add an `@source` directive pointing at the installed dist so Tailwind's scanner reaches the compiled templates (the path is relative to the CSS file the directive sits in—adjust the `../` depth to your project layout). Without it, glass-ui's components render with their layout/variant utilities silently absent—the same failure class as a missing `tw-animate-css`. This is a binding requirement for any consumer mounting glass-ui components (not just the `/styles` cascade); it composes with—does not replace—the `tw-animate-css` import. Option A (pre-generating the utilities into the dist `/styles` bundle) was rejected at AN.W2 on payload + pipeline-fragility grounds (≈22 KB-gzip of mostly-duplicated utilities + a brittle theme-context re-derivation); see `docs/tranches/AN/audit/W2-tailwind-utilities.md`. Note the v0.9.x second `@import "@mkbabb/glass-ui/styles.css"` line is no longer needed—AN.W1 folded the SFC scoped CSS into the single `@import "@mkbabb/glass-ui/styles"` (the `/styles` bundle now carries the token cascade AND the compiled SFC `<style scoped>` component CSS).
 
 ```ts
 import { Button } from "@mkbabb/glass-ui";

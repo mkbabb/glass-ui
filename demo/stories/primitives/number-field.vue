@@ -78,5 +78,58 @@ const bounded = ref<number>(5);
                 <p class="text-mono-caption text-muted-foreground">Locked</p>
             </div>
         </section>
+
+        <!--
+            Label-binding contract (AN.W4.C). axe's `label` rule fires on the
+            inner <input role="spinbutton"> itself, NOT on the NumberField group
+            wrapper. The accessible name MUST be bound on <NumberFieldInput> via
+            one of three channels — each resolves the name onto the focusable
+            input (AM.W0.2's `inheritAttrs:false` + `v-bind="$attrs"` forward).
+        -->
+        <section class="grid grid-cols-1 gap-10 md:grid-cols-3">
+            <!-- Channel 1: <Label for> → input id. -->
+            <div class="flex flex-col gap-3">
+                <Label for="nf-label-input">Servings</Label>
+                <NumberField v-model="quantity" :min="0">
+                    <NumberFieldContent>
+                        <NumberFieldDecrement />
+                        <NumberFieldInput id="nf-label-input" />
+                        <NumberFieldIncrement />
+                    </NumberFieldContent>
+                </NumberField>
+                <p class="text-mono-caption text-muted-foreground">
+                    <code class="fira-code">&lt;Label for&gt;</code> → input id
+                </p>
+            </div>
+
+            <!-- Channel 2: aria-labelledby → external label id. -->
+            <div class="flex flex-col gap-3">
+                <span id="nf-aria-by" class="text-admin-label text-foreground">Portions</span>
+                <NumberField v-model="quantity" :min="0">
+                    <NumberFieldContent>
+                        <NumberFieldDecrement />
+                        <NumberFieldInput aria-labelledby="nf-aria-by" />
+                        <NumberFieldIncrement />
+                    </NumberFieldContent>
+                </NumberField>
+                <p class="text-mono-caption text-muted-foreground">
+                    <code class="fira-code">aria-labelledby</code>
+                </p>
+            </div>
+
+            <!-- Channel 3: aria-label directly on the input. -->
+            <div class="flex flex-col gap-3">
+                <NumberField v-model="quantity" :min="0">
+                    <NumberFieldContent>
+                        <NumberFieldDecrement />
+                        <NumberFieldInput aria-label="Helpings" />
+                        <NumberFieldIncrement />
+                    </NumberFieldContent>
+                </NumberField>
+                <p class="text-mono-caption text-muted-foreground">
+                    <code class="fira-code">aria-label</code> on input
+                </p>
+            </div>
+        </section>
     </StoryPage>
 </template>

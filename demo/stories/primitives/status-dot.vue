@@ -92,5 +92,18 @@ const sizes: Size[] = ["xs", "sm", "md"];
                 Pulse halo respects <code class="fira-code">prefers-reduced-motion</code>.
             </p>
         </StorySection>
+
+        <!-- Role contract: consumer-bound aria-label → role="img" (AN.W4.A). -->
+        <StorySection label="role contract · consumer-bound aria-label">
+            <div class="flex items-center gap-6">
+                <StatusDot variant="active" aria-label="Cary hue · active" data-probe="labelled" />
+                <StatusDot variant="error" data-probe="decorative" />
+            </div>
+            <p class="text-mono-caption text-muted-foreground">
+                A bound <code class="fira-code">aria-label</code> emits
+                <code class="fira-code">role="img"</code> on the span root; the
+                decorative case (no label) stays role-free.
+            </p>
+        </StorySection>
     </StoryPage>
 </template>

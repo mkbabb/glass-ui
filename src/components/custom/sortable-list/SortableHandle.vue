@@ -11,19 +11,33 @@
  * The default slot renders inside the handle — typically a
  * grip glyph like `⋮⋮`.
  */
-import type { Component } from "vue";
+import { computed, type Component } from "vue";
 
-withDefaults(
+const props = withDefaults(
     defineProps<{
         /** Root element tag. Default `"span"`. */
         as?: string | Component;
     }>(),
     { as: "span" },
 );
+
+// A bare <span> grip is presentational to AT. When the default span tag is
+// used, expose an interactive role + tab stop so the consumer's
+// `:aria-label="'Reorder ' + name"` lands on a role that allows the
+// accessible-name attr (closes axe `aria-prohibited-attr` — AN.W4.B). When the
+// consumer overrides `as` with a natively-interactive element (e.g. `button`),
+// the host tag already carries the role, so we emit neither.
+const interactive = computed(() => props.as === "span");
 </script>
 
 <template>
-    <component :is="as" class="sortable-handle" data-sortable-handle>
+    <component
+        :is="as"
+        class="sortable-handle"
+        data-sortable-handle
+        :role="interactive ? 'button' : undefined"
+        :tabindex="interactive ? 0 : undefined"
+    >
         <slot />
     </component>
 </template>

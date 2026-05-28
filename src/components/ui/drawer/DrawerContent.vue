@@ -6,7 +6,23 @@ import type { HtmlHTMLAttributes } from 'vue'
 import DrawerOverlay from './DrawerOverlay.vue'
 import { cn } from '../../../utils'
 
-const props = defineProps<DialogContentProps & { class?: HtmlHTMLAttributes['class'] }>()
+/**
+ * `showOverlay` — render the scrim (AN.W3). Defaults `true` for the modal
+ * sheet. The live-behind pattern (`<Drawer mode="live-behind">`) passes
+ * `:show-overlay="false"` so the page-behind stays visible AND interactive;
+ * vaul-vue's `modal:false` already drops `disableOutsidePointerEvents`, but a
+ * painted scrim would still visually occlude the live verdict, so the overlay
+ * is opt-out at the content level.
+ */
+const props = withDefaults(
+  defineProps<
+    DialogContentProps & {
+      class?: HtmlHTMLAttributes['class']
+      showOverlay?: boolean
+    }
+  >(),
+  { showOverlay: true },
+)
 const emits = defineEmits<DialogContentEmits>()
 
 const forwarded = useForwardPropsEmits(props, emits)
@@ -14,14 +30,14 @@ const forwarded = useForwardPropsEmits(props, emits)
 
 <template>
   <DrawerPortal>
-    <DrawerOverlay />
+    <DrawerOverlay v-if="props.showOverlay" />
     <DrawerContent
-      v-bind="forwarded" :class="cn(
-        'fixed inset-x-0 bottom-0 z-modal mt-24 flex h-auto flex-col rounded-t-[var(--radius-panel)] border bg-background',
-        props.class,
-      )"
+      v-bind="forwarded" :class="cn('glass-drawer', props.class)"
     >
-      <div class="mx-auto mt-4 h-2 w-[100px] rounded-pill bg-muted" />
+      <!-- Detent peek handle (AN.W3) — grips the sheet for drag-snap -->
+      <div class="glass-drawer-handle" aria-hidden="true">
+        <span class="glass-drawer-grip" />
+      </div>
       <slot />
     </DrawerContent>
   </DrawerPortal>

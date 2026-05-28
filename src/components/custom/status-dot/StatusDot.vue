@@ -1,5 +1,6 @@
 <template>
     <span
+        :role="$attrs['aria-label'] != null ? 'img' : undefined"
         :class="
             cn(
                 'inline-flex items-center gap-1.5 align-middle',

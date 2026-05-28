@@ -4,9 +4,18 @@
  * Import this in your project's main CSS file:
  *   @import "tailwindcss";
  *   @import "tw-animate-css";
- *   @import "@mkbabb/glass-ui/styles";        (critical — no font payload)
+ *   @import "@mkbabb/glass-ui/styles";        (token cascade + SFC scoped CSS)
  *   @import "@mkbabb/glass-ui/styles/fonts";  (OFL woff2 corpus, loaded once)
  *   (then add your project-specific token overrides locally)
+ *
+ * AN.W1 — the single `@mkbabb/glass-ui/styles` import resolves the COMPLETE
+ * stylesheet: this @import cascade PLUS the per-component `<style scoped>`
+ * payload (Aurora grid layering, Progress/Slider/Notification/… scoped rules).
+ * The build folds the SFC bundle (`dist/glass-ui.css`) into the dist copy of
+ * this file (vite.config.ts `publishStyleAssets`), so a consumer never needs
+ * a second `@import "@mkbabb/glass-ui/styles.css"` line. The `./styles.css`
+ * export stays reachable as a transparent SFC-only entry (NOT a back-compat
+ * alias) for a cascade-free consumer.
  */
 
 /*
@@ -69,8 +78,10 @@
  *  14. glyph-face.css        — P-tranche component CSS (cap + backplate).
  *  15. disco-glyph.css       — P-tranche component CSS (layered fills).
  *  16. hover-popover.css     — V.W3 popover-animation grammar.
+ *  17. drawer.css            — AN.W3 detented bottom-sheet grammar (glass
+ *                             sheet surface + peek handle + snap-stop rules).
  *
- * Per-package component CSS lives at (12)-(16) (loaded after utilities so
+ * Per-package component CSS lives at (12)-(17) (loaded after utilities so
  * component-local recipes can override). New per-package CSS files append
  * to that tail.
  */
@@ -90,6 +101,7 @@
 @import "./glyph-face.css";
 @import "./disco-glyph.css";
 @import "./hover-popover.css";
+@import "./drawer.css";
 
 /* Ensure consumer's Tailwind scans glass-ui components for utility classes
    (e.g. CVA button variants like text-destructive-foreground) */

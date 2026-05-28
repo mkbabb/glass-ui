@@ -1,0 +1,138 @@
+/*
+ * drawer.css — Detented bottom-sheet grammar (AN.W3).
+ *
+ * vaul-vue owns the snap math (the spring transform between snap-points, the
+ * drag-resistance overshoot, the `data-vaul-*` state attributes). glass-ui owns
+ * the LOOK: the glass sheet surface, the rounded peek handle, the snap-stop
+ * indicator rules, and the drag-resistance feel-tuning. This file is the
+ * substrate so a consumer mounting `<Drawer mode="live-behind">` does not
+ * re-author the three detents from scratch.
+ *
+ * Token-first — every visual axis reads a custom property. Consumers retune
+ * the sheet by overriding the rungs below, never by editing this file.
+ */
+
+:root {
+    /* Detent grammar knobs — overridable per-consumer */
+    --drawer-handle-w: 2.25rem;
+    --drawer-handle-h: 0.3125rem; /* 5px — vaul's hit-target rhythm */
+    --drawer-handle-color: var(--muted-foreground);
+    --drawer-handle-opacity: 0.45;
+    --drawer-handle-opacity-active: 0.85;
+    --drawer-snap-rule-color: color-mix(in srgb, var(--border) 60%, transparent);
+}
+
+/*
+ * The sheet surface. Replaces the prior inline-Tailwind triplet on
+ * DrawerContent.vue so the glass tier + the snap transform feel live in one
+ * token-driven place. The fixed/inset/z-index layout stays here too.
+ *
+ * NOTE: vaul-vue sets `transition: transform .5s cubic-bezier(.32,.72,0,1)` and
+ * `touch-action: none` on `[data-vaul-drawer]` from its injected stylesheet —
+ * that IS the drag-resistance spring curve. We do NOT override `transition` so
+ * the snap feel is preserved; we layer border-radius + glass surface on top.
+ */
+.glass-drawer {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    max-height: 97vh;
+    margin-top: 6rem;
+    border: 1px solid var(--border);
+    border-bottom: 0;
+    border-start-start-radius: var(--radius-panel);
+    border-start-end-radius: var(--radius-panel);
+    background-color: hsl(var(--background));
+    box-shadow: var(--shadow-2xl);
+}
+
+/*
+ * Detented (snap-point) sheets fill the viewport height. vaul positions the
+ * sheet by translating it DOWN by `innerHeight - (fraction * innerHeight)` —
+ * so for a snap fraction to read as that fraction OF THE VIEWPORT, the sheet's
+ * top must sit at the viewport top when fully open (offset 0). A `height: auto`
+ * content sheet would instead translate off-screen. vaul tags the snap case via
+ * `[data-vaul-snap-points=true]`; we fill height there and let the content
+ * scroll inside.
+ */
+.glass-drawer[data-vaul-snap-points="true"] {
+    height: 100%;
+    max-height: 100%;
+    margin-top: 0;
+}
+
+/* Live-behind direction variants — vaul tags the root with the drag axis.
+   Bottom is the default + the F-side pattern; the others ride the same surface
+   so a top/side live-behind sheet inherits the grammar. */
+.glass-drawer[data-vaul-drawer-direction="top"] {
+    bottom: auto;
+    top: 0;
+    margin-top: 0;
+    margin-bottom: 6rem;
+    border-top: 0;
+    border-bottom: 1px solid var(--border);
+    border-radius: 0 0 var(--radius-panel) var(--radius-panel);
+}
+
+/*
+ * Peek handle — the rounded grip at the top of the sheet. It is the visual
+ * affordance the user drags to cycle peek → half → full. vaul-vue intensifies
+ * the grip on `:active` via its own `[data-vaul-handle]` rules when the consumer
+ * uses `<DrawerHandle>`; this is the glass-ui default grip for the common case.
+ */
+.glass-drawer-handle {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-block: 0.75rem 0.5rem;
+    touch-action: none;
+}
+
+.glass-drawer-grip {
+    display: block;
+    width: var(--drawer-handle-w);
+    height: var(--drawer-handle-h);
+    border-radius: var(--radius-pill);
+    background-color: hsl(var(--drawer-handle-color));
+    opacity: var(--drawer-handle-opacity);
+    transition: opacity var(--duration-fast) var(--ease-out),
+        width var(--duration-fast) var(--ease-out);
+}
+
+/* While the sheet is being dragged vaul exposes the gesture; intensify the grip
+   so the affordance reads as "live". `:active` covers the pointer-held case for
+   the default grip; consumers using vaul's `<DrawerHandle>` get its own active
+   rule in addition. */
+.glass-drawer-handle:active .glass-drawer-grip,
+.glass-drawer:hover .glass-drawer-grip {
+    opacity: var(--drawer-handle-opacity-active);
+    width: calc(var(--drawer-handle-w) * 1.15);
+}
+
+/*
+ * Snap-stop indicators — subtle full-width hairline rules that mark where the
+ * sheet content sections break across detents. A consumer opts in by adding
+ * `.glass-drawer-snap-rule` to a separator element inside the sheet; it reads as
+ * the detent boundary line without competing with the content. This is the
+ * "snap-stop visual indicator" the spec asks for, expressed as an opt-in class
+ * (the detents themselves are positional, owned by vaul; the RULE is the look).
+ */
+.glass-drawer-snap-rule {
+    height: 1px;
+    margin-inline: calc(var(--radius-panel) * -0.5);
+    border: 0;
+    background-color: var(--drawer-snap-rule-color);
+}
+
+/* Reduced-motion — vaul's transform transition is its own; we only suppress the
+   grip's affordance animation so the handle does not pulse for PRM users. */
+@media (prefers-reduced-motion: reduce) {
+    .glass-drawer-grip {
+        transition: none;
+    }
+}

@@ -285,6 +285,7 @@ export const CATEGORIES: Category[] = [
             s("compositions", "empty-states", "Empty States"),
             s("compositions", "instrument-chassis", "Instrument Chassis", "Three-region chassis with twin-line bezel grooves and phase cascade."),
             s("compositions", "dock-with-slider", "Dock with Slider", "Cross-substrate `keep-dock-open` contract — slider thumb-halo + dock substrate response while dragging."),
+            s("compositions", "drawer-live-behind", "Drawer Live-Behind", "Detented non-modal bottom sheet (`mode=\"live-behind\"`) — peek/half/full snap-points over a live, native-size verdict surface."),
         ],
     },
 ];

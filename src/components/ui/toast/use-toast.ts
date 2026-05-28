@@ -12,6 +12,12 @@ export interface Toast {
   description?: string
   action?: Component | VNode
   variant?: ToastVariant
+  /**
+   * Auto-dismiss delay in ms, forwarded to reka-ui's `ToastRoot`. Omit to
+   * inherit the `ToastProvider` default; `Number.POSITIVE_INFINITY` keeps the
+   * toast open until dismissed.
+   */
+  duration?: number
 }
 
 type ToasterToast = Toast & {
