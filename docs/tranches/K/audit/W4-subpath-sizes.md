@@ -1,6 +1,6 @@
 # Per-subpath gzipped-size table
 
-Generated 2026-05-27T02:23:11.062Z by `scripts/profile-bundle.mjs`.
+Generated 2026-05-28T15:05:45.849Z by `scripts/profile-bundle.mjs`.
 Every `dist/*.js` chunk, sorted largest-gzip first. `entry` = a
 publishable subpath a consumer imports; `shared` = a Rolldown-extracted
 leaf several entries reference. Informational — not gated.
@@ -8,15 +8,15 @@ leaf several entries reference. Informational — not gated.
 | Chunk | Kind | Raw | Gzip |
 |---|---|---|---|
 | `dist/aurora.js` | entry | 50545 (49.4 KiB) | 16351 (16.0 KiB) |
-| `dist/glass-ui.js` | entry | 36047 (35.2 KiB) | 8491 (8.3 KiB) |
+| `dist/glass-ui.js` | entry | 36047 (35.2 KiB) | 8492 (8.3 KiB) |
 | `dist/typewriter.js` | entry | 19501 (19.0 KiB) | 5649 (5.5 KiB) |
 | `dist/dock.js` | entry | 16145 (15.8 KiB) | 5205 (5.1 KiB) |
-| `dist/search.js` | entry | 13825 (13.5 KiB) | 4595 (4.5 KiB) |
-| `dist/DataTable-C-WgCrqm.js` | shared | 15327 (15.0 KiB) | 4260 (4.2 KiB) |
+| `dist/search.js` | entry | 13825 (13.5 KiB) | 4597 (4.5 KiB) |
+| `dist/DataTable-Ce00dbHD.js` | shared | 15335 (15.0 KiB) | 4264 (4.2 KiB) |
 | `dist/timeline.js` | entry | 14017 (13.7 KiB) | 4125 (4.0 KiB) |
 | `dist/useConfiguratorState-BlaevW0S.js` | shared | 9935 (9.7 KiB) | 3638 (3.6 KiB) |
-| `dist/carousel.js` | entry | 11938 (11.7 KiB) | 3386 (3.3 KiB) |
-| `dist/motion.js` | entry | 8221 (8.0 KiB) | 2880 (2.8 KiB) |
+| `dist/carousel.js` | entry | 11938 (11.7 KiB) | 3387 (3.3 KiB) |
+| `dist/motion.js` | entry | 8221 (8.0 KiB) | 2879 (2.8 KiB) |
 | `dist/sidebar.js` | entry | 8964 (8.8 KiB) | 2817 (2.8 KiB) |
 | `dist/forms.js` | entry | 8824 (8.6 KiB) | 2408 (2.4 KiB) |
 | `dist/Toaster-DY8_jtHv.js` | shared | 7317 (7.1 KiB) | 2407 (2.4 KiB) |
@@ -24,8 +24,8 @@ leaf several entries reference. Informational — not gated.
 | `dist/SelectScrollDownButton-yu8EYUnu.js` | shared | 7179 (7.0 KiB) | 2352 (2.3 KiB) |
 | `dist/glass-carousel.js` | entry | 6410 (6.3 KiB) | 2274 (2.2 KiB) |
 | `dist/dropdown-menu-2K-SGkZU.js` | shared | 9595 (9.4 KiB) | 2198 (2.1 KiB) |
-| `dist/CommandShortcut-dZk4X6I-.js` | shared | 7767 (7.6 KiB) | 2131 (2.1 KiB) |
-| `dist/sheet-BQXClY5W.js` | shared | 6240 (6.1 KiB) | 2073 (2.0 KiB) |
+| `dist/CommandShortcut-_INFUMu6.js` | shared | 7767 (7.6 KiB) | 2130 (2.1 KiB) |
+| `dist/sheet-CLVkb3AO.js` | shared | 6240 (6.1 KiB) | 2074 (2.0 KiB) |
 | `dist/useSortable-Ck0rBJ4g.js` | shared | 5484 (5.4 KiB) | 2027 (2.0 KiB) |
 | `dist/Progress-CCH-2UBR.js` | shared | 5243 (5.1 KiB) | 1969 (1.9 KiB) |
 | `dist/ContextMenuSubContent-DCkweFW9.js` | shared | 6681 (6.5 KiB) | 1777 (1.7 KiB) |
@@ -34,7 +34,7 @@ leaf several entries reference. Informational — not gated.
 | `dist/labeled-field.js` | entry | 4879 (4.8 KiB) | 1512 (1.5 KiB) |
 | `dist/DialogFooter-DRdaCok0.js` | shared | 4437 (4.3 KiB) | 1494 (1.5 KiB) |
 | `dist/useKeyboardShortcuts-B1ev1YEC.js` | shared | 3516 (3.4 KiB) | 1483 (1.4 KiB) |
-| `dist/DialogContent-Cr7pJCiA.js` | shared | 3202 (3.1 KiB) | 1461 (1.4 KiB) |
+| `dist/DialogContent-CmCijgX9.js` | shared | 3202 (3.1 KiB) | 1464 (1.4 KiB) |
 | `dist/cn-DJXf4yaB.js` | shared | 3465 (3.4 KiB) | 1446 (1.4 KiB) |
 | `dist/useBreakpoint-BHlX-MhR.js` | shared | 3479 (3.4 KiB) | 1420 (1.4 KiB) |
 | `dist/ToggleGroupItem-BYG_8M9M.js` | shared | 4058 (4.0 KiB) | 1401 (1.4 KiB) |
@@ -42,8 +42,8 @@ leaf several entries reference. Informational — not gated.
 | `dist/confirm-dialog.js` | entry | 2891 (2.8 KiB) | 1335 (1.3 KiB) |
 | `dist/stacked-icons.js` | entry | 3495 (3.4 KiB) | 1329 (1.3 KiB) |
 | `dist/expandable-container.js` | entry | 2841 (2.8 KiB) | 1287 (1.3 KiB) |
-| `dist/button-J_Ydhuti.js` | shared | 3151 (3.1 KiB) | 1193 (1.2 KiB) |
-| `dist/useSpringMount-DKha341Y.js` | shared | 3045 (3.0 KiB) | 1191 (1.2 KiB) |
+| `dist/button-BlOW34DT.js` | shared | 3296 (3.2 KiB) | 1212 (1.2 KiB) |
+| `dist/useSpringMount-BTRBNzXP.js` | shared | 3045 (3.0 KiB) | 1192 (1.2 KiB) |
 | `dist/Notification-DrI1DT2v.js` | shared | 2513 (2.5 KiB) | 1187 (1.2 KiB) |
 | `dist/PopoverContent-BCH4eYs8.js` | shared | 3189 (3.1 KiB) | 1177 (1.1 KiB) |
 | `dist/controls.js` | entry | 2157 (2.1 KiB) | 1156 (1.1 KiB) |
@@ -57,9 +57,9 @@ leaf several entries reference. Informational — not gated.
 | `dist/TooltipProvider-C5QLSPto.js` | shared | 2817 (2.8 KiB) | 1061 (1.0 KiB) |
 | `dist/header-ribbon.js` | entry | 2337 (2.3 KiB) | 1027 (1.0 KiB) |
 | `dist/toggle-chip.js` | entry | 2458 (2.4 KiB) | 1021 (1.0 KiB) |
+| `dist/CardFooter-Yi0xtLLd.js` | shared | 3058 (3.0 KiB) | 1011 (1.0 KiB) |
 | `dist/ContextMenuContent-CvXfU5qz.js` | shared | 2366 (2.3 KiB) | 1007 (1.0 KiB) |
 | `dist/metric-cell.js` | entry | 2086 (2.0 KiB) | 1003 (1.0 KiB) |
-| `dist/CardFooter-CzZZhfy4.js` | shared | 3042 (3.0 KiB) | 1001 (1.0 KiB) |
 | `dist/status-dot.js` | entry | 1973 (1.9 KiB) | 960 (0.9 KiB) |
 | `dist/HoverCardContent-4nN5-5bz.js` | shared | 2298 (2.2 KiB) | 955 (0.9 KiB) |
 | `dist/pulse.js` | entry | 1856 (1.8 KiB) | 931 (0.9 KiB) |
@@ -98,11 +98,11 @@ leaf several entries reference. Informational — not gated.
 | `dist/select.js` | entry | 435 (0.4 KiB) | 234 (0.2 KiB) |
 | `dist/dom.js` | entry | 350 (0.3 KiB) | 210 (0.2 KiB) |
 | `dist/keys-DVkcUktU.js` | shared | 263 (0.3 KiB) | 202 (0.2 KiB) |
-| `dist/dialog.js` | entry | 341 (0.3 KiB) | 198 (0.2 KiB) |
+| `dist/dialog.js` | entry | 341 (0.3 KiB) | 196 (0.2 KiB) |
 | `dist/configurator.js` | entry | 308 (0.3 KiB) | 196 (0.2 KiB) |
 | `dist/search-ocd8tmL9.js` | shared | 224 (0.2 KiB) | 191 (0.2 KiB) |
-| `dist/command.js` | entry | 298 (0.3 KiB) | 185 (0.2 KiB) |
-| `dist/sheet.js` | entry | 279 (0.3 KiB) | 183 (0.2 KiB) |
+| `dist/command.js` | entry | 298 (0.3 KiB) | 184 (0.2 KiB) |
+| `dist/sheet.js` | entry | 279 (0.3 KiB) | 184 (0.2 KiB) |
 | `dist/glyph-face.js` | entry | 240 (0.2 KiB) | 181 (0.2 KiB) |
 | `dist/x-cdWAmO-q.js` | shared | 198 (0.2 KiB) | 173 (0.2 KiB) |
 | `dist/chevron-right-fS7fal2t.js` | shared | 165 (0.2 KiB) | 164 (0.2 KiB) |
@@ -112,7 +112,7 @@ leaf several entries reference. Informational — not gated.
 | `dist/check-dwgetki8.js` | shared | 159 (0.2 KiB) | 161 (0.2 KiB) |
 | `dist/keyboard.js` | entry | 199 (0.2 KiB) | 154 (0.2 KiB) |
 | `dist/_plugin-vue_export-helper-n-_DRHWS.js` | shared | 163 (0.2 KiB) | 151 (0.1 KiB) |
-| `dist/card.js` | entry | 198 (0.2 KiB) | 149 (0.1 KiB) |
+| `dist/card.js` | entry | 198 (0.2 KiB) | 147 (0.1 KiB) |
 | `dist/api.js` | entry | 136 (0.1 KiB) | 132 (0.1 KiB) |
 | `dist/tooltip.js` | entry | 169 (0.2 KiB) | 130 (0.1 KiB) |
 | `dist/collapsible.js` | entry | 154 (0.2 KiB) | 120 (0.1 KiB) |
@@ -138,5 +138,5 @@ leaf several entries reference. Informational — not gated.
 | `dist/progress.js` | entry | 75 (0.1 KiB) | 82 (0.1 KiB) |
 | `dist/label.js` | entry | 69 (0.1 KiB) | 79 (0.1 KiB) |
 
-**Entries** — 65 files, 248615 raw / 83402 gzip.
-**Shared** — 65 files, 177790 raw / 67988 gzip.
+**Entries** — 65 files, 248615 raw / 83401 gzip.
+**Shared** — 65 files, 177959 raw / 68025 gzip.
