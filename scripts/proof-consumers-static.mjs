@@ -102,17 +102,24 @@ function unionExports(files) {
     return exports;
 }
 
+// The intended root-barrel contract — the exact per-package sources `src/index.ts`
+// re-exports. Drift between this list and `src/index.ts` is the surface-creep this
+// proof guards. The dark/ + keyboard/ + motion/ sub-trees are subpath-only (vueuse-
+// or keyframes.js-bearing, SCC-trap closure) and are deliberately absent here.
 const rootContractFiles = [
     "src/components/ui/index.ts",
-    "src/composables/useGlobalDark.ts",
-    "src/composables/useInterval.ts",
-    "src/composables/useKeyboardShortcuts.ts",
-    "src/composables/useTimer.ts",
-    "src/composables/useTouchGate.ts",
+    // The 7 cherry-picked custom/ packages on the root barrel.
+    "src/components/custom/instrument-chassis/index.ts",
+    "src/components/custom/instrument-rail/index.ts",
+    "src/components/custom/glyph-face/index.ts",
+    "src/components/custom/disco-glyph/index.ts",
+    "src/components/custom/hover-popover/index.ts",
+    "src/components/custom/configurator/index.ts",
+    "src/components/custom/scrolling-text/index.ts",
+    // The vueuse-free composable sub-trees.
+    "src/composables/reactive/index.ts",
+    "src/composables/dom/index.ts",
     "src/composables/glass/index.ts",
-    // AI.W1 R3 — `composables/motion/index.ts` retired from the root barrel.
-    // The keyframes.js-bearing motion composables ship via the `/motion` flat
-    // subpath (mirrors the `/dark` + `/keyboard` SCC-trap closure shape).
     "src/composables/sortable/index.ts",
     "src/utils/index.ts",
 ].map((file) => resolve(root, file));

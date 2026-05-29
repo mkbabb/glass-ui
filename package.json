@@ -480,7 +480,7 @@
         "dev": "vite",
         "build": "vite build && npm run emit-types",
         "build:watch": "vite build --watch",
-        "prepare": "test -f dist/glass-ui.js || npm run build",
+        "prepare": "test -f dist/glass-ui.js -a -f dist/index.d.ts || npm run build",
         "typecheck": "vue-tsc --noEmit",
         "test": "vitest run",
         "verify-export-types": "node scripts/verify-export-types.mjs",
