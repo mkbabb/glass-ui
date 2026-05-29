@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
 // Drive a parametric spring across translateX + hue + rotate between two snapshots.
-// Showcases `useSpringOrchestrator` from `@/composables/motion` with four spring
+// Showcases `useNumericTransition` from `@/composables/motion` with four spring
 // presets expressed as explicit TimingFunction lambdas (damped-spring closed form).
 import { computed, ref, shallowRef } from "vue";
 import type { TimingFunction } from "@mkbabb/keyframes.js";
-import { useSpringOrchestrator } from "../../../src/composables/motion";
+import { useNumericTransition } from "../../../src/composables/motion";
 import type { SpringSnapshot } from "../../../src/composables/motion";
 import { Button } from "../../../src/components/ui/button";
 import { Label } from "../../../src/components/ui/label";
@@ -83,7 +83,7 @@ function applySnapshot(values: SpringSnapshot<Keys>): void {
 
 // Re-create orchestrator on preset change so it picks up the new timing fn.
 const orchestrator = computed(() =>
-    useSpringOrchestrator<Keys>({
+    useNumericTransition<Keys>({
         from,
         to,
         duration: 1100,

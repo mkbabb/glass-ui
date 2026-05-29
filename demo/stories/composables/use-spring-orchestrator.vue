@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// useSpringOrchestrator — keyed numeric snapshots between two states.
+// useNumericTransition — keyed numeric snapshots between two states.
 // Live visual demo: motion/springs.vue. This entry cross-links + documents API.
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
@@ -13,7 +13,7 @@ import ShowcaseFrame from "../ShowcaseFrame.vue";
             blurb="Wraps keyframes.js NumericAnimation. Drives numeric interpolation between two named snapshots over a duration; per-frame onFrame consumer writes the resulting record to the DOM (CSS variables, transforms, etc.). The composable never touches the DOM directly."
         >
             <ShowcaseFrame pad="md" tier="quiet">
-                <pre v-pre class="fira-code text-sm overflow-x-auto"><code>const orchestrator = useSpringOrchestrator&lt;"x" | "y" | "scale"&gt;({
+                <pre v-pre class="fira-code text-sm overflow-x-auto"><code>const transition = useNumericTransition&lt;"x" | "y" | "scale"&gt;({
   from:     { x: 0,   y: 0,   scale: 1 },
   to:       { x: 100, y: 50,  scale: 1.2 },
   duration: 400,
@@ -25,9 +25,8 @@ import ShowcaseFrame from "../ShowcaseFrame.vue";
   },
 });
 
-orchestrator.play();
-orchestrator.reverse();
-orchestrator.snap();</code></pre>
+transition.start();
+transition.stop();</code></pre>
             </ShowcaseFrame>
         </StorySection>
 

@@ -6,12 +6,6 @@
 // bezier / keyframes.js timing-function names). True spring physics
 // (mass / stiffness / damping / overshoot) lives in `useSpring` (W9-β),
 // which owns the reserved "spring" name in the composable surface.
-//
-// Renamed at AL.W9-δ from `useSpringOrchestrator` to reflect what the
-// composable actually does. A one-minor-version re-export shim at
-// `./useSpringOrchestrator.ts` keeps the old name resolvable for any
-// downstream consumer that hasn't migrated; the shim retires at the next
-// major version bump.
 import { NumericAnimation } from "@mkbabb/keyframes.js";
 import type {
     NumericAnimationOptions,

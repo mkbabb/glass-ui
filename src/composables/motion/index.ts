@@ -8,10 +8,6 @@ export * from "./useSpring";
 export * from "./useSpringMount";
 export * from "./useSpringPress";
 export * from "./useNumericTransition";
-// AL.W9-δ — `useSpringOrchestrator` renamed to `useNumericTransition`; the
-// shim below re-exports the old name with `@deprecated` JSDoc for one minor
-// version. Retires at v3.0.
-export * from "./useSpringOrchestrator";
 export * from "./useStaggerReveal";
 export * from "./useScrollProgress";
 export * from "./useAnimatedNumber";

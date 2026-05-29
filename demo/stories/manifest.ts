@@ -225,7 +225,7 @@ export const CATEGORIES: Category[] = [
             s("composables", "use-intersection-pause", "useIntersectionPause", "Pause a runtime when target scrolls offscreen or document.hidden flips."),
             s("composables", "use-raf-loop", "useRAFLoop", "Scope-aware rAF loop with start/stop/pause/resume/dispose."),
             s("composables", "use-scroll-progress", "useScrollProgress", "Map a target's scroll position in the viewport to [0, 1]."),
-            s("composables", "use-spring-orchestrator", "useSpringOrchestrator", "Parametric spring between two named numeric snapshots."),
+            s("composables", "use-spring-orchestrator", "useNumericTransition", "Numeric transition between two named snapshots over a duration."),
             s("composables", "use-stagger-reveal", "useStaggerReveal", "IntersectionObserver-gated entrance cascade (sibling of useStagger)."),
             s("composables", "use-sortable", "useSortable", "Pointer-capture drag-reorder with optional cross-list group drops."),
             s("composables", "use-scroll-tracker", "useScrollTracker", "Active-section tracking as host scrolls."),

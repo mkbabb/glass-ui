@@ -15,9 +15,8 @@
 // Asymmetry note (the latent oversight this subpath retires): the L.W1 Lane C
 // closure curated the vueuse-bearing surface into its own subpath but left the
 // keyframes-bearing surface on the root barrel. The motion sub-tree's barrel
-// (`composables/motion/index.ts`) re-exports `useNumericTransition` (formerly
-// `useSpringOrchestrator`, renamed at AL.W9-δ; deprecation shim retained for
-// one minor), `useAnimatedNumber`, `useAnimatedNumberMap`, `useStagger`,
+// (`composables/motion/index.ts`) re-exports `useNumericTransition`,
+// `useAnimatedNumber`, `useAnimatedNumberMap`, `useStagger`,
 // `useStaggerReveal`, `useScrollProgress`, `useRAFLoop`, `useIntersectionPause`,
 // `installDarkModeSync` + `constants` (DAMPING, SNAP_THRESHOLD, RAFLoopTiming
 // type, etc.). Only `useNumericTransition` + `useAnimatedNumber` (and
@@ -33,8 +32,7 @@
 // layout (same pattern as `/dark` and `/keyboard`).
 //
 // BREAKING (v2.0.0): consumers that previously reached `useStagger`,
-// `useAnimatedNumber`, `useAnimatedNumberMap`, `useNumericTransition` (formerly
-// `useSpringOrchestrator`; see AL.W9-δ rename note above), `useStaggerReveal`,
+// `useAnimatedNumber`, `useAnimatedNumberMap`, `useNumericTransition`, `useStaggerReveal`,
 // `useScrollProgress`, `useRAFLoop`, `useIntersectionPause`,
 // `installDarkModeSync`, `DAMPING`, `SNAP_THRESHOLD`, `RAFLoopTiming`,
 // `PausableRuntime`, etc. through `@mkbabb/glass-ui` must migrate to

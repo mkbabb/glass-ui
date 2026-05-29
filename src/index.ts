@@ -42,7 +42,7 @@
 //   CarouselPrevious, GlassCarouselPager,
 //   useCarousel, CarouselApi
 //   useSpring, useSpringPress,                 @mkbabb/glass-ui/motion        @mkbabb/keyframes.js (AI.W1 R3 + AL.W9-β)
-//   useNumericTransition, useAnimatedNumber,   (useSpringOrchestrator → useNumericTransition at AL.W9-δ; shim retires at v3.0)
+//   useNumericTransition, useAnimatedNumber,
 //   useAnimatedNumberMap, useStagger,
 //   useStaggerReveal, useScrollProgress,
 //   useRAFLoop, useIntersectionPause,
