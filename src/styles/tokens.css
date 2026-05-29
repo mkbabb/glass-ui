@@ -79,21 +79,10 @@
        headline and the thank-you headline stay in lockstep. */
     --motion-duration-complete-shimmer: 2.4s;
     --motion-delay-complete-shimmer: 220ms;
-    /* AJ.W2-ζ canon checkpoint — the gold-headline shimmer at
-       CompleteHeadline + ThankYou reads these two tokens under a
-       one-shot CSS animation. The gradient (background-size: 240% 100%
-       with --color-gold-light at 46%), the @keyframes
-       (gold-headline-shimmer: background-position 120% 0 → -120% 0),
-       and the animation declaration are mutually consistent: at 2.4s
-       duration + 220ms delay the bright band traverses the headline
-       glyphs cleanly. A regression that drops either token to 0ms /
-       unset / 0 would silently collapse the celebratory shimmer to an
-       imperceptible blow-through (live regression P1-12 surfaced this
-       risk; investigation closed at the publisher as a verify — both
-       values resolve correctly today). These two values are LOAD-
-       BEARING. Do not retire / zero / un-publish without an explicit
-       decision + companion consumer-side migration at speedtest's
-       CompleteHeadline.vue + ThankYou.vue. */
+    /* The gold-headline shimmer reads these two tokens under a one-shot
+       animation: at 2.4s + 220ms delay the bright band traverses the headline
+       glyphs cleanly. Load-bearing — zeroing either collapses the shimmer to
+       an imperceptible blow-through. */
 
     /* CompleteBadge staged-reveal cluster — the disc / ring / check curve
        fires at three asymmetric durations + delays per the A4-AF staged-
@@ -106,43 +95,16 @@
     --motion-delay-badge-ring: 220ms;
     --motion-delay-badge-check: 460ms;
 
-    /* AJ-W4-κ — staggered-reveal increment canon (per A5 §8.9). Promotes
-       the scattered per-consumer constants
-       (`STATS_CARD_STAGGER_MS = 40` in MetricGaugeCards,
-        `BAR_STAGGER_MS = 80` in DistributionChart,
-        `SERIES_STAGGER_MS = 120` in TimeSeriesChart,
-        `useStagger` default 80ms) to one shared canon so a per-row /
-       per-cell / per-bar cascade across consumer surfaces reads at one
-       of three named tiers.
-
-       The three tiers are perceptually distinct registers:
-         • tight (40ms) — dense row cascades where the gap between
-           consecutive reveals should be sub-perceptual (StatsCards row
-           strip, results-table rows under their `:nth-child(N+1)` delays)
-         • default (80ms) — the canonical row-stagger rhythm (the
-           speedtest ResultStack row-tint sweep, the DistributionChart
-           bar entrance — both already at 80ms). Aliased as `default`
-           to match `useStagger`'s built-in fallback so consumers
-           omitting `delayMs` resolve to the same token.
-         • relaxed (120ms) — wider cascades where each reveal carries
-           its own attention budget (TimeSeriesChart series entrance)
-
-       The FD2 §6 rule-1 "shared period multiple" canon for ambient
-       cycles extends here to staggers: at 40/80/120ms, the default
-       (80ms) is the LCM of tight (40) AND a 2/3 of relaxed (120)
-       — a tight cascade beating against a default cascade syncs on
-       every-other-reveal, and a default cascade against a relaxed
-       cascade syncs on every-three-reveals. Consumers that nest
-       multiple cascades on adjacent surfaces should pick adjacent
-       tiers so the cross-beats stay quiet.
-
-       Consumers can read these tokens directly from inline-style
-       calc() expressions (`animation-delay: calc(var(--motion-stagger-default) * var(--row-index))`)
-       or via JS by resolving the CSS custom property at runtime
-       (`getComputedStyle(document.documentElement).getPropertyValue('--motion-stagger-default')`).
-       The latter shape collapses the speedtest TS-side constants
-       (SERIES_STAGGER_MS, BAR_STAGGER_MS, STATS_CARD_STAGGER_MS) into
-       single-source token reads. */
+    /* Staggered-reveal increment canon — three perceptually-distinct tiers for
+       per-row/per-cell/per-bar cascades:
+         • tight (40ms) — dense row cascades, sub-perceptual gap
+         • default (80ms) — the canonical row-stagger rhythm (matches
+           `useStagger`'s built-in fallback)
+         • relaxed (120ms) — wider cascades where each reveal carries its own
+           attention budget
+       Adjacent tiers keep cross-beats quiet (80 is the LCM of 40 and 2/3 of
+       120). Consumers read these via inline-style calc() or `getComputedStyle`
+       at runtime. */
     --motion-stagger-tight: 40ms;
     --motion-stagger-default: 80ms;
     --motion-stagger-relaxed: 120ms;
@@ -199,23 +161,13 @@
     --ease-accelerate: var(--ease-in);
 
     /* ═══════════════════════════════════════════════
-       §2.A AMBIENT MOTION — Pulse aura tokens (AB.W3.T1)
+       §2.A AMBIENT MOTION — Pulse aura tokens
 
-       Parameterise the breathing rhythm for `<Pulse variant="aura">`
-       so consumers don't re-author the cycle per site. The 6s
-       duration is the canon ambient-pulse rate (matches the dial's
-       idle breathing). Scale 1.0 ↔ 1.15 reads as a quiet halo at
-       intensity="normal"; the Pulse component remaps min/max from
-       its `intensity` prop ('subtle' = 1.06; 'vivid' = 1.22).
-
-       Opacity min/max scope is `--pulse-aura-opacity-{min,max}` —
-       the aura ALWAYS keeps a visible halo (min 0.55) so the colour
-       stays read at the trough; the peak goes to 0.95 so the breath
-       reads as a soft swell, not a fade-in-fade-out.
-
-       Reduced motion: Pulse.vue's scoped @media bracket forces
-       `animation: none` and parks at the min stop. Depth + colour
-       remain visible; the breath cycle disables.
+       Breathing rhythm for `<Pulse variant="aura">`. The 6s duration is the
+       canon ambient-pulse rate; scale 1.0 ↔ 1.15 reads as a quiet halo at
+       intensity="normal" (Pulse remaps min/max from its `intensity` prop).
+       The aura always keeps a visible halo at the trough (opacity min 0.55).
+       Reduced motion: Pulse.vue parks at the min stop, breath cycle disabled.
        ═══════════════════════════════════════════════ */
     --animate-ambient-pulse-duration: 6s;
     --animate-ambient-pulse-scale-min: 1.0;
@@ -247,37 +199,18 @@
     --progress-sectioned-track: var(--secondary);
 
     /* ═══════════════════════════════════════════════
-       §2.C ANIMATION EXPRESSIVENESS — AI.W4 grammar
-       (publisher-side; consumer-side companions live in speedtest)
+       §2.C ANIMATION EXPRESSIVENESS
 
-       Three idiom families compose the W4 wave:
-
-       • Progress lifecycle (M.1) — the under-meter / survey progress bar
-         rides an intake pulse on rising-edge, a crescendo brightening at
-         ≥85%, and a one-shot discharge flash at 100%. The crescendo is a
-         typed CSS variable (`@property --progress-crescendo`) so the
-         indicator's leading-edge gradient stop interpolates smoothly.
-
-       • Chassis phase-tint companion (M.1) — the `--phase-color` cross-
-         fade established by the chassis cascade gains an amount companion
-         (`@property --phase-tint-amount`) so the chassis backdrop "warms
-         toward" the active phase. Both typed vars interpolate together
-         across the speedtest-owned `--motion-duration-phase-handoff`
-         window; the chassis reads the consumer-tuned clock with a safe
-         600ms default so a non-speedtest consumer still gets the cross-
-         fade shape.
-
-       • Audacious button press-ripple (M.2 Q5 — ratified G-AI-D27) — the
-         `btn-audacious` utility gains an in-place `@property --ripple-
-         radius` ripple emanating from the pressed surface. Single typed
-         length, ramps 0 → max over the ripple duration, retires on
-         release. Q3 (needle micro-jitter) + Q4 (DockLayerGroup sympath-
-         etic motion) were pruned at G-AI-D27 — no tokens reserved.
-
-       All three families coexist with the existing `--motion-*` /
-       `--phase-*` cluster. Speedtest re-uses these tokens at the existing
-       --motion-duration-phase-handoff (consumer-side, 600ms). PRM brackets
-       live alongside each consumer rule. */
+       Three idiom families:
+       • Progress lifecycle — the progress bar rides an intake pulse on
+         rising-edge, a crescendo brightening at ≥85%, and a one-shot discharge
+         flash at 100% (the crescendo is the typed `@property --progress-crescendo`).
+       • Chassis phase-tint companion — `@property --phase-tint-amount` so the
+         chassis backdrop warms toward the active phase, interpolating with
+         `--phase-color` across the consumer's phase-handoff window (600ms default).
+       • Audacious button press-ripple — `btn-audacious` gains a typed
+         `@property --ripple-radius` ramping 0 → max over the ripple duration.
+       ═══════════════════════════════════════════════ */
 
     /* Progress lifecycle — typed crescendo + segment-local durations */
     --motion-duration-progress-intake: 220ms;       /* rising-edge pulse */
@@ -390,6 +323,13 @@
     --card-foreground: var(--foreground);
     --popover: var(--neutral-0);
     --popover-foreground: var(--foreground);
+
+    /* R0G-5 (AO.W4) — warm-neutral public-data panel surface. One warmth step
+       off --card (hue 44 vs 48, +4 sat, −2 L) so a consumer's aurora-OFF
+       /dashboard/* surfaces read with the admin canon's warm-neutral chrome
+       instead of the colder bare card. Opaque surface (the --card family), not
+       a --surface-tint-* overlay. Consumer applies on /dashboard/* only. */
+    --surface-public-data-panel: hsl(44 16% 96%);
 
     --muted: var(--neutral-1);
     --muted-foreground: var(--neutral-5);
@@ -547,21 +487,12 @@
        variable at any ancestor. Auto-dark via `--card`. */
     --card-header-bg:    color-mix(in srgb, var(--card) 60%, transparent);
 
-    /* Dock shadows */
-    /* User 2026-05-13 (third + fourth report). The dock previously layered:
-         1) directional `0 4px 20px` drop  → retired (third report; the Y-
-            offset concentrated on the pill's rounded right cap and read as
-            a right-edge halo on the rightmost child).
-         2) `0 0 0 1px` hairline outer ring → retired (fourth report; in
-            dark mode the 10% cream-white ring traced the right-cap arc and
-            still read as a shadow even after the directional drop was
-            gone).
-       The dock's own `border: 1.5px solid var(--glass-border-dock)` already
-       provides silhouette definition, so the outer ring was redundant. The
-       canonical dock shadow is now a single omnidirectional glow in the
-       `--shadow-md`/`--shadow-lg` family. Per-instance directional drop
-       can still be reinstated via `--shadow-dock-override` (consumed by
-       every `.glass-dock` state selector — see dock.css). */
+    /* Dock shadows — a single omnidirectional glow in the
+       `--shadow-md`/`--shadow-lg` family (a directional drop concentrated on
+       the pill's rounded right cap as a right-edge halo; the dock's own
+       border already defines the silhouette). Per-instance directional drop
+       reinstates via `--shadow-dock-override` (consumed by every `.glass-dock`
+       state selector — see dock.css). */
     --shadow-dock:           0 0 20px color-mix(in srgb, var(--shadow-color) 14%, transparent);
     --shadow-dock-collapsed: 0 0 12px color-mix(in srgb, var(--shadow-color) 12%, transparent);
     --dock-shadow:           var(--shadow-dock);
@@ -617,27 +548,11 @@
     --glass-blur-resting-radius:  12px;
     --glass-blur-floating-radius: 16px;
     --glass-blur-overlay-radius:  24px;
-    /* AJ.W2-β — dock blur lifted to 14px (was 0px at J.W3.C, was 1px
-       pre-J.W3.C). Per FD1 §4 §1.9 (AJ-time live regression P1-11):
-       "the dock should feel anchored to its surface; too much blur
-       dissociates" — but zero blur reads as "transparent-with-tint",
-       NOT as "feathered glass." The AJ-time perceptual register
-       overrides the J.W3.C compositor-cost concern: 14px is the lower
-       end of the FD1 §4 target range (14-16px); the dock composes
-       `blur()` only (no saturate — preserved from J.W3.C); the
-       `prefers-reduced-transparency` PRM bracket at glass.css:229
-       still maps the dock to its opacity-only register.
-       Quiet tier (above) lifted 3px → 10px on the same perceptual-
-       register reset (FD1 §4 target range 10-12px; 10px is the lower
-       end). The MetricBadge pills + InstrumentChassis-internal cells
-       now read as translucent gauge rather than flat tint.
-
-       AL-W3-α (T10 per A-synthesis §1.5): retune 14px → 11px with a
-       paired opacity lift 0.32 → 0.42 (below). The user mandate at
-       AL-time was "slight blur" + "refined glassyness" — at 11px /
-       0.42 the dock reads as a CRISPER GLASS PILL (the iOS Control
-       Center register), not a feathered watercolour wash. Holds the
-       register at the lower blur radius. */
+    /* Dock blur radius — 11px, paired with the 0.42 opacity below: a crisp
+       glass pill (the iOS Control Center register), not a feathered wash.
+       The dock composes `blur()` only (no saturate); the
+       `prefers-reduced-transparency` bracket at glass.css maps it to the
+       opacity-only register. */
     --glass-blur-dock-radius:     11px;
 
     --glass-blur-wash:     blur(var(--glass-blur-wash-radius)) saturate(1.05);
@@ -645,23 +560,14 @@
     --glass-blur-resting:  blur(var(--glass-blur-resting-radius)) saturate(1.05);
     --glass-blur-floating: blur(var(--glass-blur-floating-radius)) saturate(1.4);
     --glass-blur-overlay:  blur(var(--glass-blur-overlay-radius)) saturate(1.5);
-    /* Dock blur composes blur() only — no saturate. The 14px radius
-       feathers the aurora bleed-through into a watercolour register
-       while `--glass-bg-dock` (32% card opacity) carries the
-       translucent register. The dock reads as "feathered glass" rather
-       than "transparent tint" (AJ.W2-β). */
+    /* Dock blur composes blur() only — no saturate. */
     --glass-blur-dock:     blur(var(--glass-blur-dock-radius));
 
-    /* Dock-specific opacity. Lighter than `resting` (0.65) so the dock reads
-       as a translucent overlay rather than a panel — backdrop bleed visible
-       through it. Consumed by `.glass-dock` via the `--glass-bg-dock` token.
-
-       AL-W3-α (T10 per A-synthesis §1.5): retune 0.32 → 0.42 paired with
-       the dock blur radius drop (14px → 11px above). The user mandate at
-       AL-time was "slight blur" + "refined glassyness" — the +0.10 opacity
-       lift HOLDS the surface register against the tightened blur, so the
-       dock still reads as a clearly painted chrome rather than dissociating
-       into a frosted ghost. */
+    /* Dock-specific opacity (0.42) — lighter than `resting` (0.65) so the dock
+       reads as a translucent overlay rather than a panel, backdrop bleed
+       visible through it. Consumed by `.glass-dock` via `--glass-bg-dock`. The
+       value holds the surface register against the tightened 11px blur so the
+       dock reads as painted chrome, not a frosted ghost. */
     --glass-opacity-dock: 0.42;
 
     /* Chassis-specific opacity. Looser than `default` (0.50) so the
@@ -881,6 +787,13 @@
         - var(--page-padding-top, 0rem)
         - 1rem
     );
+    /* R0G-2 (AO.W3/W4) — chassis mobile dial-reserve canon. instrument-
+       chassis.css's mobile breakpoint reserves the dial's final box from
+       frame 0 via these vars (with the same values as inline fallbacks, the
+       safety net). Token-first home so the vars resolve canonically. */
+    --instrument-dial-min-height-mobile: 24rem;
+    --instrument-dial-meter-reserve-mobile: minmax(0, 1fr);
+
     --max-width-input: 24rem;
     --input-min-width-sm: 5rem;
     --min-width-input-sm: var(--input-min-width-sm);
@@ -1000,27 +913,10 @@
     --scale-press: 0.96;
     --scale-press-dock: 0.92;
 
-    /* Press-scale — the canonical iOS Liquid Glass press value.
-       `--scale-press` (0.96) is the canonical rung every primitive
-       should reach for unless it has a documented reason — see
-       DESIGN.md §L3. `--scale-press-btn` (aliased to `--scale-press-sm`,
-       0.97) is the slightly-softer rung the legacy button + slider
-       recipes consume.
-
-       AL-W10 SLIM reconciliation (per audit G-W1-2 / G-W1-4 F-2):
-       the prior `--scale-press: 0.95` value drifted from the §L3
-       canonical 0.96 rung; the canon-amend lifts the token to match
-       the iOS `.regular` control rung the precept ratifies.
-
-       Q.W4 Lane D (Q-sty-5) retired the P.W4 `--scale-press-{xs,md,lg}`
-       rungs: the ladder was minted as preemptive consumer-facing
-       substrate for a words/frontend `active:scale-[X.XX]` absorption
-       that never landed — a fleet-wide grep (words/frontend, fourier,
-       bbnf-buddy, speedtest, keyframes.js + glass-ui src/) found zero
-       `var(--scale-press-{xs,md,lg})` consumers. Substrate-without-
-       consumer is binary (N invariant 23 / L invariant 8); the three
-       unused rungs are gone. `sm` is retained — `--scale-press-btn`
-       aliases it. */
+    /* Press-scale rungs. `--scale-press` (0.96) is the canonical iOS Liquid
+       Glass press value every primitive reaches for unless it has a documented
+       reason (DESIGN.md §L3); `--scale-press-btn` aliases the slightly-softer
+       `--scale-press-sm` (0.97) the button + slider recipes consume. */
     --scale-press-sm: 0.97;
     --scale-press-btn: var(--scale-press-sm);
     --opacity-disabled: 0.5;
@@ -1168,26 +1064,12 @@
     /* ═══════════════════════════════════════════════
        §17 METRIC
 
-       MetricRow / MetricStack value-clamp dialect. The post-P
-       `9ba68ca` + `d244dd5` commits introduced this 8-token family
-       (plus the P.W5 Lane A.1 MetricRow clamp work) as a private SFC
-       dialect — the defaults lived as `var(…, fallback)` literals
-       scattered across MetricRow.vue / MetricStack.vue, never
-       discoverable or `:root`-overridable. Q.W4 Lane A promotes the
-       whole family here per the DESIGN.md feature-token-home rule;
-       the SFCs now consume them bare.
-
-       The declared values ARE the `audacious` poster register — the
-       hero-scale clamp for a single giant number the user watches
-       climb. MetricStack's `[data-register="result"]` scoped selector
-       legitimately overrides this register-locally for the compact
-       multi-row ledger; that override now retunes a globally declared
-       default rather than minting a fallback.
-
-       Three clamp arms each: `min` (floor), `cqi` (the binding
-       container-query middle term), `max` (ceiling). value + label
-       carry all three; unit carries min/max only (its cqi coefficient
-       is a fixed 6cqi, not consumer-tuned).
+       MetricRow / MetricStack value-clamp dialect. The declared values are the
+       `audacious` poster register — the hero-scale clamp for a single giant
+       number; MetricStack's `[data-register="result"]` selector overrides it
+       locally for the compact multi-row ledger. Three clamp arms each: `min`
+       (floor), `cqi` (the binding container-query middle term), `max`
+       (ceiling); unit carries min/max only (its cqi is a fixed 6cqi).
        ═══════════════════════════════════════════════ */
 
     /* Value register — audacious-poster hero clamp */
@@ -1206,69 +1088,35 @@
     --metric-row-label-clamp-max: 2.75rem;
 
     /* ═══════════════════════════════════════════════
-       §2.D INSTRUMENT-CLUSTER COMPOSITION RHYTHM —
-       AK.W3 / FD1 TRANSPOSITION 5 absorb.
+       §2.D INSTRUMENT-CLUSTER COMPOSITION RHYTHM
 
-       The under-meter progress bar nests INTO the dial's painted-disc
-       bound (FD2 §5.2) and any two stacked progress rails inside a
-       cluster share the same vertical rhythm token. Both tokens were
-       authored speedtest-local (`AJ.W3-α`, `AJ.W3-μ.3`) but the design
-       intent is library-canon: the instrument-chassis family owns the
-       under-meter / progress-cluster grammar, so the tokens absorb here
-       at AK.W3. Speedtest reads transitively through the canon.
+       The instrument-chassis family owns the under-meter / progress-cluster
+       grammar.
 
-       AM-W7-δ — `--meter-progress-gap` RETIRED (dead-canon). It was
-       absorbed pre-emptively at AK.W3 for a post-nest "meter ↔ per-phase
-       progress-bar gap" composition that never materialised: speedtest's
-       bar uses the negative `--meter-progress-inset` instead, and a
-       fleet grep (glass-ui src/ + demo + speedtest) found ZERO `var()`
-       consumers (only doc references in pre-AL/pre-AK audits flagging it
-       as G-AL-D-METER-PROGRESS-GAP-DEAD-CANON, routed to retire). Per
-       NO-legacy-code it is removed rather than kept as speculative
-       forward-compat reservation; a future glass-ui Meter primitive that
-       needs the gap re-authors it at its real consumer.
-
-       • `--meter-progress-inset` — the negative-margin inset that pulls
-         the under-meter bar INTO the unpainted ring lane around the
-         dial canvas (~4% of meter-size, two-thirds of the way through
-         the lane). Consumed at `.phase-progress` with `margin-block-
-         start: calc(-1 * var(--meter-progress-inset))`.
+       • `--meter-progress-inset` — the negative-margin inset that pulls the
+         under-meter bar INTO the unpainted ring lane around the dial canvas
+         (~4% of meter-size). Consumed at `.phase-progress` via
+         `margin-block-start: calc(-1 * var(--meter-progress-inset))`. The
+         `--meter-size` reference resolves against the consumer's own
+         declaration; the 200px fallback keeps the calc well-defined.
        • `--progress-stack-gap` — vertical rhythm between any two stacked
-         progress rails inside one cluster (the under-meter bar cluster
-         + the global PhaseTimeline siblinged at W3-β).
-
-       The `--meter-size` reference inside the inset clamp resolves
-       against the consumer's own `--meter-size` declaration; when no
-       consumer ships one (a non-speedtest demo of the chassis), the
-       inline fallback of 200px keeps the calc well-defined. */
+         progress rails inside one cluster.
+       ═══════════════════════════════════════════════ */
     --meter-progress-inset: calc(var(--meter-size, 200px) * 0.04);
     --progress-stack-gap: clamp(0.1875rem, 0.4cqi, 0.375rem);
 
     /* ═══════════════════════════════════════════════
-       §2.E CELEBRATION-TIER REGISTER — AK.W3 / FD1
-       TRANSPOSITION 5 absorb.
+       §2.E CELEBRATION-TIER REGISTER
 
-       The celebration cluster (speedtest "Complete!" headline,
-       ThankYou's "Thanks for taking the time" headline) is a SHARED
-       peak across multiple consumer surfaces. Before AK.W3 these
-       tokens were speedtest-local (`AJ.W3-μ.4`, W2-C headline-parity)
-       but the design intent is library-canon: any glass-ui consumer
-       composing a "completion" / "thank-you" surface should reach
-       for the same row-rhythm + headline-ceiling pair.
+       Shared peak for any "completion" / "thank-you" surface.
 
-       • `--celebration-row-rhythm` — gap between the celebration
-         cluster's rows (cqi-axis so the rhythm tracks the card's
-         intrinsic width).
-       • `--text-celebration-headline-size` — the SINGLE designed peak
-         both celebration surfaces clamp toward (the W2-C unification).
-         cqi-axis so the size tracks each card's intrinsic width.
-       • `--complete-headline-size` — the per-consumer FONT-SIZE HOOK
-         that `CompleteHeadline.vue` reads (`font-size:
-         var(--complete-headline-size, …)`). Each consumer assigns the
-         canon clamp (`--text-celebration-headline-size`) to this hook
-         at the container so the headline pegs at the shared peak.
-         The default falls back to a smaller hero-rung clamp for
-         consumers that haven't opted into the celebration ceiling. */
+       • `--celebration-row-rhythm` — gap between the cluster's rows (cqi-axis).
+       • `--text-celebration-headline-size` — the single designed peak both
+         celebration surfaces clamp toward (cqi-axis).
+       • `--complete-headline-size` — the per-consumer font-size hook a consumer
+         assigns the canon clamp to so its headline pegs at the shared peak;
+         the default falls back to a smaller hero-rung clamp.
+       ═══════════════════════════════════════════════ */
     --celebration-row-rhythm: clamp(0.5rem, 1.6cqi, 1rem);
     --text-celebration-headline-size: clamp(2.5rem, 12cqi, 9rem);
     --complete-headline-size: clamp(2.25rem, 11cqi, 4rem);
@@ -1276,22 +1124,12 @@
     /* ═══════════════════════════════════════════════
        §19 TABLE DENSITY
 
-       A single unitless knob `--table-density` scales the cell
-       padding and header row height of the Table / DataTable
-       primitive. Default `1` is backward-compatible (resolves to
-       the same `1rem` cell padding and `3rem` header height as the
-       pre-knob hardcoded values). Consumers set this on a wrapping
-       element or on `:root` to tune density for their context:
-
-         • 0.75 — compact admin table (tighter rows, more data/screen)
-         • 1    — default (unchanged)
-         • 1.25 — comfortable / touch-friendly rows
-
-       The derived tokens are read by the `table-cell` and `table-head`
-       CSS utilities (utilities.css) which TableCell.vue and TableHead.vue
-       consume instead of the former Tailwind `p-4` / `h-12` literals.
-       Changing `--table-density` cascades instantly via CSS inheritance —
-       no JS prop is needed.
+       A single unitless knob `--table-density` scales the cell padding +
+       header row height of the Table / DataTable primitive. Default `1`
+       resolves to 1rem cell padding + 3rem header height; 0.75 is a compact
+       admin table, 1.25 is comfortable/touch-friendly. The derived tokens are
+       read by the `table-cell` / `table-head` utilities; changing the knob
+       cascades instantly via CSS inheritance — no JS prop needed.
        ═══════════════════════════════════════════════ */
     --table-density: 1;
     --table-cell-px: calc(1rem * var(--table-density));
@@ -1325,6 +1163,11 @@
     --card-foreground: var(--foreground);
     --popover: hsl(24 8% 10%);
     --popover-foreground: var(--foreground);
+
+    /* R0G-5 (AO.W4) — dark mirror of the warm-neutral public-data panel.
+       --card's dark hsl(24 8% 10%) nudged one warmth step toward amber
+       (24→36) + +1 sat + +2 L so the dark dashboard panel lifts off the page. */
+    --surface-public-data-panel: hsl(36 9% 12%);
 
     --muted: var(--neutral-1);
     --muted-foreground: var(--neutral-5);
