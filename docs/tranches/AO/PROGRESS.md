@@ -124,43 +124,58 @@ All four need the user's GitHub push authority.
 
 ---
 
-## AO.W3 — Consumer-gap (speedtest AQ R0G-1..4)
+## AO.W3 — Consumer-gap (speedtest AQ R0G-1..4) — 2026-05-29 — CLOSED
 
-- **Opens:** after W1 close AND explicit user authorization (independent of W2; parallelizes)
-- **Status:** PLANNED
-- **Agents:** up to 4 (∥ disjoint — aurora ‖ instrument-chassis ‖ composables/dom ‖ toast)
-- **Disposition:** PLANNED
+- **Opens:** after W1 close — **Closes:** 2026-05-29
+- **Status:** DONE — gates 1-5 MET; gate 6 (visual π) runs at W5 close
+- **Agents:** 4 (∥ disjoint — aurora ‖ instrument-chassis ‖ composables/dom ‖ toast); orchestrator-verified combined
+- **Commits:** `f934fed` (R0G-1) · `f76f7bf` (R0G-2) · `029d052` (R0G-3) · `8e299a6` (R0G-4) · `ab93d38` (surface-manifest purge) · `c92b2a5` (audit)
+
+### Events
+
+- **R0G-1 Aurora** — demand-driven `needsAnimation()` loop + `wake()` setters + runtime `visibilitychange` suspend; `drawFrame` byte-identical (π hero unchanged in motion). Fixed a latent bug in the same carve: the outer `resume` wrapper set `running=true` before the inner `resume()`'s `if(running) return`, so the `useIntersectionPause` re-show seam no-opped post-arm — now delegates purely.
+- **R0G-2 chassis** — mobile `.instrument-dial` reserves the final box from frame 0 (`min-height` + `minmax(0,1fr)` meter row); only the paint-only `--phase-tint` transition animates; tokens.css untouched (W4 owns the canonical token).
+- **R0G-3 useIdleReady** — created sibling of `useViewportReady`; vueuse-free; surfaces to the root barrel + resolves from dist (`function`); 7-case test green. Justified by 5 consumer sites.
+- **R0G-4 Toaster position** — additive prop, default `bottom-right` byte-identical to the prior literal (proven via real `cn()`).
+- **Surface manifest** — `tests/public-surface.spec.ts` dropped the deleted-alias assertions, completing the W2 purge; full suite 521 passed.
 
 ### Gates
 
 | # | Gate | Status | Evidence |
 |---|---|---|---|
-| 1 | `typecheck` + `build` exit 0 (default heap) | PLANNED | — |
-| 2 | R0G-3 `useIdleReady` exported from dom barrel + type-resolves; sibling-consistent; test passes | PLANNED | `audit/W3-consumer-gap.md` |
-| 3 | R0G-4 `<Toaster>` accepts `position`; default anchor unchanged | PLANNED | `audit/W3-...` |
-| 4 | R0G-1 Aurora loop demand-driven + visibilitychange-paused; reduced-motion static | PLANNED | `audit/W3-...` |
-| 5 | R0G-2 chassis reserves dial final box at mobile breakpoint; recentre transform-only | PLANNED | `audit/W3-...` |
-| 6 | Visual π re-probe — aurora/chassis/toast surfaces zero canon regression | PLANNED | `audit/W3-...` |
+| 1 | `typecheck` + `build` exit 0 (default heap) | MET | both 0 |
+| 2 | R0G-3 `useIdleReady` exported + resolves; sibling-consistent; test passes | MET | dist export = function; 7-case test green |
+| 3 | R0G-4 `<Toaster>` accepts `position`; default anchor unchanged | MET | default class byte-identical |
+| 4 | R0G-1 Aurora loop demand-driven + visibilitychange-paused; reduced-motion static | MET | `needsAnimation()` + visibility listener; drawFrame untouched |
+| 5 | R0G-2 chassis reserves dial final box at mobile; recentre transform-only | MET | min-height + minmax reserve; paint-only transition |
+| 6 | Visual π re-probe — aurora/chassis/toast zero canon regression | DEFERRED→W5 | runs in the close ceremony |
 
 ---
 
-## AO.W4 — CSS budget re-base + cascade consolidation + R0G-5 token
+## AO.W4 — CSS budget re-base + cascade consolidation + R0G-5 token — 2026-05-29 — CLOSED
 
-- **Opens:** after W2 close (gate truth) AND W3 close (settled cascade content)
-- **Status:** PLANNED
-- **Agents:** 1-2 (gate re-base + enforce ‖ cascade consolidation; R0G-5 token first)
-- **Disposition:** PLANNED
+- **Opens:** after W2 + W3 close — **Closes:** 2026-05-29
+- **Status:** DONE — gates 1-4, 6 MET; gate 5 (visual π) runs at W5 close
+- **Agents:** 2 (Carve B cascade+tokens, then Carve A gate re-base+enforce against the settled draw); orchestrator-verified
+- **Commits:** see W4 commit list below
+
+### Events
+
+- **R0G-5 token** — `--surface-public-data-panel` (light `hsl(44 16% 96%)`, dark `hsl(36 9% 12%)`) added to tokens.css §5 + theme.css bridge. Chassis reserve canonical tokens added (token-first completion of R0G-2). drawer.css double-`hsl()` bug fixed.
+- **Consolidation** — conservative dedup (dock.css density-merge + four-state `:where()` hoist, utilities.css hoists, prose trims) reclaimed **6476 gzip**: resolved draw 80827 → **74928 gzip**. No rung retired (rainbow/configurator-row/disco-glyph-hook/gold-hover all left intact, overfitting-gated). proof:theme byte-clean.
+- **Re-base** — CSS ceiling re-based to `{raw 340000, gzip 82500}` (74928 + ~10%), derived not invented; the SFC-only 8650 ceiling + the bump-at-every-close chain retired. Gate PASSES at 90.8% (the deliberate 10% headroom).
+- **Per-subpath enforcement** — D5 drift gate (10%, 1 KiB floor) vs the regenerated honest baseline; probe-confirmed (aurora 16470→13000 baseline → FAIL +26.7%; restored). W2 `combinedStylesDraw` unchanged — the cascade-regression property holds.
 
 ### Gates
 
 | # | Gate | Status | Evidence |
 |---|---|---|---|
-| 1 | `typecheck` + `build` exit 0 | PLANNED | — |
-| 2 | `proof:theme` byte-clean (every rung + the new `--surface-public-data-panel` token ships) | PLANNED | `audit/W4-css-rebase-consolidation.md` |
-| 3 | Honest gate PASSES with documented headroom (re-based ceiling) | PLANNED | `audit/W4-...` |
-| 4 | Per-subpath caps enforced; synthetic per-subpath regression trips | PLANNED | `audit/W4-...` |
-| 5 | Visual π re-probe — zero canon regression | PLANNED | `audit/W4-...` |
-| 6 | W2 fails-on-synthetic-cascade-regression still holds against the re-base | PLANNED | `audit/W4-...` |
+| 1 | `typecheck` + `build` exit 0 | MET | both 0 |
+| 2 | `proof:theme` byte-clean (every rung + the new token ships) | MET | proof:theme 0 |
+| 3 | Honest gate PASSES with documented headroom (re-based ceiling) | MET | `[PASS] styles/index.css gzip 74928/82500 (90.8%)`, --enforce 0 |
+| 4 | Per-subpath caps enforced; synthetic per-subpath regression trips | MET | aurora drift probe → FAIL +26.7%; restored |
+| 5 | Visual π re-probe — zero canon regression | DEFERRED→W5 | runs in the close ceremony |
+| 6 | W2 fails-on-synthetic-cascade-regression still holds against the re-base | MET | `combinedStylesDraw` unchanged |
 
 ---
 
