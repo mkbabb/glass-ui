@@ -10,9 +10,13 @@
 //                        useChartReady promotion).
 //   - useBreakpoint    — reactive `matchMedia` wrapper (AJ.W6-β; speedtest
 //                        useBreakpoint promotion).
+//   - useIdleReady     — requestIdleCallback (+ setTimeout fallback) post-mount
+//                        idle gate; rIC-sibling of useViewportReady, no viewport
+//                        stage (AO.W3; speedtest 5-site promotion).
 export * from "./useResizeObserver";
 export * from "./useTouchGate";
 export * from "./useTokenColor";
 export * from "./useClipboard";
 export * from "./useViewportReady";
 export * from "./useBreakpoint";
+export * from "./useIdleReady";
