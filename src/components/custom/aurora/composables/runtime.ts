@@ -38,6 +38,13 @@ const CURSOR_POS_LERP = 0.22;
 const CURSOR_STRENGTH_LERP = 0.18;
 const CURSOR_DECAY_PER_FRAME = 0.992; // ≈ 2 s half-life at 60 fps
 
+/**
+ * At-rest epsilon for the demand-driven loop. The cursor is "settled" once its
+ * eased position is within ε of its target AND its strength has decayed below
+ * ε — below this the next frame is visually identical, so the loop may park.
+ */
+const CURSOR_REST_EPSILON = 1e-3;
+
 export type AuroraRuntimeMode = "live" | "capture";
 
 /**
@@ -182,6 +189,7 @@ export function createAurora(
         readonly renderAt: (timeSec: number) => void;
         readonly pause: () => void;
         readonly resume: () => void;
+        readonly wake: () => void;
         readonly dispose: () => void;
     } | null = null;
     let disposedBeforeArm = false;
@@ -190,15 +198,25 @@ export function createAurora(
         cursor.targetX = x;
         cursor.targetY = y;
         cursor.targetStrength = strength;
+        // A pointer move re-introduces cursor easing — re-arm a parked loop.
+        armed?.wake();
     }
     function clearCursor() {
         cursor.targetStrength = 0;
+        // The decay-to-rest still needs frames to animate out — re-arm.
+        armed?.wake();
     }
     function setCursorRadius(r: number) {
         cursor.radius = r;
+        // Radius shift is visible iff the cursor is active; wake so the change
+        // is drawn (the loop re-parks immediately if the cursor is at rest).
+        armed?.wake();
     }
     function setReducedMotion(flag: boolean) {
         reducedMotion = flag;
+        // reduced→full restarts drift; full→reduced must draw one last static
+        // frame then park. Either way the loop must run at least one more tick.
+        armed?.wake();
     }
 
     /**
@@ -407,6 +425,33 @@ export function createAurora(
             gl!.drawArrays(gl!.TRIANGLES, 0, 3);
         }
 
+        /**
+         * Demand-driven gate: is there live motion to render on the next frame?
+         *
+         * - `false` under reduced-motion — the static frame is drawn once, then
+         *   the loop parks (no perpetual re-rasterization of a byte-identical
+         *   frame).
+         * - `false` at steady-state — all four motion-drift uniforms are 0 AND
+         *   the cursor has settled within ε (eased position at target, strength
+         *   decayed out). The next frame would be pixel-identical, so park.
+         * - `true` otherwise — drift is live or the cursor is still easing.
+         */
+        function needsAnimation(): boolean {
+            if (reducedMotion) return false;
+            const driftLive =
+                config.nucleiDrift !== 0 ||
+                config.paletteDrift !== 0 ||
+                config.breathDepth !== 0 ||
+                config.warpDrift !== 0;
+            if (driftLive) return true;
+            const cursorLive =
+                cursor.targetStrength > CURSOR_REST_EPSILON ||
+                cursor.strength > CURSOR_REST_EPSILON ||
+                Math.abs(cursor.x - cursor.targetX) > CURSOR_REST_EPSILON ||
+                Math.abs(cursor.y - cursor.targetY) > CURSOR_REST_EPSILON;
+            return cursorLive;
+        }
+
         function tick() {
             if (!running) return;
             const t = reducedMotion
@@ -414,9 +459,22 @@ export function createAurora(
                 : (performance.now() - startTime) / 1000;
             advanceCursor();
             drawFrame(t);
-            raf = requestAnimationFrame(tick);
+            // Reschedule ONLY while motion is live. At steady-state this draws
+            // the final settled frame once and lets `raf` go to 0 (parked) —
+            // no perpetual 60fps compositor cost. `wake()` re-arms on demand.
+            raf = needsAnimation() ? requestAnimationFrame(tick) : 0;
         }
         if (running) raf = requestAnimationFrame(tick);
+
+        /**
+         * Re-arm a parked loop. A setter that re-introduces motion (cursor
+         * move, config drift raise, reduced-motion toggle) calls this so the
+         * canvas resumes immediately. No-op while suspended (`!running`) or
+         * already scheduled (`raf` non-zero), so it never double-schedules.
+         */
+        function wake() {
+            if (running && !raf) raf = requestAnimationFrame(tick);
+        }
 
         function renderAt(timeSec: number) {
             drawFrame(timeSec);
@@ -425,6 +483,7 @@ export function createAurora(
         function pause() {
             running = false;
             cancelAnimationFrame(raf);
+            raf = 0;
         }
 
         function resume() {
@@ -434,9 +493,30 @@ export function createAurora(
             tick();
         }
 
+        // Runtime-level document-visibility suspend (R0G-1). Every consumer —
+        // eager, capture-then-live, always-on-screen — gets a tab-hidden pause,
+        // not just the deferred consumer that composes `useIntersectionPause`.
+        // Idempotent with that seam: pause() is a no-op when already paused and
+        // resume() early-returns when already running.
+        const hasDocument = typeof document !== "undefined";
+        function onVisibilityChange() {
+            if (document.hidden) pause();
+            else resume();
+        }
+        if (hasDocument) {
+            document.addEventListener("visibilitychange", onVisibilityChange);
+        }
+
         function dispose() {
             running = false;
             cancelAnimationFrame(raf);
+            raf = 0;
+            if (hasDocument) {
+                document.removeEventListener(
+                    "visibilitychange",
+                    onVisibilityChange,
+                );
+            }
             ro.disconnect();
             gl!.deleteProgram(prog);
             gl!.deleteShader(vs);
@@ -453,7 +533,7 @@ export function createAurora(
         // API delegates through `armed`; the pre-arm setters above have
         // already mutated `config` / `cursor` / `running` and arm() consumed
         // the latest values via `setConfig(config)` + the `running` gate.
-        armed = { setConfig, renderAt, pause, resume, dispose };
+        armed = { setConfig, renderAt, pause, resume, wake, dispose };
     }
 
     // The expensive path runs now (eager / capture) or is invoked later by
@@ -469,20 +549,28 @@ export function createAurora(
             // upload immediately. Either way the next drawn frame is correct.
             config = cfg;
             armed?.setConfig(cfg);
+            // A config change may raise a drift uniform (slider drag) — re-arm
+            // a parked loop so the new motion is rendered. wake() re-parks
+            // immediately if the new config is still steady-state.
+            armed?.wake();
         },
         setCursor,
         clearCursor,
         setCursorRadius,
         setReducedMotion,
-        // Pre-arm `pause`/`resume` mutate `running`; arm() honors it via the
-        // `if (running) raf = requestAnimationFrame(tick)` gate.
+        // Pre-arm, mutate `running` directly — arm() honors it via the
+        // `if (running) raf = requestAnimationFrame(tick)` gate. Post-arm,
+        // delegate to the inner pause/resume, which own `running` and the
+        // RAF (the inner resume() restarts `tick()`); setting `running` here
+        // first would make the inner resume() early-return on `if (running)`
+        // and never restart the loop (the useIntersectionPause re-show seam).
         pause: () => {
-            running = false;
-            armed?.pause();
+            if (armed) armed.pause();
+            else running = false;
         },
         resume: () => {
-            running = true;
-            armed?.resume();
+            if (armed) armed.resume();
+            else running = true;
         },
         renderAt: (t) => armed?.renderAt(t),
         dispose: () => {
