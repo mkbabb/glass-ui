@@ -478,8 +478,8 @@
     ],
     "scripts": {
         "dev": "vite",
-        "build": "NODE_OPTIONS=--max-old-space-size=8192 vite build && npm run emit-types",
-        "build:watch": "NODE_OPTIONS=--max-old-space-size=8192 vite build --watch",
+        "build": "vite build && npm run emit-types",
+        "build:watch": "vite build --watch",
         "prepare": "test -f dist/glass-ui.js || npm run build",
         "typecheck": "vue-tsc --noEmit",
         "test": "vitest run",

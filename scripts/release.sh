@@ -73,12 +73,7 @@ echo "[release] typecheck..."
 npm run typecheck
 
 echo "[release] Building dist artefact..."
-# vite:dts walks the full TS surface and OOMs under Node's default 4 GB
-# heap on this codebase; bump to 8 GB for the release build. Reproducible
-# at HEAD per the O.W5 Lane B+D observation. Folded as a release-script
-# concern (rather than baked into the npm script) to keep dev-loop builds
-# at default heap.
-NODE_OPTIONS="${NODE_OPTIONS:-} --max-old-space-size=8192" npm run build
+npm run build
 
 # L.W0 Lane III — subpath publication is binary. `verify-export-types`
 # probes every published subpath (from package.json's `exports`) for

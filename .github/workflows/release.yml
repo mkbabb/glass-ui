@@ -4,7 +4,7 @@
 # Packages PR merge, or hand-cut). The job re-runs the full release gate
 # matrix before publishing so a tag can never ship an artifact that the
 # CI gate would have rejected:
-#   build (8 GB heap) → typecheck → test → verify-export-types
+#   build → typecheck → test → verify-export-types
 #   → profile:budget → proof:package + proof:theme + proof:resolution.
 #
 # Publish auth: NPM_TOKEN repository secret (automation token, publish
@@ -27,8 +27,6 @@ jobs:
                   registry-url: "https://registry.npmjs.org"
             - run: npm ci
             - name: build
-              env:
-                  NODE_OPTIONS: --max-old-space-size=8192
               run: npm run build
             - name: typecheck
               run: npm run typecheck

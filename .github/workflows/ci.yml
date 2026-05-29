@@ -11,8 +11,6 @@
 #   5. profile:budget       — bundle-budget enforcement (K W4 Lane B re-land)
 #
 # Fail-fast: `set -e` is implicit in `run:` steps; any non-zero exit aborts the job.
-# Heap bump: build step gets NODE_OPTIONS=--max-old-space-size=8192 per W1 observation
-# (vue-tsc + vite together exceed the default 4 GB heap on this codebase).
 
 name: ci
 
@@ -36,8 +34,6 @@ jobs:
             - name: test
               run: npm run test
             - name: build
-              env:
-                  NODE_OPTIONS: --max-old-space-size=8192
               run: npm run build
             - name: verify-export-types
               run: npm run verify-export-types

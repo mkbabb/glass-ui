@@ -11,7 +11,7 @@ npm run profile:budget     # bundle-budget gate (re-landed K W4 Lane B); --enfor
 npm run verify-export-types # subpath dts publication probe (L W0 Lane III release-script clause)
 ```
 
-The `build` script prefixes `NODE_OPTIONS=--max-old-space-size=8192` (P.W4 Lane A bake). `vite-plugin-dts` invokes `api-extractor` per library entry with `rollupTypes: true`; with the 42-entry matrix the per-entry type-graph walk allocates ≈6.7 GB peak RSS, which exceeds Node's default 4 GB heap. The 8 GB bump is the documented baseline rather than a release-script workaround — release.sh + ci.yml previously layered the env-var on top of `npm run build`; the bake makes the prefix the single canonical site (consumers and CI inherit it automatically). Root-cause profiling at P.W4 confirmed TypeScript + api-extractor are the dominant allocators (≈408 MiB of sampled allocations); a future upstream incremental-rollup fix in vite-plugin-dts ≥ 5.x may retire the bump.
+The `build` script runs two sequential arms — `vite build` emits the JS bundle + per-subpath chunks + the `/styles` CSS, then `emit-types` (`vue-tsc --project tsconfig.build.json`) emits the flat per-entry `.d.ts` set into `dist/` out-of-band. Declarations are NOT emitted by an in-Vite plugin: `tsconfig.build.json` runs the repo-native `vue-tsc` in `emitDeclarationOnly` mode against `src/`, which decouples the dts emit from any plugin-bundled TypeScript pin. The full build is ≈6.9 s (the vite arm ~0.8 s over 2415 modules; the vue-tsc dts arm ~6 s) and peaks at ≈769 MB RSS — comfortably under Node's default heap, so `build` runs green with no `NODE_OPTIONS` heap prefix. CI and `release.sh` invoke `npm run build` directly; both inherit the default-heap profile.
 
 ## Structure
 
