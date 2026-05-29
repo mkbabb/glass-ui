@@ -96,24 +96,31 @@ All four need the user's GitHub push authority.
 
 ---
 
-## AO.W2 — Self-measurement truth + legacy purge
+## AO.W2 — Self-measurement truth + legacy purge — 2026-05-29 — CLOSED
 
-- **Opens:** after W1 close AND explicit user authorization
-- **Status:** PLANNED
-- **Agents:** 2 (∥ disjoint — gate/build truth ‖ motion-alias delete)
-- **Disposition:** PLANNED
+- **Opens:** after W1 close — **Closes:** 2026-05-29
+- **Status:** DONE — all 7 hard gates MET
+- **Agents:** 2 (∥ disjoint — Agent A gate/build truth ‖ Agent B motion-alias delete); orchestrator-verified combined
+- **Commits:** `f79df28` (D1 inv α) · `b10c66f` (D2 inv β) · `9e5c036` (D3 heap + §Build) · `9f90bb4` (alias delete)
+
+### Events
+
+- **inv α landed + proven** — `combinedStylesDraw` resolves the full `dist/styles/index.css` @import graph; the gate reads **80786 gzip** (fully-resolved), not the 7818 SFC fragment. A synthetic 4000-prop regression into `src/styles/tokens.css` moved it 80786 → 144142 gzip and tripped the gate (FAIL exit 1); restored clean. The SFC-only gate was blind to this.
+- **inv β landed** — `publishStyleAssets` shared via `vite.style-assets.ts`; `dist/styles` + `dist/fonts` survive a `profile:budget` run. The "re-run build last" workaround retired.
+- **heap prefix gone** — 6 sites (ci.yml carried 2 the plan missed); build under default heap peaks **708 MB RSS** (~10× under the dropped 8 GB). §Build resynced to the real `vue-tsc` toolchain.
+- **alias deleted** — `useSpringOrchestrator` (identity alias) removed; 9 touches → `useNumericTransition`; grep 0; slug kept (inv 43).
 
 ### Gates
 
 | # | Gate | Status | Evidence |
 |---|---|---|---|
-| 1 | `typecheck` + `build` exit 0 under DEFAULT heap | PLANNED | — |
-| 2 | Gate measures `dist/styles` (fully-resolved ~79 KiB), not the SFC fragment | PLANNED | `audit/W2-self-measurement-truth.md` |
-| 3 | Gate fails-on-synthetic-cascade-regression | PLANNED | `audit/W2-...` |
-| 4 | Gate passes-on-HEAD | PLANNED | `audit/W2-...` |
-| 5 | Dist-wipe footgun closed (profile:budget leaves dist/ intact) | PLANNED | `audit/W2-...` |
-| 6 | `grep -rn 'max-old-space-size' package.json scripts/release.sh .github/` = 0 | PLANNED | — |
-| 7 | `grep -r 'useSpringOrchestrator' src/` = 0; demo + tests migrated | PLANNED | — |
+| 1 | `typecheck` + `build` exit 0 under DEFAULT heap | MET | typecheck 0; build 0, peak RSS 708 MB |
+| 2 | Gate measures `dist/styles` (fully-resolved ~80.8 KiB), not the SFC fragment | MET | `[PASS] dist/styles/index.css — gzip 80786/89000 (90.8%)` |
+| 3 | Gate fails-on-synthetic-cascade-regression | MET | tokens.css probe → 144142 gzip, FAIL exit 1; restored clean |
+| 4 | Gate passes-on-HEAD | MET | exit 0 at 90.8% |
+| 5 | Dist-wipe footgun closed (profile:budget leaves dist/ intact) | MET | dist/styles + dist/fonts present post-run |
+| 6 | `grep -rn 'max-old-space-size' package.json scripts/release.sh .github/` = 0 | MET | 0 matches (6 sites) |
+| 7 | `grep -r 'useSpringOrchestrator' src/` = 0; demo + tests migrated | MET | 0 matches; typecheck 0 |
 
 ---
 
