@@ -7,11 +7,13 @@ import {
     libraryFileName,
     libraryGlobals,
 } from "./vite.library";
+import { publishStyleAssets } from "./vite.style-assets";
 
 export default defineConfig({
     plugins: [
         tailwindcss(),
         vue(),
+        publishStyleAssets(),
     ],
     build: {
         sourcemap: false,
