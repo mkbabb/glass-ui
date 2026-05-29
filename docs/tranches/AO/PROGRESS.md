@@ -6,7 +6,7 @@ Status vocabulary — PLANNED / IN-PROGRESS / DONE / MET / MISS / NAMED-FORWARD 
 
 ## Top-line status
 
-**IMPLEMENTATION.** W0 closed (6-lane audit + synthesis). W1 closed (the 4-doc design slice — gate-truth, css-rebase, legacy-purge-build, consumer-gap; the dev/impl boundary). The speedtest-AQ consumer-request fold grew the tranche 5→6 waves (W3 consumer-gap inserted; CSS→W4, close→W5). W2-W5 now execute under the standing tranche directive ("complete the plan IN TOTALITY") — the authorization that crosses the W1|W2 boundary.
+**CLOSED — complete (v3.0.0 staged).** All 6 waves DONE. W0 (audit) → W1 (4-doc design slice, dev boundary) → W2 (self-measurement truth + legacy purge) → W3 (consumer-gap R0G-1..4) → W4 (CSS re-base + consolidation + R0G-5) → W5 (close + first changeset-driven 3.0.0). The speedtest-AQ consumer-request fold grew the tranche 5→6 waves. glass-ui-internal gate matrix all green; the 2 cross-repo residuals (speedtest consumer debt + stale worktrees; fourier-analysis phantom-classes handoff) are consumer-domain + absent from CI. The publish/push leg is user-domain (FINAL §Cross-repo perimeter).
 
 AO opens against a **clean ledger** — 0 unaddressed requests, 0 survivors, no consumer-surfaced primitive gap (muster's H tranche is muster-only), and no ≥2-consumer pattern that clears the substrate-promotion gate. AO is internal-correctness work landed in the ideal window: the headline is the self-measurement truth + CSS-architecture pass, with the hygiene (alias delete + heap-prefix retire + doc resync + dist-wipe-footgun fix) riding the same close.
 
@@ -179,20 +179,28 @@ All four need the user's GitHub push authority.
 
 ---
 
-## AO.W5 — Close ceremony + first changeset-driven release
+## AO.W5 — Close ceremony + first changeset-driven release — 2026-05-29 — CLOSED
 
-- **Opens:** after W2 + W3 + W4 close
-- **Status:** PLANNED
-- **Agents:** 1 (orchestrator-led close sweep)
-- **Disposition:** PLANNED
+- **Opens:** after W2 + W3 + W4 close — **Closes:** 2026-05-29
+- **Status:** DONE — all 6 gates MET; AO closes `complete`
+- **Agents:** orchestrator-led close sweep
+- **Disposition:** DONE — `v3.0.0` staged via the first changeset-driven version bump
+
+### Events
+
+- **π re-probe (asset-level)** — caught + fixed a real regression: the W4 `:where()` hoist dropped the dock focus-ring specificity (0,2,0 → 0,1,0), restored via a comma group (one rule body, original specificity). proof:theme byte-clean; aurora drawFrame byte-identical; chassis reserve mobile-scoped; toast default byte-identical; the drawer.css fix is a correction.
+- **ι sweep** — stash CLEAN (audit:stash 0); no agent-attributed git mutation; secrets-clean (only NPM_TOKEN doc-name references); alias grep 0.
+- **Overfitting** — every AO change correctness/deletion/gate-cleared; the one new substrate `useIdleReady` carries its 5-site justification.
+- **Two W5-discovered truth-fixes** — the root-surface contract proof was stale (flagged ~40 legitimate exports; would fail CI on push) → resynced to the real barrel (registers useIdleReady); the `prepare` dts guard hardened (an iter-build-left dist no longer packs incomplete).
+- **First changeset release** — `.changeset/ao-self-measurement-truth.md` (major) → `changeset version` bumped **2.1.0 → 3.0.0** + generated CHANGELOG.md; dist rebuilt. The tag + publish leg is user-domain.
 
 ### Gates
 
 | # | Gate | Status | Evidence |
 |---|---|---|---|
-| 1 | π re-probe — visual canon + 4 motion primitives + W3 consumer surfaces unregressed | PLANNED | `audit/W5-close.md` |
-| 2 | ι sweep — stash-clean; no agent-attributed mutation; secrets-clean; alias grep 0 | PLANNED | `audit/W5-close.md` |
-| 3 | Overfitting audit clean — every AO change is correctness/deletion/gate-cleared promotion | PLANNED | `audit/W5-close.md` |
-| 4 | Full gate matrix green locally (typecheck + build + proof:all + proof:resolution + verify-export-types + profile:budget --enforce) | PLANNED | this PROGRESS |
-| 5 | `AO/FINAL.md` — gate table + watched-conditions ledger + cross-repo perimeter | PLANNED | `FINAL.md` |
-| 6 | First changeset authored (major; alias break + 5 consumer items) + `changeset version` stages the bump (default 3.0.0) + CHANGELOG; dist/ rebuilt; tag/publish recorded user-domain | PLANNED | `.changeset/` + `CHANGELOG.md` |
+| 1 | π re-probe — canon + 4 motion primitives + W3 surfaces unregressed | MET | `audit/W5-close.md` (caught + fixed the dock specificity regression) |
+| 2 | ι sweep — stash-clean; no agent mutation; secrets-clean; alias grep 0 | MET | `audit/W5-close.md` |
+| 3 | Overfitting audit clean | MET | `audit/W5-close.md` |
+| 4 | Full gate matrix green locally | MET (glass-ui-internal) | `FINAL.md` §Gate matrix; 2 cross-repo residuals documented |
+| 5 | `AO/FINAL.md` authored | MET | `FINAL.md` |
+| 6 | First changeset + `changeset version` → 3.0.0 + CHANGELOG; dist rebuilt | MET | `CHANGELOG.md`; package.json 3.0.0 |
