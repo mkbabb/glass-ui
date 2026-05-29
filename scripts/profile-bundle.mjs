@@ -77,8 +77,30 @@ const startedAt = Date.now();
 // (token co-location is not deletable behaviour); REBASELINE not reduce.
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
-    "dist/glass-ui.css": { raw: 48_000, gzip: 8_650 },
+    // AO.W2 interim ceiling (inv α). The measured combined `dist/styles`
+    // consumer draw is 80827 gzip; this sits ~10% above it. W4 (D4) re-bases
+    // the constant precisely against the final post-consolidation cascade.
+    "dist/styles/index.css": { raw: 360_000, gzip: 89_000 },
 };
+
+// AO.W2 (inv α) — the real consumer-draw CSS artifact.
+// `@import "@mkbabb/glass-ui/styles"` resolves to dist/styles/index.css, which
+// @imports the 17 sibling cascade rungs (./tokens.css …) AND the folded
+// ../glass-ui.css (the AN.W1 SFC fold). Resolve ALL of them and gzip the
+// concatenation — that is glass-ui's published /styles draw. A byte added to
+// any cascade rung moves this number (the cascade arm is INSIDE the gate).
+function combinedStylesDraw(distRoot) {
+    const stylesDir = resolve(distRoot, "styles");
+    const indexPath = resolve(stylesDir, "index.css");
+    if (!existsSync(indexPath)) return null;
+    let css = readFileSync(indexPath, "utf-8");
+    // One-level resolve: ./*.css siblings + ../glass-ui.css both resolve under stylesDir.
+    css = css.replace(/@import\s+["']([^"']+\.css)["'];?/g, (m, ref) => {
+        const target = resolve(stylesDir, ref);
+        return existsSync(target) ? `\n${readFileSync(target, "utf-8")}\n` : m;
+    });
+    return { raw: Buffer.byteLength(css), gzip: gzipSync(css).length };
+}
 
 const args = new Set(process.argv.slice(2));
 const skipBuild =
@@ -185,7 +207,17 @@ const budgetReport = [];
 let anyBudgetExceeded = false;
 
 for (const [path, budget] of Object.entries(BUDGETS)) {
-    const entry = files.find((f) => f.file === path);
+    // AO.W2 (inv α) — the CSS key gates the resolved `dist/styles/index.css`
+    // draw (cascade @imports inlined), not any single on-disk file. The JS
+    // entry keeps the per-file `files.find` path. A null (file absent — the
+    // footgun left no dist) fails closed, the same shape as a MISSING entry.
+    const measured =
+        path === "dist/styles/index.css"
+            ? combinedStylesDraw(distRoot)
+            : files.find((f) => f.file === path);
+    const entry = measured
+        ? { bytes: measured.bytes ?? measured.raw, gzipBytes: measured.gzipBytes ?? measured.gzip }
+        : null;
     if (!entry) {
         budgetReport.push({
             file: path,
