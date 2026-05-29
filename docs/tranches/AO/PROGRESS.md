@@ -108,11 +108,31 @@ All four need the user's GitHub push authority.
 
 ---
 
-## AO.W3 — CSS budget re-base + cascade consolidation
+## AO.W3 — Consumer-gap (speedtest AQ R0G-1..4)
 
-- **Opens:** after W2 close
+- **Opens:** after W1 close AND explicit user authorization (independent of W2; parallelizes)
 - **Status:** PLANNED
-- **Agents:** 1-2 (gate re-base + enforce ‖ cascade consolidation)
+- **Agents:** up to 4 (∥ disjoint — aurora ‖ instrument-chassis ‖ composables/dom ‖ toast)
+- **Disposition:** PLANNED
+
+### Gates
+
+| # | Gate | Status | Evidence |
+|---|---|---|---|
+| 1 | `typecheck` + `build` exit 0 (default heap) | PLANNED | — |
+| 2 | R0G-3 `useIdleReady` exported from dom barrel + type-resolves; sibling-consistent; test passes | PLANNED | `audit/W3-consumer-gap.md` |
+| 3 | R0G-4 `<Toaster>` accepts `position`; default anchor unchanged | PLANNED | `audit/W3-...` |
+| 4 | R0G-1 Aurora loop demand-driven + visibilitychange-paused; reduced-motion static | PLANNED | `audit/W3-...` |
+| 5 | R0G-2 chassis reserves dial final box at mobile breakpoint; recentre transform-only | PLANNED | `audit/W3-...` |
+| 6 | Visual π re-probe — aurora/chassis/toast surfaces zero canon regression | PLANNED | `audit/W3-...` |
+
+---
+
+## AO.W4 — CSS budget re-base + cascade consolidation + R0G-5 token
+
+- **Opens:** after W2 close (gate truth) AND W3 close (settled cascade content)
+- **Status:** PLANNED
+- **Agents:** 1-2 (gate re-base + enforce ‖ cascade consolidation; R0G-5 token first)
 - **Disposition:** PLANNED
 
 ### Gates
@@ -120,17 +140,17 @@ All four need the user's GitHub push authority.
 | # | Gate | Status | Evidence |
 |---|---|---|---|
 | 1 | `typecheck` + `build` exit 0 | PLANNED | — |
-| 2 | `proof:theme` byte-clean (every rung ships) | PLANNED | `audit/W3-css-rebase-consolidation.md` |
-| 3 | Honest gate PASSES with documented headroom (re-based ceiling) | PLANNED | `audit/W3-...` |
-| 4 | Per-subpath caps enforced; synthetic per-subpath regression trips | PLANNED | `audit/W3-...` |
-| 5 | Visual π re-probe — zero canon regression | PLANNED | `audit/W3-...` |
-| 6 | W2 fails-on-synthetic-cascade-regression still holds against the re-base | PLANNED | `audit/W3-...` |
+| 2 | `proof:theme` byte-clean (every rung + the new `--surface-public-data-panel` token ships) | PLANNED | `audit/W4-css-rebase-consolidation.md` |
+| 3 | Honest gate PASSES with documented headroom (re-based ceiling) | PLANNED | `audit/W4-...` |
+| 4 | Per-subpath caps enforced; synthetic per-subpath regression trips | PLANNED | `audit/W4-...` |
+| 5 | Visual π re-probe — zero canon regression | PLANNED | `audit/W4-...` |
+| 6 | W2 fails-on-synthetic-cascade-regression still holds against the re-base | PLANNED | `audit/W4-...` |
 
 ---
 
-## AO.W4 — Close ceremony + first changeset-driven release
+## AO.W5 — Close ceremony + first changeset-driven release
 
-- **Opens:** after W2 + W3 close
+- **Opens:** after W2 + W3 + W4 close
 - **Status:** PLANNED
 - **Agents:** 1 (orchestrator-led close sweep)
 - **Disposition:** PLANNED
@@ -139,9 +159,9 @@ All four need the user's GitHub push authority.
 
 | # | Gate | Status | Evidence |
 |---|---|---|---|
-| 1 | π re-probe — visual canon + 4 motion primitives unregressed | PLANNED | `audit/W4-close.md` |
-| 2 | ι sweep — stash-clean; no agent-attributed mutation; secrets-clean; alias grep 0 | PLANNED | `audit/W4-close.md` |
-| 3 | Overfitting audit clean — every AO change is correctness/deletion, no new substrate | PLANNED | `audit/W4-close.md` |
+| 1 | π re-probe — visual canon + 4 motion primitives + W3 consumer surfaces unregressed | PLANNED | `audit/W5-close.md` |
+| 2 | ι sweep — stash-clean; no agent-attributed mutation; secrets-clean; alias grep 0 | PLANNED | `audit/W5-close.md` |
+| 3 | Overfitting audit clean — every AO change is correctness/deletion/gate-cleared promotion | PLANNED | `audit/W5-close.md` |
 | 4 | Full gate matrix green locally (typecheck + build + proof:all + proof:resolution + verify-export-types + profile:budget --enforce) | PLANNED | this PROGRESS |
 | 5 | `AO/FINAL.md` — gate table + watched-conditions ledger + cross-repo perimeter | PLANNED | `FINAL.md` |
-| 6 | First changeset authored + `changeset version` stages the bump (default 3.0.0) + CHANGELOG; dist/ rebuilt; tag/publish recorded user-domain | PLANNED | `.changeset/` + `CHANGELOG.md` |
+| 6 | First changeset authored (major; alias break + 5 consumer items) + `changeset version` stages the bump (default 3.0.0) + CHANGELOG; dist/ rebuilt; tag/publish recorded user-domain | PLANNED | `.changeset/` + `CHANGELOG.md` |
