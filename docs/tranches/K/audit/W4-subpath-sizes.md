@@ -1,6 +1,6 @@
 # Per-subpath gzipped-size table
 
-Generated 2026-05-29T19:30:02.248Z by `scripts/profile-bundle.mjs`.
+Generated 2026-05-29T19:55:35.355Z by `scripts/profile-bundle.mjs`.
 Every `dist/*.js` chunk, sorted largest-gzip first. `entry` = a
 publishable subpath a consumer imports; `shared` = a Rolldown-extracted
 leaf several entries reference. Informational — not gated.
