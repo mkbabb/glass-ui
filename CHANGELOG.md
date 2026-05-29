@@ -1,5 +1,30 @@
 # Changelog
 
+## 3.0.0
+
+### Major Changes
+
+-   AO — self-measurement truth, CSS-architecture pass, legacy purge, and the speedtest-AQ consumer-gap fold.
+
+    BREAKING: the deprecated `useSpringOrchestrator` / `UseSpringOrchestratorOptions` back-compat alias is removed. Migrate to `useNumericTransition` / `UseNumericTransitionOptions` (an identity rename — no call-shape change).
+
+    Self-measurement truth:
+
+    -   The bundle budget gate now measures the real combined `dist/styles/index.css` consumer draw (the full cascade + the folded SFC bundle, ~75 KiB gzip), not the SFC-only fragment — a regression in any cascade rung now trips the gate. Re-based the ceiling against the honest number with per-subpath drift enforcement.
+    -   `iter-build` and the canonical build no longer wipe each other's `dist/styles` (`publishStyleAssets` shared across both Vite configs).
+    -   Dropped the dead `--max-old-space-size=8192` build prefix (the api-extractor toolchain it served is gone; the build peaks ~700 MB) and resynced the build documentation.
+    -   Resynced the root-surface contract proof to the real barrel and hardened the package `prepare` dts guard.
+
+    CSS-architecture pass: consolidated the cascade (dock dedup, `:where()` hoists, prose trim) for ~6.5 KiB gzip of genuine headroom; fixed a `drawer.css` double-`hsl()` bug.
+
+    Consumer-gap (speedtest AQ):
+
+    -   Aurora: demand-driven, visibility-paused render loop (idle GPU recovers; reduced-motion still static).
+    -   InstrumentChassis: breakpoint-correct child-geometry reserve (mobile CLS).
+    -   `useIdleReady`: new `requestIdleCallback` idle-gate composable (sibling of `useViewportReady`).
+    -   `Toaster`: new `position` prop (default unchanged).
+    -   New `--surface-public-data-panel` theme token.
+
 > **AC.W6 + AC.W8e cohort cross-reference (speedtest tranche AC).** The
 > v1.5.0 + v1.5.1 + v1.6.0 minor/patch trio shipped as the AC.W6 cohort;
 > v1.7.0 adds the AC.W8e AB+1-subset substrate (two new primitives + a
@@ -7,13 +32,13 @@
 > speedtest wave; the cohort consolidates as one continuous narrative.
 > Cross-reference map:
 >
-> | glass-ui tag | speedtest wave | Theme |
-> |---|---|---|
-> | `v1.1.0` (retro, `a28560f`) | AB.W4 close | AB Living-UI canon (retroactive anchor; W6a) |
-> | `v1.5.0` (`8246e07`) | AC.W6b | OFL font self-host subsystem—Plus Jakarta Sans + Fira Code |
-> | `v1.5.1` (`099910d`) | AC.W6c | Chassis `--phase-color-label` cascade for WCAG label register |
-> | `v1.6.0` (`e238862`) | AC.W6d | Primitive expansions—MetricRow + MetricStack + AnimatedDigit + `::before` -15px hit-area |
-> | `v1.7.0` | AC.W8e | AB+1 substrate—`<MetricCell>` + `<ResponsiveTabs>` + `<ToggleGroupItem variant="card">` |
+> | glass-ui tag                | speedtest wave | Theme                                                                                    |
+> | --------------------------- | -------------- | ---------------------------------------------------------------------------------------- |
+> | `v1.1.0` (retro, `a28560f`) | AB.W4 close    | AB Living-UI canon (retroactive anchor; W6a)                                             |
+> | `v1.5.0` (`8246e07`)        | AC.W6b         | OFL font self-host subsystem—Plus Jakarta Sans + Fira Code                               |
+> | `v1.5.1` (`099910d`)        | AC.W6c         | Chassis `--phase-color-label` cascade for WCAG label register                            |
+> | `v1.6.0` (`e238862`)        | AC.W6d         | Primitive expansions—MetricRow + MetricStack + AnimatedDigit + `::before` -15px hit-area |
+> | `v1.7.0`                    | AC.W8e         | AB+1 substrate—`<MetricCell>` + `<ResponsiveTabs>` + `<ToggleGroupItem variant="card">`  |
 >
 > Speedtest reference: `docs/tranches/AC/AC.md` §AC.W6 + §AC.W8 + `docs/tranches/AC/waves/W6{a,b,c,d,e}-*.md` + `docs/tranches/AC/waves/W8.md`. Tags v1.5.0 + v1.5.1 placed retroactively at AC.W6e close.
 
@@ -21,16 +46,16 @@
 
 Additive minor. The AN cohort closes the eight gaps the muster (dine-vote) F-tranche redesign surfaced at the glass-ui root—five surface gaps plus three intrinsic-primitive role-contract residues from the F.W8.6 axe sweep—plus the folded-in SP-1 (muster-G `Toast.duration`). No break: every change is opt-in via new props/defaults or documentation. Plan + close: `docs/tranches/AN/AN.md` + `docs/tranches/AN/FINAL.md`.
 
-- **Gap 1 — `/styles` completeness (AN.W1, LANDED).** `@import "@mkbabb/glass-ui/styles"` now resolves the COMPLETE stylesheet—the token cascade AND the compiled SFC `<style scoped>` component CSS (Aurora's `.aurora-root` grid layering, Progress/Slider/Notification scoped rules). `vite.config.ts` `publishStyleAssets` folds `dist/glass-ui.css` into `dist/styles/index.css` (Shape A). The v0.9.x second `@import "@mkbabb/glass-ui/styles.css"` bridge retires from the consumer head. `proof:theme` green.
-- **Gap 2 — Tailwind template-utility emission (AN.W2, DOCUMENTED — Option B).** The library's compiled templates emit utility classes (`h-full`, `w-full`, `shrink-0`) + CVA variant classes (`text-destructive-foreground`, `rounded-pill`) that a consumer's content-scan must reach. CLAUDE.md §Consumer wiring now documents the `@source "../node_modules/@mkbabb/glass-ui/dist"` directive as a binding contract with the same authority as `tw-animate-css`. Option A (ship ≈22 KB-gzip pre-generated utilities) rejected on payload + pipeline-fragility grounds. Zero new dist payload.
-- **Gap 3 — detented + non-modal + live-behind Drawer (AN.W3, LANDED).** Additive `Drawer mode?: "modal" | "live-behind"` (default `"modal"`); `mode="live-behind"` bundles `modal:false` + `shouldScaleBackground:false` + `snapPoints:[0.12,0.5,1]`, each overridable. `DrawerContent` gains `showOverlay?: boolean` (default `true`). New `src/styles/drawer.css` (cascade rung 17) carries the `.glass-drawer` surface + peek-handle detent grammar. `DrawerMode` type co-exported; `Drawer*` stays root-barrel. Detents land exactly at 12/50/100% of viewport; no focus-trap + no page `aria-hidden` under `modal:false`. Upstream note: vaul-vue does not re-snap an already-open sheet from an external `activeSnapPoint` write (not a glass-ui bug; programmatic set lands the OPENING detent).
-- **Gap A — StatusDot role contract (AN.W4, LANDED).** `<StatusDot :aria-label>` emits `role="img"` (decorative case stays role-free). Closes the F.W8.6 `aria-prohibited-attr` site.
-- **Gap B — SortableHandle role contract (AN.W4, LANDED).** The default `as="span"` grip emits `role="button"` + `tabindex="0"`; `as="button"` drops both (native). Closes the second `aria-prohibited-attr` site.
-- **Gap C — NumberField label binding (AN.W4, DOCUMENTED — verdict C2).** The AM.W0.2 `inheritAttrs:false` + `v-bind="$attrs"` chain reaches the inner `<input role="spinbutton">` on all three name channels (`aria-label`, `aria-labelledby`, `<Label for>`). The F.W8.6 residue was a consumer-side `role="group"` wrapper-label gap (a wrapper `aria-label` does NOT propagate to the input); documented as the binding contract in CLAUDE.md §Component architecture.
-- **SP-1 (folded from muster G) — Toast.duration (LANDED).** `duration?: number` added to the `Toast` interface (`use-toast.ts`); the forward chain already carried it to reka `ToastRoot`. `toast({ title, duration: 6000 })` now typechecks.
-- **Gap 6 — InstrumentChassis phase canon (AN.W6, DOCUMENTED — "ping" canon).** No additive `"scoring"` union member ships; `"ping"` is documented as the canonical generic-active phase (CLAUDE.md §Component architecture). A speculative `"scoring"` member with no consumer would be overfit substrate.
-- **Gap 4 — interruptible MetricStack reorder recipe (AN.W5, ARCHIVED — 2-consumer gate).** muster v1 is settle-on-pointerup; zero realised consumers. Wrote no source. Realisation condition: ≥ 2 consumers declaring a mid-drag-reorder pattern.
-- **Gap 5 — dock panel-host variant (AN.W6, ARCHIVED — 2-consumer gate).** muster's F redesign cut "the dock IS the app"; zero realised consumers. Wrote no source. Realisation condition: ≥ 2 consumers declaring a tall-vertical-pane stacked-control pattern.
+-   **Gap 1 — `/styles` completeness (AN.W1, LANDED).** `@import "@mkbabb/glass-ui/styles"` now resolves the COMPLETE stylesheet—the token cascade AND the compiled SFC `<style scoped>` component CSS (Aurora's `.aurora-root` grid layering, Progress/Slider/Notification scoped rules). `vite.config.ts` `publishStyleAssets` folds `dist/glass-ui.css` into `dist/styles/index.css` (Shape A). The v0.9.x second `@import "@mkbabb/glass-ui/styles.css"` bridge retires from the consumer head. `proof:theme` green.
+-   **Gap 2 — Tailwind template-utility emission (AN.W2, DOCUMENTED — Option B).** The library's compiled templates emit utility classes (`h-full`, `w-full`, `shrink-0`) + CVA variant classes (`text-destructive-foreground`, `rounded-pill`) that a consumer's content-scan must reach. CLAUDE.md §Consumer wiring now documents the `@source "../node_modules/@mkbabb/glass-ui/dist"` directive as a binding contract with the same authority as `tw-animate-css`. Option A (ship ≈22 KB-gzip pre-generated utilities) rejected on payload + pipeline-fragility grounds. Zero new dist payload.
+-   **Gap 3 — detented + non-modal + live-behind Drawer (AN.W3, LANDED).** Additive `Drawer mode?: "modal" | "live-behind"` (default `"modal"`); `mode="live-behind"` bundles `modal:false` + `shouldScaleBackground:false` + `snapPoints:[0.12,0.5,1]`, each overridable. `DrawerContent` gains `showOverlay?: boolean` (default `true`). New `src/styles/drawer.css` (cascade rung 17) carries the `.glass-drawer` surface + peek-handle detent grammar. `DrawerMode` type co-exported; `Drawer*` stays root-barrel. Detents land exactly at 12/50/100% of viewport; no focus-trap + no page `aria-hidden` under `modal:false`. Upstream note: vaul-vue does not re-snap an already-open sheet from an external `activeSnapPoint` write (not a glass-ui bug; programmatic set lands the OPENING detent).
+-   **Gap A — StatusDot role contract (AN.W4, LANDED).** `<StatusDot :aria-label>` emits `role="img"` (decorative case stays role-free). Closes the F.W8.6 `aria-prohibited-attr` site.
+-   **Gap B — SortableHandle role contract (AN.W4, LANDED).** The default `as="span"` grip emits `role="button"` + `tabindex="0"`; `as="button"` drops both (native). Closes the second `aria-prohibited-attr` site.
+-   **Gap C — NumberField label binding (AN.W4, DOCUMENTED — verdict C2).** The AM.W0.2 `inheritAttrs:false` + `v-bind="$attrs"` chain reaches the inner `<input role="spinbutton">` on all three name channels (`aria-label`, `aria-labelledby`, `<Label for>`). The F.W8.6 residue was a consumer-side `role="group"` wrapper-label gap (a wrapper `aria-label` does NOT propagate to the input); documented as the binding contract in CLAUDE.md §Component architecture.
+-   **SP-1 (folded from muster G) — Toast.duration (LANDED).** `duration?: number` added to the `Toast` interface (`use-toast.ts`); the forward chain already carried it to reka `ToastRoot`. `toast({ title, duration: 6000 })` now typechecks.
+-   **Gap 6 — InstrumentChassis phase canon (AN.W6, DOCUMENTED — "ping" canon).** No additive `"scoring"` union member ships; `"ping"` is documented as the canonical generic-active phase (CLAUDE.md §Component architecture). A speculative `"scoring"` member with no consumer would be overfit substrate.
+-   **Gap 4 — interruptible MetricStack reorder recipe (AN.W5, ARCHIVED — 2-consumer gate).** muster v1 is settle-on-pointerup; zero realised consumers. Wrote no source. Realisation condition: ≥ 2 consumers declaring a mid-drag-reorder pattern.
+-   **Gap 5 — dock panel-host variant (AN.W6, ARCHIVED — 2-consumer gate).** muster's F redesign cut "the dock IS the app"; zero realised consumers. Wrote no source. Realisation condition: ≥ 2 consumers declaring a tall-vertical-pane stacked-control pattern.
 
 Cross-repo handoff: muster consumes via the npm publish of `2.1.0` (the `file:` seam retired in muster's G tranche). muster's G.W4 auto-close fires on publish—bump `^2.1.0`, retire the two `styles.css` bridges + the `MusterDetentSheet` stopgap, and verify the three axe classes (StatusDot · SortableHandle · NumberField) at ZERO.
 
@@ -38,36 +63,34 @@ Cross-repo handoff: muster consumes via the npm publish of `2.1.0` (the `file:` 
 
 The G-W3-3 audit verified zero live consumers of the `@mkbabb/glass-ui/metaballs` subpath across the constellation (speedtest, glass-ui internal, value.js, bbnf-buddy, words). The publisher had been kept after AK retired the speedtest consumer; AL.W4 Lane D retires the publisher now that the consumer cohort is empty. Discharges **AL-CARRY-METABALLS-PUBLISHER-CONSUMERS** (AL-SEED.md §5 row 2).
 
-- **Source retired** — `src/components/custom/metaballs/` deleted in full (`MetaballCanvas.vue`, `useMetaballs.ts`, `shaders.ts`, `types.ts`, `index.ts`, `__tests__/MetaballCanvas.test.ts`).
-- **Sub-barrel + dist artefacts retired** — `src/metaballs.ts` deleted; the `metaballs` entry retires from `vite.library.ts`; the `./metaballs` `exports` row + `metaballs` `typesVersions` row retire from `package.json`; `dist/metaballs.{js,d.ts}` no longer emit.
-- **API discovery layer retired** — `src/api/index.ts` drops the `MetaballConfig` + `MetaballPositioning` type re-exports + the `DEFAULT_METABALL_CONFIG` constant re-export + the Metaballs scope-criteria parenthetical.
-- **Tests realigned** — `tests/public-surface.spec.ts` drops the `MetaballsSurface` import + the `metaballs` subpath assertion + the `MetaballCanvas` non-core-root retirement pin. `tests/configurator-recursion.spec.ts` inlines a local `AxisConfig` fixture (preserving the exact 7-axis topology that drove the F-ε-3 repro) so the Configurator-recursion test no longer depends on the retired metaballs publisher; the host renames to `MultiAxisConfiguratorHost`.
-- **Demo retires** — `demo/stories/motion/metaballs.vue` deleted; the manifest row retires; `demo/stories/compositions/hero.vue` drops the ambient metaballs backdrop (the warm-palette radial gradients carry the hero composition unaided); `demo/stories/data/search.vue` drops the `Metaball canvas proof` fixture row; the `aurora.vue` doc-string consumer-list refers to the canonical Configurator primitive without naming the retired story.
-- **Docs realigned** — `README.md`, `CLAUDE.md`, `MIGRATION.md`, `DESIGN.md` lose live references to MetaballCanvas / Metaballs / MetaballConfig / DEFAULT_METABALL_CONFIG. Historical bug-fix lineage (K W7 Configurator P0 absorb; L W7 Lane B Aurora unification) survives — the route name `/motion/metaballs` is load-bearing context for those narratives. DESIGN.md gains a "(The `./metaballs` subpath retired at AL.W4)" parenthetical on the subpath enumeration.
+-   **Source retired** — `src/components/custom/metaballs/` deleted in full (`MetaballCanvas.vue`, `useMetaballs.ts`, `shaders.ts`, `types.ts`, `index.ts`, `__tests__/MetaballCanvas.test.ts`).
+-   **Sub-barrel + dist artefacts retired** — `src/metaballs.ts` deleted; the `metaballs` entry retires from `vite.library.ts`; the `./metaballs` `exports` row + `metaballs` `typesVersions` row retire from `package.json`; `dist/metaballs.{js,d.ts}` no longer emit.
+-   **API discovery layer retired** — `src/api/index.ts` drops the `MetaballConfig` + `MetaballPositioning` type re-exports + the `DEFAULT_METABALL_CONFIG` constant re-export + the Metaballs scope-criteria parenthetical.
+-   **Tests realigned** — `tests/public-surface.spec.ts` drops the `MetaballsSurface` import + the `metaballs` subpath assertion + the `MetaballCanvas` non-core-root retirement pin. `tests/configurator-recursion.spec.ts` inlines a local `AxisConfig` fixture (preserving the exact 7-axis topology that drove the F-ε-3 repro) so the Configurator-recursion test no longer depends on the retired metaballs publisher; the host renames to `MultiAxisConfiguratorHost`.
+-   **Demo retires** — `demo/stories/motion/metaballs.vue` deleted; the manifest row retires; `demo/stories/compositions/hero.vue` drops the ambient metaballs backdrop (the warm-palette radial gradients carry the hero composition unaided); `demo/stories/data/search.vue` drops the `Metaball canvas proof` fixture row; the `aurora.vue` doc-string consumer-list refers to the canonical Configurator primitive without naming the retired story.
+-   **Docs realigned** — `README.md`, `CLAUDE.md`, `MIGRATION.md`, `DESIGN.md` lose live references to MetaballCanvas / Metaballs / MetaballConfig / DEFAULT_METABALL_CONFIG. Historical bug-fix lineage (K W7 Configurator P0 absorb; L W7 Lane B Aurora unification) survives — the route name `/motion/metaballs` is load-bearing context for those narratives. DESIGN.md gains a "(The `./metaballs` subpath retired at AL.W4)" parenthetical on the subpath enumeration.
 
 ## AI.W5 Phase 1—2026-05-20—Engineering hygiene + chassis chronics + 2-component VERIFY-then-DECIDE archives (publisher writes)
 
 The first phase of the AI.W5 wave — glass-ui-side publisher writes only. Speedtest-consumer follow-ons (apologetic-comment retire at `ChartsView.vue`, `chassisPhase` switch simplification, ToastProvider retire, typed dev-handle bridge) land in Phase 2 per precept 13's XR sub-protocol. Spec: `speedtest/docs/tranches/AI/artefacts/W5-spec.md`. Ratified user disposition: G-AI-D26 (Path B archive for both DockGroup and ProgressiveSidebar families; composables retained for the latter).
 
-- **W5-α — `InstrumentChassisPhase` gains `"jitter"` + a `data-phase="jitter"` cascade rule** — the `InstrumentChassisPhase` union at `InstrumentChassis.vue` now enumerates `"ready" | "ping" | "download" | "upload" | "jitter" | "complete"` (was missing `"jitter"`). `instrument-chassis.css` gains a `[data-phase="jitter"]` rule that maps `--phase-color` and `--phase-color-label` through the right-canon fallback chain `var(--chart-jitter, var(--viz-legendre))` matching the token canon at `tokens.css:629` + `tokens.css:650`. The speedtest consumer at `ChartsView.vue` previously fell `"jitter"` through to `"ready"` with an apologetic narrative comment — the consumer-side simplification (return `distMetric.value` directly + retire the apologetic comment) lands in Phase 2. Retires **AI-CARRY-PHASE-ENUM-JITTER** (`CARRY` → `CLOSED-IN-W5-α`).
-- **W5-β — `data-phase="upload"` fallback chain canon-aligned (`--viz-legendre` → `--viz-amber`)** — the latent fallback at `instrument-chassis.css:120-124` read `var(--chart-upload, var(--viz-legendre))` — a wrong-canon binding (legendre is the jitter base hue, not upload). The fallback now reads `var(--chart-upload, var(--viz-amber))` matching the canon at `tokens.css:628` (`--chart-upload: var(--viz-amber)`). Latent-only behaviour: every constellation consumer ships with `--chart-upload` set, so the fallback never fires in practice — but the wrong-canon binding was real and the carry's "bounded fix" rationale demanded retire. Retires **AI-CARRY-CHASSIS-FALLBACK-WRONG-CANON** (`CARRY` → `CLOSED-IN-W5-β`).
-- **W5-α/β — phase-cascade canon vitest (`InstrumentChassis.phase-canon.test.ts`)** — new data-driven test guards both retires plus the broader cascade invariant. Asserts: (1) every `data-phase` rule's fallback chain matches `--chart-{phase}: var({canon})` at `tokens.css` (the `--viz-chebyshev` / `--viz-fourier` / `--viz-amber` / `--viz-legendre` quartet); (2) the `InstrumentChassisPhase` union enumerates the six phases; (3) the SFC paints `data-phase` on the root from the prop and defaults to `"ready"`; (4) `"complete"` resolves to `--color-gold` directly (brand-canon, not a `--chart-*` alias). The data-driven shape (vs. per-phase hard-coded matches) means future phase additions or canon renames trip the test with a single fixture update.
-- **W5-ζ.2 — phantom-class doc-bug retire in `src/styles/index.css`** — the utilities.css resident list at lines 48-49 named `.btn-press`, `.rainbow-text`, `.touch-gate` — none exist in source. Real names: `.btn-audacious` + `.btn-interactive` (press cluster), `.rainbow-vivid` + `.rainbow-pastel` (rainbow cluster). The `.touch-gate-target`/`.touch-gate-active` cluster lives at value.js, not glass-ui — retired from the comment. Doc-only edit; no source behaviour change.
-- **W5-ζ.3 — `--icon-3xl` rebound to `var(--size-icon-btn)` (contractual, not coincidental)** — `tokens.css:756` previously declared `--icon-3xl: 2.5rem` alongside `--size-icon-btn: 2.5rem` with a comment acknowledging the alignment was numerical only. The rebind makes the alignment contractual single-source-of-truth: `--icon-3xl: var(--size-icon-btn)`. Any future retune of the icon-btn size propagates automatically; the prior coincidence-trap retires.
-- **W5-γ — `<DockGroup>` archived (zero production consumers across two-plus tranches)** — DockGroup landed at P.W1.B as substrate for a speedtest `<MetricStrip>` pill-row consumer that never materialised. Per G-AI-D26 (Path B), the SFC retires. Deleted: `src/components/custom/dock-group/DockGroup.vue` + `index.ts` + `src/dock-group.ts` (subpath aggregator) + `src/styles/dock-group.css` + the `./dock-group` subpath entries in `package.json` (`typesVersions` + `exports`) + the `dock-group` `vite.library.ts` entry + the `@import "./dock-group.css"` line in `src/styles/index.css` + the `dock-group` demo story + the dashboard demo's `<DockGroup>` reference (the KPI strip absorbs into an inline-flex sibling row) + the `<DockGroup>` arm of the density-rail probe in `tests/components.smoke.spec.ts`. The `.dock-group` CSS class joins `.retired-classes.txt` for invariant-32/33 phantom-class gate coverage. Composables: none (DockGroup was zero-behaviour styling).
-- **W5-δ — `<ProgressiveSidebar>` family archived; composables retained** — the SFC family (`ProgressiveSidebar.vue` + `ProgressiveSidebarSection.vue` + `context.ts`) had 0 external consumers; words/frontend's parallel local `ProgressiveSidebar.vue` consumes the `useScrollTracker` + `useSidebarFollow` + `useTreeIndex` + `useSidebarState` composables only. Per G-AI-D26 (Path B), the SFC family retires; the composable surface stays load-bearing. Deleted: `ProgressiveSidebar.vue` + `ProgressiveSidebarSection.vue` + `context.ts` + `__tests__/ProgressiveSidebar.test.ts` + both navigation demo stories. Relocated: `src/components/custom/sidebar/types.ts` → `src/composables/sidebar/types.ts` (its actual home — the composables consume it; the SFCs were the misplaced consumers). The `./sidebar` subpath survives (composables-only now); `src/sidebar.ts` aggregator drops `export * from "./components/custom/sidebar"` and keeps `export * from "./composables/sidebar"`. `tests/public-surface.spec.ts` retires the `ProgressiveSidebar` runtime-export assertion at `subpathRuntimeExports`; the composable assertions (`useScrollTracker`, `useSidebarFollow`, `useTreeIndex`, `buildTreeIndex`) all survive. Demo manifest entries for the two retired stories retire.
-- **AI.W5 Phase 2 (NOT in this release)** — speedtest-consumer migrations. The W5-α apologetic-comment retire + `chassisPhase` switch simplification at `ChartsView.vue` lands when speedtest dispatches the consumer half; the W5-ε `(window as any)` retire via typed dev-handle (`tests-e2e/fixtures/window.d.ts`) + the W5-ζ.1 ToastProvider retire at `App.vue` also land at Phase 2. Phase 2 dispatches separately per precept 13.
-
-
+-   **W5-α — `InstrumentChassisPhase` gains `"jitter"` + a `data-phase="jitter"` cascade rule** — the `InstrumentChassisPhase` union at `InstrumentChassis.vue` now enumerates `"ready" | "ping" | "download" | "upload" | "jitter" | "complete"` (was missing `"jitter"`). `instrument-chassis.css` gains a `[data-phase="jitter"]` rule that maps `--phase-color` and `--phase-color-label` through the right-canon fallback chain `var(--chart-jitter, var(--viz-legendre))` matching the token canon at `tokens.css:629` + `tokens.css:650`. The speedtest consumer at `ChartsView.vue` previously fell `"jitter"` through to `"ready"` with an apologetic narrative comment — the consumer-side simplification (return `distMetric.value` directly + retire the apologetic comment) lands in Phase 2. Retires **AI-CARRY-PHASE-ENUM-JITTER** (`CARRY` → `CLOSED-IN-W5-α`).
+-   **W5-β — `data-phase="upload"` fallback chain canon-aligned (`--viz-legendre` → `--viz-amber`)** — the latent fallback at `instrument-chassis.css:120-124` read `var(--chart-upload, var(--viz-legendre))` — a wrong-canon binding (legendre is the jitter base hue, not upload). The fallback now reads `var(--chart-upload, var(--viz-amber))` matching the canon at `tokens.css:628` (`--chart-upload: var(--viz-amber)`). Latent-only behaviour: every constellation consumer ships with `--chart-upload` set, so the fallback never fires in practice — but the wrong-canon binding was real and the carry's "bounded fix" rationale demanded retire. Retires **AI-CARRY-CHASSIS-FALLBACK-WRONG-CANON** (`CARRY` → `CLOSED-IN-W5-β`).
+-   **W5-α/β — phase-cascade canon vitest (`InstrumentChassis.phase-canon.test.ts`)** — new data-driven test guards both retires plus the broader cascade invariant. Asserts: (1) every `data-phase` rule's fallback chain matches `--chart-{phase}: var({canon})` at `tokens.css` (the `--viz-chebyshev` / `--viz-fourier` / `--viz-amber` / `--viz-legendre` quartet); (2) the `InstrumentChassisPhase` union enumerates the six phases; (3) the SFC paints `data-phase` on the root from the prop and defaults to `"ready"`; (4) `"complete"` resolves to `--color-gold` directly (brand-canon, not a `--chart-*` alias). The data-driven shape (vs. per-phase hard-coded matches) means future phase additions or canon renames trip the test with a single fixture update.
+-   **W5-ζ.2 — phantom-class doc-bug retire in `src/styles/index.css`** — the utilities.css resident list at lines 48-49 named `.btn-press`, `.rainbow-text`, `.touch-gate` — none exist in source. Real names: `.btn-audacious` + `.btn-interactive` (press cluster), `.rainbow-vivid` + `.rainbow-pastel` (rainbow cluster). The `.touch-gate-target`/`.touch-gate-active` cluster lives at value.js, not glass-ui — retired from the comment. Doc-only edit; no source behaviour change.
+-   **W5-ζ.3 — `--icon-3xl` rebound to `var(--size-icon-btn)` (contractual, not coincidental)** — `tokens.css:756` previously declared `--icon-3xl: 2.5rem` alongside `--size-icon-btn: 2.5rem` with a comment acknowledging the alignment was numerical only. The rebind makes the alignment contractual single-source-of-truth: `--icon-3xl: var(--size-icon-btn)`. Any future retune of the icon-btn size propagates automatically; the prior coincidence-trap retires.
+-   **W5-γ — `<DockGroup>` archived (zero production consumers across two-plus tranches)** — DockGroup landed at P.W1.B as substrate for a speedtest `<MetricStrip>` pill-row consumer that never materialised. Per G-AI-D26 (Path B), the SFC retires. Deleted: `src/components/custom/dock-group/DockGroup.vue` + `index.ts` + `src/dock-group.ts` (subpath aggregator) + `src/styles/dock-group.css` + the `./dock-group` subpath entries in `package.json` (`typesVersions` + `exports`) + the `dock-group` `vite.library.ts` entry + the `@import "./dock-group.css"` line in `src/styles/index.css` + the `dock-group` demo story + the dashboard demo's `<DockGroup>` reference (the KPI strip absorbs into an inline-flex sibling row) + the `<DockGroup>` arm of the density-rail probe in `tests/components.smoke.spec.ts`. The `.dock-group` CSS class joins `.retired-classes.txt` for invariant-32/33 phantom-class gate coverage. Composables: none (DockGroup was zero-behaviour styling).
+-   **W5-δ — `<ProgressiveSidebar>` family archived; composables retained** — the SFC family (`ProgressiveSidebar.vue` + `ProgressiveSidebarSection.vue` + `context.ts`) had 0 external consumers; words/frontend's parallel local `ProgressiveSidebar.vue` consumes the `useScrollTracker` + `useSidebarFollow` + `useTreeIndex` + `useSidebarState` composables only. Per G-AI-D26 (Path B), the SFC family retires; the composable surface stays load-bearing. Deleted: `ProgressiveSidebar.vue` + `ProgressiveSidebarSection.vue` + `context.ts` + `__tests__/ProgressiveSidebar.test.ts` + both navigation demo stories. Relocated: `src/components/custom/sidebar/types.ts` → `src/composables/sidebar/types.ts` (its actual home — the composables consume it; the SFCs were the misplaced consumers). The `./sidebar` subpath survives (composables-only now); `src/sidebar.ts` aggregator drops `export * from "./components/custom/sidebar"` and keeps `export * from "./composables/sidebar"`. `tests/public-surface.spec.ts` retires the `ProgressiveSidebar` runtime-export assertion at `subpathRuntimeExports`; the composable assertions (`useScrollTracker`, `useSidebarFollow`, `useTreeIndex`, `buildTreeIndex`) all survive. Demo manifest entries for the two retired stories retire.
+-   **AI.W5 Phase 2 (NOT in this release)** — speedtest-consumer migrations. The W5-α apologetic-comment retire + `chassisPhase` switch simplification at `ChartsView.vue` lands when speedtest dispatches the consumer half; the W5-ε `(window as any)` retire via typed dev-handle (`tests-e2e/fixtures/window.d.ts`) + the W5-ζ.1 ToastProvider retire at `App.vue` also land at Phase 2. Phase 2 dispatches separately per precept 13.
 
 The first phase of the AI.W4 wave — publisher-side writes only. Speedtest consumer migrations (CompleteBadge gold-bloom, MeterColumn idle backdrop, PaperBackdrop wrap on Complete/Thankyou, aurora cadence harmonisation, the 13 M.3 consumer sites) land in Phase 2 per precept 13's XR sub-protocol. Spec: `speedtest/docs/tranches/AI/artefacts/W4-spec.md`. Ratified user disposition: G-AI-D27 (YES on Q1 Metaballs idle backdrop, Q2 Aurora cadence harmonisation, Q5 btn-audacious press-ripple in-place, Q6 proposal additions; NO on Q3 needle micro-jitter, NO on Q4 DockLayerGroup sympathetic motion — Q3 + Q4 pruned at the dispatch gate).
 
-- **W4-M.1 — Progress gestalt publisher (`Progress.vue` + `tokens.css` + `instrument-chassis.css`)** — three typed-CSS lifecycles ship at once. `<Progress variant="gradient">` gains a `data-lifecycle="idle | loading | progressing | complete"` attribute (orthogonal to reka-ui's own `data-state` so consumers can target either path) that drives: (1) a 220ms intake pulse on the loading rising edge via the new `progress-intake-pulse` `@keyframes`; (2) a typed `@property --progress-crescendo: <percentage>` brightening overlay past 85% modelValue — the indicator paints a white leading-edge cap whose alpha interpolates smoothly via the Houdini typed-property contract; (3) a one-shot 240ms `progress-discharge-flash` brightness/saturation pulse at 100%. Additive `indeterminate?: boolean` prop hosts a 4s `progress-indeterminate-sweep` left-to-right gradient pan (the gradient variant only) for any consumer that wants the sweep without managing modelValue. The chassis backdrop on `<InstrumentChassis>` gains a typed `@property --phase-tint-amount: <percentage>` companion to the existing `--phase-color` cross-fade — the backdrop composes `color-mix(in oklab, var(--glass-bg-chassis), var(--phase-color) var(--phase-tint-amount))` and the typed amount interpolates over the speedtest-owned `--motion-duration-phase-handoff` (600ms fallback baked in for non-speedtest consumers). Idle returns to 0%; active phases (ping/download/upload/complete) lift to `--phase-tint-peak` (6%). PRM brackets at each consumer rule.
-- **W4-M.2 — `btn-audacious` press-ripple in-place (`utilities.css` + `tokens.css`)** — per G-AI-D27's Q5 ratification, the audacious recipe gains an in-place ripple rather than a `btn-audacious-with-ripple` sibling variant. The `::before` element paints a radial gradient whose typed `@property --ripple-radius: <length>` interpolates 0 → `--ripple-radius-max` (12rem) over `--motion-duration-ripple` (340ms) on `:active`; release returns to 0px. Coexists with the existing `::after` sparkle-sweep (hover) — both pseudo-elements share the same isolation context. PRM bracket retires the ripple transition; the transform/scale press beat survives. Q4 (DockLayerGroup sympathetic motion) — PRUNED at G-AI-D27; no DockLayerGroup writes.
-- **W4-M.3 — `<Skeleton variant="breath">` (`Skeleton.vue` + `tokens.css`)** — additive third variant on the existing primitive (alongside `pulse` and `shimmer`). The breath consumes the canon `--animate-ambient-pulse-duration` (6s) at the canon `--pulse-aura-opacity-min/max` envelope so a skeleton breath beside a `<Pulse variant="aura">` cycles in lockstep. Use case: the known-imminent loading register (chart series substitution, dashboard cell substitution) where 6s reads as "the surface is alive and resolving" rather than the 2s `pulse` short-wait register. `--skeleton-breath-duration` token aliases the cycle so consumers can retune without disturbing the broader ambient canon. PRM retires the cycle to the trough (opacity-min) — the surface still reads.
-- **W4-M.3 — Toast contract documentation (`transitions.css`)** — doc-only PR per spec §1.1.1 row 26. The Toast SFC consumes reka-ui's `tw-animate-css` defaults via the existing class chain; the new comment block in `transitions.css` (adjacent to the existing named transitions) codifies the entrance / dwell / exit grammar (~200ms slide-in from viewport edge → consumer-specified dwell with NO motion → ~150ms fade-out + slide-out-to-right) as the canonical toast motion contract. No source motion change.
-- **AI.W4 Phase 2 (NOT in this release)** — the speedtest consumer migration. ~11 consumer sites: CompleteBadge gold-blob bloom mount, MeterColumn idle Metaballs backdrop, SpeedtestResults + ThankYou PaperBackdrop wraps, aurora drift cadence harmonisation (~12s → ~30s in `auroraConfig.ts`), 13 M.3 cohesion sites (chart series stagger, distribution bar stagger, stats card overshoot, table row entrance, chip activation pulse, FlowSelector aura, AdminLoginView breath, scrim breath, hover-lift uniform rule), plus consumer verification that the existing `<Progress variant="gradient">` callsites in MeterColumn + SurveyResultDock compose with the new lifecycle automatically (no double-affirmation with the existing `result-dock-tick-pop`). Phase 2 dispatches separately per precept 13.
-- **`@property` browser-support note** — Chromium 85+, Safari 16.4+, Firefox 128+. Speedtest deployment targets sit well within the floor; unregistered fallback collapses to each `initial-value` so a pre-Houdini browser still paints the resting state.
+-   **W4-M.1 — Progress gestalt publisher (`Progress.vue` + `tokens.css` + `instrument-chassis.css`)** — three typed-CSS lifecycles ship at once. `<Progress variant="gradient">` gains a `data-lifecycle="idle | loading | progressing | complete"` attribute (orthogonal to reka-ui's own `data-state` so consumers can target either path) that drives: (1) a 220ms intake pulse on the loading rising edge via the new `progress-intake-pulse` `@keyframes`; (2) a typed `@property --progress-crescendo: <percentage>` brightening overlay past 85% modelValue — the indicator paints a white leading-edge cap whose alpha interpolates smoothly via the Houdini typed-property contract; (3) a one-shot 240ms `progress-discharge-flash` brightness/saturation pulse at 100%. Additive `indeterminate?: boolean` prop hosts a 4s `progress-indeterminate-sweep` left-to-right gradient pan (the gradient variant only) for any consumer that wants the sweep without managing modelValue. The chassis backdrop on `<InstrumentChassis>` gains a typed `@property --phase-tint-amount: <percentage>` companion to the existing `--phase-color` cross-fade — the backdrop composes `color-mix(in oklab, var(--glass-bg-chassis), var(--phase-color) var(--phase-tint-amount))` and the typed amount interpolates over the speedtest-owned `--motion-duration-phase-handoff` (600ms fallback baked in for non-speedtest consumers). Idle returns to 0%; active phases (ping/download/upload/complete) lift to `--phase-tint-peak` (6%). PRM brackets at each consumer rule.
+-   **W4-M.2 — `btn-audacious` press-ripple in-place (`utilities.css` + `tokens.css`)** — per G-AI-D27's Q5 ratification, the audacious recipe gains an in-place ripple rather than a `btn-audacious-with-ripple` sibling variant. The `::before` element paints a radial gradient whose typed `@property --ripple-radius: <length>` interpolates 0 → `--ripple-radius-max` (12rem) over `--motion-duration-ripple` (340ms) on `:active`; release returns to 0px. Coexists with the existing `::after` sparkle-sweep (hover) — both pseudo-elements share the same isolation context. PRM bracket retires the ripple transition; the transform/scale press beat survives. Q4 (DockLayerGroup sympathetic motion) — PRUNED at G-AI-D27; no DockLayerGroup writes.
+-   **W4-M.3 — `<Skeleton variant="breath">` (`Skeleton.vue` + `tokens.css`)** — additive third variant on the existing primitive (alongside `pulse` and `shimmer`). The breath consumes the canon `--animate-ambient-pulse-duration` (6s) at the canon `--pulse-aura-opacity-min/max` envelope so a skeleton breath beside a `<Pulse variant="aura">` cycles in lockstep. Use case: the known-imminent loading register (chart series substitution, dashboard cell substitution) where 6s reads as "the surface is alive and resolving" rather than the 2s `pulse` short-wait register. `--skeleton-breath-duration` token aliases the cycle so consumers can retune without disturbing the broader ambient canon. PRM retires the cycle to the trough (opacity-min) — the surface still reads.
+-   **W4-M.3 — Toast contract documentation (`transitions.css`)** — doc-only PR per spec §1.1.1 row 26. The Toast SFC consumes reka-ui's `tw-animate-css` defaults via the existing class chain; the new comment block in `transitions.css` (adjacent to the existing named transitions) codifies the entrance / dwell / exit grammar (~200ms slide-in from viewport edge → consumer-specified dwell with NO motion → ~150ms fade-out + slide-out-to-right) as the canonical toast motion contract. No source motion change.
+-   **AI.W4 Phase 2 (NOT in this release)** — the speedtest consumer migration. ~11 consumer sites: CompleteBadge gold-blob bloom mount, MeterColumn idle Metaballs backdrop, SpeedtestResults + ThankYou PaperBackdrop wraps, aurora drift cadence harmonisation (~12s → ~30s in `auroraConfig.ts`), 13 M.3 cohesion sites (chart series stagger, distribution bar stagger, stats card overshoot, table row entrance, chip activation pulse, FlowSelector aura, AdminLoginView breath, scrim breath, hover-lift uniform rule), plus consumer verification that the existing `<Progress variant="gradient">` callsites in MeterColumn + SurveyResultDock compose with the new lifecycle automatically (no double-affirmation with the existing `result-dock-tick-pop`). Phase 2 dispatches separately per precept 13.
+-   **`@property` browser-support note** — Chromium 85+, Safari 16.4+, Firefox 128+. Speedtest deployment targets sit well within the floor; unregistered fallback collapses to each `initial-value` so a pre-Houdini browser still paints the resting state.
 
 ## 2.0.0—2026-05-20—AI.W3 R3 close (motion subpath surgery; AI-CARRY-GLASS-UI-KEYFRAMES-EDGE CLOSED) — BREAKING
 
@@ -75,52 +98,52 @@ Major bump because the root barrel sheds the `composables/motion` re-export — 
 
 Spec: `speedtest/docs/tranches/AI/artefacts/W3-spec.md` §2.3 (W3-R3). Cross-repo XR sub-protocol per precept 13 — speedtest + value.js + bbnf-buddy + words + fourier-analysis consumer migrations dispatch at their respective LOCKSTEP waves (the speedtest-side migration is the W3 consumer half; sibling-repo migrations are tracked in `docs/tranches/AI/artefacts/`).
 
-- **`@mkbabb/glass-ui/motion` flat subpath added (AI.W3 R3 publisher)** — new `src/motion.ts` re-exports `composables/motion/index.ts` through a flat subpath, mirroring the `dark.ts` / `keyboard.ts` / `carousel.ts` shape. `package.json` `exports` adds `./motion` with `types` + `import` entries; `typesVersions` adds `motion → dist/motion.d.ts`; `vite.library.ts` adds the `motion` entry. The 11 runtime exports + ≥ 5 type exports moved: `useSpringOrchestrator`, `useAnimatedNumber`, `useAnimatedNumberMap`, `useStagger`, `useStaggerReveal`, `useScrollProgress`, `useRAFLoop`, `useIntersectionPause`, `installDarkModeSync`, `DAMPING`, `SNAP_THRESHOLD` (runtime); `RAFLoopTiming`, `PausableRuntime`, `AnimatedNumber`, `UseAnimatedNumberOptions`, `SpringSnapshot` (types).
-- **Root barrel `export * from "./composables/motion"` retired (`src/index.ts:147`)** — the load-bearing line per A4 §3 + W3-spec §2.3.1 deletes. The root barrel is now keyframes.js-free at static import time. Post-build, `grep -c "@mkbabb/keyframes" dist/glass-ui.js` returns 0 (was 1 pre-cut). Companion update to the doc comment block at the top of `src/index.ts` extends the "vueuse-bearing exclusions" canon into a "Heavy-peer exclusions (vueuse + keyframes.js)" table.
-- **Why the whole motion barrel moves, not just the keyframes-touching subset** — only `useSpringOrchestrator` + `useAnimatedNumber` (+ `useAnimatedNumberMap` transitively) statically import from `@mkbabb/keyframes.js`. The other composables in the sub-tree (`useStagger`, `useStaggerReveal`, `useScrollProgress`, `useRAFLoop`, `useIntersectionPause`, `installDarkModeSync`) are keyframes-free. They move anyway because the sub-tree's `index.ts` rolls up every leaf with `export *`, so Rollup walks the entire sub-tree as one SCC at root-barrel build time — splitting keyframes-touching from keyframes-adjacent would require a second internal sub-barrel, which is the wrong shape. The motion subpath is the canonical home for every kinetic composable; consumers reach `/motion` for any kinetic primitive regardless of which engine it currently touches.
-- **No back-compat root-barrel alias** — per precept 1 (NO workarounds) + precept 2 (NO legacy code) + L invariant 4 (no backwards-compat shims), the cut is clean. Consumers migrate at their dispatch gates; v1.9.x remains available on the patch stream for repos that cannot migrate immediately.
-- **`tests/public-surface.spec.ts` updated** — the 11 motion runtime symbols + 2 constants migrate from the `composableRuntimeExports` (root-surface) list to a new motion-subpath block in `subpathRuntimeExports`; the same names also land in `nonCoreRootRetirements` to assert the negative (motion symbols MUST NOT appear on the root surface in v2.0). `import * as Motion from "../src/motion"` joins the surface-fixture imports.
-- **`scripts/proof-consumers-static.mjs` updated** — `src/composables/motion/index.ts` retires from `rootContractFiles` (it's no longer a permitted root-barrel re-export source). The proof script auto-discovers the new `./motion` exports-map entry via the generic `pkg.exports` walk; no further bookkeeping needed.
-- **DESIGN.md surface** — Composables section gains a `@mkbabb/glass-ui/motion` subpath canon note. The motion composable rows acknowledge the subpath surgery + the heavy-peer-exclusion principle (cited from the L.W1 Lane C precedent).
-- **MIGRATION.md surface** — new `## v2.0.0—Motion subpath surgery (AI.W1 R3)` section documents the 11+ symbol moves with before/after snippets, codemod hints (`rg` patterns), the "why the whole sub-tree moves" rationale, and the verification recipe (`grep "@mkbabb/keyframes" dist/glass-ui.js` must be 0). Header gains a v2.0.0 banner.
-- **Bundle-graph verification (publisher side)** — post-build, `dist/glass-ui.js` (root barrel) ships ZERO static reach to `@mkbabb/keyframes.js`; `dist/motion.js` (the new subpath) carries the `NumericAnimation` + `SmoothProgress` reach. Verified via `grep -c "@mkbabb/keyframes"` on both files post-`npm run build`.
+-   **`@mkbabb/glass-ui/motion` flat subpath added (AI.W3 R3 publisher)** — new `src/motion.ts` re-exports `composables/motion/index.ts` through a flat subpath, mirroring the `dark.ts` / `keyboard.ts` / `carousel.ts` shape. `package.json` `exports` adds `./motion` with `types` + `import` entries; `typesVersions` adds `motion → dist/motion.d.ts`; `vite.library.ts` adds the `motion` entry. The 11 runtime exports + ≥ 5 type exports moved: `useSpringOrchestrator`, `useAnimatedNumber`, `useAnimatedNumberMap`, `useStagger`, `useStaggerReveal`, `useScrollProgress`, `useRAFLoop`, `useIntersectionPause`, `installDarkModeSync`, `DAMPING`, `SNAP_THRESHOLD` (runtime); `RAFLoopTiming`, `PausableRuntime`, `AnimatedNumber`, `UseAnimatedNumberOptions`, `SpringSnapshot` (types).
+-   **Root barrel `export * from "./composables/motion"` retired (`src/index.ts:147`)** — the load-bearing line per A4 §3 + W3-spec §2.3.1 deletes. The root barrel is now keyframes.js-free at static import time. Post-build, `grep -c "@mkbabb/keyframes" dist/glass-ui.js` returns 0 (was 1 pre-cut). Companion update to the doc comment block at the top of `src/index.ts` extends the "vueuse-bearing exclusions" canon into a "Heavy-peer exclusions (vueuse + keyframes.js)" table.
+-   **Why the whole motion barrel moves, not just the keyframes-touching subset** — only `useSpringOrchestrator` + `useAnimatedNumber` (+ `useAnimatedNumberMap` transitively) statically import from `@mkbabb/keyframes.js`. The other composables in the sub-tree (`useStagger`, `useStaggerReveal`, `useScrollProgress`, `useRAFLoop`, `useIntersectionPause`, `installDarkModeSync`) are keyframes-free. They move anyway because the sub-tree's `index.ts` rolls up every leaf with `export *`, so Rollup walks the entire sub-tree as one SCC at root-barrel build time — splitting keyframes-touching from keyframes-adjacent would require a second internal sub-barrel, which is the wrong shape. The motion subpath is the canonical home for every kinetic composable; consumers reach `/motion` for any kinetic primitive regardless of which engine it currently touches.
+-   **No back-compat root-barrel alias** — per precept 1 (NO workarounds) + precept 2 (NO legacy code) + L invariant 4 (no backwards-compat shims), the cut is clean. Consumers migrate at their dispatch gates; v1.9.x remains available on the patch stream for repos that cannot migrate immediately.
+-   **`tests/public-surface.spec.ts` updated** — the 11 motion runtime symbols + 2 constants migrate from the `composableRuntimeExports` (root-surface) list to a new motion-subpath block in `subpathRuntimeExports`; the same names also land in `nonCoreRootRetirements` to assert the negative (motion symbols MUST NOT appear on the root surface in v2.0). `import * as Motion from "../src/motion"` joins the surface-fixture imports.
+-   **`scripts/proof-consumers-static.mjs` updated** — `src/composables/motion/index.ts` retires from `rootContractFiles` (it's no longer a permitted root-barrel re-export source). The proof script auto-discovers the new `./motion` exports-map entry via the generic `pkg.exports` walk; no further bookkeeping needed.
+-   **DESIGN.md surface** — Composables section gains a `@mkbabb/glass-ui/motion` subpath canon note. The motion composable rows acknowledge the subpath surgery + the heavy-peer-exclusion principle (cited from the L.W1 Lane C precedent).
+-   **MIGRATION.md surface** — new `## v2.0.0—Motion subpath surgery (AI.W1 R3)` section documents the 11+ symbol moves with before/after snippets, codemod hints (`rg` patterns), the "why the whole sub-tree moves" rationale, and the verification recipe (`grep "@mkbabb/keyframes" dist/glass-ui.js` must be 0). Header gains a v2.0.0 banner.
+-   **Bundle-graph verification (publisher side)** — post-build, `dist/glass-ui.js` (root barrel) ships ZERO static reach to `@mkbabb/keyframes.js`; `dist/motion.js` (the new subpath) carries the `NumericAnimation` + `SmoothProgress` reach. Verified via `grep -c "@mkbabb/keyframes"` on both files post-`npm run build`.
 
 ## AI.W1—2026-05-20—Card scroll-driven shrink + Chassis-prefix rename + Timeline #detail slot
 
 First substantive wave of the AI tranche. Publisher-side writes only — speedtest + value.js consumer migrations dispatch in subsequent phases per precept 13. Spec: `speedtest/docs/tranches/AI/artefacts/W1-spec.md`.
 
-- **`<CardHeader shrink>` (AI.W1-α)** — additive `shrink?: boolean` modifier on the existing thin static SFC. When true, the header binds to the `--card-scroll` named scroll-timeline and runs a 3-lane choreography (header padding `0..120px`, title font-size `0..120px`, description grid-row collapse `0..80px`) keyed on `[data-slot="card-title"]` + `[data-slot="card-description"]`. The choreography migrates verbatim from value.js's `PaneHeader.vue` (the load-bearing pane-scroll-fade pattern that ran across the 9 panes); identifiers renamed `pane-*` → `card-*`. Default `shrink=false` is byte-identical to the pre-W1 wrapper — existing 5+ consumers unaffected. PRM bracket collapses animations to `0.01ms` for reduced-motion users.
-- **`.card-scroll-host` utility + `--card-header-bg` token (AI.W1-α)** — canonical scroll-overflow host emits `--card-scroll` and isolates it via `contain: layout style paint` (matches the value.js `PaneHeader.vue` isolation guarantee). Apply to the scroll wrapper inside a `<Card>` to arm the choreography. Disambiguated from the `.scroll-fade-*` mask family (which paints a gradient; this utility paints nothing). `--card-header-bg` parameterises the `color-mix(in srgb, var(--card) 60%, transparent)` literal value.js's PaneHeader carried (`bg-card/60`); consumers retune per-host via the cascade.
-- **`<CardTitle>` + `<CardDescription>` `data-slot` hooks** — both child SFCs now emit `data-slot="card-title"` / `data-slot="card-description"` so the scoped choreography selects on attribute hooks rather than class selectors. Consumer `class=` overrides cannot suppress the choreography. Matches `<Card>` and `<CardHeader>` patterns (which already emit `data-slot="card"` and `data-slot="card-header"`).
-- **`RegionDivider` → `ChassisDivider` rename (AI.W1-γ)** — host-prefix alignment so the instrument-chassis family's signature detail carries the family-root prefix (matching `InstrumentChassis`, `instrument-chassis.css`). SFC + `index.ts` export + `InstrumentChassis.vue` import & two render sites + JSDoc + `instrument-chassis.css` selector classes (`.region-divider*` → `.chassis-divider*`) all migrate at the same break. CSS custom property `--region-divider-vertical-height` → `--chassis-divider-vertical-height`. The composition story `demo/stories/compositions/instrument-chassis.vue` updates its import + render site. No back-compat shims (per the tranche posture). Consumer-side speedtest cascade follows in a later phase — there are 4 live `.region-divider` CSS selector sites (`SpeedtestResults.vue:287`, `ThankYou.vue:140`, `MapView.vue:109`, `ChartsView.vue:234`) + 2 doc-comments that must follow this rename when speedtest dispatches W1-γ Phase 2; this finding exceeds the spec's enumeration (the spec called out only the doc-comments).
-- **`<GlassTimeline #detail>` slot — continuous variant only (AI.W1-δ)** — `<ContinuousTimeline>` gains an internal `hoveredKey` ref + `effectiveSegment` (hovered ?? current) + `detailSource` (`"hovered"` / `"current"` / `"idle"`) computeds; emits an optional `#detail` scoped slot rendered as a sibling of the rail wrap with payload `{ segment, source, currentKey, hoveredKey }`. The dispatcher (`<GlassTimeline>`) forwards the slot in the `variant === "continuous"` branch only (option γ per post-RD-3 §3). Height reservation via `--timeline-detail-min-height` (default `1.25rem`) so idle ↔ active transitions do not reflow surrounding layout. Consumers compose `<Transition mode="out-in">` keyed on `segment.key` for the fade-swap choreography. The story `demo/stories/data/timeline-continuous.vue` migrates to exercise the slot (the prior consumer-side `hovered` + `selected` refs retire).
-- **DESIGN.md surface** — Card section gains a `<CardHeader shrink>` subsection documenting the named timeline, the required `.card-scroll-host` ancestor, the canonical recipe, and the PRM contract. Timeline section gains a `#detail` slot subsection documenting the payload shape, the two-keyed-children `<Transition mode="out-in">` requirement, and the new `--timeline-detail-min-height` token row.
+-   **`<CardHeader shrink>` (AI.W1-α)** — additive `shrink?: boolean` modifier on the existing thin static SFC. When true, the header binds to the `--card-scroll` named scroll-timeline and runs a 3-lane choreography (header padding `0..120px`, title font-size `0..120px`, description grid-row collapse `0..80px`) keyed on `[data-slot="card-title"]` + `[data-slot="card-description"]`. The choreography migrates verbatim from value.js's `PaneHeader.vue` (the load-bearing pane-scroll-fade pattern that ran across the 9 panes); identifiers renamed `pane-*` → `card-*`. Default `shrink=false` is byte-identical to the pre-W1 wrapper — existing 5+ consumers unaffected. PRM bracket collapses animations to `0.01ms` for reduced-motion users.
+-   **`.card-scroll-host` utility + `--card-header-bg` token (AI.W1-α)** — canonical scroll-overflow host emits `--card-scroll` and isolates it via `contain: layout style paint` (matches the value.js `PaneHeader.vue` isolation guarantee). Apply to the scroll wrapper inside a `<Card>` to arm the choreography. Disambiguated from the `.scroll-fade-*` mask family (which paints a gradient; this utility paints nothing). `--card-header-bg` parameterises the `color-mix(in srgb, var(--card) 60%, transparent)` literal value.js's PaneHeader carried (`bg-card/60`); consumers retune per-host via the cascade.
+-   **`<CardTitle>` + `<CardDescription>` `data-slot` hooks** — both child SFCs now emit `data-slot="card-title"` / `data-slot="card-description"` so the scoped choreography selects on attribute hooks rather than class selectors. Consumer `class=` overrides cannot suppress the choreography. Matches `<Card>` and `<CardHeader>` patterns (which already emit `data-slot="card"` and `data-slot="card-header"`).
+-   **`RegionDivider` → `ChassisDivider` rename (AI.W1-γ)** — host-prefix alignment so the instrument-chassis family's signature detail carries the family-root prefix (matching `InstrumentChassis`, `instrument-chassis.css`). SFC + `index.ts` export + `InstrumentChassis.vue` import & two render sites + JSDoc + `instrument-chassis.css` selector classes (`.region-divider*` → `.chassis-divider*`) all migrate at the same break. CSS custom property `--region-divider-vertical-height` → `--chassis-divider-vertical-height`. The composition story `demo/stories/compositions/instrument-chassis.vue` updates its import + render site. No back-compat shims (per the tranche posture). Consumer-side speedtest cascade follows in a later phase — there are 4 live `.region-divider` CSS selector sites (`SpeedtestResults.vue:287`, `ThankYou.vue:140`, `MapView.vue:109`, `ChartsView.vue:234`) + 2 doc-comments that must follow this rename when speedtest dispatches W1-γ Phase 2; this finding exceeds the spec's enumeration (the spec called out only the doc-comments).
+-   **`<GlassTimeline #detail>` slot — continuous variant only (AI.W1-δ)** — `<ContinuousTimeline>` gains an internal `hoveredKey` ref + `effectiveSegment` (hovered ?? current) + `detailSource` (`"hovered"` / `"current"` / `"idle"`) computeds; emits an optional `#detail` scoped slot rendered as a sibling of the rail wrap with payload `{ segment, source, currentKey, hoveredKey }`. The dispatcher (`<GlassTimeline>`) forwards the slot in the `variant === "continuous"` branch only (option γ per post-RD-3 §3). Height reservation via `--timeline-detail-min-height` (default `1.25rem`) so idle ↔ active transitions do not reflow surrounding layout. Consumers compose `<Transition mode="out-in">` keyed on `segment.key` for the fade-swap choreography. The story `demo/stories/data/timeline-continuous.vue` migrates to exercise the slot (the prior consumer-side `hovered` + `selected` refs retire).
+-   **DESIGN.md surface** — Card section gains a `<CardHeader shrink>` subsection documenting the named timeline, the required `.card-scroll-host` ancestor, the canonical recipe, and the PRM contract. Timeline section gains a `#detail` slot subsection documenting the payload shape, the two-keyed-children `<Transition mode="out-in">` requirement, and the new `--timeline-detail-min-height` token row.
 
 ## 1.9.2—2026-05-18—Q.W6 close (strengthened audit + phantom-class gate + precept advance) — Q CLOSED
 
 Aggregate close ship for the Q tranche. 13-lane W6 audit + 6 consumer re-audits + FINAL.md.
 
-- **invariant-32/33 gate**: `scripts/proof-phantom-classes.mjs` + `.retired-classes.txt` registry — a fail-closed corpus-grep gate for retired CSS class names across the `@mkbabb/*` fleet; `--pre-deletion` mode for cleanup commits. `proof:phantom-classes` npm script + CI wiring.
-- **strengthened audit caught + fixed three real gaps in-wave**: a speedtest BLOCKER (5 dashboard SFCs imported the W3-retired `<ScrollPane>` — migrated to the Card recipe), words/frontend's 8 residual `glass-default`/`glass-elevated` phantom-class sites, and a keyframes.js gh-pages `outDir` clobber.
-- **precept submodule advance** (`3c32fae`): invariants 30-33 codified; `cross-repo-dev-resolution.md` canonical; 5 LESSONS-LEARNED entries; the π visual-runtime lane re-activated (contingent — canonical-when-tooling-available).
-- Q close report: `docs/tranches/Q/FINAL.md`.
+-   **invariant-32/33 gate**: `scripts/proof-phantom-classes.mjs` + `.retired-classes.txt` registry — a fail-closed corpus-grep gate for retired CSS class names across the `@mkbabb/*` fleet; `--pre-deletion` mode for cleanup commits. `proof:phantom-classes` npm script + CI wiring.
+-   **strengthened audit caught + fixed three real gaps in-wave**: a speedtest BLOCKER (5 dashboard SFCs imported the W3-retired `<ScrollPane>` — migrated to the Card recipe), words/frontend's 8 residual `glass-default`/`glass-elevated` phantom-class sites, and a keyframes.js gh-pages `outDir` clobber.
+-   **precept submodule advance** (`3c32fae`): invariants 30-33 codified; `cross-repo-dev-resolution.md` canonical; 5 LESSONS-LEARNED entries; the π visual-runtime lane re-activated (contingent — canonical-when-tooling-available).
+-   Q close report: `docs/tranches/Q/FINAL.md`.
 
 ## 1.9.1—2026-05-18—Q.W4 close (style/token co-location + CSS budget rebaseline)
 
 Patch ship. Token co-location + cascade hygiene.
 
-- **Token promotion**: the 8-token metric-stack `--metric-row-*-clamp-*` private SFC dialect promoted to `tokens.css §metric`; the 6 `--timeline-dot-*` knobs promoted to `§timeline` — both now `:root`-overridable per the W3 token-home rule.
-- **Cascade hygiene**: manual `-webkit-backdrop-filter` prefixes retired across 4 SFCs (routed through the `glass.css` single-source mechanism); `transitions.css` wrapped in `@layer components` (was the last unlayered class sheet).
-- **Substrate-without-consumer**: `--scale-press-{xs,md,lg}` retired (zero fleet consumers; `sm`/`btn`/`dock` kept).
-- **CSS budget** rebaselined to ≈10% headroom (CSS draw 43,340 raw / 7,780 gzip).
+-   **Token promotion**: the 8-token metric-stack `--metric-row-*-clamp-*` private SFC dialect promoted to `tokens.css §metric`; the 6 `--timeline-dot-*` knobs promoted to `§timeline` — both now `:root`-overridable per the W3 token-home rule.
+-   **Cascade hygiene**: manual `-webkit-backdrop-filter` prefixes retired across 4 SFCs (routed through the `glass.css` single-source mechanism); `transitions.css` wrapped in `@layer components` (was the last unlayered class sheet).
+-   **Substrate-without-consumer**: `--scale-press-{xs,md,lg}` retired (zero fleet consumers; `sm`/`btn`/`dock` kept).
+-   **CSS budget** rebaselined to ≈10% headroom (CSS draw 43,340 raw / 7,780 gzip).
 
 ## 1.9.0—2026-05-18—Q.W3 close (core-feature cohesion + substrate REVERTs + component DEMOTE)
 
 Minor ship. Substrate transposition + three consumer-recovery reverts + two component retirements.
 
-- **Component DEMOTE**: `<ScrollPane>` + `<CartoonCard>` retired (both styling-only, zero-behaviour, single-consumer — fail L invariant 8; lifted out of Card's `variant` enum together at `e017d53`, retire together). `Card` gains an orthogonal `surface?: "glass" | "cartoon"` prop (default `"glass"`). `ui/` package count 43 → 41. Clean break — no aliases.
-- **Substrate REVERTs** (consumer-recovery): `.rainbow-vivid` / `.rainbow-pastel` / `.btn-interactive` re-promoted as `@utility` recipes (the `b0debec` D.W2.D retiral missed keyframes.js); redundant `typography.css` `:root` font-stack literals retired (`6ce14e5` shadowed consumer `@theme` overrides); IconTooltip `inline-flex` wrap-span retired (`25e1b5a` broke `w-full` descendants — keyframes PlaybackRibbon Slider) — WCAG 44×44 routed through each callsite's own contract.
-- **Cohesion**: dock `data-density` consolidated to `dock.css` (cascade-order dependency removed); `.glass-cartoon` re-modelled → decoration-only `@utility cartoon-surface` in `cards.css` (dead `--glass-*-cartoon` phantom tokens dropped); dropdown scoped-style migrated to `floating-panel.css` (menu family now uniformly global-CSS); `beec35e` dock hit-test duplication consolidated; token-home rule documented in DESIGN.md.
+-   **Component DEMOTE**: `<ScrollPane>` + `<CartoonCard>` retired (both styling-only, zero-behaviour, single-consumer — fail L invariant 8; lifted out of Card's `variant` enum together at `e017d53`, retire together). `Card` gains an orthogonal `surface?: "glass" | "cartoon"` prop (default `"glass"`). `ui/` package count 43 → 41. Clean break — no aliases.
+-   **Substrate REVERTs** (consumer-recovery): `.rainbow-vivid` / `.rainbow-pastel` / `.btn-interactive` re-promoted as `@utility` recipes (the `b0debec` D.W2.D retiral missed keyframes.js); redundant `typography.css` `:root` font-stack literals retired (`6ce14e5` shadowed consumer `@theme` overrides); IconTooltip `inline-flex` wrap-span retired (`25e1b5a` broke `w-full` descendants — keyframes PlaybackRibbon Slider) — WCAG 44×44 routed through each callsite's own contract.
+-   **Cohesion**: dock `data-density` consolidated to `dock.css` (cascade-order dependency removed); `.glass-cartoon` re-modelled → decoration-only `@utility cartoon-surface` in `cards.css` (dead `--glass-*-cartoon` phantom tokens dropped); dropdown scoped-style migrated to `floating-panel.css` (menu family now uniformly global-CSS); `beec35e` dock hit-test duplication consolidated; token-home rule documented in DESIGN.md.
 
 ## 1.8.7—2026-05-18—Q.W2 close (Card props fail-explicit + bbnf-buddy variant migration)
 
@@ -140,43 +163,43 @@ Aggregate close ship for the P tranche. Documentation + audit ledger + precept i
 
 ### 13-lane audit (6 consolidated agent deliverables)
 
-| Lane | Agent deliverable | Verdict |
-|---|---|---|
-| α plan-vs-actual | `W6-audit-alpha-beta.md` | CLEAN |
-| β substrate-without-consumer | `W6-audit-alpha-beta.md` | CLEAN |
-| γ doc-drift | `W6-audit-gamma-delta.md` | MINOR (absorbed inline) |
-| δ idiomatic-gestalt | `W6-audit-gamma-delta.md` | MINOR (absorbed inline) |
-| ε performance | `W6-audit-epsilon-pi-iota.md` | CLEAN |
-| π visual-runtime | `W6-audit-epsilon-pi-iota.md` | ATTEMPTED + ARCHIVED-permanent (`archive/visual-runtime-tooling.md`) |
-| ι integrity-sweep | `W6-audit-epsilon-pi-iota.md` | CLEAN |
-| P11/a words/frontend | `W6-P11-Lane-ab-rerun.md` | CLEAN |
-| P11/b fourier-analysis | `W6-P11-Lane-ab-rerun.md` | CLEAN |
-| P11/c bbnf-buddy | `W6-P11-Lane-cd-rerun.md` | CLEAN |
-| P11/d keyframes.js | `W6-P11-Lane-cd-rerun.md` | CLEAN |
-| P11/e value.js | `W6-P11-Lane-ef-rerun.md` | CLEAN |
-| P11/f speedtest | `W6-P11-Lane-ef-rerun.md` | CLEAN |
+| Lane                         | Agent deliverable             | Verdict                                                              |
+| ---------------------------- | ----------------------------- | -------------------------------------------------------------------- |
+| α plan-vs-actual             | `W6-audit-alpha-beta.md`      | CLEAN                                                                |
+| β substrate-without-consumer | `W6-audit-alpha-beta.md`      | CLEAN                                                                |
+| γ doc-drift                  | `W6-audit-gamma-delta.md`     | MINOR (absorbed inline)                                              |
+| δ idiomatic-gestalt          | `W6-audit-gamma-delta.md`     | MINOR (absorbed inline)                                              |
+| ε performance                | `W6-audit-epsilon-pi-iota.md` | CLEAN                                                                |
+| π visual-runtime             | `W6-audit-epsilon-pi-iota.md` | ATTEMPTED + ARCHIVED-permanent (`archive/visual-runtime-tooling.md`) |
+| ι integrity-sweep            | `W6-audit-epsilon-pi-iota.md` | CLEAN                                                                |
+| P11/a words/frontend         | `W6-P11-Lane-ab-rerun.md`     | CLEAN                                                                |
+| P11/b fourier-analysis       | `W6-P11-Lane-ab-rerun.md`     | CLEAN                                                                |
+| P11/c bbnf-buddy             | `W6-P11-Lane-cd-rerun.md`     | CLEAN                                                                |
+| P11/d keyframes.js           | `W6-P11-Lane-cd-rerun.md`     | CLEAN                                                                |
+| P11/e value.js               | `W6-P11-Lane-ef-rerun.md`     | CLEAN                                                                |
+| P11/f speedtest              | `W6-P11-Lane-ef-rerun.md`     | CLEAN                                                                |
 
 13 lanes / 11 CLEAN + 2 MINOR / 0 BLOCKER. Both MINOR findings absorbed inline at this close: CLAUDE.md /api count refreshed 55 → 66 (62 types + 4 constants); precept submodule advance committed at submodule HEAD `3310a8c` (was authored-not-committed at audit time).
 
 ### Formal-archive ledger (9 entries)
 
-- `archive/vue-passive-listeners.md` — PD-1 PERMANENT.
-- `archive/cache-ttl.md` — PD-2 PERMANENT.
-- `archive/value-js-wip-branch.md` — PD-3 PERMANENT (W5.md A.5 fallback).
-- `archive/use-popup-mutex.md` — CONSUMER-PRIVATE.
-- `archive/idle-bob.md` — CONSUMER-PRIVATE.
-- `archive/keyframes-overfitting.md` — CONSUMER-ORCHESTRATOR-OWNED.
-- `archive/bbnf-buddy-53-findings.md` — CONSUMER-SIDE-CARRY.
-- `archive/words-frontend-substrate-pending.md` — MIXED (E.3 ADDRESSED via substrate extension at v1.8.3; E.4 + E.5 ARCHIVED).
-- `archive/visual-runtime-tooling.md` — π lane 3-strike formal-archive.
+-   `archive/vue-passive-listeners.md` — PD-1 PERMANENT.
+-   `archive/cache-ttl.md` — PD-2 PERMANENT.
+-   `archive/value-js-wip-branch.md` — PD-3 PERMANENT (W5.md A.5 fallback).
+-   `archive/use-popup-mutex.md` — CONSUMER-PRIVATE.
+-   `archive/idle-bob.md` — CONSUMER-PRIVATE.
+-   `archive/keyframes-overfitting.md` — CONSUMER-ORCHESTRATOR-OWNED.
+-   `archive/bbnf-buddy-53-findings.md` — CONSUMER-SIDE-CARRY.
+-   `archive/words-frontend-substrate-pending.md` — MIXED (E.3 ADDRESSED via substrate extension at v1.8.3; E.4 + E.5 ARCHIVED).
+-   `archive/visual-runtime-tooling.md` — π lane 3-strike formal-archive.
 
 ### Precept submodule advance
 
 `docs/precepts` advances from HEAD `46ee7e9` (O.W0 close) → `3310a8c` (P close):
 
-- `tranche/SPEC.md §Close` — invariant 28 (zero deferral at tranche close) codified.
-- `tranche/SPEC.md §"Retrospective Discipline"` — invariant 29 (AB+1 retrospective discipline) added.
-- `LESSONS-LEARNED.md` — 3 entries appended (51 + 52 + 53; the LL ledger advances 50 → 53).
+-   `tranche/SPEC.md §Close` — invariant 28 (zero deferral at tranche close) codified.
+-   `tranche/SPEC.md §"Retrospective Discipline"` — invariant 29 (AB+1 retrospective discipline) added.
+-   `LESSONS-LEARNED.md` — 3 entries appended (51 + 52 + 53; the LL ledger advances 50 → 53).
 
 ### FINAL.md
 
@@ -184,32 +207,32 @@ Authored at `docs/tranches/P/FINAL.md` per the close-honesty checklist. 38 inher
 
 ### Inheritance-ledger summary (re-stated at close)
 
-- 7 O internal carry-forwards: 7 ADDRESSED.
-- 7 O cross-repo carry-forwards: 5 ADDRESSED + 2 RETIRED-at-open.
-- 3 PERMANENT-DEFER items: 3 ARCHIVED-PERMANENT (PERMANENT-DEFER classification itself RETIRES at P).
-- AB+1 shadow-execution cohort: ADDRESSED (retrospective at `docs/tranches/AB+1/`).
-- 14 new P-audit debts: 14 ADDRESSED.
-- W5 Lane E flagged: E.3 ADDRESSED via substrate extension; E.4 + E.5 ARCHIVED.
-- Pβ overfitting classification: 2 archive entries.
+-   7 O internal carry-forwards: 7 ADDRESSED.
+-   7 O cross-repo carry-forwards: 5 ADDRESSED + 2 RETIRED-at-open.
+-   3 PERMANENT-DEFER items: 3 ARCHIVED-PERMANENT (PERMANENT-DEFER classification itself RETIRES at P).
+-   AB+1 shadow-execution cohort: ADDRESSED (retrospective at `docs/tranches/AB+1/`).
+-   14 new P-audit debts: 14 ADDRESSED.
+-   W5 Lane E flagged: E.3 ADDRESSED via substrate extension; E.4 + E.5 ARCHIVED.
+-   Pβ overfitting classification: 2 archive entries.
 
 **Total**: 38 inheritance items dispositioned. **Zero P-residuals.**
 
 ### Verification
 
 All 8 gates GREEN at v1.8.4:
-- `npm run typecheck` — PASS.
-- `npm run build` — PASS (heap-bump baked at v1.8.1).
-- `npm run verify-export-types` — PASS.
-- `npm run profile:budget` — PASS (CSS 89.0% raw / 90.2% gzip; ε agent flagged gzip headroom thin at 9.8% remaining; flagged for successor-tranche awareness).
-- `npm test` — PASS (32 files / 367 tests).
-- `npm run audit:stash` — PASS (clean).
-- `npm run proof:package` — PASS.
-- `npm run proof:theme` — PASS.
+
+-   `npm run typecheck` — PASS.
+-   `npm run build` — PASS (heap-bump baked at v1.8.1).
+-   `npm run verify-export-types` — PASS.
+-   `npm run profile:budget` — PASS (CSS 89.0% raw / 90.2% gzip; ε agent flagged gzip headroom thin at 9.8% remaining; flagged for successor-tranche awareness).
+-   `npm test` — PASS (32 files / 367 tests).
+-   `npm run audit:stash` — PASS (clean).
+-   `npm run proof:package` — PASS.
+-   `npm run proof:theme` — PASS.
 
 ### P tranche CLOSED
 
 Final aggregate tag: v1.8.4. Glass-ui-side carry to successor tranche: ZERO P-residuals. Future tranches open with a clean ledger.
-
 
 ## 1.8.3—2026-05-16—P.W5 close (cross-repo MULTI-WRITER batch + MetricRow substrate extension + archive ledger)
 
@@ -247,59 +270,60 @@ Per the W5 close gate verification: glass-ui's tests transitively import keyfram
 ### Archive ledger (Lane F)
 
 Five archive entries at `docs/tranches/P/archive/`:
-- `value-js-wip-branch.md` — PD-3 formal-archive (WIP-branch LAND fold per W5.md A.5 fallback).
-- `use-popup-mutex.md` — CONSUMER-PRIVATE.
-- `idle-bob.md` — CONSUMER-PRIVATE (RETIRE-as-inline at keyframes.js).
-- `keyframes-overfitting.md` — CONSUMER-ORCHESTRATOR-OWNED.
-- `bbnf-buddy-53-findings.md` — CONSUMER-SIDE-CARRY.
+
+-   `value-js-wip-branch.md` — PD-3 formal-archive (WIP-branch LAND fold per W5.md A.5 fallback).
+-   `use-popup-mutex.md` — CONSUMER-PRIVATE.
+-   `idle-bob.md` — CONSUMER-PRIVATE (RETIRE-as-inline at keyframes.js).
+-   `keyframes-overfitting.md` — CONSUMER-ORCHESTRATOR-OWNED.
+-   `bbnf-buddy-53-findings.md` — CONSUMER-SIDE-CARRY.
 
 Plus `words-frontend-substrate-pending.md` documenting the E.3 / E.4 / E.5 mixed dispositions (E.3 ADDRESSED with this substrate ship; E.4 + E.5 ARCHIVED).
 
 ### Cross-repo MULTI-WRITER commits (this close ceremony)
 
-| Repo | Commit | Status |
-|---|---|---|
-| fourier-analysis | `4df1a06` | pushed origin/master |
-| keyframes.js | `2183f32` | pushed origin/master |
-| bbnf-buddy | `dafb99f` | local only (no remote) |
-| words/frontend | `5c1b2b8` | pushed origin/master |
-| value.js | `755b3cd` | local only on `w.w2.1-value-js-prebuild` WIP branch; NOT pushed per PD-3 archive disposition |
+| Repo             | Commit    | Status                                                                                       |
+| ---------------- | --------- | -------------------------------------------------------------------------------------------- |
+| fourier-analysis | `4df1a06` | pushed origin/master                                                                         |
+| keyframes.js     | `2183f32` | pushed origin/master                                                                         |
+| bbnf-buddy       | `dafb99f` | local only (no remote)                                                                       |
+| words/frontend   | `5c1b2b8` | pushed origin/master                                                                         |
+| value.js         | `755b3cd` | local only on `w.w2.1-value-js-prebuild` WIP branch; NOT pushed per PD-3 archive disposition |
 
 ### Verification
 
 All 8 W5 close gates PASS at glass-ui:
-- `npm run typecheck` — PASS.
-- `npm run build` — PASS (29.94 s; Lane A bake).
-- `npm run verify-export-types` — PASS.
-- `npm run profile:budget` — PASS (CSS 89.0% raw / 90.2% gzip).
-- `npm test` — PASS (32 files / 367 tests; +2 from W5 Lane A.1 surface-lock additions).
-- `npm run audit:stash` — PASS (clean; zero stash entries).
-- `npm run proof:package` — PASS (Lane B inline absorbs).
-- `npm run proof:theme` — PASS (Lane B inline absorbs).
+
+-   `npm run typecheck` — PASS.
+-   `npm run build` — PASS (29.94 s; Lane A bake).
+-   `npm run verify-export-types` — PASS.
+-   `npm run profile:budget` — PASS (CSS 89.0% raw / 90.2% gzip).
+-   `npm test` — PASS (32 files / 367 tests; +2 from W5 Lane A.1 surface-lock additions).
+-   `npm run audit:stash` — PASS (clean; zero stash entries).
+-   `npm run proof:package` — PASS (Lane B inline absorbs).
+-   `npm run proof:theme` — PASS (Lane B inline absorbs).
 
 ### Inheritance ledger absorbed at W5
 
-| P ID | Item | Status |
-|---|---|---|
-| CR-1 | value.js v1.7.0 adoption fix | ADDRESSED (Lane A; demo/@/* on WIP branch) |
-| CR-2 | fourier-analysis dock injects + useClipboard + HoverCard | ADDRESSED (Lane B; pushed) |
-| CR-3 | keyframes.js HeaderRibbon + scale-on-hover + Fira Code CDN drop | ADDRESSED (Lane C; pushed) |
-| CR-4 | value.js HeaderRibbon retire + 19→17 useClipboard bulk flip | ADDRESSED (Lane A; WIP branch) |
-| CR-5 | bbnf-buddy ToolsLayer :deep retire | ADDRESSED (Lane D; local) |
-| P11/c useLeaveTimer | RETIRE-as-inline | ADDRESSED (Lane D; local) |
-| P11/a E.1 | Fira Code CDN drop (words/frontend) | ADDRESSED (Lane E; pushed) |
-| P11/a E.2 | scale-on-hover (words/frontend) | ADDRESSED (Lane E; 15 sites; pushed) |
-| P11/a E.3 | MetricRow compact register | ADDRESSED (substrate extension at this close) |
-| P11/a E.4 | ProgressiveSidebar adoption | ARCHIVED-CONSUMER-DESIGN-PENDING |
-| P11/a E.5 | PaperBackdrop adoption | ARCHIVED-CONSUMER-ORCHESTRATOR-OWNED |
-| PD-3 | value.js WIP-branch LAND | ARCHIVED-PERMANENT (W5.md A.5 fallback) |
-| Pβ usePopupMutex | single-consumer composable | ARCHIVED-CONSUMER-PRIVATE |
-| Pβ idle-bob | single-site utility | ARCHIVED-CONSUMER-PRIVATE |
-| P11/d 84% overfitting | keyframes.js consumer-orchestrator-owned | ARCHIVED-CONSUMER-ORCHESTRATOR-OWNED |
-| P11/c 53-finding ledger | bbnf-buddy consumer-side | ARCHIVED-CONSUMER-SIDE-CARRY |
+| P ID                    | Item                                                            | Status                                        |
+| ----------------------- | --------------------------------------------------------------- | --------------------------------------------- |
+| CR-1                    | value.js v1.7.0 adoption fix                                    | ADDRESSED (Lane A; demo/@/\* on WIP branch)   |
+| CR-2                    | fourier-analysis dock injects + useClipboard + HoverCard        | ADDRESSED (Lane B; pushed)                    |
+| CR-3                    | keyframes.js HeaderRibbon + scale-on-hover + Fira Code CDN drop | ADDRESSED (Lane C; pushed)                    |
+| CR-4                    | value.js HeaderRibbon retire + 19→17 useClipboard bulk flip     | ADDRESSED (Lane A; WIP branch)                |
+| CR-5                    | bbnf-buddy ToolsLayer :deep retire                              | ADDRESSED (Lane D; local)                     |
+| P11/c useLeaveTimer     | RETIRE-as-inline                                                | ADDRESSED (Lane D; local)                     |
+| P11/a E.1               | Fira Code CDN drop (words/frontend)                             | ADDRESSED (Lane E; pushed)                    |
+| P11/a E.2               | scale-on-hover (words/frontend)                                 | ADDRESSED (Lane E; 15 sites; pushed)          |
+| P11/a E.3               | MetricRow compact register                                      | ADDRESSED (substrate extension at this close) |
+| P11/a E.4               | ProgressiveSidebar adoption                                     | ARCHIVED-CONSUMER-DESIGN-PENDING              |
+| P11/a E.5               | PaperBackdrop adoption                                          | ARCHIVED-CONSUMER-ORCHESTRATOR-OWNED          |
+| PD-3                    | value.js WIP-branch LAND                                        | ARCHIVED-PERMANENT (W5.md A.5 fallback)       |
+| Pβ usePopupMutex        | single-consumer composable                                      | ARCHIVED-CONSUMER-PRIVATE                     |
+| Pβ idle-bob             | single-site utility                                             | ARCHIVED-CONSUMER-PRIVATE                     |
+| P11/d 84% overfitting   | keyframes.js consumer-orchestrator-owned                        | ARCHIVED-CONSUMER-ORCHESTRATOR-OWNED          |
+| P11/c 53-finding ledger | bbnf-buddy consumer-side                                        | ARCHIVED-CONSUMER-SIDE-CARRY                  |
 
 Per P invariant 28: zero P-residuals exit W5. Every inheritance-ledger item is ADDRESSED or ARCHIVED-with-rationale.
-
 
 ## 1.8.2—2026-05-16—P.W5 Lane A.1 (`copyToClipboard` bare co-export; glass-ui-side prereq for value.js Path B)
 
@@ -314,8 +338,8 @@ Path B: add an additive bare co-export from `src/composables/dom/useClipboard.ts
 ```ts
 export async function copyToClipboard(
     text: string,
-    options?: UseClipboardOptions,
-): Promise<boolean>
+    options?: UseClipboardOptions
+): Promise<boolean>;
 ```
 
 Auto-flows to the root barrel via the existing `export * from "./useClipboard"` chain.
@@ -341,10 +365,9 @@ All 8 gates PASS: typecheck + build (Lane A bake; no env prep) + verify-export-t
 
 ### Inheritance ledger absorbed at W5 Lane A.1
 
-| P ID | Item | Status |
-|---|---|---|
+| P ID         | Item                               | Status                                                                 |
+| ------------ | ---------------------------------- | ---------------------------------------------------------------------- |
 | P11/e Path B | useClipboard bare co-export prereq | ADDRESSED (glass-ui-side ship; consumer-side migration at W5 Lane A.4) |
-
 
 ## 1.8.1—2026-05-16—P.W4 (pipeline + style + demo + µ-split absorbs)
 
@@ -363,11 +386,11 @@ Disposition (per P invariant 28 ADDRESS not defer): `package.json.scripts.build`
 
 `CLAUDE.md` `## Build` section gains a 1-paragraph rationale. `scripts/release.sh` + `.github/workflows/ci.yml` continue to set the env var defensively; the local-dev `npm run build` no longer requires consumer-side env prep. The bump becomes the documented baseline; the workaround taxonomy retires.
 
-### Lane B—CI proof:* subset (Pε-3) + 3 inline absorbs
+### Lane B—CI proof:\* subset (Pε-3) + 3 inline absorbs
 
 `.github/workflows/ci.yml` gains 4 new steps after `profile:budget`: `proof:package` + `proof:theme` + `proof:consumers:static` + `audit:stash`. Total CI delta ~3 s.
 
-Adding the proof:* steps exposed three stale glass-ui-side issues the gates had been silently allowing. Per P invariant 28 (ship enforcement when the trigger fires), all three closed inline at W4 Lane B:
+Adding the proof:\* steps exposed three stale glass-ui-side issues the gates had been silently allowing. Per P invariant 28 (ship enforcement when the trigger fires), all three closed inline at W4 Lane B:
 
 1. `scripts/proof-package.mjs` probe.ts surface drift: `useGlobalDark` moved to `@mkbabb/glass-ui/dark` at L.W1 + `DockPopover` was a phantom symbol. Probe updated to `useGlobalDark` from `/dark` + `DockDropdownTrigger` (canonical compound).
 2. `scripts/proof-theme-style.mjs` `blur-glass-subtle` was a pre-L.W1 retired utility. Replaced with `blur-glass-resting` (canonical 5-rung-ladder default).
@@ -390,51 +413,51 @@ Four sub-tasks per P-6 + Pγ.4 + O-N-7:
 
 Seven new stories under `demo/stories/`:
 
-| # | Path | Feature |
-|---|---|---|
-| 1 | `composables/use-clipboard.vue` | `useClipboard()` composable (resetMs ladder + API surface) |
-| 2 | `custom/header-ribbon.vue` | `<HeaderRibbon>` SFC (position toggle) |
-| 3 | `dock/icon-button-token-ladder.vue` | `--dock-active-*` cohort (5 override scopes + live dock) |
-| 4 | `utilities/scale-on-hover.vue` | `@utility scale-on-hover` (4-scope hover-scale ladder) |
-| 5 | `sliders/glass-scrubber.vue` | `<Slider variant="glass-scrubber">` (6-variant comparison) |
-| 6 | `navigation/progressive-sidebar-section.vue` | `<ProgressiveSidebarSection>` slotted primitive in isolation |
-| 7 | `foundations/paper-backdrop-texture-system.vue` | `<PaperBackdrop>` clean/aged + `--paper-*` cascade retint |
+| #   | Path                                            | Feature                                                      |
+| --- | ----------------------------------------------- | ------------------------------------------------------------ |
+| 1   | `composables/use-clipboard.vue`                 | `useClipboard()` composable (resetMs ladder + API surface)   |
+| 2   | `custom/header-ribbon.vue`                      | `<HeaderRibbon>` SFC (position toggle)                       |
+| 3   | `dock/icon-button-token-ladder.vue`             | `--dock-active-*` cohort (5 override scopes + live dock)     |
+| 4   | `utilities/scale-on-hover.vue`                  | `@utility scale-on-hover` (4-scope hover-scale ladder)       |
+| 5   | `sliders/glass-scrubber.vue`                    | `<Slider variant="glass-scrubber">` (6-variant comparison)   |
+| 6   | `navigation/progressive-sidebar-section.vue`    | `<ProgressiveSidebarSection>` slotted primitive in isolation |
+| 7   | `foundations/paper-backdrop-texture-system.vue` | `<PaperBackdrop>` clean/aged + `--paper-*` cascade retint    |
 
 `demo/stories/manifest.ts` gains 3 rows in existing categories + 4 new categories (`custom/` + `dock/` + `utilities/` + `sliders/`).
 
 ### Lane F—Formal µ-split retirements (Pβ §"O-residual µ-splits")
 
 Both µ-splits already-retired by non-execution at HEAD:
-- `find src -name 'dragGhost*'` → zero results. Ghost helper inline at `useSortable.ts` (lines 161, 230-331) as closure-state-sharing locals.
-- `find src/styles -name 'btn-audacious*'` → zero results. `@utility btn-audacious` inline at `src/styles/utilities.css:578`.
+
+-   `find src -name 'dragGhost*'` → zero results. Ghost helper inline at `useSortable.ts` (lines 161, 230-331) as closure-state-sharing locals.
+-   `find src/styles -name 'btn-audacious*'` → zero results. `@utility btn-audacious` inline at `src/styles/utilities.css:578`.
 
 Decision: **FORMAL RETIREMENT** documented; no source-tree mutations needed. The Pβ recommendation matched the HEAD state.
 
 ### Verification
 
-- `npm run typecheck`—PASS.
-- `npm run build`—PASS (no env-prep needed; Lane A bake).
-- `npm run verify-export-types`—PASS.
-- `npm run profile:budget`—PASS.
-- `npm test`—PASS (32 files / 365 tests).
-- `node scripts/audit-stash-list.mjs`—PASS (clean).
-- `npm run proof:package`—PASS (post probe-fix at Lane B inline-absorb).
-- `npm run proof:theme`—PASS (post fixes at Lane B inline-absorb).
+-   `npm run typecheck`—PASS.
+-   `npm run build`—PASS (no env-prep needed; Lane A bake).
+-   `npm run verify-export-types`—PASS.
+-   `npm run profile:budget`—PASS.
+-   `npm test`—PASS (32 files / 365 tests).
+-   `node scripts/audit-stash-list.mjs`—PASS (clean).
+-   `npm run proof:package`—PASS (post probe-fix at Lane B inline-absorb).
+-   `npm run proof:theme`—PASS (post fixes at Lane B inline-absorb).
 
 ### Inheritance ledger absorbed at W4
 
-| P ID | Item | Status |
-|---|---|---|
-| Pε-2 | Heap-bump root-cause OR bake | ADDRESSED (Lane A; Path B bake) |
-| Pε-3 | CI proof:* subset | ADDRESSED (Lane B) |
-| Pε-4 | tailwind-merge cruft | ADDRESSED (Lane C) |
-| P-6 | Banned-word + em-dash sweeps | ADDRESSED (Lane D) |
-| Pγ.4 | 2 missed module-registries | ADDRESSED (Lane D) |
-| O-N-7 / P11/a I4 | Press-scale ladder | ADDRESSED (Lane D) |
-| P-4 | 4 W6 demo stories + 3 W3 stub stories | ADDRESSED (Lane E) |
-| Pβ µ-split-1 + µ-split-2 | dragGhost + btn-audacious µ-splits | ADDRESSED (Lane F; already-retired) |
-| Lane B inline absorbs (×3) | stale probe + stale lint + scoped style | ADDRESSED (Lane B) |
-
+| P ID                       | Item                                    | Status                              |
+| -------------------------- | --------------------------------------- | ----------------------------------- |
+| Pε-2                       | Heap-bump root-cause OR bake            | ADDRESSED (Lane A; Path B bake)     |
+| Pε-3                       | CI proof:\* subset                      | ADDRESSED (Lane B)                  |
+| Pε-4                       | tailwind-merge cruft                    | ADDRESSED (Lane C)                  |
+| P-6                        | Banned-word + em-dash sweeps            | ADDRESSED (Lane D)                  |
+| Pγ.4                       | 2 missed module-registries              | ADDRESSED (Lane D)                  |
+| O-N-7 / P11/a I4           | Press-scale ladder                      | ADDRESSED (Lane D)                  |
+| P-4                        | 4 W6 demo stories + 3 W3 stub stories   | ADDRESSED (Lane E)                  |
+| Pβ µ-split-1 + µ-split-2   | dragGhost + btn-audacious µ-splits      | ADDRESSED (Lane F; already-retired) |
+| Lane B inline absorbs (×3) | stale probe + stale lint + scoped style | ADDRESSED (Lane B)                  |
 
 ## 1.8.0—2026-05-16—P.W3 HEADLINE (substrate promotions—GlassScrubber + ProgressiveSidebar slotted-chassis + PaperBackdrop /api)
 
@@ -444,10 +467,10 @@ Minor-level cohort. Three parallel substrate promotions clear the ≥ 2-consumer
 
 `src/components/ui/slider/index.ts` `sliderVariants` CVA gains a 6th `variant` entry (`glass-scrubber`). `src/components/ui/slider/Slider.vue` scoped CSS adds `[data-variant="glass-scrubber"]` block targeting `.slider-track` / `.slider-range` / `.slider-thumb` with scrubber-canonical geometry:
 
-- Track: 1.25 rem (20 px median of fourier-analysis's 3 sites' 16/20/24 px), `--surface-tint-6` resting → `--surface-tint-8` hover, `--glass-blur-quiet` backdrop-filter.
-- Range: `--surface-tint-8` resting → `--surface-tint-15` hover, pill radius.
-- Thumb: 6×16 px thin bar, hidden at rest (opacity:0), materializes on hover / focus / `[data-held]` / `[data-touch-active]` and grows to 8×18 px with `--surface-tint-40`.
-- Focus ring: `0 0 0 2px color-mix(in srgb, var(--ring) 40%, transparent)`—matches the 3 recipes verbatim.
+-   Track: 1.25 rem (20 px median of fourier-analysis's 3 sites' 16/20/24 px), `--surface-tint-6` resting → `--surface-tint-8` hover, `--glass-blur-quiet` backdrop-filter.
+-   Range: `--surface-tint-8` resting → `--surface-tint-15` hover, pill radius.
+-   Thumb: 6×16 px thin bar, hidden at rest (opacity:0), materializes on hover / focus / `[data-held]` / `[data-touch-active]` and grows to 8×18 px with `--surface-tint-40`.
+-   Focus ring: `0 0 0 2px color-mix(in srgb, var(--ring) 40%, transparent)`—matches the 3 recipes verbatim.
 
 All paints compose existing substrate tokens (`--surface-tint-N`, `--ring`, `--glass-blur-quiet`, `--radius-pill`, `--duration-fast`, `--ease-standard`, `--scale-press-btn`). Zero hardcoded colors. No new tokens shipped—divergence axes route through inline `var(--slider-scrub-*, default)` per the existing slider scoped-CSS pattern.
 
@@ -461,14 +484,16 @@ All paints compose existing substrate tokens (`--surface-tint-N`, `--ring`, `--g
 2. **Slotted mode** (NEW): omit `state`; place `<ProgressiveSidebarSection>` children in the default slot. The chassis installs a DI context; sections register on mount via the new typed-key + helper-pair pattern.
 
 New artefacts:
-- `src/components/custom/sidebar/ProgressiveSidebarSection.vue` (NEW SFC)—slotted section primitive with `id` + `label` + `icon` props + `#header` + default slots + optional-context DI registration.
-- `src/components/custom/sidebar/context.ts` (NEW DI module)—`PROGRESSIVE_SIDEBAR_CONTEXT_KEY` + `provideProgressiveSidebarContext` + strict `useProgressiveSidebarContext()` + befitting `useOptionalProgressiveSidebarContext()`. Mirrors P.W2 Lane B `SortableList` + O.W2 `DockLayerGroup` precedents per invariant 25.
+
+-   `src/components/custom/sidebar/ProgressiveSidebarSection.vue` (NEW SFC)—slotted section primitive with `id` + `label` + `icon` props + `#header` + default slots + optional-context DI registration.
+-   `src/components/custom/sidebar/context.ts` (NEW DI module)—`PROGRESSIVE_SIDEBAR_CONTEXT_KEY` + `provideProgressiveSidebarContext` + strict `useProgressiveSidebarContext()` + befitting `useOptionalProgressiveSidebarContext()`. Mirrors P.W2 Lane B `SortableList` + O.W2 `DockLayerGroup` precedents per invariant 25.
 
 `src/components/custom/sidebar/index.ts` re-exports the section SFC + context primitives + helper pair.
 
 Test coverage: existing XSS-prevention test preserved verbatim; +4 NEW tests cover slotted rendering, DI register/unregister lifecycle, active-section cascade, and standalone-section optional-context fallback. Test count 361 → 365.
 
 **≥ 2-consumer verification**:
+
 1. words/frontend `WordlistProgressiveSidebar.vue` (319 LOC) + co-located `ProgressiveSidebar.vue` (150 LOC) = 469 LOC parallel implementation; consumer-side absorption at P.W5 Lane E.
 2. glass-ui demo `demo/stories/navigation/sidebar.vue`—slotted-mode story landed at this commit (Filters + Sort + Tags sections; consumer #2 LANDS at this wave, not deferred).
 
@@ -479,11 +504,13 @@ Test coverage: existing XSS-prevention test preserved verbatim; +4 NEW tests cov
 `src/api/index.ts` gains a "Paper / texture" section re-exporting `PaperBackdropProps` + `PaperBackdropFrequency`. Surface count 64 → **66** (62 types + 4 constants).
 
 `DESIGN.md` adds a "Texture system" section (lines 1239-1290) documenting:
-- Substrate of choice: `<PaperBackdrop>` + `paper-underpaint` + `paper-grain-overlay` utilities.
-- Custom-property cascade pattern: consumers retint texture via `--paper-*` CSS variables at `:root` rather than reaching inside scoped styles (parallel to `--phase-color-*` per AC.W6c).
-- 4-step migration path for consumers retiring parallel `useTextureSystem` implementations.
+
+-   Substrate of choice: `<PaperBackdrop>` + `paper-underpaint` + `paper-grain-overlay` utilities.
+-   Custom-property cascade pattern: consumers retint texture via `--paper-*` CSS variables at `:root` rather than reaching inside scoped styles (parallel to `--phase-color-*` per AC.W6c).
+-   4-step migration path for consumers retiring parallel `useTextureSystem` implementations.
 
 **≥ 2-consumer verification**:
+
 1. words/frontend—503 LOC parallel implementation (`useTextureSystem.ts` 162 LOC + 3 texture SFCs 341 LOC); cross-walk lands at P.W5 Lane E.
 2. glass-ui demo—9 production-binary call sites at HEAD (AppShell substrate + 4 paper-backdrop story instances + 6 paper-grain-overlay utility consumers).
 
@@ -493,22 +520,21 @@ Lane A's glass-scrubber variant + Lane B's slotted-chassis chassis added scoped-
 
 ### Verification
 
-- `npm run typecheck`—PASS.
-- `NODE_OPTIONS=--max-old-space-size=8192 npm run build`—PASS (28.55 s).
-- `npm run verify-export-types`—PASS.
-- `npm run profile:budget`—PASS (post-rebaseline).
-- `npm test`—PASS (32 files / 365 tests; +4 from Lane B coverage).
-- `node scripts/audit-stash-list.mjs`—PASS (clean; zero stash entries; the W2 fail-closed gate continues to hold).
+-   `npm run typecheck`—PASS.
+-   `NODE_OPTIONS=--max-old-space-size=8192 npm run build`—PASS (28.55 s).
+-   `npm run verify-export-types`—PASS.
+-   `npm run profile:budget`—PASS (post-rebaseline).
+-   `npm test`—PASS (32 files / 365 tests; +4 from Lane B coverage).
+-   `node scripts/audit-stash-list.mjs`—PASS (clean; zero stash entries; the W2 fail-closed gate continues to hold).
 
 ### Inheritance ledger absorbed at W3
 
-| P ID | Item | Status |
-|---|---|---|
-| P-5 | GlassScrubber substrate (3 fourier-analysis sites) | ADDRESSED (Lane A) |
-| P11/a G2 | ProgressiveSidebar slotted-chassis split | ADDRESSED (Lane B) |
-| P11/a G3 + I2 | PaperBackdrop /api promotion + texture-system migration | ADDRESSED (Lane C) |
-| P-2 (recurrent) | CSS budget re-baseline at substrate-promotion close | ADDRESSED (W3 close re-baseline) |
-
+| P ID            | Item                                                    | Status                           |
+| --------------- | ------------------------------------------------------- | -------------------------------- |
+| P-5             | GlassScrubber substrate (3 fourier-analysis sites)      | ADDRESSED (Lane A)               |
+| P11/a G2        | ProgressiveSidebar slotted-chassis split                | ADDRESSED (Lane B)               |
+| P11/a G3 + I2   | PaperBackdrop /api promotion + texture-system migration | ADDRESSED (Lane C)               |
+| P-2 (recurrent) | CSS budget re-baseline at substrate-promotion close     | ADDRESSED (W3 close re-baseline) |
 
 ## 1.7.2—2026-05-16—P.W2 (invariant-25 paired-helper completion + UseDockStateReturn + stash-audit script)
 
@@ -540,10 +566,10 @@ Call-site migrations: `GlyphFace.vue` + `DiscoGlyph.vue` updated. Debug-label of
 
 `useDockState()` previously returned an inferred shape—the surviving inline-return outlier after O.W4 Lane B fixed `useAurora`. P.W2 Lane D closes Pγ.3:
 
-- `src/components/custom/dock/composables/useDockState.ts` adds `export interface UseDockStateReturn` with the exact 13-field shape (`state` + `expanded` + `isPinned` + `isHeld` + `onMouseEnter` / `Leave` / `FocusIn` / `Out` / `ClickCollapsed` + `keepOpen` / `release` + `expand` / `collapse`). Function annotated `useDockState(options: UseDockStateOptions): UseDockStateReturn`.
-- `src/components/custom/dock/composables/index.ts` re-exports the type.
-- `src/components/custom/dock/index.ts` extends the O.W4 Lane B + P.W1 Lane B re-export block.
-- `src/api/index.ts` promotes `UseDockStateReturn` under a new Dock section—composable-return canon paralleling `UseClipboardReturn`.
+-   `src/components/custom/dock/composables/useDockState.ts` adds `export interface UseDockStateReturn` with the exact 13-field shape (`state` + `expanded` + `isPinned` + `isHeld` + `onMouseEnter` / `Leave` / `FocusIn` / `Out` / `ClickCollapsed` + `keepOpen` / `release` + `expand` / `collapse`). Function annotated `useDockState(options: UseDockStateOptions): UseDockStateReturn`.
+-   `src/components/custom/dock/composables/index.ts` re-exports the type.
+-   `src/components/custom/dock/index.ts` extends the O.W4 Lane B + P.W1 Lane B re-export block.
+-   `src/api/index.ts` promotes `UseDockStateReturn` under a new Dock section—composable-return canon paralleling `UseClipboardReturn`.
 
 Surface count: 63 → **64** (60 types + 4 constants).
 
@@ -551,30 +577,29 @@ Surface count: 63 → **64** (60 types + 4 constants).
 
 Two of the four W2 lane agents (Lane C + Lane D) self-reported `git stash + git stash pop` build-isolation violations of the hardened agent git clause. Per O invariant 27 ("the next recurrence triggers tooling-side enforcement"), the audit script's authorship is **accelerated from P.W6 to P.W2 close** per P invariant 28 (zero deferral; ship enforcement when the trigger fires).
 
-- `scripts/audit-stash-list.mjs` (NEW): fail-closed gate verifying `git stash list` returns empty. Exit 0 when clean; exit 1 otherwise. One-shot bypass via `AUDIT_STASH_LIST_BYPASS=1` for user-authorized intentional stash.
-- `package.json.scripts.audit:stash` (NEW): ergonomic invocation.
-- Stale `stash@{0}` entry (mid-flight agent capture; subset of HEAD diffs verified before drop) cleared via orchestrator-authority `git stash drop`.
-- LL ledger advance from 5 → 7 codified at P.W6 Lane B precept submodule advance (existing plan).
+-   `scripts/audit-stash-list.mjs` (NEW): fail-closed gate verifying `git stash list` returns empty. Exit 0 when clean; exit 1 otherwise. One-shot bypass via `AUDIT_STASH_LIST_BYPASS=1` for user-authorized intentional stash.
+-   `package.json.scripts.audit:stash` (NEW): ergonomic invocation.
+-   Stale `stash@{0}` entry (mid-flight agent capture; subset of HEAD diffs verified before drop) cleared via orchestrator-authority `git stash drop`.
+-   LL ledger advance from 5 → 7 codified at P.W6 Lane B precept submodule advance (existing plan).
 
 ### Verification
 
-- `npm run typecheck`—PASS.
-- `NODE_OPTIONS=--max-old-space-size=8192 npm run build`—PASS (28.99 s).
-- `npm run verify-export-types`—PASS.
-- `npm run profile:budget`—PASS (CSS 38_006 / 42_000 raw 90.5%; gzip 7_093 / 7_400 95.9%).
-- `npm test`—PASS (32 files / 361 tests).
-- `node scripts/audit-stash-list.mjs`—PASS (clean; zero stash entries).
+-   `npm run typecheck`—PASS.
+-   `NODE_OPTIONS=--max-old-space-size=8192 npm run build`—PASS (28.99 s).
+-   `npm run verify-export-types`—PASS.
+-   `npm run profile:budget`—PASS (CSS 38_006 / 42_000 raw 90.5%; gzip 7_093 / 7_400 95.9%).
+-   `npm test`—PASS (32 files / 361 tests).
+-   `node scripts/audit-stash-list.mjs`—PASS (clean; zero stash entries).
 
 ### Inheritance ledger absorbed at W2
 
-| P ID | Item | Status |
-|---|---|---|
-| P-3a | CONFIGURATOR_DENSITY_KEY paired-helper completion | ADDRESSED (Lane A; optional-only per intent) |
-| P-3b | SORTABLE_CONTEXT paired-helper completion | ADDRESSED (Lane B; strict-only per intent) |
-| P-3c | GlyphFaceSilhouetteKey paired-helper completion + UPPER_SNAKE_CASE rename | ADDRESSED (Lane C; optional-only per intent; clean break) |
-| Pγ.3 | useDockState inline return | ADDRESSED (Lane D; surface 63 → 64) |
-| O invariant 27 (audit-script destination) | scripts/audit-stash-list.mjs | ADDRESSED at W2 (accelerated from W6 per zero-deferral) |
-
+| P ID                                      | Item                                                                      | Status                                                    |
+| ----------------------------------------- | ------------------------------------------------------------------------- | --------------------------------------------------------- |
+| P-3a                                      | CONFIGURATOR_DENSITY_KEY paired-helper completion                         | ADDRESSED (Lane A; optional-only per intent)              |
+| P-3b                                      | SORTABLE_CONTEXT paired-helper completion                                 | ADDRESSED (Lane B; strict-only per intent)                |
+| P-3c                                      | GlyphFaceSilhouetteKey paired-helper completion + UPPER_SNAKE_CASE rename | ADDRESSED (Lane C; optional-only per intent; clean break) |
+| Pγ.3                                      | useDockState inline return                                                | ADDRESSED (Lane D; surface 63 → 64)                       |
+| O invariant 27 (audit-script destination) | scripts/audit-stash-list.mjs                                              | ADDRESSED at W2 (accelerated from W6 per zero-deferral)   |
 
 ## 1.7.1—2026-05-16—P.W1 (/api Props promotion + dock barrel re-export + cosmetic comment rephrase)
 
@@ -584,8 +609,8 @@ Patch-level cohesion release. Three parallel lanes; all additive at the consumer
 
 The AB+1 primitive cohort (`MetricCell`, `MetricStack`, `MetricRow`, `AnimatedDigit`, `ResponsiveTabs`) plus the Rγ-baseline carryover `StackedIconGroup` reach the `@mkbabb/glass-ui/api` discovery layer:
 
-- **AB+1 primitives (7 types)**: `MetricCellProps`, `MetricCellAppearance` (`"dashboard" | "compact" | "bare"`), `MetricStackProps`, `MetricRowProps`, `AnimatedDigitProps`, `AnimatedDigitMode` (`"absolute" | "progress"`), `ResponsiveTabsProps`.
-- **StackedIconGroup (1 type)**: `StackedIconGroupProps<TItem>`—Rγ baseline carryover missed at the O.W4 Lane A triad.
+-   **AB+1 primitives (7 types)**: `MetricCellProps`, `MetricCellAppearance` (`"dashboard" | "compact" | "bare"`), `MetricStackProps`, `MetricRowProps`, `AnimatedDigitProps`, `AnimatedDigitMode` (`"absolute" | "progress"`), `ResponsiveTabsProps`.
+-   **StackedIconGroup (1 type)**: `StackedIconGroupProps<TItem>`—Rγ baseline carryover missed at the O.W4 Lane A triad.
 
 Five SFCs refactored from inline `defineProps<{...}>` to named `export interface FooProps` (HeaderRibbon O.W6 precedent)—per P invariant 5, the inline anonymous form is REPLACED, not preserved alongside.
 
@@ -612,26 +637,25 @@ Prior to W1, these were reachable only via deep import (`src/components/custom/d
 
 Two source-comment word swaps; zero runtime impact. Per P invariant 5 (NO LEGACY CODE), the substrate at HEAD contains no actual legacy artefact—the comments mis-described their referents:
 
-- `src/components/custom/timeline/GlassTimeline.vue:88`: "legacy monolith" → "pre-O.W3 monolithic source" (the 1049-LOC pre-O.W3 source the W3 split replaced).
-- `src/styles/typography.css:194`: "legacy `Fira Mono`" → "fallback `Fira Mono`" (Fira Mono is the documented fallback tier in the `--font-mono` cascade, not deprecated).
+-   `src/components/custom/timeline/GlassTimeline.vue:88`: "legacy monolith" → "pre-O.W3 monolithic source" (the 1049-LOC pre-O.W3 source the W3 split replaced).
+-   `src/styles/typography.css:194`: "legacy `Fira Mono`" → "fallback `Fira Mono`" (Fira Mono is the documented fallback tier in the `--font-mono` cascade, not deprecated).
 
 ### Verification
 
-- `npm run typecheck`—PASS (zero diagnostics).
-- `NODE_OPTIONS=--max-old-space-size=8192 npm run build`—PASS.
-- `npm run verify-export-types`—PASS (all targets + type resolutions valid).
-- `npm run profile:budget`—PASS (CSS 38_006 / 42_000 raw = 90.5%; gzip 7_094 / 7_400 = 95.9%—comfortably under the P.W0 rebaseline).
-- `npm test`—PASS (32 files / 361 tests; surface-lock test in `tests/public-surface.spec.ts` updated to include the 4 new dock-context runtime symbols).
+-   `npm run typecheck`—PASS (zero diagnostics).
+-   `NODE_OPTIONS=--max-old-space-size=8192 npm run build`—PASS.
+-   `npm run verify-export-types`—PASS (all targets + type resolutions valid).
+-   `npm run profile:budget`—PASS (CSS 38_006 / 42_000 raw = 90.5%; gzip 7_094 / 7_400 = 95.9%—comfortably under the P.W0 rebaseline).
+-   `npm test`—PASS (32 files / 361 tests; surface-lock test in `tests/public-surface.spec.ts` updated to include the 4 new dock-context runtime symbols).
 
 ### Inheritance ledger absorbed at W1
 
-| P ID | Item | Status |
-|---|---|---|
-| Pα B2 / Pγ.1 | AB+1 cohort skipped Props-export canon | ADDRESSED (Lane A—7 promotions) |
-| Pγ (Rγ baseline) | StackedIconGroupProps missed at O.W4 | ADDRESSED (Lane A—1 promotion) |
-| P11/b CR-2-prereq | Dock subpath does not publish DI helpers | ADDRESSED (Lane B) |
-| Pα A7-x + A9-x | 2 cosmetic "legacy" comments | ADDRESSED (Lane C) |
-
+| P ID              | Item                                     | Status                          |
+| ----------------- | ---------------------------------------- | ------------------------------- |
+| Pα B2 / Pγ.1      | AB+1 cohort skipped Props-export canon   | ADDRESSED (Lane A—7 promotions) |
+| Pγ (Rγ baseline)  | StackedIconGroupProps missed at O.W4     | ADDRESSED (Lane A—1 promotion)  |
+| P11/b CR-2-prereq | Dock subpath does not publish DI helpers | ADDRESSED (Lane B)              |
+| Pα A7-x + A9-x    | 2 cosmetic "legacy" comments             | ADDRESSED (Lane C)              |
 
 ## 1.7.0—2026-05-14—AB+1 substrate cohort (speedtest AC.W8e); P.W0 Lane B ceremonial tag
 
@@ -641,79 +665,85 @@ The `package.json` bump landed at commit `b201b03` without a git tag; **P.W0 Lan
 
 **New primitives**:
 
-- `<MetricCell>`—compact metric card (icon-on-label, stacked value + unit) on a wash-tier glass surface. Promoted from speedtest's `<ResultDetailSheet>` 4-card grid; the 11-class glass-wash + p-3 + text-mono-prose composition becomes one prop-driven consume. Three appearance variants: `dashboard` (default, wash + p-3 + `text-mono-prose`), `compact` (wash + p-2 + `text-mono-small`), `bare` (no surface; consumers host inside a pre-styled panel). Subpath: `@mkbabb/glass-ui/metric-cell`.
+-   `<MetricCell>`—compact metric card (icon-on-label, stacked value + unit) on a wash-tier glass surface. Promoted from speedtest's `<ResultDetailSheet>` 4-card grid; the 11-class glass-wash + p-3 + text-mono-prose composition becomes one prop-driven consume. Three appearance variants: `dashboard` (default, wash + p-3 + `text-mono-prose`), `compact` (wash + p-2 + `text-mono-small`), `bare` (no surface; consumers host inside a pre-styled panel). Subpath: `@mkbabb/glass-ui/metric-cell`.
 
-- `<ResponsiveTabs>`—single consume that swaps between `<Select>` (mobile) and `<UnderlineTabs>` (desktop) via `window.matchMedia` at a configurable breakpoint (default `640px` = Tailwind `sm:`). Promoted from speedtest's 3-site duplicated mobile-Select / desktop-UnderlineTabs pair (AdminDataView, AdminDashboardLayout, PublicDashboardLayout). Accepts `desktopOptions` for the cases where a tab is mobile-only (e.g. an inline-filters tab that lives in a desktop sidebar). Subpath: `@mkbabb/glass-ui/responsive-tabs`.
+-   `<ResponsiveTabs>`—single consume that swaps between `<Select>` (mobile) and `<UnderlineTabs>` (desktop) via `window.matchMedia` at a configurable breakpoint (default `640px` = Tailwind `sm:`). Promoted from speedtest's 3-site duplicated mobile-Select / desktop-UnderlineTabs pair (AdminDataView, AdminDashboardLayout, PublicDashboardLayout). Accepts `desktopOptions` for the cases where a tab is mobile-only (e.g. an inline-filters tab that lives in a desktop sidebar). Subpath: `@mkbabb/glass-ui/responsive-tabs`.
 
 **Variant addition**:
 
-- `<ToggleGroupItem variant="card">`—extends the CVA `variant` union with a `card` register that bakes the glass-card surface (hover-quiet fill, `data-state="on"` selected fill + border + shadow, `active:scale-95` press, focus ring). Promoted from speedtest's `<FlowSelector>` 17-class glass-card recipe; consumers reach for the variant rather than re-declaring the surface at each call site. Composes with the existing glass-token cascade (`--glass-bg-quiet`, `--glass-border-quiet`, `--glass-shadow-quiet`) so retinting flows through tokens rather than per-consumer Tailwind utility overrides.
+-   `<ToggleGroupItem variant="card">`—extends the CVA `variant` union with a `card` register that bakes the glass-card surface (hover-quiet fill, `data-state="on"` selected fill + border + shadow, `active:scale-95` press, focus ring). Promoted from speedtest's `<FlowSelector>` 17-class glass-card recipe; consumers reach for the variant rather than re-declaring the surface at each call site. Composes with the existing glass-token cascade (`--glass-bg-quiet`, `--glass-border-quiet`, `--glass-shadow-quiet`) so retinting flows through tokens rather than per-consumer Tailwind utility overrides.
 
 ### Changed—`src/components/ui/toggle/index.ts`
 
-- `toggleVariants` CVA gains the `card` entry under the `variant` union. Existing `default` and `outline` variants unchanged; no consumer regression on the existing variants (CVA's default-variant resolution preserves prior behaviour for omitted `variant=` consumers).
+-   `toggleVariants` CVA gains the `card` entry under the `variant` union. Existing `default` and `outline` variants unchanged; no consumer regression on the existing variants (CVA's default-variant resolution preserves prior behaviour for omitted `variant=` consumers).
 
 ### Added—`src/components/custom/metric-cell/`
 
-- `MetricCell.vue` + `index.ts` + the `metric-cell.ts` flat subpath barrel.
+-   `MetricCell.vue` + `index.ts` + the `metric-cell.ts` flat subpath barrel.
 
 ### Added—`src/components/custom/responsive-tabs/`
 
-- `ResponsiveTabs.vue` + `index.ts` + the `responsive-tabs.ts` flat subpath barrel.
+-   `ResponsiveTabs.vue` + `index.ts` + the `responsive-tabs.ts` flat subpath barrel.
 
 ### Added—`package.json` + `vite.library.ts`
 
-- New `./metric-cell` and `./responsive-tabs` entries in `exports` + `typesVersions`; new entries in `libraryEntries()` so Vite builds the dist artefacts.
+-   New `./metric-cell` and `./responsive-tabs` entries in `exports` + `typesVersions`; new entries in `libraryEntries()` so Vite builds the dist artefacts.
 
 ### Verification
 
-- `npm run typecheck`—PASS.
-- `npm run build`—PASS (44 entry chunks emitted; v1.7.0 adds `metric-cell.{js,d.ts}` + `responsive-tabs.{js,d.ts}`).
+-   `npm run typecheck`—PASS.
+-   `npm run build`—PASS (44 entry chunks emitted; v1.7.0 adds `metric-cell.{js,d.ts}` + `responsive-tabs.{js,d.ts}`).
 
 ### Consumer adoption
 
 speedtest's AC.W8e wave consumes the trio at:
-- `<FlowSelector>` migrates to `<ToggleGroupItem variant="card">` (17 → 0 consumer classes on the surface).
-- `<ResultDetailSheet>` 4 sites consume `<MetricCell>` direct (44 → 0 consumer classes on the cards).
-- `<AdminDataView>` + `<AdminDashboardLayout>` + `<PublicDashboardLayout>` 3 sites consume `<ResponsiveTabs>` (dual sm:hidden / hidden sm:block mounts → single matchMedia-driven consume).
+
+-   `<FlowSelector>` migrates to `<ToggleGroupItem variant="card">` (17 → 0 consumer classes on the surface).
+-   `<ResultDetailSheet>` 4 sites consume `<MetricCell>` direct (44 → 0 consumer classes on the cards).
+-   `<AdminDataView>` + `<AdminDashboardLayout>` + `<PublicDashboardLayout>` 3 sites consume `<ResponsiveTabs>` (dual sm:hidden / hidden sm:block mounts → single matchMedia-driven consume).
 
 ### P.W0 Lane C—doc-counter resync + bundle-budget rebaseline
 
 The AB+1 cohort accumulated documentation drift across CLAUDE.md, `src/index.ts`, and `src/api/index.ts` because the per-tag releases (v1.5.0 / v1.5.1 / v1.6.0 / v1.7.0) shipped without a `docs/tranches/<LETTER>/` plan folder—the third K-invariant-3 shadow-execution recurrence (V → AB → AB+1). P.W0 Lane A authors the retrospective; Lane C resyncs the counters.
 
 Doc-counter fixes:
-- `CLAUDE.md:20`—`/api` surface "53 canonical public symbols (49 types + 4 constants)" → "55 canonical public symbols (51 types + 4 constants)" (the 2-type drift surfaced at the P-open Pγ audit).
-- `CLAUDE.md:72`—custom-package dir count "31" → "35" (AB+1 added `animated-digit/`, `metric-cell/`, `metric-stack/`, `responsive-tabs/`).
-- `CLAUDE.md:195` + `:243`—subpath count "38 flat JS subpaths" → "42"; "39 entries total" → "43"; "v1.4.0 ships" → "v1.7.0 ships". Directory tree gains the 4 AB+1 custom-package entries.
-- `src/index.ts:52`—"30 packages in `src/components/custom/`" → "35 packages"; "the other 23 reach consumers ONLY via their dedicated subpath" → "the other 28".
-- `src/api/index.ts`—adds a P.W0 Lane C resync block documenting the canonical at-HEAD surface count (55 / 51 types + 4 constants).
-- Historical CHANGELOG entries at v1.0.0 + v1.0.5 + v1.3.0—"8 constants" arithmetic typos corrected with editorial notes per P invariant 28 FIX-WITH-NOTE.
+
+-   `CLAUDE.md:20`—`/api` surface "53 canonical public symbols (49 types + 4 constants)" → "55 canonical public symbols (51 types + 4 constants)" (the 2-type drift surfaced at the P-open Pγ audit).
+-   `CLAUDE.md:72`—custom-package dir count "31" → "35" (AB+1 added `animated-digit/`, `metric-cell/`, `metric-stack/`, `responsive-tabs/`).
+-   `CLAUDE.md:195` + `:243`—subpath count "38 flat JS subpaths" → "42"; "39 entries total" → "43"; "v1.4.0 ships" → "v1.7.0 ships". Directory tree gains the 4 AB+1 custom-package entries.
+-   `src/index.ts:52`—"30 packages in `src/components/custom/`" → "35 packages"; "the other 23 reach consumers ONLY via their dedicated subpath" → "the other 28".
+-   `src/api/index.ts`—adds a P.W0 Lane C resync block documenting the canonical at-HEAD surface count (55 / 51 types + 4 constants).
+-   Historical CHANGELOG entries at v1.0.0 + v1.0.5 + v1.3.0—"8 constants" arithmetic typos corrected with editorial notes per P invariant 28 FIX-WITH-NOTE.
 
 CSS bundle-budget rebaseline (`scripts/profile-bundle.mjs`):
-- Prior baseline: 36_000 raw / 6_700 gzip (N.W0 v1.1.1 rebaseline against the AB tranche additions).
-- Current draw at v1.7.0: 38_006 raw / 7_096 gzip—over both budgets due to AC.W6b OFL font face declarations + AC.W6c phase-color-label cascade + AC.W6d timeline `::before` 44×44 + MetricRow/Stack/AnimatedDigit recipes + AC.W8e MetricCell + ResponsiveTabs + ToggleGroupItem card variant + the `--continuous-fill-opacity` cascade (commit `b8a61ec`).
-- New baseline: 42_000 raw / 7_400 gzip (≈ 10 % headroom).
-- Rebaseline rationale captured inline in `scripts/profile-bundle.mjs`.
 
+-   Prior baseline: 36_000 raw / 6_700 gzip (N.W0 v1.1.1 rebaseline against the AB tranche additions).
+-   Current draw at v1.7.0: 38_006 raw / 7_096 gzip—over both budgets due to AC.W6b OFL font face declarations + AC.W6c phase-color-label cascade + AC.W6d timeline `::before` 44×44 + MetricRow/Stack/AnimatedDigit recipes + AC.W8e MetricCell + ResponsiveTabs + ToggleGroupItem card variant + the `--continuous-fill-opacity` cascade (commit `b8a61ec`).
+-   New baseline: 42_000 raw / 7_400 gzip (≈ 10 % headroom).
+-   Rebaseline rationale captured inline in `scripts/profile-bundle.mjs`.
 
 ## 1.6.0—2026-05-14—primitive expansions cohort (speedtest AC.W6d)
 
 Minor-level expansion shipping three new custom primitives + a WCAG 2.5.5 hit-area gestalt-fix + a documented custom-prop cascade pattern.
 
 **New primitives**:
-- `<MetricRow>`—single-metric row with phase-color binding + value/unit/state subgrid contract. Speedtest's per-metric callsites collapse onto this primitive instead of re-rolling the row interior at each consumer.
-- `<MetricStack>`—4-track subgrid composer of `<MetricRow>` children. Owns the inline-size container, the `--result-row-scale` knob, and row min-block-size pre-allocation. Optional `as` prop renders as `<TransitionGroup>` for per-row enter/leave while preserving the immediate-child subgrid contract.
-- `<AnimatedDigit>`—keyframes.js-backed digit animator with the speedtest-canonical hero clamp shape (single hard ceiling, decimal-place-aware).
+
+-   `<MetricRow>`—single-metric row with phase-color binding + value/unit/state subgrid contract. Speedtest's per-metric callsites collapse onto this primitive instead of re-rolling the row interior at each consumer.
+-   `<MetricStack>`—4-track subgrid composer of `<MetricRow>` children. Owns the inline-size container, the `--result-row-scale` knob, and row min-block-size pre-allocation. Optional `as` prop renders as `<TransitionGroup>` for per-row enter/leave while preserving the immediate-child subgrid contract.
+-   `<AnimatedDigit>`—keyframes.js-backed digit animator with the speedtest-canonical hero clamp shape (single hard ceiling, decimal-place-aware).
 
 **Hit-area + touch-target**:
-- Timeline + dock primitives now ship a `::before { inset: -15px }` hit-area extension so the underlying interactive element passes WCAG 2.5.5 (44×44 exact) without changing visual geometry. The -15px inset is the gestalt fix (speedtest AC-r3-r-3 §14 confirmed -14px from F2 audit yielded 42×42 off-by-one).
+
+-   Timeline + dock primitives now ship a `::before { inset: -15px }` hit-area extension so the underlying interactive element passes WCAG 2.5.5 (44×44 exact) without changing visual geometry. The -15px inset is the gestalt fix (speedtest AC-r3-r-3 §14 confirmed -14px from F2 audit yielded 42×42 off-by-one).
 
 **Custom-prop cascade pattern**:
-- DESIGN.md now documents the canonical `:deep`-retire pattern: primitives expose `--<primitive>-<token>` CSS custom properties at their root; consumers retint via the root CSS variable rather than reaching inside scoped styles. The pattern lets the consumer surface stay shallow + decoupled from the primitive's internal selector tree.
+
+-   DESIGN.md now documents the canonical `:deep`-retire pattern: primitives expose `--<primitive>-<token>` CSS custom properties at their root; consumers retint via the root CSS variable rather than reaching inside scoped styles. The pattern lets the consumer surface stay shallow + decoupled from the primitive's internal selector tree.
 
 **Residual** (deferred to AC.W8c / W6d-residual or AC+1):
-- `<ChassisCard>`, `<ProgressSegment>`, `<DataTableWithActions>`, `<ConfirmDialog>` enhancements
-- `(pointer: coarse)` media-query touch-target augmentation
+
+-   `<ChassisCard>`, `<ProgressSegment>`, `<DataTableWithActions>`, `<ConfirmDialog>` enhancements
+-   `(pointer: coarse)` media-query touch-target augmentation
 
 ## 1.5.1—2026-05-14—chassis `--phase-color-label` cascade (speedtest AC.W6c)
 
@@ -728,21 +758,21 @@ through the canvas hue when the consumer hasn't migrated yet.
 
 ### Changed—`src/styles/instrument-chassis.css`
 
-- Idle defaults declare `--phase-color-label: var(--muted-foreground)`
-  alongside the existing `--phase-color` default—symmetric pair at
-  rest.
-- `data-phase="{ping,download,upload}"` cascade adds the parallel
-  `--phase-color-label: var(--chart-{phase}-label, var(--chart-{phase}, ...))`
-  declaration so each phase retints both registers in a single CSS
-  mutation.
-- `data-phase="complete"` routes the label to `--color-gold-dark`
-  (the darker rung of the gold trio) so the post-complete "Complete!"
-  headline tinting clears body-text contrast against the light card.
+-   Idle defaults declare `--phase-color-label: var(--muted-foreground)`
+    alongside the existing `--phase-color` default—symmetric pair at
+    rest.
+-   `data-phase="{ping,download,upload}"` cascade adds the parallel
+    `--phase-color-label: var(--chart-{phase}-label, var(--chart-{phase}, ...))`
+    declaration so each phase retints both registers in a single CSS
+    mutation.
+-   `data-phase="complete"` routes the label to `--color-gold-dark`
+    (the darker rung of the gold trio) so the post-complete "Complete!"
+    headline tinting clears body-text contrast against the light card.
 
 ### Verification
 
-- `npm run typecheck`—PASS.
-- `npm test`—348 / 30 green (no behavioural delta).
+-   `npm run typecheck`—PASS.
+-   `npm test`—348 / 30 green (no behavioural delta).
 
 ### Consumer adoption
 
@@ -767,9 +797,9 @@ change (typography.css + `src/fonts/`), zero primitive churn.
 Plus Jakarta Sans (Tokotype / Gumpita Rahayu, OFL 1.1) ships as the
 canonical brand display sans family at `src/fonts/plus-jakarta-sans/`:
 
-- `plus-jakarta-sans-latin.woff2`—27 KB variable (wght 200..800)
-- `plus-jakarta-sans-latin-ext.woff2`—22 KB variable (wght 200..800)
-- `OFL.txt`—SIL Open Font License 1.1 attribution
+-   `plus-jakarta-sans-latin.woff2`—27 KB variable (wght 200..800)
+-   `plus-jakarta-sans-latin-ext.woff2`—22 KB variable (wght 200..800)
+-   `OFL.txt`—SIL Open Font License 1.1 attribution
 
 Plus Jakarta Sans was selected per speedtest's AC.W6b 5-way visual-
 fidelity test against the pre-substitution General Sans baseline at
@@ -792,12 +822,12 @@ swap from fallback to primary is geometry-neutral, zero CLS contribution.
 Capsize calibration (per `@capsizecss/core` against the bundled latin
 woff2; receipts in `docs/tranches/AC/artefacts/W6b/`):
 
-| Fallback         | size-adjust | ascent-override | descent-override |
-|------------------|-------------|-----------------|------------------|
-| `-apple-system`  | 112.3639%   | 92.3784%        | 19.7572%         |
-| Segoe UI         | 105.5577%   | 98.3348%        | 21.0311%         |
-| Roboto           | 105.2101%   | 98.6597%        | 21.1006%         |
-| Arial            | 104.9796%   | 98.8763%        | 21.1470%         |
+| Fallback        | size-adjust | ascent-override | descent-override |
+| --------------- | ----------- | --------------- | ---------------- |
+| `-apple-system` | 112.3639%   | 92.3784%        | 19.7572%         |
+| Segoe UI        | 105.5577%   | 98.3348%        | 21.0311%         |
+| Roboto          | 105.2101%   | 98.6597%        | 21.1006%         |
+| Arial           | 104.9796%   | 98.8763%        | 21.1470%         |
 
 All four overrides sit within the W6b Triumvirate gate (0.95 ≤ size-
 adjust ≤ 1.13—the apple-system value is the upper edge because Plus
@@ -807,23 +837,24 @@ Jakarta Sans runs slightly wider than San Francisco at the same px).
 
 Fira Code (Nikita Prokopov, OFL 1.1) ships at `src/fonts/fira-code/`:
 
-- `fira-code-latin.woff2`—36 KB variable (wght 300..700)
-- `fira-code-latin-ext.woff2`—13 KB variable (wght 300..700)
-- `OFL.txt`—SIL Open Font License 1.1 attribution
+-   `fira-code-latin.woff2`—36 KB variable (wght 300..700)
+-   `fira-code-latin-ext.woff2`—13 KB variable (wght 300..700)
+-   `OFL.txt`—SIL Open Font License 1.1 attribution
 
 Fira Code retires the Google Fonts CDN round-trip from every glass-ui
 consumer (audit AC.W6b GU-FONT §1.1 measured ~258 ms wasted on desktop
-+ ~810 ms on mobile for the Fira Code CSS fetch). `font-display: swap`
-is preserved because Fira Code is post-LCP (mono-register admin labels
-+ tabular numerics render below the fold; FOUT is a minor visual blip,
-not a layout shift).
+
+-   ~810 ms on mobile for the Fira Code CSS fetch). `font-display: swap`
+    is preserved because Fira Code is post-LCP (mono-register admin labels
+-   tabular numerics render below the fold; FOUT is a minor visual blip,
+    not a layout shift).
 
 Capsize calibration:
 
-| Fallback                       | size-adjust | ascent-override | descent-override |
-|--------------------------------|-------------|-----------------|------------------|
-| SF Mono / Menlo / Consolas /   | 99.9837%    | 99.0161%        | 32.2052%         |
-| Courier New / Roboto Mono      |             |                 |                  |
+| Fallback                     | size-adjust | ascent-override | descent-override |
+| ---------------------------- | ----------- | --------------- | ---------------- |
+| SF Mono / Menlo / Consolas / | 99.9837%    | 99.0161%        | 32.2052%         |
+| Courier New / Roboto Mono    |             |                 |                  |
 
 size-adjust ≈ 1.00 means Fira Code's x-width matches the system mono
 exactly—the swap is geometrically transparent across the chain.
@@ -841,43 +872,44 @@ preamble documents the substrate canon + the Capsize methodology.
 
 `--font-stack-mono` (the theme-bridge token consumed by Tailwind's
 `font-mono` utility) now leads with the bundled `"Fira Code"` family
-+ the calibrated `"Fira Code Fallback"` face—every glass-ui consumer
-gets the self-hosted mono by default without any consumer-side wiring.
+
+-   the calibrated `"Fira Code Fallback"` face—every glass-ui consumer
+    gets the self-hosted mono by default without any consumer-side wiring.
 
 ### Changed—`DESIGN.md` `### Self-host font policy` section
 
 The W6a-r1 skeleton subsection (commit `4660a0d`) is replaced by the
 fully-populated v1.5.0 policy:
 
-- The Path D candidate matrix (5 candidates evaluated; Plus Jakarta
-  Sans selected with rationale).
-- The Capsize calibration methodology (`@capsizecss/core createFontStack`
-  against the bundled latin woff2; per-face size-adjust + ascent-
-  override + descent-override matrix).
-- The `font-display` policy (`optional` for LCP-critical display;
-  `swap` for post-LCP mono).
-- The license attribution + OFL.txt locations.
-- The forward-compatibility note: future tranches should not
-  re-introduce non-OFL display sans-serif at glass-ui (`feedback_fonts`
-  project-memory canon).
+-   The Path D candidate matrix (5 candidates evaluated; Plus Jakarta
+    Sans selected with rationale).
+-   The Capsize calibration methodology (`@capsizecss/core createFontStack`
+    against the bundled latin woff2; per-face size-adjust + ascent-
+    override + descent-override matrix).
+-   The `font-display` policy (`optional` for LCP-critical display;
+    `swap` for post-LCP mono).
+-   The license attribution + OFL.txt locations.
+-   The forward-compatibility note: future tranches should not
+    re-introduce non-OFL display sans-serif at glass-ui (`feedback_fonts`
+    project-memory canon).
 
 ### Compatibility
 
-- Speedtest AC.W6b retires the Fontshare CDN `<link>` + the "General
-  Sans Fallback" `@font-face` (now upstream as "Plus Jakarta Sans
-  Fallback") at `speedtest/index.html` + `speedtest/styles/style.css`.
-  Speedtest's consumer-side `tokens.css` overrides `--font-brand-sans`
-  to `"Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui,
-  sans-serif`—the brand-uniform-sans preset cascade routes display
-  + serif through this stack.
-- Other glass-ui consumers (the demo, downstream libraries) keep the
-  pre-existing Helvetica Neue default at `--font-stack-sans`; no
-  unrelated visual changes. The OFL face files are net-additive.
-- Bundle delta: ~98 KB woff2 across both families (lazy-loaded by
-  unicode-range; only the in-use subset transfers). Speedtest cohort
-  expects a net LCP improvement vs the prior Fontshare CDN path (no
-  third-party connect + handshake; font self-host inside the same
-  origin's HTTP/2 multiplex).
+-   Speedtest AC.W6b retires the Fontshare CDN `<link>` + the "General
+    Sans Fallback" `@font-face` (now upstream as "Plus Jakarta Sans
+    Fallback") at `speedtest/index.html` + `speedtest/styles/style.css`.
+    Speedtest's consumer-side `tokens.css` overrides `--font-brand-sans`
+    to `"Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui,
+sans-serif`—the brand-uniform-sans preset cascade routes display
+    -   serif through this stack.
+-   Other glass-ui consumers (the demo, downstream libraries) keep the
+    pre-existing Helvetica Neue default at `--font-stack-sans`; no
+    unrelated visual changes. The OFL face files are net-additive.
+-   Bundle delta: ~98 KB woff2 across both families (lazy-loaded by
+    unicode-range; only the in-use subset transfers). Speedtest cohort
+    expects a net LCP improvement vs the prior Fontshare CDN path (no
+    third-party connect + handshake; font self-host inside the same
+    origin's HTTP/2 multiplex).
 
 ## 1.4.1—2026-05-14—O.W7 close (13-lane audit fan-out + γ BLOCKER absorb + FINAL.md)
 
@@ -889,38 +921,39 @@ waves within the V7 dual-ceiling.
 
 The W6 close commit `25e1b5a` shipped `dist/header-ribbon.js` but the
 W6 Lane A proof doc's claim that `package.json.exports["./header-ribbon"]`
-+ `typesVersions["*"]["header-ribbon"]` writes landed was vacuous —
-the integration missed both entries. `verify-export-types` reported
-PASS because it enumerates `package.json.exports` and skipped the
-unwired subpath. External consumers at v1.4.0 attempting
-`import { HeaderRibbon } from "@mkbabb/glass-ui/header-ribbon"` would
-have failed with `ERR_PACKAGE_PATH_NOT_EXPORTED`.
+
+-   `typesVersions["*"]["header-ribbon"]` writes landed was vacuous —
+    the integration missed both entries. `verify-export-types` reported
+    PASS because it enumerates `package.json.exports` and skipped the
+    unwired subpath. External consumers at v1.4.0 attempting
+    `import { HeaderRibbon } from "@mkbabb/glass-ui/header-ribbon"` would
+    have failed with `ERR_PACKAGE_PATH_NOT_EXPORTED`.
 
 This is a regression of L invariant 7 (subpath publication binary)
 that O.W5 Lane B+D specifically retired the env-gate to prevent. The
 W7 γ audit caught it; β audit independently corroborated; absorbed
 inline at W7 close. Verified post-absorb:
 
-- `package.json.exports["./header-ribbon"]` present (development +
-  types + import targets).
-- `package.json.typesVersions["*"]["header-ribbon"]` present.
-- `dist/header-ribbon.d.ts` now emitted (1.7 KB).
-- `verify-export-types` PASS (all 39 exports including
-  `/header-ribbon` resolve).
+-   `package.json.exports["./header-ribbon"]` present (development +
+    types + import targets).
+-   `package.json.typesVersions["*"]["header-ribbon"]` present.
+-   `dist/header-ribbon.d.ts` now emitted (1.7 KB).
+-   `verify-export-types` PASS (all 39 exports including
+    `/header-ribbon` resolve).
 
 ### Fixed—Doc-counter drifts (γ MINORs)
 
-- `CLAUDE.md:20` /api symbol count refreshed: "32 canonical public
-  symbols" → "53 canonical public symbols (49 types + 4 constants)".
-- `CLAUDE.md:72` custom-package count: 30 → 31 (header-ribbon added).
-- `CLAUDE.md:168` subpath count: "23 remaining custom packages" → 24
-  (`/header-ribbon` added).
-- `CLAUDE.md:243` subpath count: "37 flat JS subpaths" → 38 (post
-  header-ribbon).
-- `src/api/index.ts` preamble arithmetic: "29 types + 8 constants" →
-  "33 types + 4 constants" (M.W2 typo); "41 types + 8 constants" →
-  "45 types + 4 constants" (O.W4 typo). Added O.W6 promotion note:
-  surface count 49 → 53 (49 types + 4 constants).
+-   `CLAUDE.md:20` /api symbol count refreshed: "32 canonical public
+    symbols" → "53 canonical public symbols (49 types + 4 constants)".
+-   `CLAUDE.md:72` custom-package count: 30 → 31 (header-ribbon added).
+-   `CLAUDE.md:168` subpath count: "23 remaining custom packages" → 24
+    (`/header-ribbon` added).
+-   `CLAUDE.md:243` subpath count: "37 flat JS subpaths" → 38 (post
+    header-ribbon).
+-   `src/api/index.ts` preamble arithmetic: "29 types + 8 constants" →
+    "33 types + 4 constants" (M.W2 typo); "41 types + 8 constants" →
+    "45 types + 4 constants" (O.W4 typo). Added O.W6 promotion note:
+    surface count 49 → 53 (49 types + 4 constants).
 
 ### Documented—FINAL.md
 
@@ -932,46 +965,46 @@ to O-directives O1-O18 + named-destination per carry-forward to P.
 
 7 strengthened audit lanes:
 
-- α plan-vs-actual: CLEAN.
-- β substrate-without-consumer: MINOR-flags (1 BLOCKER → absorbed
-  inline + 4 single-consumer flags → P carry).
-- γ doc-drift: 1 BLOCKER + 5 MINORs → all absorbed inline except γ-M5
-  (frozen historical CHANGELOG entry → P-deferral acceptable).
-- δ idiomatic-gestalt: CLEAN with MINORs (P carry).
-- ε performance: FAVOURABLE-NEUTRAL (build-time −80ms; CSS budget
-  rebaseline candidate at P).
-- π visual-runtime: TOOLING-DEFERRED (Chrome MCP not connected; 2nd
-  consecutive deferral; P escalation flagged).
-- ι integrity-sweep: CLEAN (zero orphan stash; zero unauthorized
-  commits; precept submodule advance authorized; cross-constellation
-  reflog scan green).
+-   α plan-vs-actual: CLEAN.
+-   β substrate-without-consumer: MINOR-flags (1 BLOCKER → absorbed
+    inline + 4 single-consumer flags → P carry).
+-   γ doc-drift: 1 BLOCKER + 5 MINORs → all absorbed inline except γ-M5
+    (frozen historical CHANGELOG entry → P-deferral acceptable).
+-   δ idiomatic-gestalt: CLEAN with MINORs (P carry).
+-   ε performance: FAVOURABLE-NEUTRAL (build-time −80ms; CSS budget
+    rebaseline candidate at P).
+-   π visual-runtime: TOOLING-DEFERRED (Chrome MCP not connected; 2nd
+    consecutive deferral; P escalation flagged).
+-   ι integrity-sweep: CLEAN (zero orphan stash; zero unauthorized
+    commits; precept submodule advance authorized; cross-constellation
+    reflog scan green).
 
 6 consumer re-audit lanes:
 
-- O11/a words/frontend: CLEAN (builds at v1.4.0).
-- O11/b fourier-analysis: MINOR (2 silent legacy dock-key injects;
-  carry to P).
-- O11/c bbnf-buddy: CLEAN (dock-DI binary-transparent verified).
-- O11/d keyframes.js: CLEAN.
-- O11/e value.js: BLOCKER (consumer-side; pre-existing avatar typo +
-  2 silent dock-key injects; value.js on WIP branch—READER-ONLY at
-  O per CONSTELLATION.md; carry to P cross-repo wave).
-- O11/f speedtest: CLEAN (A5 wire intact; AC.W6 cohort handoff
-  complete; 1 deliverable [Fira Code woff2] pending orchestrator
-  network-fetch).
+-   O11/a words/frontend: CLEAN (builds at v1.4.0).
+-   O11/b fourier-analysis: MINOR (2 silent legacy dock-key injects;
+    carry to P).
+-   O11/c bbnf-buddy: CLEAN (dock-DI binary-transparent verified).
+-   O11/d keyframes.js: CLEAN.
+-   O11/e value.js: BLOCKER (consumer-side; pre-existing avatar typo +
+    2 silent dock-key injects; value.js on WIP branch—READER-ONLY at
+    O per CONSTELLATION.md; carry to P cross-repo wave).
+-   O11/f speedtest: CLEAN (A5 wire intact; AC.W6 cohort handoff
+    complete; 1 deliverable [Fira Code woff2] pending orchestrator
+    network-fetch).
 
 ### Verification
 
-- `npm run typecheck`—PASS.
-- `npm test`—348 / 30 green.
-- `npm run build`—659 modules; `dist/header-ribbon.{js,d.ts}` both
-  emit at v1.4.1.
-- `npm run profile:budget`—PASS (CSS 95.7% raw—rebaseline
-  candidate flagged for P).
-- `npm run verify-export-types`—PASS (39 exports including
-  `/header-ribbon`).
-- `git stash list`—empty across glass-ui + 6 consumer repos +
-  precept submodule.
+-   `npm run typecheck`—PASS.
+-   `npm test`—348 / 30 green.
+-   `npm run build`—659 modules; `dist/header-ribbon.{js,d.ts}` both
+    emit at v1.4.1.
+-   `npm run profile:budget`—PASS (CSS 95.7% raw—rebaseline
+    candidate flagged for P).
+-   `npm run verify-export-types`—PASS (39 exports including
+    `/header-ribbon`).
+-   `git stash list`—empty across glass-ui + 6 consumer repos +
+    precept submodule.
 
 ## 1.4.0—2026-05-14—O.W6 HEADLINE (constellation-level substrate promotions + speedtest AC.W6 cohort)
 
@@ -1039,28 +1072,28 @@ Six glass-ui-side primitives unblock speedtest's AC.W6 tranche:
 2. **`.text-hero` utility hoist** (`src/styles/typography.css`)—3
    consumer-tunable knobs.
 3. **WCAG `--chart-{phase}-label` companions** (`src/styles/tokens.css`)
-  —4 light tokens at OKLCH L≈0.40 + 4 dark companions at L≈0.85.
+   —4 light tokens at OKLCH L≈0.40 + 4 dark companions at L≈0.85.
 4. **`--meter-track-stroke` dark fix** (`src/styles/tokens.css`) —
    promoted from speedtest's broken consumer-side declaration; both
    light + dark now read `var(--foreground)` (was `var(--background)`
    at dark; bg-on-bg invisible).
 5. **`<IconTooltip>` 44×44 hit-area**—slot wrapped in `<span
-   class="icon-tooltip-trigger">` with `--icon-tooltip-hit-area` knob.
+class="icon-tooltip-trigger">` with `--icon-tooltip-hit-area` knob.
 6. **Dock touch-target media-query** (`src/styles/dock.css`) —
    `@media (pointer: coarse)` lifts `--dock-control-size` +
    `--size-icon-btn` to `--dock-touch-target` (2.75rem / 44px).
 
 ### Verification
 
-- `npm run typecheck`—PASS.
-- `npm test`—348 / 30 green.
-- `npm run build`—659 modules (+8 from W6); `dist/header-ribbon.js`
-  2.61 KB / 1.00 KB gzip emitted as a new subpath chunk.
-- `npm run profile:budget`—PASS (raw 67.8% / 95.7%; gzip 69.0% /
-  94.4%). CSS budget tight at 95.7% raw—folded to W7 ε audit for
-  potential rebaseline.
-- `npm run verify-export-types`—PASS (new `/header-ribbon` subpath
-  resolves).
+-   `npm run typecheck`—PASS.
+-   `npm test`—348 / 30 green.
+-   `npm run build`—659 modules (+8 from W6); `dist/header-ribbon.js`
+    2.61 KB / 1.00 KB gzip emitted as a new subpath chunk.
+-   `npm run profile:budget`—PASS (raw 67.8% / 95.7%; gzip 69.0% /
+    94.4%). CSS budget tight at 95.7% raw—folded to W7 ε audit for
+    potential rebaseline.
+-   `npm run verify-export-types`—PASS (new `/header-ribbon` subpath
+    resolves).
 
 ### Cross-repo coordination
 
@@ -1068,18 +1101,18 @@ All four W6 promotions + the 6 AC.W6 dependencies ship on glass-ui
 only. Consumer-side adoption defers to user-authorized cross-repo
 waves per CONSTELLATION.md MULTI-WRITER policy:
 
-- value.js: 20 useClipboard sites + 155 LOC HeaderRibbon fork to
-  retire.
-- fourier-analysis: 1 inline useClipboard parallel.
-- keyframes.js: 13 `hover:scale-105` sites + 152 LOC HeaderRibbon fork.
-- bbnf-buddy: 7 `:deep()` escapes (3 absorbable).
-- speedtest: AC.W6 tranche unblocks at v1.4.0 dep bump.
+-   value.js: 20 useClipboard sites + 155 LOC HeaderRibbon fork to
+    retire.
+-   fourier-analysis: 1 inline useClipboard parallel.
+-   keyframes.js: 13 `hover:scale-105` sites + 152 LOC HeaderRibbon fork.
+-   bbnf-buddy: 7 `:deep()` escapes (3 absorbable).
+-   speedtest: AC.W6 tranche unblocks at v1.4.0 dep bump.
 
 ### Open items for W7
 
-- Fira Code woff2 binaries: orchestrator runs `curl` fetch step at
-  integration before tag (per `src/fonts/README.md`).
-- CSS budget headroom (95.7% raw): rebaseline candidate at W7 ε.
+-   Fira Code woff2 binaries: orchestrator runs `curl` fetch step at
+    integration before tag (per `src/fonts/README.md`).
+-   CSS budget headroom (95.7% raw): rebaseline candidate at W7 ε.
 
 ## 1.3.1—2026-05-14—O.W5 (pipeline orchestration consolidation)
 
@@ -1097,25 +1130,25 @@ folded to P-tranche candidate.
 
 ### Changed—`release.sh` single-source-of-truth (Lane B+D)
 
-- `verify-export-types` is unconditional (env-gate `GLASS_UI_RELEASE_SURFACE_GUARD`
-  retired; L.W0 Lane III invariant).
-- Hardcoded 7-subpath bash probe loop dropped—superseded by
-  `verify-export-types.mjs` (enumerates all 38 subpaths from
-  `package.json.exports`).
-- `npm test` ownership consolidated to `prepublishOnly`—no longer
-  invoked from `release.sh`.
-- `npm run profile:budget` added to the unconditional gate matrix.
-- Build step inside `release.sh` runs with
-  `NODE_OPTIONS=--max-old-space-size=8192` (the vite:dts plugin's
-  pre-existing OOM at default 4GB heap; orchestrator absorb at
-  integration).
+-   `verify-export-types` is unconditional (env-gate `GLASS_UI_RELEASE_SURFACE_GUARD`
+    retired; L.W0 Lane III invariant).
+-   Hardcoded 7-subpath bash probe loop dropped—superseded by
+    `verify-export-types.mjs` (enumerates all 38 subpaths from
+    `package.json.exports`).
+-   `npm test` ownership consolidated to `prepublishOnly`—no longer
+    invoked from `release.sh`.
+-   `npm run profile:budget` added to the unconditional gate matrix.
+-   Build step inside `release.sh` runs with
+    `NODE_OPTIONS=--max-old-space-size=8192` (the vite:dts plugin's
+    pre-existing OOM at default 4GB heap; orchestrator absorb at
+    integration).
 
 Canonical gate matrix:
 
-| Owner | Steps |
-|---|---|
-| `release.sh` | typecheck → build (heap-bumped) → verify-export-types → profile:budget → tag |
-| `prepublishOnly` | build + test |
+| Owner            | Steps                                                                        |
+| ---------------- | ---------------------------------------------------------------------------- |
+| `release.sh`     | typecheck → build (heap-bumped) → verify-export-types → profile:budget → tag |
+| `prepublishOnly` | build + test                                                                 |
 
 Net duplication: `test` 2× → 1×; `build` remains 2× with documented
 rationale (release.sh build is prerequisite for the
@@ -1156,13 +1189,13 @@ step's output is reused).
 
 ### Verification
 
-- `npm run typecheck`—PASS.
-- `npm test`—348 / 30 green.
-- `npm run build`—652 modules (+1 from `freshness-walk.mjs`).
-- `npm run profile:budget`—PASS (raw 67.3% / 93.3%; gzip 68.1% /
-  91.7%).
-- `npm run verify-export-types`—PASS.
-- `bash -n scripts/release.sh`—SYNTAX OK.
+-   `npm run typecheck`—PASS.
+-   `npm test`—348 / 30 green.
+-   `npm run build`—652 modules (+1 from `freshness-walk.mjs`).
+-   `npm run profile:budget`—PASS (raw 67.3% / 93.3%; gzip 68.1% /
+    91.7%).
+-   `npm run verify-export-types`—PASS.
+-   `bash -n scripts/release.sh`—SYNTAX OK.
 
 ## 1.3.0—2026-05-14—O.W4 (/api discovery gaps + leaky abstractions + service boundaries)
 
@@ -1178,13 +1211,13 @@ rename.
 
 Surface count 37 → 49 (41 types + 4 constants—historical arithmetic typo corrected at P.W0 Lane C; the constant count never changed from the 4 Aurora + Metaballs constants):
 
-- **Sidebar domain (6)**: `SidebarState`, `SidebarSection`,
-  `TreeNode`, `TreeIndexEntry`, `SidebarIndexEntry`,
-  `ScrollTrackerOptions`.
-- **Search domain (5)**: `SearchableItem`, `SearchResult`,
-  `FuzzySearchState`, `UseFuzzySearchOptions`, `SearchIndex`.
-- **Props/variants triad (3)**: `GlassPanelProps`, `ToastType`,
-  `MenuItemVariants`.
+-   **Sidebar domain (6)**: `SidebarState`, `SidebarSection`,
+    `TreeNode`, `TreeIndexEntry`, `SidebarIndexEntry`,
+    `ScrollTrackerOptions`.
+-   **Search domain (5)**: `SearchableItem`, `SearchResult`,
+    `FuzzySearchState`, `UseFuzzySearchOptions`, `SearchIndex`.
+-   **Props/variants triad (3)**: `GlassPanelProps`, `ToastType`,
+    `MenuItemVariants`.
 
 `MenuItemVariants` required a NEW `src/components/ui/_shared/index.ts`
 barrel—runtime-private; exists only so `/api` can pin the type from
@@ -1193,18 +1226,18 @@ runtime visibility is unchanged from pre-W4).
 
 ### Changed—Leaky abstraction fixes (Lane B)
 
-- `UseDockStateOptions` + `DockState` re-exported from
-  `src/components/custom/dock/index.ts`—consumers can now type
-  wrappers around `useDockState` via the published `@mkbabb/glass-ui/dock`
-  surface.
-- `UseAuroraReturn` interface authored; replaces the inline-typed
-  return literal of `useAurora`. Re-exported from the aurora package
-  barrel (not promoted to `/api` per the preamble's composable-return
-  exclusion).
-- `useDarkModeSync` renamed to `installDarkModeSync`—names the
-  side-effect plainly (installs a `watch`; returns `void`). The
-  `useFoo` contract implies a reactive return; this composable doesn't
-  satisfy that contract.
+-   `UseDockStateOptions` + `DockState` re-exported from
+    `src/components/custom/dock/index.ts`—consumers can now type
+    wrappers around `useDockState` via the published `@mkbabb/glass-ui/dock`
+    surface.
+-   `UseAuroraReturn` interface authored; replaces the inline-typed
+    return literal of `useAurora`. Re-exported from the aurora package
+    barrel (not promoted to `/api` per the preamble's composable-return
+    exclusion).
+-   `useDarkModeSync` renamed to `installDarkModeSync`—names the
+    side-effect plainly (installs a `watch`; returns `void`). The
+    `useFoo` contract implies a reactive return; this composable doesn't
+    satisfy that contract.
 
 ### Changed—`avatarVariant` → `avatarVariants` (Lane C)
 
@@ -1232,22 +1265,22 @@ but not authorized.
 
 ### Verification
 
-- `npm run typecheck`—PASS.
-- `npm test`—348 / 30 green.
-- `npm run build`—651 modules; declaration build (heap-bumped).
-- `npm run profile:budget`—PASS (raw 67.3% / 93.3%; gzip 68.1% /
-  91.7%).
-- `npm run verify-export-types`—PASS (all 12 new `/api` types
-  resolve from `dist/api.d.ts`).
+-   `npm run typecheck`—PASS.
+-   `npm test`—348 / 30 green.
+-   `npm run build`—651 modules; declaration build (heap-bumped).
+-   `npm run profile:budget`—PASS (raw 67.3% / 93.3%; gzip 68.1% /
+    91.7%).
+-   `npm run verify-export-types`—PASS (all 12 new `/api` types
+    resolve from `dist/api.d.ts`).
 
 ### Cross-repo coordination
 
 Both renames + the 12 type promotions defer their consumer-side
 adoption to O.W6 cross-repo cohort wave per CONSTELLATION.md:
 
-- `avatarVariant` rename—1 passthrough re-export site
-  (`value.js/demo/@/components/ui/avatar/`).
-- `useDarkModeSync` rename—3 sites in speedtest.
+-   `avatarVariant` rename—1 passthrough re-export site
+    (`value.js/demo/@/components/ui/avatar/`).
+-   `useDarkModeSync` rename—3 sites in speedtest.
 
 ## 1.2.3—2026-05-14—O.W3 (god-module cohesion splits)
 
@@ -1261,12 +1294,12 @@ cohesive sub-modules. Public API surfaces unchanged.
 continuous) become standalone SFCs. Shared geometry math lifts to
 `geometry.ts`.
 
-- `ScrubberTimeline.vue` (191)—`<GlassTimeline variant="scrubber">`.
-- `SegmentedTimeline.vue` (225)—`<GlassTimeline variant="segmented">`.
-- `ContinuousTimeline.vue` (607)—`<GlassTimeline variant="continuous">`;
-  preserves the non-scoped `<style>` block for HoverCardPortal per Rβ
-  contract.
-- `geometry.ts` (187)—shared math + factory functions.
+-   `ScrubberTimeline.vue` (191)—`<GlassTimeline variant="scrubber">`.
+-   `SegmentedTimeline.vue` (225)—`<GlassTimeline variant="segmented">`.
+-   `ContinuousTimeline.vue` (607)—`<GlassTimeline variant="continuous">`;
+    preserves the non-scoped `<style>` block for HoverCardPortal per Rβ
+    contract.
+-   `geometry.ts` (187)—shared math + factory functions.
 
 Consumer-side `<GlassTimeline variant="...">` renders identically.
 
@@ -1288,12 +1321,12 @@ refactor lives there; this lane was the structural split).
 
 5 concerns split across:
 
-- `demo/configurator/preset-editor/types.ts` (97)
-- `demo/configurator/preset-editor/defaults.ts` (90)
-- `demo/configurator/preset-editor/css-writers.ts` (53)
-- `demo/configurator/preset-editor/persistence.ts` (139)
-- `demo/configurator/preset-editor/stylesheet-swap.ts` (53)
-- `demo/configurator/preset-editor/store.ts` (313)
+-   `demo/configurator/preset-editor/types.ts` (97)
+-   `demo/configurator/preset-editor/defaults.ts` (90)
+-   `demo/configurator/preset-editor/css-writers.ts` (53)
+-   `demo/configurator/preset-editor/persistence.ts` (139)
+-   `demo/configurator/preset-editor/stylesheet-swap.ts` (53)
+-   `demo/configurator/preset-editor/store.ts` (313)
 
 `demo/configurator/usePresetEditor.ts` becomes a 24-LOC façade
 re-exporting the public surface through `./preset-editor/store`.
@@ -1301,13 +1334,13 @@ Demo-private; no library API impact.
 
 ### Verification
 
-- `npm run typecheck`—PASS.
-- `npm test`—348 / 30 green; 11 timeline-specific tests pass through
-  the new dispatcher.
-- `npm run build`—651 modules transformed (+9 from W3 splits).
-- `npm run profile:budget`—PASS (raw 67.3% / 93.3%; gzip 68.1% /
-  91.7%).
-- `npm run verify-export-types`—PASS.
+-   `npm run typecheck`—PASS.
+-   `npm test`—348 / 30 green; 11 timeline-specific tests pass through
+    the new dispatcher.
+-   `npm run build`—651 modules transformed (+9 from W3 splits).
+-   `npm run profile:budget`—PASS (raw 67.3% / 93.3%; gzip 68.1% /
+    91.7%).
+-   `npm run verify-export-types`—PASS.
 
 ## 1.2.2—2026-05-14—O.W2 HEADLINE (dock subsystem DI canonicalization)
 
@@ -1322,16 +1355,16 @@ optional consumer helpers. Net `provide()` call count in `GlassDock.vue`:
 
 `src/components/custom/dock/composables/dockContext.ts` gains:
 
-- `DOCK_CONTEXT_KEY: InjectionKey<DockContext>` (Symbol-based; not a
-  string).
-- Expanded `DockContext = { id, orientation, keepOpen, release, held }`
- —absorbs the 4 prior string-key provides (`dockKeepOpen`,
-  `dockRelease`, `dockHeld`, `glassDockId`); `dockExpanded`
-  PERMANENTLY RETIRED (rg-verified zero consumers per Rδ audit).
-- `useDockContext()`—strict; throws "called outside <GlassDock>"
-  when no parent provider exists.
-- `useOptionalDockContext()`—befitting silent default; returns
-  `DockContext | null`.
+-   `DOCK_CONTEXT_KEY: InjectionKey<DockContext>` (Symbol-based; not a
+    string).
+-   Expanded `DockContext = { id, orientation, keepOpen, release, held }`
+    —absorbs the 4 prior string-key provides (`dockKeepOpen`,
+    `dockRelease`, `dockHeld`, `glassDockId`); `dockExpanded`
+    PERMANENTLY RETIRED (rg-verified zero consumers per Rδ audit).
+-   `useDockContext()`—strict; throws "called outside <GlassDock>"
+    when no parent provider exists.
+-   `useOptionalDockContext()`—befitting silent default; returns
+    `DockContext | null`.
 
 DockLayer ↔ DockLayerGroup migration: new
 `src/components/custom/dock/composables/dockLayerContext.ts` with the
@@ -1344,16 +1377,16 @@ applying the same pattern.
 All five reach-into-dock-state sites migrate to
 `useOptionalDockContext()`:
 
-- `<Slider>` (Lane B): keep-dock-open + held-halo contract preserved;
-  callsites rewritten to `dock?.keepOpen()` / `dock?.release()` /
-  `dock?.held.value`.
-- `<HoverPopover>` (Lane C): 3 raw injects (`dockKeepOpen`,
-  `dockRelease`, `glassDockId`) consolidated into one
-  `useOptionalDockContext()` call.
-- `<PopoverContent>` / `<SelectContent>` / `<DropdownMenuContent>`
-  (Lane C): each migrate `inject("glassDockContext")` to
-  `useOptionalDockContext()`; portal-attribute access pattern
-  unchanged (`dockContext?.id`).
+-   `<Slider>` (Lane B): keep-dock-open + held-halo contract preserved;
+    callsites rewritten to `dock?.keepOpen()` / `dock?.release()` /
+    `dock?.held.value`.
+-   `<HoverPopover>` (Lane C): 3 raw injects (`dockKeepOpen`,
+    `dockRelease`, `glassDockId`) consolidated into one
+    `useOptionalDockContext()` call.
+-   `<PopoverContent>` / `<SelectContent>` / `<DropdownMenuContent>`
+    (Lane C): each migrate `inject("glassDockContext")` to
+    `useOptionalDockContext()`; portal-attribute access pattern
+    unchanged (`dockContext?.id`).
 
 ### Removed—5 transitional dual-provides (W2 close sweep)
 
@@ -1374,17 +1407,17 @@ toggleGroupContext.ts.
 
 ### Verification
 
-- `npm run typecheck`—PASS.
-- `npm test`—348 tests / 30 files green (no regression; cross-substrate
-  proof story `demo/stories/compositions/dock-with-slider.vue` renders
-  identically).
-- `npm run build`—642 modules transformed (+2 new context.ts files).
-- `npm run profile:budget`—PASS (raw 67.3% / 90.2%; gzip 68.1% /
-  90.7%).
-- `npm run verify-export-types`—PASS.
-- Residual string-key audit: zero `inject("dock*"|"glassDock*")` calls
-  in `src/`; remaining mentions are template refs, HTML data
-  attributes, and documentation cross-references.
+-   `npm run typecheck`—PASS.
+-   `npm test`—348 tests / 30 files green (no regression; cross-substrate
+    proof story `demo/stories/compositions/dock-with-slider.vue` renders
+    identically).
+-   `npm run build`—642 modules transformed (+2 new context.ts files).
+-   `npm run profile:budget`—PASS (raw 67.3% / 90.2%; gzip 68.1% /
+    90.7%).
+-   `npm run verify-export-types`—PASS.
+-   Residual string-key audit: zero `inject("dock*"|"glassDock*")` calls
+    in `src/`; remaining mentions are template refs, HTML data
+    attributes, and documentation cross-references.
 
 ### Cross-repo
 
@@ -1450,50 +1483,50 @@ for naming-convention parity. 21 test files now follow one shape.
 
 ### Verification
 
-- `npm run typecheck`—PASS.
-- `npm test`—348 tests / 30 files green (unchanged from N close).
-- `npm run build`—640 modules transformed; declaration build green
-  with bumped heap (`NODE_OPTIONS=--max-old-space-size=8192`; the
-  vite:dts heap-limit issue is pre-existing—folded to O.W5 Lane A
-  / E candidate).
-- `npm run profile:budget`—PASS (raw 67.2% / 90.2%; gzip 67.9% /
-  90.7%); bundle profile bit-identical to v1.2.0.
-- `npm run verify-export-types`—PASS.
+-   `npm run typecheck`—PASS.
+-   `npm test`—348 tests / 30 files green (unchanged from N close).
+-   `npm run build`—640 modules transformed; declaration build green
+    with bumped heap (`NODE_OPTIONS=--max-old-space-size=8192`; the
+    vite:dts heap-limit issue is pre-existing—folded to O.W5 Lane A
+    / E candidate).
+-   `npm run profile:budget`—PASS (raw 67.2% / 90.2%; gzip 67.9% /
+    90.7%); bundle profile bit-identical to v1.2.0.
+-   `npm run verify-export-types`—PASS.
 
 ## 1.2.0—2026-05-14—O.W0 (AB post-hoc plan folder + precept invariants 24-27 + cosmetic legacy excise)
 
 O tranche W0 HEADLINE. Three parallel lanes:
 
-- **Lane A**—AB tranche post-hoc plan folder authored at
-  `docs/tranches/AB/` (AB.md + 4 wave specs + FINAL.md + PROGRESS.md +
-  coordination/CONSTELLATION.md). Closes the K-invariant-3 shadow-execution
-  recurrence: AB shipped v1.0.5 → v1.1.0 with ~9 commits but no
-  `docs/tranches/AB/` plan folder; the retrospective traces every
-  commit + reconstructs the per-wave thesis (Living UI canon—chassis +
-  timeline + Pulse + Progress + dock-shadow).
-- **Lane B**—Precept submodule advanced `b8af314` → `46ee7e9`. Four
-  new invariants codified (24 fail-explicit on library-internal contract
-  violations; 25 typed-key + helper-pair DI canonical shape; 26 test-file
-  relocation outside src/; 27 tooling-side stash enforcement). LL entry
-  `2026-05-14 - Audit + DI + Test-Hygiene + Tooling-Stash` documents
-  origin in the O round-1 backend audit.
-- **Lane C**—7 src/ files: cosmetic legacy excise (Rα E1-E4 + K7-K9).
-  `probeWebGLSupport` alias retired (3 call-sites renamed to
-  `isWebGLSupported`); `freshness.ts` docstring rewritten to match the
-  actual single-pure-TS-walk impl; 5 "back-compat" comment rewords
-  across Pulse / Progress / GlassTimeline / LabeledField / Section /
-  composables/index.ts. Two surviving `back-compat` mentions
-  (`tokens.css:198`, `utilities.css:355`) are intentional explanatory
-  prose about design choices. Net −14 src/ LOC; comment-only.
+-   **Lane A**—AB tranche post-hoc plan folder authored at
+    `docs/tranches/AB/` (AB.md + 4 wave specs + FINAL.md + PROGRESS.md +
+    coordination/CONSTELLATION.md). Closes the K-invariant-3 shadow-execution
+    recurrence: AB shipped v1.0.5 → v1.1.0 with ~9 commits but no
+    `docs/tranches/AB/` plan folder; the retrospective traces every
+    commit + reconstructs the per-wave thesis (Living UI canon—chassis +
+    timeline + Pulse + Progress + dock-shadow).
+-   **Lane B**—Precept submodule advanced `b8af314` → `46ee7e9`. Four
+    new invariants codified (24 fail-explicit on library-internal contract
+    violations; 25 typed-key + helper-pair DI canonical shape; 26 test-file
+    relocation outside src/; 27 tooling-side stash enforcement). LL entry
+    `2026-05-14 - Audit + DI + Test-Hygiene + Tooling-Stash` documents
+    origin in the O round-1 backend audit.
+-   **Lane C**—7 src/ files: cosmetic legacy excise (Rα E1-E4 + K7-K9).
+    `probeWebGLSupport` alias retired (3 call-sites renamed to
+    `isWebGLSupported`); `freshness.ts` docstring rewritten to match the
+    actual single-pure-TS-walk impl; 5 "back-compat" comment rewords
+    across Pulse / Progress / GlassTimeline / LabeledField / Section /
+    composables/index.ts. Two surviving `back-compat` mentions
+    (`tokens.css:198`, `utilities.css:355`) are intentional explanatory
+    prose about design choices. Net −14 src/ LOC; comment-only.
 
 ### Verification
 
-- `npm run typecheck`—PASS.
-- `npm test`—348 tests / 30 files green.
-- `npm run build`—640 modules transformed; dist artefacts fresh.
-- `npm run profile:budget`—PASS for both raw (67.2% / 90.2%) and
-  gzip (67.9% / 90.7%). Bundle profile unchanged from N close (cosmetic
-  edits + plan-folder additions do not affect dist).
+-   `npm run typecheck`—PASS.
+-   `npm test`—348 tests / 30 files green.
+-   `npm run build`—640 modules transformed; dist artefacts fresh.
+-   `npm run profile:budget`—PASS for both raw (67.2% / 90.2%) and
+    gzip (67.9% / 90.7%). Bundle profile unchanged from N close (cosmetic
+    edits + plan-folder additions do not affect dist).
 
 ## 1.1.4 — 2026-05-14 — N close (13-audit fan-out + β absorbs + γ doc-drift fix + FINAL.md)
 
@@ -1513,16 +1546,17 @@ prior changelog would have authored invalid CSS. Fixed inline.
 ### Added — Pulse `variant="aura"` + Progress `variant="sectioned"` demo stories (β absorb)
 
 The β substrate-without-consumer audit caught that the AB.W3 Pulse-aura
-+ Progress-sectioned variants shipped without glass-ui-side demo
-consumers (the pulse + progress stories only exercised the pre-AB
-variants). N.W4 absorbs:
 
-- `demo/stories/primitives/pulse.vue` gains an "aura variant (ambient
-  halo)" story section showing 3 speed × 3 viz-basis colour cells.
-- `demo/stories/feedback/progress.vue` gains a "sectioned variant
-  (phase bus)" story section using `ProgressSegment[]` with 4 phases
-  (pings / jitter / download / upload) mirroring the speedtest
-  phase-bus pattern.
+-   Progress-sectioned variants shipped without glass-ui-side demo
+    consumers (the pulse + progress stories only exercised the pre-AB
+    variants). N.W4 absorbs:
+
+*   `demo/stories/primitives/pulse.vue` gains an "aura variant (ambient
+    halo)" story section showing 3 speed × 3 viz-basis colour cells.
+*   `demo/stories/feedback/progress.vue` gains a "sectioned variant
+    (phase bus)" story section using `ProgressSegment[]` with 4 phases
+    (pings / jitter / download / upload) mirroring the speedtest
+    phase-bus pattern.
 
 Closes the AB.W3 substrate-without-glass-ui-consumer gap; speedtest
 remains the canonical cross-constellation consumer.
@@ -1557,14 +1591,14 @@ visual exactly. The default is back-compatible at every consumer.
 New tokens (in `src/styles/tokens.css`):
 
 ```css
---configurator-row-gap-mobile:       0.25rem;
---configurator-row-gap-compact:      0.3125rem;
---configurator-row-gap-comfortable:  0.375rem;
---configurator-row-gap-spacious:     0.75rem;
---configurator-row-py-mobile:        0.25rem;
---configurator-row-py-compact:       0.375rem;
---configurator-row-py-comfortable:   0.5rem;
---configurator-row-py-spacious:      0.875rem;
+--configurator-row-gap-mobile: 0.25rem;
+--configurator-row-gap-compact: 0.3125rem;
+--configurator-row-gap-comfortable: 0.375rem;
+--configurator-row-gap-spacious: 0.75rem;
+--configurator-row-py-mobile: 0.25rem;
+--configurator-row-py-compact: 0.375rem;
+--configurator-row-py-comfortable: 0.5rem;
+--configurator-row-py-spacious: 0.875rem;
 ```
 
 ConfiguratorRow's scoped CSS binds each density rung via attribute
@@ -1597,7 +1631,8 @@ over-aurora to over-flat-bg).
 
 NO-OP for this wave. No token change; no cascade adjustment. Audit
 lands in `docs/tranches/N/audit/W2-Lane-B-dock-blur-N7-audit-proof.md`
-+ DESIGN.md for posterity.
+
+-   DESIGN.md for posterity.
 
 ## 1.1.2 — 2026-05-14 — N.W1 typography sweep + N-4 absorb + GlassPanel translucent + frosted canonical
 
@@ -1615,10 +1650,10 @@ canonical surface.
 `text-[0.6875rem]` literals replaced with the canonical `text-micro` semantic
 class across:
 
-- `src/components/custom/configurator/ConfiguratorRow.vue`
-- `src/components/custom/configurator/ConfiguratorLayer.vue`
-- `demo/configurator/PresetEditor.vue`
-- `demo/configurator/PresetEditorField.vue`
+-   `src/components/custom/configurator/ConfiguratorRow.vue`
+-   `src/components/custom/configurator/ConfiguratorLayer.vue`
+-   `demo/configurator/PresetEditor.vue`
+-   `demo/configurator/PresetEditorField.vue`
 
 The `@utility text-micro` already exists at `src/styles/typography.css:235`
 plus the Tailwind v4 `--text-micro` bridge at `src/styles/theme.css:14`;
@@ -1651,11 +1686,11 @@ defineExpose surface post-M.W2; the story still referenced the now-removed
 
 DESIGN.md `## Glass Surfaces` extended:
 
-- Five-tier table's `Resting` row's "Use" column notes
-  `<GlassPanel>` default canonicalisation.
-- New sub-section "Canonical translucent + frosted (N.W1 Lane A —
-  `<GlassPanel>` default)" documents the 65 % opacity + 12 px blur + 1.05
-  saturation + 12 % border + grain overlay composition explicitly.
+-   Five-tier table's `Resting` row's "Use" column notes
+    `<GlassPanel>` default canonicalisation.
+-   New sub-section "Canonical translucent + frosted (N.W1 Lane A —
+    `<GlassPanel>` default)" documents the 65 % opacity + 12 px blur + 1.05
+    saturation + 12 % border + grain overlay composition explicitly.
 
 Per N invariant 22 (audit-verdict spot-verification gate) + KISS: no new
 tier introduced. The existing resting rung already satisfies the N9 brief
@@ -1715,16 +1750,16 @@ demo-only); demonstrates the primitive as a generally-reusable substrate.
 
 `demo/stories/compositions/hero.vue` gains:
 
-- An ambient `<MetaballCanvas>` layer behind the existing radial-gradient
-  background, gated by `isWebGLSupported() && !prefersReducedMotion`.
-  5-blob config tuned to complement (not compete with) the warm-palette
-  gradients. Scoped `:deep(canvas)` rule re-targets the upstream
-  viewport-pinned canvas to the hero frame.
-- A `<TypewriterText>` headline split around the static italic-f
-  signature glyph — segment 1 types first, segment 2 starts on
-  `@complete` of segment 1 with a brief `startDelay`. The italic-f
-  remains anchored as static markup; reduced-motion fallback renders
-  the verbatim original h2 with zero diff.
+-   An ambient `<MetaballCanvas>` layer behind the existing radial-gradient
+    background, gated by `isWebGLSupported() && !prefersReducedMotion`.
+    5-blob config tuned to complement (not compete with) the warm-palette
+    gradients. Scoped `:deep(canvas)` rule re-targets the upstream
+    viewport-pinned canvas to the hero frame.
+-   A `<TypewriterText>` headline split around the static italic-f
+    signature glyph — segment 1 types first, segment 2 starts on
+    `@complete` of segment 1 with a brief `startDelay`. The italic-f
+    remains anchored as static markup; reduced-motion fallback renders
+    the verbatim original h2 with zero diff.
 
 Demonstrates the canonical ambient-backdrop + animated-headline
 composition pattern for downstream consumer hero composites.
@@ -1738,18 +1773,18 @@ points at a stale `dist/`. Cross-repo write per MULTI-WRITER mode.
 
 ### Codified — three precept canonicalizations (N.W0 Lane B; precept submodule `46d6cfb → b8af314`)
 
-- `tranche/RESEARCH.md` §"Canonical Angles" extends from 6 → 8 angles:
-  bidirectional style audit (angle 7) + overfitting audit (angle 8) are
-  canonical at every tranche that ships substrate work in a design system
-  or library-with-consumers shape.
-- `tranche/SPEC.md` §"Close" gains a new sub-section
-  "Audit-verdict spot-verification gate": before authoring a wave-spec
-  that retires items per an overfitting audit, the orchestrator MUST
-  spot-verify (item exists; rg count accurate through alias paths;
-  zero-consumer claim resolves through CSS / dynamic-import paths).
-- `instructions/README.md` §"Edicts" gains "Wire before retire":
-  under-wired primitives default to WIRE, not RETIRE; retirement
-  requires explicit "no proper wiring target exists" rationale.
+-   `tranche/RESEARCH.md` §"Canonical Angles" extends from 6 → 8 angles:
+    bidirectional style audit (angle 7) + overfitting audit (angle 8) are
+    canonical at every tranche that ships substrate work in a design system
+    or library-with-consumers shape.
+-   `tranche/SPEC.md` §"Close" gains a new sub-section
+    "Audit-verdict spot-verification gate": before authoring a wave-spec
+    that retires items per an overfitting audit, the orchestrator MUST
+    spot-verify (item exists; rg count accurate through alias paths;
+    zero-consumer claim resolves through CSS / dynamic-import paths).
+-   `instructions/README.md` §"Edicts" gains "Wire before retire":
+    under-wired primitives default to WIRE, not RETIRE; retirement
+    requires explicit "no proper wiring target exists" rationale.
 
 ### Codified — audit-verdict LESSONS-LEARNED entry (N.W0 Lane C)
 
@@ -1766,22 +1801,22 @@ as a single v1.1.0 bump per the user 2026-05-13 directive. The version is a
 deliberate **minor** rather than a sequence of patches because the cumulative
 surface adds API:
 
-- New layout-tier guardrail token `--chassis-max-block-size` (AB.W1.T1)
-- New `<GlassTimeline>` Option C structural split (`progressbar` ↔ marker
-  sibling), `popoverContent` slot, `currentSegmentKey`, `hoverEnd` event
-  (AB.W2.T1–T4); new `<HoverPopover>` `v-model:open` + `update:open`
-- New `<Pulse variant="aura">` ambient halo + `--animate-ambient-pulse-*`
-  ambient-motion token block + `@keyframes ambient-pulse` (AB.W3.T1)
-- New `<Progress variant="sectioned">` with per-segment colour cells +
-  spring active fill + transition-gradient seams + reduced-motion contract
-  + `--progress-sectioned-*` token block (AB.W3.T2)
-- AB.W4 closes the Z.W2 honesty bomb on B5 (dock-shadow override) by
-  shipping the **consumer canon** with a verified Playwright-probe trail —
-  no glass-ui canon edit was needed; the existing `--shadow-dock-override`
-  on `.glass-dock` (`dock.css:46`) + `--shadow-uniform` token
-  (`tokens.css:346`) already comprise the canon. The W4 close documents
-  the consumer recipe for any future dock-hosted icon that catches the
-  rightmost taper of the directional dock shadow.
+-   New layout-tier guardrail token `--chassis-max-block-size` (AB.W1.T1)
+-   New `<GlassTimeline>` Option C structural split (`progressbar` ↔ marker
+    sibling), `popoverContent` slot, `currentSegmentKey`, `hoverEnd` event
+    (AB.W2.T1–T4); new `<HoverPopover>` `v-model:open` + `update:open`
+-   New `<Pulse variant="aura">` ambient halo + `--animate-ambient-pulse-*`
+    ambient-motion token block + `@keyframes ambient-pulse` (AB.W3.T1)
+-   New `<Progress variant="sectioned">` with per-segment colour cells +
+    spring active fill + transition-gradient seams + reduced-motion contract
+    -   `--progress-sectioned-*` token block (AB.W3.T2)
+-   AB.W4 closes the Z.W2 honesty bomb on B5 (dock-shadow override) by
+    shipping the **consumer canon** with a verified Playwright-probe trail —
+    no glass-ui canon edit was needed; the existing `--shadow-dock-override`
+    on `.glass-dock` (`dock.css:46`) + `--shadow-uniform` token
+    (`tokens.css:346`) already comprise the canon. The W4 close documents
+    the consumer recipe for any future dock-hosted icon that catches the
+    rightmost taper of the directional dock shadow.
 
 This is the AB Living-UI canon: every primitive in the cluster (chassis +
 timeline + Pulse + Progress + dock) now reads as **living** under capped
@@ -1794,10 +1829,7 @@ speedtest `.results-card`):
 
 ```css
 --chassis-max-block-size: calc(
-    100dvh
-    - var(--dock-footer-space, 5.75rem)
-    - var(--page-padding-top, 0rem)
-    - 1rem
+    100dvh - var(--dock-footer-space, 5.75rem) - var(--page-padding-top, 0rem) - 1rem
 );
 ```
 
@@ -1809,14 +1841,14 @@ card-edge-inset` sum) so the calc evaluates correctly inside any consumer.
 Discipline (DESIGN.md `## Chassis sizing — dock-adjusted viewport` carries
 the full statement):
 
-- Consumers centre cards inside the **dock-adjusted viewport** (the area
-  above the dock), then clamp internal regions to that area.
-- Internal regions (meter / readout / timeline) must yield in order before
-  scroll appears: meter shrinks first, then readout, then timeline.
-- `overflow-y: auto` is a documented fallback, not the primary passing
-  path. Clamp-first / no-scroll-first is the canon.
-- The token reserves a ≥ 1rem visible gap above the dock — the user mandate
-  is "the card should not occlude the dock".
+-   Consumers centre cards inside the **dock-adjusted viewport** (the area
+    above the dock), then clamp internal regions to that area.
+-   Internal regions (meter / readout / timeline) must yield in order before
+    scroll appears: meter shrinks first, then readout, then timeline.
+-   `overflow-y: auto` is a documented fallback, not the primary passing
+    path. Clamp-first / no-scroll-first is the canon.
+-   The token reserves a ≥ 1rem visible gap above the dock — the user mandate
+    is "the card should not occlude the dock".
 
 Speedtest's AB.W1.T2 consumes the token to repair B1 (card-too-tall
 occlusion) + B10 (mobile/desktop fit) + H3 (mobile-375 CLS 0.926 → ≤ 0.15)
@@ -1834,13 +1866,13 @@ API additions (backward-compatible — `variant`/`speed`/`count`/`class`
 unchanged):
 
 ```ts
-type PulseVariant = 'dots' | 'ring' | 'aura';
-type PulseIntensity = 'subtle' | 'normal' | 'vivid';
+type PulseVariant = "dots" | "ring" | "aura";
+type PulseIntensity = "subtle" | "normal" | "vivid";
 
 interface PulseProps {
     variant?: PulseVariant;
     intensity?: PulseIntensity; // aura-only — scale-max amplitude
-    once?: boolean;             // aura-only — single-breath then settle
+    once?: boolean; // aura-only — single-breath then settle
     // ...existing props
 }
 ```
@@ -1849,7 +1881,7 @@ Tokens published at `styles/tokens.css` §2.A AMBIENT MOTION:
 
 ```css
 --animate-ambient-pulse-duration: 6s;
---animate-ambient-pulse-scale-min: 1.0;
+--animate-ambient-pulse-scale-min: 1;
 --animate-ambient-pulse-scale-max: 1.15;
 --animate-ambient-pulse-easing: var(--ease-apple);
 --pulse-aura-opacity-min: 0.55;
@@ -1881,23 +1913,24 @@ API additions:
 export interface ProgressSegment {
     key: string;
     label?: string;
-    color: string;           // CSS colour (hex, oklch, color-mix, var())
-    state?: 'pending' | 'active' | 'completed';
-    weight?: number;         // default 1 (equal share)
+    color: string; // CSS colour (hex, oklch, color-mix, var())
+    state?: "pending" | "active" | "completed";
+    weight?: number; // default 1 (equal share)
 }
 
 interface ProgressProps {
-    variant?: 'default' | 'gradient' | 'sectioned';
-    segments?: ProgressSegment[];          // sectioned only
-    currentSegmentKey?: string | null;     // sectioned only
-    activeProgress?: number;               // sectioned only — 0..1 fill of active cell
+    variant?: "default" | "gradient" | "sectioned";
+    segments?: ProgressSegment[]; // sectioned only
+    currentSegmentKey?: string | null; // sectioned only
+    activeProgress?: number; // sectioned only — 0..1 fill of active cell
 }
 ```
 
 Per-cell visual register:
-- **pending** — frosted colour tint @12% opacity
-- **active** — frosted tint @18% + spring-fill from leading edge + `mix-blend-mode: overlay` catch-light sweep traversing every 1.8s
-- **completed** — saturated fill at 100% across the cell
+
+-   **pending** — frosted colour tint @12% opacity
+-   **active** — frosted tint @18% + spring-fill from leading edge + `mix-blend-mode: overlay` catch-light sweep traversing every 1.8s
+-   **completed** — saturated fill at 100% across the cell
 
 Seams between adjacent cells paint as a small gradient blend (`--seam-from`
 → `--seam-to`) at `mix-blend-mode: screen` so the joins read as living
@@ -1908,7 +1941,7 @@ token: top catch-light strip, lower inner shadow, small outer drop.
 Token knobs at `tokens.css` §2.B SECTIONED PROGRESS:
 
 ```css
---progress-sectioned-height: 0.875rem;       /* 14px — W3 spec minimum */
+--progress-sectioned-height: 0.875rem; /* 14px — W3 spec minimum */
 --progress-sectioned-track: var(--secondary);
 ```
 
@@ -1926,14 +1959,14 @@ New `@utility dock-label` (typography.css) — canonical register for
 text labels INSIDE `.dock-tab-button` (Start, Next, Submit, Done, New
 Test, survey labels). Composes:
 
-- `font-family: var(--font-serif)` — picks up the consumer's
-  brand-uniform-sans preset when set
-- `font-size: var(--dock-label-size, var(--type-subheading))` — composes
-  the audacious-dock label-size knob (utilities.css §audacious mobile
-  carve declares `--dock-label-size: 14-15px` at narrow viewports);
-  desktop falls back to `--type-subheading`
-- `line-height: var(--type-leading-body)`
-- `font-weight: 500` — medium rung; present but not bold
+-   `font-family: var(--font-serif)` — picks up the consumer's
+    brand-uniform-sans preset when set
+-   `font-size: var(--dock-label-size, var(--type-subheading))` — composes
+    the audacious-dock label-size knob (utilities.css §audacious mobile
+    carve declares `--dock-label-size: 14-15px` at narrow viewports);
+    desktop falls back to `--type-subheading`
+-   `line-height: var(--type-leading-body)`
+-   `font-weight: 500` — medium rung; present but not bold
 
 Rationale: `.text-heading` is the heading register and carries
 `font-weight: 700`. Consumers were applying `.text-heading` to dock
@@ -1956,19 +1989,25 @@ SIBLINGS:
 
 ```html
 <div class="continuous-track-wrap">
-  <div role="progressbar" aria-valuemin="0" aria-valuemax="N"
-       aria-valuenow="..." class="continuous-track">
-    <div class="continuous-region state-completed">
-      <div class="continuous-region-fill" />  <!-- paints --continuous-fill-width -->
+    <div
+        role="progressbar"
+        aria-valuemin="0"
+        aria-valuemax="N"
+        aria-valuenow="..."
+        class="continuous-track"
+    >
+        <div class="continuous-region state-completed">
+            <div class="continuous-region-fill" />
+            <!-- paints --continuous-fill-width -->
+        </div>
+        ...
     </div>
-    ...
-  </div>
-  <ul role="list" class="continuous-markers">
-    <li role="listitem">
-      <HoverPopover><button class="continuous-dot" /></HoverPopover>
-    </li>
-    ...
-  </ul>
+    <ul role="list" class="continuous-markers">
+        <li role="listitem">
+            <HoverPopover><button class="continuous-dot" /></HoverPopover>
+        </li>
+        ...
+    </ul>
 </div>
 ```
 
@@ -1985,16 +2024,16 @@ single DOM rewrite.
 Three coupled fixes restore the dot's perceived centre to its math
 centre on the rail:
 
-- Opaque dot background (`var(--background)`) so the rail seam line no
-  longer bleeds through the translucent fill.
-- Symmetric `box-shadow: 0 0 4px ...` (was directional `0 1px 2px`)
-  so the dot's centre of mass aligns with the math centre.
-- `box-sizing: border-box` so the 2 px border lives inside the 14 px
-  box.
-- Marker `<li>` uses `display: flex` + `line-height: 0` to collapse
-  the default list-item line-box, which otherwise introduced a 1 px
-  vertical drift between the translate anchor and the dot's geometric
-  middle.
+-   Opaque dot background (`var(--background)`) so the rail seam line no
+    longer bleeds through the translucent fill.
+-   Symmetric `box-shadow: 0 0 4px ...` (was directional `0 1px 2px`)
+    so the dot's centre of mass aligns with the math centre.
+-   `box-sizing: border-box` so the 2 px border lives inside the 14 px
+    box.
+-   Marker `<li>` uses `display: flex` + `line-height: 0` to collapse
+    the default list-item line-box, which otherwise introduced a 1 px
+    vertical drift between the translate anchor and the dot's geometric
+    middle.
 
 ### Added — `popoverContent` slot + `currentSegmentKey` prop (AB.W2.T2 / T3)
 
@@ -2046,12 +2085,12 @@ Z.W2 (canon since v1.0.1) shipped two coupled primitives for consumers
 that need to neutralize the dock's directional drop shadow on a per-
 icon basis:
 
-- `--shadow-dock-override` — consumed by `.glass-dock` at
-  `dock.css:46` (`box-shadow: var(--shadow-dock-override,
-  var(--shadow-dock))`).
-- `--shadow-uniform` — uniform omnidirectional shadow recipe in the
-  `--shadow-md`/`--shadow-lg` color-mix family
-  (`tokens.css:346`).
+-   `--shadow-dock-override` — consumed by `.glass-dock` at
+    `dock.css:46` (`box-shadow: var(--shadow-dock-override,
+var(--shadow-dock))`).
+-   `--shadow-uniform` — uniform omnidirectional shadow recipe in the
+    `--shadow-md`/`--shadow-lg` color-mix family
+    (`tokens.css:346`).
 
 Z.W2's documentation gestured at the pairing but did NOT publish the
 canonical consumer recipe. AB.W4's audit (the A2 "honesty bomb" — Z.W2
@@ -2065,9 +2104,9 @@ leftmost taper of `.glass-dock`'s directional drop shadow:**
 
 ```vue
 <GlassDock
-  :style="{ '--shadow-dock-override': 'var(--shadow-uniform)' }"
-  shape="pill"
-  ...
+    :style="{ '--shadow-dock-override': 'var(--shadow-uniform)' }"
+    shape="pill"
+    ...
 >
   <!-- dock children, including the icon that catches the taper -->
 </GlassDock>
@@ -2125,8 +2164,9 @@ Verification: Vitest fixture 6/6 PASS; full test suite 29 files / 339
 tests PASS. Lighthouse@12.8.2 against `/motion/metaballs` with
 `--headless=new --disable-gpu`: `errors-in-console` score 0 → 1; items
 1 → 0; BP category 0.96. Puppeteer cross-verification at 1.5Mbps/750Kbps
-+ 4× CPU throttle: pageerror count 15+ → 0; `[Vue warn]` traces
-14+ → 0.
+
+-   4× CPU throttle: pageerror count 15+ → 0; `[Vue warn]` traces
+    14+ → 0.
 
 ### Added — `@mkbabb/glass-ui/api` (Lane B)
 
@@ -2138,47 +2178,47 @@ the canonical public surface today.
 
 Surface count: 32 → 37 (29 types + 4 constants — historical arithmetic typo corrected at P.W0 Lane C).
 
-- `GlassPanelVariant` — 5-rung glass-ladder vocabulary (`wash | quiet |
-  resting | floating | overlay`). Lane B-original W1-B Open Q1 path-a
-  closure: the canonical home `src/components/custom/glass-panel/index.ts`
-  now re-exports the type from the SFC alongside `GlassPanelProps` so the
-  symbol is on the public-package barrel before api/ re-exports it. The
-  demo's `foundations/paper-glass.vue` had locally redeclared this exact
-  union since v0.8.6 — promotion deletes that duplicate at consumer side.
-- `ConfiguratorCloneMode` — `"commit-on-write" | "per-preset"` union
-  driving the Configurator slot model. Shipped at L.W7 Lane B aurora
-  unification (aurora chrome pins `'per-preset'`). The Configurator
-  `index.ts` already exported it; api/ now completes the cluster
-  alongside `ConfiguratorPreset`, `ConfiguratorScrollMode`,
-  `ConfiguratorState`, `ConfiguratorStateOptions`.
-- `TimelineSegment` + `TimelineSegmentGradient` + `TimelineSegmentState`
-  — segment data shape from the AA-tranche timeline primitive. Consumers
-  building timeline preset arrays type fixtures against these. The
-  `TimelineSegmentState` lifecycle enum is the timeline analog of
-  `ToastVariant` (status-tier vocabulary).
+-   `GlassPanelVariant` — 5-rung glass-ladder vocabulary (`wash | quiet |
+resting | floating | overlay`). Lane B-original W1-B Open Q1 path-a
+    closure: the canonical home `src/components/custom/glass-panel/index.ts`
+    now re-exports the type from the SFC alongside `GlassPanelProps` so the
+    symbol is on the public-package barrel before api/ re-exports it. The
+    demo's `foundations/paper-glass.vue` had locally redeclared this exact
+    union since v0.8.6 — promotion deletes that duplicate at consumer side.
+-   `ConfiguratorCloneMode` — `"commit-on-write" | "per-preset"` union
+    driving the Configurator slot model. Shipped at L.W7 Lane B aurora
+    unification (aurora chrome pins `'per-preset'`). The Configurator
+    `index.ts` already exported it; api/ now completes the cluster
+    alongside `ConfiguratorPreset`, `ConfiguratorScrollMode`,
+    `ConfiguratorState`, `ConfiguratorStateOptions`.
+-   `TimelineSegment` + `TimelineSegmentGradient` + `TimelineSegmentState`
+    — segment data shape from the AA-tranche timeline primitive. Consumers
+    building timeline preset arrays type fixtures against these. The
+    `TimelineSegmentState` lifecycle enum is the timeline analog of
+    `ToastVariant` (status-tier vocabulary).
 
 ### Fixed — `src/components/custom/glass-panel/index.ts`
 
-- Canonical-home barrel now re-exports `GlassPanelVariant` from
-  `GlassPanel.vue`. Closes the W1-B audit's single-canonical-home
-  oversight (the SFC exported the type but the package barrel did not,
-  so api/ couldn't reach it without breaking the
-  re-export-from-canonical-home invariant).
+-   Canonical-home barrel now re-exports `GlassPanelVariant` from
+    `GlassPanel.vue`. Closes the W1-B audit's single-canonical-home
+    oversight (the SFC exported the type but the package barrel did not,
+    so api/ couldn't reach it without breaking the
+    re-export-from-canonical-home invariant).
 
 ### Refined — L cosmetic residuals absorb (Lane C)
 
 9 of 11 cataloged L cosmetic residuals absorbed (≥80% target met):
 
-- **F-π-1** — `demo/stories/TokenLadder.vue` 375 viewport overflow.
-- **F-π-2** — `demo/stories/compositions/dashboard.vue` 375+1024 viewport
-  overflows.
-- **F-π-3 + G13** — `demo/stories/aurora.vue` overflow + cosmetic.
-- **G16** — `demo/stories/primitives/dock-group.vue` polish.
-- **G17** — `demo/stories/composables/use-story-demo.vue` polish.
-- **G4** — `src/composables/motion/index.ts` barrel style alignment with
-  the rest of the composables/ tree.
-- **G14** — `src/components/ui/_shared/ModalOverlay.vue` `layout="edge"`
-  comment wording clarification.
+-   **F-π-1** — `demo/stories/TokenLadder.vue` 375 viewport overflow.
+-   **F-π-2** — `demo/stories/compositions/dashboard.vue` 375+1024 viewport
+    overflows.
+-   **F-π-3 + G13** — `demo/stories/aurora.vue` overflow + cosmetic.
+-   **G16** — `demo/stories/primitives/dock-group.vue` polish.
+-   **G17** — `demo/stories/composables/use-story-demo.vue` polish.
+-   **G4** — `src/composables/motion/index.ts` barrel style alignment with
+    the rest of the composables/ tree.
+-   **G14** — `src/components/ui/_shared/ModalOverlay.vue` `layout="edge"`
+    comment wording clarification.
 
 1 NO-CHANGE-REQUIRED (forms.ts Textarea hypothesis disproven at lane
 investigation); 1 deferred to Lane B coordination (GlassPanelVariant —
@@ -2187,17 +2227,17 @@ viewports.
 
 ### Verification
 
-- `dist/api.d.ts` self-contained: 0 `'../src/...'` refs; size 12,513 B →
-  ~16 KB (38 `export declare` lines).
-- `npm run verify-export-types`: PASS (`./api` resolves).
-- Synthetic-consumer probe at `/tmp/glass-ui-mw2b-probe/` typechecks
-  cleanly on positive narrowing for all 5 new types; negative-control
-  errors correctly flag invalid literals (`"elevated"`,  `"overwrite"`,
-  `"skipped"`).
-- Runtime probe `import("@mkbabb/glass-ui/api")` keys unchanged
-  (4 constants — the 5 promotions are type-only, erase at build).
-- Full library typecheck (src/ side) + Vitest suite (29 files / 339
-  tests + new `tests/configurator-recursion.spec.ts` 6/6) all PASS.
+-   `dist/api.d.ts` self-contained: 0 `'../src/...'` refs; size 12,513 B →
+    ~16 KB (38 `export declare` lines).
+-   `npm run verify-export-types`: PASS (`./api` resolves).
+-   Synthetic-consumer probe at `/tmp/glass-ui-mw2b-probe/` typechecks
+    cleanly on positive narrowing for all 5 new types; negative-control
+    errors correctly flag invalid literals (`"elevated"`, `"overwrite"`,
+    `"skipped"`).
+-   Runtime probe `import("@mkbabb/glass-ui/api")` keys unchanged
+    (4 constants — the 5 promotions are type-only, erase at build).
+-   Full library typecheck (src/ side) + Vitest suite (29 files / 339
+    tests + new `tests/configurator-recursion.spec.ts` 6/6) all PASS.
 
 ## v1.0.4 — 2026-05-12 — M.W0 (Carousel subpath substrate alignment with MIGRATION.md §1.2)
 
@@ -2228,10 +2268,10 @@ subpath surface rather than dead-coding on root-barrel consumers.
 
 ### Fixed
 
-- `@mkbabb/glass-ui/carousel` now exports the full `Carousel*` component
-  family, matching MIGRATION.md §1.2's documented contract. Consumers
-  migrating from v0.9.x per the migration guide can now resolve every
-  named symbol from the canonical subpath.
+-   `@mkbabb/glass-ui/carousel` now exports the full `Carousel*` component
+    family, matching MIGRATION.md §1.2's documented contract. Consumers
+    migrating from v0.9.x per the migration guide can now resolve every
+    named symbol from the canonical subpath.
 
 ## v1.0.3 — 2026-05-12 — AA.W3.5 (Audacious display tier — mega / hero / audacious)
 
@@ -2249,9 +2289,9 @@ peg against it via `var(--type-display-*)`.
 
 Three new rungs above `--type-display-5` continue the φ-ladder unbroken:
 
-- `--type-display-mega:       clamp(5.382rem, 4rem + 9vw, 11.089rem)`   /* φ^(9/2) — peak 177px */
-- `--type-display-hero:       clamp(6.854rem, 4.5rem + 12vw, 17.942rem)` /* φ^5    — peak 287px */
-- `--type-display-audacious:  clamp(8.728rem, 5rem + 16vw, 22rem)`      /* φ^(11/2) — peak 352px */
+-   `--type-display-mega:       clamp(5.382rem, 4rem + 9vw, 11.089rem)` /_ φ^(9/2) — peak 177px _/
+-   `--type-display-hero:       clamp(6.854rem, 4.5rem + 12vw, 17.942rem)` /_ φ^5 — peak 287px _/
+-   `--type-display-audacious:  clamp(8.728rem, 5rem + 16vw, 22rem)` /_ φ^(11/2) — peak 352px _/
 
 Plus `.text-display-mega`, `.text-display-hero`, `.text-display-audacious`
 utility classes mirroring the existing `.text-display-5` shape — Fraunces
@@ -2273,10 +2313,10 @@ tier" section documents the canon — peak px values, intended uses
 (speedtest hero, dashboard pane titles when the consumer wants the
 number to win), opt-out paths.
 
-- `src/styles/typography.css` — three new `:root` token declarations +
-  three new `@utility` blocks
-- `DESIGN.md` — "## Audacious display tier" sub-section appended to the
-  "## Typography" section + size-tokens table rows added
+-   `src/styles/typography.css` — three new `:root` token declarations +
+    three new `@utility` blocks
+-   `DESIGN.md` — "## Audacious display tier" sub-section appended to the
+    "## Typography" section + size-tokens table rows added
 
 ## v1.0.2 — 2026-05-12 — AA.W1 (Timeline continuous variant + a11y defence + §16 TIMELINE tokens + canon-truth)
 
@@ -2315,10 +2355,10 @@ The speedtest consumer (AA.W2) is one prop-value flip away from
 canonical adoption — `variant="segmented"` → `variant="continuous"`
 plus retiring the `.completion-segments` private CSS.
 
-- `src/components/custom/timeline/GlassTimeline.vue` — third variant
-  template branch + region geometry helpers + continuous CSS recipe
-- `src/components/custom/timeline/types.ts` — `TimelineSegment.weight`
-  optional field
+-   `src/components/custom/timeline/GlassTimeline.vue` — third variant
+    template branch + region geometry helpers + continuous CSS recipe
+-   `src/components/custom/timeline/types.ts` — `TimelineSegment.weight`
+    optional field
 
 ### Fixed — scrubber `aria-valuenow` coercion (axe-zero close)
 
@@ -2331,9 +2371,10 @@ renders even when consumers pass `undefined` / `null` / a string.
 
 Three regression specs at
 `src/components/custom/timeline/__tests__/aria-valuenow.test.ts`:
-- `modelValue: undefined` → renders `aria-valuenow="0"`
-- `modelValue: null` → renders `aria-valuenow="0"`
-- `modelValue: 0.5` → renders `aria-valuenow="0.5"`
+
+-   `modelValue: undefined` → renders `aria-valuenow="0"`
+-   `modelValue: null` → renders `aria-valuenow="0"`
+-   `modelValue: 0.5` → renders `aria-valuenow="0.5"`
 
 Test count: 330 → 333.
 
@@ -2347,13 +2388,13 @@ first-class declarations alongside their siblings. Added a `§16
 TIMELINE` block in `src/styles/tokens.css` (after `§14 RAINBOW PALETTE`,
 before the `:root` close):
 
-- Heights — `--timeline-scrubber-height`, `--timeline-segmented-height`,
-  `--timeline-continuous-height`
-- Geometry — `--timeline-dot-size`, `--timeline-segment-flex`
-- Continuous-specific — `--timeline-continuous-seam-opacity`,
-  `--timeline-continuous-seam-color`
-- Per-segment gradients — `--timeline-segment-default-gradient`,
-  `--timeline-segment-gradient-{ping,download,upload,jitter}`
+-   Heights — `--timeline-scrubber-height`, `--timeline-segmented-height`,
+    `--timeline-continuous-height`
+-   Geometry — `--timeline-dot-size`, `--timeline-segment-flex`
+-   Continuous-specific — `--timeline-continuous-seam-opacity`,
+    `--timeline-continuous-seam-color`
+-   Per-segment gradients — `--timeline-segment-default-gradient`,
+    `--timeline-segment-gradient-{ping,download,upload,jitter}`
 
 ### Fixed — var() fallback canon-truth
 
@@ -2373,11 +2414,11 @@ documenting that `<GlassTimeline>` is a separate Vue primitive with
 its own variant taxonomy. Added a `## Timeline Primitive` section
 after `## Variant Taxonomy` documenting:
 
-- The `<GlassTimeline>` Vue primitive (NOT the slider variant)
-- Three variants: scrubber + segmented + continuous (visual + use-case per)
-- `TimelineSegment` shape including the new `weight` field
-- Full token API (§16 TIMELINE, 11 declared rungs)
-- ARIA + a11y guarantees per variant
+-   The `<GlassTimeline>` Vue primitive (NOT the slider variant)
+-   Three variants: scrubber + segmented + continuous (visual + use-case per)
+-   `TimelineSegment` shape including the new `weight` field
+-   Full token API (§16 TIMELINE, 11 declared rungs)
+-   ARIA + a11y guarantees per variant
 
 Added a cross-reference parenthetical to the slider table row so
 readers landing on the slider docs first find the primitive.
@@ -2400,9 +2441,9 @@ legend) but using `variant="continuous"`. Registered in
 
 ### Verification
 
-- 28 test files, 333/333 tests passing (was 330 pre-AA)
-- `vue-tsc --noEmit --project tsconfig.src.json` clean
-- `git diff --check` clean
+-   28 test files, 333/333 tests passing (was 330 pre-AA)
+-   `vue-tsc --noEmit --project tsconfig.src.json` clean
+-   `git diff --check` clean
 
 ---
 
@@ -2424,11 +2465,11 @@ fill mapping (0 / 0.5 / 1) that consumers may override via the optional
 `progress` field. Boundary dots are real `<button>` elements with full
 keyboard semantics (Enter / Space activate; native focus-visible ring).
 
-- `src/components/custom/timeline/GlassTimeline.vue` — `variant` prop;
-  segmented render path; scrubber path untouched
-- `src/components/custom/timeline/types.ts` — `TimelineSegment` + gradient + state types (NEW)
-- `src/components/custom/timeline/index.ts` — re-export the types
-- `demo/stories/data/timeline-segmented.vue` — 3-segment storybook story (NEW)
+-   `src/components/custom/timeline/GlassTimeline.vue` — `variant` prop;
+    segmented render path; scrubber path untouched
+-   `src/components/custom/timeline/types.ts` — `TimelineSegment` + gradient + state types (NEW)
+-   `src/components/custom/timeline/index.ts` — re-export the types
+-   `demo/stories/data/timeline-segmented.vue` — 3-segment storybook story (NEW)
 
 Speedtest consumes this primitive for multi-phase ping/download/upload
 progress (Z.W2.T4).
@@ -2443,9 +2484,9 @@ mask-fade gradients are retained as cosmetic feathers at the cap edge,
 not as scroll affordances. Consumers needing wrap behaviour opt into
 `.dock-wrap`.
 
-- `src/styles/dock.css` L156-194 — vertical rail: `overflow-{x,y}: visible`
-- `src/styles/dock.css` L294-312 — horizontal expanded: `overflow-x: visible`
-- `src/styles/dock.css` L354-358 — always-expanded vertical: `overflow-{x,y}: visible`
+-   `src/styles/dock.css` L156-194 — vertical rail: `overflow-{x,y}: visible`
+-   `src/styles/dock.css` L294-312 — horizontal expanded: `overflow-x: visible`
+-   `src/styles/dock.css` L354-358 — always-expanded vertical: `overflow-{x,y}: visible`
 
 ### Added — `--shadow-uniform` token (B7 routing)
 
@@ -2456,15 +2497,15 @@ via `--shadow-dock-override: var(--shadow-uniform)` per-instance or attach
 to per-icon-button shadow stacks. Same color-mix recipe family as the
 sized rungs; peer elevation, not sibling.
 
-- `src/styles/tokens.css` — `--shadow-uniform: 0 0 12px color-mix(...)`
-- `DESIGN.md` — token table entry under §Shadows
+-   `src/styles/tokens.css` — `--shadow-uniform: 0 0 12px color-mix(...)`
+-   `DESIGN.md` — token table entry under §Shadows
 
 ### Verification
 
-- Test suite: 27/27 files, 330/330 tests passing (no test deltas)
-- `vue-tsc --noEmit` clean
-- All existing dock stories render — the overflow change is conservative
-  (clip-as-default removed; canonical grow-to-fit re-asserted)
+-   Test suite: 27/27 files, 330/330 tests passing (no test deltas)
+-   `vue-tsc --noEmit` clean
+-   All existing dock stories render — the overflow change is conservative
+    (clip-as-default removed; canonical grow-to-fit re-asserted)
 
 ## v1.0.0 — 2026-05-11 — L.W1 HEADLINE (root-barrel Phase 2 + curated surface + api/ discovery + subpath flatten)
 
@@ -2489,19 +2530,19 @@ See `MIGRATION.md` for the consumer-facing migration path.
 
 Root barrel re-exports stripped — consumers must import from explicit subpaths:
 
-- **`Input`, `Textarea`, all `Combobox*` family** — moved off root barrel; use
-  `@mkbabb/glass-ui/forms`. Vueuse-bearing form primitives that pulled the
-  vueuse runtime into the entry chunk via the SCC walk.
-- **`Carousel`, `CarouselContent`, `CarouselDots`, `CarouselItem`,
-  `CarouselNext`, `CarouselPager`, `CarouselPrevious`, `GlassCarouselPager`,
-  `useCarousel`, `CarouselApi`** — moved off root barrel; use
-  `@mkbabb/glass-ui/carousel` (NEW v1.0 subpath; see Lane C below).
-- **`useGlobalDark`** — moved off root barrel; use `@mkbabb/glass-ui/dark`
-  (NEW v1.0 flat subpath; see Lane C below).
-- **`useKeyboardShortcuts`, `registerShortcut`, `useRegisteredShortcuts`,
-  `formatCombo`, `formatComboParts`, `isMac`, `ShortcutOptions`,
-  `RegisteredShortcut`, `ShortcutCombo`, `ShortcutEventType`** — moved off
-  root barrel; use `@mkbabb/glass-ui/keyboard` (NEW v1.0 flat subpath).
+-   **`Input`, `Textarea`, all `Combobox*` family** — moved off root barrel; use
+    `@mkbabb/glass-ui/forms`. Vueuse-bearing form primitives that pulled the
+    vueuse runtime into the entry chunk via the SCC walk.
+-   **`Carousel`, `CarouselContent`, `CarouselDots`, `CarouselItem`,
+    `CarouselNext`, `CarouselPager`, `CarouselPrevious`, `GlassCarouselPager`,
+    `useCarousel`, `CarouselApi`** — moved off root barrel; use
+    `@mkbabb/glass-ui/carousel` (NEW v1.0 subpath; see Lane C below).
+-   **`useGlobalDark`** — moved off root barrel; use `@mkbabb/glass-ui/dark`
+    (NEW v1.0 flat subpath; see Lane C below).
+-   **`useKeyboardShortcuts`, `registerShortcut`, `useRegisteredShortcuts`,
+    `formatCombo`, `formatComboParts`, `isMac`, `ShortcutOptions`,
+    `RegisteredShortcut`, `ShortcutCombo`, `ShortcutEventType`** — moved off
+    root barrel; use `@mkbabb/glass-ui/keyboard` (NEW v1.0 flat subpath).
 
 The root barrel curation replaces the single `export * from "./components/ui"`
 wildcard with 40 explicit per-package re-exports, omitting the 4 vueuse-bearing
@@ -2516,39 +2557,39 @@ Cherry-pick rationale for the 7 `custom/` packages still on the root barrel
 
 ### ADDED — Lane B (`src/api/` discovery layer)
 
-- **`@mkbabb/glass-ui/api`** (NEW subpath) — single-file aggregator
-  re-exporting 32 canonical public symbols (24 types + 4 constants/runtime
-  values; the original entry said `8` — corrected at P.W0 Lane C) from
-  canonical homes across 5 domain groupings: Aurora (12 types
-  + 3 constants), Configurator (4 types), Metaballs (1 type + 1 constant),
-  Surface enums (CardTier, InstrumentChassisPhase, ToastVariant), CVA
-  variants (8 types across Alert/Avatar/Badge/Button/Sheet/Slider/Toggle +
-  ToggleChip). `dist/api.js` 220 B (runtime constants; types erase);
-  `dist/api.d.ts` 12,513 B / 32 export declarations / zero broken
-  `'../src/...'` refs.
+-   **`@mkbabb/glass-ui/api`** (NEW subpath) — single-file aggregator
+    re-exporting 32 canonical public symbols (24 types + 4 constants/runtime
+    values; the original entry said `8` — corrected at P.W0 Lane C) from
+    canonical homes across 5 domain groupings: Aurora (12 types
+    -   3 constants), Configurator (4 types), Metaballs (1 type + 1 constant),
+        Surface enums (CardTier, InstrumentChassisPhase, ToastVariant), CVA
+        variants (8 types across Alert/Avatar/Badge/Button/Sheet/Slider/Toggle +
+        ToggleChip). `dist/api.js` 220 B (runtime constants; types erase);
+        `dist/api.d.ts` 12,513 B / 32 export declarations / zero broken
+        `'../src/...'` refs.
 
 ### BREAKING — Lane C (subpath flatten)
 
-- **`@mkbabb/glass-ui/composables/dark` REMOVED** — use
-  `@mkbabb/glass-ui/dark`. The nested form was a v0.9.x transitional
-  shape introduced at the W0 Lane III dts-publication-gap fix; v1.0
-  flattens it to match every other public subpath (`/forms`, `/dock`,
-  `/configurator`, ...). Per L invariant 4, no legacy alias is shipped.
-- **`@mkbabb/glass-ui/composables/keyboard` REMOVED** — use
-  `@mkbabb/glass-ui/keyboard`. Same rationale.
-- **`dist/dark-subpath.{js,d.ts}` + `dist/keyboard-subpath.{js,d.ts}`
-  artefacts retire** — the v0.9.4 transitional dist filenames are
-  replaced by canonical `dist/dark.{js,d.ts}` + `dist/keyboard.{js,d.ts}`.
+-   **`@mkbabb/glass-ui/composables/dark` REMOVED** — use
+    `@mkbabb/glass-ui/dark`. The nested form was a v0.9.x transitional
+    shape introduced at the W0 Lane III dts-publication-gap fix; v1.0
+    flattens it to match every other public subpath (`/forms`, `/dock`,
+    `/configurator`, ...). Per L invariant 4, no legacy alias is shipped.
+-   **`@mkbabb/glass-ui/composables/keyboard` REMOVED** — use
+    `@mkbabb/glass-ui/keyboard`. Same rationale.
+-   **`dist/dark-subpath.{js,d.ts}` + `dist/keyboard-subpath.{js,d.ts}`
+    artefacts retire** — the v0.9.4 transitional dist filenames are
+    replaced by canonical `dist/dark.{js,d.ts}` + `dist/keyboard.{js,d.ts}`.
 
 ### ADDED — Lane C (carousel subpath)
 
-- **`@mkbabb/glass-ui/carousel`** subpath barrel at `src/carousel.ts`.
-  Re-exports `useCarousel` (the embla-carousel-vue + `createInjectionState`
-  composable that powers `<Carousel>` and the `Carousel*` family) plus the
-  `CarouselApi` type. `useCarousel` imports `createInjectionState` from
-  `@vueuse/core`, so isolating it on its own subpath keeps it off the
-  consumer's root-barrel tree-shake walk — the same SCC-trap mechanism
-  that motivates the `/dark` + `/keyboard` carve.
+-   **`@mkbabb/glass-ui/carousel`** subpath barrel at `src/carousel.ts`.
+    Re-exports `useCarousel` (the embla-carousel-vue + `createInjectionState`
+    composable that powers `<Carousel>` and the `Carousel*` family) plus the
+    `CarouselApi` type. `useCarousel` imports `createInjectionState` from
+    `@vueuse/core`, so isolating it on its own subpath keeps it off the
+    consumer's root-barrel tree-shake walk — the same SCC-trap mechanism
+    that motivates the `/dark` + `/keyboard` carve.
 
 <!-- Lane A appends its W3 composable wire-or-retire section here. -->
 
@@ -2558,37 +2599,37 @@ L.W3 Lane A — second-consumer fidelity audit per L invariant 8
 (substrate-without-consumer binary at v1.0 freeze). Six composables in
 scope; three WIRED via cross-repo speedtest consumption; three retired.
 
-- **`useOffsetPagination` REMOVED** — 0 production consumers (no src/
-  site; no speedtest consumer). Demo-only at v0.9.x. Consumers roll their
-  own offset pagination with `ref()` + a `fetchFn`-driven loader (the
-  retired implementation was 60 LOC; copy from v0.9.3 source if needed).
-- **`useVirtualSectionWindow` REMOVED** — 0 production consumers.
-  Consumers use `@tanstack/vue-virtual` or a hand-rolled
-  IntersectionObserver windower.
-- **`useWindowedStore` REMOVED** — 0 production consumers. A sliding-
-  window resident store is a `ref<T[]>` plus an eviction policy.
-- **`virtualSectionLayout` helpers REMOVED** — `buildSectionLayout`,
-  `findSectionOffset`, `resolveActiveSection`, `resolveSectionWindow` and
-  the associated `FlatSection` / `SectionLayout` / `SectionWindowRange` /
-  `ForcedSectionWindowRange` types. Pure-function support substrate for
-  `useVirtualSectionWindow`; retires with its parent.
-- **`@mkbabb/glass-ui/pagination` subpath REMOVED** — entry deleted from
-  `package.json` exports + typesVersions and from `vite.library.ts`
-  libraryEntries.
-- **`@mkbabb/glass-ui/virtual` subpath REMOVED** — entry deleted (housed
-  the three virtual composables).
+-   **`useOffsetPagination` REMOVED** — 0 production consumers (no src/
+    site; no speedtest consumer). Demo-only at v0.9.x. Consumers roll their
+    own offset pagination with `ref()` + a `fetchFn`-driven loader (the
+    retired implementation was 60 LOC; copy from v0.9.3 source if needed).
+-   **`useVirtualSectionWindow` REMOVED** — 0 production consumers.
+    Consumers use `@tanstack/vue-virtual` or a hand-rolled
+    IntersectionObserver windower.
+-   **`useWindowedStore` REMOVED** — 0 production consumers. A sliding-
+    window resident store is a `ref<T[]>` plus an eviction policy.
+-   **`virtualSectionLayout` helpers REMOVED** — `buildSectionLayout`,
+    `findSectionOffset`, `resolveActiveSection`, `resolveSectionWindow` and
+    the associated `FlatSection` / `SectionLayout` / `SectionWindowRange` /
+    `ForcedSectionWindowRange` types. Pure-function support substrate for
+    `useVirtualSectionWindow`; retires with its parent.
+-   **`@mkbabb/glass-ui/pagination` subpath REMOVED** — entry deleted from
+    `package.json` exports + typesVersions and from `vite.library.ts`
+    libraryEntries.
+-   **`@mkbabb/glass-ui/virtual` subpath REMOVED** — entry deleted (housed
+    the three virtual composables).
 
 ### KEPT — W3 Lane A (cross-repo wired)
 
-- **`useRAFLoop` retained** — speedtest's `useMeterRenderer.ts` consumes
-  it for the canvas render loop (`@mkbabb/glass-ui` root barrel). Plus
-  demo + test coverage. ≥ 2 consumers; no migration required.
-- **`useIntersectionPause` retained** — speedtest's `useAuroraPolicy.ts`
-  composes it with reduced-motion gating for the aurora background. Plus
-  demo + test coverage.
-- **`useDarkModeSync` retained** — speedtest's `SpeedtestMeter.vue` plus
-  `dashboard/composables/useEChartsTheme.ts` consume it for canvas /
-  ECharts theme re-init after dark-mode toggles. Plus demo coverage.
+-   **`useRAFLoop` retained** — speedtest's `useMeterRenderer.ts` consumes
+    it for the canvas render loop (`@mkbabb/glass-ui` root barrel). Plus
+    demo + test coverage. ≥ 2 consumers; no migration required.
+-   **`useIntersectionPause` retained** — speedtest's `useAuroraPolicy.ts`
+    composes it with reduced-motion gating for the aurora background. Plus
+    demo + test coverage.
+-   **`useDarkModeSync` retained** — speedtest's `SpeedtestMeter.vue` plus
+    `dashboard/composables/useEChartsTheme.ts` consume it for canvas /
+    ECharts theme re-init after dark-mode toggles. Plus demo coverage.
 
 ### BREAKING — W3 retirements (Lane B — primitives)
 
@@ -2598,36 +2639,36 @@ in scope (`<DiscoGlyph>`, `<DockGroup>`, `<InstrumentChassis>`,
 `<DockShowcaseFrame>`) reached the wave at exactly 1 consumer (the
 self-named primitive demo). The disposition matrix:
 
-- **`<DockShowcaseFrame>` REMOVED** — the demo-private dock-context
-  showcase chassis (V.W4) had zero consumers besides its own definition
-  file at HEAD; `rg "DockShowcaseFrame" demo/` returned only
-  `demo/stories/DockShowcaseFrame.vue` itself. Per Rε A3 verdict, the
-  file is retired. Dock stories at HEAD compose raw chassis recipes or
-  the canonical `<ShowcaseFrame>` directly; non-dock contexts already
-  use `<ShowcaseFrame>` exclusively. The component was never on the
-  library public surface (demo-private), so no `src/` source / barrel
-  / package.json export changes are required.
+-   **`<DockShowcaseFrame>` REMOVED** — the demo-private dock-context
+    showcase chassis (V.W4) had zero consumers besides its own definition
+    file at HEAD; `rg "DockShowcaseFrame" demo/` returned only
+    `demo/stories/DockShowcaseFrame.vue` itself. Per Rε A3 verdict, the
+    file is retired. Dock stories at HEAD compose raw chassis recipes or
+    the canonical `<ShowcaseFrame>` directly; non-dock contexts already
+    use `<ShowcaseFrame>` exclusively. The component was never on the
+    library public surface (demo-private), so no `src/` source / barrel
+    / package.json export changes are required.
 
 ### ADDED — Lane B (primitive second-consumer wiring)
 
-- **`<DiscoGlyph>` 2nd consumer** wired into
-  `demo/stories/foundations/chart-chassis-palette.vue`. The chart-palette
-  ladder now sits alongside live `<DiscoGlyph>` swatches — each chart
-  token (`--chart-{ping,download,upload,jitter}`) drives the 8-stop
-  facet gradient. Consumers verify the chart palette reads at glyph
-  scale in one place.
-- **`<DockGroup>` 2nd consumer** wired into
-  `demo/stories/compositions/dashboard.vue` as the dashboard's KPI
-  pill-row shelf. Composes `<MetricBadge>` cells under a comfortable
-  density rung — the canonical chassis-strip pattern DockGroup was
-  designed for, now exercised in a non-primitive composition site.
-- **`<InstrumentChassis>` 2nd consumer** wired into
-  `demo/stories/foundations/chart-chassis-palette.vue` as a live
-  mini-chassis under the chassis-tier-tokens token ladder. The four
-  chassis tokens (`--glass-bg-dock`, `--glass-bg-chassis`, the
-  curvature overlay, the specular) now read in composition immediately
-  below the swatch row. The compositions/instrument-chassis.vue page
-  remains the dial-state interactive consumer.
+-   **`<DiscoGlyph>` 2nd consumer** wired into
+    `demo/stories/foundations/chart-chassis-palette.vue`. The chart-palette
+    ladder now sits alongside live `<DiscoGlyph>` swatches — each chart
+    token (`--chart-{ping,download,upload,jitter}`) drives the 8-stop
+    facet gradient. Consumers verify the chart palette reads at glyph
+    scale in one place.
+-   **`<DockGroup>` 2nd consumer** wired into
+    `demo/stories/compositions/dashboard.vue` as the dashboard's KPI
+    pill-row shelf. Composes `<MetricBadge>` cells under a comfortable
+    density rung — the canonical chassis-strip pattern DockGroup was
+    designed for, now exercised in a non-primitive composition site.
+-   **`<InstrumentChassis>` 2nd consumer** wired into
+    `demo/stories/foundations/chart-chassis-palette.vue` as a live
+    mini-chassis under the chassis-tier-tokens token ladder. The four
+    chassis tokens (`--glass-bg-dock`, `--glass-bg-chassis`, the
+    curvature overlay, the specular) now read in composition immediately
+    below the swatch row. The compositions/instrument-chassis.vue page
+    remains the dial-state interactive consumer.
 
 ### Production demo build — formal retire (L.W5 Lane B Option B)
 
@@ -2654,29 +2695,29 @@ Rε §B.1.3 + §B.2.7. The pre-L flat top-level files are absorbed into the
 matching domain sub-trees; the legacy `useGlobalDark.ts` + `useKeyboardShortcuts.ts`
 shims retire alongside their pre-W0 impl files.
 
-- **NEW sub-tree** `src/composables/reactive/` — `useInterval`, `useTimer`.
-- **NEW sub-tree** `src/composables/dom/` — `useResizeObserver`, `useTouchGate`, `useTokenColor`.
-- **PROMOTED** `src/composables/dark/` — `useGlobalDark` (sub-tree with `index.ts` barrel; flat
-  `/dark` subpath continues to re-export through it).
-- **PROMOTED** `src/composables/keyboard/` — keyboard-shortcuts registry (sub-tree with
-  `index.ts` barrel; flat `/keyboard` subpath continues to re-export through it).
-- **ABSORBED** `useStagger.ts` → `src/composables/motion/useStagger.ts` (alongside
-  `useStaggerReveal` which already lived there).
-- **DEMOTED** `useStoryDemo.ts` → `demo/composables/useStoryDemo.ts` (demo-private;
-  no longer on library public surface per Rε §B.2.8).
-- 11 file moves; 24 importer-graph edits (4 src/, 13 demo/, 8 tests, 3 barrels).
+-   **NEW sub-tree** `src/composables/reactive/` — `useInterval`, `useTimer`.
+-   **NEW sub-tree** `src/composables/dom/` — `useResizeObserver`, `useTouchGate`, `useTokenColor`.
+-   **PROMOTED** `src/composables/dark/` — `useGlobalDark` (sub-tree with `index.ts` barrel; flat
+    `/dark` subpath continues to re-export through it).
+-   **PROMOTED** `src/composables/keyboard/` — keyboard-shortcuts registry (sub-tree with
+    `index.ts` barrel; flat `/keyboard` subpath continues to re-export through it).
+-   **ABSORBED** `useStagger.ts` → `src/composables/motion/useStagger.ts` (alongside
+    `useStaggerReveal` which already lived there).
+-   **DEMOTED** `useStoryDemo.ts` → `demo/composables/useStoryDemo.ts` (demo-private;
+    no longer on library public surface per Rε §B.2.8).
+-   11 file moves; 24 importer-graph edits (4 src/, 13 demo/, 8 tests, 3 barrels).
 
 ### L.W2 — Cohesion + import-shape annotations (Lane B)
 
 L.W2 Lane B documents the cherry-pick rationale + cascade-order rules in source.
 Pure documentation; zero runtime delta.
 
-- `src/index.ts` header comment block — extends the L.W1 curated-surface intro to
-  enumerate (a) the three-layer import shape (root barrel · per-package subpaths · `/api`
-  discovery layer) and (b) the acceptance bar for root-barrel inclusion (vueuse-free
-  + small primitive + ui/-composability) + names the 23 excluded custom packages.
-- `src/styles/index.css` cascade-order block — 40-line per-layer rationale block
-  documenting all 16 CSS imports + their dependencies. Cascade unchanged.
+-   `src/index.ts` header comment block — extends the L.W1 curated-surface intro to
+    enumerate (a) the three-layer import shape (root barrel · per-package subpaths · `/api`
+    discovery layer) and (b) the acceptance bar for root-barrel inclusion (vueuse-free
+    -   small primitive + ui/-composability) + names the 23 excluded custom packages.
+-   `src/styles/index.css` cascade-order block — 40-line per-layer rationale block
+    documenting all 16 CSS imports + their dependencies. Cascade unchanged.
 
 ### W4 — Mobile-viewport finishing
 
@@ -2685,100 +2726,100 @@ fix landed at K W5 commit `12abb09` (already at HEAD); the actual R1-shaped offe
 was the K W8 π-1 finding — an audacious DockGroup `size="lg"` MetricBadge chip
 overflowing the 375 viewport by 24 px at `/primitives/dock-group`.
 
-- **Fix**: `demo/stories/primitives/dock-group.vue` wraps the audacious DockGroup in
-  a `<div class="dock-group-audacious-scroll">` with scoped `overflow-x: auto;
-  scrollbar-width: none`. Mirrors the StoryPager idiom. DockGroup substrate untouched
-  (its inline-flex sizing is correct for chassis-strip consumers like speedtest's
-  `MetricStrip`; the audacious row is intended for wider contexts).
-- **Post-fix probe at 375×667**: `body.scrollWidth = 375 = viewport`. Multi-viewport
-  sweep across 9 surfaces × 3 viewports = 27 cells; 26 PASS + 1 pre-documented
-  K-residual (Aurora -inset-6 decorative bloom +8 px at 375; K W8 π-2 cosmetic
-  non-blocker; carries forward in K residuals ledger, not a new W8 ι entry).
+-   **Fix**: `demo/stories/primitives/dock-group.vue` wraps the audacious DockGroup in
+    a `<div class="dock-group-audacious-scroll">` with scoped `overflow-x: auto;
+scrollbar-width: none`. Mirrors the StoryPager idiom. DockGroup substrate untouched
+    (its inline-flex sizing is correct for chassis-strip consumers like speedtest's
+    `MetricStrip`; the audacious row is intended for wider contexts).
+-   **Post-fix probe at 375×667**: `body.scrollWidth = 375 = viewport`. Multi-viewport
+    sweep across 9 surfaces × 3 viewports = 27 cells; 26 PASS + 1 pre-documented
+    K-residual (Aurora -inset-6 decorative bloom +8 px at 375; K W8 π-2 cosmetic
+    non-blocker; carries forward in K residuals ledger, not a new W8 ι entry).
 
 ### W6 — Lighthouse cohort completion
 
 L.W6 re-verifies the K-absorbed Lighthouse cohort and dispositions the 4 P2
 carry-forwards from K.
 
-- **K-absorbed fixes re-verified clean at HEAD post-L-W1**: viz-basis dark-mode
-  contrast (`/primitives/buttons` A11y 100), preset chip aria-label (`/aurora`),
-  dropdown aria-label (`/navigation/dock`), Skeleton compositor + Fraunces async +
-  Computer Modern `font-display: swap`. Net A11y delta: `/primitives/buttons`
-  94 → 100. SEO held at 91. 0 L W1 regressions.
-- **P2-2 `robots.txt`** — Option B: deferred to W5 Lane B (atomic with the
-  production-demo-build binary disposition; W5 Lane B chose Option B —
-  formally retire demo as deploy target — so robots.txt is retire-as-not-applicable).
-- **P2-3 `uses-passive-event-listeners`** — RETIRE-AS-NOT-OUR-SCOPE. Source is
-  `@vue/runtime-dom` (Vue framework upstream). Carries forward to L FINAL.md
-  ledger as upstream-Vue-debt.
-- **P2-4 `uses-long-cache-ttl`** — RETIRE-AS-NOT-OUR-SCOPE. Production hosting
-  layer concern; consumers wire prod cache headers via their deploy target.
-  Carries forward to L FINAL.md ledger as consumer-deploy concern.
-- **OPEN — F-ε-3 Configurator recursion** at `/motion/metaballs` reproduced under
-  Lighthouse Headless Chrome; K W8 had dispositioned as "false-positive" but
-  L W6 Lighthouse re-run reproduces. Routed to L W7 (touches Configurator with
-  `cloneMode: 'per-preset'` extension) OR L W8 ι integrity-sweep as M-tranche
-  carry-forward.
+-   **K-absorbed fixes re-verified clean at HEAD post-L-W1**: viz-basis dark-mode
+    contrast (`/primitives/buttons` A11y 100), preset chip aria-label (`/aurora`),
+    dropdown aria-label (`/navigation/dock`), Skeleton compositor + Fraunces async +
+    Computer Modern `font-display: swap`. Net A11y delta: `/primitives/buttons`
+    94 → 100. SEO held at 91. 0 L W1 regressions.
+-   **P2-2 `robots.txt`** — Option B: deferred to W5 Lane B (atomic with the
+    production-demo-build binary disposition; W5 Lane B chose Option B —
+    formally retire demo as deploy target — so robots.txt is retire-as-not-applicable).
+-   **P2-3 `uses-passive-event-listeners`** — RETIRE-AS-NOT-OUR-SCOPE. Source is
+    `@vue/runtime-dom` (Vue framework upstream). Carries forward to L FINAL.md
+    ledger as upstream-Vue-debt.
+-   **P2-4 `uses-long-cache-ttl`** — RETIRE-AS-NOT-OUR-SCOPE. Production hosting
+    layer concern; consumers wire prod cache headers via their deploy target.
+    Carries forward to L FINAL.md ledger as consumer-deploy concern.
+-   **OPEN — F-ε-3 Configurator recursion** at `/motion/metaballs` reproduced under
+    Lighthouse Headless Chrome; K W8 had dispositioned as "false-positive" but
+    L W6 Lighthouse re-run reproduces. Routed to L W7 (touches Configurator with
+    `cloneMode: 'per-preset'` extension) OR L W8 ι integrity-sweep as M-tranche
+    carry-forward.
 
 ### L.W7 — Substrate cohesion (keyframes lift + aurora chrome Option-A unification)
 
 #### Lane A — Keyframes lift to canonical animations.css
 
-- 3 inline keyframes lifted from component `<style scoped>` blocks to
-  `src/styles/animations.css`: `pulse-dot-bounce`, `pulse-ring-spin`,
-  `typewriter-blink` (renamed from `tw-cursor-blink`; kebab-case canonical).
-- `Pulse.vue` -7 lines; `TypewriterText.vue` -11 lines.
-- `ScrollingText.vue`'s `scrolling-text-pan` remains inline (out of Lane A
-  bounds; documented exception).
+-   3 inline keyframes lifted from component `<style scoped>` blocks to
+    `src/styles/animations.css`: `pulse-dot-bounce`, `pulse-ring-spin`,
+    `typewriter-blink` (renamed from `tw-cursor-blink`; kebab-case canonical).
+-   `Pulse.vue` -7 lines; `TypewriterText.vue` -11 lines.
+-   `ScrollingText.vue`'s `scrolling-text-pan` remains inline (out of Lane A
+    bounds; documented exception).
 
 #### Lane B — Aurora chrome Option-A unification (closes K cross-tranche-debt)
 
-- **`useConfiguratorState<T>` API gains `cloneMode?: 'commit-on-write' |
-  'per-preset'` option** (default `'commit-on-write'` — metaballs preserved).
-  `per-preset` semantics: each preset slot holds an independent live clone
-  seeded from baseline; `selectPreset` snapshots the outgoing slot via
-  `toRaw` + clone then loads incoming slot into reactive `config`;
-  `resetCurrent` re-clones from preset definition.
-- **`useConfiguratorState<T>` API gains `cyclePreset(direction?: 1 | -1)`**
-  for keyboard handlers.
-- **Real bug fix surfaced during lane**: `defaultClone` hardened with `toRaw`
-  to unwrap Vue reactive proxies before `structuredClone` (which throws
-  `DataCloneError` on a Proxy).
-- **`ConfiguratorCloneMode` type exported** from configurator barrel.
-- **`useAuroraStudio` REMOVED** (Option I disposition). Aurora chrome
-  (`demo/stories/aurora.vue`) now consumes `useConfiguratorState<AuroraConfig>`
-  with `cloneMode: 'per-preset'`. The previously demo-private
-  `useAuroraStudio.ts` parallel-chrome implementation retires.
-- Configurator family second-consumer maturity: ACHIEVED. 3 consumers at HEAD
-  (metaballs commit-on-write; aurora per-preset; primitives/configurator demo
-  catalog). K cross-tranche-debt for configurator-family fidelity CLOSED.
-- F-ε-3 (Configurator recursion warning at `/motion/metaballs`): Playwright
-  probe post-Lane-B clean (zero "Maximum recursive updates exceeded" errors).
-  Lighthouse re-reproduction still surfaces under specific load timing —
-  routed to M-tranche for further investigation. Not a v1.0 release blocker
-  (Best-practices Lighthouse score 96; non-blocking advisory).
+-   **`useConfiguratorState<T>` API gains `cloneMode?: 'commit-on-write' |
+'per-preset'` option** (default `'commit-on-write'` — metaballs preserved).
+    `per-preset` semantics: each preset slot holds an independent live clone
+    seeded from baseline; `selectPreset` snapshots the outgoing slot via
+    `toRaw` + clone then loads incoming slot into reactive `config`;
+    `resetCurrent` re-clones from preset definition.
+-   **`useConfiguratorState<T>` API gains `cyclePreset(direction?: 1 | -1)`**
+    for keyboard handlers.
+-   **Real bug fix surfaced during lane**: `defaultClone` hardened with `toRaw`
+    to unwrap Vue reactive proxies before `structuredClone` (which throws
+    `DataCloneError` on a Proxy).
+-   **`ConfiguratorCloneMode` type exported** from configurator barrel.
+-   **`useAuroraStudio` REMOVED** (Option I disposition). Aurora chrome
+    (`demo/stories/aurora.vue`) now consumes `useConfiguratorState<AuroraConfig>`
+    with `cloneMode: 'per-preset'`. The previously demo-private
+    `useAuroraStudio.ts` parallel-chrome implementation retires.
+-   Configurator family second-consumer maturity: ACHIEVED. 3 consumers at HEAD
+    (metaballs commit-on-write; aurora per-preset; primitives/configurator demo
+    catalog). K cross-tranche-debt for configurator-family fidelity CLOSED.
+-   F-ε-3 (Configurator recursion warning at `/motion/metaballs`): Playwright
+    probe post-Lane-B clean (zero "Maximum recursive updates exceeded" errors).
+    Lighthouse re-reproduction still surfaces under specific load timing —
+    routed to M-tranche for further investigation. Not a v1.0 release blocker
+    (Best-practices Lighthouse score 96; non-blocking advisory).
 
 ### L.W5 — Doc cohort + K residual absorption (Lane A)
 
 L.W5 Lane A closes the v1.0 doc cohort + absorbs K residuals R3 + R4.
 
-- **CLAUDE.md / README.md / DESIGN.md aligned with v1.0 HEAD** — composables tree
-  reflects the L.W2 8-sub-tree restructure; Subpath surface section enumerates the
-  flat v1.0 surface (38 flat subpaths + `/styles` + `/api`); custom-package
-  cherry-pick rationale, naming-pair disambiguation (`dock` vs `dock-group`;
-  `glass-carousel` vs `carousel`), and CSS cascade order all documented.
-- **K R3 absorbed** — wave-spec status lines bumped from "open / pending /
-  planned" to "CLOSED `<commit>`" across `docs/tranches/K/waves/W*.md` (matching
-  K PROGRESS.md commit hashes) and the closed `docs/tranches/L/waves/W{0..6}.md`.
-- **K R4 absorbed (Option A — define new rungs)** — new `--surface-tint-{35,40,70}`
-  rungs in `src/styles/tokens.css` + `src/styles/theme.css` Tailwind bridge.
-  4 P1 sites migrated to canonical tokens: `Slider.vue:163` (slider thumb border),
-  `GlassTimeline.vue:172` (timeline thumb hover background),
-  `UnderlineTabs.vue:110` (tab hover color), `glass.css:220` (input-pill
-  placeholder). Canonical token vocabulary now covers every literal
-  `color-mix(in srgb, var(--foreground) N%, transparent)` site at HEAD.
-- **MIGRATION.md** — Lane B authors the canonical v0.9.x → v1.0 migration path.
-  Cited from CHANGELOG v1.0 header.
+-   **CLAUDE.md / README.md / DESIGN.md aligned with v1.0 HEAD** — composables tree
+    reflects the L.W2 8-sub-tree restructure; Subpath surface section enumerates the
+    flat v1.0 surface (38 flat subpaths + `/styles` + `/api`); custom-package
+    cherry-pick rationale, naming-pair disambiguation (`dock` vs `dock-group`;
+    `glass-carousel` vs `carousel`), and CSS cascade order all documented.
+-   **K R3 absorbed** — wave-spec status lines bumped from "open / pending /
+    planned" to "CLOSED `<commit>`" across `docs/tranches/K/waves/W*.md` (matching
+    K PROGRESS.md commit hashes) and the closed `docs/tranches/L/waves/W{0..6}.md`.
+-   **K R4 absorbed (Option A — define new rungs)** — new `--surface-tint-{35,40,70}`
+    rungs in `src/styles/tokens.css` + `src/styles/theme.css` Tailwind bridge.
+    4 P1 sites migrated to canonical tokens: `Slider.vue:163` (slider thumb border),
+    `GlassTimeline.vue:172` (timeline thumb hover background),
+    `UnderlineTabs.vue:110` (tab hover color), `glass.css:220` (input-pill
+    placeholder). Canonical token vocabulary now covers every literal
+    `color-mix(in srgb, var(--foreground) N%, transparent)` site at HEAD.
+-   **MIGRATION.md** — Lane B authors the canonical v0.9.x → v1.0 migration path.
+    Cited from CHANGELOG v1.0 header.
 
 ## v0.9.4 — 2026-05-11 — subpath dts publication gap (K.WS regression patch)
 
@@ -2793,31 +2834,31 @@ not ship `dist/src/`, so the path resolved to nothing. Consumers got
 
 ### FIXED
 
-- **Subpath dts publication gap** — `vite-plugin-dts` `rollupTypes: true`
-  has a pathing bug for nested entry-keys (containing `/`): the
-  synthetic-stub-then-rollup flow writes a broken `'../src/...'` re-export
-  at `dist/<key>.d.ts` and the rolled-up self-contained dts at
-  `dist/<basename>.d.ts`. Cohesion fix: rebound the two nested entry-keys
-  (`composables/dark`, `composables/keyboard`) to flat dist names
-  (`dark-subpath`, `keyboard-subpath`) in `vite.library.ts`. The
-  consumer-facing subpaths `@mkbabb/glass-ui/composables/{dark,keyboard}`
-  are preserved verbatim via `package.json` `exports` + `typesVersions`
-  pointing to the flat dist outputs.
-  Source implementations were also lifted into the subpath barrels
-  (`src/composables/{dark,keyboard}.ts`) — the legacy
-  `src/composables/{useGlobalDark,useKeyboardShortcuts}.ts` files become
-  one-line re-export shims that keep all internal `./useGlobalDark` and
-  `./useKeyboardShortcuts` imports compiling without churn.
-  (L.W1 will flatten the consumer-facing subpath names to
-  `./dark` / `./keyboard` as the final breaking gestalt.)
+-   **Subpath dts publication gap** — `vite-plugin-dts` `rollupTypes: true`
+    has a pathing bug for nested entry-keys (containing `/`): the
+    synthetic-stub-then-rollup flow writes a broken `'../src/...'` re-export
+    at `dist/<key>.d.ts` and the rolled-up self-contained dts at
+    `dist/<basename>.d.ts`. Cohesion fix: rebound the two nested entry-keys
+    (`composables/dark`, `composables/keyboard`) to flat dist names
+    (`dark-subpath`, `keyboard-subpath`) in `vite.library.ts`. The
+    consumer-facing subpaths `@mkbabb/glass-ui/composables/{dark,keyboard}`
+    are preserved verbatim via `package.json` `exports` + `typesVersions`
+    pointing to the flat dist outputs.
+    Source implementations were also lifted into the subpath barrels
+    (`src/composables/{dark,keyboard}.ts`) — the legacy
+    `src/composables/{useGlobalDark,useKeyboardShortcuts}.ts` files become
+    one-line re-export shims that keep all internal `./useGlobalDark` and
+    `./useKeyboardShortcuts` imports compiling without churn.
+    (L.W1 will flatten the consumer-facing subpath names to
+    `./dark` / `./keyboard` as the final breaking gestalt.)
 
 ### ADDED
 
-- **`scripts/release.sh` subpath-probe block** — runs a `node -e
-  "import('@mkbabb/glass-ui/<sp>')"` resolve check for every published
-  subpath after `npm run build` and before `git tag`. Aborts the release
-  if any subpath fails to resolve. Closes the silent-miss class that
-  produced the K.WS publication gap.
+-   **`scripts/release.sh` subpath-probe block** — runs a `node -e
+"import('@mkbabb/glass-ui/<sp>')"` resolve check for every published
+    subpath after `npm run build` and before `git tag`. Aborts the release
+    if any subpath fails to resolve. Closes the silent-miss class that
+    produced the K.WS publication gap.
 
 ## v0.9.3 — 2026-05-09 — vueuse SCC trap (Phase 1: additive subpath split)
 
@@ -2828,20 +2869,20 @@ removal, breaking, scheduled for v1.0).
 
 ### ADDED
 
-- **`@mkbabb/glass-ui/forms`** subpath barrel at `src/forms.ts`. Re-exports
-  `Input`, `Textarea`, the full `Combobox*` family (Combobox, ComboboxAnchor,
-  ComboboxCancel, ComboboxEmpty, ComboboxGroup, ComboboxInput, ComboboxItem,
-  ComboboxItemIndicator, ComboboxList, ComboboxSeparator, ComboboxTrigger,
-  ComboboxViewport). These are the form primitives that import `useVModel` /
-  `reactiveOmit` from `@vueuse/core` and so propagate the vueuse → Vue
-  runtime SCC into any consumer that reaches them through the root barrel.
-- **`@mkbabb/glass-ui/composables/dark`** subpath barrel at
-  `src/composables/dark.ts`. Re-exports `useGlobalDark` (`createGlobalState`
-  + `useDark` + `useToggle` consumer).
-- **`@mkbabb/glass-ui/composables/keyboard`** subpath barrel at
-  `src/composables/keyboard.ts`. Re-exports the keyboard-shortcuts registry
-  surface (`registerShortcut`, `useRegisteredShortcuts`, `formatCombo`,
-  `formatComboParts`, `isMac`, type aliases).
+-   **`@mkbabb/glass-ui/forms`** subpath barrel at `src/forms.ts`. Re-exports
+    `Input`, `Textarea`, the full `Combobox*` family (Combobox, ComboboxAnchor,
+    ComboboxCancel, ComboboxEmpty, ComboboxGroup, ComboboxInput, ComboboxItem,
+    ComboboxItemIndicator, ComboboxList, ComboboxSeparator, ComboboxTrigger,
+    ComboboxViewport). These are the form primitives that import `useVModel` /
+    `reactiveOmit` from `@vueuse/core` and so propagate the vueuse → Vue
+    runtime SCC into any consumer that reaches them through the root barrel.
+-   **`@mkbabb/glass-ui/composables/dark`** subpath barrel at
+    `src/composables/dark.ts`. Re-exports `useGlobalDark` (`createGlobalState`
+    -   `useDark` + `useToggle` consumer).
+-   **`@mkbabb/glass-ui/composables/keyboard`** subpath barrel at
+    `src/composables/keyboard.ts`. Re-exports the keyboard-shortcuts registry
+    surface (`registerShortcut`, `useRegisteredShortcuts`, `formatCombo`,
+    `formatComboParts`, `isMac`, type aliases).
 
 ### WHY
 
@@ -2853,7 +2894,7 @@ The speedtest W3.b.1 disposition surfaced a Strongly-Connected-Components
 entry chunk then imports from vueuse to access Vue, and Vite emits a
 `<link rel="modulepreload">` to satisfy the eager dependency — the same
 mechanism V.W1.T7 retired for vue-echarts. Net: the consumer's eager
-critical path *grows* despite the manualChunk's intent.
+critical path _grows_ despite the manualChunk's intent.
 
 The architecturally-correct fix is to keep vueuse-bearing surfaces off
 the consumer's tree-shake walk unless they explicitly reach for them.
@@ -2867,7 +2908,13 @@ Root-barrel imports keep working at v0.9.3:
 
 ```ts
 // Still resolves at v0.9.3 (Phase 1 keeps backward compat)
-import { Input, Textarea, Combobox, useGlobalDark, registerShortcut } from "@mkbabb/glass-ui";
+import {
+    Input,
+    Textarea,
+    Combobox,
+    useGlobalDark,
+    registerShortcut,
+} from "@mkbabb/glass-ui";
 ```
 
 Consumers that want to apply a vueuse manualChunk should migrate to the
@@ -2897,11 +2944,11 @@ for v1.0 / L tranche.
 
 ### CHORE
 
-- `package.json`: version bump 0.9.2 → 0.9.3; `exports["./forms"]`,
-  `exports["./composables/dark"]`, `exports["./composables/keyboard"]`
-  added; matching `typesVersions` entries.
-- `vite.library.ts`: `libraryEntries` extended with the three new entry
-  points.
+-   `package.json`: version bump 0.9.2 → 0.9.3; `exports["./forms"]`,
+    `exports["./composables/dark"]`, `exports["./composables/keyboard"]`
+    added; matching `typesVersions` entries.
+-   `vite.library.ts`: `libraryEntries` extended with the three new entry
+    points.
 
 ## v0.9.2 — 2026-05-08
 
@@ -2911,47 +2958,47 @@ Split 6 swap of `tailwind-merge` for a hand-rolled deduplicator.
 
 ### FIX
 
-- **Root barrel no longer re-exports `./freshness`** (the build-blocker).
-  `src/freshness.ts` imports `node:fs` / `node:path` / `node:url`; Vite's
-  browser bundler externalises these as `__vite-browser-external` and
-  fails when a consumer's worker pulls anything off `@mkbabb/glass-ui`'s
-  root export. The speedtest worker at `src/utils/speedtest/index.ts:1`
-  was hitting this path: the symptom was
-  `"existsSync" is not exported by "__vite-browser-external"` during
-  `npm run build`. The fix removes line 19's `export * from "./freshness"`
-  from `src/index.ts` and leaves the helper reachable at the subpath
-  `@mkbabb/glass-ui/freshness` (`exports["./freshness"]` was minted in
-  v0.9.1). The library-external list in `vite.library.ts` keeps the
-  Node-builtin externals so the subpath still bundles correctly.
+-   **Root barrel no longer re-exports `./freshness`** (the build-blocker).
+    `src/freshness.ts` imports `node:fs` / `node:path` / `node:url`; Vite's
+    browser bundler externalises these as `__vite-browser-external` and
+    fails when a consumer's worker pulls anything off `@mkbabb/glass-ui`'s
+    root export. The speedtest worker at `src/utils/speedtest/index.ts:1`
+    was hitting this path: the symptom was
+    `"existsSync" is not exported by "__vite-browser-external"` during
+    `npm run build`. The fix removes line 19's `export * from "./freshness"`
+    from `src/index.ts` and leaves the helper reachable at the subpath
+    `@mkbabb/glass-ui/freshness` (`exports["./freshness"]` was minted in
+    v0.9.1). The library-external list in `vite.library.ts` keeps the
+    Node-builtin externals so the subpath still bundles correctly.
 
 ### PERF
 
-- **`cn()` swaps `tailwind-merge` for `clsx` + a hand-rolled deduplicator**
-  per A5 §3 Split 6 and `feedback_library_gaps.md`. `tailwind-merge`
-  ships ~22 KB gzipped of full Tailwind config tables to resolve every
-  conflict pair across the framework; glass-ui exercises a small,
-  enumerable subset. The replacement walks the joined class string
-  left-to-right, computes each token's bucket via a ~30-rule regex
-  table (font-size, font-weight, padding axes, margin axes, gap, sizing,
-  bg-color, text-color, border-color, border-width, ring, rounded,
-  display, position, overflow, flex, items, justify, opacity, z-index,
-  cursor, shadow), and keeps the last-write per `(prefix-scope|bucket)`
-  pair. Variant prefixes (`hover:`, `md:`, `dark:`) scope the bucket so
-  `text-sm md:text-lg` keeps both tokens. Estimated consumer-side delta:
-  −10 to −18 KB gzipped on the speedtest entry chunk after re-link
-  (A5 §3 Split 6).
+-   **`cn()` swaps `tailwind-merge` for `clsx` + a hand-rolled deduplicator**
+    per A5 §3 Split 6 and `feedback_library_gaps.md`. `tailwind-merge`
+    ships ~22 KB gzipped of full Tailwind config tables to resolve every
+    conflict pair across the framework; glass-ui exercises a small,
+    enumerable subset. The replacement walks the joined class string
+    left-to-right, computes each token's bucket via a ~30-rule regex
+    table (font-size, font-weight, padding axes, margin axes, gap, sizing,
+    bg-color, text-color, border-color, border-width, ring, rounded,
+    display, position, overflow, flex, items, justify, opacity, z-index,
+    cursor, shadow), and keeps the last-write per `(prefix-scope|bucket)`
+    pair. Variant prefixes (`hover:`, `md:`, `dark:`) scope the bucket so
+    `text-sm md:text-lg` keeps both tokens. Estimated consumer-side delta:
+    −10 to −18 KB gzipped on the speedtest entry chunk after re-link
+    (A5 §3 Split 6).
 
 ### TEST
 
-- **18 new `cn.test.ts` cases** (5 variadic + clsx normalisation,
-  13 conflict-pair last-wins) at `src/utils/__tests__/cn.test.ts`.
-  Suite total moves from 322/322 (W2 close) to 340/340.
+-   **18 new `cn.test.ts` cases** (5 variadic + clsx normalisation,
+    13 conflict-pair last-wins) at `src/utils/__tests__/cn.test.ts`.
+    Suite total moves from 322/322 (W2 close) to 340/340.
 
 ### CHORE
 
-- `package.json`: `tailwind-merge` removed from `peerDependencies` +
-  `devDependencies`; `clsx` retained.
-- `vite.library.ts`: `tailwind-merge` removed from `libraryExternal`.
+-   `package.json`: `tailwind-merge` removed from `peerDependencies` +
+    `devDependencies`; `clsx` retained.
+-   `vite.library.ts`: `tailwind-merge` removed from `libraryExternal`.
 
 ## v0.9.1 — 2026-05-08
 
@@ -2962,64 +3009,64 @@ post-V drift surfaced by audit A3.
 
 ### NEW
 
-- **`<ScrollingText>` overflow-marquee primitive** lifted from the
-  speedtest consumer per A3 §3.1. Subpath: `@mkbabb/glass-ui/scrolling-text`.
-  Mirrors the typewriter / pulse / status-dot custom-composite shape.
-  Test coverage: 3 vitest cases against the `data-overflows` boolean
-  threshold (delta > 1 px).
-- **`<Section>` storybook entry** at `demo/stories/primitives/section.vue`
-  closes the V.W3.T7 unification primitive's missing demo (A3 §5.1).
-  Exercises tone (heading · title · subheading · label) × gap (tight ·
-  regular · loose) plus the custom header slot.
-- **`<ScrollingText>` storybook entry** at `demo/stories/data/scrolling-text.vue`
-  shows the overflow threshold across narrow / mid / wide hosts using
-  long IPv6 + org-name samples.
+-   **`<ScrollingText>` overflow-marquee primitive** lifted from the
+    speedtest consumer per A3 §3.1. Subpath: `@mkbabb/glass-ui/scrolling-text`.
+    Mirrors the typewriter / pulse / status-dot custom-composite shape.
+    Test coverage: 3 vitest cases against the `data-overflows` boolean
+    threshold (delta > 1 px).
+-   **`<Section>` storybook entry** at `demo/stories/primitives/section.vue`
+    closes the V.W3.T7 unification primitive's missing demo (A3 §5.1).
+    Exercises tone (heading · title · subheading · label) × gap (tight ·
+    regular · loose) plus the custom header slot.
+-   **`<ScrollingText>` storybook entry** at `demo/stories/data/scrolling-text.vue`
+    shows the overflow threshold across narrow / mid / wide hosts using
+    long IPv6 + org-name samples.
 
 ### INFRASTRUCTURE
 
-- **`scripts/freshness-gate.mjs` + `prebuild` hook** close the V.W8
-  stale-dist drift class per A3 §4.3 / V.FINAL.md:104-106. Strict-mode
-  invocation (CI / hard-gate) exits 1 when newest src mtime exceeds
-  `dist/glass-ui.js` or `dist/index.d.ts`. `--pre` permissive mode warns
-  and exits 0 so the upcoming `vite build` can rebuild without the gate
-  blocking it.
-- **`prepare: test -f dist/glass-ui.js || npm run build`** lifecycle hook
-  (npm-canonical build-on-install path).
-- **`assertDistFresh()` helper** exported from `@mkbabb/glass-ui/freshness`
-  for downstream `vite.config.ts` consumer wiring (W3 wires speedtest;
-  W2 ships the helper alone). 1 vitest sanity case in
-  `scripts/__tests__/freshness-gate.test.ts`.
-- **`@types/node` + tsconfig `types: ["vite/client", "node"]`** added so
-  the freshness module typechecks. `node:fs` / `node:path` / `node:url`
-  added to vite's `libraryExternal` list (Node-only consumer helper —
-  must not be bundled into the browser ESM output).
-- **Cross-repo prebuild gate** mirrors land at `keyframes.js@<HEAD>`
-  (branch `w.w2.1-keyframes-prebuild`, scripts/freshness-gate.mjs +
-  `prebuild` script — `prepare` already present) and `value.js@<HEAD>`
-  (branch `w.w2.1-value-js-prebuild`, scripts/freshness-gate.mjs +
-  `prebuild` + `prepare`). Per A3 §4.4 same-bug-class. Version bumps +
-  publish ceremonies are owned by W5.T1 (value.js) / W5.T2 (keyframes.js).
+-   **`scripts/freshness-gate.mjs` + `prebuild` hook** close the V.W8
+    stale-dist drift class per A3 §4.3 / V.FINAL.md:104-106. Strict-mode
+    invocation (CI / hard-gate) exits 1 when newest src mtime exceeds
+    `dist/glass-ui.js` or `dist/index.d.ts`. `--pre` permissive mode warns
+    and exits 0 so the upcoming `vite build` can rebuild without the gate
+    blocking it.
+-   **`prepare: test -f dist/glass-ui.js || npm run build`** lifecycle hook
+    (npm-canonical build-on-install path).
+-   **`assertDistFresh()` helper** exported from `@mkbabb/glass-ui/freshness`
+    for downstream `vite.config.ts` consumer wiring (W3 wires speedtest;
+    W2 ships the helper alone). 1 vitest sanity case in
+    `scripts/__tests__/freshness-gate.test.ts`.
+-   **`@types/node` + tsconfig `types: ["vite/client", "node"]`** added so
+    the freshness module typechecks. `node:fs` / `node:path` / `node:url`
+    added to vite's `libraryExternal` list (Node-only consumer helper —
+    must not be bundled into the browser ESM output).
+-   **Cross-repo prebuild gate** mirrors land at `keyframes.js@<HEAD>`
+    (branch `w.w2.1-keyframes-prebuild`, scripts/freshness-gate.mjs +
+    `prebuild` script — `prepare` already present) and `value.js@<HEAD>`
+    (branch `w.w2.1-value-js-prebuild`, scripts/freshness-gate.mjs +
+    `prebuild` + `prepare`). Per A3 §4.4 same-bug-class. Version bumps +
+    publish ceremonies are owned by W5.T1 (value.js) / W5.T2 (keyframes.js).
 
 ### MIGRATIONS
 
-- **StorySection sweep** — opportunistic mechanical migration of 16
-  `<section class="flex flex-col gap-3"><p class="section-label">…</p>`
-  pairs onto `<StorySection :label="…">` across 5 stories:
-  `feedback/progress.vue` (4 sites), `feedback/skeleton.vue` (3),
-  `primitives/pulse.vue` (4), `primitives/status-dot.vue` (2),
-  `primitives/separator.vue` (4 top-level; nested label-paragraphs
-  inside the 4th section's sub-divs left as-is — those are inner-row
-  labels, not section heads). Bound by W2.md §Format budget; further
-  sites roll forward to the next opportunistic touch.
+-   **StorySection sweep** — opportunistic mechanical migration of 16
+    `<section class="flex flex-col gap-3"><p class="section-label">…</p>`
+    pairs onto `<StorySection :label="…">` across 5 stories:
+    `feedback/progress.vue` (4 sites), `feedback/skeleton.vue` (3),
+    `primitives/pulse.vue` (4), `primitives/status-dot.vue` (2),
+    `primitives/separator.vue` (4 top-level; nested label-paragraphs
+    inside the 4th section's sub-divs left as-is — those are inner-row
+    labels, not section heads). Bound by W2.md §Format budget; further
+    sites roll forward to the next opportunistic touch.
 
 ### CONSUMER MIGRATION (speedtest)
 
-- `src/components/AppSettingsButton.vue:81` rewrites
-  `import ScrollingText from "@src/components/ScrollingText.vue"` →
-  `import { ScrollingText } from "@mkbabb/glass-ui"` (named import —
-  ScrollingText now ships from the root barrel + `/scrolling-text`
-  subpath). Deletes `src/components/ScrollingText.vue` (115 LOC).
-  Five template-level call-sites unchanged.
+-   `src/components/AppSettingsButton.vue:81` rewrites
+    `import ScrollingText from "@src/components/ScrollingText.vue"` →
+    `import { ScrollingText } from "@mkbabb/glass-ui"` (named import —
+    ScrollingText now ships from the root barrel + `/scrolling-text`
+    subpath). Deletes `src/components/ScrollingText.vue` (115 LOC).
+    Five template-level call-sites unchanged.
 
 ## v0.9.0 — 2026-05-08
 
@@ -3030,117 +3077,117 @@ R-tranche refining synthesis.
 
 ### Foundation polish (V.W2)
 
-- **Icon-size tokens minted** — `--icon-2xl: 2rem`, `--icon-3xl: 2.5rem`,
-  `--icon-hero: 3.5rem` complete the icon-size rung set; `theme.css`
-  bridges the new tokens through `@theme` so consumers compose
-  `size-icon-2xl`, `size-icon-3xl`, `size-icon-hero` Tailwind utilities.
-- **`--z-behind: -10`** — Aurora background-tier z-index for elements
-  that intentionally render below the document flow.
-- **Notification + Slider canonical glass-blur** — both primitives adopt
-  the canonical per-tier glass-blur tokens.
-- **Notification + Toast canonical tier shadows** — retire literal
-  `shadow-lg` overrides in favour of the canonical tier-shadow tokens.
-- **Card + Label titles** → typography ladder (admin-label / display-N).
-- **Avatar / Badge / Button / Toggle radius sweep** — remaining raw
-  radius literals migrate onto the `--radius-*` token rungs.
-- **Resource hints + .browserslistrc floor** — `<link rel="preconnect">`
-  for `api.fontshare.com` lands in the demo shell; `.browserslistrc`
-  declares the canonical baseline.
-- **`.gold-shimmer` PRM bracket** — wraps the slide animation in a
-  `prefers-reduced-motion: no-preference` bracket per R1 §3 + R4 §5.1.
+-   **Icon-size tokens minted** — `--icon-2xl: 2rem`, `--icon-3xl: 2.5rem`,
+    `--icon-hero: 3.5rem` complete the icon-size rung set; `theme.css`
+    bridges the new tokens through `@theme` so consumers compose
+    `size-icon-2xl`, `size-icon-3xl`, `size-icon-hero` Tailwind utilities.
+-   **`--z-behind: -10`** — Aurora background-tier z-index for elements
+    that intentionally render below the document flow.
+-   **Notification + Slider canonical glass-blur** — both primitives adopt
+    the canonical per-tier glass-blur tokens.
+-   **Notification + Toast canonical tier shadows** — retire literal
+    `shadow-lg` overrides in favour of the canonical tier-shadow tokens.
+-   **Card + Label titles** → typography ladder (admin-label / display-N).
+-   **Avatar / Badge / Button / Toggle radius sweep** — remaining raw
+    radius literals migrate onto the `--radius-*` token rungs.
+-   **Resource hints + .browserslistrc floor** — `<link rel="preconnect">`
+    for `api.fontshare.com` lands in the demo shell; `.browserslistrc`
+    declares the canonical baseline.
+-   **`.gold-shimmer` PRM bracket** — wraps the slide animation in a
+    `prefers-reduced-motion: no-preference` bracket per R1 §3 + R4 §5.1.
 
 ### Structural unions (V.W3)
 
-- **`<ModalOverlay>` collapses 3 scrim declarations onto a shared SFC** —
-  AlertDialogOverlay + DialogOverlay + SheetOverlay compose the new
-  primitive reading `--overlay-scrim` (with `tier='strong'` for the
-  destructive variant).
-- **`menuItemVariants` CVA collapses 9 primitives** — DropdownMenuItem,
-  ContextMenuItem, SelectItem, ComboboxItem, CommandItem and their
-  Sub variants share a single CVA recipe with `data-[disabled]`,
-  `data-[highlighted]`, and `data-[state=checked]` branches.
-- **`.popover-content` utility** — collapses 2 W1-survivor popover hosts
-  onto a single shared utility.
-- **`<LabeledField>` parent SFC + `.labeled-field-label` utility** —
-  the four labeled-field wrappers (Input / Select / Slider / Switch)
-  now compose a single parent that owns the IconTooltip + label
-  layer; the four wrappers stay as 3-line forwarders for back-compat.
-- **`<Section>` sectioning primitive over the typography ladder** —
-  semantic sectioning host that paints the canonical
-  `text-display-N`/`text-title`/`text-prose` typography pairings.
-- **Active-state vocabulary canon** — BouncyToggle + UnderlineTabs adopt
-  `aria-pressed` / `data-active` per R4 §2.4 reconcile.
-- **Density-rail unification** — GlassDock + DockGroup + MetricPill
-  unify on `data-density` attribute + a CVA-driven density token set
-  (StackedIconGroup intentionally excluded per B5 §2.1 — size-axis only).
-- **Popover-animation grammar** — `popover-animate` + `slide-in-from-side`
-  standardised on `@utility`; HoverPopover + the floating-panel host
-  unify on the canon.
-- **Surface-tint tier aliases** — `--surface-tint-quiet/floating/modal`
-  bridge the 9-rung numeric scale into named tiers consumed by
-  component-level styles.
+-   **`<ModalOverlay>` collapses 3 scrim declarations onto a shared SFC** —
+    AlertDialogOverlay + DialogOverlay + SheetOverlay compose the new
+    primitive reading `--overlay-scrim` (with `tier='strong'` for the
+    destructive variant).
+-   **`menuItemVariants` CVA collapses 9 primitives** — DropdownMenuItem,
+    ContextMenuItem, SelectItem, ComboboxItem, CommandItem and their
+    Sub variants share a single CVA recipe with `data-[disabled]`,
+    `data-[highlighted]`, and `data-[state=checked]` branches.
+-   **`.popover-content` utility** — collapses 2 W1-survivor popover hosts
+    onto a single shared utility.
+-   **`<LabeledField>` parent SFC + `.labeled-field-label` utility** —
+    the four labeled-field wrappers (Input / Select / Slider / Switch)
+    now compose a single parent that owns the IconTooltip + label
+    layer; the four wrappers stay as 3-line forwarders for back-compat.
+-   **`<Section>` sectioning primitive over the typography ladder** —
+    semantic sectioning host that paints the canonical
+    `text-display-N`/`text-title`/`text-prose` typography pairings.
+-   **Active-state vocabulary canon** — BouncyToggle + UnderlineTabs adopt
+    `aria-pressed` / `data-active` per R4 §2.4 reconcile.
+-   **Density-rail unification** — GlassDock + DockGroup + MetricPill
+    unify on `data-density` attribute + a CVA-driven density token set
+    (StackedIconGroup intentionally excluded per B5 §2.1 — size-axis only).
+-   **Popover-animation grammar** — `popover-animate` + `slide-in-from-side`
+    standardised on `@utility`; HoverPopover + the floating-panel host
+    unify on the canon.
+-   **Surface-tint tier aliases** — `--surface-tint-quiet/floating/modal`
+    bridge the 9-rung numeric scale into named tiers consumed by
+    component-level styles.
 
 ### Storybook + composables expansion (V.W4)
 
-- **5 chassis primitives** — `<StorySection>`, `<ShowcaseFrame>`,
-  `<DockShowcaseFrame>`, `<TokenLadder>`, `<ToneSwatch>` collapse the
-  ~233-site demo-host duplication. `<ShowcaseFrame>` carries a 5-rung
-  `pad` knob (xs=p-3 / sm=p-4 / md=p-5 / lg=p-6 / xl=p-10) including
-  the p-4 most-frequent close-variant.
-- **`useStoryDemo` composable** — canonical play / reset / status
-  harness for storybook demos. Mirrors `useStagger`'s timer-set
-  discipline: cleanup callbacks registered inside the play handler
-  fire on `reset()` AND `onScopeDispose`. Async-aware. Generic over
-  the live-state shape.
-- **9 missing primitive entries** — configurator, controls/DarkModeToggle,
-  expandable-container, icon-tooltip, labeled-field, paper-backdrop,
-  stacked-icons, toggle-chip, glass-panel.
-- **Toaster.vue story** — the `ui/toast/Toaster.vue` drop-in primitive
-  that consumers (the speedtest, the demo itself) compose at the layout
-  root. Per B4 §3.3 — A4 missed `ui/`-orphan primitives.
-- **Badge `success | warning | info` variants demo** — the v0.8.6 CVA
-  branches gain a dedicated `semantic tones` row in the badge story.
-- **23 composable storybook entries** — useGlobalDark (with singleton
-  invariant demo per B4 §3.5), useKeyboardShortcuts (registerShortcut
-  + useRegisteredShortcuts pair), useResizeObserver, useGlassRenderer,
-  useAnimatedNumber, useDarkModeSync, useIntersectionPause, useRAFLoop,
-  useScrollProgress, useSpringOrchestrator, useStaggerReveal,
-  useOffsetPagination, useVirtualSectionWindow, useWindowedStore,
-  useSortable, useScrollTracker, useSidebarFollow, useSidebarState,
-  useTreeIndex, useTouchGate, useTimer, useInterval, useInfiniteScroll,
-  plus the new useStoryDemo entry. Per R4 §4.3 — all 23 are publicly
-  exported (no internal-only composables in the cohort).
-- **3 token-tour foundation pages** — Surface Tints (9-rung tint scale +
-  V.W3 tier aliases), Overlays & Scrims (three scrim weights + motion
-  + lift offsets), Chart & Chassis Palette (chart aliases + chassis-tier
-  opacities + specular tokens; resolves the pre-V `--viz-topology` /
-  `--viz-recursion` non-existent token references).
-- **Toast story tone migration** — retires raw `bg-emerald-*` /
-  `bg-amber-*` / `bg-red-*` Tailwind ladders for the canonical
-  `--success` / `--warning` / `--destructive` token plates.
-- **Storybook smoke gate** — `tests/stories.smoke.spec.ts` asserts every
-  manifest entry resolves to a valid component (no MissingStory
-  placeholder), catching manifest-vs-file drift in the existing test
-  suite.
+-   **5 chassis primitives** — `<StorySection>`, `<ShowcaseFrame>`,
+    `<DockShowcaseFrame>`, `<TokenLadder>`, `<ToneSwatch>` collapse the
+    ~233-site demo-host duplication. `<ShowcaseFrame>` carries a 5-rung
+    `pad` knob (xs=p-3 / sm=p-4 / md=p-5 / lg=p-6 / xl=p-10) including
+    the p-4 most-frequent close-variant.
+-   **`useStoryDemo` composable** — canonical play / reset / status
+    harness for storybook demos. Mirrors `useStagger`'s timer-set
+    discipline: cleanup callbacks registered inside the play handler
+    fire on `reset()` AND `onScopeDispose`. Async-aware. Generic over
+    the live-state shape.
+-   **9 missing primitive entries** — configurator, controls/DarkModeToggle,
+    expandable-container, icon-tooltip, labeled-field, paper-backdrop,
+    stacked-icons, toggle-chip, glass-panel.
+-   **Toaster.vue story** — the `ui/toast/Toaster.vue` drop-in primitive
+    that consumers (the speedtest, the demo itself) compose at the layout
+    root. Per B4 §3.3 — A4 missed `ui/`-orphan primitives.
+-   **Badge `success | warning | info` variants demo** — the v0.8.6 CVA
+    branches gain a dedicated `semantic tones` row in the badge story.
+-   **23 composable storybook entries** — useGlobalDark (with singleton
+    invariant demo per B4 §3.5), useKeyboardShortcuts (registerShortcut
+    -   useRegisteredShortcuts pair), useResizeObserver, useGlassRenderer,
+        useAnimatedNumber, useDarkModeSync, useIntersectionPause, useRAFLoop,
+        useScrollProgress, useSpringOrchestrator, useStaggerReveal,
+        useOffsetPagination, useVirtualSectionWindow, useWindowedStore,
+        useSortable, useScrollTracker, useSidebarFollow, useSidebarState,
+        useTreeIndex, useTouchGate, useTimer, useInterval, useInfiniteScroll,
+        plus the new useStoryDemo entry. Per R4 §4.3 — all 23 are publicly
+        exported (no internal-only composables in the cohort).
+-   **3 token-tour foundation pages** — Surface Tints (9-rung tint scale +
+    V.W3 tier aliases), Overlays & Scrims (three scrim weights + motion
+    -   lift offsets), Chart & Chassis Palette (chart aliases + chassis-tier
+        opacities + specular tokens; resolves the pre-V `--viz-topology` /
+        `--viz-recursion` non-existent token references).
+-   **Toast story tone migration** — retires raw `bg-emerald-*` /
+    `bg-amber-*` / `bg-red-*` Tailwind ladders for the canonical
+    `--success` / `--warning` / `--destructive` token plates.
+-   **Storybook smoke gate** — `tests/stories.smoke.spec.ts` asserts every
+    manifest entry resolves to a valid component (no MissingStory
+    placeholder), catching manifest-vs-file drift in the existing test
+    suite.
 
 ### Test surface
 
-- 24 test files / 311 tests pass (was 22 / 301 at v0.8.6 baseline).
-- New: `useStoryDemo.spec.ts` (6 tests covering cleanup-on-reset,
-  cleanup-on-unmount, state-resets-to-initial, sync-status-cycle,
-  async-status-cycle, no-op-without-handler).
-- New: `stories.smoke.spec.ts` (4 tests over the manifest).
+-   24 test files / 311 tests pass (was 22 / 301 at v0.8.6 baseline).
+-   New: `useStoryDemo.spec.ts` (6 tests covering cleanup-on-reset,
+    cleanup-on-unmount, state-resets-to-initial, sync-status-cycle,
+    async-status-cycle, no-op-without-handler).
+-   New: `stories.smoke.spec.ts` (4 tests over the manifest).
 
 ### Migration notes
 
-- Consumers of `<DialogOverlay>` / `<SheetOverlay>` / `<AlertDialogOverlay>`
-  see no API changes — these primitives now compose the new
-  `<ModalOverlay>` internally.
-- `<LabeledInput|Select|Slider|Switch>` consumers see no API changes —
-  the four wrappers now forward to the new `<LabeledField>` parent.
-- Demo-side authors should compose the new `<StorySection>` and
-  `<ShowcaseFrame>` primitives in new stories; existing stories will
-  migrate progressively in a future cleanup pass.
+-   Consumers of `<DialogOverlay>` / `<SheetOverlay>` / `<AlertDialogOverlay>`
+    see no API changes — these primitives now compose the new
+    `<ModalOverlay>` internally.
+-   `<LabeledInput|Select|Slider|Switch>` consumers see no API changes —
+    the four wrappers now forward to the new `<LabeledField>` parent.
+-   Demo-side authors should compose the new `<StorySection>` and
+    `<ShowcaseFrame>` primitives in new stories; existing stories will
+    migrate progressively in a future cleanup pass.
 
 ## v0.8.6 — 2026-05-07
 
@@ -3151,104 +3198,104 @@ several primitives onto the canon they advertise.
 
 ### Composable repairs
 
-- **`useAnimatedNumber` — progress mode no longer overshoots backward
-  through the rail.** Audit U.W0.A5 §1 isolated the smoking gun at line
-  87: `clamp: false` for progress mode let `SmoothProgress.currentValue`
-  hold a stale 100 across phase boundaries, then damp 100 → 0 when the
-  consumer's target dropped to the next phase's first-tick value. The
-  composable now keeps the underlying smoother in `[0, 1]` and scales
-  at the consumer-facing boundary, so the smoother's internal clamp is
-  the exact mirror of the `[0, 100]` external contract.
-- **`useStagger` — `prefers-reduced-motion` short-circuit.** Per audit
-  A5 §"library gaps", the timer cascade ran unconditionally. The
-  composable now defaults to honouring `prefers-reduced-motion: reduce`
-  with a synchronous flush of every reveal slot. Opt out via
-  `respectReducedMotion: false`.
+-   **`useAnimatedNumber` — progress mode no longer overshoots backward
+    through the rail.** Audit U.W0.A5 §1 isolated the smoking gun at line
+    87: `clamp: false` for progress mode let `SmoothProgress.currentValue`
+    hold a stale 100 across phase boundaries, then damp 100 → 0 when the
+    consumer's target dropped to the next phase's first-tick value. The
+    composable now keeps the underlying smoother in `[0, 1]` and scales
+    at the consumer-facing boundary, so the smoother's internal clamp is
+    the exact mirror of the `[0, 100]` external contract.
+-   **`useStagger` — `prefers-reduced-motion` short-circuit.** Per audit
+    A5 §"library gaps", the timer cascade ran unconditionally. The
+    composable now defaults to honouring `prefers-reduced-motion: reduce`
+    with a synchronous flush of every reveal slot. Opt out via
+    `respectReducedMotion: false`.
 
 ### Primitive repairs
 
-- **`GlassPanel` — retired-tier migration (v0.7 → v0.8 5-rung ladder).**
-  Audit C-b axis 4 #21. The last custom citizen still shipping
-  `default | medium | elevated` migrates to
-  `wash | quiet | resting | floating | overlay`. Default is now `resting`
-  (matches the prior `default → glass-resting` resolution exactly).
-  Scoped fallback CSS adopts canonical `--glass-bg-{wash,floating}` and
-  `--glass-border-floating` handles instead of raw `color-mix(--card N%, ...)`.
-- **Popover-class `shadow-md` retire (7 components).** Audit C-a §1 +
-  §5.2 / U10. PopoverContent, SelectContent, ComboboxList,
-  ContextMenu{,Sub}Content, DialogContent (`shadow-xl`), CommandDialog
-  (`shadow-lg`) all double-stacked Tailwind shadow utilities atop
-  `.glass-floating`, clobbering the canonical `--glass-shadow-floating`.
-  The literal shadow drops; the canon paints.
-- **`ContextMenu*Content` — drop opaque `bg-popover` over glass-floating.**
-  Audit C-a §2.2 / §gap.10. The opaque `bg-popover` declaration negated
-  the `glass-floating` translucent background.
-- **Notification — status-color foreground tokens.** Audit C-a §1.4 /
-  §7.2 / §gap.5 (and U11). The four-row variant map now consumes
-  `text-{success,warning,info,destructive}-foreground` instead of
-  baking `text-white` (which misread against the luminous amber plate
-  particularly).
-- **`Button.glass` — canonical `.glass-wash` composition.** Audit C-a
-  §2.1. The variant re-implemented `.glass-wash` inline AND mixed tiers
-  (bg-wash + border-quiet — self-contradictory). Compresses onto the
-  canonical class.
-- **`Sheet` — canonical `.sheet-animate` adoption.** Audit C-a §2.3 /
-  §7. The `sheet-animate` utility was authored explicitly for Sheet
-  but bypassed via raw `data-[state]:duration-300/-500`.
-- **`Badge` — `success | warning | info` variants.** Audit B-b
-  §"glass-ui gaps". The semantic-colour CVA branches now compose the
-  canonical `--success / --warning / --info` plates with their
-  `--*-foreground` glyph counterparts.
-- **`DarkModeToggle` — focus-visible affordance.** Audit C-b axis 3
-  #16. Composes `focus-ring` so keyboard navigation paints
-  `--focus-ring-shadow` over the pill geometry.
+-   **`GlassPanel` — retired-tier migration (v0.7 → v0.8 5-rung ladder).**
+    Audit C-b axis 4 #21. The last custom citizen still shipping
+    `default | medium | elevated` migrates to
+    `wash | quiet | resting | floating | overlay`. Default is now `resting`
+    (matches the prior `default → glass-resting` resolution exactly).
+    Scoped fallback CSS adopts canonical `--glass-bg-{wash,floating}` and
+    `--glass-border-floating` handles instead of raw `color-mix(--card N%, ...)`.
+-   **Popover-class `shadow-md` retire (7 components).** Audit C-a §1 +
+    §5.2 / U10. PopoverContent, SelectContent, ComboboxList,
+    ContextMenu{,Sub}Content, DialogContent (`shadow-xl`), CommandDialog
+    (`shadow-lg`) all double-stacked Tailwind shadow utilities atop
+    `.glass-floating`, clobbering the canonical `--glass-shadow-floating`.
+    The literal shadow drops; the canon paints.
+-   **`ContextMenu*Content` — drop opaque `bg-popover` over glass-floating.**
+    Audit C-a §2.2 / §gap.10. The opaque `bg-popover` declaration negated
+    the `glass-floating` translucent background.
+-   **Notification — status-color foreground tokens.** Audit C-a §1.4 /
+    §7.2 / §gap.5 (and U11). The four-row variant map now consumes
+    `text-{success,warning,info,destructive}-foreground` instead of
+    baking `text-white` (which misread against the luminous amber plate
+    particularly).
+-   **`Button.glass` — canonical `.glass-wash` composition.** Audit C-a
+    §2.1. The variant re-implemented `.glass-wash` inline AND mixed tiers
+    (bg-wash + border-quiet — self-contradictory). Compresses onto the
+    canonical class.
+-   **`Sheet` — canonical `.sheet-animate` adoption.** Audit C-a §2.3 /
+    §7. The `sheet-animate` utility was authored explicitly for Sheet
+    but bypassed via raw `data-[state]:duration-300/-500`.
+-   **`Badge` — `success | warning | info` variants.** Audit B-b
+    §"glass-ui gaps". The semantic-colour CVA branches now compose the
+    canonical `--success / --warning / --info` plates with their
+    `--*-foreground` glyph counterparts.
+-   **`DarkModeToggle` — focus-visible affordance.** Audit C-b axis 3
+    #16. Composes `focus-ring` so keyboard navigation paints
+    `--focus-ring-shadow` over the pill geometry.
 
 ### Foundation repairs
 
-- **Typography ladder dedup — `--type-leading-*` / `--type-tracking-*`
-  canonical.** Audit C-c §1.1 / Union 2 (and U13). `typography.css`
-  declared duplicate `--leading-*` / `--tracking-*` tokens with the
-  same numeric values as the canonical `--type-*` rungs. Retires the
-  duplicates and migrates every in-file `@utility text-*` consumer to
-  the `--type-*` form. theme.css continues to bridge the
-  `--leading-*` / `--tracking-*` Tailwind utilities through the canon.
-- **Cartoon-shadow dual-system collapse.** Audit C-c §1.3 / Union 1
-  (and U14). The token-driven `--shadow-cartoon-{sm,md,lg}` rungs
-  (auto-darking via `--shadow-color`) were silently shadowed at every
-  consumer site by the `utilities.css` `.shadow-cartoon-*` class set
-  reading raw `--shadow-cartoon-color{,-soft}` literals (pure
-  black/white). The utility-class shadows now consume the token rungs;
-  the bezel border + translateY stamp geometry stays.
-- **`metric-badge` + `input-bar` adopt the canonical glass tier.**
-  Audit C-c §7.2. Both utilities painted raw
-  `color-mix(--card N%, transparent)` plates with hand-rolled
-  `backdrop-filter` — bypassing the 5-tier ladder and silently
-  no-op'ing the PRT / no-backdrop-filter fallbacks. metric-badge now
-  composes `--glass-bg-quiet` (rest) → `--glass-bg-resting` (hover);
-  input-bar composes `--glass-bg-floating` + `--glass-blur-floating`.
-- **`--opacity-disabled` Tailwind bridge + sweep.** Audit C-a §1.2 /
-  §gap.4 / U12. theme.css adds the `--opacity-disabled` (0.5) and
-  `--opacity-icon-muted` (0.8) bridges so consumers compose
-  `disabled:opacity-disabled` instead of literal `disabled:opacity-50`.
-  The 11 ui/ + custom/ sites that hardcoded the literal — plus the
-  Button base composing the arbitrary `disabled:opacity-[var(--opacity-disabled)]`
-  form — sweep onto the canonical utility.
+-   **Typography ladder dedup — `--type-leading-*` / `--type-tracking-*`
+    canonical.** Audit C-c §1.1 / Union 2 (and U13). `typography.css`
+    declared duplicate `--leading-*` / `--tracking-*` tokens with the
+    same numeric values as the canonical `--type-*` rungs. Retires the
+    duplicates and migrates every in-file `@utility text-*` consumer to
+    the `--type-*` form. theme.css continues to bridge the
+    `--leading-*` / `--tracking-*` Tailwind utilities through the canon.
+-   **Cartoon-shadow dual-system collapse.** Audit C-c §1.3 / Union 1
+    (and U14). The token-driven `--shadow-cartoon-{sm,md,lg}` rungs
+    (auto-darking via `--shadow-color`) were silently shadowed at every
+    consumer site by the `utilities.css` `.shadow-cartoon-*` class set
+    reading raw `--shadow-cartoon-color{,-soft}` literals (pure
+    black/white). The utility-class shadows now consume the token rungs;
+    the bezel border + translateY stamp geometry stays.
+-   **`metric-badge` + `input-bar` adopt the canonical glass tier.**
+    Audit C-c §7.2. Both utilities painted raw
+    `color-mix(--card N%, transparent)` plates with hand-rolled
+    `backdrop-filter` — bypassing the 5-tier ladder and silently
+    no-op'ing the PRT / no-backdrop-filter fallbacks. metric-badge now
+    composes `--glass-bg-quiet` (rest) → `--glass-bg-resting` (hover);
+    input-bar composes `--glass-bg-floating` + `--glass-blur-floating`.
+-   **`--opacity-disabled` Tailwind bridge + sweep.** Audit C-a §1.2 /
+    §gap.4 / U12. theme.css adds the `--opacity-disabled` (0.5) and
+    `--opacity-icon-muted` (0.8) bridges so consumers compose
+    `disabled:opacity-disabled` instead of literal `disabled:opacity-50`.
+    The 11 ui/ + custom/ sites that hardcoded the literal — plus the
+    Button base composing the arbitrary `disabled:opacity-[var(--opacity-disabled)]`
+    form — sweep onto the canonical utility.
 
 ### Demo
 
-- **`foundations/paper-glass.vue` — 5-tier completion + retired-vocab
-  fix.** Audit C-d §4.2 / §1.1. Adds the missing `overlay` tier to the
-  ladder enumeration; migrates the embedded `GlassPanelVariant` type
-  to the v0.8 vocabulary; swaps the invalid `--viz-topology` /
-  `--viz-recursion` accents for declared `--viz-{chebyshev,fourier}`.
+-   **`foundations/paper-glass.vue` — 5-tier completion + retired-vocab
+    fix.** Audit C-d §4.2 / §1.1. Adds the missing `overlay` tier to the
+    ladder enumeration; migrates the embedded `GlassPanelVariant` type
+    to the v0.8 vocabulary; swaps the invalid `--viz-topology` /
+    `--viz-recursion` accents for declared `--viz-{chebyshev,fourier}`.
 
 ### Verification
 
-- `npm run typecheck` exit 0
-- `npm run build` exit 0
-- `npm test` 291/291 (was 288/288; +3 regression tests across
-  `useAnimatedNumber` and `useStagger`)
-- `dist/index.d.ts` re-exported with the v0.8.6 surface
+-   `npm run typecheck` exit 0
+-   `npm run build` exit 0
+-   `npm test` 291/291 (was 288/288; +3 regression tests across
+    `useAnimatedNumber` and `useStagger`)
+-   `dist/index.d.ts` re-exported with the v0.8.6 surface
 
 ## v0.8.5 — 2026-05-07
 
@@ -3257,23 +3304,24 @@ several primitives onto the canon they advertise.
 The W2-W6 stacked surface ladder authored both unprefixed `backdrop-filter` and the legacy `-webkit-backdrop-filter` declaration on every glass-tier rule. Lightning CSS in the consumer's Tailwind v4 pipeline deduped the pair and kept the **prefixed** form only — modern Chromium then dropped that legacy alias from the CSSOM, leaving every `.glass-{wash,quiet,resting,floating,overlay}` rule **without** an applied `backdrop-filter` at runtime.
 
 Live evidence captured at `https://speedtest.friday.institute/`:
-- `.glass-resting` rule shipped with `-webkit-backdrop-filter: var(--glass-blur-resting)`
-- `getComputedStyle(card).backdropFilter === "none"` and `.webkitBackdropFilter === "none"`
-- The translucent fill survived (still consuming `--glass-bg-resting`); only the 12px blur was missing
+
+-   `.glass-resting` rule shipped with `-webkit-backdrop-filter: var(--glass-blur-resting)`
+-   `getComputedStyle(card).backdropFilter === "none"` and `.webkitBackdropFilter === "none"`
+-   The translucent fill survived (still consuming `--glass-bg-resting`); only the 12px blur was missing
 
 Fix: drop the manual `-webkit-backdrop-filter` from every glass-tier rule in `src/styles/{glass,floating-panel,dock,hover-popover,instrument-chassis,dock-group,utilities}.css`. Single-source-of-truth authoring lets Lightning CSS / autoprefixer emit the legacy form when browserslist requires it.
 
 The `@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)))` feature-detection check at `glass.css:267` keeps both form names in its parenthesised support-query (a feature-name reference, not a declaration; safe).
 
 Files swept:
-- `src/styles/glass.css` (8 paired declarations across the 5-rung ladder + `.glass-card` + `.glass-cartoon`)
-- `src/styles/floating-panel.css`
-- `src/styles/dock.css`
-- `src/styles/hover-popover.css`
-- `src/styles/instrument-chassis.css`
-- `src/styles/dock-group.css`
-- `src/styles/utilities.css`
 
+-   `src/styles/glass.css` (8 paired declarations across the 5-rung ladder + `.glass-card` + `.glass-cartoon`)
+-   `src/styles/floating-panel.css`
+-   `src/styles/dock.css`
+-   `src/styles/hover-popover.css`
+-   `src/styles/instrument-chassis.css`
+-   `src/styles/dock-group.css`
+-   `src/styles/utilities.css`
 
 ## v0.8.4 — 2026-05-07
 
@@ -3281,32 +3329,32 @@ Composable promotion — three patterns the speedtest consumer carried inline no
 
 ### `useTokenColor`
 
-- New composable at `src/composables/useTokenColor.ts`. Reads a CSS custom property as a reactive `Ref<string>` and re-resolves on dark-mode transitions via `useGlobalDark`. Replaces the ad-hoc `getComputedStyle(html).getPropertyValue("--xxx")` reads scattered across canvas + Aurora consumers (the `useMeterRenderer.ts:84-85` pattern).
-- Accepts a `MaybeRefOrGetter<string>` token name (so consumers can swap `--accent-warm` ↔ `--accent-cool` reactively), an optional element-scoped resolve target, and a fallback for SSR / unset properties.
-- The reactive seam lives at the cascade root: CSS custom properties don't fire change events on the platform, so the composable tracks `useGlobalDark`'s ref + exposes a `refresh()` knob for manual cascade mutations.
+-   New composable at `src/composables/useTokenColor.ts`. Reads a CSS custom property as a reactive `Ref<string>` and re-resolves on dark-mode transitions via `useGlobalDark`. Replaces the ad-hoc `getComputedStyle(html).getPropertyValue("--xxx")` reads scattered across canvas + Aurora consumers (the `useMeterRenderer.ts:84-85` pattern).
+-   Accepts a `MaybeRefOrGetter<string>` token name (so consumers can swap `--accent-warm` ↔ `--accent-cool` reactively), an optional element-scoped resolve target, and a fallback for SSR / unset properties.
+-   The reactive seam lives at the cascade root: CSS custom properties don't fire change events on the platform, so the composable tracks `useGlobalDark`'s ref + exposes a `refresh()` knob for manual cascade mutations.
 
 ### `useStagger`
 
-- New composable at `src/composables/useStagger.ts`. One-shot staggered reveal-flag array — `revealed.value[i]` flips true at `initialDelayMs + i * delayMs`. Replaces hand-rolled `setTimeout` cascades (the climax row-tint sweep at speedtest's `SpeedtestResults.vue:251-267` is the source pattern).
-- Distinct from the existing `useStaggerReveal`: that one gates on IntersectionObserver thresholds for entrance choreography; this one fires on a pure timer for unconditional cascades. The two compose.
-- Each timeout handle is tracked in a `Set<TimeoutHandle>`; both `reset()` and the `onScopeDispose` hook drain the set so no orphan callbacks fire after dispose.
+-   New composable at `src/composables/useStagger.ts`. One-shot staggered reveal-flag array — `revealed.value[i]` flips true at `initialDelayMs + i * delayMs`. Replaces hand-rolled `setTimeout` cascades (the climax row-tint sweep at speedtest's `SpeedtestResults.vue:251-267` is the source pattern).
+-   Distinct from the existing `useStaggerReveal`: that one gates on IntersectionObserver thresholds for entrance choreography; this one fires on a pure timer for unconditional cascades. The two compose.
+-   Each timeout handle is tracked in a `Set<TimeoutHandle>`; both `reset()` and the `onScopeDispose` hook drain the set so no orphan callbacks fire after dispose.
 
 ### `useAnimatedNumberMap`
 
-- New composable at `src/composables/motion/useAnimatedNumberMap.ts`. Wraps `useAnimatedNumber` per key into a single `Record<K, ComputedRef<number | null>>`. Replaces the static N-up fan-out where consumers declare four `useAnimatedNumber` instances side by side (the `MetricPillCluster.vue:125-134` pattern, post-W4 internalised inside `useMetricResult`).
-- The library gap: `useAnimatedNumber` cannot run inside a `v-for` because the surrounding reactive scope is the wrong owner. The fan-out had to be static. This composable lifts that fan-out behind one call.
-- Null propagation is preserved: when a source resolves to null, the corresponding ref returns null rather than freezing on the last smoothed sample.
+-   New composable at `src/composables/motion/useAnimatedNumberMap.ts`. Wraps `useAnimatedNumber` per key into a single `Record<K, ComputedRef<number | null>>`. Replaces the static N-up fan-out where consumers declare four `useAnimatedNumber` instances side by side (the `MetricPillCluster.vue:125-134` pattern, post-W4 internalised inside `useMetricResult`).
+-   The library gap: `useAnimatedNumber` cannot run inside a `v-for` because the surrounding reactive scope is the wrong owner. The fan-out had to be static. This composable lifts that fan-out behind one call.
+-   Null propagation is preserved: when a source resolves to null, the corresponding ref returns null rather than freezing on the last smoothed sample.
 
 ### Storybook
 
-- New "Composables" category in the demo manifest with three entries: `use-token-color`, `use-stagger`, `use-animated-number-map`. Each shows the composable's contract with a live interaction.
+-   New "Composables" category in the demo manifest with three entries: `use-token-color`, `use-stagger`, `use-animated-number-map`. Each shows the composable's contract with a live interaction.
 
 ### Verification
 
-- `npm run typecheck` exit 0
-- `npm run build` exit 0
-- `npm test` 288/288 (was 276/276; +12 new tests across the three composables)
-- `dist/index.d.ts` carries `useTokenColor`, `useStagger`, `useAnimatedNumberMap` exports
+-   `npm run typecheck` exit 0
+-   `npm run build` exit 0
+-   `npm test` 288/288 (was 276/276; +12 new tests across the three composables)
+-   `dist/index.d.ts` carries `useTokenColor`, `useStagger`, `useAnimatedNumberMap` exports
 
 ## v0.8.3 — 2026-05-06
 
@@ -3314,28 +3362,28 @@ The library uplift the speedtest stacked-pill directive needs. Three additions l
 
 ### `<GlassDock>` containerName prop
 
-- New optional `containerName?: string`. When set, the dock root emits inline `container-type: inline-size; container-name: <value>; overflow: visible` plus a `data-container-name` structural marker.
-- The base `overflow: hidden` shell gates on `:not([data-container-name])` so non-host docks keep the default clip — a backward-compatible extension. Consumers query the named container via `@container <value> (...)` rules without wrapping the dock in a sibling subject.
-- Lifts the container subject onto the primitive (the audit-B §1.3 gestalt move). CSS Containment L3 §3.2: a container subject must be a peer or ancestor of the dock, never an interior descendant whose intrinsic size the dock relies on.
+-   New optional `containerName?: string`. When set, the dock root emits inline `container-type: inline-size; container-name: <value>; overflow: visible` plus a `data-container-name` structural marker.
+-   The base `overflow: hidden` shell gates on `:not([data-container-name])` so non-host docks keep the default clip — a backward-compatible extension. Consumers query the named container via `@container <value> (...)` rules without wrapping the dock in a sibling subject.
+-   Lifts the container subject onto the primitive (the audit-B §1.3 gestalt move). CSS Containment L3 §3.2: a container subject must be a peer or ancestor of the dock, never an interior descendant whose intrinsic size the dock relies on.
 
 ### `<MetricBadge labelPosition="stacked">` 2-row refinement
 
-- Template wraps `<span class="metric-badge__amount">` + `<span class="metric-badge__unit">` in a single `<span class="metric-badge__row">` when stacked. Layout becomes 2 rows: row 1 label/abbreviation, row 2 amount + unit baseline-aligned via `display: inline-flex; align-items: baseline; gap: 0.25rem`.
-- The pre-T 3-row layout (label / amount / unit on three separate rows) was the bug, not the contract — users reasonably expect the value+unit pair to read together as a single quantity. The inline branch keeps the flat sibling order so the single-row baseline reads unbroken.
-- Two new tokens land in `tokens.css`: `--metric-badge-min-height-stacked: 2.625rem` and `--metric-badge-padding-block-stacked: 0.375rem`. The stacked variant consumes both so the taller register has breathing room above the baseline pair.
-- Existing consumers are zero — the refinement is safe.
+-   Template wraps `<span class="metric-badge__amount">` + `<span class="metric-badge__unit">` in a single `<span class="metric-badge__row">` when stacked. Layout becomes 2 rows: row 1 label/abbreviation, row 2 amount + unit baseline-aligned via `display: inline-flex; align-items: baseline; gap: 0.25rem`.
+-   The pre-T 3-row layout (label / amount / unit on three separate rows) was the bug, not the contract — users reasonably expect the value+unit pair to read together as a single quantity. The inline branch keeps the flat sibling order so the single-row baseline reads unbroken.
+-   Two new tokens land in `tokens.css`: `--metric-badge-min-height-stacked: 2.625rem` and `--metric-badge-padding-block-stacked: 0.375rem`. The stacked variant consumes both so the taller register has breathing room above the baseline pair.
+-   Existing consumers are zero — the refinement is safe.
 
 ### New `<MetricPill>` primitive
 
-- Lives at `src/components/ui/metric-pill/MetricPill.vue`. Composition-only over `<MetricBadge>` with `labelPosition="stacked"` + `density="spacious"` + `size="lg"` baked in. Same prop surface (label, abbreviation, amount, unit, color, size, density, placeholder, class), but stacked-pill defaults pre-applied.
-- The `density` prop is the dock-tier knob lifted onto the pill: `spacious` (default) widens block padding for chassis-strip rhythm; `comfortable` keeps the tighter compact register where pills nest in a denser dock. The CSS modifier (`.metric-pill--density-{value}`) adjusts the local metric-badge padding tokens; the underlying badge stays unchanged.
-- Storybook entry at `demo/stories/primitives/metric-pill.vue` shows the size ladder, density toggle, the GlassDock containerName-host cluster composition, and empty/placeholder rendering.
+-   Lives at `src/components/ui/metric-pill/MetricPill.vue`. Composition-only over `<MetricBadge>` with `labelPosition="stacked"` + `density="spacious"` + `size="lg"` baked in. Same prop surface (label, abbreviation, amount, unit, color, size, density, placeholder, class), but stacked-pill defaults pre-applied.
+-   The `density` prop is the dock-tier knob lifted onto the pill: `spacious` (default) widens block padding for chassis-strip rhythm; `comfortable` keeps the tighter compact register where pills nest in a denser dock. The CSS modifier (`.metric-pill--density-{value}`) adjusts the local metric-badge padding tokens; the underlying badge stays unchanged.
+-   Storybook entry at `demo/stories/primitives/metric-pill.vue` shows the size ladder, density toggle, the GlassDock containerName-host cluster composition, and empty/placeholder rendering.
 
 ### Verification
 
-- `npm run typecheck` exit 0
-- `npm run build` exit 0
-- `npm test` 276/276 (was 269/269; +7 new tests across the three additions)
+-   `npm run typecheck` exit 0
+-   `npm run build` exit 0
+-   `npm test` 276/276 (was 269/269; +7 new tests across the three additions)
 
 ## v0.8.2 — 2026-05-06
 
@@ -3343,19 +3391,19 @@ The v0.8.1 dev-pipeline pivot (`development` exports condition + `preserveSymlin
 
 ### Internal alias sweep
 
-- Every `import … from "@utils"` (~132 lines) and `import … from "@/X"` (3 sites) under `src/` rewritten to the corresponding relative path. Quote style and trailing punctuation preserved per file.
-- `tests/` and `demo/` swept the same way (105 files) so the demo dev server and the vitest suite stop depending on alias substitution.
-- `vite.library.ts` retires `libraryAliases()`; `vite.config.ts` and `vite.iter.config.ts` drop their `resolve.alias` blocks. `vitest.config.ts` drops its `@`/`@utils` aliases.
-- `tsconfig.json` `paths` cleared of `@/*`, `@utils`, `@utils/*`.
+-   Every `import … from "@utils"` (~132 lines) and `import … from "@/X"` (3 sites) under `src/` rewritten to the corresponding relative path. Quote style and trailing punctuation preserved per file.
+-   `tests/` and `demo/` swept the same way (105 files) so the demo dev server and the vitest suite stop depending on alias substitution.
+-   `vite.library.ts` retires `libraryAliases()`; `vite.config.ts` and `vite.iter.config.ts` drop their `resolve.alias` blocks. `vitest.config.ts` drops its `@`/`@utils` aliases.
+-   `tsconfig.json` `paths` cleared of `@/*`, `@utils`, `@utils/*`.
 
 Glass-ui source now compiles standalone for any consumer (workspace symlink under `development`, `node_modules` `dist` under `import`, future SSR runtime). The speedtest consumer's 210/210 client-test baseline is preserved through the workspace symlink without any speedtest-side resolver shim.
 
 ### Verification
 
-- `grep -c '@utils\|from "@/' src/` → 0
-- `npm run build` exit 0
-- `npm test` 269/269 green
-- speedtest `npm run test:run:client` 210/210 green
+-   `grep -c '@utils\|from "@/' src/` → 0
+-   `npm run build` exit 0
+-   `npm test` 269/269 green
+-   speedtest `npm run test:run:client` 210/210 green
 
 ## v0.8.1 — 2026-05-06
 
@@ -3363,11 +3411,11 @@ Bundles the `862c1e7` MetricBadge dual-slot back-compat fix (adjacent-sibling se
 
 ### Workspace dev-pipeline
 
-- `exports.<subpath>.development = "./src/<entry>.ts"` added across all 33 object-shaped entries. Dev-mode consumers reading the workspace symlink resolve directly to source, so HMR and symbol changes surface without a manual `dist` rebuild. The `import` condition keeps pointing at the production-built `dist/<entry>.js`, so package-published consumers are unaffected.
+-   `exports.<subpath>.development = "./src/<entry>.ts"` added across all 33 object-shaped entries. Dev-mode consumers reading the workspace symlink resolve directly to source, so HMR and symbol changes surface without a manual `dist` rebuild. The `import` condition keeps pointing at the production-built `dist/<entry>.js`, so package-published consumers are unaffected.
 
 ### Bundled
 
-- Every commit between `28b79b3` (v0.8.0) and the v0.8.1 release commit, including the `862c1e7` adjacent-sibling MetricBadge fix and the tranche-J library work that landed in the interim (`tranche-j/w0` through `tranche-j/w7`).
+-   Every commit between `28b79b3` (v0.8.0) and the v0.8.1 release commit, including the `862c1e7` adjacent-sibling MetricBadge fix and the tranche-J library work that landed in the interim (`tranche-j/w0` through `tranche-j/w7`).
 
 ## v0.8.0 — 2026-05-06
 
@@ -3375,67 +3423,67 @@ The bundled glass-tier ladder rename + Card API redesign + dual-slot MetricBadge
 
 ### Breaking changes
 
-- **Glass-tier ladder renamed** — the four-rung `subtle / default / medium / elevated` ladder retires in favour of the five-rung `wash / quiet / resting / floating / overlay` canon. `quiet` is a new mid-low rung; `overlay` is a new modal-over-modal rung. Mapping for upstream migrations:
+-   **Glass-tier ladder renamed** — the four-rung `subtle / default / medium / elevated` ladder retires in favour of the five-rung `wash / quiet / resting / floating / overlay` canon. `quiet` is a new mid-low rung; `overlay` is a new modal-over-modal rung. Mapping for upstream migrations:
 
-  | Pre-v0.8 | Post-v0.8 | Note |
-  |---|---|---|
-  | `glass-subtle`   | `glass-wash`     | lightest |
-  | `glass-default`  | `glass-resting`  | (no direct prior — `default` was the canonical tier) |
-  | `glass-medium`   | `glass-resting`  | collision into the canonical tier |
-  | `glass-elevated` | `glass-floating` | popover-class surfaces |
-  | _(none)_         | `glass-overlay`  | NEW — modal-over-modal |
+    | Pre-v0.8         | Post-v0.8        | Note                                                 |
+    | ---------------- | ---------------- | ---------------------------------------------------- |
+    | `glass-subtle`   | `glass-wash`     | lightest                                             |
+    | `glass-default`  | `glass-resting`  | (no direct prior — `default` was the canonical tier) |
+    | `glass-medium`   | `glass-resting`  | collision into the canonical tier                    |
+    | `glass-elevated` | `glass-floating` | popover-class surfaces                               |
+    | _(none)_         | `glass-overlay`  | NEW — modal-over-modal                               |
 
-  Same renames apply to `--glass-{bg,blur,border,shadow}-{tier}` token families and to the Tailwind v4 `--{shadow,blur}-glass-{tier}` bridges in `theme.css`. **No legacy aliases ship.**
+    Same renames apply to `--glass-{bg,blur,border,shadow}-{tier}` token families and to the Tailwind v4 `--{shadow,blur}-glass-{tier}` bridges in `theme.css`. **No legacy aliases ship.**
 
-- **`<Card>` API redesigned**. The `variant="subtle | default | pane | cartoon"` enum retires. The new shape:
+-   **`<Card>` API redesigned**. The `variant="subtle | default | pane | cartoon"` enum retires. The new shape:
 
-  ```ts
-  interface CardProps {
-    tier?: 'wash' | 'quiet' | 'resting' | 'floating' | 'overlay'  // default 'resting'
-    shadow?: boolean       // default true
-    grain?: boolean        // default true
-    as?: string            // default 'div' — polymorphic root via reka-ui Primitive
-    asChild?: boolean
-    class?: HTMLAttributes['class']
-  }
-  ```
+    ```ts
+    interface CardProps {
+        tier?: "wash" | "quiet" | "resting" | "floating" | "overlay"; // default 'resting'
+        shadow?: boolean; // default true
+        grain?: boolean; // default true
+        as?: string; // default 'div' — polymorphic root via reka-ui Primitive
+        asChild?: boolean;
+        class?: HTMLAttributes["class"];
+    }
+    ```
 
-  Migration codemod for callers:
+    Migration codemod for callers:
 
-  ```vue
-  <!-- v0.7 -->                                      <!-- v0.8 -->
-  <Card variant="default">                          → <Card>
-  <Card variant="medium">                           → <Card tier="resting">
-  <Card variant="elevated">                         → <Card tier="floating">
-  <Card variant="subtle">                           → <Card tier="wash">
-  <Card variant="pane" class="overflow-hidden">    → <ScrollPane class="overflow-hidden">
-  <Card variant="cartoon">                          → <CartoonCard>
-  ```
+    ```vue
+    <!-- v0.7 -->                                      <!-- v0.8 -->
+    <Card variant="default">                          → <Card>
+    <Card variant="medium">                           → <Card tier="resting">
+    <Card variant="elevated">                         → <Card tier="floating">
+    <Card variant="subtle">                           → <Card tier="wash">
+    <Card variant="pane" class="overflow-hidden">    → <ScrollPane class="overflow-hidden">
+    <Card variant="cartoon">                          → <CartoonCard>
+    ```
 
-- **`<ScrollPane>` and `<CartoonCard>` sibling primitives** ship at `src/components/ui/scroll-pane/` and `src/components/ui/cartoon-card/`. They lift the `pane` and `cartoon` register out of `Card`'s variant ladder. `<ScrollPane>` is `glass-wash` + `overflow:auto` + `scrollbar-hidden` + grain disabled. `<CartoonCard>` resolves through `.glass-cartoon`.
+-   **`<ScrollPane>` and `<CartoonCard>` sibling primitives** ship at `src/components/ui/scroll-pane/` and `src/components/ui/cartoon-card/`. They lift the `pane` and `cartoon` register out of `Card`'s variant ladder. `<ScrollPane>` is `glass-wash` + `overflow:auto` + `scrollbar-hidden` + grain disabled. `<CartoonCard>` resolves through `.glass-cartoon`.
 
-- **Library popover family migrated**. `TooltipContent`, `HoverCardContent`, `DropdownMenuContent`, `DropdownMenuSubContent`, `DialogContent`, `ContextMenuContent`, `ContextMenuSubContent`, `PopoverContent`, `SelectContent`, `SheetContent`, `GlassPanel` — every popover-class surface that hard-coded `glass-elevated` now hard-codes `glass-floating`. Consumer-side tier overrides fall through.
+-   **Library popover family migrated**. `TooltipContent`, `HoverCardContent`, `DropdownMenuContent`, `DropdownMenuSubContent`, `DialogContent`, `ContextMenuContent`, `ContextMenuSubContent`, `PopoverContent`, `SelectContent`, `SheetContent`, `GlassPanel` — every popover-class surface that hard-coded `glass-elevated` now hard-codes `glass-floating`. Consumer-side tier overrides fall through.
 
-- **`Button` `glass-subtle` variant renamed to `glass-wash`**. Same surface, new name to align with the canon.
+-   **`Button` `glass-subtle` variant renamed to `glass-wash`**. Same surface, new name to align with the canon.
 
-- **`--shadow-card` canon** routed to `var(--shadow-md)` (soft-Gaussian drop). The cartoon offset stamp lives only at `--shadow-cartoon` and is consumed by `.glass-cartoon` + `<CartoonCard>`.
+-   **`--shadow-card` canon** routed to `var(--shadow-md)` (soft-Gaussian drop). The cartoon offset stamp lives only at `--shadow-cartoon` and is consumed by `.glass-cartoon` + `<CartoonCard>`.
 
 ### Additions
 
-- **Dual-slot `<MetricBadge>`** — passing `label` AND `abbreviation` together renders both as sibling spans (`metric-badge__label--full` + `metric-badge__label--abbr`). Default visibility shows `--full`; the consumer toggles via container query (the speedtest consumer in S.W3 does this with `@container pill-cluster (max-width: 600px)`). Single-slot use stays back-compat.
+-   **Dual-slot `<MetricBadge>`** — passing `label` AND `abbreviation` together renders both as sibling spans (`metric-badge__label--full` + `metric-badge__label--abbr`). Default visibility shows `--full`; the consumer toggles via container query (the speedtest consumer in S.W3 does this with `@container pill-cluster (max-width: 600px)`). Single-slot use stays back-compat.
 
-- **`.metric-badge__label` letter-spacing canon**: 0.18em on md/lg/xl tiers, 0.10em on sm tier (was 0.05em / 0.025em).
+-   **`.metric-badge__label` letter-spacing canon**: 0.18em on md/lg/xl tiers, 0.10em on sm tier (was 0.05em / 0.025em).
 
-- **`<DockTabButton>` density-keyed height tokens** — new `--dock-tab-h-{compact|comfortable|audacious}` token family analogous to `<DockIconButton>`'s height token. Compact value 32 px.
+-   **`<DockTabButton>` density-keyed height tokens** — new `--dock-tab-h-{compact|comfortable|audacious}` token family analogous to `<DockIconButton>`'s height token. Compact value 32 px.
 
-- **`--dock-label-size` mobile carve** — density-audacious mobile media-query introduces `--dock-label-size` (16 px at <480, 14 px at 480–719) consumed by dock label spans.
+-   **`--dock-label-size` mobile carve** — density-audacious mobile media-query introduces `--dock-label-size` (16 px at <480, 14 px at 480–719) consumed by dock label spans.
 
-- **Storybook stories** — new `demo/stories/primitives/{card,scroll-pane,cartoon-card}.vue` walk the redesigned API; `demo/stories/primitives/metric-badge.vue` extended with a dual-slot example. Legacy `demo/stories/containers/card.vue` retired.
+-   **Storybook stories** — new `demo/stories/primitives/{card,scroll-pane,cartoon-card}.vue` walk the redesigned API; `demo/stories/primitives/metric-badge.vue` extended with a dual-slot example. Legacy `demo/stories/containers/card.vue` retired.
 
 ### Internal
 
-- The reka-ui `Primitive` import lands on `<Card>`, `<ScrollPane>`, `<CartoonCard>` — polymorphic-root + slot-binding contracts come standard.
-- `cn(tierClass, props.class)` is the single class-merge seam on `<Card>`. No JS-side ladder duplicating the CSS-side ladder.
+-   The reka-ui `Primitive` import lands on `<Card>`, `<ScrollPane>`, `<CartoonCard>` — polymorphic-root + slot-binding contracts come standard.
+-   `cn(tierClass, props.class)` is the single class-merge seam on `<Card>`. No JS-side ladder duplicating the CSS-side ladder.
 
 ### Migration impact
 
