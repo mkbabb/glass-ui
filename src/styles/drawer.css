@@ -46,7 +46,7 @@
     border-bottom: 0;
     border-start-start-radius: var(--radius-panel);
     border-start-end-radius: var(--radius-panel);
-    background-color: hsl(var(--background));
+    background-color: var(--background);
     box-shadow: var(--shadow-2xl);
 }
 
@@ -98,7 +98,7 @@
     width: var(--drawer-handle-w);
     height: var(--drawer-handle-h);
     border-radius: var(--radius-pill);
-    background-color: hsl(var(--drawer-handle-color));
+    background-color: var(--drawer-handle-color);
     opacity: var(--drawer-handle-opacity);
     transition: opacity var(--duration-fast) var(--ease-out),
         width var(--duration-fast) var(--ease-out);

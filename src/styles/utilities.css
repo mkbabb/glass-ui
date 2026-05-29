@@ -460,8 +460,10 @@
         color: color-mix(in srgb, var(--muted-foreground) 50%, transparent);
     }
 
-    /* ── Hover lift — translate-y + shadow on hover (3 levels) ── */
-    .hover-lift {
+    /* ── Hover lift — translate-y + shadow on hover (3 levels) ──
+       The shared transition is expressed once over the family; the three
+       :hover rules carry the per-level translate + shadow. */
+    :where(.hover-lift, .hover-lift-md, .hover-lift-lg) {
         transition-property: transform, box-shadow;
         transition-duration: var(--duration-normal);
         transition-timing-function: var(--ease-standard);
@@ -470,21 +472,9 @@
         transform: translateY(var(--lift-sm));
         box-shadow: var(--shadow-md);
     }
-
-    .hover-lift-md {
-        transition-property: transform, box-shadow;
-        transition-duration: var(--duration-normal);
-        transition-timing-function: var(--ease-standard);
-    }
     .hover-lift-md:hover:not(:disabled):not([aria-disabled='true']) {
         transform: translateY(var(--lift-md));
         box-shadow: var(--shadow-md);
-    }
-
-    .hover-lift-lg {
-        transition-property: transform, box-shadow;
-        transition-duration: var(--duration-normal);
-        transition-timing-function: var(--ease-standard);
     }
     .hover-lift-lg:hover:not(:disabled):not([aria-disabled='true']) {
         transform: translateY(var(--lift-lg));
@@ -501,21 +491,19 @@
        the whole cartoon read.
        (Per audit U.W0.C-c §1.3 / Union 1 — collapses the dual-system
        drift onto the token-driven shadow.) */
+    :where(.shadow-cartoon-sm, .shadow-cartoon-md, .shadow-cartoon-lg) {
+        border: 2px solid var(--border);
+    }
     .shadow-cartoon-sm {
         box-shadow: var(--shadow-cartoon-sm);
-        border: 2px solid var(--border);
         transform: translateY(-1px);
     }
-
     .shadow-cartoon-md {
         box-shadow: var(--shadow-cartoon-md);
-        border: 2px solid var(--border);
         transform: translateY(-1px);
     }
-
     .shadow-cartoon-lg {
         box-shadow: var(--shadow-cartoon-lg);
-        border: 2px solid var(--border);
         transform: translateY(-2px);
     }
 
@@ -574,21 +562,14 @@
            data-[state=closed]:duration-[var(--duration-fast)];
 }
 
-/* ── Audacious primary CTA recipe (K.W6 HEADLINE) ────────────────────
-   Lifted from `dock.css` `.dock-tab-button[data-tier="primary"]` per
-   K.W6 spec §3 (Option B — drop phase-tinting from the canonical
-   variant; phase-tint stays as a dock-local extension). Composes three
-   at-rest marks (top-highlight via --glass-highlight, bottom under-shadow
-   via --border-hairline, baseline glass via --card surface) with three
-   disco accents on hover (specular swap via --glass-specular, sparkle
-   sweep via the ::after star, disco-grain via --paper-clean-texture
-   blended with a --primary radial). Reservation: disco fires on hover
-   only — at rest the button reads as a Vignelli-restrained composed
-   glass surface.
-
-   Pair with `bg-primary text-primary-foreground` for the canonical
-   Button variant; the utility owns the texture/highlight/sparkle
-   composition only. */
+/* ── Audacious primary CTA recipe ────────────────────────────────────────
+   Composes three at-rest marks (top-highlight via --glass-highlight, bottom
+   under-shadow via --border-hairline, baseline glass) with three disco accents
+   on hover (specular swap via --glass-specular, sparkle sweep via the ::after
+   star, disco-grain via --paper-clean-texture blended with a --primary radial).
+   Disco fires on hover only — at rest the button reads as a restrained glass
+   surface. Pair with `bg-primary text-primary-foreground`; the utility owns
+   the texture/highlight/sparkle composition only. */
 @utility btn-audacious {
     position: relative;
     isolation: isolate;
@@ -782,21 +763,11 @@
     padding-inline: var(--table-head-px, 1rem);
 }
 
-/* ── Rainbow gradient backgrounds (Q.W3 Lane E re-promote) ──────────────
+/* ── Rainbow gradient backgrounds ───────────────────────────────────────
    `.rainbow-vivid` + `.rainbow-pastel` paint a left-to-right 7-stop spectrum
    from the canonical `--rainbow-*` / `--rainbow-pastel-*` token families
-   (tokens.css §14). They were retired at `b0debec` (D.W2.D, 2026-04-30)
-   under a zero-consumer audit that did not include keyframes.js in its
-   sweep corpus — keyframes.js's `AnimationMenuBar.vue` round play button
-   composes `rainbow-vivid` (playing) / `rainbow-pastel` (idle) and silently
-   lost its gradient when the recipes left the library. The `--rainbow-*`
-   color tokens survived the retiral; only the class recipes were dropped.
-
-   Re-promoted as `@utility` recipes — the token half is canonical, so the
-   class form that paints it belongs alongside it. Not a backwards-compat
-   alias: it is a substrate REVERT, the revert IS the consumer rediscovery
-   (≥ 1 consumer exists post-revert, satisfying L invariant 8). Faithful
-   to the pre-`b0debec` recipe bodies. */
+   (tokens.css §14). Consumed by keyframes.js's `AnimationMenuBar.vue` round
+   play button — `rainbow-vivid` (playing) / `rainbow-pastel` (idle). */
 @utility rainbow-vivid {
     background: linear-gradient(
         to right,
@@ -823,19 +794,13 @@
     );
 }
 
-/* ── Interactive-button four-state recipe (Q.W3 Lane E re-promote) ───────
+/* ── Interactive-button four-state recipe ────────────────────────────────
    `.btn-interactive` carries the canonical "Button-with-spring-hover"
    four-state contract — transition + hover-scale (`--scale-hover`) +
-   active-press (`--scale-press`) + disabled-opacity (`--opacity-disabled`)
-   + focus-ring fade-in. Same shape as `.btn-audacious` (a composition-only
-   recipe a Button variant opts into). Retired at `b0debec` (D.W2.D)
-   alongside the rainbow recipes under the same incomplete audit corpus;
-   keyframes.js consumes it at 7 sites (CubeScene, EasingScene, demo/cube,
-   AnimationControlsGroup RIBBON_BUTTON_CLASS, PlaybackRibbon Reverse).
-
-   The Button primitive's own variants emit the four states except
-   `hover:scale-*` — `.btn-interactive` is the canonical opt-in that adds
-   the spring-hover lift. Faithful to the pre-`b0debec` recipe body. */
+   active-press (`--scale-press`) + disabled-opacity + focus-ring fade-in.
+   The Button primitive's variants emit the four states except `hover:scale-*`;
+   this is the canonical opt-in that adds the spring-hover lift. Consumed by
+   keyframes.js at 7 sites. */
 @utility btn-interactive {
     transition:
         background-color var(--duration-fast) var(--ease-standard),

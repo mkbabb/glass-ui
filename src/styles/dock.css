@@ -22,6 +22,32 @@
         --dock-motion-resize: var(--duration-normal) var(--spring-snappy);
     }
 
+    /* Shared four-state contract — the focus-visible ring + disabled paint are
+       identical across every dock control, so they are expressed ONCE here
+       over the control family (the `:where()` idiom this file already uses for
+       the motion tokens) rather than copied per rule-set. Per-control
+       transition extensions (the box-shadow fade on focus-visible) stay with
+       their own selectors below where they differ. */
+    :where(
+        .dock-icon-button,
+        .dock-tab-button,
+        .dock-select-trigger,
+        .dock-dropdown-trigger
+    ):focus-visible {
+        box-shadow: var(--focus-ring-shadow);
+        outline: none;
+    }
+
+    :where(
+        .dock-icon-button,
+        .dock-tab-button,
+        .dock-select-trigger,
+        .dock-dropdown-trigger
+    ):disabled {
+        opacity: var(--opacity-disabled);
+        cursor: not-allowed;
+    }
+
     .glass-dock {
         --dock-surface-blur: var(--glass-blur-dock, var(--glass-blur-wash));
         /* J.W3.C — vertical-rail max-block + horizontal max-inline caps
@@ -68,6 +94,7 @@
         --dock-trigger-padding-inline: var(--dock-density-compact-trigger-padding-inline, 0.4375rem);
         --dock-tab-padding-block: var(--dock-density-compact-tab-padding-block, 0.3125rem);
         --dock-tab-padding-inline: var(--dock-density-compact-tab-padding-inline, 0.625rem);
+        --dock-tab-h: 32px;
     }
 
     /* Comfortable density — the GlassDock default. Sits between compact
@@ -82,6 +109,7 @@
         --dock-trigger-padding-inline: var(--dock-density-comfortable-trigger-padding-inline, 0.5rem);
         --dock-tab-padding-block: var(--dock-density-comfortable-tab-padding-block, 0.4375rem);
         --dock-tab-padding-inline: var(--dock-density-comfortable-tab-padding-inline, 0.75rem);
+        --dock-tab-h: 38px;
     }
 
     .glass-dock[data-density="spacious"] {
@@ -94,6 +122,7 @@
         --dock-trigger-padding-inline: var(--dock-density-spacious-trigger-padding-inline, 0.625rem);
         --dock-tab-padding-block: var(--dock-density-spacious-tab-padding-block, 0.5rem);
         --dock-tab-padding-inline: var(--dock-density-spacious-tab-padding-inline, 0.875rem);
+        --dock-tab-h: 44px;
     }
 
     /* Audacious density — typography-forward chrome where the dock reads as
@@ -111,41 +140,13 @@
         --dock-tab-padding-block: var(--dock-density-audacious-tab-padding-block, 0.5rem);
         --dock-tab-padding-inline: var(--dock-density-audacious-tab-padding-inline, 1.5rem);
         --dock-tab-min-height: var(--dock-density-audacious-tab-min-height, 3.5rem);
+        --dock-tab-h: var(--dock-density-audacious-tab-min-height, 3.5rem);
     }
 
-    /* Dock tab-button density-keyed height (R3-spec / audit-E P0-3;
-       consolidated into dock.css at Q.W3 Lane A — formerly split into
-       utilities.css and surviving only by import-cascade accident).
-       The four bare DockIconButton consumers solve their density-keyed
-       height via `--dock-control-size` (set per density tier above);
-       DockTabButton's analogous `--dock-tab-h` knob lives in the same
-       density rungs so the tab-button row no longer free-floats to the
-       glyph + padding sum. Compact density lands at 32px to match the
-       deployed product's bottom-dock height. The `.dock-tab-button` rule
-       (further down this file) consumes `--dock-tab-h`. */
-    .glass-dock[data-density="compact"] {
-        --dock-tab-h-compact: 32px;
-        --dock-tab-h: var(--dock-tab-h-compact);
-    }
-    .glass-dock[data-density="comfortable"] {
-        --dock-tab-h-comfortable: 38px;
-        --dock-tab-h: var(--dock-tab-h-comfortable);
-    }
-    .glass-dock[data-density="spacious"] {
-        --dock-tab-h-spacious: 44px;
-        --dock-tab-h: var(--dock-tab-h-spacious);
-    }
-    .glass-dock[data-density="audacious"] {
-        --dock-tab-h-audacious: var(--dock-density-audacious-tab-min-height, 3.5rem);
-        --dock-tab-h: var(--dock-tab-h-audacious);
-    }
-
-    /* Density-audacious mobile carve (R3-spec / audit-D D-Rec-5;
-       consolidated into dock.css at Q.W3 Lane A). At narrow viewports
-       the audacious-dock label glyphs compress so the audacious chrome
-       doesn't overflow its host: `≤14px at <480` and `15px at 480–719`.
-       Consumer dock label spans bind `font-size: var(--dock-label-size)`
-       (typography.css `.dock-label` recipe is the canonical consumer). */
+    /* Density-audacious mobile carve — at narrow viewports the audacious-dock
+       label glyphs compress so the chrome doesn't overflow its host
+       (≤14px at <480, 15px at 480–719). Consumer dock label spans bind
+       `font-size: var(--dock-label-size)` (typography.css `.dock-label`). */
     @media (max-width: 479px) {
         .glass-dock[data-density="audacious"] {
             --dock-label-size: 14px;
@@ -188,22 +189,11 @@
             border-color var(--dock-motion-standard);
     }
 
-    /* Z.W2.T2 — vertical rails grow-to-fit + clamp, no scroll. Per A2 §B6
-       + A4 special-focus: canon-intent is grow-and-wrap, not scroll. The
-       prior `overflow-y: auto` produced the "dock scrolls when it
-       shouldn't" regression at narrow viewports; the right escape is to
-       let descendants wrap to multiple rows (consumers opt-in via
-       `dock-wrap`) or to clamp via `--dock-max-block-size` and let the
-       cap fail visibly rather than mask the overflow as a scroll
-       affordance.
-
-       The edge-fade `mask-image` retired here in lockstep with the
-       horizontal `.dock-layers` rule. With grow-to-fit + visible
-       overflow the rail never scrolls, so a scroll-feather mask has
-       nothing to feather — it only bled a transparent ramp onto the
-       top and bottom rail items, casting a stray directional shadow
-       on those edge controls. J.W3.C's auto + mask-fade shape is fully
-       superseded: grow-to-fit is the whole contract, no feather. */
+    /* Vertical rails grow-to-fit + clamp, no scroll: descendants wrap to
+       multiple rows (opt-in via `dock-wrap`) or clamp via
+       `--dock-max-block-size`; the cap fails visibly rather than masking
+       overflow as a scroll affordance. No edge-fade mask — a rail that never
+       scrolls has nothing to feather. */
     .glass-dock.vertical {
         display: inline-flex;
         flex-direction: column;
@@ -382,23 +372,11 @@
         transition: width var(--dock-motion-resize);
     }
 
-    /* Z.W2.T2 — horizontal dock content grows visibly when the active
-       layer's natural width exceeds the dock's content area. Per
-       A2 §B6 + A4 special-focus: the canon-intent for the bottom dock
-       is grow-to-fit; consumers needing wrap opt into `dock-wrap`. The
-       prior `overflow-x: auto` produced the user-reported "dock scrolls
-       when it shouldn't" — the wrong escape valve.
-
-       The edge-fade `mask-image` retired here. Once Z.W2.T2 made the
-       dock grow-to-fit, content is never clipped and never scrolls, so
-       the mask had nothing left to feather — it was kept only "for
-       visual symmetry" with the vertical rule. In practice the 1rem
-       transparent ramp at each edge bled onto the first and last dock
-       items: the rightmost control (e.g. a settings cog) had its outer
-       edge faded into the glass backdrop, which read as a stray
-       directional shadow on that item. A scroll-affordance feather on
-       a surface that never scrolls is pure cosmetic damage, so it is
-       removed at the root rather than masked per-consumer. */
+    /* Horizontal dock content grows visibly when the active layer's natural
+       width exceeds the content area (grow-to-fit; consumers needing wrap opt
+       into `dock-wrap`). No edge-fade mask — content never clips or scrolls,
+       so a feather has nothing to feather and only bleeds a stray ramp onto
+       the edge controls. */
     .glass-dock.expanded:not(.dock-wrap) > .dock-layers {
         overflow-x: visible;
     }
@@ -693,20 +671,15 @@
         outline: none;
     }
 
+    /* focus-visible ring + disabled paint hoisted to the shared `:where()`
+       group at the top; this rule adds only the box-shadow fade transition. */
     .dock-icon-button:focus-visible {
-        box-shadow: var(--focus-ring-shadow);
-        outline: none;
         transition:
             background-color var(--dock-motion-fast),
             color var(--dock-motion-fast),
             transform var(--dock-motion-fast),
             opacity var(--dock-motion-fast),
             box-shadow var(--dock-motion-fast);
-    }
-
-    .dock-icon-button:disabled {
-        opacity: var(--opacity-disabled);
-        cursor: not-allowed;
     }
 
     /* O.W6 Lane B — token-ladder active paint. Defaults match the prior
@@ -841,15 +814,8 @@
         box-shadow: none;
     }
 
-    .dock-tab-button:focus-visible {
-        box-shadow: var(--focus-ring-shadow);
-        outline: none;
-    }
-
-    .dock-tab-button:disabled {
-        opacity: var(--opacity-disabled);
-        cursor: not-allowed;
-    }
+    /* focus-visible ring + disabled paint hoisted to the shared `:where()`
+       group at the top. */
 
     .dock-tab-button:is(.is-active, .active, [aria-current="page"], [aria-pressed="true"]) {
         background: var(--surface-tint-10);
@@ -998,22 +964,16 @@
         outline: none;
     }
 
+    /* focus-visible ring + disabled paint hoisted to the shared `:where()`
+       group at the top; this rule adds only the box-shadow fade transition. */
     .dock-select-trigger:focus-visible,
     .dock-dropdown-trigger:focus-visible {
-        box-shadow: var(--focus-ring-shadow);
-        outline: none;
         transition:
             background-color var(--dock-motion-fast),
             color var(--dock-motion-fast),
             transform var(--dock-motion-fast),
             opacity var(--dock-motion-fast),
             box-shadow var(--dock-motion-fast);
-    }
-
-    .dock-select-trigger:disabled,
-    .dock-dropdown-trigger:disabled {
-        opacity: var(--opacity-disabled);
-        cursor: not-allowed;
     }
 
     .dock-select-trigger:is(.is-active, .active, [aria-expanded="true"], [aria-pressed="true"]),

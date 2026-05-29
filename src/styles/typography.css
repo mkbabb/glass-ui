@@ -10,59 +10,27 @@
  * (`.text-display-*`, `.text-body`, `.text-admin-label`) and feature
  * utilities (`.cm-serif`, `.fira-code`, `.fourier-f`).
  *
- * AC.W6b (v1.5.0) — self-host font subsystem
- * ────────────────────────────────────────────
- * Glass-ui ships two OFL-1.1 face families as bundled woff2 assets under
- * `src/fonts/`:
- *
- *   - **Plus Jakarta Sans** (latin + latin-ext, variable wght 200..800).
- *     Selected as the brand display sans-serif substitute via AC.W6b's
- *     5-way visual-fidelity test against pre-substitution General Sans
- *     baseline at 1200×766 hero size. Closest character match among the
- *     OFL candidate menu (Plus Jakarta Sans / Onest / Manrope / Inter /
- *     Geist). Carries `font-display: optional` so paint never blocks on
- *     the LCP-critical hero font.
- *
- *   - **Fira Code** (latin + latin-ext, variable wght 300..700). The
- *     canonical glass-ui mono. OFL — full self-host permitted. Carries
- *     `font-display: swap` (post-LCP register; visual swap acceptable).
- *
- * Both ship with Capsize-calibrated `size-adjust` / `ascent-override` /
- * `descent-override` metric overrides on the matching fallback faces so
- * the swap (system → primary) is geometry-neutral; CLS contribution
- * from the font-load is zero by construction.
- *
- * Consumers map `--font-brand-sans` / `--font-display` / `--font-mono`
- * to reference these self-hosted families and get the full gestalt-2
- * stack (self-host + optional + size-adjust + metric overrides) at the
- * substrate layer without re-introducing third-party CDN dependencies
- * on the LCP-critical path.
+ * Self-host font subsystem — glass-ui ships two OFL-1.1 face families as
+ * bundled woff2 assets: Plus Jakarta Sans (brand display sans, font-display:
+ * optional) + Fira Code (canonical mono, font-display: swap). Both ship with
+ * Capsize-calibrated size-adjust / ascent-override / descent-override on the
+ * matching fallback faces so the swap is geometry-neutral (zero CLS). Consumers
+ * map --font-brand-sans / --font-display / --font-mono to reference them, no
+ * third-party CDN dependency on the LCP-critical path.
  */
 
 /* ═══════════════════════════════════════════════
    OFL FACE FILES — Plus Jakarta Sans (brand display)
    ═══════════════════════════════════════════════ */
 
-/* The payload-bearing "Plus Jakarta Sans" faces (latin + latin-ext woff2)
-   live in `fonts.css`, reachable via the `@mkbabb/glass-ui/styles/fonts`
-   export. They are split off the critical entry path so `./styles` (first
-   paint) does not carry the ~99 KB-gzipped base64 font binary. Consumers
-   import `…/styles/fonts` once, separately. The calibrated `local()`
-   fallback face below carries NO payload and stays on the critical path —
-   it is what paints during the `font-display: optional` window. */
-
-/* Plus Jakarta Sans — calibrated fallback face.
-   Wraps the platform's system sans-serif (San Francisco / Segoe UI /
-   Roboto / Arial) and overrides its metrics to match Plus Jakarta Sans's
-   x-width + ascent + descent. While the primary face hasn't arrived
-   (font-display: optional → renders in fallback if not in cache within
-   the 100ms block window), the fallback paints at Plus Jakarta's
-   geometry — the swap is metrically neutral, no CLS contribution.
-
-   The four values (size-adjust + ascent-override + descent-override per
-   system face) were derived programmatically via @capsizecss/core's
-   `createFontStack` against the bundled latin woff2 (AC.W6b Capsize
-   calibration; receipts at docs/tranches/AC/artefacts/W6b/). */
+/* The payload-bearing "Plus Jakarta Sans" faces live in `fonts.css`
+   (`@mkbabb/glass-ui/styles/fonts`), split off the critical entry path so
+   `./styles` does not carry the ~99 KB-gzipped font binary. The calibrated
+   `local()` fallback face below carries NO payload, stays on the critical
+   path, and paints during the `font-display: optional` window. Its metric
+   overrides (per system face) were derived via @capsizecss/core's
+   `createFontStack` against the bundled latin woff2 — the swap is metrically
+   neutral (no CLS). */
 @font-face {
     font-family: "Plus Jakarta Sans Fallback";
     src: local("System Font"), local(".SFNS-Regular"), local(".SFNSText-Regular"),
@@ -98,19 +66,12 @@
    OFL FACE FILES — Fira Code (canonical mono)
    ═══════════════════════════════════════════════ */
 
-/* The payload-bearing "Fira Code" faces (latin + latin-ext woff2) live in
-   `fonts.css`, reachable via the `@mkbabb/glass-ui/styles/fonts` export —
-   split off the critical entry path (see the Plus Jakarta note above). The
-   calibrated `local()` fallback face below carries NO payload and stays on
-   the critical path; it covers the `font-display: swap` window. */
-
-/* Fira Code — calibrated fallback face. Wraps the platform mono stack
-   (SF Mono / Menlo / Consolas / Courier New) with Capsize-derived
-   metric overrides referenced against Roboto Mono (the only mono entry
-   in `@capsizecss/metrics`; the platform monos cluster within ~2% of
-   Roboto Mono's metrics, so the override holds across the chain).
-   size-adjust ≈ 1.0 means Fira Code's x-width matches the system mono
-   exactly — the swap is geometrically transparent. */
+/* The payload-bearing "Fira Code" faces live in `fonts.css`
+   (`@mkbabb/glass-ui/styles/fonts`), split off the critical entry path. The
+   calibrated `local()` fallback face below carries NO payload, stays on the
+   critical path, and covers the `font-display: swap` window. Its metric
+   overrides reference Roboto Mono (the platform monos cluster within ~2%);
+   size-adjust ≈ 1.0 makes the swap geometrically transparent. */
 @font-face {
     font-family: "Fira Code Fallback";
     src: local("SF Mono"), local("SFMono-Regular"), local("Menlo"),
@@ -121,37 +82,16 @@
 }
 
 :root {
-    /* Font family tokens.
-
-       `--font-serif`, `--font-display`, and `--font-mono` are NOT declared
-       here. Their canonical source-of-truth lives in tokens.css
-       (`--font-stack-serif`, `--font-stack-display`, `--font-stack-mono`),
-       bridged to Tailwind utilities via the `@theme` block in theme.css
-       (`--font-serif: var(--font-stack-serif)` etc.). Declaring them here
-       as `:root` literals would shadow any consumer `@theme` override because
-       un-layered `:root` declarations win over `@layer theme { :root }` in
-       the Tailwind v4 cascade. The Q.W3 Lane F substrate revert (commit
-       retiring the L.W1 `6ce14e5` fossil) removes those literals so the
-       tokens.css→theme.css bridge is the single resolution path.
-
-       Per AC.W6b (v1.5.0): the self-hosted OFL face files declared above
-       expose two new family names: `"Plus Jakarta Sans"` (brand display
-       sans — Path D substitute) + `"Fira Code"` (canonical mono). Both
-       families pair with their respective `"... Fallback"` faces (which
-       wrap the system fallback via `local()` + Capsize-calibrated
-       metric overrides — the swap is no-shift on geometry).
-
-       - `--font-brand-sans` ships its neutral default
-         (`"Helvetica Neue" → Arial Nova → Arial → system-ui → sans-serif`).
-         Consumers opting into Plus Jakarta Sans via the `brand-uniform-sans`
-         preset override this token at `:root` to:
-         `"Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif`.
-
-       - `--font-mono` references `"Fira Code"` first so the self-hosted
-         face engages by default for every glass-ui consumer; the
-         calibrated `"Fira Code Fallback"` covers the swap window, then
-         fallback `"Fira Mono"` + the generic `monospace` backstop the
-         chain for browsers that reject local() lookups. */
+    /* Font family tokens. `--font-serif` / `--font-display` / `--font-mono`
+       are NOT declared here — their source-of-truth lives in tokens.css
+       (`--font-stack-*`), bridged to Tailwind via theme.css's `@theme` block;
+       declaring `:root` literals here would shadow consumer `@theme` overrides
+       (un-layered `:root` wins over `@layer theme`). The self-hosted faces
+       above expose `"Plus Jakarta Sans"` + `"Fira Code"`, each pairing with a
+       calibrated `"... Fallback"`. `--font-brand-sans` ships a neutral default;
+       consumers opting into Plus Jakarta via the `brand-uniform-sans` preset
+       override it. `--font-mono` references `"Fira Code"` first (engages by
+       default) then the fallback chain. */
     /* Independent brand/system sans stack; consumers override once for uniform sans. */
     --font-brand-sans: "Helvetica Neue", "Arial Nova", Arial, system-ui, sans-serif;
     --font-sans: var(--font-brand-sans);
@@ -219,29 +159,12 @@ body {
     font-weight: var(--font-display-weight);
 }
 
-/* O.W6 Lane D — `.text-hero` consumer-recipe hoist (speedtest AC.W6
-   cohort, T_GU-HERO).
-
-   The poster-type hero register. Composes the existing audacious ladder:
-   ceiling pegs to `--type-display-audacious` (φ^(11/2) — peak 352px, the
-   fast.com peg) so consumers reading this utility against the type-scale
-   get the canonical ceiling without re-declaring it.
-
-   Three knobs let consumers tune without forking the recipe:
-   - `--text-hero-size`: total clamp (default = canonical cap). Speedtest
-     overrides this to `clamp(3rem, 45cqi, var(--type-display-audacious))`
-     for its container-query metric column.
-   - `--text-hero-leading`: line-height; default 0.84 matches speedtest's
-     AB.W1.T3 tight-leading baseline.
-   - `--text-hero-tracking`: letter-spacing; default -0.03em (poster-type
-     register — tighter than `--type-tracking-tight`).
-
-   `font-weight: 300` (poster-type) and `font-feature-settings: ss01,
-   tnum, lnum` lock the numeric/stylistic-set baseline; consumers that
-   need different features re-declare locally. The utility is otherwise
-   substrate-only — consumer-side data-attribute registers (e.g.,
-   speedtest's `.text-hero[data-idle]` colour cascade) compose ON TOP of
-   this base. */
+/* `.text-hero` — the poster-type hero register. Ceiling pegs to
+   `--type-display-audacious` (φ^(11/2) — peak 352px). Three knobs tune without
+   forking: `--text-hero-size` (total clamp), `--text-hero-leading` (line-height,
+   default 0.84), `--text-hero-tracking` (letter-spacing, default -0.03em).
+   `font-weight: 300` + `font-feature-settings: ss01, tnum, lnum` lock the
+   numeric/stylistic baseline; consumer data-attribute registers compose on top. */
 @utility text-hero {
     font-family: var(--font-display);
     font-size: var(--text-hero-size, var(--type-display-audacious));
@@ -352,23 +275,13 @@ body {
     font-weight: 600;
 }
 
-/* AB.W1.T5 — canonical dock control label register.
-   Use case: text labels INSIDE `.dock-tab-button` (Start, Next, Submit,
-   Done, New Test, survey labels). The dock-tab-button shell itself owns
-   `--type-small` as a fallback, but consumers wanting an emphatic label
-   character (slightly larger than the body small register) reach for
-   `.dock-label` rather than `.text-heading` — `.text-heading` is the
-   heading register and carries `font-weight: 700`, which reads as
-   literal bold inside a dock pill (the user mandate is "the start text
-   should not be bold", redressed to every bottom-dock label).
-
-   Composes the audacious-dock `--dock-label-size` knob when set
-   (utilities.css §audacious mobile carve declares `--dock-label-size:
-   14-15px` at narrow viewports); falls back to `--type-subheading` so
-   the register stays one rung above body-small at desktop. Weight 400
-   (regular) per the standing precept: Plus Jakarta Sans at the dock
-   pill size reads visually heavier than the numeric weight implies, so
-   the regular rung is the correct register for the not-bold posture. */
+/* Canonical dock control label register — text labels INSIDE
+   `.dock-tab-button` (Start, Next, Submit, …) that want an emphatic character
+   without `.text-heading`'s `font-weight: 700` (which reads as literal bold in
+   a dock pill). Composes the `--dock-label-size` knob when set (dock.css
+   audacious mobile carve), else `--type-subheading`. Weight 400 — Plus Jakarta
+   reads heavier than its numeric weight at pill size, so regular is the
+   not-bold register. */
 @utility dock-label {
     font-family: var(--font-serif);
     font-size: var(--dock-label-size, var(--type-subheading));
