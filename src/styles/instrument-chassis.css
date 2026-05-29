@@ -292,7 +292,34 @@
     @media (max-width: 720px) {
         .instrument-chassis .instrument-dial {
             grid-template-columns: 1fr;
-            grid-template-rows: auto auto auto;
+            /* R0G-2 (AO.W3) — reserve the dial's FINAL box from frame 0. The
+               desktop axis is already CLS-clean (the 3-column `align-items:
+               center` grid reserves row height from intrinsic min + the AP-Pγ
+               transform-only idle recentre). The mobile reflow previously
+               collapsed to `grid-template-rows: auto auto auto`, which reserves
+               NO height — the meter row, divider, and readout column sit at
+               zero height until the consumer's meter <canvas> + readout
+               numbers hydrate, then grow collapsed → final and push everything
+               below down ~326-331px → mobile-390 CLS 0.32-0.38.
+
+               The fix pins the dial box from frame 0: the meter row carries the
+               dominant reserve (`minmax(0, 1fr)` — it expands to fill the
+               envelope the `min-height` establishes), divider + readout stay
+               intrinsic (`auto`). The load-bearing reserve is `min-height` —
+               it fixes the dial's outer box so the rows distribute WITHIN a
+               reserved envelope rather than growing it post-hydration.
+
+               Both knobs are CSS custom properties (token-first). The
+               `--instrument-dial-min-height-mobile` canonical rung lands in
+               tokens.css at AO.W4; until then the inline `24rem` fallback IS
+               the default and carries the contract. A consumer whose meter is
+               a different size retunes the token — a tuning knob, not a
+               workaround for a missing reserve. */
+            grid-template-rows:
+                var(--instrument-dial-meter-reserve-mobile, minmax(0, 1fr))
+                auto
+                auto;
+            min-height: var(--instrument-dial-min-height-mobile, 24rem);
             gap: var(--instrument-dial-gap-mobile, 1.5rem);
         }
 
