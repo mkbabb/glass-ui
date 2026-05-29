@@ -14,15 +14,18 @@ AO opens against a **clean ledger** — 0 unaddressed requests, 0 survivors, no 
 
 | Wave | Title | Phase | Status | Evidence |
 |---|---|---|---|---|
-| AO.W0 | 6-lane audit + path-forward synthesis | DEV | DONE | `audit/{ALPHA,BETA,GAMMA,DELTA,EPSILON,OMEGA}-*.md` + `audit/PATH-FORWARD.md` + `AO.md` + `waves/W{0..4}.md` + this PROGRESS |
-| AO.W1 | Design slice — gate-truth + CSS re-base + cascade-consolidation + legacy-purge + changeset-release | DEV (boundary) | PLANNED | `design/W1.1-gate-truth.md` · `design/W1.2-css-rebase.md` · `design/W1.3-legacy-purge-and-build.md` |
+| AO.W0 | 6-lane audit + path-forward synthesis | DEV | DONE | `audit/{ALPHA,BETA,GAMMA,DELTA,EPSILON,OMEGA}-*.md` + `audit/PATH-FORWARD.md` + `AO.md` + `waves/W{0..5}.md` + this PROGRESS |
+| AO.W1 | Design slice — gate-truth + CSS re-base + cascade-consolidation + legacy-purge + changeset-release + consumer-gap | DEV (boundary) | PLANNED | `design/W1.1-gate-truth.md` · `design/W1.2-css-rebase.md` · `design/W1.3-legacy-purge-and-build.md` · `design/W1.4-consumer-gap.md` |
 | AO.W2 | Self-measurement truth + legacy purge | IMPL | PLANNED | `audit/W2-self-measurement-truth.md` (gate measures dist/styles · footgun closed · heap prefix 0 · alias grep 0) |
-| AO.W3 | CSS budget re-base + cascade consolidation | IMPL | PLANNED | `audit/W3-css-rebase-consolidation.md` (re-based ceiling · per-subpath enforce · proof:theme byte-clean · π re-probe) |
-| AO.W4 | Close ceremony + first changeset-driven release | IMPL (LAST) | PLANNED | `audit/W4-close.md` + `FINAL.md` + `.changeset/` (default 3.0.0) |
+| AO.W3 | Consumer-gap (speedtest AQ R0G-1..4) | IMPL | PLANNED | `audit/W3-consumer-gap.md` (Aurora idle-fps · chassis mobile CLS < 0.05 · useIdleReady exported · Toaster position) |
+| AO.W4 | CSS budget re-base + cascade consolidation + R0G-5 token | IMPL | PLANNED | `audit/W4-css-rebase-consolidation.md` (R0G-5 token · re-based ceiling · per-subpath enforce · proof:theme byte-clean · π re-probe) |
+| AO.W5 | Close ceremony + first changeset-driven release | IMPL (LAST) | PLANNED | `audit/W5-close.md` + `FINAL.md` + `.changeset/` (default 3.0.0) |
 
-**Wave count: 5 (AO.W0-AO.W4)** — 2 DEVELOPMENT (W0 audit + W1 design) + 3 IMPLEMENTATION. Dev/impl boundary at W1|W2.
+**Wave count: 6 (AO.W0-AO.W5)** — 2 DEVELOPMENT (W0 audit + W1 design) + 4 IMPLEMENTATION. Dev/impl boundary at W1|W2.
 
-DAG — W0 first; W1 after W0; W2 the truth-foundation (W3's re-base depends on the gate measuring reality); W3 the headline pass; W4 closes + exercises changesets.
+DAG — W0 first; W1 after W0; W2 the truth-foundation (W4's re-base depends on the gate measuring reality); W3 the consumer-gap pass (independent of W2; settles `instrument-chassis.css`); W4 the CSS headline pass against the settled cascade (post-W2 gate + post-W3 chassis + R0G-5 token); W5 closes + exercises changesets.
+
+**Amendment (2026-05-29, post-W0):** speedtest tranche AQ surfaced 5 consumer-driven R0-glass items AFTER the W0 audit (`CONSUMER-REQUEST-speedtest-AQ.md`). AO folds all five (see `AO.md` §Consumer-request amendment + §Resolved decision 6) — R0G-1/2/3/4 → new AO.W3 consumer-gap wave; R0G-5 token → AO.W4. The W0 "0 unaddressed / clean ledger" finding was true-as-of-`4869b74`; the fold amends it. Wave count 5→6.
 
 ## Cross-tranche posture
 

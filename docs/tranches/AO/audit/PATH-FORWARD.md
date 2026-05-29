@@ -51,3 +51,13 @@ AO is **glass-ui-internal-first**. The one cross-repo-shaped exercise is the fir
 ## § Brittleness
 
 AO declares ZERO brittleness windows. The gate/build-config fixes are revertible; the cascade consolidation is CSS-dedup verified against `proof:theme` + a visual π re-probe; the alias deletion is a clean break with zero external consumers (the only "irreversible" is the npm publish of the new version, an enabling property — consumers pin at leisure since nothing they use is removed). No rename (inv 43). The 4 motion primitives + the visual canon are the regression bar throughout.
+
+## § Amendment — speedtest AQ consumer-request fold (post-W0)
+
+This synthesis's §The-one-load-bearing-fact ("clean ledger; 0 unaddressed; no consumer-surfaced primitive gap") was true as of the audit's basis commit `4869b74` — it ran **before speedtest tranche AQ existed**. AQ's 10-lane cohort subsequently handed AO five consumer-driven R0-glass items (`CONSUMER-REQUEST-speedtest-AQ.md`; authoritative spec `speedtest/docs/tranches/AQ/R0-GLASS-COORDINATION.md`). AO owns the disposition and FOLDS all five:
+
+- **R0G-1 Aurora demand-driven render loop** + **R0G-2 InstrumentChassis breakpoint child-reserve** — perf/correctness transpositions of existing primitives the consumer cannot fix idiomatically (the loop + the child layout live in the primitives). The AO ethos exactly (elegance/simplicity/performance of existing surface).
+- **R0G-3 `useIdleReady`** — 5 consumer sites; **clears J inv 10 / L inv 8** (≥2-consumer substrate-promotion gate). This is the consumer-gap the W0 audit read as empty because AQ had not surfaced it. EPSILON's "no ≥2-consumer pattern clears the gate" is amended for this one composable.
+- **R0G-4 `Toaster` `position`** + **R0G-5 `--surface-public-data-panel` token** — additive API/cascade completeness; no breaking change; `proof:theme`-gated.
+
+None invents unjustified substrate; all are additive and ride the planned 3.0.0 alias-removal break. The fold extends the internal-first thesis rather than contradicting it — the headline stays self-measurement-truth + CSS-architecture; the consumer items are a parallel correctness/promotion track (AO.W3) that the CSS re-base (AO.W4) then measures against. Wave shape grows 5→6; the publish leg stays user-domain (now outward-facing for the consumer items too — confirm-first).
