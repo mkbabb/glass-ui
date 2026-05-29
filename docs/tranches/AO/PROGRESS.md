@@ -6,7 +6,7 @@ Status vocabulary — PLANNED / IN-PROGRESS / DONE / MET / MISS / NAMED-FORWARD 
 
 ## Top-line status
 
-**DEVELOPMENT.** W0 closed (the 6-lane audit ran + the synthesis landed). W1 (the design slice) awaits — it is the END OF THE DEVELOPMENT BOUNDARY. W2-W4 are authored as binding wave specs but RUN only on explicit user authorization; the dev/impl boundary sits at W1|W2.
+**IMPLEMENTATION.** W0 closed (6-lane audit + synthesis). W1 closed (the 4-doc design slice — gate-truth, css-rebase, legacy-purge-build, consumer-gap; the dev/impl boundary). The speedtest-AQ consumer-request fold grew the tranche 5→6 waves (W3 consumer-gap inserted; CSS→W4, close→W5). W2-W5 now execute under the standing tranche directive ("complete the plan IN TOTALITY") — the authorization that crosses the W1|W2 boundary.
 
 AO opens against a **clean ledger** — 0 unaddressed requests, 0 survivors, no consumer-surfaced primitive gap (muster's H tranche is muster-only), and no ≥2-consumer pattern that clears the substrate-promotion gate. AO is internal-correctness work landed in the ideal window: the headline is the self-measurement truth + CSS-architecture pass, with the hygiene (alias delete + heap-prefix retire + doc resync + dist-wipe-footgun fix) riding the same close.
 
@@ -52,7 +52,7 @@ All four need the user's GitHub push authority.
 - The 6-lane audit landed (`audit/{ALPHA,BETA,GAMMA,DELTA,EPSILON,OMEGA}-*.md`) + `audit/PATH-FORWARD.md` + `AO.md` + the W0-W4 wave specs + this PROGRESS.
 - **The clean-ledger finding (ALPHA).** 13 DELIVERED / 0 UNADDRESSED across the AM→AN arc; the precept canon HELD over the AN window (agent git-discipline, no backwards-compat slip, no greenfield-voice breach); muster's H tranche surfaces no glass-ui primitive gap (it composes shipped 2.1.0 primitives or is muster-bespoke). EPSILON confirmed no ≥2-consumer pattern clears the substrate-promotion gate (inline-edit has 2 divergent shapes; LabeledSlider readout is minor-additive). So AO is neither consumer-gap-driven nor primitive-driven.
 - **The three-stale-self-descriptions thesis.** The audit's real finding is internal: the library carries three stale self-descriptions (the gate measures the wrong CSS artifact; the §Build prose narrates a vanished api-extractor toolchain; the 8 GB heap prefix serves it) and one live legacy alias (`useSpringOrchestrator`). AO makes glass-ui's self-knowledge true and the source pristine.
-- **The gate-mis-measurement headline (DELTA D1).** `profile:budget` measures `dist/glass-ui.css` (the SFC-only fragment, 7805 gzip, reported 90.2% of an 8650 ceiling) while consumers draw `dist/styles/index.css` (the AN.W1 fold — cascade + folded SFC bundle, ~10.2 KiB gzip combined). A regression in the cascade arm (tokens / theme / utilities) never moves the gated number. The "90.2% near-breach" is a mis-measurement, not a crunch — the same gate-blindness class muster's H.W3 critical-path-gate closes. AO inv α: the gate measures the real consumer artifact.
+- **The gate-mis-measurement headline (DELTA D1).** `profile:budget` measures `dist/glass-ui.css` (the SFC-only fragment, 7805 gzip, reported 90.2% of an 8650 ceiling) while consumers draw `dist/styles/index.css` (the AN.W1 fold — cascade + folded SFC bundle; W1.1 re-measured the fully-resolved draw at ~79 KiB gzip — the W0 ~10.2 KiB estimate counted only index.css text + the folded SFC, missing the 17 cascade rungs). A regression in the cascade arm (tokens / theme / utilities) never moves the gated number. The "90.2% near-breach" is a mis-measurement, not a crunch — the same gate-blindness class muster's H.W3 critical-path-gate closes. AO inv α: the gate measures the real consumer artifact.
 - **The dist-wipe footgun (DELTA D2).** `vite.iter.config.ts` omits `publishStyleAssets()` and `emptyOutDir` defaults true, so every `iter-build` (hence every `profile:budget`) wipes `dist/` and never recreates `dist/styles`. This forced the "re-run the canonical build last" workaround at AN.W7 + muster G.W3 and is exactly why the gate could never see the real artifact. AO inv β: the two build configs do not wipe each other's dist.
 - **The inv-47 alias (BETA).** `src/composables/motion/useSpringOrchestrator.ts` is a live `@deprecated` back-compat export alias (`useSpringOrchestrator = useNumericTransition`), kept as a one-minor courtesy from AL.W9-δ — now stale (the rename predates 2.0.0, the lib is at 2.1.0), zero external consumers (only 3 demo-private sites + 2 shim test cases). Its JSDoc defers retirement to v3.0; AO folds that deferral forward. DELETE — clean break, no replacement alias (inv 47 / L inv 4).
 - **The dead heap prefix (GAMMA + DELTA D3).** `NODE_OPTIONS=--max-old-space-size=8192` lives at 4 sites (`package.json:481` build, `package.json:482` build:watch, `scripts/release.sh:81`, `.github/workflows/release.yml:31`). It was provisioned for the vite-plugin-dts + api-extractor per-entry walk (~6.7 GB RSS) that is GONE — dts now emits via `vue-tsc --project tsconfig.build.json`, the build is ~6.9 s, both arms peak < 740 MB RSS. The prefix is dead weight and the §Build paragraph is stale fiction. DROP + resync. **Resolved against BETA's "carry as latent-debt" framing:** BETA item 2 read the prefix as upstream-gated latent-debt to CARRY; GAMMA + DELTA + PATH-FORWARD finding 3 + AO.md decision 4 overrode it — the toolchain already moved off api-extractor, so the prefix is dead weight to DROP now, not a carry awaiting an upstream vite-plugin-dts incremental-rollup landing.
@@ -69,21 +69,30 @@ All four need the user's GitHub push authority.
 
 ---
 
-## AO.W1 — Design slice — END OF DEVELOPMENT BOUNDARY
+## AO.W1 — Design slice — END OF DEVELOPMENT BOUNDARY — 2026-05-29 — DEV-CLOSED
 
-- **Opens:** after W0 close
-- **Status:** PLANNED
-- **Agents:** 2-3 (W1.1 + W1.3 disjoint; W1.2 reads W1.1's measurement target)
-- **Disposition:** PLANNED — the design docs bind W2-W4; **the dev/impl boundary sits at W1|W2; W2 opens only on explicit user authorization.**
+- **Opens:** after W0 close — **Closes:** 2026-05-29
+- **Status:** DONE
+- **Agents:** 4 (W1.1 gate-truth ‖ W1.3 legacy-purge ‖ W1.4 consumer-gap dispatched parallel; W1.2 css-rebase against W1.1's resolved measurement target)
+- **Disposition:** DONE — the 4 design docs bind W2-W5. **The dev/impl boundary sits at W1|W2; the standing tranche directive ("complete the plan IN TOTALITY") is the authorization to cross it.**
+
+### Events
+
+- **The measurement correction (W1.1 + orchestrator).** The W0 audit + the first W1.1 pass estimated the combined CSS draw at ~10.2 KiB by counting only `index.css`'s entry text (comments + `@import` lines, 2441 gzip) + the folded SFC (7818). Measuring the FULLY-RESOLVED `dist/styles/index.css` (all 17 cascade `@import`s inlined + the folded SFC) gives **80827 gzip ≈ 79 KiB** — the cascade arm (tokens.css 26 KiB, dock.css 10.7, utilities.css 10.4, …) dominates and was untracked. The gate-blindness was worse than DELTA diagnosed. The gate (inv α) resolves every `@import` so a regression in ANY rung trips it; the W1.1 "inline only glass-ui.css, leave cascade as references" design was corrected (it would have re-blinded the cascade arm, failing W2 gate #3). Binding specs (W2/W4/AO.md/PROGRESS) re-numbered to ~79 KiB.
+- **The W1.3 grep catch.** The alias-deletion grep `grep -r 'useSpringOrchestrator' src/` would match a "renamed from useSpringOrchestrator" comment in `src/composables/motion/useNumericTransition.ts:10-14` — folded into the W2 scrub list (a 9th touch the original File Bounds missed). The alias is an identity alias (no signature difference) — every call site is a pure symbol swap.
+- **The heap-prefix 6 sites.** Empirically there are 6, not 4 — `.github/workflows/ci.yml` carries a live env (`:40`) + a stale comment (`:14`) the original plan missed. W2 + the AO.md/wave specs corrected to 6.
+- **W1.4 consumer-gap shape.** Pinned the exact Aurora RAF site (`tick()`/`arm()` in `aurora/composables/runtime.ts`; option (a) demand-driven + visibilitychange-pause), the chassis defect (`grid-template-rows: auto auto auto` in the `@media (max-width:720px)` `.instrument-dial` block → min-height reserve), the `useIdleReady` signature (`useViewportReady` minus the IO stage + an `onReady` hook), and the `Toaster` `position` map (default `bottom-right` byte-identical).
+- **W1.2 found a latent bug** — `drawer.css` double-wraps `hsl(var(--background))` on an already-`hsl()` token (`:49`/`:101`); folded into W4 as a fix (not a reclaim). Re-based ceiling derived: post-consolidation ~75447 gzip → ceiling `83000` gzip. R0G-5 token home: `tokens.css` §5 (the `--card` opaque-surface convention), value `hsl(44 16% 96%)` light.
 
 ### Gates
 
 | # | Gate | Status | Evidence |
 |---|---|---|---|
-| 1 | `design/W1.1-gate-truth.md` — combined-draw measurement + dist-share fix + per-subpath enforce | PLANNED | — |
-| 2 | `design/W1.2-css-rebase.md` — re-based ceiling (derived) + per-rung consolidation plan | PLANNED | — |
-| 3 | `design/W1.3-legacy-purge-and-build.md` — alias migration map + heap-prefix sites + §Build resync + version decision (default 3.0.0) | PLANNED | — |
-| 4 | `git status -- src/` clean; dev/impl boundary marked | PLANNED | — |
+| 1 | `design/W1.1-gate-truth.md` — combined-draw measurement + dist-share fix + per-subpath enforce | MET | resolved-draw 80827 gzip; Option (a) shared `vite.style-assets.ts`; drift-% gate |
+| 2 | `design/W1.2-css-rebase.md` — re-based ceiling (derived) + per-rung consolidation plan | MET | ceiling 83000 gzip; per-rung reclaim plan across 19 files |
+| 3 | `design/W1.3-legacy-purge-and-build.md` — alias migration map + 6 heap sites + §Build resync + version (3.0.0) | MET | 9-touch migration map; identity alias; §Build draft |
+| 4 | `design/W1.4-consumer-gap.md` — R0G-1..4 exact sites + shapes | MET | RAF site, chassis defect, useIdleReady sig, Toaster map |
+| 5 | `git status -- src/` clean; dev/impl boundary marked | MET | src/ clean; boundary crossed under the standing directive |
 
 ---
 
@@ -99,7 +108,7 @@ All four need the user's GitHub push authority.
 | # | Gate | Status | Evidence |
 |---|---|---|---|
 | 1 | `typecheck` + `build` exit 0 under DEFAULT heap | PLANNED | — |
-| 2 | Gate measures `dist/styles` (combined ~10.2 KiB), not the SFC fragment | PLANNED | `audit/W2-self-measurement-truth.md` |
+| 2 | Gate measures `dist/styles` (fully-resolved ~79 KiB), not the SFC fragment | PLANNED | `audit/W2-self-measurement-truth.md` |
 | 3 | Gate fails-on-synthetic-cascade-regression | PLANNED | `audit/W2-...` |
 | 4 | Gate passes-on-HEAD | PLANNED | `audit/W2-...` |
 | 5 | Dist-wipe footgun closed (profile:budget leaves dist/ intact) | PLANNED | `audit/W2-...` |
