@@ -23,64 +23,21 @@ const startedAt = Date.now();
 // `npm run profile:bundle` keeps its measurement-only contract and prints the
 // same report without exiting non-zero on FAIL.
 //
-// Numbers chosen against K W4 baseline (2026-05-09 build):
-//   glass-ui.js   raw 146_129 / gz 25_928
-//   glass-ui.css  raw  22_359 / gz  4_420
-// with ~30% headroom per K invariant 12 + Rβ A13 disposition. Speedtest
-// W3.perf.B.T5 (cn() refactor → v0.9.2) is expected to compress glass-ui.js
-// by ~10–18 KB gz; the gate is intentionally re-baselined at K W8 close
-// after that ship per K W4 sequencing.
+// The JS key gates the root barrel `dist/glass-ui.js`; the CSS key gates the
+// fully-resolved `dist/styles/index.css` consumer draw (the cascade @imports
+// inlined — see combinedStylesDraw below), which is the real artifact a
+// consumer's bundler resolves through `@import "@mkbabb/glass-ui/styles"`.
 //
-// N.W0 re-baseline (v1.1.1): AB tranche shipped ~10 KB of load-bearing CSS
-// (AB.W1.T1 `--chassis-max-block-size` token block; AB.W3.T1 Pulse aura
-// recipe + `--animate-ambient-pulse-*` block; AB.W3.T2 Progress sectioned
-// recipe + `--progress-sectioned-*` block; AB.W3 dock-shadow consumer
-// canon) without re-baselining the budget at AB close — a precept gap the
-// N.W0 audit-verdict spot-verification gate surfaces. Bumping CSS budget
-// to 36_000 raw / 6_700 gzip (≈ 13 % headroom over current draw of
-// 31_875 raw / 5_972 gzip) restores a passing gate without papering over
-// the AB additions; future tranches re-baseline at their own close.
-//
-// P.W0 Lane C re-baseline (v1.7.0 ceremonial close): the AB+1 shadow-execution
-// cohort (v1.5.0 → v1.7.0; speedtest AC.W6 + W8e driven) shipped CSS without
-// re-baselining the budget at its tag boundaries — a recurrence of the AB
-// gap the N.W0 audit caught. AC.W6b OFL font self-host face declarations,
-// AC.W6c `--phase-color-label` cascade, AC.W6d timeline `::before` 44×44
-// hit-area + MetricRow/MetricStack/AnimatedDigit styles, AC.W8e MetricCell +
-// ResponsiveTabs + ToggleGroupItem card variant, plus the b8a61ec
-// `--continuous-fill-opacity` cascade collectively grew CSS draw from
-// 31_875 raw / 5_972 gzip (N.W0 baseline) to 38_006 raw / 7_096 gzip
-// (P.W0 measurement). Bumped CSS budget to 42_000 raw / 7_400 gzip
-// (≈ 10 % headroom over current draw) — superseded by the P.W3 baseline
-// below.
-//
-// P.W3 close re-baseline (v1.8.0 substrate-promotion minor): Lane A's
-// `glass-scrubber` Slider variant + Lane B's ProgressiveSidebar slotted-
-// chassis split added scoped-CSS draw to the bundle. Current draw at HEAD:
-// 40_882 raw / 7_396 gzip (97.3% raw, 99.9% gzip against the prior P.W0
-// baseline — the gzip cap would FAIL on the next byte). Bumping CSS budget
-// to 46_000 raw / 8_200 gzip (≈ 11% headroom raw + ≈ 11% headroom gzip)
-// restores the canonical headroom without papering over the substrate
-// promotions. The bump cadence (N.W0 → P.W0 → P.W3) is the canonical
-// "tranche-close re-baseline against substrate additions" pattern per
-// invariant-29 AB+1 retrospective discipline (codified at P.W6 close).
-//
-// Q.W4 close re-baseline (v1.9.1 patch — Q-sty-6): the post-P shadow
-// cohort pushed CSS draw to 42_667 raw / 7_674 gzip (93.6% gzip — below
-// the ε-thin threshold) without rebaselining the budget. Q.W4 Lanes A+B
-// promoted the metric-stack + timeline-dot private token dialects into
-// tokens.css §17 METRIC / §16 TIMELINE — net-additive on raw bytes (the
-// declared defaults outweigh the shed SFC `var()` fallbacks). Settled
-// post-W4 draw: 43_340 raw / 7_780 gzip. Rebaselining ONCE, post-token-
-// promotion, to 48_000 raw / 8_650 gzip (≈ 10% headroom on both axes)
-// per the canonical tranche-close cadence. The growth is load-bearing
-// (token co-location is not deletable behaviour); REBASELINE not reduce.
+// CSS ceiling — re-based ONCE at AO.W4 (D4) against the measured
+// post-consolidation resolved draw of dist/styles/index.css (gzip 74928 /
+// raw 308645) plus ~10% tranche-close headroom (74928 × 1.10 ≈ 82421 →
+// 82500). This retires the SFC-only 8650 ceiling that gated the wrong (tiny)
+// dist/glass-ui.css fragment, and the N.W0→P.W0→P.W3→Q.W4 bump-at-every-close
+// cadence that chased it: the gate now measures the real consumer artifact, so
+// the ceiling is set against reality, not bumped per tranche.
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
-    // AO.W2 interim ceiling (inv α). The measured combined `dist/styles`
-    // consumer draw is 80827 gzip; this sits ~10% above it. W4 (D4) re-bases
-    // the constant precisely against the final post-consolidation cascade.
-    "dist/styles/index.css": { raw: 360_000, gzip: 89_000 },
+    "dist/styles/index.css": { raw: 340_000, gzip: 82_500 },
 };
 
 // AO.W2 (inv α) — the real consumer-draw CSS artifact.
@@ -246,6 +203,91 @@ for (const [path, budget] of Object.entries(BUDGETS)) {
     });
 }
 
+// D5 (AO.W4) — per-subpath drift enforcement. Promote the subpathEntries
+// table from informational to ENFORCED via a drift-% threshold against the
+// committed `W4-bundle-profile.json` baseline (read authoritatively from the
+// same artifact path the profiler writes). Drift-% (not absolute per-chunk
+// caps) flags a *regression* — an entry that grew unexpectedly — while letting
+// legitimate growth re-baseline by committing a fresh baseline: one artifact,
+// one gate, no constant-per-chunk maintenance.
+//
+// Scope:
+//   - ENTRY chunks only (kind "entry"). Shared leaves are content-hashed and
+//     their names rotate per build, so they are not stable enough to drift-gate.
+//   - MIN_GATED_GZIP floor (1024 = 1 KiB): skip drift on sub-1-KiB re-export
+//     shim entries (configurator/command/…) so the gate spends enforcement on
+//     the chunks that move payload (aurora, dock, glass-ui root, typewriter,
+//     search, timeline) and does not flap on 200-byte shim noise.
+//   - DRIFT_CEIL = 0.10 (10%, matching the tranche-close headroom convention).
+//     FAIL a chunk when drift > DRIFT_CEIL.
+//   - A baseline entry absent from current dist is a MISSING FAIL (a published
+//     subpath vanished). A current entry absent from baseline is reported but
+//     NOT failed (a new subpath — re-baseline to adopt it).
+const DRIFT_CEIL = 0.1;
+const MIN_GATED_GZIP = 1024;
+const subpathReport = [];
+let baselineEntries = new Map();
+if (existsSync(artifactPath)) {
+    try {
+        const baseline = JSON.parse(readFileSync(artifactPath, "utf8"));
+        for (const e of baseline.subpathTable ?? []) {
+            if (e.kind === "entry") baselineEntries.set(e.name, e);
+        }
+    } catch {
+        // A malformed/absent baseline leaves baselineEntries empty — D5 simply
+        // reports every current entry as NEW (un-failed) until a baseline is
+        // committed. The first canonical run writes the baseline the next run
+        // drifts against.
+    }
+}
+const currentEntries = new Map(
+    subpathEntries.filter((e) => e.kind === "entry").map((e) => [e.name, e]),
+);
+for (const [name, base] of baselineEntries) {
+    const cur = currentEntries.get(name);
+    if (!cur) {
+        subpathReport.push({
+            name,
+            status: "MISSING",
+            gzip: null,
+            baselineGzip: base.gzipBytes,
+            drift: null,
+        });
+        anyBudgetExceeded = true;
+        continue;
+    }
+    if (base.gzipBytes < MIN_GATED_GZIP) {
+        subpathReport.push({
+            name,
+            status: "SKIP",
+            gzip: cur.gzipBytes,
+            baselineGzip: base.gzipBytes,
+            drift: (cur.gzipBytes - base.gzipBytes) / base.gzipBytes,
+        });
+        continue;
+    }
+    const drift = (cur.gzipBytes - base.gzipBytes) / base.gzipBytes;
+    const status = drift > DRIFT_CEIL ? "FAIL" : "PASS";
+    if (status === "FAIL") anyBudgetExceeded = true;
+    subpathReport.push({
+        name,
+        status,
+        gzip: cur.gzipBytes,
+        baselineGzip: base.gzipBytes,
+        drift,
+    });
+}
+for (const [name, cur] of currentEntries) {
+    if (baselineEntries.has(name)) continue;
+    subpathReport.push({
+        name,
+        status: "NEW",
+        gzip: cur.gzipBytes,
+        baselineGzip: null,
+        drift: null,
+    });
+}
+
 mkdirSync(auditDir, { recursive: true });
 writeFileSync(
     artifactPath,
@@ -258,6 +300,7 @@ writeFileSync(
             durationMs: Date.now() - startedAt,
             budgets: BUDGETS,
             budgetReport,
+            subpathReport,
             totals,
             subpathTotals,
             subpathTable: subpathEntries,
@@ -331,6 +374,36 @@ for (const row of budgetReport) {
     const pct = (n, d) => `${((n / d) * 100).toFixed(1)}%`;
     console.log(
         `  [${row.status}] ${row.file} — raw ${row.raw} / ${row.budgetRaw} (${pct(row.raw, row.budgetRaw)}); gzip ${row.gzip} / ${row.budgetGzip} (${pct(row.gzip, row.budgetGzip)})`,
+    );
+}
+
+// Per-subpath drift report (D5). Same rg-friendly format as the budget report.
+// SKIP rows (sub-1-KiB shim entries) and NEW rows (un-baselined subpaths) are
+// informational; PASS/FAIL/MISSING are the gated verdicts.
+console.log("");
+console.log("Per-subpath drift report (entry chunks ≥ 1 KiB, drift vs baseline):");
+const driftPct = (d) => `${d >= 0 ? "+" : ""}${(d * 100).toFixed(1)}%`;
+for (const row of subpathReport) {
+    if (row.status === "MISSING") {
+        console.log(
+            `  [MISSING] dist/${row.name} — gzip <absent> vs baseline ${row.baselineGzip}`,
+        );
+        continue;
+    }
+    if (row.status === "NEW") {
+        console.log(
+            `  [NEW] dist/${row.name} — gzip ${row.gzip} (no baseline — re-baseline to adopt)`,
+        );
+        continue;
+    }
+    if (row.status === "SKIP") {
+        console.log(
+            `  [SKIP] dist/${row.name} — gzip ${row.gzip} vs baseline ${row.baselineGzip} (below ${MIN_GATED_GZIP}-byte floor)`,
+        );
+        continue;
+    }
+    console.log(
+        `  [${row.status}] dist/${row.name} — gzip ${row.gzip} vs baseline ${row.baselineGzip} (drift ${driftPct(row.drift)})`,
     );
 }
 
