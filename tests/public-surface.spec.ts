@@ -80,9 +80,8 @@ const uiRuntimeExports = [
 // + keyboard composables moved to `/dark` + `/keyboard`. Root barrel no
 // longer re-exports any vueuse-bearing symbol (SCC trap closure).
 //
-// AI.W1 R3 — keyframes.js-bearing motion composables (`useNumericTransition`
-// — formerly `useSpringOrchestrator`, renamed at AL.W9-δ, deprecation shim
-// retained for one minor — `useStaggerReveal`, `useScrollProgress`,
+// keyframes.js-bearing motion composables (`useNumericTransition`,
+// `useStaggerReveal`, `useScrollProgress`,
 // `useAnimatedNumber`, `useAnimatedNumberMap`, `useStagger`, `useRAFLoop`,
 // `useIntersectionPause`, `installDarkModeSync`, `DAMPING`, `SNAP_THRESHOLD`)
 // moved to `/motion`. Root barrel no longer reaches `@mkbabb/keyframes.js`
@@ -159,11 +158,8 @@ const subpathRuntimeExports = [
     { subpath: "api", surface: Api, name: "MAX_NUCLEI" },
     { subpath: "api", surface: Api, name: "MAX_STOPS" },
     { subpath: "api", surface: Api, name: "DEFAULT_AURORA_CONFIG" },
-    // AI.W1 R3 — keyframes.js-bearing motion composables (new in v2.0)
-    // AL.W9-δ — `useSpringOrchestrator` → `useNumericTransition`; both names
-    // resolve through the `/motion` subpath while the deprecation shim lives.
+    // keyframes.js-bearing motion composables on the `/motion` subpath.
     { subpath: "motion", surface: Motion, name: "useNumericTransition" },
-    { subpath: "motion", surface: Motion, name: "useSpringOrchestrator" },
     { subpath: "motion", surface: Motion, name: "useAnimatedNumber" },
     { subpath: "motion", surface: Motion, name: "useAnimatedNumberMap" },
     { subpath: "motion", surface: Motion, name: "useStagger" },
@@ -249,12 +245,8 @@ const nonCoreRootRetirements = [
     "formatComboParts",
     "registerShortcut",
     "useRegisteredShortcuts",
-    // AI.W1 R3 — root-barrel keyframes.js SCC closure (motion subpath surgery)
-    // AL.W9-δ — `useNumericTransition` (formerly `useSpringOrchestrator`); the
-    // deprecation shim re-exports the old name through `/motion`, so the old
-    // name remains retired from the root barrel exactly like the canonical name.
+    // root-barrel keyframes.js SCC closure — motion composables live on `/motion`.
     "useNumericTransition",
-    "useSpringOrchestrator",
     "useAnimatedNumber",
     "useAnimatedNumberMap",
     "useStagger",
