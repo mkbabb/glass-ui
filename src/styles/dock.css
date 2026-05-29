@@ -23,27 +23,24 @@
     }
 
     /* Shared four-state contract — the focus-visible ring + disabled paint are
-       identical across every dock control, so they are expressed ONCE here
-       over the control family (the `:where()` idiom this file already uses for
-       the motion tokens) rather than copied per rule-set. Per-control
-       transition extensions (the box-shadow fade on focus-visible) stay with
-       their own selectors below where they differ. */
-    :where(
-        .dock-icon-button,
-        .dock-tab-button,
-        .dock-select-trigger,
-        .dock-dropdown-trigger
-    ):focus-visible {
+       identical across every dock control, so they are expressed ONCE here as a
+       comma group over the control family rather than copied per rule-set. The
+       group keeps full class+pseudo specificity (NOT `:where()`, which would
+       zero the class and let a per-control :hover box-shadow override the focus
+       ring). Per-control transition extensions (the box-shadow fade on
+       focus-visible) stay with their own selectors below where they differ. */
+    .dock-icon-button:focus-visible,
+    .dock-tab-button:focus-visible,
+    .dock-select-trigger:focus-visible,
+    .dock-dropdown-trigger:focus-visible {
         box-shadow: var(--focus-ring-shadow);
         outline: none;
     }
 
-    :where(
-        .dock-icon-button,
-        .dock-tab-button,
-        .dock-select-trigger,
-        .dock-dropdown-trigger
-    ):disabled {
+    .dock-icon-button:disabled,
+    .dock-tab-button:disabled,
+    .dock-select-trigger:disabled,
+    .dock-dropdown-trigger:disabled {
         opacity: var(--opacity-disabled);
         cursor: not-allowed;
     }
