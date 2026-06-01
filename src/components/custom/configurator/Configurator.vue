@@ -91,7 +91,15 @@ const containerClass = computed(() =>
     cn(
         // glass-floating is the canonical "studio panel" tier; honors
         // prefers-reduced-transparency via the @media block in glass.css.
-        "configurator glass-floating rounded-card border border-border/60 overflow-hidden",
+        // Shape geometry is `rounded-panel` (--radius-panel = --radius-xl):
+        // a floating *panel* carries panel radius, matching every other
+        // glass-floating surface in the library (HoverCardContent,
+        // DropdownMenuContent, ComboboxList, ContextMenuContent, …). Surface
+        // tier × shape geometry stay orthogonal (DESIGN.md §Orthogonal
+        // variants); the radius is owned here at the container root so the
+        // rounding does not stop one level too high (the stacked
+        // ConfiguratorLayer sections inherit a rounded outer clip).
+        "configurator glass-floating rounded-panel border border-border/60 overflow-hidden",
         "grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(280px,360px)]",
         "min-h-0",
         props.class,

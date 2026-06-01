@@ -96,7 +96,7 @@ const stateAttr = computed(() => (internalOpen.value ? "open" : "closed"));
 
 <template>
     <div
-        :class="cn('configurator-layer border-b border-border/40 last:border-b-0', props.class)"
+        :class="cn('configurator-layer rounded-panel border-b border-border/40 last:border-b-0', props.class)"
         :data-state="stateAttr"
     >
         <button
@@ -104,6 +104,13 @@ const stateAttr = computed(() => (internalOpen.value ? "open" : "closed"));
             :class="
                 cn(
                     'configurator-layer-trigger',
+                    // rounded-panel: the trigger's hover/focus fill follows the
+                    // section's panel geometry rather than reading as a squared
+                    // bar — the rounding is owned at the section root by default
+                    // (see Configurator.vue: the outer clip is rounded-panel too,
+                    // so stacked sections are rounded top-to-bottom, not just at
+                    // the outer container).
+                    'rounded-panel',
                     'group flex w-full items-center justify-between gap-2 px-3 py-2',
                     'text-left transition-colors hover:bg-foreground/5 focus-ring',
                 )
