@@ -112,23 +112,24 @@ All four need the user's GitHub/npm push authority. The precepts submodule stays
 
 ---
 
-## AP.W3 — Consumer-contract completion + control-flow derivation — PLANNED
+## AP.W3 — Consumer-contract completion + control-flow derivation — 2026-05-31 — CLOSED (the AP headline)
 
-- **Opens:** after W1 close AND explicit user authorization
-- **Status:** PLANNED
-- **Agents:** 2-3 (∥ disjoint — motion barrel ‖ dock + aurora)
-- **Disposition:** the zero-deferral repair — R0G-7 SCC carve + R0G-6 dock floor + T3 suspend-set + DockLayerGroup investigation.
+- **Opens:** 2026-05-31
+- **Closes:** 2026-05-31
+- **Status:** DONE — the real AP headline (W2 refuted). All gates MET.
+- **Agents:** 3 (∥ disjoint — motion R0G-7 ‖ dock R0G-6+DockLayerGroup ‖ aurora T3); orchestrator landed the inv-47 call-site renames + surface-manifest updates + comment trim.
+- **Disposition:** the zero-deferral repair LANDED — R0G-7 `/motion-core` SCC carve (cheap-leaf import proven engine-free, 0 keyframes/0 vueuse) + R0G-6 dock 44px coarse floor (orchestrator-overrode the W1.2 `::before` shape with a specificity fix that lifts `--dock-control-size` so the button box AND the dock width-math both reach 44px — no overflow) + T3 aurora suspend-source set (resume-while-suspended unreachable; `drawFrame` byte-identical) + DockLayerGroup vertical-overflow (CONFIRMED bug, fixed). Evidence: `audit/W3-consumer-contract.md`.
 
 ### Gates
 
 | # | Gate | Status | Evidence |
 |---|---|---|---|
-| 1 | `typecheck` + `build` exit 0 | PLANNED | — |
-| 2 | R0G-7 — keyframes-free leaf import proven engine-free; keyframes-bearing surface resolves; `verify-export-types` passes; NO back-compat alias (inv 47) | PLANNED | — |
-| 3 | R0G-6 — 44px floor on the rendered button box at coarse pointer; fine-pointer box byte-identical | PLANNED | — |
-| 4 | T3 — resume-while-suspended structurally unreachable; reduced-motion static; `drawFrame` byte-identical | PLANNED | — |
-| 5 | DockLayerGroup vertical-overflow investigation recorded with disposition | PLANNED | — |
-| 6 | Tests green (`vitest run` exit 0) | PLANNED | — |
+| 1 | `typecheck` + `build` exit 0 | MET | 0 typecheck errors; build ok; `dist/motion-core.{js,d.ts}` emitted |
+| 2 | R0G-7 — keyframes-free leaf import proven engine-free; keyframes-bearing surface resolves; `verify-export-types` passes; NO back-compat alias (inv 47) | MET | `dist/motion-core.js` 0 keyframes/0 vueuse; `dist/motion.js` keyframes present; `verify-export-types` + `proof:resolution` + `proof:package` green; inv 47 grep clean |
+| 3 | R0G-6 — 44px floor on the rendered button box at coarse pointer; fine-pointer box byte-identical | MET | `.glass-dock[data-density]` (0,2,0) wins by source order; lifts `--dock-control-size` read by button box + dock-math; `@media coarse` isolated |
+| 4 | T3 — resume-while-suspended structurally unreachable; reduced-motion static; `drawFrame` byte-identical | MET | 4-step suspend-set trace; 0 draw-line diffs; reduced-motion gate untouched |
+| 5 | DockLayerGroup vertical-overflow investigation recorded with disposition | MET | CONFIRMED bug (hardcoded row pane, no vertical analogue), fixed; horizontal byte-identical |
+| 6 | Tests green (`vitest run` exit 0) | MET | `vitest` 523/523 (6 surface-manifest assertions updated for the relocation) |
 
 ---
 
