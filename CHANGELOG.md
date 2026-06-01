@@ -35,6 +35,15 @@
     -   Wiring: `vite.library.ts` adds the `motion-core` entry; `package.json` `exports` adds `./motion-core` (contract-v2 `types`+`import`) and `typesVersions["*"]` adds `motion-core → dist/motion-core.d.ts`.
     -   NO back-compat alias on `/motion` for the relocated symbols (inv 47); consumers rename per call site. Rename table in MIGRATION.md §v3.0.0.
 
+-   AP.W3/W4 — consumer-contract completion + control-flow derivation + the false-witness coda.
+
+    -   R0G-6 — `DockIconButton` meets the WCAG 44px coarse-pointer target. The v1.4.0 floor was real CSS but SHADOWED: the always-present `.glass-dock[data-density]` (0,2,0) setter beat the bare `.glass-dock` (0,1,0) coarse floor, pinning the touch box at 40px. The coarse block now selects `.glass-dock[data-density]` (wins by source order), lifting `--dock-control-size` — which the button box AND the dock width-math both read, so the slot reserves 44px (no overflow). Fine-pointer rendering byte-identical.
+    -   Aurora — the render loop derives its run-state from a suspend-source SET (`tab-hidden`/`off-screen`/`manual`) instead of three uncoordinated owners of one `running` boolean. Resume-while-still-off-screen is structurally unreachable (a reason-keyed resume cannot clear a reason it did not set). One observer owns visibility, one owns intersection. `drawFrame` byte-identical; reduced-motion still static.
+    -   `DockLayerGroup` — fixed a vertical-overflow bug: the layer pane was hardcoded to a no-wrap row, forcing a `vertical` group's content onto one horizontal line. Vertical groups now stack/wrap/block-size to the height the stack animates. Horizontal byte-identical.
+    -   The proof gates made honest: `proof-consumers-static` no longer flags `@import`/`@source` directives that live in consumer COMMENTS (a string-aware comment-strip), and the per-subpath drift gate reads a committed baseline instead of the one it overwrites each run.
+
+    NOTE — the speculative "cascade derives itself for ~7-12 KiB reclaim" pass was investigated and DECLINED: direct measurement (deterministic build) found every form of the token/tier/four-state single-sourcing refactor byte-NEGATIVE (+1665 / +356 / +100 gzip). gzipped CSS is compression-saturated and the `@theme` bridge is idiomatic namespace-registration, not duplication. The cascade ships as-is; the only genuine reclaim was AO's prior pass. (See `docs/tranches/AP/audit/W2-cascade-derivation.md`.)
+
 > **AC.W6 + AC.W8e cohort cross-reference (speedtest tranche AC).** The
 > v1.5.0 + v1.5.1 + v1.6.0 minor/patch trio shipped as the AC.W6 cohort;
 > v1.7.0 adds the AC.W8e AB+1-subset substrate (two new primitives + a

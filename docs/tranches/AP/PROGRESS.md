@@ -6,7 +6,9 @@ Status vocabulary — PLANNED / IN-PROGRESS / DONE / MET / MISS / NAMED-FORWARD 
 
 ## Top-line status
 
-**IMPLEMENTATION — W0+W1 closed, the dev/impl boundary CROSSED on the standing tranche directive. W2-W5 in flight.** AP's development half (W0 audit + W1 design slice) is DONE; the 3 design docs at `design/W1.{1,2,3}-*.md` bind W2-W5. The implementation half opened under the standing tranche directive (the explicit authorization to cross the W1|W2 boundary). Orchestrator-led: agents are edit-only/read-only-git; the orchestrator owns the index, runs the authoritative gates, and commits per wave to avoid dist races.
+**AP CLOSED — W0-W5 complete.** The full glass-ui-internal gate matrix is green; AP folds into the unpublished 3.0.0. The headline pivoted: W2's cascade-reclaim premise was REFUTED by measurement (every dedup byte-negative; inv ζ retired; the cascade ships as-is), so AP's value is W3 (the zero-deferral consumer repair — R0G-6/R0G-7 + the aurora T3 control-flow derivation) + W4 (the false-witness coda). The user-domain perimeter (push + `v3.0.0` tag + `npm publish` + the precepts submodule) is recorded in FINAL, not executed.
+
+**(historical) IMPLEMENTATION — W0+W1 closed, the dev/impl boundary CROSSED on the standing tranche directive. W2-W5 in flight.** AP's development half (W0 audit + W1 design slice) is DONE; the 3 design docs at `design/W1.{1,2,3}-*.md` bind W2-W5. The implementation half opened under the standing tranche directive (the explicit authorization to cross the W1|W2 boundary). Orchestrator-led: agents are edit-only/read-only-git; the orchestrator owns the index, runs the authoritative gates, and commits per wave to avoid dist races.
 
 W1 review-of-design findings folded into the implementation contract: (1) gui-W1.1's T1 investigation CONFIRMED the declared "raw HSL-channel brittleness window" is stale — HEAD uses complete `hsl()` values + `color-mix` alpha (zero `hsl(var(--x)/α)` sites), so the merge moves only the namespace layer and the real merge constraint is `proof-theme-style.mjs`'s `selfReferences` scan; (2) the W1.1 grain shared group was CORRECTED from `:where([class*="glass-"])` (over-matches the non-tier `.glass-card`/`.glass-btn`/`.glass-pill`/`.glass-dock` shorthands → grain regression) to the explicit five-tier `:where()` list; (3) W3's R0G-6 `::before` hit-area shape is bound CONDITIONAL — W3 measures with the real acceptance probe and falls back to `min-block/inline-size` on the button if the `::before` does not lift the measured box to 44px.
 
@@ -153,20 +155,21 @@ All four need the user's GitHub/npm push authority. The precepts submodule stays
 
 ---
 
-## AP.W5 — Close ceremony + release — PLANNED
+## AP.W5 — Close ceremony + release — 2026-06-01 — CLOSED (AP COMPLETE)
 
-- **Opens:** after W2 + W3 + W4 close
-- **Status:** PLANNED
-- **Agents:** orchestrator-led close sweep
-- **Disposition:** π/ι + overfitting + `AP/FINAL.md` + the 3.0.0 changeset amendment (fold AP into the unpublished 3.0.0; bump only if cause).
+- **Opens:** 2026-06-01
+- **Closes:** 2026-06-01
+- **Status:** DONE — AP closes. All gates MET.
+- **Agents:** orchestrator-led close sweep.
+- **Disposition:** the close landed. Full glass-ui-internal gate matrix GREEN (10/10); π re-probe clean (cascade byte-identical → canon-equal; `drawFrame` byte-identical; vitest 523/523); ι sweep clean (stash empty, all commits orchestrator-authored, secrets-clean, no `--no-verify`); overfitting audit clean (AP promoted nothing; inv ζ retired as refuted). `AP/FINAL.md` authored. AP folded into the unpublished 3.0.0 CHANGELOG (the R0G-7 entry was added at W3; W5 added R0G-6/T3/DockLayerGroup/coda + the honest W2-refutation note). Evidence: `audit/W5-close.md` + `FINAL.md`.
 
 ### Gates
 
 | # | Gate | Status | Evidence |
 |---|---|---|---|
-| 1 | Full glass-ui-internal gate matrix green; cross-repo residuals documented | PLANNED | — |
-| 2 | π re-probe — canon + 4 motion primitives + W3 surfaces (R0G-6 dock, aurora idle) unregressed; `proof:theme` byte-clean | PLANNED | — |
-| 3 | ι sweep — stash-clean; no agent mutation; secrets-clean; no `--no-verify` | PLANNED | — |
-| 4 | Overfitting audit clean — every AP change derivation/correctness/the 2 deferred items + hygiene; watched conditions stay gated (AP promotes nothing) | PLANNED | — |
-| 5 | `AP/FINAL.md` authored — gate matrix + watched-conditions ledger (inline-edit 3-divergent; dock panel-host 1-consumer) + cross-repo perimeter | PLANNED | — |
-| 6 | The unpublished 3.0.0 changeset/CHANGELOG amended to fold AP (or justified bump); user-domain push/tag/publish/submodule perimeter recorded | PLANNED | — |
+| 1 | Full glass-ui-internal gate matrix green; cross-repo residuals documented | MET | typecheck/build/test/verify-export-types/proof:resolution/theme/package/runtime/consumers:static/profile:budget — all PASS; fourier + consumers:build residuals documented |
+| 2 | π re-probe — canon + 4 motion primitives + W3 surfaces unregressed; `proof:theme` byte-clean | MET | cascade byte-identical to pre-AP HEAD (W2 refuted → no change); `drawFrame` 0 diffs; dock floor + motion leaves correct; vitest 523/523 |
+| 3 | ι sweep — stash-clean; no agent mutation; secrets-clean; no `--no-verify` | MET | stash empty; all commits `Mike Babb`; no token values; the 11 hash-matches are commit SHAs |
+| 4 | Overfitting audit clean — every AP change derivation/correctness/the 2 deferred items + hygiene; watched conditions stay gated | MET | no invented primitive; inline-edit 3-divergent + dock panel-host 1-consumer stay watched; inv ζ retired |
+| 5 | `AP/FINAL.md` authored — gate matrix + watched-conditions ledger + cross-repo perimeter | MET | `FINAL.md` |
+| 6 | The unpublished 3.0.0 CHANGELOG amended to fold AP; user-domain perimeter recorded | MET | CHANGELOG 3.0.0 carries the full AP fold; the push/tag/publish/submodule perimeter recorded in FINAL |
