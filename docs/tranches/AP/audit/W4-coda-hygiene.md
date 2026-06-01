@@ -18,14 +18,19 @@ COMMENTS — `speedtest:src/fonts/loadFonts.ts:13` (a JSDoc block documenting "r
 flags a directive a consumer wrote in PROSE to document a retired pattern is lying — exactly the
 class W4 exists to fix.
 
-**The honest fix (glass-ui-domain):** a string-aware `stripComments()` blanks comment bodies (with
+**The honest fix (glass-ui-domain):** a source-aware `stripComments()` blanks comment bodies (with
 spaces, newlines + length preserved so match positions + line numbers stay exact) before the
-CSS-directive scan; `//` and `/* */` inside `'…'`/`"…"`/`` `…` `` literals are NOT treated as
-comments (a state machine, not a naive regex). The import-declaration scan was already comment-safe
-(its per-line guard skips lines that do not start with `import`). After the fix:
-`proof:consumers:static` exits 0 — the live consumer trees ARE clean (the only "violations" were
-the gate mis-reading prose). Zero signal loss: a LIVE directive (outside a comment) still fails the
-gate; CI never sees the siblings via the `existsSync` guard.
+CSS-directive scan. It is a full lexical state machine — `code` / `line` / `block` / string
+(`'…'`/`"…"`/`` `…` ``) / `regex` (`/…/`) — so `//` and `/* */` inside a string OR a regex literal
+are NOT treated as comments, and a regex-internal quote does not open a phantom string state. (The
+`regex` state was added at the AP+I cross-tranche verification, which surfaced a LATENT gap: the
+original code/line/block/string machine carried no regex state, so a regex bearing `//` could swallow
+a same-line live `@source` and a regex bearing a quote could leak a next-line commented `@import`. No
+consumer file at HEAD triggered either, but the machine now closes the class.) The import-declaration
+scan was already comment-safe (its per-line guard skips lines that do not start with `import`). After
+the fix: `proof:consumers:static` exits 0 — the live consumer trees ARE clean (the only "violations"
+were the gate mis-reading prose). Zero signal loss: a LIVE directive (outside a comment, a string, or
+a regex) still fails the gate; CI never sees the siblings via the `existsSync` guard.
 
 ## 2. D5 self-erasing-baseline split
 
@@ -79,7 +84,7 @@ trail).
 
 | Gate | Status | Evidence |
 |---|---|---|
-| `proof:consumers:static` exit 0 locally | MET | 212 → 0 (ignoredDirs + comment-stripping); live trees clean; zero signal loss |
+| `proof:consumers:static` exit 0 locally | MET | 212 → 0 (ignoredDirs + comment-stripping, incl. the AP+I regex-state hardening); live trees clean; zero signal loss |
 | D5 baseline stable across runs (no self-erase) | MET | committed baseline SHA `7777bbf5…` identical across seed + 3 runs; `--rebaseline` the only writer |
 | `git status` clean of strays; `.gitignore` carries the pattern | MET | 10 strays deleted; re-emitted scratch stays ignored |
 | `package.json` single converged keyframes floor; `typecheck` 0 | MET | both `^2.1.1`; typecheck exit 0 |

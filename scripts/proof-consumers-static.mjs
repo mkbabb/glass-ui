@@ -223,28 +223,59 @@ function lineNumber(source, index) {
 // comment-safe (its per-line guard skips lines that do not start with `import`).
 function stripComments(src) {
     let out = "";
-    let state = "code"; // code | line | block | sq | dq | tq
+    let state = "code"; // code | line | block | sq | dq | tq | regex
+    // Previous SIGNIFICANT (non-whitespace) char emitted in `code` — disambiguates
+    // a regex literal (`/…/`) from a division operator. A regex may legally open
+    // only where a value is expected: after one of = ( , : [ ! & | ? { } ; , after
+    // `return`, or at start-of-input. After an identifier/`)`/`]`/digit a leading
+    // `/` is DIVISION, not a regex.
+    let prevSig = "";
+    let inCharClass = false; // inside a regex [...] character class — `/` does not terminate
+    const regexAllowedPrev = new Set(["", "=", "(", ",", ":", "[", "!", "&", "|", "?", "{", "}", ";"]);
+    function regexLegalHere() {
+        if (regexAllowedPrev.has(prevSig)) return true;
+        // `return /…/` — the only keyword that ends in a regex-legal position and
+        // whose trailing char (`n`) would otherwise read as an identifier.
+        return /(^|[^A-Za-z0-9_$])return$/.test(out.replace(/\s+$/, ""));
+    }
     for (let i = 0; i < src.length; i++) {
         const c = src[i];
         const d = i + 1 < src.length ? src[i + 1] : "";
         if (state === "code") {
             if (c === "/" && d === "/") { out += "  "; i++; state = "line"; }
             else if (c === "/" && d === "*") { out += "  "; i++; state = "block"; }
-            else if (c === "'") { out += c; state = "sq"; }
-            else if (c === '"') { out += c; state = "dq"; }
-            else if (c === "`") { out += c; state = "tq"; }
-            else out += c;
+            else if (c === "/" && regexLegalHere()) { out += c; state = "regex"; inCharClass = false; prevSig = c; }
+            else if (c === "'") { out += c; state = "sq"; prevSig = c; }
+            else if (c === '"') { out += c; state = "dq"; prevSig = c; }
+            else if (c === "`") { out += c; state = "tq"; prevSig = c; }
+            else { out += c; if (c.trim() !== "") prevSig = c; }
         } else if (state === "line") {
             if (c === "\n") { out += "\n"; state = "code"; }
             else out += " ";
         } else if (state === "block") {
             if (c === "*" && d === "/") { out += "  "; i++; state = "code"; }
             else out += c === "\n" ? "\n" : " ";
+        } else if (state === "regex") {
+            // regex literal — copy the BODY verbatim (it is code, not a comment).
+            // Honor `\` escapes and `[...]` character classes (a `/` inside a class
+            // does NOT terminate); exit on the first unescaped, non-class-internal `/`.
+            out += c;
+            if (c === "\\" && i + 1 < src.length) { out += src[i + 1]; i++; }
+            else if (c === "[") inCharClass = true;
+            else if (c === "]") inCharClass = false;
+            else if (c === "/" && !inCharClass) { state = "code"; prevSig = c; }
         } else {
             // string literal — copy verbatim, honor escapes + the matching terminator
             out += c;
             if (c === "\\" && i + 1 < src.length) { out += src[i + 1]; i++; }
-            else if ((state === "sq" && c === "'") || (state === "dq" && c === '"') || (state === "tq" && c === "`")) state = "code";
+            else if ((state === "sq" && c === "'") || (state === "dq" && c === '"') || (state === "tq" && c === "`")) { state = "code"; prevSig = c; }
+            // Defensive bound: a single-quoted/double-quoted literal cannot legally
+            // span a raw newline (only a template literal can). If we hit a newline
+            // not preceded by a `\` line-continuation, the open quote was a misdetection
+            // (e.g. a regex-internal apostrophe) — reset to code so any residual
+            // mis-parse is bounded to a single line. Template literals + blocks are
+            // exempt (they legally span newlines).
+            else if (c === "\n" && (state === "sq" || state === "dq")) { state = "code"; prevSig = ""; }
         }
     }
     return out;

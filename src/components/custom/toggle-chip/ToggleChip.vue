@@ -6,13 +6,15 @@
  * selectors or `variant="cell"` for square icon + label cards.
  *
  * Usage:
- *   <ToggleChip v-model:pressed="isActive" variant="chip">
+ *   <ToggleChip v-model="isActive" variant="chip">
  *     Label
  *   </ToggleChip>
  *
- * When multiple chips share an exclusive selection, wire them up via
- * `pressed` / `@update:pressed` rather than reaching for ToggleGroup —
- * this component is deliberately unopinionated about selection mode.
+ * The toggle state is the reka-ui Toggle `modelValue` contract — bind it via
+ * `v-model` (or `:model-value` / `@update:model-value`). When multiple chips
+ * share an exclusive selection, wire them up this way rather than reaching for
+ * ToggleGroup — this component is deliberately unopinionated about selection
+ * mode.
  */
 import type { HTMLAttributes } from "vue";
 import { Toggle, type ToggleEmits, type ToggleProps, useForwardPropsEmits } from "reka-ui";
