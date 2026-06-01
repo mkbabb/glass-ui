@@ -91,23 +91,24 @@ All four need the user's GitHub/npm push authority. The precepts submodule stays
 
 ---
 
-## AP.W2 — The cascade derives itself (T1 + T2) — PLANNED
+## AP.W2 — The cascade derives itself (T1 + T2) — 2026-05-31 — CLOSED: PREMISE REFUTED, no source change
 
-- **Opens:** after W1 close AND explicit user authorization
-- **Status:** PLANNED
-- **Agents:** 1-2 (∥ — Carve A T1 tokens/theme ‖ Carve B T2 glass/dock)
-- **Disposition:** the headline — `@theme` single-source + shared tier/four-state recipes; inv ζ.
+- **Opens:** 2026-05-31 (boundary crossed)
+- **Closes:** 2026-05-31
+- **Status:** DONE — the reclaim premise is REFUTED by measurement; the cascade ships as-is.
+- **Agents:** 2 (Carve A T1 tokens/theme ‖ Carve B T2 glass/dock — both executed cleanly; both byte-NEGATIVE; both reverted)
+- **Disposition:** **W2's "cascade derives itself for ~7-12 KiB reclaim" is REFUTED by direct measurement** (deterministic build). Full var-indirection refactor: **+1665 gzip**. T1-surgical: +356. §radius-dedup + grain-collapse: +100. The cascade is compression-saturated — gzip already folds the copy-paste, the `@theme` bridge is idiomatic namespace-registration (not duplication), and the §radius dup is INERT (shadowed dead-weight). Per "performance above all," W2 ships **NO cascade source change** (all 4 files byte-identical to HEAD). **inv ζ RETIRED** (premise refuted). AP's headline pivots to W3 (the zero-deferral consumer repair) + W4. Evidence: `audit/W2-cascade-derivation.md` (the full measurement table + the 3 sub-findings + the inv-ζ retirement). The aurora T3 control-flow derivation is a CORRECTNESS fix (not a byte play) and stands in W3.
 
-### Gates
+### Gates (re-read against the refutation)
 
 | # | Gate | Status | Evidence |
 |---|---|---|---|
-| 1 | `typecheck` + `build` exit 0 | PLANNED | — |
-| 2 | `proof:theme` byte-clean (every rung + token still ships; override names survive) | PLANNED | — |
-| 3 | Reclaim measured — resolved draw drops from 74995 gzip by ~7-12 KiB | PLANNED | — |
-| 4 | `profile:budget --enforce` exit 0 against the re-based ceiling | PLANNED | — |
-| 5 | Visual π re-probe — glass tiers + dock controls zero canon regression | PLANNED | — |
-| 6 | Synthetic cascade regression still trips the gate (AO inv α preserved) | PLANNED | — |
+| 1 | `typecheck` + `build` exit 0 | MET | green at HEAD (no source change) |
+| 2 | `proof:theme` byte-clean (every rung + token still ships) | MET | passed on every refactor variant AND at HEAD; the cascade is unchanged |
+| 3 | Reclaim measured — resolved draw drops by ~7-12 KiB | **VACATED — REFUTED** | every variant byte-NEGATIVE (+1665 / +356 / +100 gzip); deterministic build; `audit/W2-cascade-derivation.md` |
+| 4 | `profile:budget --enforce` exit 0 against the re-based ceiling | MET (no re-base) | 74995 / 82500 unchanged; the draw is identical to HEAD |
+| 5 | Visual π re-probe — glass tiers + dock controls zero canon regression | MET (trivially) | cascade byte-identical to HEAD → canon-identical |
+| 6 | Synthetic cascade regression still trips the gate (AO inv α preserved) | MET | inv α intact (AO's `combinedStylesDraw` unchanged; the refactor variants moved the gated number, proving it measures the real artifact) |
 
 ---
 
