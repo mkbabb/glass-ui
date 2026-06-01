@@ -625,6 +625,23 @@
         min-width: 0;
     }
 
+    /* AP.W3 — axis-aware layer pane. The stack + `useLayerTransition` are
+       axis-aware, but the pane was hardcoded to a no-wrap ROW with
+       `width: max-content` — forcing a `vertical` group's content onto one
+       horizontal line that could not grow down (the vertical-overflow fight).
+       A vertical group stacks in a column, stretches, wraps, and block-sizes
+       to the height the stack animates. Horizontal byte-identical. */
+    .dock-layer-group.vertical .dock-layer-item-host {
+        flex-direction: column;
+        align-items: stretch;
+        white-space: normal;
+    }
+
+    .dock-layer-group.vertical .dock-layer-item-host.is-active {
+        width: auto;
+        height: max-content;
+    }
+
     .dock-icon-button {
         display: inline-flex;
         align-items: center;
@@ -1029,12 +1046,15 @@
        that wires `var(--size-icon-btn)` for trigger sizing) inherit
        the same floor.
 
-       Density overrides (`[data-density="compact"]` etc.) still win
-       inside `@layer components` ordering — consumers that explicitly
-       opt into compact density on touch devices get their compact size
-       back. The media-query only lifts the *default* path. */
+       AP.W3 R0G-6 — selector is `.glass-dock[data-density]`, not bare
+       `.glass-dock`: the always-present density setter (0,2,0) shadowed a
+       bare (0,1,0) coarse floor, pinning the touch box at 40px. The
+       presence-selector (0,2,0) wins by source order, lifting
+       `--dock-control-size` to 44px — read by both the button box and the
+       dock width-math, so the slot reserves 44px (no overflow). Fine pointer
+       byte-identical. Proof: design/W1.2-motion-carve-and-dock.md §B.2. */
     @media (pointer: coarse) {
-        .glass-dock {
+        .glass-dock[data-density] {
             --dock-control-size: var(--dock-touch-target, 2.75rem);
             --size-icon-btn: var(--dock-touch-target, 2.75rem);
         }
