@@ -10,7 +10,9 @@ AO.W0 concluded *"0 unaddressed requests, no consumer-surfaced primitive gap, no
 
 **AO owns the disposition** (fold into a wave / defer to a successor / decline with rationale). This is a request + spec, not a mandate.
 
-## The five (summary — full spec + acceptance gates in the speedtest doc)
+## The seven (summary — full spec + acceptance gates in the speedtest doc)
+
+R0G-1..5 were surfaced at AQ-open; R0G-6..7 were surfaced during AQ R2 **implementation** (measured on the real built dist / real edge — they are confirmed, not speculative).
 
 | # | Item | Kind | Surface | Acceptance signal |
 |---|---|---|---|---|
@@ -19,6 +21,8 @@ AO.W0 concluded *"0 unaddressed requests, no consumer-surfaced primitive gap, no
 | R0G-3 | **`useIdleReady` composable** (rIC sibling of `useViewportReady`) | substrate promotion (clears ≥2-consumer gate; 5 sites) | composables barrel | exported; scope-aware signature; sibling-consistent with `useViewportReady` |
 | R0G-4 | **`Toaster` `position` prop** | API completeness | Toaster | `<Toaster position="top-center">` anchors viewport top; default unchanged |
 | R0G-5 | **`--surface-public-data-panel` token** | theme token | theme cascade | token present; `proof:theme` byte-clean |
+| R0G-6 | **`DockIconButton` coarse-pointer 44px floor** | a11y/touch, existing primitive | DockIconButton | ≥44×44 on coarse pointer; fine-pointer desktop unchanged. **Measured at 40×40 on the real edge — disproves the prior "dock already has a 44px floor" assumption** |
+| R0G-7 | **split the `motion` barrel (keyframes eager-pull)** | perf/bundle-shape, existing barrel | `@mkbabb/glass-ui/motion` | a consumer importing only cheap motion utils builds a dist with keyframes (~125KB) OFF the entry/eager graph (sourcemap-verified); animation primitives stay available on their own lazy path |
 
 ## Release / cross-repo
 

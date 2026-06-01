@@ -34,6 +34,12 @@ const ignoredDirs = new Set([
     "node_modules",
     ".output",
     ".nuxt",
+    // Sibling consumers stash throwaway agent checkouts under
+    // `.claude/worktrees/agent-*/src/`; walking them lints stale copies as
+    // live consumer source (false-witness noise). `.claude` stops the descent
+    // at the dir; `worktrees` defends a `worktrees/` tree rooted elsewhere.
+    ".claude",
+    "worktrees",
 ]);
 
 function resolveModulePath(fromFile, specifier) {
@@ -208,6 +214,42 @@ function lineNumber(source, index) {
     return source.slice(0, index).split("\n").length;
 }
 
+// AP.W4 — false-witness fix. The CSS-directive scan must not flag an
+// `@import`/`@source` that lives inside a COMMENT (consumers legitimately
+// document retired directives in prose — flagging those is a lying gate).
+// Blank out comment bodies with spaces (newlines + length preserved, so match
+// positions + line numbers stay exact). String-aware: `//` and `/* */` inside a
+// '…'/"…"/`…` literal are NOT comments. The import-declaration scan is already
+// comment-safe (its per-line guard skips lines that do not start with `import`).
+function stripComments(src) {
+    let out = "";
+    let state = "code"; // code | line | block | sq | dq | tq
+    for (let i = 0; i < src.length; i++) {
+        const c = src[i];
+        const d = i + 1 < src.length ? src[i + 1] : "";
+        if (state === "code") {
+            if (c === "/" && d === "/") { out += "  "; i++; state = "line"; }
+            else if (c === "/" && d === "*") { out += "  "; i++; state = "block"; }
+            else if (c === "'") { out += c; state = "sq"; }
+            else if (c === '"') { out += c; state = "dq"; }
+            else if (c === "`") { out += c; state = "tq"; }
+            else out += c;
+        } else if (state === "line") {
+            if (c === "\n") { out += "\n"; state = "code"; }
+            else out += " ";
+        } else if (state === "block") {
+            if (c === "*" && d === "/") { out += "  "; i++; state = "code"; }
+            else out += c === "\n" ? "\n" : " ";
+        } else {
+            // string literal — copy verbatim, honor escapes + the matching terminator
+            out += c;
+            if (c === "\\" && i + 1 < src.length) { out += src[i + 1]; i++; }
+            else if ((state === "sq" && c === "'") || (state === "dq" && c === '"') || (state === "tq" && c === "`")) state = "code";
+        }
+    }
+    return out;
+}
+
 function scanFile(consumer, file) {
     const rel = file.slice(consumer.dir.length + 1);
     const source = readFileSync(file, "utf8");
@@ -280,10 +322,11 @@ function scanFile(consumer, file) {
         }
     }
 
-    for (const match of source.matchAll(cssPattern)) {
+    const styleSource = stripComments(source);
+    for (const match of styleSource.matchAll(cssPattern)) {
         const directive = match[1];
         const specifier = match[2];
-        const line = lineNumber(source, match.index ?? 0);
+        const line = lineNumber(styleSource, match.index ?? 0);
         if (specifier.includes("glass-ui/src")) {
             failures.push({
                 file: rel,

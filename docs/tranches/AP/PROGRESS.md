@@ -133,22 +133,23 @@ All four need the user's GitHub/npm push authority. The precepts submodule stays
 
 ---
 
-## AP.W4 — False-witness coda + hygiene — PLANNED
+## AP.W4 — False-witness coda + hygiene — 2026-05-31 — CLOSED
 
-- **Opens:** after W1 close AND explicit user authorization
-- **Status:** PLANNED
-- **Agents:** 1
-- **Disposition:** the cheap on-thesis coda — proof scan-scope + D5 baseline split + stray cleanup + keyframes pin + prose reconcile.
+- **Opens:** 2026-05-31
+- **Closes:** 2026-05-31
+- **Status:** DONE — all gates MET; one design assumption corrected.
+- **Agents:** 1 (code/doc edits) + orchestrator (git hygiene + the comment-stripping false-witness fix + commits).
+- **Disposition:** the coda landed. The scan-scope fix surfaced a SECOND false witness the W1 design missed — the scanner flagged `@import`/`@source` directives inside CONSUMER COMMENTS (documenting retired patterns), so the orchestrator added a string-aware `stripComments()` to the CSS-directive scan; `proof:consumers:static` now exits 0 honestly (212 → 0). D5 baseline split proven stable (sha identical across 3 runs; motion-core adopted). Strays deleted + `.gitignore`d. keyframes pin converged. CLAUDE.md cherry-pick count reconciled to the empirical 7 (the prose's named list was wrong — `dock-group` → `instrument-rail`). The AQ handoff record updated to "the seven" (R0G-6/R0G-7). Evidence: `audit/W4-coda-hygiene.md`.
 
 ### Gates
 
 | # | Gate | Status | Evidence |
 |---|---|---|---|
-| 1 | `proof:consumers:static` exit 0 locally — the 78 stale-worktree violations gone; live trees clean (zero signal loss) | PLANNED | — |
-| 2 | D5 baseline stable across runs — committed reference, no self-erase; `--rebaseline` the only update path | PLANNED | — |
-| 3 | `git status` clean of the 8 jpegs + 2 `*_time.txt`; `.gitignore` carries the scratch pattern | PLANNED | — |
-| 4 | `package.json` single converged keyframes.js floor (`^2.1.1`); `typecheck` + `build` exit 0 | PLANNED | — |
-| 5 | CLAUDE.md §Build matches the `vue-tsc` toolchain on-disk; cherry-pick count reads 7 (CLAUDE.md + `src/index.ts` header) | PLANNED | — |
+| 1 | `proof:consumers:static` exit 0 locally — stale-worktree violations gone; live trees clean (zero signal loss) | MET | 212 → 0 (`ignoredDirs += .claude/worktrees` + the comment-stripping false-witness fix); a live directive still fails |
+| 2 | D5 baseline stable across runs — committed reference, no self-erase; `--rebaseline` the only update path | MET | committed baseline SHA `7777bbf5…` identical across seed + 3 runs; `dist/motion-core.js` adopted ([PASS] +0.0%) |
+| 3 | `git status` clean of the 8 jpegs + 2 `*_time.txt`; `.gitignore` carries the scratch pattern | MET | 10 strays deleted; re-emitted scratch stays ignored |
+| 4 | `package.json` single converged keyframes.js floor (`^2.1.1`); `typecheck` exit 0 | MET | both stanzas `^2.1.1`; typecheck 0 errors |
+| 5 | CLAUDE.md §Build matches the `vue-tsc` toolchain on-disk; cherry-pick count reads 7 (CLAUDE.md + `src/index.ts` header) | MET | §Build clean on-disk; count + named list reconciled to the empirical 7 |
 
 ---
 

@@ -58,12 +58,12 @@
 // ── Custom-package cherry-pick rationale (Rε §B.2.2 → L.W2 disposition) ───
 //
 // Of the 33 packages in `src/components/custom/`, this root barrel re-exports
-// 6 (`instrument-chassis`, `glyph-face`, `disco-glyph`,
-// `hover-popover`, `configurator`, `scrolling-text`). The other 27 reach
+// 7 (`instrument-chassis`, `instrument-rail`, `glyph-face`, `disco-glyph`,
+// `hover-popover`, `configurator`, `scrolling-text`). The other 26 reach
 // consumers ONLY via their dedicated subpath (`@mkbabb/glass-ui/dock`,
 // `/aurora`, `/sidebar`, ...). (AI.W5-γ/δ — `dock-group` retired alongside
-// the `sidebar` SFC family; root-barrel count drops from 7 to 6, custom-
-// package count from 35 to 33.)
+// the `sidebar` SFC family; `instrument-rail` was re-added, so the live
+// root-barrel count is 7 and the custom-package count is 33.)
 //
 // Acceptance bar for root-barrel inclusion:
 //   (a) vueuse-free at every transitive import (closes SCC trap);
@@ -73,7 +73,7 @@
 //       — i.e. consumers reach for it alongside `<Button>`, `<Card>`, etc.
 //       rather than as a stand-alone bundle.
 //
-// The 23 excluded packages fail one or more of those criteria:
+// The 26 excluded packages fail one or more of those criteria:
 //   - vueuse-bearing internals (sidebar, glass-carousel, infinite-scroll);
 //   - large composite chassis with nested composables (dock, aurora,
 //     configurator domain helpers); OR

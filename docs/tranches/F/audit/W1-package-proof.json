@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-05-29T19:52:08.152Z",
+  "generatedAt": "2026-06-01T02:56:56.420Z",
   "status": "pass",
   "package": "@mkbabb/glass-ui",
-  "version": "2.1.0",
-  "durationMs": 4412,
+  "version": "3.0.0",
+  "durationMs": 10862,
   "steps": [
     {
-      "command": "npm pack --json --pack-destination /tmp/claude-504/glass-ui-packed-fixture-1780084323694",
+      "command": "npm pack --json --pack-destination /tmp/claude-504/glass-ui-packed-fixture-1780282605476",
       "cwd": "/Users/mkbabb/Programming/glass-ui",
       "status": "pass",
-      "durationMs": 749
+      "durationMs": 1431
     },
     {
       "command": "npm install --ignore-scripts",
-      "cwd": "/tmp/claude-504/glass-ui-packed-fixture-1780084323694",
+      "cwd": "/tmp/claude-504/glass-ui-packed-fixture-1780282605476",
       "status": "pass",
-      "durationMs": 2792
+      "durationMs": 5737
     },
     {
       "command": "npx tsc -p tsconfig.json --noEmit",
-      "cwd": "/tmp/claude-504/glass-ui-packed-fixture-1780084323694",
+      "cwd": "/tmp/claude-504/glass-ui-packed-fixture-1780282605476",
       "status": "pass",
-      "durationMs": 869
+      "durationMs": 3688
     }
   ],
-  "tarball": "mkbabb-glass-ui-2.1.0.tgz",
-  "packedFiles": 639
+  "tarball": "mkbabb-glass-ui-3.0.0.tgz",
+  "packedFiles": 643
 }

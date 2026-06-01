@@ -8,7 +8,7 @@ import {
     writeFileSync,
 } from "node:fs";
 import { gzipSync } from "node:zlib";
-import { extname, join, resolve } from "node:path";
+import { dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("../", import.meta.url)));
@@ -16,6 +16,17 @@ const auditDir = resolve(root, "docs/tranches/K/audit");
 const artifactPath = resolve(
     process.env.GLASS_UI_BUNDLE_ARTIFACT ??
         resolve(auditDir, "W4-bundle-profile.json"),
+);
+// D5 drift baseline — a COMMITTED, reviewed reference distinct from the
+// ephemeral per-run profile (`artifactPath`). The gate READS this file; only
+// a deliberate `--rebaseline` flag (or a `GLASS_UI_BUNDLE_BASELINE` override)
+// WRITES it. Splitting read-baseline from write-profile is what makes drift a
+// real measurement against the last reviewed point — the prior code read and
+// wrote the same `artifactPath`, so every run gated against numbers it had
+// just written (self-erasing baseline, drift structurally ~0%).
+const baselinePath = resolve(
+    process.env.GLASS_UI_BUNDLE_BASELINE ??
+        resolve(root, "docs/tranches/AP/W4-bundle-profile.baseline.json"),
 );
 const startedAt = Date.now();
 
@@ -64,6 +75,9 @@ const skipBuild =
     args.has("--skip-build") || process.env.GLASS_UI_BUDGET_SKIP_BUILD === "1";
 const budgetMode =
     args.has("--enforce") || process.env.GLASS_UI_BUDGET_MODE === "1";
+// The ONLY path that updates the committed D5 baseline. Without it the
+// baseline is immutable across runs; with it, a human rebaselines + commits.
+const rebaseline = args.has("--rebaseline");
 
 function walk(dir) {
     if (!existsSync(dir)) return [];
@@ -203,13 +217,16 @@ for (const [path, budget] of Object.entries(BUDGETS)) {
     });
 }
 
-// D5 (AO.W4) — per-subpath drift enforcement. Promote the subpathEntries
-// table from informational to ENFORCED via a drift-% threshold against the
-// committed `W4-bundle-profile.json` baseline (read authoritatively from the
-// same artifact path the profiler writes). Drift-% (not absolute per-chunk
-// caps) flags a *regression* — an entry that grew unexpectedly — while letting
-// legitimate growth re-baseline by committing a fresh baseline: one artifact,
-// one gate, no constant-per-chunk maintenance.
+// D5 (AO.W4; baseline split AP.W4) — per-subpath drift enforcement. Promote
+// the subpathEntries table from informational to ENFORCED via a drift-%
+// threshold against the COMMITTED `baselinePath` reference — a reviewed git
+// object distinct from the ephemeral `artifactPath` profile this run writes.
+// The gate reads the baseline; only `--rebaseline` updates it (AP.W4 split,
+// retiring the self-erasing read-and-write-the-same-path no-op). Drift-% (not
+// absolute per-chunk caps) flags a *regression* — an entry that grew
+// unexpectedly — while letting legitimate growth re-baseline via a deliberate
+// `--rebaseline` commit: one reviewed reference, one gate, no constant-per-
+// chunk maintenance.
 //
 // Scope:
 //   - ENTRY chunks only (kind "entry"). Shared leaves are content-hashed and
@@ -227,9 +244,9 @@ const DRIFT_CEIL = 0.1;
 const MIN_GATED_GZIP = 1024;
 const subpathReport = [];
 let baselineEntries = new Map();
-if (existsSync(artifactPath)) {
+if (existsSync(baselinePath)) {
     try {
-        const baseline = JSON.parse(readFileSync(artifactPath, "utf8"));
+        const baseline = JSON.parse(readFileSync(baselinePath, "utf8"));
         for (const e of baseline.subpathTable ?? []) {
             if (e.kind === "entry") baselineEntries.set(e.name, e);
         }
@@ -288,28 +305,35 @@ for (const [name, cur] of currentEntries) {
     });
 }
 
+const profile = {
+    generatedAt: new Date().toISOString(),
+    status: anyBudgetExceeded ? "fail" : "pass",
+    command: budgetMode ? "npm run profile:budget" : "npm run profile:bundle",
+    buildDurationMs,
+    durationMs: Date.now() - startedAt,
+    budgets: BUDGETS,
+    budgetReport,
+    subpathReport,
+    totals,
+    subpathTotals,
+    subpathTable: subpathEntries,
+    files,
+};
+
 mkdirSync(auditDir, { recursive: true });
-writeFileSync(
-    artifactPath,
-    `${JSON.stringify(
-        {
-            generatedAt: new Date().toISOString(),
-            status: anyBudgetExceeded ? "fail" : "pass",
-            command: budgetMode ? "npm run profile:budget" : "npm run profile:bundle",
-            buildDurationMs,
-            durationMs: Date.now() - startedAt,
-            budgets: BUDGETS,
-            budgetReport,
-            subpathReport,
-            totals,
-            subpathTotals,
-            subpathTable: subpathEntries,
-            files,
-        },
-        null,
-        2,
-    )}\n`,
-);
+// Ephemeral per-run profile — the informational artifact. NOT the baseline
+// the next run reads (that is `baselinePath`, committed + `--rebaseline`-only).
+writeFileSync(artifactPath, `${JSON.stringify(profile, null, 2)}\n`);
+
+// `--rebaseline` — the ONLY path that moves the committed D5 reference. A
+// reviewed git mutation: a human runs `profile:budget -- --rebaseline` once
+// against a canonical `npm run build` dist, then commits the result. The
+// baseline carries the same shape the read path parses (`subpathTable`).
+if (rebaseline) {
+    mkdirSync(dirname(baselinePath), { recursive: true });
+    writeFileSync(baselinePath, `${JSON.stringify(profile, null, 2)}\n`);
+    console.log(`D5 baseline rebased: ${baselinePath}`);
+}
 
 console.log(`Bundle profile written: ${artifactPath}`);
 
