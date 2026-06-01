@@ -6,7 +6,9 @@ Status vocabulary — PLANNED / IN-PROGRESS / DONE / MET / MISS / NAMED-FORWARD 
 
 ## Top-line status
 
-**DEVELOPMENT — W0 closed, W1 the boundary, W2-W5 await authorization.** AP is in its development half. W0 (the 6-lane audit + path-forward synthesis) is DONE; W1 (the 3-doc design slice) is the dev/impl boundary; W2-W5 are authored-now-run-later — the implementation phase opens only on explicit user authorization. The boundary sits between W1 and W2.
+**IMPLEMENTATION — W0+W1 closed, the dev/impl boundary CROSSED on the standing tranche directive. W2-W5 in flight.** AP's development half (W0 audit + W1 design slice) is DONE; the 3 design docs at `design/W1.{1,2,3}-*.md` bind W2-W5. The implementation half opened under the standing tranche directive (the explicit authorization to cross the W1|W2 boundary). Orchestrator-led: agents are edit-only/read-only-git; the orchestrator owns the index, runs the authoritative gates, and commits per wave to avoid dist races.
+
+W1 review-of-design findings folded into the implementation contract: (1) gui-W1.1's T1 investigation CONFIRMED the declared "raw HSL-channel brittleness window" is stale — HEAD uses complete `hsl()` values + `color-mix` alpha (zero `hsl(var(--x)/α)` sites), so the merge moves only the namespace layer and the real merge constraint is `proof-theme-style.mjs`'s `selfReferences` scan; (2) the W1.1 grain shared group was CORRECTED from `:where([class*="glass-"])` (over-matches the non-tier `.glass-card`/`.glass-btn`/`.glass-pill`/`.glass-dock` shorthands → grain regression) to the explicit five-tier `:where()` list; (3) W3's R0G-6 `::before` hit-area shape is bound CONDITIONAL — W3 measures with the real acceptance probe and falls back to `min-block/inline-size` on the button if the `::before` does not lift the measured box to 44px.
 
 AP opens against a **repaired ledger** — the AP.W0 audit found AO left two facts load-bearing-open. First, AO under-folded the speedtest-AQ request: it was a seven-item ask (R0G-1..7), but the committed handoff captured only five — R0G-6 (DockIconButton no coarse-pointer 44px floor; measured 40×40) and R0G-7 (the `/motion` barrel mixes keyframes-free leaves with the keyframes-bearing engine, so a cheap import eager-pulls ~125 KB) surfaced later and were never dispositioned, a P inv 28 zero-deferral breach AP repairs. Second, the CSS cascade hand-mirrors itself: the token system declares every token twice (raw `:root` + `@theme` bridge, 198 lines) and the glass tiers + dock four-state are copy-pasted ~20×, the draw at 90.9% of cap. AO made the library's self-measurement TRUE; AP makes the library DERIVE rather than DUPLICATE — the dual move.
 
@@ -69,22 +71,23 @@ All four need the user's GitHub/npm push authority. The precepts submodule stays
 
 ---
 
-## AP.W1 — Design slice — END OF DEVELOPMENT BOUNDARY — PLANNED
+## AP.W1 — Design slice — END OF DEVELOPMENT BOUNDARY — 2026-05-31 — DEV-CLOSED
 
-- **Opens:** after W0 close
-- **Status:** PLANNED
-- **Agents:** 3-4 (W1.1 cascade-derivation ‖ W1.2 motion-carve-and-dock ‖ W1.3 aurora-and-coda)
-- **Disposition:** the 3 design docs bind W2-W5. **The dev/impl boundary sits at W1|W2; the standing tranche directive is the authorization to cross it.**
+- **Opens:** 2026-05-31
+- **Closes:** 2026-05-31
+- **Status:** DONE
+- **Agents:** 3 (W1.1 cascade-derivation ‖ W1.2 motion-carve-and-dock ‖ W1.3 aurora-and-coda — dispatched in one dual-repo design workflow, all read-only on source)
+- **Disposition:** the 3 design docs bind W2-W5; every open question resolved (T1 alpha-mechanism investigated-not-assumed, T2 recipe shapes named per-rung, R0G-7 leaf-split map fixed, R0G-6 40×40 bypass PROVEN by specificity, T3 suspend-set + coda + hygiene named). **The dev/impl boundary is CROSSED on the standing tranche directive.**
 
 ### Gates
 
 | # | Gate | Status | Evidence |
 |---|---|---|---|
-| 1 | `design/W1.1-cascade-derivation.md` — T1 `@theme` alpha-mechanism investigation CONCRETE + the merge scope + T2 tier/four-state recipe shapes per-rung | PLANNED | — |
-| 2 | `design/W1.2-motion-carve-and-dock.md` — R0G-7 leaf-split map (leaves + subpath + rename + sourcemap gate) + R0G-6 40×40 confirmation against the rendered box | PLANNED | — |
-| 3 | `design/W1.3-aurora-and-coda.md` — suspend-source-set design + proof scan-scope + D5 baseline split + hygiene list | PLANNED | — |
-| 4 | `git status -- src/` clean; no source touched | PLANNED | — |
-| 5 | The dev/impl boundary marked (END OF DEVELOPMENT BOUNDARY) | PLANNED | — |
+| 1 | `design/W1.1-cascade-derivation.md` — T1 `@theme` alpha-mechanism investigation CONCRETE + the merge scope + T2 tier/four-state recipe shapes per-rung | MET | `design/W1.1` — T1 confirms full-`hsl()`+`color-mix` (no channels-form), per-cluster DERIVES/STAYS-RAW table, `selfReferences`-scan merge constraint; T2a `@utility glass-*` + `--glass-shadow-composed-*` knob + corrected five-tier grain group; T2b shared `dock-control` base |
+| 2 | `design/W1.2-motion-carve-and-dock.md` — R0G-7 leaf-split map (leaves + subpath + rename + sourcemap gate) + R0G-6 40×40 confirmation against the rendered box | MET | `design/W1.2` — 13-leaf transitive classification, new flat `/motion-core` subpath, `installDarkModeSync`→`/dark` (vueuse), no-alias rename table; R0G-6 bypass PROVEN ((0,2,0) density selector shadows the (0,1,0) coarse floor), `::before` shape (W3-conditional) |
+| 3 | `design/W1.3-aurora-and-coda.md` — suspend-source-set design + proof scan-scope + D5 baseline split + hygiene list | MET | `design/W1.3` — `Set<SuspendReason>` 4-step unreachability trace, `ignoredDirs += .claude/worktrees`, D5 committed-baseline split, hygiene (8 jpegs + keyframes pin + cherry-pick count = 7) |
+| 4 | `git status -- src/` clean; no source touched | MET | `git status -- src/ scripts/` empty post-workflow |
+| 5 | The dev/impl boundary marked (END OF DEVELOPMENT BOUNDARY) | MET | boundary crossed on the standing directive; W2-W5 in flight |
 
 ---
 
