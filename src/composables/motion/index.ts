@@ -1,18 +1,23 @@
-// Sub-tree barrel for motion composables backed by @mkbabb/keyframes.js.
+// Sub-tree barrel for the keyframes.js-BEARING motion composables.
 //
-// Shape harmonised with sibling sub-trees (dark/, keyboard/, reactive/, dom/)
-// — every leaf is `export *`-rolled so the barrel is a thin pass-through with
-// no curation. Types are co-exported beside their runtime symbols at each leaf.
+// AP.W3 R0G-7 — re-pointed to the bearing set only. The six keyframes-FREE
+// leaves (useStaggerReveal, useScrollProgress, useRAFLoop, useIntersectionPause,
+// useStagger, constants) carved out to the flat `@mkbabb/glass-ui/motion-core`
+// sibling subpath (`composables/motion/core/index.ts`); the keyframes-free but
+// vueuse-bearing `installDarkModeSync` relocated to `composables/dark/`. This
+// barrel ships ONLY the leaves whose module-eval reaches `@mkbabb/keyframes.js`
+// (directly or transitively) so a `/motion-core` import stays engine-free.
+//
+// `constants` stays here too — it is keyframes-free (so it also ships on
+// `/motion-core`), but the bearing leaves read DAMPING/SNAP_THRESHOLD from it.
+// Duplicate-exporting a pure-data module from two entries is benign (W1.2 §A.2).
+//
+// NO alias for the relocated free leaves / installDarkModeSync (inv 47);
+// consumers rename per call site (see MIGRATION.md / CHANGELOG.md).
 export * from "./constants";
 export * from "./useSpring";
 export * from "./useSpringMount";
 export * from "./useSpringPress";
 export * from "./useNumericTransition";
-export * from "./useStaggerReveal";
-export * from "./useScrollProgress";
 export * from "./useAnimatedNumber";
 export * from "./useAnimatedNumberMap";
-export * from "./installDarkModeSync";
-export * from "./useRAFLoop";
-export * from "./useIntersectionPause";
-export * from "./useStagger";

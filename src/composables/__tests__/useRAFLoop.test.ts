@@ -1,6 +1,6 @@
 import { effectScope } from "vue";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { useRAFLoop, type RAFLoopControls } from "../motion";
+import { useRAFLoop, type RAFLoopControls } from "../motion/core";
 
 type FrameCallback = (now: number) => void;
 

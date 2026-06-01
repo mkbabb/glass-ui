@@ -25,6 +25,16 @@
     -   `Toaster`: new `position` prop (default unchanged).
     -   New `--surface-public-data-panel` theme token.
 
+-   AP.W3 R0G-7 — `/motion-core` engine-free carve.
+
+    BREAKING: the keyframes-FREE motion leaves carve off `/motion` onto a new flat `@mkbabb/glass-ui/motion-core` subpath so a cheap-leaf import never statically reaches `@mkbabb/keyframes.js`. The v2.0.0 "whole motion barrel moves as one SCC" rationale is overturned — a consumer touching ZERO keyframes (e.g. `useIntersectionPause` only) still dragged the ~125 KB engine onto its eager graph because the joined `export *` barrel made the SCC, not the leaves. v3.0.0 breaks the barrel.
+
+    -   New flat subpath `@mkbabb/glass-ui/motion-core` (`src/motion-core.ts` → `src/composables/motion/core/index.ts`): `useStaggerReveal`, `useScrollProgress`, `useRAFLoop` (+ `RAFLoopTiming`), `useIntersectionPause` (+ `PausableRuntime`), `useStagger`, `DAMPING`, `SNAP_THRESHOLD`. Keyframes-FREE AND vueuse-FREE: `dist/motion-core.js` reaches neither heavy peer.
+    -   `@mkbabb/glass-ui/motion` keeps the keyframes-BEARING set: `useSpring`, `useSpringMount`, `useSpringPress`, `useNumericTransition`, `useAnimatedNumber`, `useAnimatedNumberMap` + `DAMPING`/`SNAP_THRESHOLD` (the `constants` module is duplicate-exported on both barrels — pure data; the bearing leaves read it). `RAFLoopTiming` + `PausableRuntime` move to `/motion-core` (no bearing leaf references them).
+    -   `installDarkModeSync` relocates from `/motion` to `@mkbabb/glass-ui/dark` (`src/composables/motion/installDarkModeSync.ts` → `src/composables/dark/`). It is keyframes-free but vueuse-bearing (reads `useGlobalDark`), so it homes on the vueuse subpath family rather than the engine-free carve.
+    -   Wiring: `vite.library.ts` adds the `motion-core` entry; `package.json` `exports` adds `./motion-core` (contract-v2 `types`+`import`) and `typesVersions["*"]` adds `motion-core → dist/motion-core.d.ts`.
+    -   NO back-compat alias on `/motion` for the relocated symbols (inv 47); consumers rename per call site. Rename table in MIGRATION.md §v3.0.0.
+
 > **AC.W6 + AC.W8e cohort cross-reference (speedtest tranche AC).** The
 > v1.5.0 + v1.5.1 + v1.6.0 minor/patch trio shipped as the AC.W6 cohort;
 > v1.7.0 adds the AC.W8e AB+1-subset substrate (two new primitives + a

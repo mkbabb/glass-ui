@@ -1,0 +1,19 @@
+// Sub-tree barrel for the keyframes.js-FREE + vueuse-FREE motion leaves.
+//
+// AP.W3 R0G-7 — the engine-free core of the motion family. These leaves import
+// `vue` only (verified leaf by leaf, W1.2 §A.1); none statically reaches
+// `@mkbabb/keyframes.js` or `@vueuse/core`. The leaf `.ts` files live one level
+// up in `composables/motion/`; this barrel re-points them onto the flat
+// `@mkbabb/glass-ui/motion-core` subpath so a cheap-leaf import never walks the
+// keyframes-bearing siblings' module-eval imports.
+//
+// `constants` is duplicate-exported here and on the keyframes-bearing `/motion`
+// barrel — pure data (DAMPING, SNAP_THRESHOLD, RAFLoopTiming type), no heavy
+// transitive, identical symbols. The bearing leaves read DAMPING/SNAP_THRESHOLD
+// from `../constants`, so both surfaces ship it. Benign (W1.2 §A.2).
+export * from "../constants";
+export * from "../useStaggerReveal";
+export * from "../useScrollProgress";
+export * from "../useRAFLoop";
+export * from "../useIntersectionPause"; // exports PausableRuntime too
+export * from "../useStagger";

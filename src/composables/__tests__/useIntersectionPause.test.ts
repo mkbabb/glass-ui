@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { TestIntersectionObserver } from "../../../tests/setup";
-import { useIntersectionPause } from "../motion";
+import { useIntersectionPause } from "../motion/core";
 
 function setDocumentHidden(hidden: boolean): void {
     Object.defineProperty(document, "hidden", {

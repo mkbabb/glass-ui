@@ -5,7 +5,7 @@ import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { Button } from "../../../src/components/ui/button";
-import { installDarkModeSync } from "../../../src/composables/motion/installDarkModeSync";
+import { installDarkModeSync } from "../../../src/composables/dark/installDarkModeSync";
 import { useGlobalDark } from "../../../src/composables/dark";
 
 const syncCount = ref(0);

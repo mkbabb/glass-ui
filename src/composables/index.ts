@@ -18,6 +18,11 @@ export * from "./keyboard";
 export * from "./reactive";
 export * from "./dom";
 export * from "./motion";
+// AP.W3 R0G-7 — the keyframes-FREE motion leaves carved out of the `/motion`
+// barrel onto the flat `/motion-core` subpath. Re-export the core barrel here so
+// those leaves stay reachable internally. (`installDarkModeSync` auto-flows via
+// the `export * from "./dark"` above.)
+export * from "./motion/core";
 export * from "./glass";
 export * from "./sortable";
 export * from "./sidebar";

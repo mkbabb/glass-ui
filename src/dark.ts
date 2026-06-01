@@ -10,4 +10,6 @@
 // `useGlobalDark.ts` leaf re-exported by `dark/index.ts`). This file is a
 // thin re-export that resolves through the sub-tree index, so the public
 // flat subpath stays decoupled from the internal directory layout.
-export { useGlobalDark } from "./composables/dark";
+// AP.W3 R0G-7 — installDarkModeSync (keyframes-free, vueuse-bearing via
+// useGlobalDark) relocated here from /motion; /dark is its vueuse home.
+export { useGlobalDark, installDarkModeSync } from "./composables/dark";

@@ -54,6 +54,13 @@ export function libraryEntries(rootDir: string) {
         // so consumers opt into it explicitly and bundlers shake it from
         // unrelated entry chunks. Closes AI-CARRY-GLASS-UI-KEYFRAMES-EDGE.
         motion: resolve(rootDir, "src/motion.ts"),
+        // AP.W3 R0G-7 — flat sibling subpath for the keyframes.js-FREE +
+        // vueuse-FREE motion leaves. The `/motion` barrel walked all twelve
+        // leaves as one SCC, dragging the keyframes engine onto a cheap
+        // consumer's eager graph; `/motion-core` carves the engine-free leaves
+        // out so `dist/motion-core.js` reaches neither `@mkbabb/keyframes.js`
+        // nor `@vueuse/core`. Pairs with `/motion` (the engine-bearing surface).
+        "motion-core": resolve(rootDir, "src/motion-core.ts"),
         // AK.W3 — per-family sub-barrel entries for the `ui/` primitive families
         // already re-exported from the root barrel. The flat-name subpath lets a
         // consumer opt INTO precisely the families it uses (e.g. `Button`,

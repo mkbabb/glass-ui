@@ -6,7 +6,7 @@ import StoryPage from "../StoryPage.vue";
 // the axis-driving machinery (they apply on any display face exposing those
 // optional axes).
 import { computed, ref } from "vue";
-import { useScrollProgress } from "../../../src/composables/motion";
+import { useScrollProgress } from "../../../src/composables/motion/core";
 import { cn } from "../../../src/utils/cn";
 
 const target = ref<HTMLElement | null>(null);

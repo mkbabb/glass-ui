@@ -22,6 +22,7 @@ import * as Keyboard from "../src/keyboard";
 import * as LabeledFieldSurface from "../src/labeled-field";
 import * as MetricBadgeSurface from "../src/metric-badge";
 import * as Motion from "../src/motion";
+import * as MotionCore from "../src/motion-core";
 import * as PaperBackdropSurface from "../src/paper-backdrop";
 import * as PopoverSurface from "../src/popover";
 import * as PulseSurface from "../src/pulse";
@@ -150,6 +151,9 @@ const subpathRuntimeExports = [
     { subpath: "forms", surface: Forms, name: "ComboboxInput" },
     { subpath: "carousel", surface: CarouselSurface, name: "useCarousel" },
     { subpath: "dark", surface: Dark, name: "useGlobalDark" },
+    // AP.W3 R0G-7 — installDarkModeSync (keyframes-free, vueuse-bearing) relocated
+    // from /motion to /dark (its vueuse home).
+    { subpath: "dark", surface: Dark, name: "installDarkModeSync" },
     { subpath: "keyboard", surface: Keyboard, name: "registerShortcut" },
     { subpath: "keyboard", surface: Keyboard, name: "useRegisteredShortcuts" },
     { subpath: "keyboard", surface: Keyboard, name: "formatCombo" },
@@ -158,18 +162,22 @@ const subpathRuntimeExports = [
     { subpath: "api", surface: Api, name: "MAX_NUCLEI" },
     { subpath: "api", surface: Api, name: "MAX_STOPS" },
     { subpath: "api", surface: Api, name: "DEFAULT_AURORA_CONFIG" },
-    // keyframes.js-bearing motion composables on the `/motion` subpath.
+    // keyframes.js-BEARING motion composables on the `/motion` subpath.
     { subpath: "motion", surface: Motion, name: "useNumericTransition" },
     { subpath: "motion", surface: Motion, name: "useAnimatedNumber" },
     { subpath: "motion", surface: Motion, name: "useAnimatedNumberMap" },
-    { subpath: "motion", surface: Motion, name: "useStagger" },
-    { subpath: "motion", surface: Motion, name: "useStaggerReveal" },
-    { subpath: "motion", surface: Motion, name: "useScrollProgress" },
-    { subpath: "motion", surface: Motion, name: "useRAFLoop" },
-    { subpath: "motion", surface: Motion, name: "useIntersectionPause" },
-    { subpath: "motion", surface: Motion, name: "installDarkModeSync" },
+    // AP.W3 R0G-7 — the keyframes-FREE leaves carved to the flat `/motion-core`
+    // subpath (a cheap-leaf import no longer statically reaches the keyframes
+    // engine). `constants` (DAMPING/SNAP_THRESHOLD) is duplicate-exported on both.
+    { subpath: "motion-core", surface: MotionCore, name: "useStagger" },
+    { subpath: "motion-core", surface: MotionCore, name: "useStaggerReveal" },
+    { subpath: "motion-core", surface: MotionCore, name: "useScrollProgress" },
+    { subpath: "motion-core", surface: MotionCore, name: "useRAFLoop" },
+    { subpath: "motion-core", surface: MotionCore, name: "useIntersectionPause" },
     { subpath: "motion", surface: Motion, name: "DAMPING" },
     { subpath: "motion", surface: Motion, name: "SNAP_THRESHOLD" },
+    { subpath: "motion-core", surface: MotionCore, name: "DAMPING" },
+    { subpath: "motion-core", surface: MotionCore, name: "SNAP_THRESHOLD" },
     // AL.W4 — sub-barrel publishing phase 2 (G-AL-D7 ABSORB). Six remaining
     // `ui/` primitive families speedtest still imports from the root barrel
     // get flat-name subpaths so consumers can shake unrelated families out

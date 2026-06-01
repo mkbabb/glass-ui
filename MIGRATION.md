@@ -586,6 +586,85 @@ consumer cannot migrate immediately.
 
 ---
 
+## v3.0.0—`/motion-core` engine-free carve (AP.W3 R0G-7)
+
+v2.0.0 moved the whole motion sub-tree onto `/motion` on the theory that "the
+bundler walks the sub-tree's `export *` chain as one SCC anyway" — so splitting
+keyframes-touching from keyframes-adjacent leaves "would be a fictitious
+distinction" (the v2.0.0 §"Why the entire motion barrel moves" rationale above).
+**That premise is overturned by consumer measurement.** A cheap path touching
+ZERO keyframes (e.g. importing only `useIntersectionPause`) still dragged the
+~125 KB `@mkbabb/keyframes.js` engine onto the eager graph, because the joined
+barrel is what makes the SCC, not the leaves — the leaves split cleanly.
+
+v3.0.0 breaks the barrel. The keyframes-BEARING leaves stay on `/motion`; the
+keyframes-FREE leaves carve out to a new flat sibling `@mkbabb/glass-ui/motion-core`
+(keyframes-free AND vueuse-free); the keyframes-free-but-vueuse-bearing
+`installDarkModeSync` relocates to `@mkbabb/glass-ui/dark` (it reads
+`useGlobalDark`, so it is topically a dark-mode leaf). `dist/motion-core.js`
+reaches neither heavy peer; `dist/motion.js` keeps the engine.
+
+### Rename table (no alias — inv 47)
+
+| Symbol | Old path | New path |
+|---|---|---|
+| `useStaggerReveal` | `@mkbabb/glass-ui/motion` | `@mkbabb/glass-ui/motion-core` |
+| `useScrollProgress` | `@mkbabb/glass-ui/motion` | `@mkbabb/glass-ui/motion-core` |
+| `useRAFLoop`, `RAFLoopTiming` | `@mkbabb/glass-ui/motion` | `@mkbabb/glass-ui/motion-core` |
+| `useIntersectionPause`, `PausableRuntime` | `@mkbabb/glass-ui/motion` | `@mkbabb/glass-ui/motion-core` |
+| `useStagger` | `@mkbabb/glass-ui/motion` | `@mkbabb/glass-ui/motion-core` |
+| `DAMPING`, `SNAP_THRESHOLD` | `@mkbabb/glass-ui/motion` | `@mkbabb/glass-ui/motion-core` (also still on `/motion`) |
+| `installDarkModeSync` | `@mkbabb/glass-ui/motion` | `@mkbabb/glass-ui/dark` |
+| `useSpring`, `useSpringMount`, `useSpringPress`, `useNumericTransition`, `useAnimatedNumber`, `useAnimatedNumberMap` | `@mkbabb/glass-ui/motion` | `@mkbabb/glass-ui/motion` (unchanged) |
+
+`DAMPING` + `SNAP_THRESHOLD` resolve identically from either path (the same
+pure-data `constants` module is duplicate-exported on both barrels because the
+bearing leaves read them). `RAFLoopTiming` + `PausableRuntime` are type-only
+relocations — no bearing leaf references them, so they move with their leaves to
+`/motion-core` and drop from `/motion`'s type surface.
+
+### Example
+
+```ts
+// Before (v2.0.0–v2.x)
+import {
+    useIntersectionPause,
+    useScrollProgress,
+    DAMPING,
+    installDarkModeSync,
+    type PausableRuntime,
+} from "@mkbabb/glass-ui/motion";
+
+// After (≥ v3.0.0)
+import {
+    useIntersectionPause,
+    useScrollProgress,
+    DAMPING,
+    type PausableRuntime,
+} from "@mkbabb/glass-ui/motion-core";
+import { installDarkModeSync } from "@mkbabb/glass-ui/dark";
+```
+
+The keyframes-bearing imports (`useSpring*`, `useNumericTransition`,
+`useAnimatedNumber*`) stay on `@mkbabb/glass-ui/motion` unchanged.
+
+### Verification
+
+```bash
+grep -c "@mkbabb/keyframes\|@vueuse/core" node_modules/@mkbabb/glass-ui/dist/motion-core.js
+# Expected: 0 (both heavy peers absent — engine-free + vueuse-free)
+grep -c "@mkbabb/keyframes" node_modules/@mkbabb/glass-ui/dist/motion.js
+# Expected: ≥ 1 (the engine still resolves on /motion)
+```
+
+### No back-compat shim
+
+Per inv 47 (no back-compat alias on `/motion` for the relocated leaves) +
+precept 1/2 + L invariant 4, `/motion` ships no alias for the carved symbols.
+Consumers rename per call site (the diffs are mechanical 1-line edits).
+
+---
+
 ## v1.2.1—Aurora init fail-explicit (O.W1 Lane A)
 
 Per O invariant 24 (library-internal contract violations throw; browser-API

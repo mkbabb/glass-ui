@@ -31,7 +31,7 @@
 //   Symbol(s)                                  Subpath                        Peer
 //   -----------------------------------------  -----------------------------  ---------------------
 //   Input, Textarea, Combobox*                 @mkbabb/glass-ui/forms         @vueuse/core
-//   useGlobalDark                              @mkbabb/glass-ui/dark          @vueuse/core (L.W1 Lane C)
+//   useGlobalDark, installDarkModeSync         @mkbabb/glass-ui/dark          @vueuse/core (L.W1 Lane C; installDarkModeSync relocated AP.W3 R0G-7)
 //   useKeyboardShortcuts, registerShortcut,    @mkbabb/glass-ui/keyboard      @vueuse/core (L.W1 Lane C)
 //   formatCombo, formatComboParts, isMac,
 //   useRegisteredShortcuts, ShortcutOptions,
@@ -41,14 +41,13 @@
 //   CarouselItem, CarouselNext, CarouselPager,
 //   CarouselPrevious, GlassCarouselPager,
 //   useCarousel, CarouselApi
-//   useSpring, useSpringPress,                 @mkbabb/glass-ui/motion        @mkbabb/keyframes.js (AI.W1 R3 + AL.W9-β)
+//   useSpring, useSpringMount, useSpringPress, @mkbabb/glass-ui/motion        @mkbabb/keyframes.js (AI.W1 R3 + AL.W9-β)
 //   useNumericTransition, useAnimatedNumber,
-//   useAnimatedNumberMap, useStagger,
-//   useStaggerReveal, useScrollProgress,
-//   useRAFLoop, useIntersectionPause,
-//   installDarkModeSync, DAMPING,
-//   SNAP_THRESHOLD, RAFLoopTiming,
-//   PausableRuntime
+//   useAnimatedNumberMap, DAMPING, SNAP_THRESHOLD
+//   useStagger, useStaggerReveal,              @mkbabb/glass-ui/motion-core   (none — keyframes-FREE + vueuse-FREE; AP.W3 R0G-7)
+//   useScrollProgress, useRAFLoop,
+//   useIntersectionPause, RAFLoopTiming,
+//   PausableRuntime, DAMPING, SNAP_THRESHOLD
 //
 // Mechanism: K.WS Phase 1 (additive subpaths at v0.9.3) did NOT close the SCC
 // trap because Rollup still walked `export * from "./components/ui"` through
