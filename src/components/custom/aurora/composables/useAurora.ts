@@ -6,10 +6,14 @@ import {
     watch,
     type Ref,
 } from "vue";
-import { createAurora, type AuroraRuntimeOptions } from "./runtime";
+import {
+    createAurora,
+    type AuroraRuntime,
+    type AuroraRuntimeOptions,
+} from "./runtime";
 import { asGetter, type ConfigSource } from "./configSource";
 import { useIntersectionPause } from "../../../../composables/motion/useIntersectionPause";
-import type { AuroraConfig, AuroraInstance } from "../presets";
+import type { AuroraConfig } from "../presets";
 
 /**
  * Adaptive-substrate options threaded down from `Aurora.vue` (AM.W1). The
@@ -132,7 +136,7 @@ export function useAurora(
     // construction below is skipped and the placeholder is the permanent
     // surface. `"webgl"` (default) arms the deferred path exactly as before.
     const cssOnly = adaptiveOptions.renderMode === "css";
-    let inst: AuroraInstance | null = null;
+    let inst: AuroraRuntime | null = null;
     let stopWatch: (() => void) | null = null;
     let stopArmWatch: (() => void) | null = null;
     let cancelSchedule: (() => void) | null = null;
@@ -230,16 +234,23 @@ export function useAurora(
             return;
         }
 
-        // Deferred path. Compose `useIntersectionPause` for the visibility
-        // gate: it pauses/resumes the (un-armed, then armed) runtime on
-        // viewport + document-visibility changes. We additionally watch its
-        // `isIntersecting` ref so the FIRST intersection triggers the
-        // post-first-paint idle-callback that actually arms the GL path —
-        // the shader never compiles while the canvas is off-screen.
-        intersection = useIntersectionPause(canvasRef, {
-            pause: () => inst?.pause(),
-            resume: () => inst?.resume(),
-        });
+        // Deferred path. Compose `useIntersectionPause` as the SINGLE owner of
+        // the viewport-intersection seam — it drives ONLY the `"off-screen"`
+        // suspend reason. Document-visibility is the runtime's concern now (it
+        // owns the lifted `"tab-hidden"` listener), so we disable this
+        // observer's own visibility arm with `pauseWhenHidden: false`; exactly
+        // one observer writes each reason and they never alias. We additionally
+        // watch its `isIntersecting` ref so the FIRST intersection triggers the
+        // post-first-paint idle-callback that actually arms the GL path — the
+        // shader never compiles while the canvas is off-screen.
+        intersection = useIntersectionPause(
+            canvasRef,
+            {
+                pause: () => inst?.pause("off-screen"),
+                resume: () => inst?.resume("off-screen"),
+            },
+            { pauseWhenHidden: false },
+        );
 
         const visibility = intersection.isIntersecting;
         stopArmWatch = watch(

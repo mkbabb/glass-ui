@@ -48,6 +48,19 @@ const CURSOR_REST_EPSILON = 1e-3;
 export type AuroraRuntimeMode = "live" | "capture";
 
 /**
+ * The three independent reasons the RAF loop may be suspended. The runtime
+ * tracks them in a `Set<SuspendReason>` rather than one boolean, so the loop
+ * runs IFF the set is empty and each reason is cleared ONLY by the source that
+ * set it. This makes resume-while-still-suspended structurally unreachable — a
+ * `resume("tab-hidden")` cannot lift an `"off-screen"` suspension.
+ *
+ * - `"tab-hidden"` — the runtime's own `document.visibilitychange` owner.
+ * - `"off-screen"` — viewport-intersection, driven by `useIntersectionPause`.
+ * - `"manual"` — the public `pause()`/`resume()` API (and capture-mode seed).
+ */
+export type SuspendReason = "tab-hidden" | "off-screen" | "manual";
+
+/**
  * When the expensive WebGL path (context creation, shader compile + GPU link,
  * first uniform upload, rAF arm) actually runs.
  *
@@ -148,11 +161,23 @@ const UNIFORM_NAMES = [
 
 type UniformName = (typeof UNIFORM_NAMES)[number];
 
+/**
+ * The concrete `createAurora` return shape. It IS an {@link AuroraInstance}
+ * (structurally assignable — every member matches) but widens `pause`/`resume`
+ * to carry an optional {@link SuspendReason}, defaulting to `"manual"`. The
+ * Vue wrapper passes `"off-screen"` for the intersection seam; a bare
+ * `pause()`/`resume()` reads identically to the `AuroraInstance` contract.
+ */
+export interface AuroraRuntime extends Omit<AuroraInstance, "pause" | "resume"> {
+    pause(reason?: SuspendReason): void;
+    resume(reason?: SuspendReason): void;
+}
+
 export function createAurora(
     canvas: HTMLCanvasElement,
     initial: AuroraConfig,
     options: AuroraRuntimeOptions = {},
-): AuroraInstance {
+): AuroraRuntime {
     const preserveDrawingBuffer = shouldPreserveDrawingBuffer(options);
 
     // ── Pre-arm state ───────────────────────────────────────────────────
@@ -161,13 +186,59 @@ export function createAurora(
     // arm() folds them into the live runtime; until then the imperative
     // setters mutate them harmlessly and arm() picks up the latest values.
     let config: AuroraConfig = initial;
-    let running = options.mode !== "capture";
+    // The loop runs IFF this set is empty. A capture runtime pre-seeds
+    // `"manual"` so it never auto-runs — exactly the old `running = false` for
+    // capture; a live runtime starts empty (the old `running = true`).
+    const suspended = new Set<SuspendReason>();
+    if (options.mode === "capture") suspended.add("manual");
+    const isRunning = (): boolean => suspended.size === 0;
     let reducedMotion =
         typeof window !== "undefined" && window.matchMedia
             ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
             : false;
     let startTime = performance.now();
     const frozenOffset = 3.7;
+
+    // ── RAF + run-gate plumbing, hoisted out of arm() ───────────────────
+    // `raf` is the live RAF handle; `tickFn` is arm()'s `tick`, assigned once
+    // armed. suspend()/resume() refcount the set and toggle the loop on the
+    // empty↔non-empty transition ONLY. Before arm() they mutate the set and
+    // cancel a (zero) RAF harmlessly; arm() then honors `isRunning()`.
+    let raf = 0;
+    let tickFn: (() => void) | null = null;
+
+    function suspend(reason: SuspendReason): void {
+        const wasRunning = isRunning();
+        suspended.add(reason);
+        if (wasRunning && !isRunning()) {
+            cancelAnimationFrame(raf);
+            raf = 0;
+        }
+    }
+
+    function resume(reason: SuspendReason): void {
+        const wasSuspended = !isRunning();
+        suspended.delete(reason);
+        if (wasSuspended && isRunning() && tickFn) {
+            // Skip the gap the loop was parked across so motion does not jump.
+            startTime = performance.now() - 1000;
+            tickFn();
+        }
+    }
+
+    // Tab-visibility owner — ONE writer of `"tab-hidden"`. Lifted to the
+    // runtime level (not inside arm()) so every consumer — eager, capture-
+    // then-live, always-on-screen — gets a tab-hidden pause. Because it keys
+    // ONLY on `"tab-hidden"` and never touches `"off-screen"`, a tab-show can
+    // never clear an off-screen suspension (the resume-while-off-screen seam).
+    const hasDocument = typeof document !== "undefined";
+    function onVisibilityChange() {
+        if (document.hidden) suspend("tab-hidden");
+        else resume("tab-hidden");
+    }
+    if (hasDocument) {
+        document.addEventListener("visibilitychange", onVisibilityChange);
+    }
 
     // Cursor state — x/y in 0..1, eased. `strength` ramps in; `targetStrength` decays.
     const cursor = {
@@ -187,8 +258,6 @@ export function createAurora(
     let armed: {
         readonly setConfig: (cfg: AuroraConfig) => void;
         readonly renderAt: (timeSec: number) => void;
-        readonly pause: () => void;
-        readonly resume: () => void;
         readonly wake: () => void;
         readonly dispose: () => void;
     } | null = null;
@@ -403,7 +472,6 @@ export function createAurora(
         gl.enable(gl.BLEND);
         gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 
-        let raf = 0;
         function advanceCursor() {
             // Cursor easing — snappy approach, gentle decay when idle. Constants
             // live at module scope; see DESIGN.md §4.
@@ -453,7 +521,7 @@ export function createAurora(
         }
 
         function tick() {
-            if (!running) return;
+            if (!isRunning()) return;
             const t = reducedMotion
                 ? frozenOffset
                 : (performance.now() - startTime) / 1000;
@@ -464,59 +532,29 @@ export function createAurora(
             // no perpetual 60fps compositor cost. `wake()` re-arms on demand.
             raf = needsAnimation() ? requestAnimationFrame(tick) : 0;
         }
-        if (running) raf = requestAnimationFrame(tick);
+        // Publish tick to the hoisted run-gate so suspend()/resume() can drive
+        // it, then arm the loop iff no suspend reason is held.
+        tickFn = tick;
+        if (isRunning()) raf = requestAnimationFrame(tick);
 
         /**
          * Re-arm a parked loop. A setter that re-introduces motion (cursor
          * move, config drift raise, reduced-motion toggle) calls this so the
-         * canvas resumes immediately. No-op while suspended (`!running`) or
+         * canvas resumes immediately. No-op while suspended (set non-empty) or
          * already scheduled (`raf` non-zero), so it never double-schedules.
          */
         function wake() {
-            if (running && !raf) raf = requestAnimationFrame(tick);
+            if (isRunning() && !raf) raf = requestAnimationFrame(tick);
         }
 
         function renderAt(timeSec: number) {
             drawFrame(timeSec);
         }
 
-        function pause() {
-            running = false;
-            cancelAnimationFrame(raf);
-            raf = 0;
-        }
-
-        function resume() {
-            if (running) return;
-            running = true;
-            startTime = performance.now() - 1000;
-            tick();
-        }
-
-        // Runtime-level document-visibility suspend (R0G-1). Every consumer —
-        // eager, capture-then-live, always-on-screen — gets a tab-hidden pause,
-        // not just the deferred consumer that composes `useIntersectionPause`.
-        // Idempotent with that seam: pause() is a no-op when already paused and
-        // resume() early-returns when already running.
-        const hasDocument = typeof document !== "undefined";
-        function onVisibilityChange() {
-            if (document.hidden) pause();
-            else resume();
-        }
-        if (hasDocument) {
-            document.addEventListener("visibilitychange", onVisibilityChange);
-        }
-
         function dispose() {
-            running = false;
             cancelAnimationFrame(raf);
             raf = 0;
-            if (hasDocument) {
-                document.removeEventListener(
-                    "visibilitychange",
-                    onVisibilityChange,
-                );
-            }
+            tickFn = null;
             ro.disconnect();
             gl!.deleteProgram(prog);
             gl!.deleteShader(vs);
@@ -531,9 +569,20 @@ export function createAurora(
 
         // Publish the armed GL closures. From here on the outer imperative
         // API delegates through `armed`; the pre-arm setters above have
-        // already mutated `config` / `cursor` / `running` and arm() consumed
-        // the latest values via `setConfig(config)` + the `running` gate.
-        armed = { setConfig, renderAt, pause, resume, wake, dispose };
+        // already mutated `config` / `cursor` / the suspend set and arm()
+        // consumed the latest values via `setConfig(config)` + the
+        // `isRunning()` arm gate.
+        armed = { setConfig, renderAt, wake, dispose };
+    }
+
+    // Common teardown for the runtime-level seams (the tab-visibility listener
+    // + the suspend set). Runs on every dispose path — armed OR disposed-
+    // before-arm — so the lifted listener never leaks.
+    function teardownRuntime(): void {
+        if (hasDocument) {
+            document.removeEventListener("visibilitychange", onVisibilityChange);
+        }
+        suspended.clear();
     }
 
     // The expensive path runs now (eager / capture) or is invoked later by
@@ -558,20 +607,14 @@ export function createAurora(
         clearCursor,
         setCursorRadius,
         setReducedMotion,
-        // Pre-arm, mutate `running` directly — arm() honors it via the
-        // `if (running) raf = requestAnimationFrame(tick)` gate. Post-arm,
-        // delegate to the inner pause/resume, which own `running` and the
-        // RAF (the inner resume() restarts `tick()`); setting `running` here
-        // first would make the inner resume() early-return on `if (running)`
-        // and never restart the loop (the useIntersectionPause re-show seam).
-        pause: () => {
-            if (armed) armed.pause();
-            else running = false;
-        },
-        resume: () => {
-            if (armed) armed.resume();
-            else running = true;
-        },
+        // Public pause/resume key on the `"manual"` reason by default. The Vue
+        // wrapper passes `"off-screen"` for the intersection seam so the two
+        // sources never alias. suspend()/resume() are runtime-level and work
+        // pre- AND post-arm: before arm() they only mutate the set (which arm()
+        // then honors via the `isRunning()` gate); after arm() they toggle the
+        // live RAF on the empty↔non-empty transition.
+        pause: (reason: SuspendReason = "manual") => suspend(reason),
+        resume: (reason: SuspendReason = "manual") => resume(reason),
         renderAt: (t) => armed?.renderAt(t),
         dispose: () => {
             if (armed) {
@@ -581,6 +624,10 @@ export function createAurora(
                 // late idle-callback can't resurrect a torn-down instance.
                 disposedBeforeArm = true;
             }
+            // The tab-visibility listener + suspend set are runtime-level, so
+            // tear them down on BOTH paths (the armed dispose() above only
+            // owns GL resources).
+            teardownRuntime();
         },
     };
 }
