@@ -226,12 +226,19 @@ function stripComments(src) {
     let state = "code"; // code | line | block | sq | dq | tq | regex
     // Previous SIGNIFICANT (non-whitespace) char emitted in `code` — disambiguates
     // a regex literal (`/…/`) from a division operator. A regex may legally open
-    // only where a value is expected: after one of = ( , : [ ! & | ? { } ; , after
-    // `return`, or at start-of-input. After an identifier/`)`/`]`/digit a leading
-    // `/` is DIVISION, not a regex.
+    // only where a value is expected: after one of = ( , : [ ! & | ? { ; , after
+    // `return`, or at start-of-input. After an identifier/`)`/`]`/`}`/digit a
+    // leading `/` is DIVISION, not a regex. `}` is EXCLUDED (like `)` and `]`): it
+    // is lexically ambiguous (block-close → regex-legal, but object/expression-close
+    // → division), and a JSX `}/>` self-close or a `} / 2` division would otherwise
+    // open a spurious regex that desyncs the scan and could leak a following
+    // COMMENTED directive (the false-positive class this gate exists to avoid —
+    // strip-misclassify re-verification). The only cost is reading a genuine
+    // block-statement-then-regex `{}/re/` as division — a false-NEGATIVE that the
+    // 1577-file consumer differential shows never fires.
     let prevSig = "";
     let inCharClass = false; // inside a regex [...] character class — `/` does not terminate
-    const regexAllowedPrev = new Set(["", "=", "(", ",", ":", "[", "!", "&", "|", "?", "{", "}", ";"]);
+    const regexAllowedPrev = new Set(["", "=", "(", ",", ":", "[", "!", "&", "|", "?", "{", ";"]);
     function regexLegalHere() {
         if (regexAllowedPrev.has(prevSig)) return true;
         // `return /…/` — the only keyword that ends in a regex-legal position and
