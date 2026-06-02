@@ -12,6 +12,27 @@
 
 :root {
     /* ═══════════════════════════════════════════════
+       §-1  COLOR-SCHEME (AQ.W2 §1)
+
+       Lets native UI (scrollbars, spinbuttons, form-control chrome, the
+       default focus ring) honor the OS preference when the consumer has
+       NOT pinned a `.dark` class. glass-ui's dark mode is class-driven
+       (`.dark`, theme.css `@variant dark`), so `.dark` overrides to a hard
+       `dark` regardless of OS — but absent the class, native chrome should
+       still track `prefers-color-scheme`. `light dark` (not `only light`)
+       on `:root` delivers that; `.dark` hard-pins `dark`.
+
+       Baseline Widely Available → adopt natively, no `@supports` guard
+       (older engines ignore the property and keep default-light chrome).
+       `accent-color` (AQ.W2 §4) is the companion native-control brand;
+       both are inherited built-in <color>/keyword properties re-specified
+       inside `.dark`. The `--accent-color` token is defined in the §5
+       color block below (custom properties resolve order-independently).
+       ═══════════════════════════════════════════════ */
+    color-scheme: light dark;
+    accent-color: var(--accent-color);
+
+    /* ═══════════════════════════════════════════════
        §0  THEME BRIDGE FALLBACKS
 
        theme.css uses these non-Tailwind names to register v4 utility
@@ -352,6 +373,24 @@
     --ring: hsl(24 10% 10%);
     --shadow: hsl(24 10% 10%);
     --shadow-color: var(--foreground);
+
+    /* AQ.W2 §4 — native-control accent. `accent-color` is an inherited
+       built-in <color>, so per the §2b resolve-late discipline it reads a
+       dedicated UNREGISTERED token set per-mode (NOT light-dark()) and is
+       re-specified inside `.dark` — otherwise the accent freezes to the
+       light shade at the cascade root. Light: muted-black checkmarks /
+       sliders on warm cream. Dark arm (`.dark`) reads `--ring` (mid-tone),
+       not the near-white dark `--primary`, so a checkbox's white checkmark
+       keeps contrast headroom (accent-color.md §5). */
+    --accent-color: var(--primary);
+
+    /* Border hairline at whisper alpha — the canonical rung for
+       section-spine / panel-edge hairlines a consumer wants to read as an
+       iOS-26 whisper rather than a hard rule. Consumers compose this named
+       rung instead of hand-mixing `color-mix(... var(--border) ...)`
+       per-site (token-first). 45% is the canonical whisper. Auto-dark via
+       `--border` (which is `var(--neutral-4)`, light-dark()-resolved). */
+    --border-soft: color-mix(in srgb, var(--border) 45%, transparent);
 
     /* Foreground-tint rungs — canonical handles for the 36+ raw
        `color-mix(in srgb, var(--foreground) N%, transparent)` sites surveyed
@@ -1139,11 +1178,147 @@
 }
 
 /* ═══════════════════════════════════════════════
+   §-1b  LIGHT-DARK() COLOR ARCHITECTURE (AQ.W2 §2)
+
+   Every PAIRED color token (a token whose `:root` and `.dark` values are
+   BOTH a <color> and differ) folds onto one `light-dark(light, dark)`
+   declaration, keyed off the element's `color-scheme` (§-1). This is the
+   single-source-of-truth collapse of the `.dark` mirror AND the dynamism
+   win: an unregistered custom property holding a `light-dark()` expression
+   re-resolves under a descendant `color-scheme` override (a `.dark`
+   code-block embedded in a light page, or vice-versa).
+
+   DISCIPLINE (§2b — BINDING): these tokens MUST stay UNREGISTERED (no
+   `@property … syntax:"<color>"`). A registered <color> would resolve ONCE
+   at the declaring element and inherit the RESOLVED color, freezing the
+   descendant re-resolution. glass-ui's only `@property` registrations (§18)
+   are non-color (percentage/length), so the discipline holds — W2 adds NO
+   color `@property`.
+
+   The semantic `var()`-aliases (`--background`, `--muted`, `--border`,
+   `--secondary`, `--accent`, `--card-foreground`, …) do NOT appear here:
+   they point at the SAME source name in both modes and auto-track once the
+   `--neutral-*` ladder + `--foreground` resolve via `light-dark()`. Their
+   redundant `.dark` re-declarations DELETE below.
+
+   FALLBACK (§2c): this whole block is `@supports`-gated, so an engine
+   WITHOUT `light-dark()` skips it and the retained `.dark` class block (the
+   SOLE fallback floor) drives dark exactly as at HEAD. `light-dark()` is the
+   enhancement OVER the class — not a parallel alias. Baseline Newly
+   Available; the fallback floor is the pre-existing class block (net-zero
+   new fallback LOC).
+   ═══════════════════════════════════════════════ */
+@supports (color: light-dark(white, black)) {
+    :root {
+        /* Neutral ladder — the source the var()-aliases track */
+        --neutral-0: light-dark(hsl(48 12% 98%), hsl(24 8% 6%));
+        --neutral-1: light-dark(hsl(48 10% 95%), hsl(24 6% 11%));
+        --neutral-2: light-dark(hsl(48  9% 90%), hsl(24 5% 16%));
+        --neutral-3: light-dark(hsl(48  8% 82%), hsl(24 5% 22%));
+        --neutral-4: light-dark(hsl(48  7% 70%), hsl(24 5% 34%));
+        --neutral-5: light-dark(hsl(48  6% 40%), hsl(48 5% 62%));
+        --neutral-6: light-dark(hsl(48  7% 30%), hsl(48 6% 72%));
+
+        /* Core surfaces + ink */
+        --foreground:                 light-dark(hsl(24 10% 10%), hsl(48 10% 90%));
+        --card:                       light-dark(var(--neutral-0), hsl(24 8% 10%));
+        --popover:                    light-dark(var(--neutral-0), hsl(24 8% 10%));
+        --surface-public-data-panel:  light-dark(hsl(44 16% 96%), hsl(36 9% 12%));
+
+        --primary:                 light-dark(hsl(24 10% 10%), hsl(48 10% 90%));
+        --primary-foreground:      light-dark(var(--neutral-0), hsl(24 10% 10%));
+        --destructive:             light-dark(hsl(0 72% 50%), hsl(0 62.8% 30.6%));
+        --destructive-foreground:  light-dark(var(--neutral-0), hsl(48 10% 90%));
+        --ring:                    light-dark(hsl(24 10% 10%), hsl(48 10% 70%));
+        --shadow:                  light-dark(hsl(24 10% 10%), hsl(0 0% 5%));
+
+        /* §4 native-control accent — the per-mode arms (dark reads the
+           mid-tone ring for checkmark-glyph contrast headroom, NOT the
+           near-white dark primary). Joins the light-dark() collapse; still
+           re-specified as `accent-color` inside `.dark` per §2b. */
+        --accent-color:            light-dark(var(--primary), var(--ring));
+
+        /* Section palette — jewel tones brightened ~20% L for dark */
+        --section-color-0:   light-dark(hsl(334 63% 47%), hsl(334 72% 70%));
+        --section-color-1:   light-dark(hsl(272 44% 47%), hsl(272 54% 73%));
+        --section-color-2:   light-dark(hsl(224 58% 46%), hsl(224 67% 72%));
+        --section-color-3:   light-dark(hsl(194 62% 36%), hsl(194 61% 64%));
+        --section-color-4:   light-dark(hsl(163 46% 35%), hsl(163 50% 60%));
+        --section-color-5:   light-dark(hsl(35 70% 42%),  hsl(37 73% 67%));
+        --section-color-6:   light-dark(hsl(6 72% 49%),   hsl(6 77% 66%));
+        --section-color-7:   light-dark(hsl(286 46% 47%), hsl(286 58% 72%));
+        --section-color-8:   light-dark(hsl(342 62% 44%), hsl(342 71% 69%));
+        --section-color-9:   light-dark(hsl(205 20% 38%), hsl(205 24% 70%));
+        --section-color-10:  light-dark(hsl(86 38% 36%),  hsl(86 44% 63%));
+        --section-color-11:  light-dark(hsl(187 58% 39%), hsl(187 63% 65%));
+        --section-color-12:  light-dark(hsl(256 44% 52%), hsl(256 60% 74%));
+
+        --accent-pink:     light-dark(hsl(330 65% 55%), hsl(335 55% 65%));
+        --section-heading: light-dark(hsl(328 60% 46%), hsl(330 55% 68%));
+        --accent-red:      light-dark(hsl(0 72% 50%),   hsl(0 68% 62%));
+
+        /* Viz basis (amber/green stay var()-aliases → auto-track) */
+        --viz-fourier:   light-dark(hsl(6 72% 49%),   hsl(6 77% 66%));
+        --viz-chebyshev: light-dark(hsl(224 58% 46%), hsl(224 67% 72%));
+        --viz-legendre:  light-dark(hsl(286 46% 47%), hsl(286 58% 72%));
+
+        /* WCAG companion chart labels */
+        --chart-ping-label:     light-dark(oklch(0.40 0.18 230), oklch(0.85 0.12 230));
+        --chart-download-label: light-dark(oklch(0.40 0.20 22),  oklch(0.85 0.14 22));
+        --chart-upload-label:   light-dark(oklch(0.40 0.16 55),  oklch(0.85 0.12 55));
+        --chart-jitter-label:   light-dark(oklch(0.40 0.20 305), oklch(0.85 0.14 305));
+
+        /* Semantic UI accents */
+        --tier-featured: light-dark(hsl(45 100% 50%),  hsl(45 100% 60%));
+        --tier-saved:    light-dark(hsl(210 100% 60%), hsl(210 100% 70%));
+        --like:          light-dark(hsl(0 80% 60%),    hsl(0 80% 68%));
+        --success:       light-dark(hsl(142 71% 45%),  hsl(142 71% 58%));
+        --warning:       light-dark(hsl(38 92% 50%),   hsl(38 92% 60%));
+        --info:          light-dark(hsl(217 91% 60%),  hsl(217 91% 70%));
+        --delete:        light-dark(hsl(0 70% 55%),    hsl(0 70% 62%));
+
+        /* Semantic foregrounds (warning-foreground is identical both modes
+           → stays a single light-mode declaration, no light-dark() needed) */
+        --success-foreground: light-dark(var(--neutral-0), hsl(48 10% 96%));
+        --info-foreground:    light-dark(var(--neutral-0), hsl(48 10% 96%));
+
+        /* Cartoon-shadow color primitives (§2d — plain colors, convert) */
+        --shadow-cartoon-color:      light-dark(rgb(0 0 0 / 0.12), rgb(255 255 255 / 0.07));
+        --shadow-cartoon-color-soft: light-dark(rgb(0 0 0 / 0.06), rgb(255 255 255 / 0.03));
+
+        /* Gold family */
+        --gold:       light-dark(hsl(43 74% 49%),  hsl(43 74% 55%));
+        --gold-light: light-dark(hsl(51 100% 50%), hsl(51 100% 55%));
+        --gold-dark:  light-dark(hsl(34 87% 38%),  hsl(34 87% 45%));
+    }
+}
+
+/* ═══════════════════════════════════════════════
    DARK MODE — warm dark, section palette brightened ~20% L
+
+   FALLBACK FLOOR (AQ.W2 §2c): this class block is the SOLE non-light-dark()
+   dark path. On a `light-dark()`-supporting engine with `.dark` present,
+   `.dark { color-scheme: dark }` (§1) makes every §-1b token resolve to its
+   dark arm and these explicit dark values agree with it (kept as the floor
+   for non-supporting engines). The pure `var()`-alias re-declarations
+   (`--muted`/`--secondary`/`--accent`/`--border`/`--input`/… and the
+   `--background`/`*-foreground` aliases) are DELETED — they auto-track the
+   `--neutral-*` ladder + `--foreground` resolved above; only EXPLICIT-color
+   dark values (and the non-color overrides §2d) stay.
    ═══════════════════════════════════════════════ */
 .dark {
+    /* §1 — hard-pin native chrome to dark regardless of OS preference. §4 —
+       re-specify the inherited `accent-color` so it re-resolves to the dark
+       arm (§2b: an inherited built-in <color> set at `:root` would freeze to
+       the light shade without this re-specification). */
+    color-scheme: dark;
+    accent-color: var(--accent-color);
+
     /* Neutral scale mirrors light-mode pattern: step UP from the background's
-       low L toward foreground. Same perceptual deltas as light. */
+       low L toward foreground. Same perceptual deltas as light. FALLBACK
+       FLOOR — kept verbatim for non-light-dark() engines (§2c); on a
+       supporting engine `color-scheme: dark` (above) drives the §-1b
+       light-dark() arms and these agree. */
     --neutral-0: hsl(24 8% 6%);    /* L 6  — page surface (dark) */
     --neutral-1: hsl(24 6% 11%);   /* L 11 — soft field */
     --neutral-2: hsl(24 5% 16%);   /* L 16 — chip / tab-inactive */
@@ -1157,30 +1332,19 @@
        (cf. neutral-5's 7.39:1). */
     --neutral-6: hsl(48 6% 72%);   /* L 72 — strong-muted text (secondary register) */
 
-    --background: var(--neutral-0);
+    /* --background / --card-foreground / --popover-foreground / --muted /
+       --muted-foreground{,-strong} / --secondary{,-foreground} /
+       --accent{,-foreground} / --border / --input are pure var()-aliases —
+       DELETED here (AQ.W2 §2a): they auto-track the --neutral-* ladder +
+       --foreground above. Re-declaring them would be redundant. */
     --foreground: hsl(48 10% 90%);
     --card: hsl(24 8% 10%);
-    --card-foreground: var(--foreground);
     --popover: hsl(24 8% 10%);
-    --popover-foreground: var(--foreground);
 
     /* R0G-5 (AO.W4) — dark mirror of the warm-neutral public-data panel.
        --card's dark hsl(24 8% 10%) nudged one warmth step toward amber
        (24→36) + +1 sat + +2 L so the dark dashboard panel lifts off the page. */
     --surface-public-data-panel: hsl(36 9% 12%);
-
-    --muted: var(--neutral-1);
-    --muted-foreground: var(--neutral-5);
-    /* W7-α' (AK-FD1) — strong-muted secondary text. Auto-tracks the dark
-       neutral-6 rung above; by-colour, not alpha. */
-    --muted-foreground-strong: var(--neutral-6);
-    --secondary: var(--neutral-2);
-    --secondary-foreground: var(--foreground);
-    --accent: var(--neutral-3);
-    --accent-foreground: var(--foreground);
-
-    --border: var(--neutral-4);
-    --input: var(--neutral-4);
 
     --primary: hsl(48 10% 90%);
     --primary-foreground: hsl(24 10% 10%);
@@ -1211,8 +1375,9 @@
     --viz-fourier:   hsl(6 77% 66%);
     --viz-chebyshev: hsl(224 67% 72%);
     --viz-legendre:  hsl(286 58% 72%);
-    --viz-amber:     var(--section-color-5);
-    --viz-green:     var(--section-color-4);
+    /* --viz-amber / --viz-green / --meter-track-stroke are pure var()-aliases
+       (→ --section-color-5/-4 / --foreground) — DELETED (§2a); they auto-track
+       their sources, which convert via §-1b. */
 
     /* O.W6 Lane D — WCAG companion labels lift to L≈0.85 against the
        deep dark canvas; same two-token discipline as light mode (canvas
@@ -1221,11 +1386,6 @@
     --chart-download-label: oklch(0.85 0.14 22);
     --chart-upload-label:   oklch(0.85 0.12 55);
     --chart-jitter-label:   oklch(0.85 0.14 305);
-
-    /* O.W6 Lane D — Meter track stroke dark companion. Mirrors `:root`
-       (was speedtest's consumer-side `var(--background)` — bg-on-bg
-       invisible at dark mode; F1.V-02 closure). */
-    --meter-track-stroke: var(--foreground);
 
     --tier-featured: hsl(45 100% 60%);
     --tier-saved:    hsl(210 100% 70%);

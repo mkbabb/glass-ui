@@ -163,8 +163,8 @@ src/
 - `moduleResolution:bundler`, `target:ES2022`, `lib:ES2023`
 - `import type` for all type-only imports
 - Named exports only, no defaults
-- All shadows use `hsl(var(--shadow-color) / alpha)` format
-- Color palette as HSL channels: `--primary: 222.2 47.4% 11.2%`, consumed as `hsl(var(--primary))` in `@theme`
+- All shadows compose via `color-mix(in srgb, var(--shadow-color) N%, transparent)` over `--shadow-color: var(--foreground)` (tokens.css §7).
+- Color tokens are complete `hsl()` colors: `--primary: hsl(24 10% 10%)`, consumed directly as `var(--primary)`. NEVER `hsl(var(--token))` (the token is already a color — double-wrapping is invalid and never paints). For an alpha derivative use `color-mix(in srgb, var(--token) N%, transparent)` (the `--surface-tint-*` / `--border-soft` house pattern).
 
 ## Entry point
 

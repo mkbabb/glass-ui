@@ -856,3 +856,37 @@ html.no-transition *::before,
 html.no-transition *::after {
     transition-duration: 0s !important;
 }
+
+/* ── Forced-colors restoration (AQ.W2 §5) ──────────────────────────────
+   Windows High Contrast / forced-colors mode STRIPS `box-shadow` — so the
+   glass focus rings (box-shadow + `outline: none`) vanish, leaving keyboard
+   users with no visible focus (a WCAG 2.4.7 failure forced-colors exposes).
+   Restore a real `outline` keyed to the system `Highlight` color (outline
+   survives forced-colors; box-shadow does not). The box-shadow ring stays the
+   primary in normal mode (it carries the glass aesthetic) — these two are
+   mutually exclusive by media query, NOT a parallel path.
+
+   `forced-color-adjust: none` is deliberately NOT used — glass-ui's
+   glassmorphic chrome is decorative and yields to the user's forced palette
+   (css forced-colors guidance). Baseline Widely Available; this IS the
+   fallback mechanism (it only activates under forced-colors), so no nested
+   guard. */
+@media (forced-colors: active) {
+    .focus-ring:focus-visible,
+    .glass-btn:focus-visible,
+    .interactive-item:focus-visible,
+    .input-pill:focus,
+    .input-pill:focus-visible {
+        outline: 2px solid Highlight;
+        outline-offset: 2px;
+    }
+
+    /* Structural edges borne ONLY by box-shadow (the hairline catch-light /
+       glass pill edge / card plate) also vanish — restore a real border so
+       the silhouette survives. CanvasText is the system text/border color. */
+    .hairline-accent,
+    .glass-dock,
+    .glass-card {
+        border: 1px solid CanvasText;
+    }
+}
