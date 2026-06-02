@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.1.1
+
+### Patch Changes
+
+-   AR.W2 — the binding-correctness floor.
+
+    Fixes the GlassDock `view-transition-name` collision: a module-level counter restarted per module-graph copy, so two docks on a page minted the same name and the browser rejected the transition. `dockId` is now minted from `useId()` (app-scoped, collision-free across module-graph copies), and a new `proof:vt-names` static gate makes the violation class structurally impossible (every VT/anchor-name mint must derive from `useId()` or a documented page-singleton, never a module counter).
+
+    Consumer-correctness folds: `ConfiguratorLayer` applies `inert` to its collapsed body (closes an `aria-hidden-focus` violation — the focusable children no longer sit under `aria-hidden`); the Configurator sections now round at the container root (the per-section `rounded-panel` that deformed the inner `border-b` dividers is removed — rounding is owned by the container clip).
+
+    Release CI repaired — the `package-lock.json` resolves `@mkbabb/*` from the registry (not the dev symlinks) so `npm ci` succeeds on a clean runner, and the workflows run node 24 (against `engines: >=22`).
+
 ## 3.0.0
 
 ### Major Changes
