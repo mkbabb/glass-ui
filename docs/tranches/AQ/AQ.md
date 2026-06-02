@@ -77,13 +77,13 @@ not shipped — + AQ.FINAL + the 3.x fold) lands.
 | Wave | Disposition | Contents |
 |---|---|---|
 | **W0** | DEV — done | 6-agent modern-web baseline audit (`audit/W0-modern-web-baseline.md`) |
-| **W1** | DEV | Design slices: inheritance-safe `light-dark()` token design; `color-mix` migration map; `:user-invalid` + `aria-invalid` bridge; scroll-driven `@supports` boundary; anchor fallback ladder; native-`<select>` API |
+| **W1** | DEV — done | Design slices W1.1-W1.3 authored + verified; AQ↔J couplings (`useUserInvalidAria`, `useViewTransition`) cohere; the 71-site `hsl(var())` classification (64 bug / 6 legit) + the `/number-field`+`/switch` subpath deliverable folded into W7 (`audit/W1-design-close.md`) |
 | **W2** | IMPL | **Color & theming** — `color-scheme` + `light-dark()` mirror collapse + `color-mix` alpha (consumer bug fix) + `accent-color` + forced-colors focus |
 | **W3** | IMPL | **Selectors & transforms** — `:has()` parent-state + individual transforms (identity base) + `text-wrap` + tokenized scrollbars |
 | **W4** | IMPL | **Form vocabulary** — `:user-invalid`/required-field + `aria-invalid` bridge + attr-passthrough + `field-sizing` + native `<select>` + `:focus-visible` |
 | **W5** | IMPL | **Motion → platform** — scroll-driven animations + `@starting-style` top-layer + the `useViewTransition` substrate |
 | **W6** | IMPL | **Anchor & top-layer** — anchor-positioned underline + native `<dialog>`/popover + `interestfor` (opt-in) + dock VT swap + `command`/`moveBefore` |
-| **W7** | IMPL | **Bundle guardrail** — heavy-leaf carve + barrel-vs-subpath delta + value.js laziness + container-style-query density |
+| **W7** | IMPL | **Bundle guardrail** — heavy-leaf carve + barrel-vs-subpath delta + value.js laziness + container-style-query density + **subpath completeness (`+/number-field`, `+/switch`)** so muster J.W4 can fully sweep (`/drawer` stays root-barrel by AN.W3) |
 | **W8** | IMPL | Close — overfitting audit + AQ.FINAL + the 3.x fold |
 
 Ordering rationale: W2 (color) is the foundation — `color-scheme` precedes `light-dark()` precedes
