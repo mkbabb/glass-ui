@@ -33,6 +33,7 @@
         font-size: var(--type-body);
         color: var(--muted-foreground);
         line-height: 1.5;
+        text-wrap: pretty; /* AQ.W3 §W3.3 — prose-register orphan/river fix */
     }
 
     /* ── Labeled-field label (V.W3.T5 / A5 §5.5) ────────────────────
@@ -72,9 +73,28 @@
         display: none;
     }
 
+    /* AQ.W3 §W3.4 — tokenized thin scrollbar. Standard `scrollbar-width` +
+       `scrollbar-color` (Baseline Widely, Chromium 121+) is the primary path,
+       reading `--scrollbar-{thumb,track}` (auto-dark via `--muted-foreground`).
+       The legacy `::-webkit-scrollbar` family is the SOLE fallback for older
+       WebKit/Blink, gated on `@supports not (scrollbar-color: auto)` so modern
+       engines never paint it — not a live+dead alias. */
     .scrollbar-thin {
         scrollbar-width: thin;
-        scrollbar-color: color-mix(in srgb, var(--muted-foreground) 25%, transparent) transparent;
+        scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+    }
+    @supports not (scrollbar-color: auto) {
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: var(--scrollbar-track);
+        }
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border-radius: var(--radius-pill);
+        }
     }
 
     /* ── Focus ring — auto-activates on :focus-visible ── */
@@ -95,6 +115,8 @@
 
     /* ── Interactive item (hover bg + focus ring + active scale) ── */
     .interactive-item {
+        /* AQ.W3 §W3.2 identity base */
+        scale: 1;
         border-radius: var(--radius-lg);
         user-select: none;
         transition:
@@ -102,7 +124,7 @@
             color var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard),
             box-shadow var(--duration-fast) var(--ease-standard),
-            transform var(--duration-fast) var(--ease-standard);
+            scale var(--duration-fast) var(--ease-standard);
     }
     .interactive-item:hover {
         background-color: color-mix(in srgb, var(--accent) 50%, transparent);
@@ -112,7 +134,7 @@
         box-shadow: var(--focus-ring-shadow);
     }
     .interactive-item:active {
-        transform: scale(0.98);
+        scale: 0.98;
     }
     .interactive-item:disabled,
     .interactive-item[data-disabled] {
@@ -136,15 +158,19 @@
        consumer's own hover/active bg-tint cascade to acknowledge the
        press. */
     .tap-squish {
-        transition: transform var(--duration-fast) var(--spring-snappy);
+        /* AQ.W3 §W3.2 identity base */
+        scale: 1;
+        transition: scale var(--duration-fast) var(--spring-snappy);
         transform-origin: center center;
     }
     .tap-squish:active {
-        transform: scale(var(--scale-press));
+        scale: var(--scale-press);
     }
     @media (prefers-reduced-motion: reduce) {
         .tap-squish:active {
-            transform: none;
+            /* Reset to the longhand identity (not `transform: none`) so the
+               press scale is neutralized under PRM. */
+            scale: 1;
         }
     }
 
@@ -212,6 +238,29 @@
         -webkit-mask-image: linear-gradient(to bottom, transparent, black var(--mask-fade-width), black calc(100% - var(--mask-fade-width)), transparent);
     }
 
+    /* ── Deferred section — render-skip an offscreen subtree (AQ.W3 §5) ──────
+       `content-visibility: auto` skips layout/paint/style of an offscreen
+       subtree — the INP-under-load lever (fourier γ, muster, speedtest, words).
+       `contain-intrinsic-size: auto <estimate>` is measurement-safe: the `auto`
+       prefix makes the engine REMEMBER the last-rendered size (no scroll-jump on
+       re-entry); plain `<estimate>` freezes the section + thrashes the scrollbar
+       — the trap this closes. Estimate is token-driven (`--deferred-section-
+       size`, default 30rem). `.deferred-section--cached` →
+       `content-visibility: hidden` (always skipped, state CACHED — cheaper to
+       re-show than `display:none`). Baseline Widely; unsupporting engines render
+       normally. JS HOOK: the engine fires `contentvisibilityautostatechange`
+       { skipped } at the render-skip boundary — pair with `useRAFLoop`
+       pause/resume: `el.addEventListener('contentvisibilityautostatechange',
+       e => e.skipped ? loop.pause() : loop.resume())`. */
+    .deferred-section {
+        content-visibility: auto;
+        contain-intrinsic-size: auto var(--deferred-section-size, 30rem);
+    }
+    .deferred-section--cached {
+        content-visibility: hidden;
+        contain-intrinsic-size: auto var(--deferred-section-size, 30rem);
+    }
+
     /* ── Card scroll-timeline host (AI.W1-α) ───────────────────────────────
        Canonical scroll-overflow host that emits the `--card-scroll` named
        scroll-timeline consumed by `<CardHeader shrink>`. Apply to the
@@ -273,6 +322,8 @@
         align-items: center;
         justify-content: center;
         text-align: center;
+        /* AQ.W3 §W3.2 identity base */
+        scale: 1;
         gap: var(--metric-badge-gap, 0.125rem);
         max-width: var(--metric-badge-max-width, 8rem);
         min-height: var(--metric-badge-min-height, 1.5rem);
@@ -297,7 +348,7 @@
             background var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard),
             box-shadow var(--duration-fast) var(--ease-standard),
-            transform var(--duration-fast) var(--ease-standard);
+            scale var(--duration-fast) var(--ease-standard);
     }
 
     .metric-badge > span {
@@ -310,11 +361,11 @@
         border-color: var(--metric-badge-hover-border, var(--glass-border-resting));
         background: var(--metric-badge-hover-bg, var(--glass-bg-resting));
         box-shadow: var(--metric-badge-hover-shadow, 0 2px 10px color-mix(in srgb, var(--shadow-color) 12%, transparent), var(--glass-highlight));
-        transform: scale(var(--metric-badge-hover-scale, 1.02));
+        scale: var(--metric-badge-hover-scale, 1.02);
     }
 
     .metric-badge:active {
-        transform: scale(var(--metric-badge-press-scale, 0.96));
+        scale: var(--metric-badge-press-scale, 0.96);
     }
 
     .metric-badge:focus-visible {
@@ -464,20 +515,24 @@
        The shared transition is expressed once over the family; the three
        :hover rules carry the per-level translate + shadow. */
     :where(.hover-lift, .hover-lift-md, .hover-lift-lg) {
-        transition-property: transform, box-shadow;
+        /* Individual-transform identity base (AQ.W3 §W3.2) — `translate: 0` at
+           rest mints the stacking context once so the hover lift does not
+           flicker it into being. */
+        translate: 0;
+        transition-property: translate, box-shadow;
         transition-duration: var(--duration-normal);
         transition-timing-function: var(--ease-standard);
     }
     .hover-lift:hover:not(:disabled):not([aria-disabled='true']) {
-        transform: translateY(var(--lift-sm));
+        translate: 0 var(--lift-sm);
         box-shadow: var(--shadow-md);
     }
     .hover-lift-md:hover:not(:disabled):not([aria-disabled='true']) {
-        transform: translateY(var(--lift-md));
+        translate: 0 var(--lift-md);
         box-shadow: var(--shadow-md);
     }
     .hover-lift-lg:hover:not(:disabled):not([aria-disabled='true']) {
-        transform: translateY(var(--lift-lg));
+        translate: 0 var(--lift-lg);
         box-shadow: var(--shadow-lg);
     }
 
@@ -494,17 +549,20 @@
     :where(.shadow-cartoon-sm, .shadow-cartoon-md, .shadow-cartoon-lg) {
         border: 2px solid var(--border);
     }
+    /* Static cartoon-stamp lift (AQ.W3 §W3.2). NOT state-driven, so the
+       identity base is not strictly required, but the `translate:` longhand
+       keeps the family uniform with the state-driven sites above. */
     .shadow-cartoon-sm {
         box-shadow: var(--shadow-cartoon-sm);
-        transform: translateY(-1px);
+        translate: 0 -1px;
     }
     .shadow-cartoon-md {
         box-shadow: var(--shadow-cartoon-md);
-        transform: translateY(-1px);
+        translate: 0 -1px;
     }
     .shadow-cartoon-lg {
         box-shadow: var(--shadow-cartoon-lg);
-        transform: translateY(-2px);
+        translate: 0 -2px;
     }
 
     /* ── Divider utilities ── */
@@ -542,10 +600,13 @@
    `class="scale-on-hover"`; transition + easing bind to the canonical
    `--duration-fast` + `--ease-standard` tokens. */
 @utility scale-on-hover {
-    @apply transition-transform duration-fast ease-standard;
+    /* Individual-transform identity base (AQ.W3 §W3.2). Transition the `scale`
+       longhand (not `transform`) so the migrated hover scale animates. */
+    scale: 1;
+    transition: scale var(--duration-fast) var(--ease-standard);
 
     &:hover {
-        transform: scale(var(--scale-hover));
+        scale: var(--scale-hover);
     }
 }
 
@@ -802,18 +863,20 @@
    this is the canonical opt-in that adds the spring-hover lift. Consumed by
    keyframes.js at 7 sites. */
 @utility btn-interactive {
+    /* AQ.W3 §W3.2 identity base */
+    scale: 1;
     transition:
         background-color var(--duration-fast) var(--ease-standard),
         color var(--duration-fast) var(--ease-standard),
-        transform var(--duration-fast) var(--ease-standard),
+        scale var(--duration-fast) var(--ease-standard),
         opacity var(--duration-fast) var(--ease-standard);
 
     &:hover {
-        transform: scale(var(--scale-hover));
+        scale: var(--scale-hover);
     }
 
     &:active {
-        transform: scale(var(--scale-press));
+        scale: var(--scale-press);
     }
 
     &:disabled {
@@ -829,7 +892,7 @@
         transition:
             background-color var(--duration-fast) var(--ease-standard),
             color var(--duration-fast) var(--ease-standard),
-            transform var(--duration-fast) var(--ease-standard),
+            scale var(--duration-fast) var(--ease-standard),
             opacity var(--duration-fast) var(--ease-standard),
             box-shadow var(--duration-fast) var(--ease-standard);
     }
@@ -888,5 +951,22 @@ html.no-transition *::after {
     .glass-dock,
     .glass-card {
         border: 1px solid CanvasText;
+    }
+}
+
+/* ── Coarse-pointer touch-target floor (AQ.W3 §7) ───────────────────────────
+   General-surface companion to the dock-scoped R0G-6 floor (dock.css). On
+   coarse pointers the small icon-button/trigger surfaces OUTSIDE the dock lift
+   to the WCAG 2.5.5 (44px) minimum — ONE amendment retiring the per-consumer
+   `min-h-[44px]` one-liners. Token-driven (`--touch-target`); fine-pointer
+   byte-identical. Targets `Button size="icon"` (via the `data-size="icon"`
+   attr Button.vue reflects), ExpandableContainer + ResponsiveTabs triggers.
+   `min-block/inline-size` only RAISES — a larger explicit size is never lost. */
+@media (pointer: coarse) {
+    [data-size="icon"],
+    .expandable-container__trigger,
+    .responsive-tabs__trigger {
+        min-block-size: var(--touch-target, 2.75rem);
+        min-inline-size: var(--touch-target, 2.75rem);
     }
 }

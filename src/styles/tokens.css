@@ -392,6 +392,16 @@
        `--border` (which is `var(--neutral-4)`, light-dark()-resolved). */
     --border-soft: color-mix(in srgb, var(--border) 45%, transparent);
 
+    /* AQ.W3 §W3.4 — tokenized scrollbar thumb + track. Minted in the color
+       block so the `scrollbar-color` / `::-webkit-scrollbar-thumb` rungs read a
+       single source. Auto-dark via `--muted-foreground` (light-dark()-resolved,
+       AQ.W2) — the OS scrollbar chrome also honors `color-scheme: dark`, so the
+       custom thumb tracks the dark surface without an explicit dark mirror. The
+       thumb α (25%) matches the prior inline `.scrollbar-thin` value byte-for-
+       byte; `transparent` track keeps the scroll-pane glass reading through. */
+    --scrollbar-thumb: color-mix(in srgb, var(--muted-foreground) 25%, transparent);
+    --scrollbar-track: transparent;
+
     /* Foreground-tint rungs — canonical handles for the 36+ raw
        `color-mix(in srgb, var(--foreground) N%, transparent)` sites surveyed
        in R5 axis-1. Each rung's α is named in its key (4 → 4%, 22 → 22%).
@@ -912,6 +922,15 @@
        `@media (pointer: coarse)` block at `dock.css` lifts it to the
        WCAG 2.5.5 floor on touch devices. */
     --dock-touch-target: 2.75rem; /* 44px */
+
+    /* AQ.W3 §7 — canonical WCAG 2.5.5 (44px) touch-target floor for the
+       NON-dock coarse-pointer surfaces (`Button size="icon"`,
+       ExpandableContainer triggers, ResponsiveTabs mobile trigger). One
+       named rung the `@media (pointer: coarse)` block in utilities.css reads,
+       retiring the per-consumer one-liner `min-h-[44px]` patches. Equals
+       `--dock-touch-target` numerically; kept as a distinct token so the
+       dock floor and the general floor can be retuned independently. */
+    --touch-target: 2.75rem; /* 44px */
 
     /* MetricBadge — stacked variant geometry. The 2-row stacked layout
        (label / value+unit) wants a taller floor than the inline pill so the

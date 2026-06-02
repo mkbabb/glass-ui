@@ -101,13 +101,30 @@
        Interactive cards live in <Card> (which owns its own hover composition)
        or in components that explicitly opt into a hover variant. */
     .glass-card {
+        /* Focus-elevation rungs (AQ.W3 §W3.1a) — identity = at-rest paint; the
+           `:has(:focus-visible)` rule redefines them (one source, shared with
+           the fallback). */
+        --card-focus-shadow: var(--shadow-card);
+        --card-focus-border: var(--glass-border-quiet);
         position: relative;
         background: var(--glass-bg-quiet);
         backdrop-filter: var(--glass-blur-quiet);
-        border: 1px solid var(--glass-border-quiet);
+        border: 1px solid var(--card-focus-border);
         border-radius: var(--radius-card);
-        box-shadow: var(--shadow-card);
+        box-shadow: var(--card-focus-shadow);
         contain: layout style;
+        transition:
+            box-shadow var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard);
+    }
+
+    /* Elevate one rung on descendant KEYBOARD focus (`:focus-visible`, not
+       pointer). Scoped to `.glass-card`. `:has()` Baseline Widely; the
+       `@supports not selector(:has(*))` class fallback (below) ships anyway
+       (focus-elevation is UX-critical — child-state-styling MANDATORY clause). */
+    .glass-card:has(:focus-visible) {
+        --card-focus-shadow: var(--shadow-md);
+        --card-focus-border: var(--glass-border-floating);
     }
 
     /* ── Glassmorphic circular icon button ── */
@@ -115,6 +132,10 @@
     .glass-btn {
         @apply flex items-center justify-center cursor-pointer;
 
+        /* Individual-transform identity base (AQ.W3 §W3.2) — `scale: 1` at rest
+           mints the stacking context once so the hover/press scale below does
+           not flicker it into being (the z-index/anchor hazard). */
+        scale: 1;
         width: var(--size-icon-btn);
         height: var(--size-icon-btn);
         border-radius: var(--radius-pill);
@@ -126,18 +147,18 @@
             background var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard),
             color var(--duration-fast) var(--ease-standard),
-            transform var(--duration-normal) var(--spring-snappy);
+            scale var(--duration-normal) var(--spring-snappy);
     }
 
     .glass-btn:hover:not(:disabled) {
         background: color-mix(in srgb, var(--background) 85%, transparent);
         border-color: var(--surface-tint-22);
         color: var(--foreground);
-        transform: scale(var(--scale-hover));
+        scale: var(--scale-hover);
     }
 
     .glass-btn:active:not(:disabled) {
-        transform: scale(var(--scale-press));
+        scale: var(--scale-press);
     }
 
     .glass-btn:focus-visible {
@@ -273,5 +294,19 @@
         .glass-btn {
             background: color-mix(in srgb, var(--background) 92%, transparent);
         }
+    }
+}
+
+/* ── :has() focus-elevation fallback (AQ.W3 §W3.1a) ──────────────────────
+   SOLE fallback for engines without `:has()`. `.is-focus-within` is toggled
+   by a ≤6-LOC focusin/focusout guard in `Card.vue` that runs ONLY when
+   `!CSS.supports('selector(:has(*))')` (modern engines run zero JS). The
+   class redefines the SAME `--card-focus-*` rungs as the `:has()` rule, so the
+   override values have one source. NOT a live+dead alias — `:has()` is the
+   enhancement, this the documented degradation path. */
+@supports not selector(:has(*)) {
+    .glass-card.is-focus-within {
+        --card-focus-shadow: var(--shadow-md);
+        --card-focus-border: var(--glass-border-floating);
     }
 }

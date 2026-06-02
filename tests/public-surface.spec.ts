@@ -174,6 +174,9 @@ const subpathRuntimeExports = [
     { subpath: "motion-core", surface: MotionCore, name: "useScrollProgress" },
     { subpath: "motion-core", surface: MotionCore, name: "useRAFLoop" },
     { subpath: "motion-core", surface: MotionCore, name: "useIntersectionPause" },
+    // AQ.W3 §6 — the INP-under-load lever. Engine-free (`/motion-core`).
+    { subpath: "motion-core", surface: MotionCore, name: "useYieldToMain" },
+    { subpath: "motion-core", surface: MotionCore, name: "yieldToMain" },
     { subpath: "motion", surface: Motion, name: "DAMPING" },
     { subpath: "motion", surface: Motion, name: "SNAP_THRESHOLD" },
     { subpath: "motion-core", surface: MotionCore, name: "DAMPING" },

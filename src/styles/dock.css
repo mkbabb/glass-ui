@@ -56,6 +56,11 @@
         --dock-wrap-max-width: calc(100vw - var(--dock-viewport-inline-gutter, 1rem));
         --dock-separator-height: calc(var(--dock-h, var(--size-icon-btn)) * 0.5);
         --dock-collapsed-hover-scale: var(--scale-hover-dock);
+        /* Individual-transform identity base (AQ.W3 §W3.2). `scale: 1` at rest
+           mints the stacking context once so a portaled popover over `--z-dock`
+           stays above the dock during a hover scale (the load-bearing
+           stacking-context guarantee). Covers every dock scale site. */
+        scale: 1;
         position: relative;
         display: inline-flex;
         align-items: center;
@@ -308,7 +313,7 @@
         background: var(--glass-bg-wash);
         border-color: var(--glass-border-floating);
         box-shadow: var(--shadow-dock-override, var(--shadow-dock));
-        transform: scale(var(--dock-collapsed-hover-scale));
+        scale: var(--dock-collapsed-hover-scale);
     }
 
     /* J.W5.C — held-state substrate response.
@@ -329,6 +334,15 @@
             background var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard),
             box-shadow var(--duration-fast) var(--ease-standard);
+    }
+
+    /* AQ.W3 §W3.1b — open-descendant surface response. When a dock-hosted
+       trigger (`[data-state="open"]`) is open, the dock root holds its elevated
+       read natively (no consumer JS). Idempotent with `[data-held]` above (same
+       floating paint, different trigger). Decorative; `:has()` Baseline Widely. */
+    .glass-dock:has([data-state="open"]) {
+        background: var(--glass-bg-floating, var(--glass-bg-resting));
+        border-color: var(--glass-border-floating, var(--glass-border-resting));
     }
 
     .glass-dock:where(.fixed) {
@@ -647,6 +661,8 @@
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
+        /* AQ.W3 §W3.2 identity base */
+        scale: 1;
         width: var(--dock-control-size, var(--size-icon-btn));
         height: var(--dock-control-size, var(--size-icon-btn));
         padding: var(--dock-icon-padding, 0);
@@ -659,7 +675,7 @@
         transition:
             background-color var(--dock-motion-fast),
             color var(--dock-motion-fast),
-            transform var(--dock-motion-fast),
+            scale var(--dock-motion-fast),
             opacity var(--dock-motion-fast);
     }
 
@@ -673,11 +689,11 @@
     .dock-icon-button:hover:not(:disabled) {
         background: var(--muted);
         color: var(--btn-hover-color, var(--foreground));
-        transform: scale(var(--scale-hover-dock));
+        scale: var(--scale-hover-dock);
     }
 
     .dock-icon-button:active:not(:disabled) {
-        transform: scale(var(--scale-press-dock));
+        scale: var(--scale-press-dock);
     }
 
     .dock-icon-button:focus:not(:focus-visible) {
@@ -691,7 +707,7 @@
         transition:
             background-color var(--dock-motion-fast),
             color var(--dock-motion-fast),
-            transform var(--dock-motion-fast),
+            scale var(--dock-motion-fast),
             opacity var(--dock-motion-fast),
             box-shadow var(--dock-motion-fast);
     }
@@ -705,7 +721,7 @@
     .dock-icon-button:is(.is-active, .active, [aria-expanded="true"], [aria-pressed="true"]) {
         background: var(--dock-active-bg);
         color: var(--dock-active-color);
-        transform: scale(var(--dock-active-scale));
+        scale: var(--dock-active-scale);
         border: var(--dock-active-border);
         box-shadow: var(--dock-active-shadow);
     }
@@ -809,10 +825,12 @@
         cursor: pointer;
         white-space: nowrap;
         outline: none;
+        /* AQ.W3 §W3.2 identity base */
+        scale: 1;
         transition:
             background-color var(--dock-motion-fast),
             color var(--dock-motion-fast),
-            transform var(--dock-motion-fast);
+            scale var(--dock-motion-fast);
     }
 
     .dock-tab-button:hover:not(:disabled) {
@@ -821,7 +839,7 @@
     }
 
     .dock-tab-button:active:not(:disabled) {
-        transform: scale(var(--scale-press-dock));
+        scale: var(--scale-press-dock);
     }
 
     .dock-tab-button:focus:not(:focus-visible) {
@@ -938,6 +956,8 @@
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
+        /* AQ.W3 §W3.2 identity base */
+        scale: 1;
         gap: var(--dock-trigger-gap, 0.25rem);
         min-height: var(--dock-trigger-min-height, auto);
         padding:
@@ -953,7 +973,7 @@
         transition:
             background-color var(--dock-motion-fast),
             color var(--dock-motion-fast),
-            transform var(--dock-motion-fast),
+            scale var(--dock-motion-fast),
             opacity var(--dock-motion-fast);
     }
 
@@ -964,12 +984,12 @@
     }
 
     .dock-dropdown-trigger:hover:not(:disabled) {
-        transform: scale(var(--scale-hover-dock));
+        scale: var(--scale-hover-dock);
     }
 
     .dock-select-trigger:active:not(:disabled),
     .dock-dropdown-trigger:active:not(:disabled) {
-        transform: scale(var(--scale-press-dock));
+        scale: var(--scale-press-dock);
     }
 
     .dock-select-trigger:focus:not(:focus-visible),
@@ -985,7 +1005,7 @@
         transition:
             background-color var(--dock-motion-fast),
             color var(--dock-motion-fast),
-            transform var(--dock-motion-fast),
+            scale var(--dock-motion-fast),
             opacity var(--dock-motion-fast),
             box-shadow var(--dock-motion-fast);
     }
@@ -1001,11 +1021,14 @@
         height: var(--dock-trigger-icon-size, 0.75rem);
         flex-shrink: 0;
         opacity: 0.5;
-        transition: transform var(--dock-motion-fast);
+        /* Individual-transform identity base (AQ.W3 §W3.2) — `rotate:` longhand
+           for family consistency (not a stacking-context hazard: child glyph). */
+        rotate: 0deg;
+        transition: rotate var(--dock-motion-fast);
     }
 
     .dock-select-trigger[data-state="open"] .dock-select-trigger__chevron {
-        transform: rotate(180deg);
+        rotate: 180deg;
     }
 
     @media (min-width: 640px) {

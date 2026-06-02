@@ -6,6 +6,12 @@ import {
     ref,
     type Ref,
 } from "vue";
+// AQ.W3 §6 — the INP-under-load lever, surfaced on the loop controls so a frame
+// callback doing heavy chunked work can yield to the main thread between chunks
+// (`await controls.yieldToMain()`) without blocking input/paint. Both leaves are
+// engine-free (`/motion-core`), so this import introduces no keyframes/vueuse
+// edge.
+import { yieldToMain } from "./useYieldToMain";
 
 export interface RAFLoopTiming {
     /** Current frame timestamp from requestAnimationFrame. */
@@ -46,6 +52,13 @@ export interface RAFLoopControls {
     resume: () => void;
     /** Stop the loop and detach document/media listeners. */
     dispose: () => void;
+    /**
+     * Yield to the main thread between chunks of heavy per-frame work (the INP
+     * lever). Native `scheduler.yield()` when available, else a MessageChannel/
+     * setTimeout fallback. `await` it inside the frame callback when a single
+     * frame's work would otherwise block input/paint. See {@link yieldToMain}.
+     */
+    yieldToMain: () => Promise<void>;
 }
 
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
@@ -269,5 +282,6 @@ export function useRAFLoop(
         pause,
         resume,
         dispose,
+        yieldToMain,
     };
 }

@@ -136,7 +136,7 @@ function onUpdate(value: unknown) {
         <div :class="cn('responsive-tabs__mobile w-fit', props.class)">
             <Select :model-value="modelValue" @update:model-value="onUpdate">
                 <SelectTrigger
-                    :class="cn('text-small w-auto min-w-input-sm', mobileTriggerClass)"
+                    :class="cn('responsive-tabs__trigger text-small w-auto min-w-input-sm', mobileTriggerClass)"
                 >
                     <SelectValue />
                 </SelectTrigger>

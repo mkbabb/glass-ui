@@ -33,12 +33,16 @@
 @utility cartoon-surface {
     border-width: 2px;
     box-shadow: var(--shadow-cartoon-md);
+    /* Individual-transform identity base (AQ.W3 §W3.2) — state-driven 2D lift on
+       a card surface that often hosts portaled content; `translate: 0` at rest
+       mints the stacking context once. Longhand maps `translate(x, y)` 1:1. */
+    translate: 0;
     transition:
-        transform var(--duration-normal) var(--ease-apple-spring),
+        translate var(--duration-normal) var(--ease-apple-spring),
         box-shadow var(--duration-normal) var(--ease-apple);
 
     &:hover:not(:disabled) {
-        transform: translate(var(--lift-sm), var(--lift-sm));
+        translate: var(--lift-sm) var(--lift-sm);
         box-shadow: var(--shadow-cartoon-lg);
     }
 }
