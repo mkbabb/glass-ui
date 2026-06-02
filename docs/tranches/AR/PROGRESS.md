@@ -17,6 +17,18 @@ lockfile + node 24); and — as a byproduct of unmasking it — the
 `proof:consumers:static` false-witness gate bug. Full gate matrix green. W3-W6
 remain PLANNED (the 3.2.0 leverage fold). Evidence: `audit/W2-vt-names-gate.md`.
 
+**ci.yml is GREEN** (run 26849704298, node 24 + registry-resolved lockfile — all
+11 gates incl. the new `proof:vt-names`). Fixing the #177 `npm ci` failure
+unmasked three `proof:*` gates that assumed the local monorepo sibling layout and
+went red on a clean runner — all fixed as post-tag CI-portability follow-ups:
+`proof:package` (fixture resolved keyframes via `file:../keyframes.js` → fall back
+to the registry peer range when no sibling), `proof:resolution` (skip an absent
+sibling publisher rather than flag it), and the latent `proof:consumers:static`
+false-witness. `release.yml` on the tag is red — the tag (`ed2add9`) predates
+those follow-ups and the publish step needs the user-domain `NPM_TOKEN`; the
+published 3.1.1 is unaffected (scripts/ is not in the tarball — `dist`/`src/styles`/
+`src/fonts` only).
+
 AR is the dual of AQ's headline: AQ's `color-mix` substrate made the `hsl(var())` paint-failure structurally impossible; AR's `proof:vt-names` gate makes the `view-transition-name`/`anchor-name` collision structurally impossible (inv η). The A1 audit diagnosed a **live** bug in that class — `GlassDock.vue:9` mints its `view-transition-name` from a module-level `let dockInstanceId = 0` counter that restarts per module-graph copy, so a lazy-chunked dock collides with the eager dock's `glass-dock-1`, the browser rejects the transition, and only fourier's console-error e2e catches it (vue-tsc + vitest both pass). AR fixes it via `useId()` (mirroring `DockLayerGroup.vue:69`), ships the static gate, repairs CI #177 (node 20→24 + registry-not-symlink publish), and cuts a **3.1.1 patch** FIRST — then takes the modern-web leverage AQ left (container style queries, scroll-state queries, cross-document VT + types, `scheduler.postTask` priority) and evaluates the AS-GU design bundle at the ≥2-consumer bar, folded as a **3.2.0 minor**.
 
 ## Wave status table
