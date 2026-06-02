@@ -209,6 +209,19 @@ function checkPublisherPackages() {
         const pkgJsonPath = resolve(pkg.dir, "package.json");
 
         if (!existsSync(pkgJsonPath)) {
+            // A sibling publisher repo that isn't checked out on this runner (the
+            // CI case — siblings live under PARENT, absent on a clean Actions
+            // runner) is not a contract violation: the contract-v2 exports shape
+            // can only be verified for a publisher that EXISTS. glass-ui itself
+            // (dir = ROOT) is always present, so an absent package.json there IS
+            // a real error; an absent SIBLING is a non-fatal skip (mirrors the
+            // consumer-config skip below — "no silent cap": log it).
+            if (pkg.dir !== ROOT) {
+                console.log(
+                    `[proof:resolution] publisher ${pkg.id} not checked out — sibling skip (CI-expected)`,
+                );
+                continue;
+            }
             violations.push({
                 repo: pkg.id,
                 file: "package.json",
