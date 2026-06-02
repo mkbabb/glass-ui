@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue";
-import { computed, ref, watch } from "vue";
+import { computed, ref, useId, watch } from "vue";
 import {
     HoverCardContent,
     HoverCardPortal,
@@ -95,6 +95,21 @@ const props = withDefaults(
          * as "inside the dock".
          */
         keepDockOpen?: boolean;
+        /**
+         * AQ.W6 — opt into the native `interestfor` + `popover="hint"` path
+         * when the browser supports interest invokers. Default `false` →
+         * reka-ui `HoverCard` (the unchanged default). When `true` AND the
+         * engine supports interest invokers, the trigger carries
+         * `interestfor` (an implicit anchor) and the panel renders as a
+         * `popover="hint"` top-layer surface driven by the `.glass-top-layer`
+         * grammar. When `true` but unsupported, it falls straight through to
+         * the reka-ui HoverCard — zero behaviour change.
+         *
+         * Baseline: `interest-invokers` + `popover-hint` = LIMITED →
+         * progressive-enhancement only; reka-ui stays the default path. No
+         * polyfill (substrate cannot drag one).
+         */
+        native?: boolean;
     }>(),
     {
         side: "top",
@@ -103,6 +118,7 @@ const props = withDefaults(
         closeDelay: 150,
         sideOffset: 6,
         keepDockOpen: false,
+        native: false,
     },
 );
 
@@ -112,6 +128,18 @@ const contentClass = computed(() =>
         props.class,
     ),
 );
+
+/* AQ.W6 — the native `interestfor` opt-in. Active ONLY when the consumer
+   passes `:native="true"` AND the engine supports interest invokers; otherwise
+   the component renders the reka-ui HoverCard default below (the kept path). */
+const SUPPORTS_INTEREST =
+    typeof HTMLButtonElement !== "undefined" &&
+    "interestForElement" in HTMLButtonElement.prototype;
+const useNative = computed(() => props.native && SUPPORTS_INTEREST);
+
+// A page-unique id wires the trigger's `interestfor` to the `popover="hint"`
+// panel (the implicit-anchor + invoker contract).
+const nativeId = `gl-hover-popover-${useId() ?? "0"}`;
 
 /* J.W3.B — dock-keep-open sink. Track open state via reka's
    `v-model:open`; while the popover is visible AND `keepDockOpen` is
@@ -136,6 +164,15 @@ watch(() => props.open, (next) => {
 watch(isOpen, (next) => {
     emit("update:open", next);
 });
+
+/* AQ.W6 native path — the `popover="hint"` panel's `toggle` event is the
+   open-state source (reka's `v-model:open` is not in play). Sync it into the
+   shared `isOpen` ref so the dock-keep-open watcher + `update:open` surface
+   fire identically on both paths. */
+function onNativeToggle(e: Event) {
+    const open = (e as ToggleEvent).newState === "open";
+    if (open !== isOpen.value) isOpen.value = open;
+}
 /* O.W2 Lane C — `dockId` + keep-open / release callables consolidated under
    the canonical typed-context helper. Outside a `<GlassDock>` the helper
    returns `null` and every `dock?.…` access is a no-op (befitting silent
@@ -167,7 +204,35 @@ const portalAttrs = computed(() =>
 </script>
 
 <template>
-    <HoverCardRoot v-model:open="isOpen" :open-delay="hoverOpenDelay" :close-delay="closeDelay">
+    <!-- AQ.W6 native path — `interestfor` trigger + `popover="hint"` panel.
+         Only rendered when `:native` is set AND the engine supports interest
+         invokers; the panel rides the `.glass-top-layer` grammar (§2). -->
+    <template v-if="useNative">
+        <span class="hover-popover-native-trigger" :interestfor="nativeId">
+            <slot name="trigger">
+                <slot />
+            </slot>
+        </span>
+        <div
+            :id="nativeId"
+            popover="hint"
+            :class="cn('glass-top-layer hover-popover-panel', props.class)"
+            v-bind="portalAttrs"
+            @toggle="onNativeToggle"
+        >
+            <slot name="content">
+                <span class="hover-popover-label">{{ content }}</span>
+            </slot>
+        </div>
+    </template>
+
+    <!-- Default (kept) path — reka-ui HoverCard. -->
+    <HoverCardRoot
+        v-else
+        v-model:open="isOpen"
+        :open-delay="hoverOpenDelay"
+        :close-delay="closeDelay"
+    >
         <HoverCardTrigger as-child>
             <slot name="trigger">
                 <slot />

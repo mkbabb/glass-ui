@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useTemplateRef } from "vue";
+import { computed, ref, useId, useTemplateRef } from "vue";
 import type { Component } from "vue";
 import { useOptionalDockContext } from "./composables/dockContext";
 import {
@@ -59,6 +59,23 @@ const { onTransitionEnd, currentLayer, leavingLayer } = useLayerTransition({
     axis,
 });
 
+/* AQ.W6 §Design 7 — on a View-Transitions engine the layer-stack size morph +
+   pane crossfade is owned by the browser (the `useLayerTransition` native fork);
+   give the stack a page-unique `view-transition-name` so it is captured, plus
+   the `.gl-dock-layer` group class for the `--vt-*` duration/ease. Set only when
+   supported, so the FLIP fallback path keeps its plain box. */
+const supportsVT =
+    typeof document !== "undefined" && "startViewTransition" in document;
+const vtId = useId();
+const stackVtStyle = computed<Record<string, string> | undefined>(() =>
+    supportsVT
+        ? {
+              "view-transition-name": `gl-dock-stack-${(vtId ?? "0").replace(/[^a-zA-Z0-9_-]/g, "-")}`,
+              "view-transition-class": "gl-dock-layer",
+          }
+        : undefined,
+);
+
 provideDockLayerGroupContext({
     register,
     unregister,
@@ -104,6 +121,7 @@ function isComponent(icon: unknown): icon is Component {
         <div
             ref="containerEl"
             class="dock-layer-stack"
+            :style="stackVtStyle"
             @transitionend="onTransitionEnd"
         >
             <slot />

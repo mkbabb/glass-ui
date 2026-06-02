@@ -44,6 +44,17 @@
 ::view-transition-new(.gl-list-item):only-child { animation-name: gl-vt-slide-in; }
 ::view-transition-old(.gl-list-item):only-child { animation-name: gl-vt-slide-out; }
 
+/* AQ.W6 §Design 7 — the dock layer group recipe. `<GlassDock>` (.dock-layers)
+ * and `<DockLayerGroup>` (.dock-layer-stack) carry `view-transition-class:
+ * gl-dock-layer` + a page-unique `view-transition-name` on a View-Transitions
+ * engine, so the collapsed↔expanded width + the layer-pane swap morph as a VT
+ * group instead of the JS FLIP. The `--dock-motion-resize` spring maps here to
+ * `--vt-ease`; both default to the apple-spring. PRM zeroes the animation above. */
+::view-transition-group(.gl-dock-layer) {
+    animation-duration: var(--vt-duration, var(--duration-normal));
+    animation-timing-function: var(--vt-ease, var(--ease-apple-spring));
+}
+
 @keyframes gl-vt-slide-in  { from { opacity: 0; translate: 0 var(--vt-rise, 8px); } }
 @keyframes gl-vt-slide-out { to   { opacity: 0; translate: 0 var(--vt-rise, 8px); } }
 

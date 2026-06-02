@@ -1,5 +1,6 @@
 import { ref, computed, watch, nextTick, onUnmounted } from "vue";
 import type { Ref } from "vue";
+import { startViewTransition } from "../../../../composables/motion/useViewTransition";
 
 export interface UseLayerTransitionOptions {
     /** The container element that owns the stacked layer panes. */
@@ -23,22 +24,37 @@ export interface UseLayerTransitionReturn {
 }
 
 /**
- * Coordinates simultaneous crossfade + FLIP size animation for
- * grid-stacked layer containers. Reusable at any nesting level.
+ * Coordinates the crossfade + size animation between grid-stacked dock layer
+ * panes. Reusable at any nesting level (the inner `<DockLayerGroup>` pair AND
+ * the outer GlassDock collapsed↔expanded pair).
  *
- * Algorithm on activeLayer change:
- * 1. Capture current container size
- * 2. Pin container to that size
- * 3. Swap classes: old layer → leaving (absolute, fading out),
- *    new layer → active (relative, fading in)
- * 4. nextTick: measure new natural size, re-pin to old
- * 5. Animate to new size via CSS transition
- * 6. On transitionend(size), clear inline size
+ * AQ.W6 §Design 7 — the swap FORKS on View-Transitions support:
+ *
+ * - **Native path** (`document.startViewTransition` present): the layer swap is
+ *   wrapped in `startViewTransition(() => mutate())`. The browser snapshots the
+ *   container + panes (tagged `view-transition-name` in `dock.css`) and morphs
+ *   the size + crossfades the pane content with ZERO `getBoundingClientRect`
+ *   reads. No pin/measure/re-pin dance, no inline size, no rAF.
+ *
+ * - **Fallback path** (no `startViewTransition`): the existing axis-aware FLIP
+ *   runs verbatim, KEPT as the sole feature-detected fallback (no alias — one
+ *   path or the other runs per swap, never both):
+ *   1. Capture current container size
+ *   2. Pin container to that size
+ *   3. Swap classes: old layer → leaving, new layer → active
+ *   4. nextTick: measure new natural size, re-pin to old
+ *   5. Animate to new size via CSS transition
+ *   6. On transitionend(size), clear inline size
  */
 export function useLayerTransition(
     options: UseLayerTransitionOptions,
 ): UseLayerTransitionReturn {
     const { containerEl, activeLayer, axis } = options;
+
+    // Forked once at composable construction — `startViewTransition` support is
+    // a stable engine capability, not a per-swap condition.
+    const NATIVE_VT =
+        typeof document !== "undefined" && "startViewTransition" in document;
 
     const dim = computed<"width" | "height">(() =>
         axis?.value === "vertical" ? "height" : "width",
@@ -96,6 +112,27 @@ export function useLayerTransition(
             return;
         }
 
+        // ── Native path (AQ.W6) — the browser owns the size morph + crossfade.
+        // Mutate the layer state synchronously inside `startViewTransition` (the
+        // callback snapshots old → new); ZERO getBoundingClientRect. The leaving
+        // pane is held painted for the duration of the snapshot transition, then
+        // cleared on `finished`. `view-transition-name` on the container + panes
+        // (set in `dock.css`) drives the morph.
+        if (NATIVE_VT) {
+            clearCleanup();
+            const id = ++transitionId;
+            const { finished } = startViewTransition(() => {
+                leavingLayer.value = oldLayer;
+                currentLayer.value = newLayer;
+            });
+            finished.finally(() => {
+                if (id !== transitionId) return;
+                leavingLayer.value = null;
+            });
+            return;
+        }
+
+        // ── Fallback path — the kept axis-aware FLIP (verbatim).
         clearCleanup();
         const id = ++transitionId;
 

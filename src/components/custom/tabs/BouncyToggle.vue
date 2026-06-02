@@ -61,6 +61,22 @@ const emit = defineEmits<{
 const containerRef = ref<HTMLElement | null>(null);
 const buttonRefs = ref<HTMLElement[]>([]);
 
+// AQ.W6 §Design 4b — the single-select slider is CSS anchor-positioned where
+// supported; the active button carries `anchor-name: --gl-toggle-active` and
+// `.bouncy-slider` tethers to it via `position-anchor` + `inset: anchor(...)`,
+// so the browser interpolates the slider between buttons with ZERO measure JS.
+//
+// `anchor-name` is single-target, so the MULTI-select path (N simultaneous
+// sliders) cannot be anchor-positioned — it KEEPS the JS measure path
+// (`updateMultiSliders` + the `ResizeObserver`) as its sole writer. Likewise a
+// non-anchor engine falls back to the JS single-slider writer. So the JS path
+// runs only on the multi-select OR `@supports not (anchor)` branch — never
+// double-running alongside the CSS anchor on the same element.
+const ANCHOR_SUPPORTED =
+    typeof CSS !== "undefined" &&
+    typeof CSS.supports === "function" &&
+    CSS.supports("position-anchor", "--x");
+
 // ── Computed state ──
 
 const isPill = computed(() => props.variant === "pill");
@@ -76,7 +92,13 @@ const activeValues = computed<string[]>(() => {
 
 const isActive = (value: string) => activeValues.value.includes(value);
 
-// ── Single-select slider style ──
+// True when the JS single-slider writer is the active path: single-select on a
+// non-anchor engine. (Single-select on an anchor engine → CSS owns it.)
+const jsSingleSlider = computed(() => !props.multiSelect && !ANCHOR_SUPPORTED);
+// True when ANY JS slider writer is live (so the RO/watchers attach at all).
+const jsSliderActive = computed(() => props.multiSelect || !ANCHOR_SUPPORTED);
+
+// ── Single-select slider style (JS fallback path only) ──
 
 const singleSliderStyle = ref<Record<string, string>>({
     width: "0px",
@@ -85,7 +107,7 @@ const singleSliderStyle = ref<Record<string, string>>({
 });
 
 function updateSingleSlider() {
-    if (props.multiSelect) return;
+    if (props.multiSelect || ANCHOR_SUPPORTED) return;
     const idx = props.options.findIndex((o) => o.value === (props.modelValue as string));
     if (idx < 0 || !buttonRefs.value[idx]) return;
     const btn = buttonRefs.value[idx];
@@ -184,16 +206,36 @@ function select(value: string, idx: number) {
     }
 }
 
-// ── Watchers ──
+// ── Watchers (JS slider path only) ──
+// On the anchor path the CSS `anchor-name` follows `aria-pressed` reactively,
+// so no watcher-driven re-measure is needed.
 
-watch(() => props.modelValue, () => nextTick(updateSliders), { deep: true });
-watch(() => props.options, () => nextTick(updateSliders), { deep: true });
+watch(
+    () => props.modelValue,
+    () => {
+        if (jsSliderActive.value) nextTick(updateSliders);
+    },
+    { deep: true },
+);
+watch(
+    () => props.options,
+    () => {
+        if (jsSliderActive.value) nextTick(updateSliders);
+    },
+    { deep: true },
+);
 
 // ── Lifecycle ──
+//
+// The `ResizeObserver` + the initial measure attach ONLY when a JS slider
+// writer is live (multi-select, or single-select on a non-anchor engine). On an
+// anchor-supporting single-select engine the CSS owns the slider position, so
+// no RO is constructed and no measure runs — the AQ.W6 listener-count win.
 
 let resizeObserver: ResizeObserver | null = null;
 
 onMounted(() => {
+    if (!jsSliderActive.value) return;
     nextTick(updateSliders);
     if (containerRef.value) {
         resizeObserver = new ResizeObserver(() => updateSliders());
@@ -216,11 +258,17 @@ onUnmounted(() => {
             props.class,
         )"
     >
-        <!-- Single-select slider -->
+        <!-- Single-select slider.
+             Anchor path → no inline `:style` (CSS `position-anchor` + `inset`
+             govern position, keyed off the active button's `anchor-name`).
+             Fallback path → the JS-measured `singleSliderStyle`. -->
         <div
             v-if="!multiSelect"
-            :class="isPill ? 'bouncy-slider bouncy-slider--pill' : 'bouncy-slider'"
-            :style="singleSliderStyle"
+            :class="[
+                isPill ? 'bouncy-slider bouncy-slider--pill' : 'bouncy-slider',
+                jsSingleSlider ? 'bouncy-slider--js' : 'bouncy-slider--anchor',
+            ]"
+            :style="jsSingleSlider ? singleSliderStyle : undefined"
         />
 
         <!-- Multi-select sliders (one per active value) -->
@@ -228,7 +276,10 @@ onUnmounted(() => {
             <div
                 v-for="value in activeValues"
                 :key="'slider-' + value"
-                :class="isPill ? 'bouncy-slider bouncy-slider--pill' : 'bouncy-slider'"
+                :class="[
+                    isPill ? 'bouncy-slider bouncy-slider--pill' : 'bouncy-slider',
+                    'bouncy-slider--js',
+                ]"
                 :style="multiSliderStyles[value] ?? { opacity: '0' }"
             />
         </template>
@@ -308,16 +359,52 @@ onUnmounted(() => {
     box-shadow:
         0 1px 3px rgba(0, 0, 0, 0.08),
         0 0 0 1px color-mix(in srgb, var(--border) 30%, transparent);
+}
+
+/* Fallback (JS-measured) path — the slider is moved by inline `transform`/
+   `width` writes; animate those. */
+.bouncy-slider--js {
     transition:
         transform var(--duration-normal) var(--spring-snappy),
         width var(--duration-normal) var(--spring-snappy),
         opacity var(--duration-fast) ease;
 }
 
+/* AQ.W6 anchor path — the slider tethers to the active button's `anchor-name`.
+   `inset` reads the anchor's edges (the `inset-block` trim is preserved by
+   adding the trim back onto the top/bottom anchor edges); the browser
+   interpolates `inset` between buttons on selection. */
+@supports (position-anchor: --x) {
+    .bouncy-slider--anchor {
+        position-anchor: --gl-toggle-active;
+        inset-block-start: calc(anchor(top) + 0.1875rem);
+        inset-block-end: calc(anchor(bottom) + 0.1875rem);
+        inset-inline-start: anchor(left);
+        inset-inline-end: anchor(right);
+        inset-block: auto;
+        opacity: 1;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+        .bouncy-slider--anchor {
+            transition: inset var(--duration-normal) var(--spring-snappy);
+        }
+    }
+    .bouncy-btn[aria-pressed="true"] {
+        anchor-name: --gl-toggle-active;
+    }
+}
+
 @media (min-width: 640px) {
     .bouncy-slider {
         inset-block: 0.25rem;
         border-radius: 0.375rem;
+    }
+    @supports (position-anchor: --x) {
+        .bouncy-slider--anchor {
+            inset-block-start: calc(anchor(top) + 0.25rem);
+            inset-block-end: calc(anchor(bottom) + 0.25rem);
+            inset-block: auto;
+        }
     }
 }
 
@@ -335,6 +422,12 @@ onUnmounted(() => {
     font-size: 0.8125rem;
     color: var(--muted-foreground);
     transition: color var(--duration-fast) ease;
+    /* AQ.W3 identity base — keep `scale:1; translate:0` so a hover/press
+       transform never mints a stacking context that severs `anchor()`
+       resolution for the slider (the WAAPI press bounce writes `transform`
+       transiently, which is harmless to the anchor box itself). */
+    scale: 1;
+    translate: 0;
 }
 
 @media (min-width: 640px) {

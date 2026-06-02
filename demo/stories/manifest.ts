@@ -91,6 +91,7 @@ export const CATEGORIES: Category[] = [
             s("foundations", "overlays-scrims", "Overlays & Scrims", "Three scrim weights + ModalOverlay + motion / lift offsets."),
             s("foundations", "chart-chassis-palette", "Chart & Chassis Palette", "Chart aliases (ping / download / upload / jitter) + chassis-tier opacities + specular tokens."),
             s("foundations", "paper-backdrop-texture-system", "Paper Backdrop Texture System", "`<PaperBackdrop>` frequency register (clean / aged) + cascade-overridable --paper-* tokens (P.W3 Lane C)."),
+            s("foundations", "native-top-layer", "Native Top-Layer", "AQ.W6 pilots — native `<dialog>` + `commandfor` + `.glass-top-layer`; `HoverPopover :native` interestfor opt-in; capability probe."),
         ],
     },
     {

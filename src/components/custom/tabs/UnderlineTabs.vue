@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, onUnmounted, nextTick, type HTMLAttributes } from "vue";
+import { type HTMLAttributes } from "vue";
 import { cn } from "../../../utils";
 
 export interface TabOption {
@@ -17,52 +17,24 @@ const emit = defineEmits<{
     "update:modelValue": [value: string];
 }>();
 
-const containerRef = ref<HTMLElement | null>(null);
-const buttonRefs = ref<HTMLElement[]>([]);
-const underlineStyle = ref<Record<string, string>>({
-    width: "0px",
-    transform: "translateX(0px)",
-});
-
-function updateUnderline() {
-    const idx = props.options.findIndex((o) => o.value === props.modelValue);
-    if (idx < 0 || !buttonRefs.value[idx]) return;
-    const btn = buttonRefs.value[idx];
-    underlineStyle.value = {
-        width: `${btn.offsetWidth}px`,
-        transform: `translateX(${btn.offsetLeft}px)`,
-    };
-}
-
+// AQ.W6 §Design 4a — the underline is CSS anchor-positioned, not JS-measured.
+// The active tab is `anchor-name: --gl-tab-active`; the `.underline-tabs::before`
+// pseudo tethers to it via `position-anchor` + `anchor()`, and the browser
+// interpolates `inset` between anchors on selection. The prior per-frame
+// offset-FLIP (`updateUnderline` + a `ResizeObserver` + two watchers +
+// `onMounted`/`onUnmounted` + `nextTick`) is RETIRED — the static
+// `border-bottom` under `@supports not (position-anchor: --x)` is the sole
+// feature-detected fallback (never both live). No JS, no reflow, no nextTick.
 function select(value: string) {
     emit("update:modelValue", value);
 }
-
-watch(() => props.modelValue, () => nextTick(updateUnderline));
-watch(() => props.options, () => nextTick(updateUnderline), { deep: true });
-
-let resizeObserver: ResizeObserver | null = null;
-
-onMounted(() => {
-    nextTick(updateUnderline);
-    if (containerRef.value) {
-        resizeObserver = new ResizeObserver(() => updateUnderline());
-        resizeObserver.observe(containerRef.value);
-    }
-});
-
-onUnmounted(() => {
-    resizeObserver?.disconnect();
-});
 </script>
 
 <template>
-    <div ref="containerRef" role="tablist" :class="cn('underline-tabs', props.class)">
-        <div class="underline-indicator" :style="underlineStyle" />
+    <div role="tablist" :class="cn('underline-tabs', props.class)">
         <button
-            v-for="(option, idx) in options"
+            v-for="option in options"
             :key="option.value"
-            :ref="(el) => { if (el) buttonRefs[idx] = el as HTMLElement }"
             class="underline-tab"
             role="tab"
             :aria-selected="modelValue === option.value ? 'true' : 'false'"
@@ -80,16 +52,41 @@ onUnmounted(() => {
     gap: 0.25rem;
 }
 
-.underline-indicator {
+/* The active tab is the anchor the indicator tethers to. */
+.underline-tab[aria-selected="true"] {
+    anchor-name: --gl-tab-active;
+}
+
+/* Indicator pseudo-element, position-anchored to the active tab. The browser
+   interpolates `inset` between anchors on selection — no JS measure path. */
+.underline-tabs::before {
+    content: "";
     position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 2px;
+    position-anchor: --gl-tab-active;
+    inset-block-start: calc(anchor(bottom) - 2px);
+    inset-inline-start: anchor(left);
+    inset-inline-end: anchor(right);
+    block-size: 2px;
     background: var(--foreground);
     border-radius: var(--radius-sm);
-    transition:
-        transform var(--duration-normal) var(--ease-apple-spring),
-        width var(--duration-normal) var(--ease-apple-spring);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .underline-tabs::before {
+        transition: inset var(--duration-normal) var(--ease-apple-spring);
+    }
+}
+
+/* Fallback ladder — static underline when anchor positioning is absent. The
+   indicator pseudo is suppressed and the active tab grows a plain bottom border
+   (the sole fallback; the JS FLIP path is retired, not kept-as-dead). */
+@supports not (position-anchor: --x) {
+    .underline-tabs::before {
+        display: none;
+    }
+    .underline-tab[aria-selected="true"] {
+        border-bottom: 2px solid var(--foreground);
+    }
 }
 
 .underline-tab {
@@ -104,6 +101,11 @@ onUnmounted(() => {
     color: var(--muted-foreground);
     transition: color var(--duration-normal) var(--ease-standard);
     border-radius: 0.25rem;
+    /* AQ.W3 identity base — a hover-minted stacking context would break
+       `anchor()` resolution for the indicator. Keep `scale:1; translate:0` so a
+       transformed hover never severs the anchor tether. */
+    scale: 1;
+    translate: 0;
 }
 
 .underline-tab:hover {

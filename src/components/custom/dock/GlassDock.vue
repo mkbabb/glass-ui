@@ -168,6 +168,24 @@ const { onTransitionEnd: onLayersTransitionEnd } = useLayerTransition({
     axis: outerLayerAxis,
 });
 
+/* AQ.W6 §Design 7 — when View-Transitions are supported, the outer
+   collapsed↔expanded width swap morphs as a VT group instead of the JS FLIP.
+   A per-instance `view-transition-name` (page-unique via `dockId`) lets the
+   browser capture + interpolate the `.dock-layers` box; `view-transition-class`
+   binds the `.gl-dock-layer` group recipe (duration/ease from `--vt-*`). The
+   name is set ONLY on a supporting engine, so the FLIP-fallback path is never
+   given a containing-block/isolation it does not need. */
+const supportsVT =
+    typeof document !== "undefined" && "startViewTransition" in document;
+const layersVtStyle = computed<Record<string, string> | undefined>(() =>
+    supportsVT
+        ? {
+              "view-transition-name": dockId.replace(/[^a-zA-Z0-9_-]/g, "-"),
+              "view-transition-class": "gl-dock-layer",
+          }
+        : undefined,
+);
+
 function parseTimeMs(value: string): number {
     const trimmed = value.trim();
     if (!trimmed) return 0;
@@ -302,7 +320,12 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
             no nested grid.
         -->
         <template v-if="orientation === 'horizontal'">
-            <div ref="layersEl" class="dock-layers" @transitionend="onLayersTransitionEnd">
+            <div
+                ref="layersEl"
+                class="dock-layers"
+                :style="layersVtStyle"
+                @transitionend="onLayersTransitionEnd"
+            >
                 <div
                     :class="['dock-layer dock-layer--full', { 'layer-active': visualExpanded }]"
                     :inert="!expanded || undefined"
