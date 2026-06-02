@@ -95,8 +95,9 @@ const stateAttr = computed(() => (internalOpen.value ? "open" : "closed"));
 </script>
 
 <template>
+    <!-- No per-section radius: rounding is owned at the container root clip (Configurator.vue rounded-panel + overflow-hidden); flush sections keep straight border-b dividers — a per-section radius only deforms the hairline on a transparent border-only element. -->
     <div
-        :class="cn('configurator-layer rounded-panel border-b border-border/40 last:border-b-0', props.class)"
+        :class="cn('configurator-layer border-b border-border/40 last:border-b-0', props.class)"
         :data-state="stateAttr"
     >
         <button
@@ -104,13 +105,6 @@ const stateAttr = computed(() => (internalOpen.value ? "open" : "closed"));
             :class="
                 cn(
                     'configurator-layer-trigger',
-                    // rounded-panel: the trigger's hover/focus fill follows the
-                    // section's panel geometry rather than reading as a squared
-                    // bar — the rounding is owned at the section root by default
-                    // (see Configurator.vue: the outer clip is rounded-panel too,
-                    // so stacked sections are rounded top-to-bottom, not just at
-                    // the outer container).
-                    'rounded-panel',
                     'group flex w-full items-center justify-between gap-2 px-3 py-2',
                     'text-left transition-colors hover:bg-foreground/5 focus-ring',
                 )
@@ -142,10 +136,12 @@ const stateAttr = computed(() => (internalOpen.value ? "open" : "closed"));
             race. Matches the reka-ui `data-state` vocabulary so existing
             consumer CSS (chevron rotate, etc.) keeps working.
         -->
+        <!-- inert pulls the collapsed subtree from tab order + a11y tree—the aria-hidden-focus closure -->
         <div
             :id="bodyId"
             role="region"
             :aria-hidden="!internalOpen"
+            :inert="!internalOpen"
             :data-state="stateAttr"
             class="configurator-layer-region grid transition-[grid-template-rows] duration-200 ease-out motion-reduce:transition-none"
             :style="{ gridTemplateRows: internalOpen ? '1fr' : '0fr' }"

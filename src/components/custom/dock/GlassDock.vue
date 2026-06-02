@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, useId, useTemplateRef, watch } from "vue";
 import { useTouchGate } from "../../../composables/dom/useTouchGate";
 import { provideDockContext } from "./composables/dockContext";
 import { useDockState } from "./composables/useDockState";
 import { useLayerTransition } from "./composables/useLayerTransition";
 
 type DockDensity = "compact" | "comfortable" | "spacious" | "audacious";
-let dockInstanceId = 0;
 
 const props = withDefaults(
     defineProps<{
@@ -109,7 +108,7 @@ const fitContent = computed(() =>
 
 const isTransitioning = ref(false);
 const touchGate = useTouchGate(props.collapseDelay);
-const dockId = `glass-dock-${++dockInstanceId}`;
+const dockId = `glass-dock-${useId()}`;
 let transitionTimer: ReturnType<typeof setTimeout> | null = null;
 
 const {
@@ -170,11 +169,13 @@ const { onTransitionEnd: onLayersTransitionEnd } = useLayerTransition({
 
 /* AQ.W6 §Design 7 — when View-Transitions are supported, the outer
    collapsed↔expanded width swap morphs as a VT group instead of the JS FLIP.
-   A per-instance `view-transition-name` (page-unique via `dockId`) lets the
-   browser capture + interpolate the `.dock-layers` box; `view-transition-class`
-   binds the `.gl-dock-layer` group recipe (duration/ease from `--vt-*`). The
-   name is set ONLY on a supporting engine, so the FLIP-fallback path is never
-   given a containing-block/isolation it does not need. */
+   A per-instance `view-transition-name` lets the browser capture + interpolate
+   the `.dock-layers` box; `view-transition-class` binds the `.gl-dock-layer`
+   group recipe (duration/ease from `--vt-*`). `dockId` is minted from Vue's
+   app-scoped `useId()` — collision-free across lazy/eager module-graph copies,
+   the same idiom as `<DockLayerGroup>`. The name is set ONLY on a supporting
+   engine, so the FLIP-fallback path is never given a containing-block/isolation
+   it does not need. */
 const supportsVT =
     typeof document !== "undefined" && "startViewTransition" in document;
 const layersVtStyle = computed<Record<string, string> | undefined>(() =>

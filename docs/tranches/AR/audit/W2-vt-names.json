@@ -1,0 +1,36 @@
+{
+  "generatedAt": "2026-06-02T21:25:18.959Z",
+  "status": "pass",
+  "command": "npm run proof:vt-names",
+  "mints": [
+    {
+      "file": "src/components/custom/dock/DockLayerGroup.vue",
+      "line": 73,
+      "kind": "js-dynamic",
+      "source": "`gl-dock-stack-${(vtId ?? \"0\").replace(/[^a-zA-Z0-9_-]/g",
+      "verdict": "pass"
+    },
+    {
+      "file": "src/components/custom/dock/GlassDock.vue",
+      "line": 184,
+      "kind": "js-dynamic",
+      "source": "dockId.replace(/[^a-zA-Z0-9_-]/g",
+      "verdict": "pass"
+    },
+    {
+      "file": "src/components/custom/tabs/BouncyToggle.vue",
+      "line": 393,
+      "kind": "css-static",
+      "source": "--gl-toggle-active",
+      "verdict": "pass"
+    },
+    {
+      "file": "src/components/custom/tabs/UnderlineTabs.vue",
+      "line": 57,
+      "kind": "css-static",
+      "source": "--gl-tab-active",
+      "verdict": "pass"
+    }
+  ],
+  "violations": []
+}

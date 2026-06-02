@@ -27,7 +27,7 @@ jobs:
             - uses: actions/checkout@v4
             - uses: actions/setup-node@v4
               with:
-                  node-version: 20
+                  node-version: 24
             - run: npm ci
             - name: typecheck
               run: npm run typecheck
@@ -72,3 +72,5 @@ jobs:
             # the substrate or its demo?" question.
             - name: proof:phantom-classes
               run: npm run proof:phantom-classes
+            - name: proof:vt-names
+              run: npm run proof:vt-names
