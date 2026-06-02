@@ -80,7 +80,11 @@ function collectExports(filePath, seen = new Set()) {
     if (seen.has(resolved) || !existsSync(resolved)) return new Set();
     seen.add(resolved);
 
-    const source = readFileSync(resolved, "utf8");
+    // Comment-strip BEFORE scanning: a commented example of an export directive
+    // (e.g. `src/index.ts`'s `// NOT `export * from "./composables/motion/core"``)
+    // must not be followed as a real re-export — the AP.W4 false-witness class
+    // (bb4e79b) applied to the root-surface collector, not just the consumer scan.
+    const source = stripComments(readFileSync(resolved, "utf8"));
     const exports = new Set();
 
     for (const match of source.matchAll(/export\s+\*\s+from\s+["']([^"']+)["']/g)) {
@@ -111,7 +115,8 @@ function unionExports(files) {
 // The intended root-barrel contract — the exact per-package sources `src/index.ts`
 // re-exports. Drift between this list and `src/index.ts` is the surface-creep this
 // proof guards. The dark/ + keyboard/ + motion/ sub-trees are subpath-only (vueuse-
-// or keyframes.js-bearing, SCC-trap closure) and are deliberately absent here.
+// or keyframes.js-bearing, SCC-trap closure) and are deliberately absent here — save
+// the dependency-free View-Transitions trio, allowed explicitly below (AQ.W5).
 const rootContractFiles = [
     "src/components/ui/index.ts",
     // The 7 cherry-picked custom/ packages on the root barrel.
@@ -130,6 +135,27 @@ const rootContractFiles = [
     "src/utils/index.ts",
 ].map((file) => resolve(root, file));
 const rootAllowed = unionExports(rootContractFiles);
+// AQ.W5 §Design 3 — the View-Transitions substrate is the ONE motion symbol set
+// deliberately re-exported to the root barrel, via a TARGETED
+// `export { … } from "./composables/motion/useViewTransition"` (dependency-free —
+// no vue, no keyframes.js, no vueuse — so SCC-trap-safe on the curated root). The
+// whole-file contract above cannot express a partial (3-of-N) re-export, so the
+// trio is allowed explicitly here.
+for (const name of ["startViewTransition", "supportsViewTransitions", "ViewTransitionResult"]) {
+    rootAllowed.add(name);
+}
+// L.W1 SCC-trap closure — the 4 vueuse-bearing ui families (input/, textarea/,
+// combobox/, carousel/) are subpath-only (`/forms`, `/carousel`): the curated root
+// barrel re-exports the 37 vueuse-FREE ui packages but NOT these. The `ui/index.ts`
+// contract above is the FULL barrel (it includes them), so subtract their exports
+// from rootAllowed to match the curated, vueuse-free root surface.
+const subpathOnlyUiFiles = [
+    "src/components/ui/input/index.ts",
+    "src/components/ui/textarea/index.ts",
+    "src/components/ui/combobox/index.ts",
+    "src/components/ui/carousel/index.ts",
+].map((file) => resolve(root, file));
+for (const name of unionExports(subpathOnlyUiFiles)) rootAllowed.delete(name);
 const actualRootExports = collectExports(resolve(root, "src/index.ts"));
 const unexpectedRootExports = [...actualRootExports]
     .filter((name) => !rootAllowed.has(name))
