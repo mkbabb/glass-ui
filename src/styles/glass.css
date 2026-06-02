@@ -231,10 +231,58 @@
         color: var(--surface-tint-35);
     }
 
-    .input-pill:focus {
+    /* AQ.W4 §W4.6 — keyboard-focus ring only. Was bare `:focus` (showed the
+       accent ring on a mouse click); `:focus-visible` matches the
+       `.focus-ring` / `.glass-btn` / dock-control discipline. Ordered BEFORE
+       the `:user-invalid` rungs so an invalid focused field shows destructive,
+       not accent (the `:user-invalid:focus-visible` rule below wins by order +
+       specificity). `:focus-visible` Baseline Widely — no fallback. */
+    .input-pill:focus-visible {
         outline: none;
         border-color: var(--color-accent-opaque, var(--ring));
         box-shadow: 0 0 0 2px var(--color-accent, color-mix(in srgb, var(--ring) 30%, transparent));
+    }
+
+    /* AQ.W4 §W4.1 — validity vocabulary on `.input-pill` (Input + Textarea).
+       The forgiving `:where(:user-invalid, .user-invalid-fallback)` group is
+       ONE rule covering native + the `useUserInvalidAria` fallback class (css
+       §3.2; NOT a live+dead alias — the class is the SOLE fallback for engines
+       without `:user-invalid`). The destructive/success tints reuse the
+       semantic tokens via `color-mix` per the house pattern (W2). Non-color
+       reinforcement is the error TEXT (W4.5 `error` slot) + the `required`
+       asterisk — the border/bg shift is the supplementary cue, never the sole
+       one. `:user-valid` is intentionally subtle (border only, no bg fill) so
+       a long valid form is not a wall of green. */
+    .input-pill:where(:user-invalid, .user-invalid-fallback) {
+        border-color: var(--destructive);
+        background: color-mix(in srgb, var(--destructive) 8%, var(--glass-bg-quiet));
+    }
+    .input-pill:where(:user-valid, .user-valid-fallback) {
+        border-color: var(--success);
+    }
+    /* Invalid + keyboard-focused → destructive ring (overrides the accent
+       `:focus-visible` ring above by order + the extra `:user-invalid`
+       compound). */
+    .input-pill:where(:user-invalid, .user-invalid-fallback):focus-visible {
+        border-color: var(--destructive);
+        box-shadow: 0 0 0 var(--focus-ring-width)
+            color-mix(in srgb, var(--destructive) 35%, transparent);
+    }
+
+    /* AQ.W4 §W4.3 — `field-sizing: content` autosize (opt-in via the Textarea
+       `autosize` prop → `[data-autosize]`). The textarea grows vertically with
+       content between a 3-line floor and a token-driven ceiling, then scrolls.
+       `field-sizing` Baseline Newly (Chromium 2024) — on a non-supporting
+       engine the declaration is ignored and the element keeps the
+       `min/max-block-size` bounds + standard scroll (no JS, no `@supports`,
+       no grid-mirror polyfill). The fixed-size path (default, `min-h-20`) is
+       the unchanged no-op fallback. */
+    .input-pill[data-autosize] {
+        field-sizing: content;
+        width: 100%;
+        min-block-size: 3lh;
+        max-block-size: var(--textarea-autosize-max, 12lh);
+        resize: vertical;
     }
 
     .input-pill:disabled {

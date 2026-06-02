@@ -1,11 +1,21 @@
 <template>
-    <LabeledField :label="label" :tooltip="tooltip" :label-class="labelClass">
-        <Input
-            :type="type ?? 'string'"
-            :class="inputClass ?? 'fira-code'"
-            :model-value="modelValue"
-            @change="(e: Event) => emit('update:modelValue', (e.target as HTMLInputElement).value)"
-        />
+    <LabeledField
+        :label="label"
+        :tooltip="tooltip"
+        :label-class="labelClass"
+        :required="required"
+    >
+        <template #default="{ errorId }">
+            <Input
+                :type="type ?? 'string'"
+                :class="inputClass ?? 'fira-code'"
+                :model-value="modelValue"
+                :required="required"
+                :aria-errormessage="$slots.error ? errorId : undefined"
+                @change="(e: Event) => emit('update:modelValue', (e.target as HTMLInputElement).value)"
+            />
+        </template>
+        <template v-if="$slots.error" #error><slot name="error" /></template>
     </LabeledField>
 </template>
 
@@ -20,6 +30,12 @@ defineProps<{
     labelClass?: string;
     inputClass?: string;
     type?: string;
+    /**
+     * AQ.W4 §W4.5 — mark the field required. Threads the `aria-hidden`
+     * asterisk onto the label AND sets the native `required` attribute on the
+     * inner `<Input>` (the semantic carrier that drives `:user-invalid`).
+     */
+    required?: boolean;
 }>();
 
 const emit = defineEmits<{

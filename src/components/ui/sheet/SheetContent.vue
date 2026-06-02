@@ -119,6 +119,7 @@ const dragHandlers = computed(() =>
         class="focus-ring absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 disabled:pointer-events-none data-[state=open]:bg-secondary"
       >
         <X class="w-4 h-4 text-muted-foreground" />
+        <span class="sr-only">Close</span>
       </DialogClose>
     </DialogContent>
   </DialogPortal>

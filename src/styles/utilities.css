@@ -45,8 +45,47 @@
     .labeled-field-label {
         font-family: var(--font-display);
         font-size: var(--type-body);
-        color: var(--muted-foreground);
+        /* AQ.W4 §W3.1c — the label color reads the group-state variable so the
+           `:has(:user-invalid)` rule below reddens it (one source of the
+           override value, shared with the `.has-error` fallback class). */
+        color: var(--field-label-color, var(--muted-foreground));
         cursor: help;
+    }
+
+    /* AQ.W4 §W3.1c — LabeledField group error highlight. When any descendant
+       control is `:user-invalid`, the whole field group marks (the label
+       reddens via `--field-label-color`, the error region reveals). Scoped to
+       `.labeled-field` — never `body`, never a bare element. `:has()` Baseline
+       Widely; the `.has-error` / `.has-valid` fallback classes (toggled by the
+       `useUserInvalidAria` fallback path) are the SOLE degradation for engines
+       without `:has()`/`:user-invalid` (not a live+dead alias). */
+    .labeled-field {
+        --field-label-color: var(--muted-foreground);
+    }
+    .labeled-field:has(:user-invalid),
+    .labeled-field.has-error {
+        --field-label-color: var(--destructive);
+    }
+
+    /* The error region: hidden at rest, revealed once a descendant is
+       `:user-invalid` (or the `.has-error` fallback class is set). Non-color
+       reinforcement for the validity tint — the error TEXT is the primary
+       cue, the border/bg shift the supplement (forms guide: never color
+       alone). */
+    .labeled-field-error {
+        display: none;
+        font-size: var(--type-small);
+        color: var(--destructive);
+        margin-block-start: 0.25rem;
+    }
+    .labeled-field:has(:user-invalid) .labeled-field-error,
+    .labeled-field.has-error .labeled-field-error {
+        display: block;
+    }
+    /* Hide the error text once the field reads valid (the user corrected it). */
+    .labeled-field:has(:user-valid) .labeled-field-error,
+    .labeled-field.has-valid .labeled-field-error {
+        display: none;
     }
 
     /* ── Popover-content recipe (V.W3.T3 / A5 §3.2) ─────────────────

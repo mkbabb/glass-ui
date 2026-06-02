@@ -107,6 +107,7 @@ export const CATEGORIES: Category[] = [
             s("primitives", "expandable-container", "Expandable Container", "In-place vs Teleport-to-body fullscreen with body-overflow lock-depth."),
             s("primitives", "icon-tooltip", "Icon Tooltip", "Auto-provider tooltip for label co-location with display typography baked in."),
             s("primitives", "labeled-field", "Labeled Field", "Parent SFC + 4 wrappers (Input · Select · Slider · Switch) with shared IconTooltip label."),
+            s("primitives", "form-validation", "Form Validation", ":user-invalid / :user-valid rungs + useUserInvalidAria aria-invalid bridge + required asterisk + error slot + Textarea autosize (AQ.W4)."),
             s("primitives", "paper-backdrop", "Paper Backdrop", "Paper-grain texture substrate, two frequencies (clean / aged) + opacity knob."),
             s("primitives", "stacked-icons", "Stacked Icons", "Overlapping icon stack with maxVisible / +N overflow; size axis only."),
             s("primitives", "toggle-chip", "Toggle Chip", "chip vs cell variants over a reka-ui Toggle root; aria-pressed semantics."),

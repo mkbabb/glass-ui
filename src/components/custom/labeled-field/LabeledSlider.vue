@@ -1,5 +1,10 @@
 <template>
-    <LabeledField :label="label" :tooltip="tooltip" :label-class="labelClass">
+    <LabeledField
+        :label="label"
+        :tooltip="tooltip"
+        :label-class="labelClass"
+        :required="required"
+    >
         <Slider
             class="py-2"
             :min="min"
@@ -23,6 +28,8 @@ defineProps<{
     min: number;
     max: number;
     step: number;
+    /** AQ.W4 §W4.5 — thread the required-field asterisk onto the label. */
+    required?: boolean;
 }>();
 
 const emit = defineEmits<{

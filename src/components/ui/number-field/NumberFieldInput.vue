@@ -4,6 +4,11 @@
 // This lands the accessible-name attrs (aria-label / aria-labelledby) on the
 // focusable input (gap 4, AM.W0.2) without dropping the other attrs
 // (placeholder / id / listeners) that a cherry-picked forward would discard.
+//
+// AQ.W4 §W4.2 — `inputmode="decimal"` is supplied as the DEFAULT (before
+// `v-bind="$attrs"` so a consumer override wins). reka-ui NumberField supports
+// fractional/negative values, so `decimal` surfaces the decimal point on
+// mobile keyboards; an integer-only consumer passes `inputmode="numeric"`.
 export default { inheritAttrs: false }
 </script>
 
@@ -14,6 +19,7 @@ import { cn } from '../../../utils'
 
 <template>
   <NumberFieldInput
+    inputmode="decimal"
     v-bind="$attrs"
     data-slot="input"
     :class="cn('focus-ring flex h-10 w-full rounded-input border border-input bg-background py-2 text-sm text-center placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-disabled')"

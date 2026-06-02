@@ -1,5 +1,10 @@
 <template>
-    <LabeledField :label="label" :tooltip="tooltip" :label-class="labelClass">
+    <LabeledField
+        :label="label"
+        :tooltip="tooltip"
+        :label-class="labelClass"
+        :required="required"
+    >
         <Select
             :model-value="modelValue"
             :open="isOpen"
@@ -49,6 +54,8 @@ defineProps<{
     label: string;
     tooltip: string;
     labelClass?: string;
+    /** AQ.W4 §W4.5 — thread the required-field asterisk onto the label. */
+    required?: boolean;
 }>();
 
 const emit = defineEmits<{

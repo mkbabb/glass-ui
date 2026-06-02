@@ -229,6 +229,18 @@ export type {
     UseClipboardReturn,
 } from "../composables/dom/useClipboard";
 
+// ── User-invalid ARIA bridge ─────────────────────────────────────────────────
+// `UseUserInvalidAriaReturn` — canonical composable-return shape (the `{ bind }`
+// handle) paralleling `UseClipboardReturn`. `UseUserInvalidAriaOptions` ships
+// paired so a consumer wrapping `useUserInvalidAria` (e.g. a form-shell factory)
+// can forward the `fallbackClasses` knob. Promoted AQ.W4 — the cross-repo
+// coupling contract muster J.W6/J.W7 consume; J pins the return shape when
+// typing its form-bridge wiring against the published discovery layer.
+export type {
+    UseUserInvalidAriaOptions,
+    UseUserInvalidAriaReturn,
+} from "../composables/dom/useUserInvalidAria";
+
 // ── HeaderRibbon ───────────────────────────────────────────────────────────
 // `HeaderRibbonProps` — props shape consumers forward when wrapping
 // `<HeaderRibbon>` (e.g. domain-themed header strips). `HeaderRibbonPosition`

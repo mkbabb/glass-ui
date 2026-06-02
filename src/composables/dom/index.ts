@@ -13,6 +13,11 @@
 //   - useIdleReady     — requestIdleCallback (+ setTimeout fallback) post-mount
 //                        idle gate; rIC-sibling of useViewportReady, no viewport
 //                        stage (AO.W3; speedtest 5-site promotion).
+//   - useUserInvalidAria — `:user-invalid` → `aria-invalid` blur-bridge; keeps
+//                        the screen-reader validity state in step with the
+//                        native visual state, with a fallback class-toggle for
+//                        engines without `:user-invalid` (AQ.W4; the muster J
+//                        cross-repo coupling contract).
 export * from "./useResizeObserver";
 export * from "./useTouchGate";
 export * from "./useTokenColor";
@@ -20,3 +25,4 @@ export * from "./useClipboard";
 export * from "./useViewportReady";
 export * from "./useBreakpoint";
 export * from "./useIdleReady";
+export * from "./useUserInvalidAria";
