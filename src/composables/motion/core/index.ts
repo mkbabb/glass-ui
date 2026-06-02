@@ -22,3 +22,9 @@ export * from "../useStagger";
 // the engine-free `/motion-core` surface alongside `useRAFLoop` (its companion
 // for the chunked-work case) — NOT on the keyframes-bearing `/motion` barrel.
 export * from "../useYieldToMain";
+// AQ.W5 §Design 3 — the View-Transitions motion substrate (the cross-repo
+// coupling contract muster J.W5 consumes). Dependency-free (no `vue`, no
+// `@mkbabb/keyframes.js`, no `@vueuse/core`), so it ships on the engine-free
+// `/motion-core` surface — and, being heavy-peer-free, it is also root-barrel
+// safe (re-exported from the root barrel below for broad reach).
+export * from "../useViewTransition";

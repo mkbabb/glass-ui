@@ -166,5 +166,18 @@ export * from "./composables/dom";
 export * from "./composables/glass";
 export * from "./composables/sortable";
 
+// AQ.W5 §Design 3 — the View-Transitions motion substrate. Dependency-free
+// (no `vue`, no `@mkbabb/keyframes.js`, no `@vueuse/core`), so it is safe on
+// the vueuse-/keyframes-FREE root barrel — re-exported here for BROAD reach
+// (the cross-repo coupling contract muster J.W5 consumes; also reachable via
+// the `@mkbabb/glass-ui/motion-core` subpath). A targeted re-export, NOT
+// `export * from "./composables/motion/core"`, so the keyframes-free-but-
+// barrel-excluded scroll/RAF/stagger leaves stay off the root walk.
+export {
+    startViewTransition,
+    supportsViewTransitions,
+    type ViewTransitionResult,
+} from "./composables/motion/useViewTransition";
+
 // Core utilities
 export * from "./utils";

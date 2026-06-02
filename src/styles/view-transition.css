@@ -1,0 +1,51 @@
+/*
+ * view-transition.css — the View-Transitions CSS substrate (AQ.W5 §Design 3b).
+ *
+ * Cascade rung after scroll-driven.css. Token-first shared-class recipes for the
+ * group-transition case — the substrate the `useViewTransition` helper
+ * (`@mkbabb/glass-ui/motion-core`) pairs with. The helper wraps the DOM
+ * mutation; this CSS owns the LOOK of the cross-fade/slide. The consumer adds
+ * `view-transition-class: gl-list-item` plus a UNIQUE `view-transition-name`
+ * per tracked element (the runtime MANDATORY — ≤ 1 element per name per state,
+ * else the transition is skipped silently).
+ *
+ * Consumed across the AQ↔muster J seam: J.W5's verdict re-rank tags each row
+ * `view-transition-class: gl-list-item; view-transition-name: row-<id>` and
+ * calls `startViewTransition(() => render())`; the dock layer swap (W6) reuses
+ * the same group recipe.
+ *
+ * Baseline: same-document `view-transitions` + `view-transition-class` = Newly
+ * Available. The helper's instant-update fallback (calls `mutate()` synchronously
+ * when `document.startViewTransition` is absent) is the ≤ 20-LOC feature-detected
+ * fallback — no CSS counterpart is needed because a non-supporting engine simply
+ * never generates the `::view-transition*` pseudo tree.
+ *
+ * Reduced-motion: `animation: none` on every VT pseudo. The native swap still
+ * runs (state mutates instantly), just without motion — the correct PRM degrade.
+ */
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
+    }
+}
+
+/* Shared group class — consumers add `view-transition-class: gl-list-item` on
+ * each tracked element plus a unique `view-transition-name` per element. */
+::view-transition-group(.gl-list-item) {
+    animation-duration: var(--vt-duration, var(--duration-normal));
+    animation-timing-function: var(--vt-ease, var(--ease-apple-spring));
+}
+
+/* Added / removed members — the `:only-child` trick from the group guide: a
+ * member present in only ONE of the old/new states slides instead of cross-fades. */
+::view-transition-new(.gl-list-item):only-child { animation-name: gl-vt-slide-in; }
+::view-transition-old(.gl-list-item):only-child { animation-name: gl-vt-slide-out; }
+
+@keyframes gl-vt-slide-in  { from { opacity: 0; translate: 0 var(--vt-rise, 8px); } }
+@keyframes gl-vt-slide-out { to   { opacity: 0; translate: 0 var(--vt-rise, 8px); } }
+
+/* Keep the non-transitioned UI interactive while the snapshot animates. */
+::view-transition { pointer-events: none; }

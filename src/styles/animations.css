@@ -296,3 +296,80 @@
         animation: none;
     }
 }
+
+/* ── §TOP-LAYER ENTRY/EXIT (AQ.W5 §Design 2) ───────────────────────────────
+ *
+ * A pure-CSS entry/exit grammar for NATIVE top-layer surfaces — `[popover]`
+ * elements and native `<dialog>` — keyed off `:popover-open` / `dialog[open]`,
+ * plus a glass `::backdrop`. This replaces the per-frame inline-style entry the
+ * platform now owns: `@starting-style` + `transition` + `transition-behavior:
+ * allow-discrete` + `overlay`.
+ *
+ * SCOPE: this applies ONLY to elements tagged `.glass-top-layer`. It does NOT
+ * touch reka-ui's portaled overlays — those keep their `tw-animate-css`
+ * data-state fade (distinct selectors, no cascade fight, mirroring the
+ * `[data-scrim-animation]` discipline above). `DialogContent`'s `spring` opt-in
+ * (`useSpringMount`) is also untouched — a legitimate iOS-physics variant, not a
+ * duplicate of this fade.
+ *
+ * Baseline: `@starting-style` = Widely Available; `transition-behavior:
+ * allow-discrete` + `overlay` = Newly Available → adopt natively, gate the
+ * whole grammar on `@supports (overlay: auto)`. A non-supporting engine shows
+ * the element instantly (acceptable for a native top-layer surface; glass-ui
+ * ships no JS top-layer coordinator — that is reka-ui Dialog's remit).
+ *
+ * Uses `scale:` (the longhand) not `transform: scale()` so it composes with the
+ * identity-base transform work and does not mint a stacking context. Every
+ * visual axis reads a `--top-layer-*` token (tokens.css §20).
+ */
+@supports (overlay: auto) {
+    /* Base (closed / exit) + the transition list. `allow-discrete` MUST come
+     * after the property longhands, never negated. */
+    .glass-top-layer[popover],
+    dialog.glass-top-layer {
+        opacity: 0;
+        scale: var(--top-layer-enter-scale, 0.96);
+        transition-property: opacity, scale, display, overlay;
+        transition-duration: var(--duration-normal);
+        transition-timing-function: var(--ease-apple-spring);
+        transition-behavior: allow-discrete;
+    }
+
+    /* Open state + `@starting-style` entry (starting-style AFTER the open
+     * selector so the entry interpolates from the closed values). */
+    .glass-top-layer[popover]:popover-open,
+    dialog.glass-top-layer[open] {
+        opacity: 1;
+        scale: 1;
+        @starting-style {
+            opacity: 0;
+            scale: var(--top-layer-enter-scale, 0.96);
+        }
+    }
+
+    /* Glass backdrop — blur + dim, animated discretely. `::backdrop` only
+     * exists for `showModal()` dialogs, NOT `[popover]` (popovers are
+     * non-modal — correct, no scrim). */
+    dialog.glass-top-layer::backdrop {
+        background-color: hsl(var(--background) / 0);
+        backdrop-filter: blur(var(--top-layer-backdrop-blur, 8px));
+        transition: display var(--duration-normal) allow-discrete,
+                    overlay var(--duration-normal) allow-discrete,
+                    background-color var(--duration-normal) var(--ease-standard);
+    }
+    dialog.glass-top-layer[open]::backdrop {
+        background-color: hsl(var(--background) / var(--top-layer-backdrop-dim, 0.5));
+        @starting-style {
+            background-color: hsl(var(--background) / 0);
+        }
+    }
+}
+
+/* Reduced-motion carve — flatten the scale to a fade, shorten the duration. */
+@media (prefers-reduced-motion: reduce) {
+    .glass-top-layer[popover],
+    dialog.glass-top-layer {
+        scale: none;
+        transition-duration: var(--duration-fast);
+    }
+}

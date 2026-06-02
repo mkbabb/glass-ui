@@ -63,7 +63,14 @@
  *                              pop, dialog-scale, dropdown, tab-fade).
  *  10. animations.css        — @keyframes for components consumed via
  *                              `animation:` properties in (9) and component
- *                              <style> blocks.
+ *                              <style> blocks. Includes the §TOP-LAYER
+ *                              `@starting-style` entry/exit grammar (AQ.W5).
+ *  10a. scroll-driven.css    — native scroll-driven recipes (.scroll-progress
+ *                              + [data-scroll-reveal]); the `@supports`-gated
+ *                              primary over the JS-composable fallback (AQ.W5).
+ *  10b. view-transition.css  — the `.gl-list-item` View-Transitions group
+ *                              recipe + `--vt-*` axes (AQ.W5; the
+ *                              `useViewTransition` substrate's CSS half).
  *  11. utilities.css         — focus-ring, btn-audacious + btn-interactive
  *                              (press cluster; K W6 + Q.W3 Lane E),
  *                              rainbow-vivid + rainbow-pastel. Consumes earlier
@@ -95,6 +102,8 @@
 @import "./floating-panel.css";
 @import "./transitions.css";
 @import "./animations.css";
+@import "./scroll-driven.css";
+@import "./view-transition.css";
 @import "./utilities.css";
 @import "./instrument-chassis.css";
 @import "./instrument-rail.css";

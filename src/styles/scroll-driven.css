@@ -1,0 +1,72 @@
+/*
+ * scroll-driven.css — native scroll-driven CSS animations (AQ.W5 §Design 1).
+ *
+ * Cascade rung after animations.css. Two token-first recipe families that move
+ * the scroll-progress + stagger-reveal work OFF the main thread (the consumer
+ * INP lever): the browser runs them on the compositor instead of a rAF/IO
+ * listener loop in JS.
+ *
+ *   .scroll-progress      — a 0..1 scaleX bar driven by a `scroll()` timeline.
+ *                           The `useScrollProgress` composable replacement.
+ *   [data-scroll-reveal]  — fade + lift on entry, one `view()` timeline PER
+ *                           child (the stagger is implicit — no setTimeout
+ *                           cascade). The `useStaggerReveal` composable
+ *                           replacement.
+ *
+ * DUAL-PATH with a SINGLE writer (no double-run): when the engine supports
+ * `animation-timeline`, the CSS here owns the visual axis and the composables
+ * gate their listener/observer machinery OFF (so CSS and JS never both write
+ * the same target). When the engine does NOT support it, this block is skipped
+ * by `@supports` and the composable is the sole writer. See the gate at the top
+ * of `useScrollProgress.ts` / `useStaggerReveal.ts`.
+ *
+ * Baseline: `scroll-driven-animations` = Newly Available → adopt CSS as
+ * primary, keep the composable as the ≤ 20-LOC feature-detected fallback.
+ *
+ * Reduced-motion is the OUTER gate: the whole `@supports` block sits under
+ * `prefers-reduced-motion: no-preference`, so under PRM no scroll animation
+ * attaches at all and content renders in its terminal state (the `from`
+ * keyframe is never applied because the animation never binds).
+ */
+
+/* ── Scroll progress (scroll() timeline) — drives a 0..1 scaleX bar.
+ * Consumers add `.scroll-progress` on a position:fixed/absolute element; the
+ * scroller is the nearest ancestor block scroller (`root` by default; override
+ * via `--scroll-progress-scroller`). */
+@media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+        @keyframes gl-scroll-grow {
+            from { transform: scaleX(0); }
+            to   { transform: scaleX(1); }
+        }
+        .scroll-progress {
+            transform-origin: 0 50%;
+            animation: gl-scroll-grow auto linear;
+            animation-timeline: scroll(var(--scroll-progress-scroller, root) block);
+        }
+    }
+}
+
+/* ── View-driven entry (view() timeline) — the useStaggerReveal replacement.
+ * Each child of a `[data-scroll-reveal]` scroller fades + lifts on entry. The
+ * stagger is implicit in the per-element view-timeline (each child owns its
+ * own timeline), so NO setTimeout cascade is needed. Horizontal scrollers add
+ * `.scroll-reveal--inline` for a `view(inline)` axis. */
+@media (prefers-reduced-motion: no-preference) {
+    @supports ((animation-timeline: view()) and (animation-range: entry)) {
+        @keyframes gl-reveal-in {
+            from {
+                opacity: 0;
+                transform: translateY(var(--scroll-reveal-rise, 6px));
+            }
+        }
+        [data-scroll-reveal] > * {
+            animation: gl-reveal-in auto linear both;
+            animation-timeline: view(block);
+            animation-range: entry 0% entry var(--scroll-reveal-range-end, 60%);
+        }
+        [data-scroll-reveal].scroll-reveal--inline > * {
+            animation-timeline: view(inline);
+        }
+    }
+}

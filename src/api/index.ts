@@ -241,6 +241,15 @@ export type {
     UseUserInvalidAriaReturn,
 } from "../composables/dom/useUserInvalidAria";
 
+// ── View-Transition substrate ───────────────────────────────────────────────
+// `ViewTransitionResult` — the `{ finished, transitioned }` shape
+// `startViewTransition` resolves. Promoted AQ.W5 — the cross-repo coupling
+// contract muster J.W5 consumes: J pins the return shape when typing its
+// verdict re-rank / dialog-reveal wiring against the published discovery layer.
+// The `startViewTransition` + `supportsViewTransitions` runtime helpers ship on
+// the root barrel + `@mkbabb/glass-ui/motion-core` (dependency-free).
+export type { ViewTransitionResult } from "../composables/motion/useViewTransition";
+
 // ── HeaderRibbon ───────────────────────────────────────────────────────────
 // `HeaderRibbonProps` — props shape consumers forward when wrapping
 // `<HeaderRibbon>` (e.g. domain-themed header strips). `HeaderRibbonPosition`

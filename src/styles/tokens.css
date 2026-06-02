@@ -1194,6 +1194,40 @@
     --table-cell-py: calc(1rem * var(--table-density));
     --table-head-h: calc(3rem * var(--table-density));
     --table-head-px: calc(1rem * var(--table-density));
+
+    /* ═══════════════════════════════════════════════
+       §20 PLATFORM MOTION (AQ.W5)
+
+       The native-platform motion substrate axes. Three families, each read
+       by a `@supports`-gated CSS recipe in `scroll-driven.css`,
+       `animations.css` (§TOP-LAYER), and `view-transition.css` — every visual
+       knob a token so a consumer retunes without editing library source.
+
+       SCROLL-DRIVEN (scroll-driven.css). Values mirror the JS-fallback
+       composable defaults (`useScrollProgress` / `useStaggerReveal`) so the
+       native CSS path and the fallback path read identically — no visual seam
+       at the `@supports` boundary.
+
+       TOP-LAYER (animations.css §TOP-LAYER). The `@starting-style` entry/exit
+       grammar for native `<dialog>` / `[popover]` glass surfaces. Backdrop dim
+       uses the `hsl(var(--background) / α)` channel form — the legitimate
+       single-token alpha case (AQ.W2's color-mix migration is orthogonal).
+
+       VIEW-TRANSITION (view-transition.css). The shared `.gl-list-item` group
+       recipe + the `--vt-*` axes the `useViewTransition` substrate consumers
+       (dock layer swap, muster J's verdict re-rank) tune their swap against.
+       ═══════════════════════════════════════════════ */
+    --scroll-progress-scroller: root;
+    --scroll-reveal-rise: 6px;
+    --scroll-reveal-range-end: 60%;
+
+    --top-layer-enter-scale: 0.96;
+    --top-layer-backdrop-blur: 8px;
+    --top-layer-backdrop-dim: 0.5;
+
+    --vt-duration: var(--duration-normal);
+    --vt-ease: var(--ease-apple-spring);
+    --vt-rise: 8px;
 }
 
 /* ═══════════════════════════════════════════════
