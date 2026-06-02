@@ -101,7 +101,13 @@ try {
                 type: "module",
                 dependencies: {
                     "@mkbabb/glass-ui": `file:${tarball}`,
-                    "@mkbabb/keyframes.js": `file:${keyframes}`,
+                    // Prefer the local sibling checkout when present (dev — tests the
+                    // packed surface against the in-tree keyframes); fall back to the
+                    // published peer range on a clean runner where no `../keyframes.js`
+                    // exists (CI), exactly as the other peers resolve via the registry.
+                    "@mkbabb/keyframes.js": existsSync(keyframes)
+                        ? `file:${keyframes}`
+                        : dependencyVersion("@mkbabb/keyframes.js"),
                     "@vueuse/core": dependencyVersion("@vueuse/core"),
                     "class-variance-authority": dependencyVersion(
                         "class-variance-authority",
