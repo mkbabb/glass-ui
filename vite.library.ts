@@ -103,6 +103,14 @@ export function libraryEntries(rootDir: string) {
         "dropdown-menu": resolve(rootDir, "src/dropdown-menu.ts"),
         "context-menu": resolve(rootDir, "src/context-menu.ts"),
         command: resolve(rootDir, "src/command.ts"),
+        // AQ.W7 — subpath completeness for the form-vocabulary sweep. Flat
+        // per-family subpaths for NumberField + Switch so muster J.W4 can sweep
+        // both off the root barrel onto their dedicated dist chunks (same
+        // `export * from "./components/ui/<family>"` mirror as AK.W3/AL.W4).
+        // `/drawer` deliberately stays root-barrel (AN.W3 — prop/type-only, no
+        // heavy isolated chunk warrants a subpath).
+        "number-field": resolve(rootDir, "src/number-field.ts"),
+        switch: resolve(rootDir, "src/switch.ts"),
     };
 }
 

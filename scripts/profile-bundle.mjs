@@ -46,9 +46,20 @@ const startedAt = Date.now();
 // dist/glass-ui.css fragment, and the N.W0→P.W0→P.W3→Q.W4 bump-at-every-close
 // cadence that chased it: the gate now measures the real consumer artifact, so
 // the ceiling is set against reality, not bumped per tranche.
+//
+// CSS ceiling re-based AGAIN at AQ.W7 (the sanctioned AQ-close rebase). The AQ
+// tranche legitimately grew the CSS substrate against the platform-native
+// modern-web swaps — W2 (color-scheme/light-dark mirror collapse/color-mix
+// alpha), W3 (:has() selectors/.deferred-section/tokenized scrollbars), W4
+// (form vocabulary), W5 (scroll-driven animations/@starting-style top-layer/
+// View-Transitions grammar). Measured AQ-final resolved draw of
+// dist/styles/index.css: gzip 87928 / raw 349789. Re-based at × 1.10 close
+// headroom (87928 × 1.10 ≈ 96721 → 96800; 349789 × 1.10 ≈ 384768 → 385000),
+// per the same set-against-reality methodology AO.W4 used — re-based ONCE at
+// close, not bumped per wave.
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
-    "dist/styles/index.css": { raw: 340_000, gzip: 82_500 },
+    "dist/styles/index.css": { raw: 385_000, gzip: 96_800 },
 };
 
 // AO.W2 (inv α) — the real consumer-draw CSS artifact.

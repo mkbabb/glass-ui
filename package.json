@@ -201,6 +201,12 @@
             ],
             "command": [
                 "dist/command.d.ts"
+            ],
+            "number-field": [
+                "dist/number-field.d.ts"
+            ],
+            "switch": [
+                "dist/switch.d.ts"
             ]
         }
     },
@@ -476,6 +482,14 @@
         "./command": {
             "types": "./dist/command.d.ts",
             "import": "./dist/command.js"
+        },
+        "./number-field": {
+            "types": "./dist/number-field.d.ts",
+            "import": "./dist/number-field.js"
+        },
+        "./switch": {
+            "types": "./dist/switch.d.ts",
+            "import": "./dist/switch.js"
         }
     },
     "files": [
@@ -518,7 +532,7 @@
     },
     "peerDependencies": {
         "@lucide/vue": "^1.16.0",
-        "@mkbabb/keyframes.js": "^2.1.1",
+        "@mkbabb/keyframes.js": "^2.2.0",
         "@vueuse/core": "^14.0",
         "class-variance-authority": "^0.7",
         "clsx": "^2.0",
@@ -534,7 +548,7 @@
     },
     "devDependencies": {
         "@lucide/vue": "^1.16.0",
-        "@mkbabb/keyframes.js": "^2.1.1",
+        "@mkbabb/keyframes.js": "^2.2.0",
         "@mkbabb/value.js": "^0.10.0",
         "@tailwindcss/postcss": "^4.3.0",
         "@tailwindcss/vite": "^4.3.0",
