@@ -110,13 +110,16 @@ All standing glass-ui invariants bind unchanged. Load-bearing for AQ:
 - **The fallback is mandatory for Newly/Limited features** — the SKILL.md Baseline policy binds; every
   such wave ships the ≤ 20-LOC feature-detected fallback (no runtime-dep polyfills).
 
-## § Cross-repo perimeter (USER-DOMAIN — recorded, not executed)
+## § Cross-repo perimeter (EXECUTION-AUTHORIZED — green-gated)
 
 AQ is the substrate; muster J adopts it via the published glass-ui (the contract-v2 dev-resolution, not
-a source reach-around). The outward leg stays the user's: the AQ implementation publishes a glass-ui
-3.x minor (each wave additive + fallback-guarded, so SemVer-minor), which muster J's
-platform-adoption waves gate on. AQ.W2's `color-mix` migration is the substrate fix for muster's live
-`hsl(var(--border) / α)` bug — delivered to the consumer through the publish.
+a source reach-around). The outward leg is now **orchestrator-authorized** (green-gated, secret-safe —
+never echo/commit `NPM_TOKEN`): the staged **3.0.0 publish** (GATE 1) lands first, then the AQ
+implementation publishes a glass-ui **3.x minor per wave** (each additive + fallback-guarded, so
+SemVer-minor — GATE 2), which muster J's platform-adoption waves gate on. AQ.W2's `color-mix` migration
+is the substrate fix for muster's live `hsl(var(--border) / α)` bug — delivered to the consumer through
+the publish. Conductor + gate order: `docs/constellation/MODERN-WEB-EXECUTION-PLAN.md` (tasks
+#160–#169).
 
 ## § Successor
 

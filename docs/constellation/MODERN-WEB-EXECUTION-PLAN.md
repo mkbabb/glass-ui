@@ -7,6 +7,13 @@ modern-web-guidance. The headline: the constellation was carrying the **same sub
 this plan collapses it to **one upstream publish per item, N consumer adoptions**, and shows it can run
 **fully parallel within three publish-gated layers**.
 
+> **Execution authorization (2026-06-01).** The publishes (keyframes.js@2.2.0, glass-ui 3.0.0, the AQ
+> 3.x minors) and the pushes (the muster remote, speedtest/words/bbnf) are **authorized to the
+> orchestrator** — run green-gated (no publish/push on a red tree), secret-safe (never echo or commit
+> `NPM_TOKEN`/registry creds), never `--no-verify`. The three gates below are orchestrator steps, not
+> user handoffs. Tracked as tasks **#159–#176**. The only remaining held item is the `precepts`
+> submodule.
+
 ## 1. The dependency DAG
 
 ```
@@ -127,9 +134,9 @@ muster) is refined to put the foundational packages first and the consumers in a
 ### The three serial gates (the only forced ordering)
 
 - **GATE 0 — keyframes.js@2.2.0** (KF-B1). Executable immediately. Unblocks value.js-laziness everywhere.
-- **GATE 1 — glass-ui 3.0.0 publish** (the AP-closed staged cut). User-domain `npm publish` GO. Unblocks
-  speedtest R0G-1..7 + the AN-axe/`color-mix` correctness bump for *every* consumer on a pre-3.0.0 pin
-  (muster `^2.1.0`, words/bbnf `^2.0.0`, fourier `^2.0.0`, speedtest `^2.1.0`).
+- **GATE 1 — glass-ui 3.0.0 publish** (the AP-closed staged cut). Orchestrator publish, green-gated.
+  Unblocks speedtest R0G-1..7 + the AN-axe/`color-mix` correctness bump for *every* consumer on a
+  pre-3.0.0 pin (muster `^2.1.0`, words/bbnf `^2.0.0`, fourier `^2.0.0`, speedtest `^2.1.0`).
 - **GATE 2 — glass-ui AQ 3.x minors** (per AQ impl wave, additive + fallback-guarded). Unblocks the
   consumer platform-adoption waves. Each AQ wave is justified by ≥2 consumers adopting it (muster J is the
   first/primary proof; fourier/speedtest are the second).
@@ -176,13 +183,15 @@ Immediately actionable with **zero upstream gate** (in priority order):
 1. **fourier P0 form-label fix** (`FunctionInput.vue:97,114`) — the only true a11y P0 in the constellation.
 2. **keyframes.js KF-B1** — the value.js dynamic boundary (unblocks value.js-laziness for 4 consumers).
 3. **glass-ui AQ impl** (W2 first — color/theming, incl. the `color-mix` consumer-bug fix) — the substrate
-   the whole fan-out adopts. (Currently dev-phase; opens on user authorization.)
+   the whole fan-out adopts. (Dev-phase W0-W1 committed; impl authorized.)
 4. **muster J-local** (J.W2 harness → J.W3 SSR-hero) + **fourier-local γ/θ** + **speedtest-local AS-MW** —
    all parallel, no gate.
 
-User-domain (held, confirm-first): the **glass-ui 3.0.0 `npm publish` GO** (GATE 1 — the single highest
-unblock); the constellation push perimeter (muster has no remote; speedtest ~550 commits behind origin);
-the precepts submodule. These are recorded, not executed.
+Orchestrator-authorized (green-gated, secret-safe — never echo/commit `NPM_TOKEN`; tasks #159–#176): the
+**glass-ui 3.0.0 publish** (GATE 1 — the single highest unblock) + the keyframes.js@2.2.0 + AQ-minor
+publishes; the constellation **pushes** (create the muster remote; speedtest ~550 commits behind origin;
+words/bbnf). Each publish/push is green-gated — no red tree ships. **Held (user-domain): only the
+`precepts` submodule.**
 
 ---
 *This plan supersedes the per-repo modern-web duplication: fourier-I's α/β/δ/ε/ζ/η, speedtest's AS-§3 GU
