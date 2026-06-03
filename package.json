@@ -215,11 +215,13 @@
     ],
     "exports": {
         ".": {
+            "development": "./src/index.ts",
             "types": "./dist/index.d.ts",
             "import": "./dist/glass-ui.js",
             "default": "./dist/glass-ui.js"
         },
         "./tokens": {
+            "development": "./src/tokens.ts",
             "types": "./dist/tokens.d.ts",
             "import": "./dist/tokens.js"
         },
@@ -228,266 +230,332 @@
         "./styles.css": "./dist/glass-ui.css",
         "./fonts/*": "./dist/fonts/*",
         "./dock": {
+            "development": "./src/dock.ts",
             "types": "./dist/dock.d.ts",
             "import": "./dist/dock.js"
         },
         "./search": {
+            "development": "./src/search.ts",
             "types": "./dist/search.d.ts",
             "import": "./dist/search.js"
         },
         "./sidebar": {
+            "development": "./src/sidebar.ts",
             "types": "./dist/sidebar.d.ts",
             "import": "./dist/sidebar.js"
         },
         "./controls": {
+            "development": "./src/controls.ts",
             "types": "./dist/controls.d.ts",
             "import": "./dist/controls.js"
         },
         "./confirm-dialog": {
+            "development": "./src/confirm-dialog.ts",
             "types": "./dist/confirm-dialog.d.ts",
             "import": "./dist/confirm-dialog.js"
         },
         "./infinite-scroll": {
+            "development": "./src/infinite-scroll.ts",
             "types": "./dist/infinite-scroll.d.ts",
             "import": "./dist/infinite-scroll.js"
         },
         "./tabs": {
+            "development": "./src/tabs.ts",
             "types": "./dist/tabs.d.ts",
             "import": "./dist/tabs.js"
         },
         "./typewriter": {
+            "development": "./src/typewriter.ts",
             "types": "./dist/typewriter.d.ts",
             "import": "./dist/typewriter.js"
         },
         "./stacked-icons": {
+            "development": "./src/stacked-icons.ts",
             "types": "./dist/stacked-icons.d.ts",
             "import": "./dist/stacked-icons.js"
         },
         "./glass-carousel": {
+            "development": "./src/glass-carousel.ts",
             "types": "./dist/glass-carousel.d.ts",
             "import": "./dist/glass-carousel.js"
         },
         "./aurora": {
+            "development": "./src/aurora.ts",
             "types": "./dist/aurora.d.ts",
             "import": "./dist/aurora.js"
         },
         "./configurator": {
+            "development": "./src/configurator.ts",
             "types": "./dist/configurator.d.ts",
             "import": "./dist/configurator.js"
         },
         "./header-ribbon": {
+            "development": "./src/header-ribbon.ts",
             "types": "./dist/header-ribbon.d.ts",
             "import": "./dist/header-ribbon.js"
         },
         "./metric-badge": {
+            "development": "./src/metric-badge.ts",
             "types": "./dist/metric-badge.d.ts",
             "import": "./dist/metric-badge.js"
         },
         "./metric-stack": {
+            "development": "./src/metric-stack.ts",
             "types": "./dist/metric-stack.d.ts",
             "import": "./dist/metric-stack.js"
         },
         "./animated-digit": {
+            "development": "./src/animated-digit.ts",
             "types": "./dist/animated-digit.d.ts",
             "import": "./dist/animated-digit.js"
         },
         "./metric-cell": {
+            "development": "./src/metric-cell.ts",
             "types": "./dist/metric-cell.d.ts",
             "import": "./dist/metric-cell.js"
         },
         "./responsive-tabs": {
+            "development": "./src/responsive-tabs.ts",
             "types": "./dist/responsive-tabs.d.ts",
             "import": "./dist/responsive-tabs.js"
         },
         "./status-dot": {
+            "development": "./src/status-dot.ts",
             "types": "./dist/status-dot.d.ts",
             "import": "./dist/status-dot.js"
         },
         "./pulse": {
+            "development": "./src/pulse.ts",
             "types": "./dist/pulse.d.ts",
             "import": "./dist/pulse.js"
         },
         "./paper-backdrop": {
+            "development": "./src/paper-backdrop.ts",
             "types": "./dist/paper-backdrop.d.ts",
             "import": "./dist/paper-backdrop.js"
         },
         "./toggle-chip": {
+            "development": "./src/toggle-chip.ts",
             "types": "./dist/toggle-chip.d.ts",
             "import": "./dist/toggle-chip.js"
         },
         "./glass-panel": {
+            "development": "./src/glass-panel.ts",
             "types": "./dist/glass-panel.d.ts",
             "import": "./dist/glass-panel.js"
         },
         "./sortable-list": {
+            "development": "./src/sortable-list.ts",
             "types": "./dist/sortable-list.d.ts",
             "import": "./dist/sortable-list.js"
         },
         "./timeline": {
+            "development": "./src/timeline.ts",
             "types": "./dist/timeline.d.ts",
             "import": "./dist/timeline.js"
         },
         "./labeled-field": {
+            "development": "./src/labeled-field.ts",
             "types": "./dist/labeled-field.d.ts",
             "import": "./dist/labeled-field.js"
         },
         "./expandable-container": {
+            "development": "./src/expandable-container.ts",
             "types": "./dist/expandable-container.d.ts",
             "import": "./dist/expandable-container.js"
         },
         "./icon-tooltip": {
+            "development": "./src/icon-tooltip.ts",
             "types": "./dist/icon-tooltip.d.ts",
             "import": "./dist/icon-tooltip.js"
         },
         "./instrument-chassis": {
+            "development": "./src/instrument-chassis.ts",
             "types": "./dist/instrument-chassis.d.ts",
             "import": "./dist/instrument-chassis.js"
         },
         "./instrument-rail": {
+            "development": "./src/instrument-rail.ts",
             "types": "./dist/instrument-rail.d.ts",
             "import": "./dist/instrument-rail.js"
         },
         "./glyph-face": {
+            "development": "./src/glyph-face.ts",
             "types": "./dist/glyph-face.d.ts",
             "import": "./dist/glyph-face.js"
         },
         "./disco-glyph": {
+            "development": "./src/disco-glyph.ts",
             "types": "./dist/disco-glyph.d.ts",
             "import": "./dist/disco-glyph.js"
         },
         "./hover-popover": {
+            "development": "./src/hover-popover.ts",
             "types": "./dist/hover-popover.d.ts",
             "import": "./dist/hover-popover.js"
         },
         "./scrolling-text": {
+            "development": "./src/scrolling-text.ts",
             "types": "./dist/scrolling-text.d.ts",
             "import": "./dist/scrolling-text.js"
         },
         "./forms": {
+            "development": "./src/forms.ts",
             "types": "./dist/forms.d.ts",
             "import": "./dist/forms.js"
         },
         "./api": {
+            "development": "./src/api/index.ts",
             "types": "./dist/api/index.d.ts",
             "import": "./dist/api.js"
         },
         "./dark": {
+            "development": "./src/dark.ts",
             "types": "./dist/dark.d.ts",
             "import": "./dist/dark.js"
         },
         "./keyboard": {
+            "development": "./src/keyboard.ts",
             "types": "./dist/keyboard.d.ts",
             "import": "./dist/keyboard.js"
         },
         "./carousel": {
+            "development": "./src/carousel.ts",
             "types": "./dist/carousel.d.ts",
             "import": "./dist/carousel.js"
         },
         "./motion": {
+            "development": "./src/motion.ts",
             "types": "./dist/motion.d.ts",
             "import": "./dist/motion.js"
         },
         "./motion-core": {
+            "development": "./src/motion-core.ts",
             "types": "./dist/motion-core.d.ts",
             "import": "./dist/motion-core.js"
         },
         "./button": {
+            "development": "./src/button.ts",
             "types": "./dist/button.d.ts",
             "import": "./dist/button.js"
         },
         "./card": {
+            "development": "./src/card.ts",
             "types": "./dist/card.d.ts",
             "import": "./dist/card.js"
         },
         "./dialog": {
+            "development": "./src/dialog.ts",
             "types": "./dist/dialog.d.ts",
             "import": "./dist/dialog.js"
         },
         "./sheet": {
+            "development": "./src/sheet.ts",
             "types": "./dist/sheet.d.ts",
             "import": "./dist/sheet.js"
         },
         "./badge": {
+            "development": "./src/badge.ts",
             "types": "./dist/badge.d.ts",
             "import": "./dist/badge.js"
         },
         "./separator": {
+            "development": "./src/separator.ts",
             "types": "./dist/separator.d.ts",
             "import": "./dist/separator.js"
         },
         "./label": {
+            "development": "./src/label.ts",
             "types": "./dist/label.d.ts",
             "import": "./dist/label.js"
         },
         "./slider": {
+            "development": "./src/slider.ts",
             "types": "./dist/slider.d.ts",
             "import": "./dist/slider.js"
         },
         "./collapsible": {
+            "development": "./src/collapsible.ts",
             "types": "./dist/collapsible.d.ts",
             "import": "./dist/collapsible.js"
         },
         "./progress": {
+            "development": "./src/progress.ts",
             "types": "./dist/progress.d.ts",
             "import": "./dist/progress.js"
         },
         "./toggle-group": {
+            "development": "./src/toggle-group.ts",
             "types": "./dist/toggle-group.d.ts",
             "import": "./dist/toggle-group.js"
         },
         "./hover-card": {
+            "development": "./src/hover-card.ts",
             "types": "./dist/hover-card.d.ts",
             "import": "./dist/hover-card.js"
         },
         "./tooltip": {
+            "development": "./src/tooltip.ts",
             "types": "./dist/tooltip.d.ts",
             "import": "./dist/tooltip.js"
         },
         "./toast": {
+            "development": "./src/toast.ts",
             "types": "./dist/toast.d.ts",
             "import": "./dist/toast.js"
         },
         "./notification": {
+            "development": "./src/notification.ts",
             "types": "./dist/notification.d.ts",
             "import": "./dist/notification.js"
         },
         "./reactive": {
+            "development": "./src/reactive.ts",
             "types": "./dist/reactive.d.ts",
             "import": "./dist/reactive.js"
         },
         "./dom": {
+            "development": "./src/dom.ts",
             "types": "./dist/dom.d.ts",
             "import": "./dist/dom.js"
         },
         "./popover": {
+            "development": "./src/popover.ts",
             "types": "./dist/popover.d.ts",
             "import": "./dist/popover.js"
         },
         "./select": {
+            "development": "./src/select.ts",
             "types": "./dist/select.d.ts",
             "import": "./dist/select.js"
         },
         "./data-table": {
+            "development": "./src/data-table.ts",
             "types": "./dist/data-table.d.ts",
             "import": "./dist/data-table.js"
         },
         "./dropdown-menu": {
+            "development": "./src/dropdown-menu.ts",
             "types": "./dist/dropdown-menu.d.ts",
             "import": "./dist/dropdown-menu.js"
         },
         "./context-menu": {
+            "development": "./src/context-menu.ts",
             "types": "./dist/context-menu.d.ts",
             "import": "./dist/context-menu.js"
         },
         "./command": {
+            "development": "./src/command.ts",
             "types": "./dist/command.d.ts",
             "import": "./dist/command.js"
         },
         "./number-field": {
+            "development": "./src/number-field.ts",
             "types": "./dist/number-field.d.ts",
             "import": "./dist/number-field.js"
         },
         "./switch": {
+            "development": "./src/switch.ts",
             "types": "./dist/switch.d.ts",
             "import": "./dist/switch.js"
         }
@@ -536,6 +604,7 @@
     "peerDependencies": {
         "@lucide/vue": "^1.16.0",
         "@mkbabb/keyframes.js": "^2.2.0",
+        "@mkbabb/value.js": "^0.10.0",
         "@vueuse/core": "^14.0",
         "class-variance-authority": "^0.7",
         "clsx": "^2.0",

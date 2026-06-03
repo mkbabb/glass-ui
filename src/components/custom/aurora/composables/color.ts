@@ -1,83 +1,36 @@
 import type { OklchStop } from "../presets";
 import { MAX_STOPS } from "../presets";
 
-export function clamp(v: number, min: number, max: number): number {
-    return v < min ? min : v > max ? max : v;
-}
-
-function linearize(c: number): number {
-    return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-}
-
-function delinearize(c: number): number {
-    return c <= 0.0031308
-        ? 12.92 * c
-        : 1.055 * Math.pow(c, 1 / 2.4) - 0.055;
-}
-
-export function srgbToOKLab(r: number, g: number, b: number): [number, number, number] {
-    const lr = linearize(r), lg = linearize(g), lb = linearize(b);
-    const l_ = Math.cbrt(0.4122214708 * lr + 0.5363325363 * lg + 0.0514459929 * lb);
-    const m_ = Math.cbrt(0.2119034982 * lr + 0.6806995451 * lg + 0.1073969566 * lb);
-    const s_ = Math.cbrt(0.0883024619 * lr + 0.2817188376 * lg + 0.6299787005 * lb);
-    return [
-        0.2104542553 * l_ + 0.793617785 * m_ - 0.0040720468 * s_,
-        1.9779984951 * l_ - 2.428592205 * m_ + 0.4505937099 * s_,
-        0.0259040371 * l_ + 0.7827717662 * m_ - 0.808675766 * s_,
-    ];
-}
-
-export function oklabToOklch(L: number, a: number, b: number): [number, number, number] {
-    const C = Math.sqrt(a * a + b * b);
-    const H = ((Math.atan2(b, a) * 180) / Math.PI + 360) % 360;
-    return [L, C, H];
-}
-
-export function oklchToOklab(L: number, C: number, H: number): [number, number, number] {
-    const rad = (H * Math.PI) / 180;
-    return [L, C * Math.cos(rad), C * Math.sin(rad)];
-}
-
-function oklabToLinearRgb(L: number, a: number, b: number): [number, number, number] {
-    const l_ = L + 0.3963377774 * a + 0.2158037573 * b;
-    const m_ = L - 0.1055613458 * a - 0.0638541728 * b;
-    const s_ = L - 0.0894841775 * a - 1.291485548 * b;
-    const l = l_ * l_ * l_;
-    const m = m_ * m_ * m_;
-    const s = s_ * s_ * s_;
-    return [
-        +4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
-        -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
-        -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s,
-    ];
-}
-
-export function oklabToRgb255(L: number, a: number, b: number): [number, number, number] {
-    const [lr, lg, lb] = oklabToLinearRgb(L, a, b);
-    return [
-        clamp(Math.round(delinearize(lr) * 255), 0, 255),
-        clamp(Math.round(delinearize(lg) * 255), 0, 255),
-        clamp(Math.round(delinearize(lb) * 255), 0, 255),
-    ];
-}
-
-export function rgbToOklch(r: number, g: number, b: number): [number, number, number] {
-    const [L, a, b_] = srgbToOKLab(r / 255, g / 255, b / 255);
-    return oklabToOklch(L, a, b_);
-}
-
-export function oklchToRgb(L: number, C: number, H: number): [number, number, number] {
-    const [la, a, b] = oklchToOklab(L, C, H);
-    return oklabToRgb255(la, a, b);
-}
+// inv-K-2 (value.js-K, K.W2c): the single canonical color core lives in
+// value.js `src/units/color/`. glass-ui's aurora consumes the Ottosson
+// OKLab/OKLCh/sRGB primitives from there — it does NOT re-implement them. The
+// 8 byte-for-byte duplicates that lived here (srgbToOKLab, oklab<->oklch,
+// oklab->linear/rgb255, css->rgb 1×1-canvas, …) are DELETED; the kept aurora
+// helpers below re-source their math from value.js. A deleted symbol cannot
+// duplicate; `__tests__/color-equivalence.test.ts` is the canary.
+import {
+    srgbToOKLab,
+    oklabToLinearSRGB,
+    oklabToRgb255,
+    rawOklabToOklch,
+    rawOklchToOklab,
+    parseCSSColor,
+    colorUnit2,
+} from "@mkbabb/value.js";
 
 /**
  * OKLCh stop to linear-sRGB in [0, 1] — bundle-canonical bake target.
  * The shader ACES-tonemaps in linear, so the LUT must stay linear.
+ *
+ * The OKLCh→linear math is value.js's canonical Ottosson path
+ * (`rawOklchToOklab` → `oklabToLinearSRGB`, inv-K-2). The `Math.max(0, ·)` wrap
+ * is aurora's OWN ACES-in-linear contract — value.js's `oklabToLinearSRGB` does
+ * not clamp negative linear (an out-of-gamut stop yields negatives; the wrap
+ * keeps them off the GPU). The equivalence test asserts the COMPOSED path.
  */
 export function oklchToLinear(stop: OklchStop): [number, number, number] {
-    const [la, a, b] = oklchToOklab(stop.L, stop.C, stop.h);
-    const [lr, lg, lb] = oklabToLinearRgb(la, a, b);
+    const [L, a, b] = rawOklchToOklab(stop.L, stop.C, stop.h);
+    const [lr, lg, lb] = oklabToLinearSRGB(L, a, b);
     return [Math.max(0, lr), Math.max(0, lg), Math.max(0, lb)];
 }
 
@@ -134,9 +87,10 @@ export function paletteToCssGradient(stops: OklchStop[]): string {
 }
 
 export function oklchStopToHex(s: OklchStop): string {
-    const [r, g, b] = oklchToRgb(s.L, s.C, s.h);
-    const toHex = (v: number) => v.toString(16).padStart(2, "0");
-    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+    const [L, a, b] = rawOklchToOklab(s.L, s.C, s.h);
+    const [r, g, bch] = oklabToRgb255(L, a, b);
+    const toHex = (v: number) => Math.round(v).toString(16).padStart(2, "0");
+    return `#${toHex(r)}${toHex(g)}${toHex(bch)}`;
 }
 
 export function hexToOklchStop(hex: string): OklchStop {
@@ -144,27 +98,24 @@ export function hexToOklchStop(hex: string): OklchStop {
     const r = parseInt(h.slice(0, 2), 16);
     const g = parseInt(h.slice(2, 4), 16);
     const b = parseInt(h.slice(4, 6), 16);
-    const [L, C, H] = rgbToOklch(r, g, b);
-    return { L, C, h: H };
+    const [L, a, bch] = srgbToOKLab(r / 255, g / 255, b / 255);
+    const [Lo, C, H] = rawOklabToOklch(L, a, bch);
+    return { L: Lo, C, h: H };
 }
 
-let _parseCtx: CanvasRenderingContext2D | null = null;
-export function cssToRgb(css: string): [number, number, number] {
-    if (!_parseCtx) {
-        const c = document.createElement("canvas");
-        c.width = c.height = 1;
-        _parseCtx = c.getContext("2d", { willReadFrequently: true })!;
-    }
-    _parseCtx.clearRect(0, 0, 1, 1);
-    _parseCtx.fillStyle = "#808080";
-    _parseCtx.fillStyle = css;
-    _parseCtx.fillRect(0, 0, 1, 1);
-    const d = _parseCtx.getImageData(0, 0, 1, 1).data;
-    return [d[0]!, d[1]!, d[2]!];
-}
-
+/**
+ * Resolve any CSS color string to an OKLCh stop via value.js's parser — the
+ * single canonical core (inv-K-2). Replaces the former 1×1-canvas `cssToRgb`
+ * DOM trick, so this now works in SSR / happy-dom (no `document` required).
+ */
 export function cssToOklch(css: string): OklchStop {
-    const [r, g, b] = cssToRgb(css);
-    const [L, C, H] = rgbToOklch(r, g, b);
-    return { L, C, h: H };
+    // `parseCSSColor` returns a loosely-typed parse-mode ValueUnit whose channels
+    // are themselves ValueUnits; the cast bridges it to `colorUnit2`'s param type
+    // (the same idiom value.js's own demo uses), and `Number(...)` coerces each
+    // parse-mode channel to the raw [0,1] sRGB number `srgbToOKLab` expects.
+    const parsed = parseCSSColor(css) as Parameters<typeof colorUnit2>[0];
+    const rgb = colorUnit2(parsed, "rgb").value;
+    const [L, a, bch] = srgbToOKLab(Number(rgb.r), Number(rgb.g), Number(rgb.b));
+    const [Lo, C, H] = rawOklabToOklch(L, a, bch);
+    return { L: Lo, C, h: H };
 }
