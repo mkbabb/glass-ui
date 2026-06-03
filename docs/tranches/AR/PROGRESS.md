@@ -6,6 +6,14 @@ Status vocabulary — PLANNED / IN-PROGRESS / DONE / MET / MISS / NAMED-FORWARD 
 
 ## Top-line status
 
+**AR CLOSED at W2 — 3.1.1 shipped, ci.yml green; W3-W6 re-homed to AS.** See `FINAL.md`.
+The AS.W0 deep audit ruled AR closes clean at the binding-correctness headline (a SemVer-patch
+boundary) rather than bolting a leverage arc onto a correctness tranche; AR's authored-but-unrun
+W3-W6 are AS's implementation set, re-derived against HEAD (the A1-era AS-GU roster had gone
+stale — OKLab/`--glass-opacity-dock` already ship). AR.W2's execution also surfaced the
+gate-integrity class (5× hardcoded constellation, divergent gate lists, tracked-artefact
+mutation, the `proof:vt-names` over-claim) — now the AS thesis (inv-θ).
+
 **AR.W2 DONE — 3.1.1 cut (the gate + bug-fix + cohort asks + CI #177).** W0-W1
 (audit/design) are folded into the A1 deep-audit + AR.md authoring; W2 shipped
 the binding-correctness floor as a 3.1.1 patch: GlassDock `useId()` fix +
