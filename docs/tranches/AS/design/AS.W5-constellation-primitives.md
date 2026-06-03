@@ -86,7 +86,7 @@ The grand-audit §E "serial spine" confirmed against HEAD. glass-ui primitives l
 | P2 `deriveAuroraFromColor` + OKLab-LUT bake | **SHIP→AS.W5 ONLY-IF value.js K.W4 live ≥2**; else **value.js VAL-1 KILL** |
 | P3 Metaballs + BlobDot family | **SHIP→AS post-v1.0.0** (net-new public surface; after value.js K.W6) |
 | P4 `useTextHighlight` (Custom Highlight) | **SHIP→AS.W5** (retires FuzzySearch `<mark>` splitter) |
-| P5 self-hosted Fraunces @font-face (opsz+SOFT+WONK) | **SHIP→AS.W5** (mirror Plus-Jakarta/Fira pattern) |
+| P5 self-hosted Fraunces @font-face (opsz+SOFT+WONK) | **SHIP→AS.W5** (mirror Plus-Jakarta/Fira pattern) — consumers = **value.js + words** (slides DROPPED per constellation DEC-8: slides font final as-is; ≥2 gate still met) |
 | P6 `--dock-fg-on-aurora` + `as`/`asChild` | **SHIP→AS.W5**; 44px floor + `--dock-motion-*` **ADOPT-CHECK** (already ship) |
 | P7 Mascot / monogram-pose primitive | **KILLED (constellation DEC-3, 2026-06-03, user)** — the bbnf-"b" / orange-sun / sudoku mascots are *disparate* (they share a pencil-boil **skin**, not a **shape**); NO glass-ui mascot primitive, NO new `@mkbabb/mascot` package. Shapes stay app-local; the skin/physics + the mid-session reactive-PRM-teardown fix stay in `@mkbabb/pencil-boil`. §4.2 resolved: glass-ui does NOT own it. |
 | P8 VT `.ready` rejection hardening | **SHIP→AS.W5** (must-land-before speedtest AT-R2) |
