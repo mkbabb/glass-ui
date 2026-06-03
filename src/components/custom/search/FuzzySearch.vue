@@ -6,6 +6,7 @@ import { Dialog, DialogContent } from "../../ui/dialog";
 import { Button } from "../../ui/button";
 import { Badge } from "../../ui/badge";
 import { fuzzyMatch } from "./composables/fuzzySearchIndex";
+import { useTextHighlight } from "../../../composables/dom/useTextHighlight";
 import type { FuzzySearchState, SearchableItem, SearchResult } from "./composables/types";
 
 const props = withDefaults(
@@ -40,40 +41,67 @@ watch(() => props.state.isExpanded.value, (expanded) => {
     if (expanded) nextTick(() => modalInputRef.value?.focus());
 });
 
+// Repaint the match highlight whenever the query/result set/open-state changes,
+// against whichever list is currently mounted (dialog when expanded, else popover).
+// When both surfaces are closed there's no list to paint, so the highlight clears.
+watch(
+    [
+        () => props.state.query.value,
+        () => props.state.results.value,
+        () => props.state.isExpanded.value,
+        inlineOpen,
+    ],
+    () => {
+        const container = props.state.isExpanded.value
+            ? modalListRef.value
+            : inlineOpen.value
+                ? inlineListRef.value
+                : null;
+        repaintHighlight(container);
+    },
+    { flush: "post" },
+);
+
 function focus() { inputRef.value?.focus(); }
 defineExpose({ focus });
 
 function resultLabel(r: SearchResult) { return r.item.label || r.item.text.slice(0, 120); }
 function getTypeLabel(r: SearchResult) { return props.typeLabel ? props.typeLabel(r.item) : (r.item.type ?? ""); }
 
-interface HighlightSegment { text: string; matched: boolean }
-function highlightFuzzySegments(text: string, query: string): HighlightSegment[] {
-    if (!text) return [];
+// Match emphasis rides the CSS Custom Highlight API (composables/dom) rather
+// than a <mark> splitter — the matched chars paint via ::highlight(glass-search-mark)
+// over the rendered label text with no DOM mutation. The popover and dialog each
+// own a container ref; after a query/results change we re-scan the visible list's
+// `.fuzzy-search-label` text nodes and set the range union. Where the API is
+// unsupported the composable no-ops and labels render as plain text.
+const inlineListRef = ref<HTMLElement | null>(null);
+const modalListRef = ref<HTMLElement | null>(null);
+const highlight = useTextHighlight("glass-search-mark");
+
+// Per-label fuzzy matcher — fuzzyMatch's char indices over the label string
+// are exactly the text-node spans, so each matched index becomes a 1-char range.
+function fuzzySpans(text: string, query: string) {
     const tokens = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
-    if (tokens.length === 0) return [{ text, matched: false }];
+    if (tokens.length === 0) return [];
     const textLc = text.toLowerCase();
-    const matchSet = new Set<number>();
+    const set = new Set<number>();
     for (const token of tokens) {
         const m = fuzzyMatch(token, textLc);
-        if (m) for (const idx of m.matches) matchSet.add(idx);
+        if (m) for (const idx of m.matches) set.add(idx);
     }
-    if (matchSet.size === 0) return [{ text, matched: false }];
-    const segments: HighlightSegment[] = [];
-    let start = 0;
-    let matched = matchSet.has(0);
-    for (let i = 1; i < text.length; i++) {
-        const next = matchSet.has(i);
-        if (next !== matched) {
-            segments.push({ text: text.slice(start, i), matched });
-            start = i;
-            matched = next;
-        }
+    const spans: Array<{ start: number; end: number }> = [];
+    for (const idx of [...set].sort((a, b) => a - b)) {
+        const last = spans[spans.length - 1];
+        if (last && last.end === idx) last.end = idx + 1;
+        else spans.push({ start: idx, end: idx + 1 });
     }
-    segments.push({ text: text.slice(start), matched });
-    return segments;
+    return spans;
 }
 
-const MARK_CLASS = "rounded-sm bg-[hsl(var(--rainbow-pastel-yellow,50_100%_60%)/0.35)] px-px text-inherit";
+function repaintHighlight(container: HTMLElement | null) {
+    if (!container) { highlight.clear(); return; }
+    nextTick(() => highlight.setFromMatches(container, props.state.query.value, fuzzySpans));
+}
 </script>
 
 <template>
@@ -103,18 +131,15 @@ const MARK_CLASS = "rounded-sm bg-[hsl(var(--rainbow-pastel-yellow,50_100%_60%)/
             <PopoverContent align="start" :side-offset="4" :portal="false"
                 class="w-[var(--reka-popover-trigger-width)] max-h-[50vh] overflow-y-auto overscroll-contain p-1"
                 @open-auto-focus="(e: Event) => e.preventDefault()">
-                <button v-for="(r, i) in state.results.value" :key="`${r.item.id}-${r.item.type}-${i}`" type="button"
-                    class="fuzzy-search-result interactive-item flex w-full items-baseline gap-1.5 px-2 py-1.5 text-left text-sm"
-                    :class="{ 'is-selected bg-muted/50': i === state.selectedIndex.value }"
-                    @click="state.selectResult(r)" @mouseenter="state.selectedIndex.value = i">
-                    <Badge v-if="getTypeLabel(r)" variant="secondary" class="shrink-0 text-[0.6rem] font-bold uppercase tracking-wider">{{ getTypeLabel(r) }}</Badge>
-                    <span class="fuzzy-search-label flex-1 min-w-0 truncate text-foreground/85">
-                        <template v-for="(seg, j) in highlightFuzzySegments(resultLabel(r), state.query.value)" :key="j">
-                            <mark v-if="seg.matched" :class="MARK_CLASS">{{ seg.text }}</mark>
-                            <span v-else>{{ seg.text }}</span>
-                        </template>
-                    </span>
-                </button>
+                <div ref="inlineListRef">
+                    <button v-for="(r, i) in state.results.value" :key="`${r.item.id}-${r.item.type}-${i}`" type="button"
+                        class="fuzzy-search-result interactive-item flex w-full items-baseline gap-1.5 px-2 py-1.5 text-left text-sm"
+                        :class="{ 'is-selected bg-muted/50': i === state.selectedIndex.value }"
+                        @click="state.selectResult(r)" @mouseenter="state.selectedIndex.value = i">
+                        <Badge v-if="getTypeLabel(r)" variant="secondary" class="shrink-0 text-[0.6rem] font-bold uppercase tracking-wider">{{ getTypeLabel(r) }}</Badge>
+                        <span class="fuzzy-search-label flex-1 min-w-0 truncate text-foreground/85">{{ resultLabel(r) }}</span>
+                    </button>
+                </div>
             </PopoverContent>
         </Popover>
 
@@ -132,18 +157,13 @@ const MARK_CLASS = "rounded-sm bg-[hsl(var(--rainbow-pastel-yellow,50_100%_60%)/
                         <Minimize2 class="h-3.5 w-3.5" />
                     </Button>
                 </div>
-                <div v-if="state.results.value.length > 0" class="flex-1 min-h-0 overflow-y-auto overscroll-contain p-1.5">
+                <div v-if="state.results.value.length > 0" ref="modalListRef" class="flex-1 min-h-0 overflow-y-auto overscroll-contain p-1.5">
                     <button v-for="(r, i) in state.results.value" :key="`modal-${r.item.id}-${r.item.type}-${i}`" type="button"
                         class="fuzzy-search-result interactive-item flex w-full items-baseline gap-1.5 px-2.5 py-2 text-left"
                         :class="{ 'is-selected bg-muted/50': i === state.selectedIndex.value }"
                         @click="state.selectResult(r)" @mouseenter="state.selectedIndex.value = i">
                         <Badge v-if="getTypeLabel(r)" variant="secondary" class="shrink-0 text-[0.65rem] font-bold uppercase tracking-wider">{{ getTypeLabel(r) }}</Badge>
-                        <span class="fuzzy-search-label flex-1 min-w-0 truncate text-base text-foreground/85">
-                            <template v-for="(seg, j) in highlightFuzzySegments(resultLabel(r), state.query.value)" :key="j">
-                                <mark v-if="seg.matched" :class="MARK_CLASS">{{ seg.text }}</mark>
-                                <span v-else>{{ seg.text }}</span>
-                            </template>
-                        </span>
+                        <span class="fuzzy-search-label flex-1 min-w-0 truncate text-base text-foreground/85">{{ resultLabel(r) }}</span>
                     </button>
                 </div>
                 <div v-else class="px-4 py-8 text-center text-muted-foreground/60">No results</div>

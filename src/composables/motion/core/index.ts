@@ -22,6 +22,11 @@ export * from "../useStagger";
 // the engine-free `/motion-core` surface alongside `useRAFLoop` (its companion
 // for the chunked-work case) — NOT on the keyframes-bearing `/motion` barrel.
 export * from "../useYieldToMain";
+// AS.W3 §G4 — the `scheduler.postTask` priority lever, companion to
+// `useYieldToMain` for the schedule-at-priority case. Keyframes-FREE +
+// vueuse-FREE (native `scheduler.postTask` + `MessageChannel`/`setTimeout`
+// fallback), so it ships on the engine-free `/motion-core` surface.
+export * from "../usePrioritizedTask";
 // AQ.W5 §Design 3 — the View-Transitions motion substrate (the cross-repo
 // coupling contract muster J.W5 consumes). Dependency-free (no `vue`, no
 // `@mkbabb/keyframes.js`, no `@vueuse/core`), so it ships on the engine-free

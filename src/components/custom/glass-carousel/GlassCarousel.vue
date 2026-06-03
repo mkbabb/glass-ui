@@ -171,6 +171,75 @@ defineExpose({
     --mask-fade-width: 1.5rem;
 }
 
+/* ── Overflow fade via @container scroll-state (AS.W4) ───────────────────────
+   The progressive-enhancement path for the VERTICAL carousel: when the engine
+   supports scroll-state container queries, the viewport becomes the scroll-state
+   container and the top/bottom fade is driven from CSS — no JS scroll listener
+   attaches (the composable's `supportsScrollStateQuery()` gate keeps
+   `getOverflowFadeClass()` empty + skips `addEventListener` for the vertical
+   axis). On unsupporting engines (and jsdom) this block is inert and the JS
+   `.scroll-fade-*` masks remain the writer.
+
+   The mask lives on `.glass-carousel__content` (NOT the viewport): a scroll
+   container cannot style itself from its OWN scroll-state, only a descendant
+   can. In the expanded vertical layout the content is window-HEIGHT
+   (`height: 100%`) while its items overflow, so a gradient measured from the
+   content's top/bottom edges maps to the visible window exactly as the JS
+   mask-on-viewport did — items scrolled past the window fall in the gradient's
+   transparent tail and read as faded-away.
+
+   Scoped to vertical only: the horizontal flex content sizes to `fit-content`
+   (reka's viewport wraps it in a `min-width: fit-content` inner div), so a
+   content-relative mask would not map to the window there — the horizontal axis
+   keeps the JS mask path. Per-edge fade widths are `@property`-typed lengths
+   (default 0) that the scroll-state queries raise to `--mask-fade-width`, so
+   the two edges compose into one mask declaration. */
+@property --gl-carousel-fade-top {
+    syntax: "<length>";
+    inherits: false;
+    initial-value: 0px;
+}
+@property --gl-carousel-fade-bottom {
+    syntax: "<length>";
+    inherits: false;
+    initial-value: 0px;
+}
+
+@supports (container-type: scroll-state) {
+    .glass-carousel--vertical .glass-carousel__viewport {
+        container-type: scroll-state;
+    }
+
+    .glass-carousel--vertical .glass-carousel__content {
+        --gl-carousel-fade-top: 0px;
+        --gl-carousel-fade-bottom: 0px;
+        mask-image: linear-gradient(
+            to bottom,
+            transparent 0,
+            black var(--gl-carousel-fade-top),
+            black calc(100% - var(--gl-carousel-fade-bottom)),
+            transparent 100%
+        );
+    }
+    @container scroll-state(scrollable: top) {
+        .glass-carousel--vertical .glass-carousel__content {
+            --gl-carousel-fade-top: var(--mask-fade-width);
+        }
+    }
+    @container scroll-state(scrollable: bottom) {
+        .glass-carousel--vertical .glass-carousel__content {
+            --gl-carousel-fade-bottom: var(--mask-fade-width);
+        }
+    }
+
+    /* During the expand/collapse FLIP the content cross-fades out — drop the
+       mask so it never flickers against the size animation (matches the JS
+       path, which clears the fade class while `--animating`). */
+    .glass-carousel--vertical.glass-carousel--animating .glass-carousel__content {
+        mask-image: none;
+    }
+}
+
 /* ── Content layout ── */
 .glass-carousel__content {
     display: flex;

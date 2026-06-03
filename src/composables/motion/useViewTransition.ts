@@ -31,6 +31,8 @@
  *  helper reads (the lib's DOM types may not carry it on every target). */
 interface ViewTransitionLike {
     finished: Promise<unknown>;
+    /** Rejects ('Transition was skipped') when a re-trigger skips this one. */
+    ready?: Promise<unknown>;
 }
 
 interface DocumentWithViewTransition {
@@ -87,6 +89,10 @@ export function startViewTransition(mutate: () => void): ViewTransitionResult {
     }
 
     const vt = doc.startViewTransition(() => mutate());
+    // A rapid re-trigger SKIPS this transition, rejecting `ready` ('Transition
+    // was skipped'); `ready` is otherwise unread, so swallow it here to keep the
+    // rejection from leaking an unhandled pageerror (the dock/speedtest leak).
+    vt.ready?.catch(() => {});
     return {
         finished: vt.finished.then(
             () => undefined,

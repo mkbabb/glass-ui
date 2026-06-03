@@ -52,12 +52,14 @@ describe("GlassDock dockId (AR inv-η pairwise-distinct guard)", () => {
             .map((el) => el.attributes("data-dock-id"));
 
         expect(ids).toHaveLength(2);
-        // Both well-formed (useId() returned a value — not the `undefined`
-        // degenerate a broken id source would mask).
+        // Both well-formed (useId() returned a non-empty value — the real
+        // degenerate is `glass-dock-` from an empty-string id, NOT
+        // `glass-dock-undefined`; useId() returns "" outside a value, never
+        // `undefined`). The `.+` requires a non-empty suffix.
         expect(ids[0]).toMatch(/^glass-dock-.+/);
         expect(ids[1]).toMatch(/^glass-dock-.+/);
-        expect(ids[0]).not.toBe("glass-dock-undefined");
-        expect(ids[1]).not.toBe("glass-dock-undefined");
+        expect(ids[0]).not.toBe("glass-dock-");
+        expect(ids[1]).not.toBe("glass-dock-");
         // The AR inv-η invariant: STRICTLY DISTINCT.
         expect(ids[0]).not.toBe(ids[1]);
     });

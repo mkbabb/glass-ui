@@ -1,5 +1,26 @@
 import { ref, watch, nextTick, onUnmounted, onMounted, type Ref } from "vue";
 
+/**
+ * Genuine support for `@container scroll-state(scrollable: …)` queries (AS.W4).
+ *
+ * `CSS.supports("container-type", "scroll-state")` is the canonical probe, but
+ * happy-dom / jsdom return `true` for EVERY query — so the negative probe
+ * (`!supports(garbage)`) filters those always-true shims (same harden as
+ * `supportsCssTimeline.ts`). When this reads `true` the scoped CSS recipe owns
+ * the overflow-fade and the JS scroll listener below never attaches; when it
+ * reads `false` (older engines, jsdom) the JS listener stays the sole writer.
+ * Limited Baseline at v1.0 — CSS is the progressive enhancement, JS the floor.
+ */
+function supportsScrollStateQuery(): boolean {
+    if (typeof CSS === "undefined" || typeof CSS.supports !== "function") {
+        return false;
+    }
+    return (
+        CSS.supports("container-type", "scroll-state") &&
+        !CSS.supports("container-type", "gl-not-a-real-container-type")
+    );
+}
+
 export interface UseGlassCarouselOptions {
     /** Scroll axis */
     orientation: Ref<"horizontal" | "vertical">;
@@ -22,6 +43,17 @@ export function useGlassCarousel(options: UseGlassCarouselOptions) {
     const { orientation, expanded, rootEl, viewportEl, fadeMs = 60 } = options;
 
     // ── Overflow detection ──
+    // On engines with `@container scroll-state(scrollable)` support the scoped
+    // CSS recipe drives the VERTICAL overflow-fade entirely (zero JS) — the
+    // listener never attaches and `getOverflowFadeClass()` yields the empty
+    // class so the two paths never double-apply. The horizontal axis keeps the
+    // JS mask (its `fit-content` flex content is not window-relative, so the
+    // CSS content-mask cannot map to the window there), as does every engine
+    // without scroll-state support (and jsdom).
+    const scrollStateSupported = supportsScrollStateQuery();
+    function cssOwnsOverflowFade(): boolean {
+        return scrollStateSupported && orientation.value === "vertical";
+    }
     const canScrollStart = ref(false);
     const canScrollEnd = ref(false);
 
@@ -47,6 +79,11 @@ export function useGlassCarousel(options: UseGlassCarouselOptions) {
 
     function attachScrollListener() {
         detachScrollListener();
+        // CSS scroll-state owns the fade on supporting engines — skip the
+        // listener entirely (the measured win: zero scroll handlers attach).
+        // Detach above first so a vertical→horizontal flip on an unsupporting
+        // engine, or the reverse, lands in the right state.
+        if (cssOwnsOverflowFade()) return;
         const vp = viewportEl.value;
         if (!vp) {
             updateOverflow();
@@ -66,8 +103,9 @@ export function useGlassCarousel(options: UseGlassCarouselOptions) {
         boundViewport = null;
     }
 
-    // Re-attach when viewport element changes
-    watch(viewportEl, attachScrollListener);
+    // Re-attach when the viewport element OR orientation changes (orientation
+    // flips whether CSS or JS owns the fade — see `cssOwnsOverflowFade`).
+    watch([viewportEl, orientation], attachScrollListener);
     onMounted(attachScrollListener);
     onUnmounted(detachScrollListener);
 
@@ -180,8 +218,11 @@ export function useGlassCarousel(options: UseGlassCarouselOptions) {
     onUnmounted(clearTimers);
 
     // ── Overflow fade class ──
-    // Computed dynamically based on scroll state
+    // Computed dynamically based on scroll state. On scroll-state-capable
+    // engines the scoped CSS recipe paints the fade, so this returns the empty
+    // class — the JS-driven `.scroll-fade-*` masks are the fallback path only.
     function getOverflowFadeClass() {
+        if (cssOwnsOverflowFade()) return "";
         if (canScrollStart.value && canScrollEnd.value) {
             return orientation.value === "vertical" ? "scroll-fade-y" : "scroll-fade-mask";
         }

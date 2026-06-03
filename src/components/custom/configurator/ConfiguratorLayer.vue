@@ -141,7 +141,7 @@ const stateAttr = computed(() => (internalOpen.value ? "open" : "closed"));
             :id="bodyId"
             role="region"
             :aria-hidden="!internalOpen"
-            :inert="!internalOpen"
+            :inert="!internalOpen || undefined"
             :data-state="stateAttr"
             class="configurator-layer-region grid transition-[grid-template-rows] duration-200 ease-out motion-reduce:transition-none"
             :style="{ gridTemplateRows: internalOpen ? '1fr' : '0fr' }"

@@ -21,6 +21,17 @@ import {
 export type ConfiguratorScrollMode = "auto" | "always" | "never";
 
 /**
+ * Which side the aside (preset row + controls) sits on at `lg`+ width.
+ *
+ * `right` (default) is the inspector idiom — stage left, controls right.
+ * `left` is a reversible, taste-level flip: the aside renders on the
+ * left while DOM/tab order stays stage→aside (the flip is grid-column
+ * placement + border-side only, no source reorder — no a11y regression).
+ * Below `lg` the layout is a single column and the side has no meaning.
+ */
+export type ConfiguratorAsideSide = "left" | "right";
+
+/**
  * Generic preset descriptor. Consumers pass `T` as the live config shape.
  * The primitive carries no preset semantics beyond `key + label` for
  * the picker row and `config: T` for the active payload — preset
@@ -65,12 +76,29 @@ const props = withDefaults(
          * `gap-1.5 py-2` recipe exactly.
          */
         density?: ConfiguratorDensity;
+        /**
+         * Which side the aside sits on at `lg`+ width. Default `"right"`
+         * (the inspector idiom). `"left"` flips the visual column via
+         * grid-column placement + border-side swap only — DOM/tab order
+         * stays stage→aside. No effect below `lg` (single-column).
+         */
+        asideSide?: ConfiguratorAsideSide;
+        /**
+         * Aside width band at `lg`+ width, as a CSS length pair driving
+         * `minmax(--configurator-aside-min, --configurator-aside-max)`. The
+         * prop sets the two inline custom properties; consumers may instead
+         * (or also) set `--configurator-aside-min` / `--configurator-aside-max`
+         * via the cascade. Default band is `280px`/`360px`. Pass a single
+         * length to pin the band (`min === max`), or a `[min, max]` pair.
+         */
+        asideWidth?: string | readonly [min: string, max: string];
         /** Optional outer container override. */
         class?: HTMLAttributes["class"];
     }>(),
     {
         scrollMode: "auto",
         density: "comfortable",
+        asideSide: "right",
     },
 );
 
@@ -100,10 +128,48 @@ const containerClass = computed(() =>
         // rounding does not stop one level too high (the stacked
         // ConfiguratorLayer sections inherit a rounded outer clip).
         "configurator glass-floating rounded-panel border border-border/60 overflow-hidden",
-        "grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(280px,360px)]",
+        // Single column below `lg`; at `lg`+ a stage 1fr + aside band. The
+        // band reads from the `--configurator-aside-{min,max}` token pair
+        // (defaults 280px/360px), retunable via the `asideWidth` prop or the
+        // cascade — muster's CLS-fence carrier + value.js's dual-pane axis.
+        "grid grid-cols-1",
+        "lg:grid-cols-[minmax(0,1fr)_minmax(var(--configurator-aside-min,280px),var(--configurator-aside-max,360px))]",
         "min-h-0",
         props.class,
     ),
+);
+
+// Inline custom props the `asideWidth` prop projects onto the root. A single
+// length pins the band (min === max); a [min, max] pair sets each rail. When
+// the prop is absent both stay unset and the cascade/defaults apply.
+const containerStyle = computed(() => {
+    if (props.asideWidth == null) return undefined;
+    const [min, max] = Array.isArray(props.asideWidth)
+        ? props.asideWidth
+        : [props.asideWidth, props.asideWidth];
+    return {
+        "--configurator-aside-min": min,
+        "--configurator-aside-max": max,
+    } as Record<string, string>;
+});
+
+// Visual side flip without a DOM reorder: at `lg`+ place the stage and aside
+// into explicit grid columns. `right` (default) keeps source order (stage in
+// col 1, aside in col 2 — the natural fill). `left` swaps the column targets
+// so the aside paints first; tab order stays stage→aside (no a11y regression).
+// Below `lg` (single column) neither override applies.
+const stageColumnClass = computed(() =>
+    props.asideSide === "left" ? "lg:col-start-2" : "",
+);
+const asideColumnClass = computed(() =>
+    props.asideSide === "left" ? "lg:col-start-1 lg:row-start-1" : "",
+);
+
+// The aside's vertical/horizontal rules follow the side: on the right the
+// hairline sits on its left edge (`lg:border-l`); flipped left, on its right
+// edge (`lg:border-r`). The mobile top border is side-agnostic.
+const asideBorderClass = computed(() =>
+    props.asideSide === "left" ? "lg:border-r lg:border-l-0" : "lg:border-l",
 );
 
 const controlsScrollClass = computed(() => {
@@ -120,15 +186,28 @@ const controlsScrollClass = computed(() => {
 </script>
 
 <template>
-    <section :class="containerClass">
+    <section :class="containerClass" :style="containerStyle">
         <!-- ── Stage column (live specimen viewport) ─────────────────── -->
-        <div class="configurator-stage relative min-h-0 min-w-0 overflow-hidden">
+        <div
+            :class="
+                cn(
+                    'configurator-stage relative min-h-0 min-w-0 overflow-hidden',
+                    stageColumnClass,
+                )
+            "
+        >
             <slot name="stage" />
         </div>
 
         <!-- ── Aside (preset row + controls) ─────────────────────────── -->
         <aside
-            class="configurator-aside flex min-h-0 min-w-0 flex-col border-t border-border/40 lg:border-l lg:border-t-0"
+            :class="
+                cn(
+                    'configurator-aside flex min-h-0 min-w-0 flex-col border-t border-border/40 lg:border-t-0',
+                    asideBorderClass,
+                    asideColumnClass,
+                )
+            "
         >
             <!-- Preset picker row -->
             <div

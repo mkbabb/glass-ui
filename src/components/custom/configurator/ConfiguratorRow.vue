@@ -136,4 +136,50 @@ const resolvedDensity = computed<ConfiguratorDensity | undefined>(
     gap: var(--configurator-row-gap-spacious);
     padding-block: var(--configurator-row-py-spacious);
 }
+
+/*
+ * Container-style-query companion (AS.W4 — @container style(--density)).
+ * Lets a row react to an ANCESTOR's `--density` custom property with no
+ * `data-density` markup contract — a host that sets `--density: compact`
+ * on any wrapping element retunes every descendant row's gap/padding.
+ * In Tailwind v4 every element is a custom-property style-query container
+ * by default, so `style(--density: X)` matches the nearest ancestor that
+ * declares `--density` (no explicit container-name needed).
+ *
+ * Specificity: the inner `.configurator-row` selector (scoped to
+ * `[data-v]`, so 0,2,0) sits just BELOW the `[data-density]` attribute
+ * rules above (0,3,0) and just ABOVE the baked-in `gap-1.5`/`py-2` Tailwind
+ * utilities (0,1,0) — so the container path overrides the bare recipe, yet
+ * a row carrying BOTH the attribute and a `--density` ancestor lands on the
+ * attribute rule (identical token, identical paint). `[data-density]` stays
+ * the SOLE feature-detected fallback (inv 47 — not a dead mirror): the
+ * `@supports` boundary keeps the whole block out of engines without
+ * style-query support, landing them on the attribute path only.
+ */
+@supports (container-type: inline-size) {
+    @container style(--density: mobile) {
+        .configurator-row {
+            gap: var(--configurator-row-gap-mobile);
+            padding-block: var(--configurator-row-py-mobile);
+        }
+    }
+    @container style(--density: compact) {
+        .configurator-row {
+            gap: var(--configurator-row-gap-compact);
+            padding-block: var(--configurator-row-py-compact);
+        }
+    }
+    @container style(--density: comfortable) {
+        .configurator-row {
+            gap: var(--configurator-row-gap-comfortable);
+            padding-block: var(--configurator-row-py-comfortable);
+        }
+    }
+    @container style(--density: spacious) {
+        .configurator-row {
+            gap: var(--configurator-row-gap-spacious);
+            padding-block: var(--configurator-row-py-spacious);
+        }
+    }
+}
 </style>

@@ -480,6 +480,33 @@
         --metric-badge-padding-inline: 0.5rem;
     }
 
+    /* AS.W4 — @container style(--density) companion. A pill nested under a host
+       that sets `--density: comfortable | spacious` on a wrapping element picks
+       up the matching padding register with no `data-density` markup contract;
+       the attribute rules above stay the SOLE feature-detected fallback (inv 47).
+       The inner `.metric-pill.metric-badge--label-stacked` selector (0,2,0) sits
+       just BELOW the `.metric-pill[data-density]…` attribute rules (0,3,0) — so a
+       pill carrying BOTH the attribute and a `--density` ancestor lands on the
+       attribute rule (same tokens, identical paint), while a pill with only the
+       ancestor token still resolves the right register (no competing rule sets
+       these padding custom props at higher weight in that case). The `@supports`
+       boundary keeps the block out of engines without style-query support,
+       landing them on the attribute path only. */
+    @supports (container-type: inline-size) {
+        @container style(--density: spacious) {
+            .metric-pill.metric-badge--label-stacked {
+                --metric-badge-padding-block-stacked: 0.5rem;
+                --metric-badge-padding-inline: 0.75rem;
+            }
+        }
+        @container style(--density: comfortable) {
+            .metric-pill.metric-badge--label-stacked {
+                --metric-badge-padding-block-stacked: 0.25rem;
+                --metric-badge-padding-inline: 0.5rem;
+            }
+        }
+    }
+
     .metric-badge__label {
         letter-spacing: 0.18em;
         line-height: 1;
@@ -892,6 +919,28 @@
         var(--rainbow-pastel-indigo),
         var(--rainbow-pastel-violet)
     );
+}
+
+/* ── Text-highlight paint (CSS Custom Highlight API) ─────────────────────
+   The default `::highlight()` paint for the `useTextHighlight` composable
+   (composables/dom). A named `Highlight` registered in `CSS.highlights`
+   under one of these keys paints its `Range` set without a `<mark>` wrapper.
+   Token-bridged: the search mark reads the canonical pastel-yellow rainbow
+   token at a soft alpha; the equation/variable mark reads `--primary`. Both
+   axes are overridable via the `--text-highlight-*` custom properties. */
+::highlight(glass-search-mark) {
+    background-color: var(
+        --text-highlight-search-bg,
+        color-mix(in srgb, var(--rainbow-pastel-yellow) 55%, transparent)
+    );
+    color: var(--text-highlight-search-fg, inherit);
+}
+::highlight(glass-mark) {
+    background-color: var(
+        --text-highlight-bg,
+        color-mix(in srgb, var(--primary) 18%, transparent)
+    );
+    color: var(--text-highlight-fg, inherit);
 }
 
 /* ── Interactive-button four-state recipe ────────────────────────────────

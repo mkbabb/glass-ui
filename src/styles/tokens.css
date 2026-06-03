@@ -619,6 +619,17 @@
        dock reads as painted chrome, not a frosted ghost. */
     --glass-opacity-dock: 0.42;
 
+    /* Dock foreground over an animated backdrop. A dock floating over an
+       aurora/animated surface (`value.js` dock-over-aurora, a slides routed
+       control, bbnf) sits on a mid-luminance, shifting field where the muted
+       default fg can drop below contrast. This token is the dock control's
+       foreground base — a complete `hsl()` color consumed via `var()`; for the
+       muted icon weight the control mixes it down with `--opacity-icon-muted`.
+       Defaults to `var(--foreground)` so the dock paints byte-identically to
+       today; a consumer overrides it per-backdrop (e.g. a near-white over a
+       dark aurora) without touching library source. */
+    --dock-fg-on-aurora: var(--foreground);
+
     /* Chassis-specific opacity. Looser than `default` (0.50) so the
        <InstrumentChassis> surface reads as glass-over-aurora at its
        64rem-wide footprint; the default tier stays calibrated for cards.

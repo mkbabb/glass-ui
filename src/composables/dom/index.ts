@@ -18,6 +18,10 @@
 //                        native visual state, with a fallback class-toggle for
 //                        engines without `:user-invalid` (AQ.W4; the muster J
 //                        cross-repo coupling contract).
+//   - useTextHighlight — named CSS Custom Highlight API wrapper (CSS.highlights
+//                        registry + ::highlight(<name>) paint); Range-based
+//                        substring/match emphasis with no <mark> DOM mutation,
+//                        feature-detected no-op fallback.
 export * from "./useResizeObserver";
 export * from "./useTouchGate";
 export * from "./useTokenColor";
@@ -26,3 +30,4 @@ export * from "./useViewportReady";
 export * from "./useBreakpoint";
 export * from "./useIdleReady";
 export * from "./useUserInvalidAria";
+export * from "./useTextHighlight";

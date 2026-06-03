@@ -78,9 +78,17 @@ const startedAt = Date.now();
 // headroom (87928 × 1.10 ≈ 96721 → 96800; 349789 × 1.10 ≈ 384768 → 385000),
 // per the same set-against-reality methodology AO.W4 used — re-based ONCE at
 // close, not bumped per wave.
+// CSS ceiling re-based at AS.W5 (P9 — the build-independent component-utility
+// ship). P9 emits glass-ui's own component-utility rules (rounded-panel,
+// text-muted-foreground, h-full, the CVA variants, …) into the published
+// dist/styles bundle so a consumer paints correctly with no `@source` glob (the
+// constellation-wide silent-styling repair). components.css adds raw ≈ 57 KB /
+// gzip ≈ 9 KB to the resolved draw → measured dist/styles/index.css gzip 97749 /
+// raw 412097. Re-based with modest headroom (gzip 100000, raw 420000) — this is
+// a ONE-TIME structural correctness addition, not per-wave creep.
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
-    "dist/styles/index.css": { raw: 385_000, gzip: 96_800 },
+    "dist/styles/index.css": { raw: 420_000, gzip: 100_000 },
 };
 
 // AO.W2 (inv α) — the real consumer-draw CSS artifact.

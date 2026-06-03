@@ -17,7 +17,7 @@ function item(id: string, label: string): SearchableItem {
 }
 
 describe("FuzzySearch highlighting", () => {
-    it("renders highlighted labels without interpreting item HTML", async () => {
+    it("renders the full label as plain text without interpreting item HTML", async () => {
         const malicious = item("malicious", '<img src=x onerror="alert(1)">Alpha');
         const result: SearchResult = {
             item: malicious,
@@ -45,9 +45,16 @@ describe("FuzzySearch highlighting", () => {
 
         const label = wrapper.find(".fuzzy-search-label");
         expect(label.exists()).toBe(true);
+        // The full label is interpolated as text — the malicious markup never
+        // becomes a DOM node.
         expect(label.text()).toContain('<img src=x onerror="alert(1)">Alpha');
         expect(label.element.querySelector("img")).toBeNull();
-        expect(label.find("mark").text()).toBe("img");
+        // Match emphasis rides the CSS Custom Highlight API, not a <mark>
+        // splitter — the label carries no element children. (In this env
+        // CSS.highlights is absent, so the highlight no-ops; the text still
+        // renders intact, which is the graceful fallback.)
+        expect(label.find("mark").exists()).toBe(false);
+        expect(label.element.children.length).toBe(0);
 
         wrapper.unmount();
     });

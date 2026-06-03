@@ -670,7 +670,11 @@
         border: none;
         background: transparent;
         border-radius: var(--dock-control-radius, var(--radius-pill));
-        color: color-mix(in srgb, var(--foreground) calc(var(--opacity-icon-muted) * 100%), transparent);
+        /* Foreground base routes through `--dock-fg-on-aurora` (defaults to
+           `--foreground`, byte-identical to before) so a consumer floating the
+           dock over an aurora can lift contrast per-backdrop. The muted icon
+           weight mixes that base down with `--opacity-icon-muted`. */
+        color: color-mix(in srgb, var(--dock-fg-on-aurora, var(--foreground)) calc(var(--opacity-icon-muted) * 100%), transparent);
         outline: none;
         transition:
             background-color var(--dock-motion-fast),
@@ -968,7 +972,8 @@
         border: none;
         background: transparent;
         border-radius: var(--dock-control-radius, var(--radius-pill));
-        color: color-mix(in srgb, var(--foreground) calc(var(--opacity-icon-muted) * 100%), transparent);
+        /* Shares the dock-icon-button legibility base (`--dock-fg-on-aurora`). */
+        color: color-mix(in srgb, var(--dock-fg-on-aurora, var(--foreground)) calc(var(--opacity-icon-muted) * 100%), transparent);
         outline: none;
         transition:
             background-color var(--dock-motion-fast),
@@ -1080,6 +1085,20 @@
         .glass-dock[data-density] {
             --dock-control-size: var(--dock-touch-target, 2.75rem);
             --size-icon-btn: var(--dock-touch-target, 2.75rem);
+        }
+
+        /* S-2 — the in-dock floor above lifts the control-SIZE token, which
+           only reaches a DockIconButton that has a `.glass-dock` ancestor.
+           A STANDALONE DockIconButton (a routed settings gear, no dock
+           wrapper) reads the bare `--size-icon-btn` and would fall below the
+           44px WCAG target. This button-level floor holds the touch box
+           regardless of ancestry; the in-dock rule above stays (more specific,
+           and it also reserves the slot in the dock's width-math). Compact
+           buttons opt out — they are auto-sized affordances, not primary
+           targets. */
+        .dock-icon-button:not(.dock-icon-button--compact) {
+            min-block-size: var(--dock-touch-target, 2.75rem);
+            min-inline-size: var(--dock-touch-target, 2.75rem);
         }
     }
 }

@@ -70,7 +70,7 @@ const vtId = useId();
 const stackVtStyle = computed<Record<string, string> | undefined>(() =>
     supportsVT
         ? {
-              "view-transition-name": `gl-dock-stack-${(vtId ?? "0").replace(/[^a-zA-Z0-9_-]/g, "-")}`,
+              "view-transition-name": `gl-dock-stack-${vtId.replace(/[^a-zA-Z0-9_-]/g, "-")}`,
               "view-transition-class": "gl-dock-layer",
           }
         : undefined,

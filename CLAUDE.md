@@ -142,7 +142,7 @@ src/
 │   ├── theme.css                   # @theme block: Tailwind color/font/radius aliases + dark variant
 │   ├── typography.css              # golden-ratio scale (√φ), semantic classes, font utilities
 │   ├── glass.css                   # .glass-{wash,quiet,resting,floating,overlay} 5-rung ladder + .glass-card / .glass-pill / .glass-btn
-│   ├── dock.css                    # .dock-icon-btn, .dock-select-trigger, .dock-separator, .dock-layer-grid, density-rail
+│   ├── dock.css                    # .dock-icon-button, .dock-select-trigger, .dock-separator, .dock-layer-grid, density-rail
 │   ├── dock-group.css              # DockGroup chassis-strip rules
 │   ├── disco-glyph.css             # DiscoGlyph layered fills + facet gradient
 │   ├── glyph-face.css              # GlyphFace cap + backplate cascade
