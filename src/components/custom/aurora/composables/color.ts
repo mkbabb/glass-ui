@@ -107,6 +107,12 @@ export function hexToOklchStop(hex: string): OklchStop {
  * Resolve any CSS color string to an OKLCh stop via value.js's parser — the
  * single canonical core (inv-K-2). Replaces the former 1×1-canvas `cssToRgb`
  * DOM trick, so this now works in SSR / happy-dom (no `document` required).
+ *
+ * Semantics differ from the old canvas path (which masked them): an INVALID
+ * string THROWS (the canvas silently returned gray); ALPHA is dropped (OklchStop
+ * has no alpha; the canvas blended against a gray pre-fill); out-of-gamut inputs
+ * are NOT byte-clamped. Callers feeding user-supplied / possibly-transparent
+ * strings should wrap in try/catch and decide an alpha policy.
  */
 export function cssToOklch(css: string): OklchStop {
     // `parseCSSColor` returns a loosely-typed parse-mode ValueUnit whose channels
