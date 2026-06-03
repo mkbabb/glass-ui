@@ -50,78 +50,22 @@
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import {
+    PUBLISHERS,
+    CONSUMERS,
+    resolveSibling,
+    skipSibling,
+} from "./constellation.mjs";
 
 // ---------------------------------------------------------------------------
-// CONSTELLATION — maintainable const. Update when repos join or leave the
-// @mkbabb/* workspace. Paths are siblings of glass-ui under the shared parent.
+// CONSTELLATION — membership + absent-sibling policy live in constellation.mjs
+// (AS.W2, inv-θ): the single source of the @mkbabb/* workspace table. The
+// publisher loop reads PUBLISHERS; the consumer loop reads CONSUMERS (which
+// carries `viteConfigs` — the resolution-contract config files per repo).
+// Every absent-sibling case routes through resolveSibling()+skipSibling():
+// a sibling absent on a clean runner is a graceful logged skip (the registry
+// is the primary surface), while glass-ui's own `self` repo is REQUIRED.
 // ---------------------------------------------------------------------------
-
-const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-const PARENT = resolve(ROOT, "..");
-
-/**
- * Publisher packages — `@mkbabb/*` libraries that are workspace-linked between
- * sibling repos. Under contract-v2 each must declare the 3-key exports shape,
- * carry no `development` key, and expose a `build:watch` script.
- * These are the repos that appear as `file:` deps in other repos' package.json.
- *
- * Format: { id: string, dir: string }
- *   id  — human-readable name for diagnostics
- *   dir — absolute path to the repo root
- */
-const PUBLISHER_PACKAGES = [
-    { id: "glass-ui",     dir: ROOT },
-    { id: "keyframes.js", dir: resolve(PARENT, "keyframes.js") },
-    { id: "value.js",     dir: resolve(PARENT, "value.js") },
-];
-
-/**
- * Consumer repos — every repo that has a Vite config and might carry a
- * `resolve.alias` pointing at a sibling `@mkbabb/*` dist/ path.
- * glass-ui itself is a consumer of keyframes.js.
- *
- * Format: { id: string, viteConfigs: string[] }
- *   id          — human-readable name for diagnostics
- *   viteConfigs — relative paths from that repo's root to its Vite config(s)
- */
-const CONSUMER_REPOS = [
-    {
-        id: "glass-ui",
-        dir: ROOT,
-        viteConfigs: ["vite.config.ts"],
-    },
-    {
-        id: "keyframes.js",
-        dir: resolve(PARENT, "keyframes.js"),
-        viteConfigs: ["vite.config.ts"],
-    },
-    {
-        id: "value.js",
-        dir: resolve(PARENT, "value.js"),
-        viteConfigs: ["vite.config.ts"],
-    },
-    {
-        id: "fourier-analysis/web",
-        dir: resolve(PARENT, "fourier-analysis/web"),
-        viteConfigs: ["vite.config.ts"],
-    },
-    {
-        id: "bbnf-buddy",
-        dir: resolve(PARENT, "bbnf-buddy"),
-        viteConfigs: ["vite.config.ts"],
-    },
-    {
-        id: "words/frontend",
-        dir: resolve(PARENT, "words/frontend"),
-        viteConfigs: ["vite.config.ts"],
-    },
-    {
-        id: "speedtest",
-        dir: resolve(PARENT, "speedtest"),
-        viteConfigs: ["vite.config.ts"],
-    },
-];
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -205,28 +149,36 @@ function scanViteConfigForDistAliases(filePath) {
 function checkPublisherPackages() {
     const violations = [];
 
-    for (const pkg of PUBLISHER_PACKAGES) {
+    for (const pkg of PUBLISHERS) {
+        // Absent-sibling policy (constellation.mjs): a sibling publisher repo
+        // that isn't checked out on this runner (the CI case — siblings live
+        // under PARENT, absent on a clean Actions runner) is a graceful logged
+        // skip, never a violation — the contract-v2 exports shape can only be
+        // verified for a publisher that EXISTS. glass-ui's own `self` repo is
+        // REQUIRED, so its absence IS a real error.
+        const { present, self } = resolveSibling(pkg);
+        if (!present) {
+            if (self) {
+                violations.push({
+                    repo: pkg.id,
+                    file: "package.json",
+                    line: null,
+                    message: "self repo not checked out — glass-ui must always be present",
+                });
+            } else {
+                skipSibling("proof:resolution", pkg);
+            }
+            continue;
+        }
+
         const pkgJsonPath = resolve(pkg.dir, "package.json");
 
         if (!existsSync(pkgJsonPath)) {
-            // A sibling publisher repo that isn't checked out on this runner (the
-            // CI case — siblings live under PARENT, absent on a clean Actions
-            // runner) is not a contract violation: the contract-v2 exports shape
-            // can only be verified for a publisher that EXISTS. glass-ui itself
-            // (dir = ROOT) is always present, so an absent package.json there IS
-            // a real error; an absent SIBLING is a non-fatal skip (mirrors the
-            // consumer-config skip below — "no silent cap": log it).
-            if (pkg.dir !== ROOT) {
-                console.log(
-                    `[proof:resolution] publisher ${pkg.id} not checked out — sibling skip (CI-expected)`,
-                );
-                continue;
-            }
             violations.push({
                 repo: pkg.id,
                 file: "package.json",
                 line: null,
-                message: "package.json not found — repo missing or path wrong in PUBLISHER_PACKAGES",
+                message: "package.json not found — repo present but exports manifest missing",
             });
             continue;
         }
@@ -302,12 +254,30 @@ function checkPublisherPackages() {
 function checkConsumerViteConfigs() {
     const violations = [];
 
-    for (const consumer of CONSUMER_REPOS) {
+    for (const consumer of CONSUMERS) {
+        // Absent-sibling policy (constellation.mjs): a consumer repo absent on
+        // a clean runner is a graceful logged skip (no silent cap). glass-ui's
+        // own `self` repo is always present, so it never trips this branch.
+        const { present, self } = resolveSibling(consumer);
+        if (!present) {
+            if (self) {
+                violations.push({
+                    repo: consumer.id,
+                    file: "<repo>",
+                    line: null,
+                    message: "self repo not checked out — glass-ui must always be present",
+                });
+            } else {
+                skipSibling("proof:resolution", consumer);
+            }
+            continue;
+        }
+
         for (const relPath of consumer.viteConfigs) {
             const fullPath = resolve(consumer.dir, relPath);
 
             if (!existsSync(fullPath)) {
-                // Not all consumers may have every config; non-fatal skip.
+                // The repo is present but lacks this particular config; non-fatal skip.
                 continue;
             }
 

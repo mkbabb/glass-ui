@@ -5,6 +5,10 @@ dist/
 demo/dist/
 demo/.qa/
 .claude/worktrees/
+# AS.W2 inv-θ — gate output is a pure function in a gitignored cache (no
+# tracked-state side effect; a deliberate snapshot uses GATE_SNAPSHOT=1 + the
+# gate's env override to a committed path).
+.cache/
 .DS_Store
 **/.DS_Store
 

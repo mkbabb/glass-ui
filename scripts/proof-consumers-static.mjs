@@ -1,28 +1,42 @@
-import {
-    existsSync,
-    mkdirSync,
-    readFileSync,
-    readdirSync,
-    statSync,
-    writeFileSync,
-} from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, extname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import {
+    CONSUMERS,
+    ROOT,
+    resolveSibling,
+    skipSibling,
+} from "./constellation.mjs";
+import { gateArtifactPath, writeGateArtifact } from "./gate-output.mjs";
 
-const root = resolve(fileURLToPath(new URL("../", import.meta.url)));
-const parent = resolve(root, "..");
-const artifactPath = resolve(
-    root,
-    process.env.GLASS_UI_CONSUMERS_STATIC_ARTIFACT ?? "docs/tranches/F/audit/W1-consumers-static.json",
+const root = ROOT;
+const artifactPath = gateArtifactPath(
+    "GLASS_UI_CONSUMERS_STATIC_ARTIFACT",
+    "W1-consumers-static",
 );
 const packageJson = JSON.parse(readFileSync(resolve(root, "package.json"), "utf8"));
 
-const consumers = [
-    { id: "fourier-analysis/web", dir: resolve(parent, "fourier-analysis/web") },
-    { id: "words/frontend", dir: resolve(parent, "words/frontend") },
-    { id: "bbnf-lang/playground", dir: resolve(parent, "bbnf-lang/playground") },
-    { id: "speedtest", dir: resolve(parent, "speedtest") },
-];
+// The consumers THIS gate scans — the four sibling app repos it walked before
+// AS.W2 (fourier-analysis/web, words/frontend, bbnf-lang/playground, speedtest).
+// Drawn from the constellation table by id, EXCLUDING self/glass-ui and the
+// publishers (keyframes.js, value.js) this surface-creep gate never scanned, and
+// bbnf-buddy (not in the original scanned set). Absent siblings on a clean runner
+// are a graceful logged skip via skipSibling (registry-default policy).
+const SCANNED_CONSUMER_IDS = new Set([
+    "fourier-analysis/web",
+    "words/frontend",
+    "bbnf-lang/playground",
+    "speedtest",
+]);
+const consumers = CONSUMERS.filter((c) => SCANNED_CONSUMER_IDS.has(c.id))
+    .map((c) => {
+        const { present, dir } = resolveSibling(c);
+        if (!present) {
+            skipSibling("proof:consumers:static", c);
+            return null;
+        }
+        return { id: c.id, dir };
+    })
+    .filter(Boolean);
 
 const sourceExts = new Set([".ts", ".tsx", ".js", ".jsx", ".vue", ".css", ".scss", ".pcss", ".json"]);
 const ignoredDirs = new Set([
@@ -431,25 +445,17 @@ const results = consumers.map((consumer) => {
     };
 });
 
-mkdirSync(dirname(artifactPath), { recursive: true });
-writeFileSync(
-    artifactPath,
-    `${JSON.stringify(
-            {
-                generatedAt: new Date().toISOString(),
-                rootContractFiles: rootContractFiles.map((file) => file.slice(root.length + 1)),
-                rootAllowedSymbols: [...rootAllowed].sort(),
-                actualRootExports: [...actualRootExports].sort(),
-                rootSurfaceFailures: {
-                    unexpectedRootExports,
-                    missingRootExports,
-                },
-                consumers: results,
-            },
-        null,
-        2,
-    )}\n`,
-);
+writeGateArtifact(artifactPath, {
+    generatedAt: new Date().toISOString(),
+    rootContractFiles: rootContractFiles.map((file) => file.slice(root.length + 1)),
+    rootAllowedSymbols: [...rootAllowed].sort(),
+    actualRootExports: [...actualRootExports].sort(),
+    rootSurfaceFailures: {
+        unexpectedRootExports,
+        missingRootExports,
+    },
+    consumers: results,
+});
 
 const failed = results.filter((result) => result.failures.length > 0);
 if (unexpectedRootExports.length > 0 || missingRootExports.length > 0 || failed.length > 0) {

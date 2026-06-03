@@ -50,70 +50,34 @@
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
-
-const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-const PARENT = resolve(ROOT, "..");
+import { CONSUMERS, ROOT, resolveSibling, skipSibling } from "./constellation.mjs";
 
 // ---------------------------------------------------------------------------
-// CONSTELLATION — maintainable const. Mirrors the CONSUMER_REPOS list shape in
-// `proof-resolution-contract.mjs`. Update when repos join or leave the
-// @mkbabb/* workspace. Each entry names the source roots to grep — the dirs a
-// consumer's templates/stylesheets live in (className references appear in
-// .vue / .ts / .tsx / .css / .html).
+// CONSTELLATION — membership comes from constellation.mjs (AS.W2, inv-θ), the
+// SINGLE source of constellation/sibling membership + the ONE absent-sibling
+// policy. The prior hardcoded list lived here and had drifted from the other
+// gates' partial views; it is now the canonical CONSUMERS union (glass-ui's own
+// src/ + demo/ first — invariant 32 greps glass-ui's OWN corpus for a reference
+// to a class it has retired — then every @mkbabb/* consumer repo).
 //
-// glass-ui itself is listed first — invariant 32 greps glass-ui's OWN src/ +
-// demo/ for any reference to a class it has retired (a stale demo story or a
-// substrate self-reference is just as much a phantom as a consumer one).
+// Each entry names the source roots to grep — the dirs a consumer's
+// templates/stylesheets live in (className references appear in
+// .vue / .ts / .tsx / .css / .html). We map CONSUMERS's `{ id, dir, roots }`
+// onto the local `{ id, base, roots }` shape (`base` ← `dir`): `base` is the
+// repo root grep hits are reported relative to. An absent root resolves to a
+// logged sibling-skip via resolveSibling/skipSibling — absence is the
+// clean-runner case (registry-default), never a silent cap.
 //
 // Format: { id: string, base: string, roots: string[] }
-//   id    — human-readable name for diagnostics
-//   base  — the repo root; grep hits are reported relative to it
-//   roots — absolute paths to grep recursively
 // ---------------------------------------------------------------------------
 
-const REPOS = [
-    {
-        id: "glass-ui",
-        base: ROOT,
-        roots: [resolve(ROOT, "src"), resolve(ROOT, "demo")],
-    },
-    {
-        id: "keyframes.js",
-        base: resolve(PARENT, "keyframes.js"),
-        roots: [resolve(PARENT, "keyframes.js/src")],
-    },
-    {
-        id: "value.js",
-        base: resolve(PARENT, "value.js"),
-        roots: [resolve(PARENT, "value.js/src")],
-    },
-    {
-        id: "fourier-analysis",
-        base: resolve(PARENT, "fourier-analysis"),
-        // fourier carries both a legacy `src/` and the active `web/src/`.
-        roots: [
-            resolve(PARENT, "fourier-analysis/src"),
-            resolve(PARENT, "fourier-analysis/web/src"),
-        ],
-    },
-    {
-        id: "bbnf-buddy",
-        base: resolve(PARENT, "bbnf-buddy"),
-        roots: [resolve(PARENT, "bbnf-buddy/src")],
-    },
-    {
-        id: "words/frontend",
-        base: resolve(PARENT, "words/frontend"),
-        roots: [resolve(PARENT, "words/frontend/src")],
-    },
-    {
-        id: "speedtest",
-        base: resolve(PARENT, "speedtest"),
-        roots: [resolve(PARENT, "speedtest/src")],
-    },
-];
+const REPOS = CONSUMERS.map(({ id, dir, roots, self }) => ({
+    id,
+    base: dir,
+    roots,
+    self: Boolean(self),
+}));
 
 // File extensions that can carry a CSS class reference (markup + stylesheets).
 const SCAN_GLOBS = ["*.vue", "*.ts", "*.tsx", "*.js", "*.jsx", "*.css", "*.html"];
@@ -140,7 +104,7 @@ const SCAN_GLOBS = ["*.vue", "*.ts", "*.tsx", "*.js", "*.jsx", "*.css", "*.html"
 
 const KNOWN_PENDING = [
     {
-        repo: "fourier-analysis",
+        repo: "fourier-analysis/web",
         reason:
             "Q.W4 Lane F migration delivered as the un-applied patch " +
             "docs/tranches/Q/audit/W4-Lane-F-fourier.patch — the fourier team " +
@@ -314,7 +278,11 @@ function grepClassInRepo(className, repo) {
     const localRe = new RegExp(`(^|[^-A-Za-z0-9_])${escaped}([^-A-Za-z0-9_]|$)`);
 
     for (const root of repo.roots) {
-        if (!existsSync(root)) continue; // a consumer may lack a given root
+        // A present repo may still lack a given root (fourier carries a legacy
+        // `src/` AND an active `web/src/` — only one need exist). Whole-repo
+        // absence is logged once upstream via skipSibling; a missing sub-root
+        // inside a present repo is the multi-root case, silently skipped here.
+        if (!existsSync(root)) continue;
         let out = "";
         try {
             out = execFileSync(
@@ -369,20 +337,52 @@ function escapeForEre(s) {
     return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+/**
+ * Resolve REPOS to the present-on-disk subset, applying the ONE absent-sibling
+ * policy (constellation.mjs). An absent self (glass-ui) is a hard error — the
+ * gate cannot grep its own corpus; an absent sibling is a graceful LOGGED skip
+ * (registry-default world: the local checkout is a dev convenience, ABSENT on a
+ * clean CI runner). The skip is emitted via skipSibling so absence is never a
+ * silent cap.
+ */
+function presentRepos() {
+    const present = [];
+    for (const repo of REPOS) {
+        const { present: onDisk, self } = resolveSibling({
+            id: repo.id,
+            dir: repo.base,
+            self: repo.self,
+        });
+        if (onDisk) {
+            present.push(repo);
+            continue;
+        }
+        if (self) {
+            console.error(
+                `[proof:phantom-classes] FATAL — self repo glass-ui absent at ${repo.base}`,
+            );
+            process.exit(2);
+        }
+        skipSibling("proof:phantom-classes", repo);
+    }
+    return present;
+}
+
 // ---------------------------------------------------------------------------
 // Mode: default — registry sweep (invariant 32)
 // ---------------------------------------------------------------------------
 
 function runRegistrySweep() {
     const classes = readRegistry();
+    const repos = presentRepos();
     console.log(
         `[proof:phantom-classes] registry sweep — ${classes.length} retired class(es) ` +
-            `× ${REPOS.length} repos`,
+            `× ${repos.length} present repo(s)`,
     );
 
     const allHits = [];
     for (const className of classes) {
-        for (const repo of REPOS) {
+        for (const repo of repos) {
             allHits.push(...grepClassInRepo(className, repo));
         }
     }
@@ -470,12 +470,13 @@ function runPreDeletion(className) {
         process.exit(2);
     }
 
+    const repos = presentRepos();
     console.log(
-        `[proof:phantom-classes] pre-deletion grep — "${className}" × ${REPOS.length} repos`,
+        `[proof:phantom-classes] pre-deletion grep — "${className}" × ${repos.length} present repo(s)`,
     );
 
     const allHits = [];
-    for (const repo of REPOS) {
+    for (const repo of repos) {
         allHits.push(...grepClassInRepo(className, repo));
     }
 
@@ -508,7 +509,7 @@ function runPreDeletion(className) {
         );
         console.log(
             `    proof:phantom-classes --pre-deletion ${className} → 0 consumer sites ` +
-                `(${REPOS.length} repos)`,
+                `(${repos.length} present repos)`,
         );
         console.log(
             `  After deleting, append "${className}" to .retired-classes.txt so the ` +

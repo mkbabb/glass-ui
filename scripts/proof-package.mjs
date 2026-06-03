@@ -1,13 +1,21 @@
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { dirname, join, resolve } from "node:path";
+import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { PUBLISHERS, resolveSibling } from "./constellation.mjs";
+import { gateArtifactPath, writeGateArtifact } from "./gate-output.mjs";
 
 const root = resolve(fileURLToPath(new URL("../", import.meta.url)));
-const parent = resolve(root, "..");
-const keyframes = resolve(parent, "keyframes.js");
-const artifactPath = resolve(root, process.env.GLASS_UI_PACKAGE_ARTIFACT ?? "docs/tranches/F/audit/W1-package-proof.json");
+// The keyframes.js sibling publisher — constellation owns its location + the
+// present/absent policy. A dev machine has the local checkout; a clean CI
+// runner does not, and resolves the published peer range via the registry.
+const keyframesPublisher = PUBLISHERS.find((p) => p.id === "keyframes.js");
+const keyframes = keyframesPublisher.dir;
+const artifactPath = gateArtifactPath(
+    "GLASS_UI_PACKAGE_ARTIFACT",
+    "W1-package-proof",
+);
 const tmp = join(tmpdir(), `glass-ui-packed-fixture-${Date.now()}`);
 const pkg = JSON.parse(
     execFileSync("node", ["-e", "console.log(JSON.stringify(require('./package.json')))"], {
@@ -61,22 +69,21 @@ function dependencyVersion(name) {
 }
 
 function writeArtifact(status, extra = {}) {
-    mkdirSync(dirname(artifactPath), { recursive: true });
-    writeFileSync(
+    // `generatedAt` + the live `durationMs` measurements are volatile: dropped
+    // by default so the cache artefact is byte-stable (git stays clean); kept
+    // only under GATE_SNAPSHOT=1 for a deliberate committed snapshot.
+    writeGateArtifact(
         artifactPath,
-        `${JSON.stringify(
-            {
-                generatedAt: new Date().toISOString(),
-                status,
-                package: pkg.name,
-                version: pkg.version,
-                durationMs: Date.now() - startedAt,
-                steps,
-                ...extra,
-            },
-            null,
-            2,
-        )}\n`,
+        {
+            generatedAt: new Date().toISOString(),
+            status,
+            package: pkg.name,
+            version: pkg.version,
+            durationMs: Date.now() - startedAt,
+            steps,
+            ...extra,
+        },
+        { volatile: ["durationMs", "steps"] },
     );
 }
 
@@ -105,7 +112,8 @@ try {
                     // packed surface against the in-tree keyframes); fall back to the
                     // published peer range on a clean runner where no `../keyframes.js`
                     // exists (CI), exactly as the other peers resolve via the registry.
-                    "@mkbabb/keyframes.js": existsSync(keyframes)
+                    "@mkbabb/keyframes.js": resolveSibling(keyframesPublisher)
+                        .present
                         ? `file:${keyframes}`
                         : dependencyVersion("@mkbabb/keyframes.js"),
                     "@vueuse/core": dependencyVersion("@vueuse/core"),

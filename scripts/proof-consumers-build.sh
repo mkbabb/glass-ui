@@ -3,13 +3,22 @@ set -euo pipefail
 
 ROOT="$(git rev-parse --show-toplevel)"
 PARENT="$(dirname "$ROOT")"
-ARTIFACT="${GLASS_UI_CONSUMERS_BUILD_ARTIFACT:-$ROOT/docs/tranches/F/audit/W1-consumers-build.json}"
-CONSUMERS=(
-    "fourier-analysis/web"
-    "words/frontend"
-    "bbnf-lang/playground"
-    "speedtest"
-)
+# AS.W2 inv-θ — the consumer set + the absent-sibling policy come from the ONE
+# membership source (scripts/constellation.mjs), never a hardcoded bash array.
+# The build set is the APP consumers (CONSUMERS minus self minus the publishers
+# keyframes/value); each line is `<id>\t<dir>`. Absent siblings skip-by-policy.
+mapfile -t CONSUMER_ROWS < <(node -e '
+import("'"$ROOT"'/scripts/constellation.mjs").then((m) => {
+  const pub = new Set(m.PUBLISHERS.map((p) => p.id));
+  for (const c of m.CONSUMERS) {
+    if (c.self || pub.has(c.id)) continue;
+    console.log(`${c.id}\t${c.dir}`);
+  }
+});
+')
+# AS.W2 inv-θ — pure output: the default artefact lands in the gitignored cache;
+# the env override still points it at a committed path for a deliberate snapshot.
+ARTIFACT="${GLASS_UI_CONSUMERS_BUILD_ARTIFACT:-$ROOT/.cache/gates/W1-consumers-build.json}"
 
 mkdir -p "$(dirname "$ARTIFACT")"
 
@@ -17,12 +26,12 @@ status=0
 first=1
 {
     printf '{\n'
-    printf '  "generatedAt": "%s",\n' "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
     printf '  "consumers": [\n'
 } > "$ARTIFACT"
 
-for consumer in "${CONSUMERS[@]}"; do
-    consumer_dir="$PARENT/$consumer"
+for row in "${CONSUMER_ROWS[@]}"; do
+    consumer="${row%%$'\t'*}"
+    consumer_dir="${row#*$'\t'}"
     start="$(date +%s)"
     rc=0
 

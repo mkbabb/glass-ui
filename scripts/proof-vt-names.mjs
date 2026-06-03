@@ -24,13 +24,18 @@
 //   - emit a JSON report, print a human summary, process.exit(1) on violation
 //     (fail-closed).
 
-import { existsSync, readdirSync, readFileSync, mkdirSync, writeFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const SRC = resolve(ROOT, "src");
-const ARTIFACT = resolve(ROOT, "docs/tranches/AR/audit/W2-vt-names.json");
+// inv-θ: gate output is a pure function landing in a gitignored cache by default
+// (.cache/gates/W2-vt-names.json). A DELIBERATE snapshot to the committed
+// AR-audit path is opt-in via GLASS_UI_VT_NAMES_ARTIFACT (+ GATE_SNAPSHOT=1 for
+// the timestamp). Default → byte-stable cache, so a gate run leaves git clean.
+const ARTIFACT = gateArtifactPath("GLASS_UI_VT_NAMES_ARTIFACT", "W2-vt-names");
 
 // ---------------------------------------------------------------------------
 // DOCUMENTED PAGE-SINGLETON ALLOWLIST.
@@ -203,25 +208,73 @@ function lineOf(text, index) {
 // ---------------------------------------------------------------------------
 // Mint detection.
 //
-// JS-side dynamic mint: an object property `"view-transition-name":` /
-//   `"anchor-name":` whose value is NOT a bare static string literal (it is a
-//   template literal or any expression), OR a template-literal style string that
-//   carries `view-transition-name:`/`anchor-name:` with a `${…}` interpolation.
+// The mint of a `view-transition-name` / `anchor-name` can arrive through SIX
+// surface forms; AS.W0 proved the original single-shape scan caught only the
+// first two and let the other four slip SILENTLY. All six are detected and
+// ruled identically (dataflow-traced for the dynamic ones, allowlist-governed
+// for the static ones):
 //
-// CSS/static mint: a literal `view-transition-name: <ident>;` /
-//   `anchor-name: <ident>;` with NO interpolation.
+//   (a) JS object-property kebab mint — `"view-transition-name": <expr>`
+//       (the :style/style-object literal form).
+//   (b) CSS / template-literal style-string declaration — `view-transition-name:
+//       <value>;` (CSS static, or a backtick style-string carrying a `${…}`).
+//   (c) camelCase IDL assignment — `.style.viewTransitionName = <expr>` /
+//       `.viewTransitionName = <expr>` / `.style.anchorName = <expr>`.
+//   (d) setProperty 2-arg — `.style.setProperty("view-transition-name", <expr>)`
+//       / `("anchor-name", <expr>)` (string-LITERAL first arg only — a variable
+//       first arg like `dim.value` is NOT this property and is not flagged).
+//   (e) setAttribute style-string — `.setAttribute("style", `…view-transition-
+//       name:…`)` (a `style` attribute string carrying the property).
+//   (f) .vue <template> inline — `style="…view-transition-name:…"` or a `:style`
+//       binding object literal `{ "view-transition-name": <expr> }` / camelCase
+//       `{ viewTransitionName: <expr> }`, scanned in the TEMPLATE region.
+//
+// A dynamic mint (interpolated / expression-valued) is then DATAFLOW-traced: its
+// value must resolve to `useId()` (directly or through a module-scope binding
+// chain). A value tracing to a module-level numeric counter (`let X = 0`), a
+// `.length`, or a clock/random source is a VIOLATION. A static mint is governed
+// by the page-singleton allowlist.
 // ---------------------------------------------------------------------------
 const PROP_NAMES = ["view-transition-name", "anchor-name"];
+// camelCase IDL spellings paired to the kebab property names.
+const IDL_NAMES = ["viewTransitionName", "anchorName"];
 
-// JS object-property mint:  "view-transition-name": <value-up-to-,-or-}>
+// (a) JS object-property mint:  "view-transition-name": <value-up-to-,-or-}>
 const jsPropRe = new RegExp(
     `["'](${PROP_NAMES.join("|")})["']\\s*:\\s*([^,}\\n]+)`,
     "g",
 );
 
-// CSS declaration mint:  view-transition-name: <value> ;   (property, not quoted key)
+// (b/e/f) CSS declaration mint:  view-transition-name: <value> ;  (property, not
+// quoted key). Reused to scan CSS regions, template-region inline style strings,
+// and any backtick style-string carrying the property.
 const cssDeclRe = new RegExp(
     `(^|[^"'\\w-])(${PROP_NAMES.join("|")})\\s*:\\s*([^;\\n}]+)`,
+    "g",
+);
+
+// (c) camelCase IDL assignment:  .viewTransitionName = <expr>  /  .anchorName = …
+//     (covers both `.style.viewTransitionName=` and a bare `.viewTransitionName=`).
+//     `==`/`===`/`!=` comparisons are excluded via the negative lookahead.
+const idlAssignRe = new RegExp(
+    `\\.(${IDL_NAMES.join("|")})\\s*=\\s*(?!=)([^;\\n]+)`,
+    "g",
+);
+
+// (d) setProperty 2-arg with a STRING-LITERAL property name:
+//     .setProperty("view-transition-name", <expr>)
+const setPropRe = new RegExp(
+    `\\.setProperty\\(\\s*["'](${PROP_NAMES.join("|")})["']\\s*,\\s*([^)\\n]+)\\)`,
+    "g",
+);
+
+// (e) setAttribute("style", <string>) — flag when the style string carries the
+//     property. We capture the whole second arg and re-scan it with cssDeclRe.
+const setAttrStyleRe = /\.setAttribute\(\s*["']style["']\s*,\s*([^)]*)\)/g;
+
+// (f) .vue <template> `:style` binding camelCase object key — viewTransitionName: …
+const tmplIdlKeyRe = new RegExp(
+    `(${IDL_NAMES.join("|")})\\s*:\\s*([^,}\\n]+)`,
     "g",
 );
 
@@ -229,20 +282,21 @@ function hasInterpolation(value) {
     return /\$\{/.test(value);
 }
 
-// Is the JS-property value a BARE static string literal (no interpolation /
-// expression)?  e.g.  "foo"  or  'bar'  → static; `gl-${x}` / expr → dynamic.
+// Is the value a BARE static string literal (no interpolation / expression)?
+//   e.g.  "foo"  or  'bar'  → static; `gl-${x}` / expr → dynamic.
 function isBareStaticString(value) {
     const v = value.trim();
     return /^["'][^"'`$]*["']\s*$/.test(v);
 }
 
 // Find a module-level (script/module scope — NOT inside a function/arrow body)
-// numeric `let <ident> = <integer>;` counter. We approximate "module scope" via
-// brace-depth: depth 0 at the position the `let` begins. Returns the set of
-// counter ident names declared at depth 0.
+// numeric `let|var <ident> = <integer>;` counter. We approximate "module scope"
+// via brace-depth: depth 0 at the position the decl begins. Returns the set of
+// counter ident names declared at depth 0. (`const` can't be a counter — it is
+// never reassigned — so it is excluded.)
 function moduleLevelNumericLets(text) {
     const names = new Set();
-    const re = /\blet\s+([A-Za-z_$][\w$]*)\s*=\s*-?\d+\s*;/g;
+    const re = /\b(?:let|var)\s+([A-Za-z_$][\w$]*)\s*=\s*-?\d+\s*;/g;
     let m;
     while ((m = re.exec(text)) !== null) {
         // Brace depth before this match (ignoring braces inside strings is
@@ -293,24 +347,55 @@ function moduleLevelBindings(text) {
     return map;
 }
 
-// Does any module-level numeric counter in `counterNames` FEED `expr` — either
-// referenced directly in `expr`, OR via a module-level binding chain that `expr`
-// pulls in (e.g. mint references `dockId`, `dockId`'s RHS references the
-// counter)? Bounded transitive walk over module-scope bindings.
-function counterFeedsExpr(expr, counterNames, bindings) {
-    if (counterNames.size === 0) return false;
-    const refs = (s) => (s.match(/[A-Za-z_$][\w$]*/g) ?? []);
+// PER-MINT DATAFLOW TRACE (replaces the old file-level `fileHasUseId` boolean).
+//
+// Resolve where a dynamic mint's VALUE comes from. Starting at the mint
+// expression, transitively pull in every module-scope binding it references
+// (the GlassDock chain: mint `dockId.replace(…)` → binding `dockId` whose RHS is
+// `` `glass-dock-${useId()}` ``). Over the closure of fragments (the mint expr +
+// every binding RHS reached), classify the source:
+//
+//   - usesId      → some reached fragment calls `useId()` directly.
+//   - usesCounter → some reached fragment references a module-level numeric
+//                   counter (`let|var X = 0`).
+//   - usesVolatile→ some reached fragment reads a `.length`, a clock
+//                   (`Date.now()`/`performance.now()`), or `Math.random()`.
+//
+// A merely-MENTIONED `useId()` elsewhere in the file no longer launders an
+// unrelated counter-fed mint: only `useId()` reached through THIS mint's binding
+// chain sets `usesId`.
+function traceMintSource(expr, counterNames, bindings) {
+    const refs = (s) => s.match(/[A-Za-z_$][\w$]*/g) ?? [];
     const seen = new Set();
+    const fragments = [expr];
     const stack = [...refs(expr)];
     while (stack.length) {
         const id = stack.pop();
         if (seen.has(id)) continue;
         seen.add(id);
-        if (counterNames.has(id)) return true;
         const rhs = bindings.get(id);
-        if (rhs) stack.push(...refs(rhs));
+        if (rhs !== undefined) {
+            fragments.push(rhs);
+            stack.push(...refs(rhs));
+        }
     }
-    return false;
+    let usesId = false;
+    let usesCounter = false;
+    let usesVolatile = false;
+    for (const frag of fragments) {
+        if (/\buseId\s*\(/.test(frag)) usesId = true;
+        if (
+            /\.length\b/.test(frag) ||
+            /\bDate\s*\.\s*now\s*\(/.test(frag) ||
+            /\bperformance\s*\.\s*now\s*\(/.test(frag) ||
+            /\bMath\s*\.\s*random\s*\(/.test(frag)
+        )
+            usesVolatile = true;
+    }
+    // Counter membership is checked over the reached identifier set (which
+    // already includes every ident pulled in transitively).
+    for (const id of seen) if (counterNames.has(id)) usesCounter = true;
+    return { usesId, usesCounter, usesVolatile };
 }
 
 // ---------------------------------------------------------------------------
@@ -322,83 +407,159 @@ function analyzeFile(path) {
     const regions = fileRegions(path, raw);
     const mints = [];
 
-    // Whole-file (comment-stripped) text for cross-region facts: useId presence
-    // and module-level counter lets are file-scoped. For a .vue we concatenate
-    // the script regions; for .ts the single region.
+    // Whole-file (comment-stripped) SCRIPT text for module-scope dataflow facts:
+    // the module-level counter set + binding map are file-scoped. For a .vue we
+    // concatenate the script regions; for .ts the single region. (The old
+    // file-level `fileHasUseId` boolean is GONE — useId derivation is now traced
+    // per-mint, not asserted file-wide.)
     const scriptText = regions
         .filter((r) => r.kind === "script" || r.kind === "ts")
         .map((r) => r.text)
         .join("\n");
-    const fileHasUseId = /\buseId\s*\(/.test(scriptText);
     const counterNames = moduleLevelNumericLets(scriptText);
     const bindings = moduleLevelBindings(scriptText);
+
+    // Record a dynamic mint with the raw value `expr` to dataflow-trace, plus a
+    // human-readable `source`.
+    const pushDynamic = (text, idx, expr, source) =>
+        mints.push({
+            file: rel,
+            line: lineOf(text, idx),
+            kind: "js-dynamic",
+            source,
+            expr,
+        });
+    const pushStatic = (text, idx, kind, source) =>
+        mints.push({ file: rel, line: lineOf(text, idx), kind, source });
+
+    // Scan a style-string fragment (a backtick/quoted CSS string, an inline
+    // `style="…"`, a setAttribute body) for the property declaration. Each
+    // declaration found is a dynamic mint if interpolated, else a static mint.
+    const scanStyleString = (text, baseIdx, frag, fragOffset) => {
+        cssDeclRe.lastIndex = 0;
+        let d;
+        while ((d = cssDeclRe.exec(frag)) !== null) {
+            const value = d[3].trim();
+            const at = baseIdx + fragOffset + d.index + d[1].length;
+            if (hasInterpolation(value)) {
+                pushDynamic(text, at, value, `${d[2]}: ${value}`);
+            } else {
+                const ident = value.replace(/!important\s*$/, "").trim();
+                pushStatic(text, at, "css-static", ident);
+            }
+        }
+    };
 
     for (const region of regions) {
         const isScriptLike = region.kind === "script" || region.kind === "ts";
         const isCssLike = region.kind === "css" || region.kind === "style";
+        const isTemplate = region.kind === "template";
+        const text = region.text;
+        let m;
 
         if (isScriptLike) {
-            // JS-side: object-property mints.
-            let m;
+            // (a) object-property kebab mints:  "view-transition-name": <value>
             jsPropRe.lastIndex = 0;
-            while ((m = jsPropRe.exec(region.text)) !== null) {
+            while ((m = jsPropRe.exec(text)) !== null) {
                 const value = m[2].trim();
                 if (isBareStaticString(value)) {
-                    // A bare static string used as a JS-side VT name is treated
-                    // like a static mint (allowlist-governed).
-                    const lit = value.replace(/^["']|["']$/g, "");
-                    mints.push({
-                        file: rel,
-                        line: lineOf(region.text, m.index),
-                        kind: "js-static",
-                        source: lit,
-                    });
+                    pushStatic(text, m.index, "js-static", value.replace(/^["']|["']$/g, ""));
                 } else {
-                    mints.push({
-                        file: rel,
-                        line: lineOf(region.text, m.index),
-                        kind: "js-dynamic",
-                        source: value,
-                    });
+                    pushDynamic(text, m.index, value, value);
                 }
             }
-            // Template-literal style strings carrying the property with ${…}.
-            // (Covered by the cssDeclRe scan below restricted to interpolated
-            //  values inside backtick strings — but to keep regions clean we
-            //  scan the script text for `prop:` + ${ on the same declaration.)
+            // (b) template-literal / quoted style strings carrying the property
+            //     with `${…}` — `el.style.cssText = `…view-transition-name:${x}…``.
             cssDeclRe.lastIndex = 0;
-            while ((m = cssDeclRe.exec(region.text)) !== null) {
+            while ((m = cssDeclRe.exec(text)) !== null) {
                 const value = m[3];
                 if (hasInterpolation(value)) {
-                    mints.push({
-                        file: rel,
-                        line: lineOf(region.text, m.index + m[1].length),
-                        kind: "js-dynamic",
-                        source: `${m[2]}: ${value.trim()}`,
-                    });
+                    pushDynamic(
+                        text,
+                        m.index + m[1].length,
+                        value.trim(),
+                        `${m[2]}: ${value.trim()}`,
+                    );
                 }
+            }
+            // (c) camelCase IDL assignment:  .viewTransitionName = <expr>
+            idlAssignRe.lastIndex = 0;
+            while ((m = idlAssignRe.exec(text)) !== null) {
+                const value = m[2].trim();
+                if (isBareStaticString(value)) {
+                    pushStatic(text, m.index, "js-static", value.replace(/^["']|["']$/g, ""));
+                } else {
+                    pushDynamic(text, m.index, value, `.${m[1]} = ${value}`);
+                }
+            }
+            // (d) setProperty 2-arg:  .setProperty("view-transition-name", <expr>)
+            setPropRe.lastIndex = 0;
+            while ((m = setPropRe.exec(text)) !== null) {
+                const value = m[2].trim();
+                if (isBareStaticString(value)) {
+                    pushStatic(text, m.index, "js-static", value.replace(/^["']|["']$/g, ""));
+                } else {
+                    pushDynamic(text, m.index, value, `setProperty(${m[1]}, ${value})`);
+                }
+            }
+            // (e) setAttribute("style", <string>) carrying the property.
+            setAttrStyleRe.lastIndex = 0;
+            while ((m = setAttrStyleRe.exec(text)) !== null) {
+                const frag = m[1];
+                const fragOffset = m[0].length - frag.length;
+                scanStyleString(text, m.index, frag, fragOffset);
             }
         }
 
         if (isCssLike) {
-            let m;
             cssDeclRe.lastIndex = 0;
-            while ((m = cssDeclRe.exec(region.text)) !== null) {
+            while ((m = cssDeclRe.exec(text)) !== null) {
                 const value = m[3].trim();
                 if (hasInterpolation(value)) continue; // dynamic — not a CSS-static mint
-                // strip a trailing `}` artefact / `!important`
                 const ident = value.replace(/!important\s*$/, "").trim();
-                mints.push({
-                    file: rel,
-                    line: lineOf(region.text, m.index + m[1].length),
-                    kind: "css-static",
-                    source: ident,
-                });
+                pushStatic(text, m.index + m[1].length, "css-static", ident);
+            }
+        }
+
+        if (isTemplate) {
+            // (f) .vue <template> inline mints. Two forms:
+            //   1. an inline / bound `style="…view-transition-name:…"` string —
+            //      caught by the CSS-declaration scan over the template text.
+            //   2. a `:style` binding OBJECT literal whose key is the camelCase
+            //      IDL spelling — `{ viewTransitionName: <expr> }`. The kebab
+            //      object key (`"view-transition-name": …`) is caught by jsPropRe.
+            cssDeclRe.lastIndex = 0;
+            while ((m = cssDeclRe.exec(text)) !== null) {
+                const value = m[3].trim();
+                const at = m.index + m[1].length;
+                if (hasInterpolation(value)) {
+                    pushDynamic(text, at, value, `${m[2]}: ${value}`);
+                } else {
+                    pushStatic(text, at, "css-static", value.replace(/!important\s*$/, "").trim());
+                }
+            }
+            jsPropRe.lastIndex = 0;
+            while ((m = jsPropRe.exec(text)) !== null) {
+                const value = m[2].trim();
+                if (isBareStaticString(value)) {
+                    pushStatic(text, m.index, "js-static", value.replace(/^["']|["']$/g, ""));
+                } else {
+                    pushDynamic(text, m.index, value, value);
+                }
+            }
+            tmplIdlKeyRe.lastIndex = 0;
+            while ((m = tmplIdlKeyRe.exec(text)) !== null) {
+                const value = m[2].trim();
+                if (isBareStaticString(value)) {
+                    pushStatic(text, m.index, "js-static", value.replace(/^["']|["']$/g, ""));
+                } else {
+                    pushDynamic(text, m.index, value, `${m[1]}: ${value}`);
+                }
             }
         }
     }
 
-    return { rel, mints, fileHasUseId, counterNames, bindings };
+    return { rel, mints, counterNames, bindings };
 }
 
 // ---------------------------------------------------------------------------
@@ -406,30 +567,38 @@ function analyzeFile(path) {
 // ---------------------------------------------------------------------------
 function verdictFor(mint, fileFacts) {
     if (mint.kind === "js-dynamic") {
-        // Must derive from useId() AND have no module-level numeric counter
-        // feeding it. We flag the GlassDock pattern: a dynamic mint whose
-        // expression is fed — directly or through a module-scope binding chain
-        // (`counter → dockId → mint`) — by a module-level numeric `let` counter.
-        // An UNRELATED module-level counter (a `let rafId = 0` not in the mint's
-        // chain) does NOT fire, by construction of the transitive trace.
-        const fedByCounter = counterFeedsExpr(
-            mint.source,
+        // PER-MINT DATAFLOW: the mint's VALUE expression must resolve to useId()
+        // through this mint's own binding chain. The `expr` field carries the
+        // raw value to trace (the GlassDock chain: `dockId.replace(…)` →
+        // `dockId` → `` `glass-dock-${useId()}` ``). A value fed by a module-level
+        // numeric counter, a `.length`, or a clock/random source is a VIOLATION;
+        // a value with no useId derivation at all is a VIOLATION. A file that
+        // merely MENTIONS useId() elsewhere no longer launders an unrelated
+        // counter-fed mint — only useId() reached through THIS chain passes.
+        const trace = traceMintSource(
+            mint.expr ?? mint.source,
             fileFacts.counterNames,
             fileFacts.bindings,
         );
-        if (fedByCounter) {
+        if (trace.usesCounter) {
             return {
                 verdict: "violation",
-                reason: `dynamic mint fed by module-level counter (one of: ${[...fileFacts.counterNames].join(", ")}) — restarts per module-graph copy and silently collides (the GlassDock bug); mint from useId() instead`,
+                reason: `dynamic mint traces to a module-level counter (one of: ${[...fileFacts.counterNames].join(", ")}) — restarts per module-graph copy and silently collides (the GlassDock bug); mint from useId() instead`,
             };
         }
-        if (!fileFacts.fileHasUseId) {
+        if (trace.usesVolatile && !trace.usesId) {
             return {
                 verdict: "violation",
-                reason: "dynamic mint with no useId() in file — name must derive from an app-unique source",
+                reason: "dynamic mint traces to a volatile source (.length / Date.now() / performance.now() / Math.random()) — not app-unique; mint from useId() instead",
             };
         }
-        return { verdict: "pass", reason: "derives from useId(); no module-level counter" };
+        if (!trace.usesId) {
+            return {
+                verdict: "violation",
+                reason: "dynamic mint does not trace to useId() — its value must resolve (directly or through a module-scope binding chain) to Vue's app-scoped useId()",
+            };
+        }
+        return { verdict: "pass", reason: "value traces to useId(); no module-level counter or volatile source" };
     }
 
     // css-static / js-static → allowlist-governed page-singleton.
@@ -452,9 +621,19 @@ function run() {
 
     for (const path of files) {
         const facts = analyzeFile(path);
+        // One declaration can surface through two detection forms when forms
+        // nest (a backtick style-string is both a form-(b) declaration AND, when
+        // wrapped in `setAttribute("style", …)`, a form-(e) hit). Dedupe per file
+        // by (line · kind · source) so a single mint is reported once.
+        const seenKeys = new Set();
         for (const mint of facts.mints) {
+            const key = `${mint.line}|${mint.kind}|${mint.source}`;
+            if (seenKeys.has(key)) continue;
+            seenKeys.add(key);
             const v = verdictFor(mint, facts);
-            const record = { ...mint, verdict: v.verdict };
+            // `expr` is an internal tracing aid — keep it out of the artefact.
+            const { expr: _expr, ...reported } = mint;
+            const record = { ...reported, verdict: v.verdict };
             mints.push(record);
             if (v.verdict === "violation") {
                 violations.push({ ...record, reason: v.reason });
@@ -469,16 +648,15 @@ function run() {
     violations.sort(byLoc);
 
     const status = violations.length === 0 ? "pass" : "fail";
-    const report = {
-        generatedAt: new Date().toISOString(),
+    // inv-θ: `generatedAt` is the only volatile field; dropped unless
+    // GATE_SNAPSHOT=1, so the default cache artefact is byte-stable across runs.
+    writeGateArtifact(ARTIFACT, {
+        generatedAt: snapshotStamp(),
         status,
         command: "npm run proof:vt-names",
         mints,
         violations,
-    };
-
-    mkdirSync(resolve(ARTIFACT, ".."), { recursive: true });
-    writeFileSync(ARTIFACT, `${JSON.stringify(report, null, 2)}\n`);
+    });
 
     // ---- human summary ----
     console.log("proof:vt-names — view-transition-name / anchor-name mint gate (AR invariant η)");

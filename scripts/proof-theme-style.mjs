@@ -8,14 +8,14 @@ import {
     rmSync,
     writeFileSync,
 } from "node:fs";
-import { basename, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { join, resolve } from "node:path";
+import { ROOT } from "./constellation.mjs";
+import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
-const root = resolve(fileURLToPath(new URL("../", import.meta.url)));
-const auditDir = resolve(root, "docs/tranches/F/audit");
-const artifactPath = resolve(
-    process.env.GLASS_UI_THEME_ARTIFACT ?? resolve(auditDir, "W4-tailwind-theme-proof.json"),
-);
+const root = ROOT;
+// Default → byte-stable `.cache/gates/W4-tailwind-theme-proof.json`; a deliberate
+// snapshot to the committed F-audit path is opt-in via GLASS_UI_THEME_ARTIFACT.
+const artifactPath = gateArtifactPath("GLASS_UI_THEME_ARTIFACT", "W4-tailwind-theme-proof");
 const tmpRoot = resolve(root, ".tmp", `theme-style-proof-${Date.now()}`);
 const srcDir = join(tmpRoot, "src");
 const outDir = join(tmpRoot, "dist");
@@ -215,20 +215,17 @@ function writeProbeFiles() {
 }
 
 function writeArtifact(payload) {
-    mkdirSync(basename(artifactPath) === artifactPath ? auditDir : resolve(artifactPath, ".."), {
-        recursive: true,
-    });
-    writeFileSync(
+    // generatedAt + durationMs are volatile measurements — dropped from the
+    // default cache artefact (kept only under GATE_SNAPSHOT=1) so a gate run
+    // leaves git status clean.
+    writeGateArtifact(
         artifactPath,
-        `${JSON.stringify(
-            {
-                generatedAt: new Date().toISOString(),
-                durationMs: Date.now() - startedAt,
-                ...payload,
-            },
-            null,
-            2,
-        )}\n`,
+        {
+            generatedAt: snapshotStamp(),
+            durationMs: Date.now() - startedAt,
+            ...payload,
+        },
+        { volatile: ["durationMs"] },
     );
 }
 

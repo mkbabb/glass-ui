@@ -69,23 +69,15 @@ fi
 # `verify-export-types` enumerates every subpath from package.json
 # and subsumes the loop's coverage.
 
-echo "[release] typecheck..."
-npm run typecheck
-
-echo "[release] Building dist artefact..."
-npm run build
-
-# L.W0 Lane III — subpath publication is binary. `verify-export-types`
-# probes every published subpath (from package.json's `exports`) for
-# dts + import target presence and runs a tsc consumer probe. The
-# prior env-gate (`GLASS_UI_RELEASE_SURFACE_GUARD`) was retired at
-# O.W5 Lane B: per the L.W0 invariant, this gate MUST run on every
-# release.
-echo "[release] verify-export-types (subpath publication binary gate)..."
-npm run verify-export-types
-
-echo "[release] profile:budget (bundle-budget enforce)..."
-npm run profile:budget
+# AS.W2 inv-θ — the release gate set is the manifest's `release` filter, NOT a
+# hand-curated inline list. Before AS.W2 release.sh ran 4 gates and ZERO
+# proof:*, so VT-name / surface / phantom-class drift between the last CI run
+# and the tag shipped unguarded. `gates.mjs --run release` runs typecheck +
+# build + verify-export-types + profile:budget + the proof:* binding-correctness
+# floor (sibling gates skip-by-policy on a clean machine). local == ci ==
+# release is now structural.
+echo "[release] running the manifest 'release' gate set..."
+node scripts/gates.mjs --run release
 
 echo "[release] Smoke check on dist/index.d.ts..."
 if [[ ! -f dist/index.d.ts ]]; then

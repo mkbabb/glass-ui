@@ -74,3 +74,11 @@ jobs:
               run: npm run proof:phantom-classes
             - name: proof:vt-names
               run: npm run proof:vt-names
+            # AS.W2 inv-θ — the lockfile registry-resolution drift guard (#177
+            # cannot silently re-break npm ci) + the meta-gate asserting this
+            # ci.yml step set matches scripts/gates.mjs exactly (the manifest is
+            # the single source of truth; per-step visibility kept, drift fails).
+            - name: proof:lockfile
+              run: npm run proof:lockfile
+            - name: gates:verify-ci
+              run: npm run gates:verify-ci
