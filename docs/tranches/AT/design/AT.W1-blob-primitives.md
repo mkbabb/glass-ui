@@ -204,3 +204,70 @@ today; tier-1 vitest is binding).
 The cross-repo counterpart (value.js K.W3: delete the demo impls, import the
 published subpaths, supply its own `ColorResolver`) is NAME-FORWARD (inv-16) —
 unblocked by AT's 3.3.0 publish (W8).
+
+## §9 — W0b augmentation: the shader-quality wave + the color-space seam
+
+The W0b SOTA lenses (`audit/W0b-A1/A2/A3`) found §6 ("the D1 OKLCh shader") was
+correctly-aimed but UNDER-scoped — the demo's SDF/noise/AA core is competent
+2020-era Shadertoy with four citable quality gaps, three of which are single-line
+swaps to forms glass-ui's OWN aurora shader already trusts. W5 is RENAMED the
+**"shader-quality wave"** (DEC-AT-8): five byte-isolated, individually-gated edits.
+
+**The headline correctness bug — the color space (DEC-AT-7).** §6 never named what
+space `uBaseColor` is in. The demo's canvas resolver returns GAMMA sRGB; AT's
+`defaultBlobColorResolver` returns... it MUST return GAMMA at W4 (the faithful lift —
+HSV needed no OETF) and the shader stays gamma. At W5, OKLCh is defined on LINEAR
+light, so D1 flips `uBaseColor` to linear AND adds the mandatory `linearToSrgb()`
+OUTPUT stage (the 3rd GLSL fn §6 omitted). Without it the blob paints visibly
+too-dark AND the perceptual-uniformity claim D1 is sold on is voided. The seam is the
+W4-vs-W5 boundary, NOT a conflict: **GAMMA@W4, LINEAR@W5 as D1's own gated change.**
+The `/color` leaf ships `oklchToGammaRgb` (W4 default) AND `oklchToLinear` (W5/aurora)
+— both value.js-backed (`design/AT.W1c-color-gates.md §2`).
+
+**The five W5 edits (each gated):**
+1. **`fwidth(d)` derivative AA** replacing the hardcoded `±1.5px` (frag :137-138) —
+   `smin`+FBM make the field gradient non-unit-length, so the fixed band is provably
+   wrong at the satellite-merge neck and noisy rim (the exact gooey-blob loci). Guard
+   `max(fwidth(d),1e-4)`. Free WebGL2 intrinsic.
+2. **Quilez normalized quadratic `smin`** (frag :86-89) — `k` becomes neck-thickness-
+   in-uv (a meaningful `--blob-smooth-k` token); deletes the `/0.22*POS_SCALE` fudge.
+   −1 mul, faster. CPU unit: `smin(a,b,0)==min`.
+3. **Aurora's rotated-octave FBM** (`mat2(0.8,0.6,-0.6,0.8)`+`2.02`,
+   `aurora.frag.ts:121-132`) — kills the power-of-two grid artifacts; known-good form,
+   same `hash21`. Visual A/B, no new unit.
+4. **OKLCh perturbation** — exact value.js Ottosson matrices transposed for GLSL
+   column-major (DEC-AT-10, NOT the GM-Shaders/LYGIA convenience matrices ~1e-4 off);
+   `radians(uHueRange)` (the demo's degrees would over-rotate ~57×); MULTIPLICATIVE
+   chroma; the linear flip + `linearToSrgb()` (per the seam above).
+5. **Hue-preserving chroma-reduction** on gamut overflow (the GPU cousin of
+   `color.ts`'s `safeC *= 0.999` loop) — NOT a naive `clamp(rgb,0,1)` which clips a
+   channel and SHIFTS hue, defeating D1. The CPU-equivalence gate's out-of-gamut sweep
+   asserts no hue drift.
+
+**Preserve (a STRENGTH, not a gap):** premultiplied-alpha output (frag :159
+`rgb*alpha`) — the D1 rewrite must keep "perturb straight RGB → gamut-clamp →
+premultiply LAST" ordering or it reintroduces edge fringing the math gate can't see
+(W4 asserts `premultipliedAlpha:true` on the context).
+
+**The gate (DEC-AT-4):** the CPU-equivalence hardens 4→8 assertions over a textually-
+parallel `metaball-color.glsl-port.ts` (witness `#3a7bd5`) — see
+`design/AT.W1c-color-gates.md §4`. PLUS `proof:webgl-golden` (the PROMOTED
+`profile-aurora.mjs`, not a new harness): on-GPU zero-perturb output ==
+`linearToSrgb(uBaseColor)`. The manual-visual line is scoped to the
+`--blob-edge-glow-l` token ONLY (the one genuinely-subjective knob).
+
+**The substrate inherits two robustness wins (W2, `audit/W0b-A3`):** the metaball
+renderer pauses only on tab-hidden+reduced-motion, never off-screen (`:251-253`) — the
+`useWebGLCanvas` harness folds `useIntersectionPause` so goo-blob inherits aurora's
+intersection-gate for free; and it absorbs aurora's MISSING `webglcontextrestored`
+handler (aurora goes permanently black on GPU reset today). The extraction is strictly
+ADDITIVE on robustness.
+
+**The aurora free-ride (W2b sub-slice):** D1's GLSL OKLab fn pair makes aurora's
+palette a ≥2-consumer shared primitive — fold the **dither floor** (IGN/TPDF ±0.5/255
+after `aces`+`paperGrain`, `aurora.frag.ts:808-817` — the #1 visible aurora banding
+gap; OKLCh does NOT fix banding, it's a separate quantization problem) + the **OKLab
+palette LUT** (`samplePalette` lerps in linear sRGB `:195-203`, throwing away half the
+OKLCh authoring — reuse the W5 fn pair). Gated: byte-parity REBASED (composition path
+byte-identical + dither bounded ≤1/255) + CPU amplitude unit + a "no banding" π
+baseline|close.
