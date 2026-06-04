@@ -290,16 +290,29 @@ function shouldGateTouch(): boolean {
     return orientation.value === "horizontal" && !alwaysExpanded.value;
 }
 
+/* AT.W6-dock-b — shape B′ touch-gate. The gate's job is to DISTINGUISH a tap
+   from a vertical scroll on the floating collapsed pill (the 150ms pending
+   window + the >10px scroll-check inside `useTouchGate`), NOT to SWALLOW the
+   tap. We therefore do NOT `preventDefault()`/`stopPropagation()` the activating
+   `touchstart`/`touchend`: the browser's native tap→click compatibility event is
+   allowed to flow to the tapped control, so a SINGLE tap on a collapsed dock
+   control BOTH expands the dock (here) AND activates that control (via the
+   native click) — the iOS Now-Playing mini-bar single-tap-play contract. No
+   `elementFromPoint`, no synthetic dispatch: the fix rides the browser's own
+   tap→click. (Swallowing the tap was the root cause of the double-tap field
+   defect — a prevented touch sequence emits no compatibility click, so the
+   control under the finger fired nothing and the user had to tap twice.) A
+   scroll gesture cancels the pending tap inside the gate and never emits a
+   tap-click, so vertical scrolling on the pill stays browser-owned. */
 function onTouchStart(event: TouchEvent): void {
     if (!shouldGateTouch() || visualExpanded.value) return;
     const root = dockEl.value;
     const touch = event.touches[0];
     if (!root || !touch) return;
 
-    if (!touchGate.handleTouchStart(root, touch.clientY)) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
+    // Arm the tap/scroll discrimination; the return value is consumed by the
+    // gate's own state — the tap is never preventDefault-ed (shape B′).
+    touchGate.handleTouchStart(root, touch.clientY);
 }
 
 function onTouchMove(event: TouchEvent): void {
@@ -307,13 +320,13 @@ function onTouchMove(event: TouchEvent): void {
     touchGate.handleScrollCheck(event);
 }
 
-function onTouchEnd(event: TouchEvent): void {
+function onTouchEnd(): void {
     if (!shouldGateTouch()) return;
     const wasActive = touchGate.isActive.value;
     touchGate.handleTouchEnd();
     if (!wasActive && touchGate.isActive.value && !visualExpanded.value) {
-        event.preventDefault();
-        event.stopPropagation();
+        // Expand on the resolved tap, but let the native compatibility click
+        // reach the control — no preventDefault, no stopPropagation (shape B′).
         expand();
     }
 }
