@@ -36,7 +36,13 @@ const entries = computed<PagerEntry[]>(() =>
         class="flex w-full justify-center pt-2 pb-1"
         aria-label="Stories in category"
     >
-        <GlassDock orientation="horizontal" always-expanded fit-content class="story-pager-dock">
+        <GlassDock
+            orientation="horizontal"
+            always-expanded
+            fit-content
+            scroll-on-overflow
+            class="story-pager-dock"
+        >
             <div class="story-pager-row">
                 <DockTabButton
                     v-for="entry in entries"
@@ -66,12 +72,5 @@ const entries = computed<PagerEntry[]>(() =>
     display: flex;
     align-items: center;
     gap: 0.25rem;
-    overflow-x: auto;
-    /* scrollbar-hidden — class form would compose; use raw rules in scoped block */
-    scrollbar-width: none;
-}
-
-.story-pager-row::-webkit-scrollbar {
-    display: none;
 }
 </style>

@@ -25,8 +25,13 @@ const activeFlatId = computed<string | null>(() => {
 </script>
 
 <template>
-    <aside class="sticky top-0 flex h-screen shrink-0 items-start justify-center px-3 py-4">
-        <GlassDock variant="rail" aria-label="Category navigation">
+    <aside class="flex h-full min-h-0 shrink-0 flex-col items-center px-3 py-4">
+        <GlassDock
+            variant="rail"
+            scroll-on-overflow
+            class="min-h-0"
+            aria-label="Category navigation"
+        >
             <!-- Brand wordmark — lives once, at the top of the rail -->
             <RouterLink
                 to="/"

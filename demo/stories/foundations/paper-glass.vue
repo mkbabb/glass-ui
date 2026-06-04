@@ -136,7 +136,7 @@ onMounted(() => {
             :class="
                 cn(
                     'relative overflow-hidden rounded-card p-8 md:p-12',
-                    'bg-[radial-gradient(ellipse_70%_60%_at_25%_25%,color-mix(in_srgb,var(--rainbow-pastel-yellow)_55%,transparent),transparent_60%),radial-gradient(ellipse_65%_55%_at_80%_70%,color-mix(in_srgb,var(--rainbow-pastel-blue)_50%,transparent),transparent_60%),radial-gradient(ellipse_60%_50%_at_60%_20%,color-mix(in_srgb,var(--rainbow-pastel-red)_40%,transparent),transparent_55%)]'
+                    'bg-[radial-gradient(ellipse_70%_60%_at_25%_25%,color-mix(in_srgb,var(--section-color-5)_38%,transparent),transparent_60%),radial-gradient(ellipse_65%_55%_at_80%_70%,color-mix(in_srgb,var(--section-color-2)_34%,transparent),transparent_60%),radial-gradient(ellipse_60%_50%_at_60%_20%,color-mix(in_srgb,var(--section-color-0)_28%,transparent),transparent_55%)]'
                 )
             "
         >

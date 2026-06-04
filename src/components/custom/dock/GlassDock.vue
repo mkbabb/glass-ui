@@ -53,6 +53,22 @@ const props = withDefaults(
          */
         density?: DockDensity;
         /**
+         * Overflow strategy when the expanded content exceeds the dock's
+         * axis cap (`--dock-max-inline-size` horizontally,
+         * `--dock-max-block-size` vertically).
+         *   `"grow"`   — content grows to fit then overflows visibly past
+         *                the cap (the historical default; nothing clips or
+         *                scrolls).
+         *   `"scroll"` — the dock becomes the scroll port. Horizontal docks
+         *                scroll the active layer on the inline axis
+         *                (`.dock-scroll-x`); vertical rails scroll on the
+         *                block axis (`.dock-scroll-y`), keeping the
+         *                `max-block-size` cap. The rounded pill masks the
+         *                scroll edge; the scrollbar is hidden. The axis is
+         *                chosen automatically from `orientation`.
+         */
+        overflow?: "grow" | "scroll";
+        /**
          * When set, the dock root establishes an inline-size container query
          * subject (`container-type: inline-size; container-name: <value>`)
          * and lifts its `overflow: hidden` clip so descendants can wrap or
@@ -77,6 +93,7 @@ const props = withDefaults(
         shape: "pill",
         orientation: "horizontal",
         density: "comfortable",
+        overflow: "grow",
     },
 );
 
@@ -99,6 +116,15 @@ const orientation = computed(() =>
         : props.orientation,
 );
 const density = computed(() => props.density);
+/* Scroll-on-overflow opt-in (default `"grow"` keeps the historical
+   visible-overflow behaviour). When `overflow === "scroll"` the dock
+   becomes the scroll port on its layout axis: horizontal docks scroll the
+   active layer inline (`.dock-scroll-x`), vertical rails scroll the root
+   block-axis (`.dock-scroll-y`). The axis is derived from `orientation`. */
+const scrollClass = computed<string | null>(() => {
+    if (props.overflow !== "scroll") return null;
+    return orientation.value === "vertical" ? "dock-scroll-y" : "dock-scroll-x";
+});
 const alwaysExpanded = computed(() => props.alwaysExpanded || orientation.value === "vertical");
 const fitContent = computed(() =>
     props.fitContent ||
@@ -293,6 +319,7 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
             orientation,
             `variant-${variant}`,
             `shape-${shape}`,
+            scrollClass,
             { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'dock-wrap': wrap },
             position === 'fixed' ? 'fixed bottom-[var(--dock-pos)] left-1/2 -translate-x-1/2'
               : position === 'sticky' ? 'dock-sticky'

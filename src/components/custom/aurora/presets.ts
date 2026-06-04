@@ -29,7 +29,7 @@ export interface AuroraNucleus {
     paletteBias: number;
     /** -0.3..0.3 — lightness pull within the nucleus's zone of influence. */
     valueBias: number;
-    /** 0..0.03 — orbit amplitude for slow drift. */
+    /** 0..0.08 — orbit amplitude for slow drift (the visible-travel gate). */
     driftRadius: number;
     /** 0..2π — phase seed. */
     driftPhase: number;
@@ -152,8 +152,8 @@ export const DEFAULT_AURORA_CONFIG: AuroraConfig = {
         { L: 0.95, C: 0.03, h: 80 },
     ],
     nuclei: [
-        { x: 0.3, y: 0.3, radius: 0.5, paletteBias: 0.0, valueBias: 0, driftRadius: 0.015, driftPhase: 0.0 },
-        { x: 0.7, y: 0.65, radius: 0.5, paletteBias: 1.0, valueBias: 0.05, driftRadius: 0.015, driftPhase: 2.4 },
+        { x: 0.3, y: 0.3, radius: 0.5, paletteBias: 0.0, valueBias: 0, driftRadius: 0.045, driftPhase: 0.0 },
+        { x: 0.7, y: 0.65, radius: 0.5, paletteBias: 1.0, valueBias: 0.05, driftRadius: 0.045, driftPhase: 2.4 },
     ],
     softmaxBeta: 3.0,
     valueVariance: 0.08,
@@ -174,8 +174,8 @@ export const DEFAULT_AURORA_CONFIG: AuroraConfig = {
     impasto: 0,
     brokenColor: 0,
     canvasGrain: 0,
-    nucleiDrift: 0.01,
-    paletteDrift: 0.008,
+    nucleiDrift: 0.015,
+    paletteDrift: 0.015,
     breathDepth: 0.05,
     breathPeriod: 40,
     saturation: 1.0,

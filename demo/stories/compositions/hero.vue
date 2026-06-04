@@ -66,24 +66,23 @@ const claims = [
             class="hero-frame"
             :class="cn(
                 'relative isolate overflow-hidden rounded-[var(--radius-dialog)]',
-                'border border-border/40 px-8 py-20 md:px-16 md:py-28',
+                'border border-border bg-card shadow-cartoon px-8 py-20 md:px-16 md:py-28',
             )"
             :style="{
-                backgroundColor: 'var(--background)',
                 backgroundImage: `
                     radial-gradient(
                         ellipse 70% 55% at 12% 8%,
-                        color-mix(in srgb, var(--section-color-0, hsl(12 78% 72%)) 55%, transparent) 0%,
+                        color-mix(in srgb, var(--section-color-0) 36%, transparent) 0%,
                         transparent 60%
                     ),
                     radial-gradient(
                         ellipse 65% 60% at 92% 20%,
-                        color-mix(in srgb, var(--section-color-2, hsl(45 85% 70%)) 50%, transparent) 0%,
+                        color-mix(in srgb, var(--section-color-2) 32%, transparent) 0%,
                         transparent 65%
                     ),
                     radial-gradient(
                         ellipse 80% 70% at 55% 110%,
-                        color-mix(in srgb, var(--section-color-5, hsl(195 75% 68%)) 45%, transparent) 0%,
+                        color-mix(in srgb, var(--section-color-5) 30%, transparent) 0%,
                         transparent 60%
                     )
                 `,
@@ -172,10 +171,7 @@ const claims = [
         </div>
 
         <Card
-            :class="cn(
-                'border-2 border-foreground/10 transition-transform duration-200',
-                'hover:-translate-x-px hover:-translate-y-px',
-            )"
+            class="transition-transform duration-200 hover:-translate-x-px hover:-translate-y-px"
         >
             <CardContent class="grid gap-0 p-0 md:grid-cols-3">
                 <div

@@ -155,6 +155,24 @@ export interface UseSortableReturn {
     dropIndex: ComputedRef<number | null>;
 }
 
+/**
+ * True when a computed `border-radius` string has any non-zero
+ * corner. Computed values resolve to space-separated lengths
+ * (e.g. `"0px"`, `"6px"`, `"12px 12px 0px 0px"`) with an optional
+ * `/` separating the horizontal/vertical radii of elliptical
+ * corners. A radius is "zero" only when every numeric component
+ * parses to 0; a non-length token (`%`, `auto`) counts as
+ * non-zero so we never miss a rounded corner.
+ */
+function isNonZeroRadius(radius: string): boolean {
+    if (!radius) return false;
+    return radius
+        .replace(/\//g, " ")
+        .split(/\s+/)
+        .filter(Boolean)
+        .some((part) => parseFloat(part) !== 0);
+}
+
 const DEFAULT_HANDLE_SELECTOR = "[data-sortable-handle]";
 const DROP_ABOVE_CLASS = "is-sortable-drop-above";
 const DROP_BELOW_CLASS = "is-sortable-drop-below";
@@ -290,6 +308,26 @@ export function useSortable<T>(
     }
 
     /**
+     * Resolve the effective VISIBLE corner radius for the dragged
+     * content. Returns the source's own computed `border-radius`
+     * when it is non-zero; otherwise walks descendants depth-first
+     * and returns the first element's non-zero radius (the common
+     * case where the SortableItem root is unrounded and the
+     * rounded surface lives on an inner child). Returns `null`
+     * when nothing in the subtree is rounded — caller leaves the
+     * ghost radius untouched.
+     */
+    function resolveVisibleRadius(source: HTMLElement): string | null {
+        const own = getComputedStyle(source).borderRadius;
+        if (isNonZeroRadius(own)) return own;
+        for (const el of source.querySelectorAll<HTMLElement>("*")) {
+            const r = getComputedStyle(el).borderRadius;
+            if (isNonZeroRadius(r)) return r;
+        }
+        return null;
+    }
+
+    /**
      * Build the drag ghost by cloning the source row's DOM and
      * positioning a fixed copy at its current bounding rect.
      * The clone inherits scoped data-v-* attributes + classes so
@@ -303,6 +341,17 @@ export function useSortable<T>(
 
         const clone = source.cloneNode(true) as HTMLElement;
         clone.classList.add(DRAG_GHOST_CLASS);
+        // Adopt the dragged content's effective VISIBLE corner radius onto the
+        // ghost root so the gold drag ring (a `0 0 0 2px` box-shadow on the
+        // ghost root — see SortableList.vue) traces the real corner. The
+        // SortableItem root often has `border-radius: 0` while the rounded
+        // surface lives on an inner child; without this the ring renders
+        // square around a rounded card. Read the source's own radius first;
+        // if all-zero, walk descendants depth-first for the first non-zero
+        // radius. Set it inline so nothing in the cascade overrides it on the
+        // floating clone.
+        const adoptedRadius = resolveVisibleRadius(source);
+        if (adoptedRadius) clone.style.borderRadius = adoptedRadius;
         clone.style.position = "fixed";
         clone.style.left = `${rect.left}px`;
         clone.style.top = `${rect.top}px`;

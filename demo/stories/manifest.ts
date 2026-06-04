@@ -23,6 +23,7 @@ import {
     SlidersHorizontal,
     Anchor,
     Paintbrush,
+    Droplet,
     type LucideIcon,
 } from "@lucide/vue";
 
@@ -102,9 +103,8 @@ export const CATEGORIES: Category[] = [
             s("primitives", "buttons", "Buttons"),
             s("primitives", "card", "Card", "Five-tier glass surface — wash · quiet · resting · floating · overlay; orthogonal surface=cartoon decoration; scroll-pane recipe; polymorphic root via reka-ui Primitive."),
             s("primitives", "glass-panel", "Glass Panel", "Five-rung glass tier ladder over a renderer-tier detection cascade (svg-filter / css / fallback)."),
-            s("primitives", "configurator", "Configurator", "Studio-tier preset + layers + scroll-mode primitive; floating glass substrate."),
-            s("primitives", "configurator-mobile", "Configurator (mobile density)", "Density axis (N.W2 Lane A) — `mobile` vs `comfortable` rungs side-by-side; provide/inject from `<Configurator>` to `<ConfiguratorRow>`."),
-            s("primitives", "dark-mode-toggle", "Dark Mode Toggle", "5-rung size axis (sm · md · lg · control · dock); composes useGlobalDark."),
+            s("primitives", "configurator", "Configurator", "Studio shell — preset row + grouped <ConfiguratorLayer> + a live specimen stage; responsive density (mobile at narrow, comfortable when wide); floating glass substrate."),
+            s("primitives", "dark-mode-toggle", "Dark Mode Toggle", "Size axis (sm · md · lg · control standalone; dock sizes to its GlassDock host); composes useGlobalDark."),
             s("primitives", "expandable-container", "Expandable Container", "In-place vs Teleport-to-body fullscreen with body-overflow lock-depth."),
             s("primitives", "icon-tooltip", "Icon Tooltip", "Auto-provider tooltip for label co-location with display typography baked in."),
             s("primitives", "labeled-field", "Labeled Field", "Parent SFC + 4 wrappers (Input · Select · Slider · Switch) with shared IconTooltip label."),
@@ -300,6 +300,14 @@ export const FLAT_STORIES: FlatStory[] = [
             "Procedural painterly gradients — multi-nuclei composition, four mediums, cursor-driven swirl.",
         icon: Wand2,
         component: () => import("./aurora.vue").then((m) => m.default),
+    },
+    {
+        id: "blob",
+        title: "Blob",
+        blurb:
+            "Procedural metaball field — drifting nuclei merge and split over a token-driven palette; count / viscosity / glow / grain axes.",
+        icon: Droplet,
+        component: () => import("./blob.vue").then((m) => m.default),
     },
 ];
 

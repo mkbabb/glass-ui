@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
+import { useRoute } from "vue-router";
 import {
     Dialog,
     DialogContent,
@@ -23,6 +24,20 @@ const { next, prev, nextCategory, prevCategory } = useStoryNavigation();
 
 const showHelp = ref(false);
 const shortcuts = useRegisteredShortcuts();
+
+// `<main>` owns route scroll now (the shell itself is a fixed viewport frame),
+// so the router's window-targeted scrollBehavior can't reset it. Reset the
+// container to the top on every navigation so a new route never inherits the
+// prior offset.
+const route = useRoute();
+const mainEl = ref<HTMLElement | null>(null);
+
+watch(
+    () => route.fullPath,
+    () => {
+        mainEl.value?.scrollTo({ top: 0 });
+    },
+);
 
 onMounted(() => {
     registerShortcut("]", () => next(), {
@@ -59,13 +74,16 @@ onMounted(() => {
 <template>
     <PaperBackdrop class="fixed inset-0 -z-10 bg-background" />
 
-    <div class="relative flex min-h-screen text-foreground">
+    <div class="relative flex h-screen overflow-hidden text-foreground">
         <CategoryRail />
 
-        <div class="flex min-w-0 flex-1 flex-col">
+        <div class="flex min-h-0 min-w-0 flex-1 flex-col">
             <StoryPager />
 
-            <main class="relative flex-1 min-w-0 px-4 py-6 md:px-8 md:py-10">
+            <main
+                ref="mainEl"
+                class="relative flex-1 min-h-0 min-w-0 overflow-y-auto px-4 py-6 md:px-8 md:py-10"
+            >
                 <RouterView v-slot="{ Component }">
                     <component :is="Component" v-if="Component" />
                     <div

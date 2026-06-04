@@ -78,6 +78,22 @@ uniform float uSaturation;
 uniform float uPaperGrain;
 uniform float uAlpha;
 
+// ── Time rate ────────────────────────────────────────────────────────────────
+// The authoring coefficients (uNucleiDrift, uPaletteDrift, uWarpDrift) live in a
+// human-friendly 0..~0.05 band — that scale is what the config schema and every
+// demo preset are tuned against. But that band, multiplied straight into uTime
+// (seconds), yields rad/sec rates so small the field reads visually static (one
+// nuclei orbit took ~10 min at the old default). These K_* constants decouple
+// the AUTHORING scale from the RAD/SEC scale: each time term wraps its coefficient
+// in the matching K_, lifting the same authored value to a perceptible period
+// without touching any preset. Tuned so the field reads SLOWLY ALIVE — drift over
+// a ~5–15s window, never a frantic pan. These are downstream of uTime, which the
+// runtime FREEZES under reduced-motion (t = frozenOffset) before the shader sees
+// it, so the lift cannot leak motion into the reduced-motion path.
+const float K_NUCLEI = 14.0; // nuclei orbit: ~one cycle per ~45s at default 0.01
+const float K_PAL    = 24.0; // palette hue breathe: ~one cycle per ~33s at default
+const float K_WARP   = 5.0;  // domain warp scroll: a perceptible fbm-cell traverse
+
 // ── Noise ──────────────────────────────────────────────────────────────────
 float hash21(vec2 p) {
   p = fract(p * vec2(123.34, 456.21));
@@ -134,16 +150,16 @@ float cellular(vec2 p) {
 // ── Warp ──────────────────────────────────────────────────────────────────
 vec2 domainWarp(vec2 p, float t) {
   // Quilez canonical double warp
-  vec2 q = vec2(fbm(p * uWarpScale + vec2(0.0, 0.0) + t * uWarpDrift),
-                fbm(p * uWarpScale + vec2(5.2, 1.3) + t * uWarpDrift));
+  vec2 q = vec2(fbm(p * uWarpScale + vec2(0.0, 0.0) + t * uWarpDrift * K_WARP),
+                fbm(p * uWarpScale + vec2(5.2, 1.3) + t * uWarpDrift * K_WARP));
   vec2 r = vec2(fbm(p * uWarpScale + 4.0 * q + vec2(1.7, 9.2)),
                 fbm(p * uWarpScale + 4.0 * q + vec2(8.3, 2.8)));
 
   vec2 warp = r;
   if (uWarpMode == 1) {
     // cellular — chunky territories (MEADOW block-like)
-    float c1 = cellular(p * uWarpScale * 1.5 + vec2(t * uWarpDrift * 2.0, 0.0));
-    float c2 = cellular(p * uWarpScale * 1.5 + vec2(11.0, 7.0 + t * uWarpDrift * 2.0));
+    float c1 = cellular(p * uWarpScale * 1.5 + vec2(t * uWarpDrift * K_WARP * 2.0, 0.0));
+    float c2 = cellular(p * uWarpScale * 1.5 + vec2(11.0, 7.0 + t * uWarpDrift * K_WARP * 2.0));
     warp = vec2(c1, c2);
   } else if (uWarpMode == 2) {
     // hybrid — fbm + cellular averaged
@@ -195,8 +211,8 @@ void nucleiField(vec2 p, float t, out float paletteId, out float valueMod) {
     if (i >= uNucleiCount) break;
     vec2 posI = uNucleiPos[i]
               + uNucleiDriftRadius[i] * vec2(
-                  cos(t * uNucleiDrift + uNucleiDriftPhase[i]),
-                  sin(t * uNucleiDrift + uNucleiDriftPhase[i] * 1.13)
+                  cos(t * uNucleiDrift * K_NUCLEI + uNucleiDriftPhase[i]),
+                  sin(t * uNucleiDrift * K_NUCLEI + uNucleiDriftPhase[i] * 1.13)
                 );
     vec2 diff = p - posI;
     // Anisotropic Gaussian: rotate diff into the nucleus's local frame
@@ -219,8 +235,12 @@ void nucleiField(vec2 p, float t, out float paletteId, out float valueMod) {
   paletteId = accumBias  / max(accumW, 1e-4);
   valueMod  = accumValue / max(accumW, 1e-4);
 
-  // Palette drift — subtle global paletteId shift
-  paletteId += 0.04 * sin(t * uPaletteDrift * 6.2831) * uPaletteDrift * 20.0;
+  // Palette drift — slow global paletteId breathe between adjacent stops. The
+  // rate rides K_PAL (perceptible ~30–60s hue cycle at the default coefficient);
+  // the amplitude lifts the authored coefficient into a 0.03..0.06 paletteId band
+  // so the palette visibly travels rather than dithering within one stop.
+  float palAmp = clamp(uPaletteDrift * 6.0, 0.0, 0.06);
+  paletteId += palAmp * sin(t * uPaletteDrift * K_PAL);
   paletteId = clamp(paletteId, 0.0, 1.0);
 }
 

@@ -1,12 +1,21 @@
 <script setup lang="ts">
-// DarkModeToggle — passive vs live, 5-rung size axis, disable-transitions knob.
+// DarkModeToggle — passive vs live, size axis, disable-transitions knob.
+//
+// The `dock` size rung is shown ONLY inside a real <GlassDock>: it resolves
+// `--dock-control-size` from the host density, so standalone it would fall
+// through to the bare --size-icon-btn fallback and teach nothing. We host it
+// across three densities so the size-inheritance IS the teaching point.
 import { ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { DarkModeToggle } from "../../../src/controls";
+import { GlassDock } from "../../../src/components/custom/dock";
 
-const sizes = ["sm", "md", "lg", "control", "dock"] as const;
+// Standalone rungs only — `dock` is excluded here because it inherits its
+// size from a GlassDock host (demonstrated in its own section below).
+const sizes = ["sm", "md", "lg", "control"] as const;
+const dockDensities = ["compact", "comfortable", "audacious"] as const;
 const disableTransitions = ref(false);
 </script>
 
@@ -14,13 +23,35 @@ const disableTransitions = ref(false);
     <StoryPage>
         <StorySection
             label="size axis"
-            blurb="Five rungs: sm (28px) · md (36px, default) · lg (44px) · control (CSS control vars) · dock (GlassDock sizing vars). All toggle the canonical useGlobalDark singleton."
+            blurb="Standalone rungs: sm (28px) · md (36px, default) · lg (44px) · control (follows the generic --control-size var). All toggle the canonical useGlobalDark singleton."
         >
             <ShowcaseFrame pad="lg">
                 <div class="flex flex-wrap items-center gap-6">
                     <div v-for="size in sizes" :key="size" class="flex flex-col items-center gap-2">
                         <DarkModeToggle :size="size" />
                         <code class="fira-code text-mono-caption text-muted-foreground">{{ size }}</code>
+                    </div>
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
+
+        <StorySection
+            label="dock rung — sizes to its GlassDock host"
+            blurb="size=&quot;dock&quot; reads --dock-control-size from the surrounding GlassDock, so the toggle matches its dock siblings at every density. Shown standalone it would fall through to a bare 40px fallback and teach nothing — here it rides three live docks."
+        >
+            <ShowcaseFrame pad="lg">
+                <div class="flex flex-wrap items-end gap-6">
+                    <div
+                        v-for="d in dockDensities"
+                        :key="d"
+                        class="flex flex-col items-center gap-2"
+                    >
+                        <GlassDock :density="d" always-expanded>
+                            <DarkModeToggle size="dock" />
+                        </GlassDock>
+                        <code class="fira-code text-mono-caption text-muted-foreground">
+                            density="{{ d }}"
+                        </code>
                     </div>
                 </div>
             </ShowcaseFrame>

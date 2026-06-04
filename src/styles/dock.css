@@ -489,6 +489,48 @@
         overflow-y: visible;
     }
 
+    /* ── Scroll-on-overflow opt-in (GlassDock `overflow="scroll"`) ───────
+       The default contract grows-to-fit then overflows visibly past the
+       axis cap. `overflow="scroll"` instead makes the dock the scroll port
+       on its layout axis, pairing the existing cap with a hidden-scrollbar
+       scroll region so over-cap content stays reachable. The rounded pill
+       masks the scroll edge; both axes keep their cap. */
+
+    /* Inline axis (horizontal docks). The active layer becomes the scroll
+       port: `min-width: 0` releases the flex item's `min-content` floor so
+       it can shrink under the clamped `.dock-layers` track, then `overflow-x:
+       auto` scrolls its over-cap content. `.dock-layers` must KEEP clipping
+       so the pill's rounded edge masks the scroll boundary — hence the
+       grow-mode `overflow-x: visible` (`.dock-layers`, above) is overridden
+       back to `hidden` here. */
+    .glass-dock.dock-scroll-x.expanded:not(.dock-wrap) > .dock-layers {
+        overflow-x: hidden;
+    }
+
+    .glass-dock.dock-scroll-x .dock-layer--full {
+        min-width: 0;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .glass-dock.dock-scroll-x .dock-layer--full::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Block axis (vertical rails). The root keeps its `max-block-size` cap
+       and scrolls its over-cap children — cap + scroll is the correct
+       pairing the grow-mode contract split apart. Ties the
+       `.vertical.always-expanded` visible default on specificity and wins on
+       source order. */
+    .glass-dock.vertical.dock-scroll-y {
+        overflow-y: auto;
+        scrollbar-width: none;
+    }
+
+    .glass-dock.vertical.dock-scroll-y::-webkit-scrollbar {
+        display: none;
+    }
+
     .glass-dock.dock-wrap {
         white-space: normal;
         border-radius: var(--radius-2xl);

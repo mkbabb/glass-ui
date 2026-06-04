@@ -178,6 +178,27 @@ function animatePress(btn: HTMLElement) {
     );
 }
 
+// ── Scroll-active-into-view (overflow scroller only) ──
+//
+// In the `scroll`/`auto` overflow variants the container is a horizontal
+// scroller with an edge fade mask; the rightmost tab can sit under the fade
+// with no visible affordance. Bring the just-selected (or initially-active)
+// button into the solid band so it is never born clipped. No-op for the
+// default `none` variant (no scroller). Honors reduced-motion.
+function scrollButtonIntoView(idx: number) {
+    if (!isScroll.value && !isAuto.value) return;
+    const btn = buttonRefs.value[idx];
+    if (!btn) return;
+    const reduceMotion =
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    btn.scrollIntoView({
+        inline: "nearest",
+        block: "nearest",
+        behavior: reduceMotion ? "auto" : "smooth",
+    });
+}
+
 // ── Selection handler ──
 
 function select(value: string, idx: number) {
@@ -204,6 +225,8 @@ function select(value: string, idx: number) {
     } else {
         emit("update:modelValue", value);
     }
+
+    scrollButtonIntoView(idx);
 }
 
 // ── Watchers (JS slider path only) ──
@@ -235,6 +258,16 @@ watch(
 let resizeObserver: ResizeObserver | null = null;
 
 onMounted(() => {
+    // Bring the initially-active button on-screen when the overflow scroller is
+    // live — independent of the slider path, so an anchor-engine single-select
+    // (no JS slider) that opens with a clipped active tab is not born clipped.
+    nextTick(() => {
+        const activeIdx = props.options.findIndex((o) =>
+            isActive(o.value),
+        );
+        if (activeIdx >= 0) scrollButtonIntoView(activeIdx);
+    });
+
     if (!jsSliderActive.value) return;
     nextTick(updateSliders);
     if (containerRef.value) {
@@ -495,5 +528,17 @@ onUnmounted(() => {
     overflow-x: auto;
     overflow-y: hidden;
     width: 100%;
+}
+
+/* The pill rail is a short-label segmented control, not a long content scroll
+   — the default 1rem edge fade is heavy enough to swallow the last pill at
+   rest. Narrow the fade and pad the inline-end by the same amount so the
+   rightmost pill always scrolls fully clear of the fade (the fade must never
+   eat the last pill). Token-bridged: re-points the shared `--mask-fade-width`
+   that `.scroll-fade-mask` reads. */
+.bouncy-toggle--scroll {
+    --mask-fade-width: 0.5rem;
+    padding-inline-end: calc(0.125rem + var(--mask-fade-width));
+    scroll-padding-inline: var(--mask-fade-width);
 }
 </style>

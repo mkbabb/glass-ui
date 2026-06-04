@@ -25,9 +25,13 @@ export {
 } from "./presets";
 export {
     cssToOklch,
+    deriveAurora,
     flattenPalette,
     hexToOklchStop,
     oklchStopToHex,
     oklchToLinear,
     paletteToCssGradient,
 } from "./composables/color";
+// D10b — the seed-one-color → N-stop palette producer (composes the shipped
+// value.js OKLab/gamut core). T6 wires it into the Palette configurator tab.
+export type { AuroraHarmony, DeriveAuroraOptions } from "./composables/color";
