@@ -26,16 +26,30 @@
 
 import { readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
-const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-const SRC = resolve(ROOT, "src");
+// The CLI paths (repo ROOT, the src/ scan dir, the gate-output ARTIFACT) are
+// resolved LAZILY + memoized, never at module scope: importing this module for
+// its exported pure detectors (scripts/__tests__/proof-vt-names.test.ts) must
+// not run `fileURLToPath(import.meta.url)`, which throws under vitest's module
+// runner (import.meta.url is not a file: URL there). Only the CLI path
+// (analyzeFile + run) touches them.
 // inv-θ: gate output is a pure function landing in a gitignored cache by default
 // (.cache/gates/W2-vt-names.json). A DELIBERATE snapshot to the committed
 // AR-audit path is opt-in via GLASS_UI_VT_NAMES_ARTIFACT (+ GATE_SNAPSHOT=1 for
 // the timestamp). Default → byte-stable cache, so a gate run leaves git clean.
-const ARTIFACT = gateArtifactPath("GLASS_UI_VT_NAMES_ARTIFACT", "W2-vt-names");
+let _cliPaths = null;
+function cliPaths() {
+    if (_cliPaths) return _cliPaths;
+    const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
+    _cliPaths = {
+        ROOT,
+        SRC: resolve(ROOT, "src"),
+        ARTIFACT: gateArtifactPath("GLASS_UI_VT_NAMES_ARTIFACT", "W2-vt-names"),
+    };
+    return _cliPaths;
+}
 
 // ---------------------------------------------------------------------------
 // DOCUMENTED PAGE-SINGLETON ALLOWLIST.
@@ -403,7 +417,16 @@ function traceMintSource(expr, counterNames, bindings) {
 // ---------------------------------------------------------------------------
 function analyzeFile(path) {
     const raw = readFileSync(path, "utf8");
-    const rel = path.slice(ROOT.length + 1);
+    const rel = path.slice(cliPaths().ROOT.length + 1);
+    return analyzeSource(path, raw, rel);
+}
+
+// Pure (FS-free) twin of analyzeFile: classify mints in `raw`, treating `path`
+// only as the region-kind selector (.ts/.css/.vue). `rel` is the file label
+// stamped into each mint record. Exported so the gate's detection logic can be
+// exercised over in-memory fixtures (scripts/__tests__/proof-vt-names.test.ts)
+// without touching the filesystem — analyzeFile is just this + a readFileSync.
+export function analyzeSource(path, raw, rel = path) {
     const regions = fileRegions(path, raw);
     const mints = [];
 
@@ -612,33 +635,55 @@ function verdictFor(mint, fileFacts) {
 }
 
 // ---------------------------------------------------------------------------
+// Detect — the core per-file ruling: dedupe a file's mints and apply the
+// verdict to each. Returns `{ mints, violations }` for ONE file's facts. This is
+// the unit the spec drives (via detectSource below); `run()` folds it over the
+// whole src/ tree.
+// ---------------------------------------------------------------------------
+export function detect(facts) {
+    const mints = [];
+    const violations = [];
+    // One declaration can surface through two detection forms when forms nest
+    // (a backtick style-string is both a form-(b) declaration AND, when wrapped
+    // in `setAttribute("style", …)`, a form-(e) hit). Dedupe per file by
+    // (line · kind · source) so a single mint is reported once.
+    const seenKeys = new Set();
+    for (const mint of facts.mints) {
+        const key = `${mint.line}|${mint.kind}|${mint.source}`;
+        if (seenKeys.has(key)) continue;
+        seenKeys.add(key);
+        const v = verdictFor(mint, facts);
+        // `expr` is an internal tracing aid — keep it out of the report.
+        const { expr: _expr, ...reported } = mint;
+        const record = { ...reported, verdict: v.verdict };
+        mints.push(record);
+        if (v.verdict === "violation") {
+            violations.push({ ...record, reason: v.reason });
+        }
+    }
+    return { mints, violations };
+}
+
+// FS-free convenience: classify in-memory `source` text as if it were the file
+// `path` (region kind keyed off the extension). The spec's entry point.
+export function detectSource(path, source) {
+    return detect(analyzeSource(path, source, path));
+}
+
+// ---------------------------------------------------------------------------
 // Run
 // ---------------------------------------------------------------------------
 function run() {
+    const { ROOT, SRC, ARTIFACT } = cliPaths();
     const files = walk(SRC);
     const mints = [];
     const violations = [];
 
     for (const path of files) {
         const facts = analyzeFile(path);
-        // One declaration can surface through two detection forms when forms
-        // nest (a backtick style-string is both a form-(b) declaration AND, when
-        // wrapped in `setAttribute("style", …)`, a form-(e) hit). Dedupe per file
-        // by (line · kind · source) so a single mint is reported once.
-        const seenKeys = new Set();
-        for (const mint of facts.mints) {
-            const key = `${mint.line}|${mint.kind}|${mint.source}`;
-            if (seenKeys.has(key)) continue;
-            seenKeys.add(key);
-            const v = verdictFor(mint, facts);
-            // `expr` is an internal tracing aid — keep it out of the artefact.
-            const { expr: _expr, ...reported } = mint;
-            const record = { ...reported, verdict: v.verdict };
-            mints.push(record);
-            if (v.verdict === "violation") {
-                violations.push({ ...record, reason: v.reason });
-            }
-        }
+        const ruled = detect(facts);
+        mints.push(...ruled.mints);
+        violations.push(...ruled.violations);
     }
 
     // Stable ordering for a deterministic artefact.
@@ -680,4 +725,9 @@ function run() {
     process.exit(status === "pass" ? 0 : 1);
 }
 
-run();
+// CLI entry — walk src/ + fail-closed — runs ONLY when invoked directly
+// (`node scripts/proof-vt-names.mjs`), not when imported by the spec (the import
+// path leaves argv[1] as the test runner / unset, so this stays inert).
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+    run();
+}

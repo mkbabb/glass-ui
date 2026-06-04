@@ -105,4 +105,75 @@ describe("useTextHighlight", () => {
             expect(registry.has("search")).toBe(false);
         });
     });
+
+    // A name IS a paint identity (one `::highlight(<name>)` rule, no wildcard),
+    // so two surfaces sharing a name must MULTIPLEX their ranges under one
+    // shared Highlight rather than clobber each other.
+    describe("multi-instance (shared name multiplexing)", () => {
+        let registry: Map<string, StubHighlight>;
+
+        beforeEach(() => { registry = installHighlightApi(); });
+        afterEach(uninstallHighlightApi);
+
+        it("unions both instances' ranges under one shared Highlight", () => {
+            const a = mountComposable(() => useTextHighlight("shared"));
+            const b = mountComposable(() => useTextHighlight("shared"));
+
+            a.result.set([document.createRange(), document.createRange()]);
+            b.result.set([document.createRange()]);
+
+            // The shared paint carries the union: 2 (from a) + 1 (from b).
+            expect(registry.get("shared")?.size).toBe(3);
+
+            a.unmount();
+            b.unmount();
+        });
+
+        it("does not erase the other instance's ranges on clear()", () => {
+            const a = mountComposable(() => useTextHighlight("shared"));
+            const b = mountComposable(() => useTextHighlight("shared"));
+
+            a.result.set([document.createRange(), document.createRange()]);
+            b.result.set([document.createRange()]);
+
+            // a clears its own contribution; b's single range survives.
+            a.result.clear();
+            expect(registry.get("shared")?.size).toBe(1);
+
+            a.unmount();
+            b.unmount();
+        });
+
+        it("does not erase the other instance's ranges on dispose()", () => {
+            const a = mountComposable(() => useTextHighlight("shared"));
+            const b = mountComposable(() => useTextHighlight("shared"));
+
+            a.result.set([document.createRange()]);
+            b.result.set([document.createRange(), document.createRange()]);
+
+            // Disposing a leaves b's two ranges painting under the shared name.
+            a.unmount();
+            expect(registry.has("shared")).toBe(true);
+            expect(registry.get("shared")?.size).toBe(2);
+
+            b.unmount();
+        });
+
+        it("deletes the registry entry only when the last instance disposes", () => {
+            const a = mountComposable(() => useTextHighlight("shared"));
+            const b = mountComposable(() => useTextHighlight("shared"));
+
+            a.result.set([document.createRange()]);
+            b.result.set([document.createRange()]);
+            expect(registry.has("shared")).toBe(true);
+
+            a.unmount();
+            // One contributor still live — the shared paint persists.
+            expect(registry.has("shared")).toBe(true);
+
+            b.unmount();
+            // Last contributor gone — the registry entry drops.
+            expect(registry.has("shared")).toBe(false);
+        });
+    });
 });

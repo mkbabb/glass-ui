@@ -152,34 +152,41 @@ const resolvedDensity = computed<ConfiguratorDensity | undefined>(
  * utilities (0,1,0) — so the container path overrides the bare recipe, yet
  * a row carrying BOTH the attribute and a `--density` ancestor lands on the
  * attribute rule (identical token, identical paint). `[data-density]` stays
- * the SOLE feature-detected fallback (inv 47 — not a dead mirror): the
- * `@supports` boundary keeps the whole block out of engines without
- * style-query support, landing them on the attribute path only.
+ * the SOLE fallback (inv 47 — not a dead mirror).
+ *
+ * No `@supports` wrapper: unlike the sibling scroll-state recipe (which probes
+ * `@supports (container-type: scroll-state)` — a probeable container-type
+ * VALUE), style queries introduce no new `container-type` value (every element
+ * is a style container by default), so there is no clean declaration test for
+ * style-query support. Instead this relies on `@container style()`'s own
+ * graceful degradation: an engine without style-query support parses the
+ * unknown `@container style(--density: …)` as an invalid at-rule, drops the
+ * whole block, and keeps the `[data-density]` attribute base. (The earlier
+ * `@supports (container-type: inline-size)` wrapper was wrong — it probed
+ * SIZE-query support, a distinct feature with a distinct support timeline.)
  */
-@supports (container-type: inline-size) {
-    @container style(--density: mobile) {
-        .configurator-row {
-            gap: var(--configurator-row-gap-mobile);
-            padding-block: var(--configurator-row-py-mobile);
-        }
+@container style(--density: mobile) {
+    .configurator-row {
+        gap: var(--configurator-row-gap-mobile);
+        padding-block: var(--configurator-row-py-mobile);
     }
-    @container style(--density: compact) {
-        .configurator-row {
-            gap: var(--configurator-row-gap-compact);
-            padding-block: var(--configurator-row-py-compact);
-        }
+}
+@container style(--density: compact) {
+    .configurator-row {
+        gap: var(--configurator-row-gap-compact);
+        padding-block: var(--configurator-row-py-compact);
     }
-    @container style(--density: comfortable) {
-        .configurator-row {
-            gap: var(--configurator-row-gap-comfortable);
-            padding-block: var(--configurator-row-py-comfortable);
-        }
+}
+@container style(--density: comfortable) {
+    .configurator-row {
+        gap: var(--configurator-row-gap-comfortable);
+        padding-block: var(--configurator-row-py-comfortable);
     }
-    @container style(--density: spacious) {
-        .configurator-row {
-            gap: var(--configurator-row-gap-spacious);
-            padding-block: var(--configurator-row-py-spacious);
-        }
+}
+@container style(--density: spacious) {
+    .configurator-row {
+        gap: var(--configurator-row-gap-spacious);
+        padding-block: var(--configurator-row-py-spacious);
     }
 }
 </style>

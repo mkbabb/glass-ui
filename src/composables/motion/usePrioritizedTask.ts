@@ -52,6 +52,40 @@ function abortError(): Error {
 }
 
 /**
+ * Merge ≥ 0 abort signals into one that aborts when ANY input does. Mirrors the
+ * `postTaskSafe` fallback-with-feature-detect idiom: native `AbortSignal.any`
+ * when available (Baseline 2024, alongside `scheduler.postTask`), else a manual
+ * merge via a fresh `AbortController`. The manual branch is load-bearing — the
+ * same legacy engines that lack `scheduler.postTask` also lack `AbortSignal.any`.
+ *
+ * Returns `undefined` for an empty live set so callers pass no signal at all
+ * (rather than a never-aborting one), and the lone-signal case passes through
+ * untouched (no needless wrapper controller).
+ */
+function anySignal(
+    signals: ReadonlyArray<AbortSignal | undefined>,
+): AbortSignal | undefined {
+    const live = signals.filter((s): s is AbortSignal => s != null);
+    if (live.length === 0) return undefined;
+    if (live.length === 1) return live[0];
+
+    // `AbortSignal.any` is Baseline 2024 (alongside scheduler.postTask); the
+    // typeof guard still gates legacy engines that type-declare but lack it.
+    if (typeof AbortSignal.any === "function") return AbortSignal.any(live);
+
+    const merged = new AbortController();
+    const onAbort = (source: AbortSignal) => merged.abort(source.reason);
+    for (const signal of live) {
+        if (signal.aborted) {
+            merged.abort(signal.reason);
+            break;
+        }
+        signal.addEventListener("abort", () => onAbort(signal), { once: true });
+    }
+    return merged.signal;
+}
+
+/**
  * Schedule `callback` at an explicit priority, resolving with its result.
  * Native `scheduler.postTask` when available; otherwise a `MessageChannel`
  * macrotask (honouring `delay` via `setTimeout`, and `signal` via a plain
@@ -153,7 +187,10 @@ export function usePrioritizedTask(
             postTaskSafe(callback, {
                 priority,
                 ...options,
-                signal: options.signal ?? controller?.signal,
+                // Merge BOTH signals so the controller's own `abort()` still
+                // cancels a task scheduled with an explicit `options.signal`
+                // (the prior `??` dropped the controller signal in that case).
+                signal: anySignal([controller?.signal, options.signal]),
             }),
         abort: (reason?: unknown) => controller?.abort(reason),
     };

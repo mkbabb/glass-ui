@@ -12,9 +12,15 @@
 // the consumer keeps whatever fallback it renders. SSR (no `document`/`CSS`)
 // takes the same no-op path.
 //
-// The highlight registry is process-global keyed by name, so two composables
-// sharing a name share one `Highlight`; pick a name unique to the surface
-// (`fuzzy-search`, `fourier-eq`, …) and ship a matching `::highlight()` paint.
+// The highlight registry is process-global keyed by name, and a name IS a
+// paint identity (`::highlight(<name>)` has no wildcard form). Two surfaces
+// that share a name — two FuzzySearch instances both painting
+// `glass-search-mark`, say — therefore MULTIPLEX rather than clobber: each
+// instance is a contributor whose current ranges union into one shared
+// `Highlight`. The module-level `groups` map below holds, per name, the set of
+// live contributors; any `set`/`clear`/`dispose` rebuilds the shared
+// `Highlight` from the union of all live contributors' ranges. The registry
+// entry is deleted only when the last contributor for a name disposes.
 
 import { getCurrentScope, onScopeDispose } from "vue";
 
@@ -45,6 +51,18 @@ export interface UseTextHighlightControls {
     readonly supported: boolean;
 }
 
+/** One instance's contribution to a shared name — its current range set. */
+interface Contributor {
+    ranges: Range[];
+}
+
+/**
+ * Per-name contributor sets. Every live `useTextHighlight(name)` instance owns
+ * a `Contributor` in `groups.get(name)`; the shared `Highlight` registered
+ * under `name` is the union of all members' ranges.
+ */
+const groups = new Map<string, Set<Contributor>>();
+
 /** `CSS.highlights` + the `Highlight` constructor are present. */
 function detectSupport(): boolean {
     return (
@@ -53,6 +71,24 @@ function detectSupport(): boolean {
         "highlights" in CSS &&
         typeof (globalThis as { Highlight?: unknown }).Highlight === "function"
     );
+}
+
+/**
+ * Rebuild the shared `Highlight` for `name` from the union of all live
+ * contributors' ranges. With no contributors left, drop the registry entry so
+ * a stale name can't paint a torn-down view.
+ */
+function rebuild(name: string): void {
+    const members = groups.get(name);
+    if (!members || members.size === 0) {
+        CSS.highlights.delete(name);
+        return;
+    }
+    const highlight = new Highlight();
+    for (const member of members) {
+        for (const range of member.ranges) highlight.add(range);
+    }
+    CSS.highlights.set(name, highlight);
 }
 
 /** Default substring matcher — every case-insensitive occurrence of `query`. */
@@ -78,6 +114,8 @@ function substringMatcher(
  * Drive a named CSS Custom Highlight reactively.
  *
  * @param name registry key — must match a `::highlight(<name>)` style rule.
+ *   Instances sharing a name multiplex: each contributes its own ranges and
+ *   the shared paint is their union (last to dispose drops the registry entry).
  *
  * @example
  * const hl = useTextHighlight("fuzzy-search");
@@ -91,22 +129,26 @@ function substringMatcher(
 export function useTextHighlight(name: string): UseTextHighlightControls {
     const supported = detectSupport();
 
-    // One Highlight per composable instance; the name keys it in the registry.
-    // Constructed lazily on first `set` so an unused instance registers nothing.
-    let highlight: Highlight | null = null;
+    // This instance's contribution to the shared name, registered lazily on the
+    // first `set` so an unused instance never joins the group nor registers.
+    let contributor: Contributor | null = null;
 
-    function ensureHighlight(): Highlight {
-        if (highlight) return highlight;
-        highlight = new Highlight();
-        CSS.highlights.set(name, highlight);
-        return highlight;
+    function ensureContributor(): Contributor {
+        if (contributor) return contributor;
+        contributor = { ranges: [] };
+        let members = groups.get(name);
+        if (!members) {
+            members = new Set<Contributor>();
+            groups.set(name, members);
+        }
+        members.add(contributor);
+        return contributor;
     }
 
     function set(ranges: Range[]): void {
         if (!supported) return;
-        const hl = ensureHighlight();
-        hl.clear();
-        for (const range of ranges) hl.add(range);
+        ensureContributor().ranges = ranges.slice();
+        rebuild(name);
     }
 
     function setFromMatches(
@@ -139,16 +181,20 @@ export function useTextHighlight(name: string): UseTextHighlightControls {
     }
 
     function clear(): void {
-        if (!supported || !highlight) return;
-        highlight.clear();
+        if (!supported || !contributor) return;
+        contributor.ranges = [];
+        rebuild(name);
     }
 
     function dispose(): void {
-        if (!supported) return;
-        highlight?.clear();
-        // Drop the registry entry so a stale name can't paint a torn-down view.
-        CSS.highlights.delete(name);
-        highlight = null;
+        if (!supported || !contributor) return;
+        // Drop this instance's contribution and rebuild the shared paint from
+        // whoever's left; the registry entry survives until the last leaves.
+        groups.get(name)?.delete(contributor);
+        rebuild(name);
+        const members = groups.get(name);
+        if (members && members.size === 0) groups.delete(name);
+        contributor = null;
     }
 
     if (getCurrentScope()) {
