@@ -22,7 +22,7 @@ const categories: { slug: string; title: string; blurb: string }[] = [
             :class="
                 cn(
                     'paper-grain-overlay relative overflow-hidden rounded-card px-8 py-20 md:px-16 md:py-32',
-                    'bg-[radial-gradient(ellipse_80%_70%_at_20%_20%,color-mix(in_srgb,var(--rainbow-pastel-red)_45%,transparent),transparent_60%),radial-gradient(ellipse_70%_60%_at_80%_30%,color-mix(in_srgb,var(--rainbow-pastel-blue)_40%,transparent),transparent_55%),radial-gradient(ellipse_75%_65%_at_50%_90%,color-mix(in_srgb,var(--rainbow-pastel-yellow)_35%,transparent),transparent_60%)]',
+                    'bg-[radial-gradient(ellipse_80%_70%_at_20%_20%,color-mix(in_srgb,var(--section-color-0)_34%,transparent),transparent_60%),radial-gradient(ellipse_70%_60%_at_80%_30%,color-mix(in_srgb,var(--section-color-2)_30%,transparent),transparent_55%),radial-gradient(ellipse_75%_65%_at_50%_90%,color-mix(in_srgb,var(--section-color-5)_26%,transparent),transparent_60%)]',
                 )
             "
             style="filter: hue-rotate(var(--hue-shift, 0deg));"

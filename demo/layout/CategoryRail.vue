@@ -28,7 +28,7 @@ const activeFlatId = computed<string | null>(() => {
     <aside class="flex h-full min-h-0 shrink-0 flex-col items-center px-3 py-4">
         <GlassDock
             variant="rail"
-            scroll-on-overflow
+            overflow="scroll"
             class="min-h-0"
             aria-label="Category navigation"
         >

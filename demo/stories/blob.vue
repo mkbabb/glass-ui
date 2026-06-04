@@ -210,6 +210,10 @@ const loop = useRAFLoop(
 
 onMounted(() => {
     fitCanvas();
+    // Paint one static frame up front so the field is VISIBLE even when the
+    // rAF loop never delivers a frame — useRAFLoop auto-pauses under
+    // prefers-reduced-motion, which would otherwise leave a blank canvas.
+    draw(0);
     loop.start();
     window.addEventListener("resize", fitCanvas);
 });

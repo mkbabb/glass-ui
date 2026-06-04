@@ -36,7 +36,14 @@ const HARMONIES: { value: AuroraHarmony; label: string }[] = [
     { value: "monochrome", label: "Mono" },
 ];
 
-const seedHex = ref(oklchStopToHex(props.config.palette[0]!));
+// Seed defaults to the live first stop; guard the empty-palette edge (a
+// consumer could hand a 0-stop config) so the color input never receives an
+// undefined → invalid-hex value and silently falls back to #000000.
+const seedHex = ref(
+    props.config.palette[0]
+        ? oklchStopToHex(props.config.palette[0])
+        : "#6b8fd4",
+);
 const harmony = ref<AuroraHarmony>("analogous");
 const stopCount = ref(Math.min(Math.max(props.config.palette.length, 2), MAX_STOPS));
 
@@ -51,12 +58,20 @@ function onSeed(e: Event) {
     seedHex.value = (e.target as HTMLInputElement).value;
 }
 
+// reka-ui's single ToggleGroup clears to "" when the active harmony is
+// re-clicked (deselect). Coerce that back to the painterly default so the
+// derive never runs with an off-union value and the chip never reads as
+// "no harmony selected" while Derive still works.
+function onHarmony(next: string) {
+    harmony.value = (next as AuroraHarmony) || "analogous";
+}
+
 function derive() {
     // Assigning the whole palette array flows through useAurora's reactive
     // watch — no extra plumbing; the canvas re-uploads on the next frame.
     config.value.palette = deriveAurora(seedHex.value, {
         stopCount: stopCount.value,
-        harmony: harmony.value,
+        harmony: harmony.value || "analogous",
     });
 }
 </script>
@@ -83,10 +98,11 @@ function derive() {
                     @input="onSeed"
                 />
                 <ToggleGroup
-                    v-model="harmony"
+                    :model-value="harmony"
                     type="single"
                     variant="outline"
                     class="flex-1"
+                    @update:model-value="(v) => onHarmony(v as string)"
                 >
                     <ToggleGroupItem
                         v-for="h in HARMONIES"

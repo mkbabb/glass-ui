@@ -511,6 +511,11 @@
         min-width: 0;
         overflow-x: auto;
         scrollbar-width: none;
+        /* Trap the inline-scroll momentum at the dock's own boundary so a
+           wheel/trackpad gesture that bottoms out the pill does NOT chain into
+           scrolling the page behind it (the dock is a self-contained scroll
+           port, not a window into the route scroller). */
+        overscroll-behavior-x: contain;
     }
 
     .glass-dock.dock-scroll-x .dock-layer--full::-webkit-scrollbar {
@@ -525,6 +530,9 @@
     .glass-dock.vertical.dock-scroll-y {
         overflow-y: auto;
         scrollbar-width: none;
+        /* Same momentum-trap as the inline port — a rail that bottoms out must
+           not chain its remaining wheel delta into the page scroller behind it. */
+        overscroll-behavior-y: contain;
     }
 
     .glass-dock.vertical.dock-scroll-y::-webkit-scrollbar {

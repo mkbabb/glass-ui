@@ -40,7 +40,7 @@ const entries = computed<PagerEntry[]>(() =>
             orientation="horizontal"
             always-expanded
             fit-content
-            scroll-on-overflow
+            overflow="scroll"
             class="story-pager-dock"
         >
             <div class="story-pager-row">

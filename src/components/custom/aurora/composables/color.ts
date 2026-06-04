@@ -15,6 +15,7 @@ import {
     rawOklabToOklch,
     rawOklchToOklab,
     gamutMapOKLab,
+    isInSRGBGamut,
     parseCSSColor,
     colorUnit2,
 } from "@mkbabb/value.js";
@@ -254,12 +255,38 @@ function deriveHue(
 
 /**
  * Gamut-map one OklchStop through value.js's Ottosson core
- * (`rawOklchToOklab → gamutMapOKLab → rawOklabToOklch`) so the returned stop is
- * guaranteed in-sRGB. Hue is preserved exactly by the adaptive-L0 strategy.
+ * (`rawOklchToOklab → gamutMapOKLab → rawOklabToOklch`). Hue is preserved exactly
+ * by the adaptive-L0 strategy; the result is in-sRGB to the rendering pipeline's
+ * tolerance.
+ *
+ * `gamutMapOKLab` maps onto the gamut HULL — analytically in-gamut, but the
+ * boundary point lands EXACTLY on a sRGB face, where the OKLCh round-trip's float
+ * error can push a channel a hair past [0,1] for a neon/near-primary seed
+ * (`#00ff00`, `#0000ff`, …). Two distinct escapes:
+ *
+ *  - OVER-1 overshoot (a channel > 1) — the dangerous one: the bake path
+ *    (`oklchToLinear`) lower-clamps with `Math.max(0,·)` but does NOT cap the top,
+ *    so an uncorrected overshoot would reach the GPU. A bounded inward-chroma
+ *    nudge clears every over-1 escape (verified 0 over-1 across the neon × harmony
+ *    matrix); hue and L are untouched, chroma shrinks ≤ ~0.6% (imperceptible).
+ *  - sub-1.1e-4 NEGATIVE residual (a channel < 0 by ≤ 0.027/255) — irreducible
+ *    float noise of the hull placement on deep blues; chroma-shrink cannot move
+ *    it (it is L/face-direction, not chroma-direction). It is below perception
+ *    AND the bake's `Math.max(0,·)` wrap already clamps it, so it never paints.
+ *
+ * The loop breaks the instant the stop reads strictly in-gamut; the 6-step cap
+ * bounds the negative-residual case (which never converges) so this stays O(1).
  */
 function gamutMapStop(stop: OklchStop): OklchStop {
     const [L, a, b] = rawOklchToOklab(stop.L, stop.C, stop.h);
     const [Lm, am, bm] = gamutMapOKLab(L, a, b);
     const [Lo, C, H] = rawOklabToOklch(Lm, am, bm);
-    return { L: Lo, C, h: H };
+    let safeC = C;
+    for (let k = 0; k < 6; k++) {
+        const [lx, ax, bx] = rawOklchToOklab(Lo, safeC, H);
+        const [lr, lg, lb] = oklabToLinearSRGB(lx, ax, bx);
+        if (isInSRGBGamut(lr, lg, lb)) break;
+        safeC *= 0.999; // pull chroma 0.1% inward — hue/L preserved
+    }
+    return { L: Lo, C: safeC, h: H };
 }

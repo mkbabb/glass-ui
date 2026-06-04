@@ -163,8 +163,11 @@ export interface UseSortableReturn {
  * corners. A radius is "zero" only when every numeric component
  * parses to 0; a non-length token (`%`, `auto`) counts as
  * non-zero so we never miss a rounded corner.
+ *
+ * Exported (not re-exported from the package barrel) for the D9 drag-ring
+ * regression test — keep it a pure string predicate.
  */
-function isNonZeroRadius(radius: string): boolean {
+export function isNonZeroRadius(radius: string): boolean {
     if (!radius) return false;
     return radius
         .replace(/\//g, " ")
