@@ -90,14 +90,34 @@ function writeArtifact(status, extra = {}) {
 mkdirSync(tmp, { recursive: true });
 
 try {
-    if (!existsSync(resolve(root, "dist/glass-ui.js")) || process.argv.includes("--build")) {
+    // A prior gate in the same `gates.mjs --run` sequence (profile:budget's
+    // iter-build = `vite build` with NO emit-types) rebuilds the canonical dist
+    // JS-only, leaving no `.d.ts`. This proof tsc-probes the packed TYPES, so it
+    // needs a COMPLETE dist (JS + dts). Build when EITHER is missing — the gate
+    // stays a pure function of source, independent of what a sibling gate left
+    // in dist (inv-θ). `stdio:inherit` (run helper, non-capture) keeps this
+    // build's output off the captured pack stdout below.
+    if (
+        !existsSync(resolve(root, "dist/glass-ui.js")) ||
+        !existsSync(resolve(root, "dist/index.d.ts")) ||
+        process.argv.includes("--build")
+    ) {
         run("npm", ["run", "build"]);
     }
 
-    const packOutput = run("npm", ["pack", "--json", "--pack-destination", tmp], {
-        capture: true,
-    });
-    const packResult = JSON.parse(packOutput)[0];
+    // `--ignore-scripts`: do NOT run the `prepare` lifecycle during pack. The
+    // dist is already complete above; letting `prepare` rebuild here would be
+    // redundant AND leak the build's stdout into the `--json` capture (the
+    // "vite v… building" contamination class — npm runs lifecycle output
+    // through the same pipe). With scripts off the pack emits pure JSON.
+    const packOutput = run(
+        "npm",
+        ["pack", "--json", "--ignore-scripts", "--pack-destination", tmp],
+        { capture: true },
+    );
+    // Defensive: parse from the first `[` so any residual leading line (an npm
+    // banner under some builds) cannot break the parse.
+    const packResult = JSON.parse(packOutput.slice(packOutput.indexOf("[")))[0];
     const tarball = resolve(tmp, packResult.filename);
 
     writeFileSync(
