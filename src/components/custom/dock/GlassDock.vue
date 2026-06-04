@@ -136,6 +136,15 @@ const isTransitioning = ref(false);
 const touchGate = useTouchGate(props.collapseDelay);
 const dockId = `glass-dock-${useId()}`;
 let transitionTimer: ReturnType<typeof setTimeout> | null = null;
+/* AT.W6-dock-c — the morph GENERATION. `isTransitioning` must track the ACTUAL
+   resize morph, never a stale event from a superseded one. Each `markTransitioning`
+   (every `visualExpanded` flip) bumps `morphGeneration`; the timer fallback and
+   the `transitionend` handler both capture the generation live at fire time and
+   no-op when it has moved on. So a ≥2-dock rapid A→B→A re-trigger CANNOT
+   skip-fast-forward (a leftover A→B `transitionend` cannot clear the live B→A
+   morph) and CANNOT queue (the flag stays true across the whole chain, cleared
+   only by the LAST morph's own resolution). */
+let morphGeneration = 0;
 
 const {
     expanded,
@@ -238,12 +247,23 @@ function clearTransitionTimer(): void {
     }
 }
 
+/* The properties whose transitions ARE the resize morph (driven by
+   `--dock-motion-resize`). The flag resolves on one of THESE finishing — never
+   on a shorter `--dock-motion-standard` property (box-shadow/background/
+   border-color), which would skip-fast-forward `isTransitioning` to false while
+   the morph is still in flight. */
+const RESIZE_MORPH_PROPS = new Set(["width", "height", "padding", "transform"]);
+
 function markTransitioning(): void {
     const root = dockEl.value;
     if (!root) return;
+    // Bump the generation: any in-flight morph's pending timer / transitionend
+    // is now stale and self-cancels (the A→B→A no-skip / no-queue invariant).
+    const generation = ++morphGeneration;
     clearTransitionTimer();
     isTransitioning.value = true;
     transitionTimer = setTimeout(() => {
+        if (generation !== morphGeneration) return;
         isTransitioning.value = false;
         transitionTimer = null;
     }, longestTransitionMs(root) + 50);
@@ -251,7 +271,12 @@ function markTransitioning(): void {
 
 function onDockTransitionDone(event: TransitionEvent): void {
     if (event.target !== dockEl.value) return;
+    // Only the resize-morph properties resolve the flag — a shorter standard-
+    // motion property finishing first must NOT drop `isTransitioning` mid-morph.
+    if (!RESIZE_MORPH_PROPS.has(event.propertyName)) return;
     clearTransitionTimer();
+    // Settle the generation so a later stale timer can't reopen the flag.
+    morphGeneration++;
     isTransitioning.value = false;
 }
 

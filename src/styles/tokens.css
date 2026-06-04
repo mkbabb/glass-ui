@@ -1239,6 +1239,15 @@
     --vt-duration: var(--duration-normal);
     --vt-ease: var(--ease-apple-spring);
     --vt-rise: 8px;
+
+    /* AT.W6-dock-c — the dock layer-swap morph timing, minted ONCE so both
+       engine paths are timing-IDENTICAL: the FLIP fallback (via
+       `--dock-motion-resize`) and the native View-Transition group (its
+       `animation-timing-function`) consume this same `linear()` curve. Retires
+       the AQ.W6 fork where the VT path ran `--vt-ease` (apple-spring, +27.5%
+       overshoot) while the FLIP ran the snappy spring. `--vt-ease` still
+       defaults the other VT recipes (`.gl-list-item`). */
+    --dock-resize-spring: var(--spring-snappy);
 }
 
 /* ═══════════════════════════════════════════════

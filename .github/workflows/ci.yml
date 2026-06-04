@@ -81,6 +81,14 @@ jobs:
               run: npm run proof:phantom-classes
             - name: proof:vt-names
               run: npm run proof:vt-names
+            # AT.W6-dock-c — the dock VT/FLIP motion-parity static gate. Asserts
+            # the native View-Transition path and the JS FLIP fallback consume
+            # ONE source timing curve (--dock-resize-spring), so an identity
+            # dock layer-swap morph is timing-identical per engine (retiring the
+            # AQ.W6 --vt-ease fork). The runtime concurrency half (isTransitioning
+            # A→B→A no-skip/no-queue) rides `npm run test`.
+            - name: proof:dock-motion-parity
+              run: npm run proof:dock-motion-parity
             # AS.W2 inv-θ — the lockfile registry-resolution drift guard (#177
             # cannot silently re-break npm ci) + the meta-gate asserting this
             # ci.yml step set matches scripts/gates.mjs exactly (the manifest is

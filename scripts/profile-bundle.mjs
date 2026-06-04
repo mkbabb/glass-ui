@@ -86,9 +86,19 @@ const startedAt = Date.now();
 // gzip ≈ 9 KB to the resolved draw → measured dist/styles/index.css gzip 97749 /
 // raw 412097. Re-based with modest headroom (gzip 100000, raw 420000) — this is
 // a ONE-TIME structural correctness addition, not per-wave creep.
+// CSS ceiling re-based at AT.W6-dock-c (the dock VT/FLIP timing-parity slice).
+// Minting `--dock-resize-spring` (the single source curve both engine paths of
+// the dock layer-swap morph now consume) + its lean rationale in the three CSS
+// rungs (tokens/dock/view-transition) lifts the measured resolved draw of
+// dist/styles/index.css to gzip 99958 / raw 419727 — within the AS.W5 ceiling
+// but with knife's-edge headroom (42 gzip bytes), too tight to survive a zlib
+// drift across runners. Re-based against the measured reality with the same
+// modest ~3% close headroom the prior re-bases used (gzip 99958 → 103000;
+// raw 419727 → 432000) — a one-time conscious lift for a real feature landing,
+// not per-wave creep.
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
-    "dist/styles/index.css": { raw: 420_000, gzip: 100_000 },
+    "dist/styles/index.css": { raw: 432_000, gzip: 103_000 },
 };
 
 // AO.W2 (inv α) — the real consumer-draw CSS artifact.

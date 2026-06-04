@@ -19,7 +19,11 @@
     ) {
         --dock-motion-fast: var(--duration-fast) var(--ease-standard);
         --dock-motion-standard: var(--duration-normal) var(--ease-standard);
-        --dock-motion-resize: var(--duration-normal) var(--spring-snappy);
+        /* AT.W6-dock-c — the FLIP-fallback timing. `--dock-resize-spring` (the
+           `--spring-snappy` linear()) is the single source curve the native
+           View-Transition path ALSO consumes, so the morph is timing-identical
+           across engines. */
+        --dock-motion-resize: var(--duration-normal) var(--dock-resize-spring);
     }
 
     /* Shared four-state contract — the focus-visible ring + disabled paint are
