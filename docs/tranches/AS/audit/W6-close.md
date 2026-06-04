@@ -21,7 +21,7 @@ overfitting) holds.
 | `useTextHighlight` | keep | `/dom` export + FuzzySearch consumer + spec |
 | `postTaskSafe`, `usePrioritizedTask`, `TaskPriority`, `PostTaskOptions` | keep | `/motion-core` exports + internal + spec |
 | `UsePrioritizedTaskReturn` | keep-current | public return-shape type, 1 site + docstring |
-| `supportsPostTask` | keep | `/utils` export + `usePrioritizedTask` guard |
+| `supportsPostTask` | keep | root-barrel public API (`src/index.ts` → `./utils` → `platformSupport`); pure feature-detect predicate, 0 in-repo call sites by design (AT: wire into `usePrioritizedTask` for DRY, or drop) |
 | `deriveAurora`, `AuroraHarmony` | keep | `/aurora` export + the W7 D10b Derive-from-color demo UI + spec |
 | `oklchToLinear`/`oklchStopToHex`/`hexToOklchStop`/`cssToOklch` | keep | `/aurora` exports + internal palette use + spec/demo |
 | `@container style(--density)` / `@container scroll-state(scrollable)` | keep | ConfiguratorRow + GlassCarousel/useGlassCarousel |
@@ -82,3 +82,26 @@ with provenance).
 which is sibling-RED on the present value.js `development` key — fail-closed
 locally. The pushed tag's `release.yml` run (clean runner, siblings absent) is
 the binding green per inv-27.
+
+## Shipped commit + the inv-27 binding green
+
+The cut landed at **`9031972`** — `fix(gates): proof:package robust to the
+gates.mjs --run sequence (inv-θ)`, one commit PAST the documented close
+`ba0a117`. The sequenced `gates.mjs --run release` (which `release.yml` runs)
+exposed a `proof:package` defect the standalone gate runs masked: `profile:budget`'s
+`iter-build` (`vite build` with no `emit-types`) rebuilds the canonical dist
+JS-only, wiping `dist/index.d.ts`; the later `proof:package` `npm pack` then
+triggered `prepare`'s rebuild whose vite stdout contaminated the `--json`
+capture. The fix makes `proof:package` a pure function of source (guard on the
+`.d.ts` too + pack `--ignore-scripts` + robust JSON slice) — the inv-θ principle
+applied within the gate fleet (a gate must not depend on a sibling gate's dist
+side-effect). The annotated tag `v3.2.0` (`8903d9d`) points at `9031972`, which
+equals `npm view @mkbabb/glass-ui@3.2.0 gitHead`.
+
+The binding green per inv-27 is **`release.yml` run `26964913257`** (clean
+Node-24 runner, siblings absent, the full `gates.mjs --run release` filter,
+`npm publish --provenance` → SLSA `provenance/v1` attestation; companion `ci`
+run `26964815843` on the same sha). Published-artifact byte-fidelity confirmed:
+the registry tarball's `dist/glass-ui.js` / `aurora.js` (value.js-externalized) /
+`styles/index.css` are sha256-identical to local dist; 667 files, no scratch
+(`files` = `["dist","src/styles","src/fonts"]`).
