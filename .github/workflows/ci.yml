@@ -89,6 +89,14 @@ jobs:
             # A→B→A no-skip/no-queue) rides `npm run test`.
             - name: proof:dock-motion-parity
               run: npm run proof:dock-motion-parity
+            # AT.W7-dock-c — the ι doc-rot sweep. Asserts every `custom/<dir>`
+            # directory + every Dependencies-table package + every
+            # `@mkbabb/glass-ui/<subpath>` CLAUDE.md cites RESOLVES at HEAD
+            # (catches the `dock-group`/`sidebar` dir drift + the
+            # `lucide-vue-next`→`@lucide/vue` reference rot). Sibling-free —
+            # runs on the bare runner.
+            - name: proof:doc-consistency
+              run: npm run proof:doc-consistency
             # AS.W2 inv-θ — the lockfile registry-resolution drift guard (#177
             # cannot silently re-break npm ci) + the meta-gate asserting this
             # ci.yml step set matches scripts/gates.mjs exactly (the manifest is

@@ -69,7 +69,7 @@ src/
 │   │   ├── toggle-group/           # ToggleGroup, ToggleGroupItem
 │   │   ├── tooltip/                # Tooltip provider/trigger/content (rounded-tooltip token)
 │   │   └── index.ts                # barrel: all ui/ exports
-│   ├── custom/                     # 35 custom package dirs (every dir has a package barrel)
+│   ├── custom/                     # 34 custom package dirs (every dir has a package barrel)
 │   │   ├── animated-digit/         # AnimatedDigit single-glyph reel (AB+1 / AC.W6d ergonomics)
 │   │   ├── aurora/                 # Aurora WebGL background + useAurora composable (aurora chrome consumes useConfiguratorState<AuroraConfig> with cloneMode='per-preset'—see Configurator; L.W7 Lane B retired the prior parallel useAuroraStudio chrome)
 │   │   ├── configurator/           # Configurator + ConfiguratorLayer + ConfiguratorRow + useConfiguratorState
@@ -87,7 +87,7 @@ src/
 │   │   │   ├── DockDropdownTrigger.vue
 │   │   │   ├── composables/        # useDockState, useLayerTransition (axis-aware—see dock orientation)
 │   │   │   └── index.ts
-│   │   ├── dock-group/             # DockGroup chassis-strip wrapper
+│   │   ├── dialog-native/          # GlassDialogNative — native <dialog> wrapper
 │   │   ├── expandable-container/   # ExpandableContainer
 │   │   ├── glass-carousel/         # GlassCarousel + useGlassCarousel
 │   │   ├── glass-panel/            # GlassPanel substrate wrapper
@@ -97,6 +97,7 @@ src/
 │   │   ├── icon-tooltip/           # IconTooltip
 │   │   ├── infinite-scroll/        # InfiniteScroll + composable
 │   │   ├── instrument-chassis/     # InstrumentChassis + RegionDivider
+│   │   ├── instrument-rail/        # InstrumentRail cockpit-ratio rail (AK-W2-α)
 │   │   ├── labeled-field/          # LabeledField parent + 4 wrappers (LabeledInput/Select/Slider/Switch)
 │   │   ├── metric-badge/           # MetricBadge primitive
 │   │   ├── metric-cell/            # MetricCell compact metric card (AB+1 / AC.W8e—wash-tier glass surface)
@@ -106,7 +107,6 @@ src/
 │   │   ├── responsive-tabs/        # ResponsiveTabs matchMedia Select↔UnderlineTabs swap (AB+1 / AC.W8e)
 │   │   ├── scrolling-text/         # ScrollingText overflow-marquee (lifted from speedtest—v0.9.1)
 │   │   ├── search/                 # Fuzzy search exports
-│   │   ├── sidebar/                # ProgressiveSidebar + component-owned types only
 │   │   ├── sortable-list/          # SortableList + list item helpers
 │   │   ├── stacked-icons/          # StackedIcons
 │   │   ├── status-dot/             # StatusDot
@@ -143,7 +143,6 @@ src/
 │   ├── typography.css              # golden-ratio scale (√φ), semantic classes, font utilities
 │   ├── glass.css                   # .glass-{wash,quiet,resting,floating,overlay} 5-rung ladder + .glass-card / .glass-pill / .glass-btn
 │   ├── dock.css                    # .dock-icon-button, .dock-select-trigger, .dock-separator, .dock-layer-grid, density-rail
-│   ├── dock-group.css              # DockGroup chassis-strip rules
 │   ├── disco-glyph.css             # DiscoGlyph layered fills + facet gradient
 │   ├── glyph-face.css              # GlyphFace cap + backplate cascade
 │   ├── hover-popover.css           # popover-animation grammar (V.W3)
@@ -172,7 +171,7 @@ src/
 
 ## Entry point
 
-`src/index.ts` is the **v1.0 curated public barrel**—vueuse-free per L.W1 Lane A SCC trap closure. It re-exports the 37 vueuse-free `ui/` package barrels (4 vueuse-bearing packages—`input/`, `textarea/`, `combobox/`, `carousel/`—are reachable only via subpath), 7 cherry-picked `custom/` packages (`instrument-chassis`, `instrument-rail`, `glyph-face`, `disco-glyph`, `hover-popover`, `configurator`, `scrolling-text`), the vueuse-free composable sub-trees (`motion/`, `reactive/`, `dom/`, `glass/`, `sortable/`), and `cn()`. The cherry-pick rationale is documented inline in `src/index.ts` (header comment block; L.W2 Lane B). The remaining 26 `custom/` packages reach consumers only via their dedicated subpath (`@mkbabb/glass-ui/dock`, `/aurora`, `/sidebar`, `/header-ribbon`, ...). Sidebar state/follow/scroll/tree composables live under `src/composables/sidebar/`; component-owned types stay in `src/components/custom/sidebar/types.ts`.
+`src/index.ts` is the **v1.0 curated public barrel**—vueuse-free per L.W1 Lane A SCC trap closure. It re-exports the 37 vueuse-free `ui/` package barrels (4 vueuse-bearing packages—`input/`, `textarea/`, `combobox/`, `carousel/`—are reachable only via subpath), 7 cherry-picked `custom/` packages (`instrument-chassis`, `instrument-rail`, `glyph-face`, `disco-glyph`, `hover-popover`, `configurator`, `scrolling-text`), the vueuse-free composable sub-trees (`motion/`, `reactive/`, `dom/`, `glass/`, `sortable/`), and `cn()`. The cherry-pick rationale is documented inline in `src/index.ts` (header comment block; L.W2 Lane B). The remaining 26 `custom/` packages reach consumers only via their dedicated subpath (`@mkbabb/glass-ui/dock`, `/aurora`, `/sidebar`, `/header-ribbon`, ...). Sidebar state/follow/scroll/tree composables live under `src/composables/sidebar/`; the `custom/sidebar/` component dir was retired (AI.W5-δ; zero external SFC consumers) and its types relocated to `src/composables/sidebar/types.ts`. The `Sidebar` surface now reaches consumers via the `/sidebar` subpath (`src/sidebar.ts` → the composables barrel).
 
 ## Dependencies
 
@@ -187,9 +186,11 @@ All runtime deps are peer:
 | `class-variance-authority` ^0.7 | Component variant definitions |
 | `clsx` ^2.0 | Conditional class joining (replaces tailwind-merge as of v0.9.2; cn() ships its own deduplicator) |
 | `embla-carousel-vue` ^8.0 | Carousel substrate |
-| `lucide-vue-next` ^0.525 | Icon set |
-| `vaul-vue` ^0.2 | Drawer primitives |
-| `@mkbabb/keyframes.js` ^2.0 | Spring/keyframe runtime |
+| `@lucide/vue` ^1.16.0 | Icon set (the renamed v1 package; was `lucide-vue-next` ^0.x pre-v1.0) |
+| `vaul-vue` ^0.4 | Drawer primitives |
+| `tw-animate-css` ^1.2.5 | `animate-in`/`animate-out` data-state utilities (optionalPeer) |
+| `@mkbabb/keyframes.js` ^2.2.0 \|\| ^3.0.0 | Spring/keyframe runtime |
+| `@mkbabb/value.js` ^0.10.0 | Color/value normalization (keyframes peer transitive) |
 
 ## Path aliases (tsconfig)
 
@@ -242,7 +243,7 @@ import { GlassCarousel } from "@mkbabb/glass-ui/glass-carousel";
 // + tokens, search, confirm-dialog, infinite-scroll, tabs, typewriter, stacked-icons,
 //   metric-badge, status-dot, pulse, paper-backdrop, toggle-chip, glass-panel,
 //   sortable-list, timeline, labeled-field, expandable-container,
-//   icon-tooltip, instrument-chassis, glyph-face, dock-group, disco-glyph,
+//   icon-tooltip, instrument-chassis, glyph-face, disco-glyph,
 //   scrolling-text
 ```
 
@@ -252,10 +253,11 @@ The v0.9.x nested subpaths `@mkbabb/glass-ui/composables/dark` + `@mkbabb/glass-
 
 ### Subpath naming pairs (canonical)
 
-Two name-pairs flag substrate boundaries; consumers pick the right one per the use case:
+One name-pair flags a substrate boundary; consumers pick the right one per the use case:
 
-- `@mkbabb/glass-ui/dock` (GlassDock + DockLayer + DockLayerGroup + button/select/dropdown triggers) vs `@mkbabb/glass-ui/dock-group` (DockGroup chassis-strip wrapper—DIFFERENT primitive; not part of the GlassDock composite).
 - `@mkbabb/glass-ui/glass-carousel` (custom-styled `<GlassCarousel>` composite) vs `@mkbabb/glass-ui/carousel` (vueuse-bearing `useCarousel` composable + embla-carousel-vue `CarouselApi` type—the underlying primitive `<Carousel>` family wraps this).
+
+(The `@mkbabb/glass-ui/dock-group` `DockGroup` chassis-strip wrapper was a third pair member alongside `/dock`; it was retired with its `custom/dock-group/` dir + `dock-group.css` + subpath export — no consumer at HEAD.)
 
 ## Design Axes
 

@@ -14,8 +14,6 @@ const props = withDefaults(
         fitContent?: boolean;
         position?: "fixed" | "inline" | "sticky";
         alwaysExpanded?: boolean;
-        /** Allow expanded content to wrap to multiple lines. */
-        wrap?: boolean;
         /**
          * Visual/behavioral preset.
          *   `dock`             — the horizontal floating dock (default).
@@ -55,10 +53,16 @@ const props = withDefaults(
         /**
          * Overflow strategy when the expanded content exceeds the dock's
          * axis cap (`--dock-max-inline-size` horizontally,
-         * `--dock-max-block-size` vertically).
+         * `--dock-max-block-size` vertically). The ONE knob governing every
+         * overflow behaviour (AT.W7-dock-a clean break — collapsed from the
+         * prior `wrap` boolean + `overflow` pair + `containerName` clip-lift,
+         * which all touched overflow divergently).
          *   `"grow"`   — content grows to fit then overflows visibly past
-         *                the cap (the historical default; nothing clips or
-         *                scrolls).
+         *                the cap (the default; nothing clips or scrolls).
+         *   `"wrap"`   — expanded content wraps to multiple lines/rows (the
+         *                `.dock-overflow-wrap` recipe — a multi-row pill that narrows
+         *                to the viewport gutter on small screens and snaps
+         *                back to a single nowrap row past `--dock-overflow-bp`).
          *   `"scroll"` — the dock becomes the scroll port. Horizontal docks
          *                scroll the active layer on the inline axis
          *                (`.dock-scroll-x`); vertical rails scroll on the
@@ -67,18 +71,19 @@ const props = withDefaults(
          *                scroll edge; the scrollbar is hidden. The axis is
          *                chosen automatically from `orientation`.
          */
-        overflow?: "grow" | "scroll";
+        overflow?: "grow" | "wrap" | "scroll";
         /**
          * When set, the dock root establishes an inline-size container query
-         * subject (`container-type: inline-size; container-name: <value>`)
-         * and lifts its `overflow: hidden` clip so descendants can wrap or
-         * report intrinsic widths at narrow viewports. Consumers query the
-         * named container via `@container <value> (...)` rules.
+         * subject (`container-type: inline-size; container-name: <value>`) so
+         * descendants can query the named container via `@container <value>
+         * (...)` rules. ORTHOGONAL to the `overflow` clip: opting into a
+         * container subject does NOT silently change the dock's clip shell
+         * (AT.W7-dock-a — the prior clip-lift was folded out; use
+         * `overflow="wrap"` to allow multi-line content).
          *
-         * Without this prop the dock retains its default `overflow: hidden`
-         * shell — the pre-T behaviour. T.B audit §1.3 cornerstone: the
-         * cluster's container subject must live on the dock primitive, never
-         * on a descendant whose intrinsic size the dock relies on.
+         * T.B audit §1.3 cornerstone: the cluster's container subject must
+         * live on the dock primitive, never on a descendant whose intrinsic
+         * size the dock relies on.
          */
         containerName?: string;
     }>(),
@@ -88,7 +93,6 @@ const props = withDefaults(
         fitContent: false,
         position: "inline",
         alwaysExpanded: false,
-        wrap: false,
         variant: "dock",
         shape: "pill",
         orientation: "horizontal",
@@ -97,12 +101,15 @@ const props = withDefaults(
     },
 );
 
+/* AT.W7-dock-a — the container-query opt-in is ORTHOGONAL to the overflow
+   clip. The prior `overflow: visible` clip-lift here silently coupled the
+   container subject to the clip shell; it is folded out. A consumer wanting
+   multi-line content opts into `overflow="wrap"`. */
 const containerStyle = computed<Record<string, string> | undefined>(() => {
     if (!props.containerName) return undefined;
     return {
         "container-type": "inline-size",
         "container-name": props.containerName,
-        overflow: "visible",
     };
 });
 
@@ -358,7 +365,7 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
             `variant-${variant}`,
             `shape-${shape}`,
             scrollClass,
-            { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'dock-wrap': wrap },
+            { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'dock-overflow-wrap': overflow === 'wrap' },
             position === 'fixed' ? 'fixed bottom-[var(--dock-pos)] left-1/2 -translate-x-1/2'
               : position === 'sticky' ? 'dock-sticky'
               : 'dock-inline',

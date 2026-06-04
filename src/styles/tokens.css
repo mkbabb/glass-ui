@@ -826,6 +826,15 @@
     --dock-max-inline-size: min(80vw, 64rem);
     --dock-max-block-size: min(80vh, 48rem);
 
+    /* AT.W7-dock-a — the `overflow="wrap"` desktop snap-back breakpoint, named
+       once. Below this viewport width a wrap-mode dock reads as a multi-row pill
+       that narrows to the viewport gutter; at/above it the pill snaps back to a
+       single nowrap row. The single source-of-record for the threshold the
+       `@media` in dock.css realizes (a `var()` cannot drive a media-query
+       feature in Baseline CSS, so the MQ carries the literal value of THIS
+       token; consumers reading the breakpoint do so through this name). */
+    --dock-overflow-bp: 640px;
+
     /* AB.W1.T1 — chassis max-block-size guardrail.
        Maximum block size a centred consumer-app card may consume while
        preserving the inline dock footprint. The recipe subtracts the
@@ -980,12 +989,19 @@
     --scale-hover: 1.08;
     --scale-hover-dock: 1.1;
     --scale-press: 0.96;
-    --scale-press-dock: 0.92;
 
     /* Press-scale rungs. `--scale-press` (0.96) is the canonical iOS Liquid
        Glass press value every primitive reaches for unless it has a documented
        reason (DESIGN.md §L3); `--scale-press-btn` aliases the slightly-softer
-       `--scale-press-sm` (0.97) the button + slider recipes consume. */
+       `--scale-press-sm` (0.97) the button + slider recipes consume.
+
+       AT.W7-dock-b — press canon. `--scale-press-dock` previously hard-coded a
+       deeper 0.92 (a second magic press value with no documented rationale),
+       so a dock control pressed visibly harder than every other primitive. It
+       now references the canonical `--scale-press` (0.96) — ONE source for the
+       press scale across the system. A consumer wanting the dock's old deeper
+       press overrides `--scale-press-dock` on the dock instance. */
+    --scale-press-dock: var(--scale-press);
     --scale-press-sm: 0.97;
     --scale-press-btn: var(--scale-press-sm);
     --opacity-disabled: 0.5;
@@ -1248,6 +1264,15 @@
        overshoot) while the FLIP ran the snappy spring. `--vt-ease` still
        defaults the other VT recipes (`.gl-list-item`). */
     --dock-resize-spring: var(--spring-snappy);
+
+    /* AT.W7-dock-b — dock-control press micro-feedback spring. A TRANSFORM-ONLY
+       spring (`scale`/`rotate`) the dock controls apply to their hover/press
+       activation so the squish reads with a touch of spring-back rather than a
+       flat ease. STRICTLY transform-scoped: it must never touch the surface-tier
+       `[data-held]` fades (background/border/box-shadow), which stay on
+       `--duration-fast var(--ease-standard)`. The duration pairs with
+       `--duration-fast`; consumers retune the whole feel via this one token. */
+    --dock-press-spring: var(--duration-fast) var(--spring-bouncy);
 }
 
 /* ═══════════════════════════════════════════════

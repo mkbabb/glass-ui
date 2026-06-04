@@ -189,9 +189,11 @@
        canonical iOS `.regular` control rung) and the spring carries
        the return via `--spring-snappy` (the §L3 release-spring
        contract). I keep this as a single canonical rung — NOT a
-       3-rung ladder. The outliers I leave alone are button `0.97` and
-       dock control `0.92`, which consume their own scale tokens
-       directly.
+       3-rung ladder. The one outlier I leave alone is the button
+       `0.97` (`--scale-press-btn`), which consumes its own slightly-
+       softer token directly. The dock control now tracks the canonical
+       `--scale-press` (0.96) too (AT.W7-dock-b press canon — the prior
+       deeper `0.92` was retired to ONE source).
 
        Under PRM I retire the press transform entirely and lean on the
        consumer's own hover/active bg-tint cascade to acknowledge the

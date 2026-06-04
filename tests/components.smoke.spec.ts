@@ -297,7 +297,11 @@ describe("component smoke coverage", () => {
         const style = root.attributes("style") ?? "";
         expect(style).toContain("container-type: inline-size");
         expect(style).toContain("container-name: pill-cluster");
-        expect(style).toContain("overflow: visible");
+        // AT.W7-dock-a — the container-query opt-in is ORTHOGONAL to the clip.
+        // The prior inline `overflow: visible` clip-lift was folded out; opting
+        // into a container subject must NOT silently change the dock's clip
+        // (a consumer wanting multi-line content opts into `overflow="wrap"`).
+        expect(style).not.toContain("overflow");
     });
 
     it("preserves the default overflow shell when GlassDock has no containerName", () => {

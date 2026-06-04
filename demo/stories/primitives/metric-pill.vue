@@ -118,7 +118,9 @@ import { GlassDock } from "../../../src/components/custom/dock";
             <p class="text-mono-caption text-muted-foreground">
                 The dock primitive carries `containerName="metric-pill-cluster-demo"`,
                 so its outer shell emits `container-type: inline-size; container-name:
-                metric-pill-cluster-demo; overflow: visible`. Consumers add
+                metric-pill-cluster-demo` (the clip stays orthogonal — this
+                always-expanded dock lifts its own clip via `.always-expanded`).
+                Consumers add
                 `@container metric-pill-cluster-demo (max-width: 640px) {…}` rules
                 to swap full labels for abbreviations off the dock's own width — no
                 viewport coupling, no JS branch.

@@ -78,15 +78,13 @@
         box-shadow: var(--shadow-dock-override, var(--shadow-dock));
     }
 
-    /* T.W2.T1 — `overflow: hidden` is the default shell, but the
-       container-query host path (`<GlassDock containerName="…">`) must
-       allow descendants to wrap and report intrinsic widths past the
-       padding box. Inline-style on the SFC sets `overflow: visible` for
-       that path; this rule grants the default clip to every dock that
-       is NOT a container-query host. The `data-container-name` attribute
-       is the structural marker (set by the SFC when `containerName` is
-       passed). */
-    .glass-dock:not([data-container-name]) {
+    /* `overflow: hidden` is the clip shell for every dock. AT.W7-dock-a
+       folded out the prior `containerName` clip-lift (the container-query
+       opt-in is orthogonal — it no longer silently changes the clip), so the
+       clip applies universally and the `.expanded` / `.always-expanded` /
+       `.dock-overflow-wrap` states lift it back to `visible` where they need to
+       grow. A consumer wanting multi-line content opts into `overflow="wrap"`. */
+    .glass-dock {
         overflow: hidden;
     }
 
@@ -196,7 +194,7 @@
     }
 
     /* Vertical rails grow-to-fit + clamp, no scroll: descendants wrap to
-       multiple rows (opt-in via `dock-wrap`) or clamp via
+       multiple rows (opt-in via `overflow="wrap"`) or clamp via
        `--dock-max-block-size`; the cap fails visibly rather than masking
        overflow as a scroll affordance. No edge-fade mask — a rail that never
        scrolls has nothing to feather. */
@@ -389,10 +387,10 @@
 
     /* Horizontal dock content grows visibly when the active layer's natural
        width exceeds the content area (grow-to-fit; consumers needing wrap opt
-       into `dock-wrap`). No edge-fade mask — content never clips or scrolls,
+       into `overflow="wrap"`). No edge-fade mask — content never clips or scrolls,
        so a feather has nothing to feather and only bleeds a stray ramp onto
        the edge controls. */
-    .glass-dock.expanded:not(.dock-wrap) > .dock-layers {
+    .glass-dock.expanded:not(.dock-overflow-wrap) > .dock-layers {
         overflow-x: visible;
     }
 
@@ -507,7 +505,7 @@
        so the pill's rounded edge masks the scroll boundary — hence the
        grow-mode `overflow-x: visible` (`.dock-layers`, above) is overridden
        back to `hidden` here. */
-    .glass-dock.dock-scroll-x.expanded:not(.dock-wrap) > .dock-layers {
+    .glass-dock.dock-scroll-x.expanded:not(.dock-overflow-wrap) > .dock-layers {
         overflow-x: hidden;
     }
 
@@ -543,7 +541,14 @@
         display: none;
     }
 
-    .glass-dock.dock-wrap {
+    /* ── `overflow="wrap"` recipe (the `.dock-overflow-wrap` hook) ────────
+       Parallel to the `.dock-scroll-{x,y}` hooks the `overflow="scroll"`
+       member emits: the `overflow="wrap"` enum member emits this class. (The
+       prior `wrap` boolean's hook is retired — clean break, no alias.)
+       Expanded content wraps to multiple rows; the pill narrows to the
+       viewport gutter and snaps back to a single nowrap row past
+       `--dock-overflow-bp` (the `@media` at the tail). */
+    .glass-dock.dock-overflow-wrap {
         white-space: normal;
         border-radius: var(--radius-2xl);
         max-width: var(--dock-wrap-max-width);
@@ -552,7 +557,7 @@
             var(--dock-wrap-padding-inline, 0.625rem);
     }
 
-    .glass-dock.dock-wrap .dock-layer--full {
+    .glass-dock.dock-overflow-wrap .dock-layer--full {
         flex-wrap: wrap;
         justify-content: center;
         height: auto;
@@ -560,16 +565,16 @@
         gap: var(--dock-wrap-row-gap, 0.25rem) var(--dock-wrap-column-gap, var(--dock-layer-gap, 0.375rem));
     }
 
-    .glass-dock.dock-wrap .dock-layer--summary {
+    .glass-dock.dock-overflow-wrap .dock-layer--summary {
         height: auto;
         min-height: var(--dock-wrap-layer-min-height, var(--dock-layer-height, 2rem));
     }
 
-    .glass-dock.dock-wrap .dock-separator {
+    .glass-dock.dock-overflow-wrap .dock-separator {
         display: none;
     }
 
-    .glass-dock.dock-wrap.collapsed {
+    .glass-dock.dock-overflow-wrap.collapsed {
         border-radius: var(--radius-pill);
         white-space: nowrap;
         max-width: none;
@@ -733,8 +738,12 @@
         transition:
             background-color var(--dock-motion-fast),
             color var(--dock-motion-fast),
-            scale var(--dock-motion-fast),
-            opacity var(--dock-motion-fast);
+            /* AT.W7-dock-b — `scale` carries the press micro-feedback spring
+               (transform-scoped only; the surface fades stay on the flat ease). */
+            scale var(--dock-press-spring),
+            opacity var(--dock-motion-fast),
+            /* AT.W7-dock-b — the glass specular highlight fades in on hover. */
+            box-shadow var(--dock-motion-fast);
     }
 
     .dock-icon-button--compact {
@@ -744,10 +753,25 @@
         padding: var(--dock-compact-control-padding, 0.25rem);
     }
 
+    /* AT.W7-dock-b — glass icon-hover. The icon-button hover now reads as a
+       glass surface, not a flat `--muted` plate: a translucent card-tinted fill
+       composes with the specular `--glass-highlight` token (the inset top-edge
+       glass highlight every glass tier carries — `--dock-icon-hover-shadow`
+       defaults to it). Coherent with the dock's glass tier and the
+       `[data-tier="secondary"]` recipe below. A consumer retunes the fill via
+       `--dock-icon-hover-bg` and the specular via `--dock-icon-hover-shadow`. */
     .dock-icon-button:hover:not(:disabled) {
-        background: var(--muted);
+        background: var(--dock-icon-hover-bg, color-mix(in srgb, var(--card) 55%, transparent));
         color: var(--btn-hover-color, var(--foreground));
         scale: var(--scale-hover-dock);
+    }
+
+    /* The specular highlight is scoped to `:not(:focus-visible)` so it never
+       clobbers the focus ring box-shadow (the shared `:focus-visible` group at
+       the top of this file) when a control is both hovered and keyboard-focused —
+       the ring wins, the specular yields. */
+    .dock-icon-button:hover:not(:disabled):not(:focus-visible) {
+        box-shadow: var(--dock-icon-hover-shadow, var(--glass-highlight));
     }
 
     .dock-icon-button:active:not(:disabled) {
@@ -760,15 +784,9 @@
     }
 
     /* focus-visible ring + disabled paint hoisted to the shared `:where()`
-       group at the top; this rule adds only the box-shadow fade transition. */
-    .dock-icon-button:focus-visible {
-        transition:
-            background-color var(--dock-motion-fast),
-            color var(--dock-motion-fast),
-            scale var(--dock-motion-fast),
-            opacity var(--dock-motion-fast),
-            box-shadow var(--dock-motion-fast);
-    }
+       group at the top. The box-shadow fade transition now lives on the base
+       `.dock-icon-button` rule (AT.W7-dock-b added `box-shadow` there for the
+       glass specular hover), so no per-state transition override is needed. */
 
     /* O.W6 Lane B — token-ladder active paint. Defaults match the prior
        hardcoded recipe (--muted bg + --foreground color, no transform / border
@@ -888,7 +906,8 @@
         transition:
             background-color var(--dock-motion-fast),
             color var(--dock-motion-fast),
-            scale var(--dock-motion-fast);
+            /* AT.W7-dock-b — press micro-feedback spring (transform-scoped). */
+            scale var(--dock-press-spring);
     }
 
     .dock-tab-button:hover:not(:disabled) {
@@ -1032,7 +1051,8 @@
         transition:
             background-color var(--dock-motion-fast),
             color var(--dock-motion-fast),
-            scale var(--dock-motion-fast),
+            /* AT.W7-dock-b — press micro-feedback spring (transform-scoped). */
+            scale var(--dock-press-spring),
             opacity var(--dock-motion-fast);
     }
 
@@ -1058,13 +1078,14 @@
     }
 
     /* focus-visible ring + disabled paint hoisted to the shared `:where()`
-       group at the top; this rule adds only the box-shadow fade transition. */
+       group at the top; this rule adds only the box-shadow fade transition.
+       `scale` keeps the AT.W7-dock-b press micro-feedback spring. */
     .dock-select-trigger:focus-visible,
     .dock-dropdown-trigger:focus-visible {
         transition:
             background-color var(--dock-motion-fast),
             color var(--dock-motion-fast),
-            scale var(--dock-motion-fast),
+            scale var(--dock-press-spring),
             opacity var(--dock-motion-fast),
             box-shadow var(--dock-motion-fast);
     }
@@ -1081,17 +1102,26 @@
         flex-shrink: 0;
         opacity: 0.5;
         /* Individual-transform identity base (AQ.W3 §W3.2) — `rotate:` longhand
-           for family consistency (not a stacking-context hazard: child glyph). */
+           for family consistency (not a stacking-context hazard: child glyph).
+           AT.W7-dock-b — the open/close flip carries the press micro-feedback
+           spring (transform-scoped). */
         rotate: 0deg;
-        transition: rotate var(--dock-motion-fast);
+        transition: rotate var(--dock-press-spring);
     }
 
     .dock-select-trigger[data-state="open"] .dock-select-trigger__chevron {
         rotate: 180deg;
     }
 
-    @media (min-width: 640px) {
-        .glass-dock.dock-wrap {
+    /* The `overflow="wrap"` desktop snap-back. Past the overflow breakpoint a
+       wrap-mode dock reverts from the narrow multi-row pill to a single nowrap
+       row. The breakpoint is the named token `--dock-overflow-bp` (tokens.css §9
+       Layout) — its single source-of-record. A `var()` cannot drive a
+       media-query feature in Baseline CSS, so this one `@media` realizes the
+       token's value; there is no longer a bare unexplained magic number — the
+       threshold lives under one name and is documented at its mint. */
+    @media (min-width: 640px /* = var(--dock-overflow-bp) */) {
+        .glass-dock.dock-overflow-wrap {
             white-space: nowrap;
             border-radius: var(--radius-pill);
             max-width: none;
@@ -1100,17 +1130,17 @@
                 var(--dock-wrap-desktop-padding-inline, 0.75rem);
         }
 
-        .glass-dock.dock-wrap .dock-layer--full {
+        .glass-dock.dock-overflow-wrap .dock-layer--full {
             flex-wrap: nowrap;
             height: var(--dock-layer-height, 2.5rem);
             gap: var(--dock-wrap-desktop-gap, var(--dock-layer-gap, 0.25rem));
         }
 
-        .glass-dock.dock-wrap .dock-layer--summary {
+        .glass-dock.dock-overflow-wrap .dock-layer--summary {
             height: var(--dock-layer-height, 2.5rem);
         }
 
-        .glass-dock.dock-wrap .dock-separator {
+        .glass-dock.dock-overflow-wrap .dock-separator {
             display: block;
         }
     }

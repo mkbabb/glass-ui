@@ -61,4 +61,28 @@ describe("GlassDock overflow=\"scroll\" (AS.W7 D2/D12)", () => {
         expect(root.classes()).not.toContain("dock-scroll-x");
         expect(root.classes()).not.toContain("dock-scroll-y");
     });
+
+    // AT.W7-dock-a — the overflow clean break: the `wrap` enum member (replacing
+    // the deleted `wrap` boolean) emits the renamed `dock-overflow-wrap` hook,
+    // parallel to the `dock-scroll-{x,y}` hooks the `scroll` member emits. The
+    // prior `dock-wrap` class is retired (no alias).
+    it("overflow=\"wrap\" emits the `dock-overflow-wrap` hook, never a scroll class", () => {
+        const wrapper = mount(GlassDock, {
+            props: { overflow: "wrap" },
+        });
+        const root = wrapper.get(".glass-dock");
+        expect(root.classes()).toContain("dock-overflow-wrap");
+        expect(root.classes()).not.toContain("dock-wrap");
+        expect(root.classes()).not.toContain("dock-scroll-x");
+        expect(root.classes()).not.toContain("dock-scroll-y");
+    });
+
+    it("the default + non-wrap overflow modes never acquire the wrap hook", () => {
+        for (const overflow of ["grow", "scroll"] as const) {
+            const wrapper = mount(GlassDock, { props: { overflow } });
+            expect(wrapper.get(".glass-dock").classes()).not.toContain(
+                "dock-overflow-wrap",
+            );
+        }
+    });
 });
