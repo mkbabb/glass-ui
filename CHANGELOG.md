@@ -1,5 +1,26 @@
 # Changelog
 
+## 3.2.0
+
+### Minor Changes
+
+-   AS — the gate-integrity substrate (inv-θ), the modern-web leverage AR left, the AS.W7 visual/design correctness pass, and the AS.W2b publish-floor fixes. Published through the repaired release pipeline with npm provenance.
+
+    **Consumer-facing wiring changes:**
+
+    -   **`@mkbabb/keyframes.js` peer widened to `^2.2.0 || ^3.0.0`.** keyframes 3.0.0 is now the published `latest`; glass-ui is validated against both (it consumes only the light static engines — `SpringProgress`/`NumericAnimation`/`SmoothProgress` — which are unchanged across the 2.2.0 light/heavy boundary). Consumers may pair glass-ui 3.2.0 with either keyframes major.
+    -   **`@mkbabb/value.js` is a peer dependency and is no longer inlined into `dist/aurora.js`.** The aurora OKLab color core consumes value.js's Ottosson core (deduped, SSR-safe — no 1×1-canvas), and value.js is externalized from the bundle (aurora gzip 47.7 → 16.8 KiB). Aurora consumers install `@mkbabb/value.js` as a peer.
+    -   **The `/styles` bundle now ships glass-ui's own component-utility rules (`dist/styles/components.css`).** A bare consumer that imports `@mkbabb/glass-ui/styles` without an `@source` glob now paints the component vocabulary (`rounded-panel`, `text-muted-foreground`, the `--spacing`/`--text-*` bases the utilities reference, …) instead of rendering silently unstyled. The `@source` directive is still recommended for utilities your own templates use; it is no longer required just to style glass-ui's components.
+
+    **New surface:**
+
+    -   `deriveAurora(seed, { stopCount, harmony, … })` + the `AuroraHarmony` union — seed-to-palette generation (`@mkbabb/glass-ui/aurora`).
+    -   `usePrioritizedTask` / `postTaskSafe` — `scheduler.postTask` priority scheduling with a `MessageChannel` + `AbortSignal` fallback (`@mkbabb/glass-ui/motion-core`).
+    -   `useTextHighlight` — named CSS Custom Highlight wrapper, now multi-instance safe (surfaces sharing a name multiplex their ranges under one registry entry) (`@mkbabb/glass-ui/dom`).
+    -   `GlassDock` gains `overflow?: "grow" | "scroll"` (+ the `.dock-scroll-x` / `.dock-scroll-y` utilities) so a dock that exceeds its track scrolls instead of growing.
+
+    **Platform:** G1 density `@container style(--density)` over the kept `[data-density]` base; G2 `@container scroll-state(scrollable)` retiring an overflow-fade JS listener. **Visual/design:** the AS.W7 pass fixed 13 reported defects (the muddy dark background, the aurora overhaul, the configurator rounding/merge, the hero surface, the golden drag-ring radius, …). **Tooling (inv-θ):** the proof-gate fleet is now a pure, sibling-portable function of one `constellation.mjs` membership + one `gates.mjs` manifest (local == ci == release as filters), gitignored gate output, a lockfile re-drift guard, and a `proof:components-css` gate.
+
 ## 3.1.1
 
 ### Patch Changes

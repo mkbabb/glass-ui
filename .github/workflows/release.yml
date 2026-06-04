@@ -1,14 +1,19 @@
-# release — publish @mkbabb/glass-ui to npm on a v*.*.* tag (G.W5 Sub-wave C).
+# release — publish @mkbabb/glass-ui to npm on a v*.*.* tag.
 #
-# Trigger: a pushed tag matching v*.*.* (cut by the changesets Version
-# Packages PR merge, or hand-cut). The job re-runs the full release gate
-# matrix before publishing so a tag can never ship an artifact that the
-# CI gate would have rejected:
-#   build → typecheck → test → verify-export-types
-#   → profile:budget → proof:package + proof:theme + proof:resolution.
+# Trigger: a pushed tag matching v*.*.* (changesets Version-Packages merge, or
+# hand-cut). Before publishing, the job re-runs the FULL release gate matrix as
+# the `gates.mjs --run release` FILTER — inv-θ: local == ci == release derive
+# from ONE manifest (scripts/gates.mjs), never a hand-curated list that drifts
+# (the prior hand list had silently dropped proof:components-css, proof:lockfile,
+# and proof:phantom-classes). A tag can therefore never ship an artifact the
+# gate would reject. Sibling gates (proof:resolution, proof:phantom-classes,
+# proof:consumers:static) skip-by-policy on the clean runner where the sibling
+# repos are absent.
 #
-# Publish auth: NPM_TOKEN repository secret (automation token, publish
-# scope). The publish step runs only on tag refs — push/PR never reach it.
+# Publish auth: the NPM_TOKEN repository secret (automation token, publish
+# scope) + an OIDC id-token for npm provenance (`--provenance` attests the
+# build to this repo/workflow). The publish step runs only on tag refs —
+# push/PR never reach it.
 name: release
 
 on:
@@ -19,6 +24,12 @@ on:
 jobs:
     publish:
         runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            id-token: write # npm provenance via OIDC
+        env:
+            # profile:budget reuses the `build` gate's dist instead of rebuilding.
+            GLASS_UI_BUDGET_SKIP_BUILD: "1"
         steps:
             - uses: actions/checkout@v4
             - uses: actions/setup-node@v4
@@ -26,27 +37,14 @@ jobs:
                   node-version: 24
                   registry-url: "https://registry.npmjs.org"
             - run: npm ci
-            - name: build
-              run: npm run build
-            - name: typecheck
-              run: npm run typecheck
-            - name: test
-              run: npm run test
-            - name: verify-export-types
-              run: npm run verify-export-types
-            - name: profile:budget
-              env:
-                  GLASS_UI_BUDGET_SKIP_BUILD: "1"
-              run: npm run profile:budget
-            - name: proof:package
-              run: npm run proof:package
-            - name: proof:theme
-              run: npm run proof:theme
-            - name: proof:resolution
-              run: npm run proof:resolution
-            - name: proof:vt-names
-              run: npm run proof:vt-names
+            - name: verify tag matches package.json version
+              run: |
+                  TAG="${GITHUB_REF_NAME#v}"
+                  PKG="$(node -p "require('./package.json').version")"
+                  test "$TAG" = "$PKG" || { echo "tag ${GITHUB_REF_NAME} != package.json ${PKG}"; exit 1; }
+            - name: release gate matrix (gates.mjs --run release)
+              run: node scripts/gates.mjs --run release
             - name: publish
-              run: npm publish --access public
+              run: npm publish --access public --provenance
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
