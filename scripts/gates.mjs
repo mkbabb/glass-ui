@@ -33,6 +33,7 @@ export const GATES = [
     { id: "profile:budget", cmd: "profile:budget", tags: ["local", "ci", "release"] },
     { id: "proof:package", cmd: "proof:package", tags: ["local", "ci", "release"], sibling: true, note: "keyframes peer" },
     { id: "proof:theme", cmd: "proof:theme", tags: ["local", "ci", "release"] },
+    { id: "proof:components-css", cmd: "proof:components-css", tags: ["local", "ci", "release"] },
     { id: "proof:consumers:static", cmd: "proof:consumers:static", tags: ["local", "ci", "release"], sibling: true },
     { id: "proof:consumers:build", cmd: "proof:consumers:build", tags: ["local"], sibling: true, note: "walks sibling builds; local-only" },
     { id: "proof:runtime", cmd: "proof:runtime", tags: ["local"], sibling: true, note: "walks sibling builds; local-only" },

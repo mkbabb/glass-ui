@@ -123,6 +123,7 @@ export const libraryExternal = [
     "reka-ui",
     "@vueuse/core",
     "@mkbabb/keyframes.js",
+    "@mkbabb/value.js",
     "class-variance-authority",
     "clsx",
     "embla-carousel-vue",
@@ -133,4 +134,5 @@ export const libraryExternal = [
 export const libraryGlobals = {
     vue: "Vue",
     "@mkbabb/keyframes.js": "Keyframes",
+    "@mkbabb/value.js": "ValueJs",
 };

@@ -1,8 +1,11 @@
 import { cpSync, existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { createRequire } from "node:module";
+import { dirname, resolve } from "node:path";
 import postcss from "postcss";
 import tailwindcss from "@tailwindcss/postcss";
 import type { Plugin } from "vite";
+
+const require_ = createRequire(import.meta.url);
 
 /**
  * publishStyleAssets — the post-build CSS/font publish step, shared by both
@@ -85,11 +88,25 @@ import type { Plugin } from "vite";
  * (`glass-floating`, `configurator-layer`, …) generate nothing — harmless.
  *
  * The compile output also carries a preflight reset (`@layer base`) + the
- * `:root,:host` `@theme` var block — glass-ui already ships BOTH (tokens.css +
- * theme.css), so we keep ONLY: the `@layer utilities` rules (flattened), the
- * `@property --tw-*` declarations, and the `@supports` block that initializes
- * `--tw-*` vars (the var machinery border/duration/etc. utilities reference).
- * The base reset and theme var block are dropped.
+ * `:root,:host` `@theme` var block — glass-ui already ships its OWN tokens
+ * (tokens.css + theme.css), so we keep ONLY: the `@layer utilities` rules
+ * (flattened), the `@property --tw-*` declarations, and the `@supports` block
+ * that initializes `--tw-*` vars (the var machinery border/duration/etc.
+ * utilities reference). The base reset is dropped.
+ *
+ * R3 — the dropped `:root,:host` block is also where Tailwind defines its OWN
+ * built-in theme defaults (`--spacing`, the `--text-*` ladder, `--ease-in-out`,
+ * the `--animate-*` keyframe refs, the `--color-amber-*`/`--color-red-*` palette
+ * stops, …). The kept utilities REFERENCE those via `var(--X)` (every `p-*`/
+ * `gap-*`/`inset-*` is `calc(var(--spacing) * N)`), so dropping the whole block
+ * leaves them undefined and the utilities silently no-op for a bare consumer.
+ * glass-ui already ships its own radius/color/text bases, so the fix is NOT to
+ * keep the whole theme block (that would re-emit — and risk clobbering — every
+ * glass-ui token); it is to emit a MINIMAL `:root{}` carrying exactly the props
+ * the kept utilities reference that TAILWIND owns (present in the compiled
+ * `:root,:host` block) and that glass-ui's OWN `src/styles` does NOT already
+ * define. That is `--spacing` & co. — Tailwind's defaults — and nothing of
+ * glass-ui's. Same self-sufficiency posture as tokens.css's radius/color bases.
  *
  * Deterministic + byte-stable: the token set is sorted; no timestamps.
  */
@@ -165,6 +182,80 @@ async function emitComponentUtilities(
         if (hasDecl && onlyTw) kept.append(node.clone());
     });
 
+    // R3 — make `kept` self-sufficient for the Tailwind-OWNED custom props its
+    // utilities reference. Three sets:
+    //   themeOwned — every `--X` Tailwind's own built-in `@theme` default block
+    //                defines, read from the installed `tailwindcss/theme.css`.
+    //                NOT from this in-build compile's emitted `:root` block:
+    //                `@tailwindcss/vite` and this in-`closeBundle`
+    //                `@tailwindcss/postcss` pass share ONE Tailwind v4
+    //                design-system instance, so the postcss pass treats the
+    //                theme as already-emitted and suppresses the `:root,:host`
+    //                var block entirely (it would come back empty). The package
+    //                `theme.css` is the authoritative, version-tracking source.
+    //   glassDefined — every `--X` glass-ui's own `src/styles/*.css` declares
+    //                (tokens.css + theme.css + the rest of the cascade). These
+    //                already ship; re-emitting them would duplicate or clobber.
+    //   referenced — every `var(--X)` the kept utility rules read.
+    // Emit `:root{}` for referenced ∩ themeOwned − glassDefined — i.e. exactly
+    // Tailwind's built-in defaults (`--spacing` &c.) that glass-ui does not own.
+    const themeOwned = new Map<string, string>();
+    const twThemePath = resolve(
+        dirname(require_.resolve("tailwindcss/package.json")),
+        "theme.css",
+    );
+    if (existsSync(twThemePath)) {
+        postcss.parse(readFileSync(twThemePath, "utf-8")).walkAtRules(
+            "theme",
+            (atRule) => {
+                atRule.walkDecls((decl) => {
+                    if (decl.prop.startsWith("--")) {
+                        themeOwned.set(decl.prop, decl.value);
+                    }
+                });
+            },
+        );
+    }
+
+    const glassDefined = new Set<string>();
+    const srcStyles = resolve(root, "src/styles");
+    if (existsSync(srcStyles)) {
+        const declRe = /(?:^|[\s;{])(--[a-zA-Z0-9_-]+)\s*:/g;
+        for (const f of readdirSync(srcStyles).filter((n) => n.endsWith(".css"))) {
+            // Strip CSS block comments so a `--token` mentioned in prose is not
+            // mistaken for a declaration.
+            const css = readFileSync(resolve(srcStyles, f), "utf-8").replace(
+                /\/\*[\s\S]*?\*\//g,
+                "",
+            );
+            let d: RegExpExecArray | null;
+            while ((d = declRe.exec(css))) glassDefined.add(d[1]);
+        }
+    }
+
+    const referenced = new Set<string>();
+    const keptStr = kept.toString();
+    const varRe = /var\(\s*(--[a-zA-Z0-9_-]+)/g;
+    let v: RegExpExecArray | null;
+    while ((v = varRe.exec(keptStr))) referenced.add(v[1]);
+
+    const baseProps = [...referenced]
+        .filter((p) => themeOwned.has(p) && !glassDefined.has(p))
+        .sort();
+    const baseBlock =
+        baseProps.length === 0
+            ? ""
+            : "/* R3 — Tailwind's OWN built-in theme defaults (--spacing, the\n" +
+              "   --text-* ladder, --ease-in-out, …) the kept utilities reference;\n" +
+              "   glass-ui ships its own radius/color/text bases, so ONLY the\n" +
+              "   Tailwind-owned props NOT in glass-ui's tokens are emitted here so\n" +
+              "   spacing/typography utilities paint for a bare consumer. */\n" +
+              ":root {\n" +
+              baseProps
+                  .map((p) => `    ${p}: ${themeOwned.get(p)};`)
+                  .join("\n") +
+              "\n}\n";
+
     const header =
         "/* P9 — glass-ui's own component-utility rules, emitted build-\n" +
         "   independently from glass-ui's native @theme so a bare consumer\n" +
@@ -172,7 +263,7 @@ async function emitComponentUtilities(
         "   vite.style-assets.ts emitComponentUtilities; do not hand-edit. */\n";
     writeFileSync(
         resolve(distStyles, "components.css"),
-        header + kept.toString() + "\n",
+        header + baseBlock + kept.toString() + "\n",
         "utf-8",
     );
 

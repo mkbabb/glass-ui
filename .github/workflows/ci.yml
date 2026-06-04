@@ -51,6 +51,13 @@ jobs:
               run: npm run proof:package
             - name: proof:theme
               run: npm run proof:theme
+            # AS.W2b R3 — the emitted component-utility cascade (P9) must define
+            # every custom prop it references (the `--spacing` base + the
+            # Tailwind-owned defaults), carry the canonical `.rounded-panel`
+            # rule, and ship zero `@layer base`. Reads the freshly-built
+            # dist/styles/components.css (build step above is its prerequisite).
+            - name: proof:components-css
+              run: npm run proof:components-css
             - name: proof:consumers:static
               run: npm run proof:consumers:static
             - name: audit:stash
