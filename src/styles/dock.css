@@ -411,12 +411,21 @@
        flow, so the FLIP width measurement in `useLayerTransition` still
        reads its geometry (`display:none` would zero it). The delayed
        `visibility` transition holds a leaving layer `visible` for the
-       length of the opacity crossfade, then flips it `hidden`. */
+       length of the opacity crossfade, then flips it `hidden`.
+
+       AU.W2 — the opacity-lockstep fold (slides-F P0, the "not iOS-smooth"
+       report). The layer fade rides `--dock-motion-resize` (the SAME duration +
+       spring the container morph runs at, `:189`/`:216`/`:385`) — NOT the faster
+       `--dock-motion-fast` (0.2s). Before, the host faded in 0.2s while the
+       container morphed in 0.3s: a 100ms-apart settle (the items appeared to lag
+       the pill). Now the fade and the morph settle in lockstep. The matched
+       `visibility` hold extends to `--duration-normal` so the leaving layer stays
+       paintable for the FULL (now longer) crossfade. */
     .dock-layer,
     .dock-layer-item-host {
         transition:
-            opacity var(--dock-motion-fast),
-            visibility 0s linear var(--duration-fast);
+            opacity var(--dock-motion-resize),
+            visibility 0s linear var(--duration-normal);
     }
 
     .dock-layer:not(.layer-active),
@@ -431,9 +440,12 @@
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
-        /* The active layer shows immediately — no deferred `visibility`. */
+        /* The active layer shows immediately — no deferred `visibility`. AU.W2:
+           the opacity rides `--dock-motion-resize` (lockstep with the container
+           morph), but the `visibility 0s` stays immediate (the `:434` rule
+           governs — the active layer must paint at once, no fade-in delay). */
         transition:
-            opacity var(--dock-motion-fast),
+            opacity var(--dock-motion-resize),
             visibility 0s;
     }
 

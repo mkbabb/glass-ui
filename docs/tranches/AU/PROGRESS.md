@@ -49,7 +49,7 @@ Every later wave gates on these FACTS, not the AT plan's narration.
 |---|---|---|---|
 | **AU.W0** formalize + re-ground | DEV | **DONE** | `AU.md` + `PROGRESS.md` authored; `proof:au-w0-reground` green; the 3 dock SHAs ancestor-reachable; the collision re-lettered; the a11y bundle decomposed; 71/71 dispositioned |
 | **AU.W1** design slices | DEV | **DONE** | three `design/AU.W1*.md` slices authored (blob/dock/color-gates); the W1c slice is the gate-fleet registry (19/19 gates enumerated with greening waves); `proof:au-w1-design` green |
-| **AU.W2** dock opacity-lockstep | IMPL | PLANNED | slides-F P0; `proof:dock-opacity-lockstep` |
+| **AU.W2** dock opacity-lockstep | IMPL | **DONE** | `dock.css` `.dock-layer{,-item-host}` opacity `--dock-motion-fast`→`--dock-motion-resize` (base + active rules); base visibility hold `--duration-fast`→`--duration-normal`; active `visibility 0s` preserved. `proof:dock-opacity-lockstep` green (bite: revert→red, the 100ms desync returns); build green; the token lands in slides via the W10 publish |
 | **AU.W3** keystone + correctness fold | IMPL | PLANNED | `proof:strict-templates` FIRST; `proof:peer-optional`; `proof:vueuse-free-root`; `proof:supportsPostTask-wired`; the 3 decomposed a11y sites |
 | **AU.W4** Fraunces ship | IMPL | PLANNED | `proof:font-axes` |
 | **AU.W5** `/color` leaf | IMPL | PLANNED | `proof:color-acyclic` + `proof:single-color-core` |

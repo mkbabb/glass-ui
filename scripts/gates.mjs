@@ -41,6 +41,7 @@ export const GATES = [
     { id: "proof:phantom-classes", cmd: "proof:phantom-classes", tags: ["local", "ci", "release"], sibling: true },
     { id: "proof:vt-names", cmd: "proof:vt-names", tags: ["local", "ci", "release"] },
     { id: "proof:dock-motion-parity", cmd: "proof:dock-motion-parity", tags: ["local", "ci", "release"], note: "AT.W6-dock-c — dock VT/FLIP timing-parity static gate" },
+    { id: "proof:dock-opacity-lockstep", cmd: "proof:dock-opacity-lockstep", tags: ["local", "ci", "release"], note: "AU.W2 — dock fade↔morph opacity-lockstep (slides-F P0): the layer opacity transition rides the SAME --dock-motion-resize token as the container morph (0-frame settle, ≤1-frame bar)" },
     { id: "proof:doc-consistency", cmd: "proof:doc-consistency", tags: ["local", "ci", "release"], note: "AT.W7-dock-c — CLAUDE.md custom-dir + dependency citations resolve at HEAD (doc-rot guard)" },
     { id: "proof:au-w0-reground", cmd: "proof:au-w0-reground", tags: ["local", "ci"], note: "AU.W0 — formalize+re-ground meta-gate (AU.md/PROGRESS.md exist; 3 dock SHAs ancestor-reachable; zero bundle labels survive; W6-dock-b collision re-lettered)" },
     { id: "proof:au-w1-design", cmd: "proof:au-w1-design", tags: ["local", "ci"], note: "AU.W1 — design-slice meta-gate (3 slices cite AT.W1 origin + HEAD delta; the W1c registry enumerates the full AU gate fleet with greening waves)" },
