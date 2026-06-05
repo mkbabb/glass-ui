@@ -89,13 +89,35 @@ jobs:
             # A→B→A no-skip/no-queue) rides `npm run test`.
             - name: proof:dock-motion-parity
               run: npm run proof:dock-motion-parity
+            # AU.W8 — the dock single-frame-origin gate. The PERCEPTUAL sibling of
+            # the string-match proof:dock-opacity-lockstep: the FLIP fallback's layer
+            # ref-swap (→ opacity) and the width set (→ morph) must share ONE rAF
+            # frame origin (closing the useLayerTransition async fork). Static source
+            # proof — the perceptual settle-probe rides the slides deck Playwright.
+            - name: proof:dock-motion-single-source
+              run: npm run proof:dock-motion-single-source
             # AU.W2 — the dock fade↔morph opacity-lockstep static gate (slides-F
             # P0, the "not iOS-smooth" report). Asserts the `.dock-layer{,-item-host}`
             # opacity transition rides the SAME `--dock-motion-resize` token the
             # container morph uses (a 0-frame settle, inside the ≤1-frame bar) and
             # the active layer's `visibility 0s` stays immediate. Sibling-free.
+            # DEMOTED W8 → syntactic; the frame-origin sibling is proof:dock-motion-single-source.
             - name: proof:dock-opacity-lockstep
               run: npm run proof:dock-opacity-lockstep
+            # AU.W8 — the reka-Tabs dock rail a11y contract. The mounted-dock vitest
+            # asserts role=tablist/tab + aria-selected (NOT the hand-rolled
+            # aria-pressed at DockLayerGroup.vue), roving tabindex (Arrow/Home/End),
+            # the focus-ring class, keepOpen/release on tab focus, and the
+            # inactive-pane aria-hidden (8 rendered-attr assertions).
+            - name: proof:dock-a11y-contract
+              run: npm run proof:dock-a11y-contract
+            # AU.W8 — the dock role-vocabulary gate. Asserts the dock README is the
+            # single source for the four <Role>Dock names + base primitives + the
+            # canonical useDock* composable names, and records the two HEAD
+            # re-groundings (useTouchGate stays general; DockTabButton kept). Bite:
+            # delete a role from the README → RED.
+            - name: proof:dock-vocabulary
+              run: npm run proof:dock-vocabulary
             # AT.W7-dock-c — the ι doc-rot sweep. Asserts every `custom/<dir>`
             # directory + every Dependencies-table package + every
             # `@mkbabb/glass-ui/<subpath>` CLAUDE.md cites RESOLVES at HEAD

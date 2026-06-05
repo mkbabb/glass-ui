@@ -50,15 +50,15 @@
  * engine, so the collapsed↔expanded width + the layer-pane swap morph as a VT
  * group instead of the JS FLIP.
  *
- * AT.W6-dock-c — VT/FLIP timing PARITY. The timing-function is
- * `--dock-resize-spring` (the `--spring-snappy` linear()) — the SAME source the
- * FLIP fallback consumes via `--dock-motion-resize` (`dock.css`), so the identical
- * curve drives both engines. Retires the AQ.W6 fork (this group ran `--vt-ease`,
- * the apple-spring overshoot). `--vt-ease` still governs the other recipes
- * (`.gl-list-item`). PRM zeroes the animation above. */
+ * AT.W6-dock-c / AU.W8 — VT/FLIP timing PARITY. The timing-function is
+ * `--dock-resize-spring` (= the `--spring-dock` linear(), AU.W8) — the SAME
+ * source the FLIP fallback consumes via `--dock-motion-resize` (`dock.css`), so
+ * the identical curve drives both engines. Retires the AQ.W6 fork (this group
+ * ran `--vt-ease`, the apple-spring overshoot). `--vt-ease` still governs the
+ * other recipes (`.gl-list-item`). PRM zeroes the animation above. */
 ::view-transition-group(.gl-dock-layer) {
     animation-duration: var(--vt-duration, var(--duration-normal));
-    animation-timing-function: var(--dock-resize-spring, var(--spring-snappy));
+    animation-timing-function: var(--dock-resize-spring, var(--spring-dock));
 }
 
 @keyframes gl-vt-slide-in  { from { opacity: 0; translate: 0 var(--vt-rise, 8px); } }

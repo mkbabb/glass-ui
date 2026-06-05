@@ -8,8 +8,8 @@
 // Invariant (recap): the native View-Transition path
 // (`::view-transition-group(.gl-dock-layer)` animation-timing-function) and the
 // JS FLIP fallback (`--dock-motion-resize` easing) must consume ONE source curve
-// (`--dock-resize-spring` = the settling `--spring-snappy` linear()), so an
-// identity dock layer-swap morph is timing-identical per engine. The divergent
+// (`--dock-resize-spring` = the iOS-springy `--spring-dock` linear(), AU.W8), so
+// an identity dock layer-swap morph is timing-identical per engine. The divergent
 // `--vt-ease` apple-spring overshoot must NOT drive the dock group. And the
 // driver must carry the `morphGeneration` concurrency guard.
 
@@ -18,18 +18,18 @@ import { describe, expect, it } from "vitest";
 import { detectSource } from "../proof-dock-motion-parity.mjs";
 
 // The good substrate: VT + FLIP both on --dock-resize-spring; the token minted to
-// the snappy spring; the driver carrying the generation guard.
+// the dock spring (AU.W8); the driver carrying the generation guard.
 const GOOD = {
     vtCss: `
 ::view-transition-group(.gl-dock-layer) {
     animation-duration: var(--vt-duration, var(--duration-normal));
-    animation-timing-function: var(--dock-resize-spring, var(--spring-snappy));
+    animation-timing-function: var(--dock-resize-spring, var(--spring-dock));
 }`,
     dockCss: `
 :where(.glass-dock) {
     --dock-motion-resize: var(--duration-normal) var(--dock-resize-spring);
 }`,
-    tokensCss: `:root { --dock-resize-spring: var(--spring-snappy); }`,
+    tokensCss: `:root { --dock-resize-spring: var(--spring-dock); }`,
     dockVue: `
 let morphGeneration = 0;
 function markTransitioning() { const generation = ++morphGeneration; }
@@ -48,7 +48,7 @@ describe("proof:dock-motion-parity — VT/FLIP timing-parity detector (AT.W6-doc
         const { violations } = detectSource({
             ...GOOD,
             vtCss: GOOD.vtCss.replace(
-                "var(--dock-resize-spring, var(--spring-snappy))",
+                "var(--dock-resize-spring, var(--spring-dock))",
                 "var(--vt-ease, var(--ease-apple-spring))",
             ),
         });

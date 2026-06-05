@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, useId, useTemplateRef } from "vue";
 import type { Component } from "vue";
+import { Tabs, TabsList, TabsTrigger, TabsIndicator } from "../../ui/tabs";
 import { useOptionalDockContext } from "./composables/dockContext";
 import {
     provideDockLayerGroupContext,
@@ -86,6 +87,28 @@ provideDockLayerGroupContext({
 function isComponent(icon: unknown): icon is Component {
     return typeof icon === "object" && icon !== null;
 }
+
+/* AU.W8.4 — keep the dock open while a rail tab holds focus, so keyboard
+   navigation (Arrow/Home/End) does not trip the idle-collapse timer. A boolean
+   edge keeps the keep-open token reference-counted exactly once: acquired on the
+   first focusin, released only when focus leaves the rail entirely (gated on
+   `relatedTarget`, so tab-to-tab transit inside the rail does not double-count). */
+const railHolds = ref(false);
+
+function onRailFocusIn() {
+    if (railHolds.value) return;
+    railHolds.value = true;
+    dock?.keepOpen();
+}
+
+function onRailFocusOut(e: FocusEvent) {
+    const next = e.relatedTarget as Node | null;
+    const list = e.currentTarget as HTMLElement | null;
+    if (next && list?.contains(next)) return;
+    if (!railHolds.value) return;
+    railHolds.value = false;
+    dock?.release();
+}
 </script>
 
 <template>
@@ -93,31 +116,46 @@ function isComponent(icon: unknown): icon is Component {
         class="dock-layer-group"
         :class="[axis, `rail-${railPosition}`]"
     >
-        <nav
+        <!-- AU.W8.4 — the layer-switcher rail is a reka-ui Tabs contract (APG
+             tabs): role=tablist/tab + aria-selected (NOT aria-pressed), roving
+             tabindex, Arrow/Home/End. Keyboard stays Left/Right always (reka's
+             horizontal convention); CSS rotates the rail visually for vertical
+             docks (the `dock-layer-group.vertical` flex-direction). The Tabs
+             v-model binds the SAME `activeLayer` ref that drives
+             useLayerTransition, so selecting a tab fires the crossfade with no
+             second source of truth. The travelling TabsIndicator carries the
+             active affordance (replacing the per-button background). -->
+        <Tabs
             v-if="showRail && layers.length > 1"
-            class="dock-layer-rail"
-            :class="railPosition"
+            v-model="activeLayer"
+            orientation="horizontal"
+            :as-child="true"
         >
-            <button
-                v-for="layer in layers"
-                :key="layer.id"
-                type="button"
-                class="dock-layer-tab"
-                :class="{ 'is-active': activeLayer === layer.id }"
-                :title="layer.label"
-                :aria-label="layer.label ?? layer.id"
-                :aria-pressed="activeLayer === layer.id"
-                @click="activeLayer = layer.id"
+            <TabsList
+                class="dock-layer-rail"
+                :class="railPosition"
+                @focusin="onRailFocusIn"
+                @focusout="onRailFocusOut"
             >
-                <component
-                    v-if="isComponent(layer.icon)"
-                    :is="layer.icon"
-                    class="size-4"
-                />
-                <span v-else-if="typeof layer.icon === 'string'">{{ layer.icon }}</span>
-                <span v-else>{{ (layer.label ?? layer.id).charAt(0) }}</span>
-            </button>
-        </nav>
+                <TabsTrigger
+                    v-for="layer in layers"
+                    :key="layer.id"
+                    :value="layer.id"
+                    class="dock-layer-tab"
+                    :title="layer.label"
+                    :aria-label="layer.label ?? layer.id"
+                >
+                    <component
+                        v-if="isComponent(layer.icon)"
+                        :is="layer.icon"
+                        class="size-4"
+                    />
+                    <span v-else-if="typeof layer.icon === 'string'">{{ layer.icon }}</span>
+                    <span v-else>{{ (layer.label ?? layer.id).charAt(0) }}</span>
+                </TabsTrigger>
+                <TabsIndicator class="dock-layer-tab-indicator" />
+            </TabsList>
+        </Tabs>
         <div
             ref="containerEl"
             class="dock-layer-stack"

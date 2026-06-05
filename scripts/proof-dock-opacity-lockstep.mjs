@@ -27,6 +27,11 @@
 // House style mirrors proof-dock-motion-parity.mjs: ESM .mjs, comment-strip
 // first (false-witness discipline), a pure exported detector, a byte-stable JSON
 // artefact via gate-output, a human summary, process.exit(1) on any violation.
+//
+// DEMOTED at AU.W8 to the SYNTACTIC token-match; the frame-origin (perceptual)
+// half is proof:dock-motion-single-source. This gate stays KEPT — it is the
+// cheap fast-guard that both rules name --dock-motion-resize; the W8 sibling
+// gate proves the FLIP fallback's ref-swap and width-set share ONE rAF origin.
 
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";

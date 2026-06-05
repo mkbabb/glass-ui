@@ -654,7 +654,16 @@
         border-top: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
     }
 
+    /* AU.W8.4 — the rail is a reka-ui Tabs contract. The travelling
+       `.dock-layer-tab-indicator` (the reka TabsIndicator) now carries the
+       active affordance; the rail is `position: relative` so the indicator's
+       absolute placement is rail-local. */
+    .dock-layer-rail {
+        position: relative;
+    }
+
     .dock-layer-rail .dock-layer-tab {
+        position: relative;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -667,6 +676,8 @@
         cursor: pointer;
         font: inherit;
         font-size: 0.75rem;
+        /* The tab glyph rides above the travelling indicator backplate. */
+        z-index: 1;
         transition:
             background var(--dock-motion-fast),
             color var(--dock-motion-fast);
@@ -677,10 +688,46 @@
         color: var(--foreground);
     }
 
-    .dock-layer-rail .dock-layer-tab.is-active {
-        background: color-mix(in srgb, var(--primary) 15%, transparent);
+    /* AU.W8.4 — KEEP the active glyph tint on the selected tab (reka emits
+       `data-state="active"` + `aria-selected="true"`); the per-button active
+       BACKGROUND is RETIRED — the travelling indicator carries that affordance. */
+    .dock-layer-rail .dock-layer-tab[data-state="active"] {
         color: var(--primary);
     }
+
+    /* AU.W8.4 — the dock control focus-ring contract does not cover
+       `.dock-layer-tab` (the rail tab is not in the `.dock-icon-button` family).
+       The roving tabindex means only the active tab is in the tab order; a
+       focus-visible tab paints the shared dock ring. */
+    .dock-layer-rail [role="tab"]:focus-visible {
+        box-shadow: var(--focus-ring-shadow);
+        outline: none;
+    }
+
+    /* AU.W8.4 — the travelling indicator (reka TabsIndicator). reka computes
+       `--reka-tabs-indicator-position` + `--reka-tabs-indicator-size` from the
+       active tab's geometry; the indicator morphs between tabs riding
+       `--dock-motion-resize` (= `--spring-dock` after AU.W8.2) — NOT a hardcoded
+       `--spring-snappy`. It paints the active-tab backplate the per-button
+       `.is-active` background used to. */
+    .dock-layer-rail .dock-layer-tab-indicator {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: var(--dock-layer-tab-size, var(--dock-control-size, 1.75rem));
+        width: var(--reka-tabs-indicator-size);
+        transform: translateX(var(--reka-tabs-indicator-position));
+        border-radius: var(--dock-layer-tab-radius, var(--radius-sm));
+        background: color-mix(in srgb, var(--primary) 15%, transparent);
+        transition:
+            width var(--dock-motion-resize),
+            transform var(--dock-motion-resize);
+        pointer-events: none;
+    }
+
+    /* For a vertical rail the indicator travels along the inline axis still
+       (the horizontal-always keyboard decision keeps the indicator inline);
+       reka's position var resolves to the active tab offset regardless. */
 
     .dock-layer-stack {
         position: relative;

@@ -52,6 +52,12 @@ const PRESETS = [
         dampingFraction: 1.0,
         comment: "patient critically-damped",
     },
+    {
+        name: "dock",
+        response: 0.5,
+        dampingFraction: 0.5,
+        comment: "dock expand/collapse morph — iOS-springy overshoot ~+18.5%",
+    },
 ];
 
 /**
@@ -87,7 +93,7 @@ function generateBlock() {
 const BLOCK_START_MARKER =
     "    /* ═══════════════════════════════════════════════\n       §2  EASING — Spring curves via linear()";
 const SPRING_LINES_RE =
-    /(    --spring-(?:smooth|snappy|bouncy|gentle): linear\([^)]+\);\n?)+/m;
+    /(    --spring-(?:smooth|snappy|bouncy|gentle|dock): linear\([^)]+\);\n?)+/m;
 
 function main() {
     const source = readFileSync(tokensPath, "utf8");

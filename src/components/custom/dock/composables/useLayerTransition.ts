@@ -1,6 +1,22 @@
 import { ref, computed, watch, nextTick, onUnmounted } from "vue";
 import type { Ref } from "vue";
+import { SpringProgress } from "@mkbabb/keyframes.js";
 import { startViewTransition } from "../../../../composables/motion/useViewTransition";
+
+/**
+ * The dock resize-morph spring (AU.W8.3). MIRRORS the `--spring-dock` PRESETS
+ * row in `scripts/regen-spring-tokens.mjs` (response 0.5, ζ 0.5, ~+18.5%
+ * overshoot) so the build-time CSS token and the runtime driver sample the
+ * SAME analytic ODE — bit-identical motion. A retune MUST touch BOTH this const
+ * and the PRESETS row, or the CSS-token and JS-driven curves drift.
+ *
+ * LIGHT-surface only: `SpringProgress` carries no static value.js edge (it owns
+ * its own `RAFPlayback` via `.play(onFrame)`). NEVER import `AnimationGroup` /
+ * `loadAnimationEngine` / `CSSKeyframesAnimation` / `.fromString` — those cross
+ * the HEAVY `./engine` boundary and pull value.js into the dock bundle
+ * (AU-keyframes-coordination.md §2.3).
+ */
+const DOCK_SPRING = { response: 0.5, dampingFraction: 0.5 } as const;
 
 export interface UseLayerTransitionOptions {
     /** The container element that owns the stacked layer panes. */
@@ -65,6 +81,16 @@ export function useLayerTransition(
     const leavingLayer = ref<string | null>(null);
     let transitionId = 0;
     let cleanupTimer: ReturnType<typeof setTimeout> | null = null;
+    // The live FLIP-fallback driver (AU.W8.3); held on a closure var so a
+    // superseded swap's loop is stopped/disposed before the next one arms.
+    let spring: SpringProgress | null = null;
+
+    function disposeSpring() {
+        if (spring) {
+            spring.dispose();
+            spring = null;
+        }
+    }
 
     function parseTimeMs(value: string): number {
         const trimmed = value.trim();
@@ -132,9 +158,29 @@ export function useLayerTransition(
             return;
         }
 
-        // ── Fallback path — the kept axis-aware FLIP (verbatim).
+        // ── prefers-reduced-motion fast-path (AU.W8.1). A single synchronous
+        // state swap — no measure/pin/animate dance, no inline size, no rAF, no
+        // spring driver. The VT path's PRM is CSS-gated (view-transition.css);
+        // the FLIP fallback needs this explicit JS gate. Returns BEFORE any
+        // driver is constructed (belt-and-suspenders with the driver's own
+        // `respectReducedMotion`).
+        const prm =
+            typeof window !== "undefined" &&
+            window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+        if (prm) {
+            currentLayer.value = newLayer;
+            leavingLayer.value = null;
+            return;
+        }
+
+        // ── Fallback path — the kept axis-aware FLIP.
         clearCleanup();
         const id = ++transitionId;
+
+        // Stop/dispose any driver from a superseded swap so its onFrame loop
+        // cannot race the live one (AU.W8.3). The transitionId already gates the
+        // ID, but disposing frees the rAF immediately rather than on next tick.
+        disposeSpring();
 
         // 1. Capture current size
         const fromSize = getSize(el);
@@ -142,46 +188,84 @@ export function useLayerTransition(
         // 2. Pin size (prevents snap during class swap)
         setDim(el, `${fromSize}px`);
 
-        // 3. Swap: mark old as leaving, new as active
-        leavingLayer.value = oldLayer;
-        currentLayer.value = newLayer;
-
-        // 4. Measure new natural size on next tick
+        // 3. Measure new natural size, then drive the morph. The layer ref swap
+        // (→ class-driven opacity) and the width set (→ size morph) must START
+        // in the SAME animation frame, so the box never shrinks before items
+        // fade (the async-fork the user reported). The swap is therefore
+        // DEFERRED into the rAF callback that drives the width — one frame
+        // ORIGIN for both (AU.W8.1; gate: proof:dock-motion-single-source).
         nextTick(() => {
             if (id !== transitionId) return;
             if (!el) return;
 
-            // Temporarily unpin to measure
-            el.style.transition = "none";
-            clearDim(el);
-            const toSize = getSize(el);
-
-            // Re-pin to old size
-            setDim(el, `${fromSize}px`);
-            // Force reflow so the browser registers the old size
-            void el.offsetWidth;
-            // Restore CSS transitions
-            el.style.transition = "";
-
-            // 5. Animate to new size
             requestAnimationFrame(() => {
                 if (id !== transitionId) return;
-                setDim(el, `${toSize}px`);
+
+                // Swap DEFERRED into the rAF so class-opacity and width-set
+                // start in the SAME frame.
+                leavingLayer.value = oldLayer;
+                currentLayer.value = newLayer;
+
+                // Measure new natural size (the swap is applied this tick).
+                el.style.transition = "none";
+                clearDim(el);
+                const toSize = getSize(el);
+
+                // Re-pin to the old size so the morph runs from `fromSize`.
+                setDim(el, `${fromSize}px`);
+                void el.offsetWidth;
+
+                if (Math.abs(toSize - fromSize) < 0.5) {
+                    el.style.transition = "";
+                    clearDim(el);
+                    leavingLayer.value = null;
+                    return;
+                }
+
+                // 4. Drive width off ONE SpringProgress clock (AU.W8.3) so width
+                // + opacity advance off the same solver and converge within one
+                // frame at settle. Mirrors useSpring.ts:105-136. The JS driver
+                // OWNS the container width (transition stays "none" on `el` so
+                // the CSS `width var(--dock-motion-resize)` does not fight the
+                // per-frame inline set); the pane opacity stays class-driven (a
+                // SEPARATE element — `.dock-layer-item-host` — so its
+                // --dock-motion-resize fade is unaffected). Both consume the SAME
+                // (0.5, 0.5) curve (the token + the driver), so width + opacity
+                // are timing-identical by construction.
+                spring = new SpringProgress({
+                    response: DOCK_SPRING.response,
+                    dampingFraction: DOCK_SPRING.dampingFraction,
+                    respectReducedMotion: true,
+                });
+                const activeSpring = spring;
+                activeSpring.target = 1;
+                activeSpring.play((p: number) => {
+                    if (id !== transitionId) return;
+                    const w = fromSize + (toSize - fromSize) * p;
+                    setDim(el, `${w}px`);
+                    // Default: opacity stays class-driven (the CSS transition on
+                    // `.dock-layer-item-host`, lockstep on --dock-motion-resize).
+                    // Escalate to inline clamped opacity ONLY if the settle probe
+                    // shows drift: clamp01(p) on the active host, 1-clamp01(p) on
+                    // the leaving host.
+                    if (activeSpring.settled) {
+                        el.style.transition = "";
+                        clearDim(el);
+                        leavingLayer.value = null;
+                        disposeSpring();
+                    }
+                });
+
+                // Safety: clear inline size + restore the CSS transition after
+                // the computed window in case the spring's settle is missed.
+                cleanupTimer = setTimeout(() => {
+                    if (id !== transitionId) return;
+                    el.style.transition = "";
+                    clearDim(el);
+                    leavingLayer.value = null;
+                    disposeSpring();
+                }, cleanupDelayMs(el));
             });
-
-            if (Math.abs(toSize - fromSize) < 0.5) {
-                clearDim(el);
-                leavingLayer.value = null;
-                return;
-            }
-
-            // Safety: clear inline size after the computed transition window in
-            // case transitionend doesn't fire.
-            cleanupTimer = setTimeout(() => {
-                if (id !== transitionId) return;
-                clearDim(el);
-                leavingLayer.value = null;
-            }, cleanupDelayMs(el));
         });
     });
 
@@ -192,11 +276,16 @@ export function useLayerTransition(
         if (e.propertyName !== dim.value) return;
 
         clearCleanup();
+        disposeSpring();
+        el.style.transition = "";
         clearDim(el);
         leavingLayer.value = null;
     }
 
-    onUnmounted(clearCleanup);
+    onUnmounted(() => {
+        clearCleanup();
+        disposeSpring();
+    });
 
     return { onTransitionEnd, currentLayer, leavingLayer };
 }

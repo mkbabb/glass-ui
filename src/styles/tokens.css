@@ -143,9 +143,10 @@
 
        iOS-canonical (response, dampingFraction) per AL-X4 §3:
          smooth: (0.50s, ζ=0.86)  — gentle settle, sub-perceptual overshoot ~0.5%
-         snappy: (0.35s, ζ=0.85)  — quick crisp, micro-overshoot
-         bouncy: (0.50s, ζ=0.65)  — emphatic overshoot ~7%
+         snappy: (0.35s, ζ=0.65)  — quick crisp, overshoot ~+6.8%
+         bouncy: (0.50s, ζ=0.45)  — emphatic overshoot ~+20.5%
          gentle: (0.70s, ζ=1.00)  — patient critically-damped
+         dock:   (0.50s, ζ=0.50)  — dock expand/collapse morph, overshoot ~+18.5%
 
        Note on `smooth`: at ζ=0.86 the analytic solver produces a peak
        of 1.00498 (+0.5%) at the 24% slot — mathematically present but
@@ -159,6 +160,7 @@
     --spring-snappy: linear(0, 0.10438 2.041%, 0.32622 4.082%, 0.56668 6.122%, 0.77153 8.163%, 0.91961 10.204%, 1.01073 12.245%, 1.05549 14.286%, 1.06804 16.327%, 1.06171 18.367%, 1.04686 20.408%, 1.03044 22.449%, 1.01629 24.490%, 1.00596 26.531%, 0.99954 28.571%, 0.99633 30.612%, 0.99537 32.653%, 0.99575 34.694%, 0.99674 36.735%, 0.99786 38.776%, 0.99884 40.816%, 0.99956 42.857%, 1.00001 44.898%, 1.00024 46.939%, 1.00000 48.980%, 1.00000 51.020%, 1.00000 53.061%, 1.00000 55.102%, 1.00000 57.143%, 1.00000 59.184%, 1.00000 61.224%, 1.00000 63.265%, 1.00000 65.306%, 1.00000 67.347%, 1.00000 69.388%, 1.00000 71.429%, 1.00000 73.469%, 1.00000 75.510%, 1.00000 77.551%, 1.00000 79.592%, 1.00000 81.633%, 1.00000 83.673%, 1.00000 85.714%, 1.00000 87.755%, 1.00000 89.796%, 1.00000 91.837%, 1.00000 93.878%, 1.00000 95.918%, 1.00000 97.959%, 1);
     --spring-bouncy: linear(0, 0.11105 2.041%, 0.36430 4.082%, 0.65496 6.122%, 0.90929 8.163%, 1.08828 10.204%, 1.18289 12.245%, 1.20482 14.286%, 1.17641 16.327%, 1.12214 18.367%, 1.06276 20.408%, 1.01239 22.449%, 0.97809 24.490%, 0.96099 26.531%, 0.95826 28.571%, 0.96514 30.612%, 0.97666 32.653%, 0.98873 34.694%, 0.99867 36.735%, 1.00520 38.776%, 1.00825 40.816%, 1.00847 42.857%, 1.00686 44.898%, 1.00443 46.939%, 1.00199 48.980%, 1.00004 51.020%, 0.99880 53.061%, 0.99827 55.102%, 0.99829 57.143%, 0.99866 59.184%, 0.99916 61.224%, 0.99966 63.265%, 1.00004 65.306%, 1.00027 67.347%, 1.00000 69.388%, 1.00000 71.429%, 1.00000 73.469%, 1.00000 75.510%, 1.00000 77.551%, 1.00000 79.592%, 1.00000 81.633%, 1.00000 83.673%, 1.00000 85.714%, 1.00000 87.755%, 1.00000 89.796%, 1.00000 91.837%, 1.00000 93.878%, 1.00000 95.918%, 1.00000 97.959%, 1);
     --spring-gentle: linear(0, 0.09415 2.041%, 0.27374 4.082%, 0.45506 6.122%, 0.60779 8.163%, 0.72570 10.204%, 0.81213 12.245%, 0.87336 14.286%, 0.91570 16.327%, 0.94445 18.367%, 0.96371 20.408%, 0.97645 22.449%, 0.98481 24.490%, 0.99025 26.531%, 0.99377 28.571%, 0.99604 30.612%, 0.99749 32.653%, 0.99841 34.694%, 0.99900 36.735%, 0.99937 38.776%, 0.99961 40.816%, 0.99975 42.857%, 0.99985 44.898%, 1.00000 46.939%, 1.00000 48.980%, 1.00000 51.020%, 1.00000 53.061%, 1.00000 55.102%, 1.00000 57.143%, 1.00000 59.184%, 1.00000 61.224%, 1.00000 63.265%, 1.00000 65.306%, 1.00000 67.347%, 1.00000 69.388%, 1.00000 71.429%, 1.00000 73.469%, 1.00000 75.510%, 1.00000 77.551%, 1.00000 79.592%, 1.00000 81.633%, 1.00000 83.673%, 1.00000 85.714%, 1.00000 87.755%, 1.00000 89.796%, 1.00000 91.837%, 1.00000 93.878%, 1.00000 95.918%, 1.00000 97.959%, 1);
+    --spring-dock: linear(0, 0.10932 2.041%, 0.35412 4.082%, 0.63074 6.122%, 0.87072 8.163%, 1.04044 10.204%, 1.13391 12.245%, 1.16292 14.286%, 1.14748 16.327%, 1.10854 18.367%, 1.06337 20.408%, 1.02357 22.449%, 0.99499 24.490%, 0.97889 26.531%, 0.97350 28.571%, 0.97561 30.612%, 0.98178 32.653%, 0.98915 34.694%, 0.99574 36.735%, 1.00055 38.776%, 1.00332 40.816%, 1.00431 42.857%, 1.00403 44.898%, 1.00305 46.939%, 1.00186 48.980%, 1.00076 51.020%, 0.99996 53.061%, 0.99948 55.102%, 0.99930 57.143%, 0.99933 59.184%, 0.99949 61.224%, 0.99968 63.265%, 0.99986 65.306%, 1.00000 67.347%, 1.00008 69.388%, 1.00000 71.429%, 1.00000 73.469%, 1.00000 75.510%, 1.00000 77.551%, 1.00000 79.592%, 1.00000 81.633%, 1.00000 83.673%, 1.00000 85.714%, 1.00000 87.755%, 1.00000 89.796%, 1.00000 91.837%, 1.00000 93.878%, 1.00000 95.918%, 1.00000 97.959%, 1);
 
     /* Core cubic-bezier (exits, fallbacks, non-spring uses) */
     --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
@@ -1256,14 +1258,22 @@
     --vt-ease: var(--ease-apple-spring);
     --vt-rise: 8px;
 
-    /* AT.W6-dock-c — the dock layer-swap morph timing, minted ONCE so both
-       engine paths are timing-IDENTICAL: the FLIP fallback (via
-       `--dock-motion-resize`) and the native View-Transition group (its
-       `animation-timing-function`) consume this same `linear()` curve. Retires
-       the AQ.W6 fork where the VT path ran `--vt-ease` (apple-spring, +27.5%
-       overshoot) while the FLIP ran the snappy spring. `--vt-ease` still
-       defaults the other VT recipes (`.gl-list-item`). */
-    --dock-resize-spring: var(--spring-snappy);
+    /* AT.W6-dock-c / AU.W8 — the dock layer-swap morph timing, minted ONCE so
+       both engine paths are timing-IDENTICAL: the FLIP fallback (via
+       `--dock-motion-resize`), the native View-Transition group (its
+       `animation-timing-function`), AND the runtime SpringProgress driver
+       (AU.W8.3) consume this same `(0.5, 0.5)` source curve. Retires the AQ.W6
+       fork where the VT path ran `--vt-ease` (apple-spring, +27.5% overshoot)
+       while the FLIP ran the snappy spring. `--vt-ease` still defaults the
+       other VT recipes (`.gl-list-item`).
+
+       AU.W8 — RETARGET snappy → dock. `--spring-snappy` (ζ=0.65, +6.8%) read as
+       mechanical: a stiff plateau at ~48% with too little overshoot to feel
+       alive ("not iOS-smooth"). `--spring-dock` ((0.5, 0.5), ~+18.5%) sits in
+       the springy 15-30% band — the user-felt iOS bounce. The runtime driver's
+       DOCK_SPRING const MIRRORS the (0.5, 0.5) PRESETS row, so the CSS token and
+       the JS-driven morph are bit-identical. */
+    --dock-resize-spring: var(--spring-dock);
 
     /* AT.W7-dock-b — dock-control press micro-feedback spring. A TRANSFORM-ONLY
        spring (`scale`/`rotate`) the dock controls apply to their hover/press

@@ -11,8 +11,10 @@
 //     `linear()`).
 //
 // AT.W6-dock-c reconciles them onto ONE source curve, minted once as
-// `--dock-resize-spring` (= the `--spring-snappy` linear()). A `linear()` is
-// valid as BOTH a CSS transition timing-function AND a `::view-transition-group`
+// `--dock-resize-spring`. AU.W8 RETARGETED that source from `--spring-snappy`
+// (which read mechanical — a stiff ~48% plateau) to `--spring-dock` (the
+// iOS-springy (0.5, 0.5) curve, ~+18.5% overshoot). A `linear()` is valid as
+// BOTH a CSS transition timing-function AND a `::view-transition-group`
 // animation-timing-function, so the SAME curve drives both engines.
 //
 // This gate is the STATIC half of `proof:dock-motion-parity` (the runtime
@@ -26,8 +28,8 @@
 //   NO-FORK — the dock VT group no longer pins the divergent `--vt-ease`
 //             (the apple-spring overshoot). The general `.gl-list-item` recipe
 //             may still default to `--vt-ease`; only the dock group is re-pointed.
-//   SOURCE  — `--dock-resize-spring` is minted, and to the snappy spring (the
-//             settling linear()), not the apple-spring overshoot.
+//   SOURCE  — `--dock-resize-spring` is minted, and to the dock morph spring
+//             (`var(--spring-dock)`, AU.W8), not the apple-spring overshoot.
 //   GUARD   — the runtime driver (`GlassDock.vue`) carries the morph-generation
 //             concurrency guard that the A→B→A runtime test exercises, so the
 //             static gate and the runtime gate cannot silently drift apart.
@@ -182,17 +184,19 @@ export function detectParity({ vtCss, dockCss, tokensCss, dockVue }) {
         facts.parity = false;
     }
 
-    // ── SOURCE: --dock-resize-spring is minted to the settling snappy spring,
-    // NOT the apple-spring overshoot.
+    // ── SOURCE: --dock-resize-spring is minted to the dock morph spring
+    // (var(--spring-dock), AU.W8 — the iOS-springy (0.5, 0.5) curve), NOT the
+    // apple-spring overshoot. AU.W8 retargeted this from --spring-snappy (which
+    // read mechanical: a stiff ~48% plateau, too little overshoot to feel alive).
     const springDecl = declValue(tokensCss, "--dock-resize-spring");
     facts.dockResizeSpring = springDecl;
     if (springDecl === null) {
         violations.push(
             "tokens.css: --dock-resize-spring is not minted — the shared source curve is missing",
         );
-    } else if (!/--spring-snappy\b/.test(springDecl)) {
+    } else if (!/--spring-dock\b/.test(springDecl)) {
         violations.push(
-            `--dock-resize-spring must be the settling snappy spring (var(--spring-snappy)), got: \`${springDecl}\``,
+            `--dock-resize-spring must be the dock morph spring (var(--spring-dock)), got: \`${springDecl}\``,
         );
     } else if (/apple-spring/.test(springDecl)) {
         violations.push(
