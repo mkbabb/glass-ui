@@ -96,9 +96,19 @@ const startedAt = Date.now();
 // modest ~3% close headroom the prior re-bases used (gzip 99958 → 103000;
 // raw 419727 → 432000) — a one-time conscious lift for a real feature landing,
 // not per-wave creep.
+//
+// AU.W8/W8b landing (the dock-motion overhaul): the 50-stop --spring-dock
+// linear() token + the W8b native arms (@supports interpolate-size width
+// morph; @starting-style + allow-discrete discrete-transition arm) + the
+// dock-controls.css carve preamble + the transition-control/transition-collapse
+// @utility recipes lift the measured draw to raw 441623 / gzip 106614.
+// Re-based with the SAME ~3% close headroom (raw 441623 → 455000; gzip
+// 106614 → 110000) — the second one-time conscious lift, for the dock-motion
+// feature landing (the 3.3.0 headline), not per-wave creep. The dock.js
+// drift re-baseline (+SpringProgress LIGHT driver) rides the same commit.
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
-    "dist/styles/index.css": { raw: 432_000, gzip: 103_000 },
+    "dist/styles/index.css": { raw: 455_000, gzip: 110_000 },
 };
 
 // AO.W2 (inv α) — the real consumer-draw CSS artifact.

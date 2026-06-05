@@ -320,3 +320,18 @@ export type {
     PaperBackdropFrequency,
     PaperBackdropProps,
 } from "../components/custom/paper-backdrop";
+
+// ── Dark ergonomics (AU.W9) ────────────────────────────────────────────────
+// `UseGlobalDarkOptions` — the one-shot `initialValue` seed shape honored on
+// FIRST `useGlobalDark()` construction (the createGlobalState factory is
+// memoized; later conflicting calls dev-warn). `DarkModeSyncScriptOptions` —
+// options for the parse-time FOUC eliminator `darkModeSyncScript()`, the
+// PURE inline-<head>-script string emitter that byte-mirrors the runtime
+// dark contract (localStorage["vueuse-color-scheme"] → prefers-color-scheme
+// fallback → classList("dark") + style.colorScheme). Both runtime values
+// live on the flat `/dark` subpath (vueuse-bearing surface discipline);
+// only the types ride the discovery layer.
+export type {
+    DarkModeSyncScriptOptions,
+    UseGlobalDarkOptions,
+} from "../composables/dark";
