@@ -144,6 +144,15 @@ jobs:
             # silently-inert axis (the slip the campaign missed) is a hard fail.
             - name: proof:font-axes
               run: npm run proof:font-axes
+            # AU.W5 — the /color runtime-JS leaf gates. color-acyclic: the leaf
+            # imports value.js only (no component back-import) + value.js/src never
+            # imports glass-ui (the published graph is a DAG). single-color-core:
+            # no glass-ui source re-defines a value.js color primitive (ONE core);
+            # the CSS token tier stays native (exempt — .css is not scanned).
+            - name: proof:color-acyclic
+              run: npm run proof:color-acyclic
+            - name: proof:single-color-core
+              run: npm run proof:single-color-core
             # AS.W2 inv-θ — the lockfile registry-resolution drift guard (#177
             # cannot silently re-break npm ci) + the meta-gate asserting this
             # ci.yml step set matches scripts/gates.mjs exactly (the manifest is

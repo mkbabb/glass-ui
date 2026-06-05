@@ -13,11 +13,11 @@
 
 // ── Types ───────────────────────────────────────────────────────────────
 
-export interface OklchStop {
-    L: number; // 0..1
-    C: number; // 0..0.4 typical
-    h: number; // 0..360
-}
+// OklchStop is single-sourced in the `/color` leaf (AU.W5 hoist); imported for
+// local use here AND re-exported so aurora-domain consumers keep importing it
+// from `../presets`.
+import type { OklchStop } from "../../../composables/color";
+export type { OklchStop };
 
 export interface AuroraNucleus {
     /** 0..1 in CSS-top-origin space (0 = top, 1 = bottom). Runtime flips Y. */
