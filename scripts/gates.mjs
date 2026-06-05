@@ -53,6 +53,7 @@ export const GATES = [
     { id: "proof:color-acyclic", cmd: "proof:color-acyclic", tags: ["local", "ci", "release", "sibling"], note: "AU.W5 — the /color leaf graph is a DAG (imports value.js only, no component back-import; value.js/src never imports glass-ui)" },
     { id: "proof:single-color-core", cmd: "proof:single-color-core", tags: ["local", "ci"], note: "AU.W5 — ONE runtime-JS color source (value.js); no glass-ui src re-defines a value.js color primitive; CSS token tier exempt" },
     { id: "proof:frostShader-deleted", cmd: "proof:frostShader-deleted", tags: ["local", "ci"], note: "AU.W6 — the frostShader.ts orphan is DELETED (file-absence + import-graph, NOT a name-grep — the name form is born-green at HEAD)" },
+    { id: "proof:webgl-substrate-single", cmd: "proof:webgl-substrate-single", tags: ["local", "ci"], note: "AU.W6 — ONE webgl2 bootstrap (useWebGLCanvas); the substrate bakes no aurora quad/DPR/uniforms; the 3-reason suspend model + demand-gate + context-restore present; the consumer-#2 usability assert exists" },
     { id: "proof:lockfile", cmd: "proof:lockfile", tags: ["local", "ci", "release"], note: "registry-resolution drift guard" },
     { id: "audit:stash", cmd: "audit:stash", tags: ["ci"] },
 ];

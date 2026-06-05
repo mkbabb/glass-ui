@@ -158,6 +158,13 @@ jobs:
             # unfixed orphan-present state).
             - name: proof:frostShader-deleted
               run: npm run proof:frostShader-deleted
+            # AU.W6 — the useWebGLCanvas substrate (DEC-AT-1). ONE webgl2 bootstrap
+            # shared by aurora + the blob; the substrate bakes none of aurora's
+            # quad/DPR/uniforms (the consumer-#2 assert proves it composes generically);
+            # the 3-reason suspend model + demand-gate + the webglcontextrestored
+            # robustness are present.
+            - name: proof:webgl-substrate-single
+              run: npm run proof:webgl-substrate-single
             # AS.W2 inv-θ — the lockfile registry-resolution drift guard (#177
             # cannot silently re-break npm ci) + the meta-gate asserting this
             # ci.yml step set matches scripts/gates.mjs exactly (the manifest is

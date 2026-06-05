@@ -1,9 +1,15 @@
 /**
- * Aurora v4.1 runtime — port of bundle `runtime.js` to TypeScript.
+ * Aurora v4.1 runtime — composes the `useWebGLCanvas` substrate (AU.W6, the
+ * DEC-AT-1 transposition).
  *
- * Compiles the shader, owns the WebGL2 context and RAF loop, translates a
- * reactive `AuroraConfig` into uniforms, and exposes an imperative cursor API
- * plus a side-effect-safe `renderAt(t)` method for capture baking.
+ * This module owns ONLY the aurora-specific concerns: compiling the shader,
+ * translating a reactive `AuroraConfig` into uniforms, the eased cursor model,
+ * the reduced-motion frozen-t, and the DPR policy. The generic WebGL2 lifecycle
+ * — context creation, the three-reason suspend/resume model, the demand-driven
+ * rAF loop, the tab-visibility owner, the ResizeObserver, and the
+ * webglcontextlost/restored robustness — lives in the substrate; this runtime
+ * threads its aurora-specific behaviour through the substrate's `setup`/`frame`/
+ * `shouldContinue`/`resize`/`time`/`teardown` callbacks.
  *
  * Y-origin convention: config authoring is CSS-top-origin (0 = top). The
  * runtime flips Y at the uniform boundary (see AUTHOR_Y_ORIGIN_IS_TOP marks).
@@ -12,6 +18,7 @@
 import { VERTEX_SRC } from "../shaders/aurora.vert";
 import { FRAGMENT_SRC } from "../shaders/aurora.frag";
 import { flattenPalette } from "./color";
+import { createWebGLCanvas } from "../../../../composables/glass/webgl/useWebGLCanvas";
 import {
     MAX_NUCLEI,
     MAX_STOPS,
@@ -48,13 +55,13 @@ const CURSOR_REST_EPSILON = 1e-3;
 export type AuroraRuntimeMode = "live" | "capture";
 
 /**
- * The three independent reasons the RAF loop may be suspended. The runtime
- * tracks them in a `Set<SuspendReason>` rather than one boolean, so the loop
- * runs IFF the set is empty and each reason is cleared ONLY by the source that
- * set it. This makes resume-while-still-suspended structurally unreachable — a
- * `resume("tab-hidden")` cannot lift an `"off-screen"` suspension.
+ * The three independent reasons the rAF loop may be suspended. Now owned by the
+ * `useWebGLCanvas` substrate as a `Set<reason>`: the loop runs IFF the set is
+ * empty and each reason is cleared ONLY by the source that set it. This makes
+ * resume-while-still-suspended structurally unreachable — a `resume("tab-hidden")`
+ * cannot lift an `"off-screen"` suspension.
  *
- * - `"tab-hidden"` — the runtime's own `document.visibilitychange` owner.
+ * - `"tab-hidden"` — the substrate's `document.visibilitychange` owner.
  * - `"off-screen"` — viewport-intersection, driven by `useIntersectionPause`.
  * - `"manual"` — the public `pause()`/`resume()` API (and capture-mode seed).
  */
@@ -180,65 +187,17 @@ export function createAurora(
 ): AuroraRuntime {
     const preserveDrawingBuffer = shouldPreserveDrawingBuffer(options);
 
-    // ── Pre-arm state ───────────────────────────────────────────────────
-    // These survive the cheap-construction → arm() split: they hold cursor /
-    // config / motion intent the consumer may set BEFORE the GL path arms.
-    // arm() folds them into the live runtime; until then the imperative
-    // setters mutate them harmlessly and arm() picks up the latest values.
+    // ── Aurora-specific state — survives the cheap-construction → arm() split.
+    // These hold cursor / config / motion intent the consumer may set BEFORE
+    // the GL path arms. The substrate's `setup(gl)` folds them into the live
+    // program (via `setConfig`); until then the imperative setters mutate them
+    // harmlessly and `setup` picks up the latest values.
     let config: AuroraConfig = initial;
-    // The loop runs IFF this set is empty. A capture runtime pre-seeds
-    // `"manual"` so it never auto-runs — exactly the old `running = false` for
-    // capture; a live runtime starts empty (the old `running = true`).
-    const suspended = new Set<SuspendReason>();
-    if (options.mode === "capture") suspended.add("manual");
-    const isRunning = (): boolean => suspended.size === 0;
     let reducedMotion =
         typeof window !== "undefined" && window.matchMedia
             ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
             : false;
-    let startTime = performance.now();
     const frozenOffset = 3.7;
-
-    // ── RAF + run-gate plumbing, hoisted out of arm() ───────────────────
-    // `raf` is the live RAF handle; `tickFn` is arm()'s `tick`, assigned once
-    // armed. suspend()/resume() refcount the set and toggle the loop on the
-    // empty↔non-empty transition ONLY. Before arm() they mutate the set and
-    // cancel a (zero) RAF harmlessly; arm() then honors `isRunning()`.
-    let raf = 0;
-    let tickFn: (() => void) | null = null;
-
-    function suspend(reason: SuspendReason): void {
-        const wasRunning = isRunning();
-        suspended.add(reason);
-        if (wasRunning && !isRunning()) {
-            cancelAnimationFrame(raf);
-            raf = 0;
-        }
-    }
-
-    function resume(reason: SuspendReason): void {
-        const wasSuspended = !isRunning();
-        suspended.delete(reason);
-        if (wasSuspended && isRunning() && tickFn) {
-            // Skip the gap the loop was parked across so motion does not jump.
-            startTime = performance.now() - 1000;
-            tickFn();
-        }
-    }
-
-    // Tab-visibility owner — ONE writer of `"tab-hidden"`. Lifted to the
-    // runtime level (not inside arm()) so every consumer — eager, capture-
-    // then-live, always-on-screen — gets a tab-hidden pause. Because it keys
-    // ONLY on `"tab-hidden"` and never touches `"off-screen"`, a tab-show can
-    // never clear an off-screen suspension (the resume-while-off-screen seam).
-    const hasDocument = typeof document !== "undefined";
-    function onVisibilityChange() {
-        if (document.hidden) suspend("tab-hidden");
-        else resume("tab-hidden");
-    }
-    if (hasDocument) {
-        document.addEventListener("visibilitychange", onVisibilityChange);
-    }
 
     // Cursor state — x/y in 0..1, eased. `strength` ramps in; `targetStrength` decays.
     const cursor = {
@@ -251,357 +210,309 @@ export function createAurora(
         radius: 0.25,
     };
 
-    // ── Armed GL state — null until arm() runs ──────────────────────────
-    // Populated by arm(); the post-arm draw closures (`drawFrame`, `tick`,
-    // `dispose`) and `setConfig` close over it. Before arm the imperative
-    // API degrades to pre-arm-state mutation only.
-    let armed: {
-        readonly setConfig: (cfg: AuroraConfig) => void;
-        readonly renderAt: (timeSec: number) => void;
-        readonly wake: () => void;
-        readonly dispose: () => void;
-    } | null = null;
-    let disposedBeforeArm = false;
+    // `setConfig` is (re)assigned by `setup(gl)`; before the first arm (and
+    // across a context-loss/restore window) it is null and `update()` only
+    // stashes `config` for the next `setup` to upload.
+    let setConfig: ((cfg: AuroraConfig) => void) | null = null;
 
-    function setCursor(x: number, y: number, strength: number = 0.8) {
-        cursor.targetX = x;
-        cursor.targetY = y;
-        cursor.targetStrength = strength;
-        // A pointer move re-introduces cursor easing — re-arm a parked loop.
-        armed?.wake();
-    }
-    function clearCursor() {
-        cursor.targetStrength = 0;
-        // The decay-to-rest still needs frames to animate out — re-arm.
-        armed?.wake();
-    }
-    function setCursorRadius(r: number) {
-        cursor.radius = r;
-        // Radius shift is visible iff the cursor is active; wake so the change
-        // is drawn (the loop re-parks immediately if the cursor is at rest).
-        armed?.wake();
-    }
-    function setReducedMotion(flag: boolean) {
-        reducedMotion = flag;
-        // reduced→full restarts drift; full→reduced must draw one last static
-        // frame then park. Either way the loop must run at least one more tick.
-        armed?.wake();
-    }
-
-    /**
-     * Run the expensive WebGL init: create the WebGL2 context, compile +
-     * GPU-link the shader, allocate geometry + the uniform cache, upload the
-     * first config, and (for non-capture runtimes) arm the rAF loop.
-     *
-     * Idempotent — a second call is a no-op. Throws on WebGL2/shader-compile/
-     * link failure exactly as the pre-lazy-arm `createAurora` did (O
-     * invariant 24); on the eager path the throw propagates synchronously out
-     * of `createAurora`, on the deferred path out of this `arm()` call.
-     */
-    function arm(): void {
-        if (armed || disposedBeforeArm) return;
-
-        const gl = canvas.getContext("webgl2", {
+    const canvasHandle = createWebGLCanvas(canvas, {
+        mode: options.mode === "capture" ? "capture" : "live",
+        contextAttrs: {
             antialias: false,
             alpha: true,
             premultipliedAlpha: true,
             // Live canvases default false; capture/thumbnail runtimes opt in
             // for readPixels/toDataURL after a deterministic renderAt() draw.
             preserveDrawingBuffer,
-        });
-        if (!gl) throw new Error("[Aurora] WebGL2 unavailable");
+        },
+        // Build the program + geometry + uniform cache on a fresh context. The
+        // substrate calls this on arm() AND on every webglcontextrestored, so a
+        // GPU context loss self-heals — the closures below close over the fresh
+        // `gl`/`prog`/`U` each time.
+        setup: (gl) => {
+            const vs = compile(gl, gl.VERTEX_SHADER, VERTEX_SRC);
+            const fs = compile(gl, gl.FRAGMENT_SHADER, FRAGMENT_SRC);
+            const prog = link(gl, vs, fs);
+            gl.useProgram(prog);
 
-        const vs = compile(gl, gl.VERTEX_SHADER, VERTEX_SRC);
-        const fs = compile(gl, gl.FRAGMENT_SHADER, FRAGMENT_SRC);
-        const prog = link(gl, vs, fs);
-        gl.useProgram(prog);
+            // Full-screen triangle: covers the viewport with one draw.
+            const vao = gl.createVertexArray()!;
+            gl.bindVertexArray(vao);
+            const buf = gl.createBuffer()!;
+            gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+            gl.bufferData(
+                gl.ARRAY_BUFFER,
+                new Float32Array([-1, -1, 3, -1, -1, 3]),
+                gl.STATIC_DRAW,
+            );
+            const aPos = gl.getAttribLocation(prog, "aPos");
+            gl.enableVertexAttribArray(aPos);
+            gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
 
-        // Full-screen triangle: covers the viewport with one draw.
-        const vao = gl.createVertexArray()!;
-        gl.bindVertexArray(vao);
-        const buf = gl.createBuffer()!;
-        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-        gl.bufferData(
-            gl.ARRAY_BUFFER,
-            new Float32Array([-1, -1, 3, -1, -1, 3]),
-            gl.STATIC_DRAW,
-        );
-        const aPos = gl.getAttribLocation(prog, "aPos");
-        gl.enableVertexAttribArray(aPos);
-        gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+            // Uniform location cache
+            const U = {} as Record<UniformName, WebGLUniformLocation | null>;
+            for (const n of UNIFORM_NAMES) U[n] = gl.getUniformLocation(prog, n);
 
-        // Uniform location cache
-        const U = {} as Record<UniformName, WebGLUniformLocation | null>;
-        for (const n of UNIFORM_NAMES) U[n] = gl.getUniformLocation(prog, n);
-
-        function resize() {
-            const dpr = Math.min(window.devicePixelRatio || 1, 2);
-            const cw = canvas.clientWidth || canvas.parentElement?.clientWidth || 1;
-            const ch = canvas.clientHeight || canvas.parentElement?.clientHeight || 1;
-            const w = Math.max(1, Math.floor(cw * dpr));
-            const h = Math.max(1, Math.floor(ch * dpr));
-            canvas.width = w;
-            canvas.height = h;
-            gl!.viewport(0, 0, w, h);
-            gl!.useProgram(prog);
-        }
-
-        const ro = new ResizeObserver(() => resize());
-        ro.observe(canvas);
-        // Belt and suspenders — initial layout can race the first frame.
-        requestAnimationFrame(() => {
-            resize();
-            requestAnimationFrame(resize);
-        });
-
-        // Pre-allocated upload buffers — filled in place inside setConfig() so a
-        // slider drag does not allocate ~8 Float32Arrays per frame. Sized to the
-        // shader's MAX_NUCLEI / MAX_STOPS arrays; spare slots are uploaded but
-        // ignored thanks to uNucleiCount / uStopCount gates in the shader.
-        const ub = {
-            palette: new Float32Array(MAX_STOPS * 3),
-            pos: new Float32Array(MAX_NUCLEI * 2),
-            rad: new Float32Array(MAX_NUCLEI),
-            pb: new Float32Array(MAX_NUCLEI),
-            vb: new Float32Array(MAX_NUCLEI),
-            dr: new Float32Array(MAX_NUCLEI),
-            dp: new Float32Array(MAX_NUCLEI),
-            elong: new Float32Array(MAX_NUCLEI),
-            angle: new Float32Array(MAX_NUCLEI),
-        };
-
-        function setConfig(cfg: AuroraConfig) {
-            config = cfg;
-            gl!.useProgram(prog);
-
-            // Palette — fill in place. flattenPalette writes into `ub.palette`.
-            flattenPalette(cfg.palette, MAX_STOPS, ub.palette);
-            gl!.uniform3fv(U.uPalette, ub.palette);
-            gl!.uniform1i(U.uStopCount, Math.min(cfg.palette.length, MAX_STOPS));
-
-            // Nuclei
-            const n = Math.min(cfg.nuclei.length, MAX_NUCLEI);
-            gl!.uniform1i(U.uNucleiCount, n);
-            for (let i = 0; i < n; i++) {
-                const nu = cfg.nuclei[i]!;
-                ub.pos[i * 2 + 0] = nu.x;
-                // AUTHOR_Y_ORIGIN_IS_TOP — flip to shader's bottom-origin.
-                ub.pos[i * 2 + 1] = 1.0 - nu.y;
-                ub.rad[i] = nu.radius;
-                ub.pb[i] = nu.paletteBias;
-                ub.vb[i] = nu.valueBias;
-                ub.dr[i] = nu.driftRadius;
-                ub.dp[i] = nu.driftPhase;
-                ub.elong[i] = nu.elongation ?? 1.0;
-                // AUTHOR_Y_ORIGIN_IS_TOP — top-origin angles invert relative to
-                // bottom-origin shader space.
-                ub.angle[i] = (-(nu.angle ?? 0) * Math.PI) / 180;
+            function resize() {
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                const cw = canvas.clientWidth || canvas.parentElement?.clientWidth || 1;
+                const ch = canvas.clientHeight || canvas.parentElement?.clientHeight || 1;
+                const w = Math.max(1, Math.floor(cw * dpr));
+                const h = Math.max(1, Math.floor(ch * dpr));
+                canvas.width = w;
+                canvas.height = h;
+                gl.viewport(0, 0, w, h);
+                gl.useProgram(prog);
             }
-            // Spare slots: zero-out so old values from a longer prior config don't
-            // bleed into the per-iteration loop (gated by uNucleiCount, but cheap
-            // to defend).
-            for (let i = n; i < MAX_NUCLEI; i++) {
-                ub.pos[i * 2 + 0] = 0;
-                ub.pos[i * 2 + 1] = 0;
-                ub.rad[i] = 0;
-                ub.pb[i] = 0;
-                ub.vb[i] = 0;
-                ub.dr[i] = 0;
-                ub.dp[i] = 0;
-                ub.elong[i] = 1.0;
-                ub.angle[i] = 0;
+
+            // Pre-allocated upload buffers — filled in place inside setConfig() so a
+            // slider drag does not allocate ~8 Float32Arrays per frame. Sized to the
+            // shader's MAX_NUCLEI / MAX_STOPS arrays; spare slots are uploaded but
+            // ignored thanks to uNucleiCount / uStopCount gates in the shader.
+            const ub = {
+                palette: new Float32Array(MAX_STOPS * 3),
+                pos: new Float32Array(MAX_NUCLEI * 2),
+                rad: new Float32Array(MAX_NUCLEI),
+                pb: new Float32Array(MAX_NUCLEI),
+                vb: new Float32Array(MAX_NUCLEI),
+                dr: new Float32Array(MAX_NUCLEI),
+                dp: new Float32Array(MAX_NUCLEI),
+                elong: new Float32Array(MAX_NUCLEI),
+                angle: new Float32Array(MAX_NUCLEI),
+            };
+
+            function uploadConfig(cfg: AuroraConfig) {
+                config = cfg;
+                gl.useProgram(prog);
+
+                // Palette — fill in place. flattenPalette writes into `ub.palette`.
+                flattenPalette(cfg.palette, MAX_STOPS, ub.palette);
+                gl.uniform3fv(U.uPalette, ub.palette);
+                gl.uniform1i(U.uStopCount, Math.min(cfg.palette.length, MAX_STOPS));
+
+                // Nuclei
+                const n = Math.min(cfg.nuclei.length, MAX_NUCLEI);
+                gl.uniform1i(U.uNucleiCount, n);
+                for (let i = 0; i < n; i++) {
+                    const nu = cfg.nuclei[i]!;
+                    ub.pos[i * 2 + 0] = nu.x;
+                    // AUTHOR_Y_ORIGIN_IS_TOP — flip to shader's bottom-origin.
+                    ub.pos[i * 2 + 1] = 1.0 - nu.y;
+                    ub.rad[i] = nu.radius;
+                    ub.pb[i] = nu.paletteBias;
+                    ub.vb[i] = nu.valueBias;
+                    ub.dr[i] = nu.driftRadius;
+                    ub.dp[i] = nu.driftPhase;
+                    ub.elong[i] = nu.elongation ?? 1.0;
+                    // AUTHOR_Y_ORIGIN_IS_TOP — top-origin angles invert relative to
+                    // bottom-origin shader space.
+                    ub.angle[i] = (-(nu.angle ?? 0) * Math.PI) / 180;
+                }
+                // Spare slots: zero-out so old values from a longer prior config don't
+                // bleed into the per-iteration loop (gated by uNucleiCount, but cheap
+                // to defend).
+                for (let i = n; i < MAX_NUCLEI; i++) {
+                    ub.pos[i * 2 + 0] = 0;
+                    ub.pos[i * 2 + 1] = 0;
+                    ub.rad[i] = 0;
+                    ub.pb[i] = 0;
+                    ub.vb[i] = 0;
+                    ub.dr[i] = 0;
+                    ub.dp[i] = 0;
+                    ub.elong[i] = 1.0;
+                    ub.angle[i] = 0;
+                }
+                gl.uniform2fv(U.uNucleiPos, ub.pos);
+                gl.uniform1fv(U.uNucleiRadius, ub.rad);
+                gl.uniform1fv(U.uNucleiPaletteBias, ub.pb);
+                gl.uniform1fv(U.uNucleiValueBias, ub.vb);
+                gl.uniform1fv(U.uNucleiDriftRadius, ub.dr);
+                gl.uniform1fv(U.uNucleiDriftPhase, ub.dp);
+                gl.uniform1fv(U.uNucleiElong, ub.elong);
+                gl.uniform1fv(U.uNucleiAngle, ub.angle);
+                gl.uniform1f(U.uSoftmaxBeta, cfg.softmaxBeta);
+                gl.uniform1f(U.uValueVariance, cfg.valueVariance);
+
+                // Warp
+                gl.uniform1f(U.uWarpAmount, cfg.warpAmount);
+                gl.uniform1f(U.uWarpScale, cfg.warpScale);
+                gl.uniform1f(U.uWarpDrift, cfg.warpDrift);
+                gl.uniform1i(U.uWarpMode, WARP_ID[cfg.warpMode]);
+                gl.uniform1i(U.uNoiseOctaves, cfg.noiseOctaves);
+
+                // Medium
+                gl.uniform1i(U.uMedium, MEDIUM_ID[cfg.medium]);
+                gl.uniform1i(U.uFlowPattern, FLOW_ID[cfg.flow.pattern]);
+                // AUTHOR_Y_ORIGIN_IS_TOP
+                gl.uniform2f(U.uFlowFocal, cfg.flow.focalX, 1.0 - cfg.flow.focalY);
+                gl.uniform1f(U.uFlowAngle, cfg.flow.angle);
+                gl.uniform1f(U.uFlowCurl, cfg.flow.curl);
+                // Cursor uniforms are re-sent every frame in frame(); initialise once here.
+                // AUTHOR_Y_ORIGIN_IS_TOP
+                gl.uniform2f(U.uCursor, cursor.x, 1.0 - cursor.y);
+                gl.uniform1f(U.uCursorStrength, cursor.strength);
+                gl.uniform1f(U.uCursorRadius, cursor.radius);
+                gl.uniform1f(U.uStrokeAmount, cfg.strokeAmount);
+                gl.uniform1f(U.uStrokeScale, cfg.strokeScale);
+                gl.uniform1f(U.uStrokeAnisotropy, cfg.strokeAnisotropy);
+                gl.uniform1i(U.uStrokeLayers, cfg.strokeLayers);
+                gl.uniform1i(U.uStrokeMode, STROKE_MODE_ID[cfg.strokeMode]);
+                gl.uniform1f(U.uWetEdge, cfg.wetEdge);
+                gl.uniform1f(U.uGranulation, cfg.granulation);
+                gl.uniform1f(U.uImpasto, cfg.impasto);
+                gl.uniform1f(U.uBrokenColor, cfg.brokenColor);
+                gl.uniform1f(U.uCanvasGrain, cfg.canvasGrain);
+
+                // Motion
+                gl.uniform1f(U.uNucleiDrift, cfg.nucleiDrift);
+                gl.uniform1f(U.uPaletteDrift, cfg.paletteDrift);
+                gl.uniform1f(U.uBreathDepth, cfg.breathDepth);
+                gl.uniform1f(U.uBreathPeriod, cfg.breathPeriod);
+
+                // Output
+                gl.uniform1f(U.uSaturation, cfg.saturation);
+                gl.uniform1f(U.uPaperGrain, cfg.paperGrain);
+                gl.uniform1f(U.uAlpha, cfg.alpha);
             }
-            gl!.uniform2fv(U.uNucleiPos, ub.pos);
-            gl!.uniform1fv(U.uNucleiRadius, ub.rad);
-            gl!.uniform1fv(U.uNucleiPaletteBias, ub.pb);
-            gl!.uniform1fv(U.uNucleiValueBias, ub.vb);
-            gl!.uniform1fv(U.uNucleiDriftRadius, ub.dr);
-            gl!.uniform1fv(U.uNucleiDriftPhase, ub.dp);
-            gl!.uniform1fv(U.uNucleiElong, ub.elong);
-            gl!.uniform1fv(U.uNucleiAngle, ub.angle);
-            gl!.uniform1f(U.uSoftmaxBeta, cfg.softmaxBeta);
-            gl!.uniform1f(U.uValueVariance, cfg.valueVariance);
 
-            // Warp
-            gl!.uniform1f(U.uWarpAmount, cfg.warpAmount);
-            gl!.uniform1f(U.uWarpScale, cfg.warpScale);
-            gl!.uniform1f(U.uWarpDrift, cfg.warpDrift);
-            gl!.uniform1i(U.uWarpMode, WARP_ID[cfg.warpMode]);
-            gl!.uniform1i(U.uNoiseOctaves, cfg.noiseOctaves);
+            function advanceCursor() {
+                // Cursor easing — snappy approach, gentle decay when idle. Constants
+                // live at module scope; see DESIGN.md §4.
+                cursor.x += (cursor.targetX - cursor.x) * CURSOR_POS_LERP;
+                cursor.y += (cursor.targetY - cursor.y) * CURSOR_POS_LERP;
+                cursor.strength +=
+                    (cursor.targetStrength - cursor.strength) * CURSOR_STRENGTH_LERP;
+                cursor.targetStrength *= CURSOR_DECAY_PER_FRAME;
+            }
 
-            // Medium
-            gl!.uniform1i(U.uMedium, MEDIUM_ID[cfg.medium]);
-            gl!.uniform1i(U.uFlowPattern, FLOW_ID[cfg.flow.pattern]);
-            // AUTHOR_Y_ORIGIN_IS_TOP
-            gl!.uniform2f(U.uFlowFocal, cfg.flow.focalX, 1.0 - cfg.flow.focalY);
-            gl!.uniform1f(U.uFlowAngle, cfg.flow.angle);
-            gl!.uniform1f(U.uFlowCurl, cfg.flow.curl);
-            // Cursor uniforms are re-sent every frame in tick(); initialise once here.
-            // AUTHOR_Y_ORIGIN_IS_TOP
-            gl!.uniform2f(U.uCursor, cursor.x, 1.0 - cursor.y);
-            gl!.uniform1f(U.uCursorStrength, cursor.strength);
-            gl!.uniform1f(U.uCursorRadius, cursor.radius);
-            gl!.uniform1f(U.uStrokeAmount, cfg.strokeAmount);
-            gl!.uniform1f(U.uStrokeScale, cfg.strokeScale);
-            gl!.uniform1f(U.uStrokeAnisotropy, cfg.strokeAnisotropy);
-            gl!.uniform1i(U.uStrokeLayers, cfg.strokeLayers);
-            gl!.uniform1i(U.uStrokeMode, STROKE_MODE_ID[cfg.strokeMode]);
-            gl!.uniform1f(U.uWetEdge, cfg.wetEdge);
-            gl!.uniform1f(U.uGranulation, cfg.granulation);
-            gl!.uniform1f(U.uImpasto, cfg.impasto);
-            gl!.uniform1f(U.uBrokenColor, cfg.brokenColor);
-            gl!.uniform1f(U.uCanvasGrain, cfg.canvasGrain);
+            function drawFrame(timeSec: number) {
+                gl.useProgram(prog);
+                // AUTHOR_Y_ORIGIN_IS_TOP
+                gl.uniform2f(U.uCursor, cursor.x, 1.0 - cursor.y);
+                gl.uniform1f(U.uCursorStrength, cursor.strength);
+                gl.uniform1f(U.uCursorRadius, cursor.radius);
+                gl.uniform1f(U.uTime, timeSec);
+                gl.clear(gl.COLOR_BUFFER_BIT);
+                gl.drawArrays(gl.TRIANGLES, 0, 3);
+            }
 
-            // Motion
-            gl!.uniform1f(U.uNucleiDrift, cfg.nucleiDrift);
-            gl!.uniform1f(U.uPaletteDrift, cfg.paletteDrift);
-            gl!.uniform1f(U.uBreathDepth, cfg.breathDepth);
-            gl!.uniform1f(U.uBreathPeriod, cfg.breathPeriod);
+            /**
+             * Demand-driven gate: is there live motion to render on the next frame?
+             *
+             * - `false` under reduced-motion — the static frame is drawn once, then
+             *   the loop parks (no perpetual re-rasterization of a byte-identical
+             *   frame).
+             * - `false` at steady-state — all four motion-drift uniforms are 0 AND
+             *   the cursor has settled within ε (eased position at target, strength
+             *   decayed out). The next frame would be pixel-identical, so park.
+             * - `true` otherwise — drift is live or the cursor is still easing.
+             */
+            function needsAnimation(): boolean {
+                if (reducedMotion) return false;
+                const driftLive =
+                    config.nucleiDrift !== 0 ||
+                    config.paletteDrift !== 0 ||
+                    config.breathDepth !== 0 ||
+                    config.warpDrift !== 0;
+                if (driftLive) return true;
+                const cursorLive =
+                    cursor.targetStrength > CURSOR_REST_EPSILON ||
+                    cursor.strength > CURSOR_REST_EPSILON ||
+                    Math.abs(cursor.x - cursor.targetX) > CURSOR_REST_EPSILON ||
+                    Math.abs(cursor.y - cursor.targetY) > CURSOR_REST_EPSILON;
+                return cursorLive;
+            }
 
-            // Output
-            gl!.uniform1f(U.uSaturation, cfg.saturation);
-            gl!.uniform1f(U.uPaperGrain, cfg.paperGrain);
-            gl!.uniform1f(U.uAlpha, cfg.alpha);
-        }
+            // GL state setup — clear-to-transparent, premultiplied-alpha blend.
+            gl.clearColor(0, 0, 0, 0);
+            gl.disable(gl.DEPTH_TEST);
+            gl.enable(gl.BLEND);
+            gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 
-        setConfig(config);
-        resize();
+            // Upload the latest config into the fresh program. Publish the
+            // uploader so the imperative `update()` can re-upload post-arm.
+            setConfig = uploadConfig;
+            uploadConfig(config);
 
-        gl.clearColor(0, 0, 0, 0);
-        gl.disable(gl.DEPTH_TEST);
-        gl.enable(gl.BLEND);
-        gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+            // Belt and suspenders — initial layout can race the first frame.
+            // (The substrate calls `resize()` once on build + on every observed
+            // resize; this extra rAF-chained double-resize defends the
+            // first-paint layout race exactly as the pre-substrate runtime did.)
+            requestAnimationFrame(() => {
+                resize();
+                requestAnimationFrame(resize);
+            });
 
-        function advanceCursor() {
-            // Cursor easing — snappy approach, gentle decay when idle. Constants
-            // live at module scope; see DESIGN.md §4.
-            cursor.x += (cursor.targetX - cursor.x) * CURSOR_POS_LERP;
-            cursor.y += (cursor.targetY - cursor.y) * CURSOR_POS_LERP;
-            cursor.strength +=
-                (cursor.targetStrength - cursor.strength) * CURSOR_STRENGTH_LERP;
-            cursor.targetStrength *= CURSOR_DECAY_PER_FRAME;
-        }
+            return {
+                // advance the cursor easing THEN draw — the per-frame step.
+                frame: (timeSec) => {
+                    advanceCursor();
+                    drawFrame(timeSec);
+                },
+                shouldContinue: needsAnimation,
+                resize,
+                // reduced-motion freezes time at the authored offset; otherwise
+                // pass the substrate's elapsed seconds straight through.
+                time: (elapsedSec) => (reducedMotion ? frozenOffset : elapsedSec),
+                teardown: () => {
+                    gl.deleteProgram(prog);
+                    gl.deleteShader(vs);
+                    gl.deleteShader(fs);
+                    gl.deleteBuffer(buf);
+                    gl.deleteVertexArray(vao);
+                    // The WEBGL_lose_context release is the substrate's job.
+                },
+            };
+        },
+    });
 
-        function drawFrame(timeSec: number) {
-            gl!.useProgram(prog);
-            // AUTHOR_Y_ORIGIN_IS_TOP
-            gl!.uniform2f(U.uCursor, cursor.x, 1.0 - cursor.y);
-            gl!.uniform1f(U.uCursorStrength, cursor.strength);
-            gl!.uniform1f(U.uCursorRadius, cursor.radius);
-            gl!.uniform1f(U.uTime, timeSec);
-            gl!.clear(gl!.COLOR_BUFFER_BIT);
-            gl!.drawArrays(gl!.TRIANGLES, 0, 3);
-        }
-
-        /**
-         * Demand-driven gate: is there live motion to render on the next frame?
-         *
-         * - `false` under reduced-motion — the static frame is drawn once, then
-         *   the loop parks (no perpetual re-rasterization of a byte-identical
-         *   frame).
-         * - `false` at steady-state — all four motion-drift uniforms are 0 AND
-         *   the cursor has settled within ε (eased position at target, strength
-         *   decayed out). The next frame would be pixel-identical, so park.
-         * - `true` otherwise — drift is live or the cursor is still easing.
-         */
-        function needsAnimation(): boolean {
-            if (reducedMotion) return false;
-            const driftLive =
-                config.nucleiDrift !== 0 ||
-                config.paletteDrift !== 0 ||
-                config.breathDepth !== 0 ||
-                config.warpDrift !== 0;
-            if (driftLive) return true;
-            const cursorLive =
-                cursor.targetStrength > CURSOR_REST_EPSILON ||
-                cursor.strength > CURSOR_REST_EPSILON ||
-                Math.abs(cursor.x - cursor.targetX) > CURSOR_REST_EPSILON ||
-                Math.abs(cursor.y - cursor.targetY) > CURSOR_REST_EPSILON;
-            return cursorLive;
-        }
-
-        function tick() {
-            if (!isRunning()) return;
-            const t = reducedMotion
-                ? frozenOffset
-                : (performance.now() - startTime) / 1000;
-            advanceCursor();
-            drawFrame(t);
-            // Reschedule ONLY while motion is live. At steady-state this draws
-            // the final settled frame once and lets `raf` go to 0 (parked) —
-            // no perpetual 60fps compositor cost. `wake()` re-arms on demand.
-            raf = needsAnimation() ? requestAnimationFrame(tick) : 0;
-        }
-        // Publish tick to the hoisted run-gate so suspend()/resume() can drive
-        // it, then arm the loop iff no suspend reason is held.
-        tickFn = tick;
-        if (isRunning()) raf = requestAnimationFrame(tick);
-
-        /**
-         * Re-arm a parked loop. A setter that re-introduces motion (cursor
-         * move, config drift raise, reduced-motion toggle) calls this so the
-         * canvas resumes immediately. No-op while suspended (set non-empty) or
-         * already scheduled (`raf` non-zero), so it never double-schedules.
-         */
-        function wake() {
-            if (isRunning() && !raf) raf = requestAnimationFrame(tick);
-        }
-
-        function renderAt(timeSec: number) {
-            drawFrame(timeSec);
-        }
-
-        function dispose() {
-            cancelAnimationFrame(raf);
-            raf = 0;
-            tickFn = null;
-            ro.disconnect();
-            gl!.deleteProgram(prog);
-            gl!.deleteShader(vs);
-            gl!.deleteShader(fs);
-            gl!.deleteBuffer(buf);
-            gl!.deleteVertexArray(vao);
-            // Force context release so the browser reclaims it under the
-            // per-page WebGL-context cap (~8 in Chromium).
-            const ext = gl!.getExtension("WEBGL_lose_context");
-            if (ext) ext.loseContext();
-        }
-
-        // Publish the armed GL closures. From here on the outer imperative
-        // API delegates through `armed`; the pre-arm setters above have
-        // already mutated `config` / `cursor` / the suspend set and arm()
-        // consumed the latest values via `setConfig(config)` + the
-        // `isRunning()` arm gate.
-        armed = { setConfig, renderAt, wake, dispose };
+    function setCursor(x: number, y: number, strength: number = 0.8) {
+        cursor.targetX = x;
+        cursor.targetY = y;
+        cursor.targetStrength = strength;
+        // A pointer move re-introduces cursor easing — re-arm a parked loop.
+        canvasHandle.wake();
+    }
+    function clearCursor() {
+        cursor.targetStrength = 0;
+        // The decay-to-rest still needs frames to animate out — re-arm.
+        canvasHandle.wake();
+    }
+    function setCursorRadius(r: number) {
+        cursor.radius = r;
+        // Radius shift is visible iff the cursor is active; wake so the change
+        // is drawn (the loop re-parks immediately if the cursor is at rest).
+        canvasHandle.wake();
+    }
+    function setReducedMotion(flag: boolean) {
+        reducedMotion = flag;
+        // reduced→full restarts drift; full→reduced must draw one last static
+        // frame then park. Either way the loop must run at least one more tick.
+        canvasHandle.wake();
     }
 
-    // Common teardown for the runtime-level seams (the tab-visibility listener
-    // + the suspend set). Runs on every dispose path — armed OR disposed-
-    // before-arm — so the lifted listener never leaks.
-    function teardownRuntime(): void {
-        if (hasDocument) {
-            document.removeEventListener("visibilitychange", onVisibilityChange);
-        }
-        suspended.clear();
+    // The expensive path runs now (eager / capture) or is invoked later by the
+    // consumer (`useAurora` schedules it past first paint). Capture mode already
+    // armed inside the substrate; the eager-live path arms here. On either eager
+    // path a WebGL2/compile/link failure throws straight out of `createAurora`,
+    // exactly as a pre-lazy-arm runtime did (O invariant 24); the deferred path
+    // throws from `arm()`.
+    if (options.mode !== "capture" && shouldInitEagerly(options)) {
+        canvasHandle.arm();
     }
-
-    // The expensive path runs now (eager / capture) or is invoked later by
-    // the consumer (`useAurora` schedules it past first paint). On the eager
-    // path a WebGL2/compile/link failure throws straight out of createAurora,
-    // exactly as a pre-lazy-arm runtime did (O invariant 24).
-    if (shouldInitEagerly(options)) arm();
 
     return {
-        arm,
+        arm: () => canvasHandle.arm(),
         update: (cfg) => {
-            // Pre-arm: stash the config so arm() uploads the latest. Post-arm:
-            // upload immediately. Either way the next drawn frame is correct.
+            // Pre-arm: stash the config so the next `setup` uploads the latest.
+            // Post-arm: upload immediately. Either way the next drawn frame is
+            // correct.
             config = cfg;
-            armed?.setConfig(cfg);
+            setConfig?.(cfg);
             // A config change may raise a drift uniform (slider drag) — re-arm
             // a parked loop so the new motion is rendered. wake() re-parks
             // immediately if the new config is still steady-state.
-            armed?.wake();
+            canvasHandle.wake();
         },
         setCursor,
         clearCursor,
@@ -609,25 +520,11 @@ export function createAurora(
         setReducedMotion,
         // Public pause/resume key on the `"manual"` reason by default. The Vue
         // wrapper passes `"off-screen"` for the intersection seam so the two
-        // sources never alias. suspend()/resume() are runtime-level and work
-        // pre- AND post-arm: before arm() they only mutate the set (which arm()
-        // then honors via the `isRunning()` gate); after arm() they toggle the
-        // live RAF on the empty↔non-empty transition.
-        pause: (reason: SuspendReason = "manual") => suspend(reason),
-        resume: (reason: SuspendReason = "manual") => resume(reason),
-        renderAt: (t) => armed?.renderAt(t),
-        dispose: () => {
-            if (armed) {
-                armed.dispose();
-            } else {
-                // Disposed before arming — make arm() a permanent no-op so a
-                // late idle-callback can't resurrect a torn-down instance.
-                disposedBeforeArm = true;
-            }
-            // The tab-visibility listener + suspend set are runtime-level, so
-            // tear them down on BOTH paths (the armed dispose() above only
-            // owns GL resources).
-            teardownRuntime();
-        },
+        // sources never alias. Both delegate to the substrate's three-reason
+        // suspend model, which works pre- AND post-arm.
+        pause: (reason: SuspendReason = "manual") => canvasHandle.suspend(reason),
+        resume: (reason: SuspendReason = "manual") => canvasHandle.resume(reason),
+        renderAt: (t) => canvasHandle.renderAt(t),
+        dispose: () => canvasHandle.dispose(),
     };
 }
