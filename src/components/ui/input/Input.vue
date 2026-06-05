@@ -21,7 +21,8 @@ export default { inheritAttrs: false }
 </script>
 
 <script setup lang="ts">
-import type { HTMLAttributes } from 'vue'
+import type { HTMLAttributes, InputHTMLAttributes } from 'vue'
+import { computed } from 'vue'
 import { useVModel } from '@vueuse/core'
 import { cn } from '../../../utils'
 
@@ -29,6 +30,21 @@ const props = defineProps<{
   defaultValue?: string | number
   modelValue?: string | number
   class?: HTMLAttributes['class']
+  // Element-specific <input> attributes typed on the wrapper surface — the
+  // forms-guide §3 matrix the header documents (the rest of the native
+  // attribute set still falls through via `v-bind="$attrs"`).
+  type?: InputHTMLAttributes['type']
+  placeholder?: InputHTMLAttributes['placeholder']
+  disabled?: InputHTMLAttributes['disabled']
+  required?: InputHTMLAttributes['required']
+  inputmode?: InputHTMLAttributes['inputmode']
+  // `autocomplete` is typed as `string` rather than the full token union — the
+  // union is large enough to overflow TS's representable-union budget (TS2590)
+  // when widened into the forwarded `elementAttrs` literal.
+  autocomplete?: string
+  pattern?: InputHTMLAttributes['pattern']
+  name?: InputHTMLAttributes['name']
+  readonly?: InputHTMLAttributes['readonly']
 }>()
 
 const emits = defineEmits<{
@@ -39,8 +55,21 @@ const modelValue = useVModel(props, 'modelValue', emits, {
   passive: true,
   defaultValue: props.defaultValue,
 })
+
+// Declared props are extracted from `$attrs`, so forward them explicitly.
+const elementAttrs = computed(() => ({
+  type: props.type,
+  placeholder: props.placeholder,
+  disabled: props.disabled,
+  required: props.required,
+  inputmode: props.inputmode,
+  autocomplete: props.autocomplete,
+  pattern: props.pattern,
+  name: props.name,
+  readonly: props.readonly,
+}))
 </script>
 
 <template>
-  <input v-model="modelValue" v-bind="$attrs" :class="cn('input-pill text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium', props.class)">
+  <input v-model="modelValue" v-bind="{ ...$attrs, ...elementAttrs }" :class="cn('input-pill text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium', props.class)">
 </template>

@@ -8,20 +8,25 @@
 //
 // CSS custom properties don't fire change events on the platform — there's no
 // MutationObserver hook on resolved property values. The reactive seam lives
-// at the cascade root: dark-mode flips the `<html>.dark` class, which the
-// `useGlobalDark` global state already tracks. We re-resolve when that ref
-// flips, plus on a one-shot resolve at scope creation. Consumers that need
-// a fresh read at an arbitrary moment call `refresh()`.
+// at the cascade root: dark-mode flips the `<html>.dark` class. We observe that
+// class directly (a native `MutationObserver` on `<html>`'s `class` attribute)
+// plus the OS `(prefers-color-scheme: dark)` media query, and re-resolve on
+// either — vueuse-FREE, so `useTokenColor` stays on the curated root barrel (the
+// full `useGlobalDark` machinery is reachable only via the `/dark` subpath; a
+// root-barrel composable must not transitively import `@vueuse/core` — the SCC
+// trap). A one-shot resolve runs at scope creation; consumers that need a fresh
+// read at an arbitrary moment call `refresh()`.
 
 import {
+    getCurrentScope,
     onMounted,
+    onScopeDispose,
     ref,
     toValue,
-    watch,
     type MaybeRefOrGetter,
     type Ref,
 } from "vue";
-import { useGlobalDark } from "../dark";
+import { watch } from "vue";
 
 export interface UseTokenColorOptions {
     /** Element to resolve the property against. Defaults to `<html>`. */
@@ -77,10 +82,27 @@ export function useTokenColor(
     refresh();
     onMounted(refresh);
 
-    // Re-resolve on theme transitions. The dark ref already debounces via
-    // its `disableTransition` knob; we just track its flip.
-    const { isDark } = useGlobalDark();
-    watch(isDark, refresh);
+    // Re-resolve on theme transitions — observe the cascade root directly (the
+    // `.dark` class flip on `<html>` + the OS `prefers-color-scheme` query),
+    // vueuse-free, so this composable stays on the curated root barrel.
+    if (typeof document !== "undefined") {
+        const observer = new MutationObserver(refresh);
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ["class"],
+        });
+        const mq =
+            typeof window !== "undefined" && window.matchMedia
+                ? window.matchMedia("(prefers-color-scheme: dark)")
+                : null;
+        mq?.addEventListener?.("change", refresh);
+        if (getCurrentScope()) {
+            onScopeDispose(() => {
+                observer.disconnect();
+                mq?.removeEventListener?.("change", refresh);
+            });
+        }
+    }
 
     // Track token-name changes (a ref or getter that swaps the property
     // queried — e.g. switching `--accent-warm` ↔ `--accent-cool`).

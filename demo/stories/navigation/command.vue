@@ -58,10 +58,9 @@ function pick(id: string) {
             <div class="mx-auto w-full max-w-lg">
                 <Command
                     v-model="selected"
-                    v-model:search-term="query"
                     class="rounded-[var(--radius-card)] border border-border/50 bg-card/70 shadow-lg backdrop-blur"
                 >
-                    <CommandInput placeholder="Type to search commands, files, settings…" />
+                    <CommandInput v-model="query" placeholder="Type to search commands, files, settings…" />
                     <CommandList class="max-h-80">
                         <CommandEmpty>
                             <div class="flex flex-col items-center gap-2 py-4">

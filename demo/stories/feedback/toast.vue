@@ -128,7 +128,7 @@ function toneFor(id: string): keyof typeof toneClass {
                     <div class="flex items-start gap-3">
                         <component
                             :is="toneIcon[toneFor(t.title ?? '')]"
-                            data-tone-icon
+                            v-bind="{ 'data-tone-icon': '' }"
                             class="mt-0.5 size-5 shrink-0"
                         />
                         <div class="grid gap-1">

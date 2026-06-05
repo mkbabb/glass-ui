@@ -45,6 +45,10 @@ export const GATES = [
     { id: "proof:doc-consistency", cmd: "proof:doc-consistency", tags: ["local", "ci", "release"], note: "AT.W7-dock-c — CLAUDE.md custom-dir + dependency citations resolve at HEAD (doc-rot guard)" },
     { id: "proof:au-w0-reground", cmd: "proof:au-w0-reground", tags: ["local", "ci"], note: "AU.W0 — formalize+re-ground meta-gate (AU.md/PROGRESS.md exist; 3 dock SHAs ancestor-reachable; zero bundle labels survive; W6-dock-b collision re-lettered)" },
     { id: "proof:au-w1-design", cmd: "proof:au-w1-design", tags: ["local", "ci"], note: "AU.W1 — design-slice meta-gate (3 slices cite AT.W1 origin + HEAD delta; the W1c registry enumerates the full AU gate fleet with greening waves)" },
+    { id: "proof:strict-templates", cmd: "proof:strict-templates", tags: ["local", "ci"], note: "AU.W3 KEYSTONE — checkUnknownProps:true across the 3 tsconfigs; <GlassDock bogus-prop> is a RED typecheck (the silent-no-op closer); zero @ts-expect-error suppressions" },
+    { id: "proof:peer-optional", cmd: "proof:peer-optional", tags: ["local", "ci", "release"], note: "AU.W3 — peer optionality is a derived fact of the root bundle (optional IFF absent from dist/glass-ui.js & not core-substrate); the dead optionalPeerDependencies field deleted" },
+    { id: "proof:vueuse-free-root", cmd: "proof:vueuse-free-root", tags: ["local", "ci"], note: "AU.W3 — the root barrel transitively imports no @vueuse/core (SOURCE-graph walk from src/index.ts + DIST-floor grep of glass-ui.js)" },
+    { id: "proof:supportsPostTask-wired", cmd: "proof:supportsPostTask-wired", tags: ["local", "ci"], note: "AU.W3 — supportsPostTask is WIRED (>=1 real caller) or DROPPED — no exported orphan (P3)" },
     { id: "proof:lockfile", cmd: "proof:lockfile", tags: ["local", "ci", "release"], note: "registry-resolution drift guard" },
     { id: "audit:stash", cmd: "audit:stash", tags: ["ci"] },
 ];

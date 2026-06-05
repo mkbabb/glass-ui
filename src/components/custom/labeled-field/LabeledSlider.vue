@@ -4,8 +4,10 @@
         :tooltip="tooltip"
         :label-class="labelClass"
         :required="required"
+        v-slot="{ labelledBy }"
     >
         <Slider
+            :aria-labelledby="labelledBy"
             class="py-2"
             :min="min"
             :max="max"

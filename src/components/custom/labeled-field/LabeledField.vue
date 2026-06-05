@@ -1,20 +1,20 @@
 <template>
     <div class="labeled-field">
         <IconTooltip v-if="tooltip" :text="tooltip">
-            <label :class="cn('labeled-field-label', labelClass)"
+            <label :id="labelId" :for="controlId" :class="cn('labeled-field-label', labelClass)"
                 >{{ label
                 }}<span v-if="required" class="text-destructive" aria-hidden="true">
                     *</span
                 ></label
             >
         </IconTooltip>
-        <label v-else :class="cn('labeled-field-label', labelClass)"
+        <label v-else :id="labelId" :for="controlId" :class="cn('labeled-field-label', labelClass)"
             >{{ label
             }}<span v-if="required" class="text-destructive" aria-hidden="true">
                 *</span
             ></label
         >
-        <slot :error-id="errorId" />
+        <slot :error-id="errorId" :control-id="controlId" :labelled-by="labelId" />
         <div
             v-if="$slots.error"
             :id="errorId"
@@ -65,4 +65,12 @@ defineProps<{
 }>();
 
 const errorId = useId();
+// AU.W3 (a11y B3-1) — the for/id binding. `controlId` is exposed as a slot-prop
+// so the slotted form control binds `:id`, and the `<label :for>` points at it
+// (a programmatic label↔control association — `forms` "associate <label> with its
+// input using for and id"). `labelId` is exposed as `labelled-by` for controls
+// that can't take a `for` target (Slider's role=slider thumb) — they bind
+// `:aria-labelledby`. The four wrappers auto-wire whichever applies.
+const controlId = useId();
+const labelId = useId();
 </script>

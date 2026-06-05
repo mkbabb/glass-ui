@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
+import type { HTMLAttributes, InputHTMLAttributes } from 'vue'
+import { computed } from 'vue'
 import { Search } from "@lucide/vue"
 import { ComboboxInput, type ComboboxInputProps, useForwardProps } from 'reka-ui'
 import { cn } from '../../../utils'
@@ -10,6 +11,7 @@ defineOptions({
 
 const props = defineProps<ComboboxInputProps & {
   class?: HTMLAttributes['class']
+  placeholder?: InputHTMLAttributes['placeholder']
 }>()
 
 const delegatedProps = computed(() => {
@@ -22,7 +24,7 @@ const forwardedProps = useForwardProps(delegatedProps)
 </script>
 
 <template>
-  <div class="flex items-center border-b px-3" cmdk-input-wrapper>
+  <div class="flex items-center border-b px-3" data-cmdk-input-wrapper>
     <Search class="mr-2 h-4 w-4 shrink-0 opacity-50" />
     <ComboboxInput
       v-bind="{ ...forwardedProps, ...$attrs }"

@@ -17,6 +17,8 @@
 // (a macrotask is a macrotask) — it degrades to "run as a normal macrotask after
 // any delay", still correctness-preserving, just without the priority ordering.
 
+import { supportsPostTask } from "../../utils/platformSupport";
+
 export type TaskPriority = "user-blocking" | "user-visible" | "background";
 
 export interface PostTaskOptions {
@@ -36,11 +38,10 @@ interface SchedulerWithPostTask {
 }
 
 function getSchedulerPostTask(): SchedulerWithPostTask["postTask"] | null {
+    if (!supportsPostTask()) return null;
     const scheduler = (globalThis as { scheduler?: SchedulerWithPostTask })
         .scheduler;
-    return typeof scheduler?.postTask === "function"
-        ? scheduler.postTask.bind(scheduler)
-        : null;
+    return scheduler?.postTask?.bind(scheduler) ?? null;
 }
 
 /** The error a fallback-path abort rejects with (the native API rejects with a

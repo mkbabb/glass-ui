@@ -43,13 +43,15 @@ const classes = computed(() =>
 );
 
 // `type` is a <button>-only attribute; emit it only when the host is a button.
-const buttonType = computed(() =>
-    !props.asChild && props.as === "button" ? props.type : undefined,
+// It is spread through `$attrs` (not bound on <Primitive> directly — reka's
+// Primitive only types `as`/`as-child`) so it lands on the rendered host.
+const hostAttrs = computed(() =>
+    !props.asChild && props.as === "button" ? { type: props.type } : {},
 );
 </script>
 
 <template>
-    <Primitive :as="as" :as-child="asChild" :type="buttonType" :class="classes">
+    <Primitive :as="as" :as-child="asChild" v-bind="hostAttrs" :class="classes">
         <slot />
     </Primitive>
 </template>

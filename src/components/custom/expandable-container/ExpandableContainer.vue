@@ -5,6 +5,7 @@
             class="expandable-container__trigger absolute z-10 rounded-button bg-card/70 [backdrop-filter:var(--glass-blur-wash)] p-1.5 text-muted-foreground hover:text-foreground transition-colors shadow-sm border border-border/40"
             :class="buttonPosition === 'left' ? 'left-2 top-2' : 'right-2 top-2'"
             title="Fullscreen"
+            :aria-label="expandLabel"
             @click="open = true"
         >
             <Maximize2 class="h-4 w-4" />
@@ -22,6 +23,7 @@
                 class="expandable-container__trigger absolute z-10 rounded-button bg-card/70 [backdrop-filter:var(--glass-blur-wash)] p-2 text-muted-foreground hover:text-foreground transition-colors shadow-sm border border-border/40"
                 :class="buttonPosition === 'left' ? 'left-3 top-3' : 'right-3 top-3'"
                 title="Exit fullscreen"
+                :aria-label="collapseLabel"
                 @click="open = false"
             >
                 <Minimize2 class="h-4 w-4" />
@@ -69,8 +71,16 @@ defineOptions({ inheritAttrs: false });
 withDefaults(
     defineProps<{
         buttonPosition?: "left" | "right";
+        /** Accessible name for the expand (fullscreen) button. */
+        expandLabel?: string;
+        /** Accessible name for the collapse (exit fullscreen) button. */
+        collapseLabel?: string;
     }>(),
-    { buttonPosition: "right" },
+    {
+        buttonPosition: "right",
+        expandLabel: "Fullscreen",
+        collapseLabel: "Exit fullscreen",
+    },
 );
 
 /**

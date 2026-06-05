@@ -532,6 +532,10 @@
         "proof:doc-consistency": "node scripts/proof-doc-consistency.mjs",
         "proof:au-w0-reground": "node scripts/proof-au-w0-reground.mjs",
         "proof:au-w1-design": "node scripts/proof-au-w1-design.mjs",
+        "proof:strict-templates": "node scripts/proof-strict-templates.mjs",
+        "proof:peer-optional": "node scripts/proof-peer-optional.mjs",
+        "proof:vueuse-free-root": "node scripts/proof-vueuse-free-root.mjs",
+        "proof:supportsPostTask-wired": "node scripts/proof-supports-post-task-wired.mjs",
         "proof:lockfile": "node scripts/proof-lockfile.mjs",
         "proof:all": "node scripts/gates.mjs --run local",
         "gates:verify-ci": "node scripts/gates.mjs --verify-ci",
@@ -559,8 +563,22 @@
         "vaul-vue": "^0.4",
         "vue": "^3.5"
     },
-    "optionalPeerDependencies": {
-        "tw-animate-css": "^1.2.5"
+    "peerDependenciesMeta": {
+        "@vueuse/core": {
+            "optional": true
+        },
+        "embla-carousel-vue": {
+            "optional": true
+        },
+        "@mkbabb/keyframes.js": {
+            "optional": true
+        },
+        "@mkbabb/value.js": {
+            "optional": true
+        },
+        "tw-animate-css": {
+            "optional": true
+        }
     },
     "devDependencies": {
         "@lucide/vue": "^1.16.0",

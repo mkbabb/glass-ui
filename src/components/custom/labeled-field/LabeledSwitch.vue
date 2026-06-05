@@ -4,11 +4,13 @@
         :tooltip="tooltip"
         :label-class="labelClass"
         :required="required"
+        v-slot="{ controlId }"
     >
         <div class="flex items-center">
             <Switch
-                :checked="checked"
-                @update:checked="(v: boolean) => emit('update:checked', v)"
+                :id="controlId"
+                :model-value="checked"
+                @update:model-value="(v: boolean) => emit('update:checked', v)"
             />
         </div>
     </LabeledField>

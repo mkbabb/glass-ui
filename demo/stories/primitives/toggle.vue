@@ -26,7 +26,7 @@ const cell = ref<string>("warm");
         <section class="flex flex-col gap-3">
             <p class="section-label">single toggle</p>
             <div class="flex items-center gap-4">
-                <Toggle v-model:pressed="bold" aria-label="Bold">
+                <Toggle v-model="bold" aria-label="Bold">
                     <Bold class="h-4 w-4" />
                 </Toggle>
                 <span class="text-mono-caption text-muted-foreground">

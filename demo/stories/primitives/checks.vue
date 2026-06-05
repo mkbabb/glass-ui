@@ -26,15 +26,15 @@ const airplane = ref(false);
             </p>
             <div class="flex flex-wrap items-start gap-8">
                 <div class="flex items-center gap-2">
-                    <Checkbox id="chk-tos" v-model:checked="tos" />
+                    <Checkbox id="chk-tos" v-model="tos" />
                     <Label for="chk-tos">Accept terms</Label>
                 </div>
                 <div class="flex items-center gap-2">
-                    <Checkbox id="chk-marketing" v-model:checked="marketing" />
+                    <Checkbox id="chk-marketing" v-model="marketing" />
                     <Label for="chk-marketing">Marketing email</Label>
                 </div>
                 <div class="flex items-center gap-2">
-                    <Checkbox id="chk-indet" v-model:checked="indeterminate" />
+                    <Checkbox id="chk-indet" v-model="indeterminate" />
                     <Label for="chk-indet">Indeterminate</Label>
                 </div>
                 <div class="flex items-center gap-2 opacity-60">
@@ -82,11 +82,11 @@ const airplane = ref(false);
             </p>
             <div class="flex flex-wrap items-center gap-8">
                 <div class="flex items-center gap-3">
-                    <Switch id="sw-notifications" v-model:checked="notifications" />
+                    <Switch id="sw-notifications" v-model="notifications" />
                     <Label for="sw-notifications">Notifications</Label>
                 </div>
                 <div class="flex items-center gap-3">
-                    <Switch id="sw-airplane" v-model:checked="airplane" />
+                    <Switch id="sw-airplane" v-model="airplane" />
                     <Label for="sw-airplane">Airplane mode</Label>
                 </div>
                 <div class="flex items-center gap-3 opacity-60">

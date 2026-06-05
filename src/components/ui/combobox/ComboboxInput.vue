@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from 'vue'
+import type { HTMLAttributes, InputHTMLAttributes } from 'vue'
 import { reactiveOmit } from '@vueuse/core'
 import { SearchIcon } from "@lucide/vue"
 import { ComboboxInput, type ComboboxInputEmits, type ComboboxInputProps, useForwardPropsEmits } from 'reka-ui'
@@ -11,6 +11,7 @@ defineOptions({
 
 const props = defineProps<ComboboxInputProps & {
   class?: HTMLAttributes['class']
+  placeholder?: InputHTMLAttributes['placeholder']
 }>()
 
 const emits = defineEmits<ComboboxInputEmits>()

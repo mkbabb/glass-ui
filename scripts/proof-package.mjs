@@ -3,6 +3,7 @@ import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import semver from "semver";
 import { PUBLISHERS, resolveSibling } from "./constellation.mjs";
 import { gateArtifactPath, writeGateArtifact } from "./gate-output.mjs";
 
@@ -88,6 +89,24 @@ function writeArtifact(status, extra = {}) {
 }
 
 mkdirSync(tmp, { recursive: true });
+
+// AU.W3 — the keyframes peer-compatibility MATRIX axis. glass-ui supports BOTH
+// keyframes major lines (the spring helpers are stable across 2.x→3.x), declared
+// as `^2.2.0 || ^3.0.0`. CI-witness that the declared range accepts both real
+// published lines — a silent drift (e.g. dropping the `^2.2.0` arm) would orphan
+// 2.x consumers with no error. semver-checked against the literal range.
+{
+    const kfRange = pkg.peerDependencies?.["@mkbabb/keyframes.js"] ?? "";
+    const kfMatrix = ["2.2.0", "3.0.0"];
+    const kfMisses = kfMatrix.filter((v) => !semver.satisfies(v, kfRange));
+    if (kfMisses.length) {
+        steps.push({ command: `peer-matrix @mkbabb/keyframes.js`, status: "fail" });
+        writeArtifact("fail", { peerMatrixError: `keyframes peer range "${kfRange}" rejects supported version(s): ${kfMisses.join(", ")}` });
+        console.error(`[proof:package] keyframes peer-matrix FAIL — range "${kfRange}" does not accept: ${kfMisses.join(", ")}`);
+        process.exit(1);
+    }
+    steps.push({ command: `peer-matrix @mkbabb/keyframes.js [${kfMatrix.join(", ")}] ⊆ "${kfRange}"`, status: "pass" });
+}
 
 try {
     // A prior gate in the same `gates.mjs --run` sequence (profile:budget's

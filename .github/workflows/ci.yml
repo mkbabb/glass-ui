@@ -118,6 +118,26 @@ jobs:
             # registry (every AU gate enumerated with a greening wave — inv-θ).
             - name: proof:au-w1-design
               run: npm run proof:au-w1-design
+            # AU.W3 — the strict-templates KEYSTONE. checkUnknownProps:true across
+            # the 3 tsconfigs makes a bogus prop on a glass-ui component a RED
+            # typecheck (the silent-no-op class that seeded the AS.W7 dock bug);
+            # the fixture asserts the diagnostic fires; zero @ts-expect-error.
+            - name: proof:strict-templates
+              run: npm run proof:strict-templates
+            # AU.W3 — peer optionality is a derived fact of the root bundle
+            # (optional IFF absent from dist/glass-ui.js & not core-substrate);
+            # the dead optionalPeerDependencies field is deleted (P1).
+            - name: proof:peer-optional
+              run: npm run proof:peer-optional
+            # AU.W3 — the vueuse-FREE root barrel (SOURCE-graph walk from
+            # src/index.ts + DIST-floor grep). The DataTable + useTokenColor leaks
+            # are closed; no @vueuse/core reaches the root barrel.
+            - name: proof:vueuse-free-root
+              run: npm run proof:vueuse-free-root
+            # AU.W3 — supportsPostTask is WIRED (>=1 real caller) or DROPPED; no
+            # exported orphan (P3 wire-before-retire).
+            - name: proof:supportsPostTask-wired
+              run: npm run proof:supportsPostTask-wired
             # AS.W2 inv-θ — the lockfile registry-resolution drift guard (#177
             # cannot silently re-break npm ci) + the meta-gate asserting this
             # ci.yml step set matches scripts/gates.mjs exactly (the manifest is

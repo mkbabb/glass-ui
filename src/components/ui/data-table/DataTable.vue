@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T extends Record<string, any>">
 import { computed, ref, useSlots } from "vue";
-import { useElementSize } from "@vueuse/core";
+import { useResizeObserver } from "../../../composables/dom";
 import {
     Table,
     TableBody,
@@ -70,12 +70,15 @@ const slots = useSlots();
 const hasRowActions = computed(() => !!slots["row-actions"]);
 const hasRowContextMenu = computed(() => !!slots["row-context-menu"]);
 
-// Container-driven card mode — ResizeObserver-backed via `useElementSize`,
-// the same seam the chart components use to bridge a `@container`-style
-// intent into a JS boolean. `width > 0` guards the pre-measure frame so
-// the table never flashes the card layout before its width is known.
+// Container-driven card mode — ResizeObserver-backed via `useResizeObserver`,
+// the in-house callback composable that bridges a `@container`-style intent
+// into a JS boolean. `width > 0` guards the pre-measure frame so the table
+// never flashes the card layout before its width is known.
 const rootRef = ref<HTMLElement | null>(null);
-const { width: rootWidth } = useElementSize(rootRef);
+const rootWidth = ref(0);
+useResizeObserver(rootRef, (rect) => {
+    rootWidth.value = rect.width;
+});
 const isCard = computed(
     () => props.responsive && rootWidth.value > 0 && rootWidth.value < props.cardBreakpoint,
 );

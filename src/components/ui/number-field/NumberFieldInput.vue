@@ -15,12 +15,16 @@ export default { inheritAttrs: false }
 <script setup lang="ts">
 import { NumberFieldInput } from 'reka-ui'
 import { cn } from '../../../utils'
+
+// `inputmode` is an <input>-specific attribute reka's NumberFieldInput does not
+// type; supply it as a default through a spread (a consumer `$attrs` override
+// still wins) rather than binding it as a static named attr.
+const defaultAttrs = { inputmode: 'decimal' as const }
 </script>
 
 <template>
   <NumberFieldInput
-    inputmode="decimal"
-    v-bind="$attrs"
+    v-bind="{ ...defaultAttrs, ...$attrs }"
     data-slot="input"
     :class="cn('focus-ring flex h-10 w-full rounded-input border border-input bg-background py-2 text-sm text-center placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-disabled')"
   />

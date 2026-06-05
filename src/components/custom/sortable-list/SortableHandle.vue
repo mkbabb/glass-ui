@@ -11,12 +11,18 @@
  * The default slot renders inside the handle — typically a
  * grip glyph like `⋮⋮`.
  */
-import { computed, type Component } from "vue";
+import { computed, type ButtonHTMLAttributes, type Component } from "vue";
 
 const props = withDefaults(
     defineProps<{
         /** Root element tag. Default `"span"`. */
         as?: string | Component;
+        /**
+         * `<button>` type attribute — emitted only when the host is a `button`
+         * (an anchor/span grip carries no `type`). Spread through `$attrs`
+         * since `<component :is>` does not type element-specific attributes.
+         */
+        type?: ButtonHTMLAttributes["type"];
     }>(),
     { as: "span" },
 );
@@ -28,6 +34,11 @@ const props = withDefaults(
 // consumer overrides `as` with a natively-interactive element (e.g. `button`),
 // the host tag already carries the role, so we emit neither.
 const interactive = computed(() => props.as === "span");
+
+// `type` is a <button>-only attribute; emit it only on a button host.
+const hostAttrs = computed(() =>
+    props.as === "button" ? { type: props.type } : {},
+);
 </script>
 
 <template>
@@ -35,6 +46,7 @@ const interactive = computed(() => props.as === "span");
         :is="as"
         class="sortable-handle"
         data-sortable-handle
+        v-bind="hostAttrs"
         :role="interactive ? 'button' : undefined"
         :tabindex="interactive ? 0 : undefined"
     >

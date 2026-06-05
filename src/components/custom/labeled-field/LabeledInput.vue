@@ -5,8 +5,9 @@
         :label-class="labelClass"
         :required="required"
     >
-        <template #default="{ errorId }">
+        <template #default="{ errorId, controlId }">
             <Input
+                :id="controlId"
                 :type="type ?? 'string'"
                 :class="inputClass ?? 'fira-code'"
                 :model-value="modelValue"

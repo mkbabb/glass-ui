@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // ToggleChip — chip vs cell variants over a reka-ui Toggle root.
 // Deliberately unopinionated about exclusive vs multi selection; consumers
-// wire `pressed` / `@update:pressed` directly.
+// wire `model-value` / `@update:model-value` (or `v-model`) directly.
 import { ref, computed } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
@@ -40,7 +40,7 @@ const cells = [
                     <ToggleChip
                         v-for="key in Object.keys(tags)"
                         :key="key"
-                        v-model:pressed="tags[key]"
+                        v-model="tags[key]"
                         variant="chip"
                     >
                         {{ key }}
@@ -58,9 +58,9 @@ const cells = [
                     <ToggleChip
                         v-for="cell in cells"
                         :key="cell.value"
-                        :pressed="pose === cell.value"
+                        :model-value="pose === cell.value"
                         variant="cell"
-                        @update:pressed="() => pickPose(cell.value)"
+                        @update:model-value="() => pickPose(cell.value)"
                     >
                         <component :is="cell.icon" class="size-icon-md" />
                         <span>{{ cell.label }}</span>

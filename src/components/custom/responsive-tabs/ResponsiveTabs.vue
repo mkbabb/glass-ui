@@ -66,6 +66,12 @@ export interface ResponsiveTabsProps {
     desktopClass?: HTMLAttributes["class"];
     /** Class merged onto the mobile SelectTrigger only. */
     mobileTriggerClass?: HTMLAttributes["class"];
+    /**
+     * Accessible name for the mobile `<SelectTrigger>` (axe `select-name` /
+     * WCAG 4.1.2 — the bare trigger carries only a `<SelectValue>`). Defaults to
+     * the active option's label.
+     */
+    ariaLabel?: string;
 }
 
 const props = withDefaults(defineProps<ResponsiveTabsProps>(), {
@@ -116,6 +122,15 @@ const effectiveDesktopValue = computed(() => {
     return opts[0]?.value ?? props.modelValue;
 });
 
+// The mobile Select's accessible name — the consumer's `ariaLabel`, else the
+// active option's label (so the icon-only trigger is never name-less).
+const mobileAriaLabel = computed(
+    () =>
+        props.ariaLabel ??
+        props.options.find((o) => o.value === props.modelValue)?.label ??
+        "Select",
+);
+
 function onUpdate(value: unknown) {
     if (typeof value === "string") {
         emit("update:modelValue", value);
@@ -136,6 +151,7 @@ function onUpdate(value: unknown) {
         <div :class="cn('responsive-tabs__mobile w-fit', props.class)">
             <Select :model-value="modelValue" @update:model-value="onUpdate">
                 <SelectTrigger
+                    :aria-label="mobileAriaLabel"
                     :class="cn('responsive-tabs__trigger text-small w-auto min-w-input-sm', mobileTriggerClass)"
                 >
                     <SelectValue />

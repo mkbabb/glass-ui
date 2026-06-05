@@ -1,0 +1,10 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "noEmit": true
+    },
+    "vueCompilerOptions": {
+        "checkUnknownProps": true
+    },
+    "include": ["strict-templates.fixture.vue", "../../src/types/html-attributes.d.ts"]
+}

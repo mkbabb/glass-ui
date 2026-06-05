@@ -4,6 +4,7 @@
         :tooltip="tooltip"
         :label-class="labelClass"
         :required="required"
+        v-slot="{ controlId }"
     >
         <Select
             :model-value="modelValue"
@@ -11,7 +12,7 @@
             @update:open="(v: boolean) => emit('update:open', v)"
             @update:model-value="(v: any) => emit('update:modelValue', v)"
         >
-            <SelectTrigger class="fira-code">
+            <SelectTrigger :id="controlId" class="fira-code">
                 <SelectValue />
             </SelectTrigger>
             <SelectContent>

@@ -7,7 +7,8 @@ export default { inheritAttrs: false }
 </script>
 
 <script setup lang="ts">
-import type { HTMLAttributes } from 'vue'
+import type { HTMLAttributes, TextareaHTMLAttributes } from 'vue'
+import { computed } from 'vue'
 import { useVModel } from '@vueuse/core'
 import { cn } from '../../../utils'
 
@@ -16,6 +17,10 @@ const props = withDefaults(
     class?: HTMLAttributes['class']
     defaultValue?: string | number
     modelValue?: string | number
+    // Element-specific <textarea> attributes typed on the wrapper surface (the
+    // rest of the native attribute set still falls through via `v-bind="$attrs"`).
+    placeholder?: TextareaHTMLAttributes['placeholder']
+    disabled?: TextareaHTMLAttributes['disabled']
     /**
      * AQ.W4 §W4.3 — opt into `field-sizing: content` auto-grow. When `true`,
      * the textarea grows vertically with its content between a 3-line floor
@@ -44,12 +49,18 @@ const modelValue = useVModel(props, 'modelValue', emits, {
   passive: true,
   defaultValue: props.defaultValue,
 })
+
+// Declared props are extracted from `$attrs`, so forward them explicitly.
+const elementAttrs = computed(() => ({
+  placeholder: props.placeholder,
+  disabled: props.disabled,
+}))
 </script>
 
 <template>
   <textarea
     v-model="modelValue"
-    v-bind="$attrs"
+    v-bind="{ ...$attrs, ...elementAttrs }"
     :data-autosize="autosize ? '' : undefined"
     :class="cn('input-pill py-2 text-sm', autosize ? '' : 'min-h-20', props.class)"
   />
