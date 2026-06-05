@@ -15,7 +15,7 @@ import {
     cssToOklch,
     flattenPalette,
 } from "../composables/color";
-import type { OklchStop } from "../presets";
+import type { OklchStop } from "../constants/presets";
 
 /**
  * inv-K-2 canary (value.js-K, K.W2c). glass-ui's aurora color helpers were

@@ -76,7 +76,7 @@ Both channels share `uCursor`, `uCursorStrength`, `uCursorRadius`. JS-side easin
 ## 5. Public API
 
 ```ts
-// src/components/custom/aurora/presets.ts — types only, no authored themes
+// src/components/custom/aurora/constants/presets.ts — types only, no authored themes
 export interface OklchStop { L: number; C: number; h: number; }
 
 export interface AuroraNucleus {
@@ -175,12 +175,14 @@ Per memory rule "Presets in consumers": the 11 authored themes (Sky, Dawn, Meado
 ```
 src/components/custom/aurora/
 ├── Aurora.vue                    # canvas wrapper + useAurora + defineExpose cursor API
-├── presets.ts                    # types only + DEFAULT_AURORA_CONFIG + MAX_* constants
 ├── index.ts                      # barrel
 ├── DESIGN.md                     # this file
-├── shaders/
-│   ├── aurora.vert.ts            # full-screen triangle via VBO (`in vec2 aPos`)
-│   └── aurora.frag.ts            # the entire pipeline — composition + medium + post
+├── constants/                    # the constant-tier files (no reactivity, no lifecycle)
+│   ├── presets.ts                # types only + DEFAULT_AURORA_CONFIG + MAX_* constants
+│   ├── renderMode.ts             # AuroraRenderMode union + resolveRenderMode device-tier resolver
+│   └── shaders/
+│       ├── aurora.vert.ts        # full-screen triangle via VBO (`in vec2 aPos`)
+│       └── aurora.frag.ts        # the entire pipeline — composition + medium + post
 └── composables/
     ├── color.ts                  # OKLCh math + oklchToLinear + flattenPalette
     ├── runtime.ts                # createAurora — live/capture WebGL lifecycle + cursor easing + renderAt

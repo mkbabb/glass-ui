@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, computed, onMounted, onUnmounted, nextTick, type HTMLAttributes } from "vue";
+import { ref, computed, onMounted, nextTick, type HTMLAttributes } from "vue";
 import { cn } from "../../../utils";
 import {
     Tooltip,
@@ -7,6 +7,7 @@ import {
     TooltipTrigger,
     TooltipProvider,
 } from "../../ui/tooltip";
+import { useBouncySlider } from "./composables/useBouncySlider";
 
 // WAAPI keyframes can't dereference custom properties — resolve literals at
 // runtime via the cascade root. Inlined per K.W3.A.4 (cssVar() retire);
@@ -99,55 +100,20 @@ const jsSingleSlider = computed(() => !props.multiSelect && !ANCHOR_SUPPORTED);
 // True when ANY JS slider writer is live (so the RO/watchers attach at all).
 const jsSliderActive = computed(() => props.multiSelect || !ANCHOR_SUPPORTED);
 
-// ── Single-select slider style (JS fallback path only) ──
+// ── JS-measured slider path (package-private composable) ──
+// Owns the single/multi slider styles + the measure/RO lifecycle. Dormant on
+// the anchor-supporting single-select engine (CSS owns the slider there).
 
-const singleSliderStyle = ref<Record<string, string>>({
-    width: "0px",
-    transform: "translateX(0px)",
-    opacity: "0",
+const { singleSliderStyle, multiSliderStyles } = useBouncySlider({
+    containerRef,
+    buttonRefs,
+    options: computed(() => props.options),
+    model,
+    multiSelect: computed(() => props.multiSelect),
+    anchorSupported: ANCHOR_SUPPORTED,
+    jsSliderActive,
+    activeValues,
 });
-
-function updateSingleSlider() {
-    if (props.multiSelect || ANCHOR_SUPPORTED) return;
-    const idx = props.options.findIndex((o) => o.value === (model.value as string));
-    if (idx < 0 || !buttonRefs.value[idx]) return;
-    const btn = buttonRefs.value[idx];
-    singleSliderStyle.value = {
-        width: `${btn.offsetWidth}px`,
-        transform: `translateX(${btn.offsetLeft}px)`,
-        opacity: "1",
-    };
-}
-
-// ── Multi-select slider styles ──
-
-const multiSliderStyles = ref<Record<string, Record<string, string>>>({});
-
-function updateMultiSliders() {
-    if (!props.multiSelect) return;
-    const styles: Record<string, Record<string, string>> = {};
-    for (const value of activeValues.value) {
-        const optionIdx = props.options.findIndex((o) => o.value === value);
-        const btn = buttonRefs.value[optionIdx];
-        if (!btn) continue;
-        styles[value] = {
-            width: `${btn.offsetWidth}px`,
-            transform: `translateX(${btn.offsetLeft}px)`,
-            opacity: "1",
-        };
-    }
-    multiSliderStyles.value = styles;
-}
-
-// ── Unified update ──
-
-function updateSliders() {
-    if (props.multiSelect) {
-        updateMultiSliders();
-    } else {
-        updateSingleSlider();
-    }
-}
 
 // ── Button press animation (Web Animations API) ──
 
@@ -230,33 +196,8 @@ function select(value: string, idx: number) {
     scrollButtonIntoView(idx);
 }
 
-// ── Watchers (JS slider path only) ──
-// On the anchor path the CSS `anchor-name` follows `aria-pressed` reactively,
-// so no watcher-driven re-measure is needed.
-
-watch(
-    () => model.value,
-    () => {
-        if (jsSliderActive.value) nextTick(updateSliders);
-    },
-    { deep: true },
-);
-watch(
-    () => props.options,
-    () => {
-        if (jsSliderActive.value) nextTick(updateSliders);
-    },
-    { deep: true },
-);
-
-// ── Lifecycle ──
-//
-// The `ResizeObserver` + the initial measure attach ONLY when a JS slider
-// writer is live (multi-select, or single-select on a non-anchor engine). On an
-// anchor-supporting single-select engine the CSS owns the slider position, so
-// no RO is constructed and no measure runs — the AQ.W6 listener-count win.
-
-let resizeObserver: ResizeObserver | null = null;
+// ── Lifecycle (scroll-into-view only; the JS slider measure/RO is owned by
+//    useBouncySlider) ──
 
 onMounted(() => {
     // Bring the initially-active button on-screen when the overflow scroller is
@@ -268,17 +209,6 @@ onMounted(() => {
         );
         if (activeIdx >= 0) scrollButtonIntoView(activeIdx);
     });
-
-    if (!jsSliderActive.value) return;
-    nextTick(updateSliders);
-    if (containerRef.value) {
-        resizeObserver = new ResizeObserver(() => updateSliders());
-        resizeObserver.observe(containerRef.value);
-    }
-});
-
-onUnmounted(() => {
-    resizeObserver?.disconnect();
 });
 </script>
 

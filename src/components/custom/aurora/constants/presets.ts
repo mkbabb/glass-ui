@@ -15,8 +15,8 @@
 
 // OklchStop is single-sourced in the `/color` leaf (AU.W5 hoist); imported for
 // local use here AND re-exported so aurora-domain consumers keep importing it
-// from `../presets`.
-import type { OklchStop } from "../../../composables/color";
+// from `../constants/presets`.
+import type { OklchStop } from "../../../../composables/color";
 export type { OklchStop };
 
 export interface AuroraNucleus {

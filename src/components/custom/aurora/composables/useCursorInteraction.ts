@@ -1,7 +1,7 @@
 import { onBeforeUnmount, onMounted, type Ref } from "vue";
 import { asGetter, type ConfigSource } from "./configSource";
-import type { AuroraConfig, AuroraNucleus } from "../presets";
-import { MAX_NUCLEI } from "../presets";
+import type { AuroraConfig, AuroraNucleus } from "../constants/presets";
+import { MAX_NUCLEI } from "../constants/presets";
 
 export interface CursorInteractionOptions {
     /** Fires `setCursor(x,y,strength)` for continuous swirl. */

@@ -8,8 +8,8 @@ import {
 
 import { deriveAurora, cssToOklch, oklchToLinear } from "../composables/color";
 import type { AuroraHarmony } from "../composables/color";
-import { MAX_STOPS } from "../presets";
-import type { OklchStop } from "../presets";
+import { MAX_STOPS } from "../constants/presets";
+import type { OklchStop } from "../constants/presets";
 
 /**
  * D10b witness — `deriveAurora` seeds ONE color into a harmonious, gamut-safe

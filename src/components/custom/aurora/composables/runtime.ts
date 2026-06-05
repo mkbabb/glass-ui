@@ -15,8 +15,8 @@
  * runtime flips Y at the uniform boundary (see AUTHOR_Y_ORIGIN_IS_TOP marks).
  */
 
-import { VERTEX_SRC } from "../shaders/aurora.vert";
-import { FRAGMENT_SRC } from "../shaders/aurora.frag";
+import { VERTEX_SRC } from "../constants/shaders/aurora.vert";
+import { FRAGMENT_SRC } from "../constants/shaders/aurora.frag";
 import { flattenPalette } from "./color";
 import { createWebGLCanvas } from "../../../../composables/glass/webgl/useWebGLCanvas";
 import {
@@ -28,7 +28,7 @@ import {
     type FlowPattern,
     type StrokeMode,
     type WarpMode,
-} from "../presets";
+} from "../constants/presets";
 
 const MEDIUM_ID: Record<AuroraMedium, number> = { smooth: 0, pastel: 1, watercolor: 2, oil: 3 };
 const FLOW_ID: Record<FlowPattern, number> = { none: 0, radial: 1, swirl: 2, diagonal: 3, multi: 4 };

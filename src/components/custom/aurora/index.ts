@@ -1,7 +1,7 @@
 export { default as Aurora } from "./Aurora.vue";
 // AM.W1 — adaptive render substrate. `AuroraRenderMode` is the public prop
 // type; `resolveRenderMode` is the device-tier resolver (testable in isolation).
-export { resolveRenderMode, type AuroraRenderMode } from "./renderMode";
+export { resolveRenderMode, type AuroraRenderMode } from "./constants/renderMode";
 export { useAurora } from "./composables/useAurora";
 // O.W4 Lane B — Fix 2 (Rγ L2): named return shape for useAurora.
 export type { UseAuroraReturn } from "./composables/useAurora";
@@ -22,7 +22,7 @@ export {
     type OklchStop,
     type StrokeMode,
     type WarpMode,
-} from "./presets";
+} from "./constants/presets";
 export {
     cssToOklch,
     deriveAurora,

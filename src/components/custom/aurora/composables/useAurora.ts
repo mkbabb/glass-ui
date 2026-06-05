@@ -13,7 +13,7 @@ import {
 } from "./runtime";
 import { asGetter, type ConfigSource } from "./configSource";
 import { useIntersectionPause } from "../../../../composables/motion/useIntersectionPause";
-import type { AuroraConfig } from "../presets";
+import type { AuroraConfig } from "../constants/presets";
 
 /**
  * Adaptive-substrate options threaded down from `Aurora.vue` (AM.W1). The

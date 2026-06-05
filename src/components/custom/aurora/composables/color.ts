@@ -1,4 +1,4 @@
-import { MAX_STOPS } from "../presets";
+import { MAX_STOPS } from "../constants/presets";
 
 // inv-K-2 / AU.W5 — the single canonical color core is value.js's Ottosson
 // primitives. The SHARED runtime-JS hoist (oklchToLinear / cssToOklch /

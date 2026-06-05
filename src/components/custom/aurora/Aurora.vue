@@ -3,8 +3,8 @@ import { computed, ref } from "vue";
 import { useAurora } from "./composables/useAurora";
 import { paletteToCssGradient } from "./composables/color";
 import type { AuroraRuntimeOptions } from "./composables/runtime";
-import { DEFAULT_AURORA_CONFIG, type AuroraConfig } from "./presets";
-import { resolveRenderMode, type AuroraRenderMode } from "./renderMode";
+import { DEFAULT_AURORA_CONFIG, type AuroraConfig } from "./constants/presets";
+import { resolveRenderMode, type AuroraRenderMode } from "./constants/renderMode";
 
 /**
  * Aurora — a painterly WebGL2 background.
@@ -43,7 +43,7 @@ const props = withDefaults(
          * Aurora field configuration (palette, nuclei, warp, media). Optional —
          * omit it and the canonical `DEFAULT_AURORA_CONFIG` painterly look
          * renders (gap 11, AM.W1). Pass a full config to author a custom field,
-         * or a preset object from `./presets`. The default is supplied via a
+         * or a preset object from `./constants/presets`. The default is supplied via a
          * `withDefaults` factory so each mount gets its own (un-shared) object.
          */
         config?: AuroraConfig;
