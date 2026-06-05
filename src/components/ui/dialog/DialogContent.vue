@@ -53,13 +53,20 @@ const props = withDefaults(
      * immediately — entrance becomes a no-op transform.
      */
     spring?: boolean | SpringPreset;
+    /**
+     * Render the default top-right close (X) button (default `true`).
+     * Set `false` when the consumer composes its own header / dismiss control
+     * (e.g. a hand-composed access modal) so the built-in X does not
+     * double-up. The default keeps every existing mount byte-identical.
+     */
+    showClose?: boolean;
   }>(),
-  { variant: 'glass' },
+  { variant: 'glass', showClose: true },
 )
 const emits = defineEmits<DialogContentEmits>()
 
 const delegatedProps = computed(() => {
-  const { class: _, variant: _v, scrimAnimation: _sa, spring: _sp, ...delegated } = props
+  const { class: _, variant: _v, scrimAnimation: _sa, spring: _sp, showClose: _sc, ...delegated } = props
   return delegated
 })
 
@@ -124,6 +131,7 @@ const springStyle = computed<CSSProperties | undefined>(() => {
       <slot />
 
       <DialogClose
+        v-if="props.showClose"
         class="focus-ring absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
       >
         <X class="w-4 h-4" />
