@@ -9,12 +9,14 @@ const props = withDefaults(
     class?: HTMLAttributes['class']
     /** 'default' = glass bg; 'ghost' = transparent, no border/shadow */
     variant?: 'default' | 'ghost'
+    /** Height register: 'default' = h-10 (byte-identical), 'sm' = h-9 (compact controls) */
+    size?: 'sm' | 'default'
   }>(),
-  { variant: 'default' },
+  { variant: 'default', size: 'default' },
 )
 
 const delegatedProps = computed(() => {
-  const { class: _, variant: __, ...delegated } = props
+  const { class: _, variant: __, size: ___, ...delegated } = props
 
   return delegated
 })
@@ -26,6 +28,8 @@ const variantClass = computed(() =>
     ? 'bg-transparent border-none shadow-none'
     : 'glass-wash',
 )
+
+const sizeClass = computed(() => (props.size === 'sm' ? 'h-9' : 'h-10'))
 </script>
 
 <template>
@@ -33,7 +37,8 @@ const variantClass = computed(() =>
     v-bind="forwardedProps"
     :class="cn(
       variantClass,
-      'focus-ring flex h-10 w-full items-center justify-between rounded-pill px-3 py-2 text-sm placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-disabled [&>span]:line-clamp-1 transition-control',
+      sizeClass,
+      'focus-ring flex w-full items-center justify-between rounded-pill px-3 py-2 text-sm placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-disabled [&>span]:line-clamp-1 transition-control',
       props.class,
     )"
   >

@@ -39,6 +39,7 @@ export const buttonVariants = cva(
         sm: 'h-9 rounded-pill px-3',
         lg: 'h-11 rounded-pill px-8',
         icon: 'h-10 w-10 p-0',
+        'icon-sm': 'h-7 w-7 p-0',
       },
     },
     defaultVariants: {
