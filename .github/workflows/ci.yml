@@ -176,6 +176,13 @@ jobs:
               run: npm run proof:no-value-default
             - name: proof:blob-space-gamma
               run: npm run proof:blob-space-gamma
+            # AU.W7 — the 8-assertion CPU-equivalence: the metaball OKLCh shader-
+            # color TS port matches value.js's exact Ottosson CPU result to 1e-6
+            # (asymmetric witness #3a7bd5 catches a transpose / convenience-matrix
+            # error, which would sit at ~1e-4). The OKLCh-linear flip closes with a
+            # linearToSrgb OETF (no too-dark ship).
+            - name: proof:blob-color-equivalence
+              run: npm run proof:blob-color-equivalence
             # AS.W2 inv-θ — the lockfile registry-resolution drift guard (#177
             # cannot silently re-break npm ci) + the meta-gate asserting this
             # ci.yml step set matches scripts/gates.mjs exactly (the manifest is

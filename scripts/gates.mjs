@@ -57,6 +57,7 @@ export const GATES = [
     { id: "proof:blob-value-free", cmd: "proof:blob-value-free", tags: ["local", "ci"], note: "AU.W7 — the goo-blob/watercolor-dot are value.js-free (two-tier: source-graph + dist) — the injected ColorResolver seam, not a value.js coupling" },
     { id: "proof:no-value-default", cmd: "proof:no-value-default", tags: ["local", "ci"], note: "AU.W7 — a no-resolver blob mount THROWS naming defaultBlobColorResolver (the loud failure, not a silent gray default)" },
     { id: "proof:blob-space-gamma", cmd: "proof:blob-space-gamma", tags: ["local", "ci"], note: "AU.W7 — DEC-AT-7 seam: the default resolver paints GAMMA (oklchToGammaRgb, not oklchToLinear); a shader linear-flip must close with linearToSrgb (no too-dark)" },
+    { id: "proof:blob-color-equivalence", cmd: "proof:blob-color-equivalence", tags: ["local", "ci"], note: "AU.W7 — the 8-assertion CPU-equivalence: the metaball OKLCh shader-color TS port matches value.js's Ottosson CPU result to 1e-6 (asymmetric witness #3a7bd5 — the exact-matrix trap detector)" },
     { id: "proof:lockfile", cmd: "proof:lockfile", tags: ["local", "ci", "release"], note: "registry-resolution drift guard" },
     { id: "audit:stash", cmd: "audit:stash", tags: ["ci"] },
 ];

@@ -565,6 +565,7 @@
         "proof:blob-value-free": "node scripts/proof-blob-value-free.mjs",
         "proof:no-value-default": "node scripts/proof-no-value-default.mjs",
         "proof:blob-space-gamma": "node scripts/proof-blob-space-gamma.mjs",
+        "proof:blob-color-equivalence": "vitest run src/components/custom/goo-blob/__tests__/blob-color-equivalence.test.ts",
         "proof:lockfile": "node scripts/proof-lockfile.mjs",
         "proof:all": "node scripts/gates.mjs --run local",
         "gates:verify-ci": "node scripts/gates.mjs --verify-ci",
