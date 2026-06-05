@@ -50,11 +50,6 @@ export interface ResponsiveTabsProps {
      */
     desktopOptions?: TabOption[] | null;
     /**
-     * Currently-active value. Bound through `v-model`; the consumer
-     * receives `update:modelValue` whenever either control changes.
-     */
-    modelValue: string;
-    /**
      * CSS length string for the media query breakpoint. Mobile-control
      * (Select) below; desktop-control (UnderlineTabs) at/above.
      * Defaults to `"640px"` (Tailwind `sm:`).
@@ -79,9 +74,9 @@ const props = withDefaults(defineProps<ResponsiveTabsProps>(), {
     desktopOptions: null,
 });
 
-const emit = defineEmits<{
-    "update:modelValue": [value: string];
-}>();
+// Vue 3.5 defineModel — one model drives BOTH the mobile Select and the
+// desktop UnderlineTabs so the consumer binds a single `v-model`.
+const model = defineModel<string>({ required: true });
 
 const isDesktop = ref(true);
 
@@ -116,10 +111,10 @@ const effectiveDesktopOptions = computed(
  */
 const effectiveDesktopValue = computed(() => {
     const opts = effectiveDesktopOptions.value;
-    if (opts.some((o) => o.value === props.modelValue)) {
-        return props.modelValue;
+    if (opts.some((o) => o.value === model.value)) {
+        return model.value;
     }
-    return opts[0]?.value ?? props.modelValue;
+    return opts[0]?.value ?? model.value;
 });
 
 // The mobile Select's accessible name — the consumer's `ariaLabel`, else the
@@ -127,13 +122,13 @@ const effectiveDesktopValue = computed(() => {
 const mobileAriaLabel = computed(
     () =>
         props.ariaLabel ??
-        props.options.find((o) => o.value === props.modelValue)?.label ??
+        props.options.find((o) => o.value === model.value)?.label ??
         "Select",
 );
 
 function onUpdate(value: unknown) {
     if (typeof value === "string") {
-        emit("update:modelValue", value);
+        model.value = value;
     }
 }
 </script>
@@ -149,7 +144,7 @@ function onUpdate(value: unknown) {
     </template>
     <template v-else>
         <div :class="cn('responsive-tabs__mobile w-fit', props.class)">
-            <Select :model-value="modelValue" @update:model-value="onUpdate">
+            <Select :model-value="model" @update:model-value="onUpdate">
                 <SelectTrigger
                     :aria-label="mobileAriaLabel"
                     :class="cn('responsive-tabs__trigger text-small w-auto min-w-input-sm', mobileTriggerClass)"

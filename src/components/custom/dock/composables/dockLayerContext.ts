@@ -20,8 +20,15 @@ export interface DockLayerDescriptor {
 export interface DockLayerGroupContext {
     register(desc: DockLayerDescriptor): void;
     unregister(id: string): void;
-    currentLayerId: Ref<string>;
-    leavingLayerId: Ref<string | null>;
+    /**
+     * AU.W8b.6 — group-orchestrated layer state, exposed READ-ONLY. The
+     * `<DockLayerGroup>` (via `useLayerTransition`) owns the writable refs and
+     * provides `readonly()` projections; a `<DockLayer>` child can read but
+     * never write this state. A child `currentLayerId.value = …` is a compile
+     * error (see `__tests__/dockLayerContext.readonly.test-d.ts`).
+     */
+    currentLayerId: Readonly<Ref<string>>;
+    leavingLayerId: Readonly<Ref<string | null>>;
 }
 
 export const DOCK_LAYER_GROUP_KEY: InjectionKey<DockLayerGroupContext> = Symbol(

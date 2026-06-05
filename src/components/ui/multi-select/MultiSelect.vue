@@ -27,14 +27,9 @@ export interface MultiSelectOption {
 
 interface Props {
   options: MultiSelectOption[]
-  modelValue: string[]
   placeholder?: string
   disabled?: boolean
   maxDisplay?: number
-}
-
-interface Emits {
-  (e: 'update:modelValue', value: string[]): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -43,12 +38,16 @@ const props = withDefaults(defineProps<Props>(), {
   maxDisplay: 3,
 })
 
-const emit = defineEmits<Emits>()
+// Vue 3.5 defineModel — replaces the manual modelValue prop + update:modelValue
+// emit pair. The `default: () => []` keeps an unbound mount identical to the
+// prior required-prop contract (consumers that always v-model-bind see no
+// change; an unbound mount reads `[]` instead of crashing on `.includes`).
+const model = defineModel<string[]>({ default: () => [] })
 
 const open = ref(false)
 
 const selectedOptions = computed(() =>
-  props.options.filter(option => props.modelValue.includes(option.value))
+  props.options.filter(option => model.value.includes(option.value))
 )
 
 const displayText = computed(() => {
@@ -73,16 +72,13 @@ function componentIcon(icon: MultiSelectOption['icon']): Component | null {
 }
 
 function toggleOption(value: string) {
-  const newValue = props.modelValue.includes(value)
-    ? props.modelValue.filter(v => v !== value)
-    : [...props.modelValue, value]
-
-  emit('update:modelValue', newValue)
+  model.value = model.value.includes(value)
+    ? model.value.filter(v => v !== value)
+    : [...model.value, value]
 }
 
 function removeOption(value: string) {
-  const newValue = props.modelValue.filter(v => v !== value)
-  emit('update:modelValue', newValue)
+  model.value = model.value.filter(v => v !== value)
 }
 </script>
 
@@ -116,7 +112,7 @@ function removeOption(value: string) {
               <Check
                 :class="cn(
                   'mr-2 h-4 w-4',
-                  modelValue.includes(option.value) ? 'opacity-100' : 'opacity-0'
+                  model.includes(option.value) ? 'opacity-100' : 'opacity-0'
                 )"
               />
               <span v-if="isTextIcon(option.icon)" class="mr-2">{{ option.icon }}</span>

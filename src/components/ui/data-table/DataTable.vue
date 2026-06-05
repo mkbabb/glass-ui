@@ -21,7 +21,6 @@ const props = withDefaults(
         columns: DataTableColumn<T>[];
         rows: T[];
         total: number;
-        page: number;
         pageSize: number;
         isLoading?: boolean;
         rowKey?: string;
@@ -59,8 +58,12 @@ const props = withDefaults(
     },
 );
 
+// Vue 3.5 defineModel — the page model ONLY. `update:sort` stays a plain emit
+// below: it carries a `{ key, direction }` payload and is an EVENT, not a
+// two-way model.
+const page = defineModel<number>("page", { required: true });
+
 const emit = defineEmits<{
-    "update:page": [page: number];
     "update:sort": [sort: DataTableSort];
     select: [row: T];
     "load-more": [];
@@ -433,7 +436,7 @@ const bodyColumns = computed<DataTableColumn<T>[]>(() => props.columns.slice(1))
             :page="page"
             :page-size="pageSize"
             :total="total"
-            @update:page="emit('update:page', $event)"
+            @update:page="page = $event"
         />
     </div>
 </template>

@@ -10,7 +10,6 @@ export interface TabOption {
 
 const props = withDefaults(defineProps<{
     options: TabOption[];
-    modelValue: string;
     /** "default" = subtle muted slider; "pill" = solid foreground pill */
     variant?: "default" | "pill";
     /** Tab-row overflow — see `<BouncyToggle>`. */
@@ -21,19 +20,21 @@ const props = withDefaults(defineProps<{
     overflow: "none",
 });
 
-const emit = defineEmits<{
-    "update:modelValue": [value: string];
-}>();
+// Vue 3.5 defineModel — the inner BouncyToggle is single-select
+// (`:multi-select="false"`), so the model is always a `string`. The
+// `onUpdate` shim narrows BouncyToggle's `string | string[]` emit back to
+// the string surface BouncyTabs exposes.
+const model = defineModel<string>({ required: true });
 
 function onUpdate(value: string | string[]) {
-    emit("update:modelValue", value as string);
+    model.value = value as string;
 }
 </script>
 
 <template>
     <BouncyToggle
         :options="(options as ToggleOption[])"
-        :model-value="modelValue"
+        :model-value="model"
         :variant="variant"
         :overflow="overflow"
         :class="props.class"

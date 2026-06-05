@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from "vue";
-import { computed, ref, useId, watch } from "vue";
+import { computed, useId, watch } from "vue";
 import {
     HoverCardContent,
     HoverCardPortal,
@@ -37,30 +37,10 @@ import { useOptionalDockContext } from "../dock/composables/dockContext";
  * pay nothing.
  */
 
-const emit = defineEmits<{
-    /**
-     * AB.W2 — open-state passthrough.
-     *
-     * Surfaces reka-ui's internal HoverCardRoot open state to
-     * consumers via `v-model:open`. Cadence honors `hoverOpenDelay`
-     * and `closeDelay`, so consumers receive the SAME debounced
-     * signal the popover itself reads (no double-firing on pointer
-     * skim across the trigger edge). Use this to drive a sibling
-     * "hovered" highlight without manually hooking @mouseenter on
-     * the trigger element — the latter fires too eagerly when the
-     * popover content overlaps the trigger.
-     */
-    "update:open": [open: boolean];
-}>();
-
 const props = withDefaults(
     defineProps<{
         /** Convenience: label text. Slot wins if both supplied. */
         content?: string;
-        /** AB.W2 — externally-controlled open state. Two-way bound via
-         *  `v-model:open`. Leave undefined for the default uncontrolled
-         *  cadence (reka-ui drives the open state internally). */
-        open?: boolean;
         /** Side relative to trigger. Defaults `top` (tooltip register). */
         side?: "top" | "right" | "bottom" | "left";
         /** Alignment along the side. Defaults `center`. */
@@ -122,6 +102,21 @@ const props = withDefaults(
     },
 );
 
+/**
+ * AB.W2 — open-state two-way binding via Vue 3.5 `defineModel`.
+ *
+ * `open` is the single source of truth for the dock-keep-open watcher, the
+ * `update:open` surface, and reka-ui's HoverCardRoot `v-model:open`. The
+ * `{ default: false }` preserves the prior `props.open ?? false` uncontrolled
+ * cadence — reka writes the local model ref to drive its internal open state
+ * when no parent `v-model:open` is bound; a parent that binds it controls the
+ * value and receives `update:open` (the debounced signal honoring
+ * `hoverOpenDelay`/`closeDelay`). The prior dual-watch reconciliation
+ * (external `props.open` → internal `isOpen` + internal `isOpen` →
+ * `update:open` emit) is RETIRED — `defineModel` collapses both legs.
+ */
+const open = defineModel<boolean>("open", { default: false });
+
 const contentClass = computed(() =>
     cn(
         "z-popover hover-popover-panel popover-animate",
@@ -141,37 +136,19 @@ const useNative = computed(() => props.native && SUPPORTS_INTEREST);
 // panel (the implicit-anchor + invoker contract).
 const nativeId = `gl-hover-popover-${useId() ?? "0"}`;
 
-/* J.W3.B — dock-keep-open sink. Track open state via reka's
-   `v-model:open`; while the popover is visible AND `keepDockOpen` is
-   set, hold the parent dock open via the provide/inject contract
-   `<GlassDock>` ships through `useDockState`. Outside a dock context
-   the injects fall back to null and the watcher is a no-op.
-
-   AB.W2 — `v-model:open` passthrough. The local `isOpen` ref doubles
-   as the source of truth for both the dock-keep-open watcher AND the
-   `update:open` event surface. When the consumer two-way-binds the
-   `open` prop, the watcher on `props.open` syncs the external value
-   into the internal ref so reka-ui's HoverCardRoot reads from one
-   place. */
-const isOpen = ref(props.open ?? false);
-
-watch(() => props.open, (next) => {
-    if (typeof next === "boolean" && next !== isOpen.value) {
-        isOpen.value = next;
-    }
-});
-
-watch(isOpen, (next) => {
-    emit("update:open", next);
-});
+/* J.W3.B — dock-keep-open sink. Track open state via the `open` model
+   (reka's `v-model:open` writes it); while the popover is visible AND
+   `keepDockOpen` is set, hold the parent dock open via the provide/inject
+   contract `<GlassDock>` ships through `useDockState`. Outside a dock context
+   the injects fall back to null and the watcher is a no-op. */
 
 /* AQ.W6 native path — the `popover="hint"` panel's `toggle` event is the
    open-state source (reka's `v-model:open` is not in play). Sync it into the
-   shared `isOpen` ref so the dock-keep-open watcher + `update:open` surface
+   shared `open` model so the dock-keep-open watcher + `update:open` surface
    fire identically on both paths. */
 function onNativeToggle(e: Event) {
-    const open = (e as ToggleEvent).newState === "open";
-    if (open !== isOpen.value) isOpen.value = open;
+    const next = (e as ToggleEvent).newState === "open";
+    if (next !== open.value) open.value = next;
 }
 /* O.W2 Lane C — `dockId` + keep-open / release callables consolidated under
    the canonical typed-context helper. Outside a `<GlassDock>` the helper
@@ -180,12 +157,12 @@ function onNativeToggle(e: Event) {
 const dock = useOptionalDockContext();
 let isHeld = false;
 
-watch(isOpen, (open) => {
+watch(open, (next) => {
     if (!props.keepDockOpen) return;
-    if (open && !isHeld) {
+    if (next && !isHeld) {
         dock?.keepOpen();
         isHeld = true;
-    } else if (!open && isHeld) {
+    } else if (!next && isHeld) {
         dock?.release();
         isHeld = false;
     }
@@ -229,7 +206,7 @@ const portalAttrs = computed(() =>
     <!-- Default (kept) path — reka-ui HoverCard. -->
     <HoverCardRoot
         v-else
-        v-model:open="isOpen"
+        v-model:open="open"
         :open-delay="hoverOpenDelay"
         :close-delay="closeDelay"
     >
