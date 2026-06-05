@@ -45,6 +45,12 @@ const props = withDefaults(
         id?: string;
         /** Uncontrolled initial state. */
         defaultOpen?: boolean;
+        /**
+         * Opt-in inter-row hairline. When set, sibling rows inside the body
+         * are separated by a `border-border/30` top rule (the first row stays
+         * flush). Default `false` keeps the body gap-only (pre-AU.W9 visual).
+         */
+        dividers?: boolean;
         class?: HTMLAttributes["class"];
         /** Body wrapper class override. */
         bodyClass?: HTMLAttributes["class"];
@@ -103,7 +109,7 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
             @click="onToggle"
         >
             <div class="flex min-w-0 items-baseline gap-2">
-                <span class="text-sm font-semibold text-foreground">{{ label }}</span>
+                <span class="text-small font-semibold text-foreground">{{ label }}</span>
                 <span
                     v-if="sub"
                     class="truncate text-micro font-mono text-muted-foreground/70"
@@ -135,7 +141,16 @@ const stateAttr = computed(() => (open.value ? "open" : "closed"));
             :style="{ gridTemplateRows: open ? '1fr' : '0fr' }"
         >
             <div class="min-h-0 overflow-hidden">
-                <div :class="cn('configurator-layer-body px-3 py-2 space-y-2', props.bodyClass)">
+                <div
+                    :class="
+                        cn(
+                            'configurator-layer-body px-3 py-2 space-y-2',
+                            props.dividers &&
+                                '[&>*+*]:border-t [&>*+*]:border-border/30 [&>*+*]:pt-2',
+                            props.bodyClass,
+                        )
+                    "
+                >
                     <slot />
                 </div>
             </div>

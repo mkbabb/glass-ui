@@ -75,7 +75,7 @@ const resolvedDensity = computed<ConfiguratorDensity | undefined>(
     >
         <div class="flex items-baseline justify-between gap-3">
             <div class="flex min-w-0 items-baseline gap-2">
-                <Label class="truncate text-sm font-medium text-foreground">
+                <Label class="truncate text-small font-medium text-foreground">
                     {{ label }}
                 </Label>
                 <span

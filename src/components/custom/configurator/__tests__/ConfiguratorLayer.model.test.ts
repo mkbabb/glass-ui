@@ -38,3 +38,24 @@ describe("ConfiguratorLayer defineModel(open) round-trip", () => {
         expect(wrapper.find("button").attributes("aria-expanded")).toBe("false");
     });
 });
+
+// AU.W9.A — A-1 inter-row divider opt-in (conditional Tailwind arm, no CSS rung).
+describe("ConfiguratorLayer dividers opt-in", () => {
+    it("renders the inter-row hairline class when dividers is set", () => {
+        const wrapper = mount(ConfiguratorLayer, {
+            props: { label: "Section", dividers: true },
+        });
+        const body = wrapper.find(".configurator-layer-body");
+        expect(body.classes()).toContain("[&>*+*]:border-t");
+        expect(body.classes()).toContain("[&>*+*]:border-border/30");
+    });
+
+    it("renders no divider class by default", () => {
+        const wrapper = mount(ConfiguratorLayer, {
+            props: { label: "Section" },
+        });
+        const body = wrapper.find(".configurator-layer-body");
+        expect(body.classes()).not.toContain("[&>*+*]:border-t");
+        expect(body.classes()).not.toContain("[&>*+*]:border-border/30");
+    });
+});
