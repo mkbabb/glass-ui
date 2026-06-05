@@ -118,6 +118,20 @@ jobs:
             # delete a role from the README → RED.
             - name: proof:dock-vocabulary
               run: npm run proof:dock-vocabulary
+            # AU.W8b — the dock.css split gate. Asserts the five-control family
+            # (.dock-icon-button/.dock-tab-button/triggers/dark-mode-toggle) moved
+            # to dock-controls.css, the shared :where() four-state contract STAYS
+            # in dock.css (the import root), and index.css @imports dock-controls.
+            # Bite: a surviving control rule in dock.css → RED.
+            - name: proof:dock-css-split
+              run: npm run proof:dock-css-split
+            # AU.W8b — the design-idiom localization gate. Asserts no SFC smuggles
+            # a token through a `text-[var(--…)]` / `shadow-[var(--…)]` arbitrary
+            # wrap that bypasses the @theme layer (the cascade tokens.css →
+            # theme.css → utilities.css → scoped is the gold standard; sole
+            # allowlist: TabsTrigger --active-tab-color). Bite: re-inject one → RED.
+            - name: proof:design-idiom-localization
+              run: npm run proof:design-idiom-localization
             # AT.W7-dock-c — the ι doc-rot sweep. Asserts every `custom/<dir>`
             # directory + every Dependencies-table package + every
             # `@mkbabb/glass-ui/<subpath>` CLAUDE.md cites RESOLVES at HEAD
