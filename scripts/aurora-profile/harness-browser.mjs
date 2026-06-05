@@ -316,6 +316,13 @@ export const HARNESS_SOURCE = String.raw`
             const setupStarted = performance.now();
             aurora = createAurora(canvas, cfg, {
                 preserveDrawingBuffer: options.preserveDrawingBuffer,
+                // The profiler needs the GL context created synchronously so the
+                // getContext patch on HTMLCanvasElement captures it into
+                // canvas.__auroraProfileGl before the render/timing steps below.
+                // The default "deferred" strategy skips arm() inside createAurora
+                // and delays context creation to an idle tick — too late for this
+                // harness. Force eager init (same behaviour as pre-AU runtimes).
+                initStrategy: "eager",
             });
             result.setupMs = performance.now() - setupStarted;
             await waitForCanvasSize(canvas, options.widthCss, options.heightCss);

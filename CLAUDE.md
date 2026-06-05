@@ -69,7 +69,7 @@ src/
 │   │   ├── toggle-group/           # ToggleGroup, ToggleGroupItem
 │   │   ├── tooltip/                # Tooltip provider/trigger/content (rounded-tooltip token)
 │   │   └── index.ts                # barrel: all ui/ exports
-│   ├── custom/                     # 34 custom package dirs (every dir has a package barrel)
+│   ├── custom/                     # 36 custom package dirs (every dir has a package barrel)
 │   │   ├── animated-digit/         # AnimatedDigit single-glyph reel (AB+1 / AC.W6d ergonomics)
 │   │   ├── aurora/                 # Aurora WebGL background + useAurora composable (aurora chrome consumes useConfiguratorState<AuroraConfig> with cloneMode='per-preset'—see Configurator; L.W7 Lane B retired the prior parallel useAuroraStudio chrome)
 │   │   ├── configurator/           # Configurator + ConfiguratorLayer + ConfiguratorRow + useConfiguratorState
@@ -92,6 +92,7 @@ src/
 │   │   ├── glass-carousel/         # GlassCarousel + useGlassCarousel
 │   │   ├── glass-panel/            # GlassPanel substrate wrapper
 │   │   ├── glyph-face/             # GlyphFace 3-layer wrapper (phase-tinted backplate + cap)
+│   │   ├── goo-blob/               # GooBlob WebGL2 metaball on the useWebGLCanvas substrate—injected ColorResolver (AU.W7; subpath /goo-blob)
 │   │   ├── header-ribbon/          # HeaderRibbon—hover-tracking ribbon (O.W6 Lane A; subpath /header-ribbon)
 │   │   ├── hover-popover/          # HoverPopover with hoverOpenDelay prop (renamed from openDelay—K W1)
 │   │   ├── icon-tooltip/           # IconTooltip
@@ -110,14 +111,16 @@ src/
 │   │   ├── sortable-list/          # SortableList + list item helpers
 │   │   ├── stacked-icons/          # StackedIcons
 │   │   ├── status-dot/             # StatusDot
-│   │   ├── tabs/                   # BouncyTabs, UnderlineTabs, BouncyToggle (active-state vocab canon—V.W3)
-│   │   ├── timeline/               # GlassTimeline
+│   │   ├── tabs/                   # BouncyTabs, UnderlineTabs, BouncyToggle (active-state vocab canon—V.W3; AU.W10 extracted composables/useBouncySlider)
+│   │   ├── timeline/               # GlassTimeline + Continuous{Timeline,Rail,Markers} (AU.W10 split the 901-line orchestrator)
 │   │   ├── toggle-chip/            # segmented chip/cell toggle
 │   │   ├── typewriter/             # TypewriterText
+│   │   ├── watercolor-dot/         # WatercolorDot CSS/SVG blob—internalized per-instance filter + seeded prng (AU.W7; subpath /watercolor-dot)
 │   │   └── index.ts
 │   └── index.ts                    # barrel: ui/ + custom/
-├── composables/                    # v1.0 public composables—8 coherent sub-trees (L.W2 Lane A restructure)
-│   ├── dark/                       # useGlobalDark (subpath canonical home—/dark; vueuse-bearing)
+├── composables/                    # v1.0 public composables—9 coherent sub-trees (L.W2 Lane A restructure; AU.W5 added color/)
+│   ├── color/                      # OKLCh primitives + ColorResolver seam (value.js-only leaf—subpath /color; AU.W5)
+│   ├── dark/                       # useGlobalDark({initialValue}) + darkModeSyncScript()/installDarkModeSync() FOUC (subpath /dark; vueuse-bearing; AU.W9)
 │   ├── keyboard/                   # useKeyboardShortcuts + registerShortcut + useRegisteredShortcuts
 │   │                               # + formatCombo + formatComboParts + isMac + types
 │   │                               # (subpath canonical home—/keyboard; vueuse-bearing)
@@ -128,7 +131,7 @@ src/
 │   │                               # useDarkModeSync, useRAFLoop, useIntersectionPause,
 │   │                               # useViewTransition (AQ.W5—the startViewTransition
 │   │                               # substrate; dependency-free, on /motion-core + root barrel)
-│   ├── glass/                      # useGlassRenderer + WebGL/WebGPU shader assets
+│   ├── glass/                      # useGlassRenderer + useWebGLCanvas substrate (AU.W6) + WebGL/WebGPU shader assets
 │   ├── sortable/                   # useSortable
 │   ├── sidebar/                    # useSidebarState, useSidebarFollow, useScrollTracker, useTreeIndex
 │   └── index.ts                    # internal barrel—re-exports all 8 sub-trees + co-located
