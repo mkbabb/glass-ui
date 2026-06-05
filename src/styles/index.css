@@ -53,8 +53,18 @@
  *                              Consumes tokens (1) + theme aliases (3).
  *   5. paper.css             — paper underpaint + grain overlay utilities.
  *                              Pairs with (4) for paper-on-glass compositions.
- *   6. dock.css              — .dock-icon-button, .dock-select-trigger, etc.
- *                              Component utility layer; consumes (1) + (3).
+ *   6. dock.css              — dock shell / density / grain / layer-crossfade
+ *                              contract + the shared cross-control four-state
+ *                              comma-groups. Component utility layer; consumes
+ *                              (1) + (3).
+ *  6b. dock-controls.css     — the five dock CONTROL families carved out of
+ *                              dock.css (AU.W8b.3): .dock-icon-button,
+ *                              .dark-mode-toggle-button, .dock-tab-button + tiers,
+ *                              .dock-select-trigger / .dock-dropdown-trigger, and
+ *                              the coarse-pointer touch floor. Same @layer
+ *                              components; MUST load directly after dock.css so
+ *                              the shared :where()/comma-group contract in (6)
+ *                              cascades into these control rules.
  *   7. cards.css             — .cartoon-surface, .paper-texture.
  *                              Component utility layer.
  *   8. floating-panel.css    — .floating-panel + .floating-panel-item.
@@ -98,6 +108,7 @@
 @import "./glass.css";
 @import "./paper.css";
 @import "./dock.css";
+@import "./dock-controls.css";
 @import "./cards.css";
 @import "./floating-panel.css";
 @import "./transitions.css";

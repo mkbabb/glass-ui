@@ -1,0 +1,143 @@
+AU.W8b Lane A — compiled dist CSS selector-list diff (§2 nesting + §3 carve)
+=================================================================
+
+Method: de-sugar native &-nesting + descendant nesting to fully-qualified
+selectors (paren-aware comma split so :is()/:where() arg-lists are not
+fragmented), comment-strip, dedupe, sort. Compared:
+  BEFORE = dist/styles/dock.css after §1 (pre-carve baseline)
+  AFTER  = dist/styles/dock.css + dist/styles/dock-controls.css (post-carve+nest)
+
+BEFORE selector count: 121
+AFTER  selector count: 121
+
+DIFF (before vs after):
+  (empty — IDENTICAL)
+
+RESULT: IDENTICAL selector set. The §2 &-nesting is specificity-preserving
+and the §3 carve is a pure relocation — zero selectors added, dropped, or
+changed. Native nesting is Baseline Widely (2023); the consumer's
+Tailwind/Lightning CSS de-sugars dock-controls.css to this same flat set.
+
+Full sorted AFTER selector list:
+-------------------------------
+.dark .glass-dock.variant-instrument-strip::before
+.dark .glass-dock::after
+.dark-mode-toggle-button
+.dark-mode-toggle-button > svg
+.dark-mode-toggle-button:focus
+.dark-mode-toggle-button:focus-visible
+.dark-mode-toggle-button:hover
+.dark-mode-toggle-button[data-size="control"]
+.dark-mode-toggle-button[data-size="dock"]
+.dark-mode-toggle-button[data-size="lg"]
+.dark-mode-toggle-button[data-size="md"]
+.dark-mode-toggle-button[data-size="sm"]
+.dock-dropdown-trigger
+.dock-dropdown-trigger:active:not(:disabled)
+.dock-dropdown-trigger:disabled
+.dock-dropdown-trigger:focus-visible
+.dock-dropdown-trigger:focus:not(:focus-visible)
+.dock-dropdown-trigger:hover:not(:disabled)
+.dock-dropdown-trigger:is(.is-active, .active, [aria-expanded="true"], [aria-pressed="true"])
+.dock-icon-button
+.dock-icon-button--compact
+.dock-icon-button:active:not(:disabled)
+.dock-icon-button:disabled
+.dock-icon-button:focus-visible
+.dock-icon-button:focus:not(:focus-visible)
+.dock-icon-button:hover:not(:disabled)
+.dock-icon-button:hover:not(:disabled):not(:focus-visible)
+.dock-icon-button:is(.is-active, .active, [aria-expanded="true"], [aria-pressed="true"])
+.dock-icon-button:not(.dock-icon-button--compact)
+.dock-icon-button[data-tier="secondary"]
+.dock-icon-button[data-tier="secondary"]:hover:not(:disabled)
+.dock-inline
+.dock-layer
+.dock-layer-group
+.dock-layer-group .dock-layer-item-host.is-active
+.dock-layer-group.horizontal
+.dock-layer-group.horizontal.rail-end
+.dock-layer-group.horizontal.rail-end .dock-layer-rail
+.dock-layer-group.vertical
+.dock-layer-group.vertical .dock-layer-item-host
+.dock-layer-group.vertical .dock-layer-item-host.is-active
+.dock-layer-group.vertical .dock-layer-rail
+.dock-layer-group.vertical.rail-end
+.dock-layer-group.vertical.rail-end .dock-layer-rail
+.dock-layer-item-host
+.dock-layer-item-host.is-active
+.dock-layer-item-host.is-leaving
+.dock-layer-item-host:not(.is-active):not(.is-leaving)
+.dock-layer-rail
+.dock-layer-rail .dock-layer-tab
+.dock-layer-rail .dock-layer-tab-indicator
+.dock-layer-rail .dock-layer-tab:hover
+.dock-layer-rail .dock-layer-tab[data-state="active"]
+.dock-layer-rail [role="tab"]:focus-visible
+.dock-layer-stack
+.dock-layer.layer-active
+.dock-layer:not(.layer-active)
+.dock-layers
+.dock-select-trigger
+.dock-select-trigger:active:not(:disabled)
+.dock-select-trigger:disabled
+.dock-select-trigger:focus-visible
+.dock-select-trigger:focus:not(:focus-visible)
+.dock-select-trigger:hover:not(:disabled)
+.dock-select-trigger:is(.is-active, .active, [aria-expanded="true"], [aria-pressed="true"])
+.dock-select-trigger[data-state="open"] .dock-select-trigger__chevron
+.dock-select-trigger__chevron
+.dock-separator
+.dock-spacer
+.dock-sticky
+.dock-tab-button
+.dock-tab-button:active:not(:disabled)
+.dock-tab-button:disabled
+.dock-tab-button:focus-visible
+.dock-tab-button:focus:not(:focus-visible)
+.dock-tab-button:hover:not(:disabled)
+.dock-tab-button:is(.is-active, .active, [aria-current="page"], [aria-pressed="true"])
+.dock-tab-button[data-tier="primary"]
+.dock-tab-button[data-tier="primary"]:hover:not(:disabled)
+.dock-tab-button[data-tier="primary"][data-phase]:not([data-phase="ready"]):not([data-phase="idle"])::before
+.dock-tab-button[data-tier="secondary"]
+.dock-tab-button[data-tier="secondary"]:hover:not(:disabled)
+.glass-dock
+.glass-dock .dark-mode-toggle-button:not([data-size="sm"]):not([data-size="lg"]):not([data-size="control"])
+.glass-dock.always-expanded
+.glass-dock.collapsed
+.glass-dock.collapsed .dock-layer--summary
+.glass-dock.collapsed:hover
+.glass-dock.dock-overflow-wrap
+.glass-dock.dock-overflow-wrap .dock-layer--full
+.glass-dock.dock-overflow-wrap .dock-layer--summary
+.glass-dock.dock-overflow-wrap .dock-separator
+.glass-dock.dock-overflow-wrap.collapsed
+.glass-dock.dock-scroll-x .dock-layer--full
+.glass-dock.dock-scroll-x .dock-layer--full::-webkit-scrollbar
+.glass-dock.dock-scroll-x.expanded:not(.dock-overflow-wrap) > .dock-layers
+.glass-dock.expanded
+.glass-dock.expanded > .dock-layers
+.glass-dock.expanded:not(.dock-overflow-wrap) > .dock-layers
+.glass-dock.expanded:not(.fit-content) .dock-layer--full
+.glass-dock.expanded:not(.fit-content) .dock-layers
+.glass-dock.variant-instrument-strip
+.glass-dock.variant-instrument-strip::before
+.glass-dock.variant-rail
+.glass-dock.variant-rail.shape-pill
+.glass-dock.variant-rail.shape-rounded
+.glass-dock.vertical
+.glass-dock.vertical.always-expanded
+.glass-dock.vertical.dock-scroll-y
+.glass-dock.vertical.dock-scroll-y::-webkit-scrollbar
+.glass-dock::after
+.glass-dock:has([data-state="open"])
+.glass-dock:not(.vertical)
+.glass-dock:where(.fixed)
+.glass-dock[data-density="audacious"]
+.glass-dock[data-density="comfortable"]
+.glass-dock[data-density="compact"]
+.glass-dock[data-density="spacious"]
+.glass-dock[data-density]
+.glass-dock[data-held]
+:where( .glass-dock, .dock-layer-stack, .dock-layer-item-host, .dock-layer-tab, .dock-icon-button, .dark-mode-toggle-button, .dock-tab-button, .dock-select-trigger, .dock-dropdown-trigger )

@@ -1,0 +1,432 @@
+/* Dock CONTROL-family styles — carved out of dock.css at AU.W8b.3.
+ *
+ * dock.css keeps the shell / density / grain / layer-crossfade contract + the
+ * shared cross-control four-state contract (the `:focus-visible` / `:disabled`
+ * comma-groups + the motion-token `:where()` group, which reference these
+ * control selectors but are shared, not per-control). This file owns the FIVE
+ * control families themselves:
+ *   1. `.dock-icon-button`        (base / --compact / hover / active / focus / active-paint)
+ *   2. `.dark-mode-toggle-button` (sizes / hover / focus)
+ *   3. `.dock-tab-button`         (base / states / tier-primary audacious / tier-secondary)
+ *   4. `.dock-select-trigger` / `.dock-dropdown-trigger` (base / states / __chevron / open-flip)
+ *   5. the `@media (pointer: coarse)` per-button touch-target floor on `.dock-icon-button`
+ *
+ * AU.W8b.2 — the per-family parent+state clusters use native `&`-nesting
+ * (Baseline Widely available 2023; Lightning CSS down-compiles so the shipped
+ * `dist` CSS is flat with IDENTICAL specificity). The cross-family comma-groups
+ * stay in dock.css UN-nested (nesting under one control would change coverage).
+ *
+ * Imported by index.css directly after dock.css in the same `@layer components`
+ * (cascade rung 6b) — no new subpath; it ships inside `/styles`. */
+
+@layer components {
+    .dock-icon-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        /* AQ.W3 §W3.2 identity base */
+        scale: 1;
+        width: var(--dock-control-size, var(--size-icon-btn));
+        height: var(--dock-control-size, var(--size-icon-btn));
+        padding: var(--dock-icon-padding, 0);
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        border-radius: var(--dock-control-radius, var(--radius-pill));
+        /* Foreground base routes through `--dock-fg-on-aurora` (defaults to
+           `--foreground`, byte-identical to before) so a consumer floating the
+           dock over an aurora can lift contrast per-backdrop. The muted icon
+           weight mixes that base down with `--opacity-icon-muted`. */
+        color: color-mix(in srgb, var(--dock-fg-on-aurora, var(--foreground)) calc(var(--opacity-icon-muted) * 100%), transparent);
+        outline: none;
+        transition:
+            background-color var(--dock-motion-fast),
+            color var(--dock-motion-fast),
+            /* AT.W7-dock-b — `scale` carries the press micro-feedback spring
+               (transform-scoped only; the surface fades stay on the flat ease). */
+            scale var(--dock-press-spring),
+            opacity var(--dock-motion-fast),
+            /* AT.W7-dock-b — the glass specular highlight fades in on hover. */
+            box-shadow var(--dock-motion-fast);
+
+        /* AT.W7-dock-b — glass icon-hover. The icon-button hover now reads as a
+           glass surface, not a flat `--muted` plate: a translucent card-tinted fill
+           composes with the specular `--glass-highlight` token (the inset top-edge
+           glass highlight every glass tier carries — `--dock-icon-hover-shadow`
+           defaults to it). Coherent with the dock's glass tier and the
+           `[data-tier="secondary"]` recipe below. A consumer retunes the fill via
+           `--dock-icon-hover-bg` and the specular via `--dock-icon-hover-shadow`. */
+        &:hover:not(:disabled) {
+            background: var(--dock-icon-hover-bg, color-mix(in srgb, var(--card) 55%, transparent));
+            color: var(--btn-hover-color, var(--foreground));
+            scale: var(--scale-hover-dock);
+        }
+
+        /* The specular highlight is scoped to `:not(:focus-visible)` so it never
+           clobbers the focus ring box-shadow (the shared `:focus-visible` group in
+           dock.css) when a control is both hovered and keyboard-focused —
+           the ring wins, the specular yields. */
+        &:hover:not(:disabled):not(:focus-visible) {
+            box-shadow: var(--dock-icon-hover-shadow, var(--glass-highlight));
+        }
+
+        &:active:not(:disabled) {
+            scale: var(--scale-press-dock);
+        }
+
+        &:focus:not(:focus-visible) {
+            box-shadow: none;
+            outline: none;
+        }
+
+        /* O.W6 Lane B — token-ladder active paint. Defaults match the prior
+           hardcoded recipe (--muted bg + --foreground color, no transform / border
+           / shadow). Consumers override the active variant via the
+           `--dock-active-{bg,color,scale,border,shadow}` cohort scoped to a parent
+           (e.g. bbnf-buddy `ToolsLayer.vue` audacious active treatment) — no
+           `:deep()` escapes required. See tokens.css §10 (dock geometry block). */
+        &:is(.is-active, .active, [aria-expanded="true"], [aria-pressed="true"]) {
+            background: var(--dock-active-bg);
+            color: var(--dock-active-color);
+            scale: var(--dock-active-scale);
+            border: var(--dock-active-border);
+            box-shadow: var(--dock-active-shadow);
+        }
+    }
+
+    /* focus-visible ring + disabled paint hoisted to the shared `:where()`
+       group in dock.css. The box-shadow fade transition lives on the base
+       `.dock-icon-button` rule (AT.W7-dock-b added `box-shadow` there for the
+       glass specular hover), so no per-state transition override is needed. */
+
+    .dock-icon-button--compact {
+        width: var(--dock-compact-control-size, auto);
+        height: var(--dock-compact-control-size, auto);
+        min-width: var(--dock-compact-control-min-width, 0);
+        padding: var(--dock-compact-control-padding, 0.25rem);
+    }
+
+    .dark-mode-toggle-button {
+        width: var(--dark-mode-toggle-size, 2.25rem);
+        height: var(--dark-mode-toggle-size, 2.25rem);
+        min-width: var(--dark-mode-toggle-size, 2.25rem);
+        min-height: var(--dark-mode-toggle-size, 2.25rem);
+        max-width: var(--dark-mode-toggle-size, 2.25rem);
+        max-height: var(--dark-mode-toggle-size, 2.25rem);
+        aspect-ratio: 1;
+        padding: var(--dark-mode-toggle-padding, 0.375rem);
+        transition:
+            opacity var(--dock-motion-standard),
+            background-color var(--dock-motion-standard),
+            box-shadow var(--dock-motion-fast);
+
+        & > svg {
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        &:hover,
+        &:focus {
+            background: var(--surface-tint-10);
+            opacity: 1;
+            outline: none;
+        }
+
+        &:focus-visible {
+            box-shadow: var(--focus-ring-shadow);
+        }
+
+        &[data-size="sm"] {
+            --dark-mode-toggle-size: 1.75rem;
+            --dark-mode-toggle-padding: 0.25rem;
+        }
+
+        &[data-size="md"] {
+            --dark-mode-toggle-size: 2.25rem;
+            --dark-mode-toggle-padding: 0.375rem;
+        }
+
+        &[data-size="lg"] {
+            --dark-mode-toggle-size: 2.75rem;
+            --dark-mode-toggle-padding: 0.5rem;
+        }
+
+        &[data-size="control"] {
+            --dark-mode-toggle-size: var(--control-size, 2.25rem);
+            --dark-mode-toggle-padding: var(--control-icon-padding, 0.375rem);
+        }
+    }
+
+    .dark-mode-toggle-button[data-size="dock"],
+    .glass-dock .dark-mode-toggle-button:not([data-size="sm"]):not([data-size="lg"]):not([data-size="control"]) {
+        --dark-mode-toggle-size: var(--dock-control-size, var(--size-icon-btn));
+        --dark-mode-toggle-padding: var(--dock-icon-padding, 0);
+    }
+
+    .dock-tab-button {
+        display: inline-flex;
+        align-items: center;
+        flex-shrink: 0;
+        /* P.W4 Lane B inline-absorb: the `--dock-tab-h` density-keyed height
+           knob (parallel to DockIconButton's --dock-control-size) merged
+           here from the prior DockTabButton.vue scoped style block. The
+           density rungs that set `--dock-tab-h` per tier live in dock.css
+           (the `.glass-dock[data-density="…"]` blocks) — Q.W3
+           Lane A consolidated them out of utilities.css, closing the
+           cascade-order split-brain. When a parent <GlassDock density="…">
+           sets `--dock-tab-h`, the tab-button reserves that row even when
+           the glyph + padding sum would ride lower. Falls through to
+           `--dock-tab-min-height` (kept for audacious-tier callers) and
+           finally to `auto`. R3-spec / audit-E P0-3. */
+        min-height: var(--dock-tab-h, var(--dock-tab-min-height, auto));
+        padding-inline: var(--dock-tab-padding-inline, 0.75rem);
+        padding-block: var(--dock-tab-padding-block, 0.375rem);
+        border: none;
+        background: transparent;
+        border-radius: var(--dock-control-radius, var(--radius-pill));
+        /* Default font-size carries through to text-only tab content; consumers
+           wrapping content in an explicit type utility (e.g. `text-hero`,
+           `text-display`) on an inner <span> win because Tailwind v4 ships
+           @utility blocks in @layer utilities, which ranks above @layer
+           components — so this declaration is a fallback, not a ceiling. */
+        font-size: var(--type-small);
+        line-height: 1;
+        color: var(--muted-foreground);
+        text-decoration: none;
+        cursor: pointer;
+        white-space: nowrap;
+        outline: none;
+        /* AQ.W3 §W3.2 identity base */
+        scale: 1;
+        transition:
+            background-color var(--dock-motion-fast),
+            color var(--dock-motion-fast),
+            /* AT.W7-dock-b — press micro-feedback spring (transform-scoped). */
+            scale var(--dock-press-spring);
+
+        &:hover:not(:disabled) {
+            background: var(--surface-tint-8);
+            color: var(--foreground);
+        }
+
+        &:active:not(:disabled) {
+            scale: var(--scale-press-dock);
+        }
+
+        &:focus:not(:focus-visible) {
+            box-shadow: none;
+        }
+
+        /* focus-visible ring + disabled paint hoisted to the shared `:where()`
+           group in dock.css. */
+
+        &:is(.is-active, .active, [aria-current="page"], [aria-pressed="true"]) {
+            background: var(--surface-tint-10);
+            color: var(--foreground);
+        }
+    }
+
+    /* Tier — primary ────────────────────────────────────────────
+     *
+     * Per W2.7 §9, §12, §13, §17. The primary tier composes three at-rest
+     * marks (top-highlight, bottom under-shadow, baseline glass) with three
+     * disco accents on hover (specular swap, sparkle sweep, disco-grain).
+     *
+     * Reservation: disco fires on hover only. At rest the button reads as
+     * a Vignelli-restrained composed glass surface. The `--phase-color`
+     * cascade (provided by `<InstrumentChassis>` via `data-phase`) tints
+     * the disco-grain radial only on hover; idle is neutral.
+     *
+     * K.W6 Lane B — the canonical disco-grain + sparkle-sweep + specular
+     * recipe lifted to `@utility btn-audacious` (utilities.css). The Vue
+     * <DockTabButton> attaches `btn-audacious` automatically when the
+     * consumer passes `data-tier="primary"`. The dock-local rules below
+     * are STRICTLY the dock extension: structural shell (padding, base
+     * surface tint, min-height) + phase-tint extensions (hover radial
+     * uses `--phase-color`, plus the `[data-phase]` `::before` halo).
+     */
+    .dock-tab-button[data-tier="primary"] {
+        --dock-tab-min-height: 4rem;
+        padding-inline: 1.5rem;
+        background:
+            color-mix(in srgb, var(--card) 60%, transparent);
+        color: var(--foreground);
+
+        /* Phase-tint hover override — same disco-grain composition as
+         * `btn-audacious`, but the radial uses `--phase-color` (instrument-
+         * cluster axis) instead of the canonical `--primary`. The `--paper-
+         * clean-texture` overlay and `--glass-specular` shadow stack are
+         * inherited from the underlying `btn-audacious` utility. */
+        &:hover:not(:disabled) {
+            --glass-grain-opacity: var(--glass-grain-opacity-disco, 0.08);
+            background-image:
+                var(--paper-clean-texture),
+                radial-gradient(
+                    ellipse at 30% 30%,
+                    color-mix(in srgb, var(--phase-color, var(--foreground)) 18%, transparent),
+                    transparent 70%
+                );
+            background-blend-mode: overlay, normal;
+            background-size: var(--paper-texture-size), auto;
+        }
+
+        /* Q.W3.A.4 — phase-tint backplate halo at the pill wrapper.
+         *
+         * The inner `<GlyphFace>` halo (`.glyph-face-backplate { inset: -25% }`)
+         * gets clipped by the pill's `overflow: hidden`; the halo never escapes
+         * the inner glyph wrapper. This `::before` lifts the phase-tint to the
+         * pill itself so the glow composes with the whole CTA. Scoped to
+         * active phases — at idle / ready the pill stays neutral and inherits
+         * the W2.7 reservation ("disco fires on hover only"). */
+        &[data-phase]:not([data-phase="ready"]):not([data-phase="idle"])::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(
+                ellipse at 30% 30%,
+                color-mix(in srgb, var(--phase-color, var(--foreground)) 18%, transparent) 0%,
+                transparent 70%
+            );
+            pointer-events: none;
+            z-index: -1;
+            opacity: 1;
+            transition: opacity var(--duration-fast) var(--ease-standard);
+        }
+    }
+
+    /* Tier — secondary ──────────────────────────────────────────
+     *
+     * Companion to `data-tier="primary"`. Carries the same edge-light +
+     * edge-shadow skeu vocabulary at quieter weight: no disco accent, no
+     * sparkle, no curvature radial. Composes for icon-button consumers
+     * (chassis ActionCluster, SettingsCog) where the surface needs a
+     * glass-tier read but not the audacious primary punch. Per P.W1.B
+     * audit-C §3 — closes the four bare `<DockIconButton>` consumer sites
+     * (cog + back + retake + stop) without redefining the family. The
+     * secondary tier is a cross-control comma-group (tab + icon button), so it
+     * stays flat — nesting under one control would change coverage.
+     */
+    .dock-tab-button[data-tier="secondary"],
+    .dock-icon-button[data-tier="secondary"] {
+        background: color-mix(in srgb, var(--card) 50%, transparent);
+        border: 1px solid var(--glass-border-quiet);
+        box-shadow:
+            var(--border-hairline),
+            var(--glass-highlight);
+    }
+
+    .dock-tab-button[data-tier="secondary"]:hover:not(:disabled),
+    .dock-icon-button[data-tier="secondary"]:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--card) 65%, transparent);
+        box-shadow:
+            var(--glass-specular),
+            0 0.5px 0 0 rgb(0 0 0 / 0.06);
+    }
+
+    .dock-select-trigger,
+    .dock-dropdown-trigger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        /* AQ.W3 §W3.2 identity base */
+        scale: 1;
+        gap: var(--dock-trigger-gap, 0.25rem);
+        min-height: var(--dock-trigger-min-height, auto);
+        padding:
+            var(--dock-trigger-padding-block, 0.25rem)
+            var(--dock-trigger-padding-inline, 0.5rem);
+        white-space: nowrap;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        border-radius: var(--dock-control-radius, var(--radius-pill));
+        /* Shares the dock-icon-button legibility base (`--dock-fg-on-aurora`). */
+        color: color-mix(in srgb, var(--dock-fg-on-aurora, var(--foreground)) calc(var(--opacity-icon-muted) * 100%), transparent);
+        outline: none;
+        transition:
+            background-color var(--dock-motion-fast),
+            color var(--dock-motion-fast),
+            /* AT.W7-dock-b — press micro-feedback spring (transform-scoped). */
+            scale var(--dock-press-spring),
+            opacity var(--dock-motion-fast);
+    }
+
+    .dock-select-trigger:hover:not(:disabled),
+    .dock-dropdown-trigger:hover:not(:disabled) {
+        background: var(--muted);
+        color: var(--btn-hover-color, var(--foreground));
+    }
+
+    .dock-dropdown-trigger:hover:not(:disabled) {
+        scale: var(--scale-hover-dock);
+    }
+
+    .dock-select-trigger:active:not(:disabled),
+    .dock-dropdown-trigger:active:not(:disabled) {
+        scale: var(--scale-press-dock);
+    }
+
+    .dock-select-trigger:focus:not(:focus-visible),
+    .dock-dropdown-trigger:focus:not(:focus-visible) {
+        box-shadow: none;
+        outline: none;
+    }
+
+    /* focus-visible ring + disabled paint hoisted to the shared `:where()`
+       group in dock.css; this rule adds only the box-shadow fade transition.
+       `scale` keeps the AT.W7-dock-b press micro-feedback spring. */
+    .dock-select-trigger:focus-visible,
+    .dock-dropdown-trigger:focus-visible {
+        transition:
+            background-color var(--dock-motion-fast),
+            color var(--dock-motion-fast),
+            scale var(--dock-press-spring),
+            opacity var(--dock-motion-fast),
+            box-shadow var(--dock-motion-fast);
+    }
+
+    .dock-select-trigger:is(.is-active, .active, [aria-expanded="true"], [aria-pressed="true"]),
+    .dock-dropdown-trigger:is(.is-active, .active, [aria-expanded="true"], [aria-pressed="true"]) {
+        background: var(--muted);
+        color: var(--foreground);
+    }
+
+    .dock-select-trigger__chevron {
+        width: var(--dock-trigger-icon-size, 0.75rem);
+        height: var(--dock-trigger-icon-size, 0.75rem);
+        flex-shrink: 0;
+        opacity: 0.5;
+        /* Individual-transform identity base (AQ.W3 §W3.2) — `rotate:` longhand
+           for family consistency (not a stacking-context hazard: child glyph).
+           AT.W7-dock-b — the open/close flip carries the press micro-feedback
+           spring (transform-scoped). */
+        rotate: 0deg;
+        transition: rotate var(--dock-press-spring);
+    }
+
+    .dock-select-trigger[data-state="open"] .dock-select-trigger__chevron {
+        rotate: 180deg;
+    }
+
+    /* O.W6 Lane D — Touch-target floor (speedtest AC.W6 F2.AA-03 / WCAG
+       2.5.5), button-level half. The dock-width-math half (the
+       `.glass-dock[data-density]` `--dock-control-size` lift) STAYS in dock.css
+       (shell / width-math). This per-button floor reaches a STANDALONE
+       DockIconButton (a routed settings gear, no dock wrapper) that reads the
+       bare `--size-icon-btn` and would otherwise fall below the 44px WCAG
+       target. It holds the touch box regardless of ancestry; the in-dock
+       `.glass-dock[data-density]` rule is more specific and also reserves the
+       slot in the dock's width-math. Compact buttons opt out — they are
+       auto-sized affordances, not primary targets. */
+    @media (pointer: coarse) {
+        .dock-icon-button:not(.dock-icon-button--compact) {
+            min-block-size: var(--dock-touch-target, 2.75rem);
+            min-inline-size: var(--dock-touch-target, 2.75rem);
+        }
+    }
+}

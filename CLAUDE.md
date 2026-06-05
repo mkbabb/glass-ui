@@ -142,7 +142,8 @@ src/
 │   ├── theme.css                   # @theme block: Tailwind color/font/radius aliases + dark variant
 │   ├── typography.css              # golden-ratio scale (√φ), semantic classes, font utilities
 │   ├── glass.css                   # .glass-{wash,quiet,resting,floating,overlay} 5-rung ladder + .glass-card / .glass-pill / .glass-btn
-│   ├── dock.css                    # .dock-icon-button, .dock-select-trigger, .dock-separator, .dock-layer-grid, density-rail
+│   ├── dock.css                    # dock shell/density/grain/layer-crossfade contract + .dock-separator, .dock-layer-grid + shared cross-control four-state comma-groups
+│   ├── dock-controls.css           # the five dock CONTROL families carved from dock.css (AU.W8b.3): .dock-icon-button, .dark-mode-toggle-button, .dock-tab-button + tiers, .dock-select-trigger/.dock-dropdown-trigger, coarse-pointer touch floor
 │   ├── disco-glyph.css             # DiscoGlyph layered fills + facet gradient
 │   ├── glyph-face.css              # GlyphFace cap + backplate cascade
 │   ├── hover-popover.css           # popover-animation grammar (V.W3)
