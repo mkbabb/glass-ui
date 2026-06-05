@@ -57,6 +57,73 @@ afterEach(() => {
     vi.restoreAllMocks();
 });
 
+describe("DataTable page defineModel round-trip", () => {
+    // AU.W8b.5 — the `page` model is now `defineModel<number>("page")`; the
+    // `update:sort` channel STAYS a plain emit (it carries {key,direction}).
+    it("emits update:page when a pagination control is clicked", async () => {
+        const rows: Row[] = Array.from({ length: 30 }, (_, i) => ({
+            _id: String(i),
+            name: `Row ${i}`,
+        }));
+        const wrapper = mount(DataTable as Component, {
+            props: {
+                columns,
+                rows: rows.slice(0, 10),
+                total: 30,
+                page: 1,
+                pageSize: 10,
+                infinite: false,
+            },
+        });
+        const next = wrapper.find('button[aria-label="Next page"]');
+        expect(next.exists()).toBe(true);
+        await next.trigger("click");
+        expect(wrapper.emitted("update:page")?.at(-1)?.[0]).toBe(2);
+    });
+
+    it("reflects an external page write in the active pagination control", async () => {
+        const rows: Row[] = Array.from({ length: 30 }, (_, i) => ({
+            _id: String(i),
+            name: `Row ${i}`,
+        }));
+        const wrapper = mount(DataTable as Component, {
+            props: {
+                columns,
+                rows: rows.slice(10, 20),
+                total: 30,
+                page: 1,
+                pageSize: 10,
+                infinite: false,
+            },
+        });
+        await wrapper.setProps({ page: 2 });
+        // The Previous-page control is enabled only when page > 1.
+        const prev = wrapper.find('button[aria-label="Previous page"]');
+        expect(prev.attributes("disabled")).toBeUndefined();
+    });
+
+    it("keeps update:sort as a plain event emit (not a model)", async () => {
+        const sortableColumns: DataTableColumn[] = [
+            { key: "name", label: "Name", sortable: true },
+        ];
+        const wrapper = mount(DataTable as Component, {
+            props: {
+                columns: sortableColumns,
+                rows: [{ _id: "1", name: "Ada" }],
+                total: 1,
+                page: 1,
+                pageSize: 10,
+                infinite: true,
+            },
+        });
+        await wrapper.find("thead th").trigger("click");
+        expect(wrapper.emitted("update:sort")?.at(-1)?.[0]).toEqual({
+            key: "name",
+            direction: "asc",
+        });
+    });
+});
+
 describe("DataTable row identity", () => {
     it("falls back to stable object identity when the configured row key is missing", async () => {
         const warn = vi.spyOn(console, "warn").mockImplementation(() => {});

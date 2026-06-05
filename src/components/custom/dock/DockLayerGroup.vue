@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useId, useTemplateRef } from "vue";
+import { computed, readonly, ref, useId, useTemplateRef } from "vue";
 import type { Component } from "vue";
 import { Tabs, TabsList, TabsTrigger, TabsIndicator } from "../../ui/tabs";
 import { useOptionalDockContext } from "./composables/dockContext";
@@ -77,11 +77,15 @@ const stackVtStyle = computed<Record<string, string> | undefined>(() =>
         : undefined,
 );
 
+/* AU.W8b.6 — the group (via `useLayerTransition`) owns the WRITABLE
+   `currentLayer`/`leavingLayer` refs and keeps mutating them; the context
+   projection is `readonly()` so a `<DockLayer>` child can read the active-layer
+   state but never write the group-orchestrated value. */
 provideDockLayerGroupContext({
     register,
     unregister,
-    currentLayerId: currentLayer,
-    leavingLayerId: leavingLayer,
+    currentLayerId: readonly(currentLayer),
+    leavingLayerId: readonly(leavingLayer),
 });
 
 function isComponent(icon: unknown): icon is Component {

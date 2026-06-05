@@ -30,7 +30,6 @@ export interface ToggleOption {
 
 export interface BouncyToggleProps {
     options: ToggleOption[];
-    modelValue: string | string[];
     multiSelect?: boolean;
     /** "default" = subtle muted slider; "pill" = solid foreground pill */
     variant?: "default" | "pill";
@@ -54,9 +53,10 @@ const props = withDefaults(defineProps<BouncyToggleProps>(), {
     overflow: "none",
 });
 
-const emit = defineEmits<{
-    "update:modelValue": [value: string | string[]];
-}>();
+// Vue 3.5 defineModel — replaces the manual modelValue prop +
+// update:modelValue emit pair. Single- and multi-select share the one model
+// (`string` vs `string[]`), keyed off `multiSelect`.
+const model = defineModel<string | string[]>({ required: true });
 
 const containerRef = ref<HTMLElement | null>(null);
 const buttonRefs = ref<HTMLElement[]>([]);
@@ -84,10 +84,11 @@ const isScroll = computed(() => props.overflow === "scroll");
 const isAuto = computed(() => props.overflow === "auto");
 
 const activeValues = computed<string[]>(() => {
+    const value = model.value;
     if (props.multiSelect) {
-        return Array.isArray(props.modelValue) ? props.modelValue : [props.modelValue];
+        return Array.isArray(value) ? value : value != null ? [value] : [];
     }
-    return [props.modelValue as string];
+    return value != null ? [value as string] : [];
 });
 
 const isActive = (value: string) => activeValues.value.includes(value);
@@ -108,7 +109,7 @@ const singleSliderStyle = ref<Record<string, string>>({
 
 function updateSingleSlider() {
     if (props.multiSelect || ANCHOR_SUPPORTED) return;
-    const idx = props.options.findIndex((o) => o.value === (props.modelValue as string));
+    const idx = props.options.findIndex((o) => o.value === (model.value as string));
     if (idx < 0 || !buttonRefs.value[idx]) return;
     const btn = buttonRefs.value[idx];
     singleSliderStyle.value = {
@@ -221,9 +222,9 @@ function select(value: string, idx: number) {
         } else {
             current.push(value);
         }
-        emit("update:modelValue", current);
+        model.value = current;
     } else {
-        emit("update:modelValue", value);
+        model.value = value;
     }
 
     scrollButtonIntoView(idx);
@@ -234,7 +235,7 @@ function select(value: string, idx: number) {
 // so no watcher-driven re-measure is needed.
 
 watch(
-    () => props.modelValue,
+    () => model.value,
     () => {
         if (jsSliderActive.value) nextTick(updateSliders);
     },

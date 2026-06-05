@@ -9,13 +9,12 @@ export interface TabOption {
 
 const props = defineProps<{
     options: TabOption[];
-    modelValue: string;
     class?: HTMLAttributes["class"];
 }>();
 
-const emit = defineEmits<{
-    "update:modelValue": [value: string];
-}>();
+// Vue 3.5 defineModel — replaces the manual modelValue prop +
+// update:modelValue emit pair.
+const model = defineModel<string>({ required: true });
 
 // AQ.W6 §Design 4a — the underline is CSS anchor-positioned, not JS-measured.
 // The active tab is `anchor-name: --gl-tab-active`; the `.underline-tabs::before`
@@ -26,7 +25,7 @@ const emit = defineEmits<{
 // `border-bottom` under `@supports not (position-anchor: --x)` is the sole
 // feature-detected fallback (never both live). No JS, no reflow, no nextTick.
 function select(value: string) {
-    emit("update:modelValue", value);
+    model.value = value;
 }
 </script>
 
@@ -37,7 +36,7 @@ function select(value: string) {
             :key="option.value"
             class="underline-tab"
             role="tab"
-            :aria-selected="modelValue === option.value ? 'true' : 'false'"
+            :aria-selected="model === option.value ? 'true' : 'false'"
             @click="select(option.value)"
         >
             {{ option.label }}
