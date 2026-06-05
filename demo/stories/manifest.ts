@@ -309,6 +309,14 @@ export const FLAT_STORIES: FlatStory[] = [
         icon: Droplet,
         component: () => import("./blob.vue").then((m) => m.default),
     },
+    {
+        id: "goo-blob",
+        title: "GooBlob + WatercolorDot",
+        blurb:
+            "The AU.W7 library blob primitives — a WebGL2 metaball on the shared substrate (injected color resolver) + a CSS/SVG pastel swatch (internalized filter).",
+        icon: Droplet,
+        component: () => import("./goo-blob.vue").then((m) => m.default),
+    },
 ];
 
 export function findFlatStory(id: string): FlatStory | undefined {

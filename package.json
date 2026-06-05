@@ -49,6 +49,15 @@
             "aurora": [
                 "dist/aurora.d.ts"
             ],
+            "color": [
+                "dist/color.d.ts"
+            ],
+            "goo-blob": [
+                "dist/goo-blob.d.ts"
+            ],
+            "watercolor-dot": [
+                "dist/watercolor-dot.d.ts"
+            ],
             "metric-badge": [
                 "dist/metric-badge.d.ts"
             ],
@@ -276,6 +285,18 @@
         "./aurora": {
             "types": "./dist/aurora.d.ts",
             "import": "./dist/aurora.js"
+        },
+        "./color": {
+            "types": "./dist/color.d.ts",
+            "import": "./dist/color.js"
+        },
+        "./goo-blob": {
+            "types": "./dist/goo-blob.d.ts",
+            "import": "./dist/goo-blob.js"
+        },
+        "./watercolor-dot": {
+            "types": "./dist/watercolor-dot.d.ts",
+            "import": "./dist/watercolor-dot.js"
         },
         "./configurator": {
             "types": "./dist/configurator.d.ts",
@@ -541,6 +562,9 @@
         "proof:single-color-core": "node scripts/proof-single-color-core.mjs",
         "proof:frostShader-deleted": "node scripts/proof-frostshader-deleted.mjs",
         "proof:webgl-substrate-single": "node scripts/proof-webgl-substrate-single.mjs",
+        "proof:blob-value-free": "node scripts/proof-blob-value-free.mjs",
+        "proof:no-value-default": "node scripts/proof-no-value-default.mjs",
+        "proof:blob-space-gamma": "node scripts/proof-blob-space-gamma.mjs",
         "proof:lockfile": "node scripts/proof-lockfile.mjs",
         "proof:all": "node scripts/gates.mjs --run local",
         "gates:verify-ci": "node scripts/gates.mjs --verify-ci",

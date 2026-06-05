@@ -165,6 +165,17 @@ jobs:
             # robustness are present.
             - name: proof:webgl-substrate-single
               run: npm run proof:webgl-substrate-single
+            # AU.W7 — the blob trio. value-free (the injected ColorResolver seam,
+            # two-tier source+dist); no-value-default (a no-resolver mount throws
+            # naming defaultBlobColorResolver, not a silent gray); space-gamma (the
+            # DEC-AT-7 seam — the default resolver paints GAMMA, a shader linear-flip
+            # must close with linearToSrgb).
+            - name: proof:blob-value-free
+              run: npm run proof:blob-value-free
+            - name: proof:no-value-default
+              run: npm run proof:no-value-default
+            - name: proof:blob-space-gamma
+              run: npm run proof:blob-space-gamma
             # AS.W2 inv-θ — the lockfile registry-resolution drift guard (#177
             # cannot silently re-break npm ci) + the meta-gate asserting this
             # ci.yml step set matches scripts/gates.mjs exactly (the manifest is
