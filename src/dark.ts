@@ -12,4 +12,12 @@
 // flat subpath stays decoupled from the internal directory layout.
 // AP.W3 R0G-7 — installDarkModeSync (keyframes-free, vueuse-bearing via
 // useGlobalDark) relocated here from /motion; /dark is its vueuse home.
-export { useGlobalDark, installDarkModeSync } from "./composables/dark";
+// AU.W9.B — darkModeSyncScript (vueuse-FREE FOUC parse-time primitive, #22) +
+// the useGlobalDark one-shot initialValue seed (#21) home on /dark too.
+export {
+    useGlobalDark,
+    installDarkModeSync,
+    darkModeSyncScript,
+    DARK_MODE_STORAGE_KEY,
+} from "./composables/dark";
+export type { UseGlobalDarkOptions, DarkModeSyncScriptOptions } from "./composables/dark";
