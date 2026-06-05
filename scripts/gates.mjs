@@ -52,6 +52,7 @@ export const GATES = [
     { id: "proof:font-axes", cmd: "proof:font-axes", tags: ["local", "ci"], note: "AU.W4 — every variation axis typography.css references (WONK/SOFT) is carried by the shipped display @font-face (parsed from the woff2 fvar) — no silently-inert axis" },
     { id: "proof:color-acyclic", cmd: "proof:color-acyclic", tags: ["local", "ci", "release", "sibling"], note: "AU.W5 — the /color leaf graph is a DAG (imports value.js only, no component back-import; value.js/src never imports glass-ui)" },
     { id: "proof:single-color-core", cmd: "proof:single-color-core", tags: ["local", "ci"], note: "AU.W5 — ONE runtime-JS color source (value.js); no glass-ui src re-defines a value.js color primitive; CSS token tier exempt" },
+    { id: "proof:frostShader-deleted", cmd: "proof:frostShader-deleted", tags: ["local", "ci"], note: "AU.W6 — the frostShader.ts orphan is DELETED (file-absence + import-graph, NOT a name-grep — the name form is born-green at HEAD)" },
     { id: "proof:lockfile", cmd: "proof:lockfile", tags: ["local", "ci", "release"], note: "registry-resolution drift guard" },
     { id: "audit:stash", cmd: "audit:stash", tags: ["ci"] },
 ];

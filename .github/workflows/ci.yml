@@ -153,6 +153,11 @@ jobs:
               run: npm run proof:color-acyclic
             - name: proof:single-color-core
               run: npm run proof:single-color-core
+            # AU.W6 — the frostShader.ts orphan deletion (P1 no-legacy). File-
+            # absence + import-graph (NOT a name-grep, which is born-green on the
+            # unfixed orphan-present state).
+            - name: proof:frostShader-deleted
+              run: npm run proof:frostShader-deleted
             # AS.W2 inv-θ — the lockfile registry-resolution drift guard (#177
             # cannot silently re-break npm ci) + the meta-gate asserting this
             # ci.yml step set matches scripts/gates.mjs exactly (the manifest is
