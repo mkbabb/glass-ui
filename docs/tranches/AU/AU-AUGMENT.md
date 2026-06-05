@@ -22,7 +22,7 @@ The user's new round, glass-ui-facing items:
 | D1 | dock animations "not properly springy and iOS-like" | **W8** dock-motion overhaul (§2) |
 | D2 | "animations still quite delayed; the dock shrinks before the elements fade/animate out" | **W8** — the async-fork root cause (§2.1), the headline fix |
 | D3 | "audit the keyframes.js tranche + our tranche with 12 agents; animation SOTA; `npx modern-web-guidance`" | **DONE** (12 AnimSOTA agents); SOTA adopt/defer table (§2.4) |
-| D4 | "dock animations, layering &c need great refinement; collaborate with the keyframes.js workflow" | **W8** — keyframes.js `AnimationGroup` one-rAF driver (§2.2); keyframes is READ-ONLY upstream (§6) |
+| D4 | "dock animations, layering &c need great refinement; collaborate with the keyframes.js workflow" | **W8** — keyframes.js `SpringProgress.play()` one-rAF driver (§2.2; NOT the HEAVY `AnimationGroup`); keyframes is READ-ONLY upstream (§6) |
 | D5 | "constellation should be abstracted into a glass-ui component, if not already" | **KEEP-DEFERRED / BOOK** `useCanvas2D` — single-consumer, Canvas2D ≠ the WebGL substrate (§4). The visibility fix is slides-local. |
 | D6 | "what gaps in glass-ui / slides; converge on a library optimum" | **library-optimum map** (§7) + the slides arm's `F-AUGMENT` |
 | D7 | "break large components (>500 lines) into sub-components; modern Vue patterns; colocate composables; logical grouping; KISS" | **W8b/W10** encapsulation folds (§5.1–5.3) |
@@ -81,20 +81,28 @@ iOS-grade.** Both are isomorphic (no public API change).
   **class-apply (→ opacity) and width-set start in the same animation frame** (measured target:
   `< 16ms` between class-apply and width-start). Refs still track the same state, deferred by one
   rAF. No API change.
-- **(B) One spring AUTHORITY via keyframes.js.** Drive the morph through keyframes.js's
-  `AnimationGroup` so **width + opacity advance off ONE `advanceTo(t)` rAF loop** on **one
-  `SpringProgress` solver** (`keyframes.js/src/animation/spring.ts` — analytic 2nd-order ODE),
-  settling within one frame of each other. **LIGHT surface only** (value.js-free): `SpringProgress`,
-  `springLinearStops()`, `springTimingFunction()`, `Timeline`, `ElementMorph` — NOT the HEAVY
-  `loadAnimationEngine()`/CSS-parser boundary. The dock stays value.js-free (verified by
-  `proof:vueuse-free-root`'s sibling discipline).
+- **(B) One spring AUTHORITY via keyframes.js.** Drive the morph through **one `SpringProgress`
+  solver** (`keyframes.js/src/animation/spring.ts` — analytic 2nd-order ODE) via its **`.play(onFrame)`
+  rAF loop**, mapping one `value∈[0,1]` to BOTH width-px and opacity in the same callback so they
+  settle within one frame of each other. **CORRECTION (AU.W8 + AU-keyframes-coordination, formed
+  specs):** the prior draft named `AnimationGroup.advanceTo(t)` as the driver — that is WRONG.
+  `AnimationGroup`'s runtime constructor is **HEAVY**, reachable only behind `loadAnimationEngine()`'s
+  `await import("./engine")`, which pulls `@mkbabb/value.js` — using it would breach the value.js-free
+  guarantee. The correct value.js-free path is `SpringProgress.play(onFrame)` directly, exactly the
+  SHIPPED `useSpring.ts:105-136` pattern. **LIGHT surface only** (value.js-free): `SpringProgress`,
+  `springLinearStops()`, `springTimingFunction()`, `Timeline`, `ElementMorph`, `RAFPlayback`,
+  `toEasing` — the **FORBIDDEN HEAVY list** is `loadAnimationEngine`, the `AnimationGroup` runtime,
+  `fromString`, `resolveEasing`. See `waves/AU-keyframes-coordination.md §2` for the exact permitted/
+  forbidden symbol table.
 
 **Who emits the spring.** glass-ui already does the right thing: `scripts/regen-spring-tokens.mjs`
-runs the keyframes.js solver at BUILD time to bake the four `--spring-*` CSS `linear()` tokens
+runs the keyframes.js solver at BUILD time to bake the `--spring-*` CSS `linear()` tokens
 (`tokens.css:158-161`, 48-sample grid). The morph curve stays a **CSS token**; the FLIP/VT
 transition consumes it. keyframes.js is the build-time AUTHOR of the curve and (for B) the runtime
-DRIVER of the `advanceTo(t)` loop — **one solver, both paths, bit-identical motion.** No keyframes.js
-change is required (§6).
+DRIVER of the `SpringProgress.play()` loop — **one solver, both paths, bit-identical motion.** No
+keyframes.js change is required (§6). The implementation-ready detail lives in the formed wave specs
+`waves/AU.W8-dock-motion.md` + `waves/AU.W8b-modern-css.md` + `waves/AU-gate-fleet-augment.md` (which
+SUPERSEDE this section's sketch).
 
 ### 2.3 iOS spring params — author `--spring-dock`
 
@@ -140,7 +148,7 @@ snaps to target in one emission; the VT path checks `prefersReducedMotion()` bef
 
 | id | what | type | one-line gate |
 |---|---|---|---|
-| **W8** | **Dock-design headline — MOTION-led, ONE atomic pass.** (1) single-frame FLIP sync (`useLayerTransition.ts:146→167`); (2) author `--spring-dock` (~20% overshoot) + route `--dock-resize-spring`; (3) the keyframes.js `AnimationGroup` one-rAF driver for the FLIP fallback (LIGHT surface); (4) reka-ui `Tabs` rail + travelling indicator; (5) the dock a11y/state contract test; (6) `<Role>Dock` docs vocabulary (README + gate already authored); (7) anchor-positioning for dock popovers | IMPL | `proof:dock-motion-single-source` (Playwright settle probe: container-width-stop ↔ child-opacity≤0.01 within ±1 frame) **+** `proof:dock-a11y-contract` **+** `proof:dock-vocabulary` |
+| **W8** | **Dock-design headline — MOTION-led, ONE atomic pass.** (1) single-frame FLIP sync (`useLayerTransition.ts:146→167`); (2) author `--spring-dock` (~20% overshoot) + route `--dock-resize-spring` (+ re-pin `proof-dock-motion-parity.mjs:193` off the hard `--spring-snappy` assert); (3) the keyframes.js `SpringProgress.play()` one-rAF driver for the FLIP fallback (value.js-free LIGHT surface; NOT `AnimationGroup`); (4) reka-ui `Tabs` rail + travelling indicator; (5) the dock a11y/state contract test; (6) `<Role>Dock` docs vocabulary (README + gate already authored); (7) anchor-positioning for dock popovers | IMPL | `proof:dock-motion-single-source` (Playwright settle probe: container-width-stop ↔ child-opacity≤0.01 within ±1 frame) **+** `proof:dock-a11y-contract` **+** `proof:dock-vocabulary` |
 | **W8b** *(NEW)* | **Modern-CSS + encapsulation/styling folds.** `interpolate-size`+`@starting-style`+`allow-discrete` on `.dock-layer` (folds the visibility fork); CSS-nesting; split `dock.css` → `dock.css`/`dock-controls.css`; non-idiomatic Tailwind lift (12 sites → `@theme`/`@utility`); deprecated `-webkit-*` cleanup; `defineModel` ×8; context `Readonly<>` guards | IMPL | `proof:design-idiom-localization` + `proof:dock-css-split` (born-RED on inject) |
 | **W9** | **Control-pane + dark-ergonomics + lean folds + slides-supply** (intent unchanged): A-1 divider + A-2 label ladder; `useGlobalDark({initialValue})` + `darkModeSyncScript()`; Drawer `:native` (FOLD-IF, now FOLDed — chronic, §3.1); size-vocabulary FOLD-IF; the publish-gated slides-supply (`showClose`, `/deck` lift, Card/Badge, `useCountup`+`v-reveal`) | IMPL | `proof:au-w9-consumers` — each fold names ≥2 consumers |
 | **W10** | **Close + 3.3.0 READY-TO-PUBLISH** (unchanged): the component splits (§5.1, polish-tier), overfitting audit, gates matrix green, `AU.FINAL` + the deferral register, the changeset staged not auto-published (publish USER-DOMAIN) | IMPL (LAST) | `proof:au-final` |
@@ -217,18 +225,25 @@ the team prefers; otherwise the flat layout is already correct — no contrivanc
 - **Design-idiom (W8):** glass-ui's `tokens.css → theme.css → utilities.css → scoped CSS` cascade is
   the **GOLD STANDARD** (it is the pattern slides-F adopts). The fold ENFORCES "scoped `<style>`
   consumes only `var(--…)` + `@utility`, no hardcoded literals" via `proof:design-idiom-localization`.
-- **Deprecated (W8b):** remove `-webkit-backdrop-filter` (`glass.css:326`); guard `-webkit-scrollbar`
-  under `@supports not(scrollbar-color)` (`utilities.css:111-137`); raw `rgb(255 255 255)` →
-  `--highlight-overlay`. Keep `-webkit-background-clip:text` (load-bearing).
+- **Deprecated (W8b) — RE-GROUNDED (these AU-AUGMENT citations were stale; `waves/AU.W8b-modern-css.md
+  §7` corrects them):** `glass.css:326` `-webkit-backdrop-filter` is a **feature-test predicate — KEEP**;
+  `utilities.css` `-webkit-scrollbar` is **already `@supports`-guarded — KEEP**; there are **zero raw
+  `rgb(255 255 255)`** at HEAD. Per the modern-web-guidance Baseline ledger, `scrollbar-color` is only
+  *Newly* available (Baseline 2025-12-12), so `::-webkit-scrollbar` MUST be kept as a fallback for a
+  "Widely Available" target — do NOT strip it. The ONE real fold is adding `scrollbar-width: none` to
+  `.scrollbar-hidden`. Keep `-webkit-background-clip:text` (load-bearing).
 
 ---
 
 ## §6 — Cross-repo coordination + risks
 
-- **keyframes.js is READ-ONLY upstream (inv-16).** The spring solver, `springLinearStops`,
-  `AnimationGroup`, `ElementMorph` are all consumed via the published surface; **no keyframes.js
-  change is required** for the overhaul. The dock-driver uses `SpringProgress` but no `fromString`,
-  so ZERO value.js enters the bundle. keyframes D.W5 *consumes* the published 3.3.0 dock (one-way).
+- **keyframes.js is READ-ONLY upstream (inv-16).** The dock consumes the **LIGHT, value.js-free**
+  surface only — `SpringProgress` (+ `.play()`), `springLinearStops`, `springTimingFunction`,
+  `ElementMorph`, `Timeline`, `RAFPlayback`, `toEasing`; **no keyframes.js change is required.** The
+  `AnimationGroup` runtime + `loadAnimationEngine`/`fromString` are the **FORBIDDEN HEAVY** path (they
+  pull `@mkbabb/value.js`) — see `waves/AU-keyframes-coordination.md §2.4`. The dock-driver uses
+  `SpringProgress.play(onFrame)` and never touches the HEAVY boundary, so ZERO value.js enters the
+  bundle. keyframes D.W5 *consumes* the published 3.3.0 dock (one-way).
 - **slides coordination.** AU publishes 3.3.0 → slides F bumps `^3.2.0 → ^3.3.0` and the dock-motion
   fix lands downstream. The motion fix is **glass-ui-owned, NOT slides-local.** The progress-de-dock
   is **already structurally clean** (the bar is a viewport-root sibling); its visual articulation is
@@ -237,7 +252,8 @@ the team prefers; otherwise the flat layout is already correct — no contrivanc
 - **Isomorphism risks.** (A) defers refs one rAF — safe Vue reactivity, no API change. `interpolate-size`
   may double-animate with the VT path — browser-test before landing. `--spring-dock` retune is
   isomorphic (same duration) but `proof:dock-motion-parity` (`gates.mjs:43`) must still see both
-  engines on one source. The visibility-fork (§2.1) is LOAD-BEARING — any `@starting-style` rewrite
+  engines on one source — and `proof-dock-motion-parity.mjs:193` currently **hard-asserts
+  `--spring-snappy`**, so it MUST be re-pinned to `--spring-dock` in the same commit or it goes RED. The visibility-fork (§2.1) is LOAD-BEARING — any `@starting-style` rewrite
   preserves the 3-state contract. `--dock-press-spring` must NEVER fold into the resize family.
 
 ### 6.1 Gate fleet (the §3 gates, born-RED)

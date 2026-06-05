@@ -1,0 +1,2620 @@
+
+--- Guide for scroll-progress-indicator ---
+# Build a Scroll Progress Indicator
+
+A scroll progress indicator is a common user interface pattern that visually communicates the user's progress through a scrollable document or container. As the user scrolls, a visual element updates to reflect their position, providing a clear and intuitive sense of how much content has been viewed and how much remains.
+
+## How to implement
+
+To create a scroll progress indicator, you need two things:
+
+1.  An element to act as the progress bar. This element is typically `position: fixed` or `position: absolute` so that it stays in view while the user scrolls.
+2.  An animation that is linked to the scroll position.
+
+Here’s how you can achieve this:
+
+-   First, create an HTML element that will serve as your progress bar. This element can be styled to your liking.
+-   Next, in your CSS, define a `@keyframes` animation that scales the progress bar. A common approach is to scale the element from `scaleX(0)` to `scaleX(1)`.
+-   Finally, apply this animation to your progress bar element and set its `animation-timeline` to a scroll-timeline. This tells the browser to drive the animation's progress based on the scroll position of the nearest ancestor scroller.
+
+## Example code
+
+This code grows the `#progress` element on scroll using an anonymous scroll-timeline, created by the `scroll()` function.
+
+```css
+@media (prefers-reduced-motion: no-preference) {
+  @supports ((animation-timeline: scroll())) {
+    @keyframes grow-progress {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+
+    #progress {
+      position: fixed;
+      left: 0; top: 0;
+      width: 100%; height: 1em;
+      background: red;
+
+      transform-origin: 0 50%;
+      animation: grow-progress auto linear;
+      animation-timeline: scroll();
+    }
+  }
+}
+```
+
+Because of its location in the DOM, the `scroll()` function will track its neareast ancestor scroller in the `block` direction, which here is the root scroller.
+
+```html
+<body>
+  <!-- MANDATORY: Purely decorative visual scroll progress bars MUST set aria-hidden="true" to remove the empty element from the assistive technology reading tree -->
+  <div id="progress" aria-hidden="true"></div>
+</body>
+```
+
+This code grows the `#progress` element on scroll using a named scroll-timeline, created by the `scroll-timeline` property.
+
+```css
+@media (prefers-reduced-motion: no-preference) {
+  @supports ((animation-timeline: scroll())) {
+    @keyframes grow-progress {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+
+    :root {
+      scroll-timeline: --tl block;
+    }
+
+    #progress {
+      position: fixed;
+      left: 0; top: 0;
+      width: 100%; height: 1em;
+      background: red;
+
+      transform-origin: 0 50%;
+      animation: grow-progress auto linear;
+      animation-timeline: --tl;
+    }
+  }
+}
+```
+
+## Best Practices
+
+When using scroll-driven animations, it's important to follow a few best practices to ensure a smooth and accessible experience:
+
+- **DO** include feature detection: Not all browsers support scroll-driven animations. Use `@supports (animation-timeline: scroll())` to check for support and provide a fallback for browsers that don't support it.
+  - **DO NOT** use the `scroll-timeline-polyfill` package for the fallback strategy as it is not feature complete and has a lot of known issues.
+  - If the animation is only considered to be decorative, opt for Progressive Enhancement and **DO NOT** provide a fallback.
+- **DO** remove purely decorative elements from assistive technology reading flows: Apply `aria-hidden="true"` to purely visual scroll indicators to ensure screen readers do not encounter empty, unnamed nodes.
+- **DO** respect user preferences: Some users prefer to have less motion on the web. Use the `prefers-reduced-motion` media query to disable or reduce your animations for these users.
+- **DO** try to animate only performant CSS properties: For the smoothest animations, stick to animating properties that can be handled by the browser's compositor thread, such as `transform` and `opacity`. Animating other properties like `width` or `height` can lead to performance issues.
+- **DO** use the correct declaration order: When using the `animation` shorthand property, declare `animation-timeline` *after* it to prevent the shorthand from resetting the timeline.
+
+When using the `scroll()` function to create a scroll-driven animation:
+
+- **OPTIONAL** be explicit about the scroller: When not targeting the nearest ancestor scroller, be explicit about which scroller you want to use with `scroll(root)` or `scroll(self)`.
+  - When `root`, `nearest`, or `self` are not sufficient, use a named scroll-timeline.
+- **OPTIONAL** be explicit about the axis to track: When not targeting the default `block` axis (such as in a horizontal scroller), be explicit about which axis to track with `scroll(block)` or `scroll(inline)`.
+
+When using the `scroll-timeline` property to create a scroll-driven animation:
+
+- **DO** use a CSS `<dashed-ident>` for the name.
+- **OPTIONAL** be explicit about the axis to track: When not targeting the default `block` axis (such as in a horizontal scroller), be explicit about which axis to track with `scroll-timeline-axis`.
+- **DO** make sure the scope of the lookup works: When the element that is declaring the `scroll-timeline` is not a flat tree ancestor of the animated element, hoist up the visibility of the `scroll-timeline`’s name by using `timeline-scope` on a shared ancestor.
+
+## Fallback strategies
+
+Scroll-driven animations has limited availability.
+Supported by: Chrome 115 (Jul 2023), Edge 115 (Jul 2023), and Safari 26 (Sep 2025).
+Unsupported in: Firefox.
+
+For browsers that do not support scroll-driven animations, you can use a fallback to recreate the visual effects. The fallbacks are typically built with either a scroll listener (for ScrollTimeline effects) or the IntersectionObserver API (for ViewTimeline effects).
+
+In browsers with built-in support for scroll-driven animations, ALWAYS use the native CSS implementation as those are more performant.
+
+Note that not every effect can be recreated using the fallbacks approach.
+
+For this use-case specifically, the following script applies the fallback for browsers that do not support scroll-driven animations. It uses a scroll listener to track the scroll position of the root element and updates the `transform` property of the progress bar accordingly.
+
+```html
+<script>
+  if (!CSS.supports('animation-timeline', 'scroll()')) {
+    const progress = document.querySelector('#progress');
+
+    window.addEventListener('scroll', () => {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = window.scrollY;
+      const progressPercentage = (scrolled / scrollable);
+
+      progress.style.transform = `scaleX(${progressPercentage})`;
+    });
+  }
+</script>
+```
+
+
+--- Guide for accessible-error-announcement ---
+# Accessible Error Announcement
+
+## The Problem
+Standard HTML5 validation provides visual feedback (via `:invalid` or `:user-invalid`), but it doesn't automatically synchronize with accessibility attributes like `aria-invalid`. 
+
+If you use standard `:invalid` styling, screen readers might announce "Invalid entry" the moment a user tabs into a required field that is currently empty. This creates a disruptive experience for users using assistive technologies, as the error is announced before interaction has occurred.
+
+## The Solution
+We want the *programmatic* state (`aria-invalid="true"`) to be applied **at the exact same moment** the *visual* state (`:user-invalid`) applies. Since `:user-invalid` relies on the browser's internal "user-interacted" flag, we can use JavaScript to check that this selector matches during standard interaction events.
+
+See [MDN aria-invalid](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-invalid) for more details.
+
+### Implementation Strategy
+
+1.  **Visual Layer**: Use CSS `:user-invalid` to show borders/icons.
+2.  **Accessibility Layer**: Use `aria-invalid` and `aria-errormessage` to communicate state to Assistive Technology (AT).
+3.  **Bridge Visual & Accessibility Layer**: Create a lightweight JavaScript utility that listens for `blur` and `input` events, checks if the element matches `:user-invalid`, and updates the ARIA attributes accordingly.
+
+## Implementation Guide
+
+### 1. HTML Structure
+Link your input to its error message using `aria-errormessage` (or `aria-describedby` for broader support).
+
+```html
+<form>
+  <div class="field">
+    <label for="email">Email</label>
+    <input 
+      type="email" 
+      id="email" 
+      required 
+      aria-errormessage="email-error"
+    >
+    <span id="email-error" class="error-msg">
+      Please enter a valid email address.
+    </span>
+  </div>
+</form>
+```
+
+### 2. CSS
+Control the visibility of the error message using the native pseudo-class `:user-invalid`.
+
+```css
+.error-msg {
+  display: none;
+  color: #d93025;
+}
+
+/* Show error message when input is user-invalid */
+input:user-invalid ~ .error-msg {
+  display: block;
+}
+
+/* Optional: Visual cues on the input itself */
+input:user-invalid {
+  border-color: #d93025;
+}
+```
+
+### 3. JavaScript
+Since there is no "UserInvalidChanged" event, hook into standard form events to check the state.
+
+```javascript
+const updateAriaState = (event) => {
+  const input = event.target;
+  if (!input.matches?.('input, textarea, select')) return;
+
+  // Check if the browser currently considers this input "user-invalid"
+  const isUserInvalid = input.matches(':user-invalid');
+  
+  if (isUserInvalid) {
+    input.setAttribute('aria-invalid', 'true');
+  } else {
+    input.removeAttribute('aria-invalid');
+  }
+};
+
+// Listen on the document to handle dynamically added fields.
+// 'blur' and 'focus' do not bubble, so we must use the capture phase (true).
+document.addEventListener('blur', updateAriaState, true);
+document.addEventListener('focus', updateAriaState, true);
+
+// Also update on input if we've already shown the error, 
+// so the error clears immediately when fixed.
+document.addEventListener('input', (event) => {
+  const input = event.target;
+  if (!input.matches?.('input, textarea, select')) return;
+
+  const hasAriaInvalid = input.hasAttribute('aria-invalid');
+  const ariaInvalid = input.getAttribute('aria-invalid');
+  if (hasAriaInvalid && ariaInvalid === 'true') {
+    updateAriaState(event);
+  }
+});
+```
+
+## Fallbacking & Browser Support
+
+The `:user-invalid` pseudo-class is widely supported (Baseline 2023), but older browsers need a fallback.
+
+### Feature Detection
+You can check for support in CSS and JavaScript.
+
+**JavaScript Check:**
+```javascript
+if (!CSS.supports('selector(:user-invalid)')) {
+  // Fallback logic here
+}
+```
+
+### CSS for Fallback
+To ensure your fallback logic is visually indistinguishable from the native behavior, you must apply your error styles to both the pseudo-class and your fallback class.
+
+```css
+/* Apply error styles to both native selector and fallback class */
+input:user-invalid,
+input.user-invalid-fallback {
+  border-color: #d93025;
+  background-color: #fce8e6;
+}
+
+/* Show error message for both cases */
+input:user-invalid ~ .error-msg,
+input.user-invalid-fallback ~ .error-msg {
+  display: block;
+}
+```
+
+### Fallback Logic
+If `:user-invalid` is missing manually track the interaction state using a `WeakMap`.
+
+```javascript
+const UserInvalidFallback = (() => {
+  const dirtyState = new WeakMap();
+
+  const updateState = (input) => {
+    const isValid = input.checkValidity();
+
+    // Update both visual and ARIA state
+    input.classList.toggle('user-invalid-fallback', !isValid);
+    input.classList.toggle('user-valid-fallback', isValid);
+
+    if (!isValid) {
+      input.setAttribute('aria-invalid', 'true');
+    } else {
+      input.removeAttribute('aria-invalid');
+    }
+  };
+
+  const handleEvent = (event) => {
+    const input = event.target;
+
+    if (event.type === 'reset' && input.matches?.('form')) {
+      const controls = input.elements || [];
+      for (const control of controls) {
+        dirtyState.delete(control);
+        control.classList.remove('user-invalid-fallback');
+        control.classList.remove('user-valid-fallback');
+        control.removeAttribute('aria-invalid');
+      }
+      return;
+    }
+
+    if (!input.matches?.('input, textarea, select')) return;
+
+    if (event.type === 'input' || event.type === 'change') {
+      const state = dirtyState.get(input) || { hasInteracted: false, hasBlurred: false };
+      state.hasInteracted = true;
+      dirtyState.set(input, state);
+      if (state.hasBlurred) {
+        updateState(input);
+      }
+    } else if (event.type === 'blur') {
+      const state = dirtyState.get(input) || { hasInteracted: false, hasBlurred: false };
+      state.hasBlurred = true;
+      dirtyState.set(input, state);
+      if (state.hasInteracted) {
+        updateState(input);
+      }
+    }
+  };
+
+  const init = () => {
+    if (CSS.supports('selector(:user-invalid)')) return;
+
+    document.addEventListener('blur', handleEvent, true); // Capture phase required
+    document.addEventListener('input', handleEvent, true);
+    document.addEventListener('change', handleEvent, true);
+    document.addEventListener('reset', handleEvent, true); // Capture resets
+  };
+
+  return { init };
+})();
+
+// Initialize globally
+UserInvalidFallback.init();
+```
+
+## Other Considerations
+
+1.  **`aria-live` vs. `aria-errormessage`**: 
+    *   `aria-errormessage` connects the input to the text, but screen readers might not announce it immediately upon appearance (only when focusing the input).
+    *   If you need *immediate* announcement when the error appears (e.g., on blur), consider adding `role="alert"` or `aria-live="polite"` to the error message container, but test thoroughly to avoid "double announcement" when the user focuses the field to fix it.
+
+2.  **Internationalization**:
+    *   Ensure the text content of your error message (`#email-error`) is translated. The logic remains the same.
+
+
+--- Guide for accessibility ---
+# Accessibility Coding Guidelines
+
+This guide provides actionable DOs and DON'Ts for AI coding agents to ensure web applications are accessible to all users, including those using assistive technologies.
+
+Keep these principles in mind throughout:
+
+- **Accessibility is the minimum, not the ceiling.** Conformance to standards is the floor; aim for genuine usability.
+- **Patterns are use-case specific.** No checklist replaces real testing — including testing with disabled users — to confirm a given implementation is actually accessible in context.
+
+## 1. Content Navigability and Structure
+
+### Actionable Guidelines
+
+#### DOs
+- **Place all content within landmarks**: Wrap the page in `<header>`, `<nav>`, `<main>`, `<aside>`, and `<footer>` so assistive-tech users can jump between regions.
+- **Structure main content with headings**: Use `<h1>`–`<h6>` sequentially (no jumping `<h1>` → `<h4>`) so screen-reader users get a navigable outline.
+- **Use lists for repeated, contiguous content**: `<ul>`/`<ol>` give assistive tech a count up front and let users skip the entire group.
+- **Provide skip links** prior to repeated content like site headers with navigation or long/infinite lists, so that keyboard users can easily bypass them. Make sure the target is focusable (e.g. `<main id="content" tabindex="-1">`).
+- **Semantic Tables**: Use `<caption>` and `<th scope="col">` (or `<th scope="row">`) for data tables.
+
+#### DON'Ts
+- **Don't use fake headings**: Never style `<div>` or `<span>` to look like headings without standard `<h1>`–`<h6>` tags.
+- **Don't place headings inside `<summary>`, and avoid relying on headings inside `<details>` content**: Headings inside `<summary>` may be hidden from screen-reader heading lists and heading-navigation shortcuts entirely; headings inside `<details>` content are only reachable via heading navigation when the disclosure is open.
+  - **Caveat**: If a heading must act as a disclosure trigger, use a more robust alternative to `<details>`/`<summary>` instead, e.g. an accordion or a disclosure implemented with ARIA where the heading wraps the button.
+- **Don't use tables for layout**: Use CSS Grid/Flexbox for visual layouts.
+- **Don't overuse landmarks**: Too many landmarks dilute their value. In particular, avoid labeling a `<section>` (which turns it into a `region` landmark) — `region` should be a last resort when no other landmark fits.
+
+### Code Examples
+
+```html
+<!-- Good: Semantic landmarks, heading hierarchy, skip link -->
+<header>
+  <a href="#content" class="skip-link visually-hidden">Skip to content</a>
+  <nav aria-label="Primary">
+    <ul>
+      <li><a href="/">Home</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="content" tabindex="-1">
+  <h1>Platform Dashboard</h1>
+  <section>
+    <h2>User Statistics</h2>
+    <table>
+      <caption>Monthly active users</caption>
+      <tr>
+        <th scope="col">Month</th>
+        <th scope="col">Users</th>
+      </tr>
+      <tr>
+        <td>January</td>
+        <td>12,000</td>
+      </tr>
+    </table>
+  </section>
+</main>
+```
+
+## 2. Semantic HTML and ARIA
+
+### Actionable Guidelines
+
+#### DOs
+- **Prefer HTML elements and attributes to ARIA**: A native element comes with the right role and behavior. `<button>` already implies `role="button"`; `required` already implies `aria-required`.
+- **Match ARIA implementations to actual behavior**: If you set `role="tab"`, the element must behave like a tab — including keyboard interactions. Many ARIA patterns can't be implemented in CSS alone and need JavaScript.
+- **Be deliberate about `disabled` vs `aria-disabled`**: `disabled` removes the element from the focus order entirely (and `tabindex="0"` won't bring it back), which is often wrong for toolbar buttons or links. `aria-disabled="true"` keeps the element focusable so users can land on it and learn it's disabled.
+
+#### DON'Ts
+- **Don't use ARIA when native HTML exists**: Avoid `<div role="button">` or `<a role="button">` if `<button>` works.
+- **Don't add redundant ARIA roles or properties**: Avoid `<ul role="list">`, `<nav role="navigation">`, or `<input required aria-required="true">`.
+  - **Caveat**: Safari removes list semantics from `<ul>`/`<ol>` outside `<nav>` when `list-style: none` or `display: flex`/`grid` is applied. In that case `role="list"` is required to restore them.
+- **Don't assume custom elements have no ARIA**: Custom elements can attach ARIA via `ElementInternals`, which some automated test tools can't see — so the absence of `role`/`aria-*` attributes in markup doesn't prove the element has no semantics. Verify with the browser's accessibility-tree inspector.
+
+## 3. Accessible Names and Descriptions
+
+Every interactive element and some landmarks need an accessible name, and many benefit from an accessible description. Names are short and identify the element; descriptions add context.
+
+### Actionable Guidelines
+
+#### DOs
+- **Prefer native naming mechanisms**: `<label>` for form controls, `<caption>` for `<table>`, `<legend>` for `<fieldset>`, `<figcaption>` for `<figure>`.
+- **Explicitly associate `<label>` with its control via `for`/`id`**, even when nesting the input inside the label — explicit association improves assistive-tech support.
+- **Prefer `aria-labelledby` over `aria-label` when a visible label exists**: avoids duplication, improves maintainability, and translates better.
+- **Prefer to reuse the same accessible name for hyperlinks that share an `href`.**
+- **Use visually hidden text to disambiguate controls** that look identical visually but do different things (e.g. multiple "Edit" buttons in a list).
+
+#### DON'Ts
+- **Don't put `aria-label`/`aria-labelledby` on elements that shouldn't be named** — e.g. plain `<div>`, `<span>`, or custom elements without a role. Custom elements may have an implicit role set via `ElementInternals`, so the absence of a `role` attribute isn't conclusive.
+- **Don't reuse an accessible name across controls with different effects in the same view** (close buttons for two different open dialogs are fine because only one is reachable at a time; multiple “Edit” buttons for different content is not).
+- **Don't reuse an accessible name across hyperlinks pointing to different `href`s.**
+- **Don't pack descriptions, error messages, or instructions into the label.**
+- **Don't repeat state already exposed via ARIA** (`aria-expanded`, `aria-checked`, `aria-selected`, `aria-pressed`) inside the accessible name — it creates redundancy and ambiguity.
+- **Don't include the role name in the label**: `<nav aria-label="Primary navigation">` reads as "Primary navigation navigation."
+- **Don't use `title` or `placeholder` as a naming mechanism.**
+- **Don't include interactive elements in an `aria-describedby` target** unless their text content reads sensibly as a description on its own (e.g. if a link’s text is the same as how it’s labelled elsewhere, it can be included within a description).
+
+### Code Example: Visually Hidden Utility
+
+A `.visually-hidden` utility lets you provide text for screen readers without rendering it visually. It's commonly used for skip links, additional context on icon-only buttons, and supplementary labels.
+
+```css
+/* Hides content visually but keeps it in the accessibility tree.
+   :focus-within / :active opt elements out — useful for skip links and
+   any focusable content wrapped in this class. */
+.visually-hidden:where(:not(:focus-within, :active)) {
+  position: absolute !important;
+  clip-path: inset(50%) !important;
+  overflow: hidden !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  white-space: nowrap !important;
+}
+```
+
+When the hidden content is focusable (skip links, focus-receiving wrappers), the `:focus-within`/`:active` exception lets it become visible. Style the visible state per situation, e.g. a skip link to the main content typically wants fixed positioning at the top-left of the viewport so the rest of the page doesn't shift.
+
+## 4. Document Metadata and Language
+
+### Actionable Guidelines
+
+#### DOs
+- **Declare Visual Language**: Always set `<html lang="en">` (or appropriate code).
+- **Unique Page Titles**: Front-load unique context in `<title>` (e.g., `Page Topic | Site Name`).
+- **Inline Language Switches**: Use `lang="..."` for block quotes or text in different languages.
+- **IFrame Titles**: Always provide a descriptive `title="..."` for `<iframe>` elements.
+- **Update document title on Page Transitions in SPAs**: Shift focus to updated titles.
+
+#### DON'Ts
+- **Don't Disable iframe Scrolling**: Avoid `scrolling="no"` (deprecated) or `overflow: hidden` on iframes. Users who zoom in or enlarge text need to scroll to reach content that overflows.
+
+### Code Examples
+
+```html
+<!-- Good: Distinct title and language declaration -->
+<html lang="en">
+<head>
+  <title>Analytics Reports | Guidance Platform</title>
+</head>
+<body>
+  <p>The motto is <span lang="la">"Carpe diem"</span>.</p>
+  <iframe title="Interactive Sales Chart" src="/chart"></iframe>
+</body>
+</html>
+```
+
+## 5. Keyboard and Focus Management
+
+### Actionable Guidelines
+
+#### DOs
+- **Logical Tab Order**: Ensure tab order matches visual layouts (top-to-bottom).
+- **Visible Focus Indicators**: Always style `:focus-visible` states explicitly. If disabling defaults, provide overrides with sufficient contrast.
+- **Custom Trigger Keyboards**: Attach Enter/Space handlers for custom simulated interactive elements. When implementing a custom keyboard handler for button-like elements, `Enter` should be a `keydown` handler and `Space` should be a `keyup` handler (matching native `<button>` behavior where `Enter` repeats and `Space` triggers on release).
+- **Use `tabindex` deliberately**: Anything focusable — by keyboard or programmatically — should have an implicit or explicit ARIA role, so don't make every element focusable. When focus is needed, choose `tabindex="0"` to add the element to the tab order or `tabindex="-1"` to make it programmatically focusable only (e.g., a skip-link target).
+- **Manage Toggle States**: Utilize `aria-expanded` and `aria-pressed` to communicate toggle states for custom controls.
+
+#### DON'Ts
+- **Don't disable outlines without replacements**: Avoid `outline: none` without styling alternatives.
+- **Don't use Positive Tabindex values**: Never use `tabindex="1"` or greater.
+- **Don't hide interactive elements from screen readers**: Avoid `aria-hidden="true"` or `role="presentation"` on elements that can receive focus.
+
+### Code Examples
+
+```css
+/* Good: High contrast focus border */
+:where(a:any-link, button):focus-visible {
+  outline: 3px solid #ff0055;
+  outline-offset: 3px;
+}
+```
+
+```html
+<!-- Good: Skip to main content -->
+<a href="#content" class="skip-link">Skip to main content</a>
+<main id="content" tabindex="-1">...</main>
+```
+
+```javascript
+// Good: Keyboard handlers for complex custom widgets (e.g., Tree items, tabs).
+// NOTE: This pattern applies ONLY to non-standard UI where no native HTML tag exists.
+// Always prioritize native <button> or <input> elements for standard interactions.
+// Elements MUST have the appropriate ARIA role (e.g., role="treeitem" or role="tab").
+customWidget.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    toggleWidgetState();
+  }
+  if (e.key === ' ') {
+    e.preventDefault(); // Prevent page scrolling on Spacebar keydown
+  }
+});
+
+customWidget.addEventListener('keyup', (e) => {
+  if (e.key === ' ') {
+    toggleWidgetState();
+  }
+});
+
+function toggleWidgetState() {
+  // E.g., Manage toggle/expanded states for custom controls
+  const isExpanded = customWidget.getAttribute('aria-expanded') === 'true';
+  customWidget.setAttribute('aria-expanded', !isExpanded);
+}
+```
+
+## 6. Alternate Text and Media
+
+### Actionable Guidelines
+
+#### DOs
+- **Informative Visual Descriptions**: Describe the purpose of the image (e.g., "Search", not "Magnifying glass").
+- **Empty Alt properties for decorative visuals**: Use `alt=""` to remove decorative images from the accessibility tree so they aren't announced.
+- **Synchronous Captions for videos**: Supply WebVTT captions for video tracks.
+- **Transcripts for audio**: Provide text transcripts for purely audio podcasts.
+- **Informative View Descriptions for inline SVGs**: Apply `role="img"` and a nested `<title>` tag for informative visuals.
+- **Decorative SVGs removal**: Apply `aria-hidden="true"` to remove decorative SVGs from reading flows.
+- **Long descriptions for complex images**: Use `<figure>`/`<figcaption>` or `aria-describedby` for charts and infographics.
+- **Provide data tables as alternatives**: Consider providing semantic data tables as accessible alternatives for charts and other complex data visualizations.
+
+#### DON'Ts
+- **Don't use clichéd prefixes**: Avoid "Image of..." or "Picture of...".
+- **Don't use underscores in filenames**: Use dashes if the filename might be announced as fallback.
+
+### Code Examples
+
+```html
+<!-- Decorative -->
+<img src="divider.png" alt="">
+
+<!-- Inline Decorative SVG (remove from tab flow) -->
+<svg aria-hidden="true" viewBox="0 0 24 24">
+  <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+</svg>
+
+<!-- Informative (Functional) -->
+<a href="/search">
+  <img src="glass.png" alt="Search the platform">
+</a>
+
+<!-- Video with Captions tracks -->
+<video controls>
+  <source src="intro.mp4" type="video/mp4">
+  <track src="caps.vtt" kind="captions" srclang="en" label="English">
+</video>
+
+<!-- Complex graph with figcaption -->
+<figure>
+  <img src="chart.png" alt="Sales growth graph 2024.">
+  <figcaption>Sales grew 20% in Q3 due to new platform launch.</figcaption>
+</figure>
+
+<!-- Audio with expandable transcript details -->
+<audio controls src="podcast.mp3" aria-details="podcast-transcript"></audio>
+<details id="podcast-transcript">
+  <summary>View Transcript</summary>
+  <div class="transcript-content">
+    Welcome to the show...
+  </div>
+</details>
+```
+
+### Content Visibility Decision Matrix
+
+| Intent | Visual | Screen Reader | Focusable | Structural Pattern |
+| :--- | :--- | :--- | :--- | :--- |
+| **Visible to all** | Yes | Yes | Yes | Standard rendering |
+| **Screen Reader only** | No | Yes | Yes (if interactive) | Visually hidden utility (e.g. `.visually-hidden`) |
+| **Visual only** | Yes | No | No | `aria-hidden="true"` / `role="presentation"` |
+| **Hidden for all** | No | No | No | `hidden` attribute / `display: none` |
+
+**Heuristic Rule**: If an element can receive keyboard focus, it must not be hidden via `aria-hidden="true"`.
+
+## 7. Forms and Input Controls
+
+### Actionable Guidelines
+
+#### DOs
+- **Connect Labels Programmatically**: Use `<label for="id">` linked to `<input id="id">`.
+- **Use Autocomplete**: Set valid standard `autocomplete` options (e.g., `"email"` or `"given-name"`) for user profiles.
+- **Link hints to inputs via `aria-describedby`**: Associate help text with inputs, and place the hint above the input so autocomplete popovers don't cover it during editing.
+- **Announce dynamic errors via live regions**: Use `aria-live` or shift focus to error lists.
+- **Provide form validation constraints**: Use `required` (or `aria-required="true"` only when `required` isn't applicable) to signal mandatory inputs.
+
+#### DON'Ts
+- **Don't use placeholders as labels**: Placeholders are not persistent labels.
+- **Don't trigger context shifts on focus changes**: Avoid auto-submitting forms or jumping pages on focus change events alone.
+
+### Code Examples
+
+```html
+<!-- Good: Semantic forms with hints for passwords -->
+<form>
+  <label for="pwd">Password:</label>
+  <span id="pwd-hint">Must contain at least 8 characters.</span>
+  <input id="pwd" type="password" aria-describedby="pwd-hint" autocomplete="current-password" required>
+</form>
+```
+
+## 8. Live Regions
+
+Live regions let assistive tech announce content updates that aren't tied to navigation or focus changes. They're easy to misuse — too many regions, or noisy ones, quickly become spam for screen-reader users.
+
+### Live Region Urgency Table
+
+| Urgency | Visual Analogue | `aria-live` Value | Behavioral Impact | Example |
+| :--- | :--- | :--- | :--- | :--- |
+| **Critical** | Modal / Alert | `assertive` (or `role="alert"`) | Interrupts immediately, clears speech queue | Session timeout, API failure |
+| **Standard**| Toast / Banner | `polite` | Announces at next graceful break | Search results, "Saved" status |
+| **Passive**  | Silent text | `off` | Only if user navigates to it | Live character count |
+
+**Heuristic Rule**: Use `assertive` only for critical, time-sensitive updates that require immediate attention or prevent safe continuation (e.g., data loss, session timeouts, or network drops).
+
+### Actionable Guidelines
+
+#### DOs
+- **Centralize live regions for non-visible announcements**: A single `polite` region and a single `assertive` region per page (with whatever `aria-atomic` configuration you need) keeps announcements consistent and easier to maintain. Many frameworks ship their own announcer abstraction — use it.
+- **Debounce frequently-changing regions**: If a region can update many times per second (e.g. a combobox's result count as the user types), debounce so users aren't spammed.
+- **Delay slightly when other announcements may collide**: When the user is typing or focus is being managed, a small delay before announcing keeps live-region updates from overlapping other speech.
+
+#### DON'Ts
+- **Don't use live regions for interstitial states** like "Loading…" or "Updating…" unless they're meaningfully informative — they usually just create noise.
+- **Don't add live-region updates to inert DOM**: When dialogs open or sections become `inert`, queued or debounced messages can end up unannounced — or announced from DOM the user can't reach. Coordinate live-region updates with dialog/inert state changes.
+
+### Code Example
+
+```html
+<!-- Session Timeout Warning with controls -->
+<div role="alert" class="timeout-warning">
+  Your session will expire in 2 minutes. 
+  <button type="button" onclick="extendSession()">Extend Session</button>
+</div>
+```
+
+## 9. Color, Contrast, and Typography
+
+### Actionable Guidelines
+
+#### DOs
+- **Minimum contrast standards**: Maintain 4.5:1 for normal text and 3:1 for large text or icons.
+- **Ensure non-text contrast standards**: Maintain a minimum contrast ratio of 3:1 for user interface component boundaries and states.
+  - This includes visual elements (borders, backgrounds, box-shadows, underlines) that form the boundary or indicate the presence of a UI component (e.g., input field borders).
+  - This also includes visual elements indicating active states within a component (e.g., checkbox checkmarks or switch thumbs).
+  - **Caveat**: Meeting 3:1 non-text contrast can challenge minimalistic designs. Soft gradients or subtle inset/outset shadows can soften visual boundaries while satisfying accessibility requirements.
+- **Use multiple state indicators**: Do not denote success/errors ONLY with color. Use icons or text.
+- **Relative font size units**: Use `rem` or `em` for font sizes instead of `px`.
+- **Consistent or Start alignment**: Avoid `justify` alignment as it can be more difficult to read.
+- **Avoid long lines of text**: Cap paragraph blocks to a maximum of 80 characters width.
+- **Support user zoom preferences**: Allow users to resize text up to 200% without loss of content or functionality.
+- **Support light and dark color schemes**: Honor `@media (prefers-color-scheme: dark)` and pair it with the `color-scheme` CSS property so form controls, scrollbars, and other UA-rendered surfaces match.
+- **Use `prefers-contrast` only when warranted**: Reach for `@media (prefers-contrast: more)` when the design uses low-contrast accents (e.g., subtle borders, muted secondary text) that need to be reinforced; most sites that already meet baseline contrast won't need it.
+
+#### DON'Ts
+- **Don't use color alone to indicate the presence of a user interface component or its state**: Use iconography and/or shape to help differentiate.
+- **Don't use Justified Text Alignment**: Avoid `text-align: justify`.
+- **Don't use Ornate fonts**: Omit cursive typefaces for main reading content.
+- **Don't rely on all-caps for emphasis**: Prefer bolding for visual emphasis, and use `<em>`/`<strong>` when the emphasis is semantic.
+- **Limit emphasis overall**: Emphasis loses meaning when it's everywhere — apply it only where it changes how the content should be read.
+
+### Code Examples
+
+```css
+/* Good: Relative sizing and line caps */
+body {
+  line-height: 1.5;
+  text-align: start; /* Supports LTR and RTL */
+}
+article {
+  max-width: 80ch; /* Caps line length to ~80 characters for readability */
+}
+```
+
+```html
+<!-- Good: Denotes state without colors alone -->
+<div class="error-msg">
+  <span aria-hidden="true">❌</span>
+  <span>The password entered was invalid.</span>
+</div>
+```
+
+```css
+/* Dark Mode support variables */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #212529;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #121212;
+    --text-color: #f8f9fa;
+  }
+}
+```
+
+## 10. Motions and Preferences
+
+### Actionable Guidelines
+
+#### DOs
+- **Support Reduced Motion media queries**: Support `@media (prefers-reduced-motion: reduce)` media queries.
+- **Provide Pause mechanism**: Allow users to stop auto-running carousels banners or other persistent animations.
+- **Default to static views**: Consider defaulting to static states and allowing users to opt-in to motion.
+
+#### DON'Ts
+- **Don't exceed flash limits (three per second)**: Never include rapid light-to-dark flashing. Such effects can cause seizures.
+
+### Code Examples
+
+```css
+/* Good: Dampen spin states for reduced motion queries */
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+    opacity: 0.5;
+  }
+}
+```
+
+## 11. Modals and Native Dialogs
+
+Modern browsers provide native solutions for creating modal dialogs which avoid the need for focus traps, managing the accessibility of outside content, ensuring the content is on top, and dimming the background content — all of which can be error prone and require heavy JavaScript event tracking to maintain.
+
+### Actionable Guidelines
+
+#### DOs
+- **Use the Native `<dialog>` Element**: Invoke the dialog using the `.showModal()` method to open it in a modal state. When in a modal state, the browser sets outside content as inert (i.e. the outside content is hidden from the accessibility tree and cannot be interacted with nor be focused).
+- **Use the `inert` Attribute for Custom Overlays**: When `<dialog>` cannot be used (e.g., some non-modal overlays, framework constraints, or layouts where `<dialog>`'s top-layer/positioning behavior conflicts with the design), apply `inert` to outside content to ensure it cannot be interacted with by keyboard, pointer, or assistive technology. This requires structuring elements in such a way that the custom overlay is not a descendant of the element with `inert` set on it.
+
+#### DON'Ts
+- **Don't implement focus traps for native modal dialogs**: When a `<dialog>` element is opened in a modal state, browsers set outside content as inert which is sufficient for ensuring only the dialog’s content can be focused.
+
+### Code Examples
+
+**HTML & JS: Native `<dialog>` with standard close events**
+```html
+<!-- Dialog opens natively with showModal() and locks focus -->
+<button id="open-btn">Open Dialog</button>
+
+<dialog id="accessible-modal" aria-labelledby="title-id">
+  <h2 id="title-id">Account Settings</h2>
+  <p>Update your details here.</p>
+  <button onclick="this.closest('dialog').close()">Close Dialog</button>
+</dialog>
+
+<script>
+  document.getElementById('open-btn').addEventListener('click', () => {
+    document.getElementById('accessible-modal').showModal();
+  });
+</script>
+```
+
+## 12. Testing Validations
+
+### Actionable Guidelines
+
+#### DOs
+- **Run Automated checks via axe-core or Lighthouse audits**: Catch missing alt texts or low contrasts (e.g., via Lighthouse in Chrome DevTools MCP).
+- **Validate Sequential Navigations using keyboards alone**: Using only keyboard shortcuts, such as Tab/Shift+Tab, arrow keys, Enter, Space, and Esc, confirm every interactive element is reachable and operable, and that focus never gets stuck.
+- **Test on Screen Readers with calibrated browsers**: Rely on standard bindings (e.g., JAWS with Chrome, NVDA with Firefox, Narrator with Edge, VoiceOver with Safari on macOS and iOS, TalkBack with Chrome for Android).
+
+#### DON'Ts
+- **Don't rely purely on scores**: A 100% score does not guarantee real usability.
+
+
+--- Guide for required-field-feedback ---
+# Required Field Feedback
+
+## The Problem
+Marking required fields with an error state immediately upon page load can be confusing. Ideally, a required field should only look "invalid" if the user has attempted to fill it out and failed.
+
+## The Solution
+The `:user-invalid` pseudo-class solves this perfectly. For a required field, it will not match on page load. It will only match if:
+1.  The user interacts with the field (e.g., types a character and deletes it) and then leaves it (blur), leaving it empty.
+2.  The user attempts to submit the form while the field is empty.
+
+### Implementation Strategy
+
+1.  **HTML Constraint**: Add the `required` attribute to your inputs.
+2.  **Visual Feedback**: Use `:user-invalid` to style the border red and show a "Required" helper text.
+3.  **Timing**: Rely on the browser's native timing for visual feedback. You don't need `onBlur` handlers to add a `touched` class anymore, though some JavaScript is still needed to sync ARIA attributes (see below).
+
+## Implementation Guide
+
+### 1. HTML Structure
+```html
+<form id="feedback-form">
+  <div class="field">
+    <label for="full-name">Full Name</label>
+    <input
+      type="text"
+      id="full-name"
+      name="full-name"
+      required
+      aria-errormessage="name-error"
+    >
+    <!-- MANDATORY: Include an icon or distinct non-color indicator alongside error text -->
+    <div id="name-error" class="error-msg">
+      <span aria-hidden="true">❌</span> This field is required.
+    </div>
+  </div>
+</form>
+```
+
+### 2. CSS
+```css
+.error-msg {
+  display: none;
+  color: #d93025;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/*
+  Only highlight empty required fields AFTER the user visits them.
+  MANDATORY: Provide multiple indicators (border shift + helper text/icon) to avoid color-only state communication.
+*/
+input:user-invalid {
+  border-color: #d93025;
+  background-color: #fce8e6;
+}
+
+input:user-invalid + .error-msg {
+  display: block;
+}
+
+/* Optional: Subtle indicator for required fields that are valid */
+input:required:user-valid {
+  border-color: #188038;
+  border-width: 2px;
+}
+```
+
+### 3. JavaScript State Synchronization
+
+MANDATORY: Because `:user-invalid` is a visual state, you MUST provide a JavaScript bridge to sync `aria-invalid="true"` dynamically for assistive technologies when a user blurs an invalid field or attempts submission.
+
+```javascript
+const form = document.getElementById('feedback-form');
+
+const syncAriaInvalid = (input) => {
+  if (!input.checkValidity()) {
+    input.setAttribute('aria-invalid', 'true');
+  } else {
+    input.removeAttribute('aria-invalid');
+  }
+};
+
+// Sync on blur when a user finishes interacting
+form.addEventListener('blur', (e) => {
+  if (e.target.matches('input[required]')) {
+    syncAriaInvalid(e.target);
+  }
+}, true);
+
+// Sync all required fields when submission is attempted
+form.addEventListener('submit', () => {
+  form.querySelectorAll('input[required]').forEach(syncAriaInvalid);
+});
+
+// Remove error state immediately upon correction
+form.addEventListener('input', (e) => {
+  if (e.target.matches('input[required]') && e.target.checkValidity()) {
+    e.target.removeAttribute('aria-invalid');
+  }
+});
+```
+
+## Fallbacking & Browser Support
+
+### Fallbacks & browser support for :user-valid and :user-invalid
+
+Baseline status for :user-valid and :user-invalid: Widely available. It's been Baseline since 2023-11-02.
+Supported by: Chrome 119 (Oct 2023), Edge 119 (Nov 2023), Firefox 88 (Apr 2021), and Safari 16.5 (May 2023).
+
+### CSS for Fallback
+
+```css
+input:user-invalid,
+input.user-invalid-fallback {
+  border-color: #d93025;
+  background-color: #fce8e6;
+}
+
+input:user-invalid + .error-msg,
+input.user-invalid-fallback + .error-msg {
+  display: block;
+}
+```
+
+### JavaScript Fallback
+
+Use a reusable utility that tracks interaction state using a `WeakMap`. This avoids polluting the DOM with "dirty" classes or data attributes.
+
+```javascript
+const UserInvalidFallback = (() => {
+  const dirtyState = new WeakMap();
+
+  const updateState = (input) => {
+    const isValid = input.checkValidity();
+
+    // Update both visual and ARIA state
+    input.classList.toggle('user-invalid-fallback', !isValid);
+    input.classList.toggle('user-valid-fallback', isValid);
+
+    if (!isValid) {
+      input.setAttribute('aria-invalid', 'true');
+    } else {
+      input.removeAttribute('aria-invalid');
+    }
+  };
+
+  const handleEvent = (event) => {
+    const input = event.target;
+
+    if (event.type === 'reset') {
+      const controls = input.elements || [];
+      for (const control of controls) {
+        dirtyState.delete(control);
+        control.classList.remove('user-invalid-fallback');
+        control.classList.remove('user-valid-fallback');
+        control.removeAttribute('aria-invalid');
+      }
+      return;
+    }
+
+    if (!input.checkValidity) return;
+
+    if (event.type === 'input' || event.type === 'change') {
+      const state = dirtyState.get(input) || { hasInteracted: false, hasBlurred: false };
+      state.hasInteracted = true;
+      dirtyState.set(input, state);
+      if (state.hasBlurred) {
+        updateState(input);
+      }
+    } else if (event.type === 'blur') {
+      const state = dirtyState.get(input) || { hasInteracted: false, hasBlurred: false };
+      state.hasBlurred = true;
+      dirtyState.set(input, state);
+      if (state.hasInteracted) {
+        updateState(input);
+      }
+    }
+  };
+
+  const init = (root = document) => {
+    if (CSS.supports('selector(:user-invalid)')) return;
+
+    root.addEventListener('blur', handleEvent, true); // Capture phase
+    root.addEventListener('input', handleEvent);
+    root.addEventListener('change', handleEvent);
+    root.addEventListener('reset', handleEvent, true); // Capture resets
+  };
+
+  return { init };
+})();
+
+// Initialize for a specific form
+const form = document.querySelector('#demo-form');
+UserInvalidFallback.init(form);
+```
+
+## Other Considerations
+
+1.  **Asterisks**: It is still best practice to indicate required fields visually (e.g., with an asterisk `*`) in the label, so users know what to expect *before* they interact.
+2.  **Submit Buttons**: Unlike `disabled` buttons, keep your submit button enabled. If the user clicks it, the browser will automatically trigger `:user-invalid` on all empty required fields and focus the first one. This is excellent for accessibility and UX.
+3.  **Accessibility**: Native `:user-invalid` does not automatically sync with ARIA attributes. Add the following JavaScript to keep `aria-invalid` in sync with the visual state:
+
+```javascript
+// Sync aria-invalid with the CSS :user-invalid state
+const syncAria = (el) => {
+  el.setAttribute?.('aria-invalid', el.matches(':user-invalid') ? 'true' : 'false');
+};
+
+// Update on blur (to show error) and input (to clear it)
+document.addEventListener('blur', (e) => syncAria(e.target), true);
+document.addEventListener('input', (e) => {
+  if (e.target.hasAttribute('aria-invalid')) syncAria(e.target);
+});
+```
+
+
+--- Guide for validate-input-after-interaction ---
+# Validate Input After Interaction
+
+## The Problem
+
+Displaying validation errors the moment a user focuses on a field and starts typing is premature and distracting. For example, as a user types an email address (e.g., "user@gm") or a password with complex requirements, the field is technically invalid until completion. Standard `:invalid` styling results in an error state appearing immediately, frustrating the user.
+
+## The Solution
+
+The `:user-invalid` pseudo-class allows you to defer the error state until the user has "committed" to a value (by blurring the field) or attempted to submit the form. This ensures validation feedback is provided only after the user has finished interacting with the field.
+
+### Implementation Strategy
+
+1.  **HTML Constraint**: DO use standard HTML5 attributes like `type="email"`, `pattern`, and `required` to trigger the browser's built-in validation logic.
+2.  **Visual Feedback**: DO use `:user-invalid` to apply error styling only after interaction.
+3.  **Positive Reinforcement**: DO optionally use `:user-valid` to give a green "success" indicator once the requirements are met.
+4.  **Graceful Recovery**: As soon as the user corrects the input to a valid format, `:user-invalid` stops matching, removing the error state immediately.
+
+## Implementation Guide
+
+### Use Case 1: Email Validation
+
+MANDATORY: Rely on standard HTML5 attributes for email fields. The error message is hidden by default and only revealed when the browser determines the user has left the field in an invalid state.
+
+```html
+<form>
+  <div class="field">
+    <label for="email">Email Address</label>
+    <!-- MANDATORY: Place format hints above the input so autocomplete popovers don't cover them during editing -->
+    <span id="email-hint" class="hint">Format: you@example.com</span>
+    <!-- DO: Use standard HTML validation attributes like type="email" and required -->
+    <input
+      type="email"
+      id="email"
+      name="email"
+      required
+      autocomplete="email"
+      aria-describedby="email-hint"
+      aria-errormessage="email-error"
+    >
+    <div id="email-error" class="error-msg">
+      <span aria-hidden="true">❌</span> Please enter a valid email address.
+    </div>
+  </div>
+</form>
+```
+
+```css
+.hint {
+  display: block;
+  color: #5f6368;
+  font-size: 0.85rem;
+  margin-bottom: 0.25rem;
+}
+
+.error-msg {
+  display: none;
+  color: #d93025;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/*
+  DO: Only show error styles after user interaction.
+  Use multiple indicators (border/background shift + icon/text) to avoid color-only states.
+*/
+input:user-invalid {
+  border-color: #d93025;
+  background-color: #fce8e6;
+}
+
+/* DO: Reveal the error message using the adjacent sibling selector */
+input:user-invalid + .error-msg {
+  display: block;
+}
+
+/* DO: Provide a clear success indication on :user-valid */
+input:user-valid {
+  border-color: #188038;
+}
+```
+
+### Use Case 2: Password Complexity
+
+MANDATORY: Define the complexity rule using a Regex Lookahead pattern in the `pattern` attribute. The rules list is shown above the input to guide the user, and highlighted if there's an error.
+
+```html
+<form>
+  <div class="field">
+    <label for="password">New Password</label>
+    <!-- MANDATORY: Place hints and rules above the input so mobile keyboards do not obscure them -->
+    <ul id="password-rules" class="rules-list">
+      <li>At least 8 characters</li>
+      <li>One uppercase letter</li>
+      <li>One number</li>
+      <li>One special character</li>
+    </ul>
+    <!-- DO: Use pattern and minlength for complex password validation
+         DO: Match all constraints with lookaheads via pattern attribute
+     -->
+    <input
+      type="password"
+      id="password"
+      autocomplete="new-password"
+      required
+      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}"
+      minlength="8"
+      aria-describedby="password-rules"
+    >
+  </div>
+</form>
+```
+
+```css
+/* DO: State the default styling as neutral */
+.rules-list { 
+  color: #5f6368; 
+  margin-bottom: 0.5rem;
+}
+
+/* DO: Show invalid state (After interaction): Error */
+input:user-invalid {
+  border-color: #d93025;
+  background-color: #fce8e6;
+}
+
+/* DO: Highlight rules list when error is shown using the modern :has() selector */
+.field:has(input:user-invalid) .rules-list {
+  color: #d93025;
+  font-weight: 600;
+}
+
+/* DO: Add success indications for :user-valid state */
+input:user-valid {
+  border-color: #188038;
+}
+
+/* DO: Hide rules once satisfied */
+.field:has(input:user-valid) .rules-list {
+  display: none;
+}
+```
+
+## Fallbacking & Browser Support
+
+### Fallbacks & browser support for :user-valid and :user-invalid
+
+Baseline status for :user-valid and :user-invalid: Widely available. It's been Baseline since 2023-11-02.
+Supported by: Chrome 119 (Oct 2023), Edge 119 (Nov 2023), Firefox 88 (Apr 2021), and Safari 16.5 (May 2023).
+
+### CSS for Fallback
+
+```css
+input:user-invalid,
+input.user-invalid-fallback {
+  border-color: #d93025;
+  background-color: #fce8e6;
+}
+
+input:user-invalid + .error-msg,
+input.user-invalid-fallback + .error-msg {
+  display: block;
+}
+```
+
+### JavaScript Fallback
+
+Use a reusable utility that tracks interaction state using a `WeakMap`. This avoids polluting the DOM with "dirty" classes or data attributes.
+
+```javascript
+const UserInvalidFallback = (() => {
+  const dirtyState = new WeakMap();
+
+  const updateState = (input) => {
+    const isValid = input.checkValidity();
+
+    // Update both visual and ARIA state
+    input.classList.toggle('user-invalid-fallback', !isValid);
+    input.classList.toggle('user-valid-fallback', isValid);
+
+    if (!isValid) {
+      input.setAttribute('aria-invalid', 'true');
+    } else {
+      input.removeAttribute('aria-invalid');
+    }
+  };
+
+  const handleEvent = (event) => {
+    const input = event.target;
+
+    if (event.type === 'reset') {
+      const controls = input.elements || [];
+      for (const control of controls) {
+        dirtyState.delete(control);
+        control.classList.remove('user-invalid-fallback');
+        control.classList.remove('user-valid-fallback');
+        control.removeAttribute('aria-invalid');
+      }
+      return;
+    }
+
+    if (!input.checkValidity) return;
+
+    if (event.type === 'input' || event.type === 'change') {
+      const state = dirtyState.get(input) || { hasInteracted: false, hasBlurred: false };
+      state.hasInteracted = true;
+      dirtyState.set(input, state);
+      if (state.hasBlurred) {
+        updateState(input);
+      }
+    } else if (event.type === 'blur') {
+      const state = dirtyState.get(input) || { hasInteracted: false, hasBlurred: false };
+      state.hasBlurred = true;
+      dirtyState.set(input, state);
+      if (state.hasInteracted) {
+        updateState(input);
+      }
+    }
+  };
+
+  const init = (root = document) => {
+    if (CSS.supports('selector(:user-invalid)')) return;
+
+    root.addEventListener('blur', handleEvent, true); // Capture phase
+    root.addEventListener('input', handleEvent);
+    root.addEventListener('change', handleEvent);
+    root.addEventListener('reset', handleEvent, true); // Capture resets
+  };
+
+  return { init };
+})();
+
+// Initialize for a specific form
+const form = document.querySelector('#demo-form');
+UserInvalidFallback.init(form);
+```
+
+## Other Considerations
+
+1.  **Accessibility**:
+    *   MANDATORY: Use `aria-describedby` to link the rules list to the input.
+    *   DO NOT: Hide rules lists entirely until the input is valid; users need to know what to type!
+2.  **Pattern Attribute Limits**: MANDATORY: The `pattern` attribute performs a full match (implied `^...$`). Ensure your password regex accounts for the entire string.
+3.  **Validation Strictness**: DO note that the browser's default `type="email"` validation is quite permissive (e.g., `user@localserver` might pass). If you need stricter validation, you may need to use a more robust validation library or a custom validation function alongside `type="email"`.
+4.  **Focus Management**: MANDATORY: If a user submits the form with an invalid field, the browser will automatically focus the first invalid field. Your `:user-invalid` styles will apply immediately because a submission attempt counts as an interaction.
+5. **Consistent ARIA Experience**: Native `:user-invalid` does not automatically sync with ARIA attributes. Add the following JavaScript to keep `aria-invalid` in sync with the visual state:
+
+```javascript
+// Sync aria-invalid with the CSS :user-invalid state
+const syncAria = (el) => {
+  el.setAttribute?.('aria-invalid', el.matches(':user-invalid') ? 'true' : 'false');
+};
+
+// Update on blur (to show error) and input (to clear it)
+document.addEventListener('blur', (e) => syncAria(e.target), true);
+document.addEventListener('input', (e) => {
+  if (e.target.hasAttribute('aria-invalid')) syncAria(e.target);
+});
+```
+
+
+--- Guide for component-specific-light-dark-theme ---
+# Component-specific light/dark themes
+
+While more commonly set on the root, the `color-scheme` property can be set on individual elements to force them into a different color scheme from the rest of the page.
+This can be useful for components that must always be viewed in a specific color scheme (e.g. always in dark or light mode).
+
+Example use cases include:
+- Elements that are often in dark mode even on light mode pages for aesthetic reasons, e.g. code blocks, media players, photo galleries
+- Areas that contain media designed for a light background (e.g. images, videos, illustrations, print previews) can be set to light mode even if the rest of the page is in dark mode.
+- Elements whose color-scheme is controlled by a user-level setting, such as component previews
+- Embeds that don't support both light and dark modes
+- Design tools, maps, visualizations, games etc.
+
+## When to change colors vs. when to force `color-scheme`?
+
+Not every element that uses lighter text on darker background in light mode or darker text on lighter background in dark mode needs a different `color-scheme`.
+For example, a primary button may be rendered as blue with white text in light mode, but that does not warrant a `color-scheme: dark`.
+
+As a rule of thumb, typically elements using a different `color-scheme` are complex surfaces establishing their own visual context, rather than simple shallow containers.
+
+When considering using a different `color-scheme` on an element, ask yourself:
+
+- Should built-in browser UI that is not otherwise customized (e.g. form controls, scrollbars, etc) use that color-scheme or adapt to the page's color-scheme? -> if the former, don't use `color-scheme`.
+- Should any `light-dark()` colors resolve like they do for the rest of the page or based on the override? -> if the former, don't use `color-scheme`.
+- Should descendants be in that `color-scheme`? If not, don't use `color-scheme`.
+
+## Basic implementation
+
+Component-specific overrides are typically (though not strictly necessarily) used on pages that also support multiple color schemes via a global `color-scheme`.
+For implementing page-wide dark mode well, see `dark-mode` (via `npx -y modern-web-guidance@latest retrieve "dark-mode"`).
+
+Once a page-wide `color-scheme` is in place, and you are using color tokens sensitive to it (e.g. via `light-dark()`), you can simply set `color-scheme` on specific components to override the color mode for that subtree:
+
+```css
+pre, code, .dark {
+  color-scheme: dark;
+}
+```
+
+Note that some browsers automatically adapt components to a different color scheme anyway.
+To force the specified color scheme in all cases, use `only`, i.e. `color-scheme: only dark;` instead of `color-scheme: dark;`.
+
+### Adapting non-color values
+
+`light-dark()` currently only works for colors.
+
+## Best practices
+
+- **MANDATORY**: Do not set `color-scheme` on elements without a background, as that risks mixing background and text color pairs from different color-schemes, resulting in unreadable text.
+- **OPTIONAL**: While it is easier to reuse the same color pairs as the page-wide dark mode, we _can_ define different color pairs for these components. For example, we may want a dark mode component used in a light mode page to be a little less dark than when the same dark mode component is used in a page that is overall in dark mode.
+
+## Known issues to be aware of
+
+### Important gotcha: Inheritance of `light-dark()` colors
+
+**`light-dark()` resolves at computed value time.**
+This means that any inherited `<color>` properties set to a `light-dark()` color will only pass down one of the two colors to their descendants, not the `light-dark()` expression itself.
+
+This includes:
+- Built-in color properties that inherit, such as `color`, `accent-color`, `fill`, `stroke`, `text-shadow`, `caret-color`
+- Any registered inheritable custom properties with `syntax: <color>` and `inherits: true`
+- Any other `<color>` property set to `inherit`
+
+This means you should:
+- **NOT** register custom properties meant to hold *design tokens* (e.g. `--surface-color`) as `<color>`. Tokens need to keep their `light-dark()` expression live so descendants can re-resolve them under a different `color-scheme`.
+- When setting `color-scheme` on an element, re-specify any inherited `<color>` properties that may have been set to `light-dark()` values (directly or via design tokens), even if that's to the same design token.
+- **NOT** use `inherit` on `<color>` properties on elements with a `color-scheme` override (fine to use on their descendants).
+- **DO** use registered `<color>` properties for the *opposite* use case: when you deliberately want to snapshot the ancestor's resolved color and prevent it from re-resolving under the descendant's `color-scheme`. For example, capturing the page background to use elsewhere.
+- If you need to animate a color, use a separate `@property`-registered `<color>` property on the element being animated (registration is required for color interpolation) — this is not a design token, but a per-element animation target, so it does not conflict with the rule above.
+
+Example:
+
+```css
+:root {
+	--accent-color: light-dark(blue, skyblue);
+	--surface-color: light-dark(white, #222);
+	--text-color: light-dark(#111, white);
+
+	color-scheme: light dark;
+	accent-color: var(--accent-color);
+	color: var(--text-color);
+}
+
+body {
+	/* --surface-color dynamically switches despite being inherited because --surface-color is not registered */
+	background: var(--surface-color);
+}
+
+pre, code {
+	color-scheme: dark;
+	background: var(--surface-color);
+
+	/* Without this, accent-color would be blue, not skyblue! */
+	accent-color: var(--accent-color);
+
+	/* Without this, text-color would be #111, not white! */
+	color: var(--text-color);
+}
+```
+
+### Issues to be aware of when using color-scheme
+
+- Chrome and Firefox respect `color-scheme` for iframes: they render embedded pages in the correct color scheme and adjust the embedded page's `prefers-color-scheme` media query to reflect the embedding context's `color-scheme`. Safari does not, and resolves `prefers-color-scheme` to the system setting even inside iframes.
+  - **If you control both parent and iframe:** pass the parent's color scheme to the iframe explicitly — via a URL parameter (`?theme=dark`) at iframe construction time, or via `postMessage()` (which also lets you react to runtime changes). In the iframe, set a class on `<html>` (and/or `color-scheme` on `:root`) from that signal instead of relying on `prefers-color-scheme`.
+  - **If you only control the embedded page:** there is no reliable way to detect the embedding context's `color-scheme` from inside the iframe in Safari. Expose an explicit theme parameter on your embed API (e.g. a query string or `postMessage` protocol) and document it for embedders.
+
+## Fallback strategies
+
+### Fallbacks & browser support for color-scheme
+
+Baseline status for color-scheme: Widely available. It's been Baseline since 2022-02-03.
+Supported by: Chrome 98 (Feb 2022), Edge 98 (Feb 2022), Firefox 96 (Jan 2022), and Safari 13 (Sep 2019).
+
+The `color-scheme` property is **progressive enhancement**.
+Browsers that do not support it will ignore this property and use their default light-mode UI.
+
+To adapt to the user's preferences in older browsers, use `prefers-color-scheme` media queries to provide different colors when dark mode is preferred.
+
+- DO use the media query to switch custom properties on `:root` or `html`
+- Avoid using the media query on individual components unless the component requires a very specific type of dark mode customization beyond colors.
+
+```css
+:root {
+  /* Define brand colors for each mode */
+  --color-brand-light: #0056b3;
+  --color-brand-dark: #00e5ff;
+  --color-brand: var(--color-brand-light);
+
+  /* MANDATORY: Fallback for browsers without light-dark support */
+  @media (prefers-color-scheme: dark) {
+    --color-brand: var(--color-brand-dark);
+  }
+
+  /* Ignored in older browsers */
+  color-scheme: light dark;
+}
+
+button.primary {
+	background-color: var(--color-brand);
+}
+```
+
+### Fallbacks & browser support for light-dark()
+
+Baseline status for light-dark(): Newly available. It's been Baseline since 2024-05-13.
+Supported by: Chrome 123 (Mar 2024), Edge 123 (Mar 2024), Firefox 120 (Nov 2023), and Safari 17.5 (May 2024).
+
+For browsers that support `color-scheme` but not yet `light-dark()`, light and dark versions of colors should first be defined as custom properties, and the `prefers-color-scheme` media query should be used to set colors for the respective mode like in the example below:
+
+```css
+:root {
+  /* Define browser UI accent color for each mode */
+  --brand-accent-light: #0056b3;
+  --brand-accent-dark: #00e5ff;
+  --accent-color: var(--brand-accent-light);
+
+  /* MANDATORY: Fallback for browsers without light-dark support */
+  @media (prefers-color-scheme: dark) {
+    --accent-color: var(--brand-accent-dark);
+  }
+
+  /* OPTIONAL: use light-dark() for more control of built-in UI colors */
+  @supports (color: light-dark(white, black)) {
+    --accent-color: light-dark(var(--brand-accent-light), var(--brand-accent-dark));
+  }
+
+  /* MANDATORY: Automatically adapt native UI to user system preferences */
+  color-scheme: light dark;
+
+  /* Example inherited color property */
+  accent-color: var(--accent-color);
+}
+
+pre, code {
+  color-scheme: dark;
+
+  /* **Mandatory**: any inherited color properties must be set again, even if to the same design tokens */
+  accent-color: var(--accent-color);
+}
+```
+
+
+--- Guide for dark-mode ---
+# Dark mode
+
+The `color-scheme` property indicates which color schemes (such as light or dark) your page supports. This informs the browser that it can automatically theme native UI elements—like scrollbars, form controls, and the default canvas background—to match your site's design and help minimize white flashes during initial loading.
+
+## Implementation
+
+### 1. Declare supported schemes in HTML
+
+MANDATORY: To help prevent a "flash of un-themed content" (FOUC), place a `<meta>` tag in your `<head>` to ensure the browser knows which themes you support before it even starts rendering. While this `<meta>` tag helps to avoid FOUC by setting the initial canvas color early, it may not completely eliminate flashes in all browsers or loading conditions.
+
+```html
+<!-- MANDATORY: Declare support for both light and dark themes -->
+<meta name="color-scheme" content="light dark">
+```
+
+### 2. Apply page-wide color scheme to CSS :root or html
+
+MANDATORY: Apply the `color-scheme` property to the `html` element or the `:root` pseudo-class. Browsers specifically look to the root element to determine the theme for the entire viewport—including the root scrollbars and the initial "canvas" background. If applied only to the `body`, these global UI surfaces may remain in light mode because the `body` does not control the window's rendering context.
+
+```css
+/* MANDATORY: Apply color-scheme to :root or html for viewport-wide theming */
+:root {
+  /* MANDATORY: Automatically adapt native UI to user system preferences */
+  color-scheme: light dark;
+}
+```
+
+### 3. Define light and dark color tokens
+
+You can use the `light-dark()` function to define color tokens that automatically adapt to different `color-scheme` values.
+
+It is recommended that you also keep the raw color values in separate custom properties, which makes it easier to combine them in different ways (and makes fallback behavior easier, if needed).
+
+For more control over the colors of built-in UI such as `accent-color` or `scrollbar-color`, authors **can optionally** add their own dynamic colors with use of custom properties and/or the `light-dark()` function. This function automatically picks the correct color based on the computed `color-scheme` of the element and eliminates the need for redundant media queries, but is not required for a basic implementation.
+
+```css
+:root {
+  --color-brand-light: oklch(45% 0.23 270);
+  --color-brand-dark: oklch(85% 0.15 210);
+  --color-brand-text-light: white;
+  --color-brand-text-dark: oklch(40% 0.23 270);
+
+  --color-brand: light-dark(var(--color-brand-light), var(--color-brand-dark));
+  --color-brand-text: light-dark(var(--color-brand-text-light), var(--color-brand-text-dark));
+
+  /* MANDATORY: Automatically adapt native UI to user system preferences */
+  color-scheme: light dark;
+}
+
+button.primary {
+  /* These automatically adapt to color scheme */
+  background-color: var(--color-brand);
+  color: var(--color-brand-text);
+}
+```
+
+OPTIONAL: A number of system colors are available, which also automatically adapt to the used color scheme (and other color modes, e.g. forced colors), such as `canvas`, `canvastext`, `accentcolor` (check support) , `buttonborder` etc. These are typically too limited to be useful, beyond very specific cases where you need to exactly match certain default browser UI or as fallbacks/defaults.
+
+#### OPTIONAL: Tailor color pairs to context
+
+Even when overriding the system default, it can be useful to use the `prefers-color-scheme` media query to define **different** color pairs that take into account the colors of the browser and OS chrome around the page (or of the surrounding page, when the page is used as an iframe).
+
+For example, use a slightly dimmer light theme when the system setting is `dark`, or a more contrasting dark theme when the system setting is `light`, so the page is not visually overpowered by the surrounding UI.
+
+
+## Fine-grained browser UI customization
+
+Setting `color-scheme` already adapts browser UI to the used color scheme, but this will use OS defaults and/or system colors that may not perfectly align with the website design.
+Modern browsers expose several fine-grained customization hooks for these.
+Do not reimplement native controls simply to customize their appearance without exhausting the customization hooks modern browsers provide.
+
+### Setting the accent color
+
+Some browser UI (e.g. checked checkboxes or sliders) uses an accent color.
+This resolves to the OS setting by default, but you can use the `accent-color` property to set it to a color that better aligns with the page, such as the page's brand color.
+
+```css
+html {
+  accent-color: light-dark(var(--color-accent-light), var(--color-accent-dark));
+}
+```
+
+### Issues to be aware of when using accent-color
+
+- When placing visual elements over the accent color (e.g. a checkbox checkmark), Chrome and Safari will automatically select a contrasting color, whereas Safari will modify the accent color, and may not maintain adequate contrast.
+
+### Scrollbar colors
+
+You can use `scrollbar-color` together with `light-dark()` to set custom scrollbar colors that adapt to the color scheme used.
+
+```css
+:root {
+  --color-scrollbar-track: light-dark(#eee, #222);
+  --color-scrollbar-thumb: light-dark(#999, #666);
+  scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
+}
+```
+
+### Issues to be aware of when using scrollbar-color
+
+- Do NOT animate or transition `scrollbar-color`. A [WebKit bug](https://bugs.webkit.org/show_bug.cgi?id=311752) causes the scrollbar to flicker every time `scrollbar-color` changes.
+- On macOS, `scrollbar-color` (standard) and `::-webkit-scrollbar` (legacy) properties are ignored by default because macOS uses native "overlay" scrollbars. You MUST pair custom colors with `scrollbar-width` (e.g., `thin` or `auto`) to force macOS to render them.
+- Even with `scrollbar-width` applied, macOS overlay scrollbars render the track (gutter) as transparent by default. If the design requires a visible track background color on MacOS, you MUST apply `scrollbar-gutter: stable;` to the scrollable container, but note that it only appears after the user hovers over the scrollbar.
+- Even with `scrollbar-gutter: stable` the track may be transparent on MacOS. The thumb should not depend on the track color to be visible.
+
+### Further customization
+
+Most browser UI exposes pseudo-elements to fully customize its appearance, such as:
+- `::placeholder`
+- `::spelling-error`
+- `::grammar-error`
+- `::selection`
+- `::search-text`
+- `::target-text`
+- `::file-selector-button`
+
+You can use `light-dark()` colors on any of these to apply colors that adapt to the used color scheme.
+
+## OPTIONAL: Implementing a color-scheme toggle
+
+**DO NOT** set `color-scheme: light` or `color-scheme: dark` on the root element by default.
+The default color-scheme MUST be the user's system preference, which happens automatically when setting `color-scheme` to `light dark`.
+
+For website-specific customization, a manual toggle could be provided to allow users to choose between light, dark, or system-default modes.
+
+If a user-facing toggle to override it is desired, it should:
+- Update the `<meta name="color-scheme">` element to reflect the chosen theme (`light dark` for system default, `light` for light, and `dark` for dark).
+- If branching is desired for non-color values, set a class on `<html>` to match the theme preference and use descendant selectors. While `:root:has(> head > meta[name="color-scheme"][content="dark"])` would technically work, it is slower and confers no benefit, since we are already using JS to update the `<meta>` element.
+- Persist user choice in `localStorage`.
+- **IMPORTANT**: The CSS should be written to default to the system preference, with overrides for user-specified color-schemes. That way, if JS fails to execute, the site still defaults to the system color-scheme.
+- The system-level OS theme can change at any time. If you are using JS to read `matchMedia("(prefers-color-scheme: dark)").matches`, you MUST also use `addEventListener("change", fn)` to react to changes. CSS automatically adapts to changes.
+- **IMPORTANT**: To avoid a Flash of Unstyled Content (FOUC) for users who have pinned a different color scheme than their system default, use an inline script (NOT `type=module`, NOT `defer`) to set it when the page loads:
+
+```html
+<meta name="color-scheme" content="light dark">
+<script>
+{
+  const colorScheme = localStorage.getItem("color-scheme");
+  if (colorScheme) {
+    document.querySelector('meta[name="color-scheme"]').content = colorScheme;
+  }
+}
+</script>
+```
+
+### UX considerations
+
+Use a two-state control:
+1. System setting.
+2. The opposite (e.g. light when the system setting is dark, and dark when the system setting is light). Selecting this setting must pin that exact color scheme, not a dynamically computed "opposite of system setting" value. Example scenario:
+    1. The OS is set to light mode.
+    2. The user selects the opposite setting for this website (dark).
+    3. The user changes their system setting to dark.
+    4. The website should remain dark.
+
+**DON'T** expose all three states (system, light, dark). While the rationale is plausible — "Follow system (currently dark)" is a distinct user intent from "Always dark" — it provides suboptimal UX:
+- Users cannot meaningfully express intent for problems they don't currently have. A manual toggle is a temporary comfort adjustment ("it's too bright right now"), not a long-term preference ("make sure this never changes").
+- Two of the three options always produce the same visual result, violating the principle of feedback.
+
+## Component-specific overrides
+
+You can override the global theme for specific elements by setting `color-scheme` on them.
+This is useful for "dark mode" sections within a light-themed site, such as code blocks or media players.
+
+```css
+pre, code {
+  /* Forces element and its children to use dark themed UI */
+  color-scheme: dark;
+}
+```
+
+For more information about component-specific overrides and their gotchas, see `component-specific-light-dark-theme` (via `npx -y modern-web-guidance@latest retrieve "component-specific-light-dark-theme"`).
+
+## Known issues to be aware of
+
+### Issues to be aware of when using color-scheme
+
+- Chrome and Firefox respect `color-scheme` for iframes: they render embedded pages in the correct color scheme and adjust the embedded page's `prefers-color-scheme` media query to reflect the embedding context's `color-scheme`. Safari does not, and resolves `prefers-color-scheme` to the system setting even inside iframes.
+  - **If you control both parent and iframe:** pass the parent's color scheme to the iframe explicitly — via a URL parameter (`?theme=dark`) at iframe construction time, or via `postMessage()` (which also lets you react to runtime changes). In the iframe, set a class on `<html>` (and/or `color-scheme` on `:root`) from that signal instead of relying on `prefers-color-scheme`.
+  - **If you only control the embedded page:** there is no reliable way to detect the embedding context's `color-scheme` from inside the iframe in Safari. Expose an explicit theme parameter on your embed API (e.g. a query string or `postMessage` protocol) and document it for embedders.
+
+## Fallback strategies
+
+### Fallbacks & browser support for color-scheme
+
+Baseline status for color-scheme: Widely available. It's been Baseline since 2022-02-03.
+Supported by: Chrome 98 (Feb 2022), Edge 98 (Feb 2022), Firefox 96 (Jan 2022), and Safari 13 (Sep 2019).
+
+The `color-scheme` property is **progressive enhancement**.
+Browsers that do not support it will ignore this property and use their default light-mode UI.
+
+To adapt to the user's preferences in older browsers, use `prefers-color-scheme` media queries to provide different colors when dark mode is preferred.
+
+- DO use the media query to switch custom properties on `:root` or `html`
+- Avoid using the media query on individual components unless the component requires a very specific type of dark mode customization beyond colors.
+
+```css
+:root {
+  /* Define brand colors for each mode */
+  --color-brand-light: #0056b3;
+  --color-brand-dark: #00e5ff;
+  --color-brand: var(--color-brand-light);
+
+  /* MANDATORY: Fallback for browsers without light-dark support */
+  @media (prefers-color-scheme: dark) {
+    --color-brand: var(--color-brand-dark);
+  }
+
+  /* Ignored in older browsers */
+  color-scheme: light dark;
+}
+
+button.primary {
+	background-color: var(--color-brand);
+}
+```
+
+### Fallbacks & browser support for light-dark()
+
+Baseline status for light-dark(): Newly available. It's been Baseline since 2024-05-13.
+Supported by: Chrome 123 (Mar 2024), Edge 123 (Mar 2024), Firefox 120 (Nov 2023), and Safari 17.5 (May 2024).
+
+For browsers that support `color-scheme` but not yet `light-dark()`, light and dark versions of colors should first be defined as custom properties, and the `prefers-color-scheme` media query should be used to set colors for the respective mode like in the example below:
+
+```css
+:root {
+  /* Define browser UI accent color for each mode */
+  --brand-accent-light: #0056b3;
+  --brand-accent-dark: #00e5ff;
+  --accent-color: var(--brand-accent-light);
+
+  /* MANDATORY: Fallback for browsers without light-dark support */
+  @media (prefers-color-scheme: dark) {
+    --accent-color: var(--brand-accent-dark);
+  }
+
+  /* OPTIONAL: use light-dark() for more control of built-in UI colors */
+  @supports (color: light-dark(white, black)) {
+    --accent-color: light-dark(var(--brand-accent-light), var(--brand-accent-dark));
+  }
+
+  /* MANDATORY: Automatically adapt native UI to user system preferences */
+  color-scheme: light dark;
+
+  /* Example inherited color property */
+  accent-color: var(--accent-color);
+}
+
+pre, code {
+  color-scheme: dark;
+
+  /* **Mandatory**: any inherited color properties must be set again, even if to the same design tokens */
+  accent-color: var(--accent-color);
+}
+```
+
+### Fallbacks & browser support for scrollbar-color
+
+Baseline status for scrollbar-color: Newly available. It's been Baseline since 2025-12-12.
+Supported by: Chrome 121 (Jan 2024), Edge 121 (Jan 2024), Firefox 64 (Dec 2018), and Safari 26.2 (Dec 2025).
+
+This feature is progressive enhancement and does not always require fallbacks.
+
+If the styling is important and the user's Baseline target is "Baseline Widely Available" or earlier, you SHOULD include the non-standard `::-webkit-scrollbar` pseudo-elements as fallbacks.
+
+Wrap legacy fallbacks in an `@supports not (scrollbar-color: auto)` block to prevent conflicts between standard properties and legacy WebKit selectors in browsers that support both natively.
+
+If you are using custom properties to define colors, these will cascade to the legacy WebKit selectors automatically. You do NOT need to duplicate them.
+
+```css
+/* Legacy fallback for WebKit/Blink browsers */
+@supports not (scrollbar-color: auto) {
+  .scroller::-webkit-scrollbar {
+    /* Must define base size in WebKit for custom colors to be visual */
+    width: 12px;
+    height: 12px;
+  }
+
+  .scroller::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+  }
+
+  .scroller::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+}
+```
+
+### Fallbacks & browser support for accent-color
+
+accent-color has limited availability.
+Supported by: Chrome 93 (Aug 2021), Edge 93 (Sep 2021), and Firefox 92 (Sep 2021).
+Unsupported in: Safari.
+
+The `accent-color` property is progressive enhancement.
+Browsers that do not support this property will ignore it and use their default UI colors.
+
+
+--- Guide for fluid-scaling ---
+## Overview
+
+Fluid scaling allows components to adjust their internal proportions (like font sizes and spacing) based on their current dimensions. This creates a more cohesive design than jumping between fixed breakpoints.
+
+While fluid scaling was historically achieved using viewport units (scaling based on the screen size), modern container query units allow components to scale relative to their parent container instead. This ensures components look good regardless of where they are placed in a layout, promoting better component isolation and reusability.
+
+## Implementation
+
+### 1. Define a container
+
+To use container query units, you must first define a containment context on a parent element.
+
+```css
+.component-wrapper {
+  /* Define the container type. Use 'inline-size' for width-based scaling. */
+  /* You can also use 'size' for both width and height, but it requires explicit sizing. */
+  container-type: inline-size;
+  
+  /* Optional: Name the container for specific targeting */
+  container-name: fluid-card;
+}
+```
+
+### 2. Use container query units
+
+Use container query units (`cqi`, `cqb`, etc.) to set sizes relative to the container's dimensions.
+
+*   `cqi`: 1% of the container's inline size (width in horizontal writing modes).
+*   `cqb`: 1% of the container's block size (height in horizontal writing modes).
+
+**Note**: Container units can be used directly on any property without needing an `@container` query rule. They automatically resolve based on the nearest ancestor with a defined `container-type`.
+
+```css
+.component-title {
+  /* Scale font size based on container width */
+  /* 10cqi means 10% of the container's width */
+  font-size: 10cqi;
+}
+
+.component-body {
+  /* Scale padding based on container width */
+  padding: 5cqi;
+}
+```
+
+### 3. Constrain values with `clamp()`
+
+To prevent sizes from becoming too small or too large, use the CSS `clamp()` function. This impacts the user's ability to zoom or adjust their base font size. To ensure text meets accessibility guidelines, the maximum size must not be more than 2.5 times the minimum size.
+
+```css
+.component-title {
+  /* Clamp font size between 1rem and 2.5rem, scaling with 5% of container width */
+  font-size: clamp(1rem, 5cqi, 2.5rem);
+}
+```
+
+### Fallback strategies
+
+Baseline status for Container queries: Widely available. It's been Baseline since 2023-02-14.
+Supported by: Chrome 105 (Sep 2022), Edge 105 (Sep 2022), Firefox 110 (Feb 2023), and Safari 16 (Sep 2022).
+
+If container queries are not supported by the browser, you should provide a fallback using viewport units or standard media queries.
+
+```css
+.component-title {
+  /* Fallback for browsers that do not support container units */
+  font-size: clamp(1rem, 5vw, 2.5rem);
+}
+
+@supports (font-size: 1cqi) {
+  .component-title {
+    /* Use container units where supported */
+    font-size: clamp(1rem, 5cqi, 2.5rem);
+  }
+}
+```
+
+This fallback ensures that the text still scales, but it will be based on the screen width rather than the component's width. This should be tested to verify it works in your use case.
+
+
+--- Guide for calculate-with-intrinsic-sizes ---
+`calc-size()` is a CSS function for performing mathematical operations on intrinsic sizing keywords like `auto`, `min-content`, and `fit-content`. **MANDATORY**: Use `calc-size()` only when you need to modify an intrinsic size with a calculation or constraint; for simple keyword-based animations (e.g., `0` to `auto`), you must use `interpolate-size: allow-keywords`.
+
+## Implementation Steps
+
+1. **Identify the Intrinsic Basis**: Determine which intrinsic keyword (`auto`, `min-content`, etc.) should form the base of your calculation.
+2. **Define Constraints**: Use CSS math functions like `clamp()`, `min()`, or `max()` within the second argument to enforce design constraints on the intrinsic size.
+3. **MANDATORY: Provide a Fallback**: Always declare a standard sizing keyword or length immediately before the property using `calc-size()` to ensure the layout remains functional in unsupported browsers.
+4. **Apply Logical Properties**: Default to using logical properties like `inline-size` or `block-size` to ensure the calculations respect the document's writing mode.
+5. **Optional: Progressive Enhancement**: Wrap complex layout logic or animations in a `@supports (inline-size: calc-size(auto, size + 0px))` block to deliver advanced features only to capable browsers.
+
+## Basic Syntax
+
+```css
+/* calc-size(<calc-size-basis>, <calc-sum>) — mathematical operations on intrinsic sizing keywords */
+.element {
+  /* MANDATORY: Always provide a fallback for browsers that do not support calc-size() */
+  inline-size: min-content;
+  
+  /* DO: Use calc-size to modify an intrinsic basis with a calculation or function */
+  inline-size: calc-size(min-content, size + 2rem);
+}
+```
+
+### Valid Basis Arguments (`<calc-size-basis>`)
+The first argument defines the "base" size for the calculation.
+
+**Standard Keywords:**
+- `auto`: The default sizing for the element.
+- `min-content`: The smallest size the element can take without overflowing.
+- `max-content`: The size the element takes to fit all content on one line.
+- `fit-content`: Equivalent to `clamp(min-content, auto, max-content)`.
+- `content`: Only valid when `calc-size()` is used within the `flex-basis` property.
+
+**Special Arguments:**
+- `any`: A generic basis used when the specific intrinsic type is unknown or when nesting calculations.
+- Nested `calc-size()`: Allows for multi-step or conditional calculations.
+- `<calc-sum>`: A specific length, percentage, or mathematical expression (e.g., `100px` or `20%`). When a fixed value is used as the basis, the **`size` keyword is still available** (but only within the second argument) and represents the resolved value of that basis.
+
+**MANDATORY**: The `size` keyword is **not valid** within the first argument (`<calc-size-basis>`) itself. It is a local variable that only exists to refer back to the basis from within the second argument (`<calc-sum>`).
+
+### Valid Calculation Arguments (`<calc-sum>`)
+The second argument is the mathematical expression.
+- It typically uses the `size` keyword to refer to the value of the basis.
+- While the `size` keyword is technically optional, omitting it means the calculation will resolve to a fixed value, ignoring the basis entirely.
+- It can include standard math operators (`+`, `-`, `*`, `/`).
+- It can include CSS math functions like `clamp()`, `min()`, `max()`, and `round()`.
+- **MANDATORY**: `calc-size()` only allows a **single** intrinsic size value (the basis) in each calculation. You cannot mix intrinsic sizing keywords in the same `calc-size()` call.
+
+## Use Cases
+
+### Animating to and from Intrinsic Sizes
+By default, browsers cannot interpolate between a length (e.g., `0px`) and an intrinsic keyword (e.g., `auto`). Wrapping the keyword in `calc-size()` makes it an interpolatable value.
+
+#### Choosing the Right Tool for Animations
+- **MANDATORY: Use `interpolate-size: allow-keywords`**: For simple animations to or from intrinsic sizes (e.g., `height: 0` to `height: auto`) without any mathematical modifications. This is the required approach for simple keyword interpolation and should ideally be applied globally via `:root`.
+
+  ```css
+  :root {
+    /* Best practice: Enable keyword interpolation globally */
+    interpolate-size: allow-keywords;
+  }
+
+  .item {
+    height: 0;
+    transition: height 0.3s ease;
+  }
+
+  .item.open {
+    /* Simple interpolation from 0 to auto now works without calc-size() */
+    height: auto;
+  }
+  ```
+
+- **Use `calc-size()`**: ONLY when you need to perform mathematical calculations on an intrinsic size during a transition (e.g., adding padding or clamping the size).
+
+```css
+.accordion-content {
+  display: block;
+  overflow: hidden;
+  /* MANDATORY: Fallback value for closed state */
+  block-size: 0;
+  transition: block-size 0.3s ease-out;
+}
+
+.accordion-content.open {
+  /* MANDATORY: Fallback value for open state */
+  block-size: auto;
+
+  /* 
+    DO: Use calc-size(auto, ...) to enable animation from 0 to the element's 
+    intrinsic size while doing a calculation (in this case, adding a space of 2rem).
+  */
+  block-size: calc-size(auto, size + 2rem);
+}
+```
+
+**MANDATORY**: Interpolation between two intrinsic sizing keywords is not possible directly. One end of the transition must be a length or a percentage.
+
+#### Respecting User Motion Preferences
+Animations that change the size of large layout areas can be particularly disruptive for users with vestibular disorders. **MANDATORY**: Always respect user motion preferences by using the `prefers-reduced-motion` media query to simplify or minimize non-essential animations. Common strategies include disabling motion entirely, reducing duration, or replacing layout shifts with subtle opacity transitions.
+
+```css
+.accordion-content {
+  opacity: 0;
+  transition: block-size 0.3s ease, opacity 0.3s ease;
+}
+
+.accordion-content.open {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion-content {
+    /* 
+       EXAMPLE: Replacing disruptive layout animations with a subtle fade-in.
+       Setting the block-size instantly and transitioning opacity 
+       provides a clear state change without large-scale motion.
+    */
+    transition: opacity 1.5s ease;
+  }
+
+  .accordion-content.open {
+    /* Jump the size instantly */
+    block-size: auto;
+  }
+}
+```
+
+
+### Applying Constraints to Intrinsic Sizes
+You can use `calc-size()` with any CSS math function—such as `min()`, `max()`, `clamp()`, or `round()`—to ensure an element's intrinsic size remains within design boundaries.
+
+```css
+.dynamic-container {
+  /* MANDATORY: Always provide a fallback for browsers that do not support calc-size() */
+  inline-size: fit-content;
+
+  /* 
+    DO: Establish a dynamic size based on content, while:
+    1. Enforcing boundaries using CSS math functions (min, clamp, etc.)
+    2. Modifying the intrinsic size with fixed or relative offsets
+  */
+  inline-size: calc-size(fit-content, min(size + var(--extra-space), var(--max-allowed)));
+}
+```
+
+## Critical Considerations
+
+- **Percentage Pitfalls**: Percentages inside the `<calc-sum>` are resolved against the **container's size**, not the `size` keyword. For example, `calc-size(auto, size + 10%)` adds 10% of the *parent's* width to the element's `auto` width, which may lead to unexpected results or overflows.
+- **Calculations requirement**: **MANDATORY**: Use `interpolate-size: allow-keywords` instead of `calc-size()` for simple animations (e.g., `0` to `auto`). `calc-size()` should only be used when the layout requires dynamic mathematical adjustments to the intrinsic base.
+- **Performance Note**: Animating box model properties like `inline-size` or `block-size` triggers layout recalculations, which can be expensive. Use `calc-size()` animations primarily for layout-critical elements where non-layout alternatives are insufficient.
+
+## Fallback strategies
+
+calc-size() has limited availability.
+Supported by: Chrome 129 (Sep 2024) and Edge 129 (Sep 2024).
+Unsupported in: Firefox and Safari.
+interpolate-size has limited availability.
+Supported by: Chrome 129 (Sep 2024) and Edge 129 (Sep 2024).
+Unsupported in: Firefox and Safari.
+
+`calc-size()` and `interpolate-size` are **progressive enhancements**. In browsers that do not support them, the properties will be ignored and the layout will remain functional, though animations to intrinsic keywords will jump instead of transitioning. Always provide a standard keyword or length as a fallback.
+
+```css
+.element {
+  /* Fallback for browsers that don't support calc-size() */
+  inline-size: fit-content; 
+  /* Modern browsers will override the fallback */
+  inline-size: calc-size(fit-content, size + 2rem);
+}
+```
+
+### Animation and Transition Fallbacks
+In browsers without support for `calc-size()` or `interpolate-size`, transitions involving intrinsic sizing keywords will fail to interpolate. 
+
+- **Graceful Degradation**: The default fallback is an "instant jump" between states (e.g., from `0` to `auto`). This is often acceptable as the layout remains functional.
+- **Enhanced Experience**: Use `@supports` to apply complex layout logic or additional styling that only makes sense when smooth intrinsic animations are possible.
+- **Avoid JS-based measurements**: While you could use JavaScript to measure elements and manually animate their dimensions, this is often unnecessary and can lead to layout thrashing. Relying on the native "instant jump" is the recommended fallback for modern web applications.
+
+For animations, the fallback experience will be an instant jump to the final size. To detect support in CSS or JavaScript:
+
+```css
+/* CSS Feature Detection */
+@supports (inline-size: calc-size(auto, size + 0px)) {
+  .element {
+    /* Apply advanced logic only when supported */
+  }
+}
+```
+
+```javascript
+/* JavaScript Feature Detection */
+if (CSS.supports('inline-size', 'calc-size(auto, size + 0px)')) {
+  // Apply advanced sizing or animations
+}
+```
+
+
+--- Guide for improve-text-layout-and-legibility ---
+# Improve Text Layout and Legibility
+
+The layout of text, particularly at the ends of lines and and ends of paragraphs, can impact the legibility and aesthetic appeal of a page. CSS provides several text wrapping options that can improve specific use cases.
+
+For short text blocks like headings, use `text-wrap: balance`. This property instructs the browser to distribute text as evenly as possible across lines, creating a more symmetrical appearance.
+
+The `text-wrap: pretty` CSS property allows you to improve the typographic quality of body text by enabling a more sophisticated wrapping algorithm. It is specifically designed to prevent "orphans" (single words on the last line of a paragraph) and create a more pleasing visual "rag" for long blocks of text.
+
+## Implementation
+
+### 1. **Identify text elements**: 
+
+For `text-wrap: balance`, select short text blocks like headings and table headers. Avoid elements that have visible boxes such as borders or backgrounds, as this can create unexpected visually empty areas in the layout.
+
+For `text-wrap: pretty`, select elements potentially containing long runs of text where orphaned words (runts) or poor line breaks are most noticeable. This includes the following elements:
+  - `<p>`
+  - `<blockquote>`
+  - `<li>`
+  - Any other element potentially containing long runs of text.
+
+#### Choosing the Right Wrapping Method
+
+| Criteria | `text-wrap: balance` | `text-wrap: pretty` | `text-wrap: wrap` (Default) |
+| :--- | :--- | :--- | :--- |
+| **Best For** | Short blocks (Headings, Titles) | Long blocks (Paragraphs, Lists) | Performance-critical content |
+| **Visual Goal** | Symmetrical line lengths | Avoiding orphans ("runts") | Fast, standard wrapping |
+| **Line Constraints** | Up to 6–10 lines (algorithm limit) | Best for 3 to many lines | No limit |
+| **Perf Cost** | **High**: Binary search algorithm | **Medium**: Look-back algorithm | **Low**: Standard greedy algorithm |
+
+### 2. **Apply the chosen wrapping**: 
+
+Apply `text-wrap: balance` specifically to short, multi-line elements such as headings (`h1`-`h6`), subheadings, or pullquotes.
+
+```css
+/* Target specific heading elements for balanced wrapping */
+h1, h2, h3, h4, h5, h6 {
+  /* Enables balanced line-breaking logic */
+  text-wrap: balance;
+}
+```
+
+Use `text-wrap: pretty` to enable an optimized algorithm that evaluates the last few lines of a paragraph to find the best break points.
+
+```css
+/* Apply to multi-line text blocks to prevent orphaned words */
+p, blockquote, li, .pretty-text {
+  /* Enables pretty line-breaking logic for body copy */
+  text-wrap: pretty;
+}
+```
+
+### Critical Constraints and Performance
+
+#### text-wrap: balance
+
+*   **Line Limit:** Browsers impose a limit on the number of lines they will attempt to balance to maintain performance (typically **6 lines** in Chromium and **10 lines** in Firefox). If the text exceeds this limit, the browser reverts to standard `wrap` behavior. Avoid using `text-wrap: balance` on text blocks that are likely to exceed these limits.
+*   **Targeted Application:** DO NOT apply `text-wrap: balance` globally (e.g., `* { text-wrap: balance; }`). The iterative "binary search" algorithm used by browsers is computationally expensive. Limit its use to specific, short text elements.
+*   **Interaction with Width:** `text-wrap: balance` does not change the container's width (`inline-size`). It only affects how text wraps *within* that width. This can leave empty space at the end of the container, which may affect layouts relying on full-width text blocks.
+
+#### text-wrap: pretty
+
+*   **Performance vs. Quality**: MANDATORY: `text-wrap: pretty` is more computationally expensive than the default `wrap` (greedy) algorithm because it evaluates multiple lines (typically the last four) to optimize the break points. Avoid applying it globally to every element if your page has an extreme amount of text content.
+*   **Best for multi-line text**: The benefits of `pretty` are most apparent in paragraphs of three or more lines. It has little to no effect on short, single-line text.
+*   **Browser-specific behavior**: Be aware that implementation details vary. Chromium-based browsers typically focus on the last four lines, while other engines may evaluate the entire paragraph.
+
+### Fallback strategies
+
+Baseline status for text-wrap: balance: Newly available. It's been Baseline since 2024-05-13.
+Supported by: Chrome 114 (May 2023), Edge 114 (Jun 2023), Firefox 121 (Dec 2023), and Safari 17.5 (May 2024).
+text-wrap: pretty has limited availability.
+Supported by: Chrome 117 (Sep 2023), Edge 117 (Sep 2023), and Safari 26 (Sep 2025).
+Unsupported in: Firefox.
+
+In browsers that do not support `text-wrap: balance` or `text-wrap: pretty`, the property is ignored, and the text will wrap using the default `wrap` behavior. This is a progressive enhancement that gracefully degrades to standard typography. This ensures that your content remains perfectly readable across all browsers while providing a superior experience to those that support it.
+
+For critical layouts where refined text layout is a requirement, use a JavaScript library, but be aware that this may be slow and cause performance issues.
+
+--- Guide for prevent-text-wrapping ---
+# Prevent text wrapping
+
+Modern CSS provides the `text-wrap` property to control how text breaks within its container. To ensure text stays on a single line and ignores container boundaries, use `text-wrap: nowrap`. This is the modern, more semantic replacement for `white-space: nowrap`.
+
+Preventing text wrapping is useful for UI elements like navigation tabs, horizontal scrolling chips, or any scenario where a line break would break the layout or visual design.
+
+## How to implement `text-wrap: nowrap`
+
+### Basic Usage
+
+To prevent any automatic line breaks, apply `text-wrap: nowrap` to the element containing the text.
+
+1. **MANDATORY**: Apply `text-wrap: nowrap` to the target element.
+2. **OPTIONAL**: Use an `overflow` property (such as `hidden`, `scroll`, or `auto`) to manage the resulting overflow.
+3. **OPTIONAL**: Use `text-overflow: ellipsis` to provide a visual cue when text is truncated. Note: This requires `overflow: hidden`.
+
+### Example code
+
+```css
+.no-wrap-text {
+  /* MANDATORY: Prevents automatic line breaks */
+  text-wrap: nowrap;
+
+  /* OPTIONAL: Handles the overflow visually */
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* OPTIONAL: Constrain width to force and handle overflow within this element */
+  max-width: 200px;
+}
+```
+
+### Specific Control with Longhands
+
+The `text-wrap` property is a shorthand for `text-wrap-mode` (whether text wraps) and `text-wrap-style` (how it wraps). Since `text-wrap-style` is ignored when wrapping is disabled, you should generally stick to the `text-wrap` shorthand.
+
+While the longhand `text-wrap-mode: nowrap` exists, the property name is currently considered a placeholder by the CSS Working Group and may change in the future.
+
+```css
+.granular-control {
+  /* Modern longhand equivalent to white-space: nowrap */
+  /* Preferred: text-wrap: nowrap; */
+  text-wrap-mode: nowrap;
+}
+```
+
+### Fallback strategies
+
+Baseline status for text-wrap: Newly available. It's been Baseline since 2024-10-17.
+Supported by: Chrome 130 (Oct 2024), Edge 130 (Oct 2024), Firefox 124 (Mar 2024), and Safari 17.5 (May 2024).
+
+For browsers that do not yet support `text-wrap`, use the legacy `white-space` property. Modern browsers treat `white-space` as a shorthand for setting both the `text-wrap-mode` and `white-space-collapse` properties.
+
+```css
+.no-wrap-with-fallback {
+  /* Fallback for older browsers */
+  white-space: nowrap;
+
+  /* Modern standard */
+  text-wrap: nowrap;
+}
+```
+
+
+--- Guide for visually-stable-font-fallbacks ---
+When web fonts load, they often replace a fallback font that has different dimensions, even if both are set to the same `font-size`. This causes "layout shift" (Cumulative Layout Shift) and can make text illegible if the fallback's lowercase letters (x-height) are significantly different than the preferred font.
+
+The `font-size-adjust` property solves this by normalizing the size of the font based on a specific metric (usually the x-height), ensuring that text occupies the same visual space regardless of which font is currently active.
+
+## Implementation steps
+
+### 1. Identify the aspect ratio of your preferred font
+To normalize fallbacks, you need the "aspect value" (the ratio of lowercase letters to the font size) of your primary font.
+
+*   **Automatic discovery (Recommended):** Use the `from-font` keyword to let the browser extract the ratio from your primary web font.
+*   **Manual calculation:** If you know the specific value (e.g., 0.545 for Verdana), you can provide it directly for more precise control.
+
+### 2. Apply font-size-adjust to the text container
+Apply the property to the element or a parent container. This ensures that if the primary font fails to load or is in the process of loading, the fallback font is scaled to match the visual size of the primary font.
+
+```css
+.text-content {
+  /* Define your font stack as usual */
+  font-family: "MyWebFont", "Arial", sans-serif;
+  font-size: 1rem;
+
+  /* MANDATORY: Normalize the font size based on the primary font's x-height.
+     This ensures that if 'Arial' is used as a fallback, it is scaled 
+     to match the x-height of 'MyWebFont'. */
+  font-size-adjust: from-font;
+}
+```
+
+### 3. (Optional) Adjust for specific metrics
+While x-height is the default and most common, you can normalize by other metrics like `cap-height` (useful for all-caps headers) or `ch-width` (useful for monospaced fonts).
+
+```css
+h1 {
+  /* Normalize based on the height of capital letters */
+  font-size-adjust: cap-height from-font;
+}
+```
+
+### 4. Verify visual stability
+Ensure that the `font-size-adjust` value correctly aligns the fallback. You can test this by temporarily blocking the web font or adjusting the `font-family` declaration in your browser's DevTools and verifying that the text layout remains stable.
+
+## Fallback strategies
+
+Baseline status for font-size-adjust: Newly available. It's been Baseline since 2024-07-25.
+Supported by: Chrome 127 (Jul 2024), Edge 127 (Jul 2024), Firefox 118 (Sep 2023), and Safari 17 (Sep 2023).
+
+In browsers that do not support `font-size-adjust`, the font will be rendered at its default scale. This may result in layout shifts or changes in readability during font swaps. 
+
+To mitigate this without `font-size-adjust`, you can use the `@font-face` descriptors `size-adjust`, `ascent-override`, and `descent-override` to manually tune fallback fonts, though these are more complex to calculate than a single `font-size-adjust` value.
+
+
+--- Guide for soft-edge-content-fade ---
+## Overview
+To apply a transparency gradient to the edges of a container (e.g., to indicate more content is available to scroll or to fade out text), use CSS Masking with a linear gradient. This approach is superior to using a semi-transparent overlay because it actually fades the content itself, allowing the background to show through naturally without interfering with text selection or pointer events.
+
+## Implementation
+To implement a soft edge fade:
+
+### Fading the bottom edge of a container
+This is useful for indicating that there is more content below in a scrollable area.
+
+```css
+.container {
+  /* Enable scrolling */
+  overflow-y: auto;
+  
+  /* MANDATORY: Use vendor prefix for wider support in older browsers */
+  -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+  
+  /* Standard property for modern browsers */
+  mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+}
+```
+
+### Fading both top and bottom edges
+You can use a single gradient with multiple color stops to fade both edges.
+
+```css
+.dual-fade-container {
+  /* Content is visible between 10% and 90% of the height */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+```
+
+## Fallback strategies
+Baseline status for Masks: Newly available. It's been Baseline since 2023-12-07.
+Supported by: Chrome 120 (Dec 2023), Edge 120 (Dec 2023), Firefox 53 (Apr 2017), and Safari 15.4 (Mar 2022).
+
+If a browser does not support `mask-image` or the prefixed version:
+- The content will not fade and will display with sharp edges.
+- Ensure the interface is still functional and content is readable without the fade (progressive enhancement).
+- You can use a semi-transparent overlay as a fallback, but be aware it requires knowing the background color and may interfere with text selection unless `pointer-events: none` is used.
+
+```css
+/* Fallback using an overlay for browsers that do not support masking */
+@supports (not (mask-image: linear-gradient(to bottom, black, transparent))) and (not (-webkit-mask-image: linear-gradient(to bottom, black, transparent))) {
+  .container {
+    position: relative;
+  }
+  
+  .container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20%;
+    /* Fallback assumes a solid background color (e.g., white) */
+    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
+    pointer-events: none; /* Allow interaction with text underneath */
+  }
+}
+```
+
+
+--- Guide for size-aware-styling ---
+## Overview
+
+Size-aware styling allows components to change their layout or appearance based on the space available to them, rather than the size of the whole screen. This is useful for components like cards or navigation bars that might be placed in different parts of a layout (like a narrow sidebar or a wide main area).
+
+Using container queries is recommended because it makes components truly modular. You do not need to know where the component will live or write complex media queries to handle every possible layout.
+
+## Implementation
+
+### 1. Define the container
+
+MANDATORY: You must first tell the browser which element is the container to be measured.
+
+```css
+.card-container {
+  /* Define the container type. Use 'inline-size' for width-based queries. */
+  /* You can also use 'size' for both width and height, but it requires explicit sizing. */
+  container-type: inline-size;
+}
+```
+
+### 2. Apply styles based on container size
+
+Use the `@container` rule to apply styles when the container reaches a certain size.
+
+```css
+/* Default styles for small containers (stacked layout) */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Styles for larger containers (side-by-side layout) */
+/* This triggers when the container is wider than 400px */
+@container (min-width: 400px) {
+  .card {
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .card-image {
+    width: 150px;
+    height: 150px;
+  }
+}
+```
+
+### 3. Conditionally show content
+
+You can also use container queries to hide or show extra details when there is more room.
+
+```css
+.card-details {
+  /* Hide extra details by default in small spaces */
+  display: none;
+}
+
+@container (min-width: 600px) {
+  .card-details {
+    /* Show details when there is plenty of room */
+    display: block;
+  }
+}
+```
+
+### Fallback strategies
+
+Baseline status for Container queries: Widely available. It's been Baseline since 2023-02-14.
+Supported by: Chrome 105 (Sep 2022), Edge 105 (Sep 2022), Firefox 110 (Feb 2023), and Safari 16 (Sep 2022).
+
+For browsers that do not support container queries, the best approach is to use a safe default layout (like the stacked vertical layout) and progressively enhance it using media queries if the general screen size allows it.
+
+```css
+/* Default safe stacked layout */
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Fallback using media queries for older browsers */
+@media (min-width: 600px) {
+  .card {
+    flex-direction: row;
+  }
+}
+
+/* Overwrite with container queries where supported */
+@supports (container-type: inline-size) {
+  @media (min-width: 600px) {
+    .card {
+      /* Reset media query fallback if needed, or let container query handle it */
+      flex-direction: column;
+    }
+  }
+  
+  @container (min-width: 400px) {
+    .card {
+      flex-direction: row;
+    }
+  }
+}
+```
+
+This ensures that users on older browsers still get a usable layout, even if it does not adapt perfectly to every specific container width.
+
+
+--- Guide for style-parent-with-has ---
+# Style Parent with :has()
+
+## The Problem
+Often, an error state requires styling elements *outside* the input itself—for example, changing the color of a parent `fieldset` border, highlighting the `<label>`, or showing a global error icon in the card header. Historically, this required JavaScript to toggle classes on parent elements.
+
+## The Solution
+By combining `:has()` with `:user-invalid`, we can declaratively style any ancestor based on the validity state of a specific descendant. This keeps all presentation logic in CSS.
+
+### Implementation Strategy
+
+1.  **Selector**: Use `.parent:has(:user-invalid)` to target the container.
+2.  **Scope**: Be specific to avoid performance issues. Target `.field-group` rather than `body`.
+3.  **Fallback**: Requires JS to toggle classes on the parent if `:has()` is not supported.
+
+## Implementation Guide
+
+### 1. HTML Structure
+```html
+<form>
+  <div class="card-section">
+    <div class="header">
+      <h3>Profile Settings</h3>
+      <span class="status-icon"></span>
+    </div>
+
+    <div class="field">
+      <label for="username">Username</label>
+      <input type="text" id="username" required>
+    </div>
+  </div>
+</form>
+```
+
+### 2. CSS
+```css
+/* Default State */
+.card-section {
+  border: 1px solid #ccc;
+  border-left: 4px solid #ccc;
+}
+
+/*
+  Parent Styling Logic:
+  If the card contains ANY user-invalid input, turn the whole card's edge red.
+*/
+.card-section:has(:user-invalid) {
+  border-left-color: #d93025;
+  background-color: #fff8f8;
+}
+
+/* Change the icon too */
+.card-section:has(:user-invalid) .status-icon::after {
+  content: "⚠️";
+}
+```
+
+## Fallbacking & Browser Support
+
+The `:user-invalid` pseudo-class is widely supported (Baseline 2023), but if you need to support older browsers, you must ensure consistency of the implementation.
+
+### CSS for Fallback
+We use a class `.has-error` on the parent to mimic the `:has()` behavior.
+
+```css
+/* Native */
+.card-section:has(:user-invalid) {
+  border-left-color: #d93025;
+}
+
+/* Fallback */
+.card-section.has-error-fallback {
+  border-left-color: #d93025;
+}
+```
+
+### JavaScript Fallback
+
+Use a reusable utility that tracks interaction state using a `WeakMap`. This avoids polluting the DOM with "dirty" classes or data attributes.
+
+```javascript
+const UserInvalidFallback = (() => {
+  const dirtyState = new WeakMap();
+
+  const updateState = (input) => {
+    const isValid = input.checkValidity();
+
+    // Update both visual and ARIA state
+    input.classList.toggle('user-invalid-fallback', !isValid);
+    input.classList.toggle('user-valid-fallback', isValid);
+
+    if (!isValid) {
+      input.setAttribute('aria-invalid', 'true');
+    } else {
+      input.removeAttribute('aria-invalid');
+    }
+  };
+
+  const handleEvent = (event) => {
+    const input = event.target;
+
+    if (event.type === 'reset') {
+      const controls = input.elements || [];
+      for (const control of controls) {
+        dirtyState.delete(control);
+        control.classList.remove('user-invalid-fallback');
+        control.classList.remove('user-valid-fallback');
+        control.removeAttribute('aria-invalid');
+      }
+      return;
+    }
+
+    if (!input.checkValidity) return;
+
+    if (event.type === 'input' || event.type === 'change') {
+      const state = dirtyState.get(input) || { hasInteracted: false, hasBlurred: false };
+      state.hasInteracted = true;
+      dirtyState.set(input, state);
+      if (state.hasBlurred) {
+        updateState(input);
+      }
+    } else if (event.type === 'blur') {
+      const state = dirtyState.get(input) || { hasInteracted: false, hasBlurred: false };
+      state.hasBlurred = true;
+      dirtyState.set(input, state);
+      if (state.hasInteracted) {
+        updateState(input);
+      }
+    }
+  };
+
+  const init = (root = document) => {
+    if (CSS.supports('selector(:user-invalid)')) return;
+
+    root.addEventListener('blur', handleEvent, true); // Capture phase
+    root.addEventListener('input', handleEvent);
+    root.addEventListener('change', handleEvent);
+    root.addEventListener('reset', handleEvent, true); // Capture resets
+  };
+
+  return { init };
+})();
+
+// Initialize for a specific form
+const form = document.querySelector('#demo-form');
+UserInvalidFallback.init(form);
+```
+
+```js
+// 1. Initialize the generic fallback
+const form = document.querySelector('#demo-form');
+UserInvalidFallback.init(form);
+
+// 2. Add specialized "parent styling" logic (Separate from fallback)
+// Listen for changes to form validity after interaction
+form.addEventListener('blur', (e) => {
+  if (!e.target.matches('input, select, textarea')) return;
+
+  // Find the container we want to style (sync with CSS)
+  const container = e.target.closest('.card-section');
+  if (!container) return;
+
+  // Check if ANY fallbacked input in this container is invalid
+  const hasError = container.querySelector('.user-invalid-fallback');
+  container.classList.toggle('has-error-fallback', !!hasError);
+}, true); // Capture phase to ensure we run after the fallback's blur listener
+
+// Also handle input events for immediate cleanup
+form.addEventListener('input', (e) => {
+  const container = e.target.closest('.card-section');
+  if (container) {
+    const hasError = container.querySelector('.user-invalid-fallback');
+    container.classList.toggle('has-error-fallback', !!hasError);
+  }
+});
+
+// Handle form resets
+form.addEventListener('reset', () => {
+  form.querySelectorAll('.has-error-fallback').forEach(el => {
+    el.classList.remove('has-error-fallback');
+  });
+});
+```
+
+## Other Considerations
+
+1.  **Accessibility**: Native `:user-invalid` does not automatically sync with ARIA attributes. Add the following JavaScript to keep `aria-invalid` in sync with the visual state:
+
+```javascript
+// Sync aria-invalid with the CSS :user-invalid state
+const syncAria = (el) => {
+  el.setAttribute?.('aria-invalid', el.matches(':user-invalid') ? 'true' : 'false');
+};
+
+// Update on blur (to show error) and input (to clear it)
+document.addEventListener('blur', (e) => syncAria(e.target), true);
+document.addEventListener('input', (e) => {
+  if (e.target.hasAttribute('aria-invalid')) syncAria(e.target);
+});
+```
+

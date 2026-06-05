@@ -1,0 +1,2605 @@
+
+--- Guide for css ---
+# CSS: Modern Architecture and Performance
+
+These guidelines provide a high-density reference for writing maintainable, performant, and standard-compliant CSS.
+
+1. [1. Foundations](#1-foundations)
+2. [2. Inheritance and The Cascade](#2-inheritance-and-the-cascade)
+3. [3. Selectors and scoping](#3-selectors-and-scoping)
+   1. [Prefer CSS selectors over JS for complex element targeting](#prefer-css-selectors-over-js-for-complex-element-targeting)
+   2. [Use `:is()` (or `:where()`) instead of CSS rule duplication for fallbacks](#use-is-or-where-instead-of-css-rule-duplication-for-fallbacks)
+   3. [Avoid overmatching](#avoid-overmatching)
+   4. [Nesting and scoping](#nesting-and-scoping)
+4. [4. Interactivity](#4-interactivity)
+   1. [Focus management](#focus-management)
+   2. [Touch targets](#touch-targets)
+5. [5. Design Tokens and Theming](#5-design-tokens-and-theming)
+   1. [Dark mode](#dark-mode)
+   2. [Forced Colors Mode](#forced-colors-mode)
+   3. [Generating tints](#generating-tints)
+   4. [Theming browser-generated UI](#theming-browser-generated-ui)
+6. [6. Responsive design](#6-responsive-design)
+   1. [Responsive Typography](#responsive-typography)
+7. [7. Typography](#7-typography)
+   1. [Text wrapping](#text-wrapping)
+8. [8. Visual effects](#8-visual-effects)
+   1. [Depth and texture](#depth-and-texture)
+   2. [Shapes](#shapes)
+   3. [Gradients and `color-mix()`](#gradients-and-color-mix)
+   4. [Patterns](#patterns)
+9. [9. Transitions \& animations](#9-transitions--animations)
+   1. [Performance](#performance)
+   2. [Accessibility](#accessibility)
+10. [10. Generated content](#10-generated-content)
+
+
+## 1. Foundations
+
+Be allergic to knowledge duplication. Prefer variables over repetition, but whenever possible, prefer built-in conventions such as:
+- `currentColor` instead of defining a variable and setting `color` to it
+- The `inherit` keyword instead of defining a variable on the parent and using it on the same property across parent and child.
+- `em` units instead of `font-size: var(--size)`
+- `cqw`/`cqh` (or their logical versions — `cqi`/`cqb`) units instead of repeating box model values.
+- Code duplication is not knowledge duplication. The goal is robustness and maintainability, not saving characters.
+- Prefer **logical properties and values** over physical ones (e.g. `margin-inline-start` instead of `margin-left`) so that styles adapt to different writing modes and orientations. Even if the page author does not plan to localize, external translation tools often display translated text in context.
+- Do not use logical properties indiscriminately — ask yourself "would I want this to flip in RTL?" — if the answer is no, use the physical property instead.
+- Consider different viewing modes (dark mode, high contrast mode), different viewport sizes, and different input modes (touch, keyboard, pointer).
+
+## 2. Inheritance and The Cascade
+
+**Avoid** introducing BEM naming conventions to manage specificity.
+Instead, use modern CSS features such as cascade layers and `:where()` to make cascade behavior predictable and follow author intent.
+
+Use cascade layers (`@layer`) to define explicit priority zones (e.g., `reset`, `base`, `theme`, `components`, `utilities`), and declare their order upfront (e.g. `@layer reset, base, theme, components, utilities;`).
+Within each layer, use `:where()` to make selectors only compete based on meaningful signals, not incidental filters (`:not()` edge cases, remote ancestors, etc.) or for one-off easily overridable defaults.
+
+Use keywords like `inherit`, `initial`, `unset`, or `revert` instead of explicit values to improve maintainability and better express intent.
+Examples:
+- When specifying a transition on a child that should match the parent's `transition-*` properties, instead of repeating the transition properties on the child, use `transition: inherit` (reduce duplication, improve maintainability)
+- Use `initial` to reset a property to its initial value instead of specifying the value explicitly (clearer expression of intent)
+
+## 3. Selectors and scoping
+
+Modern browser-native selectors reduce the need for preprocessors and complex state-tracking in JS.
+
+### Prefer CSS selectors over JS for complex element targeting
+
+- **DO** use `:has()` to style parents based on child state instead of managing classes in JS (e.g. `label:has(:checked)` instead of a manual `label.has-checked` class) For more information, see the guides at `child-state-based-styling` (via `npx -y modern-web-guidance@latest retrieve "child-state-based-styling"`) and `content-based-styling` (via `npx -y modern-web-guidance@latest retrieve "content-based-styling"`).
+- **DO NOT** nest `:has()` or use pseudo-elements inside it (browser API limitation)
+- Use `:nth-child(<An+B> of <selector>)` when you need to style every n-th element of a certain type. E.g. `details:nth-child(1 of [open])` will style the first open `<details>` element it finds, whereas `details[open]:first-child` would style only the first child if and only if it was open.
+
+### Use `:is()` (or `:where()`) instead of CSS rule duplication for fallbacks
+
+**DO NOT** duplicate CSS rules to provide fallbacks for pseudo-classes that may not be supported — use `:is()` or `:where()` instead and take advantage of their forgiving parsing rules.
+
+```css
+/* BAD: duplicate rules instead of using `:where()` */
+[popover]:popover-open {
+  /* styles for native popovers */
+}
+[popover].\:popover-open {
+  /* same styles again, for polyfilled popovers */
+}
+
+/* GOOD */
+[popover]:where(:popover-open, .\:popover-open) {
+  /* same styles in one rule */
+}
+```
+
+Do NOT use this for pseudo-elements, as they are not supported in `:is()` or `:where()`.
+
+### Avoid overmatching
+
+Write selectors in a way that expresses _intent_.
+
+#### Use `:not()` instead of overrides to exclude irrelevant states/targets
+
+When the intent is to exclude certain states or elements that are fundamentally irrelevant, use `:not()`.
+
+For example, to apply bottom borders between list items, don't do this:
+
+```css
+.fancy-list li {
+  border-bottom: 1px solid silver;
+}
+
+.fancy-list li:last-child {
+  border-bottom: none;
+}
+```
+
+This can unintentionally overwrite a desirable `border-bottom` set from another rule.
+The actual intent was to only apply the bottom border to the non-last `li`s. The code above is a workaround that poorly expresses this intent. Instead, this expresses intent more clearly:
+
+```css
+.fancy-list li:not(:last-child) {
+  border-bottom: 1px solid silver;
+}
+```
+
+Similarly, don't do this:
+
+```css
+button:hover {
+  background: var(--color-blue);
+}
+
+button:disabled {
+  background: var(--color-neutral);
+}
+```
+
+If we reorder the two rules, we will get a hover background on disabled buttons!
+Instead, do this:
+
+```css
+button:hover:not(:disabled) {
+  background: var(--color-blue);
+}
+
+button:disabled {
+  background: var(--color-neutral);
+}
+```
+
+This works regardless of reordering, as the first rule does not overmatch.
+
+#### Prefer `@scope` over `:not()` for excluding (potentially deeply nested) subtrees
+
+While `:not()` + descendant selectors can exclude subtrees, this works poorly for deeply nested structures.
+For example, `.card :not(.content *)` will not work as expected for nested cards.
+`@scope` fixes this as it takes hierarchical proximity into account:
+
+```css
+@scope (.card) to (.content) {
+  /* styles for elements inside .card but not inside .content */
+}
+```
+
+This will work as expected even for nested cards.
+
+#### Overrides are fine for specialization
+
+This is fine:
+
+```css
+button {
+  background: var(--color-neutral);
+}
+
+button.primary {
+  background: var(--color-blue);
+}
+```
+
+Both rules express legitimate _intent_: buttons are generally neutral, but primary ones are blue.
+
+#### No global resets
+
+**DO NOT** use global resets (styles on `*`) as they cannot be overridden by web components or lower-priority cascade layers (without `!important`). Instead, apply reset styles to specific element types and/or conditions.
+
+### Nesting and scoping
+
+Use native CSS nesting to group related styles to the extent it improves maintainability and readability.
+
+Prefer `@scope` over nesting when proximity should matter more than pure specificity. This is common in selectors that can be nested in any order, but the closest matching one (in element -> ancestor order) should win, e.g. theming classes.
+
+For example this will not work as expected:
+```css
+.dark .invert { color-scheme: light }
+.light .invert { color-scheme: dark }
+```
+
+If `.invert` is nested within _both_ `.dark` and `.light`, it will always resolve to dark mode as both rules have the same specificity.
+Using `@scope` fixes this:
+
+```css
+@scope (.dark) {
+  .invert { color-scheme: light }
+}
+
+@scope (.light) {
+  .invert { color-scheme: dark }
+}
+```
+
+## 4. Interactivity
+
+### Focus management
+
+- Use `:focus-visible` to define custom focus rings, not `:focus`.
+- Do not remove the browser's default focus rings (via `outline: none`) without providing an alternative visible focus style.
+- Prefer `outline` over other properties (e.g. `box-shadow`) for focus rings. If you must rely on `box-shadow` for focus rings, provide an `outline`-based fallback for High Contrast Mode using the `forced-colors` media query.
+- Pair focus outlines with `outline-offset` to visually separate the ring from the element.
+
+### Touch targets
+
+- Interactive elements should be at least 24×24 CSS pixels (WCAG 2.5.8 AA). Enforce with `min-block-size` / `min-inline-size` or padding rather than `width` / `height`, so content can grow the target but not shrink it.
+- Bump targets up on coarse pointers: `@media (pointer: coarse) { ... }`.
+- **DON'T** use `touch-action: none` for custom gestures — it disables page scrolling through the element. Scope to the axis you actually need: `pan-y` for horizontal swipes (page still scrolls vertically), `pan-x` for vertical ones. Reserve `none` for elements where no native touch behavior makes sense (e.g. a drawing canvas).
+
+## 5. Design Tokens and Theming
+
+Use CSS custom properties on `:root` to define core design variables (colors, fonts, sizes, etc) used throughout the design, for visual consistency and to scale UI design across teams.
+**DO NOT** specify nontrivial styling values inline. E.g. `background: transparent` or `padding: 0` is ok, but `background: #f06` or `padding: .3em` are not.
+One exception is use cases where keeping code small and simple is far more important than long-term maintainability and evolution, such as testcases.
+
+Typically these are organized in tiers, with each tier building upon the previous one. For example:
+1. Tier 1: Literal design tokens (e.g. `--color-blue-10`, `--color-gray-90`, `--font-sans-serif`, `--size-xl` etc)
+2. Tier 2: Semantic design tokens (e.g. `--color-accent`, `--color-neutral`, `--font-body`, `--font-heading` etc)
+3. Tier 3: General UI design tokens (e.g. `--ui-border`, `--surface-bg-subtle` etc)
+4. Tier 4: Component-specific design tokens (e.g. `--button-bg-primary-hover`, `--button-border-color-secondary` etc)
+
+The smaller the scope of the use case, the fewer tiers it needs. E.g. a quick demo or toy app are fine with one tier. Do not overengineer.
+Check for any existing conventions around naming and levels before inventing your own.
+
+### Dark mode
+
+- Use `color-scheme: light dark` on `:root` to enable dark mode support that automatically adapts to the system setting. You can also specify `color-scheme` on individual elements to force a different value for that subtree (`light`/`dark` or `light dark` for the system default)
+- Use `light-dark()` to provide alternatives that automatically resolve based on the element's `color-scheme`.
+Typically this happens in Tier 2 or Tier 3 tokens.
+- IMPORTANT: When using `light-dark()` on an inherited `<color>` property, it will resolve to a specific color based on that element's `color-scheme` and inherit as that resolved color, not as a `light-dark()` value. It will NOT adapt to any descendant-specific `color-scheme` overrides. To keep `light-dark()` color tokens dynamic resolve them as late as possible by only passing them around as unregistered custom properties and avoid relying on inherited color values across `color-scheme` boundaries.
+
+See `dark-mode` (via `npx -y modern-web-guidance@latest retrieve "dark-mode"`) for tips & best practices on supporting dark mode switching and `component-specific-light-dark-theme` (via `npx -y modern-web-guidance@latest retrieve "component-specific-light-dark-theme"`) for more on applying different `color-scheme` modes than the page-wide setting on certain elements.
+
+### Forced Colors Mode
+
+In Forced Colors Mode (High Contrast on Windows), the browser overrides author colors with system keywords and strips `background-image`, `box-shadow`, and `border-image`.
+
+- Define system color fallbacks for color tokens using `@media (forced-colors: active)`.
+- **DON'T** rely on `background-image`, `box-shadow`, or `border-image` to convey borders, separators, or state — they disappear in forced colors (and often in print too). If you must, ensure there's an alternative in forced colors mode, such as `outline` or `border` with system color keywords (`CanvasText`, `LinkText`, `ButtonText`, `Highlight`, `GrayText`, etc.).
+- Use `forced-color-adjust: none` where color is essential information (syntax highlighter, color picker swatch). **DON'T** use `forced-color-adjust: none` just to preserve aesthetics.
+
+
+### Generating tints
+
+Before generating tints dynamically, check if you can use an existing, predefined, design token. This allows much more designer control and ensures consistency.
+
+If you need to generate lighter or darker colors dynamically:
+- **DO NOT** just adjust the lightness channel in `oklch`/`oklab` or `lch`/`lab`, e.g. `oklab(from var(--primary) 0.9 a b)`. While that is theoretically the correct way, browsers do not yet implement gamut mapping, so the resulting color is unpredictable.
+- You can use `color-mix()` to mix with white or black (preferably in `oklab`). This keeps the color safely in gamut, but tends to over-desaturate colors and produce washed out tints and shades.
+- You MAY combine lightness adjustment with any of the other methods (e.g. `color-mix(in oklab, oklch(from var(--primary) 0.9 c h), white 30%)`) for a balance between the two, but avoid going above 30% for the lightness adjustment.
+
+### Theming browser-generated UI
+
+Most browser-generated UI can be customized to some extent using CSS.
+Even if it requires modern features, it degrades gracefully in older browsers, and thus often does not require a polyfill or fallback.
+
+Before re-creating browser UI (form controls, scrollbars, selections, error messages, etc), first verify that:
+1. the browser UI cannot be customized enough for your needs, even with modern CSS,
+2. the desired customization is sufficiently critical to justify the tradeoffs of re-creating built-in UI — most notably losing accessible semantics, keyboard handling, IME, and AT integration that the native UI provides for free.
+
+Example customizations that are possible:
+- Use `::selection` to customize highlighted text colors.
+- **DON'T** apply `user-select: none` to content text — breaks copy-paste, translation tools, and AT "read from here" gestures. Limit it to chrome (drag handles, toolbars, redundant button labels).
+- Use `accent-color` to apply the page's accent color to any browser-generated UI.
+- Use `color-scheme` to have browser UI adapt to light/dark mode.
+- Use `scrollbar-color` to customize scrollbar colors and `scrollbar-width` to control scrollbar thickness — keep the thumb visibly distinct from the track (≥3:1), and don't set `scrollbar-width: none` on scrollable regions (use it only when scrolling is fully replaced by another affordance).
+- Use `:user-invalid` / `:user-valid` for validity styling, **not** `:invalid` / `:valid` — they only match after the user has interacted with the field, avoiding the hostile default of flagging required-empty fields as errors on page load.
+- Buttons and text fields (including `<textarea>`) can generally be styled as normal elements.
+- Use `font-size` to scale and other textual properties to control typography
+
+#### Styling textual fields (`<input>` & `<textarea>`)
+
+For most styling purposes (e.g. colors, borders, backgrounds, typography, etc) treat these elements as normal text containers.
+
+- Use `:placeholder-shown` and `::placeholder` to style input placeholders.
+- Use `field-sizing: content` to make text fields size to content.
+- For `<textarea>` elements, use `resize: vertical` to disable horizontal resizing or `resize: none` to disable all resizing.
+
+#### Multiple choice controls (select, radios, checkboxes)
+
+- To select one among many options presented in a dropdown: Use a `<select>` + `appearance: base-select` + `::picker(select)`. For more info see `branded-select-styling` (via `npx -y modern-web-guidance@latest retrieve "branded-select-styling"`)
+- Selecting one or more among multiple options laid out inline in the page: Use a `<input type=checkbox>` or `<input type=radio>` inside a `<label>` for each option. Style via `label:has(:checked)`.
+- Style checkboxes, radios and switches via `appearance: none` + generated content (`::before`/`::after`) or background images to draw the checked state.
+<!-- Customizable select listbox version currently buggy + this has much better browser support -->
+
+#### Non-textual `<input>`s (buttons, sliders, file inputs etc.)
+
+- File inputs: Use `::file-selector-button` to style the button.
+- Do not use `<input>` with a `type` of `button`, `submit` or `reset`. Use `<button>` instead and style it as a regular element.
+- Sliders: Use `appearance: none` + thumb pseudo-elements (`::-webkit-slider-thumb`, `::-moz-range-thumb`, etc) and track pseudo-elements (`::-webkit-slider-runnable-track`, `::-moz-range-track`, etc) for more granular control.
+
+## 6. Responsive design
+
+- Use `@container` queries to create component-driven responsive layouts that adapt to their parent container's size rather than the viewport.
+- Use dynamic viewport units (`dvh`, `dvw`) instead of `vh`/`vw` to prevent layout breakage when mobile browser UI elements (like address bars) appear or disappear.
+- Use `aspect-ratio` for media elements (like `<img>` and `<video>`) to reserve space during loading and prevent Cumulative Layout Shift (CLS).
+
+### Responsive Typography
+
+- **DO** combine viewport-relative and font-relative units in `clamp()` for font sizes that scale with the viewport size while ensuring they stay within a desired range. For example, `clamp(2rem, 1rem + 5vw, 4rem)`. Adjust the proportion of viewport-relative and font-relative units to control how quickly the font-size changes.
+- **DON'T** use `vw` alone for font-size without `clamp()`, as it can scale text too small or too large on extreme screens.
+
+## 7. Typography
+
+- Use unitless numbers for `line-height` (e.g., `1.5`) to ensure relative scaling during font-size inheritance.
+- Use `overflow-wrap: break-word` (or `anywhere`) to contain long URLs.
+- **DON'T** use `px` for font-size. Prefer `rem` to honor the user's browser font-size preferences (root font size), or `em` for contextual sizing.
+
+### Text wrapping
+
+- Use `text-wrap: balance` for balanced headlines and headline-like content (e.g. `<th>`)
+- Use `text-wrap: pretty` for long-form body text (paragraphs, blockquotes, etc.)
+- Use `text-wrap: balance` or `text-wrap: pretty` deliberately, **DO NOT** apply it on `*` as it does have a performance cost.
+- Avoid `text-wrap: balance` on elements with a visible box (backgrounds, borders, shadows, etc) as it does not change the container's width, it only affects how text wraps *within* that width. This can leave empty space at the end of the container, which is usually undesirable.
+
+## 8. Visual effects
+
+### Depth and texture
+
+- Layer multiple shadows for realistic soft depth effects.
+- Use `filter: drop-shadow()` instead of `box-shadow` for non-rectangular shapes or transparent PNGs.
+- Use `mix-blend-mode` and `background-blend-mode` for lighting overlays (limit scope with `isolation: isolate`)
+
+```css
+.hero {
+  background-image: url('texture.png'), linear-gradient(to bottom, #fff, #eee);
+  background-blend-mode: soft-light;
+}
+```
+
+### Shapes
+
+- Use `corner-shape: squircle` for more aesthetically pleasing curves as a progressive enhancement over regular rounded corners.
+- Use elliptical `border-radius` (e.g., `10px / 20px`) for proportional curves without extra elements.
+
+### Gradients and `color-mix()`
+
+Use `in oklch` or `in oklab` to explicitly specify the interpolation color space for gradients or `color-mix()`.
+- `in oklch` preserves chroma better, but can more easily get out of device gamut, especially for bigger differences between colors
+- `in oklab` stays in gamut more easily (assuming in-gamut endpoints) but can create washed out desaturated colors in the middle, especially when interpolating between opposite hues.
+- *DON'T* use `in srgb` unless you have a specific reason to do so (e.g. you are building a color picker that needs to interpolate in srgb).
+
+#### Fallback
+
+Some pre-2024 browsers do not support gradient color interpolation space.
+To support these browsers, use the token only when its usage is safe by defining a variable:
+
+```css
+:root {
+  --in-oklab: ;
+  --in-oklch: ;
+}
+
+@supports (linear-gradient(in oklab, white, black)) {
+  :root {
+    --in-oklab: in oklab;
+    --in-oklch: in oklch;
+  }
+}
+```
+
+Then use like:
+
+```css
+.card {
+  background: linear-gradient(to bottom var(--in-oklab), var(--accent-color), var(--darker));
+}
+```
+
+- **Important:** If you use this technique, make sure there is always a non-empty gradient preamble without it, otherwise it will be a syntax error in older browsers.
+- You do NOT need this for `color-mix()`. If a browser supports `color-mix()`, it also supports its `in <color-space>` argument.
+
+### Patterns
+
+Many patterns can be created via CSS gradients + hard stops, and these can be more flexible and performant than SVGs or external images as they can have access to CSS variables and lengths from the surrounding context.
+You don't need to repeat the position twice — just use `0` or `0%` and gradient fixup will auto-adjust it.
+
+Examples below.
+
+Vertical stripes of `1em` width each:
+
+```css
+background: linear-gradient(to right, var(--color-1) 50%, var(--color-2) 0) 0 / 2em;
+```
+
+Diagonal stripes of `1em` width each:
+
+```css
+background: repeating-linear-gradient(-45deg, var(--color-1) 0 1em, var(--color-2) 0 2em);
+```
+
+Checkerboard pattern with `1em` squares:
+
+```css
+background: repeating-conic-gradient(var(--color-1) 0 25%, var(--color-2) 0 50%) 0 / 2em 2em;
+```
+
+Polka dot with `.5em` radius dots spaced `2em` apart (horizontally/vertically — multiply by `sqrt(2)` for diagonal distance):
+
+```css
+--distance: 2em;
+--radius: .5em;
+--polka: radial-gradient(circle, var(--color-1) var(--radius), transparent calc(var(--radius) + 1px));
+background: var(--polka) 0 0, var(--polka) var(--distance) var(--distance) var(--color-2);
+background-size: calc(var(--distance) * 2) calc(var(--distance) * 2);
+```
+
+Simple pie chart:
+
+```css
+.pie {
+  --p: 80%;
+  width: 60px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: conic-gradient(var(--color-1) var(--p), transparent 0%) var(--color-2);
+}
+```
+
+**Important:** When using gradients to render charts, ensure there is a textual fallback for screen readers. MANDATORY: You MUST provide a semantic data table as an accessible alternative, as detailed in `accessibility` (via `npx -y modern-web-guidance@latest retrieve "accessibility"`) under the alternate text and media guidelines.
+
+## 9. Transitions & animations
+
+- Use `clip-path` and `mask-image` for custom geometric reveals and smooth fade-outs.
+- Use **Scroll-Driven Animations** (`animation-timeline: scroll()`) for non-essential scroll-bound effects instead of JS listeners.
+- Use **View Transitions** to animate between complex layout states seamlessly.
+
+### Performance
+
+Rendering performance is critical for smooth user experiences, especially in heavy DOM trees.
+
+- Prefer to animate `opacity` and `transform` (including individual transform properties, e.g. `translate` instead of `left/right/top/bottom`) to ensure animations stay on the compositor thread.
+- Use `transition-behavior: allow-discrete` + `@starting-style` to animate layout properties like `display` or `<dialog>` state natively.
+- Always pair `content-visibility` with `contain-intrinsic-size` to prevent scrollbar jumps (CLS).
+- When setting `contain-intrinsic-size` use the `auto` keyword and a value that’s derived from what is known about the contents (i.e. text size, spacing, size of graphics, character count). Preferably use units such as `rem`, `lh`, `cap`, or `ch` that match values used for the elements within the contents rather than `px`. If the content for items in a group is not consistently sized, then use an average size.
+- Use `contain: layout style paint` to isolate component rendering updates.
+
+#### Code Example: Render Optimization
+
+```css
+.large-section {
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto 800px;
+}
+
+.row {
+  --row-gap: .4rem;
+  --title-height: 1lh;
+  --description-height: 0.85lh;
+
+  display: grid;
+  row-gap: var(--row-gap);
+  content-visibility: auto;
+  /* The sum of the title height, row gap, and description height should be the size of the contents when skipped for rendering. */
+  contain-intrinsic-block-size: auto calc(var(--title-height) + var(--row-gap) + var(--description-height));
+}
+
+.popover-reveal {
+  /* Allow discrete animations for display transitions */
+  transition: display 0.2s allow-discrete;
+}
+```
+
+### Accessibility
+
+Use `prefers-reduced-motion` media queries to turn off heavy motion for users who prefer it.
+
+**DO NOT** globally apply `animation-duration: 0.01ms;` globally as it can cause certain animations to become _more_ jarring.
+Either apply reduced motion versions on a case by case basis, or use a custom property like:
+
+```css
+@property --animation-reduced {
+  syntax: "*";
+  inherits: false;
+  initial-value: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: var(--animation-reduced) !important;
+  }
+}
+```
+
+Then, reduced motion versions can be kept together with the original animations:
+
+```css
+progress:not([value]) {
+  animation: slide 1s infinite linear;
+  --animation-reduced: slide 20s infinite linear;
+}
+```
+
+## 10. Generated content
+
+- **DON'T** use `content` to convey meaningful text (labels, state, instructions) — keep that in the DOM (WCAG F87). The alt text argument is harm reduction for cases where decoration accidentally carries meaning, not a license.
+- Use the alternative text argument of `content` to provide alt text for screen readers. E.g. `content: url(cloud.svg) / "Save";`
+- Use `content: "text" / "";` to prevent purely decorative text from being announced to screen readers.
+- **DON'T** use an empty alt text argument for images — they're already presentational by default. E.g. this is wrong: `content: url(cloud.svg) / "";`.
+- **DON'T** use the alt text argument to describe emojis unless the description differs from the official emoji name. E.g. don't do `content: "🎉" / "celebration";`, but `content: "🎉" / "Yay!";` is fine.
+
+**ONLY** use the alt text argument when the text is different than the primary value and is not already present in the DOM. I.e. this is wrong:
+
+HTML:
+```html
+<button class="save">Save</button>
+```
+
+CSS:
+```css
+button.save::before {
+  content: url(cloud.svg) / "Save";
+}
+```
+
+A screen reader would read it out as "Save save".
+
+
+--- Guide for css-layout ---
+# CSS Layouts and Responsive Design
+
+1. [1 Fundamentals](#1-fundamentals)
+   1. [Which layout mode to use?](#11-which-layout-mode-to-use)
+   2. [Working principles](#12-working-principles)
+2. [2 Flexbox](#2-flexbox)
+3. [3 Grid and subgrid](#3-grid-and-subgrid)
+   1. [Code example: grid and subgrid](#31-code-example-grid-and-subgrid)
+4. [4 Container queries](#4-container-queries)
+   1. [Code example: fluid typography using container query units](#41-code-example-fluid-typography-using-container-query-units)
+5. [5 Native overlays, anchor positioning, and stacking contexts](#5-native-overlays-anchor-positioning-and-stacking-contexts)
+6. [6 Overflow tracking and layout stability](#6-overflow-tracking-and-layout-stability)
+7. [7 Viewport mechanics and track distribution](#7-viewport-mechanics-and-track-distribution)
+8. [8 Grid lanes (aka masonry)](#8-grid-lanes-aka-masonry)
+
+## 1 Fundamentals
+
+Lean on the browser's layout engine when possible for better performance. Reach for intrinsic sizing, logical properties, and `aspect-ratio` before resorting to hardcoded dimensions or complicated media-queries.
+
+### 1.1 Which layout mode to use?
+
+Walk the decision tree top-to-bottom and stop at the first match. Note that layouts can be nested within each-other and each decision is based on the use-case for that container.
+
+1. **Is it a simple row OR column of items?** Use **flexbox** — 1D, content-first, content distributes along a single axis.
+2. **Does a nested element need to line up with its grandparent grid's tracks?** Use **subgrid** — 2D, relationship-first, inherits parent tracks so grandchildren can align across siblings.
+3. **Is it a complex page or component structure with rows AND columns?** Use **grid** — 2D, layout-first, you define the skeleton and content fills it.
+4. **Is the content a long flow of prose that should split into balanced columns?** Use **multi-column** — 1D flow, newspaper-style.
+5. **Are items of varied heights that need to be packed tightly?** Use **grid** with `grid-auto-flow: dense` today; reach for native masonry (aka "grid lanes") only when it ships in your Baseline target (see [§8](#8-grid-lanes-aka-masonry)).
+6. **Does an element need to float above the page and stay spatially tethered to a trigger, even across DOM boundaries or stacking contexts?** Use **anchor positioning** — `anchor-name` on the trigger, `position-anchor` on the overlay (see [§5](#5-native-overlays-anchor-positioning-and-stacking-contexts)).
+
+### 1.2 Working principles
+
+**Do:**
+
+- Use logical properties (`inline-size`, `block-size`, `margin-inline`, `padding-block`, `inset-inline-start`) for layout dimensions and spacing — see `css` (via `npx -y modern-web-guidance@latest retrieve "css"`) for full coverage.
+- Apply the content-first vs layout-first mental model: flexbox when items dictate flow, grid when you define the skeleton first.
+- Use the `place-*` shorthands (`place-content`, `place-items`, `place-self`) to align across both axes in one declaration.
+- Reach for intrinsic sizing (`min-content`, `max-content`, `fit-content()`) and flexible tracks (`fr`, `minmax()`) before fixed `width`/`height` — fewer media queries, more resilient layouts.
+- Use `aspect-ratio` to reserve space for media and prevent layout shift before assets load.
+
+```css
+.sidebar       { inline-size: max-content; }    /* Size to longest unbreakable token. */
+.main-content  { inline-size: fit-content; }    /* Grow to available space, no further. */
+.media         { aspect-ratio: 16 / 9; inline-size: 100%; block-size: auto; }
+body.centered  { display: grid; place-content: center; min-block-size: 100dvb; }
+```
+
+> For `calc-size()` and constraint-aware intrinsic sizing, see `calculate-with-intrinsic-sizes` (via `npx -y modern-web-guidance@latest retrieve "calculate-with-intrinsic-sizes"`).
+
+## 2 Flexbox
+
+One-dimensional layout — items flow along a single **main** axis with alignment on the **cross** axis. Reach for it for navbars, toolbars, item rows, and any single-row-or-column distribution.
+
+**Do:**
+
+- Establish a context with `display: flex` and set the main axis with `flex-direction` (`row` default).
+- Use `flex-wrap: wrap` whenever overflow is a possibility — `nowrap` without `overflow: auto/hidden` will spill on narrow viewports.
+- Use the `flex` shorthand `<grow> <shrink> <basis>` (e.g., `flex: 1 1 250px`) on items rather than setting `flex-grow`/`flex-shrink`/`flex-basis` individually.
+- Use `gap` (or the `row-gap`/`column-gap` longhand) for spacing between items instead of child margins.
+- Prefix positional alignment with `safe` (e.g., `align-items: safe center`) so focusable content isn't clipped when the container is narrower than its content.
+- Push a single item to the far end of the main axis with `margin-inline-start: auto` (or `margin-block-start: auto`) — that's the standard escape hatch.
+- Override cross-axis alignment per item with `align-self`.
+- Use `align-items` to center all items on the cross axis; use `margin: auto` on a single item to center it on both axes independently; use `align-content` only when the container wraps and has extra space across rows.
+- Set `min-inline-size: 0` (or `min-width: 0`) on flex items that contain long unbreakable content (URLs, code, long strings) — flex items won't shrink below their content size by default, causing overflow.
+
+**Do not:**
+
+- Don't reach for `justify-self` on flex items — it only works on grid, block, and absolutely-positioned layouts. Use auto margins instead.
+- Don't use `order` or `flex-direction: *-reverse` to reorder interactive content. They change visual order only; the DOM order still drives sequential focus, so keyboard tab flow won't match what the user sees.
+- Don't confuse `space-around` (half-gap at the ends) with `space-evenly` (equal gaps before, between, and after).
+- Don't forget the axis flip: when `flex-direction: column`, `justify-content` aligns on the block axis and `align-items` aligns on the inline axis — the opposite of the default.
+- Don't size both the container and its children to fill each other — that's a common source of overflow and surprising results. Give one side a definite size.
+- Don't set both `flex-basis` and `width`/`inline-size` on the same item — `flex-basis` takes precedence in a flex context and `width` is ignored. Use `flex-basis` (or the `flex` shorthand) as the single source of truth for sizing flex items.
+
+```css
+.card-grid        { display: flex; flex-flow: row wrap; gap: 1rem; }
+.card-item        { flex: 1 1 250px; }                  /* grow, shrink, basis */
+.card-item-action { margin-inline-start: auto; }        /* Push to main-axis end. */
+.toolbar          { display: flex; align-items: safe center; }
+```
+
+## 3 Grid and subgrid
+
+Baseline status for Subgrid: Widely available. It's been Baseline since 2023-09-15.
+Supported by: Chrome 117 (Sep 2023), Edge 117 (Sep 2023), Firefox 71 (Dec 2019), and Safari 16 (Sep 2022).
+
+Two-dimensional layout — define rows AND columns explicitly, or let the engine derive them. Subgrid lets a nested grid inherit its parent's tracks so grandchildren align across siblings.
+
+**Choosing grid features:**
+
+- Do you know exactly how many columns you need?
+  - **Yes** — use explicit tracks (`grid-template-columns: 200px 1fr`, `repeat(3, 1fr)`, etc.)
+    - Do different columns need different sizes (sidebar + main, header spanning all)? → use `grid-template-areas` for named, readable regions
+    - Are all columns uniform or positioned purely by line number? → use `repeat(N, ...)` or named lines
+  - **No** (responsive, unknown item count) — use `repeat(auto-fit, minmax(min, 1fr))`
+    - Should items on the last row stretch to fill remaining space? → `auto-fit`
+    - Should empty last-row tracks hold their min size (preserving column ghost slots)? → `auto-fill`
+- Do you need to place an item at a specific location?
+  - **Yes** — use `grid-column: <start> / <end>` or `grid-area: <name>`
+  - **No** (just spanning multiple tracks, flow position doesn't matter) — use `grid-column: span <n>`
+- Do child elements need to inherit the parent grid's track sizes (ragged-edge alignment across siblings)?
+  - **Yes** — use subgrid on the affected axis
+    - Is the number of children per cell variable? → subgrid **one axis only**; use `grid-auto-rows`/`grid-auto-columns` for the other
+    - Is the child count fixed? → subgrid on both axes is fine
+  - **No** — standard grid, no subgrid needed
+
+**Do:**
+
+- Establish a context with `display: grid`.
+- Use `grid-template-areas` for complex page-level layouts — area names are self-documenting and the declaration can be aligned in rows and columns for at-a-glance readability.
+- Use `repeat(auto-fit, minmax(200px, 1fr))` for responsive card grids that stretch filled tracks to fill the row, or `auto-fill` to preserve empty repeated tracks at their min size.
+- Use `fr` for proportional track distribution and `minmax(min, max)` for flexible-but-bounded tracks.
+- Position items with `grid-column: span <n>` to size across tracks, `grid-column: <start> / <end>` to place at specific lines, or `grid-area: <name>` for named regions.
+- Use subgrid (`grid-template-columns: subgrid` or `grid-template-rows: subgrid`) to solve the "ragged edge" problem in card lists — internal elements like titles, metadata, and CTAs line up across siblings.
+- Pair a subgrid declaration with a preceding explicit `grid-template-rows`/`-columns` declaration as a same-cascade fallback for older browsers.
+
+**Do not:**
+
+- Don't expect `auto-fit`/`auto-fill` track size to come from item content — it comes from the `repeat()` size argument.
+- Don't use `grid-auto-flow: dense` on interactive content. It packs items efficiently but reorders them visually, breaking DOM-order keyboard tab flow.
+- Don't apply subgrid to both axes when the child count is variable. Extras land in the last track; use `grid-auto-rows`/`grid-auto-columns` for the implicit axis instead.
+- Don't confuse `justify-items`/`align-items` (aligns item content *within its track*) with `justify-content`/`align-content` (aligns the grid tracks *within the container*). Using the wrong one silently has no effect.
+- Don't use `repeat(auto-fit/auto-fill, ...)` without a definite `inline-size` on the container — inside `display: inline-grid` or an unsized flex item, the container has no width to divide, making track counts unpredictable.
+
+### 3.1 Code example: grid and subgrid
+
+Page shell: `<main class="page-layout">` contains `<header>`, `<aside>`, a `<section class="card-grid">` with `<div class="card">` children, and `<footer>`.
+
+```css
+/* Align grid-template-areas in rows and columns for readability. */
+.page-layout {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+    "header  header  header"
+    "sidebar main    main"
+    "footer  footer  footer";
+  gap: 1.5rem;
+}
+
+header  { grid-area: header; }
+aside   { grid-area: sidebar; }
+footer  { grid-area: footer; }
+
+.card-grid {
+  grid-area: main;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-rows: auto 1fr; /* title block, body block */
+  gap: 1rem;
+}
+
+.card {
+  grid-row: span 2;
+  display: grid;
+  /* Same-cascade fallback: ignored when subgrid is supported. */
+  grid-template-rows: auto 1fr;
+  grid-template-rows: subgrid;
+}
+```
+
+## 4 Container queries
+
+Baseline status for Container queries: Widely available. It's been Baseline since 2023-02-14.
+Supported by: Chrome 105 (Sep 2022), Edge 105 (Sep 2022), Firefox 110 (Feb 2023), and Safari 16 (Sep 2022).
+
+Query the size (or computed style) of an ancestor container rather than the viewport. Mental model: container queries = component context; media queries = global page layout and user preferences (`prefers-color-scheme`, `prefers-reduced-motion`).
+
+**Do:**
+
+- Establish a containment context with `container-type: inline-size` (width-only queries) or `container-type: size` (both axes) on a wrapper before its descendants can be queried.
+- Name containers with `container-name` (or the `container` shorthand: `container: inline-size card`) when nested contexts could collide.
+- Include container query units in calculating fluid type and spacing: `cqi`/`cqb` (logical inline/block), `cqw`/`cqh` (physical), `cqmin`/`cqmax`.
+- Give the container a definite `block-size` whenever `container-type: size` is used — without one, descendants collapse because size containment forces the container to ignore its content.
+
+**Do not:**
+
+- Don't use `block-size` as a `container-type` value — it isn't valid. Use `size` for both axes.
+- Don't expect children's intrinsic size to influence the container after declaring `container-type`. The container is computed as if it has no children once containment is active.
+- Don't rely on container query units inside descendants of a non-qualifying ancestor; they fall back to the small viewport (`svw`/`svh`).
+
+### 4.1 Code example: fluid typography using container query units
+
+```css
+.card-wrapper {
+  container: inline-size / card; /* shorthand for container-type + container-name */
+}
+
+@container card (inline-size > 400px) {
+  .content {
+    display: flex;
+    gap: 2rem;
+  }
+}
+
+.title {
+  /* Fluid type bound to the container width, not the viewport. */
+  font-size: clamp(1rem, 4cqi, 2rem);
+}
+```
+
+> For component-driven responsive styling patterns, see `size-aware-styling` (via `npx -y modern-web-guidance@latest retrieve "size-aware-styling"`) and `fluid-scaling` (via `npx -y modern-web-guidance@latest retrieve "fluid-scaling"`).
+
+## 5 Native overlays, anchor positioning, and stacking contexts
+
+Baseline status for <dialog>: Widely available. It's been Baseline since 2022-03-14.
+Supported by: Chrome 37 (Aug 2014), Edge 79 (Jan 2020), Firefox 98 (Mar 2022), and Safari 15.4 (Mar 2022).
+Baseline status for Popover: Newly available. It's been Baseline since 2025-01-27.
+Supported by: Chrome 116 (Aug 2023), Edge 116 (Aug 2023), Firefox 125 (Apr 2024), Safari 17 (Sep 2023), and Safari iOS 18.3 (Jan 2025).
+Anchor positioning is not natively supported by any major browser yet.
+
+**When to use each overlay primitive:**
+
+- Use `popover` for transient, non-modal UI (flyouts, toasts, tooltips) — lives in the top layer, no `z-index` management needed.
+- Use `<dialog>` with `.showModal()` for modal interactions that require focus trapping and an inert backdrop.
+- Don't combine `popover` and `.showModal()` on the same element — they're mutually exclusive runtime states.
+
+**Anchor positioning (spatial layout of overlays):**
+
+- Use `position-area` (or `anchor()` on insets) and `anchor-size()` to position and size an overlay relative to its trigger.
+- Use `position-try-fallbacks: flip-block` (or `flip-inline`) to let the browser reposition when the overlay overflows the viewport.
+- Don't mix physical and logical keywords in a single `position-area` value — pick one coordinate system.
+- Feature-detect with `@supports (anchor-name: --x)` and provide an absolute-position fallback.
+
+> For full implementation detail, polyfill strategies, and `popover` value reference, see `declarative-dialog-popover-control` (via `npx -y modern-web-guidance@latest retrieve "declarative-dialog-popover-control"`) and `position-aware-tooltips` (via `npx -y modern-web-guidance@latest retrieve "position-aware-tooltips"`). For anchor positioning applied to menus and tab indicators, see `resilient-context-menus-and-nested-dropdowns` (via `npx -y modern-web-guidance@latest retrieve "resilient-context-menus-and-nested-dropdowns"`) and `anchor-positioning-tab-underline` (via `npx -y modern-web-guidance@latest retrieve "anchor-positioning-tab-underline"`).
+
+## 6 Overflow tracking and layout stability
+
+Baseline status for scrollbar-gutter: Newly available. It's been Baseline since 2024-12-11.
+Supported by: Chrome 94 (Sep 2021), Edge 94 (Sep 2021), Firefox 97 (Feb 2022), and Safari 18.2 (Dec 2024).
+line-clamp is not natively supported by any major browser yet.
+
+Manage layout shifts, scrollbars, and clipping predictably.
+
+**Do:**
+
+- Use `overflow: auto` so scrollbars appear only when content actually overflows.
+- Use `overflow: clip` to clip content **without** establishing a scroll container; opt into spillover with `overflow-clip-margin`.
+- Use `scrollbar-gutter: stable` to reserve space for scrollbars and prevent layout shifts when content grows.
+- Use `overscroll-behavior: contain` (or `none`) on scrollable containers to stop scroll chains from bubbling into the parent or document.
+- Use the `-webkit-line-clamp` + `display: -webkit-box` + `-webkit-box-orient: vertical` triad for multi-line truncation — despite the prefix, this pattern is fully specified and not deprecated. Declare the unprefixed `line-clamp` shorthand alongside it; browsers that don't yet support it ignore the property harmlessly.
+**Do not:**
+
+- Don't use `overflow: scroll` when `auto` will do — `scroll` forces scrollbars even when there's nothing to scroll.
+- Don't reach for `overflow: hidden` when you only want to clip — `hidden` establishes a scroll container that can be programmatically scrolled.
+
+```css
+.scrollable-list {
+  max-block-size: 400px;
+  overflow-y: auto;
+  scrollbar-gutter: stable;       /* Reserve scrollbar space. */
+  overscroll-behavior: contain;   /* No scroll chaining into the page. */
+}
+
+.snippet {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;                  /* Ignored where unsupported. */
+  overflow: clip;
+}
+```
+
+> For `overflow: clip` and `overflow-clip-margin` in depth, see `overflow-clipping-control` (via `npx -y modern-web-guidance@latest retrieve "overflow-clipping-control"`). For scrollbar color, sizing, and theming, see `customize-scrollbar-color-and-thickness` (via `npx -y modern-web-guidance@latest retrieve "customize-scrollbar-color-and-thickness"`), `dark-mode` (via `npx -y modern-web-guidance@latest retrieve "dark-mode"`), and `adapt-scrollbar-to-contrast-preferences` (via `npx -y modern-web-guidance@latest retrieve "adapt-scrollbar-to-contrast-preferences"`).
+
+## 7 Viewport mechanics and track distribution
+
+Baseline status for Small, large, and dynamic viewport units: Widely available. It's been Baseline since 2022-12-05.
+Supported by: Chrome 108 (Nov 2022), Edge 108 (Dec 2022), Firefox 101 (May 2022), and Safari 15.4 (Mar 2022).
+
+- Use `dvh`/`dvw` for mobile layout containers that must account for browser UI shifting (URL bar collapse/expand).
+- Don't use `100vw` for full-width layout — it ignores scrollbar width and causes horizontal overflow. Use `100%`, `100dvw`, or `100svw` instead.
+
+> For the full viewport unit reference (`svh`, `lvh`, `dvi`, `dvb`, etc.), see `css` (via `npx -y modern-web-guidance@latest retrieve "css"`).
+
+## 8 Grid lanes (aka masonry)
+
+Masonry is not natively supported by any major browser yet.
+
+The spec is in development. The currently agreed-upon name is "grid lanes" (e.g., `display: grid-lanes`). Firefox ships `grid-template-rows: masonry` behind a flag; no other engines ship it in stable as of this writing.
+
+**Do:**
+
+- Use grid with `grid-auto-flow: dense` for tight packing today, accepting that DOM order may not match visual order.
+- Use multi-column (`columns: 3; column-gap: 1rem`) for content-heavy masonry-like flow when items are document fragments rather than equal-weight cards.
+- Treat `grid-template-rows: masonry` as a progressive enhancement only — feature-detect with `@supports`.
+
+**Do not:**
+
+- Don't ship `grid-template-rows: masonry` as a hard requirement until your Baseline target catches up.
+
+```css
+.gallery       { columns: 3 200px; column-gap: 1rem; }
+.gallery > *   { break-inside: avoid; margin-block-end: 1rem; }
+
+@supports (grid-template-rows: masonry) {
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-rows: masonry;
+    gap: 1rem;
+    columns: unset;
+  }
+}
+```
+
+
+--- Guide for design-token-reactivity ---
+## Background & Overview
+
+Often an author will need to make contextual changes to the design of a component. Historically authors would need to use selectors to apply such changes. This often meant that while many of their design tokens could exist as custom properties, higher-order design tokens could only be encoded as a selector pattern (i.e. using a class name or attribute convention) or as props/context in a JavaScript framework.
+
+**Container style queries** allow authors to style elements based on the computed custom property value of an ancestor element. This means authors can write meaningful design token values within their stylesheets rather than relying on markup or JavaScript for presentation.
+
+## How to implement
+
+Implementing a reactive design token using a container style query is quite straightforward:
+
+1. Set the higher-order design token as a custom property on a container. This does not need to be a registered custom property.
+2. Use the `@container style()` rule to query the value of that custom property.
+3. Apply the appropriate styles to a descendant element within the container.
+
+A few things to keep in mind:
+
+- The container being queried with a style query does not need to have a `container-type` or `container-name` set, however, a `container-name` can allow for more specific querying.
+- The container itself cannot be styled by the container style query.
+
+The following is a basic example of the above implementation steps.
+
+```html
+<div class="features">
+  <div class="card"></div>
+  <div class="card"></div>
+</div>
+<div class="bugs">
+  <div class="card"></div>
+  <div class="card"></div>
+  <div class="card"></div>
+  <div class="card"></div>
+</div>
+```
+
+```css
+.features {
+  --density: spacious;
+}
+
+.bugs {
+  --density: compact;
+}
+
+@container style(--density: compact) {
+  .card {
+    padding: 8px;
+  }
+}
+
+@container style(--density: spacious) {
+  .card {
+    padding: 24px;
+  }
+}
+```
+
+## Fallback strategies
+
+Container style queries has limited availability.
+Supported by: Chrome 111 (Mar 2023), Edge 111 (Mar 2023), and Safari 18 (Sep 2024).
+Unsupported in: Firefox.
+
+Until there is Baseline support for container style queries it is NOT RECOMMENDED that they be used for core features that must be available across all browsers, since it is not simple to create a fallback for them that does not take away from their benefits or that have their own limitations. For example, if a UI density user preference is not deemed to be a core feature that must be available across all experiences, then container style queries can be use to implement the feature without a fallback.
+
+### Using selectors instead
+
+For core features, an alternate approach using selectors should be used. This example uses a `data-density` attribute to encode the density design token in the markup rather than as a custom property:
+
+```html
+<div class="features" data-density="spacious">
+  <div class="card"></div>
+  <div class="card"></div>
+</div>
+<div class="bugs" data-density="compact">
+  <div class="card"></div>
+  <div class="card"></div>
+  <div class="card"></div>
+  <div class="card"></div>
+</div>
+```
+
+```css
+/* This example uses `:where()` to avoid increasing specificity */
+:where([data-density="compact"]) .card {
+  padding: var(--card-padding-compact);
+}
+
+:where([data-density="spacious"]) .card {
+  padding: var(--card-padding-spacious);
+}
+```
+
+A major limitation of this fallback approach is that it does not support nesting elements with the `data-density` attribute set, since the selector specificity is the same, order of appearance will be used to determine the styles (i.e. `[data-density="spacious"]` will always take precendence over `[data-density="compact"]`).
+
+### Using style queries as a progressive enhancement
+
+While it’s NOT RECOMMENDED, if you want to use style queries as a progressive enhancement for a core feature, then to avoid duplication you can create some custom properties, then include the style queries after. Make sure the fallback approach uses `:where()` when selecting the container elements to avoid increasing the specificity.
+
+```css
+.card {
+  --card-padding-compact: 8px;
+  --card-padding-spacious: 24px;
+}
+
+:where([data-density="compact"]) .card {
+  padding: var(--card-padding-compact);
+}
+
+:where([data-density="spacious"]) .card {
+  padding: var(--card-padding-spacious);
+}
+
+/* Use style queries as a progressive enhancement: same specificity, so order of appearance is used */
+
+@container style(--density: compact) {
+  .card {
+    padding: var(--card-padding-compact);
+  }
+}
+
+@container style(--density: spacious) {
+  .card {
+    padding: var(--card-padding-spacious);
+  }
+}
+```
+
+### Feature-checking with just CSS
+
+If you need to feature check container style queries to conditionally display some UI that relies on it, you can use a style query to do so:
+
+```css
+:root {
+  --style-queries-supported: check;
+}
+
+.density-toggle {
+  display: none;
+}
+
+@container style(--style-queries-supported) {
+  .density-toggle {
+    display: revert;
+  }
+}
+```
+
+### Feature-checking with JavaScript
+
+For feature-checking with JavaScript, it is slightly more complicated as the `CSSContainerRule` interface existed prior to the addition of container style queries, so it is unreliable for this purpose. Instead, you’ll need to check the computed value of a known property that is being set with a style query.
+
+This example uses a custom property as it will have no visual effect:
+
+```css
+:root {
+  --style-queries-supported: check;
+}
+
+@container style(--style-queries-supported: check) {
+  body {
+    --style-queries-supported: yes;
+  }
+}
+```
+
+Then check the computed value in JavaScript like this:
+
+```js
+if (getComputedStyle(document.body).getPropertyValue("--style-queries-supported") === "yes") {
+  // Use container style queries
+} else {
+  // Use fallback strategy
+}
+```
+
+
+
+--- Guide for stabilize-reactive-state ---
+# Stabilize Reactive State with Temporal
+
+While some reactive systems (like [React](https://react.dev/)) rely strictly on reference equality to detect state changes, others (like [Vue](https://vuejs.org/) and [Svelte](https://svelte.dev/)) can track mutations to plain objects. However, for built-in objects like the legacy `Date` object, internal mutations (like `setHours()`) do not change the object's reference and are generally not tracked by any framework's default reactivity system. This leads to missed UI updates and hard-to-debug side effects.
+
+The `Temporal` API solves this by providing immutable objects. Any operation that modifies a value (such as adding time or setting a field) returns a new instance with a new memory reference. This guarantees that state updates are always detected by reactive systems, ensuring UI stability.
+
+## How to Implement
+
+To stabilize reactive state using Temporal:
+
+1. **Use Temporal types for state:** Store `Temporal` objects (like `Temporal.PlainDateTime` or `Temporal.PlainDate`) in your reactive state instead of legacy `Date` objects.
+2. **Perform immutable updates:** When updating the state, use Temporal methods like `.add()`, `.subtract()`, or `.with()`. These methods return a new object.
+3. **Pass the new reference to the state setter:** Use the newly created Temporal object to update your component state, triggering a reliable re-render.
+
+## Example Code: Temporal vs Legacy Date in State
+
+```javascript
+// ❌ BAD: Mutating legacy Date breaks reactivity
+let dateState = { deadline: new Date() };
+
+function extendDeadlineBad() {
+  // Mutates the object in place. Reference remains the same!
+  dateState.deadline.setHours(dateState.deadline.getHours() + 1);
+
+  // Frameworks will skip re-rendering because
+  // prevState === nextState (same memory reference)
+  updateState(dateState);
+}
+
+// ✅ GOOD: Temporal ensures immutability and reliable reactivity
+let temporalState = { deadline: Temporal.Now.plainDateTimeISO() };
+
+function extendDeadlineGood() {
+  // Returns a new object with a new reference.
+  const newDeadline = temporalState.deadline.add({ hours: 1 });
+
+  // Create a new state object with the new Temporal reference
+  temporalState = { deadline: newDeadline };
+
+  // Frameworks will detect the reference change and re-render the UI
+  updateState(temporalState);
+}
+```
+
+## Strategic Implementation & Best Practices
+
+- **DO** use `Temporal` for any date/time values stored in reactive state to benefit from its immutability.
+- **DO** use the most specific Temporal type for your use case (e.g., `Temporal.PlainDate` if you only need the calendar date) to avoid unnecessary complexity.
+- **DO NOT** mutate `Date` objects in place when they are part of a component's state.
+- **DO** ensure you handle environments without native support by conditionally loading a polyfill.
+
+### Fallback strategies
+
+Temporal has limited availability.
+Supported by: Chrome 144 (Jan 2026), Edge 144 (Jan 2026), and Firefox 139 (May 2025).
+Unsupported in: Safari.
+
+Since the `Temporal` API is a newer feature and may not be supported in all browsers, you should feature-detect it and conditionally load a polyfill if needed.
+
+```html
+<!-- Conditionally load the Temporal polyfill only if not natively supported -->
+<script>
+  if (typeof Temporal === "undefined") {
+    try {
+      const module = await import("https://esm.sh/@js-temporal/polyfill");
+      globalThis.Temporal = module.Temporal;
+    } catch (e) {
+      console.error("Failed to load Temporal polyfill:", e);
+    }
+  }
+</script>
+```
+
+--- Guide for reduce-style-repetition ---
+# Reduce Style Repetition with CSS Functions
+
+Maintaining large stylesheets often leads to repetitive logic, especially when dealing with design system tokens like gradients or responsive layout patterns.
+
+The CSS `@function` at-rule allows you to encapsulate this logic into reusable, parameterized functions, making your CSS more maintainable, consistent and DRY (Don't Repeat Yourself).
+
+## The `@function` Syntax
+
+A custom function is defined using the `@function` rule followed by a dashed name and a list of parameters. The function returns a value using the `result` property. 
+
+```css
+@function --my-function(--input1 <length>, --input2: default-value) returns <length> {
+  /* Logic goes here */
+  result: var(--input1);
+}
+```
+
+### Key Concepts
+- **Parameters:** Must start with a double dash (`--`).
+- **Defaults:** You can provide default values using a colon (`:`).
+- **Result:** The `result` property determines the value the function returns. The last `result` declared in the function body wins.
+- **Scoping:** Parameters and variables defined inside the function are locally scoped.
+- **Types:** You can require parameters and the returned value to match a CSS type with bracket notation (e.g., `<color>`) and allow multiple types with the `type` function (e.g., `type(<number> | <percentage>)`).
+
+## Practical Examples
+
+### 1. Design System Tokens (Gradients)
+Ensure consistent color gradients across your app by encapsulating gradient logic. The `--angle` provides a default value to provide consistency that can be overridden.
+
+```css
+@function --fancy-gradient(--start-color <color>, --end-color <color>, --angle: 98deg) returns <image>{
+  result: linear-gradient(in oklab var(--angle), var(--start-color), var(--end-color) );
+}
+
+.card {
+  background: --fancy-gradient(#ed73d7, #5d87e9);
+}
+```
+
+### 2. Conditional Layout Logic
+You can use `@media` or other queries directly inside a function to return different values based on the environment. When using conditional logic in a function, note that the `@function` does not "return" at the first value of `result`, but rather follows the CSS cascade, and resolves to the last value that matches based on the screen size, container size, or other query.
+
+```css
+@function --grid-template(--count <number>){
+  /* MANDATORY: Put default value first. */
+  result: 1fr; /* Default: stack */
+  @media (min-width: 800px) {
+    result: repeat(var(--count), 1fr); /* Grid on larger screens */
+  }
+}
+
+main {
+  display: grid;
+  grid-template-columns: --grid-template(2);
+}
+```
+
+## Best Practices
+- **Use Dashed Names:** Always prefix your function names and parameters with `--`.
+- **Provide Defaults:** Make your functions more robust by providing sensible default values.
+- **Keep it Simple:** Use functions for logic that is actually repeated or complex. Don't over-engineer simple property-value pairs.
+- **Use Types:** Ensure your parameters and return values are the expected types.
+- **Consider Precompiled Alternatives:** For functions that do not depend on user input, media queries or other client-side variation, consider using a CSS precompiler to avoid doing unnecessary work on the client. 
+
+### Fallback strategies
+
+@function has limited availability.
+Supported by: Chrome 139 (Aug 2025) and Edge 139 (Aug 2025).
+Unsupported in: Firefox and Safari.
+
+In browsers that do not support CSS Functions, values set using CSS functions will be invalid. To support other browsers, provide a fallback value for the property first. This will be overridden in browsers with CSS function support.
+
+```css
+.card {
+  /* Provide fallback, in this case a solid color. */
+  background: #5d87e9;
+  background: --fancy-gradient(#ed73d7, #5d87e9);
+}
+
+main {
+  /* Provide fallback, in this case a simple stacked default. */
+  grid-template-columns: 1fr;
+  grid-template-columns: --grid-template(2);
+}
+```
+
+If it is a requirement to reduce style repetition while supporting other browsers, consider a CSS precompiler with functions, like Sass.
+
+
+--- Guide for break-up-long-tasks ---
+Heavy computations or long loops can block the main thread, causing the page to become unresponsive. To prevent this, you should yield control back to the browser periodically. The `scheduler.yield()` API allows you to pause a long task and let the browser handle user input or rendering before continuing.
+
+### Breaking up long tasks
+
+Use `scheduler.yield()` inside async functions to break up work.
+
+```javascript
+async function processLargeArray(items) {
+  // DO: Set a time-based deadline 50 milliseconds into the future. 50
+  // milliseconds is the boundary for when a task becomes a long task.
+  let deadline = performance.now() + 50; // 50ms budget
+
+  for (const item of items) {
+    // Process the item
+    processItem(item);
+    
+    // MANDATORY: Yield to the main thread periodically to keep the UI
+    // responsive. This can be done by checking if the deadline set earlier
+    // has been exceeded. When it has been, yield, then reset the deadline
+    // another 50 milliseconds into the future.
+    if (performance.now() >= deadline) {
+      await scheduler.yield();
+      deadline = performance.now() + 50;
+    }
+  }
+}
+```
+
+### Fallback strategies
+
+Scheduler API has limited availability.
+Supported by: Chrome 129 (Sep 2024), Edge 129 (Sep 2024), and Firefox 142 (Aug 2025).
+Unsupported in: Safari.
+
+Some browsers may not support the `scheduler` API. You MUST implement a fallback using `setTimeout` to ensure code executes without breaking.
+
+#### Fallback for `scheduler.yield()`
+
+```javascript
+async function processLargeArrayWithFallback(items) {
+  // DO: Set a time-based deadline 50 milliseconds into the future.
+  let deadline = performance.now() + 50;
+
+  for (const item of items) {
+    processItem(item);
+    
+    // MANDATORY: Yield to the main thread periodically to keep the UI responsive.
+    if (performance.now() >= deadline) {
+      // DO: Feature detect scheduler.yield
+      if ('scheduler' in window && 'yield' in window.scheduler) {
+        await scheduler.yield();
+      } else {
+        // DO: Fallback to setTimeout for older browsers
+        await new Promise(resolve => setTimeout(resolve, 0));
+      }
+      deadline = performance.now() + 50;
+    }
+  }
+}
+```
+
+
+--- Guide for schedule-tasks-by-priority ---
+When building complex web applications, tasks have different levels of urgency. Completing tasks for the current view is more important than sending analytics or prefetching assets. The Prioritized Task Scheduling API allows you to schedule work with specific priorities, ensuring the browser remains responsive to user input.
+
+### Scheduling tasks by priority
+
+Use `scheduler.postTask()` to schedule tasks with one of three priorities:
+- `user-blocking`: Tasks that block user interaction (e.g., input handling, critical rendering).
+- `user-visible`: Tasks visible to the user but not blocking (default).
+- `background`: Tasks that are not time-critical (e.g., analytics, prefetching).
+
+```javascript
+// Schedule a high-priority task that blocks user interaction
+scheduler.postTask(() => {
+  // DO: Handle critical updates that impact user interaction
+  handleCriticalUpdate();
+}, { priority: 'user-blocking' });
+
+// Schedule a default priority task
+scheduler.postTask(() => {
+  // DO: Render non-critical content that is visible to the user
+  renderSecondaryContent();
+}); // Defaults to 'user-visible'
+
+// Schedule a low-priority background task
+scheduler.postTask(() => {
+  // DO: Perform heavy background work that is not time-critical
+  sendAnalytics();
+}, { priority: 'background' });
+```
+
+### Fallback strategies
+
+Scheduler API has limited availability.
+Supported by: Chrome 129 (Sep 2024), Edge 129 (Sep 2024), and Firefox 142 (Aug 2025).
+Unsupported in: Safari.
+
+To support browsers that do not have the Prioritized Task Scheduling API, you must use a polyfill to maintain task prioritization.
+
+```javascript
+// Feature detect the scheduler API
+if (!('scheduler' in window && 'postTask' in window.scheduler)) {
+  // DO: Conditionally load the polyfill for browsers that need it
+  const script = document.createElement('script');
+  script.src = 'https://unpkg.com/scheduler-polyfill';
+  script.onload = () => {
+    // Polyfill is loaded and ready to use
+    runScheduledTasks();
+  };
+  document.head.appendChild(script);
+} else {
+  runScheduledTasks();
+}
+
+function runScheduledTasks() {
+  // Now safe to use scheduler.postTask in all browsers
+  scheduler.postTask(() => {
+    console.log('Task with priority support');
+  }, { priority: 'background' });
+}
+```
+
+
+--- Guide for navigation-drawer ---
+## Overview
+
+A navigation drawer is a panel that slides in from the edge of the viewport over the page content, dimming everything behind it. It is opened from a trigger button and dismissed by swiping the panel off-screen, tapping the dimmed backdrop, or pressing Escape.
+
+This guide implements the drawer as:
+
+- A `popover="manual"` element promoted to the top layer so the panel and its `::backdrop` overlay every other element on the page, regardless of stacking context.
+- A horizontally scrolling container with two CSS scroll-snap stops — one for "open", one for "closed" — so the swipe gesture is handled natively by the browser. This delivers momentum, velocity, and interruption tracking for free, with no JavaScript pointer-event code.
+- A scroll-driven animation that ties the backdrop's opacity to the scroll position, so the dim fades in and out smoothly as the user drags the panel.
+- An `IntersectionObserver` on the panel that detects when it has fully entered or fully left the viewport, and uses those moments to update focus, `aria-expanded`, and `inert`.
+
+This approach is preferred over JavaScript-driven `transform` animations because the scroll mechanism gives the user direct control of the panel's position (their finger drives it, not a tween) and it much more closely matches the interaction patterns that users are accustomed to in native mobile apps.
+
+## Implementation
+
+### 1. Markup
+
+The drawer is a single popover containing a horizontal scroller, which contains the visible "sheet". The trigger button lives in the page content.
+
+```html
+<!-- popover="manual" is REQUIRED. Do not use popover="auto" or "hint". -->
+<div class="Drawer" id="drawer" popover="manual">
+  <div class="Drawer-scroller">
+    <nav class="Drawer-sheet" tabindex="-1">
+      <!-- tabindex="-1" makes the sheet programmatically focusable so we
+           can move focus into it when the drawer opens, without adding it
+           to the natural tab order. -->
+      <ul>
+        <li><a href="/page-1">Page 1</a></li>
+        <li><a href="/page-2">Page 2</a></li>
+        <!-- ... -->
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<main>
+  <header>
+    <!-- aria-controls links the trigger to the drawer; aria-expanded
+         reflects the current state for assistive tech. -->
+    <button id="drawer-open"
+            aria-label="Menu"
+            aria-expanded="false"
+            aria-controls="drawer">
+      <!-- MANDATORY: Inline decorative SVGs MUST define aria-hidden="true" -->
+      <svg aria-hidden="true" viewBox="0 0 24 24">...</svg>
+    </button>
+  </header>
+  <!-- Page content. -->
+</main>
+```
+
+### 2. Styles
+
+#### Reset the popover and fill the viewport
+
+The popover must cover the whole viewport so its `::backdrop` dims the entire page and the swipe surface extends edge-to-edge. The default user-agent popover styles (centered, auto-sized, bordered) get in the way and must be reset.
+
+```css
+.Drawer {
+  /* min() caps the sheet width on large screens but on a phone leaves
+     a 20% peek of page content visible, which is the affordance that
+     tells the user they can tap outside to dismiss. */
+  --drawer-width: min(20em, 80dvw);
+
+  /* Custom property driven by the scroll-driven animation below.
+     0 = drawer fully closed (transparent backdrop).
+     1 = drawer fully open (visible backdrop). */
+  --drawer-backdrop: 0;
+
+  /* Reset UA popover style that would constrain the element. */
+  width: auto;
+  height: auto;
+  background: transparent;
+  border: 0;
+  overflow: visible;
+}
+
+/* Style the popover's ::backdrop to achive the overlay effect and
+   provide visual affordances indicating that the rest of the page is inert */
+.Drawer::backdrop {
+  background: #000;
+  /* Use calc() to limit the opacity range so the content beneath is visible */
+  opacity: calc(var(--drawer-backdrop) / 2);
+}
+```
+
+#### Build the swipe surface with scroll snap
+
+The scroller is a horizontal grid wider than the viewport: column 1 holds the sheet (width `--drawer-width`), column 2 is an empty pseudo-element spacer the width of the viewport. Snapping between the two columns is what opens and closes the drawer.
+
+```css
+.Drawer-scroller {
+  position: relative;
+  display: grid;
+  /* Sheet on the left, full-viewport spacer on the right. The user
+     scrolls between the two snap stops to open and close. */
+  grid-template-columns: var(--drawer-width) 100%;
+
+  overflow-x: scroll;
+  /* Stop the swipe from chaining into the page's vertical scroll
+     when the user reaches either snap edge. */
+  overscroll-behavior: none;
+  scrollbar-width: none;
+  /* `mandatory` guarantees the drawer always settles fully open or
+     fully closed — never half-open after a partial swipe. */
+  scroll-snap-type: x mandatory;
+}
+
+/* Enable smooth scrolling natively, but only if the user has not
+   requested reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .Drawer-scroller {
+    scroll-behavior: smooth;
+  }
+}
+
+/* The empty spacer that creates the "closed" snap stop. */
+.Drawer-scroller::after {
+  content: '';
+  scroll-snap-align: end;
+  /* Open the popover already scrolled to this stop (drawer off-screen),
+     so the JS only needs to scroll to the open position to
+     animate it in. */
+  scroll-initial-target: nearest;
+}
+
+.Drawer-sheet {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  /* Use `svh` (small viewport height) — not `vh` or `dvh` — so the
+     sheet height does not jump when the iOS Safari address bar
+     resizes mid-swipe. */
+  height: 100svh;
+
+  background: #333;
+  color: #fff;
+  overflow-y: auto;
+  scroll-snap-align: start;
+  scrollbar-width: none;
+}
+```
+
+#### Tie the backdrop opacity to the scroll position
+
+A scroll-driven animation maps `--drawer-backdrop` from 1 (open) to 0 (closed) across the scroller's range, so the backdrop fades in and out perfectly synced with the drag.
+
+```css
+/* MANDATORY: Wrap this entire block in @supports. Browsers that don't
+   support animation-timeline still parse the @keyframes and would
+   apply the animation's `0%` value (--drawer-backdrop: 1) at all
+   times, leaving the backdrop permanently opaque. The @supports gate
+   ensures the animation is only registered where it actually works. */
+@supports (animation-timeline: scroll()) {
+  .Drawer {
+    /* timeline-scope lets .Drawer reference a scroll-timeline that
+       is defined on its descendant (the scroller). Without this, the
+       timeline name is not visible to the .Drawer element. */
+    timeline-scope: --drawer-fade;
+    animation: fade-drawer-backdrop linear both;
+    animation-timeline: --drawer-fade;
+  }
+
+  .Drawer-scroller {
+    /* The horizontal scroll position of this element drives the
+       timeline named `--drawer-fade`. */
+    scroll-timeline: --drawer-fade x;
+  }
+
+  /* @property is REQUIRED. Without registering --drawer-backdrop with
+     a `<number>` syntax, the browser treats it as a string and cannot
+     interpolate it — the backdrop would jump from 0 to 1 with no
+     fade. */
+  @property --drawer-backdrop {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 0;
+  }
+
+  @keyframes fade-drawer-backdrop {
+    /* Scroll position 0 = drawer fully open = backdrop visible. */
+    0% { --drawer-backdrop: 1 }
+    /* Scroll position 100% = drawer fully closed = backdrop hidden. */
+    100% { --drawer-backdrop: 0 }
+  }
+}
+```
+
+### 3. Open and close the drawer
+
+Opening is two steps: promote the popover to the top layer, then scroll the sheet into view. Closing is one step: scroll back to the spacer; an observer (step 4) hides the popover once the sheet is fully off-screen.
+
+```js
+const drawer = document.getElementById('drawer');
+const openBtn = document.getElementById('drawer-open');
+const scroller = drawer.querySelector('.Drawer-scroller');
+const sheet = drawer.querySelector('.Drawer-sheet');
+
+function openDrawer() {
+  // Show the popover first so the element is in the top layer before
+  // we trigger any scrolling. `scroll-initial-target` (set on the
+  // ::after spacer) places the initial scroll position at the closed
+  // stop, so the drawer enters the top layer already off-screen.
+  drawer.showPopover();
+
+  // Scroll the sheet into view. The `behavior: 'auto'` option defers
+  // to the CSS `scroll-behavior` property, which will be smooth unless
+  // the user prefers reduced motion. Snap takes over at the end and
+  // locks the drawer fully open.
+  scroller.scrollTo({left: 0, behavior: 'auto'});
+}
+
+function closeDrawer() {
+  // Scroll back to the spacer. Do NOT call hidePopover() here —
+  // doing so would remove the element from the top layer mid-animation
+  // and the close animation would not be visible. The
+  // IntersectionObserver in step 4 hides the popover once the sheet
+  // has actually left the viewport.
+  scroller.scrollTo({left: scroller.offsetWidth, behavior: 'auto'});
+}
+```
+
+### 4. Detect open and closed state
+
+Use an `IntersectionObserver` on the sheet — not the scroll position — as the source of truth for the drawer's state. The observer fires regardless of how the sheet moved (user swipe, programmatic scroll, snap settle), so all dismissal paths converge in the same callback.
+
+```js
+function onDrawerOpened() {
+  // Mark the rest of the page inert so keyboard and screen-reader
+  // users cannot tab into content hidden behind the drawer.
+  document.querySelector('main').inert = true;
+  openBtn.setAttribute('aria-expanded', 'true');
+  // Move focus into the drawer for keyboard users.
+  sheet.focus();
+}
+
+function onDrawerClosed() {
+  // Hide the popover only after the close animation completes,
+  // so the slide-out is visible to the user.
+  drawer.hidePopover();
+  document.querySelector('main').inert = false;
+  openBtn.setAttribute('aria-expanded', 'false');
+}
+
+// Treat "any pixel of the sheet visible inside the popover root" as
+// "open enough to count as not closed". This threshold is intentionally
+// tiny so the closed callback only fires once the sheet is truly gone.
+const visibleThreshold = 1 / window.innerWidth;
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    // During programmatic scrolling the observer can deliver multiple
+    // entries in one batch. Only the most recent describes the
+    // current state; earlier entries are intermediate positions.
+    const entry = entries.at(-1);
+    if (entry.intersectionRatio < visibleThreshold) onDrawerClosed();
+    if (entry.intersectionRatio === 1) onDrawerOpened();
+  },
+  // root: drawer makes the popover element the intersection root,
+  // so the ratio reflects the sheet's visibility within the popover
+  // (i.e. how much of it has been swiped on-screen).
+  {root: drawer, threshold: [visibleThreshold, 1]},
+);
+observer.observe(sheet);
+```
+
+### 5. Wire up the trigger and dismissal handlers
+
+```js
+// Open trigger.
+openBtn.addEventListener('click', openDrawer);
+
+// Light-dismiss: a tap on the dimmed area (anywhere inside the
+// popover but outside the sheet) closes the drawer. We implement
+// this manually because popover="manual" disables the browser's
+// built-in light-dismiss (which would also fire mid-swipe — see step 1).
+drawer.addEventListener('click', (event) => {
+  if (!sheet.contains(event.target)) closeDrawer();
+});
+
+// Escape key. Listen on document because focus may be inside the
+// drawer when the user presses Escape.
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeDrawer();
+});
+```
+
+### Fallback strategies
+
+Baseline status for Popover: Newly available. It's been Baseline since 2025-01-27.
+Supported by: Chrome 116 (Aug 2023), Edge 116 (Aug 2023), Firefox 125 (Apr 2024), Safari 17 (Sep 2023), and Safari iOS 18.3 (Jan 2025).
+
+The drawer's core mechanics — scroll snap, `IntersectionObserver`, and `inert` — are all Baseline Widely available and required for the component to function. The popover API, the scroll-driven animation that fades the backdrop, and `scroll-initial-target` are progressive enhancements with simple fallbacks that can be easily implemented if wide browser support is required.
+
+#### Backdrop fade fallback (no `animation-timeline` support):
+
+Scroll-driven animations has limited availability.
+Supported by: Chrome 115 (Jul 2023), Edge 115 (Jul 2023), and Safari 26 (Sep 2025).
+Unsupported in: Firefox.
+
+Detect with `CSS.supports('animation-timeline: scroll()')` and write `--drawer-backdrop` from a `scroll` event listener if not supported. The CSS `@supports` block in step 2 ensures the keyframes never apply in unsupported browsers, so the JavaScript value is the only writer.
+
+```js
+if (!CSS.supports('animation-timeline: scroll()')) {
+  scroller.addEventListener('scroll', () => {
+    // Same mapping as the @keyframes: 0 scroll = 1 (open),
+    // sheet-width scroll = 0 (closed).
+    const ratio = 1 - scroller.scrollLeft / sheet.offsetWidth;
+    drawer.style.setProperty('--drawer-backdrop', ratio);
+  });
+}
+```
+
+#### Initial scroll position fallback (no `scroll-initial-target` support):
+
+scroll-initial-target has limited availability.
+Supported by: Chrome 133 (Feb 2025) and Edge 133 (Feb 2025).
+Unsupported in: Firefox and Safari.
+
+Detect with `CSS.supports('scroll-initial-target', 'nearest')` and inside `openDrawer()`, jump-scroll the scroller to the closed position immediately after `showPopover()`. Without this, the drawer would appear instantly in the open position with no slide-in animation.
+
+```js
+async function openDrawer() {
+  drawer.showPopover();
+
+  if (!CSS.supports('scroll-initial-target', 'nearest')) {
+    // Jump-scroll to the closed stop so the scroll below
+    // animates the drawer in from off-screen.
+    scroller.scrollTo({left: scroller.offsetWidth, behavior: 'instant'});
+    // Wait two animation frames for the jump-scroll to commit.
+    // A single rAF is not enough — the second `scrollTo` would
+    // cancel the first before the browser has a chance to apply it.
+    await new Promise((r) =>
+      requestAnimationFrame(() => requestAnimationFrame(r))
+    );
+  }
+
+  scroller.scrollTo({left: 0, behavior: 'auto'});
+}
+```
+
+#### `@property` fallback (no registered custom properties):
+
+Baseline status for Registered custom properties: Newly available. It's been Baseline since 2024-07-09.
+Supported by: Chrome 85 (Aug 2020), Edge 85 (Aug 2020), Firefox 128 (Jul 2024), and Safari 16.4 (Mar 2023).
+
+`@property` is only needed because the scroll-driven animation interpolates `--drawer-backdrop` between keyframes — without registration, the property would be treated as a string and would jump between 0 and 1 with no fade. If the scroll-driven animation fallback above is in place, that JavaScript writes a fresh numeric string to `--drawer-backdrop` on every scroll frame and never interpolates, so no seprarate `@property` fallback is needed since all browsers that support scroll-driven animations also support `@property`.
+
+
+#### Popover API fallback (no `popover` attribute support):
+
+Baseline status for the api.HTMLElement.showPopover capability: Newly available. It's been Baseline since 2024-04-16.
+Supported by: Chrome 114 (May 2023), Edge 114 (Jun 2023), Firefox 125 (Apr 2024), and Safari 17 (Sep 2023).
+
+Because this component uses `popover="manual"` and implements dismissal entirely from JavaScript, it does not depend on the popover API's defining behaviors — light-dismiss, the `popovertarget` attribute, top-layer-managed Escape handling, or focus management. The only popover features it actually uses are top-layer promotion (via `showPopover()`) and the `::backdrop` pseudo-element, which have been Baseline since April 2024.
+
+If wider browser support is needed, do not branch on feature detection — simply do not use popover at all. Drop the `popover="manual"` attribute, replace top-layer promotion with `position: fixed` and a high `z-index`, replace `::backdrop` with a sibling element styled identically (using the same `--drawer-backdrop` custom property), and toggle visibility from a class instead of `showPopover()`/`hidePopover()`. The rest of the component (scroll snap, the scroll-driven backdrop animation, the `IntersectionObserver`, and the dismissal handlers) is unchanged.
+
+
+--- Guide for light-dismiss-a-dialog ---
+Modern modal dialogs often support "light-dismiss," allowing users to close a dialog by clicking or tapping the backdrop (the area outside the dialog). The `closedby` attribute provides a declarative way to enable this behavior without custom JavaScript.
+
+## Implementation
+
+To enable light-dismiss:
+
+1. Add `closedby="any"` to the `<dialog>` element.
+2. Open the dialog using `dialog.showModal()`.
+
+### Attribute Values
+
+- `any`: Enables light-dismiss (clicking the backdrop), "close requests" (the `Esc` key), and developer mechanisms (e.g., `dialog.close()`).
+- `closerequest`: Enables "close requests" and developer mechanisms only. This is the default for modal dialogs.
+- `none`: Only developer mechanisms can close the dialog.
+
+### Styling the Backdrop
+When a dialog is opened as a modal using `showModal()`, the browser generates a `::backdrop` pseudo-element. This backdrop covers the entire viewport and sits directly behind the dialog.
+
+```css
+/* Style the backdrop to indicate the dialog is modal */
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px); /* Optional: add blur for modern browsers */
+}
+```
+
+## Example
+
+```html
+<!-- MANDATORY: Use closedby="any" to enable light-dismiss behavior -->
+<dialog id="myDialog" closedby="any" aria-labelledby="dialogTitle">
+  <form method="dialog">
+    <h2 id="dialogTitle">Feedback</h2>
+    <p>Click outside this box or press Esc to dismiss.</p>
+    <button type="submit">Close</button>
+  </form>
+</dialog>
+
+<button onclick="document.getElementById('myDialog').showModal()">Open Dialog</button>
+```
+
+## Constraints & Accessibility
+
+- **MANDATORY**: Use `closedby="any"` to enable light-dismiss declaratively.
+- **MANDATORY**: Always open modal dialogs with `showModal()`. This ensures the dialog is in the top layer, focus is trapped, and the `Esc` key is handled.
+- **DO**: Use `aria-labelledby` or `aria-label` to provide an accessible name for the dialog.
+- **DO NOT**: Use `closedby` for non-modal dialogs (opened with `show()`), as they do not have a backdrop and won't trigger light-dismiss.
+- **DO NOT**: Use the `click` event for critical logic that should happen *before* closing; instead, listen for the `close` or `cancel` events.
+
+## Fallback strategies
+
+<dialog closedby> has limited availability.
+Supported by: Chrome 134 (Mar 2025), Edge 134 (Mar 2025), and Firefox 141 (Jul 2025).
+Unsupported in: Safari.
+
+**MANDATORY**: For browsers that do not yet support `closedby`, you **must** implement a fallback for light-dismiss by checking if a click occurred outside the dialog content's boundaries using the following script:
+
+```javascript
+const dialog = document.querySelector('dialog');
+
+// Fallback for browsers without closedby support
+if (!('closedBy' in HTMLDialogElement.prototype)) {
+  dialog.addEventListener('click', (event) => {
+    // 1. When clicking the backdrop, the event target is the dialog element itself.
+    // Ignore clicks where the target is a child element inside the dialog.
+    if (event.target !== dialog) return;
+
+    // 2. Check if the click coordinates fall within the dialog's content box.
+    // This distinguishes between a click on the backdrop vs a click on the dialog's background/padding.
+    const rect = dialog.getBoundingClientRect();
+    const isDialogContent = (
+      rect.top <= event.clientY &&
+      event.clientY <= rect.top + rect.height &&
+      rect.left <= event.clientX &&
+      event.clientX <= rect.left + rect.width
+    );
+
+    if (isDialogContent) return;
+
+    // 3. Since the click was outside the content area (on the backdrop), manually close the dialog.
+    dialog.close();
+  });
+}
+```
+
+
+--- Guide for declarative-dialog-popover-control ---
+# Overview
+
+Use the Invoker Commands API to toggle the visibility of `<dialog>` and `[popover]` elements directly from HTML buttons, eliminating the need for custom JavaScript event listeners.
+
+By applying the `commandfor` (target ID) and `command` (action) attributes to a `<button>`, the browser automatically handles open/close state changes, focus management, and accessibility bindings (such as `aria-expanded`). This declarative approach is recommended because it removes brittle boilerplate code, ensures interactions are functional immediately upon HTML parsing, and guarantees a robust, natively accessible user experience.
+
+## Implementing Declarative Popovers
+
+Popovers can be toggled open and closed using a single button.
+
+```html
+<!-- MANDATORY: The commandfor attribute links the invoker to the ID of the target element so the browser knows what to control. -->
+<!-- MANDATORY: The command attribute specifies the action to perform. Use 'toggle-popover' to handle both open and close states automatically. -->
+<button commandfor="my-popover" command="toggle-popover">
+  Toggle Popover
+</button>
+
+<!-- MANDATORY: The target element must have the popover attribute to be controlled as a popover. -->
+<div id="my-popover" popover>
+  <p>Popover content goes here.</p>
+</div>
+```
+
+If you need to control opening and closing with separate buttons, you can use the `show-popover` and `hide-popover` commands.
+
+```html
+<!-- MANDATORY: Use 'show-popover' to explicitly open the popover. It will not close the popover if clicked again. -->
+<button commandfor="my-explicit-popover" command="show-popover">
+  Show Popover
+</button>
+
+<div id="my-explicit-popover" popover="manual">
+  <p>This popover is explicitly opened and closed by separate buttons.</p>
+
+  <!-- MANDATORY: Use 'hide-popover' to explicitly close the targeted popover. -->
+  <button commandfor="my-explicit-popover" command="hide-popover">
+    Hide Popover
+  </button>
+</div>
+```
+
+## Implementing Declarative Modal Dialogs
+
+Unlike popovers, modal dialogs typically use separate buttons for opening and closing. Use the `show-modal` command specifically when you need to open a dialog as a modal.
+
+```html
+<!-- MANDATORY: Use command="show-modal" to trigger the dialog as a modal, trapping focus and preventing interaction with the rest of the page. -->
+<!-- MANDATORY: The commandfor attribute connects this button to the dialog ID. -->
+<button commandfor="confirm-dialog" command="show-modal">
+  Open Confirmation
+</button>
+
+<dialog id="confirm-dialog">
+  <p>Are you sure you want to proceed?</p>
+
+  <!-- MANDATORY: Use command="close" to dismiss the dialog safely. -->
+  <button commandfor="confirm-dialog" command="close">
+    Cancel
+  </button>
+</dialog>
+```
+
+## Fallback strategies
+
+Baseline status for Invoker commands: Newly available. It's been Baseline since 2025-12-12.
+Supported by: Chrome 135 (Apr 2025), Edge 135 (Apr 2025), Firefox 144 (Oct 2025), and Safari 26.2 (Dec 2025).
+Baseline status for Popover: Newly available. It's been Baseline since 2025-01-27.
+Supported by: Chrome 116 (Aug 2023), Edge 116 (Aug 2023), Firefox 125 (Apr 2024), Safari 17 (Sep 2023), and Safari iOS 18.3 (Jan 2025).
+
+Because Invoker Commands and Popovers are not yet universally supported, you MUST use polyfills as fallbacks for older browsers.
+
+### Polyfilling Invoker Commands
+
+MANDATORY: Feature detect support by checking for the `commandForElement` property on the `HTMLButtonElement` prototype. Do NOT check the window or document object. You MUST dynamically import the polyfill only when the native feature is missing. DO NOT unconditionally load the polyfill.
+Mandatory: Listen for the 'command' event directly on the target element because the native 'command' event does not bubble.
+
+**Option 1: Using a bundler**
+Install the polyfill via npm (`npm install invokers-polyfill`). This approach is for projects using a bundler (like Vite or Webpack) or import maps. For all other setups, use the CDN option below.
+
+```javascript
+// MANDATORY: Feature detect 'commandForElement' on HTMLButtonElement.prototype.
+// Conditionally load the invokers-polyfill only in browsers lacking native support.
+if (!('commandForElement' in HTMLButtonElement.prototype)) {
+  import('invokers-polyfill');
+}
+```
+
+**Option 2: Using a CDN**
+For projects without a bundler, dynamically import the polyfill directly from a CDN inside a `<script type="module">`.
+
+```html
+<script type="module">
+  // MANDATORY: Feature detect 'commandForElement' on HTMLButtonElement.prototype.
+  // Conditionally load the invokers-polyfill from a CDN only in browsers lacking native support.
+  if (!('commandForElement' in HTMLButtonElement.prototype)) {
+    import('https://esm.run/invokers-polyfill');
+  }
+</script>
+```
+
+**Invokers Polyfill Limitations**
+MANDATORY: This polyfill does not handle the ARIA states (e.g., `aria-expanded`) of the command button the way native browsers do. You are strongly encouraged to handle these states yourself to ensure your site is fully accessible.
+
+Baseline status for Invoker commands: Newly available. It's been Baseline since 2025-12-12.
+Supported by: Chrome 135 (Apr 2025), Edge 135 (Apr 2025), Firefox 144 (Oct 2025), and Safari 26.2 (Dec 2025).
+
+If the Invoker Commands API is not supported, the `command` event will not fire. For full support across all modern browsers, it is recommended to use the invokers-polyfill from https://github.com/keithamus/invokers-polyfill via `npm install` or CDN.
+
+This polyfill fully supports custom actions (starting with `--`) and dispatches the `command` event exactly like the native API.
+
+### Dynamic Import (Performance Optimization)
+
+For the best performance, you should only load the polyfill if the browser doesn't support the API natively. This saves bandwidth and reduces script execution time for users on modern browsers.
+
+```javascript
+// Check for native support first
+const hasNativeSupport = 'commandForElement' in HTMLButtonElement.prototype;
+
+if (!hasNativeSupport) {
+  // Dynamically import the polyfill only when needed
+  try {
+    await import('https://cdn.jsdelivr.net/npm/invokers-polyfill@latest/dist/index.min.js');
+    console.log('Invoker Commands polyfill loaded');
+  } catch (err) {
+    console.error('Error loading fallback:', err);
+  }
+}
+```
+
+### Manual fallback (Traditional pattern)
+
+If you prefer not to use a polyfill, you can use a combination of **event delegation** to dispatch events and a **command registry** to handle the actions. This is a common architectural pattern in traditional JavaScript development that remains highly efficient and scalable.
+
+```javascript
+// 1. Define a registry of requested actions for cleaner logic
+const commandRegistry = {
+  '--spin': (target) => target.classList.toggle('is-spun'),
+  '--grow': (target) => target.classList.toggle('is-grown'),
+  '--reset': (target) => target.classList.remove('is-spun', 'is-grown'),
+};
+
+const supportsInvokers = 'commandForElement' in HTMLButtonElement.prototype;
+
+// 2. The fallback: Dispatch events manually if native support is missing
+if (!supportsInvokers) {
+  document.addEventListener('click', (event) => {
+    const button = event.target.closest('button[commandfor]');
+    if (!button) return;
+
+    const target = document.getElementById(button.getAttribute('commandfor'));
+    const command = button.getAttribute('command');
+
+    if (target && command) {
+      target.dispatchEvent(new CustomEvent('command', {
+        bubbles: true,
+        detail: { command }
+      }));
+    }
+  });
+}
+
+// 3. The unified listener: Registered directly on the target element
+document.getElementById('action-target').addEventListener('command', (event) => {
+  const command = event.command || event.detail?.command;
+  const target = event.currentTarget;
+  const action = commandRegistry[command];
+
+  if (action) {
+    action(target);
+  }
+});
+```
+
+### Polyfilling the Popover Attribute
+
+To support the `popover` attribute in older browsers, use the `@oddbird/popover-polyfill`.
+
+MANDATORY: Feature detect popover support by checking for the `popover` property on the `HTMLElement` prototype. Conditionally initialize the polyfill only if native support is missing.
+
+**Option 1: Using a bundler**
+Install the package via npm (`npm install @oddbird/popover-polyfill`). This method requires a bundler or import maps to resolve the module path.
+
+```javascript
+// MANDATORY: Feature detect 'popover' on HTMLElement.prototype.
+if (!('popover' in HTMLElement.prototype)) {
+  import('@oddbird/popover-polyfill/fn').then(({ apply }) => {
+    apply();
+  });
+}
+```
+
+**Option 2: Using a CDN**
+For projects without a bundler, dynamically import the polyfill directly from a CDN inside a `<script type="module">`.
+
+```html
+<script type="module">
+  // MANDATORY: Feature detect 'popover' on HTMLElement.prototype.
+  // Conditionally load the popover-polyfill from a CDN only in browsers lacking native support.
+  if (!('popover' in HTMLElement.prototype)) {
+    import('https://unpkg.com/@oddbird/popover-polyfill@latest/dist/popover-fn.js').then(({ apply }) => {
+      apply();
+    });
+  }
+</script>
+```
+
+**Popover Polyfill Limitations & Styling Caveats**
+MANDATORY: Use `:is()` or `:where()` to combine `:popover-open` with the corresponding polyfill class, otherwise browsers that do not support `:popover-open` will throw away the entire rule.
+
+```css
+[popover]:is(:popover-open, .\:popover-open) {
+  display: block;
+}
+```
+
+
+--- Guide for brand-consistent-forms ---
+# Brand-Consistent Forms
+
+Customizing standard HTML form elements like checkboxes and radio buttons has historically been difficult. Developers often faced a choice between using the browser defaults or building custom components from scratch. Building custom controls is time-consuming and can easily lead to accessibility issues or missing states (like the indeterminate state for checkboxes).
+
+The CSS property `accent-color` provides a simple way to bring your brand color to built-in HTML form inputs with a single line of CSS, without sacrificing accessibility or built-in browser features.
+
+## How to Implement
+
+To apply your brand color to form controls:
+
+1. **Identify your brand color:** Choose a color that represents your brand.
+2. **Apply the `accent-color` property:** Add `accent-color` to the element or a container element (like `body` or a specific form) in your CSS.
+3. **Support Dark Mode (Optional but Recommended):** Use `color-scheme` to let the browser know your site supports dark mode, and adjust the `accent-color` if necessary for better contrast.
+
+## Example Code: Brand-Consistent Form Controls
+
+```css
+:root {
+  --brand-color: #6200ee;
+}
+
+/* Apply accent-color to the body or a specific container */
+body {
+  accent-color: var(--brand-color);
+}
+
+/* Optional: Adjust for dark mode if needed */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --brand-color: #bb86fc; /* A lighter shade for dark mode */
+  }
+}
+```
+
+```html
+<form>
+  <!-- Checkbox -->
+  <label for="subscribe">
+    <input type="checkbox" id="subscribe" checked>
+    Subscribe to newsletter
+  </label>
+
+  <!-- Radio Buttons -->
+  <label for="plan-monthly">
+    <input type="radio" id="plan-monthly" name="plan" value="monthly">
+    Monthly
+  </label>
+  <label for="plan-yearly">
+    <input type="radio" id="plan-yearly" name="plan" value="yearly" checked>
+    Yearly
+  </label>
+
+  <!-- Range Slider -->
+  <label for="volume">Volume:</label>
+  <input type="range" id="volume" min="0" max="100" value="70">
+
+  <!-- Progress Bar -->
+  <label for="file">Upload Progress:</label>
+  <progress id="file" max="100" value="70">70%</progress>
+</form>
+```
+
+## Strategic Implementation & Best Practices
+
+- **DO** use `accent-color` to easily theme form controls to match your brand.
+- **DO NOT** blindly trust the browser to handle contrast. While browsers are supposed to automatically determine an eligible contrast color, known bugs in implementations like **Safari** (WebKit bug 244233) and **Android Chrome** (Chromium bug 343503163) can fail to invert checkmark colors, leading to invisible or hard-to-see controls when using colors that lack sufficient contrast against the background (e.g., light colors in light mode, or dark colors in dark mode).
+- **DO** combine `accent-color` with `color-scheme: light dark` to ensure form controls look good in both light and dark themes.
+- **DO NOT** use a color that is too close to the background color, even though browsers try to guarantee contrast, it's best to provide a color with good base contrast.
+- **DO NOT** assume `accent-color` works on all form elements. Currently, it only tints `checkbox`, `radio`, `range`, and `progress` elements.
+
+## Fallback Strategy
+
+accent-color has limited availability.
+Supported by: Chrome 93 (Aug 2021), Edge 93 (Sep 2021), and Firefox 92 (Sep 2021).
+Unsupported in: Safari.
+
+For browsers that do not support `accent-color`, the form controls fall back to the browser's default appearance. To ensure full brand consistency and high reliability across all environments, you MUST implement a custom fallback strategy using the established "visually hidden input" technique.
+
+### Progressive Enhancement with `@supports not`
+
+You MUST use the `@supports not` rule to apply custom fallback styles only when `accent-color` is not supported. This ensures you leverage the simplicity of `accent-color` for modern browsers while guaranteeing a consistent branded experience for older ones.
+
+#### 1. HTML Structure
+Ensure your labels wrap the text in a `<span>` to allow for sibling selectors in CSS:
+```html
+<label for="subscribe-fallback">
+  <input type="checkbox" id="subscribe-fallback" class="visually-hidden" checked>
+  <span>Subscribe to newsletter</span>
+</label>
+```
+
+#### 2. CSS Fallback
+Apply custom styles within a `@supports not` block:
+```css
+/* Fallback for older browsers without accent-color */
+@supports not (accent-color: var(--brand-color)) {
+  /* Visually hide the native input using the canonical accessible recipe */
+  form input[type="checkbox"].visually-hidden {
+    position: absolute !important;
+    clip-path: inset(50%) !important;
+    overflow: hidden !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  /* Style the wrapper label */
+  label {
+    position: relative;
+    padding-left: 2rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Custom box for checkbox */
+  input[type="checkbox"] + span::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.2rem;
+    height: 1.2rem;
+    border: 2px solid #ccc;
+    background: white;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+  }
+
+  /* Ensure custom checkbox shows focus for keyboard users */
+  input[type="checkbox"]:focus-visible + span::before {
+    outline: 2px solid #000;
+    outline-offset: 2px;
+  }
+
+  /* Checked State */
+  input[type="checkbox"]:checked + span::before {
+    background-color: var(--brand-color, #6200ee);
+    border-color: var(--brand-color, #6200ee);
+  }
+
+  /* Checkmark (Unicode) */
+  input[type="checkbox"]:checked + span::after {
+    content: "✓";
+    position: absolute;
+    left: 0.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+
+  /* Fallback for Range Slider */
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+  }
+
+  /* Webkit (Chrome, Safari, Edge) */
+  input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8px;
+    /* Use gradient to show progress for a static value (e.g., 70%) or update with JS */
+    background: linear-gradient(to right, var(--brand-color, #6200ee) 70%, #ccc 70%);
+    border-radius: 4px;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: var(--brand-color, #6200ee);
+    cursor: pointer;
+    margin-top: -4px; /* Center vertically */
+  }
+
+  /* Firefox */
+  input[type="range"]::-moz-range-track {
+    width: 100%;
+    height: 8px;
+    background: #ccc;
+    border-radius: 4px;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: var(--brand-color, #6200ee);
+    cursor: pointer;
+  }
+
+  /* Firefox specific progress bar */
+  input[type="range"]::-moz-range-progress {
+    background-color: var(--brand-color, #6200ee);
+    height: 8px;
+    border-radius: 4px;
+  }
+
+  /* Fallback for Progress Bar */
+  progress {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    background: #ccc;
+    height: 8px;
+    border-radius: 4px;
+  }
+
+  progress::-webkit-progress-bar {
+    background-color: #ccc;
+    border-radius: 4px;
+  }
+
+  progress::-webkit-progress-value {
+    background-color: var(--brand-color, #6200ee);
+    border-radius: 4px;
+  }
+
+  progress::-moz-progress-bar {
+    background-color: var(--brand-color, #6200ee);
+    border-radius: 4px;
+  }
+}
+```
+
+### Dynamic Range Progress in Webkit Fallback
+
+To make the progress fill move with the thumb on a range slider in Webkit browsers (without `accent-color`), you can use a CSS variable and a small amount of JavaScript.
+
+1. **Update CSS**: Use a CSS variable for the gradient stop:
+```css
+input[type="range"]::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, var(--brand-color) var(--progress, 0%), #ccc var(--progress, 0%));
+}
+```
+
+2. **Add JavaScript**: Update the variable on the `input` event:
+```javascript
+if (!CSS.supports('accent-color')) {
+  const slider = document.getElementById('volume');
+  slider.addEventListener('input', (e) => {
+    e.target.style.setProperty('--progress', `${e.target.value}%`);
+  });
+}
+```
+
+
+--- Guide for position-aware-tooltips ---
+When building tooltips or popovers with CSS Anchor Positioning, the browser can automatically "flip" the element to a fallback position if it would otherwise overflow the viewport. When this happens, you may want to adjust the style of the positioned content, for instance to reposition an arrow that points from the positioned content to the anchor.
+
+**Anchored Container Queries** solve this by allowing you to query the active positioning state of an element and apply styles accordingly.
+
+## The problem
+
+Imagine a tooltip that appears above its anchor by default. It has a "down" arrow at the bottom. If the user scrolls and the tooltip flips to appear *below* the anchor, the arrow is now pointing the wrong way and is on the wrong side of the tooltip.
+
+## The solution: Anchored Container Queries
+
+By setting `container-type: anchored` on your positioned element, you turn it into a query container that knows about its own anchor-positioned state. You can then use the `@container anchored()` query to update its descendants or pseudo-elements.
+
+### 1. Create the tooltip and trigger
+
+Use the Popover API to create a tooltip. This creates an implicit anchor connection that can be used for positioning.
+
+```html
+<button popovertarget="tooltip" id="anchor" aria-describedby="tooltip">anchor</button>
+<div id="tooltip" popover role="tooltip"></div>
+```
+
+Reset the popover inset and margin styles for use with anchor positioning, but only if anchor positioning is supported.
+
+```css
+@supports (anchor-name: --my-anchor) {
+  [popover] {
+    inset: auto;
+    margin: unset;
+  }
+}
+```
+
+### 2. Set up the container
+
+Apply `container-type: anchored` to the element being positioned. This element must also have `position-try-fallbacks` defined to enable the flipping behavior.
+
+```css
+#tooltip {
+  position: fixed;
+  position-area: block-start;
+  position-try-fallbacks: flip-block;
+
+  /* Enable anchored container queries */
+  container-type: anchored;
+}
+```
+
+### 3. Style based on the fallback
+
+Use `@container anchored(fallback: <value>)` to apply styles when a specific fallback is active.
+
+Like all container queries, `@container` can only style **descendants** of the container. A common strategy to create the arrows is with the `::before` and `::after` pseudo-elements, which are treated as descendants and can be styled directly. However, to style the tooltip itself (as seen in step 4), we will add a child element to the tooltip, and create the arrow in its `::before` pseudo-element.
+
+```html
+<div id="tooltip" popover role="tooltip">
+  <div class="tooltip-content">Tooltip</div>
+</div>
+```
+
+```css
+.tooltip-content::before {
+  /* Default "down" arrow for the 'top' position */
+  content: "▼";
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 1rem;
+}
+
+/* Update to an "up" arrow when the 'flip-block' fallback (bottom) is active */
+@container anchored(fallback: flip-block) {
+  .tooltip-content::before {
+    content: "▲";
+    inset-block-start: 0;
+    inset-block-end: auto;
+  }
+}
+```
+
+## 4. Styling the container itself
+
+If you need to change properties on the container itself (like `margin` or `background-color`) when it flips, you should use an **inner wrapper element**.
+
+1. Apply `container-type: anchored` to the outer positioned element.
+2. Target the inner element inside the `@container` block.
+
+
+```css
+@container anchored(fallback: flip-block) {
+  .tooltip-content {
+    border-radius: 0 0 .5rem .5rem;
+    margin-block-start: 0.25rem;
+  }
+}
+```
+
+## Best practices
+
+- **Prefer logical fallbacks**: Use keywords like `flip-block` and `flip-inline` in `position-try-fallbacks` for simpler queries that handle RTL and different writing modes automatically.
+- **Use pseudo-elements for arrows**: Tooltip arrows are purely decorative and are perfect candidates for `::before` or `::after`, which can be styled via anchored container queries without extra DOM.
+
+
+## Fallback strategies
+
+Anchor position container queries has limited availability.
+Supported by: Chrome 143 (Dec 2025) and Edge 143 (Dec 2025).
+Unsupported in: Firefox and Safari.
+
+Positioning the arrow based on the applied fallback is a progressive enhancement, and there is not another way of reacting to the fallback position. To hide the arrow in browsers that don't support anchor position container queries, test for CSS support with `@supports (container-type: anchored)`.
+
+```css
+@supports (container-type: anchored) {
+  .tooltip-content::before {
+    content: "▼";
+  }
+}
+```
+
+### Polyfilling the Popover Attribute
+
+Baseline status for Popover: Newly available. It's been Baseline since 2025-01-27.
+Supported by: Chrome 116 (Aug 2023), Edge 116 (Aug 2023), Firefox 125 (Apr 2024), Safari 17 (Sep 2023), and Safari iOS 18.3 (Jan 2025).
+
+To support the `popover` attribute in older browsers, use the `@oddbird/popover-polyfill`.
+
+MANDATORY: Feature detect popover support by checking for the `popover` property on the `HTMLElement` prototype. Conditionally initialize the polyfill only if native support is missing.
+
+**Option 1: Using a package manager**
+Install the package (`npm install @oddbird/popover-polyfill`).
+
+```javascript
+// MANDATORY: Feature detect 'popover' on HTMLElement.prototype.
+if (!('popover' in HTMLElement.prototype)) {
+  import('@oddbird/popover-polyfill/fn').then(({ apply }) => {
+    apply();
+  });
+}
+```
+
+**Option 2: Manual installation without npm**
+If you are not using a package manager, dynamically import the polyfill directly from a CDN (such as unpkg) inside a `<script type="module">`.
+
+```html
+<script type="module">
+  // MANDATORY: Feature detect 'popover' on HTMLElement.prototype.
+  // Conditionally load the popover-polyfill from a CDN only in browsers lacking native support.
+  if (!('popover' in HTMLElement.prototype)) {
+    import('https://unpkg.com/@oddbird/popover-polyfill@latest/dist/popover-fn.js').then(({ apply }) => {
+      apply();
+    });
+  }
+</script>
+```
+
+Browsers without support for the Popover API also do not support anchor positioning, so the tooltip will appear in the center of the screen.
+
+--- Guide for faster-spa-view-transitions ---
+# Faster SPA View Transitions via State Caching
+
+Enable instant navigation between views in a Single-Page Application (SPA) by caching the rendered state of inactive views instead of destroying them.
+
+## Overview
+
+Traditionally, when a user navigates between tabs or views in an SPA, developers either destroy the old view or hide it using `display: none`. Both approaches require the browser to recreate or recalculate the full layout and paint when the user returns to that view.
+
+By using `content-visibility: hidden` on inactive views, the browser removes the element’s contents from the layout flow and stops painting it, but *retains* its cached rendering state in memory. When the user switches back, the view restores nearly instantly.
+
+### The CPU vs. RAM Trade-off
+
+While this approach offers massive performance benefits, it introduces a specific trade-off that you must manage carefully:
+
+*   **CPU Savings:** Massive. The browser completely skips layout and paint passes for hidden views.
+*   **RAM Cost:** High. The browser keeps all DOM nodes, event listeners, and state for the hidden view in memory.
+
+#### When This Trade-off Becomes Dangerous
+
+*   **DO** use this strategy for simple applications with a small, predictable number of views (e.g., a 3-to-5 tabbed interface).
+*   **DO NOT** unconditionally cache every view in highly dynamic applications that generate dozens of unique reports or use infinite dynamic routes. Doing so will eventually cause severe memory bloat and may crash the browser on low-end devices.
+*   **MANDATORY:** If your application is highly dynamic, you MUST implement an **eviction strategy** (like a Least Recently Used cache) to destroy old views when a memory threshold is reached.
+
+## Implementation
+
+### 1. Configure View Containers
+
+Set `content-visibility: hidden` on views that are not currently active.
+
+> **Note:** The `content-visibility: hidden` property hides an element's *contents*, but the element itself remains styled and visible. Its background, borders, padding, and margins will still be painted by the browser.
+
+```css
+.spa-view.inactive {
+  /* MANDATORY: Use hidden to cache the rendering state of inactive views */
+  content-visibility: hidden;
+  
+  /* Optional: Prevent hidden views from taking up physical space in layout flow */
+  position: absolute;
+}
+```
+
+### 2. Manage Focus
+
+When swapping views, ensure you manage keyboard focus correctly to preserve accessibility.
+
+```javascript
+function switchToView(viewId) {
+  // Hide all views
+  document.querySelectorAll('.spa-view').forEach(view => {
+    view.classList.add('inactive');
+    view.setAttribute('aria-hidden', 'true');
+  });
+  
+  // Show the target view
+  const activeView = document.getElementById(viewId);
+  activeView.classList.remove('inactive');
+  activeView.setAttribute('aria-hidden', 'false');
+  
+  // MANDATORY: Move focus to the new view to ensure a logical tab-order
+  activeView.focus();
+}
+```
+
+### Fallback strategies
+
+Baseline status for content-visibility: Newly available. It's been Baseline since 2025-09-15.
+Supported by: Chrome 108 (Nov 2022), Edge 108 (Dec 2022), Firefox 130 (Sep 2024), and Safari 26 (Sep 2025).
+
+The `content-visibility` property degrades gracefully. In browsers that do not support it:
+*   The property is ignored.
+*   To prevent fallback browsers from rendering all views simultaneously, you should provide a fallback to `display: none` in your CSS:
+
+```css
+@supports not (content-visibility: hidden) {
+  .spa-view.inactive {
+    display: none;
+  }
+}
+```
+
+
+--- Guide for optimize-image-priority ---
+# Optimize image priority
+
+Browsers use heuristics to assign loading priorities to images, but these defaults may not always align with your page's Largest Contentful Paint (LCP). Using `fetchpriority` on an `<img>` element allows you to explicitly signal an image's importance to the browser, ensuring critical images load faster while non-essential ones don't compete for bandwidth.
+
+## How to implement
+
+1. **Identify the LCP image**: Determine which image is the most likely candidate for the Largest Contentful Paint (usually the hero image at the top of the page).
+2. **Elevate LCP priority**: Add `fetchpriority="high"` to the `<img>` element for the LCP candidate.
+3. **Deprioritize non-critical images**: For images that are part of a secondary UI or are only revealed after user interaction (like mega menus, modals, or off-screen carousel slides), add `fetchpriority="low"`.
+4. **Optimize lazy loading**: Never use `loading="lazy"` on the LCP image. For standard below-the-fold images, `loading="lazy"` is sufficient to defer the request until the user scrolls near them. Avoid adding `fetchpriority="low"` to these images, as you want them to load at normal priority once the user scrolls to them. Reserve `fetchpriority="low"` for images that are technically "above the fold" but not initially visible (e.g., hidden carousel slides or mega menus). For these hidden images, it is acceptable to use `loading="lazy"` as well; the browser will handle the request timing while respecting the low priority.
+5. **Prefer default priorities**: If an image should have normal loading priority, omit the `fetchpriority` attribute entirely rather than setting it to `auto`. This is a stylistic convention to keep your HTML cleaner while relying on the browser's native heuristics.
+
+## Example code
+
+```html
+<!-- Elevate priority for the LCP image -->
+<img src="/images/hero-lcp.jpg"
+     alt="Main Banner"
+     fetchpriority="high"
+     width="800" height="400">
+
+<!-- Deprioritize initially hidden images above the fold -->
+<img src="/images/gallery-alt.jpg"
+     alt="Gallery Image"
+     fetchpriority="low"
+     width="400" height="300">
+
+<!-- Deprioritize images revealed only after user interaction -->
+<img src="/images/mega-menu-promo.jpg"
+     alt="Special Offer"
+     fetchpriority="low"
+     width="300" height="150">
+
+<!-- Use lazy loading ALONE for standard below-the-fold images -->
+<img src="/images/footer-logo.png"
+     alt="Footer Logo"
+     loading="lazy"
+     width="120" height="60">
+
+<!-- Omit fetchpriority for images with standard priority -->
+<img src="/images/standard-image.jpg"
+     alt="Standard Image"
+     width="400" height="300">
+```
+
+## Best practices
+
+- **MANDATORY**: Always apply `fetchpriority="high"` to the LCP image.
+- **MANDATORY**: Only use `fetchpriority="high"` on at most 1-2 critical images to avoid network contention and diluting the priority boost.
+- **MANDATORY**: Use `fetchpriority="low"` for images that are technically "above the fold" but initially hidden (e.g., hidden carousel slides, mega menu images).
+- **MANDATORY**: **Do not** use `fetchpriority="low"` on standard below-the-fold images that are already using `loading="lazy"`. These images should load at normal priority once they enter the viewport.
+- **RECOMMENDED**: Avoid using `fetchpriority="auto"`. If you want the default priority, omit the attribute entirely to keep your HTML clean.
+- **DO NOT** combine `fetchpriority="high"` with `loading="lazy"` for the LCP image.
+- **DO NOT** use the deprecated `importance` attribute. It has been replaced by `fetchpriority` and is not supported by any browser.
+
+## Fallback strategy
+
+Baseline status for Fetch priority: Newly available. It's been Baseline since 2024-10-29.
+Supported by: Chrome 103 (Jun 2022), Edge 103 (Jun 2022), Firefox 132 (Oct 2024), and Safari 17.2 (Dec 2023).
+
+The `fetchpriority` attribute is a progressive enhancement for the `<img>` element. If a browser does not support it, the attribute is ignored, and the browser uses its default priority heuristics.
+
+
+--- Guide for manage-recurring-intervals ---
+# Managing Recurring Intervals with Temporal
+
+Calculating recurring intervals, such as subscription billing cycles or payroll periods, has historically been error-prone with the legacy `Date` object. Adding a month to a date like January 31st is ambiguous (should it be February 28th/29th or March 3rd?).
+
+The `Temporal` API provides a clean solution with `Temporal.PlainDate` and its `.add()` method, which handles month-end transitions predictably using configurable overflow strategies.
+
+## How to Implement
+
+1. **MANDATORY:** **Parse the starting date**: Use `Temporal.PlainDate.from()` to create a date object.
+2. **MANDATORY:** **Add the duration**: Use the `.add()` method with a duration object (e.g., `{ months: 1 }`).
+3. **OPTIONAL:** **Specify overflow behavior**: Use the `overflow` option to control how invalid dates (like Feb 31) are handled.
+    - `'constrain'` (default): Clamps to the last valid day of the month.
+    - `'reject'`: Throws a `RangeError`.
+
+### Example: Subscription Billing Cycle
+
+```javascript
+// 1. Parse the start date (e.g., billing starts on Jan 31st)
+const startDate = Temporal.PlainDate.from('2024-01-31');
+
+// 2. Add 1 month with default 'constrain' overflow
+// Jan 31 + 1 month -> Feb 29 (2024 is a leap year)
+const nextBillingDate = startDate.add({ months: 1 });
+console.log(`Next billing: ${nextBillingDate.toString()}`); // 2024-02-29
+
+// 3. Add 1 month to Feb 29
+// Feb 29 + 1 month -> Mar 29
+// Note: Day is preserved if valid, otherwise constrained.
+const thirdBillingDate = nextBillingDate.add({ months: 1 });
+console.log(`Third billing: ${thirdBillingDate.toString()}`); // 2024-03-29
+
+// Example with 'reject' strategy
+try {
+  // Jan 31 + 1 month with 'reject' throws because Feb 31 is invalid
+  const invalidDate = startDate.add({ months: 1 }, { overflow: 'reject' });
+} catch (e) {
+  console.log("Caught expected error:", e.name); // RangeError
+}
+```
+
+## Strategic Implementation & Best Practices
+
+- **DO** use `Temporal.PlainDate` for calculations that do not depend on specific times or time zones (like calendar dates or billing cycles).
+- **DO** understand the default `constrain` behavior. It is usually what users expect for billing (e.g., Jan 31 -> Feb 28/29 -> Mar 28/29).
+- **DO NOT** modify instances directly; `Temporal` objects are **immutable**. Operations return a new instance.
+- **DO** use `overflow: 'reject'` if you need to enforce that the resulting date must exist in the calendar and handle failures explicitly.
+
+### Fallback strategies
+
+Temporal has limited availability.
+Supported by: Chrome 144 (Jan 2026), Edge 144 (Jan 2026), and Firefox 139 (May 2025).
+Unsupported in: Safari.
+
+For browsers that do not yet support the native `Temporal` API, use feature detection and a polyfill. The standard reference polyfill is `@js-temporal/polyfill`.
+
+```javascript
+// Check if Temporal is supported natively
+(async () => {
+  if (typeof Temporal === 'undefined') {
+    // Load the polyfill conditionally
+    const module = await import("https://esm.sh/@js-temporal/polyfill");
+    globalThis.Temporal = module.Temporal;
+    // Extend Date.prototype if needed
+    Date.prototype.toTemporalInstant = module.toTemporalInstant;
+    initializeApp();
+  }
+})();
+
+function initializeApp() {
+  const date = Temporal.PlainDate.from('2024-01-31');
+  console.log(date.add({ months: 1 }).toString());
+}
+```

@@ -1,0 +1,1321 @@
+
+--- Guide for animate-to-intrinsic-sizes ---
+# Animate to Intrinsic Sizes
+
+Animating elements to dynamic sizes like `block-size: auto` or `inline-size: max-content` has historically required JavaScript or fragile "max-height" hacks. The `interpolate-size` property and `calc-size()` function allow the browser to natively interpolate between fixed lengths and intrinsic sizing keywords.
+
+## Implementation steps
+
+1.  **Opt-in to keyword interpolation**: Apply `interpolate-size: allow-keywords` to a parent element (typically `:root`) to enable transitions for properties using intrinsic keywords.
+2.  **Define the transition**: Set a `transition` for the sizing property (e.g., `block-size`, `inline-size`) on the target element.
+3.  **Use intrinsic keywords**: Change the sizing property to a supported intrinsic keyword—`auto`, `min-content`, `max-content`, `fit-content`, or (for flex-basis) `content`—during an interaction (e.g., `:hover` or a state class).
+4.  **Perform calculations (Optional)**: Use `calc-size()` if you need to perform math on an intrinsic size (e.g., `auto + 2rem`). `calc-size()` also supports the `any` keyword for basis-agnostic calculations.
+
+## Example: Generic Expansion Pattern
+
+You can apply this pattern to any container (like a "Show More" section or a navigation menu) to transition between a restricted height and the element's natural size.
+
+```css
+/* Opt-in globally for all children */
+:root {
+  /* MANDATORY: Transitions to intrinsic keywords are disabled by default for compatibility */
+  interpolate-size: allow-keywords;
+}
+
+.expandable-container {
+  /* 1. Define a fixed initial size (or 0) and hide overflow */
+  block-size: 100px;
+  overflow: hidden;
+  
+  /* 2. Transition the sizing property */
+  transition: block-size 0.4s ease-out;
+}
+
+.expandable-container.is-expanded {
+  /* 3. Smoothly animate to the intrinsic natural height */
+  block-size: auto;
+}
+```
+
+## Example: Calculated Intrinsic Inline-Size
+
+```css
+.badge {
+  inline-size: 40px;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: inline-size 0.3s ease;
+}
+
+.badge:hover {
+  /* calc-size(basis, calculation) */
+  /* 'size' refers to the evaluated basis (max-content in this case) */
+  inline-size: calc-size(max-content, size + 20px);
+}
+```
+
+## Example: Transition from Intrinsic to Fixed
+
+You can also animate in the opposite direction—starting from a natural size and collapsing to a specific length. This is useful for "dismissible" components.
+
+```css
+.collapsible-alert {
+  /* 1. Start with the natural content height */
+  block-size: auto;
+  overflow: hidden;
+  transition: block-size 0.5s ease-in-out, opacity 0.5s ease;
+}
+
+.collapsible-alert.is-dismissed {
+  /* 2. Smoothly collapse to zero */
+  block-size: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* MANDATORY Copy-Paste Safety: Disable sizing animations for sensitive users */
+@media (prefers-reduced-motion: reduce) {
+  .expandable-container,
+  .badge,
+  .collapsible-alert {
+    transition: none !important;
+  }
+}
+```
+
+```javascript
+// MANDATORY Accessibility Synchronization: Ensure elements collapsed to zero dimensions are removed from the assistive technology tree, and sync aria-expanded states on triggers.
+const alertElement = document.querySelector('.collapsible-alert');
+alertElement.addEventListener('transitionend', (e) => {
+  if (e.propertyName === 'block-size' && alertElement.classList.contains('is-dismissed')) {
+    alertElement.hidden = true;
+  }
+});
+
+// Example trigger syncer
+const triggerBtn = document.querySelector('.accordion-trigger');
+triggerBtn?.addEventListener('click', () => {
+  const isExpanded = triggerBtn.getAttribute('aria-expanded') === 'true';
+  triggerBtn.setAttribute('aria-expanded', !isExpanded);
+});
+```
+
+## Key constraints
+
+*   **Keyword-to-Keyword Restriction**: You cannot animate between two different keywords directly (e.g., from `min-content` to `max-content`). One end of the transition must be a fixed length or percentage (e.g., `0` to `auto`).
+*   **Calc-size Syntax**: Inside `calc-size()`, you cannot mix different intrinsic keywords in the same expression. The first argument (the basis) defines what `size` represents.
+*   **Opt-in Requirement**: Transitions to intrinsic keywords are disabled by default (`numeric-only`) to maintain backward compatibility. You must apply `interpolate-size: allow-keywords` to the element or an ancestor. `calc-size()` acts as a per-property override, automatically enabling interpolation whenever it is used.
+
+## Fallback strategies
+
+interpolate-size has limited availability.
+Supported by: Chrome 129 (Sep 2024) and Edge 129 (Sep 2024).
+Unsupported in: Firefox and Safari.
+calc-size() has limited availability.
+Supported by: Chrome 129 (Sep 2024) and Edge 129 (Sep 2024).
+Unsupported in: Firefox and Safari.
+
+`interpolate-size` and `calc-size()` are progressive enhancements. Browsers that do not support them will perform an instant jump to the target size.
+
+*   **Graceful Degradation**: For simple `block-size: auto` transitions, standard browsers will simply toggle the size instantly, which is functional but less polished.
+*   **Manual keyword fallbacks**: When using `calc-size()`, always provide a standard keyword fallback for older browsers, as they will discard the entire `calc-size()` declaration.
+
+```css
+.card {
+  block-size: auto; /* Fallback for older browsers */
+  block-size: calc-size(auto, size); /* Modern browsers use this */
+  transition: block-size 0.3s ease;
+}
+```
+
+
+--- Guide for animate-element-entry-exit ---
+In the past, CSS transitions could not animate elements when they were first added to the DOM or when their `display` property changed from `none`. The `@starting-style` at-rule and `transition-behavior: allow-discrete` provide a declarative way to create smooth entry and exit animations.
+
+## Implementation
+
+### 1. Animating `display: none` Toggles
+
+To animate an element when toggling its visibility via an attribute (e.g., `hidden` with `display: none`):
+
+1. **Define the visible state**: Set the final property values (e.g., `opacity: 1`) on the base class.
+2. **Define the entry starting state**: Use `@starting-style` to specify the values to transition *from* when the element becomes visible.
+3. **Enable discrete transitions**: Include `display` in the `transition` property and use `transition-behavior: allow-discrete`.
+4. **Define the exit state**: Set the target values in the `hidden` attribute.
+
+```css
+.card {
+  display: block;
+  opacity: 1;
+  translate: 0;
+  /* MANDATORY: Use transition-behavior: allow-discrete for display transition */
+  transition:
+    display 0.4s,
+    opacity 0.4s ease-out,
+    translate 0.4s ease-out;
+  transition-behavior: allow-discrete;
+}
+
+/* Entry animation: transition FROM these values when first rendered */
+@starting-style {
+  .card {
+    opacity: 0;
+    translate: 0 -20px;
+  }
+}
+
+/* Exit animation: transition TO these values when hidden */
+.card:where(.hidden, [hidden]) {
+  display: none;
+  opacity: 0;
+  translate: 0 -20px;
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    /* Disable movement and shorten duration for a simple fade */
+    translate: none;
+    transition-duration: 0.1s;
+  }
+
+  @starting-style {
+    .card {
+      translate: none;
+    }
+  }
+
+  .card:where(.hidden, [hidden]) {
+    translate: none;
+  }
+}
+```
+
+### 2. Animating DOM Insertion and Removal
+
+For elements added via `appendChild()` or removed via `remove()`:
+
+- **Entry**: Use `@starting-style` as shown above. The browser will automatically detect the style change from "nothing" to the element's initial styles and trigger the transition from the `@starting-style` values.
+- **Removal**: Since `element.remove()` is instantaneous and doesn't trigger a CSS transition on its own, you must trigger the exit transition first (e.g., by adding a class) and wait for it to finish before removing the node from the DOM.
+
+```javascript
+// Trigger exit transition
+element.setAttribute('hidden', true);
+
+// 2. Wait for all active transitions/animations to finish,
+//    with a failsafe timeout in case an animation never ends (e.g. for looping animations)
+const animations = element.getAnimations();
+if (animations.length > 0) {
+  await Promise.race([
+    // Promise.allSettled ensures we wait even if some animations fail
+    Promise.allSettled(animations.map(a => a.finished)),
+    new Promise(r => setTimeout(r, 2000))
+  ]);
+}
+
+// 3. Finally remove the node from the DOM
+element.remove();
+```
+
+## Constraints & Accessibility
+
+- **MANDATORY**: Use `transition-behavior: allow-discrete` when transitioning `display`. Without it, the element will instantly disappear during exit.
+- **DO NOT** use `allow-discrete` in the `transition` shorthand — it will make older browsers ignore the entire `transition` declaration. Except in use cases where that is desirable, use a separate `transition-behavior: allow-discrete` declaration.
+- **MANDATORY**: Use `@starting-style` for entry animations. Browsers skip transitions on an element's first style update (initial render or `display: none` change) unless this is provided.
+- **DO**: Include `overlay` in the `transition` list if animating top-layer elements like `<dialog>` or `popover` to ensure they stay in the top layer during the exit animation.
+- **DO**: Respect user preferences for reduced motion using the `prefers-reduced-motion` media query.
+- **DO NOT**: Rely on `@starting-style` for exit animations; it only defines the *starting* point for an entry transition. Exit animations are defined by the transition to the hidden state.
+
+## Fallback strategies
+
+Baseline status for @starting-style: Newly available. It's been Baseline since 2024-08-06.
+Supported by: Chrome 117 (Sep 2023), Edge 117 (Sep 2023), Firefox 129 (Aug 2024), and Safari 17.5 (May 2024).
+
+For browsers that do not support these features, elements will toggle `display: none` instantly. You can detect support in JavaScript using `CSS.supports()` to conditionally apply manual animation logic.
+
+```javascript
+// Detect support for discrete transitions and starting-style
+const supportsModernTransitions =
+  window.CSS &&
+  CSS.supports('transition-behavior', 'allow-discrete');
+
+if (!supportsModernTransitions) {
+  // Implement manual JS-based fallback for entry/exit
+}
+```
+
+### Manual Entry Animation (JS Fallback)
+
+```javascript
+// To show:
+el.style.display = '';
+requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
+    el.classList.remove('hidden');
+  });
+});
+
+// To hide:
+el.setAttribute('hidden', true);
+el.addEventListener('transitionend', () => {
+  if (el.classList.contains('hidden')) el.style.display = 'none';
+}, { once: true });
+```
+
+
+--- Guide for animate-to-from-top-layer ---
+Elements that render in the "top layer" (like `<dialog>`, elements with the `popover` attribute, or tooltips) have historically been difficult to animate because they toggle between `display: none` and a visible state. Modern CSS provides `@starting-style`, `transition-behavior: allow-discrete`, and the `overlay` property to enable smooth entry and exit transitions for these elements. Note that native CSS nesting is used in the examples below.
+
+## Implementation
+
+### 1. Enable Discrete Transitions
+
+To animate the `display` property, you must set `transition-behavior: allow-discrete`. This allows the element to remain visible during its exit transition. If using transition shorthands, be sure to place the `transition-behavior: allow-discrete` afterwards to prevent the shorthand from negating it.
+
+### 2. The `overlay` Property
+
+When an element moves in or out of the top layer, it must transition the `overlay` property. This ensures the element stays in the top layer for the duration of the animation, preventing it from being clipped by other elements or the viewport prematurely.
+
+### 3. Entry Animations with `@starting-style`
+
+Use the `@starting-style` at-rule to define the styles an element should transition *from* when it is first rendered or its `display` changes from `none`.
+
+### 4. Animating the Backdrop
+
+The `::backdrop` pseudo-element can be animated similarly by applying transitions to its own properties.
+
+## Example
+
+```css
+/* 1. Define the visible (open) state */
+dialog[open],
+[popover]:popover-open {
+  opacity: 1;
+  transform: scale(1);
+
+  /* 2. Define the starting state for entry (must come after open state) */
+  @starting-style {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+/* 3. Define the base (closed/exit) state and transitions */
+dialog,
+[popover] {
+  opacity: 0;
+  transform: scale(0.9);
+
+  /* MANDATORY: transition display and overlay for top-layer elements */
+  transition-property: opacity, transform, display, overlay;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+  /* Applies to discrete properties like display and overlay */
+  transition-behavior: allow-discrete; /* Note: be sure to write this after the shorthand */
+}
+
+/* 4. Animate the backdrop */
+dialog::backdrop,
+[popover]::backdrop {
+  background-color: rgba(0, 0, 0, 0);
+  /* The transition shorthand can also be used with allow-discrete */
+  transition:
+    display 0.3s allow-discrete,
+    overlay 0.3s allow-discrete,
+    background-color 0.3s ease-out;
+}
+
+dialog[open]::backdrop,
+[popover]:popover-open::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+
+  @starting-style {
+    background-color: rgba(0, 0, 0, 0);
+  }
+}
+
+/* 5. Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  dialog,
+  [popover] {
+    /* Disable movement and shorten duration for a simple fade */
+    transform: none;
+    transition-duration: 0.1s;
+  }
+
+  @starting-style {
+    dialog[open],
+    [popover]:popover-open {
+      transform: none;
+    }
+  }
+}
+```
+
+## Constraints & Accessibility
+
+- **MANDATORY**: Include `overlay` in your `transition` list for any element moving into or out of the top layer.
+- **MANDATORY**: Use `allow-discrete` for the `display` property transition.
+- **MANDATORY**: Respect user preferences for reduced motion using `prefers-reduced-motion` by simplifying transitions (e.g., removing transforms and shortening duration).
+- **DO**: Place the `@starting-style` block inside or after the "open" state selector to ensure proper cascading.
+- **DO NOT**: Use `@starting-style` for exit animations; exit animations are defined by the transition to the base (closed) state.
+
+## Fallback strategies
+
+#### Top-layer animation features
+
+Baseline status for @starting-style: Newly available. It's been Baseline since 2024-08-06.
+Supported by: Chrome 117 (Sep 2023), Edge 117 (Sep 2023), Firefox 129 (Aug 2024), and Safari 17.5 (May 2024).
+Baseline status for transition-behavior: Newly available. It's been Baseline since 2024-08-06.
+Supported by: Chrome 117 (Sep 2023), Edge 117 (Sep 2023), Firefox 129 (Aug 2024), and Safari 17.4 (Mar 2024).
+overlay has limited availability.
+Supported by: Chrome 117 (Sep 2023) and Edge 117 (Sep 2023).
+Unsupported in: Firefox and Safari.
+
+For browsers that do not support these features, top-layer elements will appear and disappear instantly. To provide animations in older browsers, you must use JavaScript to coordinate classes and wait for `transitionend` events or use the Web Animations API.
+
+```javascript
+// Feature detection for top-layer animations
+const supportsTopLayerAnimation =
+  window.CSS &&
+  CSS.supports('transition-behavior', 'allow-discrete') &&
+  CSS.supports('overlay', 'auto');
+
+if (!supportsTopLayerAnimation) {
+  // Manual JS fallback for entry/exit animations:
+  // 1. Add an `.is-opening` class for entry.
+  // 2. On close, add an `.is-closing` class, wait for the `transitionend` event, then call .close() or hide the popover.
+}
+```
+
+#### popover
+
+Baseline status for Popover: Newly available. It's been Baseline since 2025-01-27.
+Supported by: Chrome 116 (Aug 2023), Edge 116 (Aug 2023), Firefox 125 (Apr 2024), Safari 17 (Sep 2023), and Safari iOS 18.3 (Jan 2025).
+
+If the browser does not support Popover, use the `@oddbird/popover-polyfill`:
+
+```html
+<script type="module">
+  if (!HTMLElement.prototype.hasOwnProperty('popover')) {
+    await import('https://unpkg.com/@oddbird/popover-polyfill');
+  }
+</script>
+```
+
+Alternatively, for legacy support without a polyfill, use `position: fixed` and manually calculate coordinates via JavaScript `getBoundingClientRect()`.
+
+
+--- Guide for physics-based-easing ---
+Traditional CSS easing functions like `ease-in` or `cubic-bezier()` are limited to simple curves, making it impossible to create complex physics-based effects like bounces or springs. The `linear()` timing function solves this by allowing you to provide a series of stops that can approximate complex curves. Transitions and animations are interpolated based on straight lines between the stops, but within enough stops, it can appear smooth.
+
+### Implementation Steps
+
+1.  **Generate the curve stops:**
+    Manually plotting dozens of points for a spring or bounce is impractical. Use a timing function from an external library, or use a  tool to convert an existing JavaScript easing function or an SVG path into the `linear()` syntax. Optional: store these timing functions as CSS custom properties for reuse throughout your site.
+2.  **Define the timing function:**
+    Apply the generated stops to the `transition-timing-function` or `animation-timing-function` property, or through the `transition` or `animation` shorthands.
+3.  **Adjust the duration:**
+    Unlike JavaScript physics engines where duration is derived from physical properties (mass, stiffness), CSS still requires a fixed `duration`. You may need to adjust the duration to get the intended effect.
+
+### Example: Spring Easing
+
+This example shows how to use a custom `linear()` function to create a spring effect that overshoots the target value before settling.
+
+```css
+.spring {
+  /* Define the physics-based easing as a reusable variable */
+  --spring-easing: linear(0, 0.016 0.5%, 0.06 1%, 0.226 2%, 1.116 5.4%, 1.375 6.6%, 1.527 7.7%, 1.565 8.2%, 1.585 8.8%, 1.581 9.3%, 1.559 9.8%, 1.458 10.9%, 0.937 14.3%, 0.784 15.5%, 0.693 16.6%, 0.67 17.1%, 0.657 17.7%, 0.671 18.7%, 0.729 19.8%, 1.042 23.3%, 1.13 24.5%, 1.182 25.6%, 1.201 26.7%, 1.192 27.7%, 1.156 28.8%, 0.977 32.2%, 0.925 33.4%, 0.894 34.5%, 0.882 35.6%, 0.887 36.6%, 0.907 37.7%, 1.045 42.4%, 1.069 44.5%, 1.059 46.3%, 0.979 50.9%, 0.96 53.4%, 0.966 55.3%, 1.013 59.9%, 1.024 62.3%, 0.986 71.2%, 1.008 79.9%, 0.995 88.9%, 1);
+
+
+  /* Apply the easing with a duration that fits the spring's complexity */
+  /* MANDATORY: Always include a duration; linear() does not calculate it automatically */
+  transition: scale 0.8s var(--spring-easing);
+}
+
+.spring:hover {
+  scale: 1.2;
+}
+```
+### Example: Bounce Easing
+
+This example shows how to use a custom `linear()` function to create a bounce effect.
+
+```css
+.bounce {
+  /* Define the physics-based easing as a reusable variable */
+  --bounce-easing: linear(0, 0.214 14.7%, 0.386 23.7%, 0.598 31.9%, 0.999 44.7%, 0.807 52.6%, 0.762 56%, 0.747 59.4%, 0.758 62.4%, 0.793 65.6%, 0.999 77.4%, 0.961 81.2%, 0.949 84.8%, 0.956 88%, 0.993 95.5%, 1);
+
+
+  /* Apply the easing with a duration that fits the bounce's complexity */
+  /* MANDATORY: Always include a duration; linear() does not calculate it automatically */
+  transition: scale 0.4s var(--bounce-easing);
+}
+
+.bounce:hover {
+  scale: 1.2;
+}
+```
+
+### Key Considerations
+
+*   **Performance:** For the smoothest physics-based animations, apply `linear()` to properties that run on a separate thread, such as `transform` and `opacity`.
+*   **Precision vs. Payload:** While more stops result in a smoother curve, they also increase the size of your CSS. Most generators allow you to "simplify" the curve to find the optimal balance between smoothness and code size.
+*   **Avoid Opacity for Bounces:** Applying bounce easings to `opacity` can cause visually jarring flickering if the value overshoots below 0 or above 1.
+*   **Accessibility:** Complex physics-based animations can be distracting or cause motion sensitivity for some users. Always respect user preferences by reducing or disabling these animations.
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  .element {
+    transition: none;
+  }
+}
+```
+
+### Fallback strategies
+
+Baseline status for linear() easing: Newly available. It's been Baseline since 2023-12-11.
+Supported by: Chrome 113 (May 2023), Edge 113 (May 2023), Firefox 112 (Apr 2023), and Safari 17.2 (Dec 2023).
+
+#### CSS Fallback
+For browsers that do not support `linear()`, provide a standard easing function as a fallback. The browser will ignore the `linear()` value if it doesn't recognize it, falling back to the previous valid declaration.
+
+```css
+.element {
+  /* Fallback for older browsers (standard smooth exit) */
+  transition: transform 0.8s ease-out;
+  
+  /* Modern browsers will override with the physics-based easing */
+  transition-timing-function: linear(0, 1.1, 0.95, 1.02, 1);
+}
+```
+
+#### JavaScript Library Fallback (Motion/GSAP)
+
+Optional: If a high-fidelity physics animation is critical even in older browsers, use a JavaScript library like **Motion** (motion.dev) or **GSAP** (greensock.com) to handle the animation when `linear()` is unsupported.
+
+1.  **Detect support:** Use `CSS.supports()` to check if the browser handles the `linear()` function.
+2.  **Conditionally load/apply:** If unsupported, use the library's spring or bounce implementation.
+
+```javascript
+/* Detect if the browser supports the linear() function */
+const supportsLinearEasing = window.CSS && CSS.supports('animation-timing-function', 'linear(0, 1)');
+
+if (!supportsLinearEasing) {
+  /* 
+     Example using Motion (motion.dev) for a spring fallback.
+     This should only be initialized if native CSS support is missing.
+  */
+  import("https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.js").then(({ animate, spring }) => {
+    animate(".element", { transform: "scale(1.2)" }, {
+      easing: spring({ stiffness: 100, damping: 10 })
+    });
+  });
+}
+```
+
+You can also use `@supports` in CSS for more explicit feature detection:
+
+```css
+@supports not (animation-timing-function: linear(0, 1)) {
+  .element {
+    /* Alternative experience for unsupported browsers */
+    transition-duration: 0.4s;
+    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}
+```
+
+
+--- Guide for individual-transform-properties ---
+The `transform` property allows you to apply multiple transformations in a specified order, but any changes to a single transformation require re-specifying the entire transformation chain. This makes it tricky to animate or transition a single transformation.
+
+The individual CSS transform properties (`translate`, `rotate`, and `scale`) allow you to apply transformations independently of the `transform` property. This approach makes it simpler to override a single transformation, for instance on `:hover`.
+
+### Key Implementation Details
+
+Individual transform properties are always applied in a **fixed order**, regardless of their order in your CSS:
+1. `translate`
+2. `rotate`
+3. `scale`
+4. `transform` (applied last)
+
+If you require a different order (e.g., scaling *before* rotating), you must continue using the `transform` property functions.
+
+Transform functions do not override the individual transform properties. In other words, `scale: 2; transform: scale(3);` will first scale by 2x, then again by 3x, for a total of 6x.
+
+### Preventing Unexpected Changes in Stacking Contexts and Containing Blocks
+
+The `transform` property and individual transform properties impact the layout and rendering of the page and may cause unexpected behavior with the z-index or anchor positioning. MANDATORY: If an element may have a transform applied as part of a state change like `:hover`, or a transition or animation, apply an identity transformation to the base element. This ensures that the element's stacking context and containment do not change when a transform is applied.
+
+```css
+.element{
+  /* MANDATORY: Apply identity transformations for properties that will
+     change on state changes (like :hover). This prevents unexpected layout
+     or z-index shifts caused by creating a new stacking context only on hover. */
+  translate: 0px;
+  rotate: 0deg;
+  scale: 1;
+}
+.element:hover{
+  translate: 10px 10px;
+  rotate: 20deg;
+  scale: 0.8;
+}
+```
+
+### Independent Animation and Transitions
+
+The primary benefit is the ability to define overlapping animations or transitions that target different properties without conflict.
+
+```css
+.card {
+  /* Define independent animations that don't overwrite each other */
+  animation: float 3s infinite ease-in-out;
+  
+  /* Transition only the scale property for hover states */
+  transition: scale 0.3s ease;
+
+  /* Establish the base scale to prevent a sudden stacking context shift when transitioning on hover. */
+  scale: 1;
+}
+
+.card:hover {
+  /* Only the scale changes; the 'float' animation (translate) continues uninterrupted */
+  scale: 1.05;
+}
+
+@keyframes float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -10px; }
+}
+```
+
+### Fallback strategies
+
+Baseline status for Individual transform properties: Widely available. It's been Baseline since 2022-08-05.
+Supported by: Chrome 104 (Aug 2022), Edge 104 (Aug 2022), Firefox 72 (Jan 2020), Safari 14.1 (Apr 2021), and Safari iOS 14.5 (Apr 2021).
+
+For browsers that do not support individual transform properties, use the traditional `transform` property. Note that this requires re-declaring the entire transform stack if you want to modify one part in a different state.
+
+```css
+.element {
+  /* Base transform */
+  transform: translate(100px, 0) rotate(45deg);
+  /* Specify the identity for the scale property. */
+  scale: 1;
+}
+
+@supports not (translate: 0px) {
+  .element:hover {
+    /* Fallback: Must repeat translate and rotate even if only scale changes */
+    transform: translate(100px, 0) rotate(45deg) scale(1.1);
+  }
+}
+
+@supports (translate: 0px) {
+  .element:hover {
+    /* Modern: Only declare the change */
+    scale: 1.1;
+  }
+}
+```
+
+
+--- Guide for move-dom-element-without-losing-state ---
+When reparenting DOM elements using traditional methods like `appendChild()` or `insertBefore()`, the browser implicitly removes the element from the DOM and then inserts it into its new location. This "remove and insert" operation resets many internal states, causing `<iframe>` elements to reload, CSS animations to restart, and input fields to lose focus.
+
+To move an element while preserving its state, use the `moveBefore()` API. This method performs an atomic move, completely bypassing the removal and insertion steps.
+
+### Moving an element with state
+
+Use `moveBefore()` exactly as you would use `insertBefore()`. It requires two arguments: the node to move, and a reference node to insert before (or `null` to append to the end of the new parent).
+
+```javascript
+const newParent = document.getElementById('new-parent');
+const elementWithState = document.getElementById('iframe-or-focused-input');
+
+// MANDATORY: Use moveBefore to preserve state. 
+// Passing null as the second argument appends the element to the end of newParent.
+newParent.moveBefore(elementWithState, null);
+```
+
+### Moving custom elements (Web Components)
+
+If you are moving custom elements using `moveBefore()`, their `connectedCallback` and `disconnectedCallback` lifecycle methods will **not** be fired.
+
+If your custom element needs to perform specific logic when moved, implement the `connectedMoveCallback()` method inside the custom element definition.
+
+```javascript
+class MyCustomElement extends HTMLElement {
+  connectedCallback() {
+    // Runs on initial insertion.
+  }
+  
+  connectedMoveCallback() {
+    // Runs when the element is moved via moveBefore().
+    // Use this to update state that depends on the new DOM location.
+  }
+}
+```
+
+### Fallback strategies
+
+moveBefore() has limited availability.
+Supported by: Chrome 133 (Feb 2025), Edge 133 (Feb 2025), and Firefox 144 (Oct 2025).
+Unsupported in: Safari.
+
+Since `moveBefore()` is a progressive enhancement, you MUST use feature detection before calling it, falling back to traditional `insertBefore()` or `appendChild()` operations for older browsers. 
+
+```javascript
+const targetParent = document.getElementById('target-container');
+const nodeToMove = document.getElementById('moving-element');
+
+// Check if moveBefore is supported on the Element prototype
+if ('moveBefore' in Element.prototype) {
+  targetParent.moveBefore(nodeToMove, null);
+} else {
+  // Fallback: traditional move. 
+  // Note: This WILL reset <iframe>, animation, and focus state in unsupported browsers.
+  targetParent.insertBefore(nodeToMove, null);
+}
+```
+
+--- Guide for same-document-transitions ---
+# Same Document Transitions
+
+## The Problem
+
+Web sites often provide multiple views of an object, for instance a list of products, and then a detail page for each product. Navigating between the two views often feels disconnected. When a user clicks a product thumbnail to view its details, the thumbnail disappears and a new, larger image appears instantly elsewhere on the screen. This lack of continuity makes it harder for users to track relationships between elements.
+
+## The Solution
+
+The **View Transitions API** allows you to specify element pairs that exist in different states before and after a transition. When triggering a transition with `document.startViewTransition()` in a Single Page Navigation (SPA), the browser identifies these shared elements by their shared unique `view-transition-name`. It then automatically calculates the difference in their position, size, and styling, and animates them smoothly from the old state to the new state. This transition occurs in the top layer, above even elements with high `z-index` values.
+
+## Implementation Guide
+
+### Step 1: Wrap State Changes in `startViewTransition`
+
+For Single-Page Applications (SPAs) or simple state changes, wrap the logic that updates the DOM in `document.startViewTransition`. The browser captures a snapshot of the current state, runs the update, and then captures the new state. 
+
+```javascript
+function navigate(view) {
+  // MANDATORY: Wrap the update in startViewTransition
+  document.startViewTransition(() => updateDOM(view));
+}
+```
+
+### Step 2: Assign Shared Transition Names
+
+Use the `view-transition-name` CSS property to tell the browser which elements should be morphed. The name can be anything (except `none`). **MANDATORY**: there must be no more than 1 element before and after with a given `view-transition-name`. If there are 2 or more elements with a given `view-transition-name`, the DOM will be updated to the new state immediately, without a transition.
+
+You can use multiple `view-transition-name`s to morph multiple pairs of elements. For example, you may want to transition both the product image and title with separate transitions.
+
+Because there are multiple items on the list view, you can not give the all of them the same `view-transition-name`. This can be solved in two ways in a SPA.
+
+1. **Dynamic detail page:** Assign each item on the list page a unique `view-transition-name`, and then dynamically apply that name to the matching element on the detail page when the list item is selected, as shown here.
+
+```css
+/* In the list view, give each */
+#product-1 { view-transition-name: p1 }
+#product-2 { view-transition-name: p2 }
+#product-3 { view-transition-name: p3 }
+```
+
+```js
+function updateDOM(clickedTransitionName){
+  const hero = document.getElementById("hero");
+  hero.style.viewTransitionName = clickedTransitionName;
+}
+```
+
+2. **Dynamic list item:** Assign the element on the detail page a `view-transition-name`, and apply that name to the item on the list page when it is selected. Remove the `view-transition-name` from the item on the list page when returning to the list page.
+
+The `#hero` element on the detail page and the selected `.thumbnail` element on the list page share a `view-transition-name`. 
+
+```css
+#hero{
+  view-transition-name: hero;
+}
+.thumbnail.selected {
+  view-transition-name: hero;
+}
+```
+
+When a thumbnail is clicked, we need to prepare the list view by assigning the `view-transition-name` using the `.selected` class selector, and making any changes to the DOM before starting the transition.
+
+Then, you can call `document.startViewTransition()`, and apply the changes to transition the page from the detail to list view.
+
+After navigating back to the list view, you must clean up the view transition classes to prevent the next navigation from erroring. You can perform this cleanup after the transition's `finished` promise resolves.
+
+```javascript
+// Function called when a thumbnail is clicked
+function goFromListToDetail(e){
+  e.currentTarget.classList.add("selected");
+  const hero = document.getElementById("hero");
+  const bgColor = getComputedStyle(e.currentTarget).backgroundColor;
+  hero.style.background = bgColor;
+
+  // Trigger the transition, checking for support
+  if (!document.startViewTransition) {
+    document.body.classList.add("detail");
+    // MANDATORY Accessibility Routing: Route focus to the newly revealed heading to announce context and preserve logical tab flow
+    document.getElementById("detail-heading")?.focus();
+    return; // MANDATORY: End function execution if view transitions are not supported.  
+  }
+  const transition = document.startViewTransition(() => {
+    document.body.classList.add("detail");
+  });
+  // MANDATORY Accessibility Routing: Route focus after the view transition resolves
+  transition.finished.finally(() => {
+    document.getElementById("detail-heading")?.focus();
+  });
+}
+
+// Function called when navigating from detail back to list view
+function goFromDetailToList() {
+  if (!document.startViewTransition) {
+    document.body.classList.remove("detail");
+    document.getElementById("list-heading")?.focus();
+    return;
+  }
+  const transition = document.startViewTransition(() => {
+    document.body.classList.remove("detail");
+  });
+  // Clean up the list view and route focus
+  transition.finished.finally(() => {
+    // Route focus back to list view
+    document.getElementById("list-heading")?.focus();
+    // Remove selected classList to remove view-transition-names
+    document.querySelectorAll(".selected").forEach(
+      (element) => {
+        element.classList.remove("selected");
+      },
+    );
+  });
+}
+```
+
+The method you choose will depend on the use case. The dynamic list item requires less repeated CSS, but more manual JavaScript cleanup.
+
+
+### Step 3: Fix Aspect Ratio "Stretching"
+
+By default, the browser cross-fades the old and new snapshots within a group that stretches to fit both. If you are transitioning text, set the width of the text element to `fit-content` on both the old and new views, so that the transitioned element's aspect ratio is stable.
+
+```css
+#list-page .title {
+  width: fit-content;
+}
+
+#detail-page #title {
+  width: fit-content;
+}
+```
+
+If you are transitioning elements that change aspect ratio, you may need to set the height of the old and new pseudo-elements to 100% of the `::view-transition-pair()` pseudo-element.
+
+```css
+::view-transition-old(hero),
+::view-transition-new(hero){
+  height: 100%;
+}
+```
+
+The pseudo-elements are snapshots of the live elements, so you can also use `object-fit` and `object-position` declarations for more control of the transitioning effect.
+
+## Best Practices
+
+-   **DO NOT** specify too many transitions. Only use shared elements for primary content that the user is actively tracking (e.g., hero images, headings).
+-   **DO** remove temporary `view-transition-name` values after the transition finishes to avoid side effects on future transitions.
+-   **DO NOT** transition elements with active animations. View transitions operate on snapshots, so any animations will appear to be paused during the view transition.
+-   **DO** respect user preferences for reduced motion using the `prefers-reduced-motion` media query.
+-   **MANDATORY Accessibility Routing**: View transitions morph page layouts dynamically but do not manage programmatic focus. If focus remains on an element that is hidden or removed during the transition, focus is abandoned, leaving keyboard and assistive technology users without context. Shift focus programmatically to an updated page heading or view container (using `tabindex="-1"`) immediately after the DOM updates or when the view transition's `finished` promise resolves.
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+```
+
+## Fallback Strategies
+
+Baseline status for View transitions: Newly available. It's been Baseline since 2025-10-14.
+Supported by: Chrome 111 (Mar 2023), Edge 111 (Mar 2023), Firefox 144 (Oct 2025), and Safari 18 (Sep 2024).
+
+The View Transitions API is designed for progressive enhancement. Browsers that do not support it will simply execute the DOM update immediately without animation.
+
+```javascript
+function navigate(){
+  if (!document.startViewTransition) {
+    // Fallback: Just update the DOM
+    updateDOM();
+  } else {
+    document.startViewTransition(() => updateDOM());
+  }
+}
+```
+
+
+--- Guide for group-element-transitions ---
+As items are added or removed from a list, or rearranged, transitions can help users maintain context. View transitions provide a way to transition between two states of an element by giving the element a unique `view-transition-name`. When multiple elements on a page share the same transition behavior, `view-transition-class` allows you to define that logic once in CSS rather than repeating it for every unique `view-transition-name`. This keeps your stylesheets maintainable while ensuring consistent animations across a group of elements.
+
+### Implementation steps
+
+1. **Assign unique names and a shared class**
+
+Each element that needs to be tracked individually during a transition must have a unique `view-transition-name`.
+
+```html
+<!-- Mandatory: Each element must have a unique view-transition-name -->
+<li style="view-transition-name: item-1" class="item">Item 1</li>
+<li style="view-transition-name: item-2" class="item">Item 2</li>
+```
+
+To apply shared styles, also assign a `view-transition-class`.
+
+```css
+.item {
+  view-transition-class: list-item;
+}
+```
+
+2. **Define the shared transition logic**
+   
+Use the `::view-transition-group()` pseudo-element with the class selector to apply styles to all members of that group.
+
+```css
+/* Targets any view transition group that has the 'list-item' class */
+::view-transition-group(.list-item) {
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+}
+
+/* Handle accessibility by respecting motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  /* Disable all group transitions, including the default `root` group. */
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+```
+
+3. **Optional: Define entry and exit animations**
+
+Use the `:only-child` selector to add specific transitions to the elements that are added or removed. `::view-transition-new()` and `::view-transition-old()` pseudo-elements are children of a `::view-transition-image-pair()` pseudo-element, so we can determine it is an added or removed element if it is the only child.
+
+```css
+/* A `::view-transition-new()` element is the only child if it wasn't present before the view transition, so it is an added element. */
+::view-transition-new(.list-item):only-child {
+  animation-name: slide-in;
+  /* Specify an animation duration if you want something different than the UA default of 0.5s */
+  animation-duration: 1s;
+}
+/* A `::view-transition-old()` element is the only child if it isn't present after the view transition, so it is a removed element. */
+::view-transition-old(.list-item):only-child {
+  animation-name: slide-out;
+  /* Specify an animation duration if you want something different than the UA default of 0.5s */
+  animation-duration: 1s;
+}
+
+@keyframes slide-in {
+  from {
+    translate: -100vw 0;
+  }
+}
+@keyframes slide-out {
+  to {
+    translate: -100vw 0;
+  }
+}
+```
+
+4. **Trigger the transition**
+
+Wrap the DOM update in `document.startViewTransition()`. The browser will capture the old state, perform the update, and then animate to the new state.
+
+```javascript
+function updateList(newData) {
+  document.startViewTransition(() => {
+    // All DOM changes inside this callback will be transitioned
+    render(newData);
+  });
+}
+```
+
+5. **Maintain interactivity of non-transitioned elements**
+
+View transitions work by overlaying snapshots of the DOM elements, and then transitioning the snapshots. This means that during the transition, elements are not interactive. If there are interactive elements that are not transitioned, you can make them interactive by disabling touch events on the view transitions.
+
+```css
+::view-transition {
+  /* Non-transitioned elements below the view transitions remain interactive */
+  pointer-events: none;
+}
+```
+
+In addition, by default, the `:root` element has a view transition named `root`, which enables default full-page transitions. If there are no changes to the root element, this will be a transition between two identical snapshots, which are not interactive. Because we are only transitioning specific elements, and not the entire screen, we can disable the `root` transition. 
+
+```css
+:root {
+  /* Disable the root transition because we are only transitioning specific elements. */
+  view-transition-name: none;
+}
+```
+
+### Fallback strategies
+
+Baseline status for view-transition-class: Newly available. It's been Baseline since 2025-10-14.
+Supported by: Chrome 125 (May 2024), Edge 125 (May 2024), Firefox 144 (Oct 2025), and Safari 18.2 (Dec 2024).
+
+View Transitions are a progressive enhancement. If the browser does not support `document.startViewTransition`, the DOM update should still occur immediately, providing a functional but non-animated experience.
+
+```javascript
+if (document.startViewTransition) {
+  document.startViewTransition(() => updateDOM());
+} else {
+  // Fallback: Perform the update without animation
+  updateDOM();
+}
+```
+
+For CSS, browsers that do not recognize `view-transition-class` or the `::view-transition-group()` class selector will simply ignore those rules, and no animation will be applied.
+
+
+--- Guide for anchor-positioning-tab-underline ---
+In a tab menu, you should provide visual hints to users about what page they are on. One option is by underlining the tab. With anchor positioning, you can create a smooth animation between the positions of the underline. This does not work when changing the active tab loads a new web page.
+
+You can also use this effect to add an animated dot to indicate the active tab in a vertical tab bar.
+
+Create the underline using a `::before` pseudo-element on the `<ul>` that contains the `<li>` elements. **Using a pseudo-element is the preferred approach as it keeps the DOM clean and avoids adding extra elements for purely decorative effects.**
+
+```css
+ul::before {
+  /* Use a pseudo-element on the container to represent the animated indicator */
+  content: '';
+}
+```
+
+Make the active list item an anchor by adding the `anchor-name` property, which has a value that starts with `--`.
+
+```css
+li.active {
+  /* Make a unique anchor-name for the active element. */
+  anchor-name: --active;
+}
+```
+
+Tether the underline to the active item anchor with a `position-anchor` that matches the `anchor-name` on the anchor, and making it `position: absolute`.
+
+```css
+ul::before {
+  /* Tether the underline to the active element. */
+  position: absolute;
+  position-anchor: --active;
+}
+```
+
+Position the underline relative to the anchor using the inset properties and `anchor()` functions.
+
+```css
+ul::before {
+  /* DO NOT use position-area, which can not be transitioned. */
+  /* Use calc() to offset the top slightly */
+  inset-block-start: calc(anchor(bottom) + .1lh);
+  inset-inline-start: anchor(left);
+  inset-inline-end: anchor(right);
+}
+```
+
+Add a height and other visual styles.
+
+```css
+ul::before {
+  /* Apply your project's styles for the indicator */
+  block-size: .25lh;
+  background: red;
+}
+```
+
+Finally, add a transition on the `inset` properties.
+
+```css
+ul::before {
+  @media (prefers-reduced-motion: no-preference) {
+    /* MANDATORY: The transition must be wrapped in a prefers-reduced-motion media query to respect user preferences. */
+    transition: inset .2s;
+  }
+}
+```
+
+This is only a visual indicator, and must not be a replacement for setting the appropriate `aria-current="page"` or `aria-selected` aria values.
+
+```html
+<!-- MANDATORY: Provide explicit assistive technology state alongside the visual tab underline -->
+<nav aria-label="Primary">
+  <ul>
+    <li class="active">
+      <a href="/home" aria-current="page">Home</a>
+    </li>
+    <li>
+      <a href="/about">About</a>
+    </li>
+  </ul>
+</nav>
+```
+
+## Fallback strategies
+
+Anchor positioning is not natively supported by any major browser yet.
+
+If anchor positioning is not supported in the browser, use a `border-bottom` to add an underline. It will not be animated.
+
+```css
+ul li.active {
+  @supports not (position-anchor: auto) {
+    /* Choose a color appropriate to the app theme. */
+    border-bottom: .25lh var(--primary) solid;
+  }
+}
+```
+
+--- Guide for directional-navigation-transitions ---
+Single Page Applications (SPAs) provide the appearance of navigation by replacing the content of the page without navigating to a new page. By default, the content is simply replaced, without any transitions. Directional transitions can visually reinforce a spatial relationship between views. 
+
+By sliding new content in from the direction the user is moving you create a mental map of the application structure. For instance, a product site may show a transition to the right for "forward," and to the left for "back", or a slideshow may transition up and down to show next and previous slides.
+
+### Implementation Steps
+
+1. **Detect Navigation Direction**: Determine if the user is moving "forward" or "backward" in the application flow. How you detect the direction depends on your use case.
+2. **Trigger Transition with Types**: Pass the direction in a `types` array to `document.startViewTransition()` to categorize the transition.
+3. **Define Directional Animations with CSS**: Use the `:active-view-transition-type()` pseudo-class to apply specific animations based on the navigation type.
+
+### Defining Keyframes
+
+Define sliding animations to and from each direction. For best performance, animate position changes using the `transform` property or the individual transform properties, `scale`, `rotate`, and `translate`. `opacity` is generally performant as well, but avoid animating other CSS properties without first verifying that they don't trigger layout or painting.
+
+```css
+/* Slide an element out to the left */
+@keyframes slide-to-left {
+  /* Mandatory: animate `transform` instead of inset properties for better performance. */
+  to { transform: translateX(-100%); }
+}
+
+/* Slide an element in from the right */
+@keyframes slide-from-right {
+  from { transform: translateX(100%); }
+}
+
+/* Slide an element out to the right */
+@keyframes slide-to-right {
+  to { transform: translateX(100%); }
+}
+
+/* Slide an element in from the left */
+@keyframes slide-from-left {
+  from { transform: translateX(-100%); }
+}
+```
+
+### Set up shared animation settings
+
+Use the `::view-transition-group(root)` selector to apply animation settings that are shared across all transitions.
+
+```css
+::view-transition-group(root){
+  animation: 0.4s ease-in-out both;
+}
+```
+
+### Applying Directional Animations
+
+Use the `active-view-transition-type` pseudo-class to target the transition views specifically when the "forward" or "backward" type is active.
+
+```css
+/* MANDATORY: Apply forward animations when the 'forward' type is active */
+html:active-view-transition-type(forward)::view-transition-old(root) {
+  animation-name: slide-to-left;
+}
+html:active-view-transition-type(forward)::view-transition-new(root) {
+  animation-name: slide-from-right;
+}
+
+/* MANDATORY: Apply backward animations when the 'backward' type is active */
+html:active-view-transition-type(backward)::view-transition-old(root) {
+  animation-name: slide-to-right;
+}
+html:active-view-transition-type(backward)::view-transition-new(root) {
+  animation-name: slide-from-left;
+}
+```
+
+### Triggering the Transition
+
+When navigating, pass the appropriate type to the `startViewTransition` method.
+
+```javascript
+const transitionType = yourTransitionTypeLogic();
+const updateDOM = yourUpdateDOMLogic();
+
+document.startViewTransition({
+  update: updateDOM,
+  types: [transitionType] // Matches the CSS :active-view-transition-type() selectors
+});
+```
+
+
+### Accessibility
+
+Always respect user preferences for reduced motion by disabling or simplifying animations.
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(root) {
+    animation: none !important;
+  }
+}
+```
+
+### Fallback strategies
+
+Baseline status for View transitions: Newly available. It's been Baseline since 2025-10-14.
+Supported by: Chrome 111 (Mar 2023), Edge 111 (Mar 2023), Firefox 144 (Oct 2025), and Safari 18 (Sep 2024).
+Baseline status for Active view transition: Newly available. It's been Baseline since 2026-01-13.
+Supported by: Chrome 125 (May 2024), Edge 125 (May 2024), Firefox 147 (Jan 2026), and Safari 18.2 (Dec 2024).
+
+The View Transitions API is a progressive enhancement. In unsupported browsers, `document.startViewTransition` will be `undefined`. You must wrap your navigation logic in a feature detection check to ensure the DOM update still occurs immediately without animation, as shown in this helper function.
+
+```javascript
+/**
+ * Navigates to a new view with a directional transition.
+ * @param {Function} updateDOM - Callback to update the DOM state.
+ * @param {string} direction - Either 'forward' or 'backward'.
+ */
+function navigate(updateDOM, direction) {
+  // Feature detect for browsers that do not support View Transitions
+  if (!document.startViewTransition) {
+    updateDOM();
+    return;
+  }
+
+  // Start transition with the specific navigation type
+  document.startViewTransition({
+    update: updateDOM,
+    types: [direction] // Matches the CSS :active-view-transition-type() selectors
+  });
+}
+```
+
+
+--- Guide for dynamic-sibling-animations ---
+# Creating a stagger animation
+
+Stagger animations provide an interesting effect where multiple ordered elements animate sequentially with a slight delay between each, rather than all animating at once. This technique is often used in lists, galleries, or navigation menus to guide the user's eye and add a polished, rhythmic feel to interactions.
+
+## Stagger animations with `sibling-index()`
+
+Use the `sibling-index()` property on the `animation-delay` property so that the animation on each element is offset by a number proportionate to their position in their parent. The `sibling-index()` function returns an integer, so it must be multiplied by a time unit to convert it to a time.
+
+```css
+#stagger-list > .item {
+  --stagger-time: 0.1s;
+  /* Define the animation first */
+  animation: fade-in 0.4s;
+  /* Set the `animation-delay` to a time multipled by the `sibling-index()` */
+  animation-delay: calc(sibling-index() * var(--stagger-time))
+}
+```
+
+**MANDATORY:** Respect user preferences by disabling the animation for users who prefer reduced motion. 
+
+```css
+@media (prefers-reduced-motion: reduce){
+  /* Disable animation for users who prefer reduced motion. */
+  #stagger-list > .item {
+    animation: none;
+  }
+}
+```
+
+## Fallback strategies
+
+sibling-count() and sibling-index() has limited availability.
+Supported by: Chrome 138 (Jun 2025), Edge 138 (Jun 2025), and Safari 26.2 (Dec 2025).
+Unsupported in: Firefox.
+
+Test for support for `sibling-index()` using CSS with `@supports (animation-delay: calc(sibling-index() * 0.1s)){}` or JavaScript with `!CSS.supports('animation-delay: calc(sibling-index() * 0.1s)')`.
+
+To support stagger animations in older browsers, use JavaScript to add a `--sibling-index` custom property to each sibling element. MANDATORY: wrap this in a `CSS.supports('animation-delay: calc(sibling-index() * 0.1s)')` test to avoid running unneeded JavaScript.
+
+```js
+if(!CSS.supports('animation-delay: calc(sibling-index() * 0.1s)')){
+  const staggerList = document.getElementById('stagger-list');
+  [...staggerList.children].forEach((el, index)=>el.style.setProperty('--sibling-index', index + 1));
+}
+```
+
+Add an `animation-delay` declaration that uses the `--sibling-index` custom property. It must be before the `animation-delay` declaration that uses the `sibling-index()` function. This does not need to be wrapped in `@supports` - older browsers will not parse the second declaration and will use the first declaration.
+
+```css
+#stagger-list > .item {
+  animation-delay: calc(var(--sibling-index) * var(--stagger-time));
+  animation-delay: calc(sibling-index() * var(--stagger-time));
+}
+```
+
+
+--- Guide for persistent-top-layer-ui ---
+When moving an open `<dialog>`, `popover`, or fullscreen element in the DOM using traditional methods like `appendChild()` or `insertBefore()`, the browser implicitly removes the element from the DOM and re-inserts it. This removal resets the state, causing open modals, popovers, and fullscreen elements to close abruptly.
+
+To reparent top-layer elements without interrupting the user experience or closing them, use the atomic `moveBefore()` API instead.
+
+### Reparenting open top-layer elements
+
+`moveBefore()` takes two arguments: the node to move, and a reference node to insert before (or `null` to append to the end of the new parent).
+
+```javascript
+const newParent = document.getElementById('new-container');
+const dialogElement = document.getElementById('my-dialog');
+
+// MANDATORY: Use moveBefore to ensure the <dialog> or popover stays open.
+// Passing null appends it to the end of newParent.
+newParent.moveBefore(dialogElement, null);
+```
+
+### Fallback strategies
+
+moveBefore() has limited availability.
+Supported by: Chrome 133 (Feb 2025), Edge 133 (Feb 2025), and Firefox 144 (Oct 2025).
+Unsupported in: Safari.
+
+Since `moveBefore()` is a progressive enhancement, you MUST use feature detection before calling it. For older browsers, you will have to fallback to traditional reparenting.
+
+**MANDATORY**: For `<dialog>` elements in unsupported browsers, the traditional move will close the dialog. If you need it to remain open, you must manually re-open it after the move.
+
+```javascript
+const targetParent = document.getElementById('target-container');
+const popoverOrDialog = document.getElementById('my-top-layer-element');
+
+// Check if moveBefore is supported
+if ('moveBefore' in Element.prototype) {
+  targetParent.moveBefore(popoverOrDialog, null);
+} else {
+  // Fallback: traditional move.
+  // Note: This WILL close <dialog>, popover, and fullscreen elements.
+  const wasOpen = popoverOrDialog.hasAttribute('open') || popoverOrDialog.matches(':popover-open');
+  targetParent.insertBefore(popoverOrDialog, null);
+  
+  // Manually restore state if possible
+  if (wasOpen && typeof popoverOrDialog.showModal === 'function') {
+    popoverOrDialog.showModal();
+  } else if (wasOpen && typeof popoverOrDialog.showPopover === 'function') {
+    popoverOrDialog.showPopover();
+  }
+}
+```
