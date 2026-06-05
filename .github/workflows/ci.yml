@@ -97,6 +97,14 @@ jobs:
             # runs on the bare runner.
             - name: proof:doc-consistency
               run: npm run proof:doc-consistency
+            # AU.W0 — the formalize + re-ground meta-gate. Asserts tranches/AU/
+            # is the binding tranche (AU.md + PROGRESS.md), the three landed dock
+            # SHAs (e906448/f0b0ffb/8e4cb9f) are ancestor-reachable from HEAD, the
+            # "3 a11y asks" bundle label survives only in a decompose context,
+            # every numbered ledger row carries a disposition (P-Inv 28), and the
+            # W6-dock-b slot-ID collision is re-lettered. Sibling-free.
+            - name: proof:au-w0-reground
+              run: npm run proof:au-w0-reground
             # AS.W2 inv-θ — the lockfile registry-resolution drift guard (#177
             # cannot silently re-break npm ci) + the meta-gate asserting this
             # ci.yml step set matches scripts/gates.mjs exactly (the manifest is
