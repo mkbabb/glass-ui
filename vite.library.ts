@@ -130,9 +130,3 @@ export const libraryExternal = [
     "lucide-vue-next",
     "vaul-vue",
 ];
-
-export const libraryGlobals = {
-    vue: "Vue",
-    "@mkbabb/keyframes.js": "Keyframes",
-    "@mkbabb/value.js": "ValueJs",
-};

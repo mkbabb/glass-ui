@@ -21,6 +21,27 @@ woff2 builds live in `distr/woff2/` of that repository's releases — pull
 the `Regular`/`Medium`/`SemiBold` weights only (the three glass-ui ships
 as the `--font-mono` stack rungs).
 
+## Fraunces (display, AU.W4)
+
+The actual on-disk layout is per-family nested
+(`src/fonts/<family>/<face>.woff2`), e.g.
+`src/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2`. AU.W4 ships the
+display register's face — the `--font-stack-display: "Fraunces"` token
+(`tokens.css`) had no face, so the `WONK`/`SOFT` axes `typography.css` drives were
+silently inert. The shipped face is the FULL variable Fraunces (latin subset):
+
+```
+src/fonts/fraunces/fraunces-latin.woff2
+```
+
+It carries the `wght` · `opsz` · `SOFT` · `WONK` axes (verified by
+`proof:font-axes`, which parses the woff2 `fvar` against the axes
+`typography.css` references). Source canonical:
+<https://github.com/googlefonts/fraunces> (OFL-1.1); the variable woff2 latin
+subset is the Google Fonts / fontsource distribution. `proof:font-axes` fails
+closed if a wght-only instance (one that drops `SOFT`/`WONK`) is ever
+substituted.
+
 ## Why this directory ships, not the fetch step
 
 This worktree has no network access. Sub-task 1 documents the canonical

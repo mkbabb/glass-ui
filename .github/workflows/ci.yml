@@ -138,6 +138,12 @@ jobs:
             # exported orphan (P3 wire-before-retire).
             - name: proof:supportsPostTask-wired
               run: npm run proof:supportsPostTask-wired
+            # AU.W4 — the Fraunces slipped-ship gate. Asserts every variation axis
+            # typography.css references (WONK/SOFT) is carried by the shipped
+            # display @font-face — verified against the woff2 fvar table, so a
+            # silently-inert axis (the slip the campaign missed) is a hard fail.
+            - name: proof:font-axes
+              run: npm run proof:font-axes
             # AS.W2 inv-θ — the lockfile registry-resolution drift guard (#177
             # cannot silently re-break npm ci) + the meta-gate asserting this
             # ci.yml step set matches scripts/gates.mjs exactly (the manifest is

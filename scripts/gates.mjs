@@ -49,6 +49,7 @@ export const GATES = [
     { id: "proof:peer-optional", cmd: "proof:peer-optional", tags: ["local", "ci", "release"], note: "AU.W3 — peer optionality is a derived fact of the root bundle (optional IFF absent from dist/glass-ui.js & not core-substrate); the dead optionalPeerDependencies field deleted" },
     { id: "proof:vueuse-free-root", cmd: "proof:vueuse-free-root", tags: ["local", "ci"], note: "AU.W3 — the root barrel transitively imports no @vueuse/core (SOURCE-graph walk from src/index.ts + DIST-floor grep of glass-ui.js)" },
     { id: "proof:supportsPostTask-wired", cmd: "proof:supportsPostTask-wired", tags: ["local", "ci"], note: "AU.W3 — supportsPostTask is WIRED (>=1 real caller) or DROPPED — no exported orphan (P3)" },
+    { id: "proof:font-axes", cmd: "proof:font-axes", tags: ["local", "ci"], note: "AU.W4 — every variation axis typography.css references (WONK/SOFT) is carried by the shipped display @font-face (parsed from the woff2 fvar) — no silently-inert axis" },
     { id: "proof:lockfile", cmd: "proof:lockfile", tags: ["local", "ci", "release"], note: "registry-resolution drift guard" },
     { id: "audit:stash", cmd: "audit:stash", tags: ["ci"] },
 ];

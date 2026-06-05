@@ -5,7 +5,6 @@ import {
     libraryEntries,
     libraryExternal,
     libraryFileName,
-    libraryGlobals,
 } from "./vite.library";
 import { publishStyleAssets } from "./vite.style-assets";
 
@@ -25,9 +24,6 @@ export default defineConfig({
         },
         rolldownOptions: {
             external: libraryExternal,
-            output: {
-                globals: libraryGlobals,
-            },
         },
     },
 });
