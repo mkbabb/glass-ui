@@ -685,6 +685,29 @@
     }
 }
 
+/* ── Control transition recipe (AU.W8b.4) ───────────────────────────────
+   Shared compound transition for interactive controls that animate their
+   surface (background-color/color/box-shadow/border-color) on the four-state
+   contract. Replaces the per-site
+   `transition-[background-color,color,box-shadow,border-color] duration-[var(--duration-fast)] ease-[var(--ease-standard)]`
+   arbitrary wraps at ≥2 sites (TabsTrigger, SelectTrigger, Toggle `card`
+   variant). Binds the canonical --duration-fast + --ease-standard tokens. */
+@utility transition-control {
+    transition-property: background-color, color, box-shadow, border-color;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-standard);
+}
+
+/* ── Collapse transition recipe (AU.W8b.4) ──────────────────────────────
+   Shared height+opacity transition for reka-ui collapse surfaces (Accordion
+   content, Collapsible content). Replaces the per-site `transition-[height,opacity]`
+   wrap at ≥2 sites. The duration/easing rides the data-state
+   `animate-accordion-*`/`animate-collapsible-*` keyframes (this only declares
+   WHICH properties transition; the keyframes own the timing). */
+@utility transition-collapse {
+    transition-property: height, opacity;
+}
+
 /* ── Sheet/drawer slide-out animation grammar ──
    Mirror of `.popover-animate` for sheet/drawer panels. Pairs with
    `slide-in-from-{top,right,bottom,left}-N` to compose side-keyed entries.

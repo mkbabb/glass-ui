@@ -13,7 +13,7 @@
                 :class="[
                     sizeClass,
                     'relative flex items-center justify-center rounded-pill transform-gpu',
-                    'transition-[transform,box-shadow,opacity] duration-[var(--duration-fast)] ease-[var(--spring-snappy)]',
+                    'transition-[transform,box-shadow,opacity] duration-fast ease-spring-snappy',
                     i > 0 ? overlapClass : '',
                     expandOnHover && i > 0
                         ? direction === 'vertical'
@@ -34,7 +34,7 @@
                 sizeClass,
                 'relative flex items-center justify-center rounded-pill',
                 'border-2 border-background bg-[color-mix(in_srgb,var(--background)_96%,transparent)] text-xs font-semibold text-muted-foreground/60 shadow-cartoon-sm',
-                'transform-gpu transition-[background-color,color,transform,box-shadow] duration-[var(--duration-fast)] ease-[var(--spring-snappy)]',
+                'transform-gpu transition-[background-color,color,transform,box-shadow] duration-fast ease-spring-snappy',
                 'hover:bg-background hover:text-muted-foreground hover:shadow-cartoon-md',
                 overlapClass,
                 expandOnHover

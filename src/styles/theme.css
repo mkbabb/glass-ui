@@ -71,6 +71,12 @@
 
     --color-muted: var(--muted);
     --color-muted-foreground: var(--muted-foreground);
+    /* AU.W8b.4 — the muted-foreground-strong bridge (text-muted-foreground-strong
+       utility). The base token already exists (tokens.css:362); only the
+       --color-muted-foreground bridge was present. CardDescription consumes
+       text-muted-foreground-strong through this. NOT @property-registered (a
+       design-token color; registration would break light-dark() re-resolution). */
+    --color-muted-foreground-strong: var(--muted-foreground-strong);
 
     --color-accent: var(--accent);
     --color-accent-foreground: var(--accent-foreground);
@@ -99,6 +105,15 @@
     /* Muted-tinted rungs — bg-muted-soft / bg-muted-medium. */
     --color-muted-soft:   var(--muted-soft);
     --color-muted-medium: var(--muted-medium);
+
+    /* AU.W8b.4 — glass-tier surface/border bridges (bg-glass-quiet /
+       border-glass-quiet). Companions to the existing --shadow-glass-quiet
+       bridge below; lets the Toggle `card` variant compose bg-glass-quiet /
+       border-glass-quiet / shadow-glass-quiet instead of bg-[var(--glass-…)]
+       arbitrary wraps. NOT @property-registered (design-token colors —
+       registration snapshots the resolved color + breaks light-dark()). */
+    --color-glass-quiet:        var(--glass-bg-quiet);
+    --color-glass-border-quiet: var(--glass-border-quiet);
 
     /* Foreground-tint rungs — bg-surface-tint-{4,6,8,10,12,15,18,22,25}. */
     --color-surface-tint-4:  var(--surface-tint-4);
@@ -236,6 +251,8 @@
     --height-chart-large:   var(--chart-height-large);
     --min-width-input-sm:   var(--input-min-width-sm);
     --spacing-chart-margin: var(--chart-margin);
+    /* AU.W8b.4 — w-popover utility (Combobox list width). Lifts `w-[200px]`. */
+    --width-popover:        var(--popover-width);
 
     /* Golden-ratio spacing — p-phi-5 / m-phi-6 etc. via Tailwind's spacing
        utilities. φ² and φ³ rungs for hero/chassis padding ladder. */
