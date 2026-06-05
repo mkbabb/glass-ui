@@ -278,6 +278,22 @@ green until the gate's siblings exist).
 
 ---
 
+### 6.2 modern-web-guidance Baseline decision-changes (folded)
+
+The `modern-web-guidance` npm package was run (`retrieve`) over every modern-platform / a11y / forms
+item; the authoritative Baseline-dated corpus + the crosswalk are at
+`audit/AUGMENT/{mwg/, modern-web-guidance-crosswalk.md}`. Six decisions change or sharpen as a
+result — each is folded where named:
+
+| # | decision-change | Baseline authority | folds into |
+|---|---|---|---|
+| 1 | **`:user-invalid` REVISIT** — AU.W3 KILL'd the `.input-pill :user-invalid` rung; the `accessible-error-announcement` use case gives the canonical `aria-invalid`↔`:user-invalid` + validate-after-interaction recipe. Reinstate it for the glass-ui Input (and the slides DeckGate). | `:user-valid`/`:user-invalid` Widely, Baseline **2023-11-02** | **W9** (glass-ui Input a11y) + slides **F.W1** (DeckGate) |
+| 2 | **VT keep-FLIP CONFIRMED** + mandatory post-VT focus routing | View Transitions Newly **2025-10-14** (active-VT 2026-01-13) | **W8** (AU.W8 reform folds it) |
+| 3 | **keep `::-webkit-scrollbar` fallback** (do NOT strip) | `scrollbar-color` Newly **2025-12-12** | **W8b §7** (already re-grounded) |
+| 4 | **`@property` typed tokens** — type interpolated custom props, but NEVER register a design-token color as `<color>` (`light-dark()` stops re-resolving) | registered custom props Newly **2024-07-09** | **W8b** (design-idiom unit) |
+| 5 | **`interpolate-size`/`calc-size()` are LIMITED (Chrome/Edge), NOT Baseline** → the `@supports` gate is mandatory CORRECTNESS, not polish; `@starting-style`/`transition-behavior` ARE Baseline-safe | starting-style **2024-08-06**; calc-size limited | **W8b §1** |
+| 6 | **`text-wrap:pretty` + `accent-color` are NOT Baseline** → gate as enhancements | per corpus | **W8b** / slides typography |
+
 ## §7 — The library-optimum map (D6 — what glass-ui owns vs what stays slides-local)
 
 | slides surface | current | glass-ui target | gate |
