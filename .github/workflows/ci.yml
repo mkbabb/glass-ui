@@ -132,6 +132,14 @@ jobs:
             # allowlist: TabsTrigger --active-tab-color). Bite: re-inject one → RED.
             - name: proof:design-idiom-localization
               run: npm run proof:design-idiom-localization
+            # AU.W9 — the W9 overfitting bar. Asserts each LANDED W9 fold (prop/
+            # subpath/composable) maps to ≥2 distinct consumer contexts OR carries
+            # a correctness/hygiene tag, and every cited consumer resolves at HEAD
+            # (in-repo relative + cross-repo absolute). BOOKed items are not
+            # tallied. Bite: a 1-consumer untagged fold (or drop a real consumer)
+            # → RED.
+            - name: proof:au-w9-consumers
+              run: npm run proof:au-w9-consumers
             # AT.W7-dock-c — the ι doc-rot sweep. Asserts every `custom/<dir>`
             # directory + every Dependencies-table package + every
             # `@mkbabb/glass-ui/<subpath>` CLAUDE.md cites RESOLVES at HEAD

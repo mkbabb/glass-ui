@@ -1,0 +1,58 @@
+{
+  "$comment": "AU.W9 overfitting-bar tally (proof:au-w9-consumers). Each item is a LANDED W9 FOLD; BOOKed items are NOT tallied (they carry no >=2 evidence and live in PROGRESS.md instead). Each item clears the bar via consumers.length>=2 (distinct repo/file/demo-story contexts) XOR a correctness/hygiene tag. Every cited consumer resolves at HEAD: in-repo paths are relative to the glass-ui ROOT; cross-repo paths are absolute (/Users/mkbabb/Programming/<repo>/...). The BOOK set (Card cartoon dark arm, useCountup/vReveal, Drawer :native #32, :user-invalid KILL-as-shipped) is recorded in docs/tranches/AU/PROGRESS.md with named triggers.",
+  "items": [
+    {
+      "id": "configurator-a1-dividers",
+      "consumers": [
+        "demo/stories/primitives/configurator.vue",
+        "demo/stories/blob.vue"
+      ]
+    },
+    {
+      "id": "configurator-a2-ladder",
+      "consumers": [
+        "demo/stories/primitives/configurator.vue",
+        "demo/stories/blob.vue"
+      ]
+    },
+    {
+      "id": "dark-mode-sync-script",
+      "consumers": [
+        "/Users/mkbabb/Programming/speedtest/src/composables/useAppProviders.ts",
+        "/Users/mkbabb/Programming/speedtest/src/layouts/PublicDashboardLayout.vue",
+        "/Users/mkbabb/Programming/words/frontend/src/stores/ui/ui-state.ts",
+        "/Users/mkbabb/Programming/words/frontend/src/styles/ios-pwa.css"
+      ]
+    },
+    {
+      "id": "use-global-dark-initial-value",
+      "tag": "hygiene",
+      "consumers": [
+        "/Users/mkbabb/Programming/speedtest/src/composables/useAppProviders.ts",
+        "/Users/mkbabb/Programming/words/frontend/src/stores/ui/ui-state.ts"
+      ]
+    },
+    {
+      "id": "button-icon-sm",
+      "tag": "hygiene",
+      "consumers": [
+        "demo/stories/primitives/buttons.vue",
+        "/Users/mkbabb/Programming/speedtest/src/components/dashboard/DashboardMapControls.vue"
+      ]
+    },
+    {
+      "id": "select-size",
+      "tag": "hygiene",
+      "consumers": [
+        "demo/stories/primitives/select.vue"
+      ]
+    },
+    {
+      "id": "dialog-show-close",
+      "consumers": [
+        "/Users/mkbabb/Programming/slides/src/deck/DeckGate.vue",
+        "demo/stories/containers/dialog.vue"
+      ]
+    }
+  ]
+}
