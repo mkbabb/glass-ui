@@ -96,6 +96,16 @@
 // canonical texture-system pattern (consumer retints via `--paper-*-texture`
 // CSS custom properties at `:root`) is documented in DESIGN.md "Texture
 // system" section. Surface count 64 → 66 (62 types + 4 constants).
+//
+// AU.W9 resync (3.3.0): the canonical at-HEAD enumeration is 70 (67 types +
+// 3 constants). The running P.W3 tally (66 = 62 types + 4 constants) drifted
+// from the actually-exported symbol set: the AQ.W4 / AQ.W5 / AU.W9 waves added
+// 5 type re-exports (`UseUserInvalidAriaOptions`, `UseUserInvalidAriaReturn`,
+// `ViewTransitionResult`, `UseGlobalDarkOptions`, `DarkModeSyncScriptOptions`)
+// below this header without bumping the prose tally, and the "4 constants"
+// figure was a long-standing miscount — only 3 value exports ride the layer
+// (`DEFAULT_AURORA_CONFIG`, `MAX_NUCLEI`, `MAX_STOPS`). This resync names the
+// canonical count from the literal `export …` enumeration in this file.
 
 // ── Aurora ─────────────────────────────────────────────────────────────────
 // Substrate config + family, plus numeric ceilings the consumer needs to

@@ -19,7 +19,7 @@ import {
     oklchToOklab,
     srgbToOklab,
     type Vec3,
-} from "../shaders/metaball-color.glsl-port";
+} from "./metaball-color.glsl-port";
 
 /**
  * AU.W7 — the 8-assertion CPU-equivalence gate for the goo-blob OKLCh shader path

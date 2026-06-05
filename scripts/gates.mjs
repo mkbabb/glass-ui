@@ -106,12 +106,28 @@ function verifyCi() {
         [...yaml.matchAll(/run:\s*npm run ([A-Za-z0-9:_-]+)/g)].map((m) => m[1]),
     );
     const expected = new Set(gatesFor("ci").map((g) => g.cmd));
+    // META-STEPS — ci.yml `npm run` lines that are NOT proof gates and so never
+    // appear in GATES (the verify-ci meta-step runs the drift check itself). They
+    // are allowlisted explicitly: anything ci.yml runs that is neither a ci-tagged
+    // gate NOR an allowlisted meta-step is an UNKNOWN step and fails closed (a
+    // truly-novel `run: npm run …` line added to ci.yml must be classified here or
+    // ci-tagged in the manifest — it can no longer slip through undetected).
+    const CI_META_STEPS = new Set(["gates:verify-ci"]);
     const missing = [...expected].filter((c) => !ciSteps.has(c));
-    const extra = [...ciSteps].filter((c) => !expected.has(c) && GATES.some((g) => g.cmd === c));
+    const extra = [...ciSteps].filter(
+        (c) => !expected.has(c) && !CI_META_STEPS.has(c),
+    );
     if (missing.length || extra.length) {
         console.error("[gates:verify-ci] ci.yml drifted from the gate manifest:");
         for (const c of missing) console.error(`  MISSING from ci.yml: ${c}`);
-        for (const c of extra) console.error(`  EXTRA in ci.yml (not ci-tagged): ${c}`);
+        for (const c of extra) {
+            const known = GATES.some((g) => g.cmd === c);
+            console.error(
+                known
+                    ? `  EXTRA in ci.yml (manifest gate, not ci-tagged): ${c}`
+                    : `  UNKNOWN in ci.yml (no manifest gate, not an allowlisted meta-step): ${c}`,
+            );
+        }
         process.exit(1);
     }
     console.log(`[gates:verify-ci] ci.yml matches the manifest ci set (${expected.size} gates).`);

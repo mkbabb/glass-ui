@@ -168,6 +168,8 @@ export function useLayerTransition(
             typeof window !== "undefined" &&
             window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
         if (prm) {
+            clearCleanup();
+            ++transitionId;
             currentLayer.value = newLayer;
             leavingLayer.value = null;
             return;
@@ -243,11 +245,9 @@ export function useLayerTransition(
                     if (id !== transitionId) return;
                     const w = fromSize + (toSize - fromSize) * p;
                     setDim(el, `${w}px`);
-                    // Default: opacity stays class-driven (the CSS transition on
-                    // `.dock-layer-item-host`, lockstep on --dock-motion-resize).
-                    // Escalate to inline clamped opacity ONLY if the settle probe
-                    // shows drift: clamp01(p) on the active host, 1-clamp01(p) on
-                    // the leaving host.
+                    // Opacity stays class-driven via the --dock-motion-resize CSS
+                    // transition on `.dock-layer-item-host`; the spring drives
+                    // width only.
                     if (activeSpring.settled) {
                         el.style.transition = "";
                         clearDim(el);

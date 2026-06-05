@@ -15,7 +15,7 @@
 // CPU-equivalence gate). `mat3` literals are TRANSPOSED from value.js's row-major
 // arrays because GLSL `mat3` is column-major (`mat3 * vec3` dots each column with
 // the vector); writing value.js's rows as GLSL columns yields the row-major M·v.
-// Hues are in RADIANS. See `metaball-color.glsl-port.ts` (the line-for-line TS
+// Hues are in RADIANS. See `__tests__/metaball-color.glsl-port.ts` (the line-for-line TS
 // transcription) + `__tests__/blob-color-equivalence.test.ts` (the 8-assertion gate).
 
 export const METABALL_FRAGMENT_SRC = /* glsl */ `#version 300 es

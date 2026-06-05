@@ -31,6 +31,31 @@ function makeCanvas(glStub: object | null) {
     } as unknown as HTMLCanvasElement;
 }
 
+// A canvas variant that CAPTURES its own event listeners (the context
+// lost/restored pair lives on the canvas, not on `document`) so a test can
+// dispatch `webglcontextlost`/`webglcontextrestored` and exercise the
+// self-heal. `getContext` returns a FRESH stub each call so a test can assert
+// the restored context is a NEW object (the substrate re-acquired it).
+function makeRestorableCanvas(makeGl: () => object) {
+    const canvasListeners: Record<string, Array<(e: any) => void>> = {};
+    const canvas = {
+        getContext: vi.fn(() => makeGl()),
+        addEventListener: (t: string, cb: any) => {
+            (canvasListeners[t] ??= []).push(cb);
+        },
+        removeEventListener: vi.fn(),
+        width: 0,
+        height: 0,
+        clientWidth: 100,
+        clientHeight: 50,
+        parentElement: null,
+    } as unknown as HTMLCanvasElement;
+    function dispatch(type: string, e: any = {}) {
+        for (const cb of canvasListeners[type] ?? []) cb(e);
+    }
+    return { canvas, dispatch };
+}
+
 function flushFrames(n: number) {
     for (let i = 0; i < n; i++) {
         const next = rafQueue.shift();
@@ -134,6 +159,63 @@ describe("useWebGLCanvas — the consumer-#2 substrate contract (AU.W6)", () => 
         handle.resume("off-screen");
         flushFrames(1);
         expect(frames).toBeGreaterThan(base);
+        handle.dispose();
+    });
+
+    it("self-heals on webglcontextlost → webglcontextrestored (re-setup + resume)", () => {
+        // N-3 coverage gap — the substrate's ONE genuinely-absent robustness
+        // (vs aurora's bootstrap): a GPU context loss must self-heal instead of
+        // going permanently blank. On `webglcontextlost` the loop is cancelled
+        // and `gl`/`hooks` are nulled; on `webglcontextrestored` the substrate
+        // re-runs the consumer's `setup(gl)` on a FRESH context and re-arms.
+        let setups = 0;
+        let frames = 0;
+        const glA = { getExtension: () => null } as unknown as WebGL2RenderingContext;
+        const glB = { getExtension: () => null } as unknown as WebGL2RenderingContext;
+        // First arm() gets glA; the restore re-acquires glB (a NEW context).
+        const contexts = [glA, glB];
+        const { canvas, dispatch } = makeRestorableCanvas(() => contexts[setups]!);
+        const resize = vi.fn();
+        const handle = createWebGLCanvas(canvas, {
+            setup: (gl) => {
+                setups += 1;
+                expect(gl).toBe(setups === 1 ? glA : glB);
+                return {
+                    frame: () => {
+                        frames += 1;
+                    },
+                    shouldContinue: () => true,
+                    resize,
+                };
+            },
+        });
+
+        handle.arm();
+        expect(setups).toBe(1); // initial setup ran on glA
+        expect(handle.gl).toBe(glA);
+        flushFrames(2);
+        expect(frames).toBe(2); // the loop is live
+        const beforeLoss = frames;
+
+        // ── context lost ── the loop parks and the GL handle drops to null.
+        dispatch("webglcontextlost", {
+            preventDefault: vi.fn(),
+        });
+        expect(handle.gl).toBe(null); // gl released — surface is blank
+        flushFrames(5);
+        expect(frames).toBe(beforeLoss); // no frames drawn while lost
+
+        // ── context restored ── the substrate re-creates its GL resources
+        // (re-runs setup on the fresh context) and resumes the rAF loop.
+        dispatch("webglcontextrestored");
+        expect(setups).toBe(2); // setup re-ran — program/geometry rebuilt
+        expect(handle.gl).toBe(glB); // a NEW context was acquired
+        expect(resize).toHaveBeenCalledTimes(2); // re-sized on the fresh context
+
+        // The loop resumed — frames advance again after the restore.
+        flushFrames(2);
+        expect(frames).toBeGreaterThan(beforeLoss);
+
         handle.dispose();
     });
 

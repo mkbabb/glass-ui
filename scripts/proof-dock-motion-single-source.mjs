@@ -88,20 +88,19 @@ function stripComments(src) {
 
 // Slice the FLIP fallback section — everything AFTER the native-VT block returns.
 // The VT path's own synchronous ref-swap (inside startViewTransition) is correct
-// (one mutation, the browser owns the morph); only the FLIP fallback must defer
-// its swap into the rAF. We anchor on the "Fallback path" comment marker, which
-// survives in the stripped source as blanks, so anchor instead on the
-// `const id = ++transitionId;` that opens the fallback — the SECOND occurrence
-// (the first opens the VT block).
+// (one mutation, the browser owns the morph); the PRM fast-path's synchronous swap
+// is likewise correct (no measure/pin/animate, it returns before any driver);
+// only the FLIP fallback must defer its swap into the rAF. The fallback is ALWAYS
+// the LAST transition path (VT → PRM → FLIP), and it opens with a
+// `const id = ++transitionId;`, so anchor on the LAST `++transitionId` occurrence —
+// robust to the VT block and the PRM fast-path each carrying their own bump.
 function flipFallbackSection(src) {
     const marker = "++transitionId";
-    const first = src.indexOf(marker);
-    if (first === -1) return null;
-    const second = src.indexOf(marker, first + marker.length);
-    // If there is only one ++transitionId the structure changed — bail to a
-    // safe whole-source scan (the SAME-FRAME check still holds the gate).
-    const start = second === -1 ? first : second;
-    return src.slice(start);
+    const last = src.lastIndexOf(marker);
+    // If there is no ++transitionId the structure changed — bail to a safe
+    // whole-source scan (the SAME-FRAME check still holds the gate).
+    if (last === -1) return null;
+    return src.slice(last);
 }
 
 // Find the requestAnimationFrame(() => { … }) callback body that sets the width

@@ -2,6 +2,7 @@ import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
 import GlassTimeline from "../GlassTimeline.vue";
+import HoverPopover from "../../hover-popover/HoverPopover.vue";
 import type { TimelineSegment } from "../types";
 
 /**
@@ -176,6 +177,59 @@ describe("GlassTimeline continuous — Option C structural split", () => {
             key: string;
         };
         expect(enterPayload.key).toBe("upload");
+        expect(leavePayload.key).toBe("upload");
+    });
+
+    it("emits hover/hoverEnd via the HoverPopover update:open path (default popover enabled)", async () => {
+        // N-2 coverage gap — the W10 ContinuousMarkers split consumes
+        // HoverPopover via `@update:open` (the listen-only uncontrolled
+        // defineModel cadence). With the popover ENABLED (default — no
+        // `disablePopover`), the dot is wrapped in HoverPopover and the
+        // popover's debounced open-state is the authoritative hover signal:
+        // `update:open(true)` → `onPopoverOpenChange` emits `hover`,
+        // `update:open(false)` emits `hoverEnd`. The bare mouseenter/leave
+        // listeners only exist on the disablePopover fallback, so the ONLY
+        // way the default path emits hover is through this popover cadence.
+        const wrapper = mount(GlassTimeline, {
+            props: {
+                variant: "continuous",
+                segments,
+                currentSegmentKey: "download",
+            },
+        });
+
+        // One HoverPopover per segment when the popover is enabled (proves
+        // the default path wraps each dot — not the bare-button fallback).
+        const popovers = wrapper.findAllComponents(HoverPopover);
+        expect(popovers).toHaveLength(segments.length);
+
+        // The marker whose trigger button labels the "upload" segment.
+        const uploadIdx = segments.findIndex((s) => s.key === "upload");
+        const uploadPopover = popovers[uploadIdx]!;
+
+        // Drive the popover's open-state model — the same signal reka-ui's
+        // HoverCard emits after its hoverOpenDelay/closeDelay debounce. This
+        // exercises the real `@update:open → markers emit → orchestrator
+        // re-emit` chain without depending on reka's pointer/timer machinery.
+        uploadPopover.vm.$emit("update:open", true);
+        await wrapper.vm.$nextTick();
+        uploadPopover.vm.$emit("update:open", false);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.emitted("hover")).toBeTruthy();
+        expect(wrapper.emitted("hoverEnd")).toBeTruthy();
+        const enterPayload = wrapper.emitted("hover")?.[0]?.[0] as {
+            key: string;
+            segment: TimelineSegment;
+        };
+        const leavePayload = wrapper.emitted("hoverEnd")?.[0]?.[0] as {
+            key: string;
+            segment: TimelineSegment;
+        };
+        // The signal carries the correct segment — the popover open-change is
+        // bound to THIS marker's segment, not a stale closure capture.
+        expect(enterPayload.key).toBe("upload");
+        expect(enterPayload.segment.label).toBe("Upload");
         expect(leavePayload.key).toBe("upload");
     });
 
