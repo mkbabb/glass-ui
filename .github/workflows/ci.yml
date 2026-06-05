@@ -105,6 +105,12 @@ jobs:
             # W6-dock-b slot-ID collision is re-lettered. Sibling-free.
             - name: proof:au-w0-reground
               run: npm run proof:au-w0-reground
+            # AU.W1 — the design-slice meta-gate. Asserts the three AU.W1 design
+            # slices exist (blob-primitives · dock · color-gates), each cites its
+            # AT.W1 origin + its HEAD delta, and the W1c slice is the gate-fleet
+            # registry (every AU gate enumerated with a greening wave — inv-θ).
+            - name: proof:au-w1-design
+              run: npm run proof:au-w1-design
             # AS.W2 inv-θ — the lockfile registry-resolution drift guard (#177
             # cannot silently re-break npm ci) + the meta-gate asserting this
             # ci.yml step set matches scripts/gates.mjs exactly (the manifest is

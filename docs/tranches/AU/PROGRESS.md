@@ -48,7 +48,7 @@ Every later wave gates on these FACTS, not the AT plan's narration.
 | Wave | Type | Status | Evidence / note |
 |---|---|---|---|
 | **AU.W0** formalize + re-ground | DEV | **DONE** | `AU.md` + `PROGRESS.md` authored; `proof:au-w0-reground` green; the 3 dock SHAs ancestor-reachable; the collision re-lettered; the a11y bundle decomposed; 71/71 dispositioned |
-| **AU.W1** design slices | DEV | PLANNED | three `design/AU.W1*.md` slices; every W1c gate registered born-RED in `gates.mjs` |
+| **AU.W1** design slices | DEV | **DONE** | three `design/AU.W1*.md` slices authored (blob/dock/color-gates); the W1c slice is the gate-fleet registry (19/19 gates enumerated with greening waves); `proof:au-w1-design` green |
 | **AU.W2** dock opacity-lockstep | IMPL | PLANNED | slides-F P0; `proof:dock-opacity-lockstep` |
 | **AU.W3** keystone + correctness fold | IMPL | PLANNED | `proof:strict-templates` FIRST; `proof:peer-optional`; `proof:vueuse-free-root`; `proof:supportsPostTask-wired`; the 3 decomposed a11y sites |
 | **AU.W4** Fraunces ship | IMPL | PLANNED | `proof:font-axes` |
@@ -85,3 +85,4 @@ Every later wave gates on these FACTS, not the AT plan's narration.
 | When | Wave | Milestone | Evidence |
 |---|---|---|---|
 | 2026-06-05 | AU.W0 | tranche formalized + re-grounded; `proof:au-w0-reground` green | this file + `AU.md` + `scripts/proof-au-w0-reground.mjs` |
+| 2026-06-05 | AU.W1 | three design slices authored; the W1c gate-fleet registry (19 gates); `proof:au-w1-design` green | `design/AU.W1*.md` + `scripts/proof-au-w1-design.mjs` |

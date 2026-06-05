@@ -43,6 +43,7 @@ export const GATES = [
     { id: "proof:dock-motion-parity", cmd: "proof:dock-motion-parity", tags: ["local", "ci", "release"], note: "AT.W6-dock-c — dock VT/FLIP timing-parity static gate" },
     { id: "proof:doc-consistency", cmd: "proof:doc-consistency", tags: ["local", "ci", "release"], note: "AT.W7-dock-c — CLAUDE.md custom-dir + dependency citations resolve at HEAD (doc-rot guard)" },
     { id: "proof:au-w0-reground", cmd: "proof:au-w0-reground", tags: ["local", "ci"], note: "AU.W0 — formalize+re-ground meta-gate (AU.md/PROGRESS.md exist; 3 dock SHAs ancestor-reachable; zero bundle labels survive; W6-dock-b collision re-lettered)" },
+    { id: "proof:au-w1-design", cmd: "proof:au-w1-design", tags: ["local", "ci"], note: "AU.W1 — design-slice meta-gate (3 slices cite AT.W1 origin + HEAD delta; the W1c registry enumerates the full AU gate fleet with greening waves)" },
     { id: "proof:lockfile", cmd: "proof:lockfile", tags: ["local", "ci", "release"], note: "registry-resolution drift guard" },
     { id: "audit:stash", cmd: "audit:stash", tags: ["ci"] },
 ];
