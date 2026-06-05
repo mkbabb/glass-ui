@@ -70,7 +70,7 @@ useStalePropWarning("Card");
                 'rounded-card text-card-foreground scrollbar-hidden',
                 `glass-${tier}`,
                 surface === 'cartoon' && 'cartoon-surface',
-                shadow && surface === 'glass' && 'shadow-[var(--shadow-card)]',
+                shadow && surface === 'glass' && 'shadow-card',
                 !grain && '[&::after]:hidden',
                 props.class,
             )

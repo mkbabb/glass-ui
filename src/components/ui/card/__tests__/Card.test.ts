@@ -67,7 +67,7 @@ describe("Card", () => {
         });
 
         const classes = wrapper.get(".shadowless").classes();
-        expect(classes).not.toContain("shadow-[var(--shadow-card)]");
+        expect(classes).not.toContain("shadow-card");
     });
 
     // Q.W3 Lane H — `surface` is an orthogonal decoration prop (the retired
@@ -115,7 +115,7 @@ describe("Card", () => {
         // `cartoon-surface` carries its own offset-stamp box-shadow; the glass
         // drop shadow is suppressed so the two do not stack.
         expect(wrapper.get(".c3").classes()).not.toContain(
-            "shadow-[var(--shadow-card)]",
+            "shadow-card",
         );
     });
 });

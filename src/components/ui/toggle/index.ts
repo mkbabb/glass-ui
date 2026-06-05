@@ -30,7 +30,7 @@ export const toggleVariants = cva(
         outline:
           'border border-input bg-transparent hover:bg-accent hover:text-accent-foreground',
         card:
-          'glass-card w-full transform-gpu cursor-pointer flex-col gap-4 p-8 text-center transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-fast ease-standard hover:bg-[var(--glass-bg-quiet)] hover:text-foreground active:scale-95 data-[state=on]:border-[var(--glass-border-quiet)] data-[state=on]:bg-[var(--glass-bg-quiet)] data-[state=on]:text-foreground data-[state=on]:shadow-[var(--glass-shadow-quiet)]',
+          'glass-card w-full transform-gpu cursor-pointer flex-col gap-4 p-8 text-center transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-fast ease-standard hover:bg-glass-quiet hover:text-foreground active:scale-95 data-[state=on]:border-glass-border-quiet data-[state=on]:bg-glass-quiet data-[state=on]:text-foreground data-[state=on]:shadow-glass-quiet',
       },
       size: {
         default: 'h-10 px-3',

@@ -33,7 +33,7 @@ const variantClass = computed(() =>
     v-bind="forwardedProps"
     :class="cn(
       variantClass,
-      'focus-ring flex h-10 w-full items-center justify-between rounded-pill px-3 py-2 text-sm placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-disabled [&>span]:line-clamp-1 transition-[background-color,border-color,box-shadow,color]',
+      'focus-ring flex h-10 w-full items-center justify-between rounded-pill px-3 py-2 text-sm placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-disabled [&>span]:line-clamp-1 transition-control',
       props.class,
     )"
   >
