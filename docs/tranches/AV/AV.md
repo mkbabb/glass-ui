@@ -28,6 +28,18 @@ fact below is re-grounded against glass-ui HEAD `d58de1d`.
 `audit/SOTA-crosswalk.md`, `audit/live-validation.md`, and the cross-repo `UNION-COORDINATION.md`.
 Each AV fold cites the digest section it lands.
 
+**Audit grounding — Band 2 (the reinvent waves W9-W17):** `audit/reinvent/INDEX.md` indexes the
+6 live-audit digests grounding the reinvent arc — `storybook-digest.md` (the 11-category IA +
+the prune ledger + the font-defaults location → W10), `dock-slider-digest.md` (the AU.W8b
+dual-driver freeze root-cause + the single-driver rebuild + the slider two-only unification →
+W9 + W11), `legacy-architecture-digest.md` (the fail-explicit policy + the god-module
+decomposition + the DI/boundaries/nested-imports/test-in-src/DRY sweep → W12 + W13 + W14),
+`ios26-partial-digest.md` (the iOS-26 MOTION contract + the dock velocity-continuity gap + the
+speedtest-ownership ledger → W9 + W15 + W17), `ios26-tailwind-font-digest.md` (the Liquid Glass
+material evolution + the modern-Tailwind v4 cohesion + the font-fix → W15 + W16 + W10), and the
+slides-arm `slides-restructure-digest.md` (OUT — inv-16 name-forward, the G slides restructure).
+Each Band-2 wave cites its digest in its `waves/` spec.
+
 **Format** — mirrors AU (`AV.md` charter + `PROGRESS.md` + per-wave specs under `waves/` +
 `FINAL.md`). This file is the CHARTER only — DEV (it writes no `src`). The per-wave specs
 (`waves/AV.W1-aurora-fix.md`, `waves/AV.W2-blob-converge.md`, `waves/AV.W3-motion.md`, …)
@@ -48,6 +60,12 @@ The user's AV-round asks, each → one disposition row. No ask is silently absor
 | D-3 | **the SOTA-animation research folds** | **AV.W3 + AV.W6.** Adopt the keyframes E.W10 value.js-free LIGHT orchestration tier (`stagger`/`flip`/`Sequence`/`animate()`) + the E.W9 native-scroll/PRM bridge into glass-ui's motion composables; the 14-agent SOTA crosswalk folds at the `## SOTA crosswalk (folded)` placeholder when it lands. value.js-free → root-barrel-safe. |
 | D-4 | **the deferred-fold sweep** | **§3 ledger + the lift waves.** Every AU `FINAL.md §2` BOOK + the digest's FOLD-AV / AV-GATED / KEEP-BOOK rows is transcribed with its trigger. The fired triggers fold (useIdleSchedule, Card cartoon-dark lift, the motion tier); the unmet stay BOOK with the trigger named. Zero silent punts (P-Inv 28). |
 | D-5 | **"NO legacy/workarounds; gestalt transpositions for elegance/simplicity/performance"** | **AV.W5 + §6.** The audit's hygiene targets are gestalt transpositions, not patches: `scheduleAfterFirstPaint` inline → `useIdleSchedule` extract; 33 one-line subpath barrels → `src/subpaths/` metadir; orphaned top-level composables → domain sub-trees; dock provide/inject → `createDockContext<T>()` factory (−30-40 LOC). Net-deletion-or-neutral; ≥2-consumer-gated. |
+| D-6 | **the storybook re-invention + prune** | **AV.W10.** The live-audit found the demo storybook IA incoherent. Re-invent it to the 11-category tree (substrates surfaced near top, dock consolidated into ONE Navigation section, debris bins dissolved); prune the demo-route orphans + the TWO genuine src orphans (metric-cell, metric-stack); record the honest push-back where a removal directive collides with a real consumer (instrument-*/glyph-face/disco-glyph SHIP); fix the demo font-canon (retired faces in the picker). Gate: `proof:storybook-ia` + `proof:no-orphan-demo-route` + `proof:font-canon`. |
+| D-7 | **the dock rebuild from first principles** | **AV.W9 HIGH-PRIORITY HEADLINE (Band 2).** The live audit DISPROVED the "dock perfect-already" verdict — the dock is FROZEN at runtime (the AU.W8b `interpolate-size` native arm fights the FLIP `SpringProgress` driver; both write `width`, cancelling the motion). Rebuild on ONE driver per swap, ONE layering model, velocity-continuity on retarget, a momentum-gated press spring, and a born-RED behavioral gate. Supersedes the §1 "dock perfect-already" claim. Gate: `proof:dock-animation-live`. |
+| D-8 | **the slider unification** | **AV.W11.** Collapse the six-variant `<Slider>` sprawl to exactly TWO canonical recipes — `standard` (the continuous rounded iOS knob) + `spectrum` (the gradient-track color slider); delete the four overfit variants with their scoped CSS; port every consumer. Gate: `proof:slider-two-only`. |
+| D-9 | **the legacy excision + god-modules + DI/hygiene** | **AV.W12 + AV.W13 + AV.W14.** W12 — the fail-explicit policy (excise silent error-swallows; keep befitting `@supports` fallbacks documented) + the production-code legacy-commentary excision. W13 — the god-module decomposition (no `src/` file >500 lines; aurora.frag 819, useSortable 659, Progress 649, runtime 530, metaball 282). W14 — the canonical DI factory pair + no-nested-import + test-in-src relocation + pipeline-orchestration hygiene. Gates: `proof:fail-explicit`, `proof:no-legacy-commentary`, `proof:no-god-module`, `proof:no-nested-import`, `proof:no-test-in-src`, `proof:di-consistency`. |
+| D-10 | **the iOS-26 Liquid Glass + modern Tailwind** | **AV.W15 + AV.W16.** W15 — the portable Liquid Glass subset as token edits + additive folds over the warm-cream identity (per-rung saturate, `--glass-edge-light` rim, content-aware under-shadow, the pointer-anchored moving specular). W16 — the modern-Tailwind v4 cohesion (`@theme inline` migration, oklch palette ramps, container queries, the registered-token lifts + `theme()`-function kills). Gates: `proof:liquid-glass-tokens`, `proof:tailwind-v4-idiom`. |
+| D-11 | **the speedtest ownership** | **AV.W17.** Audit the speedtest-origin composable set; ledger each STAY-as-CORE (a general web-platform primitive with ≥2 genuine glass-ui consumers) or MOVE-to-speedtest (app-specific OR orphaned). The ≥2-consumer bar, not the ORIGIN, decides ownership; the speedtest moves are name-forward (inv-16). Gate: `proof:speedtest-boundary`. |
 
 ---
 
@@ -63,6 +81,24 @@ W0→W10 chain.
 **The deep-audit verdict (Stream A):** the AU+F work is **27/31-idiomatic** — NO landed
 defect needs re-architecture. AV transposes only hygiene + the deferred-fold ledger. The
 single CORRECTNESS finding is the aurora OETF (Stream B), which AV.W1 lands as the headline.
+
+**RE-SCOPE — the live-audit correction (the dock is NOT perfect-already).** The reinvent
+live-audit round (`audit/reinvent/`) disproved the Stream-A "dock perfect-already" reading.
+The static gates that blessed the AU.W8b dock-motion overhaul passed on SYNTAX, never on
+runtime paint — and the dock is FROZEN at runtime. The AU.W8b `@supports (interpolate-size:
+allow-keywords)` native CSS arm (`dock.css:400-409`) fights the JS `SpringProgress` FLIP
+driver (`useLayerTransition.ts`): both write `.dock-layers` width on Chrome 129+, cancelling
+the motion. The `proof:dock-motion-single-source`/`proof:dock-opacity-lockstep` gates are
+STRING-MATCH scans — they assert intent, never mount a browser, never observe a painted frame,
+and their scripts explicitly delegated the perceptual half downstream that never returned. So
+the freeze shipped green. This is the honest lesson — a gate-vs-runtime gap the static fleet
+could not see. **AV.W9 (dock-rebuild) SUPERSEDES the "dock perfect-already" claim** (and the §4
+"DONE — dock-motion overhaul" entry is corrected to OPEN-FOLD → AV.W9): the native arm is the
+regression, not the perfected baseline. W9 rebuilds on one driver per swap, one layering model,
+velocity-continuity, and a born-RED real-browser behavioral gate (`proof:dock-animation-live`)
+that fails on a zero-delta/single-frame width timeline — so this regression class cannot ship
+green again. The Band-2 reinvent waves (W9-W17) carry D-6 through D-11 (§0); W9 is the
+HIGH-PRIORITY headline (AT-disjoint, opens NOW).
 
 **AV is the ripening tranche** — its braids:
 1. **The aurora fix** (AV.W1) — the OETF darkening, code-confirmed at `aurora.frag.ts:817`,
@@ -89,7 +125,17 @@ authored W7+W8 and filled the W1/W2/W3 `## SOTA crosswalk (folded)` placeholders
 
 ---
 
-## §2 — The wave table (9 waves)
+## §2 — The wave table (Band 1: 9 waves · Band 2: 9 waves)
+
+The tranche runs two bands. **Band 1 (W0-W8)** is the aurora-fix + SOTA-fold + ripening arc
+(below). **Band 2 (W9-W17)** is the reinvent arc the live-audit round opened — the dock-rebuild
+correction (D-7) + the storybook/slider/legacy/god-module/DI/iOS-26/Tailwind/speedtest folds
+(D-6, D-8 through D-11). The Band-2 table sits at §2.A. **AV.W9 (dock-rebuild) is the
+high-priority Band-2 headline** — it corrects the runtime regression the static gates missed, is
+AT-disjoint, and opens NOW (it does not wait on the Band-1 close). The W6 gate-close meta-wave
+(LAST) absorbs every Band-2 gate.
+
+### Band 1 (W0-W8)
 
 W0 (formalize) is DEV; W1–W8 are IMPL (the headline-first ordering: the aurora fix lands
 ahead of the convergence + folds; the two SOTA-headline waves W7 perf + W8 constellation land
@@ -108,7 +154,29 @@ with W6 (the close) LAST.
 | **AV.W5** | **Architectural transpositions (the hygiene gestalt).** `scheduleAfterFirstPaint` (`useAurora.ts:74`, Aurora-only) → extract `useIdleSchedule(task, timeout)` (rIC + Safari double-rAF fallback + cancel) IFF a 2nd consumer; 33 one-line subpath barrels → `src/subpaths/` metadir (batch-resolve in `vite.library.ts`, zero runtime delta); orphaned top-level composables → domain sub-trees (`reactive/`, `platform/`); dock provide/inject → `createDockContext<T>()` factory over `dockContext.ts`+`dockLayerContext.ts` (−30-40 LOC). PLUS the D7 goo-blob arm — hoist `easeInOut`/`easeIn`/`easeOut` to a component-scoped `goo-blob/easing.ts`. See `waves/AV.W5-transpositions.md` | IMPL | `proof:subpath-enumeration` (every subpath resolves from `src/subpaths/`; `exports` map unchanged) + `proof:no-orphan-composable` (one factory, two contexts; LOC-delta ≤0); bite: a stray top-level barrel survives → red |
 | **AV.W7** | **SOTA perf + a11y wave (the §2.F compositor/content-visibility folds + the G1/G2 motion-a11y).** F1 offscreen RAF-pause (`content-visibility:auto` + `contentvisibilityautostatechange`, IO `rootMargin:200px` fallback) gating the substrate's `shouldContinue()`/`armed` seam — the SOTA #2 ADOPT, the single biggest unpulled perf lever; F2 `contain:content`/`strict` on aurora/blob hosts + clamp `--glass-blur-*` to the 8-15px band (overlay 24px is the one out-of-band token); F3 on-demand `will-change` lifecycle in `useLayerTransition`; F4 wire aurora+blob RAF to `useIntersectionPause` + `document.visibilityState`; F5 inheritance-bomb guard; F6 DPR≤2 → named token + budget caps. **Conjoint a11y folds (`audit/conjoint-perfection-digest.md` §3, `audit/conjoint-augmentations.md`):** G1 — lift the prefers-reduced-motion freeze from aurora's `runtime.ts:197` into `useWebGLCanvas` so goo-blob + every future AV surface inherit it as a platform guarantee (blob reads PRM once at init today, never re-monitors); G2 — author the WCAG 2.2.2 Level-A pause/play `DockIconButton` for the continuously-running AV backgrounds (goo-blob already returns `pause()`/`resume()`; no UI control binds them). See `waves/AV.W7-perf.md`. Depends on AV.W1/W2 (the shaders) | IMPL | `proof:offscreen-pause` — the substrate parks its RAF when content-hidden/offscreen; bite: remove the content-visibility hook → the loop runs offscreen → RED. (OffscreenCanvas+Worker + F7 LoAF frame-budget gate DEFER with triggers) |
 | **AV.W8** | **Constellation procedural primitive + the `useCanvas2D` substrate (the SOTA D1+E1 headline; ADOPT-gated).** Build the constellation as a glass-ui Canvas2D primitive (proximity-graph + spatial binning + optional Verlet settle) on a NEW `useCanvas2D` substrate (sibling to `useWebGLCanvas`, composing `useRAFLoop` + `useIntersectionPause`) — Canvas2D NOT WebGL (below the crossover; no GPU-init tax; SOTA E1). D2 draw discipline (polyline batching, NO `shadowBlur` — pre-rendered glow sprite, floored coords, never `getImageData` per-frame). The slides red ANOMALY skin (`drawAnomaly`) stays a consumer overlay (FOLD-G extract), never baked into the primitive. The SOTA RESOLVES the prior `useCanvas2D` BOOK (§3.3) → ADOPT-gated. **Conjoint gate (`audit/union-digest.md` D4, `audit/conjoint-perfection-digest.md` §3):** the 2nd resolving consumer is the slides **G.W2** swap (constellation hand-rolled RAF → `useRAFLoop` + `useIntersectionPause` + reduced-motion seam); the 1st is the glass-ui demo story. CONDITIONAL: lands at ≥2 resolving consumers, else GATED-NOT-LANDED with the slides G.W2 swap named as the 2nd-consumer trigger. See `waves/AV.W8-constellation-primitive.md` | IMPL (CONDITIONAL) | `proof:canvas2d-substrate-consumer` — `useCanvas2D` + `Constellation` each map to ≥2 resolving-at-HEAD consumers; bite: drop the demo story → RED. OR GATED-NOT-LANDED (no `src/`, no gate, trigger named) |
-| **AV.W6** | **Gate-fleet hardening + SOTA folds + close (LAST wave).** Register every AV gate in `gates.mjs` with its `{local,ci,release,sibling}` tag (NOT hand-listed in ci.yml); confirm the 14-agent SOTA crosswalk is folded at every wave's placeholder (W1/W2/W3 filled + W7/W8 authored — see `## SOTA crosswalk`); the overfitting audit (PROPS); `AV.FINAL` citing a green run id per wave; re-verify the AU chain on AV's OWN green CI (inv-27). Opens AFTER W7+W8 (the close DERIVES from the post-perf/post-constellation surface). PLUS the `/api` discovery-layer completion (the ~10 composables + ~13 option/return types named in `audit/union-digest.md` §4). See `waves/AV.W6-gates-close.md` | IMPL (LAST) | `proof:av-final` — full matrix green over a clean tree; overfitting audit zero orphans; `gates:verify-ci` green; `FINAL.md` cites a green run id per wave |
+| **AV.W6** | **Gate-fleet hardening + SOTA folds + close (LAST wave).** Register every AV gate in `gates.mjs` with its `{local,ci,release,sibling}` tag (NOT hand-listed in ci.yml); confirm the 14-agent SOTA crosswalk is folded at every wave's placeholder (W1/W2/W3 filled + W7/W8 authored — see `## SOTA crosswalk`); the overfitting audit (PROPS); `AV.FINAL` citing a green run id per wave; re-verify the AU chain on AV's OWN green CI (inv-27). Opens AFTER W7+W8 (the close DERIVES from the post-perf/post-constellation surface). PLUS the `/api` discovery-layer completion (the ~10 composables + ~13 option/return types named in `audit/union-digest.md` §4). The close ABSORBS the Band-2 gates (§2.A) — every W9-W17 gate registers in `gates.mjs` here. See `waves/AV.W6-gates-close.md` | IMPL (LAST) | `proof:av-final` — full matrix green over a clean tree (Band-1 + Band-2 gates); overfitting audit zero orphans; `gates:verify-ci` green; `FINAL.md` cites a green run id per wave |
+
+---
+
+## §2.A — The wave table BAND 2 (W9-W17, the reinvent arc)
+
+The 9 reinvent waves the live-audit round (`audit/reinvent/INDEX.md` + the 6 digests) opened.
+Execution order: **AV.W9 (dock-rebuild) is the high-priority headline** — it corrects the runtime
+regression the static gates missed, is AT-disjoint, and opens NOW; the remaining waves
+(storybook · slider · legacy/god-module/DI · iOS-26/Tailwind · speedtest) sequence per their
+named dependencies. The W6 gate-close (Band 1, LAST) absorbs every gate below.
+
+| Wave | What | Type | HARD gate (one-line, falsifiable) |
+|---|---|---|---|
+| **AV.W9** | **DOCK-REBUILD (the high-priority Band-2 headline — corrects the runtime regression).** Collapse the dock size-morph to ONE driver per swap (retire the AU.W8b `interpolate-size` native arm that fights the FLIP `SpringProgress` driver); re-author the layering model as ONE design (one size authority, one opacity authority, one visibility authority); re-seat the live `SpringProgress` from its `(value, velocity)` on retarget (velocity-continuity); convert dock-control press to a momentum-gated spring (100% damping for taps); author the born-RED behavioral gate. Opens after W3 (motion). See `waves/AV.W9-dock-rebuild.md` | IMPL | `proof:dock-animation-live` — born-RED on HEAD goes GREEN: a real-browser rAF probe asserts the dock container width AND child opacity each morph monotonically over ≥3 frames and co-settle within ±1 frame (≤16.7ms) on collapse/expand/switch; bite: the frozen dock fails the ≥3-frame assert → RED |
+| **AV.W10** | **Storybook re-invention + prune + font-fix (DEMO-SURFACE REFORM).** Rewrite the demo IA to the 11-category tree (Substrates surfaced near top, dock consolidated into ONE Navigation section, debris bins dissolved); prune the demo-route orphans + the TWO genuine src orphans (metric-cell, metric-stack); RECORD the honest push-back (instrument-*/glyph-face/disco-glyph SHIP — real consumers, NOT cut); fix the demo font-canon (drop the retired faces from the picker; audit the library `--font-stack-serif`). Opens after W6. See `waves/AV.W10-storybook-prune.md` | DEMO-SURFACE + FONT-FIX | `proof:storybook-ia` (the manifest tree matches the §1 IA EXACTLY, no `MissingStory:*`) + `proof:no-orphan-demo-route` (every story ↔ exactly one manifest row, bidirectional) + `proof:font-canon` (no font reference to a non-shipped face); all three born-RED at HEAD, green at close |
+| **AV.W11** | **Slider unification (TWO-only collapse).** Collapse the six-variant `<Slider>` sprawl to exactly TWO canonical recipes — `standard` (the continuous rounded iOS knob, borderless, halo-on-state) + `spectrum` (the gradient-track color slider); delete `timeline`/`glass-pill`/`glass-cartoon`/`glass-scrubber` with their scoped CSS; port every consumer. Opens after W1. See `waves/AV.W11-slider-unification.md` | IMPL | `proof:slider-two-only` — exactly two slider primitives ship (`standard` + `spectrum`), no orphan `[data-variant]` block, the standard thumb resolves to a fully-rounded continuous-track knob; born-RED on HEAD (6 keys, four orphan blocks) |
+| **AV.W12** | **Legacy-excision + fail-explicit (DEV).** Disposition every silent path in `src/` to EXCISE / FAIL-EXPLICIT / KEEP+BEFITTING (befitting `@supports` fallbacks kept + documented; silent error-swallows excised or surfaced); move the production-code legacy commentary (the `api/index.ts` per-version tranche archaeology) to `CHANGELOG.md`/`docs/`; hoist the `mediumOil_crayon` special-case to a peer medium; seal the four shader-ID `Record`s into typed dispatch. Opens after the W0-W8 arc. See `waves/AV.W12-legacy-excision.md` | DEV | `proof:fail-explicit` (no silent error-swallow in `src/` — every `catch` re-throws/surfaces a flag/carries a `// fail-explicit:` sentinel + surface) + `proof:no-legacy-commentary` (no tranche-letter/`vN.N.N` archaeology in `api/index.ts`/`index.ts` bodies); born-RED at HEAD |
+| **AV.W13** | **God-module decomposition.** Split the five named god-modules into cohesive sub-modules owning ONE responsibility seam apiece — `aurora.frag` 819, `useSortable` 659, `Progress.vue` 649, `runtime.ts` 530, `metaball.frag` 282-but-conflated — no behaviour change (snapshots + tests stable); fix the carousel-progress break via a surfaced prop-boundary contract. Opens after W2 (the shared GLSL chunk must exist). See `waves/AV.W13-god-module-decomposition.md` | IMPL | `proof:no-god-module` — no `src/` `.ts`/`.vue` file >500 lines (warn at 300); `typecheck`/`build` green; every test passes unchanged; aurora+blob snapshots byte-stable; born-RED on HEAD (5 modules >500) |
+| **AV.W14** | **DI + service-boundaries + pipeline-orchestration + hygiene (REFACTOR, public API unchanged).** Generalize W5's dock-only factory into ONE canonical DI pair (`createStrictContext`/`createOptionalContext`) over all four context triplets; hoist the inline type-position import; relocate all 60 test files from in-src `__tests__/` to a top-level `tests/` tree; formalize the build-pipeline + render-loop service-boundary; single-source the residual D1-D8 DRY (PRNG, `visibilitychange`, WebGL compile/link). Opens after W5 + W2/W13. See `waves/AV.W14-di-orchestration-hygiene.md` | REFACTOR | `proof:no-nested-import` + `proof:no-test-in-src` + `proof:di-consistency` (three NEW born-RED gates green); the PUBLIC API surface BYTE-UNCHANGED (`proof:package`/`proof:resolution`/`verify-export-types` same entry set); LOC delta recorded |
+| **AV.W15** | **iOS-26 Liquid Glass design-evolution (IMPL + doc).** Land the portable Liquid Glass subset as token edits + additive folds over the warm-cream identity — per-rung saturate/brightness on the lower rungs, `--glass-edge-light` full-perimeter rim, content-aware under-shadow, the pointer-anchored MOVING specular (`@property`-animated masked radial driven by `--mouse-x/--mouse-y`, reduced-motion-guarded, opt-in on dock/Button/Card); the no-glass-on-glass discipline doc; the iOS-spring cross-ref to W9/W11. Opens after W4 + W5. See `waves/AV.W15-ios26-liquid-glass.md` | IMPL + doc | `proof:liquid-glass-tokens` — the new tokens exist (`--glass-edge-light{,-dark}`, the per-rung saturate, the `--glass-specular-track*` recipe, the content-aware under-shadow modifier); the `@supports`-gating holds (the `feDisplacementMap` garnish is PE-only); the PRM/reduced-transparency contract + the AA floors survive; born-RED |
+| **AV.W16** | **Modern-Tailwind v4 cohesion (IMPL + gate).** Close the remaining non-idiomatic v4 lifts — the `@theme inline` migration (each token mints ONE global var, not two), the oklch palette ramps (even-lightness rungs), container queries (the dock/chassis read their OWN box), the ~14 registered-token lift sites + the 2 `theme(colors.…)`-function kills + the bare-`[--var]` → paren shorthand. Opens after W5 + W15. See `waves/AV.W16-modern-tailwind.md` | IMPL + gate | `proof:tailwind-v4-idiom` — zero `theme(colors.…)` sites; no `<utility>-[var(--x)]` arbitrary wrap where a bridge resolves the named utility; the dock/chassis container-query context exists; `@theme` completeness (every primitive bridged or allowlisted); extends `proof:design-idiom-localization`; born-RED |
+| **AV.W17** | **Speedtest-ownership coordination (coordination + name-forward, DEV-only — ONE doc, no src).** Ledger the eight speedtest-origin composables — each STAY-as-CORE (a general web-platform primitive with ≥2 genuine glass-ui consumers) or MOVE-to-speedtest (app-specific OR orphaned), the verdict backed by a HEAD consumer-grep; the ≥2-consumer bar (not the ORIGIN) decides ownership; the speedtest moves are name-forward (inv-16, glass-ui writes no speedtest source). Opens after W14. See `waves/AV.W17-speedtest-ownership.md` | COORDINATION | `proof:speedtest-boundary` SPECIFIED born-RED-on-orphan — every glass-ui composable in the speedtest-origin set has ≥2 genuine glass-ui consumers OR is removed; no app-specific orphan survives; cross-references `proof:no-orphan-composable` (W14) |
 
 ---
 
@@ -210,7 +278,14 @@ wave that owns it). Zero ask is unaccounted.
 
 | Ask | Status |
 |---|---|
-| dock-motion overhaul · the polish-tier splits · `defineModel` ×8 · strict-templates · the idiom-lift · vueuse-free root · Fraunces ship · `/color` leaf · `useWebGLCanvas` substrate · the blob trio · the a11y sites · the W9 folds | **DONE** (AU W2→W10; cited in `AU.FINAL.md §1`) |
+| the polish-tier splits · `defineModel` ×8 · strict-templates · the idiom-lift · vueuse-free root · Fraunces ship · `/color` leaf · `useWebGLCanvas` substrate · the blob trio · the a11y sites · the W9 folds | **DONE** (AU W2→W10; cited in `AU.FINAL.md §1`) |
+| **dock-motion overhaul** | **OPEN-FOLD → AV.W9** (CORRECTED from DONE — the AU.W8b native arm FROZE the dock at runtime; the static gates blessed syntax, not paint. See the §1 re-scope) |
+| **the storybook re-invention + prune + font-fix** | **OPEN-FOLD → AV.W10** (D-6; the live-audit found the demo IA incoherent) |
+| **the dock rebuild from first principles** | **OPEN-FOLD → AV.W9** (D-7; the high-priority Band-2 headline, AT-disjoint, opens now) |
+| **the slider unification (two-only)** | **OPEN-FOLD → AV.W11** (D-8) |
+| **the legacy excision + god-modules + DI/hygiene** | **OPEN-FOLD → AV.W12 + AV.W13 + AV.W14** (D-9) |
+| **the iOS-26 Liquid Glass + modern Tailwind** | **OPEN-FOLD → AV.W15 + AV.W16** (D-10) |
+| **the speedtest ownership** | **OPEN-FOLD → AV.W17** (D-11; coordination + name-forward, inv-16) |
 | slides: progress / few-dollars / pptx / squish / XRAY / constellation / 11→6 deck-rework · keyframes LIGHT barrel | **DONE** (the F/E session) |
 | **fix aurora (the OETF)** | **OPEN-FOLD → AV.W1** (the user-mandated headline; code- + live-confirmed) |
 | **shadow-cartoon-lg ships** | **DONE library-side** (`tokens.css:563` chain); **OPEN-FOLD → AV.W2** (contract-doc) + G (slides reconcile) |
@@ -259,10 +334,22 @@ the 4 easing-token forks, alias glass-ui `--ease-out-expo`/`--ease-standard`), D
 (`content="light dark"`), and G.W2 (the constellation RAF swap — the 2nd consumer that unblocks
 AV.W8). All slides work is OUT (inv-16 name-forward); glass-ui writes only glass-ui.
 
+**The speedtest arm (W17 — a name-forward edge).** The reinvent round adds a fifth repo to the
+coordination surface: speedtest, the consumer that ORIGINATED eight of glass-ui's composables.
+AV.W17 ledgers each STAY-as-CORE (a general web-platform primitive glass-ui genuinely consumes
+≥2× — origin is provenance, not title) or MOVE-to-speedtest (app-specific OR orphaned in
+glass-ui). The MOVE items are NAME-FORWARD asks the speedtest session executes (land the
+composable + tests in speedtest, repoint local imports); glass-ui's side is the REMOVE from the
+barrel + subpath + `/api` + `exports` IFF it has no glass-ui consumer. The edge is one-way
+(glass-ui → speedtest); inv-16 holds — glass-ui writes no speedtest source. W17 authors ONLY the
+ownership spec; the glass-ui-side removals are a later IMPL wave's work, gated on that spec.
+
 **AV.W0-W1 are AT-disjoint** — they touch no published-surface contract (the aurora OETF fix
 re-bakes presets + re-blesses snapshots, all internal to the `/aurora` chunk; the doc-currency
 is docs-only). They open BEFORE the 3.3.0 publish. The publish-gated lifts (any slides-supply
-consumption) wait on E1.
+consumption) wait on E1. **AV.W9 (dock-rebuild) is likewise AT-disjoint** — it touches no
+published-surface contract (the dock motion is internal to the `/dock` chunk) and opens NOW as
+the high-priority Band-2 headline.
 
 This tranche is glass-ui-internal — every cross-repo item is NAME-FORWARD; glass-ui writes
 only glass-ui. The 3.3.0 publish leg stays USER-DOMAIN, confirm-first (the boundary is
@@ -308,9 +395,16 @@ irreversibility).
   (`proof:aurora-space-gamma`, `proof:shader-shared-source`, `proof:motion-value-free`,
   `proof:motion-composables-consumer`, `proof:shadow-contract + proof:card-cartoon-consumers`, `proof:subpath-enumeration`,
   `proof:no-orphan-composable`, the SOTA-wave gates `proof:offscreen-pause` (W7) +
-  `proof:canvas2d-substrate-consumer` (W8, LANDED-case only), plus the DEV meta-gates
-  `av-w0-reground`/`av-final`) is registered in `gates.mjs` with its
-  `{local,ci,release,sibling}` tag, NOT hand-listed in ci.yml. `git status` clean after
+  `proof:canvas2d-substrate-consumer` (W8, LANDED-case only), the Band-2 reinvent gates
+  `proof:dock-animation-live` (W9, the born-RED real-browser frame-sampler),
+  `proof:storybook-ia` + `proof:no-orphan-demo-route` + `proof:font-canon` (W10),
+  `proof:slider-two-only` (W11), `proof:fail-explicit` + `proof:no-legacy-commentary` (W12),
+  `proof:no-god-module` (W13), `proof:no-nested-import` + `proof:no-test-in-src` +
+  `proof:di-consistency` (W14), `proof:liquid-glass-tokens` (W15), `proof:tailwind-v4-idiom`
+  (W16, extends `proof:design-idiom-localization`), `proof:speedtest-boundary` (W17, SPECIFIED
+  born-RED-on-orphan — the gate REGISTRATION + the glass-ui-side removals are a later IMPL
+  wave's), plus the DEV meta-gates `av-w0-reground`/`av-final`) is registered in `gates.mjs`
+  with its `{local,ci,release,sibling}` tag, NOT hand-listed in ci.yml. `git status` clean after
   `proof:all`; `gates:verify-ci` fails closed on drift. Each born-RED gate reddens on a
   deliberate inject.
 
@@ -323,6 +417,11 @@ release step.
 **AV headline:** *Fix aurora (the OETF) + the SOTA-animation/procedural folds (the IGN dither,
 the `linear()`-spring convergence, the content-visibility offscreen-pause [W7], the
 constellation primitive on a `useCanvas2D` substrate [W8]) + the design-system ripening (motion
-composables, the gated supply, the hygiene transpositions) + the derived-fact gate fleet.* The
-SOTA crosswalk (`audit/SOTA-crosswalk.md`) is the binding Baseline-dated authority; it grew the
-tranche from 7 to 9 waves.
+composables, the gated supply, the hygiene transpositions) + the derived-fact gate fleet — then
+the reinvent arc the live-audit begot: the dock rebuilt from first principles [W9] over the
+runtime regression the static gates could not see, the storybook re-invention [W10], the slider
+two-only collapse [W11], the legacy-excision + god-module decomposition + DI/hygiene [W12-W14],
+the iOS-26 Liquid Glass + modern-Tailwind cohesion [W15-W16], and the speedtest-ownership ledger
+[W17].* The SOTA crosswalk (`audit/SOTA-crosswalk.md`) is the binding Baseline-dated authority;
+it grew Band 1 from 7 to 9 waves. The reinvent live-audit (`audit/reinvent/INDEX.md`) added Band
+2 (W9-W17) — its lesson is the gate-vs-runtime gap: a static fleet can ship a frozen dock green.
