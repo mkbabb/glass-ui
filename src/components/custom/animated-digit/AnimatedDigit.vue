@@ -21,10 +21,10 @@ import { useAnimatedNumber } from "../../../composables/motion/useAnimatedNumber
  *    `String(Math.round(v))`.
  *  - `placeholder`: glyph for null/empty (default "—").
  *  - `digitCount`: optional knob exposed to the consumer via the
- *    `--digit-count` CSS custom property on the host. Pairs with
- *    MetricRow's `--digit-count` clamp so the value cell shrinks
- *    proportionally as the rendered digits widen. When omitted the
- *    primitive computes it from the formatted string length.
+ *    `--digit-count` CSS custom property on the host. A consumer's
+ *    width-clamp can read this so the value cell shrinks proportionally
+ *    as the rendered digits widen. When omitted the primitive computes
+ *    it from the formatted string length.
  *  - `mode`: `"absolute"` (default) or `"progress"` — passes through to
  *    `useAnimatedNumber`.
  */
@@ -37,8 +37,8 @@ export interface AnimatedDigitProps {
     placeholder?: string;
     /**
      * Override the auto-derived digit-count. When unset the primitive
-     * publishes the formatted-string length to `--digit-count` so
-     * MetricRow's clamp math reads from a single source of truth.
+     * publishes the formatted-string length to `--digit-count` so a
+     * consumer's width-clamp reads from a single source of truth.
      */
     digitCount?: number;
     /** Tag forwarded to `useAnimatedNumber`. */

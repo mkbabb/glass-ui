@@ -44,7 +44,7 @@ const sizeClass = computed(() => (props.size === 'sm' ? 'h-9' : 'h-10'))
   >
     <slot />
     <SelectIcon as-child>
-      <ChevronDown class="transition-transform duration-200 ease-[var(--ease-standard)] [&[data-state=open]]:rotate-180 h-4 w-4 shrink-0 opacity-50" />
+      <ChevronDown class="transition-transform duration-200 ease-standard [&[data-state=open]]:rotate-180 h-4 w-4 shrink-0 opacity-50" />
     </SelectIcon>
   </SelectTrigger>
 </template>

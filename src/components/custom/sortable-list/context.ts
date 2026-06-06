@@ -18,23 +18,23 @@
  * rendered outside a <SortableList> has no registration target and
  * cannot function. The optional helper would be dead code.
  */
-import { inject, provide, type InjectionKey } from "vue";
 import type { UseSortableReturn } from "../../../composables/sortable";
+import { createStrictContext } from "../../../composables/context";
 
-export const SORTABLE_CONTEXT: InjectionKey<UseSortableReturn> =
-    Symbol("glass-ui:sortable");
+// Strict-only (AV.W14): no `useOptionalSortableContext` is exported — a
+// `<SortableItem>` outside a `<SortableList>` is meaningless (invariant 25's
+// "per intent" clause). The factory's `useOptional` over this key is left
+// unexported by design.
+const ctx = createStrictContext<UseSortableReturn>(
+    "glass-ui:sortable",
+    "[glass-ui:sortable] <SortableItem> must be used inside <SortableList>",
+);
+
+export const SORTABLE_CONTEXT = ctx.KEY;
 
 export function provideSortableContext(sortable: UseSortableReturn): void {
-    provide(SORTABLE_CONTEXT, sortable);
+    ctx.provide(sortable);
 }
 
 /** Strict — throws when used outside `<SortableList>`. */
-export function useSortableContext(): UseSortableReturn {
-    const ctx = inject(SORTABLE_CONTEXT);
-    if (!ctx) {
-        throw new Error(
-            "[glass-ui:sortable] <SortableItem> must be used inside <SortableList>",
-        );
-    }
-    return ctx;
-}
+export const useSortableContext = ctx.use;

@@ -1,10 +1,10 @@
 /*
- * typography.css — Computer Modern body + Fraunces display + Fira Code mono
- *                + Plus Jakarta Sans (brand display fallback face, OFL 1.1)
+ * typography.css — Fraunces serif/display + Plus Jakarta Sans + Fira Code mono
+ *                (all three OFL faces self-hosted via fonts.css)
  *
- * Golden-ratio scale (√φ ≈ 1.272). Computer Modern is primary for body,
- * headings, prose, and math. Fraunces is reserved for ornamental display
- * with WONK=1 / SOFT=0. Fira Code for mono.
+ * Golden-ratio scale (√φ ≈ 1.272). Fraunces carries the serif register —
+ * body, headings, prose, and math — and the ornamental display register
+ * with WONK=1 / SOFT=0. Plus Jakarta Sans is the brand sans; Fira Code is mono.
  *
  * Semantic type classes expose both Tailwind-friendly utility names
  * (`.text-display-*`, `.text-body`, `.text-admin-label`) and feature
@@ -265,7 +265,7 @@ body {
 }
 
 /* ═══════════════════════════════════════════════
-   HEADINGS / BODY — Computer Modern
+   HEADINGS / BODY — Fraunces serif register
    ═══════════════════════════════════════════════ */
 @utility text-title {
     font-family: var(--font-serif);
@@ -358,7 +358,7 @@ body {
 }
 
 /* ═══════════════════════════════════════════════
-   MATH — Computer Modern italic
+   MATH — Fraunces serif italic
    ═══════════════════════════════════════════════ */
 @utility text-math {
     font-family: var(--font-serif);
@@ -444,7 +444,13 @@ body {
         font-variation-settings: var(--font-display-variation-settings);
     }
 
-    @media (min-width: 640px) {
+    /* AV.W16 TW3 — the pane title scales off its PANE's box, not the viewport.
+       An unnamed @container query resolves to the nearest ancestor container,
+       so the title grows once its pane clears 40rem (≈ 640px) regardless of the
+       viewport. Contract: the consuming pane sets `container-type: inline-size`
+       (the dock/chassis pattern); without a container ancestor the compact base
+       holds. */
+    @container (min-width: 40rem) {
         .text-pane-title {
             font-size: var(--type-display-3);
         }

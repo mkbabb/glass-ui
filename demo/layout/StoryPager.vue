@@ -5,9 +5,7 @@ import { useStoryNavigation } from "../composables/useStoryNavigation";
 
 const { current } = useStoryNavigation();
 
-const categoryLoc = computed(() =>
-    current.value?.kind === "category" ? current.value : null,
-);
+const categoryLoc = computed(() => current.value);
 
 interface PagerEntry {
     id: string;
@@ -28,8 +26,8 @@ const entries = computed<PagerEntry[]>(() =>
 
 <template>
     <!--
-      Pager hides entirely when the active route is a flat standalone story
-      (Aurora et al.) — there are no siblings to page through.
+      Pager hides entirely when the active route is not a story page
+      (e.g. a bare category landing) — there are no siblings to page through.
     -->
     <nav
         v-if="categoryLoc && entries.length > 0"

@@ -19,7 +19,7 @@ The `build` script runs two sequential arms — `vite build` emits the JS bundle
 src/
 ├── index.ts                        # v1.0 curated public barrel (vueuse-free)—Phase 2 SCC closure (L.W1 Lane A)
 ├── api/                            # `@mkbabb/glass-ui/api` discovery layer—types + constants only (L.W1 Lane B)
-│   └── index.ts                    # 70 canonical public symbols (67 types + 3 constants)—M.W2 + O.W4 + O.W6 + P.W1 + P.W2 + P.W3 + AQ.W4 + AQ.W5 + AU.W9 extensions; P.W0 + P.W6 resyncs
+│   └── index.ts                    # 68 canonical public symbols (65 types + 3 constants)—M.W2 + O.W4 + O.W6 + P.W1 + P.W2 + P.W3 + AQ.W4 + AQ.W5 + AU.W9 extensions; P.W0 + P.W6 resyncs; AV.W10 metric-cell/stack retirement (−4 types)
 ├── dark.ts                         # `@mkbabb/glass-ui/dark` flat subpath (L.W1 Lane C; vueuse-bearing)
 ├── keyboard.ts                     # `@mkbabb/glass-ui/keyboard` flat subpath (L.W1 Lane C; vueuse-bearing)
 ├── carousel.ts                     # `@mkbabb/glass-ui/carousel` flat subpath (L.W1 Lane C; vueuse-bearing; v1.0.4 ships full `Carousel*` family per MIGRATION.md §1.2)
@@ -69,7 +69,7 @@ src/
 │   │   ├── toggle-group/           # ToggleGroup, ToggleGroupItem
 │   │   ├── tooltip/                # Tooltip provider/trigger/content (rounded-tooltip token)
 │   │   └── index.ts                # barrel: all ui/ exports
-│   ├── custom/                     # 36 custom package dirs (every dir has a package barrel)
+│   ├── custom/                     # 34 custom package dirs (every dir has a package barrel)
 │   │   ├── animated-digit/         # AnimatedDigit single-glyph reel (AB+1 / AC.W6d ergonomics)
 │   │   ├── aurora/                 # Aurora WebGL background + useAurora composable (aurora chrome consumes useConfiguratorState<AuroraConfig> with cloneMode='per-preset'—see Configurator; L.W7 Lane B retired the prior parallel useAuroraStudio chrome)
 │   │   ├── configurator/           # Configurator + ConfiguratorLayer + ConfiguratorRow + useConfiguratorState
@@ -101,8 +101,6 @@ src/
 │   │   ├── instrument-rail/        # InstrumentRail cockpit-ratio rail (AK-W2-α)
 │   │   ├── labeled-field/          # LabeledField parent + 4 wrappers (LabeledInput/Select/Slider/Switch)
 │   │   ├── metric-badge/           # MetricBadge primitive
-│   │   ├── metric-cell/            # MetricCell compact metric card (AB+1 / AC.W8e—wash-tier glass surface)
-│   │   ├── metric-stack/           # MetricStack vertical metric grouping (AB+1 / AC.W6d—`as` prop TransitionGroup support)
 │   │   ├── paper-backdrop/         # PaperBackdrop
 │   │   ├── pulse/                  # Pulse (dots / ring) loading indicator
 │   │   ├── responsive-tabs/        # ResponsiveTabs matchMedia Select↔UnderlineTabs swap (AB+1 / AC.W8e)
@@ -120,6 +118,7 @@ src/
 │   └── index.ts                    # barrel: ui/ + custom/
 ├── composables/                    # v1.0 public composables—9 coherent sub-trees (L.W2 Lane A restructure; AU.W5 added color/)
 │   ├── color/                      # OKLCh primitives + ColorResolver seam (value.js-only leaf—subpath /color; AU.W5)
+│   ├── context/                    # createStrictContext<T>()/createOptionalContext<T>() canonical DI factory pair (AV.W14; internal—the dock/dock-layer/toggle-group/sortable/glyph-face/configurator provide-inject triplets collapse onto it)
 │   ├── dark/                       # useGlobalDark({initialValue}) + darkModeSyncScript()/installDarkModeSync() FOUC (subpath /dark; vueuse-bearing; AU.W9)
 │   ├── keyboard/                   # useKeyboardShortcuts + registerShortcut + useRegisteredShortcuts
 │   │                               # + formatCombo + formatComboParts + isMac + types
@@ -164,9 +163,12 @@ src/
 │   ├── view-transition.css         # AQ.W5—.gl-list-item View-Transitions group recipe + --vt-* axes (the useViewTransition substrate's CSS half)
 │   └── utilities.css               # focus-ring, btn-press, btn-audacious (K W6), rainbow-text, touch-gate, etc.
 └── utils/
-    └── cn.ts                       # clsx + hand-rolled deduplicator (v0.9.2—replaces tailwind-merge)
+    ├── cn.ts                       # clsx + hand-rolled deduplicator (v0.9.2—replaces tailwind-merge)
+    └── prng.ts                     # shared seeded PRNG leaf—mulberry32 + hashString single-source (AV.W14; watercolor-dot + goo-blob import it; watercolor keeps its border-radius helpers local)
 
 ```
+
+Tests live in a top-level `tests/` tree that MIRRORS `src/` (AV.W14—NO test files under `src/`, enforced by `proof:no-test-in-src`). A spec at `src/<P>/__tests__/foo.test.ts` lives at `tests/<P>/foo.test.ts`; relative imports route through `../…/src/<P>/…` (the `@/*` alias is retired—relative imports across the repo per v0.8.2). The shader-validation fixture `metaball-color.glsl-port.ts` rides with its tests (`tests/components/custom/goo-blob/`). `vitest.config.ts` globs `tests/**` + `scripts/**`. The two gates that read a relocated test as a canary/consumer-#2 fixture (`proof:single-color-core`, `proof:webgl-substrate-single`) and the two test-running proof scripts (`proof:dock-a11y-contract`, `proof:blob-color-equivalence`) point at the `tests/` paths.
 
 ## Conventions
 

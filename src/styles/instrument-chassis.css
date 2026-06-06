@@ -71,6 +71,11 @@
            paints something readable. */
         --phase-color: var(--muted-foreground);
         --phase-color-label: var(--muted-foreground);
+
+        /* AV.W16 TW3 — inline-size container named `chassis` so the dial reflow
+           below reads the chassis's OWN box, not the viewport (portable into a
+           narrow host). */
+        container: chassis / inline-size;
     }
 
     .dark .instrument-chassis {
@@ -286,10 +291,12 @@
         align-self: stretch;
     }
 
-    /* Mobile reflow — dial stacks vertically; the inner divider rotates from
-       a vertical groove (desktop) to a horizontal groove (mobile). Same
-       twin-line idiom, different orientation. */
-    @media (max-width: 720px) {
+    /* Narrow-box reflow — dial stacks vertically; the inner divider rotates
+       from a vertical groove (wide) to a horizontal groove (narrow). AV.W16 TW3
+       — keyed off the `chassis` container (above), not the viewport, so a
+       narrow-host chassis stacks off ITS box. 45rem ≈ 720px at the 16px root
+       (the prior viewport cadence as a box width). */
+    @container chassis (max-width: 44.9375rem) {
         .instrument-chassis .instrument-dial {
             grid-template-columns: 1fr;
             /* R0G-2 (AO.W3) — reserve the dial's FINAL box from frame 0. The

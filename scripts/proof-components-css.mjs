@@ -64,6 +64,15 @@ const GLASS_TOKEN_RUNGS = ["tokens.css", "theme.css", "typography.css"];
 //                                   trigger width for `w-[var(...)]` matching.
 //   --reka-toast-swipe-{end,move}-x — reka-ui ToastRoot sets these per swipe
 //                                   gesture for the swipe-translate utilities.
+//   --reka-combobox-content-transform-origin — reka-ui ComboboxContent sets the
+//                                   popper transform-origin; ComboboxList reads it
+//                                   via `origin-(--reka-…)` (AV.W16 TW5 paren form).
+//   --reka-select-trigger-{height,width} — reka-ui SelectContent sets these to the
+//                                   trigger box; SelectContent's popper viewport
+//                                   reads them via `h-(--reka-…)`/`min-w-(--reka-…)`.
+//   --reka-tabs-indicator-{position,size} — reka-ui TabsIndicator sets these per
+//                                   active tab; the indicator reads them via
+//                                   `translate-x-(--reka-…)`/`h-(--reka-…)`.
 //   --dock-pos                    — GlassDock sets the dock offset inline.
 //   --carousel-nav-{offset,size}  — Carousel nav-button positioning, consumer-
 //                                   tunable, defaulted in the carousel SFC.
@@ -74,6 +83,11 @@ const RUNTIME_PROPS = new Set([
     "--reka-popover-trigger-width",
     "--reka-toast-swipe-end-x",
     "--reka-toast-swipe-move-x",
+    "--reka-combobox-content-transform-origin",
+    "--reka-select-trigger-height",
+    "--reka-select-trigger-width",
+    "--reka-tabs-indicator-position",
+    "--reka-tabs-indicator-size",
     "--dock-pos",
     "--carousel-nav-offset",
     "--carousel-nav-size",

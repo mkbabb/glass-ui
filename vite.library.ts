@@ -19,8 +19,6 @@ export function libraryEntries(rootDir: string) {
         "goo-blob": resolve(rootDir, "src/goo-blob.ts"),
         "watercolor-dot": resolve(rootDir, "src/watercolor-dot.ts"),
         "metric-badge": resolve(rootDir, "src/metric-badge.ts"),
-        "metric-stack": resolve(rootDir, "src/metric-stack.ts"),
-        "metric-cell": resolve(rootDir, "src/metric-cell.ts"),
         "responsive-tabs": resolve(rootDir, "src/responsive-tabs.ts"),
         "animated-digit": resolve(rootDir, "src/animated-digit.ts"),
         "status-dot": resolve(rootDir, "src/status-dot.ts"),

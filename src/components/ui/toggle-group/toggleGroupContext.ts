@@ -1,6 +1,6 @@
-import { inject, provide, type InjectionKey } from "vue";
 import type { VariantProps } from "class-variance-authority";
 import type { toggleVariants } from "../toggle";
+import { createOptionalContext } from "../../../composables/context";
 
 /**
  * ToggleGroup context — surfaces `variant` + `size` to descendant
@@ -18,15 +18,15 @@ export interface ToggleGroupContext {
     size: ToggleGroupVariants["size"];
 }
 
-export const TOGGLE_GROUP_KEY: InjectionKey<ToggleGroupContext> = Symbol(
-    "glass-ui:toggle-group",
-);
+// Optional-only (AV.W14): `<ToggleGroupItem>` can also render bare, so no
+// strict counterpart is minted.
+const ctx = createOptionalContext<ToggleGroupContext>("glass-ui:toggle-group");
+
+export const TOGGLE_GROUP_KEY = ctx.KEY;
 
 export function provideToggleGroupContext(context: ToggleGroupContext): void {
-    provide(TOGGLE_GROUP_KEY, context);
+    ctx.provide(context);
 }
 
 /** Befitting silent default — `<ToggleGroupItem>` can also render bare. */
-export function useOptionalToggleGroupContext(): ToggleGroupContext | null {
-    return inject(TOGGLE_GROUP_KEY, null);
-}
+export const useOptionalToggleGroupContext = ctx.use;

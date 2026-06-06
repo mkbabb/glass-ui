@@ -1,4 +1,4 @@
-import { mulberry32, hashString } from "./prng";
+import { mulberry32, hashString } from "../../../../utils/prng";
 import type {
     BlobConfig,
     MetaballSource,

@@ -106,9 +106,18 @@ const startedAt = Date.now();
 // 106614 → 110000) — the second one-time conscious lift, for the dock-motion
 // feature landing (the 3.3.0 headline), not per-wave creep. The dock.js
 // drift re-baseline (+SpringProgress LIGHT driver) rides the same commit.
+//
+// AV.W15/W16 landing (the iOS-26 Liquid Glass token surface + the modern-v4
+// idiom cohesion): the W15 token evolution (--glass-edge-light rim, the moving
+// specular @property regs + glass-specular-track.css rung, the oklch ramp
+// light-dark() pairs) + the W16 container-query rules (dock/chassis/typography
+// @container contexts) lift the measured draw to raw 459897 / gzip 114456.
+// Re-based with the SAME ~3% close headroom (raw 459897 → 474000; gzip
+// 114456 → 118000) — the third one-time conscious lift, for the iOS-26 +
+// idiom feature landing, not per-wave creep.
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
-    "dist/styles/index.css": { raw: 455_000, gzip: 110_000 },
+    "dist/styles/index.css": { raw: 474_000, gzip: 118_000 },
 };
 
 // AO.W2 (inv α) — the real consumer-draw CSS artifact.

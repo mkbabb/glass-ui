@@ -34,7 +34,7 @@ function cliPaths() {
     _cliPaths = {
         ROOT,
         SRC: resolve(ROOT, "src"),
-        CANARY: resolve(ROOT, "src/components/custom/aurora/__tests__/color-equivalence.test.ts"),
+        CANARY: resolve(ROOT, "tests/components/custom/aurora/color-equivalence.test.ts"),
         ARTIFACT: gateArtifactPath("GLASS_UI_SINGLE_COLOR_CORE_ARTIFACT", "AU-single-color-core"),
     };
     return _cliPaths;
@@ -75,7 +75,7 @@ function run() {
     // the equivalence canary must exist (the value.js-agreement drift guard).
     facts.canary = existsSync(CANARY);
     if (!facts.canary) {
-        violations.push("the color-equivalence canary (aurora/__tests__/color-equivalence.test.ts) is absent — the value.js-agreement drift guard is gone");
+        violations.push("the color-equivalence canary (tests/components/custom/aurora/color-equivalence.test.ts) is absent — the value.js-agreement drift guard is gone");
     }
 
     const status = violations.length === 0 ? "pass" : "fail";

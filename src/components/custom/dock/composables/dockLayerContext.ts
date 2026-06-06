@@ -1,4 +1,5 @@
-import { inject, provide, type Component, type InjectionKey, type Ref } from "vue";
+import type { Component, Ref } from "vue";
+import { createStrictContext } from "../../../../composables/context";
 
 /**
  * DockLayerGroup context — DI surface for `<DockLayer>` children registering
@@ -31,26 +32,21 @@ export interface DockLayerGroupContext {
     leavingLayerId: Readonly<Ref<string | null>>;
 }
 
-export const DOCK_LAYER_GROUP_KEY: InjectionKey<DockLayerGroupContext> = Symbol(
+// Strict + optional (reserved) over ONE key (AV.W14): `<DockLayerGroup>`
+// provides; `<DockLayer>` children use strict.
+const ctx = createStrictContext<DockLayerGroupContext>(
     "glass-ui:dock-layer-group",
+    "[glass-ui:dock] <DockLayer> must be used inside <DockLayerGroup>",
 );
 
+export const DOCK_LAYER_GROUP_KEY = ctx.KEY;
+
 export function provideDockLayerGroupContext(context: DockLayerGroupContext): void {
-    provide(DOCK_LAYER_GROUP_KEY, context);
+    ctx.provide(context);
 }
 
 /** Strict — throws when used outside `<DockLayerGroup>`. */
-export function useDockLayerGroupContext(): DockLayerGroupContext {
-    const ctx = inject(DOCK_LAYER_GROUP_KEY);
-    if (!ctx) {
-        throw new Error(
-            "[glass-ui:dock] <DockLayer> must be used inside <DockLayerGroup>",
-        );
-    }
-    return ctx;
-}
+export const useDockLayerGroupContext = ctx.use;
 
 /** Befitting silent default; reserved for future consumers. */
-export function useOptionalDockLayerGroupContext(): DockLayerGroupContext | null {
-    return inject(DOCK_LAYER_GROUP_KEY, null);
-}
+export const useOptionalDockLayerGroupContext = ctx.useOptional;

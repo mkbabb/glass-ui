@@ -17,10 +17,12 @@ export default defineConfig({
     test: {
         environment: "happy-dom",
         globals: true,
+        // AV.W14 — all tests live under the top-level `tests/` tree (mirrors
+        // `src/`); none remain in `src/` (proof:no-test-in-src). The
+        // `scripts/**` glob covers any gate self-test colocated with a script.
         include: [
-            "src/**/*.{test,spec}.{ts,tsx}",
-            "src/**/*.{test,spec}.vue",
             "tests/**/*.{test,spec}.{ts,tsx}",
+            "tests/**/*.{test,spec}.vue",
             "scripts/**/*.{test,spec}.{ts,tsx}",
         ],
         setupFiles: ["./tests/setup.ts"],

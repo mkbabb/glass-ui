@@ -2,6 +2,7 @@
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../../src/components/ui/tabs";
+import { BouncyTabs, type TabOption } from "../../../src/components/custom/tabs";
 import { cn } from "../../../src/utils/cn";
 
 const defaultTab = ref("overview");
@@ -32,6 +33,24 @@ const profile = [
     { id: "billing", label: "Billing" },
     { id: "team", label: "Team" },
     { id: "keys", label: "API Keys" },
+];
+
+// Bouncy variant — the custom <BouncyTabs> spring-slider toggle (merged in
+// from the former standalone bouncy-tabs story, AV.W10).
+const viewMode = ref("grid");
+const viewOptions: TabOption[] = [
+    { label: "Grid", value: "grid" },
+    { label: "List", value: "list" },
+    { label: "Kanban", value: "kanban" },
+    { label: "Timeline", value: "timeline" },
+];
+
+const priority = ref("normal");
+const priorityOptions: TabOption[] = [
+    { label: "Low", value: "low" },
+    { label: "Normal", value: "normal" },
+    { label: "High", value: "high" },
+    { label: "Urgent", value: "urgent" },
 ];
 </script>
 
@@ -138,6 +157,26 @@ const profile = [
                     </TabsContent>
                 </div>
             </Tabs>
+        </section>
+
+        <!-- Bouncy — the custom <BouncyTabs> spring-slider toggle variant. -->
+        <section class="flex flex-col gap-3">
+            <h2 class="text-sm font-semibold text-muted-foreground">
+                Bouncy (custom spring-slider variant)
+            </h2>
+            <p class="text-sm text-muted-foreground">
+                <code class="rounded bg-muted px-1">&lt;BouncyTabs&gt;</code> — a
+                squash-stretch spring slider over a shared track. Default and
+                pill variants; slider position + width reflow on prop change.
+            </p>
+            <div class="flex flex-wrap items-center gap-3 rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-4">
+                <BouncyTabs v-model="viewMode" :options="viewOptions" />
+                <span class="text-xs text-muted-foreground">selected: {{ viewMode }}</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-4">
+                <BouncyTabs v-model="priority" :options="priorityOptions" variant="pill" />
+                <span class="text-xs text-muted-foreground">selected: {{ priority }}</span>
+            </div>
         </section>
     </StoryPage>
 </template>

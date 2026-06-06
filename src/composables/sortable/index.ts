@@ -1,5 +1,1 @@
-export {
-    useSortable,
-    type UseSortableReturn,
-    type SortableId,
-} from "./useSortable";
+export { useSortable, type UseSortableReturn, type SortableId } from "./useSortable";

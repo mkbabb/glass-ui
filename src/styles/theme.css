@@ -5,20 +5,49 @@
  * Tailwind utility-generating token. References vars (not literals) so
  * consumers can override at :root / .dark without rebuilding Tailwind.
  *
- * Two blocks (AV.W16 TW1):
- *   - `@theme inline` carries every `var(--token)`-referencing BRIDGE. The
- *     inline form substitutes the referenced value into the generated
- *     utilities and mints NO second global variable, so each tokens.css
- *     token stays the SINGLE override point (a plain `@theme` would emit
- *     both `--color-primary` AND `--primary`, doubling the override
- *     surface). Guardrail: NEVER `@property`-register a color token —
- *     registration snapshots the resolved value and breaks light-dark()
- *     re-resolution (see the `--color-muted-foreground-strong` note below).
- *   - the trailing plain `@theme` carries the directly-authored LITERALS
- *     (the radius primitives, the `--animate-*` composites, the opacity
- *     rungs) — these ARE the source of truth here, not bridges, so they
- *     mint their namespaced var as the override surface.
+ * Three blocks (AV.W16 TW1):
+ *   - LEADING plain `@theme`: the radius primitives + the radius semantic
+ *     aliases. Plain (not inline) on purpose — the radius scale has no
+ *     tokens.css twin, so each `--radius-*` is the lone declaration + single
+ *     override point. Inline is WRONG here: it substitutes the VALUE, so two
+ *     aliases resolving to one primitive (`--radius-card`/`--radius-dialog`
+ *     both → `--radius-2xl`) collapse to an identical value and v4 drops one
+ *     `rounded-*` utility when both are scanned. Plain mints each alias's own
+ *     var, so value-identical siblings never collide.
+ *   - `@theme inline`: the tokens.css `var(--token)` BRIDGES (color/shadow/
+ *     blur/duration/ease/typography). Inline substitutes the referenced value
+ *     and mints no second var, so the tokens.css token stays the single
+ *     override point (plain would emit `--color-primary` AND `--primary`).
+ *     Guardrail: NEVER `@property`-register a color token — registration
+ *     snapshots the value and breaks light-dark() (see below).
+ *   - trailing plain `@theme`: the remaining literals (`--animate-*`, opacity).
  */
+
+/* Radius primitives — leading plain @theme (declared before the inline aliases
+   reference them; see the order note above). */
+@theme {
+    --radius: 0.625rem;
+    --radius-xs: 4px;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-xl: 12px;
+    --radius-2xl: 1rem;
+    --radius-pill: 9999px;
+
+    /* Semantic radius aliases — plain @theme (not inline; see header note).
+       Value-identical siblings (e.g. --radius-card + --radius-dialog) would
+       collapse + drop a rounded-* utility under inline; plain mints each
+       alias's own var. */
+    --radius-lg:      var(--radius);
+    --radius-card:    var(--radius-2xl);
+    --radius-panel:   var(--radius-xl);
+    --radius-dialog:  var(--radius-2xl);
+    --radius-input:   var(--radius);
+    --radius-button:  var(--radius);
+    --radius-badge:   var(--radius-pill);
+    --radius-dock:    var(--radius-pill);
+    --radius-tooltip: var(--radius-lg);
+}
 
 @theme inline {
     /* ═══════════════════════════════════════════════
@@ -235,26 +264,10 @@
     --z-index-toggle: var(--z-toggle);
     --z-index-max: var(--z-max);
 
-    /* ═══════════════════════════════════════════════
-       Border radius (aliases) → rounded-* utilities
-       The radius PRIMITIVES (--radius, --radius-xs … --radius-pill) are
-       directly-authored literals; they live in the trailing plain @theme
-       block (they are the override surface, not bridges). These semantic
-       aliases reference them — @theme inline substitutes the referenced
-       value, no second variable minted. Custom-property resolution is not
-       declaration-order-dependent, so a forward var() reference resolves.
-       ═══════════════════════════════════════════════ */
-    --radius-lg:      var(--radius);
-
-    /* Semantic radius — point at primitives from tokens.css; no self-reference */
-    --radius-card:    var(--radius-2xl);
-    --radius-panel:   var(--radius-xl);
-    --radius-dialog:  var(--radius-2xl);
-    --radius-input:   var(--radius);
-    --radius-button:  var(--radius);
-    --radius-badge:   var(--radius-pill);
-    --radius-dock:    var(--radius-pill);
-    --radius-tooltip: var(--radius-lg);
+    /* The radius PRIMITIVES + the semantic radius aliases (→ rounded-*
+       utilities) live in the LEADING plain @theme block above — plain, not
+       inline, so value-identical aliases never collide during candidate
+       resolution. See the order/collision note there. */
 
     /* ═══════════════════════════════════════════════
        Sizing → h-*, min-w-*, and spacing utilities
@@ -356,17 +369,6 @@
    opacity rungs.
    ═══════════════════════════════════════════════════════════════════════ */
 @theme {
-    /* ═══════════════════════════════════════════════
-       Border radius primitives → rounded-* utilities
-       ═══════════════════════════════════════════════ */
-    --radius: 0.625rem;
-    --radius-xs: 4px;
-    --radius-sm: 4px;
-    --radius-md: 6px;
-    --radius-xl: 12px;
-    --radius-2xl: 1rem;
-    --radius-pill: 9999px;
-
     /* ═══════════════════════════════════════════════
        Animation → animate-* utilities
        ═══════════════════════════════════════════════ */

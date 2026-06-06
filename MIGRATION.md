@@ -797,6 +797,34 @@ at O.W6 cross-repo cohort. No other constellation references.
 
 ---
 
+## `@mkbabb/glass-ui/metric-cell` + `@mkbabb/glass-ui/metric-stack` subpaths RETIRED (AV.W10)
+
+Both subpaths are removed. The `metric-cell/` (`MetricCell`) and
+`metric-stack/` (`MetricStack` + `MetricRow`) component dirs, their
+`src/metric-cell.ts` / `src/metric-stack.ts` barrels, the
+`./metric-cell` / `./metric-stack` `package.json` `exports` entries +
+`typesVersions` rows, and the `@mkbabb/glass-ui/api` re-exports
+(`MetricCellAppearance`, `MetricCellProps`, `MetricStackProps`,
+`MetricRowProps`) are deleted. The orphaned `--metric-row-*` value-clamp
+token family (tokens.css §17, consumed only by `MetricRow`/`MetricStack`)
+is removed with them.
+
+**0 external consumers** — at HEAD neither package had any `.vue`/`.ts`
+SFC consumer across `src/` or `demo/` (only its own dir + test + the
+subpath barrel + the `/api` re-export). They failed the ≥2-consumer
+substrate bar (J inv 10), so they are retired rather than wired to a
+synthetic second consumer.
+
+**No alias** (no-backwards-compat precept). There is no shim. A consumer
+that imported these subpaths fails with Node's standard
+`ERR_PACKAGE_PATH_NOT_EXPORTED`; the migration is to compose
+`<MetricBadge>` (still shipped on the root barrel + `/metric-badge`)
+directly — `MetricStack` was a thin layout grouping over `MetricBadge`
+rows, and `MetricCell` a glass-surface card wrapper, both reproducible in
+consumer composition.
+
+---
+
 ## Recommended new surfaces (best-practice, not strict migration)
 
 Even where a root-barrel import still works at v1.0, prefer per-package

@@ -130,14 +130,8 @@
             "carousel": [
                 "dist/carousel.d.ts"
             ],
-            "metric-stack": [
-                "dist/metric-stack.d.ts"
-            ],
             "animated-digit": [
                 "dist/animated-digit.d.ts"
-            ],
-            "metric-cell": [
-                "dist/metric-cell.d.ts"
             ],
             "responsive-tabs": [
                 "dist/responsive-tabs.d.ts"
@@ -310,17 +304,9 @@
             "types": "./dist/metric-badge.d.ts",
             "import": "./dist/metric-badge.js"
         },
-        "./metric-stack": {
-            "types": "./dist/metric-stack.d.ts",
-            "import": "./dist/metric-stack.js"
-        },
         "./animated-digit": {
             "types": "./dist/animated-digit.d.ts",
             "import": "./dist/animated-digit.js"
-        },
-        "./metric-cell": {
-            "types": "./dist/metric-cell.d.ts",
-            "import": "./dist/metric-cell.js"
         },
         "./responsive-tabs": {
             "types": "./dist/responsive-tabs.d.ts",
@@ -552,10 +538,11 @@
         "proof:dock-motion-parity": "node scripts/proof-dock-motion-parity.mjs",
         "proof:dock-motion-single-source": "node scripts/proof-dock-motion-single-source.mjs",
         "proof:dock-opacity-lockstep": "node scripts/proof-dock-opacity-lockstep.mjs",
-        "proof:dock-a11y-contract": "vitest run src/components/custom/dock/__tests__/DockLayerRail.a11y.test.ts",
+        "proof:dock-a11y-contract": "vitest run tests/components/custom/dock/DockLayerRail.a11y.test.ts",
         "proof:dock-vocabulary": "node scripts/proof-dock-vocabulary.mjs",
         "proof:dock-css-split": "node scripts/proof-dock-controls-split.mjs",
         "proof:design-idiom-localization": "node scripts/proof-design-idiom-localization.mjs",
+        "proof:tailwind-v4-idiom": "node scripts/proof-tailwind-v4-idiom.mjs",
         "proof:au-w9-consumers": "node scripts/proof-au-w9-consumers.mjs",
         "proof:doc-consistency": "node scripts/proof-doc-consistency.mjs",
         "proof:au-w0-reground": "node scripts/proof-au-w0-reground.mjs",
@@ -570,6 +557,9 @@
         "proof:single-color-core": "node scripts/proof-single-color-core.mjs",
         "proof:frostShader-deleted": "node scripts/proof-frostshader-deleted.mjs",
         "proof:slider-two-only": "node scripts/proof-slider-two-only.mjs",
+        "proof:storybook-ia": "node scripts/proof-storybook-ia.mjs",
+        "proof:no-orphan-demo-route": "node scripts/proof-no-orphan-demo-route.mjs",
+        "proof:font-canon": "node scripts/proof-font-canon.mjs",
         "proof:webgl-substrate-single": "node scripts/proof-webgl-substrate-single.mjs",
         "proof:blob-value-free": "node scripts/proof-blob-value-free.mjs",
         "proof:motion-composables-consumer": "node scripts/proof-motion-composables-consumer.mjs",
@@ -578,11 +568,16 @@
         "proof:blob-space-gamma": "node scripts/proof-blob-space-gamma.mjs",
         "proof:aurora-space-gamma": "node scripts/proof-aurora-space-gamma.mjs",
         "proof:shader-shared-source": "node scripts/proof-shader-shared-source.mjs",
-        "proof:blob-color-equivalence": "vitest run src/components/custom/goo-blob/__tests__/blob-color-equivalence.test.ts",
+        "proof:blob-color-equivalence": "vitest run tests/components/custom/goo-blob/blob-color-equivalence.test.ts",
         "proof:fail-explicit": "node scripts/proof-fail-explicit.mjs",
+        "proof:no-god-module": "node scripts/proof-no-god-module.mjs",
         "proof:no-legacy-commentary": "node scripts/proof-no-legacy-commentary.mjs",
         "proof:liquid-glass-tokens": "node scripts/proof-liquid-glass-tokens.mjs",
         "proof:lockfile": "node scripts/proof-lockfile.mjs",
+        "proof:di-consistency": "node scripts/proof-di-consistency.mjs",
+        "proof:no-nested-import": "node scripts/proof-no-nested-import.mjs",
+        "proof:no-test-in-src": "node scripts/proof-no-test-in-src.mjs",
+        "proof:spring-tokens-synced": "node scripts/proof-spring-tokens-synced.mjs",
         "proof:all": "node scripts/gates.mjs --run local",
         "gates:verify-ci": "node scripts/gates.mjs --verify-ci",
         "profile:bundle": "node scripts/profile-bundle.mjs",

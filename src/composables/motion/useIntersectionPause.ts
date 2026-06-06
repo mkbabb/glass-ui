@@ -8,6 +8,9 @@ import {
     type MaybeRefOrGetter,
     type Ref,
 } from "vue";
+// AV.W14 — the shared `visibilitychange` leaf (engine-free, vue-only). Imported
+// directly (not via the dom/ barrel) so it stays off the public root surface.
+import { useDocumentVisibility } from "../dom/useDocumentVisibility";
 
 export interface PausableRuntime {
     pause: () => void;
@@ -38,10 +41,6 @@ export interface IntersectionPauseControls {
     dispose: () => void;
 }
 
-function getDocument(): Document | null {
-    return typeof document === "undefined" ? null : document;
-}
-
 /**
  * Pause a runtime while its target is outside the viewport or the document is
  * hidden. Safe to call in SSR/tests; unavailable observers leave runtime state
@@ -59,9 +58,8 @@ export function useIntersectionPause(
         pauseWhenHidden = true,
     } = options;
 
-    const doc = getDocument();
     const isIntersecting = ref(true);
-    const isDocumentVisible = ref(!pauseWhenHidden || !doc?.hidden);
+    const isDocumentVisible = ref(true);
     const isPaused = ref(false);
 
     let disposed = false;
@@ -117,13 +115,19 @@ export function useIntersectionPause(
         { immediate: true },
     );
 
-    function onVisibilityChange(): void {
-        isDocumentVisible.value = !pauseWhenHidden || !doc?.hidden;
-        applyRuntimeState();
-    }
-
-    if (doc && pauseWhenHidden) {
-        doc.addEventListener("visibilitychange", onVisibilityChange);
+    if (pauseWhenHidden) {
+        const { hidden } = useDocumentVisibility();
+        isDocumentVisible.value = !hidden.value;
+        // `flush: 'sync'` so the visibility reaction is synchronous — matches
+        // the prior hand-rolled `visibilitychange` listener's timing exactly.
+        watch(
+            hidden,
+            (next) => {
+                isDocumentVisible.value = !next;
+                applyRuntimeState();
+            },
+            { flush: "sync" },
+        );
     }
 
     function dispose(): void {
@@ -133,7 +137,6 @@ export function useIntersectionPause(
         observer?.disconnect();
         observer = null;
         observedTarget = null;
-        doc?.removeEventListener("visibilitychange", onVisibilityChange);
     }
 
     if (getCurrentScope()) {

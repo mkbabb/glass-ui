@@ -55,15 +55,29 @@ const probeClasses = [
     "animate-shimmer",
 ];
 
+// AV.W16 TW1 — the `@theme inline` migration substitutes the REFERENCED value
+// into the generated utility (it mints no second namespaced var), so a bridge
+// `--text-display-1: var(--type-display-1)` emits `font-size: var(--type-display-1)`
+// — the tokens.css source token, NOT the `--text-display-1` namespace var. Each
+// assertion below pins the SUBSTITUTED value (the inline-bridge contract: the
+// utility resolves straight to the single override point in tokens.css).
+//
+// The exceptions are the entries authored as PLAIN `@theme` (the override
+// surface IS the namespaced var, so no substitution): `shadow-card` reads the
+// `--card-shadow` literal-bridge body, `rounded-card` reads its own
+// `--radius-card` alias var (plain @theme — value-identical siblings would
+// collide under inline; see theme.css radius note), `max-w-2xl` reads
+// Tailwind's built-in `--container-2xl`, and `animate-dock-in` reads the plain
+// `--animate-dock-in` composite.
 const cssAssertions = [
-    ["text-display-1", "font-size: var(--text-display-1)"],
-    ["font-display", "font-family: var(--font-display)"],
-    ["leading-display", "line-height: var(--leading-display)"],
-    ["tracking-caps", "letter-spacing: var(--tracking-caps)"],
-    ["bg-gold", "background-color: var(--color-gold)"],
+    ["text-display-1", "font-size: var(--type-display-1)"],
+    ["font-display", "font-family: var(--font-stack-display)"],
+    ["leading-display", "line-height: var(--type-leading-display)"],
+    ["tracking-caps", "letter-spacing: var(--type-tracking-caps)"],
+    ["bg-gold", "background-color: var(--gold)"],
     ["shadow-card", "var(--card-shadow)"],
     ["rounded-card", "border-radius: var(--radius-card)"],
-    ["z-dock", "z-index: var(--z-index-dock)"],
+    ["z-dock", "z-index: var(--z-dock)"],
     ["max-w-2xl", "max-width: var(--container-2xl)"],
     ["animate-dock-in", "animation: var(--animate-dock-in)"],
 ];

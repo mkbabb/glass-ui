@@ -1,0 +1,23 @@
+{
+  "wave": "AV.W14",
+  "title": "DI + service-boundaries + pipeline-orchestration + hygiene",
+  "diNetLoc": 1,
+  "diNote": "DI factory pair (createContext.ts +index.ts) + 6 context migrations + goo-blob di-default sentinel: +71 / -70 net +1. The factory pays for itself by collapsing the per-site provide/inject/throw boilerplate; the 6 call sites now each declare only their interface + label + (strict) error message.",
+  "dedupNetLoc": -46,
+  "dedupNote": "Lane E single-sourcing: shared src/utils/prng.ts (mulberry32 + hashString defined once; goo-blob/composables/prng.ts deleted, watercolor re-exports the core + keeps its border-radius helpers); shared src/composables/glass/webgl/compile.ts (compileShader/linkProgram — the aurora glSetup + goo-blob metaball both drop their byte-identical local copies); src/composables/dom/useDocumentVisibility.ts leaf (useRAFLoop + useIntersectionPause drop their hand-rolled visibilitychange listener + dispose). +65 / -111 net -46.",
+  "hoistNetLoc": 0,
+  "hoistNote": "Lane B: useSidebarState.ts:46 inline import(\"vue\").ComputedRef hoisted to a top-level import type { ComputedRef }. +2 / -2.",
+  "testRelocation": {
+    "relocatedFiles": 62,
+    "testFiles": 60,
+    "testDFiles": 1,
+    "fixtures": 1,
+    "deletedInSrcDirs": 27,
+    "deletedInSrcLines": 7721,
+    "note": "All 60 *.test.ts + 1 *.test-d.ts + the metaball-color.glsl-port.ts fixture relocated from 27 in-src __tests__/ dirs to a top-level tests/ tree mirroring src/. Pure relocation + relative-import-depth fix + 2 instrument-chassis __dirname filesystem-path fixes; no test logic changed. The full vitest suite is green from tests/ (71 files / 690 tests)."
+  },
+  "newInternalChunks": ["compile.js", "createContext.js", "prng.js"],
+  "newInternalChunksNote": "Three NEW internal shared-leaf chunks from the Lane A/E extractions. NONE is a published subpath — package.json exports + the 69 published subpath entry files are byte-unchanged (proof:package + verify-export-types + proof:resolution green).",
+  "publicSurfaceByteStable": true,
+  "excluded": "src/styles/typography.css + tests/stories.smoke.spec.ts carried pre-existing working-tree edits at wave open (NOT W14 changes — left untouched)."
+}

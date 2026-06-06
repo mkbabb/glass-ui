@@ -9,11 +9,15 @@ import type { ConfigBaseline, Density, FontOption, FontSlots, WritableField } fr
 export const STORAGE_KEY = "glass-ui-demo-config";
 export const PRESET_LINK_ID = "glass-ui-demo-preset-link";
 
+// The shipped-canon font picker. Every stack names ONLY a self-hosted face
+// (Plus Jakarta Sans / Fira Code / Fraunces — declared in src/styles/fonts.css
+// + demo/demo.css), its Capsize-calibrated "* Fallback" wrapper, or a generic
+// system keyword. No option advertises a face the browser cannot paint.
 export const FONT_OPTIONS: readonly FontOption[] = [
     {
-        id: "cm-serif",
-        label: "Computer Modern Serif",
-        stack: '"Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif',
+        id: "plus-jakarta-sans",
+        label: "Plus Jakarta Sans",
+        stack: '"Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif',
     },
     {
         id: "fraunces",
@@ -21,39 +25,29 @@ export const FONT_OPTIONS: readonly FontOption[] = [
         stack: '"Fraunces", Georgia, serif',
     },
     {
-        id: "general-sans",
-        label: "General Sans",
-        stack: '"General Sans", "Inter", system-ui, sans-serif',
-    },
-    {
-        id: "inter",
-        label: "Inter",
-        stack: '"Inter", system-ui, sans-serif',
-    },
-    {
-        id: "jetbrains-mono",
-        label: "JetBrains Mono",
-        stack: '"JetBrains Mono", "Fira Code", ui-monospace, monospace',
-    },
-    {
         id: "fira-code",
         label: "Fira Code",
-        stack: '"Fira Code", ui-monospace, monospace',
+        stack: '"Fira Code", "Fira Code Fallback", "Fira Mono", monospace',
     },
     {
         id: "system",
-        label: "System",
+        label: "System UI",
         stack: "system-ui, -apple-system, sans-serif",
+    },
+    {
+        id: "ui-monospace",
+        label: "ui-monospace",
+        stack: "ui-monospace, 'SF Mono', 'Cascadia Code', monospace",
     },
 ] as const;
 
 export const DEFAULT_CONFIG: ConfigBaseline = {
     preset: "default",
     font: {
-        serif: '"Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif',
-        sans: '"Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif',
+        serif: '"Fraunces", Georgia, serif',
+        sans: '"Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif',
         display: '"Fraunces", Georgia, serif',
-        mono: '"Fira Code", "Fira Mono", monospace',
+        mono: '"Fira Code", "Fira Code Fallback", "Fira Mono", monospace',
     },
     scaleBase: 16,
     hueShift: 0,

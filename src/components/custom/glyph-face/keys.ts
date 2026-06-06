@@ -1,4 +1,5 @@
-import { inject, provide, type InjectionKey, type Ref } from "vue";
+import type { Ref } from "vue";
+import { createOptionalContext } from "../../../composables/context";
 
 /**
  * Silhouette injection slot used by `<GlyphFace>` to receive a silhouette
@@ -26,11 +27,16 @@ import { inject, provide, type InjectionKey, type Ref } from "vue";
  * `<DiscoGlyph>` rendering outside `<GlyphFace>` is a first-class use case,
  * not an error condition.
  */
-export const GLYPH_FACE_SILHOUETTE_KEY: InjectionKey<Ref<string | undefined>> =
-    Symbol("glass-ui:glyph-face-silhouette");
+// Optional-only (AV.W14): silent absence is the design intent — `<DiscoGlyph>`
+// rendering outside `<GlyphFace>` is a first-class use case, not an error.
+const ctx = createOptionalContext<Ref<string | undefined>>(
+    "glass-ui:glyph-face-silhouette",
+);
+
+export const GLYPH_FACE_SILHOUETTE_KEY = ctx.KEY;
 
 export function provideGlyphFaceSilhouette(slot: Ref<string | undefined>): void {
-    provide(GLYPH_FACE_SILHOUETTE_KEY, slot);
+    ctx.provide(slot);
 }
 
 /**
@@ -38,6 +44,4 @@ export function provideGlyphFaceSilhouette(slot: Ref<string | undefined>): void 
  * is present. `<DiscoGlyph>` cooperates with a wrapping `<GlyphFace>` when
  * the slot is available; otherwise stands alone.
  */
-export function useOptionalGlyphFaceSilhouette(): Ref<string | undefined> | null {
-    return inject(GLYPH_FACE_SILHOUETTE_KEY, null);
-}
+export const useOptionalGlyphFaceSilhouette = ctx.use;

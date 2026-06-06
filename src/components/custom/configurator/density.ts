@@ -1,4 +1,5 @@
-import { inject, provide, type ComputedRef, type InjectionKey } from "vue";
+import type { ComputedRef } from "vue";
+import { createOptionalContext } from "../../../composables/context";
 
 /**
  * Density axis for `<Configurator>` + `<ConfiguratorRow>` (N.W2 Lane A).
@@ -22,12 +23,8 @@ export type ConfiguratorDensity = "mobile" | "compact" | "comfortable" | "spacio
  * `ComputedRef<ConfiguratorDensity>` so descendants stay reactive when
  * the host swaps density (e.g., viewport-driven mobile/desktop branch).
  */
-export const CONFIGURATOR_DENSITY_KEY: InjectionKey<
-    ComputedRef<ConfiguratorDensity>
-> = Symbol("configuratorDensity");
-
 /*
- * Paired helpers — P.W2 Lane A (invariant 25 closure).
+ * Paired helpers — AV.W14 (invariant 25 closure, canonical DI factory).
  *
  * Per Pδ §2.2: the consumer (`<ConfiguratorRow>`) renders bare when no
  * ancestor `<Configurator>` is present — density falls through to
@@ -38,11 +35,16 @@ export const CONFIGURATOR_DENSITY_KEY: InjectionKey<
  * be dead code (no callsite would tolerate a throw). Invariant 25 closes
  * "per intent" at this site with provide-helper + optional-helper only.
  */
+const ctx = createOptionalContext<ComputedRef<ConfiguratorDensity>>(
+    "configuratorDensity",
+);
+
+export const CONFIGURATOR_DENSITY_KEY = ctx.KEY;
 
 export function provideConfiguratorDensity(
     density: ComputedRef<ConfiguratorDensity>,
 ): void {
-    provide(CONFIGURATOR_DENSITY_KEY, density);
+    ctx.provide(density);
 }
 
 /**
@@ -50,8 +52,4 @@ export function provideConfiguratorDensity(
  * `<Configurator>`. The consumer null-coalesces to `undefined` so the
  * `:data-density` binding emits no attribute (pre-N.W2 visual preserved).
  */
-export function useOptionalConfiguratorDensity():
-    | ComputedRef<ConfiguratorDensity>
-    | null {
-    return inject(CONFIGURATOR_DENSITY_KEY, null);
-}
+export const useOptionalConfiguratorDensity = ctx.use;

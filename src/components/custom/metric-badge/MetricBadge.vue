@@ -153,8 +153,8 @@ const showLabel = computed(() =>
 
 <style scoped>
 /* The label weight routes through `--metric-badge-label-weight` so a
-   consumer can retint it without a `:deep()` reach, mirroring the
-   `--metric-row-*` token family in metric-stack/. Default is a fine
+   consumer can retint it without a `:deep()` reach — the same token-only
+   override pattern the rest of the metric family follows. Default is a fine
    weight (300) — the annotation sits quieter than the value it
    qualifies; consumers wanting the prior medium register set the token
    to 500. */

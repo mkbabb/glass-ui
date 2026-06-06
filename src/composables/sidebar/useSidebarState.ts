@@ -12,7 +12,7 @@
  * `SidebarSection`.
  */
 import { reactive, computed, toValue } from "vue";
-import type { Ref, MaybeRefOrGetter } from "vue";
+import type { Ref, MaybeRefOrGetter, ComputedRef } from "vue";
 import type { TreeNode, TreeIndexEntry, SidebarSection, SidebarState } from "./types";
 import { useTreeIndex } from "./useTreeIndex";
 
@@ -43,7 +43,7 @@ export interface UseSidebarStateOptions<T extends TreeNode = SidebarSection> {
 export interface GenericSidebarState<T extends TreeNode> {
     sections: T[];
     activeId: Ref<string | null>;
-    activeRootId: import("vue").ComputedRef<string | null>;
+    activeRootId: ComputedRef<string | null>;
     treeIndex: Map<string, TreeIndexEntry<T>>;
     isExpanded(id: string): boolean;
     toggleSection(id: string): void;

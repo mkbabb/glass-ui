@@ -14,11 +14,11 @@
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { springLinearStops } from "@mkbabb/keyframes.js";
 
 const root = resolve(fileURLToPath(new URL("../", import.meta.url)));
-const tokensPath = resolve(root, "src/styles/tokens.css");
+export const tokensPath = resolve(root, "src/styles/tokens.css");
 
 /**
  * iOS-canonical (response, dampingFraction) pairs for the four glass-ui
@@ -78,7 +78,7 @@ const PRESETS = [
  */
 const SAMPLE_COUNT = 48;
 
-function generateBlock() {
+export function generateBlock() {
     const lines = PRESETS.map((preset) => {
         const stops = springLinearStops({
             response: preset.response,
@@ -90,12 +90,12 @@ function generateBlock() {
     return lines.join("\n");
 }
 
-const BLOCK_START_MARKER =
+export const BLOCK_START_MARKER =
     "    /* ═══════════════════════════════════════════════\n       §2  EASING — Spring curves via linear()";
-const SPRING_LINES_RE =
+export const SPRING_LINES_RE =
     /(    --spring-(?:smooth|snappy|bouncy|gentle|dock): linear\([^)]+\);\n?)+/m;
 
-function main() {
+export function main() {
     const source = readFileSync(tokensPath, "utf8");
     if (!source.includes(BLOCK_START_MARKER)) {
         throw new Error(
@@ -125,4 +125,7 @@ function main() {
     }
 }
 
-main();
+// Run only when invoked directly (the sync gate imports `generateBlock` etc.).
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+    main();
+}

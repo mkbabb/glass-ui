@@ -1,10 +1,11 @@
 // stories.smoke.spec.ts — V.W4.T16 smoke gate over the storybook manifest.
 //
-// Asserts every Story row + FlatStory in `demo/stories/manifest.ts` resolves
-// to a component (no MissingStory placeholder), and that the lazy import
-// fires without throwing. This catches manifest-vs-file drift (a row added
-// without the SFC, or vice versa) and import-time syntax/type errors that
-// the build-time typecheck might miss in dev mode.
+// Asserts every Story row in `demo/stories/manifest.ts` resolves to a
+// component (no MissingStory placeholder), and that the lazy import fires
+// without throwing. This catches manifest-vs-file drift (a row added without
+// the SFC, or vice versa) and import-time syntax/type errors that the
+// build-time typecheck might miss in dev mode. The flat-story arm was retired
+// at AV.W10 — Aurora / GooBlob are now Substrates category rows.
 //
 // Replaces the originally-spec'd Playwright over-the-DOM smoke with a
 // vitest variant that exercises the same surface (every story page imports
@@ -12,7 +13,7 @@
 // existing test suite.
 
 import { describe, expect, it } from "vitest";
-import { CATEGORIES, FLAT_STORIES } from "../demo/stories/manifest";
+import { CATEGORIES } from "../demo/stories/manifest";
 
 describe("storybook manifest smoke", () => {
     it("every category has at least one story", () => {
@@ -42,11 +43,4 @@ describe("storybook manifest smoke", () => {
             }
         }
     }, 60_000);
-
-    it("every flat story import resolves", async () => {
-        for (const flat of FLAT_STORIES) {
-            const resolved = await flat.component();
-            expect(resolved, `${flat.id} did not resolve`).toBeTruthy();
-        }
-    });
 });

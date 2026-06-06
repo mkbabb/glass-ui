@@ -120,7 +120,7 @@ onUnmounted(stopAnimated);
                 variant="sectioned"
                 :segments="phaseSegments"
                 :current-segment-key="phaseActive"
-                :model-value="phaseProgress"
+                :active-progress="phaseProgress / 100"
                 class="h-3"
             />
         </StorySection>

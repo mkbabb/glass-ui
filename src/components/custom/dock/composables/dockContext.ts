@@ -1,4 +1,5 @@
-import { inject, provide, type ComputedRef, type InjectionKey } from "vue";
+import type { ComputedRef } from "vue";
+import { createStrictContext } from "../../../../composables/context";
 
 export type DockOrientation = "horizontal" | "vertical";
 
@@ -35,24 +36,22 @@ export interface DockContext {
     held: ComputedRef<boolean>;
 }
 
-export const DOCK_CONTEXT_KEY: InjectionKey<DockContext> = Symbol("glass-ui:dock-context");
+// Strict + optional over ONE key (AV.W14): `<GlassDock>` provides; descendants
+// use strict; a `<Slider>` that may sit outside a dock reads via the optional
+// shape over the same key.
+const ctx = createStrictContext<DockContext>(
+    "glass-ui:dock-context",
+    "[glass-ui:dock] useDockContext() called outside <GlassDock>; use useOptionalDockContext() if the primitive may render outside a dock.",
+);
+
+export const DOCK_CONTEXT_KEY = ctx.KEY;
 
 export function provideDockContext(context: DockContext): void {
-    provide(DOCK_CONTEXT_KEY, context);
+    ctx.provide(context);
 }
 
 /** Strict — throws when used outside `<GlassDock>`. */
-export function useDockContext(): DockContext {
-    const ctx = inject(DOCK_CONTEXT_KEY);
-    if (!ctx) {
-        throw new Error(
-            "[glass-ui:dock] useDockContext() called outside <GlassDock>; use useOptionalDockContext() if the primitive may render outside a dock.",
-        );
-    }
-    return ctx;
-}
+export const useDockContext = ctx.use;
 
 /** Befitting silent default for primitives that may render outside a dock. */
-export function useOptionalDockContext(): DockContext | null {
-    return inject(DOCK_CONTEXT_KEY, null);
-}
+export const useOptionalDockContext = ctx.useOptional;

@@ -41,7 +41,7 @@
        typography.css.
        ═══════════════════════════════════════════════ */
     --font-stack-display: "Fraunces", Georgia, serif;
-    --font-stack-serif: "Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif;
+    --font-stack-serif: "Fraunces", Georgia, "Times New Roman", serif;
     --font-stack-sans: "Helvetica Neue", "Arial Nova", Arial, system-ui, sans-serif;
     /* AC.W6b (v1.5.0) — self-hosted Fira Code engages by default for
        every glass-ui consumer. The calibrated "Fira Code Fallback"
@@ -286,29 +286,12 @@
     --z-max: 9999;
     --z-debug: 99999;
 
-    /* ═══════════════════════════════════════════════
-       §4  BORDER RADIUS — 0.625rem base (warm-cream identity)
-       ═══════════════════════════════════════════════ */
-    --radius: 0.625rem;
-    --radius-xs: 4px;
-    --radius-sm: 4px;
-    --radius-md: 6px;
-    --radius-lg: var(--radius);
-    --radius-xl: 12px;
-    --radius-2xl: 1rem;
-    --radius-pill: 9999px;
-
-    /* Semantic aliases */
-    --radius-card: var(--radius-2xl);
-    --radius-panel: var(--radius-xl);
-    --radius-dialog: var(--radius-2xl);
-    --radius-input: var(--radius);
-    --radius-button: var(--radius);
-    --radius-badge: var(--radius-pill);
-    --radius-dock: var(--radius-pill);
-    /* Tooltip alias — semantic handle for the lg rung; consumed by W2 ui/tooltip
-       migration (currently inline `rounded-lg`). R5 vocab.γ gap row 5. */
-    --radius-tooltip: var(--radius-lg);
+    /* §4  BORDER RADIUS — authored ONCE in theme.css's leading plain @theme
+       block (AV.W16 TW1). A plain @theme mints each `--radius-*` as a global
+       :root var, so the `var(--radius-card)` recipe reads across this file
+       resolve from that source. The prior §4 twin here doubled the override
+       surface (the anti-pattern the @theme-inline migration kills) — excised;
+       retune the scale at theme.css. */
 
     /* ═══════════════════════════════════════════════
        §5  COLOR PALETTE — Warm cream / muted black
@@ -1176,32 +1159,6 @@
         var(--chart-jitter),
         color-mix(in srgb, var(--chart-jitter) 60%, transparent)
     );
-
-    /* ═══════════════════════════════════════════════
-       §17 METRIC
-
-       MetricRow / MetricStack value-clamp dialect. The declared values are the
-       `audacious` poster register — the hero-scale clamp for a single giant
-       number; MetricStack's `[data-register="result"]` selector overrides it
-       locally for the compact multi-row ledger. Three clamp arms each: `min`
-       (floor), `cqi` (the binding container-query middle term), `max`
-       (ceiling); unit carries min/max only (its cqi is a fixed 6cqi).
-       ═══════════════════════════════════════════════ */
-
-    /* Value register — audacious-poster hero clamp */
-    --metric-row-value-clamp-min: 4.5rem;
-    --metric-row-value-clamp-cqi: 34cqi;
-    --metric-row-value-clamp-max: var(--type-display-hero);
-
-    /* Unit register — one tier below the value it qualifies */
-    --metric-row-unit-clamp-min: 1.5rem;
-    --metric-row-unit-clamp-max: 3.25rem;
-
-    /* Label register — uppercase, the binding row-height term in the
-       compact `result` register */
-    --metric-row-label-clamp-min: 1.125rem;
-    --metric-row-label-clamp-cqi: 5cqi;
-    --metric-row-label-clamp-max: 2.75rem;
 
     /* ═══════════════════════════════════════════════
        §2.D INSTRUMENT-CLUSTER COMPOSITION RHYTHM

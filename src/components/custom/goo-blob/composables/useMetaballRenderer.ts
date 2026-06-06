@@ -1,5 +1,8 @@
 import { watch, onUnmounted, type Ref } from "vue";
 import { createWebGLCanvas } from "../../../../composables/glass/webgl/useWebGLCanvas";
+// AV.W14 — the error-checked compile/link is the shared `glass/webgl/compile`
+// leaf; goo-blob keeps its `[GooBlob]` diagnostic label via the `label` arg.
+import { compileShader, linkProgram } from "../../../../composables/glass/webgl/compile";
 import type { ColorResolver } from "../../../../composables/color";
 import { METABALL_VERTEX_SRC } from "../shaders/metaball.vert";
 import { METABALL_FRAGMENT_SRC } from "../shaders/metaball.frag";
@@ -9,6 +12,9 @@ import type { BlobPointer } from "./useBlobPointer";
 import type { BlobSatelliteSystem } from "./useBlobSatellites";
 
 const MAX_SATS = 4;
+
+/** Diagnostic label for the shared compile/link error path (AV.W14). */
+const BLOB_LABEL = "[GooBlob]";
 
 /**
  * Canvas is CSS-sized 1.6x its layout wrapper (see GooBlob.vue). Positions are in
@@ -130,9 +136,19 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
             // GPU context loss self-heals — the closures below close over the fresh
             // `gl`/`prog`/`U` each time.
             setup: (gl) => {
-                const vs = compile(gl, gl.VERTEX_SHADER, METABALL_VERTEX_SRC);
-                const fs = compile(gl, gl.FRAGMENT_SHADER, METABALL_FRAGMENT_SRC);
-                const prog = link(gl, vs, fs);
+                const vs = compileShader(
+                    gl,
+                    gl.VERTEX_SHADER,
+                    METABALL_VERTEX_SRC,
+                    BLOB_LABEL,
+                );
+                const fs = compileShader(
+                    gl,
+                    gl.FRAGMENT_SHADER,
+                    METABALL_FRAGMENT_SRC,
+                    BLOB_LABEL,
+                );
+                const prog = linkProgram(gl, vs, fs, BLOB_LABEL);
                 gl.useProgram(prog);
 
                 // Full-quad (two triangles) — the source's six-vertex quad.
@@ -333,31 +349,3 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
     };
 }
 
-function compile(gl: WebGL2RenderingContext, type: number, src: string): WebGLShader {
-    const sh = gl.createShader(type)!;
-    gl.shaderSource(sh, src);
-    gl.compileShader(sh);
-    if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
-        const log = gl.getShaderInfoLog(sh) ?? "unknown";
-        gl.deleteShader(sh);
-        throw new Error(`[GooBlob] shader compile failed:\n${log}`);
-    }
-    return sh;
-}
-
-function link(
-    gl: WebGL2RenderingContext,
-    vs: WebGLShader,
-    fs: WebGLShader,
-): WebGLProgram {
-    const p = gl.createProgram()!;
-    gl.attachShader(p, vs);
-    gl.attachShader(p, fs);
-    gl.linkProgram(p);
-    if (!gl.getProgramParameter(p, gl.LINK_STATUS)) {
-        const log = gl.getProgramInfoLog(p) ?? "unknown";
-        gl.deleteProgram(p);
-        throw new Error(`[GooBlob] program link failed:\n${log}`);
-    }
-    return p;
-}

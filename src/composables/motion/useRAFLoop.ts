@@ -4,6 +4,7 @@ import {
     onScopeDispose,
     readonly,
     ref,
+    watch,
     type Ref,
 } from "vue";
 // AQ.W3 §6 — the INP-under-load lever, surfaced on the loop controls so a frame
@@ -12,6 +13,11 @@ import {
 // engine-free (`/motion-core`), so this import introduces no keyframes/vueuse
 // edge.
 import { yieldToMain } from "./useYieldToMain";
+// AV.W14 — the shared `visibilitychange` leaf (engine-free, vue-only): the
+// single source for the document-visibility listener the motion composables
+// previously hand-rolled. Imported directly (not via the dom/ barrel) so it
+// stays off the public root surface.
+import { useDocumentVisibility } from "../dom/useDocumentVisibility";
 
 export interface RAFLoopTiming {
     /** Current frame timestamp from requestAnimationFrame. */
@@ -80,10 +86,6 @@ function getCancelAnimationFrame(): typeof cancelAnimationFrame | null {
         : null;
 }
 
-function getDocument(): Document | null {
-    return typeof document === "undefined" ? null : document;
-}
-
 function getWindow(): Window | null {
     return typeof window === "undefined" ? null : window;
 }
@@ -104,9 +106,8 @@ export function useRAFLoop(
 
     const isActive = ref(false);
     const isReducedMotion = ref(false);
-    const isDocumentHidden = ref(
-        pauseWhenHidden ? Boolean(getDocument()?.hidden) : false,
-    );
+    // Seeded from the visibility leaf below when `pauseWhenHidden`; `false` otherwise.
+    const isDocumentHidden = ref(false);
     const isRequested = ref(false);
     const isManuallyPaused = ref(false);
 
@@ -215,16 +216,19 @@ export function useRAFLoop(
         syncLoop();
     }
 
-    function onVisibilityChange(): void {
-        isDocumentHidden.value = pauseWhenHidden
-            ? Boolean(getDocument()?.hidden)
-            : false;
-        syncLoop();
-    }
-
-    const doc = getDocument();
-    if (doc && pauseWhenHidden) {
-        doc.addEventListener("visibilitychange", onVisibilityChange);
+    if (pauseWhenHidden) {
+        const { hidden } = useDocumentVisibility();
+        isDocumentHidden.value = hidden.value;
+        // `flush: 'sync'` so the visibility reaction is synchronous — matches
+        // the prior hand-rolled `visibilitychange` listener's timing exactly.
+        watch(
+            hidden,
+            (next) => {
+                isDocumentHidden.value = next;
+                syncLoop();
+            },
+            { flush: "sync" },
+        );
     }
 
     if (respectReducedMotion) {
@@ -260,7 +264,6 @@ export function useRAFLoop(
         if (disposed) return;
         disposed = true;
         stop();
-        doc?.removeEventListener("visibilitychange", onVisibilityChange);
         removeReducedMotionListener?.();
         removeReducedMotionListener = null;
     }

@@ -132,6 +132,13 @@ jobs:
             # allowlist: TabsTrigger --active-tab-color). Bite: re-inject one → RED.
             - name: proof:design-idiom-localization
               run: npm run proof:design-idiom-localization
+            # AV.W16 TW8 — EXTENDS proof:design-idiom-localization with the modern
+            # Tailwind v4 cohesion asserts: (a) no theme(colors.…) function sites,
+            # (b) no registered-namespace var-wrap where the bridge mints the named
+            # utility, (c) the dock/chassis @container context, (d) @theme scale
+            # completeness (one bridge per duration/ease/blur/shadow primitive).
+            - name: proof:tailwind-v4-idiom
+              run: npm run proof:tailwind-v4-idiom
             # AU.W9 — the W9 overfitting bar. Asserts each LANDED W9 fold (prop/
             # subpath/composable) maps to ≥2 distinct consumer contexts OR carries
             # a correctness/hygiene tag, and every cited consumer resolves at HEAD
@@ -254,11 +261,30 @@ jobs:
             # the AA floors. Born RED, greened by the W15 token + specular folds.
             - name: proof:liquid-glass-tokens
               run: npm run proof:liquid-glass-tokens
+            # AV.W10 — the storybook re-invention + font-canon gates: the demo
+            # manifest matches the §1 11-category IA (storybook-ia), every story
+            # file ↔ exactly one manifest row (no-orphan-demo-route), and every
+            # font reference names a shipped face or a generic keyword (font-canon).
+            - name: proof:storybook-ia
+              run: npm run proof:storybook-ia
+            - name: proof:no-orphan-demo-route
+              run: npm run proof:no-orphan-demo-route
+            - name: proof:font-canon
+              run: npm run proof:font-canon
             # AS.W2 inv-θ — the lockfile registry-resolution drift guard (#177
             # cannot silently re-break npm ci) + the meta-gate asserting this
             # ci.yml step set matches scripts/gates.mjs exactly (the manifest is
             # the single source of truth; per-step visibility kept, drift fails).
             - name: proof:lockfile
               run: npm run proof:lockfile
+            # AV.W14 — DI/orchestration/hygiene structure-locks.
+            - name: proof:di-consistency
+              run: npm run proof:di-consistency
+            - name: proof:no-nested-import
+              run: npm run proof:no-nested-import
+            - name: proof:no-test-in-src
+              run: npm run proof:no-test-in-src
+            - name: proof:spring-tokens-synced
+              run: npm run proof:spring-tokens-synced
             - name: gates:verify-ci
               run: npm run gates:verify-ci

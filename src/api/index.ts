@@ -191,24 +191,12 @@ export type {
     HeaderRibbonProps,
 } from "../components/custom/header-ribbon";
 
-// ── Metric / digit / responsive-tabs primitives ─────────────────────────────
-// Props/variant types for the metric + animated-digit + responsive-tabs
-// primitives. `MetricCellAppearance` is the visual register enum (`"dashboard" |
-// "compact" | "bare"`) parallel to `GlassPanelVariant`; `MetricCellProps`
-// is the Props shape consumers forward when wrapping `<MetricCell>`.
-// `MetricStackProps` + `MetricRowProps` cover the layout shell + row pair.
+// ── Digit / responsive-tabs primitives ──────────────────────────────────────
+// Props/variant types for the animated-digit + responsive-tabs primitives.
 // `AnimatedDigitMode` is the damping axis (`"absolute" | "progress"`) forwarded
 // into `useAnimatedNumber`; `AnimatedDigitProps` is the consume-side shape.
 // `ResponsiveTabsProps` parallels `BouncyToggleProps` — single shape for the
 // matchMedia-driven Select-or-Tabs swap.
-export type {
-    MetricCellAppearance,
-    MetricCellProps,
-} from "../components/custom/metric-cell";
-export type {
-    MetricRowProps,
-    MetricStackProps,
-} from "../components/custom/metric-stack";
 export type {
     AnimatedDigitMode,
     AnimatedDigitProps,
@@ -232,7 +220,7 @@ export type { UseDockStateReturn } from "../components/custom/dock";
 // `PaperBackdropProps` — the Props shape consumers forward when wrapping
 // `<PaperBackdrop>` (e.g. app-shell substrate composers). `PaperBackdropFrequency`
 // is the turbulence-register enum (`"clean" | "aged"`) parallel to
-// `MetricCellAppearance` / `AnimatedDigitMode`. The texture-system canonical
+// `AnimatedDigitMode`. The texture-system canonical
 // pattern (CSS custom-property cascade via `--paper-*-texture` vars at `:root`)
 // is documented in DESIGN.md "Texture system" section.
 export type {

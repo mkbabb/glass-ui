@@ -132,4 +132,8 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
     orbitDuration: [8000, 14000],
 };
 
+// di-default: external-provide key — consumers `provide(BLOB_CONFIG_KEY, cfg)`
+// and `<GooBlob>` reads it via a bare `inject(KEY, null)` fallthrough (the
+// `config` prop wins; the loud-throw on neither is DEC-AT-2). NOT a
+// strict-or-optional triplet, so it is not minted by the DI factory (KISS).
 export const BLOB_CONFIG_KEY: InjectionKey<BlobConfig> = Symbol("blobConfig");

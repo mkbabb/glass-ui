@@ -1,34 +1,49 @@
-// GooBlob metaball — fragment shader (AU.W7 OKLCh shader-quality stage, DEC-AT-7
-// LINEAR half). A gooey SDF body + up to four orbiting satellites smin-merged,
-// with FBM-displaced watercolor edges and a per-pixel PERCEPTUALLY-UNIFORM color
-// perturbation in OKLCh.
+// GooBlob metaball — fragment shader assembler (AU.W7 OKLCh shader-quality stage,
+// DEC-AT-7 LINEAR half). A gooey SDF body + up to four orbiting satellites
+// smin-merged, with FBM-displaced watercolor edges and a per-pixel
+// PERCEPTUALLY-UNIFORM color perturbation in OKLCh.
+//
+// The GLSL is composed from cohesive partials, template-spliced into one source
+// string at module load. The emitted METABALL_FRAGMENT_SRC is character-equivalent
+// to the prior hand-inlined shader (the splice boundaries fall on original line
+// breaks). Seams: sdf-body (sdCircle + smin) · watercolor-edges (the FBM noise that
+// displaces the edge) · oklch-perturb (inGamut + gamutClampOklch). The uniforms +
+// the three W2 splices + the per-pixel perturbation in main() stay inline here.
 //
 // The base color arrives GAMMA-sRGB (the injected `ColorResolver`'s output). The
 // shader-quality flip (DEC-AT-7 LINEAR half): srgbToLinear(uBaseColor) → OKLab →
 // OKLCh, perturb L/C/h perceptually, OKLCh → OKLab → linear sRGB, hue-preserving
-// gamut clamp, then the MANDATORY `linearToSrgb()` OETF before output — a
-// linear-in WITHOUT an OETF-out ships visibly too-dark (the named A5/A2 trap; the
+// gamut clamp, then the MANDATORY `linearToSrgb()` OETF before output — a linear-in
+// WITHOUT an OETF-out ships visibly too-dark (the named A5/A2 trap; the
 // `proof:blob-space-gamma` gate forbids it). The HSV gamma-space path was DELETED.
 //
-// The OKLab/sRGB constants are value.js's EXACT Ottosson values (NOT the
-// GM-Shaders/LYGIA convenience matrices, which are ~1e-4 off and fail the 1e-6
-// CPU-equivalence gate). `mat3` literals are TRANSPOSED from value.js's row-major
-// arrays because GLSL `mat3` is column-major (`mat3 * vec3` dots each column with
-// the vector); writing value.js's rows as GLSL columns yields the row-major M·v.
-// Hues are in RADIANS. See `__tests__/metaball-color.glsl-port.ts` (the line-for-line TS
-// transcription) + `__tests__/blob-color-equivalence.test.ts` (the 8-assertion gate).
-//
-// AV.W2 — the OETF + the Ottosson matrices + the FBM_ROT constant are SPLICED from
-// the shared procedural-color chunk (the single GLSL source both this shader and
-// aurora.frag.ts compose), so the OETF can never again diverge between them.
+// AV.W2 — the OETF + the four Ottosson matrices + the FBM_ROT constant are SPLICED
+// from the shared procedural-color chunk (the single GLSL source both this shader
+// and aurora.frag.ts compose), so the OETF can never again diverge between them.
+// The OKLab/sRGB constants are value.js's EXACT Ottosson values; `mat3` literals
+// are TRANSPOSED for GLSL column-major. Hues are in RADIANS. See
+// `__tests__/metaball-color.glsl-port.ts` (the line-for-line TS transcription) +
+// `__tests__/blob-color-equivalence.test.ts` (the 8-assertion gate).
 
 import {
     FBM_ROT_GLSL,
     OETF_GLSL,
     OKLCH_MATRICES_GLSL,
 } from "../../../../composables/glass/webgl/shaders/procedural-color.glsl";
+import { METABALL_SDF_GLSL } from "./sdf-body.glsl";
+import {
+    METABALL_EDGE_NOISE_PRE_GLSL,
+    METABALL_EDGE_NOISE_POST_GLSL,
+} from "./watercolor-edges.glsl";
+import { METABALL_OKLCH_PERTURB_GLSL } from "./oklch-perturb.glsl";
 
-export const METABALL_FRAGMENT_SRC = /* glsl */ `#version 300 es
+// A single newline joins every adjacent stage — the splice boundaries land on the
+// original source's line breaks, so the emitted shader is character-equivalent to
+// the prior hand-inlined METABALL_FRAGMENT_SRC.
+const NL = "\n";
+
+export const METABALL_FRAGMENT_SRC =
+    /* glsl */ `#version 300 es
 precision highp float;
 
 in vec2 vUv;
@@ -74,61 +89,18 @@ uniform float uSatRadius[MAX_SATS];
 uniform float uSatOpacity[MAX_SATS];
 
 const float PI = 3.141592653589793;
-
-// --- Noise ---
-
-float hash21(vec2 p) {
-    vec3 p3 = fract(vec3(p.xyx) * 0.1031);
-    p3 += dot(p3, p3.yzx + 33.33);
-    return fract((p3.x + p3.y) * p3.z);
-}
-
-float valueNoise(vec2 p) {
-    vec2 i = floor(p);
-    vec2 f = fract(p);
-    f = f * f * (3.0 - 2.0 * f);
-
-    float a = hash21(i);
-    float b = hash21(i + vec2(1.0, 0.0));
-    float c = hash21(i + vec2(0.0, 1.0));
-    float d = hash21(i + vec2(1.0, 1.0));
-
-    return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
-}
-
-// Edit #3 — rotated-octave FBM: a fixed ~0.5 rad 2x2 rotation between octaves
-// breaks the axis-aligned banding the un-rotated lattice noise produces. The
-// rotation CONSTANT is spliced from the shared chunk (AV.W2 — the one FBM_ROT);
-// the loop below stays blob-local (param octaves + 2.0 lacunarity, per §3a).
-${FBM_ROT_GLSL}
-
-float fbm(vec2 p, int octaves) {
-    float value = 0.0;
-    float amp = 0.5;
-    float freq = 1.0;
-    for (int i = 0; i < 4; i++) {
-        if (i >= octaves) break;
-        value += amp * valueNoise(p * freq);
-        p = FBM_ROT * p;
-        freq *= 2.0;
-        amp *= 0.5;
-    }
-    return value;
-}
-
-// --- SDF ---
-
-float sdCircle(vec2 p, vec2 center, float radius) {
-    return length(p - center) - radius;
-}
-
-// Edit #2 — Inigo Quilez quadratic polynomial smin (same uSmoothK uniform). The
-// quadratic h*h*k*0.25 form has a cleaner C1 seam than the prior cubic smin.
-float smin(float a, float b, float k) {
-    float h = max(k - abs(a - b), 0.0) / k;
-    return min(a, b) - h * h * k * 0.25;
-}
-
+` +
+    NL +
+    METABALL_EDGE_NOISE_PRE_GLSL +
+    NL +
+    /* glsl */ `${FBM_ROT_GLSL}
+` +
+    NL +
+    METABALL_EDGE_NOISE_POST_GLSL +
+    NL +
+    METABALL_SDF_GLSL +
+    NL +
+    /* glsl */ `
 // --- Color (Ottosson OKLab/OKLCh — value.js EXACT constants, transposed) ---
 //
 // The OETF (srgbToLinear/linearToSrgb) + the four Ottosson matrices + their space
@@ -139,30 +111,11 @@ float smin(float a, float b, float k) {
 // below stays blob-local (aurora has no in-shader OKLCh path).
 ${OETF_GLSL}
 ${OKLCH_MATRICES_GLSL}
-
-// Edit #4's gamut step — hue-preserving inward chroma clamp. If the linear result
-// is out of [0,1], bisect chroma toward 0 (L + h fixed) until in gamut. Preserves
-// hue exactly (only C shrinks). 16 steps resolve C to < 2^-16 of its span.
-bool inGamut(vec3 lin) {
-    return all(greaterThanEqual(lin, vec3(0.0))) && all(lessThanEqual(lin, vec3(1.0)));
-}
-vec3 gamutClampOklch(vec3 lch) {
-    vec3 lin = oklabToLinearSrgb(oklchToOklab(lch));
-    if (inGamut(lin)) return lch;
-    float lo = 0.0;
-    float hi = lch.y;
-    for (int i = 0; i < 16; i++) {
-        float mid = 0.5 * (lo + hi);
-        vec3 test = vec3(lch.x, mid, lch.z);
-        if (inGamut(oklabToLinearSrgb(oklchToOklab(test)))) {
-            lo = mid;
-        } else {
-            hi = mid;
-        }
-    }
-    return vec3(lch.x, lo, lch.z);
-}
-
+` +
+    NL +
+    METABALL_OKLCH_PERTURB_GLSL +
+    NL +
+    /* glsl */ `
 void main() {
     vec2 uv = vUv - 0.5;
 

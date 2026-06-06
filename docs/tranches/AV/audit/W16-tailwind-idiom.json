@@ -1,0 +1,102 @@
+{
+  "wave": "AV.W16",
+  "title": "modern-Tailwind v4 cohesion",
+  "generatedAt": "2026-06-06",
+  "gate": "proof:tailwind-v4-idiom (extends proof:design-idiom-localization)",
+  "status": "green",
+  "summary": "The bulk of the TW1 (@theme inline), TW2 (oklch ramps), and most TW4/TW5/TW6 SFC lifts landed in the AV.W15 commit (8036370). W16 closed the remaining cohesion gaps + completed the @theme-inline migration + authored the born-RED-then-green idiom gate.",
+  "lanes": {
+    "A_theme_inline_and_oklch": {
+      "theme_inline_migration": {
+        "state": "complete",
+        "bridge_var_references": 169,
+        "radius_single_source": {
+          "finding": "the radius scale was DOUBLE-declared — tokens.css §4 (--radius … --radius-tooltip) AND theme.css (the primitives + the @theme inline aliases) — the exact doubled override surface TW1 targets, the one family the W15 migration missed.",
+          "fix": "excised the tokens.css §4 radius twin; theme.css is now the single source. The radius PRIMITIVES + the SEMANTIC ALIASES both live in a LEADING plain @theme block (NOT @theme inline).",
+          "why_plain_not_inline": "@theme inline substitutes the resolved VALUE into the utility, so two aliases resolving to the same primitive (--radius-card + --radius-dialog both → var(--radius-2xl); --radius-input + --radius-button both → var(--radius)) collapse to an identical value and Tailwind v4 DROPS one rounded-* utility when both candidates are scanned from source. This was a latent W15 regression: rounded-card (used 75×) + rounded-input silently failed to mint once a sibling-valued alias (rounded-dialog, in confirm-dialog/dialog-native) was scanned. Plain @theme mints each alias's own --radius-* var so value-identical siblings never collide.",
+          "value_preserving": true
+        }
+      },
+      "oklch_ramps": {
+        "state": "landed at W15, verified at W16",
+        "section_rungs": 13,
+        "rainbow_rungs": 7,
+        "viz_rungs": 6,
+        "semantic_accents": 7,
+        "dark_mirrors": "light-dark() pairs convert in lockstep (the .dark{} block + the inline light-dark() mirrors)"
+      }
+    },
+    "B_sfc_lifts": {
+      "state": "TW4/TW5/TW6 SFC lifts landed at W15; W16 closed the one stray site",
+      "stray_lift": {
+        "site": "src/components/ui/select/SelectTrigger.vue:47",
+        "from": "ease-[var(--ease-standard)]",
+        "to": "ease-standard",
+        "note": "the --ease-standard bridge exists (theme.css); this was the lone registered-namespace wrap the W15 sweep left. Caught by gate assert (b)."
+      },
+      "verified_already_landed": [
+        "TabsIndicator.vue: duration-normal + ease-spring-snappy + h-(--reka-tabs-indicator-size) (paren shorthand)",
+        "CarouselDots.vue: bg-muted-medium",
+        "HeaderRibbon.vue: z-dock",
+        "DarkModeToggle.vue: rounded-pill + fill-foreground",
+        "NumberFieldDecrement/Increment.vue: size-icon-sm",
+        "ComboboxAnchor.vue: w-popover (the W8b miss)",
+        "ComboboxList.vue + SelectContent.vue: paren shorthand",
+        "Progress.vue: theme(colors.x) → var(--color-x) (the 2 theme()-function kills)",
+        "utilities.css: single-source masks (the -webkit-mask-image companions dropped)"
+      ]
+    },
+    "C_container_queries_and_gate": {
+      "container_queries": {
+        "dock": {
+          "state": "landed at W15",
+          "context": "container: dock / inline-size on .glass-dock",
+          "variants": "@container dock (max-width: 29.9375rem) + (min-width: 30rem) and (max-width: 44.9375rem) on the audacious-density label",
+          "kept_media": "dock.css:919 @container-query wrap-trigger KEPT as @media (env-coupled --dock-overflow-bp, viewport-semantic)"
+        },
+        "instrument_chassis": {
+          "state": "W16",
+          "context": "container: chassis / inline-size on .instrument-chassis",
+          "swap": "@media (max-width: 720px) → @container chassis (max-width: 44.9375rem) on the .instrument-dial reflow",
+          "kept_media": "instrument-chassis.css @media (prefers-reduced-motion) KEPT (preference-semantic, not box)"
+        },
+        "typography": {
+          "state": "W16",
+          "swap": "@media (min-width: 640px) → @container (min-width: 40rem) on .text-pane-title (unnamed container query → nearest pane ancestor)"
+        }
+      },
+      "gate": {
+        "file": "scripts/proof-tailwind-v4-idiom.mjs",
+        "extends": "proof:design-idiom-localization",
+        "asserts": {
+          "a_no_theme_fn": "zero theme(colors.…) function sites under src/ (0 hits)",
+          "b_no_registered_wrap": "no <util>-[var(--z|radius|duration|ease-…)] SFC wrap where the bridge mints the named utility (0 hits, 0 allowlisted)",
+          "c_container_context": "dock.css + instrument-chassis.css carry a @container CONTEXT and read @container size variants (both ok)",
+          "d_theme_completeness": "duration(8/10 bridged, 2 holdout), ease-spring(10/11 bridged, 1 holdout), glass-blur(6/6), named-shadow(16 bridges, 0 dangling)"
+        },
+        "holdouts": {
+          "duration": ["--duration-shimmer", "--duration-shimmer-fast — shimmer-composite tempo, consumed inside --animate-shimmer*, no standalone utility"],
+          "ease_spring": ["--spring-dock — dock FLIP choreography constant, raw var() inside the dock motion recipes"],
+          "named_shadow": "bridge-INTEGRITY check (every theme.css --shadow-* bridge resolves to an existing tokens.css token) rather than forward completeness — the -shadow namespace is mixed (rungs + recipe internals), a forward regex over-matches"
+        },
+        "sanctioned_sites_off_the_flag_list": [
+          "compound transition-[…] property lists (TabsIndicator, Toast, CarouselDots, Toggle, ConfiguratorLayer, StackedIconGroup) — property lists, not var wraps",
+          "slider [--slider-track-height:…] DECLARATIONS (the declare-vs-consume distinction; the : form is never matched by the consume-wrap regex)",
+          "choreography constants scale-[var(--scale-press)] / scale-[var(--scale-hover)] (scale namespace, no --scale-* bridge)"
+        ],
+        "born_red_then_green": "verified by bite-tests: injecting a theme() call, a z-[var(--z-dock)] wrap, a dropped @container context, or an un-bridged duration row each reddens; reverting greens."
+      }
+    }
+  },
+  "gates_reconciled": {
+    "proof:theme": "the cssAssertions encoded the PRE-inline expectation (border-radius: var(--radius-card), font-size: var(--text-display-1), …). The W15 @theme inline migration had left this gate RED (substitution emits the tokens.css source token, not the namespace var). W16 updated the assertions to the @theme-inline substituted values (var(--type-display-1), var(--gold), var(--z-dock), …) AND the radius restructure fixed the rounded-card MISSING-utility failure. Now green."
+  },
+  "verification": {
+    "typecheck": "green",
+    "build": "green",
+    "proof:tailwind-v4-idiom": "green",
+    "proof:design-idiom-localization": "green",
+    "proof:theme": "green",
+    "proof:liquid-glass-tokens": "green"
+  }
+}

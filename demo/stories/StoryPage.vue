@@ -16,10 +16,7 @@ const { current } = useStoryNavigation();
 const eyebrow = computed(() => {
     const loc = current.value;
     if (!loc) return null;
-    if (loc.kind === "category") {
-        return `${loc.category.title} · ${loc.story.title}`;
-    }
-    return loc.story.title;
+    return `${loc.category.title} · ${loc.story.title}`;
 });
 
 const title = computed(() => current.value?.story.title ?? "");

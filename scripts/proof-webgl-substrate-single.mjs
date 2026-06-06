@@ -40,7 +40,7 @@ function cliPaths() {
         ROOT,
         SRC: resolve(ROOT, "src"),
         SUBSTRATE: resolve(ROOT, "src/composables/glass/webgl/useWebGLCanvas.ts"),
-        CONSUMER2: resolve(ROOT, "src/composables/glass/webgl/__tests__/useWebGLCanvas.test.ts"),
+        CONSUMER2: resolve(ROOT, "tests/composables/glass/webgl/useWebGLCanvas.test.ts"),
         ARTIFACT: gateArtifactPath("GLASS_UI_WEBGL_SUBSTRATE_SINGLE_ARTIFACT", "AU-webgl-substrate-single"),
     };
     return _cliPaths;

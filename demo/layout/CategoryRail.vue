@@ -8,20 +8,24 @@ import {
     TooltipTrigger,
 } from "../../src/components/ui/tooltip";
 import { cn } from "../../src/utils/cn";
-import { CATEGORIES, FLAT_STORIES } from "../stories/manifest";
+import { CATEGORIES } from "../stories/manifest";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 
-const { current, firstOfCategory, goToFlat } = useStoryNavigation();
+const { current, firstOfCategory } = useStoryNavigation();
 
 const activeCategoryId = computed<string | null>(() => {
     const loc = current.value;
-    return loc?.kind === "category" ? loc.category.id : null;
+    return loc ? loc.category.id : null;
 });
 
-const activeFlatId = computed<string | null>(() => {
-    const loc = current.value;
-    return loc?.kind === "flat" ? loc.story.id : null;
-});
+// The primary categories ride the top of the rail; the reference-only
+// shelf (Composables) sits below a divider, collapsed below the fold.
+const primaryCategories = computed(() =>
+    CATEGORIES.filter((c) => !c.reference),
+);
+const referenceCategories = computed(() =>
+    CATEGORIES.filter((c) => c.reference),
+);
 </script>
 
 <template>
@@ -52,7 +56,10 @@ const activeFlatId = computed<string | null>(() => {
             </RouterLink>
 
             <TooltipProvider :delay-duration="250">
-                <Tooltip v-for="category in CATEGORIES" :key="category.id">
+                <Tooltip
+                    v-for="category in primaryCategories"
+                    :key="category.id"
+                >
                     <TooltipTrigger as-child>
                         <DockIconButton
                             type="button"
@@ -84,41 +91,46 @@ const activeFlatId = computed<string | null>(() => {
                 </Tooltip>
 
                 <!--
-                  Flat standalone stories (tools / playgrounds). Visually
-                  separated from the component categories by a thin divider so
-                  the distinction reads at a glance.
+                  Reference-only shelf (Composables). Visually separated from
+                  the component categories by a thin divider so the distinction
+                  reads at a glance — these are reference docs, not surfaces.
                 -->
-                <template v-if="FLAT_STORIES.length > 0">
+                <template v-if="referenceCategories.length > 0">
                     <div
                         aria-hidden="true"
                         class="my-1 h-px w-6 self-center bg-border/50"
                     />
-                    <Tooltip v-for="flat in FLAT_STORIES" :key="flat.id">
+                    <Tooltip
+                        v-for="category in referenceCategories"
+                        :key="category.id"
+                    >
                         <TooltipTrigger as-child>
                             <DockIconButton
                                 type="button"
                                 :aria-current="
-                                    flat.id === activeFlatId ? 'page' : undefined
+                                    category.id === activeCategoryId
+                                        ? 'page'
+                                        : undefined
                                 "
-                                :aria-label="flat.title"
+                                :aria-label="`${category.title} (reference)`"
                                 :class="
                                     cn(
-                                        flat.id === activeFlatId
+                                        category.id === activeCategoryId
                                             ? 'is-active'
                                             : 'text-muted-foreground',
                                     )
                                 "
-                                @click="goToFlat(flat.id)"
+                                @click="firstOfCategory(category.id)"
                             >
                                 <component
-                                    :is="flat.icon"
+                                    :is="category.icon"
                                     class="h-4 w-4"
                                     aria-hidden="true"
                                 />
                             </DockIconButton>
                         </TooltipTrigger>
                         <TooltipContent side="right" :side-offset="10">
-                            {{ flat.title }}
+                            {{ category.title }} · reference
                         </TooltipContent>
                     </Tooltip>
                 </template>

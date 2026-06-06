@@ -27,52 +27,317 @@ import { ROOT } from "./constellation.mjs";
  */
 export const GATES = [
     { id: "typecheck", cmd: "typecheck", tags: ["local", "ci", "release"] },
-    { id: "test", cmd: "test", tags: ["local", "ci"], note: "release runs it via prepublishOnly" },
+    {
+        id: "test",
+        cmd: "test",
+        tags: ["local", "ci"],
+        note: "release runs it via prepublishOnly",
+    },
     { id: "build", cmd: "build", tags: ["local", "ci", "release"] },
-    { id: "verify-export-types", cmd: "verify-export-types", tags: ["local", "ci", "release"] },
+    {
+        id: "verify-export-types",
+        cmd: "verify-export-types",
+        tags: ["local", "ci", "release"],
+    },
     { id: "profile:budget", cmd: "profile:budget", tags: ["local", "ci", "release"] },
-    { id: "proof:package", cmd: "proof:package", tags: ["local", "ci", "release"], sibling: true, note: "keyframes peer" },
+    {
+        id: "proof:package",
+        cmd: "proof:package",
+        tags: ["local", "ci", "release"],
+        sibling: true,
+        note: "keyframes peer",
+    },
     { id: "proof:theme", cmd: "proof:theme", tags: ["local", "ci", "release"] },
-    { id: "proof:components-css", cmd: "proof:components-css", tags: ["local", "ci", "release"] },
-    { id: "proof:consumers:static", cmd: "proof:consumers:static", tags: ["local", "ci", "release"], sibling: true },
-    { id: "proof:consumers:build", cmd: "proof:consumers:build", tags: ["local"], sibling: true, note: "walks sibling builds; local-only" },
-    { id: "proof:runtime", cmd: "proof:runtime", tags: ["local"], sibling: true, note: "walks sibling builds; local-only" },
-    { id: "proof:resolution", cmd: "proof:resolution", tags: ["local", "ci", "release"], sibling: true },
-    { id: "proof:phantom-classes", cmd: "proof:phantom-classes", tags: ["local", "ci", "release"], sibling: true },
+    {
+        id: "proof:components-css",
+        cmd: "proof:components-css",
+        tags: ["local", "ci", "release"],
+    },
+    {
+        id: "proof:consumers:static",
+        cmd: "proof:consumers:static",
+        tags: ["local", "ci", "release"],
+        sibling: true,
+    },
+    {
+        id: "proof:consumers:build",
+        cmd: "proof:consumers:build",
+        tags: ["local"],
+        sibling: true,
+        note: "walks sibling builds; local-only",
+    },
+    {
+        id: "proof:runtime",
+        cmd: "proof:runtime",
+        tags: ["local"],
+        sibling: true,
+        note: "walks sibling builds; local-only",
+    },
+    {
+        id: "proof:resolution",
+        cmd: "proof:resolution",
+        tags: ["local", "ci", "release"],
+        sibling: true,
+    },
+    {
+        id: "proof:phantom-classes",
+        cmd: "proof:phantom-classes",
+        tags: ["local", "ci", "release"],
+        sibling: true,
+    },
     { id: "proof:vt-names", cmd: "proof:vt-names", tags: ["local", "ci", "release"] },
-    { id: "proof:dock-motion-parity", cmd: "proof:dock-motion-parity", tags: ["local", "ci", "release"], note: "AT.W6-dock-c (W8 re-pinned) — dock VT/FLIP timing-parity static gate; the shared source is now var(--spring-dock) (AU.W8)" },
-    { id: "proof:dock-motion-single-source", cmd: "proof:dock-motion-single-source", tags: ["local", "ci"], note: "AU.W8 — the dock FLIP single-frame-origin gate: the layer ref-swap (→opacity) and the width set (→morph) share ONE rAF origin; the perceptual sibling of the string-match proof:dock-opacity-lockstep (the perceptual settle-probe is delegated DOWNSTREAM to the slides deck Playwright — no playwright dep here, KISS)" },
-    { id: "proof:dock-opacity-lockstep", cmd: "proof:dock-opacity-lockstep", tags: ["local", "ci", "release"], note: "AU.W2 (DEMOTED W8 → 'syntactic') — the SAME-TOKEN string-match that the dock fade opacity rides --dock-motion-resize (a 0-frame token settle). The PERCEPTUAL frame-origin sibling is proof:dock-motion-single-source (W8)." },
-    { id: "proof:dock-a11y-contract", cmd: "proof:dock-a11y-contract", tags: ["local", "ci"], note: "AU.W8 — the reka-Tabs dock rail APG contract: role=tablist/tab + aria-selected (NOT aria-pressed), roving tabindex (Arrow/Home/End), focus-ring, keepOpen()/release() on tab focus, inactive-pane aria-hidden (8 rendered-attr assertions)" },
-    { id: "proof:dock-vocabulary", cmd: "proof:dock-vocabulary", tags: ["local", "ci"], note: "AU.W8 — the <Role>Dock README convention (ASK-7, re-grounded): four role names + base primitives + canonical useDock* composables + the useTouchGate/DockTabButton re-groundings. Bite: delete a role → RED" },
-    { id: "proof:dock-css-split", cmd: "proof:dock-css-split", tags: ["local", "ci", "release"], note: "AU.W8b — the dock.css monolith split: the five-control family lives in dock-controls.css, the shared :where() four-state contract STAYS in dock.css (the import root), and index.css imports both. Bite: leave a control rule in dock.css → RED" },
-    { id: "proof:design-idiom-localization", cmd: "proof:design-idiom-localization", tags: ["local", "ci"], note: "AU.W8b — scoped styles consume @theme-generated utilities, not text-[var(--…)]/shadow-[var(--…)] arbitrary wraps (the cascade discipline; sole allowlist: TabsTrigger --active-tab-color runtime binding). Bite: re-inject one wrap → RED" },
-    { id: "proof:au-w9-consumers", cmd: "proof:au-w9-consumers", tags: ["local", "ci"], note: "AU.W9 — each W9 fold (prop/subpath/composable) names ≥2 distinct consumer contexts OR carries a correctness/hygiene tag (the overfitting bar), and every cited consumer resolves at HEAD (in-repo relative + cross-repo absolute). BOOKed items are not tallied. Bite: a 1-consumer untagged fold (or drop a real consumer) → RED" },
-    { id: "proof:doc-consistency", cmd: "proof:doc-consistency", tags: ["local", "ci", "release"], note: "AT.W7-dock-c — CLAUDE.md custom-dir + dependency citations resolve at HEAD (doc-rot guard)" },
-    { id: "proof:au-w0-reground", cmd: "proof:au-w0-reground", tags: ["local", "ci"], note: "AU.W0 — formalize+re-ground meta-gate (AU.md/PROGRESS.md exist; 3 dock SHAs ancestor-reachable; zero bundle labels survive; W6-dock-b collision re-lettered)" },
-    { id: "proof:au-w1-design", cmd: "proof:au-w1-design", tags: ["local", "ci"], note: "AU.W1 — design-slice meta-gate (3 slices cite AT.W1 origin + HEAD delta; the W1c registry enumerates the full AU gate fleet with greening waves)" },
-    { id: "proof:strict-templates", cmd: "proof:strict-templates", tags: ["local", "ci"], note: "AU.W3 KEYSTONE — checkUnknownProps:true across the 3 tsconfigs; <GlassDock bogus-prop> is a RED typecheck (the silent-no-op closer); zero @ts-expect-error suppressions" },
-    { id: "proof:peer-optional", cmd: "proof:peer-optional", tags: ["local", "ci", "release"], note: "AU.W3 — peer optionality is a derived fact of the root bundle (optional IFF absent from dist/glass-ui.js & not core-substrate); the dead optionalPeerDependencies field deleted" },
-    { id: "proof:vueuse-free-root", cmd: "proof:vueuse-free-root", tags: ["local", "ci"], note: "AU.W3 — the root barrel transitively imports no @vueuse/core (SOURCE-graph walk from src/index.ts + DIST-floor grep of glass-ui.js)" },
-    { id: "proof:supportsPostTask-wired", cmd: "proof:supportsPostTask-wired", tags: ["local", "ci"], note: "AU.W3 — supportsPostTask is WIRED (>=1 real caller) or DROPPED — no exported orphan (P3)" },
-    { id: "proof:font-axes", cmd: "proof:font-axes", tags: ["local", "ci"], note: "AU.W4 — every variation axis typography.css references (WONK/SOFT) is carried by the shipped display @font-face (parsed from the woff2 fvar) — no silently-inert axis" },
-    { id: "proof:color-acyclic", cmd: "proof:color-acyclic", tags: ["local", "ci", "release", "sibling"], note: "AU.W5 — the /color leaf graph is a DAG (imports value.js only, no component back-import; value.js/src never imports glass-ui)" },
-    { id: "proof:single-color-core", cmd: "proof:single-color-core", tags: ["local", "ci"], note: "AU.W5 — ONE runtime-JS color source (value.js); no glass-ui src re-defines a value.js color primitive; CSS token tier exempt" },
-    { id: "proof:frostShader-deleted", cmd: "proof:frostShader-deleted", tags: ["local", "ci"], note: "AU.W6 — the frostShader.ts orphan is DELETED (file-absence + import-graph, NOT a name-grep — the name form is born-green at HEAD)" },
-    { id: "proof:webgl-substrate-single", cmd: "proof:webgl-substrate-single", tags: ["local", "ci"], note: "AU.W6 — ONE webgl2 bootstrap (useWebGLCanvas); the substrate bakes no aurora quad/DPR/uniforms; the 3-reason suspend model + demand-gate + context-restore present; the consumer-#2 usability assert exists" },
-    { id: "proof:blob-value-free", cmd: "proof:blob-value-free", tags: ["local", "ci"], note: "AU.W7 — the goo-blob/watercolor-dot are value.js-free (two-tier: source-graph + dist) — the injected ColorResolver seam, not a value.js coupling" },
-    { id: "proof:no-value-default", cmd: "proof:no-value-default", tags: ["local", "ci"], note: "AU.W7 — a no-resolver blob mount THROWS naming defaultBlobColorResolver (the loud failure, not a silent gray default)" },
-    { id: "proof:motion-composables-consumer", cmd: "proof:motion-composables-consumer", tags: ["local", "ci"], note: "AV.W3 — each NEW motion composable (useCountup/vReveal) tallies ≥2 RESOLVING-at-HEAD in-repo consumers (demo route + test); the slides DeckNav fork is `pending` (cross-repo, post-publish), not counted. Bite: drop demo/stories/motion/countup.vue (or the test) → RED" },
-    { id: "proof:motion-value-free", cmd: "proof:motion-value-free", tags: ["local", "ci"], note: "AV.W3 — the W3-lifted/adopted motion composables (useCountup/vReveal/useStagger*/useLayerTransition/useGlassCarousel) consume the keyframes LIGHT tier only (no value.js edge, no loadAnimationEngine/animate/CSSKeyframesAnimation). Sibling of proof:blob-value-free" },
-    { id: "proof:blob-space-gamma", cmd: "proof:blob-space-gamma", tags: ["local", "ci"], note: "AU.W7 — DEC-AT-7 seam: the default resolver paints GAMMA (oklchToGammaRgb, not oklchToLinear); a shader linear-flip must close with linearToSrgb (no too-dark)" },
-    { id: "proof:aurora-space-gamma", cmd: "proof:aurora-space-gamma", tags: ["local", "ci"], note: "AV.W1 — aurora's linear LUT pipeline MUST close with a linearToSrgb() OETF before fragColor (the un-converged-sibling of the blob's A5/A2 darkening trap); the call precedes output, not a dead helper" },
-    { id: "proof:shader-shared-source", cmd: "proof:shader-shared-source", tags: ["local", "ci"], note: "AV.W2 — the aurora↔blob shared GLSL convergence: the OETF + the four Ottosson mat3 literals + the FBM_ROT constant live ONCE in procedural-color.glsl.ts (the single source); comment-stripped, NEITHER metaball.frag.ts NOR aurora.frag.ts re-defines a chunk-owned artefact, and both splice it. Bite: re-inline a local linearToSrgb body or a mat3 literal → RED" },
-    { id: "proof:blob-color-equivalence", cmd: "proof:blob-color-equivalence", tags: ["local", "ci"], note: "AU.W7 — the 8-assertion CPU-equivalence: the metaball OKLCh shader-color TS port matches value.js's Ottosson CPU result to 1e-6 (asymmetric witness #3a7bd5 — the exact-matrix trap detector)" },
-    { id: "proof:fail-explicit", cmd: "proof:fail-explicit", tags: ["local"], note: "AV.W12 — no silent error-swallow in src/: every catch re-throws or carries a '// fail-explicit:' sentinel, and no '?? reactive(' masking default-synthesis on a required dependency. Bite: strip a befitting sentinel or re-inject '?? reactive(BLOB_CONFIG_DEFAULTS)' → RED" },
-    { id: "proof:no-legacy-commentary", cmd: "proof:no-legacy-commentary", tags: ["local"], note: "AV.W12 — the api/index.ts + index.ts barrels carry zero tranche-letter ref / 'tranche' word / vN.N.N version-archaeology in their bodies (the audit trail lives in CHANGELOG.md). Bite: re-inject one 'M.W2' or 'v1.7.0' → RED" },
-    { id: "proof:au-final", cmd: "proof:au-final", tags: ["release"], note: "AU.W10 — the close meta-gate (release-only, NOT ci): --verify-ci green; clean tree minus the 2 documented user-domain entries (inv-θ); AU.FINAL.md cites a green run per wave (W0..W10 incl. W8b) + the deferral register; overfitting zero orphans; the 3.3.0 changeset STAGED not auto-published (publish USER-DOMAIN; package.json stays 3.2.0)" },
-    { id: "proof:liquid-glass-tokens", cmd: "proof:liquid-glass-tokens", tags: ["local", "ci"], note: "AV.W15 — the iOS-26 Liquid Glass token-evolution: --glass-edge-light{,-dark} full-perimeter rim wired onto floating/dock, the quiet rung chains saturate (rung parity), the content-aware under-shadow modifier swaps a heavier rung over text, the three @property --specular-* regs, the moving specular paints STATIC under prefers-reduced-motion + a centred var() fallback, the saturate drops with the blur under reduced-transparency, the feDisplacementMap garnish is @supports-gated PE-only (no url(#…) substrate leak), the AA floors at tokens.css:332/339 survive. Bite: strip a guard or a token → RED" },
-    { id: "proof:lockfile", cmd: "proof:lockfile", tags: ["local", "ci", "release"], note: "registry-resolution drift guard" },
+    {
+        id: "proof:dock-motion-parity",
+        cmd: "proof:dock-motion-parity",
+        tags: ["local", "ci", "release"],
+        note: "AT.W6-dock-c (W8 re-pinned) — dock VT/FLIP timing-parity static gate; the shared source is now var(--spring-dock) (AU.W8)",
+    },
+    {
+        id: "proof:dock-motion-single-source",
+        cmd: "proof:dock-motion-single-source",
+        tags: ["local", "ci"],
+        note: "AU.W8 — the dock FLIP single-frame-origin gate: the layer ref-swap (→opacity) and the width set (→morph) share ONE rAF origin; the perceptual sibling of the string-match proof:dock-opacity-lockstep (the perceptual settle-probe is delegated DOWNSTREAM to the slides deck Playwright — no playwright dep here, KISS)",
+    },
+    {
+        id: "proof:dock-opacity-lockstep",
+        cmd: "proof:dock-opacity-lockstep",
+        tags: ["local", "ci", "release"],
+        note: "AU.W2 (DEMOTED W8 → 'syntactic') — the SAME-TOKEN string-match that the dock fade opacity rides --dock-motion-resize (a 0-frame token settle). The PERCEPTUAL frame-origin sibling is proof:dock-motion-single-source (W8).",
+    },
+    {
+        id: "proof:dock-a11y-contract",
+        cmd: "proof:dock-a11y-contract",
+        tags: ["local", "ci"],
+        note: "AU.W8 — the reka-Tabs dock rail APG contract: role=tablist/tab + aria-selected (NOT aria-pressed), roving tabindex (Arrow/Home/End), focus-ring, keepOpen()/release() on tab focus, inactive-pane aria-hidden (8 rendered-attr assertions)",
+    },
+    {
+        id: "proof:dock-vocabulary",
+        cmd: "proof:dock-vocabulary",
+        tags: ["local", "ci"],
+        note: "AU.W8 — the <Role>Dock README convention (ASK-7, re-grounded): four role names + base primitives + canonical useDock* composables + the useTouchGate/DockTabButton re-groundings. Bite: delete a role → RED",
+    },
+    {
+        id: "proof:dock-css-split",
+        cmd: "proof:dock-css-split",
+        tags: ["local", "ci", "release"],
+        note: "AU.W8b — the dock.css monolith split: the five-control family lives in dock-controls.css, the shared :where() four-state contract STAYS in dock.css (the import root), and index.css imports both. Bite: leave a control rule in dock.css → RED",
+    },
+    {
+        id: "proof:design-idiom-localization",
+        cmd: "proof:design-idiom-localization",
+        tags: ["local", "ci"],
+        note: "AU.W8b — scoped styles consume @theme-generated utilities, not text-[var(--…)]/shadow-[var(--…)] arbitrary wraps (the cascade discipline; sole allowlist: TabsTrigger --active-tab-color runtime binding). Bite: re-inject one wrap → RED",
+    },
+    {
+        id: "proof:tailwind-v4-idiom",
+        cmd: "proof:tailwind-v4-idiom",
+        tags: ["local", "ci"],
+        note: "AV.W16 TW8 — EXTENDS proof:design-idiom-localization with the modern-v4 cohesion asserts: (a) zero theme(colors.…) function sites under src/; (b) no <util>-[var(--z|radius|duration|ease-…)] registered-namespace wrap in an SFC where the bridge mints the named utility (allowlisted sanctioned sites); (c) the dock/chassis carry a @container CONTEXT + read @container size variants (portable into a narrow host); (d) @theme scale completeness — every duration/ease-spring/glass-blur/named-shadow primitive in tokens.css has a theme.css bridge OR a justified holdout. Bite: re-inject a theme() call, a z-[var(--z-dock)] wrap, drop a @container context, or add an un-bridged scale rung → RED",
+    },
+    {
+        id: "proof:au-w9-consumers",
+        cmd: "proof:au-w9-consumers",
+        tags: ["local", "ci"],
+        note: "AU.W9 — each W9 fold (prop/subpath/composable) names ≥2 distinct consumer contexts OR carries a correctness/hygiene tag (the overfitting bar), and every cited consumer resolves at HEAD (in-repo relative + cross-repo absolute). BOOKed items are not tallied. Bite: a 1-consumer untagged fold (or drop a real consumer) → RED",
+    },
+    {
+        id: "proof:doc-consistency",
+        cmd: "proof:doc-consistency",
+        tags: ["local", "ci", "release"],
+        note: "AT.W7-dock-c — CLAUDE.md custom-dir + dependency citations resolve at HEAD (doc-rot guard)",
+    },
+    {
+        id: "proof:au-w0-reground",
+        cmd: "proof:au-w0-reground",
+        tags: ["local", "ci"],
+        note: "AU.W0 — formalize+re-ground meta-gate (AU.md/PROGRESS.md exist; 3 dock SHAs ancestor-reachable; zero bundle labels survive; W6-dock-b collision re-lettered)",
+    },
+    {
+        id: "proof:au-w1-design",
+        cmd: "proof:au-w1-design",
+        tags: ["local", "ci"],
+        note: "AU.W1 — design-slice meta-gate (3 slices cite AT.W1 origin + HEAD delta; the W1c registry enumerates the full AU gate fleet with greening waves)",
+    },
+    {
+        id: "proof:strict-templates",
+        cmd: "proof:strict-templates",
+        tags: ["local", "ci"],
+        note: "AU.W3 KEYSTONE — checkUnknownProps:true across the 3 tsconfigs; <GlassDock bogus-prop> is a RED typecheck (the silent-no-op closer); zero @ts-expect-error suppressions",
+    },
+    {
+        id: "proof:peer-optional",
+        cmd: "proof:peer-optional",
+        tags: ["local", "ci", "release"],
+        note: "AU.W3 — peer optionality is a derived fact of the root bundle (optional IFF absent from dist/glass-ui.js & not core-substrate); the dead optionalPeerDependencies field deleted",
+    },
+    {
+        id: "proof:vueuse-free-root",
+        cmd: "proof:vueuse-free-root",
+        tags: ["local", "ci"],
+        note: "AU.W3 — the root barrel transitively imports no @vueuse/core (SOURCE-graph walk from src/index.ts + DIST-floor grep of glass-ui.js)",
+    },
+    {
+        id: "proof:supportsPostTask-wired",
+        cmd: "proof:supportsPostTask-wired",
+        tags: ["local", "ci"],
+        note: "AU.W3 — supportsPostTask is WIRED (>=1 real caller) or DROPPED — no exported orphan (P3)",
+    },
+    {
+        id: "proof:font-axes",
+        cmd: "proof:font-axes",
+        tags: ["local", "ci"],
+        note: "AU.W4 — every variation axis typography.css references (WONK/SOFT) is carried by the shipped display @font-face (parsed from the woff2 fvar) — no silently-inert axis",
+    },
+    {
+        id: "proof:color-acyclic",
+        cmd: "proof:color-acyclic",
+        tags: ["local", "ci", "release", "sibling"],
+        note: "AU.W5 — the /color leaf graph is a DAG (imports value.js only, no component back-import; value.js/src never imports glass-ui)",
+    },
+    {
+        id: "proof:single-color-core",
+        cmd: "proof:single-color-core",
+        tags: ["local", "ci"],
+        note: "AU.W5 — ONE runtime-JS color source (value.js); no glass-ui src re-defines a value.js color primitive; CSS token tier exempt",
+    },
+    {
+        id: "proof:frostShader-deleted",
+        cmd: "proof:frostShader-deleted",
+        tags: ["local", "ci"],
+        note: "AU.W6 — the frostShader.ts orphan is DELETED (file-absence + import-graph, NOT a name-grep — the name form is born-green at HEAD)",
+    },
+    {
+        id: "proof:webgl-substrate-single",
+        cmd: "proof:webgl-substrate-single",
+        tags: ["local", "ci"],
+        note: "AU.W6 — ONE webgl2 bootstrap (useWebGLCanvas); the substrate bakes no aurora quad/DPR/uniforms; the 3-reason suspend model + demand-gate + context-restore present; the consumer-#2 usability assert exists",
+    },
+    {
+        id: "proof:blob-value-free",
+        cmd: "proof:blob-value-free",
+        tags: ["local", "ci"],
+        note: "AU.W7 — the goo-blob/watercolor-dot are value.js-free (two-tier: source-graph + dist) — the injected ColorResolver seam, not a value.js coupling",
+    },
+    {
+        id: "proof:no-value-default",
+        cmd: "proof:no-value-default",
+        tags: ["local", "ci"],
+        note: "AU.W7 — a no-resolver blob mount THROWS naming defaultBlobColorResolver (the loud failure, not a silent gray default)",
+    },
+    {
+        id: "proof:motion-composables-consumer",
+        cmd: "proof:motion-composables-consumer",
+        tags: ["local", "ci"],
+        note: "AV.W3 — each NEW motion composable (useCountup/vReveal) tallies ≥2 RESOLVING-at-HEAD in-repo consumers (demo route + test); the slides DeckNav fork is `pending` (cross-repo, post-publish), not counted. Bite: drop demo/stories/motion/countup.vue (or the test) → RED",
+    },
+    {
+        id: "proof:motion-value-free",
+        cmd: "proof:motion-value-free",
+        tags: ["local", "ci"],
+        note: "AV.W3 — the W3-lifted/adopted motion composables (useCountup/vReveal/useStagger*/useLayerTransition/useGlassCarousel) consume the keyframes LIGHT tier only (no value.js edge, no loadAnimationEngine/animate/CSSKeyframesAnimation). Sibling of proof:blob-value-free",
+    },
+    {
+        id: "proof:blob-space-gamma",
+        cmd: "proof:blob-space-gamma",
+        tags: ["local", "ci"],
+        note: "AU.W7 — DEC-AT-7 seam: the default resolver paints GAMMA (oklchToGammaRgb, not oklchToLinear); a shader linear-flip must close with linearToSrgb (no too-dark)",
+    },
+    {
+        id: "proof:aurora-space-gamma",
+        cmd: "proof:aurora-space-gamma",
+        tags: ["local", "ci"],
+        note: "AV.W1 — aurora's linear LUT pipeline MUST close with a linearToSrgb() OETF before fragColor (the un-converged-sibling of the blob's A5/A2 darkening trap); the call precedes output, not a dead helper",
+    },
+    {
+        id: "proof:shader-shared-source",
+        cmd: "proof:shader-shared-source",
+        tags: ["local", "ci"],
+        note: "AV.W2 — the aurora↔blob shared GLSL convergence: the OETF + the four Ottosson mat3 literals + the FBM_ROT constant live ONCE in procedural-color.glsl.ts (the single source); comment-stripped, NEITHER metaball.frag.ts NOR aurora.frag.ts re-defines a chunk-owned artefact, and both splice it. Bite: re-inline a local linearToSrgb body or a mat3 literal → RED",
+    },
+    {
+        id: "proof:blob-color-equivalence",
+        cmd: "proof:blob-color-equivalence",
+        tags: ["local", "ci"],
+        note: "AU.W7 — the 8-assertion CPU-equivalence: the metaball OKLCh shader-color TS port matches value.js's Ottosson CPU result to 1e-6 (asymmetric witness #3a7bd5 — the exact-matrix trap detector)",
+    },
+    {
+        id: "proof:fail-explicit",
+        cmd: "proof:fail-explicit",
+        tags: ["local"],
+        note: "AV.W12 — no silent error-swallow in src/: every catch re-throws or carries a '// fail-explicit:' sentinel, and no '?? reactive(' masking default-synthesis on a required dependency. Bite: strip a befitting sentinel or re-inject '?? reactive(BLOB_CONFIG_DEFAULTS)' → RED",
+    },
+    {
+        id: "proof:no-god-module",
+        cmd: "proof:no-god-module",
+        tags: ["local"],
+        note: "AV.W13 — no src/ .ts/.vue file > 500 lines (excludes __tests__/); warns at 300. The five named god-modules (aurora.frag, useSortable, Progress.vue, runtime, metaball) split into cohesive sub-modules. Bite: a file grows past 500 → RED. W6 gates-close folds it into the ci aggregate",
+    },
+    {
+        id: "proof:no-legacy-commentary",
+        cmd: "proof:no-legacy-commentary",
+        tags: ["local"],
+        note: "AV.W12 — the api/index.ts + index.ts barrels carry zero tranche-letter ref / 'tranche' word / vN.N.N version-archaeology in their bodies (the audit trail lives in CHANGELOG.md). Bite: re-inject one 'M.W2' or 'v1.7.0' → RED",
+    },
+    {
+        id: "proof:au-final",
+        cmd: "proof:au-final",
+        tags: ["release"],
+        note: "AU.W10 — the close meta-gate (release-only, NOT ci): --verify-ci green; clean tree minus the 2 documented user-domain entries (inv-θ); AU.FINAL.md cites a green run per wave (W0..W10 incl. W8b) + the deferral register; overfitting zero orphans; the 3.3.0 changeset STAGED not auto-published (publish USER-DOMAIN; package.json stays 3.2.0)",
+    },
+    {
+        id: "proof:liquid-glass-tokens",
+        cmd: "proof:liquid-glass-tokens",
+        tags: ["local", "ci"],
+        note: "AV.W15 — the iOS-26 Liquid Glass token-evolution: --glass-edge-light{,-dark} full-perimeter rim wired onto floating/dock, the quiet rung chains saturate (rung parity), the content-aware under-shadow modifier swaps a heavier rung over text, the three @property --specular-* regs, the moving specular paints STATIC under prefers-reduced-motion + a centred var() fallback, the saturate drops with the blur under reduced-transparency, the feDisplacementMap garnish is @supports-gated PE-only (no url(#…) substrate leak), the AA floors at tokens.css:332/339 survive. Bite: strip a guard or a token → RED",
+    },
+    {
+        id: "proof:storybook-ia",
+        cmd: "proof:storybook-ia",
+        tags: ["local", "ci"],
+        note: "AV.W10 — the demo manifest matches the §1 11-category IA EXACTLY (category order + per-category story-id set) and no row resolves the lazy() MissingStory fallback. Bite: reorder a category off §1, add/drop a story id, or point a row at a nonexistent .vue → RED",
+    },
+    {
+        id: "proof:no-orphan-demo-route",
+        cmd: "proof:no-orphan-demo-route",
+        tags: ["local", "ci"],
+        note: "AV.W10 — bidirectional set-equality: every demo/stories/<category>/<id>.vue ↔ exactly one manifest row (helper dirs/root chassis excluded by the category-scoped walk). Bite: leave an unreferenced .vue (orphan file) or a row → missing file (dangling row) → RED",
+    },
+    {
+        id: "proof:font-canon",
+        cmd: "proof:font-canon",
+        tags: ["local", "ci"],
+        note: "AV.W10 — every NAMED font-family in the demo tables (defaults.ts FONT_OPTIONS + DEFAULT_CONFIG.font), the demo presets, and the library --font-stack-* tokens resolves to a shipped @font-face (parsed from fonts.css + demo.css + typography.css) OR a generic/system keyword. Bite: re-add cm-serif / point --font-stack-serif at a non-shipped face → RED",
+    },
+    {
+        id: "proof:lockfile",
+        cmd: "proof:lockfile",
+        tags: ["local", "ci", "release"],
+        note: "registry-resolution drift guard",
+    },
+    {
+        id: "proof:di-consistency",
+        cmd: "proof:di-consistency",
+        tags: ["local", "ci"],
+        note: "AV.W14 — every InjectionKey<T> context that hand-rolls a strict-or-optional triplet collapses onto the canonical createStrictContext/createOptionalContext pair (dock/dock-layer = strict+optional, toggle-group/glyph-face/configurator = optional, sortable = strict; goo-blob BLOB_CONFIG_KEY is an allowlisted // di-default: external-provide key); the strict-vs-optional matrix matches; mulberry32/hashString defined exactly once (src/utils/prng.ts). Bite: re-inline a hand-rolled inject()+throw triplet → RED",
+    },
+    {
+        id: "proof:no-nested-import",
+        cmd: "proof:no-nested-import",
+        tags: ["local", "ci"],
+        note: "AV.W14 — zero runtime nested import()/require() inside any src/ function body UNLESS the line carries a // lazy-boundary: sentinel (the keyframes loadAnimationEngine HEAVY-tier seam shape); inline type-position import(\"…\") is flagged (hoist to a top-level import type). Structure-lock — the count is zero at HEAD. Bite: add a nested await import() without the sentinel → RED",
+    },
+    {
+        id: "proof:no-test-in-src",
+        cmd: "proof:no-test-in-src",
+        tags: ["local", "ci"],
+        note: "AV.W14 — zero *.{test,spec,test-d} files + zero __tests__/ dirs under src/; all tests live in the top-level tests/ tree mirroring src/ (the glsl-port fixture rides with its tests). Bite: drop a *.test.ts back under src/ → RED",
+    },
+    {
+        id: "proof:spring-tokens-synced",
+        cmd: "proof:spring-tokens-synced",
+        tags: ["local", "ci", "release"],
+        note: "AV.W14 — the build-pipeline orchestration guarantee: the committed --spring-* block in tokens.css matches the regen-spring-tokens.mjs generator output (the external mutation point is NOT in `build`, so this gate guards the silent-drift gap). Bite: hand-edit one --spring-* value → RED, then run the generator + commit → green",
+    },
     { id: "audit:stash", cmd: "audit:stash", tags: ["ci"] },
 ];
 
@@ -88,7 +353,9 @@ function runMode(mode) {
         console.error(`[gates] unknown mode '${mode}' (expected local|ci|release)`);
         process.exit(2);
     }
-    console.log(`[gates] running '${mode}' set (${set.length} gates): ${set.map((g) => g.id).join(", ")}`);
+    console.log(
+        `[gates] running '${mode}' set (${set.length} gates): ${set.map((g) => g.id).join(", ")}`,
+    );
     for (const g of set) {
         console.log(`\n[gates] ── ${g.id} ──`);
         try {
@@ -121,9 +388,7 @@ function verifyCi() {
     // ci-tagged in the manifest — it can no longer slip through undetected).
     const CI_META_STEPS = new Set(["gates:verify-ci"]);
     const missing = [...expected].filter((c) => !ciSteps.has(c));
-    const extra = [...ciSteps].filter(
-        (c) => !expected.has(c) && !CI_META_STEPS.has(c),
-    );
+    const extra = [...ciSteps].filter((c) => !expected.has(c) && !CI_META_STEPS.has(c));
     if (missing.length || extra.length) {
         console.error("[gates:verify-ci] ci.yml drifted from the gate manifest:");
         for (const c of missing) console.error(`  MISSING from ci.yml: ${c}`);
@@ -137,7 +402,9 @@ function verifyCi() {
         }
         process.exit(1);
     }
-    console.log(`[gates:verify-ci] ci.yml matches the manifest ci set (${expected.size} gates).`);
+    console.log(
+        `[gates:verify-ci] ci.yml matches the manifest ci set (${expected.size} gates).`,
+    );
 }
 
 const arg = process.argv[2];
@@ -145,8 +412,14 @@ if (arg === "--run") runMode(process.argv[3]);
 else if (arg === "--verify-ci") verifyCi();
 else if (arg === "--list") {
     const mode = process.argv[3] ?? "local";
-    console.log(gatesFor(mode).map((g) => g.cmd).join("\n"));
+    console.log(
+        gatesFor(mode)
+            .map((g) => g.cmd)
+            .join("\n"),
+    );
 } else {
-    console.error("usage: gates.mjs --run <local|ci|release> | --verify-ci | --list <mode>");
+    console.error(
+        "usage: gates.mjs --run <local|ci|release> | --verify-ci | --list <mode>",
+    );
     process.exit(2);
 }

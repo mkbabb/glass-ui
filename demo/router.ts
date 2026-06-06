@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
-import { CATEGORIES, FLAT_STORIES, firstStoryPath } from "./stories/manifest";
+import { CATEGORIES, firstStoryPath } from "./stories/manifest";
 
 /**
- * Routes are derived from the manifest. Categories produce
- * `/:category/:story` routes; standalone tools/playgrounds in `FLAT_STORIES`
- * get top-level static paths (`/aurora`, etc.) — Vue Router prefers static
- * over dynamic, so they resolve cleanly alongside the category routes.
+ * Routes are derived from the manifest. Every category produces a
+ * `/:category` landing redirect plus a `/:category/:story` route per story.
+ * There are no flat standalone routes — the former Aurora/GooBlob/Blob flat
+ * tools are now rows in the Substrates category (AV.W10).
  */
 function buildRoutes(): RouteRecordRaw[] {
     const routes: RouteRecordRaw[] = [
@@ -15,19 +15,6 @@ function buildRoutes(): RouteRecordRaw[] {
             redirect: () => firstStoryPath(),
         },
     ];
-
-    // Flat standalone stories first — static paths win over `:dynamic`.
-    for (const flat of FLAT_STORIES) {
-        routes.push({
-            path: `/${flat.id}`,
-            name: `flat:${flat.id}`,
-            component: flat.component,
-            meta: {
-                flatStoryId: flat.id,
-                title: flat.title,
-            },
-        });
-    }
 
     for (const category of CATEGORIES) {
         // Category landing — redirect to first story (or show empty-state fallback below).

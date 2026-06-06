@@ -68,7 +68,7 @@
 //   - large composite chassis with nested composables (dock, aurora,
 //     configurator domain helpers); OR
 //   - vertical/themed substrate (paper-backdrop, search,
-//     animated-digit, metric-cell, metric-stack, responsive-tabs).
+//     animated-digit, responsive-tabs).
 // Consumers of those packages explicitly opt into them via subpath, keeping
 // the root barrel's transitive-import graph tight.
 

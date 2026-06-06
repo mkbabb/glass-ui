@@ -7,23 +7,24 @@
  *
  * The manifest is consumed by `router.ts` (routes), `AppShell.vue` (dock rail
  * + carousel pager), and `useStoryNavigation` (current/next/prev).
+ *
+ * The IA is 11 coherent categories — Foundations, Substrates, Primitives,
+ * Containers, Navigation, Data, Feedback, Motion, Tools, Compositions, and a
+ * reference-only Composables shelf collapsed below the fold.
  */
 import type { Component } from "vue";
 import {
     Compass,
+    Droplet,
     Shapes,
     Boxes,
     Navigation,
     Database,
     Bell,
     Sparkles,
+    Command,
     LayoutDashboard,
-    Wand2,
     Cog,
-    SlidersHorizontal,
-    Anchor,
-    Paintbrush,
-    Droplet,
     type LucideIcon,
 } from "@lucide/vue";
 
@@ -39,20 +40,9 @@ export interface Category {
     id: string;
     title: string;
     icon: LucideIcon;
+    /** Reference-only shelf — rendered collapsed below the fold in the rail. */
+    reference?: boolean;
     stories: Story[];
-}
-
-/**
- * Top-level standalone story (not part of a component category). Renders as
- * a distinct icon in the left rail, with no story-pager above the content.
- * Used for tools and playgrounds — Aurora is the first instance.
- */
-export interface FlatStory {
-    id: string;
-    title: string;
-    blurb?: string;
-    icon: LucideIcon;
-    component: () => Promise<Component>;
 }
 
 const modules = import.meta.glob<{ default: Component }>("./*/*.vue");
@@ -92,7 +82,19 @@ export const CATEGORIES: Category[] = [
             s("foundations", "overlays-scrims", "Overlays & Scrims", "Three scrim weights + ModalOverlay + motion / lift offsets."),
             s("foundations", "chart-chassis-palette", "Chart & Chassis Palette", "Chart aliases (ping / download / upload / jitter) + chassis-tier opacities + specular tokens."),
             s("foundations", "paper-backdrop-texture-system", "Paper Backdrop Texture System", "`<PaperBackdrop>` frequency register (clean / aged) + cascade-overridable --paper-* tokens (P.W3 Lane C)."),
-            s("foundations", "native-top-layer", "Native Top-Layer", "AQ.W6 pilots — native `<dialog>` + `commandfor` + `.glass-top-layer`; `HoverPopover :native` interestfor opt-in; capability probe."),
+            s("foundations", "paper-backdrop", "Paper Backdrop", "Paper-grain texture substrate, two frequencies (clean / aged) + opacity knob."),
+            s("foundations", "dock-active-tokens", "Dock Active Tokens", "--dock-active-{bg,color,scale,border,shadow} cohort — token-only override pattern (O.W6 Lane B)."),
+            s("foundations", "css-utilities", "CSS Utilities", "`@utility scale-on-hover` over `--scale-hover` — per-scope override cascade (O.W6 Lane C)."),
+        ],
+    },
+    {
+        id: "substrates",
+        title: "Substrates",
+        icon: Droplet,
+        stories: [
+            s("substrates", "aurora", "Aurora", "Procedural painterly gradients — multi-nuclei composition, four mediums, cursor-driven swirl. Shipped /aurora."),
+            s("substrates", "goo-blob", "GooBlob + WatercolorDot", "WebGL2 metaball on the shared substrate (injected color resolver) + a CSS/SVG pastel swatch. Shipped /goo-blob + /watercolor-dot."),
+            s("substrates", "glass-panel", "Glass Panel", "Five-rung glass tier ladder over a renderer-tier detection cascade (svg-filter / css / fallback) — a substrate, not a UI primitive."),
         ],
     },
     {
@@ -102,36 +104,28 @@ export const CATEGORIES: Category[] = [
         stories: [
             s("primitives", "buttons", "Buttons"),
             s("primitives", "card", "Card", "Five-tier glass surface — wash · quiet · resting · floating · overlay; orthogonal surface=cartoon decoration; scroll-pane recipe; polymorphic root via reka-ui Primitive."),
-            s("primitives", "glass-panel", "Glass Panel", "Five-rung glass tier ladder over a renderer-tier detection cascade (svg-filter / css / fallback)."),
-            s("primitives", "configurator", "Configurator", "Studio shell — preset row + grouped <ConfiguratorLayer> + a live specimen stage; responsive density (mobile at narrow, comfortable when wide); floating glass substrate."),
-            s("primitives", "dark-mode-toggle", "Dark Mode Toggle", "Size axis (sm · md · lg · control standalone; dock sizes to its GlassDock host); composes useGlobalDark."),
-            s("primitives", "expandable-container", "Expandable Container", "In-place vs Teleport-to-body fullscreen with body-overflow lock-depth."),
-            s("primitives", "icon-tooltip", "Icon Tooltip", "Auto-provider tooltip for label co-location with display typography baked in."),
-            s("primitives", "labeled-field", "Labeled Field", "Parent SFC + 4 wrappers (Input · Select · Slider · Switch) with shared IconTooltip label."),
-            s("primitives", "form-validation", "Form Validation", ":user-invalid / :user-valid rungs + useUserInvalidAria aria-invalid bridge + required asterisk + error slot + Textarea autosize (AQ.W4)."),
-            s("primitives", "paper-backdrop", "Paper Backdrop", "Paper-grain texture substrate, two frequencies (clean / aged) + opacity knob."),
-            s("primitives", "stacked-icons", "Stacked Icons", "Overlapping icon stack with maxVisible / +N overflow; size axis only."),
-            s("primitives", "toggle-chip", "Toggle Chip", "chip vs cell variants over a reka-ui Toggle root; aria-pressed semantics."),
             s("primitives", "inputs", "Inputs"),
             s("primitives", "textarea", "Textarea"),
             s("primitives", "checks", "Checkbox · Radio · Switch"),
-            s("primitives", "slider", "Slider"),
+            s("primitives", "slider", "Slider", "Two recipes — standard (continuous rounded iOS knob) + spectrum (gradient-track color slider)."),
             s("primitives", "number-field", "Number Field"),
             s("primitives", "select", "Select"),
             s("primitives", "combobox", "Combobox"),
             s("primitives", "multi-select", "Multi-Select"),
             s("primitives", "toggle", "Toggle · Toggle Group"),
+            s("primitives", "toggle-chip", "Toggle Chip", "chip vs cell variants over a reka-ui Toggle root; aria-pressed semantics."),
             s("primitives", "label", "Label"),
             s("primitives", "badge", "Badge"),
+            s("primitives", "separator", "Separator"),
+            s("primitives", "section", "Section", "Sectioning landmark over the typography ladder — title / description / tone / gap."),
             s("primitives", "metric-badge", "Metric Badge"),
-            s("primitives", "metric-pill", "Metric Pill", "Stacked taller-fatter pill — `MetricBadge` with `labelPosition=stacked` + `density=spacious` + `size=lg` baked in. Composes inside a `GlassDock containerName=…` host."),
+            s("primitives", "metric-pill", "Metric Pill", "A `MetricBadge` composition — `labelPosition=stacked` + `density=spacious` + `size=lg` baked in. Not a parallel primitive."),
             s("primitives", "status-dot", "Status Dot"),
             s("primitives", "pulse", "Pulse"),
-            s("primitives", "glyph-face", "Glyph Face", "Phase-tinted lucide wrapper with catch-light cap."),
-            s("primitives", "hover-popover", "Hover Popover", "Hover-triggered floating label with adaptive side / align + defer-on-leave timer; popover-tier substrate for chassis dock consumers."),
-            s("primitives", "disco-glyph", "Disco Glyph", "Faceted SVG glyph primitive — 8-stop linear facet × 165° specular cap, phase-tinted on activation."),
-            s("primitives", "separator", "Separator"),
-            s("primitives", "section", "Section", "Sectioning landmark over the typography ladder — title / description / tone (heading · title · subheading · label) / gap (tight · regular · loose)."),
+            s("primitives", "stacked-icons", "Stacked Icons", "Overlapping icon stack with maxVisible / +N overflow; size axis only."),
+            s("primitives", "dark-mode-toggle", "Dark Mode Toggle", "Size axis (sm · md · lg · control standalone; dock sizes to its GlassDock host); composes useGlobalDark."),
+            s("primitives", "glyph-face", "Glyph Face", "Phase-tinted lucide wrapper with catch-light cap; clips to a descendant DiscoGlyph silhouette via provide/inject."),
+            s("primitives", "disco-glyph", "Disco Glyph", "Faceted SVG glyph primitive — 8-stop linear facet × 165° specular cap, phase-tinted on activation; writes its silhouette into a wrapping GlyphFace."),
         ],
     },
     {
@@ -140,6 +134,7 @@ export const CATEGORIES: Category[] = [
         icon: Boxes,
         stories: [
             s("containers", "dialog", "Dialog"),
+            s("containers", "native-top-layer", "Native Top-Layer", "AQ.W6 pilots — native `<dialog>` + `commandfor` + `.glass-top-layer`; `HoverPopover :native` interestfor opt-in; capability probe. Folds into Dialog as a `:native` opt-in (FIX-ROUTE)."),
             s("containers", "sheet", "Sheet"),
             s("containers", "drawer", "Drawer"),
             s("containers", "popover", "Popover"),
@@ -147,10 +142,10 @@ export const CATEGORIES: Category[] = [
             s("containers", "context-menu", "Context Menu"),
             s("containers", "hover-card", "Hover Card"),
             s("containers", "tooltip", "Tooltip"),
-            s("containers", "alert", "Alert"),
             s("containers", "accordion", "Accordion"),
             s("containers", "collapsible", "Collapsible"),
-            s("containers", "glass-carousel", "Glass Carousel", "GlassCarousel items and composable controls."),
+            s("containers", "hover-popover", "Hover Popover", "Hover-triggered floating label with adaptive side / align + defer-on-leave timer; popover-tier floating surface."),
+            s("containers", "expandable-container", "Expandable Container", "In-place vs Teleport-to-body fullscreen with body-overflow lock-depth."),
         ],
     },
     {
@@ -158,13 +153,12 @@ export const CATEGORIES: Category[] = [
         title: "Navigation",
         icon: Navigation,
         stories: [
-            s("navigation", "tabs", "Tabs"),
-            s("navigation", "bouncy-tabs", "Bouncy Tabs"),
+            s("navigation", "tabs", "Tabs", "reka Tabs (default · pill · underline · vertical) + the custom BouncyTabs spring-slider variant."),
             s("navigation", "dock", "Dock"),
             s("navigation", "dock-layers", "Dock Layers"),
             s("navigation", "rail", "Dock Rail", "Vertical GlassDock variant behind the demo's category nav."),
             s("navigation", "carousel", "Carousel"),
-            s("navigation", "command", "Command Palette"),
+            s("navigation", "glass-carousel", "Glass Carousel", "GlassCarousel items and composable controls."),
         ],
     },
     {
@@ -190,6 +184,7 @@ export const CATEGORIES: Category[] = [
         title: "Feedback",
         icon: Bell,
         stories: [
+            s("feedback", "alert", "Alert", "role=\"alert\" status surface — a feedback primitive."),
             s("feedback", "toast", "Toast"),
             s("feedback", "toaster", "Toaster", "Drop-in <ToastProvider> wrapper composed at the layout root."),
             s("feedback", "notification", "Notification"),
@@ -205,17 +200,44 @@ export const CATEGORIES: Category[] = [
         stories: [
             s("motion", "transitions", "Transitions"),
             s("motion", "springs", "Spring Orchestrator"),
-            s("motion", "stagger", "Stagger Reveal"),
             s("motion", "countup", "Count-up", "Walk [data-countup] figures and tween textContent on the keyframes NumericAnimation engine."),
             s("motion", "reveal", "v-reveal", "Dependency-free entrance directive — sets the [data-reveal] hook + --d stagger step the CSS reads."),
-            s("motion", "scroll-type", "Scroll-driven Type"),
             s("motion", "typewriter", "Typewriter"),
+        ],
+    },
+    {
+        id: "tools",
+        title: "Tools",
+        icon: Command,
+        stories: [
+            s("tools", "command", "Command Palette", "Fuzzy command tool — search/command surface, not nav structure."),
+        ],
+    },
+    {
+        id: "compositions",
+        title: "Compositions",
+        icon: LayoutDashboard,
+        stories: [
+            s("compositions", "hero", "Hero"),
+            s("compositions", "math-paper", "Math Paper"),
+            s("compositions", "dashboard", "Dashboard"),
+            s("compositions", "auth-shell", "Auth Shell"),
+            s("compositions", "settings", "Settings"),
+            s("compositions", "empty-states", "Empty States"),
+            s("compositions", "dock-with-slider", "Dock with Slider", "Cross-substrate `keep-dock-open` contract — slider thumb-halo + dock substrate response while dragging."),
+            s("compositions", "drawer-live-behind", "Drawer Live-Behind", "Detented non-modal bottom sheet (`mode=\"live-behind\"`) — peek/half/full snap-points over a live, native-size verdict surface."),
+            s("compositions", "configurator", "Configurator", "Studio shell — preset row + grouped <ConfiguratorLayer> + a live specimen stage. Aurora is its real consumer."),
+            s("compositions", "instrument-chassis", "Instrument Chassis", "Three-region chassis with twin-line bezel grooves and phase cascade; the GlassDock instrument-strip host."),
+            s("compositions", "form-validation", "Form Validation", ":user-invalid / :user-valid rungs + useUserInvalidAria aria-invalid bridge + required asterisk + error slot + Textarea autosize (AQ.W4)."),
+            s("compositions", "labeled-field", "Labeled Field", "Parent SFC + 4 wrappers (Input · Select · Slider · Switch) with shared IconTooltip label."),
+            s("compositions", "icon-tooltip", "Icon Tooltip", "Auto-provider tooltip for label co-location with display typography baked in."),
         ],
     },
     {
         id: "composables",
         title: "Composables",
         icon: Cog,
+        reference: true,
         stories: [
             s("composables", "use-token-color", "useTokenColor", "Reactive read of a CSS custom property — re-resolves on dark-mode transitions."),
             s("composables", "use-stagger", "useStagger", "Fixed-count timed reveal cascade — one-shot timeline with cleanup-safe timers."),
@@ -239,91 +261,11 @@ export const CATEGORIES: Category[] = [
             s("composables", "use-touch-gate", "useTouchGate", "Touch-vs-pointer disambiguation with a deactivation timer."),
             s("composables", "use-timer", "useTimer", "Scope-aware setTimeout — auto-cleans on dispose."),
             s("composables", "use-interval", "useInterval", "Scope-aware setInterval — companion of useTimer."),
-            s("composables", "use-story-demo", "useStoryDemo", "Canonical play/reset/status harness for storybook demos (V.W4)."),
             s("composables", "use-infinite-scroll", "useInfiniteScroll", "Scroll-driven incremental load engine under the InfiniteScroll primitive."),
             s("composables", "use-clipboard", "useClipboard", "Reactive clipboard copy with auto-resetting `copied` flag + execCommand fallback (O.W6 Lane A)."),
         ],
     },
-    {
-        id: "custom",
-        title: "Custom",
-        icon: Anchor,
-        stories: [
-            s("custom", "header-ribbon", "Header Ribbon", "Hover-tracking ribbon anchor — position=left|right, hideTimeoutMs, pin/toggle (O.W6 Lane A)."),
-        ],
-    },
-    {
-        id: "dock",
-        title: "Dock",
-        icon: Boxes,
-        stories: [
-            s("dock", "icon-button-token-ladder", "Icon Button Token Ladder", "--dock-active-{bg,color,scale,border,shadow} cohort — token-only override pattern (O.W6 Lane B)."),
-        ],
-    },
-    {
-        id: "utilities",
-        title: "Utilities",
-        icon: Paintbrush,
-        stories: [
-            s("utilities", "scale-on-hover", "Scale on Hover", "`@utility scale-on-hover` over `--scale-hover` — per-scope override cascade (O.W6 Lane C)."),
-        ],
-    },
-    {
-        id: "sliders",
-        title: "Sliders",
-        icon: SlidersHorizontal,
-        stories: [
-            s("sliders", "spectrum", "Spectrum", "`<Slider variant=\"spectrum\">` — the gradient-track color slider: consumer-supplied `--slider-track-bg` ramp, transparent range, small ringed knob (AV.W11)."),
-        ],
-    },
-    {
-        id: "compositions",
-        title: "Compositions",
-        icon: LayoutDashboard,
-        stories: [
-            s("compositions", "hero", "Hero"),
-            s("compositions", "math-paper", "Math Paper"),
-            s("compositions", "dashboard", "Dashboard"),
-            s("compositions", "auth-shell", "Auth Shell"),
-            s("compositions", "settings", "Settings"),
-            s("compositions", "empty-states", "Empty States"),
-            s("compositions", "instrument-chassis", "Instrument Chassis", "Three-region chassis with twin-line bezel grooves and phase cascade."),
-            s("compositions", "dock-with-slider", "Dock with Slider", "Cross-substrate `keep-dock-open` contract — slider thumb-halo + dock substrate response while dragging."),
-            s("compositions", "drawer-live-behind", "Drawer Live-Behind", "Detented non-modal bottom sheet (`mode=\"live-behind\"`) — peek/half/full snap-points over a live, native-size verdict surface."),
-        ],
-    },
 ];
-
-export const FLAT_STORIES: FlatStory[] = [
-    {
-        id: "aurora",
-        title: "Aurora",
-        blurb:
-            "Procedural painterly gradients — multi-nuclei composition, four mediums, cursor-driven swirl.",
-        icon: Wand2,
-        component: () => import("./aurora.vue").then((m) => m.default),
-    },
-    {
-        id: "blob",
-        title: "Blob",
-        blurb:
-            "Procedural metaball field — drifting nuclei merge and split over a token-driven palette; count / viscosity / glow / grain axes.",
-        icon: Droplet,
-        component: () => import("./blob.vue").then((m) => m.default),
-    },
-    {
-        id: "goo-blob",
-        title: "GooBlob + WatercolorDot",
-        blurb:
-            "The AU.W7 library blob primitives — a WebGL2 metaball on the shared substrate (injected color resolver) + a CSS/SVG pastel swatch (internalized filter).",
-        icon: Droplet,
-        component: () => import("./goo-blob.vue").then((m) => m.default),
-    },
-];
-
-export function findFlatStory(id: string): FlatStory | undefined {
-    return FLAT_STORIES.find((f) => f.id === id);
-}
 
 export function findCategory(id: string): Category | undefined {
     return CATEGORIES.find((c) => c.id === id);
