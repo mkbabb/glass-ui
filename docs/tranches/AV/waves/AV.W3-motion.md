@@ -64,6 +64,41 @@ Rows that land in OTHER waves (recorded here for the routing seam): **D4** (cons
 
 **DEFER (KEEP-BOOK).** glass-ui ALREADY runs the native-scroll-first contract HAND-ROLLED and correct: `supportsCssTimeline.ts` is a HARDENED `CSS.supports` probe (the garbage-value negative-probe filters lying happy-dom/jsdom shims — a discipline keyframes' `createNativeTimeline` does not replicate), and `useScrollProgress`/`useStaggerReveal` already go inert (zero listeners) on a supporting engine, ceding to the `scroll-driven.css` `.scroll-progress`/`[data-scroll-reveal]` compositor recipes (AQ.W5). keyframes `createNativeTimeline` constructs a JS `ScrollTimeline` OBJECT to DRIVE an animation — a different shape from glass-ui's "detect native → go inert, let CSS own it" dual-path-single-writer rule. Adopting it would ADD a JS timeline object on exactly the engine where glass-ui's whole point is to attach nothing. **Trigger to revisit:** a glass-ui consumer needs a reactive JS scroll value ON a supporting engine (the case `useScrollProgress`'s own docstring calls "opted into the wrong tool") AND wants keyframes to drive a non-CSS-expressible animation off it. No such consumer at HEAD → DEFER, record the trigger in `PROGRESS.md`.
 
+## 3a. Triumvirate Dispatch
+
+Trigger a triumvirate (research + plan augment + redress) — the orchestrator may NOT redispatch the failing unit
+alone — on any of:
+
+- **File-bounds expansion that invalidates the wave**: the AV.W3.5 (D2) `flip()`/`flipShared()`/`ElementMorph`
+  adoption is observed to NEED a change to `@mkbabb/keyframes.js` itself (the LIGHT `flip()` API does not expose
+  the read/invert batching seam the dock/carousel mechanics require, or `FlipOptions` cannot carry the
+  CSS-`transition-duration`-parsed duration / the per-frame `SpringProgress` value WITHOUT a keyframes edit) —
+  keyframes.js is READ-ONLY upstream (inv-16), so this is a DOCS-bounds-breaking expansion, halt and triumvirate;
+  the AV.W3.5 fold touches the `SpringProgress`/`DOCK_SPRING` driver block (`useLayerTransition.ts:237`) the §4
+  Do-NOT-touch list EXCLUDES (W3.5 is the FLIP-batching half ONLY — the velocity-continuity re-seat is the C3
+  dock-motion-arm seam, recorded-not-edited; an edit reaching the spring driver is out-of-bounds); the AV.W3.3
+  (D1) `stagger()` adoption forces a keyframes-bearing subpath RELOCATION of `useStagger`/`useStaggerReveal` from
+  `/motion-core` to `/motion` that BREAKS a `/motion-core` consumer (the fold crossing a subpath boundary is the
+  explicit triumvirate trigger named in §3.3 — do NOT redispatch the relocation alone; the KISS escape is to BOOK
+  D1 with the named trigger, but the BOOK-vs-relocate call is a plan-augment decision).
+- **Non-local-recoverable hard-gate failures**: `proof:dock-motion-parity` or `proof:dock-motion-single-source`
+  goes RED after AV.W3.5 — the FLIP-mechanics fold corrupted the spring-driven width-morph or the single-frame
+  settle (the `DOCK_SPRING` driver was supposed to be untouched, so a RED here means the `flip()` batching
+  changed the morph timing — NOT a local re-tweak; the AT-tranche dock-motion contract must be re-derived against
+  the folded mechanics); `proof:motion-composables-consumer` cannot reach ≥2 RESOLVING-at-HEAD consumers for a NEW
+  composable (the slides DeckNav fork resolves only post-publish, so a second IN-REPO consumer must exist — if no
+  second in-repo demo route can honestly consume `useCountup`/`vReveal`, the gate cannot be made green by a local
+  edit and the consumer story must be re-planned, not a born-RED gate forced green); `proof:motion-value-free`
+  RED — a lifted composable statically reaches a value.js edge (`loadAnimationEngine`/`animate`/
+  `CSSKeyframesAnimation`) the LIGHT-only import contract forbids, and the value.js-free re-expression is not a
+  one-line import swap.
+- **Third-iteration diagnostic halt**: any FLIP-equivalence test RED (the layer swap or carousel size-morph
+  diverging from HEAD) that survives three fold-strategy iterations (`flip()` with the swap inside `mutate` →
+  `flipShared()` for the shared-element morph → reverting the batching to the hand-rolled read-mutate-read and
+  re-scoping D2) must HALT and escalate, not loop a fourth.
+
+See `ORCHESTRATION.md` §Triumvirate Auto-Triggers for measurable thresholds.
+
 ## 4. File Bounds
 
 | File | Access |
@@ -133,9 +168,9 @@ Do NOT touch: the `SpringProgress`/`DOCK_SPRING` driver block in `useLayerTransi
 - Mechanism (the NARROW fold per §3):
   - **`useStagger.ts:123-137`** — replace the inline `initialDelayMs + idx*delayMs` with `const delay = stagger(itemCount, { each: delayMs });` (constructed once in `start()`), then `setTimeout(reveal, initialDelayMs + delay(idx, itemCount))`. The `for`-loop + the reactive `revealed.value` slice-write + the `timers` `Set` + `onScopeDispose(clearAll)` STAY (Vue-reactive + teardown concerns keyframes does not own). `delayMs` default 80 (the `--motion-stagger-default` token) is preserved as `each`. EXPOSE an optional `from?: StaggerOrigin`/`ease?` pass-through on `UseStaggerOptions` ONLY if a demo consumer uses it (else KISS — keep the linear default, do not add unused options).
   - **`useStaggerReveal.ts:65-68`** — replace `staggerMs*idx` with a `stagger(targets.value.length, { each: staggerMs })` distribution; the IntersectionObserver callback uses `delay(idx, total)`. Same teardown/reactive machinery stays.
-  - value.js-FREE: `stagger` is a LIGHT-barrel export (`./internal/leaves` clamp only; `toEasing` value.js-free). `import { stagger }` + `import type { StaggerOrigin, StaggerFn }`. Since these leaves now statically reach `@mkbabb/keyframes.js`, **confirm `/motion-core`'s keyframes-FREE contract** — `stagger` IS on the keyframes barrel, so `useStagger`/`useStaggerReveal` BECOME keyframes-bearing and must MOVE from `/motion-core` to `/motion`. **This is a subpath relocation — re-ground against the `proof:motion-core-free` discipline; if the relocation breaks a `/motion-core` consumer, that is a triumvirate trigger (the fold crosses a subpath boundary).** ALTERNATIVELY (KISS escape): if `stagger`'s linear distribution is a one-line `idx*each`, the fold's net value is marginal and the subpath churn is real — BOOK §3.3 with the trigger "a non-linear `from`/`ease` distribution consumer appears" and keep the two hand-rolls. **The unit author decides at HEAD: adopt IFF a demo/consumer actually wants `from`/`ease`; else BOOK (the keyframes-bearing relocation is not worth a behavior-identical linear ramp).**
+  - value.js-FREE: `stagger` is a LIGHT-barrel export (`./internal/leaves` clamp only; `toEasing` value.js-free). `import { stagger }` + `import type { StaggerOrigin, StaggerFn }`. Since these leaves now statically reach `@mkbabb/keyframes.js`, **confirm `/motion-core`'s keyframes-FREE contract** — `stagger` IS on the keyframes barrel, so `useStagger`/`useStaggerReveal` BECOME keyframes-bearing and must MOVE from `/motion-core` to `/motion`. **This is a subpath relocation — re-ground against the `proof:vueuse-free-root` keyframes-FREE/root-barrel discipline; if the relocation breaks a `/motion-core` consumer, that is a triumvirate trigger (the fold crosses a subpath boundary).** ALTERNATIVELY (KISS escape): if `stagger`'s linear distribution is a one-line `idx*each`, the fold's net value is marginal and the subpath churn is real — BOOK §3.3 with the trigger "a non-linear `from`/`ease` distribution consumer appears" and keep the two hand-rolls. **The unit author decides at HEAD: adopt IFF a demo/consumer actually wants `from`/`ease`; else BOOK (the keyframes-bearing relocation is not worth a behavior-identical linear ramp).**
 - Files: `src/composables/motion/useStagger.ts`, `src/composables/motion/useStaggerReveal.ts`, `src/composables/motion/__tests__/useStagger.test.ts`, AND (if adopted) `src/composables/motion/index.ts`/`core/index.ts`/`package.json` for the subpath relocation.
-- Sub-gate: no new gate. The `useStagger.test.ts` asserts the default-linear distribution is UNCHANGED post-adoption (the `idx*delayMs` ramp byte-equals `delay(idx)`); `proof:motion-core-free` (or `proof:vueuse-free-root`'s sibling) stays green for whichever barrel the leaves land on; `typecheck` green. **If BOOKed:** the §3.3 BOOK rationale + trigger recorded in `PROGRESS.md`, the two hand-rolls KEPT, the gate is `useCountup`+`vReveal`-only.
+- Sub-gate: no new gate. The `useStagger.test.ts` asserts the default-linear distribution is UNCHANGED post-adoption (the `idx*delayMs` ramp byte-equals `delay(idx)`); `proof:vueuse-free-root` (the keyframes-FREE/root-barrel guard) stays green for whichever barrel the leaves land on; `typecheck` green. **If BOOKed:** the §3.3 BOOK rationale + trigger recorded in `PROGRESS.md`, the two hand-rolls KEPT, the gate is `useCountup`+`vReveal`-only.
 
 ### AV.W3.4 useIdleSchedule extract (2nd-consumer-gated)
 
@@ -254,7 +289,7 @@ Binding authority: `docs/tranches/AV/audit/SOTA-crosswalk.md`. W3 owns the §2.C
 
 - **The fold (ADOPT):** on an interrupted/retargeted dock resize, re-seat the live `SpringProgress` from its current value + velocity (the solver already tracks both) instead of re-constructing from the static preset. This is the highest-leverage *interaction*-motion win and the **dock-lag-adjacent fold** — the live solver already exists and re-seats correctly; the work is wiring the retarget path to read the in-flight state.
 - **Boundary (C4, ADOPT-as-invariant):** ambient WebGL (aurora/blob) stays on cheap static curves; the live solver is reserved for interactive surfaces (dock). [SOTA §2.C C4] Record as a convention so a future surface does not put the live solver on an ambient background.
-- **Cross-wave note:** C3 touches `useLayerTransition.ts` (dock motion) — the §4 Do-NOT-touch list of THIS wave excludes the dock FLIP (AU.W8-owned). C3 is therefore a **named dock-motion fold recorded here for the dock-motion arm**, not a W3 src edit on the motion-composable leaves. The on-demand `will-change` lifecycle (F3) on the same composable is the AV.W7 perf deliverable; C3's velocity-continuity is the spring-correctness half. Both land in the dock-motion file; W3 records the seam, AV.W7 owns the perf half.
+- **Cross-wave note:** C3 touches `useLayerTransition.ts` (dock motion) at the `SpringProgress`/`DOCK_SPRING` driver block (`:237`) — which the §4 Do-NOT-touch list explicitly EXCLUDES from W3's edit (W3.5/D2 folds the FLIP measure/pin/invert mechanics AROUND the spring, but does NOT touch the spring driver itself). C3 is therefore a **named dock-motion fold recorded here for the dock-motion arm**, NOT a W3 src edit: W3.5 owns the FLIP-batching half; the velocity-continuity re-seat is the spring-correctness half, recorded-not-edited here. The on-demand `will-change` lifecycle (F3) on the same composable is the AV.W7 perf deliverable. All three converge on the one dock-motion file: W3.5 lands the FLIP fold, W3 RECORDS the C3 velocity seam, AV.W7 owns the perf half (will-change). The C3 velocity re-seat itself lands when the dock-motion arm executes it — W3 names the seam, does not edit the spring.
 
 ### Baseline-dated CSS-motion folds (the §1 crosswalk table)
 

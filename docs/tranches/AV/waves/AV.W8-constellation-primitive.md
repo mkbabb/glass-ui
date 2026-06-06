@@ -27,7 +27,7 @@ This wave succeeds if (1) a new `useCanvas2D` substrate — a SIBLING to `useWeb
    - **Consumer 2 — a glass-ui demo story.** `demo/stories/.../constellation.vue` (or a named trigger). This is the IN-REPO consumer that resolves at HEAD on authoring.
    - **The muster verdict (taken at HEAD):** the slides consumer is a CROSS-REPO PENDING adoption (G.W2 swap not yet landed) — it does NOT count toward ≥2 until it resolves (mirrors `proof:au-w9-consumers`'s "every cited consumer resolves at HEAD" rule). So the in-repo ≥2 must be met by TWO resolving-at-HEAD glass-ui consumers (the demo story + a SECOND in-repo surface), OR the wave is GATED-NOT-LANDED pending the slides G.W2 swap.
 
-### §3a — the GATED-vs-LANDED decision (CONDITIONAL authoring)
+### §3.5 — the GATED-vs-LANDED decision (CONDITIONAL authoring)
 
 The wave's land/gate disposition is taken at authoring:
 
@@ -35,16 +35,16 @@ The wave's land/gate disposition is taken at authoring:
 - **IF only one resolving-at-HEAD consumer exists** (the demo story alone; the slides constellation is the PENDING cross-repo 2nd) → **GATED-NOT-LANDED.** Author the substrate + primitive SPEC (this file) but DO NOT create the `src/` artefacts; record the KEEP-BOOK in `PROGRESS.md`: "useCanvas2D + Constellation GATED — trigger: the slides G.W2 constellation-RAF-park swap lands (making the slides til-briefing constellation a resolving glass-ui-substrate consumer) OR a second in-repo glass-ui Canvas2D surface musters. At HEAD the demo story is the sole resolving consumer; the substrate is substrate-without-2nd-consumer (J inv 10). The SOTA D1/E1 RESOLVES the prior `useCanvas2D` BOOK to ADOPT-gated — the gate is the muster, not the technique." Do NOT create any `src/` file.
 - **The SOTA resolution of the prior BOOK:** AV.md §3.3 carried `useCanvas2D` as KEEP-BOOK ("a 2nd Canvas2D consumer"). The SOTA D1/E1 marks the TECHNIQUE as ADOPT (the constellation IS the named headline procedural deliverable; Canvas2D IS the correct substrate) — so the BOOK moves from "technique unproven" to **ADOPT-gated-on-muster**. The gate is now the 2nd-consumer count, not the architectural question. This is the §3.3 ledger line's promotion: KEEP-BOOK → FOLD-AV-IFF-muster.
 
-## 3b. Triumvirate Dispatch
+## 3a. Triumvirate Dispatch
 
 A triumvirate (research + plan augment + redress) is mandatory — the orchestrator may NOT redispatch the failing unit alone — when:
 
-- **The 2nd resolving-at-HEAD consumer cannot be mustered in-repo.** If the demo story is the SOLE resolving consumer (the slides G.W2 swap is the pending cross-repo 2nd), forcing a second SPECULATIVE demo route to clear the count is overfitting (a demo built only to satisfy the gate is not a genuine consumer context). The redress is to GATE-NOT-LAND (per §3a), a scope decision, not a local edit.
+- **The 2nd resolving-at-HEAD consumer cannot be mustered in-repo.** If the demo story is the SOLE resolving consumer (the slides G.W2 swap is the pending cross-repo 2nd), forcing a second SPECULATIVE demo route to clear the count is overfitting (a demo built only to satisfy the gate is not a genuine consumer context). The redress is to GATE-NOT-LAND (per §3.5), a scope decision, not a local edit.
 - **`useCanvas2D` cannot cleanly compose `useRAFLoop` + `useIntersectionPause`.** If the Canvas2D lifecycle needs a RAF shape `useRAFLoop` cannot express (a per-canvas clock vs the shared loop the slides constellation uses for `.is-active`-only animation), the redress is the composition boundary (does `useCanvas2D` own a `useRAFLoop` instance per canvas, or share one?), an architectural decision about the substrate, not a local fix.
 - **The constellation primitive over-couples to the slides ANOMALY skin.** The slides constellation has a red ANOMALY node (pinned, pulsing, tethered to a label, resolves on `data-resolved`). That skin is SLIDES-EDITORIAL (the `drawAnomaly` skin extract is a FOLD-G item). If the glass-ui primitive bakes in the anomaly, it over-fits — the primitive ships the generic lattice; the anomaly is a consumer SLOT/overlay, not a baked feature. If the extraction cannot cleanly separate them → triumvirate.
 - **Any diagnostic loop reaches its third iteration** on the spatial-binning O(n) neighbor-query verify — halt, do not iterate a fourth time.
 
-## 4. File Bounds (CONDITIONAL — only if §3a LANDS)
+## 4. File Bounds (CONDITIONAL — only if §3.5 LANDS)
 
 | File | Access | Lane |
 |---|---|---|
@@ -80,9 +80,9 @@ Net: two lanes — **(A) substrate**, **(B) primitive** (depends on A). One work
 
 | Agent unit lane | Sibling worktree absolute path | notes |
 |---|---|---|
-| Lane A+B — canvas2d-substrate + constellation | `/Users/mkbabb/Programming/glass-ui-w8-canvas2d` | serial A→B: substrate first (composing useRAFLoop/useIntersectionPause), then the constellation primitive + the demo consumer + the gate. CONDITIONAL on §3a LAND. |
+| Lane A+B — canvas2d-substrate + constellation | `/Users/mkbabb/Programming/glass-ui-w8-canvas2d` | serial A→B: substrate first (composing useRAFLoop/useIntersectionPause), then the constellation primitive + the demo consumer + the gate. CONDITIONAL on §3.5 LAND. |
 
-No `CARGO_TARGET_DIR` (Node/Vite repo). The lane runs `npm run typecheck`/`npm run build`/the gate against its own checkout. The orchestrator runs `git worktree add` before dispatch and owns the `gates.mjs`/`package.json`/`CLAUDE.md`/`PROGRESS.md` integration at close. Branches from clean main. IF §3a GATES (no land), the lane writes ONLY the `PROGRESS.md` KEEP-BOOK record + the (RED-asserting) consumer tally — no `src/` file.
+No `CARGO_TARGET_DIR` (Node/Vite repo). The lane runs `npm run typecheck`/`npm run build`/the gate against its own checkout. The orchestrator runs `git worktree add` before dispatch and owns the `gates.mjs`/`package.json`/`CLAUDE.md`/`PROGRESS.md` integration at close. Branches from clean main. IF §3.5 GATES (no land), the lane writes ONLY the `PROGRESS.md` KEEP-BOOK record + the (RED-asserting) consumer tally — no `src/` file.
 
 ## 5. Agent Units
 
@@ -100,7 +100,7 @@ No `CARGO_TARGET_DIR` (Node/Vite repo). The lane runs `npm run typecheck`/`npm r
 - **Goal**: the constellation is a glass-ui primitive on `useCanvas2D` — proximity-graph + spatial binning + optional Verlet — with the SOTA D2 draw discipline, the generic lattice (no baked anomaly), and the in-repo demo consumer.
 - **Mechanism**:
   - **`useConstellation.ts` + `Constellation.vue` (create)** — the node lattice: nodes with `(x,y,vx,vy,r)`; drift on constant velocity (or fbm/domain-warp drift IFF the AV.W2 shared-noise leaf is available); bounce off bounds; a SPATIAL-BIN grid (uniform-grid / spatial-hash) so the within-`link`-px neighbor query is O(n) not O(n²); an OPTIONAL Verlet relaxation pass (opt-in `settle` prop, off by default). Consumer tokens: `count`/`link`/`speed`/node-color/line-color (overridable; read from CSS vars per the slides `readVar` idiom).
-  - **D2 draw discipline** — pre-render ONE radial-gradient glow sprite to an offscreen canvas at mount; per frame: batch the hairlines into `beginPath`/`stroke` per opacity bucket (polyline batching), `drawImage` the glow sprite per node at `Math.floor(x)`/`Math.floor(y)`; NO `shadowBlur`; NO `getImageData`. The generic lattice ships WITHOUT the slides ANOMALY skin (the anomaly is a consumer overlay/slot, not a baked feature — §3b over-coupling caveat).
+  - **D2 draw discipline** — pre-render ONE radial-gradient glow sprite to an offscreen canvas at mount; per frame: batch the hairlines into `beginPath`/`stroke` per opacity bucket (polyline batching), `drawImage` the glow sprite per node at `Math.floor(x)`/`Math.floor(y)`; NO `shadowBlur`; NO `getImageData`. The generic lattice ships WITHOUT the slides ANOMALY skin (the anomaly is a consumer overlay/slot, not a baked feature — §3a over-coupling caveat).
   - **The demo consumer** — `demo/stories/.../constellation.vue` (the in-repo resolving consumer #1) + register in `manifest.ts`.
   - **Subpath** — `src/constellation.ts` barrel + the `vite.library.ts` entry + the `./constellation` export (the primitive ships subpath-only — a Canvas2D background is not a root-barrel cherry-pick; mirrors `/aurora`/`/goo-blob`).
 - **Files**: `constellation/` dir (create), `src/constellation.ts` (create), `vite.library.ts` + `package.json` (modify), the demo story + `manifest.ts` (create/modify), `CLAUDE.md` (modify).
@@ -112,7 +112,7 @@ W8 closes when every condition below is evidence-backed:
 
 1. **AV.W8.A** — `useCanvas2D` composes `useRAFLoop` + `useIntersectionPause` (no re-rolled RAF; the offscreen/tab park inherited) + the reduced-motion one-static-frame + the E4 `willReadFrequently:false` guardrail; `typecheck` green. **(LANDED case)**
 2. **AV.W8.B** — the constellation primitive (proximity-graph + spatial binning + optional Verlet) ships on `useCanvas2D` with the D2 draw discipline (polyline batching, NO `shadowBlur`, pre-rendered glow sprite, floored coords, no `getImageData`); the generic lattice ships without the baked anomaly; `dist/constellation.js` emits; the `/constellation` subpath resolves. **(LANDED case)**
-3. **`proof:canvas2d-substrate-consumer` (NEW, born-RED)** — GREEN: `useCanvas2D` + `Constellation` each map to ≥2 DISTINCT resolving-at-HEAD consumer contexts; every cited path RESOLVES (a pending cross-repo slides consumer is recorded but does NOT count until it resolves); bite: drop the demo story → RED. **OR — the GATED case (§3a):** the wave is GATED-NOT-LANDED — NO `src/` artefact created, the KEEP-BOOK + the 2nd-consumer trigger (the slides G.W2 swap OR a 2nd in-repo surface) recorded in `PROGRESS.md`, NO gate registered (a born-RED gate against an un-landed substrate violates manifest==ci).
+3. **`proof:canvas2d-substrate-consumer` (NEW, born-RED)** — GREEN: `useCanvas2D` + `Constellation` each map to ≥2 DISTINCT resolving-at-HEAD consumer contexts; every cited path RESOLVES (a pending cross-repo slides consumer is recorded but does NOT count until it resolves); bite: drop the demo story → RED. **OR — the GATED case (§3.5):** the wave is GATED-NOT-LANDED — NO `src/` artefact created, the KEEP-BOOK + the 2nd-consumer trigger (the slides G.W2 swap OR a 2nd in-repo surface) recorded in `PROGRESS.md`, NO gate registered (a born-RED gate against an un-landed substrate violates manifest==ci).
 4. **The SOTA BOOK resolution recorded** — the prior AV.md §3.3 `useCanvas2D` KEEP-BOOK is updated to FOLD-AV-IFF-muster (the SOTA D1/E1 ADOPT-gates it); the slides til-briefing constellation (G.W2 swap) is named as the cross-repo 2nd consumer prep.
 5. **No regression.** The existing gate matrix stays GREEN: `proof:webgl-substrate-single` (the WebGL substrate is UNCHANGED — `useCanvas2D` is a sibling), `proof:vueuse-free-root`, `proof:package`, `proof:resolution`, `npm run typecheck`, `npm run build`. `PROGRESS.md` records the wave with a green run id.
 
@@ -120,7 +120,7 @@ W8 closes when every condition below is evidence-backed:
 
 | gate | script | tags | bite-check |
 |---|---|---|---|
-| `proof:canvas2d-substrate-consumer` (LANDED case only) | `scripts/proof-canvas2d-substrate-consumer.mjs` | `["local","ci"]` | drop the demo story (or a resolving consumer) → RED. **NOT registered if §3a GATES (no land).** |
+| `proof:canvas2d-substrate-consumer` (LANDED case only) | `scripts/proof-canvas2d-substrate-consumer.mjs` | `["local","ci"]` | drop the demo story (or a resolving consumer) → RED. **NOT registered if §3.5 GATES (no land).** |
 
 Follows the house template (`scripts/proof-au-w9-consumers.mjs` — the consumer-tally form: an injected path-resolver, BOOK-exclusion, a byte-stable JSON artefact via `scripts/gate-output.mjs`, a pure exported `detectConsumers` detector, `process.exit(1)` on any <2 or unresolved). Register in `package.json` + `gates.mjs` ONLY if the wave LANDS (manifest==ci — no born-RED gate against an un-landed substrate).
 
@@ -139,7 +139,7 @@ Follows the house template (`scripts/proof-au-w9-consumers.mjs` — the consumer
 - `proof:canvas2d-substrate-consumer` JSON artefact (`docs/tranches/AV/audit/W8-canvas2d-consumers.json`, byte-stable via `scripts/gate-output.mjs`) — the ≥2-consumer tally OR the RED muster record.
 - The draw-discipline grep result (NO `shadowBlur`/`getImageData` in the draw loop) — `PROGRESS.md`.
 - The O(n) spatial-binning neighbor-query verify — `PROGRESS.md`.
-- The §3a LAND-or-GATE verdict + (if GATED) the 2nd-consumer trigger (the slides G.W2 swap OR a 2nd in-repo surface) — `PROGRESS.md`.
+- The §3.5 LAND-or-GATE verdict + (if GATED) the 2nd-consumer trigger (the slides G.W2 swap OR a 2nd in-repo surface) — `PROGRESS.md`.
 - The SOTA §3.3-BOOK-resolution record (KEEP-BOOK → ADOPT-gated) — `PROGRESS.md`.
 - The green CI run id for the wave + the integration commit hashes (per §9).
 

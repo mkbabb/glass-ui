@@ -5,7 +5,7 @@
 **Name**: W2 — blob-converge (the aurora↔blob shared-GLSL convergence; delete the shader-math duplication that let the aurora OETF diverge)
 **Opens after**: AV.W1 (the aurora OETF fix lands FIRST — W1 copies `linearToSrgb()` into `aurora.frag.ts` + inserts `col = linearToSrgb(col)` before output + re-bakes the 11 presets; W2 then DE-DUPLICATES the now-identical OETF + the shared procedural math into one source). W2 cannot open before W1's atomic commit + preset re-bake are green.
 **Agents**: 1 serial unit (the shared-chunk extraction touches BOTH `.frag.ts` modules + creates the chunk + the gate + the build wiring; the two frags are not file-disjoint from the chunk they compose, so this is one writer/worktree — see §4a).
-**Hard gate**: one NEW born-RED gate green (`proof:shader-shared-source`); the existing shader-color gate matrix (`proof:blob-space-gamma`, `proof:blob-color-equivalence`, `proof:blob-value-free`, `proof:webgl-substrate-single` + whatever aurora-OETF gate AV.W1 lands) stays green with NO regression; `npm run typecheck` + `npm run build` green; both shaders compile + link on a live WebGL2 context (manual browser verify recorded in `PROGRESS.md`); the aurora preset snapshots + blob snapshots are byte-stable (the convergence is a refactor — the emitted GLSL string is character-equivalent modulo the chunk-splice boundary).
+**Hard gate**: one NEW born-RED gate green (`proof:shader-shared-source`); the existing shader-color gate matrix (`proof:blob-space-gamma`, `proof:blob-color-equivalence`, `proof:blob-value-free`, `proof:webgl-substrate-single` + AV.W1's `proof:aurora-space-gamma`) stays green with NO regression; `npm run typecheck` + `npm run build` green; both shaders compile + link on a live WebGL2 context (manual browser verify recorded in `PROGRESS.md`); the aurora preset snapshots + blob snapshots are byte-stable (the convergence is a refactor — the emitted GLSL string is character-equivalent modulo the chunk-splice boundary).
 
 **Status**: planned
 
@@ -52,6 +52,38 @@ Grounded against HEAD — the convergence is asymmetric because the blob is the 
 - the blob's `sdCircle`, satellite loop, `fwidth` AA edge, `gamutClampOklch` bisection, pointer deformation, edge-glow — blob-exclusive. KEEP.
 - each shader's `fbm` LOOP body + lacunarity (per §3a). KEEP; only the rotation constant converges.
 
+## 3a. Triumvirate Dispatch
+
+Trigger a triumvirate (research + plan augment + redress) — the orchestrator may NOT redispatch the failing
+unit (AV.W2.1) alone — on any of:
+
+- **File-bounds expansion that invalidates the wave**: the shared-chunk splice produces a syntactically-broken
+  shader — the `${OETF_GLSL}`/`${OKLCH_MATRICES_GLSL}`/`${FBM_ROT_GLSL}` interpolation lands the chunk source at a
+  scope where a chunk-emitted GLSL declaration collides with a surviving local one (a re-declared `mat3`/function
+  name → `gl.linkProgram` fails on the live WebGL2 context), and the fix would require editing the chunk's emitted
+  GLSL text to disambiguate a name the OTHER shader depends on (a change that re-blesses the un-touched shader's
+  snapshots — out of the §3a-MANDATORY OETF+matrices+FBM-rot bounds); a `hash21`/value-noise reconciliation (§3a)
+  that is NOT cleanly KISS and forces re-blessing BOTH shaders' noise fields (the over-abstraction the wave
+  forbids — scope `hash21` OUT, do not expand the chunk to swallow both); any fix requiring an edit to the
+  `/color` runtime-JS leaf (`src/composables/color/index.ts` — the CPU color source is already converged, READ-ONLY
+  here per §3.6) or to `@mkbabb/value.js`/`@mkbabb/keyframes.js` (READ-ONLY upstream, inv-16); any fix requiring an
+  `#include` preprocessor or a new bundler step (the splice is JS template-literal interpolation by design — adding
+  a preprocessor is a build-mechanism expansion the SOTA crosswalk explicitly forbids).
+- **Non-local-recoverable hard-gate failures**: `proof:blob-color-equivalence` (the 8-assert 1e-6 CPU-equivalence)
+  goes RED after the splice — the matrices moved homes but the equivalence broke, meaning a Ottosson `mat3` literal
+  was corrupted in the move (a 1e-6 EXACT-vs-convenience-matrix trap, `metaball.frag.ts:14-19`); this is NOT a
+  local re-tweak — the chunk's matrix literals must be re-derived against value.js's core and re-certified, which
+  is a research+redress cycle, not a redispatch. Likewise `proof:aurora-space-gamma` (AV.W1's OETF gate) cannot
+  see the spliced OETF without aurora's output path being re-architected (the splice did not reach the output
+  site). A born-RED `proof:shader-shared-source` that STAYS RED after BOTH frags are migrated AND the comment-strip
+  false-witness pass is exhausted (the gate detects a chunk-owned artefact still locally re-defined that the
+  migration cannot cleanly remove — the splice boundary fights a load-bearing local).
+- **Third-iteration diagnostic halt**: any live WebGL2 compile+link failure (or `proof:shader-shared-source` RED)
+  that survives three splice-position iterations (re-order the interpolation → split the chunk sub-source →
+  scope-out the contested helper per §3a) must HALT and escalate, not loop a fourth.
+
+See `ORCHESTRATION.md` §Triumvirate Auto-Triggers for measurable thresholds.
+
 ## 4. File Bounds
 
 | File | Access |
@@ -93,7 +125,7 @@ No `CARGO_TARGET_DIR` (Node/Vite repo). The lane runs `npm run typecheck`/`npm r
   4. **Re-point the glsl-port provenance** — `metaball-color.glsl-port.ts`'s header comment now cites the SHARED chunk as the GLSL source it mirrors. The TS math is unchanged.
   5. **Author the gate** (§6) against the settled state.
 - **Files:** the chunk (create), the two frags (modify), the glsl-port (modify provenance), the gate (create), `gates.mjs`/`package.json` (register).
-- **Sub-gate:** `proof:shader-shared-source` (NEW, born-RED) green + bite-verified; `proof:blob-color-equivalence` (the 8-assert 1e-6) STAYS green (the math moved homes, did not change — if it reddens, the splice corrupted a matrix → a real defect); `proof:blob-space-gamma` + AV.W1's aurora-OETF gate stay green; `proof:blob-value-free` stays green (the chunk is GLSL string, value.js-free); `npm run typecheck` + `npm run build` green; both shaders compile + link on a live WebGL2 context (manual browser verify in `PROGRESS.md`).
+- **Sub-gate:** `proof:shader-shared-source` (NEW, born-RED) green + bite-verified; `proof:blob-color-equivalence` (the 8-assert 1e-6) STAYS green (the math moved homes, did not change — if it reddens, the splice corrupted a matrix → a real defect); `proof:blob-space-gamma` + AV.W1's `proof:aurora-space-gamma` stay green; `proof:blob-value-free` stays green (the chunk is GLSL string, value.js-free); `npm run typecheck` + `npm run build` green; both shaders compile + link on a live WebGL2 context (manual browser verify in `PROGRESS.md`).
 
 ## 6. Hard Gate
 
@@ -103,7 +135,7 @@ W2 closes when every condition below is evidence-backed:
 2. **`proof:shader-shared-source` (NEW, born-RED)** — GREEN. The gate (house template, comment-strip first) asserts: (a) the chunk EXISTS and exports the OETF + the four Ottosson `mat3` literals + the `FBM_ROT` constant as its SINGLE definition; (b) comment-strip `metaball.frag.ts` + `aurora.frag.ts` → NEITHER contains a LOCAL re-definition of `linearToSrgb`/`srgbToLinear` (the `float linearToSrgbCh`/`vec3 linearToSrgb` function bodies), the four Ottosson `mat3(...)` literals, or the `mat2(0.8, 0.6, -0.6, 0.8)` FBM rotation literal — each must be 0 in BOTH frags (the chunk is the single source; a re-inlined local definition is the bite); (c) both frags REFERENCE the chunk (the splice interpolation `${OETF_GLSL}` etc. is present in each `.frag.ts` source). Bite-check: re-inline a local `vec3 linearToSrgb(vec3 c)` body into `aurora.frag.ts` → RED; re-inline a `mat3 LMS_TO_OKLAB = mat3(...)` literal into `metaball.frag.ts` → RED.
 3. **`proof:blob-color-equivalence`** — STAYS GREEN (the 8-assert 1e-6 CPU-equivalence; the matrices moved to the chunk but are byte-identical, so the port still matches value.js).
 4. **`proof:blob-space-gamma`** — STAYS GREEN (the blob OETF seam intact via the chunk).
-5. **AV.W1's aurora-OETF gate** — STAYS GREEN (aurora's OETF now sourced from the chunk; the gate sees the spliced definition).
+5. **`proof:aurora-space-gamma`** (AV.W1's aurora-OETF gate) — STAYS GREEN (aurora's OETF now sourced from the chunk; the gate sees the spliced definition).
 6. **`proof:blob-value-free`** — STAYS GREEN (the chunk imports no value.js; the blob/watercolor-dot value.js-free invariant holds).
 7. **No regression.** `proof:webgl-substrate-single`, `npm run typecheck`, `npm run build`, the existing shader-color suite stay GREEN. Both shaders compile + link on a live WebGL2 context; the aurora preset snapshots + blob snapshots are byte-stable OR re-blessed-with-rationale (only if a §3a noise reconciliation changed a field). `PROGRESS.md` records the wave with a green run id + the chosen `hash21` route + any re-bless.
 
@@ -113,13 +145,15 @@ W2 closes when every condition below is evidence-backed:
 |---|---|---|---|
 | `proof:shader-shared-source` | `scripts/proof-shader-shared-source.mjs` | `["local","ci"]` | re-inline a local `vec3 linearToSrgb(...)` into `aurora.frag.ts` → RED; re-inline a Ottosson `mat3(...)` literal into `metaball.frag.ts` → RED |
 
+**Canonical gate name:** `proof:shader-shared-source` is the canonical name across the AV wave specs and `gates.mjs`. The `AV.md §2` charter table + the §6 inv-θ list carry the earlier placeholder `proof:shader-chunk-single`; that is the same single gate under its pre-rename label — there is exactly ONE W2 convergence gate. (The charter row is the authoring placeholder; the spec name binds.)
+
 The gate follows the house template (`scripts/proof-blob-space-gamma.mjs`): comment-strip first (false-witness discipline — the chunk's own provenance comments quote the matrix names; strip before matching so a COMMENT mention is not a false-RED), a pure exported detector, a byte-stable JSON artefact via `scripts/gate-output.mjs` (`gateArtifactPath`/`writeGateArtifact`/`snapshotStamp`), a human summary, `process.exit(1)` on any violation. Register in `package.json` scripts + `gates.mjs` manifest ONLY after BOTH frags are migrated (`verifyCi()` enforces manifest==ci; do not register a born-RED gate against an un-migrated frag).
 
 ## 7. Format And Lint Cadence
 
 - `npm run typecheck` (`vue-tsc --noEmit`) — after the chunk + both migrations land, and at close.
 - `npm run build` — after the chunk + each frag migration, to confirm the template-splice emits both shaders with the chunk inlined (Vite bundles the `.glsl.ts` string module; confirm `dist` carries the assembled shader strings).
-- `proof:shader-shared-source` + the no-regression shader-color gate matrix (`proof:blob-color-equivalence`, `proof:blob-space-gamma`, the AV.W1 aurora-OETF gate, `proof:blob-value-free`, `proof:webgl-substrate-single`) run after the migration completes and at close.
+- `proof:shader-shared-source` + the no-regression shader-color gate matrix (`proof:blob-color-equivalence`, `proof:blob-space-gamma`, AV.W1's `proof:aurora-space-gamma`, `proof:blob-value-free`, `proof:webgl-substrate-single`) run after the migration completes and at close.
 - A live WebGL2 compile+link verify (both shaders) — manual browser, recorded in `PROGRESS.md`. A splice that produces a syntactically-broken shader fails `gl.linkProgram`; the snapshot tests do not exercise a real GL context (the `proof:webgl-golden` headless runner is KEEP-BOOK debt per the audit), so the manual link verify is the binding evidence that the spliced GLSL compiles.
 - `git diff --check` (whitespace/conflict-marker) on the DOCS-edited files (`CLAUDE.md`, `PROGRESS.md`) at close.
 

@@ -11,7 +11,7 @@ CORE-vs-specific split, and the demos-consume-glass-ui asks. It is sourced from
 (the cross-repo coordination), both authored against HEAD (glass-ui 3.2.0, branch
 `at-dock-convergence`, 2026-06-05/06).
 
-It does NOT re-derive the dock fix (`AV.md §1`) or the wave table (`AV.md §4`). It maps the
+It does NOT re-derive the aurora fix (`AV.md §0`) or the wave table (`AV.md §2`). It maps the
 UNION EDGES. Where it cites a sibling, the line traces to that repo's live tranche docs.
 
 ---
@@ -253,9 +253,9 @@ value.js 0.11.0  →  glass-ui 3.3.0 (peer bump)  →  { keyframes D.W5 ∥ slid
 ```
 
 - **E1 hinge — glass-ui 3.3.0 → npm.** AV.W0–W1 are AT-disjoint and stage before the publish.
-  AV.W10 closes: stages the changeset (NOT auto-published), greens the gate matrix, carries
-  the value.js peer-bump line. The publish unblocks keyframes D.W5, slides G.W1, value.js
-  M.W7 — all in parallel.
+  AV.W6 closes (the LAST wave): stages the changeset (NOT auto-published), greens the gate
+  matrix, carries the value.js peer-bump line. The publish unblocks keyframes D.W5, slides
+  G.W1, value.js M.W7 — all in parallel.
 - **value.js 0.11.0 (E-valuepeer) — publishes BEFORE the cut.** The 3.3.0 cut bumps its
   `@mkbabb/value.js` peer + devDep `^0.10.0 → ^0.11.0`; the `^0.10.0` range excludes 0.11.0,
   so value.js must publish `0.11.0` first (or concurrent) for the manifest to resolve. The

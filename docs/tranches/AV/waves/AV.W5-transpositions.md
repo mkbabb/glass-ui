@@ -4,7 +4,7 @@
 
 **Name**: W5 — the L-Rε hygiene transpositions (KISS, public API unchanged)
 **Opens after**: AV.W0 (the formalize + doc-currency wave). AT-disjoint with AV.W1–W4; opens before the 3.3.0 publish. Should land AFTER AV.W4 so the (conditional) `drawer-native` subpath barrel is already in the `vite.library.ts` map before the barrel-batch transposition rewrites that map.
-**Agents**: 4 parallel — four file-disjoint lanes (§4a): (A) subpath-barrel collapse + vite batch-resolve, (B) composable restructure (reactive/platform sub-trees), (C) `createDockContext<T>()` factory, (D) types-ownership hoist (sidebar + infinite-scroll). No two lanes share a `modify` path EXCEPT `vite.library.ts` (Lane A sole owner) and the composables barrel (Lane B sole owner).
+**Agents**: 5 parallel — five file-disjoint lanes (§4a): (A) subpath-barrel collapse + vite batch-resolve, (B) composable restructure (reactive/platform sub-trees) + the optional `useReducedMotionToggle()` hoist note, (C) `createDockContext<T>()` factory, (D) types-ownership hoist (sidebar + infinite-scroll), (E) the goo-blob easing-module fold (D7 — `goo-blob/easing.ts`, component-scoped). No two lanes share a `modify` path EXCEPT `vite.library.ts` (Lane A sole owner) and the composables barrel (Lane B sole owner).
 **Hard gate**: two NEW born-RED gates green (`proof:subpath-enumeration` + `proof:no-orphan-composable`); the PUBLIC API surface is BYTE-UNCHANGED (`proof:package` + `proof:resolution` + `verify-export-types` + the per-subpath dist inventory all green with the SAME entry set); the existing gate matrix + `typecheck` + `build` stay green; the LOC delta is recorded.
 **Status**: planned
 
@@ -15,7 +15,7 @@
 
 ## 2a. Goal criterion
 
-This wave succeeds if (1) the 60 trivial one-line subpath barrels at `src/` top level are collapsed into a `src/subpaths/` metadir and BATCH-RESOLVED in `vite.library.ts` (zero runtime delta — the same `dist/<subpath>.js` chunk set emits); (2) the two orphaned top-level composables (`useInterval`/`useTimer` already in `reactive/`; the platform-detection leaf) sit in domain sub-trees (`reactive/`, `platform/`); (3) the dock provide/inject boilerplate (two near-identical `provideX`/`useX`/`useOptionalX` triplets) is unified via a `createDockContext<T>()` factory (−30-40 LOC); (4) the sidebar + infinite-scroll types are owned by their composable-of-record. The reader's test: `git diff` shows MOVED source + ONE factory + ZERO change to `package.json` exports / `dist/` inventory / public type surface; `proof:package` + `proof:resolution` + `verify-export-types` are byte-stable.
+This wave succeeds if (1) the 60 trivial one-line subpath barrels at `src/` top level are collapsed into a `src/subpaths/` metadir and BATCH-RESOLVED in `vite.library.ts` (zero runtime delta — the same `dist/<subpath>.js` chunk set emits); (2) the two orphaned top-level composables (`useInterval`/`useTimer` already in `reactive/`; the platform-detection leaf) sit in domain sub-trees (`reactive/`, `platform/`); (3) the dock provide/inject boilerplate (two near-identical `provideX`/`useX`/`useOptionalX` triplets) is unified via a `createDockContext<T>()` factory (−30-40 LOC); (4) the sidebar + infinite-scroll types are owned by their composable-of-record; (5) the three goo-blob hand-rolled easing helpers (`easeInOut`/`easeIn`/`easeOut`) are de-duplicated into a component-scoped `goo-blob/easing.ts` module (D7; private to `/goo-blob`, no public surface). The reader's test: `git diff` shows MOVED source + ONE factory + ONE goo-blob easing module + ZERO change to `package.json` exports / `dist/` inventory / public type surface; `proof:package` + `proof:resolution` + `verify-export-types` are byte-stable.
 
 ## 3. Scope
 
@@ -23,6 +23,9 @@ This wave succeeds if (1) the 60 trivial one-line subpath barrels at `src/` top 
 2. **Composable restructure (Lane B).** Verify the `reactive/` sub-tree (`useInterval`/`useTimer` — ALREADY there at HEAD) and restructure any genuinely-orphaned top-level composable into a domain sub-tree. The digest names `platform/` as a candidate (the `isMac` platform-detection leaf currently lives inside `composables/keyboard/useKeyboardShortcuts.ts`); IFF `isMac`/platform-detection is a ≥2-consumer leaf, extract it to `composables/platform/`. If it is single-consumer (keyboard-only), KEEP it in keyboard and record (no orphan extraction for a single consumer — J inv 10).
 3. **`createDockContext<T>()` factory (Lane C).** Unify the two near-identical dock DI boilerplate triplets — `dockContext.ts` (`provideDockContext`/`useDockContext`/`useOptionalDockContext` over `DOCK_CONTEXT_KEY`) + `dockLayerContext.ts` (`provideDockLayerGroupContext`/`useDockLayerGroupContext`/`useOptionalDockLayerGroupContext` over `DOCK_LAYER_GROUP_KEY`) — via a generic `createDockContext<T>(name, errorMessage)` factory returning the `{ KEY, provide, useStrict, useOptional }` quadruple (−30-40 LOC). The two call sites keep their distinct `interface` (DockContext / DockLayerGroupContext) + error messages; only the provide/inject/throw boilerplate collapses.
 4. **Types-ownership hoist (Lane D).** Confirm the sidebar types (ALREADY at `composables/sidebar/types.ts` per AI.W5-δ) and the infinite-scroll types (`components/custom/infinite-scroll/composables/types.ts`) are owned by their composable-of-record — verify-and-record mostly; hoist only a genuinely-misplaced type to its composable-of-record. No public-surface change.
+5. **Goo-blob easing-module fold (Lane E — D7, `audit/union-digest.md` D7 + `audit/conjoint-perfection-digest.md` §2 D1-D8 routing).** The goo-blob hand-rolls three quadratic easing helpers — `easeInOut` (`useBlobMood.ts:97`) + `easeIn`/`easeOut` (`useBlobSatellites.ts:18-24`) — confirmed against HEAD. The use is SINGLE-COMPONENT (the goo-blob alone), so the correct fold is a COMPONENT-SCOPED module, NOT a keyframes consumption nor a glass-ui-public composable: extract the three helpers to a new `src/components/custom/goo-blob/composables/easing.ts` (or `goo-blob/easing.ts`) and re-import them in `useBlobMood.ts` + `useBlobSatellites.ts`. This is a hygiene de-dup INTERNAL to the goo-blob family — the helpers stay private to `/goo-blob`; no new public surface, no `/api` entry. The `useBlobSatellites.ts:278` inline `smoothstep` (`bt * bt * (3 - 2 * bt)`) is a distinct local form — fold it into the module only IFF it is byte-identical to one of the three; else leave it inline (KISS, no forced consolidation). The slides `constellation.ts:181` `easeInOutQuad` is the SLIDES arm of D7 (editorial, document in-place, rides G's constellation lift) — OUT under inv-16; W5 owns ONLY the goo-blob arm.
+
+**Note — the optional `useReducedMotionToggle()` hoist (Lane B; cross-ref AV.W7 G1).** `audit/conjoint-perfection-digest.md` §3 ("A11y motion") records an OPTIONAL hoist: the prefers-reduced-motion freeze/wake pattern (`setReducedMotion` + the matchMedia change listener + `wake()`) could lift into a `useReducedMotionToggle()` motion-core composable that both aurora + blob compose. This is NON-BREAKING hygiene, but it is the SAME pattern AV.W7 G1 lifts into the `useWebGLCanvas` SUBSTRATE (so goo-blob + every future AV surface inherit the freeze as a platform guarantee). The two folds are alternatives, not both: W7 G1's substrate-level lift is the PRIMARY (it makes the freeze a substrate guarantee, the canonical home); the `useReducedMotionToggle()` motion-core composable is the SECONDARY shape and lands in W5 ONLY IF W7 G1's substrate lift does NOT subsume it (i.e. a NON-substrate consumer wants the toggle pattern). W5 RECORDS the note + defers the decision to W7 G1's substrate lift; W5 does NOT speculatively hoist a composable W7 G1 would make redundant (KISS, no duplicate freeze home).
 
 ## 3a. Triumvirate Dispatch
 
@@ -53,6 +56,9 @@ A triumvirate (research + plan augment + redress) is mandatory — the orchestra
 | `src/components/custom/dock/composables/__tests__/createDockContext.test-d.ts` | create (the factory type fixture) | C |
 | `src/composables/sidebar/types.ts` | audit (already canonical; likely no-op) | D |
 | `src/components/custom/infinite-scroll/composables/types.ts` | audit (already canonical; likely no-op) | D |
+| `src/components/custom/goo-blob/composables/easing.ts` | create (the D7 component-scoped easing module) | E |
+| `src/components/custom/goo-blob/composables/useBlobMood.ts` | modify (import `easeInOut` from `easing.ts`; delete the local hand-roll) | E |
+| `src/components/custom/goo-blob/composables/useBlobSatellites.ts` | modify (import `easeIn`/`easeOut` from `easing.ts`; delete the local hand-rolls) | E |
 | `scripts/proof-subpath-enumeration.mjs` | create | A |
 | `scripts/proof-no-orphan-composable.mjs` | create | B |
 | `scripts/gates.mjs` | modify (register, orchestrator-merged) | A/B |
@@ -71,9 +77,10 @@ No two agent units share a `modify`/`create`/`delete` path:
 - **Lane B (composable restructure)** owns the CONDITIONAL `composables/platform/` extraction + `composables/keyboard/useKeyboardShortcuts.ts` + `composables/index.ts` + `proof-no-orphan-composable.mjs`. It does NOT touch the 60 moved barrels (those are component/composable MIRRORS at `src/` top level; the platform leaf is a composable IMPL at `src/composables/`). Disjoint from Lane A.
 - **Lane C (`createDockContext<T>()`)** owns the new `createDockContext.ts` factory + the two dock context files + the dock composables barrel + the type fixture. Entirely within `src/components/custom/dock/composables/`. Disjoint.
 - **Lane D (types-ownership)** owns the AUDIT of `composables/sidebar/types.ts` + `infinite-scroll/composables/types.ts` — verify-and-record mostly; if it hoists a misplaced type it edits the composable-of-record, which Lane B/C do not touch. Disjoint.
+- **Lane E (goo-blob easing module — D7)** owns the new `goo-blob/composables/easing.ts` + the two consuming composables (`useBlobMood.ts`/`useBlobSatellites.ts`). Entirely within `src/components/custom/goo-blob/composables/`; no other lane touches the goo-blob family. Disjoint. (Lane E touches a goo-blob composable IMPL, not a subpath barrel — so it does NOT collide with Lane A's barrel moves nor Lane B's `composables/` restructure, which is the LIBRARY `src/composables/` tree, not the component-local `goo-blob/composables/`.)
 - `scripts/gates.mjs` + `package.json` (scripts) are touched by Lane A + Lane B for gate registration — append-only to disjoint regions. `CLAUDE.md` is Lane-A-owned (the `src/subpaths/` Structure line) + Lane-B-conditional (the `platform/` sub-tree note) — orchestrator-merged. The orchestrator integrates at close.
 
-Net: four parallel lanes — **(A) subpath-collapse**, **(B) composable-restructure**, **(C) dock-factory**, **(D) types-ownership**. `gates.mjs`/`package.json`/`CLAUDE.md` registration is orchestrator-integrated.
+Net: five parallel lanes — **(A) subpath-collapse**, **(B) composable-restructure**, **(C) dock-factory**, **(D) types-ownership**, **(E) goo-blob easing module (D7)**. `gates.mjs`/`package.json`/`CLAUDE.md` registration is orchestrator-integrated. Five lanes is within the six-agent implementation ceiling.
 
 ## 4b. Worktree Plan
 
@@ -83,6 +90,7 @@ Net: four parallel lanes — **(A) subpath-collapse**, **(B) composable-restruct
 | Lane B — composable-restructure | `/Users/mkbabb/Programming/glass-ui-w5-b` | CONDITIONAL `platform/` extraction; sole owner of `composables/index.ts` |
 | Lane C — dock-factory | `/Users/mkbabb/Programming/glass-ui-w5-c` | entirely within `dock/composables/` |
 | Lane D — types-ownership | `/Users/mkbabb/Programming/glass-ui-w5-d` | audit-mostly; the two `types.ts` files |
+| Lane E — goo-blob easing (D7) | `/Users/mkbabb/Programming/glass-ui-w5-e` | entirely within `goo-blob/composables/`; the easing-module de-dup |
 
 No `CARGO_TARGET_DIR` (Node/Vite repo). Each lane runs `npm run typecheck`/`npm run build`/its gates against its own worktree checkout. The orchestrator runs `git worktree add` for the siblings before dispatch and owns the `gates.mjs`/`package.json`/`CLAUDE.md` integration at close. All four lanes branch from the same clean main with AV.W0 (and ideally AV.W4) committed. **Sequencing caveat:** if AV.W4 Lane B lands the conditional `drawer-native` subpath, Lane A MUST start from a checkout that already has the `src/drawer-native.ts` barrel + its `vite.library.ts` entry, so the batch-resolve captures it.
 
@@ -142,6 +150,17 @@ No `CARGO_TARGET_DIR` (Node/Vite repo). Each lane runs `npm run typecheck`/`npm 
 - Files: `src/composables/sidebar/types.ts` (audit), `src/components/custom/infinite-scroll/composables/types.ts` (audit), `docs/tranches/AV/PROGRESS.md` (record the audit verdicts).
 - Sub-gate: no new gate. `npm run typecheck` + `proof:package` + `proof:resolution` GREEN (types byte-unchanged on the public surface). The audit verdicts recorded in `PROGRESS.md`.
 
+### AV.W5.E Goo-blob easing-module fold (D7)
+
+- Goal: the three goo-blob hand-rolled easing helpers are de-duplicated into a component-scoped `goo-blob/easing.ts` module, private to the `/goo-blob` family, with no public-surface change and the blob runtime byte-identical.
+- Mechanism:
+  - **`src/components/custom/goo-blob/composables/easing.ts`** (create) — extract `easeInOut` (the `useBlobMood.ts:97` quadratic form), `easeIn`, and `easeOut` (the `useBlobSatellites.ts:18-24` quadratic forms) VERBATIM into one module, exported as named functions. No semantic change — the curves stay byte-identical (the bite is runtime-equivalence, not a re-derivation).
+  - **`useBlobMood.ts`** (modify) — delete the local `easeInOut` (`:97`) and import it from `./easing`.
+  - **`useBlobSatellites.ts`** (modify) — delete the local `easeIn`/`easeOut` (`:18-24`) and import them from `./easing`. The inline `smoothstep` at `:278` (`bt * bt * (3 - 2 * bt)`) is a DISTINCT cubic form — fold it into `easing.ts` ONLY IFF byte-identical to one of the three (it is not — it is a smoothstep, not the quadratic ease); else leave it inline (KISS).
+  - **Scope discipline** — the helpers stay PRIVATE to `/goo-blob` (not re-exported from `goo-blob/index.ts`, not added to `/api`). The use is single-component, so the local module is the correct fold per D7 — NOT a keyframes consumption (the helpers are not in keyframes' LIGHT tier) nor a glass-ui-public composable.
+- Files: `src/components/custom/goo-blob/composables/easing.ts` (create), `src/components/custom/goo-blob/composables/useBlobMood.ts` (modify), `src/components/custom/goo-blob/composables/useBlobSatellites.ts` (modify).
+- Sub-gate: no new public gate. `npm run typecheck` GREEN; the goo-blob unit suite (`goo-blob/__tests__/`) GREEN (the easing helpers are exercised through the blob composables — the de-dup is runtime-byte-identical); the public surface is unchanged (`proof:package` + `proof:resolution` byte-stable; the helpers are not exported). The LOC delta (a small net-neutral move — the three helpers leave their two call sites and gain one module) recorded in `W5-loc-delta.json` alongside the dock-factory delta.
+
 ## 6. Hard Gate
 
 W5 closes when every condition below is evidence-backed:
@@ -150,8 +169,9 @@ W5 closes when every condition below is evidence-backed:
 2. **AV.W5.B** — `proof:no-orphan-composable` GREEN + bite-verified (a loose `useFoo.ts` at `src/composables/` top level → RED); every composable sits in a named sub-tree; `platform/` extracted IFF `isMac` ≥2-consumer, else KEEP-recorded. Registered `["local","ci"]`.
 3. **AV.W5.C** — the `createDockContext<T>()` factory lands; both dock context files consume it; the named export surface (`provideDockContext`/`useDockContext`/`useOptionalDockContext` + layer equivalents) is byte-identical; the `.test-d.ts` fixture green; `npm run typecheck` GREEN; the −30-40 LOC delta recorded in `W5-loc-delta.json`.
 4. **AV.W5.D** — the sidebar + infinite-scroll types-ownership audit verdicts recorded in `PROGRESS.md`; `proof:package` + `proof:resolution` GREEN (no public-surface drift).
-5. **PUBLIC API BYTE-UNCHANGED.** `proof:package` + `proof:resolution` + `npm run verify-export-types` + the per-subpath dist inventory are byte-stable before/after (the same `exports` set, the same `dist/<subpath>.js` files). This is the wave's CARDINAL invariant — a refactor that drifts the published surface is a defect.
-6. **No regression.** The existing gate matrix stays GREEN through W5: `proof:vueuse-free-root`, `proof:strict-templates`, `proof:doc-consistency`, `proof:components-css`, `npm run typecheck`, `npm run build`, the unit suites. `PROGRESS.md` records the wave with a green run id + the LOC delta.
+5. **AV.W5.E** — the three goo-blob easing helpers (`easeInOut`/`easeIn`/`easeOut`) live in `goo-blob/composables/easing.ts`; `useBlobMood.ts` + `useBlobSatellites.ts` import them (no surviving local hand-roll); the helpers stay PRIVATE to `/goo-blob` (not re-exported, not on `/api`); `npm run typecheck` + the goo-blob unit suite GREEN; the blob runtime is byte-identical (the curves unchanged). The `useReducedMotionToggle()` hoist is RECORDED as deferred-to-W7-G1 in `PROGRESS.md` (no speculative composable W7 G1 would subsume).
+6. **PUBLIC API BYTE-UNCHANGED.** `proof:package` + `proof:resolution` + `npm run verify-export-types` + the per-subpath dist inventory are byte-stable before/after (the same `exports` set, the same `dist/<subpath>.js` files). This is the wave's CARDINAL invariant — a refactor that drifts the published surface is a defect. (The goo-blob easing module is internal to the `/goo-blob` chunk — the `dist/goo-blob.js` chunk's CONTENT changes by the de-dup, but the export SURFACE is unchanged.)
+7. **No regression.** The existing gate matrix stays GREEN through W5: `proof:vueuse-free-root`, `proof:strict-templates`, `proof:doc-consistency`, `proof:components-css`, `proof:blob-value-free` (the goo-blob easing module imports no value.js), `npm run typecheck`, `npm run build`, the unit suites. `PROGRESS.md` records the wave with a green run id + the LOC delta.
 
 **Born-RED gate registration (manifest==ci invariant):**
 
@@ -164,7 +184,8 @@ Both follow the house gate template (`scripts/proof-package.mjs` for the dist-in
 
 ## 7. Format And Lint Cadence
 
-- `npm run typecheck` (`vue-tsc --noEmit`) — after AV.W5.A (the moved-barrel path-depth fix), AV.W5.C (the factory), and at close.
+- `npm run typecheck` (`vue-tsc --noEmit`) — after AV.W5.A (the moved-barrel path-depth fix), AV.W5.C (the factory), AV.W5.E (the goo-blob easing module + the two import rewrites), and at close.
+- The goo-blob unit suite (`src/components/custom/goo-blob/__tests__/`) — after AV.W5.E (confirm the easing de-dup is runtime byte-identical).
 - `npm run build` — after AV.W5.A (CRITICAL — confirm the batch-resolve emits the SAME `dist/<subpath>.js` set; diff the dist file list before/after) and at close.
 - `npm run verify-export-types` + `npm run proof:resolution` + `npm run proof:package` — after AV.W5.A and at close (the public-surface byte-stability evidence).
 - The two NEW gates + the no-regression existing-gate matrix run after their fold completes and at close.
@@ -188,6 +209,7 @@ No formatter is intentionally skipped; the gate fleet + the dist-inventory diff 
 - **Lane B (composable-restructure) commit** — `refactor(tranche-AV): W5 — composable sub-tree structure-lock + proof:no-orphan-composable` (+ `platform/` extraction IF it lands). (Body required — names the verdict + the platform/ land-or-keep disposition.)
 - **Lane C (dock-factory) commit** — `refactor(tranche-AV): W5 — createDockContext<T>() factory (−30-40 LOC, named surface byte-identical)`. (Body required — names the two collapsed triplets + the −LOC + the preserved named exports.)
 - **Lane D (types-ownership) commit** — folded into the close commit's PROGRESS record (audit-mostly; no standalone src change expected).
+- **Lane E (goo-blob easing — D7) commit** — `refactor(tranche-AV): W5 — goo-blob easing helpers → component-scoped goo-blob/easing.ts (D7; private, runtime byte-identical)`. (Body required — names the three hand-rolls de-duplicated, the single-component scope, the no-public-surface invariant, and the `useReducedMotionToggle()` defer-to-W7-G1 note.)
 - **Orchestrator gate-registration commit** — `chore(tranche-AV): W5 — register proof:subpath-enumeration + proof:no-orphan-composable (manifest==ci)`. (Body required — names the manifest rows + tags.)
 - **Orchestrator integration + docs commit** — `docs(tranche-AV): W5 close — PROGRESS green run id + LOC delta + CLAUDE.md src/subpaths/ line + types-ownership verdicts`. (Body required — status/close + the LOC delta.)
 
