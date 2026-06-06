@@ -1,4 +1,5 @@
 import { mulberry32, hashString } from "../../../../utils/prng";
+import { easeIn, easeOut } from "./easing";
 import type {
     BlobConfig,
     MetaballSource,
@@ -13,14 +14,6 @@ function randRange(rng: () => number, lo: number, hi: number): number {
 
 function clamp01(t: number): number {
     return t < 0 ? 0 : t > 1 ? 1 : t;
-}
-
-function easeIn(t: number): number {
-    return t * t;
-}
-
-function easeOut(t: number): number {
-    return 1 - (1 - t) * (1 - t);
 }
 
 function lerp(a: number, b: number, t: number): number {

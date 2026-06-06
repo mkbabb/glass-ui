@@ -61,6 +61,12 @@
             "metric-badge": [
                 "dist/metric-badge.d.ts"
             ],
+            "metric-cell": [
+                "dist/metric-cell.d.ts"
+            ],
+            "metric-stack": [
+                "dist/metric-stack.d.ts"
+            ],
             "status-dot": [
                 "dist/status-dot.d.ts"
             ],
@@ -304,6 +310,14 @@
             "types": "./dist/metric-badge.d.ts",
             "import": "./dist/metric-badge.js"
         },
+        "./metric-cell": {
+            "types": "./dist/metric-cell.d.ts",
+            "import": "./dist/metric-cell.js"
+        },
+        "./metric-stack": {
+            "types": "./dist/metric-stack.d.ts",
+            "import": "./dist/metric-stack.js"
+        },
         "./animated-digit": {
             "types": "./dist/animated-digit.d.ts",
             "import": "./dist/animated-digit.js"
@@ -523,7 +537,7 @@
         "iter-build": "vite build --config vite.iter.config.ts",
         "iter-test": "vitest run --reporter=verbose",
         "iter-test-watch": "vitest --watch",
-        "emit-types": "vue-tsc --project tsconfig.build.json",
+        "emit-types": "vue-tsc --project tsconfig.build.json && node scripts/flatten-subpath-types.mjs",
         "iter": "npm run iter-check && npm run iter-build && npm run iter-test",
         "proof:package": "node scripts/proof-package.mjs",
         "proof:consumers:static": "node scripts/proof-consumers-static.mjs",
@@ -544,6 +558,8 @@
         "proof:design-idiom-localization": "node scripts/proof-design-idiom-localization.mjs",
         "proof:tailwind-v4-idiom": "node scripts/proof-tailwind-v4-idiom.mjs",
         "proof:au-w9-consumers": "node scripts/proof-au-w9-consumers.mjs",
+        "proof:shadow-contract": "node scripts/proof-shadow-contract.mjs",
+        "proof:card-cartoon-consumers": "node scripts/proof-card-cartoon-consumers.mjs",
         "proof:doc-consistency": "node scripts/proof-doc-consistency.mjs",
         "proof:au-w0-reground": "node scripts/proof-au-w0-reground.mjs",
         "proof:au-w1-design": "node scripts/proof-au-w1-design.mjs",
@@ -578,6 +594,10 @@
         "proof:no-nested-import": "node scripts/proof-no-nested-import.mjs",
         "proof:no-test-in-src": "node scripts/proof-no-test-in-src.mjs",
         "proof:spring-tokens-synced": "node scripts/proof-spring-tokens-synced.mjs",
+        "proof:offscreen-pause": "node scripts/proof-offscreen-pause.mjs",
+        "proof:subpath-enumeration": "node scripts/proof-subpath-enumeration.mjs",
+        "proof:no-orphan-composable": "node scripts/proof-no-orphan-composable.mjs",
+        "proof:speedtest-boundary": "node scripts/proof-speedtest-boundary.mjs",
         "proof:all": "node scripts/gates.mjs --run local",
         "gates:verify-ci": "node scripts/gates.mjs --verify-ci",
         "profile:bundle": "node scripts/profile-bundle.mjs",

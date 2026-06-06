@@ -1,41 +1,41 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import * as Api from "../src/api";
-import * as Aurora from "../src/aurora";
+import * as Aurora from "../src/subpaths/aurora";
 import * as CarouselSurface from "../src/carousel";
-import * as CommandSurface from "../src/command";
-import * as ConfirmDialogSurface from "../src/confirm-dialog";
-import * as ContextMenuSurface from "../src/context-menu";
+import * as CommandSurface from "../src/subpaths/command";
+import * as ConfirmDialogSurface from "../src/subpaths/confirm-dialog";
+import * as ContextMenuSurface from "../src/subpaths/context-menu";
 import * as Glass from "../src/index";
-import * as Controls from "../src/controls";
+import * as Controls from "../src/subpaths/controls";
 import * as Dark from "../src/dark";
-import * as DataTableSurface from "../src/data-table";
-import * as Dock from "../src/dock";
-import * as DropdownMenuSurface from "../src/dropdown-menu";
-import * as ExpandableContainerSurface from "../src/expandable-container";
+import * as DataTableSurface from "../src/subpaths/data-table";
+import * as Dock from "../src/subpaths/dock";
+import * as DropdownMenuSurface from "../src/subpaths/dropdown-menu";
+import * as ExpandableContainerSurface from "../src/subpaths/expandable-container";
 import * as Forms from "../src/forms";
-import * as GlassCarouselSurface from "../src/glass-carousel";
-import * as GlassPanelSurface from "../src/glass-panel";
-import * as IconTooltipSurface from "../src/icon-tooltip";
+import * as GlassCarouselSurface from "../src/subpaths/glass-carousel";
+import * as GlassPanelSurface from "../src/subpaths/glass-panel";
+import * as IconTooltipSurface from "../src/subpaths/icon-tooltip";
 import * as InfiniteScrollSurface from "../src/infinite-scroll";
 import * as Keyboard from "../src/keyboard";
-import * as LabeledFieldSurface from "../src/labeled-field";
-import * as MetricBadgeSurface from "../src/metric-badge";
+import * as LabeledFieldSurface from "../src/subpaths/labeled-field";
+import * as MetricBadgeSurface from "../src/subpaths/metric-badge";
 import * as Motion from "../src/motion";
 import * as MotionCore from "../src/motion-core";
-import * as PaperBackdropSurface from "../src/paper-backdrop";
-import * as PopoverSurface from "../src/popover";
-import * as PulseSurface from "../src/pulse";
-import * as Search from "../src/search";
-import * as SelectSurface from "../src/select";
+import * as PaperBackdropSurface from "../src/subpaths/paper-backdrop";
+import * as PopoverSurface from "../src/subpaths/popover";
+import * as PulseSurface from "../src/subpaths/pulse";
+import * as Search from "../src/subpaths/search";
+import * as SelectSurface from "../src/subpaths/select";
 import * as Sidebar from "../src/sidebar";
-import * as SortableListSurface from "../src/sortable-list";
-import * as StackedIconsSurface from "../src/stacked-icons";
-import * as StatusDotSurface from "../src/status-dot";
-import * as TabsSurface from "../src/tabs";
-import * as TimelineSurface from "../src/timeline";
-import * as ToggleChipSurface from "../src/toggle-chip";
-import * as TypewriterSurface from "../src/typewriter";
+import * as SortableListSurface from "../src/subpaths/sortable-list";
+import * as StackedIconsSurface from "../src/subpaths/stacked-icons";
+import * as StatusDotSurface from "../src/subpaths/status-dot";
+import * as TabsSurface from "../src/subpaths/tabs";
+import * as TimelineSurface from "../src/subpaths/timeline";
+import * as ToggleChipSurface from "../src/subpaths/toggle-chip";
+import * as TypewriterSurface from "../src/subpaths/typewriter";
 
 const uiRuntimeExports = [
     "Accordion",
@@ -83,7 +83,7 @@ const uiRuntimeExports = [
 //
 // keyframes.js-bearing motion composables (`useNumericTransition`,
 // `useStaggerReveal`, `useScrollProgress`,
-// `useAnimatedNumber`, `useAnimatedNumberMap`, `useStagger`, `useRAFLoop`,
+// `useAnimatedNumber`, `useRAFLoop`,
 // `useIntersectionPause`, `installDarkModeSync`, `DAMPING`, `SNAP_THRESHOLD`)
 // moved to `/motion`. Root barrel no longer reaches `@mkbabb/keyframes.js`
 // statically.
@@ -107,6 +107,7 @@ const composableRuntimeExports = [
 const subpathRuntimeExports = [
     { subpath: "dock", surface: Dock, name: "GlassDock" },
     { subpath: "dock", surface: Dock, name: "DockIconButton" },
+    { subpath: "dock", surface: Dock, name: "DockBackgroundToggle" },
     { subpath: "dock", surface: Dock, name: "DockLayer" },
     { subpath: "dock", surface: Dock, name: "DockLayerGroup" },
     { subpath: "dock", surface: Dock, name: "DockTabButton" },
@@ -165,11 +166,9 @@ const subpathRuntimeExports = [
     // keyframes.js-BEARING motion composables on the `/motion` subpath.
     { subpath: "motion", surface: Motion, name: "useNumericTransition" },
     { subpath: "motion", surface: Motion, name: "useAnimatedNumber" },
-    { subpath: "motion", surface: Motion, name: "useAnimatedNumberMap" },
     // AP.W3 R0G-7 — the keyframes-FREE leaves carved to the flat `/motion-core`
     // subpath (a cheap-leaf import no longer statically reaches the keyframes
     // engine). `constants` (DAMPING/SNAP_THRESHOLD) is duplicate-exported on both.
-    { subpath: "motion-core", surface: MotionCore, name: "useStagger" },
     { subpath: "motion-core", surface: MotionCore, name: "useStaggerReveal" },
     { subpath: "motion-core", surface: MotionCore, name: "useScrollProgress" },
     { subpath: "motion-core", surface: MotionCore, name: "useRAFLoop" },
@@ -214,6 +213,7 @@ const subpathRuntimeExports = [
 const nonCoreRootRetirements = [
     "GlassDock",
     "DockIconButton",
+    "DockBackgroundToggle",
     "FuzzySearch",
     "ProgressiveSidebar",
     "DarkModeToggle",
@@ -259,8 +259,6 @@ const nonCoreRootRetirements = [
     // root-barrel keyframes.js SCC closure — motion composables live on `/motion`.
     "useNumericTransition",
     "useAnimatedNumber",
-    "useAnimatedNumberMap",
-    "useStagger",
     "useStaggerReveal",
     "useScrollProgress",
     "useRAFLoop",
@@ -280,6 +278,7 @@ const exactSubpathRuntimeSurfaces = [
         // symbol + 3 helpers join the SFC default-exports here.
         names: [
             "DOCK_CONTEXT_KEY",
+            "DockBackgroundToggle",
             "DockDropdownTrigger",
             "DockIconButton",
             "DockLayer",

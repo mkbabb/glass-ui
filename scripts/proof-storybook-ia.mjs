@@ -71,7 +71,7 @@ export const EXPECTED_TREE = [
         "labeled-field", "icon-tooltip",
     ]],
     ["composables", [
-        "use-token-color", "use-stagger", "use-animated-number-map",
+        "use-token-color",
         "use-global-dark", "use-keyboard-shortcuts", "use-resize-observer",
         "use-glass-renderer", "use-animated-number", "use-dark-mode-sync",
         "use-intersection-pause", "use-raf-loop", "use-scroll-progress",

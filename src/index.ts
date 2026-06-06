@@ -37,8 +37,8 @@
 //   useCarousel, CarouselApi
 //   useSpring, useSpringMount, useSpringPress, @mkbabb/glass-ui/motion        @mkbabb/keyframes.js
 //   useNumericTransition, useAnimatedNumber,
-//   useAnimatedNumberMap, DAMPING, SNAP_THRESHOLD
-//   useStagger, useStaggerReveal,              @mkbabb/glass-ui/motion-core   (none — keyframes-FREE + vueuse-FREE)
+//   DAMPING, SNAP_THRESHOLD
+//   useStaggerReveal,                          @mkbabb/glass-ui/motion-core   (none — keyframes-FREE + vueuse-FREE)
 //   useScrollProgress, useRAFLoop,
 //   useIntersectionPause, RAFLoopTiming,
 //   PausableRuntime, DAMPING, SNAP_THRESHOLD
@@ -68,7 +68,7 @@
 //   - large composite chassis with nested composables (dock, aurora,
 //     configurator domain helpers); OR
 //   - vertical/themed substrate (paper-backdrop, search,
-//     animated-digit, responsive-tabs).
+//     animated-digit, metric-cell, metric-stack, responsive-tabs).
 // Consumers of those packages explicitly opt into them via subpath, keeping
 // the root barrel's transitive-import graph tight.
 

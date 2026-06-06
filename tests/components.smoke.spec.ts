@@ -21,14 +21,14 @@ import {
     buttonVariants,
 } from "../src/index";
 import { Input, Textarea } from "../src/forms";
-import { DarkModeToggle } from "../src/controls";
-import { DockLayer, DockLayerGroup, GlassDock } from "../src/dock";
-import { MetricBadge } from "../src/metric-badge";
-import { PaperBackdrop } from "../src/paper-backdrop";
-import { Pulse } from "../src/pulse";
-import { StatusDot } from "../src/status-dot";
-import { BouncyToggle } from "../src/tabs";
-import { ToggleChip, toggleChipVariants } from "../src/toggle-chip";
+import { DarkModeToggle } from "../src/subpaths/controls";
+import { DockLayer, DockLayerGroup, GlassDock } from "../src/subpaths/dock";
+import { MetricBadge } from "../src/subpaths/metric-badge";
+import { PaperBackdrop } from "../src/subpaths/paper-backdrop";
+import { Pulse } from "../src/subpaths/pulse";
+import { StatusDot } from "../src/subpaths/status-dot";
+import { BouncyToggle } from "../src/subpaths/tabs";
+import { ToggleChip, toggleChipVariants } from "../src/subpaths/toggle-chip";
 
 describe("component smoke coverage", () => {
     it("renders Button slot content", () => {

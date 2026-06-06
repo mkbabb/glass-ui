@@ -1,5 +1,6 @@
 import { ref, type Ref, readonly } from "vue";
 import type { BlobMood, MoodParams } from "../types";
+import { easeInOut } from "./easing";
 
 const MOOD_TARGETS: Record<BlobMood, MoodParams> = {
     idle: {
@@ -92,10 +93,6 @@ function lerpParams(a: MoodParams, b: MoodParams, t: number): MoodParams {
         pointerAttraction: mix(a.pointerAttraction, b.pointerAttraction),
         mergeRate: mix(a.mergeRate, b.mergeRate),
     };
-}
-
-function easeInOut(t: number): number {
-    return t < 0.5 ? 2 * t * t : 1 - 2 * (1 - t) * (1 - t);
 }
 
 /**

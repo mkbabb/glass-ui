@@ -17,7 +17,7 @@ import {
     clearSearchCache,
     fuzzyMatch,
     searchIndex,
-} from "../src/search";
+} from "../src/subpaths/search";
 import {
     buildTreeIndex,
     isActive,

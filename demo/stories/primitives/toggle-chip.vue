@@ -6,7 +6,7 @@ import { ref, computed } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
-import { ToggleChip } from "../../../src/toggle-chip";
+import { ToggleChip } from "../../../src/subpaths/toggle-chip";
 import { Triangle, Square, Circle, Hexagon } from "@lucide/vue";
 
 const tags = ref<Record<string, boolean>>({

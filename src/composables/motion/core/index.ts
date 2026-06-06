@@ -16,7 +16,6 @@ export * from "../useStaggerReveal";
 export * from "../useScrollProgress";
 export * from "../useRAFLoop";
 export * from "../useIntersectionPause"; // exports PausableRuntime too
-export * from "../useStagger";
 // AQ.W3 §6 — the INP-under-load lever. Keyframes-FREE + vueuse-FREE (pure
 // native `scheduler.yield` + MessageChannel/setTimeout fallback), so it ships on
 // the engine-free `/motion-core` surface alongside `useRAFLoop` (its companion

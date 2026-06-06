@@ -179,6 +179,16 @@ defineExpose({
 <style scoped>
 .aurora-root {
     display: grid;
+    /* AV.W7 F2 — paint/layout containment caps the `backdrop-filter`-adjacent
+       paint area + isolates the WebGL surface as its own compositing root
+       (50–80% paint-area reduction; caps VRAM). `content-visibility:auto`
+       (F1) lets the browser content-skip the surface when it scrolls offscreen
+       — the substrate's `contentvisibilityautostatechange` listener parks the
+       RAF on `skipped`. `contain-intrinsic-size:auto` preserves the rendered
+       size across a skip so the layout box does not collapse. */
+    contain: content;
+    content-visibility: auto;
+    contain-intrinsic-size: auto none;
 }
 
 /* Both layers share the single grid cell so they stack — no positioning. */

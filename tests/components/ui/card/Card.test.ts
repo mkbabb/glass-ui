@@ -118,6 +118,31 @@ describe("Card", () => {
             "shadow-card",
         );
     });
+
+    // AV.W4.C — the cartoon dark-arm is TOKEN-driven, not class-conditional.
+    // `cartoon-surface` reads only `var(--shadow-cartoon-{md,lg})`; those ride
+    // `color-mix(... var(--shadow-color) ...)` and `--shadow-color:
+    // var(--foreground)` flips light→dark, so the dark shadow re-resolves
+    // through the SAME class. We assert the class is present unchanged under a
+    // `.dark` ancestor — the dark adaptivity is a CSS-token concern (verified by
+    // proof:shadow-contract's DARK-ARM-ALLOWED assert + the live browser check),
+    // not a separate dark-only class the component would have to mint.
+    it("keeps the cartoon-surface class unchanged under .dark (token-adaptive dark arm)", () => {
+        const wrapper = mount(
+            {
+                components: { Card },
+                template: `<div class="dark"><Card surface="cartoon" class="c-dark">content</Card></div>`,
+            },
+            { attachTo: document.body },
+        );
+
+        const root = wrapper.get(".c-dark");
+        // Same decoration class light + dark — the dark shadow value comes from
+        // the token chain, not a class swap. No light-only literal leaks.
+        expect(root.classes()).toContain("cartoon-surface");
+        expect(root.attributes("data-surface")).toBe("cartoon");
+        wrapper.unmount();
+    });
 });
 
 // AI.W1-α — additive `shrink` modifier on <CardHeader> binds the 3-lane

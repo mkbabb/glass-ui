@@ -286,5 +286,17 @@ jobs:
               run: npm run proof:no-test-in-src
             - name: proof:spring-tokens-synced
               run: npm run proof:spring-tokens-synced
+            - name: proof:offscreen-pause
+              run: npm run proof:offscreen-pause
+            - name: proof:subpath-enumeration
+              run: npm run proof:subpath-enumeration
+            - name: proof:no-orphan-composable
+              run: npm run proof:no-orphan-composable
+            - name: proof:speedtest-boundary
+              run: npm run proof:speedtest-boundary
+            - name: proof:shadow-contract
+              run: npm run proof:shadow-contract
+            - name: proof:card-cartoon-consumers
+              run: npm run proof:card-cartoon-consumers
             - name: gates:verify-ci
               run: npm run gates:verify-ci

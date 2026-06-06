@@ -4,7 +4,7 @@ import { ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
-import { PaperBackdrop } from "../../../src/paper-backdrop";
+import { PaperBackdrop } from "../../../src/subpaths/paper-backdrop";
 
 const opacity = ref(0.5);
 </script>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-// useStaggerReveal — IntersectionObserver-gated cascade. Sibling of useStagger
-// (timer-gated, already in Composables).
+// useStaggerReveal — IntersectionObserver-gated entrance cascade.
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
@@ -13,7 +12,7 @@ const { register, revealed } = useStaggerReveal({ staggerMs: 80, threshold: 0.2 
     <StoryPage>
         <StorySection
             label="reveal-on-scroll cascade"
-            blurb="IntersectionObserver-gated entrance cascade. Each registered target reveals in sequence as it crosses the viewport threshold. Sibling of useStagger (timer-gated). Visual demo lives at Motion / Stagger Reveal."
+            blurb="IntersectionObserver-gated entrance cascade. Each registered target reveals in sequence as it crosses the viewport threshold. Visual demo lives at Motion / Stagger Reveal."
         >
             <ShowcaseFrame pad="lg">
                 <div class="h-[60vh] overflow-y-auto rounded-md border border-border bg-card">

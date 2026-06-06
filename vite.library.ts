@@ -1,118 +1,56 @@
+import { readdirSync } from "node:fs";
 import { resolve } from "node:path";
 
+/**
+ * The library entry map. Two tiers:
+ *
+ *  1. The 11 MULTI-LINE CURATED barrels — hand-listed below. These carry real
+ *     curation logic, not a single mirror line: `index` (the vueuse-FREE root
+ *     barrel — L.W1 Lane A SCC closure), `api` (the types/constants discovery
+ *     layer), `tokens`, `forms`/`dark`/`keyboard`/`carousel` (the vueuse-bearing
+ *     flat subpaths — L.W1 Lane C), `motion`/`motion-core` (the keyframes-engine
+ *     split — AP.W3 R0G-7), `sidebar` (the AI.W5-δ composables-of-record
+ *     relocation), `infinite-scroll` (the component + composables pair). They
+ *     STAY at `src/` top level — moving them would obscure the curation.
+ *
+ *  2. The TRIVIAL single-line subpath barrels — each `export * from
+ *     "../components/<…>"` or `"../composables/<…>"`. These live in
+ *     `src/subpaths/` (AV.W5 Lane A) and are BATCH-RESOLVED below: the dir is
+ *     globbed and mapped programmatically so a new per-family subpath barrel
+ *     never has to be hand-added here. Zero runtime delta — the emitted
+ *     `dist/<name>.js` chunk set is name-for-name identical to the prior
+ *     hand-list (proven by `proof:subpath-enumeration`'s BATCH-EQUIV assert).
+ *
+ * `package.json` exports are byte-unchanged by the source move: each `import`
+ * key points at `dist/<name>.js` (the BUILT chunk keyed by entry NAME), which is
+ * unaffected by where the source barrel lives.
+ */
 export function libraryEntries(rootDir: string) {
-    return {
+    // Tier 1 — the curated multi-line barrels (explicit; STAY at src/ top level).
+    const curated: Record<string, string> = {
         index: resolve(rootDir, "src/index.ts"),
-        tokens: resolve(rootDir, "src/tokens.ts"),
-        dock: resolve(rootDir, "src/dock.ts"),
-        search: resolve(rootDir, "src/search.ts"),
-        sidebar: resolve(rootDir, "src/sidebar.ts"),
-        controls: resolve(rootDir, "src/controls.ts"),
-        "confirm-dialog": resolve(rootDir, "src/confirm-dialog.ts"),
-        "infinite-scroll": resolve(rootDir, "src/infinite-scroll.ts"),
-        tabs: resolve(rootDir, "src/tabs.ts"),
-        typewriter: resolve(rootDir, "src/typewriter.ts"),
-        "stacked-icons": resolve(rootDir, "src/stacked-icons.ts"),
-        "glass-carousel": resolve(rootDir, "src/glass-carousel.ts"),
-        aurora: resolve(rootDir, "src/aurora.ts"),
-        color: resolve(rootDir, "src/color.ts"),
-        "goo-blob": resolve(rootDir, "src/goo-blob.ts"),
-        "watercolor-dot": resolve(rootDir, "src/watercolor-dot.ts"),
-        "metric-badge": resolve(rootDir, "src/metric-badge.ts"),
-        "responsive-tabs": resolve(rootDir, "src/responsive-tabs.ts"),
-        "animated-digit": resolve(rootDir, "src/animated-digit.ts"),
-        "status-dot": resolve(rootDir, "src/status-dot.ts"),
-        pulse: resolve(rootDir, "src/pulse.ts"),
-        "paper-backdrop": resolve(rootDir, "src/paper-backdrop.ts"),
-        "toggle-chip": resolve(rootDir, "src/toggle-chip.ts"),
-        "glass-panel": resolve(rootDir, "src/glass-panel.ts"),
-        "sortable-list": resolve(rootDir, "src/sortable-list.ts"),
-        timeline: resolve(rootDir, "src/timeline.ts"),
-        "labeled-field": resolve(rootDir, "src/labeled-field.ts"),
-        "expandable-container": resolve(rootDir, "src/expandable-container.ts"),
-        "icon-tooltip": resolve(rootDir, "src/icon-tooltip.ts"),
-        "instrument-chassis": resolve(rootDir, "src/instrument-chassis.ts"),
-        "instrument-rail": resolve(rootDir, "src/instrument-rail.ts"),
-        "glyph-face": resolve(rootDir, "src/glyph-face.ts"),
-        "disco-glyph": resolve(rootDir, "src/disco-glyph.ts"),
-        "hover-popover": resolve(rootDir, "src/hover-popover.ts"),
-        "header-ribbon": resolve(rootDir, "src/header-ribbon.ts"),
-        configurator: resolve(rootDir, "src/configurator.ts"),
-        "scrolling-text": resolve(rootDir, "src/scrolling-text.ts"),
-        forms: resolve(rootDir, "src/forms.ts"),
         api: resolve(rootDir, "src/api/index.ts"),
-        // L.W1 Lane C — flat top-level subpath barrels for the vueuse-bearing
-        // composables. The v0.9.x transitional `dark-subpath` / `keyboard-subpath`
-        // dist filenames retire here in favour of canonical flat names matching
-        // every other subpath. `useCarousel` joins the set as a new public
-        // subpath (Lane A removes it from the root barrel re-export chain).
+        tokens: resolve(rootDir, "src/tokens.ts"),
+        forms: resolve(rootDir, "src/forms.ts"),
         dark: resolve(rootDir, "src/dark.ts"),
         keyboard: resolve(rootDir, "src/keyboard.ts"),
         carousel: resolve(rootDir, "src/carousel.ts"),
-        // AI.W1 R3 — flat top-level subpath barrel for the keyframes.js-bearing
-        // motion composables. Mirrors the Lane C closure shape: a heavy peer
-        // (`@mkbabb/keyframes.js`, ~102 KB raw) gets carved off the root barrel
-        // so consumers opt into it explicitly and bundlers shake it from
-        // unrelated entry chunks. Closes AI-CARRY-GLASS-UI-KEYFRAMES-EDGE.
         motion: resolve(rootDir, "src/motion.ts"),
-        // AP.W3 R0G-7 — flat sibling subpath for the keyframes.js-FREE +
-        // vueuse-FREE motion leaves. The `/motion` barrel walked all twelve
-        // leaves as one SCC, dragging the keyframes engine onto a cheap
-        // consumer's eager graph; `/motion-core` carves the engine-free leaves
-        // out so `dist/motion-core.js` reaches neither `@mkbabb/keyframes.js`
-        // nor `@vueuse/core`. Pairs with `/motion` (the engine-bearing surface).
         "motion-core": resolve(rootDir, "src/motion-core.ts"),
-        // AK.W3 — per-family sub-barrel entries for the `ui/` primitive families
-        // already re-exported from the root barrel. The flat-name subpath lets a
-        // consumer opt INTO precisely the families it uses (e.g. `Button`,
-        // `Dialog`), so bundlers shake every other primitive's transitive graph
-        // out of the entry chunk. Pattern: each `src/<family>.ts` is a single-
-        // line `export * from "./components/ui/<family>"` mirror. Closes
-        // AJ-CARRY-GLASS-UI-SUB-BARREL-PUBLISHING. Per AK-A7 §2.4 W3 + A1 §3.3.4.
-        button: resolve(rootDir, "src/button.ts"),
-        card: resolve(rootDir, "src/card.ts"),
-        dialog: resolve(rootDir, "src/dialog.ts"),
-        sheet: resolve(rootDir, "src/sheet.ts"),
-        badge: resolve(rootDir, "src/badge.ts"),
-        separator: resolve(rootDir, "src/separator.ts"),
-        label: resolve(rootDir, "src/label.ts"),
-        slider: resolve(rootDir, "src/slider.ts"),
-        collapsible: resolve(rootDir, "src/collapsible.ts"),
-        progress: resolve(rootDir, "src/progress.ts"),
-        "toggle-group": resolve(rootDir, "src/toggle-group.ts"),
-        "hover-card": resolve(rootDir, "src/hover-card.ts"),
-        tooltip: resolve(rootDir, "src/tooltip.ts"),
-        toast: resolve(rootDir, "src/toast.ts"),
-        notification: resolve(rootDir, "src/notification.ts"),
-        // AK.W3 — composable sub-barrels. `reactive` (useInterval + useTimer)
-        // and `dom` (useResizeObserver + useTouchGate + useTokenColor +
-        // useBreakpoint + useClipboard + useViewportReady) are already re-
-        // exported from the root barrel as part of the vueuse-free curated
-        // surface; the flat subpath lets a consumer reach just that subtree.
-        reactive: resolve(rootDir, "src/reactive.ts"),
-        dom: resolve(rootDir, "src/dom.ts"),
-        // AL.W4 — sub-barrel publishing phase 2 (per A4 R5 + G-AL-D7 ABSORB).
-        // Six remaining `ui/` primitive families speedtest still imports from
-        // the root barrel: Popover, Select, DataTable, DropdownMenu,
-        // ContextMenu, Command. Same pattern as AK.W3: each `src/<family>.ts`
-        // is a single-line `export * from "./components/ui/<family>"` mirror.
-        // Closes AL-CARRY-REMAINING-ROOT-BARREL-IMPORTS (AL-SEED §5). Forecast
-        // ~10-20 KB additional plateau cut at consumer migration (Wave 4).
-        popover: resolve(rootDir, "src/popover.ts"),
-        select: resolve(rootDir, "src/select.ts"),
-        "data-table": resolve(rootDir, "src/data-table.ts"),
-        "dropdown-menu": resolve(rootDir, "src/dropdown-menu.ts"),
-        "context-menu": resolve(rootDir, "src/context-menu.ts"),
-        command: resolve(rootDir, "src/command.ts"),
-        // AQ.W7 — subpath completeness for the form-vocabulary sweep. Flat
-        // per-family subpaths for NumberField + Switch so muster J.W4 can sweep
-        // both off the root barrel onto their dedicated dist chunks (same
-        // `export * from "./components/ui/<family>"` mirror as AK.W3/AL.W4).
-        // `/drawer` deliberately stays root-barrel (AN.W3 — prop/type-only, no
-        // heavy isolated chunk warrants a subpath).
-        "number-field": resolve(rootDir, "src/number-field.ts"),
-        switch: resolve(rootDir, "src/switch.ts"),
+        sidebar: resolve(rootDir, "src/sidebar.ts"),
+        "infinite-scroll": resolve(rootDir, "src/infinite-scroll.ts"),
     };
+
+    // Tier 2 — batch-resolve every `src/subpaths/*.ts` trivial mirror barrel.
+    const subpathsDir = resolve(rootDir, "src/subpaths");
+    const batched: Record<string, string> = {};
+    for (const file of readdirSync(subpathsDir)) {
+        if (!file.endsWith(".ts")) continue;
+        const name = file.slice(0, -3);
+        batched[name] = resolve(subpathsDir, file);
+    }
+
+    return { ...curated, ...batched };
 }
 
 export function libraryFileName(_format: string, entryName: string) {

@@ -191,6 +191,21 @@ export type {
     HeaderRibbonProps,
 } from "../components/custom/header-ribbon";
 
+// ── Metric primitives ───────────────────────────────────────────────────────
+// `MetricCellAppearance` is the visual register enum (`"dashboard" | "compact"
+// | "bare"`) parallel to `GlassPanelVariant`; `MetricCellProps` is the Props
+// shape consumers forward when wrapping `<MetricCell>`. `MetricStackProps` +
+// `MetricRowProps` cover the layout shell + row pair. Both metric families ship
+// via their `/metric-cell` + `/metric-stack` subpaths (speedtest consumes them).
+export type {
+    MetricCellAppearance,
+    MetricCellProps,
+} from "../components/custom/metric-cell";
+export type {
+    MetricRowProps,
+    MetricStackProps,
+} from "../components/custom/metric-stack";
+
 // ── Digit / responsive-tabs primitives ──────────────────────────────────────
 // Props/variant types for the animated-digit + responsive-tabs primitives.
 // `AnimatedDigitMode` is the damping axis (`"absolute" | "progress"`) forwarded

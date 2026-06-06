@@ -1,0 +1,62 @@
+{
+  "wave": "AV.W5",
+  "title": "the L-Rε hygiene transpositions (KISS, public API byte-unchanged)",
+  "laneA_subpath_collapse": {
+    "barrelsMoved": 58,
+    "from": "src/<name>.ts",
+    "to": "src/subpaths/<name>.ts",
+    "curatedBarrelsKept": 10,
+    "curatedKeptNames": [
+      "index",
+      "tokens",
+      "forms",
+      "dark",
+      "keyboard",
+      "carousel",
+      "motion",
+      "motion-core",
+      "sidebar",
+      "infinite-scroll"
+    ],
+    "note": "api lives at src/api/index.ts (own dir); 11th explicit libraryEntries key, not a src/ top-level barrel",
+    "viteLibraryLines": { "before": 134, "after": 71, "delta": -63 },
+    "batchResolve": "vite.library.ts globs src/subpaths/*.ts; libraryEntries() key set is name-for-name identical to HEAD (69 entries: 11 curated + 58 batched)",
+    "dtsFlatten": "scripts/flatten-subpath-types.mjs restores the flat dist/<name>.d.ts surface (the dts emit mirrors src/ → dist/subpaths/; flatten moves to dist/ root + undeepens the one re-export path); chained into emit-types",
+    "surfaceInvariant": "named publication chunks (67) byte-identical; all chunk basenames (hash-stripped) identical; 68 dist .d.ts identical; verify-export-types + proof:package + proof:resolution(glass-ui-own) green"
+  },
+  "laneB_composable_restructure": {
+    "platformExtracted": false,
+    "verdict": "platform/ NOT extracted — isMac is single-consumer (used only inside composables/keyboard/useKeyboardShortcuts.ts); J inv 10 forbids a one-consumer sub-tree",
+    "structureLock": "proof:no-orphan-composable green at HEAD (10 named sub-trees incl. context/ added at AV.W14; only index.ts loose)",
+    "linesChanged": 0
+  },
+  "laneC_dock_factory": {
+    "created": false,
+    "verdict": "SUPERSEDED by AV.W14 — the dock DI boilerplate already collapsed onto the canonical createStrictContext<T>() factory (src/composables/context/createContext.ts), which is byte-for-byte the {KEY, provide, use, useOptional} quadruple the W5 spec specified. Creating a parallel createDockContext.ts would duplicate the abstraction and violate proof:di-consistency (which allowlists the canonical pair). KISS + no-duplication: BOOKed.",
+    "locAlreadyCollapsedAtW14": "the -30-40 LOC the W5 spec forecast was already realized by AV.W14's createStrictContext fold across dockContext.ts + dockLayerContext.ts",
+    "noTestFixture": "the spec's __tests__/createDockContext.test-d.ts is also moot — proof:no-test-in-src (AV.W14) forbids test files under src/; the dock context type fixture already lives at tests/components/custom/dock/dockLayerContext.readonly.test-d.ts",
+    "linesChanged": 0
+  },
+  "laneD_types_ownership": {
+    "sidebarTypes": "src/composables/sidebar/types.ts — CANONICAL (AI.W5-δ relocation; the /sidebar subpath src/sidebar.ts barrels from composables/sidebar). No-op.",
+    "infiniteScrollTypes": "src/components/custom/infinite-scroll/composables/types.ts — CANONICAL (co-located with the useInfiniteScroll composable-of-record). No-op.",
+    "linesChanged": 0
+  },
+  "laneE_goo_blob_easing": {
+    "created": "src/components/custom/goo-blob/composables/easing.ts",
+    "helpersFolded": ["easeInOut", "easeIn", "easeOut"],
+    "from": ["useBlobMood.ts:97 (easeInOut)", "useBlobSatellites.ts:18-24 (easeIn/easeOut)"],
+    "smoothstepLeftInline": "useBlobSatellites.ts:278 `bt*bt*(3-2*bt)` is a distinct cubic smoothstep, not one of the three quadratic curves — left inline (KISS, no forced consolidation)",
+    "privateScope": "NOT re-exported from goo-blob/index.ts, NOT on /api — private to the /goo-blob chunk",
+    "runtimeByteIdentical": "curves verbatim; goo-blob unit suite (blob-color-equivalence 8/8) green; the dist/goo-blob.js chunk CONTENT changes (de-dup) but the export SURFACE is unchanged",
+    "newModuleLines": 24,
+    "callSiteLinesRemoved": 10,
+    "callSiteImportLinesAdded": 2
+  },
+  "reducedMotionToggleDefer": "the optional useReducedMotionToggle() motion-core hoist (Lane B note) is DEFERRED to AV.W7 G1's useWebGLCanvas substrate-level lift (the PRIMARY freeze home); W5 does not speculatively hoist a composable W7 G1 would subsume",
+  "newGates": [
+    "proof:subpath-enumeration (local,ci,release) — exports↔dist↔libraryEntries surface-invariance; bite: drop a src/subpaths/<name>.ts while leaving its export → RED",
+    "proof:no-orphan-composable (local,ci) — composables sub-tree structure-lock; bite: drop a loose useFoo.ts at src/composables/ top level → RED"
+  ],
+  "netSourceLocDelta": "vite.library.ts -63; goo-blob net ~+16 (one module of 24 lines incl. doc comment, minus 10 inline call-site lines, plus 2 import lines); the dominant move is the 58-barrel relocation (0 net LOC — moved, not deleted, paths undeepened)"
+}

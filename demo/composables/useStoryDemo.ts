@@ -6,7 +6,7 @@
 // hand-rolled cleanup set for timers / listeners that the play handler
 // registered. The pattern is identical; the duplication is mechanical.
 //
-// `useStoryDemo` mirrors `useStagger`'s timer-set discipline. The play
+// `useStoryDemo` mirrors `useStaggerReveal`'s timer-set discipline. The play
 // handler receives a `cleanup(fn)` registrar — every disposer registered
 // via that callback fires on `reset()` AND on `onScopeDispose`. The handler
 // is async-aware: a synchronous return flips status to "complete"
@@ -53,7 +53,7 @@ export interface UseStoryDemoControls<T> {
 }
 
 /**
- * Story-side play / reset / status harness. Mirrors `useStagger`'s timer-set
+ * Story-side play / reset / status harness. Mirrors `useStaggerReveal`'s timer-set
  * discipline: cleanup callbacks registered inside the play handler fire on
  * both `reset()` AND scope dispose, so unmount + repeated plays never leak
  * timers, listeners, or rAF handles.

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-// useAnimatedNumber — single-ref smoothed numeric tracker. Single-target
-// sibling of useAnimatedNumberMap; keyframes.js SmoothProgress under the hood.
+// useAnimatedNumber — single-ref smoothed numeric tracker; keyframes.js
+// SmoothProgress under the hood.
 import { ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";

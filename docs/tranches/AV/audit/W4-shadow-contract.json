@@ -1,0 +1,45 @@
+{
+  "wave": "AV.W4.A",
+  "gate": "proof:shadow-contract",
+  "directive": "shadow-cartoon-lg is to ship — SATISFIED library-side at HEAD; W4 documents the consumer-overridable contract + LOCKS the chain (does NOT re-author the value).",
+  "canonicalChain": [
+    {
+      "link": 1,
+      "file": "src/styles/tokens.css",
+      "role": "raw value + alias",
+      "evidence": "--shadow-cartoon-lg: -6px 4px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent), … (tokens.css ~549); --cartoon-shadow-lg: var(--shadow-cartoon-lg) (~554)"
+    },
+    {
+      "link": 2,
+      "file": "src/styles/theme.css",
+      "role": "@theme namespace bridge",
+      "evidence": "--shadow-cartoon-lg: var(--cartoon-shadow-lg) (theme.css ~321) — the bridge a Tailwind `shadow-cartoon-lg` utility resolves through"
+    },
+    {
+      "link": 3,
+      "file": "src/styles/utilities.css",
+      "role": "utility consumer",
+      "evidence": ".shadow-cartoon-lg { box-shadow: var(--shadow-cartoon-lg) } (utilities.css ~641)"
+    },
+    {
+      "link": 4,
+      "file": "src/styles/cards.css",
+      "role": "cartoon-surface hover consumer",
+      "evidence": "@utility cartoon-surface { … &:hover { box-shadow: var(--shadow-cartoon-lg) } } (cards.css ~46)"
+    }
+  ],
+  "asserts": {
+    "CHAIN-INTACT": "all four chain links present (comment-stripped)",
+    "OVERRIDE-RESOLVES": "the utility AND cartoon-surface read the token through var(--shadow-cartoon-lg), NOT a literal — a :root override re-resolves every site (the bite)",
+    "DARK-ARM-ALLOWED": "the cartoon shadow rides color-mix(... var(--shadow-color)); --shadow-color: var(--foreground) flips under .dark, so the dark arm is token-adaptive BY CONSTRUCTION — no hardcoded .dark re-declaration of --shadow-cartoon-lg needed, no false-RED"
+  },
+  "overrideContract": {
+    "correct": ":root { --shadow-cartoon-lg: <value>; } — sits ON the cascade path the utilities read; re-resolves every .shadow-cartoon-lg / cartoon-surface site with zero library edit",
+    "antiPattern": "a deck re-declaring --shadow-cartoon-lg as a dead LOCAL orphan (feedback-coder/theme.css:127 form) that never reaches glass-ui's utilities — the f-w6-idiom ambiguity; the override must sit on the cascade, not a dead local block"
+  },
+  "biteVerified": {
+    "literalUtility": "hardcode .shadow-cartoon-lg box-shadow to a literal → RED (OVERRIDE-RESOLVES NO)",
+    "themeBridgeDelete": "delete the @theme bridge → RED (CHAIN-INTACT NO)"
+  },
+  "tags": ["local", "ci", "release"]
+}

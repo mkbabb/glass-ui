@@ -23,12 +23,13 @@ function cliPaths() {
         ROOT,
         // The W3-touched motion composables — the lift (useCountup), the
         // dependency-free directive (vReveal), and the two FLIP-fold consumers
-        // (the drivers stay LIGHT-only). useStagger* are listed too: the D1
-        // BOOK keeps them hand-rolled, so they must stay value.js-free.
+        // (the drivers stay LIGHT-only). useStaggerReveal stays hand-rolled (the
+        // D1 BOOK), so it must stay value.js-free. `useStagger.ts` was MOVED to
+        // the speedtest owner at AV.W17 (zero genuine glass-ui consumer — see
+        // proof:speedtest-boundary), so it is no longer a glass-ui-guarded file.
         FILES: [
             "src/composables/motion/useCountup.ts",
             "src/composables/motion/vReveal.ts",
-            "src/composables/motion/useStagger.ts",
             "src/composables/motion/useStaggerReveal.ts",
             "src/components/custom/dock/composables/useLayerTransition.ts",
             "src/components/custom/glass-carousel/useGlassCarousel.ts",

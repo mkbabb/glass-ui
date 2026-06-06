@@ -23,9 +23,9 @@
 // sibling, and the keyframes-free-but-vueuse-bearing `installDarkModeSync`
 // relocates to `@mkbabb/glass-ui/dark`. So `/motion` now ships ONLY:
 // `useSpring`, `useSpringMount`, `useSpringPress`, `useNumericTransition`,
-// `useAnimatedNumber`, `useAnimatedNumberMap` + `constants` (DAMPING,
-// SNAP_THRESHOLD — duplicate-exported on `/motion-core`; the bearing leaves read
-// them). `RAFLoopTiming` + `PausableRuntime` types move to `/motion-core` with
+// `useAnimatedNumber` + `constants` (DAMPING, SNAP_THRESHOLD —
+// duplicate-exported on `/motion-core`; the bearing leaves read them).
+// `RAFLoopTiming` + `PausableRuntime` types move to `/motion-core` with
 // their leaves (no bearing leaf references them).
 //
 // L.W2 — Implementation home is the `src/composables/motion/` sub-tree. This
@@ -34,10 +34,10 @@
 // layout (same pattern as `/dark` and `/keyboard`).
 //
 // BREAKING (v2.0.0): consumers that previously reached `useAnimatedNumber`,
-// `useAnimatedNumberMap`, `useNumericTransition`, `useSpring`, `useSpringMount`,
-// `useSpringPress`, `DAMPING`, `SNAP_THRESHOLD` through `@mkbabb/glass-ui` must
+// `useNumericTransition`, `useSpring`, `useSpringMount`, `useSpringPress`,
+// `DAMPING`, `SNAP_THRESHOLD` through `@mkbabb/glass-ui` must
 // migrate to `@mkbabb/glass-ui/motion`. The keyframes-free leaves
-// (`useStagger`, `useStaggerReveal`, `useScrollProgress`, `useRAFLoop`,
+// (`useStaggerReveal`, `useScrollProgress`, `useRAFLoop`,
 // `useIntersectionPause`, `RAFLoopTiming`, `PausableRuntime`) live on
 // `@mkbabb/glass-ui/motion-core`; `installDarkModeSync` lives on
 // `@mkbabb/glass-ui/dark`. See MIGRATION.md and CHANGELOG.md for the full

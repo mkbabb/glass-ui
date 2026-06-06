@@ -240,8 +240,6 @@ export const CATEGORIES: Category[] = [
         reference: true,
         stories: [
             s("composables", "use-token-color", "useTokenColor", "Reactive read of a CSS custom property — re-resolves on dark-mode transitions."),
-            s("composables", "use-stagger", "useStagger", "Fixed-count timed reveal cascade — one-shot timeline with cleanup-safe timers."),
-            s("composables", "use-animated-number-map", "useAnimatedNumberMap", "N-up useAnimatedNumber fan-out behind a Record-returning composable."),
             s("composables", "use-global-dark", "useGlobalDark", "Singleton dark-mode store (createGlobalState wrapper)."),
             s("composables", "use-keyboard-shortcuts", "useKeyboardShortcuts", "registerShortcut + useRegisteredShortcuts pair for scope-aware keybindings."),
             s("composables", "use-resize-observer", "useResizeObserver", "Threshold + rafBatch options for sub-pixel resize storms."),
@@ -252,7 +250,7 @@ export const CATEGORIES: Category[] = [
             s("composables", "use-raf-loop", "useRAFLoop", "Scope-aware rAF loop with start/stop/pause/resume/dispose."),
             s("composables", "use-scroll-progress", "useScrollProgress", "Map a target's scroll position in the viewport to [0, 1]."),
             s("composables", "use-spring-orchestrator", "useNumericTransition", "Numeric transition between two named snapshots over a duration."),
-            s("composables", "use-stagger-reveal", "useStaggerReveal", "IntersectionObserver-gated entrance cascade (sibling of useStagger)."),
+            s("composables", "use-stagger-reveal", "useStaggerReveal", "IntersectionObserver-gated entrance cascade."),
             s("composables", "use-sortable", "useSortable", "Pointer-capture drag-reorder with optional cross-list group drops."),
             s("composables", "use-scroll-tracker", "useScrollTracker", "Active-section tracking as host scrolls."),
             s("composables", "use-sidebar-follow", "useSidebarFollow", "Sticky / follow-cursor sidebar behaviour."),

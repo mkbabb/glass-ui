@@ -70,6 +70,21 @@ export interface UseLayerTransitionReturn {
  *   spring is still live) RE-SEATS the existing solver's target from its current
  *   `(value, velocity)` instead of dispose+reconstruct-from-rest, so the morph is
  *   continuous through a retarget (the iOS interruptible-spring contract).
+ *
+ * AV.W7 perf folds:
+ *   - F3 — on-demand `will-change`: the morphing box gets `will-change:<dim>`
+ *     ONLY for the gesture's duration (set just before the spring drives it,
+ *     cleared to `auto` on settle/`transitionend`). NEVER a standing hint — a
+ *     permanent `will-change` holds a compositor layer + VRAM for an idle dock.
+ *   - F5 — inheritance-bomb guard (CONVENTION): this driver animates ONLY the
+ *     element's own `width`/`height` (the spring's pixel-space `value`) and the
+ *     pane opacity rides a class-driven CSS transition on the SEPARATE
+ *     `.dock-layer-item-host`. NO INHERITED custom property (`--phase-color` /
+ *     `--shadow-color`) is TWEENED per frame here — animating an inherited
+ *     custom property forces a whole-subtree style recalc every frame (the
+ *     inheritance bomb). Phase/shadow colors are SET on a discrete state change,
+ *     never interpolated frame-by-frame. Keep new motion on `transform`/`opacity`
+ *     /`width`/`height`; route any color shift through a discrete class swap.
  */
 export function useLayerTransition(
     options: UseLayerTransitionOptions,
@@ -146,6 +161,23 @@ export function useLayerTransition(
 
     function clearDim(el: HTMLElement) {
         el.style.removeProperty(dim.value);
+    }
+
+    // AV.W7 F3 — on-demand `will-change` lifecycle. A STANDING `will-change`
+    // holds a compositor layer + VRAM for an idle surface, and the dock is
+    // interactive/idle-mostly (not the always-animating goo-blob canvas, where
+    // a standing hint is defensible). So the hint is promoted ONLY for the
+    // duration of a morph: set on the animated `dim` (`width`/`height`) at
+    // gesture START (just before the spring drives the box), cleared to `auto`
+    // on the spring-SETTLE / `transitionend` so it never stands. The clear fires
+    // on settle (after the final paint), NOT before — so it cannot race the
+    // spring's last frame and flash.
+    function setWillChange(el: HTMLElement) {
+        el.style.willChange = dim.value;
+    }
+
+    function clearWillChange(el: HTMLElement) {
+        el.style.willChange = "auto";
     }
 
     watch(activeLayer, (newLayer, oldLayer) => {
@@ -253,9 +285,14 @@ export function useLayerTransition(
                 if (!live && Math.abs(toSize - fromSize) < 0.5) {
                     el.style.transition = "";
                     clearDim(el);
+                    clearWillChange(el);
                     leavingLayer.value = null;
                     return;
                 }
+
+                // Promote the morphing box for the gesture's duration (cleared on
+                // settle / transitionend below — never standing).
+                setWillChange(el);
 
                 // 3. Drive size off ONE SpringProgress clock in PIXEL space — its
                 // `value` is the live width/height. On a retarget reuse the live
@@ -287,6 +324,9 @@ export function useLayerTransition(
                     if (activeSpring.settled) {
                         el.style.transition = "";
                         clearDim(el);
+                        // Clear the compositor hint AFTER the final paint (settle),
+                        // so it never races the spring's last frame (F3).
+                        clearWillChange(el);
                         leavingLayer.value = null;
                         disposeSpring();
                     }
@@ -298,6 +338,7 @@ export function useLayerTransition(
                     if (id !== transitionId) return;
                     el.style.transition = "";
                     clearDim(el);
+                    clearWillChange(el);
                     leavingLayer.value = null;
                     disposeSpring();
                 }, cleanupDelayMs(el));
@@ -315,6 +356,7 @@ export function useLayerTransition(
         disposeSpring();
         el.style.transition = "";
         clearDim(el);
+        clearWillChange(el);
         leavingLayer.value = null;
     }
 

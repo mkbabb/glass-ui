@@ -22,6 +22,7 @@
 
 import { VERTEX_SRC } from "../constants/shaders/aurora.vert";
 import { FRAGMENT_SRC } from "../constants/shaders/aurora.frag";
+import { resolveBudgetDpr } from "../constants/budget";
 import { createWebGLCanvas } from "../../../../composables/glass/webgl/useWebGLCanvas";
 import type { AuroraConfig, AuroraInstance } from "../constants/presets";
 import { createGlProgram } from "./glSetup";
@@ -126,10 +127,12 @@ export function createAurora(
     // (via `setConfig`); until then the imperative setters mutate them harmlessly
     // and `setup` picks up the latest values.
     let config: AuroraConfig = initial;
-    let reducedMotion =
-        typeof window !== "undefined" && window.matchMedia
-            ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
-            : false;
+    // AV.W7 G1 — the reduced-motion freeze is LIFTED into the `useWebGLCanvas`
+    // substrate, which now OWNS + LIVE-MONITORS the query (a `matchMedia` `change`
+    // listener that re-arms one static frame on un-reduce). Aurora reads the
+    // substrate's live `reducedMotion` getter instead of an init-once local —
+    // toggling reduced-motion at runtime now freezes/wakes without the duplicate
+    // consumer-side listener `useAurora` used to install.
     const frozenOffset = 3.7;
 
     const cursor = createCursorState();
@@ -163,7 +166,8 @@ export function createAurora(
             } = createGlProgram(gl, VERTEX_SRC, FRAGMENT_SRC);
 
             function resize() {
-                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                // AV.W7 F6 — the DPR≤2 clamp is the named `AV_DPR_MAX` ceiling.
+                const dpr = resolveBudgetDpr();
                 const cw = canvas.clientWidth || canvas.parentElement?.clientWidth || 1;
                 const ch =
                     canvas.clientHeight || canvas.parentElement?.clientHeight || 1;
@@ -182,7 +186,8 @@ export function createAurora(
                 uniforms,
                 cursor,
                 getConfig: () => config,
-                getReducedMotion: () => reducedMotion,
+                // Read the substrate's live reduced-motion state (G1).
+                getReducedMotion: () => canvasHandle.reducedMotion,
             });
 
             // GL state setup — clear-to-transparent, premultiplied-alpha blend.
@@ -213,8 +218,10 @@ export function createAurora(
                 shouldContinue: loop.needsAnimation,
                 resize,
                 // reduced-motion freezes time at the authored offset; otherwise
-                // pass the substrate's elapsed seconds straight through.
-                time: (elapsedSec) => (reducedMotion ? frozenOffset : elapsedSec),
+                // pass the substrate's elapsed seconds straight through. The
+                // substrate owns + live-monitors the PRM state (G1).
+                time: (elapsedSec) =>
+                    canvasHandle.reducedMotion ? frozenOffset : elapsedSec,
                 teardown: () => {
                     gl.deleteProgram(prog);
                     gl.deleteShader(vs);
@@ -245,10 +252,12 @@ export function createAurora(
         // drawn (the loop re-parks immediately if the cursor is at rest).
         canvasHandle.wake();
     }
-    function setReducedMotion(flag: boolean) {
-        reducedMotion = flag;
-        // reduced→full restarts drift; full→reduced must draw one last static frame
-        // then park. Either way the loop must run at least one more tick.
+    function setReducedMotion(_flag: boolean) {
+        // AV.W7 G1 — the reduced-motion state is now OWNED + live-monitored by the
+        // substrate (it installs the `matchMedia` `change` listener and re-arms one
+        // static frame on un-reduce). This setter is retained only as a public
+        // wake() nudge for a consumer that mutates the OS query in a test harness;
+        // the substrate's own listener is the source of truth.
         canvasHandle.wake();
     }
 

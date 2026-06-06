@@ -27,6 +27,16 @@
 // retained per slot across switches. `resetCurrent` re-clones the active
 // slot from the preset definition. Matches the aurora storybook shape
 // (slider edits persist when the user switches presets and comes back).
+//
+// ## Per-preset rationale (the aurora vs blob split)
+//
+// Aurora uses `per-preset` because its chrome treats each preset as a NAMED
+// EDITABLE BASELINE the user tunes and returns to — slider edits must survive
+// a preset round-trip. The blob uses the default `commit-on-write`: a
+// single-surface shape where a preset switch is a clean reset. (Aurora also
+// hand-authors `DockLayerGroup` + `DockLayer` chrome rather than stacking
+// `ConfiguratorLayer`s — a DESIGN CHOICE, not a gap: layer switching +
+// crossfades exceed `ConfiguratorLayer`'s single-section collapse pattern.)
 
 import { reactive, ref, computed, toRaw, type ComputedRef } from "vue";
 import type { ConfiguratorPreset } from "./Configurator.vue";

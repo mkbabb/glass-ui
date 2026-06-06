@@ -19,7 +19,7 @@ The `build` script runs two sequential arms — `vite build` emits the JS bundle
 src/
 ├── index.ts                        # v1.0 curated public barrel (vueuse-free)—Phase 2 SCC closure (L.W1 Lane A)
 ├── api/                            # `@mkbabb/glass-ui/api` discovery layer—types + constants only (L.W1 Lane B)
-│   └── index.ts                    # 68 canonical public symbols (65 types + 3 constants)—M.W2 + O.W4 + O.W6 + P.W1 + P.W2 + P.W3 + AQ.W4 + AQ.W5 + AU.W9 extensions; P.W0 + P.W6 resyncs; AV.W10 metric-cell/stack retirement (−4 types)
+│   └── index.ts                    # 72 canonical public symbols (69 types + 3 constants)—M.W2 + O.W4 + O.W6 + P.W1 + P.W2 + P.W3 + AQ.W4 + AQ.W5 + AU.W9 extensions; P.W0 + P.W6 resyncs (metric-cell/stack ship via subpath — speedtest consumer)
 ├── dark.ts                         # `@mkbabb/glass-ui/dark` flat subpath (L.W1 Lane C; vueuse-bearing)
 ├── keyboard.ts                     # `@mkbabb/glass-ui/keyboard` flat subpath (L.W1 Lane C; vueuse-bearing)
 ├── carousel.ts                     # `@mkbabb/glass-ui/carousel` flat subpath (L.W1 Lane C; vueuse-bearing; v1.0.4 ships full `Carousel*` family per MIGRATION.md §1.2)
@@ -69,7 +69,7 @@ src/
 │   │   ├── toggle-group/           # ToggleGroup, ToggleGroupItem
 │   │   ├── tooltip/                # Tooltip provider/trigger/content (rounded-tooltip token)
 │   │   └── index.ts                # barrel: all ui/ exports
-│   ├── custom/                     # 34 custom package dirs (every dir has a package barrel)
+│   ├── custom/                     # 36 custom package dirs (every dir has a package barrel)
 │   │   ├── animated-digit/         # AnimatedDigit single-glyph reel (AB+1 / AC.W6d ergonomics)
 │   │   ├── aurora/                 # Aurora WebGL background + useAurora composable (aurora chrome consumes useConfiguratorState<AuroraConfig> with cloneMode='per-preset'—see Configurator; L.W7 Lane B retired the prior parallel useAuroraStudio chrome)
 │   │   ├── configurator/           # Configurator + ConfiguratorLayer + ConfiguratorRow + useConfiguratorState
@@ -82,6 +82,7 @@ src/
 │   │   │   ├── DockLayerGroup.vue  # multi-layer container + optional switcher rail
 │   │   │   ├── DockLayer.vue       # named pane inside a DockLayerGroup
 │   │   │   ├── DockIconButton.vue
+│   │   │   ├── DockBackgroundToggle.vue # WCAG-2.2.2 pause/play toggle for the AV backgrounds (AV.W7 G2)
 │   │   │   ├── DockTabButton.vue
 │   │   │   ├── DockSelectTrigger.vue
 │   │   │   ├── DockDropdownTrigger.vue
@@ -101,6 +102,8 @@ src/
 │   │   ├── instrument-rail/        # InstrumentRail cockpit-ratio rail (AK-W2-α)
 │   │   ├── labeled-field/          # LabeledField parent + 4 wrappers (LabeledInput/Select/Slider/Switch)
 │   │   ├── metric-badge/           # MetricBadge primitive
+│   │   ├── metric-cell/            # MetricCell compact metric card (subpath /metric-cell; speedtest consumer)
+│   │   ├── metric-stack/           # MetricStack + MetricRow vertical metric grouping (subpath /metric-stack; speedtest consumer)
 │   │   ├── paper-backdrop/         # PaperBackdrop
 │   │   ├── pulse/                  # Pulse (dots / ring) loading indicator
 │   │   ├── responsive-tabs/        # ResponsiveTabs matchMedia Select↔UnderlineTabs swap (AB+1 / AC.W8e)
@@ -142,6 +145,16 @@ src/
 │                                   # filters out dark/ + keyboard/ (vueuse-bearing) and consumes
 │                                   # the vueuse-free leaves only; consumers reach dark/keyboard
 │                                   # via flat `@mkbabb/glass-ui/dark` and `@mkbabb/glass-ui/keyboard`.
+├── subpaths/                       # AV.W5.A — the 58 TRIVIAL one-line per-package subpath
+│                                   # mirror barrels (each `export * from "../components/<…>"`
+│                                   # or `"../composables/<…>"`). BATCH-RESOLVED in
+│                                   # vite.library.ts (glob src/subpaths/*.ts) so a new subpath
+│                                   # barrel never has to be hand-added. The 10 CURATED
+│                                   # multi-line barrels (index/tokens/forms/dark/keyboard/
+│                                   # carousel/motion/motion-core/sidebar/infinite-scroll) + api/
+│                                   # STAY at src/ top level (SCC-aware curation, not a mirror
+│                                   # line). Zero surface delta: the same dist/<name>.js chunk set
+│                                   # emits; flatten-subpath-types.mjs keeps dist/<name>.d.ts flat.
 ├── styles/
 │   ├── index.css                   # imports all below in cascade order
 │   ├── tokens.css                  # §1–§10: duration, easing, z-index, radius, shadows, glass, paper, colors
@@ -178,6 +191,14 @@ Tests live in a top-level `tests/` tree that MIRRORS `src/` (AV.W14—NO test fi
 - Named exports only, no defaults
 - All shadows compose via `color-mix(in srgb, var(--shadow-color) N%, transparent)` over `--shadow-color: var(--foreground)` (tokens.css §7).
 - Color tokens are complete `hsl()` colors: `--primary: hsl(24 10% 10%)`, consumed directly as `var(--primary)`. NEVER `hsl(var(--token))` (the token is already a color — double-wrapping is invalid and never paints). For an alpha derivative use `color-mix(in srgb, var(--token) N%, transparent)` (the `--surface-tint-*` / `--border-soft` house pattern).
+
+### Cartoon-shadow override contract
+
+glass-ui ships `--shadow-cartoon-{sm,md,lg}` as its **own identity tokens** (the Memphis-sticker offset-stamp shadow). The canonical chain is `tokens.css` (raw value + the `--cartoon-shadow-*` alias) → `theme.css` `@theme` bridge (`--shadow-cartoon-lg: var(--cartoon-shadow-lg)`, the namespace var a Tailwind `shadow-cartoon-lg` utility resolves through) → `utilities.css` (`.shadow-cartoon-{sm,md,lg} { box-shadow: var(--shadow-cartoon-*) }`) → `cards.css` (`@utility cartoon-surface` consumes `var(--shadow-cartoon-md)` at rest + `var(--shadow-cartoon-lg)` on hover; `<Card surface="cartoon">` composes it).
+
+A consumer retints the cartoon shadow by **overriding the `:root` token** — `:root { --shadow-cartoon-lg: <value>; }` — which re-resolves *every* `.shadow-cartoon-lg` utility + `cartoon-surface` site with **zero library edit**. The anti-pattern is **re-declaring the token name as a dead local orphan** that sits OFF the cascade path glass-ui's utilities read (a `feedback-coder/theme.css`-style local `--shadow-cartoon-lg: 7px 7px` block that never reaches the `@theme`-bridged utility and so never paints). Override on the cascade; never re-declare a dead local.
+
+The cartoon shadow is **token-adaptive under `.dark` BY CONSTRUCTION**: each `--shadow-cartoon-*` value rides `color-mix(in srgb, var(--shadow-color) N%, transparent)` and `--shadow-color: var(--foreground)` flips light→dark, so the offset stamp re-tints under `.dark` with no hardcoded `.dark` re-declaration of `--shadow-cartoon-lg` (the `.dark` block re-resolves `--foreground`/`--shadow-color`, which is a legitimate token re-resolution, not a dead orphan). Presets-in-consumers: named themed cartoon-shadow presets live in the consumer; the library's `--shadow-cartoon-*` is its own identity. Machine-locked by `proof:shadow-contract` (CHAIN-INTACT + OVERRIDE-RESOLVES + DARK-ARM-ALLOWED).
 
 ## Entry point
 
@@ -322,6 +343,14 @@ Each `DockLayer` registers itself with its parent via `provide`/`inject`; the gr
 
 The `GlassDock` root is **presentational**—a `<div class="glass-dock">` carrying layout/state data attributes (`data-density`, `data-held`, `data-container-name`) and pointer/focus listeners, but no ARIA role. `aria-expanded` MUST NOT be applied to the root: it has no interactive role, so the attribute is disallowed there and trips axe's `aria-allowed-attr` rule. `aria-expanded` belongs on the dock **trigger** child—the interactive control (`<button>`/`role="button"`) the user activates to open/collapse the dock—bound to the dock's exposed `expanded` state (reachable via `defineExpose`). Consumers that need an expand-state announcement wire `:aria-expanded` to their trigger button, not the dock wrapper. See `docs/tranches/AM/audit/W0-forms-a11y.md` (gap 3).
 
+#### DockBackgroundToggle (WCAG 2.2.2 pause/play)
+
+`DockBackgroundToggle` is the Level-A (WCAG 2.2.2 Pause, Stop, Hide) control for a continuously-running AV background (`Aurora`/`GooBlob`)—auto-starting, >5s, non-essential motion is obligated to carry a user-reachable stop control, available to ALL users (NOT gated behind `prefers-reduced-motion`, which the `useWebGLCanvas` substrate handles separately via its live PRM freeze). It is a thin `v-model:paused` `<DockIconButton>` host reflecting state via `aria-pressed` + a Pause↔Play glyph/label swap. KISS—it binds the EXISTING renderer seam: the consumer wires `@update:paused` → the renderer's `pause()`/`resume()` (GooBlob exposes both; Aurora's `useAurora` does too). It adds no parallel pause path. (AV.W7 G2.)
+
+#### WebGL substrate offscreen-pause + reduced-motion (AV.W7)
+
+`useWebGLCanvas` (the shared WebGL2 substrate Aurora + GooBlob compose) PARKS its rAF loop when its host is content-hidden (`content-visibility:auto` + `contentvisibilityautostatechange`), scrolled offscreen (the consumer's `useIntersectionPause` `rootMargin:200px` seam), or its tab is backgrounded (`document.hidden`)—all ORed onto the existing `shouldContinue()`/`isRunning()` park machinery, so an offscreen/hidden surface attaches zero frames. It also OWNS + LIVE-MONITORS `prefers-reduced-motion: reduce` (a `matchMedia` `change` listener) and paints ONE static frame then parks under reduce—every surface on the substrate inherits the freeze + the re-monitor (a CSS reset cannot reach the WebGL rAF). The aurora/blob hosts carry `contain` (aurora `content`, blob `layout style`—the blob's satellites overflow). Gated by `proof:offscreen-pause`.
+
 ### Slider keep-dock-open contract
 
 `<Slider>` exposes `keepDockOpen?: boolean` (default `true`). When a Slider is a descendant of a `<GlassDock>`, pointer-drag acquires a `dockKeepOpen` token for the duration of the gesture (preventing idle-collapse) AND the Slider subscribes to the dock's `dockHeld` computed and reflects it via `data-held` on its root for thumb-halo intensification. The contract is bidirectional and pointer-anchored—the Slider is the only consumer (Option B per K W7); keyboard- and discrete-button interactions on `<NumberField>` are not eligible because they have no continuous-interaction window. The cross-substrate proof story lives at `demo/stories/compositions/dock-with-slider.vue`.
@@ -341,6 +370,18 @@ vaul-vue owns the snap MATH (the drag-release spring, the `data-vaul-*` state at
 ### InstrumentChassis phase canon
 
 The `InstrumentChassisPhase` union (`ready | ping | download | upload | jitter | complete`) carries `"ping"` as the canonical generic-active phase—use it for any active-but-unspecialised state (scoring, validating, processing). The union does NOT carry a per-domain `"scoring"` member; a consumer maps its domain-active state onto `"ping"` (AN.W6—a speculative `"scoring"` member with no consumer would be overfit substrate). A phase-canon test enforces the union.
+
+### Configurator contract
+
+`Configurator` + `ConfiguratorLayer` + `ConfiguratorRow` + `useConfiguratorState` compose a preset-driven controls column (`@mkbabb/glass-ui/configurator`; also on the root barrel). Four shipped behaviours:
+
+- **`ConfiguratorLayer` `dividers` prop** (`dividers?: boolean`)—opt-in per-section hairline (`border-t border-border/30` between sibling rows; the first row stays flush). Section **rounding is owned at the container-root clip** (`Configurator.vue` `rounded-panel` + `overflow-hidden`), NOT per-section: a per-section radius on a transparent border-only element would deform the straight `border-b` divider, so flush sections keep straight dividers by design.
+
+- **`ConfiguratorRow` density cascade**—a four-rung density axis (`mobile` | `compact` | `comfortable` | `spacious`) resolved **local-prop-over-inject**: the row's `density` prop wins; the `<Configurator>`-injected `ComputedRef<ConfiguratorDensity>` is the fallback; `undefined` keeps the baked-in `gap-1.5 py-2` recipe and emits no `data-density` (pre-density visual preserved). `comfortable` is functionally the no-density default (an explicit restatement). A resolved density emits `data-density="…"` driving the token-override CSS, with an `@container style(--density: X)` companion so a host setting `--density` on any ancestor retunes every descendant row's gap/padding without the `data-density` markup contract.
+
+- **`useConfiguratorState` `cloneMode` semantics** (`ConfiguratorCloneMode = "commit-on-write" | "per-preset"`)—`commit-on-write` (default) keeps one live `config`; `selectPreset(key)` overwrites it, so edits are lost when the user switches away. `per-preset` allocates an independent live clone per preset slot; `selectPreset` snapshots the outgoing slot before loading the named one, so slider edits **persist per slot across switches** (`resetCurrent` re-clones the active slot from the preset definition).
+
+- **Per-preset rationale.** Aurora consumes `cloneMode="per-preset"` because its chrome treats each preset as a **named editable baseline** the user tunes and returns to (slider edits must survive a preset round-trip). The blob uses the default `commit-on-write`—a single-surface shape where a preset switch is a clean reset. Aurora also **hand-authors `DockLayerGroup` + `DockLayer` chrome** rather than stacking `ConfiguratorLayer`s—a DESIGN CHOICE, not a gap: layer switching + crossfades exceed `ConfiguratorLayer`'s single-section collapse pattern.
 
 ## Demo storybook chassis (demo-private)
 

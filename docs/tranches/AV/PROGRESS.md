@@ -1,5 +1,171 @@
 # AV — Progress
 
+## W4 — shadow-contract + Drawer-native(gated) + Card-cartoon + configurator docs
+
+**Status:** DEV-COMPLETE, green. Single-checkout solo execution of the three lanes (A shadow-contract + configurator docs / B Drawer-native CONDITIONAL / C Card-cartoon dark-arm). Two NEW gates green + bite-verified; the Drawer-native lane is formally KEEP-BOOKed (muster UNMET). `typecheck` + `build` both green; no regression. Non-publish-blocking supply IMPL.
+
+### Lane A — shadow-cartoon-lg override contract + proof:shadow-contract (born-GREEN lock)
+
+`--shadow-cartoon-{sm,md,lg}` ships canonical at HEAD; W4 does NOT re-author the value — it DOCUMENTS the consumer-overridable contract + LOCKS the chain. The canonical chain (verified against HEAD; the spec's :563/:568 line refs are pre-W14 drift, the gate matches by TOKEN not line): `tokens.css` raw value (`--shadow-cartoon-lg: -6px 4px 1px color-mix(in srgb, var(--shadow-color) 12%, transparent), …`) + the `--cartoon-shadow-lg` alias → `theme.css` `@theme` bridge (`--shadow-cartoon-lg: var(--cartoon-shadow-lg)`) → `utilities.css` `.shadow-cartoon-lg { box-shadow: var(--shadow-cartoon-lg) }` → `cards.css` `cartoon-surface` hover consumer.
+
+- **`CLAUDE.md`** — new "Cartoon-shadow override contract" subsection under Conventions: glass-ui ships the tokens as its OWN identity; a consumer retints by OVERRIDING the `:root` token (re-resolves every utility + `cartoon-surface` site, zero library edit), NOT by re-declaring a dead local orphan off the cascade (the f-w6-idiom anti-pattern). Names the `.dark` legitimacy (the `--shadow-color: var(--foreground)` flip makes it token-adaptive by construction).
+- **`scripts/proof-shadow-contract.mjs`** (NEW, `["local","ci","release"]`) — three asserts: CHAIN-INTACT (4 links), OVERRIDE-RESOLVES (the utility + `cartoon-surface` read `var(--shadow-cartoon-lg)` not a literal — the bite), DARK-ARM-ALLOWED (the `--shadow-color`→`--foreground` indirection is the adaptive seam; the `.dark` re-resolution is allowlisted, not a false-RED). Born-GREEN (the chain ships at HEAD — a contract LOCK, not a born-RED fold). Bite-verified: hardcode the `.shadow-cartoon-lg` utility box-shadow to a literal → RED; delete the `@theme` bridge → RED. Both files byte-restored after each bite. Tally: `docs/tranches/AV/audit/W4-shadow-contract.json`.
+
+**Configurator documentation folds (DOC-ONLY; props already ship at HEAD — no new prop).** `CLAUDE.md` gains a Configurator-contract section naming: the `ConfiguratorLayer` `dividers` prop (per-section hairline; rounding owned at the container-root clip so flush sections keep straight dividers); the `ConfiguratorRow` four-rung density cascade (`mobile`/`compact`/`comfortable`/`spacious`, local-prop-over-inject, the `@container style(--density)` companion); the `useConfiguratorState` `cloneMode` semantics (`commit-on-write` default vs `per-preset`); the per-preset rationale (aurora's preset-as-named-baseline shape preserves slider edits — and hand-authors `DockLayerGroup`+`DockLayer` chrome by DESIGN, not a gap; blob uses commit-on-write). JSDoc: `ConfiguratorLayer.vue` (`dividers` + container-root-clip) and `ConfiguratorRow.vue` (density cascade) already carry complete doc comments at HEAD — verified, no extension needed; `useConfiguratorState.ts` gained an additive "Per-preset rationale" JSDoc block naming the aurora-vs-blob split + the DockLayerGroup design choice. `proof:doc-consistency` stays GREEN (no new `custom/<dir>` citation, no new dep).
+
+### Lane B — GlassNativeDrawer: KEEP-BOOK (muster UNMET)
+
+The native-`<dialog>`-backed bottom-sheet surface is **formally KEEP-BOOKed** — NO file created, NO gate registered. The muster is `mode="live-behind"` FIRM (the vaul-vue drawer, a DISTINCT surface, does NOT count as a native consumer) + a 2nd native consumer. At HEAD the native `<dialog>` family (`GlassDialogNative`) has exactly ONE consumer — `demo/stories/containers/native-top-layer.vue` — so the 2nd-native muster does NOT clear. Shipping `GlassNativeDrawer` now would be substrate-without-consumer (J inv 10). The vaul-vue `mode="live-behind"` drawer is UNCHANGED.
+
+**GlassNativeDrawer KEEP-BOOK — trigger:** a 2nd repo/story needing a native-`<dialog>` bottom sheet distinct from the vaul-vue `mode='live-behind'` path. At HEAD only the live-behind surface musters; the native surface is substrate-without-consumer. The `dialog-native/` family (`GlassDialogNative`) already exists as the compose target if the muster ever clears.
+
+### Lane C — Card surface="cartoon" dark-arm token-adaptive + proof:card-cartoon-consumers
+
+The cartoon dark arm is **token-adaptive BY CONSTRUCTION** — the `cartoon-surface` `@utility` reads ONLY `var(--shadow-cartoon-md)` (rest) + `var(--shadow-cartoon-lg)` (hover), and those tokens ride `color-mix(in srgb, var(--shadow-color) N%, transparent)` where `--shadow-color: var(--foreground)` flips light→dark. **No light literal leaks into the dark arm; no `cards.css` / `tokens.css` edit needed** (audit confirmed token-only; light-arm paint byte-identical to HEAD because nothing changed). `Card.vue`'s `surface === 'cartoon' && 'cartoon-surface'` path carries no inline shadow — no-op, recorded.
+
+- **`tests/components/ui/card/Card.test.ts`** (the W14-relocated path; the spec's `src/.../__tests__/` ref is pre-W14 drift) — ADDED a dark-arm assertion: under a `.dark` ancestor the rendered card keeps the `cartoon-surface` class unchanged (the dark shadow re-resolves via the token chain, not a class swap). 16/16 green (was 15).
+- **`scripts/proof-card-cartoon-consumers.mjs`** (NEW, `["local","ci"]`) — the J-inv-10 ≥2-consumer muster (mirrors `proof-au-w9-consumers.mjs`): 2 DISTINCT resolving consumer contexts (`demo/stories/primitives/card.vue` + `tests/components/ui/card/Card.test.ts`). Bite-verified: drop a consumer to <2 → RED. Tally: `docs/tranches/AV/audit/W4-cartoon-consumers.json`.
+
+**Live browser-verify (Playwright @ :5173, `/primitives/card`):** the `.cartoon-surface` card carries the class in BOTH modes; the computed `box-shadow` FLIPS light↔dark — `oklab(0.927 …)`/light-arm vs `color(srgb 0.91 0.906 0.89 …)`/dark-arm (`shadowFlips: true`) — proving the offset stamp re-tints with the scheme through the `--shadow-color`→`--foreground` token chain (this demo drives dark via `color-scheme` + the `light-dark()` `--foreground` arm; the shadow re-resolves either way). The class is identical in both modes — the dark adaptivity is a CSS-token concern, not a class swap.
+
+### Gate registration (manifest==ci)
+
+Both gates registered in `package.json` + `gates.mjs` + `ci.yml`. `npm run gates:verify-ci` GREEN (manifest==ci, 57 gates). The Drawer-native gate is NOT registered (the fold is BOOKed — a born-RED gate against an un-folded file would violate manifest==ci).
+
+| gate | tags | bite |
+|---|---|---|
+| `proof:shadow-contract` | `["local","ci","release"]` | hardcode `.shadow-cartoon-lg` utility to a literal → RED; delete `@theme` bridge → RED |
+| `proof:card-cartoon-consumers` | `["local","ci"]` | drop a consumer to <2 → RED |
+
+### Verification
+
+- `npm run typecheck` — **GREEN** (`vue-tsc --noEmit`; the configurator JSDoc edit does not perturb the typed surface).
+- `npm run build` — **GREEN** (both arms; exit 0; the flatten-subpath-types arm completes).
+- `npm run proof:shadow-contract` — **GREEN** + bite-verified. `npm run proof:card-cartoon-consumers` — **GREEN** + bite-verified.
+- `npm run proof:doc-consistency` — **GREEN** (CLAUDE.md edits add no dangling `custom/<dir>` / dep citation).
+- No-regression spot matrix — `proof:theme`, `proof:components-css`, `proof:tailwind-v4-idiom`, `proof:liquid-glass-tokens` all GREEN; the Card unit suite 16/16 green.
+
+## W5 — the L-Rε hygiene transpositions (KISS, public API byte-unchanged)
+
+**Status:** DEV-COMPLETE, green. Single-checkout solo execution of the five lanes (A subpath-collapse / B composable-restructure / C dock-factory / D types-ownership / E goo-blob easing). Two NEW born-RED gates (`proof:subpath-enumeration` + `proof:no-orphan-composable`) green + bite-verified; `typecheck` + `build` both green; the public surface is BYTE-UNCHANGED. Non-publish-blocking REFACTOR.
+
+### What landed (five lanes)
+
+**Lane A — subpath-barrel collapse + vite batch-resolve.** The 58 TRIVIAL one-line subpath barrels (each `export * from "./components/<…>"` or `"./composables/<…>"`) moved from `src/<name>.ts` → `src/subpaths/<name>.ts` (relative paths undeepened `./` → `../`). `vite.library.ts` replaced its 58 hand-listed `resolve(rootDir, "src/<name>.ts")` entries with a programmatic glob over `src/subpaths/*.ts`, MERGED with the 11 explicit curated entries (index/api/tokens/forms/dark/keyboard/carousel/motion/motion-core/sidebar/infinite-scroll). The merged `libraryEntries()` key set is name-for-name identical to HEAD (69 entries; `vite.library.ts` −63 lines). The 10 multi-line curated barrels + `api/index.ts` STAY at `src/` top level (SCC-aware curation, not a mirror line). Clean break — no re-export shim at the old `src/<name>.ts` path; the 40 demo + test call sites that imported via `../src/<name>` repointed to `../src/subpaths/<name>`.
+
+**dts-flatten seam.** The dts emit mirrors the SOURCE tree (`tsconfig.build.json` `rootDir: src` + `include: src/`), so the moved barrels' declarations landed at `dist/subpaths/<name>.d.ts` — but `package.json` `types`/`typesVersions` publishes the FLAT `dist/<name>.d.ts`. New `scripts/flatten-subpath-types.mjs` (chained into `emit-types`) moves each `dist/subpaths/<name>.d.ts` → `dist/<name>.d.ts` and undeepens its single re-export (`from "../…"` → `from "./…"`), restoring the byte-identical flat publication. The 68-file dist `.d.ts` set is identical to HEAD.
+
+**Lane B — composable sub-tree structure-lock.** `platform/` NOT extracted: `isMac` is SINGLE-CONSUMER (used only inside `composables/keyboard/useKeyboardShortcuts.ts`); J inv 10 forbids a one-consumer sub-tree. `proof:no-orphan-composable` locks the structure (10 named sub-trees incl. `context/` from AV.W14; only `index.ts` loose). 0 source lines changed.
+
+**Lane C — dock-factory: SUPERSEDED by AV.W14.** The dock DI boilerplate already collapsed onto the canonical `createStrictContext<T>()` (`src/composables/context/createContext.ts`) at AV.W14 — byte-for-byte the `{KEY, provide, use, useOptional}` quadruple W5 specified, with the −30-40 LOC already realized across `dockContext.ts` + `dockLayerContext.ts`. PROGRESS.md W14 Lane A records this explicitly ("it subsumes the planned dock factory"). Creating a parallel `createDockContext.ts` would duplicate the abstraction + violate `proof:di-consistency`; the spec's `__tests__/createDockContext.test-d.ts` is also moot under `proof:no-test-in-src` (the dock context type fixture lives at `tests/components/custom/dock/dockLayerContext.readonly.test-d.ts`). BOOKed — KISS + no-duplication. 0 source lines changed.
+
+**Lane D — types-ownership audit (verdicts).** `src/composables/sidebar/types.ts` — CANONICAL (AI.W5-δ relocation; `/sidebar` subpath `src/sidebar.ts` barrels from `composables/sidebar`). `src/components/custom/infinite-scroll/composables/types.ts` — CANONICAL (co-located with the `useInfiniteScroll` composable-of-record). Both no-op; no hoist. 0 source lines changed.
+
+**Lane E — goo-blob easing-module fold (D7).** The three hand-rolled quadratic helpers — `easeInOut` (`useBlobMood.ts:97`) + `easeIn`/`easeOut` (`useBlobSatellites.ts:18-24`) — extracted VERBATIM into `src/components/custom/goo-blob/composables/easing.ts` and re-imported. The distinct cubic smoothstep (`useBlobSatellites.ts` `bt*bt*(3-2*bt)`) stays inline (KISS, not one of the three quadratics). PRIVATE to `/goo-blob` (not re-exported from `goo-blob/index.ts`, not on `/api`). Runtime byte-identical — `proof:blob-color-equivalence` 8/8 green; the `dist/goo-blob.js` chunk CONTENT changes (de-dup) but the export SURFACE is unchanged.
+
+**Deferred — `useReducedMotionToggle()` hoist.** DEFERRED to AV.W7 G1's `useWebGLCanvas` substrate-level lift (the PRIMARY freeze home). W5 does not speculatively hoist a composable W7 G1 would subsume.
+
+### Public-surface byte-stability (CARDINAL invariant)
+
+- The 67 named publication chunks (`dist/<subpath>.js`) byte-identical name set; all chunk basenames (content-hash stripped) identical — only the shared-leaf content-hash suffixes changed (the expected cascade from Lane E's goo-blob content change). The 68-file dist `.d.ts` set identical.
+- `npm run verify-export-types` GREEN. `npm run proof:package` GREEN. `package.json` exports byte-unchanged (the `import` keys point at `dist/<name>.js`, unaffected by the source move).
+
+### Gates
+
+- `proof:subpath-enumeration` (NEW, `["local","ci","release"]`) — exports↔dist↔libraryEntries surface-invariance (ENUM-COMPLETE + NO-ORPHAN-CHUNK + BATCH-EQUIV). Born-RED → GREEN; bite-verified (drop `dist/dock.js`/`src/subpaths/dock.ts` while leaving `./dock` export → RED).
+- `proof:no-orphan-composable` (NEW, `["local","ci"]`) — composables sub-tree structure-lock. GREEN at HEAD; bite-verified (loose `useFoo.ts` → RED).
+- Registered in `package.json` + `gates.mjs` + `ci.yml`; `node scripts/gates.mjs --verify-ci` GREEN (manifest==ci, 54 gates).
+- No-regression: `proof:di-consistency`, `proof:no-test-in-src`, `proof:vueuse-free-root`, `proof:blob-value-free`, `proof:no-value-default`, `proof:doc-consistency` — all GREEN. `proof:resolution` RED is sibling-only (value.js + bbnf-lang pre-existing cross-repo state, staged-green per contract-v2; zero glass-ui files implicated) — NOT a W5 regression.
+- `npm run typecheck` GREEN. `npm run build` GREEN. The goo-blob unit suite GREEN (8/8); the 3 rewritten-import test files GREEN (273/273).
+
+### LOC delta
+
+Recorded in `docs/tranches/AV/audit/W5-loc-delta.json`. Dominant: 58 barrels moved (0 net LOC — relocated + paths undeepened); `vite.library.ts` −63; goo-blob net ~+16 (one 24-line module incl. doc comment, −10 inline call-site lines, +2 import lines). Lanes B/C/D: 0 source lines.
+
+## W7 — SOTA perf: offscreen-pause + containment + on-demand will-change + budget caps
+
+**Status:** DEV-COMPLETE, green. Single-checkout solo execution of the three lanes (A substrate / B css-budget / C dock-motion). The NEW born-RED gate `proof:offscreen-pause` is green + bite-verified; `typecheck` + `build` both green; the existing gate matrix shows no regression. Non-publish-blocking.
+
+### What landed (the perf folds)
+
+**Lane A — substrate offscreen-park (F1/F4) + the G1 PRM-freeze lift.** `useWebGLCanvas.ts` now gates its EXISTING `shouldContinue()`/`armed`/`isRunning()` machinery on the VISIBILITY + reduced-motion state (the gestalt — it adds the CONDITION to the park seam, never a parallel loop):
+
+- **F1 content-visibility park.** A `contentvisibilityautostatechange` listener binds to the canvas's host (`canvas.parentElement`) at `arm()`. On `event.skipped === true` (the host is content-skipped — scrolled offscreen / display-locked) → `suspend("off-screen")`; on `false` → `resume("off-screen")`. The host carries `content-visibility:auto` (Lane B). The `ContentVisibilityAutoStateChangeEvent` interface declares the one un-typed `skipped` field.
+- **F4 tab + IO.** The tab-visibility owner parks on `document.hidden` (kept; now also seeds `tab-hidden` if constructed in a backgrounded tab). The IntersectionObserver `rootMargin:200px` fallback is the consumer's `useIntersectionPause` off-screen seam — aurora already wired it via `useAurora`; goo-blob NOW wires it in `useMetaballRenderer` (`pauseWhenHidden:false` so the substrate stays the sole `tab-hidden` writer). All three (F1, tab, IO) drive the SAME `off-screen`/`tab-hidden` reasons — ORed park conditions on one `isRunning()` set.
+- **G1 PRM-freeze lift + LIVE re-monitor.** The reduced-motion freeze is LIFTED out of the two consumers (which read `matchMedia` ONCE at init and never re-monitored) into the substrate, which installs a `matchMedia("(prefers-reduced-motion: reduce)")` `change` listener driving a `reducedMotion` ref. The `tick()` reschedule gate (`!reducedMotion && hooks.shouldContinue()`) draws ONE static frame then parks under reduce — it gates the RESCHEDULE, NOT the suspend set, so an on-screen reduced surface never blanks (the §3a ordering caveat). On un-reduce the loop re-arms from a fresh clock (no jump). The handle exposes `readonly reducedMotion` — aurora reads it for its frozen-t; goo-blob dropped its init-once `prefersReducedMotion` and its `shouldContinue` is now motion-only. `respectReducedMotion` option defaults `true` for live / `false` for capture. Every future AV surface on the substrate inherits the frozen-one-static-frame guarantee + the live re-monitor for free.
+
+**Lane B — containment + blur-budget + budget tokens (F2/F6).**
+
+- **F2 contain.** `Aurora.vue` `.aurora-root` → `contain: content` + `content-visibility:auto` + `contain-intrinsic-size:auto none` (full paint/layout containment — the aurora canvas does not overflow). `GooBlob.vue` `.goo-blob-wrapper` → `contain: layout style` (NO paint — the 160% canvas satellites intentionally overflow; paint containment would clip them on-screen) + `content-visibility:auto` (which applies its own containment ONLY while skipped/offscreen-invisible, so on-screen overflow is preserved) + `contain-intrinsic-size:auto none`.
+- **F2 blur clamp.** `--glass-blur-overlay-radius` clamped **24px → 15px** (the ONE out-of-band token; the wash/quiet/resting 1/10/12 are in-band, floating 16px is the design ceiling at the band edge — LEFT). The richer 24px is RESTORED via a `@media (min-resolution: 2dppx)` `:root` arm (the cost is amortised by the denser backing store). Token-only override; every overlay surface inherits it.
+- **F6 DPR-max + budget caps.** New `aurora/constants/budget.ts`: `AV_DPR_MAX = 2` (the formerly-magic `Math.min(dpr, 2)` literal in BOTH aurora + goo-blob `resize()` — now `resolveBudgetDpr()`), plus the budget caps `AV_MAX_BLOBS = 3`, `AV_MAX_COLORS = 4`, `AV_LOOP_DURATION_{MIN,MAX}_S = 8/15`, and a `clampBudget()` helper. Pure-numeric, value.js-free (goo-blob cross-imports it without breaking `proof:blob-value-free`).
+
+**Lane C — on-demand will-change (F3) + inheritance-bomb guard (F5) + the G2 pause toggle.**
+
+- **F3 will-change lifecycle.** `useLayerTransition.ts` sets `will-change:<dim>` (`width`/`height` per axis) on the morphing `.dock-layer-stack` ONLY for the gesture's duration — just before `spring.play()`, cleared to `auto` on the spring SETTLE callback (after the final paint, so it never races the last frame / flashes) AND on the cleanup-timer + `transitionend` + the `< 0.5px` no-op early-return. NEVER standing. (The standing `will-change:transform` on `GooBlob.vue:139` is a DIFFERENT surface — always-animating ambient WebGL canvas, where a standing hint is defensible; recorded as the deliberate distinction.)
+- **F5 inheritance-bomb guard (convention + browser-verify).** The dock driver animates ONLY the element's own `width`/`height` (the spring's pixel value) + pane opacity (a class-driven CSS transition on the SEPARATE `.dock-layer-item-host`). NO inherited custom property (`--phase-color`/`--shadow-color`) is TWEENED per frame — they are SET on discrete state change. Recorded as a binding convention in the composable header.
+- **G2 WCAG-2.2.2 Level-A pause/play toggle.** New `DockBackgroundToggle.vue` (exported from `@mkbabb/glass-ui/dock`): a thin `v-model:paused` `<DockIconButton>` host reflecting state via `aria-pressed` + a Pause↔Play glyph + label swap, available to ALL users (NOT gated behind reduced-motion). KISS — it binds the EXISTING renderer seam: the consumer wires `update:paused` → the renderer's `pause()`/`resume()` (goo-blob already exposes both; no parallel pause path added). 4 a11y unit tests (the rendered aria contract + the renderer-binding wiring).
+
+### Verification
+
+- **`proof:offscreen-pause`** (born-RED): GREEN + bite-verified — strip `contentvisibilityautostatechange` from the substrate → RED (the headline bite). Registered `["local","ci"]` in `package.json` + `gates.mjs` + `ci.yml`; `gates:verify-ci` GREEN (manifest==ci, 52 gates). Artefact: `.cache/gates/AV-offscreen-pause.json`. The gate is a SEAM assertion (reads the visibility/PRM state statically — not a flaky headless-frame gate, per the §3a redress clause).
+- **Live (Playwright @ :5173):**
+  - **F1 offscreen-park** — instrumenting global rAF over 300ms windows on the goo-blob story (5 blob loops): **running 252 → content-skipped 144 → un-skipped 252**. The ~108-frame drop is the 5 substrate loops parking on the synthetic `contentvisibilityautostatechange{skipped:true}`, resuming on `{skipped:false}`. The RAF parks when content-hidden and re-arms.
+  - **G1 reduced-motion live re-monitor** — `page.emulateMedia({reducedMotion})` toggled AT RUNTIME (firing the substrate's real `MediaQueryList` change listener): **full 259 → reduce 144 → full 259**. goo-blob (NOT just aurora) freezes/wakes — proving the substrate seam re-monitors and the consumers inherit it. The on-screen reduced surface draws one static frame (never blanks).
+  - **F2/F6 host attrs** — `.goo-blob-wrapper`: `contain:layout style`, `content-visibility:auto`, `contain-intrinsic-size:auto none`; canvas backing store 882×882 at `dpr=2` (the `AV_DPR_MAX` clamp holds on a 2× display). The clamped `--glass-blur-overlay-radius:15px` + the `@media (min-resolution:2dppx){:root{…:24px}}` restore both verified in `dist/styles/tokens.css`.
+  - **F3 will-change** — at IDLE, EVERY dock-layer element reads `will-change:auto` with no inline hint (the never-standing rule, observed across all `.glass-dock`/`.dock-layer-*` on the dock-layers story). The set-during-morph lives in the FLIP fallback path (Chromium takes the native View-Transitions path, which owns the morph itself — the lifecycle correctly applies only where the JS spring drives size).
+  - **G2 toggle** — 4 unit tests green (aria-pressed reflects paused, glyph/label swap, click emits the v-model, the canonical consumer wiring drives `renderer.pause()`/`resume()`). The Level-A conformance evidence.
+- **No-regression matrix** — `proof:aurora-space-gamma`, `proof:blob-space-gamma`, `proof:shader-shared-source`, `proof:webgl-substrate-single`, `proof:blob-value-free`, `proof:motion-value-free`, `proof:dock-opacity-lockstep`, `proof:dock-motion-parity`, `proof:dock-motion-single-source`, `proof:dock-a11y-contract`, `proof:dock-css-split`, `proof:dock-vocabulary`, `proof:vt-names`, `proof:vueuse-free-root`, `proof:design-idiom-localization`, `proof:tailwind-v4-idiom`, `proof:liquid-glass-tokens`, `proof:theme`, `proof:components-css`, `proof:di-consistency`, `proof:no-god-module`, `proof:fail-explicit`, `proof:strict-templates` — all GREEN. `proof:resolution` RED is sibling-only (value.js/bbnf-lang cross-repo state, staged-green per contract-v2); glass-ui exports resolve.
+- **`npm run typecheck`** — GREEN. **`npm run build`** — GREEN (both arms; the clamped blur band emits in `dist/styles/tokens.css`). **`npm run test`** — GREEN (696/696, +5 from W7: 4 G2 a11y + 1 public-surface DockBackgroundToggle).
+
+### DEFER register (KISS — adopt only the crosswalk's ADOPT marks)
+
+- **OffscreenCanvas + Worker** — DEFER. Trigger: a profiled LoAF `duration`/`blockingDuration` regression that traces to the aurora/blob RAF (main-thread contention). Worker-message plumbing for no win until the thread is actually contended.
+- **F7 — LoAF `PerformanceObserver` frame-budget gate** — DEFER (as a GATE). The ≤16.7ms-tick technique is sound but a deterministic assertion needs a stable headless-RAF harness CI does not provide (the `proof:webgl-golden` keep-book class). Trigger: a stable headless frame-timing runner lands. `proof:offscreen-pause` is the shippable substitute.
+- **WebGPU render path** — DEFER. WebGL2 stays the substrate; `navigator.gpu`-detection enhancement only (Limited, not Baseline).
+
+## W8 — useCanvas2D + Constellation primitive (the SOTA D1+E1 headline) — **GATED-NOT-LANDED**
+
+**Status:** GATED-NOT-LANDED (CONDITIONAL authoring; the §3.5 GATE branch taken). NO `src/` artefact created, NO gate registered, NO `package.json`/`vite.library.ts`/`CLAUDE.md` structure edit. `typecheck` + `build` baseline-green and untouched (no delta — the wave wrote only this KEEP-BOOK record). The SOTA crosswalk RESOLVED the technique question; the wave gates on the MUSTER, not the technique.
+
+### The §3.5 LAND-vs-GATE verdict (taken at HEAD)
+
+The visual-load-bearing precept (J inv 10) requires **≥2 DISTINCT resolving-at-HEAD consumers** before the `useCanvas2D` substrate + the `Constellation` primitive may ship. The muster taken at HEAD:
+
+| candidate consumer | resolves at HEAD? | counts? |
+|---|---|---|
+| **Slides til-briefing constellation** (`/Users/mkbabb/Programming/slides/src/decks/til-briefing/constellation.ts`, 488 lines) | **NO — cross-repo PENDING.** It runs its OWN `requestAnimationFrame` (`:457,460`) today; the **slides G.W2 swap** (constellation RAF-park → `useRAFLoop`/`useIntersectionPause` + reduced-motion seam) is the PREP that makes it a glass-ui-substrate consumer. That swap is a SLIDES G-tranche deliverable gated on the glass-ui 3.3.0 publish hinge E1 — it resolves at HEAD only AFTER the slides fork lands. | **NO** (per the `proof:au-w9-consumers` resolve-at-HEAD rule — a pending cross-repo adoption does not count) |
+| **A glass-ui demo story** (`demo/stories/.../constellation.vue`) | YES if authored | would be **consumer #1** |
+| **A 2nd genuine in-repo glass-ui Canvas2D surface** | **NO — none exists at HEAD.** Grep confirms zero Canvas2D *animation* surface in `src/`/`demo/` (`useGlassRenderer.ts`'s two `getContext("2d")` calls are a STATIC blur-mask helper, not an animated constellation-class consumer; `scripts/constellation.mjs` is the cross-repo SIBLING-REPO membership table — an unrelated sense of "constellation"). | **NO** |
+
+**Verdict: only ONE resolving-at-HEAD consumer can be mustered (the demo story alone). → GATED-NOT-LANDED.**
+
+Manufacturing a SECOND speculative demo route purely to clear the count is the §3a over-fit trap, called out verbatim in the wave spec: "forcing a second SPECULATIVE demo route to clear the count is overfitting (a demo built only to satisfy the gate is not a genuine consumer context). The redress is to GATE-NOT-LAND (per §3.5), a scope decision, not a local edit." A demo built only to satisfy the gate is not a genuine consumer context — so I did NOT author one. No `src/` file, no demo story, no subpath, no gate.
+
+### KEEP-BOOK record
+
+**`useCanvas2D` + `Constellation` GATED — trigger:** the slides **G.W2** constellation-RAF-park swap lands (making the slides til-briefing constellation a resolving glass-ui-substrate consumer) OR a second in-repo glass-ui Canvas2D surface musters. At HEAD the demo story is the SOLE resolving consumer; the substrate is substrate-without-2nd-consumer (J inv 10). The SOTA D1/E1 RESOLVES the prior `useCanvas2D` BOOK (AV.md §3.3) to ADOPT-gated — **the gate is the MUSTER, not the technique.** Canvas2D IS the correct substrate (E1, below the WebGL crossover); the constellation IS the named headline procedural deliverable (D1); the D2 draw discipline (polyline batching, NO `shadowBlur` / pre-rendered glow sprite, floored coords, never `getImageData`) is the authored spec — all settled. Only the 2nd-consumer count is open.
+
+**When the trigger clears (the LAND path, fully specified — execute without re-deriving):**
+
+- `src/composables/glass/canvas2d/useCanvas2D.ts` (+ `canvas2d/index.ts` + the `glass/index.ts` re-export) — the Canvas2D lifecycle substrate SIBLING to `useWebGLCanvas` (do NOT fork or touch the WebGL substrate): acquire `getContext("2d", { willReadFrequently: false })` (the E4 guardrail — any pixel readback is isolated to a separate `willReadFrequently` canvas off the animation path), DPR-aware `ResizeObserver` sizing clamped via the AV.W7 F6 `resolveBudgetDpr()`/`AV_DPR_MAX=2` idiom, the RAF arm COMPOSED from `useRAFLoop` (the shared clock — never re-roll `requestAnimationFrame`) gated by `useIntersectionPause({ rootMargin: "200px" })` (the offscreen/tab park — the SAME discipline AV.W7 lands on the WebGL substrate), plus the reduced-motion one-static-frame seam (the G1 floor for Canvas2D too).
+- `src/components/custom/constellation/` (`Constellation.vue` + `composables/useConstellation.ts` + `index.ts`) — the proximity-graph node lattice ON `useCanvas2D`: nodes `(x,y,vx,vy,r)` drift on constant velocity (or fbm/domain-warp drift IFF the AV.W2 shared-noise leaf is available), bounce off bounds, joined by a distance-falloff hairline within `link` px; a SPATIAL-BIN grid (uniform-grid / spatial-hash) for the O(n) neighbor query; an OPTIONAL Verlet settle (opt-in `settle` prop, off by default). The GENERIC lattice ships WITHOUT the slides red ANOMALY skin — the anomaly is a consumer overlay/slot (the slides-side `drawAnomaly` FOLD-G extract), never baked into the primitive. Tokens (`count`/`link`/`speed`/node-color/line-color) consumer-overridable via the `readVar` idiom.
+- `src/constellation.ts` subpath barrel + the `vite.library.ts` `constellation` entry + the `./constellation` `package.json` export (subpath-only — a Canvas2D background is not a root-barrel cherry-pick; mirrors `/aurora`, `/goo-blob`).
+- `demo/stories/.../constellation.vue` (the in-repo resolving consumer) + `manifest.ts` route.
+- `scripts/proof-canvas2d-substrate-consumer.mjs` (the consumer-tally gate, house template `proof-au-w9-consumers.mjs`: injected path-resolver, BOOK-exclusion, byte-stable JSON via `gate-output.mjs`, pure `detectConsumers` detector, `process.exit(1)` on any <2 or unresolved) + register in `package.json` + `gates.mjs` + `ci.yml` — **ONLY when the wave LANDS** (manifest==ci forbids a born-RED gate against an un-landed substrate; that is why no gate is registered now).
+- `CLAUDE.md` Structure-block lines (the `canvas2d/` sub-tree + the `constellation/` custom dir + the `/constellation` subpath).
+
+### SOTA §3.3-BOOK resolution recorded
+
+The prior **AV.md §3.3** `useCanvas2D` KEEP-BOOK ("a 2nd Canvas2D consumer; Canvas2D ≠ the WebGL substrate; single-consumer slides-local") is RESOLVED by the SOTA crosswalk D1/E1 to **FOLD-AV-IFF-muster** — already recorded at `AV.md:261` ("RESOLVED by the SOTA crosswalk (D1/E1) → FOLD-AV AV.W8 (ADOPT-gated)"). The BOOK moved from "technique unproven" to "ADOPT-gated-on-muster." This wave confirms the muster is UNMET at HEAD (1 resolving consumer) and re-books with the slides G.W2 swap named as the 2nd-consumer trigger. The `AV.md:270` `KEEP-BOOK-G` ledger line (`useCanvas2D` 2nd-consumer gate) stands.
+
+### Verification (GATED case — no build/typecheck delta)
+
+- `npm run typecheck` — **GREEN** (baseline; the wave wrote only this `PROGRESS.md` KEEP-BOOK record — zero `src/` delta).
+- `npm run build` — **GREEN** (baseline; no `vite.library.ts`/`package.json` entry added — `dist/constellation.js` is correctly ABSENT until the LAND path executes).
+- `proof:canvas2d-substrate-consumer` — **NOT registered** (the GATED branch per §6.3: a born-RED gate against an un-landed substrate violates manifest==ci). No `gates.mjs`/`package.json`/`ci.yml` edit. The existing gate matrix (`proof:webgl-substrate-single` — the WebGL substrate is UNCHANGED; `proof:vueuse-free-root`; `proof:package`; `proof:subpath-enumeration`) stays GREEN by construction (zero surface change).
+- The draw-discipline + O(n) spatial-bin verifies are SPEC-level (the LAND-path mechanism above), not runtime — no draw loop exists to grep at HEAD (the GATED case ships no `src/` file).
+
 ## W14 — DI + service-boundaries + pipeline-orchestration + hygiene
 
 **Status:** DEV-COMPLETE, green. All five lanes landed in one checkout (single-agent execution); the four NEW gates are born-RED → green + bite-verified; the public surface is byte-unchanged.

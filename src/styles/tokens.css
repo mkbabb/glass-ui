@@ -584,7 +584,14 @@
     --glass-blur-quiet-radius:    10px;
     --glass-blur-resting-radius:  12px;
     --glass-blur-floating-radius: 16px;
-    --glass-blur-overlay-radius:  24px;
+    /* AV.W7 F2 — clamped from 24px into the 8–15px budget band. A blur radius
+       past ~20px is exponentially costlier (`backdrop-filter` is glass-ui's most
+       expensive idiom — the radius is the dominant cost). 15px is the band
+       ceiling; the lower rungs (wash/quiet/resting 1/10/12) sit in-band and the
+       floating 16px is the design ceiling at the band edge (left as-is). A
+       high-resolution display restores the richer 24px wash via the @media arm
+       below — the cost is amortised by the extra device pixels. */
+    --glass-blur-overlay-radius:  15px;
     /* Dock blur radius — 11px, paired with the 0.42 opacity below: a crisp
        glass pill (the iOS Control Center register), not a feathered wash.
        The dock composes `blur()` only (no saturate); the
@@ -1161,6 +1168,32 @@
     );
 
     /* ═══════════════════════════════════════════════
+       §17 METRIC
+
+       MetricRow / MetricStack value-clamp dialect. The declared values are the
+       `audacious` poster register — the hero-scale clamp for a single giant
+       number; MetricStack's `[data-register="result"]` selector overrides it
+       locally for the compact multi-row ledger. Three clamp arms each: `min`
+       (floor), `cqi` (the binding container-query middle term), `max`
+       (ceiling); unit carries min/max only (its cqi is a fixed 6cqi).
+       ═══════════════════════════════════════════════ */
+
+    /* Value register — audacious-poster hero clamp */
+    --metric-row-value-clamp-min: 4.5rem;
+    --metric-row-value-clamp-cqi: 34cqi;
+    --metric-row-value-clamp-max: var(--type-display-hero);
+
+    /* Unit register — one tier below the value it qualifies */
+    --metric-row-unit-clamp-min: 1.5rem;
+    --metric-row-unit-clamp-max: 3.25rem;
+
+    /* Label register — uppercase, the binding row-height term in the
+       compact `result` register */
+    --metric-row-label-clamp-min: 1.125rem;
+    --metric-row-label-clamp-cqi: 5cqi;
+    --metric-row-label-clamp-max: 2.75rem;
+
+    /* ═══════════════════════════════════════════════
        §2.D INSTRUMENT-CLUSTER COMPOSITION RHYTHM
 
        The instrument-chassis family owns the under-meter / progress-cluster
@@ -1275,6 +1308,18 @@
        `--duration-fast var(--ease-standard)`. The duration pairs with
        `--duration-fast`; consumers retune the whole feel via this one token. */
     --dock-press-spring: var(--duration-fast) var(--spring-bouncy);
+}
+
+/* AV.W7 F2 — high-resolution overlay-blur restore. On a 2dppx+ display the
+   richer 24px overlay wash is amortised by the extra device pixels (the blur
+   samples a denser backing store), so the design ceiling is restored where it
+   is affordable. Standard-density displays keep the 15px budget radius set in
+   §-1a `:root`. Token-only override — every overlay surface that reads
+   `--glass-blur-overlay-radius` inherits the restored value automatically. */
+@media (min-resolution: 2dppx) {
+    :root {
+        --glass-blur-overlay-radius: 24px;
+    }
 }
 
 /* ═══════════════════════════════════════════════

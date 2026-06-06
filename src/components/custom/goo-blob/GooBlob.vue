@@ -112,6 +112,18 @@ defineExpose({ nudge, setMood, currentMood: mood.currentMood });
     z-index: var(--z-content);
     overflow: visible;
     cursor: pointer;
+    /* AV.W7 F2 — layout/style containment isolates the blob as a layout root
+       (NO `paint` containment: the 160%-canvas satellites intentionally
+       overflow the wrapper footprint, and paint containment would clip them).
+       `content-visibility:auto` (F1) lets the browser content-skip the blob
+       when it scrolls offscreen — the substrate's `contentvisibilityautostate-
+       change` listener then parks the RAF. content-visibility applies its own
+       paint/layout containment ONLY while skipped (offscreen, invisible), so
+       the on-screen overflow is preserved. `contain-intrinsic-size:auto`
+       remembers the rendered size across a skip so the box does not collapse. */
+    contain: layout style;
+    content-visibility: auto;
+    contain-intrinsic-size: auto none;
     filter: drop-shadow(
         5px 5px 2.5px
             color-mix(in srgb, var(--blob-color, transparent) 20%, var(--foreground))

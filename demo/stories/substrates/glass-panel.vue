@@ -6,7 +6,7 @@ import { ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
-import { GlassPanel, type GlassPanelProps } from "../../../src/glass-panel";
+import { GlassPanel, type GlassPanelProps } from "../../../src/subpaths/glass-panel";
 import { useGlassRenderer, type GlassTier } from "../../../src/index";
 
 const variants: GlassPanelProps["variant"][] = [

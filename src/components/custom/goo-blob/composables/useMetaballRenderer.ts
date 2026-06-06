@@ -1,8 +1,10 @@
 import { watch, onUnmounted, type Ref } from "vue";
 import { createWebGLCanvas } from "../../../../composables/glass/webgl/useWebGLCanvas";
+import { useIntersectionPause } from "../../../../composables/motion/useIntersectionPause";
 // AV.W14 — the error-checked compile/link is the shared `glass/webgl/compile`
 // leaf; goo-blob keeps its `[GooBlob]` diagnostic label via the `label` arg.
 import { compileShader, linkProgram } from "../../../../composables/glass/webgl/compile";
+import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import type { ColorResolver } from "../../../../composables/color";
 import { METABALL_VERTEX_SRC } from "../shaders/metaball.vert";
 import { METABALL_FRAGMENT_SRC } from "../shaders/metaball.frag";
@@ -95,15 +97,18 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
         );
     }
 
-    const prefersReducedMotion =
-        typeof window !== "undefined" &&
-        window.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true;
+    // AV.W7 G1 — the reduced-motion freeze is LIFTED into the `useWebGLCanvas`
+    // substrate, which OWNS + LIVE-MONITORS the query (a `matchMedia` `change`
+    // listener that re-arms one static frame on un-reduce, then parks). The blob
+    // no longer reads `matchMedia` once at init and never re-monitors — toggling
+    // reduced-motion at runtime now freezes/wakes the blob, not just aurora.
+    // `shouldContinue` therefore drops its PRM branch; the substrate's reschedule
+    // gate draws the one static frame then parks.
 
     // Per-frame timing — `frame(timeSec)` gives elapsed seconds; the mood system
     // needs a millisecond delta and the satellite system a millisecond `now`, so
     // derive both from the substrate's seconds clock.
     let lastTimeSec = 0;
-    let firstFrameDrawn = false;
 
     // Memoise the resolver: the consumer cycles through a handful of stable color
     // strings, so the resolve runs once per unique color rather than every frame.
@@ -121,9 +126,23 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
     let canvasHandle: ReturnType<typeof createWebGLCanvas> | null = null;
     let paused = false;
 
-    function start(canvas: HTMLCanvasElement) {
-        firstFrameDrawn = false;
+    // AV.W7 F4 — wire the RAF through the viewport-intersection seam so a blob
+    // scrolled out of the viewport (the `rootMargin:200px` warm band) parks its
+    // loop; this is the IntersectionObserver fallback for engines without
+    // `contentvisibilityautostatechange` (the substrate's F1 content-visibility
+    // path). The substrate owns `tab-hidden` itself, so `pauseWhenHidden:false`
+    // keeps exactly one writer per reason — the IO drives ONLY `off-screen`.
+    // Both gate the same `isRunning()` set, ORed.
+    useIntersectionPause(
+        canvasRef,
+        {
+            pause: () => canvasHandle?.suspend("off-screen"),
+            resume: () => canvasHandle?.resume("off-screen"),
+        },
+        { rootMargin: "200px", pauseWhenHidden: false },
+    );
 
+    function start(canvas: HTMLCanvasElement) {
         canvasHandle = createWebGLCanvas(canvas, {
             contextAttrs: {
                 alpha: true,
@@ -183,7 +202,8 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                 gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 
                 function resize() {
-                    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                    // AV.W7 F6 — the DPR≤2 clamp is the named `AV_DPR_MAX` ceiling.
+                    const dpr = resolveBudgetDpr();
                     // Size from the rendered element, not config — the blob fills its
                     // container.
                     const cssW = canvas.clientWidth || config.canvasSize;
@@ -286,19 +306,18 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     gl.clear(gl.COLOR_BUFFER_BIT);
                     gl.drawArrays(gl.TRIANGLES, 0, 6);
                     gl.bindVertexArray(null);
-
-                    firstFrameDrawn = true;
                 }
 
                 /**
-                 * Demand gate. Under reduced motion the static frame is drawn once
-                 * then the loop parks; while manually paused it parks too; otherwise
+                 * Demand gate. While manually paused (G2) the loop parks; otherwise
                  * the blob is perpetually animated (mood drift + satellite cycle).
+                 * The reduced-motion one-static-frame-then-park is now owned by the
+                 * substrate's reschedule gate (G1) — it draws the current frame then
+                 * parks while `reducedMotion` is live, so this gate stays
+                 * motion-only.
                  */
                 function shouldContinue(): boolean {
-                    if (paused) return false;
-                    if (prefersReducedMotion) return !firstFrameDrawn;
-                    return true;
+                    return !paused;
                 }
 
                 return {
