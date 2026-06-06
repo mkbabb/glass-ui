@@ -1,0 +1,172 @@
+# AV.W7 — the SOTA perf wave (offscreen-pause + containment + on-demand will-change + the budget caps)
+
+## 2. State
+
+**Name**: W7 — compositor/content-visibility perf folds (the single biggest unpulled perf lever + the containment/blur-budget pass + the on-demand will-change lifecycle + the RAF visibility wiring)
+**Opens after**: AV.W1 + AV.W2 (the shaders — F1/F4 land the offscreen-pause + visibility wiring on the `useWebGLCanvas` substrate the two shaders ride; the substrate seam must carry the fixed/converged shaders before the RAF-park hook lands, so a regression is attributable to the hook, not a stale shader). AT-disjoint with AV.W3–W5; non-publish-blocking.
+**Agents**: 3 parallel-ish lanes — **(A) substrate** (F1 content-visibility/IO offscreen-pause + F4 RAF↔useIntersectionPause/visibilityState wiring on `useWebGLCanvas` + the aurora/blob hosts), **(B) css-budget** (F2 `contain` + the `--glass-blur-*` 8-15px clamp + F6 DPR-clamp token + budget caps), **(C) dock-motion** (F3 on-demand `will-change` lifecycle in `useLayerTransition` + F5 inheritance-bomb guard). Lane A and Lane C both touch motion/transition seams but file-disjoint (A is the WebGL substrate + the aurora/blob hosts; C is the dock layer-transition composable); Lane B is CSS-only. See §4a.
+**Hard gate**: one NEW born-RED gate green (`proof:offscreen-pause` — the substrate parks its RAF when its host is content-hidden/offscreen; bite: remove the content-visibility hook → the loop runs offscreen → RED); the existing gate matrix + `typecheck` + `build` stay green with no regression; a `prefers-reduced-motion` + an offscreen-park browser-verify recorded in `PROGRESS.md`.
+**Status**: planned
+
+**Type:** IMPL (perf; non-publish-blocking — closes the one real platform-SOTA gap the substrate does not yet pull).
+**Scope source:** `docs/tranches/AV/audit/SOTA-crosswalk.md` §2.F (the perf / compositor / content-visibility lane — F1..F7) + §1 (the `content-visibility: auto` + `contentvisibilityautostatechange` Baseline row, NA 2025-09-15). The SOTA's **#2 highest-value ADOPT** (§3.2): "Offscreen RAF pause … the single biggest perf+battery lever the substrate doesn't pull." This file is the FULLY-formed, execute-without-re-deriving spec for W7.
+
+**Precepts in force.** No legacy / no back-compat aliases (clean breaks — the content-visibility hook is ADDED to the substrate; no flag to keep the perpetually-running loop). Gestalt transposition, not patch — the RAF-park hook gates the EXISTING `shouldContinue()`/`armed` machinery (`useWebGLCanvas.ts:40,91,101,105,163,167`); it does not add a parallel loop. KISS — adopt ONLY the §2.F rows marked ADOPT; OffscreenCanvas+Worker stays DEFER. Token-first — the DPR clamp + the blur band + the budget caps become NAMED tokens, not magic numbers, so a consumer preset cannot blow the budget. value.js-FREE + vueuse-FREE substrate (the visibility hooks are `IntersectionObserver`/`contentvisibilityautostatechange`/`document.visibilityState` — platform APIs, no library dep).
+
+## 2a. Goal criterion
+
+This wave succeeds if (1) the `useWebGLCanvas` substrate PARKS its RAF when its host element is content-hidden (`content-visibility: auto` + `contentvisibilityautostatechange`) or scrolled offscreen (the `IntersectionObserver` `rootMargin:200px` fallback) — gating the existing `shouldContinue()`/`armed` seam so a settled-AND-offscreen surface attaches zero frames; (2) the aurora + blob RAF is wired to `useIntersectionPause` + `document.visibilityState` so a backgrounded tab or an offscreen background stops the loop; (3) the aurora/blob hosts carry `contain: content`/`strict` and the `--glass-blur-*` radii are clamped to the 8-15px band (the overlay's 24px is the one out-of-band token); (4) `useLayerTransition` sets `will-change` at gesture start + clears it to `auto` at transition end (never standing); (5) the DPR≤2 clamp is a named token + the budget caps (blobs/colors/loop-duration) are `aurora/constants` tokens. The reader's test: removing the content-visibility hook makes `proof:offscreen-pause` RED (the loop runs while the host is hidden); a backgrounded tab stops the aurora RAF (browser-verify); the `--glass-blur-overlay-radius` is the single token flagged + clamped.
+
+## 3. Scope
+
+1. **F1 — Offscreen RAF pause (the headline; GAP confirmed).** Add a `content-visibility: auto` + `contentvisibilityautostatechange` listener to the `useWebGLCanvas` host that gates the substrate's `shouldContinue()`/`armed` machinery: on `skipped` (content-hidden) → park the RAF (`armed` stays, but `shouldContinue()` returns false); on un-skipped → re-arm. An `IntersectionObserver` `rootMargin:200px` arm is the fallback for engines without `contentvisibilityautostatechange` (the substrate already imports the `useIntersectionPause` sibling for F4 — reuse it). Baseline NA 2025-09-15. [SOTA §2.F F1, §1, cit. B11 §9 / B13]
+2. **F2 — `contain` + blur-budget pass.** Add `contain: content` (or `strict` for the fixed-size aurora/blob hosts) to the aurora + goo-blob host elements; clamp the `--glass-blur-*-radius` tokens to the 8-15px band (>20px is exponentially costlier — `backdrop-filter` is glass-ui's most expensive idiom). At HEAD the bands are wash 1px / quiet 10px / resting 12px / floating 16px / overlay 24px / dock 11px (`tokens.css:597-607`) — **`--glass-blur-overlay-radius: 24px` is the one out-of-band token**; clamp it toward 15-16px (a high-end-only `@media`/`@supports` override may restore 24px). The 16px floating is at the band edge — record + LEAVE (it is the design ceiling). [SOTA §2.F F2, cit. B11 §4,6]
+3. **F3 — On-demand `will-change` lifecycle.** In `useLayerTransition` (the dock resize/morph), set `will-change: transform` (or the animated `dim`) at gesture START and clear it to `auto` on `transitionend`/the spring-settle callback — NEVER a standing `will-change` (a permanent `will-change` holds a compositor layer + VRAM for an idle surface). [SOTA §2.F F3, cit. B11 §3]
+4. **F4 — Wire aurora + blob RAF to `useIntersectionPause` + `document.visibilityState`.** The `useIntersectionPause` composable already exists (`src/composables/motion/useIntersectionPause.ts` — exports `useIntersectionPause`, handles `visibilitychange`/`document.visibilityState` + `IntersectionObserver` `rootMargin`). Wire the aurora + goo-blob RAF arms through it so a backgrounded tab OR an offscreen background stops the loop (complements F1 — F1 is the content-visibility path, F4 is the IO + tab-visibility path; both gate the same `shouldContinue()`). [SOTA §2.F F4, cit. B11 §9]
+5. **F5 — Inheritance-bomb guard (convention + assert).** Animated values stay on `transform`/`opacity`; `--phase-color`/`--shadow-color` are SET, not TWEENED per frame (animating an INHERITED custom property forces a whole-subtree style recalc). Record as a convention + a lint-note assertion (no per-frame inherited-var tween survives in the dock/aurora paths). [SOTA §2.F F5, cit. B11 §1]
+6. **F6 — DPR≤2 clamp → named token + budget caps.** The DPR clamp already lives at `runtime.ts:257` (`Math.min(window.devicePixelRatio || 1, 2)`) — promote the `2` to a named token/constant (`--av-dpr-max` / an `aurora/constants` export) so it is not a magic number; add the budget caps (≤2-3 blobs, 3-4 colors, 8-15s loop) as `aurora/constants/` tokens so a consumer preset cannot blow the budget. [SOTA §2.F F6, cit. B11 §2 / B13]
+7. **The gate (F1/F4 evidence).** `proof:offscreen-pause` (born-RED): the substrate parks its RAF when content-hidden/offscreen. (The SOTA names `proof:frame-budget` / a LoAF `PerformanceObserver` assertion (F7) as an ALTERNATIVE objective jank gate — but F7's `PerformanceObserver` LoAF threshold needs a deterministic headless-frame harness the CI does not yet provide reliably; `proof:offscreen-pause` is the SHIPPABLE gate at HEAD. F7 is DEFERRED with the trigger named — see §3a / §11.)
+
+### §3a — DEFER rows (KISS — adopt only the crosswalk's ADOPT marks)
+
+- **OffscreenCanvas + Worker** — Baseline WA 2025-09-27 — **DEFER.** Trigger: profiled main-thread contention (a LoAF `duration`/`blockingDuration` regression that traces to the aurora/blob RAF). Adds worker-message plumbing for no win until the main thread is actually contended. [SOTA §1, §2.D D4 / §2.E posture, cit. B1/B9]
+- **F7 — LoAF `PerformanceObserver` + frame-budget assertion** — **DEFER (as a GATE).** The technique is sound (≤16.7ms tick, degrade toward 8ms) but a deterministic frame-budget assertion needs a stable headless-RAF harness the CI does not provide (same class as the `proof:webgl-golden` KEEP-BOOK). Trigger: a stable headless frame-timing runner lands. `proof:offscreen-pause` is the shippable substitute gate. [SOTA §2.F F7, cit. B11 §8 / B13]
+- **WebGPU render path** — Limited, NOT Baseline — **DEFER** (WebGL2 stays the substrate; `navigator.gpu`-detection enhancement only). [SOTA §1]
+
+## 3b. Triumvirate Dispatch
+
+A triumvirate (research + plan augment + redress) is mandatory — the orchestrator may NOT redispatch the failing unit alone — when:
+
+- **The content-visibility RAF-park interacts wrongly with the reduced-motion freeze-frame.** If parking the RAF on `content-hidden` collides with aurora's `runtime.ts:197` reduced-motion freeze (the surface must paint ONE static frame even when reduced-motion AND offscreen — the park must not blank an on-screen reduced-motion frame), the fix is the ordering of the two gates, a CORRECTNESS decision about the visibility state machine, not a local line move. Halt and triumvirate.
+- **Clamping `--glass-blur-overlay-radius` shifts the overlay paint visibly.** The 24px→15-16px clamp is a perf fold, but if a snapshot catches a visibly-different overlay blur (the design ceiling was load-bearing), the redress is a high-end-only `@media`/`@supports` restore arm, not a silent paint regression. Halt and record the high-end override.
+- **`proof:offscreen-pause` cannot be authored without a live RAF context** the CI lacks. If the gate's RAF-park assertion needs a real browser frame loop (not a unit-testable seam), the redress is to author it as a SEAM assertion (the `shouldContinue()` reads the visibility state — assertable without a live frame) + a manual browser-verify, NOT a flaky headless-frame gate. A gate that requires an unavailable runtime is a plan defect.
+- **F3's `will-change` clear races the spring-settle.** If clearing `will-change` to `auto` on `transitionend` fires BEFORE the spring's final paint (a flash/jank on settle), the redress is the clear-timing (settle-callback vs `transitionend`), not a removal of the lifecycle.
+- **Any diagnostic loop reaches its third iteration** on the offscreen-park browser-verify — halt, do not iterate a fourth time.
+
+## 4. File Bounds
+
+| File | Access | Lane |
+|---|---|---|
+| `src/composables/glass/webgl/useWebGLCanvas.ts` | modify (the content-visibility/IO RAF-park hook gating `shouldContinue()`/`armed`) | A |
+| `src/components/custom/aurora/composables/runtime.ts` | modify (wire the RAF arm through `useIntersectionPause`; the F6 DPR-clamp token) | A |
+| `src/components/custom/goo-blob/composables/useMetaballRenderer.ts` | modify (wire the RAF arm through `useIntersectionPause`/the substrate hook) | A |
+| `src/components/custom/aurora/Aurora.vue` | modify (the `contain` on the host; the content-visibility host attr) | A/B |
+| `src/components/custom/goo-blob/GooBlob.vue` | modify (the `contain` on the host) | A/B |
+| `src/styles/tokens.css` | modify (clamp `--glass-blur-overlay-radius`; the budget-cap tokens) | B |
+| `src/components/custom/aurora/constants/` (the budget-cap + DPR-max constants) | modify/create | B |
+| `src/components/custom/dock/composables/useLayerTransition.ts` | modify (the on-demand `will-change` lifecycle; the F5 inheritance-bomb guard) | C |
+| `scripts/proof-offscreen-pause.mjs` | create | A |
+| `docs/tranches/AV/audit/W7-offscreen-pause.json` | create (the gate tally) | A |
+| `scripts/gates.mjs` | modify (register, orchestrator-merged) | A |
+| `package.json` | modify (scripts only — the gate entry) | A |
+| `CLAUDE.md` | modify (the dock orientation / substrate note IF a behavior contract surfaces) | A |
+| `docs/tranches/AV/PROGRESS.md` | modify (the offscreen-park + reduced-motion browser-verify, the blur-clamp record, the F7/OffscreenCanvas DEFER triggers) | all |
+
+Do NOT touch: the shader STRINGS (`aurora.frag.ts`/`metaball.frag.ts` — AV.W1/W2-owned; W7 touches the RUNTIME RAF/host seams, not the GLSL) · `src/composables/motion/useIntersectionPause.ts` (the composable is CONSUMED, not edited — it already exports the visibility seam) · `src/composables/color/index.ts` (no color path) · the dock FLIP single-frame sync `useLayerTransition.ts:146→167` math (W7 adds the `will-change` lifecycle AROUND it, does not edit the FLIP) · `docs/precepts/`.
+
+## 4a. Disjointness
+
+No two agent units share a `modify`/`create` path:
+
+- **Lane A (substrate)** owns `useWebGLCanvas.ts` + the aurora/blob RUNTIME seams (`runtime.ts`/`useMetaballRenderer.ts`) + the gate (`proof-offscreen-pause.mjs`/`gates.mjs`/`package.json`). The `contain`-on-host edits to `Aurora.vue`/`GooBlob.vue` are co-owned with Lane B — Lane A sets the content-visibility host attr, Lane B sets the `contain` declaration; sequence them in one host-edit pass OR Lane A owns the host SFC and Lane B hands it the `contain` value. Treat the two host SFCs as a Lane-A/B serial micro-lane.
+- **Lane B (css-budget)** owns `tokens.css` (the blur clamp + budget tokens) + the `aurora/constants/` tokens + the `contain` declarations on the two hosts. Disjoint from the substrate RAF seam.
+- **Lane C (dock-motion)** owns `useLayerTransition.ts` (the `will-change` lifecycle + the F5 guard). Entirely within the dock composable. Disjoint.
+- `scripts/gates.mjs` + `package.json` (scripts) are Lane-A-owned (the one new gate). `PROGRESS.md`/`CLAUDE.md` are orchestrator-merged.
+
+Net: three lanes — **(A) substrate**, **(B) css-budget**, **(C) dock-motion** — with the two host SFCs a Lane-A/B serial micro-lane. `gates.mjs`/`package.json`/`CLAUDE.md`/`PROGRESS.md` registration is orchestrator-integrated.
+
+## 4b. Worktree Plan
+
+| Agent unit lane | Sibling worktree absolute path | notes |
+|---|---|---|
+| Lane A — substrate | `/Users/mkbabb/Programming/glass-ui-w7-a` | owns `useWebGLCanvas.ts` + the aurora/blob RAF seams + the gate; the host-attr micro-lane with B |
+| Lane B — css-budget | `/Users/mkbabb/Programming/glass-ui-w7-b` | owns `tokens.css` + the `aurora/constants` tokens + the `contain` host declarations |
+| Lane C — dock-motion | `/Users/mkbabb/Programming/glass-ui-w7-c` | owns `useLayerTransition.ts` |
+
+No `CARGO_TARGET_DIR` (Node/Vite repo). Each lane runs `npm run typecheck`/`npm run build`/its gates against its own worktree checkout. The orchestrator runs `git worktree add` for the siblings before dispatch and owns the `gates.mjs`/`package.json`/`CLAUDE.md`/`PROGRESS.md` + the two-host-SFC integration at close. All three lanes branch from the same clean main with AV.W1 + AV.W2 committed + green.
+
+## 5. Agent Units
+
+### AV.W7.A Substrate offscreen-pause (F1 + F4) + the born-RED gate
+
+- **Goal**: the `useWebGLCanvas` substrate parks its RAF when its host is content-hidden or scrolled offscreen or its tab is backgrounded — gating the existing `shouldContinue()`/`armed` seam, zero frames attached to a hidden surface.
+- **Mechanism**:
+  - **`useWebGLCanvas.ts` — the content-visibility hook (F1).** The substrate already has the park machinery: `armed` (`:91`), `shouldContinue()` (`:40,101`), the suspend/resume on `:105,120`, and a documented settle-park (`:19`). ADD a visibility-state ref the host's `contentvisibilityautostatechange` listener drives: on `event.skipped === true` (content-hidden) → set the ref false so `tick()`'s `raf = hooks.shouldContinue() ? requestAnimationFrame(tick) : 0` (`:101`) parks; on `skipped === false` → set true + re-arm (`:163-169`). The host must carry `content-visibility: auto` (Lane B sets it) for the event to fire. Where the engine lacks `contentvisibilityautostatechange`, the `IntersectionObserver` `rootMargin:200px` arm (via the consumed `useIntersectionPause`) drives the same ref.
+  - **F4 — wire `useIntersectionPause` + `document.visibilityState`.** The substrate (or each renderer's runtime) consumes `useIntersectionPause({ rootMargin: "200px" })` — its `visibilitychange`/`document.visibilityState` handling (`useIntersectionPause.ts:126`) + its `IntersectionObserver` (`:87-97`) drive the SAME visibility ref. F1's content-visibility path + F4's IO/tab-visibility path both gate `shouldContinue()` — one park condition (OR of the two).
+  - **The gate.** Author `scripts/proof-offscreen-pause.mjs` on the house template (`scripts/proof-blob-space-gamma.mjs` shape: a pure read-and-detect over the substrate source + a byte-stable JSON artefact via `scripts/gate-output.mjs`). Assert: (1) `useWebGLCanvas.ts` references `contentvisibilityautostatechange` OR consumes the `useIntersectionPause` visibility seam; (2) the visibility-hidden state GATES `shouldContinue()`/the RAF arm (the park condition reads the visibility ref — a seam assertion, not a live-frame assertion); (3) the aurora + blob runtimes wire through the visibility seam. Born-RED at HEAD (the substrate has NO content-visibility/IO hook — confirmed: `useWebGLCanvas.ts` greps clean for `content-visibility`/`IntersectionObserver`). Greens on the fold.
+- **Files**: `useWebGLCanvas.ts` (modify), `runtime.ts` + `useMetaballRenderer.ts` (modify — wire), `Aurora.vue`/`GooBlob.vue` (host content-visibility attr — micro-lane with B), `proof-offscreen-pause.mjs` (create), `gates.mjs` + `package.json` (register).
+- **Sub-gate**: `proof:offscreen-pause` GREEN + bite-verified — **remove the content-visibility/IO hook → the loop runs offscreen → RED** (the named bite). Born-RED proof captured (RED at HEAD pre-fold). A browser-verify: scroll the aurora offscreen / background the tab → the RAF parks (recorded in `PROGRESS.md`). The reduced-motion freeze-frame still paints ONE on-screen static frame (the §3b ordering caveat). Register `["local","ci"]` after the fold.
+
+### AV.W7.B CSS containment + blur-budget + DPR/budget tokens (F2 + F6)
+
+- **Goal**: the aurora/blob hosts are paint-contained; the `--glass-blur-*` radii sit in the 8-15px band (the overlay's 24px clamped); the DPR clamp + budget caps are named tokens.
+- **Mechanism**:
+  - **F2 — `contain`.** Add `contain: content` (or `strict` for the fixed-size aurora/blob host) to `Aurora.vue`/`GooBlob.vue` host elements. (HEAD has `contain: layout style` on `glass.css:115` — a precedent; the aurora/blob hosts have NO containment.) Attacks `backdrop-filter`'s paint/layout area (50-80% reduction; caps VRAM).
+  - **F2 — blur-budget clamp.** Clamp `--glass-blur-overlay-radius` (24px at `tokens.css:601`) toward 15-16px — the ONE out-of-band token. The wash/quiet/resting/floating/dock radii (1/10/12/16/11px) are in-or-at-band; LEAVE + record. A high-end-only `@media (min-resolution …)`/`@supports` override may restore 24px IF a snapshot demands it (the §3b caveat).
+  - **F6 — DPR-max token.** Promote the `2` in `runtime.ts:257` (`Math.min(window.devicePixelRatio || 1, 2)`) to a named constant/token (`AV_DPR_MAX` in `aurora/constants/` or a `--av-dpr-max` token read CPU-side). Add the budget-cap constants (≤2-3 blobs, 3-4 colors, 8-15s loop) to `aurora/constants/` so a consumer preset cannot blow the budget — a preset exceeding a cap is clamped/flagged.
+- **Files**: `Aurora.vue`/`GooBlob.vue` (host `contain` — micro-lane with A), `tokens.css` (blur clamp), `aurora/constants/` (DPR-max + budget tokens).
+- **Sub-gate**: no new gate (the F2/F6 tokens are evidence in `proof:offscreen-pause`'s artefact / a `proof:theme`-adjacent token read). `npm run build` GREEN (Lightning CSS emits the clamped blur). The overlay-blur clamp is paint-verified (no visible regression OR the high-end override recorded). The budget caps documented in `PROGRESS.md`.
+
+### AV.W7.C On-demand will-change lifecycle + the inheritance-bomb guard (F3 + F5)
+
+- **Goal**: the dock layer-transition sets `will-change` only DURING a gesture (cleared to `auto` on settle); no per-frame inherited-var tween survives.
+- **Mechanism**:
+  - **F3 — `will-change` lifecycle.** In `useLayerTransition.ts`, set `will-change: transform` (or the animated `dim` — `width`/`height` per the axis) on the morphing element at gesture START (the spring construct at `:237`), and clear it to `auto` on the spring-settle callback / `transitionend` — NEVER a standing `will-change`. (HEAD has a STANDING `will-change: transform` on `GooBlob.vue:121` — that is a DIFFERENT surface, ambient WebGL, where a standing hint is defensible for the always-animating canvas; the dock is INTERACTIVE/idle-mostly, so its `will-change` must be on-demand. Record the distinction.)
+  - **F5 — inheritance-bomb guard.** Confirm the dock/aurora animated paths tween `transform`/`opacity`, NOT inherited custom properties; `--phase-color`/`--shadow-color` are SET on state change, not TWEENED per frame. Record as a convention; assert no per-frame inherited-var tween in the dock path.
+- **Files**: `useLayerTransition.ts` (the `will-change` lifecycle + the F5 guard).
+- **Sub-gate**: no new gate. `npm run typecheck` + `npm run build` GREEN; the dock motion stays smooth (no settle-flash from a mistimed `will-change` clear — the §3b caveat); the F5 convention recorded in `PROGRESS.md`. `proof:dock-opacity-lockstep`/`proof:dock-motion-parity` stay green (the lifecycle does not change the timing token).
+
+## 6. Hard Gate
+
+W7 closes when every condition below is evidence-backed:
+
+1. **AV.W7.A** — `useWebGLCanvas.ts` parks its RAF on content-hidden (`contentvisibilityautostatechange`) AND offscreen (`IntersectionObserver` `rootMargin:200px`) AND backgrounded-tab (`document.visibilityState` via `useIntersectionPause`); `proof:offscreen-pause` GREEN + bite-verified (remove the hook → RED); born-RED proof captured (RED at HEAD); the reduced-motion freeze-frame still paints one on-screen static frame. Registered `["local","ci"]`.
+2. **AV.W7.B** — the aurora/blob hosts carry `contain: content`/`strict`; `--glass-blur-overlay-radius` clamped to the 8-15(-16)px band (the one out-of-band token) OR the high-end override recorded; the DPR≤2 clamp + the budget caps are named `aurora/constants`/tokens (no magic `2`); `npm run build` GREEN.
+3. **AV.W7.C** — `useLayerTransition` sets `will-change` at gesture start + clears it to `auto` on settle (no standing `will-change` on the dock); the F5 inheritance-bomb guard recorded (no per-frame inherited-var tween); the dock motion stays smooth.
+4. **DEFERs recorded** — OffscreenCanvas+Worker (trigger: profiled LoAF main-thread contention) + F7 LoAF frame-budget gate (trigger: a stable headless frame-timing runner) + WebGPU render path — all DEFERRED with their triggers named in `PROGRESS.md`.
+5. **No regression.** The existing gate matrix stays GREEN through W7: `proof:aurora-space-gamma`, `proof:shader-shared-source`, `proof:blob-space-gamma`, `proof:dock-opacity-lockstep`, `proof:dock-motion-parity`, `proof:vueuse-free-root`, `npm run typecheck`, `npm run build`, the aurora/blob/dock unit suites. `PROGRESS.md` records the wave with a green run id.
+
+**Born-RED gate registration (manifest==ci invariant):**
+
+| gate | script | tags | bite-check |
+|---|---|---|---|
+| `proof:offscreen-pause` | `scripts/proof-offscreen-pause.mjs` | `["local","ci"]` | remove the content-visibility/IO hook → the RAF runs while the host is content-hidden → RED |
+
+Follows the house gate template (`scripts/proof-blob-space-gamma.mjs`): comment-strip first, a pure exported detector over the substrate source, a byte-stable JSON artefact via `scripts/gate-output.mjs` (`gateArtifactPath`/`writeGateArtifact`/`snapshotStamp`), a human summary, `process.exit(1)` on violation. Register in `package.json` scripts + `gates.mjs` manifest ONLY after the fold lands (`gates:verify-ci` enforces manifest==ci; do not register a born-RED gate against an un-folded substrate).
+
+## 7. Format And Lint Cadence
+
+- `npm run typecheck` (`vue-tsc --noEmit`) — after AV.W7.A (the substrate seam) + AV.W7.C (the dock lifecycle), and at close.
+- `npm run build` — after AV.W7.B (the blur clamp / token authoring — confirm Lightning CSS emits the clamped band) and at close.
+- `proof:offscreen-pause` + the no-regression existing-gate matrix run after the fold completes and at close.
+- The offscreen-park + reduced-motion + dock-smoothness browser-verifies recorded in `PROGRESS.md`.
+- `git diff --check` (whitespace/conflict-marker) on the DOCS-edited files (`CLAUDE.md`, `PROGRESS.md`) at close.
+
+No formatter is intentionally skipped; the gate + the offscreen-park browser-verify are the binding evidence for the perf fold.
+
+## 8. Verification Artefacts
+
+- `proof:offscreen-pause` JSON artefact (`docs/tranches/AV/audit/W7-offscreen-pause.json`, byte-stable via `scripts/gate-output.mjs`) — the born-RED (pre-fold) AND green (post-fold) captures.
+- The offscreen-park browser-verify (scroll-offscreen + background-tab → RAF parks) + the reduced-motion one-static-frame verify — `PROGRESS.md`.
+- The `--glass-blur-overlay-radius` clamp record (24px → 15-16px) + any high-end override; the `contain` host application — `PROGRESS.md`.
+- The DPR-max token + the budget-cap tokens record — `PROGRESS.md`.
+- The F5 inheritance-bomb guard convention + the dock-smoothness verify — `PROGRESS.md`.
+- The OffscreenCanvas + F7-LoAF + WebGPU DEFER triggers — `PROGRESS.md`.
+- The green CI run id for the wave + the integration commit hashes (per §9).
+
+## 9. Commit Plan
+
+- **Lane A (substrate) commit** — `feat(tranche-AV): W7 — useWebGLCanvas offscreen RAF-pause (content-visibility + IntersectionObserver) + wire aurora/blob to useIntersectionPause + born-RED proof:offscreen-pause`. (Body required — names the `shouldContinue()`/`armed` gating seam, the F1 content-visibility + F4 IO/visibilityState paths, the bite.)
+- **Lane B (css-budget) commit** — `perf(tranche-AV): W7 — contain:content on aurora/blob hosts + clamp --glass-blur-overlay to the 8-15px band + DPR-max/budget-cap tokens`. (Body required — names the `backdrop-filter` paint-area attack, the one out-of-band token, the named-token promotions.)
+- **Lane C (dock-motion) commit** — `perf(tranche-AV): W7 — on-demand will-change lifecycle in useLayerTransition + inheritance-bomb guard`. (Body required — names the gesture-start-set/settle-clear lifecycle + the never-standing rule + the F5 convention.)
+- **Orchestrator gate-registration commit** — `chore(tranche-AV): W7 — register proof:offscreen-pause (born-RED, manifest==ci)`. (Body required — gate change; names the manifest row + tags + the bite.)
+- **Orchestrator integration + docs commit** — `docs(tranche-AV): W7 close — PROGRESS green run id + offscreen-park/reduced-motion verifies + the OffscreenCanvas/F7 DEFER triggers`. (Body required — status/close.)
+
+## 10. Dependencies
+
+- **Depends on**: **AV.W1 + AV.W2** (the shaders — F1/F4 land the offscreen-pause + visibility wiring on the substrate seam the two shaders ride; the substrate must carry the fixed/converged shaders so a perf regression is attributable to the RAF-park hook, not a stale shader). The `useIntersectionPause` composable (`src/composables/motion/useIntersectionPause.ts`) exists at HEAD (the F4 wiring target — CONSUMED, not edited). The `useWebGLCanvas` substrate (AU.W6) + the aurora `runtime.ts` reduced-motion/DPR seams (`:197,257`) are at HEAD.
+- **Blocks**: nothing publish-blocking (W7 is non-publish-blocking IMPL). The AV tranche FINAL/close (AV.W6) depends on W7's gate matrix being green — **sequencing note:** AV.W6 is the close meta-wave; with W7 added, the close runs AFTER W7 (the wave-table ordering W7→W8→W6-close is the orchestrator's; W6's `proof:av-final` derives from the post-W7 surface). See `AV.md §2` for the updated table ordering.
+
+## 11. Archaeology
+
+Not a re-attempt of a prior failed wave. The offscreen-pause is the SOTA crosswalk's **#2 highest-value ADOPT** (§3.2) and the **single biggest perf+battery lever the substrate does not yet pull** (animation ≈11% screen-on battery). The substrate is already AHEAD of the copy-paste field — it carries a frozen reduced-motion frame (`runtime.ts:197`), a DPR≤2 clamp (`:257`), and a settle-to-idle RAF park (`useWebGLCanvas.ts:19` "a settled surface parks"). The ONE real platform-SOTA gap is that the park triggers on SETTLE (the animation reaching rest), NOT on VISIBILITY (the host scrolled offscreen / content-hidden / tab backgrounded) — a perpetually-animating aurora keeps running at 60fps while completely offscreen. F1+F4 close exactly that gap: gate the EXISTING `shouldContinue()` machinery on the visibility state. This is the gestalt transposition — the park seam already exists; W7 adds the visibility CONDITION to it, it does not build a parallel loop. `content-visibility: auto` + `contentvisibilityautostatechange` reached Baseline NA 2025-09-15, so the headline path is Baseline-safe; the `IntersectionObserver` `rootMargin` fallback covers the older engines.
