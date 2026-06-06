@@ -57,6 +57,10 @@ export function darkModeSyncScript(options: DarkModeSyncScriptOptions = {}): str
     // The emitted body is an IIFE so it leaks no globals. It mirrors the
     // useGlobalDark runtime contract: storage key → mode string → dark boolean
     // (auto/null/unknown ↦ prefers-color-scheme), then classList + colorScheme.
+    // fail-explicit: befitting — the EMITTED inline `<head>` script's `catch(_){}`
+    // must swallow (e.g. localStorage throws in privacy mode) so a storage failure
+    // never breaks first paint; the page degrades to prefers-color-scheme. This is
+    // a runtime-emitted string, not source control flow.
     return `(function(){try{var m=localStorage.getItem(${JSON.stringify(
         key,
     )});var d=m==="${DARK_CLASS}"||((m===null||m==="auto")&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);var e=document.documentElement;e.classList.toggle("${DARK_CLASS}",d);e.style.colorScheme=d?"dark":"light";}catch(_){}})();`;

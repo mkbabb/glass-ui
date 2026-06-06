@@ -1,4 +1,8 @@
-// AU.W7 — the TS transcription of `metaball.frag.ts`'s OKLCh color path.
+// AU.W7 — the TS transcription of the shared procedural-color GLSL chunk's OKLCh
+// color path (AV.W2 re-pointed the provenance: the OETF + the Ottosson matrices +
+// the space conversions now live ONCE in
+// `src/composables/glass/webgl/shaders/procedural-color.glsl.ts`, which both
+// `metaball.frag.ts` and `aurora.frag.ts` splice — this port mirrors THAT chunk).
 //
 // A TEXTUALLY-PARALLEL port of the shader's color half — gamma sRGB → linear →
 // OKLab → OKLCh → [perturb] → OKLab → linear → linearToSrgb. SAME constants, SAME

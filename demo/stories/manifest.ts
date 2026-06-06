@@ -206,6 +206,8 @@ export const CATEGORIES: Category[] = [
             s("motion", "transitions", "Transitions"),
             s("motion", "springs", "Spring Orchestrator"),
             s("motion", "stagger", "Stagger Reveal"),
+            s("motion", "countup", "Count-up", "Walk [data-countup] figures and tween textContent on the keyframes NumericAnimation engine."),
+            s("motion", "reveal", "v-reveal", "Dependency-free entrance directive — sets the [data-reveal] hook + --d stagger step the CSS reads."),
             s("motion", "scroll-type", "Scroll-driven Type"),
             s("motion", "typewriter", "Typewriter"),
         ],

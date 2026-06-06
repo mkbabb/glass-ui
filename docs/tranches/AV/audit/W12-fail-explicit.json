@@ -1,0 +1,124 @@
+{
+  "wave": "AV.W12",
+  "title": "legacy-excision + fail-explicit — per-site disposition ledger",
+  "generatedAt": "2026-06-06",
+  "buckets": {
+    "EXCISE": "deleted outright",
+    "FAIL_EXPLICIT": "thrown error or surfaced degraded/isNative/reason flag",
+    "KEEP_BEFITTING": "feature-detected progressive-enhancement fallback, retained AND documented as befitting"
+  },
+  "sites": [
+    {
+      "id": "scope-1-sortable-capture",
+      "file": "src/composables/sortable/useSortable.ts",
+      "line": 404,
+      "before": "empty catch {} on setPointerCapture failure",
+      "bucket": "KEEP_BEFITTING",
+      "disposition": "Capture is an OPTIMIZATION; the document pointermove/pointerup listeners are the real, unconditional drag path. The swallow is now SURFACED: a new pointerCaptureActive: ComputedRef<boolean> return flips false on failure, dev-warns once, and the catch carries the befitting sentinel.",
+      "surface": "pointerCaptureActive: ComputedRef<boolean>",
+      "rationale": "Both arms are correct; the document-listener path is the primary. Befitting + now visible."
+    },
+    {
+      "id": "scope-2-clipboard",
+      "file": "src/composables/dom/useClipboard.ts",
+      "lines": [52, 69],
+      "before": "two catch { return false } with no reason",
+      "bucket": "FAIL_EXPLICIT",
+      "disposition": "Each write helper returns a discriminated CopyResult naming the failing channel. UseClipboardOptions gains onCopyError(reason); the composable copy() returns { ok, reason }; CopyFailureReason ('clipboard-api'|'exec-command'|'no-api') + CopyResult ship. The execCommand arm STAYS (legacy-browser fallback — befitting) but is now NAMED + REPORTED. The bare copyToClipboard(text) keeps Promise<boolean> (cross-repo verbatim signature), reporting via onCopyError.",
+      "surface": "onCopyError(reason) + copy() -> { ok, reason }",
+      "rationale": "A copy failure is reported, never a bare unreported false."
+    },
+    {
+      "id": "scope-3-goo-blob-config-di",
+      "file": "src/components/custom/goo-blob/GooBlob.vue",
+      "line": 37,
+      "before": "injectedConfig ?? reactive({ ...BLOB_CONFIG_DEFAULTS }) — masking default-synthesis",
+      "bucket": "FAIL_EXPLICIT",
+      "disposition": "Removed the reactive-defaults synthesis. Config is resolved with the same loud discipline as the sibling colorResolver seam (DEC-AT-2): an explicit config?: BlobConfig prop OR an ancestor provide(BLOB_CONFIG_KEY, ...). A mount with NEITHER throws. Demo consumer (demo/stories/goo-blob.vue) updated to pass :config=BLOB_CONFIG_DEFAULTS explicitly (one-line consumer change).",
+      "surface": "throw on absent config DI + no prop",
+      "rationale": "Reconciled with the resolver seam that already throws loudly; no silent stand-in for a required dependency."
+    },
+    {
+      "id": "scope-4-useGlobalDark-seed",
+      "file": "src/composables/dark/useGlobalDark.ts",
+      "line": 99,
+      "before": "conflicting second initialValue seed silently ignored in prod (dev-warn only)",
+      "bucket": "FAIL_EXPLICIT",
+      "disposition": "A CONFLICTING second seed now THROWS (the createGlobalState singleton constraint is visible, not hidden). A MATCHING re-seed stays a no-op. JSDoc + module header updated to the throw contract.",
+      "surface": "throw on conflicting seed",
+      "rationale": "A misconfigured consumer learns at first conflict instead of shipping a wrong first-paint theme."
+    },
+    {
+      "id": "scope-5-aurora-deferred-init",
+      "file": "src/components/custom/aurora/composables/useAurora.ts",
+      "lines": [207, 243],
+      "before": "deferred surfaceInitError re-throws on the microtask queue; two catches return silently; contract undocumented",
+      "bucket": "FAIL_EXPLICIT",
+      "disposition": "Behavior preserved (still re-throws when no onInitError). The CONTRACT is now loud: JSDoc states the three required consumer paths (onInitError | Vue errorHandler | accept the unhandled rejection); useAurora dev-warns ONCE when armed deferred with no handler; the two catches carry fail-explicit sentinels + the surfaced error path. WebGL2-unavailable still throws HARD (O-invariant 24 preserved).",
+      "surface": "dev-warn-once + JSDoc contract + sentinels + onInitError",
+      "rationale": "The deferred-tick failure is no longer silent-by-omission."
+    },
+    {
+      "id": "scope-6-api-legacy-commentary",
+      "files": ["src/api/index.ts", "src/index.ts"],
+      "before": "100+ lines of per-version tranche archaeology (39 tranche-letter refs in api/index.ts) in production re-export barrels",
+      "bucket": "EXCISE",
+      "disposition": "Moved the audit trail (per-version surface-count tally + cherry-pick version history) to CHANGELOG.md (Unreleased section). Kept ONLY the live IN/NOT-in-scope scope criteria (api/index.ts) and the cherry-pick acceptance bar + exclusion criteria (index.ts). proof:no-legacy-commentary enforces zero tranche/version archaeology in either body.",
+      "surface": "CHANGELOG.md Unreleased section",
+      "rationale": "Live criteria are load-bearing doc; the version history is archaeology."
+    },
+    {
+      "id": "scope-7-crayon-peer",
+      "file": "src/components/custom/aurora/constants/shaders/aurora.frag.ts",
+      "before": "mediumOil() has an `else if (mode == 2) return mediumOil_crayon(...)` special-case branch",
+      "bucket": "EXCISE",
+      "disposition": "Excised the mode == 2 branch from mediumOil(); renamed mediumOil_crayon -> mediumCrayon (a peer, not an oil sub-mode); dispatched at main() level as uMedium == 4 alongside pastel/watercolor/oil. mediumOil() keeps only its genuine oil-stroke modes (0 oil, 1 knife, 3 chunky).",
+      "shaderEquivalence": "PIXEL-EQUIVALENT. The crayon path (mediumCrayon) reads no uStrokeMode uniform; its arguments (col, pN, t) are identical pre/post. The runtime resolves a medium:'oil'+strokeMode:'crayon' config to the crayon peer (resolveMediumId) and uploads a benign uStrokeMode (oil=0), which the crayon function never reads. Confirmed: grep shows no `mode == 2` and no uStrokeMode read inside mediumCrayon. proof:blob-color-equivalence 8/8, derive-aurora 13/13, proof:aurora-space-gamma + proof:shader-shared-source green.",
+      "rationale": "Crayon is wax-on-tooth, not oil strokes; it belongs at the medium-dispatch level, not as a guarded branch inside an oil function."
+    },
+    {
+      "id": "scope-8-sealed-dispatch",
+      "file": "src/components/custom/aurora/composables/runtime.ts",
+      "before": "four string-keyed Record<…, number> maps (MEDIUM_ID, FLOW_ID, WARP_ID, STROKE_MODE_ID)",
+      "bucket": "EXCISE",
+      "disposition": "Replaced with sealed `as const satisfies Record<Union, number>` typed dispatch — a new union member is a COMPILE error until it gets a slot (no stale-Record gap). MEDIUM_ID gains the crayon: 4 peer slot; STROKE_MODE_ID drops crayon (Exclude<StrokeMode, 'crayon'>). resolveMediumId / resolveStrokeModeId thread the crayon peer derivation.",
+      "surface": "as const satisfies Record + resolveMediumId/resolveStrokeModeId",
+      "rationale": "Bidirectional type safety at the enum<->shader-int boundary; one source of truth."
+    },
+    {
+      "id": "scope-9-useViewTransition-skip",
+      "file": "src/composables/motion/useViewTransition.ts",
+      "line": 95,
+      "before": "vt.ready?.catch(() => {}) — swallows the 'Transition was skipped' rejection",
+      "bucket": "KEEP_BEFITTING",
+      "disposition": "KEPT (no code-path change). Annotated with the fail-explicit befitting sentinel: 'ready' rejects 'Transition was skipped' on a rapid re-trigger; the swallow prevents an unhandled pageerror; 'ready' is otherwise unread, so there is no real failure to surface.",
+      "rationale": "A documented progressive-enhancement swallow that prevents a real pageerror leak; befitting."
+    }
+  ],
+  "befitting_set": [
+    "useViewTransition.ts:95 (vt.ready skip-swallow)",
+    "useSortable.ts setPointerCapture (capture is an optimization; surfaced via pointerCaptureActive)",
+    "useClipboard.ts execCommand arm (legacy-browser fallback; named + reported)",
+    "useCursorInteraction.ts releasePointerCapture (idempotent cleanup)",
+    "darkModeSyncScript.ts emitted-inline-script catch(_){} (FOUC eliminator must not break first paint)",
+    "usePrioritizedTask.ts callback catch (surfaced via reject)",
+    "color.ts flattenPalette `out ?? new Float32Array` (explicitly-optional reuse buffer, not a required dependency)"
+  ],
+  "motion_composable_exemplars_unchanged": [
+    "useYieldToMain.ts (native scheduler.yield -> MessageChannel -> setTimeout floor; surfaces hasNativeYield)",
+    "useScrollProgress.ts (native scroll-timeline -> JS+ResizeObserver fallback; gated on NATIVE_SCROLL_TIMELINE)",
+    "useViewTransition.ts (native startViewTransition -> instant swap; surfaces transitioned)"
+  ],
+  "gates": {
+    "proof:fail-explicit": "PASS (491 files scanned, 0 violations; born-RED verified by injected `?? reactive(` probe)",
+    "proof:no-legacy-commentary": "PASS (both barrels clean; born-RED verified by injected 'M.W2 v1.7.0 tranche' probe)"
+  },
+  "verification": {
+    "typecheck": "green (vue-tsc --noEmit)",
+    "build": "green (vite + emit-types)",
+    "tests": "691/691 pass (70 files)",
+    "proof:blob-color-equivalence": "8/8",
+    "derive-aurora": "13/13",
+    "note": "proof:consumers:build is a pre-existing environmental skip on this box (system bash 3.2.57 lacks the `mapfile` builtin; the script walks sibling consumer builds not present here; not touched by W12, tagged local-only)."
+  }
+}

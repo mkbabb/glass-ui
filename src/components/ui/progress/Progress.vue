@@ -178,7 +178,7 @@ const rootClass = computed(() => {
     return 'relative h-[var(--progress-sectioned-height,0.875rem)] w-full overflow-hidden rounded-pill progress-sectioned-rail'
   }
   if (props.variant === 'gradient') {
-    return 'relative h-4 w-full overflow-hidden rounded-pill bg-[var(--progress-track,theme(colors.secondary.DEFAULT))] progress-gradient-rail'
+    return 'relative h-4 w-full overflow-hidden rounded-pill bg-[var(--progress-track,var(--secondary))] progress-gradient-rail'
   }
   return 'relative h-4 w-full overflow-hidden rounded-pill bg-secondary'
 })
@@ -191,7 +191,7 @@ const indicatorClass = computed(() => {
     return 'absolute inset-0 pointer-events-none opacity-0'
   }
   if (props.variant === 'gradient') {
-    return 'h-full w-full flex-1 rounded-pill [background:var(--progress-fill,theme(colors.primary.DEFAULT))] transition-transform'
+    return 'h-full w-full flex-1 rounded-pill [background:var(--progress-fill,var(--primary))] transition-transform'
   }
   return 'h-full w-full flex-1 rounded-pill bg-primary transition-transform'
 })

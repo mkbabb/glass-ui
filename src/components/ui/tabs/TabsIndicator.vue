@@ -15,7 +15,7 @@ const delegatedProps = computed(() => {
     <TabsIndicator
         v-bind="delegatedProps"
         :class="cn(
-            'absolute left-0 h-[--reka-tabs-indicator-size] translate-x-[--reka-tabs-indicator-position] rounded-pill bg-secondary/80 transition-[width,transform] duration-[var(--duration-normal)] ease-[var(--spring-snappy)]',
+            'absolute left-0 h-(--reka-tabs-indicator-size) translate-x-(--reka-tabs-indicator-position) rounded-pill bg-secondary/80 transition-[width,transform] duration-normal ease-spring-snappy',
             props.class,
         )"
     />

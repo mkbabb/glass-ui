@@ -77,7 +77,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 // the prior `shadow-xl` literal clobbered it (audit U.W0.C-a §5.2).
 const baseClasses = 'fixed left-1/2 top-1/2 z-modal grid w-full max-w-lg gap-4 p-6'
 // Default cubic path retains the canonical popover-animate + translate trick.
-const defaultMotionClasses = '-translate-x-1/2 -translate-y-1/2 duration-[var(--duration-normal)] popover-animate'
+const defaultMotionClasses = '-translate-x-1/2 -translate-y-1/2 duration-normal popover-animate'
 
 const variantClasses = computed(() =>
   props.variant === 'opaque'

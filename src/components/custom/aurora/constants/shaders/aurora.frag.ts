@@ -5,8 +5,22 @@
 // The three non-obvious load-bearing details:
 //   1. Palette baked to LINEAR sRGB (color.ts `oklchToLinear`) — shader ACES-tonemaps in linear.
 //   2. Cursor rotates `p` inside domainWarp() AND blends flow direction — both channels required.
-//   3. `strokeMode == 2` (crayon) routes to mediumOil_crayon which is NOT stroke-based; it's
-//      anisotropic tooth noise multiplied into the base color.
+//   3. Crayon is a PEER medium (`uMedium == 4`), NOT an oil stroke-mode: it is
+//      anisotropic tooth noise multiplied into the base color, dispatched at
+//      main() level alongside pastel/watercolor/oil (not inside mediumOil).
+//
+// AV.W2 — the sRGB OETF (`linearToSrgb`) + the FBM_ROT rotation constant are SPLICED
+// from the shared procedural-color chunk (the single GLSL source aurora + the goo-blob
+// metaball compose), so the OETF can never again diverge between them (the AV.W1 root
+// cause). Aurora keeps its OWN hash21/vnoise/fbm LOOP (its 2D hash + 2.02 lacunarity +
+// uniform octaves legitimately differ from the blob's — only the FBM_ROT constant
+// converges, per AV.W2 §3a); aurora bakes its palette CPU-side in linear, so it does
+// NOT splice the chunk's OKLCh matrices.
+
+import {
+    FBM_ROT_GLSL,
+    OETF_GLSL,
+} from "../../../../../composables/glass/webgl/shaders/procedural-color.glsl";
 
 export const FRAGMENT_SRC = /* glsl */ `#version 300 es
 precision highp float;
@@ -47,7 +61,8 @@ uniform int   uWarpMode;      // 0=fbm 1=cellular 2=hybrid
 uniform int   uNoiseOctaves;
 
 // Medium
-// 0 smooth, 1 pastel, 2 watercolor, 3 oil
+// 0 smooth, 1 pastel, 2 watercolor, 3 oil, 4 crayon (peer medium — wax pigment
+// on paper tooth; NOT an oil-stroke sub-mode, so it dispatches at main() level).
 uniform int   uMedium;
 uniform int   uFlowPattern;   // 0 none, 1 radial, 2 swirl, 3 diagonal, 4 multi
 uniform vec2  uFlowFocal;
@@ -60,7 +75,7 @@ uniform float uStrokeAmount;
 uniform float uStrokeScale;
 uniform float uStrokeAnisotropy;
 uniform int   uStrokeLayers;  // 1 or 2 (crosshatch)
-uniform int   uStrokeMode;    // 0 oil (modern gestural), 1 palette-knife, 2 crayon/oil-pastel, 3 modern-chunky
+uniform int   uStrokeMode;    // 0 oil (modern gestural), 1 palette-knife, 3 modern-chunky (crayon is uMedium==4, a peer medium)
 uniform float uWetEdge;
 uniform float uGranulation;
 uniform float uImpasto;
@@ -118,26 +133,28 @@ float vnoise(vec2 p) {
   return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
 }
 
+// The rotated-octave FBM rotation constant — spliced from the shared chunk (AV.W2
+// — the one FBM_ROT). The loop below stays aurora-local (2.02 lacunarity +
+// uniform-driven octaves, per §3a — only the rotation constant converges).
+${FBM_ROT_GLSL}
+
 float fbm(vec2 p) {
   float v = 0.0;
   float a = 0.5;
-  mat2 r = mat2(0.8, 0.6, -0.6, 0.8);
   for (int i = 0; i < 5; i++) {
     if (i >= uNoiseOctaves) break;
     v += a * vnoise(p);
-    p = r * p * 2.02;
+    p = FBM_ROT * p * 2.02;
     a *= 0.5;
   }
   return v;
 }
 
-// sRGB OETF — linear-light channel → gamma sRGB (the mandatory close-the-seam).
-float linearToSrgbCh(float c) {
-    return c <= 0.0031308 ? c * 12.92 : 1.055 * pow(c, 1.0 / 2.4) - 0.055;
-}
-vec3 linearToSrgb(vec3 c) {
-    return vec3(linearToSrgbCh(c.r), linearToSrgbCh(c.g), linearToSrgbCh(c.b));
-}
+// The sRGB OETF (linearToSrgb) — spliced from the shared procedural-color chunk
+// (AV.W2 — the single OETF source; the AV.W1 local copy is deleted here). Aurora's
+// linear pipeline closes the seam with this transfer before fragColor (the
+// proof:aurora-space-gamma seam).
+${OETF_GLSL}
 
 // Interleaved Gradient Noise (Jimenez) — a 1-LSB triangular dither applied in
 // DISPLAY space AFTER the OETF, so 8-bit mid-tone banding on the soft gradient is
@@ -632,13 +649,14 @@ StrokeHit bestOil(vec2 p, float cellSize, float lenMul, float halfWMul,
   return best;
 }
 
-// ── Crayon / oil-pastel — paper tooth × wax pigment ───────────────────────
+// ── Crayon / oil-pastel — paper tooth × wax pigment (PEER medium) ─────────
 // Crayon is not strokes. It's pigment crumbs dragged across paper tooth.
 // Model: heavy 2D tooth noise at multiple scales, anisotropically stretched
 // along flow direction, multiplied into the base color. Add a slow "waxy
 // film" that slightly unifies hues, and occasional darker "pressed" spots
-// where the crayon dug in. NO straight segments.
-vec3 mediumOil_crayon(vec3 col, vec2 p, float t) {
+// where the crayon dug in. NO straight segments. Dispatched at main() level as
+// a peer of pastel/watercolor/oil — never a branch inside mediumOil().
+vec3 mediumCrayon(vec3 col, vec2 p, float t) {
   vec2 flow = flowField(p, t);
   float ang = atan(flow.y, flow.x);
   float ca = cos(-ang), sa = sin(-ang);
@@ -688,10 +706,10 @@ vec3 mediumOil_crayon(vec3 col, vec2 p, float t) {
 }
 
 vec3 mediumOil(vec3 col, vec2 p, float t) {
-  // Mode knobs (uStrokeMode):
+  // Mode knobs (uStrokeMode) — oil-stroke modes ONLY (crayon is a peer medium,
+  // uMedium==4, dispatched at main()):
   //   0 oil         — balanced modern-abstract/palette-knife hybrid
   //   1 knife       — palette-knife impasto: razor edges, heavy bristle/shadow
-  //   2 crayon      — soft-edged wax smudges on tooth (no straight segments)
   //   3 brushwork   — thick bristle brush
   int mode = uStrokeMode;
 
@@ -717,8 +735,6 @@ vec3 mediumOil(vec3 col, vec2 p, float t) {
     hardness   = 0.95;
     toothAmp   = 0.04;
     densityBig = 0.80; densityMed = 0.88; densitySml = 0.70;
-  } else if (mode == 2) { // crayon — handled specially below
-    return mediumOil_crayon(col, p, t);
   } else if (mode == 3) { // thick brushwork
     shapeType = 0;        // tapered
     bristleAmp = 0.32;
@@ -820,10 +836,11 @@ void main() {
   float breath = sin(t * 6.2831 / max(uBreathPeriod, 1.0));
   col *= 1.0 + uBreathDepth * breath * 0.5;
 
-  // Medium
+  // Medium — crayon (4) is a peer dispatched here, not a mediumOil sub-mode.
   if (uMedium == 1) col = mediumPastel(col, pN, t);
   else if (uMedium == 2) col = mediumWatercolor(col, pN, t);
   else if (uMedium == 3) col = mediumOil(col, pN, t);
+  else if (uMedium == 4) col = mediumCrayon(col, pN, t);
 
   // Saturation trim
   col = saturate3(col, uSaturation);

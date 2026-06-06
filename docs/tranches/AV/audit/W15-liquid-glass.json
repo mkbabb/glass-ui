@@ -1,0 +1,85 @@
+{
+  "wave": "AV.W15",
+  "title": "iOS-26 Liquid Glass design-evolution",
+  "type": "IMPL + doc (token-edit-shaped, non-publish-blocking)",
+  "identity": "warm-cream HELD — every fold is a token edit or additive fold, never a hue swap, never a clone",
+  "newTokens": {
+    "perimeterRim": {
+      "--glass-edge-light": "inset 0 0 0 0.75px hsl(0 0% 100% / 0.18)",
+      "--glass-edge-light-dark": "inset 0 0 0 0.75px hsl(0 0% 100% / 0.10)",
+      "darkRemap": "--glass-edge-light: var(--glass-edge-light-dark) inside .dark",
+      "wiredOnto": ["glass.css .glass-floating", "dock.css .glass-dock"],
+      "distinctFrom": "--glass-highlight (top-only inset 0 0.5px 0 0) — this is a four-edge full-perimeter ring",
+      "rimAlpha": "0.18 light / 0.10 dark — decoration weight, below the legibility-reading threshold"
+    },
+    "propertySpecularRegs": {
+      "--specular-x": { "syntax": "<percentage>", "inherits": false, "initial-value": "50%" },
+      "--specular-y": { "syntax": "<percentage>", "inherits": false, "initial-value": "50%" },
+      "--specular-intensity": { "syntax": "<number>", "inherits": false, "initial-value": "0" },
+      "home": "tokens.css §11b, alongside the existing three regs (progress-crescendo, phase-tint-amount, ripple-radius)",
+      "baseline": "@property 2024-07-09"
+    }
+  },
+  "rungSaturateParity": {
+    "before": "--glass-blur-quiet: blur(10px)  (bare blur, the only ladder rung without saturate)",
+    "after": "--glass-blur-quiet: blur(10px) saturate(1.05) brightness(1.02)",
+    "rationale": "M1 — the lower ladder reads with the same saturation life as resting+ (Apple: Liquid Glass concentrates light, it does not desaturate)",
+    "ladderNow": {
+      "wash": "blur(1px) saturate(1.05)",
+      "quiet": "blur(10px) saturate(1.05) brightness(1.02)",
+      "resting": "blur(12px) saturate(1.05)",
+      "floating": "blur(16px) saturate(1.4)",
+      "overlay": "blur(24px) saturate(1.5)"
+    }
+  },
+  "contentAwareUnderShadow": {
+    "modifier": ".glass-over-text / [data-over-content=\"text\"] (attribute-driven, no JS)",
+    "swaps": {
+      "quiet→over-text": "--glass-under-shadow-default (one rung heavier)",
+      "resting→over-text": "--glass-under-shadow-vivid (one rung heavier)",
+      "resting→over-solid": "--glass-under-shadow-quiet (one rung lighter)",
+      "floating→over-solid": "--glass-under-shadow-default (one rung lighter)"
+    },
+    "reusesExistingRungs": true,
+    "newShadowValueAuthored": false,
+    "note": "vivid was sufficient over text — --glass-under-shadow-text NOT authored (no overfit fourth rung)"
+  },
+  "movingSpecular": {
+    "headline": true,
+    "file": "src/styles/glass-specular-track.css",
+    "import": "index.css cascade rung 4a (after glass.css)",
+    "recipe": "radial-gradient(circle at var(--specular-x) var(--specular-y), …) over a mask-image, mix-blend-mode: screen, on a ::before pseudo (a light layer, not a second glass plate — no glass-on-glass)",
+    "pointerSeam": "consumer writes --mouse-x/--mouse-y; the rung maps them onto the typed --specular-x/y; intensity lifts on hover/active",
+    "guards": {
+      "reducedMotionStatic": "prefers-reduced-motion: reduce pins --specular-x/y to 50% + transition:none (static centred catch-light, warm-cream tint intact)",
+      "varFallback": "var(--specular-x, 50%) / var(--specular-y, 50%) — a centred catch-light paints without typed-property animation",
+      "reducedTransparency": "prefers-reduced-transparency: reduce → display:none (decoration without substrate when the surface goes opaque)"
+    },
+    "consumers": [
+      "src/components/custom/dock/DockIconButton.vue (.glass-specular-track + the pointermove --mouse-x/--mouse-y write seam)",
+      "src/components/ui/button/index.ts (glass + glass-wash variants opt in)",
+      "src/components/ui/card/Card.vue (surface=glass cards opt in)"
+    ]
+  },
+  "refractionGarnish": {
+    "status": "PE-only, @supports-gated — DEFER-as-garnish shipped",
+    "gate": "@supports (backdrop-filter: url(\"#glass-refract\"))",
+    "substrate": "the blur base paints WITHOUT it; no url(#…) declaration leaks outside the @supports block",
+    "trigger": "WebKit bug #245510 (not shipping), Firefox not shipping; reaches Baseline on Chromium today, fully on the WebKit fix"
+  },
+  "discipline": {
+    "noGlassOnGlass": "documented in dock/README.md + glass.css header — glass is the navigation/overlay band only; nested glass is a violation (read as flat tier instead)",
+    "threeBands": {
+      "content": "--z-background … --z-content (NOT glass)",
+      "navigation": "--z-controls … --z-dock/panel (glass)",
+      "overlay": "--z-overlay … --z-modal (glass)"
+    },
+    "springCrossRef": "AV.W9 (dock motion / velocity continuity) + AV.W11 (slider) own the momentum-gated press squish — cross-referenced, not re-authored; the material half (rim/specular) + the spring half are one Liquid Glass behaviour"
+  },
+  "accessibility": {
+    "aaFloors": "tokens.css:332 (neutral-5 L40, AA 5.23:1/4.91:1) + :341 (neutral-6 L30, AA 7.79:1/7.31:1) byte-unchanged — the folds are glass-surface decoration, not text-color edits",
+    "edgeLightAlphaCap": "≤ 0.25 (rim is decoration, must not eat legibility over a busy backdrop)"
+  },
+  "gate": "proof:liquid-glass-tokens (born RED, greened) — registered local+ci in gates.mjs + package.json",
+  "deferred": []
+}

@@ -37,7 +37,7 @@ const rootClass = computed(() =>
         "dark-mode-toggle-button",
         "relative isolate inline-flex shrink-0 items-center justify-center",
         "cursor-pointer border-0 bg-transparent",
-        "rounded-[var(--radius-pill)]",
+        "rounded-pill",
         "opacity-80",
         // Canonical focus-visible affordance for an interactive button —
         // pulls the `--focus-ring-shadow` recipe via the shared utility.
@@ -81,7 +81,7 @@ watchEffect(() => {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 472.39 472.39"
-            class="block h-full w-full fill-[var(--foreground)]"
+            class="block h-full w-full fill-foreground"
         >
             <g class="toggle-sun">
                 <path

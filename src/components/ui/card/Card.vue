@@ -69,6 +69,12 @@ useStalePropWarning("Card");
             cn(
                 'rounded-card text-card-foreground scrollbar-hidden',
                 `glass-${tier}`,
+                // AV.W15 — glass cards opt into the moving specular (the
+                // pointer-anchored catch-light). The consumer wires the
+                // --mouse-x/--mouse-y write on hover; without it the var()
+                // fallback paints a centred catch-light. cartoon cards stay
+                // flat (the specular is a glass-surface fold, not a sticker).
+                surface === 'glass' && 'glass-specular-track',
                 surface === 'cartoon' && 'cartoon-surface',
                 shadow && surface === 'glass' && 'shadow-card',
                 !grain && '[&::after]:hidden',

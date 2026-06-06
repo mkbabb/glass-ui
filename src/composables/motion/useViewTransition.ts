@@ -89,9 +89,9 @@ export function startViewTransition(mutate: () => void): ViewTransitionResult {
     }
 
     const vt = doc.startViewTransition(() => mutate());
-    // A rapid re-trigger SKIPS this transition, rejecting `ready` ('Transition
-    // was skipped'); `ready` is otherwise unread, so swallow it here to keep the
-    // rejection from leaking an unhandled pageerror (the dock/speedtest leak).
+    // fail-explicit: befitting — 'ready' rejects 'Transition was skipped' on a
+    // rapid re-trigger; the swallow prevents an unhandled pageerror; 'ready' is
+    // otherwise unread, so there is no real failure to surface.
     vt.ready?.catch(() => {});
     return {
         finished: vt.finished.then(

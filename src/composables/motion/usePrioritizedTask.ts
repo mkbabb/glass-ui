@@ -120,6 +120,8 @@ export function postTaskSafe<T>(
             try {
                 resolve(callback());
             } catch (err) {
+                // fail-explicit: the callback's throw is SURFACED — it rejects
+                // the task promise so the caller's await sees the real error.
                 reject(err);
             }
         };

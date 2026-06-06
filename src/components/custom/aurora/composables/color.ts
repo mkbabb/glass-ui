@@ -44,6 +44,9 @@ export function flattenPalette(
     maxStops: number = MAX_STOPS,
     out?: Float32Array,
 ): Float32Array {
+    // fail-explicit: optional out-buffer, not a masking default — `out` is an
+    // explicitly OPTIONAL reuse buffer; allocating one when absent is the
+    // documented contract, not synthesis of a required dependency.
     const buf = out ?? new Float32Array(maxStops * 3);
     const n = Math.min(stops.length, maxStops);
     for (let i = 0; i < n; i++) {

@@ -1,7 +1,7 @@
 <template>
     <div
         :class="[
-            'fixed z-[var(--z-dock)] pointer-events-none w-fit flex items-center px-4 pt-4 pb-2',
+            'fixed z-dock pointer-events-none w-fit flex items-center px-4 pt-4 pb-2',
             position === 'left' ? 'top-0 left-0' : 'top-0 right-0',
         ]"
         @mouseleave="onGroupMouseLeave"

@@ -51,6 +51,13 @@
  *   4. glass.css             — .glass-{wash,quiet,resting,floating,overlay}
  *                              5-rung ladder + .glass-card / -pill / -btn.
  *                              Consumes tokens (1) + theme aliases (3).
+ *  4a. glass-specular-track.css — the pointer-anchored MOVING specular rung
+ *                              (AV.W15). A `.glass-specular-track` opt-in paints
+ *                              a masked radial catch-light tracking the pointer
+ *                              (@property-animated, reduced-motion-static, var()
+ *                              fallback) + the @supports-gated refraction
+ *                              garnish. Loads after glass.css so it composes
+ *                              over the glass tiers.
  *   5. paper.css             — paper underpaint + grain overlay utilities.
  *                              Pairs with (4) for paper-on-glass compositions.
  *   6. dock.css              — dock shell / density / grain / layer-crossfade
@@ -106,6 +113,7 @@
 @import "./typography.css";
 @import "./theme.css";
 @import "./glass.css";
+@import "./glass-specular-track.css";
 @import "./paper.css";
 @import "./dock.css";
 @import "./dock-controls.css";

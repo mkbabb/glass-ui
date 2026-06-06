@@ -36,7 +36,7 @@
  * each tracked element plus a unique `view-transition-name` per element. */
 ::view-transition-group(.gl-list-item) {
     animation-duration: var(--vt-duration, var(--duration-normal));
-    animation-timing-function: var(--vt-ease, var(--ease-apple-spring));
+    animation-timing-function: var(--vt-ease, var(--spring-bouncy));
 }
 
 /* Added / removed members — the `:only-child` trick from the group guide: a

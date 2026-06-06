@@ -9,7 +9,7 @@
 //
 // without dragging Vue runtime or component implementations into their build.
 //
-// Scope criteria (L.W1 Lane B):
+// Scope criteria — what rides this discovery layer:
 //
 //   - Re-export only types/constants that are ALREADY on the canonical public
 //     surface (i.e. exported from a package's `index.ts` or named-subpath barrel).
@@ -26,86 +26,7 @@
 //     (`ConfiguratorState`, `SidebarState`, `FuzzySearchState`) which consumers
 //     pin against when typing component wrappers or fixtures.
 //   - Carousel domain types — vueuse-bearing per-subpath only.
-//   - Dock orientation/state — component-internal; not on public surface
-//     (closed at O.W4 Lane B against the dock barrel itself).
-//
-// M.W2 Lane B extensions (v1.0.5): 5 promotions absorbing L-residuals + L.W7
-// fallout — `GlassPanelVariant` (W1-B Open Q1 path-a; canonical barrel
-// re-export added in lockstep), `ConfiguratorCloneMode` (W1-B Open Q3;
-// shipped at L.W7 Lane B), `TimelineSegment` + `TimelineSegmentGradient` +
-// `TimelineSegmentState` (AA-tranche timeline primitive canonical data
-// shape). Surface count 32 → 37 (33 types + 4 constants).
-//
-// O.W4 Lane A extensions (v1.2.4 or v1.3.0): 12 type promotions closing the
-// 3 Rγ /api discovery gaps —
-//   - Sidebar domain (6 types): `SidebarState` (composable-return canon,
-//     parallels `ConfiguratorState<T>`), `SidebarSection`, `TreeNode`,
-//     `TreeIndexEntry`, `SidebarIndexEntry`, `ScrollTrackerOptions`.
-//   - Search domain (5 types): `SearchableItem`, `SearchResult`,
-//     `FuzzySearchState`, `UseFuzzySearchOptions`, `SearchIndex`.
-//   - Props / variants triad (3 types): `GlassPanelProps` (sibling of the
-//     already-promoted `GlassPanelVariant`), `ToastType` (the toast row
-//     shape — paired with `ToastVariant`), `MenuItemVariants` (CVA-derived
-//     union from `ui/_shared/`; canonical home for the 11-site menu-item
-//     four-state contract).
-// Surface count 37 → 49 (45 types + 4 constants).
-//
-// O.W6 Lane A extensions (v1.4.0): 4 type promotions for the useClipboard +
-// HeaderRibbon canonical primitives (`UseClipboardOptions`, `UseClipboardReturn`,
-// `HeaderRibbonPosition`, `HeaderRibbonProps`). Surface count 49 → 53 (49
-// types + 4 constants). HeaderRibbon ships subpath-only; useClipboard is
-// root-barrel re-exported (vueuse-free).
-//
-// P.W0 Lane C resync (v1.7.0 ceremonial close): canonical surface at HEAD is
-// 55 (51 types + 4 constants). The 2-type drift between the O.W6 running
-// tally (53) and the actual HEAD count surfaced at the P-open Pγ audit; the
-// AB+1 cohort (v1.5.0 → v1.7.0) shipped 4 new custom primitives
-// (`AnimatedDigit`, `MetricCell`, `MetricStack`, `ResponsiveTabs` — also
-// `MetricRow` which lives in ui/) but did NOT promote their Props/variant
-// types to /api. Those promotions land at P.W1 Lane A (surface 55 → 63).
-// The 2-type delta is bookkeeping (historical add-counts vs. actual
-// exported-symbol enumeration); the P.W0 resync names the canonical at-HEAD
-// count.
-//
-// P.W1 Lane A extensions (v1.7.1): 8 type promotions for the AB+1 primitive
-// cohort per Pγ §"AB+1 cohort skipped the Props-export canon" —
-//   - MetricCell domain (2 types): `MetricCellProps` + `MetricCellAppearance`
-//     (the `"dashboard" | "compact" | "bare"` visual register).
-//   - MetricStack domain (2 types): `MetricStackProps` + `MetricRowProps`
-//     (the layout shell + row Props pair).
-//   - AnimatedDigit domain (2 types): `AnimatedDigitProps` +
-//     `AnimatedDigitMode` (the `"absolute" | "progress"` damping axis).
-//   - ResponsiveTabs (1 type): `ResponsiveTabsProps` (parallels
-//     `BouncyToggleProps`).
-//   - StackedIconGroup (1 type, Rγ baseline carryover): `StackedIconGroupProps`
-//     — flagged by Rγ §2.3, missed at O.W4 Lane A triad.
-// Surface count 55 → 63 (59 types + 4 constants).
-//
-// P.W2 Lane D extensions (v1.7.2): 1 type promotion — `UseDockStateReturn`
-// (composable-return canon paralleling `UseClipboardReturn`). Closes Pγ.3
-// "useDockState inline return" by naming the inferred return shape and
-// re-exporting from the `/dock` subpath barrel + the `/api` discovery layer.
-// Surface count 63 → 64 (60 types + 4 constants).
-//
-// P.W3 Lane C extensions (v1.8.0): 2 type promotions for the paper-backdrop
-// / texture-system substrate per P11/a §G3 + §I2. `PaperBackdropProps` lifts
-// the inline `defineProps<{...}>` shape to a named interface (matching the
-// HeaderRibbon precedent applied to the AB+1 cohort at P.W1 Lane A);
-// `PaperBackdropFrequency` is the `"clean" | "aged"` turbulence-texture
-// register parallel to `MetricCellAppearance` / `AnimatedDigitMode`. The
-// canonical texture-system pattern (consumer retints via `--paper-*-texture`
-// CSS custom properties at `:root`) is documented in DESIGN.md "Texture
-// system" section. Surface count 64 → 66 (62 types + 4 constants).
-//
-// AU.W9 resync (3.3.0): the canonical at-HEAD enumeration is 70 (67 types +
-// 3 constants). The running P.W3 tally (66 = 62 types + 4 constants) drifted
-// from the actually-exported symbol set: the AQ.W4 / AQ.W5 / AU.W9 waves added
-// 5 type re-exports (`UseUserInvalidAriaOptions`, `UseUserInvalidAriaReturn`,
-// `ViewTransitionResult`, `UseGlobalDarkOptions`, `DarkModeSyncScriptOptions`)
-// below this header without bumping the prose tally, and the "4 constants"
-// figure was a long-standing miscount — only 3 value exports ride the layer
-// (`DEFAULT_AURORA_CONFIG`, `MAX_NUCLEI`, `MAX_STOPS`). This resync names the
-// canonical count from the literal `export …` enumeration in this file.
+//   - Dock orientation/state — component-internal; not on public surface.
 
 // ── Aurora ─────────────────────────────────────────────────────────────────
 // Substrate config + family, plus numeric ceilings the consumer needs to
@@ -134,9 +55,9 @@ export {
 // ── Configurator ───────────────────────────────────────────────────────────
 // Preset descriptor + state-machine return shape. Consumers building generic
 // configurator wrappers (e.g. aurora chrome) type against these.
-// `ConfiguratorCloneMode` (M.W2 Lane B) drives the per-preset vs.
-// commit-on-write disposition — the aurora chrome pins `'per-preset'`; new
-// chrome consumers narrow against this union when picking their slot model.
+// `ConfiguratorCloneMode` drives the per-preset vs. commit-on-write
+// disposition — the aurora chrome pins `'per-preset'`; new chrome consumers
+// narrow against this union when picking their slot model.
 export type {
     ConfiguratorCloneMode,
     ConfiguratorPreset,
@@ -147,9 +68,9 @@ export type {
 
 // ── Timeline ───────────────────────────────────────────────────────────────
 // Segment data shape consumers type fixture arrays + preset descriptors
-// against (M.W2 Lane B; AA-tranche timeline primitive). `TimelineSegmentState`
-// is the lifecycle enum (parallel to `ToastVariant`); `TimelineSegment` is
-// the row shape; `TimelineSegmentGradient` is the `{from, to}` endpoint pair.
+// against. `TimelineSegmentState` is the lifecycle enum (parallel to
+// `ToastVariant`); `TimelineSegment` is the row shape; `TimelineSegmentGradient`
+// is the `{from, to}` endpoint pair.
 export type {
     TimelineSegment,
     TimelineSegmentGradient,
@@ -158,11 +79,10 @@ export type {
 
 // ── Surface enums ──────────────────────────────────────────────────────────
 // Semantic enums that recur across consumer code paths (typed prop values,
-// switch dispatch, preset descriptors). `GlassPanelVariant` (M.W2 Lane B)
-// is the 5-rung glass-ladder surface vocabulary (wash/quiet/resting/floating/
-// overlay) parallel to `CardTier` — distinct because GlassPanel paints the
-// glass substrate directly while Card composes the same ladder via the
-// `tier` prop.
+// switch dispatch, preset descriptors). `GlassPanelVariant` is the 5-rung
+// glass-ladder surface vocabulary (wash/quiet/resting/floating/overlay)
+// parallel to `CardTier` — distinct because GlassPanel paints the glass
+// substrate directly while Card composes the same ladder via the `tier` prop.
 export type { CardTier, CardSurface } from "../components/ui/card";
 export type { GlassPanelVariant } from "../components/custom/glass-panel";
 export type { InstrumentChassisPhase } from "../components/custom/instrument-chassis";
@@ -191,7 +111,7 @@ export type { MenuItemVariants } from "../components/ui/_shared";
 // `SidebarSection` is the row shape; `TreeNode` + `TreeIndexEntry` +
 // `SidebarIndexEntry` describe the flat-index lookup; `ScrollTrackerOptions`
 // pins the `useSidebarFollow` option shape consumers customise root-margin
-// against. Promoted O.W4 Lane A per Rγ §3.3 A1.
+// against.
 export type {
     ScrollTrackerOptions,
     SidebarIndexEntry,
@@ -206,7 +126,7 @@ export type {
 // `useFuzzySearch`; `SearchResult` carries scored matches; `FuzzySearchState`
 // is the composable-return canon; `UseFuzzySearchOptions` parameterises the
 // reactive composable; `SearchIndex` is the prebuilt-index handle the
-// imperative `searchIndex(...)` accepts. Promoted O.W4 Lane A per Rγ §3.3 A2.
+// imperative `searchIndex(...)` accepts.
 export type {
     FuzzySearchState,
     SearchableItem,
@@ -221,8 +141,8 @@ export type {
 // preset panels) type their forwarded prop bag against this. `ToastType`
 // is the canonical toast row shape (aliased from `Toast` on the toast
 // barrel — `Toast` itself is the SFC default-export, so the row shape
-// flows as `ToastType` per shadcn-vue parity); paired with the
-// already-promoted `ToastVariant` enum. Promoted O.W4 Lane A per Rγ §3.3 A3.
+// flows as `ToastType` per shadcn-vue parity); paired with the `ToastVariant`
+// enum above.
 export type { GlassPanelProps } from "../components/custom/glass-panel";
 export type { ToastType } from "../components/ui/toast";
 
@@ -232,8 +152,7 @@ export type { ToastType } from "../components/ui/toast";
 // wrapping `useClipboard` (e.g. a domain-specific copy button factory)
 // pin against this rather than redeclaring `{ copied, copy }`.
 // `UseClipboardOptions` ships paired so consumers can forward the
-// `resetMs` knob from a wrapper. Promoted O.W6 Lane A per O11/e cross-walk
-// (value.js 20 sites + fourier-analysis 1 inline site).
+// `resetMs` / `onCopyError` knobs from a wrapper.
 export type {
     UseClipboardOptions,
     UseClipboardReturn,
@@ -243,9 +162,7 @@ export type {
 // `UseUserInvalidAriaReturn` — canonical composable-return shape (the `{ bind }`
 // handle) paralleling `UseClipboardReturn`. `UseUserInvalidAriaOptions` ships
 // paired so a consumer wrapping `useUserInvalidAria` (e.g. a form-shell factory)
-// can forward the `fallbackClasses` knob. Promoted AQ.W4 — the cross-repo
-// coupling contract muster J.W6/J.W7 consume; J pins the return shape when
-// typing its form-bridge wiring against the published discovery layer.
+// can forward the `fallbackClasses` knob.
 export type {
     UseUserInvalidAriaOptions,
     UseUserInvalidAriaReturn,
@@ -253,36 +170,37 @@ export type {
 
 // ── View-Transition substrate ───────────────────────────────────────────────
 // `ViewTransitionResult` — the `{ finished, transitioned }` shape
-// `startViewTransition` resolves. Promoted AQ.W5 — the cross-repo coupling
-// contract muster J.W5 consumes: J pins the return shape when typing its
-// verdict re-rank / dialog-reveal wiring against the published discovery layer.
-// The `startViewTransition` + `supportsViewTransitions` runtime helpers ship on
-// the root barrel + `@mkbabb/glass-ui/motion-core` (dependency-free).
+// `startViewTransition` resolves. The `startViewTransition` +
+// `supportsViewTransitions` runtime helpers ship on the root barrel +
+// `@mkbabb/glass-ui/motion-core` (dependency-free).
 export type { ViewTransitionResult } from "../composables/motion/useViewTransition";
+
+// ── Count-up animator ────────────────────────────────────────────────────────
+// `Countup` — the `{ runActive, settle, cancel }` control shape `useCountup`
+// returns; `UseCountupOptions` — its `{ easeFn, skip }` options. `useCountup`
+// is keyframes-bearing (it rides `NumericAnimation`), so the composable itself
+// ships ONLY on `@mkbabb/glass-ui/motion`, not the root barrel.
+export type { Countup, UseCountupOptions } from "../composables/motion/useCountup";
 
 // ── HeaderRibbon ───────────────────────────────────────────────────────────
 // `HeaderRibbonProps` — props shape consumers forward when wrapping
 // `<HeaderRibbon>` (e.g. domain-themed header strips). `HeaderRibbonPosition`
-// is the alignment enum (`'left' | 'right'`). Promoted O.W6 Lane A per
-// O11/e cross-walk (value.js + keyframes.js consumer copies).
+// is the alignment enum (`'left' | 'right'`).
 export type {
     HeaderRibbonPosition,
     HeaderRibbonProps,
 } from "../components/custom/header-ribbon";
 
-// ── AB+1 primitives ────────────────────────────────────────────────────────
-// AC.W6d + AC.W8e cohort (v1.5.0 → v1.7.0) Props/variant types — promoted
-// P.W1 Lane A per Pγ §"AB+1 cohort skipped the Props-export canon".
-// `MetricCellAppearance` is the visual register enum (`"dashboard" |
+// ── Metric / digit / responsive-tabs primitives ─────────────────────────────
+// Props/variant types for the metric + animated-digit + responsive-tabs
+// primitives. `MetricCellAppearance` is the visual register enum (`"dashboard" |
 // "compact" | "bare"`) parallel to `GlassPanelVariant`; `MetricCellProps`
 // is the Props shape consumers forward when wrapping `<MetricCell>`.
-// `MetricStackProps` + `MetricRowProps` cover the layout shell + row pair
-// (both lift their inline `defineProps<{...}>` shapes to named interfaces
-// matching the HeaderRibbon precedent). `AnimatedDigitMode` is the damping
-// axis (`"absolute" | "progress"`) forwarded into `useAnimatedNumber`;
-// `AnimatedDigitProps` is the consume-side shape. `ResponsiveTabsProps`
-// parallels `BouncyToggleProps` — single shape for the matchMedia-driven
-// Select-or-Tabs swap.
+// `MetricStackProps` + `MetricRowProps` cover the layout shell + row pair.
+// `AnimatedDigitMode` is the damping axis (`"absolute" | "progress"`) forwarded
+// into `useAnimatedNumber`; `AnimatedDigitProps` is the consume-side shape.
+// `ResponsiveTabsProps` parallels `BouncyToggleProps` — single shape for the
+// matchMedia-driven Select-or-Tabs swap.
 export type {
     MetricCellAppearance,
     MetricCellProps,
@@ -298,43 +216,34 @@ export type {
 export type { ResponsiveTabsProps } from "../components/custom/responsive-tabs";
 
 // ── StackedIconGroup ───────────────────────────────────────────────────────
-// `StackedIconGroupProps<TItem>` — Rγ baseline carryover (§2.3); missed at
-// the O.W4 Lane A Props/variants triad. The barrel already exports the
-// type; P.W1 Lane A adds the `/api` re-export so consumers wiring stacked
-// avatar/icon strips can pin the generic shape from the discovery layer.
+// `StackedIconGroupProps<TItem>` — the generic shape consumers wiring stacked
+// avatar/icon strips pin against from the discovery layer.
 export type { StackedIconGroupProps } from "../components/custom/stacked-icons";
 
 // ── Dock ───────────────────────────────────────────────────────────────────
 // `UseDockStateReturn` — canonical composable-return shape paralleling
 // `UseClipboardReturn` / `UseAuroraReturn`. Consumers wrapping `<GlassDock>`
 // or authoring a custom dock chassis pin against this rather than
-// redeclaring the state-machine handle. Promoted P.W2 Lane D per Pγ.3
-// "useDockState inline return". `UseDockStateOptions` + `DockState` ship via
-// the `/dock` subpath barrel only (component-internal arg + state-enum;
-// O.W4 Lane B disposition preserved).
+// redeclaring the state-machine handle. `UseDockStateOptions` + `DockState`
+// ship via the `/dock` subpath barrel only (component-internal arg + state-enum).
 export type { UseDockStateReturn } from "../components/custom/dock";
 
 // ── Paper / texture ────────────────────────────────────────────────────────
 // `PaperBackdropProps` — the Props shape consumers forward when wrapping
 // `<PaperBackdrop>` (e.g. app-shell substrate composers). `PaperBackdropFrequency`
 // is the turbulence-register enum (`"clean" | "aged"`) parallel to
-// `MetricCellAppearance` / `AnimatedDigitMode`. Promoted P.W3 Lane C per
-// P11/a §G3 + §I2 — the consumer-side cleanup wave (words/frontend at P.W5
-// Lane E) retires ~500 LOC of parallel `useTextureSystem` + 3 TextureCard /
-// TextureBackground / TextureOverlay SFCs in favour of the canonical
-// `<PaperBackdrop>` + `paper-underpaint` / `paper-grain-overlay` utility
-// composition. The texture-system canonical pattern (CSS custom-property
-// cascade via `--paper-*-texture` vars at `:root`) is documented in DESIGN.md
-// "Texture system" section.
+// `MetricCellAppearance` / `AnimatedDigitMode`. The texture-system canonical
+// pattern (CSS custom-property cascade via `--paper-*-texture` vars at `:root`)
+// is documented in DESIGN.md "Texture system" section.
 export type {
     PaperBackdropFrequency,
     PaperBackdropProps,
 } from "../components/custom/paper-backdrop";
 
-// ── Dark ergonomics (AU.W9) ────────────────────────────────────────────────
+// ── Dark ergonomics ──────────────────────────────────────────────────────────
 // `UseGlobalDarkOptions` — the one-shot `initialValue` seed shape honored on
 // FIRST `useGlobalDark()` construction (the createGlobalState factory is
-// memoized; later conflicting calls dev-warn). `DarkModeSyncScriptOptions` —
+// memoized; a later conflicting seed throws). `DarkModeSyncScriptOptions` —
 // options for the parse-time FOUC eliminator `darkModeSyncScript()`, the
 // PURE inline-<head>-script string emitter that byte-mirrors the runtime
 // dark contract (localStorage["vueuse-color-scheme"] → prefers-color-scheme

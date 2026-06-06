@@ -33,3 +33,7 @@ export * from "../usePrioritizedTask";
 // `/motion-core` surface — and, being heavy-peer-free, it is also root-barrel
 // safe (re-exported from the root barrel below for broad reach).
 export * from "../useViewTransition";
+// AV.W3 — the v-reveal entrance directive. Dependency-free (`vue` type-only —
+// no `@mkbabb/keyframes.js`, no `@vueuse/core`), so it ships on the engine-free
+// `/motion-core` surface AND is re-exported from the root barrel below.
+export * from "../vReveal";

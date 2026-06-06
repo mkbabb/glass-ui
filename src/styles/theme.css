@@ -4,9 +4,23 @@
  * Maps every CSS custom property from tokens.css + typography.css to a
  * Tailwind utility-generating token. References vars (not literals) so
  * consumers can override at :root / .dark without rebuilding Tailwind.
+ *
+ * Two blocks (AV.W16 TW1):
+ *   - `@theme inline` carries every `var(--token)`-referencing BRIDGE. The
+ *     inline form substitutes the referenced value into the generated
+ *     utilities and mints NO second global variable, so each tokens.css
+ *     token stays the SINGLE override point (a plain `@theme` would emit
+ *     both `--color-primary` AND `--primary`, doubling the override
+ *     surface). Guardrail: NEVER `@property`-register a color token —
+ *     registration snapshots the resolved value and breaks light-dark()
+ *     re-resolution (see the `--color-muted-foreground-strong` note below).
+ *   - the trailing plain `@theme` carries the directly-authored LITERALS
+ *     (the radius primitives, the `--animate-*` composites, the opacity
+ *     rungs) — these ARE the source of truth here, not bridges, so they
+ *     mint their namespaced var as the override surface.
  */
 
-@theme {
+@theme inline {
     /* ═══════════════════════════════════════════════
        Typography — size scale → text-* utilities
        ═══════════════════════════════════════════════ */
@@ -222,16 +236,15 @@
     --z-index-max: var(--z-max);
 
     /* ═══════════════════════════════════════════════
-       Border radius → rounded-* utilities
+       Border radius (aliases) → rounded-* utilities
+       The radius PRIMITIVES (--radius, --radius-xs … --radius-pill) are
+       directly-authored literals; they live in the trailing plain @theme
+       block (they are the override surface, not bridges). These semantic
+       aliases reference them — @theme inline substitutes the referenced
+       value, no second variable minted. Custom-property resolution is not
+       declaration-order-dependent, so a forward var() reference resolves.
        ═══════════════════════════════════════════════ */
-    --radius: 0.625rem;
-    --radius-xs: 4px;
-    --radius-sm: 4px;
-    --radius-md: 6px;
-    --radius-lg: var(--radius);
-    --radius-xl: 12px;
-    --radius-2xl: 1rem;
-    --radius-pill: 9999px;
+    --radius-lg:      var(--radius);
 
     /* Semantic radius — point at primitives from tokens.css; no self-reference */
     --radius-card:    var(--radius-2xl);
@@ -333,6 +346,26 @@
     --transition-duration-xl: var(--duration-xl);
     --transition-duration-xxl: var(--duration-xxl);
     --transition-duration-sparkle: var(--duration-sparkle);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Directly-authored LITERALS — plain @theme (the override surface here is
+   the namespaced var itself, not a tokens.css bridge, so these mint their
+   global variable). Radius primitives, the --animate-* composites (literal
+   keyframe name + var() timing — no tokens.css twin to double), and the
+   opacity rungs.
+   ═══════════════════════════════════════════════════════════════════════ */
+@theme {
+    /* ═══════════════════════════════════════════════
+       Border radius primitives → rounded-* utilities
+       ═══════════════════════════════════════════════ */
+    --radius: 0.625rem;
+    --radius-xs: 4px;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-xl: 12px;
+    --radius-2xl: 1rem;
+    --radius-pill: 9999px;
 
     /* ═══════════════════════════════════════════════
        Animation → animate-* utilities

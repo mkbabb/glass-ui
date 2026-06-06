@@ -68,6 +68,15 @@
         position: relative;
         display: inline-flex;
         align-items: center;
+        /* AV.W16 TW3 — the dock establishes an inline-size container named
+           `dock` so its descendants (the label glyph, the density rules)
+           read the dock's OWN box, not the viewport. This makes the dock
+           portable into a 320px sidebar: the label compresses off the
+           dock's box width, not `@media`. A consumer that sets the
+           `containerName` prop overrides the name via inline style (the
+           explicit container-query opt-in); the default `dock` name backs
+           the built-in label/density container reads below. */
+        container: dock / inline-size;
         border-radius: var(--radius-dock);
         white-space: nowrap;
         max-inline-size: var(--dock-max-inline-size);
@@ -75,7 +84,10 @@
         background: var(--glass-bg-dock, var(--glass-bg-resting));
         backdrop-filter: var(--dock-surface-blur);
         border: 1.5px solid var(--glass-border-dock, var(--glass-border-resting));
-        box-shadow: var(--shadow-dock-override, var(--shadow-dock));
+        /* AV.W15 M3 — the full-perimeter `--glass-edge-light` rim rides as the
+           leading inset layer of the dock shadow stack (the navigation-band
+           silhouette catch-light, distinct from the top-only highlight). */
+        box-shadow: var(--glass-edge-light), var(--shadow-dock-override, var(--shadow-dock));
     }
 
     /* `overflow: hidden` is the clip shell for every dock. AT.W7-dock-a
@@ -195,17 +207,23 @@
         --dock-tab-h: var(--dock-density-audacious-tab-min-height, 3.5rem);
     }
 
-    /* Density-audacious mobile carve — at narrow viewports the audacious-dock
-       label glyphs compress so the chrome doesn't overflow its host
-       (≤14px at <480, 15px at 480–719). Consumer dock label spans bind
-       `font-size: var(--dock-label-size)` (typography.css `.dock-label`). */
-    @media (max-width: 479px) {
-        .glass-dock[data-density="audacious"] {
+    /* Density-audacious narrow-box carve (AV.W16 TW3) — when the dock's OWN
+       box is narrow the audacious-dock label glyphs compress so the chrome
+       doesn't overflow its host (≤14px below 30rem, 15px 30–45rem). Keyed off
+       the dock's `dock` inline-size container (established on `.glass-dock`
+       above) rather than the viewport — so a dock dropped into a 320px
+       sidebar compresses its label off ITS box, not the page width. The var
+       is set on the `.dock-label` descendant (which reads it via
+       `font-size: var(--dock-label-size)`, typography.css). Thresholds keep
+       the prior 479/719px viewport cadence as box widths (30rem ≈ 480px,
+       45rem ≈ 720px at the 16px root). */
+    @container dock (max-width: 29.9375rem) {
+        .glass-dock[data-density="audacious"] .dock-label {
             --dock-label-size: 14px;
         }
     }
-    @media (min-width: 480px) and (max-width: 719px) {
-        .glass-dock[data-density="audacious"] {
+    @container dock (min-width: 30rem) and (max-width: 44.9375rem) {
+        .glass-dock[data-density="audacious"] .dock-label {
             --dock-label-size: 15px;
         }
     }
@@ -891,7 +909,13 @@
        Layout) — its single source-of-record. A `var()` cannot drive a
        media-query feature in Baseline CSS, so this one `@media` realizes the
        token's value; there is no longer a bare unexplained magic number — the
-       threshold lives under one name and is documented at its mint. */
+       threshold lives under one name and is documented at its mint.
+       AV.W16 TW3 — KEPT as `@media` (not converted to `@container`): the wrap
+       dock is `max-width: calc(100vw - gutter)` — it spans the VIEWPORT by
+       contract, so the snap-back is genuinely viewport-semantic. The dock
+       establishes its own `dock` container and cannot self-query that
+       container for a rule on the dock root; the descendant-readable
+       label/density rules above are the container-query candidates. */
     @media (min-width: 640px /* = var(--dock-overflow-bp) */) {
         .glass-dock.dock-overflow-wrap {
             white-space: nowrap;

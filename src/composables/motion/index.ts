@@ -21,3 +21,7 @@ export * from "./useSpringPress";
 export * from "./useNumericTransition";
 export * from "./useAnimatedNumber";
 export * from "./useAnimatedNumberMap";
+// AV.W3 — the editorial count-up animator. Rides the keyframes LIGHT
+// `NumericAnimation` engine (value.js-free callable easing) → keyframes-BEARING,
+// so it ships ONLY here (`/motion`), NOT on `/motion-core` and NOT on the root.
+export * from "./useCountup";

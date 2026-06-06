@@ -153,6 +153,14 @@ export interface UseSortableReturn {
     dragPosition: ComputedRef<{ x: number; y: number } | null>;
     /** Index the drop will land at, or null when no target. */
     dropIndex: ComputedRef<number | null>;
+    /**
+     * `true` while the active drag holds a pointer capture; `false` when the
+     * `setPointerCapture` optimization was unavailable and the drag is running
+     * on the document `pointermove`/`pointerup` listeners alone (still fully
+     * functional). Surfaced so a consumer can observe the degraded-but-correct
+     * path instead of it being an invisible swallow.
+     */
+    pointerCaptureActive: ComputedRef<boolean>;
 }
 
 /**
@@ -241,6 +249,15 @@ export function useSortable<T>(
     const _dragId = shallowRef<SortableId | null>(null);
     const _pos = shallowRef<{ x: number; y: number } | null>(null);
     const _dropIndex = shallowRef<number | null>(null);
+    /**
+     * Pointer-capture state for the active drag. `true` while a capture is held,
+     * `false` once a drag began without one (the `setPointerCapture` optimization
+     * was unavailable — the document listeners carry the drag regardless). Reset
+     * to `true` at the start of each `beginDrag`.
+     */
+    const _pointerCaptureActive = shallowRef(true);
+    /** Dev-warn the capture-unavailable path exactly once per instance. */
+    let warnedCaptureUnavailable = false;
     /**
      * Foreign-drop target handle (null when the drop stays on
      * this instance). Set by `onPointerMove` when the cursor
@@ -393,6 +410,7 @@ export function useSortable<T>(
         _dragId.value = id;
         _pos.value = { x: e.clientX, y: e.clientY };
         _dropIndex.value = findIndexById(id);
+        _pointerCaptureActive.value = true;
         foreignTarget = null;
         sourceEl = src;
         src.classList.add(SOURCE_DRAGGING_CLASS);
@@ -404,7 +422,18 @@ export function useSortable<T>(
             try {
                 (host as HTMLElement).setPointerCapture(e.pointerId);
             } catch {
-                /* capture failed — drag still works via document listeners */
+                // fail-explicit: befitting — capture is an optimization; the
+                // document pointermove/pointerup listeners below are the real
+                // drag path and run unconditionally. The failure is SURFACED via
+                // pointerCaptureActive (not swallowed) and dev-warned once.
+                _pointerCaptureActive.value = false;
+                if (import.meta.env.DEV && !warnedCaptureUnavailable) {
+                    warnedCaptureUnavailable = true;
+                    console.warn(
+                        "[glass-ui] useSortable: setPointerCapture unavailable — " +
+                            "dragging via document listeners (pointerCaptureActive=false).",
+                    );
+                }
             }
         }
 
@@ -655,5 +684,6 @@ export function useSortable<T>(
         dragId: computed(() => _dragId.value),
         dragPosition: computed(() => _pos.value),
         dropIndex: computed(() => _dropIndex.value),
+        pointerCaptureActive: computed(() => _pointerCaptureActive.value),
     };
 }

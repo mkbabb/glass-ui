@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { inject, reactive, useTemplateRef, watch, toRef } from "vue";
+import { inject, useTemplateRef, watch, toRef } from "vue";
 import type { ColorResolver } from "../../../composables/color";
 import type { BlobMood, BlobConfig } from "./types";
-import { BLOB_CONFIG_DEFAULTS, BLOB_CONFIG_KEY } from "./types";
+import { BLOB_CONFIG_KEY } from "./types";
 import { useBlobMood } from "./composables/useBlobMood";
 import { useBlobPointer } from "./composables/useBlobPointer";
 import { useBlobSatellites } from "./composables/useBlobSatellites";
 import { useMetaballRenderer } from "./composables/useMetaballRenderer";
 
 /**
- * GooBlob — a gooey metaball creature on a WebGL2 canvas (AU.W7 lift).
+ * GooBlob — a gooey metaball creature on a WebGL2 canvas.
  *
  * Renders a pulsing SDF body with orbiting satellites that periodically merge in,
  * get absorbed, then re-emerge. Mood, pointer-attraction and a deterministic
@@ -21,12 +21,23 @@ import { useMetaballRenderer } from "./composables/useMetaballRenderer";
  * `defaultBlobColorResolver` from `@mkbabb/glass-ui/color` (or your own) so a
  * `lab()`/`oklch()`/`hsl()`/hex string resolves correctly. A missing resolver
  * throws (the loud failure, not a silent gray).
+ *
+ * Config is resolved with the SAME loud discipline as the resolver: either
+ * `provide(BLOB_CONFIG_KEY, cfg)` from an ancestor OR pass an explicit `config`
+ * prop. A mount with NEITHER throws — there is no silent reactive-defaults
+ * synthesis. A consumer that genuinely wants the stock tuning passes
+ * `BLOB_CONFIG_DEFAULTS` explicitly.
  */
-const { color, colorResolver, seed = "" } = defineProps<{
+const { color, colorResolver, config, seed = "" } = defineProps<{
     /** Base CSS color string (any form the `colorResolver` understands). */
     color: string;
     /** REQUIRED color seam — resolves `color` to a gamma-sRGB [r,g,b] triple in [0,1]. */
     colorResolver: ColorResolver;
+    /**
+     * REQUIRED unless an ancestor `provide(BLOB_CONFIG_KEY, …)` supplies it.
+     * The metaball tuning. Pass `BLOB_CONFIG_DEFAULTS` for the stock look.
+     */
+    config?: BlobConfig;
     /** Extra seed string mixed into the satellite PRNG for a unique-but-reproducible system. */
     seed?: string;
 }>();
@@ -34,7 +45,14 @@ const { color, colorResolver, seed = "" } = defineProps<{
 const emit = defineEmits<{ click: [] }>();
 
 const injectedConfig = inject(BLOB_CONFIG_KEY, null);
-const cfg: BlobConfig = injectedConfig ?? reactive({ ...BLOB_CONFIG_DEFAULTS });
+const cfg = config ?? injectedConfig;
+if (!cfg) {
+    throw new Error(
+        "[glass-ui] GooBlob: no blob config. Pass an explicit `config` prop " +
+            "(e.g. BLOB_CONFIG_DEFAULTS) or provide(BLOB_CONFIG_KEY, cfg) from an " +
+            "ancestor. There is no silent defaults synthesis.",
+    );
+}
 
 const canvasRef = useTemplateRef<HTMLCanvasElement>("canvasRef");
 const wrapperRef = useTemplateRef<HTMLElement>("wrapperRef");

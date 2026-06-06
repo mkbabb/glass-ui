@@ -124,6 +124,19 @@ function scheduleAfterFirstPaint(task: () => void): () => void {
  * placeholder under the canvas so the consumer's first paint is never blocked
  * on the shader. Capture / `initStrategy: "eager"` consumers arm synchronously
  * inside `createAurora` and skip the defer entirely.
+ *
+ * Init-failure contract (O invariant 24 — "fails explicitly by default"). A
+ * WebGL2/shader-compile/link failure is a library-internal contract violation.
+ * On the DEFERRED path the failure lands on an idle tick, OUTSIDE any
+ * mount-time error boundary, so the consumer MUST handle it through exactly one
+ * of three paths:
+ *   1. pass an `onInitError(err)` handler in `runtimeOptions` (the explicit
+ *      opt-in — receives the error directly), OR
+ *   2. install a Vue global `app.config.errorHandler` (the re-surfaced
+ *      microtask rejection reaches it), OR
+ *   3. knowingly accept the unhandled rejection (the dev console still gets it).
+ * Armed deferred with NO `onInitError`, `useAurora` dev-warns ONCE so the
+ * silent-by-omission case is visible. WebGL2-unavailable still throws HARD.
  */
 export function useAurora(
     canvasRef: Ref<HTMLCanvasElement | null>,
@@ -144,6 +157,8 @@ export function useAurora(
     let reducedMq: MediaQueryList | null = null;
     // Guards a single arm attempt (success OR failure both consume it).
     let armAttempted = false;
+    // Dev-warn the deferred-without-onInitError contract gap exactly once.
+    let warnedNoInitHandler = false;
     // Exposed to `Aurora.vue` so it can cross-fade the canvas in over the
     // static gradient placeholder once the GL runtime is live. Stays `false`
     // on init failure — the placeholder then remains as the WebGL-unavailable
@@ -190,6 +205,10 @@ export function useAurora(
         try {
             inst.arm();
         } catch (err) {
+            // fail-explicit: the deferred-path arm() failure is SURFACED via
+            // surfaceInitError (onInitError or a re-raised microtask rejection),
+            // and isArmed stays false so Aurora.vue keeps the CSS placeholder as
+            // the WebGL-unavailable fallback. Not swallowed.
             surfaceInitError(err);
             return;
         }
@@ -222,6 +241,9 @@ export function useAurora(
                 ...runtimeOptions,
             });
         } catch (err) {
+            // fail-explicit: surface the synchronous (eager-path) init failure
+            // through surfaceInitError — onInitError if provided, else re-raised
+            // on the microtask queue (reaches the dev console / errorHandler).
             surfaceInitError(err);
             return;
         }
@@ -232,6 +254,24 @@ export function useAurora(
             // idempotent no-op and `isArmed` flips `true` within onMounted.
             armRuntime();
             return;
+        }
+
+        // Deferred path: the init failure (if any) lands on an idle tick,
+        // outside any mount-time error boundary. Dev-warn ONCE when no
+        // `onInitError` handler is armed so the silent-by-omission case is
+        // visible (the contract's three handling paths are in the JSDoc).
+        if (
+            import.meta.env.DEV &&
+            !runtimeOptions.onInitError &&
+            !warnedNoInitHandler
+        ) {
+            warnedNoInitHandler = true;
+            console.warn(
+                "[glass-ui] useAurora: deferred init armed with no onInitError handler. " +
+                    "A WebGL/shader failure will re-surface as an unhandled rejection. " +
+                    "Pass runtimeOptions.onInitError, install app.config.errorHandler, " +
+                    "or knowingly accept the rejection.",
+            );
         }
 
         // Deferred path. Compose `useIntersectionPause` as the SINGLE owner of

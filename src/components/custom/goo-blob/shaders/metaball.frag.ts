@@ -17,6 +17,16 @@
 // the vector); writing value.js's rows as GLSL columns yields the row-major M·v.
 // Hues are in RADIANS. See `__tests__/metaball-color.glsl-port.ts` (the line-for-line TS
 // transcription) + `__tests__/blob-color-equivalence.test.ts` (the 8-assertion gate).
+//
+// AV.W2 — the OETF + the Ottosson matrices + the FBM_ROT constant are SPLICED from
+// the shared procedural-color chunk (the single GLSL source both this shader and
+// aurora.frag.ts compose), so the OETF can never again diverge between them.
+
+import {
+    FBM_ROT_GLSL,
+    OETF_GLSL,
+    OKLCH_MATRICES_GLSL,
+} from "../../../../composables/glass/webgl/shaders/procedural-color.glsl";
 
 export const METABALL_FRAGMENT_SRC = /* glsl */ `#version 300 es
 precision highp float;
@@ -87,8 +97,10 @@ float valueNoise(vec2 p) {
 }
 
 // Edit #3 — rotated-octave FBM: a fixed ~0.5 rad 2x2 rotation between octaves
-// breaks the axis-aligned banding the un-rotated lattice noise produces.
-const mat2 FBM_ROT = mat2(0.8, 0.6, -0.6, 0.8);
+// breaks the axis-aligned banding the un-rotated lattice noise produces. The
+// rotation CONSTANT is spliced from the shared chunk (AV.W2 — the one FBM_ROT);
+// the loop below stays blob-local (param octaves + 2.0 lacunarity, per §3a).
+${FBM_ROT_GLSL}
 
 float fbm(vec2 p, int octaves) {
     float value = 0.0;
@@ -118,85 +130,15 @@ float smin(float a, float b, float k) {
 }
 
 // --- Color (Ottosson OKLab/OKLCh — value.js EXACT constants, transposed) ---
-
-// sRGB OETF inverse — gamma sRGB channel → linear-light. Matches value.js's
-// transfer (gamma 2.4, offset 0.055, slope 12.92, transition 0.04045/12.92).
-float srgbToLinearCh(float c) {
-    return c <= 0.04045 ? c / 12.92 : pow((c + 0.055) / 1.055, 2.4);
-}
-vec3 srgbToLinear(vec3 c) {
-    return vec3(srgbToLinearCh(c.r), srgbToLinearCh(c.g), srgbToLinearCh(c.b));
-}
-
-// sRGB OETF — linear-light channel → gamma sRGB (the mandatory close-the-seam).
-float linearToSrgbCh(float c) {
-    return c <= 0.0031308 ? c * 12.92 : 1.055 * pow(c, 1.0 / 2.4) - 0.055;
-}
-vec3 linearToSrgb(vec3 c) {
-    return vec3(linearToSrgbCh(c.r), linearToSrgbCh(c.g), linearToSrgbCh(c.b));
-}
-
-// value.js LINEAR_SRGB_TO_LMS (constants.ts), row-major; written here as GLSL
-// columns (= the transpose) so mat3 * vec3 evaluates the row-major M·v.
-const mat3 LINEAR_SRGB_TO_LMS = mat3(
-    0.4122214708, 0.2119034982, 0.0883024619,
-    0.5363325363, 0.6806995451, 0.2817188376,
-    0.0514459929, 0.1073969566, 0.6299787005
-);
-
-// value.js srgbToOKLab's INLINE LMS→OKLab coefficients (gamut.ts lines 295-297 —
-// these differ at the ~1e-9 digit from LMS_TO_OKLAB_MATRIX; use the inline ones to
-// mirror the exact value.js path), row-major → GLSL columns.
-const mat3 LMS_TO_OKLAB = mat3(
-    0.2104542553, 1.9779984951, 0.0259040371,
-    0.7936177850, -2.4285922050, 0.7827717662,
-    -0.0040720468, 0.4505937099, -0.8086757660
-);
-
-// value.js OKLAB_TO_LMS_COEFF (constants.ts), row-major → GLSL columns. Rows:
-// l = [1, 0.3963377774, 0.2158037573], m = [1, -0.1055613458, -0.0638541728],
-// s = [1, -0.0894841775, -1.2914855480].
-const mat3 OKLAB_TO_LMS = mat3(
-    1.0, 1.0, 1.0,
-    0.3963377774, -0.1055613458, -0.0894841775,
-    0.2158037573, -0.0638541728, -1.2914855480
-);
-
-// value.js LMS_TO_LINEAR_SRGB (constants.ts), row-major → GLSL columns.
-const mat3 LMS_TO_LINEAR_SRGB = mat3(
-    4.0767416621, -1.2684380046, -0.0041960863,
-    -3.3077115913, 2.6097574011, -0.7034186147,
-    0.2309699292, -0.3413193965, 1.7076147010
-);
-
-// Gamma sRGB → raw OKLab (L, a, b). Mirrors value.js srgbToOKLab.
-vec3 srgbToOklab(vec3 c) {
-    vec3 lin = srgbToLinear(c);
-    vec3 lms = LINEAR_SRGB_TO_LMS * lin;
-    vec3 lmsCbrt = sign(lms) * pow(abs(lms), vec3(1.0 / 3.0));
-    return LMS_TO_OKLAB * lmsCbrt;
-}
-
-// Raw OKLab (L, a, b) → linear sRGB. Mirrors value.js oklabToLinearSRGB.
-vec3 oklabToLinearSrgb(vec3 lab) {
-    vec3 lms_ = OKLAB_TO_LMS * lab;
-    vec3 lms = lms_ * lms_ * lms_;
-    return LMS_TO_LINEAR_SRGB * lms;
-}
-
-// OKLab → OKLCh: H in RADIANS. Mirrors value.js rawOklabToOklch (which returns
-// degrees; we stay in radians and only fold to [0, 2pi)).
-vec3 oklabToOklch(vec3 lab) {
-    float C = length(lab.yz);
-    float H = atan(lab.z, lab.y);
-    if (H < 0.0) H += 2.0 * PI;
-    return vec3(lab.x, C, H);
-}
-
-// OKLCh (H radians) → OKLab. Mirrors value.js rawOklchToOklab.
-vec3 oklchToOklab(vec3 lch) {
-    return vec3(lch.x, lch.y * cos(lch.z), lch.y * sin(lch.z));
-}
+//
+// The OETF (srgbToLinear/linearToSrgb) + the four Ottosson matrices + their space
+// conversions are SPLICED from the shared chunk (AV.W2 —
+// src/composables/glass/webgl/shaders/procedural-color.glsl.ts). They live there
+// ONCE so the OETF can never diverge from aurora's; the line-for-line TS port
+// (__tests__/metaball-color.glsl-port.ts) mirrors that chunk. The gamut-clamp
+// below stays blob-local (aurora has no in-shader OKLCh path).
+${OETF_GLSL}
+${OKLCH_MATRICES_GLSL}
 
 // Edit #4's gamut step — hue-preserving inward chroma clamp. If the linear result
 // is out of [0,1], bisect chroma toward 0 (L + h fixed) until in gamut. Preserves

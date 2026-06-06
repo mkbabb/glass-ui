@@ -14,8 +14,8 @@
 // per-call `initialValue` therefore CANNOT re-seed after construction: the seed
 // is a ONE-SHOT honored only by the first `useGlobalDark()` invocation. We
 // capture the first-call options in a module-level ref the factory reads on
-// construction, and dev-warn if a later call passes a CONFLICTING `initialValue`
-// (so the one-shot semantics surprise no one). This pairs with
+// construction, and THROW if a later call passes a CONFLICTING `initialValue`
+// (the misconfiguration is loud, not silently swallowed). This pairs with
 // `darkModeSyncScript()` — the parse-time `<head>` script that sets the theme
 // before first paint so the seed and the FOUC eliminator agree.
 import type { BasicColorSchema } from "@vueuse/core";
@@ -26,10 +26,11 @@ export interface UseGlobalDarkOptions {
     /**
      * The first-paint color scheme seed, threaded to `useDark({ initialValue })`.
      * ONE-SHOT: only the FIRST `useGlobalDark()` call constructs the singleton, so
-     * only its `initialValue` is honored; later calls' values are ignored (a dev
-     * warning fires on a conflict). Defaults to vueuse's `"auto"`
-     * (prefers-color-scheme). Pair with `darkModeSyncScript()` so the parse-time
-     * `<head>` script and this runtime seed agree.
+     * only its `initialValue` is honored. A later call passing a CONFLICTING value
+     * THROWS (the misconfiguration is loud, not silently ignored); a matching
+     * re-seed is a no-op. Defaults to vueuse's `"auto"` (prefers-color-scheme).
+     * Pair with `darkModeSyncScript()` so the parse-time `<head>` script and this
+     * runtime seed agree.
      */
     initialValue?: BasicColorSchema;
 }
@@ -96,14 +97,15 @@ export function useGlobalDark(options?: UseGlobalDarkOptions) {
     if (options?.initialValue !== undefined) {
         if (seededInitialValue === undefined) {
             seededInitialValue = options.initialValue;
-        } else if (
-            seededInitialValue !== options.initialValue &&
-            import.meta.env.DEV
-        ) {
-            console.warn(
-                `[glass-ui] useGlobalDark({ initialValue: "${options.initialValue}" }) ignored: ` +
+        } else if (seededInitialValue !== options.initialValue) {
+            // fail-explicit: a CONFLICTING second seed is a misconfiguration —
+            // the createGlobalState singleton already locked the first one and
+            // can never re-seed. Silently ignoring it would hide the mistake; a
+            // MATCHING re-seed is a harmless no-op and falls through.
+            throw new Error(
+                `[glass-ui] useGlobalDark({ initialValue: "${options.initialValue}" }) conflicts: ` +
                     `the singleton was already constructed with initialValue "${seededInitialValue}". ` +
-                    `Seed it on the FIRST useGlobalDark() call (the one-shot seed contract).`,
+                    `The seed is ONE-SHOT — set it on the FIRST useGlobalDark() call only.`,
             );
         }
     }

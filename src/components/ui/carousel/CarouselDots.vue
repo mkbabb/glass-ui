@@ -59,7 +59,7 @@ onMounted(syncIndex);
             :aria-label="`Go to slide ${i}`"
             :data-active="i - 1 === selectedIndex ? '' : undefined"
             data-slot="carousel-dot"
-            class="focus-ring rounded-pill cursor-pointer transition-[background-color,transform,width,height,box-shadow] duration-[var(--duration-fast)]"
+            class="focus-ring rounded-pill cursor-pointer transition-[background-color,transform,width,height,box-shadow] duration-fast"
             :class="
                 cn(
                     orientation === 'vertical' ? 'w-1.5' : 'h-1.5',
@@ -68,8 +68,8 @@ onMounted(syncIndex);
                             ? 'h-6 bg-foreground scale-[var(--scale-hover)]'
                             : 'w-6 bg-foreground scale-[var(--scale-hover)]'
                         : orientation === 'vertical'
-                            ? 'h-1.5 bg-[var(--muted-medium)] hover:bg-foreground/50'
-                            : 'w-1.5 bg-[var(--muted-medium)] hover:bg-foreground/50'
+                            ? 'h-1.5 bg-muted-medium hover:bg-foreground/50'
+                            : 'w-1.5 bg-muted-medium hover:bg-foreground/50'
                 )
             "
             @click="scrollTo(i - 1)"

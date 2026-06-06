@@ -129,9 +129,13 @@ src/
 │   ├── motion/                     # useScrollProgress, useSpringOrchestrator, useStaggerReveal,
 │   │                               # useAnimatedNumber, useAnimatedNumberMap, useStagger,
 │   │                               # useDarkModeSync, useRAFLoop, useIntersectionPause,
+│   │                               # useCountup (AV.W3—editorial [data-countup] walker on the
+│   │                               # keyframes NumericAnimation engine; keyframes-bearing → /motion only),
+│   │                               # vReveal (AV.W3—dependency-free [data-reveal]/--d entrance
+│   │                               # directive; on /motion-core + root barrel),
 │   │                               # useViewTransition (AQ.W5—the startViewTransition
 │   │                               # substrate; dependency-free, on /motion-core + root barrel)
-│   ├── glass/                      # useGlassRenderer + useWebGLCanvas substrate (AU.W6) + WebGL/WebGPU shader assets
+│   ├── glass/                      # useGlassRenderer + useWebGLCanvas substrate (AU.W6) + WebGL/WebGPU shader assets + webgl/shaders/procedural-color.glsl.ts (AV.W2 — the shared OETF + Ottosson OKLCh matrices + FBM_ROT chunk aurora.frag.ts & metaball.frag.ts both splice)
 │   ├── sortable/                   # useSortable
 │   ├── sidebar/                    # useSidebarState, useSidebarFollow, useScrollTracker, useTreeIndex
 │   └── index.ts                    # internal barrel—re-exports all 8 sub-trees + co-located

@@ -1,0 +1,154 @@
+/* Pointer-anchored moving specular — the iOS-26 Liquid Glass illuminate-from-
+ * within behaviour (AV.W15 M2, the HEADLINE fold).
+ *
+ * A masked radial-gradient catch-light rides the material surface at the
+ * pointer position. The consumer writes the pointer location onto the element
+ * as `--mouse-x` / `--mouse-y` (percentages) via a thin pointer-listener; this
+ * rung maps those onto the typed `--specular-x` / `--specular-y` properties
+ * (registered in tokens.css §11b) and paints a `radial-gradient(circle at …)`
+ * over a `mask-image` so the glow stays clipped to the glass plate and travels
+ * with the cursor — "the light travels around the material / illuminate under
+ * your fingertip".
+ *
+ * Baseline floors: `@property` 2024-07-09 (the smooth position interpolation),
+ * CSS `mask-image` 2023-12-07 (the surface-clip). Both carry a `var()` fallback
+ * so an engine without typed-property animation still paints a centred catch-
+ * light, and an engine without `mask` still paints the radial (unmasked but
+ * surface-bounded by the `::before` `inset: 0` + `border-radius: inherit`).
+ *
+ * The pointer-position WRITE (`--mouse-x` / `--mouse-y`) is the consumer's seam
+ * (DockIconButton wires it; Button glass + Card hover opt in). The CSS half —
+ * the masked radial, the reduced-motion static bracket, the var() fallback, the
+ * @supports-gated refraction garnish — is the deliverable here.
+ */
+
+@layer components {
+    /* The opt-in class. A `::before` pseudo carries the moving catch-light so it
+       composes over the host's own glass background/blur without a second
+       backdrop-filter (no glass-on-glass — the specular is a LIGHT layer, not a
+       second plate). The host need not be positioned-relative by us; the five
+       glass tiers + the dock + Button already mint `position: relative`. */
+    .glass-specular-track::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        z-index: 1;
+        /* Map the consumer's pointer write onto the typed properties, ON THE
+           PSEUDO. The `--mouse-x/--mouse-y` write lands on the HOST (inline
+           style); those are UNREGISTERED custom properties, so they inherit
+           down to this `::before` naturally. The registered `--specular-*`
+           props are `inherits: false` (per-surface ownership), which means a
+           `::before` does NOT see a value set on its originating element — so
+           the mapping must be declared HERE, on the pseudo, where it owns its
+           own typed value. The `var(--mouse-x, 50%)` floor is the centred
+           fallback: an engine that never receives a pointer write paints a
+           centred catch-light, never a broken/absent one. */
+        --specular-x: var(--mouse-x, 50%);
+        --specular-y: var(--mouse-y, 50%);
+        /* The catch-light intensity floor at rest; hover/active lift it (the
+           pseudo-targeting rules below). Registered `<number>`, so the layer
+           opacity it drives interpolates smoothly. */
+        --specular-intensity: 0.35;
+        /* The travelling catch-light. A soft circular glow centred on the
+           tracked pointer position; the warm-white tint keeps the warm-cream
+           identity (NOT iOS blue). The gradient carries FIXED stop alphas — the
+           `--specular-intensity` multiplier drives the layer `opacity` below
+           (NOT a `calc()` in the stop alpha: a registered-`@property` `var()`
+           nested in `calc()` inside an `hsl()` alpha inside a gradient does not
+           substitute in Chromium — it computes to 0. Driving the whole layer's
+           `opacity` is both correct AND the cleaner model — intensity IS a
+           layer brightness, not a per-stop axis). */
+        background: radial-gradient(
+            circle at var(--specular-x, 50%) var(--specular-y, 50%),
+            hsl(40 30% 100% / 0.55) 0%,
+            hsl(40 30% 100% / 0.22) 22%,
+            transparent 55%
+        );
+        opacity: var(--specular-intensity, 0.35);
+        /* Clip the glow to the plate so it rides the surface (the "light travels
+           AROUND the material" read). `mask-image` Baseline 2023-12-07; a
+           non-supporting engine ignores it and the `inset: 0` + radius-inherit
+           already bound the glow to the host rectangle. */
+        mask-image: radial-gradient(
+            circle at var(--specular-x, 50%) var(--specular-y, 50%),
+            black 0%,
+            black 55%,
+            transparent 75%
+        );
+        mix-blend-mode: screen;
+        /* Smooth the position + intensity between pointer samples. The typed
+           `@property` registrations make the percentage stops interpolable, so
+           the catch-light position SETTLES rather than snapping frame-to-frame;
+           the intensity rides the layer `opacity` transition. */
+        transition:
+            --specular-x var(--duration-fast, 150ms) var(--ease-standard, ease-out),
+            --specular-y var(--duration-fast, 150ms) var(--ease-standard, ease-out),
+            opacity var(--duration-normal, 240ms) var(--ease-standard, ease-out);
+    }
+
+    .dark .glass-specular-track::before {
+        /* Softer over the deep canvas — the screen blend lifts harder on dark. */
+        --specular-intensity: 0.22;
+    }
+
+    /* Hover/active lift the intensity — the "illuminate under your fingertip"
+       brighten on engagement; settles back on leave via the opacity transition
+       above. The rules target the `::before` (the intensity lives on the pseudo
+       — see the mapping note above). */
+    .glass-specular-track:hover::before {
+        --specular-intensity: 0.6;
+    }
+    .glass-specular-track:active::before {
+        --specular-intensity: 0.85;
+    }
+}
+
+/* ── Reduced-motion: pin the specular STATIC ───────────────────────────────
+   The MANDATORY guard. Under `prefers-reduced-motion: reduce` the catch-light
+   paints static at rest position — no pointer-tracking (the position pins to
+   centre, ignoring the consumer's `--mouse-x/--mouse-y` write), no transition
+   animation. The centred catch-light + the warm-cream tint survive; only the
+   MOTION is removed. The pin + the `transition: none` live on the `::before`
+   (where the typed `--specular-*` props are owned), overriding the pointer-map
+   above by order — the `var(--mouse-x)` write is ignored, the catch-light pins
+   centred. */
+@media (prefers-reduced-motion: reduce) {
+    .glass-specular-track::before {
+        --specular-x: 50%;
+        --specular-y: 50%;
+        transition: none;
+    }
+}
+
+/* ── Reduced-transparency: drop the specular ───────────────────────────────
+   When the user requests reduced transparency the surface goes opaque (the
+   glass.css bracket maps the blurs to `none`); a travelling catch-light on a
+   flat opaque surface is decoration without substrate, so it drops too. */
+@media (prefers-reduced-transparency: reduce) {
+    .glass-specular-track::before {
+        display: none;
+    }
+}
+
+/* ── feDisplacementMap refraction garnish — PE-only, @supports-gated ────────
+   True SVG `feDisplacementMap` lensing (`backdrop-filter: url(#…)`) is
+   Chromium-only (WebKit bug #245510, Firefox not shipping) and resize-
+   expensive. It lands ONLY as a progressive-enhancement garnish layered OVER
+   the blur base, NEVER the substrate — gated `@supports (backdrop-filter:
+   url(#…))` so a non-supporting engine paints the blur base alone (no broken
+   `url(#…)` reference). A consumer opts a glass surface into the refraction by
+   adding `.glass-refract` AND mounting the named SVG filter; the gate asserts
+   the garnish never reaches the substrate. The blur base paints WITHOUT it. */
+@supports (backdrop-filter: url("#glass-refract")) {
+    @layer components {
+        .glass-specular-track.glass-refract {
+            /* The garnish composes the consumer-mounted `#glass-refract` SVG
+               filter OVER the host's existing blur. It is additive — the host's
+               `backdrop-filter` blur already painted; this only sharpens the
+               refraction edge where the engine supports it. */
+            backdrop-filter: var(--glass-blur-resting) url("#glass-refract");
+        }
+    }
+}

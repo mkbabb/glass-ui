@@ -3,7 +3,9 @@ import {
     computed,
     type ButtonHTMLAttributes,
     type Component,
+    type CSSProperties,
     type HTMLAttributes,
+    ref,
 } from "vue";
 import { Primitive } from "reka-ui";
 import { cn } from "../../../utils";
@@ -36,11 +38,31 @@ const props = withDefaults(
 
 const classes = computed(() =>
     cn(
-        "dock-icon-button",
+        "dock-icon-button glass-specular-track",
         { "dock-icon-button--compact": props.compact },
         props.class,
     ),
 );
+
+// AV.W15 — the pointer-anchored moving specular write seam. On pointer-move the
+// catch-light position (--mouse-x/--mouse-y, percentages of the control box) is
+// written onto the host so glass-specular-track.css paints the travelling glow.
+// The CSS half owns the reduced-motion static guard + the centred var() floor;
+// this seam only feeds the position. The write is style-only (no reflow, no
+// re-render) and pointer-anchored, so it is inert until the user hovers.
+const specularStyle = ref<CSSProperties>({});
+function trackSpecular(event: PointerEvent) {
+    const target = event.currentTarget as HTMLElement | null;
+    if (!target) return;
+    const rect = target.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) return;
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+    specularStyle.value = {
+        "--mouse-x": `${x.toFixed(2)}%`,
+        "--mouse-y": `${y.toFixed(2)}%`,
+    } as CSSProperties;
+}
 
 // `type` is a <button>-only attribute; emit it only when the host is a button.
 // It is spread through `$attrs` (not bound on <Primitive> directly — reka's
@@ -51,7 +73,14 @@ const hostAttrs = computed(() =>
 </script>
 
 <template>
-    <Primitive :as="as" :as-child="asChild" v-bind="hostAttrs" :class="classes">
+    <Primitive
+        :as="as"
+        :as-child="asChild"
+        v-bind="hostAttrs"
+        :class="classes"
+        :style="specularStyle"
+        @pointermove="trackSpecular"
+    >
         <slot />
     </Primitive>
 </template>

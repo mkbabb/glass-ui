@@ -25,7 +25,7 @@ const forwarded = useForwardProps(delegatedProps)
       :class="cn('absolute top-1/2 -translate-y-1/2 right-0 disabled:cursor-not-allowed disabled:opacity-20', props.class)"
     >
       <slot>
-        <Plus class="size-[var(--icon-sm)]" />
+        <Plus class="size-icon-sm" />
       </slot>
     </Button>
   </NumberFieldIncrement>

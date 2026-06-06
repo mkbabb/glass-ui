@@ -12,6 +12,7 @@ import StoryPage from "./StoryPage.vue";
 import StorySection from "./StorySection.vue";
 import ShowcaseFrame from "./ShowcaseFrame.vue";
 import { GooBlob } from "../../src/components/custom/goo-blob";
+import { BLOB_CONFIG_DEFAULTS } from "../../src/components/custom/goo-blob/types";
 import { WatercolorDot } from "../../src/components/custom/watercolor-dot";
 import { defaultBlobColorResolver } from "../../src/composables/color";
 
@@ -39,7 +40,12 @@ const dotColors = ["#cc0000", "oklch(0.7 0.15 250)", "oklch(0.82 0.13 90)", "#2b
                     :key="c"
                     class="relative aspect-square overflow-hidden rounded-card"
                 >
-                    <GooBlob :color="c" :color-resolver="defaultBlobColorResolver" :seed="c" />
+                    <GooBlob
+                        :color="c"
+                        :color-resolver="defaultBlobColorResolver"
+                        :config="BLOB_CONFIG_DEFAULTS"
+                        :seed="c"
+                    />
                 </div>
             </ShowcaseFrame>
         </StorySection>
@@ -50,7 +56,11 @@ const dotColors = ["#cc0000", "oklch(0.7 0.15 250)", "oklch(0.82 0.13 90)", "#2b
         >
             <ShowcaseFrame class="flex items-center gap-4">
                 <div class="relative aspect-square w-40 overflow-hidden rounded-card">
-                    <GooBlob :color="gooColor" :color-resolver="defaultBlobColorResolver" />
+                    <GooBlob
+                        :color="gooColor"
+                        :color-resolver="defaultBlobColorResolver"
+                        :config="BLOB_CONFIG_DEFAULTS"
+                    />
                 </div>
                 <input v-model="gooColor" class="input-pill" aria-label="Blob base color" />
             </ShowcaseFrame>

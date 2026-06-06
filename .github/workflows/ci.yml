@@ -218,6 +218,14 @@ jobs:
               run: npm run proof:blob-value-free
             - name: proof:no-value-default
               run: npm run proof:no-value-default
+            # AV.W3 — each NEW motion composable (useCountup/vReveal) tallies ≥2
+            # RESOLVING-at-HEAD in-repo consumers; the slides fork is `pending`.
+            - name: proof:motion-composables-consumer
+              run: npm run proof:motion-composables-consumer
+            # AV.W3 — the lifted/adopted motion composables consume the keyframes
+            # LIGHT tier only (no value.js edge, no loadAnimationEngine/animate).
+            - name: proof:motion-value-free
+              run: npm run proof:motion-value-free
             - name: proof:blob-space-gamma
               run: npm run proof:blob-space-gamma
             # AV.W1 — aurora's linear LUT pipeline MUST close with a linearToSrgb()
@@ -225,6 +233,12 @@ jobs:
             # darkening trap; a linear-in without an OETF-out ships ~2.2× too dark).
             - name: proof:aurora-space-gamma
               run: npm run proof:aurora-space-gamma
+            # AV.W2 — the aurora↔blob shared GLSL convergence: the OETF + the four
+            # Ottosson mat3 literals + the FBM_ROT constant live ONCE in
+            # procedural-color.glsl.ts; neither frag re-defines a chunk-owned
+            # artefact (the OETF can never again diverge — the AV.W1 root cause).
+            - name: proof:shader-shared-source
+              run: npm run proof:shader-shared-source
             # AU.W7 — the 8-assertion CPU-equivalence: the metaball OKLCh shader-
             # color TS port matches value.js's exact Ottosson CPU result to 1e-6
             # (asymmetric witness #3a7bd5 catches a transpose / convenience-matrix
@@ -232,6 +246,14 @@ jobs:
             # linearToSrgb OETF (no too-dark ship).
             - name: proof:blob-color-equivalence
               run: npm run proof:blob-color-equivalence
+            # AV.W15 — the iOS-26 Liquid Glass token-evolution: the
+            # --glass-edge-light rim + the quiet-rung saturate parity + the
+            # content-aware under-shadow modifier + the @property --specular-*
+            # regs + the pointer-anchored moving specular (reduced-motion-static
+            # + var()-centred fallback + @supports-gated refraction garnish) +
+            # the AA floors. Born RED, greened by the W15 token + specular folds.
+            - name: proof:liquid-glass-tokens
+              run: npm run proof:liquid-glass-tokens
             # AS.W2 inv-θ — the lockfile registry-resolution drift guard (#177
             # cannot silently re-break npm ci) + the meta-gate asserting this
             # ci.yml step set matches scripts/gates.mjs exactly (the manifest is

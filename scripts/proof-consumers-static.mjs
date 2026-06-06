@@ -158,6 +158,11 @@ const rootAllowed = unionExports(rootContractFiles);
 for (const name of ["startViewTransition", "supportsViewTransitions", "ViewTransitionResult"]) {
     rootAllowed.add(name);
 }
+// AV.W3 — `vReveal` is the same shape: a dependency-free motion symbol
+// (`vue` type-only — no keyframes.js, no vueuse) targeted-re-exported to the
+// root barrel from `./composables/motion/vReveal`, per the useViewTransition
+// precedent. A single-symbol re-export the whole-file contract cannot express.
+rootAllowed.add("vReveal");
 // L.W1 SCC-trap closure — the 4 vueuse-bearing ui families (input/, textarea/,
 // combobox/, carousel/) are subpath-only (`/forms`, `/carousel`): the curated root
 // barrel re-exports the 37 vueuse-FREE ui packages but NOT these. The `ui/index.ts`

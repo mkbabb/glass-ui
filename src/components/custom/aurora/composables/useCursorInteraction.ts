@@ -171,7 +171,10 @@ export function useCursorInteraction(
             try {
                 el.releasePointerCapture(e.pointerId);
             } catch {
-                /* already released */
+                // fail-explicit: befitting — releasePointerCapture throws only
+                // when the capture is already gone (the pointer left the element
+                // / was cancelled). The release is idempotent cleanup; there is
+                // no real failure to surface.
             }
             pointerId = null;
             dragIndex = null;

@@ -258,25 +258,28 @@
         font-size: max(1rem, 1em);
     }
 
-    /* ── Scroll fade masks ── */
+    /* ── Scroll fade masks ──
+       Single-source `mask-image` (AV.W16 TW7): the `-webkit-` companion is
+       dropped — Tailwind v4's Lightning CSS build pipeline auto-prefixes per
+       the browserslist targets, mirroring the glass ladder's single-source
+       `backdrop-filter` (glass.css). NOTE: this is the consistency cut; it
+       does NOT conflict with W15's `@supports`-gated older-Safari mask
+       fallback (that fallback is the distinct case where the companion is
+       genuinely needed and W15 gates it). */
     .scroll-fade-mask {
         mask-image: linear-gradient(to right, transparent, black var(--mask-fade-width), black calc(100% - var(--mask-fade-width)), transparent);
-        -webkit-mask-image: linear-gradient(to right, transparent, black var(--mask-fade-width), black calc(100% - var(--mask-fade-width)), transparent);
     }
 
     .scroll-fade-top {
         mask-image: linear-gradient(to bottom, transparent, black var(--mask-fade-width));
-        -webkit-mask-image: linear-gradient(to bottom, transparent, black var(--mask-fade-width));
     }
 
     .scroll-fade-bottom {
         mask-image: linear-gradient(to bottom, black calc(100% - var(--mask-fade-width)), transparent);
-        -webkit-mask-image: linear-gradient(to bottom, black calc(100% - var(--mask-fade-width)), transparent);
     }
 
     .scroll-fade-y {
         mask-image: linear-gradient(to bottom, transparent, black var(--mask-fade-width), black calc(100% - var(--mask-fade-width)), transparent);
-        -webkit-mask-image: linear-gradient(to bottom, transparent, black var(--mask-fade-width), black calc(100% - var(--mask-fade-width)), transparent);
     }
 
     /* ── Deferred section — render-skip an offscreen subtree (AQ.W3 §5) ──────

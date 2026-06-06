@@ -1,4 +1,32 @@
-/* Glass utilities — glassmorphism surface classes referencing --glass-* tokens */
+/* Glass utilities — glassmorphism surface classes referencing --glass-* tokens
+ *
+ * ── No-glass-on-glass discipline (AV.W15 D5) ───────────────────────────────
+ * Apple's Liquid Glass guidance: "glass is best reserved for the navigation
+ * layer that floats above the content" — there is no glass-on-glass. glass-ui
+ * adopts the same RUNG-PAIRING rule across three layer bands (the existing
+ * z-index registry already encodes them, tokens.css §3 `--z-*`):
+ *
+ *   content    (--z-background … --z-content)  — the page substrate; NOT glass.
+ *   navigation (--z-controls … --z-dock/panel) — the glass band (dock, panels,
+ *                                                 floating chrome).
+ *   overlay    (--z-overlay … --z-modal)       — the glass band (dialog/sheet
+ *                                                 over content).
+ *
+ * A glass surface nested INSIDE another glass surface is a discipline violation
+ * — the inner surface should read as a FLAT tier (a `--card` / `--muted` fill),
+ * not a second `.glass-*` plate (the blur stacks muddy, the rim doubles, the
+ * read collapses). Reach for glass in the navigation/overlay bands only; inside
+ * a glass panel, compose flat tiers.
+ *
+ * ── iOS-spring-on-controls cross-ref (AV.W15 C/M cross-ref) ────────────────
+ * The momentum-gated press squish (the control's "lift up on touch, quiet at
+ * rest" register — scale toward `--scale-press-dock` / `--scale-press-btn`) is
+ * the SPRING half of one Liquid Glass behaviour the rim/specular folds here are
+ * the MATERIAL half of. The spring wiring is OWNED by the dock-motion arm
+ * (AV.W9, velocity continuity) and the slider arm (AV.W11); it is cross-
+ * referenced here and authored there, not re-derived. See
+ * `src/components/custom/dock/README.md` for the canonical discipline.
+ */
 
 @layer components {
     /* ── Five-tier surface ladder (v0.8.0; visual only, no geometry) ──
@@ -53,12 +81,20 @@
         box-shadow: var(--glass-under-shadow-default), var(--glass-shadow-resting);
     }
 
+    /* AV.W15 M3 — the floating tier wires the full-perimeter `--glass-edge-light`
+       rim as an inset layer alongside the under-shadow + lift stack. The rim is
+       the catch-light that "defines the silhouette" (WWDC25 sess. 219), distinct
+       from the top-only `--glass-highlight`. It rides INSIDE the box-shadow stack
+       so it composes with the under-shadow floor and the elevation lift. */
     .glass-floating {
         position: relative;
         background: var(--glass-bg-floating);
         backdrop-filter: var(--glass-blur-floating);
         border: 1px solid var(--glass-border-floating);
-        box-shadow: var(--glass-under-shadow-vivid), var(--glass-shadow-floating);
+        box-shadow:
+            var(--glass-edge-light),
+            var(--glass-under-shadow-vivid),
+            var(--glass-shadow-floating);
     }
 
     .glass-overlay {
@@ -67,6 +103,42 @@
         backdrop-filter: var(--glass-blur-overlay);
         border: 1px solid var(--glass-border-overlay);
         box-shadow: var(--glass-shadow-overlay);
+    }
+
+    /* ── Content-aware under-shadow modifier (AV.W15 M4) ──────────────
+       Apple raises the under-shadow over text (so the glass reads as
+       lifting OFF the text) and drops it over solid light. The modifier
+       is ATTRIBUTE-DRIVEN, no JS: a consumer adds `.glass-over-text`
+       (or `[data-over-content="text"]`) to a text-bearing glass surface to
+       swap it ONE under-shadow rung heavier, or `[data-over-content="solid"]`
+       to lighten it one rung over a solid-light backdrop. It reuses the
+       existing `--glass-under-shadow-{quiet,default,vivid}` rungs (no new
+       shadow value — `vivid` is sufficient over text), redefining only the
+       leading under-shadow layer per tier; the lift stack is untouched.
+
+       The selectors are per-tier so the swap is rung-correct
+       (quiet→default, resting→vivid). `.glass-floating` already sits at the
+       `vivid` ceiling over text, so the heavier variant is a no-op there
+       (the rung saturates) — documented, not an error. */
+    .glass-quiet.glass-over-text,
+    .glass-quiet[data-over-content="text"] {
+        box-shadow: var(--glass-under-shadow-default), var(--glass-shadow-quiet);
+    }
+    .glass-resting.glass-over-text,
+    .glass-resting[data-over-content="text"] {
+        box-shadow: var(--glass-under-shadow-vivid), var(--glass-shadow-resting);
+    }
+
+    /* The inverse — over a solid-light backdrop the under-shadow lightens
+       one rung (the glass need not lift as hard off a flat bright field). */
+    .glass-resting[data-over-content="solid"] {
+        box-shadow: var(--glass-under-shadow-quiet), var(--glass-shadow-resting);
+    }
+    .glass-floating[data-over-content="solid"] {
+        box-shadow:
+            var(--glass-edge-light),
+            var(--glass-under-shadow-default),
+            var(--glass-shadow-floating);
     }
 
     /* Grain noise overlay — reuses paper texture SVG, no extra assets */

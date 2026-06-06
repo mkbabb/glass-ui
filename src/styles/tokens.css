@@ -438,42 +438,45 @@
     /* ═══════════════════════════════════════════════
        §6  SECTION PALETTE — 13-stop jewel tones (light)
        ═══════════════════════════════════════════════ */
-    --section-color-0:  hsl(334 63% 47%);   /* rose       */
-    --section-color-1:  hsl(272 44% 47%);   /* purple     */
-    --section-color-2:  hsl(224 58% 46%);   /* indigo     */
-    --section-color-3:  hsl(194 62% 36%);   /* teal-cyan  */
-    --section-color-4:  hsl(163 46% 35%);   /* forest     */
-    --section-color-5:  hsl(35 70% 42%);    /* amber      */
-    --section-color-6:  hsl(6 72% 49%);     /* tomato-red */
-    --section-color-7:  hsl(286 46% 47%);   /* violet     */
-    --section-color-8:  hsl(342 62% 44%);   /* ruby       */
-    --section-color-9:  hsl(205 20% 38%);   /* slate-blue */
-    --section-color-10: hsl(86 38% 36%);    /* olive      */
-    --section-color-11: hsl(187 58% 39%);   /* ocean      */
-    --section-color-12: hsl(256 44% 52%);   /* periwinkle */
+    /* AV.W16 TW2 — oklch ramp (perceptually-even L; hue preserved from the
+       prior hsl() cadence). Categorical jewel tones — distinct hues, not a
+       monotone scale. Authored as oklch pairs with the .dark mirror. */
+    --section-color-0:  oklch(0.552 0.192 359.8);  /* rose       */
+    --section-color-1:  oklch(0.502 0.165 305.9);  /* purple     */
+    --section-color-2:  oklch(0.484 0.163 265.5);  /* indigo     */
+    --section-color-3:  oklch(0.542 0.089 222.8);  /* teal-cyan  */
+    --section-color-4:  oklch(0.551 0.088 171.1);  /* forest     */
+    --section-color-5:  oklch(0.623 0.124 69.6);   /* amber      */
+    --section-color-6:  oklch(0.579 0.201 30.4);   /* tomato-red */
+    --section-color-7:  oklch(0.532 0.180 317.5);  /* violet     */
+    --section-color-8:  oklch(0.520 0.176 8.4);    /* ruby       */
+    --section-color-9:  oklch(0.492 0.038 239.6);  /* slate-blue */
+    --section-color-10: oklch(0.556 0.103 128.8);  /* olive      */
+    --section-color-11: oklch(0.601 0.092 208.0);  /* ocean      */
+    --section-color-12: oklch(0.513 0.163 291.9);  /* periwinkle */
 
     /* Accent colors */
-    --accent-pink: hsl(330 65% 55%);
-    --section-heading: hsl(328 60% 46%);
-    --accent-red: hsl(0 72% 50%);
+    --accent-pink: oklch(0.613 0.197 353.8);
+    --section-heading: oklch(0.545 0.189 352.8);
+    --accent-red: oklch(0.574 0.216 27.5);
 
     /* ═══════════════════════════════════════════════
        §6b VIZ BASIS — core brand hues
        ═══════════════════════════════════════════════ */
-    --viz-fourier:   hsl(6 72% 49%);
-    --viz-chebyshev: hsl(224 58% 46%);
-    --viz-legendre:  hsl(286 46% 47%);
+    --viz-fourier:   oklch(0.579 0.201 30.4);
+    --viz-chebyshev: oklch(0.484 0.163 265.5);
+    --viz-legendre:  oklch(0.532 0.180 317.5);
     --viz-amber:     var(--section-color-5);
     --viz-green:     var(--section-color-4);
 
     /* Semantic UI accents */
-    --tier-featured: hsl(45 100% 50%);
-    --tier-saved:    hsl(210 100% 60%);
-    --like:          hsl(0 80% 60%);
-    --success:       hsl(142 71% 45%);
-    --warning:       hsl(38 92% 50%);
-    --info:          hsl(217 91% 60%);
-    --delete:        hsl(0 70% 55%);
+    --tier-featured: oklch(0.841 0.173 84.2);
+    --tier-saved:    oklch(0.676 0.176 252.3);
+    --like:          oklch(0.633 0.200 24.9);
+    --success:       oklch(0.720 0.192 149.5);
+    --warning:       oklch(0.770 0.165 70.6);
+    --info:          oklch(0.626 0.186 259.6);
+    --delete:        oklch(0.597 0.198 25.5);
 
     /* Semantic foregrounds — text/glyph atop --success/--warning/--info plates.
        Notification.vue currently hardcodes `text-white`/`text-foreground`
@@ -607,7 +610,14 @@
     --glass-blur-dock-radius:     11px;
 
     --glass-blur-wash:     blur(var(--glass-blur-wash-radius)) saturate(1.05);
-    --glass-blur-quiet:    blur(var(--glass-blur-quiet-radius));
+    /* AV.W15 M1 — the `quiet` rung gained `saturate(1.05) brightness(1.02)`
+       so the lower ladder reads with the same saturation life as `resting`+
+       (Apple: Liquid Glass concentrates light, it does not desaturate). The
+       `brightness(1.02)` is the small lift the spec names — it lands `quiet`
+       between bare `wash` and `resting` without over-brightening the rung.
+       The `prefers-reduced-transparency: reduce` bracket at glass.css maps
+       `--glass-blur-quiet: none`, so this whole chain drops with the blur. */
+    --glass-blur-quiet:    blur(var(--glass-blur-quiet-radius)) saturate(1.05) brightness(1.02);
     --glass-blur-resting:  blur(var(--glass-blur-resting-radius)) saturate(1.05);
     --glass-blur-floating: blur(var(--glass-blur-floating-radius)) saturate(1.4);
     --glass-blur-overlay:  blur(var(--glass-blur-overlay-radius)) saturate(1.5);
@@ -684,6 +694,21 @@
        handle consumers can reference to compose dark-aware layers. */
     --glass-specular: inset 0 1.5px 0 0 hsl(0 0% 100% / 0.45);
     --glass-specular-dark: inset 0 1.5px 0 0 hsl(0 0% 100% / 0.30);
+
+    /* AV.W15 M3 — Full-perimeter rim light (the "rim that defines the
+       silhouette", WWDC25 sess. 219). Distinct from the top-only
+       `--glass-highlight` (a 0.5px top-edge catch-light): this is a 0.75px
+       inset ring around the WHOLE silhouette, four edges, reading as the
+       catch-light that wraps the glass plate the way iOS-26 Liquid Glass
+       carries a rim, not just a top highlight. Composed as a SECOND inset
+       box-shadow layer alongside `--glass-highlight` on the floating/dock
+       tiers (glass.css wires it). The alpha is deliberately low (0.18 light
+       / 0.10 dark) — the rim is decoration and must not eat AA legibility
+       over a busy backdrop; it sits below the perceptual reading threshold
+       on text. The `-dark` companion is overridden inside `.dark` mirroring
+       the `--glass-specular-dark` precedent. */
+    --glass-edge-light:      inset 0 0 0 0.75px hsl(0 0% 100% / 0.18);
+    --glass-edge-light-dark: inset 0 0 0 0.75px hsl(0 0% 100% / 0.10);
 
     /* Chassis curvature illusion — a subtle radial gradient at the chassis
        top centre that lifts the surface without committing to literal 3D.
@@ -1033,32 +1058,33 @@
     /* ═══════════════════════════════════════════════
        §13 GOLD (accent family kept for consumers using it)
        ═══════════════════════════════════════════════ */
-    --gold: hsl(43 74% 49%);
-    --gold-light: hsl(51 100% 50%);
-    --gold-dark: hsl(34 87% 38%);
+    --gold: oklch(0.751 0.147 84.2);
+    --gold-light: oklch(0.890 0.183 96.1);
+    --gold-dark: oklch(0.599 0.132 64.2);
 
     --color-gold: var(--gold);
     --color-gold-light: var(--gold-light);
     --color-gold-dark: var(--gold-dark);
 
     /* ═══════════════════════════════════════════════
-       §14 RAINBOW PALETTE
+       §14 RAINBOW PALETTE — oklch (AV.W16 TW2; mode-independent, no .dark
+       mirror; hue preserved from the prior hsl() cadence)
        ═══════════════════════════════════════════════ */
-    --rainbow-red: hsl(0 85% 60%);
-    --rainbow-orange: hsl(30 90% 55%);
-    --rainbow-yellow: hsl(55 90% 55%);
-    --rainbow-green: hsl(130 70% 50%);
-    --rainbow-blue: hsl(210 80% 55%);
-    --rainbow-indigo: hsl(260 70% 60%);
-    --rainbow-violet: hsl(300 75% 60%);
+    --rainbow-red: oklch(0.636 0.210 25.5);
+    --rainbow-orange: oklch(0.737 0.163 58.9);
+    --rainbow-yellow: oklch(0.900 0.183 103.7);
+    --rainbow-green: oklch(0.772 0.233 144.8);
+    --rainbow-blue: oklch(0.633 0.162 252.1);
+    --rainbow-indigo: oklch(0.566 0.206 294.1);
+    --rainbow-violet: oklch(0.684 0.250 327.9);
 
-    --rainbow-pastel-red: hsl(0 50% 78%);
-    --rainbow-pastel-orange: hsl(25 55% 76%);
-    --rainbow-pastel-yellow: hsl(50 55% 78%);
-    --rainbow-pastel-green: hsl(130 35% 74%);
-    --rainbow-pastel-blue: hsl(220 45% 76%);
-    --rainbow-pastel-indigo: hsl(260 35% 76%);
-    --rainbow-pastel-violet: hsl(280 40% 78%);
+    --rainbow-pastel-red: oklch(0.793 0.066 18.7);
+    --rainbow-pastel-orange: oklch(0.823 0.059 57.3);
+    --rainbow-pastel-yellow: oklch(0.889 0.068 98.1);
+    --rainbow-pastel-green: oklch(0.826 0.072 149.5);
+    --rainbow-pastel-blue: oklch(0.783 0.056 264.2);
+    --rainbow-pastel-indigo: oklch(0.772 0.062 300.2);
+    --rainbow-pastel-violet: oklch(0.799 0.070 314.4);
 
     /* ═══════════════════════════════════════════════
        §16 TIMELINE
@@ -1258,7 +1284,13 @@
     --top-layer-backdrop-dim: 0.5;
 
     --vt-duration: var(--duration-normal);
-    --vt-ease: var(--ease-apple-spring);
+    /* AV.W3 C2 — the spring-coverage sweep: every spring-flavored transition
+       reads a `--spring-*` token. `--ease-apple-spring`'s +27.5% overshoot maps
+       to `--spring-bouncy` (the closest `linear()` overshoot stop-set), so the
+       VT default and the cards/top-layer transitions share one spring primitive
+       (CPU + GPU sample the same curve). The apple-spring cubic-bezier survives
+       as a token DEFINITION only (a `@supports not (linear())` fallback seed). */
+    --vt-ease: var(--spring-bouncy);
     --vt-rise: 8px;
 
     /* AT.W6-dock-c / AU.W8 — the dock layer-swap morph timing, minted ONCE so
@@ -1349,29 +1381,30 @@
            re-specified as `accent-color` inside `.dark` per §2b. */
         --accent-color:            light-dark(var(--primary), var(--ring));
 
-        /* Section palette — jewel tones brightened ~20% L for dark */
-        --section-color-0:   light-dark(hsl(334 63% 47%), hsl(334 72% 70%));
-        --section-color-1:   light-dark(hsl(272 44% 47%), hsl(272 54% 73%));
-        --section-color-2:   light-dark(hsl(224 58% 46%), hsl(224 67% 72%));
-        --section-color-3:   light-dark(hsl(194 62% 36%), hsl(194 61% 64%));
-        --section-color-4:   light-dark(hsl(163 46% 35%), hsl(163 50% 60%));
-        --section-color-5:   light-dark(hsl(35 70% 42%),  hsl(37 73% 67%));
-        --section-color-6:   light-dark(hsl(6 72% 49%),   hsl(6 77% 66%));
-        --section-color-7:   light-dark(hsl(286 46% 47%), hsl(286 58% 72%));
-        --section-color-8:   light-dark(hsl(342 62% 44%), hsl(342 71% 69%));
-        --section-color-9:   light-dark(hsl(205 20% 38%), hsl(205 24% 70%));
-        --section-color-10:  light-dark(hsl(86 38% 36%),  hsl(86 44% 63%));
-        --section-color-11:  light-dark(hsl(187 58% 39%), hsl(187 63% 65%));
-        --section-color-12:  light-dark(hsl(256 44% 52%), hsl(256 60% 74%));
+        /* Section palette — jewel tones brightened L for dark (oklch pairs;
+           AV.W16 TW2 — hue preserved, L evened) */
+        --section-color-0:   light-dark(oklch(0.552 0.192 359.8), oklch(0.721 0.145 354.0));
+        --section-color-1:   light-dark(oklch(0.502 0.165 305.9), oklch(0.733 0.113 308.2));
+        --section-color-2:   light-dark(oklch(0.484 0.163 265.5), oklch(0.718 0.107 268.4));
+        --section-color-3:   light-dark(oklch(0.542 0.089 222.8), oklch(0.767 0.091 219.9));
+        --section-color-4:   light-dark(oklch(0.551 0.088 171.1), oklch(0.776 0.105 172.6));
+        --section-color-5:   light-dark(oklch(0.623 0.124 69.6),  oklch(0.813 0.109 78.2));
+        --section-color-6:   light-dark(oklch(0.579 0.201 30.4),  oklch(0.693 0.151 28.1));
+        --section-color-7:   light-dark(oklch(0.532 0.180 317.5), oklch(0.739 0.134 318.1));
+        --section-color-8:   light-dark(oklch(0.520 0.176 8.4),   oklch(0.709 0.142 2.3));
+        --section-color-9:   light-dark(oklch(0.492 0.038 239.6), oklch(0.763 0.032 239.0));
+        --section-color-10:  light-dark(oklch(0.556 0.103 128.8), oklch(0.794 0.116 127.9));
+        --section-color-11:  light-dark(oklch(0.601 0.092 208.0), oklch(0.805 0.095 206.7));
+        --section-color-12:  light-dark(oklch(0.513 0.163 291.9), oklch(0.719 0.115 295.6));
 
-        --accent-pink:     light-dark(hsl(330 65% 55%), hsl(335 55% 65%));
-        --section-heading: light-dark(hsl(328 60% 46%), hsl(330 55% 68%));
-        --accent-red:      light-dark(hsl(0 72% 50%),   hsl(0 68% 62%));
+        --accent-pink:     light-dark(oklch(0.613 0.197 353.8), oklch(0.683 0.131 354.7));
+        --section-heading: light-dark(oklch(0.545 0.189 352.8), oklch(0.711 0.123 349.3));
+        --accent-red:      light-dark(oklch(0.574 0.216 27.5),  oklch(0.644 0.165 22.9));
 
         /* Viz basis (amber/green stay var()-aliases → auto-track) */
-        --viz-fourier:   light-dark(hsl(6 72% 49%),   hsl(6 77% 66%));
-        --viz-chebyshev: light-dark(hsl(224 58% 46%), hsl(224 67% 72%));
-        --viz-legendre:  light-dark(hsl(286 46% 47%), hsl(286 58% 72%));
+        --viz-fourier:   light-dark(oklch(0.579 0.201 30.4),  oklch(0.693 0.151 28.1));
+        --viz-chebyshev: light-dark(oklch(0.484 0.163 265.5), oklch(0.718 0.107 268.4));
+        --viz-legendre:  light-dark(oklch(0.532 0.180 317.5), oklch(0.739 0.134 318.1));
 
         /* WCAG companion chart labels */
         --chart-ping-label:     light-dark(oklch(0.40 0.18 230), oklch(0.85 0.12 230));
@@ -1380,13 +1413,13 @@
         --chart-jitter-label:   light-dark(oklch(0.40 0.20 305), oklch(0.85 0.14 305));
 
         /* Semantic UI accents */
-        --tier-featured: light-dark(hsl(45 100% 50%),  hsl(45 100% 60%));
-        --tier-saved:    light-dark(hsl(210 100% 60%), hsl(210 100% 70%));
-        --like:          light-dark(hsl(0 80% 60%),    hsl(0 80% 68%));
-        --success:       light-dark(hsl(142 71% 45%),  hsl(142 71% 58%));
-        --warning:       light-dark(hsl(38 92% 50%),   hsl(38 92% 60%));
-        --info:          light-dark(hsl(217 91% 60%),  hsl(217 91% 70%));
-        --delete:        light-dark(hsl(0 70% 55%),    hsl(0 70% 62%));
+        --tier-featured: light-dark(oklch(0.841 0.173 84.2),  oklch(0.867 0.165 88.7));
+        --tier-saved:    light-dark(oklch(0.676 0.176 252.3), oklch(0.748 0.135 250.1));
+        --like:          light-dark(oklch(0.633 0.200 24.9),  oklch(0.690 0.162 22.2));
+        --success:       light-dark(oklch(0.720 0.192 149.5), oklch(0.805 0.186 151.6));
+        --warning:       light-dark(oklch(0.770 0.165 70.6),  oklch(0.809 0.150 76.6));
+        --info:          light-dark(oklch(0.626 0.186 259.6), oklch(0.713 0.138 259.5));
+        --delete:        light-dark(oklch(0.597 0.198 25.5),  oklch(0.644 0.170 23.1));
 
         /* Semantic foregrounds (warning-foreground is identical both modes
            → stays a single light-mode declaration, no light-dark() needed) */
@@ -1398,9 +1431,9 @@
         --shadow-cartoon-color-soft: light-dark(rgb(0 0 0 / 0.06), rgb(255 255 255 / 0.03));
 
         /* Gold family */
-        --gold:       light-dark(hsl(43 74% 49%),  hsl(43 74% 55%));
-        --gold-light: light-dark(hsl(51 100% 50%), hsl(51 100% 55%));
-        --gold-dark:  light-dark(hsl(34 87% 38%),  hsl(34 87% 45%));
+        --gold:       light-dark(oklch(0.751 0.147 84.2), oklch(0.784 0.143 86.0));
+        --gold-light: light-dark(oklch(0.890 0.183 96.1), oklch(0.898 0.182 97.4));
+        --gold-dark:  light-dark(oklch(0.599 0.132 64.2), oklch(0.678 0.150 63.8));
     }
 }
 
@@ -1464,28 +1497,29 @@
     --ring: hsl(48 10% 70%);
     --shadow: hsl(0 0% 5%);
 
-    /* Section palette — brightened for dark backgrounds */
-    --section-color-0:  hsl(334 72% 70%);
-    --section-color-1:  hsl(272 54% 73%);
-    --section-color-2:  hsl(224 67% 72%);
-    --section-color-3:  hsl(194 61% 64%);
-    --section-color-4:  hsl(163 50% 60%);
-    --section-color-5:  hsl(37 73% 67%);
-    --section-color-6:  hsl(6 77% 66%);
-    --section-color-7:  hsl(286 58% 72%);
-    --section-color-8:  hsl(342 71% 69%);
-    --section-color-9:  hsl(205 24% 70%);
-    --section-color-10: hsl(86 44% 63%);
-    --section-color-11: hsl(187 63% 65%);
-    --section-color-12: hsl(256 60% 74%);
+    /* Section palette — brightened for dark backgrounds (oklch; AV.W16 TW2 —
+       mirrors the light-dark() dark halves above; hue preserved) */
+    --section-color-0:  oklch(0.721 0.145 354.0);
+    --section-color-1:  oklch(0.733 0.113 308.2);
+    --section-color-2:  oklch(0.718 0.107 268.4);
+    --section-color-3:  oklch(0.767 0.091 219.9);
+    --section-color-4:  oklch(0.776 0.105 172.6);
+    --section-color-5:  oklch(0.813 0.109 78.2);
+    --section-color-6:  oklch(0.693 0.151 28.1);
+    --section-color-7:  oklch(0.739 0.134 318.1);
+    --section-color-8:  oklch(0.709 0.142 2.3);
+    --section-color-9:  oklch(0.763 0.032 239.0);
+    --section-color-10: oklch(0.794 0.116 127.9);
+    --section-color-11: oklch(0.805 0.095 206.7);
+    --section-color-12: oklch(0.719 0.115 295.6);
 
-    --accent-pink: hsl(335 55% 65%);
-    --section-heading: hsl(330 55% 68%);
-    --accent-red: hsl(0 68% 62%);
+    --accent-pink: oklch(0.683 0.131 354.7);
+    --section-heading: oklch(0.711 0.123 349.3);
+    --accent-red: oklch(0.644 0.165 22.9);
 
-    --viz-fourier:   hsl(6 77% 66%);
-    --viz-chebyshev: hsl(224 67% 72%);
-    --viz-legendre:  hsl(286 58% 72%);
+    --viz-fourier:   oklch(0.693 0.151 28.1);
+    --viz-chebyshev: oklch(0.718 0.107 268.4);
+    --viz-legendre:  oklch(0.739 0.134 318.1);
     /* --viz-amber / --viz-green / --meter-track-stroke are pure var()-aliases
        (→ --section-color-5/-4 / --foreground) — DELETED (§2a); they auto-track
        their sources, which convert via §-1b. */
@@ -1498,13 +1532,13 @@
     --chart-upload-label:   oklch(0.85 0.12 55);
     --chart-jitter-label:   oklch(0.85 0.14 305);
 
-    --tier-featured: hsl(45 100% 60%);
-    --tier-saved:    hsl(210 100% 70%);
-    --like:          hsl(0 80% 68%);
-    --success:       hsl(142 71% 58%);
-    --warning:       hsl(38 92% 60%);
-    --info:          hsl(217 91% 70%);
-    --delete:        hsl(0 70% 62%);
+    --tier-featured: oklch(0.867 0.165 88.7);
+    --tier-saved:    oklch(0.748 0.135 250.1);
+    --like:          oklch(0.690 0.162 22.2);
+    --success:       oklch(0.805 0.186 151.6);
+    --warning:       oklch(0.809 0.150 76.6);
+    --info:          oklch(0.713 0.138 259.5);
+    --delete:        oklch(0.644 0.170 23.1);
 
     /* Semantic foregrounds — off-white over dark plates. Mirrors the
        `--destructive-foreground` dark pattern (hsl 48 10% 90%). The warning
@@ -1544,16 +1578,20 @@
     /* Specular + curvature — softened for dark backdrops. Disco-grain stays
        at the same opacity ceiling; the dark grain blend already lifts it. */
     --glass-specular: inset 0 1.5px 0 0 hsl(0 0% 100% / 0.30);
+    /* AV.W15 M3 — the full-perimeter rim remaps to its dark weight inside
+       `.dark` (mirroring the `--glass-specular` remap above). The lit token
+       resolves to the `-dark` alpha on the deeper canvas. */
+    --glass-edge-light: var(--glass-edge-light-dark);
     --glass-curvature-overlay: radial-gradient(
         ellipse at 50% -20%,
         hsl(0 0% 100% / 0.06),
         transparent 60%
     );
 
-    /* Gold — boosted for dark */
-    --gold: hsl(43 74% 55%);
-    --gold-light: hsl(51 100% 55%);
-    --gold-dark: hsl(34 87% 45%);
+    /* Gold — boosted for dark (oklch; AV.W16 TW2) */
+    --gold: oklch(0.784 0.143 86.0);
+    --gold-light: oklch(0.898 0.182 97.4);
+    --gold-dark: oklch(0.678 0.150 63.8);
 }
 
 /* ═══════════════════════════════════════════════
@@ -1606,4 +1644,48 @@
     syntax: "<length>";
     inherits: false;
     initial-value: 0px;
+}
+
+/* ═══════════════════════════════════════════════
+   §11b  POINTER-ANCHORED MOVING SPECULAR (AV.W15)
+
+   The iOS-26 Liquid Glass "light travels around the material /
+   illuminate under your fingertip" behaviour. A masked radial-gradient
+   catch-light rides the surface at (--specular-x, --specular-y), driven
+   by the consumer's pointer-tracked --mouse-x/--mouse-y write. Registered
+   as typed custom properties so the position INTERPOLATES smoothly between
+   pointer samples (a bare unregistered var() snaps; the @property reg lets
+   the engine animate the percentage stop).
+
+   • --specular-x / --specular-y (percentage) — the catch-light centre.
+     `inherits: false` because each glass surface owns its own pointer
+     position (a hovered parent must not push its specular onto a child —
+     the no-glass-on-glass discipline made mechanical).
+
+   • --specular-intensity (number) — the catch-light alpha multiplier.
+     `inherits: false` for the same per-surface-ownership reason; rises on
+     hover/active, settles to its rest floor on leave.
+
+   @property crosses Baseline 2024-07-09. The consumption (the masked
+   radial + the reduced-motion static bracket + the var() fallback) lives
+   in glass-specular-track.css; the registrations live here alongside the
+   other three regs so the typed-property tier has one home.
+   ═══════════════════════════════════════════════ */
+
+@property --specular-x {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 50%;
+}
+
+@property --specular-y {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 50%;
+}
+
+@property --specular-intensity {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 0;
 }

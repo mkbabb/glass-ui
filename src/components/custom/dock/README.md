@@ -46,6 +46,45 @@ re-invented equivalent:
 - `useDockContext` / `useOptionalDockContext` — the dock provide/inject seam.
 - `useDockLayerGroupContext` / `useOptionalDockLayerGroupContext` — the layer-group seam.
 
+## The no-glass-on-glass discipline (AV.W15 D5)
+
+Apple's Liquid Glass guidance: *"glass is best reserved for the navigation layer
+that floats above the content"* — there is no glass-on-glass. glass-ui adopts the
+same RUNG-PAIRING rule. The existing z-index registry (`tokens.css` §3 `--z-*`)
+already encodes three layer bands:
+
+| Band | z-index range | Glass? |
+|---|---|---|
+| **content** | `--z-background` … `--z-content` | NO — the page substrate. |
+| **navigation** | `--z-controls` … `--z-dock` / `--z-panel` | YES — the glass band (the dock, floating panels, chrome). |
+| **overlay** | `--z-overlay` … `--z-modal` | YES — the glass band (dialog / sheet over content). |
+
+The rule: **a glass surface nested INSIDE another glass surface is a discipline
+violation.** The inner surface should read as a FLAT tier (a `--card` / `--muted`
+fill), not a second `.glass-*` plate — the blurs stack and muddy, the rims double,
+the read collapses. The dock IS the navigation band; controls inside it
+(`DockIconButton`, `DockTabButton`) are flat tiers over the dock's single glass
+plate, NOT nested glass surfaces. Reach for `.glass-*` in the navigation/overlay
+bands only; inside a glass panel, compose flat tiers.
+
+## The Liquid Glass material ↔ spring duality (AV.W15)
+
+The iOS-26 Liquid Glass read is ONE behaviour with a MATERIAL half and a SPRING
+half — the lens and the spring are the same surface coming alive on touch:
+
+- **The material half** (the rim, the moving specular, the per-rung saturation)
+  is owned by the W15 token folds in `glass.css` / `tokens.css` /
+  `glass-specular-track.css`. The pointer-anchored catch-light "illuminates under
+  your fingertip"; the `--glass-edge-light` rim "defines the silhouette".
+- **The spring half** — the momentum-gated press squish, the control's "lift up
+  temporarily on touch, quiet at rest" register (scale toward
+  `--scale-press-dock` / `--scale-press-btn`) — is owned by the **dock-motion arm
+  (AV.W9)** (velocity continuity, WWDC23 sess. 10158) and the **slider arm
+  (AV.W11)**. W15 does NOT re-author the spring wiring; it cross-references those
+  waves. A dock control under a pointer paints a catch-light that tracks the
+  cursor (material) AND squishes toward its press scale on tap (spring) — one
+  Liquid Glass behaviour, two arms.
+
 ## Re-grounding notes (AU.W8, vs HEAD)
 
 - **`useTouchGate` is NOT renamed.** It is a GENERAL `composables/dom` primitive

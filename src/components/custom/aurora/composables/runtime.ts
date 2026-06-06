@@ -30,10 +30,70 @@ import {
     type WarpMode,
 } from "../constants/presets";
 
-const MEDIUM_ID: Record<AuroraMedium, number> = { smooth: 0, pastel: 1, watercolor: 2, oil: 3 };
-const FLOW_ID: Record<FlowPattern, number> = { none: 0, radial: 1, swirl: 2, diagonal: 3, multi: 4 };
-const WARP_ID: Record<WarpMode, number> = { fbm: 0, cellular: 1, hybrid: 2 };
-const STROKE_MODE_ID: Record<StrokeMode, number> = { oil: 0, knife: 1, crayon: 2, chunky: 3 };
+/**
+ * Sealed enum↔shader-int dispatch. Each map is `as const` and constrained by a
+ * `satisfies Record<Union, number>` so a NEW union member is a COMPILE error
+ * until it gets a slot here — no silent stale-`Record` gap where a fresh enum
+ * value uploads `undefined`. The reverse — `as const` keeping the literal int
+ * types — gives the shader-int boundary one source of truth.
+ *
+ * Crayon is a PEER medium (`uMedium == 4`), NOT a stroke mode: the shader hoists
+ * it out of `mediumOil()` (it is wax-on-tooth, not oil strokes). So `MEDIUM_ID`
+ * carries the peer `crayon: 4` slot and `STROKE_MODE_ID` no longer maps `crayon`
+ * — the runtime resolves an `cfg.strokeMode === "crayon"` config to the crayon
+ * peer medium via `resolveMediumId` and uploads a benign `uStrokeMode` (oil).
+ */
+const MEDIUM_ID = {
+    smooth: 0,
+    pastel: 1,
+    watercolor: 2,
+    oil: 3,
+    crayon: 4,
+} as const satisfies Record<AuroraMedium | "crayon", number>;
+
+const FLOW_ID = {
+    none: 0,
+    radial: 1,
+    swirl: 2,
+    diagonal: 3,
+    multi: 4,
+} as const satisfies Record<FlowPattern, number>;
+
+const WARP_ID = {
+    fbm: 0,
+    cellular: 1,
+    hybrid: 2,
+} as const satisfies Record<WarpMode, number>;
+
+// Oil-stroke modes ONLY — crayon dropped (it is a peer medium per MEDIUM_ID).
+const STROKE_MODE_ID = {
+    oil: 0,
+    knife: 1,
+    chunky: 3,
+} as const satisfies Record<Exclude<StrokeMode, "crayon">, number>;
+
+/**
+ * The effective `uMedium` int for a config. The only non-identity case: a
+ * `medium: "oil"` + `strokeMode: "crayon"` config selects the crayon PEER
+ * (`uMedium == 4`) rather than oil — behavior-preserving with the pre-hoist
+ * `mediumOil()` `mode == 2` branch (same pixel output, dispatched one level up).
+ */
+function resolveMediumId(cfg: AuroraConfig): number {
+    if (cfg.medium === "oil" && cfg.strokeMode === "crayon") {
+        return MEDIUM_ID.crayon;
+    }
+    return MEDIUM_ID[cfg.medium];
+}
+
+/**
+ * The `uStrokeMode` int for a config. Crayon is not an oil stroke (it routes to
+ * the crayon peer medium where `uStrokeMode` is unread), so it uploads the
+ * benign oil default; the other modes map directly.
+ */
+function resolveStrokeModeId(cfg: AuroraConfig): number {
+    if (cfg.strokeMode === "crayon") return STROKE_MODE_ID.oil;
+    return STROKE_MODE_ID[cfg.strokeMode];
+}
 
 /**
  * Cursor easing constants. Authored to feel "snappy on entry, gentle decay";
@@ -340,8 +400,9 @@ export function createAurora(
                 gl.uniform1i(U.uWarpMode, WARP_ID[cfg.warpMode]);
                 gl.uniform1i(U.uNoiseOctaves, cfg.noiseOctaves);
 
-                // Medium
-                gl.uniform1i(U.uMedium, MEDIUM_ID[cfg.medium]);
+                // Medium — `resolveMediumId` routes the oil+crayon config to the
+                // crayon PEER (uMedium==4); every other case is the identity map.
+                gl.uniform1i(U.uMedium, resolveMediumId(cfg));
                 gl.uniform1i(U.uFlowPattern, FLOW_ID[cfg.flow.pattern]);
                 // AUTHOR_Y_ORIGIN_IS_TOP
                 gl.uniform2f(U.uFlowFocal, cfg.flow.focalX, 1.0 - cfg.flow.focalY);
@@ -356,7 +417,7 @@ export function createAurora(
                 gl.uniform1f(U.uStrokeScale, cfg.strokeScale);
                 gl.uniform1f(U.uStrokeAnisotropy, cfg.strokeAnisotropy);
                 gl.uniform1i(U.uStrokeLayers, cfg.strokeLayers);
-                gl.uniform1i(U.uStrokeMode, STROKE_MODE_ID[cfg.strokeMode]);
+                gl.uniform1i(U.uStrokeMode, resolveStrokeModeId(cfg));
                 gl.uniform1f(U.uWetEdge, cfg.wetEdge);
                 gl.uniform1f(U.uGranulation, cfg.granulation);
                 gl.uniform1f(U.uImpasto, cfg.impasto);

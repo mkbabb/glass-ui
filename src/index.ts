@@ -1,7 +1,4 @@
-// @mkbabb/glass-ui — Unified design system (v1.0 curated public surface)
-//
-// L.W1 Lane A — vueuse SCC trap closure (Phase 2; intentional v1.0 break).
-// L.W2 Lane B — cohesion + import-shape annotations (cherry-pick rationale).
+// @mkbabb/glass-ui — Unified design system (curated public surface).
 //
 // ── Import shape canon ───────────────────────────────────────────────────
 //
@@ -9,17 +6,14 @@
 //
 //   1. ROOT barrel (`@mkbabb/glass-ui`) — vueuse-free curated surface;
 //      the per-package list below. This file IS that barrel.
-//   2. Per-package SUBPATHS (`@mkbabb/glass-ui/<pkg>`) — 35 + 4 active
-//      entries, every public component package reachable via flat name
-//      (verified at L.W2 Lane B via `npm run verify-export-types` and
-//      runtime probe in `docs/tranches/L/audit/W2-B-cohesion-import-shape-proof.md`).
+//   2. Per-package SUBPATHS (`@mkbabb/glass-ui/<pkg>`) — every public
+//      component package reachable via flat name (verified by
+//      `npm run verify-export-types`).
 //   3. API discovery layer (`@mkbabb/glass-ui/api`) — pure-types/constants
-//      re-export aggregator (L.W1 Lane B; see `src/api/index.ts`).
+//      re-export aggregator (see `src/api/index.ts`).
 //
 // All subpath barrels at top level (`src/<flat>.ts`) follow the same shape:
-// `export * from "./components/<dir>"` (or composition thereof). Lane C of
-// W1 added `src/dark.ts` + `src/keyboard.ts` + `src/carousel.ts` to retire
-// the nested `composables/dark` + `composables/keyboard` v0.9.x subpaths.
+// `export * from "./components/<dir>"` (or composition thereof).
 //
 // ── Heavy-peer exclusions (vueuse + keyframes.js) ────────────────────────
 //
@@ -31,61 +25,52 @@
 //   Symbol(s)                                  Subpath                        Peer
 //   -----------------------------------------  -----------------------------  ---------------------
 //   Input, Textarea, Combobox*                 @mkbabb/glass-ui/forms         @vueuse/core
-//   useGlobalDark, installDarkModeSync         @mkbabb/glass-ui/dark          @vueuse/core (L.W1 Lane C; installDarkModeSync relocated AP.W3 R0G-7)
-//   useKeyboardShortcuts, registerShortcut,    @mkbabb/glass-ui/keyboard      @vueuse/core (L.W1 Lane C)
+//   useGlobalDark, installDarkModeSync         @mkbabb/glass-ui/dark          @vueuse/core
+//   useKeyboardShortcuts, registerShortcut,    @mkbabb/glass-ui/keyboard      @vueuse/core
 //   formatCombo, formatComboParts, isMac,
 //   useRegisteredShortcuts, ShortcutOptions,
 //   RegisteredShortcut, ShortcutCombo,
 //   ShortcutEventType
-//   Carousel, CarouselContent, CarouselDots,   @mkbabb/glass-ui/carousel      @vueuse/core (L.W1 Lane C)
+//   Carousel, CarouselContent, CarouselDots,   @mkbabb/glass-ui/carousel      @vueuse/core
 //   CarouselItem, CarouselNext, CarouselPager,
 //   CarouselPrevious, GlassCarouselPager,
 //   useCarousel, CarouselApi
-//   useSpring, useSpringMount, useSpringPress, @mkbabb/glass-ui/motion        @mkbabb/keyframes.js (AI.W1 R3 + AL.W9-β)
+//   useSpring, useSpringMount, useSpringPress, @mkbabb/glass-ui/motion        @mkbabb/keyframes.js
 //   useNumericTransition, useAnimatedNumber,
 //   useAnimatedNumberMap, DAMPING, SNAP_THRESHOLD
-//   useStagger, useStaggerReveal,              @mkbabb/glass-ui/motion-core   (none — keyframes-FREE + vueuse-FREE; AP.W3 R0G-7)
+//   useStagger, useStaggerReveal,              @mkbabb/glass-ui/motion-core   (none — keyframes-FREE + vueuse-FREE)
 //   useScrollProgress, useRAFLoop,
 //   useIntersectionPause, RAFLoopTiming,
 //   PausableRuntime, DAMPING, SNAP_THRESHOLD
 //
-// Mechanism: K.WS Phase 1 (additive subpaths at v0.9.3) did NOT close the SCC
-// trap because Rollup still walked `export * from "./components/ui"` through
-// every vueuse-bearing leaf. Phase 2 removes the leaves from the root walk.
-// See `docs/tranches/L/research/Rε-architectural-transpositions.md` §B.1 and
-// `docs/tranches/L/waves/W1.md` for full context.
+// Mechanism: the root barrel re-exports each vueuse-free leaf EXPLICITLY rather
+// than `export * from "./components/ui"`, so Rollup never walks a vueuse-bearing
+// leaf into the root SCC.
 //
-// ── Custom-package cherry-pick rationale (Rε §B.2.2 → L.W2 disposition) ───
+// ── Custom-package cherry-pick rationale ─────────────────────────────────
 //
-// Of the 33 packages in `src/components/custom/`, this root barrel re-exports
-// 7 (`instrument-chassis`, `instrument-rail`, `glyph-face`, `disco-glyph`,
-// `hover-popover`, `configurator`, `scrolling-text`). The other 26 reach
-// consumers ONLY via their dedicated subpath (`@mkbabb/glass-ui/dock`,
-// `/aurora`, `/sidebar`, ...). (AI.W5-γ/δ — `dock-group` retired alongside
-// the `sidebar` SFC family; `instrument-rail` was re-added, so the live
-// root-barrel count is 7 and the custom-package count is 33.)
+// This root barrel re-exports a curated 7 of the `src/components/custom/`
+// packages (`instrument-chassis`, `instrument-rail`, `glyph-face`,
+// `disco-glyph`, `hover-popover`, `configurator`, `scrolling-text`). The rest
+// reach consumers ONLY via their dedicated subpath (`@mkbabb/glass-ui/dock`,
+// `/aurora`, `/sidebar`, ...).
 //
 // Acceptance bar for root-barrel inclusion:
-//   (a) vueuse-free at every transitive import (closes SCC trap);
+//   (a) vueuse-free at every transitive import (closes the SCC trap);
 //   (b) single-component or small primitive package (no nested composables
 //       sub-tree, no WebGL substrate); AND
 //   (c) composes tightly with the `ui/` primitives in compositions
 //       — i.e. consumers reach for it alongside `<Button>`, `<Card>`, etc.
 //       rather than as a stand-alone bundle.
 //
-// The 26 excluded packages fail one or more of those criteria:
+// The excluded packages fail one or more of those criteria:
 //   - vueuse-bearing internals (sidebar, glass-carousel, infinite-scroll);
 //   - large composite chassis with nested composables (dock, aurora,
 //     configurator domain helpers); OR
 //   - vertical/themed substrate (paper-backdrop, search,
 //     animated-digit, metric-cell, metric-stack, responsive-tabs).
 // Consumers of those packages explicitly opt into them via subpath, keeping
-// the root barrel's transitive-import graph tight per the tree-shaking
-// gestalt in `docs/tranches/L/research/Rε-architectural-transpositions.md`
-// §B.2.2 (HEADLINE-aligned curation).
-//
-// Brittleness window: `breaking_changes_during_wave: yes`; consumer-facing
-// migration documented in `MIGRATION.md` (L.W5).
+// the root barrel's transitive-import graph tight.
 
 // ─── Core UI primitives (vueuse-free) ─────────────────────────────────────
 // Explicit per-package re-exports — the `export * from "./components/ui"`
@@ -146,38 +131,39 @@ export * from "./components/custom/scrolling-text";
 // `useGlobalDark` and `useKeyboardShortcuts` are intentionally removed
 // from the root barrel — they are vueuse-bearing SCC-trap leaves.
 // Consumers use the `@mkbabb/glass-ui/dark` and `@mkbabb/glass-ui/keyboard`
-// subpaths (Lane C; flat naming per L.W1).
+// subpaths (flat naming).
 //
-// L.W2 — Sub-tree restructure: reactive/ (useInterval + useTimer), dom/
-// (useResizeObserver + useTouchGate + useTokenColor), motion/ (includes
-// useStagger), glass/, sortable/. `useStoryDemo` was demoted to demo-private
-// per CLAUDE.md.
+// Sub-trees: reactive/ (useInterval + useTimer), dom/ (useResizeObserver +
+// useTouchGate + useTokenColor), glass/, sortable/. `useStoryDemo` is
+// demo-private per CLAUDE.md.
 //
-// AI.W1 R3 — `composables/motion` retires from the root barrel for the same
-// reason `composables/dark` + `composables/keyboard` retired in L.W1 Lane C:
-// it statically reaches a heavy peer (`@mkbabb/keyframes.js` — NumericAnimation
-// + SmoothProgress engines, ~102 KB raw / ~34 KB gz) that the bundler walks
-// transitively into every consumer's entry chunk, even consumers that only
-// reach for `Card` or `Button`. The motion composables are now reachable via
-// `@mkbabb/glass-ui/motion` (BREAKING — see MIGRATION.md + CHANGELOG.md).
-// Closes AI-CARRY-GLASS-UI-KEYFRAMES-EDGE.
+// `composables/motion` is NOT on the root barrel — it statically reaches a
+// heavy peer (`@mkbabb/keyframes.js` — the NumericAnimation + SmoothProgress
+// engines) that the bundler would otherwise walk transitively into every
+// consumer's entry chunk, even Card-/Button-only consumers. The motion
+// composables are reachable via `@mkbabb/glass-ui/motion`.
 export * from "./composables/reactive";
 export * from "./composables/dom";
 export * from "./composables/glass";
 export * from "./composables/sortable";
 
-// AQ.W5 §Design 3 — the View-Transitions motion substrate. Dependency-free
-// (no `vue`, no `@mkbabb/keyframes.js`, no `@vueuse/core`), so it is safe on
-// the vueuse-/keyframes-FREE root barrel — re-exported here for BROAD reach
-// (the cross-repo coupling contract muster J.W5 consumes; also reachable via
-// the `@mkbabb/glass-ui/motion-core` subpath). A targeted re-export, NOT
-// `export * from "./composables/motion/core"`, so the keyframes-free-but-
-// barrel-excluded scroll/RAF/stagger leaves stay off the root walk.
+// The View-Transitions motion substrate. Dependency-free (no `vue`, no
+// `@mkbabb/keyframes.js`, no `@vueuse/core`), so it is safe on the
+// vueuse-/keyframes-FREE root barrel — re-exported here for BROAD reach (also
+// reachable via the `@mkbabb/glass-ui/motion-core` subpath). A TARGETED
+// re-export, NOT `export * from "./composables/motion/core"`, so the
+// keyframes-free-but-barrel-excluded scroll/RAF/stagger leaves stay off the
+// root walk.
 export {
     startViewTransition,
     supportsViewTransitions,
     type ViewTransitionResult,
 } from "./composables/motion/useViewTransition";
+
+// The v-reveal entrance directive. Dependency-free (`vue` type-only — no
+// keyframes, no vueuse), so it is root-barrel safe per the `useViewTransition`
+// precedent; also reachable via `@mkbabb/glass-ui/motion-core`.
+export { vReveal } from "./composables/motion/vReveal";
 
 // Core utilities
 export * from "./utils";

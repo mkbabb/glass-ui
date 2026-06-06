@@ -1,0 +1,30 @@
+{
+  "tranche": "AV",
+  "wave": "W3",
+  "gate": "proof:motion-composables-consumer",
+  "note": "Each NEW motion composable tallies >=2 RESOLVING-at-HEAD in-repo consumers (the demo route + the test). The slides DeckNav fork is the EVENTUAL cross-repo consumer (G.W1, post-3.3.0 publish) — listed under `pending`, NOT counted toward >=2 until it resolves. BOOKed folds (D1 stagger, D2 flip, useIdleSchedule keep-private) are NOT tallied.",
+  "items": [
+    {
+      "id": "useCountup",
+      "subpath": "@mkbabb/glass-ui/motion",
+      "consumers": [
+        "demo/stories/motion/countup.vue",
+        "src/composables/__tests__/useCountup.test.ts"
+      ],
+      "pending": [
+        "/Users/mkbabb/Programming/slides/src/deck/useCountup.ts"
+      ]
+    },
+    {
+      "id": "vReveal",
+      "subpath": "@mkbabb/glass-ui/motion-core (+ root barrel)",
+      "consumers": [
+        "demo/stories/motion/reveal.vue",
+        "src/composables/__tests__/vReveal.test.ts"
+      ],
+      "pending": [
+        "/Users/mkbabb/Programming/slides/src/deck/reveal.ts"
+      ]
+    }
+  ]
+}
