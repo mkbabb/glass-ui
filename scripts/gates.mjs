@@ -281,8 +281,8 @@ export const GATES = [
     {
         id: "proof:au-final",
         cmd: "proof:au-final",
-        tags: ["release"],
-        note: "AU.W10 — the close meta-gate (release-only, NOT ci): --verify-ci green; clean tree minus the 2 documented user-domain entries (inv-θ); AU.FINAL.md cites a green run per wave (W0..W10 incl. W8b) + the deferral register; overfitting zero orphans; the 3.3.0 changeset STAGED not auto-published (publish USER-DOMAIN; package.json stays 3.2.0)",
+        tags: [],
+        note: "AU.W10 — the close meta-gate. RETIRED from the release set at the 3.3.0 cut: its assertion #5 (STAGED-NOT-PUBLISHED: version stays 3.2.0 + the changeset staged) guarded the AU→3.3.0 staging window, which closes the moment the cut runs. The user authorized the publish; `changeset version` bumped to 3.3.0 and consumed the changeset, so the staging assertion is fulfilled-and-superseded. AV is the successor tranche (proof:av-final is its close gate). The 21 other release gates carry the release-quality coverage. Kept here untagged for the historical record; bite-runnable via `npm run proof:au-final`.",
     },
     {
         id: "proof:liquid-glass-tokens",
