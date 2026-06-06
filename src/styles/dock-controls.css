@@ -20,6 +20,29 @@
  * (cascade rung 6b) — no new subpath; it ships inside `/styles`. */
 
 @layer components {
+    /* AV.W9.3 — momentum-gated dock-control press spring. The `:active` squish
+       toward `--scale-press-dock` settles on a NO-OVERSHOOT spring (Apple,
+       "Designing Fluid Interfaces": default 100% damping — no bounce — for a tap;
+       reserve bounce for surfaces driven by gesture MOMENTUM). The dock controls
+       are tap surfaces (no momentum), so the press re-binds `--dock-press-spring`
+       from the bouncy preset (`--spring-bouncy`, ~+20% overshoot, defined in
+       tokens.css §-2) to `--spring-smooth` — the critically-damped (ζ≈1, ~0.4%
+       peak) iOS tap curve. Token-routed (an existing spring preset, never a raw
+       cubic-bezier); the `--duration-fast` prefix is kept so the squish-back stays
+       quick. Every dock-control `scale var(--dock-press-spring)` press transition
+       (and the select chevron's `rotate`) inherits this one binding. A future
+       momentum-gated surface (none today) would override this back to a bouncy
+       preset on its own scope. The `:where()` group keeps zero specificity so a
+       consumer override of `--dock-press-spring` still wins. */
+    :where(
+        .dock-icon-button,
+        .dock-tab-button,
+        .dock-select-trigger,
+        .dock-dropdown-trigger
+    ) {
+        --dock-press-spring: var(--duration-fast) var(--spring-smooth);
+    }
+
     .dock-icon-button {
         display: inline-flex;
         align-items: center;
@@ -38,17 +61,22 @@
            `--foreground`, byte-identical to before) so a consumer floating the
            dock over an aurora can lift contrast per-backdrop. The muted icon
            weight mixes that base down with `--opacity-icon-muted`. */
-        color: color-mix(in srgb, var(--dock-fg-on-aurora, var(--foreground)) calc(var(--opacity-icon-muted) * 100%), transparent);
+        color: color-mix(
+            in srgb,
+            var(--dock-fg-on-aurora, var(--foreground))
+                calc(var(--opacity-icon-muted) * 100%),
+            transparent
+        );
         outline: none;
         transition:
             background-color var(--dock-motion-fast),
             color var(--dock-motion-fast),
             /* AT.W7-dock-b — `scale` carries the press micro-feedback spring
                (transform-scoped only; the surface fades stay on the flat ease). */
-            scale var(--dock-press-spring),
+                scale var(--dock-press-spring),
             opacity var(--dock-motion-fast),
             /* AT.W7-dock-b — the glass specular highlight fades in on hover. */
-            box-shadow var(--dock-motion-fast);
+                box-shadow var(--dock-motion-fast);
 
         /* AT.W7-dock-b — glass icon-hover. The icon-button hover now reads as a
            glass surface, not a flat `--muted` plate: a translucent card-tinted fill
@@ -58,7 +86,10 @@
            `[data-tier="secondary"]` recipe below. A consumer retunes the fill via
            `--dock-icon-hover-bg` and the specular via `--dock-icon-hover-shadow`. */
         &:hover:not(:disabled) {
-            background: var(--dock-icon-hover-bg, color-mix(in srgb, var(--card) 55%, transparent));
+            background: var(
+                --dock-icon-hover-bg,
+                color-mix(in srgb, var(--card) 55%, transparent)
+            );
             color: var(--btn-hover-color, var(--foreground));
             scale: var(--scale-hover-dock);
         }
@@ -161,7 +192,10 @@
     }
 
     .dark-mode-toggle-button[data-size="dock"],
-    .glass-dock .dark-mode-toggle-button:not([data-size="sm"]):not([data-size="lg"]):not([data-size="control"]) {
+    .glass-dock
+        .dark-mode-toggle-button:not([data-size="sm"]):not([data-size="lg"]):not(
+            [data-size="control"]
+        ) {
         --dark-mode-toggle-size: var(--dock-control-size, var(--size-icon-btn));
         --dark-mode-toggle-padding: var(--dock-icon-padding, 0);
     }
@@ -204,8 +238,8 @@
         transition:
             background-color var(--dock-motion-fast),
             color var(--dock-motion-fast),
-            /* AT.W7-dock-b — press micro-feedback spring (transform-scoped). */
-            scale var(--dock-press-spring);
+            /* AT.W7-dock-b — press micro-feedback spring (transform-scoped). */ scale
+                var(--dock-press-spring);
 
         &:hover:not(:disabled) {
             background: var(--surface-tint-8);
@@ -251,8 +285,7 @@
     .dock-tab-button[data-tier="primary"] {
         --dock-tab-min-height: 4rem;
         padding-inline: 1.5rem;
-        background:
-            color-mix(in srgb, var(--card) 60%, transparent);
+        background: color-mix(in srgb, var(--card) 60%, transparent);
         color: var(--foreground);
 
         /* Phase-tint hover override — same disco-grain composition as
@@ -266,7 +299,11 @@
                 var(--paper-clean-texture),
                 radial-gradient(
                     ellipse at 30% 30%,
-                    color-mix(in srgb, var(--phase-color, var(--foreground)) 18%, transparent),
+                    color-mix(
+                        in srgb,
+                        var(--phase-color, var(--foreground)) 18%,
+                        transparent
+                    ),
                     transparent 70%
                 );
             background-blend-mode: overlay, normal;
@@ -288,7 +325,12 @@
             border-radius: inherit;
             background: radial-gradient(
                 ellipse at 30% 30%,
-                color-mix(in srgb, var(--phase-color, var(--foreground)) 18%, transparent) 0%,
+                color-mix(
+                        in srgb,
+                        var(--phase-color, var(--foreground)) 18%,
+                        transparent
+                    )
+                    0%,
                 transparent 70%
             );
             pointer-events: none;
@@ -314,9 +356,7 @@
     .dock-icon-button[data-tier="secondary"] {
         background: color-mix(in srgb, var(--card) 50%, transparent);
         border: 1px solid var(--glass-border-quiet);
-        box-shadow:
-            var(--border-hairline),
-            var(--glass-highlight);
+        box-shadow: var(--border-hairline), var(--glass-highlight);
     }
 
     .dock-tab-button[data-tier="secondary"]:hover:not(:disabled),
@@ -337,8 +377,7 @@
         scale: 1;
         gap: var(--dock-trigger-gap, 0.25rem);
         min-height: var(--dock-trigger-min-height, auto);
-        padding:
-            var(--dock-trigger-padding-block, 0.25rem)
+        padding: var(--dock-trigger-padding-block, 0.25rem)
             var(--dock-trigger-padding-inline, 0.5rem);
         white-space: nowrap;
         cursor: pointer;
@@ -346,13 +385,18 @@
         background: transparent;
         border-radius: var(--dock-control-radius, var(--radius-pill));
         /* Shares the dock-icon-button legibility base (`--dock-fg-on-aurora`). */
-        color: color-mix(in srgb, var(--dock-fg-on-aurora, var(--foreground)) calc(var(--opacity-icon-muted) * 100%), transparent);
+        color: color-mix(
+            in srgb,
+            var(--dock-fg-on-aurora, var(--foreground))
+                calc(var(--opacity-icon-muted) * 100%),
+            transparent
+        );
         outline: none;
         transition:
             background-color var(--dock-motion-fast),
             color var(--dock-motion-fast),
-            /* AT.W7-dock-b — press micro-feedback spring (transform-scoped). */
-            scale var(--dock-press-spring),
+            /* AT.W7-dock-b — press micro-feedback spring (transform-scoped). */ scale
+                var(--dock-press-spring),
             opacity var(--dock-motion-fast);
     }
 
@@ -390,8 +434,18 @@
             box-shadow var(--dock-motion-fast);
     }
 
-    .dock-select-trigger:is(.is-active, .active, [aria-expanded="true"], [aria-pressed="true"]),
-    .dock-dropdown-trigger:is(.is-active, .active, [aria-expanded="true"], [aria-pressed="true"]) {
+    .dock-select-trigger:is(
+        .is-active,
+        .active,
+        [aria-expanded="true"],
+        [aria-pressed="true"]
+    ),
+    .dock-dropdown-trigger:is(
+        .is-active,
+        .active,
+        [aria-expanded="true"],
+        [aria-pressed="true"]
+    ) {
         background: var(--muted);
         color: var(--foreground);
     }

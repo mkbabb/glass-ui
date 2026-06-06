@@ -94,10 +94,22 @@
         --dock-control-size: var(--dock-density-compact-control-size, 2rem);
         --dock-layer-height: var(--dock-density-compact-layer-height, 2rem);
         --dock-layer-gap: var(--dock-density-compact-gap, 0.25rem);
-        --dock-trigger-padding-block: var(--dock-density-compact-trigger-padding-block, 0.1875rem);
-        --dock-trigger-padding-inline: var(--dock-density-compact-trigger-padding-inline, 0.4375rem);
-        --dock-tab-padding-block: var(--dock-density-compact-tab-padding-block, 0.3125rem);
-        --dock-tab-padding-inline: var(--dock-density-compact-tab-padding-inline, 0.625rem);
+        --dock-trigger-padding-block: var(
+            --dock-density-compact-trigger-padding-block,
+            0.1875rem
+        );
+        --dock-trigger-padding-inline: var(
+            --dock-density-compact-trigger-padding-inline,
+            0.4375rem
+        );
+        --dock-tab-padding-block: var(
+            --dock-density-compact-tab-padding-block,
+            0.3125rem
+        );
+        --dock-tab-padding-inline: var(
+            --dock-density-compact-tab-padding-inline,
+            0.625rem
+        );
         --dock-tab-h: 32px;
     }
 
@@ -109,10 +121,22 @@
         --dock-control-size: var(--dock-density-comfortable-control-size, 2.5rem);
         --dock-layer-height: var(--dock-density-comfortable-layer-height, 2.5rem);
         --dock-layer-gap: var(--dock-density-comfortable-gap, 0.375rem);
-        --dock-trigger-padding-block: var(--dock-density-comfortable-trigger-padding-block, 0.25rem);
-        --dock-trigger-padding-inline: var(--dock-density-comfortable-trigger-padding-inline, 0.5rem);
-        --dock-tab-padding-block: var(--dock-density-comfortable-tab-padding-block, 0.4375rem);
-        --dock-tab-padding-inline: var(--dock-density-comfortable-tab-padding-inline, 0.75rem);
+        --dock-trigger-padding-block: var(
+            --dock-density-comfortable-trigger-padding-block,
+            0.25rem
+        );
+        --dock-trigger-padding-inline: var(
+            --dock-density-comfortable-trigger-padding-inline,
+            0.5rem
+        );
+        --dock-tab-padding-block: var(
+            --dock-density-comfortable-tab-padding-block,
+            0.4375rem
+        );
+        --dock-tab-padding-inline: var(
+            --dock-density-comfortable-tab-padding-inline,
+            0.75rem
+        );
         --dock-tab-h: 38px;
     }
 
@@ -122,10 +146,22 @@
         --dock-control-size: var(--dock-density-spacious-control-size, 2.75rem);
         --dock-layer-height: var(--dock-density-spacious-layer-height, 2.75rem);
         --dock-layer-gap: var(--dock-density-spacious-gap, 0.5rem);
-        --dock-trigger-padding-block: var(--dock-density-spacious-trigger-padding-block, 0.375rem);
-        --dock-trigger-padding-inline: var(--dock-density-spacious-trigger-padding-inline, 0.625rem);
-        --dock-tab-padding-block: var(--dock-density-spacious-tab-padding-block, 0.5rem);
-        --dock-tab-padding-inline: var(--dock-density-spacious-tab-padding-inline, 0.875rem);
+        --dock-trigger-padding-block: var(
+            --dock-density-spacious-trigger-padding-block,
+            0.375rem
+        );
+        --dock-trigger-padding-inline: var(
+            --dock-density-spacious-trigger-padding-inline,
+            0.625rem
+        );
+        --dock-tab-padding-block: var(
+            --dock-density-spacious-tab-padding-block,
+            0.5rem
+        );
+        --dock-tab-padding-inline: var(
+            --dock-density-spacious-tab-padding-inline,
+            0.875rem
+        );
         --dock-tab-h: 44px;
     }
 
@@ -139,10 +175,22 @@
         --dock-control-size: var(--dock-density-audacious-control-size, 4rem);
         --dock-layer-height: var(--dock-density-audacious-layer-height, 4rem);
         --dock-layer-gap: var(--dock-density-audacious-gap, 0.875rem);
-        --dock-trigger-padding-block: var(--dock-density-audacious-trigger-padding-block, 0.625rem);
-        --dock-trigger-padding-inline: var(--dock-density-audacious-trigger-padding-inline, 1rem);
-        --dock-tab-padding-block: var(--dock-density-audacious-tab-padding-block, 0.5rem);
-        --dock-tab-padding-inline: var(--dock-density-audacious-tab-padding-inline, 1.5rem);
+        --dock-trigger-padding-block: var(
+            --dock-density-audacious-trigger-padding-block,
+            0.625rem
+        );
+        --dock-trigger-padding-inline: var(
+            --dock-density-audacious-trigger-padding-inline,
+            1rem
+        );
+        --dock-tab-padding-block: var(
+            --dock-density-audacious-tab-padding-block,
+            0.5rem
+        );
+        --dock-tab-padding-inline: var(
+            --dock-density-audacious-tab-padding-inline,
+            1.5rem
+        );
         --dock-tab-min-height: var(--dock-density-audacious-tab-min-height, 3.5rem);
         --dock-tab-h: var(--dock-density-audacious-tab-min-height, 3.5rem);
     }
@@ -264,7 +312,10 @@
      * `.variant-instrument-strip` — chassis-strip carries ONE canonical
      * border-radius (`--radius-card`), per the chassis family. */
     .glass-dock.variant-instrument-strip {
-        padding: var(--dock-instrument-strip-padding, var(--dock-padding-inline, 0.75rem));
+        padding: var(
+            --dock-instrument-strip-padding,
+            var(--dock-padding-inline, 0.75rem)
+        );
         background: var(--glass-bg-chassis, var(--glass-bg-wash));
         border: 1px solid var(--glass-border-quiet, var(--glass-border-resting));
         border-radius: var(--radius-card);
@@ -307,7 +358,10 @@
     }
 
     .glass-dock.collapsed .dock-layer--summary {
-        min-width: var(--dock-collapsed-summary-min-size, var(--dock-layer-height, 2.5rem));
+        min-width: var(
+            --dock-collapsed-summary-min-size,
+            var(--dock-layer-height, 2.5rem)
+        );
         justify-content: center;
     }
 
@@ -385,28 +439,22 @@
         transition: width var(--dock-motion-resize);
     }
 
-    /* AU.W8b.1 — native container-morph arm. On a supporting engine the browser
-       interpolates the current computed width → the active layer's intrinsic
-       width natively, so the container morph needs no JS pin/measure dance (the
-       FLIP fixed-pixel path above stays the unconditional fallback). The active
-       layer carries the intrinsic-width destination via `calc-size(auto, size)`;
-       `interpolate-size: allow-keywords` opts the subtree into width:auto ↔ length
-       interpolation.
-
-       BASELINE: `interpolate-size: allow-keywords` + `calc-size()` are LIMITED
-       availability — Chrome/Edge 129 only, NO Firefox/Safari (mwg crosswalk §3.5,
-       NOT Baseline). The `@supports` gate is MANDATORY CORRECTNESS, not optional
-       polish — the fold is safe BECAUSE of the gate. */
-    @supports (interpolate-size: allow-keywords) {
-        .dock-layers {
-            interpolate-size: allow-keywords;
-        }
-
-        .glass-dock.expanded > .dock-layers,
-        .dock-layer-group .dock-layer-item-host.is-active {
-            width: calc-size(auto, size);
-        }
-    }
+    /* AV.W9.0 — the AU.W8b native container-morph arm (the `@supports` block that
+       opted the subtree into auto-to-length width interpolation and declared the
+       active layer's destination width as intrinsic) is RETIRED. It was never made
+       mutually exclusive with the `SpringProgress` FLIP driver in
+       `useLayerTransition.ts`: on Chrome 129+ the native arm interpolated
+       `.dock-layers` width on the browser's own clock WHILE the spring wrote inline
+       `width` per frame — a dual-driver race over the SAME property that cancelled
+       the morph and froze the dock at runtime (born-RED under
+       `proof:dock-animation-live`). One authority per concern: the size morph now
+       has exactly ONE driver on every engine — the `SpringProgress` FLIP path above
+       (`:382`), or the orthogonal View-Transitions path inside
+       `startViewTransition` (which owns size + crossfade as a single browser-side
+       mutation and never touches inline width). Neither coexists with a CSS-native
+       intrinsic-width destination, so the race is gone. This re-expresses the
+       `e8380d7` "one driver owns the morph" invariant on the modern
+       FLIP+spring(+VT) architecture. */
 
     /* Horizontal dock content grows visibly when the active layer's natural
        width exceeds the content area (grow-to-fit; consumers needing wrap opt
@@ -423,9 +471,10 @@
        leaves the hit-test tree (`visibility:hidden`), the leaving layer stays
        painted-but-untouchable through its fade (`visibility:visible` +
        `pointer-events:none`), and the active layer shows IMMEDIATELY (`visibility
-       0s`, no fade-in delay). The hand-rolled 3-state fork below is the
-       unconditional fallback; the `@supports (transition-behavior: allow-discrete)`
-       arm that follows expresses the SAME 3-state contract natively. */
+       0s`, no fade-in delay). The hand-rolled 3-state fork below is now the SOLE
+       visibility authority on every engine — AV.W9.1 retired the native
+       discrete-visibility arm that used to second-drive it, so one owner governs
+       visibility (one owner governs size, one owns opacity). */
 
     /* ── Layer crossfade + hit-test contract (shared) ──────────────────
        Two dock-layer surfaces stack on a 1/1 CSS grid and crossfade:
@@ -492,59 +541,18 @@
         pointer-events: none;
     }
 
-    /* AU.W8b.1 — native discrete-visibility arm. The hand-rolled 3-state fork
-       above (inactive / active / leaving) is the unconditional fallback; on a
-       supporting engine the SAME contract is expressed as ONE discrete transition
-       over `opacity, visibility` with a `@starting-style` entry anchor, so the
-       active layer fades in from hidden and the inactive layer animates out of the
-       hit-test tree in lockstep with the opacity crossfade — no delayed
-       `visibility 0s linear` hold needed.
-
-       `allow-discrete` goes on a SEPARATE `transition-behavior` declaration, NEVER
-       inside the `transition` shorthand (mwg crosswalk §2.1 — older browsers drop
-       the WHOLE shorthand declaration if `allow-discrete` appears inside it).
-
-       BASELINE: `@starting-style` + `transition-behavior: allow-discrete` are
-       Baseline Newly available since 2024-08-06 (mwg §3.5/§3.6) — Baseline-safe
-       behind this `@supports` gate. */
-    @supports (transition-behavior: allow-discrete) {
-        .dock-layer,
-        .dock-layer-item-host {
-            transition-property: opacity, visibility;
-            /* `--dock-motion-resize` is the compound `duration easing` token the
-               fallback shorthand consumes; the longhands below ride its two halves
-               (`--duration-normal` + the `--dock-resize-spring` curve) so the
-               native arm settles on the SAME timing source as the FLIP fallback. */
-            transition-duration: var(--duration-normal);
-            transition-timing-function: var(--dock-resize-spring);
-            transition-behavior: allow-discrete;
-        }
-
-        .dock-layer.layer-active,
-        .dock-layer-item-host.is-active {
-            opacity: 1;
-            visibility: visible;
-            /* Re-assert the discrete-transition longhands at the active rule's
-               (0,2,0) specificity. The unconditional fallback active rule
-               (`:438`/`:472`) sets the `transition` SHORTHAND at the same
-               specificity — that shorthand resets `transition-behavior` to
-               `normal` and the visibility duration to `0s`, so without this
-               re-assert the fallback would shadow the native arm on the active
-               layer. Source order (this arm follows the fallback) + the
-               re-asserted longhands let the native discrete arm govern: the
-               active layer fades in from the `@starting-style` hidden anchor and
-               visibility rides the SAME `--dock-motion-resize` halves discretely. */
-            transition-property: opacity, visibility;
-            transition-duration: var(--duration-normal);
-            transition-timing-function: var(--dock-resize-spring);
-            transition-behavior: allow-discrete;
-
-            @starting-style {
-                opacity: 0;
-                visibility: hidden;
-            }
-        }
-    }
+    /* AV.W9.1 — the AU.W8b native discrete-visibility arm (the second `@supports`
+       block that expressed the 3-state contract as one discrete transition over
+       opacity + visibility with a `@starting-style` entry anchor) is RETIRED. It
+       was a THIRD opacity/visibility authority overlapping the hand-rolled 3-state
+       fork above and the spring's settle — three owners for one concern. With the
+       native size arm gone (W9.0), opacity now has ONE owner everywhere: the
+       `opacity var(--dock-motion-resize)` crossfade on `.dock-layer{,-item-host}`
+       (the AU.W2 lockstep token — kept), and visibility has ONE owner: the delayed
+       `visibility 0s linear var(--duration-normal)` hold of the
+       `AU.W8b-visibility-fork` 3-state fallback above (the a11y-006 bite-anchor,
+       LOAD-BEARING). One authority per concern: size = spring/VT, opacity = the
+       CSS crossfade, visibility = the delayed-hold fork. */
 
     /* ── Base layout — distinct per surface ─────────────────────────── */
     .dock-layer {
@@ -651,8 +659,7 @@
         white-space: normal;
         border-radius: var(--radius-2xl);
         max-width: var(--dock-wrap-max-width);
-        padding:
-            var(--dock-wrap-padding-block, var(--dock-padding-block, 0.375rem))
+        padding: var(--dock-wrap-padding-block, var(--dock-padding-block, 0.375rem))
             var(--dock-wrap-padding-inline, 0.625rem);
     }
 
@@ -661,7 +668,8 @@
         justify-content: center;
         height: auto;
         min-height: var(--dock-wrap-layer-min-height, var(--dock-layer-height, 2rem));
-        gap: var(--dock-wrap-row-gap, 0.25rem) var(--dock-wrap-column-gap, var(--dock-layer-gap, 0.375rem));
+        gap: var(--dock-wrap-row-gap, 0.25rem)
+            var(--dock-wrap-column-gap, var(--dock-layer-gap, 0.375rem));
     }
 
     .glass-dock.dock-overflow-wrap .dock-layer--summary {
@@ -889,8 +897,10 @@
             white-space: nowrap;
             border-radius: var(--radius-pill);
             max-width: none;
-            padding:
-                var(--dock-wrap-desktop-padding-block, var(--dock-padding-block, 0.375rem))
+            padding: var(
+                    --dock-wrap-desktop-padding-block,
+                    var(--dock-padding-block, 0.375rem)
+                )
                 var(--dock-wrap-desktop-padding-inline, 0.75rem);
         }
 

@@ -64,8 +64,8 @@ const trim = ref<number[]>([55]);
         </StorySection>
 
         <StorySection
-            label="slider in dock — glass-pill variant"
-            blurb="The glass-pill slider variant carries a denser thumb halo on hold (`.glass-slider[data-variant='glass-pill'][data-held]`). The dock substrate response is the same — the contract is variant-agnostic at the API surface."
+            label="slider in dock — wider track"
+            blurb="The same standard knob over a wider dock cell. The thumb halo + dock substrate response on hold are variant-agnostic — the `dockKeepOpen` / `dockHeld` contract lives on the API surface, not the recipe."
         >
             <div class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
                 <GlassDock fit-content>
@@ -75,7 +75,6 @@ const trim = ref<number[]>([55]);
                     <div class="flex w-56 items-center px-2">
                         <Slider
                             v-model="brightness"
-                            variant="glass-pill"
                             :max="100"
                             :step="1"
                             aria-label="Brightness"

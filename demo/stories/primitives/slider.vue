@@ -8,20 +8,14 @@ const volume = ref<number[]>([42]);
 const balance = ref<number[]>([65]);
 const range = ref<number[]>([22, 78]);
 const spectrum = ref<number[]>([50]);
-const timeline = ref<number[]>([35]);
-const pill = ref<number[]>([60]);
-const cartoon = ref<number[]>([45]);
 const disabled = ref<number[]>([30]);
 
-// J.W5.A — variant × size matrix (5 variants × 3 sizes = 15 cells).
+// AV.W11 — variant × size matrix (2 variants × 3 sizes = 6 cells).
 // Each cell binds an independent reactive value so drag interactions
-// don't cross-couple. Hard gate (e) requires every cell renders.
+// don't cross-couple. Hard gate requires every cell renders.
 const variants: NonNullable<SliderVariants["variant"]>[] = [
     "standard",
     "spectrum",
-    "timeline",
-    "glass-pill",
-    "glass-cartoon",
 ];
 const sizes: NonNullable<SliderVariants["size"]>[] = ["sm", "md", "lg"];
 
@@ -84,44 +78,20 @@ const matrix = ref<Record<MatrixKey, number[]>>(
             <Slider v-model="range" :max="100" :step="1" aria-label="Price range" />
         </section>
 
-        <!-- Spectrum variant — thin bar thumb over a tall muted track. -->
+        <!-- Spectrum variant — gradient track + small ringed knob. The track
+             background is consumer-supplied via `--slider-track-bg`. -->
         <section class="flex flex-col gap-3">
-            <p class="section-label">spectrum variant</p>
+            <p class="section-label">spectrum variant — gradient track</p>
             <Slider
                 v-model="spectrum"
                 variant="spectrum"
                 :max="100"
                 :step="1"
                 aria-label="Spectrum"
-                :class="
-                    cn(
-                        '[&_.slider-track]:bg-[linear-gradient(to_right,var(--viz-fourier),var(--viz-legendre),var(--viz-chebyshev))]',
-                    )
-                "
-            />
-        </section>
-
-        <!-- Timeline variant — glass-wash scrub track. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">timeline variant</p>
-            <Slider v-model="timeline" variant="timeline" :max="100" :step="1" aria-label="Timeline" />
-        </section>
-
-        <!-- Glass-pill variant — pill substrate w/ halo thumb. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">glass-pill variant</p>
-            <Slider v-model="pill" variant="glass-pill" :max="100" :step="1" aria-label="Glass pill" />
-        </section>
-
-        <!-- Glass-cartoon variant — 2px-bordered, cartoon-shadow. -->
-        <section class="flex flex-col gap-3">
-            <p class="section-label">glass-cartoon variant</p>
-            <Slider
-                v-model="cartoon"
-                variant="glass-cartoon"
-                :max="100"
-                :step="1"
-                aria-label="Glass cartoon"
+                :style="{
+                    '--slider-track-bg':
+                        'linear-gradient(to right, var(--viz-fourier), var(--viz-legendre), var(--viz-chebyshev))',
+                }"
             />
         </section>
 

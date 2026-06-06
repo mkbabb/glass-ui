@@ -52,15 +52,24 @@ export interface UseLayerTransitionReturn {
  *   the size + crossfades the pane content with ZERO `getBoundingClientRect`
  *   reads. No pin/measure/re-pin dance, no inline size, no rAF.
  *
- * - **Fallback path** (no `startViewTransition`): the existing axis-aware FLIP
- *   runs verbatim, KEPT as the sole feature-detected fallback (no alias — one
- *   path or the other runs per swap, never both):
- *   1. Capture current container size
+ * - **Fallback path** (no `startViewTransition`): the axis-aware FLIP, KEPT as
+ *   the sole feature-detected fallback (no alias — one path or the other runs per
+ *   swap, never both). It is now the ONLY driver that writes inline size on a
+ *   non-VT engine (AV.W9.0 retired the `interpolate-size`/`calc-size` CSS arm that
+ *   used to second-drive width on Chrome 129+ and freeze the dock):
+ *   1. Capture current container size (or the live spring's pixel value on a
+ *      retarget)
  *   2. Pin container to that size
- *   3. Swap classes: old layer → leaving, new layer → active
- *   4. nextTick: measure new natural size, re-pin to old
- *   5. Animate to new size via CSS transition
- *   6. On transitionend(size), clear inline size
+ *   3. nextTick → rAF: swap classes (old → leaving, new → active) AND measure new
+ *      natural size in ONE frame origin
+ *   4. Drive size off ONE `SpringProgress` clock in PIXEL space (its `value` IS
+ *      the live width/height)
+ *   5. On settle, clear inline size + restore the CSS transition
+ *
+ *   AV.W9.2 — velocity-continuity: an interrupted swap (a re-toggle while the
+ *   spring is still live) RE-SEATS the existing solver's target from its current
+ *   `(value, velocity)` instead of dispose+reconstruct-from-rest, so the morph is
+ *   continuous through a retarget (the iOS interruptible-spring contract).
  */
 export function useLayerTransition(
     options: UseLayerTransitionOptions,
@@ -82,14 +91,23 @@ export function useLayerTransition(
     let transitionId = 0;
     let cleanupTimer: ReturnType<typeof setTimeout> | null = null;
     // The live FLIP-fallback driver (AU.W8.3); held on a closure var so a
-    // superseded swap's loop is stopped/disposed before the next one arms.
+    // retargeted swap can RE-SEAT it from its current `(value, velocity)` rather
+    // than dispose+reconstruct from rest (AV.W9.2, the iOS interruptible-spring
+    // contract). The spring drives the container size in PIXEL space directly —
+    // its `value` IS the live width/height — so a retarget is the solver's native
+    // `set target(newToSize)`, which re-seats the closed-form solution from the
+    // current pixel value AND velocity (keyframes.d.ts:800-805). The element it is
+    // driving is captured alongside so the live frame loop keeps writing the right
+    // box across a retarget.
     let spring: SpringProgress | null = null;
+    let springEl: HTMLElement | null = null;
 
     function disposeSpring() {
         if (spring) {
             spring.dispose();
             spring = null;
         }
+        springEl = null;
     }
 
     function parseTimeMs(value: string): number {
@@ -102,7 +120,9 @@ export function useLayerTransition(
 
     function cleanupDelayMs(el: HTMLElement): number {
         const style = getComputedStyle(el);
-        const properties = style.transitionProperty.split(",").map((part) => part.trim());
+        const properties = style.transitionProperty
+            .split(",")
+            .map((part) => part.trim());
         const durations = style.transitionDuration.split(",").map(parseTimeMs);
         const delays = style.transitionDelay.split(",").map(parseTimeMs);
         const candidates = durations.map((duration, index) => {
@@ -179,18 +199,30 @@ export function useLayerTransition(
         clearCleanup();
         const id = ++transitionId;
 
-        // Stop/dispose any driver from a superseded swap so its onFrame loop
-        // cannot race the live one (AU.W8.3). The transitionId already gates the
-        // ID, but disposing frees the rAF immediately rather than on next tick.
-        disposeSpring();
+        // AV.W9.2 — RETARGET an in-flight spring instead of dispose+reconstruct.
+        // If a prior swap's spring is still live (non-null, unsettled, driving
+        // THIS container), the morph is being interrupted mid-flight: read its
+        // current pixel value as the new `from`, re-seat its target to the new
+        // intrinsic size, and carry the in-flight velocity through (the solver's
+        // `set target` re-seats the closed-form from the live `(value, velocity)`
+        // — keyframes.d.ts:800). Disposing here would zero the velocity and the
+        // morph would snap from rest (the non-iOS re-toggle the charter flags).
+        const live =
+            spring !== null && springEl === el && !spring.settled ? spring : null;
 
-        // 1. Capture current size
-        const fromSize = getSize(el);
+        // 1. Capture current size. On a retarget the live spring's value IS the
+        // current painted pixel size (it has been writing it every frame); on a
+        // fresh swap, measure the box.
+        const fromSize = live ? live.value : getSize(el);
 
-        // 2. Pin size (prevents snap during class swap)
-        setDim(el, `${fromSize}px`);
+        if (!live) {
+            // Fresh swap — dispose any settled/foreign driver, pin the box so the
+            // class swap does not snap it, then construct a pixel-space spring.
+            disposeSpring();
+            setDim(el, `${fromSize}px`);
+        }
 
-        // 3. Measure new natural size, then drive the morph. The layer ref swap
+        // 2. Measure new natural size, then drive the morph. The layer ref swap
         // (→ class-driven opacity) and the width set (→ size morph) must START
         // in the SAME animation frame, so the box never shrinks before items
         // fade (the async-fork the user reported). The swap is therefore
@@ -213,41 +245,45 @@ export function useLayerTransition(
                 clearDim(el);
                 const toSize = getSize(el);
 
-                // Re-pin to the old size so the morph runs from `fromSize`.
+                // Re-pin to the live `from` (the retarget pixel value or the
+                // captured fresh size) so the morph runs continuously from there.
                 setDim(el, `${fromSize}px`);
                 void el.offsetWidth;
 
-                if (Math.abs(toSize - fromSize) < 0.5) {
+                if (!live && Math.abs(toSize - fromSize) < 0.5) {
                     el.style.transition = "";
                     clearDim(el);
                     leavingLayer.value = null;
                     return;
                 }
 
-                // 4. Drive width off ONE SpringProgress clock (AU.W8.3) so width
-                // + opacity advance off the same solver and converge within one
-                // frame at settle. Mirrors useSpring.ts:105-136. The JS driver
-                // OWNS the container width (transition stays "none" on `el` so
-                // the CSS `width var(--dock-motion-resize)` does not fight the
-                // per-frame inline set); the pane opacity stays class-driven (a
-                // SEPARATE element — `.dock-layer-item-host` — so its
-                // --dock-motion-resize fade is unaffected). Both consume the SAME
-                // (0.5, 0.5) curve (the token + the driver), so width + opacity
-                // are timing-identical by construction.
-                spring = new SpringProgress({
-                    response: DOCK_SPRING.response,
-                    dampingFraction: DOCK_SPRING.dampingFraction,
-                    respectReducedMotion: true,
-                });
-                const activeSpring = spring;
-                activeSpring.target = 1;
-                activeSpring.play((p: number) => {
+                // 3. Drive size off ONE SpringProgress clock in PIXEL space — its
+                // `value` is the live width/height. On a retarget reuse the live
+                // solver (velocity carried through `set target`); on a fresh swap
+                // construct one seeded at `fromSize`. The JS driver OWNS the
+                // container size (transition stays "none" on `el` so the CSS
+                // `width var(--dock-motion-resize)` does not fight the per-frame
+                // inline set); the pane opacity stays class-driven on the SEPARATE
+                // `.dock-layer-item-host` via its `--dock-motion-resize` fade, so
+                // size + opacity settle in lockstep by the shared (0.5, 0.5)
+                // curve (the token + the driver), continuous across a retarget.
+                if (!live) {
+                    spring = new SpringProgress({
+                        response: DOCK_SPRING.response,
+                        dampingFraction: DOCK_SPRING.dampingFraction,
+                        initial: fromSize,
+                        respectReducedMotion: true,
+                    });
+                    springEl = el;
+                }
+                const activeSpring = spring!;
+                activeSpring.target = toSize;
+                activeSpring.play((w: number) => {
                     if (id !== transitionId) return;
-                    const w = fromSize + (toSize - fromSize) * p;
                     setDim(el, `${w}px`);
                     // Opacity stays class-driven via the --dock-motion-resize CSS
                     // transition on `.dock-layer-item-host`; the spring drives
-                    // width only.
+                    // size only.
                     if (activeSpring.settled) {
                         el.style.transition = "";
                         clearDim(el);

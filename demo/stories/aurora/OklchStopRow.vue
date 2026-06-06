@@ -26,6 +26,28 @@ const emit = defineEmits<{
 
 const hex = computed(() => oklchStopToHex(props.stop));
 
+/* AV.W11 — per-channel gradient tracks for the spectrum slider. Each ramp is
+   an OKLCh gradient holding the row's other two channels fixed, so a track
+   reads as "what this channel does to THIS color":
+     L → black → white (at the row's chroma + hue),
+     C → grey (chroma 0) → saturated (chroma 0.3) at the row's L + hue,
+     h → the full hue wheel at the row's L + chroma. */
+const lTrack = computed(() => {
+    const { C, h } = props.stop;
+    return `linear-gradient(to right, oklch(0 ${C} ${h}), oklch(1 ${C} ${h}))`;
+});
+const cTrack = computed(() => {
+    const { L, h } = props.stop;
+    return `linear-gradient(to right, oklch(${L} 0 ${h}), oklch(${L} 0.3 ${h}))`;
+});
+const hTrack = computed(() => {
+    const { L, C } = props.stop;
+    const stops = [0, 60, 120, 180, 240, 300, 360]
+        .map((deg) => `oklch(${L} ${C} ${deg})`)
+        .join(", ");
+    return `linear-gradient(to right, ${stops})`;
+});
+
 function patch(patch: Partial<OklchStop>) {
     emit("update", { ...props.stop, ...patch });
 }
@@ -63,10 +85,13 @@ function onSwatch(e: Event) {
                 <span class="text-mono-caption w-3 text-muted-foreground">L</span>
                 <Slider
                     class="flex-1 py-1"
+                    variant="spectrum"
+                    size="sm"
                     :min="0"
                     :max="1"
                     :step="0.01"
                     :model-value="[stop.L]"
+                    :style="{ '--slider-track-bg': lTrack }"
                     @update:model-value="(v: number[] | undefined) => v && patch({ L: v[0] })"
                 />
                 <span class="text-mono-caption w-7 text-right text-muted-foreground">
@@ -77,10 +102,13 @@ function onSwatch(e: Event) {
                 <span class="text-mono-caption w-3 text-muted-foreground">C</span>
                 <Slider
                     class="flex-1 py-1"
+                    variant="spectrum"
+                    size="sm"
                     :min="0"
                     :max="0.3"
                     :step="0.005"
                     :model-value="[stop.C]"
+                    :style="{ '--slider-track-bg': cTrack }"
                     @update:model-value="(v: number[] | undefined) => v && patch({ C: v[0] })"
                 />
                 <span class="text-mono-caption w-7 text-right text-muted-foreground">
@@ -91,10 +119,13 @@ function onSwatch(e: Event) {
                 <span class="text-mono-caption w-3 text-muted-foreground">h</span>
                 <Slider
                     class="flex-1 py-1"
+                    variant="spectrum"
+                    size="sm"
                     :min="0"
                     :max="360"
                     :step="1"
                     :model-value="[stop.h]"
+                    :style="{ '--slider-track-bg': hTrack }"
                     @update:model-value="(v: number[] | undefined) => v && patch({ h: v[0] })"
                 />
                 <span class="text-mono-caption w-7 text-right text-muted-foreground">

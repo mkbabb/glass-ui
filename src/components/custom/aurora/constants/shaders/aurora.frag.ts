@@ -131,6 +131,21 @@ float fbm(vec2 p) {
   return v;
 }
 
+// sRGB OETF — linear-light channel → gamma sRGB (the mandatory close-the-seam).
+float linearToSrgbCh(float c) {
+    return c <= 0.0031308 ? c * 12.92 : 1.055 * pow(c, 1.0 / 2.4) - 0.055;
+}
+vec3 linearToSrgb(vec3 c) {
+    return vec3(linearToSrgbCh(c.r), linearToSrgbCh(c.g), linearToSrgbCh(c.b));
+}
+
+// Interleaved Gradient Noise (Jimenez) — a 1-LSB triangular dither applied in
+// DISPLAY space AFTER the OETF, so 8-bit mid-tone banding on the soft gradient is
+// quantization-dithered at the value being quantized (post-transfer, not linear).
+float ign(vec2 p) {
+    return fract(52.9829189 * fract(dot(p, vec2(0.06711056, 0.00583715))));
+}
+
 // Cellular / Worley f1
 float cellular(vec2 p) {
   vec2 i = floor(p);
@@ -490,8 +505,10 @@ StrokeHit curvedStroke(vec2 p, vec2 a, vec2 b, float halfW,
   float cov = 0.0;
   if (along1 >= 0.0 && along1 <= 1.0 && halfWNow > 1e-6) {
     float cn = abs(cross1) / halfWNow;
-    // razor-hard edge with tiny aa
-    cov = 1.0 - smoothstep(0.88, 1.02, cn);
+    // fwidth-derived AA: half-width from the field's screen-space gradient so the
+    // edge holds ~1px regardless of zoom/DPR (mirrors metaball.frag.ts:252-255).
+    float aaC = max(fwidth(cn), 1e-6);
+    cov = 1.0 - smoothstep(1.0 - aaC, 1.0 + aaC, cn);
   }
 
   // End-cap blobs (rounded tips, not perpendicular cuts)
@@ -506,8 +523,11 @@ StrokeHit curvedStroke(vec2 p, vec2 a, vec2 b, float halfW,
     float rB = halfW * endShapeB * (0.9 + 0.2 * fbm(vec2(streakSeed * 19.0 + 5.0)));
     float dA = length(p - capCenterA);
     float dB = length(p - capCenterB);
-    capA = 1.0 - smoothstep(rA * 0.85, rA * 1.05, dA);
-    capB = 1.0 - smoothstep(rB * 0.85, rB * 1.05, dB);
+    // fwidth-derived AA on the clean Euclidean cap distances (mirrors metaball.frag.ts:252-255).
+    float aaA = max(fwidth(dA), 1e-6);
+    float aaB = max(fwidth(dB), 1e-6);
+    capA = 1.0 - smoothstep(rA - aaA, rA + aaA, dA);
+    capB = 1.0 - smoothstep(rB - aaB, rB + aaB, dB);
     // Only apply caps if we're BEYOND the segment; otherwise the segment wins.
     capA *= (along1 < 0.05) ? 1.0 : 0.0;
     capB *= (along1 > 0.95) ? 1.0 : 0.0;
@@ -814,6 +834,17 @@ void main() {
   col += (grain - 0.5) * uPaperGrain;
 
   col = clamp(col * 0.985 + 0.008, 0.0, 1.0);
+
+  // MANDATORY OETF — closes the seam (mirrors metaball.frag.ts:278). The whole
+  // pipeline above (linear palette LUT, ACES tonemap, grain) runs in LINEAR; without
+  // this transfer the aurora ships ~2.2× too dark (linear 0.5 → ~0.215, not ~0.735).
+  col = linearToSrgb(col);
+
+  // 1-LSB triangular IGN dither in DISPLAY space, AFTER the OETF — breaks 8-bit
+  // mid-tone banding on the soft gradient. Texture-free (the canonical Jimenez IGN).
+  col += (1.0 / 255.0) * (ign(gl_FragCoord.xy) - 0.5);
+
+  // Premultiply operates on DISPLAY-space color (matches the blob: OETF, then premul).
   fragColor = vec4(col * uAlpha, uAlpha);
 }
 `;

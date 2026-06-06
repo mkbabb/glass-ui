@@ -32,6 +32,13 @@
 // half is proof:dock-motion-single-source. This gate stays KEPT — it is the
 // cheap fast-guard that both rules name --dock-motion-resize; the W8 sibling
 // gate proves the FLIP fallback's ref-swap and width-set share ONE rAF origin.
+//
+// SEVERITY: STRUCTURE (re-demoted at AV.W9.4). A same-token proof is EXACT for
+// "do both rules name one curve" but BLIND to whether the morph paints — it could
+// not catch the AU.W8b dual-driver freeze. The behavioral source of truth is now
+// proof:dock-animation-live (the born-RED Playwright frame-sampling gate). This
+// gate stays GREEN as a fast guard that opacity + the container morph still share
+// the --dock-motion-resize token.
 
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -45,7 +52,10 @@ function cliPaths() {
     _cliPaths = {
         ROOT,
         DOCK_CSS: resolve(ROOT, "src/styles/dock.css"),
-        ARTIFACT: gateArtifactPath("GLASS_UI_DOCK_OPACITY_LOCKSTEP_ARTIFACT", "AU-dock-opacity-lockstep"),
+        ARTIFACT: gateArtifactPath(
+            "GLASS_UI_DOCK_OPACITY_LOCKSTEP_ARTIFACT",
+            "AU-dock-opacity-lockstep",
+        ),
     };
     return _cliPaths;
 }
@@ -91,7 +101,8 @@ function transitionValue(body) {
 }
 
 const BASE_RULE_RE = /\.dock-layer\s*,\s*\.dock-layer-item-host\s*\{/;
-const ACTIVE_RULE_RE = /\.dock-layer\.layer-active\s*,\s*\.dock-layer-item-host\.is-active\s*\{/;
+const ACTIVE_RULE_RE =
+    /\.dock-layer\.layer-active\s*,\s*\.dock-layer-item-host\.is-active\s*\{/;
 
 // The pure detector. Takes the comment-stripped dock.css, returns {facts,violations}.
 export function detectLockstep(dockCss) {
@@ -99,16 +110,24 @@ export function detectLockstep(dockCss) {
     const facts = {};
 
     // (anchor) the container morph rides --dock-motion-resize (the lockstep target).
-    const morphUsesResize = /\b(?:width|height)\s+var\(--dock-motion-resize\)/.test(dockCss);
-    facts.containerMorphToken = morphUsesResize ? "--dock-motion-resize" : "(not --dock-motion-resize)";
+    const morphUsesResize = /\b(?:width|height)\s+var\(--dock-motion-resize\)/.test(
+        dockCss,
+    );
+    facts.containerMorphToken = morphUsesResize
+        ? "--dock-motion-resize"
+        : "(not --dock-motion-resize)";
     if (!morphUsesResize) {
-        violations.push("the dock container morph (width/height) does not ride --dock-motion-resize — the lockstep anchor is missing");
+        violations.push(
+            "the dock container morph (width/height) does not ride --dock-motion-resize — the lockstep anchor is missing",
+        );
     }
 
     // (base/inactive) opacity rides --dock-motion-resize; visibility hold → --duration-normal.
     const baseBody = matchRuleBody(dockCss, BASE_RULE_RE);
     if (baseBody === null) {
-        violations.push("dock.css: the `.dock-layer, .dock-layer-item-host` base transition rule is missing");
+        violations.push(
+            "dock.css: the `.dock-layer, .dock-layer-item-host` base transition rule is missing",
+        );
     } else {
         const t = transitionValue(baseBody);
         facts.baseTransition = t;
@@ -116,16 +135,24 @@ export function detectLockstep(dockCss) {
             violations.push("the base layer rule declares no `transition`");
         } else {
             if (/opacity\s+var\(--dock-motion-fast\)/.test(t)) {
-                violations.push(`the base layer OPACITY still rides --dock-motion-fast (the 0.2s desync) — must ride --dock-motion-resize: \`${t}\``);
+                violations.push(
+                    `the base layer OPACITY still rides --dock-motion-fast (the 0.2s desync) — must ride --dock-motion-resize: \`${t}\``,
+                );
             }
             if (!/opacity\s+var\(--dock-motion-resize\)/.test(t)) {
-                violations.push(`the base layer opacity must ride --dock-motion-resize (lockstep with the morph): \`${t}\``);
+                violations.push(
+                    `the base layer opacity must ride --dock-motion-resize (lockstep with the morph): \`${t}\``,
+                );
             }
             if (/visibility\s+0s\s+linear\s+var\(--duration-fast\)/.test(t)) {
-                violations.push(`the base layer VISIBILITY hold still uses --duration-fast — must extend to --duration-normal (matched to the longer fade): \`${t}\``);
+                violations.push(
+                    `the base layer VISIBILITY hold still uses --duration-fast — must extend to --duration-normal (matched to the longer fade): \`${t}\``,
+                );
             }
             if (!/visibility\s+0s\s+linear\s+var\(--duration-normal\)/.test(t)) {
-                violations.push(`the base layer visibility hold must be \`0s linear var(--duration-normal)\`: \`${t}\``);
+                violations.push(
+                    `the base layer visibility hold must be \`0s linear var(--duration-normal)\`: \`${t}\``,
+                );
             }
         }
     }
@@ -133,7 +160,9 @@ export function detectLockstep(dockCss) {
     // (active) opacity rides --dock-motion-resize; visibility stays IMMEDIATE (0s, no delay).
     const activeBody = matchRuleBody(dockCss, ACTIVE_RULE_RE);
     if (activeBody === null) {
-        violations.push("dock.css: the `.dock-layer.layer-active, .dock-layer-item-host.is-active` rule is missing");
+        violations.push(
+            "dock.css: the `.dock-layer.layer-active, .dock-layer-item-host.is-active` rule is missing",
+        );
     } else {
         const t = transitionValue(activeBody);
         facts.activeTransition = t;
@@ -141,14 +170,20 @@ export function detectLockstep(dockCss) {
             violations.push("the active layer rule declares no `transition`");
         } else {
             if (/opacity\s+var\(--dock-motion-fast\)/.test(t)) {
-                violations.push(`the active layer OPACITY still rides --dock-motion-fast — must ride --dock-motion-resize: \`${t}\``);
+                violations.push(
+                    `the active layer OPACITY still rides --dock-motion-fast — must ride --dock-motion-resize: \`${t}\``,
+                );
             }
             if (!/opacity\s+var\(--dock-motion-resize\)/.test(t)) {
-                violations.push(`the active layer opacity must ride --dock-motion-resize: \`${t}\``);
+                violations.push(
+                    `the active layer opacity must ride --dock-motion-resize: \`${t}\``,
+                );
             }
             // The active layer must show IMMEDIATELY (`visibility 0s`, no deferred delay) — the :434 rule.
             if (!/visibility\s+0s\s*(?:,|$)/.test(t)) {
-                violations.push(`the active layer visibility must stay IMMEDIATE (\`visibility 0s\`, no deferred delay) per the :434 governing rule: \`${t}\``);
+                violations.push(
+                    `the active layer visibility must stay IMMEDIATE (\`visibility 0s\`, no deferred delay) per the :434 governing rule: \`${t}\``,
+                );
             }
         }
     }
@@ -174,21 +209,31 @@ function run() {
     writeGateArtifact(ARTIFACT, {
         generatedAt: snapshotStamp(),
         status,
+        severity: "structure",
+        sourceOfTruth: "proof:dock-animation-live",
         command: "npm run proof:dock-opacity-lockstep",
         facts,
         violations,
     });
 
-    console.log("proof:dock-opacity-lockstep — the dock fade↔morph lockstep static gate (AU.W2)");
+    console.log(
+        "proof:dock-opacity-lockstep — the dock fade↔morph lockstep static gate (AU.W2)",
+    );
     console.log(`  container morph token     : ${facts.containerMorphToken}`);
     console.log(`  base layer transition     : ${facts.baseTransition ?? "(missing)"}`);
-    console.log(`  active layer transition   : ${facts.activeTransition ?? "(missing)"}`);
-    console.log(`  fade↔morph lockstep (one token) : ${facts.lockstep ? "YES" : "NO"}`);
+    console.log(
+        `  active layer transition   : ${facts.activeTransition ?? "(missing)"}`,
+    );
+    console.log(
+        `  fade↔morph lockstep (one token) : ${facts.lockstep ? "YES" : "NO"}`,
+    );
     if (violations.length > 0) {
         console.log("\nVIOLATIONS:");
         for (const v of violations) console.log(`  ✗ ${v}`);
     }
-    console.log(`\n  status: ${status.toUpperCase()}   artefact: ${ARTIFACT.slice(ROOT.length + 1)}`);
+    console.log(
+        `\n  status: ${status.toUpperCase()}   artefact: ${ARTIFACT.slice(ROOT.length + 1)}`,
+    );
     process.exit(status === "pass" ? 0 : 1);
 }
 

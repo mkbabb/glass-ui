@@ -8,8 +8,8 @@
                 trigger">` styled `inline-flex; min-width/min-height: 44px`
                 to force a WCAG 2.5.5 (44×44) hit-area. That span turned the
                 slotted child into a flex item, which strips `width:100%`
-                semantics — keyframes.js PlaybackRibbon's `<Slider
-                variant="timeline">` collapsed to a 16px thumb-only nub.
+                semantics — a slotted `<Slider>` (keyframes.js's
+                PlaybackRibbon) collapsed to a 16px thumb-only nub.
 
                 Path C revert: no wrap-span. `as-child` forwards the
                 trigger props directly onto the slotted element, so a

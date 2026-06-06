@@ -271,7 +271,7 @@ export const CATEGORIES: Category[] = [
         title: "Sliders",
         icon: SlidersHorizontal,
         stories: [
-            s("sliders", "glass-scrubber", "Glass Scrubber", "`<Slider variant=\"glass-scrubber\">` — tall scrub track + grab-friendly thin-bar thumb (P.W3 Lane A)."),
+            s("sliders", "spectrum", "Spectrum", "`<Slider variant=\"spectrum\">` — the gradient-track color slider: consumer-supplied `--slider-track-bg` ramp, transparent range, small ringed knob (AV.W11)."),
         ],
     },
     {

@@ -220,6 +220,11 @@ jobs:
               run: npm run proof:no-value-default
             - name: proof:blob-space-gamma
               run: npm run proof:blob-space-gamma
+            # AV.W1 — aurora's linear LUT pipeline MUST close with a linearToSrgb()
+            # OETF before fragColor (the un-converged-sibling of the blob's A5/A2
+            # darkening trap; a linear-in without an OETF-out ships ~2.2× too dark).
+            - name: proof:aurora-space-gamma
+              run: npm run proof:aurora-space-gamma
             # AU.W7 — the 8-assertion CPU-equivalence: the metaball OKLCh shader-
             # color TS port matches value.js's exact Ottosson CPU result to 1e-6
             # (asymmetric witness #3a7bd5 catches a transpose / convenience-matrix

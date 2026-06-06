@@ -35,6 +35,13 @@
 // House style mirrors proof-dock-opacity-lockstep.mjs: ESM .mjs, comment-strip
 // first (false-witness discipline), a pure exported detector, a byte-stable JSON
 // artefact via gate-output, a human summary, process.exit(1) on any violation.
+//
+// SEVERITY: STRUCTURE (demoted at AV.W9.4). This is a cheap source-shape
+// pre-check, NOT the source of truth for motion correctness — it cannot see a
+// painted frame, so it could not catch the AU.W8b dual-driver freeze. The
+// behavioral source of truth is now proof:dock-animation-live (the born-RED
+// Playwright frame-sampling gate). This gate stays GREEN as a fast guard that the
+// FLIP fallback's ref-swap + width-set still share one rAF origin.
 
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -201,6 +208,8 @@ function run() {
     writeGateArtifact(ARTIFACT, {
         generatedAt: snapshotStamp(),
         status,
+        severity: "structure",
+        sourceOfTruth: "proof:dock-animation-live",
         command: "npm run proof:dock-motion-single-source",
         facts,
         violations,
@@ -210,7 +219,9 @@ function run() {
     );
     console.log(`  ref swap inside width rAF : ${facts.refSwapInRaf ? "YES" : "NO"}`);
     console.log(`  width set inside rAF      : ${facts.widthSetInRaf ? "YES" : "NO"}`);
-    console.log(`  single-frame origin       : ${facts.singleFrameOrigin ? "YES" : "NO"}`);
+    console.log(
+        `  single-frame origin       : ${facts.singleFrameOrigin ? "YES" : "NO"}`,
+    );
     if (violations.length) {
         console.log("\nVIOLATIONS:");
         for (const v of violations) console.log(`  ✗ ${v}`);
