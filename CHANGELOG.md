@@ -1,5 +1,35 @@
 # Changelog
 
+## 3.3.0
+
+### Minor Changes
+
+-   AV — the dock rebuilt from first principles + aurora-fix + the iOS-26 glass evolution + the legacy/god-module sweep (the 3.3.0 cut, atop AU).
+
+    **Dock-rebuild (AV.W9, the headline correction).** The AU dock-motion overhaul shipped a native `@supports (interpolate-size: allow-keywords)` width-morph arm. At runtime it FROZE the dock — the native `calc-size()` arm drove `width` on the browser clock while the FLIP `SpringProgress` driver wrote inline `width` per frame, a dual-driver race over one property. The static gates passed because they check source structure, not paint. AV.W9 retires the `interpolate-size` arm and the parallel discrete-visibility arm: ONE `SpringProgress` driver owns the width morph on every engine (the orthogonal View-Transitions path is kept and forks cleanly). The spring drives container size in pixel space; an interrupted/retargeted gesture re-seats the live solver from its current (value, velocity) instead of reconstructing from rest (velocity-continuity). The press spring is momentum-gated (smooth, no overshoot). New behavioral gate `proof:dock-animation-live` (Playwright frame-samples that width+opacity actually morph over frames and co-settle); the two static dock gates demoted to `structure`.
+
+    **Aurora OETF fix (AV.W1).** The aurora shader emitted linear sRGB with no OETF (~2.2× too dark). It now applies `linearToSrgb()` before the `fragColor` write (matching the blob), plus fwidth stroke AA and a 1-LSB IGN dither. Gate `proof:aurora-space-gamma`. The OETF + Ottosson matrices + FBM rotation now live in ONE shared GLSL chunk (`procedural-color.glsl.ts`) both shaders splice, so they can never re-diverge (`proof:shader-shared-source`).
+
+    **Two-slider unification (AV.W11).** Exactly two sliders ship: `standard` (a continuous iOS knob — `border-radius:50%`, no border, reading as a swelling of the capsule, with the four-state halo and the iOS press spring) and `spectrum` (the gradient-track color slider). The other variants retired; consumers ported. Gate `proof:slider-two-only`.
+
+    **iOS-26 Liquid Glass evolution (AV.W15).** Token-edits over the warm-cream identity (held): per-rung saturate, a `--glass-edge-light` rim, content-aware under-shadow, and a pointer-anchored moving specular (`@property`-animated, reduced-motion-guarded, with a `var()` fallback; SVG `feDisplacementMap` refraction stays an `@supports`-gated progressive-enhancement garnish). The no-glass-on-glass discipline documented. Gate `proof:liquid-glass-tokens`.
+
+    **Perf (AV.W7).** Content-visibility offscreen-pause on the `useWebGLCanvas` substrate (the RAF parks when the canvas scrolls off-screen and resumes on return); `contain:content` + a backdrop-blur budget clamp; an on-demand `will-change` lifecycle on the dock (never standing); the prefers-reduced-motion freeze lifted into the substrate with a live `matchMedia` re-monitor; a `DockBackgroundToggle` pause/play control (WCAG 2.2.2, available to all users); DPR + budget tokens. Gate `proof:offscreen-pause`.
+
+    **Legacy-excision + fail-explicit (AV.W12).** Silent error-swallows made explicit (`useClipboard` names the failing channel; `GooBlob` requires an explicit config; `useGlobalDark` throws on a conflicting re-seed); genuine `@supports` progressive-enhancement kept with sentinels. Per-version tranche commentary moved out of the barrels to the CHANGELOG. The shader crayon special-case hoisted to a peer; the shader ID maps sealed to typed dispatch.
+
+    **God-module decomposition (AV.W13).** No `src/` file exceeds 500 lines: `aurora.frag.ts` (819→348), `useSortable.ts`, `Progress.vue`, `runtime.ts`, and `metaball.frag.ts` each split into cohesive sub-modules (public shapes unchanged). Fixed the carousel-progress break (a silent sectioned `modelValue` override → a prop-boundary contract). Gate `proof:no-god-module`.
+
+    **DI + hygiene (AV.W14, AV.W5).** A canonical `createStrictContext`/`createOptionalContext` factory generalizing the hand-rolled context triplets; all tests relocated out of `src/` to a top-level `tests/` mirror; nested imports hoisted (the keyframes lazy boundary kept); the 58 one-line subpath barrels collapsed into a `src/subpaths/` metadir. Gates `proof:no-test-in-src`, `proof:no-nested-import`, `proof:di-consistency`, `proof:subpath-enumeration`.
+
+    **Modern Tailwind v4 + storybook (AV.W16, AV.W10).** Completed the `@theme inline` migration (fixing a latent `rounded-card` paint collision); container queries on the chassis + typography. The demo storybook re-organized into a coherent IA with the substrate stories surfaced; the demo font defaults corrected to the shipped face canon. Gates `proof:tailwind-v4-idiom`, `proof:storybook-ia`, `proof:font-canon`.
+
+    **The blob trio + `/color` + the WebGL substrate (AU.W5-W7, carried).** The value.js-only `/color` leaf (OKLCh primitives + the injected `ColorResolver` seam), the generic `useWebGLCanvas` substrate, and the `/goo-blob` + `/watercolor-dot` subpaths. The metaball OKLCh shader-color port is proven bit-identical to value.js's CPU result (`proof:blob-color-equivalence` 8/8).
+
+    **W9 supply + Fraunces + component splits (AU.W4/W9/W10, carried).** Button `size="icon-sm"`, Select `size`, Dialog `showClose`, `ConfiguratorLayer dividers`, `darkModeSyncScript()` FOUC, `useGlobalDark({ initialValue })`; the variable Fraunces display face; the ContinuousTimeline + BouncyToggle splits.
+
+    **value.js peer (E-valuepeer) — sequencing note.** value.js is `0.10.0` on npm at this cut; the in-tree peer stays `^0.10.0` so installs resolve today. The downstream sequence publishes value.js `0.11.0` first, then the peer bump rides a later cut — a manifest-range precondition, not a runtime change (the blob-color contract is proven bit-identical against value.js's CPU port).
+
 ## Unreleased
 
 ### Tranche AV.W12 — legacy-excision + fail-explicit
@@ -1071,8 +1101,7 @@ fully-populated v1.5.0 policy:
     Fallback") at `speedtest/index.html` + `speedtest/styles/style.css`.
     Speedtest's consumer-side `tokens.css` overrides `--font-brand-sans`
     to `"Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui,
-sans-serif`—the brand-uniform-sans preset cascade routes display
-    -   serif through this stack.
+sans-serif`—the brand-uniform-sans preset cascade routes display - serif through this stack.
 -   Other glass-ui consumers (the demo, downstream libraries) keep the
     pre-existing Helvetica Neue default at `--font-stack-sans`; no
     unrelated visual changes. The OFL face files are net-additive.
