@@ -285,6 +285,12 @@ export const GATES = [
         note: "AW.W4.4 — mediumCrayon is reworked into the oil-pastel deposition (tooth-occlusion deposit/toothFloor) + broken scumble upper layer (coverage<1) + waxy burnish film (a specular sheen growing with build-up); the old tooth-MULTIPLY (col*lay) is GONE; oil-pastel is in the union + MEDIUM_ID:6 + the uMedium==6 dispatch; the deposition orients along the ETF + applies OKLCh broken color; dist/aurora.js stays inside the AW.W4.0 governor ceiling. Bite: revert to the tooth-multiply → RED; OR grow the chunk past the aurora ceiling → the budget arm REDs",
     },
     {
+        id: "proof:aurora-atoms-roundtrip",
+        cmd: "proof:aurora-atoms-roundtrip",
+        tags: ["local", "ci"],
+        note: "AW.W6 — resolveAtoms is a PURE TOTAL mapper over the ≤7 Tier-1 atoms (seed/harmony/mood/medium/textureAmount/motion/zones): a fuzz over the full atom-combination matrix (incl. out-of-range inputs) yields a valid in-range AuroraConfig respecting every budget.ts cap, AND resolveAtoms(DEFAULT_ATOMS) deep-equals DEFAULT_AURORA_CONFIG (the wispy-sky default survives the new door). Bite: change a DEFAULT_ATOMS value (default ≠ wispy-sky) → RED; OR remove a budget clamp so a vivid×6-zone combination overflows → RED",
+    },
+    {
         id: "proof:shader-shared-source",
         cmd: "proof:shader-shared-source",
         tags: ["local", "ci"],

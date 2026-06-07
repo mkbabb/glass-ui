@@ -90,6 +90,24 @@ export type StrokeOrient = "flow" | "tensor";
 
 export type WarpMode = "fbm" | "cellular" | "hybrid";
 
+/**
+ * AW.W6/W8 — the interactivity flag SHAPE (declared at W6, default OFF; behavior
+ * wired at W8). Each axis opts the aurora into a pointer/scroll response:
+ * - `light`  — the cursor drives the impasto `uLightDir` (cursor-as-light + idle orbit).
+ * - `flow`   — pointer/scroll VELOCITY injects a transient swirl-burst (velocity-reactive).
+ * - `scroll` — palette/breath progress couples to scroll (via `useScrollProgress`).
+ * - `wake`   — the WebGPU stateful pointer wake (a ping-pong velocity texture; AW.W8.2).
+ * Every axis is suppressed under `prefers-reduced-motion` + the DockBackgroundToggle
+ * pause (the master tempo scalar is the single suppression seam). The wispy-sky
+ * default carries no `interactivity` (every axis OFF — the default stays static).
+ */
+export interface AuroraInteractivity {
+    light?: boolean;
+    flow?: boolean;
+    scroll?: boolean;
+    wake?: boolean;
+}
+
 export interface AuroraFlow {
     pattern: FlowPattern;
     /** 0..1 CSS-top-origin. Runtime flips Y. */
@@ -168,6 +186,14 @@ export interface AuroraConfig {
     saturation: number; // 0.6..1.3
     paperGrain: number; // 0..0.02
     alpha: number; // 0..1
+
+    /**
+     * AW.W6/W8 — the pointer/scroll interactivity opt-in (default OFF — the wispy-sky
+     * default stays static). W6 declares the SHAPE; W8 wires the cursor-as-light /
+     * velocity-reactive flow / scroll-coupling / WebGPU-wake behavior. Omitted = every
+     * axis off. Aliased on `/api` as part of the `AuroraConfig` surface.
+     */
+    interactivity?: AuroraInteractivity;
 }
 
 /**

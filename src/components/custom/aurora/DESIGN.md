@@ -136,6 +136,20 @@ The `<Aurora>` SFC also accepts a `:opacity-ceiling` prop (`number`, default `1.
 
 Per memory rule "Presets in consumers": the 11 authored themes (Sky, Dawn, Meadow, Deliberative, Day9, Oil Impasto, Oil Gestural, Oil Van Gogh, Crayon Sunset, Crayon Rainbow, Crayon Ocean) live at `demo/stories/aurora/presets.ts`, not here.
 
+### The two-tier "atoms of control" door (AW.W6)
+
+The full ~28-field `AuroraConfig` is the AUTHOR schema (a surface for tuning a shader). `resolveAtoms(atoms) → AuroraConfig` (`composables/atoms.ts`) is a thin CONSUMER door over it — ≤7 intuitive atoms that fan out to the full config. Nothing is removed from `AuroraConfig`; the full schema stays whole as the progressive-disclosure "Advanced" escape hatch (the demo panel shows the ≤7 atoms by default with the full surface under a `Collapsible`). `resolveAtoms` is PURE + TOTAL (every atom combination — including out-of-range inputs — yields a valid in-range config respecting every `budget.ts` cap) and DEFAULT-PRESERVING (`resolveAtoms(DEFAULT_ATOMS)` deep-equals `DEFAULT_AURORA_CONFIG` — the wispy-sky default survives the door, machine-asserted by `proof:aurora-atoms-roundtrip`). Mechanism: clone the default and apply ONLY the PRESENT atoms as clamped overrides, so the empty atom set (`DEFAULT_ATOMS`) passes through to the default.
+
+| Atom | Fans to |
+|---|---|
+| `seed` (+ `harmony`) | the derived palette via `deriveAurora` (clamped to the perf color budget) |
+| `mood` (calm ↔ vivid) | `saturation` + `warpAmount` + `valueVariance` + `breathDepth` (the co-varying energy axes) |
+| `medium` | the `AuroraMedium` value (+ tensor orientation for the painterly mediums) |
+| `textureAmount` (0..1) | the medium's dominant texture knob (`strokeAmount`/`wetEdge`/`canvasGrain`) |
+| `motion` (still·breathing·drifting) | the four motion fields (`nucleiDrift`/`paletteDrift`/`warpDrift`/`breathDepth`) |
+| `zones` (2..6) | the nuclei count on a rule-of-thirds/golden prior (clamped to `MAX_NUCLEI`) |
+| `interactivity` | the W6 SHAPE (default OFF — the `light`/`flow`/`scroll`/`wake` axes; behavior wired at W8) |
+
 ## 6. Spec deltas (v4 → v4.1)
 
 - **Δ01 `warpMode: "fbm" | "cellular" | "hybrid"`** — Meadow's chunky almost-rectangular territories need cellular; pure fBm can't produce them. Hybrid averages both for soft-edged blocks.
