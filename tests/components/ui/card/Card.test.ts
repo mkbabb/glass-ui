@@ -164,7 +164,7 @@ describe("CardHeader — shrink modifier (AI.W1-α)", () => {
         const root = wrapper.get(".default-header");
         const classes = root.classes();
         expect(classes).toContain("flex");
-        expect(classes).toContain("p-6");
+        expect(classes).toContain("p-(--card-spacing)");
         // The shrink class binding stays off — no choreography arms.
         expect(classes).not.toContain("card-header--shrink");
         // Slot hook stays at canonical name.
@@ -186,7 +186,7 @@ describe("CardHeader — shrink modifier (AI.W1-α)", () => {
         expect(classes).toContain("card-header--shrink");
         // Default layout classes still apply — the prop is additive.
         expect(classes).toContain("flex");
-        expect(classes).toContain("p-6");
+        expect(classes).toContain("p-(--card-spacing)");
     });
 
     it("renders <CardTitle> + <CardDescription> with canonical data-slot hooks the shrink choreography selects on", async () => {
