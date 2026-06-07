@@ -16,7 +16,7 @@ import { startViewTransition } from "../../../../composables/motion/useViewTrans
  * the HEAVY `./engine` boundary and pull value.js into the dock bundle
  * (AU-keyframes-coordination.md §2.3).
  */
-const DOCK_SPRING = { response: 0.5, dampingFraction: 0.5 } as const;
+const DOCK_SPRING = { response: 0.32, dampingFraction: 0.7 } as const;
 
 export interface UseLayerTransitionOptions {
     /** The container element that owns the stacked layer panes. */

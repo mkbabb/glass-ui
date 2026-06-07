@@ -54,9 +54,9 @@ const PRESETS = [
     },
     {
         name: "dock",
-        response: 0.5,
-        dampingFraction: 0.5,
-        comment: "dock expand/collapse morph — iOS-springy overshoot ~+18.5%",
+        response: 0.32,
+        dampingFraction: 0.7,
+        comment: "dock expand/collapse morph — iOS-control settled, overshoot ~+4.6% (AW.W2 retune off the +18.5% playful register)",
     },
 ];
 
