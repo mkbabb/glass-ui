@@ -9,11 +9,14 @@ import {
 } from "@mkbabb/value.js";
 
 import {
+    applyFakeSss,
+    applyIridescence,
     blobColorChain,
     gamutClampOklch,
     inGamut,
     linearToSrgb,
     linearToSrgbCh,
+    oklabLerpStop,
     oklabToOklch,
     oklabToLinearSrgb,
     oklchToOklab,
@@ -234,5 +237,60 @@ describe("goo-blob OKLCh color path ≡ value.js Ottosson core (AU.W7, DEC-AT-7)
         expect(maxAbsDelta(premultiplied, correct)).toBeLessThanOrEqual(EPS);
         // the two orderings genuinely differ (so the assertion is load-bearing).
         expect(maxAbsDelta(correct, wrong)).toBeGreaterThan(1e-3);
+    });
+
+    // (9) W11.a iridescence — the warm-biased sheen, after the gamut clamp, is
+    // IN-GAMUT (the spectral term never pushes a pixel out of sRGB) AND the chroma
+    // stays below the warm-pearl cap (the warm-bias holds; it never goes garish).
+    it("(9) iridescence stays in gamut + holds the warm-pearl chroma cap", () => {
+        const base = oklabToOklch(srgbToOklab(hexToRgb01("#3a7bd5")));
+        const iridHue = 85 * DEG2RAD; // the warm default
+        let maxChromaAfter = 0;
+        for (let f = 0; f <= 1.0001; f += 0.1) {
+            for (let n = 0; n <= 1.0001; n += 0.25) {
+                const irid = applyIridescence(base, f, n, iridHue, 0.5, 0.0);
+                // chroma cap: never more than +0.08 above the base chroma.
+                expect(irid[1]).toBeLessThanOrEqual(base[1] + 0.08 + EPS);
+                // after the gamut clamp the result is in sRGB.
+                const clamped = gamutClampOklch(irid);
+                const lin = oklabToLinearSrgb(oklchToOklab(clamped));
+                const slack = 1e-4;
+                expect(lin.every((c) => c >= -slack && c <= 1 + slack)).toBe(true);
+                maxChromaAfter = Math.max(maxChromaAfter, clamped[1]);
+            }
+        }
+        // the cap is load-bearing — a high-chroma vivid base would otherwise blow out.
+        expect(maxChromaAfter).toBeLessThan(base[1] + 0.1);
+    });
+
+    // (10) W11.a fake-SSS — the inner-glow + back-light only LIFT OKLCh L (and warm
+    // the hue), never darken; and the result clamps into gamut.
+    it("(10) fake-SSS lifts L (never darkens) + stays in gamut", () => {
+        const base = oklabToOklch(srgbToOklab(hexToRgb01("#3a7bd5")));
+        for (let th = 0; th <= 1.0001; th += 0.25) {
+            for (let back = 0; back <= 1.0001; back += 0.5) {
+                const sss = applyFakeSss(base, th, back, 0.1, 0.2);
+                expect(sss[0]).toBeGreaterThanOrEqual(base[0] - EPS); // L never drops
+                const clamped = gamutClampOklch(sss);
+                const lin = oklabToLinearSrgb(oklchToOklab(clamped));
+                const slack = 1e-4;
+                expect(lin.every((c) => c >= -slack && c <= 1 + slack)).toBe(true);
+            }
+        }
+    });
+
+    // (11) W11.b multi-stop — OKLab interp of a VIVID pair with the midpoint
+    // chroma-bump holds chroma ABOVE the plain-mix midpoint (the linear OKLab mix
+    // dips through grey on a hue-opposed pair; the bump corrects it).
+    it("(11) OKLab interp midpoint chroma-bump holds chroma above the plain mix", () => {
+        // Two vivid, hue-opposed stops (warm vs cool) — the linear mix dips chroma.
+        const a: Vec3 = [0.7, 0.18, 30 * DEG2RAD]; // warm
+        const b: Vec3 = [0.7, 0.18, 210 * DEG2RAD]; // cool (complement)
+        const plain = oklabLerpStop(a, b, 0.5, 0.0);
+        const bumped = oklabLerpStop(a, b, 0.5, 0.06);
+        // the plain midpoint chroma is well below the endpoints (it passes near grey).
+        expect(plain[1]).toBeLessThan(a[1]);
+        // the bump lifts it back up.
+        expect(bumped[1]).toBeGreaterThan(plain[1]);
     });
 });

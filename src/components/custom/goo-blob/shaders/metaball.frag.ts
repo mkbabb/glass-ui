@@ -87,6 +87,14 @@ uniform float uSpecShininess;   // specular exponent (16-64, tight glint)
 uniform float uRimPower;        // Fresnel/Schlick exponent (~2-3)
 uniform float uRimStrength;     // Fresnel rim weight
 
+// Iridescence + fake subsurface (W11.a) — translucent-gel read.
+uniform float uIridescence;     // warm-pearl rim sheen weight (0 = off)
+uniform float uIridHue;         // base hue (radians) the cosine palette biases toward (warm)
+uniform float uIridSpeed;       // animated-thickness scroll for the iridescent t
+uniform float uSssScale;        // fast-SSS back-light weight
+uniform float uSssPower;        // fast-SSS exponent
+uniform float uCoreGlow;        // thickness-driven inner-luminosity lift
+
 // Color perturbation (perceptually uniform — OKLCh L/C/h)
 uniform float uHueRange;        // degrees of hue swing (converted to radians)
 uniform float uSatShift;        // OKLCh chroma swing
@@ -255,6 +263,49 @@ void main() {
     oklch.y = max(oklch.y + (colorNoise - 0.5) * uSatShift, 0.0); // chroma swing
     oklch.x = clamp(oklch.x + uBrightnessShift, 0.0, 1.0);        // lightness bias
 
+    // Surface normal — computed ONCE here and reused by the iridescence (W11.a),
+    // the fake-SSS (W11.a), and the lit glass block (W9.b).
+    vec3 N = surfaceNormal(uv, d, bodyR);
+    vec3 V = vec3(0.0, 0.0, 1.0);
+    float thickness = clamp(-d / max(bodyR, 1e-4), 0.0, 1.0); // 0 at rim, ~1 deep in
+    float fres = pow(1.0 - max(dot(N, V), 0.0), 2.5);          // rim-weighted angle
+
+    // ── W11.a iridescence — warm-biased IQ cosine palette driving OKLCh HUE ──
+    //
+    // A thin-film-like sheen on the RIM (fres-weighted), NOT the cold-blue default:
+    // an IQ cosine palette (a + b*cos(2pi(c*t + d))) maps the Fresnel/edge angle +
+    // the FBM color field + an animated thickness onto a HUE OFFSET biased to the
+    // warm arc (uIridHue), with the chroma clamped to a warm-pearl band so the rim
+    // reads cream/gold (congruent with the warm-cream-glass identity). Mixed into
+    // OKLCh BEFORE the gamut clamp. Default LOW.
+    if (uIridescence > 0.0) {
+        float t = fres + 0.3 * colorNoise + uTime * uIridSpeed;
+        // Cosine palette in HUE space, centred on the warm uIridHue (~0.18 turn of
+        // warm sweep so the sheen shimmers gold→peach, never swinging to cold blue).
+        float iridHue = uIridHue + 0.18 * PI * cos(2.0 * PI * t);
+        float w = fres * uIridescence;          // rim-weighted blend
+        oklch.z = mix(oklch.z, iridHue, w);
+        // Warm-pearl chroma cap: lift chroma toward a pale-pearl band, clamped.
+        oklch.y = min(oklch.y + 0.04 * w, oklch.y + 0.08);
+        oklch.x = min(oklch.x + 0.05 * w, 1.0); // a touch brighter at the sheen
+    }
+
+    // ── W11.a fake subsurface translucency — thickness inner-glow + back-light ──
+    //
+    // A bright translucent CORE fading to a light-leaking EDGE (the -d ramp) plus
+    // the fast-SSS back-light (light wrapping through the thin rim). Both lift OKLCh
+    // L and warm the hue, consuming the W9 normal. In OKLCh before the gamut clamp.
+    if (uCoreGlow > 0.0 || uSssScale > 0.0) {
+        // Inner-luminosity ramp: brighter where the body is thick.
+        oklch.x = min(oklch.x + uCoreGlow * thickness, 1.0);
+        // Fast-SSS back-light: light wrapping through the thin (low-thickness) rim.
+        vec3 L = normalize(uLightDir + vec3(1e-6));
+        float back = pow(clamp(dot(V, -(L + N * thickness)), 0.0, 1.0), uSssPower);
+        float sss = back * uSssScale * (1.0 - thickness);
+        oklch.x = min(oklch.x + sss, 1.0);
+        oklch.z += sss * 0.1; // warm the leaking edge slightly
+    }
+
     oklch = gamutClampOklch(oklch);
 
     vec3 lin = oklabToLinearSrgb(oklchToOklab(oklch));
@@ -268,9 +319,7 @@ void main() {
     // read now comes from the surface normal, not a flat smoothstep). Gated behind
     // uLit so the flat fill stays the default (zero regression).
     if (uLit > 0.5) {
-        // Pseudo-3D surface normal from the composite SDF gradient (W9.b keystone).
-        vec3 N = surfaceNormal(uv, d, bodyR);
-        vec3 V = vec3(0.0, 0.0, 1.0);              // orthographic view: straight on
+        // N, V, thickness are already computed in main() (reused by iridescence/SSS).
         vec3 L = normalize(uLightDir + vec3(1e-6)); // light direction
         vec3 H = normalize(L + V);                  // Blinn-Phong half-vector
 
@@ -282,10 +331,10 @@ void main() {
 
         // Fresnel/Schlick rim — fed uRimColor (the --foreground warm rim via the
         // injected ColorResolver, NOT a cold-blue default). Attenuated where the
-        // body is thick so the sheen rides the rim, not the core.
-        float thickness = clamp(-d / max(bodyR, 1e-4), 0.0, 1.0);
-        float fres = pow(1.0 - max(dot(N, V), 0.0), uRimPower);
-        float rim = fres * uRimStrength * (1.0 - 0.6 * thickness);
+        // body is thick so the sheen rides the rim, not the core. The rim Fresnel
+        // uses uRimPower (the W9.b knob), distinct from the iridescence's fixed 2.5.
+        float rimFres = pow(1.0 - max(dot(N, V), 0.0), uRimPower);
+        float rim = rimFres * uRimStrength * (1.0 - 0.6 * thickness);
         vec3 rimLin = srgbToLinear(uRimColor);
 
         // Combine the two warm highlights and add in LINEAR. max(spec, rim*scale)

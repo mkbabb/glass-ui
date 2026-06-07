@@ -53,6 +53,12 @@ const UNIFORM_NAMES = [
     "uSpecShininess",
     "uRimPower",
     "uRimStrength",
+    "uIridescence",
+    "uIridHue",
+    "uIridSpeed",
+    "uSssScale",
+    "uSssPower",
+    "uCoreGlow",
     "uHueRange",
     "uSatShift",
     "uBrightnessShift",
@@ -404,6 +410,19 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     gl.uniform1f(U.uSpecShininess, config.specShininess);
                     gl.uniform1f(U.uRimPower, config.rimPower);
                     gl.uniform1f(U.uRimStrength, config.rimStrength);
+
+                    // Iridescence + fake-SSS (W11.a). iridHue is degrees in config,
+                    // radians in-shader. Mood routes the sheen intensity (excited =
+                    // stronger shimmer, sleepy = nearly flat) via params.iridScale.
+                    gl.uniform1f(
+                        U.uIridescence,
+                        config.iridescence * params.iridScale,
+                    );
+                    gl.uniform1f(U.uIridHue, config.iridHue * (Math.PI / 180));
+                    gl.uniform1f(U.uIridSpeed, config.iridSpeed);
+                    gl.uniform1f(U.uSssScale, config.sssScale * params.iridScale);
+                    gl.uniform1f(U.uSssPower, config.sssPower);
+                    gl.uniform1f(U.uCoreGlow, config.coreGlow);
 
                     // Satellites
                     const sats = satellites.sources;

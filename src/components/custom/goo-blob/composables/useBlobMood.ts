@@ -15,6 +15,7 @@ const MOOD_TARGETS: Record<BlobMood, MoodParams> = {
         smoothK: 0.22,
         pointerAttraction: 0.0,
         mergeRate: 1.0,
+        iridScale: 1.0,
     },
     happy: {
         orbitSpeedScale: 1.4,
@@ -28,6 +29,7 @@ const MOOD_TARGETS: Record<BlobMood, MoodParams> = {
         smoothK: 0.28,
         pointerAttraction: 0.3,
         mergeRate: 0.6,
+        iridScale: 1.3,
     },
     curious: {
         orbitSpeedScale: 0.8,
@@ -41,6 +43,7 @@ const MOOD_TARGETS: Record<BlobMood, MoodParams> = {
         smoothK: 0.25,
         pointerAttraction: 0.6,
         mergeRate: 1.2,
+        iridScale: 1.1,
     },
     sleepy: {
         orbitSpeedScale: 0.4,
@@ -54,6 +57,7 @@ const MOOD_TARGETS: Record<BlobMood, MoodParams> = {
         smoothK: 0.16,
         pointerAttraction: -0.2,
         mergeRate: 2.0,
+        iridScale: 0.4,
     },
     excited: {
         orbitSpeedScale: 2.2,
@@ -67,6 +71,7 @@ const MOOD_TARGETS: Record<BlobMood, MoodParams> = {
         smoothK: 0.32,
         pointerAttraction: 0.1,
         mergeRate: 0.3,
+        iridScale: 1.8,
     },
 };
 
@@ -92,6 +97,7 @@ function lerpParams(a: MoodParams, b: MoodParams, t: number): MoodParams {
         smoothK: mix(a.smoothK, b.smoothK),
         pointerAttraction: mix(a.pointerAttraction, b.pointerAttraction),
         mergeRate: mix(a.mergeRate, b.mergeRate),
+        iridScale: mix(a.iridScale, b.iridScale),
     };
 }
 

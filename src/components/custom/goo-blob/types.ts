@@ -17,6 +17,8 @@ export interface MoodParams {
     smoothK: number;
     pointerAttraction: number;
     mergeRate: number;
+    /** Mood-driven iridescence/SSS intensity multiplier (excited > 1, sleepy < 1). */
+    iridScale: number;
 }
 
 export interface MetaballSource {
@@ -92,6 +94,21 @@ export interface BlobConfig {
     colorNoiseFreq: number;
     colorNoiseSpeed: number;
 
+    // Iridescence + fake-SSS (W11.a) — translucent-gel read. Taste-first low
+    // defaults (warm-pearl sheen, not garish thin-film).
+    /** Warm-pearl rim sheen weight (0 = off). */
+    iridescence: number;
+    /** Base hue (degrees) the warm-biased cosine palette centres on. */
+    iridHue: number;
+    /** Animated-thickness scroll speed for the iridescent shimmer. */
+    iridSpeed: number;
+    /** Fast-SSS back-light weight. */
+    sssScale: number;
+    /** Fast-SSS exponent. */
+    sssPower: number;
+    /** Thickness-driven inner-luminosity (core glow) lift. */
+    coreGlow: number;
+
     // Lit glass surface (W9.b) — Blinn-Phong glint + Fresnel rim. `lit` gates the
     // whole block (default OFF = flat fill, zero regression for existing consumers).
     lit: boolean;
@@ -151,6 +168,13 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
     brightnessShift: 0.0,
     colorNoiseFreq: 2.0,
     colorNoiseSpeed: 0.05,
+
+    iridescence: 0.0,
+    iridHue: 85,
+    iridSpeed: 0.06,
+    sssScale: 0.0,
+    sssPower: 2.0,
+    coreGlow: 0.0,
 
     lit: false,
     rimColor: "var(--foreground)",
