@@ -68,15 +68,20 @@
         position: relative;
         display: inline-flex;
         align-items: center;
-        /* AV.W16 TW3 — the dock establishes an inline-size container named
-           `dock` so its descendants (the label glyph, the density rules)
-           read the dock's OWN box, not the viewport. This makes the dock
-           portable into a 320px sidebar: the label compresses off the
-           dock's box width, not `@media`. A consumer that sets the
-           `containerName` prop overrides the name via inline style (the
-           explicit container-query opt-in); the default `dock` name backs
-           the built-in label/density container reads below. */
-        container: dock / inline-size;
+        /* AW.W1 — the dock does NOT establish a default inline-size container.
+           `container-type: inline-size` applies `contain: inline-size`, which
+           makes an element's inline size INDEPENDENT of its contents — fatally
+           incompatible with a shrink-to-fit pill: under it `.glass-dock` cannot
+           size to its content and collapses to its padding floor (~19px) with the
+           active layer overflowing (the 3.3.0 regression — every horizontal dock,
+           collapsed AND always-expanded, rendered as a sliver). The `dock`-named
+           container is now OPT-IN via the `containerName` prop: a consumer
+           embedding the dock in a width-CONSTRAINED host (a 320px sidebar) sets
+           `containerName="dock"` to get the descendant container-query reads (the
+           audacious-label compression below), trading shrink-to-fit for the
+           host-constrained width it already has there. The default free-floating
+           dock shrink-wraps to its content (AV.W16 TW3 made this a default and
+           silently broke dock sizing for the common case). */
         border-radius: var(--radius-dock);
         white-space: nowrap;
         max-inline-size: var(--dock-max-inline-size);
@@ -210,9 +215,13 @@
     /* Density-audacious narrow-box carve (AV.W16 TW3) — when the dock's OWN
        box is narrow the audacious-dock label glyphs compress so the chrome
        doesn't overflow its host (≤14px below 30rem, 15px 30–45rem). Keyed off
-       the dock's `dock` inline-size container (established on `.glass-dock`
-       above) rather than the viewport — so a dock dropped into a 320px
-       sidebar compresses its label off ITS box, not the page width. The var
+       the dock's `dock` inline-size container — now OPT-IN via the
+       `containerName="dock"` prop (AW.W1 removed the always-on default that
+       broke shrink-to-fit), so it fires only for a dock the consumer has
+       width-CONSTRAINED into a host (the 320px sidebar case) where the
+       compression is meaningful and the containment does not collapse the box.
+       A free-floating dock shrink-wraps (box == content) so there is nothing to
+       compress. The var
        is set on the `.dock-label` descendant (which reads it via
        `font-size: var(--dock-label-size)`, typography.css). Thresholds keep
        the prior 479/719px viewport cadence as box widths (30rem ≈ 480px,

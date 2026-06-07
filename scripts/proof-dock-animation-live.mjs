@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // AV.W9.4 — the dock BEHAVIORAL motion gate (proof:dock-animation-live).
 //
 // This is the gate the syntactic pair (proof:dock-motion-single-source +
@@ -46,8 +45,10 @@ import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
-const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5175";
+// NOTE: the gate-runner globals (ROOT/BASE_URL/DOCK_ROUTE) are resolved LAZILY
+// inside run() — `fileURLToPath(import.meta.url)` throws when this module is
+// IMPORTED by a test runner that serves it over http (vitest/vite), so the
+// pure detectors below must remain import-side-effect-free (AW.W1 unit).
 const DOCK_ROUTE = "/navigation/dock";
 
 // The behavioral bar (the CHARTER's numbers).
@@ -394,6 +395,8 @@ async function loadPlaywright() {
 }
 
 async function run() {
+    const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
+    const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5175";
     const ARTIFACT = gateArtifactPath(
         "GLASS_UI_DOCK_ANIMATION_LIVE_ARTIFACT",
         "AV-dock-animation-live",
