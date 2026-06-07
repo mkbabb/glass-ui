@@ -24,11 +24,13 @@ import { VERTEX_SRC } from "../constants/shaders/aurora.vert";
 import { FRAGMENT_SRC } from "../constants/shaders/aurora.frag";
 import { resolveBudgetDpr } from "../constants/budget";
 import { createWebGLCanvas } from "../../../../composables/glass/webgl/useWebGLCanvas";
+import { createGPUCanvas } from "../../../../composables/glass/createGPUCanvas";
 import type { AuroraConfig, AuroraInstance } from "../constants/presets";
 import { createGlProgram } from "./glSetup";
 import { createUniformBridge } from "./uniformBridge";
 import { createCursorState } from "./cursorModel";
 import { createFrameLoop } from "./frameLoop";
+import { createGPUAuroraSetup } from "./gpuRuntime";
 
 export type AuroraRuntimeMode = "live" | "capture";
 
@@ -85,6 +87,15 @@ export interface AuroraRuntimeOptions {
      * `instance.arm()` on the deferred path — rethrows from `arm()`.
      */
     onInitError?: (err: Error) => void;
+    /**
+     * AW.W7b — the WebGPU backend route. When a `GPUDevice` is supplied (the
+     * `resolveRenderModeAsync` probe resolved a non-fallback adapter), the runtime
+     * routes to `createGPUCanvas` drawing the SAME single-pass aurora over WebGPU;
+     * otherwise the WebGL2 fragment path is the universal fallback. `useAurora` runs
+     * the probe past first paint (the CSS placeholder paints first) and threads the
+     * device here. `null`/absent → the WebGL2 path (the zero-regression default).
+     */
+    gpuDevice?: GPUDevice | null;
 }
 
 function shouldInitEagerly(options: AuroraRuntimeOptions): boolean {
@@ -142,7 +153,32 @@ export function createAurora(
     // `config` for the next `setup` to upload.
     let setConfig: ((cfg: AuroraConfig) => void) | null = null;
 
-    const canvasHandle = createWebGLCanvas(canvas, {
+    // AW.W7b — route to the WebGPU backend when the probe resolved a device; else the
+    // WebGL2 fragment path (the universal zero-regression fallback). Both backends
+    // compose the SAME `createCanvasLifecycle` core, so the handle shape + the park
+    // contract are identical — the rest of this runtime is backend-agnostic.
+    const canvasHandle: {
+        arm: () => void;
+        suspend: (reason?: "tab-hidden" | "off-screen" | "manual") => void;
+        resume: (reason?: "tab-hidden" | "off-screen" | "manual") => void;
+        wake: () => void;
+        renderAt: (timeSec: number) => void;
+        dispose: () => void;
+        readonly reducedMotion: boolean;
+    } = options.gpuDevice
+        ? createGPUCanvas(canvas, {
+              device: options.gpuDevice,
+              mode: options.mode === "capture" ? "capture" : "live",
+              alphaMode: "premultiplied",
+              setup: createGPUAuroraSetup({
+                  canvas,
+                  getConfig: () => config,
+                  cursor,
+                  getReducedMotion: () => canvasHandle.reducedMotion,
+                  frozenOffset,
+              }),
+          })
+        : createWebGLCanvas(canvas, {
         mode: options.mode === "capture" ? "capture" : "live",
         contextAttrs: {
             antialias: false,

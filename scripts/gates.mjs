@@ -291,6 +291,24 @@ export const GATES = [
         note: "AW.W6 — resolveAtoms is a PURE TOTAL mapper over the ≤7 Tier-1 atoms (seed/harmony/mood/medium/textureAmount/motion/zones): a fuzz over the full atom-combination matrix (incl. out-of-range inputs) yields a valid in-range AuroraConfig respecting every budget.ts cap, AND resolveAtoms(DEFAULT_ATOMS) deep-equals DEFAULT_AURORA_CONFIG (the wispy-sky default survives the new door). Bite: change a DEFAULT_ATOMS value (default ≠ wispy-sky) → RED; OR remove a budget clamp so a vivid×6-zone combination overflows → RED",
     },
     {
+        id: "proof:aurora-wgsl-equivalence",
+        cmd: "proof:aurora-wgsl-equivalence",
+        tags: ["local", "ci"],
+        note: "AW.W7a — the WGSL color/noise twin (OETF_WGSL + OKLCH_MATRICES_WGSL + FBM_ROT_WGSL) matches its GLSL twin to 1e-6 via the hand-transcribed WGSL→TS port asserted against the EXISTING GLSL oracle (metaball-color.glsl-port.ts; never a new oracle) over the asymmetric witness #3a7bd5, AND aurora.wgsl.ts SPLICES the shared chunk's WGSL exports rather than re-authoring the OETF/matrices inline. Bite: perturb a WGSL matrix/OETF constant → the 1e-6 equivalence REDs; re-author the WGSL OETF inline → the splice arm REDs",
+    },
+    {
+        id: "proof:aurora-backend-fallback",
+        cmd: "proof:aurora-backend-fallback",
+        tags: ["local", "ci"],
+        note: "AW.W7b — the WebGL2 single-pass fragment shader is the DECLARED zero-regression fallback; resolveRenderModeAsync drops a null adapter AND an isFallbackAdapter software adapter to webgl (NOT webgpu), runtime.ts routes to createGPUCanvas only when a device is present (else createWebGLCanvas), the WGSL twin draws the single-pass aurora, and useAurora runs the probe behind the deferred first-paint schedule. Bite: break the WebGL2 fallback route (probe always returns webgpu / accepts a fallback adapter) → RED",
+    },
+    {
+        id: "proof:webgpu-substrate-single",
+        cmd: "proof:webgpu-substrate-single",
+        tags: ["local", "ci"],
+        note: "AW.W7b — the WebGPU substrate-binary gate (the proof:webgl-substrate-single by-irrelevance hole): the navigator.gpu device acquisition is confined to the sanctioned sites (renderMode.ts probe via requestAdapter→requestDevice + createGPUCanvas.ts swapchain), NO baked aurora pass-count/rgba16float/Kuwahara-sector-count in EITHER substrate (createCanvasLifecycle/createGPUCanvas), and aurora.wgsl.ts SPLICES the shared procedural-color WGSL chunk. Bite: bake passCount=4/rgba16float into createGPUCanvas → RED; add a 2nd navigator.gpu acquisition → RED; re-author the WGSL OETF inline → RED",
+    },
+    {
         id: "proof:shader-shared-source",
         cmd: "proof:shader-shared-source",
         tags: ["local", "ci"],
