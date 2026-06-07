@@ -16,9 +16,8 @@ This wave succeeds if the five-rung glass ladder reads as five distinct surfaces
 
 1. `GlassPanel.vue:60-72` — the `svg-filter` branch returns `glass-panel glass-panel--svg` for ALL variants regardless of `props.variant`; the `fallback` branch returns `glass-panel glass-panel--fallback` likewise. Make both branches carry the variant so the scoped CSS can paint per-rung: emit `glass-panel glass-panel--svg ${VARIANT_CLASS[variant]}` (and the fallback analogue), or thread the variant via a `data-variant` attribute the scoped CSS reads.
 2. `GlassPanel.vue:104-115` scoped CSS — replace the single hardcoded `background: var(--glass-bg-wash)` on `.glass-panel--svg` (and the single `--glass-bg-floating` on `.glass-panel--fallback`) with a per-variant rule set reading `var(--glass-bg-{wash,quiet,resting,floating,overlay})` keyed off the variant class or `data-variant`. The svg displacement filter overlays whichever rung the variant selects; it no longer forces the lightest rung onto every panel.
-3. Resolve the double-nested `light-dark(light-dark(...))` construction the audit flagged on the `--glass-bg-*` source tokens (tokens.css §8) — collapse to a single `light-dark()`. Token-source hygiene; no value change to the resolved light/dark pair.
-4. `demo/stories/substrates/glass-panel.vue` — stage the five-rung matrix over a shipped high-frequency backdrop. Consume the existing `Aurora` (`@mkbabb/glass-ui/aurora`) or `PaperBackdrop` (`@mkbabb/glass-ui/paper-backdrop`) substrate behind the panel grid; do NOT author a new backdrop. The glass now reads against busy color.
-5. `demo/stories/primitives/card.vue` — stage the Card tier matrix and the shadow-toggle controls over the same shipped backdrop, so the tier-alpha steps (0.30→0.95) and the shadow-on/shadow-off differential become perceptible. The toggles already function (verified DOM); this closes the perception gap, not a logic bug.
+3. `demo/stories/substrates/glass-panel.vue` — stage the five-rung matrix over a shipped high-frequency backdrop. Consume the existing `Aurora` (`@mkbabb/glass-ui/aurora`) or `PaperBackdrop` (`@mkbabb/glass-ui/paper-backdrop`) substrate behind the panel grid; do NOT author a new backdrop. The glass now reads against busy color.
+4. `demo/stories/primitives/card.vue` — stage the Card tier matrix and the shadow-toggle controls over the same shipped backdrop, so the tier-alpha steps (0.30→0.95) and the shadow-on/shadow-off differential become perceptible. The toggles already function (verified DOM); this closes the perception gap, not a logic bug.
 
 ## 3a. Triumvirate Dispatch
 
@@ -33,32 +32,30 @@ Trigger a triumvirate (research + plan augment + redress) when:
 | File | Access |
 |---|---|
 | `src/components/custom/glass-panel/GlassPanel.vue` | modify |
-| `src/styles/tokens.css` | modify-carve (the §8 `--glass-bg-*` double-`light-dark()` collapse only) |
 | `demo/stories/substrates/glass-panel.vue` | modify |
 | `demo/stories/primitives/card.vue` | modify |
 
-Do NOT touch: `src/composables/glass/useGlassRenderer.ts`, any other `src/styles/*.css`, the `Card` component source (`src/components/ui/card/`) — the toggle logic is correct; only its demo staging changes.
+Do NOT touch: `src/composables/glass/useGlassRenderer.ts`, `src/styles/tokens.css`, any other `src/styles/*.css`, the `Card` component source (`src/components/ui/card/`) — the toggle logic is correct; only its demo staging changes.
 
 ## 4a. Disjointness
 
-Single agent unit; no intra-wave path contention. W12 shares no `modify` path with W13 (W13 owns `glass.css` + `utilities.css` + `Slider.vue` + `button/index.ts`; W12 owns `GlassPanel.vue` + `tokens.css §8` + two stories), W14 (data-table only), or W15 (colocation/naming). The `tokens.css` carve here is the §8 `--glass-bg-*` nesting only; W13 does not write `tokens.css`.
+Single agent unit; no intra-wave path contention. W12 shares no `modify` path with W13 (W13 owns `glass.css` + `utilities.css` + `Slider.vue` + `button/index.ts`; W12 owns `GlassPanel.vue` + two stories), W14 (data-table only), or W15 (colocation/naming).
 
 ## 5. Agent Units
 
 ### AW.W12.a GlassPanel tier-honoring + demo backdrop
 
 - Goal: every renderer tier honors `variant` per-rung, and the glass-panel + card demos stage the ladder over a shipped high-frequency backdrop so the rungs read.
-- Mechanism: thread `props.variant` into the svg-filter and fallback class branches (`GlassPanel.vue:60-72`); expand the scoped CSS (`:104-115`) to a per-variant `--glass-bg-{variant}` rule set; collapse the double-`light-dark()` on the §8 source tokens; consume `Aurora`/`PaperBackdrop` behind the two story grids.
-- Files: `src/components/custom/glass-panel/GlassPanel.vue`, `src/styles/tokens.css` (§8 carve), `demo/stories/substrates/glass-panel.vue`, `demo/stories/primitives/card.vue`.
+- Mechanism: thread `props.variant` into the svg-filter and fallback class branches (`GlassPanel.vue:60-72`); expand the scoped CSS (`:104-115`) to a per-variant `--glass-bg-{variant}` rule set; consume `Aurora`/`PaperBackdrop` behind the two story grids.
+- Files: `src/components/custom/glass-panel/GlassPanel.vue`, `demo/stories/substrates/glass-panel.vue`, `demo/stories/primitives/card.vue`.
 - Sub-gate: a Vitest/Playwright computed-style probe mounts the five-variant matrix forcing `tier="svg-filter"` and asserts five distinct `background` values; `vue-tsc --noEmit` green; the two stories import the substrate from its published subpath (no inline backdrop).
 
 ## 6. Hard Gate
 
 1. **Per-rung svg-filter background.** A mounted matrix of the five `GlassPanelVariant`s with `tier="svg-filter"` resolves five DISTINCT computed `background` values (one per `--glass-bg-{variant}` rung), proven by a Vitest DOM probe or a Playwright `getComputedStyle` capture saved to the artefacts path. Pre-fix the same probe yields five identical `--glass-bg-wash` values; the diff is the proof.
 2. **Per-rung fallback background.** The same matrix forced to `tier="fallback"` resolves per-variant backgrounds (no longer the single `--glass-bg-floating`).
-3. **Token nesting collapsed.** `grep -c 'light-dark(\s*light-dark(' src/styles/tokens.css` returns `0` for the §8 `--glass-bg-*` block.
-4. **Demos stage a shipped backdrop.** `demo/stories/substrates/glass-panel.vue` and `demo/stories/primitives/card.vue` each import a substrate from `@mkbabb/glass-ui/aurora` or `@mkbabb/glass-ui/paper-backdrop`; neither story declares a hand-rolled gradient/backdrop element. `grep` confirms the subpath import; `grep` confirms no new `<div class="...backdrop...">` literal.
-5. **Build + types green.** `npm run build` and `npm run typecheck` pass.
+3. **Demos stage a shipped backdrop.** `demo/stories/substrates/glass-panel.vue` and `demo/stories/primitives/card.vue` each import a substrate from `@mkbabb/glass-ui/aurora` or `@mkbabb/glass-ui/paper-backdrop`; neither story declares a hand-rolled gradient/backdrop element. `grep` confirms the subpath import; `grep` confirms no new `<div class="...backdrop...">` literal.
+4. **Build + types green.** `npm run build` and `npm run typecheck` pass.
 
 ## 7. Format And Lint Cadence
 
@@ -76,7 +73,6 @@ Single agent unit; no intra-wave path contention. W12 shares no `modify` path wi
 ## 9. Commit Plan
 
 - `fix(glass-panel): honor variant per-rung in svg-filter + fallback tiers` — the `GlassPanel.vue` class-branch + scoped-CSS change; body cites the svg-filter collapse and the per-rung resolution.
-- `chore(tokens): collapse double light-dark() on §8 glass-bg ladder` — the token-source carve.
 - `chore(demo): stage glass-panel + card stories over a shipped backdrop` — the two story edits; body names the consumed substrate subpath.
 - `docs(AW): W12 close — per-tier background probe + screens` — the artefact + status commit.
 
