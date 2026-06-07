@@ -16,19 +16,16 @@ import {
 // the drift canary.
 import {
     cssToOklch,
+    deriveHue,
+    gamutMapStop,
     oklchStopToHex,
     oklchToLinear,
+    type ColorHarmony,
     type OklchStop,
 } from "../../../../composables/color";
 import {
     srgbToOKLab,
-    oklabToLinearSRGB,
     rawOklabToOklch,
-    rawOklchToOklab,
-    gamutMapOKLab,
-    isInSRGBGamut,
-    interpolateHue,
-    type HueInterpolationMethod,
 } from "@mkbabb/value.js";
 
 // Re-export the shared color core from the leaf (AU.W5 hoist — surface preserved).
@@ -38,6 +35,12 @@ export {
     oklchToLinear,
 } from "../../../../composables/color";
 export type { OklchStop } from "../../../../composables/color";
+
+// AW.W11.b — the harmony vocabulary (deriveHue / gamutMapStop / the harmony union)
+// is HOISTED to the `/color` leaf so the blob and aurora derive from ONE source
+// (no second forked `deriveHue`/`gamutMapStop`). `AuroraHarmony` stays as the
+// public alias of the shared `ColorHarmony` (surface preserved — no break).
+export type { ColorHarmony } from "../../../../composables/color";
 
 /**
  * Pack up to `maxStops` OklchStops into linear-sRGB triples. When `out` is
@@ -105,25 +108,12 @@ export function hexToOklchStop(hex: string): OklchStop {
 }
 
 /**
- * Harmony schemes for {@link deriveAurora}. Each maps the seed hue onto the
- * derived stops differently:
- * - `analogous` — the ramp walks the seed hue ± a small spread (neighbouring
- *   hues; the painterly default).
- * - `complementary` — stops travel from the seed hue toward its opposite (+180°)
- *   along the LONG arc (keeps the ramp saturated; the short arc cuts through grey
- *   on a warm→cool pair — the muddy-midtone defect).
- * - `split-complementary` — anchor + the two hues flanking the complement (±150/210).
- * - `triad` — stops distributed across the seed hue and its two 120° partners.
- * - `tetradic` — anchor + the three 90° partners (90/180/270).
- * - `monochrome` — every stop holds the seed hue; only L and C travel.
+ * Harmony schemes for {@link deriveAurora} — the PUBLIC alias of the shared
+ * `ColorHarmony` vocabulary hoisted to the `/color` leaf (AW.W11.b). The blob and
+ * aurora derive from this ONE union; aurora keeps the `AuroraHarmony` name for
+ * surface preservation. See `ColorHarmony` for the per-scheme semantics.
  */
-export type AuroraHarmony =
-    | "analogous"
-    | "complementary"
-    | "split-complementary"
-    | "triad"
-    | "tetradic"
-    | "monochrome";
+export type AuroraHarmony = ColorHarmony;
 
 /**
  * Eased L/C journey shapes for the derived ramp. `bell` (the W5 default for chroma)
@@ -155,17 +145,6 @@ export interface DeriveAuroraOptions {
      */
     temperatureShift?: number;
 }
-
-/** The harmony → value.js HueInterpolationMethod arc map. Verified against the enum. */
-const HARMONY_METHOD: Record<AuroraHarmony, HueInterpolationMethod> = {
-    // `longer` keeps the long arc saturated (the short arc greys a warm→cool pair).
-    complementary: "longer",
-    "split-complementary": "longer",
-    analogous: "shorter",
-    monochrome: "shorter",
-    triad: "increasing",
-    tetradic: "increasing",
-};
 
 /**
  * Painterly L band — a deep base, a near-white atmospheric apex. The derived L
@@ -282,84 +261,8 @@ function applyTemperature(h: number, t: number, amount: number): number {
     return wrap(h + delta);
 }
 
-/**
- * Hue per harmony, walked across the ramp parameter `t` (0..1) THROUGH value.js's
- * `interpolateHue` in the NORMALIZED-TURNS domain (`/360` in, `*360` out — value.js
- * takes turns [0,1], NOT degrees; passing degrees silently misbehaves because the
- * `.5` short-arc threshold is a half-TURN). The harmony→method map is FIXED:
- * `complementary`/`split-complementary` use `longer` (long arc, stays saturated);
- * `analogous`/`monochrome` use `shorter`; `triad`/`tetradic` use `increasing`.
- */
-function deriveHue(
-    anchorHue: number,
-    harmony: AuroraHarmony,
-    hueSpread: number,
-    t: number,
-): number {
-    const wrap = (h: number) => ((h % 360) + 360) % 360;
-    const method = HARMONY_METHOD[harmony];
-    // value.js interpolateHue takes turns; `arc(h0,h1)` lerps the anchor→target arc.
-    const arc = (h0: number, h1: number): number =>
-        wrap(interpolateHue(wrap(h0) / 360, wrap(h1) / 360, t, method) * 360);
-    switch (harmony) {
-        case "monochrome":
-            return wrap(anchorHue);
-        case "complementary":
-            // Travel from the anchor toward its opposite along the LONG arc.
-            return arc(anchorHue, anchorHue + 180);
-        case "split-complementary":
-            // Anchor → one of the complement flanks (±150 from anchor = 30 off comp).
-            return arc(anchorHue + 150, anchorHue + 210);
-        case "triad":
-            // Distribute across anchor → +120 → +240 along the increasing arc.
-            return arc(anchorHue, anchorHue + 240);
-        case "tetradic":
-            // Anchor → +90 → +180 → +270 along the increasing arc.
-            return arc(anchorHue, anchorHue + 270);
-        case "analogous":
-        default:
-            // Walk the anchor hue across ±hueSpread (centred on the anchor).
-            return arc(anchorHue - hueSpread, anchorHue + hueSpread);
-    }
-}
-
-/**
- * Gamut-map one OklchStop through value.js's Ottosson core
- * (`rawOklchToOklab → gamutMapOKLab → rawOklabToOklch`). Hue is preserved exactly
- * by the adaptive-L0 strategy; the result is in-sRGB to the rendering pipeline's
- * tolerance.
- *
- * `gamutMapOKLab` maps onto the gamut HULL — analytically in-gamut, but the
- * boundary point lands EXACTLY on a sRGB face, where the OKLCh round-trip's float
- * error can push a channel a hair past [0,1] for a neon/near-primary seed
- * (`#00ff00`, `#0000ff`, …). Two distinct escapes:
- *
- *  - OVER-1 overshoot (a channel > 1) — the dangerous one: the bake path
- *    (`oklchToLinear`) lower-clamps with `Math.max(0,·)` but does NOT cap the top,
- *    so an uncorrected overshoot would reach the GPU. A bounded inward-chroma
- *    nudge clears every over-1 escape (verified 0 over-1 across the neon × harmony
- *    matrix); hue and L are untouched, chroma shrinks ≤ ~0.6% (imperceptible).
- *  - sub-1.1e-4 NEGATIVE residual (a channel < 0 by ≤ 0.027/255) — irreducible
- *    float noise of the hull placement on deep blues; chroma-shrink cannot move
- *    it (it is L/face-direction, not chroma-direction). It is below perception
- *    AND the bake's `Math.max(0,·)` wrap already clamps it, so it never paints.
- *
- * The loop breaks the instant the stop reads strictly in-gamut; the 6-step cap
- * bounds the negative-residual case (which never converges) so this stays O(1).
- */
-function gamutMapStop(stop: OklchStop): OklchStop {
-    const [L, a, b] = rawOklchToOklab(stop.L, stop.C, stop.h);
-    const [Lm, am, bm] = gamutMapOKLab(L, a, b);
-    const [Lo, C, H] = rawOklabToOklch(Lm, am, bm);
-    let safeC = C;
-    for (let k = 0; k < 6; k++) {
-        const [lx, ax, bx] = rawOklchToOklab(Lo, safeC, H);
-        const [lr, lg, lb] = oklabToLinearSRGB(lx, ax, bx);
-        if (isInSRGBGamut(lr, lg, lb)) break;
-        safeC *= 0.999; // pull chroma 0.1% inward — hue/L preserved
-    }
-    return { L: Lo, C: safeC, h: H };
-}
+// `deriveHue` + `gamutMapStop` are HOISTED to the `/color` leaf (AW.W11.b) and
+// imported above — aurora and the blob derive from ONE source (no forked copies).
 
 // ── deriveScene — one seed + a mood word → a whole AuroraConfig (W5) ──────────
 

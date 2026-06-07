@@ -1,0 +1,63 @@
+{
+  "wave": "AW.W9 - Blob Droplet Surface",
+  "status": "closed",
+  "units": ["W9.a Field And Membrane", "W9.b Lit Glass Surface"],
+  "commits": [
+    "feat(goo-blob): normalize smin + analytic-gradient noise + domain-warp edge (W9.a)",
+    "feat(goo-blob): SDF-gradient normal + Blinn-Phong spec + Fresnel rim, premult-correct (W9.b)"
+  ],
+  "gates": [
+    {
+      "name": "proof:blob-smin-normalized",
+      "exit": 0,
+      "measurements": {
+        "fudgeGone": { "div022": false, "posScaleOnSmoothK": false },
+        "shaderNormalized": "k *= 4.0",
+        "neckSweep": [
+          { "k": 0.05, "seamDepth": 0.05, "rel": 0 },
+          { "k": 0.1, "seamDepth": 0.1, "rel": 0 },
+          { "k": 0.2, "seamDepth": 0.2, "rel": 0 },
+          { "k": 0.3, "seamDepth": 0.3, "rel": 0 }
+        ],
+        "note": "the normalized smin's seam depth at the coincident merge == k exactly, so uSmoothK is a true distance"
+      }
+    },
+    {
+      "name": "proof:blob-gradient-unit-length",
+      "exit": 0,
+      "measurements": {
+        "worstAbsErr": 0,
+        "samples": 337,
+        "edgeGlowPresent": false,
+        "normalRidesScene": true,
+        "screenSpaceEps": true,
+        "note": "|surfaceNormal()| in [0.99,1.01] across 16 gradient dirs x 21 interior depths + the flat-centre degenerate corner"
+      }
+    },
+    {
+      "name": "proof:blob-spec-premult",
+      "exit": 0,
+      "measurements": {
+        "order": { "idxLitAdd": 11277, "idxOetfCall": 11323, "idxPremult": 11494 },
+        "litBeforeOetf": true,
+        "premultLast": true,
+        "premultipliedAlphaTrue": true,
+        "antialiasFalse": true,
+        "note": "lit add (lin += highlight) < OETF (linearToSrgb(lin)) < premult (rgb * alpha); context attrs UNCHANGED"
+      }
+    },
+    { "name": "proof:blob-color-equivalence", "exit": 0, "note": "8/8 — the OKLCh color chain is unchanged; the lit terms route through already-certified primitives (oklchToOklab/oklabToLinearSrgb/srgbToLinear)" },
+    { "name": "proof:blob-space-gamma", "exit": 0, "note": "DEC-AT-7 seam intact (resolver gamma exit + shader OETF close)" },
+    { "name": "proof:offscreen-pause", "exit": 0, "note": "substrate park/freeze unbroken (no new rAF or matchMedia)" },
+    { "name": "typecheck", "exit": 0 },
+    { "name": "build", "exit": 0, "note": "dist/goo-blob.js emits; shader assembler splice character-valid" }
+  ],
+  "scope": {
+    "smin": "IQ 2024 normalized (k *= 4.0); /0.22 + POS_SCALE-on-smoothK fudge DELETED; uSmoothK is a true blend-depth in distance units; config.smoothK re-baselined 0.22 -> 0.12",
+    "merge": "config-gated quadratic | circular smin variant (BlobMerge); default quadratic",
+    "edge": "value-noise replaced by IQ noised() analytic-derivative gradient noise + one domain-warp pass (fbmWarped, uWarpAmp); default warpAmp 0 (opt-in membrane)",
+    "normal": "surfaceNormal() — IQ 4-tap tetrahedron on sceneDist with screen-space epsilon, edge-dome Z lift",
+    "lighting": "Blinn-Phong warm-cream OKLCh-tint glint + Schlick Fresnel rim (uRimColor via ColorResolver), max(spec, rim*scale), linear-before-OETF; subsumes edgeGlow; behind a lit flag (default OFF)"
+  },
+  "browserVerify": "PENDING — the orchestrator's live Playwright audit: mount <GooBlob :config> with lit:true vs lit:false side-by-side; lit:true must show a curved wet bead with a warm-cream specular glint and a warm Fresnel rim where lit:false (and HEAD) shows a flat fill; satellites merge into rounded menisci (circular merge rounder than quadratic); the warp edge breathes as a marbled membrane when warpAmp > 0."
+}

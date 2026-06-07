@@ -134,7 +134,18 @@ function setMood(m: BlobMood) {
     mood.setMood(m);
 }
 
-defineExpose({ nudge, setMood, currentMood: mood.currentMood });
+// A click fires the one-shot spring impulse (W10) — the blob bounces — AND emits
+// the `click` event. The impulse rides the renderer's single rAF (no parallel
+// loop); under PRM the substrate freezes the rAF so the bounce is a no-op.
+function pulse() {
+    pointer.click(cfg!.clickImpulse);
+}
+function onBlobClick() {
+    pulse();
+    emit("click");
+}
+
+defineExpose({ nudge, setMood, pulse, currentMood: mood.currentMood });
 </script>
 
 <template>
@@ -142,7 +153,7 @@ defineExpose({ nudge, setMood, currentMood: mood.currentMood });
         ref="wrapperRef"
         class="goo-blob-wrapper"
         :style="{ '--blob-color': color }"
-        @click="emit('click')"
+        @click="onBlobClick"
     >
         <canvas
             ref="canvasRef"

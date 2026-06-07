@@ -162,4 +162,79 @@ export function clamp3(c: Vec3): Vec3 {
     return [clamp01(c[0]), clamp01(c[1]), clamp01(c[2])];
 }
 
+// ── W11 iridescence + fake-SSS (OKLCh modifications mirroring metaball.frag.ts) ──
+
+const TWO_PI = 2 * PI;
+
+/**
+ * Warm-biased iridescence — the IQ cosine-palette OKLCh-hue shift the shader
+ * applies BEFORE the gamut clamp (mirrors the `uIridescence` block). `fres` is the
+ * rim-weighted Fresnel angle [0,1], `noise` the FBM color field [0,1]. The hue is
+ * biased to the warm `iridHue` (radians); the chroma is lifted toward a warm-pearl
+ * band but CAPPED (`+0.04*w` clamped to `+0.08`) so it never goes garish. Returns
+ * the modified OKLCh stop [L, C, h(rad)].
+ */
+export function applyIridescence(
+    lch: Vec3,
+    fres: number,
+    noise: number,
+    iridHue: number,
+    iridescence: number,
+    t: number,
+): Vec3 {
+    if (iridescence <= 0) return lch;
+    const tt = fres + 0.3 * noise + t;
+    const iridHueShifted = iridHue + 0.18 * PI * Math.cos(TWO_PI * tt);
+    const w = fres * iridescence;
+    const h = lch[2] + (iridHueShifted - lch[2]) * w; // mix(lch.z, iridHue, w)
+    const C = Math.min(lch[1] + 0.04 * w, lch[1] + 0.08); // warm-pearl chroma cap
+    const L = Math.min(lch[0] + 0.05 * w, 1.0);
+    return [L, C, h];
+}
+
+/**
+ * Fake subsurface translucency — the thickness inner-glow + the fast-SSS back-light
+ * the shader applies in OKLCh before the gamut clamp (mirrors the `uCoreGlow ||
+ * uSssScale` block). `thickness` is [0 at rim, 1 deep in]; `back` is the precomputed
+ * back-light dot (the shader's `pow(clamp(dot(V,-(L+N*thickness)),0,1), power)`).
+ */
+export function applyFakeSss(
+    lch: Vec3,
+    thickness: number,
+    back: number,
+    coreGlow: number,
+    sssScale: number,
+): Vec3 {
+    if (coreGlow <= 0 && sssScale <= 0) return lch;
+    let L = Math.min(lch[0] + coreGlow * thickness, 1.0);
+    const sss = back * sssScale * (1 - thickness);
+    L = Math.min(L + sss, 1.0);
+    const h = lch[2] + sss * 0.1; // warm the leaking edge
+    return [L, lch[1], h];
+}
+
+// ── W11.b multi-stop palette — OKLab interpolation with a midpoint chroma-bump ──
+
+/**
+ * Interpolate between two OKLCh stops in OKLab (the shader's `uPalette[N]` interp),
+ * with a MIDPOINT CHROMA-BUMP: linear OKLab `mix` of two vivid hues dips chroma at
+ * the midpoint (passing near grey); the bump lifts chroma back toward the endpoints'
+ * level so the ramp stays saturated. `bump` is the lift amount (0 = plain mix).
+ * Returns the interpolated OKLCh stop.
+ */
+export function oklabLerpStop(a: Vec3, b: Vec3, t: number, bump: number): Vec3 {
+    // OKLCh → OKLab, lerp, → OKLCh.
+    const labA = oklchToOklab(a);
+    const labB = oklchToOklab(b);
+    const lab: Vec3 = [
+        labA[0] + (labB[0] - labA[0]) * t,
+        labA[1] + (labB[1] - labA[1]) * t,
+        labA[2] + (labB[2] - labA[2]) * t,
+    ];
+    const lch = oklabToOklch(lab);
+    // Midpoint chroma-bump: a bell (peaks at t=0.5) lifts C.
+    const bell = Math.sin(PI * t);
+    return [lch[0], lch[1] + bump * bell, lch[2]];
+}
+
 export type { Vec3 };
