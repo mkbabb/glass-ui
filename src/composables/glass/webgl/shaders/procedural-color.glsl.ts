@@ -132,3 +132,91 @@ vec3 oklabToOklch(vec3 lab) {
 vec3 oklchToOklab(vec3 lch) {
     return vec3(lch.x, lch.y * cos(lch.z), lch.y * sin(lch.z));
 }`;
+
+// ════════════════════════════════════════════════════════════════════════════
+// AW.W7a — the WGSL TWIN of the shared color/noise chunk.
+//
+// The SINGLE-SOURCE-THE-GPU-MATH-FIRST discipline: the WebGPU aurora path needs the
+// SAME OETF + the SAME Ottosson OKLCh matrices + the SAME FBM_ROT the GLSL path uses.
+// Authoring a SECOND independent WGSL color core re-opens the AV.W1 "~2.2× too dark"
+// two-copy divergence (the precise class the AV.W2 convergence closed for the two
+// GLSL shaders). Instead these WGSL exports are the certified TWIN of the GLSL above:
+//
+//   - The `mat3x3f` literals are the SAME transposed value.js constants, copied
+//     VERBATIM. WGSL `mat3x3f(c0, c1, c2)` takes COLUMNS (column-major, like GLSL
+//     `mat3`), so the columns are identical — NO re-transpose (re-transposing would
+//     diverge ~1e-4 at the asymmetric witness `#3a7bd5`).
+//   - The OETF transfer constants (2.4 / 0.055 / 12.92 / 0.04045 / 0.0031308) are
+//     value.js's EXACT transfer, identical to the GLSL.
+//   - `proof:aurora-wgsl-equivalence` certifies a hand-transcribed WGSL→TS port of
+//     THIS chunk against the EXISTING `metaball-color.glsl-port.ts` GLSL oracle to
+//     1e-6 (never a new oracle) — so the WGSL string and the GLSL string provably
+//     compute the same numbers.
+//   - The premultiply (the consumer's, not here) stays AFTER the OETF (the
+//     straight-alpha gamma triple × alpha).
+
+// sRGB OETF + inverse — value.js's exact transfer (WGSL twin of OETF_GLSL).
+export const OETF_WGSL = /* wgsl */ `
+fn srgbToLinearCh(c: f32) -> f32 {
+    return select(pow((c + 0.055) / 1.055, 2.4), c / 12.92, c <= 0.04045);
+}
+fn srgbToLinear(c: vec3f) -> vec3f {
+    return vec3f(srgbToLinearCh(c.r), srgbToLinearCh(c.g), srgbToLinearCh(c.b));
+}
+fn linearToSrgbCh(c: f32) -> f32 {
+    return select(1.055 * pow(c, 1.0 / 2.4) - 0.055, c * 12.92, c <= 0.0031308);
+}
+fn linearToSrgb(c: vec3f) -> vec3f {
+    return vec3f(linearToSrgbCh(c.r), linearToSrgbCh(c.g), linearToSrgbCh(c.b));
+}`;
+
+// The rotated-octave FBM rotation constant (WGSL twin of FBM_ROT_GLSL). WGSL
+// mat2x2f is column-major, same as the GLSL mat2 — the columns are identical.
+export const FBM_ROT_WGSL = /* wgsl */ `const FBM_ROT: mat2x2f = mat2x2f(0.8, 0.6, -0.6, 0.8);`;
+
+// The four Ottosson OKLab/OKLCh matrices + their space fns (WGSL twin of
+// OKLCH_MATRICES_GLSL). The mat3x3f literals are the SAME transposed value.js
+// columns, copied VERBATIM (column-major takes columns — no re-transpose). PI must
+// be defined by the consumer before this chunk (oklabToOklch folds the hue to [0,2π)).
+export const OKLCH_MATRICES_WGSL = /* wgsl */ `
+const LINEAR_SRGB_TO_LMS: mat3x3f = mat3x3f(
+    0.4122214708, 0.2119034982, 0.0883024619,
+    0.5363325363, 0.6806995451, 0.2817188376,
+    0.0514459929, 0.1073969566, 0.6299787005
+);
+const LMS_TO_OKLAB: mat3x3f = mat3x3f(
+    0.2104542553, 1.9779984951, 0.0259040371,
+    0.7936177850, -2.4285922050, 0.7827717662,
+    -0.0040720468, 0.4505937099, -0.8086757660
+);
+const OKLAB_TO_LMS: mat3x3f = mat3x3f(
+    1.0, 1.0, 1.0,
+    0.3963377774, -0.1055613458, -0.0894841775,
+    0.2158037573, -0.0638541728, -1.2914855480
+);
+const LMS_TO_LINEAR_SRGB: mat3x3f = mat3x3f(
+    4.0767416621, -1.2684380046, -0.0041960863,
+    -3.3077115913, 2.6097574011, -0.7034186147,
+    0.2309699292, -0.3413193965, 1.7076147010
+);
+
+fn srgbToOklab(c: vec3f) -> vec3f {
+    let lin = srgbToLinear(c);
+    let lms = LINEAR_SRGB_TO_LMS * lin;
+    let lmsCbrt = sign(lms) * pow(abs(lms), vec3f(1.0 / 3.0));
+    return LMS_TO_OKLAB * lmsCbrt;
+}
+fn oklabToLinearSrgb(lab: vec3f) -> vec3f {
+    let lms_ = OKLAB_TO_LMS * lab;
+    let lms = lms_ * lms_ * lms_;
+    return LMS_TO_LINEAR_SRGB * lms;
+}
+fn oklabToOklch(lab: vec3f) -> vec3f {
+    let C = length(lab.yz);
+    var H = atan2(lab.z, lab.y);
+    if (H < 0.0) { H = H + 2.0 * PI; }
+    return vec3f(lab.x, C, H);
+}
+fn oklchToOklab(lch: vec3f) -> vec3f {
+    return vec3f(lch.x, lch.y * cos(lch.z), lch.y * sin(lch.z));
+}`;

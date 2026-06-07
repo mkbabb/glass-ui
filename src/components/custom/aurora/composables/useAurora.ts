@@ -13,6 +13,8 @@ import {
 } from "./runtime";
 import { asGetter, type ConfigSource } from "./configSource";
 import { useIntersectionPause } from "../../../../composables/motion/useIntersectionPause";
+import { useScrollProgress } from "../../../../composables/motion/useScrollProgress";
+import { resolveRenderModeAsync } from "../constants/renderMode";
 import type { AuroraConfig } from "../constants/presets";
 
 /**
@@ -47,6 +49,12 @@ export interface UseAuroraReturn {
     setCursor: (x: number, y: number, strength?: number) => void;
     clearCursor: () => void;
     setCursorRadius: (r: number) => void;
+    /**
+     * AW.W8.1 — feed a pointer delta into the velocity-reactive flow (a fast flick →
+     * a transient swirl-burst). PRM-gated at the runtime (the cursor write-path
+     * early-out). The aurora demo wires this from its stage pointermove listener.
+     */
+    injectCursorVelocity: (dx: number, dy: number) => void;
     renderAt: (t: number) => void;
     pause: () => void;
     resume: () => void;
@@ -152,6 +160,7 @@ export function useAurora(
     let inst: AuroraRuntime | null = null;
     let stopWatch: (() => void) | null = null;
     let stopArmWatch: (() => void) | null = null;
+    let stopScrollWatch: (() => void) | null = null;
     let cancelSchedule: (() => void) | null = null;
     let intersection: ReturnType<typeof useIntersectionPause> | null = null;
     let reducedMq: MediaQueryList | null = null;
@@ -218,6 +227,22 @@ export function useAurora(
         reducedMq.addEventListener("change", onReducedChange);
 
         stopWatch = watch(getCfg, (next) => inst?.update(next), { deep: true });
+
+        // AW.W8.1 — scroll coupling: when interactivity.scroll is on, bind palette/
+        // breath progress to scroll via the EXISTING useScrollProgress public
+        // composable (no new substrate). The coupling is PRM-suppressed because it
+        // routes through the runtime's reducedMotion gate — under reduce the runtime
+        // ignores the nudge (the master tempo zeroes it). The progress modulates the
+        // cursor radius subtly (a benign per-frame axis that does not fight the config
+        // deep-watch). Only wired when the flag is on (the default stays static).
+        if (getCfg().interactivity?.scroll && canvasRef.value) {
+            const progress = useScrollProgress({ target: canvasRef, trackExit: true });
+            stopScrollWatch = watch(progress, (p) => {
+                if (!inst || inst.reducedMotion) return; // PRM-suppressed
+                // Couple scroll to the cursor radius (a wide, gentle palette breathe).
+                inst.setCursorRadius(0.2 + p * 0.25);
+            });
+        }
     }
 
     onMounted(() => {
@@ -308,9 +333,32 @@ export function useAurora(
                 // the *whether* — HA4 §1.3).
                 cancelSchedule = scheduleAfterFirstPaint(() => {
                     cancelSchedule = null;
-                    if (visibility.value) armRuntime();
-                    // Else: still off-screen — leave `armAttempted` false so a
-                    // later intersection re-triggers this watch.
+                    // AW.W7b — probe for WebGPU PAST first paint (the CSS placeholder
+                    // already painted), then arm. The probe resolves a non-fallback
+                    // device → reconstruct the (still un-armed, cheap) inst on the
+                    // WebGPU backend; else the WebGL2 fragment path is the fallback.
+                    // A probe failure / no-WebGPU keeps the WebGL2 inst untouched.
+                    if (!visibility.value) return; // still off-screen — re-trigger later
+                    void resolveRenderModeAsync("webgl")
+                        .then(({ substrate, device }) => {
+                            if (armAttempted) return;
+                            if (substrate === "webgpu" && device && inst && canvasRef.value) {
+                                // Swap the un-armed WebGL2 inst for the WebGPU backend.
+                                inst.dispose();
+                                inst = createAurora(canvasRef.value, getCfg(), {
+                                    initStrategy: "deferred",
+                                    ...runtimeOptions,
+                                    gpuDevice: device,
+                                });
+                            }
+                            if (visibility.value) armRuntime();
+                        })
+                        .catch(() => {
+                            // fail-explicit: a probe rejection is impossible
+                            // (resolveRenderModeAsync never rejects), but if the
+                            // environment surprises us, fall back to the WebGL2 inst.
+                            if (visibility.value) armRuntime();
+                        });
                 });
             },
             { immediate: true },
@@ -321,6 +369,7 @@ export function useAurora(
         cancelSchedule?.();
         stopArmWatch?.();
         stopWatch?.();
+        stopScrollWatch?.();
         intersection?.dispose();
         reducedMq?.removeEventListener("change", onReducedChange);
         inst?.dispose();
@@ -331,6 +380,7 @@ export function useAurora(
         setCursor: (x, y, strength) => inst?.setCursor(x, y, strength),
         clearCursor: () => inst?.clearCursor(),
         setCursorRadius: (r) => inst?.setCursorRadius(r),
+        injectCursorVelocity: (dx, dy) => inst?.injectCursorVelocity(dx, dy),
         renderAt: (t) => inst?.renderAt(t),
         pause: () => inst?.pause(),
         resume: () => inst?.resume(),

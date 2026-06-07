@@ -251,6 +251,34 @@ jobs:
             # returns an in-gamut palette + composed nuclei per mood.
             - name: proof:aurora-derive-gamut
               run: npm run proof:aurora-derive-gamut
+            # AW.W4 — the painterly engine: the structure-tensor/ETF orientation
+            # keystone, the impasto height→normal→relight (the fixed rim retired),
+            # the first-class vangogh medium (5-step wiring), the genuine oil-pastel
+            # deposition+scumble+waxy rework (dist/aurora.js inside the W4.0 governor).
+            - name: proof:aurora-tensor-field
+              run: npm run proof:aurora-tensor-field
+            - name: proof:aurora-impasto-relight
+              run: npm run proof:aurora-impasto-relight
+            - name: proof:aurora-vangogh-preset
+              run: npm run proof:aurora-vangogh-preset
+            - name: proof:aurora-oilpastel-medium
+              run: npm run proof:aurora-oilpastel-medium
+            # AW.W6 — the resolveAtoms ≤7-atom door: total-function + default-roundtrip.
+            - name: proof:aurora-atoms-roundtrip
+              run: npm run proof:aurora-atoms-roundtrip
+            # AW.W7 — the gated WebGPU: the WGSL color twin 1e-6 parity (W7a), the
+            # WebGL2 zero-regression fallback + the createGPUCanvas substrate-binary
+            # gate (W7b).
+            - name: proof:aurora-wgsl-equivalence
+              run: npm run proof:aurora-wgsl-equivalence
+            - name: proof:aurora-backend-fallback
+              run: npm run proof:aurora-backend-fallback
+            - name: proof:webgpu-substrate-single
+              run: npm run proof:webgpu-substrate-single
+            # AW.W8 — interactivity: every axis on the master tempo scalar (PRM +
+            # the DockBackgroundToggle pause zero it; the cursor write-path early-out).
+            - name: proof:aurora-interaction-prm
+              run: npm run proof:aurora-interaction-prm
             # AV.W2 — the aurora↔blob shared GLSL convergence: the OETF + the four
             # Ottosson mat3 literals + the FBM_ROT constant live ONCE in
             # procedural-color.glsl.ts; neither frag re-defines a chunk-owned

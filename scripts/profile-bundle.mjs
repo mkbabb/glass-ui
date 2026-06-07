@@ -129,9 +129,24 @@ const startedAt = Date.now();
 // (glass-refract/specular-track) lift the draw to gzip ~124.9k / raw ~495.9k.
 // Lifted to gzip 130000 / raw 504000 — the FIFTH conscious lift, sized to carry
 // the rest of the AW band CSS (glass-atoms W24-W26, band-G), not per-wave creep.
+//
+// AW.W4.0 governor preamble (the load-bearing budget fix): aurora ships as
+// `dist/aurora.js` — the `/aurora` subpath chunk, NOT root-barrel cherry-picked —
+// so its shader growth NEVER entered the BUDGETS walk and every prior "stays inside
+// profile:budget" for shader payload was a NO-OP. This entry closes that hole: the
+// aurora-chunk ceiling is the genuine cost gate the W4 painterly folds (structure
+// tensor + impasto height→normal→relight + the vangogh medium + the oil-pastel
+// rework) and the W7 WGSL+compute twins answer to. HEAD is raw ≈60.9k / gzip
+// ≈20.3k; the ceiling is a ONE-TIME conscious lift sized to carry the whole AW
+// aurora band (the painterly GLSL growth + the bundled WGSL aurora/painterly/wake
+// twins), NOT open-ended per-wave creep. An overrun HALTS the wave and triggers the
+// W4 §3a field-bake-hoist triumvirate (a structural transposition, not a tap-count
+// tweak). Orthogonal to `profile:aurora` (the FPS/ALU floor) — this bounds gzip
+// chunk SIZE, that bounds runtime draw cost.
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
     "dist/styles/index.css": { raw: 504_000, gzip: 130_000 },
+    "dist/aurora.js": { raw: 130_000, gzip: 38_000 },
 };
 
 // AO.W2 (inv α) — the real consumer-draw CSS artifact.

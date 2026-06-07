@@ -32,12 +32,14 @@
 // Substrate config + family, plus numeric ceilings the consumer needs to
 // type-check preset shapes against.
 export type {
+    AuroraAtoms,
     AuroraConfig,
     AuroraCursorApi,
     AuroraFlow,
     AuroraHarmony,
     AuroraHuePath,
     AuroraInstance,
+    AuroraInteractivity,
     AuroraMedium,
     AuroraMood,
     AuroraNucleus,
@@ -48,6 +50,7 @@ export type {
     FlowPattern,
     OklchStop,
     StrokeMode,
+    StrokeOrient,
     WarpMode,
 } from "../components/custom/aurora";
 

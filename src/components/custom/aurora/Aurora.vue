@@ -135,6 +135,8 @@ defineExpose({
     setCursor: api.setCursor,
     clearCursor: api.clearCursor,
     setCursorRadius: api.setCursorRadius,
+    // AW.W8.1 — the velocity-reactive flow write-path (PRM-gated at the runtime).
+    injectCursorVelocity: api.injectCursorVelocity,
     renderAt: api.renderAt,
     pause: api.pause,
     resume: api.resume,

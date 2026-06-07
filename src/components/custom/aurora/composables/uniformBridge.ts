@@ -27,15 +27,26 @@ import {
     type AuroraMedium,
     type FlowPattern,
     type StrokeMode,
+    type StrokeOrient,
     type WarpMode,
 } from "../constants/presets";
 
+// AW.W4.3/W4.4 — `vangogh: 5` (the energy-graded atomic-stroke medium) and
+// `oil-pastel: 6` (the reworked deposition+scumble+waxy medium) join the map. The
+// `satisfies Record<AuroraMedium | "crayon", number>` FORCES a slot the instant the
+// union grows — omitting one is a COMPILE error (the good kind), so a fresh medium
+// can never upload `undefined`. `crayon: 4` is the legacy StrokeMode peer route
+// (oil + strokeMode:"crayon"); it shares the reworked oil-pastel deposition shader
+// body (uMedium==4 and uMedium==6 both dispatch `mediumCrayon`), so there is no
+// parallel duplicate medium.
 export const MEDIUM_ID = {
     smooth: 0,
     pastel: 1,
     watercolor: 2,
     oil: 3,
     crayon: 4,
+    vangogh: 5,
+    "oil-pastel": 6,
 } as const satisfies Record<AuroraMedium | "crayon", number>;
 
 // W5 — the value.js HueInterpolationMethod → GLSL int map. The `satisfies` forces
@@ -53,7 +64,17 @@ export const FLOW_ID = {
     swirl: 2,
     diagonal: 3,
     multi: 4,
+    // AW.W4.1 — the structure-tensor / edge-tangent-flow branch in flow.glsl.ts.
+    tensor: 5,
 } as const satisfies Record<FlowPattern, number>;
+
+// AW.W4.1 — the stroke-orientation source → GLSL int. `flow` keeps the
+// hand-authored pattern; `tensor` substitutes the structure-tensor minor
+// eigenvector in bestOil. The `satisfies` forces a slot for every union member.
+export const STROKE_ORIENT_ID = {
+    flow: 0,
+    tensor: 1,
+} as const satisfies Record<StrokeOrient, number>;
 
 export const WARP_ID = {
     fbm: 0,
@@ -89,6 +110,89 @@ export function resolveMediumId(cfg: AuroraConfig): number {
 export function resolveStrokeModeId(cfg: AuroraConfig): number {
     if (cfg.strokeMode === "crayon") return STROKE_MODE_ID.oil;
     return STROKE_MODE_ID[cfg.strokeMode];
+}
+
+/**
+ * AW.W4.1/W4.3/W4.4 — the `uStrokeOrient` int for a config. The painterly mediums
+ * (`vangogh`, `oil-pastel`) FORCE the structure-tensor orientation regardless of
+ * the config's `strokeOrient` field — their brushwork must hug the color zones (the
+ * congruent-to-real-Van-Gogh contract). Every other medium honors the config's
+ * `strokeOrient` (default `"flow"` — the pre-W4 path renders identically).
+ */
+export function resolveStrokeOrientId(cfg: AuroraConfig): number {
+    if (cfg.medium === "vangogh" || cfg.medium === "oil-pastel") {
+        return STROKE_ORIENT_ID.tensor;
+    }
+    return STROKE_ORIENT_ID[cfg.strokeOrient ?? "flow"];
+}
+
+// AW.W7b — the std140 storage-struct layout for the WGSL Uniforms (the WebGPU write
+// path). The WebGL2 path keeps its `gl.uniform*` calls (createUniformBridge); the
+// WebGPU path packs an AuroraConfig into this Float32Array and `device.queue.
+// writeBuffer`s it. The float count MUST match the WGSL `struct Uniforms` in
+// aurora.wgsl.ts: 16 scalar slots (padded to 16 for the vec4 array alignment) + the
+// palette/nuclei vec4 arrays. std140 aligns each vec4f array element to 16 bytes.
+const WGPU_SCALAR_SLOTS = 16; // time…alpha (16 floats, vec4-aligned)
+export const WGPU_UNIFORM_FLOATS =
+    WGPU_SCALAR_SLOTS + MAX_STOPS * 4 + MAX_NUCLEI * 4 * 2;
+
+/**
+ * Pack an `AuroraConfig` + cursor into the std140 WGSL Uniforms layout (the WebGPU
+ * write path). Fills `out` in place (the caller owns one reused buffer so a slider
+ * drag does not churn the GC). The WebGL2 fallback path is unaffected (it keeps its
+ * `gl.uniform*` calls). The float layout MUST mirror aurora.wgsl.ts `struct Uniforms`.
+ */
+export function packGPUUniforms(
+    cfg: AuroraConfig,
+    timeSec: number,
+    out: Float32Array,
+): Float32Array {
+    out.fill(0);
+    // Scalars (slots 0..15, mirroring the WGSL struct field order).
+    out[0] = timeSec;
+    out[1] = Math.min(cfg.palette.length, MAX_STOPS); // stopCount (as int-in-float)
+    out[2] = Math.min(cfg.nuclei.length, MAX_NUCLEI); // nucleiCount
+    out[3] = cfg.softmaxBeta;
+    out[4] = cfg.valueVariance;
+    out[5] = cfg.warpAmount;
+    out[6] = cfg.warpScale;
+    out[7] = cfg.warpDrift;
+    out[8] = WARP_ID[cfg.warpMode];
+    out[9] = cfg.noiseOctaves;
+    out[10] = resolveMediumId(cfg);
+    out[11] = cfg.breathDepth;
+    out[12] = cfg.breathPeriod;
+    out[13] = cfg.saturation;
+    out[14] = cfg.paperGrain;
+    out[15] = cfg.alpha;
+    // Palette (vec4 array — .xyz = linear-sRGB; .w pad). flattenPalette gives linear.
+    const palLin = flattenPalette(cfg.palette, MAX_STOPS);
+    let base = WGPU_SCALAR_SLOTS;
+    for (let i = 0; i < MAX_STOPS; i++) {
+        out[base + i * 4 + 0] = palLin[i * 3 + 0]!;
+        out[base + i * 4 + 1] = palLin[i * 3 + 1]!;
+        out[base + i * 4 + 2] = palLin[i * 3 + 2]!;
+    }
+    // Nuclei pos (vec4: .xy pos[Y-flipped], .z radius, .w paletteBias).
+    base = WGPU_SCALAR_SLOTS + MAX_STOPS * 4;
+    const n = Math.min(cfg.nuclei.length, MAX_NUCLEI);
+    for (let i = 0; i < n; i++) {
+        const nu = cfg.nuclei[i]!;
+        out[base + i * 4 + 0] = nu.x;
+        out[base + i * 4 + 1] = 1.0 - nu.y; // flipY
+        out[base + i * 4 + 2] = nu.radius;
+        out[base + i * 4 + 3] = nu.paletteBias;
+    }
+    // Nuclei mod (vec4: .x valueBias, .y elong, .z angle, .w driftRadius).
+    base = WGPU_SCALAR_SLOTS + MAX_STOPS * 4 + MAX_NUCLEI * 4;
+    for (let i = 0; i < n; i++) {
+        const nu = cfg.nuclei[i]!;
+        out[base + i * 4 + 0] = nu.valueBias;
+        out[base + i * 4 + 1] = nu.elongation ?? 1.0;
+        out[base + i * 4 + 2] = (-(nu.angle ?? 0) * Math.PI) / 180;
+        out[base + i * 4 + 3] = nu.driftRadius;
+    }
+    return out;
 }
 
 /**
@@ -195,11 +299,25 @@ export function createUniformBridge(
         gl.uniform2f(U.uCursor, cursor.x, flipY(cursor.y));
         gl.uniform1f(U.uCursorStrength, cursor.strength);
         gl.uniform1f(U.uCursorRadius, cursor.radius);
+        // AW.W8.1 — the velocity-reactive flow uniforms (re-sent per frame too).
+        gl.uniform2f(U.uCursorVelocity, cursor.velX, -cursor.velY);
+        gl.uniform1f(U.uCursorBurst, cursor.burst);
         gl.uniform1f(U.uStrokeAmount, cfg.strokeAmount);
         gl.uniform1f(U.uStrokeScale, cfg.strokeScale);
         gl.uniform1f(U.uStrokeAnisotropy, cfg.strokeAnisotropy);
         gl.uniform1i(U.uStrokeLayers, cfg.strokeLayers);
         gl.uniform1i(U.uStrokeMode, resolveStrokeModeId(cfg));
+        // AW.W4.1 — the stroke-orientation source (the painterly mediums force tensor).
+        gl.uniform1i(U.uStrokeOrient, resolveStrokeOrientId(cfg));
+        // AW.W4.2 — the impasto relight axis. Default upper-left (the prior fixed-rim
+        // direction) + warm-white so the still default reads identically; the shader
+        // re-normalizes uLightDir. AW.W8 overwrites uLightDir per-frame from the cursor.
+        {
+            const ld = cfg.lightDir ?? [-0.5, 0.6, 0.62];
+            const lc = cfg.lightColor ?? [1.0, 0.95, 0.88];
+            gl.uniform3f(U.uLightDir, ld[0], ld[1], ld[2]);
+            gl.uniform3f(U.uLightColor, lc[0], lc[1], lc[2]);
+        }
         gl.uniform1f(U.uWetEdge, cfg.wetEdge);
         gl.uniform1f(U.uGranulation, cfg.granulation);
         gl.uniform1f(U.uImpasto, cfg.impasto);

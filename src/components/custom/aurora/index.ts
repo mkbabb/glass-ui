@@ -16,13 +16,25 @@ export {
     type AuroraCursorApi,
     type AuroraFlow,
     type AuroraInstance,
+    type AuroraInteractivity,
     type AuroraMedium,
     type AuroraNucleus,
     type FlowPattern,
     type OklchStop,
     type StrokeMode,
+    type StrokeOrient,
     type WarpMode,
 } from "./constants/presets";
+// AW.W6 — the resolveAtoms ≤7-atom door (the thin consumer surface over the full
+// schema) + the AuroraAtoms shape + the DEFAULT_ATOMS that resolve to the wispy-sky
+// default. The full AuroraConfig stays whole as the progressive-disclosure escape hatch.
+export {
+    resolveAtoms,
+    DEFAULT_ATOMS,
+    type AuroraAtoms,
+    type AuroraMoodAtom,
+    type AuroraMotionAtom,
+} from "./composables/atoms";
 export {
     cssToOklch,
     deriveAurora,

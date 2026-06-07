@@ -52,14 +52,61 @@ export interface AuroraNucleus {
     angle?: number;
 }
 
-export type AuroraMedium = "smooth" | "pastel" | "watercolor" | "oil";
+// AW.W4.3/W4.4 — `vangogh` (first-class energy-graded atomic-stroke medium) and
+// `oil-pastel` (the reworked deposition+scumble+waxy medium) join the union
+// additively. Both force the structure-tensor orientation (the painterly hug). The
+// `uMedium` ladder dispatches vangogh==5 / oil-pastel==6; the bridge MEDIUM_ID map
+// + the aurora.frag dispatch + the uniform uploads all move in the W4 lane.
+export type AuroraMedium =
+    | "smooth"
+    | "pastel"
+    | "watercolor"
+    | "oil"
+    | "vangogh"
+    | "oil-pastel";
 
 /** Applied only when `medium === "oil"`. Routes inside the shader. */
 export type StrokeMode = "oil" | "knife" | "crayon" | "chunky";
 
-export type FlowPattern = "none" | "radial" | "swirl" | "diagonal" | "multi";
+export type FlowPattern =
+    | "none"
+    | "radial"
+    | "swirl"
+    | "diagonal"
+    | "multi"
+    // AW.W4.1 — the structure-tensor / edge-tangent-flow pattern. The flow
+    // direction derives from the color field's OWN minor-eigenvector (the
+    // edge-tangent), so brushwork hugs the color zones rather than tracking a
+    // hand-authored pattern. The painterly mediums (vangogh, oil-pastel) force it.
+    | "tensor";
+
+/**
+ * AW.W4.1 — how a stroke's orientation is sourced. `flow` keeps the hand-authored
+ * `flowField` pattern + per-cell jitter (the named legacy choice); `tensor`
+ * substitutes the structure-tensor minor-eigenvector (the color field's own
+ * edge-tangent flow). No default that hides one as a duplicate of the other.
+ */
+export type StrokeOrient = "flow" | "tensor";
 
 export type WarpMode = "fbm" | "cellular" | "hybrid";
+
+/**
+ * AW.W6/W8 — the interactivity flag SHAPE (declared at W6, default OFF; behavior
+ * wired at W8). Each axis opts the aurora into a pointer/scroll response:
+ * - `light`  — the cursor drives the impasto `uLightDir` (cursor-as-light + idle orbit).
+ * - `flow`   — pointer/scroll VELOCITY injects a transient swirl-burst (velocity-reactive).
+ * - `scroll` — palette/breath progress couples to scroll (via `useScrollProgress`).
+ * - `wake`   — the WebGPU stateful pointer wake (a ping-pong velocity texture; AW.W8.2).
+ * Every axis is suppressed under `prefers-reduced-motion` + the DockBackgroundToggle
+ * pause (the master tempo scalar is the single suppression seam). The wispy-sky
+ * default carries no `interactivity` (every axis OFF — the default stays static).
+ */
+export interface AuroraInteractivity {
+    light?: boolean;
+    flow?: boolean;
+    scroll?: boolean;
+    wake?: boolean;
+}
 
 export interface AuroraFlow {
     pattern: FlowPattern;
@@ -96,6 +143,14 @@ export interface AuroraConfig {
      */
     huePath?: AuroraHuePath;
     flow: AuroraFlow;
+    /**
+     * AW.W4.1 — how the painterly stroke direction is sourced. Optional; omitted =
+     * `"flow"` (the hand-authored `flowField` pattern — the pre-W4 path, so an
+     * unset config renders identically). `"tensor"` substitutes the structure-tensor
+     * minor eigenvector (the color field's own edge-tangent flow); the `vangogh` /
+     * `oil-pastel` mediums force it.
+     */
+    strokeOrient?: StrokeOrient;
     strokeAmount: number; // 0..1
     strokeScale: number; // 40..320
     strokeAnisotropy: number; // 0..1
@@ -106,6 +161,20 @@ export interface AuroraConfig {
     impasto: number; // 0..1 (scales internal amp)
     brokenColor: number; // 0..1
     canvasGrain: number; // 0..0.1
+    /**
+     * AW.W4.2 — the impasto relight direction (the movable directional source the
+     * accumulated paint-height field catches). Optional; omitted = upper-left
+     * (matching the prior fixed-rim default, so the still default reads identically).
+     * Unit-ish [x, y, z] in screen space (z toward the viewer). AW.W8 drives this
+     * from the cursor (cursor-as-light); the shader re-normalizes it.
+     */
+    lightDir?: [number, number, number];
+    /**
+     * AW.W4.2 — the relight tint (linear-light RGB). Optional; omitted = a warm
+     * white (the canonical impasto catch-light). The diffuse + Blinn-specular terms
+     * modulate by this.
+     */
+    lightColor?: [number, number, number];
 
     // Motion
     nucleiDrift: number; // 0..0.05
@@ -117,6 +186,14 @@ export interface AuroraConfig {
     saturation: number; // 0.6..1.3
     paperGrain: number; // 0..0.02
     alpha: number; // 0..1
+
+    /**
+     * AW.W6/W8 — the pointer/scroll interactivity opt-in (default OFF — the wispy-sky
+     * default stays static). W6 declares the SHAPE; W8 wires the cursor-as-light /
+     * velocity-reactive flow / scroll-coupling / WebGPU-wake behavior. Omitted = every
+     * axis off. Aliased on `/api` as part of the `AuroraConfig` surface.
+     */
+    interactivity?: AuroraInteractivity;
 }
 
 /**

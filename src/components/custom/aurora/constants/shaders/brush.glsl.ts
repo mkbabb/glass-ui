@@ -148,11 +148,18 @@ StrokeHit curvedStroke(vec2 p, vec2 a, vec2 b, float halfW,
   );
 }
 
-// Composite stroke over col with internal streaking + impasto edge highlight.
+// Composite stroke over col with internal streaking + ACCUMULATE paint HEIGHT.
 //   streakAmp    — 0..0.2 how much internal streaks darken/lighten
-//   impastoAmp   — 0..1 edge catch-light strength
+//   impastoAmp   — 0..1 paint-thickness contribution (the height the relight reads)
 //   hardness     — 0..1 how crisp the compositing transition is (1 = razor, 0 = creamy)
-void paintOver(inout vec3 col, StrokeHit s, float streakFreq, float streakAmp,
+//
+// AW.W4.2 — the fixed-RGB edge rim (the phantom upper-left light) is RETIRED. Each
+// stroke now deposits PAINT HEIGHT into the height accumulator (coverage x per-stroke
+// thickness, perturbed by the bristle/streak fbm for ridges/grooves); mediumOil
+// derives a normal from the accumulated height gradient (dFdx/dFdy) and relights it
+// once with the movable uLightDir source (relightImpasto), in linear before aces().
+void paintOver(inout vec3 col, inout float height, StrokeHit s,
+               float streakFreq, float streakAmp,
                float impastoAmp, float hardness, float streakSeed) {
   if (s.coverage < 0.002) return;
   float strokeOpacity = clamp(uStrokeAmount, 0.0, 1.0);
@@ -170,16 +177,40 @@ void paintOver(inout vec3 col, StrokeHit s, float streakFreq, float streakAmp,
   float crossShade = smoothstep(0.0, 0.4, s.edgeN) * (1.0 - smoothstep(0.65, 1.0, s.edgeN));
   c *= 1.0 + crossShade * 0.05;
 
-  // Impasto edge highlight — bright rim on one side of the stroke
-  float rim = smoothstep(0.85, 1.0, 1.0 - s.edgeN) * step(0.0, s.crossN);
-  c += impastoAmp * rim * vec3(0.18, 0.15, 0.11);
-  // Shadow on the other side (darker, cooler)
-  float shadow = smoothstep(0.85, 1.0, 1.0 - s.edgeN) * step(0.0, -s.crossN);
-  c -= impastoAmp * shadow * 0.25 * vec3(0.10, 0.09, 0.07);
-
   float softLimit = mix(0.35, 0.98, hardness);
   float alpha = smoothstep(0.0, 1.0 - softLimit, s.coverage) * strokeOpacity;
   col = mix(col, c, alpha);
+
+  // ── Accumulate paint HEIGHT (AW.W4.2). Thickness peaks at the stroke spine and
+  // falls to zero at the edge (edgeN: 0=edge, 1=spine), perturbed by the bristle
+  // streak so ridges/grooves form. The relight reads the gradient of this field.
+  float ridge = 0.7 + 0.3 * (streak + 0.5);
+  height += s.coverage * impastoAmp * (0.4 + 0.6 * s.edgeN) * ridge * alpha;
+}
+
+// AW.W4.2 — relight the accumulated paint height. Derive a normal from the height
+// gradient (dFdx/dFdy — derivatives are in-pattern; fwidth is already used for AA),
+// then apply diffuse + Blinn specular from the movable uLightDir/uLightColor source.
+// LINEAR-space lighting BEFORE aces() (the tonemap/OETF stay locked); thin strokes
+// inherit a low shininess, thick impasto raises it (high-height ridges catch a sharp
+// glint). canvasBase is the tooth height so the canvas weave also catches the light.
+vec3 relightImpasto(vec3 col, float height, float canvasBase) {
+  float h = height + canvasBase;
+  // Height-gradient normal. heightScale trades relief depth for surface flatness.
+  float heightScale = 6.0;
+  vec3 N = normalize(vec3(-dFdx(h) * 40.0, -dFdy(h) * 40.0, 1.0 / heightScale));
+  vec3 L = normalize(uLightDir);
+  vec3 V = vec3(0.0, 0.0, 1.0);            // view straight on
+  vec3 H = normalize(L + V);
+  float diff = max(dot(N, L), 0.0);
+  // Thick impasto → high shininess (sharp glint); thin paint → broad soft sheen.
+  float shininess = mix(8.0, 64.0, clamp(height * 2.0, 0.0, 1.0));
+  float spec = pow(max(dot(N, H), 0.0), shininess);
+  // Modulate the lit terms by how much paint sits here (no relief on bare ground).
+  float relief = clamp(h * 1.5, 0.0, 1.0);
+  vec3 lit = col * (1.0 + uImpasto * relief * (diff - 0.5) * 0.5 * uLightColor);
+  lit += uImpasto * relief * spec * 0.6 * uLightColor;
+  return lit;
 }
 
 // Best-of-9-neighbor placement: sample 3x3 surrounding cells and take the
@@ -202,14 +233,41 @@ StrokeHit bestOil(vec2 p, float cellSize, float lenMul, float halfWMul,
 
       vec2 center = (cc + 0.5 + hh * jitterAmt) * cellSize;
 
-      // Per-stroke direction: consume the layer-provided flow, then add only
-      // deterministic local perturbation so alternate stroke layers stay live.
-      vec2 f = safeDir(flow);
-      float angJ = (hash21(cc + seed + 11.0) - 0.5) * 0.9;  // +/- 0.45 rad
+      // Per-stroke direction source — the AW.W4.1 strokeOrient switch:
+      //   uStrokeOrient==0 (flow)   — the layer-provided hand-authored flowField.
+      //   uStrokeOrient==1 (tensor) — the structure-tensor minor eigenvector at the
+      //                               cell center (the color field's edge-tangent),
+      //                               so strokes hug the color zones (van Gogh).
+      // coh carries the per-cell coherence A for the W4.3 energy grading (long
+      // confident strokes where structure is coherent, stubby dabs in flat zones).
+      vec2 f;
+      float coh = 1.0;
+      if (uStrokeOrient == 1) {
+        vec3 tf = structureTensorField(center, t, safeDir(flow));
+        f = safeDir(tf.xy);
+        coh = tf.z;
+      } else {
+        f = safeDir(flow);
+      }
+      // Per-stroke deterministic local perturbation so alternate stroke layers stay
+      // live. Tensor strokes get LESS angular jitter (the field already orients them).
+      float jScale = (uStrokeOrient == 1) ? 0.4 : 1.0;
+      float angJ = (hash21(cc + seed + 11.0) - 0.5) * 0.9 * jScale;  // +/- 0.45/0.18 rad
       float localCurl = (fbm(center * (2.6 + seed * 0.11) + seed * 1.9) - 0.5) * 0.55 * uFlowCurl;
       vec2 dir = rotateDir(f, angJ + localCurl);
 
-      float lenV = cellSize * lenMul * (0.65 + 0.55 * hash21(cc + seed + 23.0));
+      // AW.W4.3 — energy-graded length/density for the van-Gogh cascade: in vangogh
+      // mode (uMedium==5) modulate the stroke length by local luminance (bright →
+      // long confident strokes, dark → short dabs, the Starry-Night Kolmogorov/
+      // Batchelor congruence) AND by coherence (coherent zones → long, flat → stubby).
+      float energy = 1.0;
+      if (uMedium == 5) {
+        float luma = clamp(dot(sampleBase(center, t), W_LUMA), 0.0, 1.0);
+        // long in the lights + coherent zones; short dabs in the darks + flat zones.
+        energy = mix(0.5, 1.5, luma) * mix(0.6, 1.0, coh);
+      }
+
+      float lenV = cellSize * lenMul * (0.65 + 0.55 * hash21(cc + seed + 23.0)) * energy;
       float halfW = cellSize * halfWMul * (0.70 + 0.55 * hash21(cc + seed + 41.0));
       float bulge = (hash21(cc + seed + 53.0) - 0.5) * lenV * 0.35;
 

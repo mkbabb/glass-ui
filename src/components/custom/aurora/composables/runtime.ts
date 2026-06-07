@@ -24,11 +24,13 @@ import { VERTEX_SRC } from "../constants/shaders/aurora.vert";
 import { FRAGMENT_SRC } from "../constants/shaders/aurora.frag";
 import { resolveBudgetDpr } from "../constants/budget";
 import { createWebGLCanvas } from "../../../../composables/glass/webgl/useWebGLCanvas";
+import { createGPUCanvas } from "../../../../composables/glass/createGPUCanvas";
 import type { AuroraConfig, AuroraInstance } from "../constants/presets";
 import { createGlProgram } from "./glSetup";
 import { createUniformBridge } from "./uniformBridge";
-import { createCursorState } from "./cursorModel";
+import { createCursorState, injectCursorVelocity as injectCursorVel } from "./cursorModel";
 import { createFrameLoop } from "./frameLoop";
+import { createGPUAuroraSetup } from "./gpuRuntime";
 
 export type AuroraRuntimeMode = "live" | "capture";
 
@@ -85,6 +87,15 @@ export interface AuroraRuntimeOptions {
      * `instance.arm()` on the deferred path — rethrows from `arm()`.
      */
     onInitError?: (err: Error) => void;
+    /**
+     * AW.W7b — the WebGPU backend route. When a `GPUDevice` is supplied (the
+     * `resolveRenderModeAsync` probe resolved a non-fallback adapter), the runtime
+     * routes to `createGPUCanvas` drawing the SAME single-pass aurora over WebGPU;
+     * otherwise the WebGL2 fragment path is the universal fallback. `useAurora` runs
+     * the probe past first paint (the CSS placeholder paints first) and threads the
+     * device here. `null`/absent → the WebGL2 path (the zero-regression default).
+     */
+    gpuDevice?: GPUDevice | null;
 }
 
 function shouldInitEagerly(options: AuroraRuntimeOptions): boolean {
@@ -112,6 +123,15 @@ function shouldPreserveDrawingBuffer(options: AuroraRuntimeOptions): boolean {
 export interface AuroraRuntime extends Omit<AuroraInstance, "pause" | "resume"> {
     pause(reason?: SuspendReason): void;
     resume(reason?: SuspendReason): void;
+    /**
+     * AW.W8.1 — feed a pointer delta into the velocity-reactive flow (a fast flick →
+     * a transient swirl-burst). The PRM early-out lives here: the injection is
+     * suppressed when the substrate reports reduced-motion (the cursor write-path
+     * fires from the pointermove listener, INDEPENDENT of the parked rAF loop).
+     */
+    injectCursorVelocity(dx: number, dy: number): void;
+    /** AW.W8.1 — the live reduced-motion state (the cursor listener early-outs on it). */
+    readonly reducedMotion: boolean;
 }
 
 export function createAurora(
@@ -142,7 +162,32 @@ export function createAurora(
     // `config` for the next `setup` to upload.
     let setConfig: ((cfg: AuroraConfig) => void) | null = null;
 
-    const canvasHandle = createWebGLCanvas(canvas, {
+    // AW.W7b — route to the WebGPU backend when the probe resolved a device; else the
+    // WebGL2 fragment path (the universal zero-regression fallback). Both backends
+    // compose the SAME `createCanvasLifecycle` core, so the handle shape + the park
+    // contract are identical — the rest of this runtime is backend-agnostic.
+    const canvasHandle: {
+        arm: () => void;
+        suspend: (reason?: "tab-hidden" | "off-screen" | "manual") => void;
+        resume: (reason?: "tab-hidden" | "off-screen" | "manual") => void;
+        wake: () => void;
+        renderAt: (timeSec: number) => void;
+        dispose: () => void;
+        readonly reducedMotion: boolean;
+    } = options.gpuDevice
+        ? createGPUCanvas(canvas, {
+              device: options.gpuDevice,
+              mode: options.mode === "capture" ? "capture" : "live",
+              alphaMode: "premultiplied",
+              setup: createGPUAuroraSetup({
+                  canvas,
+                  getConfig: () => config,
+                  cursor,
+                  getReducedMotion: () => canvasHandle.reducedMotion,
+                  frozenOffset,
+              }),
+          })
+        : createWebGLCanvas(canvas, {
         mode: options.mode === "capture" ? "capture" : "live",
         contextAttrs: {
             antialias: false,
@@ -241,6 +286,18 @@ export function createAurora(
         // A pointer move re-introduces cursor easing — re-arm a parked loop.
         canvasHandle.wake();
     }
+    // AW.W8.1 — the velocity-reactive flow WRITE-PATH. Feeds a pointer delta into the
+    // cursor velocity + swirl-burst. The pointermove listener (useCursorInteraction)
+    // fires INDEPENDENT of the rAF loop, so it could move the field even while the loop
+    // is parked under reduce — the cursor WRITE-PATH PRM early-out lives HERE: the
+    // velocity injection is SUPPRESSED when the substrate reports reduced-motion (the
+    // master tempo scalar also zeroes the decay, but this write-path check is the
+    // load-bearing one for the off-loop listener — proof:aurora-interaction-prm asserts it).
+    function injectCursorVelocity(dx: number, dy: number) {
+        if (canvasHandle.reducedMotion) return; // cursor write-path PRM early-out
+        injectCursorVel(cursor, dx, dy);
+        canvasHandle.wake();
+    }
     function clearCursor() {
         cursor.targetStrength = 0;
         // The decay-to-rest still needs frames to animate out — re-arm.
@@ -288,6 +345,12 @@ export function createAurora(
         clearCursor,
         setCursorRadius,
         setReducedMotion,
+        // AW.W8.1 — the velocity-reactive flow write-path (PRM-gated) + the live
+        // reduced-motion read (the cursor pointermove listener early-outs on it).
+        injectCursorVelocity,
+        get reducedMotion() {
+            return canvasHandle.reducedMotion;
+        },
         // Public pause/resume key on the `"manual"` reason by default. The Vue
         // wrapper passes `"off-screen"` for the intersection seam so the two
         // sources never alias. Both delegate to the substrate's three-reason
