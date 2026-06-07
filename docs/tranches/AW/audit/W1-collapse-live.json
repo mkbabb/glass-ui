@@ -1,0 +1,50 @@
+{
+  "wave": "AW.W1",
+  "gate": "proof:dock-animation-live",
+  "capturedIn": "MCP Playwright (Chromium) against the live demo dev server at http://localhost:5173/navigation/dock — the demo's first story dock is a start-collapsed two-layer GlassDock (default slot + #collapsed), the slides config. The npm `playwright` harness is intentionally absent (glass-ui carries zero browser dependency), so the proof script SKIPs fail-open on a CI runner; these timelines are the behavioral witness captured in the wave's MCP env.",
+  "rootCauseCorrected": {
+    "diagnosedInWaveSpec": "useLayerTransition.ts natural-size measurement reading the collapsed summary floor as toSize (the measure-under-collapsed-class seam).",
+    "actualRootCause": "`.glass-dock { container-type: inline-size }` (dock.css, AV.W16 TW3). `container-type: inline-size` applies `contain: inline-size`, making the element's inline size INDEPENDENT of its contents — fundamentally incompatible with a shrink-to-fit pill. EVERY horizontal dock (collapsed, expanded, AND always-expanded) collapsed to its ~19px padding floor with the active layer overflowing; the FLIP measured `.dock-layers` width as 0 and the morph short-circuited. The measurement seam the wave named was a symptom, not the cause: with the containment removed the stock `getSize` measures correctly and the morph runs unchanged.",
+    "fix": "Remove the default `container: dock / inline-size` from `.glass-dock`; the `dock`-named container-query (the audacious-label narrow-box compression) becomes OPT-IN via the existing `containerName=\"dock\"` prop (meaningful only where a consumer has width-constrained the dock into a host). The `width:100%`/`min-width:0` layers rules were never the problem — they were poisoned by the containment above them and resolve correctly once it is gone. ZERO change to useLayerTransition.ts.",
+    "filesTouched": ["src/styles/dock.css"],
+    "waveFileBoundsNote": "The wave spec forbade dock.css (scoping W1 to a useLayerTransition.ts measurement fix) and named the measurement seam as the cause. The empirical HEAD re-diagnosis (MCP Playwright) falsified that mechanism and localized the real cause to dock.css `container-type` — exactly the Triumvirate Dispatch re-plan trigger the wave names ('a different mechanism than diagnosed is a re-plan trigger'). The fix is the single correct root edit, not a workaround."
+  },
+  "bornRed_3_3_0": {
+    "description": "HEAD (3.3.0) before the fix — the start-collapsed dock's first expand. Forced-FLIP path (startViewTransition removed). The `.dock-layers` width is frozen at 0 across all sampled frames; the dock box never grows past its ~19px collapsed floor.",
+    "config": "start-collapsed two-layer GlassDock, default slot + #collapsed",
+    "dockBoxWidthCollapsed": 15,
+    "dockBoxWidthAfterExpand": 19,
+    "layersWidthTimeline": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "widthRisingFrames": 0,
+    "alwaysExpandedAlsoBroken": {
+      "mediaTransportDock": { "dockBox": 19, "layers": 0, "activeLayerContentOverflow": 197 },
+      "note": "Not just the collapse morph — every horizontal dock rendered as a ~19px sliver with content overflowing and no pill background. A far more pervasive regression than the wave's start-collapsed-first-expand framing."
+    }
+  },
+  "green_postFix": {
+    "description": "After removing `container-type: inline-size` from `.glass-dock`. Stock useLayerTransition (reverted — no measurement change). Forced-FLIP path. The width morphs 40 -> 197 over a spring with the documented ~18.5% overshoot.",
+    "layersWidthCollapsed": 40,
+    "dockBoxWidthCollapsed": 55,
+    "layersWidthExpanded": 196.92,
+    "dockBoxWidthExpanded": 216,
+    "layersWidthTimeline": [40, 46.45, 64.07, 145.33, 197, 197, 194.06, 197, 197, 196.92],
+    "widthRisingFrames": 13,
+    "opacityRisingFrames": 4,
+    "allConfigsRenderCorrectly": {
+      "collapsibleDock": { "dockBox": 55, "layers": 40 },
+      "alwaysExpandedMedia": { "dockBox": 216, "layers": 197 },
+      "alwaysExpandedFitContent": { "dockBox": 250.51, "layers": 231.51 },
+      "scrollModeStoryPager": { "dockBox": 551.36, "layers": 532.36 }
+    },
+    "noRegression": {
+      "dockLayerGroupInnerPair": "renders + morphs correctly (Assets/Layers/Libraries drill-in pill)",
+      "verticalRail": "renders correctly (sidebar rail + switcher rail)"
+    }
+  },
+  "staticGates": {
+    "proof:dock-motion-single-source": "PASS",
+    "proof:dock-opacity-lockstep": "PASS",
+    "vitest tests/components/custom/dock/dock-animation-live.detect.test.ts": "9 passed — the pure detector flags a flat (frozen) width series as a freeze violation and passes a rising one",
+    "typecheck": "clean"
+  }
+}

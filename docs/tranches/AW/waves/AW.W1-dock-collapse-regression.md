@@ -6,7 +6,14 @@
 **Opens after**: AW tranche open (AW.W0 formalize + spot-verify)
 **Agents**: 1 serial
 **Hard gate**: `proof:dock-animation-live` rAF-samples the GlassDock OWN collapse↔expand width morph (the `summary`↔`full` outer pair) over ≥3 rising frames on a START-COLLAPSED two-layer dock (the slides config), on both the FLIP and VT paths — a frozen-at-collapsed-width timeline (≈19px stuck) is RED.
-**Status**: planned
+**Status**: CLOSED (2026-06-07) — root cause CORRECTED via empirical MCP-Playwright
+re-diagnosis. The freeze was NOT the `useLayerTransition` measurement seam this spec
+named; it was `.glass-dock { container-type: inline-size }` (dock.css, AV.W16 TW3)
+applying `contain: inline-size`, which makes the dock's inline size independent of
+its content — collapsing EVERY horizontal dock (collapsed, expanded, AND
+always-expanded) to its ~19px padding floor. Fix: remove the default container, make
+the `dock` CQ opt-in via the existing `containerName="dock"` prop. ZERO change to
+`useLayerTransition.ts`. See §11 Archaeology (CORRECTED) + `audit/W1-collapse-live.json`.
 
 ## Goal criterion
 
@@ -240,3 +247,42 @@ close.
   two-layer dock's FIRST expand (the slides config), not only the demo's
   already-wide hover-collapse-then-expand — the CONFIG was the miss, not the
   selector. The widened probe is the canary that closes this exact miss class.
+
+### CORRECTED ROOT CAUSE (AW.W1 close — empirical MCP-Playwright re-diagnosis, 2026-06-07)
+
+The measure-under-collapsed-class diagnosis above is **FALSIFIED**. MCP-Playwright on
+the live demo dock (`localhost:5173/navigation/dock`) showed the freeze was NOT in
+`useLayerTransition`'s measurement, and was NOT confined to the start-collapsed
+first-expand:
+
+- **Every horizontal dock rendered as a ~19px sliver** — collapsed, expanded, AND
+  `always-expanded` — with the active layer's content (197–240px) overflowing a
+  collapsed box and no pill background. The always-expanded media-transport dock,
+  which runs NO morph, was equally broken (dock box 19, layers 0, content 197).
+  A measurement-seam bug in the FLIP driver cannot break a dock that never animates,
+  so the cause had to be CSS sizing, not the JS measurement.
+- **Root cause: `.glass-dock { container-type: inline-size }`** (dock.css line 79,
+  AV.W16 TW3 — the `dock` container query for audacious-label narrow-box
+  compression). `container-type: inline-size` applies `contain: inline-size`, which
+  makes an element's inline size INDEPENDENT of its contents. A shrink-to-fit
+  `inline-flex` pill under it cannot size to its content and collapses to its padding
+  floor (~19px); the active layer overflows. The `.dock-layers` `width:100%` +
+  `min-width:0` rules (the prior suspects) were never the problem — they resolve
+  correctly once the containment is removed. Every measurement strategy
+  (`getSize`, `scrollWidth`, `max-content`, `fit-content`) returned 0/19 because no
+  content-based size can escape size-containment; only an explicit pixel width grew
+  the box. Removing `container-type` made all configs render + morph correctly
+  (40→197 over 13 rising frames, stock `useLayerTransition`).
+- **Fix (single root edit, dock.css):** remove the default
+  `container: dock / inline-size` from `.glass-dock`; the `dock`-named CQ
+  (audacious-label compression) becomes OPT-IN via the existing `containerName="dock"`
+  prop — meaningful only where a consumer has width-constrained the dock into a host
+  (the 320px-sidebar case), where the containment does not collapse the box. The
+  default free-floating dock shrink-wraps to content.
+- **File-bounds note:** this spec forbade `dock.css` to scope W1 to a
+  `useLayerTransition.ts` measurement fix. The empirical re-diagnosis falsified that
+  mechanism (the Triumvirate Dispatch re-plan trigger: "a different mechanism than
+  diagnosed is a re-plan trigger"), so the fix correctly lands in `dock.css` — the one
+  root edit — and `useLayerTransition.ts` is UNCHANGED (reverted). The detector unit
+  (`tests/components/custom/dock/dock-animation-live.detect.test.ts`) + the artefact
+  (`audit/W1-collapse-live.json`) ride per the spec.
