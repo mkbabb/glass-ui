@@ -275,6 +275,10 @@ jobs:
               run: npm run proof:aurora-backend-fallback
             - name: proof:webgpu-substrate-single
               run: npm run proof:webgpu-substrate-single
+            # AW.W8 — interactivity: every axis on the master tempo scalar (PRM +
+            # the DockBackgroundToggle pause zero it; the cursor write-path early-out).
+            - name: proof:aurora-interaction-prm
+              run: npm run proof:aurora-interaction-prm
             # AV.W2 — the aurora↔blob shared GLSL convergence: the OETF + the four
             # Ottosson mat3 literals + the FBM_ROT constant live ONCE in
             # procedural-color.glsl.ts; neither frag re-defines a chunk-owned

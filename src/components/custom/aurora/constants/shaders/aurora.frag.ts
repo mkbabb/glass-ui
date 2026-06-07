@@ -100,6 +100,12 @@ uniform float uFlowCurl;
 uniform vec2  uCursor;          // in 0..1 screen space (matches pN)
 uniform float uCursorStrength;  // 0..1 attraction amount
 uniform float uCursorRadius;    // radius of influence (0.05..0.5)
+// AW.W8.1 — the velocity-reactive flow: a fast flick injects a transient swirl-burst
+// (uCursorBurst, decaying over ~1s) along the pointer velocity (uCursorVelocity),
+// distinct from the steady uCursorStrength attraction. Both are PRM-gated (the cursor
+// write-path early-outs on reduced-motion, and the master tempo scalar zeroes them).
+uniform vec2  uCursorVelocity;  // smoothed pointer velocity (normalized-screen/move)
+uniform float uCursorBurst;     // 0..1 transient flick burst
 uniform float uStrokeAmount;
 uniform float uStrokeScale;
 uniform float uStrokeAnisotropy;

@@ -28,7 +28,7 @@ import { createGPUCanvas } from "../../../../composables/glass/createGPUCanvas";
 import type { AuroraConfig, AuroraInstance } from "../constants/presets";
 import { createGlProgram } from "./glSetup";
 import { createUniformBridge } from "./uniformBridge";
-import { createCursorState } from "./cursorModel";
+import { createCursorState, injectCursorVelocity as injectCursorVel } from "./cursorModel";
 import { createFrameLoop } from "./frameLoop";
 import { createGPUAuroraSetup } from "./gpuRuntime";
 
@@ -123,6 +123,15 @@ function shouldPreserveDrawingBuffer(options: AuroraRuntimeOptions): boolean {
 export interface AuroraRuntime extends Omit<AuroraInstance, "pause" | "resume"> {
     pause(reason?: SuspendReason): void;
     resume(reason?: SuspendReason): void;
+    /**
+     * AW.W8.1 — feed a pointer delta into the velocity-reactive flow (a fast flick →
+     * a transient swirl-burst). The PRM early-out lives here: the injection is
+     * suppressed when the substrate reports reduced-motion (the cursor write-path
+     * fires from the pointermove listener, INDEPENDENT of the parked rAF loop).
+     */
+    injectCursorVelocity(dx: number, dy: number): void;
+    /** AW.W8.1 — the live reduced-motion state (the cursor listener early-outs on it). */
+    readonly reducedMotion: boolean;
 }
 
 export function createAurora(
@@ -277,6 +286,18 @@ export function createAurora(
         // A pointer move re-introduces cursor easing — re-arm a parked loop.
         canvasHandle.wake();
     }
+    // AW.W8.1 — the velocity-reactive flow WRITE-PATH. Feeds a pointer delta into the
+    // cursor velocity + swirl-burst. The pointermove listener (useCursorInteraction)
+    // fires INDEPENDENT of the rAF loop, so it could move the field even while the loop
+    // is parked under reduce — the cursor WRITE-PATH PRM early-out lives HERE: the
+    // velocity injection is SUPPRESSED when the substrate reports reduced-motion (the
+    // master tempo scalar also zeroes the decay, but this write-path check is the
+    // load-bearing one for the off-loop listener — proof:aurora-interaction-prm asserts it).
+    function injectCursorVelocity(dx: number, dy: number) {
+        if (canvasHandle.reducedMotion) return; // cursor write-path PRM early-out
+        injectCursorVel(cursor, dx, dy);
+        canvasHandle.wake();
+    }
     function clearCursor() {
         cursor.targetStrength = 0;
         // The decay-to-rest still needs frames to animate out — re-arm.
@@ -324,6 +345,12 @@ export function createAurora(
         clearCursor,
         setCursorRadius,
         setReducedMotion,
+        // AW.W8.1 — the velocity-reactive flow write-path (PRM-gated) + the live
+        // reduced-motion read (the cursor pointermove listener early-outs on it).
+        injectCursorVelocity,
+        get reducedMotion() {
+            return canvasHandle.reducedMotion;
+        },
         // Public pause/resume key on the `"manual"` reason by default. The Vue
         // wrapper passes `"off-screen"` for the intersection seam so the two
         // sources never alias. Both delegate to the substrate's three-reason

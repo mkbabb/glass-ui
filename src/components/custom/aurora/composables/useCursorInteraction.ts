@@ -12,6 +12,14 @@ export interface CursorInteractionOptions {
      * 0.35 matches the overlay's default ring thickness.
      */
     hitFraction?: number;
+    /**
+     * AW.W8.1 — feed the per-move pointer delta into the velocity-reactive flow (a
+     * fast flick → a transient swirl-burst). The runtime's `injectCursorVelocity`
+     * EARLY-OUTS on reduced-motion (the cursor write-path PRM check), so a parked
+     * loop with a live pointermove does NOT move the field under reduce. Optional —
+     * absent keeps the position-only steady swirl.
+     */
+    injectVelocity?: (dx: number, dy: number) => void;
 }
 
 /**
@@ -34,6 +42,10 @@ export function useCursorInteraction(
     const hitFraction = options.hitFraction ?? 0.35;
     let dragIndex: number | null = null;
     let pointerId: number | null = null;
+    // AW.W8.1 — the previous pointer position (normalized) for the per-move delta the
+    // velocity-reactive flow consumes. null until the first move.
+    let lastX: number | null = null;
+    let lastY: number | null = null;
 
     function norm(e: PointerEvent, el: HTMLElement): { x: number; y: number } {
         const r = el.getBoundingClientRect();
@@ -129,9 +141,20 @@ export function useCursorInteraction(
             getCfg().nuclei[dragIndex]!.y = Math.max(0, Math.min(1, y));
         }
         options.setCursor(x, y, 1.0);
+        // AW.W8.1 — feed the per-move delta into the velocity-reactive flow. The
+        // runtime's injectCursorVelocity EARLY-OUTS on reduced-motion (the cursor
+        // write-path PRM check), so a parked loop with a live pointermove does not
+        // move the field under reduce.
+        if (options.injectVelocity && lastX !== null && lastY !== null) {
+            options.injectVelocity(x - lastX, y - lastY);
+        }
+        lastX = x;
+        lastY = y;
     }
 
     function onPointerLeave() {
+        lastX = null;
+        lastY = null;
         if (dragIndex !== null) return; // hold swirl active while dragging
         options.clearCursor();
     }

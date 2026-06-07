@@ -309,6 +309,12 @@ export const GATES = [
         note: "AW.W7b — the WebGPU substrate-binary gate (the proof:webgl-substrate-single by-irrelevance hole): the navigator.gpu device acquisition is confined to the sanctioned sites (renderMode.ts probe via requestAdapter→requestDevice + createGPUCanvas.ts swapchain), NO baked aurora pass-count/rgba16float/Kuwahara-sector-count in EITHER substrate (createCanvasLifecycle/createGPUCanvas), and aurora.wgsl.ts SPLICES the shared procedural-color WGSL chunk. Bite: bake passCount=4/rgba16float into createGPUCanvas → RED; add a 2nd navigator.gpu acquisition → RED; re-author the WGSL OETF inline → RED",
     },
     {
+        id: "proof:aurora-interaction-prm",
+        cmd: "proof:aurora-interaction-prm",
+        tags: ["local", "ci"],
+        note: "AW.W8 — every interactive axis (cursor-as-light, velocity-burst, scroll, the WebGPU wake) routes through the MASTER TEMPO SCALAR (masterTempo() → 0 under getReducedMotion()); the tempo scales the integrated cursor advance (the step), NEVER uTime; injectCursorVelocity (the cursor write-path, which fires from the off-rAF-loop pointermove listener) EARLY-OUTS on canvasHandle.reducedMotion; NO parallel matchMedia (the substrate owns PRM); the wake advect pass gates the splat by uTempo (dt-fed, never uTime); interaction-prm.test.ts asserts tempo=0 freezes the velocity+burst. Bite: detach an axis from the tempo scalar / let the pointermove handler write without the reducedMotion early-out → RED",
+    },
+    {
         id: "proof:shader-shared-source",
         cmd: "proof:shader-shared-source",
         tags: ["local", "ci"],

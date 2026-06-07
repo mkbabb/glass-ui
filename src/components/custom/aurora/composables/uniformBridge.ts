@@ -299,6 +299,9 @@ export function createUniformBridge(
         gl.uniform2f(U.uCursor, cursor.x, flipY(cursor.y));
         gl.uniform1f(U.uCursorStrength, cursor.strength);
         gl.uniform1f(U.uCursorRadius, cursor.radius);
+        // AW.W8.1 — the velocity-reactive flow uniforms (re-sent per frame too).
+        gl.uniform2f(U.uCursorVelocity, cursor.velX, -cursor.velY);
+        gl.uniform1f(U.uCursorBurst, cursor.burst);
         gl.uniform1f(U.uStrokeAmount, cfg.strokeAmount);
         gl.uniform1f(U.uStrokeScale, cfg.strokeScale);
         gl.uniform1f(U.uStrokeAnisotropy, cfg.strokeAnisotropy);
