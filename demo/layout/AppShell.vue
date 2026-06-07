@@ -17,8 +17,9 @@ import {
 } from "../../src/composables/keyboard";
 import { useStoryNavigation } from "../composables/useStoryNavigation";
 import { PresetEditor } from "../configurator";
-import CategoryRail from "./CategoryRail.vue";
-import StoryPager from "./StoryPager.vue";
+import SidebarDock from "./SidebarDock.vue";
+import BottomDock from "./BottomDock.vue";
+import "./dock-nav.css";
 
 const { next, prev, nextCategory, prevCategory } = useStoryNavigation();
 
@@ -75,14 +76,19 @@ onMounted(() => {
     <PaperBackdrop class="fixed inset-0 -z-10 bg-background" />
 
     <div class="relative flex h-screen overflow-hidden text-foreground">
-        <CategoryRail />
+        <!-- Fixed vertical sidebar rail dock (off-canvas below the mobile
+             breakpoint — see dock-nav.css; the BottomDock owns the off-canvas
+             Sheet trigger). -->
+        <aside class="demo-sidebar-rail">
+            <SidebarDock />
+        </aside>
 
         <div class="flex min-h-0 min-w-0 flex-1 flex-col">
-            <StoryPager />
-
+            <!-- `<main>` owns route scroll. The extra bottom padding clears the
+                 viewport-anchored BottomDock that floats over this region. -->
             <main
                 ref="mainEl"
-                class="relative flex-1 min-h-0 min-w-0 overflow-y-auto px-4 py-6 md:px-8 md:py-10"
+                class="relative flex-1 min-h-0 min-w-0 overflow-y-auto px-4 pt-6 pb-28 md:px-8 md:pt-10 md:pb-32"
             >
                 <RouterView v-slot="{ Component }">
                     <component :is="Component" v-if="Component" />
@@ -95,12 +101,16 @@ onMounted(() => {
                         </p>
                         <p class="mt-2 text-sm text-muted-foreground">
                             Choose a category from the rail on the left, then
-                            a story from the pager above.
+                            a story from the bar below.
                         </p>
                     </div>
                 </RouterView>
             </main>
         </div>
+
+        <!-- Viewport-anchored bottom-bar story dock (floats over <main>'s
+             bottom inset; not in document flow). -->
+        <BottomDock />
     </div>
 
     <!-- Live token preset editor — opened by FAB or `,` shortcut -->
