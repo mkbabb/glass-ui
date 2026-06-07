@@ -17,7 +17,7 @@ import ShowcaseFrame from "../ShowcaseFrame.vue";
   from:     { x: 0,   y: 0,   scale: 1 },
   to:       { x: 100, y: 50,  scale: 1.2 },
   duration: 400,
-  timingFunction: "easeOutCubic",
+  timingFunction: (t) =&gt; 1 - Math.pow(1 - t, 3), // easeOutCubic (callable)
   onFrame:  (values) =&gt; {
     el.style.setProperty("--x", `${values.x}px`);
     el.style.setProperty("--y", `${values.y}px`);

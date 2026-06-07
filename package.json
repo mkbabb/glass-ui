@@ -546,6 +546,7 @@
         "proof:theme": "node scripts/proof-theme-style.mjs",
         "proof:components-css": "node scripts/proof-components-css.mjs",
         "proof:resolution": "node scripts/proof-resolution-contract.mjs",
+        "proof:peer-conformance": "node scripts/proof-peer-conformance.mjs",
         "proof:phantom-classes": "node scripts/proof-phantom-classes.mjs",
         "proof:vt-names": "node scripts/proof-vt-names.mjs",
         "proof:dock-animation-live": "node scripts/proof-dock-animation-live.mjs",
@@ -612,8 +613,8 @@
     },
     "peerDependencies": {
         "@lucide/vue": "^1.16.0",
-        "@mkbabb/keyframes.js": "^2.2.0 || ^3.0.0",
-        "@mkbabb/value.js": "^0.10.0",
+        "@mkbabb/keyframes.js": "^2.2.0 || ^3.0.0 || ^4.0.0",
+        "@mkbabb/value.js": "^0.10.0 || ^0.11.0",
         "@vueuse/core": "^14.0",
         "class-variance-authority": "^0.7",
         "clsx": "^2.0",
@@ -643,7 +644,7 @@
     },
     "devDependencies": {
         "@lucide/vue": "^1.16.0",
-        "@mkbabb/keyframes.js": "^2.2.0",
+        "@mkbabb/keyframes.js": "^4.0.0",
         "@mkbabb/value.js": "^0.10.0",
         "@tailwindcss/postcss": "^4.3.0",
         "@tailwindcss/vite": "^4.3.0",

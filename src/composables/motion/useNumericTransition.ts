@@ -10,7 +10,6 @@ import { NumericAnimation } from "@mkbabb/keyframes.js";
 import type {
     NumericAnimationOptions,
     TimingFunction,
-    TimingFunctionNames,
 } from "@mkbabb/keyframes.js";
 import { onBeforeUnmount, ref, shallowRef } from "vue";
 
@@ -22,8 +21,19 @@ export interface UseNumericTransitionOptions<K extends string> {
     to: SpringSnapshot<K>;
     /** Playback duration in ms. */
     duration: number;
-    /** keyframes.js timing function — string name or explicit function. */
-    timingFunction?: TimingFunction | TimingFunctionNames;
+    /**
+     * keyframes.js timing function — an explicit callable `(t) => number`.
+     *
+     * AW.W27: this is a CALLABLE `TimingFunction`, NOT a string easing name.
+     * keyframes 4 removed string-name acceptance from `NumericAnimationOptions`
+     * (a name now resolves only through the ASYNC `resolveEasing`, which crosses
+     * the value.js dynamic boundary the dock/motion light surface must never
+     * pull in). Narrowing glass-ui's public option to a callable decouples it
+     * from keyframes' name-resolution churn AND is assignable to every supported
+     * keyframes major (2.2 / 3 / 4). A consumer wanting a named curve passes the
+     * function directly (e.g. `(t) => 1 - Math.pow(1 - t, 3)` for easeOutCubic).
+     */
+    timingFunction?: TimingFunction;
     /** Per-frame consumer. Receives the same zero-allocation record each tick. */
     onFrame?: (values: SpringSnapshot<K>) => void;
 }

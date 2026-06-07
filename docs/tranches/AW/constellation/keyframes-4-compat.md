@@ -1,5 +1,18 @@
 # keyframes 4 / value 0.11 peer knot — the finding + coordination
 
+> **CORRECTION (AW.W27 close, 2026-06-07): §3-4 below are SUPERSEDED.** The
+> keyframes-^4 admit was NOT blocked on a keyframes-side value-0.11 fix. The build
+> break was glass-ui's OWN `useNumericTransition` option type (keyframes 4 removed
+> string-name acceptance from `NumericAnimationOptions.timingFunction`); narrowing
+> glass-ui's public option to a callable `TimingFunction` made glass-ui build green
+> against keyframes 4 + value 0.10. glass-ui shipped BOTH peer widens in 3.4.0
+> (keyframes `^2.2||^3||^4` + value `^0.10||^0.11`) under `proof:peer-conformance`.
+> The one non-green combo (keyframes 4 + value 0.11) is NON-RESOLVABLE (keyframes 4
+> caps value <0.11), so every npm-resolvable combo typechecks. The keyframes-side
+> value-0.11 widen is deferred to the E2/AW.W5 window (when W5 forces value 0.11).
+> See `waves/AW.W27-peer-conformance.md`. The original analysis below is kept for
+> the archaeology.
+
 The keyframes.js session (its own G-tranche exec, 2026-06-07) found glass-ui 3.3.0
 ships stale peer ranges that exclude both upstreams' current majors:
 `@mkbabb/keyframes.js: "^2.2.0 || ^3.0.0"`, `@mkbabb/value.js: "^0.10.0"`. It
