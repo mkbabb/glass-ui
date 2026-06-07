@@ -163,6 +163,12 @@ for (const name of ["startViewTransition", "supportsViewTransitions", "ViewTrans
 // root barrel from `./composables/motion/vReveal`, per the useViewTransition
 // precedent. A single-symbol re-export the whole-file contract cannot express.
 rootAllowed.add("vReveal");
+// AW.W16 — DeckProgress + DeckProgressProps are the deck-position rail wrapper
+// (a thin :value-only <Progress> restyle), targeted-re-exported to the root
+// barrel (no subpath; the /deck namespace is reserved). Single-symbol re-exports
+// the whole-file contract cannot express, same as vReveal/useViewTransition.
+rootAllowed.add("DeckProgress");
+rootAllowed.add("DeckProgressProps");
 // L.W1 SCC-trap closure — the 4 vueuse-bearing ui families (input/, textarea/,
 // combobox/, carousel/) are subpath-only (`/forms`, `/carousel`): the curated root
 // barrel re-exports the 37 vueuse-FREE ui packages but NOT these. The `ui/index.ts`

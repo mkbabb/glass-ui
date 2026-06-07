@@ -52,6 +52,7 @@ export const EXPECTED_TREE = [
     ]],
     ["navigation", [
         "tabs", "dock", "dock-layers", "rail", "carousel", "glass-carousel",
+        "deck-progress",
     ]],
     ["data", [
         "table", "data-table", "tags-input", "avatar", "sortable-list",
