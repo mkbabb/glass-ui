@@ -16,12 +16,16 @@
 
 import {
     colorUnit2,
+    gamutMapOKLab,
+    interpolateHue,
+    isInSRGBGamut,
     oklabToLinearSRGB,
     oklabToRgb255,
     parseCSSColor,
     rawOklabToOklch,
     rawOklchToOklab,
     srgbToOKLab,
+    type HueInterpolationMethod,
 } from "@mkbabb/value.js";
 
 /** An OKLCh color stop. `L` 0..1, `C` 0..~0.4, `h` 0..360. */
@@ -100,3 +104,146 @@ export function oklchStopToHex(s: OklchStop): string {
  */
 export const defaultBlobColorResolver: ColorResolver = (css) =>
     oklchToGammaRgb(cssToOklch(css));
+
+// ── Shared harmony vocabulary (AW.W11.b hoist) ───────────────────────────────
+//
+// The hue-scheme vocabulary aurora's `deriveAurora` and the blob's
+// `deriveBlobPalette` BOTH consume — hoisted to the `/color` leaf so the two
+// surfaces derive from ONE source (no second divergent `deriveHue`/`gamutMapStop`;
+// `proof:single-color-core` keeps the math on value.js). Aurora re-exports this as
+// `AuroraHarmony` for surface preservation (the prior name); the blob consumes
+// `ColorHarmony` directly.
+
+/**
+ * Harmony schemes for the OKLCh palette derivers. Each maps the seed hue onto the
+ * derived stops differently:
+ * - `analogous` — neighbouring hues (seed ± a small spread).
+ * - `complementary` — seed → +180° along the LONG arc (stays saturated; the short
+ *   arc cuts through grey on a warm→cool pair).
+ * - `split-complementary` — the two hues flanking the complement (±150/210).
+ * - `triad` — seed + its two 120° partners.
+ * - `tetradic` — seed + the three 90° partners.
+ * - `monochrome` — every stop holds the seed hue; only L and C travel.
+ */
+export type ColorHarmony =
+    | "analogous"
+    | "complementary"
+    | "split-complementary"
+    | "triad"
+    | "tetradic"
+    | "monochrome";
+
+/** The harmony → value.js HueInterpolationMethod arc map (verified against the enum). */
+const HARMONY_METHOD: Record<ColorHarmony, HueInterpolationMethod> = {
+    // `longer` keeps the long arc saturated (the short arc greys a warm→cool pair).
+    complementary: "longer",
+    "split-complementary": "longer",
+    analogous: "shorter",
+    monochrome: "shorter",
+    triad: "increasing",
+    tetradic: "increasing",
+};
+
+const wrapDeg = (h: number) => ((h % 360) + 360) % 360;
+
+/**
+ * Hue per harmony, walked across the ramp parameter `t` (0..1) THROUGH value.js's
+ * `interpolateHue` in the NORMALIZED-TURNS domain (`/360` in, `*360` out — value.js
+ * takes turns [0,1], NOT degrees; the `.5` short-arc threshold is a half-TURN). The
+ * single canonical hue-walk both backdrops consume.
+ */
+export function deriveHue(
+    anchorHue: number,
+    harmony: ColorHarmony,
+    hueSpread: number,
+    t: number,
+): number {
+    const method = HARMONY_METHOD[harmony];
+    const arc = (h0: number, h1: number): number =>
+        wrapDeg(interpolateHue(wrapDeg(h0) / 360, wrapDeg(h1) / 360, t, method) * 360);
+    switch (harmony) {
+        case "monochrome":
+            return wrapDeg(anchorHue);
+        case "complementary":
+            return arc(anchorHue, anchorHue + 180);
+        case "split-complementary":
+            return arc(anchorHue + 150, anchorHue + 210);
+        case "triad":
+            return arc(anchorHue, anchorHue + 240);
+        case "tetradic":
+            return arc(anchorHue, anchorHue + 270);
+        case "analogous":
+        default:
+            return arc(anchorHue - hueSpread, anchorHue + hueSpread);
+    }
+}
+
+/**
+ * Gamut-map one OklchStop through value.js's Ottosson core
+ * (`rawOklchToOklab → gamutMapOKLab → rawOklabToOklch`) with a bounded inward-chroma
+ * nudge for the over-1 hull-placement escape. Hue is preserved exactly; the result
+ * is in-sRGB to the pipeline's tolerance. The single gamut-mapper both backdrops use.
+ */
+export function gamutMapStop(stop: OklchStop): OklchStop {
+    const [L, a, b] = rawOklchToOklab(stop.L, stop.C, stop.h);
+    const [Lm, am, bm] = gamutMapOKLab(L, a, b);
+    const [Lo, C, H] = rawOklabToOklch(Lm, am, bm);
+    let safeC = C;
+    for (let k = 0; k < 6; k++) {
+        const [lx, ax, bx] = rawOklchToOklab(Lo, safeC, H);
+        const [lr, lg, lb] = oklabToLinearSRGB(lx, ax, bx);
+        if (isInSRGBGamut(lr, lg, lb)) break;
+        safeC *= 0.999; // pull chroma 0.1% inward — hue/L preserved
+    }
+    return { L: Lo, C: safeC, h: H };
+}
+
+/** Tuning for {@link deriveBlobPalette}. */
+export interface DeriveBlobPaletteOptions {
+    /** Number of stops to produce. Default 3; clamped to [2, 4]. */
+    stopCount?: number;
+    /** Hue scheme across the stops. Default `analogous`. */
+    harmony?: ColorHarmony;
+    /** Total L travel across the stops, in OKLCh L units. Default ~0.18. */
+    lightnessSpread?: number;
+    /** Hue walk in degrees for analogous; ignored by monochrome. Default ~24. */
+    hueSpread?: number;
+    /** Midpoint chroma-bump (keeps a vivid pair off the grey midpoint). Default ~0.03. */
+    chromaBump?: number;
+}
+
+/**
+ * Seed ONE color into a harmonious, gamut-safe 2-4-stop OKLCh palette for the blob
+ * — the blob-side twin of `deriveAurora`, consuming the SHARED `ColorHarmony`
+ * vocabulary (no forked `deriveHue`). The body takes the deepest/most-saturated
+ * stop; satellites take the lighter in-family stops. Every stop is gamut-mapped.
+ * Deterministic + DOM-free (SSR-safe; `cssToOklch` parses via value.js).
+ *
+ * @param seed any CSS color string OR an `OklchStop` anchor.
+ * @param options stop count, harmony, spreads.
+ */
+export function deriveBlobPalette(
+    seed: string | OklchStop,
+    options: DeriveBlobPaletteOptions = {},
+): OklchStop[] {
+    const anchor: OklchStop = typeof seed === "string" ? cssToOklch(seed) : seed;
+    const {
+        stopCount = 3,
+        harmony = "analogous",
+        lightnessSpread = 0.18,
+        hueSpread = 24,
+        chromaBump = 0.03,
+    } = options;
+
+    const n = Math.max(2, Math.min(4, Math.round(stopCount)));
+    const stops: OklchStop[] = [];
+    for (let i = 0; i < n; i++) {
+        const t = n === 1 ? 0 : i / (n - 1); // 0 = deep body, 1 = lighter satellite
+        const L = anchor.L - lightnessSpread / 2 + lightnessSpread * t;
+        // Midpoint chroma-bump: a bell (peaks at t=0.5) keeps a vivid pair off grey.
+        const C = Math.max(0, anchor.C + chromaBump * Math.sin(Math.PI * t));
+        const h = deriveHue(anchor.h, harmony, hueSpread, t);
+        stops.push(gamutMapStop({ L: Math.min(0.98, Math.max(0.05, L)), C, h }));
+    }
+    return stops;
+}

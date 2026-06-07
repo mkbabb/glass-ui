@@ -94,6 +94,11 @@ export interface BlobConfig {
     colorNoiseFreq: number;
     colorNoiseSpeed: number;
 
+    // Multi-stop palette (W11.b) — 2-4 in-family CSS color stops distributed across
+    // body + satellites. EMPTY (default) falls back to the single `color` base (zero
+    // regression). Derive one from a seed via `deriveBlobPalette` (`/color`).
+    paletteStops: string[];
+
     // Iridescence + fake-SSS (W11.a) — translucent-gel read. Taste-first low
     // defaults (warm-pearl sheen, not garish thin-film).
     /** Warm-pearl rim sheen weight (0 = off). */
@@ -168,6 +173,7 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
     brightnessShift: 0.0,
     colorNoiseFreq: 2.0,
     colorNoiseSpeed: 0.05,
+    paletteStops: [],
 
     iridescence: 0.0,
     iridHue: 85,

@@ -16,6 +16,8 @@ import type { BlobSatelliteSystem } from "./useBlobSatellites";
 const MAX_SATS = 4;
 /** Compile-time trail length — mirrors `TRAIL_N` in metaball.frag.ts + useBlobPointer.ts. */
 const TRAIL_N = 15;
+/** Compile-time palette cap — mirrors `MAX_BLOB_STOPS` in metaball.frag.ts. */
+const MAX_BLOB_STOPS = 4;
 
 /** Diagnostic label for the shared compile/link error path (AV.W14). */
 const BLOB_LABEL = "[GooBlob]";
@@ -64,6 +66,7 @@ const UNIFORM_NAMES = [
     "uBrightnessShift",
     "uColorNoiseFreq",
     "uColorNoiseSpeed",
+    "uStopCount",
     "uSatCount",
     "uTrailCount",
     "uVelocity",
@@ -249,6 +252,12 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     trailRadLocs.push(gl.getUniformLocation(prog, `uTrailRadius[${i}]`));
                 }
 
+                // Per-palette-stop locations (W11.b — uPalette[MAX_BLOB_STOPS]).
+                const paletteLocs: (WebGLUniformLocation | null)[] = [];
+                for (let i = 0; i < MAX_BLOB_STOPS; i++) {
+                    paletteLocs.push(gl.getUniformLocation(prog, `uPalette[${i}]`));
+                }
+
                 gl.enable(gl.BLEND);
                 gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 
@@ -299,6 +308,23 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     gl.uniform2f(U.uResolution, canvas.width, canvas.height);
                     gl.uniform1f(U.uTime, timeSec);
                     gl.uniform3f(U.uBaseColor, rgb[0], rgb[1], rgb[2]);
+
+                    // Multi-stop palette (W11.b) — 2-4 in-family stops. EMPTY falls
+                    // back to uBaseColor (uStopCount <= 1). Stops resolve through the
+                    // SAME ColorResolver seam (var()-cascade un-wrap + value.js).
+                    const stops = config.paletteStops;
+                    const stopCount = Math.min(stops.length, MAX_BLOB_STOPS);
+                    gl.uniform1i(U.uStopCount, stopCount);
+                    for (let i = 0; i < MAX_BLOB_STOPS; i++) {
+                        const loc = paletteLocs[i] ?? null;
+                        const css = stops[i];
+                        if (css) {
+                            const p = resolveRimColor(css, canvas);
+                            gl.uniform3f(loc, p[0], p[1], p[2]);
+                        } else {
+                            gl.uniform3f(loc, rgb[0], rgb[1], rgb[2]);
+                        }
+                    }
 
                     // Pointer
                     const ptr = pointer.pointer.value;

@@ -53,6 +53,13 @@ uniform vec2 uResolution;
 uniform float uTime;
 uniform vec3 uBaseColor;
 
+// Multi-stop palette (W11.b) — 2-4 in-family OKLCh stops (uploaded GAMMA sRGB, like
+// uBaseColor). uStopCount <= 1 falls back to uBaseColor (the single-color default,
+// zero regression). MAX_BLOB_STOPS is a compile-time #define.
+#define MAX_BLOB_STOPS 4
+uniform int uStopCount;
+uniform vec3 uPalette[MAX_BLOB_STOPS];
+
 // Pointer
 uniform vec2 uPointer;
 uniform float uPointerActive;
@@ -225,6 +232,27 @@ vec3 surfaceNormal(vec2 uv, float d, float bodyR) {
     return normalize(vec3(grad2d * (1.0 - z), z) + vec3(0.0, 0.0, 1e-6));
 }
 
+// W11.b — sample the multi-stop palette at t in [0,1], interpolating adjacent
+// stops in OKLab with a MIDPOINT CHROMA-BUMP (a linear OKLab mix of a vivid pair
+// dips chroma through grey; the bump lifts it back). Falls back to uBaseColor when
+// uStopCount <= 1. Returns an OKLCh stop [L, C, h(rad)].
+vec3 samplePaletteOklch(float t) {
+    if (uStopCount <= 1) return oklabToOklch(srgbToOklab(uBaseColor));
+    float n = float(uStopCount);
+    float ft = clamp(t, 0.0, 1.0) * (n - 1.0);
+    int i0 = int(floor(ft));
+    int i1 = min(i0 + 1, uStopCount - 1);
+    float f = ft - float(i0);
+    // Fetch adjacent stops (uPalette is gamma sRGB) → OKLab.
+    vec3 labA = srgbToOklab(uPalette[i0]);
+    vec3 labB = srgbToOklab(uPalette[i1]);
+    vec3 lab = mix(labA, labB, f);
+    vec3 lch = oklabToOklch(lab);
+    // Midpoint chroma-bump: a bell (peaks at f=0.5) lifts C off the grey midpoint.
+    lch.y += 0.03 * sin(PI * f);
+    return lch;
+}
+
 void main() {
     vec2 uv = vUv - 0.5;
 
@@ -256,9 +284,11 @@ void main() {
 
     // Edit #4 — perceptually-uniform OKLCh variation. Gamma base → linear → OKLab
     // → OKLCh; perturb L/C/h; OKLCh → OKLab → linear; hue-preserving gamut clamp.
-    vec3 oklch = oklabToOklch(srgbToOklab(uBaseColor));
-
+    // The base is the multi-stop palette sample (W11.b) — distributed across the
+    // body/satellites by the color noise field — or uBaseColor when single-stop.
     float colorNoise = fbm(uv * uColorNoiseFreq + uTime * uColorNoiseSpeed, 3);
+    vec3 oklch = samplePaletteOklch(colorNoise);
+
     oklch.z += (colorNoise - 0.5) * uHueRange * (PI / 180.0);     // hue swing, radians
     oklch.y = max(oklch.y + (colorNoise - 0.5) * uSatShift, 0.0); // chroma swing
     oklch.x = clamp(oklch.x + uBrightnessShift, 0.0, 1.0);        // lightness bias
