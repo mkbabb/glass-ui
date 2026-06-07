@@ -247,6 +247,29 @@ function togglePlay() {
             </div>
         </section>
 
+        <section class="flex flex-col gap-3">
+            <h2 class="text-sm font-semibold text-foreground">Big dock — card shell + tile grid (W3b)</h2>
+            <p class="text-xs text-muted-foreground">
+                <code class="rounded bg-muted px-1">shape="card"</code> gives a finite concentric
+                card radius (not a stadium pill); <code class="rounded bg-muted px-1">layout="grid"</code>
+                lays children out as a self-wrapping 2D tile grid for large multi-row docks
+                (<code class="rounded bg-muted px-1">alwaysExpanded</code> by contract — no width morph).
+            </p>
+            <div class="flex justify-center py-6">
+                <GlassDock shape="card" layout="grid" class="w-80">
+                    <DockIconButton aria-label="Home"><Home class="h-5 w-5" /></DockIconButton>
+                    <DockIconButton aria-label="Search"><Search class="h-5 w-5" /></DockIconButton>
+                    <DockIconButton aria-label="Add"><Plus class="h-5 w-5" /></DockIconButton>
+                    <DockIconButton aria-label="Notifications"><Bell class="h-5 w-5" /></DockIconButton>
+                    <DockIconButton aria-label="Previous"><SkipBack class="h-5 w-5" /></DockIconButton>
+                    <DockIconButton aria-label="Next"><SkipForward class="h-5 w-5" /></DockIconButton>
+                    <DockIconButton aria-label="Home (2)"><Home class="h-5 w-5" /></DockIconButton>
+                    <DockIconButton aria-label="Search (2)"><Search class="h-5 w-5" /></DockIconButton>
+                    <DockIconButton aria-label="Settings"><Settings class="h-5 w-5" /></DockIconButton>
+                </GlassDock>
+            </div>
+        </section>
+
         <section class="flex flex-col gap-2 text-sm text-muted-foreground">
             <h2 class="text-sm font-semibold text-foreground">Notes</h2>
             <ul class="list-disc pl-5 space-y-1">
