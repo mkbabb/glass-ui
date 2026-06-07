@@ -10,6 +10,7 @@ import {
     DockIconButton,
     DockDropdownTrigger,
     DockSelectTrigger,
+    DockBackgroundToggle,
 } from "../../../src/components/custom/dock";
 import { HoverPopover } from "../../../src/components/custom/hover-popover";
 import {
@@ -28,6 +29,7 @@ import {
 } from "../../../src/components/ui/select";
 
 const playing = ref(false);
+const bgPaused = ref(false);
 const track = ref("The Garden");
 const tracks = ["The Garden", "Morning Weft", "Carmine Drift", "Salt & Slate"];
 
@@ -268,6 +270,31 @@ function togglePlay() {
                     <DockIconButton aria-label="Settings"><Settings class="h-5 w-5" /></DockIconButton>
                 </GlassDock>
             </div>
+        </section>
+
+        <section class="flex flex-col gap-3">
+            <h2 class="text-sm font-semibold text-foreground">
+                Background pause/play toggle (WCAG 2.2.2)
+            </h2>
+            <p class="text-xs text-muted-foreground">
+                <code class="rounded bg-muted px-1">&lt;DockBackgroundToggle&gt;</code>
+                is the Level-A pause/play control a consumer wires to a running
+                Aurora/GooBlob renderer's <code class="rounded bg-muted px-1">pause()</code>/<code
+                    class="rounded bg-muted px-1"
+                    >resume()</code
+                >. It reflects state via <code class="rounded bg-muted px-1">aria-pressed</code>
+                and a Pause↔Play glyph swap, available to all users.
+            </p>
+            <div class="flex justify-center py-6">
+                <GlassDock>
+                    <DockBackgroundToggle v-model:paused="bgPaused" />
+                    <DockIconButton aria-label="Home"><Home class="h-5 w-5" /></DockIconButton>
+                    <DockIconButton aria-label="Settings"><Settings class="h-5 w-5" /></DockIconButton>
+                </GlassDock>
+            </div>
+            <p class="text-center text-xs text-muted-foreground">
+                background: <code class="rounded bg-muted px-1">{{ bgPaused ? "paused" : "running" }}</code>
+            </p>
         </section>
 
         <section class="flex flex-col gap-2 text-sm text-muted-foreground">

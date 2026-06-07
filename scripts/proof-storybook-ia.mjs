@@ -52,24 +52,28 @@ export const EXPECTED_TREE = [
     ]],
     ["navigation", [
         "tabs", "dock", "dock-layers", "rail", "carousel", "glass-carousel",
-        "deck-progress",
+        "deck-progress", "header-ribbon", "responsive-tabs",
     ]],
     ["data", [
         "table", "data-table", "tags-input", "avatar", "sortable-list",
         "infinite-scroll", "timeline", "timeline-segmented",
         "timeline-continuous", "search", "scrolling-text",
+        "metric-cell", "metric-stack",
     ]],
     ["feedback", [
         "alert", "toast", "toaster", "notification", "progress", "skeleton",
         "confirm-dialog",
     ]],
-    ["motion", ["transitions", "springs", "countup", "reveal", "typewriter"]],
+    ["motion", [
+        "transitions", "springs", "countup", "reveal", "typewriter",
+        "animated-digit",
+    ]],
     ["tools", ["command"]],
     ["compositions", [
         "hero", "math-paper", "dashboard", "auth-shell", "settings",
         "empty-states", "dock-with-slider", "drawer-live-behind",
-        "configurator", "instrument-chassis", "form-validation",
-        "labeled-field", "icon-tooltip", "gate-pattern",
+        "configurator", "instrument-chassis", "instrument-rail",
+        "form-validation", "labeled-field", "icon-tooltip", "gate-pattern",
     ]],
     ["composables", [
         "use-token-color",

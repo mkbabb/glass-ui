@@ -8,6 +8,7 @@ import {
     TableHead,
     TableHeader,
     TableRow,
+    TableEmpty,
 } from "../../../src/components/ui/table";
 import { Badge } from "../../../src/components/ui/badge";
 import { cn } from "../../../src/utils/cn";
@@ -91,6 +92,31 @@ const fmt = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", c
                     <span class="text-muted-foreground">{{ rows.length }} invoices</span>
                     <span class="fira-code">Total · {{ fmt(total) }}</span>
                 </div>
+            </div>
+        </div>
+
+        <div>
+            <p class="text-admin-label mb-4 text-muted-foreground">
+                Empty state — &lt;TableEmpty&gt;
+            </p>
+            <div class="overflow-hidden rounded-card border border-border bg-card shadow-cartoon">
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead class="w-[120px]">Invoice</TableHead>
+                            <TableHead>Customer</TableHead>
+                            <TableHead>Status</TableHead>
+                            <TableHead class="text-right">Amount</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        <TableEmpty :colspan="4">
+                            <span class="text-muted-foreground">
+                                No invoices match the current filter.
+                            </span>
+                        </TableEmpty>
+                    </TableBody>
+                </Table>
             </div>
         </div>
     </StoryPage>
