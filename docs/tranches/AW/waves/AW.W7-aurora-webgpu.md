@@ -1,0 +1,182 @@
+# AW.W7 — AURORA-WEBGPU (createGPUCanvas + WGSL parity + the multi-pass painterly substrate)
+
+## 2. State
+
+**Name**: W7 — AURORA-WEBGPU (the multi-pass substrate — staged WebGPU-first with the tested WebGL2 fallback)
+**Opens after**: AW.W4 (painterly) + AW.W5 (color). The full-quality painterly half this wave stages — the Gaussian-smoothed multi-tap structure tensor and the anisotropic Kuwahara finish — is the multi-pass form of the AW.W4 single-pass keystone; the WGSL color twin must match the AW.W5 in-shader OKLCh contract to 1e-6. W7 is the HINGE wave that relaxes the single-pass constraint.
+**Agents**: 3 serial — AW.W7.1 (the backend-agnostic substrate lift + `createGPUCanvas` + `resolveRenderMode` probe), AW.W7.2 (the WGSL parity port + the WGSL color/noise twin gated by a CPU-equivalence test), AW.W7.3 (the multi-pass painterly passes — the smoothed tensor + the anisotropic Kuwahara). Serial: .1 lands the substrate seam, .2 ports the fragment pipeline to WGSL on it, .3 adds the multi-pass on the WGSL path.
+**Hard gate**: two born-RED gates green — `proof:aurora-backend-fallback` (force the WebGL2 path; assert it renders the identical visual contract — the existing single-pass aurora is the declared zero-regression fallback) + `proof:aurora-wgsl-equivalence` (the WGSL color/noise chunk matches its GLSL twin to 1e-6 — the AV.W1 divergence-bug-class pre-empt). Every substrate contract (offscreen-park, PRM freeze, `DockBackgroundToggle` pause) extends to the compute dispatch — `proof:offscreen-pause` GREEN with the WebGPU path. `typecheck` + `build` + the existing gate matrix stay green; `profile:budget` accounts for the grown `/aurora` chunk.
+**Status**: planned
+
+**Type:** IMPL (SUBSTRATE — the user-mandated "modern WebGPU rendering"). Not publish-blocking at the consumer surface (the WebGL2 fallback is the universal path; WebGPU is the capability-gated enhancement) — but it grows the `/aurora` chunk, so the published subpath budget re-baselines.
+**Scope source:** `docs/tranches/AW/aurora/PATH-FORWARD.md` §4 (the WebGPU evaluation — the verdict, the Baseline dates, the migration shape, the decisions) + §6 (the perf budget — the multi-pass infra), `docs/tranches/AW/waves/aurora-wave-seeds.md` W8 (the WebGPU path), and the SOTA digest (`docs/tranches/AW/audit/research/aurora-digest.md` Lanes 1/2/4/5/6/9 — the WGSL feasibility, the hand-WGSL-over-TSL decision, the compute/storage-buffer multi-pass reach).
+
+**Precepts in force.** No legacy / no back-compat — the WGSL path is the new substrate, the WebGL2 fragment shader is the DECLARED fallback (not a parallel-maintained dead arm — the single GLSL pipeline stays the fallback, the WGSL is its capability-gated twin). Gestalt: lift the backend-AGNOSTIC lifecycle out of `src/composables/glass/webgl/useWebGLCanvas.ts` (the one backend-specific line is `getContext("webgl2")` at `:267`; the suspend set, offscreen-park, PRM monitor, resize, dispose are all API-shaped) into a shared core, and add a `createGPUCanvas` sibling returning the same `WebGLCanvasFrame`-shaped hooks over a `GPUDevice` — rather than forking a parallel WebGPU runtime. DRY: single-source the GPU math BEFORE the second shader copy ships — make `procedural-color.glsl.ts` emit (or twin) a WGSL chunk gated by a CPU-equivalence test, mirroring AV.W2's OETF convergence (pre-empts the AV.W1 divergence-bug class). KISS: a FRAGMENT path (not compute) for the base field (faster than compute, dodges Safari's compute-shader limitations); compute is reserved for the structure-tensor pass + an optional per-stroke buffer. Hand-written WGSL — NO Three.js/TSL (preserves the zero-dep, peer-disciplined posture; DESIGN.md §2 invariant 8 — the no-multi-pass / zero-dep rule). The WebGL2 single-pass aurora (AW.W4's approximation) stays the universal floor; WebGPU stages only the heavy painterly half. Every substrate contract (offscreen-park `proof:offscreen-pause`, the live PRM freeze, the `DockBackgroundToggle` pause) MUST reach the compute/multi-pass dispatch — a parked rAF skips compute too. The wispy-sky default renders identically on both paths.
+
+## 2a. Goal criterion
+
+This wave succeeds if the aurora renders on a WebGPU path when the engine supports it (`navigator.gpu.requestAdapter()` resolves) and falls back to the tested WebGL2 single-pass fragment shader (then the CSS placeholder floor) when it does not — and the WebGPU path unlocks the multi-pass painterly half (the Gaussian-smoothed multi-tap structure tensor at full quality + the anisotropic Kuwahara finish) the single-pass WebGL2 fragment shader fundamentally cannot express. The reader's test: forcing the WebGL2 path renders the identical visual contract (the existing single-pass aurora — zero regression); the WGSL color/noise chunk matches its GLSL twin to 1e-6 (no divergence-bug class); the WebGPU path runs the smoothed tensor + Kuwahara that AW.W4 staged as single-pass approximations; every substrate contract (offscreen-park, PRM freeze, `DockBackgroundToggle` pause) reaches the compute dispatch — a parked rAF attaches zero compute frames. The migration is low-risk because the substrate already isolates the backend (one `getContext` line). WebGL2 stays the universal fallback; WebGPU is the capability-gated enhancement, NOT a hard requirement.
+
+## 3. Scope
+
+1. **The backend-agnostic substrate lift (AW.W7.1).** Lift the backend-AGNOSTIC lifecycle out of `src/composables/glass/webgl/useWebGLCanvas.ts` (the one backend-specific line is `getContext("webgl2")` at `:267`; the suspend set, offscreen-park, PRM monitor, resize, dispose, the `setup(gl) → {frame, shouldContinue, resize, time, teardown}` hook seam are all API-shaped) into a shared core. Add a `createGPUCanvas` sibling returning the same `WebGLCanvasFrame`-shaped hooks over a `GPUDevice`.
+2. **The render-mode probe (AW.W7.1).** Extend `resolveRenderMode` (`renderMode.ts:31`) to `webgpu | webgl | css`, probing `navigator.gpu.requestAdapter()` at mount; WebGL2 the fallback, CSS the placeholder floor.
+3. **The WGSL color/noise twin gated by a CPU-equivalence test (AW.W7.2).** Before any second shader copy ships, make `procedural-color.glsl.ts` emit (or twin) a WGSL chunk (the OETF + the Ottosson OKLCh matrices + FBM_ROT) gated by a CPU-equivalence test (mirroring AV.W2's OETF convergence). This is the single-source-the-GPU-math-first discipline — pre-empts the AV.W1 divergence-bug class.
+4. **The WGSL fragment pipeline port (AW.W7.2).** Port the fragment pipeline to WGSL (a fragment path, not compute, for the base field — faster, dodges Safari compute limits). GLSL→WGSL is largely mechanical (`fwidth`→`dpdx`/`dpdy`, uniform arrays→a std140 storage struct → lifts the `MAX_NUCLEI 6`/`MAX_STOPS 8` caps, `gl.uniform*`→`writeBuffer`). The existing `glassShader.wgsl` substrate confirms the WGSL feasibility.
+5. **The multi-pass painterly passes (AW.W7.3).** Add the multi-pass structure-tensor pass (the full-quality Gaussian-smoothed multi-tap form of AW.W4's single-pass keystone), the anisotropic Kuwahara finish (8-sector elliptical kernel, polynomial weights, squeezed along the ETF tensor — the canonical "make a gradient read as oil paint" operator, the AW.W4 oil-pastel finish), and an optional per-stroke storage buffer. Each WebGPU-gated, no-op on WebGL2.
+6. **The substrate contracts extend to the compute dispatch (AW.W7.3).** The offscreen-park (`proof:offscreen-pause`), the live PRM freeze, and the `DockBackgroundToggle` pause MUST reach the compute/multi-pass dispatch — a parked rAF skips compute too. The PRM freeze paints ONE static frame on the WebGPU path as on WebGL2.
+7. **The two born-RED gates** — `proof:aurora-backend-fallback` + `proof:aurora-wgsl-equivalence` (§6).
+8. **DESIGN.md §substrate update + the `/aurora` budget re-baseline** — document the WebGPU-first-with-WebGL2-fallback verdict, the Baseline dates (the load-bearing facts), the hand-WGSL-over-TSL decision, the fragment-not-compute-for-base-field decision, and the grown `/aurora` chunk size against the published subpath budget (`profile:budget`).
+
+## 3a. Triumvirate Dispatch
+
+A triumvirate (research + plan augment + redress) is mandatory — the orchestrator may NOT redispatch the failing unit alone — when:
+
+- **The WGSL parity port diverges from the GLSL fallback visually.** If the WebGPU path renders visibly DIFFERENT from the forced WebGL2 path (`proof:aurora-backend-fallback` is about the WebGL2 path's zero-regression, but a divergent WebGPU path that does not MATCH the fallback's authored look is a parity defect — the std140 struct layout, a WGSL builtin difference, or a precision difference), the redress is the per-construct WGSL transcription audit, not a local shader tweak — this is the AV.W1 divergence-bug class at the backend boundary. Halt and triumvirate; the WGSL twin must match the GLSL reference.
+- **The substrate lift breaks an existing WebGL2 contract.** The lift extracts the lifecycle from `src/composables/glass/webgl/useWebGLCanvas.ts` (the substrate the goo-blob + watercolor-dot + dock-blob ALSO consume). If the lift reds `proof:webgl-substrate-single` or `proof:offscreen-pause` for ANY existing consumer (the offscreen-park / PRM freeze regresses on the blob), the redress is a substrate-contract decision about the shared core's seam — NOT a local aurora edit. Halt and triumvirate; the lift must preserve every existing consumer's contract.
+- **The compute dispatch escapes the park machinery.** If a parked rAF (offscreen / PRM-reduce / `DockBackgroundToggle`-paused) STILL attaches a compute frame (the compute pass is on a separate dispatch path that the `shouldContinue()`/`isRunning()` gate does not reach), that is an a11y/perf contract VIOLATION (WCAG 2.2.2 / 2.3.3 + the offscreen-park) — the redress is wiring the compute dispatch onto the SAME park gate, an architectural decision about the dispatch seam, not a local guard. Halt and triumvirate.
+- **WebGPU is not yet deployable for the target reach.** If the Baseline-date facts shift (the wave plans against WebGPU shipping in all four engines as of 2025-11-25, production-deployable-2026-but-not-yet-Baseline-widely-available, ~95%/5% reach with the fallback) and a re-check finds the reach insufficient for a hard requirement, the verdict STAYS "stage it" (WebGPU-gated, WebGL2 universal fallback) — but if the wave is pressured to make WebGPU the DEFAULT path, that is a deployment-posture decision requiring the triumvirate. The default stays the capability probe.
+- **Any diagnostic loop reaches its third iteration** on the 1e-6 WGSL-vs-GLSL color-chunk equivalence (the WGSL twin keeps drifting) — halt; the drift is a transcription bug in the WGSL emit, not a tolerance tweak.
+
+File-bound expansion BEYOND the §4 table that touches the OTHER substrate consumers' shaders (`metaball.frag.ts`, the watercolor-dot/dock-blob shaders) invalidates the aurora-scoped lift and triggers the triumvirate — those consumers inherit the lifted shared core read-only, their shaders are NOT ported in this wave.
+
+## 4. File Bounds
+
+| File | Access |
+|---|---|
+| `src/composables/glass/webgl/useWebGLCanvas.ts` | modify-carve (AW.W7.1 — extract the backend-agnostic lifecycle into a shared core; the `getContext("webgl2")` stays the WebGL2 setup) |
+| `src/composables/glass/createGPUCanvas.ts` | create (AW.W7.1 — the `GPUDevice` sibling returning the same hook shape) |
+| `src/components/custom/aurora/constants/renderMode.ts` | modify (AW.W7.1 — `webgpu \| webgl \| css` + the `navigator.gpu` probe) |
+| `src/components/custom/aurora/composables/runtime.ts` | modify (AW.W7.1 — route to the GPU canvas when the probe resolves WebGPU) |
+| `src/composables/glass/webgl/shaders/procedural-color.glsl.ts` | modify (AW.W7.2 — emit/twin the WGSL chunk; the GLSL stays the reference — this is a SHARED-CHUNK edit, owned here under the single-source-GPU-math discipline) |
+| `src/components/custom/aurora/constants/shaders/aurora.wgsl.ts` | create (AW.W7.2 — the WGSL fragment pipeline twin) |
+| `src/components/custom/aurora/constants/shaders/painterly.wgsl.ts` | create (AW.W7.3 — the multi-pass smoothed-tensor + anisotropic Kuwahara passes) |
+| `src/components/custom/aurora/composables/uniformBridge.ts` | modify (AW.W7.2 — the std140 storage-struct write path for the WGSL uniforms) |
+| `src/components/custom/aurora/DESIGN.md` | modify (the §substrate WebGPU verdict + Baseline dates + decisions) |
+| `src/composables/glass/__tests__/backend-equivalence.test.ts` | create (AW.W7.2 — the WGSL-vs-GLSL color-chunk 1e-6 equivalence) |
+| `scripts/proof-aurora-backend-fallback.mjs` | create (AW.W7.1) |
+| `scripts/proof-aurora-wgsl-equivalence.mjs` | create (AW.W7.2) |
+| `scripts/gates.mjs` | modify (register the two gates) |
+| `package.json` | modify (scripts only — the two gate entries) |
+| `docs/tranches/F/audit/W5-aurora-profile.json` | regenerate (the WebGPU profile + the WebGL2 fallback) |
+| `docs/tranches/AW/PROGRESS.md` | modify (record the green runs + the chunk-budget re-baseline) |
+| the `/aurora` subpath budget entry (the `profile:budget` baseline for the grown chunk) | regenerate |
+
+Do NOT touch: `metaball.frag.ts` + the goo-blob shaders (the blob inherits the lifted shared core READ-only; its shader is NOT ported in this wave — a parallel blob WebGPU port is a separate fold) · the watercolor-dot / dock-blob shaders (same — read-only inheritors of the lift) · `tonemap.glsl.ts` (the locked pipeline — the WGSL twin MUST match it) · `color.ts` (the CPU palette path — unchanged) · `flow.glsl.ts` / `brush.glsl.ts` / `mediums.glsl.ts` (the AW.W4 painterly GLSL — the WGSL twin ports them, it does not re-edit the GLSL) · the wispy-sky `DEFAULT_AURORA_CONFIG`. **The blob/watercolor/dock-blob WebGPU ports are NOT this wave — they inherit the lifted substrate core read-only.**
+
+## 4a. Disjointness
+
+Three serial agent units in ONE substrate/shader worktree (the units share `src/composables/glass/webgl/useWebGLCanvas.ts`, `runtime.ts`, `uniformBridge.ts`, `procedural-color.glsl.ts` across the lift→port→multi-pass sequence — NOT file-disjoint):
+
+- **AW.W7.1** (substrate lift + `createGPUCanvas` + probe) lands FIRST. Owns the `src/composables/glass/webgl/useWebGLCanvas.ts` carve, `createGPUCanvas.ts`, `renderMode.ts`, `runtime.ts` routing, the `backend-fallback` gate.
+- **AW.W7.2** (WGSL parity + the color twin) lands SECOND. Owns `procedural-color.glsl.ts` (the WGSL emit), `aurora.wgsl.ts`, `uniformBridge.ts` (the std140 write path), `backend-equivalence.test.ts`, the `wgsl-equivalence` gate. It consumes .1's `createGPUCanvas` seam.
+- **AW.W7.3** (the multi-pass painterly passes) lands THIRD. Owns `painterly.wgsl.ts`, the compute-dispatch park-gate wiring. It consumes .2's WGSL pipeline.
+
+`scripts/gates.mjs` + `package.json` are append-only per gate (.1 registers `backend-fallback`, .2 registers `wgsl-equivalence`) — serialized, no parallel race. `runtime.ts`/`uniformBridge.ts` are touched across units (.1 routing, .2 std140) — serial on the same worktree. Net: ONE serial substrate/shader lane (.1 → .2 → .3), then the bake/docs close. No parallel writers.
+
+## 4b. Worktree Plan
+
+Single serial substrate/shader lane — one worktree, three sequential agent units.
+
+| Agent unit lane | Sibling worktree absolute path | notes |
+|---|---|---|
+| Lane A — WebGPU substrate+shader (AW.W7.1 → .2 → .3, serial) | `/Users/mkbabb/Programming/glass-ui-aw-w7` | serial within; owns the substrate carve + `createGPUCanvas` + the WGSL twins + the multi-pass + the two gates + the equivalence test |
+| Lane B — bake/docs (close) | `/Users/mkbabb/Programming/glass-ui-aw-w7-b` | opens after Lane A commits; owns `DESIGN.md`, `W5-aurora-profile.json`, the `/aurora` budget re-baseline, `PROGRESS.md`; branches FROM Lane A's committed substrate so it profiles the WebGPU+fallback paths |
+
+No `CARGO_TARGET_DIR` (Node/Vite repo). The orchestrator runs `git worktree add` for the two siblings and owns the close integration.
+
+## 5. Agent Units
+
+### AW.W7.1 The backend-agnostic substrate lift + createGPUCanvas + the render-mode probe
+
+- **Goal**: the WebGL/WebGPU lifecycle is a single backend-agnostic core with a `createGPUCanvas` sibling returning the same hook shape over a `GPUDevice`, and `resolveRenderMode` probes `navigator.gpu` at mount with WebGL2 the tested fallback and CSS the floor — all without regressing any existing substrate consumer.
+- **Mechanism**:
+  - **`src/composables/glass/webgl/useWebGLCanvas.ts:267` — carve the agnostic core.** Extract the suspend set, offscreen-park, PRM monitor, resize, dispose, and the `setup → {frame, shouldContinue, resize, time, teardown}` hook seam into a shared core (a `useCanvasLifecycle`-style module); the `getContext("webgl2")` stays the WebGL2-specific setup that the core invokes.
+  - **`createGPUCanvas.ts` — the sibling.** Return the same `WebGLCanvasFrame`-shaped hooks over a `GPUDevice` (the `requestAdapter`/`requestDevice` setup replacing `getContext`; the same lifecycle core).
+  - **`renderMode.ts:31` — the probe.** Extend `resolveRenderMode` to `webgpu | webgl | css`: probe `navigator.gpu.requestAdapter()` (async, mount-time); WebGL2 the fallback; the CSS placeholder the floor.
+  - **`runtime.ts` — route.** When the probe resolves WebGPU, route the aurora setup to `createGPUCanvas`; else the existing WebGL2 path.
+- **Files**: `src/composables/glass/webgl/useWebGLCanvas.ts` (modify-carve), `createGPUCanvas.ts` (create), `renderMode.ts` (modify), `runtime.ts` (modify), `scripts/proof-aurora-backend-fallback.mjs` (create), `gates.mjs` + `package.json` (register).
+- **Sub-gate**: `proof:aurora-backend-fallback` GREEN + bite-verified — force the WebGL2 path (mock `navigator.gpu` absent) and assert the aurora renders the identical visual contract (the existing single-pass aurora is the declared zero-regression fallback — the deterministic `renderAt(t)` bake matches the pre-lift bake). `proof:webgl-substrate-single` + `proof:offscreen-pause` STAY GREEN (the lift preserves every existing consumer's contract). Bite: break the WebGL2 fallback route (the probe always returns WebGPU even when absent) → the fallback bake REDs. `build` green.
+
+### AW.W7.2 The WGSL parity port + the WGSL color/noise twin
+
+- **Goal**: the aurora fragment pipeline runs on a hand-written WGSL twin on the WebGPU path, with the shared color/noise math single-sourced as a WGSL chunk gated by a 1e-6 CPU-equivalence test — pre-empting the divergence-bug class — and the std140 storage struct lifting the nuclei/stop caps.
+- **Mechanism**:
+  - **`procedural-color.glsl.ts` — emit/twin the WGSL chunk.** Make the shared chunk emit (or carry a twin of) the OETF + the Ottosson OKLCh matrices + FBM_ROT in WGSL, gated by a CPU-equivalence test (mirroring AV.W2's OETF convergence). The GLSL stays the reference; the WGSL must match to 1e-6. This is the single-source-GPU-math-first discipline.
+  - **`aurora.wgsl.ts` — the fragment pipeline twin.** Port the FRAGMENT pipeline to WGSL (not compute — the base field is a fragment path, faster, dodging Safari compute limits). The transcription is mechanical: `fwidth`→`dpdx`/`dpdy`, uniform arrays→a std140 storage struct (lifts the `MAX_NUCLEI 6`/`MAX_STOPS 8` caps), `gl.uniform*`→`writeBuffer`.
+  - **`uniformBridge.ts` — the std140 write path.** The WGSL uniforms write through a `GPUBuffer` std140 struct (the WebGPU branch); the WebGL2 path keeps its `gl.uniform*` calls.
+- **Files**: `procedural-color.glsl.ts` (modify — the WGSL emit), `aurora.wgsl.ts` (create), `uniformBridge.ts` (modify), `backend-equivalence.test.ts` (create), `scripts/proof-aurora-wgsl-equivalence.mjs` (create), `gates.mjs` + `package.json` (register).
+- **Sub-gate**: `proof:aurora-wgsl-equivalence` GREEN + bite-verified — assert the WGSL color/noise chunk (OETF + OKLCh matrices + FBM_ROT) matches its GLSL twin to 1e-6 (a TS port of both, compared over a sample set — the AV.W1 divergence-bug-class pre-empt). Bite: perturb a WGSL matrix constant → the 1e-6 equivalence REDs. `backend-equivalence.test.ts` green. `build` green (the WGSL compiles in the harness).
+
+### AW.W7.3 The multi-pass painterly passes + the compute-dispatch park gate
+
+- **Goal**: the WebGPU path runs the full-quality multi-pass painterly half the single-pass WebGL2 fragment shader cannot express — the Gaussian-smoothed multi-tap structure tensor + the anisotropic Kuwahara finish — with every substrate contract (offscreen-park, PRM freeze, `DockBackgroundToggle` pause) reaching the compute dispatch.
+- **Mechanism**:
+  - **`painterly.wgsl.ts` — the multi-pass.** The full-quality structure-tensor pass (the Gaussian-smoothed multi-tap form of AW.W4's single-pass keystone — a compute or multi-render pass that smooths the tensor over a real neighborhood); the anisotropic Kuwahara finish (8-sector elliptical kernel, polynomial weights η≈0.1/λ≈0.5, squeezed along the ETF tensor — the AW.W4 oil-pastel finishing operator, no-op on WebGL2); an optional per-stroke storage buffer.
+  - **The compute-dispatch park gate.** Wire the compute/multi-pass dispatch onto the SAME `shouldContinue()`/`isRunning()` park machinery the WebGL2 rAF uses — a parked rAF (offscreen / PRM-reduce / `DockBackgroundToggle`-paused) skips the compute dispatch too. The PRM freeze paints ONE static frame on the WebGPU path.
+- **Files**: `painterly.wgsl.ts` (create), the compute-dispatch park-gate wiring (in `createGPUCanvas.ts`/`runtime.ts`, serial after .1/.2).
+- **Sub-gate**: no new gate — `proof:offscreen-pause` extended to the WebGPU compute dispatch GREEN (a parked rAF attaches zero compute frames). The multi-pass smoothed-tensor + Kuwahara render on the WebGPU path (the AW.W4 single-pass approximation is the WebGL2 floor; the full quality is here). `profile:budget` accounts for the grown `/aurora` chunk. `build` green.
+
+## 6. Hard Gate
+
+W7 closes when every condition below is evidence-backed:
+
+1. **AW.W7.1** — the backend-agnostic lifecycle is carved out of `src/composables/glass/webgl/useWebGLCanvas.ts`; `createGPUCanvas` returns the same hook shape over a `GPUDevice`; `resolveRenderMode` probes `navigator.gpu` (webgpu | webgl | css). `proof:aurora-backend-fallback` GREEN + bite-verified (the forced WebGL2 path renders the identical visual contract; breaking the fallback route → RED). `proof:webgl-substrate-single` + `proof:offscreen-pause` STAY GREEN (no existing consumer regressed).
+2. **AW.W7.2** — `procedural-color.glsl.ts` emits/twins a WGSL color/noise chunk; `aurora.wgsl.ts` is the WGSL fragment pipeline twin (std140 storage struct lifting the nuclei/stop caps). `proof:aurora-wgsl-equivalence` GREEN + bite-verified (the WGSL chunk matches the GLSL twin to 1e-6; perturbing a WGSL constant → RED).
+3. **AW.W7.3** — `painterly.wgsl.ts` runs the multi-pass smoothed-tensor + the anisotropic Kuwahara (the AW.W4 full-quality painterly half, no-op on WebGL2). The compute dispatch is on the park gate — `proof:offscreen-pause` extended to WebGPU GREEN (a parked rAF skips compute).
+4. **WebGL2 stays the universal fallback** — the single-pass WebGL2 aurora is the declared zero-regression fallback; CSS the placeholder floor. The wispy-sky default renders identically on both paths.
+5. **Hand-WGSL, no Three.js/TSL** — no `three`/TSL dependency added (the zero-dep posture; DESIGN.md §2 invariant 8); `package.json` deps unchanged.
+6. **The other substrate consumers are NOT ported** — `metaball.frag.ts` + the watercolor-dot/dock-blob shaders are byte-unchanged (they inherit the lifted core read-only); a blob WebGPU port is a separate fold.
+7. **The `/aurora` chunk budget is re-baselined** — `profile:budget` accounts for the grown WGSL+compute chunk against the published subpath budget; the new baseline is committed.
+8. **No regression.** The existing gate matrix stays GREEN: `proof:aurora-space-gamma`, `proof:single-color-core`, `proof:blob-color-equivalence`, `proof:webgl-substrate-single`, `proof:offscreen-pause`, `npm run typecheck`, `npm run build`, the aurora + blob unit suites. `PROGRESS.md` records green run ids + the chunk-budget re-baseline.
+
+**Born-RED gate registration (manifest==ci invariant):**
+
+| gate | script | tags | bite-check |
+|---|---|---|---|
+| `proof:aurora-backend-fallback` | `scripts/proof-aurora-backend-fallback.mjs` | `["local","ci"]` | break the WebGL2 fallback route (probe always returns WebGPU even when absent) → the fallback bake REDs |
+| `proof:aurora-wgsl-equivalence` | `scripts/proof-aurora-wgsl-equivalence.mjs` | `["local","ci"]` | perturb a WGSL matrix/OETF constant → the 1e-6 GLSL-twin equivalence REDs |
+
+Each follows the house gate template (`scripts/proof-aurora-space-gamma.mjs`): a pure read-and-detect / vitest-driven equivalence over the shader + substrate text, a byte-stable JSON artefact via `scripts/gate-output.mjs`, a human summary, `process.exit(1)` on violation. Register in `package.json` + `gates.mjs` ONLY after each unit lands (`gates:verify-ci` enforces manifest==ci).
+
+## 7. Format And Lint Cadence
+
+- `npm run typecheck` (`vue-tsc --noEmit`) — after each unit and at close.
+- `npm run build` — after .1 (the substrate lift compiles), .2 (the WGSL twins compile), .3 (the multi-pass compiles) and at close.
+- `proof:aurora-backend-fallback` + `proof:aurora-wgsl-equivalence` + `proof:offscreen-pause` (extended to WebGPU) + `proof:webgl-substrate-single` + the no-regression existing-gate matrix — after each unit and at close.
+- `vitest run src/composables/glass/__tests__/backend-equivalence.test.ts` — after .2.
+- `npm run profile:budget` + `npm run profile:aurora` — at close (the grown `/aurora` chunk + the WebGPU/WebGL2 profiles).
+- `git diff --check` on `DESIGN.md` + `PROGRESS.md` at close.
+
+No formatter is intentionally skipped; the two gates + the 1e-6 WGSL equivalence + the offscreen-park-on-compute are the binding evidence; the `profile:budget` re-baseline is the binding evidence for the chunk-size envelope.
+
+## 8. Verification Artefacts
+
+- The two `proof:aurora-*` JSON gate artefacts (byte-stable) — born-RED (pre-fold) AND green (post-fold) for each.
+- The `backend-equivalence.test.ts` run (the WGSL-vs-GLSL color/noise chunk 1e-6 equivalence) green.
+- The `proof:offscreen-pause` artefact extended to the WebGPU compute dispatch (a parked rAF attaches zero compute frames).
+- The re-baked `docs/tranches/F/audit/W5-aurora-profile.json` (the WebGPU + the WebGL2 fallback profiles) + the `/aurora` subpath budget re-baseline.
+- DESIGN.md §substrate (the WebGPU-first-with-WebGL2-fallback verdict, the Baseline dates, the hand-WGSL-over-TSL decision, the fragment-not-compute-for-base-field decision).
+- Browser-verify notes (the WebGPU path renders the smoothed-tensor + Kuwahara; the forced WebGL2 path matches; PRM paints one static frame on both) + the green CI run ids + integration commit hashes — `docs/tranches/AW/PROGRESS.md`.
+
+## 9. Commit Plan
+
+- **Lane A (WebGPU substrate+shader) implementation commits** (serial):
+  - `refactor(tranche-AW): W7 — carve the backend-agnostic canvas lifecycle + createGPUCanvas + navigator.gpu probe + born-RED proof:aurora-backend-fallback` (body: the one getContext line, the shared core, the WebGL2 zero-regression fallback, the existing-consumer-contract preservation).
+  - `feat(tranche-AW): W7 — aurora WGSL fragment pipeline twin + single-sourced WGSL color/noise chunk + born-RED proof:aurora-wgsl-equivalence` (body: the std140 cap-lift, the mechanical transcription, the AV.W1-divergence-class pre-empt, the hand-WGSL-over-TSL decision).
+  - `feat(tranche-AW): W7 — aurora multi-pass smoothed-tensor + anisotropic Kuwahara (WebGPU branch) + compute-dispatch park gate` (body: the AW.W4 full-quality painterly half, the offscreen-park-on-compute, the no-op-on-WebGL2).
+- **Lane B (bake/docs) commits**:
+  - `docs(tranche-AW): W7 — DESIGN.md §substrate WebGPU verdict + Baseline dates + hand-WGSL decision`.
+  - `chore(tranche-AW): W7 — re-baseline /aurora subpath budget (WGSL+compute chunk) + re-bake WebGPU/WebGL2 profiles` (body: the grown chunk size + the budget re-baseline).
+- **Orchestrator integration + docs commit** — `docs(tranche-AW): W7 close — PROGRESS green run ids + the backend-fallback + WGSL-equivalence + offscreen-park-on-compute results` (body: status/close).
+
+## 10. Dependencies
+
+- **Depends on**: **AW.W4** (painterly) — the multi-pass smoothed-tensor + anisotropic Kuwahara are the full-quality forms of AW.W4's single-pass keystone + oil-pastel finish; W4 ships the single-pass approximation, W7 stages the full quality. **AW.W5** (color) — the WGSL color twin must match the AW.W5 in-shader OKLCh contract to 1e-6 (the GLSL OKLCh path is the reference). The AV.W2 shared-color chunk (`procedural-color.glsl.ts`) + the AV.W1 OETF discipline are the convergence pattern this wave mirrors for the WGSL twin.
+- **Blocks**: **AW.W8** (interactivity) — the stateful pointer-wake (the ping-pong velocity texture, the delta-tracked Gaussian splat that self-advects) is the WebGPU/feedback-pass form W8 stages on this wave's WebGPU branch (the cheap cursor-as-light + velocity axes ship on WebGL2 in W8; the stateful wake is the WebGPU half).
+
+**Deferred against this wave (with trigger):** the blob/watercolor-dot/dock-blob WebGPU ports. DEFER — they inherit the lifted backend-agnostic substrate core read-only; a per-surface WGSL port is a separate fold each. Trigger: a profiled need for the blob's multi-pass (the blob's own painterly tranche) OR a consumer requiring WebGPU on the blob surface. The OffscreenCanvas + Worker path (the RAF main-thread-contention KEEP-BOOK item, `docs/tranches/AW/audit/avg-deep-audit-digest.md` §AW KEEP-BOOK) also stays deferred — it needs a stable headless frame-timing (LoAF) runner CI lacks.
+
+## 11. Archaeology
+
+Not a re-attempt of a prior failed wave. The WebGPU gap is named in PATH-FORWARD §0 gap 4 + §4: aurora is WebGL2-only (`runtime.ts`); the only `.wgsl` in the tree is `glassShader.wgsl` (a different surface); DESIGN.md §2 invariant 8 ("No multi-pass pipelines") bans multi-pass — which is exactly the constraint that blocks structure-tensor flow, anisotropic Kuwahara, and per-stroke compute (the README already anticipates the WebGPU branch relaxing this — the "One draw, one shader" rule at `README.md:336-338` cites `DESIGN.md §2` invariant 8 and books the WebGPU relaxation; the WebGPU section is `README.md:359`). The verdict is STAGE IT, WebGPU-first with the WebGL2 fragment shader as the tested fallback — the single architectural reason to adopt WebGPU is that the painterly headline is multi-pass, which the single-pass WebGL2 fragment shader fundamentally cannot do (not a perf chase). The Baseline-date facts are load-bearing: WebGPU ships by default in all four major browser engines as of 25 November 2025 (Safari 26 on macOS Tahoe / iOS 26 was the last engine; Chrome/Edge 113+ since May 2023; Firefox 141 Windows / 145+ Apple-Silicon; web.dev, 2025-11-25); it is production-deployable in 2026 but not yet "Baseline widely available" (the ~30-month all-engines mark has not passed; reach ~95% WebGPU / 5% WebGL2 with the fallback; web.dev; WebGPU.com critical-mass; Progosling 2026-01 adoption checklist). The migration is low-risk because the substrate already isolates the backend (`src/composables/glass/webgl/useWebGLCanvas.ts:267` is the ONE `getContext("webgl2")` line; the lifecycle is API-shaped). The decisions: hand-written WGSL not Three.js/TSL (TSL pulls in Three.js, a heavy dependency the zero-dep posture does not carry; the GLSL→WGSL transcription is largely mechanical); single-source the GPU math before the second copy ships (the WGSL chunk gated by a CPU-equivalence test, mirroring AV.W2's OETF convergence — pre-empts the AV.W1 divergence-bug class); fragment path not compute for the base field (faster, dodges Safari's compute-shader limitations; compute reserved for the structure-tensor pass + the optional per-stroke buffer). All accessed 2026-06-06. The AV.W1 OETF darkening bug — born of a divergence between two un-converged shader copies — is the precise class this wave's single-source-WGSL-math discipline pre-empts at the backend boundary.

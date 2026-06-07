@@ -1,0 +1,634 @@
+# Aurora — the procedural painterly gradient backdrop
+
+A WebGL2 procedural painterly-gradient surface. One full-screen fragment program
+paints a living, soft-edged color field — from atmospheric "colored gas" washes
+(the OpenAI / DALL-E / Sora hero register, Frankenthaler soak-stain) through to visible
+oil-impasto, pastel, watercolor, and crayon brushwork. No images, no video, no external
+libraries: every frame is generated in the shader from a handful of authored color zones
+and a noise field, over glass-ui's warm-cream-glass identity.
+
+Aurora is *not a mesh gradient*. The Stripe / OpenAI / Linear "ethereal glow" backdrops
+are layered noise + a UV warp over a few color points; aurora's multi-nuclei softmax
+field + Quilez double domain-warp + ACES tonemap + OKLCh-authored palette already exceeds
+that substrate on richness, and the painterly mediums take it somewhere no mesh-gradient
+tool ships — visible, hand-painted brushwork. It is the WebGL sibling of the
+[`GooBlob`](../goo-blob/): both compose the shared `useWebGLCanvas` substrate and resolve
+color through the shared `procedural-color.glsl` chunk; the blob is the bounded metaball
+creature, aurora is the full-bleed field.
+
+```ts
+import { Aurora } from "@mkbabb/glass-ui/aurora";
+```
+
+> **Research-backed.** This README documents aurora as it ships AND as the AW perfection
+> plan (`docs/tranches/AW/aurora/PATH-FORWARD.md`) targets it. Sections marked
+> **(planned — AW)** describe in-flight work and the SOTA technique behind it, cited with
+> access dates (2026-06-06). `DESIGN.md` is the authoritative architecture spec (the
+> invariants, the cursor model, the load-bearing implementation notes); this README is the
+> consumer-facing guide. The five aurora waves are **W4 — painterly** (the structure-tensor
+> / ETF keystone + real height-field impasto + the van-Gogh atomic-stroke medium + genuine
+> oil-pastel deposition), **W5 — color** (in-shader OKLCh interpolation + hue-path + the
+> `deriveAurora` / `deriveScene` front door), **W6 — options** (the ≤7-atom `resolveAtoms`
+> door), **W7 — WebGPU** (`createGPUCanvas` + the WGSL parity twin + the multi-pass
+> smoothed-tensor + anisotropic Kuwahara substrate), and **W8 — interactive** (cursor-as-
+> light + velocity-reactive flow + the stateful pointer wake) — specced under
+> `docs/tranches/AW/waves/AW.W4-aurora-painterly.md` … `AW.W8-aurora-interactive.md`.
+
+---
+
+## What it is
+
+Aurora is a **single-pass WebGL2 fragment shader** assembled from cohesive GLSL partials
+(`constants/shaders/`), not a multi-FBO compositor and not an SVG/CSS gradient. Every
+fragment evaluates the whole field directly on the GPU. The pipeline, per frame:
+
+1. **Composition** — a Quilez double-fBm *domain warp* of the UV (`aurora.frag.ts:206`),
+   then a *multi-nuclei softmax field* (2–6 anisotropic-Gaussian color attractors, each
+   with elongation + angle) that selects a palette position per pixel, with internal
+   lightness/chroma mottling (`composition.glsl.ts:20`). Palette position never comes from
+   a single focal point, a pure fBm color-id, or a spatial-distance axis — each produces a
+   visible artifact (`DESIGN.md §3`).
+2. **Medium** — an optional painterly overlay: `smooth` (no brush), `pastel`, `watercolor`,
+   or `oil` (with the `oil` / `knife` / `chunky` stroke sub-modes), plus `crayon` as a peer
+   medium (`mediums.glsl.ts`). Medium is orthogonal to composition — the same nuclei/warp
+   field underlies every medium.
+3. **Post** — saturation trim, ACES tonemap, paper grain, the mandatory sRGB OETF, and a
+   1-LSB Interleaved-Gradient-Noise dither to break 8-bit banding
+   (`aurora.frag.ts:327-343`).
+
+The palette is authored in **OKLCh** (perceptually-uniform color) and baked CPU-side to
+linear sRGB; the shader tonemaps and composites in linear, then closes the seam with the
+OETF before output.
+
+It ships behind an **adaptive substrate**: capable devices get the animated WebGL field;
+low-power / reduced-motion / data-saver devices get a static CSS-gradient placeholder
+rendering the same palette (`resolveRenderMode`). The WebGL loop parks itself when
+offscreen, content-hidden, or tab-backgrounded, and freezes to one static frame under
+`prefers-reduced-motion: reduce` (the `useWebGLCanvas` substrate, gated by
+`proof:offscreen-pause`).
+
+---
+
+## Use cases
+
+- **Hero / landing backdrops** — full-bleed atmospheric drift behind a headline. The
+  `smooth` medium is the calm default.
+- **Content-over-aurora routes** — forms, dashboards, text-dense panels where the field
+  should recede. Use `:opacity-ceiling` (a per-route compositing clamp, e.g. `0.5`) so the
+  drift sits quietly behind page content without re-authoring the palette.
+- **Brand / mood surfaces** — derive a whole palette from one seed color (`deriveAurora`)
+  to match a product accent; the NCSU-red house accent seeds a complementary ramp cleanly.
+- **Painterly art pieces** — the oil / pastel / crayon mediums for an editorial,
+  hand-painted feel rather than a flat mesh gradient. Reach for these when the brushwork
+  *is* the point.
+- **AV background** — a larger continuously-running backdrop. When used this way it MUST
+  carry a `DockBackgroundToggle` (or equivalent) pause control per WCAG 2.2.2 (see
+  [Accessibility](#accessibility)).
+- **Thumbnails / static captures** — deterministic `renderAt(t)` bakes for preset galleries
+  (the demo studio bakes 11 preset thumbnails through one shared context).
+
+---
+
+## Quick start
+
+```vue
+<script setup lang="ts">
+import { Aurora, deriveAurora, DEFAULT_AURORA_CONFIG } from "@mkbabb/glass-ui/aurora";
+
+// Seed a whole palette from one color, then spread it over the default nuclei.
+const config = {
+    ...DEFAULT_AURORA_CONFIG,
+    palette: deriveAurora("#4f46e5", { harmony: "analogous", stopCount: 5 }),
+    medium: "smooth" as const,
+};
+</script>
+
+<template>
+    <Aurora :config="config" :opacity-ceiling="1.0" />
+</template>
+```
+
+`<Aurora>` is the Vue SFC wrapper. For imperative control (a canvas you own, capture
+bakes), use `createAurora(canvas, config, options?)` directly; `useAurora(ref, config)` is
+the composable that watches config deeply and pushes uniform updates.
+
+---
+
+## The mediums
+
+The `medium` axis spans the two stylistic poles — atmospheric and painterly — continuously.
+Medium is orthogonal to composition: the same nuclei/warp field underlies every medium.
+
+| `medium`     | Look | Notes |
+|--------------|------|-------|
+| `smooth`     | Blurred colored-gas / wet-on-wet flood. No visible brush. | The OpenAI/DALL-E hero pole; the wispy-sky default. |
+| `pastel`     | Anisotropic fBm stroke + fine paper tooth. | Soft directional chalk grain. |
+| `watercolor` | Wet-edge cauliflowers (luma-gradient mask) + granulation + wash banding. | Soak-stain / bokashi. |
+| `oil`        | Visible curved brushstrokes, impasto rim-light, broken color. | Routed by `strokeMode`. |
+
+Under `medium: "oil"`, `strokeMode` selects the brush behavior:
+
+| `strokeMode` | Look |
+|--------------|------|
+| `oil`    | Balanced modern-gestural bristle (the default). |
+| `knife`  | Palette-knife impasto: razor edges, flat, heavy catch-light. |
+| `chunky` | Thick gestural bristle brush. |
+| `crayon` | Wax-pigment tooth multiply (a PEER medium — no strokes; resolves to `uMedium==4`). |
+
+`crayon` is dispatched as a **peer medium**, not an oil sub-mode: it multiplies anisotropic
+tooth noise into the base color rather than painting curved strokes (`mediums.glsl.ts:75`).
+The runtime resolves a `medium:"oil"` + `strokeMode:"crayon"` config to the crayon peer
+automatically (`resolveMediumId`, `DESIGN.md §7`).
+
+### The painterly engine
+
+The oil medium is genuine stroke-based rendering — a curved swept-stroke SDF
+(`curvedStroke`, `brush.glsl.ts:72`) with a quadratic-bulge spine, bristle-ragged edges,
+end-cap blobs, internal streaking, and an impasto rim, placed by a best-of-9-neighbor cell
+search (`bestOil`, `brush.glsl.ts:188`) across four big→medium→small→fill layers with
+optional crosshatch (`strokeLayers: 2`). Per-stroke broken color jitters each stroke's
+pigment deterministically (`brokenColorJitter`, bounded to ≈±16° hue / ±14% value so it
+reads as broken paint, not noise — `DESIGN.md §7`).
+
+**(planned — AW.W4)** The painterly roadmap perfects this engine over four folds that all
+consume one keystone:
+
+- **The structure-tensor / edge-tangent-flow keystone.** Today strokes orient off the
+  hand-authored `flowField` (`flow.glsl.ts:6`). The keystone derives stroke direction from
+  the *color field's own gradient*: a Sobel-derivative `sampleBase` → the 2×2 structure
+  tensor `J=[[Gx·Gx,Gx·Gy],[Gx·Gy,Gy·Gy]]` → its minor eigenvector (the edge-tangent flow)
+  + a coherence scalar `A=(λ1−λ2)/(λ1+λ2)`. Strokes then hug the color zones the way real
+  Van Gogh contours curve around the moon — the single biggest "congruent to real Van Gogh"
+  lever. Selectable via `strokeOrient: "flow" | "tensor"`; a single-pass small-tap
+  approximation ships on WebGL2, the Gaussian-smoothed multi-tap form is the W7 WebGPU pass.
+  *(Kyprianidis & Kang CGF 2009; Kang/Lee/Chui ETF NPAR 2007; Heckel 2024.)*
+- **Real height-field impasto.** The faked fixed-RGB edge rim (`brush.glsl.ts:173-178`, a
+  phantom upper-left light) is retired for an accumulated per-pixel paint *height* across
+  the four stroke layers → a `dFdx`/`dFdy` surface normal → diffuse + Blinn specular from a
+  movable `uLightDir`, all in linear light before the ACES tonemap. Thick impasto catches a
+  raking light; the light direction becomes the interactive cursor-as-light axis (W8).
+  *(IMPaSTo, Baxter/Wendt/Lin NPAR 2004.)*
+- **The van-Gogh atomic-stroke medium.** A first-class `medium:"vangogh"` (retiring the
+  "oil + swirl preset" approximation): ETF-oriented strokes, length + layer density graded
+  by local luminance and coherence (long confident strokes in bright passages, short dabs
+  in the darks — the measured Starry-Night Kolmogorov/Batchelor turbulence cascade), OKLCh
+  per-stroke pigment jitter, real impasto. No subject matter — the "source image" is the
+  generated nuclei field, so strokes trace its iso-bands. *(Hidden Turbulence in The Starry
+  Night, Physics of Fluids 36 / arXiv:2310.03415, 2024; Hertzmann SIGGRAPH 1998.)*
+- **Genuine oil-pastel deposition.** `mediumCrayon` is reworked from a tooth-multiply into a
+  pigment-on-tooth deposition model: tooth-occlusion deposition (pigment on the paper-height
+  peaks, skipping valleys — light pressure shows paper, heavy fills it), a *scumble* broken-
+  upper-layer pass (coverage < 1 letting the lower color through), and a *waxy specular film*
+  whose sheen grows with layer count (burnish, distinct from oil's sharp glint). The demo
+  label becomes `oil-pastel`. *(Mont Marte oil-pastel-technique references.)*
+
+The **anisotropic Kuwahara finish** (the canonical "make a gradient read as oil paint"
+operator — an 8-sector elliptical kernel squeezed along the tensor) and the smoothed
+multi-tap tensor are multi-pass and ship on the W7 WebGPU branch, no-op on WebGL2. Note the
+research lineage names ETF *+ LIC* (line-integral convolution) as the full Van-Gogh
+mechanism; the AW painterly arc adopts the ETF half (stroke orientation) and the impasto /
+deposition material truth, and treats a LIC noise-smear pass as a forward fold on the
+multi-pass branch rather than a single-pass requirement.
+
+---
+
+## Flow and warp
+
+- **`warpMode`** (`fbm` | `cellular` | `hybrid`) — the region-boundary character. `fbm`
+  gives soft organic zones; `cellular` gives chunky almost-rectangular territories;
+  `hybrid` averages both.
+- **`flow.pattern`** (`none` | `radial` | `swirl` | `diagonal` | `multi`) — the directional
+  field the pastel/oil/crayon mediums lay strokes along (`flow.glsl.ts:6`). Flow drives
+  *stroke direction only*, never which palette stop a pixel picks (`DESIGN.md §2.5`).
+- **Cursor** — `setCursor(x, y, strength)` swirls both the color field (zones curl around
+  the pointer, via `domainWarp`) and the flow field (stroke direction bends), with a
+  Gaussian-radius falloff and a ~2s decay after `clearCursor()`. The cursor is the one
+  deliberate exception to "flow couples to medium only" — it rotates the *spatial
+  coordinate*, never the palette position (`DESIGN.md §2.6`).
+
+The AW research fan grounds richer flow (true divergence-free curl noise / bitangent noise
+for incompressible, non-pooling motion; analytic-derivative fBM for a free exact gradient)
+as **perf-and-quality levers** on the keystone — the analytic gradient feeds both the curl
+field and the structure tensor — staged in `PATH-FORWARD.md §6`, not as separate feature
+waves. *(Bridson SIGGRAPH 2007; atyuwen bitangent noise; IQ morenoise.)*
+
+---
+
+## API
+
+The full config shape (`AuroraConfig`) and instance interface (`AuroraInstance`) are
+documented in `DESIGN.md §5`. The headline surface:
+
+```ts
+import {
+    Aurora,            // the Vue SFC
+    useAurora,         // composable: watches config, pushes uniforms
+    createAurora,      // imperative core: createAurora(canvas, config, options?)
+    deriveAurora,      // seed one color → harmonious N-stop OKLCh palette
+    resolveRenderMode, // device-tier substrate resolver ("webgl" | "css")
+    DEFAULT_AURORA_CONFIG,
+    MAX_NUCLEI,        // 6
+    MAX_STOPS,         // 8
+} from "@mkbabb/glass-ui/aurora";
+
+import type {
+    AuroraConfig, AuroraNucleus, AuroraFlow, OklchStop,
+    AuroraMedium, StrokeMode, FlowPattern, WarpMode,
+    AuroraHarmony, DeriveAuroraOptions, AuroraInstance,
+} from "@mkbabb/glass-ui/aurora";
+```
+
+### Instance methods
+
+```ts
+interface AuroraInstance {
+    update(cfg: AuroraConfig): void;     // re-upload uniforms (deep-watched by useAurora)
+    setCursor(x, y, strength?): void;    // pointer swirl, 0..1 space
+    clearCursor(): void;                 // begin the ~2s decay
+    setCursorRadius(r): void;            // influence radius 0.05..0.5
+    setReducedMotion(flag): void;        // freeze the field to one static frame
+    renderAt(t): void;                   // deterministic draw-only render (capture bakes)
+    pause(): void; resume(): void;       // wire to DockBackgroundToggle (WCAG 2.2.2)
+    dispose(): void;                     // release the GL context (WEBGL_lose_context)
+}
+```
+
+### The config shape
+
+`AuroraConfig` exposes the full author surface — composition (palette, nuclei, softmaxBeta,
+valueVariance), warp (amount/scale/drift/mode/octaves), medium (medium, flow, the stroke +
+wet + tooth knobs), motion (drift/breath), and output (saturation, grain, alpha). See
+`DESIGN.md §5` for every field with its range. For a consumer choosing a backdrop rather
+than tuning a shader, reach for `deriveAurora` (below) plus a small handful of high-level
+fields (`medium`, `warpAmount`, `breathPeriod`, `saturation`).
+
+**(planned — AW.W6)** A `resolveAtoms(atoms) → AuroraConfig` front door collapses the
+~28-field author schema to ≤7 intuitive atoms — **seed · harmony · mood/energy · medium ·
+texture · motion · zones** — with the full schema preserved as a progressive-disclosure
+"Advanced" tier (nothing removed from `AuroraConfig`; the simplification is in the presented
+surface). `resolveAtoms` is a pure, *total* function: every atom combination resolves to a
+valid in-range config respecting every `budget.ts` cap, and the default atoms resolve
+exactly to the wispy-sky `DEFAULT_AURORA_CONFIG`. *(Progressive disclosure, UXPin; the
+Stripe / paper.design productized two-tier model.)*
+
+### Deriving a palette
+
+`deriveAurora(seed, options?)` is the simplified authoring door — turn one color into a
+gamut-safe, harmonious N-stop palette instead of hand-tuning eight OKLCh stops:
+
+```ts
+import { deriveAurora } from "@mkbabb/glass-ui/aurora";
+
+deriveAurora("#e11d48", { harmony: "complementary", stopCount: 5 });
+deriveAurora({ L: 0.55, C: 0.18, h: 250 }, { harmony: "analogous", hueSpread: 34 });
+```
+
+Harmonies today: `analogous` (the painterly default), `complementary`, `triad`,
+`monochrome` (`color.ts:110`). The ramp walks lightness across a painterly band (deep base →
+pale apex), falls chroma off toward the apex, and gamut-maps every stop through value.js's
+Ottosson core (`gamutMapStop`, `color.ts:250`).
+
+**(planned — AW.W5)** The color wave extends `deriveAurora` with `split-complementary` /
+`tetradic` harmonies, eased L/C journeys (a **bell** chroma curve — peak in the mids,
+desaturated extremes — becomes the new default), and warm-light/cool-shadow
+`temperatureShift` coupling (the single most-cited painting rule, the fold that makes the
+oil/oil-pastel mediums read as *mixed paint* rather than stamped hue). It adds a
+`deriveScene(seed, mood)` door (`atmospheric` | `painterly` | `vivid` | `muted`) that
+derives a *whole* `AuroraConfig` — palette + nuclei layout on a rule-of-thirds prior +
+medium + motion — from one seed and a mood word. *(meodai pro-color-harmonies; Adobe
+Leonardo / OKLCh ramp tooling; Baudisch / Gamblin warm-cool temperature.)*
+
+---
+
+## Color notes
+
+- **The palette is baked to LINEAR sRGB**, not gamma sRGB. The whole shader pipeline
+  (palette interp, nuclei field, mediums, ACES tonemap, grain) runs in linear, and the
+  **mandatory `linearToSrgb()` OETF closes the seam** as the final step before `fragColor`
+  (`aurora.frag.ts:339`). Without it the field ships ~2.2× too dark (linear 0.5 → display
+  ~0.215 instead of ~0.735). This is machine-locked by `proof:aurora-space-gamma`. The OETF
+  + the rotated-octave FBM constant are spliced from the shared `procedural-color.glsl`
+  chunk so they can never diverge from the goo-blob's copy (the AV.W1 divergence root cause).
+- **Palette interpolation is currently linear-sRGB; OKLCh is the next color step.** The
+  stop-to-stop blend in `samplePalette` (`composition.glsl.ts:16`) is a linear `mix()`, so
+  distant-hue midpoints can desaturate toward grey. **(planned — AW.W5)** moves the
+  interpolation, broken-color (`brokenColorJitter`, `aurora.frag.ts:276`, off its YIQ-style
+  `hueShift` matrix), and saturation (`saturate3`, `:284`) into OKLCh for chroma-preserving
+  ramps. The `OKLCH_MATRICES_GLSL` chunk (`procedural-color.glsl.ts:73`) is already authored
+  and 1e-6-verified — zero new payload. The interpolation-space choice is deliberate:
+  *ramps interpolate in OKLab (rectangular)* to avoid the hue-detour midpoint darkening
+  Tailwind documented (#14955); the OKLCh hue-arc is reserved for deliberate rainbow travel
+  via a `huePath` atom (`shorter` | `longer` | `increasing` | `decreasing`). *(Ottosson
+  OKLab; Aras Pranckevičius cbrt-LMS precompute; MDN `<hue-interpolation-method>`.)*
+- **Author in OKLCh, not hex.** `OklchStop { L, C, h }` gives perceptually-even ramps —
+  equal numeric steps read as equal visual steps, and a hue rotation at fixed L/C preserves
+  perceived brightness (which HSL does not). `deriveAurora` is the fast path; hand-author the
+  8 stops only when you need a specific gradient. `hexToOklchStop` / `cssToOklch` convert at
+  the boundary.
+
+---
+
+## Performance notes
+
+- **Banding is dithered post-transfer.** A 1-LSB Interleaved-Gradient-Noise dither (Jimenez)
+  is applied in *display* space *after* the OETF (`aurora.frag.ts:341`) — the canonical fix
+  for 8-bit mid-tone banding on soft gradients. Don't move it into linear space.
+- **One draw, one shader.** No multi-pass, no FBO ping-pong, no external deps — a single
+  full-screen triangle (`DESIGN.md §2` invariant 8). **(planned — AW.W7)** the WebGPU path
+  relaxes this *on the WebGPU branch only*, for the structure-tensor / Kuwahara passes a
+  single fragment program cannot express; WebGL2 stays the universal fallback.
+- **The loop parks aggressively.** Offscreen (`IntersectionObserver`), content-hidden
+  (`content-visibility:auto`), and tab-backgrounded (`document.hidden`) all park the rAF
+  loop, so an off-screen aurora attaches zero frames (the `useWebGLCanvas` substrate, gated
+  by `proof:offscreen-pause`).
+- **DPR is clamped to 2×.** A retina/4K display rendering a full-viewport WebGL surface at
+  3× is ~2.25× the fill for no perceptible gain on a drift background; `AV_DPR_MAX`
+  (`budget.ts`) caps the backing store — the single biggest VRAM/fill lever after the
+  offscreen-park.
+- **Oil is the heaviest path.** `sampleBase` re-runs the entire warp + nuclei field, and
+  `bestOil` calls it once per stroke cell across ~9 neighbors × 4–5 layers ≈ 40+ full-field
+  recomputes per fragment. The AW painterly waves are budget-gated (`profile:budget`); the
+  field-bake hoist (compute `domainWarp`+`nucleiField` once per fragment, not dozens of
+  times) is the structural perf transposition the budget triumvirate reaches for if the
+  height-field impasto or OKLCh `samplePalette` reds the budget (`PATH-FORWARD.md §6`).
+- **Reduced motion freezes, not hides.** Under `prefers-reduced-motion: reduce` the field
+  paints one static frame and parks; the substrate live-monitors the media query so a
+  runtime toggle freezes/wakes. Cursor easing is JS-side (position/strength lerp + decay in
+  the runtime, not the shader) so the response stays breath-paced and framerate-independent.
+
+### WebGPU (planned — AW.W7)
+
+The single architectural reason to stage WebGPU is that the full-quality painterly half is
+**multi-pass** — the Gaussian-smoothed multi-tap structure tensor and the anisotropic
+Kuwahara finish — which a single-pass WebGL2 fragment shader fundamentally cannot express.
+This is not a perf chase. The migration is low-risk because the substrate already isolates
+the backend: the one backend-specific line is `getContext("webgl2")` in
+`useWebGLCanvas.ts:267`; the suspend set, offscreen-park, PRM monitor, resize, and dispose
+are all API-shaped. The wave lifts that lifecycle into a shared core and adds a
+`createGPUCanvas` sibling over a `GPUDevice`; `resolveRenderMode` grows a
+`navigator.gpu.requestAdapter()` probe (`webgpu | webgl | css`). The GPU color/noise math is
+single-sourced as a WGSL twin of `procedural-color.glsl`, gated by a 1e-6 CPU-equivalence
+test (mirroring AV.W2's OETF convergence — pre-empting the AV.W1 divergence-bug class). The
+WGSL is hand-written — no Three.js/TSL (TSL pulls in Three.js, which the zero-dep posture
+does not carry); the std140 storage struct lifts the `MAX_NUCLEI 6` / `MAX_STOPS 8` caps.
+
+WebGPU shipped by default in all four major engines as of 2025-11-25 (Safari 26 last); it is
+production-deployable in 2026 with the WebGL2 fallback (~95% / 5% reach) but is **not yet
+"Baseline widely available"** (the ~30-month all-engines mark has not passed). So WebGPU is
+staged as the **capability-gated enhancement, WebGL2 the universal fallback, CSS the floor**
+— not made the default path. Every substrate contract (offscreen-park, PRM freeze,
+`DockBackgroundToggle` pause) reaches the compute dispatch: a parked rAF skips compute too.
+*(web.dev 2025-11-25; WGSL spec; Chrome From-WebGL-to-WebGPU.)*
+
+---
+
+## Interactivity (planned — AW.W8)
+
+Today interaction is the stateless cursor swirl (`aurora.frag.ts:229-244`) — the pointer
+rotates the warp and bends the flow, instantaneous and stateless. The SOTA move is
+**stateful**: the pointer leaves a wake that advects and decays. The wave adds, all opt-in
+behind a config flag (the wispy-sky default stays non-interactive):
+
+- **Cursor-as-light** — the pointer drives the W4 impasto `uLightDir`, so the catch-lights
+  track the cursor and the relief reads tactile (a slow auto-orbit when idle). No new
+  lighting path — it reuses the movable light the impasto wave already lands.
+- **Velocity-reactive flow** — `cursorModel.ts` (position-only today) gains pointer/scroll
+  velocity; a fast flick injects a transient swirl-burst easing out over ~1s, distinct from
+  the steady attraction.
+- **The stateful pointer wake (WebGPU branch)** — one ping-pong velocity texture; the
+  pointer writes a delta-tracked Gaussian splat that self-advects and dissipates (lingering
+  eddies, not an instantaneous swirl), with a click → radial-ripple impulse. *(Pavel
+  Dobryakov's WebGL-Fluid-Simulation; Bridson 2007 procedural vortex.)*
+- **Scroll coupling** — palette/breath progress binds to scroll via the existing
+  `useScrollProgress` motion composable (no new substrate).
+
+**Accessibility is binding.** Every interactive axis routes through one master tempo scalar
+that `prefers-reduced-motion: reduce` (WCAG 2.3.3, Animation from Interactions — the
+substrate's live PRM freeze) and the `DockBackgroundToggle` pause (WCAG 2.2.2, Pause/Stop/
+Hide) zero. The stateful wake's feedback pass is on the same offscreen-park gate — a parked
+rAF skips its self-advection.
+
+---
+
+## Best practices
+
+- **Keep nuclei sparse and amorphous.** 2–6 zones. A single nucleus reads as a focal point
+  (an explicit non-goal); the multi-attractor blend is what makes it read atmospheric rather
+  than radial. Placing the dominant zone on a rule-of-thirds power point (not center) reads
+  as *composed*.
+- **Tune drift for "slowly alive."** `warpDrift` / `nucleiDrift` / `paletteDrift` live in a
+  human 0..0.05 band; the shader lifts them to a perceptible ~5–15s period. Leave them near
+  the defaults — a frantic pan breaks the breath-paced aesthetic, a slower-than-8s loop reads
+  static.
+- **Use `opacity-ceiling`, not `alpha`, to recede behind content.** `config.alpha` is
+  per-pixel pigment opacity *inside* the painted image; `:opacity-ceiling` is the outer
+  compositing envelope. Hero surfaces stay at `1.0`; quiet content routes opt in to `~0.5`
+  (`DESIGN.md §6 Δ06`).
+- **Let the substrate adapt.** Rely on the default `mode="auto"` so low-power /
+  reduced-motion / data-saver devices get the CSS placeholder. Don't force `webgl` on routes
+  that don't need motion.
+- **Wire a pause control on long-running surfaces.** A continuously-animating, non-essential
+  background over 5s is obligated (WCAG 2.2.2) to carry a user-reachable stop. Wire
+  `DockBackgroundToggle`'s `@update:paused` to `pause()`/`resume()`.
+- **Reach for the painterly mediums deliberately.** `smooth` is the cheap, calm atmospheric
+  pole — the right default for most backdrops. The oil/pastel/crayon mediums cost more (oil
+  re-evaluates the field per stroke cell) and read as editorial art — use them when the
+  brushwork *is* the point, not behind dense text.
+- **Presets live in consumers.** The library exports the config *shape* and a minimal
+  `DEFAULT_AURORA_CONFIG` only. The named themes (Sky, Dawn, Meadow, Oil Van Gogh, …) live in
+  `demo/stories/aurora/presets.ts`, per the presets-in-consumers rule.
+
+---
+
+## Accessibility
+
+Aurora is non-essential, continuously-animating, auto-starting motion — so two WCAG floors
+are binding, both owned by the shared substrate, not re-implemented per surface:
+
+- **WCAG 2.3.3 (Animation from Interactions) / 2.2.4 motion** — under
+  `prefers-reduced-motion: reduce` the field paints one static frame and parks. The substrate
+  *live-monitors* the media query (a `matchMedia` change listener), so a runtime toggle
+  freezes/wakes without a remount. Every planned interactive axis (W8) hooks the same master
+  tempo scalar.
+- **WCAG 2.2.2 (Pause, Stop, Hide)** — a continuously-running background over 5s must carry a
+  user-reachable stop *available to all users* (not gated behind PRM). `DockBackgroundToggle`
+  is glass-ui's Level-A control; wire its `@update:paused` to the instance `pause()` /
+  `resume()`.
+
+---
+
+## Examples
+
+### Atmospheric hero (smooth)
+
+```ts
+const config = {
+    ...DEFAULT_AURORA_CONFIG,
+    palette: deriveAurora("#1e3a8a", { harmony: "analogous", stopCount: 5 }),
+    medium: "smooth",
+    warpMode: "fbm",
+    warpAmount: 0.35,
+    breathPeriod: 48,   // a ~48s breath cycle
+};
+```
+
+### Oil impasto with cursor interaction
+
+```vue
+<script setup lang="ts">
+import { ref } from "vue";
+import { Aurora, useAurora, deriveAurora } from "@mkbabb/glass-ui/aurora";
+
+const canvas = ref<HTMLCanvasElement>();
+const { instance } = useAurora(canvas, {
+    palette: deriveAurora("#b45309", { harmony: "complementary" }),
+    medium: "oil",
+    strokeMode: "oil",
+    strokeLayers: 2,        // crosshatch
+    impasto: 0.9,
+    brokenColor: 0.6,
+    flow: { pattern: "swirl", focalX: 0.5, focalY: 0.5, angle: 0, curl: 0.4 },
+});
+
+function onMove(e: PointerEvent) {
+    const r = (e.target as HTMLElement).getBoundingClientRect();
+    instance.value?.setCursor((e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height, 1);
+}
+</script>
+
+<template>
+    <canvas ref="canvas" @pointermove="onMove" @pointerleave="instance?.clearCursor()" />
+</template>
+```
+
+### Quiet content route
+
+```vue
+<!-- The drift recedes behind a form; the painted image is unchanged. -->
+<Aurora :config="config" :opacity-ceiling="0.5" />
+```
+
+---
+
+## Architecture
+
+```
+src/components/custom/aurora/
+├── Aurora.vue                    # canvas wrapper + useAurora + defineExpose cursor API
+├── index.ts                      # barrel (@mkbabb/glass-ui/aurora)
+├── DESIGN.md                     # the authoritative architecture spec (invariants, cursor model)
+├── constants/
+│   ├── presets.ts                # types only + DEFAULT_AURORA_CONFIG + MAX_* constants
+│   ├── budget.ts                 # the CPU-side perf ceiling tokens (DPR clamp, loop band)
+│   ├── renderMode.ts             # AuroraRenderMode union + resolveRenderMode device-tier resolver
+│   └── shaders/                  # the GLSL partials the assembler splices into FRAGMENT_SRC
+│       ├── aurora.vert.ts        # full-screen triangle
+│       ├── aurora.frag.ts        # the assembler + warp + fbm + main()
+│       ├── composition.glsl.ts   # samplePalette LUT + the multi-nuclei softmax field
+│       ├── flow.glsl.ts          # the directional flow field
+│       ├── brush.glsl.ts         # the curved swept-stroke SDF + bestOil placement + impasto
+│       ├── mediums.glsl.ts       # the four peer mediums + the sampleBase edge recompute
+│       └── tonemap.glsl.ts       # the LOCKED linear→ACES→OETF→dither pipeline
+└── composables/
+    ├── color.ts                  # OKLCh math + deriveAurora + oklchToLinear + flattenPalette
+    ├── runtime.ts                # createAurora — live/capture WebGL lifecycle + cursor easing
+    ├── useAurora.ts              # the Vue wrapper: onMounted/watch/onBeforeUnmount
+    ├── uniformBridge.ts          # config → GL uniform threading
+    └── useCursorInteraction.ts   # the pointer layer
+```
+
+The substrate is shared: aurora and the goo-blob both compose `useWebGLCanvas`
+(`src/composables/glass/webgl/`) and both resolve color through the shared
+`procedural-color.glsl` chunk — so the offscreen-park, PRM freeze, and the OETF/FBM
+constants are single-sourced across both surfaces (gated by `proof:webgl-substrate-single`,
+`proof:single-color-core`, `proof:shader-shared-source`).
+
+---
+
+## Gates (the falsifiable contract)
+
+The machine-locked invariants — each born-RED on HEAD, GREEN at its wave's close, with a
+named bite-check that re-reds it:
+
+| Gate | Asserts | Ships with |
+|---|---|---|
+| `proof:aurora-space-gamma` | the linear pipeline closes the seam — `col = linearToSrgb(col)` precedes the `fragColor` write (the ~2.2×-too-dark trap is forbidden) | shipped (AV.W1) |
+| `proof:webgl-substrate-single` · `proof:single-color-core` · `proof:shader-shared-source` | aurora + blob share ONE `useWebGLCanvas` substrate and ONE OKLCh/OETF/FBM color chunk (no divergent copy) | shipped (AV.W2) |
+| `proof:offscreen-pause` | a parked rAF (offscreen / content-hidden / tab-hidden / PRM-reduce) attaches ZERO frames | shipped (AV.W7) |
+| `proof:aurora-tensor-field` | the structure-tensor eigen-decomposition matches a synthetic gradient field within tolerance; `strokeOrient:"tensor"` tracks the field gradient, not the global flow. Bite: swap the minor eigenvector for the major → RED | planned (AW.W4) |
+| `proof:aurora-impasto-relight` | the fixed-RGB rim is gone from `paintOver`; a `uLightDir` sweep moves the catch-light. Bite: restore the fixed rim → RED | planned (AW.W4) |
+| `proof:aurora-vangogh-preset` | `medium:"vangogh"` resolves its uniforms; the deterministic `renderAt(t)` bake is snapshot-blessed. Bite: fall back to oil+swirl → RED | planned (AW.W4) |
+| `proof:aurora-oilpastel-medium` | the reworked oil-pastel bake shows paper-through-scumble; the WebGL2 path stays inside `profile:budget`. Bite: revert to the tooth-multiply → RED | planned (AW.W4) |
+| `proof:aurora-oklch-interp` | the spliced OKLCh matrices match value.js to 1e-6; the blue→yellow midpoint holds chroma above the linear-`mix` midpoint. Bite: revert `samplePalette` to linear `mix()` → RED | planned (AW.W5) |
+| `proof:aurora-derive-gamut` | every harmony × easing × temperature stop is in-sRGB over a neon-seed matrix after `gamutMapStop`. Bite: remove `gamutMapStop` → RED | planned (AW.W5) |
+| `proof:aurora-atoms-roundtrip` | `resolveAtoms` is total (every atom combination is a valid in-range config) and `resolveAtoms(DEFAULT_ATOMS)` deep-equals the wispy-sky default. Bite: break a `DEFAULT_ATOMS` value → RED | planned (AW.W6) |
+| `proof:aurora-backend-fallback` · `proof:aurora-wgsl-equivalence` | the forced WebGL2 path renders the identical visual contract; the WGSL color/noise chunk matches its GLSL twin to 1e-6. Bite: break the fallback route / perturb a WGSL constant → RED | planned (AW.W7) |
+| `proof:aurora-interaction-prm` | every interactive axis is suppressed under `prefers-reduced-motion`; the master tempo scalar zeroes the stateful field; the pause stops every axis. Bite: detach an axis from the tempo scalar → RED | planned (AW.W8) |
+
+---
+
+## References
+
+The techniques behind aurora and the AW painterly roadmap, with access dates (2026-06-06):
+
+### Noise, warp, and flow
+- Iñigo Quilez — [Domain warping](https://iquilezles.org/articles/warp/),
+  [fBm](https://iquilezles.org/articles/fbm/),
+  [fBm with analytic derivatives](https://iquilezles.org/articles/morenoise/),
+  [Smooth Voronoi](https://iquilezles.org/articles/smoothvoronoi/),
+  [Procedural color palettes](https://iquilezles.org/articles/palettes/).
+- Bridson, Hourihan, Nordenstam — [Curl-Noise for Procedural Fluid Flow, SIGGRAPH 2007](https://www.cs.ubc.ca/~rbridson/docs/bridson-siggraph2007-curlnoise.pdf);
+  atyuwen — [Fast divergence-free (bitangent) noise](https://atyuwen.github.io/posts/bitangent-noise/);
+  Dziewanowski — [Dissecting Curl Noise](https://emildziewanowski.com/curl-noise/).
+- Stefan Gustavson — [Efficient computational noise in GLSL, arXiv:1204.1461 (2012)](https://arxiv.org/pdf/1204.1461);
+  [The Book of Shaders — Noise](https://thebookofshaders.com/11/).
+
+### Color science
+- Björn Ottosson — [Oklab color space](https://bottosson.github.io/posts/oklab/),
+  [sRGB gamut clipping](https://bottosson.github.io/posts/gamutclipping/).
+- Aras Pranckevičius — [Optimizing Oklab gradients](https://aras-p.info/blog/2022/03/11/Optimizing-Oklab-gradients/).
+- [OKLCH makes better gradients (Blue Monkey Makes)](https://bluemonkeymakes.com/articles/oklch-makes-better-gradients);
+  [Why CSS gradients look grayish (Toolbox365)](https://www.toolbox365.net/tutorials/gradient-banding-and-oklch/);
+  Tailwind CSS [#14955 (OKLab gradient interpolation)](https://github.com/tailwindlabs/tailwindcss/issues/14955).
+- [MDN — `<hue-interpolation-method>`](https://developer.mozilla.org/en-US/docs/Web/CSS/hue-interpolation-method);
+  meodai — [pro-color-harmonies](https://github.com/meodai/pro-color-harmonies),
+  [poline](https://github.com/meodai/poline).
+
+### Mesh-gradient baselines
+- Alex Harri — [A flowing WebGL gradient, deconstructed](https://alexharri.com/blog/webgl-gradients).
+- Kevin Hufnagl — [Stripe gradient teardown](https://kevinhufnagl.com/how-to-stripe-website-gradient-effect/).
+- [gradients.fyi (OKLCH mesh generator)](https://gradients.fyi/);
+  Justin Jay Wang (OpenAI) — [Methods for random gradients](https://justinjay.wang/methods-for-random-gradients/);
+  [paper.design Grain-Gradient shader](https://shaders.paper.design/grain-gradient).
+
+### Painterly / NPR / Van Gogh
+- Kyprianidis & Kang — [Image and Video Abstraction by Anisotropic Kuwahara Filtering, CGF 2009](https://www.kyprianidis.com/p/pg2009/).
+- Maxime Heckel — [On crafting painterly shaders](https://blog.maximeheckel.com/posts/on-crafting-painterly-shaders/),
+  [Field Guide to TSL and WebGPU](https://blog.maximeheckel.com/posts/field-guide-to-tsl-and-webgpu/).
+- Hertzmann — [Painterly Rendering with Curved Brush Strokes of Multiple Sizes, SIGGRAPH 1998](https://mrl.cs.nyu.edu/publications/painterly98/hertzmann-siggraph98.pdf);
+  Kang, Lee, Chui — [Coherent Line Drawing / Edge Tangent Flow, NPAR 2007](https://cg.postech.ac.kr/papers/kang_npar07_hi.pdf);
+  [Line Integral Convolution (Cabral & Leedom 1993)](https://en.wikipedia.org/wiki/Line_integral_convolution).
+- [Hidden Turbulence in van Gogh's The Starry Night, Physics of Fluids 36, 095140 (2024)](https://pubs.aip.org/aip/pof/article/36/9/095140/3312767) /
+  [arXiv:2310.03415](https://arxiv.org/pdf/2310.03415).
+- Sharma — [A Van Gogh Inspired 3D Shader Methodology (TAMU thesis)](https://core.ac.uk/download/pdf/147237812.pdf);
+  Bousseau et al. — [Interactive watercolor rendering, 2006](https://artis.inrialpes.fr/Publications/2006/BKTS06/watercolor.pdf).
+
+### Impasto + pigment
+- Baxter, Wendt, Lin — [IMPaSTo: A Realistic, Interactive Model for Paint, NPAR 2004](http://gamma.cs.unc.edu/IMPASTO/publications/Baxter-IMPaSTo_Web-NPAR04.pdf);
+  [Differentiable Stroke Planning with Dual Parameterization, arXiv:2604.02752](https://arxiv.org/pdf/2604.02752);
+  [LearnOpenGL — Normal Mapping](https://learnopengl.com/Advanced-Lighting/Normal-Mapping).
+- spectral.js — [Kubelka-Munk pigment mixing on the GPU (MIT)](https://github.com/rvanwijnen/spectral.js/).
+
+### Dither + tonemap
+- Jimenez — Interleaved Gradient Noise; Bart Wronski — [Dithering, part three](https://bartwronski.com/2016/10/30/dithering-part-three-real-world-2d-quantization-dithering/);
+  [Moments in Graphics — free blue-noise textures](https://momentsingraphics.de/BlueNoise.html).
+- Benjamin Wrensch — [Minimal AgX](https://iolite-engine.com/blog_posts/minimal_agx_implementation);
+  Khronos — [PBR Neutral tone mapper](https://modelviewer.dev/examples/tone-mapping).
+
+### WebGPU
+- [WebGPU supported in all major browsers, web.dev (2025-11-25)](https://web.dev/blog/webgpu-supported-major-browsers);
+  [WebGPU hits critical mass (WebGPU.com)](https://www.webgpu.com/news/webgpu-hits-critical-mass-all-major-browsers/).
+- [WGSL spec, W3C](https://www.w3.org/TR/WGSL/);
+  [WebGPU Fundamentals](https://webgpufundamentals.org/);
+  Chrome — [From WebGL to WebGPU](https://developer.chrome.com/docs/web-platform/webgpu/from-webgl-to-webgpu).
+- Pavel Dobryakov — [WebGL Fluid Simulation](https://github.com/PavelDoGreat/WebGL-Fluid-Simulation) (the stateful pointer-wake splat).
