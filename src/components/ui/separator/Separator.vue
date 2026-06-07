@@ -15,7 +15,7 @@ const delegatedProps = computed(() => {
 </script>
 
 <template>
-  <Separator
+  <Separator data-slot="separator"
     v-bind="delegatedProps"
     :class="
       cn(

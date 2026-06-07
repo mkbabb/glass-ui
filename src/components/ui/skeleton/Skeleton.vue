@@ -35,7 +35,7 @@ const props = withDefaults(
 </script>
 
 <template>
-  <div
+  <div data-slot="skeleton"
     :class="cn(
       'rounded-input bg-muted',
       variant === 'pulse' && 'animate-pulse',

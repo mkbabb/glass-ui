@@ -148,7 +148,7 @@ function sortIndicator(col: DataTableColumn<T>): string {
 </script>
 
 <template>
-    <div ref="rootRef" :class="cn('overflow-hidden', props.class)">
+    <div data-slot="data-table" ref="rootRef" :class="cn('overflow-hidden', props.class)">
         <!-- ── Card projection (responsive, narrow container) ────────── -->
         <template v-if="isCard">
             <!-- Loading skeleton -->

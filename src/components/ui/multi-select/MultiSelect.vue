@@ -83,7 +83,7 @@ function removeOption(value: string) {
 </script>
 
 <template>
-  <Popover v-model:open="open">
+  <Popover data-slot="multi-select" v-model:open="open">
     <PopoverTrigger as-child>
       <Button
         variant="outline"

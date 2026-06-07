@@ -140,7 +140,7 @@ const isTouchActive = computed(() => touchGate.isActive.value)
 </script>
 
 <template>
-  <SliderRoot
+  <SliderRoot data-slot="slider"
     ref="sliderRootRef"
     :class="cn(sliderVariants({ variant: v, size: s }), props.class)"
     :data-variant="v"

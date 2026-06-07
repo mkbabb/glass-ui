@@ -67,6 +67,10 @@ const GLASS_TOKEN_RUNGS = ["tokens.css", "theme.css", "typography.css"];
 //   --reka-combobox-content-transform-origin — reka-ui ComboboxContent sets the
 //                                   popper transform-origin; ComboboxList reads it
 //                                   via `origin-(--reka-…)` (AV.W16 TW5 paren form).
+//   --reka-select-content-transform-origin — reka-ui SelectPopperPosition sets the
+//                                   popper transform-origin; SelectContent reads it
+//                                   via `origin-(--reka-…)` for trigger-edge scale-in
+//                                   (popover-family parity, AW.W26).
 //   --reka-select-trigger-{height,width} — reka-ui SelectContent sets these to the
 //                                   trigger box; SelectContent's popper viewport
 //                                   reads them via `h-(--reka-…)`/`min-w-(--reka-…)`.
@@ -84,6 +88,7 @@ const RUNTIME_PROPS = new Set([
     "--reka-toast-swipe-end-x",
     "--reka-toast-swipe-move-x",
     "--reka-combobox-content-transform-origin",
+    "--reka-select-content-transform-origin",
     "--reka-select-trigger-height",
     "--reka-select-trigger-width",
     "--reka-tabs-indicator-position",

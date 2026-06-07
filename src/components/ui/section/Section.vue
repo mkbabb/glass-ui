@@ -77,7 +77,7 @@ const gapClass = {
 </script>
 
 <template>
-    <section
+    <section data-slot="section"
         :class="
             cn(
                 'flex flex-col',

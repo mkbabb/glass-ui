@@ -951,6 +951,39 @@ rg '"@mkbabb/glass-ui/(pagination|virtual)"' src/
 
 ---
 
+## reka-ui 2.x — Combobox `searchTerm` → `ComboboxInput` v-model (AW.W26)
+
+> Downstream-consumer note. glass-ui's own `Combobox*` wrappers are ALREADY on
+> the canonical 2.x shape — this note is for consumers who hand-wired the reka
+> Combobox primitive directly and still bind the pre-2.x `v-model:search-term`
+> on `ComboboxRoot`.
+
+reka-ui 2.x moved the search/filter term OFF `ComboboxRoot` and ONTO
+`ComboboxInput`'s `v-model`. The pre-2.x `<ComboboxRoot v-model:search-term>`
+binding **silently no-ops** on 2.x (the prop no longer exists on the root) — and
+because a stale reka model binding is a no-op, neither `vue-tsc` nor a unit test
+catches it; only a render-effect probe does (the standing binding-verification
+note + glass-ui's own `proof:reka-binding-idiom` render guard).
+
+```vue
+<!-- BEFORE (pre-2.x) — the filter term on the root -->
+<ComboboxRoot v-model:search-term="query">
+  <ComboboxInput />
+</ComboboxRoot>
+
+<!-- AFTER (reka 2.x) — the filter term on the input -->
+<ComboboxRoot>
+  <ComboboxInput v-model="query" />
+</ComboboxRoot>
+```
+
+glass-ui's `<Combobox>` / `<ComboboxInput>` already forward the 2.x shape (the
+wrapper passes `ComboboxRootProps`; the search term rides `ComboboxInput`), so a
+consumer on glass-ui's wrappers needs no change — this is only for hand-rolled
+reka usage. Sweep on every reka major bump.
+
+---
+
 ## Reference
 
 - **CHANGELOG**: full v1.0 entry at the top of `CHANGELOG.md`.

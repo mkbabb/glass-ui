@@ -60,6 +60,7 @@ const { cells, aggregateValue } = useProgressGeometry({
 
 <template>
     <ProgressRoot
+        data-slot="progress"
         v-bind="delegatedProps"
         :model-value="aggregateValue"
         :class="
