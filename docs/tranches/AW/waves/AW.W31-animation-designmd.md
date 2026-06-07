@@ -153,3 +153,71 @@ This is a coherence + docs wave. `npm run typecheck` after the `useLayerTransiti
 
 - The audit's animation-language + DESIGN.md + naming-verbiage findings (cogency-audit-full.md: Lane 5 naming-verbiage §"FOLD/WAVE-SEED LIST"; the H-fold ledger "Animation-audit → fold into existing dock/aurora/blob animation-language waves ✓ · DESIGN.md currency → fold into close/docs waves ✓") seeded folds into the BAND waves (W2/W3/W25) and the close (W33). The new band G (W28-W32) lifts the cross-cutting COHERENCE arm — the reconcile that no single band owns — into its own wave so the one-motion-language verdict, the DESIGN.md currency, and the naming consistency each carry a falsifiable gate rather than riding as an unverified fold note inside a band wave. The audit's Band-A Finding 1 (the dual-write `DOCK_SPRING` + `regen-spring-tokens.mjs` lockstep) is W2's surface; W31 only AUDITS that W2 landed it onto the one source.
 - New guardrail: `proof:animation-coherence` is the standing gate that a future band cannot re-introduce a hand-rolled spring/easing on an animated surface without the gate flagging it — the one-motion-source invariant becomes machine-enforced, not a convention. `proof:design-md-current` is the standing gate that a future aurora change cannot drift the DESIGN.md back to stale without failing closed.
+
+## 12. Naming convention (recorded, not renamed)
+
+The naming arm (W31.c) RECORDS the tranche's naming convention; it renames NO
+shipped `src/` symbol (no-legacy bars an alias — the shipped names stay). The
+convention, machine-checked where falsifiable by `proof:naming-consistency`:
+
+- **Component / file casing.** PascalCase SFC exports (`GlassDock.vue` →
+  `GlassDock`) inside kebab-case package dirs (`dock/`). This is the SHIPPED,
+  idiomatic shadcn-vue convention — the audit's "folder case ≠ export case" is
+  BY-DESIGN, not a defect. Recorded as the rule; NOT a rename.
+
+- **Wave-headline style.** Every `docs/tranches/AW/waves/AW.W<N>-*.md` first line
+  is `# AW.W<N> - <Title>` — the id↔title separator is ` - ` (hyphen-space), the
+  `WAVE_SPEC.md §1` display form. An en-dash LATER in the title body (e.g.
+  `Lighthouse audit — glass-ui demo`) is fine; only the id↔title separator is
+  the convention anchor. W31.c normalized the six deviating headers (W4-W8 + W27)
+  off the ALLCAPS-en-dash form onto this; the charter §2 bold lead-ins for W4-W8
+  match. `proof:naming-consistency` clause (a)/(b) freezes it.
+
+- **Token-family naming.** The `--glass-edge-light` rim is UNIFORM across the
+  five glass rungs by design — there is NO `--glass-edge-light-{wash..overlay}`
+  per-rung family at HEAD (`tokens.css` carries only `--glass-edge-light` +
+  `--glass-edge-light-dark`). A future rung-stepped variation is a triumvirate
+  trigger, not a silent mint. `proof:naming-consistency` clause (c) strikes any
+  doc that HEDGES the phantom family as-if-it-exists (this wave file + W22 NAME
+  it to reject it — the canonical rejection-context exemptions; a
+  rejection-framed mention is compliant). This overlaps W22's token-unify note;
+  W31 confirms only the DOCS consistency, it does NOT touch `glass.css`.
+
+- **Gate-naming convention.** `proof:<feature>-<descriptor>` is the established
+  pattern; the three W31 gates (`proof:animation-coherence`,
+  `proof:design-md-current`, `proof:naming-consistency`) conform. The
+  `gates.mjs` MANIFEST registration is W33's close ceremony — W31 mints the
+  scripts + registers the `package.json` `proof:*` entries.
+
+## 13. Implementation ledger (W31 close)
+
+- **W31.a animation-coherence.** `scripts/proof-animation-coherence.mjs` + the
+  `package.json` entry. Born-RED witness at base `246f535`: ONE residual press
+  literal — `src/styles/utilities.css:176` `.interactive-item:active { scale:
+  0.98 }`, the sole per-atom literal scale surviving the W2/W3/W25 sweeps. Fold:
+  `0.98 → var(--scale-press-sm)` (0.97, the soft press rung the button + slider
+  recipes consume — ONE press vocabulary; the delta is sub-perceptual). GREEN
+  after: 5 `--spring-*` defs all in the regen-generated §2 EASING block, zero
+  hand-rolled `cubic-bezier(`/`linear(` easing fork on any animated surface
+  (the dock `useLayerTransition.ts` rides a `DOCK_SPRING` solver-param object
+  mirroring the generator PRESETS — NOT a literal — and the `TabsIndicator`
+  rail already reads `--dock-motion-resize` = `--spring-dock`, so no dock
+  residual remained; no solver change). Non-physical allow-list
+  (shimmer/marquee/sparkle-sweep) authored in the gate, not discovered ad-hoc.
+
+- **W31.b DESIGN.md currency.** `aurora/DESIGN.md` v4.1 → v5.0 +
+  `scripts/proof-design-md-current.mjs` + the `package.json` entry. The W5
+  shared-color splice is the REALIZED delta (the shared
+  `procedural-color.glsl.ts` chunk + in-shader `mixPaletteOklchArc` /
+  `brokenColorJitter`); the W4 painterly mediums + W7 WebGPU/multi-pass
+  relaxation are documented as the STAGED forward contract (the README marks
+  them `(planned — AW.W7)` / `planned (AW.W4)` at base `246f535` — W4/W7 have
+  NOT landed the aurora source yet, so DESIGN.md frames invariant 8 as the
+  WebGL2-single-pass FALLBACK contract and the WebGPU multi-pass as the
+  capability-gated forward enhancement, matching the realized source + the
+  README's framing — documenting the design-of-record, not an aspirational
+  shipped contract).
+
+- **W31.c naming-consistency.** `scripts/proof-naming-consistency.mjs` + the
+  `package.json` entry + the six header normalizations (W4-W8 + W27) + the five
+  charter §2 bold lead-ins + this §12 convention note.

@@ -1,4 +1,4 @@
-# AW.W4 — AURORA-PAINTERLY (the structure-tensor keystone + the van-Gogh / impasto / oil-pastel engine)
+# AW.W4 - Aurora painterly (the structure-tensor keystone + the van-Gogh / impasto / oil-pastel engine)
 
 > **Numbering note:** W5 (OKLCh color core) opens BEFORE W4 by dependency — W4's van-Gogh/oil-pastel per-stroke jitter consumes the OKLCh `brokenColorJitter` seam W5 lands. The wave NUMBER ordering (W4 then W5) is not the EXECUTION ordering (W5 then W4's integration). The charter §2 open-order is fixed to match by the charter-AW fixer.
 

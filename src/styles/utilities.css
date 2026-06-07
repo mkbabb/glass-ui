@@ -173,7 +173,12 @@
         box-shadow: var(--focus-ring-shadow);
     }
     .interactive-item:active {
-        scale: 0.98;
+        /* AW.W31.a — fold the residual literal press scale onto the canonical
+           `--scale-press*` cohort (the prior `0.98` was the sole per-atom press
+           literal surviving the W2/W3/W25 sweeps). `--scale-press-sm` (0.97) is
+           the soft press rung the button + slider recipes consume — ONE press
+           vocabulary, no per-atom literal. The 0.98→0.97 delta is sub-perceptual. */
+        scale: var(--scale-press-sm);
     }
     .interactive-item:disabled,
     .interactive-item[data-disabled] {

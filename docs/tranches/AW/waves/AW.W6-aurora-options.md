@@ -1,4 +1,4 @@
-# AW.W6 — AURORA-OPTIONS (the atoms of control — the few intuitive knobs over the full schema)
+# AW.W6 - Aurora options (the atoms of control — the few intuitive knobs over the full schema)
 
 ## 2. State
 

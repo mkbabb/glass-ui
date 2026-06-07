@@ -1,4 +1,4 @@
-# AW.W27 — peer-conformance: admit keyframes ^4 + value ^0.11
+# AW.W27 - Peer-conformance: admit keyframes ^4 + value ^0.11
 
 ## State
 
