@@ -1,4 +1,4 @@
-# AW.W5 — AURORA-COLOR (in-shader OKLCh interpolation + hue-path + the derive-color front door)
+# AW.W5 - Aurora color (in-shader OKLCh interpolation + hue-path + the derive-color front door)
 
 > **Numbering note:** W5 opens BEFORE W4 by dependency — W5 lands the OKLCh `brokenColorJitter` seam W4's van-Gogh/oil-pastel per-stroke jitter consumes, so W5 SHOULD precede W4's integration. The wave NUMBER ordering (W4 then W5) is not the EXECUTION ordering. The charter §2 open-order is fixed to match by the charter-AW fixer.
 

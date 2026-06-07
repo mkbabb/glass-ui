@@ -1,4 +1,4 @@
-# AW.W7 — AURORA-WEBGPU (createGPUCanvas + WGSL parity + the multi-pass painterly substrate)
+# AW.W7 - Aurora WebGPU (createGPUCanvas + WGSL parity + the multi-pass painterly substrate)
 
 ## 2. State
 

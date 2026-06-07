@@ -1,4 +1,4 @@
-# AW.W8 — AURORA-INTERACTIVE (cursor-as-light + velocity-reactive flow + the stateful pointer wake)
+# AW.W8 - Aurora interactive (cursor-as-light + velocity-reactive flow + the stateful pointer wake)
 
 ## 2. State
 
