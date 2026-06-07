@@ -700,6 +700,32 @@
     --glass-edge-light:      inset 0 0 0 0.75px hsl(0 0% 100% / 0.18);
     --glass-edge-light-dark: inset 0 0 0 0.75px hsl(0 0% 100% / 0.10);
 
+    /* AW.W23 — content-aware adaptive tint (the Baseline-2025 "tint informed by
+       surrounding content" axis, WWDC25 sess. 219). A surface can tint toward a
+       consumer-provided dominant backdrop color via a `color-mix(in oklab, …)`
+       recipe (oklab is the mwg-preferred space for tint generation; NEVER a
+       lightness-shift in `oklch(from …)` — browsers don't gamut-map yet).
+
+       DEFAULT is zero delta: `--glass-tint-source` is the warm-white card itself
+       and `--glass-tint-strength` is 0%, so the rung background mixes 0% toward
+       the source = byte-identical to today. A consumer sets `--glass-tint-source`
+       to a sampled aurora hue + a strength ≤30% to bias the surface. Alpha-safe:
+       the mix is bounded ≤30% and never re-points the card's own alpha. */
+    --glass-tint-source:   var(--card);
+    --glass-tint-strength: 0%;
+
+    /* AW.W23 — chromatic edge dispersion (the "polished glass" rim fringe Apple
+       shows). A warm fringe on one edge + a cool fringe on the other, low-alpha,
+       biased warm-cream/NCSU-red (NOT iOS-blue). Composed OVER the W22 uniform
+       rim under `prefers-reduced-transparency: no-preference`; dropped under
+       `reduce` (it is a transparency garnish). The two directional inset rings
+       read as light refracting through the glass edge. */
+    --glass-fringe-warm: oklch(0.92 0.06 40 / 0.22);
+    --glass-fringe-cool: oklch(0.90 0.05 230 / 0.16);
+    --glass-edge-dispersion:
+        inset 0.75px 0 0 0 var(--glass-fringe-warm),
+        inset -0.75px 0 0 0 var(--glass-fringe-cool);
+
     /* Chassis curvature illusion — a subtle radial gradient at the chassis
        top centre that lifts the surface without committing to literal 3D.
        Composed into <InstrumentChassis>'s background stack. */
@@ -1586,6 +1612,13 @@
        `.dark` (mirroring the `--glass-specular` remap above). The lit token
        resolves to the `-dark` alpha on the deeper canvas. */
     --glass-edge-light: var(--glass-edge-light-dark);
+
+    /* AW.W23 — the chromatic-fringe + adaptive-tint dark arm. The fringe drops
+       to a lower-luminance warm/cool pair on the deep canvas; `--glass-tint-
+       source` auto-flips with `--card` (no override needed — the default already
+       resolves the dark card). */
+    --glass-fringe-warm: oklch(0.78 0.07 40 / 0.18);
+    --glass-fringe-cool: oklch(0.74 0.06 230 / 0.14);
     --glass-curvature-overlay: radial-gradient(
         ellipse at 50% -20%,
         hsl(0 0% 100% / 0.06),

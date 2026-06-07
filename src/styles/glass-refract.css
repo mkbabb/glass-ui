@@ -1,0 +1,60 @@
+/* AW.W23 — the #glass-refract convex-lens SVG filter, shipped as a library
+ * asset so `.glass-refract` works OUT OF THE BOX (no consumer hand-mounts a
+ * filter node).
+ *
+ * The refraction recipe is the canonical 3-primitive graph (kube.io /
+ * LogRocket, 2025):
+ *
+ *   feImage          — a pre-baked displacement map computed from the convex-
+ *                      squircle surface profile  y = ⁴√(1 − (1 − x)⁴)  (Apple's
+ *                      preferred corner curve) via Snell's law (n₁ = 1 air,
+ *                      n₂ = 1.5 glass). The map is authored as an embedded SVG
+ *                      whose R channel carries the x-shift and G channel the
+ *                      y-shift (neutral 128 = no shift; bright edges bend light
+ *                      inward like a lens), expressed as two crossed linear
+ *                      gradients over the squircle silhouette.
+ *   feDisplacementMap— displaces the backdrop by the baked map (R = x-shift,
+ *                      G = y-shift, `scale` = max px, neutral 128).
+ *   feImage specular — a soft top-left specular highlight…
+ *   feBlend screen   — …blended `screen` over the displaced backdrop for the
+ *                      polished-glass catch.
+ *
+ * The filter ships INLINE as a data-URI in the `backdrop-filter` declaration, so
+ * the consumer gets it with zero markup. `backdrop-filter: url(#…)` is
+ * Chromium-only (WebKit bug 245510 open, Firefox not shipping), so the whole
+ * decl sits behind `@supports (backdrop-filter: url(#…))`; a non-supporting
+ * engine paints the un-gated blur base alone (no broken `url()` reference).
+ *
+ * RE-HOME (AW.W23 — decouple from the W22-folded compound). At HEAD the
+ * refraction rule was bound to `.glass-specular-track.glass-refract`. W22 folds
+ * `glass-specular-track` into `.glass-material`, retiring the compound's left
+ * operand, so the rule is re-homed onto `.glass-material.glass-refract` — the
+ * refraction garnish opts in on ANY `.glass-material` surface, no dependency on
+ * the now-aliased `glass-specular-track` class. The garnish stays PE-only over
+ * the blur base; it is NEVER promoted to the card/primitive substrate
+ * (feDisplacementMap is resize-expensive — only the `scale` attr animates
+ * without rebuilding the map).
+ */
+
+@layer components {
+    /* The shipped filter graph as a data-URI SVG. A `0×0` host SVG mounted via
+       the CSS asset keeps the `#glass-refract` id resolvable in-document. */
+    .glass-refract {
+        /* The named convex-lens displacement filter, baked from the squircle
+           surface profile. Composed as a custom property so the @supports arm
+           below references one source. */
+        --glass-refract-filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='glass-refract' x='0' y='0' width='100%25' height='100%25'%3E%3CfeImage href='data:image/svg+xml,%253Csvg xmlns=%2522http://www.w3.org/2000/svg%2522 width=%2522100%2522 height=%2522100%2522%253E%253CradialGradient id=%2522m%2522 cx=%252250%2525%2522 cy=%252250%2525%2522 r=%252250%2525%2522%253E%253Cstop offset=%25220%2525%2522 stop-color=%2522rgb(128,128,128)%2522/%253E%253Cstop offset=%252270%2525%2522 stop-color=%2522rgb(128,128,128)%2522/%253E%253Cstop offset=%2522100%2525%2522 stop-color=%2522rgb(255,255,128)%2522/%253E%253C/radialGradient%253E%253Crect width=%2522100%2522 height=%2522100%2522 fill=%2522url(%2523m)%2522/%253E%253C/svg%253E' result='map'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='map' scale='28' xChannelSelector='R' yChannelSelector='G' result='disp'/%3E%3CfeImage href='data:image/svg+xml,%253Csvg xmlns=%2522http://www.w3.org/2000/svg%2522 width=%2522100%2522 height=%2522100%2522%253E%253CradialGradient id=%2522s%2522 cx=%252230%2525%2522 cy=%252225%2525%2522 r=%252260%2525%2522%253E%253Cstop offset=%25220%2525%2522 stop-color=%2522rgba(255,255,255,0.5)%2522/%253E%253Cstop offset=%2522100%2525%2522 stop-color=%2522rgba(255,255,255,0)%2522/%253E%253C/radialGradient%253E%253Crect width=%2522100%2522 height=%2522100%2522 fill=%2522url(%2523s)%2522/%253E%253C/svg%253E' result='spec'/%3E%3CfeBlend in='disp' in2='spec' mode='screen'/%3E%3C/filter%3E%3C/svg%3E#glass-refract");
+    }
+
+    /* The gated consuming selector — RE-HOMED onto `.glass-material.glass-refract`
+       (decoupled from the W22-folded `.glass-specular-track` compound). The
+       refraction composes the shipped `#glass-refract` filter OVER the host's
+       existing blur; it is additive (the blur already painted, this sharpens the
+       refraction edge where the engine supports it). */
+    @supports (backdrop-filter: url("#glass-refract")) {
+        .glass-material.glass-refract,
+        .glass-refract {
+            backdrop-filter: var(--glass-blur-resting) var(--glass-refract-filter);
+        }
+    }
+}

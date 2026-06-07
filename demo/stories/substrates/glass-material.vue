@@ -90,9 +90,9 @@ const tintSamples = [
                         squircle (.glass-card)
                     </div>
                     <div
-                        class="glass-pill flex h-12 w-44 items-center justify-center text-sm font-medium"
+                        class="glass-btn !h-12 !w-44 text-sm font-medium"
                     >
-                        squircle (.glass-pill)
+                        squircle (.glass-btn)
                     </div>
                 </div>
             </ShowcaseFrame>

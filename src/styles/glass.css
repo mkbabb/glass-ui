@@ -189,9 +189,16 @@
        which modern Chromium then dropped from the CSSOM (the prefixed
        alias is parser-rejected post-Chrome 113). Single-source-of-truth
        authorship lets the build pipeline deliver the right matrix. */
+    /* AW.W23 — every rung's background composes the adaptive-tint recipe
+       (`color-mix(in oklab, <rung bg>, var(--glass-tint-source) var(--glass-tint-
+       strength))`). With the default `--glass-tint-strength: 0%` the mix is a
+       no-op = byte-identical to the un-tinted rung; a consumer biases the surface
+       toward a sampled backdrop hue by setting `--glass-tint-source` + a
+       strength ≤30%. oklab is the mwg-preferred tint space (NEVER an
+       `oklch(from …)` lightness-shift — browsers don't gamut-map yet). */
     .glass-wash {
         position: relative;
-        background: var(--glass-bg-wash);
+        background: color-mix(in oklab, var(--glass-bg-wash), var(--glass-tint-source) var(--glass-tint-strength));
         backdrop-filter: var(--glass-blur-wash);
         border: 1px solid var(--glass-border-wash);
         box-shadow: var(--glass-material-rim), var(--glass-shadow-wash);
@@ -211,7 +218,7 @@
        Spine tier wires its own rung at instrument-chassis.css. */
     .glass-quiet {
         position: relative;
-        background: var(--glass-bg-quiet);
+        background: color-mix(in oklab, var(--glass-bg-quiet), var(--glass-tint-source) var(--glass-tint-strength));
         backdrop-filter: var(--glass-blur-quiet);
         border: 1px solid var(--glass-border-quiet);
         box-shadow:
@@ -222,7 +229,7 @@
 
     .glass-resting {
         position: relative;
-        background: var(--glass-bg-resting);
+        background: color-mix(in oklab, var(--glass-bg-resting), var(--glass-tint-source) var(--glass-tint-strength));
         backdrop-filter: var(--glass-blur-resting);
         border: 1px solid var(--glass-border-resting);
         box-shadow:
@@ -238,7 +245,7 @@
        box-shadow stack so it composes with the under-shadow floor + the lift. */
     .glass-floating {
         position: relative;
-        background: var(--glass-bg-floating);
+        background: color-mix(in oklab, var(--glass-bg-floating), var(--glass-tint-source) var(--glass-tint-strength));
         backdrop-filter: var(--glass-blur-floating);
         border: 1px solid var(--glass-border-floating);
         box-shadow:
@@ -249,7 +256,7 @@
 
     .glass-overlay {
         position: relative;
-        background: var(--glass-bg-overlay);
+        background: color-mix(in oklab, var(--glass-bg-overlay), var(--glass-tint-source) var(--glass-tint-strength));
         backdrop-filter: var(--glass-blur-overlay);
         border: 1px solid var(--glass-border-overlay);
         box-shadow: var(--glass-material-rim), var(--glass-shadow-overlay);
@@ -351,7 +358,7 @@
         --card-focus-shadow: var(--shadow-card);
         --card-focus-border: var(--glass-border-quiet);
         position: relative;
-        background: var(--glass-bg-quiet);
+        background: color-mix(in oklab, var(--glass-bg-quiet), var(--glass-tint-source) var(--glass-tint-strength));
         backdrop-filter: var(--glass-blur-quiet);
         border: 1px solid var(--card-focus-border);
         border-radius: var(--radius-card);
@@ -575,6 +582,36 @@
         box-shadow:
             var(--progress-rail-glow-x, 4px) 0 var(--progress-rail-glow-blur, 8px)
             color-mix(in srgb, var(--progress-rail-fill, var(--primary)) var(--progress-rail-glow-strength, 55%), transparent);
+    }
+
+    /* ── AW.W23 — chromatic edge dispersion (the polished-glass rim fringe) ──
+       An opt-in `.glass-chromatic` composes the warm/cool oklab fringe OVER the
+       W22 uniform rim (it does NOT replace it — the rim still rides each rung's
+       box-shadow). The fringe is a transparency garnish, so it composes ONLY
+       under `prefers-reduced-transparency: no-preference` and drops under
+       `reduce` (handled by the bracket below). The fringe lands as a dedicated
+       inset box-shadow pair on the material surface so it adds onto the rim. */
+    @media (prefers-reduced-transparency: no-preference) {
+        .glass-chromatic {
+            box-shadow: var(--glass-edge-dispersion), var(--glass-material-rim);
+        }
+    }
+}
+
+/* ── AW.W23 — corner-shape: squircle PE (Chrome 139+) ───────────────────────
+   The literal iOS-26 superellipse corner geometry that `backdrop-filter`,
+   borders, and shadows follow. `@supports (corner-shape: squircle)`-gated over
+   the un-gated `border-radius` round, which stays the fallback at zero cost on
+   every other engine (Safari/Firefox). The `corner-shape` decl sits ONLY inside
+   the `@supports` block — a leak onto the un-gated base would break the round
+   fallback on a partial-support engine. */
+@supports (corner-shape: squircle) {
+    @layer components {
+        .glass-card,
+        .glass-btn,
+        .btn-pill {
+            corner-shape: squircle;
+        }
     }
 }
 
