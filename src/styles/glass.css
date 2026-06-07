@@ -29,6 +29,150 @@
  */
 
 @layer components {
+    /* ── The unified glass material (AW.W22) ──────────────────────────────
+       ONE source for the three material atoms that AV.W15 scattered onto
+       opt-in classes + single tiers:
+         (a) the moving-specular `::before` catch-light (folded here from
+             glass-specular-track.css — that file now keeps only the thin
+             `.glass-specular-track` ALIAS + the brackets that point HERE),
+         (b) the `--glass-edge-light` full-perimeter rim (moved off the
+             floating-only block so EVERY rung carries it),
+         (c) the pointer interaction-light hooks (the `--specular-*`
+             `@property` channel mapped from the consumer's --mouse-x/--mouse-y
+             write).
+       The five ladder rungs + `.glass-card` + the `.dock-icon-button` CONTROL
+       compose `.glass-material`, so a Switch thumb, a glass Button, a Dialog,
+       and a Sheet all read as the SAME material without per-component wiring.
+
+       The `.glass-dock` SHELL is OUT of this group BY DESIGN — it hand-rolls a
+       parallel surface (its own `--glass-*-dock` family + a local rim + an
+       instrument-strip `::before`) the dock arm owns; the dock's catch-light
+       lives on its CONTROL (`.dock-icon-button`, listed below), not the shell.
+
+       The selector GROUP is the single source. Adding a surface to the band
+       material is one comma-entry here, not a new opt-in class string. */
+    .glass-material,
+    .glass-wash,
+    .glass-quiet,
+    .glass-resting,
+    .glass-floating,
+    .glass-overlay,
+    .glass-card,
+    .glass-specular-track,
+    .dock-icon-button {
+        position: relative;
+    }
+
+    /* (b) The rim — UNIFORM across all rungs (ONE `--glass-edge-light` token,
+       not a per-rung family). The floating/overlay tiers previously wired it
+       into their box-shadow stack; it now rides the material group as a
+       dedicated `::after` inset ring so it composes alongside (not inside) each
+       tier's own shadow recipe. The `::after` grain overlay already claims the
+       five rungs' `::after`; the rim is folded INTO that same overlay's
+       box-shadow below (the grain `::after` gets the rim inset ring) so no
+       pseudo-element collides. */
+
+    /* (a)+(c) The moving-specular `::before` catch-light — the iOS-26
+       illuminate-from-within behaviour. A masked radial-gradient glow rides the
+       surface at the pointer position (--mouse-x/--mouse-y → the typed
+       --specular-* channel). Folded VERBATIM from glass-specular-track.css so
+       there is exactly ONE specular source. */
+    .glass-material::before,
+    .glass-wash::before,
+    .glass-quiet::before,
+    .glass-resting::before,
+    .glass-floating::before,
+    .glass-overlay::before,
+    .glass-card::before,
+    .glass-specular-track::before,
+    .dock-icon-button::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        z-index: 1;
+        /* Map the consumer's pointer write onto the typed properties, ON THE
+           PSEUDO. The `--mouse-x/--mouse-y` write lands on the HOST (inline
+           style) as UNREGISTERED props that inherit down to this `::before`;
+           the registered `--specular-*` props are `inherits: false`, so the
+           mapping is declared HERE where the pseudo owns its typed value. The
+           `var(--mouse-x, 50%)` floor is the centred fallback. */
+        --specular-x: var(--mouse-x, 50%);
+        --specular-y: var(--mouse-y, 50%);
+        /* The catch-light intensity floor at rest; hover/active lift it (the
+           interaction-light state machine below). */
+        --specular-intensity: 0.35;
+        /* The travelling catch-light — a soft warm-white circular glow centred
+           on the tracked pointer position (NOT iOS blue; keeps the warm-cream
+           identity). The `--specular-intensity` multiplier drives the layer
+           `opacity`, not a per-stop alpha (a registered-`@property` var() nested
+           in an hsl() alpha computes to 0 in Chromium). */
+        background: radial-gradient(
+            circle at var(--specular-x, 50%) var(--specular-y, 50%),
+            hsl(40 30% 100% / 0.55) 0%,
+            hsl(40 30% 100% / 0.22) 22%,
+            transparent 55%
+        );
+        opacity: var(--specular-intensity, 0.35);
+        /* Clip the glow to the plate so it rides the surface. `mask-image`
+           Baseline 2023-12-07; a non-supporting engine ignores it and the
+           `inset: 0` + radius-inherit already bound the glow. */
+        mask-image: radial-gradient(
+            circle at var(--specular-x, 50%) var(--specular-y, 50%),
+            black 0%,
+            black 55%,
+            transparent 75%
+        );
+        mix-blend-mode: screen;
+        /* Smooth the position + intensity between pointer samples (the typed
+           @property regs make the percentage stops interpolable). */
+        transition:
+            --specular-x var(--duration-fast, 150ms) var(--ease-standard, ease-out),
+            --specular-y var(--duration-fast, 150ms) var(--ease-standard, ease-out),
+            opacity var(--duration-normal, 240ms) var(--ease-standard, ease-out);
+    }
+
+    .dark .glass-material::before,
+    .dark .glass-wash::before,
+    .dark .glass-quiet::before,
+    .dark .glass-resting::before,
+    .dark .glass-floating::before,
+    .dark .glass-overlay::before,
+    .dark .glass-card::before,
+    .dark .glass-specular-track::before,
+    .dark .dock-icon-button::before {
+        /* Softer over the deep canvas — the screen blend lifts harder on dark. */
+        --specular-intensity: 0.22;
+    }
+
+    /* (c) Interaction-light lockstep — hover/active lift the intensity in the
+       SAME rungs the scale-press squish keys off, so material-light fires in
+       lockstep with the press across every glass surface. Settles back on leave
+       via the opacity transition above. */
+    .glass-material:hover::before,
+    .glass-wash:hover::before,
+    .glass-quiet:hover::before,
+    .glass-resting:hover::before,
+    .glass-floating:hover::before,
+    .glass-overlay:hover::before,
+    .glass-card:hover::before,
+    .glass-specular-track:hover::before,
+    .dock-icon-button:hover::before {
+        --specular-intensity: 0.6;
+    }
+    .glass-material:active::before,
+    .glass-wash:active::before,
+    .glass-quiet:active::before,
+    .glass-resting:active::before,
+    .glass-floating:active::before,
+    .glass-overlay:active::before,
+    .glass-card:active::before,
+    .glass-specular-track:active::before,
+    .dock-icon-button:active::before {
+        --specular-intensity: 0.85;
+    }
+
     /* ── Five-tier surface ladder (v0.8.0; visual only, no geometry) ──
        Tier semantics, alpha-monotonic per R3-spec §A:
          wash      ~0.30α  + light blur      (was `subtle`)
@@ -50,7 +194,7 @@
         background: var(--glass-bg-wash);
         backdrop-filter: var(--glass-blur-wash);
         border: 1px solid var(--glass-border-wash);
-        box-shadow: var(--glass-shadow-wash);
+        box-shadow: var(--glass-material-rim), var(--glass-shadow-wash);
     }
 
     /* AL-W10 SLIM under-shadow wiring (tokens.css §AL-W10 SLIM —
@@ -70,7 +214,10 @@
         background: var(--glass-bg-quiet);
         backdrop-filter: var(--glass-blur-quiet);
         border: 1px solid var(--glass-border-quiet);
-        box-shadow: var(--glass-under-shadow-quiet), var(--glass-shadow-quiet);
+        box-shadow:
+            var(--glass-material-rim),
+            var(--glass-under-shadow-quiet),
+            var(--glass-shadow-quiet);
     }
 
     .glass-resting {
@@ -78,21 +225,24 @@
         background: var(--glass-bg-resting);
         backdrop-filter: var(--glass-blur-resting);
         border: 1px solid var(--glass-border-resting);
-        box-shadow: var(--glass-under-shadow-default), var(--glass-shadow-resting);
+        box-shadow:
+            var(--glass-material-rim),
+            var(--glass-under-shadow-default),
+            var(--glass-shadow-resting);
     }
 
-    /* AV.W15 M3 — the floating tier wires the full-perimeter `--glass-edge-light`
-       rim as an inset layer alongside the under-shadow + lift stack. The rim is
-       the catch-light that "defines the silhouette" (WWDC25 sess. 219), distinct
-       from the top-only `--glass-highlight`. It rides INSIDE the box-shadow stack
-       so it composes with the under-shadow floor and the elevation lift. */
+    /* AV.W15 M3 / AW.W22 — the floating tier carries the full-perimeter rim (the
+       catch-light that "defines the silhouette", WWDC25 sess. 219). The rim now
+       comes from the unified `--glass-material-rim` (= `--glass-edge-light`) so
+       it shares ONE source with the rest of the ladder; it rides INSIDE the
+       box-shadow stack so it composes with the under-shadow floor + the lift. */
     .glass-floating {
         position: relative;
         background: var(--glass-bg-floating);
         backdrop-filter: var(--glass-blur-floating);
         border: 1px solid var(--glass-border-floating);
         box-shadow:
-            var(--glass-edge-light),
+            var(--glass-material-rim),
             var(--glass-under-shadow-vivid),
             var(--glass-shadow-floating);
     }
@@ -102,7 +252,7 @@
         background: var(--glass-bg-overlay);
         backdrop-filter: var(--glass-blur-overlay);
         border: 1px solid var(--glass-border-overlay);
-        box-shadow: var(--glass-shadow-overlay);
+        box-shadow: var(--glass-material-rim), var(--glass-shadow-overlay);
     }
 
     /* ── Content-aware under-shadow modifier (AV.W15 M4) ──────────────
@@ -136,7 +286,7 @@
     }
     .glass-floating[data-over-content="solid"] {
         box-shadow:
-            var(--glass-edge-light),
+            var(--glass-material-rim),
             var(--glass-under-shadow-default),
             var(--glass-shadow-floating);
     }
@@ -157,6 +307,28 @@
         opacity: var(--glass-grain-opacity);
         pointer-events: none;
         mix-blend-mode: overlay;
+    }
+
+    /* (b) The unified rim — `--glass-edge-light` full-perimeter inset ring on
+       EVERY material surface (AW.W22). Previously the rim was wired only into
+       the floating/overlay tiers' box-shadow stack; promoting it to the material
+       group makes wash/quiet/resting/card/dock-control all carry the same
+       silhouette catch-light from ONE token. The rim is its OWN `box-shadow`
+       declaration on the material group so it composes uniformly without
+       perturbing each tier's elevation recipe (the floating/overlay tiers drop
+       their now-redundant inline `--glass-edge-light` layer below). The alpha is
+       deliberately low so the rim never eats AA legibility over a busy
+       backdrop. */
+    .glass-material,
+    .glass-wash,
+    .glass-quiet,
+    .glass-resting,
+    .glass-floating,
+    .glass-overlay,
+    .glass-card,
+    .glass-specular-track,
+    .dock-icon-button {
+        --glass-material-rim: var(--glass-edge-light);
     }
 
     .dark .glass-wash::after,
@@ -183,7 +355,7 @@
         backdrop-filter: var(--glass-blur-quiet);
         border: 1px solid var(--card-focus-border);
         border-radius: var(--radius-card);
-        box-shadow: var(--card-focus-shadow);
+        box-shadow: var(--glass-material-rim), var(--card-focus-shadow);
         contain: layout style;
         transition:
             box-shadow var(--duration-fast) var(--ease-standard),
