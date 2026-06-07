@@ -154,6 +154,7 @@ export const CATEGORIES: Category[] = [
         icon: Navigation,
         stories: [
             s("navigation", "tabs", "Tabs", "reka Tabs (default · pill · underline · vertical) + the custom BouncyTabs spring-slider variant."),
+            s("navigation", "deck-progress", "Deck Progress", "Thin deck-position rail — DeckProgress + .glass-progress-rail recipe over <Progress>. Library owns the LOOK; the consumer owns the 100·(k+1)/N math + the pinned chrome (AW.W16)."),
             s("navigation", "dock", "Dock"),
             s("navigation", "dock-layers", "Dock Layers"),
             s("navigation", "rail", "Dock Rail", "Vertical GlassDock variant behind the demo's category nav."),
