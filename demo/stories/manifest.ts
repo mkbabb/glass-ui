@@ -94,6 +94,7 @@ export const CATEGORIES: Category[] = [
         stories: [
             s("substrates", "aurora", "Aurora", "Procedural painterly gradients — multi-nuclei composition, four mediums, cursor-driven swirl. Shipped /aurora."),
             s("substrates", "goo-blob", "GooBlob + WatercolorDot", "WebGL2 metaball on the shared substrate (injected color resolver) + a CSS/SVG pastel swatch. Shipped /goo-blob + /watercolor-dot."),
+            s("substrates", "blob-interaction", "GooBlob Interaction", "The pointer-reactive blob (AW.W10) — frame-rate-independent spring follow, decaying-radius pseudopod trail, volume-preserving velocity squash, and a one-shot click spring impulse. Lit + circular merge + warp."),
             s("substrates", "glass-panel", "Glass Panel", "Five-rung glass tier ladder over a renderer-tier detection cascade (svg-filter / css / fallback) — a substrate, not a UI primitive."),
             s("substrates", "constellation", "Constellation", "A drifting proximity-graph lattice on the Canvas2D substrate (park/freeze/dispose). The neutral lattice ships; the --primary focal node is a consumer drawOverlay pass. Shipped /constellation."),
             s("substrates", "glass-material", "Glass Material", "The unified .glass-material grammar (moving-specular + edge-rim from one mixin) + the four @supports-gated Baseline-2025 SOTA folds — convex-lens refract, squircle, chromatic edge-dispersion, adaptive tint — each over a working fallback (AW.W22/W23)."),
