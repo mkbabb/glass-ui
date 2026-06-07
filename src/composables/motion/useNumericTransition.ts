@@ -11,9 +11,25 @@ import type {
     NumericAnimationOptions,
     TimingFunction,
 } from "@mkbabb/keyframes.js";
-import { onBeforeUnmount, ref, shallowRef } from "vue";
+import { onBeforeUnmount, ref, shallowRef, type Ref } from "vue";
 
 export type SpringSnapshot<K extends string> = Record<K, number>;
+
+/**
+ * The `useNumericTransition` return shape (AW.W15 — named `Use<Name>Return`).
+ * The transition is driver-only: `start`/`stop` control playback, `progress`
+ * (0..1) + `playing` are reactive read-outs.
+ */
+export interface UseNumericTransitionReturn {
+    /** Play the transition from `from` → `to`; resolves at completion. */
+    start: () => Promise<void>;
+    /** Stop the in-flight transition. */
+    stop: () => void;
+    /** Reactive 0..1 progress derived from the first interpolated key. */
+    progress: Ref<number>;
+    /** Reactive true-while-playing flag. */
+    playing: Ref<boolean>;
+}
 
 export interface UseNumericTransitionOptions<K extends string> {
     /** Named numeric endpoints to interpolate between. */
@@ -53,7 +69,7 @@ export interface UseNumericTransitionOptions<K extends string> {
  */
 export function useNumericTransition<K extends string>(
     options: UseNumericTransitionOptions<K>,
-) {
+): UseNumericTransitionReturn {
     const progress = ref(0);
     const playing = ref(false);
 

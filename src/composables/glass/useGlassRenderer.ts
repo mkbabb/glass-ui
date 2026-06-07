@@ -1,6 +1,15 @@
-import { ref, onMounted } from "vue";
+import { ref, onMounted, type Ref } from "vue";
 
 export type GlassTier = "svg-filter" | "css" | "fallback";
+
+/**
+ * The `useGlassRenderer` return shape (AW.W15 — named `Use<Name>Return`). The
+ * detected (or forced) glass rendering tier as a reactive ref.
+ */
+export interface UseGlassRendererReturn {
+    /** The active rendering tier — `preferredTier` if forced, else auto-detected on mount. */
+    tier: Ref<GlassTier>;
+}
 
 /**
  * Detect best glass rendering tier.
@@ -233,7 +242,9 @@ export function destroyGlassFilter(state: GlassFilterState) {
 /**
  * Composable for tiered glass rendering.
  */
-export function useGlassRenderer(options?: { preferredTier?: GlassTier }) {
+export function useGlassRenderer(options?: {
+    preferredTier?: GlassTier;
+}): UseGlassRendererReturn {
     const tier = ref<GlassTier>(options?.preferredTier ?? "css");
 
     onMounted(() => {

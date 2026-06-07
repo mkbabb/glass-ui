@@ -28,11 +28,25 @@ import {
 } from "vue";
 import { watch } from "vue";
 
+/**
+ * The resolver seam (AW.W15) — given a property name + the resolved element,
+ * return the property's value. Defaults to the live
+ * `getComputedStyle(el).getPropertyValue(prop)` read; an injected resolver lets
+ * SSR / tests close the DI loop without touching `document.documentElement`.
+ */
+export type TokenColorResolver = (prop: string, el?: HTMLElement) => string;
+
 export interface UseTokenColorOptions {
     /** Element to resolve the property against. Defaults to `<html>`. */
     element?: MaybeRefOrGetter<HTMLElement | null | undefined>;
     /** Fallback when the property is unset or `document` is unavailable (SSR). */
     fallback?: string;
+    /**
+     * Injected property resolver (AW.W15 DI seam). Defaults to the live
+     * `getComputedStyle(el).getPropertyValue(prop)` read. Pass a custom resolver
+     * for SSR / tests / a themed-context override without reaching the DOM.
+     */
+    resolver?: TokenColorResolver;
 }
 
 export interface UseTokenColorControls {
@@ -62,13 +76,23 @@ export function useTokenColor(
     const fallback = options.fallback ?? "";
     const value = ref<string>(fallback);
 
+    // The default resolver is the live computed-style read; an injected
+    // `options.resolver` overrides it (the AW.W15 DI seam for SSR / tests).
+    const resolver: TokenColorResolver =
+        options.resolver ??
+        ((prop, el) => getComputedStyle(el ?? document.documentElement).getPropertyValue(prop));
+
     function read(): string {
-        if (typeof document === "undefined") return fallback;
         const name = toValue(token);
         if (!name) return fallback;
-        const el = (options.element ? toValue(options.element) : null) ?? document.documentElement;
-        if (!el) return fallback;
-        const resolved = getComputedStyle(el).getPropertyValue(name).trim();
+        // An injected resolver can run without `document` (SSR / test); the
+        // default resolver needs the DOM, so guard it.
+        if (!options.resolver && typeof document === "undefined") return fallback;
+        const el =
+            (options.element ? toValue(options.element) : null) ??
+            (typeof document !== "undefined" ? document.documentElement : undefined) ??
+            undefined;
+        const resolved = resolver(name, el ?? undefined).trim();
         return resolved || fallback;
     }
 

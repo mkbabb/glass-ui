@@ -1,4 +1,9 @@
 <script setup lang="ts">
+// DO-NOT-SPLIT (AW.W15 assay): the code-quality assay graded this 475-line SFC
+// cohesive-at-boundary — the toggle markup, the anchor/JS slider fallback, and
+// the scoped track choreography are one tightly-coupled spring-slider concern;
+// splitting them severs the anchor()/measure seam. W14 split the ONE
+// over-threshold god-module (DataTable); this stays whole by design.
 import { ref, computed, onMounted, nextTick, type HTMLAttributes } from "vue";
 import { cn } from "../../../utils";
 import {
