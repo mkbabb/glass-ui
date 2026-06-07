@@ -42,8 +42,38 @@ const props = withDefaults(
          *                        chassis vocabulary. AJ-W1-δ / G-AJ-D7.
          */
         variant?: "dock" | "rail" | "instrument-strip";
-        /** Corner treatment for vertical rail/tool-palette docks. */
-        shape?: "pill" | "rounded";
+        /**
+         * Corner treatment.
+         *   `"pill"`    — the stadium silhouette (default).
+         *   `"rounded"` — a finite rounded radius (`--radius-xl`).
+         *   `"card"`    — the AW.W3b big-dock card shell: a finite concentric
+         *                 radius (`--dock-card-radius`, default `--radius-3xl`)
+         *                 ABOVE 2xl, below pill — does NOT collapse to a stadium.
+         *                 Collapsed it returns to a pill; the pill↔card swap
+         *                 morphs on the `--dock-motion-resize` spring. A `@supports
+         *                 (corner-shape: squircle)` enhancement reads better at the
+         *                 large radius (the border-radius arc is the contract).
+         *
+         * `"pill"`/`"rounded"` previously bound ONLY under the vertical rail
+         * variant — on a horizontal dock the prop silently no-op'd. AW.W3b adds
+         * the horizontal-root shape rules (closing that documented-but-dead prop),
+         * so `shape` now paints on a horizontal dock too.
+         */
+        shape?: "pill" | "rounded" | "card";
+        /**
+         * In-cap arrangement. `"linear"` (default) lays the active layer out as a
+         * linear row/column. `"grid"` makes the active layer a self-wrapping tile
+         * grid (Launchpad/Stage-Manager track symmetry — `auto-fill` columns of
+         * `--dock-tile-min`). ORTHOGONAL to `overflow` (the OVER-cap strategy):
+         * `layout` is the IN-cap arrangement.
+         *
+         * Hard contract: a `layout="grid"` dock is `alwaysExpanded` (a 2D panel
+         * does not read as a collapsible pill, and no width morph means no
+         * per-frame grid reflow). The canonical pairing is
+         * `shape="card" layout="grid"` (the props stay independent — no
+         * auto-implication of `shape`).
+         */
+        layout?: "linear" | "grid";
         /**
          * Layout axis of the dock. `"horizontal"` (default) lays items out
          * left-to-right and animates `width`; `"vertical"` lays items out
@@ -100,6 +130,7 @@ const props = withDefaults(
         alwaysExpanded: false,
         variant: "dock",
         shape: "pill",
+        layout: "linear",
         orientation: "horizontal",
         density: "comfortable",
         overflow: "grow",
@@ -122,6 +153,7 @@ const dockEl = useTemplateRef<HTMLElement>("dockEl");
 const layersEl = useTemplateRef<HTMLElement>("layersEl");
 const variant = computed(() => props.variant);
 const shape = computed(() => props.shape);
+const layout = computed(() => props.layout);
 const orientation = computed(() =>
     props.variant === "rail" || props.variant === "instrument-strip"
         ? "vertical"
@@ -137,7 +169,17 @@ const scrollClass = computed<string | null>(() => {
     if (props.overflow !== "scroll") return null;
     return orientation.value === "vertical" ? "dock-scroll-y" : "dock-scroll-x";
 });
-const alwaysExpanded = computed(() => props.alwaysExpanded || orientation.value === "vertical");
+/* AW.W3b — a `layout="grid"` dock is `alwaysExpanded` BY CONTRACT. A 2D tile
+   panel does not read as a collapsible pill, and `alwaysExpanded` means no width
+   morph → no per-frame grid-column reflow (the apple-motion reflow-during-morph
+   anti-pattern is structurally avoided). Vertical rails are also always-expanded
+   (they render a single slot). */
+const alwaysExpanded = computed(
+    () =>
+        props.alwaysExpanded ||
+        orientation.value === "vertical" ||
+        props.layout === "grid",
+);
 const fitContent = computed(() =>
     props.fitContent ||
     props.variant === "rail" ||
@@ -212,6 +254,13 @@ const { onTransitionEnd: onLayersTransitionEnd } = useLayerTransition({
     containerEl: layersEl,
     activeLayer: outerActiveLayer,
     axis: outerLayerAxis,
+    /* AW.W3 — typed directional intent for the outer collapsed↔expanded pair.
+       Going TO `full` is an EXPAND (the softer entry-overshoot curve); going TO
+       `summary` is a COLLAPSE (the snappier, non-overshooting exit). The
+       `:active-view-transition-type(dock-expand|dock-collapse)` blocks in
+       view-transition.css author the asymmetry; a non-typed engine runs the
+       symmetric `.gl-dock-layer` curve (the acceptable contract). */
+    directionTypes: (_from, to) => [to === "full" ? "dock-expand" : "dock-collapse"],
 });
 
 /* AQ.W6 §Design 7 — when View-Transitions are supported, the outer
@@ -369,6 +418,7 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
             orientation,
             `variant-${variant}`,
             `shape-${shape}`,
+            `layout-${layout}`,
             scrollClass,
             { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'dock-overflow-wrap': overflow === 'wrap' },
             position === 'fixed' ? 'fixed bottom-[var(--dock-pos)] left-1/2 -translate-x-1/2'

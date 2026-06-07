@@ -70,6 +70,14 @@ function togglePlay() {
     <StoryPage>
         <section class="flex flex-col gap-3">
             <h2 class="text-sm font-semibold text-muted-foreground">Collapsible (hover to expand)</h2>
+            <p class="text-sm text-muted-foreground">
+                AW.W3 — the collapsed pill scales up on hover riding the SAME
+                <code class="rounded bg-muted px-1">--spring-dock</code> vocabulary the expand morph uses, so
+                hover→expand reads as one continuous spring. The controls cascade in on the size spring's
+                progress (outer→in), reversed on collapse. Under
+                <code class="rounded bg-muted px-1">prefers-reduced-motion</code> the scale + stagger snap; the
+                state still toggles.
+            </p>
             <div class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
                 <GlassDock>
                     <DockIconButton aria-label="Home"><Home class="h-4 w-4" /></DockIconButton>

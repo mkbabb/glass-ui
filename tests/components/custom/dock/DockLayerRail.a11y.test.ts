@@ -178,4 +178,51 @@ describe("AU.W8.4 — dock rail a11y contract (APG tabs)", () => {
             );
         expect(indicator).toBeTruthy();
     });
+
+    /* AW.W3 — the focus-orphan assert (a gate addition against the EXISTING
+       `DockLayer.vue:46-67` post-swap focus re-home; NO new component code). When
+       a layer swap hides the previously-active pane, a focus that lived inside it
+       is orphaned for keyboard/AT users; the shipped `watch(isActive)` orphan
+       guard re-homes focus to the revealed active host (`tabindex="-1"`).
+
+       Born-RED witness: revert the `DockLayer.vue` watch → after the swap
+       `document.activeElement` stays inside the now-`[inert]` leaving pane (or is
+       `body`), never re-homed to the active host. GREEN here proves the shipped
+       code bites. Uses real timers so the watch's `await nextTick()` + `.focus()`
+       lands. */
+    it("9. FOCUS-ORPHAN — focus is re-homed to the revealed active host after a swap", async () => {
+        vi.useRealTimers();
+        const { wrapper, active } = await mountRail();
+
+        // Focus a control inside the active pane (pane "a").
+        const paneABtn = wrapper.find(".pane-a-btn").element as HTMLButtonElement;
+        paneABtn.focus();
+        expect(document.activeElement).toBe(paneABtn);
+
+        // Swap to pane "b". The prior pane ("a") goes `[inert]` + `aria-hidden`;
+        // its focused button is orphaned — the shipped watch must re-home focus
+        // to the revealed host ("b").
+        active.value = "b";
+        await nextTick();
+        await nextTick();
+        await new Promise((r) => setTimeout(r, 0));
+        await nextTick();
+
+        const hosts = wrapper.findAll(".dock-layer-item-host");
+        const activeHost = hosts.find((h) => h.classes().includes("is-active"));
+        expect(activeHost).toBeTruthy();
+        const activeHostEl = activeHost!.element as HTMLElement;
+
+        // Focus must NOT be orphaned in the now-inert leaving pane.
+        const orphaned =
+            document.activeElement === null ||
+            document.activeElement === document.body ||
+            !!document.activeElement?.closest?.("[inert]");
+        expect(orphaned).toBe(false);
+        // …and it lands on the revealed active host (the tabindex=-1 re-home target).
+        expect(document.activeElement).toBe(activeHostEl);
+        expect(activeHostEl.getAttribute("tabindex")).toBe("-1");
+
+        wrapper.unmount();
+    });
 });

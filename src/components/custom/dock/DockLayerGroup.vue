@@ -58,6 +58,17 @@ const { onTransitionEnd, currentLayer, leavingLayer } = useLayerTransition({
     containerEl,
     activeLayer,
     axis,
+    /* AW.W3 — typed directional intent for the inner pane swap. Moving to a
+       LATER-registered layer is `layer-forward` (the softer entry-overshoot);
+       moving to an EARLIER one is `layer-back` (the snappier exit). The order is
+       the rail's registration order (the visual left-to-right / top-to-bottom
+       order). A non-typed engine runs the symmetric curve. */
+    directionTypes: (from, to) => {
+        const fromIdx = layers.value.findIndex((l) => l.id === from);
+        const toIdx = layers.value.findIndex((l) => l.id === to);
+        // Unknown index (a not-yet-registered layer) → forward (the entry default).
+        return [toIdx < fromIdx ? "layer-back" : "layer-forward"];
+    },
 });
 
 /* AQ.W6 §Design 7 — on a View-Transitions engine the layer-stack size morph +

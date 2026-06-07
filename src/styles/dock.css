@@ -60,6 +60,19 @@
         --dock-wrap-max-width: calc(100vw - var(--dock-viewport-inline-gutter, 1rem));
         --dock-separator-height: calc(var(--dock-h, var(--size-icon-btn)) * 0.5);
         --dock-collapsed-hover-scale: var(--scale-hover-dock);
+        /* AW.W3 — the spring-keyed child stagger knobs. `--dock-stagger-window-size`
+           is the fraction of the morph each child reveals over; `--dock-stagger-rise`
+           is the px the child rises from as it fades in. Consumers retune the
+           cascade feel per instance. */
+        --dock-stagger-window-size: 0.55;
+        --dock-stagger-rise: 4px;
+        /* AW.W3b — big-dock tokens. `--dock-card-radius` is the finite card-shell
+           radius (default --radius-dock-card = --radius-3xl, density-scaled
+           below); `--dock-tile-min` is the grid tile minimum (auto-fill track
+           floor). Both are density-scaled (compact tighter, spacious looser) — the
+           card radius + tile size ride the density cascade, never magic numbers. */
+        --dock-card-radius: var(--radius-dock-card);
+        --dock-tile-min: 4.5rem;
         /* Individual-transform identity base (AQ.W3 §W3.2). `scale: 1` at rest
            mints the stacking context once so a portaled popover over `--z-dock`
            stays above the dock during a hover scale (the load-bearing
@@ -300,12 +313,28 @@
        only. Width is driven by the inner `.dock-layers` FLIP via
        `useLayerTransition`; pinning it here would race the FLIP and
        reintroduce the `width: auto` non-interpolation diagnosed in
-       R1+R6. */
+       R1+R6.
+
+       AW.W3 — the collapsed-hover `scale` (the `.collapsed:hover` rule below) +
+       the press squish (`--scale-press-dock` on the dock controls) ride the
+       INDIVIDUAL `scale` property, NOT `transform`. Adding `scale
+       var(--dock-motion-resize)` here unifies the hover scale onto the SAME dock
+       spring vocabulary as the morph, so a collapsed→hover→expand gesture reads as
+       ONE continuous spring rather than a `scale`-ease handed off to the
+       width-spring. Under PRM the global gate strips `scale` from the
+       transition-property → the hover scale snaps (0 morph frames). */
     .glass-dock:not(.vertical) {
         transition:
             padding var(--dock-motion-resize),
             box-shadow var(--dock-motion-standard),
             transform var(--dock-motion-resize),
+            scale var(--dock-motion-resize),
+            /* AW.W3b — the pill↔card corner radius morphs on the SAME spring the
+               aperture rides (ONE free interpolation). Without this the
+               shape-card collapsed↔expanded radius snaps discretely. The list is
+               shared by ALL horizontal docks — the radius transition also glides
+               the wrap collapsed↔expanded radius swap (desirable). */
+            border-radius var(--dock-motion-resize),
             background var(--dock-motion-standard),
             border-color var(--dock-motion-standard);
     }
@@ -339,6 +368,7 @@
             padding var(--dock-motion-resize),
             box-shadow var(--dock-motion-standard),
             transform var(--dock-motion-resize),
+            scale var(--dock-motion-resize),
             background var(--dock-motion-standard),
             border-color var(--dock-motion-standard);
     }
@@ -355,6 +385,38 @@
 
     .glass-dock.variant-rail.shape-rounded {
         border-radius: var(--radius-xl);
+    }
+
+    /* AW.W3b — horizontal-root shape rules. The `shape-*` class previously bound
+       ONLY under `.variant-rail`; on a horizontal `variant-dock` the prop silently
+       no-op'd (the root hardwired `--radius-dock` = `--radius-pill`). These rules
+       close that documented-but-dead prop — `shape="rounded"` / `shape="card"` now
+       paint on a horizontal dock. Scoped to `variant-dock:not(.vertical)` so the
+       rail + instrument-strip variants (which own their own radius) are untouched. */
+    .glass-dock.variant-dock:not(.vertical).shape-rounded {
+        border-radius: var(--radius-xl);
+    }
+
+    /* The big-dock CARD shell — a FINITE concentric radius above 2xl, below pill.
+       It does NOT collapse to a stadium. Collapsed it returns to a pill (the morph
+       target); the pill↔card swap glides on the `--dock-motion-resize` spring
+       (`border-radius` is in the `:not(.vertical)` transition list). */
+    .glass-dock.variant-dock:not(.vertical).shape-card {
+        border-radius: var(--dock-card-radius);
+    }
+
+    .glass-dock.variant-dock:not(.vertical).shape-card.collapsed {
+        border-radius: var(--radius-pill);
+    }
+
+    /* The squircle reads markedly better at the large card radius — an
+       `@supports`-gated ENHANCEMENT only (Chrome 139+, no FF/Safari 2026). The
+       border-radius arc is the CONTRACT; the squircle is the better tier (the
+       baseline arc is the acceptable contract, NOT a degraded fallback). */
+    @supports (corner-shape: squircle) {
+        .glass-dock.variant-dock:not(.vertical).shape-card {
+            corner-shape: squircle;
+        }
     }
 
     /* AJ-W1-δ — `instrument-strip` variant (per G-AJ-D7 Path 1).
@@ -438,6 +500,13 @@
         justify-content: center;
     }
 
+    /* AW.W3 — the collapsed-hover scale rides the unified dock spring vocabulary.
+       The `scale var(--dock-motion-resize)` arm was added to the `.glass-dock`
+       root transition above, so this hover scale settles on the SAME spring curve
+       the expand morph uses — a collapsed→hover→expand gesture is one continuous
+       spring, not a `scale`-ease handed off to the width-spring. The hover scale
+       and the press squish (`--scale-press-dock`) are now one register on the dock
+       surface. */
     .glass-dock.collapsed:hover {
         background: var(--glass-bg-wash);
         border-color: var(--glass-border-floating);
@@ -659,6 +728,72 @@
         inset: 0;
     }
 
+    /* AW.W3 — the spring-keyed child stagger. While the size spring drives the
+       morph, the driver arms the container (`.dock-layers` / `.dock-layer-stack`)
+       with `data-revealing` and writes the morph's normalized progress to
+       `--dock-morph-progress` (0 → 1) every frame. Each direct child of the
+       ACTIVE pane reveals when that progress crosses a per-child onset, so the
+       controls cascade IN ON the physical morph — a fast flick and a slow
+       hover-open both choreograph correctly, and an interrupted morph carries the
+       cascade with it (no orphaned timers). This is a per-CHILD opacity onset; the
+       active PANE itself stays statically opacity:1 (revealed by the aperture —
+       the W2 clip-reveal contract is NOT regressed).
+
+       The reveal is a pure `calc` ramp: `opacity = clamp(0, (progress − onset) /
+       window, 1)`. `--dock-stagger-onset` steps per child (nth-child); the window
+       is `--dock-stagger-window`. The children also rise a few px on a `translate`
+       that resolves on the same ramp. ONLY children inside the `[data-revealing]`
+       active pane are armed — at rest the children carry no opacity authority (the
+       default cascade leaves them at 1).
+
+       PRM: the driver never arms `data-revealing` on the synchronous PRM swap (the
+       FLIP fast-path returns before the spring; the spring's `respectReducedMotion`
+       settles instantly), so the children paint at full opacity at once. The
+       global PRM gate also strips `translate` from the transition-property — the
+       rise snaps. The cascade collapses to 0 stagger frames under PRM. */
+    .dock-layers[data-revealing] .dock-layer--full > *,
+    .dock-layer-stack[data-revealing] .dock-layer-item-host.is-active > * {
+        --dock-stagger-window: var(--dock-stagger-window-size, 0.55);
+        --dock-stagger-onset: 0;
+        opacity: clamp(
+            0,
+            calc(
+                (var(--dock-morph-progress, 1) - var(--dock-stagger-onset)) /
+                    var(--dock-stagger-window)
+            ),
+            1
+        );
+        translate: 0
+            calc(
+                (1 - clamp(0, calc((var(--dock-morph-progress, 1) - var(--dock-stagger-onset)) / var(--dock-stagger-window)), 1)) *
+                    var(--dock-stagger-rise, 4px)
+            );
+    }
+
+    /* Per-child onsets — each successive control starts a beat later, so the row
+       fills outer→in on expand. The onsets are fractions of the morph progress;
+       capped so even a long row finishes within the morph window. */
+    .dock-layers[data-revealing] .dock-layer--full > *:nth-child(2),
+    .dock-layer-stack[data-revealing] .dock-layer-item-host.is-active > *:nth-child(2) {
+        --dock-stagger-onset: 0.08;
+    }
+    .dock-layers[data-revealing] .dock-layer--full > *:nth-child(3),
+    .dock-layer-stack[data-revealing] .dock-layer-item-host.is-active > *:nth-child(3) {
+        --dock-stagger-onset: 0.16;
+    }
+    .dock-layers[data-revealing] .dock-layer--full > *:nth-child(4),
+    .dock-layer-stack[data-revealing] .dock-layer-item-host.is-active > *:nth-child(4) {
+        --dock-stagger-onset: 0.24;
+    }
+    .dock-layers[data-revealing] .dock-layer--full > *:nth-child(5),
+    .dock-layer-stack[data-revealing] .dock-layer-item-host.is-active > *:nth-child(5) {
+        --dock-stagger-onset: 0.32;
+    }
+    .dock-layers[data-revealing] .dock-layer--full > *:nth-child(n + 6),
+    .dock-layer-stack[data-revealing] .dock-layer-item-host.is-active > *:nth-child(n + 6) {
+        --dock-stagger-onset: 0.4;
+    }
+
     /* AW.W2 — the at-rest clip-lift moved to `.expanded:not([data-morphing])` /
        `.always-expanded:not([data-morphing])` (the clip-shell block at the top).
        A plain `overflow: visible` here would lift the clip DURING the morph (the
@@ -674,6 +809,46 @@
 
     .glass-dock.always-expanded {
         cursor: default;
+    }
+
+    /* ── AW.W3b — `layout="grid"` the 2D auto-grid big dock ──────────────
+       The active layer becomes a self-wrapping tile grid (Launchpad / Stage-Manager
+       track symmetry — `auto-fill` columns floored at `--dock-tile-min`, explicit
+       `grid-auto-rows` so the concentric look holds). DISTINCT from
+       `overflow="wrap"`'s content-ordered flex-wrap. A `layout="grid"` dock is
+       `alwaysExpanded` by contract (GlassDock.vue), so there is NO width morph and
+       hence NO per-frame grid-column reflow. `white-space: normal` releases the
+       single-row nowrap so the tiles wrap. */
+    .glass-dock.layout-grid {
+        white-space: normal;
+    }
+
+    .glass-dock.layout-grid .dock-layer--full {
+        display: grid;
+        grid-template-columns: repeat(
+            auto-fill,
+            minmax(var(--dock-tile-min, 4.5rem), 1fr)
+        );
+        grid-auto-rows: var(--dock-tile-min, 4.5rem);
+        gap: var(--dock-layer-gap, 0.375rem);
+        width: 100%;
+        height: auto;
+        white-space: normal;
+    }
+
+    /* A grid dock fills the inline cap; the active layer is the panel body, not a
+       shrink-to-fit row. The cap is the `--dock-max-inline-size` clamp (KEPT). */
+    .glass-dock.layout-grid .dock-layers {
+        width: 100%;
+    }
+
+    /* CONCENTRIC inner tiles — inner radius = outer card radius − padding (the
+       universal macOS / visionOS / Raycast rule). NEVER nest two pills
+       (stadium-in-stadium); a finite outer + a stepped-down inner. */
+    .glass-dock.layout-grid.shape-card .dock-layer--full > * {
+        border-radius: calc(
+            var(--dock-card-radius) - var(--dock-padding-inline, 0.5rem)
+        );
     }
 
     /* ── Scroll-on-overflow opt-in (GlassDock `overflow="scroll"`) ───────
@@ -748,6 +923,15 @@
         min-height: var(--dock-wrap-layer-min-height, var(--dock-layer-height, 2rem));
         gap: var(--dock-wrap-row-gap, 0.25rem)
             var(--dock-wrap-column-gap, var(--dock-layer-gap, 0.375rem));
+        /* AW.W3b — the graceful wrap-morph. The wrap/unwrap row-reflow flips
+           `flex-wrap` at the `--dock-overflow-bp` `@media` boundary; without a
+           transition the rows JUMP-CUT. Sequencing the layer's `min-height`
+           through the `--dock-motion-resize` spring MORPHS the reflow. The global
+           PRM gate strips `min-height` from the transition-property under reduce →
+           the morph snaps (0 morph frames) while the reflow still completes. The
+           wrap radius swap (`.collapsed` / `@media`) glides too — `border-radius`
+           is in the shared `:not(.vertical)` transition list (AW.W3b scope 2). */
+        transition: min-height var(--dock-motion-resize);
     }
 
     .glass-dock.dock-overflow-wrap .dock-layer--summary {

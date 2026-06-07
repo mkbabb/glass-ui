@@ -119,5 +119,32 @@ const trim = ref<number[]>([55]);
                 </GlassDock>
             </div>
         </StorySection>
+
+        <StorySection
+            label="idle-collapse-under-drag — the keepDockOpen hold (AW.W3)"
+            blurb="A collapsible dock with a SHORT idle-collapse delay (600 ms). Hover to expand, then press-and-hold the slider thumb and move the pointer OFF the dock: the dock must STAY open through the held drag (the `dockKeepOpen` token suppresses the idle-collapse timer), and re-collapse only after you release. This is the AW.W3 proof story — `proof:dock-layering-polish` synthetically drives this exact gesture and asserts the dock does not collapse mid-hold."
+        >
+            <div
+                class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8"
+                data-testid="dock-slider-hold"
+            >
+                <GlassDock :collapse-delay="600">
+                    <DockIconButton aria-label="Hold mixer">
+                        <SlidersHorizontal class="h-4 w-4" />
+                    </DockIconButton>
+                    <div class="flex w-48 items-center px-2">
+                        <Slider
+                            v-model="volume"
+                            :max="100"
+                            :step="1"
+                            aria-label="Hold mix volume"
+                        />
+                    </div>
+                    <template #collapsed>
+                        <SlidersHorizontal class="h-4 w-4" />
+                    </template>
+                </GlassDock>
+            </div>
+        </StorySection>
     </StoryPage>
 </template>

@@ -124,9 +124,14 @@ const startedAt = Date.now();
 // the AW band CSS (glass-atoms material/card, the big-dock card-radius grammar,
 // band-G) so this is not re-based per sub-cut. The lib's material identity
 // evolving with the AW feature landing, not per-wave creep.
+// AW re-base (the 3.6.0 cut): the dock W3 big-dock card/grid grammar + the
+// unified .glass-material mixin + the four Baseline-2025 SOTA folds
+// (glass-refract/specular-track) lift the draw to gzip ~124.9k / raw ~495.9k.
+// Lifted to gzip 130000 / raw 504000 — the FIFTH conscious lift, sized to carry
+// the rest of the AW band CSS (glass-atoms W24-W26, band-G), not per-wave creep.
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
-    "dist/styles/index.css": { raw: 486_000, gzip: 124_000 },
+    "dist/styles/index.css": { raw: 504_000, gzip: 130_000 },
 };
 
 // AO.W2 (inv α) — the real consumer-draw CSS artifact.
