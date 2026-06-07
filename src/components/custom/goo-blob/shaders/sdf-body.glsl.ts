@@ -23,8 +23,8 @@ float sdCircle(vec2 p, vec2 center, float radius) {
 }
 
 // IQ 2024 quadratic-polynomial smin, NORMALIZED so k is a blend band in distance
-// units. The \`k *= 4.0\` pre-scale makes the \`h*h*k*0.25\` poly's effective
-// blend width equal to k (the un-normalized form's width was 0.25*k).
+// units. The k *= 4.0 pre-scale makes the h*h*k*0.25 poly's effective blend width
+// equal to k (the un-normalized form's width was 0.25*k).
 float sminQuadratic(float a, float b, float k) {
     k *= 4.0;
     float h = max(k - abs(a - b), 0.0) / k;
@@ -32,8 +32,8 @@ float sminQuadratic(float a, float b, float k) {
 }
 
 // IQ circular smin — a quarter-circle fillet at the seam (rounder than the
-// quadratic). \`k *= 1.0/(1.0-sqrt(0.5))\` normalizes k to the same blend-band
-// units so the \`merge\` axis swaps shape without re-tuning uSmoothK.
+// quadratic). The k *= 1.0/(1.0-sqrt(0.5)) factor normalizes k to the same
+// blend-band units so the merge axis swaps shape without re-tuning uSmoothK.
 float sminCircular(float a, float b, float k) {
     k *= 1.0 / (1.0 - sqrt(0.5));
     float h = max(k - abs(a - b), 0.0) / k;

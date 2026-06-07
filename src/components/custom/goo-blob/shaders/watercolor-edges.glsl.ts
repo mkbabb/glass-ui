@@ -77,8 +77,8 @@ export const METABALL_EDGE_NOISE_POST_GLSL = /* glsl */ `float fbm(vec2 p, int o
 }
 
 // One domain-warp pass: offset the sample point by a low-frequency FBM of itself
-// (the IQ \`fbm(p + W*fbm(p))\` marbling). \`warpAmp\` (uniform-driven) is the warp
-// strength; \`warpAmp == 0.0\` degrades to plain \`fbm\` (the pre-warp look).
+// (the IQ fbm(p + W*fbm(p)) marbling). warpAmp (uniform-driven) is the warp
+// strength; warpAmp == 0.0 degrades to plain fbm (the pre-warp look).
 float fbmWarped(vec2 p, int octaves, float warpAmp) {
     if (warpAmp <= 0.0) return fbm(p, octaves);
     vec2 q = vec2(fbm(p + vec2(0.0, 0.0), octaves), fbm(p + vec2(5.2, 1.3), octaves));
