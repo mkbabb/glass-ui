@@ -1,0 +1,36 @@
+{
+  "wave": "AW.W10 - Blob Interaction",
+  "status": "closed",
+  "units": ["W10.a Spring Pointer And Trail", "W10.b Squash, Click-Impulse And PRM Rest"],
+  "commits": [
+    "feat(goo-blob): spring pointer + trail + volume-preserve squash + click impulse + PRM rest (W10)",
+    "feat(demo): interactive blob story exercising trail/squash/click (W10)",
+    "test(goo-blob): blob-interaction-prm gate (PRM no-op + frame-rate indep + no-orphan)"
+  ],
+  "gates": [
+    {
+      "name": "proof:blob-interaction-prm",
+      "exit": 0,
+      "subChecks": {
+        "volumePreserve": { "axisOverSa": true, "perpTimesSa": true, "note": "motion axis /sa, perpendicular *sa => area scale == 1 (no shrink at speed)" },
+        "framerateDamp": { "noConstantAlphaLerp": true, "settleDelta60vs120Hz": 0, "note": "SMOOTH_FACTOR retired; SpringProgress.tick(dt) is bit-identical across 60/120 Hz" },
+        "trailFixedArray": { "define": true, "array": true, "dynamicBreak": true, "isUniform": false, "note": "uTrail[TRAIL_N] over #define TRAIL_N 15, dynamic break on uTrailCount" },
+        "singleLoop": { "extraRaf": false, "matchMedia": false, "restPoseUnderPrm": true, "firstDtClamp": true, "note": "substrate owns the single rAF + PRM; renderer composes pointer.rest() on the static frame; first post-park dt clamped to 50ms" },
+        "noOrphan": { "demoBindsAttraction": true, "demoBindsStretch": true, "demoFiresImpulse": true }
+      }
+    },
+    { "name": "proof:offscreen-pause", "exit": 0, "note": "no new always-on loop; the new motion state parks offscreen/hidden/PRM as the baseline does" },
+    { "name": "typecheck", "exit": 0, "note": "trail buffer + velocity exposure + config additions typecheck; demo/ is in the tsconfig include" },
+    { "name": "build", "exit": 0, "note": "the blob chunk + the demo story build clean (dist/goo-blob.js)" }
+  ],
+  "scope": {
+    "spring": "useBlobPointer now drives a critically-damped SpringProgress (response 0.18, zeta 1.0) via tick(dt) — frame-rate independent; exposes position + velocity",
+    "trail": "TRAIL_N=15 ring buffer, decaying radius r *= 1 - i/N, surfaced through a NEW uTrail[TRAIL_N] compile-time array (the satellite plumbing pattern, not the MAX_SATS=4 array)",
+    "squash": "volume-preserving anisotropic 2x2 UV warp before sdCircle (uVelocity/uStretch); perp == 1/sa exactly",
+    "click": "one-shot underdamped semi-implicit-Euler oscillator folded into uPulseAmp; pulse clamped > -0.9; GooBlob.vue @click + exposed pulse()",
+    "pointerAttraction": "sign honored (lean-in vs shy-away); config default 0.35 so hover is felt out of the box",
+    "prm": "substrate owns the freeze; pointer.rest() composes the deterministic rest pose on the static frame; no parallel matchMedia; first-dt clamp to 50ms",
+    "demo": "demo/stories/substrates/blob-interaction.vue exercises trail/squash/click + live knobs"
+  },
+  "browserVerify": "PENDING — the orchestrator's live Playwright audit: open the GooBlob Interaction story; a programmatic hover-then-flick across the blob must produce a measurable stretch in the motion direction within ~5 frames then a recovery toward rest; the trail reaches an elastic pseudopod toward the cursor and snaps back on leave; a click fires a visible one-shot bounce (overshoot then settle); under an emulated prefers-reduced-motion: reduce the blob paints ONE composed still frame (peak roundness, trail collapsed, zero stretch) reachable by the dock pause toggle."
+}
