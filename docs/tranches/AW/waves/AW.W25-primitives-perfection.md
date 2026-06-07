@@ -120,7 +120,7 @@ Docs-only wave authoring (this file). At wave EXECUTION: `npm run typecheck` aft
 ## 10. Dependencies
 
 - **Depends on**: W13 (the at-rest affordance point-fixes W25's gate re-asserts uniformly; W25 shares `button/index.ts` + `glass.css` with W13 on disjoint lines — sequence after) + W18 (the `[aria-invalid]` ring widening; the focus/invalid rungs must already be wide before the four-state audit asserts them).
-- **Blocks**: nothing — the primitives are leaf surfaces. If the reconciler keeps a W26 idiom wave touching `Toast.vue`, that wave sequences relative to W25's Toast carve (§3a). The W27 close registers `proof:primitive-affordance` in the gate matrix.
+- **Blocks**: nothing — the primitives are leaf surfaces. If the reconciler keeps a W26 idiom wave touching `Toast.vue`, that wave sequences relative to W25's Toast carve (§3a). The W33 close registers `proof:primitive-affordance` in the gate matrix.
 
 ## 11. Archaeology
 

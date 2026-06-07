@@ -97,7 +97,7 @@ Docs-only wave authoring (this file). At wave EXECUTION (the implementation pass
 ## 10. Dependencies
 
 - **Depends on**: W12 (the busy-backdrop staging the tier-distinctness gate probes over; W24's story stages over W12's shipped Aurora/PaperBackdrop) + the glass-material edge-light band ahead of it (if the reconciler keeps a material wave at W22/W23, the card's floating-register edge composes from it — but W24 does not WRITE the material; it reads it).
-- **Blocks**: nothing — the card is a leaf surface. The W27 close registers `proof:glass-card-tiers` in the gate matrix.
+- **Blocks**: nothing — the card is a leaf surface. The W33 close registers `proof:glass-card-tiers` in the gate matrix.
 
 ## 11. Archaeology
 

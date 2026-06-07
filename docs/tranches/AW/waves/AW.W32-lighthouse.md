@@ -3,7 +3,7 @@
 ## State
 
 **Name**: W32 - Lighthouse audit — glass-ui demo (perf/a11y/best-practices/SEO)
-**Opens after**: W31 (carousel-redesign) — the LAST band-G wave; W32 audits the demo AFTER every glass-atoms restyle (W22-W26) and every band-G dogfood (storybook-completeness W28, demo-dock-nav W29, aurora-configurator W30, carousel W31) has landed, so the Lighthouse run measures the FINAL demo surface, not a mid-flight one
+**Opens after**: W31 (animation-coherence + DESIGN.md) — the LAST band-G wave; W32 audits the demo AFTER every glass-atoms restyle (W22-W26) and every band-G dogfood (storybook+demo-dock-nav W28, aurora-configurator W29, carousel W30, animation-coherence + DESIGN.md W31) has landed, so the Lighthouse run measures the FINAL demo surface, not a mid-flight one
 **Agents**: 2 parallel (harness/gate-runner + budget-config/page-matrix), then a serial orchestrator close
 **Hard gate**: `proof:lighthouse-demo` green — a headless Lighthouse run (lighthouse CLI driven by `scripts/lighthouse-demo.mjs` over a built `dist` preview server) meets a per-category budget for EVERY demo route in the page matrix; a11y ≥95 on every page, best-practices ≥95, SEO ≥90, and perf meets a SUBSTRATE-AWARE floor (≥90 on the canvas-free story pages; ≥75 on the WebGL substrate pages — aurora/goo-blob — and the Canvas2D constellation page); CLS <0.1 and LCP ≤2.5s on EVERY page including the substrate pages; born RED (no Lighthouse harness, gate, or budget JSON exists at HEAD).
 **Status**: planned
@@ -47,7 +47,7 @@ Trigger a triumvirate (research + plan augment + redress) when:
 | `docs/tranches/AW/audit/W32-lighthouse-demo.md` | create (the per-page score table + budget rationale + baseline run-id) |
 | `docs/tranches/AW/audit/artifacts/W32-lighthouse/` | create (the per-page Lighthouse JSON/HTML reports) |
 
-Do NOT touch: `docs/precepts/`, any library `src/**` component (the audit measures + gates the SHIPPED demo + library; a sub-budget a11y/perf miss caused by a library primitive BOOKS to its band — W25/W26 for atoms, W4/W17 for substrates — it is not patched here), `demo/**` SFCs (the matrix is DERIVED from `demo/stories/manifest.ts` read-only; a story is not edited to game a score — a real score miss is a real finding), `ci.yml` (the gate is registered in the MANIFEST; `gates:verify-ci` reconciles `ci.yml`, the close wave W27/W33 owns the CI wiring).
+Do NOT touch: `docs/precepts/`, any library `src/**` component (the audit measures + gates the SHIPPED demo + library; a sub-budget a11y/perf miss caused by a library primitive BOOKS to its band — W25/W26 for atoms, W4/W17 for substrates — it is not patched here), `demo/**` SFCs (the matrix is DERIVED from `demo/stories/manifest.ts` read-only; a story is not edited to game a score — a real score miss is a real finding), `ci.yml` (the gate is registered in the MANIFEST; `gates:verify-ci` reconciles `ci.yml`, the close wave W33 owns the CI wiring).
 
 ## 4a. Disjointness
 
@@ -109,7 +109,7 @@ The orchestrator runs `git worktree list` + `git worktree add` before dispatch. 
 - `scripts/lighthouse-demo.mjs` (the harness) + `scripts/lighthouse-demo.budget.json` (the budget).
 - `docs/tranches/AW/audit/artifacts/W32-lighthouse/` — the per-page Lighthouse JSON (+ HTML) reports + the median-run record.
 - `docs/tranches/AW/audit/W32-lighthouse-demo.md` — the per-page score table + the substrate-floor rationale + the baseline run-id + the remediation-booking list (if any).
-- The green run-id of `proof:lighthouse-demo` (cited in the audit doc + carried into W27/W33 close `FINAL.md`).
+- The green run-id of `proof:lighthouse-demo` (cited in the audit doc + carried into W33 close `FINAL.md`).
 
 ## 9. Commit Plan
 
@@ -118,8 +118,8 @@ The orchestrator runs `git worktree list` + `git worktree add` before dispatch. 
 
 ## 10. Dependencies
 
-- **Depends on**: W31 (carousel-redesign) + the whole band G (W28 storybook-completeness gives the canonical route matrix; W29 demo-dock-nav, W30 aurora-configurator, W31 carousel restyle the surfaces the run measures) + the glass-atoms band (W22-W26 — the a11y ≥95 floor measures their atom states) + W4 (aurora single-pass budget — the substrate perf floor calibrates against it) + W17 (constellation RAF-pause substrate). The Lighthouse run measures the FINAL demo; it must open after every restyle lands.
-- **Blocks**: the W27/W33 close `FINAL.md` (the close cites the `proof:lighthouse-demo` green run-id in the gate fleet); paired with H.W11 (the slides-side Lighthouse audit — same budget philosophy, slides route matrix).
+- **Depends on**: W31 (animation-coherence + DESIGN.md) + the whole band G (W28 storybook-completeness + demo-dock-nav gives the canonical route matrix; W29 aurora-configurator, W30 carousel, W31 animation-coherence restyle/reconcile the surfaces the run measures) + the glass-atoms band (W22-W26 — the a11y ≥95 floor measures their atom states) + W4 (aurora single-pass budget — the substrate perf floor calibrates against it) + W17 (constellation RAF-pause substrate). The Lighthouse run measures the FINAL demo; it must open after every restyle lands.
+- **Blocks**: the W33 close `FINAL.md` (the close cites the `proof:lighthouse-demo` green run-id in the gate fleet); paired with H.W11 (the slides-side Lighthouse audit — same budget philosophy, slides route matrix).
 
 ## 11. Archaeology
 
