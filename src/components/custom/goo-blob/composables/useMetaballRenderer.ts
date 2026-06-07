@@ -132,6 +132,10 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
     // needs a millisecond delta and the satellite system a millisecond `now`, so
     // derive both from the substrate's seconds clock.
     let lastTimeSec = 0;
+    // The tempo-INTEGRATED motion clock (ms) — `simTimeMs += tempo * dt`. Every
+    // motion axis (FBM scroll, satellite phase, orbit) reads THIS, not the absolute
+    // clock, so a tempo change (pause / PRM) freezes motion without a discontinuity.
+    let simTimeMs = 0;
 
     // Memoise the resolver: the consumer cycles through a handful of stable color
     // strings, so the resolve runs once per unique color rather than every frame.
@@ -278,26 +282,51 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                 }
 
                 function drawFrame(timeSec: number) {
-                    const now = performance.now();
-                    const dtMs = lastTimeSec ? (timeSec - lastTimeSec) * 1000 : 16;
+                    // Raw per-frame delta. The first post-park dt can be SECONDS
+                    // (after an offscreen/hidden/PRM re-arm) — CLAMP it to ~50ms on
+                    // EVERY integrated axis so the tempo/rest-pose composition never
+                    // jumps (the W11 extension of the W10 spring-only clamp).
+                    const rawDtMs = lastTimeSec ? (timeSec - lastTimeSec) * 1000 : 16;
                     lastTimeSec = timeSec;
+                    const dtMs = Math.min(rawDtMs, 50);
 
-                    // Advance the simulation systems. Under reduced-motion the
-                    // SUBSTRATE paints ONE static frame then parks (it owns PRM, no
-                    // parallel matchMedia here); on that frame the interaction layer
-                    // COMPOSES the deterministic rest pose (spring at centre, zero
-                    // velocity, trail collapsed, pulse zero) rather than advancing.
-                    // Otherwise the pointer spring is fed the per-frame `dtMs`
-                    // (frame-rate-independent; the first post-park dt is clamped
-                    // inside `tick`).
+                    // ── The ONE master tempo scalar (W11.c) ──────────────────────
+                    //
+                    // `tempo` multiplies every INTEGRATED dt — NEVER the clock.
+                    // Scaling the absolute clock makes the FBM noise JUMP when tempo
+                    // changes; integrating a tempo-scaled `simTimeMs` keeps the noise
+                    // scroll CONTINUOUS across a tempo change (it resumes from the
+                    // accumulated value). The SUBSTRATE owns PRM + the pause; here we
+                    // only READ them to drive tempo (no parallel matchMedia).
                     const reduced = canvasHandle?.reducedMotion ?? false;
-                    mood.tick(dtMs);
+                    const tempo = reduced || paused ? 0 : config.tempo;
+                    const stepMs = tempo * dtMs; // the tempo-scaled integration step
+                    simTimeMs += stepMs;         // the tempo-integrated motion clock
+
+                    // Advance the simulation systems on the tempo-scaled step. Under
+                    // reduced-motion (tempo 0) the interaction layer COMPOSES the
+                    // deterministic rest pose (spring at centre, zero velocity, trail
+                    // collapsed, pulse zero) rather than advancing — the SUBSTRATE
+                    // then paints ONE static frame and parks. Every axis reads the
+                    // SAME tempo-scaled clock so the whole creature breathes as one.
+                    // Drive the auto-mood arc from the interaction/idle state
+                    // (W11.c wires setMood: curious on approach, excited on click,
+                    // sleepy after inactivity). Under reduced-motion (tempo 0) the
+                    // mood holds — no retargeting on a parked frame.
+                    if (!reduced) {
+                        mood.update({
+                            pointerActive: pointer.active.value,
+                            clicked: pointer.consumeClick(),
+                            idleMs: pointer.idleMs(),
+                        });
+                    }
+                    mood.tick(stepMs);
                     if (reduced) {
                         pointer.rest();
                     } else {
-                        pointer.tick(dtMs);
+                        pointer.tick(stepMs);
                     }
-                    satellites.tick(now, mood.params.value);
+                    satellites.tick(simTimeMs, mood.params.value);
 
                     const params = mood.params.value;
                     const rgb = resolveColor(color.value);
@@ -306,7 +335,10 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     gl.bindVertexArray(vao);
 
                     gl.uniform2f(U.uResolution, canvas.width, canvas.height);
-                    gl.uniform1f(U.uTime, timeSec);
+                    // uTime is the tempo-INTEGRATED motion clock (seconds), NOT the
+                    // substrate's absolute clock — so the FBM noise scroll slows with
+                    // tempo and freezes at tempo=0 WITHOUT a discontinuity.
+                    gl.uniform1f(U.uTime, simTimeMs / 1000);
                     gl.uniform3f(U.uBaseColor, rgb[0], rgb[1], rgb[2]);
 
                     // Multi-stop palette (W11.b) — 2-4 in-family stops. EMPTY falls

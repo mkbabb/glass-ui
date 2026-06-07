@@ -68,6 +68,11 @@ export interface BlobConfig {
     satelliteRadius: number;
     orbitRadius: number;
 
+    // Master tempo (W11.c) — ONE scalar multiplying every INTEGRATED dt
+    // (mood.tick, the spring step, orbit/phase advance, noise scroll). `tempo=0`
+    // freezes (the dock pause / PRM set it). Default 1.0 (real-time).
+    tempo: number;
+
     // Gooey
     smoothK: number;
     /** Smin merge variant — `quadratic` (default) | `circular` (rounder menisci). */
@@ -153,6 +158,8 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
     satelliteCount: 3,
     satelliteRadius: 0.13,
     orbitRadius: 0.35,
+
+    tempo: 1.0,
 
     // `smoothK` is now a TRUE blend-band in the shader's UV space (the smin is
     // IQ-normalized — `k *= 4.0` — so the band == k; the old `/0.22` normalizer is

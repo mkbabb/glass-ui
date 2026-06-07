@@ -25,8 +25,11 @@ function createSatellite(
     index: number,
     orbitRadius: number,
     eccentricity: number,
+    now: number,
 ): SatelliteInternal {
-    const now = performance.now();
+    // `now` is the canonical tempo-integrated clock (W11.c) — the satellite phase
+    // timing rides the SAME clock the renderer scales by tempo, so pausing the
+    // tempo freezes the satellites with no discontinuity.
     // Spread starts widely — full circle with large random offset
     const baseAngle = (index / 4) * Math.PI * 2 + (rng() - 0.5) * Math.PI;
 
@@ -74,12 +77,21 @@ function setPhase(
     s.phaseDuration = duration;
 }
 
-function orbitPos(s: SatelliteInternal, now: number): { x: number; y: number } {
+function orbitPos(
+    s: SatelliteInternal,
+    now: number,
+    orbitSpeedScale: number,
+    wobbleScale: number,
+): { x: number; y: number } {
     const t = (now - s.timeOrigin) / 1000;
-    const angle = s.angularSpeed * t + s.phaseOffset;
+    // Mood drives the orbit (W11.c): orbitSpeedScale speeds/slows the orbital
+    // sweep; wobbleScale fattens/calms the radial wobble. excited = faster + more
+    // wobble, sleepy = slow + calm.
+    const angle = s.angularSpeed * orbitSpeedScale * t + s.phaseOffset;
     const wobble =
-        s.wobbleAmp1 * Math.sin(s.wobbleFreq1 * t) +
-        s.wobbleAmp2 * Math.sin(s.wobbleFreq2 * t + 1.3);
+        wobbleScale *
+        (s.wobbleAmp1 * Math.sin(s.wobbleFreq1 * t) +
+            s.wobbleAmp2 * Math.sin(s.wobbleFreq2 * t + 1.3));
     return {
         x:
             (s.baseRadiusX + wobble) * Math.cos(angle) +
@@ -149,7 +161,7 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
         }
     }
 
-    function syncCount() {
+    function syncCount(now: number) {
         const count = config.satelliteCount;
         while (internals.length < count) {
             internals.push(
@@ -158,6 +170,7 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
                     internals.length,
                     config.orbitRadius,
                     config.eccentricity,
+                    now,
                 ),
             );
             sources.push({ x: 0, y: 0, radius: config.satelliteRadius, opacity: 0 });
@@ -170,10 +183,12 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
         }
     }
 
-    syncCount();
+    // The satellites are seeded on the FIRST tick (which carries the canonical
+    // tempo clock), NOT at construction — so their phase clocks share the renderer's
+    // tempo-integrated `now` base rather than `performance.now()` (W11.c).
 
     function tick(now: number, mood: MoodParams) {
-        syncCount();
+        syncCount(now);
         syncOrbitRadius();
 
         const count = internals.length;
@@ -196,7 +211,7 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
                             s.phaseStart = now;
                             s.phaseDuration = randRange(rng, orbitDuration[0], orbitDuration[1]);
                         } else {
-                            const pos = orbitPos(s, now);
+                            const pos = orbitPos(s, now, mood.orbitSpeedScale, mood.wobbleScale);
                             s.startX = pos.x;
                             s.startY = pos.y;
                             const dist = Math.hypot(pos.x, pos.y);
@@ -224,7 +239,7 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
                     if (t >= 1) {
                         // New orbit — emerge toward a point on it
                         randomizeOrbit(s, rng, config.orbitRadius, config.eccentricity, now);
-                        const futurePos = orbitPos(s, now + 3000);
+                        const futurePos = orbitPos(s, now + 3000, mood.orbitSpeedScale, mood.wobbleScale);
                         s.endX = futurePos.x;
                         s.endY = futurePos.y;
                         const dist = Math.hypot(futurePos.x, futurePos.y);
@@ -262,7 +277,7 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
 
             switch (s.phase) {
                 case "orbiting": {
-                    const pos = orbitPos(s, now);
+                    const pos = orbitPos(s, now, mood.orbitSpeedScale, mood.wobbleScale);
                     // Smooth blend from emerge endpoint into orbit over ORBIT_BLEND_MS
                     const blend = orbitBlendOrigins[i]!;
                     const blendElapsed = now - blend.start;

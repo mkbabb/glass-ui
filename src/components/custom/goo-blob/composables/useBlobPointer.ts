@@ -114,6 +114,10 @@ export function useBlobPointer(el: Ref<HTMLElement | null>) {
     function tick(dtMs = 16) {
         const dt = Math.min(dtMs, 50) / 1000; // seconds, first-dt clamped
 
+        // Idle timer for the mood arc — reset on activity, accumulate otherwise.
+        if (active.value) idleMs = 0;
+        else idleMs += Math.min(dtMs, 50);
+
         // Target: the raw pointer when active, centre when not.
         const tx = active.value ? rawX : 0;
         const ty = active.value ? rawY : 0;
@@ -176,9 +180,21 @@ export function useBlobPointer(el: Ref<HTMLElement | null>) {
      * body overshoots then rings back. `amp` is the impulse strength (the config
      * `clickImpulse`). Idempotent re-fires re-kick the same channel (no new path).
      */
+    let clickPending = false;
     function click(amp: number) {
         pulseVel += amp * PULSE_OMEGA;
+        clickPending = true;
     }
+
+    /** Drain the one-shot click flag — true once after each `click()` (W11.c mood). */
+    function consumeClick(): boolean {
+        const c = clickPending;
+        clickPending = false;
+        return c;
+    }
+
+    // ms since the last pointer activity — drives the mood `sleepy` drift (W11.c).
+    let idleMs = 0;
 
     /**
      * Compose the DETERMINISTIC reduced-motion rest pose (W10): the spring snapped
@@ -206,9 +222,12 @@ export function useBlobPointer(el: Ref<HTMLElement | null>) {
         active: readonly(active),
         /** The live click-impulse pulse value (folds into uPulseAmp). */
         pulse: readonly(pulseRef),
+        /** ms since the last pointer activity (W11.c mood idle drift). */
+        idleMs: () => idleMs,
         tick,
         trailSources,
         click,
+        consumeClick,
         rest,
     };
 }
