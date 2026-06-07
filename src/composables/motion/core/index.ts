@@ -13,6 +13,13 @@
 // from `../constants`, so both surfaces ship it. Benign (W1.2 §A.2).
 export * from "../constants";
 export * from "../useStaggerReveal";
+// AW.W19/Item-5 (extended) — useStagger re-instated: removed at the AV cbbaeb0
+// orphan sweep, but it has ≥2 LIVE external consumers over /motion-core (muster
+// ×2: useVerdictMoment; speedtest ×3: motion.ts/SpeedtestResults/ResultStack) —
+// a DISTINCT API from useStaggerReveal. vue-only (engine-free + vueuse-free), so
+// it ships on the engine-free /motion-core surface, the same blind-spot class as
+// the /dom + useAnimatedNumberMap mis-prunes.
+export * from "../useStagger";
 export * from "../useScrollProgress";
 export * from "../useRAFLoop";
 export * from "../useIntersectionPause"; // exports PausableRuntime too

@@ -20,6 +20,12 @@ export * from "./useSpringMount";
 export * from "./useSpringPress";
 export * from "./useNumericTransition";
 export * from "./useAnimatedNumber";
+// AW.W19/Item-5 (extended) — useAnimatedNumberMap re-instated: removed at the AV
+// cbbaeb0 orphan sweep, but it has ≥2 LIVE external consumers over /motion
+// (muster ×3: ssr-entry/useReRank/RankedVerdict; speedtest ×2:
+// useMetricResult/MetricGaugeCards) — the same internal-only-rg blind spot that
+// mis-pruned the /dom leaves. Keyframes-bearing (composes useAnimatedNumber).
+export * from "./useAnimatedNumberMap";
 // AV.W3 — the editorial count-up animator. Rides the keyframes LIGHT
 // `NumericAnimation` engine (value.js-free callable easing) → keyframes-BEARING,
 // so it ships ONLY here (`/motion`), NOT on `/motion-core` and NOT on the root.
