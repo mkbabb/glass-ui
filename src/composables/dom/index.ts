@@ -22,9 +22,23 @@
 //                        registry + ::highlight(<name>) paint); Range-based
 //                        substring/match emphasis with no <mark> DOM mutation,
 //                        feature-detected no-op fallback.
+//   - useBreakpoint / useIdleReady / useViewportReady — RE-INSTATED (AW.W19,
+//                        glassui-aw-corrections Item 5). The AV "speedtest-
+//                        ownership" wave (cbbaeb0) removed these 3 /dom leaves as
+//                        orphans, but they have LIVE external consumers reached
+//                        over the /dom subpath — speedtest imports all three
+//                        (AdminDataSourceToggle + App + the route transitions),
+//                        value.js's demo imports useBreakpoint. A consumer bump to
+//                        3.4.x broke (MISSING_EXPORT) until they were restored.
+//                        Re-instated on their ≥2-external-consumer load-bearing
+//                        rationale (the same internal-only-rg blind spot as the
+//                        metric-cell/stack mis-prune).
 export * from "./useResizeObserver";
 export * from "./useTouchGate";
 export * from "./useTokenColor";
 export * from "./useClipboard";
 export * from "./useUserInvalidAria";
 export * from "./useTextHighlight";
+export * from "./useBreakpoint";
+export * from "./useIdleReady";
+export * from "./useViewportReady";
