@@ -285,7 +285,13 @@
 
         height: 2.5rem;
         border-radius: var(--radius-pill);
-        border: 1.5px solid var(--glass-border-wash);
+        /* AW.W13 — the resting field edge reads as an enclosed control at rest.
+           Was `--glass-border-wash` (~8%α), which nearly vanished on cream; the
+           lift to `--surface-tint-15` (15%α — ~2× the prior floor) makes the
+           edge legible without going loud. The `:focus-visible` accent ring +
+           the `:user-invalid`/`[aria-invalid]` destructive ring below still win
+           by order + specificity, so this only raises the resting alpha. */
+        border: 1.5px solid var(--surface-tint-15);
         background: var(--glass-bg-quiet);
         backdrop-filter: var(--glass-blur-wash);
         padding: 0 1rem;
@@ -360,6 +366,17 @@
     .input-pill:disabled {
         opacity: 0.5;
         cursor: not-allowed;
+    }
+
+    /* AW.W13 — the Select trigger mirrors the input pill's resting border lift.
+       The reka-ui SelectTrigger renders `role="combobox"` over the `.glass-wash`
+       surface; its 8%α `--glass-border-wash` field edge vanished on cream just
+       like the input pill, so the same `--surface-tint-15` lift makes the
+       trigger read as an enclosed control at rest. Scoped to the combobox role
+       so the lift reaches ONLY the Select trigger, not every `.glass-wash`
+       surface. */
+    .glass-wash[role="combobox"] {
+        border-color: var(--surface-tint-15);
     }
 }
 

@@ -66,11 +66,21 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
                 <code class="fira-code">btn-audacious-gold</code>. Reduced-motion suppresses
                 the sweep; static gold tint remains.
             </p>
+            <!-- AW.W13 contrast canary — the REST text is the warm-ink
+                 `--foreground` (the gold-tint-over-cream rest substrate made
+                 white-on-cream sub-legible). Read the rest label in light mode:
+                 it must be legible dark ink, NOT washed-out white. Light text is
+                 reserved for hover/active, where the gold sweep darkens the
+                 backplate. -->
             <div class="flex flex-wrap items-center gap-3">
                 <Button variant="gold-audacious" size="lg">Next →</Button>
                 <Button variant="gold-audacious">Submit</Button>
                 <Button variant="gold-audacious" disabled>Disabled</Button>
             </div>
+            <p class="fira-code text-mono-caption text-muted-foreground">
+                rest text: var(--foreground) (warm ink) · hover/active: white over
+                the saturated gold backplate — both clear WCAG-AA.
+            </p>
         </section>
 
         <section class="flex flex-col gap-4">

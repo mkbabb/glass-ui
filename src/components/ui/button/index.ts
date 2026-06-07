@@ -14,8 +14,13 @@ export const buttonVariants = cva(
           'bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80 aria-pressed:bg-primary/85',
         'primary-audacious':
           'btn-audacious bg-primary text-primary-foreground hover:scale-[var(--scale-hover)] aria-pressed:scale-[var(--scale-press-btn)]',
+        // AW.W13 — rest text is the warm-ink `--foreground`, NOT `text-white`:
+        // the `btn-audacious-gold` REST substrate is an 8%-gold-tint over glass
+        // (near-cream in light mode), so white-on-cream was sub-legible. Light
+        // text is reserved for hover/active, where the gold sweep darkens the
+        // backplate enough to clear contrast.
         'gold-audacious':
-          'btn-audacious btn-audacious-gold text-white hover:scale-[var(--scale-hover)] aria-pressed:scale-[var(--scale-press-btn)]',
+          'btn-audacious btn-audacious-gold text-foreground hover:text-white active:text-white aria-pressed:text-white hover:scale-[var(--scale-hover)] aria-pressed:scale-[var(--scale-press-btn)]',
         destructive:
           'bg-destructive text-destructive-foreground hover:bg-destructive/90 active:bg-destructive/80 aria-pressed:bg-destructive/85',
         outline:
