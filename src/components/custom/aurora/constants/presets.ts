@@ -19,6 +19,13 @@
 import type { OklchStop } from "../../../../composables/color";
 export type { OklchStop };
 
+// W5 — the hue-arc method for the OKLCh palette interpolation. value.js OWNS color
+// (the union color-ownership contract — the same reason the OKLCH matrices are
+// locked to value.js's Ottosson constants), so we IMPORT the type, never re-invent
+// it. `AuroraHuePath` is a public ALIAS of `HueInterpolationMethod`, not a copy.
+import type { HueInterpolationMethod } from "@mkbabb/value.js";
+export type AuroraHuePath = HueInterpolationMethod;
+
 export interface AuroraNucleus {
     /** 0..1 in CSS-top-origin space (0 = top, 1 = bottom). Runtime flips Y. */
     x: number;
@@ -81,6 +88,13 @@ export interface AuroraConfig {
 
     // Medium
     medium: AuroraMedium;
+    /**
+     * W5 — the hue-arc method for the OKLCh palette interpolation. Optional;
+     * omitted = `"shorter"` (the OKLab-rectangular ramp — the muddy-midtone-free
+     * default). `"increasing"`/`"decreasing"` request the OKLCh hue-arc for a
+     * deliberate rainbow sweep across the stops. Aliased on `/api` as `AuroraHuePath`.
+     */
+    huePath?: AuroraHuePath;
     flow: AuroraFlow;
     strokeAmount: number; // 0..1
     strokeScale: number; // 40..320

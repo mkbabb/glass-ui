@@ -37,6 +37,7 @@ export const UNIFORM_NAMES = [
     "uWarpMode",
     "uNoiseOctaves",
     "uMedium",
+    "uHuePath",
     "uFlowPattern",
     "uFlowFocal",
     "uFlowAngle",
