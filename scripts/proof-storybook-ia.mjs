@@ -37,7 +37,7 @@ export const EXPECTED_TREE = [
         "chart-chassis-palette", "paper-backdrop-texture-system",
         "paper-backdrop", "dock-active-tokens", "css-utilities",
     ]],
-    ["substrates", ["aurora", "goo-blob", "glass-panel", "constellation"]],
+    ["substrates", ["aurora", "goo-blob", "glass-panel", "constellation", "glass-material"]],
     ["primitives", [
         "buttons", "card", "inputs", "textarea", "checks", "slider",
         "number-field", "select", "combobox", "multi-select", "toggle",
