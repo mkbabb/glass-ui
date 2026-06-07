@@ -378,6 +378,32 @@
     .glass-wash[role="combobox"] {
         border-color: var(--surface-tint-15);
     }
+
+    /* ── Deck-position rail (AW.W16) ──────────────────────────────────────
+       A CSS recipe that RESTYLES the shipped `<Progress variant="default">`
+       (the reka-ui ProgressRoot track + its indicator child) into the thin
+       bottom-of-deck position rail. It composes the EXISTING fill — it does NOT
+       re-author a second track/range mechanic. Every visual axis is a
+       `--progress-rail-*` token, so a consumer/dark-flip re-tints with zero
+       library edit (`:root { --progress-rail-fill: … }`). The viewport-pinned
+       chrome (`position: fixed`, `env(safe-area-inset-bottom)`, the z-index) is
+       CONSUMER-supplied — this recipe owns only the LOOK. */
+    .glass-progress-rail {
+        /* The track hairline — the rail reads as a thin sliver, not a 16px bar. */
+        height: var(--progress-rail-h, 3px);
+        border-radius: 0;
+        background: var(--progress-rail-track, color-mix(in srgb, var(--foreground) 8%, transparent));
+    }
+
+    /* The fill — the shipped ProgressIndicator child. A leading-edge glow on the
+       fill's trailing edge reads as a moving position head. */
+    .glass-progress-rail > * {
+        border-radius: 0;
+        background: var(--progress-rail-fill, var(--primary));
+        box-shadow:
+            var(--progress-rail-glow-x, 4px) 0 var(--progress-rail-glow-blur, 8px)
+            color-mix(in srgb, var(--progress-rail-fill, var(--primary)) var(--progress-rail-glow-strength, 55%), transparent);
+    }
 }
 
 /* ── Accessibility: reduced transparency ────────── */
