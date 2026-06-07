@@ -22,7 +22,7 @@ digest section it lands. glass-ui HEAD is `afdc485`, branch `at-dock-convergence
 `FINAL.md`). This file is the CHARTER only — DEV (it writes no `src`). The per-wave specs
 (`waves/AW.W1-dock-collapse-regression.md`, `waves/AW.W4-aurora-painterly.md`, …) are authored
 by the sibling fleet, each matching `precepts/instructions/tranche/WAVE_SPEC.md §1-11`. AW.W0
-(formalize + spot-verify) is the only DEV wave; W1-W26 are IMPL and W27 is the close (LAST).
+(formalize + spot-verify) is the only DEV wave; W1-W32 are IMPL and W33 is the close (LAST).
 
 ---
 
@@ -43,10 +43,15 @@ absorbed; the disposition cites the RECAP line.
 | D-8 | **"why do all the glass-panels suck?"** + the broken card toggles + the datatable split | **AW.W12-W15.** The glass-panel svg-filter-tier variant collapse (five rungs → one), the card-toggle perception trap, the DataTable colocation split, the styling/composable hygiene (`frontend-convergence-digest`, `code-quality-digest`). |
 | D-9 | **"where's our slides primitive with the bottom bar — abstract it into glass-ui"** | **AW.W16 + W17.** Ship the `DeckProgress` composition over the existing `Progress` fill (W16); land the Constellation component + the `useCanvas2D` substrate (W17; AV.W8 gated-not-landed at 1 consumer, the slides H is consumer #2) (`RECAP §6`, `avg-deep-audit-digest §3`). |
 | D-10 | **"the orphan resolution"** (instrument/glyph/disco-glyph, metric-cell/stack) | **A DEDICATED orphan-resolution wave** (the sibling fixer authors it; the `AW.W14-datatable-split.md` file is DataTable-split ONLY — it carries no orphan/metric-cell scope). After a mandatory W0 spot-verify (consumer counts through re-export aliases per `SPEC §"Audit-verdict spot-verification gate"`): migrate-off-and-remove OR keep-and-document, with the metric-cell/stack hidden dep surfaced before any prune (`RECAP §1`). |
-| D-11 | **"the READMEs"** (dock, aurora, blob, constellation) | **AW.W27 (the close wave, LAST).** The four research-backed READMEs ride the gate-fleet + π-lane + `FINAL.md` close; the W18 slot holds the gate-pattern access-modal idiom, W19 the orphan-prune, W20 the styling-assay, and W22-W26 the GLASS-ATOMS band ahead of the close (`RECAP §6`). |
+| D-11 | **"the READMEs"** (dock, aurora, blob, constellation) | **AW.W33 (the close wave, LAST).** The four research-backed READMEs ride the gate-fleet + π-lane + `FINAL.md` close; the W18 slot holds the gate-pattern access-modal idiom, W19 the orphan-prune, W20 the styling-assay, W22-W26 the GLASS-ATOMS band, and W28-W32 the NEW-SCOPE band G ahead of the close (`RECAP §6`, `RECAP ADDENDUM 3`). |
 | D-12 | **"perfect the glass atoms"** — the glass-material/card/primitive material + idiom sweep | **AW.W22-W26 (the GLASS-ATOMS band, band F).** The 8-agent glass-atoms research (`audit/research/glass-atoms-digest.md`) returns ONE verdict: glass-ui's material spine, card surface, and glass ladder are SOTA — the defect is **uneven application** of that spine across the interactive atoms, plus three Baseline-2025 capabilities left unused. A DRY-consolidation band that routes every atom onto the existing spine + folds the unused Baseline-2025 capabilities: W22 glass-material unify+extend (specular/rim into the ladder, gated `#glass-refract`/`corner-shape:squircle`/directional-rim/content-tint), W23 glass-card shadcn-2025 perfection (`--card-spacing`/`CardAction`/hover-elevation/specular seam/cream-read), W24 primitive geometry+material+bug (`--radius-field`/Textarea-pill-fix/Switch+Checkbox glass/Checkbox-indeterminate), W25 cross-atom motion+a11y+overlay-band+tone parity (press-spring universalize, `.focus-ring`, Toast/Command→`glass-floating`, Alert/Toast tones), W26 reka/shadcn/Tailwind/mwg idiom + binding guard (`data-slot`, CVA modernization, `aria-invalid` paint, text-shadow tokens, the binding Playwright spec). The named affordance bugs (gold-audacious, 8%α borders, slider fill) stay owned by W13; the `[aria-invalid]` ring widen by W18. |
 | D-13 | **"is this the whole picture?"** — the monolithic-totality re-check | **The glass-atoms digest is the totality answer (`glass-atoms-digest §SYNTHESIS`).** The four faction plans (material, card, primitives, idiom) converge on 5 waves with NO proliferation — material+card fold into two waves, the whole primitive sweep into two, idiom into one. The stale `light-dark(light-dark())` double-nest claim (W12 §3.3) is struck: at HEAD the `--glass-bg-*` tokens carry a single `light-dark()`, so that sub-item is a no-op and is NOT re-seeded. The negative findings (the `srgb` glass ladder is Baseline-correct, scrollbar utils + `@container-size` + stock palettes are at-or-above the v4.3 bar) are NOT re-litigated. |
 | D-14 | **stack-currency** — reka-ui 2.9 + shadcn-vue (CVA 0.7) + Tailwind v4.3 | **Idiom-only, NO upgrade (`glass-atoms-digest §stack currency`).** Installed + verified: reka-ui 2.9.7, Tailwind 4.3.0, CVA 0.7.1, Vue 3.5.34 — all current. The glass-atoms band targets **Tailwind v4.3 (NO v5)** + idiomatic reka-ui ^2.9 + shadcn-vue; every gated Baseline capability is `@supports`-gated with a round/`border-radius` fallback (`corner-shape:squircle`, `backdrop-filter:url(#…)` refraction). New reka 2.9 `Color*`/`Autocomplete`/`MonthPicker` wraps are NOT minted speculatively (visual-load-bearing ≥2-consumer); only Checkbox-indeterminate has concrete in-repo demand and lands (W24). |
+| D-15 | **"storybook layout perfected — EVERY component demonstrated"** + **"a brand-new dock-based demo nav: a SIDEBAR dock AND a BOTTOM-bar dock"** | **AW.W28 (band G, the demo-shell wave).** Audit the AV.W10 11-category demo IA for completeness (no glass-ui component without a story) AND re-build the storybook navigation on the glass-ui dock — a sidebar dock + a bottom-bar dock, both dock-driven, dogfooding the shipped dock + the glass atoms with iOS-26 idiom. DEMO-INTERNAL: the nav shell is demo-private chrome over the already-shipped `GlassDock`/`DockLayerGroup` primitives — it does NOT mint a new library primitive (`RECAP ADDENDUM 3`). |
+| D-16 | **"the aurora CONFIGURATOR redesign"** | **AW.W29 (band G).** Re-design the aurora controls surface with iOS-26 + idiomatic glass atoms; it EXTENDS the existing shipped `Configurator` (a restyle/dogfood of an already-shipped primitive with consumers — aurora chrome + the demo — not a new control) (`RECAP ADDENDUM 3`). |
+| D-17 | **"the CAROUSEL redesign"** | **AW.W30 (band G).** Re-design the carousel with iOS-26 + idiomatic glass atoms; it restyles the already-shipped `GlassCarousel`/`carousel` family (an existing-component refactor with consumers, not a speculative mint) (`RECAP ADDENDUM 3`). |
+| D-18 | **"a deep ANIMATION audit + a DESIGN.md audit"** | **AW.W31 (band G).** The animation-language coherence audit across the dock/aurora/blob/primitives motion (one spring vocabulary, consistent timing/curves) + the DESIGN.md currency/completeness pass (it documents the warm-cream + iOS-26 + glass-atoms spine the tranche landed). Audit-and-reconcile over the shipped motion + the standing DESIGN doc — no new primitive (`RECAP ADDENDUM 3`). |
+| D-19 | **"a deep LIGHTHOUSE audit for every page + slide"** (perf/a11y/best-practices/SEO) | **AW.W32 (band G, glass-ui demo arm) + H (slides arm).** The glass-ui demo Lighthouse audit (perf/a11y/best-practices/SEO over every demo page) lands as AW.W32; the slides Lighthouse audit is the H arm (`RECAP ADDENDUM 3`, `H.md`). Audit-and-fix over the demo pages — it ships fixes, not a new surface. |
 
 ---
 
@@ -96,16 +101,23 @@ cannot ship green again (`RECAP §2`, `avg-deep-audit-digest §1 row 1`).
    primitive geometry+material+bug (W24), cross-atom motion+a11y+overlay-band+tone parity (W25),
    the reka/shadcn/Tailwind-v4.3/mwg idiom + binding guard (W26). Grounded against
    `audit/research/glass-atoms-digest.md` (the SYNTHESIS + the eight lane briefs).
-7. **The close** (W27, LAST) — the gate-fleet registration + `proof:aw-final` + the four
+7. **The new-scope band G** (W28-W32) — the demo-shell + existing-surface restyle work `RECAP
+   ADDENDUM 3` folded: the storybook-completeness audit + the dock-based demo nav (sidebar dock +
+   bottom-bar dock, dogfooding the shipped dock/atoms — DEMO-INTERNAL) (W28), the aurora-Configurator
+   restyle (W29), the carousel restyle (W30), the animation-coherence audit + the DESIGN.md currency
+   pass (W31), the glass-ui-demo Lighthouse audit (W32). These dogfood/restyle ALREADY-SHIPPED
+   primitives (the dock, Configurator, carousel) and audit-and-fix the demo — they do NOT mint new
+   speculative primitives. Grounded against `RECAP ADDENDUM 3`.
+8. **The close** (W33, LAST) — the gate-fleet registration + `proof:aw-final` + the four
    research-backed READMEs + the overfitting audit + the π visual-runtime lane + `FINAL.md`.
 
 The `waves/` dir holds the per-wave specs this table references.
 
 ---
 
-## §2 — The wave table (W0-W27 · 6 bands + gate-pattern + orphan-prune + styling-assay + close)
+## §2 — The wave table (W0-W33 · 7 bands + gate-pattern + orphan-prune + styling-assay + close)
 
-The tranche runs six bands plus the gate-pattern wave, the orphan-prune, the styling-assay, and a
+The tranche runs seven bands plus the gate-pattern wave, the orphan-prune, the styling-assay, and a
 close wave. **Band A (W1-W3)** is the dock motion-language — AW.W1 (the simple-collapse regression)
 is the HIGH headline, AT-disjoint, opens FIRST. **Band B (W4-W8)** is the aurora painterly engine
 (W5 — the OKLCh color core — opens BEFORE W4, which consumes its jitter seam). **Band C (W9-W11)**
@@ -115,9 +127,14 @@ convergence (W16 DeckProgress, W17 Constellation). **W18** is the gate-pattern a
 (tokenization + Tabs pill-track + ToggleGroup re-roll). **Band F (W22-W26)** is the GLASS-ATOMS
 band — the DRY-consolidation that routes every interactive atom onto glass-ui's already-SOTA
 material spine + folds the four unused Baseline-2025 capabilities (`audit/research/glass-atoms-digest.md`).
-**W27** is the gate-fleet + READMEs close (LAST). **W21 retired in the renumber** — the close moved
-to W27 to open after the glass-atoms band, so the W21 slot is unused (no file, no row). Each wave
-names a falsifiable HARD gate; the gate is RED on HEAD and GREEN at close.
+**Band G (W28-W32)** is the NEW-SCOPE band `RECAP ADDENDUM 3` folded — the storybook-completeness +
+dock-based demo nav (W28), the aurora-Configurator restyle (W29), the carousel restyle (W30), the
+animation-coherence + DESIGN.md currency audit (W31), the glass-ui-demo Lighthouse audit (W32); these
+dogfood/restyle ALREADY-SHIPPED primitives (the dock, Configurator, carousel) + audit-and-fix the
+demo, minting NO new speculative primitive. **W33** is the gate-fleet + READMEs close (LAST). **W21
+retired in the renumber** — the close moved to W27 to open after the glass-atoms band, then to W33
+to open after band G, so the W21 slot is unused (no file, no row). Each wave names a falsifiable HARD
+gate; the gate is RED on HEAD and GREEN at close.
 
 | Wave | What | Type | HARD gate (one-line, falsifiable) |
 |---|---|---|---|
@@ -147,7 +164,12 @@ names a falsifiable HARD gate; the gate is RED on HEAD and GREEN at close.
 | **AW.W24** | **GLASS-CARD PERFECTION (shadcn-2025 + hover + specular).** Adopt `--card-spacing` driving CardHeader/Content/Footer padding + gap from one knob (retire the three `p-6` + `gap-y-1.5`); `data-size="sm"` rung; a `CardAction` slot + `@container` header reflow; opt-in `<Card hover>` elevation reusing the cartoon longhand-translate mechanism (no fork); wire the dormant `--mouse-x/--mouse-y` specular seam behind the opt-in; the content-layer cream-read fix (opaque legible ring + under-shadow lift). Pure structure/CVA — the glass tier system is untouched. See `waves/AW.W24-glass-cards.md`. Opens after W22 (card edge-light) + W12 (backdrop staging) | IMPL | `proof:glass-card-tiers` — the five card tiers render perceptibly distinct staged over a busy backdrop (computed-style + sampled-pixel diff); a `--card-spacing` override re-resolves all three subcomponents; `<Card hover>` shows a hover `translate`/`box-shadow` delta while static `<Card>` is unchanged; bite: a hardcoded `p-6` / a flat-on-backdrop tier → RED |
 | **AW.W25** | **PRIMITIVES PERFECTION (the cross-atom affordance/state/motion/a11y sweep).** One comprehensive KISS sweep routing every interactive atom onto the existing canon: the universal `.tap-squish` press-spring (swap the ad-hoc `active:scale`) + the four-state contract + `.focus-ring` (Accordion/Collapsible triggers) + `transition-control`; `--radius-field`/`--radius-control` geometry (Textarea + NumberFieldInput off the 9999px pill; Checkbox/Tabs off raw `rounded-sm`); Switch thumb glass-highlight + spring-on-travel; Checkbox glass-tint fill + the indeterminate `<Minus>` branch (the always-`<Check>` bug); Toast + Command onto `glass-floating`; `success/warning/info` tone parity on Alert + Toast; `TabsIndicator` into base `<Tabs>`; the W13 affordance floors (gold-audacious legibility, the 8%α border, the slider track-fill) re-asserted uniformly. See `waves/AW.W25-primitives-perfection.md`. Opens after W13/W18 | IMPL | `proof:primitive-affordance` — every named interactive atom carries the four-state contract (hover ∧ active-press ∧ focus-ring ∧ disabled) ∧ a semantic-radius token ∧ `transition-control`; no multi-line/stepper atom resolves `9999px`; the indeterminate checkbox renders the dash; every floating-band surface carries a `glass-*` tier; AA contrast floors hold; bite: a press-feedback-less atom / a 9999px Textarea / an always-`<Check>` indeterminate / a flat Toast → RED |
 | **AW.W26** | **reka/shadcn/Tailwind-v4.3/mwg IDIOM + BINDING GUARD.** Refactor Toast to `useForwardPropsEmits` + a single `Toaster` provider/viewport hoist; `SelectContent` transform-origin; blanket `data-slot` on the family roots + `:data-variant`/`:data-size` on CVA roots; Button/Badge/Toggle CVA base modernization (icon-sizing, gap, `has-[>svg]` padding) verified against the `cn()` bucket table; `aria-invalid:` error-paint on the 5 `useUserInvalidAria`-wired form controls; the `--text-shadow-*` `@theme` token bridge; `text-wrap` balance/pretty/wrap-anywhere on type/label atoms; ONE Playwright binding-regression spec (the silently-no-op reka class: Toggle/Combobox/TagsInput/Switch/Checkbox rendered-effect); the MIGRATION.md Combobox-`searchTerm` note. Tailwind v4.3, NO v5. See `waves/AW.W26-reka-shadcn-tailwind-idiom.md`. Fully disjoint from W22-W25 | IMPL | `proof:reka-binding-idiom` — every `ui/` root carries a `data-slot`; the three modernized CVA bases resolve icon-sizing without a `cn()` false-merge; each named form atom paints on `aria-invalid`; `text-shadow-sm` resolves + no raw multi-stop literal survives; the binding spec asserts each model's rendered effect; Toast mounts N>1 under one provider; bite: a missing `data-slot` / a false-merged icon size → RED |
-| **AW.W27** | **GATE-FLEET CLOSE + READMEs (LAST).** Register every AW gate W0-W26 in `gates.mjs` with its `{local,ci,release,sibling}` tag (NOT hand-listed in ci.yml) — the four arcs + convergence + gate-pattern + orphan-prune + styling-assay + the glass-atoms band (`proof:glass-material-unified`/`-sota`, `proof:glass-card-tiers`, `proof:primitive-affordance`, `proof:reka-binding-idiom`); the four research-backed READMEs (dock, aurora, blob, constellation); the overfitting audit (PROPS, zero orphans); the π visual-runtime lane over the visual-change waves (W1-W3 dock, W4-W11 aurora/blob, W12-W13 component, W16-W17 convergence, W22-W26 glass-atoms); `AW.FINAL` citing a green run id per wave. Opens AFTER all bands. The prior W18 close slot was content-swapped to the gate-pattern wave; this was first restored as W21, then re-anchored to W27 when the glass-atoms band inserted ahead (W21 retired in the renumber). See `waves/AW.W27-close.md` | IMPL (LAST) | `proof:aw-final` — full matrix green over a clean tree; `gates:verify-ci` green (no hand-listed gate); the four READMEs exist + cite their research digest; the π lane ran (≥3 viewports, ≥5 frames per state-toggle, AA contrast, per-story consumption sweep) OR recorded the build-verification floor with the re-probe obligation named; overfitting audit zero orphans; `FINAL.md` cites a green run id per wave |
+| **AW.W28** | **STORYBOOK COMPLETENESS + DOCK-BASED DEMO NAV (band G, demo-internal).** Audit the AV.W10 11-category demo IA for completeness (no shipped glass-ui component without a story) AND re-build the storybook navigation on the glass-ui dock — a SIDEBAR dock + a BOTTOM-bar dock for core page nav, both dock-driven, dogfooding the shipped `GlassDock`/`DockLayerGroup` + the glass atoms with iOS-26 idiom. DEMO-INTERNAL chrome over already-shipped primitives — no new library primitive, no fake 2nd consumer (the nav is demo-private). See `waves/AW.W28-storybook-dock-nav.md`. Opens after band F | IMPL | `proof:demo-dock-nav` — the demo nav mounts a sidebar dock AND a bottom-bar dock both composing the shipped `GlassDock` (a render probe finds both dock instances driving core-page nav, no raw-`<nav>` re-roll) + `proof:storybook-complete` — every shipped glass-ui component resolves a story in the 11-category IA (a coverage walk over the export barrel vs the story registry → zero uncovered); born RED on HEAD (the nav is not dock-driven; ≥1 component has no story); bite: a non-dock nav / a component with no story → RED |
+| **AW.W29** | **AURORA CONFIGURATOR REDESIGN (band G, existing-surface restyle).** Re-design the aurora controls surface with iOS-26 + idiomatic glass atoms — it EXTENDS the already-shipped `Configurator`/`ConfiguratorLayer`/`ConfiguratorRow` (the aurora chrome + the demo are its existing consumers), routing the controls onto the glass-atoms material/press/radius spine the band-F waves landed. A restyle/dogfood of a shipped primitive, NOT a new control. See `waves/AW.W29-aurora-configurator.md`. Opens after band F + W8 (the interactive aurora surface it configures) | IMPL | `proof:configurator-glass-atoms` — the aurora configurator surface resolves the glass-atoms spine (the `.glass-material` rim/specular on its rows, the `.tap-squish` press on its controls, the semantic-radius rungs — a computed-style probe over the mounted configurator) AND composes the shipped `Configurator` family (grep finds no forked controls column); born RED on HEAD (the configurator predates the band-F spine); bite: a hand-rolled control off the atoms / a forked column → RED |
+| **AW.W30** | **CAROUSEL REDESIGN (band G, existing-surface restyle).** Re-design the carousel with iOS-26 + idiomatic glass atoms — it restyles the already-shipped `GlassCarousel`/`carousel` family (its existing consumers), routing the carousel chrome (the dots/arrows/track) onto the glass-atoms material + press + radius spine. An existing-component refactor, NOT a speculative mint. See `waves/AW.W30-carousel-redesign.md`. Opens after band F | IMPL | `proof:carousel-glass-atoms` — the carousel controls resolve the glass-atoms spine (the arrows/dots carry the four-state contract + `.tap-squish` press + a `glass-*` tier + semantic-radius — a computed-style probe over the mounted carousel) AND composes the shipped `GlassCarousel`/`carousel` (no forked carousel primitive); born RED on HEAD (the carousel chrome predates the band-F spine); bite: a flat off-atoms arrow/dot / a forked carousel → RED |
+| **AW.W31** | **ANIMATION-COHERENCE AUDIT + DESIGN.md CURRENCY (band G, audit-and-reconcile).** The animation-language coherence audit across the dock/aurora/blob/primitives motion — ONE spring vocabulary, consistent timing/curves/PRM-discipline, no off-canon ad-hoc easing — reconciling any drift the band-A/B/C/F waves left; AND the DESIGN.md currency/completeness pass (DESIGN.md documents the warm-cream + iOS-26 + glass-atoms spine the tranche landed, with no stale claim). Audit-and-fix over the shipped motion + the standing doc — no new primitive. See `waves/AW.W31-animation-designmd.md`. Opens after band F (the motion is landed) | IMPL | `proof:animation-coherence` — every animated atom resolves a `--spring-*`/`--ease-*`/`--duration-*` token from the canon (a grep + computed-style sweep finds no off-canon ad-hoc easing literal on a shipped surface; every motion axis is PRM-reachable) + `proof:design-md-current` — DESIGN.md cites the landed spine (the warm-cream tokens, the iOS-26 material, the glass-atoms consolidation) and carries no stale/struck claim (a grep asserts the documented token names resolve at HEAD); born RED on HEAD (≥1 off-canon easing survives; DESIGN.md predates the band-F spine); bite: an ad-hoc easing literal / a stale DESIGN.md claim → RED |
+| **AW.W32** | **LIGHTHOUSE AUDIT — glass-ui demo (band G, perf/a11y/best-practices/SEO).** The deep Lighthouse audit over every glass-ui demo page (perf, a11y, best-practices, SEO) — record the per-page scores, fix the regressions the audit surfaces (the a11y/perf floors), and gate the demo against a documented score floor. Audit-and-fix over the demo pages — it ships fixes, not a new surface. The slides Lighthouse arm is H-owned. See `waves/AW.W32-lighthouse.md`. Opens after W28 (the demo nav is the page shell it audits) | IMPL | `proof:lighthouse-demo` — every glass-ui demo page clears the documented Lighthouse floor (a11y ≥ the recorded threshold, perf/best-practices/SEO recorded + above floor) over the page set; the audit artefact records the per-page scores + the fixed regressions; born RED on HEAD (≥1 page below the a11y/perf floor before the fixes); bite: a page regressing below the floor → RED |
+| **AW.W33** | **GATE-FLEET CLOSE + READMEs (LAST).** Register every AW gate W0-W32 in `gates.mjs` with its `{local,ci,release,sibling}` tag (NOT hand-listed in ci.yml) — the four arcs + convergence + gate-pattern + orphan-prune + styling-assay + the glass-atoms band (`proof:glass-material-unified`/`-sota`, `proof:glass-card-tiers`, `proof:primitive-affordance`, `proof:reka-binding-idiom`) + the NEW-SCOPE band G (`proof:demo-dock-nav`/`proof:storybook-complete`, `proof:configurator-glass-atoms`, `proof:carousel-glass-atoms`, `proof:animation-coherence`/`proof:design-md-current`, `proof:lighthouse-demo`); the four research-backed READMEs (dock, aurora, blob, constellation); the overfitting audit (PROPS, zero orphans); the π visual-runtime lane over the visual-change waves (W1-W3 dock, W4-W11 aurora/blob, W12-W13 component, W16-W17 convergence, W22-W26 glass-atoms, W28-W32 band G); `AW.FINAL` citing a green run id per wave. Opens AFTER all bands. The prior W18 close slot was content-swapped to the gate-pattern wave; this was first restored as W21, re-anchored to W27 when the glass-atoms band inserted ahead, then to W33 when band G inserted ahead (W21 retired in the renumber). See `waves/AW.W33-close.md` | IMPL (LAST) | `proof:aw-final` — full matrix green over a clean tree; `gates:verify-ci` green (no hand-listed gate); the four READMEs exist + cite their research digest; the π lane ran (≥3 viewports, ≥5 frames per state-toggle, AA contrast, per-story consumption sweep) OR recorded the build-verification floor with the re-probe obligation named; overfitting audit zero orphans; `FINAL.md` cites a green run id per wave |
 
 ---
 
@@ -163,7 +185,8 @@ names a falsifiable HARD gate; the gate is RED on HEAD and GREEN at close.
 | Gate pattern | `src/styles/glass.css` (the `.input-pill` invalid-ring widen), a `GatePattern.story.vue` | W18 |
 | Orphan-prune / styling-assay | `src/components/custom/{metric-cell,metric-stack}/` (prune), `src/subpaths/metric-{cell,stack}.ts`, `api/index.ts`, `package.json` exports (W19); `src/styles/{utilities.css,tokens.css}` (tokenize), the Tabs pill-track, the glass-panel/card demo controls (W20) | W19·W20 |
 | Glass atoms (band F) | `src/styles/{glass.css,glass-specular-track.css,tokens.css,theme.css}` (material mixin, `#glass-refract`, squircle PE, `--card-spacing`/`--radius-field`/`--text-shadow-*`, W22·W23·W24·W26); `ui/card/`, `ui/{checkbox,switch,textarea,number-field}/`, `ui/{toast,command,alert}/`, the 36 family roots `data-slot` (W23·W24·W25·W26) | W22-W26 |
-| Gates + docs | `scripts/gates.mjs`, `scripts/proof-aw-final.mjs`, the four READMEs, `docs/tranches/AW/` | W27 |
+| New scope (band G) | `demo/` (the demo-private dock-nav shell + the storybook IA stories — W28); `src/components/custom/configurator/` + the aurora chrome (restyle — W29); `src/components/custom/{glass-carousel,carousel}/` + `carousel` family (restyle — W30); `DESIGN.md` + the shipped motion surfaces (audit-and-reconcile — W31); `demo/` pages + the a11y/perf fix sites (W32) — DEMO-INTERNAL chrome + existing-surface restyles, no new library primitive | W28-W32 |
+| Gates + docs | `scripts/gates.mjs`, `scripts/proof-aw-final.mjs`, the four READMEs, `docs/tranches/AW/` | W33 |
 
 **Disjointness:** Band A (dock), Band B (aurora), Band C (blob), Band D (components) write
 disjoint surfaces and parallelize across worktrees. Within a band, the waves sequence per their
@@ -173,7 +196,13 @@ single OETF/FBM/matrix source; AW splices, never diverges). The glass-atoms band
 sequences after W12/W13/W18 where it shares file bounds — W22 is the band-F spine (the material
 unify), W23 extends the card edge from it, W24/W25 ride W13's affordance tokens (W24 touches only
 the `.input-pill` radius declarations, W13 owns border-color/alpha), and W26 is fully disjoint and
-parallel-schedulable.
+parallel-schedulable. The new-scope band G (W28-W32) sequences AFTER band F (it routes the demo
+nav, the Configurator restyle, and the carousel restyle onto the band-F glass-atoms spine, and the
+animation-coherence audit reconciles the band-A/B/C/F motion): W28's nav shell + the storybook
+stories live under `demo/` (disjoint from the `src/` band-F surfaces); W29 writes the
+`configurator/` package + the aurora chrome; W30 the carousel family; W31 reconciles `DESIGN.md` +
+the shipped motion surfaces; W32 the `demo/` pages — disjoint per-wave surfaces, parallel-schedulable
+within band G except W32 opens after W28 (the demo nav is the page shell W32 audits).
 
 ---
 
@@ -273,6 +302,11 @@ idiom in the deck's dialect — H adds the missing heavy-bar signature, never a 
   ONLY if a demo exercises ≥2 moods, else it is excised. The glass-atoms `CardAction` slot names the
   demo + the speedtest metric cards as its two; new reka 2.9 `Color*`/`Autocomplete`/`MonthPicker`
   wraps are NOT minted speculatively (only Checkbox-indeterminate has concrete in-repo demand). The
+  new-scope band G (W28-W32) mints NO new library primitive: the demo-dock nav is DEMO-INTERNAL
+  chrome over the already-shipped `GlassDock`/`DockLayerGroup` (a demo-private helper, not a
+  ≥2-consumer surface), the W29 Configurator restyle + the W30 carousel restyle are EXISTING-component
+  refactors of already-shipped primitives (with their existing consumers — no fake 2nd consumer is
+  invented), and W31/W32 are audit-and-fix passes over the shipped motion + the demo pages. The
   overfitting audit tallies PROPS; the W0 spot-verify gates every retire.
 - **inv P6 — design-language cogency.** Every visual surface reads as warm-cream glass + iOS-26
   Liquid Glass; the NCSU-red stays consumer-layered; the AI-Nutrition-Label idiom is scoped to
@@ -280,6 +314,11 @@ idiom in the deck's dialect — H adds the missing heavy-bar signature, never a 
   it routes every atom onto the ONE warm-cream + iOS-26 material spine (no atom keeps a hand-rolled
   highlight/shadow literal off the `--glass-*` rungs); the content-tint stays warm-cream-biased by
   default (NOT iOS-blue); the directional rim is dark-arm via the existing `--shadow-color` flip.
+  The new-scope band G (W28-W32) serves the SAME cogency: the demo-dock nav, the Configurator
+  restyle, and the carousel restyle route their chrome onto the band-F glass-atoms spine (the
+  `.glass-material` rim/specular, the `.tap-squish` press, the semantic-radius rungs) with iOS-26
+  idiom — no restyle mints its own palette or off-canon material; the W31 animation-coherence audit
+  enforces ONE spring vocabulary across the whole tranche; W32's a11y fixes hold the AA floors.
 - **inv P8 — gated Baseline / Tailwind-v4.3-not-v5.** The glass-atoms band targets Tailwind v4.3
   (NO v5) + idiomatic reka-ui ^2.9 (2.9.7 installed) + shadcn-vue (CVA ^0.7.1) — idiom-only, no
   stack upgrade. Every gated Baseline-2025 capability ships `@supports`-gated WITH a round /
@@ -294,9 +333,10 @@ idiom in the deck's dialect — H adds the missing heavy-bar signature, never a 
   fails closed on drift.
 - **the π visual-runtime lane is binding** (AW ships visual changes). Coverage: ≥3 viewports
   (375×667, 1280×800, 1440×900), ≥5 animation frames per state-toggle (the dock collapse/switch,
-  the aurora/blob transitions, the glass-atoms press-spring + card-hover + squircle PE), WCAG-AA
-  contrast-vs-background, per-story consumption sweep. The tooling-contingency clause applies if
-  browser automation is unavailable (build-verification floor + the named re-probe obligation).
+  the aurora/blob transitions, the glass-atoms press-spring + card-hover + squircle PE, the band-G
+  demo-dock nav + the restyled Configurator/carousel), WCAG-AA contrast-vs-background, per-story
+  consumption sweep. The tooling-contingency clause applies if browser automation is unavailable
+  (build-verification floor + the named re-probe obligation).
 
 **USER-DOMAIN boundaries (inv-16):** the dirty `docs/precepts` submodule is NOT touched in-flight.
 The 3.4.0 publish leg is confirm-first; agents NEVER run an irreversible release step. Agents are
@@ -321,7 +361,11 @@ access-modal idiom [W18], the orphan-resolution + metric-cell/stack prune [W19],
 material spine + folds the four unused Baseline-2025 capabilities (glass-material unify+extend [W22],
 glass-card shadcn-2025 perfection [W23], primitive geometry+material+bug [W24], cross-atom
 motion+a11y+overlay-band+tone parity [W25], the reka/shadcn/Tailwind-v4.3/mwg idiom + binding guard
-[W26]) — then the gate-fleet close + the four research-backed READMEs [W27, LAST].* The engine
+[W26]) — then the new-scope band G that dogfoods/restyles the already-shipped primitives onto that
+spine (the storybook-completeness + dock-based demo nav — sidebar + bottom-bar, demo-internal [W28],
+the aurora-Configurator restyle [W29], the carousel restyle [W30], the animation-coherence +
+DESIGN.md currency audit [W31], the glass-ui-demo Lighthouse audit [W32]) — then the gate-fleet
+close + the four research-backed READMEs [W33, LAST].* The engine
 mechanisms port to glass-ui while the slides brand content (NCSU-red anomaly, narrative, PPTX) stays
 H-owned; the design language is warm-cream glass + iOS-26 Liquid Glass with the NCSU-red
 consumer-layered and the AI-Nutrition-Label idiom scoped to SlideXray.

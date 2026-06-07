@@ -129,3 +129,21 @@ The AW/H tranches are **monolithic + totality**: perfect EVERY faction of glass-
 - **H slides totality.** Same totality for slides: every slide + every deck-chrome element perfected (already broad in H.W1-W10).
 - **REMOVE the til-briefing lock (supersedes H.W6's gate-restyle/homepage-lock).** The lock is the soft-gate: `DeckGate.vue` + `VITE_TIL_ACCESS_KEY`, gated in `DeckPage.vue:44` (`meta.ts:9 protected:false`). The user: "remove the lock from the til-slides. Not needed any longer." H.W6 becomes a LOCK-REMOVAL wave: drop the DeckGate gating for til-briefing (the deck boots directly), retire the homepage locked-deck blur/lock-symbol ask (no lock to show), keep DeckGate available for genuinely-protected decks if any. The earlier "gate restyle / homepage lock" ask is RETIRED by this.
 - **Tailwind v5?** No v5 exists (latest 4.3.0). Target idiomatic Tailwind v4.3 throughout. Record this in the styling waves so no wave chases a nonexistent v5.
+
+---
+
+## ADDENDUM 3 — the cogency-harden round + new scope (user, 2026-06-07)
+
+This round: ensure TOTAL tranche cogency + inter-wave coherence; harden further; analyze for OVERFIT or DUPLICATIVE items; a 32-agent deep audit of the original plan + ALL waves + all changes; delineate chronically-deferred + deferred items and FOLD them; recap ALL prompts + ensure addressed. NOT implementation — tranche-development only.
+
+New scope folded into AW/H (each → a wave or a fold):
+
+- **Storybook layout perfected — EVERY component demonstrated.** No glass-ui component without a story; the demo IA (AV.W10's 11-category tree) audited for completeness + cogency. → an AW storybook-completeness wave (extends AV.W10).
+- **A brand-new dock-based demo nav: a SIDEBAR dock AND a BOTTOM-bar dock for core page nav.** The storybook navigation re-built on the glass-ui dock (the sidebar + the bottom bar both dock-driven), dogfooding the dock + the glass atoms. iOS-26 + glass-primitive inspiration; idiomatic glass-atoms usage. → an AW demo-dock-nav wave.
+- **The aurora CONFIGURATOR redesign + the CAROUSEL redesign.** The aurora controls surface + the carousel re-designed with iOS-26 + idiomatic glass atoms. → AW waves (the configurator extends the existing Configurator; the carousel the GlassCarousel/carousel).
+- **Consistent naming + verbiage** across components/stories/tokens. → a naming-consistency fold (the styling/idiom wave or a dedicated lane).
+- **A deep LIGHTHOUSE audit for every page + slide** (perf/a11y/best-practices/SEO). → an AW perf-a11y wave (glass-ui demo) + an H wave (slides).
+- **A deep ANIMATION audit + a DESIGN.md audit.** The animation language coherence (across dock/aurora/blob/primitives) + DESIGN.md currency/completeness. → folds into the animation-language + the close/docs waves.
+- **Several hardening waves in several workflows** to perfect this massive tranche → the cogency-harden loop (this round).
+
+The frontend assay (encapsulation/composables/state/colocation; >500-line split; brittle selectors; non-idiomatic Tailwind; monolithic CSS; deprecated CSS; fragile rules; design-idiom localization) + the backend legacy assay (excise/fail-explicit; god-modules; no nested imports; no test-in-src; DRY/KISS) are RE-RUN this round to catch anything AV/W12-W15 + the AW hygiene/styling waves (W15/W20) missed, and to verify the new waves don't re-introduce them.
