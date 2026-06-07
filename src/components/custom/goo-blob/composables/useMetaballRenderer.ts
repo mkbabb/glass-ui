@@ -44,6 +44,13 @@ const UNIFORM_NAMES = [
     "uWarpAmp",
     "uSmoothK",
     "uMerge",
+    "uLit",
+    "uRimColor",
+    "uLightDir",
+    "uSpecStrength",
+    "uSpecShininess",
+    "uRimPower",
+    "uRimStrength",
     "uHueRange",
     "uSatShift",
     "uBrightnessShift",
@@ -122,6 +129,28 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
         const rgb = colorResolver(css);
         if (colorCache.size > 256) colorCache.clear();
         colorCache.set(css, rgb);
+        return rgb;
+    }
+
+    // The rim color (W9.b) may be a `var(--token)` the ColorResolver (value.js)
+    // cannot parse. Mirror GooBlob.vue's cascade trick: paint the string onto the
+    // canvas element's `color` and read back the browser-resolved `rgb(...)`, then
+    // feed THAT to the resolver. A literal (no `var()`) passes straight through.
+    // Cached so the cascade read runs once per unique rim string.
+    const rimCache = new Map<string, [number, number, number]>();
+    function resolveRimColor(css: string, el: HTMLElement | null): [number, number, number] {
+        const cached = rimCache.get(css);
+        if (cached) return cached;
+        let concrete = css;
+        if (css.includes("var(") && typeof window !== "undefined" && el) {
+            const prev = el.style.color;
+            el.style.color = css;
+            concrete = getComputedStyle(el).color || css;
+            el.style.color = prev;
+        }
+        const rgb = colorResolver(concrete);
+        if (rimCache.size > 64) rimCache.clear();
+        rimCache.set(css, rgb);
         return rgb;
     }
 
@@ -293,6 +322,25 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     );
                     gl.uniform1f(U.uColorNoiseFreq, config.colorNoiseFreq);
                     gl.uniform1f(U.uColorNoiseSpeed, config.colorNoiseSpeed);
+
+                    // Lit glass surface (W9.b) — Blinn-Phong glint + Fresnel rim.
+                    // `uRimColor` resolves through the SAME injected ColorResolver
+                    // seam as `uBaseColor` (NOT a DOM probe — the `var()`-cascade
+                    // read above only un-wraps a token to a concrete string the
+                    // resolver then parses). Gated behind `uLit` (default flat).
+                    gl.uniform1f(U.uLit, config.lit ? 1.0 : 0.0);
+                    const rim = resolveRimColor(config.rimColor, canvas);
+                    gl.uniform3f(U.uRimColor, rim[0], rim[1], rim[2]);
+                    gl.uniform3f(
+                        U.uLightDir,
+                        config.lightDir[0],
+                        config.lightDir[1],
+                        config.lightDir[2],
+                    );
+                    gl.uniform1f(U.uSpecStrength, config.specStrength);
+                    gl.uniform1f(U.uSpecShininess, config.specShininess);
+                    gl.uniform1f(U.uRimPower, config.rimPower);
+                    gl.uniform1f(U.uRimStrength, config.rimStrength);
 
                     // Satellites
                     const sats = satellites.sources;

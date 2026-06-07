@@ -78,6 +78,15 @@ uniform float uMerge;   // 0 = quadratic smin, 1 = circular smin (rounder menisc
 // Membrane — domain-warp strength on the FBM edge displacement (0 = plain fbm).
 uniform float uWarpAmp;
 
+// Lit glass surface (W9.b) — gated behind uLit so the flat fill stays default.
+uniform float uLit;             // 0 = flat fill (default), 1 = lit droplet
+uniform vec3 uRimColor;         // Fresnel rim tint (GAMMA sRGB, via ColorResolver)
+uniform vec3 uLightDir;         // normalized light direction (x, y, z)
+uniform float uSpecStrength;    // Blinn-Phong specular weight
+uniform float uSpecShininess;   // specular exponent (16-64, tight glint)
+uniform float uRimPower;        // Fresnel/Schlick exponent (~2-3)
+uniform float uRimStrength;     // Fresnel rim weight
+
 // Color perturbation (perceptually uniform — OKLCh L/C/h)
 uniform float uHueRange;        // degrees of hue swing (converted to radians)
 uniform float uSatShift;        // OKLCh chroma swing
@@ -144,6 +153,35 @@ float sceneDist(vec2 uv) {
     return d;
 }
 
+// W9.b — the IQ 4-tap tetrahedron gradient of the composite SDF, lifted to a
+// pseudo-3D surface normal so the droplet reads as a rounded bead (flat centre,
+// steep rim) rather than a flat sticker.
+//
+// SCREEN-SPACE epsilon: the smin + domain-warped FBM field is NOT a unit-gradient
+// SDF, so a tiny fixed epsilon shimmers; the tap offset is ~1.5px / uResolution.y
+// so it tracks the rendered pixel size at any zoom. normalize() is guarded with
+// +1e-6 (the gate's |N| ~ 1 assertion holds across the interior).
+//
+// The Z lift: 'interior' is the normalized depth inward from the rim
+// (-d / bodyR, 0 at the edge, ~1 deep inside); the dome height
+// z = sqrt(max(0, 1 - (1 - interior)^2)) is the unit half-sphere profile (flat
+// at the centre, steep at the rim). n3 = normalize(vec3(grad2d * (1 - z), z))
+// tilts the normal outward along the SDF gradient near the rim and points it at
+// the viewer deep inside.
+vec3 surfaceNormal(vec2 uv, float d, float bodyR) {
+    const vec2 k = vec2(1.0, -1.0);
+    float eps = 1.5 / max(uResolution.y, 1.0);
+    vec2 grad2d = normalize(
+        k.xy * sceneDist(uv + k.xy * eps) +
+        k.yy * sceneDist(uv + k.yy * eps) +
+        k.yx * sceneDist(uv + k.yx * eps) +
+        k.xx * sceneDist(uv + k.xx * eps) + vec2(1e-6));
+
+    float interior = clamp(-d / max(bodyR, 1e-4), 0.0, 1.0);
+    float z = sqrt(max(0.0, 1.0 - (1.0 - interior) * (1.0 - interior)));
+    return normalize(vec3(grad2d * (1.0 - z), z) + vec3(0.0, 0.0, 1e-6));
+}
+
 void main() {
     vec2 uv = vUv - 0.5;
 
@@ -180,13 +218,45 @@ void main() {
     oklch.y = max(oklch.y + (colorNoise - 0.5) * uSatShift, 0.0); // chroma swing
     oklch.x = clamp(oklch.x + uBrightnessShift, 0.0, 1.0);        // lightness bias
 
-    // Subtle inner glow near the edge — lifts OKLCh lightness inward.
-    float edgeGlow = smoothstep(0.0, -bodyR * 0.6, d);
-    oklch.x = mix(oklch.x, min(oklch.x + 0.06, 1.0), 1.0 - edgeGlow);
-
     oklch = gamutClampOklch(oklch);
 
     vec3 lin = oklabToLinearSrgb(oklchToOklab(oklch));
+
+    // ── W9.b lit glass surface — Blinn-Phong glint + Fresnel rim, in LINEAR ──
+    //
+    // The lit terms enter lin in LINEAR space BEFORE the OETF (linearToSrgb)
+    // and BEFORE the * alpha premultiply — a post-OETF apply double-gammas the
+    // highlight and fringes the premultiplied edge (the named A5/A2 trap). The
+    // prior flat inner-glow lift is SUBSUMED by the Fresnel rim (the curvature
+    // read now comes from the surface normal, not a flat smoothstep). Gated behind
+    // uLit so the flat fill stays the default (zero regression).
+    if (uLit > 0.5) {
+        // Pseudo-3D surface normal from the composite SDF gradient (W9.b keystone).
+        vec3 N = surfaceNormal(uv, d, bodyR);
+        vec3 V = vec3(0.0, 0.0, 1.0);              // orthographic view: straight on
+        vec3 L = normalize(uLightDir + vec3(1e-6)); // light direction
+        vec3 H = normalize(L + V);                  // Blinn-Phong half-vector
+
+        // Warm-cream specular glint — a near-white OKLCh TINT (L~0.97, C~0.03,
+        // hue~85°) routed through the SAME spliced OKLCh matrices, NOT hardcoded
+        // sRGB white (pure white reads cheap-CG). Linearized for the linear add.
+        vec3 warmCream = oklabToLinearSrgb(oklchToOklab(vec3(0.97, 0.03, radians(85.0))));
+        float spec = pow(max(dot(N, H), 0.0), uSpecShininess) * uSpecStrength;
+
+        // Fresnel/Schlick rim — fed uRimColor (the --foreground warm rim via the
+        // injected ColorResolver, NOT a cold-blue default). Attenuated where the
+        // body is thick so the sheen rides the rim, not the core.
+        float thickness = clamp(-d / max(bodyR, 1e-4), 0.0, 1.0);
+        float fres = pow(1.0 - max(dot(N, V), 0.0), uRimPower);
+        float rim = fres * uRimStrength * (1.0 - 0.6 * thickness);
+        vec3 rimLin = srgbToLinear(uRimColor);
+
+        // Combine the two warm highlights and add in LINEAR. max(spec, rim*scale)
+        // keeps the glint from stacking on the rim into a blown hotspot.
+        vec3 highlight = max(warmCream * spec, rimLin * rim);
+        lin += highlight;
+    }
+
     vec3 rgb = clamp(linearToSrgb(lin), 0.0, 1.0); // MANDATORY OETF — closes the seam
 
     // Edit #8 — premultiply AFTER the OETF: straight-alpha gamma → premultiplied.

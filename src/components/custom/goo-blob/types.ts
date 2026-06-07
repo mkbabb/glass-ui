@@ -92,6 +92,20 @@ export interface BlobConfig {
     colorNoiseFreq: number;
     colorNoiseSpeed: number;
 
+    // Lit glass surface (W9.b) — Blinn-Phong glint + Fresnel rim. `lit` gates the
+    // whole block (default OFF = flat fill, zero regression for existing consumers).
+    lit: boolean;
+    /** CSS color for the Fresnel rim tint (resolved through the ColorResolver). */
+    rimColor: string;
+    /** Light direction [x, y, z] (normalized in-shader). */
+    lightDir: [number, number, number];
+    specStrength: number;
+    /** Specular exponent (16-64 — a tight glint). */
+    specShininess: number;
+    /** Fresnel/Schlick exponent (~2-3). */
+    rimPower: number;
+    rimStrength: number;
+
     // Pointer
     pointerAttraction: number;
     pointerStrength: number;
@@ -133,6 +147,14 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
     brightnessShift: 0.0,
     colorNoiseFreq: 2.0,
     colorNoiseSpeed: 0.05,
+
+    lit: false,
+    rimColor: "var(--foreground)",
+    lightDir: [0.4, 0.7, 0.6],
+    specStrength: 0.9,
+    specShininess: 32,
+    rimPower: 2.5,
+    rimStrength: 0.5,
 
     pointerAttraction: 0.0,
     pointerStrength: 0.08,
