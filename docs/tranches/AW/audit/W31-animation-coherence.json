@@ -1,0 +1,120 @@
+{
+  "wave": "AW.W31",
+  "title": "Animation-language coherence + DESIGN.md currency + naming consistency",
+  "base": "246f535",
+  "gates": {
+    "proof:animation-coherence": {
+      "script": "scripts/proof-animation-coherence.mjs",
+      "bornRed": {
+        "residuals": [
+          {
+            "file": "src/styles/utilities.css",
+            "line": 176,
+            "kind": "literal-press-scale",
+            "literal": "0.98",
+            "rule": ".interactive-item:active",
+            "note": "the sole per-atom literal press scale surviving the W2/W3/W25 sweeps"
+          }
+        ],
+        "easingForks": 0,
+        "springDefsOutsideBlock": 0
+      },
+      "fold": {
+        "file": "src/styles/utilities.css",
+        "change": "scale: 0.98 -> scale: var(--scale-press-sm)",
+        "rationale": "0.97 is the soft press rung the button + slider recipes consume; ONE press vocabulary, no per-atom literal; the 0.98->0.97 delta is sub-perceptual and visually inert",
+        "solverChange": false
+      },
+      "green": {
+        "springDefCount": 5,
+        "springDefsAllInBlock": true,
+        "easingForks": 0,
+        "pressForks": 0,
+        "dockResidual": "none — useLayerTransition.ts rides a DOCK_SPRING solver-param object mirroring the generator PRESETS (not a literal); the TabsIndicator rail already reads --dock-motion-resize = --spring-dock"
+      },
+      "nonPhysicalAllow": [
+        "shimmer",
+        "shimmer-sweep",
+        "gold-shimmer-slide",
+        "sparkle-sweep",
+        "marquee",
+        "scroll-marquee"
+      ],
+      "composesWith": "proof:spring-tokens-synced",
+      "adversarial": "verified — catches an injected cubic-bezier( on dock-controls.css + a literal scale 0.93 on dock.css; GREEN when restored"
+    },
+    "proof:design-md-current": {
+      "script": "scripts/proof-design-md-current.mjs",
+      "designDocs": ["src/components/custom/aurora/DESIGN.md"],
+      "bornRed": {
+        "violations": [
+          "COLOR-HOME (v4.1 named only color.ts)",
+          "WEBGPU-RELAX (v4.1 said Single draw / No multi-pass with no fallback framing)",
+          "PAINTERLY-MEDIUMS (no van-Gogh medium / strokeOrient tensor)",
+          "V5-MARKER (doc was v4.1)",
+          "W4-W5-W7-CITED (no v4.1->v5.0 delta block)",
+          "STALE (v4.1 status with no v5.0 cut)"
+        ]
+      },
+      "green": {
+        "version": "v5.0",
+        "landed": "Δ07 — shared procedural-color.glsl.ts color splice + in-shader OKLCh interp + deriveAurora/deriveScene (AW.W5)",
+        "staged": [
+          "Δ08 — van-Gogh / structure-tensor / real-impasto painterly mediums (AW.W4; README marks planned)",
+          "Δ09 — WebGPU createGPUCanvas + WGSL twin + Kuwahara multi-pass relaxation of invariant 8 as the WebGL2-single-pass fallback contract (AW.W7; README marks planned)"
+        ]
+      },
+      "divergenceNote": "at base 246f535 only W5 landed the aurora source (commit 3793573); W4 (van-Gogh/tensor) + W7 (createGPUCanvas/Kuwahara) are NOT in the aurora source — the README marks them (planned — AW.W7) / planned (AW.W4). DESIGN.md documents Δ08/Δ09 as the STAGED forward contract (design-of-record, not an aspirational shipped claim) so the spec the W4/W7 impl lands against is current — this is the W31 triumvirate §3a clause-3 diagnostic-loop divergence, resolved by documenting realized-vs-staged honestly rather than an aspirational contract.",
+      "adversarial": "verified — reverting the color-home to color.ts-only fails COLOR-HOME; GREEN when restored"
+    },
+    "proof:naming-consistency": {
+      "script": "scripts/proof-naming-consistency.mjs",
+      "bornRed": {
+        "enDashHeaders": [
+          "AW.W4-aurora-painterly.md",
+          "AW.W5-aurora-color-derive.md",
+          "AW.W6-aurora-options.md",
+          "AW.W7-aurora-webgpu.md",
+          "AW.W8-aurora-interactive.md",
+          "AW.W27-peer-conformance.md"
+        ],
+        "phantomHedges": []
+      },
+      "normalized": {
+        "waveHeaders": "6 headers (W4-W8 + W27) en-dash separator -> ' - ' hyphen-space, ALLCAPS title -> Title case",
+        "charterTable": "5 §2 bold lead-ins (W4-W8) ALLCAPS-en-dash -> Title-case-hyphen",
+        "conventionNote": "docs/tranches/AW/waves/AW.W31-animation-designmd.md §12 — PascalCase-SFC-in-kebab-dir (recorded, not renamed) + the uniform --glass-edge-light rim + the gate-naming convention"
+      },
+      "green": {
+        "waveHeadersLinted": 34,
+        "charterWaveFileCitations": 32,
+        "docsAndSrcScanned": 670,
+        "consistent": true
+      },
+      "phantomScope": "EXCLUDES AW.W31-animation-designmd.md (the canonical rejection exemption) + exempts a rejection-context line (phantom/proposed/does-not-exist/struck/...) so a NAMED-to-reject mention is compliant while a HEDGE-as-if-it-exists fails",
+      "adversarial": "verified — re-introducing an en-dash header fails clause (a); GREEN when restored"
+    }
+  },
+  "build": {
+    "typecheck": "clean",
+    "build": "green (the --scale-press-sm token swap is visually inert; aurora.js + dock.js chunks unchanged)",
+    "gitDiffCheck": "clean (no whitespace errors over DESIGN.md / AW.md / the wave headers)"
+  },
+  "filesChanged": [
+    "scripts/proof-animation-coherence.mjs",
+    "scripts/proof-design-md-current.mjs",
+    "scripts/proof-naming-consistency.mjs",
+    "package.json",
+    "src/styles/utilities.css",
+    "src/components/custom/aurora/DESIGN.md",
+    "docs/tranches/AW/AW.md",
+    "docs/tranches/AW/waves/AW.W31-animation-designmd.md",
+    "docs/tranches/AW/waves/AW.W4-aurora-painterly.md",
+    "docs/tranches/AW/waves/AW.W5-aurora-color-derive.md",
+    "docs/tranches/AW/waves/AW.W6-aurora-options.md",
+    "docs/tranches/AW/waves/AW.W7-aurora-webgpu.md",
+    "docs/tranches/AW/waves/AW.W8-aurora-interactive.md",
+    "docs/tranches/AW/waves/AW.W27-peer-conformance.md"
+  ],
+  "w33Handoff": "the gates.mjs manifest registration of proof:animation-coherence + proof:design-md-current + proof:naming-consistency is W33's close ceremony (W31 mints the scripts + registers the package.json proof:* entries)"
+}
