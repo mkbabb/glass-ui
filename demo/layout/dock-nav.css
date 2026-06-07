@@ -1,0 +1,148 @@
+/*
+ * dock-nav.css — DEMO-PRIVATE layout for the GlassDock-driven demo nav chrome
+ * (AW.W28.b). It does NOT touch src/styles/.
+ *
+ * Two docks compose the demo's core navigation:
+ *   - SidebarDock — a FIXED vertical `variant="rail"` GlassDock (the left
+ *     column on wide viewports; off-canvas behind a <Sheet> on narrow ones).
+ *   - BottomDock — a horizontal `always-expanded` GlassDock viewport-anchored
+ *     to the bottom inset, floating over the <main> scroll-region.
+ *
+ * Every visual axis reads a library token (`--z-dock`, `--viz-fourier`,
+ * `--radius-*`, `--duration-*`, `--spring-*`) or a demo-local `--demo-nav-*`
+ * custom property — no brittle magic literal where a token resolves (the W20
+ * styling-assay discipline).
+ */
+
+:root {
+    /* The NCSU-red active accent. `--viz-fourier` is the warm-red library token
+       the brand wordmark already rides; the demo nav binds its active-state
+       affordance to it so the accent re-resolves under .dark by construction. */
+    --demo-nav-accent: var(--viz-fourier);
+    /* The left-edge accent rule on the active sidebar category. */
+    --demo-nav-rail-accent-w: 3px;
+    /* Bottom-dock viewport inset (adds the iOS safe-area gutter). */
+    --demo-nav-bottom-inset: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+    /* The fixed sidebar rail column width. */
+    --demo-nav-rail-w: 4.5rem;
+}
+
+/* ── Sidebar fixed-rail occupancy ──────────────────────────────────────────
+   The desktop fixed-rail column. The rail dock itself sizes to content; this
+   aside reserves the column gutter and centres the dock. */
+.demo-sidebar-rail {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 0;
+    padding: 1rem 0.75rem;
+}
+
+/* The off-canvas Sheet host body needs no extra chrome — the SidebarDock fills
+   it. Keep the rail flush to the sheet's leading edge. */
+.demo-bottom-dock__sheet .demo-sidebar-dock {
+    margin: 0;
+}
+
+/* ── Active-category restyle (the genuine NEW deliverable) ──────────────────
+   The affordance moves from the bare `.is-active` colour shift onto the
+   NCSU-red accent + a left-edge accent rule + `tap-squish` press feedback
+   (the `.tap-squish` utility is composed in markup). */
+.demo-sidebar-item {
+    position: relative;
+}
+.demo-sidebar-item.is-active {
+    /* The dock's `--dock-active-color` cohort already paints the active glyph;
+       override it to the NCSU-red accent for this demo (token-on-the-cascade,
+       not a dead local). */
+    --dock-active-color: var(--demo-nav-accent);
+    color: var(--demo-nav-accent);
+}
+.demo-sidebar-item.is-active::before {
+    /* The left-edge accent rule. */
+    content: "";
+    position: absolute;
+    inset-block: 18%;
+    inset-inline-start: calc(-1 * var(--demo-nav-rail-accent-w) - 2px);
+    width: var(--demo-nav-rail-accent-w);
+    border-radius: var(--radius-pill);
+    background: var(--demo-nav-accent);
+}
+
+/* ── Bottom-bar viewport anchoring ─────────────────────────────────────────
+   The bottom dock floats over the <main> scroll-region's bottom inset — it is
+   NOT in document flow, so route scroll never displaces it. */
+.demo-bottom-dock {
+    position: fixed;
+    inset-inline: 0;
+    inset-block-end: var(--demo-nav-bottom-inset);
+    z-index: var(--z-dock);
+    display: flex;
+    justify-content: center;
+    padding-inline: 0.75rem;
+    pointer-events: none;
+}
+.demo-bottom-dock__shell {
+    pointer-events: auto;
+    /* The dock can never exceed its content area — bind the cap to the
+       available width (the rail occupancy is handled by the shell flow). */
+    max-width: min(100%, 64rem);
+}
+
+.demo-bottom-dock__tabs {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.demo-bottom-dock__sep {
+    align-self: stretch;
+    width: 1px;
+    margin-inline: 0.125rem;
+    background: var(--glass-border-quiet, color-mix(in srgb, var(--foreground) 12%, transparent));
+}
+
+/* ── Active-story affordance — the NCSU-red underline/pill ──────────────────
+   DockTabButton auto-activates its `.is-active` state when the rendered
+   RouterLink carries aria-current="page". Restyle that state to the accent. */
+.demo-bottom-dock__tab.is-active,
+.demo-bottom-dock__tab[aria-current="page"] {
+    --dock-active-color: var(--demo-nav-accent);
+    color: var(--demo-nav-accent);
+}
+.demo-bottom-dock__tab {
+    position: relative;
+}
+.demo-bottom-dock__tab.is-active::after,
+.demo-bottom-dock__tab[aria-current="page"]::after {
+    content: "";
+    position: absolute;
+    inset-inline: 18%;
+    inset-block-end: 0.15rem;
+    height: 2px;
+    border-radius: var(--radius-pill);
+    background: var(--demo-nav-accent);
+    transition: opacity var(--duration-fast, 150ms) var(--spring-snappy, ease);
+}
+
+/* ── Responsive: mobile off-canvas, bottom bar primary ─────────────────────
+   Below the mobile breakpoint the fixed sidebar rail column is hidden (it
+   moves off-canvas behind the BottomDock's <Sheet> trigger); the mobile
+   category trigger + separator paint only at narrow widths. */
+.demo-bottom-dock__menu,
+.demo-bottom-dock__menu + .demo-bottom-dock__sep {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .demo-sidebar-rail {
+        display: none;
+    }
+    .demo-bottom-dock__menu {
+        display: inline-flex;
+    }
+    .demo-bottom-dock__menu + .demo-bottom-dock__sep {
+        display: block;
+    }
+}

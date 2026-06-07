@@ -2,7 +2,13 @@
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../../src/components/ui/tabs";
-import { BouncyTabs, type TabOption } from "../../../src/components/custom/tabs";
+import {
+    BouncyTabs,
+    UnderlineTabs,
+    BouncyToggle,
+    type TabOption,
+    type ToggleOption,
+} from "../../../src/components/custom/tabs";
 import { cn } from "../../../src/utils/cn";
 
 const defaultTab = ref("overview");
@@ -51,6 +57,19 @@ const priorityOptions: TabOption[] = [
     { label: "Normal", value: "normal" },
     { label: "High", value: "high" },
     { label: "Urgent", value: "urgent" },
+];
+
+// Underline — the custom <UnderlineTabs> animated-rule slider variant.
+const docTab = ref("notes");
+const docTabs: TabOption[] = docs.map((d) => ({ label: d.label, value: d.id }));
+
+// BouncyToggle — the spring-slider toggle (single + multi-select) over a
+// shared track; the active-state vocabulary canon (V.W3).
+const density = ref("comfortable");
+const densityOptions: ToggleOption[] = [
+    { label: "Compact", value: "compact" },
+    { label: "Comfortable", value: "comfortable" },
+    { label: "Spacious", value: "spacious" },
 ];
 </script>
 
@@ -176,6 +195,42 @@ const priorityOptions: TabOption[] = [
             <div class="flex flex-wrap items-center gap-3 rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-4">
                 <BouncyTabs v-model="priority" :options="priorityOptions" variant="pill" />
                 <span class="text-xs text-muted-foreground">selected: {{ priority }}</span>
+            </div>
+        </section>
+
+        <!-- Underline — the custom <UnderlineTabs> animated-rule slider. -->
+        <section class="flex flex-col gap-3">
+            <h2 class="text-sm font-semibold text-muted-foreground">
+                Underline (custom animated-rule variant)
+            </h2>
+            <p class="text-sm text-muted-foreground">
+                <code class="rounded bg-muted px-1">&lt;UnderlineTabs&gt;</code> —
+                a single-model tab strip with a spring-driven underline rule that
+                tracks the active option. Drives the desktop arm of
+                <code class="rounded bg-muted px-1">&lt;ResponsiveTabs&gt;</code>.
+            </p>
+            <div class="rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-4">
+                <UnderlineTabs v-model="docTab" :options="docTabs" />
+                <p class="mt-3 text-xs text-muted-foreground">selected: {{ docTab }}</p>
+            </div>
+        </section>
+
+        <!-- BouncyToggle — the spring-slider toggle (active-state vocab canon). -->
+        <section class="flex flex-col gap-3">
+            <h2 class="text-sm font-semibold text-muted-foreground">
+                BouncyToggle (segmented spring toggle)
+            </h2>
+            <p class="text-sm text-muted-foreground">
+                <code class="rounded bg-muted px-1">&lt;BouncyToggle&gt;</code> — a
+                segmented control mutating one surface (the ToggleGroup case), with
+                the squash-stretch slider. Default and pill variants.
+            </p>
+            <div class="flex flex-wrap items-center gap-3 rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-4">
+                <BouncyToggle v-model="density" :options="densityOptions" />
+                <span class="text-xs text-muted-foreground">density: {{ density }}</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-4">
+                <BouncyToggle v-model="density" :options="densityOptions" variant="pill" />
             </div>
         </section>
     </StoryPage>

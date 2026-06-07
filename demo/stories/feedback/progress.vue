@@ -108,6 +108,20 @@ onUnmounted(stopAnimated);
             </div>
         </StorySection>
 
+        <!-- gradient variant — the lifecycle motion grammar dispatcher arm. -->
+        <StorySection label="gradient variant">
+            <p class="font-mono text-xs text-muted-foreground">
+                <code>variant="gradient"</code> routes to ProgressGradient — a
+                lifecycle motion grammar with an optional indeterminate sweep
+                (a slow left-to-right pan, retired under
+                <code>prefers-reduced-motion</code>).
+            </p>
+            <div class="grid gap-4">
+                <Progress variant="gradient" :model-value="determinate" />
+                <Progress variant="gradient" indeterminate />
+            </div>
+        </StorySection>
+
         <!-- AB.W3.T2 — sectioned variant (per-segment colour cells +
              spring active fill + transition-gradient seams). N.W4 β
              absorb: glass-ui-side canonical consumer for the recipe. -->

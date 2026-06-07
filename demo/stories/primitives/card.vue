@@ -8,6 +8,7 @@ import {
     CardDescription,
     CardContent,
     CardFooter,
+    CardAction,
     type CardTier,
 } from "../../../src/components/ui/card";
 import { Button } from "../../../src/components/ui/button";
@@ -344,6 +345,37 @@ const cartoonAccents = [
                             </p>
                         </div>
                     </Card>
+                </CardContent>
+            </Card>
+        </section>
+
+        <!-- CardAction — the shadcn-2025 top-right header action slot. -->
+        <section class="flex flex-col gap-4">
+            <header class="flex flex-col gap-1">
+                <p class="section-label">CardAction — header action slot</p>
+                <p class="text-sm text-muted-foreground">
+                    A <code class="font-mono text-xs">&lt;CardAction&gt;</code>
+                    inside a <code class="font-mono text-xs">&lt;CardHeader&gt;</code>
+                    reflows the header to a two-column grid (title/description +
+                    action), self-aligned to the header's top-right via the
+                    <code class="font-mono text-xs">has-data-[slot=card-action]</code>
+                    container query.
+                </p>
+            </header>
+
+            <Card tier="resting">
+                <CardHeader>
+                    <CardTitle class="text-lg">Monthly report</CardTitle>
+                    <CardDescription>
+                        Throughput, latency, and loss for the trailing 30 days.
+                    </CardDescription>
+                    <CardAction>
+                        <Button variant="outline" size="sm">Export</Button>
+                    </CardAction>
+                </CardHeader>
+                <CardContent class="text-sm text-muted-foreground">
+                    The action column self-aligns to the start of the header's
+                    first two rows, justified to the end — no manual grid markup.
                 </CardContent>
             </Card>
         </section>
