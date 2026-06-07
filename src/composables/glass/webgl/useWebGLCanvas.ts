@@ -133,10 +133,14 @@ export function createWebGLCanvas(
 
     // ── context-loss/restore robustness (the genuinely-absent piece, AU.W6 §1).
     let onContextRestored: (() => void) | null = null;
+    let markContextLost: (() => void) | null = null;
     function onContextLost(e: Event): void {
         e.preventDefault(); // REQUIRED so `webglcontextrestored` can fire
         gl = null;
         frameHooks = null;
+        // Tell the lifecycle the surface is blank — it nulls its hooks + parks the rAF
+        // (no frame attaches to a dead context) until the restore rebuilds.
+        markContextLost?.();
     }
 
     const lifecycle = createCanvasLifecycle({
@@ -148,8 +152,9 @@ export function createWebGLCanvas(
         // Bind the WebGL-specific context-loss/restore pair; on `webglcontextrestored`
         // the core re-runs buildContext (re-creating the program on the fresh context)
         // + re-arms — a GPU context loss self-heals instead of going permanently blank.
-        bindContextEvents: (rebuild) => {
+        bindContextEvents: (rebuild, markLost) => {
             onContextRestored = rebuild;
+            markContextLost = markLost;
             canvas.addEventListener("webglcontextlost", onContextLost as EventListener, false);
             canvas.addEventListener(
                 "webglcontextrestored",

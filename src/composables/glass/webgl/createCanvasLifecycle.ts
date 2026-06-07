@@ -45,8 +45,13 @@ export interface CanvasLifecycleOptions {
     buildContext: () => CanvasFrameHooks;
     /** Resize the backing store + viewport. The consumer owns its DPR policy. */
     resize: () => void;
-    /** Bind/unbind backend-specific event listeners (e.g. webglcontextlost). */
-    bindContextEvents?: (rebuild: () => void) => void;
+    /**
+     * Bind/unbind backend-specific context-loss/restore listeners. `rebuild` re-runs
+     * `buildContext` on a fresh context + resumes the loop (the self-heal); the backend
+     * calls `markContextLost` on loss so the lifecycle NULLS its hooks + cancels the
+     * rAF (the loop parks while the surface is blank — no frame attaches to a dead gl).
+     */
+    bindContextEvents?: (rebuild: () => void, markContextLost: () => void) => void;
     unbindContextEvents?: () => void;
 }
 
@@ -176,11 +181,23 @@ export function createCanvasLifecycle(
 
     function arm(): void {
         if (armed || disposed) return;
-        options.bindContextEvents?.(() => {
-            if (disposed) return;
-            build();
-            if (isRunning()) wake();
-        });
+        options.bindContextEvents?.(
+            // rebuild (the self-heal on context restore): re-acquire the context +
+            // rebuild the program/geometry, then resume the loop.
+            () => {
+                if (disposed) return;
+                build();
+                if (isRunning()) wake();
+            },
+            // markContextLost: the surface is blank — NULL the hooks + cancel the rAF
+            // so the loop parks (no frame attaches to a dead context) until the restore
+            // rebuilds. The backend has already released its gl.
+            () => {
+                hooks = null;
+                cancelAnimationFrame(raf);
+                raf = 0;
+            },
+        );
         build();
         bindContentVisibility();
         armed = true;
