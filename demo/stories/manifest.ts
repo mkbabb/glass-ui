@@ -95,6 +95,7 @@ export const CATEGORIES: Category[] = [
             s("substrates", "aurora", "Aurora", "Procedural painterly gradients — multi-nuclei composition, four mediums, cursor-driven swirl. Shipped /aurora."),
             s("substrates", "goo-blob", "GooBlob + WatercolorDot", "WebGL2 metaball on the shared substrate (injected color resolver) + a CSS/SVG pastel swatch. Shipped /goo-blob + /watercolor-dot."),
             s("substrates", "glass-panel", "Glass Panel", "Five-rung glass tier ladder over a renderer-tier detection cascade (svg-filter / css / fallback) — a substrate, not a UI primitive."),
+            s("substrates", "constellation", "Constellation", "A drifting proximity-graph lattice on the Canvas2D substrate (park/freeze/dispose). The neutral lattice ships; the --primary focal node is a consumer drawOverlay pass. Shipped /constellation."),
         ],
     },
     {
@@ -230,6 +231,7 @@ export const CATEGORIES: Category[] = [
             s("compositions", "configurator", "Configurator", "Studio shell — preset row + grouped <ConfiguratorLayer> + a live specimen stage. Aurora is its real consumer."),
             s("compositions", "instrument-chassis", "Instrument Chassis", "Three-region chassis with twin-line bezel grooves and phase cascade; the GlassDock instrument-strip host."),
             s("compositions", "form-validation", "Form Validation", ":user-invalid / :user-valid rungs + useUserInvalidAria aria-invalid bridge + required asterisk + error slot + Textarea autosize (AQ.W4)."),
+            s("compositions", "gate-pattern", "Gate Pattern", "The non-dismissable access-modal idiom — a form-in-Dialog refusing esc/scrim/close (`:show-close=false`, `@escape-key-down.prevent`), with the widened `[aria-invalid]` ring + shake feedback. A blessed composition, not a component (AW.W18)."),
             s("compositions", "labeled-field", "Labeled Field", "Parent SFC + 4 wrappers (Input · Select · Slider · Switch) with shared IconTooltip label."),
             s("compositions", "icon-tooltip", "Icon Tooltip", "Auto-provider tooltip for label co-location with display typography baked in."),
         ],

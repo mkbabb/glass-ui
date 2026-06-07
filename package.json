@@ -118,6 +118,9 @@
             "header-ribbon": [
                 "dist/header-ribbon.d.ts"
             ],
+            "constellation": [
+                "dist/constellation.d.ts"
+            ],
             "scrolling-text": [
                 "dist/scrolling-text.d.ts"
             ],
@@ -305,6 +308,10 @@
         "./header-ribbon": {
             "types": "./dist/header-ribbon.d.ts",
             "import": "./dist/header-ribbon.js"
+        },
+        "./constellation": {
+            "types": "./dist/constellation.d.ts",
+            "import": "./dist/constellation.js"
         },
         "./metric-badge": {
             "types": "./dist/metric-badge.d.ts",
@@ -597,6 +604,11 @@
         "proof:no-test-in-src": "node scripts/proof-no-test-in-src.mjs",
         "proof:spring-tokens-synced": "node scripts/proof-spring-tokens-synced.mjs",
         "proof:offscreen-pause": "node scripts/proof-offscreen-pause.mjs",
+        "proof:constellation-substrate-single": "node scripts/proof-constellation-substrate-single.mjs",
+        "proof:canvas2d-substrate": "vitest run tests/composables/glass/canvas2d/useCanvas2D.test.ts",
+        "proof:constellation-field": "vitest run tests/components/custom/constellation/constellationField.test.ts",
+        "proof:input-invalid-aria": "node scripts/proof-input-invalid-aria.mjs",
+        "proof:styling-hygiene": "node scripts/proof-styling-hygiene.mjs",
         "proof:subpath-enumeration": "node scripts/proof-subpath-enumeration.mjs",
         "proof:no-orphan-composable": "node scripts/proof-no-orphan-composable.mjs",
         "proof:speedtest-boundary": "node scripts/proof-speedtest-boundary.mjs",
