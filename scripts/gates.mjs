@@ -345,6 +345,36 @@ export const GATES = [
         note: "AV.W7 — the useWebGLCanvas substrate parks its RAF when the host is content-hidden (contentvisibilityautostatechange/F1) OR scrolled offscreen (IntersectionObserver off-screen seam/F4) OR the tab is backgrounded (document.hidden/F4) OR prefers-reduced-motion is live + re-monitored (G1, one static frame then park). A SEAM assertion (reads the visibility/PRM state), not a live-frame gate. Bite: remove the content-visibility hook / the off-screen IO wiring / the matchMedia change re-monitor → RED",
     },
     {
+        id: "proof:constellation-substrate-single",
+        cmd: "proof:constellation-substrate-single",
+        tags: ["local", "ci"],
+        note: "AW.W17 — the Constellation lattice lands the AV.W8-gated pair (consumer #1 demo + consumer #2 slides H.W10). THREE asserts: SUBSTRATE-EXISTS (useCanvas2D exports createCanvas2D + carries the same suspend-Set/content-visibility/tab-hidden/live-PRM-re-monitor park machinery as useWebGLCanvas); PRNG-SINGLE-SOURCE (Constellation.vue imports mulberry32/hashString from utils/prng, NOT a private re-roll); ANOMALY-IS-SKIN (zero ncsu/anomaly/Fira Code/accentColor literal in the constellation source — the branded skin reaches the canvas only via the consumer drawOverlay). Bite: re-roll a private mulberry32 → RED; paint an anomaly pass in the source → RED; drop the substrate matchMedia re-monitor → RED",
+    },
+    {
+        id: "proof:canvas2d-substrate",
+        cmd: "proof:canvas2d-substrate",
+        tags: ["local", "ci"],
+        note: "AW.W17 — the useCanvas2D park/freeze/dispose contract (the Canvas2D substrate paralleling useWebGLCanvas). Asserts the suspend Set gates isRunning() (a tab-show cannot lift an off-screen suspension), reduced-motion paints ONE static frame then parks, document.hidden parks, dispose() is idempotent",
+    },
+    {
+        id: "proof:constellation-field",
+        cmd: "proof:constellation-field",
+        tags: ["local", "ci"],
+        note: "AW.W17 — the pure field engine: seedField lays out `count` nodes within bounds (reproducible under a seed), stepField bounces a node off a wall (velocity sign flips) + preserves speed under pointer steering, the four neutral passes paint without throwing",
+    },
+    {
+        id: "proof:input-invalid-aria",
+        cmd: "proof:input-invalid-aria",
+        tags: ["local", "ci", "release"],
+        note: "AW.W18 — the .input-pill invalid-ring selector group honors [aria-invalid=\"true\"] alongside :user-invalid + .user-invalid-fallback, so an app-driven (non-native-validation) form gets the library's destructive ring with NO consumer :deep() re-paint. Two asserts: THREE-MEMBER (every .input-pill invalid rule carries all three trigger surfaces) + RECIPE-INTACT (the ring still resolves var(--destructive) — widened, not replaced). Born RED on HEAD (two of three). Bite: drop the [aria-invalid] arm → RED",
+    },
+    {
+        id: "proof:styling-hygiene",
+        cmd: "proof:styling-hygiene",
+        tags: ["local", "ci"],
+        note: "AW.W20 — the styling assay LOCK. Asserts the named brittle magic-numbers resolve through tokens (the BouncyToggle pill-track trim reads a --bouncy-track-trim token, not a repeated hand-computed rem); the glass-panel/card demo tier-force controls render as <ToggleGroup> with NO surviving raw-<button> tier re-roll (the ToggleGroup bite); useTokenColor carries a public-vs-reference doc block. Bite: re-roll a raw <button class=...border...> tier control → RED; hardcode the pill-track trim back to a literal → RED",
+    },
+    {
         id: "proof:subpath-enumeration",
         cmd: "proof:subpath-enumeration",
         tags: ["local", "ci", "release"],

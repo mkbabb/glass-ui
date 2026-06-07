@@ -194,6 +194,16 @@ export type {
     HeaderRibbonProps,
 } from "../components/custom/header-ribbon";
 
+// ── Constellation ───────────────────────────────────────────────────────────
+// `ConstellationProps` — the props a consumer forwards when wrapping
+// `<Constellation>` (the proximity-graph lattice; ships via `/constellation`).
+// `ConstellationField` — the live field handed to the `drawOverlay` skin seam,
+// so a consumer types its overlay against the node set + scale (AW.W17).
+export type {
+    ConstellationProps,
+    ConstellationField,
+} from "../components/custom/constellation";
+
 // ── Metric primitives ───────────────────────────────────────────────────────
 // `MetricCellAppearance` is the visual register enum (`"dashboard" | "compact"
 // | "bare"`) parallel to `GlassPanelVariant`; `MetricCellProps` is the Props

@@ -302,20 +302,31 @@ onMounted(() => {
 
 <style scoped>
 /* ── Default variant ── */
+/* W20 — the pill-track geometry is token-driven. `--bouncy-track-trim` is the
+   inset between the track edge and the active slider; it is the SINGLE source
+   the toggle `padding`, the slider `inset-block`, AND the `anchor()` offset all
+   read, so they cannot drift apart (the slider must sit flush inside the
+   padding, and three hand-matched literals were the brittle magic-number the
+   assay flagged). `@container` re-tunes it at the wider tier instead of a
+   hand-repeated `0.25rem` at every site. */
 .bouncy-toggle {
+    --bouncy-track-trim: 0.1875rem;
+    --bouncy-track-radius: 0.4375rem;
+    --bouncy-slider-radius: 0.3125rem;
     position: relative;
     display: inline-grid;
     grid-auto-flow: column;
     grid-auto-columns: 1fr;
-    padding: 0.1875rem;
-    border-radius: 0.4375rem;
+    padding: var(--bouncy-track-trim);
+    border-radius: var(--bouncy-track-radius);
     background: var(--muted-medium);
 }
 
 @media (min-width: 640px) {
     .bouncy-toggle {
-        padding: 0.25rem;
-        border-radius: 0.5rem;
+        --bouncy-track-trim: 0.25rem;
+        --bouncy-track-radius: 0.5rem;
+        --bouncy-slider-radius: 0.375rem;
     }
 }
 
@@ -323,8 +334,8 @@ onMounted(() => {
     position: absolute;
     background: var(--background);
     z-index: 0;
-    inset-block: 0.1875rem;
-    border-radius: 0.3125rem;
+    inset-block: var(--bouncy-track-trim);
+    border-radius: var(--bouncy-slider-radius);
     box-shadow:
         0 1px 3px rgba(0, 0, 0, 0.08),
         0 0 0 1px color-mix(in srgb, var(--border) 30%, transparent);
