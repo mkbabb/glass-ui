@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-06-07T19:29:30.756Z",
+  "generatedAt": "2026-06-07T19:32:21.024Z",
   "status": "fail",
   "command": "npm run profile:bundle",
-  "buildDurationMs": 1071,
-  "durationMs": 1113,
+  "buildDurationMs": 999,
+  "durationMs": 1038,
   "budgets": {
     "dist/glass-ui.js": {
       "raw": 190000,
@@ -39,31 +39,31 @@
   "subpathReport": [
     {
       "name": "aurora.js",
-      "status": "PASS",
-      "gzip": 17832,
-      "baselineGzip": 17852,
-      "drift": -0.001120322652924042
+      "status": "FAIL",
+      "gzip": 20313,
+      "baselineGzip": 17832,
+      "drift": 0.13913189771197845
     },
     {
       "name": "goo-blob.js",
       "status": "PASS",
       "gzip": 8411,
-      "baselineGzip": 8183,
-      "drift": 0.02786264206281315
+      "baselineGzip": 8411,
+      "drift": 0
     },
     {
       "name": "glass-ui.js",
       "status": "PASS",
       "gzip": 8214,
-      "baselineGzip": 8090,
-      "drift": 0.015327564894932014
+      "baselineGzip": 8214,
+      "drift": 0
     },
     {
       "name": "dock.js",
-      "status": "FAIL",
+      "status": "PASS",
       "gzip": 6994,
-      "baselineGzip": 6250,
-      "drift": 0.11904
+      "baselineGzip": 6994,
+      "drift": 0
     },
     {
       "name": "typewriter.js",
@@ -76,36 +76,36 @@
       "name": "search.js",
       "status": "PASS",
       "gzip": 4557,
-      "baselineGzip": 4555,
-      "drift": 0.0004390779363336992
+      "baselineGzip": 4557,
+      "drift": 0
     },
     {
       "name": "timeline.js",
       "status": "PASS",
       "gzip": 4461,
-      "baselineGzip": 4459,
-      "drift": 0.00044853106077595876
+      "baselineGzip": 4461,
+      "drift": 0
     },
     {
       "name": "carousel.js",
       "status": "PASS",
       "gzip": 3360,
-      "baselineGzip": 3359,
-      "drift": 0.00029770765108663293
+      "baselineGzip": 3360,
+      "drift": 0
     },
     {
       "name": "motion-core.js",
       "status": "PASS",
       "gzip": 2919,
-      "baselineGzip": 2916,
-      "drift": 0.00102880658436214
+      "baselineGzip": 2919,
+      "drift": 0
     },
     {
       "name": "tabs.js",
       "status": "PASS",
       "gzip": 2824,
-      "baselineGzip": 2823,
-      "drift": 0.00035423308537017357
+      "baselineGzip": 2824,
+      "drift": 0
     },
     {
       "name": "sidebar.js",
@@ -118,8 +118,15 @@
       "name": "forms.js",
       "status": "PASS",
       "gzip": 2569,
-      "baselineGzip": 2570,
-      "drift": -0.0003891050583657588
+      "baselineGzip": 2569,
+      "drift": 0
+    },
+    {
+      "name": "constellation.js",
+      "status": "PASS",
+      "gzip": 2497,
+      "baselineGzip": 2497,
+      "drift": 0
     },
     {
       "name": "glass-carousel.js",
@@ -132,36 +139,43 @@
       "name": "labeled-field.js",
       "status": "PASS",
       "gzip": 1902,
-      "baselineGzip": 1900,
-      "drift": 0.0010526315789473684
+      "baselineGzip": 1902,
+      "drift": 0
     },
     {
       "name": "watercolor-dot.js",
       "status": "PASS",
       "gzip": 1865,
-      "baselineGzip": 1864,
-      "drift": 0.000536480686695279
+      "baselineGzip": 1865,
+      "drift": 0
     },
     {
       "name": "motion.js",
       "status": "PASS",
       "gzip": 1526,
-      "baselineGzip": 1529,
-      "drift": -0.001962066710268149
+      "baselineGzip": 1526,
+      "drift": 0
     },
     {
       "name": "expandable-container.js",
       "status": "PASS",
       "gzip": 1347,
-      "baselineGzip": 1346,
-      "drift": 0.0007429420505200594
+      "baselineGzip": 1347,
+      "drift": 0
+    },
+    {
+      "name": "metric-stack.js",
+      "status": "PASS",
+      "gzip": 1341,
+      "baselineGzip": 1341,
+      "drift": 0
     },
     {
       "name": "confirm-dialog.js",
       "status": "PASS",
       "gzip": 1324,
-      "baselineGzip": 1323,
-      "drift": 0.0007558578987150416
+      "baselineGzip": 1324,
+      "drift": 0
     },
     {
       "name": "stacked-icons.js",
@@ -174,15 +188,15 @@
       "name": "responsive-tabs.js",
       "status": "PASS",
       "gzip": 1238,
-      "baselineGzip": 1237,
-      "drift": 0.0008084074373484236
+      "baselineGzip": 1238,
+      "drift": 0
     },
     {
       "name": "sortable-list.js",
       "status": "PASS",
       "gzip": 1156,
-      "baselineGzip": 1157,
-      "drift": -0.000864304235090752
+      "baselineGzip": 1156,
+      "drift": 0
     },
     {
       "name": "controls.js",
@@ -220,10 +234,24 @@
       "drift": 0
     },
     {
+      "name": "metric-cell.js",
+      "status": "SKIP",
+      "gzip": 994,
+      "baselineGzip": 994,
+      "drift": 0
+    },
+    {
       "name": "pulse.js",
       "status": "SKIP",
       "gzip": 926,
       "baselineGzip": 926,
+      "drift": 0
+    },
+    {
+      "name": "glass-panel.js",
+      "status": "SKIP",
+      "gzip": 842,
+      "baselineGzip": 842,
       "drift": 0
     },
     {
@@ -234,18 +262,11 @@
       "drift": 0
     },
     {
-      "name": "glass-panel.js",
-      "status": "SKIP",
-      "gzip": 842,
-      "baselineGzip": 798,
-      "drift": 0.05513784461152882
-    },
-    {
       "name": "dark.js",
       "status": "SKIP",
       "gzip": 517,
-      "baselineGzip": 518,
-      "drift": -0.0019305019305019305
+      "baselineGzip": 517,
+      "drift": 0
     },
     {
       "name": "dom.js",
@@ -318,14 +339,14 @@
       "drift": 0
     },
     {
-      "name": "color.js",
+      "name": "toast.js",
       "status": "SKIP",
       "gzip": 162,
-      "baselineGzip": 163,
-      "drift": -0.006134969325153374
+      "baselineGzip": 162,
+      "drift": 0
     },
     {
-      "name": "toast.js",
+      "name": "color.js",
       "status": "SKIP",
       "gzip": 162,
       "baselineGzip": 162,
@@ -519,32 +540,11 @@
       "gzip": 79,
       "baselineGzip": 79,
       "drift": 0
-    },
-    {
-      "name": "constellation.js",
-      "status": "NEW",
-      "gzip": 2497,
-      "baselineGzip": null,
-      "drift": null
-    },
-    {
-      "name": "metric-stack.js",
-      "status": "NEW",
-      "gzip": 1341,
-      "baselineGzip": null,
-      "drift": null
-    },
-    {
-      "name": "metric-cell.js",
-      "status": "NEW",
-      "gzip": 994,
-      "baselineGzip": null,
-      "drift": null
     }
   ],
   "totals": {
-    "bytes": 1414827,
-    "gzipBytes": 664514,
+    "bytes": 1422030,
+    "gzipBytes": 666995,
     "byExt": {
       ".css": {
         "bytes": 726990,
@@ -557,8 +557,8 @@
         "files": 5
       },
       ".js": {
-        "bytes": 508886,
-        "gzipBytes": 183427,
+        "bytes": 516089,
+        "gzipBytes": 185908,
         "files": 149
       },
       ".txt": {
@@ -575,8 +575,8 @@
   },
   "subpathTotals": {
     "entry": {
-      "bytes": 298063,
-      "gzipBytes": 103228,
+      "bytes": 305266,
+      "gzipBytes": 105709,
       "files": 72
     },
     "shared": {
@@ -589,8 +589,8 @@
     {
       "name": "aurora.js",
       "kind": "entry",
-      "bytes": 53661,
-      "gzipBytes": 17832
+      "bytes": 60864,
+      "gzipBytes": 20313
     },
     {
       "name": "goo-blob.js",
@@ -1501,6 +1501,12 @@
       "gzipBytes": 67431
     },
     {
+      "file": "dist/aurora.js",
+      "ext": ".js",
+      "bytes": 60864,
+      "gzipBytes": 20313
+    },
+    {
       "file": "dist/styles/dock.css",
       "ext": ".css",
       "bytes": 58199,
@@ -1511,12 +1517,6 @@
       "ext": ".css",
       "bytes": 57182,
       "gzipBytes": 9365
-    },
-    {
-      "file": "dist/aurora.js",
-      "ext": ".js",
-      "bytes": 53661,
-      "gzipBytes": 17832
     },
     {
       "file": "dist/styles/utilities.css",
