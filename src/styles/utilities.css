@@ -688,6 +688,26 @@
     }
 }
 
+/* ── Twin-line divider — the chassis catch-light / under-shadow groove ───────
+   AW.W15 DRY extraction. The twin-line idiom (a 1px white catch-light over a
+   1px black under-shadow reading as one engraved hairline groove) is the
+   chassis-divider signature. The exact light/dark α pair was DUPLICATED in
+   `instrument-chassis.css` (`.bezel-line.top`/`.bottom`) and `instrument-rail.css`
+   (the sibling `::before`/`::after`). This utility is the SINGLE source of that
+   α pair: it publishes `--twin-line-catch` (the top catch-light) and
+   `--twin-line-shadow` (the bottom under-shadow) as cascade tokens, dark-adaptive
+   by construction (the `.dark &` arm re-resolves them). Both consumers read the
+   tokens; a retint touches one rule. Real DRY, ≥2 consumers. */
+@utility twin-line-divider {
+    --twin-line-catch: rgb(255 255 255 / 0.10);
+    --twin-line-shadow: rgb(0 0 0 / 0.12);
+
+    :where(.dark) & {
+        --twin-line-catch: rgb(255 255 255 / 0.06);
+        --twin-line-shadow: rgb(0 0 0 / 0.18);
+    }
+}
+
 /* ── Control transition recipe (AU.W8b.4) ───────────────────────────────
    Shared compound transition for interactive controls that animate their
    surface (background-color/color/box-shadow/border-color) on the four-state

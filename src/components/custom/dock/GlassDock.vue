@@ -1,4 +1,9 @@
 <script setup lang="ts">
+// DO-NOT-SPLIT (AW.W15 assay): the code-quality assay graded this 421-line SFC
+// cohesive-at-boundary — the dual-layer grid, the axis-aware expand/collapse
+// transition, and the pointer/focus hold machinery are one tightly-coupled dock
+// concern (the transition composables already factor the FLIP logic out). W14
+// split the ONE over-threshold god-module (DataTable); this stays whole by design.
 import { computed, onBeforeUnmount, onMounted, ref, useId, useTemplateRef, watch } from "vue";
 import { useTouchGate } from "../../../composables/dom/useTouchGate";
 import { provideDockContext } from "./composables/dockContext";

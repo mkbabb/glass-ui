@@ -24,7 +24,11 @@
 import { NumericAnimation } from "@mkbabb/keyframes.js";
 import { onScopeDispose, type Ref } from "vue";
 
-export interface Countup {
+/**
+ * The `useCountup` return shape (AW.W15 — named `Use<Name>Return` convention).
+ * `Countup` is the preserved alias so existing import sites do not break.
+ */
+export interface UseCountupReturn {
     /** Animate the count-ups inside the currently-active slide/region. */
     runActive: () => void;
     /** Snap EVERY `[data-countup]` in the document to its end value (still capture). */
@@ -32,6 +36,9 @@ export interface Countup {
     /** Cancel every in-flight tween (also runs on scope-dispose). */
     cancel: () => void;
 }
+
+/** Preserved alias for {@link UseCountupReturn} — keeps import sites stable (AW.W15). */
+export type Countup = UseCountupReturn;
 
 export interface UseCountupOptions {
     /**
@@ -67,7 +74,7 @@ function prefersReducedMotion(): boolean {
 export function useCountup(
     hostRef: Ref<HTMLElement | null>,
     opts: UseCountupOptions,
-): Countup {
+): UseCountupReturn {
     const { easeFn, skip } = opts;
 
     // Every live tween, keyed by its element, so a re-run or a teardown can stop

@@ -1,4 +1,9 @@
 <script setup lang="ts">
+// DO-NOT-SPLIT (AW.W15 assay): the code-quality assay graded this 432-line SFC
+// cohesive-at-boundary — the marker geometry, the hover-popover payload mapping,
+// and the per-segment render are one tightly-coupled continuous-rail concern
+// (AU.W10 already split the 901-line orchestrator into this + Rail + Timeline).
+// W14 split the ONE over-threshold god-module (DataTable); this stays whole by design.
 import HoverPopover from "../hover-popover/HoverPopover.vue";
 import { popoverPayloadFor } from "./geometry";
 import type { TimelineSegment } from "./types";

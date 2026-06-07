@@ -231,6 +231,9 @@
     /* Chassis dividers — twin-line hairline grooves ─────────────── */
 
     .chassis-divider {
+        /* AW.W15 — consume the shared twin-line α pair (the catch-light +
+           under-shadow tokens publish here; the .bezel-line rules read them). */
+        @apply twin-line-divider;
         flex-shrink: 0;
         position: relative;
         background: transparent;
@@ -269,19 +272,13 @@
         height: 100%;
     }
 
-    /* Q.W4.A — bezel-line α lift in light mode per audit-A4 §1 row 2-3 +
-       §11 #2-#3 + §12 Action 2. The 0.04 / 0.06 light-mode pair was
-       calibrated against a flat bg; under the saturated-aurora chassis
-       composition the catch-light + under-shadow read as one slightly
-       darker pixel, and the twin-line groove fails its job. Bumping to
-       0.10 / 0.12 holds the divider against the bleed without committing
-       to the dark-mode pair's contrast (the dark mode already runs at
-       0.06 / 0.18 against a low-light bg). */
-    .bezel-line.top    { background: rgb(255 255 255 / 0.10); }
-    .bezel-line.bottom { background: rgb(0 0 0 / 0.12); }
-
-    .dark .bezel-line.top    { background: rgb(255 255 255 / 0.06); }
-    .dark .bezel-line.bottom { background: rgb(0 0 0 / 0.18); }
+    /* AW.W15 — the twin-line α pair now lives in the `twin-line-divider`
+       @utility (single source, dark-adaptive). The `.chassis-divider` host
+       `@apply`s it, publishing `--twin-line-catch` / `--twin-line-shadow`; these
+       rules read the tokens. The prior Q.W4.A light pair (0.10 / 0.12) and the
+       dark pair (0.06 / 0.18) are the values the utility resolves. */
+    .bezel-line.top    { background: var(--twin-line-catch); }
+    .bezel-line.bottom { background: var(--twin-line-shadow); }
 
     /* Inner dial divider — same primitive, vertical on desktop. Speedtest
        slots its <ChassisDivider orientation="vertical" class="dial-divider" />

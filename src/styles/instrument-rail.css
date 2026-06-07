@@ -17,6 +17,9 @@
 
 @layer components {
     .instrument-rail {
+        /* AW.W15 — consume the shared twin-line α pair (the sibling-divider
+           ::before/::after rules below read --twin-line-catch/--twin-line-shadow). */
+        @apply twin-line-divider;
         position: relative;
         display: flex;
         flex-direction: column;
@@ -71,13 +74,17 @@
        a sibling ::before/::after stack keeps consumers free of manual
        <ChassisDivider> slotting. Status header is excluded — the
        opening-edge status light reads as a region, not a sibling. */
+    /* AW.W15 — the twin-line α pair reads from the shared `twin-line-divider`
+       tokens (`@apply`ed on `.instrument-rail` above; dark-adaptive there), so
+       the prior per-variant light pair + the `.dark` re-declaration collapse
+       onto the single source. */
     .instrument-rail[data-divider-rule][data-variant="vertical"]
         > :not(:first-child):not(.instrument-rail-status)::before {
         content: "";
         display: block;
         height: 1px;
         margin-block-end: 1px;
-        background: rgb(255 255 255 / 0.10);
+        background: var(--twin-line-catch);
     }
 
     .instrument-rail[data-divider-rule][data-variant="vertical"]
@@ -86,7 +93,7 @@
         display: block;
         height: 1px;
         margin-block-start: -1px;
-        background: rgb(0 0 0 / 0.12);
+        background: var(--twin-line-shadow);
     }
 
     .instrument-rail[data-divider-rule][data-variant="horizontal"]
@@ -95,7 +102,7 @@
         display: block;
         width: 1px;
         margin-inline-end: 1px;
-        background: rgb(255 255 255 / 0.10);
+        background: var(--twin-line-catch);
     }
 
     .instrument-rail[data-divider-rule][data-variant="horizontal"]
@@ -104,15 +111,7 @@
         display: block;
         width: 1px;
         margin-inline-start: -1px;
-        background: rgb(0 0 0 / 0.12);
-    }
-
-    .dark .instrument-rail[data-divider-rule] > :not(:first-child):not(.instrument-rail-status)::before {
-        background: rgb(255 255 255 / 0.06);
-    }
-
-    .dark .instrument-rail[data-divider-rule] > :not(:first-child):not(.instrument-rail-status)::after {
-        background: rgb(0 0 0 / 0.18);
+        background: var(--twin-line-shadow);
     }
 
     /* Status header — pinned to the opening edge, flush against the

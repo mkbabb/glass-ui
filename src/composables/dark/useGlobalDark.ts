@@ -20,7 +20,23 @@
 // before first paint so the seed and the FOUC eliminator agree.
 import type { BasicColorSchema } from "@vueuse/core";
 import { createGlobalState, useDark, useToggle } from "@vueuse/core";
-import { ref, watch } from "vue";
+import { ref, watch, type Ref, type WritableComputedRef } from "vue";
+
+/**
+ * The `useGlobalDark` return shape (AW.W15 — named `Use<Name>Return`). The
+ * single shared dark-mode instance: the reactive `isDark` flag, a `toggleDark`
+ * that optionally suppresses transitions, and the transition-suppression switch.
+ */
+export interface UseGlobalDarkReturn {
+    /** Reactive dark-mode flag (vueuse `useDark` ref — writable). */
+    isDark: WritableComputedRef<boolean>;
+    /** Toggle dark mode (suppresses transitions when configured). */
+    toggleDark: () => void;
+    /** Whether transitions are suppressed during a toggle. */
+    disableTransitions: Ref<boolean>;
+    /** Configure transition suppression during the dark-mode toggle. */
+    setDisableTransitions: (value: boolean) => void;
+}
 
 export interface UseGlobalDarkOptions {
     /**
@@ -93,7 +109,7 @@ const createGlobalDark = createGlobalState(() => {
  * `initialValue` seed (one-shot — see `UseGlobalDarkOptions`); subsequent calls
  * receive the already-constructed singleton and their `initialValue` is ignored.
  */
-export function useGlobalDark(options?: UseGlobalDarkOptions) {
+export function useGlobalDark(options?: UseGlobalDarkOptions): UseGlobalDarkReturn {
     if (options?.initialValue !== undefined) {
         if (seededInitialValue === undefined) {
             seededInitialValue = options.initialValue;
