@@ -26,6 +26,7 @@ export {
 export {
     cssToOklch,
     deriveAurora,
+    deriveScene,
     flattenPalette,
     hexToOklchStop,
     oklchStopToHex,
@@ -34,4 +35,12 @@ export {
 } from "./composables/color";
 // D10b — the seed-one-color → N-stop palette producer (composes the shipped
 // value.js OKLab/gamut core). T6 wires it into the Palette configurator tab.
-export type { AuroraHarmony, DeriveAuroraOptions } from "./composables/color";
+// W5 — the derive-color superset: more harmonies + easing + temperature + scene.
+export type {
+    AuroraHarmony,
+    AuroraMood,
+    DeriveAuroraOptions,
+    DeriveEasing,
+} from "./composables/color";
+// W5 — the value.js HueInterpolationMethod alias for the palette hue-arc atom.
+export type { AuroraHuePath } from "./constants/presets";

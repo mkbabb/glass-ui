@@ -249,6 +249,18 @@ export const GATES = [
         note: "AV.W1 — aurora's linear LUT pipeline MUST close with a linearToSrgb() OETF before fragColor (the un-converged-sibling of the blob's A5/A2 darkening trap); the call precedes output, not a dead helper",
     },
     {
+        id: "proof:aurora-oklch-interp",
+        cmd: "proof:aurora-oklch-interp",
+        tags: ["local", "ci"],
+        note: "AW.W5.1 — the in-shader OKLCh palette interpolation: the spliced OKLCH_MATRICES_GLSL match value.js to 1e-6, the turns-domain interpolateHue port matches value.js to 1e-6 (ANTIPODE 30→210 + warm→cool-longer 30→250 seeded as named rows — the radians-native trap diverges 180° at the antipode), the OKLab-rectangular midpoint holds chroma above linear-mix, the OKLCh hue-arc holds chroma on the antipodal pair. Bite: revert samplePalette to linear mix() → midpoint REDs; PI/+TAU radians port → antipode REDs",
+    },
+    {
+        id: "proof:aurora-derive-gamut",
+        cmd: "proof:aurora-derive-gamut",
+        tags: ["local", "ci"],
+        note: "AW.W5.2 — every stop of every (harmony × lightnessEasing × chromaEasing × temperature) over a neon-seed matrix is in sRGB after gamutMapStop (no over-1 escape reaches the bake); deriveScene returns an in-gamut palette + composed rule-of-thirds nuclei for every mood. Bite: remove gamutMapStop from a derive branch → an over-1 neon stop REDs",
+    },
+    {
         id: "proof:shader-shared-source",
         cmd: "proof:shader-shared-source",
         tags: ["local", "ci"],

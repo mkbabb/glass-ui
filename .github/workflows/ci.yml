@@ -240,6 +240,17 @@ jobs:
             # darkening trap; a linear-in without an OETF-out ships ~2.2× too dark).
             - name: proof:aurora-space-gamma
               run: npm run proof:aurora-space-gamma
+            # AW.W5.1 — the in-shader OKLCh palette interpolation: spliced matrices
+            # 1e-6, the turns-domain interpolateHue port 1e-6 (antipode + warm→cool
+            # seeded), the OKLab/OKLCh midpoint chroma holds above linear-mix (the
+            # muddy-midtone kill).
+            - name: proof:aurora-oklch-interp
+              run: npm run proof:aurora-oklch-interp
+            # AW.W5.2 — the derive-color neon-seed gamut matrix: every harmony ×
+            # easing × temperature stop in sRGB after gamutMapStop; deriveScene
+            # returns an in-gamut palette + composed nuclei per mood.
+            - name: proof:aurora-derive-gamut
+              run: npm run proof:aurora-derive-gamut
             # AV.W2 — the aurora↔blob shared GLSL convergence: the OETF + the four
             # Ottosson mat3 literals + the FBM_ROT constant live ONCE in
             # procedural-color.glsl.ts; neither frag re-defines a chunk-owned
