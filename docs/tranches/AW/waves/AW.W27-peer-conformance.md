@@ -34,10 +34,22 @@ if a range is re-narrowed. The 3.3.0 ranges excluded both current majors
   supported keyframes major (2.2 / 3 / 4) and decoupled from keyframes'
   name-resolution churn. A consumer wanting a named curve passes the function
   directly. (One demo doc-example updated to the callable form.)
-- **devDep rebaseline:** `@mkbabb/keyframes.js` dev pin → `^4.0.0` (glass-ui now
-  builds + typechecks against the latest keyframes in dev/CI). value dev stays
-  `^0.10.0` (keyframes 4's hard dep caps it; the value-0.11 build is green by
-  construction — the consumed surface is unchanged).
+- **devDep stays `@mkbabb/keyframes.js: ^2.2.0`** (NOT bumped to ^4). keyframes
+  4.0.0's PUBLISHED tarball carries a stray `@mkbabb/glass-ui: file:../glass-ui`
+  dependency (a dev sibling-link that leaked into the publish — the registry
+  `npm view` shows clean deps, but the resolved package.json declares the file:
+  link). Bumping glass-ui's keyframes devDep to ^4 drags that unresolvable file:
+  link into glass-ui's dependency tree, breaking `npm ci` ("Missing
+  @mkbabb/glass-ui@ from lock file"). That is a KEYFRAMES-side publish bug (inv-16
+  — keyframes must republish 4.0.1 without the file: dep); glass-ui does not devDep
+  keyframes 4 until then. glass-ui's SOURCE is verified keyframes-4-compatible (the
+  useNumericTransition narrowing typechecks green against keyframes 4 + value 0.10
+  — confirmed by a manual install), and the PEER admits ^4 (the contract a consumer
+  reads). CI builds against the clean keyframes 2.2 baseline (green). value dev
+  stays `^0.10.0`; the value-0.11 build is green by construction (stable color leaf).
+  **Coordination handoff to keyframes:** republish 4.0.1 stripping the
+  `@mkbabb/glass-ui: file:../glass-ui` dep; then glass-ui bumps its keyframes devDep
+  to ^4 for CI coverage.
 - **`scripts/proof-peer-conformance.mjs` + `proof:peer-conformance` script.**
 
 ## The corrected coordination finding (supersedes keyframes-4-compat.md §3-4)
