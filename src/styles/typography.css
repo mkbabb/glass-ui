@@ -486,8 +486,8 @@ body {
        surface read as a fade, not as engraving. */
     .text-engraved {
         color: var(--muted-foreground);
-        text-shadow:
-            0 1px 0 color-mix(in srgb, var(--background) 30%, transparent),
-            0 -1px 0 var(--surface-tint-8);
+        /* AW.W26 — composes the `--text-shadow-engraved` @theme identity token
+           (the two-stop emboss) instead of a hand-rolled literal (gate 4). */
+        text-shadow: var(--text-shadow-engraved);
     }
 }

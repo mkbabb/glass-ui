@@ -4,7 +4,16 @@ import type { Component, VNode } from 'vue'
 const TOAST_LIMIT = 5
 const TOAST_REMOVE_DELAY = 1000000
 
-export type ToastVariant = 'default' | 'destructive'
+// AW.W25 — semantic-tone parity. The Toast surface resolves the
+// success/warning/info tones from the `--{success,warning,info}` tokens
+// (mirroring Badge). This is the single source for the variant union; Toast.vue
+// consumes it.
+export type ToastVariant =
+  | 'default'
+  | 'destructive'
+  | 'success'
+  | 'warning'
+  | 'info'
 
 export interface Toast {
   id: string

@@ -227,22 +227,16 @@
             background var(--duration-fast) var(--ease-standard),
             box-shadow var(--duration-fast) var(--ease-standard);
     }
-    /* ── Depth text (layered shadow with customizable colors) ── */
+    /* ── Depth text (layered offset stamp) ──
+       AW.W26 — composes the `--text-shadow-depth` @theme identity token (the
+       hard offset stack + soft ambient tail) instead of a hand-rolled multi-stop
+       literal. The token holds the stack inside the `@theme` defs (gate 4) and
+       re-tints under `.dark` via `--shadow`/`--shadow-color` BY CONSTRUCTION. */
     .depth-text {
         --depth-color-primary: var(--primary);
-        --depth-color-shadow: var(--shadow);
 
         color: var(--depth-color-primary);
-        text-shadow:
-            1px 1px 0 var(--depth-color-shadow),
-            2px 2px 0 var(--depth-color-shadow),
-            3px 3px 0 var(--depth-color-shadow),
-            4px 4px 0 var(--depth-color-shadow),
-            5px 5px 0 var(--depth-color-shadow),
-            5px 5px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
-            2px 2px 2px color-mix(in srgb, var(--shadow-color) 20%, transparent),
-            4px 4px 5px color-mix(in srgb, var(--shadow-color) 25%, transparent),
-            6px 6px 10px color-mix(in srgb, var(--shadow-color) 15%, transparent);
+        text-shadow: var(--text-shadow-depth);
     }
 
     /* ── 3D preserve ── */
@@ -397,6 +391,11 @@
 
     .metric-badge > span {
         line-height: 1;
+        /* AW.W26 — `wrap-anywhere` (overflow-wrap: anywhere) on the value slot:
+           a long metric value breaks WITHIN the badge rather than being clipped
+           by the host `overflow: hidden`. v4.1 `wrap-anywhere` / mwg css §7.
+           Scoped to the value span, NOT a universal selector (mwg perf caveat). */
+        overflow-wrap: anywhere;
     }
 
     .metric-badge:hover {

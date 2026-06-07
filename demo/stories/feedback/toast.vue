@@ -24,6 +24,7 @@ function fireDefault() {
 
 function fireSuccess() {
     toast({
+        variant: "success",
         title: "Deploy complete",
         description: "Build #2048 is live. Traffic ramping now.",
     });
@@ -31,13 +32,23 @@ function fireSuccess() {
 
 function fireWarning() {
     toast({
+        variant: "warning",
         title: "Approaching quota",
         description: "84% of your hourly window is used. Resets in 17 minutes.",
     });
 }
 
+function fireInfo() {
+    toast({
+        variant: "info",
+        title: "Live preview is read-only",
+        description: "Open the editor pane to make changes.",
+    });
+}
+
 function fireError() {
     toast({
+        variant: "destructive",
         title: "Upload failed",
         description: "Network timed out. We kept the file in local drafts.",
     });
@@ -66,34 +77,18 @@ function fireWithAction() {
     });
 }
 
-// Migrated from raw Tailwind palette literals (bg-emerald-*, etc.) to the
-// canonical --success / --warning / --destructive token plates established
-// in v0.8.6. Per V.W4.T14 + B4 §3.2.
-const toneClass: Record<string, string> = {
-    default:
-        "border-border/70 bg-card/95 text-foreground [&_[data-tone-icon]]:text-muted-foreground",
-    success:
-        "border-success/40 bg-success/15 text-success-foreground [&_[data-tone-icon]]:text-success",
-    warning:
-        "border-warning/40 bg-warning/15 text-warning-foreground [&_[data-tone-icon]]:text-warning",
-    error:
-        "border-destructive/50 bg-destructive/15 text-destructive-foreground [&_[data-tone-icon]]:text-destructive",
-};
-
+// AW.W25 — the tone now rides the NATIVE Toast `variant`
+// (success/warning/info/destructive), which resolves the
+// `--{success,warning,info}` token plates inside the CVA. The faked local
+// `toneClass` palette map is retired; the story only maps the per-variant ICON
+// (not part of the surface CVA).
 const toneIcon: Record<string, typeof CheckCircle2> = {
     default: Info,
     success: CheckCircle2,
     warning: AlertTriangle,
-    error: XCircle,
+    info: Info,
+    destructive: XCircle,
 };
-
-function toneFor(id: string): keyof typeof toneClass {
-    const lower = id.toLowerCase();
-    if (lower.includes("deploy") || lower.includes("saved")) return "success";
-    if (lower.includes("quota") || lower.includes("warn")) return "warning";
-    if (lower.includes("fail") || lower.includes("error")) return "error";
-    return "default";
-}
 </script>
 
 <template>
@@ -104,6 +99,7 @@ function toneFor(id: string): keyof typeof toneClass {
                 <Button variant="outline" @click="fireDefault">Default</Button>
                 <Button variant="outline" @click="fireSuccess">Success</Button>
                 <Button variant="outline" @click="fireWarning">Warning</Button>
+                <Button variant="outline" @click="fireInfo">Info</Button>
                 <Button variant="outline" @click="fireError">Error</Button>
                 <Button variant="destructive" @click="fireDestructive">Destructive</Button>
                 <Button @click="fireWithAction">With action</Button>
@@ -114,21 +110,20 @@ function toneFor(id: string): keyof typeof toneClass {
             <p class="section-label">viewport</p>
             <p class="font-mono text-xs text-muted-foreground">
                 Toasts render bottom-right on desktop, top on mobile. Swipe or
-                close-button dismiss. Tone is inferred from the title here to
-                extend beyond the native <code>default</code> / <code>destructive</code>
-                split without forking the component.
+                close-button dismiss. The tone rides the native Toast
+                <code>variant</code> (default / success / warning / info /
+                destructive) — the CVA resolves the
+                <code>--{success,warning,info}</code> token plates.
             </p>
             <ToastProvider>
                 <Toast
                     v-for="t in toasts"
                     :key="t.id"
                     v-bind="t"
-                    :class="t.variant === 'destructive' ? undefined : toneClass[toneFor(t.title ?? '')]"
                 >
                     <div class="flex items-start gap-3">
                         <component
-                            :is="toneIcon[toneFor(t.title ?? '')]"
-                            v-bind="{ 'data-tone-icon': '' }"
+                            :is="toneIcon[t.variant ?? 'default']"
                             class="mt-0.5 size-5 shrink-0"
                         />
                         <div class="grid gap-1">

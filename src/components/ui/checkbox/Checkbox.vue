@@ -2,7 +2,7 @@
 import { type HTMLAttributes, computed } from 'vue'
 import type { CheckboxRootEmits, CheckboxRootProps } from 'reka-ui'
 import { CheckboxIndicator, CheckboxRoot, useForwardPropsEmits } from 'reka-ui'
-import { Check } from "@lucide/vue"
+import { Check, Minus } from "@lucide/vue"
 import { cn } from '../../../utils'
 
 const props = defineProps<CheckboxRootProps & { class?: HTMLAttributes['class'] }>()
@@ -19,14 +19,20 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
 <template>
   <CheckboxRoot
+    data-slot="checkbox"
     v-bind="forwarded"
     :class="
-      cn('focus-ring peer h-4 w-4 shrink-0 rounded-sm border border-primary disabled:cursor-not-allowed disabled:opacity-disabled data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground',
+      cn('group tap-squish focus-ring peer h-4 w-4 shrink-0 rounded-control border border-primary transition-control disabled:cursor-not-allowed disabled:opacity-disabled data-[state=checked]:bg-[color-mix(in_srgb,var(--primary)_88%,var(--glass-bg-floating))] data-[state=checked]:text-primary-foreground data-[state=indeterminate]:bg-[color-mix(in_srgb,var(--primary)_88%,var(--glass-bg-floating))] data-[state=indeterminate]:text-primary-foreground',
          props.class)"
   >
     <CheckboxIndicator class="flex h-full w-full items-center justify-center text-current">
       <slot>
-        <Check class="h-4 w-4" />
+        <!-- AW.W25 — reka 2.9's CheckboxIndicator force-mounts on
+             data-state="indeterminate" too, so the dash must branch off the
+             root state attribute or an indeterminate box paints a checkmark.
+             group-data targets the CheckboxRoot's data-state. -->
+        <Minus class="hidden h-4 w-4 group-data-[state=indeterminate]:block" />
+        <Check class="h-4 w-4 group-data-[state=indeterminate]:hidden" />
       </slot>
     </CheckboxIndicator>
   </CheckboxRoot>

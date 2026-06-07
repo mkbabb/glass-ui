@@ -22,7 +22,12 @@ export { default as Toggle } from './Toggle.vue'
  * than re-declaring the surface at the consumer.
  */
 export const toggleVariants = cva(
-  'focus-ring inline-flex items-center justify-center rounded-button text-sm font-medium transition-colors hover:bg-muted hover:text-muted-foreground disabled:pointer-events-none disabled:opacity-disabled data-[state=on]:bg-accent data-[state=on]:text-accent-foreground',
+  // AW.W25 — `transition-control` (border/shadow/transform/color, not just
+  // color) + `.tap-squish` for the iOS press-spring; the four-state contract.
+  // AW.W26 — the shadcn-2025 icon-sizing/gap idiom (un-sized child svg → size-4,
+  // every svg non-shrinking + pointer-transparent; `cn()`'s `/^size-/` bucket
+  // never collides a host-sized icon thanks to the `:not([class*=size-])` guard).
+  'tap-squish focus-ring inline-flex items-center justify-center gap-2 rounded-button text-sm font-medium transition-control hover:bg-muted hover:text-muted-foreground disabled:pointer-events-none disabled:opacity-disabled data-[state=on]:bg-accent data-[state=on]:text-accent-foreground [&_svg:not([class*=size-])]:size-4 [&_svg]:shrink-0 [&_svg]:pointer-events-none',
   {
     variants: {
       variant: {

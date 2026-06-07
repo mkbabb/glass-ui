@@ -47,6 +47,15 @@
     --radius-dialog:  var(--radius-2xl);
     --radius-input:   var(--radius);
     --radius-button:  var(--radius);
+    /* AW.W25 — form-radius unification. `--radius-field` is the non-pill field
+       rung the multi-line / stepper form atoms (Textarea, NumberFieldInput)
+       resolve so a multi-line box stops inheriting the `9999px` stadium pill;
+       single-line controls (Input, SelectTrigger) keep the pill. `--radius-control`
+       is the semantic control-corner rung that retires the raw `rounded-sm` (4px)
+       on Checkbox + base Tabs onto a softer, named radius. One geometry language
+       across the form family — token + class only, no new primitive. */
+    --radius-field:   var(--radius-2xl);
+    --radius-control: var(--radius-md);
     --radius-badge:   var(--radius-pill);
     --radius-dock:    var(--radius-pill);
     /* AW.W3b — the big-dock card shell's default (comfortable-density) radius.
@@ -416,6 +425,46 @@
        ═══════════════════════════════════════════════ */
     --opacity-disabled:   0.5;
     --opacity-icon-muted: 0.8;
+
+    /* ═══════════════════════════════════════════════
+       text-shadow → text-shadow-* utilities (AW.W26)
+
+       text-shadow is the lone shadow family that shipped no `@theme` bridge
+       (Tailwind v4.1 minted the `text-shadow-{2xs,xs,sm,md,lg}` utilities). The
+       rungs are warm-`--shadow-color`-derived via `color-mix` per the box-shadow
+       ladder (tokens.css §7) + the cartoon-shadow precept's one-source chain, so
+       they re-tint under `.dark` BY CONSTRUCTION — `--shadow-color: var(--foreground)`
+       flips light→dark with no hardcoded `.dark` re-declaration. The hand-rolled
+       multi-stop `text-shadow:` literals in `.depth-text` (utilities.css) +
+       `.text-engraved` (typography.css) now compose these tokens. */
+    --text-shadow-2xs: 0 1px 0 color-mix(in srgb, var(--shadow-color) 12%, transparent);
+    --text-shadow-xs:  0 1px 1px color-mix(in srgb, var(--shadow-color) 16%, transparent);
+    --text-shadow-sm:  0 1px 0 color-mix(in srgb, var(--shadow-color) 14%, transparent),
+                       0 2px 3px color-mix(in srgb, var(--shadow-color) 18%, transparent);
+    --text-shadow-md:  0 1px 0 color-mix(in srgb, var(--shadow-color) 16%, transparent),
+                       0 2px 4px color-mix(in srgb, var(--shadow-color) 20%, transparent),
+                       0 4px 8px color-mix(in srgb, var(--shadow-color) 14%, transparent);
+    --text-shadow-lg:  0 1px 0 color-mix(in srgb, var(--shadow-color) 18%, transparent),
+                       0 2px 4px color-mix(in srgb, var(--shadow-color) 22%, transparent),
+                       0 6px 12px color-mix(in srgb, var(--shadow-color) 18%, transparent);
+
+    /* Two IDENTITY text-shadow tokens — the hard offset STAMP (`.depth-text`)
+       + the two-stop EMBOSS (`.text-engraved`). These hold the multi-stop
+       literals INSIDE the `@theme` defs so the utilities compose `var(--text-shadow-*)`
+       and no raw `text-shadow:` literal survives in `utilities.css`/`typography.css`
+       (AW.W26 gate 4). Both are `--shadow-color`/surface-tint-derived, so they
+       re-tint under `.dark` BY CONSTRUCTION. */
+    --text-shadow-depth: 1px 1px 0 var(--shadow),
+                         2px 2px 0 var(--shadow),
+                         3px 3px 0 var(--shadow),
+                         4px 4px 0 var(--shadow),
+                         5px 5px 0 var(--shadow),
+                         5px 5px 1px color-mix(in srgb, var(--shadow-color) 10%, transparent),
+                         2px 2px 2px color-mix(in srgb, var(--shadow-color) 20%, transparent),
+                         4px 4px 5px color-mix(in srgb, var(--shadow-color) 25%, transparent),
+                         6px 6px 10px color-mix(in srgb, var(--shadow-color) 15%, transparent);
+    --text-shadow-engraved: 0 1px 0 color-mix(in srgb, var(--background) 30%, transparent),
+                            0 -1px 0 var(--surface-tint-8);
 }
 
 /* Class-based dark mode */

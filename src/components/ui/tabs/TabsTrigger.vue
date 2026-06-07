@@ -16,10 +16,11 @@ const forwardedProps = useForwardProps(delegatedProps);
 
 <template>
     <TabsTrigger
+        data-slot="tabs-trigger"
         v-bind="forwardedProps"
         :class="
             cn(
-                'focus-ring inline-flex items-center justify-center whitespace-nowrap rounded-sm p-1 px-3 text-sm font-medium transition-control disabled:pointer-events-none disabled:opacity-disabled data-[state=active]:text-[var(--active-tab-color,var(--foreground))] hover:text-foreground/70',
+                'tap-squish focus-ring relative z-[1] inline-flex items-center justify-center whitespace-nowrap rounded-control p-1 px-3 text-sm font-medium transition-control disabled:pointer-events-none disabled:opacity-disabled data-[state=active]:text-[var(--active-tab-color,var(--foreground))] hover:text-foreground/70',
                 props.class,
             )
         "

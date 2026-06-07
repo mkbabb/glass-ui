@@ -23,9 +23,17 @@ const defaultAttrs = { inputmode: 'decimal' as const }
 </script>
 
 <template>
+  <!-- AW.W25 — the stepper input adopts the `.input-pill` GLASS recipe (the same
+       glass-tint substrate + resting-border floor + `:user-invalid`/`[aria-invalid]`
+       destructive ring the Input pill carries) at the non-pill `--radius-field` rung
+       (`rounded-field`), so it reads as an Input sibling rather than a different design
+       system (was solid `bg-background`/`border-input` + `rounded-input` at HEAD). The
+       multi-control NumberField box is not a single-line stadium, so it takes the field
+       rung, not the `9999px` pill. The `text-center` + flank-padding for the steppers
+       overlay the pill base. -->
   <NumberFieldInput
     v-bind="{ ...defaultAttrs, ...$attrs }"
     data-slot="input"
-    :class="cn('focus-ring flex h-10 w-full rounded-input border border-input bg-background py-2 text-sm text-center placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-disabled')"
+    :class="cn('input-pill h-10 rounded-field px-9 py-2 text-sm text-center')"
   />
 </template>

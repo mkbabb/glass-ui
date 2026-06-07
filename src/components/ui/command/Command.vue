@@ -21,9 +21,13 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
 
 <template>
+  <!-- AW.W25 — the overlay-band material carve: Command joins the shared
+       `glass-floating` substrate every overlay sibling already uses, retiring the
+       flat `bg-popover`. -->
   <ComboboxRoot
+    data-slot="command"
     v-bind="forwarded"
-    :class="cn('flex h-full w-full flex-col overflow-hidden rounded-panel bg-popover text-popover-foreground', props.class)"
+    :class="cn('glass-floating flex h-full w-full flex-col overflow-hidden rounded-panel text-popover-foreground', props.class)"
   >
     <slot />
   </ComboboxRoot>

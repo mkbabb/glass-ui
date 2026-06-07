@@ -58,10 +58,15 @@ const elementAttrs = computed(() => ({
 </script>
 
 <template>
+  <!-- AW.W25 — `rounded-field` (the `--radius-field` rung) overrides the
+       `.input-pill` `9999px` stadium radius. A multi-line box inheriting the
+       single-line pill resolved grotesque stadium ends; the field rung gives a
+       multi-line-appropriate finite corner. Single-line Input keeps the pill. -->
   <textarea
     v-model="modelValue"
+    data-slot="textarea"
     v-bind="{ ...$attrs, ...elementAttrs }"
     :data-autosize="autosize ? '' : undefined"
-    :class="cn('input-pill py-2 text-sm', autosize ? '' : 'min-h-20', props.class)"
+    :class="cn('input-pill rounded-field py-2 text-sm', autosize ? '' : 'min-h-20', props.class)"
   />
 </template>

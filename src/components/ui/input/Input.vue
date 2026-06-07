@@ -71,5 +71,5 @@ const elementAttrs = computed(() => ({
 </script>
 
 <template>
-  <input v-model="modelValue" v-bind="{ ...$attrs, ...elementAttrs }" :class="cn('input-pill text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium', props.class)">
+  <input v-model="modelValue" data-slot="input" v-bind="{ ...$attrs, ...elementAttrs }" :class="cn('input-pill text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium', props.class)">
 </template>
