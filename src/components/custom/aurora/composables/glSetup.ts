@@ -50,6 +50,11 @@ export const UNIFORM_NAMES = [
     "uStrokeAnisotropy",
     "uStrokeLayers",
     "uStrokeMode",
+    // AW.W4.1 — stroke-orientation source (flow | tensor).
+    "uStrokeOrient",
+    // AW.W4.2 — the movable impasto relight axis (cursor-as-light in AW.W8).
+    "uLightDir",
+    "uLightColor",
     "uWetEdge",
     "uGranulation",
     "uImpasto",

@@ -2,7 +2,23 @@
 // mediums. `flowField` dispatches the radial/swirl/diagonal/multi patterns, adds
 // curl-noise perturbation, and blends a cursor-anchored swirl. IN: UV + time.
 // OUT: unit flow direction. Spliced verbatim into FRAGMENT_SRC by aurora.frag.ts.
+//
+// AW.W4.1 — the structure-tensor / edge-tangent-flow (ETF) keystone. `flowField`
+// gains a `uFlowPattern == 5` ("tensor"/"etf") branch that returns the color
+// field's OWN minor-eigenvector direction (the edge-tangent flow), coherence-
+// weighted toward the smooth flow so flat zones stay calm. The tensor's BODY
+// (`structureTensorField`) lives in the mediums-pre block (after `sampleBase`,
+// which it Sobel-samples) and is reached here via a GLSL prototype (ES 3.00
+// supports forward declarations). bestOil consults the same field behind the
+// `uStrokeOrient` switch. The single biggest "congruent to real Van Gogh" lever:
+// brushwork derives its orientation from the image structure, not a hand-authored
+// pattern. The smoothed multi-tap form (Gaussian pre-blur + LIC smear) is the
+// AW.W7 WebGPU multi-pass fold; this is the single-pass small-tap approximation.
 export const AURORA_FLOW_GLSL = /* glsl */ `// ── Flow field ────────────────────────────────────────────────────────────
+// Structure-tensor prototype (body defined post-sampleBase in the mediums block).
+// Returns vec3(dir.x, dir.y, coherence) — the minor-eigenvector tangent + A.
+vec3 structureTensorField(vec2 p, float t, vec2 fallbackDir);
+
 vec2 flowField(vec2 p, float t) {
   vec2 dir = vec2(1.0, 0.0);
   if (uFlowPattern == 1) {
@@ -21,6 +37,15 @@ vec2 flowField(vec2 p, float t) {
     float n = fbm(p * 2.0 + t * 0.02);
     float a = n * 6.2831;
     dir = vec2(cos(a), sin(a));
+  } else if (uFlowPattern == 5) {
+    // tensor / ETF — the color field's OWN edge-tangent flow (AW.W4.1). The
+    // diagonal angle seeds the smooth fallback the coherence-weighted blend
+    // relaxes toward in low-structure zones. Returns directly (no curl/cursor
+    // post-mix — the tensor field already carries the structure orientation;
+    // the cursor warp still drives the underlying color field in domainWarp).
+    float a = radians(uFlowAngle);
+    vec2 fallback = vec2(cos(a), sin(a));
+    return structureTensorField(p, t, fallback).xy;
   }
   // curl — perturb by noise. Radial gets much less curl so rays stay clean.
   if (uFlowCurl > 0.0) {

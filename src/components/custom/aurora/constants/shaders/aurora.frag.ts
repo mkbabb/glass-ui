@@ -93,7 +93,7 @@ uniform int   uMedium;
 // consulted when the hue-arc path is requested; OKLab-rectangular ramps (the
 // default for adjacent-hue stops) ignore it.
 uniform int   uHuePath;
-uniform int   uFlowPattern;   // 0 none, 1 radial, 2 swirl, 3 diagonal, 4 multi
+uniform int   uFlowPattern;   // 0 none, 1 radial, 2 swirl, 3 diagonal, 4 multi, 5 tensor/ETF (W4.1)
 uniform vec2  uFlowFocal;
 uniform float uFlowAngle;
 uniform float uFlowCurl;
@@ -105,11 +105,21 @@ uniform float uStrokeScale;
 uniform float uStrokeAnisotropy;
 uniform int   uStrokeLayers;  // 1 or 2 (crosshatch)
 uniform int   uStrokeMode;    // 0 oil (modern gestural), 1 palette-knife, 3 modern-chunky (crayon is uMedium==4, a peer medium)
+// AW.W4.1 — the stroke-orientation source: 0 flow (hand-authored flowField), 1
+// tensor (the structure-tensor minor eigenvector — the color field's edge-tangent).
+uniform int   uStrokeOrient;
 uniform float uWetEdge;
 uniform float uGranulation;
 uniform float uImpasto;
 uniform float uBrokenColor;
 uniform float uCanvasGrain;
+
+// AW.W4.2 — the impasto relight axis. A movable directional source lighting the
+// accumulated paint-height field (diffuse + Blinn specular, in LINEAR before aces()).
+// AW.W8 drives uLightDir from the cursor (cursor-as-light). Default = upper-left so
+// the still default reads identically to the prior fixed rim.
+uniform vec3  uLightDir;    // unit direction (x,y in screen space, z toward viewer)
+uniform vec3  uLightColor;  // warm-white tint (linear)
 
 // Motion
 uniform float uNucleiDrift;
@@ -380,10 +390,15 @@ void main() {
   col *= 1.0 + uBreathDepth * breath * 0.5;
 
   // Medium — crayon (4) is a peer dispatched here, not a mediumOil sub-mode.
+  // AW.W4.3/W4.4 — vangogh (5) is the energy-graded atomic-stroke medium;
+  // oil-pastel (6) is the reworked deposition+scumble+waxy model. The legacy crayon
+  // peer (4) and oil-pastel (6) share the reworked mediumCrayon body (no duplicate).
   if (uMedium == 1) col = mediumPastel(col, pN, t);
   else if (uMedium == 2) col = mediumWatercolor(col, pN, t);
   else if (uMedium == 3) col = mediumOil(col, pN, t);
   else if (uMedium == 4) col = mediumCrayon(col, pN, t);
+  else if (uMedium == 5) col = mediumVangogh(col, pN, t);
+  else if (uMedium == 6) col = mediumCrayon(col, pN, t);
 
   // Saturation trim
   col = saturate3(col, uSaturation);

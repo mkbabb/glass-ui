@@ -23,6 +23,63 @@ vec3 sampleBase(vec2 p, float t) {
   return c;
 }
 
+// ── Structure-tensor / edge-tangent-flow (AW.W4.1) ─────────────────────────
+// The keystone of the painterly engine: derive stroke orientation from the COLOR
+// FIELD's OWN structure, not a hand-authored flow pattern. A 3x3 Sobel over
+// luma(sampleBase) yields the gradient (Gx,Gy); the 2x2 structure tensor
+// J = [[Gx², GxGy],[GxGy, Gy²]] eigen-decomposes closed-form into the MINOR
+// eigenvector (the edge-TANGENT — least color change, the stroke direction; the
+// MAJOR eigenvector is the gradient/edge-NORMAL and would make strokes cross the
+// bands) and the coherence A = (λ1-λ2)/(λ1+λ2). Low-coherence (flat) zones relax
+// toward the smooth fallbackDir by (1-A) so tensor noise never reads as jitter.
+// Single-pass small-tap WebGL2 form; the Gaussian-smoothed multi-tap + LIC smear
+// is the AW.W7 WebGPU multi-pass fold. Returns vec3(tangent.x, tangent.y, A).
+vec3 structureTensorField(vec2 p, float t, vec2 fallbackDir) {
+  float e = 0.0035; // small-tap neighborhood (edge-mask scale)
+  // 3x3 luma samples.
+  float l00 = dot(sampleBase(p + vec2(-e, -e), t), W_LUMA);
+  float l10 = dot(sampleBase(p + vec2( 0.0, -e), t), W_LUMA);
+  float l20 = dot(sampleBase(p + vec2( e, -e), t), W_LUMA);
+  float l01 = dot(sampleBase(p + vec2(-e, 0.0), t), W_LUMA);
+  float l21 = dot(sampleBase(p + vec2( e, 0.0), t), W_LUMA);
+  float l02 = dot(sampleBase(p + vec2(-e, e), t), W_LUMA);
+  float l12 = dot(sampleBase(p + vec2( 0.0, e), t), W_LUMA);
+  float l22 = dot(sampleBase(p + vec2( e, e), t), W_LUMA);
+  // Sobel derivatives.
+  float Gx = (l20 + 2.0 * l21 + l22) - (l00 + 2.0 * l01 + l02);
+  float Gy = (l02 + 2.0 * l12 + l22) - (l00 + 2.0 * l10 + l20);
+  // Structure tensor components.
+  float Jxx = Gx * Gx;
+  float Jyy = Gy * Gy;
+  float Jxy = Gx * Gy;
+  // Closed-form 2x2 eigenvalues: λ = 0.5(tr ± sqrt((Jxx-Jyy)² + 4Jxy²)).
+  float tr = Jxx + Jyy;
+  float disc = sqrt(max((Jxx - Jyy) * (Jxx - Jyy) + 4.0 * Jxy * Jxy, 0.0));
+  float lambdaMaj = 0.5 * (tr + disc);
+  float lambdaMin = 0.5 * (tr - disc);
+  // The MAJOR eigenvector points along the gradient (the edge NORMAL); the MINOR
+  // is its perpendicular — the edge TANGENT (the stroke direction). The principal
+  // angle is θ = 0.5·atan2(2·Jxy, Jxx-Jyy); this form is robust at Jxy≈0 (where the
+  // (λ-Jyy, Jxy) eigenvector formula collapses to a zero vector). The tangent is at
+  // θ + 90°. Guard the fully-isotropic (no-gradient) degenerate case → fallback dir.
+  vec2 tangent;
+  if (disc < 1e-7) {
+    tangent = fallbackDir;
+  } else {
+    float theta = 0.5 * atan(2.0 * Jxy, Jxx - Jyy); // major (gradient) angle
+    tangent = vec2(-sin(theta), cos(theta));          // perpendicular = tangent
+  }
+  // Coherence A in [0,1] — high where one eigenvalue dominates (a strong edge),
+  // ~0 in flat zones. Relax toward the smooth fallback by (1 - A).
+  float A = (lambdaMaj - lambdaMin) / (lambdaMaj + lambdaMin + 1e-6);
+  A = clamp(A, 0.0, 1.0);
+  // Coherence-weighted blend: full tensor in coherent zones, smooth in flat ones.
+  // Resolve the 180° sign ambiguity toward the fallback so the blend is continuous.
+  if (dot(tangent, fallbackDir) < 0.0) tangent = -tangent;
+  vec2 dir = normalize(mix(fallbackDir, tangent, A) + 1e-6);
+  return vec3(dir, A);
+}
+
 vec3 mediumWatercolor(vec3 col, vec2 p, float t) {
   // Wet-edge cauliflowers via luma-gradient magnitude
   float eps = 0.004;
@@ -72,40 +129,68 @@ export const AURORA_MEDIUMS_POST_BRUSH_GLSL = /* glsl */ `// ── Crayon / oil
 // film" that slightly unifies hues, and occasional darker "pressed" spots
 // where the crayon dug in. NO straight segments. Dispatched at main() level as
 // a peer of pastel/watercolor/oil — never a branch inside mediumOil().
+// AW.W4.4 — GENUINE oil pastel: pigment DEPOSITED on the paper tooth, a broken
+// SCUMBLE upper layer letting the paper/lower color show through, and a waxy BURNISH
+// film whose sheen grows with layer count. Reworked from the old tooth-multiply
+// gradient into a material-truth deposition model. Oriented along the ETF field
+// (W4.1); OKLCh broken color (W5). The oil-pastel first-class medium (uMedium==6)
+// AND the legacy crayon peer (uMedium==4) both dispatch this single body.
 vec3 mediumCrayon(vec3 col, vec2 p, float t) {
-  vec2 flow = flowField(p, t);
+  // Orient the deposition streaks along the structure-tensor edge-tangent. The
+  // painterly mediums force uStrokeOrient==tensor, so read the tensor field directly;
+  // fall back to flowField for the legacy crayon strokeMode route.
+  vec2 flow = (uStrokeOrient == 1)
+    ? structureTensorField(p, t, flowField(p, t)).xy
+    : flowField(p, t);
   float ang = atan(flow.y, flow.x);
   float ca = cos(-ang), sa = sin(-ang);
   vec2 pr = vec2(p.x * ca - p.y * sa, p.x * sa + p.y * ca);
 
-  // Anisotropic tooth — squished along flow, coarse cross flow.
   float aniso = mix(0.45, 0.95, uStrokeAnisotropy);
   float scale = max(uStrokeScale * 1.6, 180.0);
 
+  // ── Paper TOOTH height field — the relief the pigment rides. Anisotropic
+  // (squished along flow, coarse cross-flow). Peaks = ridges, valleys = paper pits.
   float t1 = vnoise(vec2(pr.x * scale * aniso, pr.y * scale));
   float t2 = vnoise(vec2(pr.x * scale * aniso * 0.4, pr.y * scale * 0.4) + 11.0);
   float t3 = vnoise(vec2(pr.x * scale * aniso * 2.1, pr.y * scale * 2.1) + 23.0);
-  float tooth = 0.55 * t1 + 0.30 * t2 + 0.15 * t3;
-  // Center at 0, amplify
-  tooth = (tooth - 0.5) * 1.4;
+  float paperHeight = 0.55 * t1 + 0.30 * t2 + 0.15 * t3;
 
-  // Multiplicative darkening where tooth is low (pigment skipped paper valleys)
-  float lay = 1.0 + tooth * 0.32 * uStrokeAmount;
-  vec3 result = col * lay;
+  // ── DEPOSITION — pigment lands on the tooth PEAKS and skips the valleys. Light
+  // pressure (low uStrokeAmount) shows paper through the valleys; heavy pressure
+  // fills them. deposit in [0,1] is the per-pixel pigment coverage.
+  float pressure = clamp(uStrokeAmount, 0.0, 1.0);
+  float toothFloor = mix(0.62, 0.18, pressure);  // heavy pressure lowers the floor
+  float deposit = smoothstep(toothFloor, toothFloor + 0.35, paperHeight);
 
-  // Occasional pressed-in crumbs — rare darker crumbs
-  float crumbs = smoothstep(0.78, 0.95, vnoise(pr * scale * 3.0));
-  result *= 1.0 - crumbs * 0.18 * uStrokeAmount;
+  // ── SCUMBLE — a broken UPPER layer at coverage < 1 (the signature oil-pastel
+  // move). A coarse mask gates a lighter dragged stroke over the deposition so the
+  // LOWER color shows through the gaps. Drag direction follows the tensor flow.
+  float scumbleMask = smoothstep(0.35, 0.85, vnoise(vec2(pr.x * scale * 0.55, pr.y * scale * 0.22) + 7.0));
+  float scumbleCoverage = scumbleMask * pressure * 0.6;  // < 1 — paper/lower shows
 
-  // Waxy highlight film — slight lightening on tooth peaks
-  float waxy = smoothstep(0.55, 0.85, t1);
-  result += waxy * 0.04 * vec3(1.0);
+  // The lower color is the base; the deposited pigment is the base lifted into the
+  // tooth. Mix the base toward the deposited layer by the deposition coverage, then
+  // let the scumble break the upper layer so the lower reads through the gaps.
+  vec3 paper = col * 0.92;                       // the paper-showing-through tone
+  vec3 deposited = col;                          // the pigment-on-tooth tone
+  vec3 result = mix(paper, deposited, deposit);
+  // Scumble: a broken pass of the deposited color at < 1 coverage.
+  result = mix(result, deposited * (0.96 + 0.08 * t1), scumbleCoverage);
 
-  // Paper tooth overlay (subtler than oil's canvas)
-  float paperTooth = vnoise(p * 340.0) - 0.5;
-  result *= 1.0 + paperTooth * 0.14 * uCanvasGrain;
+  // ── WAXY BURNISH FILM — a low-roughness BROAD specular lobe whose sheen grows
+  // with the pigment build-up (burnish), distinct from oil's sharp glint. Reads the
+  // paper-height gradient as a soft normal and lights it with the movable uLightDir.
+  float waxNormalZ = 2.4;
+  vec3 N = normalize(vec3(-dFdx(paperHeight) * 30.0, -dFdy(paperHeight) * 30.0, waxNormalZ));
+  vec3 L = normalize(uLightDir);
+  vec3 V = vec3(0.0, 0.0, 1.0);
+  vec3 H = normalize(L + V);
+  float burnish = deposit * (0.5 + 0.5 * scumbleMask); // sheen grows with build-up
+  float sheen = pow(max(dot(N, H), 0.0), 6.0);          // broad waxy lobe
+  result += burnish * sheen * 0.10 * uLightColor;
 
-  // Broken-color pigment: stable wax/pigment patches, not temporal flicker.
+  // ── Broken-color pigment: stable wax/pigment patches in OKLCh (W5), not flicker.
   vec2 pigmentCell = floor(pr * max(scale * 0.18, 32.0));
   float pigmentMask = smoothstep(0.28, 0.82, vnoise(pr * scale * 0.21 + 19.0));
   result = brokenColorJitter(
@@ -115,7 +200,7 @@ vec3 mediumCrayon(vec3 col, vec2 p, float t) {
     0.45 + 0.55 * pigmentMask
   );
 
-  // Crayon is saturation-amplified
+  // Oil pastel is saturation-amplified (the waxy chroma punch).
   result = saturate3(result, 1.12);
 
   return result;
@@ -178,17 +263,20 @@ vec3 mediumOil(vec3 col, vec2 p, float t) {
   vec2 flow = flowField(p, t);
 
   vec3 result = col;
+  // AW.W4.2 — accumulated paint HEIGHT across the stroke layers. The relight reads
+  // its gradient for the normal; the canvas tooth seeds the base relief.
+  float height = 0.0;
 
   // Layer 1 — big gestural strokes (sparse, shaping)
   StrokeHit hBig = bestOil(p, sBig, lenMulBig, widMulBig, jitterAmt * 0.55,
                            densityBig, shapeType, bristleAmp, flow, t, 1.3);
-  paintOver(result, hBig, streakFreq * 0.7, streakAmp,
+  paintOver(result, height, hBig, streakFreq * 0.7, streakAmp,
             uImpasto * impastoAmp * uStrokeAmount, hardness, 1.3);
 
   // Layer 2 — medium body strokes
   StrokeHit hMed = bestOil(p + vec2(11.3, 3.7), sMed, lenMulMed, widMulMed,
                            jitterAmt, densityMed, shapeType, bristleAmp, flow, t, 2.7);
-  paintOver(result, hMed, streakFreq, streakAmp,
+  paintOver(result, height, hMed, streakFreq, streakAmp,
             uImpasto * impastoAmp * uStrokeAmount, hardness, 2.7);
 
   // Layer 3 — small dabs (more frequent, smaller)
@@ -196,7 +284,7 @@ vec3 mediumOil(vec3 col, vec2 p, float t) {
   StrokeHit hSml = bestOil(p + vec2(-5.1, 8.4), sSml, lenMulSml, widMulSml,
                            jitterAmt * 1.3, densitySml, smlShape,
                            bristleAmp * 0.85, flow, t, 4.1);
-  paintOver(result, hSml, streakFreq * 1.4, streakAmp * 0.8,
+  paintOver(result, height, hSml, streakFreq * 1.4, streakAmp * 0.8,
             uImpasto * impastoAmp * 0.65 * uStrokeAmount, hardness, 4.1);
 
   // Layer 4 — fill dabs (very dense, very small) — covers bald spots
@@ -207,7 +295,7 @@ vec3 mediumOil(vec3 col, vec2 p, float t) {
   StrokeHit hFill = bestOil(p + vec2(3.9, -6.2), sFill, lenMulFill, widMulFill,
                             jitterAmt * 1.5, 0.95, fillShape,
                             bristleAmp * 0.6, flow, t, 8.9);
-  paintOver(result, hFill, streakFreq * 1.8, streakAmp * 0.6,
+  paintOver(result, height, hFill, streakFreq * 1.8, streakAmp * 0.6,
             uImpasto * impastoAmp * 0.4 * uStrokeAmount, hardness * 0.9, 8.9);
 
   // Optional crosshatch layer
@@ -215,7 +303,7 @@ vec3 mediumOil(vec3 col, vec2 p, float t) {
     vec2 flow2 = vec2(-flow.y, flow.x);
     StrokeHit hX = bestOil(p + vec2(7.3, -2.1), sMed, lenMulMed * 0.9, widMulMed,
                            jitterAmt, densityMed * 0.7, shapeType, bristleAmp, flow2, t, 6.5);
-    paintOver(result, hX, streakFreq, streakAmp * 0.85,
+    paintOver(result, height, hX, streakFreq, streakAmp * 0.85,
               uImpasto * impastoAmp * 0.55 * uStrokeAmount, hardness, 6.5);
   }
 
@@ -225,8 +313,25 @@ vec3 mediumOil(vec3 col, vec2 p, float t) {
   float tooth  = (0.6 * tooth1 + 0.4 * tooth2) - 0.5;
   result *= 1.0 + tooth * toothAmp * uCanvasGrain;
 
+  // AW.W4.2 — relight the accumulated paint height with the movable uLightDir
+  // source (diffuse + Blinn specular, in LINEAR before aces()). The canvas tooth
+  // is the base relief term so the weave also catches the raking light.
+  float canvasBase = tooth * toothAmp * 0.5;
+  result = relightImpasto(result, height, canvasBase);
+
   // Pigment saturation boost
   result = saturate3(result, pigmentSat);
 
   return result;
+}
+
+// AW.W4.3 — the van-Gogh atomic-stroke medium. Composes the oil stroke engine
+// (mediumOil) with the W4.1 ETF orientation (forced tensor via the bridge), the
+// W4.3 energy grading (gated by uMedium==5 inside bestOil — long confident strokes
+// in the lights/coherent zones, short dabs in the darks/flat zones, the Starry-Night
+// Kolmogorov/Batchelor cascade), the W5 OKLCh per-stroke pigment jitter (already in
+// bestOil's brokenColorJitter), and the W4.2 real impasto relight. No subject matter
+// — the "source image" is the generated nuclei field, so strokes trace its iso-bands.
+vec3 mediumVangogh(vec3 col, vec2 p, float t) {
+  return mediumOil(col, p, t);
 }`;

@@ -261,6 +261,30 @@ export const GATES = [
         note: "AW.W5.2 — every stop of every (harmony × lightnessEasing × chromaEasing × temperature) over a neon-seed matrix is in sRGB after gamutMapStop (no over-1 escape reaches the bake); deriveScene returns an in-gamut palette + composed rule-of-thirds nuclei for every mood. Bite: remove gamutMapStop from a derive branch → an over-1 neon stop REDs",
     },
     {
+        id: "proof:aurora-tensor-field",
+        cmd: "proof:aurora-tensor-field",
+        tags: ["local", "ci"],
+        note: "AW.W4.1 — the structure-tensor / ETF orientation keystone: structureTensorField() carries the Sobel→2x2 tensor→closed-form eigen-decomposition (the principal-angle atan2 + coherence A), the MINOR eigenvector is the edge TANGENT (its perpendicular), the uFlowPattern==5 (tensor) flow branch + the bestOil uStrokeOrient==1 switch are present, and uStrokeOrient is threaded shader→glSetup→bridge→STROKE_ORIENT_ID. The painterly.test.ts arm asserts the eigen-math against a synthetic gradient field. Bite: swap the minor eigenvector for the MAJOR (the gradient/normal) → the orientation assertion REDs",
+    },
+    {
+        id: "proof:aurora-impasto-relight",
+        cmd: "proof:aurora-impasto-relight",
+        tags: ["local", "ci"],
+        note: "AW.W4.2 — the faked fixed-RGB rim (vec3(0.18,0.15,0.11)) is RETIRED from paintOver; paintOver accumulates an inout float height, relightImpasto derives a normal from dFdx/dFdy(height) + applies diffuse + Blinn specular from the movable uLightDir/uLightColor in LINEAR before aces(); the light uniforms are threaded shader→glSetup→bridge. Bite: restore the fixed rim → RED",
+    },
+    {
+        id: "proof:aurora-vangogh-preset",
+        cmd: "proof:aurora-vangogh-preset",
+        tags: ["local", "ci"],
+        note: "AW.W4.3 — the van-Gogh medium 5-step wiring ALL landed: (1) AuroraMedium union += vangogh, (2) MEDIUM_ID vangogh:5, (3) main() uMedium==5 → mediumVangogh dispatch + the medium fn, (4) resolveStrokeOrientId FORCES tensor for vangogh, (5) bestOil energy-grades length by luma(sampleBase)+coherence when uMedium==5 + the OKLCh per-stroke jitter. Bite: vangogh falls back to oil+swirl uniforms (no force-tensor / no energy grade) → RED",
+    },
+    {
+        id: "proof:aurora-oilpastel-medium",
+        cmd: "proof:aurora-oilpastel-medium",
+        tags: ["local", "ci"],
+        note: "AW.W4.4 — mediumCrayon is reworked into the oil-pastel deposition (tooth-occlusion deposit/toothFloor) + broken scumble upper layer (coverage<1) + waxy burnish film (a specular sheen growing with build-up); the old tooth-MULTIPLY (col*lay) is GONE; oil-pastel is in the union + MEDIUM_ID:6 + the uMedium==6 dispatch; the deposition orients along the ETF + applies OKLCh broken color; dist/aurora.js stays inside the AW.W4.0 governor ceiling. Bite: revert to the tooth-multiply → RED; OR grow the chunk past the aurora ceiling → the budget arm REDs",
+    },
+    {
         id: "proof:shader-shared-source",
         cmd: "proof:shader-shared-source",
         tags: ["local", "ci"],
