@@ -226,6 +226,10 @@
     /* Chassis dividers — twin-line hairline grooves ─────────────── */
 
     .chassis-divider {
+        /* twin-line-divider brings the dark-adaptive catch-light + under-shadow
+           color pair into scope (utilities.css, AW.W15). The .bezel-line
+           children read `--twin-line-catch` / `--twin-line-shadow` below. */
+        @apply twin-line-divider;
         flex-shrink: 0;
         position: relative;
         background: transparent;
@@ -264,19 +268,14 @@
         height: 100%;
     }
 
-    /* Q.W4.A — bezel-line α lift in light mode per audit-A4 §1 row 2-3 +
-       §11 #2-#3 + §12 Action 2. The 0.04 / 0.06 light-mode pair was
-       calibrated against a flat bg; under the saturated-aurora chassis
-       composition the catch-light + under-shadow read as one slightly
-       darker pixel, and the twin-line groove fails its job. Bumping to
-       0.10 / 0.12 holds the divider against the bleed without committing
-       to the dark-mode pair's contrast (the dark mode already runs at
-       0.06 / 0.18 against a low-light bg). */
-    .bezel-line.top    { background: rgb(255 255 255 / 0.10); }
-    .bezel-line.bottom { background: rgb(0 0 0 / 0.12); }
-
-    .dark .bezel-line.top    { background: rgb(255 255 255 / 0.06); }
-    .dark .bezel-line.bottom { background: rgb(0 0 0 / 0.18); }
+    /* The catch-light (top) + under-shadow (bottom) pair reads the
+       dark-adaptive `--twin-line-*` vars the `twin-line-divider` utility puts
+       in scope (utilities.css §AW.W15) — the single source for both the chassis
+       and the rail. Light: 0.10 / 0.12 (Q.W4.A — calibrated against the
+       saturated-aurora chassis bleed); dark: 0.06 / 0.18 (handled in the
+       utility). */
+    .bezel-line.top    { background: var(--twin-line-catch); }
+    .bezel-line.bottom { background: var(--twin-line-shadow); }
 
     /* Inner dial divider — same primitive, vertical on desktop. Speedtest
        slots its <ChassisDivider orientation="vertical" class="dial-divider" />

@@ -12,9 +12,20 @@ import type {
     TimingFunction,
     TimingFunctionNames,
 } from "@mkbabb/keyframes.js";
-import { onBeforeUnmount, ref, shallowRef } from "vue";
+import { onBeforeUnmount, ref, shallowRef, type Ref } from "vue";
 
 export type SpringSnapshot<K extends string> = Record<K, number>;
+
+export interface UseNumericTransitionReturn {
+    /** Play (or restart) the transition from `from` to `to`; resolves at completion. */
+    start: () => Promise<void>;
+    /** Stop the transition in place. */
+    stop: () => void;
+    /** Reactive 0..1 progress along the transition. */
+    progress: Ref<number>;
+    /** True while the transition is playing. */
+    playing: Ref<boolean>;
+}
 
 export interface UseNumericTransitionOptions<K extends string> {
     /** Named numeric endpoints to interpolate between. */
@@ -43,7 +54,7 @@ export interface UseNumericTransitionOptions<K extends string> {
  */
 export function useNumericTransition<K extends string>(
     options: UseNumericTransitionOptions<K>,
-) {
+): UseNumericTransitionReturn {
     const progress = ref(0);
     const playing = ref(false);
 

@@ -9,10 +9,21 @@
 // the sub-tree's `index.ts` re-exports it, and the flat `@mkbabb/glass-ui/dark`
 // subpath barrel (`src/dark.ts`) resolves through that sub-tree index.
 import { createGlobalState, useDark, useToggle } from "@vueuse/core";
-import { ref, watch } from "vue";
+import { ref, watch, type Ref, type WritableComputedRef } from "vue";
+
+export interface UseGlobalDarkReturn {
+    /** Reactive, writable dark-mode flag (vueuse `useDark`). */
+    isDark: WritableComputedRef<boolean>;
+    /** Toggle dark mode, optionally suppressing CSS transitions for the flip. */
+    toggleDark: () => void;
+    /** Whether transitions are suppressed during a toggle. */
+    disableTransitions: Ref<boolean>;
+    /** Configure transition suppression during a toggle. */
+    setDisableTransitions: (value: boolean) => void;
+}
 
 /** Single shared dark mode instance — avoids multiple useDark() watchers racing on classList. */
-export const useGlobalDark = createGlobalState(() => {
+export const useGlobalDark = createGlobalState((): UseGlobalDarkReturn => {
     const isDark = useDark({ disableTransition: false });
     const _toggle = useToggle(isDark);
     const disableTransitions = ref(false);

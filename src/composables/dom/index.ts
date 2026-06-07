@@ -1,5 +1,11 @@
 // Sub-tree barrel for DOM observers + cascade bridges.
 //
+// Naming convention: a `Use<Name>Controls` return type (e.g.
+// `UseTokenColorControls`, `UseResizeObserverControls`) names a bundle of
+// IMPERATIVE handles (refresh/observe/disconnect); a `Use<Name>Return` type
+// names a STATE object. The `*Controls` suffix is intentional and is NOT
+// renamed to `*Return` (the two convey different intents).
+//
 //   - useResizeObserver — RAF-coalesced ResizeObserver wrapper.
 //   - useTouchGate     — per-control tap-to-activate guard for touch devices.
 //   - useTokenColor    — reactive read of a CSS custom property's resolved value.

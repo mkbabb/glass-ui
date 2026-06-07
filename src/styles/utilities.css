@@ -1065,3 +1065,27 @@ html.no-transition *::after {
         min-inline-size: var(--touch-target, 2.75rem);
     }
 }
+
+/* ── Twin-line divider color pair (AW.W15) ──────────────────────────────────
+   The chassis-divider signature: a catch-light line stacked over an under-
+   shadow line reads as one engraved hairline groove. The color PAIR (not the
+   geometry) is the shared idiom — `instrument-chassis.css` paints it on
+   `.bezel-line.top/.bottom` child spans, `instrument-rail.css` on a sibling
+   `::before`/`::after` stack, each with its own orientation math. Both
+   previously hardcoded the same four `rgb()` literals; this `@utility` is the
+   single source.
+
+   Apply `twin-line-divider` to the divider CONTAINER; the geometry-specific
+   rules read `var(--twin-line-catch)` for the top line and
+   `var(--twin-line-shadow)` for the bottom. The pair is dark-adaptive via the
+   nested `.dark` re-resolution (a legitimate token re-resolution). A host can
+   retint a single divider by overriding the two vars on that container. */
+@utility twin-line-divider {
+    --twin-line-catch: rgb(255 255 255 / 0.1);
+    --twin-line-shadow: rgb(0 0 0 / 0.12);
+
+    :where(.dark) & {
+        --twin-line-catch: rgb(255 255 255 / 0.06);
+        --twin-line-shadow: rgb(0 0 0 / 0.18);
+    }
+}

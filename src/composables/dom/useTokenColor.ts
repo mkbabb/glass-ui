@@ -28,6 +28,20 @@ export interface UseTokenColorOptions {
     element?: MaybeRefOrGetter<HTMLElement | null | undefined>;
     /** Fallback when the property is unset or `document` is unavailable (SSR). */
     fallback?: string;
+    /**
+     * Resolver seam for the raw property read. Defaults to a
+     * `getComputedStyle(el).getPropertyValue(prop)` read off `<html>`. Inject
+     * to close DI for SSR/test (where `document.documentElement` is absent or
+     * unmeasured) — the resolver receives the property name and the resolved
+     * element, and returns the raw (untrimmed) value.
+     */
+    resolver?: (prop: string, el?: HTMLElement) => string;
+}
+
+/** Default property read — `getComputedStyle` off the given element. */
+function defaultResolver(prop: string, el?: HTMLElement): string {
+    if (!el) return "";
+    return getComputedStyle(el).getPropertyValue(prop);
 }
 
 export interface UseTokenColorControls {
@@ -55,15 +69,22 @@ export function useTokenColor(
     options: UseTokenColorOptions = {},
 ): UseTokenColorControls {
     const fallback = options.fallback ?? "";
+    const resolver = options.resolver ?? defaultResolver;
     const value = ref<string>(fallback);
 
     function read(): string {
-        if (typeof document === "undefined") return fallback;
         const name = toValue(token);
         if (!name) return fallback;
-        const el = (options.element ? toValue(options.element) : null) ?? document.documentElement;
-        if (!el) return fallback;
-        const resolved = getComputedStyle(el).getPropertyValue(name).trim();
+        // The default resolver needs `document`; an injected resolver owns its
+        // own source (SSR/test), so it bypasses the document guard.
+        const usingDefault = options.resolver === undefined;
+        if (usingDefault && typeof document === "undefined") return fallback;
+        const el =
+            (options.element ? toValue(options.element) : null) ??
+            (typeof document !== "undefined" ? document.documentElement : undefined) ??
+            undefined;
+        if (usingDefault && !el) return fallback;
+        const resolved = resolver(name, el ?? undefined).trim();
         return resolved || fallback;
     }
 

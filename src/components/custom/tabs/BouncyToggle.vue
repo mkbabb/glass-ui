@@ -1,4 +1,8 @@
 <script setup lang="ts">
+// DO-NOT-SPLIT (AW assay): cohesive-at-boundary. The thumb FLIP geometry,
+// pointer-drag state machine, and ARIA wiring share one tightly-coupled
+// reactive surface; a split would scatter that state across files for no
+// reuse. The AW code-quality assay cleared this module — do not re-litigate.
 import { ref, watch, computed, onMounted, onUnmounted, nextTick, type HTMLAttributes } from "vue";
 import { cn } from "../../../utils";
 import {

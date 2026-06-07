@@ -1,6 +1,5 @@
 <script setup lang="ts" generic="T extends Record<string, any>">
-import { computed, ref, useSlots } from "vue";
-import { useElementSize } from "@vueuse/core";
+import { computed, useSlots } from "vue";
 import {
     Table,
     TableBody,
@@ -14,6 +13,11 @@ import { Skeleton } from "../skeleton";
 import { ContextMenu, ContextMenuTrigger, ContextMenuContent } from "../context-menu";
 import DataTablePagination from "./DataTablePagination.vue";
 import type { DataTableColumn, DataTableSort } from "./types";
+import {
+    useDataTableRowIdentity,
+    getNestedValue,
+} from "./composables/useDataTableRowIdentity";
+import { useDataTableResponsive } from "./composables/useDataTableResponsive";
 import { cn } from '../../../utils';
 
 const props = withDefaults(
@@ -70,102 +74,25 @@ const slots = useSlots();
 const hasRowActions = computed(() => !!slots["row-actions"]);
 const hasRowContextMenu = computed(() => !!slots["row-context-menu"]);
 
-// Container-driven card mode — ResizeObserver-backed via `useElementSize`,
-// the same seam the chart components use to bridge a `@container`-style
-// intent into a JS boolean. `width > 0` guards the pre-measure frame so
-// the table never flashes the card layout before its width is known.
-const rootRef = ref<HTMLElement | null>(null);
-const { width: rootWidth } = useElementSize(rootRef);
-const isCard = computed(
-    () => props.responsive && rootWidth.value > 0 && rootWidth.value < props.cardBreakpoint,
-);
+// Row identity (keyed `rowEntries`) and the responsive card-vs-table
+// projection are two orthogonal concerns the SFC composes from colocated
+// internal composables — the orchestrator, template, and column helpers
+// stay here.
+const { rowEntries } = useDataTableRowIdentity<T>({
+    rows: () => props.rows,
+    rowKey: () => props.rowKey,
+    getRowId: () => props.getRowId,
+});
+
+const { rootRef, isCard, headerColumn, bodyColumns } = useDataTableResponsive<T>({
+    columns: () => props.columns,
+    responsive: () => props.responsive,
+    cardBreakpoint: () => props.cardBreakpoint,
+});
 
 const skeletonRows = computed(() =>
     Array.from({ length: Math.min(props.pageSize, 5) }, (_, i) => i),
 );
-
-type RowEntry<T> = {
-    row: T;
-    key: PropertyKey;
-};
-
-const generatedRowIds = new WeakMap<object, symbol>();
-const warnedRowIdentityIssues = new Set<string>();
-let nextGeneratedRowId = 0;
-
-function getNestedValue(obj: unknown, key: string): unknown {
-    return key.split(".").reduce<unknown>((o, k) => {
-        if (o == null || typeof o !== "object") return undefined;
-        return (o as Record<string, unknown>)[k];
-    }, obj);
-}
-
-function isPropertyKey(value: unknown): value is PropertyKey {
-    return typeof value === "string" || typeof value === "number" || typeof value === "symbol";
-}
-
-function describeRowId(id: PropertyKey): string {
-    return typeof id === "symbol" ? id.toString() : JSON.stringify(id);
-}
-
-function warnRowIdentityIssue(issue: string, message: string): void {
-    if (!import.meta.env.DEV || warnedRowIdentityIssues.has(issue)) return;
-    warnedRowIdentityIssues.add(issue);
-    console.warn(`[DataTable] ${message}`);
-}
-
-function getExplicitRowId(row: T): unknown {
-    if (props.getRowId) return props.getRowId(row);
-    return getNestedValue(row, props.rowKey);
-}
-
-function getGeneratedRowId(row: T): symbol {
-    const objectRow = row as object;
-    const existing = generatedRowIds.get(objectRow);
-    if (existing) return existing;
-
-    const generated = Symbol(`DataTable row ${nextGeneratedRowId++}`);
-    generatedRowIds.set(objectRow, generated);
-    return generated;
-}
-
-const rowEntries = computed<RowEntry<T>[]>(() => {
-    const explicitIds = props.rows.map((row) => getExplicitRowId(row));
-    const idCounts = new Map<PropertyKey, number>();
-
-    for (const id of explicitIds) {
-        if (!isPropertyKey(id)) continue;
-        idCounts.set(id, (idCounts.get(id) ?? 0) + 1);
-    }
-
-    const missingCount = explicitIds.filter((id) => !isPropertyKey(id)).length;
-    if (missingCount > 0) {
-        warnRowIdentityIssue(
-            "missing",
-            `Missing row identity for ${missingCount} row(s). Provide getRowId or a rowKey with stable unique values; falling back to object identity.`,
-        );
-    }
-
-    const duplicateIds = Array.from(idCounts)
-        .filter(([, count]) => count > 1)
-        .map(([id]) => describeRowId(id));
-    if (duplicateIds.length > 0) {
-        warnRowIdentityIssue(
-            `duplicate:${duplicateIds.join(",")}`,
-            `Duplicate row identity value(s) ${duplicateIds.join(", ")}. Provide getRowId or a rowKey with stable unique values; falling back to object identity for those rows.`,
-        );
-    }
-
-    return props.rows.map((row, index) => {
-        const explicitId = explicitIds[index];
-        const key =
-            isPropertyKey(explicitId) && idCounts.get(explicitId) === 1
-                ? explicitId
-                : getGeneratedRowId(row);
-
-        return { row, key };
-    });
-});
 
 function getCellValue(row: T, col: DataTableColumn<T>): string {
     const raw = getNestedValue(row, col.key);
@@ -197,15 +124,6 @@ function sortIndicator(col: DataTableColumn<T>): string {
     if (props.sort?.key !== col.key) return " ↕";
     return props.sort.direction === "asc" ? " ↑" : " ↓";
 }
-
-// ── Card-projection column split ──────────────────────────────────────
-//
-// The first column is the card's header line; the rest become the
-// label/value body. Splitting once (computed) keeps the template flat.
-const headerColumn = computed<DataTableColumn<T> | undefined>(
-    () => props.columns[0],
-);
-const bodyColumns = computed<DataTableColumn<T>[]>(() => props.columns.slice(1));
 </script>
 
 <template>

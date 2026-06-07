@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { ref } from "vue";
 import { useTokenColor } from "../dom/useTokenColor";
 import { mountComposable } from "../../../tests/utils/mountComposable";
@@ -68,6 +68,36 @@ describe("useTokenColor", () => {
         // Custom-property writes don't fire change events; consumers re-read via refresh().
         result.refresh();
         expect(result.value.value).toBe("#ccc");
+
+        unmount();
+    });
+
+    it("uses an injected resolver instead of the document read (DI seam for SSR/test)", () => {
+        // The document HAS a value for this token; the injected resolver must
+        // win, proving the seam bypasses the `document.documentElement` read.
+        document.documentElement.style.setProperty("--test-token-color-a", "#fromdoc");
+
+        const resolver = vi.fn(() => "#injected");
+        const { result, unmount } = mountComposable(() =>
+            useTokenColor("--test-token-color-a", { resolver }),
+        );
+
+        expect(result.value.value).toBe("#injected");
+        expect(resolver).toHaveBeenCalledWith(
+            "--test-token-color-a",
+            document.documentElement,
+        );
+
+        unmount();
+    });
+
+    it("falls back when an injected resolver returns empty", () => {
+        const resolver = vi.fn(() => "   ");
+        const { result, unmount } = mountComposable(() =>
+            useTokenColor("--test-token-color-a", { resolver, fallback: "#fb" }),
+        );
+
+        expect(result.value.value).toBe("#fb");
 
         unmount();
     });

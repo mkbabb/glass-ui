@@ -1,4 +1,7 @@
 <script setup lang="ts">
+// DO-NOT-SPLIT (AW assay): cohesive-at-boundary — the collapse/expand orchestration
+// already delegates state + transitions to dock/composables; the residual SFC is the
+// glue. The AW code-quality assay cleared this module; do not re-litigate the split.
 import { computed, onBeforeUnmount, onMounted, ref, useId, useTemplateRef, watch } from "vue";
 import { useTouchGate } from "../../../composables/dom/useTouchGate";
 import { provideDockContext } from "./composables/dockContext";

@@ -40,7 +40,7 @@ export interface UseAnimatedNumberOptions {
     onValue?: (value: number) => void;
 }
 
-export interface AnimatedNumber {
+export interface UseAnimatedNumberReturn {
     /** Reactive smoothed value. Bind in templates. */
     current: Readonly<Ref<number>>;
     /** True while the rAF loop is running and not settled. */
@@ -52,6 +52,9 @@ export interface AnimatedNumber {
     /** Stop the smoother and target watcher. */
     dispose: () => void;
 }
+
+/** @deprecated prefer the canonical `UseAnimatedNumberReturn`; retained so no import site breaks. */
+export type AnimatedNumber = UseAnimatedNumberReturn;
 
 function clampProgress(value: number): number {
     return Math.max(0, Math.min(100, value));
@@ -67,7 +70,7 @@ function clampProgress(value: number): number {
 export function useAnimatedNumber(
     target: MaybeRefOrGetter<number | null | undefined>,
     options: UseAnimatedNumberOptions = {},
-): AnimatedNumber {
+): UseAnimatedNumberReturn {
     const mode = options.mode ?? "absolute";
 
     // Progress mode: keep the underlying SmoothProgress in [0, 1] (the only
