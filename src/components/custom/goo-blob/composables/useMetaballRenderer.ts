@@ -8,7 +8,7 @@ import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import type { ColorResolver } from "../../../../composables/color";
 import { METABALL_VERTEX_SRC } from "../shaders/metaball.vert";
 import { METABALL_FRAGMENT_SRC } from "../shaders/metaball.frag";
-import type { BlobConfig } from "../types";
+import { BLOB_CONFIG_DEFAULTS, type BlobConfig } from "../types";
 import type { BlobMoodSystem } from "./useBlobMood";
 import type { BlobPointer } from "./useBlobPointer";
 import type { BlobSatelliteSystem } from "./useBlobSatellites";
@@ -41,7 +41,9 @@ const UNIFORM_NAMES = [
     "uNoiseAmp",
     "uNoiseFreq",
     "uNoiseSpeed",
+    "uWarpAmp",
     "uSmoothK",
+    "uMerge",
     "uHueRange",
     "uSatShift",
     "uBrightnessShift",
@@ -266,12 +268,21 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     );
                     gl.uniform1f(U.uNoiseFreq, config.noiseFreq);
                     gl.uniform1f(U.uNoiseSpeed, config.noiseSpeed);
+                    gl.uniform1f(U.uWarpAmp, config.warpAmp);
 
-                    // Gooey
+                    // Gooey — `uSmoothK` is a TRUE blend-band in the shader's UV
+                    // space now that the smin is normalized (`k *= 4.0` in
+                    // sdf-body.glsl.ts). The prior `/0.22` normalizer + the
+                    // `POS_SCALE` multiply are GONE (W9.a): the config value is the
+                    // neck-width the consumer reasons about directly. The mood
+                    // `smoothK` is a unitless multiplier (1.0 at idle) so a mood
+                    // shift widens/tightens the neck without re-introducing a
+                    // hidden length transform.
                     gl.uniform1f(
                         U.uSmoothK,
-                        ((config.smoothK * params.smoothK) / 0.22) * POS_SCALE,
+                        config.smoothK * (params.smoothK / BLOB_CONFIG_DEFAULTS.smoothK),
                     );
+                    gl.uniform1f(U.uMerge, config.merge === "circular" ? 1.0 : 0.0);
 
                     // Color perturbation
                     gl.uniform1f(U.uHueRange, config.hueRange + params.hueRange);

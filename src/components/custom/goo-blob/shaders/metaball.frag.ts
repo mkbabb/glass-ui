@@ -73,6 +73,10 @@ uniform float uNoiseSpeed;
 
 // Gooey
 uniform float uSmoothK;
+uniform float uMerge;   // 0 = quadratic smin, 1 = circular smin (rounder menisci)
+
+// Membrane — domain-warp strength on the FBM edge displacement (0 = plain fbm).
+uniform float uWarpAmp;
 
 // Color perturbation (perceptually uniform — OKLCh L/C/h)
 uniform float uHueRange;        // degrees of hue swing (converted to radians)
@@ -116,6 +120,30 @@ ${OKLCH_MATRICES_GLSL}
     METABALL_OKLCH_PERTURB_GLSL +
     NL +
     /* glsl */ `
+// The composite SDF field — the domain-warped body membrane smin-merged with the
+// satellites. Factored so the lit-surface block (W9.b) can sample the SAME field
+// at a screen-space epsilon to derive the IQ tetrahedron normal: the normal MUST
+// ride the composite distance the alpha is cut from, not a clean circle.
+float sceneDist(vec2 uv) {
+    // Pulsing body radius.
+    float bodyR = uBodyRadius + sin(uPulsePhase) * uPulseAmp;
+
+    // Domain-warped FBM displacement — the organic marbled watercolor membrane.
+    float noiseVal = fbmWarped(uv * uNoiseFreq + uTime * uNoiseSpeed, 3, uWarpAmp);
+    float bodyDisplacement = (noiseVal - 0.5) * uNoiseAmp;
+
+    float d = sdCircle(uv, vec2(0.0), bodyR + bodyDisplacement);
+
+    // Satellites — smin-merged into the body (uMerge selects quadratic/circular).
+    for (int i = 0; i < MAX_SATS; i++) {
+        if (i >= uSatCount) break;
+        float satD = sdCircle(uv, uSatPos[i], uSatRadius[i]);
+        satD += (1.0 - uSatOpacity[i]) * 0.3;
+        d = smin(d, satD, uSmoothK);
+    }
+    return d;
+}
+
 void main() {
     vec2 uv = vUv - 0.5;
 
@@ -127,22 +155,11 @@ void main() {
         uv -= normalize(pointerDir + 1e-6) * influence;
     }
 
-    // Main body with pulsation
+    // The pulsing body radius — also reused below for the inner-glow falloff scale.
     float bodyR = uBodyRadius + sin(uPulsePhase) * uPulseAmp;
 
-    // FBM displacement for organic watercolor edge
-    float noiseVal = fbm(uv * uNoiseFreq + uTime * uNoiseSpeed, 3);
-    float bodyDisplacement = (noiseVal - 0.5) * uNoiseAmp;
-
-    float d = sdCircle(uv, vec2(0.0), bodyR + bodyDisplacement);
-
-    // Satellites
-    for (int i = 0; i < MAX_SATS; i++) {
-        if (i >= uSatCount) break;
-        float satD = sdCircle(uv, uSatPos[i], uSatRadius[i]);
-        satD += (1.0 - uSatOpacity[i]) * 0.3;
-        d = smin(d, satD, uSmoothK);
-    }
+    // Composite domain-warped membrane field.
+    float d = sceneDist(uv);
 
     // Edit #1 — fwidth-based anti-aliased edge: derive the smoothstep half-width
     // from the SDF screen-space gradient so the edge stays ~1px regardless of zoom.

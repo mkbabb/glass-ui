@@ -2,6 +2,9 @@ import type { InjectionKey } from "vue";
 
 export type BlobMood = "idle" | "happy" | "curious" | "sleepy" | "excited";
 
+/** Smin merge variant — `quadratic` (cheap, creased) | `circular` (rounder menisci). */
+export type BlobMerge = "quadratic" | "circular";
+
 export interface MoodParams {
     orbitSpeedScale: number;
     wobbleScale: number;
@@ -65,11 +68,18 @@ export interface BlobConfig {
 
     // Gooey
     smoothK: number;
+    /** Smin merge variant — `quadratic` (default) | `circular` (rounder menisci). */
+    merge: BlobMerge;
 
     // Surface noise
     noiseAmp: number;
     noiseFreq: number;
     noiseSpeed: number;
+    /**
+     * Domain-warp strength on the FBM edge displacement (0 = plain fbm, the
+     * pre-warp look; ~0.6 = a marbled organic membrane). Taste-first low default.
+     */
+    warpAmp: number;
 
     // Pulsation
     pulseFreq: number;
@@ -104,11 +114,16 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
     satelliteRadius: 0.13,
     orbitRadius: 0.35,
 
-    smoothK: 0.22,
+    // `smoothK` is now a TRUE blend-band in the shader's UV space (the smin is
+    // IQ-normalized — `k *= 4.0` — so the band == k; the old `/0.22` normalizer is
+    // gone). ~0.12 reads as a wet, rounded meniscus at the body/satellite seam.
+    smoothK: 0.12,
+    merge: "quadratic",
 
     noiseAmp: 0.025,
     noiseFreq: 3.5,
     noiseSpeed: 0.08,
+    warpAmp: 0.0,
 
     pulseFreq: 0.3,
     pulseAmp: 0.008,
