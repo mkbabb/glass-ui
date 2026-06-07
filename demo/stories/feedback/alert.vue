@@ -37,11 +37,13 @@ import {
                 </Alert>
             </div>
 
+            <!-- AW.W25 — the semantic tones now ride the real CVA `variant`
+                 (success/warning/info), resolving the `--{success,warning,info}`
+                 tokens. The prior hardcoded `border-amber-500/text-sky-700/…`
+                 palette fakes are retired. -->
             <div class="grid gap-3">
                 <h2 class="font-display text-xl">Warning</h2>
-                <Alert
-                    class="border-amber-500/50 text-amber-700 dark:text-amber-300 [&>svg]:text-amber-600 dark:[&>svg]:text-amber-400"
-                >
+                <Alert variant="warning">
                     <TriangleAlert />
                     <AlertTitle>Approaching rate limit</AlertTitle>
                     <AlertDescription>
@@ -53,9 +55,7 @@ import {
 
             <div class="grid gap-3">
                 <h2 class="font-display text-xl">Info</h2>
-                <Alert
-                    class="border-sky-500/50 text-sky-700 dark:text-sky-300 [&>svg]:text-sky-600 dark:[&>svg]:text-sky-400"
-                >
+                <Alert variant="info">
                     <Info />
                     <AlertTitle>Live preview is read-only</AlertTitle>
                     <AlertDescription>
@@ -67,9 +67,7 @@ import {
 
             <div class="grid gap-3">
                 <h2 class="font-display text-xl">Success</h2>
-                <Alert
-                    class="border-emerald-500/50 text-emerald-700 dark:text-emerald-300 [&>svg]:text-emerald-600 dark:[&>svg]:text-emerald-400"
-                >
+                <Alert variant="success">
                     <CircleCheck />
                     <AlertTitle>Deployed to production</AlertTitle>
                     <AlertDescription>

@@ -52,7 +52,7 @@ const composedClass = computed(() => cn("metric-pill", props.class));
 </script>
 
 <template>
-    <MetricBadge
+    <MetricBadge data-slot="metric-pill"
         :amount="amount"
         :unit="unit"
         :label="label"

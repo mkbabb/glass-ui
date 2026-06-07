@@ -22,10 +22,11 @@ const forwardedProps = useForwardProps(delegatedProps)
 
 <template>
   <RadioGroupItem
+    data-slot="radio-group-item"
     v-bind="forwardedProps"
     :class="
       cn(
-        'focus-ring aspect-square h-4 w-4 rounded-pill border border-primary text-primary disabled:cursor-not-allowed disabled:opacity-disabled',
+        'tap-squish focus-ring aspect-square h-4 w-4 rounded-pill border border-primary text-primary transition-control disabled:cursor-not-allowed disabled:opacity-disabled',
         props.class,
       )
     "

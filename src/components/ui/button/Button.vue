@@ -30,6 +30,8 @@ const hostAttrs = computed(() => ({
   <Primitive
     :as="as"
     :as-child="asChild"
+    data-slot="button"
+    :data-variant="variant"
     :data-size="size"
     v-bind="hostAttrs"
     :class="cn(buttonVariants({ variant, size }), props.class)"

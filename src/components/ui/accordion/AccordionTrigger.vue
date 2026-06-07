@@ -20,10 +20,11 @@ const delegatedProps = computed(() => {
 <template>
   <AccordionHeader class="flex">
     <AccordionTrigger
+      data-slot="accordion-trigger"
       v-bind="delegatedProps"
       :class="
         cn(
-          'flex flex-1 items-center justify-between py-4 font-medium transition-colors hover:underline [&[data-state=open]>svg]:rotate-180',
+          'tap-squish focus-ring flex flex-1 items-center justify-between rounded-control px-1 py-4 font-medium transition-control hover:underline disabled:pointer-events-none disabled:opacity-disabled [&[data-state=open]>svg]:rotate-180',
           props.class,
         )
       "

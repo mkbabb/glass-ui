@@ -11,7 +11,12 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div :class="cn(badgeVariants({ variant, size }), props.class)">
+  <div
+    data-slot="badge"
+    :data-variant="variant"
+    :data-size="size"
+    :class="cn(badgeVariants({ variant, size }), props.class)"
+  >
     <slot />
   </div>
 </template>

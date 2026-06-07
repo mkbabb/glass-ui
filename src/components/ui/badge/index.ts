@@ -3,7 +3,10 @@ import { type VariantProps, cva } from 'class-variance-authority'
 export { default as Badge } from './Badge.vue'
 
 export const badgeVariants = cva(
-  'focus-ring inline-flex items-center rounded-badge border font-semibold transition-colors',
+  // AW.W25 — `transition-control` (border/shadow/transform/color uniformly).
+  // AW.W26 — the shadcn-2025 icon-sizing/gap idiom + `wrap-anywhere` value slot
+  // (a long value breaks within the badge rather than overflowing its clip).
+  'focus-ring inline-flex items-center gap-1.5 rounded-badge border font-semibold transition-control wrap-anywhere [&_svg:not([class*=size-])]:size-3.5 [&_svg]:shrink-0 [&_svg]:pointer-events-none',
   {
     variants: {
       variant: {

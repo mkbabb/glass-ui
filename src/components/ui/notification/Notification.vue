@@ -1,5 +1,5 @@
 <template>
-  <TransitionGroup
+  <TransitionGroup data-slot="notification"
     name="notification"
     tag="div"
     class="fixed bottom-4 right-4 z-toast flex flex-col gap-2"

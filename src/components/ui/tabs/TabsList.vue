@@ -2,11 +2,25 @@
 import { type HTMLAttributes, computed } from 'vue'
 import { TabsList, type TabsListProps } from 'reka-ui'
 import { cn } from '../../../utils'
+import TabsIndicator from './TabsIndicator.vue'
 
-const props = defineProps<TabsListProps & { class?: HTMLAttributes['class'] }>()
+const props = withDefaults(
+  defineProps<TabsListProps & {
+    class?: HTMLAttributes['class']
+    /**
+     * AW.W25 — render the spring `TabsIndicator` pill behind the triggers so
+     * the base default `<Tabs>` matches its own indicator primitive (the
+     * polished pill previously lived only in custom BouncyTabs; the base
+     * under-delivered vs its own `TabsIndicator.vue`). Default `true`. Set
+     * `:indicator="false"` for a list that drives its own active-state vocab.
+     */
+    indicator?: boolean
+  }>(),
+  { indicator: true },
+)
 
 const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
+  const { class: _, indicator: __, ...delegated } = props
 
   return delegated
 })
@@ -14,12 +28,14 @@ const delegatedProps = computed(() => {
 
 <template>
   <TabsList
+    data-slot="tabs-list"
     v-bind="delegatedProps"
     :class="cn(
-      'inline-flex h-10 items-center justify-center rounded-input p-1 text-muted-foreground',
+      'relative inline-flex h-10 items-center justify-center rounded-input p-1 text-muted-foreground',
       props.class,
     )"
   >
+    <TabsIndicator v-if="indicator" />
     <slot />
   </TabsList>
 </template>

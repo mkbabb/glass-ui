@@ -34,11 +34,12 @@ const sizeClass = computed(() => (props.size === 'sm' ? 'h-9' : 'h-10'))
 
 <template>
   <SelectTrigger
+    data-slot="select-trigger"
     v-bind="forwardedProps"
     :class="cn(
       variantClass,
       sizeClass,
-      'focus-ring flex w-full items-center justify-between rounded-pill px-3 py-2 text-sm placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-disabled [&>span]:line-clamp-1 transition-control',
+      'tap-squish focus-ring flex w-full items-center justify-between rounded-pill px-3 py-2 text-sm placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-disabled [&>span]:line-clamp-1 transition-control aria-invalid:border-[var(--destructive)] aria-invalid:shadow-[0_0_0_var(--focus-ring-width)_color-mix(in_srgb,var(--destructive)_35%,transparent)]',
       props.class,
     )"
   >

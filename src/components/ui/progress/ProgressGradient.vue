@@ -61,6 +61,7 @@ const crescendoStyle = computed(() => {
 
 <template>
     <ProgressRoot
+        data-slot="progress"
         v-bind="delegatedProps"
         :class="
             cn(
