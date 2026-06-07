@@ -13,6 +13,10 @@ import {
 import { Button } from "../../../src/components/ui/button";
 import { Switch } from "../../../src/components/ui/switch";
 import { Label } from "../../../src/components/ui/label";
+// W12 — stage the tier matrix + shadow/grain toggles over a shipped
+// high-frequency backdrop (Aurora) so the tier-alpha steps (0.30→0.95) and the
+// shadow-on/off differential become perceptible against busy color.
+import { Aurora, DEFAULT_AURORA_CONFIG } from "../../../src/subpaths/aurora";
 
 interface TierExample {
     tier: CardTier;
@@ -108,28 +112,35 @@ const cartoonAccents = [
                 </Label>
             </div>
 
-            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                <Card
-                    v-for="t in tiers"
-                    :key="t.tier"
-                    :tier="t.tier"
-                    :shadow="showShadow"
-                    :grain="showGrain"
-                >
-                    <CardHeader>
-                        <CardTitle class="text-lg">{{ t.title }}</CardTitle>
-                        <CardDescription>{{ t.blurb }}</CardDescription>
-                    </CardHeader>
-                    <CardContent class="text-sm text-muted-foreground">
-                        Surface alpha {{ t.alpha }}. The tier prop is the only
-                        knob the consumer touches; the class merge happens at
-                        the single
-                        <code class="font-mono text-xs"
-                            >cn(`glass-{{ "${tier}" }}`, props.class)</code
-                        >
-                        seam in Card.vue.
-                    </CardContent>
-                </Card>
+            <!-- W12 — the tier matrix stages over a shipped Aurora backdrop so
+                 the 0.30→0.95 tier-alpha steps + the shadow on/off differential
+                 read against busy color (the toggles already function; this
+                 closes the perception gap). -->
+            <div class="relative overflow-hidden rounded-card">
+                <Aurora :config="DEFAULT_AURORA_CONFIG" class="absolute inset-0" />
+                <div class="relative z-10 grid gap-6 p-6 sm:grid-cols-2 lg:grid-cols-3">
+                    <Card
+                        v-for="t in tiers"
+                        :key="t.tier"
+                        :tier="t.tier"
+                        :shadow="showShadow"
+                        :grain="showGrain"
+                    >
+                        <CardHeader>
+                            <CardTitle class="text-lg">{{ t.title }}</CardTitle>
+                            <CardDescription>{{ t.blurb }}</CardDescription>
+                        </CardHeader>
+                        <CardContent class="text-sm text-muted-foreground">
+                            Surface alpha {{ t.alpha }}. The tier prop is the only
+                            knob the consumer touches; the class merge happens at
+                            the single
+                            <code class="font-mono text-xs"
+                                >cn(`glass-{{ "${tier}" }}`, props.class)</code
+                            >
+                            seam in Card.vue.
+                        </CardContent>
+                    </Card>
+                </div>
             </div>
         </section>
 

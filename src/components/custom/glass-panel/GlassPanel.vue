@@ -58,11 +58,16 @@ const renderer = useGlassRenderer({ preferredTier: props.tier });
 const activeTier = computed(() => props.tier ?? renderer.tier.value);
 
 const cssClass = computed(() => {
-    // SVG-filter tier: no glass CSS class (filter applied directly via JS)
+    // SVG-filter tier: the JS displacement filter overlays whichever rung the
+    // variant selects — the `data-variant` attr (below) drives the per-rung
+    // `--glass-bg-{variant}` background in the scoped CSS, so the filter no
+    // longer forces the lightest `wash` rung onto every panel.
     if (activeTier.value === "svg-filter") {
         return cn("glass-panel glass-panel--svg", props.class);
     }
 
+    // No-backdrop-filter fallback: same per-rung resolution, keyed off
+    // `data-variant` so a 5-rung ladder reads even without the blur.
     if (activeTier.value === "fallback") {
         return cn("glass-panel glass-panel--fallback", props.class);
     }
@@ -91,7 +96,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div ref="panelRef" :class="cssClass">
+    <div ref="panelRef" :class="cssClass" :data-variant="props.variant">
         <slot />
     </div>
 </template>
@@ -101,16 +106,47 @@ onBeforeUnmount(() => {
     position: relative;
 }
 
-.glass-panel--svg {
-    /* SVG-filter substrate: lightest canonical glass tint so the
-       displacement map dominates the surface read. */
+/* SVG-filter substrate — the displacement map overlays whichever rung the
+   `variant` selects. Each `data-variant` reads its own `--glass-bg-{variant}`
+   so the five-rung ladder reads under the Chromium-default svg-filter tier
+   (pre-fix every variant collapsed onto the single lightest `wash` rung). */
+.glass-panel--svg[data-variant="wash"] {
     background: var(--glass-bg-wash);
 }
+.glass-panel--svg[data-variant="quiet"] {
+    background: var(--glass-bg-quiet);
+}
+.glass-panel--svg[data-variant="resting"] {
+    background: var(--glass-bg-resting);
+}
+.glass-panel--svg[data-variant="floating"] {
+    background: var(--glass-bg-floating);
+}
+.glass-panel--svg[data-variant="overlay"] {
+    background: var(--glass-bg-overlay);
+}
 
-.glass-panel--fallback {
-    /* No-backdrop-filter fallback: the floating tier reads as the
-       opaque substrate consumers expect when blur is unavailable. */
+/* No-backdrop-filter fallback — the opaque substrate consumers see when blur
+   is unavailable, still resolved per-rung (pre-fix every variant collapsed
+   onto the single `floating` rung). The border tracks the rung too. */
+.glass-panel--fallback[data-variant="wash"] {
+    background: var(--glass-bg-wash);
+    border: 1px solid var(--glass-border-wash);
+}
+.glass-panel--fallback[data-variant="quiet"] {
+    background: var(--glass-bg-quiet);
+    border: 1px solid var(--glass-border-quiet);
+}
+.glass-panel--fallback[data-variant="resting"] {
+    background: var(--glass-bg-resting);
+    border: 1px solid var(--glass-border-resting);
+}
+.glass-panel--fallback[data-variant="floating"] {
     background: var(--glass-bg-floating);
     border: 1px solid var(--glass-border-floating);
+}
+.glass-panel--fallback[data-variant="overlay"] {
+    background: var(--glass-bg-overlay);
+    border: 1px solid var(--glass-border-overlay);
 }
 </style>
