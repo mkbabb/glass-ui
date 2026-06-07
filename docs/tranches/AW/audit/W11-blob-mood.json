@@ -1,0 +1,68 @@
+{
+  "wave": "AW.W11 - Blob Mood, Iridescence And Palette",
+  "status": "closed",
+  "units": ["W11.a Iridescence And Fake-SSS", "W11.b Palette And Shared Harmony", "W11.c Mood Resolution + The Master Tempo Scalar"],
+  "harmonyHoistPath": "FALLBACK (b) — W5 already committed without hoisting ColorHarmony into /color, so W11 performed the hoist (sequenced after W5); aurora.AuroraHarmony is now a public alias of the shared ColorHarmony, no concurrent color.ts write.",
+  "moodResolution": "WIRE (preferred) — useBlobMood KEPT (exported + consumed); the UNREAD sub-orphans wired (setMood via update, orbitSpeedScale/wobbleScale consumed). No MIGRATION collapse.",
+  "commits": [
+    "feat(goo-blob): warm-biased iridescence + thickness-driven fake-SSS, OKLCh-correct (W11.a)",
+    "feat(color): hoist ColorHarmony + deriveBlobPalette; blob multi-stop palette (W11.b)",
+    "refactor(goo-blob): resolve mood model — state-driven moods + master tempo scalar (W11.c)",
+    "feat(demo): blob mood + palette story exercising every shipped mood (W11)",
+    "test(goo-blob): blob-mood-resolved + blob-tempo-suppression gates (W11.c)"
+  ],
+  "gates": [
+    {
+      "name": "proof:blob-color-equivalence",
+      "exit": 0,
+      "note": "11/11 — extended with the iridescence (gamut + warm-pearl chroma-cap), fake-SSS (L-lift-only + gamut), and multi-stop midpoint-chroma assertions; the port carries applyIridescence/applyFakeSss/oklabLerpStop"
+    },
+    {
+      "name": "proof:single-color-core",
+      "exit": 0,
+      "note": "the blob derives through the shared ColorHarmony (no forked deriveHue); the hoist removed aurora's forked deriveHue/gamutMapStop"
+    },
+    { "name": "proof:color-acyclic", "exit": 0, "note": "the /color leaf stays a DAG after the harmony hoist" },
+    {
+      "name": "proof:blob-mood-resolved",
+      "exit": 0,
+      "measurements": {
+        "setMoodInternalCaller": true,
+        "orbitSpeedScaleRead": true,
+        "wobbleScaleRead": true,
+        "demoMissingMoods": [],
+        "note": "setMood has the update() caller (curious/excited/sleepy arc); orbitSpeedScale + wobbleScale read by useBlobSatellites.orbitPos; demo binds all 5 moods"
+      }
+    },
+    {
+      "name": "proof:blob-tempo-suppression",
+      "exit": 0,
+      "measurements": {
+        "tempoScalesStep": true,
+        "simAccumulates": true,
+        "uTimeFromSim": true,
+        "clockScaled": false,
+        "tempoZeroOnFreeze": true,
+        "readsSubstratePrm": true,
+        "parallelMatchMedia": false,
+        "firstDtClamp": true,
+        "continuityIntegratedJump": 0.00833,
+        "continuityClockScalingJump": 0.49167,
+        "note": "tempo×dt not ×clock (uTime from simTimeMs); tempo=0 under PRM/pause via the substrate freeze; no parallel matchMedia; first-dt clamp; the integrated clock is continuous (0.008) across a tempo change vs the clock-scaling jump (0.49)"
+      }
+    },
+    { "name": "proof:blob-space-gamma", "exit": 0, "note": "the OETF seam unbroken by the new color terms" },
+    { "name": "proof:offscreen-pause", "exit": 0 },
+    { "name": "typecheck", "exit": 0 },
+    { "name": "build", "exit": 0, "note": "the blob chunk + demo + /color subpath emit clean" }
+  ],
+  "scope": {
+    "iridescence": "warm-biased IQ cosine-palette OKLCh-hue sheen (fres + FBM + animated thickness), warm-pearl chroma-capped, mixed before gamutClampOklch",
+    "sss": "thickness inner-glow (-d ramp) + fast-SSS back-light pow(dot(V,-(L+N*thickness)),power)*scale*(1-thickness), L-lift + hue-warm, before the clamp",
+    "palette": "deriveBlobPalette(seed) → 2-4 gamut-mapped OKLCh stops over the shared ColorHarmony; shader uPalette[MAX_BLOB_STOPS] + uStopCount, OKLab interp + midpoint chroma-bump; uStopCount<=1 falls back to uBaseColor",
+    "harmonyHoist": "ColorHarmony + deriveHue + gamutMapStop hoisted to /color; aurora re-exports AuroraHarmony as the alias (surface preserved)",
+    "mood": "{valence, arousal} affect model (paramsFor); setMood wired from interaction via update; orbitSpeedScale/wobbleScale consumed; iridScale routed through MoodParams",
+    "tempo": "ONE master scalar × every integrated dt; simTimeMs tempo-integrated clock; uTime from simTimeMs; tempo=0 under PRM/pause via the substrate; first-dt clamp on every axis"
+  },
+  "browserVerify": "PENDING — the orchestrator's live Playwright audit: open the GooBlob Mood + Palette story; cycle the five mood buttons and confirm the motion energy + sheen change (excited = fast/strong shimmer, sleepy = slow/flat); the auto-mood arc (hover→curious, click→excited, idle→sleepy); a seed/harmony change re-derives a coherent in-family multi-stop palette across body + satellites; the warm-biased iridescent rim reads cream/gold (NOT cold-blue) and the thickness fake-SSS glows from within; toggling the dock pause / emulated prefers-reduced-motion freezes EVERY axis to a deterministic seeded rest pose (tempo=0) with no FBM jump."
+}
