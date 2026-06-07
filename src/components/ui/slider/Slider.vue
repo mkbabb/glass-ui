@@ -183,7 +183,14 @@ const isTouchActive = computed(() => touchGate.isActive.value)
 .slider-range {
     position: absolute;
     height: 100%;
-    background: var(--slider-range-bg, var(--surface-tint-25));
+    /* AW.W13 — the standard range fills to the thumb as state feedback. Was
+       `--surface-tint-25` (a 25% tint over the muted track — sub-visible on
+       cream, the audit's "no fill" finding); the lift to `--primary` makes the
+       filled portion left of the thumb read as progress against the muted
+       track. This extends the proven fill mechanic (the spectrum variant's
+       gradient IS its fill); it forks no new track/range element. Consumers
+       retint via `--slider-range-bg`. */
+    background: var(--slider-range-bg, var(--primary));
     transition: background var(--duration-fast) var(--ease-standard);
 }
 
