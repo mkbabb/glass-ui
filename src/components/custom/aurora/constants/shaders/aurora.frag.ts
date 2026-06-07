@@ -29,6 +29,7 @@
 import {
     FBM_ROT_GLSL,
     OETF_GLSL,
+    OKLCH_MATRICES_GLSL,
 } from "../../../../../composables/glass/webgl/shaders/procedural-color.glsl";
 import { AURORA_COMPOSITION_GLSL } from "./composition.glsl";
 import { AURORA_FLOW_GLSL } from "./flow.glsl";
@@ -87,6 +88,11 @@ uniform int   uNoiseOctaves;
 // 0 smooth, 1 pastel, 2 watercolor, 3 oil, 4 crayon (peer medium — wax pigment
 // on paper tooth; NOT an oil-stroke sub-mode, so it dispatches at main() level).
 uniform int   uMedium;
+// Hue-arc method for the OKLCh palette interpolation (W5). Mirrors value.js's
+// HueInterpolationMethod: 0 shorter, 1 longer, 2 increasing, 3 decreasing. Only
+// consulted when the hue-arc path is requested; OKLab-rectangular ramps (the
+// default for adjacent-hue stops) ignore it.
+uniform int   uHuePath;
 uniform int   uFlowPattern;   // 0 none, 1 radial, 2 swirl, 3 diagonal, 4 multi
 uniform vec2  uFlowFocal;
 uniform float uFlowAngle;
@@ -179,6 +185,64 @@ float fbm(vec2 p) {
 // proof:aurora-space-gamma seam).
 ${OETF_GLSL}
 
+// W5 — the four Ottosson OKLab/OKLCh matrices + their space fns, spliced from the
+// SAME shared chunk the goo-blob uses (zero new payload, 1e-6-verified). PI is
+// defined first because the chunk's oklabToOklch folds the hue into [0, 2pi).
+const float PI = 3.141592653589793;
+${OKLCH_MATRICES_GLSL}
+
+// ── OKLCh palette interpolation (W5) ─────────────────────────────────────────
+// The muddy-midtone kill: distant-hue stops interpolated by a plain linear mix()
+// desaturate toward grey at the midpoint. The OKLab-rectangular lerp (L,a,b) holds
+// chroma across the ramp; the OKLCh hue-arc form (used only for deliberate rainbow
+// travel via uHuePath increasing/decreasing) sweeps the hue wheel without flipping.
+
+// value.js's interpolateHue, transcribed in the NORMALIZED-TURNS domain (h_rad/TAU
+// → turns, the exact .5/+1.0 branch per method, fract() wrap, *TAU back). A
+// radians-native port (PI thresholds / +TAU wrap) diverges 180° at the antipode.
+// methods: 0 shorter, 1 longer, 2 increasing, 3 decreasing.
+float interpolateHueTurns(float h0, float h1, float t, int method) {
+  // h0/h1 are radians in [0, 2pi); convert to turns [0,1).
+  float TAU = 2.0 * PI;
+  float a = h0 / TAU;
+  float b = h1 / TAU;
+  float i = b - a;
+  if (method == 0) {              // shorter
+    if (i > 0.5) a += 1.0; else if (i < -0.5) b += 1.0;
+  } else if (method == 1) {       // longer
+    if (i > 0.0 && i < 0.5) a += 1.0; else if (i > -0.5 && i <= 0.0) b += 1.0;
+  } else if (method == 2) {       // increasing
+    if (i < 0.0) b += 1.0;
+  } else {                        // decreasing
+    if (i > 0.0) a += 1.0;
+  }
+  float r = a + t * (b - a);
+  r = fract(r);                   // (r % 1 + 1) % 1 — fract is non-negative in GLSL
+  return r * TAU;                 // back to radians
+}
+
+// Linear-sRGB endpoint pair → OKLab-rectangular interpolation → linear sRGB. Holds
+// chroma across the ramp (no grey midpoint). Used for the default/shorter ramp path.
+vec3 mixPaletteOklab(vec3 linA, vec3 linB, float t) {
+  vec3 labA = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * linA) * pow(abs(LINEAR_SRGB_TO_LMS * linA), vec3(1.0 / 3.0)));
+  vec3 labB = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * linB) * pow(abs(LINEAR_SRGB_TO_LMS * linB), vec3(1.0 / 3.0)));
+  vec3 lab = mix(labA, labB, t);
+  return oklabToLinearSrgb(lab);
+}
+
+// Linear-sRGB endpoint pair → OKLCh interpolation along the uHuePath arc → linear
+// sRGB. L and C lerp; H walks the chosen arc. The deliberate-rainbow path.
+vec3 mixPaletteOklchArc(vec3 linA, vec3 linB, float t, int method) {
+  vec3 labA = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * linA) * pow(abs(LINEAR_SRGB_TO_LMS * linA), vec3(1.0 / 3.0)));
+  vec3 labB = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * linB) * pow(abs(LINEAR_SRGB_TO_LMS * linB), vec3(1.0 / 3.0)));
+  vec3 lchA = oklabToOklch(labA);
+  vec3 lchB = oklabToOklch(labB);
+  float L = mix(lchA.x, lchB.x, t);
+  float C = mix(lchA.y, lchB.y, t);
+  float H = interpolateHueTurns(lchA.z, lchB.z, t, method);
+  return oklabToLinearSrgb(oklchToOklab(vec3(L, C, H)));
+}
+
 // Interleaved Gradient Noise (Jimenez) — a 1-LSB triangular dither applied in
 // DISPLAY space AFTER the OETF, so 8-bit mid-tone banding on the soft gradient is
 // quantization-dithered at the value being quantized (post-transfer, not linear).
@@ -251,39 +315,37 @@ vec2 domainWarp(vec2 p, float t) {
     NL +
     AURORA_FLOW_GLSL +
     NL +
-    /* glsl */ `// ── Color utils ───────────────────────────────────────────────────────────
+    /* glsl */ `// ── Color utils (OKLCh — W5; the sRGB YIQ hueShift matrix is DELETED) ──────────
 const vec3 W_LUMA = vec3(0.2126, 0.7152, 0.0722);
 
-vec3 hueShift(vec3 c, float degrees) {
-  float a = radians(degrees);
-  float co = cos(a), si = sin(a);
-  mat3 m = mat3(
-    0.299 + 0.701 * co + 0.168 * si,
-    0.587 - 0.587 * co + 0.330 * si,
-    0.114 - 0.114 * co - 0.497 * si,
-
-    0.299 - 0.299 * co - 0.328 * si,
-    0.587 + 0.413 * co + 0.035 * si,
-    0.114 - 0.114 * co + 0.292 * si,
-
-    0.299 - 0.300 * co + 1.250 * si,
-    0.587 - 0.588 * co - 1.050 * si,
-    0.114 + 0.886 * co - 0.203 * si
-  );
-  return m * c;
+// Linear sRGB → OKLab (the cbrt-LMS path; the goo-blob's srgbToOklab takes gamma,
+// here the color field is already linear so we skip the OETF inverse).
+vec3 linOklab(vec3 lin) {
+  vec3 lms = LINEAR_SRGB_TO_LMS * lin;
+  return LMS_TO_OKLAB * (sign(lms) * pow(abs(lms), vec3(1.0 / 3.0)));
 }
 
+// Broken color (W5) — hue + chroma jitter at fixed PERCEPTUAL lightness, in OKLCh.
+// Broken color is hue variation at constant VALUE, which only OKLCh makes true (the
+// prior YIQ-style sRGB rotation muddied value). This is the seam AW.W4's van-Gogh /
+// oil-pastel per-stroke pigment jitter consumes (the pigment-variation read).
 vec3 brokenColorJitter(vec3 c, float hueSeed, float valueSeed, float strength) {
   float amt = clamp(uBrokenColor * strength, 0.0, 1.0);
   if (amt <= 0.001) return c;
-  float hueDeg = (hueSeed - 0.5) * 32.0 * amt;
-  float valueMul = 1.0 + (valueSeed - 0.5) * 0.28 * amt;
-  return max(hueShift(c, hueDeg) * valueMul, vec3(0.0));
+  vec3 lch = oklabToOklch(linOklab(c));
+  // ±~16° hue swing + ±~12% chroma swing; L held so value reads constant.
+  lch.z += (hueSeed - 0.5) * (32.0 * PI / 180.0) * amt;
+  lch.y = max(lch.y * (1.0 + (valueSeed - 0.5) * 0.28 * amt), 0.0);
+  return max(oklabToLinearSrgb(oklchToOklab(lch)), vec3(0.0));
 }
 
+// Saturation (W5) — chroma scale at fixed L/H in OKLCh (the perceptual saturation,
+// replacing the luma-mix sRGB form). amt=1 is identity; amt<1 desaturates toward
+// the achromatic axis with NO lightness shift (the muddy-luma-mix grey is gone).
 vec3 saturate3(vec3 c, float amt) {
-  float l = dot(c, W_LUMA);
-  return mix(vec3(l), c, amt);
+  vec3 lch = oklabToOklch(linOklab(c));
+  lch.y = max(lch.y * amt, 0.0);
+  return max(oklabToLinearSrgb(oklchToOklab(lch)), vec3(0.0));
 }
 ` +
     NL +

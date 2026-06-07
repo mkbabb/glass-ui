@@ -5,7 +5,12 @@
 // palette drift. IN: warped UV + time. OUT (nucleiField): (paletteId, valueMod).
 // Spliced verbatim into FRAGMENT_SRC by the aurora.frag.ts assembler — the emitted
 // shader string is character-equivalent to the prior hand-inlined source.
-export const AURORA_COMPOSITION_GLSL = /* glsl */ `// ── Palette LUT ───────────────────────────────────────────────────────────
+export const AURORA_COMPOSITION_GLSL = /* glsl */ `// ── Palette LUT (W5 — OKLCh/OKLab interpolation) ──────────────────────────────
+// The endpoints stay CPU-baked to LINEAR sRGB (the Aras precompute pattern); only
+// the BETWEEN-endpoint interpolation moves to perceptual space. OKLab-rectangular
+// for the default ramp (holds chroma, no grey midpoint); the OKLCh hue-arc only on
+// uHuePath increasing/decreasing (deliberate rainbow travel). The prior linear
+// mix() (the muddy-midtone source) is GONE.
 vec3 samplePalette(float id) {
   id = clamp(id, 0.0, 1.0);
   float scaled = id * float(uStopCount - 1);
@@ -13,7 +18,14 @@ vec3 samplePalette(float id) {
   int i1 = min(i0 + 1, uStopCount - 1);
   float t = fract(scaled);
   t = smoothstep(0.0, 1.0, t);
-  return mix(uPalette[i0], uPalette[i1], t);
+  vec3 a = uPalette[i0];
+  vec3 b = uPalette[i1];
+  // increasing(2)/decreasing(3) request the OKLCh hue-arc (rainbow sweep); every
+  // other method takes the OKLab-rectangular straight line (no hue detour).
+  if (uHuePath == 2 || uHuePath == 3) {
+    return mixPaletteOklchArc(a, b, t, uHuePath);
+  }
+  return mixPaletteOklab(a, b, t);
 }
 
 // ── Nuclei field ──────────────────────────────────────────────────────────

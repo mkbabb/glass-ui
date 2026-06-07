@@ -23,6 +23,7 @@ import {
     MAX_NUCLEI,
     MAX_STOPS,
     type AuroraConfig,
+    type AuroraHuePath,
     type AuroraMedium,
     type FlowPattern,
     type StrokeMode,
@@ -36,6 +37,15 @@ export const MEDIUM_ID = {
     oil: 3,
     crayon: 4,
 } as const satisfies Record<AuroraMedium | "crayon", number>;
+
+// W5 — the value.js HueInterpolationMethod → GLSL int map. The `satisfies` forces
+// a slot for every method, so a value.js enum change is a COMPILE error here.
+export const HUE_PATH_ID = {
+    shorter: 0,
+    longer: 1,
+    increasing: 2,
+    decreasing: 3,
+} as const satisfies Record<AuroraHuePath, number>;
 
 export const FLOW_ID = {
     none: 0,
@@ -174,6 +184,9 @@ export function createUniformBridge(
         // Medium — `resolveMediumId` routes the oil+crayon config to the crayon
         // PEER (uMedium==4); every other case is the identity map.
         gl.uniform1i(U.uMedium, resolveMediumId(cfg));
+        // W5 — the OKLCh hue-arc method (default `shorter` = the OKLab-rectangular
+        // ramp, so an unset config keeps the muddy-midtone-free default).
+        gl.uniform1i(U.uHuePath, HUE_PATH_ID[cfg.huePath ?? "shorter"]);
         gl.uniform1i(U.uFlowPattern, FLOW_ID[cfg.flow.pattern]);
         gl.uniform2f(U.uFlowFocal, cfg.flow.focalX, flipY(cfg.flow.focalY));
         gl.uniform1f(U.uFlowAngle, cfg.flow.angle);
