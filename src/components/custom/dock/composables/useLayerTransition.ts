@@ -213,6 +213,36 @@ export function useLayerTransition(
         morphRoot(el)?.removeAttribute("data-morphing");
     }
 
+    // AW.W3 — the spring-keyed child stagger. The SINGLE size spring's normalized
+    // progress (0 at the start size → 1 at the target size) is written to the
+    // container as `--dock-morph-progress` every frame. dock.css keys each child's
+    // opacity onset off a per-child threshold against this scalar, so the cascade
+    // rides the PHYSICAL morph — a fast flick and a slow hover-open both
+    // choreograph correctly and an interrupted morph carries the cascade with it
+    // (no orphaned `setTimeout`s). This is a per-CHILD opacity onset INSIDE the
+    // active pane (the pane itself stays statically opacity:1, revealed by the
+    // aperture — the W2 clip-reveal contract is NOT regressed). `data-revealing`
+    // arms the staggered children; cleared on settle so they paint at full opacity
+    // at rest. Suppressed under PRM (the FLIP fast-path / the spring's
+    // `respectReducedMotion` never run the cascade; the CSS arms the children only
+    // while `data-revealing` is set, and the synchronous swap never sets it).
+    function setStaggerProgress(el: HTMLElement, progress: number) {
+        // Clamp to [0,1]; an overshooting spring would push past 1 (the children
+        // are already fully revealed by then — clamping keeps the onset monotone).
+        const p = progress < 0 ? 0 : progress > 1 ? 1 : progress;
+        el.style.setProperty("--dock-morph-progress", `${p}`);
+    }
+
+    function armStagger(el: HTMLElement) {
+        el.setAttribute("data-revealing", "");
+        el.style.setProperty("--dock-morph-progress", "0");
+    }
+
+    function clearStagger(el: HTMLElement) {
+        el.removeAttribute("data-revealing");
+        el.style.removeProperty("--dock-morph-progress");
+    }
+
     watch(activeLayer, (newLayer, oldLayer) => {
         if (newLayer === oldLayer) return;
 
@@ -235,10 +265,20 @@ export function useLayerTransition(
             // AW.W2 — set the clip aperture synchronously inside the VT callback
             // (the browser owns the morph; the clip holds for its duration).
             setMorphing(el);
-            const { finished } = startViewTransition(() => {
-                leavingLayer.value = oldLayer;
-                currentLayer.value = newLayer;
-            });
+            // AW.W3 — typed directional intent. The driver maps the swap
+            // `(from, to)` to the `types` array so `:active-view-transition-type`
+            // CSS authors a snappier exit / softer entry-overshoot. Empty/absent
+            // → the symmetric `.gl-dock-layer` curve (the kept default). The
+            // helper feature-detects the object-with-`types` overload, so on an
+            // engine without it the call degrades to the plain symmetric form.
+            const vtTypes = directionTypes?.(oldLayer, newLayer);
+            const { finished } = startViewTransition(
+                () => {
+                    leavingLayer.value = oldLayer;
+                    currentLayer.value = newLayer;
+                },
+                vtTypes && vtTypes.length > 0 ? { types: vtTypes } : undefined,
+            );
             finished.finally(() => {
                 if (id !== transitionId) return;
                 leavingLayer.value = null;
@@ -324,15 +364,24 @@ export function useLayerTransition(
                     clearDim(el);
                     clearWillChange(el);
                     clearMorphing(el);
+                    clearStagger(el);
                     leavingLayer.value = null;
                     return;
                 }
 
                 // Promote the morphing box for the gesture's duration (cleared on
                 // settle / transitionend below — never standing). AW.W2 — set the
-                // clip aperture at the same gesture-START seam.
+                // clip aperture at the same gesture-START seam. AW.W3 — arm the
+                // spring-keyed child stagger (progress 0 at gesture start).
                 setWillChange(el);
                 setMorphing(el);
+                armStagger(el);
+
+                // AW.W3 — the morph span, captured once so the per-frame spring
+                // value maps to a normalized [0,1] progress for the child stagger.
+                // A retarget re-reads `toSize`/`fromSize` above, so the span is the
+                // live one (the cascade carries through an interrupt).
+                const morphSpan = toSize - fromSize;
 
                 // 3. Drive size off ONE SpringProgress clock in PIXEL space — its
                 // `value` is the live width/height. On a retarget reuse the live
@@ -360,6 +409,16 @@ export function useLayerTransition(
                 activeSpring.play((w: number) => {
                     if (id !== transitionId) return;
                     setDim(el, `${w}px`);
+                    // AW.W3 — write the SINGLE size spring's normalized progress so
+                    // the child stagger rides the physical morph. `morphSpan` is the
+                    // live (retarget-aware) span; a zero span (rare) pins progress
+                    // at 1 (already revealed). The cascade is monotone in this
+                    // scalar — no fixed-ms timer.
+                    if (Math.abs(morphSpan) > 0.5) {
+                        setStaggerProgress(el, (w - fromSize) / morphSpan);
+                    } else {
+                        setStaggerProgress(el, 1);
+                    }
                     // Opacity stays class-driven via the --dock-motion-resize CSS
                     // transition on `.dock-layer-item-host`; the spring drives
                     // size only.
@@ -369,9 +428,11 @@ export function useLayerTransition(
                         // Clear the compositor hint AND the clip aperture AFTER the
                         // final paint (settle), so they never race the spring's last
                         // frame (F3 / AW.W2 — the clip lifts to `overflow:visible`
-                        // only after the morph has fully painted).
+                        // only after the morph has fully painted). AW.W3 — disarm
+                        // the child stagger so the children rest at full opacity.
                         clearWillChange(el);
                         clearMorphing(el);
+                        clearStagger(el);
                         leavingLayer.value = null;
                         disposeSpring();
                     }
@@ -385,6 +446,7 @@ export function useLayerTransition(
                     clearDim(el);
                     clearWillChange(el);
                     clearMorphing(el);
+                    clearStagger(el);
                     leavingLayer.value = null;
                     disposeSpring();
                 }, cleanupDelayMs(el));
@@ -404,6 +466,7 @@ export function useLayerTransition(
         clearDim(el);
         clearWillChange(el);
         clearMorphing(el);
+        clearStagger(el);
         leavingLayer.value = null;
     }
 

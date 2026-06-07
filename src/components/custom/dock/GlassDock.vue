@@ -212,6 +212,13 @@ const { onTransitionEnd: onLayersTransitionEnd } = useLayerTransition({
     containerEl: layersEl,
     activeLayer: outerActiveLayer,
     axis: outerLayerAxis,
+    /* AW.W3 — typed directional intent for the outer collapsed↔expanded pair.
+       Going TO `full` is an EXPAND (the softer entry-overshoot curve); going TO
+       `summary` is a COLLAPSE (the snappier, non-overshooting exit). The
+       `:active-view-transition-type(dock-expand|dock-collapse)` blocks in
+       view-transition.css author the asymmetry; a non-typed engine runs the
+       symmetric `.gl-dock-layer` curve (the acceptable contract). */
+    directionTypes: (_from, to) => [to === "full" ? "dock-expand" : "dock-collapse"],
 });
 
 /* AQ.W6 §Design 7 — when View-Transitions are supported, the outer
