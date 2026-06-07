@@ -25,17 +25,34 @@ and a PRM render paints one composed still frame, both reachable by the dock pau
    (`src/composables/motion/useSpring.ts` — wraps `@mkbabb/keyframes.js` `SpringProgress`,
    already exposes `value` + `velocity`; consume, do not hand-roll); expose smoothed position
    AND velocity.
-2. Add a 15-position pointer trail buffer (mirroring the Codrops droplet pattern); surface the
-   trail as decaying-radius `smin`-merged sphere sources reusing the existing `MAX_SATS` uniform
-   array plumbing in `useMetaballRenderer.ts`, so the blob stretches an elastic pseudopod toward
-   the cursor and snaps back.
-3. Add velocity-driven squash-and-stretch: a volume-preserving anisotropic 2×2 UV warp applied
+2. Add a 12-16-position pointer trail buffer (the Codrops 2025 droplet-metaballs pattern); surface
+   the trail as decaying-radius `smin`-merged sphere sources (later samples paint smaller metaballs,
+   `r *= (1 - i/N)`) reusing the existing `MAX_SATS` uniform array plumbing in
+   `useMetaballRenderer.ts`, so the blob stretches an elastic pseudopod toward the cursor and snaps
+   back. **GLSL ES 3.00 fixed-array discipline:** declare `uTrail[TRAIL_N]` as a COMPILE-TIME-SIZED
+   array with a DYNAMIC break (`for (int i=0;i<TRAIL_N;i++){ if(i>=uTrailCount) break; … }` — mirror
+   the satellite loop's `if (i>=uSatCount) break`); do NOT make `TRAIL_N` a uniform (GLSL ES 3.00
+   forbids dynamically-sized arrays).
+3. Add velocity-driven volume-preserving squash-and-stretch: an anisotropic 2×2 UV warp applied
    before `sdCircle` in `metaball.frag.ts` (`uVelocity`, `uStretch`), stretching along the motion
-   direction and compressing perpendicular, magnitude ∝ |velocity| (subtle 25-50%).
+   direction and compressing perpendicular, magnitude ∝ |velocity| (subtle 25-50%). **Volume
+   preservation is EXACT (sharpened at convergence):** stretch the body along `normalize(v)` by
+   `sa = (1 + |v|*k)` and squash the PERPENDICULAR axis by EXACTLY `1/sa` (NOT `1 - amt`, which loses
+   area so the blob SHRINKS at speed); applied as an anisotropic basis `q = vec2(dot(uv,ax)/sa,
+   dot(uv,perp)*sa)` (or `/sb` with `sb=1/sa`) in SDF body space.
 4. Honor the *sign* of `pointerAttraction` at `metaball.frag.ts:122-128` (lean-in vs shy-away;
    today the influence is hardcoded repulsion), and give `idle` a small non-zero default
    `pointerAttraction` so hover is always felt out of the box; wire the `click` emit to a one-shot
-   spring impulse on `pulseAmp`/`smoothK` (overshoot then settle).
+   spring impulse on `pulseAmp`/`smoothK` (overshoot then settle). **Click-impulse integration
+   (sharpened at convergence):** the click spring is a closed-form damped harmonic oscillator
+   integrated SEMI-IMPLICIT (symplectic) Euler `v += a*dt; x += v*dt` (explicit Euler blows up at low
+   frame rate), underdamped for bounce; CLAMP `pulse > -0.9` so `bodyR` never inverts; CLAMP the first
+   `dt` after a substrate park to ~50ms (after offscreen/hidden/PRM re-arm the first `dt` can be
+   seconds). The pulse folds into the EXISTING `uPulseAmp` channel (no new pulse path). Where the spec
+   migrates an easing OFF a fixed-per-frame lerp, use the Holmer framerate-independent form
+   `damp(a,b,lambda,dt) = lerp(a,b, 1 - exp(-lambda*dt))` — the `useSpring`/`SpringProgress` `dt`-fed
+   tick is the preferred primitive (it is already framerate-independent); the Holmer damp is the
+   closed-form fallback if `keyframes.js` lacks a usable `tick(dt)` seam (the §Triumvirate clause).
 5. Resolve the reduced-motion contract: every new axis (spring, trail, squash, click-impulse)
    collapses to no-op/instant under PRM and routes through the substrate's single rAF — under
    reduce the blob settles to a deterministic composed rest pose (peak roundness, trail collapsed,
@@ -132,6 +149,17 @@ needed (W10's two units are serial and share one tree).
    bit-deterministic; the spring settle matches across 60/120 Hz `dt`; the only rAF is the
    substrate's (`rg` for a second `requestAnimationFrame` in the blob tree returns nothing); the
    demo story imports and binds the shipped interaction props (no orphaned `pointerAttraction`).
+   This gate folds the PLAN's three discriminating assertions as named sub-checks (each born-RED with
+   its own bite):
+   - **volume-preserve** — the perpendicular squash factor `== 1/sa` EXACTLY (area conserved); bite:
+     replace the perpendicular `1/sa` with `1 - amt` → the area-conservation assertion REDs (the blob
+     shrinks at speed).
+   - **framerate-damp** — NO fixed-per-frame lerp remains in the blob interaction tree (`rg` for a
+     `SMOOTH_FACTOR`/`0.12`-style constant-α lerp returns nothing); every easing is `exp(-lambda*dt)`
+     / the `dt`-fed `SpringProgress`; bite: reintroduce a constant-α lerp → REDs.
+   - **trail-fixed-array** — `uTrail` is a COMPILE-TIME-SIZED array (`uTrail[TRAIL_N]`) with a DYNAMIC
+     break, never a uniform-sized array; bite: make `TRAIL_N` a uniform → the GLSL-compile/grep
+     assertion REDs.
 2. `npm run proof:offscreen-pause` exits 0: the new motion state parks offscreen/hidden/under PRM
    exactly as the baseline does (no new always-on loop).
 3. `npm run typecheck` exits 0 (the trail buffer, velocity exposure, and config additions typecheck).

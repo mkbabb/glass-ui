@@ -28,20 +28,47 @@ discipline and the AA edge intact.
 3. Add `vec3 surfaceNormal(vec2 uv, float d, float bodyR)` deriving a 2D normal from the SDF
    gradient (`normalize(vec2(dFdx(d), dFdy(d)))`, reusing the `fwidth(d)` derivatives at
    `metaball.frag.ts:149`) lifted to pseudo-3D via an edge-dome Z (`h = sqrt(max(0.0, -d/bodyR))`).
+   **Screen-space epsilon (sharpened at convergence):** if the convergence prefers the IQ 4-tap
+   tetrahedron gradient on the composite `sceneDist(uv)` (factored per W11/the lit-droplet path), the
+   tap epsilon MUST be SCREEN-SPACE (~1.5px / `uResolution.y`), NOT a tiny constant — the smin+FBM
+   field breaks `|grad|=1`, so a small fixed epsilon shimmers. Lift to `n3 = normalize(vec3(grad2d*(1-z),
+   z))` with `z = sqrt(max(0, 1-(1-interior)^2))` so the droplet reads as a rounded bead (flat center,
+   steep rim). Guard `normalize()` with `+1e-6`. The `dFdx`/`dFdy` 2-tap form is the cheaper baseline;
+   the tetrahedron form is the dome-quality option the gate's `|N|≈1` assertion covers either way.
 4. Add a Blinn-Phong specular lobe (warm-cream tint, `specShininess` 16-64 tight glint) and a
    Fresnel/Schlick rim (`--foreground`-tinted — the warm-highlight rim, NOT the default cold-blue
    Fresnel; the rim reads cream/ink-warm congruent with warm-cream-glass, `rimPower` ~2-3),
    combined `max(spec, rim*scale)`,
    injected into linear `rgb` BEFORE `linearToSrgb()` and the `* alpha` premultiply
    (`metaball.frag.ts:172-176`). Subsume the `edgeGlow` lift at `:167-168`.
+   **Concrete color discipline (sharpened at convergence):**
+   - The warm-cream glint is NOT pure white (pure white reads cheap-CG) — it is a near-white OKLCh
+     tint (`L~0.97, C~0.03, hue~85°`) routed through the SAME spliced `OKLCH_MATRICES_GLSL`, NOT a
+     hardcoded sRGB white. `spec = pow(max(dot(n3,h),0), specShininess) * ~0.9`.
+   - The Fresnel rim is fed a NEW `uRimColor` uniform uploaded through the EXISTING injected
+     `ColorResolver` seam (`defaultBlobColorResolver` in `/color`) — mirror the `uBaseColor` upload
+     (`useMetaballRenderer.ts:238` `gl.uniform3f(U.uBaseColor, …)`), NOT an ad-hoc DOM probe (the
+     value.js 1×1-canvas probe was deliberately removed at DEC-AT-2). `fres = pow(1-max(dot(n3,V),0),
+     rimPower)`, attenuated where the body is thick (`1 - 0.6*thickness`).
+   - **PremultipliedAlpha confirmation (the unhandled case — VERIFIED):** the blob context is created
+     with `premultipliedAlpha: true` + `antialias: false` (`useMetaballRenderer.ts:149-150`). The
+     premultiply-last discipline (the `* alpha` AFTER the OETF on the straight-alpha gamma triple) is
+     therefore CORRECT against the real context attr — `proof:blob-spec-premult` asserts the lit terms
+     enter linear `rgb` BEFORE `linearToSrgb()` AND the `* alpha` stays last; both `premultipliedAlpha:
+     true` and `antialias: false` stay UNTOUCHED (the gate confirms the context attr is unchanged).
 5. Replace the value-noise edge displacement (`fbm` at `metaball.frag.ts:134`,
    `watercolor-edges.glsl.ts`) with IQ analytic-derivative gradient noise (`noised()` →
    value + gradient in one eval), and wrap it in one domain-warp pass (`fbm(uv + W·fbm(uv))`)
    for the marbled organic edge; reuse the shared `FBM_ROT` rotation constant.
 6. Declare the new uniforms/config (`specStrength`, `specShininess`, `rimPower`, `rimStrength`,
-   `lightDir`, `warpAmp`, `merge`) in `types.ts` + `BLOB_CONFIG_DEFAULTS` with current-look-
-   preserving defaults; upload them in `useMetaballRenderer.ts`. Gate the lit terms behind a
-   `lit` flag so the flat fill stays the default look (zero regression for existing consumers).
+   `uRimColor`, `lightDir`, `warpAmp`, `merge`) in `types.ts` + `BLOB_CONFIG_DEFAULTS` with current-
+   look-preserving defaults; upload them in `useMetaballRenderer.ts` — **`uRimColor` uploads through
+   `resolveColor`/the injected `ColorResolver` exactly like `uBaseColor` (`useMetaballRenderer.ts:238`),
+   NOT a DOM probe.** Every NEW uniform traces shader→`UNIFORM_NAMES`-array→`getUniformLocation`
+   loop→`gl.uniform*` upload→`types.ts` config in THIS wave (the binding-verification memory: a uniform
+   declared in the shader but not added to the `UNIFORM_NAMES` array at `useMetaballRenderer.ts:30` and
+   not uploaded silently no-ops — vue-tsc and units miss it). Gate the lit terms behind a `lit` flag so
+   the flat fill stays the default look (zero regression for existing consumers).
 
 ## Triumvirate Dispatch
 

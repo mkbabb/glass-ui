@@ -5,7 +5,7 @@
 **Name**: W11 - Blob Mood, Iridescence And Palette
 **Opens after**: AW.W9 (Blob Droplet) — consumes the `surfaceNormal()` keystone; AW.W10 (Blob Interaction) — consumes the pointer/idle state for state-driven moods; AW.W5 (Aurora Color/Derive) — owns `aurora/composables/color.ts`, the harmony-hoist source (no concurrent `color.ts` write; see Scope 4)
 **Agents**: 3 serial
-**Hard gate**: `proof:blob-color-equivalence` green with the iridescence + SSS terms in the TS port; the warm-bias chroma-cap holds; `proof:single-color-core` asserts the blob consumes the shared `ColorHarmony` (no forked `deriveHue`); the mood model is wire-or-cut (no orphaned `setMood`/`orbitSpeedScale`/`wobbleScale`); a demo story exercises every shipped mood.
+**Hard gate**: `proof:blob-color-equivalence` green with the iridescence + SSS terms in the TS port; the warm-bias chroma-cap holds; `proof:single-color-core` asserts the blob consumes the shared `ColorHarmony` (no forked `deriveHue`); `proof:blob-mood-resolved` — the mood model's UNREAD sub-orphans (`setMood`/`orbitSpeedScale`/`wobbleScale`) are wired OR the exported `useBlobMood` is collapsed as a recorded `MIGRATION.md` public-surface removal (NOT a false ≥2-consumer excision of an already-exported, already-consumed composable); `proof:blob-tempo-suppression` — every motion axis traces to the ONE master tempo scalar (tempo×dt not ×uTime; substrate owns PRM; no parallel matchMedia); a demo story exercises every shipped mood.
 **Status**: planned
 
 ## Goal criterion
@@ -47,16 +47,52 @@ from a seed, and carries no orphaned mood substrate.
    hoist, sequenced strictly AFTER W5 commits to a clean main, and adds
    `aurora/composables/color.ts` to its File Bounds as `modify`. Either way the two waves never
    write `color.ts` concurrently — W11 opens after W5 lands.
-5. Resolve the mood model (wire-or-cut, per the overfitting-audit precept): EITHER wire `setMood`
-   internally from the AW.W10 pointer/idle state (curious on approach, excited on click, sleepy
-   after inactivity), consume the dead `orbitSpeedScale`/`wobbleScale` in `useBlobSatellites.tick`,
-   reframe `MOOD_TARGETS` as derived from a 2-axis `{valence, arousal}` model, route iridescence/
-   SSS intensity through `MoodParams` (excited = stronger/faster shimmer, sleepy = nearly flat),
-   AND add a demo that exercises every mood, OR collapse `useBlobMood` to a single `energy` scalar
-   and delete the orphaned vocabulary (no backwards-compat alias).
+5. Resolve the mood model — **re-scoped at convergence to the ACTUAL decision, not a false orphan
+   test.** The critique verified `useBlobMood` is ALREADY exported (`goo-blob/index.ts:11`) AND
+   consumed by its own component (`GooBlob.vue:6,60`) — so by the overfitting-audit precept
+   ("exported OR ≥2 sites OR demo-helper") it is ALREADY load-bearing. It is NOT dead substrate, and
+   "excise if <2 consumers" is the WRONG framing: removing an exported public composable consumed by
+   its own component is a PUBLIC-SURFACE BREAK, not a no-orphan cleanup. The genuine question is
+   NARROWER — does the mood model's INTERNAL plumbing earn its keep once the master-tempo scalar +
+   `deriveBlobPalette` land, or is the 5-state crossfade engine's UNREAD machinery dead? The two real
+   sub-orphans are `setMood` (no internal caller) and `orbitSpeedScale`/`wobbleScale` (lerped in
+   `MoodParams` but never read by `useBlobSatellites.tick` — briefs 30/31/32). So:
+   - **PREFERRED — WIRE.** Keep `useBlobMood` (it is exported + consumed; KEEP it). Wire `setMood`
+     internally from the AW.W10 pointer/idle state (curious on approach, excited on click, sleepy
+     after inactivity); CONSUME `orbitSpeedScale`/`wobbleScale` in `useBlobSatellites.tick`; reframe
+     `MOOD_TARGETS` on a 2-axis `{valence, arousal}` model; route iridescence/SSS intensity through
+     `MoodParams` (excited = stronger/faster shimmer, sleepy = nearly flat); AND prove the
+     master-tempo coupling (`mood.tick × tempo`) is wired through EVERY integrated dt; AND a demo
+     that exercises every mood. `proof:blob-mood-resolved` asserts no declared-but-UNREAD param
+     remains (the `setMood`/`orbitSpeedScale`/`wobbleScale` sub-orphans consumed) — NOT a
+     ≥2-EXTERNAL-consumer count on the already-exported composable.
+   - **FALLBACK — COLLAPSE, as a recorded PUBLIC-SURFACE removal.** If the wiring leaves an
+     irreducible sub-orphan after the §Triumvirate third attempt, collapse `useBlobMood` to a single
+     `energy` scalar AND delete the orphaned vocabulary — but because `useBlobMood`/`BlobMoodSystem`
+     are EXPORTED from `goo-blob/index.ts`, the collapse is a **public-surface break recorded in
+     `MIGRATION.md` per L invariant 4 (no silent alias)**, not a quiet orphan deletion. The gate
+     records the removal rationale.
 6. Declare the new config/`MoodParams` fields (`iridescence`, `iridHue`, `iridSpeed`, `sssScale`,
    `sssPower`, `coreGlow`, and the palette stops) in `types.ts` + `BLOB_CONFIG_DEFAULTS` with
    taste-first low defaults; upload them in `useMetaballRenderer.ts`.
+
+7. The ONE master tempo scalar (the blob-side twin of the aurora W8 master tempo). ONE float
+   multiplies every INTEGRATED `dt` — `mood.tick`, the W10 spring step, the W10 orbit advance, the
+   satellite phase, the noise scroll. `tempo=0` freezes; the `DockBackgroundToggle` pause sets
+   `tempo=0`; `prefers-reduced-motion` sets `tempo=0` AND composes a deterministic seeded REST POSE
+   (body at rest radius, satellites at `t=0` orbit, zero stretch, neutral pointer) painted as ONE
+   static frame. **CRITICAL — tempo multiplies `dt`, NEVER the clock**: scaling `uTime` makes the FBM
+   noise JUMP discontinuously when tempo changes; absolute time keeps marching for parked-frame
+   consistency, only the integration step scales. **NO second PRM path** — the `useWebGLCanvas`
+   substrate ALREADY owns + live-monitors PRM and paints one static frame then parks
+   (`useMetaballRenderer.ts:100-107`); `useBlobInteraction`/`useBlobMood` only COMPOSE the rest pose,
+   the substrate DECIDES when to freeze. A parallel `matchMedia` listener in the mood/interaction
+   layer is the EXACT anti-pattern the AV.W7 substrate lift removed and is forbidden. **First-dt
+   clamp on EVERY integrated axis** (not just the W10 spring): after the substrate parks
+   (offscreen/hidden/PRM) and re-arms, the first `dt` can be SECONDS — every `tempo×dt`-integrated
+   axis (`mood.tick`, orbit, satellite phase, the spring) clamps the first post-park `dt` to ~50ms
+   or the rest-pose/tempo composition JUMPS. (The W10 spec applied the clamp to the spring only;
+   W11's tempo integration extends it to all axes.)
 
 ## Triumvirate Dispatch
 
@@ -87,8 +123,9 @@ A triumvirate is mandatory when:
 | `src/components/custom/aurora/composables/color.ts` (the harmony hoist SOURCE — **AW.W5.2's file**) | conditional modify — ONLY under Scope 4 fallback (b), sequenced strictly after AW.W5 commits; under preferred (a) AW.W5 hoists and this file stays out of W11's bounds |
 | `demo/stories/.../blob-mood.vue` | create |
 | `tests/components/custom/goo-blob/metaball-color.glsl-port.ts` | modify |
-| `scripts/proof-blob-color-equivalence.mjs`, `scripts/proof-single-color-core.mjs` (extend); `scripts/proof-blob-mood-resolved.mjs` (new — the flat `scripts/proof-<name>.mjs` convention) | modify-carve / create |
-| `package.json` (the new `proof:blob-mood-resolved` entry) | modify-carve |
+| `scripts/proof-blob-color-equivalence.mjs`, `scripts/proof-single-color-core.mjs` (extend); `scripts/proof-blob-mood-resolved.mjs` + `scripts/proof-blob-tempo-suppression.mjs` (new — the flat `scripts/proof-<name>.mjs` convention) | modify-carve / create |
+| `package.json` (the new `proof:blob-mood-resolved` + `proof:blob-tempo-suppression` entries) | modify-carve |
+| `MIGRATION.md` | conditional modify — ONLY under the Scope 5 FALLBACK (the `useBlobMood` collapse is a public-surface removal recorded per L invariant 4); under the PREFERRED wire path this file stays out of bounds |
 
 Do NOT touch: `src/composables/glass/webgl/shaders/procedural-color.glsl.ts` (splice, never edit),
 aurora's `aurora.frag.ts`/`composition.glsl.ts` (the harmony hoist exposes a shared `ColorHarmony`
@@ -141,19 +178,31 @@ there is no concurrent writer on either the shared blob files or `color.ts`.
   forked `deriveHue`); a midpoint-chroma assertion (OKLCh interpolation of a vivid pair holds
   chroma above the linear-`mix` midpoint); `proof:color-acyclic` stays green.
 
-### AW.W11.c Mood Resolution
+### AW.W11.c Mood Resolution + The Master Tempo Scalar
 
-- Goal: no orphaned mood substrate — moods are state-driven (or collapsed) and a demo exercises them.
-- Mechanism: wire `setMood` from the W10 pointer/idle state, consume the dead
-  `orbitSpeedScale`/`wobbleScale` in `useBlobSatellites.tick`, reframe `MOOD_TARGETS` on a
-  `{valence, arousal}` model, route iridescence/SSS intensity through `MoodParams`, ship a demo
-  that drives every mood — OR collapse `useBlobMood` to one `energy` scalar and delete the
-  vocabulary.
-- Files: `useBlobMood.ts`, `useBlobSatellites.ts` (consume the dead params), `types.ts`
-  (`MoodParams`), `demo/stories/.../blob-mood.vue`, `scripts/proof-blob-mood-resolved.mjs`.
+- Goal: no UNREAD mood sub-orphan — `setMood`/`orbitSpeedScale`/`wobbleScale` are wired (or
+  collapsed as a recorded public-surface removal), a demo exercises every shipped mood, AND the ONE
+  master tempo scalar gates every integrated `dt` to the substrate's PRM freeze + the pause toggle.
+- Mechanism: PREFERRED — KEEP the exported `useBlobMood` (it is load-bearing); wire `setMood` from
+  the W10 pointer/idle state; consume `orbitSpeedScale`/`wobbleScale` in `useBlobSatellites.tick`;
+  reframe `MOOD_TARGETS` on a `{valence, arousal}` model; route iridescence/SSS intensity through
+  `MoodParams`; thread the master tempo scalar through `mood.tick × tempo` and EVERY other integrated
+  axis (spring/orbit/satellite-phase/noise-scroll) with the first-post-park `dt` clamp; ship a demo
+  driving every mood. FALLBACK — collapse to one `energy` scalar AND record the public-surface
+  removal in `MIGRATION.md` (the composable is EXPORTED). NO parallel `matchMedia` — the substrate
+  owns PRM; the mood layer only COMPOSES the rest pose; tempo multiplies `dt`, never `uTime`.
+- Files: `useBlobMood.ts`, `useBlobSatellites.ts` (consume the dead params + tempo), `types.ts`
+  (`MoodParams`), `useMetaballRenderer.ts` (the tempo gate + rest-pose compose), `demo/stories/.../blob-mood.vue`,
+  `scripts/proof-blob-mood-resolved.mjs` + `scripts/proof-blob-tempo-suppression.mjs`.
 - Sub-gate: `proof:blob-mood-resolved` asserts no `setMood`/`orbitSpeedScale`/`wobbleScale` is
-  declared-but-unread, and the demo story drives every shipped mood (or the collapse deleted the
-  vocabulary outright).
+  declared-but-UNREAD (the sub-orphan test — NOT a ≥2-external-consumer count on the already-exported
+  composable), and the demo story drives every shipped mood (or the collapse is recorded in
+  `MIGRATION.md`). `proof:blob-tempo-suppression` asserts EVERY motion axis traces to the master
+  tempo scalar, `tempo=0` paints a static frame, PRM routes through the SUBSTRATE freeze
+  (`useMetaballRenderer.ts:100-107`) with NO parallel `matchMedia` listener in the blob tree, tempo
+  multiplies `dt` not `uTime`, and the first-post-park `dt` is clamped on every integrated axis.
+  Bite: scale `uTime` by tempo (instead of `dt`) → the FBM-noise-discontinuity assertion REDs; OR
+  add a `matchMedia` listener in `useBlobMood`/`useBlobInteraction` → the no-parallel-PRM assertion REDs.
 
 ## Hard Gate
 
@@ -162,13 +211,19 @@ there is no concurrent writer on either the shared blob files or `color.ts`.
    out-of-gamut after the clamp) and a chroma-cap assertion (warm-bias holds) pass.
 2. `npm run proof:single-color-core` exits 0: the blob derives through the shared `ColorHarmony`;
    `rg 'deriveHue'` shows no forked copy in the blob tree; `proof:color-acyclic` stays green.
-3. `npm run proof:blob-mood-resolved` exits 0: no declared-but-unread mood param remains
+3. `npm run proof:blob-mood-resolved` exits 0: no declared-but-UNREAD mood SUB-orphan remains
    (`orbitSpeedScale`/`wobbleScale` consumed or deleted; `setMood` has a caller or is removed) and
-   the demo story binds every shipped mood.
-4. `npm run proof:blob-space-gamma` stays green (the OETF seam unbroken by the new color terms).
-5. `npm run typecheck` exits 0 (the `ColorHarmony` hoist, the palette deriver, and the config
+   the demo story binds every shipped mood — OR the `useBlobMood` collapse is recorded in
+   `MIGRATION.md` as a public-surface removal (the composable is exported; the gate does NOT count
+   external consumers on an already-exported, already-consumed composable).
+4. `npm run proof:blob-tempo-suppression` exits 0: every motion axis traces to the ONE master tempo
+   scalar; `tempo=0` paints a deterministic static frame; PRM routes through the substrate freeze
+   (`useMetaballRenderer.ts:100-107`) with NO parallel `matchMedia` listener in the blob tree; tempo
+   multiplies `dt` not `uTime`; the first-post-park `dt` is clamped on every integrated axis.
+5. `npm run proof:blob-space-gamma` stays green (the OETF seam unbroken by the new color terms).
+6. `npm run typecheck` exits 0 (the `ColorHarmony` hoist, the palette deriver, and the config
    additions typecheck clean across both blob and the `/color` leaf).
-6. `npm run build` exits 0 (the blob chunk + the demo story + the `/color` subpath emit clean).
+7. `npm run build` exits 0 (the blob chunk + the demo story + the `/color` subpath emit clean).
 
 ## Format And Lint Cadence
 
