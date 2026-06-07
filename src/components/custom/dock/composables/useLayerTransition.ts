@@ -5,10 +5,11 @@ import { startViewTransition } from "../../../../composables/motion/useViewTrans
 
 /**
  * The dock resize-morph spring (AU.W8.3). MIRRORS the `--spring-dock` PRESETS
- * row in `scripts/regen-spring-tokens.mjs` (response 0.5, ζ 0.5, ~+18.5%
- * overshoot) so the build-time CSS token and the runtime driver sample the
- * SAME analytic ODE — bit-identical motion. A retune MUST touch BOTH this const
- * and the PRESETS row, or the CSS-token and JS-driven curves drift.
+ * row in `scripts/regen-spring-tokens.mjs` (response 0.32, ζ 0.7, ~+4.6%
+ * overshoot — the AW.W2 iOS-control retune off the prior +18.5% playful
+ * register) so the build-time CSS token and the runtime driver sample the SAME
+ * analytic ODE — bit-identical motion. A retune MUST touch BOTH this const and
+ * the PRESETS row, or the CSS-token and JS-driven curves drift.
  *
  * LIGHT-surface only: `SpringProgress` carries no static value.js edge (it owns
  * its own `RAFPlayback` via `.play(onFrame)`). NEVER import `AnimationGroup` /
@@ -28,6 +29,17 @@ export interface UseLayerTransitionOptions {
      * `height`. Defaults to horizontal when omitted.
      */
     axis?: Ref<"horizontal" | "vertical">;
+    /**
+     * AW.W3 — typed directional View-Transitions. Maps a swap `(from, to)` to
+     * the `types` array passed to `startViewTransition`, so
+     * `:active-view-transition-type(<t>)` CSS can author DIRECTION-specific
+     * curves (snappier exit, softer entry-overshoot — the iOS-feel asymmetry).
+     * The outer collapsed↔expanded pair resolves `dock-expand` / `dock-collapse`;
+     * the inner DockLayerGroup pane swap resolves `layer-forward` / `layer-back`.
+     * Omit to run the single symmetric curve. Feature-detected — degrades to the
+     * symmetric curve on an engine without the `types` overload (Firefox 144).
+     */
+    directionTypes?: (from: string, to: string) => string[];
 }
 
 export interface UseLayerTransitionReturn {
@@ -89,7 +101,7 @@ export interface UseLayerTransitionReturn {
 export function useLayerTransition(
     options: UseLayerTransitionOptions,
 ): UseLayerTransitionReturn {
-    const { containerEl, activeLayer, axis } = options;
+    const { containerEl, activeLayer, axis, directionTypes } = options;
 
     // Forked once at composable construction — `startViewTransition` support is
     // a stable engine capability, not a per-swap condition.
@@ -180,6 +192,27 @@ export function useLayerTransition(
         el.style.willChange = "auto";
     }
 
+    // AW.W2 — the clip-reveal aperture lifecycle. `data-morphing` is set on the
+    // morphing container's GlassDock root at gesture START and cleared on SETTLE,
+    // so dock.css holds the single-axis `overflow: clip` for the whole morph (the
+    // box IS the reveal aperture) and lifts it to `overflow: visible` only at rest
+    // (`.expanded:not([data-morphing])`). It rides the SAME set/clear seam as the
+    // `will-change` hint — one attribute, established lifecycle. The attribute
+    // lands on the nearest `.glass-dock` ancestor (the clip shell): for the outer
+    // pair the container IS inside the root; for the inner DockLayerGroup the
+    // stack sits inside the dock root, so the clip-bearing element is the root.
+    function morphRoot(el: HTMLElement): HTMLElement | null {
+        return el.closest(".glass-dock");
+    }
+
+    function setMorphing(el: HTMLElement) {
+        morphRoot(el)?.setAttribute("data-morphing", "");
+    }
+
+    function clearMorphing(el: HTMLElement) {
+        morphRoot(el)?.removeAttribute("data-morphing");
+    }
+
     watch(activeLayer, (newLayer, oldLayer) => {
         if (newLayer === oldLayer) return;
 
@@ -199,6 +232,9 @@ export function useLayerTransition(
         if (NATIVE_VT) {
             clearCleanup();
             const id = ++transitionId;
+            // AW.W2 — set the clip aperture synchronously inside the VT callback
+            // (the browser owns the morph; the clip holds for its duration).
+            setMorphing(el);
             const { finished } = startViewTransition(() => {
                 leavingLayer.value = oldLayer;
                 currentLayer.value = newLayer;
@@ -206,6 +242,7 @@ export function useLayerTransition(
             finished.finally(() => {
                 if (id !== transitionId) return;
                 leavingLayer.value = null;
+                clearMorphing(el);
             });
             return;
         }
@@ -286,13 +323,16 @@ export function useLayerTransition(
                     el.style.transition = "";
                     clearDim(el);
                     clearWillChange(el);
+                    clearMorphing(el);
                     leavingLayer.value = null;
                     return;
                 }
 
                 // Promote the morphing box for the gesture's duration (cleared on
-                // settle / transitionend below — never standing).
+                // settle / transitionend below — never standing). AW.W2 — set the
+                // clip aperture at the same gesture-START seam.
                 setWillChange(el);
+                setMorphing(el);
 
                 // 3. Drive size off ONE SpringProgress clock in PIXEL space — its
                 // `value` is the live width/height. On a retarget reuse the live
@@ -300,10 +340,12 @@ export function useLayerTransition(
                 // construct one seeded at `fromSize`. The JS driver OWNS the
                 // container size (transition stays "none" on `el` so the CSS
                 // `width var(--dock-motion-resize)` does not fight the per-frame
-                // inline set); the pane opacity stays class-driven on the SEPARATE
-                // `.dock-layer-item-host` via its `--dock-motion-resize` fade, so
-                // size + opacity settle in lockstep by the shared (0.5, 0.5)
-                // curve (the token + the driver), continuous across a retarget.
+                // inline set). AW.W2 — the active pane is REVEALED by the clip
+                // aperture (statically opacity:1, no fade); only the LEAVING pane
+                // fades, class-driven on the SEPARATE `.dock-layer-item-host` via
+                // its `--dock-motion-resize` fade, so the leaving fade + the size
+                // morph settle in lockstep by the shared (0.32, 0.7) curve (the
+                // token + the driver), continuous across a retarget.
                 if (!live) {
                     spring = new SpringProgress({
                         response: DOCK_SPRING.response,
@@ -324,9 +366,12 @@ export function useLayerTransition(
                     if (activeSpring.settled) {
                         el.style.transition = "";
                         clearDim(el);
-                        // Clear the compositor hint AFTER the final paint (settle),
-                        // so it never races the spring's last frame (F3).
+                        // Clear the compositor hint AND the clip aperture AFTER the
+                        // final paint (settle), so they never race the spring's last
+                        // frame (F3 / AW.W2 — the clip lifts to `overflow:visible`
+                        // only after the morph has fully painted).
                         clearWillChange(el);
+                        clearMorphing(el);
                         leavingLayer.value = null;
                         disposeSpring();
                     }
@@ -339,6 +384,7 @@ export function useLayerTransition(
                     el.style.transition = "";
                     clearDim(el);
                     clearWillChange(el);
+                    clearMorphing(el);
                     leavingLayer.value = null;
                     disposeSpring();
                 }, cleanupDelayMs(el));
@@ -357,6 +403,7 @@ export function useLayerTransition(
         el.style.transition = "";
         clearDim(el);
         clearWillChange(el);
+        clearMorphing(el);
         leavingLayer.value = null;
     }
 

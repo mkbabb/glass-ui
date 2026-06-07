@@ -95,14 +95,56 @@
         box-shadow: var(--glass-edge-light), var(--shadow-dock-override, var(--shadow-dock));
     }
 
-    /* `overflow: hidden` is the clip shell for every dock. AT.W7-dock-a
-       folded out the prior `containerName` clip-lift (the container-query
-       opt-in is orthogonal — it no longer silently changes the clip), so the
-       clip applies universally and the `.expanded` / `.always-expanded` /
-       `.dock-overflow-wrap` states lift it back to `visible` where they need to
-       grow. A consumer wanting multi-line content opts into `overflow="wrap"`. */
-    .glass-dock {
-        overflow: hidden;
+    /* AW.W2 — the box IS the reveal aperture (clip-reveal one-clock morph).
+       Migrated from `overflow: hidden` to a SINGLE-AXIS `overflow: clip` on the
+       MORPH axis (horizontal clips X / visible Y; vertical clips Y / visible X),
+       gated on a `data-morphing` attribute the driver owns (set at gesture START,
+       cleared on SETTLE). The clip PERSISTS through the morph — content is laid
+       out ONCE at its natural size behind the aperture and the growing/shrinking
+       box uncovers it, never spills it — and lifts to `visible` only at REST
+       expanded (so grown content + the focus ring paint past the box). The
+       prior `.expanded { overflow: visible }` (bound synchronously to
+       `visualExpanded`) lifted the clip at frame 0, leaving no aperture to reveal
+       through; the `:not([data-morphing])` guard holds the clip for the whole
+       gesture and lifts it on the final paint.
+
+       `overflow: clip` is PAINT-ONLY (not a scroll container): it never
+       participates in `scrollIntoView`/scroll-anchoring, cannot be a
+       scroll-driven-animation `scroller`, and drops the `min-width:0` scroll-box
+       dance for the non-scroll shell. The cross axis is ALWAYS explicitly
+       `visible` (the MDN single-axis-clip-degrades-to-hidden caveat). The
+       legitimate scroll ports (`.dock-scroll-{x,y}`, `overflow: auto`) STAY
+       `auto` — they are NOT migrated. AT.W7-dock-a's orthogonality holds: the
+       `containerName` opt-in does not touch the clip. */
+    .glass-dock:not(.vertical) {
+        overflow-x: clip;
+        overflow-y: visible;
+    }
+
+    .glass-dock.vertical {
+        overflow-x: visible;
+        overflow-y: clip;
+    }
+
+    /* DURING a morph the clip is the aperture — keyed off `data-morphing`, NOT
+       off `.expanded`, so it survives the whole gesture and the box reveals its
+       content rather than letting it spill. */
+    .glass-dock[data-morphing]:not(.vertical) {
+        overflow-x: clip;
+        overflow-y: visible;
+    }
+
+    .glass-dock[data-morphing].vertical {
+        overflow-x: visible;
+        overflow-y: clip;
+    }
+
+    /* AT REST EXPANDED — lift the morph-axis clip (grown content + focus ring
+       paint past the box). Fires ONLY when NOT morphing; the [data-morphing]
+       rules above win during the gesture by being more specific + later. */
+    .glass-dock.expanded:not([data-morphing]),
+    .glass-dock.always-expanded:not([data-morphing]) {
+        overflow: visible;
     }
 
     .glass-dock[data-density="compact"] {
@@ -283,13 +325,17 @@
         width: auto;
         height: auto;
         max-block-size: var(--dock-max-block-size);
-        overflow-x: visible;
-        overflow-y: visible;
+        /* overflow on the block (morph) axis is the data-morphing-gated clip
+           shell above; the cross axis stays visible there. */
         padding: var(--dock-vertical-padding, var(--dock-padding-block, 0.375rem));
         border-radius: var(--radius-dock);
+        /* AW.W2 — axis-parity carve: NON-morph properties only. The block-axis
+           (height) morph is owned by the inner `.dock-layer-stack` / DockLayerGroup
+           spring (or the VT path); a `height var(--dock-motion-resize)` here would
+           be a second driver on the same axis (the AV.W9.0 dual-driver race),
+           and `width` is the cross axis the spring never writes. Matches how
+           `:not(.vertical)` already excludes `width`. */
         transition:
-            height var(--dock-motion-resize),
-            width var(--dock-motion-resize),
             padding var(--dock-motion-resize),
             box-shadow var(--dock-motion-standard),
             transform var(--dock-motion-resize),
@@ -549,13 +595,16 @@
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
-        /* The active layer shows immediately — no deferred `visibility`. AU.W2:
-           the opacity rides `--dock-motion-resize` (lockstep with the container
-           morph), but the `visibility 0s` stays immediate (the `:434` rule
-           governs — the active layer must paint at once, no fade-in delay). */
-        transition:
-            opacity var(--dock-motion-resize),
-            visibility 0s;
+        /* AW.W2 — the active pane is STATICALLY opacity:1, REVEALED by the clip
+           aperture (the box is the reveal mechanism), never faded. The prior
+           `opacity var(--dock-motion-resize)` arm is DELETED: there is ZERO
+           opacity authority on the active pane now — the aperture uncovers a
+           layout that is laid out ONCE at natural size behind it. Only `visibility
+           0s` survives (the active layer must paint at once, no fade-in delay —
+           the AU.W2 governing rule). The leaving pane keeps the shared-token
+           opacity fade below (the ONLY surviving opacity animation, the thin
+           polish proof:dock-opacity-lockstep names). */
+        transition: visibility 0s;
     }
 
     /* A leaving layer is inactive for hit-testing but still painted
@@ -585,9 +634,19 @@
     .dock-layer {
         display: flex;
         align-items: center;
-        white-space: nowrap;
         grid-area: 1 / 1;
         gap: var(--dock-layer-gap, 0.375rem);
+    }
+
+    /* AW.W2 — content-intrinsic axis follows the MORPH axis. A horizontal dock
+       lays its inline content out ONCE at `width: max-content` (nowrap) so the
+       width aperture uncovers a static row; the fixed `height` keeps the row a
+       single line. Scoped to `:not(.vertical)` so a vertical rail (whose
+       block-axis morph reveals a column) is NOT forced onto one nowrap row — the
+       vertical group's active host block-sizes to `height: max-content` below
+       (the AP.W3 column treatment, KEPT). */
+    .glass-dock:not(.vertical) .dock-layer {
+        white-space: nowrap;
         height: var(--dock-layer-height, 2.5rem);
     }
 
@@ -600,10 +659,11 @@
         inset: 0;
     }
 
-    .glass-dock.expanded {
-        overflow: visible;
-    }
-
+    /* AW.W2 — the at-rest clip-lift moved to `.expanded:not([data-morphing])` /
+       `.always-expanded:not([data-morphing])` (the clip-shell block at the top).
+       A plain `overflow: visible` here would lift the clip DURING the morph (the
+       load-bearing sequencing gap), so the `overflow` declarations are dropped
+       from these state rules; they keep only their non-overflow concerns. */
     .glass-dock.expanded:not(.fit-content) .dock-layers {
         width: 100%;
     }
@@ -614,15 +674,6 @@
 
     .glass-dock.always-expanded {
         cursor: default;
-        overflow: visible;
-    }
-
-    /* Z.W2.T2 — always-expanded vertical rails inherit the same
-       grow-to-fit + visible contract. The prior auto pair re-introduced
-       the scroll affordance that A2 §B6 rejected. */
-    .glass-dock.vertical.always-expanded {
-        overflow-x: visible;
-        overflow-y: visible;
     }
 
     /* ── Scroll-on-overflow opt-in (GlassDock `overflow="scroll"`) ───────
@@ -854,9 +905,13 @@
     .dock-layer-stack {
         position: relative;
         display: grid;
-        transition:
-            width var(--dock-motion-resize),
-            height var(--dock-motion-resize);
+        /* AW.W2 — the morph axis (width for a horizontal group, height for a
+           vertical one) is driven by the `useLayerTransition` SpringProgress in
+           pixel space (FLIP path) or the View-Transition (native path); a CSS
+           `width`/`height` transition here would be a SECOND driver on the same
+           axis (the AV.W9.0 dual-driver race that froze the dock). The cross axis
+           is intrinsic-sized and never morphs. So NO size transition on the stack
+           — one owner per axis. */
     }
 
     /* Base layout — the crossfade + hit-test contract is shared with

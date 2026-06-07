@@ -61,6 +61,30 @@
     animation-timing-function: var(--dock-resize-spring, var(--spring-dock));
 }
 
+/* AW.W3 — typed directional dock curves. The swap tags the active transition
+ * `dock-expand` / `dock-collapse` (the outer collapsed↔expanded pair) and
+ * `layer-forward` / `layer-back` (the inner DockLayerGroup pane swap) via the
+ * `types` argument to `startViewTransition` (Chrome 140+; feature-detected, the
+ * untyped fallback is the symmetric `.gl-dock-layer` curve above). iOS-feel
+ * motion is ASYMMETRIC — a snappier exit, a softer entry-overshoot. EXPAND
+ * (and forward) lead with the overshooting `--spring-dock`; COLLAPSE (and back)
+ * exit on the non-overshooting `--spring-snappy` (a quicker settle, no bounce on
+ * the way out). The shorter `--duration-fast` on the exit reads as the crisp
+ * dismiss. A non-typed engine never matches these — it runs the symmetric curve,
+ * which is the acceptable contract. PRM zeroes the animation (the `@media` at
+ * the top of this file). */
+:active-view-transition-type(dock-expand) ::view-transition-group(.gl-dock-layer),
+:active-view-transition-type(layer-forward) ::view-transition-group(.gl-dock-layer) {
+    animation-duration: var(--vt-duration, var(--duration-normal));
+    animation-timing-function: var(--dock-resize-spring, var(--spring-dock));
+}
+
+:active-view-transition-type(dock-collapse) ::view-transition-group(.gl-dock-layer),
+:active-view-transition-type(layer-back) ::view-transition-group(.gl-dock-layer) {
+    animation-duration: var(--vt-duration-exit, var(--duration-fast));
+    animation-timing-function: var(--spring-snappy);
+}
+
 @keyframes gl-vt-slide-in  { from { opacity: 0; translate: 0 var(--vt-rise, 8px); } }
 @keyframes gl-vt-slide-out { to   { opacity: 0; translate: 0 var(--vt-rise, 8px); } }
 

@@ -13,6 +13,17 @@
 // token, they settle in lockstep BY CONSTRUCTION — a 0-frame split, comfortably
 // inside the ≤1-frame (≤16.7ms) bar the CHARTER names.
 //
+// AW.W2 — the clip-reveal one-clock redefinition. The ACTIVE pane is now
+// REVEALED by the box (the clip aperture), statically opacity:1 — it has ZERO
+// opacity authority. The ONLY surviving opacity animation is the LEAVING pane's
+// fade, which rides the base `.dock-layer{,-item-host}` rule's
+// `opacity var(--dock-motion-resize)` (the leaving pane inherits the base rule;
+// it does not redeclare `transition`). So the lockstep target moved: the gate
+// asserts (a) the base/leaving fade still names --dock-motion-resize, and (b) the
+// ACTIVE pane has NO opacity transition arm (it must be statically revealed, not
+// faded — re-introducing `opacity var(--dock-motion-resize)` on the active pane
+// would regress the clip-reveal contract).
+//
 // WHY A STATIC SAME-TOKEN GATE (not a headless-Chrome timing probe): jsdom/
 // happy-dom do not run real CSS transitions, so a unit-test "settle" reading is
 // impossible; a real-browser rAF probe of getComputedStyle('opacity') vs the
@@ -157,7 +168,11 @@ export function detectLockstep(dockCss) {
         }
     }
 
-    // (active) opacity rides --dock-motion-resize; visibility stays IMMEDIATE (0s, no delay).
+    // (active, AW.W2 clip-reveal) — the active pane has NO opacity transition arm
+    // (statically opacity:1, REVEALED by the clip aperture, never faded), and
+    // visibility stays IMMEDIATE (`visibility 0s`, no deferred delay). A
+    // re-introduced `opacity var(--dock-motion-resize)` here would regress the
+    // clip-reveal contract (a second opacity authority on the active pane).
     const activeBody = matchRuleBody(dockCss, ACTIVE_RULE_RE);
     if (activeBody === null) {
         violations.push(
@@ -169,14 +184,9 @@ export function detectLockstep(dockCss) {
         if (!t) {
             violations.push("the active layer rule declares no `transition`");
         } else {
-            if (/opacity\s+var\(--dock-motion-fast\)/.test(t)) {
+            if (/opacity\s+var\(/.test(t)) {
                 violations.push(
-                    `the active layer OPACITY still rides --dock-motion-fast — must ride --dock-motion-resize: \`${t}\``,
-                );
-            }
-            if (!/opacity\s+var\(--dock-motion-resize\)/.test(t)) {
-                violations.push(
-                    `the active layer opacity must ride --dock-motion-resize: \`${t}\``,
+                    `the active layer must NOT animate opacity (AW.W2 clip-reveal: it is statically opacity:1, REVEALED by the aperture). The opacity transition arm must be deleted: \`${t}\``,
                 );
             }
             // The active layer must show IMMEDIATELY (`visibility 0s`, no deferred delay) — the :434 rule.
@@ -188,12 +198,39 @@ export function detectLockstep(dockCss) {
         }
     }
 
+    // (leaving, AW.W2) — the leaving pane is the SOLE surviving opacity animation
+    // (the thin polish). It carries no own `transition` (it inherits the base
+    // rule's `opacity var(--dock-motion-resize)`), so the lockstep anchor is the
+    // base rule above. Assert the leaving-pane rule EXISTS and is opacity:0 +
+    // painted (visibility:visible) so the base-rule fade actually runs on it.
+    const leavingBody = matchRuleBody(
+        dockCss,
+        /\.dock-layer-item-host\.is-leaving\s*\{/,
+    );
+    if (leavingBody === null) {
+        violations.push(
+            "dock.css: the `.dock-layer-item-host.is-leaving` rule is missing — the leaving-pane fade (the sole opacity animation under clip-reveal) is gone",
+        );
+    } else {
+        facts.leavingFadesOnBaseToken = /opacity\s+var\(--dock-motion-resize\)/.test(
+            transitionValue(baseBody) ?? "",
+        );
+        if (/opacity\s*:\s*0/.test(leavingBody) === false) {
+            violations.push(
+                "the leaving pane must target opacity:0 (it fades out as the aperture reveals the active content)",
+            );
+        }
+    }
+
+    // AW.W2 lockstep = the morph rides --dock-motion-resize AND the leaving fade
+    // (the base-rule opacity transition the leaving pane inherits) names it too,
+    // AND the active pane has NO opacity transition (it is revealed, not faded).
     facts.lockstep =
         morphUsesResize &&
         baseBody !== null &&
         /opacity\s+var\(--dock-motion-resize\)/.test(transitionValue(baseBody) ?? "") &&
         activeBody !== null &&
-        /opacity\s+var\(--dock-motion-resize\)/.test(transitionValue(activeBody) ?? "");
+        !/opacity\s+var\(/.test(transitionValue(activeBody) ?? "");
 
     return { facts, violations };
 }

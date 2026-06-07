@@ -1,233 +1,275 @@
-# AW.W2 - Dock motion unification (one clock, one velocity)
+# AW.W2 - Dock motion unification (clip-reveal, ONE clock)
 
 ## State
 
-**Name**: W2 - Dock motion unification
+**Name**: W2 - Dock motion unification (clip-reveal one-clock)
 **Opens after**: AW.W1 (the collapse morph must paint before lockstep can be measured on it)
 **Agents**: 1 serial
-**Hard gate**: `proof:dock-animation-live` asserts opacity re-seats from its live value (not 0%) through a mid-flight retarget on a CRITICALLY-DAMPED opacity companion (monotone, no overshoot), the width/opacity arrival delta holds `<= 16.7ms` (one frame) on the interrupted swap, and `proof:spring-tokens-synced` proves `DOCK_SPRING` and the `--spring-dock` token moved together to the retuned control curve.
-**Status**: planned
+**Hard gate**: `proof:dock-clip-reveal` (NEW, born-RED) asserts the active pane is revealed by
+the clip aperture (opacity == 1 every morph frame, content box clipped by the growing/shrinking
+box) rather than faded; `proof:dock-animation-live` (widened) asserts the OWN collapse↔expand
+morph rises over ≥3 frames on BOTH engines + BOTH orientations with the OPACITY sampler re-pointed
+to the LEAVING pane; `proof:spring-tokens-synced` (extended) asserts `DOCK_SPRING` and the
+`--spring-dock` token carry the SAME `(response, ζ)` inside the iOS control band AND every quoted
+doc-comment number matches the const (the doc-as-code drift catch).
+**Status**: REWRITTEN (clip-reveal model — supersedes the prior two-spring companion draft)
 
 ## Goal criterion
 
-This wave succeeds if the dock's size, opacity, and rail indicator settle as ONE
-interruptible motion — when a swap is retargeted mid-flight the opacity carries
-its current value forward with its companion solver's velocity instead of
-restarting its CSS `linear()` ramp from 0%, and the retuned `--spring-dock`
-response + damping sit in the iOS control band (response 0.30–0.35, ζ 0.7–0.8) so
-a hover-triggered dock reads instant and settled rather than lush or playful. The
-structural fix is to drive pane opacity from a `SpringProgress` clock SLAVED to
-the size morph's progress but CRITICALLY DAMPED (no overshoot on the fade — the
-size may overshoot the box, the opacity must not), retiring the parallel CSS
-opacity `transition` for the JS-driven path.
+This wave succeeds if the dock's size + content + leaving-fade settle as ONE motion with ZERO
+opacity writes on the active pane, because **the box IS the reveal aperture** and content is laid
+out ONCE at its natural size behind it. The growing aperture uncovers a static layout (the active
+pane never reflows per frame, never fades — it is at `opacity:1` from frame 0). Opacity is a thin
+polish on the LEAVING pane only — it fades the outgoing summary out as the real content is
+uncovered underneath. There is NO second timeline driving content: the size spring (FLIP path)
+or the View-Transition (native path) is the sole clock.
+
+This corrects the prior W2 draft, which kept TWO timelines (a size spring + a critically-damped
+opacity COMPANION spring) and spent its budget tuning them into agreement. The companion spring is
+a patch for a structure that should not exist — collapse the two timelines, don't tune them.
+See `docs/tranches/AW/audit/dock-perfection-plan.md` §1.
+
+**The spring is NOT retuned in this wave.** The `(0.32, 0.7)` iOS-control retune is ALREADY LANDED
+(`useLayerTransition.ts:19`, `regen-spring-tokens.mjs:56-60`, `tokens.css:163` — all carry
+`(0.32, 0.7)`, overshoot ~+4.6%, the "AW.W2 retune" comment). The only token work in this wave is
+the doc-drift comment fix (the comments still say the pre-retune `(0.5, 0.5)/+18.5%`).
 
 ## Scope
 
-1. Drive pane opacity from the size morph's clock, but NOT off the overshoot
-   size-spring's pixel curve. The naive fold — `p = (w - fromSize) / (toSize -
-   fromSize)` off the `(0.5, 0.5)` overshoot spring — hard-couples the fade to the
-   size OVERSHOOT, so the opacity clamps-then-pops (a flicker) exactly when the box
-   springs past its target: the anti-pattern the digest's own Lane 8 G1 / Lane 6
-   §B name (opacity must be critically damped; the M3 spatial-vs-effects split puts
-   size on a spatial/overshoot spring and effects/opacity on a damped curve).
-   Instead, allocate a SECOND `SpringProgress` for opacity — a CRITICALLY-DAMPED
-   companion (ζ ≈ 1.0, target `0→1`) co-`play()`d from the same gesture origin so
-   it shares the morph's start/interrupt timing but settles MONOTONE without
-   overshoot. One gesture, two solvers (an overshoot size spring + a damped opacity
-   spring), retiring the independent CSS `opacity var(--dock-motion-resize)`
-   transition on `.dock-layer-item-host` for the JS path. Lockstep by shared
-   gesture origin + the same `--spring-dock` response, NOT by sharing the overshoot
-   curve (Lane 1 α, Lane 2 β, Lane 3 α; Lane 8 G1 no-flicker rule).
-2. Velocity-carry the opacity through a retarget. The size morph already re-seats
-   from `(value, velocity)` on an interrupted swap (`useLayerTransition.ts:243`,
-   the `live` detection; the re-seat lands at `:316-317` `activeSpring.target =
-   toSize`); allocate the opacity companion the SAME retarget treatment — on an
-   interrupt, re-seat the damped opacity solver from its current `(value,
-   velocity)` rather than snap the fade back to 0% (the residual lag tell — Lane 1
-   finding 1, Lane 2 (a)).
-3. Keep the CSS `opacity var(--dock-motion-resize)` rule on `.dock-layer{,-item-host}`
-   ONLY as the reduced-motion / no-JS / View-Transitions fallback. One opacity
-   owner per path: the spring on the FLIP path, the VT group on the native path,
-   the CSS transition under PRM — never two authorities on one path (the AV.W9.1
-   one-owner-per-concern invariant).
-4. Retune `DOCK_SPRING` from `{response: 0.5, dampingFraction: 0.5}` (~+18.5%
-   overshoot — the "playful, slightly much for a system dock" register the digest
-   Lane 3 F3 names) toward the digest's iOS-control guidance: `response` in
-   `0.30–0.35`, `dampingFraction` in `0.7–0.8` (the digest's `bounce 0.12-0.18,
-   ζ≈0.7-0.8` damping advice — ≈5–8% overshoot, settled not bouncy). The prior W2
-   draft picked the digest's RESPONSE advice but the OPPOSITE damping (ζ 0.5–0.55,
-   MORE overshoot) — corrected here to the digest's damping guidance so the dock
-   reads more iOS-control, not more playful. DRY check: a `0.30–0.35 / 0.7–0.8`
-   dock lands NEAR the existing `snappy` preset (`response 0.35, ζ 0.65`,
-   `regen-spring-tokens.mjs:38-40`) but is not identical (snappy is less damped);
-   if the landed pair rounds onto `snappy`'s curve, ALIAS the `dock` token to
-   `--spring-snappy` (drop the duplicate PRESETS row) rather than ship a twin
-   register — and `DOCK_SPRING` consumes the same `(response, ζ)` (DRY). Per the
-   regen contract this MUST co-edit BOTH `DOCK_SPRING` (`useLayerTransition.ts:19`)
-   AND the `dock` PRESETS row (`scripts/regen-spring-tokens.mjs`) and re-run `node
-   scripts/regen-spring-tokens.mjs` so `--spring-dock` in `tokens.css` re-emits —
-   or the JS driver and the CSS token drift (Lane 1 γ, Lane 3 β).
-5. Unify the travelling rail `TabsIndicator` onto the SAME retuned `--spring-dock`
-   curve the layer morph uses, so selecting a rail tab moves the indicator and
-   crossfades the pane on one motion vocabulary (the indicator already rides
-   `--dock-motion-resize` at `dock.css:835` — verify it inherits the retuned
-   token and does not carry a stale hardcoded easing; Lane 1 δ, Lane 3 η).
+1. **Migrate the clip shell to a `data-morphing`-gated single-axis `overflow: clip`.** Replace
+   `dock.css:104-106` (`.glass-dock { overflow: hidden }`) and the morph-START clip-lift at
+   `dock.css:603` (`.glass-dock.expanded { overflow: visible }`, which lifts at frame 0 because
+   `.expanded` is bound synchronously to `visualExpanded` at `GlassDock.vue:368`). The clip is now
+   keyed off a `data-morphing` attribute the driver owns (set at gesture start, cleared on settle),
+   so the clip PERSISTS through the morph and lifts only at rest:
+
+   ```css
+   .glass-dock:not(.vertical) { overflow-x: clip; overflow-y: visible; }
+   .glass-dock.vertical       { overflow-x: visible; overflow-y: clip; }
+   .glass-dock[data-morphing]:not(.vertical) { overflow-x: clip; overflow-y: visible; }
+   .glass-dock[data-morphing].vertical       { overflow-x: visible; overflow-y: clip; }
+   .glass-dock.expanded:not([data-morphing]),
+   .glass-dock.always-expanded:not([data-morphing]) { overflow: visible; }
+   ```
+
+   `overflow:clip` is paint-only (NOT a scroll container), so it drops the `min-width:0` scroll-box
+   dance for the non-scroll shell and cannot snag a scroll-driven-animation scroller. The cross
+   axis is ALWAYS explicitly `visible` (the MDN single-axis-clip-degrades-to-hidden caveat). The
+   legitimate scroll ports (`.dock-scroll-{x,y}`, `overflow:auto`, dock.css:642-672) STAY `auto` —
+   they are NOT migrated.
+
+2. **Delete the active-pane opacity transition; the active pane is statically `opacity:1`** (revealed
+   by the aperture, never faded). The exact CSS delta at `dock.css:547-559`:
+
+   ```css
+   .dock-layer.layer-active,
+   .dock-layer-item-host.is-active {
+       opacity: 1;
+       visibility: visible;
+       pointer-events: auto;
+       transition: visibility 0s;   /* DELETE the `opacity var(--dock-motion-resize)` arm */
+   }
+   ```
+
+   The LEAVING pane keeps `opacity:0` + the `opacity var(--dock-motion-resize)` transition
+   (`dock.css:535-536, 565-569`) — the ONLY surviving opacity animation, the thin polish. The
+   AU.W8b 3-state VISIBILITY fork (`dock.css:495-582`, the a11y-006 anchor) governs `visibility`,
+   NOT opacity, so this deletion does NOT touch it — it is PRESERVED VERBATIM.
+
+3. **The driver writes SIZE ONLY and owns the `data-morphing` lifecycle.** In
+   `useLayerTransition.ts`: DELETE any companion-opacity-spring plan (it was never built — the
+   prior draft only proposed it). The `play()` callback writes `setDim(el, "${w}px")` and nothing
+   else (no opacity). Add `el.setAttribute("data-morphing","")` at gesture start (alongside
+   `setWillChange`, `:295`) and `el.removeAttribute("data-morphing")` on settle (alongside
+   `clearWillChange`, `:329`), on the safety timeout (`:341`), and in `onTransitionEnd` (`:359`).
+   On the native VT path set it synchronously inside the `startViewTransition` callback (`:202-205`)
+   and clear on `finished.finally` (`:206-209`). The existing retarget (the live-spring re-seat at
+   `:242-243` + `:316-317`) is PRESERVED — a retarget that changes the target layer re-measures
+   `toSize` via the existing `getSize` after the deferred class swap (`:278`), which reads the new
+   active layer's max-content, so the clip-reveal layout-behind assumption holds across a
+   layer-identity-change-mid-flight with no new code.
+
+4. **Carve the dual-driver races on the morph axis.** The `.glass-dock.vertical` transition list
+   (`dock.css:290-297`) includes BOTH `height` AND `width` — a latent dual-driver race for the
+   height-morphing rail (the inner stack's spring writes height, the root transitions height too).
+   Carve it to NON-morph properties only (padding/shadow/transform/background/border), matching how
+   `.glass-dock:not(.vertical)` (`dock.css:262-268`) already excludes `width`. Same carve on
+   `.dock-layer-stack` (`dock.css:854-860`, transitions BOTH width AND height): the spring owns the
+   morph axis, so carve the CSS transition to the cross axis only (the VT path owns both on the
+   native engine).
+
+5. **Carve the content-intrinsic axis per orientation.** The hardcoded
+   `.dock-layer { white-space:nowrap; height: var(--dock-layer-height) }` (`dock.css:585-592`) is
+   correct for horizontal but forces a one-line row on a vertical rail. Scope `white-space:nowrap`
+   + the fixed `height` to `:not(.vertical)` contexts; the vertical group's active host already
+   block-sizes (`dock.css:888-897`, KEPT) so the height aperture reveals an intrinsic-sized column.
+
+6. **Fix the 5-site doc-drift.** The spring is `(0.32, 0.7)` but five comments still say the
+   pre-retune `(0.5, 0.5)/+18.5%`: `useLayerTransition.ts:8-9` and `:305`, and `tokens.css:149`,
+   `:1290`, `:1297`, `:1299`. Correct all five to `(0.32, 0.7)`, overshoot `~+4.6%`. The
+   `proof:spring-tokens-synced` comment-match assert scans all of them (so a future retune that
+   trusts a stale comment over the const cannot desync CSS from JS).
 
 ## Triumvirate Dispatch
 
 A triumvirate is mandatory when:
 
-- the file bounds expand beyond the listed five paths — in particular if driving
-  opacity from the spring forces a change to the visibility/hit-test 3-state fork
-  (`dock.css:486`, the load-bearing a11y-006 bite-anchor), which is a separate
-  owner and must be re-planned, not folded in;
-- `proof:dock-animation-live` shows the opacity re-seat introduces an
-  inter-frame opacity discontinuity on a clean (non-interrupted) expand (a
-  regression of the AU.W2 lockstep the retune must preserve);
-- the third iteration of choosing the retuned `(response, ζ)` pair cannot land the
-  digest's settled band (ζ 0.7–0.8, ≈5–8% overshoot) while keeping arrival under
-  one frame — escalate rather than fall back to the high-overshoot ζ 0.5 "playful"
-  register the digest rejects for a system dock.
+- the file bounds expand beyond the listed paths — in particular if the `overflow:clip` migration
+  alters paint order such that a portaled popover no longer stays above the dock during a
+  collapsed:hover scale (the load-bearing stacking-context guarantee, `dock.css:62-67`), which is a
+  separate owner and must be re-planned, not patched in;
+- `proof:dock-clip-reveal` shows the active pane STILL fades (the active-pane opacity transition
+  was not fully deleted) or the aperture does not clip (the `data-morphing` lifecycle is not wired
+  on one of the two engines);
+- the widened `proof:dock-animation-live` vertical inner-group timeline surfaces a pre-existing
+  vertical-rail morph bug the carve (scope 4) does not close — escalate to own it as a separate
+  diagnosis rather than widening the morph window to mask it.
 
 ## File Bounds
 
 | File | Access |
 |---|---|
-| `src/components/custom/dock/composables/useLayerTransition.ts` | modify |
-| `src/styles/dock.css` | modify |
-| `scripts/regen-spring-tokens.mjs` | modify |
-| `src/styles/tokens.css` | modify (generated `--spring-*` block only — via the regen) |
-| `scripts/proof-dock-animation-live.mjs` | modify |
-| `scripts/proof-spring-tokens-synced.mjs` | modify (extend the drift-only check with the response/overshoot BAND assert — see Hard Gate 2; this file is NOT in the prior draft's bounds but the band-assert lands here) |
+| `src/components/custom/dock/composables/useLayerTransition.ts` | modify (data-morphing lifecycle; size-only write; the 2-site doc-drift fix; NO companion spring; NO retune) |
+| `src/styles/dock.css` | modify-carve (overflow:hidden→data-morphing-gated single-axis clip; DELETE active-pane opacity transition; carve the .vertical + .dock-layer-stack morph-axis transitions; carve the content-intrinsic axis) |
+| `src/styles/tokens.css` | modify (the 3-site `(0.5,0.5)` doc-comment fix ONLY — the `--spring-*` block is generated + already correct; NOT re-run) |
+| `scripts/proof-dock-clip-reveal.mjs` | create (the born-RED clip-reveal gate) |
+| `scripts/proof-dock-animation-live.mjs` | modify (re-point the opacity sampler to the LEAVING pane; add the vertical inner-group height timeline) |
+| `scripts/proof-spring-tokens-synced.mjs` | modify (add the BAND assert + the comment-match drift assert — both NET-NEW; the gate only does committed-vs-generated drift today) |
+| `tests/components/custom/dock/dock-clip-reveal.detect.test.ts` | create (pure detectors over synthetic timelines) |
 
-Do NOT touch: `GlassDock.vue` (W1's surface — the size-morph regression is closed
-there before W2 opens), `DockLayerGroup.vue`, the dock visibility 3-state fork
-markers in `dock.css` (`AU.W8b-visibility-fork`), `view-transition.css` (the VT
-group recipe stays the native-path opacity owner — W3 touches the typed-VT half).
+Do NOT touch: `GlassDock.vue` (W1's surface — the only band-A change to it is the `data-morphing`
+attribute, which the DRIVER sets via the root ref, not the template), `regen-spring-tokens.mjs`
+(the retune is landed — the PRESETS row is already `(0.32, 0.7)`; re-running it is a no-op and the
+gate proves no drift), the dock visibility 3-state fork markers (`AU.W8b-visibility-fork`),
+`view-transition.css` (the VT group recipe stays the native-path opacity owner — W3 touches the
+typed-VT half).
 
 ## Disjointness
 
-Single agent unit. W2 SEQUENCES after W1 (both touch `useLayerTransition.ts`); they
-never run in parallel. `tokens.css` is written only through the regenerator
-(`proof:spring-tokens-synced` enforces the committed block equals the generator
-output), never hand-edited.
+Single agent unit. W2 SEQUENCES after W1 (both touch `useLayerTransition.ts`); they never run in
+parallel. `tokens.css`'s `--spring-*` block is written only through the regenerator and is already
+correct; W2 edits ONLY the prose `(0.5,0.5)` doc comments around it (not the generated lines), and
+`proof:spring-tokens-synced` confirms the generated block stays drift-free.
 
 ## Agent Units
 
-### AW.W2.a One-clock opacity + velocity-carry + control retune
+### AW.W2.a Clip-reveal one-clock + dual-driver carve + doc-drift fix
 
-- Goal: opacity rides a critically-damped companion slaved to the size morph's
-  gesture, the retuned response + damping sit in the iOS control band, and the
-  rail indicator shares the curve.
-- Mechanism: allocate a second `SpringProgress` for opacity (ζ ≈ 1.0, target
-  `0→1`, the critically-damped companion) co-`play()`d from the SAME gesture
-  origin as the size spring; write `host.style.opacity` for the active/leaving
-  panes from its monotone progress (NOT off the overshoot size curve, which would
-  pop the fade). On a retarget re-seat BOTH solvers from their current `(value,
-  velocity)` so the derived opacity continues from its live value. Demote the CSS
-  `opacity var(--dock-motion-resize)` rule to a `@supports`/PRM fallback owner.
-  Retune `DOCK_SPRING` + the `dock` PRESETS row to `response 0.30–0.35 / ζ
-  0.7–0.8` (ALIAS to `--spring-snappy` if the pair rounds onto it — DRY) and
-  re-run the generator. Confirm the `TabsIndicator` rule (`dock.css:835`) names the
-  retuned `--dock-motion-resize` (= `--spring-dock`) and carries no stale literal
-  easing.
-- Files: `useLayerTransition.ts`, `dock.css`, `regen-spring-tokens.mjs`,
-  `tokens.css` (via regen), `proof-dock-animation-live.mjs`,
-  `proof-spring-tokens-synced.mjs`
-- Sub-gate: `npm run proof:dock-animation-live` reports the opacity timeline
-  re-seats from a non-zero value on the retarget probe (no snap-to-0%) AND is
-  MONOTONE (no overshoot frame above 1.0 or dip-then-rise), the interrupted-swap
-  width/opacity arrival delta `<= 16.7ms`, and `proof:spring-tokens-synced` is
-  GREEN with the retuned curve inside the asserted band.
+- Goal: the box is the reveal aperture (single-axis `overflow:clip` gated on `data-morphing`); the
+  active pane is statically `opacity:1`; the spring writes size only; the morph-axis dual-driver
+  races are carved; the 5-site doc-drift is corrected. ZERO opacity writes on the active pane, ONE
+  per-frame JS write total (size).
+- Mechanism: migrate the clip shell; delete the active-pane opacity transition; wire the
+  `data-morphing` set/clear lifecycle on BOTH engines; carve the `.vertical` + `.dock-layer-stack`
+  morph-axis transitions to the cross axis; scope the content-intrinsic axis per orientation; fix
+  the 5 doc-comment sites.
+- Files: `useLayerTransition.ts`, `dock.css`, `tokens.css` (doc comments only),
+  `proof-dock-clip-reveal.mjs`, `proof-dock-animation-live.mjs`, `proof-spring-tokens-synced.mjs`,
+  `dock-clip-reveal.detect.test.ts`
+- Sub-gate: `npm run proof:dock-clip-reveal` reports the active pane opacity == 1 across every
+  morph frame and the content box clipped by the aperture (born-RED on the 3.3.0
+  hidden+active-fade model); `npm run proof:dock-animation-live` reports ≥3 rising morph frames on
+  BOTH engines + BOTH orientations (the vertical timeline on the inner DockLayerGroup) with the
+  leaving-pane opacity falling 0; `npm run proof:spring-tokens-synced` GREEN with the band + the
+  comment-match assert.
 
 ## Hard Gate
 
-1. `npm run proof:dock-animation-live` — extend the retarget probe to also sample
-   active-layer OPACITY across the interruption and assert: (a) on the re-toggle
-   the first post-interrupt opacity frame is within the companion's natural
-   per-frame stride of the pre-interrupt value (NOT a jump to ~0); (b) the opacity
-   series is MONOTONE — no frame exceeds 1.0 and no overshoot-then-correct dip
-   (the critically-damped companion must not pop); (c) width/opacity arrival
-   co-occur within one frame (16.7ms) on the interrupted swap. The 3.3.0 build
-   (CSS `linear()` opacity) would show an opacity snap-to-0% on the retarget —
-   capture that as the born-RED witness, GREEN after. (Harness-gated SKIP like W1;
-   the born-RED + GREEN opacity series are captured in the Playwright env.)
-2. `npm run proof:spring-tokens-synced` — the committed `--spring-*` block equals
-   the generator output (the drift check it already enforces); EXTENDED here with a
-   BAND assert: `DOCK_SPRING` and the `dock` PRESETS row carry the SAME retuned
-   `(response, ζ)`, `response` is in `[0.30, 0.35]`, `dampingFraction` is in
-   `[0.70, 0.80]`, and the derived overshoot (the closed-form `exp(-ζπ/√(1-ζ²))`)
-   is in `[0.05, 0.10]` (the settled iOS-control band, NOT the prior draft's
-   `[0.15, 0.20]` playful band). The band-assert lands in
-   `scripts/proof-spring-tokens-synced.mjs` (now in File Bounds), which today only
-   checks committed-equals-generator drift. If the dock pair aliases onto
-   `--spring-snappy`, the assert verifies the alias (no separate `dock` row) rather
-   than a band on a duplicated row.
-3. `npm run proof:dock-opacity-lockstep` GREEN — the CSS fallback rules still name
-   `--dock-motion-resize` (the PRM/VT path's one-token lockstep is intact).
-4. `npm run proof:dock-motion-parity` GREEN — VT and FLIP still share one timing
-   source.
-5. `npm run typecheck` clean; `npm run build` green (the regen leaves `tokens.css`
-   committed-equal to the generator).
+1. `npm run proof:dock-clip-reveal` (NEW Playwright gate, harness-gated SKIP) — on the
+   start-collapsed two-layer dock + the demo:
+   (a) across EVERY morph frame the active pane's opacity == 1 (it is REVEALED by the aperture,
+   never faded);
+   (b) the active pane's content box is clipped by the aperture (rendered content width tracks
+   `min(natural, aperture)` — content never paints at full size past a half-collapsed box);
+   (c) BOTH engines (FLIP + VT), BOTH orientations.
+   BORN-RED on the 3.3.0 `overflow:hidden`+active-opacity-fade model: a frame exists where the
+   active pane's opacity < 1 while the box is still wide (the "content fades, not revealed" tell).
+   Captured in the MCP/dev Playwright env; born-RED + GREEN artefacts saved.
+2. `npm run proof:dock-animation-live` (widened) — rAF-samples the OWN collapse↔expand morph over
+   ≥3 rising frames, BOTH FLIP and VT, BOTH orientations. The horizontal timeline stays on the
+   outer start-collapsed pair; the NEW vertical timeline drives an INNER `<DockLayerGroup
+   orientation="vertical">` layer switch and samples the stack's `height` rising ≥3 frames (the
+   outer pair is hardcoded horizontal, `GlassDock.vue:205` — the vertical morph is the inner
+   group's, not the outer's). The OPACITY sampler is RE-POINTED to the LEAVING pane (the
+   `.dock-layer--summary` on an expand / the inner leaving host), which falls 0 over ≥3 frames; the
+   ACTIVE pane is asserted statically opacity == 1. Asserts ONE driver per axis (no CSS transition
+   on the morph axis the spring writes).
+3. `npm run proof:spring-tokens-synced` (extended) — the committed `--spring-*` block equals the
+   generator output (the drift check it already does); EXTENDED with (a) a BAND assert:
+   `DOCK_SPRING` and the `dock` PRESETS row carry the SAME `(response, ζ)`, `response∈[0.30,0.35]`,
+   `ζ∈[0.70,0.80]`, derived overshoot `exp(-ζπ/√(1-ζ²))∈[0.05,0.10]`; (b) a COMMENT-MATCH assert:
+   every quoted `(response, ζ)` / overshoot number in the doc comments (`useLayerTransition.ts:8`,
+   `:305`; `tokens.css:149`, `:1290`, `:1297`, `:1299`) matches the const. BOTH are NET-NEW — the
+   gate only checks committed-vs-generated drift today. The `(0.32, 0.7)` already passes the band
+   (no retune); the comment-match is the bite (born-RED on HEAD — the comments still say
+   `(0.5, 0.5)`).
+4. `npm run proof:dock-opacity-lockstep` GREEN — the LEAVING-pane fade still names
+   `--dock-motion-resize` (the one-token lockstep is intact).
+5. `npm run proof:dock-motion-single-source` + `npm run proof:dock-motion-parity` GREEN — one rAF
+   origin, one easing token; VT and FLIP share one timing source.
+6. `npm run typecheck` clean; `npm run build` green (the `--spring-*` block stays committed-equal to
+   the generator — only doc comments changed).
 
 ## Format And Lint Cadence
 
-`node scripts/regen-spring-tokens.mjs` is run (not skipped) after the PRESETS
-edit, and `proof:spring-tokens-synced` confirms no drift before close.
-`npm run typecheck` after the composable edit. Prettier over the `.mjs` files.
-`git diff --check` for whitespace. The five proof gates run before close.
+`node scripts/regen-spring-tokens.mjs` is NOT re-run (the PRESETS row is already correct; running
+it is a no-op). `proof:spring-tokens-synced` confirms no drift before close. `npm run typecheck`
+after the composable edit. Prettier over the new/modified `.mjs` + `.test.ts`. `git diff --check`
+for whitespace. The six proof gates run before close.
 
 ## Verification Artefacts
 
-- `docs/tranches/AW/audit/W2-motion-unify.json` — the gate artefact (captured in
-  the Playwright env): the born-RED 3.3.0 opacity-snap-on-retarget timeline + the
-  GREEN monotone-re-seat timeline; the retuned `(response, ζ)` + derived overshoot
-  inside the `[0.05, 0.10]` band (or the `--spring-snappy` alias decision).
-- The `git diff` of the `--spring-*` block in `tokens.css` (the retuned dock row).
-- The retarget opacity series (pre/post interrupt) proving velocity-carry.
+- `docs/tranches/AW/audit/W2-clip-reveal.json` — the gate artefact (captured in the Playwright
+  env): the born-RED 3.3.0 active-pane-fades timeline + the GREEN aperture-reveal timeline (active
+  opacity == 1 every frame, content clipped by the aperture); the leaving-pane fade series; the
+  bi-axial rising-frame counts (horizontal outer pair + vertical inner group).
+- The `git diff` of the 5 doc-comment sites (the `(0.5,0.5)`→`(0.32,0.7)` correction).
+- The `proof:spring-tokens-synced` band + comment-match output (the comment-match born-RED on HEAD,
+  GREEN after the doc fix).
 
 ## Commit Plan
 
-- `feat(dock): drive pane opacity from a critically-damped companion spring` — the
-  `useLayerTransition.ts` + `dock.css` fold (body: the two-clock desync, the
-  CSS-`linear()`-restarts-from-0%-on-retarget root cause, WHY opacity rides a
-  damped companion not the overshoot size curve — the Lane 8 G1 no-flicker rule —
-  the one-owner-per-path preservation).
-- `feat(dock): retune --spring-dock to the iOS control band (response 0.3–0.35, ζ 0.7–0.8)` —
-  the `regen-spring-tokens.mjs` PRESETS edit + the regenerated `tokens.css` block
-  (body: the digest damping guidance, the dual-write contract, the settled
-  `[0.05, 0.10]` overshoot band, the `--spring-snappy` alias decision if it rounds on).
-- `test(dock): retarget opacity velocity-carry + overshoot-band assertions` — the
-  gate extension.
-- `docs(AW): W2 close — motion-unify artefact + status`.
+- `feat(dock): clip-reveal morph — the box is the aperture, one spring clock` — the
+  `useLayerTransition.ts` (data-morphing lifecycle, size-only write) + `dock.css`
+  (overflow:hidden→data-morphing-gated single-axis clip, DELETE the active-pane opacity transition)
+  fold (body: WHY clip-reveal collapses the two timelines the prior draft tuned into agreement; the
+  active pane is REVEALED not faded; the leaving pane is the only opacity animation; the
+  data-morphing lifts the clip on settle not at morph start).
+- `fix(dock): carve the vertical + layer-stack morph-axis dual-driver races` — the `.glass-dock.vertical`
+  + `.dock-layer-stack` transition carve + the content-intrinsic-axis carve (body: the spring owns
+  the morph axis, a CSS transition on the same axis is the AV.W9.0 dual-driver race).
+- `docs(dock): correct the 5-site (0.5,0.5) spring doc-drift to (0.32,0.7)` — the comment fix
+  (body: the const is already retuned; the comments lied; a future retune trusting them desyncs).
+- `test(dock): proof:dock-clip-reveal + the leaving-pane opacity sampler + the band/comment-match
+  asserts` — the gate fleet.
+- `docs(AW): W2 close — clip-reveal artefact + status`.
 
 ## Dependencies
 
-- **Depends on**: AW.W1 (the collapse morph must paint — opacity-on-the-driver is
-  meaningless on a frozen box).
-- **Blocks**: AW.W3 (the typed-VT directional intent + hover-scale unification
-  layer onto the unified one-clock motion this wave establishes); slides H.W1.
+- **Depends on**: AW.W1 (the collapse morph must paint — clip-reveal is meaningless on a frozen box).
+- **Blocks**: AW.W3 (the typed-VT directional intent + spring-keyed stagger + hover-scale layer onto
+  the clip-reveal one-clock motion this wave establishes); slides H.W1.
 
 ## Archaeology
 
-- AU.W2 moved the layer fade off `--dock-motion-fast` (0.2s) onto
-  `--dock-motion-resize` so fade + morph share a duration token — narrowing the
-  reported 100ms desync (`proof:dock-opacity-lockstep` records the original bug).
-  But a shared TOKEN is not a shared CLOCK: the size rides a live JS ODE, the
-  opacity rides a baked 48-stop `linear()` over a fixed duration, so on an
-  interruption the size re-seats with velocity while the opacity ramp restarts
-  from 0% (Lane 1 finding 1, Lane 2 (a)).
-- AV.W9.2 added velocity-continuity to the SIZE spring's retarget; the opacity was
-  left on its independent CSS clock. W2 extends the AV.W9.2 contract to the second
-  tweened axis.
-- New guardrail: `proof:dock-animation-live` samples opacity ACROSS the retarget
-  (not only width) AND asserts it MONOTONE (the critically-damped companion must
-  not pop) — the prior probe asserted size velocity-continuity but never witnessed
-  the opacity snap, so the residual lag shipped green.
-- Corrected from the prior W2 draft: that draft drove opacity off the overshoot
-  size curve (`p = (w-fromSize)/(toSize-fromSize)`) and retuned the dock to ζ
-  0.5–0.55 (~15–20% overshoot). Both are the digest's own named anti-patterns —
-  opacity-on-overshoot flickers (Lane 8 G1 / Lane 6 §B), and ζ 0.5 is the
-  "playful, too much for a system dock" register (Lane 3 F3). This wave drives
-  opacity off a critically-damped companion and retunes to the digest's settled ζ
-  0.7–0.8, aliasing onto `--spring-snappy` if the pair rounds on (DRY).
+- AU.W2 moved the layer fade off `--dock-motion-fast` onto `--dock-motion-resize` so fade + morph
+  shared a duration TOKEN — narrowing the reported 100ms desync. But a shared token is not the
+  point: under clip-reveal the active pane has NO fade at all (it is revealed by the box), so the
+  question of fade-vs-morph lockstep dissolves for the active pane. The leaving pane keeps the
+  shared-token fade (`proof:dock-opacity-lockstep` records it).
+- AV.W9.0 retired the native container-morph arm (a dual-driver width race); AV.W9.1 retired the
+  native discrete-visibility arm (a third opacity/visibility authority). W2 completes the
+  one-owner-per-concern story: the active pane has ZERO opacity authority (the aperture reveals it),
+  the leaving pane has ONE (the shared-token CSS fade), visibility has ONE (the AU.W8b fork), size
+  has ONE (the spring/VT).
+- The spring retune `(0.5,0.5)`→`(0.32,0.7)` is ALREADY LANDED (the "AW.W2 retune" comment in
+  `regen-spring-tokens.mjs:59`). The prior W2 draft scoped the retune AND a companion opacity
+  spring; both are removed — the retune is done, and the companion is the wrong model. W2 is now the
+  clip-reveal one-clock fold + the doc-drift the landed retune left behind.
+- Corrected from the prior W2 draft: that draft kept TWO timelines (a size spring + a
+  critically-damped opacity companion) and a stale-but-detailed gate around monotone-opacity. The
+  apple-motion + lockstep findings are unanimous — collapse the two timelines, don't tune them. W2
+  is rewritten around the aperture; the gate is `proof:dock-clip-reveal` (the active pane is
+  revealed, not faded), and the existing `proof:dock-animation-live` opacity sampler — which
+  REQUIRES the active opacity to rise ≥3 frames — is re-pointed to the leaving pane (the active
+  pane is now statically opacity:1, so the old assert would have gone RED on the kept gate).

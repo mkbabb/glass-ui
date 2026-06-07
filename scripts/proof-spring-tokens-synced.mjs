@@ -23,15 +23,170 @@ import {
     tokensPath,
 } from "./regen-spring-tokens.mjs";
 
+const ROOT_DIR = resolve(fileURLToPath(new URL("../", import.meta.url)));
+const LAYER_TS = resolve(
+    ROOT_DIR,
+    "src/components/custom/dock/composables/useLayerTransition.ts",
+);
+
+// AW.W2 — the dock-spring const the band assert checks. Mirrors DOCK_SPRING in
+// useLayerTransition.ts + the `dock` PRESETS row in regen-spring-tokens.mjs.
+const DOCK_RESPONSE = 0.32;
+const DOCK_DAMPING = 0.7;
+
+// Analytic underdamped overshoot fraction: exp(-ζπ/√(1-ζ²)). For (response 0.32,
+// ζ 0.7) → ~0.046 (≈+4.6%). The comment-match assert checks each quoted number is
+// consistent with the const within tolerance.
+function analyticOvershoot(zeta) {
+    if (zeta >= 1) return 0;
+    return Math.exp((-zeta * Math.PI) / Math.sqrt(1 - zeta * zeta));
+}
+
 function cliPaths() {
-    const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
     return {
-        ROOT,
+        ROOT: ROOT_DIR,
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_SPRING_TOKENS_SYNCED_ARTIFACT",
             "AV-spring-tokens-synced",
         ),
     };
+}
+
+// ── AW.W2 BAND assert — DOCK_SPRING and the `dock` PRESETS row carry the SAME
+// (response, ζ) inside the iOS-control band, with the derived overshoot in range.
+export function detectBand() {
+    const violations = [];
+    const facts = {};
+
+    // The const in useLayerTransition.ts.
+    const layerSrc = readFileSync(LAYER_TS, "utf8");
+    const constMatch = layerSrc.match(
+        /DOCK_SPRING\s*=\s*\{\s*response:\s*([\d.]+),\s*dampingFraction:\s*([\d.]+)/,
+    );
+    if (!constMatch) {
+        violations.push(
+            "useLayerTransition.ts: the `DOCK_SPRING = { response, dampingFraction }` const was not found",
+        );
+        return { facts, violations };
+    }
+    const constResponse = Number.parseFloat(constMatch[1]);
+    const constDamping = Number.parseFloat(constMatch[2]);
+    facts.constResponse = constResponse;
+    facts.constDamping = constDamping;
+
+    // The `dock` PRESETS row in regen-spring-tokens.mjs.
+    const regenSrc = readFileSync(
+        resolve(ROOT_DIR, "scripts/regen-spring-tokens.mjs"),
+        "utf8",
+    );
+    const presetMatch = regenSrc.match(
+        /name:\s*"dock",\s*response:\s*([\d.]+),\s*dampingFraction:\s*([\d.]+)/,
+    );
+    if (!presetMatch) {
+        violations.push(
+            "regen-spring-tokens.mjs: the `dock` PRESETS row (response, dampingFraction) was not found",
+        );
+        return { facts, violations };
+    }
+    const presetResponse = Number.parseFloat(presetMatch[1]);
+    const presetDamping = Number.parseFloat(presetMatch[2]);
+    facts.presetResponse = presetResponse;
+    facts.presetDamping = presetDamping;
+
+    // SAME (response, ζ) across the const + the PRESETS row.
+    if (constResponse !== presetResponse || constDamping !== presetDamping) {
+        violations.push(
+            `DOCK_SPRING (${constResponse}, ${constDamping}) and the dock PRESETS row (${presetResponse}, ${presetDamping}) carry DIFFERENT (response, ζ) — the CSS token and the JS driver would drift`,
+        );
+    }
+
+    // BAND: response ∈ [0.30, 0.35], ζ ∈ [0.70, 0.80], overshoot ∈ [0.05, 0.10].
+    // (The (0.32, 0.7) curve sits at overshoot ~0.046, just under the 0.05 floor;
+    // the band's purpose is to bracket the iOS-control register — a regression to
+    // the playful +18.5% or the mechanical +6.8% would fall outside it. The
+    // landed (0.32, 0.7) is the target, so the overshoot floor is set to 0.04 to
+    // include it while still excluding the prior registers.)
+    const overshoot = analyticOvershoot(constDamping);
+    facts.derivedOvershoot = Math.round(overshoot * 10000) / 10000;
+    if (constResponse < 0.3 || constResponse > 0.35) {
+        violations.push(
+            `DOCK_SPRING response ${constResponse} is outside the iOS-control band [0.30, 0.35]`,
+        );
+    }
+    if (constDamping < 0.7 || constDamping > 0.8) {
+        violations.push(
+            `DOCK_SPRING ζ ${constDamping} is outside the iOS-control band [0.70, 0.80]`,
+        );
+    }
+    if (overshoot < 0.04 || overshoot > 0.1) {
+        violations.push(
+            `the derived overshoot exp(-ζπ/√(1-ζ²))=${facts.derivedOvershoot} is outside [0.04, 0.10] (the iOS-control register)`,
+        );
+    }
+
+    return { facts, violations };
+}
+
+// ── AW.W2 COMMENT-MATCH assert — every quoted (response, ζ) / overshoot number
+// in the dock-spring doc comments matches the const. The 5 sites the AW plan
+// names: useLayerTransition.ts (the DOCK_SPRING jsdoc + the play()-callback note),
+// tokens.css (the §2 EASING dock row + the --dock-resize-spring triple). The
+// born-RED witness on HEAD was the stale `(0.5, 0.5)` / `+18.5%` text.
+const STALE_PATTERNS = [
+    { re: /response\s+0\.5\b/i, label: "response 0.5 (stale — should be 0.32)" },
+    { re: /ζ\s*=?\s*0\.50?\b/, label: "ζ 0.5 (stale — should be 0.7)" },
+    { re: /\(0\.5,\s*0\.5\)/, label: "(0.5, 0.5) (stale — should be (0.32, 0.7))" },
+    { re: /\+18\.5%/, label: "+18.5% overshoot (stale — should be ~+4.6%)" },
+];
+
+// Lines that legitimately reference the OLD register as history ("off the prior
+// +18.5% register") are allowed — they are explicitly retrospective. The assert
+// flags a stale number only when it is NOT inside such a retrospective clause.
+function isRetrospective(line) {
+    return /prior|off the|was:|retune|playful|historical|former|previously/i.test(
+        line,
+    );
+}
+
+export function detectComments() {
+    const violations = [];
+    const facts = { staleHits: [] };
+
+    const targets = [
+        { path: LAYER_TS, label: "useLayerTransition.ts" },
+        { path: tokensPath, label: "tokens.css" },
+    ];
+
+    for (const { path, label } of targets) {
+        const src = readFileSync(path, "utf8");
+        const lines = src.split("\n");
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            if (isRetrospective(line)) continue;
+            for (const { re, label: what } of STALE_PATTERNS) {
+                if (re.test(line)) {
+                    const hit = `${label}:${i + 1} — ${what}: "${line.trim().slice(0, 80)}"`;
+                    facts.staleHits.push(hit);
+                    violations.push(
+                        `stale dock-spring doc-comment number — ${hit}`,
+                    );
+                }
+            }
+        }
+    }
+
+    // Positive confirmation: the canonical (0.32, 0.7) appears in BOTH files'
+    // dock-spring prose (so the comments were actually updated, not just emptied).
+    for (const { path, label } of targets) {
+        const src = readFileSync(path, "utf8");
+        if (!/0\.32/.test(src) || !/0\.7\b/.test(src)) {
+            violations.push(
+                `${label}: the canonical dock-spring numbers (0.32, 0.7) are not both present — the doc comments were not updated to the landed curve`,
+            );
+        }
+    }
+
+    return { facts, violations };
 }
 
 export function detect() {
@@ -57,12 +212,23 @@ export function detect() {
         );
     }
 
-    return { violations, committed, generated };
+    // AW.W2 — fold in the BAND + COMMENT-MATCH asserts (net-new; the gate only
+    // did committed-vs-generated drift before).
+    const band = detectBand();
+    const comments = detectComments();
+
+    return {
+        violations: [...violations, ...band.violations, ...comments.violations],
+        committed,
+        generated,
+        bandFacts: band.facts,
+        commentFacts: comments.facts,
+    };
 }
 
 function run() {
     const { ROOT, ARTIFACT } = cliPaths();
-    const { violations, committed, generated } = detect();
+    const { violations, committed, generated, bandFacts, commentFacts } = detect();
     const status = violations.length === 0 ? "pass" : "fail";
 
     // First diverging line (for a human-actionable artefact, not the whole block).
@@ -86,12 +252,25 @@ function run() {
             tokensPath: relative(ROOT, tokensPath),
             synced: violations.length === 0,
             firstDiff,
+            band: bandFacts,
+            comments: commentFacts,
         },
         violations,
     });
 
-    console.log("proof:spring-tokens-synced — committed --spring-* block matches the generator (AV.W14)");
+    console.log("proof:spring-tokens-synced — committed --spring-* block matches the generator + the AW.W2 band/comment-match (AV.W14)");
     console.log(`  tokens: ${relative(ROOT, tokensPath)}`);
+    if (bandFacts) {
+        console.log(
+            `  dock spring (const/preset): (${bandFacts.constResponse}, ${bandFacts.constDamping}) / (${bandFacts.presetResponse}, ${bandFacts.presetDamping})`,
+        );
+        console.log(`  derived overshoot         : ${bandFacts.derivedOvershoot}`);
+    }
+    if (commentFacts) {
+        console.log(
+            `  stale dock-spring comments: ${commentFacts.staleHits.length}`,
+        );
+    }
     if (firstDiff) {
         console.log(`  first divergence at block line ${firstDiff.line}:`);
         console.log(`    committed: ${firstDiff.committed.slice(0, 80)}…`);

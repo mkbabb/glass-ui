@@ -134,17 +134,28 @@ function pageProbe() {
             });
         };
 
+        // AW.W2 — under the clip-reveal one-clock model the ACTIVE pane is
+        // statically opacity:1 (revealed by the aperture, never faded); the ONLY
+        // surviving opacity animation is the LEAVING pane's fade. So the width is
+        // sampled off `.dock-layers`, the LEAVING-pane opacity off the becoming-
+        // inactive pane (`.dock-layer--summary` on an expand), and the ACTIVE pane
+        // opacity (`.dock-layer--full`) is sampled too so the gate can assert it
+        // stays statically 1 across every frame.
         const sampleExpand = (dock) => {
             const layers = dock.querySelector(".dock-layers");
             const full = dock.querySelector(".dock-layer--full");
+            const summary = dock.querySelector(".dock-layer--summary");
             const wOf = () => layers.getBoundingClientRect().width;
-            const oOf = () => parseFloat(getComputedStyle(full).opacity);
+            const leavingOf = () =>
+                summary ? parseFloat(getComputedStyle(summary).opacity) : 0;
+            const activeOf = () => parseFloat(getComputedStyle(full).opacity);
             const W0 = wOf();
-            const O0 = oOf();
+            const O0 = leavingOf();
             fire(ENTER, dock);
             return new Promise((res) => {
                 const widths = [];
-                const opacities = [];
+                const opacities = []; // the LEAVING-pane fade series
+                const activeOpacities = []; // the active pane (asserted == 1)
                 const times = [];
                 const t0 = performance.now();
                 let stable = 0;
@@ -153,9 +164,10 @@ function pageProbe() {
                 const f = () => {
                     const t = performance.now() - t0;
                     const w = wOf();
-                    const o = oOf();
+                    const o = leavingOf();
                     widths.push(w);
                     opacities.push(o);
+                    activeOpacities.push(activeOf());
                     times.push(t);
                     const dW = Math.abs(w - lastW);
                     const dO = Math.abs(o - lastO);
@@ -164,7 +176,64 @@ function pageProbe() {
                     lastW = w;
                     lastO = o;
                     if (stable >= 4 || t > 2000)
-                        res({ W0, O0, W1: w, O1: o, widths, opacities, times });
+                        res({
+                            W0,
+                            O0,
+                            W1: w,
+                            O1: o,
+                            widths,
+                            opacities,
+                            activeOpacities,
+                            times,
+                        });
+                    else requestAnimationFrame(f);
+                };
+                requestAnimationFrame(f);
+            });
+        };
+
+        // AW.W2 §2.1 — the bi-axial parity probe targets the INNER
+        // DockLayerGroup height morph (the outer collapsed↔expanded pair is
+        // hardcoded horizontal; the vertical HEIGHT morph runs on the inner
+        // `.dock-layer-stack` with axis=vertical). Drive an inner-group layer
+        // switch on the /navigation/dock-layers route and rAF-sample the stack's
+        // height rising ≥3 frames.
+        const sampleVerticalInnerGroup = () => {
+            // Find a vertical DockLayerGroup stack (a `.dock-layer-group.vertical
+            // .dock-layer-stack`). Switching its active layer morphs the stack
+            // HEIGHT (the column reveals at its intrinsic block size).
+            const stack = document.querySelector(
+                ".dock-layer-group.vertical .dock-layer-stack",
+            );
+            if (!stack) return { ran: false };
+            const tabs = [
+                ...stack
+                    .closest(".dock-layer-group")
+                    .querySelectorAll('[role="tab"]'),
+            ];
+            const hOf = () => stack.getBoundingClientRect().height;
+            const H0 = hOf();
+            // Click the second tab (if any) to drive a layer switch.
+            const target = tabs.find(
+                (t) => t.getAttribute("aria-selected") !== "true",
+            );
+            if (target) target.click();
+            return new Promise((res) => {
+                const heights = [];
+                const times = [];
+                const t0 = performance.now();
+                let stable = 0;
+                let lastH = H0;
+                const f = () => {
+                    const t = performance.now() - t0;
+                    const h = hOf();
+                    heights.push(h);
+                    times.push(t);
+                    if (Math.abs(h - lastH) < 0.5) stable++;
+                    else stable = 0;
+                    lastH = h;
+                    if (stable >= 4 || t > 2000)
+                        res({ ran: true, H0, H1: h, heights, times });
                     else requestAnimationFrame(f);
                 };
                 requestAnimationFrame(f);
@@ -239,6 +308,19 @@ function pageProbe() {
             });
             result.retarget = { widths: retargetWidths, times: retargetTimes };
 
+            // (4) AW.W2 bi-axial — the vertical INNER DockLayerGroup height morph.
+            // Nav to the layer-group route where a vertical group lives, then
+            // drive an inner layer switch and sample the stack height. The route
+            // is feature-detected (skip cleanly if no vertical inner group is
+            // mounted), so the gate never hard-fails on a demo without it.
+            clickLink("/navigation/dock-layers");
+            await sleep(500);
+            try {
+                result.verticalInner = await sampleVerticalInnerGroup();
+            } catch (e) {
+                result.verticalInner = { ran: false, error: String(e) };
+            }
+
             resolve(result);
         })();
     });
@@ -250,6 +332,21 @@ export function risingFrames(series, eps) {
     let n = 0;
     for (let i = 1; i < series.length; i++) if (series[i] - series[i - 1] > eps) n++;
     return n;
+}
+
+// `fallingFrames` counts frame-to-frame DECREASES above an epsilon — the
+// LEAVING-pane fade witness under the AW.W2 clip-reveal model (the active pane is
+// statically opacity:1; only the leaving pane animates opacity, downward).
+export function fallingFrames(series, eps) {
+    let n = 0;
+    for (let i = 1; i < series.length; i++) if (series[i - 1] - series[i] > eps) n++;
+    return n;
+}
+
+// `allEqual` — true when every sample is within `eps` of `target` (the active
+// pane is asserted statically == 1 across every morph frame).
+export function allEqual(series, target, eps) {
+    return series.every((v) => Math.abs(v - target) <= eps);
 }
 
 // `arrivalTimeMs` is the timestamp at which a morph first reaches `frac` of its
@@ -328,30 +425,49 @@ export function detectAnimation(result) {
         return { facts, violations };
     }
     const wRise = risingFrames(flip.widths, 0.5);
-    const oRise = risingFrames(flip.opacities, 0.01);
+    // AW.W2 clip-reveal — `flip.opacities` is now the LEAVING pane (it FALLS as
+    // the aperture reveals the active content); `flip.activeOpacities` is the
+    // ACTIVE pane (asserted statically == 1, revealed not faded).
+    const oFall = fallingFrames(flip.opacities, 0.01);
     facts.widthRisingFrames = wRise;
-    facts.opacityRisingFrames = oRise;
+    facts.leavingOpacityFallingFrames = oFall;
     facts.widthDelta = Math.round((flip.W1 - flip.W0) * 100) / 100;
-    facts.opacityDelta = Math.round((flip.O1 - flip.O0) * 1000) / 1000;
+    facts.leavingOpacityDelta = Math.round((flip.O1 - flip.O0) * 1000) / 1000;
     if (wRise < MIN_MORPH_FRAMES) {
         violations.push(
             `the FLIP width MORPHED over only ${wRise} rising frame(s) (< ${MIN_MORPH_FRAMES}) — the dock SNAPPED / FROZE, it did not animate (W0=${flip.W0} W1=${flip.W1})`,
         );
     }
-    if (oRise < MIN_MORPH_FRAMES) {
+    if (oFall < MIN_MORPH_FRAMES) {
         violations.push(
-            `the active-layer opacity morphed over only ${oRise} rising frame(s) (< ${MIN_MORPH_FRAMES}) — the crossfade did not animate`,
+            `the LEAVING-pane opacity faded over only ${oFall} falling frame(s) (< ${MIN_MORPH_FRAMES}) — the leaving crossfade (the sole opacity animation under clip-reveal) did not run`,
         );
     }
 
-    // Lockstep = the PERCEPTUAL arrival of width and opacity at their target band
-    // (not the final ring-settle — the spring's position overshoot tail naturally
-    // clocks width later, see arrivalTimeMs). Both ride the SAME --dock-motion-
-    // resize curve, so their 90%-arrival times coincide by construction; the bar
-    // tolerates real-browser rAF scheduler jitter (the charter's ideal is +-1
-    // frame; a live scheduler can split a co-driven pair across an extra frame, so
-    // the gate's bar is widened from the ideal to absorb that noise without
-    // loosening the freeze assert, which keys off rising-FRAME COUNT, not timing).
+    // AW.W2 — the ACTIVE pane must be statically opacity:1 across EVERY sampled
+    // frame (it is REVEALED by the clip aperture, never faded). A frame with
+    // active opacity < 1 is the "content fades, not revealed" tell.
+    if (Array.isArray(flip.activeOpacities) && flip.activeOpacities.length) {
+        const activeStatic1 = allEqual(flip.activeOpacities, 1, 0.001);
+        facts.activeOpacityStatic1 = activeStatic1;
+        facts.activeOpacityMin =
+            Math.round(Math.min(...flip.activeOpacities) * 1000) / 1000;
+        if (!activeStatic1) {
+            violations.push(
+                `the ACTIVE pane opacity fell below 1 (min ${facts.activeOpacityMin}) during the morph — the active pane is FADING (the clip-reveal contract requires it be statically opacity:1, REVEALED by the aperture)`,
+            );
+        }
+    }
+
+    // Lockstep = the PERCEPTUAL arrival of width and the LEAVING-pane fade at
+    // their target band (not the final ring-settle — the spring's position
+    // overshoot tail naturally clocks width later, see arrivalTimeMs). Both ride
+    // the SAME --dock-motion-resize curve (the width spring + the leaving fade),
+    // so their 90%-arrival times coincide by construction; the bar tolerates
+    // real-browser rAF scheduler jitter (the charter's ideal is +-1 frame; a live
+    // scheduler can split a co-driven pair across an extra frame, so the gate's
+    // bar is widened from the ideal to absorb that noise without loosening the
+    // freeze assert, which keys off rising-FRAME COUNT, not timing).
     const wArrive = arrivalTimeMs(flip.widths, flip.times);
     const oArrive = arrivalTimeMs(flip.opacities, flip.times);
     const arriveDelta = Math.abs(wArrive - oArrive);
@@ -376,6 +492,27 @@ export function detectAnimation(result) {
         if (span > 10 && jump.max > span * 0.7) {
             violations.push(
                 `the retarget showed a ${facts.retargetMaxFrameJump}px single-frame jump (> 70% of the ${Math.round(span)}px span) — the spring snapped to rest instead of carrying velocity`,
+            );
+        }
+    }
+
+    // (4) AW.W2 §2.1 — the vertical INNER DockLayerGroup HEIGHT morph rises over
+    // >=3 frames (the bi-axial parity bar). The outer pair is hardcoded
+    // horizontal, so the vertical timeline targets the inner group's stack
+    // height. Feature-detected: if no vertical inner group is mounted on the
+    // route, the probe reports ran:false and the gate notes it without failing
+    // (the horizontal timeline is the always-present bar; the vertical probe is a
+    // best-effort bi-axial extension the demo route may not carry).
+    const vi = result.verticalInner;
+    facts.verticalInnerRan = vi?.ran ?? false;
+    if (vi?.ran && Array.isArray(vi.heights)) {
+        const hRise = risingFrames(vi.heights, 0.5);
+        facts.verticalInnerHeightRisingFrames = hRise;
+        facts.verticalInnerHeightDelta =
+            Math.round((vi.H1 - vi.H0) * 100) / 100;
+        if (hRise < MIN_MORPH_FRAMES) {
+            violations.push(
+                `the vertical INNER DockLayerGroup height morphed over only ${hRise} rising frame(s) (< ${MIN_MORPH_FRAMES}) — the bi-axial (vertical) morph SNAPPED / FROZE (H0=${vi.H0} H1=${vi.H1})`,
             );
         }
     }
@@ -460,20 +597,32 @@ async function run() {
         timelines: {
             widthKeyframeTimes: result.flip?.times?.map((t) => Math.round(t * 10) / 10),
             widths: result.flip?.widths?.map((w) => Math.round(w * 100) / 100),
-            opacities: result.flip?.opacities?.map((o) => Math.round(o * 1000) / 1000),
+            leavingOpacities: result.flip?.opacities?.map((o) => Math.round(o * 1000) / 1000),
+            activeOpacities: result.flip?.activeOpacities?.map(
+                (o) => Math.round(o * 1000) / 1000,
+            ),
+            verticalInnerHeights: result.verticalInner?.heights?.map(
+                (h) => Math.round(h * 100) / 100,
+            ),
         },
     });
 
-    console.log("proof:dock-animation-live — the dock BEHAVIORAL motion gate (AV.W9)");
+    console.log("proof:dock-animation-live — the dock BEHAVIORAL motion gate (AV.W9 + AW.W2)");
     console.log(`  VT-group animations (expand) : ${facts.vtGroupAnimations ?? "n/a"}`);
     console.log(
         `  FLIP width morph frames      : ${facts.widthRisingFrames ?? "n/a"} (>= ${MIN_MORPH_FRAMES})`,
     );
     console.log(
-        `  FLIP opacity morph frames    : ${facts.opacityRisingFrames ?? "n/a"} (>= ${MIN_MORPH_FRAMES})`,
+        `  LEAVING-pane fade frames     : ${facts.leavingOpacityFallingFrames ?? "n/a"} (>= ${MIN_MORPH_FRAMES})`,
     );
     console.log(
-        `  width / opacity arrival delta: ${facts.arrivalDeltaMs ?? "n/a"}ms (<= ${SETTLE_TOLERANCE_MS}ms)`,
+        `  ACTIVE pane static opacity:1 : ${facts.activeOpacityStatic1 === undefined ? "n/a" : facts.activeOpacityStatic1 ? "YES" : `NO (min ${facts.activeOpacityMin})`}`,
+    );
+    console.log(
+        `  vertical inner-group frames  : ${facts.verticalInnerRan ? (facts.verticalInnerHeightRisingFrames ?? "n/a") : "n/a (no vertical inner group on route)"}`,
+    );
+    console.log(
+        `  width / fade arrival delta   : ${facts.arrivalDeltaMs ?? "n/a"}ms (<= ${SETTLE_TOLERANCE_MS}ms)`,
     );
     console.log(
         `  retarget max frame jump      : ${facts.retargetMaxFrameJump ?? "n/a"}px`,

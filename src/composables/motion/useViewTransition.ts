@@ -36,7 +36,20 @@ interface ViewTransitionLike {
 }
 
 interface DocumentWithViewTransition {
-    startViewTransition?: (callback: () => void) => ViewTransitionLike;
+    startViewTransition?: (
+        callbackOrOptions:
+            | (() => void)
+            | { update: () => void; types?: string[] },
+    ) => ViewTransitionLike;
+}
+
+/** Options for `startViewTransition`. `types` (Chrome 140+, absent on Firefox
+ *  144) tag the active transition so `:active-view-transition-type(<t>)` CSS can
+ *  author DIRECTION-specific curves. Feature-detected — when the engine lacks the
+ *  object-with-`types` overload the call degrades to the plain-callback form
+ *  (one symmetric curve), which is functionally identical (the swap still runs). */
+export interface ViewTransitionOptions {
+    types?: string[];
 }
 
 export interface ViewTransitionResult {
@@ -70,14 +83,24 @@ export function supportsViewTransitions(): boolean {
  * is identical regardless of support.
  *
  * @param mutate the synchronous DOM/state change to animate between.
+ * @param options optional `{ types }` — directional transition types tagged on
+ *   the active transition for `:active-view-transition-type(<t>)` CSS curves
+ *   (Chrome 140+; feature-detected, degrades to one symmetric curve elsewhere).
  * @returns `{ finished, transitioned }` — await `finished` to route focus.
  *
  * @example
  *   const { finished } = startViewTransition(() => { rows.value = reranked });
  *   await finished;            // animation done
  *   firstRow.value?.focus();   // consumer routes focus (the a11y MANDATORY)
+ *
+ * @example
+ *   // directional intent — snappier exit on collapse, softer entry on expand
+ *   startViewTransition(() => mutate(), { types: ["dock-expand"] });
  */
-export function startViewTransition(mutate: () => void): ViewTransitionResult {
+export function startViewTransition(
+    mutate: () => void,
+    options?: ViewTransitionOptions,
+): ViewTransitionResult {
     const doc =
         typeof document === "undefined"
             ? undefined
@@ -88,7 +111,15 @@ export function startViewTransition(mutate: () => void): ViewTransitionResult {
         return { finished: Promise.resolve(), transitioned: false };
     }
 
-    const vt = doc.startViewTransition(() => mutate());
+    // The object-form `{ update, types }` overload is Chrome 140+. When a
+    // consumer passes `types` we use it; on an engine that lacks the overload the
+    // browser ignores the unknown `types` key (it still reads `update`), so the
+    // call degrades to the single symmetric curve — no separate feature-probe
+    // needed beyond gating the object form on a non-empty `types`.
+    const vt =
+        options?.types && options.types.length > 0
+            ? doc.startViewTransition({ update: () => mutate(), types: options.types })
+            : doc.startViewTransition(() => mutate());
     // fail-explicit: befitting — 'ready' rejects 'Transition was skipped' on a
     // rapid re-trigger; the swallow prevents an unhandled pageerror; 'ready' is
     // otherwise unread, so there is no real failure to surface.
