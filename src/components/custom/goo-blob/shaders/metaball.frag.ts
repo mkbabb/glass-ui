@@ -101,6 +101,19 @@ uniform vec2 uSatPos[MAX_SATS];
 uniform float uSatRadius[MAX_SATS];
 uniform float uSatOpacity[MAX_SATS];
 
+// Pointer trail (W10) — a decaying-radius pseudopod toward the cursor. uTrail is a
+// COMPILE-TIME-SIZED array (GLSL ES 3.00 forbids a uniform-sized array) with a
+// DYNAMIC break on uTrailCount, mirroring the satellite loop. Later samples paint
+// smaller metaballs (r *= 1 - i/N) so the trail tapers into a tail.
+#define TRAIL_N 15
+uniform int uTrailCount;
+uniform vec2 uTrailPos[TRAIL_N];
+uniform float uTrailRadius[TRAIL_N];
+
+// Velocity-driven volume-preserving squash-and-stretch (W10).
+uniform vec2 uVelocity;   // smoothed pointer velocity (motion direction + speed)
+uniform float uStretch;   // squash-stretch magnitude (0 = off)
+
 const float PI = 3.141592653589793;
 ` +
     NL +
@@ -137,11 +150,24 @@ float sceneDist(vec2 uv) {
     // Pulsing body radius.
     float bodyR = uBodyRadius + sin(uPulsePhase) * uPulseAmp;
 
+    // Velocity-driven VOLUME-PRESERVING squash-and-stretch (W10). Stretch the body
+    // along the motion direction by sa = 1 + |v|*k and squash the PERPENDICULAR
+    // axis by EXACTLY 1/sa (NOT 1 - amt, which loses area so the blob SHRINKS at
+    // speed). Applied as an anisotropic basis in body space: q = (dot/sa, dot*sa).
+    vec2 bodyUv = uv;
+    float speed = length(uVelocity);
+    if (uStretch > 0.0 && speed > 1e-4) {
+        vec2 ax = uVelocity / speed;          // motion axis (unit)
+        vec2 perp = vec2(-ax.y, ax.x);        // perpendicular
+        float sa = 1.0 + speed * uStretch;    // stretch factor along motion
+        bodyUv = vec2(dot(uv, ax) / sa, dot(uv, perp) * sa);
+    }
+
     // Domain-warped FBM displacement — the organic marbled watercolor membrane.
-    float noiseVal = fbmWarped(uv * uNoiseFreq + uTime * uNoiseSpeed, 3, uWarpAmp);
+    float noiseVal = fbmWarped(bodyUv * uNoiseFreq + uTime * uNoiseSpeed, 3, uWarpAmp);
     float bodyDisplacement = (noiseVal - 0.5) * uNoiseAmp;
 
-    float d = sdCircle(uv, vec2(0.0), bodyR + bodyDisplacement);
+    float d = sdCircle(bodyUv, vec2(0.0), bodyR + bodyDisplacement);
 
     // Satellites — smin-merged into the body (uMerge selects quadratic/circular).
     for (int i = 0; i < MAX_SATS; i++) {
@@ -149,6 +175,15 @@ float sceneDist(vec2 uv) {
         float satD = sdCircle(uv, uSatPos[i], uSatRadius[i]);
         satD += (1.0 - uSatOpacity[i]) * 0.3;
         d = smin(d, satD, uSmoothK);
+    }
+
+    // Pointer trail — a decaying-radius pseudopod reaching toward the cursor,
+    // smin-merged so it stretches an elastic limb and snaps back. COMPILE-TIME
+    // array, DYNAMIC break (mirrors the satellite loop).
+    for (int i = 0; i < TRAIL_N; i++) {
+        if (i >= uTrailCount) break;
+        float trailD = sdCircle(uv, uTrailPos[i], uTrailRadius[i]);
+        d = smin(d, trailD, uSmoothK);
     }
     return d;
 }
@@ -185,7 +220,9 @@ vec3 surfaceNormal(vec2 uv, float d, float bodyR) {
 void main() {
     vec2 uv = vUv - 0.5;
 
-    // Pointer deformation
+    // Pointer deformation — honor the SIGN of uPointerAttraction (W10): a positive
+    // attraction leans the body IN toward the cursor, a negative shies it AWAY. The
+    // signed influence flows straight into the UV shift (no hardcoded repulsion).
     if (uPointerActive > 0.5) {
         vec2 pointerDir = uPointer - uv;
         float pointerDist = length(pointerDir);

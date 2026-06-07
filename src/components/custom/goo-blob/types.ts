@@ -109,6 +109,10 @@ export interface BlobConfig {
     // Pointer
     pointerAttraction: number;
     pointerStrength: number;
+    /** Velocity-driven volume-preserving squash-and-stretch magnitude (0 = off). */
+    stretch: number;
+    /** Click spring-impulse amplitude (a one-shot bouncy pulse on the body radius). */
+    clickImpulse: number;
 
     // Satellites
     eccentricity: number;
@@ -156,8 +160,12 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
     rimPower: 2.5,
     rimStrength: 0.5,
 
-    pointerAttraction: 0.0,
+    // Non-zero so hover is felt out of the box (W10): a small lean-IN toward the
+    // cursor. Negative shies away; the shader honors the sign.
+    pointerAttraction: 0.35,
     pointerStrength: 0.08,
+    stretch: 0.4,
+    clickImpulse: 0.5,
 
     eccentricity: 0.25,
     orbitSpeedScale: 1.0,

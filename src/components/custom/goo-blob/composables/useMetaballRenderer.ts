@@ -14,6 +14,8 @@ import type { BlobPointer } from "./useBlobPointer";
 import type { BlobSatelliteSystem } from "./useBlobSatellites";
 
 const MAX_SATS = 4;
+/** Compile-time trail length — mirrors `TRAIL_N` in metaball.frag.ts + useBlobPointer.ts. */
+const TRAIL_N = 15;
 
 /** Diagnostic label for the shared compile/link error path (AV.W14). */
 const BLOB_LABEL = "[GooBlob]";
@@ -57,6 +59,9 @@ const UNIFORM_NAMES = [
     "uColorNoiseFreq",
     "uColorNoiseSpeed",
     "uSatCount",
+    "uTrailCount",
+    "uVelocity",
+    "uStretch",
 ] as const;
 
 type UniformName = (typeof UNIFORM_NAMES)[number];
@@ -229,6 +234,15 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     satOpLocs.push(gl.getUniformLocation(prog, `uSatOpacity[${i}]`));
                 }
 
+                // Per-trail-element locations (mirrors the satellite plumbing; the
+                // trail is a separate COMPILE-TIME-SIZED uTrail[TRAIL_N] array).
+                const trailPosLocs: (WebGLUniformLocation | null)[] = [];
+                const trailRadLocs: (WebGLUniformLocation | null)[] = [];
+                for (let i = 0; i < TRAIL_N; i++) {
+                    trailPosLocs.push(gl.getUniformLocation(prog, `uTrailPos[${i}]`));
+                    trailRadLocs.push(gl.getUniformLocation(prog, `uTrailRadius[${i}]`));
+                }
+
                 gl.enable(gl.BLEND);
                 gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 
@@ -253,9 +267,21 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     const dtMs = lastTimeSec ? (timeSec - lastTimeSec) * 1000 : 16;
                     lastTimeSec = timeSec;
 
-                    // Advance the simulation systems.
+                    // Advance the simulation systems. Under reduced-motion the
+                    // SUBSTRATE paints ONE static frame then parks (it owns PRM, no
+                    // parallel matchMedia here); on that frame the interaction layer
+                    // COMPOSES the deterministic rest pose (spring at centre, zero
+                    // velocity, trail collapsed, pulse zero) rather than advancing.
+                    // Otherwise the pointer spring is fed the per-frame `dtMs`
+                    // (frame-rate-independent; the first post-park dt is clamped
+                    // inside `tick`).
+                    const reduced = canvasHandle?.reducedMotion ?? false;
                     mood.tick(dtMs);
-                    pointer.tick();
+                    if (reduced) {
+                        pointer.rest();
+                    } else {
+                        pointer.tick(dtMs);
+                    }
                     satellites.tick(now, mood.params.value);
 
                     const params = mood.params.value;
@@ -278,16 +304,53 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     );
                     gl.uniform1f(U.uPointerStrength, config.pointerStrength * POS_SCALE);
 
+                    // Velocity-driven squash-and-stretch (W10). The spring velocity
+                    // (normalized [-1,1]/s) maps into body space like the pointer.
+                    const vel = pointer.velocity.value;
+                    gl.uniform2f(
+                        U.uVelocity,
+                        vel.x * 0.5 * POS_SCALE,
+                        vel.y * 0.5 * POS_SCALE,
+                    );
+                    gl.uniform1f(U.uStretch, config.stretch);
+
+                    // Pointer trail (W10) — decaying-radius pseudopod. The trail is
+                    // in the same normalized [-1,1] space as the pointer, so map it
+                    // exactly like uPointer (`* 0.5 * POS_SCALE`).
+                    const trail = pointer.trailSources(config.satelliteRadius * 0.7);
+                    gl.uniform1i(U.uTrailCount, trail.count);
+                    for (let i = 0; i < TRAIL_N; i++) {
+                        const posLoc = trailPosLocs[i] ?? null;
+                        const radLoc = trailRadLocs[i] ?? null;
+                        const t = trail.sources[i];
+                        if (t) {
+                            gl.uniform2f(
+                                posLoc,
+                                t.x * 0.5 * POS_SCALE,
+                                t.y * 0.5 * POS_SCALE,
+                            );
+                            gl.uniform1f(radLoc, t.radius * POS_SCALE);
+                        } else {
+                            gl.uniform2f(posLoc, 0, 0);
+                            gl.uniform1f(radLoc, 0);
+                        }
+                    }
+
                     // Body — config is the base, mood params modulate.
                     gl.uniform1f(U.uBodyRadius, config.bodyRadius * POS_SCALE);
                     gl.uniform1f(
                         U.uPulsePhase,
                         timeSec * config.pulseFreq * params.pulseFreq * Math.PI * 2,
                     );
-                    // normalize to idle baseline
+                    // normalize to idle baseline + the one-shot click impulse (W10).
+                    // The pulse rings ± so it transiently fattens/thins the throb
+                    // amplitude — the click is FELT through the EXISTING uPulseAmp
+                    // channel (no parallel pulse path).
+                    const clickPulse = pointer.pulse.value * config.clickImpulse;
                     gl.uniform1f(
                         U.uPulseAmp,
-                        ((config.pulseAmp * params.pulseAmp) / 0.015) * POS_SCALE,
+                        (((config.pulseAmp * params.pulseAmp) / 0.015) + clickPulse) *
+                            POS_SCALE,
                     );
 
                     // Surface noise — config controls shape, mood scales amplitude.
