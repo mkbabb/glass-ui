@@ -6,7 +6,24 @@
 · **Audit** `deep-audit-corpus.json` slice `dock-top-spring` (index 5, findings F3/F4/F5) +
 `constellation-analysis-corpus.json` result 14 (idiom:speedtest — the EXTERNAL consumer enumeration) +
 result 28 (harden:dock-graphics — the consumer-list CORRECTION: Slider is mis-listed, the real direct set
-is 4) + `converge-digest.md` (the speedtest cross-repo breakage fold).
+is 4) + `converge-digest.md` (the speedtest cross-repo breakage fold) · **RE-OPEN (convergence)**
+`docs/tranches/AX/audit/convergence/D3.md` (the post-3.8.0 live-truth carry: the MOTION-SHAPE arm — see
+the §MOTION-SHAPE re-open below).
+
+> **RE-OPEN — MOTION-SHAPE arm (convergence D3; status: complete + carry-row).** The first close
+> excised the bezier and governed the spring REGISTER, but DELIBERATELY preserved the BouncyToggle press
+> KEYFRAME SHAPE (its own GREEN ledger records the carry verbatim — `liveArmNotes`:
+> *"BouncyToggle still bounces (PLAYFUL — overshoot survives the map)"*). The post-3.8.0 live audit proved
+> the preserved shape IS the user's loudest motion defect (USER-DEFECTS D3 — "BouncyTabs egregious /
+> jarring / too abrupt"). `animatePress` (BouncyToggle.vue:143-154) DOUBLE-springs — a keyframe TRACK that
+> bakes its own positional overshoot (`scale(1)→0.96→1.08→1`, where `1.08` = `--scale-hover` mis-recruited
+> as the press rebound peak) crammed UNDER the `--spring-bouncy` linear() easing (which adds its OWN ~+20.5%
+> overshoot between every adjacent keyframe pair), all in a hardcoded 200 ms. The register swap W05 already
+> made was necessary-but-insufficient: the abruptness is the keyframe-SHAPE × easing COMPOSITION, not the
+> register alone. This arm re-opens the SAME `BouncyToggle.vue` motion W05 owns — it does NOT re-litigate the
+> spring-vocabulary content below; it finishes the half W05 deferred. The MOTION-SHAPE additions are tagged
+> **[MS]** throughout (RED witness 4, Scope §6, the FileBounds row, the press-keyframe-shape gate arm, the π
+> close clause).
 
 ---
 
@@ -46,7 +63,42 @@ The wave is born-RED on three falsifiable witnesses at HEAD `eaba94f`:
   comment-sync gate does not scan (un-caught); a `--spring-*` preset with zero `var()` consumers passes
   `proof:animation-coherence` (which guards definition-uniqueness, not coverage).*
 
-The wave is RED at HEAD on all three; the HardGate below drives each to GREEN.
+- **RED witness 4 [MS] (the BouncyToggle press DOUBLE-springs — source-parse-falsifiable; convergence
+  D3).** `animatePress` (`BouncyToggle.vue:125-155`) authors the press feedback as a FOUR-keyframe
+  positional-overshoot TRACK under a spring `linear()` easing — two overshoot sources stacked. At HEAD
+  the body is (lines 139-154):
+
+  ```js
+  const easing = readToken("--spring-bouncy", "ease");   // ~+20.5% overshoot easing
+  const press  = readToken("--scale-press", "0.95");     // 0.96
+  const hover  = readToken("--scale-hover", "1.08");     // 1.08 — a HOVER token, mis-recruited
+  btn.animate(
+      [{ transform: "scale(1)" },
+       { transform: `scale(${press})`, offset: 0.25 },   // dip 0.96
+       { transform: `scale(${hover})`, offset: 0.7 },    // pop to 1.08 — the baked overshoot
+       { transform: "scale(1)" }],
+      { duration: 200, easing },                          // hardcoded 200ms, bouncy easing
+  );
+  ```
+
+  The track `1 → 0.96 → 1.08 → 1` is ALREADY an overshoot shape (the +8% pop at offset 0.7); the
+  `--spring-bouncy` easing then adds its own ~+20.5% overshoot BETWEEN each adjacent keyframe pair — so the
+  `0.96 → 1.08` segment is itself overshot and the `1.08 → 1` segment rings past 1.0 again, all compressed
+  into 200 ms. Net: the glyph snaps down, springs past 1.08, rings, resettles — the compounded
+  overshoot-in-200ms that reads as egregious/abrupt. Two SECONDARY defects ride along: (a) `--scale-hover`
+  (1.08, tokens.css:1090) is a HOVER-state token mis-recruited as the press REBOUND peak — the recovery pops
+  to the hover-grow size instead of settling to rest, so the pop reads as a "grow", not a "settle"; (b) the
+  `200` is a hardcoded literal off the `--duration-*` cascade the rest of the file already token-resolves via
+  `readToken`. **Falsifiable RED:** *parse `animatePress` — at HEAD it composes a 4-keyframe track whose 3rd
+  keyframe reads `--scale-hover` (a `> 1` peak) AND its easing is `--spring-bouncy` AND its `duration` is the
+  literal `200` (RED — double-spring on a hardcoded duration). After the wave it is the single iOS squish
+  track `scale(1) → scale(--scale-press) → scale(1)` (NO `> 1` keyframe — the governed spring supplies the
+  only rebound), eased on the CONTROL register `--spring-snappy`, at a token-resolved `--duration-normal`
+  (GREEN).*
+
+The wave is RED at HEAD on all four; the HardGate below drives each to GREEN. (Witnesses 1-3 are the
+original spring-vocabulary close — GREEN at 3.8.0; witness 4 [MS] is the convergence re-open and is the only
+born-RED witness at HEAD `at-dock-convergence`.)
 
 ---
 
@@ -56,6 +108,12 @@ The library converges onto ONE governed iOS-spring vocabulary — the four regen
 registers, each with a consumer and a surface-class rationale — with the legacy apple-spring cubic-bezier
 EXCISED, its 4 internal + 4 external consumers re-pointed, the slider-in-dock re-registered onto the dock
 curve, and the spring-pipeline gates truthed-up so no dead token or stale number can rot.
+
+**[MS] re-open goal (convergence D3).** And the BouncyToggle press feedback authors overshoot ONCE — the
+governed spring supplies the single rebound over an iOS press-squish track, on the CONTROL register that
+matches the slider-glide beside it, at a token-resolved duration — so the press reads SMOOTH, not the
+egregious double-spring-in-200ms the user flagged. Vocabulary governance (witnesses 1-3) and the press
+SHAPE it governs (witness 4) are ONE coherent spring story, finished.
 
 ---
 
@@ -123,6 +181,40 @@ governing rationale — read at three altitudes; one cohesive architectural fix:
    must not mint dead tokens. (Witness: `--spring-gentle` is consumed only via the `--ease-spring-gentle`
    alias today — the census decides whether the alias-only reach counts as a consumer or the preset is
    retired; RATIFY — see Open Questions.)
+
+6. **[MS] Collapse the BouncyToggle press double-spring to ONE governed overshoot (convergence D3 — the
+   re-open).** Rewrite `animatePress` (`BouncyToggle.vue:125-155`) so overshoot is authored ONCE, by the
+   governed spring, with the keyframe track reduced to the iOS press-squish shape. Three coupled edits, no
+   workaround, no new token:
+   - **Drop the `--scale-hover` keyframe.** Author the press TRACK as the down-and-settle squish
+     `scale(1) → scale(--scale-press) → scale(1)` (a 3-keyframe dip-and-return, NO `> 1` keyframe). The
+     governed spring's tail supplies the SINGLE rebound past 1.0 — the peak overshoot is then the spring's
+     once, not the product of two. This also excises the semantic error of recruiting the HOVER token
+     (`--scale-hover`, 1.08) as a PRESS rebound peak; the recovery settles to rest, not to the hover-grow
+     size. (`readToken("--scale-hover", …)` and the `hover` local are DELETED.)
+   - **Re-point the press easing PLAYFUL → CONTROL.** Read `--spring-snappy` (CONTROL, ~+6.8%), NOT
+     `--spring-bouncy` (PLAYFUL, ~+20.5%), for the press. This is W05's OWN restraint rule applied
+     (Scope §SOTA-deepening point 5, facets 5/14/16/18): a configurator tab clicked dozens of times is the
+     textbook high-frequency STRUCTURAL control that "rides the CONTROL register, never bouncy …
+     bounce>0.4 reads too exaggerated for a UI element." The press now matches the slider-glide it sits
+     beside (the `.bouncy-slider--anchor`/`--js` transitions already run `--spring-snappy`,
+     BouncyToggle.vue:350-373) — press and glide read as ONE coherent motion, not two competing springs.
+     (RATIFY at the π audit — Open Q6: if the toggle genuinely WANTS a brand-signature emphatic bounce, it
+     may stay PLAYFUL but ONLY after the double-spring is collapsed; the single-overshoot bouncy may already
+     read fine. The double-spring is the non-negotiable defect; the register is the RATIFY dial.)
+   - **Token-resolve the duration off the 200 ms literal.** Replace `duration: 200` with the ms resolved
+     from `--duration-normal` (0.3 s, tokens.css:76) via the SAME `readToken` pattern the file already uses
+     for the scales — a spring needs room to settle, and 200 ms forces the ring into a snap. WAAPI `duration`
+     is a number, so resolve `readToken("--duration-normal", "0.3s")` → parse to ms (no hand-rolled value;
+     `--duration-normal` over `--duration-fast` so the governed spring settles smoothly). The reduced-motion
+     early-return (BouncyToggle.vue:127-129) stays untouched.
+
+   This is the gestalt fix D3 names: ONE governed overshoot, on the register that matches the surrounding
+   glide, with enough duration to settle. Zero new tokens, zero new files — one `animatePress` rewrite on
+   tokens the file already reads. (Cross-checked: `proof:animation-coherence`'s press-fork literal-scale
+   detector STAYS GREEN — the WAAPI keyframes already resolve scale from the `--scale-press*` cohort via
+   `readToken`; it never saw the SHAPE defect, only literal scales. The new [MS] gate arm below adds the
+   shape assertion the literal-scale detector cannot.)
 
 ### SOTA deepening (liquid-glass research)
 
@@ -203,15 +295,16 @@ The iOS-26 Liquid-Glass corpus reframes W05 as the spring-vocabulary HALF of the
 | `src/styles/tokens.css` | **DELETE** `--motion-ease-apple-spring` (`:178`) + `--ease-apple-spring` alias (`:181`); strike/rewrite the apple-spring history comments (`:1304-1317`) to the excision rationale (no live dependency on the deleted token). EXTEND the regen-emitted PRESETS-comment surface to name the surface-class per register (or the rationale rides the regen script — see below). |
 | `src/styles/theme.css` | **DELETE** the `--ease-apple-spring: var(--motion-ease-apple-spring)` re-alias (`:361`). ADD `--slider-thumb-spring: var(--spring-dock)` if the slider re-point is expressed as a token (the dock-register default for the in-dock thumb). |
 | `src/components/custom/tabs/UnderlineTabs.vue` | `:75` — `var(--ease-apple-spring)` → `var(--spring-snappy)` (control register). |
-| `src/components/custom/tabs/BouncyToggle.vue` | `:135` — `readToken("--ease-apple-spring", …)` → `readToken("--spring-bouncy", …)`; the cubic-bezier default literal replaced by the playful register (no hand-rolled bezier fallback). |
+| `src/components/custom/tabs/BouncyToggle.vue` | `:135` — `readToken("--ease-apple-spring", …)` → `readToken("--spring-bouncy", …)`; the cubic-bezier default literal replaced by the playful register (no hand-rolled bezier fallback). **[MS re-open]** `:125-155` `animatePress` rewrite: DELETE the `hover`/`--scale-hover` read + its `> 1` keyframe → the 3-keyframe iOS squish `scale(1) → scale(--scale-press) → scale(1)`; re-point the press easing `--spring-bouncy` → `--spring-snappy` (CONTROL register — supersedes the W05-first-close `--spring-bouncy` read on this press path); `duration: 200` → ms resolved from `readToken("--duration-normal", …)`. |
 | `src/components/custom/timeline/ContinuousMarkers.vue` | `:385` — `var(--ease-apple-spring, cubic-bezier(…))` → `var(--spring-snappy)`; DELETE the inline cubic-bezier fallback. |
 | `src/components/ui/progress/ProgressSectioned.vue` | `:188` — collapse `var(--spring-snappy, var(--ease-apple-spring, ease-out))` → `var(--spring-snappy, ease-out)` (drop the dead apple-spring middle layer). |
 | `src/components/ui/slider/Slider.vue` | `:214` — the thumb `transform` timing re-pointed from `--ease-spring` (snappy) onto the dock register (`var(--slider-thumb-spring, var(--spring-dock))`). |
 | `scripts/proof-spring-tokens-synced.mjs` | Widen the comment-sync target set (add `proof-dock-motion-parity.mjs`) OR (preferred) import-and-render the overshoot; ADD the `--spring-*` consumer-coverage assertion (fail-closed on zero consumers). |
 | `scripts/proof-dock-motion-parity.mjs` | Fix the stale `(0.5,0.5)`/`+18.5%` prose (`:16,188`) → `(0.32,0.7)`/`~+4.6%`. |
 | `scripts/regen-spring-tokens.mjs` | Extend the PRESETS `comment` strings to name the surface-class register rationale (`:30-61`) — the single source the doc-table derives from. |
-| `package.json` | The widened/new spring-gate script entries + the W00 meta-gate parity match. |
-| `docs/tranches/AX/audit/W05-one-ios-spring-vocabulary.json` | **NEW** — the wave's born-RED→GREEN audit artefact + the consumer-census + the cross-repo annex. |
+| `scripts/proof-animation-coherence.mjs` | **[MS re-open]** ADD the PRESS-KEYFRAME-SHAPE assertion arm: parse `BouncyToggle.vue` `animatePress` — FAIL CLOSED if any press keyframe is `> 1` (a baked positional overshoot) OR the press easing reads `--spring-bouncy` (PLAYFUL on a high-frequency structural control) OR `duration` is a numeric literal (un-token-resolved). This is the SHAPE arm the existing literal-scale press-fork detector cannot see (it only checks scale provenance, not track topology). Same gate, new assertion — keeps the parity bijection. |
+| `package.json` | The widened/new spring-gate script entries + the W00 meta-gate parity match (no NEW `proof:*` entry for the [MS] arm — it extends the existing `proof:animation-coherence` script). |
+| `docs/tranches/AX/audit/W05-one-ios-spring-vocabulary.json` | **NEW** (first close) — the born-RED→GREEN audit artefact + the consumer-census + the cross-repo annex. **[MS re-open]** EDIT to add the D3 motion-shape finding row (press double-spring → single governed overshoot), the press-keyframe-shape gate bite-test, and the re-run π close note; flip the carried `liveArmNotes` "BouncyToggle still bounces (PLAYFUL — overshoot survives the map)" to the new close criterion ("BouncyToggle press settles SMOOTHLY on the CONTROL register — single governed overshoot, no double-spring"). |
 
 **OUT of bounds:** `src/styles/dock.css` + `GlassDock.vue` (the dock-morph driver rows — that is W01; this
 wave touches NO dock.css spring rule, only the token cohort + the SFC consumers); `useLayerTransition.ts`
@@ -312,24 +405,50 @@ collision surface is narrower; the dispatch contract:
   the publish-gated forcing function that prevents the silent clean-break (the token cannot be deleted in a
   way that breaks a consumer without the census flagging it). Recorded as a {receiver: W34, close-gate: this
   census} per the §16.4 zero-loss mandate.
+- **[MS] PRESS-KEYFRAME-SHAPE assertion arm on `proof:animation-coherence` (NEW, fail-closed; convergence
+  D3).** The DEVICE-FREE arm: parse `BouncyToggle.vue` `animatePress`, resolve its keyframe array + options.
+  FAIL CLOSED on ANY of — (a) a press keyframe whose `scale(…)` argument resolves `> 1` (a baked positional
+  overshoot peak; the `--scale-hover` mis-recruitment), (b) the press `easing` reading `--spring-bouncy`
+  (PLAYFUL on a high-frequency structural control — the W05 restraint rule), (c) the press `duration` being a
+  numeric LITERAL rather than a `--duration-*`-resolved read. **Born-RED at HEAD** (all three fire: the `1.08`
+  `--scale-hover` keyframe, `--spring-bouncy`, the `200` literal). GREEN once the track is the
+  `scale(1) → scale(--scale-press) → scale(1)` squish, eased `--spring-snappy`, at `--duration-normal`. This
+  is the SHAPE arm the existing literal-scale press-fork detector (`proof-animation-coherence.mjs:254`)
+  STRUCTURALLY CANNOT see — it checks scale PROVENANCE (is the literal from a `--scale-press*` var) but never
+  the track TOPOLOGY (an overshoot peak baked under a spring easing). It is a SOURCE/STRUCTURE arm (parses
+  the SFC, asserts the press track shape), born-RED-falsifiable with NO browser.
 
 **VISUAL-TRUTH live audit (NON-NEGOTIABLE per AX.W00 — the wave's close criterion).** A live Playwright +
-frontend-design pass on the four re-pointed surfaces + the slider-in-dock, at ≥ 2 viewports in light AND dark:
+frontend-design pass on the four re-pointed surfaces + the slider-in-dock + the **[MS] BouncyToggle press
+feel**, at ≥ 2 viewports in light AND dark:
 
 - **Slider-in-dock breathes on the dock spring (the headline visual).** On a `<GlassDock><Slider/></GlassDock>`
   mount, the slider thumb morph and the dock collapse/expand read as ONE coherent iOS spring — the thumb does
   NOT snap on a sibling-snappier curve while the dock breathes. Side-by-side BEFORE (snappy thumb vs dock
   curve mismatch) / AFTER (shared dock register).
-- **The four re-pointed surfaces still read RIGHT.** The UnderlineTabs underline still glides cleanly (control
-  register), the BouncyToggle still bounces (playful register — the overshoot survives the map), the
-  ContinuousMarkers still tracks smoothly, ProgressSectioned still fills correctly — the register-map is
-  perceptually correct, NOT just compiling. Any surface that reads WORSE on its new register is a RATIFY
-  (the surface-class map is wrong for it).
+- **The three other re-pointed surfaces still read RIGHT.** The UnderlineTabs underline still glides cleanly
+  (control register), the ContinuousMarkers still tracks smoothly, ProgressSectioned still fills correctly —
+  the register-map is perceptually correct, NOT just compiling. Any surface that reads WORSE on its new
+  register is a RATIFY (the surface-class map is wrong for it).
+- **[MS] BouncyToggle press feel — the convergence D3 close criterion (fail-CLOSED π arm).** Drive the
+  BouncyTabs / configurator tab-toggle on a REAL device (the AuroraConfigDock surface where the user flagged
+  it — D1's surface) and capture a slow-motion / paired-π BEFORE/AFTER of the press glyph: BEFORE the press
+  snaps down, springs PAST 1.08, rings, resettles in 200 ms (egregious/abrupt — the double-spring). AFTER it
+  is a single SMOOTH squish-and-settle — dip to `--scale-press`, ONE governed rebound, settle to rest, on the
+  CONTROL register at `--duration-normal`. The press now reads as ONE motion WITH the slider-glide beside it
+  (both `--spring-snappy`), not two competing springs. **The binding criterion is the USER'S word inverted:
+  the press must read SMOOTH, not "egregious / jarring / abrupt."** RATIFY (Open Q6): if the toggle reads too
+  FLAT on CONTROL and genuinely wants a brand-signature emphatic bounce, the single-overshoot PLAYFUL variant
+  (after the double-spring is collapsed) is the RATIFY fallback — but the double-spring NEVER returns. This is
+  a fail-CLOSED π arm — it cannot pass on a headless render; the press feel is only observable live.
 - **Affordance / hierarchy / spacing / NO visual occlusion** per the AX cardinal gate.
 
 **The wave does NOT close on the headless gates alone** — the executed live audit (captured as a paired-π
 BEFORE/AFTER + DELTA artefact under `docs/tranches/AX/audit/`) is the binding close criterion. The
-slider-in-dock shared-spring is the load-bearing visual proof.
+slider-in-dock shared-spring is the load-bearing visual proof for the original close; the **[MS] press
+smooth-not-abrupt feel is the load-bearing visual proof for the convergence re-open** (the carried
+"still bounces — overshoot survives the map" note from the first close was the very latent defect D3 surfaced;
+this audit clause inverts it).
 
 ---
 
@@ -360,6 +479,21 @@ slider-in-dock shared-spring is the load-bearing visual proof.
    spring + the four re-pointed surfaces); capture the paired-π BEFORE/AFTER + DELTA; write
    `audit/W05-one-ios-spring-vocabulary.json` to GREEN (the constellation census recorded RED-pending-W34).
 
+**[MS] MOTION-SHAPE re-open cadence (convergence D3 — sub-steps 1-8 above are the GREEN first close):**
+
+9. **[MS] Author the born-RED press-keyframe-shape gate arm.** Add the PRESS-KEYFRAME-SHAPE assertion to
+   `proof-animation-coherence.mjs` (parse `animatePress`: FAIL on a `> 1` keyframe / `--spring-bouncy` press
+   easing / literal `duration`); confirm it FAILS at the convergence HEAD (`at-dock-convergence`) on the live
+   double-spring. Bite-test it back to GREEN against the rewritten track.
+10. **[MS] Rewrite `animatePress`.** Collapse to the single iOS squish track
+    `scale(1) → scale(--scale-press) → scale(1)` (DELETE the `hover`/`--scale-hover` read + its keyframe);
+    re-point the press easing → `--spring-snappy` (CONTROL); resolve `duration` from
+    `readToken("--duration-normal", "0.3s")` → ms. Lint + typecheck. (The reduced-motion early-return stays.)
+11. **[MS] Live press-feel close.** Drive the BouncyTabs / configurator tab-toggle on a real device; capture
+    the paired-π BEFORE (double-spring, abrupt) / AFTER (single smooth squish-settle); RATIFY the register
+    (Open Q6) at the audit. Flip the audit-json `liveArmNotes` carry from "still bounces — overshoot survives
+    the map" to "press settles smoothly on CONTROL — single governed overshoot, no double-spring."
+
 ---
 
 ## Artefacts (the audit json + evidence it emits)
@@ -388,6 +522,11 @@ slider-in-dock shared-spring is the load-bearing visual proof.
 4. `docs(motion): govern the iOS-spring vocabulary — surface-class register rationale in regen-spring PRESETS (AX.W05 F4)`
 5. `fix(gates): truth-up the spring pipeline — stale (0.5,0.5)/+18.5% prose, import-render overshoot, --spring-gentle census (AX.W05 F3+F5)`
 6. `chore(AX.W05): audit ledger GREEN + speedtest cross-repo annex (W34) + paired-π BEFORE/AFTER + DELTA capture`
+
+**[MS] re-open commits (convergence D3):**
+
+7. `test(motion): add proof:animation-coherence press-keyframe-shape arm — born-RED on the BouncyToggle double-spring (AX.W05 MS / D3)`
+8. `fix(tabs): collapse the BouncyToggle press double-spring — single iOS squish scale(1)→--scale-press→scale(1) on CONTROL --spring-snappy at --duration-normal (AX.W05 MS / D3)`
 
 (One conventional-commit per sub-step; the orchestrator owns the index — agents NEVER stage/commit/stash per
 the hardened agent git clause. These are the messages the orchestrator authors.)
@@ -505,3 +644,42 @@ Per §2b the band-A binding precepts (pinned `docs/precepts/` @ `63240e6`):
    publish) OR is held until the speedtest adoption PR is ready. Recommendation: land the library excision +
    the RED-pending census in W05 (the forcing function), execute the speedtest re-point in W34 on the AX
    publish — the census prevents a silent break either way, matching the cross-repo-dev-resolution contract-v2.
+6. **[MS] The BouncyToggle press register — CONTROL vs single-overshoot PLAYFUL — RATIFY at the π audit
+   (convergence D3).** The recommendation is CONTROL `--spring-snappy` (the press is a high-frequency
+   structural control; W05's own restraint rule; it then matches the slider-glide beside it). The
+   NON-NEGOTIABLE is the double-spring collapse — overshoot authored ONCE, by the governed spring, on a
+   `scale(1) → scale(--scale-press) → scale(1)` track. The register is the RATIFY dial: if the toggle reads
+   too FLAT on CONTROL and the surface genuinely wants a brand-signature emphatic bounce, the single-overshoot
+   PLAYFUL `--spring-bouncy` variant (the double-spring already removed) is the fallback. DECIDE at the live
+   press-feel audit; the double-spring NEVER returns either way. (This SUPERSEDES the first-close Open Q1
+   recommendation "BouncyToggle → `--spring-bouncy` (playful), the overshoot survives the map" — that map was
+   the latent D3 defect.)
+
+---
+
+## Dedup (why no OTHER wave owns the [MS] motion-shape arm — convergence D3 proved the exclusion)
+
+The convergence finding (`docs/tranches/AX/audit/convergence/D3.md`) cross-checked every adjacent wave and
+proved W05 is the sole owner of the BouncyToggle press-shape defect:
+
+- **W05 (this wave) — the covering wave.** D3's verdict is `augment-existing-wave → W05 (re-open a
+  MOTION-SHAPE arm)`. W05 ALREADY owns `BouncyToggle.vue` motion, the surface-class spring-register map, AND
+  the VISUAL-TRUTH bounce-audit clause — its first close even handled THIS exact line (`:135` apple-spring →
+  `--spring-bouncy`) and recorded the preserved-bounce carry in its own GREEN ledger. D3 is the unfinished
+  HALF of W05's own mandate: W05 governed the spring REGISTER but deliberately preserved the keyframe SHAPE
+  that is the defect. A net-new wave would FORK spring-governance across two waves and re-litigate W05's
+  surface-class map. The augment is surgical — one `animatePress` rewrite + one gate assertion arm, no new
+  token, no new file.
+- **W42 (liquid-morph substrate) — planned; NO overlap.** D3 confirmed W42 names `BouncyToggle`/`ToggleGroup`
+  ONLY as a candidate second consumer for the morph substrate's tab-INDICATOR GLIDE (the
+  `.bouncy-slider--anchor`/`--js` slider path) — which is ALREADY smooth (CONTROL register, ~+6.8%) and is
+  explicitly NOT the D3 defect. W42 does NOT touch `animatePress`. The press BOUNCE and the slider GLIDE are
+  two independent motion paths (D3 §"motion topology"); W42 owns the glide, W05[MS] owns the press. Do NOT
+  route D3 to W42.
+- **W09 (specular tune-to-subtle) — complete; unrelated.** Specular glow, not motion. No overlap.
+- **W45 (dock region-model + mobile scale) — minted for D13/D15.** Dock layout/region morph + `--dock-scale`,
+  not the BouncyToggle press. No overlap with the press-shape arm.
+
+The exclusion is source-grounded: the press defect lives ENTIRELY in `BouncyToggle.vue:125-155` `animatePress`
+(WAAPI), a file+function W05 already owns. No other planned wave edits `animatePress`. (Verified at source —
+D3 §"Cross-reference verdicts on adjacent waves" + §"Dedup note".)

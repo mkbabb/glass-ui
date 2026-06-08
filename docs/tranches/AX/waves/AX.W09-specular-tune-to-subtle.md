@@ -1,6 +1,13 @@
-# AX.W09 — Specular tune-to-subtle: warm-cream low-alpha + one token ladder + retire the double-light
+# AX.W09 — Specular tune-to-subtle: warm-cream low-alpha + one token ladder + retire the double-light + the fixed-anchor radial-glow sweep
 
-**Band** B · GRAPHICS · **Severity** blocker (raised from major — THREE live consumer confirmations, §24)
+**Status** RE-OPENED → **live-pending** (the moving-specular arm landed headless-green; the binding VISUAL-TRUTH
+live audit — W09's OWN close criterion — surfaced D11: THREE sibling FIXED-ANCHOR radial glows the moving-specular
+pass scoped OUT, still pure-white/saturated. D11 IS the live-audit re-open W09's close protocol mandated — a green
+headless gate over a still-glowing live surface is NOT done. The radial-sweep arm below extends Scope/FileBounds/gate;
+the moving-specular content is UNCHANGED + landed.)
+
+**Band** B · GRAPHICS · **Severity** blocker (raised from major — THREE live consumer confirmations §24 + the D11
+dock+chassis corner-glow live finding)
 · **dependsOn** AX.W00 (the π-lane close machinery)
 · **Charter** AX.md §3 (the `### AX.W09` block, lines 618-657) + §4 note 12 (the published-vs-HEAD
 reconcile) + §4 note 2 (the substrate-hygiene `-1000` routing) + §2b band-B precept row · **Audit**
@@ -50,7 +57,42 @@ falsifiable RED witnesses:
   Card carries NO `specular` prop (grep `specular` over `card/index.ts` = a `surface='glass'` opt-in only, no
   `off|subtle|full` control) — so a resting glass panel cannot be made clean without editing library source.
 
-The wave is RED at HEAD on all three; the HardGate below drives each to GREEN.
+- **RED witness 4 (D11 — the THREE fixed-anchor sibling radials the moving-specular pass left untuned; grep +
+  parse-falsifiable, the live-audit re-open).** W09's moving-specular arm retuned EXACTLY ONE radial — the
+  pointer-tracked `circle at var(--specular-x) var(--specular-y)` at `glass.css:118-123` (now warm-cream
+  `hsl(40 30% 96%)` reading the `--glass-specular-intensity-*` cohort). It explicitly carved out the fixed-anchor
+  glows (SOTA item 2: "must NOT touch `--glass-edge-light`"). But the library carries THREE MORE radial glows that
+  share the IDENTICAL pure-white / saturated-at-fixed-corner anti-pattern and were never in the original FileBounds —
+  the egregious dock+chassis corner-glow the user flagged ("I thought this was fixed?" — D11 ledger, screenshot):
+
+  1. **The chassis curvature overlay — `--glass-curvature-overlay` (`tokens.css:787-799`).** A
+     `radial-gradient(ellipse at 50% -20%, hsl(0 0% 100% / 0.06), transparent 60%)` composed into the
+     `<InstrumentChassis>` background at REST (`instrument-chassis.css:38, :83`; "persists at all phases",
+     `:4-6`). It is **pure white** (`hsl(0 0% 100%)`, L=100%) — the SAME pure-white-radial anti-pattern W09 fixed
+     at `.glass-material::before` but left here. Worse: the `.dark` arm (`tokens.css:1696-1702`) is **byte-identical**
+     to light (`hsl(0 0% 100% / 0.06)`) — the unsoftened-dark defect RED-witness-1 named for the moving specular
+     (`.dark` lifts the screen blend), here UNADDRESSED. The `50% -20%` anchor above the top edge produces the
+     visible top-edge corner-glow.
+  2. **The dock primary-tier corner radials — `ellipse at 30% 30%` (`dock-controls.css:303-308, :329-334`).**
+     `.dock-tab-button[data-tier="primary"]:hover` paints `radial-gradient(ellipse at 30% 30%, color-mix(in srgb,
+     var(--phase-color, var(--foreground)) 18%, transparent), transparent 70%)` AND an always-on `[data-phase]`
+     `::before` halo at the same `30% 30%` anchor. `30% 30%` is top-LEFT-corner-biased — the literal corner-glow,
+     a loud bloom at 18% mix of a saturated `--phase-color` on the dock's most-prominent control.
+  3. **The canonical `btn-audacious` corner radial — `ellipse at 30% 30%` (`utilities.css:782-786`).** The
+     `primary-audacious` hover radial `radial-gradient(ellipse at 30% 30%, color-mix(in srgb, var(--primary) 18%,
+     transparent), transparent 70%)` — the SOURCE recipe the dock primary-tier (item 2) mirrors. Same corner anchor,
+     same 18% rung, bound to `--primary`.
+
+  **The falsifiable RED assertion:** *parse the three radials at HEAD — `--glass-curvature-overlay`'s inner stop is
+  `hsl(0 0% 100%)` (pure white) with a dark arm byte-IDENTICAL to light (RED); the two `ellipse at 30% 30%` radials
+  carry a buried `18%` corner-mix at a hard top-left anchor (RED). After the wave the curvature overlay's inner stop
+  is a warm-cream L<100% at a low alpha with a dark arm whose alpha is GENUINELY LOWER than light, routed through a
+  `--glass-radial-glow-*` magnitude token; the two corner radials read the same overridable cohort at a SUBTLE mix
+  (toned off the 18% literal) with the corner anchor softened so the glow reads as a surface lift not a hotspot
+  (GREEN).* This is a finding from the BINDING live-truth audit W09's own close protocol mandated (the cardinal
+  lesson) — not a new wave, a SCOPE EXTENSION of W09 to its sibling radials.
+
+The wave is RED at HEAD on all four; the HardGate below drives each to GREEN.
 
 ---
 
@@ -59,6 +101,11 @@ The wave is RED at HEAD on all three; the HardGate below drives each to GREEN.
 The moving-specular catch-light becomes a **subtle, warm-cream, token-overridable whisper** — one tokenized
 intensity ladder at the single unified source, the dock no longer the hottest surface, static plates clean,
 and a Card `specular` opt-in — closing the system-wide white-blowout the AW.W22 blast-radius promotion shipped.
+**AND (D11 re-open) the THREE sibling fixed-anchor radial glows the moving-specular pass left untuned — the chassis
+curvature overlay + the two `ellipse at 30% 30%` corner radials — join the SAME warm-cream-low-alpha + dark-arm-
+softened + tokenized-magnitude discipline, so the egregious dock+chassis corner-glow the user flagged is gone and the
+WHOLE radial-glow family (moving + fixed) is one overridable, dark-adaptive, warm-cream ladder — never four buried
+literals at four pure-white/saturated anchors.**
 
 ---
 
@@ -115,6 +162,44 @@ double, NOT "wire the pointer."**
    opt-in, not always-on. `off` resolves zero specular intensity; `subtle` the token-ladder default; `full` the
    pre-tune brighter ladder for the busy-backdrop case the recipe was originally authored for. This COMPLEMENTS
    the token ladder this wave mints (the prop selects WHICH rung set; the tokens carry the magnitudes).
+
+7. **D11 RE-OPEN — the fixed-anchor radial-glow sweep (the live-audit finding; same transposition, three more
+   sites).** The D11 corner-glow is the SAME architectural defect this wave fixed at `.glass-material::before`,
+   extended to the THREE sibling fixed-anchor radials the moving-specular pass scoped out. NO new mechanism — the
+   consistent application of the warm-cream-low-alpha + tokenized-intensity + dark-arm-softened discipline already
+   minted. Three legs:
+
+   a. **Chassis curvature overlay → warm-cream + softened dark arm + tokenized strength.** Re-derive
+      `--glass-curvature-overlay` (`tokens.css:787-799`) off pure-white `hsl(0 0% 100%)` onto the warm-cream identity
+      (`hsl(40 30% 96% / …)`, L<100% so the warm hue survives — mirroring the `.glass-material::before` core W09
+      authored at `glass.css:120`); drop the alpha so the top-edge lift reads as a whisper; give the `.dark` arm
+      (`tokens.css:1696-1702`) a GENUINELY LOWER alpha than light (today byte-identical — the unsoftened-dark defect).
+      Route the strength through a `--glass-radial-glow-curvature` token (a sibling of the specular cohort) so it
+      joins the same overridable-magnitude axis — one knob, override on `:root`, never a buried literal. (Cross-ref
+      D12: if D12 ratifies retiring `<InstrumentChassis>`, the curvature-overlay leg is mooted for THAT surface — but
+      the `tokens.css` token fix is independent of the chassis SFC; drop only this leg if D12 retires the chassis.)
+
+   b. **The two `ellipse at 30% 30%` corner radials → demote anchor + alpha to subtle, one shared magnitude.** Tone
+      `dock-controls.css:303-308` (`.dock-tab-button[data-tier="primary"]:hover`) + `:329-334` (the always-on
+      `[data-phase]` `::before` halo) AND `utilities.css:782-786` (`btn-audacious` — the SOURCE recipe the dock
+      mirrors) toward the W09 subtle magnitudes: a LOWER color-mix % off the buried `18%`, and soften the hard
+      top-left `30% 30%` anchor toward a near-edge/center-biased ellipse so the glow reads as a surface lift, not a
+      corner hotspot. Bind their strength to a shared `--glass-radial-glow-corner` token (a sibling of the specular
+      cohort) so dock-primary + `btn-audacious` share ONE overridable magnitude rather than two hardcoded `18%`
+      literals. This KEEPS the disco-CTA identity (still a phase/primary-tinted lift on hover) without the egregious
+      corner glow. Tone `btn-audacious` once and the dock primary-tier inherits the source recipe.
+
+   c. **One radial-glow magnitude axis (the deepest gestalt).** The four fixed-and-moving radials
+      (`.glass-material::before` moving specular, the chassis curvature overlay, the two corner radials) are FOUR
+      independent magnitude declarations of the SAME "soft inner glow" idea. W09 tokenized the first into
+      `--glass-specular-intensity-*`; D11 folds the remaining three onto the same token-first axis (a
+      `--glass-radial-glow-{curvature,corner}` sibling pair) so the whole radial-glow family is one overridable,
+      dark-adaptive, warm-cream ladder. This is the W09 SOTA item-4 "one specular owner per surface" precept applied
+      at the library-wide radial-glow level. All token-routed (`color-mix in srgb` for alpha per house pattern,
+      warm-cream `hsl(40 30% 96%)` per the W09 precedent, a `.dark` arm that actually softens) — no new magic literal,
+      no per-component patch. NOT `--glass-edge-light`: the dock rim (`tokens.css:757`, full-perimeter uniform inset
+      ring) is SOTA-correct (SOTA item 2) and stays untouched — the corner-glow is the radial-gradient family, not
+      the rim box-shadow (disambiguated to prevent the wrong fix).
 
 ### SOTA deepening (liquid-glass research)
 
@@ -198,14 +283,15 @@ material axis and is precise on the magnitudes (facets 0, 4, 20, 21, 22 —
 | File | Edit |
 |------|------|
 | `src/styles/glass.css` | The `.glass-material::before` recipe (`:54-95`): drop the inner stop `hsl(40 30% 100% / 0.55)` → low-alpha warm-cream; the `:hover`/`:active`/`.dark` rules set `--specular-intensity: var(--glass-specular-intensity-{hover,active,rest})`; drop the rest floor to ~0; fix the false "warm-cream tint intact" comment. **glass.css CO-WRITER serialization (HARDENING §G #28 + AX.md §4 note 30):** W09 is ONE of three line-region-disjoint glass.css writers — W09 owns the `.glass-material::before` specular region, W24 owns `.glass-progress-rail`, W42 appends the `@supports --glass-refract-scale` block; **W20 does NOT write glass.css** (its shadow-toggle is card-side `:data-shadow`/`shadow-none`) and W25b does NOT carve it. The orchestrator serializes the three by line-region. |
-| `src/styles/tokens.css` | **ADD** the `--glass-specular-intensity-{rest,hover,active}` token cohort (+ `.dark` arm) near the `@property --specular-intensity` registration (`:1724-1727` / §11b). The `@property` reg itself is unchanged (already `initial-value: 0`). |
-| `src/styles/dock-controls.css` | **RETIRE** the `:hover:not(:focus-visible)` `--glass-highlight` box-shadow (`:101-102`) — delete or demote to a non-specular surface-tint fill; tidy the `--dock-icon-hover-shadow` comment chain (`:78-100`). |
+| `src/styles/tokens.css` | **ADD** the `--glass-specular-intensity-{rest,hover,active}` token cohort (+ `.dark` arm) near the `@property --specular-intensity` registration (`:1724-1727` / §11b). The `@property` reg itself is unchanged (already `initial-value: 0`). **D11 RE-OPEN (region-disjoint addition):** re-derive `--glass-curvature-overlay` (`:787-799`) off pure-white `hsl(0 0% 100%)` onto warm-cream `hsl(40 30% 96% / …)` (L<100%) at a low alpha; SOFTEN its `.dark` arm (`:1696-1702`, today byte-identical to light) to a genuinely lower alpha; mint the `--glass-radial-glow-{curvature,corner}` sibling magnitude tokens (+ `.dark` arm) that the curvature overlay + the two corner radials read. |
+| `src/styles/dock-controls.css` | **RETIRE** the `:hover:not(:focus-visible)` `--glass-highlight` box-shadow (`:101-102`) — delete or demote to a non-specular surface-tint fill; tidy the `--dock-icon-hover-shadow` comment chain (`:78-100`). **D11 RE-OPEN:** demote the two `ellipse at 30% 30%` corner radials — `.dock-tab-button[data-tier="primary"]:hover` (`:303-308`) + the always-on `[data-phase]` `::before` halo (`:329-334`): tone the 18% color-mix off the literal onto `--glass-radial-glow-corner`, soften the hard top-left anchor toward a near-edge/center-biased ellipse. |
+| `src/styles/utilities.css` | **D11 RE-OPEN (NEW to W09 bounds).** Tone the `btn-audacious` hover corner radial (`:782-786`, `radial-gradient(ellipse at 30% 30%, color-mix(in srgb, var(--primary) 18%, transparent), transparent 70%)`) — the SOURCE recipe the dock-primary mirrors: bind its 18% to `--glass-radial-glow-corner`, soften the corner anchor. Tone once and the dock-primary inherits. (No other `utilities.css` edit — the `.focus-ring`/`btn-press` utilities are untouched.) |
 | `src/composables/glass/useSpecularTracking.ts` | **NEW** — the `{ specularStyle, onPointerMove }` composable (the lifted `trackSpecular`, PRM-aware, reads the intensity tokens). |
 | `src/composables/glass/index.ts` | Re-export `useSpecularTracking` from the glass composable sub-tree barrel. |
 | `src/components/ui/card/Card.vue` | Replace the inline `trackSpecular` (`:64-76`) with `useSpecularTracking()`; ADD the `specular?: 'off'｜'subtle'｜'full'` prop (default `subtle`/`off`) gating which rung set / whether the seam is wired. |
 | `src/components/ui/card/index.ts` | Co-export the `CardSpecular` type for the new prop. |
 | `src/components/custom/dock/DockIconButton.vue` | Replace the inline `trackSpecular` (`:53-65`) with `useSpecularTracking()`. |
-| `scripts/proof-glass-material-unified.mjs` | **CO-UPDATE** lines 167/170 (the hardcoded `--specular-intensity: 0.6`/`0.85` regex) to assert the token COHORT exists + is read (not the retired literals); add the Card-`specular`-prop three-distinct-intensities assertion. |
+| `scripts/proof-glass-material-unified.mjs` | **CO-UPDATE** lines 167/170 (the hardcoded `--specular-intensity: 0.6`/`0.85` regex) to assert the token COHORT exists + is read (not the retired literals); add the Card-`specular`-prop three-distinct-intensities assertion. **D11 RE-OPEN (extend the regex set — the gate already parses `tokens.css`/`dock-controls.css`/`utilities.css`):** assert `--glass-curvature-overlay`'s inner stop is NOT `hsl(0 0% 100%)` (warm-cream, L<100%) AND its `.dark` arm alpha < its light arm alpha (the unsoftened-dark fix); assert the two `ellipse at 30% 30%` radials (`dock-controls.css` + `utilities.css`) carry NO bare `18%` literal (the mix reads `--glass-radial-glow-corner`); assert the `--glass-radial-glow-{curvature,corner}` sibling tokens are minted + read. |
 | `package.json` | (If a new gate name is added) the `proof:*` entry + the W00 meta-gate parity match. The primary gate `proof:glass-material-unified` already exists — this re-points it. |
 | `docs/tranches/AX/audit/W09-specular-tune.json` | **NEW** — the wave's born-RED→GREEN audit artefact. |
 
@@ -213,7 +299,13 @@ material axis and is precise on the magnitudes (facets 0, 4, 20, 21, 22 —
 `-1000` resume fix (W25b/§J recommended — see decisions above); the `forced-colors:active` skin (W36); the
 WebGL substrate structure (HEALTHY, slice 13/14 F4 — no rework); the Button glass specular wiring (a future
 consumer of `useSpecularTracking`, not in this wave's bounds); any aurora/blob shader (W07/W08); the dock
-MORPH driver / `useLayerTransition` (W01).
+MORPH driver / `useLayerTransition` (W01). **D11 RE-OPEN out-of-bounds:** `--glass-edge-light` (`tokens.css:757`,
+the full-perimeter rim — SOTA-correct, SOTA item 2, NOT a corner glow); `src/styles/instrument-chassis.css` (the
+overlay is fixed at the TOKEN — `--glass-curvature-overlay` — so the chassis SFC needs NO per-chassis knob; add it
+to bounds ONLY if the live audit proves a per-chassis strength override beyond the token is warranted — likely
+token-only suffices, D11 finding); the `<InstrumentChassis>` SFC retire DECISION (D12's — if D12 retires the
+chassis, drop only the curvature-overlay leg; the dock + btn-audacious corner-radial legs stand regardless, they
+are not chassis-coupled).
 
 ---
 
@@ -244,6 +336,39 @@ band B alongside the two graphics blockers, but shares NO files with them. The d
 - **vs W34 (cross-repo consumer adoption).** W09 authors the keyframes.js consumer-leg NOTE (confirm-no-kf-
   override-remains after the softened default); the sibling-repo verification executes in W34. W09 writes NO
   sibling source.
+
+### D11 RE-OPEN dedup (why NO other wave owns the three fixed-anchor radials — restated from the convergence finding)
+
+The D11 convergence finding (`docs/tranches/AX/audit/convergence/D11.md`) proved the exclusion at source: a grep
+over `docs/tranches/AX/waves/*.md` for the radial tokens (`--glass-curvature-overlay`, `ellipse at 30% 30%`,
+`btn-audacious` corner radial) returns **ONLY W09** — no other AX wave touches them. W09 is the covering wave by
+TOPIC and by PRECEPT — it already owns "the radial reads as a subtle warm-cream whisper, never a pure-white/
+saturated bloom," minted the `--glass-specular-intensity-*` cohort + the warm-cream `hsl(40 30% 96%)` core + the
+dark-arm-softening discipline, and its CHARTER LANGUAGE is exactly the D11 fix shape ("warm-cream low-alpha, NEVER
+pure-white"; "one specular owner per surface"). D11 IS the finding from W09's OWN binding live-truth audit (its
+status is `dev-complete-headless-green-live-pending`; the live audit that is its actual close criterion HAD NOT run
+— a green headless gate over a still-glowing live surface is not done). So this is the live-audit re-open W09's
+close protocol mandated, NOT a new wave. The fold adds NO new mechanism, NO new prop, NO new file beyond W09's
+existing reach (W09 already edits `tokens.css` + `dock-controls.css`; the additions are the `utilities.css`
+`btn-audacious` radial + the curvature-overlay region + the `--glass-radial-glow-*` sibling tokens) — a SCOPE
+EXTENSION to W09's sibling radials, "augment, do not over-prescribe."
+
+- **NOT `--glass-edge-light` (the cross-ref that prevents the wrong fix).** The dock rim (`tokens.css:757`, the
+  full-perimeter uniform inset ring) is SOTA-correct (SOTA item 2 ratifies it untouched) — the corner-glow is the
+  radial-GRADIENT family, not the rim box-shadow. W20 (which dependsOn W09) READS the settled glass-atoms spine and
+  does NOT re-edit these radials; W36 (forced-colors) owns the a11y skin; W25b owns the file-rename/`-1000` churn —
+  none touches `--glass-curvature-overlay` or `ellipse at 30% 30%`. No collision.
+- **W06 (dock.css/dock-controls.css carve) coordination — D11 adds a SECOND dock-controls edit.** W09 already
+  retires the `--glass-highlight` hover box-shadow in `dock-controls.css`; D11 adds the two `ellipse at 30% 30%`
+  corner-radial demotions in the SAME file. Both are value/recipe edits (not structural moves). Same coordination
+  contract: W09's `dock-controls.css` edits land BEFORE the W06 partials split (W06 dependsOn W01+W04, runs LAST in
+  the dock band); W06 then carves the SETTLED `dock-controls.css`. The new `utilities.css` `btn-audacious` edit is
+  file-disjoint from every dock/aurora/blob sibling — no other AX wave edits `btn-audacious`.
+- **D12 (chassis retire) coordination.** The curvature-overlay leg is conditioned on D12: if D12 retires the
+  `<InstrumentChassis>` surface, drop ONLY the curvature-overlay leg of D11 (the `tokens.css` token fix is still
+  the gestalt-correct outcome IF the chassis ships); the dock-primary + `btn-audacious` corner-radial legs stand
+  regardless — they are not chassis-coupled. Coordinate by sequencing W09's D11 arm AFTER the D12 ratify, or land
+  the token fix unconditionally (it harms nothing if the chassis later retires).
 
 ---
 
@@ -382,17 +507,32 @@ CRITICAL COUPLING the charter §3 names — `scripts/proof-glass-material-unifie
 - **DRY composable.** Deletion-proof that the inline `trackSpecular` no longer appears in `Card.vue` /
   `DockIconButton.vue` (the composable `useSpecularTracking` is the sole home) — a deletion proof (a valid hard-
   gate form per SPEC.md §Hard Gates), not a runtime claim.
+- **D11 RE-OPEN — the fixed-anchor radial sweep (device-free SOURCE/STRUCTURE arm; the gate already parses these
+  three files).** (a) **Curvature overlay warm-cream + dark-softened.** Assert `--glass-curvature-overlay`'s inner
+  gradient stop is NOT `hsl(0 0% 100%)` (parse/lightness check — warm-cream, L < 100%) at a low alpha; assert its
+  `.dark` arm alpha is GENUINELY LOWER than its light arm (the byte-identical unsoftened-dark defect is gone).
+  **Born-RED at HEAD** (both arms are `hsl(0 0% 100% / 0.06)`, byte-identical). (b) **Corner radials de-loudened +
+  tokenized.** Assert the two `ellipse at 30% 30%` radials (`dock-controls.css:303-308, :329-334` +
+  `utilities.css:782-786`) carry NO bare `18%` color-mix literal — the mix reads `--glass-radial-glow-corner`.
+  **Born-RED at HEAD** (the `18%` is a buried literal at both anchors). (c) **One radial-glow axis.** Assert the
+  `--glass-radial-glow-{curvature,corner}` sibling tokens are MINTED (+ a `.dark` arm) AND READ by the curvature
+  overlay + the corner radials — the whole radial-glow family is one overridable axis, not four buried magnitudes.
+  **Born-RED at HEAD** (`grep "glass-radial-glow"` over `src/styles/` = NONE). These are SOURCE/STRUCTURE
+  assertions (the token-cohort minted+read + the literal-deletion proof — the precept-valid form for the
+  CSS-cascade contract); the PAINTED corner-glow is proven by the π live arm below, never a text gate alone.
 
-This is a **runtime-observation + deletion-proof** gate (the precept-valid artefact forms per SPEC.md §Hard
+This is a **runtime-observation + deletion-proof + source-structure** gate (the precept-valid artefact forms per SPEC.md §Hard
 Gates — accepted forms include build/test/runtime/deletion-proof; INVALID is "grep found a source string" FOR
 RUNTIME BEHAVIOUR). The computed-style probes are runtime observation; the `trackSpecular`-removal grep is a
 deletion proof.
 
-**VISUAL-TRUTH live audit (NON-NEGOTIABLE per AX.W00 — the wave's close criterion).** A live Playwright +
+**VISUAL-TRUTH live audit (NON-NEGOTIABLE per AX.W00 — the wave's close criterion; THE D11 RE-OPEN IS A FINDING
+FROM THIS VERY PASS — it does NOT close on the headless gate, the cardinal lesson).** A live Playwright +
 frontend-design pass on the glass-material surfaces — hover/press a `<Card surface="glass">`, a
-`<DockIconButton>`, and a `<Dialog>` — over **BOTH** a flat warm-cream substrate AND an aurora backdrop, in
-**light AND dark** (the two contexts the magnitude reads differently in — the recipe was tuned over a busy
-backdrop):
+`<DockIconButton>`, a `<Dialog>`, **AND (D11) a `<DockTabButton data-tier="primary" data-phase>` + an
+`<InstrumentChassis>` + a `primary-audacious` `<Button>`** — over **BOTH** a flat warm-cream substrate AND an aurora
+backdrop, in **light AND dark** (the two contexts the magnitude reads differently in — the recipe was tuned over a
+busy backdrop; the byte-identical dark curvature arm reads HARDER over the deep canvas):
 
 - **The press-light reads as a whisper, not a flash** — on active, the catch-light is a subtle lens, NOT a
   blown-out white hotspot (the ≈ 0.47-white-screen defect is visually gone).
@@ -402,6 +542,13 @@ backdrop):
   white hotspot at rest (the rest-floor-0 fix).
 - **`specular="off"` genuinely clean** — a `<Card specular="off">` resting panel carries zero catch-light; the
   keyframes.js consumer-side surface (D14) reads clean after the softened default.
+- **D11 — the dock+chassis corner-glow is GONE (the user's loudest defect).** The `<InstrumentChassis>` top-edge
+  curvature glow reads as a whisper (not the pure-white top-corner bloom), and its DARK rendering is no harder than
+  light (the byte-identical dark arm is softened). The `<DockTabButton data-tier="primary">` hover halo + the
+  always-on `[data-phase]` `::before` + the `primary-audacious` `<Button>` hover read as a SUBTLE phase/primary-
+  tinted surface lift — NOT the egregious loud top-left corner hotspot at the `30% 30%` anchor. Side-by-side BEFORE
+  (the screenshot the user flagged — "I thought this was fixed?") vs AFTER: the corner-glow is visibly resolved on
+  BOTH the dock AND the chassis, in light AND dark.
 - **Affordance / hierarchy / spacing / NO visual occlusion** per the AX cardinal gate.
 
 **The wave does NOT close on the headless gate alone** — the executed live audit (captured as a paired-π
@@ -431,18 +578,38 @@ beat (§4 note 12).
    `trackSpecular` from both.
 6. **Card `specular` opt-in prop.** Add `specular?: 'off'｜'subtle'｜'full'` to `<Card>` (default `subtle`/`off`);
    co-export `CardSpecular`; wire the prop to which rung set / whether the seam is armed.
-7. **Gate GREEN + VISUAL-TRUTH.** Confirm `proof:glass-material-unified` passes; run the VISUAL-TRUTH live
-   audit over flat + aurora backdrop in light/dark; capture the paired-π BEFORE/AFTER + DELTA; write
-   `audit/W09-specular-tune.json` to GREEN; author the keyframes.js consumer-leg NOTE (routes to W34).
+
+   **— THE ABOVE SIX SUB-STEPS LANDED HEADLESS-GREEN (the moving-specular arm). THE BELOW ARE THE D11 RE-OPEN. —**
+
+6b. **D11 — mint the radial-glow sibling tokens + co-update the gate (born-RED).** ADD
+   `--glass-radial-glow-{curvature,corner}` (+ `.dark` arm) to `tokens.css`; extend
+   `proof-glass-material-unified.mjs`'s regex set to assert the curvature-overlay-not-pure-white + dark-softened,
+   the corner-radials-no-bare-18%, and the sibling-tokens-minted-and-read; confirm the extended gate FAILS at HEAD
+   (the radial-glow tokens absent, the curvature overlay pure-white byte-identical, the `18%` buried).
+6c. **D11 — re-derive the three fixed-anchor radials.** `tokens.css`: `--glass-curvature-overlay` → warm-cream
+   low-alpha (L<100%), softened `.dark` arm, strength via `--glass-radial-glow-curvature`. `dock-controls.css`
+   (`:303-308, :329-334`) + `utilities.css` (`:782-786` `btn-audacious`): tone the `18%` onto
+   `--glass-radial-glow-corner`, soften the `30% 30%` corner anchor. Correct the chassis/dock/btn comments to the
+   warm-cream reality. Lint + typecheck.
+7. **Gate GREEN + VISUAL-TRUTH.** Confirm `proof:glass-material-unified` passes (moving-specular AND D11 radial
+   arms); run the VISUAL-TRUTH live audit over flat + aurora backdrop in light/dark — INCLUDING the dock primary
+   tab + the chassis curvature + the `primary-audacious` button (the D11 corner-glow surfaces); capture the
+   paired-π BEFORE/AFTER + DELTA (the BEFORE pins the user-flagged corner-glow screenshot — "I thought this was
+   fixed?"); write `audit/W09-specular-tune.json` to GREEN (status flips off `live-pending`); author the
+   keyframes.js consumer-leg NOTE (routes to W34).
 
 ---
 
 ## Artefacts (the audit json + evidence it emits)
 
-- `docs/tranches/AX/audit/W09-specular-tune.json` — the born-RED→GREEN ledger: the three RED witnesses
-  (pure-white core + literal ladder, the cohort-grep=NONE, the dock-double + trackSpecular-duplication), the
-  per-finding (slice 14 F0-F4 + slice 27 F3/F4/F5) disposition, the published-3.4.0 BEFORE magnitude, and the
-  post-wave GREEN measurements.
+- `docs/tranches/AX/audit/W09-specular-tune.json` — the born-RED→GREEN ledger: the FOUR RED witnesses
+  (pure-white core + literal ladder, the cohort-grep=NONE, the dock-double + trackSpecular-duplication, AND the
+  D11 three fixed-anchor radials), the per-finding (slice 14 F0-F4 + slice 27 F3/F4/F5 + D11) disposition, the
+  published-3.4.0 BEFORE magnitude, and the post-wave GREEN measurements. **The `status` flips off
+  `dev-complete-headless-green-live-pending` only when the D11 radial-sweep + the binding live audit both GREEN.**
+- The D11 paired-π **corner-glow BEFORE/AFTER** capture: the dock primary-tab + chassis curvature + `btn-audacious`
+  corner-glow over flat + aurora, light + dark — BEFORE (the user-flagged "I thought this was fixed?" pure-white/
+  saturated corner bloom) vs AFTER (the warm-cream surface lift, dark no harder than light).
 - `scripts/proof-glass-material-unified.mjs` — the co-updated gate (the `0.6`/`0.85` hardcodes → token-cohort
   assertion + Card-`specular` three-intensity probe).
 - `src/composables/glass/useSpecularTracking.ts` — the new DRY pointer seam.
@@ -463,7 +630,9 @@ beat (§4 note 12).
 4. `fix(dock): retire the dock-control second specular — one catch-light owner, drop the --glass-highlight hover box-shadow (AX.W09 slice14-F1)`
 5. `refactor(glass): useSpecularTracking() composable — DRY the verbatim trackSpecular off Card + DockIconButton (AX.W09 slice14-F2/slice27-F4)`
 6. `feat(card): specular?: off|subtle|full opt-in prop — clean resting panel by default (AX.W09 digest-consumer-ask)`
-7. `chore(AX.W09): audit ledger GREEN + paired-π BEFORE/AFTER + DELTA + keyframes consumer-leg note`
+6b. `test(glass): extend proof:glass-material-unified born-RED for the D11 radials — curvature-not-pure-white + dark-softened + corner-radials-no-bare-18% + radial-glow tokens (AX.W09 D11)`
+6c. `fix(styles): D11 radial-glow sweep — warm-cream softened curvature overlay + de-loudened 30%/30% corner radials onto one --glass-radial-glow-* axis (AX.W09 D11)`
+7. `chore(AX.W09): audit ledger GREEN (off live-pending) + paired-π BEFORE/AFTER + DELTA (incl. D11 dock+chassis corner-glow) + keyframes consumer-leg note`
 
 (One conventional-commit per sub-step; the orchestrator owns the index — agents NEVER stage/commit/stash per
 the hardened agent git clause. These are the messages the orchestrator authors.)
@@ -513,6 +682,16 @@ the hardened agent git clause. These are the messages the orchestrator authors.)
   `0.35/0.6/0.85` ladder + the dock double-specular + the duplicated `trackSpecular` are all live-proven here.
 - **Corroboration:** `docs/tranches/J/research/R1-dock-subsystem.md:213` — the perceived dock over-brightness
   traces to the specular cascade + aurora bleed-through (the J-tranche note the audit cites).
+- **D11 RE-OPEN lineage (the live-audit finding — `docs/tranches/AX/audit/convergence/D11.md`).** The three
+  fixed-anchor radials PREDATE W09's moving-specular pass and were scoped OUT of its FileBounds: the
+  `--glass-curvature-overlay` curvature illusion (chassis), and the two `ellipse at 30% 30%` corner radials
+  (`dock-controls.css` dock-primary tier mirroring the `utilities.css` `btn-audacious` source recipe). `git log -1
+  -- src/styles/dock-controls.css` → `d07122a` (the W09 `--glass-highlight` retire — W09 ALREADY touched this file,
+  so the D11 corner-radial demotion is an in-file extension). The W09 moving-specular arm shipped
+  `dev-complete-headless-green-live-pending`; D11 is the finding from the VISUAL-TRUTH live audit that is W09's
+  actual close criterion (the cardinal lesson — a green headless gate over a still-glowing live surface is not
+  done). No prior tranche authored these as a tokenized axis — they are four independent magnitude declarations of
+  the same soft-inner-glow idea, which this re-open folds onto one `--glass-radial-glow-*` axis.
 
 ---
 
@@ -587,3 +766,14 @@ Per §2b the band-B binding precepts (pinned `docs/precepts/` @ `63240e6`):
    non-specular surface-tint fill** (preserves a hover affordance on the dock control without a second
    catch-light) — RATIFY against the live audit (delete entirely if the moving `::before` already reads the
    hover sufficiently).
+6. **D11 — the `30% 30%` corner-anchor softening + the corner-radial magnitude.** The two `ellipse at 30% 30%`
+   radials read as a loud TOP-LEFT corner bloom; the demotion lowers the `18%` mix AND softens the anchor. RATIFY
+   against the live audit (a) the final `--glass-radial-glow-corner` magnitude (recommend ≈ half the `18%` →
+   `~9%`, tuned live), and (b) WHETHER to re-anchor the ellipse off the hard `30% 30%` corner toward a near-edge/
+   center-biased position (recommend re-anchor so the glow reads as a SURFACE LIFT, not a corner hotspot — but
+   keep it asymmetric enough that the disco-CTA identity survives). The tokens make both a one-value re-baseline.
+7. **D11 — the chassis curvature-overlay coupling to D12.** RATIFY-BEFORE-IMPL: sequence the curvature-overlay
+   leg AFTER the D12 chassis-retire ratify, OR land the `--glass-curvature-overlay` token fix UNCONDITIONALLY
+   (recommend unconditional — the token re-derivation harms nothing if D12 later retires the chassis; the dock +
+   `btn-audacious` legs are chassis-independent and land regardless). The curvature overlay's final warm-cream
+   alpha (recommend ≈ `hsl(40 30% 96% / 0.04)` light, `/0.025` dark — genuinely lower) is tuned at the live audit.

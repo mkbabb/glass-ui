@@ -4,9 +4,12 @@ The dock-first, visual-truth tranche. 46 waves (W00–W43 + W25a/b, W27a/b). W00
 up the fail-CLOSED π visual-runtime lane — the close-criterion machinery every
 downstream visual wave depends on.
 
-Status legend: `planned` · `in-progress` · `complete`. A wave is `complete` only when
-audited GREEN against the LIVE product (the AX cardinal lesson: a green headless proof
-over a black live canvas is NOT done).
+Status legend: `planned` · `in-progress` · `complete` · `live-pending`. A wave is
+`complete` only when audited GREEN against the LIVE product (the AX cardinal lesson: a
+green headless proof over a black live canvas is NOT done). `live-pending` means the
+device-free gates closed GREEN but the binding real-device visual audit surfaced a
+contradiction — the wave re-opens until the live truth is GREEN (the convergence
+soundness discipline: "complete" never collapses to "headless-green").
 
 | Wave | Title | Status |
 |---|---|---|
@@ -19,7 +22,7 @@ over a black live canvas is NOT done).
 | W06 | dock storybook honest rail + css split | planned |
 | W07 | aurora core unblock — WGSL black canvas | complete |
 | W08 | blob core unblock — smin distance regime | complete |
-| W09 | specular tune to subtle | complete |
+| W09 | specular tune to subtle | live-pending (re-open: D11 fixed-anchor radials) |
 | W10 | aurora options converge — atoms door | complete |
 | W11 | aurora color seams — OKLCh catchlight palette-ramp twin | complete |
 | W12 | mediums substrate — strokeProfile + noise basis | complete |
@@ -56,6 +59,14 @@ over a black live canvas is NOT done).
 | W41 | publisher cross-repo build supplier-edge | planned |
 | W42 | liquid-morph substrate | planned |
 | W43 | fourier-field first-class | planned |
+| W44 | dark-mode semantic-token contrast — destructive/alert AA floor (D10) | planned |
+| W45 | dock region-model + DockSeparator + mobile --dock-scale (D13+D15) | planned |
+| W46 | blob live-truth tune — floors→bands, lighting/hover down, mood latch (D4+D5+D7) | planned |
+| W47 | aurora preset-roster reconcile — name van-Gogh/oil-pastel/crayon (D2) | planned |
+| W48 | glass-material demo reauthor — bind the shipped specular seams (D8) | planned |
+| W49 | math-paper composes latex-paper (D16) | planned |
+| W50 | uniform dropdown/select/menu type-scale (D17) | planned |
+| W51 | comfortable component sizing — library-wide --ui-scale (D18 umbrella; W45/W50 specialize) | planned |
 
 ## W00 — visual-runtime (π) lane — COMPLETE
 
@@ -145,3 +156,26 @@ Carry-forward (pre-existing, NOT absorbed): the `proof:no-god-module` 3-file FAI
 (useMetaballRenderer / GlassDock / constellationField → W26/dock/W17), `proof:liquid-glass-tokens`
 (glass.css → W15), and the **ci.yml drift** — 14+ AX-band gates are ci-tagged in gates.mjs
 but absent from `.github/workflows/ci.yml` (the band-close ci.yml integration backlog).
+
+## Convergence round (post-3.8.0 live audit) — W44-W50 + re-opens
+
+After the AX dock+aurora+font+spring cut published as **3.8.0**, a live monitoring pass
+surfaced 17 visual-truth defects (`audit/USER-DEFECTS-2026-06-08.md`) the headless gates
+missed. A 23-lane read-only audit (`audit/convergence/`) mapped each at source + deduped
+against the 46-wave set (`audit/convergence/CONVERGENCE-PLAN.md`). Disposition:
+
+- **7 net-new waves** (no existing wave owned them): W44 (dark `--destructive` AA floor),
+  W45 (dock region-model + `--dock-scale` mobile + `<DockSeparator>`), W46 (blob live-truth
+  tune — floors→bands), W47 (aurora preset roster names van-Gogh), W48 (glass-material demo
+  reauthor), W49 (math-paper × latex-paper), W50 (uniform dropdown type-scale).
+- **2 cardinal-lesson re-opens** — the headline soundness finding: W09 + W05 were marked
+  `complete` on headless-green while their own JSONs recorded live-pending. W09 →
+  `live-pending` (the fixed-anchor specular radials D11), W05 carries the BouncyTabs
+  double-spring motion-shape arm (D3).
+- **Augments** (no new wave): W38 (D1 demo-chrome onto library primitives), W18 (D6 blob
+  consolidation + D14 dock category), W06 (D14 dock showcase content), W20 (the
+  `hsl(var(--background))` scrim, already RED-witness-1), W40 (D9 dock underline),
+  W28/W29 (D12 chassis retire — already planned, not a stale survivor).
+- **Structural**: all of W25-W29/W33-W35/W41 stay valid + born-RED; targets grew ~30%.
+  The `verify-ci` ci.yml drift (14 ci-tagged gates absent, mostly π-lane) is a **W33 /
+  band-close** task needing the π-gate-in-CI infra decision.
