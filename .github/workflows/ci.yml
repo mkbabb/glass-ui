@@ -81,11 +81,19 @@ jobs:
               run: npm run proof:phantom-classes
             - name: proof:vt-names
               run: npm run proof:vt-names
+            # AX.W22 — the default font register == rendered gate (device-free
+            # source arm + fail-closed π-lane live arm).
+            - name: proof:font-cascade
+              run: npm run proof:font-cascade
             # AS.W2 inv-θ — the lockfile registry-resolution drift guard (#177
             # cannot silently re-break npm ci) + the meta-gate asserting this
             # ci.yml step set matches scripts/gates.mjs exactly (the manifest is
             # the single source of truth; per-step visibility kept, drift fails).
             - name: proof:lockfile
               run: npm run proof:lockfile
+            # AX.W22 — the proof:* ↔ gates.mjs manifest bijection (a new proof
+            # gate cannot land in package.json without a manifest registration).
+            - name: proof:gate-script-parity
+              run: npm run proof:gate-script-parity
             - name: gates:verify-ci
               run: npm run gates:verify-ci

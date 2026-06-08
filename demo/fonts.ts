@@ -6,13 +6,11 @@ export interface FontOption {
     personality: string;
 }
 
-// AM-W7-η — the demo dogfoods the PUBLISHED brand faces. The display/serif
-// option is Plus Jakarta Sans (glass-ui's brand display + serif face, OFL
-// 1.1, shipped via the `./styles/fonts` export); the mono option is Fira
-// Code (the canonical mono, same export). The legacy Fraunces option was
-// retired — it is off the brand-font canon and glass-ui never shipped it.
-// The "Plus Jakarta Sans Fallback" / "Fira Code Fallback" faces are the
-// Capsize-calibrated system wrappers glass-ui ships alongside each face.
+// The demo dogfoods the PUBLISHED brand faces. The text/display option is Plus
+// Jakarta Sans (glass-ui's brand text + display face, OFL 1.1, shipped via the
+// `./styles/fonts` export); the mono option is Fira Code (the canonical mono,
+// same export). The "Plus Jakarta Sans Fallback" / "Fira Code Fallback" faces
+// are the Capsize-calibrated system wrappers glass-ui ships alongside each face.
 export const FONTS: FontOption[] = [
     {
         name: "Plus Jakarta Sans",

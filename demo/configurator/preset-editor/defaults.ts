@@ -9,36 +9,25 @@ import type { ConfigBaseline, Density, FontOption, FontSlots, WritableField } fr
 export const STORAGE_KEY = "glass-ui-demo-config";
 export const PRESET_LINK_ID = "glass-ui-demo-preset-link";
 
+// Every option must PAINT — only faces glass-ui ships (Plus Jakarta Sans, Fira
+// Code) or genuine system/generic keywords (system serif/sans, monospace). A
+// named face with no `@font-face` falls through to a system fallback and the
+// picker lies about what it offers.
 export const FONT_OPTIONS: readonly FontOption[] = [
     {
-        id: "cm-serif",
-        label: "Computer Modern Serif",
-        stack: '"Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif',
-    },
-    {
-        id: "fraunces",
-        label: "Fraunces",
-        stack: '"Fraunces", Georgia, serif',
-    },
-    {
-        id: "general-sans",
-        label: "General Sans",
-        stack: '"General Sans", "Inter", system-ui, sans-serif',
-    },
-    {
-        id: "inter",
-        label: "Inter",
-        stack: '"Inter", system-ui, sans-serif',
-    },
-    {
-        id: "jetbrains-mono",
-        label: "JetBrains Mono",
-        stack: '"JetBrains Mono", "Fira Code", ui-monospace, monospace',
+        id: "plus-jakarta-sans",
+        label: "Plus Jakarta Sans",
+        stack: '"Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif',
     },
     {
         id: "fira-code",
         label: "Fira Code",
-        stack: '"Fira Code", ui-monospace, monospace',
+        stack: '"Fira Code", "Fira Code Fallback", ui-monospace, monospace',
+    },
+    {
+        id: "system-serif",
+        label: "System Serif",
+        stack: 'Georgia, "Times New Roman", serif',
     },
     {
         id: "system",
@@ -50,10 +39,10 @@ export const FONT_OPTIONS: readonly FontOption[] = [
 export const DEFAULT_CONFIG: ConfigBaseline = {
     preset: "default",
     font: {
-        serif: '"Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif',
-        sans: '"Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif',
-        display: '"Fraunces", Georgia, serif',
-        mono: '"Fira Code", "Fira Mono", monospace',
+        serif: 'Georgia, "Times New Roman", serif',
+        sans: '"Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif',
+        display: '"Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif',
+        mono: '"Fira Code", "Fira Code Fallback", "Fira Mono", monospace',
     },
     scaleBase: 16,
     hueShift: 0,
@@ -73,9 +62,12 @@ export const DENSITY_SCALE: Record<Density, { pad: string; gap: string }> = {
     compact: { pad: "-0.25rem", gap: "-0.125rem" },
 };
 
+// `sans` drives the brand TEXT register (`--font-text`: body/headings/prose) —
+// the control a user reaches for first. `serif` drives the distinct math voice
+// (`--font-serif`). `display` + `mono` map to their namesake tokens.
 export const FONT_SLOT_VARS: Record<keyof FontSlots, string> = {
     serif: "--font-serif",
-    sans: "--font-sans",
+    sans: "--font-text",
     display: "--font-display",
     mono: "--font-mono",
 };

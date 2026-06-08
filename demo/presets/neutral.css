@@ -38,12 +38,13 @@
     --shadow-color: hsl(0 0% 0%);
 
     /* ═══════════════════════════════════════════════
-       Fonts — system sans-serif
+       Fonts — pure system stack (no web-font dependency)
        ═══════════════════════════════════════════════ */
-    --font-serif: "Inter", system-ui, -apple-system, sans-serif;
-    --font-sans:  "Inter", system-ui, -apple-system, sans-serif;
-    --font-display: "Inter", system-ui, sans-serif;
-    --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+    --font-text: system-ui, -apple-system, sans-serif;
+    --font-serif: Georgia, "Times New Roman", serif;
+    --font-sans: system-ui, -apple-system, sans-serif;
+    --font-display: system-ui, -apple-system, sans-serif;
+    --font-mono: "Fira Code", "Fira Code Fallback", ui-monospace, monospace;
 
     /* ═══════════════════════════════════════════════
        Radius — 8px (flatter than cream default)

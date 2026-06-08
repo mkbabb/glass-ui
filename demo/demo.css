@@ -1,14 +1,12 @@
 /*
- * AM-W7-η — the demo dogfoods the PUBLISHED brand faces.
+ * The demo dogfoods the PUBLISHED brand faces.
  *
- * Previously the demo pulled brand text from a Fraunces (Google Fonts) +
- * Computer Modern Serif (dreampulse CDN) + Fontshare legacy stack — none
- * of which glass-ui ships, and all of which violate the brand-font canon.
- * The canonical published faces are Plus Jakarta Sans (brand display +
- * serif, OFL 1.1) + Fira Code (mono), shipped via the `./styles/fonts`
- * export (`dist/styles/fonts.css`). The demo now loads exactly those faces
- * so it shows a consumer precisely what `@mkbabb/glass-ui/styles/fonts`
- * delivers — no third-party CDN, no off-canon families.
+ * The canonical published faces are Plus Jakarta Sans (brand text + display,
+ * OFL 1.1) + Fira Code (mono), shipped via the `./styles/fonts` export
+ * (`dist/styles/fonts.css`). They ARE the library default register — the demo
+ * loads exactly those faces so it shows a consumer precisely what
+ * `@mkbabb/glass-ui/styles/fonts` delivers — no third-party CDN, no off-canon
+ * families.
  *
  * The published `src/styles/fonts.css` `@font-face` rules reference the
  * woff2 via the `url("@mkbabb/glass-ui/fonts/…")` package-specifier shape
@@ -88,18 +86,9 @@
 
 @variant dark (&:where(.dark, .dark *));
 
-/* Brand opt-in — mirror the canonical consumer recipe (speedtest's
-   `data-typography-preset="brand-uniform-sans"` + `--font-brand-sans`
-   override). The preset cascades `--font-display`/`--font-serif` from the
-   library; overriding `--font-brand-sans` to the published Plus Jakarta
-   Sans chain makes the display/serif/sans utilities all resolve to the
-   brand display face (with its Capsize-calibrated fallback). `--font-mono`
-   already resolves to "Fira Code" through the library default stack. */
-:root {
-    --font-brand-sans:
-        "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui,
-        sans-serif;
-}
+/* No font override — the library DEFAULT register IS Plus Jakarta Sans
+   (text/display) + Fira Code (mono), and the @font-face blocks above load
+   exactly those faces. The demo renders the real default with zero opt-in. */
 
 html {
     background: var(--background);

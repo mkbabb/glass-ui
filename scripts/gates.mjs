@@ -40,6 +40,7 @@ export const GATES = [
     { id: "proof:resolution", cmd: "proof:resolution", tags: ["local", "ci", "release"], sibling: true },
     { id: "proof:phantom-classes", cmd: "proof:phantom-classes", tags: ["local", "ci", "release"], sibling: true },
     { id: "proof:vt-names", cmd: "proof:vt-names", tags: ["local", "ci", "release"] },
+    { id: "proof:font-cascade", cmd: "proof:font-cascade", tags: ["local", "ci", "release"], note: "default font register == rendered (AX.W22); device-free source arm + fail-closed π-lane live arm" },
     { id: "proof:lockfile", cmd: "proof:lockfile", tags: ["local", "ci", "release"], note: "registry-resolution drift guard" },
     { id: "audit:stash", cmd: "audit:stash", tags: ["ci"] },
 ];
@@ -92,13 +93,58 @@ function verifyCi() {
     console.log(`[gates:verify-ci] ci.yml matches the manifest ci set (${expected.size} gates).`);
 }
 
+/**
+ * The proof:gate-script-parity bijection (AX.W22). Every `proof:*` npm script
+ * that wraps a `scripts/proof-*.mjs` runner MUST be registered as a GATES `cmd`,
+ * and every GATES `cmd` MUST be a declared npm script. So a new proof gate can
+ * never land in package.json without a manifest registration (it would run in
+ * `proof:<x>` but never in `proof:all`/ci/release — the silent-miss class), and
+ * a manifest entry can never reference a script that does not exist. The
+ * meta-scripts that drive the manifest itself (`proof:all`,
+ * `proof:gate-script-parity`) are EXCLUDED — they are aggregate/verifier
+ * entrypoints, not per-runner gates. Fails closed on any add/drop.
+ */
+function verifyScripts() {
+    const pkgPath = resolve(ROOT, "package.json");
+    const pkg = JSON.parse(readFileSync(pkgPath, "utf8"));
+    const scripts = pkg.scripts ?? {};
+
+    // The manifest-meta scripts that are NOT per-runner gates.
+    const META = new Set(["proof:all", "proof:gate-script-parity"]);
+
+    // proof:* scripts that invoke a scripts/proof-*.mjs runner directly.
+    const runnerScripts = Object.keys(scripts).filter(
+        (name) =>
+            name.startsWith("proof:") &&
+            !META.has(name) &&
+            /scripts\/proof-[\w-]+\.(mjs|sh)/.test(scripts[name]),
+    );
+    const manifestCmds = new Set(GATES.map((g) => g.cmd));
+
+    const unregistered = runnerScripts.filter((s) => !manifestCmds.has(s));
+    const orphaned = GATES.map((g) => g.cmd).filter(
+        (c) => c.startsWith("proof:") && !(c in scripts),
+    );
+
+    if (unregistered.length || orphaned.length) {
+        console.error("[gates:verify-scripts] proof:* ↔ manifest bijection broken:");
+        for (const s of unregistered)
+            console.error(`  UNREGISTERED in gates.mjs GATES: ${s} (it runs standalone but never in proof:all/ci/release)`);
+        for (const c of orphaned)
+            console.error(`  ORPHANED manifest cmd (no npm script): ${c}`);
+        process.exit(1);
+    }
+    console.log(`[gates:verify-scripts] proof:* ↔ manifest bijection holds (${runnerScripts.length} runner gates).`);
+}
+
 const arg = process.argv[2];
 if (arg === "--run") runMode(process.argv[3]);
 else if (arg === "--verify-ci") verifyCi();
+else if (arg === "--verify-scripts") verifyScripts();
 else if (arg === "--list") {
     const mode = process.argv[3] ?? "local";
     console.log(gatesFor(mode).map((g) => g.cmd).join("\n"));
 } else {
-    console.error("usage: gates.mjs --run <local|ci|release> | --verify-ci | --list <mode>");
+    console.error("usage: gates.mjs --run <local|ci|release> | --verify-ci | --verify-scripts | --list <mode>");
     process.exit(2);
 }

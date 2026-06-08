@@ -1,95 +1,60 @@
-# `src/fonts/` — self-hostable woff2 assets
+# `src/fonts/` — self-hosted woff2 assets
 
-Per O.W6 Lane D / speedtest AC.W6 cohort (T_GU-FONT-A): glass-ui ships
-Fira Code (and forthcoming display/text companions) as woff2 assets so
-consumers can self-host via a single `@font-face` block rather than
-re-fetching from Google Fonts on every page-load.
+glass-ui ships its brand register as bundled OFL-1.1 woff2 assets so consumers
+self-host via the `@mkbabb/glass-ui/styles/fonts` export rather than re-fetching
+from a CDN on every page-load.
 
-## Canonical filenames (Fira Code)
+## The register
 
-The orchestrator (or release-script) fetches the OFL-licensed woff2 files
-into this directory at the following deterministic paths:
+| Family | Role | Axes | `@font-face` |
+|--------|------|------|--------------|
+| Plus Jakarta Sans | brand TEXT + display (body, headings, prose, display) | wght 200–800 | `font-display: optional` |
+| Fira Code | canonical mono (admin labels, code, tabular numerics) | wght 300–700 | `font-display: swap` |
+
+The library DEFAULT body/display register IS Plus Jakarta Sans (`--font-text` /
+`--font-display`), with Fira Code on `--font-mono` — no preset opt-out, no
+off-canon face. The `.cm-serif` / `text-math` math voice rides a distinct system
+serif (`--font-serif`: Georgia/Times), which a consumer overrides if it ships
+its own math face.
+
+## On-disk layout
+
+Per-family nested, subset-split (latin + latin-ext):
 
 ```
-src/fonts/FiraCode-Regular.woff2
-src/fonts/FiraCode-Medium.woff2
-src/fonts/FiraCode-SemiBold.woff2
+src/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2
+src/fonts/plus-jakarta-sans/plus-jakarta-sans-latin-ext.woff2
+src/fonts/fira-code/fira-code-latin.woff2
+src/fonts/fira-code/fira-code-latin-ext.woff2
 ```
 
-Source canonical: <https://github.com/tonsky/FiraCode> (OFL-1.1). The
-woff2 builds live in `distr/woff2/` of that repository's releases — pull
-the `Regular`/`Medium`/`SemiBold` weights only (the three glass-ui ships
-as the `--font-mono` stack rungs).
+Source canonical: Plus Jakarta Sans
+<https://github.com/tokotype/PlusJakartaSans> (OFL-1.1); Fira Code
+<https://github.com/tonsky/FiraCode> (OFL-1.1). Both are the variable woff2
+latin/latin-ext subsets from the Google Fonts / fontsource distribution.
 
-## Why this directory ships, not the fetch step
+## How the faces reach a consumer
 
-This worktree has no network access. Sub-task 1 documents the canonical
-path expectation + threads `src/fonts/**` into `package.json#files` so
-the woff2 files (once dropped in) ship in the published tarball without
-any further plumbing.
-
-## Orchestrator integration step
-
-At W6 close (before tagging v1.3.0), the orchestrator runs:
-
-```bash
-# from glass-ui repo root
-mkdir -p src/fonts
-curl -fL -o src/fonts/FiraCode-Regular.woff2 \
-    https://github.com/tonsky/FiraCode/raw/master/distr/woff2/FiraCode-Regular.woff2
-curl -fL -o src/fonts/FiraCode-Medium.woff2 \
-    https://github.com/tonsky/FiraCode/raw/master/distr/woff2/FiraCode-Medium.woff2
-curl -fL -o src/fonts/FiraCode-SemiBold.woff2 \
-    https://github.com/tonsky/FiraCode/raw/master/distr/woff2/FiraCode-SemiBold.woff2
-# verify
-ls -la src/fonts/*.woff2
-```
-
-OFL-1.1 attribution: include `LICENSE-FiraCode.txt` next to the woff2
-files (copy of upstream `LICENSE` from the FiraCode repo) at the same
-fetch step.
+`src/styles/fonts.css` declares each `@font-face` with a
+`url("@mkbabb/glass-ui/fonts/<family>/<face>.woff2")` package-specifier `src`.
+At publish the `publishStyleAssets` build plugin base64-inlines each woff2 into
+the emitted `dist/styles/fonts.css`, so the corpus travels INSIDE the off-critical
+async CSS the consumer imports via `@mkbabb/glass-ui/styles/fonts` — no separate
+woff2 fetch crosses the package boundary. The Capsize-calibrated `local()`
+fallback faces (`"Plus Jakarta Sans Fallback"` / `"Fira Code Fallback"`) live in
+`typography.css` on the critical path and hold the metrics during the
+`font-display` window so the swap is geometry-neutral (zero CLS).
 
 ## Consumer self-host recipe
 
-Once shipped, downstream consumers wire up the font via package-relative
-URL — no Google Fonts fetch needed:
+A consumer that wants the faces without the `/styles/fonts` bundle imports them
+directly off the published export:
 
 ```css
-@font-face {
-    font-family: "Fira Code";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url("@mkbabb/glass-ui/fonts/FiraCode-Regular.woff2") format("woff2");
-}
-
-@font-face {
-    font-family: "Fira Code";
-    font-style: normal;
-    font-weight: 500;
-    font-display: swap;
-    src: url("@mkbabb/glass-ui/fonts/FiraCode-Medium.woff2") format("woff2");
-}
-
-@font-face {
-    font-family: "Fira Code";
-    font-style: normal;
-    font-weight: 600;
-    font-display: swap;
-    src: url("@mkbabb/glass-ui/fonts/FiraCode-SemiBold.woff2") format("woff2");
-}
+@import "@mkbabb/glass-ui/styles/fonts"; /* the base64-inlined face corpus */
 ```
 
-The exact URL resolution mechanism (bundler-managed asset graph, public
-copy, or direct path) is consumer-side; glass-ui guarantees only the
-deterministic file location inside the published tarball.
-
-## Status
-
-- Path expectation: LANDED (this README + the directory + the
-  `package.json#files` include).
-- woff2 binary files: FLAGGED for orchestrator (no-network in agent
-  worktree). Orchestrator fetches at integration before v1.3.0 tag.
-- Capsize metric overrides (`size-adjust` / `ascent-override` /
-  `descent-override`): out of scope for Lane D — slated for AC.W6b's
-  follow-on glass-ui-side ship (T_GU-FONT-B per AC.r3 synthesis).
+The exact URL resolution mechanism (bundler-managed asset graph, `?url` async
+link, or direct import) is consumer-side; glass-ui guarantees the deterministic
+file location inside the published tarball + the `@font-face` family names
+(`"Plus Jakarta Sans"`, `"Fira Code"`).

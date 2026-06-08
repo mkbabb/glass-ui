@@ -40,9 +40,20 @@
        runtime tokens remain --font-*, --leading-*, and --tracking-* in
        typography.css.
        ═══════════════════════════════════════════════ */
-    --font-stack-display: "Fraunces", Georgia, serif;
-    --font-stack-serif: "Computer Modern Serif", "Latin Modern Roman", "CMU Serif", Georgia, serif;
+    /* The brand register. Plus Jakarta Sans (self-hosted, fonts.css) carries
+       the body, heading, prose, and display voice; its Capsize-calibrated
+       "Plus Jakarta Sans Fallback" face (typography.css) holds the metrics
+       during the font-display window so the swap is geometry-neutral. The
+       library DEFAULT body/display IS this register — it is what the demo and
+       consumers paint, with no preset opt-out. */
+    --font-stack-text: "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif;
+    --font-stack-display: "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif;
     --font-stack-sans: "Helvetica Neue", "Arial Nova", Arial, system-ui, sans-serif;
+    /* The math/editorial serif voice — a DISTINCT system serif consumed only by
+       the `.cm-serif` / `text-math` utilities (a KaTeX-adjacent register a
+       consumer can override). Genuinely paintable: Georgia/Times resolve on the
+       host OS, no web-font dependency. */
+    --font-stack-serif: Georgia, "Times New Roman", serif;
     /* AC.W6b (v1.5.0) — self-hosted Fira Code engages by default for
        every glass-ui consumer. The calibrated "Fira Code Fallback"
        face (declared in typography.css) wraps the system mono stack
