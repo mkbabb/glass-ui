@@ -1,0 +1,95 @@
+{
+  "wave": "AX.W09",
+  "title": "Specular tune-to-subtle — warm-cream low-alpha + one token ladder + retire the double-light",
+  "status": "dev-complete-headless-green-live-pending",
+  "band": "B (GRAPHICS)",
+  "severity": "blocker (raised from major — THREE live consumer confirmations, §24)",
+  "baseSha": "9f7b58c9b5eac36306600f4cef2fd2974ff63ae8",
+  "dependsOn": ["AX.W00"],
+  "headlessGate": {
+    "id": "proof:glass-material-unified",
+    "registration": "package.json:646 — node scripts/proof-glass-material-unified.mjs",
+    "coUpdated": true,
+    "bornRed": true,
+    "bornRedMethod": "git stash of src/styles/{glass.css,tokens.css} to BASE → gate exit 1 (10 violations: tokens absent, literals 0.35/0.6/0.85 present, pure-white core). Restored → gate exit 0.",
+    "greenAtPatchedTree": true,
+    "greenResult": "rest=0 hover=0.22 active=0.32; minted rest/hover/active ✓; dark-arm ✓; reads tokens rest/hover/active ✓; warm-cream ✓; pure-white gone ✓; dock 2nd-specular retired ✓; composable ✓; Card-specular-3-register ✓; status PASS exit 0."
+  },
+  "redWitnesses": [
+    {
+      "id": "RED-1",
+      "claim": "the unified moving-specular inner stop is pure-white (hsl(40 30% 100% / 0.55), L=100%) scaled by a 0.35/0.6/0.85 ladder — a ≈0.47 pure-white-screen hotspot at active",
+      "confirmedAtHead": true,
+      "codeEvidence": "glass.css:113 inner stop hsl(40 30% 100% / 0.55); rest floor :105 --specular-intensity: 0.35; :hover :162 0.6; :active :173 0.85; .dark arm :146 0.22",
+      "disposition": "GREEN — inner stop now hsl(40 30% 96% / 0.22) core + /0.08 mid (warm-cream, L=96%<100%); rungs read the --glass-specular-intensity-{rest,hover,active} cohort at rest 0 / hover 0.22 / active 0.32 (each ≤ half the retired value)."
+    },
+    {
+      "id": "RED-2",
+      "claim": "the --glass-specular-intensity-{rest,hover,active} token cohort does not exist — three buried literals across two files, no consumer knob (J-invariant token-first violation)",
+      "confirmedAtHead": true,
+      "codeEvidence": "grep 'specular-intensity-' over src/styles/ = NONE at HEAD; @property --specular-intensity is registered with initial-value: 0 (tokens.css:1724-1727) but the ::before rule overrode it to 0.35 unconditionally, defeating the dormancy",
+      "disposition": "GREEN — minted :root cohort (rest 0 / hover 0.22 / active 0.32) + .dark arm (hover 0.18 / active 0.26) near the @property registration; glass.css rest/hover/active rules READ the cohort via var()."
+    },
+    {
+      "id": "RED-3",
+      "claim": "the dock double-specular (.dock-icon-button is in the .glass-material ::before group AND dock-controls.css:101-102 applies a second --glass-highlight hover box-shadow) + the verbatim-duplicated trackSpecular (Card.vue:65 ≡ DockIconButton.vue:54) + no Card specular prop",
+      "confirmedAtHead": true,
+      "codeEvidence": "dock-controls.css:101-103 &:hover:not(:disabled):not(:focus-visible) { box-shadow: var(--dock-icon-hover-shadow, var(--glass-highlight)) }; Card.vue:65-76 ≡ DockIconButton.vue:54-65 (getBoundingClientRect → % → --mouse-x/--mouse-y); card/index.ts had no CardSpecular",
+      "disposition": "GREEN — the hover --glass-highlight box-shadow is RETIRED (the card-tinted hover fill carries the affordance, the moving ::before is the sole catch-light); trackSpecular lifted to useSpecularTracking() (Card + DockIconButton consume it, zero inline copies); Card gains specular?: 'off'|'subtle'|'full' (default 'off')."
+    }
+  ],
+  "findingDisposition": {
+    "slice14_F0_magnitude_headline": "FIXED — warm-cream low-alpha core + subtle token ladder at the unified .glass-material::before source",
+    "slice14_F1_dock_second_specular": "FIXED — dock-controls.css hover --glass-highlight box-shadow retired (one catch-light owner)",
+    "slice14_F2_trackSpecular_DRY": "FIXED — useSpecularTracking() composable; both SFCs consume it",
+    "slice14_F3_rest_floor": "FIXED — rest rung 0 reads the cohort default; @property initial-value:0 dormancy no longer defeated",
+    "slice14_F4_minus1000_resume": "ROUTED to W25b/§J (cosmetic, file-disjoint createCanvasLifecycle.ts, substrate HEALTHY) — NOT done here",
+    "slice27_F3_token_first": "FIXED — magnitude is the single overridable --glass-specular-intensity-* cohort",
+    "slice27_F4_DRY": "FIXED — see slice14_F2",
+    "slice27_F5_file_rename": "ROUTED to W25b/§J — glass-specular-track.css → glass-material.css rename + cross-file doc pointers NOT touched here (recipe retuned INSIDE glass.css's .glass-material::before)"
+  },
+  "ratifications": {
+    "cardSpecularDefault": "off — §24 third-confirmation (data/content backplates: slides 'Runs locally' Card + USF charts + keyframes panels all want a clean resting content card). 'subtle' is the explicit hero/chrome opt-in; 'full' the busy-backdrop case. Per §21 no-user-gate recorded default.",
+    "subtleMagnitudes": "rest 0 / hover 0.22 / active 0.32 (light); .dark hover 0.18 / active 0.26. The recommended charter triple; one-value re-baseline if the live audit wants softer/brighter.",
+    "blendMode": "kept `screen` + relied on the lowered alpha + warm-cream core first (the simpler one-axis change per Open-Question-3 recommendation). Per-context blend-mode demotion deferred to live audit if a white-lift over LIGHT still reads.",
+    "minus1000ResumeWarp": "ROUTED to W25b/§J (Open-Question 4 recommendation).",
+    "glassHighlightBoxShadow": "DELETED (not demoted) — the existing card-tinted hover background fill already carries the hover affordance, so the moving ::before is cleanly the sole catch-light owner (Open-Question 5; the simpler one-owner outcome). RATIFY against live audit."
+  },
+  "filesChanged": [
+    "src/styles/tokens.css",
+    "src/styles/glass.css",
+    "src/styles/dock-controls.css",
+    "src/composables/glass/useSpecularTracking.ts",
+    "src/composables/glass/index.ts",
+    "src/components/ui/card/Card.vue",
+    "src/components/ui/card/index.ts",
+    "src/components/custom/dock/DockIconButton.vue",
+    "scripts/proof-glass-material-unified.mjs",
+    "docs/tranches/AX/audit/W09-specular-tune.json"
+  ],
+  "selfGates": {
+    "typecheck": "PASS — vue-tsc --noEmit clean",
+    "proof:glass-material-unified": "PASS exit 0 (born-RED proven: BASE-state exit 1)",
+    "vitest_card_dock": "PASS — 98/98 (Card.test.ts + tests/components/custom/dock/)",
+    "lightningcss_parse": "OK — tokens.css + glass.css + dock-controls.css parse clean"
+  },
+  "consumerLegNote": {
+    "routedTo": "W34 (cross-repo consumer adoption)",
+    "kf_G_1_wire_or_omit": "GREEN by construction — a glass Card with specular='off' (the default) emits NO `glass-specular-track` class, so a mouse-tracked radial with no mouse writer is never the default. The dock icon (kf-G-2, dock.js:568 already pointer-wired) is a TUNE within the same cohort.",
+    "kf_G_2_dock_icon": "the dock-icon .glass-specular-track is already pointer-wired (now via useSpecularTracking + the subtle cohort) — a tune, not a wire-up.",
+    "confirmNoKfOverride": "after glass-ui softens the default + tokenizes the cohort, the keyframes demo (default surface='glass' Card) reads clean off the softened default — confirm no kf-side --specular-intensity override remains needed. EXECUTES in W34; this wave authors the note only (writes NO sibling source)."
+  },
+  "liveVerifyHandoff": {
+    "binding": "The wave does NOT close on the headless gate alone — the executed live Playwright + frontend-design VISUAL-TRUTH audit (captured as a paired-π BEFORE/AFTER + DELTA under docs/tranches/AX/audit/, per the W00 protocol) is the binding close criterion. The agent sandbox has no real-GPU browser (headless Chromium exposes no navigator.gpu; software GL false-GREENs).",
+    "surfaces": ["<Card surface=\"glass\">", "<DockIconButton>", "<Dialog>"],
+    "contexts": ["flat warm-cream substrate AND aurora backdrop", "light AND dark"],
+    "criteria": [
+      "press-light reads as a whisper not a flash — active is a subtle lens, the ≈0.47 white-screen defect is visually gone",
+      "the dock is no longer the hottest surface — the most-hovered dock control reads at parity with the band (the second --glass-highlight specular gone)",
+      "static plates clean — a <Card>/<Dialog>/<Popover> that does NOT wire a pointer shows NO centered white hotspot at rest (rest-floor-0)",
+      "specular='off' genuinely clean — a <Card specular=\"off\"> resting panel carries zero catch-light",
+      "BEFORE pins the published-3.4.0 dead-centered white bloom (§4 note 12) the tune must beat"
+    ],
+    "orchestratorMustRun": "proof:glass-material-unified (re-confirm GREEN) + the live π VISUAL-TRUTH audit on the real Metal box over the dock + a glass-Card-over-aurora route in light/dark; capture the paired-π BEFORE/AFTER + DELTA."
+  }
+}
