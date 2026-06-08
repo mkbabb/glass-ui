@@ -2,11 +2,11 @@
 //
 // A hand-written WGSL twin of the GLSL aurora fragment pipeline (NO Three.js/TSL —
 // the zero-dep posture; the GLSL→WGSL transcription is largely mechanical:
-// `fwidth`→`dpdx`/`dpdy`, uniform arrays→a std140 storage struct, `gl.uniform*`→
-// `writeBuffer`). The WebGL2 single-pass fragment shader (aurora.frag.ts) stays the
-// universal floor; this is its capability-gated twin drawing the SAME single-pass
-// aurora. The full-quality multi-pass painterly half (the smoothed-tensor + the
-// anisotropic Kuwahara) is painterly.wgsl.ts (W7c), no-op on WebGL2.
+// `fwidth`→`dpdx`/`dpdy`, `gl.uniform*`→`writeBuffer`). The WebGL2 single-pass
+// fragment shader (aurora.frag.ts) stays the universal floor; this is its
+// capability-gated twin drawing the SAME single-pass aurora. The full-quality
+// multi-pass painterly half (the smoothed-tensor + the anisotropic Kuwahara) is
+// painterly.wgsl.ts (W7c), no-op on WebGL2.
 //
 // The color/noise math is SPLICED from the shared procedural-color chunk's WGSL twin
 // (OETF_WGSL + OKLCH_MATRICES_WGSL + FBM_ROT_WGSL) — NOT re-authored — so the WebGPU
@@ -14,9 +14,21 @@
 // the proof:webgpu-substrate-single splice clause forbids). proof:aurora-wgsl-
 // equivalence certifies the color chunk to 1e-6 against the GLSL oracle.
 //
-// The std140 storage struct lifts the WebGL2 MAX_NUCLEI 6 / MAX_STOPS 8 caps (a
-// storage buffer is dynamically sized) — but this twin keeps the SAME field set so
-// the visual contract matches the WebGL2 fallback byte-for-byte where the caps overlap.
+// AX.W07 — the WGSL black-canvas fix (two device-proven defects, ONE atomic rewrite):
+//   (1a) the int-in-float class is killed AT THE ROOT — the five count/enum fields
+//        (stopCount/nucleiCount/warpMode/noiseOctaves/medium) are declared `f32` and
+//        `i32()`-cast in-shader at every use site. The CPU pack stays a single
+//        Float32Array (no Int32Array dual-view); the slot now legitimately carries a
+//        float the shader casts. WGSL no longer reads the IEEE-754 bit-pattern of a
+//        float as a raw i32 (the `bits(3.0)=1077936128` overflow that blacked the ramp).
+//   (1b) the dynamically-indexed arrays (palette/nucleiPos/nucleiMod) MOVE OUT of the
+//        `var<uniform>` block into a NEW `struct Field` bound `var<storage, read>` at a
+//        second binding (@group(0) @binding(1)). On Apple/Metal (Tint→MSL) a runtime
+//        index into a `var<uniform> array<vec4f>` returns [0,0,0,0] (MSL forbids dynamic
+//        indexing of the `constant` address space); `var<storage,read>` is always-legal
+//        for dynamic indices (gpuweb #2559). The std140 vec4-aligned record is
+//        byte-identical in uniform and storage, so the storage move keeps visual parity.
+// BOTH are required for a non-black render — landing only one still ships black.
 
 import {
     OETF_WGSL,
@@ -24,9 +36,11 @@ import {
     FBM_ROT_WGSL,
 } from "../../../../../composables/glass/webgl/shaders/procedural-color.glsl";
 
-// The shared uniform struct (std140-friendly layout). The bridge's WebGPU write path
-// (uniformBridge.ts) packs an AuroraConfig into this buffer; the WebGL2 path keeps
-// its gl.uniform* calls. MAX_* mirror the WebGL2 caps for visual parity.
+// The uniform/storage split layout. The bridge's WebGPU write path (uniformBridge.ts)
+// packs an AuroraConfig into the two buffers; the WebGL2 path keeps its gl.uniform*
+// calls. MAX_* mirror the WebGL2 caps for visual parity (the storage `Field` could be
+// runtime-sized to lift them — the cap-lift is the W14 follow-up; W07 keeps the caps so
+// the visual contract matches the WebGL2 fallback exactly).
 const WGSL_MAX_NUCLEI = 6;
 const WGSL_MAX_STOPS = 8;
 
@@ -53,30 +67,42 @@ const W_LUMA: vec3f = vec3f(0.2126, 0.7152, 0.0722);
 const MAX_NUCLEI: u32 = ${WGSL_MAX_NUCLEI}u;
 const MAX_STOPS: u32 = ${WGSL_MAX_STOPS}u;
 
-// The std140 uniform struct — the WebGPU write path packs an AuroraConfig here.
+// The uniform struct — ONLY constant-indexed scalars (safe in the uniform address
+// space). The five count/enum fields are f32 (AX.W07 1a): the WebGPU write path packs
+// them as floats and the shader i32-casts at each use, so WGSL never reads a float
+// bit-pattern as a raw i32. The dynamically-indexed arrays moved OUT to struct Field
+// below (AX.W07 1b).
 struct Uniforms {
   time: f32,
-  stopCount: i32,
-  nucleiCount: i32,
+  stopCount: f32,
+  nucleiCount: f32,
   softmaxBeta: f32,
   valueVariance: f32,
   warpAmount: f32,
   warpScale: f32,
   warpDrift: f32,
-  warpMode: i32,
-  noiseOctaves: i32,
-  medium: i32,
+  warpMode: f32,
+  noiseOctaves: f32,
+  medium: f32,
   breathDepth: f32,
   breathPeriod: f32,
   saturation: f32,
   paperGrain: f32,
   alpha: f32,
+};
+
+// The dynamically-indexed arrays — bound var<storage, read> (AX.W07 1b). A runtime
+// palette/nuclei index into a var<uniform> array<vec4f> returns [0,0,0,0] on Metal
+// (MSL forbids dynamic indexing of constant); storage is always-legal. The vec4 stride
+// is std140-identical to the uniform layout, so the move is byte-exact.
+struct Field {
   palette: array<vec4f, ${WGSL_MAX_STOPS}>,      // .xyz = linear-sRGB stop
   nucleiPos: array<vec4f, ${WGSL_MAX_NUCLEI}>,    // .xy pos, .z radius, .w paletteBias
   nucleiMod: array<vec4f, ${WGSL_MAX_NUCLEI}>,    // .x valueBias, .y elong, .z angle, .w driftRadius
 };
 
 @group(0) @binding(0) var<uniform> U: Uniforms;
+@group(0) @binding(1) var<storage, read> F: Field;
 
 ${OETF_WGSL}
 ${FBM_ROT_WGSL}
@@ -101,8 +127,9 @@ fn fbm(p0: vec2f) -> f32 {
   var v = 0.0;
   var a = 0.5;
   var p = p0;
+  let octaves = i32(U.noiseOctaves);   // AX.W07 1a — i32()-cast the f32-packed count.
   for (var i = 0; i < 5; i = i + 1) {
-    if (i >= U.noiseOctaves) { break; }
+    if (i >= octaves) { break; }
     v = v + a * vnoise(p);
     p = FBM_ROT * p * 2.02;
     a = a * 0.5;
@@ -112,14 +139,15 @@ fn fbm(p0: vec2f) -> f32 {
 
 fn samplePalette(id: f32) -> vec3f {
   // Nearest-pair OKLab interpolation across the stops (mirrors the GLSL default ramp).
-  let n = U.stopCount;
-  if (n <= 1) { return U.palette[0].xyz; }
+  let n = i32(U.stopCount);            // AX.W07 1a — i32()-cast the f32-packed count.
+  if (n <= 1) { return F.palette[0].xyz; }
   let t = clamp(id, 0.0, 1.0) * f32(n - 1);
   let i0 = i32(floor(t));
   let i1 = min(i0 + 1, n - 1);
   let f = t - f32(i0);
-  let labA = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * U.palette[i0].xyz) * pow(abs(LINEAR_SRGB_TO_LMS * U.palette[i0].xyz), vec3f(1.0 / 3.0)));
-  let labB = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * U.palette[i1].xyz) * pow(abs(LINEAR_SRGB_TO_LMS * U.palette[i1].xyz), vec3f(1.0 / 3.0)));
+  // AX.W07 1b — read the palette from the storage Field (dynamic i0/i1 index).
+  let labA = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * F.palette[i0].xyz) * pow(abs(LINEAR_SRGB_TO_LMS * F.palette[i0].xyz), vec3f(1.0 / 3.0)));
+  let labB = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * F.palette[i1].xyz) * pow(abs(LINEAR_SRGB_TO_LMS * F.palette[i1].xyz), vec3f(1.0 / 3.0)));
   return oklabToLinearSrgb(mix(labA, labB, f));
 }
 
@@ -142,15 +170,16 @@ fn nucleiField(p: vec2f, t: f32) -> vec2f {
   var accumId = 0.0;
   var accumVal = 0.0;
   var w = 0.0;
-  let n = U.nucleiCount;
+  let n = i32(U.nucleiCount);          // AX.W07 1a — i32()-cast the f32-packed count.
   for (var i = 0; i < ${WGSL_MAX_NUCLEI}; i = i + 1) {
     if (i >= n) { break; }
-    let pos = U.nucleiPos[i].xy;
-    let rad = max(U.nucleiPos[i].z, 0.01);
+    // AX.W07 1b — read the nuclei from the storage Field (dynamic i index).
+    let pos = F.nucleiPos[i].xy;
+    let rad = max(F.nucleiPos[i].z, 0.01);
     let d2 = dot(p - pos, p - pos);
     let wi = exp((-U.softmaxBeta * d2) / (rad * rad));
-    accumId = accumId + wi * U.nucleiPos[i].w;
-    accumVal = accumVal + wi * U.nucleiMod[i].x;
+    accumId = accumId + wi * F.nucleiPos[i].w;
+    accumVal = accumVal + wi * F.nucleiMod[i].x;
     w = w + wi;
   }
   if (w < 1e-4) { return vec2f(0.5, 0.0); }

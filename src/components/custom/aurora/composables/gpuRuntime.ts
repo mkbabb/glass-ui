@@ -1,12 +1,19 @@
 // AW.W7b — the WebGPU aurora setup (the createGPUCanvas `setup` callback).
 //
-// Builds the WGSL render pipeline + the std140 uniform buffer + the bind group on a
-// `GPUDevice`, and returns the per-frame hooks that pack + writeBuffer the config and
-// draw the SAME single-pass aurora the WebGL2 fragment path draws. The WGSL module is
-// `aurora.wgsl.ts` (which splices the shared procedural-color WGSL twin — the color
-// math NEVER diverges from the WebGL2/GLSL reference). The multi-pass painterly half
-// (the smoothed tensor + the anisotropic Kuwahara) is `painterly.wgsl.ts` (W7c), wired
-// through the generic FBO/storageTexture seam — NOT baked here.
+// Builds the WGSL render pipeline + the uniform buffer + the storage `Field` buffer +
+// the bind group on a `GPUDevice`, and returns the per-frame hooks that pack +
+// writeBuffer the config and draw the SAME single-pass aurora the WebGL2 fragment path
+// draws. The WGSL module is `aurora.wgsl.ts` (which splices the shared procedural-color
+// WGSL twin — the color math NEVER diverges from the WebGL2/GLSL reference). The
+// multi-pass painterly half (the smoothed tensor + the anisotropic Kuwahara) is
+// `painterly.wgsl.ts` (W7c), wired through the generic FBO/storageTexture seam — NOT
+// baked here.
+//
+// AX.W07 — the dynamically-indexed palette/nuclei arrays bind to a SECOND buffer,
+// `var<storage, read> F: Field` at @binding(1) (the int-in-float + uniform-dynamic-index
+// black-canvas fix; see aurora.wgsl.ts). The frame seam threads `masterTempo()` into
+// advanceCursor + carries the `cursor.burst` liveness term, matching the WebGL2
+// `frameLoop` demand gate.
 //
 // This module BAKES NO pass-count / tensor format / Kuwahara-sector-count (the
 // proof:webgpu-substrate-single clause-2 leak): it draws ONE render pass (the base
@@ -14,10 +21,10 @@
 // passes are a GENERIC N-pass declaration the consumer configures.
 
 import { AURORA_WGSL } from "../constants/shaders/aurora.wgsl";
-import { packGPUUniforms, WGPU_UNIFORM_FLOATS } from "./uniformBridge";
+import { packGPUUniforms, WGPU_UNIFORM_FLOATS, WGPU_FIELD_FLOATS } from "./uniformBridge";
 import type { GPUCanvasFrame, GPUCanvasSetupArgs } from "../../../../composables/glass/createGPUCanvas";
 import type { CursorState } from "./cursorModel";
-import { advanceCursor } from "./cursorModel";
+import { advanceCursor, cursorIsLive } from "./cursorModel";
 import { resolveBudgetDpr } from "../constants/budget";
 import type { AuroraConfig } from "../constants/presets";
 
@@ -60,20 +67,40 @@ export function createGPUAuroraSetup(deps: GPUAuroraDeps) {
             primitive: { topology: "triangle-list" },
         });
 
-        // The std140 uniform buffer (16-byte aligned). Reused; a slider drag refills it.
-        // GPUBufferUsage.UNIFORM (0x40) | COPY_DST (0x8) — the const namespace is not in
-        // every lib.dom revision, so the stable WebGPU flag values are inlined.
+        // The uniform + storage buffers (16-byte aligned). Reused; a slider drag refills
+        // them. The WebGPU buffer-usage flag namespace is not in every lib.dom revision,
+        // so the stable values are inlined: UNIFORM (0x40) | STORAGE (0x80) | COPY_DST
+        // (0x8).
         const BUFFER_USAGE_UNIFORM = 0x40;
+        const BUFFER_USAGE_STORAGE = 0x80;
         const BUFFER_USAGE_COPY_DST = 0x8;
         const uniformData = new Float32Array(WGPU_UNIFORM_FLOATS);
         const uniformBuffer = device.createBuffer({
             size: uniformData.byteLength,
             usage: BUFFER_USAGE_UNIFORM | BUFFER_USAGE_COPY_DST,
         });
+        // AX.W07 — the storage `Field` buffer carrying the dynamically-indexed palette +
+        // nuclei vec4 arrays (a runtime index is only legal from `var<storage,read>`).
+        const fieldData = new Float32Array(WGPU_FIELD_FLOATS);
+        const fieldBuffer = device.createBuffer({
+            size: fieldData.byteLength,
+            usage: BUFFER_USAGE_STORAGE | BUFFER_USAGE_COPY_DST,
+        });
         const bindGroup = device.createBindGroup({
             layout: pipeline.getBindGroupLayout(0),
-            entries: [{ binding: 0, resource: { buffer: uniformBuffer } }],
+            entries: [
+                { binding: 0, resource: { buffer: uniformBuffer } },
+                { binding: 1, resource: { buffer: fieldBuffer } },
+            ],
         });
+
+        // The master-tempo seam — the SAME suppression scalar the WebGL2 frameLoop
+        // routes through: 0 under reduced-motion so every interactive axis (velocity,
+        // burst) freezes, 1 otherwise. Threaded into advanceCursor (the integration
+        // step scales, NEVER the absolute clock).
+        function masterTempo(): number {
+            return getReducedMotion() ? 0 : 1;
+        }
 
         function resize(): void {
             const dpr = resolveBudgetDpr();
@@ -84,10 +111,13 @@ export function createGPUAuroraSetup(deps: GPUAuroraDeps) {
         }
 
         function frame(timeSec: number): void {
-            advanceCursor(cursor);
+            // tempo-scaled cursor advance — the burst/velocity collapse under PRM (parity
+            // with the WebGL2 frameLoop).
+            advanceCursor(cursor, masterTempo());
             const cfg = getConfig();
-            packGPUUniforms(cfg, timeSec, uniformData);
+            packGPUUniforms(cfg, timeSec, uniformData, fieldData);
             device.queue.writeBuffer(uniformBuffer, 0, uniformData);
+            device.queue.writeBuffer(fieldBuffer, 0, fieldData);
 
             const encoder = device.createCommandEncoder();
             const view = context.getCurrentTexture().createView();
@@ -108,17 +138,22 @@ export function createGPUAuroraSetup(deps: GPUAuroraDeps) {
             device.queue.submit([encoder.finish()]);
         }
 
-        // Demand-gate parity with the WebGL2 path: drift-live OR cursor-live → animate;
+        // Demand-gate parity with the WebGL2 `frameLoop.needsAnimation`: drift-live OR
+        // the velocity-burst still decaying OR the cursor still easing → animate;
         // reduced-motion → one static frame then park (the lifecycle core gates it).
         function shouldContinue(): boolean {
             if (getReducedMotion()) return false;
             const cfg = getConfig();
-            return (
+            const driftLive =
                 cfg.nucleiDrift !== 0 ||
                 cfg.paletteDrift !== 0 ||
                 cfg.breathDepth !== 0 ||
-                cfg.warpDrift !== 0
-            );
+                cfg.warpDrift !== 0;
+            if (driftLive) return true;
+            // AX.W07 — the velocity burst keeps the loop live while it decays out (parity
+            // with frameLoop, which carries the same `cursor.burst > 1e-3` term).
+            if (cfg.interactivity?.light && cursor.burst > 1e-3) return true;
+            return cursorIsLive(cursor);
         }
 
         return {
@@ -128,6 +163,7 @@ export function createGPUAuroraSetup(deps: GPUAuroraDeps) {
             time: (elapsedSec) => (getReducedMotion() ? frozenOffset : elapsedSec),
             teardown: () => {
                 uniformBuffer.destroy();
+                fieldBuffer.destroy();
             },
         };
     };
