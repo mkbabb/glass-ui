@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, readonly, ref, useId, useTemplateRef } from "vue";
-import type { Component } from "vue";
+import { computed, onBeforeUnmount, readonly, ref, useId, useTemplateRef } from "vue";
+import type { Component, Ref } from "vue";
 import { Tabs, TabsList, TabsTrigger, TabsIndicator } from "../../ui/tabs";
 import { useOptionalDockContext } from "./composables/dockContext";
 import {
@@ -8,6 +8,7 @@ import {
     type DockLayerDescriptor,
 } from "./composables/dockLayerContext";
 import { useLayerTransition } from "./composables/useLayerTransition";
+import { useOptionalDockMorphContext } from "./composables/dockMorphContext";
 
 /**
  * <DockLayerGroup> — a stack of <DockLayer> children with crossfade +
@@ -54,22 +55,52 @@ function unregister(id: string) {
 
 const axis = computed(() => props.orientation ?? dock?.orientation.value ?? "horizontal");
 
-const { onTransitionEnd, currentLayer, leavingLayer } = useLayerTransition({
-    containerEl,
-    activeLayer,
-    axis,
-    /* AW.W3 — typed directional intent for the inner pane swap. Moving to a
-       LATER-registered layer is `layer-forward` (the softer entry-overshoot);
-       moving to an EARLIER one is `layer-back` (the snappier exit). The order is
-       the rail's registration order (the visual left-to-right / top-to-bottom
-       order). A non-typed engine runs the symmetric curve. */
-    directionTypes: (from, to) => {
-        const fromIdx = layers.value.findIndex((l) => l.id === from);
-        const toIdx = layers.value.findIndex((l) => l.id === to);
-        // Unknown index (a not-yet-registered layer) → forward (the entry default).
-        return [toIdx < fromIdx ? "layer-back" : "layer-forward"];
-    },
-});
+/* AX.W02 — DEFER to the dock's single morph orchestrator when nested in a
+   `<GlassDock>`; SELF-ORCHESTRATE when standalone. The dock provides
+   `DockMorphContext` (W02 seam); a nested group registers its pane-stack as a
+   second morph target on the dock's ONE `SpringProgress` (no second engine, one
+   `--dock-morph-t` clock for a simultaneous collapse + pane-swap). Outside any
+   dock — the standalone demo case — `useOptionalDockMorphContext()` reads `null`,
+   so the group keeps its own `useLayerTransition` engine exactly as before. The
+   befitting-silent missing-provider path is the standalone render, NOT a
+   violation (hence `createOptionalContext`).
+
+   `currentLayer`/`leavingLayer` are the same read-only crossfade-class source a
+   `<DockLayer>` child reads, whether minted here (standalone) or returned by the
+   orchestrator (nested) — so deferral is transparent to `<DockLayer>`. */
+const morphHost = useOptionalDockMorphContext();
+
+let currentLayer: Readonly<Ref<string>>;
+let leavingLayer: Readonly<Ref<string | null>>;
+let onTransitionEnd: (e: TransitionEvent) => void;
+
+if (morphHost) {
+    const handle = morphHost.registerGroup({ containerEl, activeLayer, axis });
+    currentLayer = handle.currentLayer;
+    leavingLayer = handle.leavingLayer;
+    // The orchestrator owns the spring; there is no per-group transitionend to
+    // resolve. A defensive no-op keeps the `@transitionend` binding parity.
+    onTransitionEnd = () => {};
+    onBeforeUnmount(() => handle.release());
+} else {
+    const self = useLayerTransition({
+        containerEl,
+        activeLayer,
+        axis,
+        /* AW.W3 — typed directional intent for the inner pane swap (standalone
+           path only — the nested path defers to the dock's symmetric spring).
+           Moving to a LATER-registered layer is `layer-forward`; an EARLIER one
+           is `layer-back`. Order is the rail's registration order. */
+        directionTypes: (from, to) => {
+            const fromIdx = layers.value.findIndex((l) => l.id === from);
+            const toIdx = layers.value.findIndex((l) => l.id === to);
+            return [toIdx < fromIdx ? "layer-back" : "layer-forward"];
+        },
+    });
+    currentLayer = readonly(self.currentLayer);
+    leavingLayer = readonly(self.leavingLayer) as Readonly<Ref<string | null>>;
+    onTransitionEnd = self.onTransitionEnd;
+}
 
 /* AQ.W6 §Design 7 — on a View-Transitions engine the layer-stack size morph +
    pane crossfade is owned by the browser (the `useLayerTransition` native fork);
@@ -88,15 +119,19 @@ const stackVtStyle = computed<Record<string, string> | undefined>(() =>
         : undefined,
 );
 
-/* AU.W8b.6 — the group (via `useLayerTransition`) owns the WRITABLE
+/* AU.W8b.6 — the morph driver (the dock orchestrator when nested, this group's
+   own `useLayerTransition` when standalone) owns the WRITABLE
    `currentLayer`/`leavingLayer` refs and keeps mutating them; the context
-   projection is `readonly()` so a `<DockLayer>` child can read the active-layer
-   state but never write the group-orchestrated value. */
+   projection is read-only so a `<DockLayer>` child can read the active-layer
+   state but never write the group-orchestrated value. Both `currentLayer` and
+   `leavingLayer` are already read-only projections (the orchestrator returns
+   `readonly()` handles; the standalone `useLayerTransition` refs are projected
+   `readonly` here). */
 provideDockLayerGroupContext({
     register,
     unregister,
-    currentLayerId: readonly(currentLayer),
-    leavingLayerId: readonly(leavingLayer),
+    currentLayerId: currentLayer,
+    leavingLayerId: leavingLayer,
 });
 
 function isComponent(icon: unknown): icon is Component {

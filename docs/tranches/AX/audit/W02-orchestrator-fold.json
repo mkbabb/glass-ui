@@ -1,0 +1,67 @@
+{
+  "wave": "AX.W02",
+  "title": "One morph orchestrator per dock — fold the inner layer-group onto the outer driver",
+  "base": "27036cc",
+  "status": "DEV-COMPLETE (headless self-gated; live π-lane + visual-truth owned by the orchestrator)",
+  "rediagnosis": {
+    "twoEnginesPerNestedDock": {
+      "confirmed": true,
+      "outerEngine": "GlassDock.vue:269 (base) — useLayerTransition({ containerEl: layersEl, activeLayer: outerActiveLayer })",
+      "innerEngine": "DockLayerGroup.vue:57 (base) — useLayerTransition({ containerEl, activeLayer, axis, directionTypes }) instantiated UNCONDITIONALLY",
+      "sharedSpringClosure": "useLayerTransition.ts:92 — each instance owns its own `spring: SpringProgress | null`; a nested collapsible dock ran TWO live SpringProgress closures, both writing `--dock-morph-t` on the shared `.glass-dock` root (morphRoot() = el.closest('.glass-dock')) on uncoordinated clocks"
+    },
+    "doubledVocabulary": {
+      "confirmed": true,
+      "outer": ".dock-layer / .layer-active (GlassDock template + dock.css)",
+      "inner": ".dock-layer-item-host / .is-active / .is-leaving (DockLayer + dock.css)",
+      "greppableSyncComment": "dock.css:719-728 (base) — 'a later refactor greps for this marker so the semantics are not collapsed'"
+    },
+    "magicOnsetLadder": {
+      "confirmed": true,
+      "location": "dock.css:882-901 (base) — hand-typed --dock-stagger-onset: 0.08 / 0.16 / 0.24 / 0.32 / 0.4, duplicated across `.dock-layers .dock-layer--full > *` and `.dock-layer-stack .dock-layer-item-host.is-active > *`"
+    }
+  },
+  "fix": {
+    "model": "(expandedState × activePane) single morph stack — the outer collapse↔expand swap and the inner pane swap are transitions in the SAME group, ONE SpringProgress, ONE --dock-morph-t scalar, ONE clock",
+    "diSeam": "src/components/custom/dock/composables/dockMorphContext.ts — createOptionalContext<DockMorphContext>; GlassDock provides via provideDockMorphContext; DockLayerGroup injects via useOptionalDockMorphContext and DEFERS (registerGroup) when present, self-orchestrates (its own useLayerTransition) when absent",
+    "orchestrator": "useDockMorphOrchestrator — ONE shared SpringProgress driving a registry of morph targets (the outer pair + every nested group). Per-target txId gates each target's measured-once FLIP pin/measure so a simultaneous multi-target swap rides the one spring without clobbering siblings; ensureSpringRunning owns the single play() frame loop; onSwap re-bases mid-flight siblings' from-span for velocity-continuous interrupts",
+    "vocabularyUnified": ".dock-layer + .dock-layer-item-host both drive crossfade off .is-active/.is-leaving; the greppable-sync comment DELETED; GlassDock template panes use {'is-active': ...}",
+    "staggerToken": "--dock-stagger-step (0.08) declared once; per-child onset = calc(var(--dock-stagger-step) * N) over the unified .is-active vocabulary; the duplicated ramp collapsed to one rule"
+  },
+  "selfGates": {
+    "typecheck": "GREEN (vue-tsc --noEmit)",
+    "build": "GREEN (vite + vue-tsc dts emit)",
+    "proof:dock-orchestrator-single (structure arm, device-free)": "GREEN (0 violations: 1 orchestrator + 1 provide in GlassDock, optional-inject + registerGroup defer in DockLayerGroup, single useLayerTransition gated standalone-only)",
+    "proof:dock-orchestrator-single (π-lane runtime arm)": "fail-CLOSED until the orchestrator runs it against a live demo server — OWNED BY ORCHESTRATOR",
+    "proof:dock-vocabulary (CSS arm, AX.W02 extension)": "GREEN (0 live .layer-active selectors, --dock-stagger-step declared + token-keyed onsets, greppable-sync tombstone deleted, no magic onset literals)",
+    "proof:vt-names": "GREEN (the per-instance view-transition-name route-morph seam survives the fold — GlassDock dockId + DockLayerGroup vtId both useId-derived; the fourier downstream guard holds)",
+    "proof:gate-script-parity": "GREEN (the new proof-dock-orchestrator-single.mjs is registered in package.json + gates.mjs; 0 new orphans)",
+    "proof:no-test-in-src": "GREEN (the new spec lives under tests/)",
+    "vitest dock suite": "GREEN (15 tests in dock-orchestrator-single.detect.test.ts: pure detectors + RUNTIME binding-verification — a nested group PROVEN to call registerGroup with ZERO own springs; a standalone group self-orchestrates and renders .dock-layer-item-host.is-active)",
+    "vitest full": "814 pass / 1 fail — the ONE failure is pre-existing at base (public-surface.spec.ts dock surface; a W01 condition, see blockers)"
+  },
+  "blockers": [
+    {
+      "id": "proof:dock-opacity-lockstep regex stale (out of FileBounds)",
+      "file": "scripts/proof-dock-opacity-lockstep.mjs:115-116, 179",
+      "detail": "ACTIVE_RULE_RE greps the literal `.dock-layer.layer-active, .dock-layer-item-host.is-active` selector. The W02 vocabulary unification retired `.layer-active`, so the regex no longer matches → the gate reds. The fix is a one-token change (`layer-active` → `is-active`) in the regex + its error message. scripts/proof-dock-opacity-lockstep.mjs is NOT in W02 FileBounds — recorded for the orchestrator to apply alongside the W02 land.",
+      "kind": "out-of-bounds gate regex follows the W02 vocabulary unification"
+    },
+    {
+      "id": "proof:dock-vocabulary README arm pre-existing-RED at base",
+      "file": "src/components/custom/dock/README.md",
+      "detail": "The AU.W8 README-arm regex /DockTabButton[\\s\\S]{0,120}(KEPT|kept|consumers|not.*retire)/i returns false on the unchanged README at BASE (27036cc) — the gate was ALREADY RED before W02. README.md is NOT in W02 FileBounds. The W02 CSS arm I added is GREEN; the gate's overall verdict is gated on the pre-existing README arm. Recorded for the orchestrator (one-line README re-grounding note, or refresh the AU.W8 regex).",
+      "kind": "pre-existing-RED at base, out-of-bounds file"
+    },
+    {
+      "id": "public-surface.spec.ts dock surface pre-existing-RED at base",
+      "file": "tests/public-surface.spec.ts:279-292",
+      "detail": "The exact-dock-surface test was ALREADY failing at BASE (27036cc): W01 added `useLayerTransition` to the dock PACKAGE barrel (src/components/custom/dock/index.ts:27) but did NOT add it to this test's expected `names` list. W02 did NOT change the /dock public surface (the package barrel index.ts is unchanged by W02; the new morph symbols live only in the INTERNAL composables/index.ts barrel, not re-exported by /dock). The fix is adding `useLayerTransition` to the expected list — a W01 follow-up, not W02. tests/public-surface.spec.ts is NOT in W02 FileBounds.",
+      "kind": "pre-existing-RED at base (W01 condition), out-of-bounds file"
+    }
+  ],
+  "divergences": [
+    "The orchestrator (useDockMorphOrchestrator) lives INSIDE dockMorphContext.ts rather than a dedicated composable file, because the W02 FileBounds permit creating ONLY dockMorphContext.ts (no new orchestrator composable file). The context module owns the morph-orchestration factory — the same module that defines the DI seam it provides.",
+    "GlassDock's outer collapse↔expand pair NO LONGER calls useLayerTransition directly — it routes through useDockMorphOrchestrator (the single multi-target engine). This is the gestalt re-derivation of the (expandedState × activePane) single stack: the outer pair is just the first registered morph target, not a privileged second engine. useLayerTransition.ts itself is UNTOUCHED (W01's surface) — it is consumed only by the STANDALONE DockLayerGroup fall-through path."
+  ]
+}

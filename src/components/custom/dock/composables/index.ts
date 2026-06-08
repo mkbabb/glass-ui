@@ -21,3 +21,14 @@ export {
     type DockLayerDescriptor,
     type DockLayerGroupContext,
 } from "./dockLayerContext";
+export {
+    useDockMorphOrchestrator,
+    provideDockMorphContext,
+    useOptionalDockMorphContext,
+    DOCK_MORPH_KEY,
+    type DockMorphContext,
+    type DockMorphGroupRegistration,
+    type DockMorphGroupHandle,
+    type UseDockMorphOrchestratorOptions,
+    type UseDockMorphOrchestratorReturn,
+} from "./dockMorphContext";

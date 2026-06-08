@@ -10,6 +10,29 @@ type LayerId = "root" | "assets" | "layers" | "libs";
 const activeLayer = ref<LayerId>("root");
 const railLayer = ref<LayerId>("assets");
 
+/* AX.W02 — the COLLAPSIBLE nested showcase: a layer group inside a collapsible
+   (NOT always-expanded) GlassDock, so a collapse-while-switching gesture exercises
+   the ONE-orchestrator fold (the π-lane samples the dock-root box AND the nested
+   pane-stack on one --dock-morph-t timeline). Two panes + a switcher rail so the
+   gate can swap panes while the dock collapses/expands. */
+const nestedLayer = ref<LayerId>("assets");
+
+/* AX.W02 — the bbnf-buddy vertical-overflow regression case: a vertical
+   DockLayerGroup whose active pane carries MORE rows than fit the resting height,
+   to prove the inner grid chain no longer fights max-height under the single
+   orchestrator. */
+const overflowLayer = ref<LayerId>("assets");
+const overflowRows = [
+    "z-order surface stack",
+    "shared component kits",
+    "image + font tokens",
+    "spacing + radius scale",
+    "motion + easing tokens",
+    "color ramp + tints",
+    "glass tier ladder",
+    "shadow + elevation set",
+];
+
 const layers = [
     { id: "assets" as const, label: "Assets", icon: Package, blurb: "images, fonts, tokens" },
     { id: "layers" as const, label: "Layers", icon: Layers, blurb: "z-ordered surface stack" },
@@ -144,6 +167,86 @@ function back() {
                             >
                                 <component :is="candidate.icon" class="h-4 w-4" />
                             </DockIconButton>
+                        </DockLayer>
+                    </DockLayerGroup>
+                </GlassDock>
+            </div>
+        </section>
+
+        <section class="flex flex-col gap-3">
+            <h2 class="text-subheading">Collapse-while-switching (one orchestrator)</h2>
+            <p class="text-small text-muted-foreground">
+                A layer group inside a <strong>collapsible</strong> dock. Hover to expand;
+                switch panes via the rail. The dock box and the nested pane stack morph on
+                ONE spring (one <code class="rounded bg-muted px-1">--dock-morph-t</code> clock)
+                — no second engine, no double-animated pixels.
+            </p>
+            <div class="flex justify-center rounded-card border border-border/40 bg-card/40 p-10">
+                <GlassDock fit-content data-testid="dock-nested-collapsible">
+                    <DockLayerGroup
+                        v-model:active="nestedLayer"
+                        data-testid="dock-nested-collapsible-group"
+                    >
+                        <DockLayer
+                            v-for="l in layers"
+                            :key="l.id"
+                            :id="l.id"
+                            :label="l.label"
+                            :icon="l.icon"
+                        >
+                            <component :is="l.icon" class="h-4 w-4" />
+                            <span class="px-1 text-sm font-medium">{{ l.label }}</span>
+                            <span class="text-xs text-muted-foreground">{{ l.blurb }}</span>
+                        </DockLayer>
+                    </DockLayerGroup>
+                    <template #collapsed>
+                        <DockIconButton aria-label="Open layers">
+                            <Layers class="h-4 w-4" />
+                        </DockIconButton>
+                    </template>
+                </GlassDock>
+            </div>
+        </section>
+
+        <section class="flex flex-col gap-3">
+            <h2 class="text-subheading">Vertical overflow (re-adoption proof)</h2>
+            <p class="text-small text-muted-foreground">
+                A vertical <code class="rounded bg-muted px-1">DockLayerGroup</code> whose active
+                pane carries more rows than the resting height — it reflows cleanly without
+                fighting <code class="rounded bg-muted px-1">max-height</code> (the bbnf-buddy case
+                the inner grid chain used to lose).
+            </p>
+            <div class="flex justify-center rounded-card border border-border/40 bg-card/40 p-10">
+                <GlassDock
+                    variant="rail"
+                    shape="rounded"
+                    aria-label="Vertical overflow dock"
+                    data-testid="dock-vertical-overflow-host"
+                >
+                    <DockLayerGroup
+                        v-model:active="overflowLayer"
+                        orientation="vertical"
+                        data-testid="dock-vertical-overflow-group"
+                    >
+                        <DockLayer
+                            v-for="l in layers"
+                            :key="l.id"
+                            :id="l.id"
+                            :label="l.label"
+                            :icon="l.icon"
+                        >
+                            <div class="flex flex-col gap-1 py-1">
+                                <div class="flex items-center gap-2 px-1">
+                                    <component :is="l.icon" class="h-4 w-4" />
+                                    <span class="text-sm font-medium">{{ l.label }}</span>
+                                </div>
+                                <span
+                                    v-for="(row, i) in overflowRows"
+                                    :key="i"
+                                    class="px-1 text-xs text-muted-foreground"
+                                    >{{ row }}</span
+                                >
+                            </div>
                         </DockLayer>
                     </DockLayerGroup>
                 </GlassDock>

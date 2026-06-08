@@ -86,9 +86,21 @@
         /* AW.W3 — the spring-keyed child stagger knobs. `--dock-stagger-window-size`
            is the fraction of the morph each child reveals over; `--dock-stagger-rise`
            is the px the child rises from as it fades in. Consumers retune the
-           cascade feel per instance. */
+           cascade feel per instance.
+
+           AX.W02 — `--dock-stagger-step` is the per-child onset BEAT: each
+           successive control's reveal starts this fraction-of-morph later than the
+           one before it, so the row fills outer→in. ONE token × the child index
+           replaces the hand-typed 0.08/0.16/0.24/0.32/0.4 onset ladder — the onset
+           is `step × (childIndex − 1)`, capped (the cap below). 0.08 = ~5% of the
+           ~0.32s morph between items — inside Emil Kowalski's 30–60ms stagger band,
+           never the >100ms "slideshow" register. The onset rides the NORMALIZED
+           morph progress (`--dock-expand-t`), NOT a wall-clock timer, so a fast
+           flick and a slow hover-open both choreograph correctly and an interrupted
+           morph orphans no timers. */
         --dock-stagger-window-size: 0.55;
         --dock-stagger-rise: 4px;
+        --dock-stagger-step: 0.08;
         /* AW.W3b — big-dock tokens. `--dock-card-radius` is the finite card-shell
            radius (default --radius-dock-card = --radius-3xl, density-scaled
            below); `--dock-tile-min` is the grid tile minimum (auto-fill track
@@ -716,44 +728,39 @@
         overflow-x: visible;
     }
 
-    /* AU.W8b-visibility-fork — the 3-state active/inactive/leaving visibility
-       contract below is LOAD-BEARING (the a11y-006 bite-anchor). A later refactor
-       greps for this marker so the semantics are not collapsed: the inactive layer
-       leaves the hit-test tree (`visibility:hidden`), the leaving layer stays
-       painted-but-untouchable through its fade (`visibility:visible` +
-       `pointer-events:none`), and the active layer shows IMMEDIATELY (`visibility
-       0s`, no fade-in delay). The hand-rolled 3-state fork below is now the SOLE
-       visibility authority on every engine — AV.W9.1 retired the native
-       discrete-visibility arm that used to second-drive it, so one owner governs
-       visibility (one owner governs size, one owns opacity). */
+    /* ── Layer crossfade + hit-test contract (ONE vocabulary) ──────────────
+       AX.W02 — the outer `.dock-layer` (GlassDock's built-in collapsed↔expanded
+       pair) and the inner `.dock-layer-item-host` (a DockLayer inside a
+       DockLayerGroup) now share ONE active-state vocabulary: `.is-active` /
+       `.is-leaving`. The prior `.layer-active` / `.is-active` / `.is-leaving`
+       TRIPLE collapsed to the pair — both surfaces drive crossfade + hit-test off
+       the same two state classes, and the morph orchestrator fold (one engine per
+       dock) means the box, both panes, and every child stagger ride one
+       `--dock-morph-t` clock. The greppable-sync tombstone that kept the two
+       never-merged vocabularies in lockstep is DELETED — there is nothing to keep
+       in sync once the vocabulary is one.
 
-    /* ── Layer crossfade + hit-test contract (shared) ──────────────────
-       Two dock-layer surfaces stack on a 1/1 CSS grid and crossfade:
-       `.dock-layer` (GlassDock's built-in collapsed↔expanded pair) and
-       `.dock-layer-item-host` (a DockLayer inside a DockLayerGroup). They
-       differ only in base layout — the active/inactive/leaving paint +
-       hit-test semantics are identical, so the contract is expressed ONCE
-       here over both state vocabularies (`.layer-active` / `.is-active` /
-       `.is-leaving`) rather than copied per rule-set (Q-coh-5 — `beec35e`
-       patched the `visibility` fix into two parallel copies).
+       The 3-state active/inactive/leaving visibility contract here is LOAD-BEARING
+       (the a11y-006 anchor): the inactive layer leaves the hit-test tree
+       (`visibility:hidden`), the leaving layer stays painted-but-untouchable
+       through its fade (`visibility:visible` + `pointer-events:none`), and the
+       active layer shows IMMEDIATELY (`visibility 0s`, no fade-in delay). One
+       owner governs each concern — size = the spring scalar, opacity = the CSS
+       crossfade below, visibility = this 3-state fork.
 
-       An inactive layer must leave the paint AND hit-test tree: `opacity:0`
-       alone leaves the box answering `elementFromPoint()`, so an inactive
-       layer's button intercepts clicks meant for the active one.
-       `visibility:hidden` removes it from both while KEEPING it in layout
-       flow, so the FLIP width measurement in `useLayerTransition` still
-       reads its geometry (`display:none` would zero it). The delayed
-       `visibility` transition holds a leaving layer `visible` for the
-       length of the opacity crossfade, then flips it `hidden`.
+       An inactive layer must leave the paint AND hit-test tree: `opacity:0` alone
+       leaves the box answering `elementFromPoint()`, so an inactive layer's button
+       intercepts clicks meant for the active one. `visibility:hidden` removes it
+       from both while KEEPING it in layout flow, so the FLIP measurement still
+       reads its geometry (`display:none` would zero it). The delayed `visibility`
+       transition holds a leaving layer `visible` for the length of the opacity
+       crossfade, then flips it `hidden`.
 
-       AU.W2 — the opacity-lockstep fold (slides-F P0, the "not iOS-smooth"
-       report). The layer fade rides `--dock-motion-resize` (the SAME duration +
-       spring the container morph runs at, `:189`/`:216`/`:385`) — NOT the faster
-       `--dock-motion-fast` (0.2s). Before, the host faded in 0.2s while the
-       container morphed in 0.3s: a 100ms-apart settle (the items appeared to lag
-       the pill). Now the fade and the morph settle in lockstep. The matched
-       `visibility` hold extends to `--duration-normal` so the leaving layer stays
-       paintable for the FULL (now longer) crossfade. */
+       AU.W2 — the opacity-lockstep fold. The layer fade rides `--dock-motion-resize`
+       (the SAME duration the container morph runs at) — NOT the faster
+       `--dock-motion-fast` (0.2s), so the fade and the morph settle in lockstep.
+       The matched `visibility` hold extends to `--duration-normal` so the leaving
+       layer stays paintable for the FULL crossfade. */
     .dock-layer,
     .dock-layer-item-host {
         transition:
@@ -761,34 +768,34 @@
             visibility 0s linear var(--duration-normal);
     }
 
-    .dock-layer:not(.layer-active),
+    .dock-layer:not(.is-active):not(.is-leaving),
     .dock-layer-item-host:not(.is-active):not(.is-leaving) {
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
     }
 
-    .dock-layer.layer-active,
+    .dock-layer.is-active,
     .dock-layer-item-host.is-active {
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
         /* AW.W2 — the active pane is STATICALLY opacity:1, REVEALED by the clip
-           aperture (the box is the reveal mechanism), never faded. The prior
-           `opacity var(--dock-motion-resize)` arm is DELETED: there is ZERO
-           opacity authority on the active pane now — the aperture uncovers a
-           layout that is laid out ONCE at natural size behind it. Only `visibility
-           0s` survives (the active layer must paint at once, no fade-in delay —
-           the AU.W2 governing rule). The leaving pane keeps the shared-token
-           opacity fade below (the ONLY surviving opacity animation, the thin
-           polish proof:dock-opacity-lockstep names). */
+           aperture (the box is the reveal mechanism), never faded. There is ZERO
+           opacity authority on the active pane — the aperture uncovers a layout
+           that is laid out ONCE at natural size behind it. Only `visibility 0s`
+           survives (the active layer must paint at once, no fade-in delay — the
+           AU.W2 governing rule). The leaving pane keeps the shared-token opacity
+           fade below (the ONLY surviving opacity animation). */
         transition: visibility 0s;
     }
 
-    /* A leaving layer is inactive for hit-testing but still painted
-       through its fade-out. (`.dock-layer` has no separate leaving state —
-       its `:not(.layer-active)` rule above covers the crossfade-out via the
-       delayed `visibility` transition.) */
+    /* A leaving layer is inactive for hit-testing but still painted through its
+       fade-out. The outer collapse↔expand pair has no separate leaving marker in
+       markup — its `:not(.is-active):not(.is-leaving)` rule above covers the
+       crossfade-out via the delayed `visibility` transition; the inner pane swap
+       sets `.is-leaving` explicitly during the crossfade. */
+    .dock-layer.is-leaving,
     .dock-layer-item-host.is-leaving {
         opacity: 0;
         visibility: visible;
@@ -803,10 +810,10 @@
        native size arm gone (W9.0), opacity now has ONE owner everywhere: the
        `opacity var(--dock-motion-resize)` crossfade on `.dock-layer{,-item-host}`
        (the AU.W2 lockstep token — kept), and visibility has ONE owner: the delayed
-       `visibility 0s linear var(--duration-normal)` hold of the
-       `AU.W8b-visibility-fork` 3-state fallback above (the a11y-006 bite-anchor,
-       LOAD-BEARING). One authority per concern: size = spring/VT, opacity = the
-       CSS crossfade, visibility = the delayed-hold fork. */
+       `visibility 0s linear var(--duration-normal)` hold of the 3-state fork above
+       (the a11y-006 anchor, LOAD-BEARING). One authority per concern: size = the
+       spring scalar, opacity = the CSS crossfade, visibility = the delayed-hold
+       fork. */
 
     /* ── Base layout — distinct per surface ─────────────────────────── */
     .dock-layer {
@@ -828,11 +835,11 @@
         height: var(--dock-layer-height, 2.5rem);
     }
 
-    .dock-layer.layer-active {
+    .dock-layer.is-active {
         position: relative;
     }
 
-    .dock-layer:not(.layer-active) {
+    .dock-layer:not(.is-active) {
         position: absolute;
         inset: 0;
     }
@@ -857,8 +864,8 @@
        global PRM gate strips `translate` so the rise snaps too. The inner
        DockLayerGroup defines its own `--dock-expand-t` (= the per-swap progress)
        in DockLayerGroup's scope so a pane swap reveals the new pane's children. */
-    .glass-dock[data-morphing] .dock-layers .dock-layer--full > *,
-    .glass-dock[data-morphing] .dock-layer-stack .dock-layer-item-host.is-active > * {
+    .glass-dock[data-morphing] .dock-layer.is-active > *,
+    .glass-dock[data-morphing] .dock-layer-item-host.is-active > * {
         --dock-stagger-window: var(--dock-stagger-window-size, 0.55);
         --dock-stagger-onset: 0;
         opacity: clamp(
@@ -876,28 +883,37 @@
             );
     }
 
-    /* Per-child onsets — each successive control starts a beat later, so the row
-       fills outer→in on expand. The onsets are fractions of the morph progress;
-       capped so even a long row finishes within the morph window. */
-    .glass-dock[data-morphing] .dock-layers .dock-layer--full > *:nth-child(2),
-    .glass-dock[data-morphing] .dock-layer-stack .dock-layer-item-host.is-active > *:nth-child(2) {
-        --dock-stagger-onset: 0.08;
+    /* AX.W02 — per-child onsets off the ONE `--dock-stagger-step` token. Each
+       successive control starts `step` later than the one before it (`onset =
+       step × (childIndex − 1)`), so the row fills outer→in on expand. The
+       hand-typed 0.08/0.16/0.24/0.32/0.4 ladder is RETIRED — the onsets are now
+       derived from the single token, so retuning the cascade beat is a one-token
+       override. The set is capped at the 6th child (`nth-child(n + 6)` holds at
+       `step × 5`) so even a long row finishes within the morph window. ONE rule
+       over the unified `.is-active` vocabulary drives both the outer pane and the
+       inner pane-stack — no duplicated comma-group. (`sibling-index()` would
+       collapse this to a single declaration, but it is not yet Baseline across
+       Safari/Firefox — the token-keyed nth-child set is the cross-engine form, and
+       the magic ladder is gone either way.) */
+    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-child(2),
+    .glass-dock[data-morphing] .dock-layer-item-host.is-active > *:nth-child(2) {
+        --dock-stagger-onset: calc(var(--dock-stagger-step) * 1);
     }
-    .glass-dock[data-morphing] .dock-layers .dock-layer--full > *:nth-child(3),
-    .glass-dock[data-morphing] .dock-layer-stack .dock-layer-item-host.is-active > *:nth-child(3) {
-        --dock-stagger-onset: 0.16;
+    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-child(3),
+    .glass-dock[data-morphing] .dock-layer-item-host.is-active > *:nth-child(3) {
+        --dock-stagger-onset: calc(var(--dock-stagger-step) * 2);
     }
-    .glass-dock[data-morphing] .dock-layers .dock-layer--full > *:nth-child(4),
-    .glass-dock[data-morphing] .dock-layer-stack .dock-layer-item-host.is-active > *:nth-child(4) {
-        --dock-stagger-onset: 0.24;
+    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-child(4),
+    .glass-dock[data-morphing] .dock-layer-item-host.is-active > *:nth-child(4) {
+        --dock-stagger-onset: calc(var(--dock-stagger-step) * 3);
     }
-    .glass-dock[data-morphing] .dock-layers .dock-layer--full > *:nth-child(5),
-    .glass-dock[data-morphing] .dock-layer-stack .dock-layer-item-host.is-active > *:nth-child(5) {
-        --dock-stagger-onset: 0.32;
+    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-child(5),
+    .glass-dock[data-morphing] .dock-layer-item-host.is-active > *:nth-child(5) {
+        --dock-stagger-onset: calc(var(--dock-stagger-step) * 4);
     }
-    .glass-dock[data-morphing] .dock-layers .dock-layer--full > *:nth-child(n + 6),
-    .glass-dock[data-morphing] .dock-layer-stack .dock-layer-item-host.is-active > *:nth-child(n + 6) {
-        --dock-stagger-onset: 0.4;
+    .glass-dock[data-morphing] .dock-layer.is-active > *:nth-child(n + 6),
+    .glass-dock[data-morphing] .dock-layer-item-host.is-active > *:nth-child(n + 6) {
+        --dock-stagger-onset: calc(var(--dock-stagger-step) * 5);
     }
 
     /* AW.W2 — the at-rest clip-lift moved to `.expanded:not([data-morphing])` /

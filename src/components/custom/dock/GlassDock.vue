@@ -8,7 +8,10 @@ import { computed, onBeforeUnmount, onMounted, ref, useId, useTemplateRef, watch
 import { useTouchGate } from "../../../composables/dom/useTouchGate";
 import { provideDockContext } from "./composables/dockContext";
 import { useDockState } from "./composables/useDockState";
-import { useLayerTransition } from "./composables/useLayerTransition";
+import {
+    useDockMorphOrchestrator,
+    provideDockMorphContext,
+} from "./composables/dockMorphContext";
 
 type DockDensity = "compact" | "comfortable" | "spacious" | "audacious";
 
@@ -237,40 +240,47 @@ provideDockContext({
 
 const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
 
-/* AX.W01 — compose `useLayerTransition` for the outer collapsed↔expanded pair
-   (horizontal docks only — vertical rails render a single slot, no layer pair to
-   crossfade). The single-scalar rebuild drives the WHOLE box morph (size + the
-   root padding/radius/color + the child stagger) off ONE `--dock-morph-t` spring
-   scalar on the `.glass-dock` root — no CSS transition, no View-Transitions fork,
-   one clock on every engine. The same primitive drives `<DockLayerGroup>`'s inner
-   pair; both share that one clock. The `directionTypes` arg is gone — the morph is
-   a single symmetric spring, so there is no per-direction curve fork to author. */
-const outerActiveLayer = computed<"full" | "summary">(() =>
+/* AX.W02 — ONE morph orchestrator per dock. W01 established the single-scalar
+   `--dock-morph-t` spring; W02 folds the outer collapse↔expand pair AND every
+   nested `<DockLayerGroup>` pane-swap onto ONE engine. The dock is modelled as a
+   single morph stack whose active "layer" is `(expandedState × activePane)`: the
+   outer swap and the inner pane swap are transitions in the SAME group, driven by
+   ONE `SpringProgress` writing one root scalar. A nested group no longer mints its
+   own `useLayerTransition` engine — it injects this orchestrator and registers,
+   so a simultaneous collapse + pane-swap settles on one spring, one scalar, one
+   clock. The outer pair morphs the inline axis (horizontal docks only — vertical
+   rails render a single slot, no layer pair to crossfade). */
+const outerActiveLayer = computed<string>(() =>
     visualExpanded.value ? "full" : "summary",
 );
 const outerLayerAxis = computed<"horizontal" | "vertical">(() => "horizontal");
-/* AX.W01 redress — the OUTER collapse is a CLIP-APERTURE morph. Both panes
+/* AX.W01 redress (KEPT) — the OUTER collapse is a CLIP-APERTURE morph. Both panes
    (`--full` + `--summary`) are grid-stacked behind the root clip; the ACTIVE pane
    is in-flow (`position:relative; width:max-content`) and the INACTIVE one is
    `position:absolute; inset:0` (stretched, out of flow). `.dock-layers` therefore
    shrink-wraps the ACTIVE pane — so its size differs between collapsed/expanded
    only AFTER Vue flushes the `.collapsed`↔`.expanded` class flip that swaps which
-   pane is active. The live bug was `useLayerTransition` reading the from- and
-   to-size in ONE synchronous tick BEFORE that flush, seeing the same active pane,
-   hitting the from≈to early-return, and FREEZING `--dock-morph-t` at 0 (the box
-   then snapped via the class layout). The rebuilt driver pins the container at
-   `from` immediately (box holds, child stagger holds at t=0) and measures `to` one
-   rAF later — post-flush — when the container shrink-wraps to the TARGET pane's
-   natural width. The `display:inline-flex` root shrink-wraps `.dock-layers`, so the
-   BOX is the growing/shrinking aperture; size + padding + radius + color + child
-   stagger all co-morph off the one `--dock-morph-t` scalar. (The inner
-   `<DockLayerGroup>` pane-swap shares the SAME pane topology and so runs the SAME
-   driver unchanged — no per-call mode needed.) */
-const { onTransitionEnd: onLayersTransitionEnd } = useLayerTransition({
-    containerEl: layersEl,
-    activeLayer: outerActiveLayer,
-    axis: outerLayerAxis,
-});
+   pane is active. The orchestrator pins the container at `from` immediately (box
+   holds, child stagger holds at t=0) and measures `to` one rAF later — post-flush
+   — when the container shrink-wraps to the TARGET pane's natural width. Size +
+   padding + radius + color + child stagger all co-morph off the one
+   `--dock-morph-t` scalar. The inner `<DockLayerGroup>` pane-swap shares the SAME
+   pane topology and registers as a SECOND morph target on the SAME spring. */
+const { context: dockMorphContext, onOuterTransitionEnd: onLayersTransitionEnd } =
+    useDockMorphOrchestrator({
+        rootEl: dockEl,
+        outerEl: layersEl,
+        outerActiveLayer,
+        outerAxis: outerLayerAxis,
+    });
+
+/* AX.W02 — PROVIDE the single morph orchestrator through the optional DI seam. A
+   nested `<DockLayerGroup>` injects it and DEFERS its pane-swap morph to this one
+   engine (no second spring); a `<DockLayerGroup>` rendered outside any
+   `<GlassDock>` reads `null` and self-orchestrates as before (the standalone demo
+   path). `createOptionalContext` is correct: a missing provider is a
+   befitting-silent standalone-render path, not a library-internal violation. */
+provideDockMorphContext(dockMorphContext);
 
 /* AX.W01 — the route-morph `view-transition-name` seam (PRESERVED). The dock
    COLLAPSE VT fork is RETIRED (the box morph runs on the single spring scalar
@@ -474,13 +484,13 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
                 @transitionend="onLayersTransitionEnd"
             >
                 <div
-                    :class="['dock-layer dock-layer--full', { 'layer-active': visualExpanded }]"
+                    :class="['dock-layer dock-layer--full', { 'is-active': visualExpanded }]"
                     :inert="!expanded || undefined"
                 >
                     <slot />
                 </div>
                 <div
-                    :class="['dock-layer dock-layer--summary', { 'layer-active': !visualExpanded }]"
+                    :class="['dock-layer dock-layer--summary', { 'is-active': !visualExpanded }]"
                     :inert="expanded || undefined"
                     @click="onClickCollapsed"
                 >

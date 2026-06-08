@@ -476,6 +476,12 @@ export const GATES = [
         tags: ["local", "ci"],
         note: "AV.W9.4 + AW.W2; AX.W00 PROMOTED fail-open SKIP → fail-CLOSED. The dock BEHAVIORAL motion gate: deterministic-drive (forced FLIP arm via removed startViewTransition + real page.hover) samples the dock-root box geometry AND a representative child opacity on ONE rAF timeline (lead/lag ≤ 1 frame). PLUS the AX.W00 device-free TOKEN-PEAK secondary (--spring-dock linear() peak ≤ the published (0.32,0.7) ~+4.6% baseline) which reds on EVERY runner. The live-rAF arm lives in the tests-visual π workspace (dock-animation-live.spec.ts); fail-CLOSED when the workspace is present. Bite: retune --spring-dock bouncier → token-peak RED; desync the box/child clock → live RED.",
     },
+    {
+        id: "proof:dock-orchestrator-single",
+        cmd: "proof:dock-orchestrator-single",
+        tags: ["local", "ci"],
+        note: "AX.W02 — ONE morph engine per dock. Device-free STRUCTURE arm: GlassDock builds exactly 1 useDockMorphOrchestrator + provides the morph context, DockLayerGroup injects the OPTIONAL context and defers (registerGroup) with its SINGLE useLayerTransition gated standalone-only. π-lane RUNTIME arm (fail-CLOSED when the workspace is present; dock-orchestrator-single.spec.ts): a simultaneous collapse + pane-swap on the /navigation/dock-layers nested showcase samples the dock-root box AND the nested pane-stack on ONE --dock-morph-t timeline (both onset ≤ 1 frame from the scalar; engineCount == 1). Bite: re-add an unconditional useLayerTransition to the nested path → STRUCTURE RED; drive the stack on a second clock → RUNTIME RED.",
+    },
     { id: "audit:stash", cmd: "audit:stash", tags: ["ci"] },
 ];
 
