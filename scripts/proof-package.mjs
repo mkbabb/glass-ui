@@ -226,7 +226,7 @@ import { buildTreeIndex, useTreeIndex } from "@mkbabb/glass-ui/sidebar";
 import { DarkModeToggle } from "@mkbabb/glass-ui/controls";
 import { ConfirmDialog } from "@mkbabb/glass-ui/confirm-dialog";
 import { InfiniteScroll, useInfiniteScroll } from "@mkbabb/glass-ui/infinite-scroll";
-import { UnderlineTabs, BouncyTabs, BouncyToggle } from "@mkbabb/glass-ui/tabs";
+import { SegmentedTabs } from "@mkbabb/glass-ui/tabs";
 import { TypewriterText, useTypewriter } from "@mkbabb/glass-ui/typewriter";
 import { StackedIconGroup } from "@mkbabb/glass-ui/stacked-icons";
 import { GlassCarousel, GlassCarouselItem } from "@mkbabb/glass-ui/glass-carousel";
@@ -247,7 +247,7 @@ const runtimeSymbols = [
   Button, Card, Dialog, Tooltip, cn, useGlobalDark, useInterval, chartHeights,
   GlassDock, DockIconButton, DockDropdownTrigger, DockLayerGroup, FuzzySearch, useFuzzySearch,
   buildTreeIndex, useTreeIndex, DarkModeToggle,
-  ConfirmDialog, InfiniteScroll, useInfiniteScroll, UnderlineTabs, BouncyTabs, BouncyToggle,
+  ConfirmDialog, InfiniteScroll, useInfiniteScroll, SegmentedTabs,
   TypewriterText, useTypewriter, StackedIconGroup, GlassCarousel, GlassCarouselItem,
   Aurora, useAurora, MetricBadge, StatusDot, Pulse, PaperBackdrop, ToggleChip,
   GlassPanel, SortableList, GlassTimeline, LabeledInput,

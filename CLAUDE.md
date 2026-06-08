@@ -106,13 +106,12 @@ src/
 │   │   ├── metric-stack/           # MetricStack + MetricRow vertical metric grouping (subpath /metric-stack; speedtest consumer)
 │   │   ├── paper-backdrop/         # PaperBackdrop
 │   │   ├── pulse/                  # Pulse (dots / ring) loading indicator
-│   │   ├── responsive-tabs/        # ResponsiveTabs matchMedia Select↔UnderlineTabs swap (AB+1 / AC.W8e)
 │   │   ├── scrolling-text/         # ScrollingText overflow-marquee (lifted from speedtest—v0.9.1)
 │   │   ├── search/                 # Fuzzy search exports
 │   │   ├── sortable-list/          # SortableList + list item helpers
 │   │   ├── stacked-icons/          # StackedIcons
 │   │   ├── status-dot/             # StatusDot
-│   │   ├── tabs/                   # BouncyTabs, UnderlineTabs, BouncyToggle (active-state vocab canon—V.W3; AU.W10 extracted composables/useBouncySlider)
+│   │   ├── tabs/                   # SegmentedTabs—ONE component, variant axis (segmented·pill·underline), multi-select + responsive collapse, ONE elastic indicator on --spring-snappy (AX.W53 unified BouncyToggle/BouncyTabs/UnderlineTabs/ResponsiveTabs; composables/useTabIndicator)
 │   │   ├── timeline/               # GlassTimeline + Continuous{Timeline,Rail,Markers} (AU.W10 split the 901-line orchestrator)
 │   │   ├── toggle-chip/            # segmented chip/cell toggle
 │   │   ├── typewriter/             # TypewriterText
@@ -326,7 +325,11 @@ Button variants: `default`, `primary-audacious` (K W6), `gold-audacious` (AN.R0;
 
 ### Tabs vs ToggleGroup
 
-Reach for `<Tabs>` (or the custom `BouncyTabs`/`UnderlineTabs`) for **mutually-exclusive PANEL navigation**—`role="tablist"`, each tab reveals a distinct content panel and exactly one is active at a time. Reach for `<ToggleGroup>` for a set of **independent-or-single-select TOGGLES that mutate one surface**—`role="group"`, no panel swap, the toggles flip state on a shared view rather than switching between separate regions (a view-mode switcher over one result list is the canonical ToggleGroup case, not a Tabs case).
+Reach for `<Tabs>` (or the custom `<SegmentedTabs variant="underline">`) for **mutually-exclusive PANEL navigation**—`role="tablist"`, each tab reveals a distinct content panel and exactly one is active at a time. Reach for `<ToggleGroup>` (or `<SegmentedTabs :multi-select>`) for a set of **independent-or-single-select TOGGLES that mutate one surface**—`role="group"`, no panel swap, the toggles flip state on a shared view rather than switching between separate regions (a view-mode switcher over one result list is the canonical ToggleGroup case, not a Tabs case).
+
+### SegmentedTabs (AX.W53)
+
+`<SegmentedTabs>` (`@mkbabb/glass-ui/tabs`) is the unified spring-slider tab family—ONE component, a three-value `variant` axis (`segmented` DEFAULT · `pill` · `underline`), and ONE shared elastic indicator. The indicator GLIDES on `--spring-snappy` (the confirmed iOS segmented register) AND SQUISHES on travel: a volume-preserving stretch along its travel axis (`scale: var(--stretch) calc(1 / var(--stretch))`, the X/Y reciprocal pairing) capped LOW by `--tab-indicator-max-stretch` (default `1.08`, ≈+8%), released back to fit on the same snappy clock (the Material 3 ELASTIC / Apple Liquid-Glass "grow then shrink" register). **ARIA-role-per-variant** (load-bearing): `underline` is panel-nav (`role="tablist"`/`role="tab"` + `aria-selected`); `segmented`/`pill` are the ToggleGroup-shaped surface (`role="group"` + `aria-pressed`). `:multi-select` (segmented/pill only) drives N simultaneous pressed segments off the same engine. `:responsive` (`true` or `{ breakpoint, desktopOptions, ariaLabel, triggerClass }`) collapses the strip to a `<Select>` below the breakpoint. It SUBSUMES the former `BouncyToggle`/`BouncyTabs`/`UnderlineTabs`/`ResponsiveTabs`—clean break, no alias. The squish is `prefers-reduced-motion`-gated (no deform under reduce). Machine-locked by `proof:tabs-unified`.
 
 ### Dock orientation and multi-layer
 

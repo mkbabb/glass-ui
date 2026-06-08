@@ -76,7 +76,7 @@ const rowSeeds = [
     ["Command palette route", "navigation", "Keyboard-first command row with grouped actions.", "consumer", "Navigation", ["command", "palette"]],
     ["Dock rail navigation", "navigation", "Vertical GlassDock rail row with tooltip-backed icon buttons.", "consumer", "Navigation", ["rail", "icons"]],
     ["Sidebar progressive panels", "navigation", "Nested navigation row with progressive disclosure and route state.", "consumer", "Navigation", ["sidebar", "panels"]],
-    ["Bouncy tabs motion", "navigation", "Animated tab indicator row with active tab geometry.", "proof", "Navigation", ["tabs", "motion"]],
+    ["Segmented tabs motion", "navigation", "Animated tab indicator row with active tab geometry.", "proof", "Navigation", ["tabs", "motion"]],
     ["Dialog focus trap", "container", "Modal surface row with overlay, title, and close action.", "proof", "Containers", ["dialog", "focus"]],
     ["Sheet side panel", "container", "Edge drawer row with controlled open state and action footer.", "proof", "Containers", ["sheet", "panel"]],
     ["Drawer bottom panel", "container", "Mobile-style drawer row with handle, footer, and snap motion.", "proof", "Containers", ["drawer", "mobile"]],

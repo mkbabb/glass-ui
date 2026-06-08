@@ -61,14 +61,16 @@ function cliPaths() {
 // allowlist entry here (with a one-line rationale). This keeps the gate a real
 // guard rather than a rubber stamp.
 //
-//   --gl-tab-active    — UnderlineTabs: the single `aria-selected` tab is the
-//                        position-anchor the underline indicator tethers to.
-//                        One active tab per tablist ⇒ page-singleton.
-//   --gl-toggle-active — BouncyToggle: the single `aria-pressed` button is the
-//                        anchor the sliding pill tethers to. One pressed button
-//                        per toggle ⇒ page-singleton.
+//   --gl-tab-active    — SegmentedTabs (AX.W53): the single active tab
+//                        (`aria-selected` on underline, `aria-pressed` on
+//                        segmented/pill) is the position-anchor the ONE shared
+//                        indicator (slider pill OR underline rule) tethers to.
+//                        One active tab per strip ⇒ page-singleton. The former
+//                        `--gl-toggle-active` second anchor is retired — the
+//                        unified component drives all three variants off this
+//                        single anchor name.
 // ---------------------------------------------------------------------------
-const STATIC_ALLOWLIST = new Set(["--gl-tab-active", "--gl-toggle-active"]);
+const STATIC_ALLOWLIST = new Set(["--gl-tab-active"]);
 
 const EXCLUDE_DIRS = new Set(["node_modules", ".git", ".claude", "worktrees", "dist"]);
 

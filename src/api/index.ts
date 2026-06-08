@@ -235,17 +235,22 @@ export type {
     MetricStackProps,
 } from "../components/custom/metric-stack";
 
-// ── Digit / responsive-tabs primitives ──────────────────────────────────────
-// Props/variant types for the animated-digit + responsive-tabs primitives.
+// ── Digit / SegmentedTabs primitives ────────────────────────────────────────
+// Props/variant types for the animated-digit + the unified SegmentedTabs.
 // `AnimatedDigitMode` is the damping axis (`"absolute" | "progress"`) forwarded
 // into `useAnimatedNumber`; `AnimatedDigitProps` is the consume-side shape.
-// `ResponsiveTabsProps` parallels `BouncyToggleProps` — single shape for the
-// matchMedia-driven Select-or-Tabs swap.
+// `SegmentedTabsProps`/`SegmentedTabsVariant`/`SegmentedTabOption` are the
+// unified tab family — ONE component, a `variant` axis (segmented · pill ·
+// underline), multi-select + responsive collapse as props.
 export type {
     AnimatedDigitMode,
     AnimatedDigitProps,
 } from "../components/custom/animated-digit";
-export type { ResponsiveTabsProps } from "../components/custom/responsive-tabs";
+export type {
+    SegmentedTabsProps,
+    SegmentedTabsVariant,
+    SegmentedTabOption,
+} from "../components/custom/tabs";
 
 // ── StackedIconGroup ───────────────────────────────────────────────────────
 // `StackedIconGroupProps<TItem>` — the generic shape consumers wiring stacked

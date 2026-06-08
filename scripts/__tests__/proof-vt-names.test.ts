@@ -52,8 +52,8 @@ function mount(el) {
         });
 
         it("passes a documented page-singleton static name on the allowlist", () => {
-            // --gl-tab-active is the UnderlineTabs position-anchor singleton —
-            // one active tab per tablist, collision-free by construction.
+            // --gl-tab-active is the SegmentedTabs position-anchor singleton —
+            // one active tab per strip, collision-free by construction.
             const source = `
 .tab[aria-selected="true"] {
     anchor-name: --gl-tab-active;

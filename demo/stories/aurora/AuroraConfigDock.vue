@@ -2,7 +2,7 @@
 import { reactive, watch } from "vue";
 import { RefreshCw } from "@lucide/vue";
 import { Button } from "../../../src/components/ui/button";
-import { BouncyTabs } from "../../../src/components/custom/tabs";
+import { SegmentedTabs } from "../../../src/components/custom/tabs";
 import { DockLayerGroup, DockLayer } from "../../../src/components/custom/dock";
 import {
     resolveAtoms,
@@ -72,11 +72,11 @@ const TOP_TABS = [
     { label: "Advanced", value: "advanced" },
 ] as const;
 
-function setTab(next: string) {
-    emit("update:tab", next);
+function setTab(next: string | string[]) {
+    emit("update:tab", String(next));
 }
-function activeLayerProxy(next: string) {
-    emit("update:activeLayer", next);
+function activeLayerProxy(next: string | string[]) {
+    emit("update:activeLayer", String(next));
 }
 </script>
 
@@ -102,7 +102,7 @@ function activeLayerProxy(next: string) {
           (the ≤7 control elements); Advanced is the raw ~28-field escape hatch.
         -->
         <div class="border-b border-border/40 px-3 py-2">
-            <BouncyTabs
+            <SegmentedTabs
                 :options="[...TOP_TABS]"
                 :model-value="tab"
                 variant="pill"
@@ -122,7 +122,7 @@ function activeLayerProxy(next: string) {
         <!-- ── Advanced surface — the raw config layers (the escape hatch). ── -->
         <template v-if="tab === 'advanced'">
             <div class="border-b border-border/40 px-3 py-2">
-                <BouncyTabs
+                <SegmentedTabs
                     :options="[...layerOptions]"
                     :model-value="activeLayer"
                     variant="pill"

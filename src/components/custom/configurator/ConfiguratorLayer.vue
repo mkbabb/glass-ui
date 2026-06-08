@@ -12,7 +12,7 @@ import { cn } from "../../../utils/cn";
  *
  * The layer is uncontrolled by default (`defaultOpen` opens at mount);
  * pass `:open` + `@update:open` for controlled mode (e.g., when a
- * BouncyTabs / DockLayerGroup at the parent governs which layer is
+ * SegmentedTabs / DockLayerGroup at the parent governs which layer is
  * active).
  *
  * # M.W2 Lane A (F-ε-3 fix) — recursion-free reveal
