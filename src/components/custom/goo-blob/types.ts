@@ -154,37 +154,45 @@ export interface BlobConfig {
 
 export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
     canvasSize: 200,
-    // ── Geometry cohort, re-derived as ONE footprint budget (AX.W15 F0) ──────────
+    // ── Geometry cohort, re-derived against the CANVAS bound (AX.W15 REDRESS F0) ──
     //
-    // The wrapper footprint is the HARD visual bound. The coordinate chain: the
-    // full-canvas quad makes `uv ∈ [-0.5, 0.5]` across the CANVAS; the canvas is
-    // CSS-sized 160% of the wrapper (GooBlob.vue), so the wrapper edge sits at
-    // `±0.5 × (1/1.6) = ±0.3125` in `uv` — the wrapper HALF-EXTENT is 0.3125 uv.
-    // Every length uniform rides `POS_SCALE = 0.625` (useMetaballRenderer.ts), so a
-    // raw config radius `r` paints at `r × 0.625` uv and reads as
-    // `r × 0.625 / 0.3125 = r × 2.0` of the wrapper half.
+    // THE HARD BOUND IS THE CANVAS, not the wrapper. The coordinate chain: the
+    // full-canvas quad makes `uv ∈ [-0.5, 0.5]` across the CANVAS (the canvas-HALF
+    // extent is 0.5 uv — the literal painted edge the gate's edge-ring samples). The
+    // canvas is CSS-sized 160% of the wrapper (GooBlob.vue), so the wrapper edge sits
+    // at `±0.5 × (1/1.6) = ±0.3125` in `uv`. Every length uniform rides
+    // `POS_SCALE = 0.625` (useMetaballRenderer.ts), so a raw config radius `r` paints
+    // at `r × 0.625` uv.
     //
-    // The budget (the SOTA-deepening [25] atomic sum): solve
-    // `body + orbit + satellite + smin_band` TOGETHER so the merged field fits
-    // ~70-80% of the wrapper, with the orbit EXCURSION the only intentional overflow.
-    // The smin band is INVISIBLE to a raw-radius budget — IQ's kernel expands the
-    // isosurface OUTWARD of the union by ~k, so it MUST be counted. At idle the band
-    // is `smoothK × moodMult(≈1.03) ≈ 0.0515` raw. The W08 over-merge was tuned
-    // against the OLD flooded field; this is the contained re-solve:
-    //   body  0.22 → 0.54 wrapper-half (radius) — a generous, fully-contained bead.
-    //   orbit 0.27 + sat 0.105 = 0.375 outer reach → 0.75 wrapper-half at rest; the
-    //         wobble/eccentricity carries the widest excursion to ~0.86 (the
-    //         intended orbit overflow, which the 160% canvas margin absorbs).
-    //   body + smin (0.22 + 0.0515) → 0.54 wrapper-half — the bead clears the rim
-    //         with a transparent margin on ALL FOUR sides (W08 left top/bottom
-    //         touching; this is the four-side containment).
-    // This is a SINGLE atomic re-derivation of the length cohort DOWN against the
-    // footprint, not a per-constant nudge, and it KEEPS W08's POS_SCALE regime
-    // untouched (the ratified disposition — §4 note 13).
+    // WHY THE FIRST W15 SOLVE MISPREDICTED (the live four-side clip at worst-edge
+    // 0.521). The prior budget computed the satellite outer reach as `orbit + sat ≈
+    // 0.375` raw and called it 0.75 wrapper-half — but that IGNORED the THREE
+    // Y-inflating terms the satellite system actually applies (useBlobSatellites.ts):
+    //   1. baseR = orbitRadius × (0.8 … 1.2)         — a random radius up to ×1.2
+    //   2. baseRadiusY = baseR × (1 + eccentricity)  — the eccentric LONG axis is Y
+    //   3. + wobble (mood-scaled) + pertYAmp (≤0.08) — additive radial swing
+    // So the REAL worst-case satellite-CENTRE Y at idle was
+    // `0.27×1.2×(1+0.22) + wobble(≈0.12) + 0.08 ≈ 0.59` raw → `×0.625 = 0.371` uv,
+    // and the sat radius + smin band carried the painted edge to `≈0.48` uv = 96% of
+    // the canvas half — touching top/bottom. Left/right cleared because the orbit
+    // ellipse is TALLER than wide (the (1+ecc) Y-long axis vs (1−ecc) X). The body
+    // alone was always fine (0.18 uv = 36% canvas-half); the SATELLITES were the clip.
+    //
+    // THE RE-SOLVE pulls the VERTICAL satellite reach inside the canvas with a real
+    // four-side margin by attacking the Y-inflating terms directly — eccentricity DOWN
+    // (kills the Y-long axis, the dominant term), orbitRadius DOWN, satelliteRadius
+    // DOWN — solved (numerically, against the live orbitPos worst-case, not a
+    // raw-sum) so the worst-case satellite painted reach is:
+    //   idle (wobble≈1.0)   : ≈0.354 uv = 71% canvas-half — a clear top/bottom frame.
+    //   excited (wobble 2.0): ≈0.446 uv = 89% canvas-half — a brief narrow peek, never
+    //                         a hard clip (the intentional orbit excursion).
+    // The BODY stays 0.22 (36% canvas-half = 58% wrapper-half — a generous contained
+    // bead, unchanged: it was never the clip source). This is a SINGLE atomic re-solve
+    // of the Y-reach cohort and KEEPS W08's POS_SCALE regime untouched.
     bodyRadius: 0.22,
     satelliteCount: 3,
-    satelliteRadius: 0.105,
-    orbitRadius: 0.27,
+    satelliteRadius: 0.082,
+    orbitRadius: 0.17,
 
     tempo: 1.0,
 
@@ -250,22 +258,38 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
     rimPower: 2.5,
     rimStrength: 0.5,
 
-    // ── Interaction magnitudes, re-balanced against the contained body (AX.W15 F2) ─
+    // ── Interaction magnitudes, re-balanced for a LEGIBLE lean (AX.W15 REDRESS F2) ─
     //
-    // NO new interaction code — containment alone makes the EXISTING wired
-    // spring/trail/squash/click legible (the W10/W11 work was swamped by the
-    // over-sized field). The magnitudes were tuned against the OVERSIZED body; the
-    // new bead is smaller, so the lean now READS — `pointerStrength` lifts to 0.11
-    // for a clearly-felt lean toward the cursor WITHIN the footprint, `stretch` to
-    // 0.5 so a flick squashes visibly, and `clickImpulse` stays a bouncy 0.5. The
-    // trail pseudopod radius is driven off `satelliteRadius` (now 0.105) in the
-    // renderer, so it tapers proportionally to the smaller body with no extra knob.
+    // The first W15 solve set `pointerStrength: 0.11`, which the LIVE π-lane proved
+    // INVISIBLE — a synthetic hover-flick to fx=0.82 moved the painted centroid only
+    // 0.0011 width (gate floor 0.012). The chain (traced numerically, not eyeballed):
+    // the flick lands the pointer at `uPointer.x ≈ 0.32 uv`; the in-shader
+    // deformation `uv -= normalize(uPointer−uv) · smoothstep(R,0,dist) · A · S` then
+    // pulls the WHOLE field toward the cursor, so the centroid shift ≈ the
+    // body-integrated influence. At S=0.11 with the body sitting 0.32 uv from the
+    // pointer (deep in the OLD smoothstep(0.4,0,·) weak tail → ~0.10 weight), the
+    // integrated shift was ~0.005 width → ~0.001 live after spring-settle/median
+    // attenuation. TWO compounding fixes make the lean READ:
+    //   • `pointerStrength` 0.11 → 0.45 — a strong, clearly-felt lean.
+    //   • the smoothstep falloff radius widens 0.4 → 0.65 in metaball.frag.ts main()
+    //     so the body (at 0.32 uv) is no longer in the dead tail — the whole creature
+    //     coherently tilts toward the cursor.
+    // Together the modeled body-integrated centroid shift is ≈0.078 width (6.5× the
+    // floor), and the LEANED body still reaches only ~0.52 canvas-half — contained on
+    // all four sides even mid-lean. NO new interaction code: same wired spring/trail/
+    // squash/click, re-balanced. `stretch` 0.5 (visible flick squash), `clickImpulse`
+    // a bouncy 0.5 (unchanged). The trail pseudopod radius rides `satelliteRadius`
+    // (now 0.082) in the renderer, tapering proportionally with no extra knob.
     pointerAttraction: 0.35,
-    pointerStrength: 0.11,
+    pointerStrength: 0.45,
     stretch: 0.5,
     clickImpulse: 0.5,
 
-    eccentricity: 0.22,
+    // Eccentricity is the DOMINANT Y-inflating term (baseRadiusY = baseR × (1 + ecc)),
+    // pulled DOWN 0.22 → 0.05 in the four-side-containment re-solve so the orbit
+    // ellipse is near-circular and the vertical satellite reach clears the canvas
+    // top/bottom (the prior 0.22 made the orbit ~1.2× taller than wide — the live clip).
+    eccentricity: 0.05,
     orbitSpeedScale: 1.0,
     wobbleScale: 1.0,
     mergeRate: 1.0,
