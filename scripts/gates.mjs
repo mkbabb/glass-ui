@@ -500,6 +500,18 @@ export const GATES = [
         tags: ["local", "ci"],
         note: "AX.W03 — the host-native keepDockOpen hold. Deterministic, browser-FREE @vue/test-utils MOUNT gate (dock-hold-contract.test.ts) that BITES in CI: mounts <GlassDock><Slider/></GlassDock>, dispatches a real pointerdown on the resolved [data-slot=slider] host, and asserts keepOpen() fired + data-held painted on BOTH the dock root and the slider root; a window pointerup releases + clears; a touchstart arm drives the SAME single acquire (no parallel path). Replaces the fail-open detectSliderHold SKIP carved out of proof:dock-layering-polish (which exited 0 with no harness, so the broken contract shipped GREEN 3.4.0→3.6.0). The π-lane (Playwright + frontend-design) owns the LIVE visual-truth half. Bite: re-route the hold through a reka <SliderRoot> template @pointerdown (the dropped forwarding binding) → mount RED; orphan the native useDockHold listener → mount RED.",
     },
+    {
+        id: "proof:slider-two-only",
+        cmd: "proof:slider-two-only",
+        tags: ["local", "ci"],
+        note: "AV.W11 (re-registered into the AX fleet at AX.W23) — the slider two-only cardinality LOCK. <Slider> ships EXACTLY {standard, spectrum}: (1) KEYSET — sliderVariants lists exactly those two keys; (2) ORPHAN-SCAN — Slider.vue scoped CSS carries no [data-variant=X] for X ∉ keyset; (3) ROUNDED-KNOB — the base .slider-thumb resolves border-radius:50% and declares no border: paint (the borderless continuous iOS knob). Born-RED into AX only in the un-registered sense (the AV gate-fleet was un-re-registered into AX). Bite: re-add a deleted variant key → (1) RED; restore a deleted scoped block → (2) RED; revert the thumb to the bordered pill → (3) RED.",
+    },
+    {
+        id: "proof:carousel-glass-atoms",
+        cmd: "proof:carousel-glass-atoms",
+        tags: ["local", "ci"],
+        note: "AX.W23 — the carousel dot rail + chrome RENDER assertion (reads the emitted dist/glass-ui.css, not a source string). FOUR clauses: (A) DOT-CONTRAST — the emitted .carousel-dot::before inactive fill is color-mix(in srgb, var(--foreground) N%) whose RESOLVED color clears ≥3:1 (WCAG 1.4.11) against the composited bg-card/30 dark card in BOTH schemes (born-RED on HEAD's bg-muted-medium ~1.2:1); (B) NO-DEAD-CLASS — CarouselDots carries no scale-[var(--x)] var-in-arbitrary non-emit AND the active emphasis emits a REAL scoped .carousel-dot[data-active]::before width|height morph; (C) FOUR-STATE — GlassCarouselItem carries data-state + aria-pressed + .focus-ring + .tap-squish; (D) CHROME-SUBSTRATE — GlassCarousel composes a .glass-material band member. NOTE reads dist/ → run after build. Bite: revert the dot to bg-muted-medium → (A) RED; re-add scale-[var(--x)] or drop the [data-active] morph → (B) RED; drop a four-state attr → (C) RED; strip the band class → (D) RED.",
+    },
     { id: "audit:stash", cmd: "audit:stash", tags: ["ci"] },
 ];
 

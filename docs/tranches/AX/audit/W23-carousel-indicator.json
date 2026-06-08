@@ -1,0 +1,92 @@
+{
+  "wave": "AX.W23",
+  "title": "Carousel indicator re-author (dark/light-safe position dots) + AW.W30 chrome fold + §9.1 glass-scrubber naming decision",
+  "head": "a125d9a (post-W01/W02/W03/W07/W08/W09/W10/W11/W15/W16/W17/W37 settled base)",
+  "ritual": "wave-open live re-diagnosis (AX.W00 §Cadence step 1) — the four RED witnesses re-proven against the ACTUAL HEAD code, not trusted from the audit",
+  "rootCauseConfirmed": true,
+  "redWitnesses": {
+    "W1_inactiveDotInvisible": {
+      "file": "src/components/ui/carousel/CarouselDots.vue:71-72",
+      "finding": "the inactive dot painted `bg-muted-medium` (= color-mix(in srgb, var(--muted) 50%, transparent), a near-black at 50% alpha tuned for an OPAQUE light card). On the translucent `bg-card/30` dark surface the carousel story + every dark consumer places the rail on, the inactive dot resolves ~1.2:1 contrast — below the WCAG 1.4.11 3:1 non-text floor, functionally invisible. The row read as one lopsided bright bar with no track.",
+      "confirmedAtHead": true
+    },
+    "W2_deadScaleClass": {
+      "file": "src/components/ui/carousel/CarouselDots.vue:68-69",
+      "finding": "the active dot's emphasis rode `scale-[var(--scale-hover)]`. `--scale-hover` exists (tokens.css:1075 = 1.08) but the var-in-arbitrary form `scale-[var(--…)]` is silently dropped by Tailwind v4's content-scan — NO stylesheet rule emits, so the live computed transform was `none`. The only real active emphasis was the `w-6` width, which alone reads as a 'progress fill' not a position pip.",
+      "confirmedAtHead": true
+    },
+    "W3_gateAbsentChromeFlat": {
+      "facts": "package.json had NO proof:carousel-glass-atoms; proof:slider-two-only existed at :602 but was NOT registered in gates.mjs (rode the AV fleet un-re-registered into AX). GlassCarousel.vue:127-149 was a flat bordered pill with on-hover-only --glass-shadow-wash and no .glass-material specular/rim; GlassCarouselItem.vue carried no four-state contract (0 occurrences of data-state/aria-pressed/focus-ring/tap-squish).",
+      "confirmedAtHead": true
+    },
+    "W4_namingUndecided": {
+      "file": "src/components/ui/slider/index.ts:36",
+      "finding": "the CVA still keyed `standard: ''` with default `'standard'`; the §9.1 literal glass-scrubber RENAME was un-adjudicated + un-scheduled (slice 21 F2 ACCEPT vs slice 31 F6 RENAME — the corpus SPLIT, USER-ADJUDICATED).",
+      "confirmedAtHead": true
+    }
+  },
+  "findingDisposition": {
+    "F0_twoOnlyCardinality": "DONE/verify-only (AV.W11) — re-confirmed: sliderVariants keys exactly {standard, spectrum}; proof:slider-two-only GREEN.",
+    "F1_roundedKnob": "DONE/verify-only (AV.W11) — re-confirmed: .slider-thumb border-radius 50%, no border paint; Slider.vue UNTOUCHED by this wave.",
+    "F2_glassScrubberRename": "ADJUDICATED → ACCEPT (orchestrator §5.3 RATIFIED DEFAULT). The glass-scrubber rename is NOT taken; 'standard' stays the CVA key (prose-name only, ZERO churn). No slider source edit. See namingDecision below.",
+    "F3_consumersPorted": "DONE/verify-only — re-grep of src/ demo/ ~/Programming/slides/src found NO stale retired-variant binding (timeline|glass-pill|glass-cartoon|glass-scrubber as a Slider variant=).",
+    "F4_carouselDotsBroken": "FIXED (the BLOCKER) — CarouselDots re-authored. See postFix.",
+    "F5_carouselChromeGlassAtoms": "FIXED (AW.W30 fold) — GlassCarousel on glass-wash band; GlassCarouselItem four-state; spring re-pointed onto --spring-dock. See postFix."
+  },
+  "postFix": {
+    "carouselDotsReauthor": {
+      "file": "src/components/ui/carousel/CarouselDots.vue",
+      "mechanism": "re-authored from first principles against the slides DeckPager oracle. The dot is painted in a scoped `::before` inside a 24x24 transparent hit target (WCAG 2.5.8). The inactive fill is `color-mix(in srgb, var(--foreground) 52%, transparent)` — the house surface-tint pattern at the 52% stop the token ladder does not pre-mint (the ladder tops at 40%, which clears >=3:1 in DARK but not LIGHT). The active emphasis is a REAL emitted scoped rule `.carousel-dot[data-active]::before { width|height: var(--dot-elongated); background: var(--foreground) }` — the dot elongates into a pip + lifts to full foreground; the dead `scale-[var(--scale-hover)]` arbitrary class is EXCISED. The morph rides the governed --spring-dock register; the button composes .tap-squish (press-spring) + .focus-ring (the token-first focus cue). a11y (role=tablist/tab, aria-selected, aria-label) preserved.",
+      "rungDecision": {
+        "candidate": "--surface-tint-25 (audit's named candidate)",
+        "ratified": "color-mix(in srgb, var(--foreground) 52%, transparent) — the DeckPager oracle value, inlined in the scoped CSS (NOT a new token in tokens.css)",
+        "rationale": "the audit candidate --surface-tint-25 resolves 2.03:1 (dark) / 1.71:1 (light) — BELOW the 3:1 floor on the composited bg-card/30 dark card. The ladder's highest sub-loud rung, 40%, resolves 3.32:1 (dark) / 2.50:1 (light) — still fails LIGHT. The lowest stop that clears >=3:1 in BOTH schemes is 52% (the DeckPager-proven value). Since no existing --surface-tint-* rung clears the floor and tokens.css is OUT of bounds (W23 consumes, does not mint), the in-bounds gestalt fix is the SAME house pattern (color-mix(in srgb, var(--foreground) N%, transparent)) at the 52% stop, inlined at the use-site in the SFC's scoped CSS — exactly the DeckPager oracle shape."
+      },
+      "measuredContrast": {
+        "method": "WCAG 1.4.11 contrast of the resolved inactive-dot color (foreground 52% over the composited bg-card/30 dark surface) vs that surface, computed from the EMITTED dist/glass-ui.css recipe",
+        "darkScheme": "4.788:1 (>=3:1 PASS)",
+        "lightScheme": "3.525:1 (>=3:1 PASS)",
+        "surfaces": { "dark": "bg-card/30 (hsl 24 8% 10% @30%) over page hsl 24 8% 6%", "light": "bg-card/30 over page hsl 48 12% 98%" }
+      }
+    },
+    "chromeRestyle": {
+      "glassCarousel": "src/components/custom/glass-carousel/GlassCarousel.vue — shell composes the .glass-wash rung (a member of the .glass-material band: brings the moving specular catch-light + uniform rim + a real wash-tier glass surface), replacing the flat bordered pill with on-hover-only --glass-shadow-wash. The hand-rolled background/border/`:hover box-shadow` are removed (the rung owns the surface). The size-FLIP spring transitions re-point off --spring-snappy onto --spring-dock. data-slot=glass-carousel added.",
+      "glassCarouselItem": "src/components/custom/glass-carousel/GlassCarouselItem.vue — gains the four-state contract: type=button, data-slot, data-state=active|inactive, aria-pressed, .focus-ring, .tap-squish. The hand-rolled `:active { transform: scale(--scale-press) }` is delegated to .tap-squish. The transition vocabulary re-points off --spring-snappy onto --spring-dock.",
+      "glassCarouselPager": "src/components/ui/carousel/GlassCarouselPager.vue — VERIFY-ONLY: already carries full data-slot coverage (root + prev + counter + next) and NO bespoke spring (composes the Button recipe). No edit needed.",
+      "springCoordination": "W05 (the governed --spring-* register owner) has NOT landed at this HEAD (no --spring-control/--spring-settle/--spring-playful tokens). Per §Disjointness-vs-W05 + Open-Q4, W23 lands before W05 and consumes the PUBLISHED governed register --spring-dock (the iOS-control curve the dock family shares). If W05 renames the rung, the carousel inherits the final name at the W05 merge — W23 never re-authors a curve."
+    },
+    "namingDecision": {
+      "decision": "ACCEPT (default — orchestrator §5.3 RATIFIED; the glass-scrubber rename is NOT taken)",
+      "effect": "the CVA key stays `standard` with default `standard`; glass-scrubber remains the PROSE name only (the slider index.ts:18 doc-comment already names 'the general-purpose glass-scrubber knob'). ZERO call-site churn. No slider source edit (index.ts, Slider.vue, src/api/index.ts SliderVariants, the slider story all UNTOUCHED).",
+      "preceptAlignment": "the no-backwards-compat precept is NOT implicated because nothing renames (no alias, no shim, no @deprecated). The consumer-port legs (muster glass-pill sites SignalsLayer:113 + CommandPalette:485; slides variant=standard) are MOOT under ACCEPT — no rename to port. Routed to W34 only as a no-op verify (the surviving standard key needs no port).",
+      "ratificationSource": "AX.W00 orchestrator-integration §5.3 (the wave-open DECISION GATE default; harden finding 4)"
+    }
+  },
+  "gates": {
+    "proof:carousel-glass-atoms": {
+      "status": "NEW — registered (package.json + gates.mjs) + GREEN",
+      "form": "RENDER assertion — reads the EMITTED dist/glass-ui.css (the painted recipe), not a source string",
+      "clauses": "(A) DOT-CONTRAST: emitted .carousel-dot::before is color-mix foreground 52% resolving 4.788 dark / 3.525 light, both >=3:1; (B) NO-DEAD-CLASS: no scale-[var(--x)] in CarouselDots + a REAL emitted .carousel-dot[data-active]::before width|height morph; (C) FOUR-STATE: GlassCarouselItem carries data-state+aria-pressed+focus-ring+tap-squish; (D) CHROME-SUBSTRATE: GlassCarousel composes glass-wash band member",
+      "biteCheck": "re-injecting bg-muted-medium + scale-[var(--scale-hover)] REDs clauses (A)+(B) — confirmed load-bearing"
+    },
+    "proof:slider-two-only": "RE-REGISTERED into the AX fleet (gates.mjs) + GREEN — keyset {standard, spectrum}, no orphan [data-variant], thumb border-radius 50% / no border paint. EXPECTED_KEYS unchanged (ACCEPT path — no RENAME).",
+    "proof:gate-script-parity": "GREEN — 0 new orphan, 0 new dangling, 0 ghost cmd (the new gate registration is consistent)",
+    "typecheck": "GREEN (vue-tsc --noEmit, exit 0)",
+    "build": "GREEN — carousel chunk + styles bundle emit clean; the .glass-wash substrate + --surface-tint/--spring-dock token refs resolve"
+  },
+  "filesChanged": [
+    "src/components/ui/carousel/CarouselDots.vue",
+    "src/components/custom/glass-carousel/GlassCarousel.vue",
+    "src/components/custom/glass-carousel/GlassCarouselItem.vue",
+    "demo/stories/navigation/carousel.vue",
+    "scripts/proof-carousel-glass-atoms.mjs",
+    "package.json",
+    "scripts/gates.mjs",
+    "docs/tranches/AX/audit/W23-carousel-indicator.json"
+  ],
+  "liveVerifyNeeded": {
+    "owner": "orchestrator π-lane (AX.W00 — composited screenshot + getComputedStyle DOM-cascade readback on the real Metal box; headless cannot run a real browser)",
+    "binding": "the wave does NOT close on the headless gates alone — the executed LIVE dark-page Playwright audit is the binding close criterion",
+    "recipe": "see runtimeReasoning in the structured return — the exact π-lane readback recipe at /navigation/carousel + /navigation/glass-carousel, light AND dark, >=3 viewports"
+  }
+}

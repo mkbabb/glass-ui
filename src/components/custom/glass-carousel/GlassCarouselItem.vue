@@ -23,9 +23,13 @@ const emit = defineEmits<{
 
 <template>
     <button
+        type="button"
+        data-slot="glass-carousel-item"
+        :data-state="active ? 'active' : 'inactive'"
+        :aria-pressed="active"
         :class="
             cn(
-                'glass-carousel-item',
+                'glass-carousel-item focus-ring tap-squish',
                 {
                     'glass-carousel-item--active': active,
                     'glass-carousel-item--expandable': expandable,
@@ -53,24 +57,26 @@ const emit = defineEmits<{
     padding: 0.375rem 0.625rem;
     min-width: 2rem;
     min-height: 2rem;
+    /* AX.W23 F5 — the spring/ease vocabulary re-points off the bespoke
+       `--spring-snappy` onto the governed `--spring-dock` register (the
+       iOS-control curve the dock family shares; W23 CONSUMES, W05 owns).
+       The press-scale is delegated to the `.tap-squish` utility (the
+       component-over-CSS-class four-state contract) — this block no longer
+       hand-rolls the `:active` transform. */
     transition:
         background var(--duration-fast) var(--ease-standard),
         color var(--duration-fast) var(--ease-standard),
-        transform var(--duration-fast) var(--spring-snappy),
-        flex-basis var(--duration-normal) var(--spring-snappy),
-        min-height var(--duration-normal) var(--spring-snappy),
-        padding var(--duration-normal) var(--spring-snappy),
-        font-size var(--duration-normal) var(--spring-snappy);
+        transform var(--duration-fast) var(--spring-dock),
+        flex-basis var(--duration-normal) var(--spring-dock),
+        min-height var(--duration-normal) var(--spring-dock),
+        padding var(--duration-normal) var(--spring-dock),
+        font-size var(--duration-normal) var(--spring-dock);
 }
 
 .glass-carousel-item:hover {
     background: var(--surface-tint-6);
     color: var(--foreground);
     transform: scale(1.03);
-}
-
-.glass-carousel-item:active {
-    transform: scale(var(--scale-press));
 }
 
 .glass-carousel-item--active {

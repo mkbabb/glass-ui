@@ -80,9 +80,10 @@ defineExpose({
 <template>
     <div
         ref="rootEl"
+        data-slot="glass-carousel"
         :class="
             cn(
-                'glass-carousel',
+                'glass-carousel glass-wash',
                 {
                     'glass-carousel--vertical': orientation === 'vertical',
                     'glass-carousel--horizontal': orientation === 'horizontal',
@@ -123,29 +124,35 @@ defineExpose({
 </template>
 
 <style scoped>
-/* ── Base: pill-shaped glass container, matching GlassDock visual language ── */
+/* ── Base: pill-shaped glass container on the `.glass-wash` substrate ──────────
+   AX.W23 F5 (folds the never-run AW.W30 chrome restyle). The shell composes the
+   `.glass-wash` rung — a member of the unified `.glass-material` band (glass.css)
+   — so it brings the band's moving specular catch-light + uniform rim + a real
+   wash-tier glass surface (background + border + backdrop-filter), replacing the
+   prior flat bordered pill with an on-hover-only `--glass-shadow-wash`. The rung
+   owns the surface look; this scoped block owns only the carousel-specific
+   geometry overrides (the pill radius + the size FLIP) — NOT a hand-rolled
+   background or border.
+
+   The motion vocabulary re-points off the bespoke `--spring-snappy` onto the
+   governed `--spring-dock` register (the published iOS-control curve the dock
+   family shares — W23 CONSUMES it; W05 owns its authorship). */
 .glass-carousel {
     display: inline-flex;
     align-items: center;
     border-radius: var(--radius-dock);
     overflow: hidden;
     padding: 0.375rem;
-    background: transparent;
-    border: 1px solid var(--glass-border-wash);
     transition:
-        height var(--duration-normal) var(--spring-snappy),
-        width var(--duration-normal) var(--spring-snappy),
-        padding var(--duration-normal) var(--spring-snappy),
-        gap var(--duration-normal) var(--spring-snappy),
-        border-radius var(--duration-normal) var(--spring-snappy),
+        height var(--duration-normal) var(--spring-dock),
+        width var(--duration-normal) var(--spring-dock),
+        padding var(--duration-normal) var(--spring-dock),
+        gap var(--duration-normal) var(--spring-dock),
+        border-radius var(--duration-normal) var(--spring-dock),
         box-shadow var(--duration-normal) var(--ease-standard),
         background var(--duration-normal) var(--ease-standard),
         border-color var(--duration-normal) var(--ease-standard),
-        transform var(--duration-normal) var(--spring-snappy);
-}
-
-.glass-carousel:hover {
-    box-shadow: var(--glass-shadow-wash);
+        transform var(--duration-normal) var(--spring-dock);
 }
 
 .glass-carousel--no-transition {
