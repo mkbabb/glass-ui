@@ -5,7 +5,6 @@ import {
     detectFlipSample,
     detectLayeringPolish,
     detectPrmSample,
-    detectSliderHold,
     directionalAsymmetry,
     progressKeyed,
     risingFrames,
@@ -191,32 +190,11 @@ describe("detectPrmSample", () => {
     });
 });
 
-describe("detectSliderHold", () => {
-    it("passes when held during the drag and collapsed after release", () => {
-        const { violations } = detectSliderHold({
-            expandedBeforeDrag: true,
-            expandedDuringHold: true,
-            collapsedAfterRelease: true,
-        });
-        expect(violations).toHaveLength(0);
-    });
-    it("flags an idle-collapse under the held thumb (born-RED)", () => {
-        const { violations } = detectSliderHold({
-            expandedBeforeDrag: true,
-            expandedDuringHold: false,
-            collapsedAfterRelease: true,
-        });
-        expect(violations.some((v) => /idle-collapsed under the held slider/.test(v))).toBe(true);
-    });
-    it("flags a stuck-open dock after release", () => {
-        const { violations } = detectSliderHold({
-            expandedBeforeDrag: true,
-            expandedDuringHold: true,
-            collapsedAfterRelease: false,
-        });
-        expect(violations.some((v) => /did not re-collapse/.test(v))).toBe(true);
-    });
-});
+// AX.W03 — the detectSliderHold detector + its slider-hold full-probe keys are
+// RETIRED. The keepDockOpen contract migrated to the deterministic mount gate
+// proof:dock-hold-contract (tests/components/ui/slider/dock-hold-contract.test.ts)
+// + the π-lane live visual-truth audit; the polish gate no longer carries a
+// fail-open slider-hold arm.
 
 describe("detectLayeringPolish — full probe", () => {
     it("passes a healthy end-to-end result", () => {
@@ -232,24 +210,14 @@ describe("detectLayeringPolish — full probe", () => {
                 ],
                 expandedFlags: [true, true],
             },
-            sliderHold: {
-                expandedBeforeDrag: true,
-                expandedDuringHold: true,
-                collapsedAfterRelease: true,
-            },
         });
         expect(violations).toHaveLength(0);
     });
-    it("reds on a symmetric + fixed-ms + idle-collapse build (the pre-W3 witness)", () => {
+    it("reds on a symmetric + fixed-ms build (the pre-W3 witness)", () => {
         const { violations } = detectLayeringPolish({
             vtForcedOff: true,
             directional: { expandMs: 300, collapseMs: 302 },
             flip: FIXED_MS_CLUSTER,
-            sliderHold: {
-                expandedBeforeDrag: true,
-                expandedDuringHold: false,
-                collapsedAfterRelease: true,
-            },
         });
         expect(violations.length).toBeGreaterThan(0);
     });

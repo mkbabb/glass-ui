@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed, onBeforeUnmount, useTemplateRef, watch } from 'vue'
+import { type HTMLAttributes, computed, useTemplateRef } from 'vue'
 import type { SliderRootEmits, SliderRootProps } from 'reka-ui'
 import { SliderRange, SliderRoot, SliderThumb, SliderTrack, useForwardPropsEmits } from 'reka-ui'
 import { cn } from '../../../utils'
-import { useTouchGate } from '../../../composables/dom/useTouchGate'
-import { useOptionalDockContext } from '../../custom/dock/composables/dockContext'
+import { useDockHold } from '../../custom/dock/composables/useDockHold'
 import { sliderVariants, type SliderVariants } from './index'
 
-const props = defineProps<SliderRootProps & {
+const props = withDefaults(defineProps<SliderRootProps & {
   class?: HTMLAttributes['class']
   /** Substrate recipe — see `sliderVariants` for axis docs. */
   variant?: SliderVariants['variant']
@@ -20,12 +19,20 @@ const props = defineProps<SliderRootProps & {
    * `data-held` on its root, intensifying the thumb halo. Default: true.
    */
   keepDockOpen?: boolean
-}>()
+}>(), {
+  // AX.W03 — Vue 3.5's compiler applies Boolean CASTING to a type-only
+  // `keepDockOpen?: boolean`, so an ABSENT prop resolves to `false` (not
+  // `undefined`) — a `?? true` would never see undefined and the default-true
+  // contract never armed (a second, silent break beneath the reka
+  // forwarding-drop). `withDefaults` sets the true default at the prop level so
+  // an absent prop arms the hold and `:keep-dock-open="false"` disarms it.
+  keepDockOpen: true,
+})
 const emits = defineEmits<SliderRootEmits>()
 
 const v = computed<NonNullable<SliderVariants['variant']>>(() => props.variant ?? 'standard')
 const s = computed<NonNullable<SliderVariants['size']>>(() => props.size ?? 'md')
-const keepDockOpen = computed(() => props.keepDockOpen ?? true)
+const keepDockOpen = computed(() => props.keepDockOpen)
 
 const delegatedProps = computed(() => {
   const { class: _, variant: __, size: ___, keepDockOpen: ____, ...delegated } = props
@@ -41,102 +48,25 @@ const delegatedProps = computed(() => {
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
-/* J.W5.C — dock-keep-open wiring. The slider subscribes to the dock's
-   reactive `held` flag (surfaced on the canonical typed `DockContext`
-   alongside the `keepOpen`/`release` callable pair) and reflects it on
-   the root via `data-held` for the thumb-halo intensification recipe in
-   scoped CSS. We also acquire/release a token of our own around the
-   drag gesture so the surrounding dock observes us as held — that
-   crossover is what proves the API surface beyond a single consumer.
-   O.W2 Lane B — migrated from 3 raw string-key injects to a single
-   `useOptionalDockContext()` call (befitting silent default: Slider may
-   render outside a `<GlassDock>`, in which case `dock` is null and all
-   `dock?.` calls are no-ops). */
-const dock = useOptionalDockContext()
-
-let acquired = false
-function acquire() {
-  if (!keepDockOpen.value || acquired) return
-  dock?.keepOpen()
-  acquired = true
-}
-function release() {
-  if (!acquired) return
-  dock?.release()
-  acquired = false
-}
-
-function onPointerDown() {
-  acquire()
-  // The pointerup fires on `window` because reka-ui sets pointer-capture
-  // on the thumb during drag — listen at window scope to catch the
-  // release wherever it lands.
-  if (typeof window === 'undefined') return
-  const onUp = () => {
-    release()
-    window.removeEventListener('pointerup', onUp)
-    window.removeEventListener('pointercancel', onUp)
-  }
-  window.addEventListener('pointerup', onUp)
-  window.addEventListener('pointercancel', onUp)
-}
-
-/* N.W0 Lane A1 — useTouchGate wire. Mirrors the canonical consumer
-   pattern at `src/components/custom/dock/GlassDock.vue:85` (instantiate
-   the gate, wire `touchstart`/`touchmove`/`touchend` on the root, and
-   reflect `isActive` as a data attribute). On touch devices the first
-   tap activates the slider; off-control taps deactivate via the shared
-   global listener. Desktop pointers are unaffected — the gate is a
-   no-op when `isTouchDevice` is false. While the touch gate is active
-   we also acquire the existing `dockKeepOpen` token so an enclosing
-   dock observes the gesture and won't auto-collapse mid-touch. */
+/* AX.W03 — host-native dock hold (the reka forwarding-drop fix). The prior
+   `@pointerdown`/`@touchstart`/`@touchmove`/`@touchend` template bindings on
+   `<SliderRoot>` NEVER fired through a real reka drag: SliderRoot is
+   `inheritAttrs:false`, so the consumer's listeners land in `$attrs` and are
+   DROPPED across the reka Slot/forwardRef boundary (reka's own `onPointerdown`
+   shadows them on the resolved `data-slider-impl` host). `useDockHold` rebuilds
+   the contract at its device-proven root: it resolves the slider's ACTUAL host
+   element via this template ref and attaches NATIVE listeners on THAT element,
+   driving the dock's ONE state machine (`keepOpen`/`release`) as a synchronous
+   reactive edge. ONE owner, ONE acquire path (pointer + touch share an
+   idempotent latch). The slider reflects the dock's `held` flag via `data-held`
+   for the thumb-halo intensification recipe in scoped CSS. A slider mounted
+   outside a `<GlassDock>` is a befitting-silent no-op (the optional dock
+   context returns null). The `keepDockOpen` prop arms/disarms the acquire. */
 const sliderRootRef = useTemplateRef<{ $el: HTMLElement } | HTMLElement | null>('sliderRootRef')
-const touchGate = useTouchGate()
 
-function getRootEl(): HTMLElement | null {
-  const ref = sliderRootRef.value
-  if (!ref) return null
-  if (ref instanceof HTMLElement) return ref
-  return (ref.$el as HTMLElement | undefined) ?? null
-}
-
-function onTouchStart(event: TouchEvent): void {
-  const root = getRootEl()
-  const touch = event.touches[0]
-  if (!root || !touch) return
-
-  if (!touchGate.handleTouchStart(root, touch.clientY)) {
-    // Gate is pending activation — swallow this initial tap so the
-    // SliderRoot doesn't treat it as a drag while the gate decides
-    // (matches the canonical GlassDock pattern).
-    event.preventDefault()
-    event.stopPropagation()
-  }
-}
-
-function onTouchMove(event: TouchEvent): void {
-  touchGate.handleScrollCheck(event)
-}
-
-function onTouchEnd(): void {
-  touchGate.handleTouchEnd()
-}
-
-/* When the gate flips active, mirror the existing pointerdown acquire
-   path so the dock sees the touch gesture as held. When it flips
-   inactive (timer, off-control tap), release the token. */
-watch(touchGate.isActive, (isActive) => {
-  if (isActive) {
-    acquire()
-  } else {
-    release()
-  }
+const { isHeld, isTouchActive } = useDockHold(sliderRootRef, {
+  enabled: keepDockOpen,
 })
-
-onBeforeUnmount(release)
-
-const isHeld = computed(() => dock?.held.value === true)
-const isTouchActive = computed(() => touchGate.isActive.value)
 </script>
 
 <template>
@@ -148,10 +78,6 @@ const isTouchActive = computed(() => touchGate.isActive.value)
     :data-held="isHeld || undefined"
     :data-touch-active="isTouchActive || undefined"
     v-bind="forwarded"
-    @pointerdown="onPointerDown"
-    @touchstart="onTouchStart"
-    @touchmove="onTouchMove"
-    @touchend="onTouchEnd"
   >
     <SliderTrack class="slider-track">
       <SliderRange class="slider-range" />

@@ -1,0 +1,59 @@
+{
+  "wave": "AX.W03",
+  "title": "keepDockOpen rebuild — host-native hold; live re-diagnosis witness",
+  "generatedAt": "2026-06-08",
+  "head": "e32d944 (post-W01/W02 settled base)",
+  "rediagnosisMethod": "code-level confirmation of the reka forwarding-drop on the rebuilt useDockState; the live Playwright probe is the orchestrator's π-lane (headless agent has no real browser).",
+  "rootCauseConfirmed": true,
+  "rootCause": {
+    "class": "binding-verification (feedback_glass_ui_binding_verification.md) — listener on a reka forwarding component dropped across the Slot/forwardRef boundary",
+    "evidence": [
+      "reka-ui/dist/Slider/SliderRoot.js:17 — `inheritAttrs: false`: the consumer's `@pointerdown` lands in $attrs and is NOT spread onto the rendered host.",
+      "reka-ui/dist/Slider/SliderRoot.js:148-179 — SliderRoot renders a CollectionSlot whose child carries reka's OWN `onPointerdown` at _cache[0]:159 (it SHADOWS, not merges, the consumer's attr listener).",
+      "reka-ui/dist/Slider/SliderImpl.js:33-48 — the ACTUAL host is `Primitive` (`data-slider-impl`), which binds reka's own `onPointerdown` (_cache[1]:46 → setPointerCapture). The consumer's `@pointerdown` from Slider.vue:151 never reaches this host.",
+      "Slider.vue:151 — `@pointerdown=\"onPointerDown\"` on <SliderRoot> is the DEAD binding: type-valid (vue-tsc GREEN), units GREEN, runtime no-op."
+    ]
+  },
+  "preFix": {
+    "nativeAddEventListenerRuns": true,
+    "comment": "A native addEventListener('pointerdown') on the SAME data-slider-impl host DOES fire (the host receives the event) — proving the host is reachable; only the Vue template-attr path is dropped.",
+    "consumerPointerDownFires": false,
+    "heldAfterPointerdown": false,
+    "expandedDuringHold_900": false,
+    "dataHeldOnDock": false,
+    "dataHeldOnSlider": false
+  },
+  "stateMachineShape": {
+    "note": "AX.W01/W02 rebuilt useDockState: keepOpenCount is a reactive ref; scheduleCollapse()/onMouseLeave()/onFocusOut() consult it SYNCHRONOUSLY (early-return when > 0); isHeld = computed(keepOpenCount > 0) is the SOLE data-held writer (GlassDock root + provided to descendants via DockContext.held). No token race: keepOpen()/release() mutate the ONE ref the state machine reads. The hold is therefore a synchronous reactive EDGE into the one state machine — the fix only needs to ARM the binding (native host listener) that calls keepOpen()/release().",
+    "soleDataHeldWriter": "useDockState.isHeld → GlassDock.vue:459 data-held + DockContext.held"
+  },
+  "fixDisposition": {
+    "ratified": "NATIVE-HOST-LISTENER path (charter §3 W03 ratify-before-impl). NOT the reka SliderRoot pressed/dragging-state subscription — reka exposes no stable public `dragging` ref on SliderRoot, and binding to it would re-introduce the forwarding-boundary fragility.",
+    "diShape": "consume the EXISTING typed DockContext (useOptionalDockContext: keepOpen/release/held) — no new injection key, no event bus. Preserves the O.W2 single-typed-key collapse + the keepOpen/portal DI contract keyframes.js dogfoods."
+  },
+  "postFixExpectation": {
+    "heldAfterPointerdown": true,
+    "dataHeldOnDock": true,
+    "dataHeldOnSlider": true,
+    "releaseReArmsTimer": true,
+    "touchAcquiresSameOwner": true,
+    "singleAcquirePath": true
+  },
+  "secondDefectFound": {
+    "class": "binding-verification — Vue 3.5 boolean-prop casting",
+    "detail": "The contract was DOUBLE-broken. Vue 3.5's reactive-props compiler applies Boolean CASTING to a type-only `keepDockOpen?: boolean`, so an ABSENT prop resolves to `false` (not `undefined`). The prior `computed(() => props.keepDockOpen ?? true)` therefore evaluated to `false` — the `??` never saw undefined — so even with the binding fixed, the default-true contract never armed. The fix: `withDefaults(defineProps<…>(), { keepDockOpen: true })` sets the true default at the prop level; an absent prop arms the hold, `:keep-dock-open=\"false\"` disarms it.",
+    "witness": "born-RED mount gate: with the host-native binding fix alone (before withDefaults) the pointer arm still read `acquire bail enabled=false` — the prop resolved false. withDefaults turned all 5 mount-gate arms GREEN."
+  },
+  "postFixVerified_headless": {
+    "gate": "proof:dock-hold-contract",
+    "bornRedAtHead": "4 of 5 hold-acquire arms FAIL at HEAD (data-held null after pointerdown/touch); the befitting-silent outside-dock arm passes (asserts NO held).",
+    "greenAfterFix": "5 of 5 GREEN — pointerdown on the resolved host flips data-held on BOTH dock + slider roots; window pointerup releases + clears; the hold suppresses idle-collapse past the 600ms delay; touch drag acquires through the SAME single path (no double acquire); outside-dock is a no-op.",
+    "fullSuite": "830 tests / 87 files GREEN; typecheck GREEN; build GREEN (dist/slider.js + dist/dock.js emit)."
+  },
+  "liveVisualTruth": "ORCHESTRATOR-OWNED (real browser π-lane). Recipe at docs/tranches/AX/audit/W03-visual-truth/RECIPE.md. The headless mount gate proves the binding FIRES; the π-lane proves it PAINTS (halo + substrate tier-shade through a real drag past the collapse delay, BEFORE/AFTER/DELTA over ≥3 viewports + frontend-design sign-off).",
+  "w34ConsumerLegs_readonlyRouting": {
+    "note": "Read-only routing to AX.W34 (NOT edited here; sibling-repo edits are W34's). Recorded per §Cadence step 8.",
+    "musterSignalsLayer": "muster `SignalsLayer.vue` binds `:keep-dock-open=\"true\"` on a Slider that is NOT a dock descendant in the real App.vue layout — the prop is a dead no-op + the rationale comment misdescribes the tree. ADOPTION/CLEANUP leg for W34.",
+    "bbnfPlayground": "bbnf-playground `:wrap`→`overflow=\"wrap\"` binding-verification sweep — verify the renamed binding lands (a stale `:wrap` would silently no-op). VERIFICATION leg for W34."
+  }
+}

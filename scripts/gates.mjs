@@ -99,6 +99,12 @@ export const GATES = [
         note: "AU.W8 — the reka-Tabs dock rail APG contract: role=tablist/tab + aria-selected (NOT aria-pressed), roving tabindex (Arrow/Home/End), focus-ring, keepOpen()/release() on tab focus, inactive-pane aria-hidden (8 rendered-attr assertions)",
     },
     {
+        id: "proof:dock-hold-contract",
+        cmd: "proof:dock-hold-contract",
+        tags: ["local", "ci"],
+        note: "AX.W03 — the keepDockOpen host-native hold. Deterministic browser-FREE @vue/test-utils MOUNT gate: mounts <GlassDock><Slider/></GlassDock>, dispatches a REAL pointerdown on the RESOLVED slider host, asserts the provided DockContext.keepOpen() fired + data-held flips on the dock AND slider roots, window pointerup releases + clears, the hold suppresses the idle-collapse past the delay, and a touch drag acquires through the SAME single path (no second parallel acquire). Born-RED at HEAD (the @pointerdown template binding is DROPPED across the reka SliderRoot Slot/forwardRef boundary — inheritAttrs:false — AND a type-only boolean keepDockOpen prop defaulted false). GREEN after useDockHold attaches native host listeners + withDefaults arms the prop. Replaces the fail-open detectSliderHold SKIP arm of proof:dock-layering-polish. Bite: revert Slider.vue to the @pointerdown template binding → the host-pointerdown acquire reddens.",
+    },
+    {
         id: "proof:dock-vocabulary",
         cmd: "proof:dock-vocabulary",
         tags: ["local", "ci"],
