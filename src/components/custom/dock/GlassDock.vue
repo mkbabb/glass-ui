@@ -249,6 +249,23 @@ const outerActiveLayer = computed<"full" | "summary">(() =>
     visualExpanded.value ? "full" : "summary",
 );
 const outerLayerAxis = computed<"horizontal" | "vertical">(() => "horizontal");
+/* AX.W01 redress — the OUTER collapse is a CLIP-APERTURE morph. Both panes
+   (`--full` + `--summary`) are grid-stacked behind the root clip; the ACTIVE pane
+   is in-flow (`position:relative; width:max-content`) and the INACTIVE one is
+   `position:absolute; inset:0` (stretched, out of flow). `.dock-layers` therefore
+   shrink-wraps the ACTIVE pane — so its size differs between collapsed/expanded
+   only AFTER Vue flushes the `.collapsed`↔`.expanded` class flip that swaps which
+   pane is active. The live bug was `useLayerTransition` reading the from- and
+   to-size in ONE synchronous tick BEFORE that flush, seeing the same active pane,
+   hitting the from≈to early-return, and FREEZING `--dock-morph-t` at 0 (the box
+   then snapped via the class layout). The rebuilt driver pins the container at
+   `from` immediately (box holds, child stagger holds at t=0) and measures `to` one
+   rAF later — post-flush — when the container shrink-wraps to the TARGET pane's
+   natural width. The `display:inline-flex` root shrink-wraps `.dock-layers`, so the
+   BOX is the growing/shrinking aperture; size + padding + radius + color + child
+   stagger all co-morph off the one `--dock-morph-t` scalar. (The inner
+   `<DockLayerGroup>` pane-swap shares the SAME pane topology and so runs the SAME
+   driver unchanged — no per-call mode needed.) */
 const { onTransitionEnd: onLayersTransitionEnd } = useLayerTransition({
     containerEl: layersEl,
     activeLayer: outerActiveLayer,

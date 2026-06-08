@@ -118,6 +118,55 @@ export function useLayerTransition(
         disposeSpring();
     }
 
+    /**
+     * Arm the morph span + drive ONE SpringProgress 0→1. The box size, padding,
+     * radius, color, AND child stagger ALL read `--dock-morph-t` off this one
+     * scalar (dock.css picks the morph axis off the orientation class). The scalar
+     * always re-bases to 0 on the NEW [from,to] span (the container's current px IS
+     * the new span's origin); a retarget carries the inherited velocity through the
+     * re-seat so the trajectory stays continuous (the analytic re-seat keyframes.js
+     * owns); a fresh swap starts at rest. `respectReducedMotion` jumps the scalar
+     * 0→1 in one frame, so the chrome snaps under PRM.
+     */
+    function armSpring(
+        el: HTMLElement,
+        root: HTMLElement,
+        id: number,
+        fromSize: number,
+        toSize: number,
+        inheritedVelocity: number,
+        live: SpringProgress | null,
+    ) {
+        // No span — a same-size swap, nothing to morph. Land flush at rest.
+        if (Math.abs(toSize - fromSize) < 0.5) {
+            settle(el, root);
+            return;
+        }
+        el.style.setProperty("--dock-morph-from", `${fromSize}px`);
+        el.style.setProperty("--dock-morph-to", `${toSize}px`);
+        root.style.setProperty("--dock-morph-t", "0");
+        root.setAttribute("data-morphing", "");
+
+        if (!live) {
+            disposeSpring();
+            spring = new SpringProgress({
+                response: DOCK_SPRING.response,
+                dampingFraction: DOCK_SPRING.dampingFraction,
+                initial: 0,
+                respectReducedMotion: true,
+            });
+            springEl = el;
+        }
+        const activeSpring = spring!;
+        activeSpring.reset(0, inheritedVelocity);
+        activeSpring.target = 1;
+        activeSpring.play((t: number) => {
+            if (id !== transitionId) return;
+            root.style.setProperty("--dock-morph-t", `${t}`);
+            if (activeSpring.settled) settle(el, root);
+        });
+    }
+
     watch(activeLayer, (newLayer, oldLayer) => {
         if (newLayer === oldLayer) return;
 
@@ -137,65 +186,52 @@ export function useLayerTransition(
             spring !== null && springEl === el && !spring.settled ? spring : null;
         const inheritedVelocity = live ? live.velocity : 0;
 
-        // 1. Capture the from-size. On a retarget the box is mid-morph; its painted
-        // pixel size is the live `calc(from + (to-from)*t)` — re-measuring it gives
-        // the exact px the new span must start from. On a fresh swap, measure the box.
+        // 1. Capture the from-size BEFORE the ref-swap + the morph-var clear, so it
+        // reads the live painted geometry (a retarget reads the mid-morph px; a fresh
+        // swap reads the current rest aperture/container size), not an intrinsic
+        // re-resolve.
         const fromSize = getSize(el);
 
-        // 2. Swap the layer refs SYNCHRONOUSLY (class-driven opacity flips now), then
-        // measure the new natural size off the post-swap layout in the SAME tick.
-        // The box never snaps because its CSS size reads `--dock-morph-from` (pinned
-        // to `fromSize`) until the scalar moves — ONE frame origin for the ref-swap,
-        // the measure, and the spring start (the desync the prior nextTick→rAF
-        // deferral introduced is structurally gone).
+        // 2. Swap the layer refs (this drives the crossfade classes on the next
+        // flush). The from-size is captured; arm the morph once the to-size is known.
         leavingLayer.value = oldLayer;
         currentLayer.value = newLayer;
 
-        // Measure the post-swap natural size with the morph vars cleared so CSS
-        // resolves the intrinsic size (no inline pin fighting the measurement).
-        clearMorphVars(el);
-        root.style.removeProperty("--dock-morph-t");
-        const toSize = getSize(el);
-
-        // No span — a same-size swap, nothing to morph. Land flush at rest.
-        if (Math.abs(toSize - fromSize) < 0.5) {
-            settle(el, root);
-            return;
-        }
-
-        // 3. Pin the morph span as CSS pixel vars on the morphing element and arm
-        // the clip aperture + the scalar on the root. The box size, padding, radius,
-        // color, and child stagger ALL read `--dock-morph-t` off this one scalar
-        // (dock.css; the CSS picks the morph axis off the orientation class). Set
-        // t=0 before the first frame so the box holds at `fromSize` until the
-        // spring drives it.
+        // 3. PIN the container at `from` NOW — morph vars `from=to=from`, scalar 0,
+        // `data-morphing` armed — so the box HOLDS at its current aperture (no snap)
+        // and the child stagger holds at t=0 (it reads `--dock-morph-t`). Both panes
+        // (outer collapse↔expand AND inner pane-swap) share ONE topology: the ACTIVE
+        // pane is in-flow (`position:relative; width:max-content`), the INACTIVE one
+        // is `position:absolute; inset:0` (stretched, OUT of flow). So the container
+        // shrink-wraps to whichever pane is active — and the to-size is the container
+        // shrink-wrapped to the TARGET pane, which only becomes the in-flow pane AFTER
+        // Vue flushes the `currentLayer`-driven class flip. Reading `to` in this same
+        // synchronous tick (the live bug) saw the OLD active pane → `from≈to` → the
+        // early-return froze `--dock-morph-t` at 0 → the box snapped via the class
+        // layout. Pinning here defers the measurement safely.
         el.style.setProperty("--dock-morph-from", `${fromSize}px`);
-        el.style.setProperty("--dock-morph-to", `${toSize}px`);
+        el.style.setProperty("--dock-morph-to", `${fromSize}px`);
         root.style.setProperty("--dock-morph-t", "0");
         root.setAttribute("data-morphing", "");
 
-        // 4. Drive ONE SpringProgress 0→1. The scalar always re-bases to 0 on the
-        // NEW [from,to] span (the box's current px IS the new span's origin); a
-        // retarget carries the inherited velocity through the re-seat so the
-        // trajectory stays continuous (no snap to rest — the analytic re-seat
-        // keyframes.js owns). A fresh swap starts at rest.
-        if (!live) {
-            disposeSpring();
-            spring = new SpringProgress({
-                response: DOCK_SPRING.response,
-                dampingFraction: DOCK_SPRING.dampingFraction,
-                initial: 0,
-                respectReducedMotion: true,
-            });
-            springEl = el;
-        }
-        const activeSpring = spring!;
-        activeSpring.reset(0, inheritedVelocity);
-        activeSpring.target = 1;
-        activeSpring.play((t: number) => {
+        // 4. ONE rAF later (after the class flip flushes), lift the pin for a single
+        // synchronous measurement of the now-correct shrink-wrapped to-size, then
+        // re-pin + start the spring IN THE SAME FRAME — the box never paints unpinned.
+        // The box + stagger held at t=0 through the gap, then BOTH spring off the one
+        // `--dock-morph-t` scalar: SINGLE clock. (The desync the prior nextTick→rAF
+        // FLIP suffered was a SECOND root CSS-transition clock running the box morph
+        // in parallel — deleted at W01 — NOT the deferral itself; with the box on the
+        // spring scalar alone, a one-frame measurement deferral is co-temporal by
+        // construction.)
+        requestAnimationFrame(() => {
             if (id !== transitionId) return;
-            root.style.setProperty("--dock-morph-t", `${t}`);
-            if (activeSpring.settled) settle(el, root);
+            const elNow = containerEl.value;
+            if (!elNow) return;
+            const rootNow = morphRoot(elNow);
+            clearMorphVars(elNow);
+            rootNow.style.removeProperty("--dock-morph-t");
+            const toSize = getSize(elNow);
+            armSpring(elNow, rootNow, id, fromSize, toSize, inheritedVelocity, live);
         });
     });
 
