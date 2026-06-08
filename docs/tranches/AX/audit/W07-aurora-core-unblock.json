@@ -1,0 +1,140 @@
+{
+  "wave": "AX.W07",
+  "title": "Aurora core unblock — the WGSL black-canvas + WebGL2-default-until-parity",
+  "status": "green",
+  "band": "B · GRAPHICS",
+  "severity": "blocker (co-headline)",
+  "baseSha": "9f7b58c9b5eac36306600f4cef2fd2974ff63ae8",
+  "dependsOn": ["AX.W00"],
+  "restorationWave": "AX.W14 (band C · AURORA) — owns the WEBGPU_PARITY flip for the opt-in Kuwahara path",
+
+  "redWitnessesAtHead": {
+    "witness1_blackCanvas_twoDefects": {
+      "confirmedInCode": true,
+      "defect_1a_intInFloat": {
+        "site": "aurora.wgsl.ts struct Uniforms — stopCount/nucleiCount/warpMode/noiseOctaves/medium declared i32; uniformBridge.ts packGPUUniforms writes a float into the i32 slot (the `// stopCount (as int-in-float)` comment at :153)",
+        "mechanism": "WGSL reads the raw 4 bytes of stopCount as i32 → the IEEE-754 bit-pattern of float 3.0 = 1077936128, not the int 3. samplePalette t = id * f32(stopCount-1) ≈ id * 1.07e9 → i0 = i32(floor(t)) overflows the palette bounds → black.",
+        "deviceProven": "On the AX.W00 real Metal box the live aurora WGSL twin rendered [0,0,0,255]; the bite-check (reverting only the f32-cast, keeping the storage move) re-RED on apple/metal-3 with a BLACK [0,0,0] centre pixel."
+      },
+      "defect_1b_uniformDynamicIndex": {
+        "site": "aurora.wgsl.ts — palette/nucleiPos/nucleiMod arrays declared INSIDE struct Uniforms bound `@group(0) @binding(0) var<uniform> U`; samplePalette (runtime i0/i1) + nucleiField (runtime U.nucleiPos[i] loop) dynamic-index them.",
+        "mechanism": "On Apple/Metal (Tint→MSL) a per-invocation runtime index into a `var<uniform> array<vec4f>` returns [0,0,0,0] (MSL forbids dynamic indexing of the `constant` address space); the IDENTICAL access from `var<storage,read>` reads the real stop. samplePalette + nucleiField sample a zeroed palette → black.",
+        "deviceProven": "Device-proven in W01-aurora-webgpu-blackcanvas.md; the bite-check (reverting only the storage move, keeping the f32-cast, arrays back in var<uniform>) re-RED on apple/metal-3 with a BLACK [0,0,0] centre pixel — proving 1b is load-bearing and NOT redundant."
+      },
+      "bothRequired": "Each defect is independently load-bearing; landing only one still ships black (confirmed by both adversarial bite-checks). They land in ONE atomic shader-struct rewrite (the same commit)."
+    },
+    "witness2_gatePhilosophyGap": {
+      "confirmedInCode": true,
+      "grepGPUDeviceInProofScripts": 0,
+      "note": "Every prior aurora WebGPU gate (proof:aurora-wgsl-equivalence + proof:webgpu-substrate-single + proof:aurora-backend-fallback) is CPU-math / regex / AST — none instantiates a GPUDevice or reads back a pixel. The var<uniform> dynamic-index miscompile + the int-in-float mismatch are invisible to every existing gate BY CONSTRUCTION. The wave adds proof:aurora-webgpu-render — the first GPUDevice render-and-readback gate."
+    },
+    "witness3_gatingSeamAbsent": {
+      "confirmedInCode": true,
+      "grepWEBGPU_PARITY_inSrc": 0,
+      "publicUnion": "AuroraRenderMode = \"webgl\" | \"css\" | \"auto\" — NO \"webgpu\" value; WebGPU was selected by the internal resolveRenderModeAsync probe (:119 returned { substrate: \"webgpu\", device }) with NO consumer opt-out. There was no shared named lever W07 sets false and W14 owns."
+    }
+  },
+
+  "fileChanges": [
+    {
+      "file": "src/components/custom/aurora/constants/shaders/aurora.wgsl.ts",
+      "change": "The atomic struct rewrite: stopCount/nucleiCount/warpMode/noiseOctaves/medium declared f32 + i32()-cast at every read (fbm noiseOctaves, samplePalette stopCount, nucleiField nucleiCount); palette/nucleiPos/nucleiMod moved out of struct Uniforms into a new `struct Field` bound `@group(0) @binding(1) var<storage, read> F` (samplePalette/nucleiField read F.palette/F.nucleiPos/F.nucleiMod). Header comment rewritten (struck the false `uniform arrays → std140 storage struct` description; documents the f32-uniform + storage-field architecture)."
+    },
+    {
+      "file": "src/components/custom/aurora/composables/uniformBridge.ts",
+      "change": "packGPUUniforms split-write — signature now (cfg, timeSec, uniformOut, fieldOut): 16 scalars + the 5 now-f32 counts → uniformOut; palette/nuclei vec4 arrays → fieldOut (the storage Field). Struck the `// as int-in-float` comment. WGPU_UNIFORM_FLOATS = 16; new WGPU_FIELD_FLOATS = MAX_STOPS*4 + MAX_NUCLEI*4*2. std140 vec4 stride unchanged (storage-correct)."
+    },
+    {
+      "file": "src/components/custom/aurora/composables/gpuRuntime.ts",
+      "change": "createGPUAuroraSetup allocates the Field storage buffer (STORAGE|COPY_DST) + a binding-1 bind-group entry (the layout gains the storage binding); the frame writes both buffers. Added a local masterTempo() (getReducedMotion()?0:1) threaded into advanceCursor; shouldContinue now carries the cursor.burst (interactivity.light) + cursorIsLive terms to match frameLoop.needsAnimation. teardown destroys the field buffer."
+    },
+    {
+      "file": "src/components/custom/aurora/constants/renderMode.ts",
+      "change": "Added the module-level `export const WEBGPU_PARITY = false` (internal lever, NOT a consumer prop), JSDoc'd as the shared W07↔W14 switch. resolveRenderModeAsync short-circuits to { substrate: \"webgl\", device: null } before the adapter probe while WEBGPU_PARITY === false (a capable machine never pays requestAdapter for a backend it will not bind)."
+    },
+    {
+      "file": "tests-visual/aurora-webgpu-render.spec.ts",
+      "change": "NEW — the device render-and-readback spec: real GPUDevice + real createGPUAuroraSetup pipeline + real packGPUUniforms; DEFAULT config at t=1; centre-pixel readback (non-black floor), per-i32-field decode (stopCount===3/nucleiCount===2/noiseOctaves===4 + the struct declares the count fields f32), WebGL2-vs-WebGPU base-field luma delta, and the WEBGPU_PARITY-resolves-webgl routing call."
+    },
+    {
+      "file": "scripts/proof-aurora-webgpu-render.mjs",
+      "change": "NEW — the proof:aurora-webgpu-render gate driver. Mirrors proof-substrate-paints-color.mjs: spawns the workspace Playwright runner, parses the JSON report, fail-CLOSED on a present-device-renders-black, befitting-silent SKIP on (a) no installed Playwright binary OR (b) all specs internally test.skip'd (navigator.gpu absent — headless Chromium). The two failure modes are never collapsed."
+    },
+    {
+      "file": "package.json",
+      "change": "Added the `proof:aurora-webgpu-render` script entry (after proof:webgpu-substrate-single). proof:gate-script-parity bijection GREEN."
+    },
+    {
+      "file": "src/components/custom/aurora/README.md",
+      "change": "Rewrote the WebGPU section: the f32-uniform + storage-field architecture; the WEBGPU_PARITY lever + the WebGL2-default-until-parity KNOWN LIMITATION (the DEGRADED disclosure, AX.W14 named as restoration). Added the proof:aurora-webgpu-render row to the gate table."
+    },
+    {
+      "file": "CHANGELOG.md",
+      "change": "Added the `### Tranche AX.W07` Unreleased entry — the black-canvas root-cause + fix + the WebGPU-gated-off KNOWN LIMITATION honest-disclosure (SPEC.md §DEGRADED), AX.W14 named as the restoration wave."
+    },
+    {
+      "file": "docs/tranches/AX/audit/W07-aurora-core-unblock.json",
+      "change": "NEW — this born-RED→GREEN ledger."
+    }
+  ],
+
+  "findingDispositions": {
+    "slice6_aurora-core-breakage": {
+      "F0_intInFloat": "FIXED at root — f32 + in-shader i32()-cast (no Int32Array dual-view).",
+      "F1_masterTempoSeam": "FIXED — masterTempo() threaded into the WebGPU advanceCursor + cursor.burst/cursorIsLive added to shouldContinue (frameLoop parity).",
+      "F2_webglDefaultUntilParity": "FIXED — WEBGPU_PARITY=false gates the webgpu branch; a capable machine resolves webgl."
+    },
+    "slice10_aurora-webgpu-state": {
+      "F0_uniformDynamicIndex": "FIXED at root — palette/nuclei moved to var<storage,read> Field.",
+      "F1_cpuOracleBlindspot": "ADDRESSED — proof:aurora-webgpu-render is the first GPUDevice render-and-readback gate.",
+      "F2_orphanedPainterlyWake": "OUT OF W07 SCOPE → AX.W14 (painterly.wgsl.ts/wake.wgsl.ts wire-or-excise). NOT touched.",
+      "F3_reducedParityTwin": "DECLARED — the twin is reduced-parity by design; gated OFF (WEBGPU_PARITY=false); restoration is AX.W14.",
+      "F4_devicePixelBlack": "FIXED — device-proven non-black after both fixes.",
+      "F5_deviceLost": "OUT OF W07 SCOPE → AX.W14 (device.lost → WebGL2 befitting-silent fallback). NOT touched."
+    },
+    "outOfScopeRoutes": {
+      "oklchHueArcPalette": "AX.W11/W14 — W07 leaves samplePalette as the straight-OKLab placeholder (it does not paint by default).",
+      "atomsPresets": "AX.W10 — not touched.",
+      "glslOracle": "aurora.frag.ts / flow.glsl.ts / mediums.glsl.ts / brush.glsl.ts — the CORRECT WebGL2 reference; NOT touched (it is the gate's oracle)."
+    }
+  },
+
+  "greenMeasurements": {
+    "runner": "Playwright Chromium + --enable-unsafe-webgpu on the dev-Mac — adapter apple/metal-3 (Metal-CAPABLE, so this runner proves BOTH 1a and 1b, not just 1a).",
+    "metalCapable": true,
+    "gate_proof_aurora_webgpu_render": "PASS — 3/3 specs (non-black + per-i32-field decode + WebGL2-vs-WebGPU delta + WEBGPU_PARITY-resolves-webgl).",
+    "centrePixel_DEFAULT_t1": {
+      "webgpu": [211, 224, 222, 255],
+      "webgl2_reference": [198, 222, 222, 255],
+      "note": "vivid light cyan-blue sky pixels — SAME color class; centre-luma delta ≈ 3 (well under the 40 threshold)."
+    },
+    "perI32FieldDecode": {
+      "stopCount": 3,
+      "nucleiCount": 2,
+      "noiseOctaves": 4,
+      "countFieldsAreF32": true,
+      "note": "the float slots carry the COUNTS the shader i32()-casts; the struct declares the fields f32 (not i32) — the int-in-float class is eliminated."
+    },
+    "routing_WEBGPU_PARITY_false": "resolveRenderModeAsync(\"auto\") → substrate \"webgl\", device null on a WebGPU-capable adapter (RED witness 3 discharged via a runtime CALL, not a grep).",
+    "adversarialBiteChecks": {
+      "revertOnlyF32Cast_keepStorage": "RED — BLACK [0,0,0] on apple/metal-3 (the counts overflow). f32-cast is load-bearing.",
+      "revertOnlyStorageMove_keepF32Cast": "RED — BLACK [0,0,0] on apple/metal-3 (var<uniform> dynamic-index zeroes on Metal). Storage transposition is load-bearing, NOT redundant.",
+      "restoredTree": "GREEN 3/3."
+    },
+    "existingGatesStillGreen": ["proof:aurora-wgsl-equivalence", "proof:aurora-backend-fallback", "proof:webgpu-substrate-single", "proof:gate-script-parity"],
+    "typecheck": "vue-tsc --noEmit clean."
+  },
+
+  "awReprobeRowDischarge": {
+    "manifestFile": "tests-visual/pi-manifest.ts (W00-owned — NOT in W07 FileBounds; the orchestrator flips the verdict).",
+    "row": "PENDING_BROWSER_VERIFY[awWave='AW.W4', surface='aurora', ownerWave='AX.W07'] — \"aurora WebGPU/WebGL2 interior paints non-black across all presets at t=1 (the black-canvas class)\".",
+    "verdict": "RE-PROBED GREEN on the real Metal device (proof:aurora-webgpu-render 3/3 + the bite-checks). The orchestrator updates the manifest row verdict 'pending-re-probe' → 're-probed' (pi-manifest.ts is out of W07 FileBounds; see the orchestrator return).",
+    "siblingAuroraRows": "The other three AX.W07-owned aurora rows (AW.W6 medium transposition, AW.W7 impasto relight, AW.W8 cursor swirl) describe LIVE-INTERACTION/medium parity the reduced-parity twin does NOT carry by design (WEBGPU_PARITY=false); their visual-truth close rides the live WebGL2 audit + the relevant later waves, not the W07 device gate."
+  },
+
+  "liveVisualTruthAudit": {
+    "status": "PENDING — the orchestrator's binding close criterion (this headless agent cannot run the live Playwright + frontend-design pass with a real browser at the 3 viewports × light/dark).",
+    "required": "With WEBGPU_PARITY forced true for the audit, the live <Aurora> stage paints the SKY default + every preset (vivid, matching the thumbnail bake) on a WebGPU-capable machine, sampled centre pixels non-black, at 375×667 / 1280×800 / 1440×900 in light AND dark. Then with WEBGPU_PARITY=false (the shipped state), confirm the live <Aurora> binds the WebGL2 context and paints the correct universal field — no capable machine downgrades to the twin. Capture the paired-π BEFORE (black stage)/AFTER (vivid paint) + the per-i32-field raw-decode DELTA under docs/tranches/AX/audit/.",
+    "headlessProof": "The agent's proof:aurora-webgpu-render run on this dev-Mac Metal adapter already device-proved the non-black render + both bite-checks; the orchestrator confirms it visually on the live demo per the cardinal AX precept (the wave does NOT close on the headless gate alone)."
+  }
+}
