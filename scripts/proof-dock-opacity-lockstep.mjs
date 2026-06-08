@@ -121,24 +121,39 @@ const ACTIVE_RULE_RE =
     /\.dock-layer\.is-active\s*,\s*\.dock-layer-item-host\.is-active\s*\{/;
 
 // The pure detector. Takes the comment-stripped dock.css, returns {facts,violations}.
+//
+// AX.W45 DK7 — the lockstep target moved from a SAME-CSS-TOKEN match to a
+// SAME-SCALAR match. The prior model rode the leaving-pane opacity on a fixed-
+// duration CSS transition (`opacity var(--dock-motion-resize)`) — a SECOND clock
+// beside the live `--dock-morph-t` spring, which lingered past the velocity-
+// dependent spring settle and ghosted the leaving pane (the DK7 "laggy/delayed"
+// layer switch). The FIX drives the leaving-pane opacity off the SAME scalar the box
+// rides: `[data-morphing] .is-leaving { opacity: calc(1 - var(--dock-morph-t)) }`.
+// The settle delta is now identically 0 (opacity is a pure FUNCTION of the same `t`
+// as size + the child stagger) — ONE clock, every axis. The gate asserts the NEW
+// model: (a) the base rule has NO `opacity` transition (the scalar is the clock, not
+// a CSS timer), (b) the active pane has NO opacity authority (clip-reveal, KEPT), and
+// (c) the leaving pane fades on `calc(1 - var(--dock-morph-t))` gated on
+// `[data-morphing]` (the scalar crossfade). Re-introducing the
+// `opacity var(--dock-motion-resize)` CSS transition reds (the second-clock DK7
+// regression). The visibility hold (the a11y-006 anchor) stays the SAME.
 export function detectLockstep(dockCss) {
     const violations = [];
     const facts = {};
 
-    // (anchor) the container morph rides --dock-motion-resize (the lockstep target).
-    const morphUsesResize = /\b(?:width|height)\s+var\(--dock-motion-resize\)/.test(
-        dockCss,
-    );
-    facts.containerMorphToken = morphUsesResize
-        ? "--dock-motion-resize"
-        : "(not --dock-motion-resize)";
-    if (!morphUsesResize) {
+    // (anchor) the container morph rides the SCALAR (size = calc off --dock-morph-t).
+    const morphUsesScalar = /var\(--dock-morph-t/.test(dockCss);
+    facts.containerMorphToken = morphUsesScalar
+        ? "--dock-morph-t (single scalar)"
+        : "(no --dock-morph-t scalar)";
+    if (!morphUsesScalar) {
         violations.push(
-            "the dock container morph (width/height) does not ride --dock-motion-resize — the lockstep anchor is missing",
+            "the dock box morph does not read the --dock-morph-t scalar — the single-clock anchor is missing",
         );
     }
 
-    // (base/inactive) opacity rides --dock-motion-resize; visibility hold → --duration-normal.
+    // (base) — the base rule carries the visibility hold but NO opacity transition
+    // (the scalar is the opacity clock now, not a CSS timer).
     const baseBody = matchRuleBody(dockCss, BASE_RULE_RE);
     if (baseBody === null) {
         violations.push(
@@ -150,34 +165,23 @@ export function detectLockstep(dockCss) {
         if (!t) {
             violations.push("the base layer rule declares no `transition`");
         } else {
-            if (/opacity\s+var\(--dock-motion-fast\)/.test(t)) {
+            // The base rule must NOT carry an `opacity var(…)` CSS transition — that
+            // is the DK7 second-clock the scalar replaces.
+            if (/opacity\s+var\(/.test(t)) {
                 violations.push(
-                    `the base layer OPACITY still rides --dock-motion-fast (the 0.2s desync) — must ride --dock-motion-resize: \`${t}\``,
-                );
-            }
-            if (!/opacity\s+var\(--dock-motion-resize\)/.test(t)) {
-                violations.push(
-                    `the base layer opacity must ride --dock-motion-resize (lockstep with the morph): \`${t}\``,
-                );
-            }
-            if (/visibility\s+0s\s+linear\s+var\(--duration-fast\)/.test(t)) {
-                violations.push(
-                    `the base layer VISIBILITY hold still uses --duration-fast — must extend to --duration-normal (matched to the longer fade): \`${t}\``,
+                    `the base layer must NOT carry an \`opacity var(…)\` CSS transition (DK7: opacity rides the --dock-morph-t scalar, not a second CSS clock): \`${t}\``,
                 );
             }
             if (!/visibility\s+0s\s+linear\s+var\(--duration-normal\)/.test(t)) {
                 violations.push(
-                    `the base layer visibility hold must be \`0s linear var(--duration-normal)\`: \`${t}\``,
+                    `the base layer visibility hold must be \`0s linear var(--duration-normal)\` (the a11y-006 hit-test anchor): \`${t}\``,
                 );
             }
         }
     }
 
     // (active, AW.W2 clip-reveal) — the active pane has NO opacity transition arm
-    // (statically opacity:1, REVEALED by the clip aperture, never faded), and
-    // visibility stays IMMEDIATE (`visibility 0s`, no deferred delay). A
-    // re-introduced `opacity var(--dock-motion-resize)` here would regress the
-    // clip-reveal contract (a second opacity authority on the active pane).
+    // (statically opacity:1, REVEALED by the clip aperture), visibility IMMEDIATE.
     const activeBody = matchRuleBody(dockCss, ACTIVE_RULE_RE);
     if (activeBody === null) {
         violations.push(
@@ -191,49 +195,53 @@ export function detectLockstep(dockCss) {
         } else {
             if (/opacity\s+var\(/.test(t)) {
                 violations.push(
-                    `the active layer must NOT animate opacity (AW.W2 clip-reveal: it is statically opacity:1, REVEALED by the aperture). The opacity transition arm must be deleted: \`${t}\``,
+                    `the active layer must NOT animate opacity (AW.W2 clip-reveal: it is statically opacity:1, REVEALED by the aperture): \`${t}\``,
                 );
             }
-            // The active layer must show IMMEDIATELY (`visibility 0s`, no deferred delay) — the :434 rule.
             if (!/visibility\s+0s\s*(?:,|$)/.test(t)) {
                 violations.push(
-                    `the active layer visibility must stay IMMEDIATE (\`visibility 0s\`, no deferred delay) per the :434 governing rule: \`${t}\``,
+                    `the active layer visibility must stay IMMEDIATE (\`visibility 0s\`, no deferred delay): \`${t}\``,
                 );
             }
         }
     }
 
-    // (leaving, AW.W2) — the leaving pane is the SOLE surviving opacity animation
-    // (the thin polish). It carries no own `transition` (it inherits the base
-    // rule's `opacity var(--dock-motion-resize)`), so the lockstep anchor is the
-    // base rule above. Assert the leaving-pane rule EXISTS and is opacity:0 +
-    // painted (visibility:visible) so the base-rule fade actually runs on it.
+    // (leaving on the scalar, AX.W45 DK7) — the leaving pane fades on
+    // `calc(1 - var(--dock-morph-t))` gated on `[data-morphing]` (the single-clock
+    // crossfade). Assert the scalar-fade rule exists; the resting `.is-leaving` rule
+    // keeps `opacity:0` (the settled endpoint) + painted (visibility:visible).
+    const leavingScalarFade =
+        /\[data-morphing\][^{]*\.is-leaving[^{]*\{[^}]*opacity\s*:\s*calc\(\s*1\s*-\s*var\(--dock-morph-t/.test(
+            dockCss,
+        );
+    facts.leavingFadesOnScalar = leavingScalarFade;
+    if (!leavingScalarFade) {
+        violations.push(
+            "the leaving pane must fade on the scalar — `.glass-dock[data-morphing] …is-leaving { opacity: calc(1 - var(--dock-morph-t)) }` (the DK7 single-clock crossfade) is missing",
+        );
+    }
+
     const leavingBody = matchRuleBody(
         dockCss,
         /\.dock-layer-item-host\.is-leaving\s*\{/,
     );
     if (leavingBody === null) {
         violations.push(
-            "dock.css: the `.dock-layer-item-host.is-leaving` rule is missing — the leaving-pane fade (the sole opacity animation under clip-reveal) is gone",
+            "dock.css: the `.dock-layer-item-host.is-leaving` rule is missing — the resting leaving endpoint is gone",
         );
-    } else {
-        facts.leavingFadesOnBaseToken = /opacity\s+var\(--dock-motion-resize\)/.test(
-            transitionValue(baseBody) ?? "",
+    } else if (/opacity\s*:\s*0/.test(leavingBody) === false) {
+        violations.push(
+            "the resting leaving pane must target opacity:0 (the settled endpoint of the scalar fade)",
         );
-        if (/opacity\s*:\s*0/.test(leavingBody) === false) {
-            violations.push(
-                "the leaving pane must target opacity:0 (it fades out as the aperture reveals the active content)",
-            );
-        }
     }
 
-    // AW.W2 lockstep = the morph rides --dock-motion-resize AND the leaving fade
-    // (the base-rule opacity transition the leaving pane inherits) names it too,
-    // AND the active pane has NO opacity transition (it is revealed, not faded).
+    // AX.W45 lockstep = the box reads the scalar AND the leaving pane fades on the
+    // SAME scalar AND neither base nor active carries an `opacity var(…)` CSS clock.
     facts.lockstep =
-        morphUsesResize &&
+        morphUsesScalar &&
+        leavingScalarFade &&
         baseBody !== null &&
-        /opacity\s+var\(--dock-motion-resize\)/.test(transitionValue(baseBody) ?? "") &&
+        !/opacity\s+var\(/.test(transitionValue(baseBody) ?? "") &&
         activeBody !== null &&
         !/opacity\s+var\(/.test(transitionValue(activeBody) ?? "");
 

@@ -10,6 +10,7 @@ import {
     DockIconButton,
     DockDropdownTrigger,
     DockSelectTrigger,
+    DockSeparator,
     DockBackgroundToggle,
 } from "../../../src/components/custom/dock";
 import { HoverPopover } from "../../../src/components/custom/hover-popover";
@@ -82,14 +83,16 @@ function togglePlay() {
             </p>
             <div class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
                 <GlassDock>
-                    <DockIconButton aria-label="Home"><Home class="h-4 w-4" /></DockIconButton>
+                    <!-- AX.W45 — Home is a PERSISTENT control: authored ONCE in
+                         #persistent, it stays in-flow + visible in BOTH collapsed and
+                         expanded (no #collapsed-slot duplication). -->
+                    <template #persistent>
+                        <DockIconButton aria-label="Home"><Home class="h-4 w-4" /></DockIconButton>
+                    </template>
                     <DockIconButton aria-label="Search"><Search class="h-4 w-4" /></DockIconButton>
-                    <div class="dock-separator" />
+                    <DockSeparator />
                     <DockIconButton aria-label="Notifications"><Bell class="h-4 w-4" /></DockIconButton>
                     <DockIconButton aria-label="Settings"><Settings class="h-4 w-4" /></DockIconButton>
-                    <template #collapsed>
-                        <Home class="h-4 w-4" />
-                    </template>
                 </GlassDock>
             </div>
         </section>
@@ -108,7 +111,7 @@ function togglePlay() {
                         <Play v-else class="h-4 w-4" />
                     </DockIconButton>
                     <DockIconButton aria-label="Next"><SkipForward class="h-4 w-4" /></DockIconButton>
-                    <div class="dock-separator" />
+                    <DockSeparator />
                     <span class="px-2 text-xs text-muted-foreground tabular-nums max-w-36 truncate">
                         {{ track }}
                     </span>
@@ -140,7 +143,7 @@ function togglePlay() {
                         </SelectContent>
                     </Select>
 
-                    <div class="dock-separator" />
+                    <DockSeparator />
 
                     <DropdownMenu>
                         <DockDropdownTrigger
@@ -221,7 +224,7 @@ function togglePlay() {
                         </template>
                     </HoverPopover>
 
-                    <div class="dock-separator" />
+                    <DockSeparator />
 
                     <HoverPopover side="bottom" align="center" keep-dock-open>
                         <template #trigger>

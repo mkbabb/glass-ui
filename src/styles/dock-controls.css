@@ -95,10 +95,14 @@
            hover fill carries the affordance without a second catch-light, and
            dropping it also removes the `:not(:focus-visible)` specular-vs-ring
            juggle. */
+        /* AX.W45 DK2 — the hover reads the FAMILY token `--dock-control-hover-bg`
+           (the per-control `--dock-icon-hover-bg` still wins if a consumer set it),
+           so the whole dock-control family shares ONE glass-translucent hover fill.
+           One source per state across icon/tab/picker (no four-vocabulary drift). */
         &:hover:not(:disabled) {
             background: var(
                 --dock-icon-hover-bg,
-                color-mix(in srgb, var(--card) 55%, transparent)
+                var(--dock-control-hover-bg)
             );
             color: var(--btn-hover-color, var(--foreground));
             scale: var(--scale-hover-dock);
@@ -133,6 +137,19 @@
        `.dock-icon-button` rule (it carries the focus-ring + active-shadow fade
        since AX.W09 retired the hover `--glass-highlight` specular), so no
        per-state transition override is needed. */
+
+    /* AX.W45 D15 — LIBRARY GLYPH OWNERSHIP. The dock icon-button now sizes its glyph
+       (mirroring `.dark-mode-toggle-button > svg`), so the glyph scales WITH the box
+       on the `--dock-scale` multiplier instead of swimming at a fixed consumer size.
+       `--dock-icon-glyph: calc(1.25rem * var(--dock-scale))` (tokens.css) rides the
+       multiplier — at 1.5× the glyph is 30px in a 60px box, the desktop proportion.
+       A consumer passing an explicit lucide size class still WINS (utility layer >
+       component layer) — a DEFAULT, not a ceiling, matching the `.dock-tab-button`
+       font-size precedent. */
+    .dock-icon-button > svg {
+        width: var(--dock-icon-glyph, 1.25rem);
+        height: var(--dock-icon-glyph, 1.25rem);
+    }
 
     .dock-icon-button--compact {
         width: var(--dock-compact-control-size, auto);
@@ -244,8 +261,11 @@
             /* AT.W7-dock-b — press micro-feedback spring (transform-scoped). */ scale
                 var(--dock-press-spring);
 
+        /* AX.W45 DK2 — converged onto the FAMILY hover/active token pair (the
+           surface-tint-8/10 ladder it spoke is ≈ the same intent — glass-translucent
+           foreground-over-transparent). ONE grammar across icon/tab/picker. */
         &:hover:not(:disabled) {
-            background: var(--surface-tint-8);
+            background: var(--dock-control-hover-bg);
             color: var(--foreground);
         }
 
@@ -261,7 +281,7 @@
            group in dock.css. */
 
         &:is(.is-active, .active, [aria-current="page"], [aria-pressed="true"]) {
-            background: var(--surface-tint-10);
+            background: var(--dock-control-active-bg);
             color: var(--foreground);
         }
     }
@@ -415,9 +435,16 @@
             opacity var(--dock-motion-fast);
     }
 
+    /* AX.W45 DK2 — the pickers move OFF the opaque `--muted` flat plate onto the
+       glass-translucent FAMILY hover token (the dock substrate shows through, not a
+       solid cream rectangle over the glass — the loudest "not right" tell). hover ≠
+       open now: the active/open rule below reads `--dock-control-active-bg` (a tint
+       LADDER step above hover), so an OPEN dropdown reads distinctly from a merely-
+       hovered one (paired with the chevron flip). ONE source per state, glass-aware
+       across the whole dock-control family. */
     .dock-select-trigger:hover:not(:disabled),
     .dock-dropdown-trigger:hover:not(:disabled) {
-        background: var(--muted);
+        background: var(--dock-control-hover-bg);
         color: var(--btn-hover-color, var(--foreground));
     }
 
@@ -461,7 +488,11 @@
         [aria-expanded="true"],
         [aria-pressed="true"]
     ) {
-        background: var(--muted);
+        /* AX.W45 DK2 — the OPEN affordance: a translucent active fill a ladder step
+           above hover (NOT the opaque `--muted`, NOT byte-identical to hover). OPEN =
+           (chevron up + this active fill); HOVER = (the lighter hover fill, chevron
+           down) — the smooth glass-aware four-state read the picker lacked. */
+        background: var(--dock-control-active-bg);
         color: var(--foreground);
     }
 
@@ -482,18 +513,17 @@
         rotate: 180deg;
     }
 
-    /* O.W6 Lane D — Touch-target floor (speedtest AC.W6 F2.AA-03 / WCAG
-       2.5.5), button-level half. The dock-width-math half (the
-       `.glass-dock[data-density]` `--dock-control-size` lift) STAYS in dock.css
-       (shell / width-math). This per-button floor reaches a STANDALONE
-       DockIconButton (a routed settings gear, no dock wrapper) that reads the
-       bare `--size-icon-btn` and would otherwise fall below the 44px WCAG
-       target. It holds the touch box regardless of ancestry; the in-dock
-       `.glass-dock[data-density]` rule is more specific and also reserves the
-       slot in the dock's width-math. Compact buttons opt out — they are
-       auto-sized affordances, not primary targets. */
+    /* AX.W45 D15 — coarse-pointer touch floor, button-level half. The IN-DOCK floor
+       is subsumed into the `--dock-scale` multiplier + the `max(…, 44px)` clamp in
+       the dock.css density cascade (the in-dock control-size grows ~1.5× past the
+       44px target, the clamp guarantees the floor even below 1.0× scale). This
+       per-button rule is the STANDALONE half: a DockIconButton with NO `.glass-dock`
+       ancestor (a routed gear) has no density cascade lifting its size, so it keeps
+       the explicit `min-{block,inline}-size` floor. Scoped `:not(:where(.glass-dock
+       *))` so it does NOT double-stamp on an in-dock button (the cascade owns that —
+       one path per surface, no two-floor). Compact buttons opt out. */
     @media (pointer: coarse) {
-        .dock-icon-button:not(.dock-icon-button--compact) {
+        .dock-icon-button:not(.dock-icon-button--compact):not(:where(.glass-dock *)) {
             min-block-size: var(--dock-touch-target, 2.75rem);
             min-inline-size: var(--dock-touch-target, 2.75rem);
         }

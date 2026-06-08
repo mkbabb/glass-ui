@@ -1,0 +1,93 @@
+{
+  "wave": "AX.W45",
+  "title": "Dock three-region morph + H/V parity + --dock-scale mobile multiplier + glyph ownership + <DockSeparator> + the DK-band folds (DK1/DK2/DK4/DK5/DK7/DK8)",
+  "base": "c72d2ac",
+  "status": "DEV-COMPLETE (headless self-gated; live π-lane visual-truth + timing TUNE owned by the orchestrator — DK1 collapse-icon delay + DK7 layer-switch lag are the headline live checks)",
+  "bornRed": {
+    "gate": "proof:dock-region-model",
+    "violationsAtBase": 19,
+    "witnesses": {
+      "1_persistentRegion": "GlassDock.vue emitted exactly dock-layer--full + dock-layer--summary (binary crossfade, no #persistent slot); the demo hand-duplicated <Home> into #default AND #collapsed (drift-prone, not a contract)",
+      "2_hvParity": "dock.css .glass-dock.vertical hardcoded `gap: 0.25rem` + read the density-blind `--dock-vertical-padding` — the density axis was DEAD on the vertical dock",
+      "3_dockScale": "two coarse FLOOR blocks (dock.css `--dock-control-size: var(--dock-touch-target)` + dock-controls.css per-button `min-{block,inline}-size`); no --dock-scale; the box snapped to 44px while glyph/pad stayed desktop-scale",
+      "4_glyphOwnership": "no `.dock-icon-button > svg` rule anywhere (the only `> svg` was on .dark-mode-toggle-button); the glyph size was consumer-owned — the library could not scale it on mobile",
+      "5_dockSeparator": "no DockSeparator export; `.dock-separator` was a fixed VERTICAL 1px hairline (axis-blind — a 1px sliver in a column dock, a single-cell sliver in a grid dock); 7 raw `<div class=dock-separator>` demo sites",
+      "6_dk2FourState": "select/dropdown hover AND active both `var(--muted)` (opaque + byte-identical — an open picker read like a hovered one); four controls, four fill vocabularies",
+      "7_dk8Rail": "no `--dock-layer-rail-bg` (bare bordered gutter); the reka TabsIndicator traveled X-only with `top:0` — on the DEFAULT column rail it pinned at the top tab and never reached the active one below"
+    }
+  },
+  "fix": {
+    "1_persistentRegion": "GlassDock.vue — a `#persistent` slot region (`.dock-persistent` div guarded by `$slots.persistent`) is a root flex SIBLING of the morph-region, in-flow in BOTH collapsed AND expanded, NEVER :inert, NEVER a crossfade pane, NEVER a registerGroup morph target. The iOS Now-Playing/Stage-Manager idiom done STRUCTURALLY. dock.css `.dock-persistent` layout rules (row in a horizontal dock, column in a vertical dock) + the `+ .dock-layers` gap. The demo <Home> authored ONCE in #persistent (the both-slots duplication retired).",
+    "2_hvParity": "dock.css — DELETE the hardcoded `gap: 0.25rem` + the `--dock-vertical-padding` override; route `.glass-dock.vertical` through `var(--dock-layer-gap)` + `var(--dock-padding-block)` (the SAME density cascade the horizontal dock tunes). density=spacious now paints a LARGER gap than compact on BOTH axes.",
+    "3_dockScale": "tokens.css §10 — mint `--dock-scale: 1` (identity) + `--dock-mobile-scale: 1.5` (public default). The whole `.glass-dock[data-density]` cascade re-expressed as `calc(<base> * var(--dock-scale))`; the control-size carries an INNER `max(calc(…), var(--dock-control-floor, 0px))` WCAG clamp. ONE `@media (pointer: coarse)` block sets `--dock-scale: var(--dock-mobile-scale, 1.5)` + `--dock-control-floor: var(--dock-touch-target)` — every axis grows ~1.5× in lockstep; the 44px floor survives as a CLAMP (a consumer dialing scale below 1.0 still floors at 44px). The two prior floor blocks SUBSUMED; the standalone per-button floor scoped `:not(:where(.glass-dock *))` (standalone-only).",
+    "4_glyphOwnership": "dock-controls.css — `.dock-icon-button > svg { width/height: var(--dock-icon-glyph, 1.25rem) }` (mirroring .dark-mode-toggle-button); tokens.css `--dock-icon-glyph: calc(1.25rem * var(--dock-scale))` so the glyph rides the multiplier. A consumer-passed explicit size class still WINS (utility > component layer).",
+    "5_dockSeparator": "DockSeparator.vue — a thin oriented <div> reading orientation/layout via useOptionalDockContext, role=separator + aria-orientation. dock.css paints PERPENDICULAR to the layout axis: vertical hairline (row dock), horizontal rule (`.glass-dock.vertical .dock-separator { height: 1px }`, column dock), full-row section break (`.glass-dock.layout-grid .dock-separator { grid-column: 1 / -1 }`, grid dock). Exported from dock/index.ts; 7 demo sites migrated; DockLayout type added to DockContext.",
+    "DK1_collapseIcon": "dock.css — the `--summary` pane is the INCOMING pane on collapse; `.glass-dock[data-morphing] .dock-layer--summary { --dock-expand-t: var(--dock-morph-t) }` keys its content reveal to the incoming-ness (0→1) so the collapsed glyph appears WITH the pill (not faded OUT then popped in at settle). The stagger window narrowed 0.55→0.4 (last detail child finishes at 0.80 of the morph, not 0.95). The #persistent region front-loads the always-visible glyph structurally.",
+    "DK7_layerLag": "dock.css — the leaving-pane opacity drives off the SAME `--dock-morph-t` scalar the box rides: `.glass-dock[data-morphing] .is-leaving { opacity: calc(1 - var(--dock-morph-t)) }`. The prior fixed-duration `opacity var(--dock-motion-resize)` CSS transition (a SECOND clock that lingered past the velocity-dependent spring settle and ghosted) is DELETED. ONE clock, every axis — the W01/W02 single-scalar thesis FINISHED for opacity. The base rule keeps ONLY the visibility hold (the a11y-006 hit-test anchor).",
+    "DK2_fourState": "tokens.css — mint `--dock-control-hover-bg` (card 55%, glass-translucent) + `--dock-control-active-bg` (surface-tint-12, a ladder step above hover). Re-point `--dock-active-bg` off `--muted` onto `--dock-control-active-bg`. dock-controls.css routes icon/tab/select/dropdown through the pair; the pickers' hover ≠ active (paired with the chevron flip) — the smooth glass-aware four-state read.",
+    "DK4_gridAlign": "dock.css — `.glass-dock.layout-grid .dock-layer--full { place-items: center }` (the grid items were inline-start). `--dock-tile-min` routed into the density cascade as `calc(--dock-control-size + --dock-tile-pad)` so the tile scales WITH the control + glyph (a precondition for --dock-scale composing with the grid).",
+    "DK8_rail": "tokens.css — mint `--dock-layer-rail-{bg,hover,active}`. dock.css — the rail gets a quiet plate; the indicator is AXIS-AWARE (default translateY for the column rail, a `.vertical`-group translateX override). DockLayerGroup.vue threads the rail's VISUAL axis (perpendicular to the group axis) into `<Tabs :orientation>` so reka computes the correct position var; the a11y keyboard follows orientation (Up/Down for the column rail, the a11y test updated)."
+  },
+  "filesChanged": [
+    "src/components/custom/dock/GlassDock.vue",
+    "src/components/custom/dock/DockSeparator.vue (NEW)",
+    "src/components/custom/dock/DockLayerGroup.vue",
+    "src/components/custom/dock/index.ts",
+    "src/components/custom/dock/composables/dockContext.ts",
+    "src/styles/dock.css",
+    "src/styles/dock-controls.css",
+    "src/styles/tokens.css",
+    "scripts/proof-dock-region-model.mjs (NEW)",
+    "scripts/proof-dock-opacity-lockstep.mjs (re-authored to the scalar model)",
+    "scripts/gates.mjs (manifest row)",
+    "package.json (proof:dock-region-model registration)",
+    "tests/components/custom/dock/DockLayerRail.a11y.test.ts (ArrowDown for the column rail)",
+    "tests/components/custom/hover-popover/HoverPopover.model.test.ts (DockContext.layout)",
+    "tests/public-surface.spec.ts (DockSeparator export)",
+    "demo/stories/navigation/dock.vue",
+    "demo/stories/navigation/dock-layers.vue",
+    "demo/stories/compositions/dock-with-slider.vue"
+  ],
+  "selfGates": {
+    "typecheck": "GREEN (vue-tsc --noEmit)",
+    "build": "GREEN (vite + vue-tsc dts emit; dock.js 25.42 kB; the /styles bundle carries the W45 dock.css/dock-controls.css/tokens.css rules — verified dock-persistent x5, dock-scale x49, place-items, grid section-break, axis-aware indicator, glyph ownership in dist/styles)",
+    "test (FULL)": "GREEN (857 tests / 91 files; incl. dock suite + the public-surface DockSeparator export sweep + dock-hold-contract + HoverPopover.model)",
+    "proof:dock-region-model (NEW, device-free source arm)": "GREEN (born-RED at c72d2ac with 19 violations; GREEN on the patched tree)",
+    "proof:dock-animation-live": "GREEN (--dock-morph-t 26 rising frames; box 24; width/scalar onset 0ms; leaving child opacity moves 5 frames — the scalar-driven fade in lockstep; token peak 1.045 <= 1.051)",
+    "proof:dock-orchestrator-single": "GREEN (engine count 1; box/scalar onset 0ms; stack/scalar onset 0ms — one clock; the persistent region is NOT a morph target)",
+    "proof:dock-a11y-contract": "GREEN (9 tests; the rail keyboard is ArrowDown for the column rail per APG — orientation-following)",
+    "proof:dock-opacity-lockstep (re-authored)": "GREEN (the lockstep is now a SAME-SCALAR match: the leaving pane fades on calc(1 - --dock-morph-t); neither base nor active carries an opacity var() CSS clock)",
+    "proof:dock-vocabulary": "GREEN",
+    "proof:dock-css-split": "GREEN",
+    "proof:dock-wrap-content-driven": "GREEN",
+    "proof:dock-hold-contract": "GREEN",
+    "proof:gate-script-parity": "GREEN (proof-dock-region-model.mjs registered in package.json + gates.mjs; 0 new orphans)",
+    "proof:resolution": "GREEN (contract-v2 satisfied; siblings registry-default-skip)",
+    "verify-export-types": "GREEN (all subpath dts resolve; DockSeparator on /dock)",
+    "proof:dock-clip-reveal / dock-layering-polish / dock-big-dock": "SKIP (pure live-Playwright; befitting-silent device-absence, exit 0 — the orchestrator runs the live arms)"
+  },
+  "liveArmOwed": {
+    "owner": "orchestrator (π-lane visual-truth + magnitude TUNE)",
+    "headlineChecks": [
+      "DK1 — the collapsed/shrunken icon appears WITH the pill on collapse (no blank-center delay). VERIFY: drive a real hover→collapse on /navigation/dock #1; rAF-sample the #persistent <Home> + the #summary glyph opacity vs --dock-morph-t — they must ramp 0→1 as the box settles (NOT 1→0 then snap). The persistent <Home> stays opacity 1 in BOTH states (it is never staggered).",
+      "DK7 — a layer switch on /navigation/dock-layers is smooth, no ghost/lag. VERIFY: switch layers (and re-toggle mid-flight); the leaving pane opacity = calc(1 - --dock-morph-t) must track the box settle in lockstep (no linger past the spring). TUNE: if the switch still reads slow, the stagger window (0.4) or the --spring-dock response (0.32) are the dials — but the clock is now ONE (no second timer to drift).",
+      "DK2 — hover a dock icon + open a DockSelectTrigger/DockDropdownTrigger: hover is glass-translucent (not opaque cream), open is DISTINCT from hover (a ladder step darker + chevron up). No flash on the four-state transitions.",
+      "DK4 — a layout=grid big-dock (the /navigation/dock big-dock story): each icon is CENTERED in its tile (cell-center − button-center ≈ 0, not ~16px left-biased), at desktop AND on a 375×667 coarse viewport (the tile scales with the glyph).",
+      "the --dock-scale 1.5× mobile lockstep — at 375×667 the box AND glyph AND padding AND gap all render ~1.5× (a 1.4×–1.6× band), NOT a 44px box around a 20px glyph. With --dock-mobile-scale: 0.5 the box still renders >=44px (the clamp).",
+      "DK8 — the layer-switcher rail: the indicator REACHES the active tab (the column rail travels Y, the vertical-group row rail travels X); the rail has a quiet plate (not a bare gutter)."
+    ],
+    "exactTimings": {
+      "boxMorphSpring": "--spring-dock (response 0.32, dampingFraction 0.7, ~+4.6% overshoot) — UNCHANGED (W01-owned; the SOTA register per R-dock-layer-anim §1.1). The persistent region + the 1.5× scale are geometry-agnostic to it.",
+      "staggerWindow": "--dock-stagger-window-size: 0.4 (narrowed from 0.55 — last detail child finishes at 0.80 of the morph, not 0.95). --dock-stagger-step: 0.08 (Kowalski's band, KEPT). If DK1 still reads slow after the live pass, narrow the window further (0.35) — but the summary glyph is already keyed to --dock-morph-t directly (onset 0, front-loaded), so it should appear at the morph head.",
+      "leavingPaneFade": "opacity: calc(1 - var(--dock-morph-t)) gated on [data-morphing] — ZERO independent timing (a pure function of the spring scalar). No tunable; it IS the box clock.",
+      "mobileScale": "--dock-mobile-scale: 1.5 (the public default). If 1.5 reads too large/small on the live mobile pass, a single token retune (1.4 / 1.6) on :root threads the whole cascade."
+    }
+  },
+  "precepts": {
+    "singleScalarPreserved": "the W01 --dock-morph-t scalar + the W02 ONE orchestrator are UNTOUCHED — DK1/DK7 drive opacity off the EXISTING scalar (no second clock, no second spring); the persistent region rides the existing root scalar for chrome co-morph, never a registerGroup morph target.",
+    "tokenFirst": "every magnitude is a --dock-* / --surface-tint-* token (--dock-scale, --dock-mobile-scale, --dock-icon-glyph, --dock-control-{hover,active}-bg, --dock-layer-rail-{bg,hover,active}, --dock-tile-pad); zero buried literal; consumer-overridable per the presets-in-consumers contract.",
+    "componentOverClass": "the axis-blind .dock-separator raw class is promoted to <DockSeparator> (the orientation/layout contract a bare class cannot express); .dock-spacer STAYS a class (a no-axis flex-grow gap).",
+    "cleanBreak": "no backwards-compat — the two coarse floor blocks DELETED (subsumed into the scale + clamp); the Home-in-both-slots demo duplication retired; the opacity-lockstep gate re-authored to the new model (no legacy assertion kept).",
+    "safariSafe": "place-items, calc(), max(), translateY/X, color-mix(in srgb) — all Baseline; no Chrome-only primitive on the W45 surface (the squircle @supports-gate is W56's, untouched)."
+  }
+}

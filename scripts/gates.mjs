@@ -105,6 +105,12 @@ export const GATES = [
         note: "AU.W8 — the <Role>Dock README convention (ASK-7, re-grounded): four role names + base primitives + canonical useDock* composables + the useTouchGate/DockTabButton re-groundings. Bite: delete a role → RED",
     },
     {
+        id: "proof:dock-region-model",
+        cmd: "proof:dock-region-model",
+        tags: ["local", "ci"],
+        note: "AX.W45 — the dock three-region morph + H/V proportion parity + --dock-scale mobile multiplier + glyph ownership + <DockSeparator>. Device-free SOURCE-STRUCTURE arm (runs + hard-REDs on EVERY runner; the PAINTED render — persistent slot in both states on one spring, the 1.5×-in-lockstep mobile scale, the axis-aware separator — is the W00 π live audit). Asserts: GlassDock emits a `#persistent` slot region (`.dock-persistent` guarded by `$slots.persistent`, NOT in the inert two-pane crossfade); the vertical dock reads `var(--dock-layer-gap)` (NOT a hardcoded `gap: 0.25rem`); the coarse block sets ONE `--dock-scale: var(--dock-mobile-scale)` (NOT two floor blocks) with the density geometry `calc(* --dock-scale)`-threaded + a `max(…)` WCAG clamp; `.dock-icon-button > svg` reads `--dock-icon-glyph: calc(1.25rem * --dock-scale)`; DockSeparator exists + reads useOptionalDockContext + is barrel-exported + paints PERPENDICULAR (horizontal rule in a column dock, full-row section-break in a grid dock); the DK2 `--dock-control-{hover,active}-bg` four-state pair (pickers off the opaque --muted); the DK8 `--dock-layer-rail-bg` + the axis-aware indicator (translateY default, .vertical-group translateX); zero demo raw `<div class=dock-separator>` sites. Bite: keep the binary two-pane template → persistent RED; hardcode the vertical gap → parity RED; re-add a floor block → scale RED; drop the > svg rule → glyph RED; un-export DockSeparator → primitive RED.",
+    },
+    {
         id: "proof:dock-css-split",
         cmd: "proof:dock-css-split",
         tags: ["local", "ci", "release"],

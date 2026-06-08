@@ -55,6 +55,21 @@ function unregister(id: string) {
 
 const axis = computed(() => props.orientation ?? dock?.orientation.value ?? "horizontal");
 
+/* AX.W45 DK8 — the rail's visual axis is PERPENDICULAR to the group axis: a
+   horizontal group renders the rail as a COLUMN of stacked tabs (the indicator
+   travels Y → reka `orientation="vertical"`); a vertical group renders the rail as
+   a ROW (the indicator travels X → reka `orientation="horizontal"`). The prior
+   hardcoded `orientation="horizontal"` made reka compute only the inline-axis
+   position var, so on the DEFAULT (column) rail the indicator pinned at the top tab
+   and never reached the active tab below it — the mis-alignment the user
+   screenshotted. Threading the perpendicular axis makes reka compute the correct
+   position var for the axis the rail actually flexes (the dock.css indicator rule is
+   axis-aware to match). The keyboard contract stays reka's (Arrow/Home/End on the
+   computed orientation). */
+const railOrientation = computed<"horizontal" | "vertical">(() =>
+    axis.value === "vertical" ? "horizontal" : "vertical",
+);
+
 /* AX.W02 — DEFER to the dock's single morph orchestrator when nested in a
    `<GlassDock>`; SELF-ORCHESTRATE when standalone. The dock provides
    `DockMorphContext` (W02 seam); a nested group registers its pane-stack as a
@@ -166,19 +181,22 @@ function onRailFocusOut(e: FocusEvent) {
         class="dock-layer-group"
         :class="[axis, `rail-${railPosition}`]"
     >
-        <!-- AU.W8.4 — the layer-switcher rail is a reka-ui Tabs contract (APG
-             tabs): role=tablist/tab + aria-selected (NOT aria-pressed), roving
-             tabindex, Arrow/Home/End. Keyboard stays Left/Right always (reka's
-             horizontal convention); CSS rotates the rail visually for vertical
-             docks (the `dock-layer-group.vertical` flex-direction). The Tabs
-             v-model binds the SAME `activeLayer` ref that drives
-             useLayerTransition, so selecting a tab fires the crossfade with no
-             second source of truth. The travelling TabsIndicator carries the
-             active affordance (replacing the per-button background). -->
+        <!-- AU.W8.4 / AX.W45 DK8 — the layer-switcher rail is a reka-ui Tabs
+             contract (APG tabs): role=tablist/tab + aria-selected (NOT aria-pressed),
+             roving tabindex, Arrow/Home/End. The orientation is now the rail's VISUAL
+             axis (`railOrientation`, perpendicular to the group axis), so reka
+             computes the indicator position for the axis the rail actually flexes
+             (the indicator was pinned at the top tab and never reached the active one
+             below — the DK8 mis-alignment). reka's keyboard convention follows
+             orientation (a vertical/column rail uses Up/Down per APG, a horizontal/row
+             rail Left/Right) — the correct APG mapping for each axis. The Tabs v-model
+             binds the SAME `activeLayer` ref that drives the morph, so selecting a tab
+             fires the crossfade with no second source of truth. The travelling
+             TabsIndicator carries the active affordance. -->
         <Tabs
             v-if="showRail && layers.length > 1"
             v-model="activeLayer"
-            orientation="horizontal"
+            :orientation="railOrientation"
             :as-child="true"
         >
             <TabsList

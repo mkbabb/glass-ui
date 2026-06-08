@@ -2,7 +2,7 @@
 import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Package, Layers, Library, FileText, ChevronLeft, ChevronRight } from "@lucide/vue";
-import { GlassDock, DockIconButton, DockLayerGroup, DockLayer } from "../../../src/components/custom/dock";
+import { GlassDock, DockIconButton, DockLayerGroup, DockLayer, DockSeparator } from "../../../src/components/custom/dock";
 import { cn } from "../../../src/utils/cn";
 
 type LayerId = "root" | "assets" | "layers" | "libs";
@@ -86,11 +86,11 @@ function back() {
                             <DockIconButton aria-label="Back" @click="back">
                                 <ChevronLeft class="h-4 w-4" />
                             </DockIconButton>
-                            <div class="dock-separator" />
+                            <DockSeparator />
                             <component :is="l.icon" class="h-4 w-4 opacity-70" />
                             <span class="text-sm font-medium">{{ l.label }}</span>
                             <span class="text-xs text-muted-foreground">· {{ l.blurb }}</span>
-                            <div class="dock-separator" />
+                            <DockSeparator />
                             <DockIconButton aria-label="New item">
                                 <FileText class="h-4 w-4" />
                             </DockIconButton>

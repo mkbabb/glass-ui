@@ -107,14 +107,18 @@ describe("AU.W8.4 — dock rail a11y contract (APG tabs)", () => {
         expect(after[0].attributes("aria-selected")).toBe("true");
     });
 
-    it("4. KEYBOARD — ArrowRight/Home/End move selection (reka APG handler)", async () => {
+    it("4. KEYBOARD — ArrowDown/Home/End move selection (reka APG handler)", async () => {
+        // AX.W45 DK8 — the DEFAULT (horizontal-group) rail is a COLUMN of stacked
+        // tabs, so reka's orientation is now "vertical" (the rail's visual axis), and
+        // the APG keyboard for a vertical tablist is Up/Down (the correct mapping for
+        // a column rail). A vertical-group ROW rail uses Left/Right.
         const { wrapper } = await mountRail();
         const tabs = wrapper.findAll('[role="tab"]');
         await tabs[0].trigger("focus");
-        await tabs[0].trigger("keydown", { key: "ArrowRight" });
+        await tabs[0].trigger("keydown", { key: "ArrowDown" });
         await wrapper.vm.$nextTick();
         const after = wrapper.findAll('[role="tab"]');
-        // ArrowRight selects/focuses the next tab (b).
+        // ArrowDown selects/focuses the next tab (b).
         expect(after[1].attributes("aria-selected")).toBe("true");
         expect(after[1].attributes("tabindex")).toBe("0");
 

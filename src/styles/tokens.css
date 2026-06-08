@@ -1098,6 +1098,40 @@
     --dock-margin: 0.5rem;
     --dock-menubar-reserve: 4rem;
 
+    /* AX.W45 — the ONE coarse-pointer multiplier. `--dock-scale` (default 1, the
+       identity) threads the WHOLE `.glass-dock[data-density]` geometry cascade
+       (box, padding, gap, tab, tile-min, glyph) via `calc(<base> * --dock-scale)`,
+       so a single knob grows every dock axis in lockstep. `@media (pointer: coarse)`
+       sets `--dock-scale: var(--dock-mobile-scale, 1.5)` and the chrome scales ~1.5×
+       on touch — the desktop proportion preserved, the box+glyph+pad in step. The
+       WCAG 2.5.5 44px floor survives as a `max(…, 44px)` clamp INSIDE the scaled
+       control-size (so a consumer dialing `--dock-mobile-scale` below 1.0 cannot drop
+       under the target). `--dock-mobile-scale` is the public library-default identity
+       (presets-in-consumers: a consumer sets 1.3/1.75 on `:root` or a dock scope). */
+    --dock-scale: 1;
+    --dock-mobile-scale: 1.5;
+    /* Library glyph ownership — `.dock-icon-button > svg` reads this so the dock
+       icon glyph scales WITH the box (mirroring `.dark-mode-toggle-button > svg`).
+       A consumer-passed explicit lucide size class still WINS (utility layer >
+       component layer); this is a DEFAULT, not a ceiling. */
+    --dock-icon-glyph: calc(1.25rem * var(--dock-scale));
+
+    /* AX.W45 — ONE glass-aware four-state contract for the dock-control family.
+       The whole family (icon-button, tab-button, select/dropdown triggers) reads
+       this hover/active pair so hover ≠ active is distinct AND both are alpha-
+       bearing (the dock substrate shows through — never the opaque `--muted` plate
+       the pickers used to stamp). The active fill is a tint LADDER step above hover. */
+    --dock-control-hover-bg: color-mix(in srgb, var(--card) 55%, transparent);
+    --dock-control-active-bg: var(--surface-tint-12);
+
+    /* AX.W45 DK8 — the layer-switcher rail surface ladder. The rail
+       (`.dock-layer-rail` inside a `<DockLayerGroup>`) gets its own quiet plate +
+       a tunable hover/active affordance, replacing the raw `--primary 15%` /
+       `--accent 40%` mixes the indicator/tab used against an absent plate. */
+    --dock-layer-rail-bg: var(--surface-tint-8);
+    --dock-layer-rail-hover: color-mix(in srgb, var(--accent) 40%, transparent);
+    --dock-layer-rail-active: color-mix(in srgb, var(--primary) 15%, transparent);
+
     /* Dock active-state ladder (O.W6 Lane B)
        Token-overridable active paint for `.dock-icon-button`. Promoted
        from hardcoded `background: var(--muted); color: var(--foreground)`
@@ -1108,8 +1142,14 @@
        take effect per-instance via `:root` or a parent scope, e.g.
        `.tools-layer { --dock-active-scale: 1.2; --dock-active-bg: …; }`.
        ≥ 2-consumer coverage: bbnf-buddy ToolsLayer (override consumer) +
-       speedtest dock (default consumer). */
-    --dock-active-bg: var(--muted);
+       speedtest dock (default consumer).
+
+       AX.W45 DK2 — re-pointed off the opaque `--muted` plate onto the glass-
+       correct `--dock-control-active-bg` (a translucent tint a ladder step above
+       hover), so the icon-button active no longer stamps a solid cream rectangle
+       over the dock glass. The O.W6 active-ladder override consumers still retint
+       per-instance; only the DEFAULT moved to glass-correct. */
+    --dock-active-bg: var(--dock-control-active-bg);
     --dock-active-color: var(--foreground);
     --dock-active-scale: 1;
     --dock-active-border: none;

@@ -14,6 +14,79 @@ dividers — the three sub-defects D13-a/b/c) + `docs/tranches/AX/audit/converge
 
 ---
 
+## DK-band absorption (pass-2 convergence — the coherent dock band, ONE lane)
+
+The pass-2 user audit (`USER-DEFECTS-2026-06-08-pass2.md` DK1–DK9) + the convergence2
+source-audits (`convergence2/A-dock-*.md`, `R-dock-layer-anim.md`) routed the WHOLE dock
+band onto W45 (the wave that owns `GlassDock.vue` + `dock.css` + `dock-controls.css` +
+`tokens.css §10` + `DockLayerGroup.vue`). This wave executed the band as ONE concern, one
+lane — the original D13/D15 region-model + density-scale + DockSeparator PLUS the following
+folds (each a `dock.css`/`dock-controls.css`/`tokens.css`-local addition, line-disjoint from
+the region-model arms):
+
+- **DK1 (collapsed icon "does not appear for a while") + DK7 (layer switch laggy/delayed).**
+  The DK7 ROOT CAUSE (`A-dock-layers-anim.md`, `R-dock-layer-anim.md §3.1`) was the
+  leaving-pane opacity on a SECOND clock — a fixed-duration `opacity var(--dock-motion-resize)`
+  CSS transition beside the velocity-dependent `--dock-morph-t` spring, so the crossfade
+  lingered past the box settle and ghosted. FIX: drive the leaving-pane opacity off the SAME
+  scalar — `.glass-dock[data-morphing] .is-leaving { opacity: calc(1 - var(--dock-morph-t)) }`
+  — ONE clock, every axis (the W01/W02 single-scalar thesis FINISHED for opacity). DK1
+  (`A-dock-collapse-timing.md`): the `--summary` pane is the INCOMING pane on collapse but read
+  the box-directional `--dock-expand-t` (1→0), so the collapsed glyph faded OUT then popped in
+  at settle. FIX: key the summary pane's stagger scalar to `--dock-morph-t` directly (the
+  incoming-ness, 0→1) so it appears WITH the pill; the `#persistent` region front-loads the
+  always-visible glyph structurally; the stagger window narrowed 0.55→0.4 (last detail child
+  finishes at 0.80 of the morph, not 0.95).
+  > **GATE RECONCILE.** `proof:dock-opacity-lockstep` encoded the OLD model (the base rule
+  > MUST carry `opacity var(--dock-motion-resize)`). That assertion WAS the DK7 second-clock
+  > bug, so the gate was RE-AUTHORED to the new model: the lockstep is now a SAME-SCALAR match
+  > (the leaving pane fades on `calc(1 - var(--dock-morph-t))`; neither base nor active carries
+  > an `opacity var(…)` CSS clock). `proof:dock-animation-live` (the behavioral truth) stays
+  > GREEN — its leaving-child-opacity sampling now reads the scalar-driven fade in lockstep.
+
+- **DK2 (dock icon + picker hover/select not right).** `A-dock-hover-select.md`: the four dock
+  controls painted four different fill vocabularies; the select/dropdown pickers stamped the
+  OPAQUE `--muted` plate on hover AND active (byte-identical — an open picker read like a
+  hovered one). FIX: ONE glass-aware four-state contract — mint `--dock-control-{hover,active}-bg`
+  (both alpha-bearing, the active a tint LADDER step above hover), route all four controls
+  through it, re-point `--dock-active-bg` off `--muted` onto the glass-correct token, make
+  hover ≠ active on the pickers (paired with the existing chevron flip).
+
+- **DK4 (big-dock icons not aligned).** `A-dock-bigicon-sep.md`: the `.layout-grid .dock-layer--full`
+  grid had NO `justify-items`/`place-items` — fixed-width buttons degenerated to inline-start,
+  hugging the left edge of each tile. FIX: `place-items: center` (mirroring the wrap layer's
+  `justify-content: center`); `--dock-tile-min` routed INTO the density cascade as
+  `calc(--dock-control-size + --dock-tile-pad)` so the tile scales WITH the control + glyph (a
+  PRECONDITION for the `--dock-scale` thread — a flat 72px tile around a 1.5×-scaled glyph would
+  be a NEW misalignment).
+
+- **DK5 (separators when befitting).** The `<DockSeparator>` (D13-c) is extended LAYOUT-aware: a
+  vertical hairline in a row dock, a horizontal rule in a column dock, AND a full-row section
+  break (`grid-column: 1 / -1`) in a `layout="grid"` dock (a 1px sliver in one cell is useless
+  for Launchpad-style group demarcation). The wrap-layer `display:none` suppression is inherited.
+
+- **DK8 (rail bg + mis-alignment).** `A-dock-rail.md §1`: the layer-switcher rail had NO surface
+  plate (a bare bordered gutter) and the reka `TabsIndicator` traveled the inline axis ONLY —
+  on the DEFAULT (column) rail it pinned at the top tab and never reached the active one. FIX:
+  mint `--dock-layer-rail-{bg,hover,active}` (the rail gets a quiet plate + a tunable affordance
+  ladder); make the indicator AXIS-AWARE (default `translateY` for the column rail, a `.vertical`-
+  group `translateX` override) and thread the rail's VISUAL axis into `<Tabs :orientation>` so
+  reka computes the correct position var (the keyboard follows orientation per APG — Up/Down for
+  a column rail, the a11y test updated to match).
+
+- **DK9 (vertical dock vs rail differentiation)** routes to W06 (`A-dock-rail.md §2` — the honest-
+  rail type-narrow + hoisted nav chrome + the demo de-derivation are W06's surface). This wave's
+  contribution is the H/V proportion parity + the rail-bg ladder W06 COMPOSES with; the
+  variant-honesty narrow is NOT in W45's bounds. DK10 (a dedicated vertical-dock section) is a
+  W06/W18 demo-IA deliverable.
+
+The folds are ONE coherent dock-band restructure on the files W45 already owns — gestalt, not a
+patch fleet. The single-scalar morph (W01/W02) is UNTOUCHED: DK1/DK7 drive opacity off the
+EXISTING `--dock-morph-t` scalar (no second clock, no second spring); the persistent region rides
+the existing root scalar for chrome co-morph, never a `registerGroup` morph target.
+
+---
+
 ## State (born-RED — the gate must fail at HEAD before the wave)
 
 The wave is born-RED on FIVE falsifiable witnesses at HEAD `002bda5`, each a source-true
