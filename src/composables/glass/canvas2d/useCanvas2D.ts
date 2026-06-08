@@ -101,7 +101,14 @@ export interface Canvas2DHandle {
 
 const DEFAULT_ROOT_MARGIN = "200px";
 
-export function createCanvas2D(options: Canvas2DOptions): Canvas2DHandle {
+/**
+ * The Canvas2D lifecycle substrate — the park/freeze/dispose twin of
+ * `useWebGLCanvas`. Returns an imperative {@link Canvas2DHandle} (the same
+ * handle idiom the WebGL twin uses — an imperative canvas seam is NOT a
+ * ref-bundle). `useCanvasLifecycle` is the alias-of-record for the
+ * lifecycle-only framing; both name the same factory.
+ */
+export function useCanvas2D(options: Canvas2DOptions): Canvas2DHandle {
     const {
         setup,
         autoStart = true,
@@ -330,3 +337,11 @@ export function createCanvas2D(options: Canvas2DOptions): Canvas2DHandle {
         },
     };
 }
+
+/**
+ * Alias-of-record for {@link useCanvas2D} — the lifecycle-only framing (the
+ * park/freeze/dispose machinery, paralleling the WebGL substrate's
+ * `createCanvasLifecycle`). Same factory, same handle; reach for this name when
+ * the lifecycle (not the 2D drawing) is the consumer's emphasis.
+ */
+export const useCanvasLifecycle = useCanvas2D;

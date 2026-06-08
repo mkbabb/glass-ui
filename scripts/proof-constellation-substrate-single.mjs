@@ -6,7 +6,9 @@
 // H.W10). This gate freezes the THREE invariants that keep the library surface
 // clean of deck-domain content and the substrate single-source:
 //
-//   SUBSTRATE-EXISTS — `useCanvas2D.ts` exports `createCanvas2D` AND carries the
+//   SUBSTRATE-EXISTS — `useCanvas2D.ts` exports `useCanvas2D` (AX.W37 renamed the
+//     factory from the prior `create*` name; the `/canvas` subpath publishes it)
+//     AND carries the
 //     same park/freeze machinery as `useWebGLCanvas` (the suspend Set gating one
 //     isRunning, the content-visibility offscreen hook, the tab-hidden owner, the
 //     LIVE reduced-motion matchMedia `change` re-monitor).
@@ -63,7 +65,7 @@ function run() {
     } else {
         const sub = stripComments(readFileSync(SUBSTRATE, "utf8"));
         facts.substrateExists = true;
-        facts.exportsFactory = /export function createCanvas2D/.test(sub);
+        facts.exportsFactory = /export function useCanvas2D/.test(sub);
         facts.hasSuspendSet =
             /new Set</.test(sub) && /isRunning\b/.test(sub);
         facts.hasContentVisibility =
@@ -79,7 +81,7 @@ function run() {
         facts.hasDispose = /function dispose\b/.test(sub);
 
         if (!facts.exportsFactory)
-            violations.push("useCanvas2D does not export `createCanvas2D`");
+            violations.push("useCanvas2D does not export the `useCanvas2D` factory");
         if (!facts.hasSuspendSet)
             violations.push(
                 "useCanvas2D has no suspend Set gating `isRunning()` (the demand-driven park model)",

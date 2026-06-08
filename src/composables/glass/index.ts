@@ -14,8 +14,11 @@ export { useSpecularTracking } from "./useSpecularTracking";
 export type { UseSpecularTracking } from "./useSpecularTracking";
 
 // AW.W17 — the Canvas2D lifecycle substrate (park/freeze/dispose parallel to
-// the WebGL substrate). The Constellation lattice composes it.
-export { createCanvas2D } from "./canvas2d";
+// the WebGL substrate). AX.W37 published it on `/canvas` under the contract
+// name `useCanvas2D` (+ the `useCanvasLifecycle` alias) and added
+// `resolveCanvasColor` (the shared `light-dark()`→`rgb()` Canvas2D resolver).
+// Constellation + FourierField compose it.
+export { useCanvas2D, useCanvasLifecycle, resolveCanvasColor } from "./canvas2d";
 export type {
     Canvas2DFrame,
     Canvas2DHandle,

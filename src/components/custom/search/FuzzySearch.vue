@@ -6,7 +6,7 @@ import { Dialog, DialogContent } from "../../ui/dialog";
 import { Button } from "../../ui/button";
 import { Badge } from "../../ui/badge";
 import { fuzzyMatch } from "./composables/fuzzySearchIndex";
-import { useTextHighlight } from "../../../composables/dom/useTextHighlight";
+import { useTextHighlight } from "../../../composables/motion/useTextHighlight";
 import type { FuzzySearchState, SearchableItem, SearchResult } from "./composables/types";
 
 const props = withDefaults(

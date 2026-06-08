@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { useTextHighlight } from "../../src/composables/dom/useTextHighlight";
-import { mountComposable } from "../utils/mountComposable";
+import { useTextHighlight } from "../../../src/composables/motion/useTextHighlight";
+import { mountComposable } from "../../utils/mountComposable";
 
 // Minimal stand-ins for the CSS Custom Highlight API. The global `CSS` stub in
 // tests/setup.ts only carries `supports`, so the unsupported path is the default;

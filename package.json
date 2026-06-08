@@ -52,6 +52,9 @@
             "aurora": [
                 "dist/aurora.d.ts"
             ],
+            "canvas": [
+                "dist/canvas.d.ts"
+            ],
             "color": [
                 "dist/color.d.ts"
             ],
@@ -294,6 +297,10 @@
         "./aurora": {
             "types": "./dist/aurora.d.ts",
             "import": "./dist/aurora.js"
+        },
+        "./canvas": {
+            "types": "./dist/canvas.d.ts",
+            "import": "./dist/canvas.js"
         },
         "./color": {
             "types": "./dist/color.d.ts",
@@ -640,6 +647,8 @@
         "proof:constellation-tokens": "node scripts/proof-constellation-tokens.mjs",
         "proof:constellation-warp-live": "node scripts/proof-constellation-warp-live.mjs",
         "proof:canvas2d-substrate": "vitest run tests/composables/glass/canvas2d/useCanvas2D.test.ts",
+        "proof:resolve-canvas-color": "vitest run tests/composables/glass/canvas2d/resolveCanvasColor.test.ts",
+        "proof:text-highlight": "vitest run tests/composables/motion/text-highlight-home.test.ts tests/composables/motion/useTextHighlight.test.ts",
         "proof:constellation-field": "vitest run tests/components/custom/constellation/constellationField.test.ts",
         "proof:input-invalid-aria": "node scripts/proof-input-invalid-aria.mjs",
         "proof:styling-hygiene": "node scripts/proof-styling-hygiene.mjs",
