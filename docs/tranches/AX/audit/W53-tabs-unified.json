@@ -1,0 +1,84 @@
+{
+  "wave": "AX.W53",
+  "title": "tabs-unify — the unified SegmentedTabs (segmented · pill · underline, one elastic indicator)",
+  "band": "C",
+  "severity": "major",
+  "base": "6050dc4",
+  "dependsOn": ["AX.W05", "AX.W18"],
+  "headline": "Collapse the five-artefact tabs surface (BouncyToggle/BouncyTabs/UnderlineTabs/useBouncySlider + the standalone ResponsiveTabs) onto ONE component — SegmentedTabs — with a three-value variant axis and ONE shared elastic indicator gliding on --spring-snappy AND squishing on travel (volume-preserving, capped LOW). Clean break, no alias.",
+  "bornRedWitnesses": [
+    {
+      "id": "RED-1",
+      "claim": "BouncyToggle/BouncyTabs/UnderlineTabs/ResponsiveTabs all export (the 'Bouncy' prefix survives; four components for one concept)",
+      "source": "src/components/custom/tabs/{BouncyToggle,BouncyTabs,UnderlineTabs}.vue + custom/responsive-tabs/ResponsiveTabs.vue",
+      "now": "GREEN — all four DELETED; SegmentedTabs.vue is the sole component; the barrel exports only SegmentedTabs + types"
+    },
+    {
+      "id": "RED-2",
+      "claim": "UnderlineTabs is a SEPARATE component (no variant='underline' on the slider surface); ResponsiveTabs is a separate component (responsive is not a prop)",
+      "source": "custom/tabs/UnderlineTabs.vue + custom/responsive-tabs/ResponsiveTabs.vue",
+      "now": "GREEN — variant axis (segmented DEFAULT · pill · underline) + responsive prop fold both behaviours onto the one component"
+    },
+    {
+      "id": "RED-3",
+      "claim": "no --tab-indicator-max-stretch token; the slider GLIDES (rigid inset/transform interpolation) but does NOT squish/stretch on travel",
+      "source": "BouncyToggle.vue:361-375 + useBouncySlider.ts:81-86 (rigid inset/transform, no scale deform)",
+      "now": "GREEN — --tab-indicator-max-stretch: 1.08 minted; useTabIndicator writes a velocity/distance-driven --stretch the indicator pairs volume-preserving (scale: var(--stretch) calc(1/var(--stretch))) on --spring-snappy; PRM-gated"
+    },
+    {
+      "id": "RED-4",
+      "claim": "the press double-spring rings past 1.08 on --spring-bouncy (the egregious press D3 carry)",
+      "source": "BouncyToggle.vue:125-155 animatePress (scale 1 -> press -> 1.08 hover -> 1 on --spring-bouncy)",
+      "now": "GREEN — animatePress is ONE settle-into squish (scale 1 -> --scale-press-btn -> 1) on the CONTROL register --spring-snappy; no overshoot-past-rest keyframe"
+    }
+  ],
+  "filesChanged": [
+    "src/components/custom/tabs/SegmentedTabs.vue (NEW — the unified component)",
+    "src/components/custom/tabs/composables/useTabIndicator.ts (NEW — renamed engine + travel-squish)",
+    "src/components/custom/tabs/index.ts (barrel — SegmentedTabs + types only)",
+    "src/components/custom/tabs/BouncyToggle.vue (DELETED)",
+    "src/components/custom/tabs/BouncyTabs.vue (DELETED)",
+    "src/components/custom/tabs/UnderlineTabs.vue (DELETED)",
+    "src/components/custom/tabs/composables/useBouncySlider.ts (DELETED)",
+    "src/components/custom/responsive-tabs/ (DELETED dir)",
+    "src/subpaths/responsive-tabs.ts (DELETED)",
+    "src/styles/tokens.css (--tab-indicator-max-stretch token; comment re-syncs)",
+    "src/styles/utilities.css (.responsive-tabs__trigger -> .segmented-tabs__trigger touch-floor hook)",
+    "src/api/index.ts (SegmentedTabsProps/Variant/Option re-export; dropped ResponsiveTabsProps)",
+    "src/index.ts (root-barrel comment re-sync)",
+    "src/components/ui/tabs/TabsList.vue (comment re-sync)",
+    "src/components/custom/configurator/ConfiguratorLayer.vue (comment re-sync)",
+    "src/utils/moveBefore.ts (comment re-sync)",
+    "package.json (./responsive-tabs subpath + typesVersions row retired; proof:tabs-unified registered)",
+    "demo/stories/navigation/tabs.vue (re-authored onto SegmentedTabs — 5 variant/multi/responsive sections)",
+    "demo/stories/navigation/responsive-tabs.vue (DELETED — folded into tabs)",
+    "demo/stories/manifest.ts (responsive-tabs row removed; tabs row blurb re-synced)",
+    "demo/stories/aurora/AuroraConfigDock.vue + config/{MediumLayer,FlowLayer,CompositionLayer}.vue (BouncyTabs -> SegmentedTabs sweep)",
+    "demo/stories/data/search.vue (keyword re-sync)",
+    "scripts/proof-tabs-unified.mjs (NEW gate)",
+    "scripts/proof-package.mjs (subpath probe symbol sweep)",
+    "scripts/proof-composable-return-types.mjs (DO-NOT-SPLIT target path)",
+    "scripts/proof-vt-names.mjs (allowlist consolidated to --gl-tab-active)",
+    "scripts/proof-storybook-ia.mjs (responsive-tabs IA row removed)",
+    "scripts/gates.mjs (proof:tabs-unified manifest row)",
+    "scripts/__tests__/proof-vt-names.test.ts (comment re-sync)",
+    "CLAUDE.md (structure tree + Tabs-vs-ToggleGroup + SegmentedTabs section)"
+  ],
+  "gatesRun": [
+    { "name": "typecheck", "status": "pass" },
+    { "name": "build", "status": "pass", "detail": "dist/tabs.js emits 9.86 kB / 3.57 kB gz; 63 subpath dts flattened" },
+    { "name": "proof:tabs-unified", "status": "pass", "detail": "device-free SOURCE arm green; π live arm befitting-silent on the no-workspace runner" },
+    { "name": "proof:gate-script-parity", "status": "pass" },
+    { "name": "proof:theme", "status": "pass" },
+    { "name": "proof:components-css", "status": "pass" },
+    { "name": "proof:vt-names", "status": "pass" },
+    { "name": "proof:composable-return-types", "status": "pass" },
+    { "name": "proof:package", "status": "pass", "detail": "packed-tarball consumer probe imports SegmentedTabs from @mkbabb/glass-ui/tabs" },
+    { "name": "proof:doc-consistency", "status": "pass" },
+    { "name": "proof:resolution", "status": "pass" },
+    { "name": "verify-export-types", "status": "pass" },
+    { "name": "proof:storybook-ia", "status": "pass" },
+    { "name": "proof:no-legacy-commentary", "status": "pre-existing-RED", "detail": "5 pre-existing tranche-letter refs in api/index.ts at baseline 6050dc4 (AW.W16/AX.W37/...); W53 introduces ZERO new — went 6->5 after removing the added AX.W53 ref. Local-tagged only, owner-owed roadblock, NOT a W53 regression." }
+  ],
+  "liveArmNotes": "ORCHESTRATOR π LIVE TUNING (chrome-devtools-mcp @ localhost:5173 /navigation/tabs): (1) GLIDE — click between two far segments on the DEFAULT segmented strip; the .segmented-indicator must MOVE smoothly (getBoundingClientRect().left deviates) on --spring-snappy, NOT crossfade. (2) SQUISH — getComputedStyle(indicator).getPropertyValue('--stretch') must EXCEED 1 mid-travel (peak ~1.08 on a full-width jump, ~1.0x on a neighbour hop) then RELEASE to 1; the indicator visibly widens then settles to fit (Material 'grow then shrink'). The cap token is --tab-indicator-max-stretch:1.08 — TUNE between 1.06-1.10 if the squish reads too strong/weak (iOS-26.2 is restrained; lower is safer). (3) PRESS — press-and-hold a segment: animatePress is ONE settle-into squish to --scale-press-btn (0.97) on --spring-snappy, NO ring-past-1 (the old --spring-bouncy 1.08 overshoot is GONE). (4) VARIANTS — confirm pill (solid --foreground pill) + underline (role=tablist hairline rule) both glide+squish; underline ::before reads scale: var(--stretch) 1 (X-only width flex). (5) ARIA — underline emits role=tablist/tab+aria-selected; segmented/pill emit role=group+aria-pressed (axe-clean). (6) RESPONSIVE — narrow viewport <640px on the responsive section: the strip collapses to a <Select>; widen restores the strip; one v-model drives both. (7) MULTI-SELECT — the multi-select section flips N segments independently (no glide between, each pops). Magnitudes: --tab-indicator-max-stretch:1.08, --spring-snappy (control register), --scale-press-btn:0.97, --duration-normal glide clock, 60ms squish-release timer in useTabIndicator."
+}

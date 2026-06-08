@@ -42,7 +42,7 @@ function cliPaths() {
         UTILITIES: resolve(ROOT, "src/styles/utilities.css"),
         CHASSIS: resolve(ROOT, "src/styles/instrument-chassis.css"),
         RAIL: resolve(ROOT, "src/styles/instrument-rail.css"),
-        BOUNCY: resolve(ROOT, "src/components/custom/tabs/BouncyToggle.vue"),
+        BOUNCY: resolve(ROOT, "src/components/custom/tabs/SegmentedTabs.vue"),
         DOCK: resolve(ROOT, "src/components/custom/dock/GlassDock.vue"),
         MARKERS: resolve(ROOT, "src/components/custom/timeline/ContinuousMarkers.vue"),
         DENSITY: resolve(ROOT, "src/components/custom/configurator/density.ts"),
@@ -131,7 +131,7 @@ function run() {
     // ── 4. DO-NOT-SPLIT rationale comments (read the RAW source — the rationale
     //       IS a comment, so do not strip).
     const doNotSplitTargets = [
-        ["BouncyToggle.vue", P.BOUNCY],
+        ["SegmentedTabs.vue", P.BOUNCY],
         ["GlassDock.vue", P.DOCK],
         ["ContinuousMarkers.vue", P.MARKERS],
     ];

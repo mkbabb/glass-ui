@@ -441,7 +441,7 @@
 
     /* Muted-tinted surface rungs — canonical handles for the 9 raw
        `color-mix(in srgb, var(--muted) N%, transparent)` sites in
-       FuzzySearch / BouncyToggle / Slider scoped CSS. (AI.W5-δ — the
+       FuzzySearch / SegmentedTabs / Slider scoped CSS. (AI.W5-δ — the
        ProgressiveSidebar consumer retired at the wave; the canonical token
        rung lives on for the remaining consumers.) Auto-dark via --muted.
        R5 vocab.γ axis-1 row. */
@@ -1107,7 +1107,7 @@
 
     /* AQ.W3 §7 — canonical WCAG 2.5.5 (44px) touch-target floor for the
        NON-dock coarse-pointer surfaces (`Button size="icon"`,
-       ExpandableContainer triggers, ResponsiveTabs mobile trigger). One
+       ExpandableContainer triggers, SegmentedTabs responsive mobile trigger). One
        named rung the `@media (pointer: coarse)` block in utilities.css reads,
        retiring the per-consumer one-liner `min-h-[44px]` patches. Equals
        `--dock-touch-target` numerically; kept as a distinct token so the
@@ -1175,6 +1175,18 @@
     --scale-press-dock: var(--scale-press);
     --scale-press-sm: 0.97;
     --scale-press-btn: var(--scale-press-sm);
+
+    /* AX.W53 — the SegmentedTabs travel-squish cap. The active indicator
+       (segmented/pill slider OR the underline rule) STRETCHES along its travel
+       axis as it glides between tabs, then settles to fit — the Material 3
+       ELASTIC / Apple Liquid-Glass "controls insist on animating themselves"
+       register, kept RESTRAINED. The deform is volume-preserving (stretch X,
+       compress Y in lockstep: `scale: var(--stretch) calc(1 / var(--stretch))`)
+       so it reads as an elastic warp, never a size pump. The cap holds the peak
+       LOW (1.08 ≈ +8%) — iOS 26.2 dialed motion DOWN; a high-frequency control
+       wants a whisper of squish, not a bounce. A consumer dials the elasticity
+       (or to 1 for none) without touching source. */
+    --tab-indicator-max-stretch: 1.08;
     --opacity-disabled: 0.5;
     --opacity-icon-muted: 0.8;
 

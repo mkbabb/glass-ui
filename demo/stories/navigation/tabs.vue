@@ -3,11 +3,8 @@ import StoryPage from "../StoryPage.vue";
 import { ref } from "vue";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../../src/components/ui/tabs";
 import {
-    BouncyTabs,
-    UnderlineTabs,
-    BouncyToggle,
-    type TabOption,
-    type ToggleOption,
+    SegmentedTabs,
+    type SegmentedTabOption,
 } from "../../../src/components/custom/tabs";
 import { cn } from "../../../src/utils/cn";
 
@@ -41,35 +38,47 @@ const profile = [
     { id: "keys", label: "API Keys" },
 ];
 
-// Bouncy variant — the custom <BouncyTabs> spring-slider toggle (merged in
-// from the former standalone bouncy-tabs story, AV.W10).
+// Segmented (DEFAULT) — the unified <SegmentedTabs> spring-slider over a muted
+// track; the elastic indicator glides + squishes on --spring-snappy (AX.W53).
 const viewMode = ref("grid");
-const viewOptions: TabOption[] = [
+const viewOptions: SegmentedTabOption[] = [
     { label: "Grid", value: "grid" },
     { label: "List", value: "list" },
     { label: "Kanban", value: "kanban" },
     { label: "Timeline", value: "timeline" },
 ];
 
+// Pill variant — the solid --foreground pill.
 const priority = ref("normal");
-const priorityOptions: TabOption[] = [
+const priorityOptions: SegmentedTabOption[] = [
     { label: "Low", value: "low" },
     { label: "Normal", value: "normal" },
     { label: "High", value: "high" },
     { label: "Urgent", value: "urgent" },
 ];
 
-// Underline — the custom <UnderlineTabs> animated-rule slider variant.
+// Underline variant — the panel-nav (role=tablist) hairline rule.
 const docTab = ref("notes");
-const docTabs: TabOption[] = docs.map((d) => ({ label: d.label, value: d.id }));
+const docTabs: SegmentedTabOption[] = docs.map((d) => ({ label: d.label, value: d.id }));
 
-// BouncyToggle — the spring-slider toggle (single + multi-select) over a
-// shared track; the active-state vocabulary canon (V.W3).
-const density = ref("comfortable");
-const densityOptions: ToggleOption[] = [
-    { label: "Compact", value: "compact" },
-    { label: "Comfortable", value: "comfortable" },
-    { label: "Spacious", value: "spacious" },
+// Multi-select — the ToggleGroup-shaped surface (role=group, aria-pressed) over
+// the same engine; N simultaneous pressed segments.
+const facets = ref<string[]>(["pdf"]);
+const facetOptions: SegmentedTabOption[] = [
+    { label: "PDF", value: "pdf" },
+    { label: "Docs", value: "docs" },
+    { label: "Slides", value: "slides" },
+    { label: "Sheets", value: "sheets" },
+];
+
+// Responsive — the strip collapses to a <Select> below the breakpoint
+// (subsumes the former standalone ResponsiveTabs).
+const respView = ref("overview");
+const respOptions: SegmentedTabOption[] = [
+    { label: "Overview", value: "overview" },
+    { label: "Activity", value: "activity" },
+    { label: "Members", value: "members" },
+    { label: "Settings", value: "settings" },
 ];
 </script>
 
@@ -178,59 +187,92 @@ const densityOptions: ToggleOption[] = [
             </Tabs>
         </section>
 
-        <!-- Bouncy — the custom <BouncyTabs> spring-slider toggle variant. -->
+        <!-- SegmentedTabs (DEFAULT) — the unified spring-slider with the
+             elastic glide+squish indicator on --spring-snappy. -->
         <section class="flex flex-col gap-3">
             <h2 class="text-sm font-semibold text-muted-foreground">
-                Bouncy (custom spring-slider variant)
+                Segmented (default spring-slider variant)
             </h2>
             <p class="text-sm text-muted-foreground">
-                <code class="rounded bg-muted px-1">&lt;BouncyTabs&gt;</code> — a
-                squash-stretch spring slider over a shared track. Default and
-                pill variants; slider position + width reflow on prop change.
+                <code class="rounded bg-muted px-1">&lt;SegmentedTabs&gt;</code> — the
+                default pill-slider over a muted track. The indicator glides AND
+                squishes (volume-preserving stretch capped at
+                <code class="rounded bg-muted px-1">--tab-indicator-max-stretch</code>)
+                on <code class="rounded bg-muted px-1">--spring-snappy</code>.
             </p>
             <div class="flex flex-wrap items-center gap-3 rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-4">
-                <BouncyTabs v-model="viewMode" :options="viewOptions" />
+                <SegmentedTabs v-model="viewMode" :options="viewOptions" />
                 <span class="text-xs text-muted-foreground">selected: {{ viewMode }}</span>
             </div>
+        </section>
+
+        <!-- Pill variant — the solid --foreground pill. -->
+        <section class="flex flex-col gap-3">
+            <h2 class="text-sm font-semibold text-muted-foreground">
+                Pill (variant="pill")
+            </h2>
+            <p class="text-sm text-muted-foreground">
+                <code class="rounded bg-muted px-1">variant="pill"</code> — the solid
+                foreground pill chrome over the same elastic indicator.
+            </p>
             <div class="flex flex-wrap items-center gap-3 rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-4">
-                <BouncyTabs v-model="priority" :options="priorityOptions" variant="pill" />
+                <SegmentedTabs v-model="priority" :options="priorityOptions" variant="pill" />
                 <span class="text-xs text-muted-foreground">selected: {{ priority }}</span>
             </div>
         </section>
 
-        <!-- Underline — the custom <UnderlineTabs> animated-rule slider. -->
+        <!-- Underline variant — the panel-nav (role=tablist) hairline rule. -->
         <section class="flex flex-col gap-3">
             <h2 class="text-sm font-semibold text-muted-foreground">
-                Underline (custom animated-rule variant)
+                Underline (variant="underline")
             </h2>
             <p class="text-sm text-muted-foreground">
-                <code class="rounded bg-muted px-1">&lt;UnderlineTabs&gt;</code> —
-                a single-model tab strip with a spring-driven underline rule that
-                tracks the active option. Drives the desktop arm of
-                <code class="rounded bg-muted px-1">&lt;ResponsiveTabs&gt;</code>.
+                <code class="rounded bg-muted px-1">variant="underline"</code> — the
+                panel-nav <code class="rounded bg-muted px-1">role="tablist"</code>
+                hairline rule, sharing the same glide+squish indicator grammar.
             </p>
             <div class="rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-4">
-                <UnderlineTabs v-model="docTab" :options="docTabs" />
+                <SegmentedTabs v-model="docTab" :options="docTabs" variant="underline" />
                 <p class="mt-3 text-xs text-muted-foreground">selected: {{ docTab }}</p>
             </div>
         </section>
 
-        <!-- BouncyToggle — the spring-slider toggle (active-state vocab canon). -->
+        <!-- Multi-select — the ToggleGroup-shaped surface over the same engine. -->
         <section class="flex flex-col gap-3">
             <h2 class="text-sm font-semibold text-muted-foreground">
-                BouncyToggle (segmented spring toggle)
+                Multi-select (:multi-select="true")
             </h2>
             <p class="text-sm text-muted-foreground">
-                <code class="rounded bg-muted px-1">&lt;BouncyToggle&gt;</code> — a
-                segmented control mutating one surface (the ToggleGroup case), with
-                the squash-stretch slider. Default and pill variants.
+                <code class="rounded bg-muted px-1">:multi-select="true"</code> — the
+                ToggleGroup-shaped surface (<code class="rounded bg-muted px-1">role="group"</code>,
+                <code class="rounded bg-muted px-1">aria-pressed</code>); N
+                simultaneous pressed segments over the shared slider engine.
             </p>
             <div class="flex flex-wrap items-center gap-3 rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-4">
-                <BouncyToggle v-model="density" :options="densityOptions" />
-                <span class="text-xs text-muted-foreground">density: {{ density }}</span>
+                <SegmentedTabs v-model="facets" :options="facetOptions" :multi-select="true" />
+                <span class="text-xs text-muted-foreground">selected: {{ facets.join(", ") }}</span>
             </div>
-            <div class="flex flex-wrap items-center gap-3 rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-4">
-                <BouncyToggle v-model="density" :options="densityOptions" variant="pill" />
+        </section>
+
+        <!-- Responsive — strip collapses to a <Select> below the breakpoint. -->
+        <section class="flex flex-col gap-3">
+            <h2 class="text-sm font-semibold text-muted-foreground">
+                Responsive (:responsive — subsumes ResponsiveTabs)
+            </h2>
+            <p class="text-sm text-muted-foreground">
+                <code class="rounded bg-muted px-1">:responsive="true"</code> — below
+                the breakpoint the strip collapses to a
+                <code class="rounded bg-muted px-1">&lt;Select&gt;</code>, both
+                driven by one v-model. Narrow the viewport past 640px to see the swap.
+            </p>
+            <div class="max-w-md rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-4">
+                <SegmentedTabs
+                    v-model="respView"
+                    :options="respOptions"
+                    variant="underline"
+                    :responsive="{ ariaLabel: 'Project view' }"
+                />
+                <p class="mt-3 text-xs text-muted-foreground">active view: {{ respView }}</p>
             </div>
         </section>
     </StoryPage>

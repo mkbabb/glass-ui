@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { BouncyTabs } from "../../../../src/components/custom/tabs";
+import { SegmentedTabs } from "../../../../src/components/custom/tabs";
 import { LabeledSlider } from "../../../../src/components/custom/labeled-field";
 import type { AuroraConfig, FlowPattern } from "../../../../src/components/custom/aurora";
 import { flowPatternOptions } from "./options";
@@ -14,8 +14,8 @@ const showFocal = computed(
 );
 const showAngle = computed(() => props.config.flow.pattern === "diagonal");
 
-function setFlowPattern(v: string) {
-    props.config.flow.pattern = v as FlowPattern;
+function setFlowPattern(v: string | string[]) {
+    props.config.flow.pattern = String(v) as FlowPattern;
 }
 </script>
 
@@ -23,7 +23,7 @@ function setFlowPattern(v: string) {
     <div class="flex min-w-[280px] flex-col gap-3 p-3">
         <div class="flex flex-col gap-1">
             <p class="text-admin-label text-muted-foreground">Pattern</p>
-            <BouncyTabs
+            <SegmentedTabs
                 :options="[...flowPatternOptions]"
                 :model-value="config.flow.pattern"
                 variant="pill"

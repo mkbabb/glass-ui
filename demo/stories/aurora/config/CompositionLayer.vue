@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BouncyTabs } from "../../../../src/components/custom/tabs";
+import { SegmentedTabs } from "../../../../src/components/custom/tabs";
 import { LabeledSlider } from "../../../../src/components/custom/labeled-field";
 import type { AuroraConfig, WarpMode } from "../../../../src/components/custom/aurora";
 import { warpModeOptions } from "./options";
@@ -8,8 +8,8 @@ const props = defineProps<{
     config: AuroraConfig;
 }>();
 
-function setWarpMode(v: string) {
-    props.config.warpMode = v as WarpMode;
+function setWarpMode(v: string | string[]) {
+    props.config.warpMode = String(v) as WarpMode;
 }
 </script>
 
@@ -17,7 +17,7 @@ function setWarpMode(v: string) {
     <div class="flex min-w-[280px] flex-col gap-3 p-3">
         <div class="flex flex-col gap-1">
             <p class="text-admin-label text-muted-foreground">Warp mode</p>
-            <BouncyTabs
+            <SegmentedTabs
                 :options="[...warpModeOptions]"
                 :model-value="config.warpMode"
                 variant="pill"

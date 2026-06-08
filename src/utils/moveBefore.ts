@@ -13,7 +13,7 @@
 //
 // Call this instead of `appendChild`/`insertBefore` ONLY where a component or
 // consumer imperatively re-parents a subtree that may contain focus or an open
-// top-layer element (e.g. a `ResponsiveTabs` Select↔Tabs swap, a dock teleport).
+// top-layer element (e.g. a `SegmentedTabs` responsive Select↔strip swap, a dock teleport).
 // The default Vue render path (teleport, `v-if` swap) is unchanged — this is
 // opt-in at the manual-DOM-surgery call site.
 

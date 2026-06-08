@@ -1141,12 +1141,13 @@ html.no-transition *::after {
    to the WCAG 2.5.5 (44px) minimum — ONE amendment retiring the per-consumer
    `min-h-[44px]` one-liners. Token-driven (`--touch-target`); fine-pointer
    byte-identical. Targets `Button size="icon"` (via the `data-size="icon"`
-   attr Button.vue reflects), ExpandableContainer + ResponsiveTabs triggers.
+   attr Button.vue reflects), ExpandableContainer + SegmentedTabs (responsive
+   mobile Select) triggers.
    `min-block/inline-size` only RAISES — a larger explicit size is never lost. */
 @media (pointer: coarse) {
     [data-size="icon"],
     .expandable-container__trigger,
-    .responsive-tabs__trigger {
+    .segmented-tabs__trigger {
         min-block-size: var(--touch-target, 2.75rem);
         min-inline-size: var(--touch-target, 2.75rem);
     }

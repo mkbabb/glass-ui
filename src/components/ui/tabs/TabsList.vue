@@ -10,7 +10,7 @@ const props = withDefaults(
     /**
      * AW.W25 — render the spring `TabsIndicator` pill behind the triggers so
      * the base default `<Tabs>` matches its own indicator primitive (the
-     * polished pill previously lived only in custom BouncyTabs; the base
+     * polished pill previously lived only in the custom SegmentedTabs; the base
      * under-delivered vs its own `TabsIndicator.vue`). Default `true`. Set
      * `:indicator="false"` for a list that drives its own active-state vocab.
      */
