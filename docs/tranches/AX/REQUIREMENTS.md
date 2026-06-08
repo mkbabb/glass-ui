@@ -268,3 +268,86 @@ Each line: a minimal live PoC (the facility working + interruptible + PRM-safe +
 screenshot) → a hardened wave-spec scope with the edge cases. These deepen the dock band (W01-06)
 + the morph substrate (W42); a dedicated dock-facility prototype/harden pass enumerates + de-risks
 each before the dock band drives.
+
+## §20 CROSS-SESSION HAND-OFFS — USF + keyframes.js (new — folded 2026-06-08)
+
+Two consumer sessions surfaced glass-ui-owned items (audited in the consumer, NEVER patched there
+per inv-16 — kf/USF consume the PUBLISHED glass-ui; these are HAND-OFFs). Each carries a born-RED
+consumer gate = the consume-signal (greens only when glass-ui ships + the consumer bumps), the
+chronic-closure forcing function so none becomes a silent punt. Sources:
+`usf/docs/tranches/B/GLASS-UI-AX-HANDOFF.md`, kf `docs/tranches/H/valuejs-parsethat-glassui-handoff.md`.
+
+### Confirms / extends existing AX waves
+
+- **USF-1 + kf-G-1 + kf-G-2 → AX.W09 (specular).** TWO consumers confirm the resting-specular
+  blowout. Root cause (glass.css `.glass-material::before`, 3 compounding): (1) inner stop
+  `hsl(40 30% 100% / 0.55)` resolves to PURE WHITE (L=100% washes the 30% sat — not the "warm-cream"
+  the comment claims); (2) `mix-blend-mode: screen` of white over the dark canvas (.dark arm only
+  drops the floor 0.35→0.22 ≈ 0.47 white-screen at active); (3) a NON-ZERO rest floor
+  `opacity: var(--specular-intensity, 0.35)` paints it at rest, defeating the `@property`
+  `initial-value:0`; banded stops → the light rings. **The rest-floor→0 is the single highest-value
+  fix for a flat consumer.** AX.W09 ALSO gains the **wire-or-omit** leg (kf-G-1): a glass surface
+  either writes `--specular-x/y` from pointer itself (as `dock.js` does) OR does NOT emit
+  `.glass-specular-track` until a consumer opts in — a mouse-tracked radial with NO mouse writer must
+  never be the default. Calmer DEFAULT: rest ≤ 0.25 (not 0.55), radius ≤ 40%. kf-G-2: the dock-icon
+  `.glass-specular-track` (dock.js:568) IS pointer-wired, so it is a TUNE not a wire-up. RATIFY: the
+  specular default — `subtle` (rest≈0) vs `off` — flat-data consumers want `off` trivially declarable
+  (the Card `specular="off|subtle|full"` prop W09 already specs). Cross-repo gate: kf
+  `proof:specular-handoff` (born-RED until the published bump). Anchors: glass.css `.glass-material`,
+  CardFooter*.js:37, dock.js:568.
+
+- **USF-2 → AX.W06 (NEW sub-finding, not yet in AX.md).** DarkModeToggle-in-dock renders ~2.5× the
+  nav icons in `variant="rail"`. Root cause (glyph-sizing asymmetry): (1) DockIconButton glyphs are
+  consumer slots (`h-4 w-4` ≈ 40% of the 2.5rem box); (2) DarkModeToggle renders its OWN internal SVG
+  `h-full w-full` (custom/dark/DarkModeToggle.vue) — bypasses the slot convention; (3) in-dock,
+  dock-controls.css:194-201 sets `--dark-mode-toggle-padding: var(--dock-icon-padding, 0)` but
+  `--dock-icon-padding` is NEVER DEFINED → zero padding → the SVG fills the box (standalone md
+  correctly gets 0.375rem, so dock-specific). First-principles fix: the two icon-button families share
+  ONE optical-size contract when docked — route the toggle's internal glyph through a
+  `--dock-control-glyph-size` token (default `--icon-md`), scoped to the in-dock path only (`h-full
+  w-full` is correct for standalone). Folds to AX.W06 (owns dock-controls.css; lands last in the dock
+  band). Cross-repo gate: USF dock-control optical-parity visual gate.
+
+### New API asks (route to W21 / a primitive-additions home)
+
+- **kf-G-3 → AX.W21 (HIGH, NEW). `LabeledField orientation="horizontal"`** (label-LEFT / value-RIGHT
+  — the macOS/iOS settings-row idiom, distinct from the labels-above data-entry-FORM idiom). Add an
+  `orientation`/`inline` prop laying the row `grid-template-columns: auto 1fr; align-items:center` with
+  `.error { grid-column: 1 / -1 }`. Every `Labeled*` consumer + EditorHeader inherits the compact
+  settings-row by ONE prop instead of re-authoring a `grid-cols-[auto_1fr]` wrapper. The DURABLE home
+  for kf's controls-row layout. Sub-ask: a **label-row ACTION slot** (`<LabeledField>` exposes only
+  `default`+`error` today — a label-row action slot lets an "edit pencil" sit in the label row
+  idiomatically). Anchor: `.labeled-field` `utilities.css:62` (block flow today). Cross-repo gate: kf
+  `proof:single-column-pack` label-left clause (path B demo wrapper today → durable on the prop).
+
+- **kf-G-5 → AX.W21. `<DrawerContent spring>` prop** (already routed here by the liquid-glass fold) —
+  vaul `DrawerContent` uses 500ms `cubic-bezier(.32,.72,0,1)` (drawer.css:30); a `spring` prop
+  (SpringProgress curve ~240-300ms) lets consumers opt into the springy register. LOW/BOOK (kf ships
+  its own SpringProgress sheet, dogfooding). Useful for glass-ui's own Drawer consumers.
+
+- **kf-G-6 → AX.W21 / BOOK (LOW/OPTIONAL).** A named `surface="cartoon" tier="quiet"` preset/alias
+  (kf sets the pair on ~14 panel Cards). Born-GREEN today via the explicit pair; expose a named
+  register ONLY if wanted. Gate: kf `proof:glass-and-cartoon`.
+
+### Verify-landed / publish-currency
+
+- **kf-G-4 → AX.W33 (verify-landed). The `{types}` directional View-Transition helper.** The
+  liquid-glass + aurora published-vs-HEAD analysis already found `startViewTransition({types})` IS
+  landed at HEAD (unpublished). So G-4 is largely DONE — confirm the directional
+  `::view-transition-*` CSS companion ships, then it's publish-currency (W33). kf
+  `useSceneTransition.ts` is the waiting consumer. Gate: a kf demo-smoke VT-types assertion.
+
+- **kf-G-0 → NO AX ACTION (informational).** The dock-spring retune (the LAG chronic, ramp peak
+  +16.3% → the published 0.32/0.7 ~+4.6% at 53c1b07) is ALREADY published (3.5.0/3.5.1/3.6.0). AX
+  must NOT re-open it (the keyframes a-historical-dock oracle confirms it as the shipped-correct
+  baseline). kf consumes via a `^3.4.0 → ^3.5.1` bump, gated by `proof:dock-morph-settled`.
+
+### The cross-repo consume-gate discipline → AX.W34/W35
+
+Every hand-off pairs a born-RED CONSUMER gate (kf `proof:specular-handoff` / `proof:single-column-pack`
+/ `proof:glass-and-cartoon` / the VT-types smoke / `proof:dock-morph-settled`; USF's specular +
+dock-control visual gates) that greens ONLY when glass-ui ships + the consumer bumps — the
+chronic-closure forcing function (no silent forever-punt). These belong in the W34 (cross-constellation
+consumer-adoption ledger) + W35 (consumer-migration DAG) tracking, and the discipline itself reinforces
+the W00 visual-truth / no-silent-deferral philosophy. The publish hinge is AX.W33/W34: USF + kf bump
+3.x → the AX publish, full live re-audit after (the batch-1 reconciliation rides along).

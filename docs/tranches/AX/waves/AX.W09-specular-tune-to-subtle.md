@@ -271,6 +271,37 @@ band B alongside the two graphics blockers, but shares NO files with them. The d
 
 ---
 
+## Consumer hand-off confirmation (§20 — USF-1 + kf-G-1 + kf-G-2)
+
+TWO independent consumers (USF/slides + keyframes.js, each audited-not-patched per inv-16) confirm
+the resting-specular blowout and sharpen the root cause to THREE compounding facts in
+`glass.css .glass-material::before`:
+
+1. the inner stop `hsl(40 30% 100% / 0.55)` resolves to PURE WHITE — `L=100%` washes the `30%` sat,
+   so the "warm-cream" the comment claims never paints (the W09 warm-cream-low-alpha core fixes this);
+2. `mix-blend-mode: screen` of that white over the dark canvas — the `.dark` arm only drops the floor
+   `0.35→0.22` ≈ `0.47` white-screen at active (the over-hot bloom);
+3. a NON-ZERO rest floor `opacity: var(--specular-intensity, 0.35)` paints the radial AT REST, defeating
+   the `@property` `initial-value:0` — and the banded stops produce the light-mode concentric rings.
+
+**The rest-floor→0 is the single highest-value fix for a flat-data consumer** (USF emphasis — worst over
+flat backplates). W09 gains a SECOND leg from kf-G-1 — **wire-or-omit**: a glass surface either writes
+`--specular-x/y` from pointer ITSELF (as `dock.js` already does) OR does NOT emit `.glass-specular-track`
+until a consumer opts in. A mouse-tracked radial with NO mouse writer must never be the default (kf live:
+~13 glass hosts, 0 pointer-wired). The calmer DEFAULT lands at rest ≤ 0.25 (not 0.55), radius ≤ 40%.
+kf-G-2: the dock-icon `.glass-specular-track` (dock.js:568) IS already pointer-wired, so the dock icons
+are a TUNE within this same `--glass-specular-intensity-{rest,hover,active}` cohort, not a wire-up.
+
+**RATIFY-BEFORE-IMPL (consumer-driven):** the Card `specular` prop default — `subtle` (rest≈0) vs `off`.
+Flat-data consumers (USF charts) want `off` trivially declarable; the recommendation is `specular="off"`
+as the resting default for the `surface="glass"` data-backplate case, `subtle` for hero surfaces.
+
+**Cross-repo consume gate (the chronic-closure forcing function):** kf `proof:specular-handoff` +
+USF's specular visual gate — both born-RED, greening ONLY when glass-ui ships the wire-or-omit + the
+calmer default and the consumer bumps to the AX publish.
+
+---
+
 ## HardGate (born-RED→GREEN + the MANDATORY VISUAL-TRUTH live audit)
 
 **Headless / runtime gate — born-RED→GREEN.** `proof:glass-material-unified` (EXISTING, re-pointed; the

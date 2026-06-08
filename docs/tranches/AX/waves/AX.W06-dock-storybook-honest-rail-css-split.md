@@ -265,6 +265,32 @@ concurrently** (digest line 353). W06 lands **LAST in the dock band** by constru
 
 ---
 
+## Consumer hand-off sub-finding (§20 — USF-2, the dock-control optical-size contract)
+
+NEW (not in the original audit). USF reports DarkModeToggle renders **~2.5× the nav icons** in
+`GlassDock variant="rail"` — the glyph fills the button edge-to-edge. Root cause is a glyph-sizing
+asymmetry between the two dock icon-button families:
+
+1. `DockIconButton` glyphs are CONSUMER SLOTS (`h-4 w-4` ≈ 40% of the 2.5rem box) — the slot convention;
+2. `DarkModeToggle` renders its OWN internal SVG `h-full w-full` (custom/dark/DarkModeToggle.vue) —
+   bypassing the slot convention;
+3. in-dock, `dock-controls.css:194-201` sets `--dark-mode-toggle-padding: var(--dock-icon-padding, 0)`
+   but **`--dock-icon-padding` is NEVER DEFINED** → the fallback `0` wins → zero padding → the
+   `h-full w-full` SVG fills the box. (Standalone `md` correctly resolves `0.375rem`, so the defect is
+   dock-specific.)
+
+**First-principles fix (this wave owns it — W06 already touches dock-controls.css + flags a
+dock-control-primitive gap, and lands LAST in the dock band):** the two icon-button families must share
+ONE optical-size contract WHEN DOCKED. Route the toggle's internal glyph through a
+`--dock-control-glyph-size` token (default `--icon-md`), scoped to the in-dock path ONLY — `h-full
+w-full` stays correct for the standalone DarkModeToggle sizes. No per-component magic padding; one token
+the whole dock-control family reads. **Cross-repo consume gate:** USF's dock-control optical-parity
+visual gate (born-RED until the published bump). This sharpens W06's "honest rail" scope — the rail's
+control glyphs must be optically uniform with its nav glyphs, machine-checked by the parity gate, not
+eyeballed.
+
+---
+
 ## HardGate (born-RED→GREEN + the MANDATORY VISUAL-TRUTH live audit)
 
 **Headless / structural gates — born-RED→GREEN.**

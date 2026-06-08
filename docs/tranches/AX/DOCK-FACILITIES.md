@@ -1,0 +1,15 @@
+Wrote `/Users/mkbabb/Programming/glass-ui/docs/tranches/AX/DOCK-FACILITIES.md` — the §19 dock prototype+harden matrix synthesizing all 12 per-facility assays.
+
+Contents:
+
+**§1 — The facility matrix** (table): all 12 facilities (§19.1-19.12) with columns facility | current-state | owning-wave(s) | prototype-effort | GO/NO-GO hinge | visual-truth gate. Plus two structural notes flagged across assays: §19.6 carousel-dock is ownerless (recommend minting a dedicated composition wave), and §19.8's "useIdle composable" is a charter fiction (it's inline `scheduleCollapse` machinery in `useDockState.ts` with a 2000/2500ms delay divergence).
+
+**§2 — Prototype backlog ordered by risk**, with W00 as the P0 keystone precondition (no spike runnable until the π-lane stands up; `playwright` not a devDep at HEAD). The four HIGH-RISK PoCs lead: PR-1 morph substrate / interruptible single-scalar (19.1+19.10), PR-2 arbitrary-shape reshape (19.11, the scope-deciding one — the web platform can't continuously morph mismatched-topology clip-paths), PR-3 big-dock 2D (19.3). Then MEDIUM (layering fold, vertical build-vs-excise, rail, carousel-dock, slide-dock, click-events) and LOW (slider/idle hold — small but device-fidelity-critical, the PoC must be a real browser since happy-dom can't reproduce the reka Slot forwarding-drop).
+
+**§3 — Hardening backlog** grouped 3A-3I: the four cross-cutting morph substrate invariants (registered-scalar/inheritance-bomb guard, paint-bounded budget, universal velocity-continuous retarget, PRM-snap+live-re-monitor) promoted to W42, then per-facility edge cases + spec sharpenings folded into W00-06/W42 with the specific gate arms and cited line numbers.
+
+**§4 — Drive-readiness verdict per facility** (table): drive-ready / prototype-gated / harden-gated, each with what unblocks it, plus the band serialization law (W00→W01→{W02-W06}→W42; every wave mutates dock.css/GlassDock.vue so none parallelize).
+
+**§5 — The recommended single PROTOTYPE-SPIKE plan**: one throwaway `dock-facility-showcase.vue` route co-mounting all 12 facilities across six dock instances on the post-W01 single-scalar driver, one instrumentation harness (the W00 π-lane test-seam, one rAF timeline, the interruption matrix, the composition assertions, the PRM pass), closing on a paired-π BEFORE/AFTER/DELTA at 3 viewports × light/dark on the DEFAULT engine — the convergent visual-truth proof that the 12 facilities are ONE morph model, the single guard against the AW headless-green/visually-broken gap recurring across the whole dock surface.
+
+Waves cited throughout: W00 (π lane), W01 (single-scalar morph, keystone), W02 (orchestrator fold), W03 (keepDockOpen host-native hold), W04 (overflow/wrap + card), W05 (spring vocabulary), W06 (rail/storybook/css-split), W23 (carousel indicator), W24 (deck-progress), W32 (slides adoption), W34 (consumer cleanup, read-only), W42 (liquid-morph substrate).
