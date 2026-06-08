@@ -1726,3 +1726,34 @@
     inherits: false;
     initial-value: 0;
 }
+
+/* ── The specular-intensity magnitude cohort (AX.W09) ──────────────────────
+   The catch-light alpha multiplier at each interaction state, as a SINGLE
+   overridable token cohort (was three buried literals across glass.css —
+   `0.35` rest floor / `0.6` hover / `0.85` active — and the `.dark` arm's
+   `0.22`). `glass.css`'s `.glass-material::before` rest/hover/active rules READ
+   these, so the subtle-vs-extreme magnitude is a knob a consumer (or the dark
+   arm) retunes ON THE CASCADE — never a re-buried literal. Override on `:root`
+   to retune library-wide; the cartoon-shadow override contract is the precedent.
+
+   Re-baselined to a SUBTLE ladder (≈ half the retired `0.35/0.6/0.85`):
+     • rest   0    — static, unwired surfaces are CLEAN; the catch-light wakes
+                     only on hover/active or on a pointer-wired surface. This
+                     aligns the painted rest behaviour with the @property
+                     `--specular-intensity { initial-value: 0 }` dormancy the
+                     prior unconditional `0.35` floor defeated.
+     • hover  0.22 — a subtle warm-cream lens, not a flash.
+     • active 0.32 — the press whisper; ≈ 0.22α × the warm-cream core, a lens
+                     not the prior ≈ 0.47 pure-white-screen hotspot. */
+:root {
+    --glass-specular-intensity-rest: 0;
+    --glass-specular-intensity-hover: 0.22;
+    --glass-specular-intensity-active: 0.32;
+}
+
+/* Over the deep canvas the `screen` blend lifts harder, so the dark arm runs a
+   touch softer on the interaction rungs (rest already 0). */
+.dark {
+    --glass-specular-intensity-hover: 0.18;
+    --glass-specular-intensity-active: 0.26;
+}
