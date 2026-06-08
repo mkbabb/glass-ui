@@ -4,6 +4,9 @@ export type { UseDockStateOptions, UseDockStateReturn, DockState } from "./useDo
 export { useLayerTransition } from "./useLayerTransition";
 export type { UseLayerTransitionOptions, UseLayerTransitionReturn } from "./useLayerTransition";
 
+export { useDockHold } from "./useDockHold";
+export type { UseDockHoldOptions, UseDockHoldReturn } from "./useDockHold";
+
 export { isTeleportedTarget } from "./isTeleportedTarget";
 export {
     provideDockContext,

@@ -37,7 +37,6 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const DOCK_ROUTE = "/navigation/dock";
-const SLIDER_ROUTE = "/compositions/dock-with-slider";
 const MIN_MORPH_FRAMES = 3;
 
 // ── the in-page probe ────────────────────────────────────────────────────────
@@ -246,66 +245,6 @@ function prmProbe() {
     });
 }
 
-// Slider-hold probe — synthetic in-dock drag holds the dock open.
-function sliderHoldProbe() {
-    return new Promise((resolve) => {
-        const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-        // Target the dedicated short-delay hold story (the AW.W3 proof section),
-        // whose collapse delay (600ms) makes the idle-collapse-under-drag fast to
-        // sample. Fall back to any collapsible dock with a slider.
-        const holdWrap = document.querySelector('[data-testid="dock-slider-hold"]');
-        const docks = [...document.querySelectorAll(".glass-dock")];
-        const dock =
-            holdWrap?.querySelector(".glass-dock") ||
-            docks.find((d) => d.querySelector('[data-variant], [role="slider"], .slider-thumb'));
-        if (!dock) {
-            resolve({ error: "no dock-with-slider found on the route" });
-            return;
-        }
-        const slider = dock.querySelector('[role="slider"], .slider-thumb') || dock.querySelector(".slider-track");
-        if (!slider) {
-            resolve({ error: "no slider thumb/track in the dock" });
-            return;
-        }
-        const fire = (el, type, opts = {}) => {
-            const r = el.getBoundingClientRect();
-            el.dispatchEvent(
-                new PointerEvent(type, {
-                    bubbles: true,
-                    cancelable: true,
-                    clientX: r.x + r.width / 2,
-                    clientY: r.y + r.height / 2,
-                    pointerId: 1,
-                    pointerType: "mouse",
-                    ...opts,
-                }),
-            );
-        };
-        (async () => {
-            // Expand via hover first (collapsible dock).
-            fire(dock, "pointerenter");
-            fire(dock, "mouseenter");
-            await sleep(120);
-            const expandedBeforeDrag = dock.classList.contains("expanded");
-            // Begin the drag on the slider.
-            fire(slider, "pointerdown");
-            // Leave the dock bounds during the drag (the idle-collapse trigger).
-            fire(dock, "pointerleave", { relatedTarget: document.body });
-            fire(dock, "mouseleave");
-            // Wait LONGER than the collapse delay to prove the hold suppresses it.
-            // The default collapseDelay is 2000ms; sample at 2300ms.
-            await sleep(2300);
-            const expandedDuringHold = dock.classList.contains("expanded");
-            // Release — re-arms the idle collapse.
-            fire(window, "pointerup");
-            fire(dock, "pointerleave", { relatedTarget: document.body });
-            await sleep(2300);
-            const collapsedAfterRelease = dock.classList.contains("collapsed");
-            resolve({ expandedBeforeDrag, expandedDuringHold, collapsedAfterRelease });
-        })();
-    });
-}
-
 // ── pure assertions over a captured timeline (unit-testable) ──────────────────
 
 export function risingFrames(series, eps = 0.001) {
@@ -455,28 +394,14 @@ export function detectPrmSample(prm) {
     return { facts, violations };
 }
 
-export function detectSliderHold(hold) {
-    const violations = [];
-    const facts = {};
-    if (!hold || hold.error) {
-        violations.push(`slider-hold sample error: ${hold?.error ?? "missing"}`);
-        return { facts, violations };
-    }
-    facts.expandedBeforeDrag = hold.expandedBeforeDrag;
-    facts.expandedDuringHold = hold.expandedDuringHold;
-    facts.collapsedAfterRelease = hold.collapsedAfterRelease;
-    if (!hold.expandedDuringHold) {
-        violations.push(
-            "the dock idle-collapsed under the held slider thumb — the dockKeepOpen token was not acquired / not held for the drag",
-        );
-    }
-    if (!hold.collapsedAfterRelease) {
-        violations.push(
-            "the dock did not re-collapse after the slider release — the dockKeepOpen token was not released (the idle collapse stayed suppressed)",
-        );
-    }
-    return { facts, violations };
-}
+// AX.W03 — the fail-open `detectSliderHold` SKIP arm (the synthetic in-dock
+// slider-hold probe + its detector) is RETIRED here. It exited 0 with no
+// Playwright harness present, giving false assurance — the broken keepDockOpen
+// contract shipped GREEN across 3.4.0→3.6.0 behind it. Its responsibility
+// migrates to the deterministic, bite-in-CI `proof:dock-hold-contract` mount
+// gate (a @vue/test-utils MOUNT that dispatches a real pointerdown on the
+// resolved slider host — see scripts/proof-dock-hold-contract.mjs). The rest of
+// the polish gate (directional asymmetry, FLIP, PRM) is untouched.
 
 export function detectLayeringPolish(result) {
     const violations = [];
@@ -505,11 +430,6 @@ export function detectLayeringPolish(result) {
         const prm = detectPrmSample(result.prm);
         Object.assign(facts, prm.facts);
         violations.push(...prm.violations);
-    }
-    if (result.sliderHold) {
-        const sh = detectSliderHold(result.sliderHold);
-        Object.assign(facts, sh.facts);
-        violations.push(...sh.violations);
     }
 
     return { facts, violations };
@@ -567,11 +487,8 @@ async function run() {
         await prmPage.waitForSelector(".glass-dock.collapsed", { timeout: 5000 });
         result.prm = await prmPage.evaluate(prmProbe);
 
-        // (e) slider-hold on the composition route.
-        const sliderPage = await browser.newPage();
-        await sliderPage.goto(`${BASE_URL}${SLIDER_ROUTE}`, { waitUntil: "networkidle" });
-        await sliderPage.waitForSelector(".glass-dock", { timeout: 5000 });
-        result.sliderHold = await sliderPage.evaluate(sliderHoldProbe);
+        // (e) the slider-hold probe is RETIRED — its responsibility migrated to
+        //     the bite-in-CI `proof:dock-hold-contract` mount gate (AX.W03).
     } catch (e) {
         if (browser) await browser.close();
         writeGateArtifact(ARTIFACT, {
@@ -603,7 +520,6 @@ async function run() {
     console.log(`  stagger monotone        : ${facts.staggerMonotone ?? "n/a"} (${facts.staggerRevealFrames ?? "n/a"} frames)`);
     console.log(`  active pane opacity == 1: ${facts.activePaneOpacityStatic1 ?? "n/a"}`);
     console.log(`  PRM scale/stagger frames: ${facts.prmScaleRisingFrames ?? "n/a"} / ${facts.prmStaggerRevealFrames ?? "n/a"}`);
-    console.log(`  slider held during drag : ${facts.expandedDuringHold ?? "n/a"}`);
     if (violations.length) {
         console.log("\nVIOLATIONS:");
         for (const v of violations) console.log(`  x ${v}`);

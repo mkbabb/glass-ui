@@ -1,0 +1,42 @@
+{
+  "wave": "AX.W03",
+  "title": "keepDockOpen rebuild — host-native hold; live re-diagnosis witness",
+  "head": "e32d944 (post-W01/W02/W07/W08/W09/W10/W15/W17 settled base)",
+  "ritual": "wave-open live re-diagnosis (AX.W00 §Cadence step 1) — confirm the forwarding-drop is STILL the live root cause on the post-W01 HEAD, not a hypothesis carried from the audit",
+  "rootCauseConfirmed": true,
+  "codeLevelWitness": {
+    "note": "The implementer cannot run a real browser; the forwarding-drop is re-confirmed at the CODE level against the resolved reka-ui dist + a deterministic jsdom MOUNT born-RED witness (which IS the falsifiable RED — it dispatches a real pointerdown on the SAME DOM node the user presses).",
+    "rekaSliderRootForwarding": {
+      "file": "node_modules/reka-ui/dist/Slider/SliderRoot.js:148-200",
+      "finding": "SliderRoot renders `createBlock(CollectionSlot, …, createBlock(resolveDynamicComponent(SliderHorizontal|SliderVertical), mergeProps(_ctx.$attrs, { ref: forwardRef, onPointerdown: _cache[0], onSlideStart, … })))`. A consumer `@pointerdown` arrives as `$attrs.onPointerdown` and is merged with reka's OWN cached `onPointerdown` (_cache[0]) then forwarded DOWN through SliderHorizontal → SliderImpl → Primitive. Across the CollectionSlot + resolveDynamicComponent + forwardRef chain the consumer handler is shadowed — it never reaches the rendered DOM node."
+    },
+    "rekaSliderImplDomListener": {
+      "file": "node_modules/reka-ui/dist/Slider/SliderImpl.js:46-52",
+      "finding": "The DOM-attached pointerdown is reka's own _cache[1]: `target.setPointerCapture(event.pointerId); event.preventDefault(); … emits('slideStart')`. This is the handler that actually binds to the host node; the consumer's forwarded $attrs handler is not on it."
+    }
+  },
+  "preFix": {
+    "mountGate": "tests/components/ui/slider/dock-hold-contract.test.ts",
+    "heldAfterPointerdown": false,
+    "keepOpenCalls": 0,
+    "dataHeldOnDockRoot": false,
+    "dataHeldOnSliderRoot": false,
+    "nativeAddEventListenerRuns": true,
+    "witness": "At HEAD the mount gate is born-RED for the RIGHT reason: a real pointerdown dispatched on the resolved [data-slot=slider] host yields keepOpen() expected +0 to be 1 (the template @pointerdown never fired through reka's forwarding); a real touchstart likewise expected +0 to be 1; end-to-end against the REAL <GlassDock> provide, data-held expected false to be true on the dock root. The dispatch DOES reach the node (a manually-added native listener fires), proving the device-bisection: the event reaches the host; only the Vue template binding is dropped."
+  },
+  "secondLatentDefect": {
+    "name": "keepDockOpen default never applied (absent-boolean-cast trap)",
+    "finding": "Independent of the forwarding-drop, the documented `Default: true` for the `keepDockOpen` boolean prop NEVER reached the common no-prop call site (the demo + every real consumer). Vue casts an ABSENT boolean prop to `false` (not `undefined`), so `props.keepDockOpen ?? true` resolved to `false` and DISARMED the hold by default. Even with a working binding, the hold would not have armed. Collapsed by W03 via `withDefaults(..., { keepDockOpen: true })`.",
+    "device": "isolated jsdom probe — armed=false with no prop; armed=true with explicit :keep-dock-open=\"true\""
+  },
+  "postFix": {
+    "mechanism": "useDockHold(resolveHost) — native addEventListener('pointerdown'|'touchstart') on the RESOLVED reka forwardRef host (getRootEl()), window-scoped pointerup/pointercancel release, onBeforeUnmount teardown, useOptionalDockContext() DI (keepOpen/release/held). One owner, one acquire path. The dead <SliderRoot> @pointerdown/@touchstart template bindings + the duplicated acquire/release booleans + the parallel watch(touchGate.isActive) acquire path are DELETED.",
+    "mountGate": "GREEN — 3/3: pointerdown acquires keepOpen()+lights data-held; window pointerup releases+clears; touchstart drives the SAME single acquire (no parallel path); end-to-end data-held paints on BOTH the dock root and the slider root.",
+    "keepOpenCalls": 1,
+    "dataHeldOnDockRoot": true,
+    "dataHeldOnSliderRoot": true,
+    "typecheck": "GREEN (vue-tsc --noEmit, exit 0)",
+    "dockSuite": "98/98 GREEN; slider + smoke + detect 61/61 GREEN; gate-script-parity GREEN (0 new orphan/dangling)"
+  },
+  "liveVisualTruthOwnedByOrchestrator": "The π-lane Playwright + frontend-design BEFORE(broken)/AFTER(fixed)/DELTA over ≥3 viewports on /compositions/dock-with-slider [data-testid=dock-slider-hold] is the orchestrator's to run (a real-GPU darwin→Metal device; the implementer cannot drive a real browser). See liveVerifyNeeded in the wave's structured return."
+}
