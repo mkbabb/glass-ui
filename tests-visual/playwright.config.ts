@@ -25,6 +25,22 @@ const DEMO_URL = process.env.GLASS_UI_DEMO_URL ?? `http://127.0.0.1:${DEMO_PORT}
 // The library workspace root (one dir up — the `npm run dev` cwd).
 const LIBRARY_ROOT = new URL("..", import.meta.url).pathname;
 
+// The ANGLE backend. On a real-GPU dev box (darwin → Metal) we render on the ACTUAL
+// device — the TRUE render path the cardinal lesson demands, and stable (software GL
+// crashes the aurora WebGL2 shaders). A GPU-less CI runner degrades to SwiftShader
+// (deterministic software rasterizer). Override with PI_ANGLE=swiftshader|metal.
+const PI_ANGLE =
+    process.env.PI_ANGLE ?? (process.platform === "darwin" ? "metal" : "swiftshader");
+const ANGLE_ARGS =
+    PI_ANGLE === "metal"
+        ? ["--use-gl=angle", "--use-angle=metal"]
+        : [
+              "--use-gl=angle",
+              "--use-angle=swiftshader",
+              "--enable-unsafe-swiftshader",
+              "--enable-features=Vulkan",
+          ];
+
 export default defineConfig({
     testDir: ".",
     testMatch: "*.spec.ts",
@@ -52,15 +68,12 @@ export default defineConfig({
                 ...devices["Desktop Chrome"],
                 channel: undefined,
                 launchOptions: {
-                    // Chrome-headless-new + a deterministic software GL backend so
-                    // the WebGL2 substrate paints on a GPU-less runner.
+                    // Chrome-headless-new + the resolved ANGLE backend (real-GPU
+                    // Metal on a dev box, SwiftShader on a GPU-less CI runner).
                     args: [
                         "--headless=new",
-                        "--use-gl=angle",
-                        "--use-angle=swiftshader",
-                        "--enable-unsafe-swiftshader",
+                        ...ANGLE_ARGS,
                         "--enable-unsafe-webgpu",
-                        "--enable-features=Vulkan",
                         "--ignore-gpu-blocklist",
                     ],
                 },

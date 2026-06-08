@@ -22,14 +22,25 @@ import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-outpu
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const WORKSPACE = resolve(ROOT, "tests-visual");
-const PW_BIN = resolve(WORKSPACE, "node_modules/.bin/playwright");
-const PW_PKG = resolve(WORKSPACE, "node_modules/@playwright/test/package.json");
+// npm workspaces HOIST @playwright/test to the ROOT node_modules; resolve the runner
+// across BOTH the workspace-local AND the hoisted-root layout (else a hoisted install
+// false-SKIPs the fail-CLOSED arm — AX.W00 orchestrator integration fix).
+const PW_BIN =
+    [
+        resolve(WORKSPACE, "node_modules/.bin/playwright"),
+        resolve(ROOT, "node_modules/.bin/playwright"),
+    ].find(existsSync) ?? null;
+const PW_PKG =
+    [
+        resolve(WORKSPACE, "node_modules/@playwright/test/package.json"),
+        resolve(ROOT, "node_modules/@playwright/test/package.json"),
+    ].find(existsSync) ?? null;
 const REPORT = resolve(WORKSPACE, ".cache/pi-report.json");
 const COMMAND = "npm run proof:substrate-paints-color";
 
 /** Whether the π workspace carries an INSTALLED Playwright (the device present). */
 function workspacePresent() {
-    return existsSync(PW_PKG) && existsSync(PW_BIN);
+    return PW_PKG !== null && PW_BIN !== null;
 }
 
 /** Parse the Playwright JSON report into {passed, failed, specs, failures}. */
@@ -87,15 +98,18 @@ function run() {
         process.exit(0);
     }
 
-    // The workspace IS present — fail-CLOSED from here. Run the spec.
+    // The workspace IS present — fail-CLOSED from here. Run the spec. The json
+    // reporter writes the report to REPORT deterministically via
+    // PLAYWRIGHT_JSON_OUTPUT_NAME (a bare `--reporter=json` streams to stdout, which
+    // the `list` lines corrupt — the parse must read the FILE).
     const res = spawnSync(
         PW_BIN,
-        ["test", "substrate-paints-color.spec.ts", "--reporter=json,list"],
+        ["test", "substrate-paints-color.spec.ts", "--reporter=list,json"],
         {
             cwd: WORKSPACE,
             stdio: ["ignore", "pipe", "inherit"],
             encoding: "utf8",
-            env: process.env,
+            env: { ...process.env, PLAYWRIGHT_JSON_OUTPUT_NAME: REPORT },
         },
     );
 

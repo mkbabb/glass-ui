@@ -586,11 +586,19 @@ async function loadPlaywright() {
 // Whether the π workspace carries an INSTALLED Playwright runner (the fail-CLOSED
 // device is present). When present, a missing morph is a hard RED — never a SKIP.
 function piWorkspacePresent(ROOT) {
+    // npm workspaces HOIST @playwright/test to the ROOT node_modules — accept EITHER
+    // the workspace-local or the hoisted-root layout (AX.W00 orchestrator integration
+    // fix: a hoisted install must NOT false-SKIP the fail-CLOSED live arm).
     const ws = resolve(ROOT, "tests-visual");
-    return (
-        existsSync(resolve(ws, "node_modules/@playwright/test/package.json")) &&
-        existsSync(resolve(ws, "node_modules/.bin/playwright"))
-    );
+    const pkg = [
+        resolve(ws, "node_modules/@playwright/test/package.json"),
+        resolve(ROOT, "node_modules/@playwright/test/package.json"),
+    ];
+    const bin = [
+        resolve(ws, "node_modules/.bin/playwright"),
+        resolve(ROOT, "node_modules/.bin/playwright"),
+    ];
+    return pkg.some(existsSync) && bin.some(existsSync);
 }
 
 async function run() {
