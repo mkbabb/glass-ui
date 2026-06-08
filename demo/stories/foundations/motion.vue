@@ -16,11 +16,13 @@ const curves: Curve[] = [
     { id: "ease-in", label: "ease-in", cssVar: "--ease-in", kind: "cubic" },
     { id: "ease-out-expo", label: "ease-out-expo", cssVar: "--ease-out-expo", kind: "cubic" },
     { id: "ease-apple", label: "ease-apple", cssVar: "--ease-apple", kind: "cubic" },
-    { id: "ease-apple-spring", label: "ease-apple-spring", cssVar: "--ease-apple-spring", kind: "cubic" },
+    // AX.W05 — the legacy --ease-apple-spring bezier is excised; the spring tour
+    // is the governed --spring-* register vocabulary (incl. the dock register).
     { id: "spring-smooth", label: "spring-smooth", cssVar: "--spring-smooth", kind: "spring" },
     { id: "spring-snappy", label: "spring-snappy", cssVar: "--spring-snappy", kind: "spring" },
     { id: "spring-bouncy", label: "spring-bouncy", cssVar: "--spring-bouncy", kind: "spring" },
     { id: "spring-gentle", label: "spring-gentle", cssVar: "--spring-gentle", kind: "spring" },
+    { id: "spring-dock", label: "spring-dock", cssVar: "--spring-dock", kind: "spring" },
 ];
 
 const dotRefs = ref<Record<string, HTMLElement | null>>({});

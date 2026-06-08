@@ -21,42 +21,64 @@ const root = resolve(fileURLToPath(new URL("../", import.meta.url)));
 export const tokensPath = resolve(root, "src/styles/tokens.css");
 
 /**
- * iOS-canonical (response, dampingFraction) pairs for the four glass-ui
- * named springs. See `docs/audits/2026-05-26-AL-design-amend/X4-spring-engine.md`
- * §3 for the rationale. The names match speedtest CSS consumers (which
- * reach `var(--spring-smooth)` etc. directly), so they MUST stay stable
- * across regens — only the `(response, ζ)` and emitted stops change.
+ * iOS-canonical (response, dampingFraction) pairs for the five glass-ui named
+ * springs. See `docs/audits/2026-05-26-AL-design-amend/X4-spring-engine.md` §3
+ * for the rationale. The names match speedtest CSS consumers (which reach
+ * `var(--spring-smooth)` etc. directly), so they MUST stay stable across regens
+ * — only the `(response, ζ)` and emitted stops change.
+ *
+ * GOVERNED iOS-SPRING VOCABULARY (AX.W05). This is the SINGLE source of the
+ * register vocabulary — the legacy `--ease-apple-spring` cubic-bezier was a
+ * second authority and is EXCISED. Each preset's `comment` names the
+ * surface-class that rides it (the doc-table derives from this one table):
+ *
+ *   SETTLE  → --spring-smooth   — patient entrances, fades, scale-ins (no overshoot read).
+ *   CONTROL → --spring-snappy   — crisp position morphs: tab underline glide,
+ *                                 progress fill, the continuous-marker pop, the
+ *                                 generic crisp settle. The SOTA restraint rule:
+ *                                 structural UI morphs ride control, never bouncy.
+ *   PLAYFUL → --spring-bouncy   — deliberate emphatic one-shots ONLY: the bouncy
+ *                                 toggle press, dialog/success entrances, the VT
+ *                                 default. The largest governed overshoot.
+ *   GENTLE  → --spring-gentle   — critically-damped slow settles (the patient end
+ *                                 of the ladder); reached via the --ease-spring-gentle
+ *                                 @theme alias (a documented public register).
+ *   DOCK    → --spring-dock     — the dock expand/collapse morph AND everything
+ *                                 inside it: the in-dock keepDockOpen Slider thumb
+ *                                 (--slider-thumb-spring defaults here) breathes on
+ *                                 the SAME curve as the dock it lives in. W01 owns
+ *                                 the curve; W05 governs the register around it.
  */
 const PRESETS = [
     {
         name: "smooth",
         response: 0.5,
         dampingFraction: 0.86,
-        comment: "gentle settle, no overshoot",
+        comment: "SETTLE register — entrances/fades/scale-ins, no overshoot read",
     },
     {
         name: "snappy",
         response: 0.35,
         dampingFraction: 0.65,
-        comment: "quick crisp, overshoot ~+6.8%",
+        comment: "CONTROL register — crisp position morphs (tab underline, progress fill, marker pop), overshoot ~+6.8%",
     },
     {
         name: "bouncy",
         response: 0.5,
         dampingFraction: 0.45,
-        comment: "emphatic overshoot ~+20.5%",
+        comment: "PLAYFUL register — emphatic one-shots only (bouncy toggle, dialog/success entrance, VT default), overshoot ~+20.5%",
     },
     {
         name: "gentle",
         response: 0.7,
         dampingFraction: 1.0,
-        comment: "patient critically-damped",
+        comment: "GENTLE register — patient critically-damped settle, reached via the --ease-spring-gentle @theme alias",
     },
     {
         name: "dock",
         response: 0.32,
         dampingFraction: 0.7,
-        comment: "dock expand/collapse morph — iOS-control settled, overshoot ~+4.6% (AW.W2 retune off the +18.5% playful register)",
+        comment: "DOCK register — dock expand/collapse morph + the in-dock Slider thumb, iOS-control settled, overshoot ~+4.6% (AW.W2 retune off the +18.5% playful register)",
     },
 ];
 

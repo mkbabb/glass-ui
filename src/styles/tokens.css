@@ -175,10 +175,8 @@
 
     /* Apple-inspired — micro-interactions, switches, dock hover */
     --motion-ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1);
-    --motion-ease-apple-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
     --ease-apple: var(--motion-ease-apple);
-    --ease-apple-spring: var(--motion-ease-apple-spring);
     --ease-spring: var(--spring-snappy);
     --ease-decelerate: var(--ease-out);
     --ease-accelerate: var(--ease-in);
@@ -1354,12 +1352,14 @@
     --top-layer-backdrop-dim: 0.5;
 
     --vt-duration: var(--duration-normal);
-    /* AV.W3 C2 — the spring-coverage sweep: every spring-flavored transition
-       reads a `--spring-*` token. `--ease-apple-spring`'s +27.5% overshoot maps
-       to `--spring-bouncy` (the closest `linear()` overshoot stop-set), so the
-       VT default and the cards/top-layer transitions share one spring primitive
-       (CPU + GPU sample the same curve). The apple-spring cubic-bezier survives
-       as a token DEFINITION only (a `@supports not (linear())` fallback seed). */
+    /* AX.W05 — ONE iOS-spring vocabulary: every spring-flavored transition reads
+       a governed `--spring-*` register. The legacy apple-spring cubic-bezier
+       (+27.5% overshoot) was a SECOND authority beside the regen `--spring-*`
+       cohort; it is EXCISED. Its emphatic-overshoot register maps to the playful
+       `--spring-bouncy` (the closest `linear()` overshoot stop-set), so the VT
+       default + the cards/top-layer transitions share one spring primitive
+       (CPU + GPU sample the same curve). No cubic-bezier fallback seed survives —
+       the `linear()` spring degrades to `ease` where `linear()` is unsupported. */
     --vt-ease: var(--spring-bouncy);
     --vt-rise: 8px;
 

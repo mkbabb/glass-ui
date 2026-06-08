@@ -15,7 +15,9 @@
 // NO FORK OUTSIDE the generator: no second spring/easing authority sits on a
 // dock/aurora/blob/primitive animated property.
 //
-// THREE assertions over the animated-surface file set:
+// SIX assertions over the animated-surface file set (AX.W05 widened the gate
+// from three — the apple-spring survivor sweep + the --spring-* consumer-coverage
+// census + the cross-repo constellation census):
 //
 //   ONE-SPRING-SOURCE  — the ONLY `--spring-*` DEFINITIONS in the repo live in
 //                        the regen-generated §2 EASING block in tokens.css. A
@@ -40,18 +42,53 @@
 //                        literal `0.9x`. ONE press vocabulary — no per-atom
 //                        literal scale.
 //
+//   APPLE-SPRING-SURVIVOR (AX.W05) — the legacy `--ease-apple-spring` /
+//                        `--motion-ease-apple-spring` cubic-bezier is EXCISED.
+//                        Zero definitions + zero consumers anywhere in `src/`
+//                        (comment-stripped, so the excision-rationale prose is
+//                        never a false witness). A SECOND iOS-spring authority
+//                        beside the governed `--spring-*` cohort is the no-legacy
+//                        violation; this is the deletion-proof.
+//
+//   SPRING-CONSUMER-COVERAGE (AX.W05) — every emitted `--spring-X` definition has
+//                        ≥1 live consumer, counting BOTH a direct `var(--spring-X)`
+//                        read AND a `--ease-spring-X` @theme-alias reach (the alias
+//                        is a documented public register — presets-in-consumers).
+//                        A generated preset with ZERO reach FAILS CLOSED — the
+//                        generator cannot mint a dead token.
+//
+//   APPLE-SPRING-CONSTELLATION (AX.W05, cross-repo forcing function) — the
+//                        constellation consumers (at minimum `../speedtest`) carry
+//                        NO `var(--ease-apple-spring)` read while inheriting the
+//                        token with no local definition. STAYS RED until the W34
+//                        speedtest re-point leg lands (the publish-gated census
+//                        that prevents the silent clean-break). An ABSENT sibling
+//                        is SKIPPED (recorded, not failed) — the census is only
+//                        falsifiable where the sibling is checked out.
+//
 // House style mirrors proof-dock-motion-single-source.mjs: ESM .mjs, a CSS
 // comment-strip first (false-witness discipline — a commented-out `cubic-bezier`
 // or an explanatory token list is never a witness), a pure exported detector, a
 // byte-stable JSON artefact via gate-output, a human summary, exit(1) on any
 // violation.
 
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
+
+// The repo `src/` tree — the survivor sweep + the consumer-coverage census walk
+// it (CSS + SFC + TS). The constellation census walks the sibling consumers'
+// `src/` (at minimum speedtest) — sibling paths are ROOT-relative `../<name>`.
+const SRC_DIR = resolve(ROOT, "src");
+const CONSTELLATION_SIBLINGS = ["../speedtest"];
+
+// The legacy apple-spring authority AX.W05 excises. The survivor sweep reds on
+// ANY definition or consumer of either name in `src/`; the constellation census
+// reds on a consumer read in a sibling that has no local definition.
+const APPLE_SPRING_RE = /--(?:motion-)?ease-apple-spring\b/g;
 
 // The animated-surface CSS file set the spec §2/§6 names. Each is scanned for a
 // hand-rolled easing literal on a transition/animation property + a press-scale
@@ -220,6 +257,145 @@ export function detectPressForks(file, src) {
     return violations;
 }
 
+// ── AX.W05 src-tree walk + a CSS+line-comment strip ──────────────────────────
+// The survivor sweep + the consumer-coverage census walk the whole `src/` tree
+// (CSS tokens + SFC `<style>`/`<script>` + TS), so a witness in any consumer file
+// (not just the 3 SURFACE_CSS) is caught. Comments are stripped first so the
+// excision-rationale prose ("apple-spring was excised → maps to --spring-…") is
+// never a false witness — the false-witness discipline the gate header names.
+function walkSrc(dir, acc = []) {
+    if (!existsSync(dir)) return acc;
+    for (const n of readdirSync(dir)) {
+        if (n === "node_modules" || n === "__tests__") continue;
+        const p = join(dir, n);
+        if (statSync(p).isDirectory()) walkSrc(p, acc);
+        else if (/\.(css|vue|ts|tsx)$/.test(n)) acc.push(p);
+    }
+    return acc;
+}
+
+// Strip both CSS block comments AND JS/TS line comments (a `.vue`/`.ts` file
+// carries `//` rationale). Block comments reuse the offset-preserving CSS strip;
+// the line-comment pass blanks `// …` to end-of-line. `https://` is not a CSS
+// token home here, but guard the `//` strip to a non-`:` predecessor so a stray
+// URL is not mangled (a token-name witness never sits inside a URL anyway).
+function stripAllComments(src) {
+    const noBlocks = stripCssComments(src);
+    return noBlocks
+        .split("\n")
+        .map((line) => {
+            const i = line.indexOf("//");
+            if (i === -1) return line;
+            if (i > 0 && line[i - 1] === ":") return line; // not a comment (URL)
+            return line.slice(0, i);
+        })
+        .join("\n");
+}
+
+// APPLE-SPRING-SURVIVOR — zero `--ease-apple-spring`/`--motion-ease-apple-spring`
+// references (definition OR consumer) anywhere in `src/`, comment-stripped.
+export function detectAppleSpringSurvivors(files, read) {
+    const survivors = [];
+    for (const file of files) {
+        const stripped = stripAllComments(read(file));
+        let m;
+        APPLE_SPRING_RE.lastIndex = 0;
+        while ((m = APPLE_SPRING_RE.exec(stripped)) !== null) {
+            survivors.push(`${file}:${lineOf(stripped, m.index)}: '${m[0]}'`);
+        }
+    }
+    return survivors;
+}
+
+// SPRING-CONSUMER-COVERAGE — every `--spring-X` defined in tokens.css has ≥1
+// live consumer across `src/`, counting a direct `var(--spring-X)` read OR a
+// `--ease-spring-X` alias reach (the alias is a documented public register). The
+// alias DEFINITION line in theme.css (`--ease-spring-gentle: var(--spring-gentle)`)
+// counts as the alias reach that proves the public register exists. A preset with
+// ZERO reach is a dead generator mint → fail-closed.
+export function detectSpringCoverage(tokensSrc, files, read) {
+    const violations = [];
+    const facts = {};
+
+    // The defined preset names (smooth/snappy/bouncy/gentle/dock), from the
+    // §2 EASING block DEFINITIONS in tokens.css.
+    const names = [
+        ...new Set(
+            [...tokensSrc.matchAll(/--spring-([a-z-]+)\s*:/g)].map((m) => m[1]),
+        ),
+    ];
+    facts.presets = names;
+
+    const blob = files.map((f) => stripAllComments(read(f))).join("\n");
+    const coverage = {};
+    for (const name of names) {
+        const direct = new RegExp(`var\\(\\s*--spring-${name}\\b`).test(blob);
+        // The `--ease-spring-X` alias reach: either a `var(--ease-spring-X)`
+        // consumer OR the alias DEFINITION (`--ease-spring-X: var(--spring-X)`),
+        // which publishes the register a consumer can reach. `--ease-spring`
+        // (no suffix) aliases snappy and counts toward snappy.
+        const aliasName = name === "snappy" ? "(?:spring-snappy|spring)" : `spring-${name}`;
+        const aliasReach = new RegExp(
+            `--ease-${aliasName}\\s*:\\s*var\\(\\s*--spring-${name}\\b|var\\(\\s*--ease-${aliasName}\\b`,
+        ).test(blob);
+        const reached = direct || aliasReach;
+        coverage[name] = { direct, aliasReach, reached };
+        if (!reached) {
+            violations.push(
+                `--spring-${name} has ZERO consumers (no var(--spring-${name}) read + no --ease-spring-${name} alias reach) — a dead generator mint; retire it or wire a consumer`,
+            );
+        }
+    }
+    facts.coverage = coverage;
+    facts.coveredPresets = Object.values(coverage).filter((c) => c.reached).length;
+    return { facts, violations };
+}
+
+// APPLE-SPRING-CONSTELLATION — the cross-repo forcing function. A sibling
+// consumer that READS `var(--ease-apple-spring)` while carrying NO local
+// definition inherits the now-excised glass-ui token → its transition degrades
+// silently. Reds until the W34 re-point lands. An absent sibling is SKIPPED.
+export function detectConstellationCensus() {
+    const violations = [];
+    const facts = { siblings: [] };
+    for (const rel of CONSTELLATION_SIBLINGS) {
+        const root = resolve(ROOT, rel);
+        const srcDir = resolve(root, "src");
+        if (!existsSync(srcDir)) {
+            facts.siblings.push({ sibling: rel, status: "skipped (absent)" });
+            continue;
+        }
+        const files = walkSrc(srcDir);
+        const localDef = files.some((f) =>
+            /--(?:motion-)?ease-apple-spring\s*:/.test(
+                stripAllComments(readFileSync(f, "utf8")),
+            ),
+        );
+        const consumers = [];
+        for (const f of files) {
+            const stripped = stripAllComments(readFileSync(f, "utf8"));
+            let m;
+            const re = /var\(\s*--(?:motion-)?ease-apple-spring\b/g;
+            while ((m = re.exec(stripped)) !== null) {
+                consumers.push(`${f.slice(root.length + 1)}:${lineOf(stripped, m.index)}`);
+            }
+        }
+        facts.siblings.push({
+            sibling: rel,
+            status: "checked",
+            localDef,
+            consumerReads: consumers.length,
+            consumers,
+        });
+        if (consumers.length > 0 && !localDef) {
+            violations.push(
+                `constellation consumer ${rel} reads var(--ease-apple-spring) at ${consumers.length} site(s) with NO local definition — it inherits the EXCISED glass-ui token and degrades to instant/linear. Re-point onto the governed --spring-* register (W34, publish-gated).`,
+            );
+        }
+    }
+    return { facts, violations };
+}
+
 export function detectAll(read) {
     const violations = [];
     const facts = {};
@@ -246,6 +422,28 @@ export function detectAll(read) {
     facts.easingForks = easingForks.length;
     facts.pressForks = pressForks.length;
     violations.push(...easingForks, ...pressForks);
+
+    // AX.W05 — walk the whole src tree for the survivor sweep + coverage census.
+    const srcFiles = walkSrc(SRC_DIR).map((p) => p.slice(ROOT.length + 1));
+
+    // APPLE-SPRING-SURVIVOR
+    const survivors = detectAppleSpringSurvivors(srcFiles, (f) => read(f));
+    facts.appleSpringSurvivors = survivors;
+    for (const s of survivors) {
+        violations.push(
+            `legacy apple-spring survivor — ${s}: a second iOS-spring authority beside the governed --spring-* cohort. Excise it; re-point onto a --spring-* register.`,
+        );
+    }
+
+    // SPRING-CONSUMER-COVERAGE
+    const cov = detectSpringCoverage(read(TOKENS_CSS), srcFiles, (f) => read(f));
+    facts.springCoverage = cov.facts;
+    violations.push(...cov.violations);
+
+    // APPLE-SPRING-CONSTELLATION (cross-repo)
+    const census = detectConstellationCensus();
+    facts.constellationCensus = census.facts;
+    violations.push(...census.violations);
 
     facts.oneMotionSource = violations.length === 0;
     return { facts, violations };
@@ -276,10 +474,20 @@ function run() {
         facts,
         violations,
     });
-    console.log("proof:animation-coherence — the one-motion-source gate (AW.W31.a)");
+    console.log("proof:animation-coherence — the one-motion-source gate (AW.W31.a + AX.W05)");
     console.log(`  --spring-* definitions     : ${facts.springDefCount}`);
     console.log(`  hand-rolled easing forks   : ${facts.easingForks}`);
     console.log(`  literal press-scale forks  : ${facts.pressForks}`);
+    console.log(`  apple-spring survivors     : ${facts.appleSpringSurvivors.length}`);
+    console.log(
+        `  --spring-* coverage        : ${facts.springCoverage.coveredPresets}/${facts.springCoverage.presets.length} presets reached`,
+    );
+    const censusLines = facts.constellationCensus.siblings.map((s) =>
+        s.status === "checked"
+            ? `${s.sibling} (${s.consumerReads} read${s.consumerReads === 1 ? "" : "s"}, ${s.localDef ? "local-def" : "inherits"})`
+            : `${s.sibling} ${s.status}`,
+    );
+    console.log(`  constellation census       : ${censusLines.join("; ")}`);
     console.log(
         `  one motion source          : ${facts.oneMotionSource ? "YES" : "NO"}`,
     );

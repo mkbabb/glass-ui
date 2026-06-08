@@ -72,7 +72,9 @@ function select(value: string) {
 
 @media (prefers-reduced-motion: no-preference) {
     .underline-tabs::before {
-        transition: inset var(--duration-normal) var(--ease-apple-spring);
+        /* AX.W05 — control register: the active-underline glide is a crisp
+           position morph, so it rides --spring-snappy (not the legacy bezier). */
+        transition: inset var(--duration-normal) var(--spring-snappy);
     }
 }
 
