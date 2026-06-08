@@ -500,6 +500,12 @@ export const GATES = [
         tags: ["local", "ci"],
         note: "AX.W03 — the host-native keepDockOpen hold. Deterministic, browser-FREE @vue/test-utils MOUNT gate (dock-hold-contract.test.ts) that BITES in CI: mounts <GlassDock><Slider/></GlassDock>, dispatches a real pointerdown on the resolved [data-slot=slider] host, and asserts keepOpen() fired + data-held painted on BOTH the dock root and the slider root; a window pointerup releases + clears; a touchstart arm drives the SAME single acquire (no parallel path). Replaces the fail-open detectSliderHold SKIP carved out of proof:dock-layering-polish (which exited 0 with no harness, so the broken contract shipped GREEN 3.4.0→3.6.0). The π-lane (Playwright + frontend-design) owns the LIVE visual-truth half. Bite: re-route the hold through a reka <SliderRoot> template @pointerdown (the dropped forwarding binding) → mount RED; orphan the native useDockHold listener → mount RED.",
     },
+    {
+        id: "proof:deck-progress-rail",
+        cmd: "proof:deck-progress-rail",
+        tags: ["local", "ci"],
+        note: "AX.W24 — the deck-position rail gate, UPGRADED string-scan → render assertion. Device-free STRUCTURE arm (runs on EVERY runner): the `.glass-progress-rail` recipe FEEDS --progress-fill/--progress-track from --progress-rail-fill/--progress-rail-track (the F1 cascade-correct token-feed, NOT a `background:` that loses to the @layer utilities `bg-primary`) + uses an INSET glow (the F2 fix, not the eaten OUTSET shadow); ProgressDefault.vue reads the tokens at SOURCE + carries NO bg-primary/bg-secondary utility; DeckProgress composes <Progress> with no chrome/math; the /deck namespace stays RESERVED (no deck.ts subpath, no ./deck export) while ./deck-progress IS published. π-lane RENDER arm (fail-CLOSED when the tests-visual workspace is present; deck-progress-rail.spec.ts): mounts the live deck-progress story under a `:root { --progress-rail-fill: <distinct green> }` override and asserts via getComputedStyle (a) the override hue WINS the indicator background-color (the cascade fix — RED at HEAD where it painted --primary), (b) an `inset` box-shadow glow renders, (c) the rail reads as the hairline --progress-rail-h. Bite: re-add bg-primary to ProgressDefault → STRUCTURE 2 + RENDER (a) RED; re-author the glow OUTSET → STRUCTURE 1 + RENDER (b) RED; squat /deck → STRUCTURE 4 RED.",
+    },
     { id: "audit:stash", cmd: "audit:stash", tags: ["ci"] },
 ];
 
