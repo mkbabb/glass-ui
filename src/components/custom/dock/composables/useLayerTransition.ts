@@ -230,7 +230,16 @@ export function useLayerTransition(
             const rootNow = morphRoot(elNow);
             clearMorphVars(elNow);
             rootNow.style.removeProperty("--dock-morph-t");
+            // The container is laid out at `width:100%` of the STILL-COLLAPSED clipping
+            // root, so `getBoundingClientRect` reads the CLIPPED width, not the target
+            // pane's intrinsic size — a circular measure (the expanded aperture is the
+            // very thing the spring is solving for). Force `max-content` on the morph
+            // axis (inline style overrides the `[data-morphing]` calc) for the single
+            // measurement, so the box reports the in-flow TARGET pane's intrinsic size,
+            // then clear it before `armSpring` re-pins the calc span.
+            elNow.style.setProperty(morphAxisProp.value, "max-content");
             const toSize = getSize(elNow);
+            elNow.style.removeProperty(morphAxisProp.value);
             armSpring(elNow, rootNow, id, fromSize, toSize, inheritedVelocity, live);
         });
     });
