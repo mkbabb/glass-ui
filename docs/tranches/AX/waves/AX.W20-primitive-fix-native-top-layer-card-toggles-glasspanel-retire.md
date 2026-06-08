@@ -124,9 +124,15 @@ sub-steps, ordered:
   top-layer, gated as a PROGRESSIVE ENHANCEMENT over the working JS-open default. DELETE the LIMITED
   `commandfor`/`command`/`interestfor` declarative path from the demo (Baseline-LIMITED, off in most
   engines — inert today) or feature-detect it as a pure enhancement. **RATIFY-BEFORE-IMPL** the fold-vs-keep
-  decision (see Open Questions) — the charter's recommended path is FOLD (matching the manifest fix-route +
-  L inv 8: a 1-consumer orphan should retire, not merely be fixed); a "keep standalone" path requires
-  bringing the component to ≥2 consumers, which no surface supplies.
+  decision (see Open Questions). **RE-WEIGHTED to CONDITIONAL (HARDENING §G #21): the DEFAULT is the
+  scrim-root-fix + orphan-DELETE, NOT the fold.** The `<Dialog :native>` FOLD has ZERO constellation demand (no
+  consumer asks for a platform top-layer Dialog) AND carries a reka-portal-bypass RISK (rendering reka content
+  into a native `<dialog>` sidesteps reka's portal/focus-trap contract — a fragile edit outside the Dialog SFC).
+  So the autonomous DEFAULT is: ROOT-FIX the scrim (1a, always-do) + DELETE the 1-consumer `GlassDialogNative`
+  orphan + its standalone story (L inv 8 — a 1-consumer orphan retires; reka `<Dialog>` already ships the
+  working glass scrim via `ModalOverlay.vue`, so nothing is lost). The FOLD is taken ONLY if the orchestrator
+  over-rides with a named ≥2-consumer demand (none at HEAD). A "keep standalone" path is excluded (requires ≥2
+  consumers, which no surface supplies).
 - **(1c) EVALUATE the GlassNativeDrawer / `Drawer :native` ASK as an explicit scope arm (RATIFY-BEFORE-IMPL
   + ROUTE-DECISION).** The muster+speedtest cross-repo ask (a `popover="manual"` + scroll-snap-detents +
   scroll-driven `@property` backdrop native drawer / a `Drawer :native` opt-in to sidestep the vaul-vue
@@ -143,7 +149,11 @@ redesign (not a retire). Three repairs:
   `--glass-shadow-{tier}` (so OFF = genuinely flat) OR remove the shadow toggle as a non-feature.
   **RATIFY-BEFORE-IMPL** which (see Open Questions) — gate-the-tier-shadow is the more honest "flat↔elevated"
   control; remove-the-toggle is the minimal collapse of an over-parameterized knob. Recommendation: gate the
-  tier's own shadow so the control is real.
+  tier's own shadow so the control is real. **The gate mechanism is CARD-SIDE, keeping glass.css UNTOUCHED
+  (HARDENING §G #21 + §C.2 — W20 does NOT write glass.css):** the toggle reflects `:data-shadow` on the Card
+  root + a `shadow-none` (or the tier-shadow var gated to `none`) on the off state — a Card-SFC + utility edit,
+  NOT a `.glass-material`/glass.css rewrite (the §C.2 writer matrix confirms W20 touches no glass.css; the
+  specular `.glass-material::before` is W09's exclusive glass.css write).
 - **(2b) grain toggle.** Raise grain to a perceptible level when ON, or cut the toggle — a 2.5% delta is not
   a demoable control. Recommendation: raise (the grain IS a real surface feature; make it visibly so) over
   cut, unless the tier already implies grain.
@@ -246,7 +256,7 @@ retire-target the GlassPanel prune points at (facets 0, 9, 20, 21 —
 | `src/components/custom/glass-panel/` (whole dir) | **DELETE** (F2). |
 | `src/subpaths/glass-panel.ts` | **DELETE** (the `vite.library.ts` subpaths glob auto-drops the chunk). |
 | `package.json` | DELETE the `./glass-panel` `exports` block (`:352-355`) + `typesVersions['*']['glass-panel']` (`:82-83`). |
-| `src/api/index.ts` | DELETE the `GlassPanelVariant` (`:90-95`) + `GlassPanelProps` (`:147-154`) re-export blocks + their header comments. |
+| `src/api/index.ts` | DELETE the `GlassPanelVariant` (`:90-95`) + `GlassPanelProps` (`:147-154`) re-export blocks + their header comments. **REWRITE the MetricCell comment (`:217`)** dropping the "parallel to `GlassPanelVariant`" phrasing (HARDENING §G #21) — else its deletion-proof grep (`grep -c GlassPanelVariant api/index.ts`) returns 1 and FALSE-FAILS the GlassPanel-gone assertion: the surviving comment-reference is the only `GlassPanelVariant` token left after the block deletion. Re-locate `:217` by NAME at impl time (line-ref is `eaba94f`-relative; HEAD is `cdcf331`). |
 | `src/composables/glass/useGlassRenderer.ts` | DELETE the imperative-filter half — `createGlassFilter` (`:147-230`), `destroyGlassFilter` (`:235`), `GlassFilterState` (`:127`), and the filter wiring in `useGlassRenderer()` (F2). **COORDINATE the detector-only file shape with W26** (see Disjointness). |
 | `src/composables/glass/index.ts` | DROP the `createGlassFilter`/`destroyGlassFilter`/`GlassFilterState` re-exports. |
 | `demo/stories/substrates/glass-panel.vue` · `demo/stories/foundations/paper-glass.vue` · `demo/stories/composables/use-glass-renderer.vue` | RE-POINT onto `<Card surface="glass">`/`.glass-material` over a static backdrop OR delete + fold into a `.glass-material` substrate story. |

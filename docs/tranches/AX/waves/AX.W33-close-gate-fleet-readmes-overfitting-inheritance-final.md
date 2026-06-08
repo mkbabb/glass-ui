@@ -184,7 +184,9 @@ glass-ui prune); the `value.js` / `goo-blob` PRNG dup that dies with the W08/W14
 spot-verification result inline alongside the audit verdict.
 
 **(5) Inheritance-ledger cross-walk — P-inv-28 zero-deferral close (slice 25/27; constellation slice 26;
-digest line 343-344).** Enumerate EVERY REQUIREMENTS §13 item (10) + §14 item and assign each:
+digest line 343-344).** Enumerate EVERY REQUIREMENTS **§11 + §13 (10) + §14** item (the cross-walk EXTENDS to
+§11 per AX.md §4 note 29 — §11.4 brittle-selector/reactivity → W26/W25b, §11.5 library-optimum/gaps-glass-ui-vs-slides
+→ W34/§16.3 — so §11 is no longer implicit-only at close) and assign each:
 ADDRESSED-at-Wnn (cite the wave + its green gate) / RETIRES-with-rationale / ARCHIVES (write
 `docs/tranches/AX/archive/<item>.md` with permanent-out-of-scope justification). "Deferred to next tranche"
 is NOT an acceptable close-state. **Confirm at open whether AX is user-bound zero-deferral** (RATIFY-BEFORE-IMPL

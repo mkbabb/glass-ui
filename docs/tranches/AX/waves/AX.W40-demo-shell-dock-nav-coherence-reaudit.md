@@ -1,6 +1,6 @@
 # AX.W40 - Demo-shell dock-nav rebuild + cross-surface coherence re-audit (merged-but-untrusted AW.W28/W31)
 
-**Band** F · STORYBOOK IA · **Severity** major · **Mode** tranche-development (this doc is the wave SPEC; no `src`/`demo` edits, no impl, no commit, no git in this session)
+**Band** F · STORYBOOK IA · **Severity** major · **dependsOn** AX.W06, AX.W18 (the dock band lands the AX-rebuilt dock the nav SHELL rebuilds on; W18 authors the IA category tree the SHELL navigates — HARDENING §G #22, header `dependsOn` for DAG-parse robustness) · **Mode** tranche-development (this doc is the wave SPEC; no `src`/`demo` edits, no impl, no commit, no git in this session)
 
 > Glosses (first-use, per precepts README §Core-Rules / glossary/meta-terms.md):
 > *demo-shell* = the demo's core page-navigation chassis under `demo/layout/` (`AppShell.vue` + `SidebarDock.vue` + `BottomDock.vue` + `dock-nav.css`) — the dock-DRIVEN nav the storybook routes mount inside, distinct from the per-story SFCs under `demo/stories/`.

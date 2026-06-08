@@ -178,6 +178,18 @@ adoption ledger (the §16.3 receiver):
   W01-W06 rebuild via the W03/W00 binding-verification e2e sweep); the `^3.0.0/^2.0.0` pin bump (10-subpath
   consumer — a dock+slider+dialog+tooltip dogfood target for the visual-truth audit). (slice 25/charter
   CORRECTION; AX.md:1681-1684.)
+- **USF — the EIGHTH consumer-adoption ledger row (HARDENING §G #19; §20 USF tranche-B hand-off).** USF
+  (usf.friday.institute) is a glass-ui consumer that audited TWO glass-ui-owned defects in-consumer and NEVER
+  patched there (per inv-16 — USF consumes the PUBLISHED glass-ui; these are HAND-OFFs): USF-1 (the
+  resting-specular blowout — the §20/AX.W09 two-consumer confirm, now THREE with the §24 third live-screenshot)
+  + USF-2 (the DarkModeToggle-in-dock 2.5× optical-size asymmetry — routed to AX.W06). The USF leg = the
+  `^3.6.0 → 3.8.0` pin bump + the two born-RED USF visual gates (specular-clean + dock-control optical-parity),
+  a SIBLING-OWNED redeploy that greens ONLY on the AX publish + the USF bump (the chronic-closure forcing
+  function). Source: `usf/docs/tranches/B/GLASS-UI-AX-HANDOFF.md`. **The five §20 kf consume-gates** are the
+  explicit `{close-gate}` tags on the keyframes leg (W35): `proof:specular-handoff` (W09), `proof:single-column-pack`
+  (W21 kf-G-3), `proof:glass-and-cartoon` (W21 kf-G-6), the VT-types demo-smoke (W33 kf-G-4), `proof:dock-morph-settled`
+  (DO-NOT-REOPEN, §4 note 23). Each leg carries its **sibling-cleanliness eligibility** (clean-NOW: speedtest /
+  bbnf-buddy / fourier; handoff-patch: muster / words / value.js / keyframes — dirty in-flight trees).
 
 **(5) Apply the chronic-closure meta-invariant + name the phantom-owner anti-pattern (digest hist:keyframes /
 hist:bbnf-lang — slice 26 chronic-closure finding).** Every consumer leg + every §16-harvested item carries a
@@ -220,7 +232,7 @@ sibling source.
 | File | Edit |
 |------|------|
 | `coordination/CONSTELLATION.md` | **EXTEND** (W28 OPENS this doc with the band-K + gate-0 section; W34 appends the §16 receiver bands — the per-consumer §16 bands: HEAD/branch/`git status --porcelain` tree-cleanliness + commit-vs-handoff-patch disposition for value.js / speedtest / muster / fourier / words / bbnf-buddy / bbnf-playground; the sibling-baseline capture; the writer-vs-reader boundaries; the conflict-resolution protocol; the "Carry-tags TO" / "Carry-tags FROM" BD-G7-form tables; the ≥2-consumer pane-slide WATCH). DISJOINT from W28's band-K section. |
-| `docs/tranches/AX/audit/W34-cross-constellation-idiom-consumer-adoption-ledger.json` | **NEW** — the born-RED ledger (the three RED witnesses + their live measurements), the §16.1 last-10-tranches harvest-residue routing record (the DEDUP-ledger dispositions per §4 note 22), the §16.2 constellation-leverage survey (the slides-adoption leg + the `warpTo`→W17 boundary + the data-graph non-goal), the §16.3 per-consumer idiom census (the seven consumer legs with their `{receiver-wave, close-gate}` carry-tags), the publish-currency hinge record (§4 note 12), the chronic-closure / phantom-owner discipline application, and the carry-closure meta-assertion spec (the W33 close-gate input). |
+| `docs/tranches/AX/audit/W34-cross-constellation-idiom-consumer-adoption-ledger.json` | **NEW** — the born-RED ledger (the three RED witnesses + their live measurements), the §16.1 last-10-tranches harvest-residue routing record (the DEDUP-ledger dispositions per §4 note 22), the §16.2 constellation-leverage survey (the slides-adoption leg + the `warpTo`→W17 boundary + the data-graph non-goal), the §16.3 per-consumer idiom census (the eight consumer legs (incl. USF, the publish-currency hand-off) with their `{receiver-wave, close-gate}` carry-tags), the publish-currency hinge record (§4 note 12), the chronic-closure / phantom-owner discipline application, and the carry-closure meta-assertion spec (the W33 close-gate input). |
 | `docs/tranches/AX/waves/AX.W34-cross-constellation-idiom-consumer-adoption-ledger.md` | This spec (the wave doc). |
 
 **Consumer-executed (NOT glass-ui-written — W34 RECORDS the leg; the consumer session WRITES under its own
@@ -346,7 +358,7 @@ clause).
    `git status --porcelain` tree-cleanliness column + the commit-vs-handoff-patch disposition. **Born-RED**
    (the §16 bands do not exist at HEAD); GREEN after W34 authors them (extending W28's band-K opener).
 2. **The §16.3 per-consumer idiom census is authored with every leg routed — born-RED → GREEN (a
-   routing-completeness artefact).** Asserts every consumer idiom-adoption leg (the seven consumers' census
+   routing-completeness artefact).** Asserts every consumer idiom-adoption leg (the eight consumers' census incl. USF
    rows) carries an explicit `{receiver-wave, close-gate}` carry-tag. **Born-RED** (the census is unwritten);
    GREEN after W34 authors it.
 3. **The carry-closure meta-assertion returns ZERO un-receivered §16 items — born-RED → GREEN (the bbnf BD-G7
@@ -414,7 +426,7 @@ publishes.
   (the three RED witnesses with their live measurements + the 7-consumer sibling-baseline capture), the §16.1
   harvest-residue routing record (the DEDUP-ledger dispositions per §4 note 22), the §16.2 constellation-leverage
   survey (the slides-adoption leg + the `warpTo`→W17 boundary + the data-graph non-goal), the §16.3 per-consumer
-  idiom census (the seven consumer legs with their `{receiver-wave, close-gate}` carry-tags + each leg's
+  idiom census (the eight consumer legs (incl. USF, the publish-currency hand-off) with their `{receiver-wave, close-gate}` carry-tags + each leg's
   consumer-side VISUAL-TRUTH close-gate spec), the publish-currency hinge record (§4 note 12), the
   chronic-closure / phantom-owner discipline application, the ≥2-consumer pane-slide WATCH, and the
   carry-closure meta-assertion spec (the W33 close-gate input).

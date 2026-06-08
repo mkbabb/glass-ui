@@ -276,7 +276,8 @@ medium-fidelity perfection layer. The multi-pass Kuwahara/LIC painterly FINISH i
 | `scripts/proof-aurora-vangogh-preset.mjs` | **RE-AUTHOR** (born-RED): assert `mediumVangogh` is NOT a `return mediumOil(...)` passthrough; assert a distinct comma/crescent profile + atomic placement + full-height impasto; assert the energy-grade is a PROFILE field not a buried `uMedium==5` `bestOil` branch. (Co-update so the wave's own change does not red its own gate.) |
 | `scripts/proof-aurora-oilpastel-medium.mjs` | **RE-AUTHOR** (born-RED): assert `mediumOilPastel` is a DISTINCT function (NOT `mediumCrayon`); assert `uMedium==6`→`mediumOilPastel` and `uMedium==4`→`mediumCrayon` dispatch to DIFFERENT bodies; assert the shared SUBSTRATE (placement/tooth) is reused; assert the dry-crayon tooth-multiply survives. |
 | `scripts/proof-aurora-stroke-composite.mjs` | **NEW** — assert `paintOver` composites in OKLab on the painterly mediums (NOT a bare linear `mix`); assert the within-stroke modulation perturbs hue/chroma in OKLCh (not value-only); the OKLab matrices resolve from the shared `procedural-color` chunk (single-source). |
-| `package.json` | Register `proof:aurora-stroke-composite` (the new `proof:*` entry + the W00 meta-gate parity match); the two re-authored gates keep their names (`proof:aurora-vangogh-preset`, `proof:aurora-oilpastel-medium`). |
+| `package.json` | Register `proof:aurora-stroke-composite` + `proof:aurora-painterly-statistics` (the new `proof:*` entries + the W00 meta-gate parity match — HARDENING §G #16); the two re-authored gates keep their names (`proof:aurora-vangogh-preset`, `proof:aurora-oilpastel-medium`). |
+| `tests-visual/fixtures/starry-night-crop.png` | **NEW** — a PUBLIC-DOMAIN Starry Night crop (the atomicity-congruence reference fixture for `proof:aurora-painterly-statistics`; NOT a copyrighted asset — Van Gogh's Starry Night is public domain). |
 | `docs/tranches/AX/audit/W13-vangogh-oilpastel-mediums.json` | **NEW** — the born-RED→GREEN audit artefact + the paired-π BEFORE/AFTER + DELTA reference. |
 
 **OUT of bounds:** the `StrokeProfile` struct + `profileFor` selector + `paintStrokeLayers` + the
@@ -399,7 +400,28 @@ passthrough/shared-body state this wave dismantles):
   the `procedural-color` chunk (no duplicate inline color math). **Born-RED at HEAD** (`paintOver` is
   a linear `mix`; the modulation is value-only).
 
-These are **source-parse + deletion-proof** gates (the precept-valid artefact forms per SPEC.md
+- **`proof:aurora-painterly-statistics` (NEW, born-RED — the OPERATIONALIZED "stunning" bar for the UNATTENDED
+  lane; HARDENING §G #16).** A π-lane STATISTICAL readback that converts the un-falsifiable "stunning / congruent
+  to Van Gogh" into measurable assertions an autonomous run can close on (the cardinal-AW
+  green-structure-over-unvalidated-render risk re-enters at the painterly layer unless the "stunning" claim is
+  operationalized): (a) **atomicity gap-fraction** — the van-Gogh render carries a measurable inter-stroke
+  canvas-gap fraction above a floor (discrete dabs, NOT a continuous coverage smear — the passthrough's best-of-9
+  coverage field has ZERO gap fraction); (b) **no-flat-fills variance** — local pigment-density variance above a
+  floor across each painterly medium (the pigment turbulence keystone — a flat gradient measures near-zero
+  variance); (c) **OKLab overlap-not-grey** — a dense complementary-overlap region's chroma stays ABOVE the
+  muddy-midtone grey threshold (the OKLab path, not the linear-mix grey collapse — the single highest-leverage
+  lever); (d) **four-media-distinct** — the per-medium texture snapshots (vangogh / oil-pastel / crayon / oil)
+  are pairwise MEASURABLY distinct (a per-medium statistic delta above a floor — a passthrough/shared-body makes
+  two media identical). A public-domain **Starry Night reference fixture** (a public-domain Starry Night crop
+  committed under `tests-visual/fixtures/` — NOT a copyrighted asset) anchors the atomicity congruence read.
+  **Born-RED at HEAD** (the passthrough/shared-body render measures zero gap-fraction, near-zero
+  density-variance, grey overlap, two-media-identical). A RUNTIME-OBSERVATION artefact (a real device render +
+  per-pixel statistical readback). **DUAL-TIER CLOSE:** the human side-by-side audit (below) is the ENRICHMENT
+  (the frontend-design judgement); `proof:aurora-painterly-statistics` is the UNATTENDED close (the numeric gate
+  the 12-hour run gates on) — both run, neither alone closes, but the numeric gate is what an autonomous run
+  asserts when no human is present.
+
+These are **source-parse + deletion-proof + runtime-statistical** gates (the precept-valid artefact forms per SPEC.md
 §Hard Gates — accepted forms include build/test/source-structure/deletion-proof; INVALID is
 "grep found a source string" FOR RUNTIME BEHAVIOUR). The passthrough-absence + the distinct-function
 + the linear-`mix`-absence are STRUCTURE proofs (the SHADER STRING is the artefact — a GLSL body is
@@ -448,11 +470,20 @@ visibly beat against the reference works.
    landed (this wave BLOCKS on it). Capture the BEFORE π render (van-Gogh ≡ oil; oil-pastel ≡ crayon;
    grey overlap mud) as the born-RED baseline in `audit/W13-vangogh-oilpastel-mediums.json`. Do NOT
    proceed on the audit's word — re-prove.
-2. **Re-author the two gates born-RED.** RE-AUTHOR `proof-aurora-vangogh-preset.mjs` (assert NOT a
-   passthrough + a distinct profile) + `proof-aurora-oilpastel-medium.mjs` (assert distinct functions);
-   author NEW `proof-aurora-stroke-composite.mjs` (OKLab/OKLCh); register
-   `proof:aurora-stroke-composite` in `package.json` + the W00 meta-gate; confirm ALL THREE FAIL at
-   HEAD.
+2. **Re-author the two gates born-RED + author the statistics gate.** RE-AUTHOR `proof-aurora-vangogh-preset.mjs`
+   (assert NOT a passthrough + a distinct profile) + `proof-aurora-oilpastel-medium.mjs` (assert distinct
+   functions); author NEW `proof-aurora-stroke-composite.mjs` (OKLab/OKLCh) + NEW
+   `proof-aurora-painterly-statistics.mjs` (the operationalized "stunning" bar — atomicity gap-fraction +
+   no-flat-fills variance + OKLab overlap-not-grey + four-media-distinct, against the public-domain Starry
+   Night crop fixture; HARDENING §G #16); register both in `package.json` + the W00 meta-gate; confirm ALL
+   FOUR FAIL at HEAD.
+2b. **Crayon `strokeMode` consumer-sweep (the clean-break guard, per the §3a ratify).** Before REMOVING the
+   `resolveMediumId` `strokeMode:"crayon"` branch + the `presets.ts` `StrokeMode` union member (the W5 clean
+   break), SWEEP every consumer of `strokeMode:"crayon"` (in-repo + the constellation-consumer census) so the
+   clean break does NOT silently no-op a consumer's crayon request — a binding-verification-class break (a
+   stale `strokeMode` prop silently resolves to the default medium; vue-tsc+units miss it). Route any external
+   crayon consumer leg to W34; record the disposition (REMOVE-the-branch is the recorded default — take it if
+   no consumer surfaces).
 3. **First-class `mediumVangogh` body.** Author the comma/crescent `strokeShape` type (`brush.glsl.ts`);
    author the `vangogh` profile body (`mediums.glsl.ts:335`) — atomic placement, row-clustering,
    full-height impasto; fold the `uMedium==5` energy-grade switch INTO the profile (un-bury it from

@@ -39,9 +39,12 @@ re-proven live against HEAD (not trusted from the audit) — the §0 cardinal "r
   stylesheet rule emits, so the live computed `transform` is `none`. The active dot's only real emphasis
   is the `w-6` width, which on its own reads as a "progress fill," not a position pip (the SAME non-emit
   family as the §13/W24 card-lift `@utility` snag — slice 21 F4). The falsifiable RED: *a π-lane probe
-  asserts the active dot's computed `transform` is NOT `none` (i.e. a real scale/morph emitted) — at HEAD
-  it IS `none` (RED). After: the active emphasis emits real CSS (a scoped `data-[active]` rule or an
-  emitted utility), computed `transform`/width reads the morph (GREEN).*
+  asserts the active dot emits a REAL morph — **a non-`none` `transform` OR a width change** (HARDENING §G #26
+  — the gate is broadened from `transform != none` to "active emits a real morph: width OR transform" so the
+  width-only DeckPager working-oracle passes; the cited DeckPager oracle is WIDTH-ONLY, so a `transform != none`-only
+  gate would be OVER-PRESCRIPTIVE against its own oracle). At HEAD NEITHER emits (the active emphasis is the
+  dead `scale-125` class that compiles to nothing) (RED). After: the active emphasis emits real CSS (a scoped
+  `data-[active]` rule or an emitted utility), computed `transform` OR width reads the morph (GREEN).*
 
 - **RED witness 3 (`proof:carousel-glass-atoms` does NOT exist; the carousel chrome is the never-run
   AW.W30 surface).** `package.json` has NO `proof:carousel-glass-atoms` scripts entry (only
@@ -247,8 +250,9 @@ it is slides-local single-consumer chrome).
   wave-open DECISION GATE.
 - **Adversarially-verify (≤1 read-only lane).** Re-runs the four RED witnesses against the patched tree:
   asserts a π-lane computed-style readback at `/navigation/carousel` on a DARK page measures every inactive
-  dot ≥3:1 against the translucent card surface (witness 1 GREEN); asserts the active dot's computed
-  `transform` is NOT `none` and emits a real morph (witness 2 GREEN); asserts `proof:carousel-glass-atoms`
+  dot ≥3:1 against the translucent card surface (witness 1 GREEN); asserts the active dot emits a REAL morph —
+  a non-`none` `transform` OR a width change (witness 2 GREEN; the broadened "width OR transform" form per
+  HARDENING §G #26, so the width-only DeckPager oracle passes); asserts `proof:carousel-glass-atoms`
   exists + is registered + GREEN and `GlassCarouselItem` carries `data-state`/`aria-pressed`/`.focus-ring`
   (witness 3 GREEN); confirms the §9.1 decision is RECORDED with its default (witness 4 GREEN). ADVERSARIAL
   twists: (a) tries to make the dot-contrast "pass" by reading the dot on a LIGHT page only (confirms the

@@ -128,8 +128,8 @@ useCountup/DeckProgress legs until the AX release resolves on the registry (the 
 
 **(1) Delete the local reveal/countup forks → glass-ui `vReveal` + `useCountup` (F3 / witness 1).** Delete
 `slides/src/deck/reveal.ts` + `slides/src/deck/useCountup.ts`. In `main.ts`, replace the local-reveal import
-with `import { vReveal } from "@mkbabb/glass-ui"` (root barrel — see Open question 1: the charter says
-`/motion-core`, but vReveal is on the root barrel + `/motion`, NOT `/motion-core`) and register
+with `import { vReveal } from "@mkbabb/glass-ui"` (root barrel — see Open question 1: vReveal is on the root
+barrel + `/motion-core`, NEVER `/motion` — a `/motion` import 404s, the charter's `/motion-core` is correct) and register
 `.directive("reveal", vReveal)`. Re-point the countup host to `import { useCountup } from
 "@mkbabb/glass-ui/motion"`, threading `deckEase.fn` as the `easeFn` option (the slides-local `useCountup`
 already takes `{ easeFn }`, so the call site is a one-line import swap — the signatures match). The
@@ -183,8 +183,9 @@ local hold (the audit's honest-minimum option A): record that `/deck` stays slid
 consumer exists, and STOP carrying the lift-pending comments as debt (they imply work the invariant forbids).
 This is a ratification line in the audit json + a one-line comment scrub in the slides deck files, NOT a lift.
 
-**Ratify-before-impl** (recorded below, §Open questions): (a) the vReveal import PATH (root barrel / `/motion`
-vs the charter's `/motion-core` — the charter is WRONG, vReveal is not on `/motion-core`); (b) the DeckGate
+**Ratify-before-impl** (recorded below, §Open questions): (a) the vReveal import PATH (root barrel OR
+`/motion-core` — the charter's `/motion-core` is CORRECT; vReveal IS on `/motion-core`, NEVER on `/motion` — a
+`/motion` import is a deploy-path build break; HARDENING §G #18); (b) the DeckGate
 LabeledField CHANNEL (adopt `<LabeledInput>` `error` slot vs retire the BOOK note + keep bespoke chrome); (c)
 the `/deck`-stays-slides-local ratification (option A honest-minimum, not the manufacture-consumer-#2 option B).
 
@@ -636,16 +637,18 @@ consumer (DeckProgress consumer #2)."
 
 ## Open questions / RATIFY-BEFORE-IMPL
 
-1. **The `vReveal` import PATH — the charter is WRONG (RATIFY-BEFORE-IMPL).** The charter (§3 W32 + slice-24
-   F3) says "imports `vReveal` from `/motion-core`." VERIFIED at glass-ui HEAD: `vReveal` is exported from the
-   ROOT BARREL (`src/index.ts:171` `export { vReveal } from "./composables/motion/vReveal"`) and is reachable
-   via `/motion` (the motion subtree), but `/motion-core` (`src/motion-core.ts` → `./composables/motion/core`)
-   does NOT re-export `vReveal` (grep over `core.ts` returns zero). **Recommendation: import `vReveal` from the
-   ROOT barrel `@mkbabb/glass-ui`** (it is vueuse-free + dependency-free per its AV.W3 charter line, so the
-   root barrel is correct) — NOT `/motion-core`. RATIFY the import path before impl; if `/motion-core` is the
-   INTENDED home, that is a glass-ui-side export addition (a tiny `src/motion-core.ts` re-export) that would
-   need its own FileBounds entry + the harden critique. The likely answer: the charter prose drifted; the root
-   barrel / `/motion` is the real path, no glass-ui edit needed.
+1. **The `vReveal` import PATH — CORRECTED to the ground truth (HARDENING §G #18; the charter is RIGHT).**
+   RE-VERIFIED at glass-ui HEAD `cdcf331` (a prior draft grepped the wrong file — `core.ts` vs
+   `core/index.ts`): `vReveal` is exported from the ROOT BARREL (`src/index.ts:171`) AND from **`/motion-core`**
+   (`src/motion-core.ts` → `./composables/motion/core` → `core/index.ts:45` `export * from "../vReveal"`) —
+   CLAUDE.md confirms "vReveal … on /motion-core + root barrel." It is **NOT on `/motion`**
+   (`src/composables/motion/index.ts` does NOT re-export it; the `/motion` barrel walk returns zero) — so a
+   slides import `from "@mkbabb/glass-ui/motion"` would 404 vReveal (a DEPLOY-PATH BUILD BREAK the prior draft's
+   "/motion is the real path" claim would have shipped). **The CORRECT import is the ROOT barrel
+   `@mkbabb/glass-ui` OR `/motion-core`** (both carry it; both are vueuse-free + dependency-free per the AV.W3
+   charter line). The charter's `/motion-core` is CORRECT, not drifted; NO glass-ui-side export addition is
+   needed. Use the root barrel for the directive registration (the simplest path); `/motion-core` is the
+   minimal-payload subpath alternative. NEVER `/motion` for vReveal.
 2. **The DeckGate LabeledField CHANNEL (RATIFY-BEFORE-IMPL).** F5 offers two paths: (a) re-point DeckGate's
    field to `<LabeledInput>` with an `error` slot (inheriting the shipped `:user-invalid` styling +
    `aria-errormessage` wiring, deleting the local aria-invalid CSS) — the full-adoption path; vs (b) formally

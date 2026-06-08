@@ -172,7 +172,23 @@ divergence STRUCTURALLY IMPOSSIBLE.
   does NOT touch `useLayerTransition.ts`/`GlassDock.vue` (479/476 warn-band — the W01 dock rewrite owns those
   per slice 25 F5).** W26 owns ONLY the `useDockState.ts` derived-ref encapsulation. Sequence so the computed
   derivation lands on the W01-rebuilt morph core (W08/W16 are the charter dependsOn; the dock-band
-  coordination is a disjointness contract — see Disjointness).
+  coordination is a disjointness contract — see Disjointness). **The `dock/composables/index.ts` barrel
+  collision is REAL, not disjoint (HARDENING §G #17 correction):** W01/W02/W03 CO-EDIT that barrel (W01 ADDs
+  `useLayerTransition`, W02 the morph-context helpers, W03 `useDockHold`); W26 DROPS the
+  `useOptionalDockLayerGroupContext` re-export (`:19`) — so W26's barrel edit SERIALIZES strictly AFTER the
+  dock band lands (not concurrent). The `useDockState` reader-relationship is to **`GlassDock.vue`** (the
+  consumer that reads `expanded`/`visualExpanded` off `useDockState`), NOT to `useLayerTransition` — `GlassDock.vue`
+  is the reader W26's computed-cleanup must not desync; W26 owns ONLY `useDockState.ts` (the §19.9 click /
+  aria-expanded contract reads through it — W26 is the SOLE `useDockState` editor).
+
+- **§19.8 idle-collapse + §19.9 click/aria — owned by W26 via `useDockState` (HARDENING §G #17 + §5.2).** The
+  §19.8 "useIdle composable" is a charter FICTION — it is inline `scheduleCollapse` machinery in
+  `useDockState.ts` with a 2000/2500ms delay DIVERGENCE (name it, do NOT invent a composable that does not
+  exist). W26 RATIFIES the idle-collapse delay-model (reconcile the 2000-vs-2500ms divergence onto one token)
+  as part of the `useDockState` computed-cleanup. The §19.9 click-driven layer switch + the dock-trigger
+  `aria-expanded` contract read through `useDockState`'s `expanded` (the GlassDock aria contract: the root is
+  presentational, `aria-expanded` belongs on the trigger child bound to the exposed `expanded`) — W26 VERIFIES
+  the click/aria path composes with the computed `expanded`, the SOLE `useDockState` editor.
 
 **(3) HARDEN the strict-context guard — `if (!ctx)` → `if (ctx === undefined)` (slice 28 F4).** A one-line
 latent-trap excision in `createContext.ts:65` (type the inner `inject` result accordingly). Zero change to

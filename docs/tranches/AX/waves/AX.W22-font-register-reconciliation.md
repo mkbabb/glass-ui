@@ -173,7 +173,7 @@ presets-in-consumers).
 | `scripts/proof-font-axes.mjs` | (path a) **DELETE** (the gate retires with the face). |
 | `scripts/gates.mjs` | (path a) DELETE the `proof:font-axes` registration (`:186-189`); update the `proof:font-canon` note (`:375`) if the canon-gate scope shifts. |
 | `scripts/proof-font-cascade-live.mjs` | **NEW** — the π-lane live-cascade font gate (or its home in the W00 π workspace — coordinate with W00; see Disjointness). |
-| `demo/index.html` | DELETE the `data-typography-preset="brand-uniform-sans"` attr (`:9`) + the `:3-7` preset comment. |
+| `index.html` (repo-root, NOT `demo/index.html` — HARDENING §G #24: the deletion-PROOF grep false-GREENs on the non-existent `demo/index.html`; the attr lives at repo-root `index.html:9` with the `:3-7` comment) | DELETE the `data-typography-preset="brand-uniform-sans"` attr (`:9`) + the `:3-7` preset comment. |
 | `demo/demo.css` | DELETE the `--font-brand-sans` override block (`:91-102`). |
 | `demo/configurator/preset-editor/defaults.ts` | Remove the `Fraunces` font option (`:24-25`) + the preset serif/display Fraunces stacks (`:47-49`) + the `:13` comment ref. |
 | `docs/tranches/AX/audit/W22-font-register-reconciliation.json` | **NEW** — the born-RED→GREEN audit artefact + the fold-0 adjudication record. |
@@ -245,7 +245,8 @@ W00 π-workspace SCAFFOLD (W00 owns the lane; W22 authors the font-cascade ASSER
   a) delete the Fraunces dir + `fonts.css` block + the WONK/SOFT machinery + `proof:font-axes` (script +
   package.json + gates.mjs); re-ground `.fourier-f`, verify `.cm-serif`; consolidate to one token source;
   rewrite the `typography.css` header + `fonts/README.md`. Arm B (the demo de-indirection —
-  `demo/index.html`/`demo.css`/`defaults.ts`): delete the `data-typography-preset` attr + `--font-brand-sans`
+  repo-root `index.html`/`demo.css`/`defaults.ts` — NOT `demo/index.html`, the attr is repo-root, #24):
+  delete the `data-typography-preset` attr + `--font-brand-sans`
   override + the configurator Fraunces option, so the demo renders the real default with zero override.
   `npm run build` + `vue-tsc --noEmit` + BOTH static font gates at every interval (the build is the
   dropped-`@font-face`/dangling-`@import` canary). Arms A and B both touch the live cascade — Arm A lands first
@@ -316,9 +317,12 @@ The wave-agnostic authorization grant is AX.md §6.1 (the canonical clause — d
    runtime-observation artefact (the precept-valid form — NOT a grep-for-source-string).
 6. A **deletion-PROOF** (valid artefact form): (path a) `test -d src/fonts/fraunces` → absent;
    `grep -rc "Fraunces\|WONK\|SOFT\|font-brand-sans\|data-typography-preset\|font-display-variation-settings"
-   src/styles/ demo/index.html demo/demo.css demo/configurator/preset-editor/defaults.ts package.json
-   scripts/proof-font-axes.mjs scripts/gates.mjs` → 0 across the surface (the `.cm-serif` math utility is the
-   ONE allowed serif survivor — verify it is NOT Fraunces).
+   src/styles/ index.html demo/demo.css demo/configurator/preset-editor/defaults.ts package.json
+   scripts/proof-font-axes.mjs scripts/gates.mjs` → 0 across the surface (the grep targets the **repo-root
+   `index.html`, NOT `demo/index.html`** — HARDENING §G #24: a grep against the non-existent `demo/index.html`
+   returns 0 and FALSE-GREENs the deletion-proof; the `data-typography-preset` attr is at repo-root
+   `index.html:9` with the `:3-7` comment). The `.cm-serif` math utility is the ONE allowed serif survivor —
+   verify it is NOT Fraunces.
 
 These are build / structural / runtime-observation / deletion artefacts (the precept-valid forms per SPEC.md
 §Hard Gates lines 94-104) — NOT grep-for-source-string-as-runtime-behaviour gates.

@@ -1,6 +1,7 @@
 # AX.W15 — Blob contained-droplet: geometry + lit warm-cream default + living membrane
 
-**Band** D · BLOB · **Severity** blocker · **dependsOn** AX.W08 · **Charter** AX.md §3 (the `### AX.W15`
+**Band** D · BLOB · **Severity** blocker · **dependsOn** AX.W08, AX.W11 (the OKLCh `/color` core W15's
+`warmCream` → `/color` re-route reads — HARDENING §G #27) · **Charter** AX.md §3 (the `### AX.W15`
 block, lines 837-877) + §4 note 13 (the POS_SCALE disposition, lines 2069-2082) + §2b band-D precept row
 (line 216) · **Audit** `deep-audit-corpus.json` slice `blob-interaction-visual` (index 12, findings
 F0/F1/F2/F3/F6 — the contained-droplet geometry + lit-default + living-membrane + warm-token roots) +
@@ -28,7 +29,15 @@ droplet. The four falsifiable RED witnesses:
   back — the painted field's bounding reach exceeds ~80% of the wrapper footprint and the orbit excursion
   overflows the clip on multiple sides. After the wave the WHOLE merged field (body + satellites at widest
   orbit + trail) fits inside **~70-80%** of the wrapper with intentional overflow only for the orbit
-  excursion (GREEN).
+  excursion (GREEN). **UNIT RECONCILE (HARDENING §G #27): the ~70-80% is the WRAPPER-FOOTPRINT-FIT (the
+  silhouette's bounding reach as a fraction of the wrapper box), ORTHOGONAL to W08's `0.25-0.6` CANVAS
+  OPAQUE-FRACTION band (the fraction of interior PIXELS the SDF paints opaque — the un-flood metric).** They are
+  DIFFERENT measures, not a contradiction: W08 owns the opaque-fraction un-flood (the smin regime); W15 owns
+  the footprint-fit containment (the geometry budget). The W15 π-gate samples the footprint-fit; the W08
+  opaque-fraction band (`proof:blob-render`, inherited not re-authored) holds underneath. **The `warmCream`
+  tint (`metaball.frag.ts:359`) re-routes onto the OKLCh `/color` core** (the dependsOn AX.W11 — the shared
+  color seam aurora/blob already share; W15 OWNS this re-route as part of the lit warm-cream default, not a
+  parallel sRGB-literal).
 
 - **RED witness 2 (the SHIPPED default is the pre-W9 flat sticker — slice-12 F1 + slice-13 F3, blocker).**
   Every SOTA surface feature defaults OFF in `BLOB_CONFIG_DEFAULTS`: `lit:false` (`types.ts:192`),

@@ -197,7 +197,7 @@ material axis and is precise on the magnitudes (facets 0, 4, 20, 21, 22 —
 
 | File | Edit |
 |------|------|
-| `src/styles/glass.css` | The `.glass-material::before` recipe (`:54-95`): drop the inner stop `hsl(40 30% 100% / 0.55)` → low-alpha warm-cream; the `:hover`/`:active`/`.dark` rules set `--specular-intensity: var(--glass-specular-intensity-{hover,active,rest})`; drop the rest floor to ~0; fix the false "warm-cream tint intact" comment. |
+| `src/styles/glass.css` | The `.glass-material::before` recipe (`:54-95`): drop the inner stop `hsl(40 30% 100% / 0.55)` → low-alpha warm-cream; the `:hover`/`:active`/`.dark` rules set `--specular-intensity: var(--glass-specular-intensity-{hover,active,rest})`; drop the rest floor to ~0; fix the false "warm-cream tint intact" comment. **glass.css CO-WRITER serialization (HARDENING §G #28 + AX.md §4 note 30):** W09 is ONE of three line-region-disjoint glass.css writers — W09 owns the `.glass-material::before` specular region, W24 owns `.glass-progress-rail`, W42 appends the `@supports --glass-refract-scale` block; **W20 does NOT write glass.css** (its shadow-toggle is card-side `:data-shadow`/`shadow-none`) and W25b does NOT carve it. The orchestrator serializes the three by line-region. |
 | `src/styles/tokens.css` | **ADD** the `--glass-specular-intensity-{rest,hover,active}` token cohort (+ `.dark` arm) near the `@property --specular-intensity` registration (`:1724-1727` / §11b). The `@property` reg itself is unchanged (already `initial-value: 0`). |
 | `src/styles/dock-controls.css` | **RETIRE** the `:hover:not(:focus-visible)` `--glass-highlight` box-shadow (`:101-102`) — delete or demote to a non-specular surface-tint fill; tidy the `--dock-icon-hover-shadow` comment chain (`:78-100`). |
 | `src/composables/glass/useSpecularTracking.ts` | **NEW** — the `{ specularStyle, onPointerMove }` composable (the lifted `trackSpecular`, PRM-aware, reads the intensity tokens). |
@@ -293,10 +293,16 @@ the resting-specular blowout and sharpen the root cause to THREE compounding fac
    the `@property` `initial-value:0` — and the banded stops produce the light-mode concentric rings.
 
 **The rest-floor→0 is the single highest-value fix for a flat-data consumer** (USF emphasis — worst over
-flat backplates). W09 gains a SECOND leg from kf-G-1 — **wire-or-omit**: a glass surface either writes
-`--specular-x/y` from pointer ITSELF (as `dock.js` already does) OR does NOT emit `.glass-specular-track`
-until a consumer opts in. A mouse-tracked radial with NO mouse writer must never be the default (kf live:
-~13 glass hosts, 0 pointer-wired). The calmer DEFAULT lands at rest ≤ 0.25 (not 0.55), radius ≤ 40%.
+flat backplates). W09 gains a SECOND leg from kf-G-1 — **wire-or-omit**: a glass surface either writes the
+specular position channel from pointer ITSELF (as `dock.js` already does) OR does NOT emit
+`.glass-specular-track` until a consumer opts in. A mouse-tracked radial with NO mouse writer must never be the
+default (kf live: ~13 glass hosts, 0 pointer-wired). **VOCAB (HARDENING §G #28 — disambiguate, do not
+conflate):** `--mouse-x/--mouse-y` is the HOST WRITE (the pointer-handler `getBoundingClientRect → %` write on
+the host element — what `useSpecularTracking` owns); `--specular-x/--specular-y` is the CSS-INTERNAL MAPPED
+channel the `.glass-material::before` radial reads (the gradient-center position). The host writes
+`--mouse-x/y`; the recipe MAPS it to `--specular-x/y`. The published-3.4.0 defect pins the MAPPED
+`--specular-x` at 50% (no host writer) → the dead-centered bloom. The calmer DEFAULT lands at rest ≤ 0.25 (not
+0.55), radius ≤ 40%.
 kf-G-2: the dock-icon `.glass-specular-track` (dock.js:568) IS already pointer-wired, so the dock icons
 are a TUNE within this same `--glass-specular-intensity-{rest,hover,active}` cohort, not a wire-up.
 

@@ -56,7 +56,8 @@ are already satisfied; the RED witnesses are the GENUINELY-OPEN residue, not the
   surviving dir/subpath/export/token (GREEN; gate registration → W33).*
 
 - **RED witness 3 (the metric-pill subpath asymmetry — one family, inconsistent publication).** `metric-pill`
-  is exported on the ROOT BARREL (`src/index.ts:101` `export * from "./components/ui/metric-pill"`) but has
+  is exported on the ROOT BARREL (`src/index.ts:95` `export * from "./components/ui/metric-pill"` — the line-ref
+  DRIFTED from `:101` to `:95`; HARDENING §G #25, `eaba94f`→`cdcf331`; re-locate by NAME) but has
   NO `/metric-pill` subpath (no `src/subpaths/metric-pill.ts`; no `package.json` `./metric-pill` block),
   while its three sibling family members ALL have subpaths — `metric-badge` (`src/subpaths/metric-badge.ts`
   + `package.json:316`), `metric-cell`, `metric-stack`. Two members of one family with inconsistent
@@ -214,6 +215,20 @@ feature-gap + Input invalid-state contract (§3 fold (e)) IS charter-scoped — 
 invalid-state contract here (verify `useUserInvalidAria` composes with LabeledField's error slot; ship
 the optional LabeledSlider tooltip/inline-numeric/value-color hook) since W21 already touches the
 labeled-field/drawer surface.
+
+**Fold (8) — kf-G-3 `LabeledField orientation="horizontal"` + the label-row ACTION slot (HARDENING §G #25;
+§20 kf hand-off, HIGH).** Add an `orientation`/`inline` prop to `<LabeledField>` laying the row
+`grid-template-columns: auto 1fr; align-items: center` with `.error { grid-column: 1 / -1 }` — the
+macOS/iOS settings-row idiom (label-LEFT / value-RIGHT), DISTINCT from the labels-above data-entry-FORM idiom.
+Every `Labeled*` consumer + the kf EditorHeader inherits the compact settings-row by ONE prop instead of
+re-authoring a `grid-cols-[auto_1fr]` wrapper — the DURABLE home for kf's controls-row layout. Sub-ask: a
+**label-row ACTION slot** (`<LabeledField>` exposes only `default`+`error` today; a label-row action slot lets
+an "edit pencil" sit in the label row idiomatically). Anchor: `.labeled-field` `utilities.css:62` (block-flow
+today — re-locate by NAME). Cross-repo gate: kf `proof:single-column-pack` label-left clause (path B demo
+wrapper today → durable on the prop). The kf consume-leg routes through W34's ledger (born-RED until the AX
+publish + the kf bump). **Note the configurator demote rests on SIZE, not the SCC trap — the configurator is
+vueuse-FREE** (the demote-to-de-document path is about the root-barrel cherry-pick size rationale, not a
+vueuse-bearing isolation — HARDENING §G #25 disambiguation).
 
 ---
 
