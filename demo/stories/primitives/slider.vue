@@ -31,7 +31,9 @@ const matrix = ref<Record<MatrixKey, number[]>>(
 
 <template>
     <StoryPage>
-        <!-- Standard, with label + value readout. -->
+        <!-- Standard — the integrated-cylinder glass slider (AX.W59): the
+             fill is one continuous glass pill whose rounded leading edge is
+             the grab. With label + value readout. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">standard</p>
             <div class="flex items-center justify-between">
@@ -78,7 +80,8 @@ const matrix = ref<Record<MatrixKey, number[]>>(
             <Slider v-model="range" :max="100" :step="1" aria-label="Price range" />
         </section>
 
-        <!-- Spectrum variant — gradient track + small ringed knob. The track
+        <!-- Spectrum variant — value.js gradient track + a track-height
+             SQUIRCLE thumb (the iOS color-picker idiom; AX.W59). The track
              background is consumer-supplied via `--slider-track-bg`. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">spectrum variant — gradient track</p>
