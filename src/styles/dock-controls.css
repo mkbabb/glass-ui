@@ -296,18 +296,24 @@
          * cluster axis) instead of the canonical `--primary`. The `--paper-
          * clean-texture` overlay and `--glass-specular` shadow stack are
          * inherited from the underlying `btn-audacious` utility. */
+        /* AX.W52 D19 — the phase-tint hover radial DEMOTED: the prior
+         * `ellipse at 30% 30%` at 18% was a loud top-LEFT corner hotspot. Toned to
+         * 8% and the anchor shifted off the hard corner toward a softer top-biased
+         * ellipse (`40% 25%`) with a tighter `transparent 55%` falloff, so it reads
+         * as a surface lift rather than a corner glow — the disco hover identity
+         * survives, the egregious corner bloom does not. */
         &:hover:not(:disabled) {
             --glass-grain-opacity: var(--glass-grain-opacity-disco, 0.08);
             background-image:
                 var(--paper-clean-texture),
                 radial-gradient(
-                    ellipse at 30% 30%,
+                    ellipse at 40% 25%,
                     color-mix(
                         in srgb,
-                        var(--phase-color, var(--foreground)) 18%,
+                        var(--phase-color, var(--foreground)) 8%,
                         transparent
                     ),
-                    transparent 70%
+                    transparent 55%
                 );
             background-blend-mode: overlay, normal;
             background-size: var(--paper-texture-size), auto;
@@ -321,24 +327,30 @@
          * pill itself so the glow composes with the whole CTA. Scoped to
          * active phases — at idle / ready the pill stays neutral and inherits
          * the W2.7 reservation ("disco fires on hover only"). */
+        /* AX.W52 D19 — the REST phase-halo `::before` (fires during a speedtest run
+         * on the most prominent dock control) DEMOTED on the same axis as the hover
+         * radial: 18%→8%, the hard `30% 30%` corner shifted to a softer `40% 25%`
+         * top-biased ellipse with a tighter `transparent 55%` falloff, and the
+         * `opacity: 1` dropped to 0.5 so the persistent run-time halo is a subtle
+         * surface lift, not a corner bloom that washes the pill for the whole run. */
         &[data-phase]:not([data-phase="ready"]):not([data-phase="idle"])::before {
             content: "";
             position: absolute;
             inset: 0;
             border-radius: inherit;
             background: radial-gradient(
-                ellipse at 30% 30%,
+                ellipse at 40% 25%,
                 color-mix(
                         in srgb,
-                        var(--phase-color, var(--foreground)) 18%,
+                        var(--phase-color, var(--foreground)) 8%,
                         transparent
                     )
                     0%,
-                transparent 70%
+                transparent 55%
             );
             pointer-events: none;
             z-index: -1;
-            opacity: 1;
+            opacity: 0.5;
             transition: opacity var(--duration-fast) var(--ease-standard);
         }
     }

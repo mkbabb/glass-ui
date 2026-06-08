@@ -106,32 +106,40 @@
            longer defeated by a floor. Hover/active lift it through the same
            cohort (the interaction-light state machine below). */
         --specular-intensity: var(--glass-specular-intensity-rest, 0);
-        /* The travelling catch-light — a genuinely WARM-CREAM, low-alpha circular
-           glow centred on the tracked pointer position (L < 100% so the warm hue
-           survives — the prior `hsl(40 30% 100%)` was PURE WHITE at L=100%, which
-           saturated the 30% away and blew out under the screen blend; the
-           warm-cream the comment claimed never painted). The `--specular-intensity`
-           multiplier drives the layer `opacity`, not a per-stop alpha (a
+        /* AX.W52 D19 — a thin, BOUNDED, pointer-anchored EDGE gleam (not the prior
+           full-plate central disc that washed small tiles muddy). The geometry is an
+           EXPLICIT-radius circle bounded by `--glass-specular-size` (36% of the
+           plate) whose falloff reaches `/0` well INSIDE the plate (70%) — a tracked
+           catch-light reading the surface near the lit edge, NEVER a whole-surface
+           wash. The core is genuinely WARM-CREAM (L < 100% so the warm hue survives;
+           the prior `hsl(40 30% 100%)` blew out to white). The `--specular-intensity`
+           multiplier drives the layer `opacity`, NOT a per-stop alpha (a
            registered-`@property` var() nested in an hsl() alpha computes to 0 in
-           Chromium); the per-stop alphas here keep the core soft so even the lifted
-           hover/active states read as a lens, not a flash. */
+           Chromium — the cross-engine-safe path); the per-stop alphas are literals so
+           even the lifted hover/active states read as a lens, not a flash. */
         background: radial-gradient(
-            circle at var(--specular-x, 50%) var(--specular-y, 50%),
-            hsl(40 30% 96% / 0.22) 0%,
-            hsl(40 30% 96% / 0.08) 22%,
-            transparent 55%
+            circle var(--glass-specular-size, 36%) at var(--specular-x, 50%) var(--specular-y, 50%),
+            hsl(40 35% 92% / 0.5) 0%,
+            hsl(40 35% 92% / 0) 70%,
+            transparent 100%
         );
         opacity: var(--specular-intensity, 0);
-        /* Clip the glow to the plate so it rides the surface. `mask-image`
-           Baseline 2023-12-07; a non-supporting engine ignores it and the
-           `inset: 0` + radius-inherit already bound the glow. */
+        /* Clip the gleam to ITS OWN radius (not the whole plate) so it stays a
+           bounded glint. `mask-image` Baseline 2023-12-07; a non-supporting engine
+           ignores it and the `inset: 0` + radius-inherit + the in-paint falloff
+           already bound the gleam to the surface. */
         mask-image: radial-gradient(
-            circle at var(--specular-x, 50%) var(--specular-y, 50%),
+            circle var(--glass-specular-size, 36%) at var(--specular-x, 50%) var(--specular-y, 50%),
             black 0%,
-            black 55%,
-            transparent 75%
+            black 60%,
+            transparent 100%
         );
-        mix-blend-mode: screen;
+        /* AX.W52 D19 — `plus-lighter` (additive but HDR-clamped, Safari 16.4+) over
+           the prior `screen` (a non-linear lightener that lifted the whole tile
+           toward white — the muddy-card defect). A non-supporting engine degrades to
+           a plain low-alpha warm overlay (the gleam composes normally — no blend, no
+           blowout), the no-workaround floor; NOT a `screen` fallback. */
+        mix-blend-mode: plus-lighter;
         /* Smooth the position + intensity between pointer samples (the typed
            @property regs make the percentage stops interpolable). */
         transition:
@@ -149,8 +157,8 @@
     .dark .glass-card::before,
     .dark .glass-specular-track::before,
     .dark .dock-icon-button::before {
-        /* Softer over the deep canvas — the screen blend lifts harder on dark.
-           The `.dark` magnitude lives in the token cohort (tokens.css §specular-
+        /* Softer over the deep canvas — `plus-lighter` still lifts on dark, so the
+           `.dark` cohort runs a lower hover/active rung (tokens.css §specular-
            intensity `.dark` arm); the rest rung is already 0 so the dark arm only
            softens hover/active via the cohort. The rest rung re-reads the (dark)
            token here so a dark `:root` override resolves. */
@@ -170,7 +178,7 @@
     .glass-card:hover::before,
     .glass-specular-track:hover::before,
     .dock-icon-button:hover::before {
-        --specular-intensity: var(--glass-specular-intensity-hover, 0.22);
+        --specular-intensity: var(--glass-specular-intensity-hover, 0.1);
     }
     .glass-material:active::before,
     .glass-wash:active::before,
@@ -181,7 +189,7 @@
     .glass-card:active::before,
     .glass-specular-track:active::before,
     .dock-icon-button:active::before {
-        --specular-intensity: var(--glass-specular-intensity-active, 0.32);
+        --specular-intensity: var(--glass-specular-intensity-active, 0.16);
     }
 
     /* ── Five-tier surface ladder (v0.8.0; visual only, no geometry) ──
