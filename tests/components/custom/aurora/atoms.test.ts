@@ -1,19 +1,26 @@
-// AW.W6 — the resolveAtoms total-function + default-roundtrip suite.
+// AX.W10 — the resolveAtoms total-function + default-roundtrip suite, re-derived for
+// the zones/noise/color atom shape.
 //
-// Two binding properties:
-//   (1) TOTAL — a fuzz over the FULL atom-combination matrix (every seed × harmony ×
-//       mood × medium × textureAmount × motion × zones) produces a VALID in-range
-//       AuroraConfig respecting every budget.ts cap (no NaN, no out-of-range field).
+// Properties:
+//   (1) TOTAL — a fuzz over the FULL atom-combination matrix (seed × harmony ×
+//       colorEnergy × zones{count,arrangement} × noise × medium{kind,amount} × motion,
+//       INCLUDING out-of-range inputs) yields a VALID in-range AuroraConfig respecting
+//       every budget.ts cap (no NaN, no out-of-range field). Clamp, never garbage.
 //   (2) DEFAULT-PRESERVING — resolveAtoms(DEFAULT_ATOMS) deep-equals
-//       DEFAULT_AURORA_CONFIG (the wispy-sky default survives the new door).
+//       DEFAULT_AURORA_CONFIG (the wispy-sky default survives the door).
+//   (3) the NOISE atom fans to warpAmount/warpScale/warpMode/noiseOctaves.
+//   (4) the texture amount is STRUCTURALLY ABSENT on a smooth medium (the union has
+//       no `amount` field on the smooth arm).
+//   (5) the ZONES arrangement re-places the nuclei (scattered ≠ composed ≠ centred).
 
 import { describe, expect, it } from "vitest";
 import {
     resolveAtoms,
+    nucleiPrior,
     DEFAULT_ATOMS,
     type AuroraAtoms,
-    type AuroraMoodAtom,
     type AuroraMotionAtom,
+    type AuroraZoneArrangement,
 } from "../../../../src/components/custom/aurora/composables/atoms";
 import {
     DEFAULT_AURORA_CONFIG,
@@ -36,7 +43,15 @@ const HARMONIES: (AuroraHarmony | undefined)[] = [
     "tetradic",
     "monochrome",
 ];
-const MOODS: (AuroraMoodAtom | undefined)[] = [undefined, "calm", "balanced", "vivid"];
+const ENERGIES: (number | undefined)[] = [undefined, 0, 0.5, 1, 2, -1]; // includes OUT-OF-RANGE
+const ARRANGEMENTS: (AuroraZoneArrangement | undefined)[] = [
+    undefined,
+    "scattered",
+    "composed",
+    "centred",
+];
+const ZONE_COUNTS: (number | undefined)[] = [undefined, 1, 2, 6, 99, 0]; // includes OUT-OF-RANGE
+const NOISES: (number | undefined)[] = [undefined, 0, 0.5, 1, 2, -1]; // includes OUT-OF-RANGE
 const MEDIA: (AuroraMedium | undefined)[] = [
     undefined,
     "smooth",
@@ -48,11 +63,27 @@ const MEDIA: (AuroraMedium | undefined)[] = [
 ];
 const TEXTURES: (number | undefined)[] = [undefined, 0, 0.5, 1, 2, -1]; // includes OUT-OF-RANGE
 const MOTIONS: (AuroraMotionAtom | undefined)[] = [undefined, "still", "breathing", "drifting"];
-const ZONES: (number | undefined)[] = [undefined, 1, 2, 6, 99, 0]; // includes OUT-OF-RANGE
 
-// ── The in-range invariants every resolved config must satisfy. Returns a list of
-// violation strings (empty = valid) so the fuzz can collect across the whole matrix
-// and assert ONCE — millions of per-iteration expect() calls would time out.
+// Build the medium atom from a (kind, amount) pair — smooth NEVER carries amount.
+function mediumAtom(
+    kind: AuroraMedium | undefined,
+    amount: number | undefined,
+): AuroraAtoms["medium"] {
+    if (kind === undefined) return undefined;
+    if (kind === "smooth") return { kind };
+    return amount === undefined ? { kind } : { kind, amount };
+}
+
+// Build the zones atom — undefined count means no zones atom.
+function zonesAtom(
+    count: number | undefined,
+    arrangement: AuroraZoneArrangement | undefined,
+): AuroraAtoms["zones"] {
+    if (count === undefined) return undefined;
+    return { count, arrangement };
+}
+
+// ── The in-range invariants every resolved config must satisfy. ──────────────
 function configViolations(cfg: AuroraConfig, label: string): string[] {
     const v: string[] = [];
     const inRange = (x: number, lo: number, hi: number, field: string) => {
@@ -61,6 +92,7 @@ function configViolations(cfg: AuroraConfig, label: string): string[] {
     };
     inRange(cfg.saturation, 0.6, 1.3, "saturation");
     inRange(cfg.warpAmount, 0, 0.6, "warpAmount");
+    inRange(cfg.warpScale, 0.5, 3, "warpScale");
     inRange(cfg.valueVariance, 0, 0.3, "valueVariance");
     inRange(cfg.breathDepth, 0, 0.15, "breathDepth");
     inRange(cfg.nucleiDrift, 0, 0.05, "nucleiDrift");
@@ -72,6 +104,10 @@ function configViolations(cfg: AuroraConfig, label: string): string[] {
     inRange(cfg.impasto, 0, 1, "impasto");
     inRange(cfg.canvasGrain, 0, 0.1, "canvasGrain");
     inRange(cfg.alpha, 0, 1, "alpha");
+    if (![3, 4, 5].includes(cfg.noiseOctaves))
+        v.push(`${label}: noiseOctaves=${cfg.noiseOctaves} not in {3,4,5}`);
+    if (!["fbm", "cellular", "hybrid"].includes(cfg.warpMode))
+        v.push(`${label}: warpMode=${cfg.warpMode} invalid`);
     if (cfg.nuclei.length > MAX_NUCLEI || cfg.nuclei.length < 1)
         v.push(`${label}: nuclei.length=${cfg.nuclei.length} (cap ${MAX_NUCLEI})`);
     const colorBudget = Math.max(AV_MAX_COLORS, DEFAULT_AURORA_CONFIG.palette.length);
@@ -84,55 +120,157 @@ function configViolations(cfg: AuroraConfig, label: string): string[] {
     for (const n of cfg.nuclei) {
         if (![n.x, n.y, n.radius, n.paletteBias].every(Number.isFinite))
             v.push(`${label}: bad nucleus ${JSON.stringify(n)}`);
+        if (n.x < 0 || n.x > 1 || n.y < 0 || n.y > 1)
+            v.push(`${label}: nucleus out of [0,1] ${JSON.stringify(n)}`);
     }
     return v;
 }
 
-describe("AW.W6 — resolveAtoms total-function fuzz", () => {
+describe("AX.W10 — resolveAtoms total-function fuzz", () => {
+    // The color axes (seed/harmony/colorEnergy) and the composition axes
+    // (zones/noise/medium/texture/motion) are INDEPENDENT in resolveAtoms — they touch
+    // disjoint config fields. So the totality argument is TWO coordinated sweeps rather
+    // than one combinatorial cross-product: each sweep cross-products its own axes AND
+    // pins a rotating baseline of the OTHER group, so every axis is exercised across the
+    // others' boundaries without a multi-million-iteration blowup (the seed-bearing
+    // deriveAurora call is the per-iteration cost). Together they exceed the 2000-combo
+    // floor and exercise every atom field including the out-of-range inputs.
     it("every atom combination yields a valid in-range config (TOTAL)", () => {
         const violations: string[] = [];
         let count = 0;
+        const check = (atoms: AuroraAtoms) => {
+            const cfg = resolveAtoms(atoms);
+            violations.push(...configViolations(cfg, JSON.stringify(atoms)));
+            count++;
+        };
+
+        // Sweep A — the COLOR axes cross-product, against a rotating composition baseline.
+        let rot = 0;
         for (const seed of SEEDS)
             for (const harmony of HARMONIES)
-                for (const mood of MOODS)
+                for (const colorEnergy of ENERGIES) {
+                    const zoneCount = ZONE_COUNTS[rot % ZONE_COUNTS.length];
+                    const arrangement = ARRANGEMENTS[rot % ARRANGEMENTS.length];
+                    const noise = NOISES[rot % NOISES.length];
+                    const medium = MEDIA[rot % MEDIA.length];
+                    const texture = TEXTURES[rot % TEXTURES.length];
+                    const motion = MOTIONS[rot % MOTIONS.length];
+                    rot++;
+                    check({
+                        seed,
+                        harmony,
+                        colorEnergy,
+                        zones: zonesAtom(zoneCount, arrangement),
+                        noise,
+                        medium: mediumAtom(medium, texture),
+                        motion,
+                    });
+                }
+
+        // Sweep B — the COMPOSITION axes cross-product, against a rotating color baseline.
+        rot = 0;
+        for (const zoneCount of ZONE_COUNTS)
+            for (const arrangement of ARRANGEMENTS)
+                for (const noise of NOISES)
                     for (const medium of MEDIA)
-                        for (const textureAmount of TEXTURES)
-                            for (const motion of MOTIONS)
-                                for (const zones of ZONES) {
-                                    const atoms: AuroraAtoms = {
-                                        seed,
-                                        harmony,
-                                        mood,
-                                        medium,
-                                        textureAmount,
-                                        motion,
-                                        zones,
-                                    };
-                                    const cfg = resolveAtoms(atoms);
-                                    violations.push(...configViolations(cfg, JSON.stringify(atoms)));
-                                    count++;
-                                }
-        // sanity: the matrix is large enough to be a real fuzz.
+                        for (const texture of TEXTURES)
+                            for (const motion of MOTIONS) {
+                                const seed = SEEDS[rot % SEEDS.length];
+                                const harmony = HARMONIES[rot % HARMONIES.length];
+                                const colorEnergy = ENERGIES[rot % ENERGIES.length];
+                                rot++;
+                                check({
+                                    seed,
+                                    harmony,
+                                    colorEnergy,
+                                    zones: zonesAtom(zoneCount, arrangement),
+                                    noise,
+                                    medium: mediumAtom(medium, texture),
+                                    motion,
+                                });
+                            }
+
         expect(count).toBeGreaterThan(2000);
         expect(violations, violations.slice(0, 5).join("\n")).toHaveLength(0);
     });
 
-    it("the worst-case combination (vivid × 6 zones × vangogh × max texture) stays in-range", () => {
+    it("the worst-case combination (max energy × 6 zones × vangogh × max texture × max noise) stays in-range", () => {
         const cfg = resolveAtoms({
             seed: "#00ff00",
             harmony: "tetradic",
-            mood: "vivid",
-            medium: "vangogh",
-            textureAmount: 1,
+            colorEnergy: 1,
+            zones: { count: 6, arrangement: "scattered" },
+            noise: 1,
+            medium: { kind: "vangogh", amount: 1 },
             motion: "drifting",
-            zones: 6,
         });
         expect(configViolations(cfg, "worst-case")).toHaveLength(0);
         expect(cfg.nuclei.length).toBe(6);
     });
 });
 
-describe("AW.W6 — the default atoms preserve the wispy-sky default", () => {
+describe("AX.W10 — the NOISE atom fans to the organic-boundary cluster", () => {
+    it("a rising noise scalar moves warpAmount + warpScale and steps warpMode/noiseOctaves", () => {
+        const lo = resolveAtoms({ noise: 0 });
+        const hi = resolveAtoms({ noise: 1 });
+        expect(hi.warpAmount).toBeGreaterThan(lo.warpAmount);
+        expect(hi.warpScale).toBeGreaterThan(lo.warpScale);
+        // fBm at the calm end → cellular at the turbulent end.
+        expect(lo.warpMode).toBe("fbm");
+        expect(hi.warpMode).toBe("cellular");
+        expect(hi.noiseOctaves).toBeGreaterThanOrEqual(lo.noiseOctaves);
+    });
+});
+
+describe("AX.W10 — texture is structurally absent on a smooth medium", () => {
+    it("a smooth medium atom carries no `amount` field (the union narrows it away)", () => {
+        const m: AuroraAtoms["medium"] = { kind: "smooth" };
+        // @ts-expect-error — the smooth arm of AuroraMediumAtom has no `amount`.
+        m.amount = 0.5;
+        // a textured medium DOES accept an amount (compiles).
+        const t: AuroraAtoms["medium"] = { kind: "oil", amount: 0.5 };
+        expect(t).toBeDefined();
+    });
+
+    it("a smooth medium leaves the texture fields at the default (no inert write)", () => {
+        const cfg = resolveAtoms({ medium: { kind: "smooth" } });
+        expect(cfg.strokeAmount).toBe(DEFAULT_AURORA_CONFIG.strokeAmount);
+        expect(cfg.wetEdge).toBe(DEFAULT_AURORA_CONFIG.wetEdge);
+        expect(cfg.canvasGrain).toBe(DEFAULT_AURORA_CONFIG.canvasGrain);
+    });
+
+    it("a textured medium with an amount DOES write its dominant knob", () => {
+        const cfg = resolveAtoms({ medium: { kind: "watercolor", amount: 1 } });
+        expect(cfg.wetEdge).toBe(1);
+    });
+});
+
+describe("AX.W10 — the ZONES arrangement re-places the nuclei (ONE nucleiPrior)", () => {
+    it("scattered / composed / centred produce DISTINCT layouts for the same count", () => {
+        const composed = nucleiPrior(4, "composed");
+        const scattered = nucleiPrior(4, "scattered");
+        const centred = nucleiPrior(4, "centred");
+        const key = (ns: AuroraConfig["nuclei"]) =>
+            ns.map((n) => `${n.x.toFixed(3)},${n.y.toFixed(3)}`).join("|");
+        expect(key(composed)).not.toBe(key(scattered));
+        expect(key(scattered)).not.toBe(key(centred));
+        expect(key(composed)).not.toBe(key(centred));
+    });
+
+    it("centred clusters tighter around the middle than scattered", () => {
+        const dist = (ns: AuroraConfig["nuclei"]) =>
+            ns.reduce((s, n) => s + Math.hypot(n.x - 0.5, n.y - 0.5), 0) / ns.length;
+        expect(dist(nucleiPrior(5, "centred"))).toBeLessThan(dist(nucleiPrior(5, "scattered")));
+    });
+
+    it("nucleiPrior clamps the count to [1, MAX_NUCLEI] (total)", () => {
+        expect(nucleiPrior(0).length).toBe(1);
+        expect(nucleiPrior(99).length).toBe(MAX_NUCLEI);
+        expect(nucleiPrior(-5).length).toBe(1);
+    });
+});
+
+describe("AX.W10 — the default atoms preserve the wispy-sky default", () => {
     it("resolveAtoms(DEFAULT_ATOMS) deep-equals DEFAULT_AURORA_CONFIG", () => {
         const resolved = resolveAtoms(DEFAULT_ATOMS);
         expect(resolved).toEqual(DEFAULT_AURORA_CONFIG);

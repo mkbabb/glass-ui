@@ -28,8 +28,9 @@ import { Aurora } from "@mkbabb/glass-ui/aurora";
 > consumer-facing guide. The five aurora waves are **W4 — painterly** (the structure-tensor
 > / ETF keystone + real height-field impasto + the van-Gogh atomic-stroke medium + genuine
 > oil-pastel deposition), **W5 — color** (in-shader OKLCh interpolation + hue-path + the
-> `deriveAurora` / `deriveScene` front door), **W6 — options** (the ≤7-atom `resolveAtoms`
-> door), **W7 — WebGPU** (`createGPUCanvas` + the WGSL parity twin + the multi-pass
+> `deriveAurora` palette front door), **W6 — options** (the ≤7-atom `resolveAtoms`
+> door — AX.W10 converged it to the ONE consumer surface + retired the parallel
+> seed+mood door), **W7 — WebGPU** (`createGPUCanvas` + the WGSL parity twin + the multi-pass
 > smoothed-tensor + anisotropic Kuwahara substrate), and **W8 — interactive** (cursor-as-
 > light + velocity-reactive flow + the stateful pointer wake) — specced under
 > `docs/tranches/AW/waves/AW.W4-aurora-painterly.md` … `AW.W8-aurora-interactive.md`.
@@ -253,23 +254,47 @@ interface AuroraInstance {
 }
 ```
 
-### The config shape
+### The atoms door — the consumer surface
 
-`AuroraConfig` exposes the full author surface — composition (palette, nuclei, softmaxBeta,
-valueVariance), warp (amount/scale/drift/mode/octaves), medium (medium, flow, the stroke +
-wet + tooth knobs), motion (drift/breath), and output (saturation, grain, alpha). See
-`DESIGN.md §5` for every field with its range. For a consumer choosing a backdrop rather
-than tuning a shader, reach for `deriveAurora` (below) plus a small handful of high-level
-fields (`medium`, `warpAmount`, `breathPeriod`, `saturation`).
+`resolveAtoms(atoms) → AuroraConfig` is THE consumer-facing door (AX.W10). The ≤7
+intuitive **atoms** are the user's named control elements — **COLOR** (seed · harmony ·
+colorEnergy), **ZONES** (count · arrangement), **NOISE** (one organic-boundary knob),
+**MEDIUM** (+ texture, textured mediums only), **MOTION**:
 
-**(planned — AW.W6)** A `resolveAtoms(atoms) → AuroraConfig` front door collapses the
-~28-field author schema to ≤7 intuitive atoms — **seed · harmony · mood/energy · medium ·
-texture · motion · zones** — with the full schema preserved as a progressive-disclosure
-"Advanced" tier (nothing removed from `AuroraConfig`; the simplification is in the presented
-surface). `resolveAtoms` is a pure, *total* function: every atom combination resolves to a
-valid in-range config respecting every `budget.ts` cap, and the default atoms resolve
-exactly to the wispy-sky `DEFAULT_AURORA_CONFIG`. *(Progressive disclosure, UXPin; the
-Stripe / paper.design productized two-tier model.)*
+```ts
+import { resolveAtoms } from "@mkbabb/glass-ui/aurora";
+
+const config = resolveAtoms({
+    seed: "#3a7bd5",
+    harmony: "analogous",
+    colorEnergy: 0.7,                          // co-varies saturation + value + breath + warm/cool
+    zones: { count: 3, arrangement: "composed" }, // scattered | composed | centred
+    noise: 0.5,                                // → warpAmount + warpScale + warpMode + noiseOctaves
+    medium: { kind: "oil", amount: 0.6 },      // smooth carries NO `amount` (structural)
+    motion: "drifting",
+});
+// pass `config` to <Aurora :config>.
+```
+
+Each atom maps to a co-varying cluster of fields, so one knob moves the entangled axes
+together (Burley's "Principled" 5-rule discipline: intuitive, few, normalized, robust for
+EVERY combination). `resolveAtoms` is a pure, *total* function — every atom combination
+(including out-of-range inputs) resolves to a valid in-range config respecting every
+`budget.ts` cap, and `DEFAULT_ATOMS` (the empty set) resolves exactly to the wispy-sky
+`DEFAULT_AURORA_CONFIG`. Inapplicable knobs are **structurally absent** (a smooth medium's
+texture-amount union arm does not exist — no silent-inert slider); only the wired
+interactivity axes (`light` / `scroll`) ship. Machine-asserted by
+`proof:aurora-atoms-roundtrip` (totality + default-preservation + reachability + the
+dead-door deletion) and the π-lane `proof:aurora-atoms-render` (per-atom device readback).
+
+### The internal author schema
+
+`AuroraConfig` is the INTERNAL author schema — the full ~28-field surface a preset author
+types a hand-tuned backdrop against (composition: palette/nuclei/softmaxBeta/valueVariance;
+warp: amount/scale/drift/mode/octaves; medium: medium/flow + the stroke/wet/tooth knobs;
+motion: drift/breath; output: saturation/grain/alpha). See `DESIGN.md §5` for every field
+with its range. The atoms door above is the simplification the consumer reaches for; the raw
+schema is the escape hatch a preset author drops to, not the default surface.
 
 ### Deriving a palette
 
@@ -292,11 +317,12 @@ Ottosson core (`gamutMapStop`, `color.ts:250`).
 `tetradic` harmonies, eased L/C journeys (a **bell** chroma curve — peak in the mids,
 desaturated extremes — becomes the new default), and warm-light/cool-shadow
 `temperatureShift` coupling (the single most-cited painting rule, the fold that makes the
-oil/oil-pastel mediums read as *mixed paint* rather than stamped hue). It adds a
-`deriveScene(seed, mood)` door (`atmospheric` | `painterly` | `vivid` | `muted`) that
-derives a *whole* `AuroraConfig` — palette + nuclei layout on a rule-of-thirds prior +
-medium + motion — from one seed and a mood word. *(meodai pro-color-harmonies; Adobe
-Leonardo / OKLCh ramp tooling; Baudisch / Gamblin warm-cool temperature.)*
+oil/oil-pastel mediums read as *mixed paint* rather than stamped hue — the
+`temperatureShift` now interpolates the hue toward named warm/cool OKLCh poles, AX.W10).
+The whole-scene derive from one seed lives in the **atoms door** (`resolveAtoms` above —
+the ONE consumer surface; AX.W10 retired the prior parallel seed+mood door). *(meodai
+pro-color-harmonies; Adobe Leonardo / OKLCh ramp tooling; Baudisch / Gamblin warm-cool
+temperature.)*
 
 ---
 
@@ -589,7 +615,8 @@ named bite-check that re-reds it:
 | `proof:aurora-oilpastel-medium` | the reworked oil-pastel bake shows paper-through-scumble; the WebGL2 path stays inside `profile:budget`. Bite: revert to the tooth-multiply → RED | planned (AW.W4) |
 | `proof:aurora-oklch-interp` | the spliced OKLCh matrices match value.js to 1e-6; the blue→yellow midpoint holds chroma above the linear-`mix` midpoint. Bite: revert `samplePalette` to linear `mix()` → RED | planned (AW.W5) |
 | `proof:aurora-derive-gamut` | every harmony × easing × temperature stop is in-sRGB over a neon-seed matrix after `gamutMapStop`. Bite: remove `gamutMapStop` → RED | planned (AW.W5) |
-| `proof:aurora-atoms-roundtrip` | `resolveAtoms` is total (every atom combination is a valid in-range config) and `resolveAtoms(DEFAULT_ATOMS)` deep-equals the wispy-sky default. Bite: break a `DEFAULT_ATOMS` value → RED | planned (AW.W6) |
+| `proof:aurora-atoms-roundtrip` | `resolveAtoms` is total + default-preserving AND REACHABLE — the live aurora story routes the atoms-default door (drives the canvas via `resolveAtoms`, not raw config) AND the dead parallel seed+mood door is GONE (grep=0) + ONE `nucleiPrior` + the noise atom fans out + texture is structurally absent on smooth. Bite: re-route the atoms tab to mutate raw config / re-introduce the dead door / drop the noise atom → RED | shipped (AX.W10) |
+| `proof:aurora-atoms-render` | the π-lane PER-ATOM device readback — driving each atom (seed / colorEnergy / zones / noise / medium) in the live config UI visibly changes the canvas centre region above the ambient drift baseline (the atoms are WIRED, not inert). Bite: leave an atom unwired → its delta collapses to the drift floor → RED | shipped (AX.W10) |
 | `proof:aurora-backend-fallback` · `proof:aurora-wgsl-equivalence` | the forced WebGL2 path renders the identical visual contract; the WGSL color/noise chunk matches its GLSL twin to 1e-6. Bite: break the fallback route / perturb a WGSL constant → RED | planned (AW.W7) |
 | `proof:aurora-webgpu-render` | the π-lane DEVICE render-and-readback — the REAL `aurora.wgsl.ts` + `packGPUUniforms` on a real `GPUDevice` paint a NON-BLACK centre pixel (DEFAULT at t=1); the per-i32-field decode reads the counts (not the `bits(3.0)=1077936128` bit-pattern); the WebGL2-vs-WebGPU base-field delta is below the parity floor; `WEBGPU_PARITY=false` resolves `"webgl"`. Bite: revert the f32-cast OR the storage move → BLACK on Metal → RED | shipped (AX.W07) |
 | `proof:aurora-interaction-prm` | every interactive axis is suppressed under `prefers-reduced-motion`; the master tempo scalar zeroes the stateful field; the pause stops every axis. Bite: detach an axis from the tempo scalar → RED | planned (AW.W8) |

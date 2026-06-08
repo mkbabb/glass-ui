@@ -74,6 +74,9 @@ function selectPreset(key: PresetKey) {
 const thumbs = usePresetThumbnails({ widthCss: 320, heightCss: 200 });
 
 const activeLayer = ref<string>("medium");
+// AX.W10 — the dock opens on the "atoms" surface by DEFAULT (the ≤7-atom door);
+// "advanced" is the raw ~28-field escape hatch.
+const dockTab = ref<string>("atoms");
 
 onMounted(() => {
     const unregLeft = registerShortcut(
@@ -158,7 +161,9 @@ void currentMeta;
                                 <AuroraConfigDock
                                     :config="studio.config"
                                     :active-layer="activeLayer"
+                                    :tab="dockTab"
                                     @update:active-layer="(v: string) => (activeLayer = v)"
+                                    @update:tab="(v: string) => (dockTab = v)"
                                     @reset="studio.resetCurrent"
                                 />
                             </template>

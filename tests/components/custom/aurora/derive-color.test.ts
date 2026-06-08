@@ -13,9 +13,7 @@ import { describe, it, expect } from "vitest";
 import { rawOklchToOklab, oklabToLinearSRGB } from "@mkbabb/value.js";
 import {
     deriveAurora,
-    deriveScene,
     type AuroraHarmony,
-    type AuroraMood,
     type DeriveEasing,
 } from "../../../../src/components/custom/aurora/composables/color";
 
@@ -48,7 +46,6 @@ const HARMONIES: AuroraHarmony[] = [
 ];
 const EASINGS: DeriveEasing[] = ["linear", "sine", "bell"];
 const TEMPS = [0, 0.5, 1.0];
-const MOODS: AuroraMood[] = ["atmospheric", "painterly", "vivid", "muted"];
 
 function rawLinear(stop: { L: number; C: number; h: number }): number[] {
     const [L, a, b] = rawOklchToOklab(stop.L, stop.C, stop.h);
@@ -120,27 +117,3 @@ describe("deriveAurora — neon-seed gamut matrix (W5.2)", () => {
     });
 });
 
-describe("deriveScene — whole config from a seed + mood (W5.2)", () => {
-    it("returns an in-gamut palette + a composed field for every mood", () => {
-        for (const seed of NEON_SEEDS) {
-            for (const mood of MOODS) {
-                const cfg = deriveScene(seed, mood);
-                expect(cfg.palette.length).toBeGreaterThanOrEqual(2);
-                expect(cfg.nuclei.length).toBeGreaterThanOrEqual(1);
-                expect(typeof cfg.medium).toBe("string");
-                for (const s of cfg.palette) {
-                    for (const ch of rawLinear(s)) {
-                        expect(ch - 1).toBeLessThanOrEqual(OVER_TOL);
-                    }
-                }
-                // The nuclei are NOT all centred (rule-of-thirds prior).
-                if (cfg.nuclei.length >= 2) {
-                    const allCentred = cfg.nuclei.every(
-                        (n) => n.x === 0.5 && n.y === 0.5,
-                    );
-                    expect(allCentred).toBe(false);
-                }
-            }
-        }
-    });
-});

@@ -143,19 +143,21 @@ The `<Aurora>` SFC also accepts a `:opacity-ceiling` prop (`number`, default `1.
 
 Per memory rule "Presets in consumers": the 11 authored themes (Sky, Dawn, Meadow, Deliberative, Day9, Oil Impasto, Oil Gestural, Oil Van Gogh, Crayon Sunset, Crayon Rainbow, Crayon Ocean) live at `demo/stories/aurora/presets.ts`, not here.
 
-### The two-tier "atoms of control" door (AW.W6)
+### The atoms door — the ONE consumer surface (AX.W10)
 
-The full ~28-field `AuroraConfig` is the AUTHOR schema (a surface for tuning a shader). `resolveAtoms(atoms) → AuroraConfig` (`composables/atoms.ts`) is a thin CONSUMER door over it — ≤7 intuitive atoms that fan out to the full config. Nothing is removed from `AuroraConfig`; the full schema stays whole as the progressive-disclosure "Advanced" escape hatch (the demo panel shows the ≤7 atoms by default with the full surface under a `Collapsible`). `resolveAtoms` is PURE + TOTAL (every atom combination — including out-of-range inputs — yields a valid in-range config respecting every `budget.ts` cap) and DEFAULT-PRESERVING (`resolveAtoms(DEFAULT_ATOMS)` deep-equals `DEFAULT_AURORA_CONFIG` — the wispy-sky default survives the door, machine-asserted by `proof:aurora-atoms-roundtrip`). Mechanism: clone the default and apply ONLY the PRESENT atoms as clamped overrides, so the empty atom set (`DEFAULT_ATOMS`) passes through to the default.
+`resolveAtoms(atoms) → AuroraConfig` (`composables/atoms.ts`) is THE consumer-facing door. The ≤7 atoms are the user's named control elements — **COLOR** (seed + harmony + colorEnergy), **ZONES** (count + arrangement), **NOISE** (one organic-boundary knob), **MEDIUM** (+ texture, textured mediums only), **MOTION**. `AuroraConfig` is the INTERNAL author schema — the full ~28-field surface a preset author drops to, NOT the default surface (the live config dock opens on the atoms tab; the raw layers are the Advanced escape hatch). AX.W10 converged this to ONE door — the dead parallel seed+mood door (its own mood union + recipe table + duplicated thirds prior) is DELETED; one `nucleiPrior` and one COLOR-energy curve are the single source.
+
+`resolveAtoms` is PURE + TOTAL (every atom combination — including out-of-range inputs — yields a valid in-range config respecting every `budget.ts` cap) and DEFAULT-PRESERVING (`resolveAtoms(DEFAULT_ATOMS)` deep-equals `DEFAULT_AURORA_CONFIG`, machine-asserted by `proof:aurora-atoms-roundtrip`). Inapplicable knobs are **structurally absent** (the smooth-medium union arm has no `amount` field — no silent-inert texture slider); only the WIRED interactivity axes (`light`/`scroll`) ship. Mechanism: clone the default and apply ONLY the PRESENT atoms as clamped overrides, so the empty atom set passes through to the default. Each atom moves a CO-VARYING cluster as a continuous curve (one knob moves the entangled axes, the Burley "Principled" discipline).
 
 | Atom | Fans to |
 |---|---|
 | `seed` (+ `harmony`) | the derived palette via `deriveAurora` (clamped to the perf color budget) |
-| `mood` (calm ↔ vivid) | `saturation` + `warpAmount` + `valueVariance` + `breathDepth` (the co-varying energy axes) |
-| `medium` | the `AuroraMedium` value (+ tensor orientation for the painterly mediums) |
-| `textureAmount` (0..1) | the medium's dominant texture knob (`strokeAmount`/`wetEdge`/`canvasGrain`) |
+| `colorEnergy` (0..1) | `saturation` + `valueVariance` + `breathDepth` + the palette's warm/cool `temperatureShift` (the co-varying chroma/value cluster, a continuous curve — the old mood coupling folded in) |
+| `zones` (`{count, arrangement}`) | the nuclei via the ONE `nucleiPrior` — `arrangement` (scattered/composed/centred) selects the placement prior, `count` clamped to `MAX_NUCLEI` |
+| `noise` (0..1) | the organic-boundary cluster — `warpAmount` + `warpScale` + `warpMode` (fBm→hybrid→cellular) + `noiseOctaves` |
+| `medium` (`{kind, amount?}`) | the `AuroraMedium` value (+ tensor orientation for the painterly mediums); `amount` only on a textured medium (structurally absent on smooth) |
 | `motion` (still·breathing·drifting) | the four motion fields (`nucleiDrift`/`paletteDrift`/`warpDrift`/`breathDepth`) |
-| `zones` (2..6) | the nuclei count on a rule-of-thirds/golden prior (clamped to `MAX_NUCLEI`) |
-| `interactivity` | the W6 SHAPE (the `light`/`flow`/`scroll`/`wake` axes; behavior wired at W8) |
+| `interactivity` | only the WIRED axes — `light` (cursor-as-light) + `scroll` (scroll-coupled). The unwired `flow`/`wake` axes are excised from the atom shape until wired |
 
 ## 6. Spec deltas (v4 → v4.1) [archived]
 
@@ -170,7 +172,7 @@ The full ~28-field `AuroraConfig` is the AUTHOR schema (a surface for tuning a s
 
 ## 7. Load-bearing implementation notes
 
-- **The OKLCh color math is SHARED, not aurora-local (AW.W5).** The CPU-side palette bake — `oklchToLinear()` + `flattenPalette()` — still composes in `composables/color.ts`, but `color.ts` now RE-EXPORTS the shared `/color` leaf core (`src/composables/color`), and the GPU-side OKLCh lives in the SHARED `src/composables/glass/webgl/shaders/procedural-color.glsl.ts` chunk that aurora's `aurora.frag.ts` AND the blob's `metaball.frag.ts` both splice (`${OKLCH_MATRICES_GLSL}`, `${OETF_GLSL}`, `${FBM_ROT_GLSL}`). So the Ottosson OKLab/OKLCh matrices + the sRGB OETF have exactly ONE source and can NEVER drift between aurora and the blob (`proof:single-color-core` + `proof:shader-shared-source` freeze it). The W5 arm also lands the **in-shader OKLCh interpolation** (`mixPaletteOklchArc` + `brokenColorJitter` operate in OKLab/OKLCh inside the fragment program — the palette interp + the per-stroke jitter no longer run in linear-sRGB/YIQ) and the `deriveAurora` / `deriveScene(seed, mood)` front door.
+- **The OKLCh color math is SHARED, not aurora-local (AW.W5).** The CPU-side palette bake — `oklchToLinear()` + `flattenPalette()` — still composes in `composables/color.ts`, but `color.ts` now RE-EXPORTS the shared `/color` leaf core (`src/composables/color`), and the GPU-side OKLCh lives in the SHARED `src/composables/glass/webgl/shaders/procedural-color.glsl.ts` chunk that aurora's `aurora.frag.ts` AND the blob's `metaball.frag.ts` both splice (`${OKLCH_MATRICES_GLSL}`, `${OETF_GLSL}`, `${FBM_ROT_GLSL}`). So the Ottosson OKLab/OKLCh matrices + the sRGB OETF have exactly ONE source and can NEVER drift between aurora and the blob (`proof:single-color-core` + `proof:shader-shared-source` freeze it). The W5 arm also lands the **in-shader OKLCh interpolation** (`mixPaletteOklchArc` + `brokenColorJitter` operate in OKLab/OKLCh inside the fragment program — the palette interp + the per-stroke jitter no longer run in linear-sRGB/YIQ) and the `deriveAurora` palette front door (the whole-scene derive lives in the `resolveAtoms` atoms door — AX.W10).
 - **Palette is baked to LINEAR sRGB** for the LUT, not gamma-sRGB. The shader ACES-tonemaps in linear, then closes the mandatory sRGB OETF (`linearToSrgb`, spliced from the shared chunk) at `main()` — the AV.W1 too-dark defect is fixed at the single OETF source.
 - **`preserveDrawingBuffer` is capture-only by default.** WebGL context attributes are fixed at context creation, so live runtimes default false while thumbnail/capture runtimes opt true. Without preservation, `readPixels` / `toDataURL` after the composited frame is not a stable capture contract.
 - **Nuclei y-coordinate is CSS-top-origin** (0 = top, 1 = bottom). Runtime flips Y at the uniform boundary — see `AUTHOR_Y_ORIGIN_IS_TOP` marks in `runtime.ts`. Config authoring stays top-origin.
@@ -226,7 +228,7 @@ Interactivity is OPT-IN via the `AuroraConfig.interactivity` flag (`light` · `f
 ```
 src/components/custom/aurora/
 ├── Aurora.vue                    # canvas wrapper + useAurora + defineExpose cursor API
-├── index.ts                      # barrel (Aurora, useAurora, deriveAurora, deriveScene, types)
+├── index.ts                      # barrel (Aurora, useAurora, deriveAurora, resolveAtoms, types)
 ├── DESIGN.md                     # this file (the design document of record)
 ├── README.md                    # the consumer-contract guide (W33's surface)
 ├── constants/                    # the constant-tier files (no reactivity, no lifecycle)
@@ -242,7 +244,7 @@ src/components/custom/aurora/
 │       ├── mediums.glsl.ts       # mediumWatercolor / mediumPastel / mediumCrayon / mediumOil dispatch
 │       └── tonemap.glsl.ts       # ACES + the saturate3 / clamp post
 └── composables/
-    ├── color.ts                  # CPU OKLCh bake — RE-EXPORTS the shared /color leaf (AW.W5) + deriveAurora/deriveScene
+    ├── color.ts                  # CPU OKLCh bake — RE-EXPORTS the shared /color leaf (AW.W5) + deriveAurora (the dead seed+mood scene door retired AX.W10)
     ├── runtime.ts                # createAurora — live/capture WebGL lifecycle orchestration
     ├── glSetup.ts                # program/VBO/uniform-location setup
     ├── uniformBridge.ts          # config → uniform upload (the AuroraConfig → GL seam)
@@ -277,7 +279,8 @@ claim).
   RE-EXPORTS the shared `/color` leaf core for the CPU bake (surface preserved).
   The W5 arm also lands **in-shader OKLCh interpolation** (`mixPaletteOklchArc`
   + `brokenColorJitter` in OKLab/OKLCh, not linear-sRGB/YIQ) and the
-  `deriveAurora` / `deriveScene(seed, mood)` front door. (§7 + §9 reflect this.)
+  `deriveAurora` palette front door (the whole-scene derive is the `resolveAtoms`
+  atoms door — AX.W10 retired the parallel seed+mood door). (§7 + §9 reflect this.)
 
 - **Δ08 — Painterly mediums + structure-tensor orientation (AW.W4, STAGED).**
   The energy-graded **van-Gogh atomic-stroke** medium (tensor strokes + impasto

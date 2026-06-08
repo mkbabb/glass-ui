@@ -25,20 +25,26 @@ export {
     type StrokeOrient,
     type WarpMode,
 } from "./constants/presets";
-// AW.W6 — the resolveAtoms ≤7-atom door (the thin consumer surface over the full
-// schema) + the AuroraAtoms shape + the DEFAULT_ATOMS that resolve to the wispy-sky
-// default. The full AuroraConfig stays whole as the progressive-disclosure escape hatch.
+// AX.W10 — the resolveAtoms ≤7-atom door is THE consumer surface (the full
+// AuroraConfig is the INTERNAL author schema). The atom set is re-derived from the
+// user's named control elements — COLOR (seed + harmony + colorEnergy), ZONES
+// (count + arrangement), NOISE (one organic-boundary knob), MEDIUM (+ texture),
+// MOTION. `nucleiPrior` is the ONE single-sourced nuclei prior. `DEFAULT_ATOMS`
+// (the empty set) resolves to the wispy-sky default.
 export {
     resolveAtoms,
+    nucleiPrior,
     DEFAULT_ATOMS,
     type AuroraAtoms,
-    type AuroraMoodAtom,
     type AuroraMotionAtom,
+    type AuroraZones,
+    type AuroraZoneArrangement,
+    type AuroraMediumAtom,
+    type AuroraInteractivityAtom,
 } from "./composables/atoms";
 export {
     cssToOklch,
     deriveAurora,
-    deriveScene,
     flattenPalette,
     hexToOklchStop,
     oklchStopToHex,
@@ -47,10 +53,9 @@ export {
 } from "./composables/color";
 // D10b — the seed-one-color → N-stop palette producer (composes the shipped
 // value.js OKLab/gamut core). T6 wires it into the Palette configurator tab.
-// W5 — the derive-color superset: more harmonies + easing + temperature + scene.
+// W5 — the derive-color superset: more harmonies + easing + temperature.
 export type {
     AuroraHarmony,
-    AuroraMood,
     DeriveAuroraOptions,
     DeriveEasing,
 } from "./composables/color";
