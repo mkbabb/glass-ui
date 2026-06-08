@@ -200,7 +200,9 @@ const isTouchActive = computed(() => touchGate.isActive.value)
     transition:
         background var(--duration-fast) var(--ease-standard),
         box-shadow var(--duration-fast) var(--ease-standard),
-        transform var(--duration-fast) var(--ease-standard);
+        /* The thumb morph shares the dock's control register so an in-dock
+           slider breathes on the same iOS spring as the dock collapse. */
+        transform var(--duration-fast) var(--slider-thumb-spring, var(--spring-snappy));
 }
 
 .glass-slider:active .slider-thumb {

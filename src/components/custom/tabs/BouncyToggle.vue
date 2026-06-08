@@ -160,7 +160,8 @@ function animatePress(btn: HTMLElement) {
     btn.getAnimations().forEach((a) => a.cancel());
 
     // WAAPI keyframes can't dereference custom properties; resolve at runtime.
-    const easing = readToken("--ease-apple-spring", "cubic-bezier(0.175, 0.885, 0.32, 1.275)");
+    // The bouncy toggle WANTS overshoot — it rides the playful register.
+    const easing = readToken("--spring-bouncy", "ease-out");
     const press = readToken("--scale-press", "0.95");
     const hover = readToken("--scale-hover", "1.08");
 

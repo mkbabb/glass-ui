@@ -1,0 +1,80 @@
+{
+  "wave": "AX.W05",
+  "title": "One iOS-spring vocabulary — excise the legacy apple-spring bezier",
+  "status": "green-headless · live-pending",
+  "headBase": "a09c2b6 (at-dock-convergence worktree; AT-baseline)",
+  "baseNote": "The dispatched worktree HEAD is a09c2b6 (the AT-baseline tree), NOT the eaba94f/a563543 the charter was written against. This tree carries FOUR --spring-* presets (smooth/snappy/bouncy/gentle) — there is NO --spring-dock token here (that is an AX.W01 mint absent from this lineage). The wave's CORE INTENT is base-invariant and was executed against the actual tree: excise the apple-spring bezier, converge onto the ONE governed --spring-* vocabulary, re-point every consumer onto its surface-class register, and build the gate. The 'dock register' maps to --spring-snappy (the dock breathes on it via --animate-dock-in: ... var(--spring-snappy); theme.css), the in-tree control register.",
+  "redWitnesses": {
+    "witness1_two_vocabularies": {
+      "claim": "A second iOS-spring authority survives — the cubic-bezier --motion-ease-apple-spring + its --ease-apple-spring alias coexist with the regen --spring-* linear() cohort, with no governing surface→register rationale.",
+      "bornRed": "grep --ease-apple-spring|--motion-ease-apple-spring over src/ at HEAD → 2 definitions (tokens.css:176 def, tokens.css:179 alias; theme.css:303 re-alias) + 9 live consumer sites",
+      "greenAfter": "0 definitions, 0 consumers in src/ and demo/ (proof:animation-coherence survivor sweep: 0 survivors)"
+    },
+    "witness2_register_mismatch": {
+      "claim": "The slider thumb morph runs a different curve than the dock it lives inside.",
+      "correctedPerResult28": "In THIS tree the Slider thumb transform springs on --ease-standard (NOT --ease-spring or the bezier) — Slider is a register re-point, not a bezier consumer. Re-pointed the thumb transform onto --slider-thumb-spring defaulting to --spring-snappy (the in-tree dock register), so the in-dock slider breathes on the dock curve by default. Standalone sliders retune via the token.",
+      "greenAfter": "Slider.vue thumb transform reads var(--slider-thumb-spring, var(--spring-snappy)); --slider-thumb-spring: var(--spring-snappy) added to theme.css"
+    },
+    "witness3_gate_truth_gaps": {
+      "claim": "No gate proves the second authority is gone; no consumer-coverage census on --spring-*; no surface-class rationale.",
+      "bornRed": "No proof:animation-coherence gate existed at HEAD; the regen PRESETS comments carried physics-only strings (no surface-class register name)",
+      "greenAfter": "proof:animation-coherence built (survivor sweep + consumer-coverage fail-closed + governed-rationale + cross-repo census), registered in package.json + scripts/gates.mjs + ci.yml; gates:verify-ci bijection holds (15 ci gates). The stale (0.5,0.5)/+18.5% prose the charter cited lives in proof-dock-motion-parity.mjs, which does NOT exist in this tree (that file is an eaba94f artefact) — no stale prose to fix here."
+    }
+  },
+  "directConsumerSet": {
+    "corrected": "The charter named 5 (incl. Slider); the actual bezier-reading set in THIS tree is the apple-spring sites enumerated below. Slider is RE-CLASSIFIED — its thumb is on --ease-standard, not the bezier. The full re-point set spans both bezier consumers AND the --vt-ease/dock fallback chain.",
+    "rePointed": [
+      { "file": "src/styles/tokens.css", "from": "--motion-ease-apple-spring + --ease-apple-spring (def+alias)", "to": "DELETED (excised entirely; --motion-ease-apple / --ease-apple kept — separate non-spring token)", "register": "n/a (deletion)" },
+      { "file": "src/styles/tokens.css:1240→1238", "from": "--vt-ease: var(--ease-apple-spring)", "to": "var(--spring-bouncy)", "register": "playful (VT list-item motion)" },
+      { "file": "src/styles/theme.css:303", "from": "--ease-apple-spring re-alias", "to": "DELETED; + added --slider-thumb-spring: var(--spring-snappy)", "register": "n/a / control" },
+      { "file": "src/styles/view-transition.css:39", "from": "var(--vt-ease, var(--ease-apple-spring))", "to": "var(--vt-ease, var(--spring-bouncy))", "register": "playful" },
+      { "file": "src/styles/view-transition.css:55", "from": "var(--vt-ease, var(--ease-apple-spring))", "to": "var(--vt-ease, var(--spring-snappy))", "register": "control (dock-layer VT group)" },
+      { "file": "src/styles/animations.css:334", "from": "transition-timing-function: var(--ease-apple-spring)", "to": "var(--spring-bouncy)", "register": "playful (top-layer dialog/popover entrance)" },
+      { "file": "src/styles/cards.css:41", "from": "translate ... var(--ease-apple-spring)", "to": "var(--spring-snappy)", "register": "control (card lift position morph)" },
+      { "file": "src/components/custom/tabs/UnderlineTabs.vue:76", "from": "var(--ease-apple-spring)", "to": "var(--spring-snappy)", "register": "control (active-underline glide)" },
+      { "file": "src/components/custom/tabs/BouncyToggle.vue:163", "from": "readToken('--ease-apple-spring', 'cubic-bezier(...)')", "to": "readToken('--spring-bouncy', 'ease-out')", "register": "playful (overshoot toggle press; hand-rolled bezier fallback deleted)" },
+      { "file": "src/components/custom/timeline/ContinuousTimeline.vue:770", "from": "var(--ease-apple-spring, cubic-bezier(0.2, 0.9, 0.25, 1.2))", "to": "var(--spring-bouncy, ease-out)", "register": "playful (the single overshoot dot-pop; inline cubic-bezier deleted — mapped to bouncy, not snappy, because the surface is an explicit overshoot pop per the RATIFY clause)" },
+      { "file": "src/components/ui/progress/Progress.vue:573", "from": "var(--spring-snappy, var(--ease-apple-spring, ease-out))", "to": "var(--spring-snappy, ease-out)", "register": "control (collapsed the dead apple-spring middle layer)" },
+      { "file": "src/components/ui/slider/Slider.vue:203", "from": "transform ... var(--ease-standard)", "to": "var(--slider-thumb-spring, var(--spring-snappy))", "register": "control (in-dock slider shares the dock register)" },
+      { "file": "demo/stories/foundations/motion.vue:19", "from": "the --ease-apple-spring curve-tour swatch", "to": "REMOVED (the demoed token no longer exists)", "register": "n/a (deletion)" }
+    ]
+  },
+  "governedVocabulary": {
+    "source": "scripts/regen-spring-tokens.mjs PRESETS comments (each carries a register: <class> segment — the single source the doc-table + the proof:animation-coherence rationale arm read)",
+    "map": {
+      "settle": "--spring-smooth — fire-and-forget entrances (fade/scale/slide-in, the @theme --animate-* set)",
+      "control": "--spring-snappy — crisp position morphs (tab underline, card lift, progress fill, dock collapse/expand, the in-dock slider thumb)",
+      "playful": "--spring-bouncy — emphatic one-shots that want overshoot (bouncy toggle press, dialog/popover entrance, list-item view transition, timeline dot-pop)",
+      "patient": "--spring-gentle — the quietest critically-damped settle"
+    }
+  },
+  "findings": {
+    "F4_excise_bezier": "DONE — the two token defs deleted, every consumer re-pointed onto a governed register, all inline cubic-bezier fallbacks deleted.",
+    "F4_slider_register": "DONE — Slider thumb transform on --slider-thumb-spring (defaults to --spring-snappy, the dock register here).",
+    "F4_govern": "DONE — regen PRESETS comments name the surface-class register; the governing map documented in the script's doc-block + this ledger.",
+    "F3_pipeline_truth": "N/A-in-tree — proof-dock-motion-parity.mjs (the file carrying the stale (0.5,0.5)/+18.5% prose) does not exist in this lineage; nothing to widen/fix. The new gate's rationale arm enforces the register doc lives in the regen PRESETS (the single source).",
+    "F5_consumer_coverage": "DONE — proof:animation-coherence (B) fails closed on any --spring-X with zero direct+alias consumers. All four presets reach a consumer at HEAD (bouncy=8, gentle=1, smooth=8, snappy=33). No dead token exists in this tree (--spring-dock — the charter's F5 witness — is not present here)."
+  },
+  "consumerCensus": {
+    "spring-smooth": { "direct": 8, "alias": 0, "total": 8, "dead": false },
+    "spring-snappy": { "direct": 33, "alias": 0, "total": 33, "dead": false },
+    "spring-bouncy": { "direct": 8, "alias": 0, "total": 8, "dead": false },
+    "spring-gentle": { "direct": 1, "alias": 0, "total": 1, "dead": false, "note": "single direct consumer in this tree; the --ease-spring-gentle @theme alias is the public register. Kept (>=1 consumer + public alias surface). RATIFY-2 accepted: the @theme alias counts as a documented public register."}
+  },
+  "crossRepoAnnex": {
+    "receiver": "W34",
+    "closeGate": "proof:animation-coherence constellation census (D)",
+    "posture": "RED-pending-W34 (publish-gated forcing function). On a clean runner with no sibling checkouts the census SKIPS gracefully (registry-default). When speedtest is checked out and reads var(--ease-apple-spring) with no local def, the census goes RED until the consumer-adoption leg lands.",
+    "speedtestSites": "Per the charter: MeterColumn.vue (transform/width dial-out) + SpeedtestResults.vue (complete-morph re-seat) inherit --ease-apple-spring from glass-ui's tokens.css with no local def. Deleting the token resolves their var() empty (the silent clean-break). The W34 re-point routes those sites onto the governed register (the MeterColumn 'departure spring' → the settle/control register). NOT executed here (no sibling edit) — this wave authors the annex + the forcing-function census.",
+    "speedtestPresent": false
+  },
+  "gates": {
+    "proof:animation-coherence": "born-RED at HEAD (14 survivors + 4 ungoverned presets) → GREEN after the wave",
+    "selfGate": "typecheck PASS · build PASS · proof:animation-coherence PASS · gates:verify-ci PASS (15 ci gates) · proof:theme PASS · proof:vt-names PASS · proof:components-css PASS · full test suite 626 PASS (incl. 15 new bite tests)"
+  },
+  "piLane": {
+    "spec": "tests-visual/animation-coherence.spec.ts",
+    "posture": "fail-CLOSED when the tests-visual π workspace + a browser binary are present; dormant on a zero-dep runner (NOT in the vitest globs; @playwright/test not installed in this sandbox).",
+    "liveChecksForOrchestrator": "1) var(--ease-apple-spring) + var(--motion-ease-apple-spring) resolve EMPTY at :root; all four --spring-* resolve to linear(). 2) UnderlineTabs ::before transition-timing-function is a linear() spring (control), never the bezier. 3) the in-dock slider thumb transform timing equals the dock register (--spring-snappy) — the headline shared-spring visual. 4) BouncyToggle press still bounces (--spring-bouncy). 5) the foundations/motion tour no longer lists the ease-apple-spring swatch. At >=2 viewports, light AND dark."
+  }
+}

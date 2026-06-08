@@ -173,10 +173,8 @@
 
     /* Apple-inspired — micro-interactions, switches, dock hover */
     --motion-ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1);
-    --motion-ease-apple-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
     --ease-apple: var(--motion-ease-apple);
-    --ease-apple-spring: var(--motion-ease-apple-spring);
     --ease-spring: var(--spring-snappy);
     --ease-decelerate: var(--ease-out);
     --ease-accelerate: var(--ease-in);
@@ -1237,7 +1235,7 @@
     --top-layer-backdrop-dim: 0.5;
 
     --vt-duration: var(--duration-normal);
-    --vt-ease: var(--ease-apple-spring);
+    --vt-ease: var(--spring-bouncy);
     --vt-rise: 8px;
 }
 

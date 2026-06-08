@@ -767,7 +767,7 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
    any future transform) is unobstructed. */
 .continuous-dot[data-completed] {
     animation: continuous-dot-pop var(--duration-normal, 0.3s)
-        var(--ease-apple-spring, cubic-bezier(0.2, 0.9, 0.25, 1.2));
+        var(--spring-bouncy, ease-out);
 }
 
 @keyframes continuous-dot-check-draw {

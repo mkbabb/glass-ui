@@ -570,7 +570,7 @@ const effectiveModelValue = computed(() =>
     /* Spring physics on the width grow — linear() spring curve from
        --spring-snappy gives the user-mandated overshoot. */
     transition:
-        width var(--duration-slow, 0.45s) var(--spring-snappy, var(--ease-apple-spring, ease-out));
+        width var(--duration-slow, 0.45s) var(--spring-snappy, ease-out);
     will-change: width;
 }
 

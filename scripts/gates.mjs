@@ -40,6 +40,13 @@ export const GATES = [
     { id: "proof:resolution", cmd: "proof:resolution", tags: ["local", "ci", "release"], sibling: true },
     { id: "proof:phantom-classes", cmd: "proof:phantom-classes", tags: ["local", "ci", "release"], sibling: true },
     { id: "proof:vt-names", cmd: "proof:vt-names", tags: ["local", "ci", "release"] },
+    {
+        id: "proof:animation-coherence",
+        cmd: "proof:animation-coherence",
+        tags: ["local", "ci"],
+        sibling: true,
+        note: "AX.W05 — ONE iOS-spring vocabulary. (A) survivor sweep: zero --ease-apple-spring/--motion-ease-apple-spring def-or-consumer under src/ (deletion-proof, comment-stripped). (B) consumer-coverage (fail-closed): every defined --spring-* token reaches >=1 consumer (direct var() OR --ease-spring-* alias) — the generator cannot mint a dead token. (C) governed rationale: every regen PRESETS row names a surface-class register in its comment. Plus the cross-repo CONSTELLATION CENSUS (publish-gated forcing function): a consumer reading var(--ease-apple-spring) with no local def is RED-pending-W34 (sibling skip when absent). Bite: re-add an apple-spring read in src/ → survivor RED; mint a consumer-less --spring-X → coverage RED; strip a register: segment → rationale RED.",
+    },
     { id: "proof:lockfile", cmd: "proof:lockfile", tags: ["local", "ci", "release"], note: "registry-resolution drift guard" },
     { id: "audit:stash", cmd: "audit:stash", tags: ["ci"] },
 ];

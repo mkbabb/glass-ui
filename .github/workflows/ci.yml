@@ -81,6 +81,8 @@ jobs:
               run: npm run proof:phantom-classes
             - name: proof:vt-names
               run: npm run proof:vt-names
+            - name: proof:animation-coherence
+              run: npm run proof:animation-coherence
             # AS.W2 inv-θ — the lockfile registry-resolution drift guard (#177
             # cannot silently re-break npm ci) + the meta-gate asserting this
             # ci.yml step set matches scripts/gates.mjs exactly (the manifest is

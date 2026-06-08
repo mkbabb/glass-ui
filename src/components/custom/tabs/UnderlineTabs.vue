@@ -73,7 +73,7 @@ function select(value: string) {
 
 @media (prefers-reduced-motion: no-preference) {
     .underline-tabs::before {
-        transition: inset var(--duration-normal) var(--ease-apple-spring);
+        transition: inset var(--duration-normal) var(--spring-snappy);
     }
 }
 

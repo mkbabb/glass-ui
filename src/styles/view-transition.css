@@ -36,7 +36,7 @@
  * each tracked element plus a unique `view-transition-name` per element. */
 ::view-transition-group(.gl-list-item) {
     animation-duration: var(--vt-duration, var(--duration-normal));
-    animation-timing-function: var(--vt-ease, var(--ease-apple-spring));
+    animation-timing-function: var(--vt-ease, var(--spring-bouncy));
 }
 
 /* Added / removed members — the `:only-child` trick from the group guide: a
@@ -49,10 +49,11 @@
  * gl-dock-layer` + a page-unique `view-transition-name` on a View-Transitions
  * engine, so the collapsed↔expanded width + the layer-pane swap morph as a VT
  * group instead of the JS FLIP. The `--dock-motion-resize` spring maps here to
- * `--vt-ease`; both default to the apple-spring. PRM zeroes the animation above. */
+ * `--vt-ease`; the dock breathes on the control register `--spring-snappy`. PRM
+ * zeroes the animation above. */
 ::view-transition-group(.gl-dock-layer) {
     animation-duration: var(--vt-duration, var(--duration-normal));
-    animation-timing-function: var(--vt-ease, var(--ease-apple-spring));
+    animation-timing-function: var(--vt-ease, var(--spring-snappy));
 }
 
 @keyframes gl-vt-slide-in  { from { opacity: 0; translate: 0 var(--vt-rise, 8px); } }
