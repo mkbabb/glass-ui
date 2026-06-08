@@ -5,9 +5,18 @@ import { ref } from "vue";
 import { Button } from "../../../src/components/ui/button";
 import { Card, CardContent } from "../../../src/components/ui/card";
 import { TypewriterText } from "../../../src/components/custom/typewriter";
+import { Aurora } from "../../../src/components/custom/aurora";
 import { cn } from "../../../src/utils/cn";
+import { heroAuroraConfig } from "../aurora-hero";
 
 const wonkSettings = '"WONK" 1, "SOFT" 0';
+
+// AX.W57 (P7) — the hand-rolled 3-ellipse radial wash is replaced by a live
+// <Aurora> keyed off the page's rose/indigo/amber brand hues
+// (--section-color-0/2/5). opacityCeiling 0.6 keeps the drift behind the
+// text-dense hero prose; renderMode="auto" falls to the CSS-gradient
+// placeholder under reduced-motion / low-power (>= the prior static radial).
+const heroAurora = heroAuroraConfig("rose-indigo-amber");
 
 // ─── Motion gate ─────────────────────────────────────────────────────────
 // Synchronous probe: SSR-safe (returns false if window absent), feeds the
@@ -68,26 +77,14 @@ const claims = [
                 'relative isolate overflow-hidden rounded-[var(--radius-dialog)]',
                 'border border-border bg-card shadow-cartoon px-8 py-20 md:px-16 md:py-28',
             )"
-            :style="{
-                backgroundImage: `
-                    radial-gradient(
-                        ellipse 70% 55% at 12% 8%,
-                        color-mix(in srgb, var(--section-color-0) 36%, transparent) 0%,
-                        transparent 60%
-                    ),
-                    radial-gradient(
-                        ellipse 65% 60% at 92% 20%,
-                        color-mix(in srgb, var(--section-color-2) 32%, transparent) 0%,
-                        transparent 65%
-                    ),
-                    radial-gradient(
-                        ellipse 80% 70% at 55% 110%,
-                        color-mix(in srgb, var(--section-color-5) 30%, transparent) 0%,
-                        transparent 60%
-                    )
-                `,
-            }"
         >
+            <!-- AX.W57 (P7): live painterly wash, page brand hues. -->
+            <Aurora
+                :config="heroAurora"
+                :opacity-ceiling="0.6"
+                class="absolute inset-0 -z-10"
+                aria-hidden="true"
+            />
             <div class="relative z-10 flex flex-col gap-8 max-w-4xl">
                 <div class="flex items-center gap-3">
                     <Sparkles class="size-4 text-muted-foreground" aria-hidden="true" />

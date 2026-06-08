@@ -1,0 +1,126 @@
+{
+  "wave": "AX.W57",
+  "title": "Demo radial-background reauthor + Pulse-aura calm — stop hand-rolling radials, adopt the shipped substrate",
+  "base": "6050dc4b39cfe41a78eef4cdd38729f420c1c82d",
+  "charter": "convergence-2 USER-DEFECTS pass-2 P6 (the /primitives/pulse aura paints throbbing full-page radial blobs at 0.55 core × 0.95 breath) + P7 (four demo HEROS hand-roll 30-45%-alpha radial washes the shipped <Aurora> should paint)",
+  "audit": [
+    "docs/tranches/AX/audit/convergence2/A-demo-radials-bg.md",
+    "docs/tranches/AX/audit/convergence2/orchestrator-mcp-live-pass2.md"
+  ],
+  "headline": "P6 — re-baseline the pulse aura from a glowing DISC to an AMBIENT halo: collapse the --pulse-aura-opacity-pct/-pct-num desync twin onto ONE --pulse-aura-strength scalar (0.22, was 0.55), earlier falloff (mid 35% / transparent 70%), and decouple the aura element-opacity onto its OWN --pulse-aura-breath-{min,max} (0.28/0.42) so the ambient-pulse keyframe no longer drives it to the SHARED 0.95 skeleton-shimmer peak. P7 — replace the four Class-A demo HERO radials (hero/intro/paper-glass/auth-shell brand panel) with a live <Aurora> keyed off the page's --section-color-* brand hues via a new demo/stories/aurora-hero.ts palette helper, at per-hero opacityCeiling. DEMO-side + one library token leg; no component API change.",
+  "bornRed": {
+    "method": "node -e over `git show 6050dc4:` source fed through scripts/proof-demo-radial-calm.mjs detect()",
+    "violationCount": 16,
+    "witnesses": [
+      "tokens.css does not mint --pulse-aura-strength (the single density scalar)",
+      "tokens.css does not mint --pulse-aura-breath-max (the aura element-opacity peak)",
+      "Pulse.vue consumes the --pulse-aura-opacity-pct / -pct-num desync twin",
+      "Pulse.vue .pulse-aura background does not derive density from --pulse-aura-strength",
+      "compositions/hero.vue does not import/render <Aurora> + still hand-rolls a --section-color-* radial hero wash (×3 asserts)",
+      "foundations/intro.vue does not import/render <Aurora> + still hand-rolls a --section-color-* radial hero wash (×3 asserts)",
+      "foundations/paper-glass.vue does not import/render <Aurora> + still hand-rolls a --section-color-* radial hero wash (×3 asserts)",
+      "compositions/auth-shell.vue does not import/render <Aurora> + still hand-rolls a --section-color-* radial hero wash (×3 asserts)"
+    ]
+  },
+  "folds": [
+    {
+      "finding": "P6 — the pulse aura is a glowing disc, doubly-stacked + default-driven",
+      "rootCause": "0.55-density currentColor radial × an element opacity the ambient-pulse keyframe drove to the SHARED 0.95 skeleton-shimmer peak; PLUS the --pulse-aura-opacity-pct / -pct-num percent+number twin (a desync trap the two color-mix stops had to hand-keep in sync)",
+      "gestaltFix": "ONE --pulse-aura-strength scalar (0.22) both stops derive via calc(); earlier falloff (mid 35% / transparent 70%); the aura's OWN --pulse-aura-breath-{min,max} (0.28/0.42) decoupled from the shared shimmer tokens (those stay 0.55/0.95 for .skeleton-breath). The loud old read is the intensity='vivid' opt-in.",
+      "evidence": "tokens.css §2.A mints --pulse-aura-strength + --pulse-aura-breath-{min,max}; animations.css ambient-pulse keyframe re-points onto --pulse-aura-breath-*; Pulse.vue .pulse-aura background derives from calc(var(--pulse-aura-strength)*100%) / *35%, twin GONE",
+      "files": [
+        "src/styles/tokens.css",
+        "src/styles/animations.css",
+        "src/components/custom/pulse/Pulse.vue"
+      ]
+    },
+    {
+      "finding": "P7 — four demo HEROS hand-roll --section-color-* radial washes instead of the shipped <Aurora>",
+      "rootCause": "the static radials predate the <Aurora> substrate reaching demo-hero maturity (W47/W17/W18 closed the seam); each hero hand-rolls a 2-3 ellipse multi-stop wash at 30-45% alpha keyed off --section-color-*",
+      "gestaltFix": "a demo-private heroAuroraConfig(palette) mirrors the --section-color-* brand HUES into painterly OKLCh AuroraConfig palettes; each hero renders <Aurora :config class='absolute inset-0 -z-10' :opacity-ceiling aria-hidden> behind its content; the inline radial backgroundImage / bg-[radial-gradient] is deleted",
+      "map": {
+        "compositions/hero.vue": "Aurora rose-indigo-amber, opacityCeiling 0.6",
+        "foundations/intro.vue": "Aurora rose-indigo-amber, opacityCeiling 0.6 (--hue-shift filter rides the live canvas)",
+        "foundations/paper-glass.vue": "Aurora amber-indigo-rose, opacityCeiling 0.55 (page hero; the --viz-* sample-tile swatch KEPT)",
+        "compositions/auth-shell.vue": "Aurora purple-tomato, opacityCeiling 0.5 (brand panel only; the form half unchanged)"
+      },
+      "evidence": "demo/stories/aurora-hero.ts (NEW); the four hero .vue files import + render <Aurora>, the --section-color-* radial gone",
+      "files": [
+        "demo/stories/aurora-hero.ts",
+        "demo/stories/compositions/hero.vue",
+        "demo/stories/foundations/intro.vue",
+        "demo/stories/foundations/paper-glass.vue",
+        "demo/stories/compositions/auth-shell.vue"
+      ]
+    }
+  ],
+  "classMap": {
+    "classA_replace_aurora": [
+      "compositions/hero.vue",
+      "foundations/intro.vue",
+      "foundations/paper-glass.vue (page hero)",
+      "compositions/auth-shell.vue (brand panel)"
+    ],
+    "classB_constellation_rule": "Aurora for painterly/brand heros, Constellation for system/index/tooling reads. No Class-B ADD lands here — the candidates (tools/command.vue, a system index) have no hand-rolled radial today, so a background is an orchestrator 'wants a bg at all?' live call (deferred, low-pri). The rule + map are codified.",
+    "classC_keep": [
+      "compositions/configurator.vue (config-driven fake-aurora preview — the radial IS the lesson)",
+      "compositions/instrument-chassis.vue + InstrumentChassis.vue (chassis curvature token)",
+      "aurora/NucleiOverlay.vue (nucleus-handle ring mask)",
+      "foundations/paper-glass.vue:191 (sample-tile swatch)",
+      "substrates/aurora.vue (scoped -inset-6 blur-2xl opacity-60 bloom behind the live aurora-studio stage — a 2nd live GL context is BARRED on the WebGL budget; already --rainbow-pastel-* themed; KEEP)",
+      "foundations/chart-chassis-palette.vue (prose, not a paint site)"
+    ]
+  },
+  "sharedTokenTrap": {
+    "note": "--pulse-aura-opacity-{min,max} (0.55/0.95) is read by BOTH .skeleton-breath (Skeleton.vue — a neutral grey shimmer where the range is correct) AND the aura keyframe. The calm fix DECOUPLES the aura onto its own --pulse-aura-breath-* rather than lowering the shared tokens (which would break the skeleton swell).",
+    "skeletonUntouched": true
+  },
+  "gate": {
+    "name": "proof:demo-radial-calm",
+    "script": "scripts/proof-demo-radial-calm.mjs",
+    "tags": ["local", "ci"],
+    "asserts": [
+      "A — tokens.css mints --pulse-aura-strength ≤ 0.25 + --pulse-aura-breath-max ≤ 0.5; the pct/num twin is not consumed in Pulse.vue; .pulse-aura derives density from the scalar",
+      "B — each of the four Class-A hero files imports + renders <Aurora> AND carries ZERO --section-color-* radial-gradient hero wash (a --viz-* sample-tile radial is allowed)",
+      "C — no non-allowlisted demo story carries a > 30%-alpha (or > 0.30 per-stop) full-bleed radial-gradient; the five Class-C sites are on the documented KEEP allowlist"
+    ],
+    "bornRedAtHead": true,
+    "greenOnPatchedTree": true
+  },
+  "selfGate": {
+    "typecheck": "pass",
+    "build": "pass",
+    "proof:demo-radial-calm": "pass",
+    "proof:gate-script-parity": "pass",
+    "proof:theme": "pass",
+    "proof:components-css": "pass"
+  },
+  "piLiveArm": {
+    "status": "handed-to-orchestrator",
+    "binding": "the wave does NOT close on the SOURCE gate alone — the executed live chrome-devtools-mcp audit is the binding close criterion",
+    "checks": [
+      "/primitives/pulse — the three aura demos read as quiet breathing washes, NOT dense glowing discs; getComputedStyle('.pulse-aura').opacity cycles ≤ ~0.42 (NOT up to 0.95); the skeleton-breath shimmer is UNAFFECTED (still 0.55↔0.95)",
+      "the four heros show a live Aurora painterly drift in the page's brand hues behind LEGIBLE content (display titles + prose clear AA over the opacityCeiling-clamped wash); one GL context per route, no repaint storm",
+      "no-GL parity — reduced-motion / low-power → Aurora resolves to the CSS placeholder (a static wash >= the prior radial); no blank hero",
+      "affordance / hierarchy / NO occlusion / no regression, light AND dark"
+    ]
+  },
+  "exactMagnitudes": {
+    "--pulse-aura-strength": "0.22 (was 0.55; gate ceiling ≤ 0.25)",
+    "--pulse-aura-breath-min": "0.28",
+    "--pulse-aura-breath-max": "0.42 (was the shared 0.95 peak; gate ceiling ≤ 0.5)",
+    "pulse-aura falloff": "mid stop 35% (was 45%), transparent 70% (was 75%)",
+    "hero opacityCeilings": {
+      "hero.vue": 0.6,
+      "intro.vue": 0.6,
+      "paper-glass.vue": 0.55,
+      "auth-shell.vue": 0.5
+    }
+  },
+  "ratifyOpen": [
+    "substrates/aurora.vue scoped bloom — KEEP static (default) vs renderMode='css' Aurora for idiom coherence (orchestrator live)",
+    "per-hero opacityCeiling tune if content competes with the drift",
+    "Class-B Constellation ADD (tools/command.vue / a system index) — deferred behind a live 'wants a bg?' call"
+  ],
+  "status": "dev-complete-source-green-pi-pending"
+}

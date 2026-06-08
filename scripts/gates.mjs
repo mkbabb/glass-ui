@@ -369,6 +369,12 @@ export const GATES = [
         note: "AV.W10 — bidirectional set-equality: every demo/stories/<category>/<id>.vue ↔ exactly one manifest row (helper dirs/root chassis excluded by the category-scoped walk). Bite: leave an unreferenced .vue (orphan file) or a row → missing file (dangling row) → RED",
     },
     {
+        id: "proof:demo-radial-calm",
+        cmd: "proof:demo-radial-calm",
+        tags: ["local", "ci"],
+        note: "AX.W57 — P6 pulse-aura calm + P7 demo hero-radial → Aurora. Device-free SOURCE scan: tokens.css ships --pulse-aura-strength ≤ 0.25 + --pulse-aura-breath-max ≤ 0.5 and the pct/num twin is collapsed out of Pulse.vue (A); each of the four Class-A hero files (hero/intro/paper-glass/auth-shell) imports + renders <Aurora> and carries ZERO hand-rolled radial-gradient( (B); no non-allowlisted demo story carries a > 30%-alpha full-bleed radial (C). Bite: raise --pulse-aura-strength to 0.55 → A reds; re-add a radial to a hero or drop its <Aurora> → B reds; add a loud full-bleed radial to a non-keep story → C reds",
+    },
+    {
         id: "proof:font-canon",
         cmd: "proof:font-canon",
         tags: ["local", "ci"],

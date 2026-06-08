@@ -7,9 +7,18 @@ import { Checkbox } from "../../../src/components/ui/checkbox";
 import { Input } from "../../../src/components/ui/input";
 import { Label } from "../../../src/components/ui/label";
 import { Separator } from "../../../src/components/ui/separator";
+import { Aurora } from "../../../src/components/custom/aurora";
 import { cn } from "../../../src/utils/cn";
+import { heroAuroraConfig } from "../aurora-hero";
 
 const wonkSettings = '"WONK" 1, "SOFT" 0';
+
+// AX.W57 (P7) — the split-auth BRAND panel (left half) replaces its 2-ellipse
+// radial wash with a live <Aurora> on the page's purple/tomato brand hues
+// (--section-color-1/6). opacityCeiling 0.5 — the panel is text-dense (the
+// pitch copy + trust badges), so the drift recedes behind the prose. The RIGHT
+// half stays the plain card form (only the brand panel gains the wash).
+const authAurora = heroAuroraConfig("purple-tomato");
 
 const email = ref("");
 const password = ref("");
@@ -31,23 +40,16 @@ const trustBadges = [
             )"
         >
             <div
-                class="relative flex flex-col justify-between gap-[calc(2rem_+_var(--density-gap,0rem))] p-[calc(2.5rem_+_var(--density-pad,0rem))] lg:p-[calc(3.5rem_+_var(--density-pad,0rem))]"
-                :style="{
-                    backgroundImage: `
-                        radial-gradient(
-                            ellipse 80% 60% at 20% 10%,
-                            color-mix(in srgb, var(--section-color-1, hsl(28 82% 72%)) 45%, transparent),
-                            transparent 65%
-                        ),
-                        radial-gradient(
-                            ellipse 70% 65% at 80% 90%,
-                            color-mix(in srgb, var(--section-color-6, hsl(215 70% 70%)) 40%, transparent),
-                            transparent 60%
-                        )
-                    `,
-                }"
+                class="relative isolate flex flex-col justify-between gap-[calc(2rem_+_var(--density-gap,0rem))] overflow-hidden p-[calc(2.5rem_+_var(--density-pad,0rem))] lg:p-[calc(3.5rem_+_var(--density-pad,0rem))]"
             >
-                <div class="flex items-center gap-3">
+                <!-- AX.W57 (P7): live Aurora brand wash, purple/tomato hues. -->
+                <Aurora
+                    :config="authAurora"
+                    :opacity-ceiling="0.5"
+                    class="absolute inset-0 -z-10"
+                    aria-hidden="true"
+                />
+                <div class="relative z-10 flex items-center gap-3">
                     <span
                         class="fourier-f font-display italic text-4xl leading-none"
                         :style="{
