@@ -42,7 +42,14 @@ function paramsFor({ valence, arousal }: AffectPoint): MoodParams {
         hueRange: lerp(3, 25, arousal * 0.6 + (valence * 0.5 + 0.5) * 0.4),
         satShift: lerp(-0.05, 0.1, valence * 0.5 + 0.5),
         brightnessShift: lerp(-0.03, 0.08, valence * 0.5 + 0.5),
-        smoothK: lerp(0.16, 0.32, arousal),
+        // `smoothK` is a unitless, 1.0-CENTRED MULTIPLIER on the config's absolute
+        // smin band (NOT an absolute distance) — the config holds the one length
+        // authority (`BLOB_CONFIG_DEFAULTS.smoothK`, POS_SCALE'd in the renderer),
+        // mood only scales it. Excited (high arousal) merges gooier, sleepy (low
+        // arousal) crisper; idle sits ≈ 1.0 (arousal 0.35 → ~1.03). The range is the
+        // prior absolute 0.16–0.32 lerp re-expressed around 1.0 (~5× down) so the smin
+        // band stays inside the contained-droplet seam-pull at BOTH arousal extremes.
+        smoothK: lerp(0.85, 1.35, arousal),
         // Pleasant + activated leans IN; unpleasant shies AWAY.
         pointerAttraction: lerp(-0.2, 0.6, valence * 0.5 + 0.5) * (0.4 + 0.6 * arousal),
         // Energized = faster merge cycling (lower stagger scale).
