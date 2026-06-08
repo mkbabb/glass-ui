@@ -60,7 +60,7 @@ soundness discipline: "complete" never collapses to "headless-green").
 | W42 | liquid-morph substrate | planned |
 | W43 | fourier-field first-class | planned |
 | W44 | dark-mode semantic-token contrast — destructive/alert AA floor (D10) | planned |
-| W45 | dock region-model + DockSeparator + mobile --dock-scale (D13+D15) | planned |
+| W45 | dock region-model + DockSeparator + mobile --dock-scale (D13+D15) | live-verified (DEVELOPED) — region-model + DK1/2/4/5/7/8 |
 | W46 | blob live-truth tune — floors→bands, lighting/hover down, mood latch (D4+D5+D7) | planned |
 | W47 | aurora preset-roster reconcile — name van-Gogh/oil-pastel/crayon (D2) | planned |
 | W48 | glass-material demo reauthor — bind the shipped specular seams (D8) | planned |
