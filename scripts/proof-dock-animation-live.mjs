@@ -30,18 +30,26 @@
 // HARNESS: a Playwright driver. glass-ui carries ZERO browser dependency (the
 // static gates refused to add one for a single gate, on payload + KISS grounds),
 // so this gate dynamically imports `playwright`/`playwright-core` and runs the
-// probe ONLY when that harness AND a live demo dev server are present (the wave's
-// MCP environment). When the harness is absent (a clean CI runner with no browser
-// binary), the gate exits SKIPPED with a self-describing artefact — it does NOT
-// emit a false GREEN and does NOT hard-fail CI on a missing optional harness. The
-// behavioral truth is asserted wherever the harness runs; the cheap syntactic
-// pre-checks (now "structure" tier) guard the source shape on every runner.
+// probe ONLY when that harness AND a live demo dev server are present.
+//
+// AX.W00 — FAIL-CLOSED PROMOTION. The fail-open SKIP-with-EXIT=0 is promoted: when
+// the π workspace IS present (tests-visual/node_modules/@playwright/test resolves,
+// the fail-CLOSED device installed), an unreachable demo / missing morph is a HARD
+// RED (a real wiring break, not a befitting-silent browser-API absence). The SKIP
+// path stays ONLY for the genuine no-π-workspace device-absence on a zero-dep CI
+// runner. Two device-free arms run on EVERY runner regardless: the cheap "structure"
+// pre-checks and the AX.W00 TOKEN-PEAK secondary (parseSpringDockPeak — a pure
+// tokens.css string parse asserting --spring-dock's linear() peak ≤ the published
+// (0.32,0.7) ~+4.6% baseline; a spring retune to a bouncier register reds here with
+// no browser). The live-rAF behavioral truth additionally lives in the tests-visual
+// π workspace spec (dock-animation-live.spec.ts), run on the real device.
 //
 // House style mirrors proof-dock-opacity-lockstep.mjs: ESM .mjs, a byte-stable
 // JSON artefact via gate-output, a human summary, process.exit(1) on a real
 // behavioral violation (0 on pass or harness-absent skip).
 
 import { resolve } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
@@ -387,6 +395,50 @@ export function maxInterFrameJump(series) {
     return { max, at };
 }
 
+// ── AX.W00 the TOKEN-PEAK SECONDARY (flake-free, device-free) ─────────────────
+// keyframes demoted its own dock gate to exactly this form: parse the
+// `--spring-dock` linear() ramp and assert its peak stop ≤ the published (0.32,0.7)
+// ~+4.6% baseline. It has NO rAF flake surface — a pure string parse over
+// tokens.css — so it is the trivially-falsifiable secondary that catches a spring
+// retune to a bouncier register even on a runner with no browser. The published
+// peak is 1.04501 (+4.5% at 18.367%); the analytic underdamped overshoot for ζ=0.7
+// is exp(-ζπ/√(1-ζ²)) ≈ 0.046, so the ceil is 1.046 + a 0.005 parse/round margin.
+const SPRING_DOCK_PEAK_CEIL = 1.046 + 0.005;
+
+/** Parse the max numeric stop from the `--spring-dock: linear(…)` declaration. */
+export function parseSpringDockPeak(tokensCss) {
+    const m = tokensCss.match(/--spring-dock:\s*linear\(([^;]*)\)\s*;/);
+    if (!m) return { found: false, peak: null };
+    // Each stop is `<value>` or `<value> <pct>%`; take the leading numeric.
+    const nums = [...m[1].matchAll(/(-?\d+\.?\d*)(?:\s+[\d.]+%)?/g)]
+        .map((x) => Number.parseFloat(x[1]))
+        .filter((n) => !Number.isNaN(n));
+    if (!nums.length) return { found: false, peak: null };
+    return { found: true, peak: Math.max(...nums) };
+}
+
+/** The token-peak secondary as a {facts, violations} detector (device-free). */
+export function detectTokenPeak(tokensCss) {
+    const violations = [];
+    const facts = {};
+    const { found, peak } = parseSpringDockPeak(tokensCss);
+    facts.springDockPeakFound = found;
+    facts.springDockPeak = peak;
+    facts.springDockPeakCeil = SPRING_DOCK_PEAK_CEIL;
+    if (!found) {
+        violations.push(
+            "could not parse the --spring-dock: linear(…) declaration from tokens.css — the dock-spring token shape moved",
+        );
+        return { facts, violations };
+    }
+    if (peak > SPRING_DOCK_PEAK_CEIL) {
+        violations.push(
+            `--spring-dock peak stop ${peak} exceeds the published (0.32,0.7) ~+4.6% baseline ceil ${SPRING_DOCK_PEAK_CEIL} — the dock spring was retuned to a bouncier register`,
+        );
+    }
+    return { facts, violations };
+}
+
 // The pure detector over a probe RESULT — returns {facts, violations}.
 export function detectAnimation(result) {
     const violations = [];
@@ -531,32 +583,71 @@ async function loadPlaywright() {
     return null;
 }
 
+// Whether the π workspace carries an INSTALLED Playwright runner (the fail-CLOSED
+// device is present). When present, a missing morph is a hard RED — never a SKIP.
+function piWorkspacePresent(ROOT) {
+    const ws = resolve(ROOT, "tests-visual");
+    return (
+        existsSync(resolve(ws, "node_modules/@playwright/test/package.json")) &&
+        existsSync(resolve(ws, "node_modules/.bin/playwright"))
+    );
+}
+
 async function run() {
     const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-    const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5175";
+    // AX.W00 — standardize on the demo dev-server origin `npm run dev` actually
+    // serves (vite default :5173; the legacy 5175 default was an inconsistency).
+    const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5173";
     const ARTIFACT = gateArtifactPath(
         "GLASS_UI_DOCK_ANIMATION_LIVE_ARTIFACT",
         "AV-dock-animation-live",
     );
 
+    // AX.W00 — the TOKEN-PEAK SECONDARY runs FIRST + ALWAYS (flake-free,
+    // device-free). It is the cheap structure-tier check the zero-dep CI runner
+    // keeps; a --spring-dock retune to a bouncier register reds here with no
+    // browser. A token-peak violation is a HARD RED on every runner.
+    const tokensCss = readFileSync(resolve(ROOT, "src/styles/tokens.css"), "utf8");
+    const tokenPeak = detectTokenPeak(tokensCss);
+    const piPresent = piWorkspacePresent(ROOT);
+
     const pw = await loadPlaywright();
     if (!pw) {
-        // No browser harness on this runner (e.g. clean CI). SKIP — not a false
-        // GREEN, not a hard RED on a missing optional harness. The static
-        // structure gates still guard the source shape here.
+        // No browser harness reachable from the library `node_modules`. If the π
+        // workspace IS present (fail-CLOSED device installed), the behavioral arm
+        // belongs to the tests-visual spec (run by proof:substrate-paints-color's
+        // sibling / the workspace runner) — here we still HARD-FAIL on a token-peak
+        // violation (it is device-free), but the live-rAF behavioral truth is the
+        // workspace spec's. When the π workspace is ABSENT, this is a genuine
+        // device absence: befitting-silent SKIP for the live arm, but the
+        // token-peak secondary STILL reds if violated.
+        const status = tokenPeak.violations.length === 0 ? "skipped" : "fail";
         writeGateArtifact(ARTIFACT, {
             generatedAt: snapshotStamp(),
-            status: "skipped",
-            reason: "no Playwright harness on this runner — run in the demo/MCP environment (npm i -D playwright + a live demo dev server) for the behavioral assert",
+            status,
+            reason: piPresent
+                ? "the library node_modules has no Playwright — the live-rAF behavioral arm runs in the tests-visual π workspace (dock-animation-live.spec.ts); the device-free token-peak secondary ran here"
+                : "no Playwright harness AND no π workspace on this runner — the live arm is asserted in the tests-visual workspace; the device-free token-peak secondary ran here",
             command: "npm run proof:dock-animation-live",
+            facts: { piWorkspacePresent: piPresent, tokenPeak: tokenPeak.facts },
+            violations: tokenPeak.violations,
         });
         console.log(
-            "proof:dock-animation-live — SKIPPED (no Playwright harness on this runner).",
+            `proof:dock-animation-live — ${status === "fail" ? "TOKEN-PEAK FAIL" : "live arm SKIPPED on this runner"} (token-peak secondary ran here).`,
         );
         console.log(
-            "  The behavioral motion truth is asserted wherever the harness runs (the wave's MCP env / a dev box with playwright). The static structure gates guard the source shape here.",
+            `  --spring-dock peak: ${tokenPeak.facts.springDockPeak ?? "n/a"} (ceil ${tokenPeak.facts.springDockPeakCeil}) — ${tokenPeak.violations.length === 0 ? "OK" : "RETUNED"}`,
         );
-        process.exit(0);
+        console.log(
+            piPresent
+                ? "  The live-rAF morph truth is the tests-visual π workspace spec (dock-animation-live.spec.ts), run on the real device."
+                : "  Install the tests-visual workspace (npm i + npx playwright install chromium) + a demo dev server for the live behavioral arm.",
+        );
+        if (tokenPeak.violations.length) {
+            console.log("\nVIOLATIONS:");
+            for (const v of tokenPeak.violations) console.log(`  x ${v}`);
+        }
+        process.exit(status === "fail" ? 1 : 0);
     }
 
     let browser;
@@ -568,24 +659,44 @@ async function run() {
         await page.waitForSelector(".glass-dock.collapsed", { timeout: 5000 });
         result = await page.evaluate(pageProbe);
     } catch (e) {
-        // The dev server is down or the route changed — SKIP with the reason
-        // rather than RED (the harness ran but the target was unreachable).
+        // AX.W00 fail-CLOSED PROMOTION: when the π workspace is PRESENT (the
+        // fail-CLOSED device is installed), an unreachable demo is a real wiring
+        // break — exit NON-ZERO, never SKIP-with-EXIT=0. The SKIP path stays ONLY
+        // for the genuine no-π-workspace case (the device is not present). The
+        // token-peak secondary is folded into the verdict either way.
         if (browser) await browser.close();
+        const reason = `could not reach the demo dock route at ${BASE_URL}${DOCK_ROUTE}: ${e.message}`;
+        const failClosed = piPresent;
+        const violations = [...tokenPeak.violations];
+        if (failClosed)
+            violations.push(
+                `${reason} — the π workspace is PRESENT (fail-CLOSED), so an unreachable live morph is a hard RED, not a SKIP`,
+            );
+        const status = violations.length ? "fail" : "skipped";
         writeGateArtifact(ARTIFACT, {
             generatedAt: snapshotStamp(),
-            status: "skipped",
-            reason: `could not reach the demo dock route at ${BASE_URL}${DOCK_ROUTE}: ${e.message}`,
+            status,
+            reason,
             command: "npm run proof:dock-animation-live",
+            facts: { piWorkspacePresent: piPresent, tokenPeak: tokenPeak.facts },
+            violations,
         });
         console.log(
-            `proof:dock-animation-live — SKIPPED (demo unreachable at ${BASE_URL}${DOCK_ROUTE}).`,
+            `proof:dock-animation-live — ${failClosed ? "FAIL (π workspace present, demo unreachable — fail-CLOSED)" : "SKIPPED (no π workspace; demo unreachable)"} at ${BASE_URL}${DOCK_ROUTE}.`,
         );
         console.log(`  ${e.message}`);
-        process.exit(0);
+        if (violations.length) {
+            console.log("\nVIOLATIONS:");
+            for (const v of violations) console.log(`  x ${v}`);
+        }
+        process.exit(status === "fail" ? 1 : 0);
     }
     await browser.close();
 
-    const { facts, violations } = detectAnimation(result);
+    const { facts, violations: animViolations } = detectAnimation(result);
+    // Fold the device-free token-peak secondary into the verdict + facts.
+    const violations = [...animViolations, ...tokenPeak.violations];
+    Object.assign(facts, { tokenPeak: tokenPeak.facts, piWorkspacePresent: piPresent });
     const status = violations.length === 0 ? "pass" : "fail";
 
     writeGateArtifact(ARTIFACT, {
@@ -626,6 +737,9 @@ async function run() {
     );
     console.log(
         `  retarget max frame jump      : ${facts.retargetMaxFrameJump ?? "n/a"}px`,
+    );
+    console.log(
+        `  --spring-dock token peak     : ${tokenPeak.facts.springDockPeak ?? "n/a"} (<= ${tokenPeak.facts.springDockPeakCeil})`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");
