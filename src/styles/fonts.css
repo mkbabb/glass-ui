@@ -141,28 +141,3 @@
         U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF,
         U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-
-/* ═══════════════════════════════════════════════
-   OFL FACE FILES — Fraunces (ornamental display)
-   ═══════════════════════════════════════════════ */
-
-/* Fraunces — Latin subset (basic Latin + ASCII punctuation + common
-   diacritics). The FULL variable font: a single woff2 carries wght 100..900
-   AND the opsz / SOFT / WONK axes typography.css drives
-   (`--font-display-variation-settings: "WONK" 1, "SOFT" 0`). Before AU.W4 the
-   `--font-stack-display: "Fraunces"` token (tokens.css:43) had NO shipped face,
-   so those axes were SILENTLY INERT (the slipped ship of the grand-audit/AS.W0b
-   lineage); this face resolves the dangling display token. `font-display: swap`
-   — the display register is a deliberate ornament, post-LCP, with the body
-   carried by the calibrated sans/mono fallbacks. */
-@font-face {
-    font-family: "Fraunces";
-    font-style: normal;
-    font-weight: 100 900;
-    font-display: swap;
-    src: url("@mkbabb/glass-ui/fonts/fraunces/fraunces-latin.woff2") format("woff2");
-    unicode-range:
-        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
-        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}

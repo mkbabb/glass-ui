@@ -103,9 +103,17 @@
 
     /* ═══════════════════════════════════════════════
        Font families → font-* utilities
+
+       ONE brand register, bridged from tokens.css §0's --font-stack-* source.
+       --font-text is the body/heading/prose/display register (Plus Jakarta
+       Sans). --font-serif is a bridge alias for the demo configurator's "serif"
+       control slot — it resolves to the SAME text register (the library carries
+       no display-serif voice). A consumer rebrands the whole text register by
+       overriding --font-text once.
        ═══════════════════════════════════════════════ */
+    --font-text:    var(--font-stack-text);
     --font-display: var(--font-stack-display);
-    --font-serif:   var(--font-stack-serif);
+    --font-serif:   var(--font-stack-text);
     --font-sans:    var(--font-stack-sans);
     --font-mono:    var(--font-stack-mono);
 

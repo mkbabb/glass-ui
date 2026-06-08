@@ -177,12 +177,6 @@ jobs:
             # exported orphan (P3 wire-before-retire).
             - name: proof:supportsPostTask-wired
               run: npm run proof:supportsPostTask-wired
-            # AU.W4 — the Fraunces slipped-ship gate. Asserts every variation axis
-            # typography.css references (WONK/SOFT) is carried by the shipped
-            # display @font-face — verified against the woff2 fvar table, so a
-            # silently-inert axis (the slip the campaign missed) is a hard fail.
-            - name: proof:font-axes
-              run: npm run proof:font-axes
             # AU.W5 — the /color runtime-JS leaf gates. color-acyclic: the leaf
             # imports value.js only (no component back-import) + value.js/src never
             # imports glass-ui (the published graph is a DAG). single-color-core:
@@ -298,6 +292,15 @@ jobs:
               run: npm run proof:no-orphan-demo-route
             - name: proof:font-canon
               run: npm run proof:font-canon
+            # AX.W22 — the font-register reconciliation gate. Device-free STRUCTURE
+            # arm (always runs): the library DEFAULT register IS the rendered brand
+            # register (Plus Jakarta text+display, Fira Code mono) — one source, no
+            # preset opt-out, Fraunces excised. The π-lane RENDER arm (a live
+            # getComputedStyle + document.fonts.check + canvas width-fingerprint
+            # readback) befitting-silent-SKIPs on the zero-dep CI runner; the
+            # fail-CLOSED truth runs in the tests-visual π workspace on a real device.
+            - name: proof:font-cascade-live
+              run: npm run proof:font-cascade-live
             # AS.W2 inv-θ — the lockfile registry-resolution drift guard (#177
             # cannot silently re-break npm ci) + the meta-gate asserting this
             # ci.yml step set matches scripts/gates.mjs exactly (the manifest is
