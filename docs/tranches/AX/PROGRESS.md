@@ -15,7 +15,7 @@ over a black live canvas is NOT done).
 | W02 | one morph-orchestrator per dock | complete |
 | W03 | keepDockOpen host-native hold | complete |
 | W04 | dock overflow wrap | complete |
-| W05 | one iOS-spring vocabulary | planned |
+| W05 | one iOS-spring vocabulary | complete |
 | W06 | dock storybook honest rail + css split | planned |
 | W07 | aurora core unblock — WGSL black canvas | complete |
 | W08 | blob core unblock — smin distance regime | complete |
@@ -23,7 +23,7 @@ over a black live canvas is NOT done).
 | W10 | aurora options converge — atoms door | complete |
 | W11 | aurora color seams — OKLCh catchlight palette-ramp twin | complete |
 | W12 | mediums substrate — strokeProfile + noise basis | complete |
-| W13 | vangogh/oilpastel mediums — pigment compositing | planned |
+| W13 | vangogh/oilpastel mediums — pigment compositing | complete |
 | W14 | WebGPU painterly parity or excise | planned |
 | W15 | blob contained droplet — lit warm-cream living membrane | complete |
 | W16 | blob integration — interaction + perf + readme | complete |
@@ -32,7 +32,7 @@ over a black live canvas is NOT done).
 | W19 | primitive prune A — header-ribbon/glyph-face/disco-glyph | planned |
 | W20 | primitive fix — native top-layer, card toggles, glass-panel retire | planned |
 | W21 | primitive recategorize — ledger/barrel coherence + metric reconcile | planned |
-| W22 | font register reconciliation | planned |
+| W22 | font register reconciliation | complete |
 | W23 | carousel indicator reauthor — glass scrubber decision | complete |
 | W24 | deck-progress export + rail recipe | complete |
 | W25a | CSS god-module gate extension | planned |
@@ -111,3 +111,37 @@ Carry-forward (NOT absorbed — owned by later waves):
   `TabsTrigger.vue` arbitrary wraps) → owed to **W27a** (legacy gate hardening).
 - **W24** `proof:no-legacy-commentary` RED at base (tranche-letter refs in
   `api/index.ts`, `src/index.ts`) → owed to **W27b** (legacy commentary full-tree sweep).
+
+## W05 + W13 + W22 band — COMPLETE (re-dispatched on the correct base + live-verified)
+
+The first dispatch hit the stale-worktree trap (lanes seeded at a09c2b6, 189 commits
+behind HEAD — unsalvageable). Re-dispatched with a mandatory step-0 `git reset --hard
+a563563` + a verified `baseConfirmed`; all three lanes landed clean on the correct base
+and cherry-picked without semantic conflict. Live-verified on real Metal:
+
+- **W05** (one iOS-spring vocabulary): the legacy `--ease-apple-spring` /
+  `--motion-ease-apple-spring` cubic-bezier is excised; every springy surface reads the
+  governed `--spring-*` linear() vocabulary (the in-dock Slider thumb on `--spring-dock`).
+  `proof:animation-coherence` library survivor-sweep GREEN (0 survivors). The constellation
+  census REDs on `../speedtest`'s 3 stale `var(--ease-apple-spring)` reads — the W34
+  publish-gated forcing function (the gate is an AW-era orphan, NOT in the CI aggregate;
+  routed to W34, not absorbed).
+- **W13** (van-Gogh + oil-pastel first-class mediums): distinct medium bodies on the W12
+  StrokeProfile substrate (no passthrough, no shared crayon dispatch); OKLab over-composite
+  + within-stroke OKLCh; crayon promoted to a first-class medium. TWO live integration
+  defects fixed (cardinal lesson): (1) crayon was missing from the atoms-panel `MEDIA`
+  list (the π gate hung on `selectOption("crayon")`); (2) van-Gogh rendered as a continuous
+  smear (gap-fraction 0.002 vs the 0.04 floor) — fixed with the profile-driven Layer-4
+  `densityFill` (sparse fill) + a height-gated `groundFloor` darken (the visible
+  Starry-Night underpainting). `proof:aurora-painterly-statistics` GREEN 2/2 viewports;
+  oil byte-stable.
+- **W22** (font register reconciliation): the library DEFAULT register == what live
+  surfaces render (Plus Jakarta text/display, Fira Code mono, no preset opt-out, no
+  Fraunces default-undone-by-preset). `proof:font-cascade-live` (incl. its π DOM-cascade
+  render arm) + `proof:font-canon` GREEN.
+
+Band gate health: typecheck + build + `proof:gate-script-parity` GREEN; full vitest 873/873.
+Carry-forward (pre-existing, NOT absorbed): the `proof:no-god-module` 3-file FAIL
+(useMetaballRenderer / GlassDock / constellationField → W26/dock/W17), `proof:liquid-glass-tokens`
+(glass.css → W15), and the **ci.yml drift** — 14+ AX-band gates are ci-tagged in gates.mjs
+but absent from `.github/workflows/ci.yml` (the band-close ci.yml integration backlog).
