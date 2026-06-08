@@ -45,6 +45,7 @@ const MEDIA: readonly AuroraMedium[] = [
     "pastel",
     "watercolor",
     "oil",
+    "crayon",
     "vangogh",
     "oil-pastel",
 ];
