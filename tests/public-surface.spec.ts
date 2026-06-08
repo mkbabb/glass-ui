@@ -276,6 +276,12 @@ const exactSubpathRuntimeSurfaces = [
         // consumers can migrate from the retired pre-O.W2 string keys
         // without reaching for the deep-import path. The DOCK_CONTEXT_KEY
         // symbol + 3 helpers join the SFC default-exports here.
+        //
+        // AX.W01 added `useLayerTransition` to the `/dock` barrel (the rebuilt
+        // single-scalar primitive `<DockLayerGroup>` already composes; the
+        // re-export lets value.js delete its FLIP-width fork). The W02 morph
+        // symbols (DOCK_MORPH_KEY / provideDockMorphContext / …) stay INTERNAL
+        // to the composables barrel — NOT re-exported on the `/dock` surface.
         names: [
             "DOCK_CONTEXT_KEY",
             "DockBackgroundToggle",
@@ -288,6 +294,7 @@ const exactSubpathRuntimeSurfaces = [
             "GlassDock",
             "provideDockContext",
             "useDockContext",
+            "useLayerTransition",
             "useOptionalDockContext",
         ],
     },

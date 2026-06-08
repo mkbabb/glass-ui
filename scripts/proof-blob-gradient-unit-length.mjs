@@ -2,22 +2,38 @@
 // AW.W9.b — the surface-normal unit-length gate (proof:blob-gradient-unit-length).
 //
 // The lit droplet reads as a rounded bead because the Blinn-Phong glint + Fresnel
-// rim ride a pseudo-3D SURFACE NORMAL derived from the composite SDF gradient (the
-// IQ 4-tap tetrahedron on sceneDist, lifted by an edge-dome Z). For the lighting
-// to be physically sane the normal MUST be unit-length across the interior — a
-// non-unit N skews dot(N,H)/dot(N,V) and the highlight smears.
+// rim ride a pseudo-3D SURFACE NORMAL derived from the composite SDF gradient,
+// lifted by an edge-dome Z. For the lighting to be physically sane the normal MUST
+// be unit-length across the interior — a non-unit N skews dot(N,H)/dot(N,V) and the
+// highlight smears.
+//
+// AX.W15 — the field gradient is now ANALYTIC, not finite-differenced. The IQ 4-tap
+// tetrahedron on sceneDist() is DELETED: `sceneDistG()` returns vec3(dist, ∂d/∂x,
+// ∂d/∂y) — the value+gradient `sminG()` smooth-min (sdf-body.glsl.ts) propagates
+// the gradient through `mix(a.yz, b.yz, w)` so the surface normal reads the field
+// gradient DIRECTLY (the gradient noise rides IQ's `noised()` analytic-derivative
+// FBM in watercolor-edges.glsl.ts). The W15 agent measured the analytic gradient at
+// cos-sim 0.9969 vs central-difference. So Clause 2 no longer asserts the 4-tap; it
+// asserts the ANALYTIC path EXISTS + is CONSUMED.
 //
 // Two clauses:
-//   1. UNIT-LENGTH (runtime sample) — a JS port of surfaceNormal()'s LIFT math
-//      (`n3 = normalize(vec3(grad2d*(1-z), z))`, the exact form in metaball.frag.ts)
+//   1. UNIT-LENGTH (runtime sample) — a JS port of surfaceNormalFromGrad()'s LIFT
+//      math (`normalize(vec3(g*(1-z), z) + 1e-6)`, the form in metaball.frag.ts)
 //      sampled across a grid of gradient directions × interior depths. |N| must be
 //      in [0.99, 1.01] EVERYWHERE. The bite: drop the final `normalize()` (or the
 //      `+1e-6` guard at a degenerate sample) → |N| drifts off 1 and the assertion
 //      REDs. The guard is load-bearing at grad2d == 0, z == 0 (a flat-centre
-//      degenerate); the port exercises that corner.
-//   2. SUBSUMED-GLOW (static) — the flat `edgeGlow` inner-lightness lift is GONE
+//      degenerate); the port exercises that corner. The lift math is unchanged by
+//      W15 — only the gradient SOURCE moved from the 4-tap to the analytic field.
+//   2a. SUBSUMED-GLOW (static) — the flat `edgeGlow` inner-lightness lift is GONE
 //      (the curvature read is the normal now); `edgeGlow` must not appear in
 //      metaball.frag.ts (grep).
+//   2b. ANALYTIC-GRADIENT (static, AX.W15) — the normal rides the ANALYTIC field
+//      gradient: `sceneDistG()` returns the value+gradient vec3, the `sminG()`
+//      value+gradient smooth-min propagates it, and `surfaceNormalFromGrad()`
+//      consumes `scene.yz` (the field gradient) — the 4-tap tetrahedron + its
+//      screen-space epsilon are DELETED (a re-introduced `sceneDist(uv + k…)` tap
+//      would regress to finite differencing).
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -89,27 +105,48 @@ function run() {
             `the derived surface normal is NOT unit-length across the interior (worst |N|-1 = ${worst.toFixed(5)} > 0.01) — the lift/normalize is wrong`,
         );
 
-    // ── Clause 2: SUBSUMED-GLOW (static) ─────────────────────────────────────
+    // ── Clause 2: SUBSUMED-GLOW + ANALYTIC-GRADIENT (static) ─────────────────
     if (!existsSync(FRAG)) {
         violations.push("metaball.frag.ts is absent");
     } else {
         const frag = readFileSync(FRAG, "utf8");
+
+        // (2a) the flat `edgeGlow` inner-lightness lift is GONE (subsumed by the
+        //      Fresnel rim — the curvature read is the normal now).
         const hasEdgeGlow = /edgeGlow/.test(frag);
         facts.edgeGlowPresent = hasEdgeGlow;
         if (hasEdgeGlow)
             violations.push(
                 "the flat `edgeGlow` inner-lightness lift survives in metaball.frag.ts — it is subsumed by the Fresnel rim (W9.b); remove it",
             );
-        // The normal MUST ride the composite field (the screen-space tetrahedron).
-        facts.normalRidesScene = /sceneDist\(uv \+ k/.test(frag);
-        facts.screenSpaceEps = /1\.5\s*\/\s*max\(uResolution\.y/.test(frag);
-        if (!facts.normalRidesScene)
+
+        // (2b, AX.W15) the normal rides the ANALYTIC field gradient, NOT a 4-tap.
+        //   • sceneDistG() returns the value+gradient vec3(dist, ∂d/∂x, ∂d/∂y),
+        //   • mainImage extracts the field gradient (scene.yz),
+        //   • surfaceNormalFromGrad() consumes that gradient to lift the normal.
+        // The 4-tap tetrahedron + its screen-space epsilon are DELETED — a
+        // re-introduced `sceneDist(uv + k…)` tap regresses to finite differencing.
+        facts.hasAnalyticField = /vec3\s+sceneDistG\s*\(/.test(frag);
+        facts.extractsFieldGradient = /=\s*scene\.yz\s*;/.test(frag);
+        facts.normalRidesAnalyticGrad = /surfaceNormalFromGrad\s*\(\s*fieldGrad/.test(
+            frag,
+        );
+        facts.fourTapDeleted = !/sceneDist\(uv \+ k/.test(frag);
+        if (!facts.hasAnalyticField)
             violations.push(
-                "surfaceNormal() does not tap sceneDist() — the normal must ride the composite field the alpha is cut from",
+                "metaball.frag.ts does not define `sceneDistG()` (the value+gradient field returning vec3(dist, ∂d/∂x, ∂d/∂y)) — the analytic gradient is the keystone of the W15 surface normal",
             );
-        if (!facts.screenSpaceEps)
+        if (!facts.extractsFieldGradient)
             violations.push(
-                "the tetrahedron tap epsilon is not SCREEN-SPACE (~1.5px / uResolution.y) — a fixed epsilon shimmers on the non-unit SDF",
+                "mainImage does not extract the analytic field gradient (`scene.yz`) from sceneDistG() — the normal must read the field gradient directly",
+            );
+        if (!facts.normalRidesAnalyticGrad)
+            violations.push(
+                "the surface normal does not ride the analytic field gradient — `surfaceNormalFromGrad(fieldGrad, …)` must consume the sceneDistG() gradient (the 4-tap tetrahedron is deleted)",
+            );
+        if (!facts.fourTapDeleted)
+            violations.push(
+                "the deleted 4-tap tetrahedron (`sceneDist(uv + k…)`) has been RE-INTRODUCED — the W15 surface normal must ride the analytic gradient, not finite differencing",
             );
     }
 
@@ -122,11 +159,11 @@ function run() {
         violations,
     });
 
-    console.log("proof:blob-gradient-unit-length — |surfaceNormal()| ~ 1 (AW.W9.b)");
-    console.log(`  unit-length  : worst |N|-1 = ${facts.worstAbsErr} over ${samples} samples`);
-    console.log(`  edgeGlow gone: ${facts.edgeGlowPresent ? "NO ✗" : "yes ✓"}`);
+    console.log("proof:blob-gradient-unit-length — |surfaceNormalFromGrad()| ~ 1 (AW.W9.b + AX.W15)");
+    console.log(`  unit-length     : worst |N|-1 = ${facts.worstAbsErr} over ${samples} samples`);
+    console.log(`  edgeGlow gone   : ${facts.edgeGlowPresent ? "NO ✗" : "yes ✓"}`);
     console.log(
-        `  rides scene  : ${facts.normalRidesScene ? "yes ✓" : "NO ✗"} | screen-space eps: ${facts.screenSpaceEps ? "yes ✓" : "NO ✗"}`,
+        `  analytic field  : sceneDistG ${facts.hasAnalyticField ? "yes ✓" : "NO ✗"} | scene.yz ${facts.extractsFieldGradient ? "yes ✓" : "NO ✗"} | normal rides grad ${facts.normalRidesAnalyticGrad ? "yes ✓" : "NO ✗"} | 4-tap deleted ${facts.fourTapDeleted ? "yes ✓" : "NO ✗"}`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");

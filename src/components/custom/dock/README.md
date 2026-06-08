@@ -213,6 +213,9 @@ Only the active layer is interactive (inactive layers receive `inert` +
 `DockIconButton`, `DockTabButton`, `DockSelectTrigger`, `DockDropdownTrigger`,
 `DockBackgroundToggle`. All flat tiers over the dock's single glass plate.
 
+`DockTabButton` is KEPT — it has real consumers (StoryPager, instrument-chassis),
+so it is not a 0-consumer orphan to retire.
+
 ### Composables (do not re-invent)
 
 ONE canonical name per dock composable:
