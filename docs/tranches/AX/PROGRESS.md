@@ -11,15 +11,15 @@ over a black live canvas is NOT done).
 | Wave | Title | Status |
 |---|---|---|
 | W00 | visual-runtime (π) lane | complete |
-| W01 | single-scalar dock morph | planned |
+| W01 | single-scalar dock morph | complete |
 | W02 | one morph-orchestrator per dock | planned |
 | W03 | keepDockOpen host-native hold | planned |
 | W04 | dock overflow wrap | planned |
 | W05 | one iOS-spring vocabulary | planned |
 | W06 | dock storybook honest rail + css split | planned |
-| W07 | aurora core unblock — WGSL black canvas | planned |
-| W08 | blob core unblock — smin distance regime | planned |
-| W09 | specular tune to subtle | planned |
+| W07 | aurora core unblock — WGSL black canvas | complete |
+| W08 | blob core unblock — smin distance regime | complete |
+| W09 | specular tune to subtle | complete |
 | W10 | aurora options converge — atoms door | planned |
 | W11 | aurora color seams — OKLCh catchlight palette-ramp twin | planned |
 | W12 | mediums substrate — strokeProfile + noise basis | planned |
