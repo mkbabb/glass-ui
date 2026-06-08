@@ -75,16 +75,26 @@
                (transform-scoped only; the surface fades stay on the flat ease). */
                 scale var(--dock-press-spring),
             opacity var(--dock-motion-fast),
-            /* AT.W7-dock-b — the glass specular highlight fades in on hover. */
+            /* The box-shadow fade now carries ONLY the focus-visible ring (shared
+               `:focus-visible` group in dock.css) + the active-state
+               `--dock-active-shadow` — the AX.W09-retired hover `--glass-highlight`
+               specular no longer rides it. */
                 box-shadow var(--dock-motion-fast);
 
-        /* AT.W7-dock-b — glass icon-hover. The icon-button hover now reads as a
-           glass surface, not a flat `--muted` plate: a translucent card-tinted fill
-           composes with the specular `--glass-highlight` token (the inset top-edge
-           glass highlight every glass tier carries — `--dock-icon-hover-shadow`
-           defaults to it). Coherent with the dock's glass tier and the
-           `[data-tier="secondary"]` recipe below. A consumer retunes the fill via
-           `--dock-icon-hover-bg` and the specular via `--dock-icon-hover-shadow`. */
+        /* AT.W7-dock-b — glass icon-hover. The icon-button hover reads as a glass
+           surface, not a flat `--muted` plate: a translucent card-tinted fill is
+           the hover affordance. A consumer retunes the fill via `--dock-icon-hover-bg`.
+
+           AX.W09 — the dock control's SECOND specular (the `--glass-highlight`
+           hover box-shadow, AT.W7-dock-b) is RETIRED. The dock-icon-button is a
+           member of the unified `.glass-material` group (glass.css), so the moving
+           `::before` catch-light is now its SOLE specular owner — one light per
+           surface (the §0 "excise or fail" discipline). Stacking the
+           `--glass-highlight` inset box-shadow on the most-hovered, slides-floated
+           surface was the worst-offending double-light blowout; the card-tinted
+           hover fill carries the affordance without a second catch-light, and
+           dropping it also removes the `:not(:focus-visible)` specular-vs-ring
+           juggle. */
         &:hover:not(:disabled) {
             background: var(
                 --dock-icon-hover-bg,
@@ -92,14 +102,6 @@
             );
             color: var(--btn-hover-color, var(--foreground));
             scale: var(--scale-hover-dock);
-        }
-
-        /* The specular highlight is scoped to `:not(:focus-visible)` so it never
-           clobbers the focus ring box-shadow (the shared `:focus-visible` group in
-           dock.css) when a control is both hovered and keyboard-focused —
-           the ring wins, the specular yields. */
-        &:hover:not(:disabled):not(:focus-visible) {
-            box-shadow: var(--dock-icon-hover-shadow, var(--glass-highlight));
         }
 
         &:active:not(:disabled) {
@@ -128,8 +130,9 @@
 
     /* focus-visible ring + disabled paint hoisted to the shared `:where()`
        group in dock.css. The box-shadow fade transition lives on the base
-       `.dock-icon-button` rule (AT.W7-dock-b added `box-shadow` there for the
-       glass specular hover), so no per-state transition override is needed. */
+       `.dock-icon-button` rule (it carries the focus-ring + active-shadow fade
+       since AX.W09 retired the hover `--glass-highlight` specular), so no
+       per-state transition override is needed. */
 
     .dock-icon-button--compact {
         width: var(--dock-compact-control-size, auto);
