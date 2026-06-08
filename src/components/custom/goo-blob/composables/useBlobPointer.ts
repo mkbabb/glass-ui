@@ -42,8 +42,10 @@ export function useBlobPointer(el: Ref<HTMLElement | null>) {
 
     // Two critically-damped springs (x, y). `response` ~0.18s is a snappy-but-
     // weighty settle; `dampingFraction` 1.0 is critical (no overshoot on the
-    // follow — the click impulse is the bounce channel, not this).
-    const springOpts = { from: 0, to: 0, response: 0.18, dampingFraction: 1.0 };
+    // follow — the click impulse is the bounce channel, not this). `SpringProgress`
+    // starts at `initial` (default 0) — there is no `from`/`to` option pair (those
+    // keys were silently ignored; the target is driven per-frame via `.target`).
+    const springOpts = { response: 0.18, dampingFraction: 1.0 };
     const springX = new SpringProgress(springOpts);
     const springY = new SpringProgress(springOpts);
 
