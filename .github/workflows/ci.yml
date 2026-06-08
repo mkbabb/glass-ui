@@ -337,5 +337,17 @@ jobs:
               run: npm run proof:shadow-contract
             - name: proof:card-cartoon-consumers
               run: npm run proof:card-cartoon-consumers
+            # AX.W00 — the π visual-runtime lane. gate-script-parity is a device-free
+            # bijection meta-gate (always runs). substrate-paints-color +
+            # dock-animation-live carry a device-free arm here (token-peak / parity)
+            # and befitting-silent-SKIP the live readPixels/rAF arm on the zero-dep CI
+            # runner; the fail-CLOSED behavioral truth runs in the tests-visual π
+            # workspace on a real device (the orchestrator's lane).
+            - name: proof:gate-script-parity
+              run: npm run proof:gate-script-parity
+            - name: proof:substrate-paints-color
+              run: npm run proof:substrate-paints-color
+            - name: proof:dock-animation-live
+              run: npm run proof:dock-animation-live
             - name: gates:verify-ci
               run: npm run gates:verify-ci

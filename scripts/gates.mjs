@@ -470,6 +470,24 @@ export const GATES = [
         tags: ["local", "ci"],
         note: "AV.W4.C — the Card surface=\"cartoon\" ≥2-consumer muster (J inv 10). The cartoon dark arm is token-adaptive BY CONSTRUCTION (cartoon-surface reads only var(--shadow-cartoon-{md,lg}) which ride color-mix(... var(--shadow-color)); no light literal leaks). The gate locks ≥2 DISTINCT resolving consumer contexts (demo story + unit test) so the decoration is not substrate-without-consumer. Bite: drop a consumer to <2 → RED; cite a path that does not resolve at HEAD → RED",
     },
+    {
+        id: "proof:gate-script-parity",
+        cmd: "proof:gate-script-parity",
+        tags: ["local", "ci"],
+        note: "AX.W00 — the proof-script ↔ package.json BIJECTION meta-gate. Asserts (A) no orphan proof-*.mjs (every file is registered, modulo the finite owner-attributed KNOWN_ORPHANS AW baseline), (B) no dangling proof:* reference (every referenced .mjs exists, modulo KNOWN_DANGLING), (C) every gates.mjs row cmd resolves to a real package.json script. Device-free FS/JSON. Bite: drop a proof:* registration whose .mjs exists + is not allowlisted → RED (orphan); add a gates.mjs row with a ghost cmd → RED.",
+    },
+    {
+        id: "proof:substrate-paints-color",
+        cmd: "proof:substrate-paints-color",
+        tags: ["local", "ci"],
+        note: "AX.W00 — the SHARED substrate-paints-non-black readPixels primitive (W07 aurora + W08 blob compose it). The behavioral truth lives in the tests-visual π workspace spec (substrate-paints-color.spec.ts): renders aurora DEFAULT + each preset at t=1 (maxChannel>0 interior floor) + blob BLOB_CONFIG_DEFAULTS over N frames (LOOSE non-flood opaque-fraction band 0.10–0.70). FAIL-CLOSED when the π workspace is installed; befitting-silent SKIP only on a zero-dep runner (device absent). Bite: black the aurora clearColor → RED (maxChannel==0); flood the blob → RED.",
+    },
+    {
+        id: "proof:dock-animation-live",
+        cmd: "proof:dock-animation-live",
+        tags: ["local", "ci"],
+        note: "AV.W9.4 + AW.W2; AX.W00 PROMOTED fail-open SKIP → fail-CLOSED. The dock BEHAVIORAL motion gate: deterministic-drive (forced FLIP arm via removed startViewTransition + real page.hover) samples the dock-root box geometry AND a representative child opacity on ONE rAF timeline (lead/lag ≤ 1 frame). PLUS the AX.W00 device-free TOKEN-PEAK secondary (--spring-dock linear() peak ≤ the published (0.32,0.7) ~+4.6% baseline) which reds on EVERY runner. The live-rAF arm lives in the tests-visual π workspace (dock-animation-live.spec.ts); fail-CLOSED when the workspace is present. Bite: retune --spring-dock bouncier → token-peak RED; desync the box/child clock → live RED.",
+    },
     { id: "audit:stash", cmd: "audit:stash", tags: ["ci"] },
 ];
 
