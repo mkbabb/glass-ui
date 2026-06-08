@@ -126,73 +126,80 @@ export function resolveStrokeOrientId(cfg: AuroraConfig): number {
     return STROKE_ORIENT_ID[cfg.strokeOrient ?? "flow"];
 }
 
-// AW.W7b — the std140 storage-struct layout for the WGSL Uniforms (the WebGPU write
-// path). The WebGL2 path keeps its `gl.uniform*` calls (createUniformBridge); the
-// WebGPU path packs an AuroraConfig into this Float32Array and `device.queue.
-// writeBuffer`s it. The float count MUST match the WGSL `struct Uniforms` in
-// aurora.wgsl.ts: 16 scalar slots (padded to 16 for the vec4 array alignment) + the
-// palette/nuclei vec4 arrays. std140 aligns each vec4f array element to 16 bytes.
-const WGPU_SCALAR_SLOTS = 16; // time…alpha (16 floats, vec4-aligned)
-export const WGPU_UNIFORM_FLOATS =
-    WGPU_SCALAR_SLOTS + MAX_STOPS * 4 + MAX_NUCLEI * 4 * 2;
+// AW.W7b / AX.W07 — the SPLIT WebGPU write layout. The WebGL2 path keeps its
+// `gl.uniform*` calls (createUniformBridge); the WebGPU path packs an AuroraConfig into
+// TWO Float32Arrays and `device.queue.writeBuffer`s each into its own buffer:
+//   - the UNIFORM buffer (constant-indexed scalars, safe in `var<uniform>`): 16 scalar
+//     floats `time…alpha`, with the five count/enum fields now f32 the shader i32()-casts
+//     (AX.W07 1a — no Int32Array dual-view; the slot legitimately carries a float).
+//   - the STORAGE `Field` buffer (dynamically-indexed arrays — `var<storage,read>` is the
+//     ONLY legal address space for a runtime index on Metal, AX.W07 1b): the palette + the
+//     two nuclei vec4 arrays. std140 aligns each vec4f to 16 bytes — identical in storage.
+// The two float counts MUST match the WGSL `struct Uniforms` + `struct Field`.
+export const WGPU_UNIFORM_FLOATS = 16; // time…alpha (16 floats, vec4-aligned)
+export const WGPU_FIELD_FLOATS = MAX_STOPS * 4 + MAX_NUCLEI * 4 * 2;
 
 /**
- * Pack an `AuroraConfig` + cursor into the std140 WGSL Uniforms layout (the WebGPU
- * write path). Fills `out` in place (the caller owns one reused buffer so a slider
- * drag does not churn the GC). The WebGL2 fallback path is unaffected (it keeps its
- * `gl.uniform*` calls). The float layout MUST mirror aurora.wgsl.ts `struct Uniforms`.
+ * Pack an `AuroraConfig` into the SPLIT WebGPU buffers (AX.W07). `uniformOut` takes the
+ * 16 constant-indexed scalars (the f32-packed counts the shader i32()-casts); `fieldOut`
+ * takes the palette + nuclei vec4 arrays for the storage `Field` buffer. Both are filled
+ * in place (the caller owns the reused buffers so a slider drag does not churn the GC).
+ * The WebGL2 fallback path is unaffected (it keeps its `gl.uniform*` calls). The float
+ * layouts MUST mirror aurora.wgsl.ts `struct Uniforms` + `struct Field`.
  */
 export function packGPUUniforms(
     cfg: AuroraConfig,
     timeSec: number,
-    out: Float32Array,
-): Float32Array {
-    out.fill(0);
-    // Scalars (slots 0..15, mirroring the WGSL struct field order).
-    out[0] = timeSec;
-    out[1] = Math.min(cfg.palette.length, MAX_STOPS); // stopCount (as int-in-float)
-    out[2] = Math.min(cfg.nuclei.length, MAX_NUCLEI); // nucleiCount
-    out[3] = cfg.softmaxBeta;
-    out[4] = cfg.valueVariance;
-    out[5] = cfg.warpAmount;
-    out[6] = cfg.warpScale;
-    out[7] = cfg.warpDrift;
-    out[8] = WARP_ID[cfg.warpMode];
-    out[9] = cfg.noiseOctaves;
-    out[10] = resolveMediumId(cfg);
-    out[11] = cfg.breathDepth;
-    out[12] = cfg.breathPeriod;
-    out[13] = cfg.saturation;
-    out[14] = cfg.paperGrain;
-    out[15] = cfg.alpha;
-    // Palette (vec4 array — .xyz = linear-sRGB; .w pad). flattenPalette gives linear.
+    uniformOut: Float32Array,
+    fieldOut: Float32Array,
+): void {
+    uniformOut.fill(0);
+    fieldOut.fill(0);
+    // Uniform scalars (slots 0..15, mirroring the WGSL `struct Uniforms` field order).
+    // The five count/enum fields are f32 here — the shader i32()-casts each (AX.W07 1a).
+    uniformOut[0] = timeSec;
+    uniformOut[1] = Math.min(cfg.palette.length, MAX_STOPS); // stopCount (f32; shader i32()-casts)
+    uniformOut[2] = Math.min(cfg.nuclei.length, MAX_NUCLEI); // nucleiCount
+    uniformOut[3] = cfg.softmaxBeta;
+    uniformOut[4] = cfg.valueVariance;
+    uniformOut[5] = cfg.warpAmount;
+    uniformOut[6] = cfg.warpScale;
+    uniformOut[7] = cfg.warpDrift;
+    uniformOut[8] = WARP_ID[cfg.warpMode];
+    uniformOut[9] = cfg.noiseOctaves;
+    uniformOut[10] = resolveMediumId(cfg);
+    uniformOut[11] = cfg.breathDepth;
+    uniformOut[12] = cfg.breathPeriod;
+    uniformOut[13] = cfg.saturation;
+    uniformOut[14] = cfg.paperGrain;
+    uniformOut[15] = cfg.alpha;
+    // Storage Field — palette (vec4 array — .xyz = linear-sRGB; .w pad). flattenPalette
+    // gives linear.
     const palLin = flattenPalette(cfg.palette, MAX_STOPS);
-    let base = WGPU_SCALAR_SLOTS;
     for (let i = 0; i < MAX_STOPS; i++) {
-        out[base + i * 4 + 0] = palLin[i * 3 + 0]!;
-        out[base + i * 4 + 1] = palLin[i * 3 + 1]!;
-        out[base + i * 4 + 2] = palLin[i * 3 + 2]!;
+        fieldOut[i * 4 + 0] = palLin[i * 3 + 0]!;
+        fieldOut[i * 4 + 1] = palLin[i * 3 + 1]!;
+        fieldOut[i * 4 + 2] = palLin[i * 3 + 2]!;
     }
-    // Nuclei pos (vec4: .xy pos[Y-flipped], .z radius, .w paletteBias).
-    base = WGPU_SCALAR_SLOTS + MAX_STOPS * 4;
+    // Storage Field — nuclei pos (vec4: .xy pos[Y-flipped], .z radius, .w paletteBias).
+    let base = MAX_STOPS * 4;
     const n = Math.min(cfg.nuclei.length, MAX_NUCLEI);
     for (let i = 0; i < n; i++) {
         const nu = cfg.nuclei[i]!;
-        out[base + i * 4 + 0] = nu.x;
-        out[base + i * 4 + 1] = 1.0 - nu.y; // flipY
-        out[base + i * 4 + 2] = nu.radius;
-        out[base + i * 4 + 3] = nu.paletteBias;
+        fieldOut[base + i * 4 + 0] = nu.x;
+        fieldOut[base + i * 4 + 1] = 1.0 - nu.y; // flipY
+        fieldOut[base + i * 4 + 2] = nu.radius;
+        fieldOut[base + i * 4 + 3] = nu.paletteBias;
     }
-    // Nuclei mod (vec4: .x valueBias, .y elong, .z angle, .w driftRadius).
-    base = WGPU_SCALAR_SLOTS + MAX_STOPS * 4 + MAX_NUCLEI * 4;
+    // Storage Field — nuclei mod (vec4: .x valueBias, .y elong, .z angle, .w driftRadius).
+    base = MAX_STOPS * 4 + MAX_NUCLEI * 4;
     for (let i = 0; i < n; i++) {
         const nu = cfg.nuclei[i]!;
-        out[base + i * 4 + 0] = nu.valueBias;
-        out[base + i * 4 + 1] = nu.elongation ?? 1.0;
-        out[base + i * 4 + 2] = (-(nu.angle ?? 0) * Math.PI) / 180;
-        out[base + i * 4 + 3] = nu.driftRadius;
+        fieldOut[base + i * 4 + 0] = nu.valueBias;
+        fieldOut[base + i * 4 + 1] = nu.elongation ?? 1.0;
+        fieldOut[base + i * 4 + 2] = (-(nu.angle ?? 0) * Math.PI) / 180;
+        fieldOut[base + i * 4 + 3] = nu.driftRadius;
     }
-    return out;
 }
 
 /**
