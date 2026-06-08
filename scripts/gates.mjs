@@ -512,6 +512,18 @@ export const GATES = [
         tags: ["local", "ci"],
         note: "AX.W04 — `overflow=\"wrap\"` is CONTENT-driven intrinsic flex-wrap, not a viewport @media. Device-free SOURCE arm (runs + hard-REDs on EVERY runner): the magic-640 `@media` snap-back governing `.dock-overflow-wrap` is GONE, the `--dock-overflow-bp` token is deleted, the wrap recipe carries always-on `flex-wrap: wrap` + a `min(max-content, --dock-max-inline-size)` cap, the radius unifies onto `--dock-card-radius` (the bare `--radius-2xl` literal is gone) morphing off `--dock-expand-t`, the `--shadow-dock-wrap` card-tier token + the scalar-driven floating-tier box-shadow lift, the GlassDock.vue `orientation !== 'vertical'` horizontal-only guard, and the struck false `proof:dock-layering-polish` wrap-reflow doc-rot (`wrap reflow|morphing.*wrap` grep = 0). π-lane RUNTIME arm (fail-CLOSED when the workspace is present; dock-wrap-content-driven.spec.ts): mounts the demo wrap dock at a ≥640px viewport and asserts computed `flex-wrap === 'wrap'`, `rowCount >= 2`, `dock.right <= innerWidth` (no viewport bleed), and no vertical `.dock-overflow-wrap`. Born-RED at HEAD a125d9a (the @media-640 + --dock-overflow-bp + --radius-2xl wrap literal all present). Bite: re-add the @media-640 nowrap snap-back → SOURCE RED; raise the cap above content width → live rowCount:1 RED.",
     },
+    {
+        id: "proof:slider-two-only",
+        cmd: "proof:slider-two-only",
+        tags: ["local", "ci"],
+        note: "AV.W11 (re-registered into the AX fleet at AX.W23) — the slider two-only cardinality LOCK. <Slider> ships EXACTLY {standard, spectrum}: (1) KEYSET — sliderVariants lists exactly those two keys; (2) ORPHAN-SCAN — Slider.vue scoped CSS carries no [data-variant=X] for X ∉ keyset; (3) ROUNDED-KNOB — the base .slider-thumb resolves border-radius:50% and declares no border: paint (the borderless continuous iOS knob). Born-RED into AX only in the un-registered sense (the AV gate-fleet was un-re-registered into AX). Bite: re-add a deleted variant key → (1) RED; restore a deleted scoped block → (2) RED; revert the thumb to the bordered pill → (3) RED.",
+    },
+    {
+        id: "proof:carousel-glass-atoms",
+        cmd: "proof:carousel-glass-atoms",
+        tags: ["local", "ci"],
+        note: "AX.W23 — the carousel dot rail + chrome RENDER assertion (reads the emitted dist/glass-ui.css, not a source string). FOUR clauses: (A) DOT-CONTRAST — the emitted .carousel-dot::before inactive fill is color-mix(in srgb, var(--foreground) N%) whose RESOLVED color clears ≥3:1 (WCAG 1.4.11) against the composited bg-card/30 dark card in BOTH schemes (born-RED on HEAD's bg-muted-medium ~1.2:1); (B) NO-DEAD-CLASS — CarouselDots carries no scale-[var(--x)] var-in-arbitrary non-emit AND the active emphasis emits a REAL scoped .carousel-dot[data-active]::before width|height morph; (C) FOUR-STATE — GlassCarouselItem carries data-state + aria-pressed + .focus-ring + .tap-squish; (D) CHROME-SUBSTRATE — GlassCarousel composes a .glass-material band member. NOTE reads dist/ → run after build. Bite: revert the dot to bg-muted-medium → (A) RED; re-add scale-[var(--x)] or drop the [data-active] morph → (B) RED; drop a four-state attr → (C) RED; strip the band class → (D) RED.",
+    },
     { id: "audit:stash", cmd: "audit:stash", tags: ["ci"] },
 ];
 
