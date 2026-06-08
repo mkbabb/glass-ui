@@ -250,6 +250,66 @@ function togglePlay() {
         </section>
 
         <section class="flex flex-col gap-3">
+            <h2 class="text-sm font-semibold text-foreground">
+                Overflow wrap — content-driven multi-row reflow (W04)
+            </h2>
+            <p class="text-xs text-muted-foreground">
+                <code class="rounded bg-muted px-1">overflow="wrap"</code> reflows the row to
+                multiple rows by INTRINSIC flex-wrap whenever the content's natural width exceeds
+                the dock's inline cap (<code class="rounded bg-muted px-1">min(max-content,
+                --dock-max-inline-size)</code>) — at ANY viewport width, no breakpoint. The wrapped
+                multi-row silhouette lifts onto the card/floating shadow tier and a finite
+                <code class="rounded bg-muted px-1">--dock-card-radius</code> corner as it expands.
+            </p>
+            <!-- Host caps --dock-max-inline-size at 28rem so the 14-control row overflows the cap
+                 and wraps ON-SCREEN at desktop (the consumer-override the cap token exposes). -->
+            <div class="flex justify-center py-6">
+                <GlassDock
+                    overflow="wrap"
+                    always-expanded
+                    style="--dock-max-inline-size: 28rem"
+                >
+                    <DockIconButton aria-label="Home"><Home class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Search"><Search class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Add"><Plus class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Notifications"><Bell class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Share"><Share2 class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Download"><Download class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Settings"><Settings class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Previous"><SkipBack class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Play"><Play class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Next"><SkipForward class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Home (2)"><Home class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Search (2)"><Search class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Add (2)"><Plus class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Settings (2)"><Settings class="h-4 w-4" /></DockIconButton>
+                </GlassDock>
+            </div>
+            <p class="text-xs text-muted-foreground">
+                Collapsible wrap dock — hover to expand. Collapsed it is a single-row stadium pill
+                (flat <code class="rounded bg-muted px-1">--shadow-dock</code> glow); expanded it
+                wraps to rows AND morphs corner + elevation onto the card tier in lockstep on the
+                one dock spring (no jump-cut).
+            </p>
+            <div class="flex justify-center py-6">
+                <GlassDock overflow="wrap" style="--dock-max-inline-size: 22rem">
+                    <DockIconButton aria-label="Home"><Home class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Search"><Search class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Add"><Plus class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Notifications"><Bell class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Share"><Share2 class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Download"><Download class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Settings"><Settings class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Previous"><SkipBack class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Play"><Play class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Next"><SkipForward class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Home (2)"><Home class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Search (2)"><Search class="h-4 w-4" /></DockIconButton>
+                </GlassDock>
+            </div>
+        </section>
+
+        <section class="flex flex-col gap-3">
             <h2 class="text-sm font-semibold text-foreground">Big dock — card shell + tile grid (W3b)</h2>
             <p class="text-xs text-muted-foreground">
                 <code class="rounded bg-muted px-1">shape="card"</code> gives a finite concentric

@@ -1,0 +1,95 @@
+{
+  "wave": "AX.W04",
+  "title": "Dock overflow/wrap — content-driven reflow, card-tier shadow, tokenized radius",
+  "head": "a125d9a (post-W01/W02/W03/W07/W08/W09/W10/W11/W15/W16/W17/W37 settled base)",
+  "ritual": "wave-open live re-diagnosis (AX.W00 §Cadence step 1) — re-confirm the three RED witnesses against the ACTUAL post-W01 HEAD source, not the audit's word. The implementer cannot run a real browser; each RED witness is re-proven at the CODE level (the falsifiable source state) + locked by the gate's pure detector replayed against HEAD a125d9a.",
+  "rootCauseConfirmed": true,
+  "redWitnesses": {
+    "witness1_viewportToggleNotContentStrategy": {
+      "confirmed": true,
+      "codeLevelWitness": "dock.css HEAD carried `.glass-dock.dock-overflow-wrap { max-width: var(--dock-wrap-max-width) }` where `--dock-wrap-max-width: calc(100vw - var(--dock-viewport-inline-gutter, 1rem))` (the VIEWPORT gutter, not a content cap), and an `@media (min-width: 640px) { .glass-dock.dock-overflow-wrap .dock-layer--full { flex-wrap: nowrap } … max-width: none }` block that unconditionally forced nowrap above 640px. So a wide-viewport over-cap row NEVER wrapped (the live 800px → 1861px overflow). The viewport `@media` was the wrap mechanism, not an over-cap content reflow.",
+      "falsifiableAssertion": "the gate SOURCE arm asserts `media640GovernsWrap === false` + `wrapRootHasMaxContentCap === true`; replayed against a125d9a it reports media640GovernsWrap:true + the cap absent (born-RED)."
+    },
+    "witness2_falseGate": {
+      "confirmed": true,
+      "codeLevelWitness": "scripts/proof-dock-layering-polish.mjs contains ZERO references to wrap/min-height/reflow/overflow (grep = 0), yet README.md:289 + the prose CLAIMED the gate asserts 'a morphing (not snapping) wrap reflow'. The gate was GREEN while the claimed behaviour was unverified AND false (the reflow was a viewport jump-cut). The dock.css wrap layer also carried `transition: min-height var(--dock-motion-resize)` (the AW.W3b spring-keyed reflow morph the claim referenced).",
+      "falsifiableAssertion": "the gate SOURCE arm asserts the `wrap reflow|morphing.*wrap` grep over README + dock.css == 0 + the `proof:dock-layering-polish` README row no longer narrates a wrap claim + no `transition: min-height` in the wrap layer; all three trip RED at a125d9a."
+    },
+    "witness3_zeroLiveAuditedConsumer": {
+      "confirmed": true,
+      "codeLevelWitness": "grep `overflow=\"wrap\"` over demo/ returned 0 hits at HEAD — no story, no Playwright audit ever ran against the wrap path. The big-dock story shows only the orthogonal `layout=\"grid\"`. The wrap surface shipped entirely unaudited against live pixels (the headless-green/visually-broken gap the AX cardinal lesson names).",
+      "falsifiableAssertion": "the wave ADDS a `overflow=\"wrap\"` section to demo/stories/navigation/dock.vue (14-control + collapsible) + the tests-visual/dock-wrap-content-driven.spec.ts live π-lane spec the orchestrator runs at >= 3 viewports."
+    }
+  },
+  "bornRedReplay": {
+    "method": "the gate's pure detector detectWrapSource() replayed against `git show a125d9a:<file>` for all four source files (device-free, deterministic)",
+    "violationsAtHead": 11,
+    "violationsAfterWave": 0,
+    "note": "11 SOURCE violations at HEAD a125d9a (every finding F0-F5 RED) → 0 after the wave. This is the born-RED→GREEN canary the orchestrator verifies with NO browser."
+  },
+  "findingsDisposition": {
+    "F0_contentDrivenWrap": {
+      "severity": "blocker-root",
+      "fix": "Re-expressed wrap as an over-cap intrinsic reflow: `.dock-overflow-wrap .dock-layer--full { flex-wrap: wrap }` is ALWAYS-ON (no MQ), and `.dock-overflow-wrap` caps inline-size at `min(max-content, var(--dock-max-inline-size))`. So flex wraps to N rows EXACTLY when the intrinsic row exceeds the cap — at ANY viewport — and collapses to one row when it fits. DELETED the `@media (min-width: 640px)` snap-back + the `--dock-overflow-bp` token + the orphaned `--dock-wrap-max-width`/`--dock-wrap-desktop-*` tokens. `--dock-max-inline-size` is now the ONE cap every overflow strategy reads.",
+      "files": ["src/styles/dock.css", "src/styles/tokens.css"]
+    },
+    "F1_cardTierShadow": {
+      "severity": "major",
+      "fix": "Minted `--shadow-dock-wrap` (= `--shadow-xl` + `--glass-material-rim` + `--glass-under-shadow-vivid`) on the `:root` cascade (consumer-overridable per the cartoon-shadow contract; minted `--glass-material-rim` as the floating-tier rim hairline). The wrap dock box-shadow lifts the three floating-tier layers in via `--dock-wrap-elev = calc(--dock-expand-t * 100%)` — each layer's alpha tracks the SAME `--dock-expand-t` scalar the radius glides on, so the elevation thickens in LOCKSTEP with the corner morph (WWDC25 §219 'material thickens as glass flexes larger'). At collapsed (expand-t 0) only the base `--shadow-dock` glow shows; at expanded (expand-t 1) the full floating stack grounds the multi-row card.",
+      "files": ["src/styles/tokens.css", "src/styles/dock.css"]
+    },
+    "F3_falseGateStrike": {
+      "severity": "major",
+      "resolution": "(b) STRIKE — the content-driven reflow is intrinsic flex (no JS min-height morph), so the JS-morph detector path (a) is genuinely unneeded. Struck the false 'morphing (not snapping) wrap reflow' claim from README.md:289 + the prose at :105/:272, removed the `transition: min-height` from the wrap layer rule, and added a real `proof:dock-wrap-content-driven` README gate row.",
+      "files": ["src/components/custom/dock/README.md", "src/styles/dock.css"]
+    },
+    "F4_oneRadiusToken": {
+      "severity": "minor",
+      "fix": "Unified the wrap shell radius onto `--dock-card-radius` (the SAME density-scaled finite token the big-dock card path uses), morphing pill→card on `--dock-expand-t` (--radius-pill at 0, --dock-card-radius at 1). DELETED the bare 16px `--radius-2xl` literal. One finite-radius source.",
+      "files": ["src/styles/dock.css"]
+    },
+    "F5_horizontalOnly": {
+      "severity": "minor",
+      "fix": "GlassDock.vue guards the class emit on `overflow === 'wrap' && orientation !== 'vertical'` — wrap is explicitly horizontal-only. A vertical rail grows-to-fit + clamps at `--dock-max-block-size` (its own overflow story). Struck the false vertical-wrap claim from the dock.css comment + the JSDoc.",
+      "files": ["src/components/custom/dock/GlassDock.vue", "src/styles/dock.css"]
+    },
+    "F6_verticalMaxBlockContract": {
+      "severity": "digest-fold",
+      "fix": "Wired the vertical max-block-size + internal-scroll contract: at rest a `.vertical.always-expanded:not([data-morphing])` (and `.expanded`) column scrolls its OWN block axis (`overflow-y: auto`, scrollbar-hidden, overscroll contain) when content exceeds `--dock-max-block-size`, cross-axis stays `visible` for focus rings + grown popovers. Consumers set `--dock-max-block-size` per-instance to anchor a viewport-bounded scrollable tool palette without hand-anchoring it (bbnf-buddy ToolsLayer).",
+      "files": ["src/styles/dock.css"]
+    },
+    "F2_liveStory": {
+      "severity": "close-criterion",
+      "fix": "Added a `overflow=\"wrap\"` section to demo/stories/navigation/dock.vue: a 14-control always-expanded wrap dock (`--dock-max-inline-size: 28rem` host cap so it wraps on-screen at desktop) + a collapsible 12-control wrap dock (`--dock-max-inline-size: 22rem`) showing the collapse↔expand corner+elevation morph in lockstep.",
+      "files": ["demo/stories/navigation/dock.vue"]
+    }
+  },
+  "ratifyBeforeImpl": {
+    "Q1_capDefault": "RESOLVED — unified the wrap cap onto `--dock-max-inline-size` (`min(80vw, 64rem)` default, consumer-overridable per-instance) rather than a parallel 100vw-gutter token. The over-cap crossing is the wrap trigger.",
+    "Q2_strikeVsDetector": "RESOLVED — (b) STRIKE (the gestalt fix removes the JS min-height morph entirely; no spring-driven min-height is retained).",
+    "Q3_hasVsContainer": "RESOLVED — neither `:has()` nor `@container`. The pill↔card radius+shadow morph keys off `.expanded` × the `--dock-expand-t` scalar (the same axis the big-dock `shape-card` morph rides), because pure CSS cannot count flex rows; a wrap dock IS the card silhouette when expanded and a pill when collapsed. This is the honest CSS-only multi-row primitive and composes with the W01 single clock.",
+    "Q4_verticalDefault": "RESOLVED — `height:auto` stays the default; `--dock-max-block-size` is the consumer opt-in + the at-rest internal-scroll rule engages only on real over-cap content."
+  },
+  "postFix": {
+    "gate": "proof:dock-wrap-content-driven — SOURCE arm GREEN (8/8 source facts pass), born-RED replay 11→0 against a125d9a. Live π-lane arm fail-CLOSED-skips without a dev server (the orchestrator runs it on the real device at >= 3 viewports).",
+    "typecheck": "GREEN (vue-tsc --noEmit, exit 0)",
+    "build": "GREEN (vite build — the /styles bundle emits the content-driven wrap recipe: dist/styles/dock.css carries `max-inline-size: min(max-content, var(--dock-max-inline-size))`, no `@media 640` governing wrap, no active `--dock-overflow-bp` definition; dist/styles/tokens.css carries `--shadow-dock-wrap`).",
+    "dockSuite": "95/95 GREEN (tests/components/custom/dock); 9/9 GREEN (tests/scripts/dock-wrap-content-driven.detect — the GREEN/RED-canary/comment-strip/sliceRule/live-wrap detector units).",
+    "gates": "proof:gate-script-parity GREEN (0 new orphan/dangling/ghost — the new gate is bijection-registered); proof:dock-vocabulary GREEN; proof:dock-css-split GREEN; proof:dock-orchestrator-single GREEN; proof:no-test-in-src GREEN.",
+    "morphNoRegression": "the W01 single-scalar morph is NOT regressed — the wrap radius + shadow read via `calc()` off `--dock-expand-t` (the settled-state-aware derivative of the `--dock-morph-t` W01 scalar: `var(--dock-morph-t,1)` on .expanded, `calc(1 - var(--dock-morph-t,1))` on .collapsed). The wrap recipe adds NO CSS transition and touches NO morph-driver row; it READS the existing scalar, so the pill→card morph composes with the one iOS spring."
+  },
+  "liveVerifyNeeded": {
+    "route": "/navigation/dock — the new overflow=\"wrap\" section (14-control always-expanded + 12-control collapsible)",
+    "viewports": ["375x667", "1280x800", "1440x900"],
+    "modes": ["light", "dark"],
+    "assertions": [
+      "the 14-control wrap dock at 1280px/1440px wraps to >= 2 ROWS (NOT one row overflowing the host) — content-driven, not viewport-coupled",
+      "the multi-row card reads as an ELEVATED floating surface (the --shadow-dock-wrap floating-tier grounds it) — side-by-side it is NOT the flat thin-pill plate the collapsed pill shows",
+      "the finite --dock-card-radius corners clip cleanly (a card, not a stadium); the interior tiles read concentric",
+      "the collapsible wrap dock's collapsed↔expanded morph lifts radius + shadow IN LOCKSTEP on one iOS spring (reads as one continuous motion, no jump-cut) — the W01 morph is not regressed",
+      "row gaps are even; affordance/hierarchy/spacing/padding correct; NO visual occlusion"
+    ],
+    "recipe": "with a demo dev server up (npm run dev → http://localhost:5173), run `npm run proof:dock-wrap-content-driven` (the fail-CLOSED live arm) AND the tests-visual spec (`PI_ANGLE`/real-GPU per W00) `dock-wrap-content-driven.spec.ts`; capture the paired-π BEFORE(a125d9a)/AFTER + DELTA screenshots (the 1280px nowrap-bleed vs the multi-row card, the flat-pill vs floating-tier shadow A/B, the radius 16px→card-radius delta) at the 3 viewports x light/dark."
+  },
+  "status": "DEV-COMPLETE — headless GREEN (typecheck + build + dock suite + detector units + the device-free gate SOURCE arm born-RED→GREEN + parity). The BINDING close criterion is the orchestrator's live Playwright + frontend-design VISUAL-TRUTH audit on the real device (the wave does NOT close on the headless gate alone)."
+}
