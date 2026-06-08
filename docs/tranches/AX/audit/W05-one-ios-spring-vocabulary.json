@@ -1,0 +1,111 @@
+{
+  "wave": "AX.W05",
+  "title": "One iOS-spring vocabulary — excise the legacy apple-spring bezier, converge on the governed --spring-* registers",
+  "head": "a563563 (post-W04/W12/W23/W24 band-settled base; the W01 --spring-dock register is live)",
+  "ritual": "wave-open live re-diagnosis (AX.W00 §Cadence step 1) — the three RED witnesses re-proven against the ACTUAL a563563 source, NOT the plan's old eaba94f baseline. The implementer has no browser; each witness is re-proven at the CODE level + locked by the extended gate's pure detector replayed against HEAD.",
+  "rootCauseConfirmed": true,
+  "baselineCorrections": {
+    "consumerCount": "CONFIRMED 4 internal direct bezier consumers, NOT the charter's 5. The grep `grep -rn -- --ease-apple-spring|--motion-ease-apple-spring src/` at a563563 returns: tokens.css:178+181 (2 defs), theme.css:361 (1 alias), + 4 SFC consumers (UnderlineTabs.vue:75, BouncyToggle.vue:135, ContinuousMarkers.vue:385, ProgressSectioned.vue:188). Slider.vue:213 uses --ease-spring (→ --spring-snappy, a linear() spring), NOT the bezier — re-classified per result 28. Its defect is a register re-point, not a bezier excision.",
+    "dockRegister": "the dock register at a563563 is --spring-dock (the AX.W01 mint), NOT --spring-snappy. The dock-coupled surfaces (the in-dock Slider thumb) map onto --spring-dock.",
+    "staleProseFile": "the plan's RED-witness-3a target `proof-dock-motion-parity.mjs` DOES NOT EXIST at a563563 (the file was never created at this base; the stale (0.5,0.5)/+18.5% prose it cited is absorbed). The F3 import-render machinery the plan PREFERS already lives in proof-spring-tokens-synced.mjs (it imports the regen module + computes analyticOvershoot at runtime in detectBand() — no hand-typed number to rot). The only surviving +18.5% references are all inside legitimate RETROSPECTIVE clauses (the regen `dock` comment 'off the +18.5% playful register'; tokens.css:1380 'the prior playful +18.5% register'), guarded by isRetrospective(). proof:spring-tokens-synced is GREEN at a563563 and stays GREEN — F3 is already truthed-up; no new stale-prose target to fix."
+  },
+  "redWitnesses": {
+    "witness1_twoSpringVocabularies": {
+      "confirmed": true,
+      "codeLevelWitness": "tokens.css:178 `--motion-ease-apple-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275)` (~+27.5% overshoot) + its tokens.css:181 + theme.css:361 `--ease-apple-spring` aliases — a SECOND iOS-spring authority beside the regen `--spring-*` cohort that proof:animation-coherence tolerated (it scanned only for a SECOND `--spring-*:` def, not the legacy `--motion-ease-*` seed). 4 live SFC consumers read it.",
+      "falsifiableAssertion": "grep `--ease-apple-spring|--motion-ease-apple-spring` over `src/` → 2 defs + 4 consumers (the extended proof:animation-coherence APPLE-SPRING-SURVIVOR sweep reports 9 witnesses at a563563, born-RED). After the wave: 0.",
+      "bornRedReplay": "proof:animation-coherence at a563563 (with the AX.W05 extension): apple-spring survivors = 9, status FAIL → after the excise: survivors = 0, status PASS."
+    },
+    "witness2_sliderInDockRegisterMismatch": {
+      "confirmed": true,
+      "codeLevelWitness": "Slider.vue:213 thumb `transform` springs on `var(--ease-spring)` (theme.css:362 → --spring-snappy, ~+6.8%), a DIFFERENT curve than the --spring-dock (0.32, 0.7, ~+4.6%) the <GlassDock> it lives inside breathes on. A slider INSIDE the dock should share the dock register (§1.8 symptom).",
+      "falsifiableAssertion": "resolve the Slider-thumb transform timing-function vs the dock-morph timing-function — at HEAD they differ (snappy != dock). After the wave the thumb reads --slider-thumb-spring defaulting to --spring-dock, sharing the dock register. (Live-verified by the orchestrator on a <GlassDock><Slider/></GlassDock> mount.)"
+    },
+    "witness3_gateTruthGaps": {
+      "confirmed": true,
+      "codeLevelWitness": "(a) the comment-sync machinery already import-renders the overshoot (proof-spring-tokens-synced.mjs detectBand()/analyticOvershoot — no hand-typed number); the plan's `proof-dock-motion-parity.mjs` stale-prose target is absent at this base, so F3 is already truthed (re-confirmed GREEN). (b) the --spring-* cohort had NO consumer-coverage gate — --spring-gentle is consumed ONLY via the --ease-spring-gentle theme.css:354 alias (zero direct var(--spring-gentle) surface), a library-orphan the generator can mint silently.",
+      "falsifiableAssertion": "a --spring-* preset with zero var() consumers passed proof:animation-coherence (definition-uniqueness only, not coverage). The new SPRING-CONSUMER-COVERAGE assertion fail-closes on a dead preset (bite-tested: inject `--spring-dead` → 5/6 reached, status FAIL)."
+    }
+  },
+  "findingsDisposition": {
+    "F4_exciseBezier": {
+      "severity": "major-root",
+      "fix": "DELETED --motion-ease-apple-spring + --ease-apple-spring from tokens.css (:178, :181) + the theme.css:361 @theme re-alias (NOT deprecated, NOT aliased to a --spring-* — excised per the no-legacy mandate). Re-pointed the 4 internal consumers onto governed registers: UnderlineTabs.vue:75 inset glide → --spring-snappy (CONTROL); BouncyToggle.vue:135 readToken → --spring-bouncy (PLAYFUL; the cubic-bezier default literal replaced by the plain `ease` keyword, no hand-rolled bezier); ContinuousMarkers.vue:385 dot-pop → --spring-snappy (CONTROL; inline cubic-bezier fallback DELETED); ProgressSectioned.vue:188 → collapsed `var(--spring-snappy, var(--ease-apple-spring, ease-out))` to `var(--spring-snappy, ease-out)` (dead middle layer dropped). The tokens.css:1356 --vt-ease rationale comment rewritten to the excision story (no surviving cubic-bezier seed).",
+      "files": ["src/styles/tokens.css", "src/styles/theme.css", "src/components/custom/tabs/UnderlineTabs.vue", "src/components/custom/tabs/BouncyToggle.vue", "src/components/custom/timeline/ContinuousMarkers.vue", "src/components/ui/progress/ProgressSectioned.vue"]
+    },
+    "F4_sliderInDockRepoint": {
+      "severity": "major",
+      "fix": "Re-pointed Slider.vue thumb `transform` timing from --ease-spring (snappy) onto the DOCK register via `var(--slider-thumb-spring, var(--spring-dock))` — the in-dock thumb breathes on the dock curve by default, consumer-overridable through the one --slider-thumb-spring hook. Expressed as an inline-default token (matching the existing --slider-thumb-{size,bg,shadow} family convention — no stray :root declaration), so a standalone non-dock Slider resolves the dock register too (the felt iOS knob give). RATIFY (Open Q3): inline-default-in-SFC over a theme.css declaration keeps the thumb-token family consistent; a standalone slider defaults to the dock register per the recommendation.",
+      "files": ["src/components/ui/slider/Slider.vue"]
+    },
+    "F4_governVocabulary": {
+      "severity": "minor",
+      "fix": "Extended the regen-spring-tokens.mjs PRESETS `comment` strings to name the surface-class register (the single source the doc-table derives from): SETTLE→smooth, CONTROL→snappy, PLAYFUL→bouncy, GENTLE→gentle, DOCK→dock (the dock morph + the in-dock Slider thumb). Added the governing doc-block header that records the SOTA restraint rule (structural morphs ride CONTROL, never bouncy; bouncy reserved for emphatic one-shots) + the dock-register-for-dock-and-its-slider map.",
+      "files": ["scripts/regen-spring-tokens.mjs"]
+    },
+    "F3_truthUpPipeline": {
+      "severity": "minor",
+      "fix": "RE-CONFIRMED the F3 import-render path is already shipped (proof-spring-tokens-synced.mjs detectBand() imports the regen PRESET + renders analyticOvershoot at runtime; the comment-sync isRetrospective() guard permits the historical +18.5% references). proof:spring-tokens-synced is GREEN at a563563 and after the wave. The plan's `proof-dock-motion-parity.mjs:16,188` stale-prose target does not exist at this base — no new stale number to fix.",
+      "files": []
+    },
+    "F5_consumerCoverageGate": {
+      "severity": "major",
+      "fix": "Added the SPRING-CONSUMER-COVERAGE assertion to proof:animation-coherence (the EXTEND, not a new gate — keeps the parity bijection): every --spring-X def has >=1 consumer, counting a direct var(--spring-X) read OR a --ease-spring-X @theme-alias reach. RATIFY (Open Q2): the alias-only reach COUNTS — the @theme alias is a documented public register (presets-in-consumers split). --spring-gentle is JUSTIFIED-via-alias (reached through --ease-spring-gentle), NOT retired. Fail-closed bite-tested: a fresh dead --spring-dead → status FAIL.",
+      "files": ["scripts/proof-animation-coherence.mjs"]
+    }
+  },
+  "consumerCensus": {
+    "springPresets": {
+      "smooth": {"reach": "direct + alias", "register": "SETTLE", "disposition": "kept"},
+      "snappy": {"reach": "direct + alias (--ease-spring/--ease-spring-snappy)", "register": "CONTROL", "disposition": "kept"},
+      "bouncy": {"reach": "direct + alias", "register": "PLAYFUL", "disposition": "kept"},
+      "gentle": {"reach": "alias-only via --ease-spring-gentle (a documented public @theme register)", "register": "GENTLE", "disposition": "JUSTIFIED-via-alias (not retired — Open Q2 ratify)"},
+      "dock": {"reach": "direct (glass-carousel, carousel-dots, --dock-resize-spring, the in-dock Slider thumb)", "register": "DOCK", "disposition": "kept"}
+    },
+    "coverageResult": "5/5 presets reached — no dead generator mint."
+  },
+  "gateExtension": {
+    "gate": "proof:animation-coherence (EXTENDED, AW.W31.a → AW.W31.a + AX.W05)",
+    "rationale": "the plan's directive: EXTEND the existing proof-animation-coherence.mjs (the survivor sweep + governed-rationale + consumer-coverage), keep the parity bijection — do NOT author a new gate. Three new asserts folded into detectAll(): APPLE-SPRING-SURVIVOR (deletion-proof over src/), SPRING-CONSUMER-COVERAGE (fail-closed), APPLE-SPRING-CONSTELLATION (cross-repo forcing function).",
+    "parityBijection": "HELD — the extension lands in the existing script + the existing proof:animation-coherence package.json key. proof:gate-script-parity PASS (no new orphan, no new dangling).",
+    "biteTests": {
+      "deadPresetFailClosed": "inject --spring-dead with zero consumers → coverage 5/6, status FAIL (verified).",
+      "constellationFalsifiable": "mock ../speedtest/src reading var(--ease-apple-spring) with no local def → census reds with a W34-routed witness (verified, then reverted)."
+    }
+  },
+  "constellationCensus": {
+    "status": "SKIPPED in the worktree (the ../speedtest sibling is not at the worktree-relative `.claude/worktrees/speedtest` path); FALSIFIABLE on the main checkout where ../speedtest resolves to the real sibling.",
+    "speedtestSites": {
+      "MeterColumn.vue:291-292": "transform/width dial-out reads var(--ease-apple-spring) (the :281 'DEPARTURE spring' comment → maps to the CONTROL/settle register)",
+      "SpeedtestResults.vue:842": "complete-morph re-seat reads var(--ease-apple-spring)"
+    },
+    "localDef": "NONE in ../speedtest — it inherits the (now-excised) glass-ui token. Deleting it leaves var(--ease-apple-spring) resolving empty → the transitions degrade to instant/linear with NO error (the silent clean-break the census prevents).",
+    "resolution": "the 4-site speedtest re-point is the W34 cross-repo PR (gated on the AX publish per §4 note 12). This wave authors the ANNEX + the forcing-function census; it writes NO sibling source. The census STAYS RED on the main checkout until the W34 leg lands. Recorded as {receiver: W34, close-gate: this census} per the §16.4 zero-loss mandate."
+  },
+  "crossRepoAnnex_W34": {
+    "owner": "AX.W34 (cross-repo consumer adoption, publish-gated)",
+    "edits": [
+      "speedtest MeterColumn.vue:291-292 — var(--ease-apple-spring) → var(--spring-snappy) (CONTROL register; the :281 'DEPARTURE spring' comment confirms the crisp departure intent)",
+      "speedtest SpeedtestResults.vue:842 — var(--ease-apple-spring) → var(--spring-snappy) (CONTROL register; the complete-morph re-seat is a crisp position morph)"
+    ],
+    "gate": "the no---ease-apple-spring-in-consumers constellation census (this wave's APPLE-SPRING-CONSTELLATION assert) stays RED on the main checkout until the W34 leg lands."
+  },
+  "outOfBounds": {
+    "demoMotionTour": "demo/stories/foundations/motion.vue carried a stale `ease-apple-spring` tour entry referencing the deleted token. Removed it (a binding-verification clean-break tail of the same excision — a dangling demo reference would paint an empty swatch) and added the missing spring-dock entry so the spring tour reflects the full governed vocabulary. demo/ is not in the plan's FileBounds; this is an idiomatic §3a clean-break, not another wave's scope."
+  },
+  "selfGate": {
+    "device_free_arms": "GREEN",
+    "proof:animation-coherence": "PASS (survivors 0, coverage 5/5, census skipped-in-worktree)",
+    "proof:spring-tokens-synced": "PASS (dock band intact, overshoot 0.046 import-rendered, 0 stale comments)",
+    "proof:gate-script-parity": "PASS (bijection held)",
+    "typecheck": "PASS",
+    "build": "PASS"
+  },
+  "liveArmNotes": "The orchestrator runs on real Metal/browser at /Users/mkbabb/Programming/glass-ui (where ../speedtest resolves to the real sibling): (1) re-run `npm run proof:animation-coherence` — the APPLE-SPRING-CONSTELLATION census now CHECKS ../speedtest and goes RED (2 reads, inherits) until the W34 speedtest re-point lands. This is the EXPECTED publish-gated forcing-function RED, NOT a regression. (2) VISUAL-TRUTH: on a <GlassDock><Slider/></GlassDock> mount at >=2 viewports x light/dark, confirm the slider thumb morph and the dock collapse/expand read as ONE coherent iOS spring (the thumb breathes on --spring-dock, not the snappier sibling). (3) Confirm the four re-pointed surfaces still read RIGHT: UnderlineTabs underline still glides cleanly (CONTROL), BouncyToggle still bounces (PLAYFUL — overshoot survives the map), ContinuousMarkers dot-pop still pops (CONTROL ~+6.8%), ProgressSectioned still fills with overshoot. Any surface reading WORSE on its new register is a RATIFY (Open Q1).",
+  "bornRedReplay": {
+    "method": "the extended proof:animation-coherence pure detector (detectAll) run against a563563 source, device-free, deterministic",
+    "violationsAtHead": 9,
+    "violationsAfterWave": 0,
+    "note": "9 apple-spring SURVIVOR violations at a563563 (2 defs + the 1 theme.css alias line matching both names + 4 SFC consumers, expressed as 9 line-witnesses) → 0 after the excise. The born-RED→GREEN canary the orchestrator verifies with NO browser. The constellation census is the separate publish-gated RED that stays RED until W34."
+  }
+}

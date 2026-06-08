@@ -132,7 +132,11 @@ function animatePress(btn: HTMLElement) {
     btn.getAnimations().forEach((a) => a.cancel());
 
     // WAAPI keyframes can't dereference custom properties; resolve at runtime.
-    const easing = readToken("--ease-apple-spring", "cubic-bezier(0.175, 0.885, 0.32, 1.275)");
+    // AX.W05 — playful register: the bouncy toggle WANTS overshoot, so the press
+    // bounce reads the governed --spring-bouncy linear() (resolved here because
+    // WAAPI can't read a var()). The SSR/missing-token fallback is the plain
+    // `ease` keyword — no hand-rolled bezier (the coherence-gate anti-pattern).
+    const easing = readToken("--spring-bouncy", "ease");
     const press = readToken("--scale-press", "0.95");
     const hover = readToken("--scale-hover", "1.08");
 

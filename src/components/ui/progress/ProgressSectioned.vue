@@ -182,10 +182,12 @@ const { cells, aggregateValue } = useProgressGeometry({
         inset 0 1px 0 color-mix(in srgb, hsl(0 0% 100%) 28%, transparent),
         inset 0 -1px 0
             color-mix(in srgb, var(--shadow-color, hsl(0 0% 0%)) 18%, transparent);
-    /* Spring physics on the width grow — linear() spring curve from --spring-snappy
-       gives the user-mandated overshoot. */
+    /* Spring physics on the width grow — the --spring-snappy linear() curve gives
+       the user-mandated overshoot. AX.W05 — the dead apple-spring middle fallback
+       is collapsed away (it never resolved while --spring-snappy is defined); the
+       `ease-out` keyword is the sole no-linear() fallback. */
     transition: width var(--duration-slow, 0.45s)
-        var(--spring-snappy, var(--ease-apple-spring, ease-out));
+        var(--spring-snappy, ease-out);
     will-change: width;
 }
 

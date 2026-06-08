@@ -381,8 +381,11 @@ function onSegmentKeydown(e: KeyboardEvent, seg: TimelineSegment) {
    pop settles the dot releases the transform so the hover scale (and
    any future transform) is unobstructed. */
 .continuous-dot[data-completed] {
+    /* AX.W05 — control register: the check-lands pop is a crisp one-beat morph,
+       so it rides --spring-snappy (~+6.8% overshoot gives the single pop). The
+       inline cubic-bezier fallback is excised — no hand-rolled spring literal. */
     animation: continuous-dot-pop var(--duration-normal, 0.3s)
-        var(--ease-apple-spring, cubic-bezier(0.2, 0.9, 0.25, 1.2));
+        var(--spring-snappy);
 }
 
 @keyframes continuous-dot-check-draw {

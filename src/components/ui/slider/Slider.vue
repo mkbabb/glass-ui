@@ -207,10 +207,16 @@ const isTouchActive = computed(() => touchGate.isActive.value)
     border: none;
     background: var(--slider-thumb-bg, var(--foreground));
     box-shadow: var(--slider-thumb-shadow, none);
+    /* AX.W05 — the in-dock thumb breathes on the DOCK register: a Slider living
+       inside a <GlassDock> shares the dock's morph curve rather than springing
+       on a sibling-snappier curve. The `--slider-thumb-spring` hook defaults to
+       `--spring-dock`; a standalone (non-dock) Slider keeps the dock register
+       too (the felt iOS knob give), and a consumer retunes via the one token. */
     transition:
         background var(--duration-fast) var(--ease-standard),
         box-shadow var(--duration-fast) var(--ease-standard),
-        transform var(--duration-fast) var(--ease-spring);
+        transform var(--duration-fast)
+            var(--slider-thumb-spring, var(--spring-dock));
 }
 
 /* Hover/focus lift a light specular halo — the knob swells rather than
