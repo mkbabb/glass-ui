@@ -99,10 +99,12 @@ function run() {
             );
 
         // 3: tempo is 0 under reduced-motion / pause; the renderer READS the
-        //    substrate's reducedMotion (no second PRM path).
+        //    substrate's reducedMotion (no second PRM path). AX.W16 F0 — the pause is
+        //    now the reactive `v-model:paused` ref, so `paused` reads `paused.value`;
+        //    the assert accepts EITHER form (a flag or the ref read).
         const tempoZeroOnFreeze =
-            /tempo\s*=\s*reduced\s*\|\|\s*paused\s*\?\s*0/.test(src) ||
-            /reduced\s*\|\|\s*paused\s*\?\s*0\s*:\s*config\.tempo/.test(src);
+            /tempo\s*=\s*reduced\s*\|\|\s*paused(\.value)?\s*\?\s*0/.test(src) ||
+            /reduced\s*\|\|\s*paused(\.value)?\s*\?\s*0\s*:\s*config\.tempo/.test(src);
         facts.tempoZeroOnFreeze = tempoZeroOnFreeze;
         facts.readsSubstratePrm = /reducedMotion/.test(src);
         if (!tempoZeroOnFreeze)

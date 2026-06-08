@@ -5,6 +5,15 @@ export type BlobMood = "idle" | "happy" | "curious" | "sleepy" | "excited";
 /** Smin merge variant — `quadratic` (cheap, creased) | `circular` (rounder menisci). */
 export type BlobMerge = "quadratic" | "circular";
 
+/**
+ * Render-quality tier (AX.W16). `'full'` renders the metaball pass at the
+ * DPR-clamped device resolution; `'half'` renders it at HALF the backing-store
+ * resolution and lets the canvas bilinear-upsample to its display box — ~4× fewer
+ * fragments (fill-rate is quadratic in resolution), the soft FBM/AA edge hiding the
+ * interpolation. The blob is the ideal half-res candidate.
+ */
+export type BlobQuality = "full" | "half";
+
 export interface MoodParams {
     orbitSpeedScale: number;
     wobbleScale: number;

@@ -171,12 +171,27 @@ export function useBlobMood() {
         if (raw >= 1) transitioning = false;
     }
 
+    /**
+     * The at-rest predicate the demand-gate quiescence signal reads (AX.W16 F1).
+     * Settled = NOT mid cross-fade AND no pending excited-hold latch. A settled mood
+     * has reached its steady set-point and stays there (the homeostatic decay
+     * REACHES a fixed point within the transition window and stops — it is NOT a
+     * perpetual micro-drift, which would itself defeat the demand gate). The
+     * `excitedHoldMs` latch keeps the loop awake until a fresh click relaxes, so a
+     * blob does not park mid-bounce. READ-ONLY — surfaced for the renderer's
+     * `shouldContinue`, never mutated externally.
+     */
+    function settled(): boolean {
+        return !transitioning && excitedHoldMs <= 0;
+    }
+
     return {
         currentMood: readonly(currentMood) as Readonly<Ref<BlobMood>>,
         params: readonly(params) as Readonly<Ref<MoodParams>>,
         setMood,
         update,
         tick,
+        settled,
     };
 }
 

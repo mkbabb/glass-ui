@@ -33,9 +33,29 @@
 import {
     createCanvasLifecycle,
     type CanvasFrameHooks,
+    type CanvasSuspendReason,
 } from "./createCanvasLifecycle";
 
-export type WebGLSuspendReason = "tab-hidden" | "off-screen" | "manual";
+// AX.W16 F6 — the suspend-reason vocabulary. The lifecycle core
+// (`createCanvasLifecycle`) is the single source of truth; this wrapper alias is
+// MEMBER-EQUAL to it (a build-time `satisfies` assert below pins the equality, so
+// the two can never silently drift). The IO fallback now drives the DISTINCT
+// `'off-screen-io'` key, disjoint from the content-visibility `'off-screen'`, so an
+// IO resume cannot lift a legitimate CV suspend.
+export type WebGLSuspendReason =
+    | "tab-hidden"
+    | "off-screen"
+    | "off-screen-io"
+    | "manual";
+
+// Pin the wrapper alias member-equal to the lifecycle core's union (one-path: a
+// drift between the two fails the build, not silently at runtime).
+const _suspendReasonParity: WebGLSuspendReason extends CanvasSuspendReason
+    ? CanvasSuspendReason extends WebGLSuspendReason
+        ? true
+        : never
+    : never = true;
+void _suspendReasonParity;
 
 /** The per-frame hooks a consumer's `setup(gl)` returns. */
 export interface WebGLCanvasFrame {

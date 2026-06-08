@@ -471,6 +471,12 @@ export const GATES = [
         note: "AX.W00 — the SHARED substrate-paints-non-black readPixels primitive (W07 aurora + W08 blob compose it). The behavioral truth lives in the tests-visual π workspace spec (substrate-paints-color.spec.ts): renders aurora DEFAULT + each preset at t=1 (maxChannel>0 interior floor) + blob BLOB_CONFIG_DEFAULTS over N frames (LOOSE non-flood opaque-fraction band 0.10–0.70). FAIL-CLOSED when the π workspace is installed; befitting-silent SKIP only on a zero-dep runner (device absent). Bite: black the aurora clearColor → RED (maxChannel==0); flood the blob → RED.",
     },
     {
+        id: "proof:blob-integration",
+        cmd: "proof:blob-integration",
+        tags: ["local", "ci"],
+        note: "AX.W16 — the blob's INTEGRATION close: the WCAG-2.2.2 DockBackgroundToggle pause seam actually PARKS the rAF loop + the multi-instance grid stays under the WebGL-context cap + the README 'Exposed' table matches the shipped defineExpose surface. The runtime truth lives in the tests-visual π workspace spec (blob-pause-seam.spec.ts): mounts the REAL interactive <GooBlob> wired to a DockBackgroundToggle via v-model:paused, observes the loop PARK on pause (a screenshot frame-delta — NOT a defineExpose-string regex), counts live WebGL2 contexts, and asserts the README↔code expose consistency. FAIL-CLOSED when the π workspace is installed; befitting-silent SKIP only on a zero-dep runner. Bite (born-RED at HEAD): the pause seam was a no-op (discarded renderer return) → the loop never parked → after-pause frames still differed; the 5-GL grid blew the cap; pause/resume were in the README table but not the expose list.",
+    },
+    {
         id: "proof:dock-animation-live",
         cmd: "proof:dock-animation-live",
         tags: ["local", "ci"],

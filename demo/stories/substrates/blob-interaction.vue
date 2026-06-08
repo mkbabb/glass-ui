@@ -12,6 +12,7 @@ import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { GooBlob } from "../../../src/components/custom/goo-blob";
 import { BLOB_CONFIG_DEFAULTS } from "../../../src/components/custom/goo-blob/types";
 import { defaultBlobColorResolver } from "../../../src/composables/color";
+import { DockBackgroundToggle } from "../../../src/components/custom/dock";
 
 // A reactive config that drives the shipped interaction props — proving they are
 // load-bearing, not orphaned.
@@ -24,6 +25,12 @@ const cfg = reactive({
 
 const clickCount = ref(0);
 const blobRef = ref<InstanceType<typeof GooBlob> | null>(null);
+
+// AX.W16 — the WCAG-2.2.2 pause seam, wired declaratively. `v-model:paused` binds
+// the toggle's pressed state to the GooBlob's pause: the DockBackgroundToggle emits
+// `update:paused`, both `v-model`s share `paused`, and the GooBlob suspends its rAF.
+// This is the live π-lane fixture (the rAF-park observation target).
+const paused = ref(false);
 
 function onClick() {
     clickCount.value++;
@@ -50,14 +57,23 @@ function poke() {
                 <div class="relative aspect-square w-56 overflow-hidden rounded-card">
                     <GooBlob
                         ref="blobRef"
+                        v-model:paused="paused"
                         color="var(--primary)"
                         :color-resolver="defaultBlobColorResolver"
                         :config="cfg"
                         seed="interaction"
+                        data-testid="interactive-blob"
                         @click="onClick"
                     />
                 </div>
                 <div class="flex items-center gap-3 text-sm">
+                    <!-- AX.W16 — the WCAG-2.2.2 pause control, wired to the blob's
+                         v-model:paused. Clicking it freezes the surface (the rAF
+                         parks); the glyph/label swaps Pause↔Play. -->
+                    <DockBackgroundToggle
+                        v-model:paused="paused"
+                        data-testid="blob-pause-toggle"
+                    />
                     <button class="btn-press rounded-pill border px-3 py-1" @click="poke">
                         Poke (impulse)
                     </button>

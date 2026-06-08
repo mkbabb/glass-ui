@@ -1,0 +1,120 @@
+{
+  "wave": "AX.W16",
+  "title": "Blob integration + interaction + performance + README — the WCAG-2.2.2 pause seam made REAL, demand-gate quiescence, multi-instance context cap, one var()-unwrap leaf, the canonical README, + the W15 four-side carry",
+  "status": "dev-complete — headless self-gates GREEN (typecheck + 17 blob/dom units + all structural proof:* gates) AND the LIVE π-lane GREEN on the real Metal GPU (proof:blob-integration 3/0, proof:blob-render 3/0); the orchestrator re-runs the π-lane on the real device as the binding close.",
+  "baseSha": "e32d944",
+  "dependsOn": ["AX.W08", "AX.W15", "AX.W00"],
+  "ratify": {
+    "decision": "v-model:paused (RATIFIED — the recommended path b) — AND pause()/resume() re-exposed (the fallback path a) on TOP of it, because the README worked example + the demo stories + the DockBackgroundToggle JSDoc all carry imperative blob.value?.pause() call sites that must keep working.",
+    "rationale": "The v-model:paused prop OWNS the default (structurally un-droppable — a discarded renderer return cannot recur), matching the AV.W7 G2 @update:paused contract the DockBackgroundToggle was built against + Aurora's useAurora pause/resume parity. The imperative pause()/resume() handles flip the SAME paused model (they emit update:paused), so there is NO parallel pause path — one seam, two affordances. The renderer watches the resolved `paused` ref and suspends/resumes the EXISTING substrate 'manual' lifecycle reason.",
+    "publicSurfaceDelta": "GooBlob gains a `paused` prop (v-model) + a `quality` prop + an `update:paused` emit; defineExpose adds pause/resume/pulse (pulse was already a method, now exposed). types.ts adds the BlobQuality union. No length/geometry/smoothK/POS_SCALE constant touched (W08/W15 own the distance regime, §4 note 13)."
+  },
+  "redWitnessesAtHead": {
+    "W1_pauseSeamDead_blocker": {
+      "claim": "GooBlob.vue:94 called useMetaballRenderer({...}) and DISCARDED the return; :148 defineExpose({nudge,setMood,pulse,currentMood}) omitted pause/resume though the renderer returned them. So blob.value.pause() was undefined at every call site — the DockBackgroundToggle JSDoc seam + the README table + the README worked example ALL documented a seam that did not exist; the ?.-optional-chain silently swallowed the undefined (a pause button that does nothing with ZERO error).",
+      "verifiedLive": "proof:blob-integration's README-vs-code arm: at HEAD the 'Exposed' table documents `pause` but the defineExpose surface does not → RED (missing:['pause']). After the wave: missing:[] (GREEN). The pause-park arm RED at HEAD (pause undefined → the loop never parks)."
+    },
+    "W2_demandGateNoOp_major": {
+      "claim": "useMetaballRenderer.ts:511-520 shouldContinue(){return !paused} — the rAF rescheduled FOREVER unless manually paused (the :512 comment 'the blob is perpetually animated'). An idle ambient blob burned a full 60fps of FBM×3-twice + OKLCh-per-fragment indefinitely, onscreen, at rest. The substrate built an entire demand gate the blob defeated.",
+      "verifiedLive": "Confirmed by code-read at HEAD + the no-hover idle measurement (a resumed-but-idle blob now reads interior frame-delta 0.000 — it PARKS, where HEAD reran forever)."
+    },
+    "W3_multiInstanceContextCap_major": {
+      "claim": "Each <GooBlob> grabs its own webgl2 context (useWebGLCanvas.ts:110). The goo-blob story mounted 4 grid + 1 live-color = 5 GL contexts, blob-mood 2, and the demo navigates between them; Chromium caps ~8-16/page (commit 9427536's live incident). The IntersectionPause park stops the rAF but does NOT release the context.",
+      "verifiedLive": "proof:blob-integration's context-count arm counts the live WebGL2 contexts on the goo-blob page; the re-cast (2 GL heroes + WatercolorDot static register) stays under the cap (GREEN)."
+    },
+    "W4_duplicatedVarUnwrap_minorDRY": {
+      "claim": "GooBlob.vue:75-88 resolveColorString AND useMetaballRenderer.ts:159-173 resolveRimColor BOTH did el.style.color + getComputedStyle to un-wrap var(--token) — the renderer reached BACK into the canvas element to do a getComputedStyle, coupling the DOM-free renderer (the AT.W0 inv-K-3 seam) to a DOM read it was built to avoid.",
+      "verifiedLive": "grep getComputedStyle found it in BOTH at HEAD. After the wave: ONE createTokenColorResolver leaf (composables/dom/useResolveTokenColor.ts); the SFC un-wraps every color (base + rim + every palette stop) BEFORE handing concrete strings to the renderer; resolveRimColor + rimCache DELETED; getComputedStyle appears EXACTLY ONCE (in the leaf). proof:blob-value-free dist arm: 0 value.js refs in dist/goo-blob.js."
+    },
+    "W5_readmePlannedLandedDrift_minor": {
+      "claim": "README:120 listed pause/resume in the Exposed table but NOT in defineExpose; conversely README marked deriveBlobPalette/iridescence/SSS/composed-rest-pose 'Planned — AW' though they SHIPPED. The README drifted both directions because no live audit gated it against the code.",
+      "verifiedLive": "The README-vs-code defineExpose-consistency probe FAILED at HEAD on pause/resume (missing:['pause']); the planned→landed sweep flips every shipped section; the consistency probe is now a fail-CLOSED gate arm so it cannot drift again."
+    }
+  },
+  "arms": {
+    "arm1_pauseSeam": "v-model:paused on GooBlob (+ pause()/resume() re-exposed flipping the same model). The renderer watches the resolved `paused` ref → suspend('manual')/resume('manual') on the EXISTING substrate machinery. NO parallel pause path.",
+    "arm2_quiescence": "Replaced shouldContinue(){return !paused} with a REAL at-rest predicate: live IFF !pointer.atRest() || !mood.settled() || satellites.anyTransitioning(). When all settle the loop PARKS; scheduleQuiescenceWake() arms a setTimeout for the next satellite phase boundary (satellites.msUntilNextPhase / tempo) so it re-renders the merge/emerge event on time. Wired quality:'full'|'half' (half = HALF backing-store resolution + free canvas bilinear-upsample, ~4× fragment savings). NEW predicates: useBlobMood.settled(), useBlobPointer.atRest(), useBlobSatellites.anyTransitioning()/msUntilNextPhase() — all READ-ONLY seams over EXISTING state (no speculative config).",
+    "arm3_contextCap": "Re-cast goo-blob.vue (5 GL → 2 GL heroes + a WatercolorDot static color register) + documented the tier cascade (WebGL2 SDF hero → WatercolorDot ambient → static poster). blob-mood.vue keeps 2 (both load-bearing). blob-interaction.vue wires the DockBackgroundToggle pause seam (the live π fixture).",
+    "arm4_resolveTokenColorLeaf": "NEW src/composables/dom/useResolveTokenColor.ts (createTokenColorResolver → cached var()-unwrap via one getComputedStyle cascade read); re-exported from composables/dom/index.ts. The renderer's resolveRimColor + rimCache DELETED; it now receives concrete rim + paletteStops refs from the SFC and rides the SAME resolveColor (value.js) cache. The interface is named TokenColorUnwrapper (NOT TokenColorResolver — the existing useTokenColor.ts owns that name; a deliberate rename, not a collision).",
+    "arm5_perfTrim": "Pre-FBM bounding early-out in metaball.frag.ts: a TRANSPARENT WRITE (not GLSL discard — discard kills the mobile tiled-renderer fast path) when dot(uv,uv) > uMaxReach², BEFORE the two 3-octave FBM evals + the OKLCh round-trip. uMaxReach is CPU-computed PADDED by the satellite envelope (orbit×1.2×(1+ecc) + worst wobble + pertY + satRadius), the squash-stretched body, the smin band, the noise amp, ×POS_SCALE ×1.25 headroom (≈0.544 uv vs the worst painted reach ≈0.435 uv — never clips the wet meniscus). The 4-tap surfaceNormal gate is a NO-OP: W15 already landed the analytic-gradient normal (surfaceNormalFromGrad reads sceneDistG directly, no 4-tap to gate). The oversize-canvas trim is the maxReach cull (the corner triangles beyond 0.544 uv skip the field).",
+    "arm6_offScreenIo": "createCanvasLifecycle.ts CanvasSuspendReason gains the DISTINCT 'off-screen-io' key; the blob's IntersectionObserver fallback writes 'off-screen-io' (not 'off-screen'), disjoint from the content-visibility 'off-screen' — an IO resume can no longer lift a legitimately-skipped CV suspend (the one-writer-per-reason invariant is literally true). useWebGLCanvas.ts WebGLSuspendReason re-states the union member-equal to the lifecycle core (pinned by a build-time satisfies-parity const).",
+    "arm7_readme": "The canonical-shape README: the Props table (color/colorResolver/config/seed/paused/quality, accurate — removed the phantom `size` prop), the Exposed table true to defineExpose, the Emits table (+update:paused), the planned→landed sweep (every 'Planned — AW' flipped to shipped: deriveBlobPalette, iridescence/SSS, composed rest pose, quality axis, mood-from-state), the demand-gate quiescence + the half-res + the research-backed WebGPU/raymarch non-goals documented, the BlobConfig defaults block re-synced to types.ts. README-vs-code consistency is a fail-CLOSED gate arm."
+  },
+  "criticalRuntimeFinding_falseParkBug": {
+    "theW01Lesson": "The headless self-gates (typecheck + units + structural) were ALL GREEN, but the LIVE π-lane (proof:blob-integration on the real Metal GPU) caught a real runtime bug: a QUIESCED (demand-gate-parked) blob was FROZEN to interaction — a hover/click set the lean/pulse state on a parked rAF that never re-rendered. The click bounce did not render (running click-bounce body delta read 0.0000 where it should read ≈0.58).",
+    "rootCause": "The quiescence gate parked the loop, but useBlobPointer.onPointerMove/click only updated refs — NOTHING called canvasHandle.wake(), so the parked loop never re-armed on interaction (the exact 'false-park / frozen-then-jerk' hazard the SOTA research [22][14] flags).",
+    "fix": "useBlobPointer.setActivityHandler(cb) — a settable hook the RENDERER registers as () => canvasHandle?.wake(); onPointerMove + click fire it. The loop is now event-scheduled (parks at rest, wakes on the satellite phase scheduler) AND interaction-responsive (wakes instantly on hover/click). A paused blob's interaction wake is a no-op (isRunning() is false under the 'manual' suspend), so pause still beats interaction.",
+    "verifiedLive": "After the fix proof:blob-integration is 3/0 GREEN: running click-bounce ≥ 0.05, paused click-bounce ≤ 0.01, resumed click-bounce ≥ 0.05."
+  },
+  "quiescencePredicate": {
+    "definition": "shouldContinue() = !pointer.atRest() || !mood.settled() || satellites.anyTransitioning()",
+    "atRest_pointer": "no active cursor AND |springVel| < 0.01 on both axes AND trail collapsed (trailLen===0) AND pulse oscillator zeroed",
+    "settled_mood": "NOT mid cross-fade AND no excited-hold latch (the homeostatic decay REACHES a fixed point and stops — not a perpetual micro-drift)",
+    "anyTransitioning_satellites": "ANY satellite is mid-merge or mid-emerge (orbiting/absorbed are the stable resting phases the loop may park through)",
+    "wake": "scheduleQuiescenceWake() arms setTimeout(canvasHandle.wake, msUntilNextPhase/tempo) on park; interaction wakes via setActivityHandler; color/quality changes wake via watchers. No false-park: every motion source is ORed; the parked orbit re-renders on the next phase edge."
+  },
+  "w15Carry_fourSideReconciliation": {
+    "groundTruth": "At HEAD e32d944 the original blob-render.spec.ts FOUR-SIDE assertion measured worst-edge 0.500 at FOOTPRINT_INSET and failed the 0.35 ceil. Re-measured live: that 0.500 is an INTERMITTENT satellite PEEK (the satellite orbit is 8-14s; a short sample reads 0.000, a 9s driven sweep reads 0.523). The orbiting satellites INTENTIONALLY overflow the footprint — the canvas is CSS-sized 160% of the wrapper with overflow:visible PRECISELY for this. It is a PEEK, NOT a body clip.",
+    "reconciliation": "RE-DERIVED the four-side gate ceil to the design's intentional-overflow budget (option 2 of the wave spec): FOOTPRINT_PEEK_MAX_FRAC 0.35 → 0.6 (bounds the measured ≈0.52 peek). A BODY clip is distinguished by the EXISTING battery — the COVERAGE ceil (a flood reads ≈0.74), the centre-vs-corner GRADIENT (a slab has none), and the painted CENTROID staying centred (a one-sided clip shifts it). The LITERAL CANVAS edge is NOT sampled: the goo-blob cells are rounded-card overflow-hidden, so a literal-edge ring reads the rounded-card CLIP border (a fixed ≈0.5 dark fraction INVARIANT to the blob — the exact confound the W08 modal-bg + interior-inset design avoids). The wrapper FOOTPRINT ring sits INSIDE that clip on the clean cream field.",
+    "rejectedFirstAttempt": "An initial reconciliation added a CANVAS_EDGE_INSET=0.02 'hard clip' ring; the live measurement proved it reads the rounded-card clip border (0.558 even at threshold 100, invariant to the blob) — a re-introduction of the exact confound W08 designed around. Removed. The drop-shadow + rounded-card clip make any literal-canvas-edge ring useless; the body containment is proven by coverage/gradient/centroid.",
+    "preserved": "The lit dome (std ≥ 9), silhouette CV (≥ 0.015), coverage in band, hover-flick lean (≥ 0.012), both-mode legibility — all VERIFIED unchanged by the W16 edits (proof:blob-render 3/0 GREEN on the real Metal GPU)."
+  },
+  "filesChanged": [
+    "src/components/custom/goo-blob/GooBlob.vue — v-model:paused + quality props + update:paused emit; createTokenColorResolver leaf un-wraps base+rim+palette; pass paused/quality/rimColor/paletteStops refs to the renderer; defineExpose adds pause/resume/pulse",
+    "src/components/custom/goo-blob/composables/useMetaballRenderer.ts — quiescence shouldContinue + scheduleQuiescenceWake + setActivityHandler wake; quality half-res resize; uMaxReach upload; DELETE resolveRimColor+rimCache (DOM-free); off-screen-io IO key; watch(paused)→suspend/resume; rim+palette from pre-resolved refs",
+    "src/components/custom/goo-blob/composables/useBlobMood.ts — settled() at-rest predicate (READ-ONLY)",
+    "src/components/custom/goo-blob/composables/useBlobPointer.ts — atRest() predicate + setActivityHandler(cb) wake hook (fired on move+click)",
+    "src/components/custom/goo-blob/composables/useBlobSatellites.ts — anyTransitioning() + msUntilNextPhase() scheduler seams (READ-ONLY)",
+    "src/components/custom/goo-blob/types.ts — BlobQuality union (NO length/geometry/smoothK edit)",
+    "src/components/custom/goo-blob/shaders/metaball.frag.ts — uMaxReach uniform + the pre-FBM bounding transparent-write early-out (NO field-shape change)",
+    "src/composables/dom/useResolveTokenColor.ts — NEW: createTokenColorResolver (the one cached var()-unwrap leaf)",
+    "src/composables/dom/index.ts — re-export the new leaf",
+    "src/composables/glass/webgl/createCanvasLifecycle.ts — CanvasSuspendReason gains 'off-screen-io' (F6)",
+    "src/composables/glass/webgl/useWebGLCanvas.ts — WebGLSuspendReason member-equal to the lifecycle core (+ a satisfies-parity pin) [in-bounds-adjacent: required by F6 for the renderer to call suspend('off-screen-io')]",
+    "src/components/custom/goo-blob/README.md — the canonical-shape planned→landed sweep + the true defineExpose/Props/Emits tables + the quiescence/quality/contained-default + WebGPU/raymarch non-goal docs",
+    "demo/stories/substrates/goo-blob.vue — re-cast 5 GL → 2 GL heroes + WatercolorDot static register",
+    "demo/stories/substrates/blob-interaction.vue — wire the DockBackgroundToggle v-model:paused pause seam (the live π fixture)",
+    "tests-visual/blob-pause-seam.spec.ts — NEW: the born-RED→GREEN π spec (rAF-park click-bounce observation + context-count bound + README-vs-code consistency)",
+    "tests-visual/blob-render.spec.ts — the W15 four-side carry reconciliation (peek budget re-derived; literal-canvas-edge ring removed)",
+    "scripts/proof-blob-integration.mjs — NEW: the proof:blob-integration gate driver (π-lane, fail-CLOSED)",
+    "scripts/proof-offscreen-pause.mjs — F4 regex accepts the new off-screen-io key (in-bounds-adjacent: required by F6)",
+    "scripts/proof-blob-tempo-suppression.mjs — the tempo-freeze regex accepts paused.value (in-bounds-adjacent: required by the F0 reactive paused ref)",
+    "package.json — register proof:blob-integration",
+    "scripts/gates.mjs — register the proof:blob-integration row (local+ci)"
+  ],
+  "selfGatesHeadless": {
+    "typecheck": "GREEN (vue-tsc --noEmit)",
+    "build": "GREEN (vite bundle + vue-tsc dts emit; 62 subpath dts flattened)",
+    "blobAndDomUnits": "17/17 PASS (blob-color-equivalence + resolveColor + useTokenColor)",
+    "proof_gate_script_parity": "PASS (proof-blob-integration.mjs registered; no orphan/dangling/ghost)",
+    "proof_blob_value_free": "PASS (dist/goo-blob.js 0 value.js refs — renderer DOM-free in the dist)",
+    "proof_webgl_substrate_single": "PASS (the substrate carries the suspend reasons + shouldContinue + restore)",
+    "proof_offscreen_pause": "PASS (F4 blob IO seam + the off-screen-io key)",
+    "proof_blob_tempo_suppression": "PASS (tempo=0 under paused.value/PRM; no parallel matchMedia)",
+    "proof_blob_interaction_prm": "PASS",
+    "proof_blob_mood_resolved": "PASS"
+  },
+  "liveVerify_piLane": {
+    "ranOnRealMetalGPU": true,
+    "proof_blob_integration": "3/0 PASS — pause parks the rAF (click-bounce ≈0.58 running, 0.000 paused, ≈0.58 resumed), the multi-instance context count is bounded, the README↔code defineExpose is consistent",
+    "proof_blob_render": "3/0 PASS — the contained lit living droplet + the W15 four-side carry reconciliation (footprint peek bounded, body contained); the lit dome/silhouette/lean/both-mode legibility preserved",
+    "orchestratorReVerify": "The orchestrator re-runs proof:blob-integration + proof:blob-render on the real device + the VISUAL-TRUTH live Playwright audit (pause-freezes + idle-throttle + grid-renders) across ≥3 viewports × light/dark as the binding close criterion."
+  },
+  "valueJsRepatriation_closeCriterion": {
+    "routedTo": "AX.W34",
+    "note": "value.js carries a divergent LOCAL goo-blob fork (demo/@/components/custom/goo-blob/ — GooBlob.vue + a 343-line useMetaballRenderer with its own cssColorToRgb value.js path) in 3 mounts (HeroBlob/BlobPane/color-picker App) + a local WatercolorDot coupled to a global <SvgFilters> singleton in 9 sites. Now that W08/W15/W16 land the contained, lit, integrated, performant droplet, value.js DELETES its fork → @mkbabb/glass-ui/goo-blob (wiring value.js color through the injected ColorResolver seam — value.js IS the color source, a clean seam) AND its WatercolorDot+<SvgFilters> → @mkbabb/glass-ui/watercolor-dot. W16 writes NO value.js source; it READIES the /goo-blob surface (consumer-ready: the injected ColorResolver, the v-model:paused seam, BLOB_CONFIG_DEFAULTS, the quality axis) and records the named close-criterion. The adoption edit lands in W34 AFTER the AX cut publishes."
+  },
+  "w26SplitCoordination": {
+    "note": "useMetaballRenderer.ts is 714 lines at wave close (was 572 at HEAD, ALREADY RED on proof:no-god-module's 500 ceil — a BORN-RED gate W26 owns). Arm 4 DELETED resolveRimColor+rimCache (shrinking it), but the W16 integration logic (quiescence predicate, the wake scheduler, the quality resize, the maxReach upload, the paused/quality/color watchers) grew it net. The split into metaball-program.ts / uploadMetaballUniforms.ts is W26's job (W26 dependsOn W16); W16 leaves the file in a CLEAN, split-ready shape — the DOM-free color boundary + the pause-capture + the quiescence seams are the FINAL model W26 carves, not mid-churn. proof:no-god-module stays RED on this file (+ constellationField.ts 510 + GlassDock.vue 505, both pre-existing) until W26 lands."
+  },
+  "divergences": [
+    "useWebGLCanvas.ts (OUT of strict FileBounds, in-bounds-ADJACENT): F6 requires the WebGL wrapper's public suspend/resume type to carry the new 'off-screen-io' key, else the renderer cannot call suspend('off-screen-io') (typecheck RED). The wrapper's WebGLSuspendReason was a divergent literal duplicate of the lifecycle core's union; restated it member-equal + pinned with a satisfies-parity const. Idiomatic gestalt fix per AX.md §6.1.",
+    "scripts/proof-offscreen-pause.mjs (OUT of FileBounds): F6's 'off-screen-io' key broke the gate's /[\"']off-screen[\"']/ regex (the blob arm RED). Broadened to /[\"']off-screen(-io)?[\"']/ — keeps the gate's semantic intent (the blob wires the IO off-screen seam) while accommodating the distinct reason key. One-token gate-fidelity fix.",
+    "scripts/proof-blob-tempo-suppression.mjs (OUT of FileBounds): the F0 reactive `paused` ref made the renderer read `paused.value`, breaking the gate's /paused\\s*\\?/ regex. Broadened to /paused(\\.value)?\\s*\\?/ — accepts a flag or the ref read.",
+    "tests-visual/blob-render.spec.ts four-side reconciliation: the FIRST attempt added a literal-canvas-edge 'hard clip' ring; live measurement proved it reads the rounded-card cell clip (a confound W08 designed around), so it was removed and the footprint peek ceil re-derived to the intentional-overflow budget instead."
+  ],
+  "blockers": [
+    "proof:no-god-module stays RED on useMetaballRenderer.ts (714 lines > 500) — BORN-RED at HEAD (572) and explicitly W26's split deliverable (W26 dependsOn W16). NOT a W16-introduced regression; the file is left split-ready. constellationField.ts (510) + GlassDock.vue (505) are also pre-existing-RED on the same gate (other waves).",
+    "No new devDeps added; no npm install run. The π workspace's pngjs devDep was already present (W00). No out-of-bounds source touched (no length/geometry/POS_SCALE constant; no useMetaballRenderer god-module CARVE; no value.js source; no aurora WGSL/WEBGPU surface; no shader field-shape change beyond the gated transparent early-out)."
+  ]
+}

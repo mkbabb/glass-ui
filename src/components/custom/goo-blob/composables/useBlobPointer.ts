@@ -37,6 +37,17 @@ export function useBlobPointer(el: Ref<HTMLElement | null>) {
     const active = ref(false);
     const pulseRef = ref(0);
 
+    // Fired on every interaction (pointer move + click) — the RENDERER registers a
+    // handler that calls `canvasHandle.wake()` so an interaction RE-ARMS the
+    // demand-gate-parked loop (AX.W16 F1). Without it a quiesced blob would be FROZEN
+    // to interaction (the false-park hazard): the pulse/lean would set state on a
+    // parked loop that never renders. Registered late (the renderer wires it after the
+    // canvas handle exists), so it is a settable hook, not a constructor arg.
+    let activityHandler: (() => void) | null = null;
+    function setActivityHandler(cb: () => void): void {
+        activityHandler = cb;
+    }
+
     let rawX = 0;
     let rawY = 0;
 
@@ -77,6 +88,7 @@ export function useBlobPointer(el: Ref<HTMLElement | null>) {
         rawX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
         rawY = ((e.clientY - rect.top) / rect.height) * 2 - 1;
         active.value = true;
+        activityHandler?.(); // re-arm the demand-gate-parked loop so the lean/follow renders
     }
 
     function onPointerLeave() {
@@ -186,6 +198,7 @@ export function useBlobPointer(el: Ref<HTMLElement | null>) {
     function click(amp: number) {
         pulseVel += amp * PULSE_OMEGA;
         clickPending = true;
+        activityHandler?.(); // re-arm the parked loop so the click bounce renders
     }
 
     /** Drain the one-shot click flag — true once after each `click()` (W11.c mood). */
@@ -218,6 +231,27 @@ export function useBlobPointer(el: Ref<HTMLElement | null>) {
         trailLen = 0;
     }
 
+    /**
+     * The at-rest predicate the demand-gate quiescence signal reads (AX.W16 F1).
+     * The interaction layer is at rest when ALL motion sources have settled:
+     *   - the pointer is NOT active (not tracking a live cursor),
+     *   - the follow spring has settled (`|v| < eps` on BOTH axes),
+     *   - the trail has fully collapsed (`trailLen === 0`),
+     *   - the click pulse oscillator is zeroed (`pulse === 0`).
+     * ANY live source returns false — the OR-of-motion-sources guard the SOTA
+     * research [22][14] flags: park ONLY when nothing is changing, never mid-gesture.
+     * READ-ONLY — surfaced for the renderer's `shouldContinue`, never mutated.
+     */
+    const SPRING_REST_EPS = 0.01; // normalized-units/s velocity floor
+    function atRest(): boolean {
+        if (active.value) return false;
+        if (Math.abs(springX.velocity) > SPRING_REST_EPS) return false;
+        if (Math.abs(springY.velocity) > SPRING_REST_EPS) return false;
+        if (trailLen > 0) return false;
+        if (pulse !== 0 || pulseVel !== 0) return false;
+        return true;
+    }
+
     return {
         pointer: readonly(pointer),
         velocity: readonly(velocity),
@@ -231,6 +265,8 @@ export function useBlobPointer(el: Ref<HTMLElement | null>) {
         click,
         consumeClick,
         rest,
+        atRest,
+        setActivityHandler,
     };
 }
 

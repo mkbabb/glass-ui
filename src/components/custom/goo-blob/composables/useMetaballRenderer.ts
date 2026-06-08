@@ -71,23 +71,45 @@ const UNIFORM_NAMES = [
     "uTrailCount",
     "uVelocity",
     "uStretch",
+    "uMaxReach",
 ] as const;
 
 type UniformName = (typeof UNIFORM_NAMES)[number];
 
 export interface UseMetaballRendererOptions {
     canvasRef: Ref<HTMLCanvasElement | null>;
+    /** The base color, ALREADY un-wrapped to a CONCRETE string by the SFC (DOM-free renderer). */
     color: Ref<string>;
+    /** The Fresnel rim color, ALREADY un-wrapped to a CONCRETE string by the SFC. */
+    rimColor: Ref<string>;
+    /** The multi-stop palette, every entry ALREADY un-wrapped to a CONCRETE string by the SFC. */
+    paletteStops: Ref<string[]>;
     mood: BlobMoodSystem;
     pointer: BlobPointer;
     satellites: BlobSatelliteSystem;
     config: BlobConfig;
     /**
-     * The injected color seam (DEC-AT-2). Resolves a CSS color string to a GAMMA-
-     * sRGB triple in [0,1] fed straight into the shader's base-color uniform — the
-     * faithful AU.W7 lift paints gamma. REQUIRED: a no-resolver mount throws (the
+     * Reactive paused flag (AX.W16 F0). The `v-model:paused` seam OWNS this — the
+     * renderer suspends/resumes the lifecycle's `'manual'` reason on a transition,
+     * binding the EXISTING substrate park machinery (NO parallel pause path). This
+     * is the `DockBackgroundToggle` WCAG-2.2.2 contract made structurally un-droppable.
+     */
+    paused: Ref<boolean>;
+    /**
+     * Render-quality axis (AX.W16 F1). `'full'` (default) renders at the DPR-clamped
+     * device resolution; `'half'` renders the metaball pass at HALF internal resolution
+     * — ~4× fragment savings on weak GPUs (the soft FBM/AA edge hides the box-down +
+     * bilinear-up interpolation). The blob is the IDEAL half-res candidate.
+     */
+    quality: Ref<"full" | "half">;
+    /**
+     * The injected color seam (DEC-AT-2). Resolves a CONCRETE CSS color string to a
+     * GAMMA-sRGB triple in [0,1] fed straight into the shader's base-color uniform —
+     * the faithful AU.W7 lift paints gamma. REQUIRED: a no-resolver mount throws (the
      * loud failure, not a silent gray) instructing the consumer to pass
-     * `defaultBlobColorResolver` from `@mkbabb/glass-ui/color` (or their own).
+     * `defaultBlobColorResolver` from `@mkbabb/glass-ui/color` (or their own). The
+     * renderer hands it ONLY concrete strings (the SFC un-wraps `var(--token)` first),
+     * so the renderer stays DOM-free per the inv-K-3 seam.
      */
     colorResolver: ColorResolver;
 }
@@ -109,8 +131,19 @@ export interface UseMetaballRendererOptions {
  * `colorResolver`; the value.js 1×1-canvas DOM probe is gone (the seam replaces it).
  */
 export function useMetaballRenderer(options: UseMetaballRendererOptions) {
-    const { canvasRef, color, mood, pointer, satellites, config, colorResolver } =
-        options;
+    const {
+        canvasRef,
+        color,
+        rimColor,
+        paletteStops,
+        mood,
+        pointer,
+        satellites,
+        config,
+        paused,
+        quality,
+        colorResolver,
+    } = options;
 
     if (typeof colorResolver !== "function") {
         throw new Error(
@@ -137,6 +170,26 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
     // clock, so a tempo change (pause / PRM) freezes motion without a discontinuity.
     let simTimeMs = 0;
 
+    // AX.W16 F1 — the event-scheduled-loop wake timer. When `shouldContinue` parks an
+    // idle blob, it arms ONE timer for the next satellite phase boundary; firing it
+    // calls `canvasHandle.wake()` to re-arm the rAF for the merge/emerge event. The
+    // SATELLITE PHASE CLOCK advances at `tempo × realtime`, so the tempo-integrated
+    // `msUntilNextPhase` is converted to wall-clock ms by dividing by tempo. A blob
+    // with no satellites (`Infinity`) schedules nothing — it stays parked until an
+    // interaction or color change wakes it.
+    let wakeTimer: ReturnType<typeof setTimeout> | null = null;
+    function clearWakeTimer(): void {
+        if (wakeTimer !== null) {
+            clearTimeout(wakeTimer);
+            wakeTimer = null;
+        }
+    }
+
+    // The per-context `resize` closure, hoisted so a `quality` flip can re-size the
+    // backing store WITHOUT a CSS-size change (the substrate's ResizeObserver only
+    // fires on a CSS-box change). Re-assigned on every `setup()` (arm + restore).
+    let resizeBackingStore: (() => void) | null = null;
+
     // Memoise the resolver: the consumer cycles through a handful of stable color
     // strings, so the resolve runs once per unique color rather than every frame.
     // Cap defensively against unbounded growth from synthesized values.
@@ -150,43 +203,63 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
         return rgb;
     }
 
-    // The rim color (W9.b) may be a `var(--token)` the ColorResolver (value.js)
-    // cannot parse. Mirror GooBlob.vue's cascade trick: paint the string onto the
-    // canvas element's `color` and read back the browser-resolved `rgb(...)`, then
-    // feed THAT to the resolver. A literal (no `var()`) passes straight through.
-    // Cached so the cascade read runs once per unique rim string.
-    const rimCache = new Map<string, [number, number, number]>();
-    function resolveRimColor(css: string, el: HTMLElement | null): [number, number, number] {
-        const cached = rimCache.get(css);
-        if (cached) return cached;
-        let concrete = css;
-        if (css.includes("var(") && typeof window !== "undefined" && el) {
-            const prev = el.style.color;
-            el.style.color = css;
-            concrete = getComputedStyle(el).color || css;
-            el.style.color = prev;
-        }
-        const rgb = colorResolver(concrete);
-        if (rimCache.size > 64) rimCache.clear();
-        rimCache.set(css, rgb);
-        return rgb;
-    }
+    // NO `resolveRimColor` / `rimCache` here (AX.W16 F4). The renderer is DOM-free:
+    // the SFC un-wraps EVERY `var(--token)` (base + rim + palette) to a concrete
+    // string via the ONE `resolveTokenColor` leaf BEFORE handing it here, so
+    // `resolveColor` above (the value.js seam) only ever sees concrete strings and
+    // `getComputedStyle` appears EXACTLY ONCE in the blob (in the SFC). The rim +
+    // palette ride the SAME `resolveColor` cache as the base color.
 
     let canvasHandle: ReturnType<typeof createWebGLCanvas> | null = null;
-    let paused = false;
 
-    // AV.W7 F4 — wire the RAF through the viewport-intersection seam so a blob
-    // scrolled out of the viewport (the `rootMargin:200px` warm band) parks its
+    /**
+     * Arm the event-scheduled wake for the next satellite phase boundary (AX.W16 F1).
+     * Called by `shouldContinue` exactly when it is about to PARK an idle blob. The
+     * satellite phase clock advances at `tempo × realtime`, so the tempo-integrated
+     * `msUntilNextPhase` divides by tempo to get the wall-clock delay; a non-positive
+     * or infinite delay (no satellites / a transition already due) schedules nothing
+     * (the very-next-frame check the substrate already did decides re-arm). The timer
+     * is single (cleared + re-armed) so a re-park never stacks duplicate wakes.
+     */
+    function scheduleQuiescenceWake(): void {
+        clearWakeTimer();
+        const tempo = config.tempo;
+        if (tempo <= 0) return; // paused / PRM-driven: the substrate owns the re-arm
+        const simMs = satellites.msUntilNextPhase(simTimeMs);
+        if (!Number.isFinite(simMs)) return; // no satellites → nothing scheduled
+        const wallMs = simMs / tempo;
+        if (wallMs <= 0) return; // already due — the substrate reschedule handles it
+        wakeTimer = setTimeout(() => {
+            wakeTimer = null;
+            canvasHandle?.wake();
+        }, wallMs);
+    }
+
+    // AX.W16 F1 — wire the pointer's interaction signal to `wake()` so an interaction
+    // RE-ARMS a demand-gate-parked loop. Without this a quiesced blob would be FROZEN to
+    // interaction: a hover/click would set the lean/pulse on a parked rAF that never
+    // renders (the false-park hazard). The closure reads the live `canvasHandle`.
+    pointer.setActivityHandler(() => canvasHandle?.wake());
+
+    // AV.W7 F4 / AX.W16 F6 — wire the RAF through the viewport-intersection seam so a
+    // blob scrolled out of the viewport (the `rootMargin:200px` warm band) parks its
     // loop; this is the IntersectionObserver fallback for engines without
     // `contentvisibilityautostatechange` (the substrate's F1 content-visibility
     // path). The substrate owns `tab-hidden` itself, so `pauseWhenHidden:false`
-    // keeps exactly one writer per reason — the IO drives ONLY `off-screen`.
-    // Both gate the same `isRunning()` set, ORed.
+    // keeps exactly one writer per reason.
+    //
+    // The IO writes its OWN `'off-screen-io'` reason key, DISTINCT from the
+    // content-visibility path's `'off-screen'` (the substrate, F1). The two are
+    // SEPARATE writers: if both wrote `'off-screen'`, an IO `resume` could lift a
+    // legitimately-skipped CV suspend (and vice-versa). With distinct keys the loop
+    // runs only when BOTH agree the surface is visible (the suspend `Set` is empty)
+    // — the "one writer per reason" invariant is now literally true. Both gate the
+    // same `isRunning()` set, ORed.
     useIntersectionPause(
         canvasRef,
         {
-            pause: () => canvasHandle?.suspend("off-screen"),
-            resume: () => canvasHandle?.resume("off-screen"),
+            pause: () => canvasHandle?.suspend("off-screen-io"),
+            resume: () => canvasHandle?.resume("off-screen-io"),
         },
         { rootMargin: "200px", pauseWhenHidden: false },
     );
@@ -268,12 +341,21 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                 function resize() {
                     // AV.W7 F6 — the DPR≤2 clamp is the named `AV_DPR_MAX` ceiling.
                     const dpr = resolveBudgetDpr();
+                    // AX.W16 F1 — the `quality:'half'` axis renders the metaball pass at
+                    // HALF the backing-store resolution. The CSS display size (the 160%
+                    // wrapper canvas) is UNCHANGED, so the browser bilinear-upsamples the
+                    // smaller drawing buffer to the display box for FREE — ONE implicit
+                    // blit, no FBO chain. ~4× fragment savings (quadratic in resolution);
+                    // the soft FBM/AA edge hides the interpolation (the blob is the ideal
+                    // half-res candidate). The down/up grids align (an integer half-step),
+                    // avoiding the half-pixel shift a non-aligned box-down would leave.
+                    const qScale = quality.value === "half" ? 0.5 : 1.0;
                     // Size from the rendered element, not config — the blob fills its
                     // container.
                     const cssW = canvas.clientWidth || config.canvasSize;
                     const cssH = canvas.clientHeight || config.canvasSize;
-                    const w = Math.round(cssW * dpr);
-                    const h = Math.round(cssH * dpr);
+                    const w = Math.max(1, Math.round(cssW * dpr * qScale));
+                    const h = Math.max(1, Math.round(cssH * dpr * qScale));
                     if (canvas.width !== w || canvas.height !== h) {
                         canvas.width = w;
                         canvas.height = h;
@@ -299,7 +381,7 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     // accumulated value). The SUBSTRATE owns PRM + the pause; here we
                     // only READ them to drive tempo (no parallel matchMedia).
                     const reduced = canvasHandle?.reducedMotion ?? false;
-                    const tempo = reduced || paused ? 0 : config.tempo;
+                    const tempo = reduced || paused.value ? 0 : config.tempo;
                     const stepMs = tempo * dtMs; // the tempo-scaled integration step
                     simTimeMs += stepMs;         // the tempo-integrated motion clock
 
@@ -342,16 +424,18 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     gl.uniform3f(U.uBaseColor, rgb[0], rgb[1], rgb[2]);
 
                     // Multi-stop palette (W11.b) — 2-4 in-family stops. EMPTY falls
-                    // back to uBaseColor (uStopCount <= 1). Stops resolve through the
-                    // SAME ColorResolver seam (var()-cascade un-wrap + value.js).
-                    const stops = config.paletteStops;
+                    // back to uBaseColor (uStopCount <= 1). The stops arrive ALREADY
+                    // un-wrapped to concrete strings from the SFC (AX.W16 F4), so they
+                    // ride the SAME `resolveColor` value.js cache as the base — the
+                    // renderer never reaches the DOM.
+                    const stops = paletteStops.value;
                     const stopCount = Math.min(stops.length, MAX_BLOB_STOPS);
                     gl.uniform1i(U.uStopCount, stopCount);
                     for (let i = 0; i < MAX_BLOB_STOPS; i++) {
                         const loc = paletteLocs[i] ?? null;
                         const css = stops[i];
                         if (css) {
-                            const p = resolveRimColor(css, canvas);
+                            const p = resolveColor(css);
                             gl.uniform3f(loc, p[0], p[1], p[2]);
                         } else {
                             gl.uniform3f(loc, rgb[0], rgb[1], rgb[2]);
@@ -377,6 +461,32 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                         vel.y * 0.5 * POS_SCALE,
                     );
                     gl.uniform1f(U.uStretch, config.stretch);
+
+                    // AX.W16 — the PADDED pre-FBM bounding radius (uv space). It MUST
+                    // exceed the WORST-CASE outward painted reach or it clips the wet
+                    // meniscus (IQ: "inflate the bounding radius to match any
+                    // outward-expanding op"). The satellite envelope is the dominant
+                    // term (useBlobSatellites): baseR up to orbit×1.2, the eccentric
+                    // Y-long axis ×(1+ecc), the mood-scaled wobble (≤ excited 2.0 ×
+                    // ~0.135) + pertY (≤0.08). Add the satellite radius, the smin band,
+                    // the noise amp, and the squash stretch (it elongates the body up
+                    // to ×(1+|v|·stretch)). All POS_SCALE'd to match the uploaded
+                    // lengths. A generous extra 1.25× headroom keeps it conservative —
+                    // the early-out only needs to skip the FAR transparent border, not
+                    // to be tight.
+                    const satEnvelope =
+                        config.orbitRadius * 1.2 * (1 + config.eccentricity) +
+                        0.135 * Math.max(config.wobbleScale, 2.0) +
+                        0.08 +
+                        config.satelliteRadius;
+                    const bodyEnvelope =
+                        (config.bodyRadius + config.pulseAmp) * (1 + config.stretch) +
+                        config.noiseAmp;
+                    const maxReach =
+                        (Math.max(satEnvelope, bodyEnvelope) + config.smoothK) *
+                        POS_SCALE *
+                        1.25;
+                    gl.uniform1f(U.uMaxReach, maxReach);
 
                     // Pointer trail (W10) — decaying-radius pseudopod. The trail is
                     // in the same normalized [-1,1] space as the pointer, so map it
@@ -454,12 +564,12 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     gl.uniform1f(U.uColorNoiseSpeed, config.colorNoiseSpeed);
 
                     // Lit glass surface (W9.b) — Blinn-Phong glint + Fresnel rim.
-                    // `uRimColor` resolves through the SAME injected ColorResolver
-                    // seam as `uBaseColor` (NOT a DOM probe — the `var()`-cascade
-                    // read above only un-wraps a token to a concrete string the
-                    // resolver then parses). Gated behind `uLit` (default flat).
+                    // `uRimColor` arrives ALREADY un-wrapped to a concrete string from
+                    // the SFC (AX.W16 F4), so it rides the SAME `resolveColor` value.js
+                    // cache as `uBaseColor` — the renderer never reaches the DOM.
+                    // Gated behind `uLit` (default flat).
                     gl.uniform1f(U.uLit, config.lit ? 1.0 : 0.0);
-                    const rim = resolveRimColor(config.rimColor, canvas);
+                    const rim = resolveColor(rimColor.value);
                     gl.uniform3f(U.uRimColor, rim[0], rim[1], rim[2]);
                     gl.uniform3f(
                         U.uLightDir,
@@ -511,16 +621,42 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                 }
 
                 /**
-                 * Demand gate. While manually paused (G2) the loop parks; otherwise
-                 * the blob is perpetually animated (mood drift + satellite cycle).
-                 * The reduced-motion one-static-frame-then-park is now owned by the
-                 * substrate's reschedule gate (G1) — it draws the current frame then
-                 * parks while `reducedMotion` is live, so this gate stays
-                 * motion-only.
+                 * Demand gate (AX.W16 F1 — a REAL at-rest predicate, the biggest
+                 * onscreen perf lever). The old `return !paused` perpetually rescheduled
+                 * (the `:512` "the blob is perpetually animated" comment): an idle
+                 * ambient blob burned a full 60fps of FBM×2 + OKLCh-per-fragment FOREVER.
+                 *
+                 * Now the loop keeps running ONLY while something is actually changing:
+                 *   - the pointer interaction is live (spring moving / trail / pulse /
+                 *     active cursor — `pointer.atRest()`),
+                 *   - the mood is mid cross-fade or holding an excited latch
+                 *     (`mood.settled()`),
+                 *   - or a satellite is mid-merge / mid-emerge
+                 *     (`satellites.anyTransitioning()`).
+                 * When ALL are at rest the blob HOLDS its pose and PARKS — it renders
+                 * ZERO frames between satellite phase transitions. The loop is then
+                 * EVENT-SCHEDULED: `scheduleQuiescenceWake()` arms a `wake()` timer for
+                 * the next satellite phase boundary (R3F `frameloop="demand"` /
+                 * glass-ui `invalidate()`), so an orbit→merge edge re-arms the loop on
+                 * time — never a frozen-then-jerk blob.
+                 *
+                 * `paused` (the `v-model:paused` seam) and PRM are owned UPSTREAM: pause
+                 * suspends the `'manual'` lifecycle reason, PRM is the substrate's
+                 * one-static-frame-then-park reschedule gate — so this predicate is the
+                 * MOTION-quiescence half only (it never re-checks paused/PRM).
                  */
                 function shouldContinue(): boolean {
-                    return !paused;
+                    const live =
+                        !pointer.atRest() ||
+                        !mood.settled() ||
+                        satellites.anyTransitioning();
+                    if (!live) scheduleQuiescenceWake();
+                    return live;
                 }
+
+                // Hoist this context's resize so a `quality` flip can re-size the
+                // backing store on demand (the substrate RO only fires on CSS change).
+                resizeBackingStore = resize;
 
                 return {
                     frame: drawFrame,
@@ -549,24 +685,36 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
         { immediate: true },
     );
 
-    // Repaint on a color change while parked (reduced-motion / paused) so the new
-    // color lands without the perpetual loop.
-    watch(color, () => canvasHandle?.wake());
+    // AX.W16 F0 — the `v-model:paused` seam OWNS the pause. A `paused` transition
+    // suspends/resumes the EXISTING `'manual'` lifecycle reason (the same KISS
+    // contract `DockBackgroundToggle` already holds for Aurora's `useAurora`) — NO
+    // parallel pause path. This is the structural fix for the dead seam: the prop
+    // CANNOT be left unexposed (a discarded return cannot recur).
+    watch(paused, (p) => {
+        if (p) {
+            clearWakeTimer(); // a parked-then-paused blob must not self-wake
+            canvasHandle?.suspend("manual");
+        } else {
+            canvasHandle?.resume("manual");
+        }
+    });
+
+    // A quality flip re-sizes the backing store (full ↔ half resolution) then wakes
+    // to repaint at the new resolution even while the demand loop is parked. The
+    // resize reads `quality.value` live, so the hoisted closure picks up the new tier.
+    watch(quality, () => {
+        resizeBackingStore?.();
+        canvasHandle?.wake();
+    });
+
+    // Repaint on any color change (base / rim / palette) while parked (reduced-motion
+    // / paused / quiesced) so the new color lands without the perpetual loop.
+    watch([color, rimColor, paletteStops], () => canvasHandle?.wake());
 
     onUnmounted(() => {
+        clearWakeTimer();
         canvasHandle?.dispose();
         canvasHandle = null;
     });
-
-    return {
-        pause: () => {
-            paused = true;
-            canvasHandle?.suspend("manual");
-        },
-        resume: () => {
-            paused = false;
-            canvasHandle?.resume("manual");
-        },
-    };
 }
 

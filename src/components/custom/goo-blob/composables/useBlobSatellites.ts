@@ -341,7 +341,52 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
         rng = mulberry32(hashString(color + "goo"));
     }
 
-    return { sources, tick, nudge, reseed };
+    // ── Demand-gate quiescence seam (AX.W16 F1) ──────────────────────────────────
+    //
+    // The orbit/merge state machine knows its phase TIMERS. A satellite is
+    // "transitioning" when it is mid-merge or mid-emerge (the visibly-animating
+    // fuse/un-fuse) — those phases MUST keep the loop awake (no false-park mid-merge,
+    // the SOTA-research [22][14] hazard). `orbiting`/`absorbed` are the stable
+    // resting phases: an orbiting satellite drifts, but at idle the blob HOLDS its
+    // pose and re-renders on the next phase boundary (the demand model — render when
+    // something discrete is about to change, not 60fps of continuous micro-drift).
+
+    /** True while ANY satellite is mid-merge or mid-emerge (a visible transition). */
+    function anyTransitioning(): boolean {
+        for (let i = 0; i < internals.length; i++) {
+            const p = internals[i]!.phase;
+            if (p === "merging" || p === "emerging") return true;
+        }
+        return false;
+    }
+
+    /**
+     * ms until the SOONEST satellite phase transition is due — the scheduler the
+     * renderer arms a `wake()` timer against so a parked idle blob re-renders exactly
+     * when the next orbit→merge / merge→absorb / absorb→emerge / emerge→orbit edge
+     * fires (R3F `frameloop="demand"` / glass-ui `invalidate()`). Returns `Infinity`
+     * when there are no satellites (nothing scheduled). The phase clocks ride the
+     * canonical tempo-integrated `now`, so the due time is in the SAME clock the
+     * renderer schedules against.
+     */
+    function msUntilNextPhase(now: number): number {
+        let soonest = Infinity;
+        for (let i = 0; i < internals.length; i++) {
+            const s = internals[i]!;
+            const remaining = s.phaseStart + s.phaseDuration - now;
+            if (remaining < soonest) soonest = remaining;
+        }
+        return soonest;
+    }
+
+    return {
+        sources,
+        tick,
+        nudge,
+        reseed,
+        anyTransitioning,
+        msUntilNextPhase,
+    };
 }
 
 export type BlobSatelliteSystem = ReturnType<typeof useBlobSatellites>;

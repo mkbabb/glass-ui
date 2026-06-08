@@ -125,6 +125,12 @@ function run() {
 
     // ── F4 — the aurora + blob runtimes wire the RAF through the
     //         viewport-intersection seam (useIntersectionPause → off-screen).
+    //
+    // AX.W16 F6 — the IO fallback now drives its OWN distinct reason key:
+    // aurora keeps `'off-screen'`; the BLOB writes `'off-screen-io'` (disjoint from
+    // the content-visibility `'off-screen'` so an IO resume cannot lift a legitimate
+    // CV suspend). The seam is still the same `useIntersectionPause` off-screen park,
+    // so the assert accepts EITHER key (`off-screen` with the optional `-io` suffix).
     function wiresIntersectionSeam(label, path) {
         if (!existsSync(path)) {
             violations.push(`the ${label} runtime is absent`);
@@ -132,7 +138,7 @@ function run() {
         }
         const src = stripComments(readFileSync(path, "utf8"));
         const composes = /useIntersectionPause\s*\(/.test(src);
-        const drivesOffScreen = /["']off-screen["']/.test(src);
+        const drivesOffScreen = /["']off-screen(-io)?["']/.test(src);
         const wired = composes && drivesOffScreen;
         if (!wired) {
             violations.push(

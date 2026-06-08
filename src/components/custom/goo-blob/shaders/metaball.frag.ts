@@ -129,6 +129,13 @@ uniform float uTrailRadius[TRAIL_N];
 uniform vec2 uVelocity;   // smoothed pointer velocity (motion direction + speed)
 uniform float uStretch;   // squash-stretch magnitude (0 = off)
 
+// AX.W16 — the pre-FBM bounding radius. A fragment whose |uv| exceeds this radius
+// is GUARANTEED outside every metaball reach, so it skips the two 3-octave FBM
+// calls + the OKLCh round-trip entirely (the ~60% of the 1.6× canvas that is
+// transparent border ran the full ALU before this). PADDED by the smin band +
+// noise amp on the CPU so it never clips the wet meniscus.
+uniform float uMaxReach;
+
 const float PI = 3.141592653589793;
 ` +
     NL +
@@ -296,6 +303,21 @@ void main() {
         float pointerDist = length(pointerDir);
         float influence = smoothstep(0.65, 0.0, pointerDist) * uPointerAttraction * uPointerStrength;
         uv -= normalize(pointerDir + 1e-6) * influence;
+    }
+
+    // AX.W16 — PRE-FBM BOUNDING EARLY-OUT. A fragment whose post-lean |uv| is beyond
+    // uMaxReach cannot touch any metaball, so write transparent and return BEFORE the
+    // two 3-octave FBM evals (sceneDistG's domain-warped membrane + the colorNoise
+    // field) + the OKLCh round-trip — the ~60% transparent border of the 1.6x canvas
+    // no longer runs the full fragment ALU. A TRANSPARENT WRITE (not GLSL discard):
+    // the pass is a pure premultiplied blend with no depth, and discard disables the
+    // tiled-renderer fast path on mobile GPUs. The branch carries NO derivative
+    // (fwidth) — uMaxReach is PADDED past the painted edge on the CPU, so the AA edge
+    // (which needs fwidth(d) below) is always well INSIDE the bound; the only
+    // 2x2-quad straddle is in fully-transparent space (alpha ~ 0, invisible).
+    if (dot(uv, uv) > uMaxReach * uMaxReach) {
+        fragColor = vec4(0.0);
+        return;
     }
 
     // The de-synced pulsing body radius — also reused below for the inner-glow scale.

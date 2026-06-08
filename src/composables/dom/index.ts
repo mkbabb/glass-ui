@@ -36,6 +36,7 @@
 export * from "./useResizeObserver";
 export * from "./useTouchGate";
 export * from "./useTokenColor";
+export * from "./useResolveTokenColor";
 export * from "./useClipboard";
 export * from "./useUserInvalidAria";
 export * from "./useTextHighlight";
