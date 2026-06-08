@@ -112,6 +112,35 @@ Carry the **DDR-AS-RC-3 standalone-`DockIconButton` 44px coarse-pointer hit-targ
 gap a speedtest consumer measured at 40×40 regardless of `.glass-dock` ancestry — constellation
 `result[4].findings[7]`) into the `dock-controls.css` carve so the floor lands WITH the rail-polish hoist.
 
+### SOTA deepening (liquid-glass research)
+
+The iOS-26 Liquid-Glass corpus deepens the rail-polish hoist + the dock-as-portal-host contract W06
+documents (facets 0, 2, 5, 18 — `docs/tranches/AX/research/liquidglass-synthesis.md`):
+
+1. **The hoisted rail tap-squish IS Apple's `.glassEffect(.interactive())` gel-squish** (facets 0, 5, 18).
+   The press register: a ~0.96 scale on the `scale:` LONGHAND (never `transform: scale()` — the longhand
+   avoids minting a new stacking context mid-press), keyed off the dock spring with the specular
+   brightening in LOCKSTEP. The hoisted treatment must use the W05-governed dock register
+   (`--spring-dock` (0.32,0.7) ~+4.6%) so the press reads crisp, NOT wobbly — and CAP the squish LOW
+   (`--scale-press` 0.96, ~4%; iOS Liquid Glass is RESTRAINED, iOS 26.2 dialed DOWN). If the hoist adds a
+   velocity-driven squash, it is `scale: var(--squash) calc(1/var(--stretch))` (volume-preserving
+   reciprocal, facet 18) capped at `maxStretch ~1.06-1.10` — but that is an AX.W42-facility door, NOT a
+   W06 deliverable (W06 hoists the EXISTING refined treatment; it does not author new physics).
+
+2. **The dock-as-portal-host contract is the no-glass-on-glass + navigation-layer rule** (facets 0, 1, 4,
+   30). Apple's hard constraint — glass floats only in the navigation/overlay band, glass never nests in
+   glass (stacked blur muddies, the rim doubles) — is the architectural why behind the
+   `keepOpen`/`data-glass-dock-portal` teleport contract: a menu mounted in a dock must TELEPORT OUT to its
+   own sampling region, not paint a second glass plate inside the dock's. The keyframes D9 mis-wire (a
+   dropdown mounted OUTSIDE keepOpen+portal) is the canonical break — document it in the consolidated home
+   as the navigation-layer/no-glass-on-glass discipline, not just a portal mechanic.
+
+3. **The rest state must be GENUINELY static** (facets 0, 24, 28, 30). The corpus's over-animation rule
+   (NN/g + Apple HIG): Liquid Glass elements stay "visually quiet" at rest and come to life ONLY on
+   interaction/intent — never ambient idle motion (a low-amplitude breathing loop violates the rest-quiet
+   contract + the reduced-motion floor). The consolidated dock home's audit must confirm the rail/dock is
+   STILL at rest (no ambient pulse), bounce only on user-initiated expand/tap.
+
 **(4) Split dock.css LAST (F4 / slice 25 / §4 note 19).** Carve `dock.css` (1227) into `src/styles/dock/`
 sibling partials in the SAME `@layer components`, `@import`ed in cascade order after a `dock/shell.css`
 core, continuing the proven AU.W8b.3 `dock-controls.css` carve pattern: `dock/shell.css` (the `.glass-dock`

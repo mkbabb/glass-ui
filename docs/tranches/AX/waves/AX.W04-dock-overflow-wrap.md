@@ -127,6 +127,45 @@ one cohesive architectural fix:
   (the consumer re-adopts once wrap is correctly stylized). bbnf's abandonment of `DockLayerGroup` for the
   vertical overflow fight is the live witness routed to **W02** (sibling) — NOT this wave.
 
+### SOTA deepening (liquid-glass research)
+
+The iOS-26 Liquid-Glass corpus deepens W04's pill↔card morph (facets 0, 2, 11, 17, 26 —
+`docs/tranches/AX/research/liquidglass-synthesis.md`):
+
+1. **Concentric corners are the iOS rule for the radius axis** (facets 0, 26). iOS-26 auto-derives a
+   nested element's radius as `outer-radius − padding` (`ConcentricRectangle`/`.containerShape`) so inner
+   shapes read as part of the same rounded surface — and NEVER nests two stadium pills. The W04
+   `--dock-card-radius` unify + the pill→card radius-morph must preserve the inset relation
+   (`inner = calc(outer − padding)`) off the SAME morph scalar (the `--dock-morph-t` W01 mints), so the
+   wrapped card's interior tiles stay visually concentric at every morph frame. This is facet 26's named
+   dock instance of `containerConcentric`.
+
+2. **The card-tier shadow IS "material thickens when it flexes larger"** (facets 0, 2, 17). Apple's WWDC25
+   §219 rule — as glass morphs to a larger size its characteristics shift to a THICKER material (deeper
+   shadows, more pronounced lensing) — is exactly the F1 fix: the wrapped/card silhouette lifts onto the
+   floating-tier shadow stack via `--shadow-dock-wrap`, transitioning on the SAME `--dock-motion-resize`
+   spring the radius glides on. The synthesis names this the highest-value cheap iOS behaviour: the morph
+   scalar drives shadow-tier + radius (+ refraction-scale + specular-intensity in W09) TOGETHER so the
+   surface reads thicker as it expands — ONE register, no second clock.
+
+3. **`corner-shape: superellipse()` is the continuous-corner curve** (facets 0, 11, 24). The pill stadium →
+   finite card glide is the literal iOS squircle when `corner-shape` interpolates on the morph clock
+   (Chrome 139+, `@supports`-gated over `border-radius` round — the round arc is the CONTRACT, the squircle
+   the BETTER tier). Already shipped; the F4 radius unify must compose with it.
+
+4. **Content-driven flex-wrap, NOT `interpolate-size`** (facets 7, 8, 17, 24, 26). The corpus is emphatic
+   that `interpolate-size`/`calc-size` is Chromium-129+-only AND was the AV.W9.0 dock-freeze (it
+   second-drove width against the spring) — so the F0 content-driven intrinsic `flex-wrap` +
+   `min(max-content, cap)` is the CORRECT primitive, and the magic-640 `@media` toggle is the inherited
+   mobile-responsive debt to excise. `interpolate-size` stays a known-but-rejected technique (one-time
+   measurement only, never a co-driver) — exactly the §Scope.1 + §PreceptAlignment one-driver mandate.
+
+5. **The vertical max-height contract honors scroll-reactive shrink** (facet 2). Apple's tab/tool bars
+   SHRINK on scroll-down and fluidly EXPAND on scroll-up via a continuous scroll-position morph
+   (`animation-timeline: scroll()` feeding the same scalar). The W04 `--dock-max-block-size` vertical
+   contract + internal overflow-scroll is the structural precondition for a consumer to wire that
+   scroll-reactive morph later — flagged as the door, not built here.
+
 ---
 
 ## FileBounds (the EXACT files this wave may touch — for parallel-dispatch disjointness)

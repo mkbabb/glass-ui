@@ -95,6 +95,38 @@ subscription: reka does not publicly expose a stable `dragging` ref on `SliderRo
 would re-introduce the same forwarding-boundary fragility the wave excises. The recommended path is
 native host listeners; record this disposition in §Archaeology and proceed.
 
+## SOTA deepening (liquid-glass research)
+
+The iOS-26 Liquid-Glass corpus names this wave's defect as the canonical recurring footgun and ratifies
+the host-native fix (facets 14, 17, 26 — `docs/tranches/AX/research/liquidglass-synthesis.md`):
+
+1. **The reka forwarding-drop IS the named binding-verification class** (facets 17, 26). The corpus:
+   "`pointerdown` on a reka `SliderRoot` forwarding component is DROPPED across the Slot/forwardRef
+   boundary; vue-tsc + units PASS, only e2e catches" — and prescribes the W03 fix verbatim: "native
+   `addEventListener` on the RESOLVED host element is the fix; sweep this class on every reka version
+   bump." This is `feedback_glass_ui_binding_verification.md` MEMORY made load-bearing.
+
+2. **`held` is a morph-state INPUT, not a side-channel token** (facets 5, 26, 28). The corpus models
+   `held`/`pressed` as a FIRST-CLASS morph-state input that ALSO raises the specular rung — "one state
+   machine, not a token race" — mirroring W03 §Scope.4 exactly. The morph-state input must be a
+   SYNCHRONOUS reactive edge into the one state machine, with scope-disposed cleanup (`onScopeDispose`),
+   no side-channel attribute write-race, no orphaned `setTimeout` (facet 26: "orphan-able async listeners
+   race the morph driver — keepDockOpen was a ref-counted token across a window listener that raced the
+   morph `data-held` writes"). The W01 driver is the SOLE `data-held` writer.
+
+3. **Instant-on-touch-down, spring-on-release** (facet 5 — Apple "Building Fluid Interfaces"). The pressed
+   visual (the `data-held` halo + substrate tier-shade) applies IMMEDIATELY on `pointerdown` (under the
+   ~100ms perception threshold it reads as instant); the spring governs only the RELEASE/settle. W03's
+   first-line `acquire()` being capture-independent + synchronous (the device-proven seam) IS this
+   contract — the halo lights the instant `keepOpen()` fires, no spring lag. The thumb-halo + substrate
+   tier-shade CSS is already correct (live-confirmed); W03 only fixes the binding that arms it.
+
+4. **The held control may GROW proportional to hold (future door, not W03 scope).** Apple's
+   force/progress-proportional scaling (facet 5: `scale = 1 + (max-1)*force`; "a held control can
+   GROW/intensify proportional to hold time") is a velocity/duration-driven deform the AX.W42 facility
+   could expose — flagged as the natural extension of the `held`-as-morph-input seam W03 lands, NOT a W03
+   deliverable (W03 fixes the binding; the proportional-grow is a facility door).
+
 ---
 
 ## FileBounds

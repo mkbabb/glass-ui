@@ -52,6 +52,26 @@ The gestalt fix from slice 0 F0/F1/F2 + slice 1 F0/F1/F5 + slice 5 F0/F1 — one
 
 ---
 
+## SOTA deepening (liquid-glass research)
+
+The iOS-26 Liquid-Glass corpus (`docs/tranches/AX/research/liquidglass-synthesis.md` + the 32-facet corpus) UNANIMOUSLY ratifies W01's single-scalar/one-clock thesis and the retire-VT-for-the-collapse decision — every facet that touches the dock independently re-derives this architecture (facets 1, 2, 7, 14, 16, 17, 26, 27, 28, 29, 30). The corpus is the direct web transposition of Apple's `glassEffect` + `withAnimation(.bouncy)`-one-clock pattern. Concrete deepenings to fold into the §Scope:
+
+1. **`--dock-morph-t` MUST be `@property`-registered** `{ syntax:"<number>"; inherits:false; initial-value:0 }` (facets 27, 30). An UNREGISTERED custom property animates **discretely** (jumps, no tween) and on the main thread; a registered `<number>` interpolates composited. `inherits:false` is also the **inheritance-bomb guard** — writing the scalar to `:root` or any inherited var forces a whole-subtree style recalc every frame (a cited production case measured 8ms/frame over 1300 elements, facet 30). Write the scalar LOCALLY on the `.glass-dock` root, never `:root`.
+
+2. **Drive the MATERIAL off the same scalar, not just geometry** (facets 2, 14, 17, 21). Apple's "the material thickens when it flexes larger" (deeper shadow, more pronounced lensing, softer light scatter — WWDC25 §219) becomes a free fold: the radius axis, `--shadow-dock-wrap` (W04), and the `--glass-specular-intensity-*` ladder (W09) all read `calc(… * var(--dock-morph-t))` so the surface reads THICKER as it expands. This is why W01 couples to W04/W09, not sequences before them — though W01 KEEPS its own §FileBounds (the material reads happen in those waves' files, off the scalar W01 mints).
+
+3. **Velocity-continuity retarget is the ONE load-bearing iOS-feel piece** (facets 14, 15, 17, 26, 28). A re-toggle mid-flight re-seats the live `SpringProgress` from `(value, velocity)` — the thing CSS `linear()`/`transition` springs and VT fundamentally CANNOT do (the spec's reversing-shortening-factor discards inertia; a 1600ms spring re-runs at 400ms). Preserve the AV.W9.2 retarget through the 479→~130 rewrite; it is the interruptibility Emil Kowalski/Family.co demand.
+
+4. **Audit-feasibility (load-bearing for the gate).** The W01 box morph drives D-tier (`inline-size`, `padding`) and C-tier (`border-radius`, `background`, `border-color`, `box-shadow`) per frame — the EXPENSIVE corner of the 16.67ms budget (facet 30: S-tier transform/opacity/clip-path off the main thread, D-tier layout-recalc-per-frame). Acceptable ONLY because the clip-reveal aperture makes it paint-bounded (content laid out once, box-as-window) not reflow-per-frame; audit which axes can move to S-tier `transform`/`clip-path` and keep the morphing subtree small. And the gate CANNOT poll `getBoundingClientRect` — keyframes device-proved 181 rAF rect samples captured NO morph because VT runs off the live box clock (facets 17, 24, 26, 28); the gate must deterministically drive the readable spring arm and assert box-geometry vs a child's opacity onset on ONE rAF timeline (already the §HardGate.1 design).
+
+5. **VT-is-wrong-for-layout-morph, confirmed from every angle** (facets 1, 6, 12, 14, 16, 17, 26, 28, 30). VT crossfades RASTERIZED snapshots — a 150×150 morphing to 600×300 becomes "taffy"-stretch + text-blur; an animating ancestor desyncs; co-mounted docks minting `glass-dock-1` DROP the snapshot. The corpus preserves the SEPARABLE per-instance `view-transition-name` route-morph seam (the web `glassEffectID` for genuinely-different DOM / route morphs) exactly as §Scope.4 states. The matched-geometry seam stays BIFURCATED: spring+FLIP for self-reshape, VT for shared-element/route.
+
+6. **The squircle profile rides the morph clock** (facets 0, 11, 24). `corner-shape: superellipse()`/`squircle` (Chrome 139+) interpolating on the scalar is the literal iOS continuous-corner curve — `@supports`-gated over `border-radius` round (the arc is the CONTRACT, the squircle is the BETTER tier). Already shipped in glass.css/dock.css; ensure the radius axis reads `--dock-morph-t` through it.
+
+7. **Do NOT reintroduce `interpolate-size`/`calc-size` on the morph axis.** The corpus is firm (facets 7, 8, 14, 17, 24, 26): AV.W9.0 retired exactly this because it second-drove width against the spring and FROZE the dock (born-RED under `proof:dock-animation-live`). It is Chromium-129+-only, NOT Baseline, and viable only as a one-time MEASUREMENT primitive read once — never a co-driver on the spring's axis. One authority per property, always.
+
+---
+
 ## FileBounds
 
 | File | Access |

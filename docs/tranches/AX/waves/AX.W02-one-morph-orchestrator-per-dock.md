@@ -96,6 +96,47 @@ No workaround, no legacy arm. The second morph engine is **excised**, not coordi
 parallel pause path" / one-path); the orchestrator deferral is the gestalt re-derivation, not a
 coordination layer bolted on top.
 
+## SOTA deepening (liquid-glass research)
+
+W02 IS the web `GlassEffectContainer` (facets 1, 2, 16, 21, 26, 27, 30 — the iOS-26 Liquid-Glass corpus,
+`docs/tranches/AX/research/liquidglass-synthesis.md`). Apple's container establishes ONE shared sampling
+region + ONE morph context; child glass shapes declare a stable identity (`glassEffectID(id, in:
+namespace)`) and a `spacing` threshold governs when neighbours visually FUSE; SwiftUI then computes the
+morph between matched identities AUTOMATICALLY — there is NO per-component morph code, an element opts in by
+joining the container + declaring an id. The deepenings:
+
+1. **One orchestrator = one batched pass = both correctness AND cost** (facets 1, 4, 30). Apple's rule
+   "glass cannot sample other glass" is BOTH a correctness mechanism (the container is the one shared
+   sampling region) AND the perf ceiling: "you do not pay per-element, you pay per-CONTAINER." Two
+   independent springs writing inline-size = double-animation + desync (the W02 born-RED) — the
+   `GlassEffectContainer` anti-pattern inverted (N independent samplers/springs instead of one batched
+   group). The `(expandedState × activePane)` single-stack model is the exact web expression of Apple's
+   "singular floating plane the controls live on."
+
+2. **The DI seam IS `provideMorphGroup` / `MorphGroup`** (facet 26). The corpus names the canonical web
+   API shape as a two-part seam: a per-element driver + a `MorphGroup` provide-inject orchestrator (the
+   `GlassEffectContainer` / Motion `LayoutGroup` analog). W02's `createOptionalContext<DockMorphContext>`
+   IS this — and the synthesis flags W02 explicitly as "DI-fold equals MorphGroup" / "the inner
+   DockLayerGroup must NOT instantiate its own engine, it injects the dock orchestrator." Mark the DI seam
+   as the dock-flavored first instance of the general `MorphGroup` facility AX.W42 authors (the synthesis's
+   §1.4 substrate). W02 does not block on W42; it establishes the seam W42 generalizes.
+
+3. **The stagger is choreography, not a timer** (facets 16, 28, 30). The `--dock-stagger-step` token × child
+   index must ride the morph's NORMALIZED progress (a fraction-of-morph onset), not a wall-clock
+   `setTimeout`/`animation-delay` — so a fast flick and a slow hover-open both choreograph correctly and an
+   interrupted morph orphans no timers. Emil Kowalski's canon: 30-60ms between staggered items, never
+   >100ms (that reads as a slideshow). The corpus confirms glass-ui's progress-keyed ramp is correct;
+   W02's job is to write it ONCE over the unified vocabulary, not regress it to a timer cascade. The
+   canonical lead-follow depth-order is backdrop→container→content→actions (Emil) — the box LEADS, content
+   FOLLOWS in-step.
+
+4. **The gooey spacing-merge is a Chromium-only GARNISH, never the structural silhouette** (facets 1, 2,
+   4, 21). Apple's metaball-fuse (shapes within `spacing` blend into one body) maps on the web to the SVG
+   `feGaussianBlur → feColorMatrix` alpha-contrast trick — but that renders as PLAIN BLUR in Safari/Firefox
+   (Chromium-reliable only). If a future dock fuses adjacent controls, it is an `@supports`-gated PE over a
+   shape that already reads correctly — NOT a W02 deliverable (W02 unifies the orchestrator + vocabulary;
+   the gel-merge is a W42-facility door, flagged not built).
+
 **Demand-side close criterion (converge-digest, bbnf-buddy field evidence).** bbnf-buddy **ABANDONED
 `DockLayerGroup` entirely** for BOTH editor docks — `BottomDock.vue:96-98` hand-rolls a raw
 `<Transition name="dock-layer" mode="out-in">` over three layers; `LeftToolsDock.vue:135-160,182`

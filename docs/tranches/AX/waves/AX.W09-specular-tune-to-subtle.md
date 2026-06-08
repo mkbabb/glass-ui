@@ -115,6 +115,50 @@ double, NOT "wire the pointer."**
    pre-tune brighter ladder for the busy-backdrop case the recipe was originally authored for. This COMPLEMENTS
    the token ladder this wave mints (the prop selects WHICH rung set; the tokens carry the magnitudes).
 
+### SOTA deepening (liquid-glass research)
+
+The iOS-26 Liquid-Glass corpus names the W09 specular retune the "single biggest, lowest-risk win" on the
+material axis and is precise on the magnitudes (facets 0, 4, 20, 21, 22 —
+`docs/tranches/AX/research/liquidglass-synthesis.md`):
+
+1. **The SOTA color rule: warm-cream low-alpha, NEVER pure-white** (facets 0, 4, 22). The corpus pins the
+   exact anti-pattern glass-ui ships: `hsl(40 30% 100% / 0.55)` is pure white at 0.55α, directly
+   contradicting its own "warm-cream" comment, blown out further by the AW.W22 blast-radius promotion onto
+   every band surface. The fix is a warm-cream low-alpha core (~`hsl(40 40% 96%)`, L<100% so the warm hue
+   survives) at rest≈0 / hover≈0.22 / active≈0.32 — and the corpus flags the blend caveat (facet 0): `screen`
+   of even low-alpha white still LIFTS toward white over LIGHT surfaces, so keep `screen` on dark and rely
+   on the lowered alpha + warm-cream over light first (the §Open-Questions.3 blend-mode decision is
+   research-grounded).
+
+2. **The catch-light is a rim/normal-driven highlight that "defines the silhouette," not a flat bloom**
+   (facets 0, 4, 22). WWDC25 §219: the moving rim catch-light + the full-perimeter `--glass-edge-light` rim
+   read the glass body as a discrete lifting object. glass-ui's `--glass-edge-light` (AW.W22) is
+   SOTA-correct and current; W09 must NOT touch it — only the moving-`::before` core color + the
+   intensity ladder.
+
+3. **Specular and squish are ONE clock — `.glassEffect(.interactive())`** (facets 5, 18, 20, 26). The
+   corpus's unification point: Apple's interactive material flexes AND energizes-with-light on ONE press
+   spring — light and geometry move together. Tie `--glass-specular-intensity` to the press spring in
+   lockstep (the §Scope item the synthesis names "the unification of material-light and spring-squish").
+   `held`/`pressed` is a morph-state INPUT that raises the specular rung, not a token race (facet 26 — the
+   W03 contract on the dock).
+
+4. **Retire the SECOND specular — one owner per surface** (facets 21, 22). The corpus confirms the dock
+   control stacks THREE lights at HEAD: the baked `#glass-refract` feImage specular + the pointer-tracked
+   `::before` moving-specular + the `--glass-highlight` hover box-shadow (the worst blowout, on the
+   most-hovered surface). iOS-26 has ONE specular owner per surface; adding any lens/highlight fidelity
+   without first collapsing to one owner re-creates the ~0.47 pure-white hotspot. W09 retires the dock's
+   `--glass-highlight`; the feImage-vs-`::before` consolidation is the W09/W21 ownership split the corpus
+   names (refraction carries the lens-bend, `::before` owns the motion-responsive catch-light).
+
+5. **Critical gate coupling, research-confirmed** (facets 4, 17, 20). `proof-glass-material-unified.mjs`
+   HARDCODES `0.6`/`0.85` — the corpus is explicit: "co-update the gate or the retune lands RED." The §Scope
+   gate co-update is non-negotiable in the SAME wave.
+
+6. **The lens scale, not the specular, springs off the morph clock** (facets 4, 21). Registering
+   `--glass-refract-scale` as a typed `@property` so the lens can spring is W20's refraction concern, NOT
+   W09's — W09 owns the SPECULAR half. Flagged so the two material halves stay un-conflated.
+
 ### CONVERGE folds (consumer-grounded + the published-vs-HEAD correction)
 
 - **Published-vs-HEAD reconcile (LOAD-BEARING — §4 note 12 + digest 8-9).** The AW.W24 Card pointer-wiring IS

@@ -185,6 +185,51 @@ the `.glass-{tier}` ladder — there is no second renderer worth keeping. Excise
   in-repo retire independently; the PUBLISH hinges on W35 (the W28→W29 native-first / migrate-before-prune
   class).
 
+### SOTA deepening (liquid-glass research)
+
+The iOS-26 Liquid-Glass corpus ratifies all three W20 folds and is precise on the `.glass-material`
+retire-target the GlassPanel prune points at (facets 0, 9, 20, 21 —
+`docs/tranches/AX/research/liquidglass-synthesis.md`):
+
+1. **The nested-`hsl()` trap is a corpus-named, repo-wide anti-pattern** (facets 20, 21). The corpus: color
+   tokens are ALREADY complete `hsl()` colors — `hsl(var(--token) / α)` silently DROPS at parse and never
+   paints; the fix is `color-mix(in srgb, var(--token) N%, transparent)`. This is exactly the F0 scrim fix
+   (the only 3 occurrences) + the `proof:no-nested-hsl` gate this wave authors. (Related: Canvas2D silently
+   rejects `light-dark()` into fill/strokeStyle — the constellation defect; out of W20 scope but the same
+   class.)
+
+2. **Do NOT resurrect a style-STOMPING imperative filter — the retire is RATIFIED** (facets 20, 21). The
+   corpus is explicit on F2: "AX.W20 is RETIRING the JS `createGlassFilter`/`useGlassRenderer` path
+   precisely because it hard-overwrote `el.style.backdropFilter`/`border`/`boxShadow` with hardcoded
+   non-dark-adaptive white, collapsing the five CSS rungs to one look and async-loading the dataURL (blank
+   first paint). Any new refraction must be CSS-cascade-additive over `.glass-material` (dark-adaptive,
+   `@supports`-gated, fallback-bearing), never an imperative inline-style write." The `.glass-material`
+   grammar IS the shipped CSS-native answer (`@supports`-gated, dark-adaptive, fallback-bearing) — there is
+   no second renderer worth keeping.
+
+3. **The native top-layer entry grammar is SOUND — keep it** (facets 9, 20). The `.glass-top-layer`
+   `@starting-style` + `transition-behavior: allow-discrete` + `overlay` entry/exit grammar (gated on
+   `@supports (overlay: auto)`) is the corpus's named pure-CSS materialize path for floating surfaces — the
+   `<Dialog :native>` fold reuses it. Only the scrim COLOR form (the nested-hsl) is broken; the entry
+   grammar is current SOTA.
+
+4. **The lensing UPGRADE is a door the retire opens, NOT a W20 deliverable** (facets 4, 20, 21). Once
+   GlassPanel/`createGlassFilter` is gone, the surviving lens is the CSS-native `#glass-refract`
+   `feDisplacementMap` (already SOTA, `@supports (backdrop-filter: url(#…))`-gated Chromium-only — WebKit
+   bug 245510 open, Firefox not shipping). The corpus's genuine material additions — a Snell-derived
+   squircle NORMAL map (the profile `y=⁴√(1−(1−x)⁴)` is already cited in the comment but not computed) and
+   THREE-pass RGB chromatic aberration (the single biggest "thick-glass" tell glass-ui lacks) — are the
+   AX.W42 / future-refraction folds, NOT W20 (W20 RETIRES the broken JS path; it does not author the lens
+   upgrade). Any such upgrade: `@supports`-gated PE over the blur base, `--glass-refract-scale` registered
+   as a typed `@property` (only `scale` animates cheaply — a shape/size change forces a full map rebuild),
+   `contain: strict` on the filtered node, small viewport dimensions, NEVER promoted to the card/primitive
+   substrate broadly, and zeroed under `prefers-reduced-transparency`/`forced-colors`.
+
+5. **`.glass-material` lives in the navigation/overlay band only** (facets 0, 20). The surviving substrate
+   story must NOT manufacture a glass-on-glass demo — Apple's hard rule (glass never nests in glass; inside
+   a glass panel compose FLAT tiers) is the discipline the re-pointed `<Card surface="glass">`/`.glass-material`
+   story reads, not a new primitive.
+
 ---
 
 ## FileBounds (the EXACT files this wave may touch — for parallel-dispatch disjointness)

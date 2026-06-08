@@ -124,6 +124,58 @@ governing rationale — read at three altitudes; one cohesive architectural fix:
    alias today — the census decides whether the alias-only reach counts as a consumer or the preset is
    retired; RATIFY — see Open Questions.)
 
+### SOTA deepening (liquid-glass research)
+
+The iOS-26 Liquid-Glass corpus reframes W05 as the spring-vocabulary HALF of the unified morph facility
+(AX.W42) and adds a re-parameterization the wave should adopt (facets 14, 16, 17, 18 —
+`docs/tranches/AX/research/liquidglass-synthesis.md`):
+
+1. **Adopt the iOS-17+ `(perceptualDuration, bounce)` authoring surface** (facet 14, the headline new
+   technique). Apple DEPRECATED the raw `(response, dampingFraction)` dial for `(duration, bounce)`, where
+   `duration` is a PERCEPTUAL duration (time-to-the-meaningful-part, held constant as bounce changes) and
+   `bounce ∈ [-1,1]` is the overshoot dial. The closed-form map (Apple Dev Forums / kvin.me): `mass=1`;
+   `stiffness=(2π/duration)²`; `damping=(1-bounce)·4π/duration` (for bounce≥0); `bounce = 1 − dampingFraction
+   (= 1 − ζ)`. Adopt this as the AUTHORING surface in `regen-spring-tokens.mjs` so settle/control/playful map
+   cleanly onto Apple's `smooth(bounce 0)` / `snappy(0.15)` / `bouncy(0.3)`. The internal ζ stays the math;
+   `(duration, bounce)` is the human dial.
+
+2. **`duration` is PERCEPTUAL, never settle-time — gate on `settleThreshold`** (facets 14, 17). A bouncy
+   spring keeps ringing well past `duration`; conflating them makes any "animation done" gate wrong. The
+   import-and-render gate (§Scope.4) must read the spring's `settleThreshold`/`velocitySettleThreshold` as
+   the end-of-motion signal, NEVER `duration`. This is why the F3 fix is import-render, not a hand-typed
+   number.
+
+3. **`linear()` sample-count fidelity is a live gate input** (facets 14, 17, 18). 24 samples CLIPS the
+   bouncy peak (ζ=0.45 analytic peak ≈1.2054 reads ~1.1833 — ~2pp under); 48 lands it (AM-W2 already raised
+   24→48). The widened `proof:spring-tokens-synced` must render overshoot at runtime from the IMPORTED
+   constant, not a hand-typed literal — and a retune MUST touch BOTH the JS const and the regen PRESETS row
+   or the CSS-token and JS curves drift (the facet 17/27 "two spring vocabularies drift" hazard).
+
+4. **Keep the governed set SMALL — Apple ships literally three** (facets 14, 30). The SOTA register is
+   `smooth/snappy/bouncy`; glass-ui's `smooth/snappy/bouncy/gentle/dock` is ALREADY at the edge. The F5
+   overfitting census must justify each against ≥1 live consumer or fold it — the corpus explicitly flags
+   `--spring-gentle`'s alias-only reach as the live test of the bar. The fail-closed coverage assertion is
+   the machine-enforced version of facet 14's "justify each against ≥1 live consumer."
+
+5. **The restraint rule: structural morphs ride the CONTROL register, never bouncy** (facets 5, 14, 16,
+   18). iOS system controls sit in snappy/dock (bounce ~0.15, ζ~0.85, ~+4.6-6.8%), NOT bouncy (~0.3,
+   +20.5%); bounce>0.4 reads "too exaggerated for a UI element." The AW.W2 retune already walked the dock
+   spring DOWN from +18.5% to ~+4.6% (over-bounce read as "alive in a bad way"). Reserve bouncy for
+   deliberate emphatic one-shots (dialog entrance, success). Asymmetric/frequency-aware motion is SOTA, not
+   decoration: collapse (frequent dismiss) → snappier/non-overshoot; expand (the reveal) → softer
+   overshoot — which survives the W01 VT-collapse-fork retirement by moving onto TWO spring configs keyed
+   on direction (the typed-VT directions become directional spring configs). And NEVER animate
+   keyboard-initiated or high-frequency actions (facets 5, 30 — press-squish is pointer-only; the same
+   action on the 100th invocation is cognitive burden). Apple's own iOS 26.2 tweaks were about DIALING
+   DOWN, not up.
+
+6. **The two-track CPU/GPU model is correct and shipped** (facets 14, 17). Live JS `SpringProgress` for the
+   interruptible/gesture path (VELOCITY-CONTINUITY on interrupt — the one thing `linear()` springs CANNOT
+   do); build-time `linear()` tokens (sampled from the SAME ODE via `regen-spring-tokens.mjs`) for
+   fire-and-forget declarative transitions (entrances, `@starting-style` pops). The rule: `linear()` for
+   non-interruptible one-shots, the live spring for anything a user can interrupt mid-flight. W05 governs
+   the vocabulary BOTH tracks sample from.
+
 ### CONVERGE folds (cross-repo — the charter CORRECTION)
 
 - **EXTERNAL consumer enumeration (result 14 — speedtest, cross-repo blocker).** The W05 scope as charter-
