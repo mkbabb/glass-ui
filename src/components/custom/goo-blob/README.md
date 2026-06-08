@@ -88,7 +88,7 @@ import { GooBlob, BLOB_CONFIG_KEY, BLOB_CONFIG_DEFAULTS } from "@mkbabb/glass-ui
 provide(BLOB_CONFIG_KEY, {
   ...BLOB_CONFIG_DEFAULTS,
   satelliteCount: 4,
-  smoothK: 0.28,      // gooier merge
+  smoothK: 0.08,      // gooier merge (vs the 0.05 default — still contained)
   noiseAmp: 0.035,    // more organic edge wobble
 });
 </script>
@@ -139,7 +139,7 @@ interface BlobConfig {
   orbitRadius: number;        // orbit envelope (default 0.35)
 
   // Gooey
-  smoothK: number;            // smin blend thickness (default 0.22) — higher = gooier merge
+  smoothK: number;            // smin blend band, UV-space distance (default 0.05) — higher = gooier merge, but too high floods
 
   // Surface noise (the organic edge)
   noiseAmp: number;           // edge displacement amplitude (default 0.025)
@@ -177,6 +177,18 @@ interface BlobConfig {
 > consumed by the satellite tick — the AW mood wave either wires them or the config simplifies to
 > grouped sub-objects + an `energy` scalar. Treat their per-mood values as not-yet-load-bearing
 > until that wave lands.
+
+> **`smoothK` distance regime.** `smoothK` is the smin blend band in the shader's UV space (the
+> canvas is a `[-1, 1]` quad, half-extent 0.5). The smin is IQ-normalized (`k *= 4.0` in the
+> shader) so the seam dip at a fully-overlapped seam (`a == b`) is **exactly** the uploaded `k` —
+> `k` IS the maximum merge inflation in distance units. The renderer composes the uploaded value as
+> `smoothK × moodMultiplier × POS_SCALE`, where `POS_SCALE = 1/1.6 = 0.625` is the inner-region
+> compression **every** length-like uniform rides (body/satellite radius, pointer, noise amplitude).
+> At the `0.05` default with an idle mood (multiplier ≈ 1.0) the seam-pull is ≈ 0.031 — a tight, wet
+> meniscus. Raise `smoothK` for a gooier merge, but a too-large band floods the whole field
+> NON-LOCALLY (the polynomial smin is non-rigid — its effect spans far past the seam), so keep it in
+> the contained range (roughly ≤ 0.10 at the default radii). Mood `smoothK` is a unitless
+> multiplier on this band, not a second absolute length.
 
 ---
 
@@ -307,7 +319,7 @@ All interaction respects `prefers-reduced-motion` and the `DockBackgroundToggle`
 <GooBlob
   color="var(--primary)"
   :size="128"
-  :config="{ pointerAttraction: 0.5, smoothK: 0.26 }"
+  :config="{ pointerAttraction: 0.5, smoothK: 0.06 }"
 />
 ```
 
@@ -319,7 +331,7 @@ All interaction respects `prefers-reduced-motion` and the `DockBackgroundToggle`
   :size="180"
   :config="{
     satelliteCount: 4,
-    smoothK: 0.3,
+    smoothK: 0.09,
     noiseAmp: 0.04,
     pulseFreq: 0.5,
     pulseAmp: 0.012,
