@@ -251,6 +251,12 @@ jobs:
               run: npm run proof:aurora-vangogh-preset
             - name: proof:aurora-oilpastel-medium
               run: npm run proof:aurora-oilpastel-medium
+            # AX.W13 — the OKLab paintOver stroke OVER-composite + within-stroke OKLCh
+            # broken color, single-sourced from the procedural-color chunk (device-free
+            # SOURCE gate; the painterly-statistics π readback runs on the orchestrator
+            # real-GPU, like proof:aurora-webgpu-render, NOT this CI runner).
+            - name: proof:aurora-stroke-composite
+              run: npm run proof:aurora-stroke-composite
             # AW.W6 — the resolveAtoms ≤7-atom door: total-function + default-roundtrip.
             - name: proof:aurora-atoms-roundtrip
               run: npm run proof:aurora-atoms-roundtrip

@@ -284,6 +284,10 @@ function applyTexture(
             cfg.canvasGrain = a * 0.06;
             break;
         case "oil-pastel":
+        // AX.W13 — crayon is a first-class medium (the strokeMode peer-route is gone);
+        // the atoms-door texture knob is strokeAmount + canvasGrain (the DRY pressure +
+        // tooth), so a `medium:"crayon"` atom does not silently no-op the texture amount.
+        case "crayon":
             cfg.strokeAmount = a;
             cfg.canvasGrain = a * 0.05;
             break;

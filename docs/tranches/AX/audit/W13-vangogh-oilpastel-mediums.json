@@ -1,0 +1,158 @@
+{
+  "wave": "AX.W13",
+  "title": "First-class van-Gogh + oil-pastel mediums + pigment-true stroke compositing",
+  "base": "a563563",
+  "headline": "Give van-Gogh + oil-pastel FIRST-CLASS distinct medium bodies riding the W12 StrokeProfile substrate: (1) kill the mediumVangogh→mediumOil passthrough — author a real body off a vangogh StrokeProfile (comma/crescent strokeShape, sparse atomic placement, full-height impasto crowns, the energy-grade as a PROFILE field not a buried uMedium==5 branch); (2) split mediumOilPastel (stroke deposition + burnish) out of mediumCrayon (DRY tooth-multiply, no sheen) — they share the SUBSTRATE, not the dispatch body; (3) move paintOver's overlap composite into OKLab on the painterly stroke mediums so complementaries mix as pigment not grey; (4) move the within-stroke streak modulation into OKLCh hue+chroma (atom-level broken color); (5) resolve the crayon strokeMode legacy peer-route — PROMOTE crayon to a first-class medium + REMOVE the strokeMode:\"crayon\" alias. WebGL2/GLSL mediums ONLY — the WGSL twin gains NO medium dispatch (the §4-note-14 guard holds).",
+  "dependsOn": ["AX.W12", "AX.W07", "AX.W00"],
+  "ratify": {
+    "compositeChoice": {
+      "decision": "OKLab paintOver OVER-composite (the cheapest correct fix — the Ottosson matrices already ship in the shared procedural-color chunk; zero new dependency). Kubelka-Munk-as-CPU-LUT is the recorded RICHER path if the live audit reads the OKLab overlap insufficiently pigment-true against the reference works (Open-Question 1). Recorded default taken per Cadence §5.3 (orchestrator absent at impl; the spec's RECOMMENDED path).",
+      "status": "RATIFIED (recorded default — OKLab; KM-as-LUT recorded for live escalation)"
+    },
+    "crayonDisposition": {
+      "decision": "PROMOTE crayon to a first-class `AuroraMedium` (uMedium==4, the DRY tooth-multiply body) AND REMOVE the `strokeMode:\"crayon\"` union member + the resolveMediumId/resolveStrokeModeId special-cases (clean break, no alias — MEMORY no-backwards-compat). The promote keeps the dry-crayon body with a live consumer (`medium:\"crayon\"`), so substrate-with-consumer holds; the remove strikes the legacy alias. The consumer-sweep (Cadence §2b) found three shipped demo presets (CRAYON_SUNSET/RAINBOW/OCEAN, labelled 'Pastel … creamy') + a strokeMode 'Crayon' tab option using the alias — they are RE-POINTED in the same wave (the presets to `medium:\"oil-pastel\"` per their creamy-pastel labels; the option moved to the medium tab) so the clean break does NOT silently no-op a consumer. Recorded default taken per Cadence §3a (the §5.3 ratify reached impl un-ratified; the orchestrator-recorded REMOVE default applied + the consumer-sweep cadence step run).",
+      "status": "RATIFIED (recorded default — PROMOTE+REMOVE; consumer-sweep run, demo re-pointed)"
+    },
+    "vangoghDensityImpasto": {
+      "decision": "Baked a strong default congruent to the Starry Night reference: vangogh profile densityBig=0.42 / densityMed=0.52 / densitySml=0.60 (sparse — lower than oil's 0.65/0.78/0.90, the visible inter-stroke gaps), impastoFloor=1.0 (full-height crowns), energyGrade=1.0 (the Starry-Night length cascade). The exact triple is a live tuning knob the orchestrator ratifies against the π Starry Night audit (Open-Question 3); the atoms door (W10) may later expose density as an axis.",
+      "status": "RATIFIED (impl-open — strong default; live-tune in the π audit)"
+    },
+    "oklabCostGate": {
+      "decision": "The OKLab paintOver branch is GATED to the painterly stroke mediums (isPainterlyStroke = uMedium 3|5|6); the smooth/atmospheric pole never reaches paintOver, so it keeps the cheap linear mix at zero added cost (Open-Question 4). The added OKLab round-trip lands only where strokes overlap.",
+      "status": "RATIFIED (impl — gated to painterly stroke mediums)"
+    }
+  },
+  "liveRediagnosis": {
+    "ritual": "AX.W00 wave-open — code-level re-diagnosis confirmed at HEAD a563563 BEFORE any edit; the five RED witnesses re-proven by grep + git-show line-read, not taken on the audit's word. The W12 substrate (StrokeProfile/profileFor/paintStrokeLayers + the PCG2D/simplex noise basis) confirmed LANDED at a563563 (this wave BLOCKS on it — confirmed present).",
+    "witness1_vangogh_passthrough": {
+      "claim": "mediumVangogh is literally `return mediumOil(col, p, t);` (a passthrough — van-Gogh ≡ energy-graded oil). The only van-Gogh logic is the 4-line uMedium==5 energy-grade switch buried in bestOil.",
+      "confirmedAtHead": true,
+      "evidence": "git show a563563:…/mediums.glsl.ts — `vec3 mediumVangogh(...) { return mediumOil(col, p, t); }`. The gate's notPassthrough assert evaluates FALSE at HEAD (born-RED proven)."
+    },
+    "witness2_shared_oilpastel_crayon_body": {
+      "claim": "aurora.frag.ts dispatches BOTH uMedium==4 AND uMedium==6 to the IDENTICAL mediumCrayon body (oil-pastel ≡ crayon textured gradient).",
+      "confirmedAtHead": true,
+      "evidence": "git show a563563:…/aurora.frag.ts — `else if (uMedium == 6) col = mediumCrayon(...)`. The gate's dispatch6OilPastel + oilPastelDefined asserts evaluate FALSE at HEAD (born-RED proven)."
+    },
+    "witness3_linear_paintover": {
+      "claim": "paintOver composites overlapping strokes via a bare linear-RGB `col = mix(col, c, alpha)` (the muddy-midtone grey defect re-entering at the compositing layer).",
+      "confirmedAtHead": true,
+      "evidence": "git show a563563:…/brush.glsl.ts — `col = mix(col, c, alpha);`. The gate's oklabCompositeSelected assert evaluates FALSE at HEAD (born-RED proven)."
+    },
+    "witness4_per_cell_broken_color": {
+      "claim": "broken color is applied ONCE at the stroke cell center (brokenColorJitter on colMid); the within-stroke streak modulates VALUE only (`c *= 1.0 + streak*streakAmp`), never HUE.",
+      "confirmedAtHead": true,
+      "evidence": "brush.glsl.ts paintOver — value-only `c *= 1.0 + streak * streakAmp * 2.0`. The gate's withinStrokeOklch assert evaluates FALSE at HEAD (born-RED proven)."
+    },
+    "witness5_crayon_strokemode_peer_route": {
+      "claim": "uniformBridge resolveMediumId special-cases `oil` + `strokeMode:\"crayon\"` → MEDIUM_ID.crayon; presets.ts StrokeMode carries `\"crayon\"`; a live silent special-case (§0 violation).",
+      "confirmedAtHead": true,
+      "evidence": "git show a563563:…/presets.ts — `StrokeMode = \"oil\" | \"knife\" | \"crayon\" | \"chunky\"`; resolveMediumId `if (cfg.medium === \"oil\" && cfg.strokeMode === \"crayon\")`. The gate's strokeModeCrayonGone assert evaluates FALSE at HEAD (born-RED proven)."
+    },
+    "specHypothesisMatch": "EXACT. All five RED witnesses re-proven at a563563 (the charter cites eaba94f as the audit baseline; the four W13 surfaces are byte-identical at a563563). The W12 substrate is present (profileFor/paintStrokeLayers/StrokeProfile + PCG2D/simplex in the shared chunk)."
+  },
+  "folds": [
+    {
+      "finding": "slice 8 F0 — the van-Gogh one-line passthrough (the headline)",
+      "rootCause": "AW.W4.3 reused bestOil+curvedStroke verbatim, collapsing van-Gogh into a thin uMedium==5 energy-grade switch on the oil engine. mediumVangogh has been `return mediumOil(...)` since. Real Van Gogh atomicity is NOT a length modulation — it is separable directional dabs with their OWN shape/spacing/impasto.",
+      "gestaltFix": "mediumVangogh is now a FIRST-CLASS body composing its OWN vangogh StrokeProfile: (a) a new comma/crescent strokeShape (type==4, asymmetric taper — a loaded round head drawn to a fine tail); (b) SPARSE atomic placement (densityBig=0.42 vs oil's 0.65 — visible inter-stroke canvas gaps); (c) the energy grade as a PROFILE FIELD (energyGrade=1.0, un-buried from bestOil — the `if (uMedium==5)` branch is gone, bestOil energy-grades off the `energyGrade` parameter); (d) full-height impasto crowns (impastoFloor=1.0 — each atomic dab catches its own glint). The bridge forces tensor orientation so the dabs queue into swirl-rows. The bestOil/curvedStroke placement substrate is REUSED through the profile, never re-authored.",
+      "evidence": "mediums.glsl.ts: mediumVangogh composes profileFor(MEDIUM_VANGOGH, 0) → paintStrokeMedium; the MEDIUM_VANGOGH profile case sets shapeType=4 / densityBig=0.42 / energyGrade=1.0 / impastoFloor=1.0. brush.glsl.ts: strokeShape type==4 (comma/crescent); bestOil takes a `float energyGrade` param + grades off it (the buried `if(uMedium==5)` is gone). proof:aurora-vangogh-preset (re-authored) GREEN.",
+      "disposition": "ADDRESSED"
+    },
+    {
+      "finding": "slice 8 F1 — oil-pastel and crayon share ONE dispatch body",
+      "rootCause": "AW.W4.4's 'no parallel duplicate medium' precept collapsed two materially-different media (waxy oil-pastel vs dry crayon) onto one mediumCrayon dispatch body; the rework was a per-pixel tooth deposition/scumble/burnish, never a stroke.",
+      "gestaltFix": "Authored a DISTINCT mediumOilPastel — broad smeared directional strokes deposited via the shared brush engine off its OWN oil-pastel StrokeProfile (creamy soft hardness=0.42 so strokes blend on overlap, heavy build-up, chroma punch). mediumCrayon reverts to the DRY tooth-multiply (a tooth-relief col-multiply + a hard scumble + OKLCh broken color, NO sheen/burnish — that waxy gloss is oil-pastel's signature). aurora.frag.ts re-points uMedium==6 → mediumOilPastel; uMedium==4 keeps mediumCrayon. The two media share the SUBSTRATE (the structure-tensor orientation + tooth noise + brokenColorJitter, or the stroke cascade), NOT the dispatch body.",
+      "evidence": "mediums.glsl.ts: mediumOilPastel (profileFor(MEDIUM_OILPASTEL,0) → paintStrokeMedium); mediumCrayon (dry tooth-multiply, no burnish/sheen). aurora.frag.ts: uMedium==4→mediumCrayon, uMedium==6→mediumOilPastel. proof:aurora-oilpastel-medium (re-authored) GREEN.",
+      "disposition": "ADDRESSED"
+    },
+    {
+      "finding": "slice 8 F2 — stroke OVER-compositing is linear-RGB (overlap muds to grey)",
+      "rootCause": "AW.W4 §10 deferred the Kubelka-Munk fold; W5 moved palette interpolation + broken-color jitter into OKLCh but left stroke OVER-compositing (paintOver's mix) in linear-RGB. The muddy-midtone defect OKLCh killed at the palette layer RE-ENTERS at the compositing layer (the trigger condition — dense atomic van-Gogh dabs overlapping — is now met).",
+      "gestaltFix": "paintOver composites overlapping strokes in OKLab on the painterly stroke mediums only (a paintOverOklab helper lerps L,a,b of the over-color toward the under-color via linOklab/oklabToLinearSrgb — the Ottosson matrices spliced from the shared procedural-color chunk, no new color math). Overlapping complementaries transition through a chromatic path, not grey. Gated to isPainterlyStroke (uMedium 3|5|6); the smooth pole keeps the cheap linear mix.",
+      "evidence": "brush.glsl.ts: paintOverOklab + isPainterlyStroke; `col = isPainterlyStroke() ? paintOverOklab(col, c, alpha) : mix(col, c, alpha)`. proof:aurora-stroke-composite (new) GREEN.",
+      "disposition": "ADDRESSED (OKLab; KM-as-LUT recorded for live escalation per Open-Question 1)"
+    },
+    {
+      "finding": "slice 8 F5 — broken color is per-CELL, not within-stroke (flat stamped swatches)",
+      "rootCause": "brokenColorJitter applied ONCE at the stroke cell center (one constant jittered hue for the whole stroke); the within-stroke streak modulated VALUE only, never HUE — no atom-level broken color.",
+      "gestaltFix": "The within-stroke streak modulation moved into OKLCh — perturbs HUE (.z) + CHROMA (.y) along alongT/crossN, seeded per-stroke off a decorrelated streak fBm (so hue ≠ a scaled value), gated to the painterly stroke mediums + uBrokenColor. A single stroke now carries a small hue gradient — broken color at the ATOM level (adjacent strokes shimmer like real impasto).",
+      "evidence": "brush.glsl.ts paintOver: `lch = oklabToOklch(linOklab(c)); lch.z += hueStreak * …; lch.y = max(lch.y * …); c = oklabToLinearSrgb(oklchToOklab(lch))`, gated by isPainterlyStroke() && uBrokenColor. proof:aurora-stroke-composite (new) GREEN.",
+      "disposition": "ADDRESSED"
+    },
+    {
+      "finding": "slice 26 F5 — the crayon strokeMode legacy peer-route (a live silent special-case)",
+      "rootCause": "The older crayon strokeMode was kept as a peer-medium alias when the medium/strokeMode axes were reworked; neither excised nor failing. The legacy lane deferred its disposition to the aurora simplification wave; the oil-pastel/crayon split forces it here.",
+      "gestaltFix": "RESOLVED ONE way: PROMOTE crayon to a first-class `AuroraMedium` (uMedium==4) + REMOVE the strokeMode:\"crayon\" union member, the resolveMediumId/resolveStrokeModeId special-cases, and the mediums.glsl.ts legacy fall-through (clean break, no alias). The bridge forces tensor for crayon (like vangogh/oil-pastel). The consumer-sweep re-pointed the three shipped demo presets + the strokeMode tab option so the clean break does not silently no-op a consumer; the atoms-door applyTexture switch gained a `case \"crayon\"` (strokeAmount + canvasGrain) so a `medium:\"crayon\"` atom does not silently no-op the texture amount.",
+      "evidence": "presets.ts: AuroraMedium += crayon; StrokeMode = oil|knife|chunky (crayon removed). uniformBridge.ts: resolveMediumId is a pure identity map; STROKE_MODE_ID Record<StrokeMode>; resolveStrokeOrientId forces tensor for crayon. atoms.ts: applyTexture case \"crayon\". demo presets/options re-pointed. proof:aurora-oilpastel-medium step (5) GREEN.",
+      "disposition": "ADDRESSED (PROMOTE+REMOVE; consumer-sweep run)"
+    },
+    {
+      "finding": "CONVERGE digest 65-66 — speedtest deriveAurora OIL uSheen/boldness as medium-design INPUT",
+      "rootCause": "speedtest's hand-rolled deriveAurora carries an OIL register with a uSheen lever + a boldness/oiliness perceptual axis — rich consumer-grounded INPUT for the oil-pastel hardness/burnish/sheen + the van-Gogh impasto magnitudes.",
+      "gestaltFix": "READ as design reference (the oil-pastel burnish film maps onto speedtest's OIL uSheen; the impasto magnitudes inform the van-Gogh crown). The speedtest consumer-adoption (revert its auroraConfig.ts stopgap onto the converged surface) is ROUTED to W10/W28/W34 — NOT executed here. Cross-ref NOTE authored.",
+      "disposition": "ROUTED (design INPUT here; consumer-adoption is W10/W28/W34)"
+    },
+    {
+      "finding": "§4 note 14 / digest 365 — the WGSL twin gains NO medium dispatch",
+      "rootCause": "WebGPU is an OPT-IN Kuwahara finish over a parity-FLOOR field (W14), never an auto-default; medium parity in the WGSL twin is explicitly NOT a goal (the DELETE-branch decision).",
+      "gestaltFix": "This wave ships the GLSL/WebGL2 mediums ONLY. aurora.wgsl.ts / painterly.wgsl.ts / wake.wgsl.ts are UNTOUCHED (git diff --stat: empty); 0 mediumVangogh/mediumOilPastel references in the WGSL. WEBGPU_PARITY stays false (W07-set).",
+      "disposition": "OUT-OF-SCOPE (the §4-note-14 guard holds — verified untouched)"
+    }
+  ],
+  "gates": {
+    "proof:aurora-vangogh-preset": {
+      "form": "RE-AUTHORED (born-RED) source-parse + deletion-proof",
+      "asserts": "(1) union+id+dispatch; (2) NOT a `return mediumOil(...)` passthrough + composes a vangogh StrokeProfile; (3) the comma/crescent strokeShape (type==4) + the MEDIUM_VANGOGH profile case; (4) SPARSE density + full-height impasto (impastoFloor=1.0); (5) the energy grade is a PROFILE field (energyGrade=1.0 + bestOil(energyGrade) param), NOT a buried `if(uMedium==5)` branch + the OKLCh per-stroke jitter.",
+      "bornRed": "true — at a563563 mediumVangogh is `return mediumOil(...)` (notPassthrough = FALSE)",
+      "status": "GREEN on the patched tree"
+    },
+    "proof:aurora-oilpastel-medium": {
+      "form": "RE-AUTHORED (born-RED) source-parse + deletion-proof + budget",
+      "asserts": "(1) mediumOilPastel is a distinct function; (2) uMedium==4→mediumCrayon + uMedium==6→mediumOilPastel (DIFFERENT bodies); (3) oil-pastel deposits via the brush engine off its own profile; (4) dry crayon survives — tooth-multiply, NO sheen/burnish, keeps OKLCh broken color + tensor; (5) oil-pastel + crayon first-class (MEDIUM_ID 6+4) + the strokeMode:\"crayon\" peer-route REMOVED; (6) dist/aurora.js inside the governor ceiling.",
+      "bornRed": "true — at a563563 uMedium==6→mediumCrayon (dispatch6OilPastel = FALSE; oilPastelDefined = FALSE)",
+      "status": "GREEN on the patched tree (gzip 33550/38000)"
+    },
+    "proof:aurora-stroke-composite": {
+      "form": "NEW (born-RED) source-parse",
+      "asserts": "(1) paintOver composites in OKLab on the painterly stroke mediums (a paintOverOklab L,a,b lerp, gated by isPainterlyStroke), NOT a bare linear mix; (2) the within-stroke modulation perturbs HUE+CHROMA in OKLCh, gated by uBrokenColor; (3) the matrices single-sourced from the procedural-color chunk (no inline matrix in brush.glsl.ts); (4) the smooth pole keeps the linear-mix fallback.",
+      "bornRed": "true — at a563563 paintOver is a bare linear mix + value-only modulation (oklabCompositeSelected = FALSE; withinStrokeOklch = FALSE)",
+      "status": "GREEN on the patched tree"
+    },
+    "proof:aurora-painterly-statistics": {
+      "form": "NEW (born-RED) π-lane fail-CLOSED runtime-statistical readback (HARDENING §G #16)",
+      "asserts": "the operationalized 'stunning' bar on a real GPU at t=1: (a) van-Gogh atomicity gap-fraction above a floor (discrete dabs, not a coverage smear); (b) no-flat-fills local density variance per painterly medium; (c) van-Gogh OKLab overlap-not-grey (mean chroma above the muddy-grey threshold); (d) the four media (vangogh/oil-pastel/crayon/oil) pairwise MEASURABLY distinct, against the public-domain Starry Night crop fixture.",
+      "bornRed": "true (by construction) — a passthrough/shared-body/linear-mix render measures zero gap-fraction + near-zero variance + grey overlap + two-media-identical",
+      "status": "SKIPPED on the device-free runner (befitting-silent — no Playwright/GPU). FAIL-CLOSED: a PRESENT-GPU passthrough/shared render FAILs. The orchestrator runs the binding arm on the dev-Mac Metal box.",
+      "deviceArm": "AUTHORED (tests-visual/aurora-painterly-statistics.spec.ts), NOT run here (no browser/GPU in the implement sandbox)"
+    }
+  },
+  "selfGate": {
+    "typecheck": "PASS (vue-tsc --noEmit)",
+    "build": "PASS (vite + emit-types; dist/aurora.js 100.71 kB raw / 33.84 kB gzip — inside the governor ceiling)",
+    "proof:aurora-vangogh-preset": "PASS",
+    "proof:aurora-oilpastel-medium": "PASS",
+    "proof:aurora-stroke-composite": "PASS",
+    "proof:aurora-painterly-statistics": "SKIPPED (device-free runner — fail-closed arm runs on the orchestrator real GPU)",
+    "proof:gate-script-parity": "PASS (0 new orphans, 0 new dangling — the bijection holds with the two new gates)",
+    "sibling-no-regression": "proof:aurora-tensor-field, proof:aurora-impasto-relight, proof:aurora-noise-hash-equivalence, proof:aurora-wgsl-equivalence, proof:aurora-space-gamma, proof:aurora-atoms-roundtrip — ALL PASS; tests/components/custom/aurora/painterly.test.ts 8/8 PASS"
+  },
+  "liveArmPending": {
+    "owner": "orchestrator (the implement sandbox has NO browser/GPU — cannot run the π live/render arms)",
+    "binding": "the VISUAL-TRUTH live audit is the wave's close criterion (a passthrough + a shared body both PASS the CPU text gates — only the live readback catches this class; the cardinal AX precept). NOT yet run.",
+    "checks": [
+      "render the real WebGL2 aurora at t=1 over the `vangogh` preset on a real Metal GPU; assert van-Gogh reads as SEPARABLE atomic comma/crescent dabs with visible inter-stroke canvas gaps queued into swirl-rows along the ETF tangent, each catching its own full-height impasto glint — side-by-side against tests-visual/fixtures/starry-night-crop.png (the passthrough's continuous best-of-9 coverage field is visibly gone)",
+      "render the `oil-pastel` preset side-by-side with `crayon`; assert oil-pastel reads as smeared directional strokes with creamy build-up + sheen (NOT a textured gradient), and crayon reads as the dry tooth-multiply (no sheen) — the two media are VISIBLY DIFFERENT",
+      "assert a dense van-Gogh overlap region's complementaries mix as PIGMENT (chromatic OKLab path), the muddy-midtone grey defect visibly GONE",
+      "assert a single van-Gogh stroke carries within-stroke hue shimmer (broken color at the ATOM level, not a flat stamped swatch)",
+      "capture a per-medium texture snapshot (vangogh/oil-pastel/crayon/oil) so each medium's distinct character is pixel-evidenced",
+      "re-confirm the existing OIL medium is UNCHANGED (no regression — the W12 substrate already proved oil neutral)",
+      "run `npm run proof:aurora-painterly-statistics` in the tests-visual workspace with `npx playwright install chromium` + a live demo dev server on the real GPU — assert it GREENs (gap-fraction + no-flat-fills variance + OKLab overlap-not-grey + four-media-distinct all clear their floors); a passthrough/shared/linear-mix render FAILs",
+      "capture the paired-π BEFORE/AFTER + DELTA (BEFORE pins the HEAD passthrough/shared/grey-mud render) under docs/tranches/AX/audit/W13-DELTA.md"
+    ]
+  },
+  "consumerNote": {
+    "speedtest": "the speedtest deriveAurora OIL uSheen/boldness register is the design INPUT for the oil-pastel burnish + van-Gogh impasto magnitudes; the consumer-adoption (revert speedtest's auroraConfig.ts stopgap onto the converged surface) is W10/W28/W34, NOT this wave. Routed."
+  },
+  "status": "DEV-COMPLETE on the device-free arms (structure gates + typecheck + build GREEN, born-RED proven); the π painterly-statistics + the VISUAL-TRUTH live audit are AUTHORED fail-closed + handed to the orchestrator (the binding close)."
+}

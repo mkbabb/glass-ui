@@ -1,6 +1,10 @@
 node_modules/
 dist/
 *.png
+# AX.W13 — the committed public-domain reference fixtures (Van Gogh's Starry Night is
+# public domain). The π painterly-statistics gate anchors its atomicity-congruence read
+# against this crop; it must be TRACKED past the *.png ignore.
+!tests-visual/fixtures/*.png
 .playwright-mcp/
 demo/dist/
 demo/.qa/

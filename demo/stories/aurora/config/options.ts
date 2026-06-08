@@ -15,12 +15,18 @@ export const mediumOptions = [
     { label: "Watercolor", value: "watercolor" },
     { label: "Pastel", value: "pastel" },
     { label: "Oil", value: "oil" },
+    // AX.W13 — crayon (DRY tooth-multiply), van-Gogh (atomic comma dabs), and
+    // oil-pastel (stroke deposition) are first-class mediums, each its own body.
+    { label: "Crayon", value: "crayon" },
+    { label: "Van Gogh", value: "vangogh" },
+    { label: "Oil Pastel", value: "oil-pastel" },
 ] as const satisfies readonly TabOption<AuroraMedium>[];
 
+// AX.W13 — the strokeMode tab is oil sub-modes ONLY; the legacy "Crayon" entry is
+// gone (crayon is a first-class medium now, not a stroke mode).
 export const strokeModeOptions = [
     { label: "Oil", value: "oil" },
     { label: "Knife", value: "knife" },
-    { label: "Crayon", value: "crayon" },
     { label: "Chunky", value: "chunky" },
 ] as const satisfies readonly TabOption<StrokeMode>[];
 

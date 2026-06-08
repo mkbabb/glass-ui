@@ -141,12 +141,12 @@ Under `medium: "oil"`, `strokeMode` selects the brush behavior:
 | `oil`    | Balanced modern-gestural bristle (the default). |
 | `knife`  | Palette-knife impasto: razor edges, flat, heavy catch-light. |
 | `chunky` | Thick gestural bristle brush. |
-| `crayon` | Wax-pigment tooth multiply (a PEER medium — no strokes; resolves to `uMedium==4`). |
 
-`crayon` is dispatched as a **peer medium**, not an oil sub-mode: it multiplies anisotropic
-tooth noise into the base color rather than painting curved strokes (`mediums.glsl.ts:75`).
-The runtime resolves a `medium:"oil"` + `strokeMode:"crayon"` config to the crayon peer
-automatically (`resolveMediumId`, `DESIGN.md §7`).
+`strokeMode` is oil sub-modes ONLY. AX.W13 made `crayon` a first-class `medium:"crayon"`
+(the DRY wax-pigment tooth multiply, `uMedium==4`) — the legacy `oil` + `strokeMode:"crayon"`
+peer-route is REMOVED (clean break, no alias). A crayon surface selects `medium:"crayon"`;
+van-Gogh selects `medium:"vangogh"` (atomic comma/crescent dabs) and oil-pastel selects
+`medium:"oil-pastel"` (stroke deposition). See `DESIGN.md`.
 
 ### The painterly engine
 

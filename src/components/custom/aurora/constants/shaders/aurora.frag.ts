@@ -369,16 +369,18 @@ void main() {
   float breath = sin(t * 6.2831 / max(uBreathPeriod, 1.0));
   col *= 1.0 + uBreathDepth * breath * 0.5;
 
-  // Medium — crayon (4) is a peer dispatched here, not a mediumOil sub-mode.
-  // AW.W4.3/W4.4 — vangogh (5) is the energy-graded atomic-stroke medium;
-  // oil-pastel (6) is the reworked deposition+scumble+waxy model. The legacy crayon
-  // peer (4) and oil-pastel (6) share the reworked mediumCrayon body (no duplicate).
+  // Medium dispatch (AX.W13 — each is a FIRST-CLASS body, no shared dispatch):
+  //   1 pastel · 2 watercolor · 3 oil · 4 crayon (DRY tooth-multiply) ·
+  //   5 van-Gogh (atomic comma/crescent dabs) · 6 oil-pastel (stroke deposition).
+  // van-Gogh is no longer a mediumOil passthrough; oil-pastel and crayon no longer
+  // share a body — they share the SUBSTRATE (the tooth/placement helpers), not the
+  // dispatch body (slice 8 F0/F1).
   if (uMedium == 1) col = mediumPastel(col, pN, t);
   else if (uMedium == 2) col = mediumWatercolor(col, pN, t);
   else if (uMedium == 3) col = mediumOil(col, pN, t);
   else if (uMedium == 4) col = mediumCrayon(col, pN, t);
   else if (uMedium == 5) col = mediumVangogh(col, pN, t);
-  else if (uMedium == 6) col = mediumCrayon(col, pN, t);
+  else if (uMedium == 6) col = mediumOilPastel(col, pN, t);
 
   // Saturation trim
   col = saturate3(col, uSaturation);

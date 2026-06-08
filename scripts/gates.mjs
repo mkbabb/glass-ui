@@ -264,13 +264,25 @@ export const GATES = [
         id: "proof:aurora-vangogh-preset",
         cmd: "proof:aurora-vangogh-preset",
         tags: ["local", "ci"],
-        note: "AW.W4.3 — the van-Gogh medium 5-step wiring ALL landed: (1) AuroraMedium union += vangogh, (2) MEDIUM_ID vangogh:5, (3) main() uMedium==5 → mediumVangogh dispatch + the medium fn, (4) resolveStrokeOrientId FORCES tensor for vangogh, (5) bestOil energy-grades length by luma(sampleBase)+coherence when uMedium==5 + the OKLCh per-stroke jitter. Bite: vangogh falls back to oil+swirl uniforms (no force-tensor / no energy grade) → RED",
+        note: "AX.W13 (re-authored born-RED) — van-Gogh is a FIRST-CLASS body, NOT a `return mediumOil(...)` passthrough: (1) union+id+dispatch, (2) mediumVangogh composes a vangogh StrokeProfile (not mediumOil), (3) the comma/crescent strokeShape (type==4) + the MEDIUM_VANGOGH profile case, (4) SPARSE density gates + full-height impasto (impastoFloor=1.0), (5) the energy grade is a PROFILE field (energyGrade=1.0 + bestOil(energyGrade) param), NOT a buried `if(uMedium==5)` branch, + the OKLCh per-stroke jitter. Bite: revert to `return mediumOil(...)` → (2) RED; re-bury the energy grade as `if(uMedium==5)` in bestOil → (5) RED",
     },
     {
         id: "proof:aurora-oilpastel-medium",
         cmd: "proof:aurora-oilpastel-medium",
         tags: ["local", "ci"],
-        note: "AW.W4.4 — mediumCrayon is reworked into the oil-pastel deposition (tooth-occlusion deposit/toothFloor) + broken scumble upper layer (coverage<1) + waxy burnish film (a specular sheen growing with build-up); the old tooth-MULTIPLY (col*lay) is GONE; oil-pastel is in the union + MEDIUM_ID:6 + the uMedium==6 dispatch; the deposition orients along the ETF + applies OKLCh broken color; dist/aurora.js stays inside the AW.W4.0 governor ceiling. Bite: revert to the tooth-multiply → RED; OR grow the chunk past the aurora ceiling → the budget arm REDs",
+        note: "AX.W13 (re-authored born-RED) — oil-pastel and dry-crayon are SEPARATE bodies sharing the SUBSTRATE, not the dispatch body: (1) mediumOilPastel is a distinct function, (2) uMedium==4→mediumCrayon + uMedium==6→mediumOilPastel (DIFFERENT bodies), (3) oil-pastel deposits via the brush engine off its own profile, (4) dry crayon stays the tooth-multiply with NO sheen/burnish (the burnish film is oil-pastel's signature) + keeps OKLCh broken color + the tensor orientation, (5) oil-pastel + crayon are first-class mediums (MEDIUM_ID 6 + 4); the strokeMode:\"crayon\" peer-route is REMOVED; dist/aurora.js inside the governor ceiling. Bite: re-point uMedium==6→mediumCrayon → (2) RED; give crayon a burnish film → (4) RED; restore strokeMode:\"crayon\" → (5) RED",
+    },
+    {
+        id: "proof:aurora-stroke-composite",
+        cmd: "proof:aurora-stroke-composite",
+        tags: ["local", "ci"],
+        note: "AX.W13 (new born-RED) — paintOver composites in OKLab on the painterly stroke mediums (a paintOverOklab L,a,b lerp via linOklab/oklabToLinearSrgb, gated by isPainterlyStroke = uMedium 3|5|6), NOT a bare linear mix(col,c,alpha); the within-stroke modulation perturbs HUE(.z)+CHROMA(.y) in OKLCh (oklabToOklch→oklchToOklab), gated by uBrokenColor, NOT value-only; the OKLab/OKLCh matrices are single-sourced from the shared procedural-color chunk (OKLCH_MATRICES_GLSL splice + linOklab) with NO inline matrix in brush.glsl.ts; the smooth pole keeps the linear-mix fallback. Bite: revert paintOver to a bare linear mix → (1) RED; revert the modulation to value-only → (2) RED; inline an Ottosson matrix in brush.glsl.ts → (3) RED",
+    },
+    {
+        id: "proof:aurora-painterly-statistics",
+        cmd: "proof:aurora-painterly-statistics",
+        tags: ["local", "ci"],
+        note: "AX.W13 (new born-RED; π-lane fail-CLOSED, HARDENING §G #16) — the operationalized 'stunning' bar: a real-GPU readback of the van-Gogh / oil-pastel / crayon / oil mediums at t=1 asserts (a) van-Gogh atomicity gap-fraction above a floor (discrete dabs, not a coverage smear), (b) no-flat-fills local density variance per painterly medium, (c) van-Gogh OKLab overlap-not-grey (mean chroma above the muddy-grey threshold), (d) the four media pairwise MEASURABLY distinct (no passthrough/shared-body collapse), against the public-domain Starry Night crop fixture. Device-absent → befitting-silent SKIP; a PRESENT-GPU passthrough/shared/linear-mix render → FAIL. Bite: a passthrough van-Gogh measures zero gap-fraction + grey overlap + two-media-identical → RED",
     },
     {
         id: "proof:aurora-atoms-roundtrip",
