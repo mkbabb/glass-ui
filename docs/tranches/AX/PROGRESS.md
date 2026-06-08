@@ -32,7 +32,7 @@ soundness discipline: "complete" never collapses to "headless-green").
 | W16 | blob integration — interaction + perf + readme | complete |
 | W17 | constellation tokens + warp + slides adopt | complete |
 | W18 | storybook IA reinvention | planned |
-| W19 | primitive prune A — header-ribbon/glyph-face/disco-glyph | planned |
+| W19 | primitive prune A — header-ribbon/glyph-face/disco-glyph | live-verified (DEVELOPED) |
 | W20 | primitive fix — native top-layer, card toggles, glass-panel retire | planned |
 | W21 | primitive recategorize — ledger/barrel coherence + metric reconcile | planned |
 | W22 | font register reconciliation | complete |
@@ -74,7 +74,7 @@ soundness discipline: "complete" never collapses to "headless-green").
 | W56 | squircle design-language — corner-shape: superellipse() token axis (G3, foundational) | live-verified (DEVELOPED) |
 | W57 | demo-radial reauthor + pulse-aura calm + aurora/constellation heros (P6/P7) | live-verified (DEVELOPED) |
 | W58 | storybook-language strip — kill WCAG citations + impl-note code-comments (P10/P11) | dev-complete (proof:story-language born-RED→GREEN; 49 SFCs swept) |
-| W59 | slider redesign — integrated-cylinder glass default + squircle-thumb spectrum | planned |
+| W59 | slider redesign — integrated-cylinder glass default + squircle-thumb spectrum | live-verified (DEVELOPED) |
 
 ## W00 — visual-runtime (π) lane — COMPLETE
 
