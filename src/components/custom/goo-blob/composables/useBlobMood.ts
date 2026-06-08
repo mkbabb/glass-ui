@@ -54,8 +54,13 @@ function paramsFor({ valence, arousal }: AffectPoint): MoodParams {
         pointerAttraction: lerp(-0.2, 0.6, valence * 0.5 + 0.5) * (0.4 + 0.6 * arousal),
         // Energized = faster merge cycling (lower stagger scale).
         mergeRate: lerp(2.0, 0.3, arousal),
-        // The iridescence/SSS sheen intensity (excited shimmers, sleepy is flat).
-        iridScale: lerp(0.4, 1.8, arousal),
+        // The iridescence/SSS sheen intensity (excited shimmers, sleepy is calm —
+        // NOT flat: sleepy stays ALIVE at ~0.55, an `arousal=0` blob reads asleep,
+        // not dead). AX.W15: with lit/iridescence/SSS now DEFAULT-ON, this multiplier
+        // is load-bearing for the FIRST time — the excited CEILING drops 1.8 → 1.35
+        // so the excited extreme stays a WARM wet bead, never an over-saturated neon
+        // thin-film on the now-default-lit warm body.
+        iridScale: lerp(0.55, 1.35, arousal),
     };
 }
 

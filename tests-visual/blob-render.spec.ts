@@ -50,17 +50,37 @@ import type { Locator } from "@playwright/test";
 import { PNG } from "pngjs";
 import { PI_TARGETS } from "./pi-manifest.ts";
 
-// ── tunables (the W08 un-flood band — clip-robust interior-inset metrics) ─────────
+// ── tunables (the W15 four-side-containment band — clip-robust interior metrics) ───
 const INTERIOR_INSET = 0.12; // exclude the outer rounded-corner band from coverage
-const COVERAGE_MIN = 0.1; // a contained field paints SOMETHING (not blank); droplet ≈ 0.22
+const COVERAGE_MIN = 0.08; // a contained field paints SOMETHING (not blank); droplet ≈ 0.18
 const COVERAGE_MAX = 0.55; // NOT the slab (the flood reads ≈ 0.74 interior); the un-flood ceil
 const GRADIENT_MIN_DELTA = 25; // centre-vs-corner |Δluma| floor (a FIELD, not a flat slab)
-const SIDE_MARGIN_MAX_FRAC = 0.2; // the un-flood opens a transparent L/R margin (slab = 1.0)
-const EDGE_RING_W = 2; // the literal-edge ring width (px) sampled for the L/R margin
+// AX.W15 — the FOUR-SIDE footprint margin: W08 only asserted L/R (the droplet was
+// taller than the box cleared); W15's geometry budget contains the droplet on ALL
+// FOUR sides, so the ceil now covers top/bottom too. The orbit excursion is the only
+// intentional overflow, so the steady margin reads as a transparent frame on every
+// edge — but a satellite at a wide orbit can momentarily touch an edge, so the ceil
+// is the WORST edge over the PEAK-coverage frame (not zero).
+const SIDE_MARGIN_MAX_FRAC = 0.35; // worst of L/R/top/bottom literal-edge paint fraction
+const EDGE_RING_W = 2; // the literal-edge ring width (px) sampled for the margin
 const EDGE_SPAN_INSET = 0.25; // sample the MIDDLE 50% of an edge (skip the rounded corners)
 const BLOB_FRAMES = 6; // read back N frames; the verdict is the PEAK coverage
 const ANTI_FLAKE_RUNS = 3; // 3-run median verdict (anti-flake)
 const COLOR_DIFF_THRESHOLD = 40; // |ΔR|+|ΔG|+|ΔB| over the modal bg = "painted"
+// AX.W15 dome luminance-VARIANCE: a LIT dome rolls luma across a believable sphere
+// (bright specular cap → mid body → dark rim), so the painted interior's luma has a
+// real spread; a FLAT fill (lit:false) has near-zero spread. The floor is the std-dev
+// of luma over the PAINTED pixels (excludes the background).
+const DOME_LUMA_STD_MIN = 9; // painted-pixel luma std-dev floor (flat fill ≈ 3, lit ≈ 18+)
+// AX.W15 silhouette deviation: the warped-FBM membrane makes the edge deviate from a
+// perfect circle, PROPORTIONAL to the body. Measured as the coefficient-of-variation
+// of the per-angle painted radius (std/mean); a clean circle reads ≈ 0, a living
+// membrane reads a small non-zero band.
+const SILHOUETTE_CV_MIN = 0.015; // per-angle radius CV floor (clean arc ≈ 0.003, living ≈ 0.03)
+// AX.W15 pointer-driven centroid shift: a synthetic hover-flick toward an off-centre
+// point measurably pulls the painted centroid toward the pointer (the wired lean +
+// pseudopod, now legible on the contained body). The floor is in canvas-width fraction.
+const CENTROID_SHIFT_MIN = 0.012; // |Δcentroid| toward the pointer, fraction of width
 
 test.setTimeout(180_000);
 
@@ -171,37 +191,144 @@ function centreVsCornerDelta(png: PNG): number {
 }
 
 /**
- * Left/right transparent-margin fraction — the un-flood opens a margin on the L/R
- * (the slab touched all four edges). Sampled on the literal-edge 2px rings over the
- * MIDDLE 50% of the edge (skipping the rounded corners). Returns the WORSE (max) of
- * left/right. NB: the TOP/BOTTOM margin is NOT asserted here — the default body/orbit
- * radii make the droplet taller than the box clears, which is W15's FOOTPRINT job
- * (W15 dependsOn W08 + re-points this gate to the four-side footprint-fit band).
+ * AX.W15 — the FOUR-SIDE transparent-margin fraction. W08 asserted only L/R (the
+ * default radii made the droplet taller than the box cleared); W15's footprint budget
+ * contains the droplet on ALL FOUR sides, so this now samples top + bottom too.
+ * Sampled on the literal-edge 2px rings over the MIDDLE 50% of each edge (skipping the
+ * rounded corners). Returns the WORSE (max) of left/right/top/bottom — the steady
+ * droplet leaves a transparent frame on every edge; a satellite at a wide orbit can
+ * momentarily touch ONE edge (the intentional orbit excursion), bounded by the ceil.
  */
 function worstSideMargin(png: PNG, bg: [number, number, number], threshold: number): number {
     const { width: w, height: h, data } = png;
-    const y0 = Math.floor(h * EDGE_SPAN_INSET);
-    const y1 = Math.ceil(h * (1 - EDGE_SPAN_INSET));
-    const ringFrac = (xs: () => Iterable<[number, number]>): number => {
+    const ringFrac = (cells: () => Iterable<[number, number]>): number => {
         let total = 0;
         let differ = 0;
-        for (const [x, y] of xs()) {
+        for (const [x, y] of cells()) {
             total++;
             if (diffFromBg(data, (y * w + x) * 4, bg) > threshold) differ++;
         }
         return total === 0 ? 0 : differ / total;
     };
+    const y0 = Math.floor(h * EDGE_SPAN_INSET);
+    const y1 = Math.ceil(h * (1 - EDGE_SPAN_INSET));
+    const x0 = Math.floor(w * EDGE_SPAN_INSET);
+    const x1 = Math.ceil(w * (1 - EDGE_SPAN_INSET));
     const left = ringFrac(function* () {
         for (let x = 0; x < EDGE_RING_W; x++) for (let y = y0; y < y1; y++) yield [x, y];
     });
     const right = ringFrac(function* () {
         for (let x = w - EDGE_RING_W; x < w; x++) for (let y = y0; y < y1; y++) yield [x, y];
     });
-    return Math.max(left, right);
+    const top = ringFrac(function* () {
+        for (let y = 0; y < EDGE_RING_W; y++) for (let x = x0; x < x1; x++) yield [x, y];
+    });
+    const bottom = ringFrac(function* () {
+        for (let y = h - EDGE_RING_W; y < h; y++) for (let x = x0; x < x1; x++) yield [x, y];
+    });
+    return Math.max(left, right, top, bottom);
+}
+
+/**
+ * AX.W15 — the PAINTED-pixel luma std-dev (the dome luminance VARIANCE witness). A LIT
+ * dome rolls luma across a sphere (bright specular cap → mid → dark rim); the painted
+ * interior's luma spreads. A FLAT fill (lit:false) is near-uniform → near-zero spread.
+ * Computed over the interior-inset painted pixels (differ-from-bg), so the cream
+ * background does not dilute the measure.
+ */
+function domeLumaStd(png: PNG, bg: [number, number, number], threshold: number): number {
+    const { width: w, height: h, data } = png;
+    const x0 = Math.floor(w * INTERIOR_INSET);
+    const x1 = Math.ceil(w * (1 - INTERIOR_INSET));
+    const y0 = Math.floor(h * INTERIOR_INSET);
+    const y1 = Math.ceil(h * (1 - INTERIOR_INSET));
+    const lumas: number[] = [];
+    for (let y = y0; y < y1; y++) {
+        for (let x = x0; x < x1; x++) {
+            const i = (y * w + x) * 4;
+            if (diffFromBg(data, i, bg) <= threshold) continue; // background → skip
+            lumas.push(0.299 * data[i]! + 0.587 * data[i + 1]! + 0.114 * data[i + 2]!);
+        }
+    }
+    if (lumas.length < 16) return 0;
+    const mean = lumas.reduce((a, b) => a + b, 0) / lumas.length;
+    const variance = lumas.reduce((a, b) => a + (b - mean) * (b - mean), 0) / lumas.length;
+    return Math.sqrt(variance);
+}
+
+/**
+ * AX.W15 — the painted centroid (in [0,1] canvas fractions) + the silhouette CV. The
+ * centroid is the mean position of the painted interior pixels. The silhouette CV is
+ * the coefficient-of-variation of the per-angle outermost-painted radius about the
+ * centroid — a clean circle reads ≈ 0, a warped-FBM living membrane reads a small
+ * non-zero band. Computed over 48 angular bins.
+ */
+function paintedShape(
+    png: PNG,
+    bg: [number, number, number],
+    threshold: number,
+): { cx: number; cy: number; silhouetteCV: number } {
+    const { width: w, height: h, data } = png;
+    const x0 = Math.floor(w * INTERIOR_INSET);
+    const x1 = Math.ceil(w * (1 - INTERIOR_INSET));
+    const y0 = Math.floor(h * INTERIOR_INSET);
+    const y1 = Math.ceil(h * (1 - INTERIOR_INSET));
+    let sx = 0;
+    let sy = 0;
+    let n = 0;
+    for (let y = y0; y < y1; y++) {
+        for (let x = x0; x < x1; x++) {
+            if (diffFromBg(data, (y * w + x) * 4, bg) <= threshold) continue;
+            sx += x;
+            sy += y;
+            n++;
+        }
+    }
+    if (n < 16) return { cx: 0.5, cy: 0.5, silhouetteCV: 0 };
+    const cx = sx / n;
+    const cy = sy / n;
+    // Per-angle outermost painted radius about the centroid.
+    const BINS = 48;
+    const maxR = new Array<number>(BINS).fill(0);
+    for (let y = y0; y < y1; y++) {
+        for (let x = x0; x < x1; x++) {
+            if (diffFromBg(data, (y * w + x) * 4, bg) <= threshold) continue;
+            const dx = x - cx;
+            const dy = y - cy;
+            const r = Math.hypot(dx, dy);
+            let bin = Math.floor(((Math.atan2(dy, dx) + Math.PI) / (2 * Math.PI)) * BINS);
+            if (bin >= BINS) bin = BINS - 1;
+            if (r > maxR[bin]!) maxR[bin] = r;
+        }
+    }
+    const radii = maxR.filter((r) => r > 0);
+    if (radii.length < BINS / 2) return { cx: cx / w, cy: cy / h, silhouetteCV: 0 };
+    const rMean = radii.reduce((a, b) => a + b, 0) / radii.length;
+    const rVar = radii.reduce((a, b) => a + (b - rMean) * (b - rMean), 0) / radii.length;
+    const cv = rMean > 0 ? Math.sqrt(rVar) / rMean : 0;
+    return { cx: cx / w, cy: cy / h, silhouetteCV: cv };
+}
+
+/** A synthetic hover-flick over a canvas toward (fx, fy) in element fractions. */
+async function hoverFlick(page: import("@playwright/test").Page, canvas: Locator, fx: number, fy: number) {
+    const box = await canvas.boundingBox();
+    if (!box) return;
+    const cx = box.x + box.width / 2;
+    const cy = box.y + box.height / 2;
+    const tx = box.x + box.width * fx;
+    const ty = box.y + box.height * fy;
+    // Move centre → target in steps so the spring follow + velocity squash + trail
+    // accumulate (a single jump leaves zero velocity).
+    await page.mouse.move(cx, cy);
+    for (let s = 1; s <= 8; s++) {
+        await page.mouse.move(cx + (tx - cx) * (s / 8), cy + (ty - cy) * (s / 8));
+        await page.waitForTimeout(16);
+    }
+    await page.mouse.move(tx, ty);
 }
 
 test.describe("blob-render (π lane — fail-CLOSED, the blob's CLOSING gate)", () => {
-    test("blob UN-FLOODS to a contained metaball field on BLOB_CONFIG_DEFAULTS (interior band + gradient + side margin)", async ({
+    test("blob renders a CONTAINED LIT LIVING droplet on BLOB_CONFIG_DEFAULTS (four-side containment + dome variance + silhouette + field)", async ({
         page,
     }) => {
         await page.goto(PI_TARGETS.blob.path);
@@ -218,10 +345,14 @@ test.describe("blob-render (π lane — fail-CLOSED, the blob's CLOSING gate)", 
         const coverages: number[] = [];
         const gradients: number[] = [];
         const margins: number[] = [];
+        const domeStds: number[] = [];
+        const silhouettes: number[] = [];
         for (let run = 0; run < ANTI_FLAKE_RUNS; run++) {
             let peakCov = 0;
             let peakGrad = 0;
             let peakMargin = 0;
+            let peakDome = 0;
+            let peakSil = 0;
             for (let f = 0; f < BLOB_FRAMES; f++) {
                 const png = await grab(blobCanvas);
                 const bg = modalBackground(png);
@@ -230,16 +361,22 @@ test.describe("blob-render (π lane — fail-CLOSED, the blob's CLOSING gate)", 
                     peakCov = cov;
                     peakGrad = centreVsCornerDelta(png);
                     peakMargin = worstSideMargin(png, bg, COLOR_DIFF_THRESHOLD);
+                    peakDome = domeLumaStd(png, bg, COLOR_DIFF_THRESHOLD);
+                    peakSil = paintedShape(png, bg, COLOR_DIFF_THRESHOLD).silhouetteCV;
                 }
                 await page.waitForTimeout(80);
             }
             coverages.push(peakCov);
             gradients.push(peakGrad);
             margins.push(peakMargin);
+            domeStds.push(peakDome);
+            silhouettes.push(peakSil);
         }
         const coverage = median(coverages);
         const gradient = median(gradients);
         const sideMargin = median(margins);
+        const domeStd = median(domeStds);
+        const silhouetteCV = median(silhouettes);
 
         // 1. UN-FLOOD — the interior is a CONTAINED field, NOT the canvas-filling slab.
         expect(
@@ -248,7 +385,7 @@ test.describe("blob-render (π lane — fail-CLOSED, the blob's CLOSING gate)", 
         ).toBeGreaterThanOrEqual(COVERAGE_MIN);
         expect(
             coverage,
-            `blob interior coverage ${coverage.toFixed(3)} exceeds the un-flood ceil ${COVERAGE_MAX} — the blob FLOODED (the smin over-merge slab; the flood reads ≈ 0.74 interior). This is the born-RED witness the static proof:blob-smin-normalized is blind to.`,
+            `blob interior coverage ${coverage.toFixed(3)} exceeds the un-flood ceil ${COVERAGE_MAX} — the blob FLOODED (the smin over-merge slab; the flood reads ≈ 0.74 interior).`,
         ).toBeLessThanOrEqual(COVERAGE_MAX);
 
         // 2. FIELD-NOT-SLAB — a strong centre-vs-corner luma gradient (the flood is
@@ -258,11 +395,102 @@ test.describe("blob-render (π lane — fail-CLOSED, the blob's CLOSING gate)", 
             `blob centre-vs-corner luma delta ${gradient.toFixed(1)} is below the field floor ${GRADIENT_MIN_DELTA} — the canvas reads as a FLAT slab (alpha = 1 everywhere), not a metaball field`,
         ).toBeGreaterThanOrEqual(GRADIENT_MIN_DELTA);
 
-        // 3. SIDE MARGIN — the un-flood opens a transparent margin on the L/R (the slab
-        // touched all four edges). The four-side footprint margin is W15's geometry job.
+        // 3. FOUR-SIDE CONTAINMENT (AX.W15 F0) — a transparent margin on EVERY edge
+        // (W08 asserted only L/R; W15's footprint budget contains top/bottom too). The
+        // orbit excursion is the only intentional overflow, bounded by the ceil.
         expect(
             sideMargin,
-            `blob worst L/R side-margin fraction ${sideMargin.toFixed(3)} exceeds the ceil ${SIDE_MARGIN_MAX_FRAC} — the droplet still hard-clips the left/right border (the flood signature; the un-flood must open an L/R margin)`,
+            `blob worst four-side edge-paint fraction ${sideMargin.toFixed(3)} exceeds the ceil ${SIDE_MARGIN_MAX_FRAC} — the droplet hard-clips an edge (the footprint budget must open a transparent margin on ALL FOUR sides; only the orbit excursion may peek)`,
         ).toBeLessThanOrEqual(SIDE_MARGIN_MAX_FRAC);
+
+        // 4. DOME LUMINANCE VARIANCE (AX.W15 F1) — a LIT dome rolls luma across a
+        // sphere; a FLAT fill (lit:false) is near-uniform. Born-RED at HEAD (lit:false
+        // shipped a near-flat fill, std ≈ 3).
+        expect(
+            domeStd,
+            `blob painted-pixel luma std-dev ${domeStd.toFixed(1)} is below the lit-dome floor ${DOME_LUMA_STD_MIN} — the body reads as a FLAT fill, not a lit warm-cream dome (the default-OFF flat-sticker witness)`,
+        ).toBeGreaterThanOrEqual(DOME_LUMA_STD_MIN);
+
+        // 5. SILHOUETTE DEVIATION (AX.W15 F3) — the warped-FBM membrane deviates from a
+        // perfect circle. Born-RED at HEAD (warpAmp:0.0 + low noiseAmp → a clean arc,
+        // CV ≈ 0.003).
+        expect(
+            silhouetteCV,
+            `blob silhouette radius CV ${silhouetteCV.toFixed(4)} is below the living-membrane floor ${SILHOUETTE_CV_MIN} — the edge reads as a clean geometric circle, not a living warped-FBM membrane`,
+        ).toBeGreaterThanOrEqual(SILHOUETTE_CV_MIN);
+    });
+
+    test("blob LEANS toward a synthetic hover-flick (the wired interaction is legible within the footprint)", async ({
+        page,
+    }) => {
+        await page.goto(PI_TARGETS.blob.path);
+        const blobCanvas = page.locator('canvas[data-testid="goo-blob-canvas"]').first();
+        await blobCanvas.waitFor({ state: "visible", timeout: 20_000 });
+        await page.waitForTimeout(600);
+
+        // Resting centroid (median over a few frames to settle the breath/orbit).
+        const restCxs: number[] = [];
+        for (let f = 0; f < 4; f++) {
+            const png = await grab(blobCanvas);
+            const bg = modalBackground(png);
+            restCxs.push(paintedShape(png, bg, COLOR_DIFF_THRESHOLD).cx);
+            await page.waitForTimeout(80);
+        }
+        const restCx = median(restCxs);
+
+        // Synthetic hover-flick toward the RIGHT (fx=0.82): the spring follow + lean +
+        // pseudopod trail pull the painted centroid toward the pointer.
+        await hoverFlick(page, blobCanvas, 0.82, 0.5);
+        await page.waitForTimeout(120);
+        const leanCxs: number[] = [];
+        for (let f = 0; f < 4; f++) {
+            const png = await grab(blobCanvas);
+            const bg = modalBackground(png);
+            leanCxs.push(paintedShape(png, bg, COLOR_DIFF_THRESHOLD).cx);
+            await page.waitForTimeout(60);
+        }
+        const leanCx = median(leanCxs);
+        const shift = leanCx - restCx; // positive = toward the right-side pointer
+
+        expect(
+            shift,
+            `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} (rest ${restCx.toFixed(3)} → lean ${leanCx.toFixed(3)}); it must move ≥ ${CENTROID_SHIFT_MIN} toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)`,
+        ).toBeGreaterThanOrEqual(CENTROID_SHIFT_MIN);
+    });
+
+    test("EVERY grid blob paints visibly against the page background in BOTH light and dark (the var(--primary)-dark-wash guard)", async ({
+        page,
+    }) => {
+        await page.goto(PI_TARGETS.blob.path);
+        const cells = page.locator('canvas[data-testid="goo-blob-canvas"]');
+        await cells.first().waitFor({ state: "visible", timeout: 20_000 });
+        await page.waitForTimeout(600);
+
+        // The FIRST four grid blobs are the BLOB_CONFIG_DEFAULTS color showcase; the
+        // first is var(--primary) (the dark-wash risk). Assert each paints a contained
+        // field in BOTH modes (the min-contrast rim guard keeps it legible).
+        const checkMode = async (label: string) => {
+            const count = Math.min(await cells.count(), 4);
+            for (let idx = 0; idx < count; idx++) {
+                const cell = cells.nth(idx);
+                let peak = 0;
+                for (let f = 0; f < BLOB_FRAMES; f++) {
+                    const png = await grab(cell);
+                    const bg = modalBackground(png);
+                    peak = Math.max(peak, interiorCoverage(png, bg, COLOR_DIFF_THRESHOLD));
+                    await page.waitForTimeout(60);
+                }
+                expect(
+                    peak,
+                    `[${label}] grid blob #${idx} interior coverage ${peak.toFixed(3)} is below ${COVERAGE_MIN} — it washes out against the ${label} background (the var(--primary)-dark-wash min-contrast rim guard failed for this blob)`,
+                ).toBeGreaterThanOrEqual(COVERAGE_MIN);
+            }
+        };
+
+        await checkMode("light");
+        // Toggle dark mode (the demo root toggles `.dark` on <html>).
+        await page.evaluate(() => document.documentElement.classList.add("dark"));
+        await page.waitForTimeout(400); // let the MutationObserver retint + repaint
+        await checkMode("dark");
     });
 });

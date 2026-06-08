@@ -1,0 +1,154 @@
+{
+  "wave": "AX.W15",
+  "title": "Blob contained-droplet — geometry footprint budget + lit warm-cream default + living membrane + analytic-gradient smin",
+  "status": "dev-complete (headless GREEN: typecheck + blob units + glslangValidator + analytic-gradient CD cos-sim 0.997; orchestrator owns the live π-lane + Playwright visual-truth close)",
+  "baseSha": "27036cc",
+  "dependsOn": ["AX.W08", "AX.W11"],
+  "posScaleDisposition": {
+    "ratified": "KEEP W08's POS_SCALE regime (POS_SCALE = 1/1.6 = 0.625 in useMetaballRenderer.ts:32 UNTOUCHED); re-derive ONLY the geometry/identity/membrane/interaction blocks DOWN against the footprint. The slice-12 'eliminate the hidden fudge / express every length in raw wrapper-normalized units' language is DROPPED as scope-creep (the recommended §4-note-13 branch).",
+    "smin_band_untouched": "config.smoothK (0.05), the mood smoothK multiplier (lerp 0.85-1.35), the uSmoothK*POS_SCALE upload (useMetaballRenderer.ts:443), and sdf-body.glsl.ts k*=4.0 are ALL W08's and were NOT touched (verified: git diff does not edit those lines). The smin band rides into the footprint budget as a COUNTED term (the +k IQ outward-expansion) but its VALUE is inherited, never re-tuned.",
+    "noReFlood": true
+  },
+  "rootCauseLocked": "Even on W08's un-flooded field the blob does NOT read as a contained lit living warm-glass droplet: (F0) the geometry cohort was tuned against the OLD flooded field — body 0.25 + orbit 0.35 + sat 0.13 = 0.73 raw reach = 1.46x the wrapper half-extent BEFORE the smin inflation, overflowing every side; (F1) every SOTA surface feature defaulted OFF (lit:false, iridescence:0, sssScale:0, coreGlow:0 — the 'zero regression' flag-gating, legacy-forbidden in greenfield); (F3) the membrane was a dead geometric arc (warpAmp:0.0 domain-warp OFF, single-sin breath); (F2) the wired interaction was invisible (no contained silhouette to deform); (F6) the demo stories bound cold-blue oklch(0.7 0.16 250), not the warm-cream house identity.",
+  "liveRediagnosisAtHead": {
+    "method": "Read the ACTUAL implementation at BASE 27036cc; confirmed each foldsFindings root cause against real lines/symbols; verified the coordinate chain numerically (POS_SCALE + 160% canvas) rather than on the audit's word.",
+    "witness1_geometryOverBudget": {
+      "headValues": "bodyRadius:0.25 (types.ts:157), satelliteRadius:0.13 (:159), orbitRadius:0.35 (:160)",
+      "coordinateChain": "uv in [-0.5,0.5] across CANVAS; canvas CSS-sized 160% of wrapper, so wrapper half-extent in uv = 0.5*(1/1.6) = 0.3125; every length * POS_SCALE=0.625 before upload, so raw r reads as r*0.625/0.3125 = r*2.0 of the wrapper half",
+      "reachAtHead": "(0.25+0.35+0.13)*2.0 = 1.46x the wrapper half = overflows on every side (matches the spec's ~1.34x live framebuffer reading; 1.46 is the pre-smin raw, 1.34 the alpha-thresholded effective)",
+      "confirmedInCode": true
+    },
+    "witness2_flatStickerDefault": {
+      "headValues": "lit:false (types.ts:198), iridescence:0.0 (:191), sssScale:0.0 (:194), coreGlow:0.0 (:196)",
+      "result": "the pre-W9.b flat-color sticker; the lit dome/Fresnel/iridescence/SSS ALL execute correctly but are gated OFF — near-zero luminance variance across the body",
+      "confirmedInCode": true
+    },
+    "witness3_deadMembrane": {
+      "headValues": "warpAmp:0.0 (types.ts:179, domain-warp OFF), noiseAmp:0.025 (:176), FBM lacunarity 2.0 / persistence 0.5 (watercolor-edges.glsl.ts), breath = single sin(uPulsePhase) (metaball.frag.ts:166,270)",
+      "result": "a clean geometric arc, mechanical pulse — not a living warped-FBM membrane",
+      "confirmedInCode": true
+    },
+    "witness4_invisibleInteraction_coldDemo": {
+      "wiredButInvisible": "pointerStrength:0.08 (:203), stretch:0.4 (:204), clickImpulse:0.5 (:205) FULLY WIRED (spring/trail/squash sound) but tuned against the oversized field with no contained silhouette to deform",
+      "coldDemoBinding": "blob-interaction.vue:53 + blob-mood.vue:74/:104 bind color=\"oklch(0.7 0.16 250)\" (cold-blue), not the warm house identity",
+      "confirmedInCode": true
+    },
+    "divergencesFromSpecHypothesis": [
+      "STALE-IN-SPEC (not a code change needed): the SOTA-deepening claims orbitSpeedScale/wobbleScale are 'derived-but-IGNORED' by the satellite tick. At BASE they ARE consumed — useBlobSatellites.ts orbitPos() reads mood.orbitSpeedScale (lines 90,214,242,280) and mood.wobbleScale (line 92). No dead-param fix was needed; the mood drives the orbit as wired. Recorded so a later wave does not re-fix a live wiring.",
+      "The lit/iridescence/SSS blocks in metaball.frag.ts execute correctly at HEAD (confirmed by reading :311-374) — the defect is the DEFAULT FLAGS being OFF + the oversized field swamping them, exactly the spec's 'containment resurfaces them' insight."
+    ]
+  },
+  "reDerivedGeometryBudget": {
+    "approach": "ONE atomic re-derivation of the length cohort DOWN against the wrapper-footprint budget (the SOTA-deepening [25] atomic sum body+orbit+sat+smin), NOT a per-constant nudge. KEEPS W08's POS_SCALE regime.",
+    "bodyRadius": { "before": 0.25, "after": 0.22, "wrapperHalfRadius": "0.44 (a generous contained bead)" },
+    "orbitRadius": { "before": 0.35, "after": 0.27 },
+    "satelliteRadius": { "before": 0.13, "after": 0.105 },
+    "eccentricity": { "before": 0.25, "after": 0.22 },
+    "achievedFootprintFit": {
+      "bodyPlusSmin_wrapperHalf": "0.543 (the bead clears the rim with a transparent margin on ALL FOUR sides)",
+      "outerSatelliteAtRest_wrapperHalf": "0.750 (== the spec's ~70-80% target)",
+      "widestExcursion_wrapperHalf": "~1.08 (peeks past the wrapper, absorbed by the 160% canvas margin — the intentional orbit excursion overflow; NO hard clip, the canvas extends to 1.6 wrapper-half)",
+      "before_wrapperHalf": "1.46 (overflow all sides)"
+    }
+  },
+  "flippedDefaultIdentity": {
+    "lit": { "before": false, "after": true },
+    "iridescence": { "before": 0.0, "after": 0.18, "note": "a low warm-pearl floor" },
+    "sssScale": { "before": 0.0, "after": 0.2, "note": "a thin translucent rim floor" },
+    "coreGlow": { "before": 0.0, "after": 0.1, "note": "a faint inner luminosity; Beer-Lambert saturating curve in-shader" },
+    "zeroRegressionFlagGatingDeleted": "the off-by-default 'zero regression' framing is DELETED from the type comments as the legacy/fallback path the §0 mandate forbids — the SOTA look IS the default (one path, no opt-in tier). The `lit` boolean still GATES the lit block in-shader (a consumer CAN turn it off) but the DEFAULT is ON."
+  },
+  "warmCreamIdentity": {
+    "demoStoriesRepointed": "blob-interaction.vue:53, blob-mood.vue:74/:104 cold-blue oklch(0.7 0.16 250) -> var(--primary) (the warm house identity, resolved through the injected ColorResolver + the GooBlob.vue var()-cascade un-wrap). goo-blob.vue grid already led with var(--primary) (the gate-target first blob); the cold colors in the grid stay as a deliberate resolver-variety showcase.",
+    "minContrastRimGuard": "metaball.frag.ts lit block — a FOREGROUND-AWARE min-contrast rim guard: when the rim's OKLCh L sits within 0.22 of the post-perturb body L (the var(--primary)-in-dark wash), the rim is L-lifted (toward 0.92 over a dark body) and chroma-reduced toward a pale pearl (a perceptual move, NOT a re-tint), so a var(--primary) blob never washes out in dark mode. Computed in OKLCh through the spliced matrices.",
+    "warmCreamSpecular": "the Blinn-Phong glint stays a warm-cream OKLCh tint (L0.97 C0.03 h85deg) through the spliced matrices, NOT hardcoded sRGB white (unchanged from W9.b — preserved)."
+  },
+  "livingMembrane": {
+    "warpAmp": { "before": 0.0, "after": 0.35, "note": "domain-warp ON at a calm floor" },
+    "noiseAmp": { "before": 0.025, "after": 0.038, "note": "tied to the new smaller body — ~8% organic wobble at idle" },
+    "fbmLacunarity": { "before": 2.0, "after": 1.8, "note": "the LIQUID band — octaves stay closer in frequency, smooth undulation not fracture" },
+    "fbmPersistence": { "before": 0.5, "after": 0.42, "note": "higher octaves contribute less — a calm wave, not a crust" },
+    "breathDeSynced": "the single sin(uPulsePhase) -> breath(phase) = (sin + 0.5*sin(*1.4444+1.7) + 0.28*sin(*0.31+4.1))/1.78, three DETUNED sines at irrational ratios — the membrane never mechanically re-syncs. Normalized to [-1,1] so the throb amplitude is unchanged.",
+    "quinticFadePreserved": "the noised() quintic fade is kept (a cubic fade would crease the analytic gradient)."
+  },
+  "analyticGradientSmin": {
+    "landedHere": "the SOTA-deepening [2] keystone — sdCircle->sdgCircle (returns vec3(d, p/length(p))), the value+gradient smin (sminQuadraticG/sminCircularG/sminG propagating mix(a.yz,b.yz,w)), fbmG/fbmWarpedG carrying the FBM displacement's analytic gradient (chain-ruled through the per-octave freq + FBM_ROT rotation transpose), sceneDistG returns vec3(dist, grad) so surfaceNormalFromGrad reads grad2d DIRECTLY.",
+    "fourTapDeleted": "the IQ 4-tap tetrahedron normal (4 full sceneDist evals per lit pixel, each running 3-octave FBM x2 + the sat/trail loops) is DELETED — a ~4-5x field-cost cut on the normal, delivered FREE (the exact trim W16 arm-5 wanted; W16's 'gate the 4-tap behind the lit path' arm is now MOOT).",
+    "squashInverseTranspose": "the anisotropic squash basis (bodyUv = D*R*uv) transforms the body gradient too — handled by the INVERSE-TRANSPOSE M^T = R^T*D (scale by diag(1/sa, sa) in the (ax,perp) frame, reconstruct in world), the hazard the SOTA-deepening [2] flagged (the 4-tap did it implicitly via screen-space sampling).",
+    "centralDifferenceVerification": "a JS port of the body+smin field vs a central-difference reference across 896 samples (64 angles x 14 radii near the rim): mean cos-similarity 0.9969, worst 0.9575 (at a satellite-merge seam where the 4-tap was WORSE — the analytic path is strictly better there). The unit-contract is on the FINAL lifted normal N, NOT the sub-unit raw field gradient — normalize() before the dome lift (preserved).",
+    "robustnessFolds": {
+      "energyConservingBlinnPhong": "spec *= (shininess+2)/8 so shininess and strength decouple",
+      "specularAntialiasing": "the spec lobe widens where the FBM normal varies (Toksvig-style fwidth(N) clamp, shininess /= 1+24*nVar) so the tight glint does not STROBE on small dock-grid instances — DROP shininess, not raise it",
+      "beerLambertSSS": "the linear coreGlow*thickness -> a saturating 1-exp(-3*thickness) curve (flat thick core, fast warm rim falloff); the SSS hue-warm-shift scaled by (1-thickness) so only the thin rim warms",
+      "ignDither": "interleaved-gradient noise at 1/255 AFTER linearToSrgb, BEFORE the *alpha premultiply — the low-chroma warm-cream dome no longer bands on 8-bit panels (aurora ships the same splice)"
+    },
+    "glslValidation": "glslangValidator on the assembled METABALL_FRAGMENT_SRC (668 lines): EXIT 0, no errors — the full analytic migration + folds compile as valid GLSL ES 3.00."
+  },
+  "moodHeadroomRetune": {
+    "iridScale": { "before": "lerp(0.4, 1.8, arousal)", "after": "lerp(0.55, 1.35, arousal)", "rationale": "with lit/iridescence/SSS now DEFAULT-ON this multiplier is load-bearing for the FIRST time — the excited ceiling drops 1.8->1.35 so excited stays a WARM wet bead, never an over-saturated neon thin-film; sleepy floor lifts 0.4->0.55 so sleepy stays ALIVE (arousal=0 reads asleep, not dead)." }
+  },
+  "interactionMagnitudes": {
+    "pointerStrength": { "before": 0.08, "after": 0.11, "note": "a clearly-felt lean toward the cursor within the footprint" },
+    "stretch": { "before": 0.4, "after": 0.5, "note": "a visible flick squash" },
+    "clickImpulse": { "before": 0.5, "after": 0.5, "note": "unchanged (already a good bounce)" },
+    "noNewCode": "NO new interaction code — containment alone makes the EXISTING wired spring/trail/squash/click legible. The trail pseudopod radius is driven off satelliteRadius (now 0.105) in the renderer, so it tapers proportionally with no extra knob."
+  },
+  "gateExtension": {
+    "spec": "tests-visual/blob-render.spec.ts EXTENDED (W08's, not re-authored) with the W15 rendered-pixel assertions over the inherited screenshot+pngjs readback (preserveDrawingBuffer-free composited capture, the W00 mechanism):",
+    "added": [
+      "FOUR-SIDE containment — worstSideMargin now samples top+bottom too (W08 only L/R), ceil 0.35 (the orbit excursion may peek one edge; the steady droplet frames every side)",
+      "DOME LUMINANCE VARIANCE — domeLumaStd over painted pixels, floor 9 (a flat fill reads ~3, a lit dome ~18+) — catches lit:false",
+      "SILHOUETTE DEVIATION — paintedShape() per-angle radius CV, floor 0.015 (a clean arc ~0.003, a living membrane ~0.03) — catches the dead-arc membrane",
+      "POINTER CENTROID SHIFT — a synthetic hover-flick (page.mouse stepped centre->0.82) must shift the painted centroid >= 0.012 width toward the pointer — catches the invisible interaction",
+      "LIGHT/DARK LEGIBILITY — every grid blob (first 4) paints a contained field >= COVERAGE_MIN in BOTH light and dark (toggle .dark on <html>) — catches the var(--primary)-dark-wash"
+    ],
+    "bornRedPreW15": "the extended assertions FAIL on the post-W08/pre-W15 tree: dome variance RED (lit:false flat fill), silhouette CV RED (warpAmp:0 clean arc), four-side margin RED (the oversized droplet clips top/bottom), centroid shift RED (no contained silhouette), light/dark RED (the primary blob washes in dark)."
+  },
+  "headlessSelfGates": {
+    "typecheck": "GREEN (vue-tsc --noEmit)",
+    "build": "GREEN (vite + emit-types; dist/goo-blob.js emits)",
+    "blobUnits": "14/14 PASS (blob-color-equivalence + resolveColor — the OKLCh color math is untouched)",
+    "glslangValidator": "EXIT 0 on the assembled fragment shader",
+    "analyticGradientCD": "mean cos-sim 0.9969 vs central-difference (the runtime-correctness proof the W01 lesson demands)",
+    "structuralBlobGates": {
+      "proof:blob-smin-normalized": "PASS (W08's smin band untouched)",
+      "proof:blob-space-gamma": "PASS",
+      "proof:blob-spec-premult": "PASS",
+      "proof:blob-mood-resolved": "PASS",
+      "proof:blob-tempo-suppression": "PASS",
+      "proof:blob-interaction-prm": "PASS",
+      "proof:blob-gradient-unit-length": "Clause 1 (unit-length runtime port) PASS; Clause 2 (static grep for the 4-tap 'sceneDist(uv + k' + the screen-space epsilon) RED — this is the DOCUMENTED false-green the analytic migration supersedes (blob-research-corpus [2]: 'W15 is where the analytic-gradient migration LANDS, DELETING the 4 extra sceneDist calls'; W08 audit secondBlindGate_W15 flagged W15 owns it). The gate-upgrade 'spans W15/W16' per the corpus. scripts/proof-blob-gradient-unit-length.mjs is OUT of W15's FileBounds — recorded as a divergence for the orchestrator's gate-fleet reconciliation (BASE 27036cc already 'reconciled the blob gate fleet to the AX A/B architecture').",
+      "proof:blob-value-free": "RED only on the unbuilt-dist build-state condition (dist/goo-blob.js absent in worktree) — resolved by the orchestrator's build, NOT a W15 regression (W08 audit noted the identical condition)."
+    }
+  },
+  "bbnfBuddyPrmCensus": {
+    "obligation": "the W15 CONVERGE fold — confirm the useWebGLCanvas substrate PRM-freeze is REACHABLE (the consumer-adoption fix routes to W34).",
+    "substrateFreezeReachable": "CONFIRMED — useWebGLCanvas OWNS + LIVE-MONITORS prefers-reduced-motion: reduce (a matchMedia change listener) and paints ONE static frame then parks; GooBlob composes it via useMetaballRenderer (the substrate's reducedMotion drives tempo=0, the rest pose). Every surface on the substrate inherits the freeze. NOT re-implemented here.",
+    "bbnfBuddyGap": "bbnf-buddy ships the SAME WCAG 2.2.2 gap on 4 perpetual mascot rAF loops (animation/runtime.ts:710-762, app/useHoloRotation.ts:30-46, composables/useFavicon.ts:75-89, the emotion-preview thumbnails) with ZERO prefers-reduced-motion (grep -> 0 hits). The fix is a CONSUMER ADOPTION (adopt the substrate freeze / a PRM guard) — routed to W34, gated behind W08/W15/W16 landing the droplet. W15 writes NO sibling source.",
+    "valueJsForkNote": "the value.js demo/@/components/custom/goo-blob/ fork (343-line local useMetaballRenderer + 3 mount sites) waits on the contained lit droplet to retire — routed to W16/W34. W15 writes the library fix only."
+  },
+  "filesChanged": [
+    "src/components/custom/goo-blob/types.ts — geometry cohort (body/sat/orbit/eccentricity) + identity flip (lit/iridescence/sss/coreGlow) + membrane band (noiseAmp/warpAmp) + interaction magnitudes (pointerStrength/stretch)",
+    "src/components/custom/goo-blob/shaders/sdf-body.glsl.ts — sdgCircle + the value+gradient smin (sminQuadraticG/sminCircularG/sminG)",
+    "src/components/custom/goo-blob/shaders/watercolor-edges.glsl.ts — LIQUID FBM lacunarity/persistence + fbmG/fbmWarpedG (analytic-gradient FBM)",
+    "src/components/custom/goo-blob/shaders/metaball.frag.ts — sceneDistG (analytic field+gradient) + breath (de-synced) + surfaceNormalFromGrad (4-tap deleted) + energy-conserving Blinn-Phong + spec-AA + Beer-Lambert SSS + min-contrast rim guard + IGN dither",
+    "src/components/custom/goo-blob/composables/useBlobMood.ts — iridScale ceiling re-tune (load-bearing now that lit is default)",
+    "demo/stories/substrates/blob-interaction.vue — cold-blue -> var(--primary)",
+    "demo/stories/substrates/blob-mood.vue — two cold-blue bindings -> var(--primary)",
+    "tests-visual/blob-render.spec.ts — EXTENDED with the four-side + dome-variance + silhouette + centroid + light/dark assertions"
+  ],
+  "filesNotTouched": [
+    "useMetaballRenderer.ts smin-band upload (:443) + POS_SCALE (:32) — W08's, untouched (the ratified disposition)",
+    "sdf-body.glsl.ts k*=4.0 — W08-correct, untouched",
+    "package.json — NO new proof:* entry (W15 EXTENDS W08's proof:blob-render thresholds)",
+    "GooBlob.vue — the warm default is achieved via the demo-story var(--primary) re-point + the existing var()-cascade un-wrap + the in-shader min-contrast rim; no new SFC plumbing (the warm-token deriveBlobPalette default is W16's full integration, the min-contrast rim guard is the W15 dark-wash fix and lives in-shader)"
+  ],
+  "liveVerifyNeeded": "The orchestrator MUST run the π-lane (proof:blob-render on the real Metal GPU) + the Playwright visual-truth audit on all THREE blob stories (/substrates/goo-blob, /substrates/blob-interaction, /substrates/blob-mood) x >=3 viewports (375x667, 1280x800, 1440x900) x light AND dark. Pass criteria: (1) the default blob is CONTAINED on ALL FOUR sides (a transparent margin every edge, only the orbit excursion peeks); (2) it reads as a LIT wet warm-cream bead with measurable dome luminance variance (domeLumaStd >= 9); (3) a living warped-FBM membrane (silhouette CV >= 0.015, never a clean circle, never a mechanical pulse); (4) a synthetic hover-flick shifts the painted centroid >= 0.012 toward the pointer; (5) EVERY grid blob legible in BOTH light and dark; (6) the {quadratic,circular} x {min,max arousal} 4-corner matrix stays a contained droplet. Capture the paired-pi BEFORE/AFTER + DELTA (1.46x->0.75x footprint, flat->lit dome, dead-arc->living membrane).",
+  "preceptAlignment": {
+    "onePath": "ONE footprint budget (body/orbit/sat solved together), ONE POS_SCALE regime (ratified KEEP), ONE analytic-gradient path (the 4-tap deleted, not gated behind a flag). The zero-regression default-OFF flag-gating DELETED as the legacy/fallback path.",
+    "noOverfitting": "all constants tuned against the LIVE field (the footprint math + the CD cos-sim), NOT fitted to the gate threshold; NO new interaction code; the dead-default flags turned ON, not duplicated; cold/neon stays explicit consumer opt-in.",
+    "presetsInConsumers": "the contained lit warm-cream droplet IS the library's OWN evolving identity; named cold/neon presets live in the consumer (value.js supplies only its color through the ColorResolver seam).",
+    "failExplicit": "the un-contained/flat/cold/dead-membrane defect is FIXED at root + LOCKED by the rendered-pixel gate (RED on a re-oversize/flat-fill/cold field); the PRM-freeze stays a befitting-silent substrate degradation, NOT collapsed with the look defect.",
+    "piVisualRuntimeLane": "the close is a render-and-readback artefact + the executed live Playwright audit — NEVER a headless proof alone."
+  }
+}

@@ -50,7 +50,7 @@ function poke() {
                 <div class="relative aspect-square w-56 overflow-hidden rounded-card">
                     <GooBlob
                         ref="blobRef"
-                        color="oklch(0.7 0.16 250)"
+                        color="var(--primary)"
                         :color-resolver="defaultBlobColorResolver"
                         :config="cfg"
                         seed="interaction"
