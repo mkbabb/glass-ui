@@ -53,6 +53,16 @@ convergent optimum. NO quick fixes, gestalt transpositions, NO legacy.
 | P8 | Each page should use the speedtest GRID idiom when befitting — more paper + glass-like. |
 | P9 | /substrates/glass-material is broken [D8/W48 — re-confirmed]. |
 | P10 | Each story page: interspersed explanatory text, NO superfluity. Most extant text is duplicative or code that must be removed. |
+| P11 | Storybook INTERNAL META-LANGUAGE — strip/rewrite the developer-facing notes on EVERY page. Kill: WCAG citations in prose ("(WCAG 2.2.2)"), implementation notes ("Collapse delay is ref-counted — any popover or nested keep-open source pins it.", "The collapsed pill renders via the named #collapsed slot.", "Use DockIconButton for flush-fit buttons inside."). These are code-comments, not user copy. Remove OR rewrite to user-facing explanatory text with NO superfluity. [extends P10] |
+
+## Standing directive (2026-06-08, this round)
+
+- **Leverage the dev-tools MCPs (chrome-devtools-mcp + playwright) IN the workflows** — the
+  audit/dev lanes that need live truth use them (isolated contexts to avoid browser races; the
+  orchestrator owns the primary live pass). **Leverage modern-web guidance** (the chrome-devtools
+  lighthouse/a11y/performance audits + web.dev SOTA + WebSearch) in research.
+- **Continue to iterate until convergence** — the long-horizon triumvirate (research→harden→plan→
+  author→develop→live-verify), batched 4, recurring until the convergent optimum.
 
 ## Process
 
