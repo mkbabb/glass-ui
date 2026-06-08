@@ -237,15 +237,14 @@ provideDockContext({
 
 const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
 
-/* J.W3.A cornerstone — compose `useLayerTransition` for the outer
-   collapsed↔expanded pair (horizontal docks only — vertical rails
-   render a single slot, no layer pair to crossfade). The composable
-   captures the natural width before/after the slot swap and animates
-   width between fixed pixel values via the `--dock-motion-resize`
-   spring, eliminating the `width: auto` non-interpolation that caused
-   the binary jerk diagnosed in R1+R6. The same primitive already
-   drives `<DockLayerGroup>`'s inner pair — both crossfades now share
-   one mechanism. */
+/* AX.W01 — compose `useLayerTransition` for the outer collapsed↔expanded pair
+   (horizontal docks only — vertical rails render a single slot, no layer pair to
+   crossfade). The single-scalar rebuild drives the WHOLE box morph (size + the
+   root padding/radius/color + the child stagger) off ONE `--dock-morph-t` spring
+   scalar on the `.glass-dock` root — no CSS transition, no View-Transitions fork,
+   one clock on every engine. The same primitive drives `<DockLayerGroup>`'s inner
+   pair; both share that one clock. The `directionTypes` arg is gone — the morph is
+   a single symmetric spring, so there is no per-direction curve fork to author. */
 const outerActiveLayer = computed<"full" | "summary">(() =>
     visualExpanded.value ? "full" : "summary",
 );
@@ -254,34 +253,22 @@ const { onTransitionEnd: onLayersTransitionEnd } = useLayerTransition({
     containerEl: layersEl,
     activeLayer: outerActiveLayer,
     axis: outerLayerAxis,
-    /* AW.W3 — typed directional intent for the outer collapsed↔expanded pair.
-       Going TO `full` is an EXPAND (the softer entry-overshoot curve); going TO
-       `summary` is a COLLAPSE (the snappier, non-overshooting exit). The
-       `:active-view-transition-type(dock-expand|dock-collapse)` blocks in
-       view-transition.css author the asymmetry; a non-typed engine runs the
-       symmetric `.gl-dock-layer` curve (the acceptable contract). */
-    directionTypes: (_from, to) => [to === "full" ? "dock-expand" : "dock-collapse"],
 });
 
-/* AQ.W6 §Design 7 — when View-Transitions are supported, the outer
-   collapsed↔expanded width swap morphs as a VT group instead of the JS FLIP.
-   A per-instance `view-transition-name` lets the browser capture + interpolate
-   the `.dock-layers` box; `view-transition-class` binds the `.gl-dock-layer`
-   group recipe (duration/ease from `--vt-*`). `dockId` is minted from Vue's
-   app-scoped `useId()` — collision-free across lazy/eager module-graph copies,
-   the same idiom as `<DockLayerGroup>`. The name is set ONLY on a supporting
-   engine, so the FLIP-fallback path is never given a containing-block/isolation
-   it does not need. */
-const supportsVT =
-    typeof document !== "undefined" && "startViewTransition" in document;
-const layersVtStyle = computed<Record<string, string> | undefined>(() =>
-    supportsVT
-        ? {
-              "view-transition-name": dockId.replace(/[^a-zA-Z0-9_-]/g, "-"),
-              "view-transition-class": "gl-dock-layer",
-          }
-        : undefined,
-);
+/* AX.W01 — the route-morph `view-transition-name` seam (PRESERVED). The dock
+   COLLAPSE VT fork is RETIRED (the box morph runs on the single spring scalar
+   above; VT crossfades rasterized pixels — the wrong primitive for a layout
+   morph). But the per-instance `glass-dock-${useId()}` NAMED-ELEMENT seam is KEPT,
+   moved to the dock ROOT, for the consumer's PAGE/route geometry-morph (fourier's
+   J+K critical-path route morph; invariant η — the `proof:vt-names` gate polices
+   the app-unique `useId()` mint-source). `dockId` is app-scoped, so two co-mounted
+   docks mint DISTINCT names and never collide their route-morph snapshots. The
+   name is no longer the dock's OWN collapse mechanism — only the route
+   geometry-morph the consumer drives. Always applied (the route-morph is engine-
+   gated by the consumer's own `startViewTransition`, not by the dock). */
+const rootVtStyle = computed<Record<string, string>>(() => ({
+    "view-transition-name": dockId.replace(/[^a-zA-Z0-9_-]/g, "-"),
+}));
 
 function parseTimeMs(value: string): number {
     const trimmed = value.trim();
@@ -299,6 +286,22 @@ function longestTransitionMs(el: HTMLElement): number {
         0,
         ...durations.map((duration, index) => duration + (delays[index] ?? delays[0] ?? 0)),
     );
+}
+
+/* AX.W01 — the morph is now spring-driven (`--dock-morph-t`), NOT a CSS transition,
+   so the root carries no `width`/`padding` transition whose `transitionend` would
+   resolve `isTransitioning`. The fallback timer is therefore the morph's settle
+   ENVELOPE — the `--spring-dock` (0.32, 0.7) curve settles within ~2× the design
+   window (`--duration-normal`); we read that token and scale it, with a floor so a
+   token-less SSR/test env still gets a sane window. This keeps `isTransitioning`
+   high for the whole spring (preventing a mid-morph collapse) and clearing once it
+   settles — the same role the prior `longestTransitionMs(root)` played when the
+   root still owned the CSS transition. */
+function morphWindowMs(el: HTMLElement): number {
+    const normal = parseTimeMs(
+        getComputedStyle(el).getPropertyValue("--duration-normal") || "0.3s",
+    );
+    return Math.max(normal > 0 ? normal * 2 : 0, 600);
 }
 
 function clearTransitionTimer(): void {
@@ -327,7 +330,7 @@ function markTransitioning(): void {
         if (generation !== morphGeneration) return;
         isTransitioning.value = false;
         transitionTimer = null;
-    }, longestTransitionMs(root) + 50);
+    }, Math.max(longestTransitionMs(root), morphWindowMs(root)) + 50);
 }
 
 function onDockTransitionDone(event: TransitionEvent): void {
@@ -428,7 +431,7 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
         :data-density="density"
         :data-held="isHeld || undefined"
         :data-container-name="containerName || undefined"
-        :style="containerStyle"
+        :style="[containerStyle, rootVtStyle]"
         @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave($event)"
         @focusin="onFocusIn"
@@ -451,7 +454,6 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
             <div
                 ref="layersEl"
                 class="dock-layers"
-                :style="layersVtStyle"
                 @transitionend="onLayersTransitionEnd"
             >
                 <div

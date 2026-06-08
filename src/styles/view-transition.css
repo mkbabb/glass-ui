@@ -44,46 +44,18 @@
 ::view-transition-new(.gl-list-item):only-child { animation-name: gl-vt-slide-in; }
 ::view-transition-old(.gl-list-item):only-child { animation-name: gl-vt-slide-out; }
 
-/* AQ.W6 §Design 7 — the dock layer group recipe. `<GlassDock>` (.dock-layers)
- * and `<DockLayerGroup>` (.dock-layer-stack) carry `view-transition-class:
- * gl-dock-layer` + a page-unique `view-transition-name` on a View-Transitions
- * engine, so the collapsed↔expanded width + the layer-pane swap morph as a VT
- * group instead of the JS FLIP.
- *
- * AT.W6-dock-c / AU.W8 — VT/FLIP timing PARITY. The timing-function is
- * `--dock-resize-spring` (= the `--spring-dock` linear(), AU.W8) — the SAME
- * source the FLIP fallback consumes via `--dock-motion-resize` (`dock.css`), so
- * the identical curve drives both engines. Retires the AQ.W6 fork (this group
- * ran `--vt-ease`, the apple-spring overshoot). `--vt-ease` still governs the
- * other recipes (`.gl-list-item`). PRM zeroes the animation above. */
-::view-transition-group(.gl-dock-layer) {
-    animation-duration: var(--vt-duration, var(--duration-normal));
-    animation-timing-function: var(--dock-resize-spring, var(--spring-dock));
-}
-
-/* AW.W3 — typed directional dock curves. The swap tags the active transition
- * `dock-expand` / `dock-collapse` (the outer collapsed↔expanded pair) and
- * `layer-forward` / `layer-back` (the inner DockLayerGroup pane swap) via the
- * `types` argument to `startViewTransition` (Chrome 140+; feature-detected, the
- * untyped fallback is the symmetric `.gl-dock-layer` curve above). iOS-feel
- * motion is ASYMMETRIC — a snappier exit, a softer entry-overshoot. EXPAND
- * (and forward) lead with the overshooting `--spring-dock`; COLLAPSE (and back)
- * exit on the non-overshooting `--spring-snappy` (a quicker settle, no bounce on
- * the way out). The shorter `--duration-fast` on the exit reads as the crisp
- * dismiss. A non-typed engine never matches these — it runs the symmetric curve,
- * which is the acceptable contract. PRM zeroes the animation (the `@media` at
- * the top of this file). */
-:active-view-transition-type(dock-expand) ::view-transition-group(.gl-dock-layer),
-:active-view-transition-type(layer-forward) ::view-transition-group(.gl-dock-layer) {
-    animation-duration: var(--vt-duration, var(--duration-normal));
-    animation-timing-function: var(--dock-resize-spring, var(--spring-dock));
-}
-
-:active-view-transition-type(dock-collapse) ::view-transition-group(.gl-dock-layer),
-:active-view-transition-type(layer-back) ::view-transition-group(.gl-dock-layer) {
-    animation-duration: var(--vt-duration-exit, var(--duration-fast));
-    animation-timing-function: var(--spring-snappy);
-}
+/* AX.W01 — the dock COLLAPSE View-Transitions recipe is RETIRED. The
+ * `::view-transition-group(.gl-dock-layer)` group + its `:active-view-transition-type
+ * (dock-expand|dock-collapse|layer-forward|layer-back)` asymmetric curve fork are
+ * DELETED: VT crossfades RASTERIZED snapshots — the wrong primitive for a layout
+ * morph (the "taffy"-stretch + text-blur + uncaptured-animating-ancestor desync +
+ * the co-mounted-docks snapshot-DROP). The dock collapse↔expand (and inner
+ * pane-swap) now morphs off the ONE `--dock-morph-t` spring scalar
+ * (`useLayerTransition` + `dock.css`), one clock on every engine. The SEPARABLE
+ * per-instance `view-transition-name` ROUTE-morph seam on the dock root stays
+ * (GlassDock.vue `rootVtStyle`) for the consumer's page/route geometry-morph — it
+ * is no longer the dock's own collapse mechanism. The `.gl-list-item` group recipe
+ * (non-dock) is UNTOUCHED above. */
 
 @keyframes gl-vt-slide-in  { from { opacity: 0; translate: 0 var(--vt-rise, 8px); } }
 @keyframes gl-vt-slide-out { to   { opacity: 0; translate: 0 var(--vt-rise, 8px); } }
