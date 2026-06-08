@@ -22,7 +22,7 @@ soundness discipline: "complete" never collapses to "headless-green").
 | W06 | dock storybook honest rail + css split | planned |
 | W07 | aurora core unblock — WGSL black canvas | complete |
 | W08 | blob core unblock — smin distance regime | complete |
-| W09 | specular tune to subtle | live-pending (re-open: D11 fixed-anchor radials) |
+| W09 | specular tune to subtle | live-pending → D11 radials absorbed by W52 (developed) |
 | W10 | aurora options converge — atoms door | complete |
 | W11 | aurora color seams — OKLCh catchlight palette-ramp twin | complete |
 | W12 | mediums substrate — strokeProfile + noise basis | complete |
@@ -67,6 +67,7 @@ soundness discipline: "complete" never collapses to "headless-green").
 | W49 | math-paper composes latex-paper (D16) | planned |
 | W50 | uniform dropdown/select/menu type-scale (D17) | planned |
 | W51 | comfortable component sizing — library-wide --ui-scale (D18 umbrella; W45/W50 specialize) | planned |
+| W52 | liquid-glass material overhaul (D19) — kill central bloom → edge gleam + button glass/hover/gold | live-verified (DEVELOPED) |
 
 ## W00 — visual-runtime (π) lane — COMPLETE
 
