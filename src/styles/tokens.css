@@ -158,6 +158,35 @@
        `smooth` wants a slightly faster visual settle than `gentle`'s
        patient curve. The 0.5% peak does not read as overshoot to the
        eye but does narrowly distinguish `smooth` from `gentle`.
+
+       ── EASING DOCTRINE (AX.W52 §6 — which easing fits which job) ──
+       ONE recorded rule so the animation easing stops forking live. This
+       FORMALIZES the already-correct `transitions.css` idiom (enter=spring,
+       exit=bezier) as the house rule every recipe reaches for:
+
+         | Transition kind                                  | Easing                              |
+         |--------------------------------------------------|-------------------------------------|
+         | Surface props (bg, border, color, box-shadow,    | `--ease-standard` (bezier — a       |
+         |   opacity)                                       |   colour cross-fade reads as a      |
+         |                                                  |   wobble on a spring)               |
+         | Transform — hover/press/active (scale, translate,| `--spring-smooth` (the ONE button/  |
+         |   rotate)                                         |   interactive scale register) or    |
+         |                                                  |   `--spring-snappy` (crisp press)   |
+         | Enter (mount, popover open, dialog in)           | `--spring-bouncy` / `--spring-snappy`|
+         | Exit (unmount, close)                            | `--ease-out` / `--ease-standard`    |
+         |                                                  |   (bezier, NO overshoot — an exit   |
+         |                                                  |   must never overshoot past gone)   |
+         | Position-tracked (specular pointer follow)       | `--ease-standard`                   |
+
+       The BUTTON family (`.btn-pill` / `.tap-squish` / `.glass-btn` /
+       `btn-interactive`) UNIFIES its `scale` transform leg onto ONE register —
+       `--spring-smooth` — so hover + press read as one motion language (the
+       hover lift is the restrained `--scale-hover-btn` = 1.035, not the 1.08
+       `--scale-hover`). Springs read alive on TRANSFORM and ENTER (overshoot =
+       physicality); a spring on a COLOR or an EXIT reads as a wobble/hesitation.
+       `--ease-apple` is the ambient-only register (consumed solely by the Pulse
+       aura `--animate-ambient-pulse-easing` — NOT a second smooth-ease authority
+       for interactive transforms; those use `--spring-smooth`).
        ═══════════════════════════════════════════════ */
     --spring-smooth: linear(0, 0.09804 2.041%, 0.29288 4.082%, 0.49447 6.122%, 0.66436 8.163%, 0.79208 10.204%, 0.88050 12.245%, 0.93754 14.286%, 0.97182 16.327%, 0.99083 18.367%, 1.00027 20.408%, 1.00413 22.449%, 1.00502 24.490%, 1.00453 26.531%, 1.00355 28.571%, 1.00254 30.612%, 1.00169 32.653%, 1.00105 34.694%, 1.00060 36.735%, 1.00031 38.776%, 1.00014 40.816%, 1.00005 42.857%, 1.00000 44.898%, 1.00000 46.939%, 1.00000 48.980%, 1.00000 51.020%, 1.00000 53.061%, 1.00000 55.102%, 1.00000 57.143%, 1.00000 59.184%, 1.00000 61.224%, 1.00000 63.265%, 1.00000 65.306%, 1.00000 67.347%, 1.00000 69.388%, 1.00000 71.429%, 1.00000 73.469%, 1.00000 75.510%, 1.00000 77.551%, 1.00000 79.592%, 1.00000 81.633%, 1.00000 83.673%, 1.00000 85.714%, 1.00000 87.755%, 1.00000 89.796%, 1.00000 91.837%, 1.00000 93.878%, 1.00000 95.918%, 1.00000 97.959%, 1);
     --spring-snappy: linear(0, 0.10438 2.041%, 0.32622 4.082%, 0.56668 6.122%, 0.77153 8.163%, 0.91961 10.204%, 1.01073 12.245%, 1.05549 14.286%, 1.06804 16.327%, 1.06171 18.367%, 1.04686 20.408%, 1.03044 22.449%, 1.01629 24.490%, 1.00596 26.531%, 0.99954 28.571%, 0.99633 30.612%, 0.99537 32.653%, 0.99575 34.694%, 0.99674 36.735%, 0.99786 38.776%, 0.99884 40.816%, 0.99956 42.857%, 1.00001 44.898%, 1.00024 46.939%, 1.00000 48.980%, 1.00000 51.020%, 1.00000 53.061%, 1.00000 55.102%, 1.00000 57.143%, 1.00000 59.184%, 1.00000 61.224%, 1.00000 63.265%, 1.00000 65.306%, 1.00000 67.347%, 1.00000 69.388%, 1.00000 71.429%, 1.00000 73.469%, 1.00000 75.510%, 1.00000 77.551%, 1.00000 79.592%, 1.00000 81.633%, 1.00000 83.673%, 1.00000 85.714%, 1.00000 87.755%, 1.00000 89.796%, 1.00000 91.837%, 1.00000 93.878%, 1.00000 95.918%, 1.00000 97.959%, 1);
@@ -671,6 +700,17 @@
     /* Dock blur composes blur() only — no saturate. */
     --glass-blur-dock:     blur(var(--glass-blur-dock-radius));
 
+    /* AX.W52 — the GLASS BUTTON blur. The `glass`/`glass-wash` button variants
+       compose the `.glass-wash` tier (`--glass-blur-wash` = blur(1px)) — a
+       sub-perceptual diffusion authored for a small detail TILE, not a button
+       the user reads as "glass." A button is a hero control: it wants a real
+       glass blur. `--glass-blur-btn` lifts the variant onto the `quiet`-tier
+       radius (10px — a genuine liquid-glass diffusion) with the same gentle
+       `saturate(1.05) brightness(1.02)` light-concentration the quiet rung
+       carries (NOT a colour-juice). The wash TILE tier (MetricCell et al.) keeps
+       its 1px — only the glass BUTTON variants reach for this. */
+    --glass-blur-btn:      blur(var(--glass-blur-quiet-radius)) saturate(1.05) brightness(1.02);
+
     /* Dock-specific opacity (0.42) — lighter than `resting` (0.65) so the dock
        reads as a translucent overlay rather than a panel, backdrop bleed
        visible through it. Consumed by `.glass-dock` via `--glass-bg-dock`. The
@@ -1088,6 +1128,15 @@
        §11 INTERACTIVE SCALES & FOCUS
        ═══════════════════════════════════════════════ */
     --scale-hover: 1.08;
+    /* AX.W52 — the restrained BUTTON hover lift. `--scale-hover` (1.08) is an
+       8% jump — emphatic for a marquee CTA, jarring as the general hover. The
+       button family (the audacious CTAs + `btn-interactive`) lifts on the
+       smaller `--scale-hover-btn` (1.035) routed through `--spring-smooth` (the
+       sub-perceptual settle, not the snappy bounce), so the hover reads as ONE
+       coherent glide with the surface-leg cross-fade rather than a mechanical
+       pop. The dock keeps its proportionally-larger `--scale-hover-dock` (small
+       icon, bigger lift reads smaller). */
+    --scale-hover-btn: 1.035;
     --scale-hover-dock: 1.1;
     --scale-press: 0.96;
 

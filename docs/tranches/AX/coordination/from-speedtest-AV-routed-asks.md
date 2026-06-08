@@ -8,7 +8,6 @@ written against 3.7.0). Folded into the AX convergence wave set.
 
 | Ask | Priority | Disposition in AX |
 |---|---|---|
-| **ASK-GU-GOLD** — promote `btn-audacious-gold` (the gold "→ Next" CTA hover the user loves) from a speedtest-side `@utility` to a documented glass-ui ROOT facility (a Button/DockTabButton variant or canonical `@utility`) | P1 (design-praise) | **Fold into the liquid-glass material wave (D19)** — it is a glassy specular/shimmer effect: both a MODEL for the realistic liquid-glass identity AND a public facility to promote. Verbatim source in the AV doc (linear-gradient gold + paper-texture overlay + `--glass-specular` shadow + `btn-gold-bg-sweep` shimmer, PRM-gated). |
 | **`vt.ready` `.ready` swallow** — `useViewTransition` returns `{finished, transitioned}` but NO `.ready` | P0 (W19 consumer gate) | Library API gap. Add `.ready` to `useViewTransition` (the `startViewTransition().ready` swallow consumers need). Fold into a motion-surface micro-wave or W34's consumer-adoption leg. |
 | **`demandPark` on `useRAFLoop`** | P1 | Unshipped substrate. Route to the motion/raf substrate (W34 consumer-adoption / a new micro-wave). |
 | **`CompletionSeal` family** | P1 | Unshipped (dist grep = 0). W15/W16 consumer need — route to the blob/seal substrate or W34. |
@@ -16,6 +15,18 @@ written against 3.7.0). Folded into the AX convergence wave set.
 
 ## Closed / satisfied by 3.8.0
 
+- **ASK-GU-GOLD** (gold "→ Next" CTA promotion) — SATISFIED. The `@utility
+  btn-audacious-gold` + the `gold-audacious` Button variant already ship in glass-ui
+  ROOT (`a09b01a`); speedtest CONSUMES the library utility via a class binding
+  (`Dock.vue:302`), no local redefinition (`grep '@utility btn-audacious-gold'
+  ../speedtest/src` → empty); demo'd (`buttons.vue`) + gated (`proof:affordance-contrast`).
+  AX.W52 closed the one residual CANON gap: `CLAUDE.md` now enumerates `gold-audacious`
+  in the Button-variant list + documents its composition + lists `btn-audacious-gold` in
+  the utilities inventory. The gold CTA is also the D19 liquid-glass MODEL (edge catch-light
+  over central bloom, hover-gated, `background-blend-mode` Safari-clean, PRM-gated motion
+  with complete static fallback, legibility-contract-per-state). NO new variant / `gold`
+  shorthand alias / DockTabButton variant minted (the existing names are canon per inv-8 +
+  no-redundant-alias precept).
 - **AX.W22 font-register watch (BRAND-CRITICAL)** — W22 excised Fraunces; 3.8.0 ships
   Plus Jakarta Sans (text/display) + Fira Code (mono) only. The AV watch is SATISFIED;
   speedtest can bump to 3.8.0 and re-verify no Fraunces/General-Sans regression.

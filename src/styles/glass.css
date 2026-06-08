@@ -405,11 +405,17 @@
         background: var(--glass-bg-wash);
         backdrop-filter: var(--glass-blur-wash);
         color: var(--muted-foreground);
+        /* AX.W52 §6 doctrine — the surface legs ride the bezier `--ease-standard`;
+           the `scale` leg is reconciled onto `--spring-smooth` (was `--spring-snappy`)
+           so the icon-button hover settles on the SAME ONE register as `.btn-pill` /
+           `.tap-squish` / `btn-interactive` (the gate asserts one scale register
+           across all four). The press still reads crisp — `--spring-smooth` ζ=0.86
+           settles fast without a visible bounce. */
         transition:
             background var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard),
             color var(--duration-fast) var(--ease-standard),
-            scale var(--duration-normal) var(--spring-snappy);
+            scale var(--duration-normal) var(--spring-smooth);
     }
 
     .glass-btn:hover:not(:disabled) {
@@ -445,17 +451,33 @@
     .btn-pill {
         @apply inline-flex items-center justify-center cursor-pointer font-medium border-none;
 
+        /* AX.W52 §6 identity base — `scale: 1` at rest so the hover/press scale
+           below animates the `scale` longhand (not `transform`) coherently and
+           does not flicker the stacking context into being (AQ.W3 §W3.2). */
+        scale: 1;
         gap: 0.375rem;
         border-radius: var(--radius-pill);
         padding: 0.5rem 1rem;
         font-size: 1rem;
+        /* AX.W52 — the ONE coherent button transition (RED witness 5/6). The
+           SURFACE legs (bg/border/box-shadow/color/opacity) ride the bezier
+           `--ease-standard` (a colour cross-fade reads as a wobble on a spring);
+           the TRANSFORM leg (`scale`) rides `--spring-smooth` (the sub-perceptual
+           settle), so the hover lift + the surface cross-fade read as ONE glide.
+           The DEAD `transform` leg is retired — the variants animate the `scale`
+           longhand. CRITICAL: `.tap-squish` (composed alongside on the button
+           base, utilities.css) ALSO lists this full coherent set, so neither
+           class's `transition` shorthand can clobber the other down to a
+           scale-only animation — the cascade bug that left every button
+           transitioning ONLY `scale` (the live-readback RED, RED witness 5). The
+           doctrine: surface-props→bezier, transform→spring (tokens.css §2). */
         transition:
             background-color var(--duration-fast) var(--ease-standard),
             border-color var(--duration-fast) var(--ease-standard),
             box-shadow var(--duration-fast) var(--ease-standard),
             color var(--duration-fast) var(--ease-standard),
             opacity var(--duration-fast) var(--ease-standard),
-            transform var(--duration-fast) var(--ease-standard);
+            scale var(--duration-fast) var(--spring-smooth);
     }
 
     .btn-pill > * {
@@ -467,6 +489,23 @@
         opacity: var(--opacity-disabled);
         cursor: not-allowed;
         pointer-events: none;
+    }
+
+    /* ── Glass-button backdrop ─────────────────────────────────────────────
+       AX.W52 — the `glass`/`glass-wash` Button variants compose `.glass-wash`,
+       which resolves `--glass-blur-wash` = `blur(1px)` — a sub-perceptual
+       diffusion authored for a small detail TILE, not a button the user reads
+       as "glass" (the live readback found the glass variants at a negligible
+       1px). A hero control wants a real glass blur. `.btn-glass` re-points the
+       backdrop at `--glass-blur-btn` (the `quiet`-tier 10px radius + the gentle
+       `saturate(1.05) brightness(1.02)` light-concentration), so the glass
+       button variants actually read as liquid glass while the wash TILE tier
+       keeps its 1px untouched. Declares the UNPREFIXED `backdrop-filter` ONLY —
+       Lightning CSS emits the `-webkit-` companion per the single-source
+       authorship discipline above (hand-authoring both forms makes Lightning
+       dedup-and-keep-prefixed, which modern Chromium then drops). */
+    .btn-glass {
+        backdrop-filter: var(--glass-blur-btn);
     }
 
     /* ── Pill input ───────────────────────────────── */

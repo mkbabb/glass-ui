@@ -174,7 +174,7 @@ src/
 │   ├── animations.css              # @keyframes: dialog-in/out, floating-panel-in, collapsible, tooltip, shimmer, sparkle-sweep; §TOP-LAYER @starting-style entry/exit grammar (AQ.W5—.glass-top-layer)
 │   ├── scroll-driven.css           # AQ.W5—native scroll-driven recipes (.scroll-progress scroll(), [data-scroll-reveal] view()); @supports-gated primary over the JS-composable fallback
 │   ├── view-transition.css         # AQ.W5—.gl-list-item View-Transitions group recipe + --vt-* axes (the useViewTransition substrate's CSS half)
-│   └── utilities.css               # focus-ring, btn-press, btn-audacious (K W6), rainbow-text, touch-gate, etc.
+│   └── utilities.css               # focus-ring, btn-press, btn-audacious (K W6), btn-audacious-gold (AN.R0—the gold CTA), btn-interactive, btn-glass (AX.W52—real glass blur for the glass button variants), rainbow-text, touch-gate, etc.
 └── utils/
     ├── cn.ts                       # clsx + hand-rolled deduplicator (v0.9.2—replaces tailwind-merge)
     └── prng.ts                     # shared seeded PRNG leaf—mulberry32 + hashString single-source (AV.W14; watercolor-dot + goo-blob import it; watercolor keeps its border-radius helpers local)
@@ -316,9 +316,13 @@ All `ui/` components follow the shadcn-vue pattern:
 
 CVA variants are co-exported from each component's `index.ts` (e.g., `buttonVariants`, `toggleVariants`, `badgeVariants`, `sliderVariants`, `menuItemVariants`).
 
-Button variants: `default`, `primary-audacious` (K W6), `destructive`, `outline`, `secondary`, `accent`, `ghost`, `glass`, `glass-wash`, `ai`, `link`. All enforce four states: standard, hover, active (`scale-[var(--scale-press-btn)]`), disabled (`opacity-disabled`, `pointer-events-none`).
+Button variants: `default`, `primary-audacious` (K W6), `gold-audacious` (AN.R0; the gold "→ Next" CTA), `destructive`, `outline`, `secondary`, `accent`, `ghost`, `glass`, `glass-wash`, `ai`, `link`. All enforce four states: standard, hover, active (`scale-[var(--scale-press-btn)]`), disabled (`opacity-disabled`, `pointer-events-none`).
 
 `primary-audacious` composes the canonical `@utility btn-audacious` recipe from `src/styles/utilities.css`—disco-grain texture + sparkle-sweep glyph + specular-highlight backplate, bound to `--primary` (phase-color decoupled per K W6 Option B; dock primary tier retains phase-tinting as a dock-local extension via `--phase-color` cascade).
+
+`gold-audacious` extends `btn-audacious` with the `@utility btn-audacious-gold` gold-sweep hover (a translucent `--color-gold-*` linear-gradient over the paper-grain, the `--glass-specular` top-edge catch-light, and the `btn-gold-bg-sweep` shimmer—PRM-gated; rest text is warm-ink `--foreground`, hover/active flips to white over the saturated gold backplate, per the AW.W13 contrast contract gated by `proof:affordance-contrast`). It is the D19 liquid-glass MODEL—a thin edge catch-light over a diffuse central bloom, hover-gated over always-on, `background-blend-mode` (isolation-safe, Safari-clean) over `mix-blend-mode`. Speedtest consumes the library `btn-audacious-gold` utility via a class binding (inv-16; no local redefinition). The hover/press scale rides `--scale-hover-btn` on `--spring-smooth` per the §6 easing doctrine.
+
+**Easing doctrine (AX.W52 §6).** ONE recorded rule for which easing fits which job, formalizing the already-correct `transitions.css` idiom (full table in `tokens.css §2` header): surface props (bg/border/color/box-shadow/opacity) → `--ease-standard` (bezier—a colour cross-fade reads as a wobble on a spring); transform hover/press/active (scale/translate/rotate) → `--spring-smooth` (the ONE button/interactive scale register—`.btn-pill`/`.tap-squish`/`.glass-btn`/`btn-interactive` all settle on it, ζ=0.86 sub-perceptual peak so press still reads alive without a visible bounce); enter (mount/popover/dialog) → `--spring-bouncy`/`--spring-snappy`; exit (unmount/close) → `--ease-out`/`--ease-standard` (bezier, NO overshoot—an exit must never overshoot past gone); position-tracked (specular pointer) → `--ease-standard`. The button hover-visual channel (bg/border/color/shadow + scale) is UNIFIED onto this one register so the lift reads as ONE coherent glide, not a fast-color-snap-then-slow-spring desync (the prior cascade bug: `.tap-squish`'s scale-only `transition` shorthand clobbered `.btn-pill`'s surface legs, so every button transitioned ONLY scale—both classes now carry the full coherent set).
 
 ### Tabs vs ToggleGroup
 
