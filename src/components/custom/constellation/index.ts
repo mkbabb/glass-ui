@@ -8,6 +8,10 @@ export {
     drawNodes,
     drawPointerWeb,
     drawRipples,
+    nearestNode,
+    warpStep,
+    warpTo,
+    setWarpTarget,
     BASE_WIDTH,
     DEFAULT_PALETTE,
 } from "./constellationField";
@@ -17,5 +21,6 @@ export type {
     ConstellationPointer,
     ConstellationPalette,
     ConstellationField,
+    ConstellationWarp,
     ConstellationProps,
 } from "./constellationField";
