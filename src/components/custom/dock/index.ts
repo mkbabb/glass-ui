@@ -18,6 +18,18 @@ export { default as DockDropdownTrigger } from "./DockDropdownTrigger.vue";
 // composable-return shape paralleling `UseClipboardReturn` / `UseAuroraReturn`.
 export type { UseDockStateOptions, UseDockStateReturn, DockState } from "./composables";
 
+// AX.W01 — expose the rebuilt single-scalar `useLayerTransition` on the `/dock`
+// subpath barrel (substrate-WITH-consumer). value.js maintains a local FLIP-width
+// fork ONLY because this barrel never re-exported the primitive; with the export
+// landed the consumer-adoption leg (value.js deletes its fork + re-points
+// ActionBarLayer.vue) routes to AX.W34. The primitive is the same one
+// `<DockLayerGroup>` already composes — one mechanism, one published surface.
+export { useLayerTransition } from "./composables";
+export type {
+    UseLayerTransitionOptions,
+    UseLayerTransitionReturn,
+} from "./composables";
+
 // P.W1 Lane B — Fix 2 (P11/b CR-2 prerequisite): re-export the dock-context
 // canonical DI primitives so consumers can migrate from the retired
 // pre-O.W2 string keys (`"dockKeepOpen"` / `"dockRelease"`) to the typed-key
