@@ -229,7 +229,6 @@ import { InfiniteScroll, useInfiniteScroll } from "@mkbabb/glass-ui/infinite-scr
 import { SegmentedTabs } from "@mkbabb/glass-ui/tabs";
 import { TypewriterText, useTypewriter } from "@mkbabb/glass-ui/typewriter";
 import { StackedIconGroup } from "@mkbabb/glass-ui/stacked-icons";
-import { GlassCarousel, GlassCarouselItem } from "@mkbabb/glass-ui/glass-carousel";
 import { Aurora, useAurora } from "@mkbabb/glass-ui/aurora";
 import { MetricBadge } from "@mkbabb/glass-ui/metric-badge";
 import { StatusDot } from "@mkbabb/glass-ui/status-dot";
@@ -248,13 +247,13 @@ const runtimeSymbols = [
   GlassDock, DockIconButton, DockDropdownTrigger, DockLayerGroup, FuzzySearch, useFuzzySearch,
   buildTreeIndex, useTreeIndex, DarkModeToggle,
   ConfirmDialog, InfiniteScroll, useInfiniteScroll, SegmentedTabs,
-  TypewriterText, useTypewriter, StackedIconGroup, GlassCarousel, GlassCarouselItem,
+  TypewriterText, useTypewriter, StackedIconGroup,
   Aurora, useAurora, MetricBadge, StatusDot, Pulse, PaperBackdrop, ToggleChip,
   GlassPanel, SortableList, GlassTimeline, LabeledInput,
   ExpandableContainer, IconTooltip,
 ];
 
-if (runtimeSymbols.length < 40) throw new Error("packed fixture did not load expected symbols");
+if (runtimeSymbols.length < 35) throw new Error("packed fixture did not load expected symbols");
 `,
     );
 

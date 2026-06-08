@@ -530,3 +530,66 @@ Per §2b the band-G binding precepts (pinned `docs/precepts/` @ `63240e6`):
    if W19 and W20 co-land, confirm W20 does not also edit the count line (it should not — GlassPanel reaches
    consumers via subpath, not the root-barrel cherry-pick set). RATIFY the disjoint ownership so the count
    comment is mutated by exactly one wave.
+
+---
+
+## Convergence-2 augment — P1/P2/P3/P4 folded into W19 (the prune wave)
+
+Per `docs/tranches/AX/audit/convergence2/CONVERGENCE-PLAN-2.md` (line 35: "W19 ← P1/P2/P3/P4")
+and the three lane audits (`A-prune-glyphs.md`, `A-prune-carousel.md`, `A-prune-token-color.md`),
+the pass-2 USER-DEFECTS prunes fold into W19 as additional excisions. Implemented against baseline
+`7e23877` (the convergence-2 cut), NOT the wave doc's prior `eaba94f`/`b919137`. **Header-ribbon is
+out of THIS lane's scope** (it is the wave doc's original F0 — owned separately; W19-prunes lane touched
+ONLY the four targets below). Live consumer census re-proven at `7e23877` before acting (the §0 cardinal).
+
+### P4 — glass-carousel EXCISED (overfitting bar FAILS)
+
+`custom/glass-carousel/` (`GlassCarousel.vue` + `GlassCarouselItem.vue` + `useGlassCarousel.ts`) had
+**ONE binary consumer** (its own demo story `navigation/glass-carousel.vue`) + zero sibling-repo
+consumers — the substrate-without-consumer bar (J inv 10 / L inv 8). EXCISED: the dir, `src/subpaths/glass-carousel.ts`,
+the `./glass-carousel` package.json export + typesVersions, the `src/index.ts:67` cherry-pick-comment
+mention (NOT on the root barrel — no export line), the demo story + manifest row, the IA slug
+(`proof-storybook-ia.mjs` navigation cohort), and three gate-script consumers:
+`proof-package.mjs` (probe import + 2 runtimeSymbols + the `<40` guard → `<35`),
+`proof-motion-value-free.mjs` (the `useGlassCarousel.ts` scanned-file entry), and
+`proof-carousel-glass-atoms.mjs` (clauses C FOUR-STATE + D CHROME-SUBSTRATE asserting on the now-deleted
+`GlassCarouselItem`/`GlassCarousel` — DROPPED; clauses A DOT-CONTRAST + B NO-DEAD-CLASS on the SURVIVING
+`ui/carousel/CarouselDots.vue` KEPT). Tests/ mirrors swept: `public-surface.spec.ts` (import + 2 surface
+rows + the `nonCoreRootRetirements` entry), `lifecycle-cleanup.spec.ts` (the whole "detaches glass carousel
+scroll listeners" test + its now-unused `nextTick`/`ref`/`mountComposable`/`useGlassCarousel` imports).
+**OUT of bounds (KEPT):** `ui/carousel/` (the surviving embla family + `GlassCarouselPager` — a separate
+audacious-pager primitive on the `/carousel` subpath); the `@mkbabb/glass-ui/carousel` subpath;
+`CarouselDots.vue`. The W23-complete `F5` chrome restyle of `custom/glass-carousel` is SUPERSEDED by this
+prune (the W23 effort landed on a soon-to-be-pruned surface — the convergence catch).
+
+### P2 + P3 — disco-glyph + glyph-face EXCISED (overfitting bar FAILS, P3 hedge → hard PRUNE)
+
+Both fail the ≥2-binary-consumer bar. disco-glyph's only non-self touch-point was the manufactured
+`foundations/chart-chassis-palette.vue` "second-consumer wiring" demo (the circular justification);
+glyph-face's only non-self touch-point was the `compositions/instrument-chassis.vue` composition (slated for
+W28/W29 retire) + the `GLYPH_FACE_SILHOUETTE_KEY` DI coupling that wired the two demo-only primitives to each
+other. EXCISED both dirs (glyph-face incl. `keys.ts`), both subpaths, both CSS files + `index.css` imports +
+cascade comments, the `src/index.ts` root-barrel lines + cherry-pick-rationale tokens (7→5 cherry-picks),
+both package.json exports + typesVersions, both demo stories + manifest rows + IA slugs, and the gate ledgers:
+`proof-consumers-static.mjs` (2 entries + the 7→5 count comment), `proof-di-consistency.mjs` (the
+`glyph-face/keys.ts: "optional"` matrix entry), `gates.mjs:399` (the DI-note string trim),
+`createContext.ts:5` (the DI-consumer doc-comment list trim), `dock-controls.css:324` (the stale `<GlyphFace>`
+doc-comment name-drop — the `::before` CSS rule does NOT depend on the component). The disco-glyph→glyph-face
+DI coupling is severed by the dual excision (both dirs go — no dangling import survives; `vue-tsc` green).
+**Consumer re-expressions (clean break — no dangling import):** the `chart-chassis-palette.vue` DiscoGlyph
+swatch grid → plain token-color `<div>` tiles reading the chart token as `background` (no new primitive, no
+manufactured consumer); the `instrument-chassis.vue` two `<GlyphFace>` wrappers → the bare slotted lucide
+icons (the DockIconButton/DockTabButton chrome remains).
+
+### P1 — useTokenColor KEPT (≥2-consumer bar STILL MET); demo toggle → DarkModeToggle
+
+`useTokenColor` is **load-bearing** — `demo/stories/substrates/constellation.vue` calls it THREE times
+(`--primary`, `--constellation-accent`) to resolve tokens to concrete Canvas2D `fillStyle`/`strokeStyle`
+values, re-resolving on dark-flip. Constellation is a SURVIVING substrate (pass-2 P7 wants it as a page hero).
+So the ≥2-consumer bar holds after the use-token-color demo story stays (the composable + its `dom/` barrel
+export are UNTOUCHED — `proof:no-orphan-composable` green). The lane's literal P1 ask ("the demo ICON →
+a DarkModeToggle") is satisfied by swapping the use-token-color story's ad-hoc `<Button @click="toggleDark">`
+for the shipped `<DarkModeToggle>` (`custom/controls`); the story KEEPS its manifest row + IA slug (the
+composable is NOT pruned, so the conditional "remove the story IF the composable is pruned" does not fire).
+This is the reconciliation of the prior W21 fold-5 (justify-and-annotate-KEEP) with pass-2 P1 (the
+load-bearing argument holds; only the demo affordance changes).

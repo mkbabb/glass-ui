@@ -99,13 +99,11 @@
  *                              binding + bezel hairlines + sibling divider
  *                              rule). Composes alongside instrument-chassis;
  *                              shares the bezel-line twin-pixel idiom.
- *  14. glyph-face.css        — P-tranche component CSS (cap + backplate).
- *  15. disco-glyph.css       — P-tranche component CSS (layered fills).
- *  16. hover-popover.css     — V.W3 popover-animation grammar.
- *  17. drawer.css            — AN.W3 detented bottom-sheet grammar (glass
+ *  14. hover-popover.css     — V.W3 popover-animation grammar.
+ *  15. drawer.css            — AN.W3 detented bottom-sheet grammar (glass
  *                             sheet surface + peek handle + snap-stop rules).
  *
- * Per-package component CSS lives at (12)-(17) (loaded after utilities so
+ * Per-package component CSS lives at (12)-(15) (loaded after utilities so
  * component-local recipes can override). New per-package CSS files append
  * to that tail.
  */
@@ -127,8 +125,6 @@
 @import "./utilities.css";
 @import "./instrument-chassis.css";
 @import "./instrument-rail.css";
-@import "./glyph-face.css";
-@import "./disco-glyph.css";
 @import "./hover-popover.css";
 @import "./drawer.css";
 

@@ -106,8 +106,6 @@ src/
 │       ├── dock-group/         # DockGroup chassis-strip wrapper
 │       ├── hover-popover/      # HoverPopover (hoverOpenDelay prop—K W1 rename)
 │       ├── instrument-chassis/ # InstrumentChassis + RegionDivider
-│       ├── glyph-face/         # GlyphFace 3-layer wrapper
-│       ├── disco-glyph/        # DiscoGlyph 3-layer SVG glyph primitive
 │       ├── labeled-field/      # LabeledField parent + 4 wrappers
 │       ├── metric-badge/       # MetricBadge primitive
 │       ├── pulse/              # Dots / ring loading indicator
@@ -115,7 +113,7 @@ src/
 │       ├── tabs/               # BouncyTabs, UnderlineTabs, BouncyToggle
 │       ├── timeline/           # GlassTimeline
 │       ├── typewriter/         # TypewriterText
-│       └── ...                 # confirm-dialog, controls, expandable-container, glass-carousel,
+│       └── ...                 # confirm-dialog, controls, expandable-container,
 │                               # glass-panel, icon-tooltip, infinite-scroll, paper-backdrop,
 │                               # search, sidebar, sortable-list, stacked-icons, status-dot,
 │                               # toggle-chip
@@ -139,8 +137,6 @@ src/
 │   ├── glass.css               # 5-rung glass ladder + .glass-card / .glass-pill / .glass-btn / .glass-cartoon
 │   ├── dock.css                # density rail + dock-layer-grid + separators (button styling lives in dock components)
 │   ├── dock-group.css          # DockGroup chassis-strip rules
-│   ├── disco-glyph.css         # DiscoGlyph layered fills + facet gradient
-│   ├── glyph-face.css          # GlyphFace cap + backplate cascade
 │   ├── hover-popover.css       # popover-animation grammar
 │   ├── instrument-chassis.css  # bezel + groove dividers + region rules
 │   ├── cards.css               # .cartoon-card, .elevated-card
@@ -181,7 +177,6 @@ import { Configurator, useConfiguratorState } from "@mkbabb/glass-ui/configurato
 import { HoverPopover } from "@mkbabb/glass-ui/hover-popover";
 import { InstrumentChassis, RegionDivider } from "@mkbabb/glass-ui/instrument-chassis";
 import { Sidebar } from "@mkbabb/glass-ui/sidebar";
-import { GlassCarousel } from "@mkbabb/glass-ui/glass-carousel";
 import { ScrollingText } from "@mkbabb/glass-ui/scrolling-text";
 ```
 

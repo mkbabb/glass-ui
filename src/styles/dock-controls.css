@@ -321,12 +321,12 @@
 
         /* Q.W3.A.4 — phase-tint backplate halo at the pill wrapper.
          *
-         * The inner `<GlyphFace>` halo (`.glyph-face-backplate { inset: -25% }`)
-         * gets clipped by the pill's `overflow: hidden`; the halo never escapes
-         * the inner glyph wrapper. This `::before` lifts the phase-tint to the
-         * pill itself so the glow composes with the whole CTA. Scoped to
-         * active phases — at idle / ready the pill stays neutral and inherits
-         * the W2.7 reservation ("disco fires on hover only"). */
+         * An inner glyph wrapper's own halo would be clipped by the pill's
+         * `overflow: hidden` and never escape the glyph box. This `::before`
+         * lifts the phase-tint to the pill itself so the glow composes with the
+         * whole CTA. Scoped to active phases — at idle / ready the pill stays
+         * neutral and inherits the W2.7 reservation ("disco fires on hover
+         * only"). */
         /* AX.W52 D19 — the REST phase-halo `::before` (fires during a speedtest run
          * on the most prominent dock control) DEMOTED on the same axis as the hover
          * radial: 18%→8%, the hard `30% 30%` corner shifted to a softer `40% 25%`

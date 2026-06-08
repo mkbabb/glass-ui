@@ -76,7 +76,6 @@ src/
 │   │   ├── confirm-dialog/         # ConfirmDialog
 │   │   ├── controls/
 │   │   │   └── DarkModeToggle.vue  # animated sun/moon SVG (useGlobalDark)
-│   │   ├── disco-glyph/            # DiscoGlyph 3-layer SVG glyph primitive
 │   │   ├── dock/
 │   │   │   ├── GlassDock.vue       # collapsible glass pill, dual-layer grid, horizontal | vertical, containerName prop (V.W2)
 │   │   │   ├── DockLayerGroup.vue  # multi-layer container + optional switcher rail
@@ -90,9 +89,7 @@ src/
 │   │   │   └── index.ts
 │   │   ├── dialog-native/          # GlassDialogNative — native <dialog> wrapper
 │   │   ├── expandable-container/   # ExpandableContainer
-│   │   ├── glass-carousel/         # GlassCarousel + useGlassCarousel
 │   │   ├── glass-panel/            # GlassPanel substrate wrapper
-│   │   ├── glyph-face/             # GlyphFace 3-layer wrapper (phase-tinted backplate + cap)
 │   │   ├── goo-blob/               # GooBlob WebGL2 metaball on the useWebGLCanvas substrate—injected ColorResolver (AU.W7; subpath /goo-blob)
 │   │   ├── header-ribbon/          # HeaderRibbon—hover-tracking ribbon (O.W6 Lane A; subpath /header-ribbon)
 │   │   ├── hover-popover/          # HoverPopover with hoverOpenDelay prop (renamed from openDelay—K W1)
@@ -120,7 +117,7 @@ src/
 │   └── index.ts                    # barrel: ui/ + custom/
 ├── composables/                    # v1.0 public composables—9 coherent sub-trees (L.W2 Lane A restructure; AU.W5 added color/)
 │   ├── color/                      # OKLCh primitives + ColorResolver seam (value.js-only leaf—subpath /color; AU.W5)
-│   ├── context/                    # createStrictContext<T>()/createOptionalContext<T>() canonical DI factory pair (AV.W14; internal—the dock/dock-layer/toggle-group/sortable/glyph-face/configurator provide-inject triplets collapse onto it)
+│   ├── context/                    # createStrictContext<T>()/createOptionalContext<T>() canonical DI factory pair (AV.W14; internal—the dock/dock-layer/toggle-group/sortable/configurator provide-inject triplets collapse onto it)
 │   ├── dark/                       # useGlobalDark({initialValue}) + darkModeSyncScript()/installDarkModeSync() FOUC (subpath /dark; vueuse-bearing; AU.W9)
 │   ├── keyboard/                   # useKeyboardShortcuts + registerShortcut + useRegisteredShortcuts
 │   │                               # + formatCombo + formatComboParts + isMac + types
@@ -162,8 +159,6 @@ src/
 │   ├── glass.css                   # .glass-{wash,quiet,resting,floating,overlay} 5-rung ladder + .glass-card / .glass-pill / .glass-btn
 │   ├── dock.css                    # dock shell/density/grain/layer-crossfade contract + .dock-separator, .dock-layer-grid + shared cross-control four-state comma-groups
 │   ├── dock-controls.css           # the five dock CONTROL families carved from dock.css (AU.W8b.3): .dock-icon-button, .dark-mode-toggle-button, .dock-tab-button + tiers, .dock-select-trigger/.dock-dropdown-trigger, coarse-pointer touch floor
-│   ├── disco-glyph.css             # DiscoGlyph layered fills + facet gradient
-│   ├── glyph-face.css              # GlyphFace cap + backplate cascade
 │   ├── hover-popover.css           # popover-animation grammar (V.W3)
 │   ├── instrument-chassis.css      # chassis bezel + groove dividers + region rules
 │   ├── cards.css                   # .paper-texture + @utility cartoon-surface (decoration-only; layers on a glass tier)
@@ -204,7 +199,7 @@ The cartoon shadow is **token-adaptive under `.dark` BY CONSTRUCTION**: each `--
 
 ## Entry point
 
-`src/index.ts` is the **v1.0 curated public barrel**—vueuse-free per L.W1 Lane A SCC trap closure. It re-exports the 37 vueuse-free `ui/` package barrels (4 vueuse-bearing packages—`input/`, `textarea/`, `combobox/`, `carousel/`—are reachable only via subpath), 7 cherry-picked `custom/` packages (`instrument-chassis`, `instrument-rail`, `glyph-face`, `disco-glyph`, `hover-popover`, `configurator`, `scrolling-text`), the vueuse-free composable sub-trees (`motion/`, `reactive/`, `dom/`, `glass/`, `sortable/`), and `cn()`. The cherry-pick rationale is documented inline in `src/index.ts` (header comment block; L.W2 Lane B). The remaining 26 `custom/` packages reach consumers only via their dedicated subpath (`@mkbabb/glass-ui/dock`, `/aurora`, `/sidebar`, `/header-ribbon`, ...). Sidebar state/follow/scroll/tree composables live under `src/composables/sidebar/`; the `custom/sidebar/` component dir was retired (AI.W5-δ; zero external SFC consumers) and its types relocated to `src/composables/sidebar/types.ts`. The `Sidebar` surface now reaches consumers via the `/sidebar` subpath (`src/sidebar.ts` → the composables barrel).
+`src/index.ts` is the **v1.0 curated public barrel**—vueuse-free per L.W1 Lane A SCC trap closure. It re-exports the 37 vueuse-free `ui/` package barrels (4 vueuse-bearing packages—`input/`, `textarea/`, `combobox/`, `carousel/`—are reachable only via subpath), 5 cherry-picked `custom/` packages (`instrument-chassis`, `instrument-rail`, `hover-popover`, `configurator`, `scrolling-text`), the vueuse-free composable sub-trees (`motion/`, `reactive/`, `dom/`, `glass/`, `sortable/`), and `cn()`. The cherry-pick rationale is documented inline in `src/index.ts` (header comment block; L.W2 Lane B). The remaining `custom/` packages reach consumers only via their dedicated subpath (`@mkbabb/glass-ui/dock`, `/aurora`, `/sidebar`, `/header-ribbon`, ...). Sidebar state/follow/scroll/tree composables live under `src/composables/sidebar/`; the `custom/sidebar/` component dir was retired (AI.W5-δ; zero external SFC consumers) and its types relocated to `src/composables/sidebar/types.ts`. The `Sidebar` surface now reaches consumers via the `/sidebar` subpath (`src/sidebar.ts` → the composables barrel).
 
 ## Dependencies
 
@@ -272,25 +267,26 @@ import {
 } from "@mkbabb/glass-ui/configurator";
 import { HoverPopover } from "@mkbabb/glass-ui/hover-popover";
 import { Sidebar } from "@mkbabb/glass-ui/sidebar";
-import { GlassCarousel } from "@mkbabb/glass-ui/glass-carousel";
 // + tokens, search, confirm-dialog, infinite-scroll, tabs, typewriter, stacked-icons,
 //   metric-badge, status-dot, pulse, paper-backdrop, toggle-chip, glass-panel,
 //   sortable-list, timeline, labeled-field, expandable-container,
-//   icon-tooltip, instrument-chassis, glyph-face, disco-glyph,
-//   scrolling-text
+//   icon-tooltip, instrument-chassis, scrolling-text
 ```
 
-CSS imports the unified bundle via `@mkbabb/glass-ui/styles`. Per `package.json` exports + `typesVersions["*"]`, glass-ui ships **70 flat JS subpaths** (the component-package families + `/api` + `/forms` + `/dark` + `/keyboard` + `/carousel` + the composable subtrees) plus the CSS/font bundle entries (`./styles`, `./styles/fonts`, `./styles.css`, `./fonts/*`) — 75 entries total in `package.json` exports including the `./` root. Each `exports` entry carries the contract-v2 shape — `{ types, import, default }` for the `./` root, `{ types, import }` for the subpaths; no `development` condition (the AG glass-ui-core wave abrogated it). The `./freshness` subpath retired at AD.W4 (Decision 5): the runtime stale-dist gate is superseded by the cross-repo dev-resolution contract-v2 — every consumer resolves the built `dist/` in dev and prod alike, and every `@mkbabb/*` publisher runs `build:watch` so `dist/` is kept fresh while a consumer's dev server is up, so a stale `dist/` cannot mislead them. See `docs/precepts/cross-repo-dev-resolution.md` (invariant 30, contract-v2). Verified by `npm run verify-export-types` (release-script probe per L.W0 Lane III; unconditional since O.W5 Lane B+D) + the fail-closed `npm run proof:resolution` gate.
+CSS imports the unified bundle via `@mkbabb/glass-ui/styles`. Per `package.json` exports + `typesVersions["*"]`, glass-ui ships **67 flat JS subpaths** (the component-package families + `/api` + `/forms` + `/dark` + `/keyboard` + `/carousel` + the composable subtrees) plus the CSS/font bundle entries (`./styles`, `./styles/fonts`, `./styles.css`, `./fonts/*`) — 72 entries total in `package.json` exports including the `./` root. Each `exports` entry carries the contract-v2 shape — `{ types, import, default }` for the `./` root, `{ types, import }` for the subpaths; no `development` condition (the AG glass-ui-core wave abrogated it). The `./freshness` subpath retired at AD.W4 (Decision 5): the runtime stale-dist gate is superseded by the cross-repo dev-resolution contract-v2 — every consumer resolves the built `dist/` in dev and prod alike, and every `@mkbabb/*` publisher runs `build:watch` so `dist/` is kept fresh while a consumer's dev server is up, so a stale `dist/` cannot mislead them. See `docs/precepts/cross-repo-dev-resolution.md` (invariant 30, contract-v2). Verified by `npm run verify-export-types` (release-script probe per L.W0 Lane III; unconditional since O.W5 Lane B+D) + the fail-closed `npm run proof:resolution` gate.
 
 The v0.9.x nested subpaths `@mkbabb/glass-ui/composables/dark` + `@mkbabb/glass-ui/composables/keyboard` were RETIRED at v1.0—L invariant 4 (no backwards-compat aliases). Consumers migrate via one-line rename per call site; see `MIGRATION.md`. The `@mkbabb/glass-ui/pagination` and `@mkbabb/glass-ui/virtual` subpaths were RETIRED at L.W3 (0 production consumers; substrate-without-consumer-binary invariant).
 
 ### Subpath naming pairs (canonical)
 
-One name-pair flags a substrate boundary; consumers pick the right one per the use case:
-
-- `@mkbabb/glass-ui/glass-carousel` (custom-styled `<GlassCarousel>` composite) vs `@mkbabb/glass-ui/carousel` (vueuse-bearing `useCarousel` composable + embla-carousel-vue `CarouselApi` type—the underlying primitive `<Carousel>` family wraps this).
-
-(The `@mkbabb/glass-ui/dock-group` `DockGroup` chassis-strip wrapper was a third pair member alongside `/dock`; it was retired with its `custom/dock-group/` dir + `dock-group.css` + subpath export — no consumer at HEAD.)
+The single `Carousel` surface ships via `@mkbabb/glass-ui/carousel` (vueuse-bearing
+`useCarousel` composable + embla-carousel-vue `CarouselApi` type—the underlying
+primitive `<Carousel>` family + `GlassCarouselPager` wrap this). The former
+`@mkbabb/glass-ui/glass-carousel` scroll-overflow composite (`<GlassCarousel>` +
+`useGlassCarousel`) was retired at AX.W19 (single demo consumer, zero binary
+consumers — the substrate-without-consumer bar). The
+`@mkbabb/glass-ui/dock-group` `DockGroup` chassis-strip wrapper was retired
+earlier with its `custom/dock-group/` dir + `dock-group.css` + subpath export.
 
 ## Design Axes
 
@@ -441,7 +437,7 @@ export { Button, buttonVariants, type ButtonVariants } from "@mkbabb/glass-ui";
 
 ### Subpath-import discipline
 
-For a minimal payload, import from the **flat subpath** (`@mkbabb/glass-ui/button`), not the root barrel. The root `@mkbabb/glass-ui` barrel re-exports 37 `ui/` families + 7 cherry-picked `custom/` packages; a consumer build that has not been chunk-split will inline everything it reaches through that barrel into one chunk. The dist is a 76-entry per-subpath split (each `dist/<name>.js` tree-shakes independently), so `import { GlassDock } from "@mkbabb/glass-ui/dock"` pulls `dist/dock.js` + its shared leaves and never drags in the root barrel's reach. Per-subpath gzipped sizes are published in `docs/tranches/K/audit/W4-subpath-sizes.md` (regenerated by `npm run profile:bundle`) so a consumer can size each import choice—e.g. `@mkbabb/glass-ui/aurora` is a standalone ≈ 16 KiB-gzip WebGL chunk that the root barrel does NOT transitively reach.
+For a minimal payload, import from the **flat subpath** (`@mkbabb/glass-ui/button`), not the root barrel. The root `@mkbabb/glass-ui` barrel re-exports 37 `ui/` families + 5 cherry-picked `custom/` packages; a consumer build that has not been chunk-split will inline everything it reaches through that barrel into one chunk. The dist is a 76-entry per-subpath split (each `dist/<name>.js` tree-shakes independently), so `import { GlassDock } from "@mkbabb/glass-ui/dock"` pulls `dist/dock.js` + its shared leaves and never drags in the root barrel's reach. Per-subpath gzipped sizes are published in `docs/tranches/K/audit/W4-subpath-sizes.md` (regenerated by `npm run profile:bundle`) so a consumer can size each import choice—e.g. `@mkbabb/glass-ui/aurora` is a standalone ≈ 16 KiB-gzip WebGL chunk that the root barrel does NOT transitively reach.
 
 ### Vite 8 `manualChunks` recipe
 

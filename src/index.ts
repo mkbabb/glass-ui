@@ -49,11 +49,10 @@
 //
 // ── Custom-package cherry-pick rationale ─────────────────────────────────
 //
-// This root barrel re-exports a curated 7 of the `src/components/custom/`
-// packages (`instrument-chassis`, `instrument-rail`, `glyph-face`,
-// `disco-glyph`, `hover-popover`, `configurator`, `scrolling-text`). The rest
-// reach consumers ONLY via their dedicated subpath (`@mkbabb/glass-ui/dock`,
-// `/aurora`, `/sidebar`, ...).
+// This root barrel re-exports a curated 5 of the `src/components/custom/`
+// packages (`instrument-chassis`, `instrument-rail`, `hover-popover`,
+// `configurator`, `scrolling-text`). The rest reach consumers ONLY via their
+// dedicated subpath (`@mkbabb/glass-ui/dock`, `/aurora`, `/sidebar`, ...).
 //
 // Acceptance bar for root-barrel inclusion:
 //   (a) vueuse-free at every transitive import (closes the SCC trap);
@@ -64,7 +63,7 @@
 //       rather than as a stand-alone bundle.
 //
 // The excluded packages fail one or more of those criteria:
-//   - vueuse-bearing internals (sidebar, glass-carousel, infinite-scroll);
+//   - vueuse-bearing internals (sidebar, infinite-scroll);
 //   - large composite chassis with nested composables (dock, aurora,
 //     configurator domain helpers); OR
 //   - vertical/themed substrate (paper-backdrop, search,
@@ -117,8 +116,6 @@ export * from "./components/ui/tooltip";
 // Custom composites — instrument-cluster chassis
 export * from "./components/custom/instrument-chassis";
 export * from "./components/custom/instrument-rail";
-export * from "./components/custom/glyph-face";
-export * from "./components/custom/disco-glyph";
 export * from "./components/custom/hover-popover";
 
 // Custom composites — configurator primitive

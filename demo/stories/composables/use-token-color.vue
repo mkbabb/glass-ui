@@ -4,6 +4,7 @@ import { computed, ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import { useTokenColor } from "../../../src/composables/dom/useTokenColor";
 import { useGlobalDark } from "../../../src/composables/dark";
+import { DarkModeToggle } from "../../../src/components/custom/controls";
 import { Button } from "../../../src/components/ui/button";
 
 const tokens = [
@@ -19,7 +20,7 @@ const selected = ref<(typeof tokens)[number]>("--color-foreground");
 
 const resolved = useTokenColor(() => selected.value, { fallback: "transparent" });
 
-const { isDark, toggleDark } = useGlobalDark();
+const { isDark } = useGlobalDark();
 
 const swatchStyle = computed(() => ({
     backgroundColor: resolved.value.value || "transparent",
@@ -36,9 +37,10 @@ const swatchStyle = computed(() => ({
             </p>
 
             <div class="flex flex-wrap items-center gap-3">
-                <Button variant="secondary" @click="toggleDark">
-                    Theme: {{ isDark ? "dark" : "light" }} (toggle)
-                </Button>
+                <DarkModeToggle aria-label="Toggle theme" />
+                <span class="text-small text-muted-foreground">
+                    Theme: {{ isDark ? "dark" : "light" }}
+                </span>
                 <span class="text-small text-muted-foreground">
                     Resolved: <code class="fira-code">{{ resolved.value || "—" }}</code>
                 </span>

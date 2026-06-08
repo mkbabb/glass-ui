@@ -128,8 +128,6 @@ export const CATEGORIES: Category[] = [
             s("primitives", "pulse", "Pulse"),
             s("primitives", "stacked-icons", "Stacked Icons", "Overlapping icon stack with maxVisible / +N overflow; size axis only."),
             s("primitives", "dark-mode-toggle", "Dark Mode Toggle", "Size axis (sm · md · lg · control standalone; dock sizes to its GlassDock host); composes useGlobalDark."),
-            s("primitives", "glyph-face", "Glyph Face", "Phase-tinted lucide wrapper with catch-light cap; clips to a descendant DiscoGlyph silhouette via provide/inject."),
-            s("primitives", "disco-glyph", "Disco Glyph", "Faceted SVG glyph primitive — 8-stop linear facet × 165° specular cap, phase-tinted on activation; writes its silhouette into a wrapping GlyphFace."),
         ],
     },
     {
@@ -164,7 +162,6 @@ export const CATEGORIES: Category[] = [
             s("navigation", "rail", "Dock Rail", "Vertical GlassDock variant behind the demo's category nav."),
             s("navigation", "header-ribbon", "Header Ribbon", "Hover-tracking ribbon — an anchor button reveals a control row, then auto-collapses; the anchor slot exposes pinned / toggled state. Shipped /header-ribbon."),
             s("navigation", "carousel", "Carousel"),
-            s("navigation", "glass-carousel", "Glass Carousel", "GlassCarousel items and composable controls."),
         ],
     },
     {

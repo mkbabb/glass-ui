@@ -133,11 +133,9 @@ function unionExports(files) {
 // the dependency-free View-Transitions trio, allowed explicitly below (AQ.W5).
 const rootContractFiles = [
     "src/components/ui/index.ts",
-    // The 7 cherry-picked custom/ packages on the root barrel.
+    // The 5 cherry-picked custom/ packages on the root barrel.
     "src/components/custom/instrument-chassis/index.ts",
     "src/components/custom/instrument-rail/index.ts",
-    "src/components/custom/glyph-face/index.ts",
-    "src/components/custom/disco-glyph/index.ts",
     "src/components/custom/hover-popover/index.ts",
     "src/components/custom/configurator/index.ts",
     "src/components/custom/scrolling-text/index.ts",

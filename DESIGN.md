@@ -1664,7 +1664,7 @@ _shared (`<ModalOverlay>`, `menuItemVariants` CVA—V.W3) · accordion · alert 
 
 ### Custom composites (`src/components/custom/`)
 
-aurora · **configurator** (`Configurator`, `ConfiguratorLayer`, `ConfiguratorRow`, `useConfiguratorState`) · confirm-dialog · controls · **disco-glyph** · **dock** (`GlassDock`, `DockLayer`, `DockLayerGroup`, `DockIconButton`, `DockTabButton`, `DockSelectTrigger`, `DockDropdownTrigger`) · **dock-group** · expandable-container · glass-carousel · glass-panel · **glyph-face** · **hover-popover** · icon-tooltip · infinite-scroll · **instrument-chassis** · **labeled-field** · **metric-badge** · **paper-backdrop** · **pulse** · **scrolling-text** · search · sidebar · sortable-list · stacked-icons · **status-dot** · tabs (BouncyTabs, UnderlineTabs, BouncyToggle) · timeline · toggle-chip · typewriter.
+aurora · **configurator** (`Configurator`, `ConfiguratorLayer`, `ConfiguratorRow`, `useConfiguratorState`) · confirm-dialog · controls · **dock** (`GlassDock`, `DockLayer`, `DockLayerGroup`, `DockIconButton`, `DockTabButton`, `DockSelectTrigger`, `DockDropdownTrigger`) · expandable-container · glass-panel · **hover-popover** · icon-tooltip · infinite-scroll · **instrument-chassis** · **labeled-field** · **metric-badge** · **paper-backdrop** · **pulse** · **scrolling-text** · search · sidebar · sortable-list · stacked-icons · **status-dot** · tabs (`SegmentedTabs`) · timeline · toggle-chip · typewriter.
 
 ### Key component specs
 
@@ -1686,17 +1686,6 @@ aurora · **configurator** (`Configurator`, `ConfiguratorLayer`, `ConfiguratorRo
 
 **`GlassDock` containerName prop** (v0.8.3, T.W2)—optional `containerName?: string`. When set, the dock root emits inline `container-type: inline-size; container-name: <value>; overflow: visible` plus a `data-container-name` structural marker. The base `overflow: hidden` shell gates on `:not([data-container-name])` so non-host docks keep the default clip—a backward-compatible extension. Consumers query the named container via `@container <value> (...)` rules without wrapping the dock in a sibling subject. Lifts the container subject onto the primitive (audit-B §1.3 gestalt move): a container subject must be a peer or ancestor of the dock, never an interior descendant whose intrinsic size the dock relies on (CSS Containment L3 §3.2). Replaces the W3-stash workaround that put `container-type: inline-size` on the cluster itself, which collapsed the dock to 0 width.
 
-**`GlyphFace`**—`<GlyphFace :tint="hex|undefined" :active="bool" :silhouette="path-d|clip-path">`. Three-layer wrapper around a slotted lucide glyph: a phase-tinted radial backplate (visible only when `[data-active="true"]`), the slotted silhouette (stays `currentColor` so the Vignelli-clean idle reading holds), and a 165° linear-gradient catch-light cap. Four CSS knobs:
-
-- `--gf-tint`—backplate hue (defaults `transparent`).
-- `--gf-cap-strength`—cap-gradient white-stop alpha (defaults `0.55`; dark companion `0.35`). Q.W3 raised from `0.35` to compose against translucent dock substrates.
-- `--gf-cap-blend`—cap mix-blend-mode (defaults `screen` post-Q.W3; consumers needing the metallic-overlay punch override to `overlay`).
-- `--gf-cap-radius`—cap clip radius (defaults `50%`).
-
-`silhouette` is the default cap-clip mode (Q.W3 inverted: clip-to-silhouette is the default; no-silhouette renders no cap, dropping the wrapper-rectangle fallback). DiscoGlyph hands silhouette upward via `provideGlyphFaceSilhouette()` / `useOptionalGlyphFaceSilhouette()` (P.W2 Lane C—typed `GLYPH_FACE_SILHOUETTE_KEY` paired helpers) so wrapping GlyphFace cascades reach the disco-glyph silhouette without per-consumer prop plumb. Without `active` the wrapper reads as a plain glyph holder and joins clusters that share the same edge-light + cap-radius register.
-
-**`DiscoGlyph`**—`<DiscoGlyph :silhouette="path-d" :viewBox="0 0 24 24" :active="bool" :phaseColor="currentColor" :facetAxis="diagonal|horizontal|vertical">`. Three-layer SVG glyph primitive that paints the silhouette (1) filled `currentColor` so the lucide cascade carries through at idle, (2) overlaid by an 8-stop linear gradient that simulates ~6 facets cutting across the glyph face—gradient axis follows `facetAxis` so each consumer picks the direction that cuts across its dominant stroke (CheckDisco / ArrowRightDisco vertical, PlayDisco / RotateCcwDisco diagonal), (3) capped by a 165° catch-light gradient (white at the upper-left, transparent past 40%). `useId()` scopes the gradient ids so multiple glyphs on one page do not collide post-SSR/hydration. Hands silhouette upward via `useOptionalGlyphFaceSilhouette()` (typed `GLYPH_FACE_SILHOUETTE_KEY`; P.W2 Lane C helper) for wrapping GlyphFace cap consumption. Speedtest's disco icons (Play / RotateCcw / ArrowRight / Check) are thin wrappers that pass only the silhouette path + facet axis.
-
 **`HoverPopover`**—`<HoverPopover content="..." :hover-open-delay="250" :close-delay="150" :side="auto" :align="auto">`. Hover-triggered popover-tier label with adaptive `side`/`align` (auto-flips off viewport edges). Composed via reka-ui HoverCard primitives; popover-tier substrate for chassis dock consumers (SettingsCog tooltip; ActionCluster Back / Stop / Retake hover-labels).
 
 The `hoverOpenDelay` prop (default `250`ms) is the public API name as of K W1 (renamed from a prior generic name in J close). Rationale: reka-ui's HoverCard primitive exposes a generic `open-delay` for hover-card-family components; the glass-ui wrapper specialises hover-popover semantics (lighter, dock-internal label tier—distinct from the heavier hover-card register). The hover-popover-specific name disambiguates from the generic primitive's API at consumer call-sites and matches the `closeDelay` sibling. The rename is a clean break per K invariant 1 (no legacy aliases); the J FINAL named prop now matches the shipped API.
@@ -1707,12 +1696,13 @@ The `hoverOpenDelay` prop (default `250`ms) is the public API name as of K W1 (r
 
 ### Library-only primitives (post-R consumer state)
 
-`InstrumentChassis`, `RegionDivider`, `GlyphFace`, and `DiscoGlyph` are
-first-class library primitives with their own demo stories
-(`demo/stories/compositions/instrument-chassis.vue`,
-`demo/stories/primitives/glyph-face.vue`, plus the `_internal/blob-stress.vue`
-that exercises `MetricBadge` at scale). The speedtest project consumed them
-during O.W2.7 → Q.W4 but stops consuming them at R.W1—speedtest now
+`InstrumentChassis` + `RegionDivider` are first-class library primitives with
+their own demo story (`demo/stories/compositions/instrument-chassis.vue`, plus
+the `_internal/blob-stress.vue` that exercises `MetricBadge` at scale). (The
+`GlyphFace` + `DiscoGlyph` decorative-glyph primitives were retired at AX.W19 —
+single demo consumer + a manufactured intra-library DI coupling, failing the
+substrate-without-consumer bar.) The speedtest project consumed the chassis
+during O.W2.7 → Q.W4 but stops consuming it at R.W1—speedtest now
 composes its UI from `MetricPillCluster` + `SpeedtestResults` + `Dock`
 against the deployed three-flow-box shape (see speedtest `DESIGN.md`
 `## Tranche-R revisions` for the full ledger). The library exports stay;
@@ -1816,9 +1806,9 @@ v1.0 (L.W1 HEADLINE) closes the vueuse SCC trap with **Phase 2 root-barrel curat
 
 ### The three layers
 
-1. **Root barrel `@mkbabb/glass-ui`**—vueuse-FREE curated surface. Re-exports 40 `ui/` packages (the 4 vueuse-bearing—`input/`, `textarea/`, `combobox/`, `carousel/`—are intentionally absent) plus 7 cherry-picked `custom/` packages (`instrument-chassis`, `glyph-face`, `dock-group`, `disco-glyph`, `hover-popover`, `configurator`, `scrolling-text`) plus the vueuse-free composable sub-trees. Acceptance bar for root-barrel inclusion is documented inline in `src/index.ts` (header comment block; L.W2 Lane B).
+1. **Root barrel `@mkbabb/glass-ui`**—vueuse-FREE curated surface. Re-exports the `ui/` packages (the 4 vueuse-bearing—`input/`, `textarea/`, `combobox/`, `carousel/`—are intentionally absent) plus 5 cherry-picked `custom/` packages (`instrument-chassis`, `instrument-rail`, `hover-popover`, `configurator`, `scrolling-text`) plus the vueuse-free composable sub-trees. Acceptance bar for root-barrel inclusion is documented inline in `src/index.ts` (header comment block; L.W2 Lane B).
 
-2. **Per-package flat subpaths**—`./tokens`, `./dock`, `./search`, `./sidebar`, `./controls`, `./confirm-dialog`, `./infinite-scroll`, `./tabs`, `./typewriter`, `./stacked-icons`, `./glass-carousel`, `./aurora`, `./configurator`, `./metric-badge`, `./status-dot`, `./pulse`, `./paper-backdrop`, `./toggle-chip`, `./glass-panel`, `./sortable-list`, `./timeline`, `./labeled-field`, `./expandable-container`, `./icon-tooltip`, `./instrument-chassis`, `./glyph-face`, `./dock-group`, `./disco-glyph`, `./hover-popover`, `./scrolling-text`. Each maps to a `src/<name>.ts` barrel and a `dist/<name>.{js,d.ts}` artefact. (The `./freshness` subpath retired at AD.W4 per Decision 5 — superseded by the canonical `"development"` conditional-exports branch. The `./metaballs` subpath retired at AL.W4 per G-W3-3 §6 zero-consumer verification across the constellation.)
+2. **Per-package flat subpaths**—`./tokens`, `./dock`, `./search`, `./sidebar`, `./controls`, `./confirm-dialog`, `./infinite-scroll`, `./tabs`, `./typewriter`, `./stacked-icons`, `./aurora`, `./configurator`, `./metric-badge`, `./status-dot`, `./pulse`, `./paper-backdrop`, `./toggle-chip`, `./glass-panel`, `./sortable-list`, `./timeline`, `./labeled-field`, `./expandable-container`, `./icon-tooltip`, `./instrument-chassis`, `./hover-popover`, `./scrolling-text`, … Each maps to a `src/subpaths/<name>.ts` (or curated `src/<name>.ts`) barrel and a `dist/<name>.{js,d.ts}` artefact. (The `./glass-carousel`, `./glyph-face`, `./disco-glyph` subpaths retired at AX.W19 — substrate-without-consumer. The `./freshness` subpath retired at AD.W4 per Decision 5. The `./metaballs` + `./dock-group` subpaths retired earlier per zero-consumer verification.)
 
 3. **API discovery layer `@mkbabb/glass-ui/api`**—pure types + constants re-export aggregator. Ships canonical public symbols across Aurora, Configurator, Surface enums (`CardTier`, `InstrumentChassisPhase`, `ToastVariant`), and CVA variants (`ButtonVariants`, `SliderVariants`, etc.). Pure-additive; types erase at build so consumer JS pays 0 B for type-only imports. See `src/api/index.ts`.
 
@@ -1845,10 +1835,7 @@ The mechanism behind the carve: when a consumer's entry chunk depends on Vue AND
 
 ### Naming-pair disambiguation
 
-Two pairs of subpath names sit close enough to confuse consumers; each names a different primitive:
-
-- `@mkbabb/glass-ui/dock` exports `GlassDock` + `DockLayer` + `DockLayerGroup` + the dock-button family. `@mkbabb/glass-ui/dock-group` exports `DockGroup`—a different primitive (a chassis-strip wrapper, not part of the `GlassDock` composite).
-- `@mkbabb/glass-ui/glass-carousel` exports `<GlassCarousel>` + `useGlassCarousel` (the custom-styled glass carousel composite). `@mkbabb/glass-ui/carousel` exports `useCarousel` + `CarouselApi` (the embla-carousel-vue primitive that the `<Carousel>` family wraps).
+The single `Carousel` surface ships via `@mkbabb/glass-ui/carousel`—`useCarousel` + `CarouselApi` + the `<Carousel>` family + `GlassCarouselPager`. The `@mkbabb/glass-ui/glass-carousel` scroll-overflow composite (`<GlassCarousel>` + `useGlassCarousel`) retired at AX.W19 (substrate-without-consumer). The `@mkbabb/glass-ui/dock-group` `DockGroup` chassis-strip wrapper retired earlier (same bar).
 
 ### v1.0 subpath retirements (L invariant 4—no legacy aliases)
 

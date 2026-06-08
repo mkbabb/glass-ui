@@ -59,7 +59,6 @@ const MATRIX = {
     "src/components/custom/dock/composables/dockLayerContext.ts": "strict+optional",
     "src/components/ui/toggle-group/toggleGroupContext.ts": "optional",
     "src/components/custom/sortable-list/context.ts": "strict",
-    "src/components/custom/glyph-face/keys.ts": "optional",
     "src/components/custom/configurator/density.ts": "optional",
 };
 

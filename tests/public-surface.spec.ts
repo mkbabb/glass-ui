@@ -14,7 +14,6 @@ import * as Dock from "../src/subpaths/dock";
 import * as DropdownMenuSurface from "../src/subpaths/dropdown-menu";
 import * as ExpandableContainerSurface from "../src/subpaths/expandable-container";
 import * as Forms from "../src/forms";
-import * as GlassCarouselSurface from "../src/subpaths/glass-carousel";
 import * as GlassPanelSurface from "../src/subpaths/glass-panel";
 import * as IconTooltipSurface from "../src/subpaths/icon-tooltip";
 import * as InfiniteScrollSurface from "../src/infinite-scroll";
@@ -129,8 +128,6 @@ const subpathRuntimeExports = [
     { subpath: "typewriter", surface: TypewriterSurface, name: "TypewriterText" },
     { subpath: "typewriter", surface: TypewriterSurface, name: "useTypewriter" },
     { subpath: "stacked-icons", surface: StackedIconsSurface, name: "StackedIconGroup" },
-    { subpath: "glass-carousel", surface: GlassCarouselSurface, name: "GlassCarousel" },
-    { subpath: "glass-carousel", surface: GlassCarouselSurface, name: "GlassCarouselItem" },
     { subpath: "aurora", surface: Aurora, name: "Aurora" },
     { subpath: "aurora", surface: Aurora, name: "useAurora" },
     { subpath: "metric-badge", surface: MetricBadgeSurface, name: "MetricBadge" },
@@ -226,7 +223,6 @@ const nonCoreRootRetirements = [
     "TypewriterText",
     "StackedIconGroup",
     "ToggleChip",
-    "GlassCarousel",
     "Aurora",
     "GlassPanel",
     "SortableList",

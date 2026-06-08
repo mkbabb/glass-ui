@@ -2,7 +2,7 @@ import { inject, provide, type InjectionKey } from "vue";
 
 /**
  * Domain-neutral provide/inject DI factory pair — the single source the dock,
- * dock-layer-group, toggle-group, sortable-list, glyph-face, and configurator
+ * dock-layer-group, toggle-group, sortable-list, and configurator
  * contexts collapse onto (AV.W14). Generalizes the four hand-rolled
  * provide/inject/throw triplets into ONE typed factory so a `*_KEY:
  * InjectionKey<T>` declaration + its `provide`/`use`/throw boilerplate is never

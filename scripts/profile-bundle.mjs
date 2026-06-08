@@ -245,7 +245,7 @@ const totals = files.reduce(
 // Rolldown-extracted hashed chunk like `DialogContent-Cr7pJCiA.js` that
 // several entries reference). The entry set is read authoritatively from the
 // `package.json` exports' `import` targets — not pattern-matched — so a
-// hyphenated subpath name (`glass-carousel`, `paper-backdrop`) is never
+// hyphenated subpath name (`metric-badge`, `paper-backdrop`) is never
 // mistaken for a content-hashed leaf. The split tells a consumer the cost of
 // an import choice: the standalone weight of the subpath + whatever shared
 // leaves it drags in. The data was already gzipped above (`:111`); this only

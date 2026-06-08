@@ -8,14 +8,13 @@ import { Button } from "../button";
 /**
  * GlassCarouselPager — audacious carousel pager substrate.
  *
- * Lifts the hand-rolled chevron-prev + counter-pill + chevron-next + state-toggle
- * row from `containers/glass-carousel.vue:127-157` into a canonical primitive.
+ * A canonical chevron-prev + counter-pill + chevron-next + state-toggle row.
  * Composes `<Button variant="outline" size="icon">` chevrons with a glass-card
  * counter pill and an optional toggle slot for collapse/expand affordances.
  *
  * Standalone: accepts `:index` / `:total` props and emits `@prev` / `@next` /
- * `@select(i)`, so it composes equally with `<GlassCarousel>` (manual state) and
- * `<Carousel>` (embla — wire via `useCarousel`).
+ * `@select(i)`, so it composes with `<Carousel>` (embla — wire via
+ * `useCarousel`) or any manual-state host.
  */
 const props = withDefaults(
     defineProps<{
