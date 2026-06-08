@@ -1,4 +1,9 @@
-export { default as Card, type CardTier, type CardSurface } from "./Card.vue";
+export {
+    default as Card,
+    type CardTier,
+    type CardSurface,
+    type CardSpecular,
+} from "./Card.vue";
 export { default as CardHeader } from "./CardHeader.vue";
 export { default as CardTitle } from "./CardTitle.vue";
 export { default as CardDescription } from "./CardDescription.vue";
