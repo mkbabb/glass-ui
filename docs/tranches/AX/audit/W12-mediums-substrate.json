@@ -1,0 +1,81 @@
+{
+  "wave": "AX.W12",
+  "title": "Mediums substrate — StrokeProfile extraction + the high-quality painterly noise basis",
+  "base": "a125d9a",
+  "headline": "Build the substrate the W13 medium waves ride: (1) EXTRACT struct StrokeProfile + profileFor(medium, mode) + a single parameterized paintStrokeLayers(profile) from the 117-line mediumOil monolith (the per-mode if-ladder + the four hand-unrolled stroke layers collapse into a data table + one cascade — DRY substrate, byte-stable oil/knife/brushwork); (2) AUTHOR the NET-NEW Jarzynski PCG2D integer-bit hash + 2D simplex gradient-noise leaf (PCG_HASH_GLSL/PCG_HASH_WGSL) in the shared procedural-color chunk, single-sourced GLSL+WGSL twins under the OETF/FBM_ROT discipline, spliced into both aurora.frag.ts + aurora.wgsl.ts. Both changes VISUALLY NEUTRAL on the existing oil medium. SUBSTRATE wave — W13 authors profiles against it + opts the painterly mediums into the basis.",
+  "ratify": {
+    "hashChoice": {
+      "decision": "Jarzynski PCG2D integer-bit hash (the canonical 'Hash Functions for GPU Rendering' JCGT 2020 pcg2d — two LCG mixes + an xor-shift fold per axis). PCG2D over PCG3D-collapsed-to-2D: PCG2D is the cheaper-correct default for a 2D field. Recorded default taken per Cadence §5.3 (orchestrator absent at impl; the spec's RECOMMENDED path).",
+      "status": "RATIFIED (recorded default — PCG2D)"
+    },
+    "gradientNoiseChoice": {
+      "decision": "2D SIMPLEX gradient noise (Gustavson skew/unskew lattice; F2=(sqrt3-1)/2, G2=(3-sqrt3)/6, 70.0 amplitude normalize) seeded by pcg2d gradients. Simplex over classic-Perlin: patent-expired, lower directional-artifact default. Recorded default taken per Cadence §5.3 (the spec's RECOMMENDED path).",
+      "status": "RATIFIED (recorded default — simplex)"
+    },
+    "profileForHome": {
+      "decision": "struct StrokeProfile + profileFor + paintStrokeLayers ALL live in mediums.glsl.ts (the AURORA_MEDIUMS_POST_BRUSH_GLSL chunk, where the if-ladder + the four layers were). brush.glsl.ts is UNTOUCHED — bestOil/curvedStroke/paintOver/strokeShape stay the shared placement substrate the cascade CALLS (never re-authors). Rationale: the profile knobs are oil-medium data, co-located with the medium body; the brush SDFs are the cross-medium placement substrate. The spec allows either home; mediums.glsl.ts is the cleanest cohesion seam + keeps brush.glsl.ts out of bounds.",
+      "status": "RATIFIED (impl-open — mediums.glsl.ts home)"
+    }
+  },
+  "liveRediagnosis": {
+    "ritual": "AX.W00 wave-open — code-level re-diagnosis confirmed at HEAD a125d9a BEFORE any edit; both RED witnesses re-proven by grep + line-read, not taken on the audit's word.",
+    "witness1_strokeprofile_substrate_absent": {
+      "claim": "The StrokeProfile substrate does not exist: mediumOil (mediums.glsl.ts:209-326) is the 117-line monolith with the imperative per-mode if-ladder (:217-246) + the four hand-unrolled bestOil/paintOver layers (:270-308). A new medium must EDIT the monolith, not call paintStrokeLayers(profile).",
+      "confirmedAtHead": true,
+      "grepEvidence": "grep -rn 'StrokeProfile|profileFor|paintStrokeLayers' src/ = 0 hits at HEAD. mediums.glsl.ts is 337 lines (UNDER the proof:no-god-module 500 HARD_LIMIT) — so the born-RED witness is the EXTRACTION-PRESENCE arm (the substrate does not exist), NOT a line-count bite. The if-ladder mode==1/mode==3 branches + the four bestOil(...)+paintOver(...) invocations live at the cited lines."
+    },
+    "witness2_no_integer_pcg_hash": {
+      "claim": "The painterly noise basis is a low-quality sin()/value-noise ceiling: every medium-texture term reads vnoise/fbm (aurora's chained-fract hash21 + the fract(sin(p)*43758) hash22 lattice). There is NO integer-PCG GLSL hash anywhere in src/, so no proof:aurora-noise-hash-equivalence gate can assert against anything.",
+      "confirmedAtHead": true,
+      "grepEvidence": "grep -rn 'PCG|floatBitsToUint|floatConstruct|pcgHash|pcg2d' src/ = 0 hits at HEAD. The digest harden:aurora-blob PHANTOM-reference correction holds: utils/prng.ts is CPU-side mulberry32+djb2, NOT a GLSL hash, NOT PCG — zero DRY overlap with a GPU hash. W12 AUTHORS the net-new leaf; it does not cite a non-existent in-tree hash."
+    },
+    "specHypothesisMatch": "EXACT. The spec's foldsFindings (slice 8 F6 the mediumOil monolith/StrokeProfile-extraction root + F4 the value-noise/sin-hash fidelity ceiling) match the code at HEAD precisely. mediums.glsl.ts confirmed 337 lines (under 500 — extraction-presence arm, not line-count). No divergence between hypothesis and reality."
+  },
+  "folds": [
+    {
+      "finding": "slice 8 F6 — the mediumOil god-monolith / StrokeProfile-extraction root",
+      "rootCause": "mediumOil accreted four stroke modes + four stroke layers + crosshatch + tooth + relight in one function as each W4 fold landed serially on one worktree (the serial W4-fold accretion). The per-mode mode-selection is an imperative if-ladder (logic-as-branches); a new medium must edit the monolith, not author a profile.",
+      "gestaltFix": "Extracted struct StrokeProfile (the 12-field stroke-parameter cohort: shapeType/bristleAmp/streakFreq/streakAmp/impastoAmp/hardness/toothScale/toothAmp/pigmentSat/densityBig/densityMed/densitySml — logic-as-DATA, the if-ladder's knobs become fields) + profileFor(int medium, int mode) (the if-ladder folded into a data-table selector; a new medium adds a CASE, never edits a body) + a single parameterized void paintStrokeLayers(inout vec3 col, inout float height, StrokeProfile prof, int mode, vec2 p, float t) (the four hand-unrolled layers + crosshatch collapse into ONE cascade driven by the profile + the mode-invariant per-layer scale/anisotropy multipliers). mediumOil is now a thin body: profileFor(MEDIUM_OIL, mode) -> paintStrokeLayers -> tooth/relight/saturate finish reading the profile fields. The bestOil/curvedStroke/paintOver/strokeShape placement primitives in brush.glsl.ts STAY UNCHANGED — only the per-mode SELECTION moved from an imperative branch to a data table.",
+      "evidence": "mediums.glsl.ts: struct StrokeProfile (:222-233), StrokeProfile profileFor(int medium, int mode) (:239-275 — oil baseline ctor + mode==1 knife + mode==3 brushwork override blocks), void paintStrokeLayers(...) (:282-336 — the 4-layer + crosshatch cascade), mediumOil thin body (:338-369). #define MEDIUM_OIL 3 (:127). The extraction is byte/1e-6-NEUTRAL: tests/components/custom/aurora/mediums-extraction.test.ts (10 assertions) proves every if-ladder constant survived + the exact bestOil/paintOver call topology (offsets/seeds/multipliers) is preserved + the monolith if-ladder is gone from mediumOil.",
+      "disposition": "ADDRESSED"
+    },
+    {
+      "finding": "slice 8 F4 — the value-noise/sin-hash fidelity-ceiling root",
+      "rootCause": "Every medium-texture term reads vnoise (value noise on the chained-fract hash21) / fbm / hash22 (fract(sin(p)*43758)). The characteristic blocky axis-aligned lattice + sin()-periodicity-banding read as 'digital procedural texture' — the wrong basis for organic paper/pigment grain the painterly mediums magnify. There is NO integer-PCG/gradient-noise leaf to opt into.",
+      "gestaltFix": "Authored the NET-NEW Jarzynski PCG2D integer-bit hash (pcg2d uvec2->uvec2) + a float->[0,1) scalar hash (pcgHash2 via floatBitsToUint+pcg2d) + an integer-lattice gradient (pcgGrad2) + 2D simplex gradient noise (gnoise) in the shared procedural-color.glsl.ts chunk as a GLSL twin (PCG_HASH_GLSL) + a WGSL twin (PCG_HASH_WGSL) — single-sourced under the same OETF/FBM_ROT two-twin discipline. Integer-bit kills the sin() periodicity-banding permanently; gradient noise kills the value-noise blocky lattice. Spliced ${PCG_HASH_GLSL} into aurora.frag.ts + ${PCG_HASH_WGSL} into aurora.wgsl.ts. The painterly mediums OPT INTO pcgHash2/gnoise; the smooth/atmospheric pole KEEPS its cheap value-noise fbm (the cost-tiering is preserved — this is an ADDITIVE basis, not a blanket upgrade). The aurora-local hash21/vnoise/fbm loop is NOT deleted (legitimately divergent per the chunk's §3a).",
+      "evidence": "procedural-color.glsl.ts: PCG_HASH_GLSL export (the pcg2d/pcgHash2/pcgGrad2/gnoise GLSL leaf) + PCG_HASH_WGSL twin + the // What lives here header inventory update. aurora.frag.ts: +PCG_HASH_GLSL import + ${PCG_HASH_GLSL} splice (after the fbm loop). aurora.wgsl.ts: +PCG_HASH_WGSL import + ${PCG_HASH_WGSL} splice (after the chunk color splices). The twin-equivalence is locked by proof:aurora-noise-hash-equivalence (numeric 1e-6 + structural splice-discipline).",
+      "disposition": "ADDRESSED"
+    }
+  ],
+  "routedElsewhere": {
+    "F0_F1_first_class_vangogh_oilpastel_crayon_split": "AX.W13 — W12 ships the substrate; mediumVangogh stays the `return mediumOil(...)` passthrough it inherits (un-stubbed); the oil-pastel/crayon split stays uncut. W13 authors the new medium bodies AS PROFILES against paintStrokeLayers + OPTS INTO the noise basis.",
+    "F5_within_stroke_OKLCh_broken_color_F2_OKLab_KM_composite": "AX.W13 — W12 does not touch paintOver's composite mix math.",
+    "F3_WGSL_Kuwahara_LIC_tensor_multipass": "AX.W14 — W12 splices a SINGLE-PASS hash twin, never an FBO ladder. The WGSL fs_main stays the smooth pole (runs no medium body); the leaf is single-sourced for the twin contract + the W14 painterly passes consume it.",
+    "aurora_color_seam_samplePalette": "AX.W11 (LANDED) — W12's hash splice is the NOISE twin, disjoint by export from W11's PALETTE_RAMP twin (additive-export discipline on the shared chunk)."
+  },
+  "greenMeasurements": {
+    "extraction_value_fidelity": "tests/components/custom/aurora/mediums-extraction.test.ts 10/10 GREEN — the StrokeProfile carries the full slice-8-F6 cohort; the oil(0)/knife(1)/brushwork(3) profile values equal the HEAD if-ladder constants verbatim; the 4-layer + crosshatch cascade preserves the EXACT bestOil/paintOver call topology (offsets/seeds/scale-density-streak multipliers); the mediumOil monolith if-ladder is GONE; bestOil/paintOver are NOT re-authored (stay in brush.glsl.ts).",
+    "noise_hash_1e6_twin": "tests/components/custom/aurora/noise-hash-equivalence.test.ts 8/8 GREEN — both PCG_HASH twins carry the same numeric constants verbatim (1664525u/1013904223u/16u/1/2^32/F2/G2/70.0) + the same fn surface (pcg2d/pcgHash2/pcgGrad2/gnoise) + the same PCG2D op cascade; the TS port (certified bit-identical integer pipeline: GLSL uint/WGSL u32 wrap mod 2^32, floatBitsToUint/bitcast reinterpret the same IEEE-754 bits via a shared Float32Array view) matches frozen 1e-6 oracle witnesses; gnoise is in ~[-1,1], unit-gradient, decorrelated across interior cells (no value-noise lattice periodicity).",
+    "mediums_line_count_regression_lock": "mediums.glsl.ts is 382 lines AFTER the extraction (337 -> 382; the substrate scaffold adds the struct + selector + cascade body, but stays well UNDER the proof:no-god-module 500 HARD_LIMIT). mediums.glsl.ts is NOT in the proof:no-god-module violation set — the W12 regression-lock arm holds.",
+    "aurora_bundle_budget": "dist/aurora.js — [PASS] 91924/130000 raw (70.7%); gzip 30959/38000 (81.5%). The new PCG leaf drifts the aurora gzip +5.9% (30959 vs baseline 29223) but stays well under the absolute cap. The goo-blob does NOT consume the leaf (tree-shaken — grep PCG_HASH src/components/custom/goo-blob/ = 0).",
+    "gatesGreen": [
+      "proof:aurora-noise-hash-equivalence (NEW) — PASS (numeric 1e-6 + structural splice: chunk exports both twins, frag+wgsl both splice, neither re-authors inline)",
+      "proof:no-god-module over mediums.glsl.ts — PASS (382 < 500; the regression-lock arm)",
+      "proof:aurora-wgsl-equivalence — PASS (W11 ramp twin unchanged; additive chunk edits)",
+      "proof:shader-shared-source — PASS",
+      "proof:webgpu-substrate-single — PASS (WGSL still splices the chunk)",
+      "proof:gate-script-parity — PASS (0 NEW orphans, 0 NEW dangling — the new gate registered)",
+      "typecheck — GREEN",
+      "build (vite + vue-tsc dts) — GREEN",
+      "tests/components/custom/aurora/ — 66/66 GREEN"
+    ]
+  },
+  "divergences": [
+    "NONE in-bounds. The StrokeProfile home was ratified to mediums.glsl.ts (brush.glsl.ts untouched) per the spec's impl-open allowance — recorded above. No idiomatic-fix divergence was needed; the extraction is a clean structural transposition + the noise leaf is a clean additive splice."
+  ],
+  "blockers": [
+    "OUT-OF-BOUNDS REVEAL — proof:no-god-module (whole-gate) FAILS at HEAD on THREE pre-existing violators NOT in W12 FileBounds + NOT touched by W12: src/components/custom/goo-blob/composables/useMetaballRenderer.ts (690), src/components/custom/constellation/constellationField.ts (510), src/components/custom/dock/GlassDock.vue (505). All three confirmed pre-existing at HEAD a125d9a (git show <head>:<file> | wc -l). They belong to the blob/constellation/dock-big-dock waves. W12's mediums.glsl.ts (382) is NOT a violator. NOT absorbed (Class 2 scope-reveal — do not edit out-of-bounds files).",
+    "OUT-OF-BOUNDS REVEAL — npm run profile:budget (whole-gate) FAILS on two NON-W12 chunks: dist/styles/index.css (raw 100.5% over cap — CSS, no shader change touches it) + dist/goo-blob.js (gzip +27.1% drift — the blob un-flood/lit waves W08/W15/W16, which W12 did not touch). Plus two [NEW] no-baseline chunks (dist/fourier-field.js, dist/canvas.js — W37/other waves) need a re-baseline. W12's dist/aurora.js is a clean [PASS]. The budget baseline needs an orchestrator re-baseline for the new/blob chunks (the known AX 're-baseline the bundle budget' pattern). NOT absorbed."
+  ],
+  "liveVerifyNeeded": "VISUAL-TRUTH live audit (orchestrator π-lane — real Metal GPU, NOT headless; navigator.gpu is false headless so the WGSL path cannot be exercised here): /substrates/aurora at >=3 viewports (375x667 / 1280x800 / 1440x900) light+dark, on the OIL medium preset. (1) NEUTRALITY — the post-W12 oil bake reads identical-or-better than HEAD: no banding regression, no stroke-placement shift, no tooth/granulation degradation. The binding evidence is the paired-π BEFORE (HEAD oil bake) vs AFTER (post-W12 oil bake) + DELTA below the neutrality threshold — capture both trees (the orchestrator has both; this spec is the harness + the headless non-degradation floor, it cannot diff two source trees from one run). (2) ORGANIC-GRAIN — where the painterly-medium texture terms opt into the PCG/gradient basis, the grain reads organic paper/pigment (no sin()-periodicity banding, no value-noise axis-aligned lattice) — a frontend-design eye confirms the ceiling is genuinely raised. (3) No visual occlusion under the demo chrome at every viewport. The headless tests-visual/aurora-mediums-substrate.spec.ts runs the oil-medium neutrality-floor + organic-grain-floor (maxChannel>20, interior variance>30, local grain>1.5) on the real GPU; the paired BEFORE/AFTER capture is the orchestrator's binding close."
+}
