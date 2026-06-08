@@ -1,0 +1,82 @@
+{
+  "wave": "AX.W01",
+  "title": "Dock single-scalar morph — one spring, one clock, the whole box",
+  "base": "9f7b58c9b5eac36306600f4cef2fd2974ff63ae8",
+  "headline": "Collapse the dock collapse↔expand morph onto ONE normalized analytic-spring scalar (--dock-morph-t, 0→1) written once/frame to the .glass-dock root; every animated axis (inline-size, padding, border-radius, scale, background/border color, child stagger) is a pure calc()/interpolation off that scalar. The View-Transitions COLLAPSE fork is RETIRED; the route-morph view-transition-name seam is PRESERVED.",
+  "liveRediagnosis": {
+    "ritual": "AX.W00 wave-open — code-level re-diagnosis confirmed at HEAD before any edit",
+    "confirmedThreeClocks": [
+      {
+        "clock": "root CSS-transition (clock #1 + #3)",
+        "evidence": "dock.css:326-340 — .glass-dock:not(.vertical) { transition: padding/transform/scale/border-radius var(--dock-motion-resize), background/border-color var(--dock-motion-standard) }. The standard arm runs a DIFFERENT duration AND curve (--duration-normal var(--ease-standard)) than the resize arm — two clocks in one root transition list.",
+        "fires": "synchronously at the visualExpanded class flip (GlassDock.vue watch)"
+      },
+      {
+        "clock": "inner .dock-layers width spring (clock #2)",
+        "evidence": "useLayerTransition.ts:340,344,360 (HEAD) — the FLIP fallback deferred the layer-ref-swap + width-set through nextTick → requestAnimationFrame → void el.offsetWidth, pushing the inner width spring ONE FRAME behind the always-synchronous root CSS transition (the box-leads-content ~16ms desync the user reports as 'the box shrinks first, items lag a frame')."
+      },
+      {
+        "clock": "View-Transitions fork (default-engine path)",
+        "evidence": "useLayerTransition.ts:108,262-288 (HEAD) — NATIVE_VT=true on Chrome; the entire FLIP path is dead and the morph runs as a VT crossfade of .dock-layers ONLY while the root box morphs on its own CSS-transition clock. view-transition.css:76-86 adds the asymmetric curve fork (dock-expand→--spring-dock@normal vs dock-collapse→--spring-snappy@fast). VT crossfades RASTERIZED pixels — the wrong primitive for a layout morph."
+      }
+    ],
+    "specHypothesisMatch": "EXACT. The spec's foldsFindings (slice 0 F0/F1/F2, slice 1 F0/F1/F5, slice 5 F0/F1) name precisely these three clocks. No divergence between hypothesis and the code at HEAD.",
+    "vtNameSeparabilityRatified": "RATIFY-BEFORE-IMPL satisfied at the code level: the dock-COLLAPSE VT (the .dock-layers snapshot crossfade, retired) and the consumer ROUTE-MORPH VT (the per-instance glass-dock-${useId()} named element, preserved) are SEPARABLE — the collapse VT is an internal morph mechanism, the route-morph name is a consumer-driven page-geometry seam fourier J+K route-morphs through. The name is KEPT (moved to the dock ROOT) + proof:vt-names stays GREEN. No unilateral seam removal; no cross-repo annex needed."
+  },
+  "folds": [
+    {
+      "finding": "slice 0 F0 — three clocks on the morph",
+      "rootCause": "the root CSS-transition list (two curves/durations) + the nextTick→rAF inner-spring deferral + the VT fork",
+      "gestaltFix": "ONE SpringProgress drives --dock-morph-t (0→1) once/frame; padding/radius/color/scale/size all calc() off it. No root CSS transition on the morph props; no VT fork.",
+      "evidence": "useLayerTransition.ts (rebuilt 479→218 lines, 109 code lines); dock.css :326-340 deleted, morph axes re-expressed as calc() off --dock-morph-t / --dock-expand-t"
+    },
+    {
+      "finding": "slice 0 F1 / slice 1 F0,F5 / slice 5 F0 — VT-is-wrong-for-layout-morph",
+      "rootCause": "VT crossfades rasterized snapshots (taffy-stretch, text-blur, animating-ancestor desync, co-mounted-dock snapshot DROP)",
+      "gestaltFix": "RETIRE the NATIVE_VT branch + the asymmetric view-transition.css dock recipe; the live SpringProgress ODE runs on EVERY engine — iOS interruptible physics + velocity-continuity retarget universal.",
+      "evidence": "view-transition.css :59-86 deleted; GlassDock.vue collapse startViewTransition wiring removed; useLayerTransition.ts NATIVE_VT branch deleted"
+    },
+    {
+      "finding": "slice 1 F1 — accretion-of-patches IS the root cause",
+      "rootCause": "AQ.W6 VT fork → AU.W8 single-frame rAF → AV.W9 dual-driver excision → AW.W2 clip-reveal → AW.W3 stagger, each bolting a coordination layer onto the prior seam",
+      "gestaltFix": "re-derive from first principles (e8380d7 135-line single-clock high-water): measure to-size once (FLIP), drive one SpringProgress, expose normalized progress as --dock-morph-t, everything else declarative CSS. ZERO additional JS lifecycle.",
+      "evidence": "useLayerTransition.ts 479→218; will-change micro-lifecycle + DOCK_SPRING drift-warning + armStagger/setStaggerProgress/disposeSpring-dance deleted; DOCK_SPRING kept ONLY as the SpringProgress constant"
+    },
+    {
+      "finding": "slice 10 F0 — substrate-with-consumer (value.js fork)",
+      "rootCause": "value.js maintains a local FLIP-width useLayerTransition fork ONLY because the /dock barrel never re-exported the primitive",
+      "gestaltFix": "export useLayerTransition + its types on src/components/custom/dock/index.ts (the /dock subpath barrel). The consumer-adoption leg (value.js deletes the fork + re-points ActionBarLayer.vue) routes to AX.W34.",
+      "evidence": "dock/index.ts adds `export { useLayerTransition } from './composables'`; barrel-reach proof GREEN (runtime typeof === function + tsc consumer probe + dist/dock.d.ts export)"
+    }
+  ],
+  "sotaFolds": {
+    "propertyRegistered": "--dock-morph-t is @property-registered { syntax: '<number>'; initial-value: 0 } so it interpolates COMPOSITED, not discretely. inherits:true (NOT false) — the bomb guard is specifically 'never write to :root'; the scalar is written on the small .glass-dock subtree and its consumers (.dock-layers/.dock-layer-stack size + the child stagger) are DESCENDANTS that read it via inheritance, so it MUST inherit (the same pattern the prior --dock-morph-progress used on .dock-layers). Recorded as a deliberate divergence from the spec's literal inherits:false.",
+    "squircleRidesTheClock": "the shape-card border-radius now MORPHS pill↔card-radius on the same --dock-expand-t scalar; the @supports (corner-shape: squircle) enhancement is unchanged (the arc is the contract, the squircle the better tier).",
+    "noInterpolateSize": "no interpolate-size/calc-size on the morph axis — the FLIP from→to px is a one-time MEASUREMENT primitive read once, never a co-driver on the spring's axis.",
+    "velocityContinuity": "the live SpringProgress is re-based onto the new span from its current velocity on a re-toggle (reset(0, inheritedVelocity) + target=1), so an interrupted morph carries inertia rather than snapping from rest — the one load-bearing iOS-feel piece CSS linear()/transition + VT cannot do."
+  },
+  "filesChanged": [
+    "src/components/custom/dock/composables/useLayerTransition.ts",
+    "src/components/custom/dock/GlassDock.vue",
+    "src/components/custom/dock/index.ts",
+    "src/styles/dock.css",
+    "src/styles/view-transition.css",
+    "docs/tranches/AX/audit/W01-dock-morph-single-scalar.json",
+    "docs/tranches/AX/audit/W01-DELTA.md"
+  ],
+  "selfGates": [
+    { "gate": "typecheck (vue-tsc --noEmit)", "result": "GREEN" },
+    { "gate": "build (vite + emit-types)", "result": "GREEN — dock.js 20.32kB / 6.69kB gzip" },
+    { "gate": "vitest tests/components/custom/dock/ (82 tests)", "result": "GREEN" },
+    { "gate": "vitest scripts/__tests__/ gate-detector units", "result": "GREEN (104 total with dock)" },
+    { "gate": "proof:vt-names (route-morph seam PRESERVATION)", "result": "GREEN — 4 mints pass; GlassDock root dockId.replace traces to useId()" },
+    { "gate": "proof:dock-animation-live token-peak secondary", "result": "GREEN — --spring-dock peak 1.04501 ≤ 1.051 (spring untouched)" },
+    { "gate": "proof:dock-opacity-lockstep", "result": "GREEN — leaving fade still names --dock-motion-resize; active pane no opacity arm" },
+    { "gate": "barrel-reach (useLayerTransition on /dock)", "result": "GREEN — runtime + dts + tsc consumer probe" }
+  ],
+  "obsoletedGatesOutOfFileBounds": [
+    "proof:dock-motion-single-source — asserts the FLIP rAF/setDim single-frame-origin STRUCTURE that the single-scalar rebuild DELETES (no rAF, no setDim). Obsoleted BY this wave. Out of FileBounds — orchestrator must retire it.",
+    "proof:dock-motion-parity — asserts the dock VT/FLIP timing-PARITY (the gl-dock-layer recipe + --dock-resize-spring) that no longer exists once the VT fork is retired. Obsoleted BY this wave. Out of FileBounds — orchestrator must retire it."
+  ],
+  "liveVerifyNeeded": "see W01-DELTA.md — the orchestrator runs proof:dock-animation-live (live arm, dev server up) + the real-browser frontend-design audit."
+}
