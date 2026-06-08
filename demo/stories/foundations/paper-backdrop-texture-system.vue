@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// PaperBackdrop texture-system — P.W3 Lane C substrate promotion.
+// PaperBackdrop texture-system.
 //
 // The texture register on `<PaperBackdrop>` accepts `frequency="clean"`
 // (default 0.65-baseFrequency / 4-octave) or `"aged"` (0.5-baseFrequency

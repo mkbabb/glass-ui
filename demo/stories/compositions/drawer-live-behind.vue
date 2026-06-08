@@ -1,33 +1,16 @@
 <script setup lang="ts">
 /**
- * Drawer live-behind composition — AN.W3 detented non-modal bottom sheet.
+ * Drawer live-behind composition — a detented non-modal bottom sheet.
  *
- * The F-side mobile co-location pattern: a full-bleed VERDICT surface stays
- * live AND reachable while an INSTRUMENT rides over it as a peek / half / full
- * bottom sheet. The defaults that the modal Drawer carries fight this pattern
- * (`shouldScaleBackground: true` shrinks the verdict; `modal: true` traps focus
- * and hides the verdict from the a11y tree). `<Drawer mode="live-behind">`
- * flips all three at once — `modal: false` + `shouldScaleBackground: false` +
- * `snapPoints: [0.12, 0.5, 1]` — without breaking the default modal sheet.
+ * A full-bleed surface stays live AND reachable while a sheet rides over it as a
+ * peek / half / full bottom sheet. `<Drawer mode="live-behind">` flips the three
+ * relevant defaults at once — `modal: false` + `shouldScaleBackground: false` +
+ * `snapPoints: [0.12, 0.5, 1]` — so the surface behind keeps its size, stays
+ * keyboard-reachable, and is not hidden from assistive tech. The modal sheet in
+ * the right column DOES scale and trap focus, so the contrast reads as one prop.
  *
- * Proof bindings (the AN.W3 audit drives Playwright against these):
- *   - `#verdict-surface` is the page-behind. Under live-behind it stays at
- *     `transform: none` (NOT scaled), its `#verdict-cta` button stays
- *     keyboard-reachable (no focus trap), and the page root carries no
- *     `aria-hidden`.
- *   - The sheet (`[data-vaul-drawer]`) snaps to 12% / 50% / 100% of viewport
- *     height on drag-release; the active fraction is reflected via the
- *     `v-model:active-snap-point` binding (`liveActiveSnap`).
- *   - The modal comparison sheet (right column) DOES scale the verdict + trap
- *     focus — the contrast is the proof that the mode is the whole difference.
- *
- * NOTE on the detents — the spring snap is a DRAG-RELEASE gesture (vaul-vue owns
- * the snap math + momentum). vaul-vue does NOT reliably re-snap an already-open
- * sheet from an external `activeSnapPoint` write (the controllable ref shadows
- * prop writes once the gesture machinery has run), so this proof opens the sheet
- * at a chosen initial detent and the user drags the handle to cycle peek → half
- * → full. AN.W3 audit §B records the vaul-vue limitation; the drag-snap path —
- * the binding contract — passes at all three detents.
+ * The sheet snaps to 12% / 50% / 100% of viewport height on drag-release; drag
+ * the handle to cycle peek → half → full.
  */
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";

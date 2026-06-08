@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// AW.W22/W23 — the unified glass-material matrix. Every named band surface
+// The unified glass-material matrix. Every named band surface
 // (the five ladder rungs + card + the floating/overlay registers Dialog/Sheet/
 // Popover compose) reads the SAME catch-light + rim from one `.glass-material`
 // mixin; the four SOTA folds (refraction, squircle, chromatic fringe, adaptive

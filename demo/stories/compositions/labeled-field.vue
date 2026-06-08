@@ -1,7 +1,7 @@
 <script setup lang="ts">
-// LabeledField family — parent SFC + 4 sibling primitives forwarding to
+// LabeledField family — a parent SFC + 4 sibling primitives forwarding to the
 // underlying Input / Select / Slider / Switch with a baked-in tooltip-bearing
-// label. Post-V.W3 LabeledField parent owns the IconTooltip + label layer.
+// label. The LabeledField parent owns the IconTooltip + label layer.
 import { ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";

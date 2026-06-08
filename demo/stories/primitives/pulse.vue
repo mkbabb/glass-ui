@@ -66,8 +66,7 @@ import { Pulse } from "../../../src/components/custom/pulse";
             </div>
         </StorySection>
 
-        <!-- Aura variant (AB.W3.T1 — surface-scope ambient halo). N.W4 β
-             absorb: glass-ui-side canonical consumer for the aura recipe. -->
+        <!-- Aura variant — a surface-scope ambient halo. -->
         <StorySection label="aura variant (ambient halo)">
             <div class="flex flex-wrap items-center gap-8">
                 <div class="flex flex-col items-center gap-2">

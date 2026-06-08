@@ -10,7 +10,7 @@ const range = ref<number[]>([22, 78]);
 const spectrum = ref<number[]>([50]);
 const disabled = ref<number[]>([30]);
 
-// AV.W11 — variant × size matrix (2 variants × 3 sizes = 6 cells).
+// Variant × size matrix (2 variants × 3 sizes = 6 cells).
 // Each cell binds an independent reactive value so drag interactions
 // don't cross-couple. Hard gate requires every cell renders.
 const variants: NonNullable<SliderVariants["variant"]>[] = [
@@ -107,7 +107,7 @@ const matrix = ref<Record<MatrixKey, number[]>>(
             />
         </section>
 
-        <!-- J.W5.A hard gate (e): variant × size matrix proof. -->
+        <!-- Variant × size matrix. -->
         <section class="flex flex-col gap-4">
             <p class="section-label">variant × size matrix</p>
             <div class="grid grid-cols-[auto_1fr_1fr_1fr] items-center gap-x-6 gap-y-5">

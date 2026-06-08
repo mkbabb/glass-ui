@@ -37,10 +37,9 @@ import {
                 </Alert>
             </div>
 
-            <!-- AW.W25 — the semantic tones now ride the real CVA `variant`
-                 (success/warning/info), resolving the `--{success,warning,info}`
-                 tokens. The prior hardcoded `border-amber-500/text-sky-700/…`
-                 palette fakes are retired. -->
+            <!-- The semantic tones ride the CVA `variant`
+                 (success/warning/info), resolving the
+                 `--{success,warning,info}` tokens. -->
             <div class="grid gap-3">
                 <h2 class="font-display text-xl">Warning</h2>
                 <Alert variant="warning">

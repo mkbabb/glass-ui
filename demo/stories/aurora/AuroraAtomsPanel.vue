@@ -9,12 +9,10 @@ import type {
 } from "../../../src/components/custom/aurora";
 
 /**
- * AX.W10 — the ≤7-atom control surface. The user's named control elements
- * (§2.7) — COLOR (seed + harmony + energy), ZONES (count + arrangement), NOISE
- * (one organic-boundary knob), MEDIUM (+ texture when textured), MOTION. The
- * panel is a `v-model:atoms` surface; the host (`AuroraConfigDock`) resolves the
- * atoms to a config and drives the canvas. No `resolveAtoms`/`Aurora` here — this
- * is the live default surface, not a standalone demo.
+ * The compact atoms control surface — COLOR (seed + harmony + energy), ZONES
+ * (count + arrangement), NOISE (one organic-boundary knob), MEDIUM (+ texture
+ * when textured), and MOTION. A `v-model:atoms` surface; the host
+ * (`AuroraConfigDock`) resolves the atoms to a config and drives the canvas.
  */
 const props = defineProps<{
     atoms: AuroraAtoms;

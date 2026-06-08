@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// dock-icon-button token ladder — O.W6 Lane B active-state vocabulary.
+// dock-icon-button token ladder — the active-state vocabulary.
 //
 // Five `--dock-active-{bg,color,scale,border,shadow}` tokens collapse the
 // hardcoded active recipe at `.dock-icon-button:is(.is-active, ...)`. The

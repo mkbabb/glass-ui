@@ -94,11 +94,9 @@ const trendClasses: Record<Trend, string> = {
             </aside>
 
             <main class="flex flex-col gap-[calc(1.5rem_+_var(--density-gap,0rem))] min-w-0">
-                <!-- KPI strip — inline-flex pill row (AI.W5-γ: was DockGroup;
-                     the substrate retired at the wave with zero production
-                     consumers across the constellation). The same inline-flex
-                     + nowrap shape survives at the demo level via an inline
-                     `flex` cluster on a `min-w-0 overflow-x-auto` shell. -->
+                <!-- KPI strip — an inline-flex pill row on a
+                     `min-w-0 overflow-x-auto` shell so the metrics scroll
+                     horizontally rather than wrap. -->
                 <div class="kpi-strip-scroll min-w-0">
                     <div class="kpi-strip-row inline-flex items-center gap-[0.5625rem] self-start">
                         <MetricBadge :amount="42" unit="active" size="md" />
@@ -230,11 +228,9 @@ const trendClasses: Record<Trend, string> = {
 
 <style scoped>
 .kpi-strip-scroll {
-    /* M.W2 Lane C — clip the KPI strip (inline-flex + nowrap by composition)
-       to the parent column. Horizontal scroll keeps the row visually intact
-       while body scrollWidth never exceeds the viewport. Hidden scrollbar
-       matches the StoryPager idiom. (AI.W5-γ — the prior DockGroup substrate
-       retired at the wave; the inline-flex pill row survives.) */
+    /* Clip the KPI strip (inline-flex + nowrap by composition) to the parent
+       column. Horizontal scroll keeps the row visually intact while body
+       scrollWidth never exceeds the viewport; the scrollbar is hidden. */
     overflow-x: auto;
     scrollbar-width: none;
 }

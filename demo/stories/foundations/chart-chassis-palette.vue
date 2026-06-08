@@ -1,12 +1,10 @@
 <script setup lang="ts">
 // Chart & Chassis Palette — chart aliases (--chart-{ping,download,upload,jitter})
-// + chassis-tier opacities. Resolves the --viz-topology / --viz-recursion
-// non-existent token references named in C-d §4.1.
+// + chassis-tier opacities.
 //
-// L.W3 Lane B — second-consumer wiring for `<InstrumentChassis>`: the
-// chassis-tier ladder sits alongside a live mini-chassis so consumers see the
-// tokens composed. The chart-palette ladder sits alongside a row of plain
-// token-color tiles so each chart hue reads at swatch scale.
+// The chassis-tier ladder sits alongside a live mini-chassis so the tokens read
+// composed, and the chart-palette ladder sits alongside a row of plain token-color
+// tiles so each chart hue reads at swatch scale.
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";

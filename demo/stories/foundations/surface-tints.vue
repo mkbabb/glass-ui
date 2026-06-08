@@ -1,7 +1,6 @@
 <script setup lang="ts">
 // Surface Tints — the 9-rung tint scale (--surface-tint-{4..25}) + tier
-// aliases (--surface-tint-quiet/floating/modal). Closes the post-v0.8.6 +
-// V.W2 + V.W3 surface-tint reconcile.
+// aliases (--surface-tint-quiet/floating/modal).
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
@@ -21,9 +20,9 @@ const tints: TokenLadderRow[] = [
 ];
 
 const aliases: TokenLadderRow[] = [
-    { cls: "border-[var(--surface-tint-quiet)]", label: "--surface-tint-quiet", hint: "→ tint-6 (V.W3)" },
-    { cls: "border-[var(--surface-tint-floating)]", label: "--surface-tint-floating", hint: "→ tint-12 (V.W3)" },
-    { cls: "border-[var(--surface-tint-modal)]", label: "--surface-tint-modal", hint: "→ tint-18 (V.W3)" },
+    { cls: "border-[var(--surface-tint-quiet)]", label: "--surface-tint-quiet", hint: "→ tint-6" },
+    { cls: "border-[var(--surface-tint-floating)]", label: "--surface-tint-floating", hint: "→ tint-12" },
+    { cls: "border-[var(--surface-tint-modal)]", label: "--surface-tint-modal", hint: "→ tint-18" },
 ];
 </script>
 
@@ -44,8 +43,8 @@ const aliases: TokenLadderRow[] = [
         </StorySection>
 
         <StorySection
-            label="tier aliases (V.W3 — bridge layer)"
-            blurb="V.W3 introduced semantic tier aliases bridging the numeric tint rungs into named tiers. Use these in component-level styles where the rung is implicit (e.g., `<Card tier='quiet'>` paints with --surface-tint-quiet)."
+            label="tier aliases"
+            blurb="Semantic tier aliases name the numeric tint rungs. Use these in component-level styles where the rung is implicit (e.g., `<Card tier='quiet'>` paints with --surface-tint-quiet)."
         >
             <ShowcaseFrame pad="lg">
                 <TokenLadder

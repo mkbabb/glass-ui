@@ -86,7 +86,7 @@ const gaps = ["tight", "regular", "loose"] as const;
             </Section>
         </StorySection>
 
-        <!-- Paper backdrop (N.W0 Lane A3). -->
+        <!-- Paper backdrop. -->
         <StorySection
             label='backdrop="paper" · scoped paper-grain substrate'
             blurb="When backdrop=&quot;paper&quot;, the Section becomes a relative-positioned stacking context with PaperBackdrop pinned absolute behind header + content. Default is backdrop=&quot;none&quot; (purely additive)."

@@ -1,14 +1,11 @@
 <script setup lang="ts">
-// AW.W11 — the blob mood + palette story. Exercises every shipped mood (idle,
-// happy, curious, sleepy, excited) via the GooBlob `setMood` expose, a seed-derived
-// multi-stop palette (deriveBlobPalette), and the warm-biased iridescence + fake-SSS.
+// The blob mood + palette story. Exercises every shipped mood (idle, happy,
+// curious, sleepy, excited) via the GooBlob `setMood` expose, a seed-derived
+// multi-stop palette (deriveBlobPalette), and the warm-biased iridescence.
 //
-// AX.W16 — reserve ONE interactive GL <GooBlob> hero (the mood + palette showcase);
-// the seed-derived palette is now previewed by WatercolorDot swatches (CSS/SVG, zero
-// GL context) instead of a SECOND live GL blob, so this story holds a SINGLE WebGL
-// context — bounding the per-page cap when the demo navigates between blob stories
-// (commit 9427536's context-exhaustion class). The hero blob CARRIES the live palette,
-// so the GL palette path is still demonstrated on the one hero.
+// One interactive GL <GooBlob> hero carries the live palette; the seed-derived
+// palette is previewed by WatercolorDot swatches (CSS/SVG, zero GL context)
+// rather than a second live GL blob, so the page holds a single WebGL context.
 import { ref, reactive, computed } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";

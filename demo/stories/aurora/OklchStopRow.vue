@@ -26,9 +26,9 @@ const emit = defineEmits<{
 
 const hex = computed(() => oklchStopToHex(props.stop));
 
-/* AV.W11 — per-channel gradient tracks for the spectrum slider. Each ramp is
-   an OKLCh gradient holding the row's other two channels fixed, so a track
-   reads as "what this channel does to THIS color":
+/* Per-channel gradient tracks for the spectrum slider. Each ramp is an OKLCh
+   gradient holding the row's other two channels fixed, so a track reads as
+   "what this channel does to THIS color":
      L → black → white (at the row's chroma + hue),
      C → grey (chroma 0) → saturated (chroma 0.3) at the row's L + hue,
      h → the full hue wheel at the row's L + chroma. */

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// useClipboard — reactive clipboard with auto-resetting `copied` flag (O.W6 Lane A).
+// useClipboard — reactive clipboard with auto-resetting `copied` flag.
 //
 // The composable wraps `navigator.clipboard.writeText` with an
 // `execCommand("copy")` legacy fallback, then flips a Vue ref that auto-

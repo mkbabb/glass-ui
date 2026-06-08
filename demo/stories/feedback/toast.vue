@@ -77,11 +77,10 @@ function fireWithAction() {
     });
 }
 
-// AW.W25 — the tone now rides the NATIVE Toast `variant`
+// The tone rides the native Toast `variant`
 // (success/warning/info/destructive), which resolves the
-// `--{success,warning,info}` token plates inside the CVA. The faked local
-// `toneClass` palette map is retired; the story only maps the per-variant ICON
-// (not part of the surface CVA).
+// `--{success,warning,info}` token plates inside the CVA. The story only maps
+// the per-variant ICON (not part of the surface CVA).
 const toneIcon: Record<string, typeof CheckCircle2> = {
     default: Info,
     success: CheckCircle2,

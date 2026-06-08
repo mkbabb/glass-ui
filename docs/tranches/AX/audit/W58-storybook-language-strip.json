@@ -1,0 +1,89 @@
+{
+  "wave": "AX.W58",
+  "title": "Storybook language strip — kill internal meta-language (tranche codes, proof: names, muster codes, WCAG citations, impl-note code-comments) across every demo story (P10/P11)",
+  "status": "dev-complete-source-green-no-live-arm",
+  "band": "B (DEMO / IA)",
+  "severity": "major (P10 story-text de-superfluity + P11 internal meta-language strip)",
+  "baseSha": "7e238772be78362d68ee5ad723090d80fbb659be",
+  "dependsOn": ["AX.W00"],
+  "folds": [
+    "convergence2/A-demo-grid-text.md (P10 source inventory + the no-gate finding §(c))",
+    "USER-DEFECTS-2026-06-08-pass2.md P10/P11"
+  ],
+  "headlessGate": {
+    "id": "proof:story-language",
+    "registration": "package.json — node scripts/proof-story-language.mjs; gates.mjs GATES row (local)",
+    "coUpdated": true,
+    "bornRed": true,
+    "bornRedMethod": "ran scripts/proof-story-language.mjs against the HEAD source: 130+ meta-language hits across 49 of 148 demo/stories SFCs (103 tranche/wave/defect codes, 9 WCAG citations, 2 proof:* gate names, 4 'muster J' codes, 1 bare 'tranche' word, plus the impl-note signatures ref-counted/provide-inject/inheritAttrs/binary-consumer/overfitting). status FAIL exit 1.",
+    "greenAtPatchedTree": true,
+    "greenResult": "148 SFCs scanned, 0 hits, status PASS exit 0.",
+    "bite": "injected `// AX.W99 bite test` into demo/stories/foundations/motion.vue → gate RED (1 hit: tranche-code 'AX.W9'); restored → gate GREEN (0 hits). The falsifier is load-bearing.",
+    "patterns": [
+      "tranche-code  /\\b[A-Z]{1,2}\\.W\\d/",
+      "tranche-word  /\\btranche\\b/i",
+      "proof-gate-name  /\\bproof:[a-z][a-z0-9-]+/",
+      "muster-code  /\\bmuster\\s+[A-Z]\\b/",
+      "wcag-citation  /\\bWCAG[\\s-]?[\\d.]/i",
+      "impl-note  ref-counted | provide[-/]inject | inheritAttrs | binary-consumer | overfitting | #collapsed slot"
+    ],
+    "falsePositiveGuard": "live public names match none of the patterns and stay green — a token (--spring-dock), a component (<DockIconButton>), a subpath (@mkbabb/glass-ui/dock), a prop (v-model:paused). Verified: the swept tree is GREEN while every such name survives in the prose.",
+    "piArm": {
+      "present": false,
+      "rationale": "a prose/comment strip changes no painted pixel — the source text IS the truth, fully captured by the device-free gate. No readPixels/getComputedStyle assertion to drive. The orchestrator may spot-confirm a few re-authored bodies render legibly, but the gate is the binding close."
+    }
+  },
+  "filesSwept": {
+    "count": 49,
+    "byDir": {
+      "aurora": ["AuroraAtomsPanel.vue", "AuroraConfigDock.vue", "AuroraStage.vue", "OklchStopRow.vue"],
+      "composables": ["use-clipboard.vue"],
+      "compositions": ["auth-shell.vue", "dashboard.vue", "dock-with-slider.vue", "drawer-live-behind.vue", "form-validation.vue", "gate-pattern.vue", "hero.vue", "icon-tooltip.vue", "labeled-field.vue"],
+      "containers": ["native-top-layer.vue"],
+      "data": ["sortable-list.vue", "timeline-continuous.vue", "timeline-segmented.vue"],
+      "feedback": ["alert.vue", "progress.vue", "toast.vue"],
+      "foundations": ["chart-chassis-palette.vue", "css-utilities.vue", "dock-active-tokens.vue", "intro.vue", "motion.vue", "overlays-scrims.vue", "paper-backdrop-texture-system.vue", "paper-glass.vue", "surface-tints.vue"],
+      "navigation": ["carousel.vue", "deck-progress.vue", "dock-layers.vue", "dock.vue", "glass-carousel.vue", "tabs.vue"],
+      "primitives": ["buttons.vue", "disco-glyph.vue", "glyph-face.vue", "number-field.vue", "pulse.vue", "section.vue", "slider.vue", "stacked-icons.vue", "status-dot.vue"],
+      "substrates": ["aurora.vue", "blob-interaction.vue", "blob-mood.vue", "constellation.vue", "glass-material.vue", "goo-blob.vue"]
+    }
+  },
+  "p11CanonicalWitnesses": [
+    {
+      "site": "navigation/dock.vue Notes list",
+      "before": "<li>Collapse delay is ref-counted — any popover or nested keep-open source pins it.</li>",
+      "after": "<li>The dock stays open while a popover or held control inside it is active.</li>"
+    },
+    {
+      "site": "navigation/dock.vue h2",
+      "before": "Background pause/play toggle (WCAG 2.2.2)",
+      "after": "Background pause/play toggle"
+    },
+    {
+      "site": "compositions/dock-with-slider.vue blurb",
+      "before": "…This is the AW.W3 proof story — `proof:dock-layering-polish` synthetically drives this exact gesture…",
+      "after": "…the dock stays open through the held drag and re-collapses only after you release."
+    },
+    {
+      "site": "compositions/form-validation.vue prose",
+      "before": "…NOT shipped as a glass-ui primitive at AQ.W4 — the binary-consumer bar (muster J adoption) is unresolved… (see AQ.W1.2 §W4.7).",
+      "after": "…glass-ui does not ship it as a primitive; the reka-ui <Select> stays the default rich path."
+    }
+  ],
+  "outOfScopeNoted": [
+    "demo/manifest.ts blurb strings — already clean (0 hits per A-demo-grid-text.md §note); not touched.",
+    "P1–P5 prune pages (use-token-color/disco-glyph/glyph-face/glass-carousel) — only their LANGUAGE stripped here; their DELETION is W19's clean break.",
+    "the StorySection/ShowcaseFrame migration of the ~84 un-migrated section-triplet pages — W18 content scope, not this wave.",
+    "no src/ touched — no API, token, or component change."
+  ],
+  "selfGate": {
+    "typecheck": "pass",
+    "build": "pass",
+    "test": "pass",
+    "proof:gate-script-parity": "pass",
+    "proof:resolution": "pass",
+    "verify-export-types": "pass",
+    "proof:story-language": "pass",
+    "proof:no-legacy-commentary": "pass"
+  }
+}

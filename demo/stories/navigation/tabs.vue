@@ -38,8 +38,8 @@ const profile = [
     { id: "keys", label: "API Keys" },
 ];
 
-// Segmented (DEFAULT) — the unified <SegmentedTabs> spring-slider over a muted
-// track; the elastic indicator glides + squishes on --spring-snappy (AX.W53).
+// Segmented (default) — the <SegmentedTabs> spring-slider over a muted track;
+// the elastic indicator glides and squishes on --spring-snappy.
 const viewMode = ref("grid");
 const viewOptions: SegmentedTabOption[] = [
     { label: "Grid", value: "grid" },

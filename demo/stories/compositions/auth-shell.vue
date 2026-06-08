@@ -13,10 +13,9 @@ import { heroAuroraConfig } from "../aurora-hero";
 
 const wonkSettings = '"WONK" 1, "SOFT" 0';
 
-// AX.W57 (P7) — the split-auth BRAND panel (left half) replaces its 2-ellipse
-// radial wash with a live <Aurora> on the page's purple/tomato brand hues
-// (--section-color-1/6). opacityCeiling 0.5 — the panel is text-dense (the
-// pitch copy + trust badges), so the drift recedes behind the prose. The RIGHT
+// The split-auth BRAND panel (left half) carries a live <Aurora> on the page's
+// purple/tomato brand hues. opacityCeiling 0.5 — the panel is text-dense (the
+// pitch copy + trust badges), so the drift recedes behind the prose. The right
 // half stays the plain card form (only the brand panel gains the wash).
 const authAurora = heroAuroraConfig("purple-tomato");
 
@@ -42,7 +41,7 @@ const trustBadges = [
             <div
                 class="relative isolate flex flex-col justify-between gap-[calc(2rem_+_var(--density-gap,0rem))] overflow-hidden p-[calc(2.5rem_+_var(--density-pad,0rem))] lg:p-[calc(3.5rem_+_var(--density-pad,0rem))]"
             >
-                <!-- AX.W57 (P7): live Aurora brand wash, purple/tomato hues. -->
+                <!-- Live Aurora brand wash, purple/tomato hues. -->
                 <Aurora
                     :config="authAurora"
                     :opacity-ceiling="0.5"

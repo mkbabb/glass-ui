@@ -10,17 +10,15 @@ type LayerId = "root" | "assets" | "layers" | "libs";
 const activeLayer = ref<LayerId>("root");
 const railLayer = ref<LayerId>("assets");
 
-/* AX.W02 — the COLLAPSIBLE nested showcase: a layer group inside a collapsible
-   (NOT always-expanded) GlassDock, so a collapse-while-switching gesture exercises
-   the ONE-orchestrator fold (the π-lane samples the dock-root box AND the nested
-   pane-stack on one --dock-morph-t timeline). Two panes + a switcher rail so the
-   gate can swap panes while the dock collapses/expands. */
+/* The collapsible nested showcase: a layer group inside a collapsible (not
+   always-expanded) GlassDock, so a collapse-while-switching gesture exercises
+   the morph. Two panes + a switcher rail so panes can swap while the dock
+   collapses/expands. */
 const nestedLayer = ref<LayerId>("assets");
 
-/* AX.W02 — the bbnf-buddy vertical-overflow regression case: a vertical
-   DockLayerGroup whose active pane carries MORE rows than fit the resting height,
-   to prove the inner grid chain no longer fights max-height under the single
-   orchestrator. */
+/* The vertical-overflow case: a vertical DockLayerGroup whose active pane
+   carries more rows than fit the resting height, so the inner grid scrolls
+   rather than fighting the dock's height. */
 const overflowLayer = ref<LayerId>("assets");
 const overflowRows = [
     "z-order surface stack",

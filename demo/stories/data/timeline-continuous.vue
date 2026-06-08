@@ -9,22 +9,18 @@ import type {
 import { cn } from "../../../src/utils/cn";
 
 /**
- * Continuous variant — AA.W1.T1 / A4 §S-17. ONE rounded-pill rail
- * substrate with N absolute-positioned region children. Same
- * TimelineSegment[] shape as segmented; per-region gradient endpoints
- * use the canonical `--chart-*` tokens (per A4 §C-10 precedent — never
- * hex literals in storybook oracles). Demo mirrors the speedtest
- * 3-phase progression (ping → download → upload).
+ * Continuous variant — ONE rounded-pill rail with N absolute-positioned region
+ * children. Same TimelineSegment[] shape as the segmented variant; per-region
+ * gradient endpoints use the `--chart-*` tokens. This demo mirrors a 3-phase
+ * progression (ping → download → upload).
  *
- * AI.W1-δ — the story exercises the `#detail` scoped slot the primitive
- * gained at AI.W1. The slot payload `{ segment, source, currentKey,
- * hoveredKey }` resolves on the primitive side (`hovered ?? current` —
- * hover trumps current; the current-phase reading restores on hover-
- * leave). The slot body composes a `<Transition mode="out-in">` keyed
- * on the segment's stable `key` for fade-swap on segment change. The
- * two-keyed-children shape (`v-if="segment"` + `v-else` idle) is the
- * load-bearing detail; a single `v-if` inside the Transition would
- * silently break the choreography.
+ * The story exercises the `#detail` scoped slot. The slot payload
+ * `{ segment, source, currentKey, hoveredKey }` resolves on the primitive side
+ * (`hovered ?? current` — hover trumps current; the current-phase reading
+ * restores on hover-leave). The slot body composes a `<Transition mode="out-in">`
+ * keyed on the segment's stable `key` for a fade-swap on segment change. The
+ * two-keyed-children shape (`v-if="segment"` + `v-else` idle) is load-bearing;
+ * a single `v-if` inside the Transition would silently break the choreography.
  */
 
 interface DemoSegmentPayload {
@@ -75,9 +71,9 @@ const segments = ref<TimelineSegment[]>([
     },
 ]);
 
-// AI.W1-δ — the current-segment key threads to the primitive via
-// `current-segment-key`. Consumers no longer track `hoveredKey` locally —
-// the primitive owns it and surfaces it through the slot payload.
+// The current-segment key threads to the primitive via `current-segment-key`.
+// Consumers do not track `hoveredKey` locally — the primitive owns it and
+// surfaces it through the slot payload.
 const currentSegmentKey = ref<string>("download");
 
 function onClick(payload: { key: string; segment: TimelineSegment }) {
@@ -127,8 +123,7 @@ function reset() {
 /**
  * Legend swatch background. Lifted out of the template binding so the
  * inline `{ from, to }` type assertion doesn't clash with vue-tsc's
- * template parser (N.W1 Lane C / N-4 absorb). Mirrors the primitive's
- * own `gradientFor` resolver shape.
+ * template parser. Mirrors the primitive's own `gradientFor` resolver shape.
  */
 function legendBackground(seg: TimelineSegment): string {
     const g = seg.gradient;
@@ -144,7 +139,7 @@ function legendBackground(seg: TimelineSegment): string {
     <StoryPage>
         <div>
             <p class="text-admin-label mb-4 text-muted-foreground">
-                Continuous variant — ONE rail, N regions (AA.W1.T1)
+                Continuous variant — ONE rail, N regions
             </p>
 
             <div
@@ -154,7 +149,7 @@ function legendBackground(seg: TimelineSegment): string {
                     )
                 "
             >
-                <!-- Continuous timeline + AI.W1-δ #detail slot. The
+                <!-- Continuous timeline + #detail slot. The
                      `:current-segment-key` binding threads in the active
                      phase; the slot payload's `segment` resolves to the
                      hovered marker when hover is live, falling back to
@@ -273,9 +268,9 @@ function legendBackground(seg: TimelineSegment): string {
 </template>
 
 <style scoped>
-/* AI.W1-δ — fade-swap choreography for the #detail slot. The
-   transition name `phase-detail` keys both the leave and the enter
-   so segment-to-segment swaps (and active ↔ idle swaps) animate
+/* Fade-swap choreography for the #detail slot. The transition name
+   `phase-detail` keys both the leave and the enter so segment-to-segment
+   swaps (and active ↔ idle swaps) animate
    identically. PRM users skip the cross-fade. */
 .phase-detail-enter-active,
 .phase-detail-leave-active {

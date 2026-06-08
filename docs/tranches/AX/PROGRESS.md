@@ -73,7 +73,7 @@ soundness discipline: "complete" never collapses to "headless-green").
 | W55 | adaptive-glass-legibility — iOS27 backdrop-luminance darken (G2) | planned |
 | W56 | squircle design-language — corner-shape: superellipse() token axis (G3, foundational) | live-verified (DEVELOPED) |
 | W57 | demo-radial reauthor + pulse-aura calm + aurora/constellation heros (P6/P7) | live-verified (DEVELOPED) |
-| W58 | storybook-language strip — kill WCAG citations + impl-note code-comments (P10/P11) | planned |
+| W58 | storybook-language strip — kill WCAG citations + impl-note code-comments (P10/P11) | dev-complete (proof:story-language born-RED→GREEN; 49 SFCs swept) |
 | W59 | slider redesign — integrated-cylinder glass default + squircle-thumb spectrum | planned |
 
 ## W00 — visual-runtime (π) lane — COMPLETE

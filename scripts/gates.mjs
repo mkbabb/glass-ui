@@ -345,6 +345,12 @@ export const GATES = [
         note: "AV.W12 — the api/index.ts + index.ts barrels carry zero tranche-letter ref / 'tranche' word / vN.N.N version-archaeology in their bodies (the audit trail lives in CHANGELOG.md). Bite: re-inject one 'M.W2' or 'v1.7.0' → RED",
     },
     {
+        id: "proof:story-language",
+        cmd: "proof:story-language",
+        tags: ["local"],
+        note: "AX.W58 — the demo storybook (demo/stories/**) carries zero internal META-LANGUAGE in prose OR code-comments (a demo visitor reads WHAT a component does + WHEN to reach for it, not the library's dev history). FORBIDDEN: a tranche/wave/defect code (\\b[A-Z]{1,2}\\.W\\d), the word 'tranche', a proof:* gate name, a 'muster <Letter>' code, a WCAG citation in prose (WCAG 2.2.2 / WCAG-AA / WCAG 1.4.11), and the named impl-note signatures (ref-counted, provide-inject, inheritAttrs, binary-consumer, overfitting, #collapsed slot). Live forward refs to real public names (a --token, a <Component>, a /subpath) stay green. Bite: re-inject one 'AX.W17' or 'WCAG 2.2.2' or 'proof:foo' into any demo/stories SFC → RED.",
+    },
+    {
         id: "proof:au-final",
         cmd: "proof:au-final",
         tags: [],

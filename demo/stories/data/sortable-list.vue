@@ -107,7 +107,7 @@ function insertAt<T>(list: T[], index: number, item: T): T[] {
                     class="flex items-center gap-3 rounded-md border border-border/70 bg-background px-3 py-2.5"
                 >
                     <!-- Default span grip: role="button" + tabindex auto-emitted;
-                         consumer binds the reorder context via aria-label (AN.W4.B). -->
+                         bind the reorder context via aria-label. -->
                     <SortableHandle
                         class="text-muted-foreground hover:text-foreground"
                         :aria-label="`Reorder ${t.label}`"

@@ -1,7 +1,6 @@
 <script setup lang="ts">
-// AQ.W4 demo — the form-validity vocabulary in one place. This is the second
-// consumer of `useUserInvalidAria` (muster J's voter/admin forms are the
-// first), the binary-consumer proof carrier for the bridge.
+// Form-validity vocabulary in one place — the `useUserInvalidAria` composable
+// drives the `aria-invalid` / error-message wiring across the fields below.
 import { onMounted, onUnmounted, ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import { useUserInvalidAria } from "../../../src/composables/dom/useUserInvalidAria";
@@ -112,12 +111,9 @@ const name = ref("");
                 <p class="text-sm text-muted-foreground">
                     The customizable native <code class="font-mono text-xs">&lt;select&gt;</code>
                     (<code class="font-mono text-xs">appearance: base-select</code>) is
-                    Baseline LIMITED (Chromium-only at HEAD). It is NOT shipped as a
-                    glass-ui primitive at AQ.W4 — the binary-consumer bar (muster J
-                    adoption) is unresolved; the reka-ui
-                    <code class="font-mono text-xs">&lt;Select&gt;</code> stays the
-                    default rich path. It graduates to a shipped primitive only when
-                    muster J adopts it for a real low-option form (see AQ.W1.2 §W4.7).
+                    Chromium-only for now. glass-ui does not ship it as a primitive; the
+                    reka-ui <code class="font-mono text-xs">&lt;Select&gt;</code> stays the
+                    default rich path.
                 </p>
             </div>
         </div>
