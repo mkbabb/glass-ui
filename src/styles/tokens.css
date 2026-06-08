@@ -33,21 +33,24 @@
     accent-color: var(--accent-color);
 
     /* ═══════════════════════════════════════════════
-       §0  THEME BRIDGE FALLBACKS
+       §0  FONT TOKEN SOURCE-OF-TRUTH
 
-       theme.css uses these non-Tailwind names to register v4 utility
-       namespaces without self-referential @theme variables. The public
-       runtime tokens remain --font-*, --leading-*, and --tracking-* in
-       typography.css.
-       ═══════════════════════════════════════════════ */
-    --font-stack-display: "Fraunces", Georgia, serif;
-    --font-stack-serif: "Fraunces", Georgia, "Times New Roman", serif;
-    --font-stack-sans: "Helvetica Neue", "Arial Nova", Arial, system-ui, sans-serif;
-    /* AC.W6b (v1.5.0) — self-hosted Fira Code engages by default for
-       every glass-ui consumer. The calibrated "Fira Code Fallback"
-       face (declared in typography.css) wraps the system mono stack
-       with metric overrides so the `font-display: swap` window is
-       geometry-neutral. */
+       The single authoritative declaration of the library's font register.
+       theme.css bridges each --font-stack-* to its Tailwind --font-* namespace
+       var; typography.css consumes the bridged --font-* names. The public
+       runtime knobs remain --font-*, --leading-*, --tracking-*.
+
+       ONE brand register: Plus Jakarta Sans (text + display) + Fira Code (mono).
+       --font-stack-text drives the body/heading/prose/display register — the
+       library DEFAULT is the register every live surface paints (the demo +
+       speedtest render Plus Jakarta everywhere). The calibrated "Plus Jakarta
+       Sans Fallback" / "Fira Code Fallback" faces (declared in typography.css)
+       wrap the system stacks with Capsize metric overrides so the swap window
+       is geometry-neutral (zero CLS). --font-stack-display aliases the text
+       register: there is no separate display-serif voice. */
+    --font-stack-text: "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif;
+    --font-stack-display: var(--font-stack-text);
+    --font-stack-sans: var(--font-stack-text);
     --font-stack-mono: "Fira Code", "Fira Code Fallback", "Fira Mono", monospace;
 
     --type-leading-micro: 1.2;

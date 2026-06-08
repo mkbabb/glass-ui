@@ -1,13 +1,8 @@
 #!/usr/bin/env node
-// AV.W10 — the font-canon gate (proof:font-canon).
-//
-// The demo configurator advertised faces the browser can NEVER paint: the
-// `FONT_OPTIONS` / `DEFAULT_CONFIG.font` tables hard-coded Computer Modern Serif,
-// General Sans, Inter, and JetBrains Mono — none of which have an `@font-face`
-// in either of the two files that carry font binaries (src/styles/fonts.css for
-// the library, demo/demo.css for the demo). So any `--font-serif`/`--font-display`
-// surface silently fell through to a system serif. The library `--font-stack-serif`
-// token carried the same Computer-Modern reference.
+// AV.W10 · AX.W22 — the font-canon gate (proof:font-canon), demoted to a
+// NECESSARY-only static pre-check (the SUFFICIENT live-cascade truth is
+// proof:font-cascade-live; a NAMED face being legal here does not prove it
+// PAINTS — that gap is exactly what the live gate closes).
 //
 // This gate freezes the canon: every NAMED face referenced in
 //   - the demo tables (defaults.ts FONT_OPTIONS stacks + DEFAULT_CONFIG.font)
@@ -17,11 +12,14 @@
 // src/styles/fonts.css, demo/demo.css, or src/styles/typography.css's
 // calibrated fallback faces) OR a generic/system keyword (serif, sans-serif,
 // monospace, system-ui, ui-monospace, -apple-system, …). A reference to a
-// non-shipped named face → RED.
+// non-shipped named face → RED. A `var(--font-stack-*)` chain reference is
+// skipped: it resolves through the cascade to another token (the AX.W22
+// single-source consolidation — --font-stack-display/-sans alias the canonical
+// --font-stack-text), and that aliased token's own stack is checked.
 //
-// inv ε / bite-check: re-add `cm-serif` (Computer Modern Serif) to FONT_OPTIONS
-// → RED; point `--font-stack-serif` at a non-shipped named face → RED; a generic
-// keyword or a shipped face → GREEN.
+// inv ε / bite-check: re-add a non-shipped named face (e.g. "Fraunces") to
+// FONT_OPTIONS → RED; point `--font-stack-text` at a non-shipped named face →
+// RED; a generic keyword, a shipped face, or a var() chain → GREEN.
 
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -128,6 +126,12 @@ export function assertReferences(stacks, shipped) {
         for (const token of splitStack(stack)) {
             const n = norm(token);
             if (!n) continue;
+            // A `var(--font-stack-*)` chain reference resolves through the
+            // cascade to another token's value (the single-source consolidation:
+            // --font-stack-display/-sans alias --font-stack-text). It names no
+            // literal face — the canon holds on the aliased token's own stack,
+            // which is itself checked. Skip it (NOT an inert literal).
+            if (n.startsWith("var(")) continue;
             if (GENERIC.has(n)) continue;
             if (SYSTEM_NAMED.has(n)) continue;
             if (shipped.has(n)) continue;

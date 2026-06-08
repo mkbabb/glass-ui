@@ -171,12 +171,6 @@ export const GATES = [
         note: "AU.W3 — supportsPostTask is WIRED (>=1 real caller) or DROPPED — no exported orphan (P3)",
     },
     {
-        id: "proof:font-axes",
-        cmd: "proof:font-axes",
-        tags: ["local", "ci"],
-        note: "AU.W4 — every variation axis typography.css references (WONK/SOFT) is carried by the shipped display @font-face (parsed from the woff2 fvar) — no silently-inert axis",
-    },
-    {
         id: "proof:color-acyclic",
         cmd: "proof:color-acyclic",
         tags: ["local", "ci", "release", "sibling"],
@@ -378,7 +372,13 @@ export const GATES = [
         id: "proof:font-canon",
         cmd: "proof:font-canon",
         tags: ["local", "ci"],
-        note: "AV.W10 — every NAMED font-family in the demo tables (defaults.ts FONT_OPTIONS + DEFAULT_CONFIG.font), the demo presets, and the library --font-stack-* tokens resolves to a shipped @font-face (parsed from fonts.css + demo.css + typography.css) OR a generic/system keyword. Bite: re-add cm-serif / point --font-stack-serif at a non-shipped face → RED",
+        note: "AV.W10 · AX.W22 demoted to NECESSARY-only static pre-check (the SUFFICIENT live truth is proof:font-cascade-live). Every NAMED font-family in the demo tables (defaults.ts FONT_OPTIONS + DEFAULT_CONFIG.font), the demo presets, and the library --font-stack-* tokens resolves to a shipped @font-face (parsed from fonts.css + demo.css + typography.css) OR a generic/system keyword; a var(--font-stack-*) chain alias is skipped (it resolves to the canonical --font-stack-text, itself checked). Bite: re-add a non-shipped face (Fraunces) / point --font-stack-text at a non-shipped face → RED",
+    },
+    {
+        id: "proof:font-cascade-live",
+        cmd: "proof:font-cascade-live",
+        tags: ["local", "ci"],
+        note: "AX.W22 — the font-register reconciliation gate (the library DEFAULT register == the rendered register; one brand voice, no preset opt-out, no serif body). Device-free STRUCTURE arm (runs + hard-REDs on EVERY runner): tokens.css §0 single-sources --font-stack-text (Plus Jakarta) with --font-stack-display aliasing it + --font-stack-serif GONE; theme.css bridges --font-text + folds the --font-serif bridge onto --font-stack-text; typography.css body{} reads var(--font-text) + the ladder re-grounds + the WONK/SOFT machinery (--font-display-variation-settings/--font-display-weight) is excised; the brand-uniform-sans preset + --font-brand-sans are gone; DELETION proof — src/fonts/fraunces/ + the Fraunces @font-face + the index.html data-typography-preset + the demo.css --font-brand-sans + the configurator Fraunces option are all gone, and .cm-serif (the DISTINCT math voice) survives non-Fraunces. π-lane RENDER arm (fail-CLOSED when the tests-visual workspace is present; font-cascade-live.spec.ts): loads the demo, awaits document.fonts.ready, reads getComputedStyle on body/.text-display-*/.fira-code/.text-admin-label, asserts the resolved face IS the brand register (document.fonts.check + a canvas width-fingerprint vs a serif control to defeat the metric-matched-fallback silent-pass), and BITES on a Georgia --font-text override. Bite: re-point --font-stack-text at a serif → STRUCTURE 1 RED; restore the preset attr → STRUCTURE RED; a serif-first computed body family → RENDER RED.",
     },
     {
         id: "proof:lockfile",

@@ -1,12 +1,9 @@
 <!doctype html>
-<!-- AM-W7-η — the demo dogfoods the published brand faces. The
-     `brand-uniform-sans` typography preset is the canonical consumer opt-in
-     (it's exactly what the speedtest consumer sets): it cascades
-     `--font-display`/`--font-serif` from the library so the display/serif
-     utilities resolve to the published Plus Jakarta Sans face that demo.css
-     loads + maps via the `--font-brand-sans` override. No off-canon
-     Fraunces / Computer Modern / Fontshare faces, no third-party CDN. -->
-<html lang="en" data-typography-preset="brand-uniform-sans">
+<!-- The demo dogfoods the library DEFAULT register with zero override. The
+     library default IS the brand register (Plus Jakarta Sans text + display,
+     Fira Code mono) — no typography preset, no sans-indirection token. What the
+     demo renders is exactly what a consumer of the default tokens receives. -->
+<html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

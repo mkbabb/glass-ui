@@ -1,22 +1,25 @@
 /*
- * typography.css — Fraunces serif/display + Plus Jakarta Sans + Fira Code mono
- *                (all three OFL faces self-hosted via fonts.css)
+ * typography.css — Plus Jakarta Sans (text + display) + Fira Code (mono)
+ *                (both OFL faces self-hosted via fonts.css)
  *
- * Golden-ratio scale (√φ ≈ 1.272). Fraunces carries the serif register —
- * body, headings, prose, and math — and the ornamental display register
- * with WONK=1 / SOFT=0. Plus Jakarta Sans is the brand sans; Fira Code is mono.
+ * Golden-ratio scale (√φ ≈ 1.272). ONE brand register: Plus Jakarta Sans
+ * carries the text register — body, headings, prose, display, and math — and
+ * Fira Code carries mono. The library DEFAULT is the register every live
+ * surface paints (the demo + speedtest render Plus Jakarta everywhere). There
+ * is no display-serif voice and no preset opt-out: the default IS the register.
  *
  * Semantic type classes expose both Tailwind-friendly utility names
  * (`.text-display-*`, `.text-body`, `.text-admin-label`) and feature
  * utilities (`.cm-serif`, `.fira-code`, `.fourier-f`).
  *
  * Self-host font subsystem — glass-ui ships two OFL-1.1 face families as
- * bundled woff2 assets: Plus Jakarta Sans (brand display sans, font-display:
+ * bundled woff2 assets: Plus Jakarta Sans (brand text + display, font-display:
  * optional) + Fira Code (canonical mono, font-display: swap). Both ship with
  * Capsize-calibrated size-adjust / ascent-override / descent-override on the
- * matching fallback faces so the swap is geometry-neutral (zero CLS). Consumers
- * map --font-brand-sans / --font-display / --font-mono to reference them, no
- * third-party CDN dependency on the LCP-critical path.
+ * matching fallback faces so the swap is geometry-neutral (zero CLS). The
+ * register lives in tokens.css §0 (--font-stack-text/-display/-mono), bridged
+ * to --font-text/-display/-mono in theme.css; consumers override --font-text
+ * once to rebrand, no third-party CDN dependency on the LCP-critical path.
  */
 
 /* ═══════════════════════════════════════════════
@@ -82,21 +85,15 @@
 }
 
 :root {
-    /* Font family tokens. `--font-serif` / `--font-display` / `--font-mono`
-       are NOT declared here — their source-of-truth lives in tokens.css
-       (`--font-stack-*`), bridged to Tailwind via theme.css's `@theme` block;
-       declaring `:root` literals here would shadow consumer `@theme` overrides
-       (un-layered `:root` wins over `@layer theme`). The self-hosted faces
-       above expose `"Plus Jakarta Sans"` + `"Fira Code"`, each pairing with a
-       calibrated `"... Fallback"`. `--font-brand-sans` ships a neutral default;
-       consumers opting into Plus Jakarta via the `brand-uniform-sans` preset
-       override it. `--font-mono` references `"Fira Code"` first (engages by
-       default) then the fallback chain. */
-    /* Independent brand/system sans stack; consumers override once for uniform sans. */
-    --font-brand-sans: "Helvetica Neue", "Arial Nova", Arial, system-ui, sans-serif;
-    --font-sans: var(--font-brand-sans);
-    --font-display-variation-settings: "WONK" 1, "SOFT" 0;
-    --font-display-weight: 400;
+    /* Font family tokens. `--font-text` / `--font-display` / `--font-serif` /
+       `--font-mono` are NOT declared here — their source-of-truth lives in
+       tokens.css §0 (`--font-stack-*`), bridged to Tailwind via theme.css's
+       `@theme` block; declaring `:root` literals here would shadow consumer
+       `@theme` overrides (un-layered `:root` wins over `@layer theme`). The
+       self-hosted faces above expose `"Plus Jakarta Sans"` + `"Fira Code"`,
+       each pairing with a calibrated `"... Fallback"`. The brand text register
+       (Plus Jakarta Sans) engages by default for every consumer; --font-mono
+       references `"Fira Code"` first then the fallback chain. */
 
     /* Scale tokens */
     --type-admin-label: 0.625rem;  /* 10px */
@@ -116,8 +113,7 @@
     /* Audacious display tier (v1.0.3). Extends the φ-ladder three rungs
        beyond display-5 for poster-type consumers (speedtest hero,
        dashboard pane titles when the consumer wants the number to win).
-       Same vw-axis as display-1..5 — consumer-agnostic. Brand-uniform-
-       sans preset still overrides via the existing :root override. */
+       Same vw-axis as display-1..5 — consumer-agnostic. */
     --type-display-mega:       clamp(5.382rem, 4rem + 9vw, 11.089rem);   /* φ^(9/2) — peak 177px */
     --type-display-hero:       clamp(6.854rem, 4.5rem + 12vw, 17.942rem); /* φ^5    — peak 287px */
     --type-display-audacious:  clamp(8.728rem, 5rem + 16vw, 22rem);      /* φ^(11/2) — peak 352px (fast.com peg) */
@@ -129,25 +125,18 @@
        were retired in v0.8.6 (audit U.W0.C-c §1.1 / Union 2). */
 }
 
-:root[data-typography-preset="brand-uniform-sans"] {
-    --font-serif: var(--font-brand-sans);
-    --font-display: var(--font-brand-sans);
-    --font-display-variation-settings: normal;
-    --font-display-weight: 600;
-}
-
 /* ═══════════════════════════════════════════════
-   BODY CASCADE — CM serif inherits globally
+   BODY CASCADE — the brand text register inherits globally
    ═══════════════════════════════════════════════ */
 body {
-    font-family: var(--font-serif);
+    font-family: var(--font-text);
     color: var(--foreground);
     font-size: var(--type-body);
     line-height: var(--type-leading-body);
 }
 
 /* ═══════════════════════════════════════════════
-   DISPLAY — Fraunces, WONK=1 SOFT=0, tracking-tight
+   DISPLAY — Plus Jakarta Sans display, tracking-tight
    ═══════════════════════════════════════════════ */
 @utility text-display-audacious {
     font-family: var(--font-display);
@@ -155,8 +144,7 @@ body {
     line-height: var(--type-leading-display);
     letter-spacing: var(--type-tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: var(--font-display-variation-settings);
-    font-weight: var(--font-display-weight);
+    font-weight: 600;
     /* AQ.W3 §W3.3 — balance multi-line display headlines. Text-only (no box) so
        balance is safe; degrades to unbalanced wrapping with zero break. */
     text-wrap: balance;
@@ -177,7 +165,6 @@ body {
     font-feature-settings: "ss01", "tnum", "lnum";
     font-variant-numeric: tabular-nums lining-nums;
     font-optical-sizing: auto;
-    font-variation-settings: var(--font-display-variation-settings);
     display: inline-block;
     max-inline-size: 100%;
     /* AQ.W3 §W3.3 — `text-wrap: nowrap` (modern) sits AFTER `white-space:
@@ -193,8 +180,7 @@ body {
     line-height: var(--type-leading-display);
     letter-spacing: var(--type-tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: var(--font-display-variation-settings);
-    font-weight: var(--font-display-weight);
+    font-weight: 600;
     text-wrap: balance; /* AQ.W3 §W3.3 */
 }
 
@@ -204,8 +190,7 @@ body {
     line-height: var(--type-leading-display);
     letter-spacing: var(--type-tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: var(--font-display-variation-settings);
-    font-weight: var(--font-display-weight);
+    font-weight: 600;
     text-wrap: balance; /* AQ.W3 §W3.3 */
 }
 
@@ -215,8 +200,7 @@ body {
     line-height: var(--type-leading-display);
     letter-spacing: var(--type-tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: var(--font-display-variation-settings);
-    font-weight: var(--font-display-weight);
+    font-weight: 600;
     text-wrap: balance; /* AQ.W3 §W3.3 */
 }
 
@@ -226,8 +210,7 @@ body {
     line-height: var(--type-leading-display);
     letter-spacing: var(--type-tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: var(--font-display-variation-settings);
-    font-weight: var(--font-display-weight);
+    font-weight: 600;
     text-wrap: balance; /* AQ.W3 §W3.3 */
 }
 
@@ -237,8 +220,7 @@ body {
     line-height: var(--type-leading-display);
     letter-spacing: var(--type-tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: var(--font-display-variation-settings);
-    font-weight: var(--font-display-weight);
+    font-weight: 600;
     text-wrap: balance; /* AQ.W3 §W3.3 */
 }
 
@@ -248,8 +230,7 @@ body {
     line-height: var(--type-leading-display);
     letter-spacing: var(--type-tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: var(--font-display-variation-settings);
-    font-weight: var(--font-display-weight);
+    font-weight: 600;
     text-wrap: balance; /* AQ.W3 §W3.3 */
 }
 
@@ -259,16 +240,15 @@ body {
     line-height: var(--type-leading-display);
     letter-spacing: var(--type-tracking-tight);
     font-optical-sizing: auto;
-    font-variation-settings: var(--font-display-variation-settings);
-    font-weight: var(--font-display-weight);
+    font-weight: 600;
     text-wrap: balance; /* AQ.W3 §W3.3 */
 }
 
 /* ═══════════════════════════════════════════════
-   HEADINGS / BODY — Fraunces serif register
+   HEADINGS / BODY — Plus Jakarta Sans text register
    ═══════════════════════════════════════════════ */
 @utility text-title {
-    font-family: var(--font-serif);
+    font-family: var(--font-text);
     font-size: var(--type-title);
     line-height: var(--type-leading-heading);
     letter-spacing: var(--type-tracking-tight);
@@ -277,7 +257,7 @@ body {
 }
 
 @utility text-heading {
-    font-family: var(--font-serif);
+    font-family: var(--font-text);
     font-size: var(--type-heading);
     line-height: var(--type-leading-heading);
     font-weight: 700;
@@ -285,7 +265,7 @@ body {
 }
 
 @utility text-subheading {
-    font-family: var(--font-serif);
+    font-family: var(--font-text);
     font-size: var(--type-subheading);
     line-height: var(--type-leading-body);
     font-weight: 600;
@@ -300,7 +280,7 @@ body {
    reads heavier than its numeric weight at pill size, so regular is the
    not-bold register. */
 @utility dock-label {
-    font-family: var(--font-serif);
+    font-family: var(--font-text);
     font-size: var(--dock-label-size, var(--type-subheading));
     line-height: var(--type-leading-body);
     font-weight: 400;
@@ -308,7 +288,7 @@ body {
 }
 
 @utility text-prose {
-    font-family: var(--font-serif);
+    font-family: var(--font-text);
     font-size: var(--type-prose);
     line-height: var(--type-leading-prose);
     font-weight: 400;
@@ -318,7 +298,7 @@ body {
 }
 
 @utility text-body {
-    font-family: var(--font-serif);
+    font-family: var(--font-text);
     font-size: var(--type-body);
     line-height: var(--type-leading-body);
     font-weight: 400;
@@ -326,14 +306,14 @@ body {
 }
 
 @utility text-small {
-    font-family: var(--font-serif);
+    font-family: var(--font-text);
     font-size: var(--type-small);
     line-height: var(--type-leading-small);
     font-weight: 400;
 }
 
 @utility text-caption {
-    font-family: var(--font-serif);
+    font-family: var(--font-text);
     font-size: var(--type-caption);
     line-height: var(--type-leading-caption);
     font-style: italic;
@@ -358,15 +338,15 @@ body {
 }
 
 /* ═══════════════════════════════════════════════
-   MATH — Fraunces serif italic
+   MATH — Plus Jakarta Sans italic
    ═══════════════════════════════════════════════ */
 @utility text-math {
-    font-family: var(--font-serif);
+    font-family: var(--font-text);
     font-style: italic;
 }
 
 @utility text-math-body {
-    font-family: var(--font-serif);
+    font-family: var(--font-text);
     font-size: var(--type-prose);
     line-height: var(--type-leading-prose);
     font-style: italic;
@@ -406,8 +386,13 @@ body {
 /* ═══════════════════════════════════════════════
    FONT FAMILY UTILITIES
    ═══════════════════════════════════════════════ */
+/* .cm-serif — the Computer-Modern math/serif voice. A DISTINCT face from the
+   brand text register: it resolves to the consumer-supplied serif (system
+   serif by default; a math consumer maps Computer Modern / KaTeX over it). It
+   is NOT the Plus Jakarta text register — the one serif survivor of the
+   register reconciliation. */
 @utility cm-serif {
-    font-family: var(--font-serif);
+    font-family: var(--font-serif-math, serif);
 }
 
 @utility fira-code {
@@ -426,7 +411,6 @@ body {
     vertical-align: -0.05em;
     font-weight: 700;
     display: inline-block;
-    font-variation-settings: var(--font-display-variation-settings);
 }
 
 /* ═══════════════════════════════════════════════
@@ -439,9 +423,8 @@ body {
         font-size: clamp(2.4rem, 1.8rem + 2vw, 3.33rem);
         line-height: var(--type-leading-display);
         letter-spacing: var(--type-tracking-tight);
-        font-weight: var(--font-display-weight);
+        font-weight: 600;
         font-optical-sizing: auto;
-        font-variation-settings: var(--font-display-variation-settings);
     }
 
     /* AV.W16 TW3 — the pane title scales off its PANE's box, not the viewport.

@@ -1,9 +1,17 @@
 # `src/fonts/` — self-hostable woff2 assets
 
-Per O.W6 Lane D / speedtest AC.W6 cohort (T_GU-FONT-A): glass-ui ships
-Fira Code (and forthcoming display/text companions) as woff2 assets so
-consumers can self-host via a single `@font-face` block rather than
-re-fetching from Google Fonts on every page-load.
+glass-ui ships its brand register as self-hosted woff2 assets so consumers
+can self-host via the `@mkbabb/glass-ui/styles/fonts` bundle rather than
+re-fetching from a CDN on every page-load. The register is ONE coherent
+brand voice:
+
+- **Plus Jakarta Sans** — the text + display register (body, headings,
+  prose, display). The library DEFAULT family; every live surface paints it.
+- **Fira Code** — the mono register (admin labels, tabular numerics, code).
+
+Both are OFL-1.1 variable faces, each paired with a Capsize-calibrated
+`"… Fallback"` face (declared in `typography.css`) so the swap window is
+geometry-neutral (zero CLS).
 
 ## Canonical filenames (Fira Code)
 
@@ -21,26 +29,26 @@ woff2 builds live in `distr/woff2/` of that repository's releases — pull
 the `Regular`/`Medium`/`SemiBold` weights only (the three glass-ui ships
 as the `--font-mono` stack rungs).
 
-## Fraunces (display, AU.W4)
+## On-disk layout (the shipped register)
 
 The actual on-disk layout is per-family nested
-(`src/fonts/<family>/<face>.woff2`), e.g.
-`src/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2`. AU.W4 ships the
-display register's face — the `--font-stack-display: "Fraunces"` token
-(`tokens.css`) had no face, so the `WONK`/`SOFT` axes `typography.css` drives were
-silently inert. The shipped face is the FULL variable Fraunces (latin subset):
+(`src/fonts/<family>/<face>.woff2`):
 
 ```
-src/fonts/fraunces/fraunces-latin.woff2
+src/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2
+src/fonts/plus-jakarta-sans/plus-jakarta-sans-latin-ext.woff2
+src/fonts/fira-code/fira-code-latin.woff2
+src/fonts/fira-code/fira-code-latin-ext.woff2
 ```
 
-It carries the `wght` · `opsz` · `SOFT` · `WONK` axes (verified by
-`proof:font-axes`, which parses the woff2 `fvar` against the axes
-`typography.css` references). Source canonical:
-<https://github.com/googlefonts/fraunces> (OFL-1.1); the variable woff2 latin
-subset is the Google Fonts / fontsource distribution. `proof:font-axes` fails
-closed if a wght-only instance (one that drops `SOFT`/`WONK`) is ever
-substituted.
+Plus Jakarta Sans is the text + display register (`--font-stack-text`,
+aliased by `--font-stack-display`); Fira Code is `--font-stack-mono`. Each is
+a FULL variable face (latin + latin-ext subsets). Source canonical:
+<https://github.com/tokotype/PlusJakartaSans> +
+<https://github.com/tonsky/FiraCode> (both OFL-1.1); the variable woff2 latin
+subsets are the Google Fonts / fontsource distributions. The Capsize metric
+overrides on the fallback faces (`size-adjust` / `ascent-override` /
+`descent-override`) reference these binaries' exact geometry.
 
 ## Why this directory ships, not the fetch step
 

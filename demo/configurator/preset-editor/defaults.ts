@@ -10,19 +10,14 @@ export const STORAGE_KEY = "glass-ui-demo-config";
 export const PRESET_LINK_ID = "glass-ui-demo-preset-link";
 
 // The shipped-canon font picker. Every stack names ONLY a self-hosted face
-// (Plus Jakarta Sans / Fira Code / Fraunces — declared in src/styles/fonts.css
-// + demo/demo.css), its Capsize-calibrated "* Fallback" wrapper, or a generic
+// (Plus Jakarta Sans / Fira Code — declared in src/styles/fonts.css +
+// demo/demo.css), its Capsize-calibrated "* Fallback" wrapper, or a generic
 // system keyword. No option advertises a face the browser cannot paint.
 export const FONT_OPTIONS: readonly FontOption[] = [
     {
         id: "plus-jakarta-sans",
         label: "Plus Jakarta Sans",
         stack: '"Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif',
-    },
-    {
-        id: "fraunces",
-        label: "Fraunces",
-        stack: '"Fraunces", Georgia, serif',
     },
     {
         id: "fira-code",
@@ -44,9 +39,9 @@ export const FONT_OPTIONS: readonly FontOption[] = [
 export const DEFAULT_CONFIG: ConfigBaseline = {
     preset: "default",
     font: {
-        serif: '"Fraunces", Georgia, serif',
+        serif: '"Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif',
         sans: '"Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif',
-        display: '"Fraunces", Georgia, serif',
+        display: '"Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif',
         mono: '"Fira Code", "Fira Code Fallback", "Fira Mono", monospace',
     },
     scaleBase: 16,

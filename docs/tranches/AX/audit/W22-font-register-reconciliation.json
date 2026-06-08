@@ -1,0 +1,100 @@
+{
+  "wave": "AX.W22",
+  "title": "Font register reconciliation — one brand register, the library DEFAULT == the rendered register (Fraunces excised)",
+  "status": "complete",
+  "band": "G · PRIMITIVES",
+  "severity": "major",
+  "dependsOn": ["AX.W00"],
+  "baseSha": "a563563fa70699746f9ba10110f829b7abff8c69",
+  "audit": "deep-audit-corpus.json slice `fonts` (index 20; F0=three-incompatible-intents / F1=Fraunces-substrate-without-consumer / F2=both-static-gates-blind / F3=triple-indirection-preset-undoes-the-default) + constellation-analysis-corpus.json result[5]/[6]/[10]/[16]/[30].findings[7]",
+  "fold0_adjudication": {
+    "decision": "path (a) EXCISE",
+    "question": "AS-P5 (ship the full-axes self-hosted Fraunces @font-face) vs W22 (excise it) — the blocker-severity cross-constellation contradiction (§4 note 17; constellation result[5]/result[6]). They cannot both be true.",
+    "ratifiedBy": "Recorded BEFORE any source edit per the RATIFY-BEFORE-IMPL precondition. The orchestrator dispatch scope is path-a EXCISE: the cross-constellation Fraunces precondition (the words/muster consumer contradiction) is routed to W34/W35 as a cross-repo adoption leg, NOT edited in-repo — which is the EXCISE shape (a WIRE path would ship the face in glass-ui, not route consumers off it).",
+    "evidenceBasis": {
+      "brandRegisterPredatesFraunces": "AC.W6b (2474440, v1.5.0) self-hosted Plus Jakarta Sans + Fira Code as the BRAND register, with a Capsize-calibrated `Plus Jakarta Sans Fallback` face (typography.css) — the positive proof it was the intended DEFAULT. It is what speedtest + demo render. The brand register predates Fraunces by an entire arc.",
+      "frauncesShipWasMechanical": "AU.W4 (048ea88, subject literally tagged [slipped]) repointed --font-stack-serif/--font-stack-display at Fraunces purely to make a self-imposed dangling display token non-inert — WITHOUT wiring it into the consumer register, WITHOUT a calibrated fallback, WITHOUT a demo.css @font-face. The [slipped] tag is the audit's own evidence the ship was a token-fix, not a design decision.",
+      "noLiveGlassUiRenderer": "The demo FORBADE Fraunces via the brand-uniform-sans preset (demo never painted it — grep -c 'font-family: \"Fraunces\"' demo/demo.css = 0); speedtest forbids it explicitly (MapSkeleton.vue 'never Fraunces'). ZERO live glass-ui surface renders Fraunces — the ≥2-consumer overfitting bar is unmet for a LIBRARY-DEFAULT face.",
+      "valueJsSelfSupplies": "value.js loads Fraunces from its OWN @theme + Google-Fonts link (constellation result[10]) — proving the library need NOT ship it; the consumers that want the editorial WONK/SOFT voice carry it as a consumer-preset (the presets-in-consumers precept). UNAFFECTED by the excise (zero breakage).",
+      "deadCriticalPayload": "src/fonts/fraunces/fraunces-latin.woff2 was 67388 bytes — ~40KB-gzip dead critical payload guarded by proof:font-axes for ZERO live renderers.",
+      "as_p5_killed": "AS-P5 (the AS deferred-ledger 'self-hosted full-axes Fraunces' FOLD with ≥2 named consumers) is KILLED under path (a): the ≥2-consumer signal (value.js + words + slides) is adjudicated CONSUMER-PRESET territory, not library identity. The words A.W5 + value.js + slides re-ground legs route to W34/W35."
+    }
+  },
+  "redWitnessesReprovenAtBase": {
+    "note": "All three re-proven against the worktree base a563563 before acting (the §0 cardinal re-verify, not trusted from the plan's eaba94f/6e3ad10 baseline).",
+    "witness1_defaultNotRendered": {
+      "claim": "The library DEFAULT body register is a face NO live surface renders.",
+      "reproven": "tokens.css:43-44 set --font-stack-display/--font-stack-serif = \"Fraunces\", Georgia; theme.css:107-108 bridged them; typography.css:143 set body{ font-family: var(--font-serif) }. So by default ALL body/heading/prose/display resolved Fraunces→Georgia (a system serif). The demo forced Plus Jakarta via index.html:9 data-typography-preset + demo.css --font-brand-sans, so the demo with the preset REMOVED would resolve body to Georgia — default ≠ rendered.",
+      "verdict": "RED at base — confirmed."
+    },
+    "witness2_substrateWithoutConsumer": {
+      "claim": "Fraunces is substrate-without-consumer institutionalized by a green static gate — ~40KB critical payload for ZERO live renderers.",
+      "reproven": "src/fonts/fraunces/fraunces-latin.woff2 = 67388 bytes (vs Plus Jakarta latin 27348); fonts.css:158-168 declared its @font-face; proof:font-axes (gates.mjs:174) PASSED over a face NO live surface renders, asserting the woff2 fvar carries WONK/SOFT while those axes were silently inert.",
+      "verdict": "RED at base — a green gate over dead substrate."
+    },
+    "witness3_staticGatesBlind": {
+      "claim": "Both static font gates are structurally blind to the live cascade (the AW headless-green/visually-broken gap).",
+      "reproven": "proof:font-canon checks only name-legality (Georgia is in its SYSTEM_NAMED allowlist, so the \"Fraunces\", Georgia fallthrough was gate-invisible); proof:font-axes checks only the woff2 fvar. NEITHER opened a browser. No gate at base loaded the live demo, awaited document.fonts.ready, and asserted which face PAINTS.",
+      "verdict": "RED at base — no live-cascade font gate existed."
+    }
+  },
+  "findingsDisposition": {
+    "F0_threeIncompatibleIntents": {
+      "status": "DONE",
+      "fix": "Consolidated to ONE register model + ONE token source. tokens.css §0 single-sources --font-stack-text (Plus Jakarta calibrated chain); --font-stack-display/--font-stack-sans ALIAS it (var(--font-stack-text)); the misnamed --font-stack-serif is FOLDED AWAY (deleted). theme.css bridges --font-text from --font-stack-text and folds the --font-serif bridge onto --font-stack-text (the configurator serif slot resolves the text register — no display-serif voice). typography.css body{} reads var(--font-text); the heading/prose/math ladder re-grounds onto var(--font-text)."
+    },
+    "F1_frauncesSubstrateWithoutConsumer": {
+      "status": "DONE (path a EXCISE)",
+      "fix": "Deleted src/fonts/fraunces/ (the dir + the 67388-byte woff2); deleted the fonts.css Fraunces @font-face block + header; deleted the WONK/SOFT machinery across typography.css (--font-display-variation-settings + --font-display-weight, every font-variation-settings: var(--font-display-variation-settings) line across the display ladder, .fourier-f, .text-pane-title; the display ladder's font-weight folds to a literal 600). Retired proof:font-axes (the script + the package.json entry + the gates.mjs registration + the ci.yml step). Re-grounded .fourier-f onto the Plus Jakarta display register (its demo label already named Plus Jakarta). KEPT .cm-serif (the DISTINCT Computer-Modern math voice — repointed to var(--font-serif-math, serif), a real serif the consumer overrides; NOT Fraunces, NOT the brand text register)."
+    },
+    "F2_bothStaticGatesBlind": {
+      "status": "DONE",
+      "fix": "proof:font-canon demoted to a NECESSARY-only static pre-check (it stays valid: every NAMED family resolves to a shipped face or a system keyword; a var(--font-stack-*) chain alias is skipped — it resolves to the canonical --font-stack-text, itself checked). Added the standing π-lane proof:font-cascade-live gate (HardGate): a device-free STRUCTURE arm (hard-RED on every runner) + a fail-CLOSED π RENDER arm (font-cascade-live.spec.ts — getComputedStyle + document.fonts.check + a canvas width-fingerprint, BITES on a Georgia body default)."
+    },
+    "F3_presetUndoesTheDefault": {
+      "status": "DONE",
+      "fix": "Deleted the :root[data-typography-preset=\"brand-uniform-sans\"] block + the --font-brand-sans indirection from typography.css. Deleted index.html's data-typography-preset attr + its preset comment + demo/demo.css's --font-brand-sans override block — the demo renders the real default with zero override. Removed the Fraunces option from the demo configurator (defaults.ts FONT_OPTIONS) + repointed the DEFAULT_CONFIG.font serif/display slots onto the Plus Jakarta register (no UI option falls to Georgia)."
+    }
+  },
+  "filesChanged": [
+    "src/styles/tokens.css",
+    "src/styles/theme.css",
+    "src/styles/typography.css",
+    "src/styles/fonts.css",
+    "src/fonts/fraunces/ (DELETED dir + woff2)",
+    "src/fonts/README.md",
+    "scripts/proof-font-axes.mjs (DELETED)",
+    "scripts/proof-font-canon.mjs (var() chain skip + necessary-only demote)",
+    "scripts/proof-font-cascade-live.mjs (NEW)",
+    "tests-visual/font-cascade-live.spec.ts (NEW)",
+    "scripts/gates.mjs",
+    "package.json",
+    ".github/workflows/ci.yml",
+    "index.html",
+    "demo/demo.css",
+    "demo/configurator/preset-editor/defaults.ts",
+    "docs/tranches/AX/audit/W22-font-register-reconciliation.json (this)"
+  ],
+  "gates": {
+    "proof:font-cascade-live": "GREEN (STRUCTURE device-free; RENDER befitting-silent SKIP in the agent worktree — fail-CLOSED on the real device). Born-RED at base a563563 (no such gate; the STRUCTURE arm's --font-stack-text + body-reads---font-text witnesses both fail against the pre-wave Fraunces source).",
+    "proof:font-canon": "GREEN (demoted to necessary-only; var(--font-stack-*) chain skip). Bite intact: a non-shipped named face (Fraunces) / --font-stack-text at a non-shipped face → RED.",
+    "proof:font-axes": "RETIRED (deletion-PROOF — the script + package.json + gates.mjs + ci.yml registrations gone; the face it guarded is excised).",
+    "proof:gate-script-parity": "GREEN (the new script is registered, proof-font-axes.mjs cleanly removed from both fleet + registration; 0 new orphans/dangling/ghosts).",
+    "build": "GREEN (no dangling @font-face references the deleted woff2; the ./fonts/* glob export auto-drops the absent face).",
+    "typecheck": "GREEN (font tokens are CSS-only; no public type / api/index.ts reference dangles)."
+  },
+  "deletionProof": {
+    "frauncesDir": "test -d src/fonts/fraunces → absent",
+    "frauncesFace": "no @font-face font-family: \"Fraunces\" in fonts.css",
+    "proofFontAxesScript": "test -f scripts/proof-font-axes.mjs → absent",
+    "surfaceGrep": "grep -rc 'Fraunces|WONK|SOFT|font-brand-sans|data-typography-preset|font-display-variation-settings' src/styles/ index.html demo/demo.css demo/configurator/preset-editor/defaults.ts package.json scripts/gates.mjs → 0 across the surface (the grep targets the repo-root index.html per HARDENING §G #24, NOT the non-existent demo/index.html). .cm-serif is the ONE allowed serif survivor — verified non-Fraunces."
+  },
+  "consumerRepointAnnex_W34": {
+    "note": "The cross-constellation register repoints are NOT silently dropped — each is ROUTED to W34/W35 as a named per-consumer adoption leg (the no-silent-deferrals precept). W22 writes NO sibling source; it routes the NOTES.",
+    "speedtest": "Remove the data-typography-preset=\"brand-uniform-sans\" attr + the @theme re-alias + the --font-serif body override (the register now defaults to Plus Jakarta; the preset has nothing to undo). Disjoint by token namespace from W05's --ease-apple-spring speedtest repoint — coordinate the W34 speedtest annex so both land in ONE PR.",
+    "words": "Repoint body/sans/display off Fraunces onto Plus Jakarta; STOP defaulting body copy to a display serif (constellation result[16] — words institutionalizes the body-defaults-to-Fraunces-serif anti-pattern). The words A.W5-P1c/P1d Fraunces dependency (constellation result[6], blocker) is RE-GROUNDED onto Plus Jakarta per the path-a clean break — OR words self-supplies Fraunces as a consumer-preset (presets-in-consumers).",
+    "valueJs": "VERIFY-ONLY — value.js self-loads Fraunces from its own @theme + Google-Fonts (constellation result[10]); UNAFFECTED by the glass-ui excise (zero breakage).",
+    "slides": "Re-ground per the path-a clean break (no 'ported from' / migration language)."
+  },
+  "liveArmNotes": "The π RENDER arm (font-cascade-live.spec.ts) cannot run in the agent worktree (no browser). The orchestrator runs it on the real device: npm run dev (demo at :5173) + `cd tests-visual && npx playwright test font-cascade-live.spec.ts`. It asserts on /foundations/typography: (a) getComputedStyle(body / .text-display-2 / .text-body).fontFamily resolves Plus-Jakarta-FIRST (NOT Georgia/serif-first); .text-admin-label + .fira-code resolve Fira-Code-first; (b) document.fonts.check is true for both faces; (c) a canvas glyph-width fingerprint of a Plus-Jakarta sample differs from a Georgia/serif control by >2px (defeats the metric-matched-fallback silent-pass); (d) the negative control — inject :root{--font-text:Georgia,serif} and assert body NOW computes Georgia (the gate BITES). The full VISUAL-TRUTH audit (light+dark, ≥3 viewports 375x667/1280x800/1440x900, the demo + the speedtest + words live surfaces, the paired-π BEFORE/AFTER+DELTA capture under docs/tranches/AX/audit/) is the binding close criterion the orchestrator captures."
+}
