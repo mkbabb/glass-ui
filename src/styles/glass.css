@@ -100,21 +100,28 @@
            `var(--mouse-x, 50%)` floor is the centred fallback. */
         --specular-x: var(--mouse-x, 50%);
         --specular-y: var(--mouse-y, 50%);
-        /* The catch-light intensity floor at rest; hover/active lift it (the
-           interaction-light state machine below). */
-        --specular-intensity: 0.35;
-        /* The travelling catch-light — a soft warm-white circular glow centred
-           on the tracked pointer position (NOT iOS blue; keeps the warm-cream
-           identity). The `--specular-intensity` multiplier drives the layer
-           `opacity`, not a per-stop alpha (a registered-`@property` var() nested
-           in an hsl() alpha computes to 0 in Chromium). */
+        /* The catch-light intensity at REST — reads the token cohort
+           (tokens.css §specular-intensity), default 0 so a static, unwired
+           surface is CLEAN and the @property `initial-value: 0` dormancy is no
+           longer defeated by a floor. Hover/active lift it through the same
+           cohort (the interaction-light state machine below). */
+        --specular-intensity: var(--glass-specular-intensity-rest, 0);
+        /* The travelling catch-light — a genuinely WARM-CREAM, low-alpha circular
+           glow centred on the tracked pointer position (L < 100% so the warm hue
+           survives — the prior `hsl(40 30% 100%)` was PURE WHITE at L=100%, which
+           saturated the 30% away and blew out under the screen blend; the
+           warm-cream the comment claimed never painted). The `--specular-intensity`
+           multiplier drives the layer `opacity`, not a per-stop alpha (a
+           registered-`@property` var() nested in an hsl() alpha computes to 0 in
+           Chromium); the per-stop alphas here keep the core soft so even the lifted
+           hover/active states read as a lens, not a flash. */
         background: radial-gradient(
             circle at var(--specular-x, 50%) var(--specular-y, 50%),
-            hsl(40 30% 100% / 0.55) 0%,
-            hsl(40 30% 100% / 0.22) 22%,
+            hsl(40 30% 96% / 0.22) 0%,
+            hsl(40 30% 96% / 0.08) 22%,
             transparent 55%
         );
-        opacity: var(--specular-intensity, 0.35);
+        opacity: var(--specular-intensity, 0);
         /* Clip the glow to the plate so it rides the surface. `mask-image`
            Baseline 2023-12-07; a non-supporting engine ignores it and the
            `inset: 0` + radius-inherit already bound the glow. */
@@ -142,8 +149,12 @@
     .dark .glass-card::before,
     .dark .glass-specular-track::before,
     .dark .dock-icon-button::before {
-        /* Softer over the deep canvas — the screen blend lifts harder on dark. */
-        --specular-intensity: 0.22;
+        /* Softer over the deep canvas — the screen blend lifts harder on dark.
+           The `.dark` magnitude lives in the token cohort (tokens.css §specular-
+           intensity `.dark` arm); the rest rung is already 0 so the dark arm only
+           softens hover/active via the cohort. The rest rung re-reads the (dark)
+           token here so a dark `:root` override resolves. */
+        --specular-intensity: var(--glass-specular-intensity-rest, 0);
     }
 
     /* (c) Interaction-light lockstep — hover/active lift the intensity in the
@@ -159,7 +170,7 @@
     .glass-card:hover::before,
     .glass-specular-track:hover::before,
     .dock-icon-button:hover::before {
-        --specular-intensity: 0.6;
+        --specular-intensity: var(--glass-specular-intensity-hover, 0.22);
     }
     .glass-material:active::before,
     .glass-wash:active::before,
@@ -170,7 +181,7 @@
     .glass-card:active::before,
     .glass-specular-track:active::before,
     .dock-icon-button:active::before {
-        --specular-intensity: 0.85;
+        --specular-intensity: var(--glass-specular-intensity-active, 0.32);
     }
 
     /* ── Five-tier surface ladder (v0.8.0; visual only, no geometry) ──
