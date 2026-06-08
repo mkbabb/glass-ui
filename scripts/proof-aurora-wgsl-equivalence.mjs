@@ -97,14 +97,47 @@ function run() {
     facts.noReauthoredColorCore = !!wgsl && !/mat3x3f\s*\(\s*0\.4122214708/.test(wgsl) && !/fn\s+linearToSrgbCh/.test(wgsl);
     if (!facts.noReauthoredColorCore) violations.push("(2) aurora.wgsl.ts RE-AUTHORS a chunk-owned WGSL color literal (a mat3x3f Ottosson matrix or the linearToSrgb body) inline — the AV.W1 two-copy divergence");
 
+    // (3) AX.W11 — the samplePalette gate-hole close. The PALETTE RAMP (the smoothstep
+    // ease + the OKLab-rect-vs-OKLCh-hue-arc huePath dispatch) is ALSO single-sourced:
+    // the shared chunk exports PALETTE_RAMP_GLSL + PALETTE_RAMP_WGSL twins, and BOTH
+    // samplePalette ports SPLICE the shared ramp (the WGSL twin no longer flat-lerps).
+    // The numeric arm above (arm 1) now certifies samplePaletteRamp to 1e-6 across the
+    // huePath modes; this STRUCTURAL arm forbids a re-authored second ramp copy.
+    facts.chunkExportsRamp =
+        !!chunk &&
+        /export const PALETTE_RAMP_GLSL/.test(chunk) &&
+        /export const PALETTE_RAMP_WGSL/.test(chunk);
+    if (!facts.chunkExportsRamp) violations.push("(3) the shared procedural-color chunk does not export the palette-ramp twins (PALETTE_RAMP_GLSL/PALETTE_RAMP_WGSL) — the AX.W11 single-source ramp hoist is absent");
+
+    facts.wgslSplicesRamp =
+        !!wgsl &&
+        /PALETTE_RAMP_WGSL/.test(wgsl) &&
+        /\$\{PALETTE_RAMP_WGSL\}/.test(wgsl) &&
+        /samplePaletteRamp\s*\(/.test(wgsl);
+    if (!facts.wgslSplicesRamp) violations.push("(3) aurora.wgsl.ts samplePalette does not SPLICE the shared ramp twin (it must interpolate ${PALETTE_RAMP_WGSL} + call samplePaletteRamp, not flat-lerp the OKLab mix) — the W07 gate hole is still open");
+
+    // The twin must NOT re-author the ramp inline — a hand-maintained samplePalette
+    // body with a bare `mix(labA, labB, f)` (no smoothstep, no huePath) is the W07
+    // flat-lerp the hoist eliminates. The canary: the old flat-lerp pattern is gone.
+    const wgslSample = wgsl ? (wgsl.match(/fn samplePalette\([\s\S]*?\n\}/) || [""])[0] : "";
+    facts.noFlatLerpRamp = !/return oklabToLinearSrgb\(mix\(labA, labB, f\)\)/.test(wgslSample);
+    if (!facts.noFlatLerpRamp) violations.push("(3) aurora.wgsl.ts samplePalette still FLAT-LERPS the ramp (the bare `oklabToLinearSrgb(mix(labA,labB,f))` with no smoothstep / no huePath arc) — the backend ramp drift the gate exists to catch");
+
+    facts.wgslHasHuePathUniform = !!wgsl && /huePath\s*:\s*f32/.test(wgsl);
+    if (!facts.wgslHasHuePathUniform) violations.push("(3) aurora.wgsl.ts struct Uniforms has no `huePath: f32` field — the hue-arc branch has no input, so a huePath:'increasing' config silently flat-lerps");
+
     const status = violations.length === 0 ? "pass" : "fail";
     writeGateArtifact(ARTIFACT, { generatedAt: snapshotStamp(), status, gate: "proof:aurora-wgsl-equivalence", facts, violations });
 
-    console.log("proof:aurora-wgsl-equivalence — the WGSL color twin matches the GLSL oracle to 1e-6 (AW.W7a)");
+    console.log("proof:aurora-wgsl-equivalence — the WGSL color twin matches the GLSL oracle to 1e-6 (AW.W7a + AX.W11 samplePalette)");
     console.log(`  (1) numeric 1e-6 (spec)   : ${facts.numericEquivalent ? "yes ✓" : "NO ✗"}`);
     console.log(`  (2) chunk exports WGSL    : ${facts.chunkExportsWgsl ? "yes ✓" : "NO ✗"}`);
     console.log(`  (2) twin splices the chunk: ${facts.twinSplicesChunk ? "yes ✓" : "NO ✗"}`);
     console.log(`  (2) no re-authored core   : ${facts.noReauthoredColorCore ? "yes ✓" : "NO ✗"}`);
+    console.log(`  (3) chunk exports ramp    : ${facts.chunkExportsRamp ? "yes ✓" : "NO ✗"}`);
+    console.log(`  (3) wgsl splices the ramp : ${facts.wgslSplicesRamp ? "yes ✓" : "NO ✗"}`);
+    console.log(`  (3) no flat-lerp ramp     : ${facts.noFlatLerpRamp ? "yes ✓" : "NO ✗"}`);
+    console.log(`  (3) huePath uniform carry : ${facts.wgslHasHuePathUniform ? "yes ✓" : "NO ✗"}`);
     if (!specGreen) console.log("\n--- vitest tail ---\n" + output.split("\n").slice(-25).join("\n"));
     if (violations.length) { console.log("\nVIOLATIONS:"); for (const v of violations) console.log(`  ✗ ${v}`); }
     console.log(`\n  status: ${status.toUpperCase()}   artefact: ${ARTIFACT.slice(ROOT.length + 1)}`);

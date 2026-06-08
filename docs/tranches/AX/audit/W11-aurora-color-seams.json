@@ -1,0 +1,92 @@
+{
+  "wave": "AX.W11",
+  "title": "Aurora color seams — OKLCh catch-light + the shared palette-ramp twin",
+  "base": "e32d944cf05c39553bb12c28b26f2072a50d62ad",
+  "headline": "Close the two OKLCh seam leaks the W5 migration missed: (1) OKLCh-derive aurora's warm-white catch-light off a shared warmCatchLight(L,C,h) /color helper (delete the eyeballed [1.0,0.95,0.88] literal); (2) HOIST the palette-ramp interpolation (smoothstep ease + huePath OKLab-rect-vs-OKLCh-hue-arc dispatch) into the shared procedural-color chunk as PALETTE_RAMP_GLSL/PALETTE_RAMP_WGSL twins both samplePalette ports splice — closing the W07 WGSL samplePalette gate hole (the flat-lerp-rainbow drift). Plus the planned->landed README/DESIGN sweep keyed off the registered gates. SEAM-LEVEL, NOT a migration redo (S4 note 7: the OKLCh core is genuinely landed).",
+  "liveRediagnosis": {
+    "ritual": "AX.W00 wave-open — code-level re-diagnosis confirmed at HEAD e32d944 before any edit; all three RED witnesses re-proven, not taken on the audit's word.",
+    "witness1_wgsl_samplePalette_incomplete_twin": {
+      "claim": "The WGSL samplePalette (aurora.wgsl.ts:140-152) does a plain oklabToLinearSrgb(mix(labA,labB,f)) with NO smoothstep ease and NO huePath branch — no huePath uniform at all. The GLSL samplePalette (composition.glsl.ts) smoothstep-eases + dispatches mixPaletteOklab/mixPaletteOklchArc on uHuePath. So a WebGPU huePath:'increasing' rainbow config silently flat-lerps; proof:aurora-wgsl-equivalence certifies ONLY the OETF/matrices/FBM chunk, NOT samplePalette — the gate hole.",
+      "confirmedAtHead": true,
+      "numericEvidence": "Reconstructed HEAD flat-lerp vs the GLSL oracle's smoothstep+arc ramp on a distant-hue (blue->yellow) linear stop pair at t in {0.25,0.5,0.75}: flat(smoothstep) path |delta| = 1.262e-1 (the missing ease); arc(huePath) path |delta| = 5.704e-1 (the entire missing hue-arc) — both >> 1e-6 (RED on BOTH huePath paths).",
+      "structuralEvidence": "git show e32d944:aurora.wgsl.ts — PALETTE_RAMP_WGSL splice absent, samplePaletteRamp call absent, `oklabToLinearSrgb(mix(labA, labB, f))` flat-lerp present, `huePath: f32` struct field absent; procedural-color.glsl.ts — PALETTE_RAMP_GLSL export absent."
+    },
+    "witness2_catchlight_srgb_literal": {
+      "claim": "Aurora's lightColor default was the raw RGB literal [1.0, 0.95, 0.88] (uniformBridge.ts:324) declared 'warm-white tint (linear)', fed to mediums/brush impasto as a linear multiplier with NO OKLCh derivation — while the blob's warmCream IS OKLCh-derived (metaball.frag.ts:359 oklabToLinearSrgb(oklchToOklab(vec3(0.97,0.03,radians(85.0))))).",
+      "confirmedAtHead": true,
+      "grepEvidence": "grep '1.0, 0.95, 0.88' uniformBridge.ts = 1 hit; grep 'warmCatchLight' src/composables/color/index.ts = 0 (no shared OKLCh catch-light helper existed)."
+    },
+    "witness3_readme_doc_lie": {
+      "claim": "The aurora/DESIGN/blob READMEs describe the DONE OKLCh migration (and the landed W4 painterly + W7 WebGPU + W8 interactive) as future 'planned' work.",
+      "confirmedAtHead": true,
+      "grepEvidence": "aurora/README.md = 6 'planned — AW' tags + 8 'planned (AW.Wn)' gate-table cells; goo-blob/README.md = 1 'planned — AW' disclaimer; aurora/DESIGN.md §10 = 2 STAGED deltas (Δ08/Δ09). Every cited gate IS registered in package.json AND its script exists AND passes GREEN (proof:aurora-oklch-interp + proof:aurora-derive-gamut + proof:aurora-impasto-relight + proof:aurora-vangogh-preset + proof:aurora-backend-fallback all PASS) — so the features genuinely landed and the 'planned' tags are doc-lies."
+    },
+    "specHypothesisMatch": "EXACT. The spec's foldsFindings (slice 7 F1 catch-light, F3 WGSL ramp gate hole, F0 README doc-lie) match the code at HEAD precisely. No divergence between hypothesis and reality."
+  },
+  "folds": [
+    {
+      "finding": "slice 7 F3 (major root) — the WGSL samplePalette is an incomplete color twin; the gate has a hole",
+      "rootCause": "The W5 palette-ramp interpolation (smoothstep ease + huePath OKLab-rect-vs-OKLCh-hue-arc dispatch) lived inline in aurora.frag.ts; the WGSL twin (aurora.wgsl.ts, AW.W7b) was a hand-transcribed flat OKLab lerp that never carried the ease or the hue-arc. The matrices-only proof:aurora-wgsl-equivalence could not see the ramp drift.",
+      "gestaltFix": "HOISTED interpolateHueTurns + mixPaletteOklab + mixPaletteOklchArc + a new smoothstep-eased samplePaletteRamp(a,b,tRaw,huePath) dispatcher into procedural-color.glsl.ts as GLSL+WGSL twins (PALETTE_RAMP_GLSL / PALETTE_RAMP_WGSL), the SAME two-copy-elimination pattern AV.W1 established for the OETF. Both samplePalette ports now SPLICE the shared ramp: composition.glsl.ts selects the bracketing stop pair + raw t -> samplePaletteRamp; aurora.wgsl.ts does the same on the storage-Field index + carries a huePath:f32 uniform (i32-cast in-shader). The ramp can NEVER drift between backends.",
+      "evidence": "procedural-color.glsl.ts (+PALETTE_RAMP_GLSL @:147, +PALETTE_RAMP_WGSL); aurora.frag.ts (inline 3 fns removed, ${PALETTE_RAMP_GLSL} spliced); composition.glsl.ts samplePalette -> samplePaletteRamp; aurora.wgsl.ts samplePalette splices ${PALETTE_RAMP_WGSL}+samplePaletteRamp, struct Uniforms +huePath:f32; uniformBridge.ts packGPUUniforms writes huePath @slot16, WGPU_UNIFORM_FLOATS 16->20 (vec4-aligned).",
+      "disposition": "ADDRESSED"
+    },
+    {
+      "finding": "slice 7 F1 (minor root) — the catch-light is an undisciplined sRGB literal",
+      "rootCause": "The uLightColor [1.0,0.95,0.88] literal predates the W5 OKLCh migration (it landed at AW.W4.2 impasto-relight) and was never folded into the OKLCh discipline — the only non-OKLCh light path in the engine.",
+      "gestaltFix": "Added warmCatchLight(L,C,hDeg) -> linear triple to the /color leaf (routes through the existing oklchToLinear Ottosson primitive; throws on a non-finite anchor — fail-explicit, no silent grey). Re-pointed aurora's lightColor default to warmCatchLight at the ratified AURORA_CATCH_LIGHT_ANCHOR (0.985, 0.0125, 77.5deg) — reproduces the prior [1.0,0.95,0.88] warm-white to <1e-3 linear (invisible). lightColor now accepts either a linear [r,g,b] triple OR an {L,C,h} OKLCh anchor (resolveLightColor handles both).",
+      "evidence": "src/composables/color/index.ts (+warmCatchLight); uniformBridge.ts (+AURORA_CATCH_LIGHT_ANCHOR, +resolveLightColor, lightColor default re-pointed); presets.ts (lightColor type extended to [r,g,b]|OklchStop); tests/composables/color/warm-catch-light.test.ts (3 assertions: prior-warm-white <1e-3, blob-anchor byte-equal via the same helper, throws on non-finite).",
+      "disposition": "ADDRESSED"
+    },
+    {
+      "finding": "slice 7 F0 (major root) — the README is a shipped doc-lie",
+      "rootCause": "The READMEs/DESIGN were authored describing the AW perfection plan as in-flight; the W4/W5/W7/W8 features all shipped + their gates landed, but the docs were never swept.",
+      "gestaltFix": "ONE editorial pass keyed off the registered gates: every (planned — AW.Wn) tag whose proof:Wn gate IS registered + PASSES flipped to 'landed, gated by proof:X'. aurora/README.md intro + W4 painterly block + the W5 color-notes block (the headline doc-lie) + the W7/W8 perf+interactivity blocks + the 8 gate-table 'planned'->'shipped' cells; DESIGN.md §10 STAGED->LANDED (Δ08/Δ09) + a new Δ10 for the W11 seam fix; blob/README.md disclaimer. Stale source line refs re-pointed (the OETF close :339->:384, the dither :341->:388, the domainWarp :206->:348, the post block :327-343->:372-388, the broken-color/saturate refs). Added the 'warm low-intensity page-backdrop' use case (slice 6 / words consumer).",
+      "evidence": "aurora/README.md, aurora/DESIGN.md, goo-blob/README.md — 0 surviving (planned — AW)/(planned (AW.Wn)) tags whose gate is registered; 0 banned STYLE words introduced by the sweep (the 2 pre-existing 'robust' occurrences in untouched paragraphs are out of W11 scope).",
+      "disposition": "ADDRESSED"
+    }
+  ],
+  "ratify": {
+    "catchLightAnchor": {
+      "decision": "AURORA_CATCH_LIGHT_ANCHOR = {L:0.985, C:0.0125, h:77.5}. The spec demanded the helper reproduce BOTH the prior [1.0,0.95,0.88] warm-white AND the blob's warmCream (0.97,0.03,85) anchor — but those two land at DIFFERENT linear triples ([1.0,0.95,0.88] vs [0.9955,0.9055,0.7371]; the blob cream is ~0.14 bluer-deficient). The VISUAL-TRUTH binding constraint ('the aurora relight reads the SAME warm-white, no visible shift') is the dominant one, so the aurora anchor reproduces the prior literal (<1e-3 linear). The CROSS-SURFACE UNIFICATION is the shared DERIVATION (one warmCatchLight helper), not one hardcoded anchor: aurora passes its anchor, W15's blob passes (0.97,0.03,85). The helper is parameterized warmCatchLight(L,C,hDeg) for exactly this. RATIFIED in-wave per the spec's derivation rule ('pick the anchor that lands the same perceptual warm-white').",
+      "status": "RATIFIED"
+    },
+    "w15WarmCreamOrdering": {
+      "decision": "W11 does NOT touch metaball.frag.ts (the blob warmCream re-route is W15). W11 only READS :359 as the OKLCh anchor reference + proves warmCatchLight(0.97,0.03,85) is byte-identical to oklchToLinear({L:0.97,C:0.03,h:85}) (the test asserts delta==0), so W15 inherits a true drop-in. W15's dependsOn += AX.W11.",
+      "status": "RATIFIED (slice 29 disjointness — option (a))"
+    },
+    "val1DeriveColorCarry": {
+      "decision": "W11 does NOT ship the public deriveAuroraFromColor surface (the AS-P2 VAL-1 highest-stakes kill-gated chronic) and does NOT pre-kill it. The public derive-color door ships ONLY when value.js K.W4 lands the 2nd live consumer, ELSE value.js executes the VAL-1 KILL. Caveat recorded: 'designed != adopted; speedtest hand-rolls the equivalent but is not the published 2nd consumer.' Carried to W10/the W34 cross-repo annex, not resolved in the W11 color-seam scope.",
+      "status": "CARRIED (kill-gate trigger recorded)"
+    },
+    "routedElsewhere": {
+      "F2_deriveScene_resolveAtoms_excision": "AX.W10 (the derive-consolidate / atoms-door wave)",
+      "F4_temperature_pole_model": "AX.W10 (folded into the single derive door)",
+      "wgsl_paints_only_after_W14": "The WGSL samplePalette does not PAINT by default until W14 flips WEBGPU_PARITY; W11 fixes ramp CORRECTNESS + the gate hole so W14 inherits a parity-true ramp."
+    }
+  },
+  "greenMeasurements": {
+    "samplePaletteRamp_1e6_both_huePath_paths": "proof:aurora-wgsl-equivalence EXTENDED (arm 3) — the WGSL+GLSL TS ports' samplePaletteRamp agree to <1e-6 over a distant-hue stop pair at t in {0.25,0.5,0.75} across huePath flat (0/1, smoothstep OKLab-rect) AND arc (2/3, OKLCh hue-arc). The huePath carry is load-bearing: arc-vs-flat midpoint delta = 0.27 (> 0.01, NOT redundant with the ease). All 9 backend-equivalence.test.ts assertions GREEN (6 prior + 3 new).",
+    "catchLight_same_warm_white_delta": "warmCatchLight(0.985,0.0125,77.5) vs the prior [1.0,0.95,0.88]: max per-channel |delta| < 1e-3 linear (imperceptible, <0.3/255 gamma). warmCatchLight(0.97,0.03,85) == oklchToLinear({L:0.97,C:0.03,h:85}) exactly (the W15 drop-in witness). 3/3 warm-catch-light.test.ts GREEN.",
+    "readmeCurrency": "0 surviving (planned — AW.Wn) tags whose proof:Wn gate is registered, across aurora/README.md + DESIGN.md + blob/README.md. 0 banned STYLE words sweep-introduced.",
+    "gatesGreen": [
+      "proof:aurora-wgsl-equivalence (extended) — PASS",
+      "proof:aurora-oklch-interp (grep redirected to follow the hoisted ramp) — PASS",
+      "proof:single-color-core — PASS (warmCatchLight routes through value.js; 0 re-definitions)",
+      "proof:shader-shared-source — PASS",
+      "proof:webgpu-substrate-single — PASS (WGSL still splices the chunk)",
+      "proof:aurora-webgpu-render — PASS 3/0/0 (the REAL aurora.wgsl.ts + packGPUUniforms render on a device — the huePath:f32 struct + the 20-float buffer compile + paint)",
+      "proof:aurora-backend-fallback — PASS",
+      "proof:aurora-space-gamma — PASS",
+      "proof:blob-color-equivalence — PASS",
+      "proof:design-md-current — PASS",
+      "proof:no-test-in-src — PASS",
+      "proof:gate-script-parity — PASS",
+      "typecheck — GREEN"
+    ]
+  },
+  "divergences": [
+    "proof-aurora-oklch-interp.mjs (OUT of W11 FileBounds) had two grep assertions tied to the PRE-hoist code locations (mixPaletteOklab in composition.glsl.ts; interpolateHueTurns+fract(r) in aurora.frag.ts). The in-bounds hoist the spec MANDATED moved those bodies into the shared chunk + replaced the inline source with a ${PALETTE_RAMP_GLSL} splice token, so the greps went RED on a structurally-correct hoist. FIXED in-place: redirected the greps to FOLLOW the code (the chunk owns mixPaletteOklab+interpolateHueTurns; composition calls samplePaletteRamp; aurora.frag splices the ramp). This is a sibling-gate consistency fix (the gate's SEMANTIC assertion — the OKLab interp path + the turns-domain hue port are present — is preserved), NOT a scope expansion. Recorded per AX §6 autonomous-resilience (idiomatic in-bounds gestalt fix companion to a mandated hoist)."
+  ],
+  "liveVerifyNeeded": "VISUAL-TRUTH live audit (orchestrator π-lane — real Metal GPU, NOT headless): /substrates/aurora at >=3 viewports (375x667 / 1280x800 / 1440x900) light+dark. (1) WebGL2-vs-WebGPU palette-ramp parity on a huePath:'increasing' rainbow config with WEBGPU_PARITY forced true for the audit — confirm the WebGPU twin now arcs+eases IDENTICALLY to the WebGL2 reference (the flat-lerp-rainbow BEFORE vs the arc-eased AFTER), then WEBGPU_PARITY=false confirms the shipped WebGL2 ramp unchanged. (2) The catch-light reads the SAME warm-white — the aurora impasto relight (mediums/brush consumers of uLightColor) paints the warm-cream sheen with no perceptible shift from the OKLCh re-derivation. (3) No visual occlusion under the demo chrome at every viewport. Capture as paired-π BEFORE/AFTER + DELTA."
+}

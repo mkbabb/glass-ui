@@ -7,25 +7,18 @@
 // shader string is character-equivalent to the prior hand-inlined source.
 export const AURORA_COMPOSITION_GLSL = /* glsl */ `// ── Palette LUT (W5 — OKLCh/OKLab interpolation) ──────────────────────────────
 // The endpoints stay CPU-baked to LINEAR sRGB (the Aras precompute pattern); only
-// the BETWEEN-endpoint interpolation moves to perceptual space. OKLab-rectangular
-// for the default ramp (holds chroma, no grey midpoint); the OKLCh hue-arc only on
-// uHuePath increasing/decreasing (deliberate rainbow travel). The prior linear
-// mix() (the muddy-midtone source) is GONE.
+// the BETWEEN-endpoint interpolation runs in perceptual space. AX.W11 — the ramp
+// itself (the smoothstep ease + the OKLab-rectangular-vs-OKLCh-hue-arc dispatch on
+// uHuePath) is the shared samplePaletteRamp from procedural-color.glsl, the SAME
+// source the WebGPU twin splices; samplePalette here only selects the bracketing
+// stop pair + the raw inter-stop t and hands them to the shared ramp.
 vec3 samplePalette(float id) {
   id = clamp(id, 0.0, 1.0);
   float scaled = id * float(uStopCount - 1);
   int i0 = int(floor(scaled));
   int i1 = min(i0 + 1, uStopCount - 1);
   float t = fract(scaled);
-  t = smoothstep(0.0, 1.0, t);
-  vec3 a = uPalette[i0];
-  vec3 b = uPalette[i1];
-  // increasing(2)/decreasing(3) request the OKLCh hue-arc (rainbow sweep); every
-  // other method takes the OKLab-rectangular straight line (no hue detour).
-  if (uHuePath == 2 || uHuePath == 3) {
-    return mixPaletteOklchArc(a, b, t, uHuePath);
-  }
-  return mixPaletteOklab(a, b, t);
+  return samplePaletteRamp(uPalette[i0], uPalette[i1], t, uHuePath);
 }
 
 // ── Nuclei field ──────────────────────────────────────────────────────────

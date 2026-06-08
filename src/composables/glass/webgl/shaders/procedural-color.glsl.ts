@@ -133,6 +133,76 @@ vec3 oklchToOklab(vec3 lch) {
     return vec3(lch.x, lch.y * cos(lch.z), lch.y * sin(lch.z));
 }`;
 
+// ── Palette ramp (AX.W11 — single-sourced GLSL+WGSL twin) ────────────────────
+// The stop-to-stop interpolation: a smoothstep ease on the inter-stop parameter,
+// then a huePath dispatch — OKLab-rectangular (chroma-holding, no grey midpoint)
+// for the default/adjacent ramp, the OKLCh hue-arc (deliberate rainbow travel)
+// only when huePath requests increasing(2)/decreasing(3). The W5 migration landed
+// this in aurora's composition stage (GLSL) but the WGSL twin (aurora.wgsl.ts)
+// flat-lerped it — a backend drift the matrices-only equivalence gate could not
+// see. Hoisted here as a twin so both samplePalette ports SPLICE one source and
+// the ramp can NEVER drift between backends (the AV.W1 two-copy-elimination
+// pattern, applied to the ramp). Depends on OKLCH_MATRICES (the space fns) +
+// PI being in scope (the consumer splices the matrices chunk + defines PI first).
+export const PALETTE_RAMP_GLSL = /* glsl */ `
+// value.js interpolateHue in the NORMALIZED-TURNS domain (h_rad/TAU → turns, the
+// exact .5/+1.0 branch per method, fract() wrap, *TAU back). A radians-native port
+// (PI thresholds / +TAU wrap) diverges 180° at the antipode. methods: 0 shorter,
+// 1 longer, 2 increasing, 3 decreasing.
+float interpolateHueTurns(float h0, float h1, float t, int method) {
+  float TAU = 2.0 * PI;
+  float a = h0 / TAU;
+  float b = h1 / TAU;
+  float i = b - a;
+  if (method == 0) {              // shorter
+    if (i > 0.5) a += 1.0; else if (i < -0.5) b += 1.0;
+  } else if (method == 1) {       // longer
+    if (i > 0.0 && i < 0.5) a += 1.0; else if (i > -0.5 && i <= 0.0) b += 1.0;
+  } else if (method == 2) {       // increasing
+    if (i < 0.0) b += 1.0;
+  } else {                        // decreasing
+    if (i > 0.0) a += 1.0;
+  }
+  float r = a + t * (b - a);
+  r = fract(r);                   // (r % 1 + 1) % 1 — fract is non-negative in GLSL
+  return r * TAU;                 // back to radians
+}
+
+// Linear-sRGB endpoint pair → OKLab-rectangular interpolation → linear sRGB. Holds
+// chroma across the ramp (no grey midpoint). The default/shorter ramp path.
+vec3 mixPaletteOklab(vec3 linA, vec3 linB, float t) {
+  vec3 labA = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * linA) * pow(abs(LINEAR_SRGB_TO_LMS * linA), vec3(1.0 / 3.0)));
+  vec3 labB = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * linB) * pow(abs(LINEAR_SRGB_TO_LMS * linB), vec3(1.0 / 3.0)));
+  vec3 lab = mix(labA, labB, t);
+  return oklabToLinearSrgb(lab);
+}
+
+// Linear-sRGB endpoint pair → OKLCh interpolation along the huePath arc → linear
+// sRGB. L and C lerp; H walks the chosen arc. The deliberate-rainbow path.
+vec3 mixPaletteOklchArc(vec3 linA, vec3 linB, float t, int method) {
+  vec3 labA = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * linA) * pow(abs(LINEAR_SRGB_TO_LMS * linA), vec3(1.0 / 3.0)));
+  vec3 labB = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * linB) * pow(abs(LINEAR_SRGB_TO_LMS * linB), vec3(1.0 / 3.0)));
+  vec3 lchA = oklabToOklch(labA);
+  vec3 lchB = oklabToOklch(labB);
+  float L = mix(lchA.x, lchB.x, t);
+  float C = mix(lchA.y, lchB.y, t);
+  float H = interpolateHueTurns(lchA.z, lchB.z, t, method);
+  return oklabToLinearSrgb(oklchToOklab(vec3(L, C, H)));
+}
+
+// The ramp dispatcher both samplePalette ports splice. tRaw is the raw inter-stop
+// parameter [0,1]; the smoothstep ease + the huePath branch live HERE so the GLSL
+// and WGSL ramps are character-for-character one source. increasing(2)/decreasing(3)
+// take the OKLCh hue-arc (rainbow sweep); every other method takes the OKLab-
+// rectangular straight line (no hue detour).
+vec3 samplePaletteRamp(vec3 a, vec3 b, float tRaw, int huePath) {
+  float t = smoothstep(0.0, 1.0, tRaw);
+  if (huePath == 2 || huePath == 3) {
+    return mixPaletteOklchArc(a, b, t, huePath);
+  }
+  return mixPaletteOklab(a, b, t);
+}`;
+
 // ════════════════════════════════════════════════════════════════════════════
 // AW.W7a — the WGSL TWIN of the shared color/noise chunk.
 //
@@ -219,4 +289,54 @@ fn oklabToOklch(lab: vec3f) -> vec3f {
 }
 fn oklchToOklab(lch: vec3f) -> vec3f {
     return vec3f(lch.x, lch.y * cos(lch.z), lch.y * sin(lch.z));
+}`;
+
+// The palette ramp WGSL twin (AX.W11) — the EXACT twin of PALETTE_RAMP_GLSL. WGSL
+// mix/smoothstep/sign/pow/abs operate componentwise on vec3f identically to GLSL, so
+// the math is line-for-line. Consumes the OKLCH_MATRICES_WGSL space fns + PI (define
+// both before this chunk). The WebGPU samplePalette splices this so its ramp can never
+// diverge from the GLSL oracle — proof:aurora-wgsl-equivalence certifies it to 1e-6.
+export const PALETTE_RAMP_WGSL = /* wgsl */ `
+fn interpolateHueTurns(h0: f32, h1: f32, t: f32, method: i32) -> f32 {
+  let TAU = 2.0 * PI;
+  var a = h0 / TAU;
+  var b = h1 / TAU;
+  let i = b - a;
+  if (method == 0) {              // shorter
+    if (i > 0.5) { a = a + 1.0; } else if (i < -0.5) { b = b + 1.0; }
+  } else if (method == 1) {       // longer
+    if (i > 0.0 && i < 0.5) { a = a + 1.0; } else if (i > -0.5 && i <= 0.0) { b = b + 1.0; }
+  } else if (method == 2) {       // increasing
+    if (i < 0.0) { b = b + 1.0; }
+  } else {                        // decreasing
+    if (i > 0.0) { a = a + 1.0; }
+  }
+  let r = fract(a + t * (b - a));
+  return r * TAU;
+}
+
+fn mixPaletteOklab(linA: vec3f, linB: vec3f, t: f32) -> vec3f {
+  let labA = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * linA) * pow(abs(LINEAR_SRGB_TO_LMS * linA), vec3f(1.0 / 3.0)));
+  let labB = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * linB) * pow(abs(LINEAR_SRGB_TO_LMS * linB), vec3f(1.0 / 3.0)));
+  let lab = mix(labA, labB, vec3f(t));
+  return oklabToLinearSrgb(lab);
+}
+
+fn mixPaletteOklchArc(linA: vec3f, linB: vec3f, t: f32, method: i32) -> vec3f {
+  let labA = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * linA) * pow(abs(LINEAR_SRGB_TO_LMS * linA), vec3f(1.0 / 3.0)));
+  let labB = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * linB) * pow(abs(LINEAR_SRGB_TO_LMS * linB), vec3f(1.0 / 3.0)));
+  let lchA = oklabToOklch(labA);
+  let lchB = oklabToOklch(labB);
+  let L = mix(lchA.x, lchB.x, t);
+  let C = mix(lchA.y, lchB.y, t);
+  let H = interpolateHueTurns(lchA.z, lchB.z, t, method);
+  return oklabToLinearSrgb(oklchToOklab(vec3f(L, C, H)));
+}
+
+fn samplePaletteRamp(a: vec3f, b: vec3f, tRaw: f32, huePath: i32) -> vec3f {
+  let t = smoothstep(0.0, 1.0, tRaw);
+  if (huePath == 2 || huePath == 3) {
+    return mixPaletteOklchArc(a, b, t, huePath);
+  }
+  return mixPaletteOklab(a, b, t);
 }`;

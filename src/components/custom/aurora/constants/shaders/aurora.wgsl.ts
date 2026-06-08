@@ -34,6 +34,7 @@ import {
     OETF_WGSL,
     OKLCH_MATRICES_WGSL,
     FBM_ROT_WGSL,
+    PALETTE_RAMP_WGSL,
 } from "../../../../../composables/glass/webgl/shaders/procedural-color.glsl";
 
 // The uniform/storage split layout. The bridge's WebGPU write path (uniformBridge.ts)
@@ -89,6 +90,11 @@ struct Uniforms {
   saturation: f32,
   paperGrain: f32,
   alpha: f32,
+  // AX.W11 — the huePath enum (f32-packed, i32()-cast in samplePalette) carries the
+  // shared ramp's OKLab-rectangular-vs-OKLCh-hue-arc dispatch into the WebGPU twin so
+  // a huePath:'increasing' rainbow config arcs identically to the WebGL2 oracle. The
+  // CPU pad keeps the buffer vec4-aligned (WGPU_UNIFORM_FLOATS rounds to 20).
+  huePath: f32,
 };
 
 // The dynamically-indexed arrays — bound var<storage, read> (AX.W07 1b). A runtime
@@ -107,6 +113,7 @@ struct Field {
 ${OETF_WGSL}
 ${FBM_ROT_WGSL}
 ${OKLCH_MATRICES_WGSL}
+${PALETTE_RAMP_WGSL}
 
 fn hash21(p0: vec2f) -> f32 {
   var p = fract(p0 * vec2f(123.34, 456.21));
@@ -138,17 +145,19 @@ fn fbm(p0: vec2f) -> f32 {
 }
 
 fn samplePalette(id: f32) -> vec3f {
-  // Nearest-pair OKLab interpolation across the stops (mirrors the GLSL default ramp).
+  // AX.W11 — splice the SHARED samplePaletteRamp (the smoothstep ease + the OKLab-
+  // rectangular-vs-OKLCh-hue-arc huePath dispatch), the EXACT twin the GLSL oracle
+  // splices. The body here only selects the bracketing stop pair + the raw inter-stop
+  // t (the W07 storage-Field dynamic index), then hands them to the shared ramp.
   let n = i32(U.stopCount);            // AX.W07 1a — i32()-cast the f32-packed count.
   if (n <= 1) { return F.palette[0].xyz; }
   let t = clamp(id, 0.0, 1.0) * f32(n - 1);
   let i0 = i32(floor(t));
   let i1 = min(i0 + 1, n - 1);
   let f = t - f32(i0);
-  // AX.W07 1b — read the palette from the storage Field (dynamic i0/i1 index).
-  let labA = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * F.palette[i0].xyz) * pow(abs(LINEAR_SRGB_TO_LMS * F.palette[i0].xyz), vec3f(1.0 / 3.0)));
-  let labB = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * F.palette[i1].xyz) * pow(abs(LINEAR_SRGB_TO_LMS * F.palette[i1].xyz), vec3f(1.0 / 3.0)));
-  return oklabToLinearSrgb(mix(labA, labB, f));
+  // AX.W07 1b — read the palette from the storage Field (dynamic i0/i1 index);
+  // AX.W11 — i32()-cast the f32-packed huePath enum (parity with the count casts).
+  return samplePaletteRamp(F.palette[i0].xyz, F.palette[i1].xyz, f, i32(U.huePath));
 }
 
 fn domainWarp(p: vec2f, t: f32) -> vec2f {

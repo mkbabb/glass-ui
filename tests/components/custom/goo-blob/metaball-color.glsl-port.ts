@@ -162,6 +162,94 @@ export function clamp3(c: Vec3): Vec3 {
     return [clamp01(c[0]), clamp01(c[1]), clamp01(c[2])];
 }
 
+// ── The palette ramp (mirror PALETTE_RAMP_GLSL — AX.W11; the GLSL ORACLE) ──
+// Line-for-line with the shared procedural-color chunk's GLSL ramp. This is the
+// oracle the WGSL port's samplePaletteRamp is asserted against to 1e-6 (the
+// proof:aurora-wgsl-equivalence samplePalette gate-hole close).
+
+function smoothstep01(x: number): number {
+    const t = Math.min(1, Math.max(0, x));
+    return t * t * (3 - 2 * t);
+}
+
+// LINEAR sRGB → raw OKLab (cbrt-LMS on already-linear stops; the palette is CPU-baked
+// to linear so the ramp skips the OETF — mirrors the GLSL mixPalette* bodies).
+function oklabFromLinear(lin: Vec3): Vec3 {
+    const lms = mul3(LINEAR_SRGB_TO_LMS, lin);
+    const lmsCbrt: Vec3 = [
+        Math.sign(lms[0]) * Math.pow(Math.abs(lms[0]), 1 / 3),
+        Math.sign(lms[1]) * Math.pow(Math.abs(lms[1]), 1 / 3),
+        Math.sign(lms[2]) * Math.pow(Math.abs(lms[2]), 1 / 3),
+    ];
+    return mul3(LMS_TO_OKLAB, lmsCbrt);
+}
+
+export function interpolateHueTurns(
+    h0: number,
+    h1: number,
+    t: number,
+    method: number,
+): number {
+    const TAU = 2 * PI;
+    let a = h0 / TAU;
+    let b = h1 / TAU;
+    const i = b - a;
+    if (method === 0) {
+        if (i > 0.5) a += 1.0;
+        else if (i < -0.5) b += 1.0;
+    } else if (method === 1) {
+        if (i > 0.0 && i < 0.5) a += 1.0;
+        else if (i > -0.5 && i <= 0.0) b += 1.0;
+    } else if (method === 2) {
+        if (i < 0.0) b += 1.0;
+    } else {
+        if (i > 0.0) a += 1.0;
+    }
+    const r = a + t * (b - a);
+    const frac = r - Math.floor(r); // GLSL fract — non-negative
+    return frac * TAU;
+}
+
+export function mixPaletteOklab(linA: Vec3, linB: Vec3, t: number): Vec3 {
+    const labA = oklabFromLinear(linA);
+    const labB = oklabFromLinear(linB);
+    const lab: Vec3 = [
+        labA[0] + (labB[0] - labA[0]) * t,
+        labA[1] + (labB[1] - labA[1]) * t,
+        labA[2] + (labB[2] - labA[2]) * t,
+    ];
+    return oklabToLinearSrgb(lab);
+}
+
+export function mixPaletteOklchArc(
+    linA: Vec3,
+    linB: Vec3,
+    t: number,
+    method: number,
+): Vec3 {
+    const labA = oklabFromLinear(linA);
+    const labB = oklabFromLinear(linB);
+    const lchA = oklabToOklch(labA);
+    const lchB = oklabToOklch(labB);
+    const L = lchA[0] + (lchB[0] - lchA[0]) * t;
+    const C = lchA[1] + (lchB[1] - lchA[1]) * t;
+    const H = interpolateHueTurns(lchA[2], lchB[2], t, method);
+    return oklabToLinearSrgb(oklchToOklab([L, C, H]));
+}
+
+export function samplePaletteRamp(
+    a: Vec3,
+    b: Vec3,
+    tRaw: number,
+    huePath: number,
+): Vec3 {
+    const t = smoothstep01(tRaw);
+    if (huePath === 2 || huePath === 3) {
+        return mixPaletteOklchArc(a, b, t, huePath);
+    }
+    return mixPaletteOklab(a, b, t);
+}
+
 // ── W11 iridescence + fake-SSS (OKLCh modifications mirroring metaball.frag.ts) ──
 
 const TWO_PI = 2 * PI;

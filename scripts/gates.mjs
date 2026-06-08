@@ -282,7 +282,7 @@ export const GATES = [
         id: "proof:aurora-wgsl-equivalence",
         cmd: "proof:aurora-wgsl-equivalence",
         tags: ["local", "ci"],
-        note: "AW.W7a — the WGSL color/noise twin (OETF_WGSL + OKLCH_MATRICES_WGSL + FBM_ROT_WGSL) matches its GLSL twin to 1e-6 via the hand-transcribed WGSL→TS port asserted against the EXISTING GLSL oracle (metaball-color.glsl-port.ts; never a new oracle) over the asymmetric witness #3a7bd5, AND aurora.wgsl.ts SPLICES the shared chunk's WGSL exports rather than re-authoring the OETF/matrices inline. Bite: perturb a WGSL matrix/OETF constant → the 1e-6 equivalence REDs; re-author the WGSL OETF inline → the splice arm REDs",
+        note: "AW.W7a + AX.W11 — the WGSL color/noise twin (OETF_WGSL + OKLCH_MATRICES_WGSL + FBM_ROT_WGSL + PALETTE_RAMP_WGSL) matches its GLSL twin to 1e-6 via the hand-transcribed WGSL→TS ports asserted against the EXISTING GLSL oracle (metaball-color.glsl-port.ts; never a new oracle) over the asymmetric witness #3a7bd5 AND the samplePaletteRamp across huePath modes (flat OKLab-rect + the OKLCh hue-arc) at t∈{0.25,0.5,0.75}, AND aurora.wgsl.ts SPLICES the shared chunk's WGSL exports (incl. PALETTE_RAMP_WGSL + samplePaletteRamp + the huePath:f32 uniform) rather than re-authoring/flat-lerping the ramp. Bite: perturb a WGSL matrix/OETF constant → the 1e-6 equivalence REDs; re-author the WGSL OETF inline OR revert samplePalette to the flat oklabToLinearSrgb(mix(labA,labB,f)) → the splice arm REDs",
     },
     {
         id: "proof:aurora-backend-fallback",

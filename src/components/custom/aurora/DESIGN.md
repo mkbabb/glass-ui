@@ -263,11 +263,10 @@ The aurora SFC + runtime + `useAurora` ride the shared `useWebGLCanvas` substrat
 
 ## 10. Spec deltas (v4.1 → v5.0)
 
-The post-AW cut. Each delta is tagged **LANDED** (in the aurora source at the
-v5.0 base) or **STAGED** (the forward contract the README marks `(planned —
-AW.W*)`; the design-of-record documents it so the architecture is whole and the
-W4/W7 implementation lands against a current spec, not an aspirational shipped
-claim).
+The post-AW cut. Every delta is **LANDED** in the aurora source and gated — the W4
+painterly + W5 color + W7 WebGPU arms all shipped (the W7 WGSL twin is gated OFF by
+default behind `WEBGPU_PARITY` until the W14 multi-pass finalize). Each delta names the
+proof gate that machine-locks it.
 
 - **Δ07 — Shared OKLCh color source (AW.W5, LANDED).** The GPU-side OKLCh math
   moved out of an aurora-local copy into the SHARED
@@ -282,7 +281,7 @@ claim).
   `deriveAurora` palette front door (the whole-scene derive is the `resolveAtoms`
   atoms door — AX.W10 retired the parallel seed+mood door). (§7 + §9 reflect this.)
 
-- **Δ08 — Painterly mediums + structure-tensor orientation (AW.W4, STAGED).**
+- **Δ08 — Painterly mediums + structure-tensor orientation (AW.W4, LANDED).**
   The energy-graded **van-Gogh atomic-stroke** medium (tensor strokes + impasto
   + OKLCh per-stroke jitter), the per-pixel **structure-tensor / ETF**
   orientation field driving `strokeOrient: "flow" | "tensor"` (strokes follow
@@ -292,7 +291,8 @@ claim).
   WebGL2 single-pass path inside `profile:budget`; the Gaussian-smoothed
   multi-tap tensor is the Δ09 WebGPU scope. (§2.4 reflects the axis names.)
 
-- **Δ09 — WebGPU multi-pass relaxation of invariant 8 (AW.W7, STAGED).** The
+- **Δ09 — WebGPU multi-pass relaxation of invariant 8 (AW.W7, LANDED — gated OFF
+  by default until W14).** The
   HINGE wave that relaxes the single-pass constraint *additively, on the WebGPU
   branch only*: a `createGPUCanvas` substrate behind `navigator.gpu`, a
   hand-written WGSL color/noise twin gated to its GLSL twin at 1e-6
@@ -304,3 +304,17 @@ claim).
   ENHANCEMENT, not a violated invariant. (§2 invariant 8 + §3 reflect the
   re-statement.) Hand-written WGSL — no Three.js/TSL (the zero-dep posture
   survives).
+
+- **Δ10 — Color-seam single-sourcing (AX.W11, LANDED).** Two OKLCh seam leaks the
+  W5 migration left closed: (1) the **catch-light** (`lightColor`) is OKLCh-derived
+  off the shared `warmCatchLight(L,C,h)` `/color` helper at the `(0.985, 0.0125,
+  77.5°)` anchor — perceptually the prior eyeballed `[1.0,0.95,0.88]` warm-white, now
+  on the OKLCh core (the blob's `warmCream` re-routes onto the SAME helper at its own
+  `(0.97, 0.03, 85°)` anchor in W15). (2) The **palette ramp** (the smoothstep ease +
+  the OKLab-rect-vs-OKLCh-hue-arc huePath dispatch) is HOISTED to the shared
+  `procedural-color.glsl` chunk as `PALETTE_RAMP_GLSL` / `PALETTE_RAMP_WGSL` twins both
+  `samplePalette` ports splice — so the ramp can never drift between the WebGL2 and
+  WebGPU backends. The WGSL `samplePalette` (gated OFF until W14) is now parity-true:
+  it splices the shared ramp + carries the `huePath` uniform. Gated by
+  `proof:aurora-wgsl-equivalence` (extended to certify `samplePaletteRamp` to 1e-6
+  across the huePath modes).

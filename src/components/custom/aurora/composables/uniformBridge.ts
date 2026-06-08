@@ -17,6 +17,8 @@
  */
 
 import { flattenPalette } from "./color";
+import { warmCatchLight } from "../../../../composables/color";
+import type { OklchStop } from "../../../../composables/color";
 import type { UniformLocations } from "./glSetup";
 import type { CursorState } from "./cursorModel";
 import {
@@ -89,6 +91,34 @@ export const STROKE_MODE_ID = {
     chunky: 3,
 } as const satisfies Record<Exclude<StrokeMode, "crayon">, number>;
 
+// AX.W11 — the aurora catch-light OKLCh anchor. The `(0.985, 0.0125, 77.5°)` anchor
+// reproduces the prior eyeballed `[1.0, 0.95, 0.88]` warm-white to <1e-3 linear (so
+// the live impasto relight reads identically — the seam fix is invisible), now on the
+// shared OKLCh core (`warmCatchLight`) instead of an undisciplined sRGB-ish literal.
+// The blob's `warmCream` `(0.97, 0.03, 85°)` is its OWN anchor (W15 re-routes it
+// through the SAME helper) — one OKLCh derive, each surface its principled anchor.
+export const AURORA_CATCH_LIGHT_ANCHOR: OklchStop = { L: 0.985, C: 0.0125, h: 77.5 };
+
+/**
+ * Resolve a config's `lightColor` to a LINEAR-light `[r,g,b]` triple. Accepts either
+ * a raw linear triple (the array form, passed through) OR an `{L,C,h}` OKLCh anchor
+ * (derived through the shared `warmCatchLight` helper). Omitted = the canonical aurora
+ * warm-white from `AURORA_CATCH_LIGHT_ANCHOR`.
+ */
+export function resolveLightColor(
+    lightColor: [number, number, number] | OklchStop | undefined,
+): [number, number, number] {
+    if (lightColor === undefined) {
+        return warmCatchLight(
+            AURORA_CATCH_LIGHT_ANCHOR.L,
+            AURORA_CATCH_LIGHT_ANCHOR.C,
+            AURORA_CATCH_LIGHT_ANCHOR.h,
+        );
+    }
+    if (Array.isArray(lightColor)) return lightColor;
+    return warmCatchLight(lightColor.L, lightColor.C, lightColor.h);
+}
+
 /**
  * The effective `uMedium` int for a config. The only non-identity case: a
  * `medium: "oil"` + `strokeMode: "crayon"` config selects the crayon PEER
@@ -136,7 +166,9 @@ export function resolveStrokeOrientId(cfg: AuroraConfig): number {
 //     ONLY legal address space for a runtime index on Metal, AX.W07 1b): the palette + the
 //     two nuclei vec4 arrays. std140 aligns each vec4f to 16 bytes — identical in storage.
 // The two float counts MUST match the WGSL `struct Uniforms` + `struct Field`.
-export const WGPU_UNIFORM_FLOATS = 16; // time…alpha (16 floats, vec4-aligned)
+// time…alpha (16) + huePath (1, AX.W11) = 17 active floats; rounded to 20 (5 vec4s)
+// so the uniform buffer stays vec4-aligned (pad slots 17..19 are written 0).
+export const WGPU_UNIFORM_FLOATS = 20;
 export const WGPU_FIELD_FLOATS = MAX_STOPS * 4 + MAX_NUCLEI * 4 * 2;
 
 /**
@@ -173,6 +205,11 @@ export function packGPUUniforms(
     uniformOut[13] = cfg.saturation;
     uniformOut[14] = cfg.paperGrain;
     uniformOut[15] = cfg.alpha;
+    // AX.W11 — the huePath enum (f32-packed; the shader i32()-casts it). Default
+    // `shorter` (0) = the OKLab-rectangular ramp, so an unset config keeps the
+    // muddy-midtone-free default. Slots 16..19 round the buffer to a 5-vec4 stride;
+    // 17..19 stay 0 from the fill above.
+    uniformOut[16] = HUE_PATH_ID[cfg.huePath ?? "shorter"];
     // Storage Field — palette (vec4 array — .xyz = linear-sRGB; .w pad). flattenPalette
     // gives linear.
     const palLin = flattenPalette(cfg.palette, MAX_STOPS);
@@ -321,7 +358,11 @@ export function createUniformBridge(
         // re-normalizes uLightDir. AW.W8 overwrites uLightDir per-frame from the cursor.
         {
             const ld = cfg.lightDir ?? [-0.5, 0.6, 0.62];
-            const lc = cfg.lightColor ?? [1.0, 0.95, 0.88];
+            // AX.W11 — the catch-light is OKLCh-derived (the warmCatchLight helper) off
+            // the shared /color leaf, not an eyeballed [1.0,0.95,0.88] literal; the anchor
+            // reproduces the prior warm-white perceptually. A consumer may author it as an
+            // {L,C,h} OKLCh anchor or a raw linear triple — resolveLightColor handles both.
+            const lc = resolveLightColor(cfg.lightColor);
             gl.uniform3f(U.uLightDir, ld[0], ld[1], ld[2]);
             gl.uniform3f(U.uLightColor, lc[0], lc[1], lc[2]);
         }
