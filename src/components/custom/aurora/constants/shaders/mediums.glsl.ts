@@ -211,6 +211,14 @@ struct StrokeProfile {
                      // field, NOT a buried uMedium==5 bestOil branch (slice 8 F0).
   float impastoFloor;// AX.W13 — the per-stroke height-crown floor (0.4 oil falloff;
                      // 1.0 van-Gogh FULL-height crown so each dab catches its glint).
+  float densityFill; // AX.W13 — layer-4 fill-dab density. Oil/oil-pastel fill the
+                     // bald spots (0.95, full coverage); van-Gogh sets it LOW so the
+                     // sparse atomic dabs keep their visible inter-stroke ground gaps
+                     // (the atomicity read — a 0.95 fill would close every gap to a smear).
+  float groundFloor; // AX.W13 — the bare-ground darken floor. The gaps between strokes
+                     // (low accumulated height) multiply toward this floor, so van-Gogh's
+                     // sparse atomic dabs read over a visibly darker underpainting (the
+                     // Starry-Night visible ground). Oil/oil-pastel keep 1.0 (no darken).
 };
 
 // The (medium, mode) -> StrokeProfile selector. The if-ladder's knobs are the profile's
@@ -235,7 +243,9 @@ StrokeProfile profileFor(int medium, int mode) {
     0.78,   // densityMed
     0.90,   // densitySml
     0.0,    // energyGrade — oil is uniform-length (no Starry-Night cascade)
-    0.4     // impastoFloor — oil's 0.4+0.6·edgeN crown falloff
+    0.4,    // impastoFloor — oil's 0.4+0.6·edgeN crown falloff
+    0.95,   // densityFill — oil fills the bald spots (full coverage, no bare canvas)
+    1.0     // groundFloor — oil keeps the full base (no ground darken; fills everywhere)
   );
 
   // ── Van-Gogh — first-class atomic comma/crescent dabs (slice 8 F0). NOT a length
@@ -260,6 +270,11 @@ StrokeProfile profileFor(int medium, int mode) {
     prof.densitySml  = 0.60;
     prof.energyGrade = 1.0;   // the full Starry-Night length cascade (the profile field)
     prof.impastoFloor = 1.0;  // FULL-height crowns — every atomic dab catches its glint
+    prof.densityFill = 0.09;  // SPARSE fill — the bald-spot layer stays mostly open so
+                              // the atomic dabs read as separable marks over a bare
+                              // ground, not a fill-closed coverage smear (the gap read).
+    prof.groundFloor = 0.38;  // darken the bare-ground gaps to the visible Starry-Night
+                              // underpainting so the bright impasto dabs read separable.
     return prof;
   }
 
@@ -352,13 +367,15 @@ void paintStrokeLayers(inout vec3 col, inout float height, StrokeProfile prof,
   paintOver(col, height, hSml, prof.streakFreq * 1.4, prof.streakAmp * 0.8,
             uImpasto * prof.impastoAmp * 0.65 * uStrokeAmount, prof.hardness, 4.1, prof.impastoFloor);
 
-  // Layer 4 — fill dabs (very dense, very small) — covers bald spots
+  // Layer 4 — fill dabs (very dense, very small) — covers bald spots. The density is
+  // PROFILE-driven (prof.densityFill): oil/oil-pastel fill to full coverage; van-Gogh
+  // keeps it sparse so the bare-ground gaps between its atomic dabs survive.
   float sFill = baseScale * 0.22;
   float lenMulFill = mix(1.4, 2.0, uStrokeAnisotropy);
   float widMulFill = mix(0.50, 0.38, uStrokeAnisotropy);
   int fillShape = (mode == 1) ? 3 : 2; // knife=even, others=dab (round fills)
   StrokeHit hFill = bestOil(p + vec2(3.9, -6.2), sFill, lenMulFill, widMulFill,
-                            jitterAmt * 1.5, 0.95, fillShape,
+                            jitterAmt * 1.5, prof.densityFill, fillShape,
                             prof.bristleAmp * 0.6, flow, t, 8.9, prof.energyGrade);
   paintOver(col, height, hFill, prof.streakFreq * 1.8, prof.streakAmp * 0.6,
             uImpasto * prof.impastoAmp * 0.4 * uStrokeAmount, prof.hardness * 0.9, 8.9, prof.impastoFloor);
@@ -397,6 +414,13 @@ vec3 paintStrokeMedium(vec3 col, vec2 p, float t, StrokeProfile prof, int mode) 
   // is the base relief term so the weave also catches the raking light.
   float canvasBase = tooth * prof.toothAmp * 0.5;
   result = relightImpasto(result, height, canvasBase);
+
+  // AX.W13 — the visible ground. The bare-ground gaps (low accumulated stroke height)
+  // multiply toward prof.groundFloor, so van-Gogh's sparse atomic dabs read as separable
+  // marks over a darker underpainting (oil/oil-pastel keep groundFloor=1.0 → no-op). The
+  // smoothstep keeps the impasto dabs (high height) at full value; only the open ground
+  // between them darkens.
+  result *= mix(prof.groundFloor, 1.0, smoothstep(0.0, 0.38, height));
 
   // Pigment saturation boost
   result = saturate3(result, prof.pigmentSat);

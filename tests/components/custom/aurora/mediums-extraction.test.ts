@@ -56,9 +56,11 @@ describe("AX.W12 — the StrokeProfile extraction is a value-preserving transpos
         // per-mode local knobs (the if-ladder); those moved into profileFor.
         const oilBody = (C.match(/vec3 mediumOil\(vec3 col, vec2 p, float t\)\s*\{[\s\S]*?\n\}/) || [""])[0];
         expect(oilBody.length).toBeGreaterThan(0);
-        // The thin body fetches a profile + paints layers, NOT an if-ladder.
+        // The thin body fetches a profile + paints via the shared stroke substrate
+        // (AX.W13 paintStrokeMedium wraps the four-layer cascade + tooth/relight/ground),
+        // NOT an inline if-ladder.
         expect(/StrokeProfile prof = profileFor\(MEDIUM_OIL, mode\);/.test(oilBody)).toBe(true);
-        expect(/paintStrokeLayers\(result, height, prof, mode, p, t\);/.test(oilBody)).toBe(true);
+        expect(/paintStrokeMedium\(col, p, t, prof, mode\);/.test(oilBody)).toBe(true);
         // The imperative if-ladder branches must NOT live in mediumOil anymore.
         expect(/if \(mode == 1\)/.test(oilBody)).toBe(false);
         expect(/else if \(mode == 3\)/.test(oilBody)).toBe(false);
@@ -107,18 +109,21 @@ describe("AX.W12 — the StrokeProfile extraction is a value-preserving transpos
     it("paintStrokeLayers preserves the exact 4-layer + crosshatch call topology", () => {
         const body = (flat.match(/void paintStrokeLayers\([\s\S]*?\n\}\s*$/) || flat.match(/void paintStrokeLayers\(([\s\S]*?)\}\s*vec3 mediumOil/) || ["", ""])[0];
         // Layer 1 — big gestural: sBig, lenMulBig, widMulBig, jitter*0.55, seed 1.3.
-        expect(flat.includes("bestOil(p, sBig, lenMulBig, widMulBig, jitterAmt * 0.55, prof.densityBig, prof.shapeType, prof.bristleAmp, flow, t, 1.3)")).toBe(true);
+        // Each bestOil carries the AX.W13 trailing prof.energyGrade arg (the SBR length
+        // cascade as a profile field; 0 for oil → byte-stable placement). Layer 4's fill
+        // density is AX.W13 prof.densityFill (oil 0.95, van-Gogh sparse) not a literal.
+        expect(flat.includes("bestOil(p, sBig, lenMulBig, widMulBig, jitterAmt * 0.55, prof.densityBig, prof.shapeType, prof.bristleAmp, flow, t, 1.3, prof.energyGrade)")).toBe(true);
         // Layer 2 — medium body: offset (11.3, 3.7), seed 2.7.
-        expect(flat.includes("bestOil(p + vec2(11.3, 3.7), sMed, lenMulMed, widMulMed, jitterAmt, prof.densityMed, prof.shapeType, prof.bristleAmp, flow, t, 2.7)")).toBe(true);
+        expect(flat.includes("bestOil(p + vec2(11.3, 3.7), sMed, lenMulMed, widMulMed, jitterAmt, prof.densityMed, prof.shapeType, prof.bristleAmp, flow, t, 2.7, prof.energyGrade)")).toBe(true);
         // Layer 3 — small dabs: offset (-5.1, 8.4), smlShape, jitter*1.3, seed 4.1.
-        expect(flat.includes("bestOil(p + vec2(-5.1, 8.4), sSml, lenMulSml, widMulSml, jitterAmt * 1.3, prof.densitySml, smlShape, prof.bristleAmp * 0.85, flow, t, 4.1)")).toBe(true);
+        expect(flat.includes("bestOil(p + vec2(-5.1, 8.4), sSml, lenMulSml, widMulSml, jitterAmt * 1.3, prof.densitySml, smlShape, prof.bristleAmp * 0.85, flow, t, 4.1, prof.energyGrade)")).toBe(true);
         expect(flat.includes("int smlShape = (mode == 1) ? 2 : prof.shapeType;")).toBe(true);
-        // Layer 4 — fill dabs: offset (3.9, -6.2), density 0.95, fillShape, seed 8.9.
-        expect(flat.includes("bestOil(p + vec2(3.9, -6.2), sFill, lenMulFill, widMulFill, jitterAmt * 1.5, 0.95, fillShape, prof.bristleAmp * 0.6, flow, t, 8.9)")).toBe(true);
+        // Layer 4 — fill dabs: offset (3.9, -6.2), density prof.densityFill, fillShape, seed 8.9.
+        expect(flat.includes("bestOil(p + vec2(3.9, -6.2), sFill, lenMulFill, widMulFill, jitterAmt * 1.5, prof.densityFill, fillShape, prof.bristleAmp * 0.6, flow, t, 8.9, prof.energyGrade)")).toBe(true);
         expect(flat.includes("int fillShape = (mode == 1) ? 3 : 2;")).toBe(true);
         // Crosshatch — uStrokeLayers == 2: offset (7.3, -2.1), density*0.7, seed 6.5.
         expect(flat.includes("if (uStrokeLayers == 2)")).toBe(true);
-        expect(flat.includes("bestOil(p + vec2(7.3, -2.1), sMed, lenMulMed * 0.9, widMulMed, jitterAmt, prof.densityMed * 0.7, prof.shapeType, prof.bristleAmp, flow2, t, 6.5)")).toBe(true);
+        expect(flat.includes("bestOil(p + vec2(7.3, -2.1), sMed, lenMulMed * 0.9, widMulMed, jitterAmt, prof.densityMed * 0.7, prof.shapeType, prof.bristleAmp, flow2, t, 6.5, prof.energyGrade)")).toBe(true);
         expect(body.length).toBeGreaterThan(0);
     });
 
