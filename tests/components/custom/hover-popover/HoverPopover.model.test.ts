@@ -23,6 +23,7 @@ function mockDockContext(): { ctx: DockContext; keepOpen: ReturnType<typeof vi.f
     const ctx: DockContext = {
         id: "test-dock",
         orientation: computed(() => "horizontal" as const),
+        layout: computed(() => "linear" as const),
         keepOpen,
         release,
         held: computed(() => false),

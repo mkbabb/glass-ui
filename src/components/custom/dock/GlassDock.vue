@@ -244,6 +244,7 @@ const {
 provideDockContext({
     id: dockId,
     orientation,
+    layout,
     keepOpen,
     release,
     held: isHeld,
@@ -480,6 +481,23 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
         @transitionend="onDockTransitionDone"
         @transitioncancel="onDockTransitionDone"
     >
+        <!--
+            AX.W45 D13-a — the PERSISTENT region. The `#persistent` slot is a root
+            flex SIBLING of the morph-region, in-flow in BOTH collapsed AND expanded,
+            NEVER `:inert`, NEVER a crossfade pane. It is the iOS Now-Playing /
+            Stage-Manager idiom done STRUCTURALLY: a stable always-present rail beside
+            the expand-on-demand content region, so a consumer keeps a control visible
+            while collapsed WITHOUT hand-duplicating it into both the `#default` and
+            `#collapsed` slots. It rides the root padding/radius morph (it inherits the
+            `--dock-morph-t` chrome) but is NOT a `registerGroup` morph TARGET — it
+            holds steady (no crossfade, no jitter) while the morph-region's aperture
+            animates on the ONE spring. Rendered only when authored ($slots.persistent),
+            so a dock with no persistent controls is byte-identical to before.
+        -->
+        <div v-if="$slots.persistent" class="dock-persistent">
+            <slot name="persistent" />
+        </div>
+
         <!--
             Horizontal docks use the built-in two-layer pattern (full +
             collapsed summary) with CSS-grid stacking and FLIP-driven

@@ -8,6 +8,12 @@ export { default as DockBackgroundToggle } from "./DockBackgroundToggle.vue";
 export { default as DockTabButton } from "./DockTabButton.vue";
 export { default as DockSelectTrigger } from "./DockSelectTrigger.vue";
 export { default as DockDropdownTrigger } from "./DockDropdownTrigger.vue";
+// AX.W45 D13-c / DK5 — the orientation+layout-aware dock divider primitive
+// (component-over-class: the raw `.dock-separator` was axis-blind). Reads the dock
+// orientation/layout via useOptionalDockContext and paints perpendicular to the
+// layout axis (vertical hairline in a row dock, horizontal rule in a column dock,
+// full-row section break in a grid dock).
+export { default as DockSeparator } from "./DockSeparator.vue";
 
 // O.W4 Lane B — Fix 1 (Rγ L1): re-export composable types so consumers can
 // type wrappers around the published surface. Previously `UseDockStateOptions`
@@ -44,4 +50,5 @@ export {
     provideDockContext,
     type DockContext,
     type DockOrientation,
+    type DockLayout,
 } from "./composables/dockContext";

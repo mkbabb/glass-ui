@@ -112,6 +112,7 @@ const subpathRuntimeExports = [
     { subpath: "dock", surface: Dock, name: "DockTabButton" },
     { subpath: "dock", surface: Dock, name: "DockSelectTrigger" },
     { subpath: "dock", surface: Dock, name: "DockDropdownTrigger" },
+    { subpath: "dock", surface: Dock, name: "DockSeparator" },
     { subpath: "search", surface: Search, name: "FuzzySearch" },
     { subpath: "search", surface: Search, name: "useFuzzySearch" },
     // AI.W5-δ — `ProgressiveSidebar` SFC retired (Path B archive per
@@ -284,6 +285,8 @@ const exactSubpathRuntimeSurfaces = [
             "DockLayer",
             "DockLayerGroup",
             "DockSelectTrigger",
+            // AX.W45 D13-c — the orientation+layout-aware divider primitive.
+            "DockSeparator",
             "DockTabButton",
             "GlassDock",
             "provideDockContext",

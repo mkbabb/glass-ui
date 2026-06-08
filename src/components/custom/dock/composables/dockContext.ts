@@ -2,6 +2,7 @@ import type { ComputedRef } from "vue";
 import { createStrictContext } from "../../../../composables/context";
 
 export type DockOrientation = "horizontal" | "vertical";
+export type DockLayout = "linear" | "grid";
 
 /**
  * Dock context surfaces the dock id + orientation + held-state coordination
@@ -28,6 +29,12 @@ export type DockOrientation = "horizontal" | "vertical";
 export interface DockContext {
     id: string;
     orientation: ComputedRef<DockOrientation>;
+    /**
+     * In-cap arrangement (`linear` row/column vs `grid` tile panel). AX.W45 —
+     * `<DockSeparator>` reads this to paint a full-row section break in a grid dock
+     * (a 1px perpendicular hairline is useless in a 2D tile grid).
+     */
+    layout: ComputedRef<DockLayout>;
     /** Acquire a keep-open token; suppresses timer-based collapse. */
     keepOpen: () => void;
     /** Release a previously-acquired keep-open token. */

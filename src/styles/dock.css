@@ -96,8 +96,18 @@
            never the >100ms "slideshow" register. The onset rides the NORMALIZED
            morph progress (`--dock-expand-t`), NOT a wall-clock timer, so a fast
            flick and a slow hover-open both choreograph correctly and an interrupted
-           morph orphans no timers. */
-        --dock-stagger-window-size: 0.55;
+           morph orphans no timers.
+
+           AX.W45 DK1/DK7 — the window NARROWED 0.55 → 0.4. The per-child onset caps
+           at `step × 5 = 0.40` (child 6+), so the LAST detail child used to finish at
+           `0.40 + 0.55 = 0.95` of the morph — it barely appeared until 95% through
+           (the "shrunken icon does not appear for a while" tail). Tightening the
+           window to 0.4 lands the last child at `0.40 + 0.4 = 0.80` (the iOS front-
+           loaded register: stagger the EXPANDING detail, never the persistent/summary
+           glyph). The step (0.08, Kowalski's band) is KEPT — it is the window, not the
+           beat, that was too wide. The summary/persistent glyph is front-loaded
+           structurally (onset 0, scalar-keyed below). */
+        --dock-stagger-window-size: 0.4;
         --dock-stagger-rise: 4px;
         --dock-stagger-step: 0.08;
         /* AW.W3b — big-dock tokens. `--dock-card-radius` is the finite card-shell
@@ -218,81 +228,141 @@
         display: none;
     }
 
+    /* AX.W45 — the density cascade is threaded by the ONE `--dock-scale`
+       multiplier (default 1, lifted to `--dock-mobile-scale` on coarse pointers).
+       EVERY per-density geometry axis is `calc(<base> * var(--dock-scale))` so a
+       single knob grows box+pad+gap+tab+tile-min in lockstep on touch — the desktop
+       proportion preserved, never a 44px box around a desktop glyph. The
+       control-size carries an INNER `max(…, 44px)` WCAG 2.5.5 clamp (the coarse
+       block sets `--dock-control-floor: var(--dock-touch-target)`) so a consumer
+       dialing `--dock-mobile-scale` below 1.0 cannot drop the touch target under the
+       floor — the floor survives as a CLAMP, not a parallel `@media` rule. `--dock-
+       tile-min` is now IN the cascade (DK4-b) so the grid tile scales with the
+       control + glyph; it is a proportional `calc(control-size + tile-pad)` so the
+       icon-to-tile margin is ONE knob, not a per-density literal. */
     .glass-dock[data-density="compact"] {
-        --dock-padding-block: var(--dock-density-compact-padding-block, 0.25rem);
-        --dock-padding-inline: var(--dock-density-compact-padding-inline, 0.375rem);
-        --dock-control-size: var(--dock-density-compact-control-size, 2rem);
-        --dock-layer-height: var(--dock-density-compact-layer-height, 2rem);
-        --dock-layer-gap: var(--dock-density-compact-gap, 0.25rem);
-        --dock-trigger-padding-block: var(
-            --dock-density-compact-trigger-padding-block,
-            0.1875rem
+        --dock-padding-block: calc(
+            var(--dock-density-compact-padding-block, 0.25rem) * var(--dock-scale)
         );
-        --dock-trigger-padding-inline: var(
-            --dock-density-compact-trigger-padding-inline,
-            0.4375rem
+        --dock-padding-inline: calc(
+            var(--dock-density-compact-padding-inline, 0.375rem) * var(--dock-scale)
         );
-        --dock-tab-padding-block: var(
-            --dock-density-compact-tab-padding-block,
-            0.3125rem
+        --dock-control-size: max(
+            calc(var(--dock-density-compact-control-size, 2rem) * var(--dock-scale)),
+            var(--dock-control-floor, 0px)
         );
-        --dock-tab-padding-inline: var(
-            --dock-density-compact-tab-padding-inline,
-            0.625rem
+        --dock-layer-height: max(
+            calc(var(--dock-density-compact-layer-height, 2rem) * var(--dock-scale)),
+            var(--dock-control-floor, 0px)
         );
-        --dock-tab-h: 32px;
+        --dock-layer-gap: calc(
+            var(--dock-density-compact-gap, 0.25rem) * var(--dock-scale)
+        );
+        --dock-tile-min: calc(var(--dock-control-size) + var(--dock-tile-pad, 1rem));
+        --dock-trigger-padding-block: calc(
+            var(--dock-density-compact-trigger-padding-block, 0.1875rem) *
+                var(--dock-scale)
+        );
+        --dock-trigger-padding-inline: calc(
+            var(--dock-density-compact-trigger-padding-inline, 0.4375rem) *
+                var(--dock-scale)
+        );
+        --dock-tab-padding-block: calc(
+            var(--dock-density-compact-tab-padding-block, 0.3125rem) *
+                var(--dock-scale)
+        );
+        --dock-tab-padding-inline: calc(
+            var(--dock-density-compact-tab-padding-inline, 0.625rem) *
+                var(--dock-scale)
+        );
+        --dock-tab-h: calc(32px * var(--dock-scale));
     }
 
     /* Comfortable density — the GlassDock default. Sits between compact
        and spacious. */
     .glass-dock[data-density="comfortable"] {
-        --dock-padding-block: var(--dock-density-comfortable-padding-block, 0.375rem);
-        --dock-padding-inline: var(--dock-density-comfortable-padding-inline, 0.5rem);
-        --dock-control-size: var(--dock-density-comfortable-control-size, 2.5rem);
-        --dock-layer-height: var(--dock-density-comfortable-layer-height, 2.5rem);
-        --dock-layer-gap: var(--dock-density-comfortable-gap, 0.375rem);
-        --dock-trigger-padding-block: var(
-            --dock-density-comfortable-trigger-padding-block,
-            0.25rem
+        --dock-padding-block: calc(
+            var(--dock-density-comfortable-padding-block, 0.375rem) * var(--dock-scale)
         );
-        --dock-trigger-padding-inline: var(
-            --dock-density-comfortable-trigger-padding-inline,
-            0.5rem
+        --dock-padding-inline: calc(
+            var(--dock-density-comfortable-padding-inline, 0.5rem) * var(--dock-scale)
         );
-        --dock-tab-padding-block: var(
-            --dock-density-comfortable-tab-padding-block,
-            0.4375rem
+        --dock-control-size: max(
+            calc(
+                var(--dock-density-comfortable-control-size, 2.5rem) *
+                    var(--dock-scale)
+            ),
+            var(--dock-control-floor, 0px)
         );
-        --dock-tab-padding-inline: var(
-            --dock-density-comfortable-tab-padding-inline,
-            0.75rem
+        --dock-layer-height: max(
+            calc(
+                var(--dock-density-comfortable-layer-height, 2.5rem) *
+                    var(--dock-scale)
+            ),
+            var(--dock-control-floor, 0px)
         );
-        --dock-tab-h: 38px;
+        --dock-layer-gap: calc(
+            var(--dock-density-comfortable-gap, 0.375rem) * var(--dock-scale)
+        );
+        --dock-tile-min: calc(var(--dock-control-size) + var(--dock-tile-pad, 2rem));
+        --dock-trigger-padding-block: calc(
+            var(--dock-density-comfortable-trigger-padding-block, 0.25rem) *
+                var(--dock-scale)
+        );
+        --dock-trigger-padding-inline: calc(
+            var(--dock-density-comfortable-trigger-padding-inline, 0.5rem) *
+                var(--dock-scale)
+        );
+        --dock-tab-padding-block: calc(
+            var(--dock-density-comfortable-tab-padding-block, 0.4375rem) *
+                var(--dock-scale)
+        );
+        --dock-tab-padding-inline: calc(
+            var(--dock-density-comfortable-tab-padding-inline, 0.75rem) *
+                var(--dock-scale)
+        );
+        --dock-tab-h: calc(38px * var(--dock-scale));
     }
 
     .glass-dock[data-density="spacious"] {
-        --dock-padding-block: var(--dock-density-spacious-padding-block, 0.5rem);
-        --dock-padding-inline: var(--dock-density-spacious-padding-inline, 0.75rem);
-        --dock-control-size: var(--dock-density-spacious-control-size, 2.75rem);
-        --dock-layer-height: var(--dock-density-spacious-layer-height, 2.75rem);
-        --dock-layer-gap: var(--dock-density-spacious-gap, 0.5rem);
-        --dock-trigger-padding-block: var(
-            --dock-density-spacious-trigger-padding-block,
-            0.375rem
+        --dock-padding-block: calc(
+            var(--dock-density-spacious-padding-block, 0.5rem) * var(--dock-scale)
         );
-        --dock-trigger-padding-inline: var(
-            --dock-density-spacious-trigger-padding-inline,
-            0.625rem
+        --dock-padding-inline: calc(
+            var(--dock-density-spacious-padding-inline, 0.75rem) * var(--dock-scale)
         );
-        --dock-tab-padding-block: var(
-            --dock-density-spacious-tab-padding-block,
-            0.5rem
+        --dock-control-size: max(
+            calc(
+                var(--dock-density-spacious-control-size, 2.75rem) * var(--dock-scale)
+            ),
+            var(--dock-control-floor, 0px)
         );
-        --dock-tab-padding-inline: var(
-            --dock-density-spacious-tab-padding-inline,
-            0.875rem
+        --dock-layer-height: max(
+            calc(
+                var(--dock-density-spacious-layer-height, 2.75rem) * var(--dock-scale)
+            ),
+            var(--dock-control-floor, 0px)
         );
-        --dock-tab-h: 44px;
+        --dock-layer-gap: calc(
+            var(--dock-density-spacious-gap, 0.5rem) * var(--dock-scale)
+        );
+        --dock-tile-min: calc(var(--dock-control-size) + var(--dock-tile-pad, 2.75rem));
+        --dock-trigger-padding-block: calc(
+            var(--dock-density-spacious-trigger-padding-block, 0.375rem) *
+                var(--dock-scale)
+        );
+        --dock-trigger-padding-inline: calc(
+            var(--dock-density-spacious-trigger-padding-inline, 0.625rem) *
+                var(--dock-scale)
+        );
+        --dock-tab-padding-block: calc(
+            var(--dock-density-spacious-tab-padding-block, 0.5rem) * var(--dock-scale)
+        );
+        --dock-tab-padding-inline: calc(
+            var(--dock-density-spacious-tab-padding-inline, 0.875rem) *
+                var(--dock-scale)
+        );
+        --dock-tab-h: calc(44px * var(--dock-scale));
     }
 
     /* Audacious density — typography-forward chrome where the dock reads as
@@ -300,29 +370,45 @@
        consumer-bumped fonts no longer drift the button height — the
        `--dock-tab-min-height` token reserves the row regardless of glyph rise. */
     .glass-dock[data-density="audacious"] {
-        --dock-padding-block: var(--dock-density-audacious-padding-block, 0.5rem);
-        --dock-padding-inline: var(--dock-density-audacious-padding-inline, 0.875rem);
-        --dock-control-size: var(--dock-density-audacious-control-size, 4rem);
-        --dock-layer-height: var(--dock-density-audacious-layer-height, 4rem);
-        --dock-layer-gap: var(--dock-density-audacious-gap, 0.875rem);
-        --dock-trigger-padding-block: var(
-            --dock-density-audacious-trigger-padding-block,
-            0.625rem
+        --dock-padding-block: calc(
+            var(--dock-density-audacious-padding-block, 0.5rem) * var(--dock-scale)
         );
-        --dock-trigger-padding-inline: var(
-            --dock-density-audacious-trigger-padding-inline,
-            1rem
+        --dock-padding-inline: calc(
+            var(--dock-density-audacious-padding-inline, 0.875rem) * var(--dock-scale)
         );
-        --dock-tab-padding-block: var(
-            --dock-density-audacious-tab-padding-block,
-            0.5rem
+        --dock-control-size: max(
+            calc(var(--dock-density-audacious-control-size, 4rem) * var(--dock-scale)),
+            var(--dock-control-floor, 0px)
         );
-        --dock-tab-padding-inline: var(
-            --dock-density-audacious-tab-padding-inline,
-            1.5rem
+        --dock-layer-height: max(
+            calc(var(--dock-density-audacious-layer-height, 4rem) * var(--dock-scale)),
+            var(--dock-control-floor, 0px)
         );
-        --dock-tab-min-height: var(--dock-density-audacious-tab-min-height, 3.5rem);
-        --dock-tab-h: var(--dock-density-audacious-tab-min-height, 3.5rem);
+        --dock-layer-gap: calc(
+            var(--dock-density-audacious-gap, 0.875rem) * var(--dock-scale)
+        );
+        --dock-tile-min: calc(var(--dock-control-size) + var(--dock-tile-pad, 2.75rem));
+        --dock-trigger-padding-block: calc(
+            var(--dock-density-audacious-trigger-padding-block, 0.625rem) *
+                var(--dock-scale)
+        );
+        --dock-trigger-padding-inline: calc(
+            var(--dock-density-audacious-trigger-padding-inline, 1rem) *
+                var(--dock-scale)
+        );
+        --dock-tab-padding-block: calc(
+            var(--dock-density-audacious-tab-padding-block, 0.5rem) * var(--dock-scale)
+        );
+        --dock-tab-padding-inline: calc(
+            var(--dock-density-audacious-tab-padding-inline, 1.5rem) *
+                var(--dock-scale)
+        );
+        --dock-tab-min-height: calc(
+            var(--dock-density-audacious-tab-min-height, 3.5rem) * var(--dock-scale)
+        );
+        --dock-tab-h: calc(
+            var(--dock-density-audacious-tab-min-height, 3.5rem) * var(--dock-scale)
+        );
     }
 
     /* Density-audacious narrow-box carve (AV.W16 TW3) — when the dock's OWN
@@ -465,14 +551,21 @@
         flex-direction: column;
         align-items: stretch;
         justify-content: flex-start;
-        gap: 0.25rem;
+        /* AX.W45 D13-b — H/V PROPORTION PARITY. The hardcoded `gap: 0.25rem` + the
+           density-blind `--dock-vertical-padding` override are DELETED. The vertical
+           dock now reads the SAME `--dock-layer-gap` / `--dock-padding-*` density
+           cascade the horizontal dock tunes, so `density="spacious"` paints a LARGER
+           gap than `compact` on BOTH axes (the density axis was dead on the vertical
+           dock). ONE token ladder, both orientations; the `--dock-scale` multiplier
+           threads it for free (the cascade is `calc(* --dock-scale)`-keyed). */
+        gap: var(--dock-layer-gap, 0.375rem);
         white-space: normal;
         width: auto;
         height: auto;
         max-block-size: var(--dock-max-block-size);
         /* overflow on the block (morph) axis is the data-morphing-gated clip
            shell above; the cross axis stays visible there. */
-        padding: var(--dock-vertical-padding, var(--dock-padding-block, 0.375rem));
+        padding: var(--dock-padding-block, 0.375rem);
         border-radius: var(--radius-dock);
         /* AX.W01 — a vertical rail is ALWAYS-EXPANDED (no collapse↔expand morph),
            so its root padding/background/border-color never morph; the prior
@@ -629,6 +722,22 @@
         justify-content: center;
     }
 
+    /* AX.W45 DK1 — the collapsed/summary glyph appears WITH the pill, no added
+       delay. The `--summary` pane is the INCOMING pane on collapse, but the shared
+       stagger ramp reads `--dock-expand-t` which runs 1→0 on collapse — so the
+       summary glyph used to fade OUT over the back half of the morph and pop in only
+       at settle (the "shrunken icon does not appear for a while" defect). Keying the
+       summary pane's stagger scalar to `--dock-morph-t` directly (the per-swap
+       incoming-ness, 0→1) reveals it as the box settles — appearing WITH the pill.
+       The summary is a single front-loaded glyph (onset 0), so this lands it at full
+       opacity by the morph's tail. The `--dock-expand-t` directional scalar stays
+       the right driver for the box CHROME (bg/border/padding/radius interpolate
+       between the collapsed↔expanded endpoints); only the summary pane's CONTENT
+       reveal is decoupled onto the incoming scalar. */
+    .glass-dock[data-morphing] .dock-layer--summary {
+        --dock-expand-t: var(--dock-morph-t);
+    }
+
     /* AW.W3 — the collapsed-hover scale rides the unified dock spring vocabulary.
        The `scale var(--dock-motion-resize)` arm was added to the `.glass-dock`
        root transition above, so this hover scale settles on the SAME spring curve
@@ -707,6 +816,47 @@
     .dock-layers {
         display: grid;
         min-width: 0;
+    }
+
+    /* AX.W45 D13-a — the PERSISTENT region (the iOS Now-Playing / Stage-Manager
+       idiom done STRUCTURALLY). The `#persistent` slot lives in-flow as a root flex
+       SIBLING of the morph-region (`.dock-layers`) in BOTH collapsed AND expanded —
+       NEVER `:inert`, NEVER a crossfade pane, NEVER a `registerGroup` morph target.
+       It is a stable always-present rail beside the expand-on-demand content region,
+       so a consumer keeps a control visible while collapsed WITHOUT hand-duplicating
+       it into both the `#default` and `#collapsed` slots. The region co-laid by the
+       root flex/grid; the morph scalar `--dock-morph-t` co-drives only its chrome
+       (it inherits the root padding/radius morph), it is NOT a morph TARGET. It holds
+       steady (no jitter) while the morph-region's aperture animates on the ONE
+       spring. `align-items: center` keeps it on the dock's centerline; the
+       `--dock-layer-gap` separates it from the morph region (same rhythm both
+       orientations). */
+    .dock-persistent {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        gap: var(--dock-layer-gap, 0.375rem);
+    }
+
+    .glass-dock:not(.vertical) .dock-persistent {
+        flex-direction: row;
+    }
+
+    .glass-dock.vertical .dock-persistent {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    /* The persistent region + the morph region share the dock's gap rhythm. The
+       region renders only when the consumer authors a `#persistent` slot
+       (GlassDock.vue guards it with `v-if="$slots.persistent"`), so a dock with no
+       persistent controls is byte-identical to before (no empty flex item). */
+    .glass-dock:not(.vertical) .dock-persistent + .dock-layers {
+        margin-inline-start: var(--dock-layer-gap, 0.375rem);
+    }
+
+    .glass-dock.vertical .dock-persistent + .dock-layers {
+        margin-block-start: var(--dock-layer-gap, 0.375rem);
     }
 
     /* AX.W01 — the box size morph reads the SAME `--dock-morph-t` scalar as the
@@ -804,16 +954,22 @@
        transition holds a leaving layer `visible` for the length of the opacity
        crossfade, then flips it `hidden`.
 
-       AU.W2 — the opacity-lockstep fold. The layer fade rides `--dock-motion-resize`
-       (the SAME duration the container morph runs at) — NOT the faster
-       `--dock-motion-fast` (0.2s), so the fade and the morph settle in lockstep.
-       The matched `visibility` hold extends to `--duration-normal` so the leaving
-       layer stays paintable for the FULL crossfade. */
+       AX.W45 DK7 — the crossfade is now on the ONE `--dock-morph-t` scalar (the
+       SAME clock the box size + child stagger ride), NOT a parallel fixed-duration
+       CSS transition. The prior `opacity var(--dock-motion-resize)` was a SECOND
+       clock: a velocity-dependent spring settles its meaningful travel in ~0.18s
+       while the 0.3s CSS transition lingered, so the leaving pane ghosted over the
+       settled box — the "laggy/delayed" layer-switch the user read. Driving the
+       leaving-pane opacity off `calc(1 - var(--dock-morph-t))` makes the fade a pure
+       FUNCTION of the same `t`: an interrupted/retargeted switch carries the
+       crossfade WITH it (no second timer to drift). Visibility is the ONLY surviving
+       CSS-timed leg — a 0s hold over `--duration-normal` keeps the leaving pane
+       paintable through the fade, then flips it hidden (the a11y-006 hit-test
+       anchor); the spring-settle clears the morph state so the hold releases in
+       lockstep. The base rule keeps NO opacity transition (the scalar IS the clock). */
     .dock-layer,
     .dock-layer-item-host {
-        transition:
-            opacity var(--dock-motion-resize),
-            visibility 0s linear var(--duration-normal);
+        transition: visibility 0s linear var(--duration-normal);
     }
 
     .dock-layer:not(.is-active):not(.is-leaving),
@@ -833,16 +989,18 @@
            opacity authority on the active pane — the aperture uncovers a layout
            that is laid out ONCE at natural size behind it. Only `visibility 0s`
            survives (the active layer must paint at once, no fade-in delay — the
-           AU.W2 governing rule). The leaving pane keeps the shared-token opacity
-           fade below (the ONLY surviving opacity animation). */
+           AU.W2 governing rule). The leaving pane fades on the scalar below. */
         transition: visibility 0s;
     }
 
-    /* A leaving layer is inactive for hit-testing but still painted through its
-       fade-out. The outer collapse↔expand pair has no separate leaving marker in
-       markup — its `:not(.is-active):not(.is-leaving)` rule above covers the
-       crossfade-out via the delayed `visibility` transition; the inner pane swap
-       sets `.is-leaving` explicitly during the crossfade. */
+    /* AX.W45 DK7 — the leaving pane fades on the ONE `--dock-morph-t` scalar (the
+       single clock the box rides), gated on `[data-morphing]`. At rest (no morph)
+       the leaving class is already gone, so the scalar-fade is only authored DURING
+       the morph. `opacity: calc(1 - var(--dock-morph-t))` runs 1→0 as the box
+       morphs, in perfect lockstep — no ghost, no flash, no second timer. The pane
+       stays painted (visibility:visible) + untouchable (pointer-events:none) through
+       the fade; the base-rule `visibility 0s linear var(--duration-normal)` hold
+       flips it hidden once the morph state clears on spring-settle. */
     .dock-layer.is-leaving,
     .dock-layer-item-host.is-leaving {
         opacity: 0;
@@ -850,18 +1008,17 @@
         pointer-events: none;
     }
 
-    /* AV.W9.1 — the AU.W8b native discrete-visibility arm (the second `@supports`
-       block that expressed the 3-state contract as one discrete transition over
-       opacity + visibility with a `@starting-style` entry anchor) is RETIRED. It
-       was a THIRD opacity/visibility authority overlapping the hand-rolled 3-state
-       fork above and the spring's settle — three owners for one concern. With the
-       native size arm gone (W9.0), opacity now has ONE owner everywhere: the
-       `opacity var(--dock-motion-resize)` crossfade on `.dock-layer{,-item-host}`
-       (the AU.W2 lockstep token — kept), and visibility has ONE owner: the delayed
+    .glass-dock[data-morphing] .dock-layer.is-leaving,
+    .glass-dock[data-morphing] .dock-layer-item-host.is-leaving {
+        opacity: calc(1 - var(--dock-morph-t));
+    }
+
+    /* AX.W45 — opacity now has ONE owner: the `--dock-morph-t` scalar (the leaving
+       pane via `calc(1 - t)`, the entering pane revealed by the clip aperture +
+       child stagger off the SAME scalar). Visibility keeps ONE owner: the delayed
        `visibility 0s linear var(--duration-normal)` hold of the 3-state fork above
-       (the a11y-006 anchor, LOAD-BEARING). One authority per concern: size = the
-       spring scalar, opacity = the CSS crossfade, visibility = the delayed-hold
-       fork. */
+       (the a11y-006 hit-test anchor, LOAD-BEARING) released on spring-settle. ONE
+       clock, every axis — the W01/W02 single-scalar thesis FINISHED for opacity. */
 
     /* ── Base layout — distinct per surface ─────────────────────────── */
     .dock-layer {
@@ -1010,6 +1167,14 @@
         width: 100%;
         height: auto;
         white-space: normal;
+        /* AX.W45 DK4-a — center each fixed-size button in its tile cell on BOTH
+           axes. The grid layer only inherited `align-items: center` (block axis);
+           `justify-items` defaulted to `stretch`, which degenerates to `start` for a
+           fixed-width `inline-flex` button — so every icon hugged the inline-start
+           (left) edge of its tile, ~16px off-center (the "big-dock icons are not
+           aligned" defect). `place-items: center` centers on both axes, MIRRORING the
+           flex-wrap layer's `justify-content: center`. */
+        place-items: center;
     }
 
     /* A grid dock fills the inline cap; the active layer is the panel body, not a
@@ -1178,12 +1343,44 @@
         white-space: nowrap;
     }
 
+    /* AX.W45 D13-c / DK5 — the `<DockSeparator>` paint source. The separator is now
+       a first-class orientation+layout-aware primitive (DockSeparator.vue) that
+       carries the orientation contract the bare class could not. It demarcates dock
+       item GROUPS (transport | navigation | settings) for affordance hierarchy. The
+       paint is PERPENDICULAR to the layout axis:
+         - row dock (horizontal, the default)   → a VERTICAL 1px hairline
+         - column dock (vertical / rail)         → a HORIZONTAL 1px rule, cross-extent
+         - grid dock (`layout="grid"`)           → a full-row SECTION BREAK
+       The component sets `data-orientation` from `useOptionalDockContext`; the
+       dock-root ancestor class (`.glass-dock.vertical` / `.layout-grid`) drives the
+       perpendicular paint so the same primitive reads correctly at every layout. */
     .dock-separator {
         @apply flex-shrink-0;
         width: 1px;
         height: var(--dock-separator-height);
         margin: 0 0.375rem;
         background: var(--surface-tint-15);
+    }
+
+    /* Column (vertical) dock — a HORIZONTAL hairline across the column's cross
+       extent (a 1px-WIDE vertical sliver does not divide a stack). */
+    .glass-dock.vertical .dock-separator,
+    .dock-layer-group.vertical .dock-separator,
+    .dock-separator[data-orientation="vertical"] {
+        width: var(--dock-separator-height);
+        height: 1px;
+        align-self: center;
+        margin: 0.375rem 0;
+    }
+
+    /* Grid (big-dock) — a full-row SECTION BREAK spanning every column, the
+       Launchpad-style group demarcation (a 1px sliver in one cell is useless). */
+    .glass-dock.layout-grid .dock-separator {
+        grid-column: 1 / -1;
+        width: 100%;
+        height: 1px;
+        margin: var(--dock-layer-gap, 0.375rem) 0;
+        align-self: center;
     }
 
     .dock-spacer {
@@ -1215,12 +1412,21 @@
         flex-direction: column-reverse;
     }
 
+    /* AX.W45 DK8 — the rail gets its OWN surface plate. Previously the rail was a
+       bare bordered gutter (a hairline `border-right`, no background), so its
+       `--primary 15%` indicator + `--accent 40%` hover were tuned against an absent
+       plate (the "bg's not right"). The `--dock-layer-rail-bg` rung (a quiet
+       `--surface-tint-8` default, consumer-overridable) gives the rail a finished
+       glass-quiet surface; the hover/active affordance reads the `--dock-layer-rail-
+       {hover,active}` tokens, so the whole rail ladder is tunable from §10. */
     .dock-layer-rail {
         display: flex;
         flex-direction: column;
         flex-shrink: 0;
         gap: var(--dock-layer-rail-gap, 0.125rem);
         padding: var(--dock-layer-rail-padding, 0.125rem);
+        background: var(--dock-layer-rail-bg, var(--surface-tint-8));
+        border-radius: var(--dock-layer-rail-radius, var(--radius-md));
         border-right: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
     }
 
@@ -1270,7 +1476,10 @@
     }
 
     .dock-layer-rail .dock-layer-tab:hover {
-        background: color-mix(in srgb, var(--accent) 40%, transparent);
+        background: var(
+            --dock-layer-rail-hover,
+            color-mix(in srgb, var(--accent) 40%, transparent)
+        );
         color: var(--foreground);
     }
 
@@ -1290,30 +1499,43 @@
         outline: none;
     }
 
-    /* AU.W8.4 — the travelling indicator (reka TabsIndicator). reka computes
-       `--reka-tabs-indicator-position` + `--reka-tabs-indicator-size` from the
-       active tab's geometry; the indicator morphs between tabs riding
-       `--dock-motion-resize` (= `--spring-dock` after AU.W8.2) — NOT a hardcoded
-       `--spring-snappy`. It paints the active-tab backplate the per-button
-       `.is-active` background used to. */
+    /* AX.W45 DK8 — the travelling indicator is now AXIS-AWARE. reka computes
+       `--reka-tabs-indicator-position`/`-size` for the axis the `<Tabs orientation>`
+       names; DockLayerGroup threads the group axis into it (`orientation="vertical"`
+       for the DEFAULT column rail, `"horizontal"` for the `.vertical` group's row
+       rail). The DEFAULT (horizontal-group) rail is a COLUMN of stacked tabs, so the
+       indicator travels the BLOCK (Y) axis — the prior `translateX` + `top:0` pinned
+       it at the top tab and it NEVER reached the active tab below (the mis-alignment
+       the user screenshotted). The default rule below travels Y; the `.vertical`
+       group's ROW rail overrides back to X. The active-tab plate reads the tunable
+       `--dock-layer-rail-active` rung. Both morph on `--dock-motion-resize`. */
     .dock-layer-rail .dock-layer-tab-indicator {
         position: absolute;
         left: 0;
         top: 0;
-        height: var(--dock-layer-tab-size, var(--dock-control-size, 1.75rem));
-        width: var(--reka-tabs-indicator-size);
-        transform: translateX(var(--reka-tabs-indicator-position));
+        width: var(--dock-layer-tab-size, var(--dock-control-size, 1.75rem));
+        height: var(--reka-tabs-indicator-size);
+        transform: translateY(var(--reka-tabs-indicator-position));
         border-radius: var(--dock-layer-tab-radius, var(--radius-sm));
-        background: color-mix(in srgb, var(--primary) 15%, transparent);
+        background: var(
+            --dock-layer-rail-active,
+            color-mix(in srgb, var(--primary) 15%, transparent)
+        );
         transition:
             width var(--dock-motion-resize),
+            height var(--dock-motion-resize),
             transform var(--dock-motion-resize);
         pointer-events: none;
     }
 
-    /* For a vertical rail the indicator travels along the inline axis still
-       (the horizontal-always keyboard decision keeps the indicator inline);
-       reka's position var resolves to the active tab offset regardless. */
+    /* The `.vertical` group's rail is a ROW of tabs (flex-direction: row), so the
+       indicator travels the INLINE (X) axis — the row layout, reka
+       `orientation="horizontal"`. */
+    .dock-layer-group.vertical .dock-layer-rail .dock-layer-tab-indicator {
+        height: var(--dock-layer-tab-size, var(--dock-control-size, 1.75rem));
+        width: var(--reka-tabs-indicator-size);
+        transform: translateX(var(--reka-tabs-indicator-position));
+    }
 
     .dock-layer-stack {
         position: relative;
@@ -1389,37 +1611,29 @@
        above (over the base shrink-wrap) reflow to N rows at ANY width on the
        over-cap crossing — no viewport coupling, no breakpoint. */
 
-    /* O.W6 Lane D — Touch-target floor (speedtest AC.W6 F2.AA-03 / WCAG
-       2.5.5). On coarse-pointer devices (touch), every dock-control's
-       width/height floor lifts to the 44px WCAG target-size minimum.
-       The lift composes via `--dock-control-size` (the canonical knob
-       every dock-control surface — `.dock-icon-button`,
-       `.dock-tab-button`, `.dock-select-trigger`, `.dock-dropdown-trigger`
-       — already consumes) so the cascade reaches every control without
-       per-selector re-declaration. `--size-icon-btn` lifts in lockstep
-       so bare icon-button surfaces outside the dock (e.g.,
-       `.dark-mode-toggle-button[data-size="dock"]` and any consumer
-       that wires `var(--size-icon-btn)` for trigger sizing) inherit
-       the same floor.
+    /* AX.W45 D15 — the ONE coarse-pointer multiplier (the two prior FLOOR blocks
+       SUBSUMED). On touch, the dock grows ~1.5× via `--dock-scale: var(--dock-
+       mobile-scale, 1.5)` — the SAME knob that threads the WHOLE density cascade, so
+       box + padding + gap + tab + tile-min + glyph all grow in LOCKSTEP (the desktop
+       proportion preserved, never a 44px box around a 20px glyph swimming in desktop
+       padding — the prior floor-not-scale state). At 1.5× comfortable's 40px control
+       → 60px and spacious's 44px → 66px, both PAST the 44px WCAG 2.5.5 target, so the
+       scale SUBSUMES the floor. The 44px guarantee survives as a CLAMP, not a parallel
+       rule: `--dock-control-floor: var(--dock-touch-target)` feeds the `max(…, floor)`
+       in the scaled control-size, so a consumer dialing `--dock-mobile-scale` below
+       1.0 still cannot drop the touch target under 44px. `--size-icon-btn` keeps its
+       floor for STANDALONE icon-button surfaces (a routed gear, no dock ancestor)
+       that read it directly. Fine pointer byte-identical (`--dock-scale` stays 1).
 
-       AP.W3 R0G-6 — selector is `.glass-dock[data-density]`, not bare
-       `.glass-dock`: the always-present density setter (0,2,0) shadowed a
-       bare (0,1,0) coarse floor, pinning the touch box at 40px. The
-       presence-selector (0,2,0) wins by source order, lifting
-       `--dock-control-size` to 44px — read by both the button box and the
-       dock width-math, so the slot reserves 44px (no overflow). Fine pointer
-       byte-identical. Proof: design/W1.2-motion-carve-and-dock.md §B.2. */
+       AP.W3 R0G-6 — selector is `.glass-dock[data-density]`, not bare `.glass-dock`:
+       the always-present density setter (0,2,0) would shadow a bare (0,1,0) rule. The
+       presence-selector (0,2,0) wins by source order, lifting `--dock-scale` so the
+       cascade re-resolves at touch scale. */
     @media (pointer: coarse) {
         .glass-dock[data-density] {
-            --dock-control-size: var(--dock-touch-target, 2.75rem);
+            --dock-scale: var(--dock-mobile-scale, 1.5);
+            --dock-control-floor: var(--dock-touch-target, 2.75rem);
             --size-icon-btn: var(--dock-touch-target, 2.75rem);
         }
-
-        /* S-2 — the in-dock floor above lifts the control-SIZE token (shell /
-           width-math), which only reaches a DockIconButton that has a
-           `.glass-dock` ancestor. The companion button-level floor (the
-           `.dock-icon-button:not(--compact)` `min-{block,inline}-size` that
-           reaches a STANDALONE DockIconButton with no dock wrapper) moved to
-           dock-controls.css with the rest of the control family (AU.W8b.3). */
     }
 }

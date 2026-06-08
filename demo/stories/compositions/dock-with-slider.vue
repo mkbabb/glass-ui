@@ -28,7 +28,7 @@ import {
     SlidersHorizontal,
     Music,
 } from "@lucide/vue";
-import { GlassDock, DockIconButton } from "../../../src/components/custom/dock";
+import { GlassDock, DockIconButton, DockSeparator } from "../../../src/components/custom/dock";
 import { Slider } from "../../../src/components/ui/slider";
 
 const volume = ref<number[]>([42]);
@@ -97,7 +97,7 @@ const trim = ref<number[]>([55]);
                             aria-label="Mix volume"
                         />
                     </div>
-                    <div class="dock-separator" />
+                    <DockSeparator />
                     <DockIconButton aria-label="Trim">
                         <Music class="h-4 w-4" />
                     </DockIconButton>
