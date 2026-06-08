@@ -162,17 +162,214 @@ function run() {
             }
         }
 
-        // ── 5. Interaction-light lockstep — the `::before` intensity lifts on
-        // :hover / :active (the same rungs the press squish keys off).
-        facts.hoverLift = /:hover::before[\s\S]*?--specular-intensity:\s*0\.6/.test(
-            css,
-        );
-        facts.activeLift = /:active::before[\s\S]*?--specular-intensity:\s*0\.85/.test(
-            css,
-        );
-        if (!facts.hoverLift || !facts.activeLift) {
+        // ── 5. Interaction-light lockstep, TOKENIZED (AX.W09). The `::before`
+        // intensity reads the `--glass-specular-intensity-{rest,hover,active}`
+        // token cohort (NOT the retired `0.35`/`0.6`/`0.85` literals) so the
+        // subtle-vs-extreme magnitude is a single overridable knob. The rest rung
+        // reads the cohort default so a static unwired surface is CLEAN (the
+        // @property `initial-value: 0` dormancy is no longer defeated by a floor).
+        facts.restReadsToken =
+            /--specular-intensity:\s*var\(\s*--glass-specular-intensity-rest/.test(
+                css,
+            );
+        facts.hoverReadsToken =
+            /:hover::before[\s\S]*?--specular-intensity:\s*var\(\s*--glass-specular-intensity-hover/.test(
+                css,
+            );
+        facts.activeReadsToken =
+            /:active::before[\s\S]*?--specular-intensity:\s*var\(\s*--glass-specular-intensity-active/.test(
+                css,
+            );
+        if (
+            !facts.restReadsToken ||
+            !facts.hoverReadsToken ||
+            !facts.activeReadsToken
+        ) {
             violations.push(
-                "the specular intensity does not lift on :hover/:active — the interaction-light is not in lockstep with the press",
+                "the specular intensity does not read the `--glass-specular-intensity-{rest,hover,active}` token cohort on rest/:hover/:active — the magnitude is not the single overridable token (AX.W09)",
+            );
+        }
+
+        // ── 5b. The retired literals are GONE — the rest floor is not an
+        // unconditional `0.35`, and the hover/active rungs are not the bare
+        // `0.6`/`0.85` literals (a deletion-proof the tune actually landed).
+        facts.retiredRestFloor = /--specular-intensity:\s*0\.35\b/.test(css);
+        facts.retiredHoverLiteral =
+            /:hover::before[\s\S]*?--specular-intensity:\s*0\.6\b/.test(css);
+        facts.retiredActiveLiteral =
+            /:active::before[\s\S]*?--specular-intensity:\s*0\.85\b/.test(css);
+        if (
+            facts.retiredRestFloor ||
+            facts.retiredHoverLiteral ||
+            facts.retiredActiveLiteral
+        ) {
+            violations.push(
+                "a retired literal specular magnitude (rest 0.35 / hover 0.6 / active 0.85) is still present — the tune must read the token cohort, not the buried literal (AX.W09)",
+            );
+        }
+
+        // ── 5c. Warm-cream, NOT pure-white. The `.glass-material::before` inner
+        // radial stop must NOT be pure white (`hsl(40 30% 100%)`, L=100% — the
+        // blown-out core); L must be < 100% so the warm hue survives.
+        const pureWhiteCore = /hsl\(\s*40\s+30%\s+100%/.test(css);
+        facts.pureWhiteSpecularCore = pureWhiteCore;
+        // The recipe must carry a warm-cream stop at L < 100% (hsl with the warm
+        // hue ~40 and a lightness below 100).
+        facts.warmCreamCore = /hsl\(\s*40\s+\d+%\s+9[0-9]%/.test(css);
+        if (pureWhiteCore || !facts.warmCreamCore) {
+            violations.push(
+                "the `.glass-material::before` inner gradient stop is pure-white (hsl(40 30% 100%)) or carries no warm-cream L<100% stop — the catch-light blows out under the screen blend (AX.W09)",
+            );
+        }
+    }
+
+    // ── 5d. The token cohort is MINTED in tokens.css (+ a `.dark` arm). The
+    // magnitude is an overridable `:root` cohort, not three buried literals.
+    const TOKENS = resolve(ROOT, "src/styles/tokens.css");
+    if (!existsSync(TOKENS)) {
+        violations.push("tokens.css is absent");
+    } else {
+        const tok = stripComments(readFileSync(TOKENS, "utf8"));
+        for (const rung of ["rest", "hover", "active"]) {
+            const minted = new RegExp(
+                `--glass-specular-intensity-${rung}\\s*:`,
+            ).test(tok);
+            facts[`token_${rung}Minted`] = minted;
+            if (!minted) {
+                violations.push(
+                    `--glass-specular-intensity-${rung} is not minted in tokens.css — the magnitude cohort is incomplete (AX.W09)`,
+                );
+            }
+        }
+        // The `.dark` arm re-tunes at least one interaction rung.
+        facts.tokenDarkArm =
+            /\.dark\s*\{[^}]*--glass-specular-intensity-(?:hover|active)\s*:/.test(
+                tok,
+            );
+        if (!facts.tokenDarkArm) {
+            violations.push(
+                "the `.dark` arm does not re-tune the `--glass-specular-intensity-*` cohort — the dark-canvas softening is not on the cascade (AX.W09)",
+            );
+        }
+        // The SUBTLE magnitude: the light-mode rest rung is 0 (clean static
+        // plate), and hover/active are ≤ half the retired `0.6`/`0.85`.
+        const restM = tok.match(/--glass-specular-intensity-rest\s*:\s*([\d.]+)/);
+        const hoverM = tok.match(
+            /--glass-specular-intensity-hover\s*:\s*([\d.]+)/,
+        );
+        const activeM = tok.match(
+            /--glass-specular-intensity-active\s*:\s*([\d.]+)/,
+        );
+        const restV = restM ? Number(restM[1]) : NaN;
+        const hoverV = hoverM ? Number(hoverM[1]) : NaN;
+        const activeV = activeM ? Number(activeM[1]) : NaN;
+        facts.subtleRest = restV;
+        facts.subtleHover = hoverV;
+        facts.subtleActive = activeV;
+        if (!(restV <= 0.08)) {
+            violations.push(
+                `rest rung ${restV} is not ≈ 0 (≤ 0.08) — the static plate is not clean (AX.W09)`,
+            );
+        }
+        if (!(hoverV <= 0.3)) {
+            violations.push(
+                `hover rung ${hoverV} is not subtle (≤ 0.30, ≤ half the retired 0.6) (AX.W09)`,
+            );
+        }
+        if (!(activeV <= 0.425)) {
+            violations.push(
+                `active rung ${activeV} is not subtle (≤ 0.425, ≤ half the retired 0.85) (AX.W09)`,
+            );
+        }
+    }
+
+    // ── 5e. ONE dock catch-light owner. The dock control's SECOND specular (the
+    // `:hover:not(:focus-visible)` `--glass-highlight` box-shadow) is RETIRED —
+    // a deletion-proof over dock-controls.css.
+    const DOCK_CONTROLS = resolve(ROOT, "src/styles/dock-controls.css");
+    if (existsSync(DOCK_CONTROLS)) {
+        const dock = stripComments(readFileSync(DOCK_CONTROLS, "utf8"));
+        const dockSecondSpecular =
+            /:hover[^{]*:not\(:focus-visible\)[^{]*\{[^}]*box-shadow:[^}]*--glass-highlight/.test(
+                dock,
+            ) ||
+            /:hover[^{]*:not\(:focus-visible\)[^{]*\{[^}]*--dock-icon-hover-shadow/.test(
+                dock,
+            );
+        facts.dockSecondSpecularRetired = !dockSecondSpecular;
+        if (dockSecondSpecular) {
+            violations.push(
+                "the dock control still applies the `:hover:not(:focus-visible)` `--glass-highlight` box-shadow — the second catch-light is not retired (AX.W09)",
+            );
+        }
+    }
+
+    // ── 5f. DRY composable — the inline `trackSpecular` is GONE from Card.vue +
+    // DockIconButton.vue (a deletion-proof: `useSpecularTracking` is the sole
+    // home). And the Card `specular` prop produces three DISTINCT registers
+    // (off|subtle|full).
+    const CARD = resolve(ROOT, "src/components/ui/card/Card.vue");
+    const DOCK_ICON = resolve(
+        ROOT,
+        "src/components/custom/dock/DockIconButton.vue",
+    );
+    const COMPOSABLE = resolve(
+        ROOT,
+        "src/composables/glass/useSpecularTracking.ts",
+    );
+    facts.composableExists = existsSync(COMPOSABLE);
+    if (!facts.composableExists) {
+        violations.push(
+            "src/composables/glass/useSpecularTracking.ts is absent — the DRY pointer seam was not extracted (AX.W09)",
+        );
+    }
+    for (const [label, path] of [
+        ["Card.vue", CARD],
+        ["DockIconButton.vue", DOCK_ICON],
+    ]) {
+        if (!existsSync(path)) continue;
+        const sfc = readFileSync(path, "utf8");
+        const inlineCopy = /function\s+trackSpecular\s*\(/.test(sfc);
+        const usesComposable = /useSpecularTracking\s*\(/.test(sfc);
+        facts[`${label}_inlineTrackSpecularGone`] = !inlineCopy;
+        facts[`${label}_usesComposable`] = usesComposable;
+        if (inlineCopy) {
+            violations.push(
+                `${label} still declares an inline \`trackSpecular\` — it must consume useSpecularTracking() (AX.W09 DRY)`,
+            );
+        }
+        if (!usesComposable) {
+            violations.push(
+                `${label} does not call useSpecularTracking() — the DRY pointer seam is not the sole home (AX.W09)`,
+            );
+        }
+    }
+
+    // The Card `specular` prop carries three DISTINCT registers (off|subtle|full).
+    if (existsSync(CARD)) {
+        const cardSrc = readFileSync(CARD, "utf8");
+        const hasType =
+            /CardSpecular\s*=\s*["']off["']\s*\|\s*["']subtle["']\s*\|\s*["']full["']/.test(
+                cardSrc,
+            );
+        // `full` overrides the intensity tokens (a distinct brighter rung set);
+        // `off` arms nothing; `subtle` rides the ladder defaults.
+        const fullDistinct =
+            /full[\s\S]*?--glass-specular-intensity-(?:rest|hover|active)/.test(
+                cardSrc,
+            );
+        const offClean = /specular\s*!==?\s*["']off["']/.test(cardSrc);
+        facts.cardSpecularType = hasType;
+        facts.cardSpecularFullDistinct = fullDistinct;
+        facts.cardSpecularOffClean = offClean;
+        if (!hasType) {
+            violations.push(
+                "Card does not declare `CardSpecular = 'off' | 'subtle' | 'full'` — the three-register opt-in is absent (AX.W09)",
+            );
+        }
+        if (!fullDistinct || !offClean) {
+            violations.push(
+                "the Card `specular` prop does not produce three DISTINCT intensity registers (off clean / subtle ladder / full brighter override) (AX.W09)",
             );
         }
     }
@@ -260,6 +457,15 @@ function run() {
     );
     console.log(
         `  button opt-in retired: ${facts.buttonOptInRetired ? "yes ✓" : "NO ✗"}`,
+    );
+    console.log(
+        `  AX.W09 token cohort : rest=${facts.subtleRest ?? "?"} hover=${facts.subtleHover ?? "?"} active=${facts.subtleActive ?? "?"} (minted: rest=${facts.token_restMinted ? "✓" : "✗"} hover=${facts.token_hoverMinted ? "✓" : "✗"} active=${facts.token_activeMinted ? "✓" : "✗"}; dark-arm=${facts.tokenDarkArm ? "✓" : "✗"})`,
+    );
+    console.log(
+        `  AX.W09 reads tokens : rest=${facts.restReadsToken ? "✓" : "✗"} hover=${facts.hoverReadsToken ? "✓" : "✗"} active=${facts.activeReadsToken ? "✓" : "✗"}; warm-cream=${facts.warmCreamCore ? "✓" : "✗"} pure-white=${facts.pureWhiteSpecularCore ? "PRESENT ✗" : "gone ✓"}`,
+    );
+    console.log(
+        `  AX.W09 one-owner+DRY: dock 2nd-specular retired=${facts.dockSecondSpecularRetired ? "✓" : "✗"}; composable=${facts.composableExists ? "✓" : "✗"}; Card-specular-3-register=${facts.cardSpecularType && facts.cardSpecularFullDistinct ? "✓" : "✗"}`,
     );
     if (violations.length) {
         console.log("\nVIOLATIONS:");
