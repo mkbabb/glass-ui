@@ -214,3 +214,22 @@ the green claims.
 3. **CHALLENGE + HARDEN** — adversarial critique of every wave spec → converge. **Iterative loop
    until convergence.** The goal this session: a FULLY-HARDENED spec to DRIVE AX + the constellation
    NEXT session. NO development now.
+
+## §18 LIQUID-GLASS morphing facility — research-backed (new — AX directive 2026-06-07)
+
+1. **iOS 26 Liquid Glass is the north star.** The dock must animate smoothly and morph DYNAMICALLY
+   like the **iOS 26 / SwiftUI Liquid Glass dock primitives** (the 2025 Apple design language —
+   morphing controls, matched-geometry fluid transitions, the dock that reshapes/merges/splits as a
+   liquid body). ALL glass-ui UI elements should carry this **morphing / springy / liquid / dynamic
+   facility** — not just the dock.
+2. **Research waves (32-agent, mirroring aurora/blob) for THREE more cores:** (a) DOCK — iOS-26
+   Liquid-Glass dock morphing, matched-geometry, fluid reshape, the SwiftUI primitive vocabulary;
+   (b) ANIMATIONS — the springy/liquid animation language (iOS spring physics, fluid interruptible
+   transitions, morph choreography); (c) GLASS PRIMITIVES — the liquid-glass MATERIAL + the
+   morph-facility every element adopts (lensing/refraction/specular SOTA + the shared morph substrate).
+3. **A unified MORPH substrate (likely net-new).** The convergent finding to test: a single
+   composable/substrate (`useLiquidMorph` / matched-geometry seam) that the dock W01-06, the glass
+   primitives, and any UI element compose — so "every element morphs" is ONE idiom, not per-component
+   bespoke. Grounds the dock single-scalar `--dock-morph-t` (W01) as the FIRST consumer of a general
+   facility, not a dock-local trick. Research → spec → fold into the dock/animation/glass waves +
+   the new substrate wave. Research-backed README for the dock + the morph facility (per §2.9).
