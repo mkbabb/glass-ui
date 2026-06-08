@@ -270,6 +270,13 @@ band B alongside the two graphics blockers, but shares NO files with them. The d
 
 (All within the AX ≤6-implementation / ≤7-read-only ceiling — this wave's actual count is 3.)
 
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):**
+The wave-agnostic authorization grant lives ONCE in AX.md §6.1 (the master template — devise an in-FileBounds idiomatic gestalt fix; spawn a tangent triumvirate to work AROUND, never stall; escalate ONLY when genuinely user-gated) with the 4-class halt-vs-work-around decision tree in AX.md §6.2 — by reference, not restated here. This wave's §3a triumvirate AUTO-TRIGGERS (Class-2 → research→plan-augment(Exact-Wave-Amendment-Text)→redress, caps 20/15/30):
+- **Out-of-FileBounds reveal** — the specular tune needs an edit to the `glass-specular-track.css`→`glass-material.css` RENAME (W25b), the `createCanvasLifecycle.ts` `-1000` resume fix (W25b), the `forced-colors:active` skin (W36), the WebGL substrate structure (HEALTHY — no rework), the Button glass-specular wiring (a future `useSpecularTracking` consumer, out of bounds), any aurora/blob shader (W07/W08), or the dock morph driver / `useLayerTransition` (W01) — NEVER absorbed in-line; HALT and triumvirate.
+- **`proof:glass-material-unified` fails non-locally** — the re-pointed gate (the hardcoded `--specular-intensity: 0.6`/`0.85` literals at `:167,170` MUST co-update IN THIS WAVE) cannot simultaneously assert the token cohort is minted+read, the subtle magnitude ladder (rest≈0, hover≈0.22, active≈0.32, each ≤ half the retired rungs), the warm-cream-not-pure-white inner stop (L < 100%), the rest-floor≈0, the ONE dock catch-light owner, the three distinct Card-`specular` intensities, AND the `trackSpecular` DRY deletion-proof → triumvirate, never split the gate or relax a rung.
+- **The 3rd diagnostic-loop iteration** on the `useSpecularTracking` extraction race (the PRM-aware `{specularStyle, onPointerMove}` lift reading the intensity tokens, replacing the two inline `trackSpecular` copies in `Card.vue` + `DockIconButton.vue` without a pointer-move regression) — HALT and triumvirate rather than re-spin the composable seam.
+- **A §5.3 ratify reached un-ratified** (Class-3) — the §24 third-confirmation Card `specular` DEFAULT (`off` vs `subtle`, rest≈0) reached without its recorded default → take the §21 no-user-gate recorded default (`subtle`, rest≈0) per the charter, never self-ratify a divergent default.
+
 ---
 
 ## Consumer hand-off confirmation (§20 — USF-1 + kf-G-1 + kf-G-2)

@@ -313,6 +313,13 @@ on. The disjointness contract against the shared-surface siblings:
 
 (All within the AX ≤6-implementation / ≤7-read-only ceiling — this wave's actual count is 4.)
 
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):**
+The wave-agnostic authorization grant lives ONCE in AX.md §6.1 (the master template — devise an in-FileBounds idiomatic gestalt fix; spawn a tangent triumvirate to work AROUND, never stall; escalate ONLY when genuinely user-gated) with the 4-class halt-vs-work-around decision tree in AX.md §6.2 — by reference, not restated here. This wave's §3a triumvirate AUTO-TRIGGERS (Class-2 → research→plan-augment(Exact-Wave-Amendment-Text)→redress, caps 20/15/30):
+- **Out-of-FileBounds reveal** — the atoms-door converge needs an edit to the shader pipeline (`aurora.frag.ts`/`composition.glsl.ts`/`mediums.glsl.ts`/`brush.glsl.ts` — W11/W12/W13), to `aurora.wgsl.ts`/`renderMode.ts`/`WEBGPU_PARITY` (W07/W14), to the `/color` `warmCatchLight`/`samplePalette` gate-hole (W11), to the `Configurator*` glass-atoms RESTYLE (W38 — W10 is FUNCTIONAL wiring only, no visual restyle), to `useMetaballRenderer.ts`/blob (W08/W15/W16), or to speedtest's `auroraConfig.ts` (a SIBLING repo — the adoption is a W34 annex, glass-ui writes no sibling source) — NEVER absorbed in-line; HALT and triumvirate.
+- **`proof:aurora-atoms-roundtrip` / `proof:aurora-atoms-render` fails non-locally** — `resolveAtoms` cannot stay TOTAL over the 2000+ fuzz with `resolveAtoms(DEFAULT_ATOMS)` deep-equal the wispy-sky default, OR the per-atom π-lane render (toggle mood/medium/zones/noise, readback centre) does NOT visibly change between states (meaningful only because W07 unblocked the paint — if it is still black, that is a W07 scope-reveal, not a W10 fix) → triumvirate.
+- **The 3rd diagnostic-loop iteration** on the dead-door excision (`deriveScene`/`AuroraMood`/`MOOD_RECIPE`/`thirdsNuclei` grep=0 across `src/` incl. the `/api` re-export) collapsing onto ONE `nucleiPrior` + ONE mood/energy table, OR the noise-atom fan-out (`warpMode`/`warpScale`/`noiseOctaves`) with `textureAmount` structurally absent on a smooth medium (no silent-inert arm) — HALT and triumvirate rather than re-spin.
+- **A §5.3 ratify reached un-ratified** (Class-3) — the `AuroraAtoms` RE-SHAPE itself is RATIFY-first (the zones/noise/color decomposition + the `flow`/`wake` wire-or-excise decision) and reached without its recorded shape → surface to the orchestrator, never self-ratify the public atom-door shape.
+
 ---
 
 ## HardGate (born-RED→GREEN + the MANDATORY VISUAL-TRUTH live audit)

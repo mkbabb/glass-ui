@@ -293,6 +293,14 @@ predecessor of both). The disjointness contract:
 
 (All within the AX ≤6-implementation / ≤7-read-only ceiling — this wave's actual count is 3.)
 
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):**
+The wave-agnostic authorization grant lives ONCE in AX.md §6.1 (the master template — devise an in-FileBounds idiomatic gestalt fix; spawn a tangent triumvirate to work AROUND, never stall; escalate ONLY when genuinely user-gated) with the 4-class halt-vs-work-around decision tree in AX.md §6.2 — by reference, not restated here. This wave's §3a triumvirate AUTO-TRIGGERS (Class-2 → research→plan-augment(Exact-Wave-Amendment-Text)→redress, caps 20/15/30):
+- **Out-of-FileBounds reveal** — the f32-cast + storage-field transposition needs an edit to the GLSL/WebGL2 oracle (`aurora.frag.ts`/`flow.glsl.ts`/`mediums.glsl.ts`/`brush.glsl.ts`, the reference the gate measures against), to `samplePalette`/the OKLCh palette-arc (W11), to the W14 multi-pass FBO ladder / `device.lost` / `painterly.wgsl.ts` / `wake.wgsl.ts`, or to `atoms.ts`/`presets.ts`/`useAurora.ts` (W10/orchestration) — NEVER absorbed in-line; HALT and triumvirate.
+- **`proof:aurora-webgpu-render` fails non-locally** — the device render stays black after BOTH the f32-cast AND the storage move land (the two must commit together — a partial commit ships black), the per-i32-field decode disagrees, or the WebGL2-vs-WebGPU delta exceeds the perceptual threshold on the fields the reduced-parity twin carries → triumvirate, never a magic-number tolerance widen.
+- **The 3rd diagnostic-loop iteration** on the Metal/Tint `var<uniform>` dynamic-index miscompile (defect 1b — Metal-specific; a non-Metal CI runner goes GREEN with only fix 1a, so the binding 1b GO criterion is the dev-Mac live audit, NOT the CI gate) — HALT and triumvirate rather than re-spin the storage transposition blind.
+- **Device-absent vs device-renders-black disposition** (Class-2/fail-explicit boundary) — a `GPUDevice` that genuinely cannot be acquired is a befitting-silent CI SKIP (the wave still closes on the dev-Mac VISUAL-TRUTH audit, never on the SKIP); a device that IS present but paints black is a fail-CLOSED RED → the two are NEVER collapsed; if the runner's Metal-capability is unresolved in the W00 manifest, surface it rather than read a non-Metal green as both-fixes-proven.
+- **A §5.3 ratify reached un-ratified** (Class-3) — the `WEBGPU_PARITY`-default / the W14 parity-floor boundary reached without its recorded default → surface to the orchestrator, never self-ratify the lever flip.
+
 ---
 
 ## HardGate (born-RED→GREEN + the MANDATORY VISUAL-TRUTH live audit)
@@ -317,6 +325,27 @@ lane — the device choice ratified in the W00 manifest):
 - **(d) the `WEBGPU_PARITY` lever resolves `"webgl"` while `false`:** asserts
   `resolveRenderModeAsync("auto")` returns `substrate: "webgl"` (not `"webgpu"`) on a WebGPU-capable adapter
   while the const is `false` — the gating-seam witness (RED witness 3).
+
+**Backend-coverage note (load-bearing — which backend proves which defect).** Defect **1b** (the
+`var<uniform>` dynamic-index miscompile) is **Metal/Tint-codegen-specific** — it reproduces ONLY on Apple/Metal
+(the adversarial-verify (b) twist confirms this: reverting only the storage move leaves the gate RED *on Metal*).
+On a **non-Metal CI runner** (SwiftShader/Vulkan — the path Chrome WebGPU takes on a Linux runner, the W00
+recommended device choice) this gate proves **1a** (the f32-cast counts, via assertion (b) per-i32-field decode)
++ the WebGL2-vs-WebGPU delta (c), but does **NOT** independently prove **1b** is load-bearing — SwiftShader/Vulkan
+handle `var<uniform>` dynamic indexing correctly, so the gate goes GREEN with only fix 1a applied and the storage
+move absent. The **binding 1b GO criterion** is therefore the per-i32-field decode PLUS the **dev-Mac (Metal)
+VISUAL-TRUTH live audit** below — NOT the CI gate. The **W00 device manifest MUST record whether the runner is
+Metal-capable**; if it is not, the Metal live audit is the binding 1b criterion, not the CI gate. (This makes the
+real-device GO criterion honest about which backend proves which defect — an agent running CI on a non-Metal
+runner must NOT read a green gate as proof both fixes are load-bearing.)
+
+**Device-absent disposition (fail-CLOSED vs befitting-silent at the device boundary — the two are NEVER
+collapsed).** A `GPUDevice` that genuinely cannot be acquired on the runner (no Dawn binding, no WebGPU backend
+present) is a **befitting-silent SKIP** for the CI lane — but the **wave does NOT close on that SKIP**; the binding
+close is the dev-Mac (Metal) VISUAL-TRUTH live audit. A device that **IS present but renders black** is a
+**fail-CLOSED RED** (the library-internal defect — the int-in-float / address-space class the wave exists to kill).
+The two failure modes are never collapsed (cross-reference the W00 harness-absent-SKIP precedent — the zero-dep CI
+runner's device-genuinely-absent SKIP stays befitting-silent, while a real wiring break must fail-explicit).
 
 This is a **runtime-observation** gate (the precept-valid artefact form per SPEC.md §Hard Gates — a real
 device render + readback), NOT a "grep-found-a-source-string-for-runtime-behaviour" invalid form. The
@@ -380,7 +409,12 @@ oracle.
    `WEBGPU_PARITY`-resolves-`"webgl"`); discharge the W00 "aurora W7" AW PENDING re-probe row; run the
    VISUAL-TRUTH live audit (with the lever forced `true` for the paint confirmation, then `false` for the
    shipped-default confirmation); capture the paired-π BEFORE/AFTER + DELTA; write
-   `audit/W07-aurora-core-unblock.json` to GREEN.
+   `audit/W07-aurora-core-unblock.json` to GREEN. **Backend-coverage close-rule (per the HardGate note):** on a
+   non-Metal CI runner the gate proves 1a + the per-i32-field decode + the delta but NOT 1b — the **dev-Mac
+   (Metal) live audit is the binding 1b GO criterion**; a device that genuinely cannot be acquired is a
+   befitting-silent SKIP that does NOT close the wave (the Metal live audit is the binding close), while a
+   present device rendering black is a fail-CLOSED RED. Record the runner's Metal-capability (from the W00
+   device manifest) in the audit JSON.
 
 ---
 

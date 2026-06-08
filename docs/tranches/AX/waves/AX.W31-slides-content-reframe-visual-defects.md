@@ -315,6 +315,28 @@ index — agents stay read-only per K invariant 5). The actual count is 3, withi
   patched tree; registers them in the slides `npm run audit` set. (The slides repo's gate harness, NOT a
   glass-ui `proof:*` — W31 is a slides-repo wave; the gate is the slides e2e suite.)
 
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):**
+The wave-agnostic authorization grant is by-reference — AX.md §6.1 (the canonical autonomous-resilience clause) +
+§6.2 (the halt-vs-work-around decision tree). The implementing agent works AROUND a roadblock with an idiomatic
+gestalt fix in-FileBounds rather than stall; it spawns a tangent triumvirate (research→plan-augment carrying
+`## Exact Wave-Amendment Text`→redress; caps 20/15/30) on a scope-reveal, a non-local gate failure, or a 3rd
+diagnostic-loop iteration; it escalates ONLY on a §21 held-invariant breach or a §6.2 Class-3/4 user-gate. **The
+wave-specific §3a auto-triggers (authored from this wave's FileBounds + HardGate):** (1) an edit reveal OUTSIDE
+FileBounds — a fix that needs a glass-ui `src/` touch (the GENERIC portal-scheme helper or the Input invalid-state
+contract are glass-ui-side W21/W37/W32, NEVER this slides-repo wave — flag for the ≥2-consumer census, do not edit
+across the repo boundary), or a W32-owned surface (the `.deck-progress`→`<DeckProgress>` port, reveal.ts/useCountup.ts
+adoption, the DeckGate LabeledField error contract) the reframe collides with; (2) the mobile-reflow or
+chart-min-height regression guard fails NON-LOCALLY — an unfloored `calc(N*var(--cqx))` (N≥24) or a sub-80px
+chart starvation survives at a breakpoint the per-breakpoint guard should have caught; (3) the 3rd diagnostic-loop
+iteration on the $5M figure-clip excision (the `overflow:hidden` drop + glow-pseudo-layer + hero height-budget
+that will not stop the crop across the export frame, short-landscape, AND portrait); (4) the VISUAL-TRUTH
+render-matrix audit reveals the reframe still READS as a thinly-reworded named incident (a copy-register failure,
+not a token-grep), the at-rest lock blur bleeds onto title/summary text, or the modal is glass in only one
+color-scheme arm. **The RATIFIED lock-cue disposition (lift-to-rest vs retire) and the DeckGate restyle-vs-retire
+path are §6.2 Class-3** — HALT-AND-RATIFY to the recorded path if reached un-ratified, never self-ratified in-line.
+Commits are ORCHESTRATOR-owned (agents read-only on git per K invariant 5); no Class-4 user-gate gates this
+content wave.
+
 ---
 
 ## HardGate (born-RED→GREEN + the MANDATORY VISUAL-TRUTH live Playwright + frontend-design audit)

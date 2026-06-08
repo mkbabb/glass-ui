@@ -481,3 +481,149 @@ owns the full fix (rest-floor→0 = highest-value, warm-cream low-alpha core, wi
 `specular="off|subtle|full"` prop). No new wave — this RAISES W09's priority to a definite blocker for
 every glass-Card-over-dark consumer, and the `specular="off"` default for data/content backplates is
 the consumer-confirmed resolution (ratify).
+
+## §25 SLIDES TRANCHE J — drive to completion via AX (new — 2026-06-08)
+
+slides Tranche J ("legibility-and-flow" on the feedback-coder deck) is in ACTIVE development (scaffolded
+at slides `b927326`, 11 waves J.W0-W10, §7 decisions USER-RATIFIED 2026-06-08). AX drives J to completion:
+its glass-ui-session waves become AX work; its slides waves ride the AX slides leg. The feedback-coder deck
+is NO LONGER "never touch" — J is the tranche that develops it (the I-session shipped it to prod; J refines
+it). Plan basis: `slides/docs/tranches/J/J.md` + `audit/DEEP-AUDIT-DIGEST.md` (32-finder + 4-synthesis,
+176 findings). The ONE complaint J reduces to: the deck's two signature surfaces — the Fourier hero trace +
+the Slide-2 coded-turn bank — both render to near-nothing a stakeholder can see; J makes both legible by
+construction behind measured floors.
+
+### §25.1 — J's GLASS-UI arms → fold into AX (the fourier-field is now glass-ui's citizen)
+
+The I-session lifted `fourier-field` into glass-ui (`src/components/custom/fourier-field/`) on the useCanvas2D
+substrate. AX owns it now. J's glass-ui asks:
+
+- **J.W1 — fourier-field per-variant intensity model (glass-ui).** Replace the single
+  `OUTLINE_PEAK_ALPHA = 0.24` (FourierField.vue:103, ceilings every layer → near-invisible comet) with a
+  per-variant intensity BUNDLE in `VariantPreset` (peak alpha, epicycle ratios, head-glow alpha/blur,
+  trail-fade exponent) + an `intensity` prop scaling the resolved peak (the Aurora `opacityCeiling` seam,
+  threaded to a token — NOT a magic-number bump). Soften the `age*age` trail decay (≈`age^1.4` + a
+  per-variant floor) so the comet body survives; head glow is the strongest layer. Hoist the per-frame
+  color/hue resolution onto the existing color/dark watch (zero-allocation render loop). NO compat alias for
+  the old constant. **User-ratified §7.1 targets:** hero head-glow peak ≈0.55 / trail head ≈0.35 (warm,
+  bright); final ≈0.45 (cool, denser-but-quieter); hero+final visibly distinct family members. → a NEW AX
+  wave (AX.W43 fourier-field intensity) OR fold into the aurora-color band (W11 shares the OKLCh/opacity-
+  ceiling idiom). RECOMMEND a dedicated wave — it is a distinct primitive.
+- **J.W9 (glass-ui half) — fourier-field CITIZENSHIP.** Author the fourier-field README (research-backed,
+  canonical-readme-shape) + mount-smoke + demo story (sibling parity with aurora/blob) + a public-surface
+  contract entry (the `/fourier-field` subpath + api/index.ts). → folds into AX.W18 (IA includes it — already
+  flagged §24) + the NEW AX.W43 (or W37 citizenship) + AX.W33 close.
+- **J.W8 (glass-ui half) — the `/prng` first-class subpath.** Gated on a ≥2-consumer need outside
+  watercolor-dot/fourier-field (currently a keep-book hard-boundary). AX already single-sources prng at
+  `src/utils/prng.ts` (watercolor-dot + goo-blob import it). If fourier-field makes it ≥2 EXTERNAL consumers,
+  the `/prng` subpath is justified → fold into AX.W29/W37 (substrate-with-consumer). Else keep-book; J stands
+  up the slides-side single-source regardless.
+
+### §25.2 — J's RECONCILIATION arms → AX already owns (the 3.7.0→main + constellation swap)
+
+- **J.W9 (the 3.7.0 reconciliation) == AX §24 + HARDENING edit 3 + the deploy DAG.** J names the EXACT
+  reconciliation AX flagged: 3.7.0 was published from `at-dock-convergence` (a branch tip), not glass-ui
+  `main`; J.W9 requires landing `at-dock-convergence` onto `main` + re-cutting a provenance-clean tag, and
+  establishes the STANDING RULE "slides only pins a `main`-sourced glass-ui publish." **AX W33's close + the
+  §0b deploy DAG must satisfy this:** the AX publish (3.8.0) lands the AX line on `main` via PR + a
+  provenance-clean tag, so J.W2 (and every slides consume) pins a `main`-sourced artifact. This is a SHARED
+  close obligation — AX W33 discharges it for J.
+- **J.W9 decides the AW.W17 Constellation swap == AX.W17's second consumer.** 3.7.0 ships `./constellation`,
+  flipping the ≥2-consumer gate; J is the consumer (til-briefing Slide01/SlideXray runs deck-local
+  `constellation.ts`). **AX.W17 + J.W9 co-decide:** AX ships the `/constellation` light/dark tokens + the
+  §15 click-warp + the §23.3 per-mode translucency; J.W9 swaps the deck-local constellation onto the
+  published component (or formally closes with a recorded reason). AX.W17's "slides adopts" leg IS J.W9's
+  constellation swap.
+
+### §25.3 — J's SLIDES arms → ride the AX slides leg (W30-32 extended)
+
+J.W0 (design-gate + 3.7.0 read), J.W2 (visibility floor gate + consume the intensity), J.W3 (bank glass
+container + scroll/fade), J.W4 (in-flow gloss, delete HoverCard), J.W5 (scoped keyboard contract), J.W6
+(mobile no-occlusion gate + reflow), J.W7 (deck atmosphere + focal hierarchy + cover copy), J.W8 (slides-side
+prng single-source + elegance), J.W9 (slides-side dead-code purge + docs relocate + a11y floor), J.W10
+(close + re-deploy). These are slides-`src/` work on the feedback-coder deck. **The AX slides leg drives them:**
+the slides branch protocol (W30 — cut `tranche/AX-slides` forward; but J is on the feedback-coder deck, a
+DIFFERENT deck from til-briefing) means J needs its OWN slides arm. RECONCILE: AX slides waves W30-32 target
+til-briefing; J targets feedback-coder. Both decks deploy from `main`. AX coordinates BOTH onto main → one
+deploy. The §7 J decisions are RATIFIED (keyboard=reka-roving Option A, a11y=axe-core default, square-wave=
+RETRACT-the-claim default) — no user-gate; AX drives them on the ratified defaults.
+
+### §25.4 — J HARD BOUNDARIES (Class-4 user-gates — NOT agent-executable, surface as named)
+
+DOI/FAIR Zenodo deposit (account+token); `CLOUDFLARE_API_TOKEN` (CI secret, no agent handles — deploy is CI
+output); the feedback-coder git remote + tag push (the repo has ZERO remotes — a credentialed user action,
+distinct from til-briefing which deploys via CI); verbatim real NCSU/Green exemplars (IRB-bound — the
+synthetic bank ships). These are the J §3.0 hard boundaries; AX surfaces each as a named late user-gate per
+the §6.2 Class-4 rule, never silently skips. **NOTE the feedback-coder-no-remote boundary:** unlike
+til-briefing (CI-deployed to slides.friday.institute), the feedback-coder deck's repo has no git remote —
+its deploy/tag-push is a user action. AX drives J's CODE to completion + gates green; the feedback-coder
+push/deploy is the one named user-hinge (resolve at drive-open: is feedback-coder deployed via the same
+slides repo→CF Pages, or a separate credentialed push?).
+
+### §25.5 — Coordination protocol
+
+AX drives J's glass-ui arms (the fourier-field intensity W43 + citizenship + the prng-subpath decision + the
+3.7.0→main reconciliation at W33 + the W17 constellation co-decision) AS AX WAVES, and J's slides arms as the
+AX slides leg's feedback-coder sub-arm (parallel to the til-briefing W30-32 arm, both → main → one deploy).
+The DEEP-AUDIT-DIGEST.md (J's 176-finding audit) is J's equivalent of AX's deep-audit-corpus — read it for
+the per-wave detail. J.W0's "3.7.0 export-shape reconciliation" (confirm no constellation/useCanvas2D surface
+fires the AX.W17 swap prematurely) is a READ that AX.W17's spec must not break. The fold into the AX charter
+(new W43 + the W17/W18/W33/W37 + slides-leg extensions) happens in the consolidated AX.md pass after the
+apply-hardening workflow lands (avoid the file collision).
+
+## §26 FOURIER-FIELD — first-class glass-ui component (new — 2026-06-08)
+
+fourier-field is a FIRST-CLASS glass-ui component — a full peer of aurora / goo-blob / constellation, NOT
+merely the "citizen" J.W9 needs. The I-session lifted it into `src/components/custom/fourier-field/` on the
+shared useCanvas2D substrate; AX owns + perfects it to the SAME bar as the other signature graphics primitives.
+This elevates the §25.1 framing: fourier-field gets the FULL first-class treatment, not just a README+smoke.
+
+**First-class means (parity with aurora/blob/constellation):**
+1. **A dedicated perfection wave** (AX.W43) — the J.W1 per-variant intensity model + the visual-fidelity pass
+   (the Fourier trace must READ as a signature brand mark: the epicycle/DFT visualization at a stunning bar,
+   not a near-invisible whisper). The intensity seam, the trail decay, the head-glow layering, the
+   zero-allocation render loop, the per-variant bundles.
+2. **Its own SOTA RESEARCH pass — DEFERRED to MID-TRANCHE (2026-06-08 directive).** The fourier-field
+   32-facet research is NOT a now/pre-drive task (unlike liquid-glass/aurora/blob which ran during spec
+   formation). It is DEFERRED to run MID-TRANCHE — an ORCHESTRATOR-DRIVEN workflow launched during W43's
+   drive window, whose findings the orchestrator FOLDS into W43 (and the README) at that point, the same
+   research→fold pattern, just time-shifted into execution. RATIONALE: the GPU-primitive substrate W43's
+   research depends on (the WebGPU createGPUCanvas + the optimized GPU primitives) is itself being built/
+   perfected by the aurora band (W07/W14) earlier in the tranche — so fourier-field's research lands on a
+   KNOWN, settled GPU substrate rather than guessing at it. The research SCOPE (mandatory axes):
+   (a) the state of the art in epicycle / DFT / Fourier-series visualization (the rotating-vector "drawing
+   with circles" canon, the spectral-trace aesthetic, Computer-Modern/mathematical-figure typography, the
+   comet-trail/phosphor look, the seeded-elliptic-spectra generative model);
+   (b) **WebGPU** — whether/how fourier-field should ride a WebGPU compute/render path (compute the
+   harmonic sum on the GPU; the storage-buffer harmonic-coefficient array per the W07 lesson; the
+   WebGPU-vs-Canvas2D-vs-WebGL2 decision for an animated harmonic trace);
+   (c) **our OPTIMIZED GPU PRIMITIVES** — reuse the AX-built substrate: the shared createCanvasLifecycle /
+   createGPUCanvas / useWebGLCanvas / useCanvas2D park-freeze-dispose machinery, the shared OKLCh color
+   core, the single-source procedural-color GLSL/WGSL twins — fourier-field should compose the SAME
+   optimized substrate the aurora/blob band perfected, not a parallel render path;
+   (d) **our fourier-analysis VISUALIZATION SUITE** — read `/Users/mkbabb/Programming/fourier-analysis`
+   (the sibling repo's visualization components/techniques): what harmonic/spectral visualizations it
+   ships, what the fourier-field primitive should ABSORB or align with, and the cross-repo idiom
+   (fourier-analysis is the candidate ≥2nd external consumer of fourier-field — the substrate-with-consumer
+   bar). The research deepens W43 + the research-backed README, folded by the orchestrator mid-tranche.
+3. **Full citizenship**: a research-backed README (canonical-readme-shape — use cases, the variant taxonomy,
+   the intensity model, the math, examples, design considerations), a mount-smoke test, a demo story, a
+   public-surface contract entry (`api/index.ts`), and a flat `/fourier-field` subpath.
+4. **First-class in the storybook IA (W18)** — a Substrates-band story SIBLING to aurora/goo-blob/
+   constellation/glass-material (NOT a deck-local afterthought). The §6.2 "where are aurora/blob" sidebar
+   concern extends: fourier-field belongs in the same Substrates home.
+5. **The shared useCanvas2D substrate (W37)** — fourier-field + constellation are the ≥2 consumers that
+   justify the useCanvas2D lifecycle substrate as a first-class glass composable (verify-not-rebuild: the
+   I-session shipped useCanvas2D; AX certifies it as the canonical Canvas2D-park/freeze/dispose substrate the
+   way useWebGLCanvas serves aurora/blob).
+6. **The GooBlob color seam** the I-session wired (no probe-span, no MutationObserver) — fold the color
+   discipline into the shared color core (the `/color` OKLCh seam aurora/blob already share).
+
+**Routing:** a NEW band entry — fourier-field joins the graphics/substrates first-class set (aurora W07/W10-14,
+blob W08/W15-16, constellation W17, **fourier-field W43 + its research**). W43 absorbs J.W1 (intensity) + the
+J.W9 glass-ui-half citizenship + the new SOTA research. W18 seats it in Substrates. W37 certifies the shared
+useCanvas2D substrate (fourier-field + constellation = the ≥2 consumers). The §25 J coordination stands; this
+§26 RAISES the glass-ui-side fourier-field work from "citizenship chore" to "first-class component perfection +
+research," matching how the user values aurora/blob/constellation. The dedicated SOTA research runs as a
+sequenced workflow (one-at-a-time per the established cadence) before W43 drives — folded into the AX research
+corpus alongside liquid-glass/aurora/blob.

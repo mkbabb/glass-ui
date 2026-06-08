@@ -308,16 +308,23 @@ and run as **INDEPENDENT concurrent lanes** the instant W00 lands (digest `harde
 
 (All within the AX ≤6-implementation / ≤7-read-only ceiling — this wave's actual count is 3.)
 
----
-
-## HardGate (born-RED→GREEN + the MANDATORY VISUAL-TRUTH live audit)
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):**
+The wave-agnostic authorization grant lives ONCE in AX.md §6.1 (the master template — devise an in-FileBounds idiomatic gestalt fix; spawn a tangent triumvirate to work AROUND, never stall; escalate ONLY when genuinely user-gated) with the 4-class halt-vs-work-around decision tree in AX.md §6.2 — by reference, not restated here. This wave's §3a triumvirate AUTO-TRIGGERS (Class-2 → research→plan-augment(Exact-Wave-Amendment-Text)→redress, caps 20/15/30):
+- **Out-of-FileBounds reveal** — the un-flood needs an edit to `sdf-body.glsl.ts` (the `k *= 4.0` is CORRECT — this is a scale re-derivation across the config/type/mood inputs, NOT a shader rewrite), to the geometry constants `bodyRadius`/`orbitRadius`/satellite radii (W15), to the pause/resume + substrate/multi-instance plumbing or the full research README (W16), or to the aurora WGSL/`packGPUUniforms`/`WEBGPU_PARITY` surface (W07) — NEVER absorbed in-line; HALT and triumvirate.
+- **`proof:blob-render` fails non-locally** — the re-derived `smoothK` + the restored `* POS_SCALE` on the `uSmoothK` upload cannot land the canvas in the TIGHT contained band (~0.25-0.6, a strict subset of W00's loose ~0.10-0.70 floor) with a per-edge transparent margin AND a center-vs-corner gradient, without re-flooding or hard-splitting → triumvirate, never a magic-constant nudge.
+- **The 3rd diagnostic-loop iteration** on the coherent-distance-regime re-solve (the empirical wet-meniscus seam-pull tune ~0.03-0.08 effective, validated on the LIVE π-lane render, not a one-shot constant) OR the mood-driven smoothK staying in-band at both min/max arousal — HALT and triumvirate rather than re-spin the multiplier.
+- **A salvageable feature regresses** (Class-1/2 boundary) — if the un-flood breaks the W9.b lit rim (Blinn-Phong + Fresnel) or the W11.a iridescence/SSS sheen on the contained droplet's curved edge, an in-FileBounds gestalt fix is authorized; if the fix would reach the shader or the W15/W16 surface it becomes a scope-reveal → triumvirate.
 
 **Headless / runtime gate — born-RED→GREEN.** `proof:blob-render` (NEW, π-lane, fail-CLOSED, in the W00
 visual-runtime workspace, DEFAULT WebGL2 engine, `preserveDrawingBuffer: true`):
 
 - Mounts `<GooBlob>` with `BLOB_CONFIG_DEFAULTS`, drives N frames, reads back the canvas. Asserts:
-  1. **Opaque-fraction in a contained band** — roughly **0.25-0.6** of the canvas (a droplet occupies a
-     bounded region; NOT `> 0.9` flood, NOT `0` blank). **Born-RED at HEAD** (HEAD floods `> 0.9`).
+  1. **Opaque-fraction in a contained band** — the TIGHT blob-specific band, roughly **0.25-0.6** of the
+     canvas (a droplet occupies a bounded region; NOT `> 0.9` flood, NOT `0` blank). This band is a strict
+     SUBSET of W00's LOOSE shared non-flood floor `~0.10-0.70` (`proof:substrate-paints-color`): W00 owns the
+     wide superset every substrate must clear; W08 narrows it to the blob droplet's tight band INSIDE it, so
+     the two are subset-consistent and never contradict (anything passing W08's `0.25-0.6` passes W00's
+     `~0.10-0.70`). **Born-RED at HEAD** (HEAD floods `> 0.9`).
   2. **Bounded away from all four canvas edges** — a transparent margin exists on every side (a metaball must
      not touch the canvas border at rest). **Born-RED** (HEAD hard-clips top/right/bottom).
   3. **A center-vs-corner alpha gradient exists** — a field, not a slab. **Born-RED** (HEAD is alpha = 1

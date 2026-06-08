@@ -260,6 +260,28 @@ glass-ui-side count is **2** (1 annex-author + 1 adversarial-verify), under the 
   is an orchestrator-run read-only check (`git status --porcelain` empty on a known branch for both siblings),
   recorded in the coordination doc.
 
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):**
+The wave-agnostic authorization grant is by-reference — AX.md §6.1 (the canonical autonomous-resilience clause) +
+§6.2 (the halt-vs-work-around decision tree) + §6.3 (the cross-session clobber ritual). The implementing agent
+works AROUND a roadblock with an idiomatic gestalt fix in-FileBounds rather than stall; it spawns a tangent
+triumvirate (research→plan-augment carrying `## Exact Wave-Amendment Text`→redress; caps 20/15/30) on a
+scope-reveal, a non-local gate failure, or a 3rd diagnostic-loop iteration; it escalates ONLY on a §21
+held-invariant breach or a §6.2 Class-3/4 user-gate. **The wave-specific §3a auto-triggers (authored from this
+wave's FileBounds + HardGate):** (1) a reveal that the receive needs an edit OUTSIDE the annex/coordination-doc
+FileBounds — e.g. a glass-ui `src/` strike surfaces as required (that is W29's, out-of-bounds here) or a sibling
+`src/` write the glass-ui agent must not author (inv-16' — siblings own their source); (2) the `proof:repatriate-local`
+gate (speedtest-side OR muster-side) fails NON-LOCALLY — a native copy import-rewire leaves a surviving
+`@mkbabb/glass-ui/{metric-cell,metric-stack,instrument-chassis}` import, or the false-coupling guard reds because
+`MetricBadge`/`AnimatedDigit` got dragged into a native copy; (3) the 3rd diagnostic-loop iteration on the
+gate-0 `R-clean` clean-sibling precondition (a sibling tree that will not clear its stash / 23-ahead reconcile
+debt to an empty `git status --porcelain` on a known branch — the chronic dirty-sibling wall); (4) the SUBPATH_OWNED
+metaball→goo-blob reconcile or the TravelMatrix flush-density impedance-fix reveals a sibling-side contract the
+annex cannot specify without crossing into sibling source; (5) the cross-repo VISUAL-TRUTH paired-π BEFORE/AFTER
+DELTA shows a native copy that does NOT render byte-equivalent (an appearance regression the annex must re-spec).
+A §5.3 ratify reached un-ratified (none gate this wave directly; the W21↔W29 metric-pill-path ratify is W29's)
+HALTS-and-ratifies per §6.2 Class-3. A genuine deploy credential or a §21 hard-prohibited cross-repo push is the
+only Class-4 user-gate.
+
 ---
 
 ## HardGate (born-RED→GREEN + the MANDATORY VISUAL-TRUTH cross-repo live audit clause)

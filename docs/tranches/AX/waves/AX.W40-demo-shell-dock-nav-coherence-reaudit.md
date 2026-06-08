@@ -127,10 +127,14 @@ The three-role split (implement / adversarially-verify / gate-author) per the AX
 
 - **Gate-author — the five-gate registrar + the fail-open→fail-CLOSED promoter.** Promotes `proof:demo-dock-nav-runtime` from the fail-open SKIP to fail-CLOSED in the π workspace, re-baselines `proof:demo-dock-nav`'s structural shape for the AX dock + W18 tree, and REGISTERS all five gates in `gates.mjs` with correct local/ci/release tags. Runs the five to coherent green LAST.
 
-**Triumvirate auto-triggers (per WAVE_SPEC §3a — mandatory, the orchestrator may not redispatch the failing unit alone):**
-- FileBounds expansion: if rebuilding the shell requires a `src/components/custom/dock/**` edit (it must NOT — that is W01-W06 scope; the dock contract must already support the shell) → triumvirate (a dock-contract gap the dock band missed).
-- Non-local gate failure: if `proof:animation-coherence` reds on a SECOND spring/easing authority that has NO owning AX wave (a motion fork that slipped past W05 + the aurora/blob bands) → triumvirate (a cross-surface coherence break with no upstream owner).
-- Third-iteration diagnostic loop: if the π-lane live-nav audit fails to settle (the nav renders headless-green but the dock morph/overflow desyncs live, or a category is unreachable) for a third re-build pass → halt + triumvirate (the dock rebuild did not actually fix the live desync the shell dogfoods).
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):**
+
+The wave-agnostic authorization grant is AX.md §6.1 (the canonical clause — work AROUND a roadblock with an idiomatic in-FileBounds gestalt fix rather than stall; spawn a tangent triumvirate on a scope-reveal / non-local gate failure / 3rd-iteration loop; escalate ONLY on a genuine §21 user-gate) + §6.2 (the 4-class halt-vs-work-around decision tree). The orchestrator may NOT redispatch the failing unit alone. This wave's §3a auto-triggers (authored from its FileBounds + HardGate):
+
+- **FileBounds expansion / scope-reveal → triumvirate (Class 2).** If rebuilding the shell requires a `src/components/custom/dock/**` or `src/styles/dock*.css` edit (it must NOT — that is W01-W06 scope; the dock contract must already support the shell), or the coherence re-scope reveals a needed `src/styles/tokens.css` `--spring-*` edit (W05's), the reveal is NEVER absorbed in-line → HALT + triumvirate (a dock-contract / spring-vocabulary gap the dock band missed).
+- **Non-local hard-gate failure → triumvirate (Class 2).** If `proof:animation-coherence` reds on a SECOND spring/easing authority that has NO owning AX wave (a motion fork that slipped past W05 + the aurora/blob bands), or `proof:naming-consistency` flags a divergent shipped name that would require a no-legacy-violating rename, the gate fails outside W40's FileBounds → triumvirate (a cross-surface coherence break with no upstream owner).
+- **3rd diagnostic-loop iteration → triumvirate (Class 2).** If the π-lane live-nav audit fails to settle (the nav renders headless-green but the rebuilt dock morph/overflow desyncs live, or a W18 category is unreachable) for a third re-build pass → HALT + triumvirate (the dock rebuild did not actually fix the live desync the shell dogfoods).
+- **§5.3 ratify reached un-ratified → HALT-AND-RATIFY (Class 3).** If the inherited W22 font register or the W23 glass-scrubber-rename the naming convention must reflect is NOT yet ratified-landed when the audit runs, do NOT self-ratify the name → surface to the orchestrator for the recorded default.
 
 ---
 

@@ -253,6 +253,15 @@ the value-side widen are the sibling sessions' own waves, out of glass-ui's disp
   registers all four (incl. `proof:peer-conformance`) in `scripts/gates.mjs` with the at-LEAST-ci tag
   model; authors `W41-publisher-cross-repo-build.json`.
 
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):**
+
+The wave-agnostic authorization grant is AX.md §6.1 (the canonical clause — work AROUND a roadblock with an idiomatic in-FileBounds gestalt fix rather than stall; spawn a tangent triumvirate on a scope-reveal / non-local gate failure / 3rd-iteration loop; escalate ONLY on a genuine §21 user-gate) + §6.2 (the 4-class halt-vs-work-around decision tree). The orchestrator may NOT redispatch the failing unit alone. This wave's §3a auto-triggers (authored from its FileBounds + HardGate):
+
+- **FileBounds expansion / scope-reveal → triumvirate (Class 2).** If re-deriving `build:watch` to emit dts reveals a needed `tsconfig.build.json` / `vite.library.ts` / `flatten-subpath-types.mjs` edit beyond `package.json` + `scripts/build-watch.mjs` (it must NOT — the dts arm reuses the cold-build `emit-types` toolchain unchanged), or the value-devDep bump reveals a needed `peerDependencies` re-narrow (forbidden — the peers already admit `^0.11`/`^4` per AW.W27) or a real nested-graph value.js resolution edit, or any `src/` runtime touch surfaces, the reveal is NEVER absorbed in-line → HALT + triumvirate (a packaging-toolchain gap the FileBounds did not home).
+- **Non-local hard-gate failure → triumvirate (Class 2).** If `proof:build-watch-dts` reds because the combined-watch dts arm cannot stay fresh without a toolchain change outside W41's FileBounds, or `proof:keyframes-export-stability` reds on a relied-symbol the W34 idiom census has NOT yet enumerated (the export-census source is upstream-incomplete), or `proof:peer-conformance` reds against a peer/devDep state another wave owns, the gate fails outside W41's FileBounds → triumvirate (a supplier-edge break with no in-wave owner).
+- **3rd diagnostic-loop iteration → triumvirate (Class 2).** If the dts-watch re-derivation fails to keep `dist/*.d.ts` fresh on a mid-session `src/` edit (the keystone witness) for a third re-author pass — the combined JS + `emit-types --watch` arm still leaves the dts stale — HALT + triumvirate (the watch-pipeline re-derivation did not actually close the contract-v2 freshness obligation it exists to fix).
+- **§5.3 ratify reached un-ratified → HALT-AND-RATIFY (Class 3).** If the devDep-bump path (the value `^0.11` representative-point bump vs the keyframes `^4` bump GATED on the 4.0.1 republish handoff; the phantom-devDep drop-vs-keep adjudicated by the LIVE value.js-load re-diagnosis) cannot be ratified from the live evidence — the keyframes-4 `file:`-link state or the value-load path is ambiguous when the bump runs — do NOT self-ratify an `npm ci`-breaking bump → surface to the orchestrator for the recorded default (keyframes stays `^2.2.0`, gated).
+
 ---
 
 ## HardGate (born-RED → GREEN + the MANDATORY visual-truth clause)

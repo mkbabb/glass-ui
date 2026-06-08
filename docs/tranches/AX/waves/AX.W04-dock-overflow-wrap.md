@@ -49,8 +49,9 @@ shadow tier on one tokenized radius, with the magic-640 viewport chain deleted a
 
 ## Scope (the gestalt fix — no workaround, no legacy, no viewport hack)
 
-The audit's six findings (F0-F5) are the SAME surface on the SAME `--dock-motion-resize` morph substrate;
-one cohesive architectural fix:
+The audit's six findings (F0-F5) are the SAME surface on the SAME `--dock-morph-t` morph substrate (the
+single-scalar W01 mints; W04 reads it via `calc()`, never the retired transition list); one cohesive
+architectural fix:
 
 1. **Content-driven intrinsic flex-wrap (F0 — blocker root).** Re-express wrap as an over-cap reflow, not a
    viewport MQ. Make `.dock-overflow-wrap .dock-layer--full { flex-wrap: wrap }` **ALWAYS-ON** and cap the
@@ -70,10 +71,9 @@ one cohesive architectural fix:
    tier: route its box-shadow through the floating-tier stack (`--glass-material-rim`,
    `--glass-under-shadow-vivid`, `--glass-shadow-floating`) when the dock is a finite-radius multi-row/card
    surface — expressed as a **`--shadow-dock-wrap`** token **on the `:root` cascade** (consumer-overridable,
-   never a dead local — per the cartoon-shadow override contract). The shadow transitions on the **same
-   `--dock-motion-resize` spring** the radius already glides on (box-shadow is already in the
-   `:not(.vertical)` transition list), so the pill→card morph lifts elevation in lockstep with the corner
-   morph — ONE register.
+   never a dead local — per the cartoon-shadow override contract). The shadow reads via `calc()` off the
+   **same `--dock-morph-t` scalar** the radius already glides on, so the pill→card morph lifts elevation in
+   lockstep with the corner morph — ONE register, ONE clock.
 
 3. **One finite-radius token (F4 — minor, DRY).** The wrap shell hardcodes `border-radius: var(--radius-2xl)`
    (`dock.css:913`, 16px) while the sibling big-dock card path uses the density-scaled `--dock-card-radius`
@@ -143,8 +143,8 @@ The iOS-26 Liquid-Glass corpus deepens W04's pill↔card morph (facets 0, 2, 11,
 2. **The card-tier shadow IS "material thickens when it flexes larger"** (facets 0, 2, 17). Apple's WWDC25
    §219 rule — as glass morphs to a larger size its characteristics shift to a THICKER material (deeper
    shadows, more pronounced lensing) — is exactly the F1 fix: the wrapped/card silhouette lifts onto the
-   floating-tier shadow stack via `--shadow-dock-wrap`, transitioning on the SAME `--dock-motion-resize`
-   spring the radius glides on. The synthesis names this the highest-value cheap iOS behaviour: the morph
+   floating-tier shadow stack via `--shadow-dock-wrap`, read via `calc()` off the SAME `--dock-morph-t`
+   scalar the radius glides on. The synthesis names this the highest-value cheap iOS behaviour: the morph
    scalar drives shadow-tier + radius (+ refraction-scale + specular-intensity in W09) TOGETHER so the
    surface reads thicker as it expands — ONE register, no second clock.
 
@@ -195,8 +195,8 @@ The dock band (W01-W06) all mutate `dock.css` and/or `GlassDock.vue` — **they 
 (digest line 353). The dispatch contract:
 
 - **vs W01 (single-scalar morph — `useLayerTransition` rewrite + dock.css morph rules + GlassDock.vue VT
-  removal).** W04 **dependsOn W01** and runs AFTER it lands, so the wrap radius/shadow morphs inherit the
-  corrected single-scalar `--dock-motion-resize` spring (no re-bounce). W04 touches the WRAP recipe rows of
+  removal).** W04 **dependsOn W01** and runs AFTER it lands, so the wrap radius/shadow morphs read via
+  `calc()` off the corrected single-scalar `--dock-morph-t` (no re-bounce). W04 touches the WRAP recipe rows of
   `dock.css`; W01 touches the MORPH-driver rows. Sequential, not concurrent — W04 rebases onto the settled
   W01 model.
 - **vs W03 (keepDockOpen — `Slider.vue` + new `dock/composables/useDockHold.ts`).** Disjoint by file: W03 is
@@ -239,6 +239,8 @@ The dock band (W01-W06) all mutate `dock.css` and/or `GlassDock.vue` — **they 
 
 (All within the AX ≤6-implementation / ≤7-read-only ceiling — this wave's actual count is 3.)
 
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):** the wave-agnostic authorization grant is AX.md §6.1 (work AROUND a roadblock with an idiomatic gestalt fix rather than stall; the §6.2 decision tree bounds halt-vs-work-around) — by reference, not restated. This wave's §3a auto-triggers (HALT the failing unit + dispatch the research→plan-augment→redress triumvirate, never stall): (a) any need to touch the `useLayerTransition`/VT-removal morph driver (W01), `Slider.vue`/`useDockHold.ts` (W03), the `--ease-apple-spring` excision (W05), the `src/styles/dock/` partials split (W06), or to REDEFINE a shared radius token in `theme.css` (W04 only CONSUMES `--dock-card-radius`) — a scope-reveal → triumvirate, never absorbed in-line; (b) the `proof:dock-wrap-content-driven` π-lane reflow detector not reliably measurable on the DEFAULT engine (the over-cap `flex-wrap`/`rowCount` not capturable, or the radius/shadow not provably reading `calc()` off `--dock-morph-t`) → non-local gate failure → triumvirate, not a hand-patched probe; (c) any §Open-Questions RATIFY-BEFORE-IMPL (the `--dock-max-inline-size` viewport-gutter default, the F3 strike-vs-detector path, the `:has()`-vs-`@container` radius key, the vertical max-block-size default) reaching un-ratified → §6.2 Class-3 HALT-AND-RATIFY; (d) the 3rd diagnostic-loop iteration on the content-driven `min(max-content, cap)` reflow re-bouncing against the W01 single-scalar morph → triumvirate.
+
 ---
 
 ## HardGate (born-RED→GREEN + the MANDATORY VISUAL-TRUTH live audit)
@@ -254,8 +256,10 @@ the W00 visual-runtime workspace, DEFAULT engine):
   source-deletion proof that `@media (min-width: 640px)` no longer governs the wrap recipe.
 - Asserts the multi-row card `border-radius` resolves to `--dock-card-radius` (24px), NOT `--radius-2xl` (16px).
 - Asserts the multi-row card `box-shadow` resolves through the `--shadow-dock-wrap` floating-tier stack (a
-  non-`--shadow-dock` value when wrapped), and that it transitions on `--dock-motion-resize` (the property is
-  in the transition list).
+  non-`--shadow-dock` value when wrapped), and that the shadow + radius axes read via `calc()` off
+  `--dock-morph-t` (the single-scalar W01 mints) — NOT a CSS `transition` on the retired `--dock-motion-resize`
+  list. Sample the box-shadow + border-radius at two morph-scalar values (the `.glass-dock` root
+  `--dock-morph-t` driven 0→1) and assert both axes track the scalar in lockstep.
 - Asserts a **vertical** dock with `overflow="wrap"` carries NO `.dock-overflow-wrap` class (horizontal-only).
 - **Strike-proof for the false gate:** `grep "wrap reflow|morphing.*wrap"` over `README.md` +
   `dock.css` = 0 (the doc-rot line is struck), AND `proof:dock-layering-polish` no longer narrates an
@@ -293,8 +297,9 @@ BEFORE/AFTER + DELTA artefact under `docs/tranches/AX/audit/`) is the binding cl
    the `@media (min-width:640px)` block + `--dock-overflow-bp` (tokens.css); the `:has()`/container-size
    pill↔card radius key. Lint + typecheck.
 4. **Card-tier shadow morph + radius unify.** ADD `--shadow-dock-wrap` (tokens.css `:root`); route the
-   wrapped/card silhouette through the floating-tier stack on `--dock-motion-resize`; unify the wrap radius on
-   `--dock-card-radius`.
+   wrapped/card silhouette through the floating-tier stack, the shadow axis read via `calc()` off
+   `--dock-morph-t` (the W01 single-scalar, NOT the retired `--dock-motion-resize` transition); unify the wrap
+   radius on `--dock-card-radius`.
 5. **Horizontal-only guard + vertical max-height contract.** `GlassDock.vue` class-emit guard
    (`overflow === 'wrap' && orientation !== 'vertical'`); the `--dock-max-block-size` vertical contract rule;
    strike the F5 false vertical comment.
@@ -337,8 +342,8 @@ the hardened agent git clause. These are the messages the orchestrator authors.)
 
 ## Dependencies (dependsOn from the charter + why)
 
-- **AX.W01 (single-scalar morph) — HARD.** The wrap radius + the new `--shadow-dock-wrap` shadow transition
-  on `--dock-motion-resize`; W04 must rebase onto the settled W01 one-clock spring so the pill→card morph
+- **AX.W01 (single-scalar morph) — HARD.** The wrap radius + the new `--shadow-dock-wrap` shadow read via
+  `calc()` off `--dock-morph-t`; W04 must rebase onto the settled W01 one-clock spring so the pill→card morph
   composes with it (no re-bounce, no second clock). Sequencing W04 before W01 would morph the wrap silhouette
   on a spring W01 then rips out. (Charter §3 dependsOn AX.W01; audit `dependsOn` = "AFTER the dock one-clock
   morph fix is settled.")

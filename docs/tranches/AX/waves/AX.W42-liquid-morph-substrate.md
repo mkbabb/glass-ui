@@ -1,8 +1,9 @@
 # AX.W42 — The unified liquid-morph substrate: `useLiquidMorph` / `--morph-t` as ONE idiom
 
-**Band** A · DOCK / SUBSTRATE · **Severity** major · **dependsOn** AX.W00, AX.W01
+**Band** A · DOCK / SUBSTRATE · **Severity** major · **dependsOn** AX.W00, AX.W01, AX.W02
 · **Charter** AX.md REQUIREMENTS §18.1/§18.3 (the net-new unified MORPH substrate; the dock single-scalar
-`--dock-morph-t` (W01) is its FIRST consumer) · **Research**
+`--dock-morph-t` (W01) is its FIRST consumer) + §19.11 (DOCK-FACILITIES PR-2 dock-self-reshape — SCOPED GO:
+superellipse-`k`-continuous + discrete-custom-presets only, fold 7) · **Research**
 `docs/tranches/AX/research/liquidglass-synthesis.md` §1.4 + the 32-facet corpus facets 1/3/12/26/27/28/29/30
 (`liquidglass-research-corpus.json`) · **Audit** the converge-synthesis verdict: net-new + wave-worthy but
 ~70% assembly, not greenfield.
@@ -90,7 +91,7 @@ The §18.3 substrate is ~70% ASSEMBLY of primitives already in the tree (the reu
 net-new is the unifying API surface + the `MorphGroup` orchestrator + the `axes`-declaration that lets CSS
 `calc()` off one scalar + the 3-state lifecycle enum. The substrate ships ONLY with ≥2 real consumers at
 landing (the dock + ≥1 glass primitive) — every API knob needs a named consumer or it is overfit substrate
-(L invariant 8; the §0 no-overfitting bar). Six folds:
+(L invariant 8; the §0 no-overfitting bar). Seven folds:
 
 1. **The single-scalar morph kernel — `useLiquidMorph(elRef, options)`.** A per-element driver that owns
    ONE `SpringProgress` (the keyframes.js LIGHT-barrel core via the existing `useSpring`, NEVER value.js),
@@ -105,6 +106,21 @@ landing (the dock + ≥1 glass primitive) — every API knob needs a named consu
    `{ syntax:"<number>"; inherits:false; initial-value:0 }` — registered so it interpolates composited (an
    unregistered custom property animates DISCRETELY), `inherits:false` as the inheritance-bomb guard, and
    written LOCALLY on `elRef` (never `:root`).
+
+   **The scalar-name bridge (`--morph-t` ↔ `--dock-morph-t`) — the substrate writes a CONSUMER-NAMESPACED
+   scalar, not a single hardcoded `--morph-t`.** The two names are NOT a contradiction with W01: the
+   substrate writes the progress under a per-consumer custom-property name the consumer SUPPLIES (a
+   `scalarName` option defaulting to `--morph-t`), and the dock consumer supplies `--dock-morph-t`, so the
+   dock instance writes `--dock-morph-t` exactly as W01 minted it. This IS the inheritance-bomb guard's
+   complement — a locally-written, `@property`-registered, `inherits:false` scalar per morphing element means
+   two morph instances on one page never collide on a single inherited `--morph-t`, and the dock keeps its
+   established token. **W42 registers `@property --dock-morph-t` alongside `--morph-t` in `tokens.css`** (the
+   dock name is the FIRST concrete instance of the generic scalar; both carry
+   `{ syntax:"<number>"; inherits:false; initial-value:0 }`), and **`dock.css` is read UNTOUCHED** — W01
+   already authored every `dock.css` `calc()` read off `--dock-morph-t`, and W42 generalizes only the SCALAR
+   MECHANISM behind it without re-authoring a single `dock.css` line (W01 owns the dock CSS — see Disjointness
+   + the FileBounds Do-NOT-touch). The substrate's own `--morph-t` registration is the default the non-dock
+   second consumer reads.
 
 2. **The `MorphGroup` orchestrator — `provideMorphGroup()` / inject pair (the `GlassEffectContainer` /
    `LayoutGroup` analog).** Nested morphable elements INJECT this shared orchestrator and DEFER to its ONE
@@ -166,6 +182,26 @@ landing (the dock + ≥1 glass primitive) — every API knob needs a named consu
    unifying API surface + the `MorphGroup` orchestrator + the `axes`-declaration + the 3-state lifecycle
    enum.
 
+7. **The §19.11 dock-self-reshape fold — NARROWED to superellipse-`k`-continuous + discrete-custom-presets,
+   NOT arbitrary silhouettes.** §19.11 (DOCK-FACILITIES PR-2, "the scope-deciding one") asks whether the dock
+   can morph its OWN silhouette as it flexes. The honest web-platform answer the corpus records: a CSS engine
+   CANNOT continuously interpolate mismatched-topology `clip-path` silhouettes (PR-2's flag — arbitrary
+   shape-to-shape morphs jump-cut), so the fold is DELIBERATELY narrowed to the two web-feasible reshape
+   classes the single-scalar substrate CAN drive: (a) a **continuous superellipse `k` parameter** — the
+   silhouette's corner-roundness/squircle bias rides a registered `--superellipse-k` (or a `corner-shape:
+   superellipse(k)` read where the engine ships it) `calc()`'d off `--morph-t`, so the dock's silhouette
+   smoothly relaxes its squircle-`k` as it expands (a continuous, same-topology, spring-interpolable axis —
+   one more `axes` member, no second driver); (b) **discrete custom-preset SWAPS** — a small enumerated set
+   of named silhouette presets the consumer registers, the morph CROSS-FADES between via the 3-state
+   lifecycle (a `data-morph-state`-keyed discrete swap, NOT a per-frame clip-path interpolation), which is the
+   honest way to "change shape" without the topology-morph the platform can't do. **EXPLICITLY OUT OF SCOPE:
+   arbitrary free-form clip-path silhouettes** (the PR-2 NO-GO — a mismatched-topology morph the web cannot
+   continuously animate; attempting it is the jump-cut defect). This fold ships ONLY if the dock consumer
+   actually drives a `k`-continuous or preset reshape at landing (the no-overfitting bar — a `--superellipse-k`
+   axis with no consumer is dead substrate); otherwise it is a flagged-door deferred to a future dock wave.
+   The §19.11 GO/NO-GO is thereby resolved as a SCOPED GO (the feasible subset) rather than the PR-2
+   blanket NO-GO.
+
 No workaround, no parallel morph path, no speculative options surface. The substrate is the
 re-derivation that makes single-authorship STRUCTURAL, not a per-consumer discipline.
 
@@ -179,8 +215,8 @@ re-derivation that makes single-authorship STRUCTURAL, not a per-consumer discip
 | `src/composables/motion/useMorphState.ts` | **create** | the 3-state lifecycle composable — `{ state, begin(), settle() }` owning the `data-morph-state` write + the will-change/clip/stagger arm-disarm lifecycle (the facet-28 extracted seam) |
 | `src/composables/motion/morphGroupContext.ts` | **create** | the `createOptionalContext<MorphGroupContext>` orchestrator DI seam + `provideMorphGroup`/`useMorphGroup` helpers (the `GlassEffectContainer`/`LayoutGroup` analog) |
 | `src/composables/motion/index.ts` | modify | barrel-export `useLiquidMorph` + `useMorphState` + the `MorphGroup` helpers/key/types |
-| `src/composables/motion/useLayerTransition.ts` | modify | **RE-DERIVE as a thin dock-flavored wrapper over `useLiquidMorph`** (after W01 lands its single-scalar rewrite; W42 lifts the FLIP + velocity-continuity + clip-aperture lifecycle into the substrate, and `useLayerTransition` becomes the dock instance) — coordinated with W01 (see Disjointness) |
-| `src/styles/tokens.css` | modify | register `@property --morph-t { syntax:"<number>"; inherits:false; initial-value:0 }` (+ the registered `--glass-refract-scale` if the lensing fold lands) near the existing `@property` cohort |
+| `src/components/custom/dock/composables/useLayerTransition.ts` | modify | **RE-DERIVE as a thin dock-flavored wrapper over `useLiquidMorph`** (after W01 lands its single-scalar rewrite; W42 lifts the FLIP + velocity-continuity + clip-aperture lifecycle into the substrate, and `useLayerTransition` becomes the dock instance) — coordinated with W01 (see Disjointness) |
+| `src/styles/tokens.css` | modify | register `@property --morph-t { syntax:"<number>"; inherits:false; initial-value:0 }` AND `@property --dock-morph-t {…same…}` (the dock's namespaced first instance — the scalar-name bridge; `dock.css` reads it untouched, W01 authored those `calc()` reads) (+ the registered `--glass-refract-scale` if the lensing fold lands) near the existing `@property` cohort |
 | `src/styles/glass.css` | modify | the `@supports (backdrop-filter: url('#…'))`-gated `--glass-refract-scale` read off `--morph-t` (the lensing-springs-as-box-flexes fold) — ADDITIVE over the blur base, never the substrate |
 | `src/components/custom/dock/index.ts` | modify | the dock subpath barrel re-exports the rebuilt `useLayerTransition` (substrate-with-consumer — the value.js fork-deletion target; the adoption leg → W34) |
 | `src/components/ui/<glass-primitive>/<Primitive>.vue` | modify | the SECOND consumer — ONE glass primitive (dialog/popover/card→detail/tab-indicator/segmented-toggle) composes `useLiquidMorph` so the substrate ships with ≥2 consumers at landing (RATIFY the primitive — see Open Questions) |
@@ -216,9 +252,10 @@ model it lifts. The shared surfaces + collision-avoidance:
   `dockMorphContext.ts` (the dock-flavored `createOptionalContext` orchestrator); W42 authors the GENERAL
   `morphGroupContext.ts` (`MorphGroup`). W02's dock context becomes an INSTANCE of W42's `MorphGroup` (or
   W42's `MorphGroup` is what W02's `dockMorphContext` provides through) — coordinate so the dock orchestrator
-  is the dock-flavored first consumer of the general facility, not a parallel second context. If W42 follows
-  W02, W42 lifts `dockMorphContext` onto `MorphGroup`; if W42 precedes W02, W02 consumes `MorphGroup`
-  directly. RATIFY the ordering at wave-open.
+  is the dock-flavored first consumer of the general facility, not a parallel second context. **The ordering
+  is PINNED: W42 follows W02** (the band-gating dependsOn — W42 lifts the settled `dockMorphContext` onto
+  `MorphGroup`); the "W42 precedes W02 → W02 consumes `MorphGroup` directly" branch is retired by the hard
+  dependsOn.
 - **vs AX.W03 (keepDockOpen / held-as-morph-state).** W03 makes `held` a first-class morph-state INPUT to
   the dock state machine; W42 generalizes the morph-STATE-MACHINE (the `data-morph-state` enum). Disjoint
   file (W03: `useDockHold.ts`/`Slider.vue`; W42: `useMorphState.ts`). The `held`-as-morph-input is a W03
@@ -274,6 +311,15 @@ Per AX.md §0 agent-ceiling (≤6 implement / ≤7 read-only-audit). W42's actua
   has no naive `getBoundingClientRect` handle; force the readable arm via test-flag/PRM, real `page.hover`,
   expose the spring as a test seam + parse the token peak — per the W00 design).
 
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):**
+
+The wave-agnostic authorization grant is AX.md §6.1 (the canonical clause — work AROUND a roadblock with an idiomatic in-FileBounds gestalt fix rather than stall; spawn a tangent triumvirate on a scope-reveal / non-local gate failure / 3rd-iteration loop; escalate ONLY on a genuine §21 user-gate) + §6.2 (the 4-class halt-vs-work-around decision tree). The orchestrator may NOT redispatch the failing unit alone. This wave's §3a auto-triggers (authored from its FileBounds + HardGate):
+
+- **FileBounds expansion / scope-reveal → triumvirate (Class 2).** If lifting `useLayerTransition` onto the substrate reveals a needed `dock.css` morph-rule edit (it must NOT — W01 owns every `dock.css` `calc()` read off `--dock-morph-t`; W42 generalizes only the SCALAR MECHANISM), or wiring the second consumer reveals a needed edit to a glass primitive beyond the ONE ratified `<Primitive>.vue` + its barrel, or the lensing fold reveals a needed `useGlassRenderer.ts` / `useSpecularTracking.ts` touch (W20/W09 own those — W42 CONSUMES them), the reveal is NEVER absorbed in-line → HALT + triumvirate (a dock/glass/specular-substrate boundary the FileBounds did not home).
+- **Non-local hard-gate failure → triumvirate (Class 2).** If `proof:dock-animation-live` (W01's gate, RE-RUN here) reds after the substrate lift — the box-leads-content desync re-entering through the thin `useLayerTransition` wrapper — the failure lands on a gate W01 owns, not W42's FileBounds → triumvirate (the substrate promotion desynced the dock model W01 fixed). Likewise if `proof:vt-names` (the route-morph seam) reds because the `morphId` bifurcation broke the per-instance `view-transition-name` seam fourier route-morphs through.
+- **3rd diagnostic-loop iteration → triumvirate (Class 2).** If the π-lane visual-truth audit fails to settle (the dock + the second glass primitive do NOT read as ONE continuous iOS spring off the SAME substrate, the velocity-continuity retarget jump-cuts a mid-flight re-toggle, or the lensing fold does not degrade cleanly on a non-Chromium engine) for a third re-build pass → HALT + triumvirate (the substrate generalization did not actually unify the morph idiom the §18.3 mandate demands).
+- **§5.3 ratify reached un-ratified → HALT-AND-RATIFY (Class 3).** The four Open-Questions RATIFY hinges (the W42-as-distinct-wave-vs-folded-into-W01 disposition, the SECOND-consumer glass-primitive choice, the lensing-fold IN-SCOPE-vs-flagged-door boundary, the `axes`-declaration shape) — if any reaches the wire un-ratified against the live re-diagnosis (e.g. the second consumer does not read BETTER on the substrate, only compiles), do NOT self-ratify → surface to the orchestrator (the W42-second-consumer is a charter-flagged USER-ADJUDICATED ratify per §6.1(iii)).
+
 ---
 
 ## HardGate (born-RED → GREEN + the MANDATORY VISUAL-TRUTH live audit)
@@ -306,10 +352,19 @@ Numbered, evidence-backed, born-RED → GREEN. Precept-valid artefact forms (run
    proof); the `/dock` barrel re-exports the rebuilt `useLayerTransition` (the value.js fork-deletion target
    reachable). The substrate ships with ≥2 in-repo consumers (the dock + the ratified glass primitive) — a
    substrate-without-consumer count of <2 FAILS CLOSED.
-6. **vitest `liquid-morph.detect.test.ts`** — the pure detector flags a synthetic two-driver /
+6. **`proof:dock-animation-live` regression-rerun — the dock morph stays one-frame-synced after the lift.**
+   Because W42 RE-DERIVES `useLayerTransition` as a thin wrapper over `useLiquidMorph` (the FLIP +
+   velocity-continuity + clip-aperture lifecycle lifted into the substrate), W01's `proof:dock-animation-live`
+   (`scripts/proof-dock-animation-live.mjs`, fail-CLOSED, DEFAULT engine) is RE-RUN against the rebuilt dock
+   and MUST stay GREEN — the root-box-vs-inner-content lead/lag ≤ 1 frame the single-scalar W01 model won
+   cannot regress under the generalization. A RED here means the substrate lift desynced the dock box from
+   its content (the box-leads-content defect re-entering through the wrapper); GREEN proves the dock's
+   one-clock co-temporality survives the substrate promotion. (Companion to gate 1's substrate-single proof;
+   gate 1 proves the engine is shared, this proves the dock's morph fidelity is preserved.)
+7. **vitest `liquid-morph.detect.test.ts`** — the pure detector flags a synthetic two-driver /
    inherited-scalar / standing-will-change series as a violation and a clean single-scalar series as clean
    (so the gate's failure path is itself covered).
-7. **`npm run typecheck` + `npm run build` clean; `proof:no-test-in-src` GREEN** (the new spec lives under
+8. **`npm run typecheck` + `npm run build` clean; `proof:no-test-in-src` GREEN** (the new spec lives under
    `tests/`).
 
 **MANDATORY VISUAL-TRUTH (non-negotiable per AX.W00; appearance/interaction axis, NOT a headless proof
@@ -354,8 +409,10 @@ does NOT close the wave.
    lensing fold (additive over the blur base).
 5. **Flip the gates GREEN + adversarial verify.** `proof:morph-substrate-single` GREEN; the
    inheritance-bomb/will-change/PRM/bifurcated-seam proofs GREEN; the barrel-reach + ≥2-consumer proof GREEN;
-   the vitest GREEN; typecheck + build clean. Adversary confirms the four invariants fire + the lensing
-   degrades.
+   **re-run W01's `proof:dock-animation-live` against the rebuilt dock and confirm it stays GREEN** (the
+   regression-rerun — W42 does NOT modify `proof-dock-animation-live.mjs`; W01 owns that gate, W42 only
+   re-runs it to prove the substrate lift did not desync the dock box from its content); the vitest GREEN;
+   typecheck + build clean. Adversary confirms the four invariants fire + the lensing degrades.
 6. **VISUAL-TRUTH close.** Executed live audit + BEFORE/AFTER/DELTA.md capture (both consumers read as one
    iOS spring, the retarget reverses fluidly, the lensing degrades, PRM snaps) — the close criterion.
 7. **Doc-update.** Flip the wave status + emit the audit json (DOC_UPDATE_WAVE protocol — docs update before
@@ -411,12 +468,18 @@ step 4, step 5) and before close; `git diff --check` on the doc/status commit.
   the thin dock wrapper. There is no single-scalar model to lift until W01 builds it — running W42 before W01
   would generalize a dock morph W01 then rewrites. (The orchestrator MAY fold W42 into W01 as the
   generalization arm — RATIFY; the §18.3 net-new mandate + the ≥2-consumer bar argue for a distinct wave.)
-- **Soft-coordinates with AX.W02 (the `MorphGroup` ↔ `dockMorphContext` ordering — see Disjointness),
-  AX.W03 (the `data-morph-state` enum the held edge feeds), AX.W05 (the governed spring register the
-  substrate consumes), AX.W09 (the `useSpecularTracking` light seam + the SPECULAR/REFRACTION half split),
-  AX.W20 (the no-imperative-filter posture the lensing fold honors).** None is a HARD dependsOn (W42 consumes
-  each settled surface if it lands first, else the published baseline) — declared so the orchestrator
-  sequences the substrate after the dock band's morph model + spring vocabulary settle.
+- **dependsOn AX.W02 (one morph orchestrator per dock) — HARD; "W42 follows W02".** W02 authors the
+  dock-flavored `dockMorphContext` (the `createOptionalContext` orchestrator); W42 lifts it onto the GENERAL
+  `MorphGroup` so the dock orchestrator is the FIRST `MorphGroup` consumer, never a parallel competing DI
+  seam. Sequencing W42 strictly after W02 settles the `MorphGroup` ↔ `dockMorphContext` ordering at spec time
+  (it was a wave-open RATIFY; the band-gating pin resolves it to "W42 follows W02" — see Disjointness +
+  Open Questions #3).
+- **Soft-coordinates with AX.W03 (the `data-morph-state` enum the held edge feeds), AX.W05 (the governed
+  spring register the substrate consumes), AX.W09 (the `useSpecularTracking` light seam + the
+  SPECULAR/REFRACTION half split), AX.W20 (the no-imperative-filter posture the lensing fold honors).** None
+  is a HARD dependsOn (W42 consumes each settled surface if it lands first, else the published baseline) —
+  declared so the orchestrator sequences the substrate after the dock band's morph model + spring vocabulary
+  settle.
 - **Feeds AX.W34** (read-only routing) — the value.js FLIP-width fork-deletion + the `ActionBarLayer.vue`
   re-point onto the re-exported `useLayerTransition` is the consumer-adoption leg; W42 records it, W34
   executes it.
@@ -520,11 +583,11 @@ Pursuant to `docs/precepts/` (pinned `63240e6`); the band-A binding precepts (AX
    `@starting-style`-native (Dialog entry) — that would be a CSS-only-tier consumer, not a composable-tier
    one, weakening the substrate proof. RATIFY against the live audit (the consumer must read BETTER on the
    substrate, not just compile).
-3. **The `MorphGroup` ↔ W02 `dockMorphContext` ordering — RATIFY.** If W42 follows W02, W42 lifts
-   `dockMorphContext` onto the general `MorphGroup`; if W42 precedes W02, W02 consumes `MorphGroup` directly.
-   **Recommendation: W42 follows W02** (W02 establishes the dock-flavored orchestrator first; W42 generalizes
-   it) — so the dock orchestrator is the first `MorphGroup` consumer, not a parallel context. RATIFY the
-   sequence so the two are never authored as competing DI seams.
+3. **The `MorphGroup` ↔ W02 `dockMorphContext` ordering — RESOLVED (pinned by the band-gating dependsOn).**
+   **W42 follows W02** — encoded as a HARD `dependsOn AX.W02` (header + Dependencies). W02 establishes the
+   dock-flavored orchestrator first; W42 lifts `dockMorphContext` onto the general `MorphGroup` so the dock
+   orchestrator is the first `MorphGroup` consumer, never a parallel competing DI seam. No wave-open RATIFY
+   remains — the "W42 precedes W02" branch is retired.
 4. **The lensing fold — IN-SCOPE vs flagged-door — RATIFY.** The `@supports`-gated `--glass-refract-scale`
    springs-off-`--morph-t` fold is the genuine material addition, but it touches `glass.css` (W09/W20's
    neighbourhood) and the displacement-map is resize-expensive. **Recommendation: land the
@@ -538,4 +601,6 @@ Pursuant to `docs/precepts/` (pinned `63240e6`); the band-A binding precepts (AX
    whether `axes` is a string-literal union (`'inlineSize'|'radius'|'specular'|…`) the substrate enumerates,
    or an open `string[]` the consumer's CSS keys off freely. **Recommendation: a typed union of the axes the
    ≥2 consumers ACTUALLY drive** (the no-overfitting bar — do not enumerate an axis no consumer uses);
-   expand the union only when a consumer needs a new axis. RATIFY at the census.
+   expand the union only when a consumer needs a new axis. The fold-7 `superellipse`/`k` silhouette axis is a
+   union member ONLY if the dock consumer drives a `k`-continuous reshape at landing (else it stays
+   flagged-door, not an enumerated dead axis). RATIFY at the census.

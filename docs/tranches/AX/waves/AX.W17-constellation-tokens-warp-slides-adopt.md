@@ -60,19 +60,25 @@ focal/warp seam; slides still runs a 510-line duplicate.
   never revisited and the duplication ossified. RED: two parallel constellation implementations, the
   consumer copy un-deleted.
 
-- **RED witness 4 (a `light-dark()`-into-Canvas2D leak is unguarded at the library layer).** The W30 slides
-  cardinal defect (`constellation.ts:107` reads the neutral edge color from `--foreground`, a `light-dark()`
-  value Canvas2D SILENTLY REJECTS → `strokeStyle` stuck on the previously-set red accent → 86.3% red
-  splatter) generalizes to the LIBRARY: there is NO static gate forbidding a `light-dark(` value inside a
+- **RED witness 4 (a `light-dark()`-into-Canvas2D leak is unguarded at the library layer — DIRECTLY AND
+  TRANSITIVELY).** The W30 slides cardinal defect (`constellation.ts` reads the neutral edge color from
+  `--foreground`, a `light-dark()` value Canvas2D SILENTLY REJECTS → `strokeStyle` stuck on the previously-set
+  red accent → 86.3% red splatter; the I-session shipped the slides-side fix at `constellation.ts:116`)
+  generalizes to the LIBRARY: there is NO static gate forbidding a `light-dark(` value inside a
   `--constellation-*` token, and `--constellation-line` is a plain-hex fallback today with NO library-shipped
   light/dark arm — the moment the library ships the token block, a `light-dark()` declaration would
-  reintroduce the exact W30 defect at the library layer. The falsifiable assertion: *no
-  `no-light-dark-in-constellation-token` gate exists at HEAD (`ls scripts/proof-constellation-tokens.mjs` =
-  absent).* RED: the cardinal Canvas2D-color defect has no library-layer guard.
+  reintroduce the exact W30 defect at the library layer. **The leak re-admits TRANSITIVELY, not just
+  literally:** a `--constellation-line: var(--neutral-4)` (or `var(--foreground)`/`var(--border)`/`var(--card)`)
+  carries NO `light-dark(` substring yet RESOLVES to a `light-dark()` value Canvas2D rejects — so a
+  literal-substring-only guard is a HOLE that re-admits the cardinal defect through the library's own neutral
+  ladder. The falsifiable assertion: *no `no-light-dark-in-constellation-token` gate exists at HEAD
+  (`ls scripts/proof-constellation-tokens.mjs` = absent) — and the gate, when authored, must close the
+  transitive-var hole, not just the literal substring.* RED: the cardinal Canvas2D-color defect has no
+  library-layer guard.
 
 The wave is RED at HEAD on all four; the HardGate below drives each to GREEN (token-block presence +
-readPalette-full-set, the no-`light-dark(` static assertion, the focal-warp render observation, and the
-slides-deletion adoption gate gated on the AX publish).
+readPalette-full-set, the no-`light-dark(`-substring-NOR-transitive-var static assertion, the focal-warp
+render observation, and the slides-deletion adoption gate gated on the AX publish).
 
 ---
 
@@ -105,8 +111,11 @@ alpha, the per-mode edge multipliers). Adopt slides' RICHER set as canonical:
 - `--constellation-line` / `--constellation-edge` — resolve the edge-vs-line naming: slides uses `edge-*`
   for the multipliers; the BASE stroke color is `--constellation-line`. The component reads
   `--constellation-line` as the hairline stroke and the `edge-*` tokens as the alpha multipliers. **MUST be
-  a plain-hsl token, NEVER `--foreground`** (the W30 leak — `--foreground` is a `light-dark()` value Canvas2D
-  rejects).
+  a plain-hsl LITERAL token, NEVER `--foreground` NOR ANY `var(…)` reference to a `light-dark()`-bearing token**
+  (`--neutral-4`/`--border`/`--card`/`--background`/`--muted-foreground` — the W30 leak generalizes
+  TRANSITIVELY: `var(--neutral-4)` carries no `light-dark(` substring yet RESOLVES to a `light-dark()` value
+  Canvas2D rejects, re-admitting the cardinal defect through the library's own neutral ladder). Write the
+  hsl() literal directly per arm; do NOT alias to a neutral-ladder token.
 - `--constellation-edge-alpha` — replaces the magic `0.17` edge hairline alpha (`constellationField.ts:207`).
 - `--constellation-edge-anomaly-alpha` — the anomaly-proximity edge multiplier.
 - `--constellation-alpha` — the field-yields-to-type knob (the global field dimmer slides promoted so the
@@ -118,9 +127,12 @@ alpha, the per-mode edge multipliers). Adopt slides' RICHER set as canonical:
 Wire `readPalette` (`constellationField.ts:95-105`) to read the **FULL set** with the library tokens as
 fallbacks; make the paint passes READ the alpha tokens (the `0.17` / `0.24` literals at `:207` / `:252`
 become `var(--constellation-edge-alpha)` / `var(--constellation-alpha)` reads, resolved through the same
-`getComputedStyle` probe). **PLAIN-hsl, NEVER `light-dark()`** at the token declaration — Canvas2D silently
-rejects `light-dark()` into `strokeStyle`/`fillStyle` (the W30 cardinal defect); the light/dark split is the
-`:root` vs `.dark` cascade, not a `light-dark()` function.
+`getComputedStyle` probe). **PLAIN-hsl LITERAL, NEVER `light-dark()` AND NEVER a `var(…)` alias to a
+`light-dark()`-bearing token** at the token declaration — Canvas2D silently rejects `light-dark()` into
+`strokeStyle`/`fillStyle` (the W30 cardinal defect), and the rejection is the SAME whether the value is a
+literal `light-dark(…)` OR a `var(--neutral-4)`/`var(--foreground)` that RESOLVES to one (the transitive-var
+hole the `proof:constellation-tokens` clause (c) closes). The light/dark split is the `:root` vs `.dark`
+cascade carrying TWO hsl() literals, not a `light-dark()` function and not a neutral-ladder alias.
 
 ### 2. Focal node + click-to-warp — NET-NEW DESIGN (§4 note 15; result[18]) — RATIFY-BEFORE-IMPL
 
@@ -175,16 +187,34 @@ WHICH node is focal + its SKIN via `drawOverlay`; the library owns its POSITION 
 
 5. **API seam** — `warpTo(point)` imperative method via `defineExpose` (the canonical low-level seam,
    matching the existing `defineExpose({ field })` at `Constellation.vue:179`) + a `warpOnClick?: boolean`
-   prop as the SUGAR (wires the host `pointerdown` already added at `:175` for ripples → `nearestNode` →
-   `warpTo`). **Coordinate mapping:** `warpTo(clientX, clientY)` reuses the EXISTING `toLocal`
-   (`Constellation.vue:145-152` — `getBoundingClientRect` → canvas-local px) so the click lands in
-   canvas-local px under any CSS scale/zoom (the deck-scale invariant at `README:163-165`); `warpTo(point)`
-   accepting already-local px is the lower primitive. Document BOTH.
+   prop as the SUGAR (`nearestNode` → `warpTo`). **Coordinate mapping:** `warpTo(clientX, clientY)` reuses the
+   `toLocal` helper (`getBoundingClientRect` → canvas-local px) so the click lands in canvas-local px under any
+   CSS scale/zoom (the deck-scale invariant at `README:163-165`); `warpTo(point)` accepting already-local px is
+   the lower primitive. Document BOTH.
+
+   **Lexical-reachability fix (the unreachable-`toLocal` blocker — RESOLVE-BEFORE-IMPL).** At HEAD `toLocal`
+   AND the host `pointerdown` listener are BOTH scoped INSIDE the `if (pointerReactive && host &&
+   !handle.reducedMotion)` block (`Constellation.vue:144-176`). A `warpOnClick` that "reuses the existing
+   `toLocal`" / "wires the `:175` pointerdown" is therefore LEXICALLY UNREACHABLE whenever `pointerReactive` is
+   false (a static lattice that still wants click-to-warp) — and conflates warp onto the ripple `onDown`. The
+   fix is two-part:
+   - **HOIST `toLocal` out of the `if (pointerReactive …)` block** to the outer setup scope (it is a pure
+     `getBoundingClientRect` → canvas-local-px mapper with no `pointerReactive`/PRM dependency), so BOTH the
+     ripple path and the warp path read the ONE mapper. The ripple `onMove`/`onDown` continue to call the
+     now-hoisted `toLocal` inside their existing `pointerReactive`-gated block — no behavior change there.
+   - **Register the warp `pointerdown` on its OWN `(warpOnClick && host && !handle.reducedMotion)` guard**,
+     SEPARATE from the ripple block — NOT folded onto the ripple `onDown`. The warp listener resolves
+     `toLocal(e)` → `nearestNode` → `warpTo`; the PRM gate lives on this guard (the §6 policy). `warpOnClick`
+     and `pointerReactive` are now INDEPENDENT axes: a consumer can enable warp on a non-ripple lattice, or
+     ripples without warp, or both. (FileBounds: `Constellation.vue` only — a single-file lexical hoist + a
+     second guarded listener, no new file.)
 
 6. **PRM policy (STATE it, don't accident it).** Warp follows the ripple/steer precedent: **DISABLED under
    `prefers-reduced-motion`** (the click does not warp; the focal node stays put — consistent with the
-   pointer reactivity already gated on `!handle.reducedMotion` at `Constellation.vue:130,144`). The `dt`
-   clamp in `warpStep` is independent of PRM (it guards a park/resume gap on the active-motion path).
+   pointer reactivity already gated on `!handle.reducedMotion`). The PRM gate lives ON the §5 warp
+   `(warpOnClick && host && !handle.reducedMotion)` guard (the listener is simply not registered under PRM),
+   NOT on the ripple block — the two guards are independent now that `toLocal` is hoisted. The `dt` clamp in
+   `warpStep` is independent of PRM (it guards a park/resume gap on the active-motion path).
 
 ### 3. slides adopts — consumer #2, gated on the focal/warp seam landing (slice 24 F0; §4 note 12)
 
@@ -243,13 +273,22 @@ the DEFAULT VALUE the library ships for the two arms, and the calibration intent
   (`0.92` light / `1.0` dark) are the MAXIMUM-legibility reference; the library default ships BELOW them as the
   recessive baseline a consumer inherits, so a drop-in `<Constellation>` reads recessive WITHOUT a consumer
   override.
-- **§24 reconcile — tune ON TOP of the shipped color fix, never redo it.** The I-session 3.7.0 line landed the
-  light-mode `--constellation-line` plain-hex resolved-color fix (`deck.css:279`/`:809` slides-side; W30 lands
-  the library-side `--constellation-line` plain-hsl complement). The §23.3 translucency calibration is the
-  ALPHA channel, ORTHOGONAL to that color/leak fix — it rides on top. W17 does NOT touch the resolved-color
-  fix; it sets the recessive `--constellation-alpha` default + states the per-mode balance intent. (The W30
-  no-`light-dark(`-in-`--constellation-*` static guard already forbids re-introducing the leak through the
-  alpha tokens.)
+- **§24 reconcile — the I-session light-mode fix is ALREADY SHIPPED; W17 tunes ON TOP, never redoes it.** The
+  I-session 3.7.0 line ALREADY landed the slides-side constellation light-mode resolved-color fix (the
+  `--foreground`→`light-dark()`-into-Canvas2D leak fixed at `constellation.ts:116`; the `--constellation-line`
+  plain-hex resolved-color light arm; deck deployed `9f08ded`). This is a SATISFIED witness on the slides side
+  — the W00 live-re-diagnosis ritual MUST treat it as ADDRESSED-out-of-band (do NOT re-fix it; the §F.3
+  satisfied-witness branch — re-doing already-committed work is the clobber the protocol forbids). W17's
+  library-side `--constellation-line` plain-hsl complement is NET-NEW (the library shipped ZERO
+  `--constellation-*` tokens at HEAD — RED witness 1), NOT a redo of the slides fix; it is the library default
+  the slides deck-scoped value rides over. **What W17 ADDS on top is the §23.3 per-mode translucency token:**
+  the `--constellation-alpha` opacity knob shipped in §1, with its two-arm DEFAULT calibrated to the
+  legible-but-recessive midpoint (LOWER on light, modestly-higher on dark, BELOW the slides `0.92`/`1.0`
+  max-legibility reference). The translucency calibration is the ALPHA channel — ORTHOGONAL to the
+  already-shipped color/leak fix, layered cleanly on top. W17 does NOT touch the resolved-color fix; it ships
+  the library token block (color arms + the recessive `--constellation-alpha` default) + states the per-mode
+  balance intent. (The clause-(c) no-`light-dark(`-substring-NOR-transitive-var static guard already forbids
+  re-introducing the leak through the alpha OR the color tokens — including via a `var(--neutral-*)` alias.)
 - **Non-dup vs §12/§16.** §12.13 + §16 "not visible ENOUGH" and §23.3 "too present" are the SAME knob read at
   two ends of one calibration — recorded so the recessive default is not mistaken for a regression of the H.W4
   legibility win. ONE value per arm, tuned to the midpoint.
@@ -259,10 +298,11 @@ default) routes to **AX.W31 fold §E** (the slides repo; gated on the AX publish
 the library default + the per-mode calibration intent + the README documentation of the recessive balance.
 
 **Explicitly OUT of W17 scope (routes elsewhere):**
-- The slides-side `constellation.ts` DELETION + the slides anomaly drawOverlay skin authoring + the
-  `--foreground` light-dark()-into-Canvas2D leak fix at `constellation.ts:107` → **AX.W30** (the slides
-  baseline wave; the library-side `--constellation-line` plain-hsl token W17 ships is the COMPLEMENT the
-  slides fix reads).
+- The slides-side `constellation.ts` DELETION + the slides anomaly drawOverlay skin authoring → **AX.W30** (the
+  slides baseline wave; the library-side `--constellation-line` plain-hsl token W17 ships is the COMPLEMENT the
+  slides fix reads). NOTE the `--foreground` light-dark()-into-Canvas2D leak is ALREADY FIXED slides-side (the
+  I-session landing at `constellation.ts:116`, deck deployed `9f08ded`) — W30 treats it as a satisfied witness
+  (do NOT re-fix), and its remaining slides-side work is the `constellation.ts` deletion + anomaly skin port.
 - `useCanvas2D` / `useCanvasLifecycle` / `resolveCanvasColor` authoring → **AX.W37** (W17 composes the
   existing substrate + reads plain-hsl tokens; it does not author the resolver).
 - The `/deck-progress` subpath export + the DeckProgress rail → **AX.W24** (a SEPARATE slice-24 finding, a
@@ -277,11 +317,11 @@ the library default + the per-mode calibration intent + the README documentation
 |------|------|
 | `src/styles/tokens.css` | **ADD** the `--constellation-*` token block — a light arm (`:root`) + a `.dark` arm carrying the H.W4-derived legibility values (`--constellation-node` / `-node-dim` lifted off the dark ground, `--constellation-line`/`-edge` plain-hsl, `--constellation-edge-alpha` / `-edge-anomaly-alpha` / `--constellation-alpha`, a neutral `--constellation-accent` default). PLAIN-hsl, NEVER `light-dark()`. **§7** the `--constellation-alpha` DEFAULT is calibrated to the legible-but-recessive MIDPOINT per-mode (LOWER on `:root`/light, modestly-higher on `.dark` but NOT `1.0`) — BELOW the slides `0.92`/`1.0` max-legibility reference, so a drop-in consumer inherits a recessive field (REQUIREMENTS §23.3). |
 | `src/components/custom/constellation/constellationField.ts` | Extend `readPalette` to read the FULL token set (`:95-105`); make the paint passes read `var(--constellation-edge-alpha)` / `var(--constellation-alpha)` (replacing the `0.17` `:207` / `0.24` `:252` literals). ADD the focal-node model (`focalIndex` + `warpStep(field, dt)` — the dt-stepped critically-damped integrator, per-axis, dt-clamped) + `nearestNode(field, px, py, excludeIdx)`. Strike the "No node is pinned" comment (`:110`) → the focal node IS pinnable. |
-| `src/components/custom/constellation/Constellation.vue` | ADD the `warpOnClick?: boolean` prop + the `warpTo(point)` / `warpTo(clientX, clientY)` `defineExpose` method (reusing the existing `toLocal` mapping `:145-152` + the host `pointerdown` `:175`); thread `focalIndex` to `drawOverlay`; PRM-gate the warp (the click does not warp under reduced-motion). Step `warpStep` inside the existing `stepField` render hook (`:124` neighborhood). |
+| `src/components/custom/constellation/Constellation.vue` | **HOIST `toLocal`** out of the `if (pointerReactive && host && !handle.reducedMotion)` block (the `getBoundingClientRect`→canvas-local-px mapper) to the outer setup scope so both ripple + warp read the ONE mapper (the unreachable-`toLocal` blocker — at HEAD `toLocal` + the ripple `pointerdown` are lexically scoped inside the `pointerReactive` gate). ADD the `warpOnClick?: boolean` prop + the `warpTo(point)` / `warpTo(clientX, clientY)` `defineExpose` method (calling the hoisted `toLocal`); register the warp `pointerdown` on its OWN `(warpOnClick && host && !handle.reducedMotion)` guard, SEPARATE from the ripple block (NOT folded onto the ripple `onDown`); thread `focalIndex` to `drawOverlay`; PRM-gate the warp ON its own guard (the click does not warp under reduced-motion). Step `warpStep` inside the existing `stepField` render hook. |
 | `src/components/custom/constellation/README.md` | Research-backed canonical-readme-shape rewrite: the token vocabulary + the library-legibility-vs-`--constellation-accent`-preset boundary, the `--constellation-alpha` recessive-balance per-mode calibration intent (§7 — legible-but-recessive, not max-legibility), the unified focal-warp-and-drift seam (`warpTo` + `warpOnClick` + FORBID-useSpring rationale + the deck-scale `toLocal` mapping + the PRM policy), and the DECORATIVE-not-data-graph non-goal (§4 note 16). |
 | `src/components/custom/constellation/index.ts` | Co-export any new public type (`ConstellationFocal` / the `warpTo` signature) if the public surface widens (the `/constellation` subpath barrel mirror already re-exports `*`; verify the new symbols ride). |
 | `demo/stories/substrates/constellation.vue` | Add a `warpOnClick` + focal-skin demo section (the click-to-warp visible in the storybook) + the dark/light token-ladder tour; update the stale `:5-6` comment ("slides anomaly-ring deck never delivered" → "slides adopts at AX.W30"). DEMO-private — not a library edit. |
-| `scripts/proof-constellation-tokens.mjs` | **NEW** — the gate: (a) the `--constellation-*` token block is PRESENT with both a `:root` and a `.dark` arm; (b) `readPalette` reads the FULL set (≥6 tokens); (c) **no `light-dark(` substring** inside any `--constellation-*` token declaration (the W30 cardinal-defect static assertion) AND `--constellation-line` is never `var(--foreground)`. |
+| `scripts/proof-constellation-tokens.mjs` | **NEW** — the gate: (a) the `--constellation-*` token block is PRESENT with both a `:root` and a `.dark` arm; (b) `readPalette` reads the FULL set (≥6 tokens); (c) **no `light-dark(` substring NOR any `var(…)` reference to a `light-dark()`-bearing token** (`--foreground`/`--background`/`--card`/`--popover`/`--border`/the `--neutral-*` ladder/`--muted-foreground`/any token whose `:root`-vs-`.dark` resolved value differs) inside any `--constellation-*` token declaration (the W30 cardinal-defect static assertion + its TRANSITIVE-var closure — `--constellation-line: var(--neutral-4)` carries no `light-dark(` substring yet re-admits the Canvas2D leak through the neutral ladder). `--constellation-line` is never `var(--foreground)` is the canonical instance, not the whole rule. |
 | `scripts/proof-constellation-warp-live.mjs` | **NEW** — the π-lane render gate (runs in the W00 `tests-visual/` workspace): mount `<Constellation warpOnClick>`, dispatch a synthetic `pointerdown` at a known point, sample the focal node position over the settle window, assert (a) the focal centroid MIGRATES toward the click region, (b) it CONVERGES onto an existing node's position (min-d² to any node → 0 at settle), (c) it CHASES a live drifting target (re-targets each frame, not a frozen snapshot), (d) it is a spring-eased path (monotone-ish approach, NOT a single-frame snap). |
 | `docs/tranches/AX/audit/W17-constellation-port.json` | **NEW** — the wave's audit artefact (born-RED→GREEN evidence + the focal-seam ratification record + the slides-adoption-gated-on-publish note). |
 | `package.json` | (Verify only — the `/constellation` subpath + the gate registration. The subpath `src/subpaths/constellation.ts` already EXISTS; the new `proof:constellation-tokens` + `proof:constellation-warp-live` package.json script entries land here.) |
@@ -340,28 +380,44 @@ disjointness contract:
 - **Implement (≤1 agent — the token block + readPalette wiring + the focal-warp seam + README).** Ship the
   `--constellation-*` light/dark token block in `tokens.css`; wire `readPalette` to the full set + the paint
   passes to the alpha tokens; add the focal-node model + `warpStep` (the dt-clamped critically-damped
-  integrator, FORBID `useSpring`) + `nearestNode` to `constellationField.ts`; add the `warpOnClick` prop +
-  `warpTo` `defineExpose` (reusing `toLocal`) + PRM-gate to `Constellation.vue`; add the demo section;
-  rewrite the README. Lint + typecheck at every interval. (The slides adoption is W30 — a DIFFERENT repo +
-  wave; this agent writes NO slides source.)
+  integrator, FORBID `useSpring`) + `nearestNode` to `constellationField.ts`; HOIST `toLocal` out of the
+  `pointerReactive` block + add the `warpOnClick` prop + `warpTo` `defineExpose` (calling the hoisted
+  `toLocal`) + register the warp `pointerdown` on its own `(warpOnClick && …)` guard + PRM-gate to
+  `Constellation.vue`; add the demo section; rewrite the README. Lint + typecheck at every interval. (The
+  slides adoption is W30 — a DIFFERENT repo + wave; this agent writes NO slides source.)
 - **Adversarially-verify (≤1 read-only lane).** (a) Re-runs the four RED greps on the patched tree:
   `--constellation-*` tokens PRESENT with both arms; `readPalette` reads ≥6 tokens; `focalIndex`/`warpTo`/
-  `warpStep`/`nearestNode` EXIST; no `light-dark(` in any `--constellation-*` declaration. (b) On the device:
+  `warpStep`/`nearestNode` EXIST; no `light-dark(` substring AND no `var(…)`-alias-to-a-`light-dark()`-bearing-token
+  (the transitive-var hole — `var(--neutral-4)`/`var(--foreground)`) in any `--constellation-*` declaration. (b) On the device:
   drives a synthetic warp + confirms the focal centroid converges onto a REAL node (not a click-time snapshot
   next-to the moved node — the LIVE-TARGET correctness) over a spring-eased path. ADVERSARIAL twists: (i)
   confirms NO second rAF spawns (the `useSpring`-forbid is honest — grep `useSpring` in
   `constellation/` = 0; the substrate's single rAF is the only loop); (ii) confirms warp is DISABLED under
   `prefers-reduced-motion` (the click no-ops); (iii) confirms the focal node EXCLUDES itself from its own
   candidate set (a degenerate cursor-on-focal no-ops); (iv) confirms a deck-CSS-scale transform does NOT
-  break the click mapping (the `toLocal` reuse holds); (v) confirms `--constellation-accent` is a NEUTRAL
-  library default (not an accidental NCSU-red bake — the consumer-preset boundary is honest).
+  break the click mapping (the hoisted-`toLocal` reuse holds); (v) confirms `--constellation-accent` is a
+  NEUTRAL library default (not an accidental NCSU-red bake — the consumer-preset boundary is honest); (vi)
+  confirms warp FIRES with `pointerReactive=false` (the lexical-reachability fix — `toLocal` is hoisted +
+  the warp `pointerdown` is on its OWN guard, so `warpOnClick` works on a non-ripple lattice) AND that
+  enabling ripples without `warpOnClick` registers NO warp listener (the two axes are independent).
 - **Gate-author (≤1 agent — born-RED→GREEN).** Authors `proof:constellation-tokens` (token-block presence +
-  full-set readPalette + the no-`light-dark(` static assertion) + `proof:constellation-warp-live` (the
-  π-lane focal-warp render observation: migrate-toward-click + converge-onto-node + chase-live-target +
-  spring-eased-not-snap). Confirms each clause FAILS at the pre-wave tree (no tokens / no focal seam / no
-  guard) and PASSES on the patched tree. Registers both `proof:*` package.json entries.
+  full-set readPalette + the no-`light-dark(`-substring-NOR-transitive-var static assertion: clause (c)
+  forbids both the literal `light-dark(` AND any `var(…)` reference to a `light-dark()`-bearing token inside a
+  `--constellation-*` declaration) + `proof:constellation-warp-live` (the π-lane focal-warp render
+  observation: migrate-toward-click + converge-onto-node + chase-live-target + spring-eased-not-snap).
+  Confirms each clause FAILS at the pre-wave tree (no tokens / no focal seam / no guard) and PASSES on the
+  patched tree. Authors a born-RED FIXTURE for clause (c) proving the transitive-var hole is closed (a
+  `--constellation-line: var(--neutral-4)` decl FAILS the gate, not just a literal `light-dark(…)`).
+  Registers both `proof:*` package.json entries.
 
 (All within the AX ≤6-implementation / ≤7-read-only ceiling — this wave's actual count is 3.)
+
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):** the wave-agnostic authorization grant is AX.md §6.1 (the canonical clause — work AROUND a roadblock with an idiomatic gestalt fix, never stall; §6.2 is the 4-class halt-vs-work-around decision tree) — read it by reference, it is not restated here. The wave-SPECIFIC §3a auto-triggers (authored from this wave's FileBounds + HardGate):
+
+- **Scope-reveal → halt + triumvirate (Class 2; NEVER absorb in-line):** any need to touch the OUT-of-bounds surfaces — `src/decks/til-briefing/constellation.ts` or ANY slides-repo file (the DELETION + the anomaly skin + the `--foreground` leak fix are W30/W31, a separate TRACKED repo — glass-ui writes NO slides source), `useCanvas2D.ts`/`resolveCanvasColor` (W37 — W17 COMPOSES the existing substrate and reads plain-hsl tokens, it never needs the resolver), `deck-progress/`/`/deck-progress` (W24), `reveal.ts`/`useCountup.ts` adoption (W32), the W00 `pi-manifest.ts`/`substrate-paints-color.spec.ts` members.
+- **Non-local hard-gate failure → triumvirate (Class 2):** if `proof:constellation-tokens` REDs non-locally — ESPECIALLY clause (c) the no-`light-dark(`-substring NOR transitive-`var()` static assertion (a `--constellation-line: var(--neutral-4)` decl re-admits the Canvas2D leak through the neutral ladder even with no literal `light-dark(` substring; the gate must catch the TRANSITIVE hole, not just the literal) — or `proof:constellation-warp-live` REDs (focal centroid migrate-toward-click / converge-onto-a-REAL-node / chase-live-target / spring-eased-not-snap) — escalate the gate-author design, do NOT loosen clause (c) to the literal-substring-only form (that re-opens the W30 cardinal Canvas2D defect).
+- **3rd diagnostic-loop iteration → triumvirate (Class 2):** if the focal-warp does NOT converge onto a live drifting node over a spring-eased path (chasing a moving target, not a click-time snapshot) after three retunes of the dt-clamped critically-damped integrator, dispatch research→plan→redress — and do NOT reach for `useSpring`/a second rAF as the fix (the single-rAF / `useSpring`-FORBID is a hard contract, adding a loop is a scope-reveal not a tune).
+- **§5.3 ratify reached un-ratified → HALT-and-ratify (Class 3):** the `--constellation-alpha` recessive-balance per-mode calibration (§7 — the legible-but-recessive MIDPOINT below the slides `0.92`/`1.0` max-legibility reference, so a drop-in consumer inherits a recessive field per REQUIREMENTS §23.3) and the `--constellation-accent` NEUTRAL-library-default-vs-consumer-preset boundary are the calibration ratifies — if the value-set reaches impl un-adjudicated against the slides reference, surface to the orchestrator (take the recorded recessive default), do NOT self-ratify a max-legibility bake.
 
 ---
 
@@ -373,11 +429,20 @@ disjointness contract:
   static assertion).** Asserts (a) `src/styles/tokens.css` ships a `--constellation-*` block with BOTH a
   `:root` (light) and a `.dark` arm; (b) `readPalette` reads the FULL token set (≥6 tokens: node, node-dim,
   line/edge, edge-alpha, edge-anomaly-alpha, alpha) — not the 3 it reads at HEAD; (c) **no `light-dark(`
-  substring** inside any `--constellation-*` token declaration AND `--constellation-line` is never
-  `var(--foreground)` (the W30 cardinal-defect static guard at the library layer). **Born-RED at HEAD** (zero
-  `--constellation-*` tokens in `src/styles/`; readPalette reads 3; no guard exists). This is a
-  build-source-presence + static-assertion artefact (an accepted SPEC.md §Hard-Gates form — token-block
-  presence + a forbidden-substring static check, NOT a grep-for-runtime-behaviour).
+  substring NOR ANY `var(…)` reference to a `light-dark()`-bearing token** inside a `--constellation-*` token
+  declaration (the TRANSITIVE-var guard — the literal-substring check alone is a HOLE: `--constellation-line:
+  var(--foreground)` or `var(--neutral-4)` or `var(--border)`/`var(--card)`/`var(--background)` carries NO
+  `light-dark(` substring yet RESOLVES to a `light-dark()` value Canvas2D silently rejects, re-admitting the
+  cardinal W30 86.3%-red-splatter defect through the library's OWN neutral ladder). The gate maintains the
+  set of known `light-dark()`-bearing tokens — `--foreground`/`--background`/`--card`/`--popover`/`--border`/
+  the `--neutral-*` ladder/`--muted-foreground`/any token whose `:root`-vs-`.dark` value the static scan
+  resolves to differ — and FAILS if any `--constellation-*` declaration's value `var(`-references one (one
+  resolution hop is sufficient — the constellation tokens are PLAIN-hsl leaves by construction, never a
+  multi-hop var chain). `--constellation-line` is never `var(--foreground)` is the canonical instance of this
+  general rule, not the whole of it. **Born-RED at HEAD** (zero `--constellation-*` tokens in `src/styles/`;
+  readPalette reads 3; no guard exists). This is a build-source-presence + static-assertion artefact (an
+  accepted SPEC.md §Hard-Gates form — token-block presence + a forbidden-value static check, NOT a
+  grep-for-runtime-behaviour).
 
 - **`proof:constellation-warp-live` (born-RED — the π-lane focal-warp render observation, the INTERACTION
   gate).** Runs in the W00 `tests-visual/` workspace on a real device: mount `<Constellation warpOnClick>`,
@@ -392,8 +457,10 @@ disjointness contract:
 
 This is a **build-source-presence + static-assertion + runtime-observation** gate trio (the precept-valid
 artefact forms per SPEC.md §Hard Gates), NOT a "grep found a source string for runtime behaviour" invalid
-form: the token-presence + no-`light-dark(` clauses are source-structure assertions; the warp clause is a
-real device render + position readback.
+form: the token-presence + no-`light-dark(`-NOR-transitive-var clauses are source-structure assertions (the
+clause (c) check resolves each `--constellation-*` declaration's `var(…)` references and FAILS on any that
+hop to a `light-dark()`-bearing token — a static value-resolution scan, not a runtime probe); the warp clause
+is a real device render + position readback.
 
 **VISUAL-TRUTH live audit (NON-NEGOTIABLE per AX.W00 — the wave's close criterion).** A live Playwright +
 frontend-design pass on the live constellation demo (`/substrates/constellation`), at **≥ 3 viewports**
@@ -430,15 +497,16 @@ reads as a spring.
    single-consumer `stepOverlay` hook (the result[29] overfit anti-pattern). Confirm the design thesis (drift
    and warp are ONE mechanic, two target-sources). Record the ratification in `audit/W17-constellation-port.json`.
 3. **Author the born-RED gate clauses.** `proof:constellation-tokens` (token presence + full-set readPalette
-   + no-`light-dark(`) + `proof:constellation-warp-live` (the π-lane warp observation); confirm each FAILS at
+   + no-`light-dark(`-substring-NOR-transitive-var) + `proof:constellation-warp-live` (the π-lane warp observation); confirm each FAILS at
    the pre-wave tree.
 4. **Ship the `--constellation-*` token block.** Add the light + `.dark` arms to `tokens.css` (the H.W4
    legibility values, PLAIN-hsl). Wire `readPalette` to the full set + the paint passes to the alpha tokens
    (replace the `0.17`/`0.24` literals). Lint + typecheck.
 5. **Author the focal-node + warp seam.** Add `focalIndex` + `warpStep` (the dt-clamped critically-damped
-   integrator, FORBID `useSpring`) + `nearestNode` to `constellationField.ts`; add `warpOnClick` + `warpTo`
-   (reusing `toLocal`) + the PRM gate to `Constellation.vue`; thread `focalIndex` to `drawOverlay`. Lint +
-   typecheck.
+   integrator, FORBID `useSpring`) + `nearestNode` to `constellationField.ts`; HOIST `toLocal` out of the
+   `pointerReactive` block; add `warpOnClick` + `warpTo` (calling the hoisted `toLocal`) + register the warp
+   `pointerdown` on its own `(warpOnClick && …)` guard + the PRM gate to `Constellation.vue`; thread
+   `focalIndex` to `drawOverlay`. Lint + typecheck.
 6. **Demo + README.** Add the warp + focal-skin + token-ladder demo section; rewrite the README to the
    canonical-readme-shape (the token vocabulary + the unified warp-and-drift seam + the
    DECORATIVE-not-data-graph non-goal).
@@ -461,7 +529,7 @@ reads as a spring.
   disposition with the OUT-of-scope routes (W30 slides-side / W37 substrate / W24 deck-progress / W32 motion),
   and the post-wave GREEN measurements (the token-block presence, the readPalette full-set, the warp
   converge-onto-node readback, the slides-adoption-gated-on-publish note).
-- The NEW `scripts/proof-constellation-tokens.mjs` (token presence + full-set readPalette + no-`light-dark(`)
+- The NEW `scripts/proof-constellation-tokens.mjs` (token presence + full-set readPalette + no-`light-dark(`-substring-NOR-transitive-var)
   + `scripts/proof-constellation-warp-live.mjs` (the π-lane warp observation) + their `proof:*` package.json
   registration.
 - The paired-π **BEFORE/AFTER + DELTA** capture (the W00 protocol): the invisible-on-dark / below-floor-on-cream

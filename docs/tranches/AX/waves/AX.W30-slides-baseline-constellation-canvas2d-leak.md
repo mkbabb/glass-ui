@@ -1,214 +1,203 @@
-# AX.W30 — Slides baseline: land the H working-tree + fix the constellation light-dark()-into-Canvas2D leak
+# AX.W30 — Slides baseline: cut tranche/AX-slides FORWARD + verify the committed H state + the merge-to-main → deploy terminal
 
 **Band** L · SLIDES · **Severity** blocker · **dependsOn** AX.W17 (the library-side `--constellation-line`
 plain-hsl token + the focal/warp seam this slides port reads — gated on the AX cut PUBLISHING per §4 note
 12) + AX.W00 (the π visual-runtime discipline this wave's executed e2e + live render-matrix audit run under,
-declared binding on the slides repo) · *(separate repo, tracked — glass-ui writes NO library source in this
-wave; the orchestrator commits the SLIDES tree)* · **Charter** AX.md §3 (the `### AX.W30` block, lines
-1503-1546) + §2b band-L precept row (π visual-runtime binding on the consumer repo; cross-repo coordination +
-clean-branch landing; one-path Canvas2D plain-hsl; substrate-with-consumer DeckProgress consumer #2) + §4 note
-9 (the slides band is a SEPARATE REPO folded for tracking; most §12 items are RESOLVED at the code level by
-G/H but were NEVER browser-verified + the H work is stranded uncommitted) + §4 note 12 (publish-currency: the
-slides adoption legs are at-HEAD-only until the AX cut PUBLISHES) + the §3 `### AX.W17` block (lines 925-999,
-the LIBRARY-side complement — the `--constellation-line` plain-hsl token W17 ships is what W30 reads
-slides-side) · **Audit** `deep-audit-corpus.json` slice `slides-content` (index 28, finding F6 the
-stranded-H-working-tree blocker) + slice `slides-visual-mobile` (index 29, finding F0 the CARDINAL constellation
-`--foreground` light-dark()-into-Canvas2D leak + F1 the authored-but-unrun e2e specs) +
-`constellation-analysis-corpus.json` slice `hist:slides` (the working-tree-is-buried-under-6-commits
-sharpening + the FourierField `resolveCanvasColor` adoption + the second `feedback-coder` deck enumeration +
-the all-7-specs execution mandate) + slice `idiom:slides` (the version-pin staleness precondition + the
-TWO-instance light-dark() leak + the FourierField canvas-lifecycle under-adoption) + slice
-`harden:encapsulation-close` (the SELECTIVE-land file-manifest hardening + the access-key-redaction promotion).
+declared binding on the slides repo) + AX.W28 (the sole OPENER of `coordination/CONSTELLATION.md` band-K +
+gate-0 — W30 EDIT/APPENDs the band-L section onto W28's doc, it does NOT create it) · *(separate repo, tracked
+— glass-ui writes NO library source in this wave; the orchestrator commits the SLIDES tree)* · **Charter**
+AX.md §3 (the `### AX.W30` block, lines 1503-1546) + §2b band-L precept row (π visual-runtime binding on the
+consumer repo; cross-repo coordination + clean-branch landing; one-path Canvas2D plain-hsl;
+substrate-with-consumer DeckProgress consumer #2) + §4 note 9 (the slides band is a SEPARATE REPO folded for
+tracking; most §12 items are RESOLVED at the code level by G/H and — per the §24 reality — NOW committed +
+browser-verified + deployed) + §4 note 12 (publish-currency: the slides adoption legs are at-HEAD-only until
+the AX cut PUBLISHES) + §24 SHARED-STATE RECONCILE (the live slides state: `d79091e`, CLEAN, H committed, the
+constellation leak fixed, the deck deployed) + the §3 `### AX.W17` block (lines 925-999, the LIBRARY-side
+complement — the `--constellation-line` plain-hsl token W17 ships is what W30 reads slides-side) · **Audit**
+`deep-audit-corpus.json` slice `slides-content` (index 28, finding F6 — the H working-tree, NOW committed at
+`da173e7`/`b622ac7`/`fb2ad39`, the recoverability concern DISCHARGED) + slice `slides-visual-mobile` (index 29,
+finding F0 the constellation `--foreground` light-dark()-into-Canvas2D leak — NOW fixed at
+`constellation.ts:116` reading `--constellation-line` first + F1 the e2e specs, NOW committed + the two reds
+fixed at source per `fb2ad39`) + `constellation-analysis-corpus.json` slice `hist:slides` (the FourierField
+`resolveCanvasColor` adoption + the second `feedback-coder` deck enumeration) + slice `idiom:slides` (the
+version-pin currency + the TWO-instance light-dark() leak class) + slice `harden:encapsulation-close` (the
+branch-protocol forward-cut hardening + the access-key-redaction confirmation).
 
 ---
 
-## State (born-RED — the gate must fail at HEAD before the wave)
+## State (born-RED — the gate must fail at HEAD before the wave; re-grounded to the §24 reality)
 
-The wave is born-RED on FOUR falsifiable witnesses against the slides repo HEAD `f78f623` (branch
-`deck/feedback-coder` — a Fourier-deck commit, NOT a til-briefing commit). The entire H til-briefing visual
-pass exists ONLY as uncommitted working-tree state, the constellation paints an 86.3%-red splatter live, and
-the e2e guards that would catch it were authored but never executed.
+**The §24 SHARED-STATE re-ground (the live slides state, re-proved at this hardening pass).** The W30 born-RED
+premise was authored against a stale slides HEAD (`f78f623`, the H working-tree uncommitted). The live slides
+repo has since converged: HEAD `d79091e` (branch `deck/feedback-coder`), tree CLEAN (`git status --porcelain`
+returns only the untracked `?? docs/tranches/J/` — a NEW tranche folder, NOT the H working-tree). The H
+til-briefing visual pass is COMMITTED (`da173e7` "H.W2..W10 implementation", `b622ac7` "commit H e2e specs",
+`fb2ad39` "I.W11 — fix the two e2e reds at the source"); the constellation `--foreground`
+light-dark()-into-Canvas2D leak is FIXED (`constellation.ts:116` reads `--constellation-line` first —
+`readVar(c, "--constellation-line", readVar(c, "--foreground", "#1c1714"))`; `--foreground` survives only as a
+last-ditch fallback, and `deck.css` carries the plain-hex `--constellation-line` token in both arms — `#1c1815`
+light, `#e8e6df` dark); the e2e specs are TRACKED (`git ls-files tests/e2e/` lists `constellation-visibility`,
+`complex-graphs`, `deck-progress`, `dedup-pulse`, `deck.spec`, …); and the deck is DEPLOYED to production
+(`9f08ded` "W10 LANDED — deck deployed to production", pinning the registry-published 3.7.0 at `15c1817`). The
+three stranded-work + leak + unrun-spec witnesses (the prior W1-W3) are DISCHARGED-out-of-band per the §F.3
+satisfied-witness rule — a satisfied witness is a scope-collapse, never a re-do. W30 does NOT re-land already-
+committed work, does NOT re-fix the closed leak, does NOT re-author the committed specs.
 
-- **RED witness 1 (the H W2-W10 working-tree is UNCOMMITTED + stranded under 6 intervening commits — the
-  recoverability blocker).** Verified live against the slides repo: `git branch --show-current` =
-  `deck/feedback-coder`; `git log --oneline -1` = `f78f623` (a Fourier-DECK commit). `git status -s` shows
-  **12 modified files** (`src/deck/DeckView.vue`, `src/decks/til-briefing/constellation.ts`,
-  `src/decks/til-briefing/meta.ts`, `src/styles/deck.css`, and the 8 slide SFCs
-  `Slide01/04/08/09/10/Conclusion/Nutrition/Xray.vue`) + **7 untracked e2e specs** (`tests/e2e/{complex-graphs,
-  constellation-visibility,deck-progress,dedup-pulse,mobile-reflow,xray-portal}.spec.ts` + the untracked
-  `docs/tranches/H/`). Only H.W1 (`97ce874` — the glass-ui 3.4.0 dock-consume) is committed; H W2-W10 (the
-  ENTIRE deck visual-refinement pass) is dirty `M` state, buried UNDER `edc23e7` (the feedback-coder deck) + 5
-  fourier commits (`8586539`…`f78f623`) that landed ON TOP. The falsifiable assertion: *`git -C
-  ~/Programming/slides status --porcelain` returns ≥ 12 dirty/untracked entries AND `git branch --show-current`
-  ≠ `tranche/AX-slides` (the branch does not exist).* RED: the dev work is non-recoverable — a `git stash` or a
-  branch switch loses it; it is not on any clean reviewable branch.
+The surviving RED is the BRANCH PROTOCOL + the unreachable deploy terminal: the H state is committed but it is
+NOT on a clean reviewable `tranche/AX-slides` branch, and NOTHING merges the AX slides line onto `main` so the
+`head_branch=='main'`-gated `deploy-pages.yml` fires for the AX cut. The wave is born-RED on TWO falsifiable
+witnesses against the live slides repo HEAD `d79091e`.
 
-- **RED witness 2 (the constellation paints an 86.3%-red splatter LIVE — the CARDINAL light-dark()-into-Canvas2D
-  leak).** Verified at the source level: `constellation.ts:107` reads the neutral edge color via
-  `this.cLine = readVar(c, "--foreground", "#1c1714")`. `--foreground` resolves to
-  `light-dark(hsl(24 10% 10%), hsl(48 10% 90%))` — a `light-dark()` value Canvas2D SILENTLY REJECTS (an
-  `ctx.strokeStyle = 'light-dark(...)'` assignment leaves `strokeStyle` UNCHANGED at its prior value). In
-  `drawEdges` (`:259`) the stroke choice is `ctx.strokeStyle = red ? this.accentColor : this.cLine` — and the
-  immediately-prior set value is the red `accentColor` (`#cc0000`) from any anomaly edge, so EVERY neutral edge
-  paints RED. The audit measured it live on slide 1 (`?freeze&light`, 1512×862): **red = 15,492 px vs neutral =
-  2,353 px (6.6:1 red), 86.3% of painted constellation pixels strong red, 8,544 red pixels > 200px from the
-  anomaly anchor** — a RED SPLATTER, not a neutral lattice. H.W4 promoted `--constellation-node/-node-dim/-accent`
-  to plain-hex PRECISELY because "Canvas2D rejects light-dark()" but LEFT `cLine` reading raw `--foreground` —
-  the single most voluminous element (every inter-node edge). The falsifiable assertion: *`grep -n
-  '\-\-foreground' src/decks/til-briefing/constellation.ts` returns the `cLine` read at `:107` AND a live
-  pixel histogram on slide 1 measures red > neutral.* RED: the live lattice is a red splatter.
+- **RED witness 1 (the `tranche/AX-slides` branch does not exist — the H state is committed on
+  `deck/feedback-coder`, NOT on the AX line).** The H til-briefing work is committed, but it rides on
+  `deck/feedback-coder` alongside the unrelated fourier WIP — there is no clean `tranche/AX-slides` branch the
+  AX slides band drives on. The branch protocol is the FORWARD CUT: cut `tranche/AX-slides` FORWARD from
+  `deck/feedback-coder` (the committed H + I history is reachable from there — a forward branch carries it for
+  free; no stash, no selective land, no recoverability risk, the feedback-coder fourier deck rides along
+  untouched ON the same base). The falsifiable assertion: *`git -C ~/Programming/slides branch --list
+  tranche/AX-slides` returns EMPTY at HEAD (the branch does not exist) AND `git branch --show-current` =
+  `deck/feedback-coder`.* RED: the AX slides band has no clean branch to drive on.
 
-- **RED witness 3 (the e2e guards were AUTHORED but never EXECUTED — the cardinal headless-green/visually-broken
-  gap, one tranche later in the consumer repo).** `tests/e2e/constellation-visibility.spec.ts` asserts
-  `expect(neutral).toBeGreaterThan(red * 2)` — but the live render is the INVERSE (red 6.6× neutral), so the
-  test WOULD FAIL. PROGRESS.md admits it verbatim: *"the e2e specs are authored but NOT executed in this dev
-  pass."* The 7 specs are untracked (`??`) with no run record. The spec's sibling "no light-dark in canvas
-  tokens" assertion (`:88`) checks only the `--constellation-*` tokens, NOT `--foreground` (which `cLine`
-  reads) — the discipline check has a HOLE exactly where the bug lives; the spec's anchor cites x=0.62/0.72
-  while the live code uses 0.60 (`Slide01.vue:14` data-anomaly=0.60,0.36) — further proof it was authored from
-  the spec, not the render. The falsifiable assertion: *no slides `npm run audit` execution record exists for
-  the 7 specs AND running `constellation-visibility.spec.ts` against the live `--foreground`-leak code FAILS
-  the `neutral > red*2` assertion.* RED: every H visual wave "closed" on an unrun spec.
+- **RED witness 2 (the deploy terminal is unreachable — no wave merges the AX slides line onto `main`, so the
+  `head_branch=='main'`-gated `deploy-pages.yml` never fires for the AX cut).** `deploy-pages.yml` is gated on
+  a `workflow_run` of CI with `head_branch == 'main'`; the AX slides work lands on `tranche/AX-slides`, which
+  the deploy workflow does NOT watch. Without the merge-to-main → push terminal, the AX-rebuilt til-briefing
+  deck never re-deploys to slides.friday.institute on the custom domain (the §21 end-state leg 2). The
+  falsifiable assertion: *`git -C ~/Programming/slides log origin/main..tranche/AX-slides --oneline` is
+  NON-EMPTY (the AX line carries unmerged commits) AND no `deploy-pages.yml` run records a `head_branch==main`
+  build of the AX slides cut.* RED: the deploy DAG terminal is unowned — the slides leg of the §21 end-state
+  cannot complete.
 
-- **RED witness 4 (a SECOND identical light-dark()-into-Canvas2D instance exists on the active branch — the
-  leak is NOT one site).** `FourierField.vue:223-250` (the net-new feedback-coder deck, ENTIRELY absent from
-  the charter until the CONVERGE pass) hand-rolls a `readStroke()` probe-span workaround for the SAME root
-  cause — it appends a hidden `<span style="color:var(<token>)">` inside the `.slide.fcm` ancestor, reads back
-  `getComputedStyle(probe).color` (a canvas-valid `rgb()`), and removes the probe. So slides carries (a) a
-  BUGGY direct read (`constellation.ts:107`) AND (b) a CLEVER-BUT-BESPOKE probe workaround
-  (`FourierField.vue`) for the identical light-dark()-Canvas2D rejection — two divergent treatments of ONE
-  defect class, neither sharing a token nor a helper. The falsifiable assertion: *`grep -rn
-  'light-dark\|getComputedStyle.*color\|probe' src/decks/feedback-coder/components/FourierField.vue` returns
-  the `:223-250` probe AND it is UNRELATED to the constellation's direct `--foreground` read.* RED: the
-  Canvas2D-color-resolution discipline is NOT generalized — two consumers, two divergent ad-hoc paths.
-
-The wave is RED at HEAD on all four; the HardGate below drives each to GREEN (the clean-branch SELECTIVE land
-+ the `--constellation-edge` plain-hsl token + a fail-loud `readCanvasColor` guard + the executed all-7 e2e
-specs + the tightened constellation guard) under an EXECUTED live render-matrix audit.
+The wave is RED at HEAD on both; the HardGate below drives each to GREEN (the FORWARD-cut clean
+`tranche/AX-slides` branch carrying the committed H state with `feedback-coder/**` untouched + the
+merge-to-main → push → `deploy-pages.yml` terminal) under an EXECUTED live render-matrix audit that re-proves
+the constellation paints a neutral lattice (the leak is fixed — W30 VERIFIES it live, it does not re-fix it)
+and both decks survive on the AX line.
 
 ---
 
 ## Goal
 
-Land the stranded H W2-W10 til-briefing working-tree on a clean `tranche/AX-slides` branch, fix the
-constellation `--foreground` light-dark()-into-Canvas2D leak at its root with a plain-hsl `--constellation-edge`
-token + a fail-loud `readCanvasColor` guard, and EXECUTE all 7 authored e2e specs across the render matrix —
-converting every H "green-but-unrun" claim into a live-verified visual-truth verdict on a known-good base.
+Cut a clean `tranche/AX-slides` branch FORWARD from `deck/feedback-coder` (carrying the already-committed H
+til-briefing state — the leak is fixed, the specs are committed, the deck is deployed), VERIFY that committed
+state live (the constellation paints a neutral lattice with one red anomaly across the render matrix — the
+§24-fixed leak proven live, not re-fixed), keep `feedback-coder/**` hard out-of-bounds, and establish the
+merge-to-main → push → `deploy-pages.yml` terminal so the AX-rebuilt til-briefing deck re-deploys to
+slides.friday.institute on the custom domain (the §21 end-state leg 2). This wave is the slides BASELINE on the
+AX line: it makes the AX slides band recoverable on a clean branch and wires its deploy terminal, on a
+known-good, already-converged base.
 
 ---
 
-## Scope (the gestalt fix — clean-branch recoverability, the root-cause Canvas2D fix, executed visual truth; no workaround)
+## Scope (the gestalt fix — the FORWARD-cut branch protocol, live-verify the converged base, reach the deploy terminal; no workaround)
 
-The audit's findings converge on one architectural truth: the H tranche reproduced the EXACT cardinal AX
-failure (a green-claim never run against the live product) inside the consumer repo — and its single most
-visible symptom is a one-line light-dark()-into-Canvas2D leak that H.W4 patched everywhere EXCEPT the most
-voluminous element. This wave is the slides BASELINE: it makes the dev work recoverable, fixes the leak at its
-root (not a workaround), and executes the discipline that should have closed H. It builds NOTHING on
-uncommitted/unverified state.
+The §24 re-ground inverts the wave's premise: the H tranche's once-stranded work is NOW committed
+(`da173e7`/`b622ac7`/`fb2ad39`), the leak is fixed at the source (`constellation.ts:116` reads
+`--constellation-line` first), the specs are tracked + their two reds fixed at source, and the deck is deployed
+(`9f08ded`). The architectural truth W30 now serves is the BRANCH PROTOCOL + the deploy terminal: the AX slides
+band needs a clean `tranche/AX-slides` branch to drive on, and a merge-to-main → push terminal so its rebuilt
+deck re-deploys. This wave is the slides BASELINE on the AX line: it forward-cuts the branch off the converged
+base, VERIFIES that base live (the leak-fixed neutral lattice + both decks), and wires the deploy terminal. It
+builds on already-committed + already-deployed state — there is nothing to re-land, re-fix, or re-author.
 
-### 1. SELECTIVE clean-branch land — the recoverability precondition (slice 28 F6; hist:slides; harden SELECTIVE-land)
+### 1. The FORWARD-cut branch protocol — the recoverability + drive-line precondition (slice 28 F6 DISCHARGED; hist:slides; harden branch-protocol)
 
-The H working-tree is NOT clean uncommitted state on branch HEAD — it is 12 dirty files + 7 untracked specs
-buried UNDER `edc23e7` (the feedback-coder deck) + 5 fourier commits on `deck/feedback-coder`. The orchestrator
-(who owns the index — agents stay read-only per the hardened agent git clause) executes a SELECTIVE land:
+The H working-tree is NO LONGER dirty uncommitted state — it is COMMITTED on `deck/feedback-coder`
+(`da173e7`/`b622ac7`/`fb2ad39`), reachable from HEAD `d79091e`, alongside the committed fourier WIP. The
+recoverability blocker the prior SELECTIVE-land step addressed is DISCHARGED: there is nothing to stash, no
+selective by-path capture, no clobber risk. The orchestrator (who owns the index — agents stay read-only per
+the hardened agent git clause) executes the FORWARD CUT:
 
-1. **Capture H's W2-W10 working-tree FIRST** (snapshot the exact 12 modified files + the 7 untracked specs).
-   The til-briefing slide files carry BOTH H's uncommitted edits AND the committed feedback-coder/G history —
-   capture is by FILE PATH, not a blanket stash that would sweep in the feedback-coder WIP.
-2. **Land ONLY the til-briefing manifest** onto a clean `tranche/AX-slides` branch — the EXACT files (the
-   harden lane's load-bearing recoverability step): `src/deck/DeckView.vue`, `src/decks/til-briefing/{constellation.ts,
-   meta.ts}`, `src/styles/deck.css`, the 8 `src/decks/til-briefing/slides/*.vue`, and the 7
-   `tests/e2e/*.spec.ts`. **Leave the feedback-coder deck WIP UNTOUCHED on its branch** — the chronic block
-   named in MEMORY (`slides deploy blocked by feedback-coder WIP deck`); landing the H tree must NOT clobber
-   or strand the unrelated fourier WIP. State the file manifest IN the wave spec so the orchestrator's
-   selective commit cannot accidentally sweep in or strand the unrelated deck.
-3. **Decide + RECORD the feedback-coder/fourier deck disposition** relative to the H land (deploys vs
-   user-WIP-read-only vs live second deck) in `coordination/CONSTELLATION.md` — the second deck is a NET-NEW
-   product (5 commits + `FourierField.vue` + its DESIGN/AUDIT corpus) the charter had zero coverage of;
-   enumerate BOTH decks in the L band so neither is lost.
+1. **Capture the sibling baseline FIRST** (the slides HEAD `d79091e` + branch `deck/feedback-coder` + `git
+   status --porcelain` — CLEAN save the untracked `docs/tranches/J/`) into the band-L section of W28's
+   `coordination/CONSTELLATION.md`. Re-prove the CLEAN-tree + committed-H + fixed-leak + deployed-deck state
+   live (do not trust the spec's word) per the W00 wave-open ritual.
+2. **Cut `tranche/AX-slides` FORWARD from `deck/feedback-coder`** — a forward branch off the converged base
+   carries the committed H + I til-briefing history AND the feedback-coder fourier deck for free, with NO
+   stash, NO by-path selective land, NO recoverability risk. The FileBounds (below) scope the wave's EDITS to
+   `src/decks/til-briefing/**` + the shared deck chrome (`src/deck/**`, `src/styles/deck.css`,
+   `tests/e2e/*.spec.ts` for the til-briefing matrix); `src/decks/feedback-coder/**` is HARD out-of-bounds —
+   the wave RIDES the fourier deck forward on the same base but writes NOT ONE feedback-coder file. The
+   chronic block named in MEMORY (`slides deploy blocked by feedback-coder WIP deck`) dissolves: the forward
+   cut neither clobbers nor strands the fourier deck — both decks ride the AX line untouched.
+3. **EDIT/APPEND the band-L section onto W28's `coordination/CONSTELLATION.md`** (W28 is the sole OPENER —
+   W30 NEVER creates the doc): record the FORWARD-cut protocol + the BOTH-decks enumeration (til-briefing +
+   feedback-coder, both rideable forward — the second deck is a NET-NEW product with `FourierField.vue` + its
+   DESIGN/AUDIT corpus the charter had zero coverage of, enumerated so neither is lost) + the feedback-coder
+   HARD-out-of-bounds boundary + the merge-to-main → deploy terminal.
 
 Adopt bbnf's **sibling-baseline-capture ritual** (snapshot the slides HEAD + `git status --porcelain` BEFORE
-any cross-repo edit; reconcile at close) so the chronic dirty-tree wall is a recorded delta, not a silent
-stall.
+any cross-repo edit; reconcile at close) so the cross-repo state is a recorded delta, not a silent stall.
 
-### 2. The constellation light-dark()-into-Canvas2D ROOT-CAUSE fix (slice 29 F0 — the CARDINAL blocker)
+### 2. VERIFY the constellation light-dark()-into-Canvas2D fix live (slice 29 F0 — DISCHARGED at the source; W30 proves it)
 
-Promote the neutral edge color OFF raw `--foreground` (a `light-dark()` value Canvas2D rejects) onto a
-Canvas2D-safe plain-hsl token, exactly as H.W4 did for the node tokens:
+The leak is FIXED at the source in the committed H/I work — `constellation.ts:116` reads
+`this.cLine = readVar(c, "--constellation-line", readVar(c, "--foreground", "#1c1714"))` (the plain-hex
+`--constellation-line` token first; `--foreground` survives ONLY as a last-ditch fallback), and `deck.css`
+carries `--constellation-line` plain-hex in BOTH arms (`#1c1815` light at `:279`, `#e8e6df` dark at `:809`).
+This matched the H.W4 node-token pattern AND closed the last edge-stroke leak the audit named. W30 does NOT
+re-author this fix (it ships in the forward-cut base); W30 VERIFIES it LIVE under the AX line's render-matrix
+audit — the discharged-out-of-band satisfied-witness rule (§F.3): a fixed leak is proven, not re-implemented.
 
-- **Add `--constellation-edge`** (plain-hsl, NEVER `light-dark()`) to `deck.css` §1 (the light arm) and §10
-  (`:root.dark .deck`, the dark arm), matching the H.W4 node-token pattern — the LIGHT arm is the ink hairline
-  (`#1c1917`-class), the DARK arm is the cream hairline (the lifted-off-the-ink value, so the lattice reads on
-  the dark bookends). This is the COMPLEMENT of the library-side `--constellation-line` plain-hsl token AX.W17
-  ships — slides reads its own deck-scoped `--constellation-edge` value; the W17 library token is the
-  fallback/default a consumer dropping in `<Constellation>` inherits.
-- **Change `constellation.ts:107`** from `this.cLine = readVar(c, "--foreground", "#1c1714")` to read
-  `--constellation-edge` through the fail-loud resolver below. This closes the LAST light-dark()-into-Canvas2D
-  leak so the neutral lattice paints its intended ink/cream hairline and the red anomaly is the single focal
-  event.
-- **Add a fail-loud `readCanvasColor(c, cssVar, fallback)` helper in `constellation.ts`** (the architectural
-  gestalt the audit names — fail-loud per §0): it reads the token and THROWS on any `light-dark(` value (a
-  library-internal contract violation per the fail-explicit precept — a slides-DEV defect that must fail
-  loudly, NOT a befitting-silent browser-API degradation). Route ALL of the constellation's `readVar` color
-  reads (`cNode`/`cNodeDim`/`cLine`/`accentColor`) through it so this class can NEVER silently recur. This is
-  the one-path Canvas2D-color discipline: a plain-hex/hsl assertion at the read, not a per-site workaround.
+- **VERIFY live (the binding close, not a re-fix):** on the forward-cut `tranche/AX-slides` branch, render
+  slide 1 across the matrix (`?light`/`?dark`) and measure the alpha-weighted painted-constellation pixel
+  histogram: **neutral > red × 2** (the lattice reads as a neutral ink/cream web with the single red anomaly
+  as the only red focal event — NOT the historical 86.3%-red splatter the prior premise measured against the
+  stale stranded tree). The neutral edge hairlines paint their intended `--constellation-line` tone on cream
+  AND ink.
+- **CONFIRM the discipline holds:** the committed `constellation-visibility.spec.ts` (now tracked) carries the
+  no-`light-dark()`-in-canvas assertion; W30 confirms it RUNS GREEN on the AX line, and confirms the
+  `--constellation-line` token is plain-hex (no `light-dark(` substring) in both arms. This is the
+  verification leg of the one-path Canvas2D-color discipline (plain-hsl/hex tokens, NEVER `light-dark()` into
+  canvas), proven live rather than re-asserted in source.
 
-**RATIFY-BEFORE-IMPL — the Canvas2D-color-resolution disposition (the TWO-instance leak; hist:slides +
-idiom:slides).** The leak has TWO instances (constellation.ts:107 direct read AND FourierField.vue:231-250
-probe-span). There are two paths to the unified fix:
+**The TWO-instance leak class + the shared-resolver future (hist:slides + idiom:slides — RECORD, do not
+author).** The Canvas2D-light-dark() defect had a second instance — `FourierField.vue` (the feedback-coder
+deck) hand-rolls a probe-span `getComputedStyle()` workaround for the SAME root cause. Both instances are now
+resolved at their own sources (the constellation via plain-hex `--constellation-line`; FourierField via its
+probe-span), but the discipline is NOT yet generalized to ONE shared helper. W30 RECORDS the FourierField
+probe as the second consumer that justifies the AX.W37 `resolveCanvasColor` substrate (the ≥2-consumer math:
+constellation + FourierField — a 2D consumer reaching the same resolver the WebGL substrate gets) in the
+band-L section of `coordination/CONSTELLATION.md`, but does NOT itself author a shared cross-deck helper (the
+feedback-coder deck is HARD out-of-bounds per §1 — W30 writes NOT ONE `src/decks/feedback-coder/**` file). The
+shared resolver is W37/W17-substrate work the two decks adopt later; W30's leg is the live VERIFICATION of the
+already-shipped constellation fix on the AX line + the consumer-#2 record.
 
-- **(A) PLAIN-HSL TOKENS** — `--constellation-edge` for the constellation + plain-hsl `--viz-fourier`/`--viz-chebyshev`
-  tokens for FourierField, so neither reads `light-dark()` into canvas at all (the W17 library precept extended
-  to the deck). This is the SIMPLER, one-path-token answer — no runtime probe, no getComputedStyle reflow.
-- **(B) SHARED `resolveCanvasColor(cssVar, el)`** — adopt FourierField's probe-span `getComputedStyle()`
-  resolution as the shared helper (it ALREADY solves the exact defect live; AUDIT-FOURIER-v2 confirms it
-  resolves to clean oklch, not a light-dark string), generalizing to ANY light-dark() token in canvas. This is
-  a candidate for the AX.W37 `useCanvas2D` substrate (`resolveCanvasColor`) — a 2D consumer reaching the same
-  resolver the WebGL substrate gets.
+### 3. VERIFY the committed e2e specs across the render matrix + the merge-to-main → deploy terminal (slice 29 F1 DISCHARGED; hist:slides; §F.1 deploy DAG)
 
-**RECOMMENDED (RATIFY-BEFORE-IMPL):** **(A) the plain-hsl token path for W30's REQUIRED scope** — it is the
-KISS one-path fix that clears the blocker without a runtime probe, and it matches the W17 library precept
-(plain-hsl `--constellation-*` tokens, NEVER `light-dark()` into canvas). W30 ships `--constellation-edge`
-(REQUIRED) + the fail-loud `readCanvasColor` guard (REQUIRED). The FourierField probe → shared
-`resolveCanvasColor` consolidation (B) is the CLEANER long-run gestalt but is the AX.W37 substrate's province
-(a glass-ui-side wave shipping `resolveCanvasColor` on `useCanvas2D`); W30 RECORDS the FourierField probe as
-the second consumer that justifies the W37 substrate (the ≥2-consumer math: constellation + FourierField) and
-flags it in `coordination/CONSTELLATION.md`, but does NOT itself author a shared cross-deck helper (the
-feedback-coder deck stays untouched per §1). Plain-hsl tokens for the constellation NOW; the shared resolver
-is W37/W17-substrate work the two decks adopt later.
+The H e2e specs are COMMITTED (`b622ac7`) and their two reds were FIXED at source (`fb2ad39` "I.W11 — fix the
+two e2e reds at the source"); `tests/e2e/` is tracked (`constellation-visibility`, `complex-graphs`,
+`deck-progress`, `dedup-pulse`, `deck.spec`, …). The "authored-but-never-run" witness is DISCHARGED. W30's leg
+is to RUN them on the forward-cut `tranche/AX-slides` branch across the render matrix (390×844 / 768×1024 /
+1280×720 / the 1280 export frame, both `?light` and `?dark`) and confirm GREEN — the live VERIFICATION that
+the converged base holds on the AX line. The π-lane visual-truth discipline (AX.W00) is BINDING on the slides
+repo, not only glass-ui: the close is the EXECUTED live render-matrix audit, never a green-but-unrun claim.
 
-### 3. Execute ALL 7 H e2e specs + tighten the constellation guard (slice 29 F1; hist:slides all-7-execution)
+**The merge-to-main → deploy terminal (RED witness 2 — the §21 end-state leg 2; §F.1 step 3).** Once the
+forward-cut branch is GREEN (committed H state verified + the matrix passes), the orchestrator MERGES
+`tranche/AX-slides` → `main` and PUSHES — `ci.yml` (push:main) runs, then `deploy-pages.yml`
+(`workflow_run`, `head_branch=='main'`-gated) fires and re-deploys the AX-rebuilt til-briefing deck to
+slides.friday.institute on the custom domain. This is the deploy DAG terminal the prior premise lacked. The
+W17 library-seam adoption (the `constellation.ts` 510-line deletion onto `<Constellation :draw-overlay>`)
+stays the publish-gated tail (§4 note 12) — W30's merge ships the slides-local, leak-fixed, verified deck; the
+library-seam deletion is a SEQUENCED later slides commit gated on the AX cut PUBLISHING. (Agents stay
+read-only on git — the orchestrator owns the merge + push + the deploy trigger per the hardened agent git
+clause.)
 
-Wire the 7 authored-but-never-run H specs (`constellation-visibility`, `mobile-reflow`, `xray-portal`,
-`complex-graphs`, `deck-progress`, `dedup-pulse`, + the rebuilt deck.spec) into the EXECUTED slides `npm run
-audit` set and RUN them across the render matrix (390×844 / 768×1024 / 1280×720 / the 1280 export frame, both
-`?light` and `?dark`) — converting every H "done" claim from green-but-unrun to live-verified. The π-lane
-visual-truth discipline (AX.W00) is BINDING on the slides repo, not only glass-ui.
+### 4. Security hygiene — confirm the access-key redaction holds (slice 29 F8; harden access-key-confirmation)
 
-**Tighten the constellation guard** (the discipline check that had a hole exactly where the bug lived):
-- Count only meaningfully-OPAQUE pixels (**alpha-weighted**) so faint AA red can't game the `neutral > red*2`
-  heuristic.
-- **Include `--foreground` in the no-light-dark-in-canvas assertion** (the spec checked only `--constellation-*`
-  tokens — the bug lived in the omitted `--foreground` read).
-- **Reconcile the stale anchor** (0.62/0.72 → the live 0.60 per `Slide01.vue:14`) so the spec is authored from
-  the render, not the spec.
-
-### 4. Security hygiene — redact the leaked access key (slice 29 F8; harden access-key-promotion)
-
-The live access key `wolfpack-ledger-2026` is leaked in PLAINTEXT across committed docs
-(`docs/tranches/H/audit/slides-visual-digest.md:9,202,244,349`, `H.md:19`, E/F tranche docs). The standing
-`grep wolfpack-ledger src/` → 0 rule holds for `src/`, but the docs leak the live key. W30 — the FIRST wave to
-touch the slides repo — is the natural place to redact-or-rotate BEFORE any further commit propagates the leak
-(the harden lane's promotion: routing it as a minor tail of the W31 content wave under-prioritizes a security
-item). Redact to a placeholder `<ACCESS_KEY>` + a pointer to the gitignored `.env`; since til-briefing is now
-public (`meta.softGated:false`) the key is unused — but the leak must not persist; if genuinely retired,
-ROTATE it, don't just redact.
+The live access key `wolfpack-ledger-2026` must not persist in PLAINTEXT in committed docs. The standing
+`grep wolfpack-ledger src/` → 0 rule holds for `src/`; W30 — the first AX wave on the slides line — CONFIRMS
+the docs do not leak the live key on the forward-cut branch and redacts any surviving occurrence to a
+placeholder `<ACCESS_KEY>` + a pointer to the gitignored `.env`. Since til-briefing is public
+(`meta.softGated:false`) the key is unused; if genuinely retired, ROTATE it, don't just redact. The leak must
+not propagate in any new AX-line commit.
 
 **Explicitly OUT of W30 scope (routes elsewhere):**
 - The Slide04 hypothetical/what-if anomaly reframe + the ~$5M figure-clip + the homepage lock affordance + the
   access-key MODAL glass restyle + the mobile-reflow content guards + the dead `SlideNutrition.vue` excision →
-  **AX.W31** (the slides content reframe wave; W30 LANDS the working tree those changes sit on + executes the
-  guards, W31 authors the content).
+  **AX.W31** (the slides content reframe wave; W30 forward-cuts the branch those changes drive on + verifies
+  the converged base, W31 authors the content).
 - The `reveal.ts`/`useCountup.ts` → glass-ui `vReveal`/`useCountup` motion adoption + the LabeledField error
   pattern + the deploy verification (pptx-200 + CSP frame-src) → **AX.W32** (the slides motion/form adoption
   wave; note `vReveal` is ALREADY in 3.4.0 so its adoption is live-unblocked against the current pin, while
@@ -228,24 +217,30 @@ ROTATE it, don't just redact.
 ## FileBounds (the EXACT files this wave may touch — for parallel-dispatch disjointness)
 
 This is a SLIDES-repo wave (separate repo, tracked). glass-ui writes NO library `src/` in this wave; the
-glass-ui-side artefacts are the coordination doc + the audit ledger ONLY.
+glass-ui-side artefacts are the coordination doc + the audit ledger ONLY. The FileBounds scope EDITS to
+`src/decks/til-briefing/**` + the shared deck chrome ONLY; `src/decks/feedback-coder/**` is HARD
+out-of-bounds. The constellation leak + the e2e specs are ALREADY fixed/committed in the forward-cut base — the
+slides-side legs are VERIFY (render-matrix audit) + the orchestrator's branch/merge ops, not source re-edits.
 
 | File (in `~/Programming/slides` unless noted) | Edit |
 |------|------|
-| `src/decks/til-briefing/constellation.ts` | Change `:107` `cLine` read from `--foreground` to `--constellation-edge`; ADD the fail-loud `readCanvasColor(c, cssVar, fallback)` helper (throws on any `light-dark(` value); route all color `readVar` reads (`cNode`/`cNodeDim`/`cLine`/`accentColor`) through it. (This file is ALREADY dirty `M` from H — the land in §1 captures the H edits FIRST, then this wave's edits layer on the landed base.) |
-| `src/styles/deck.css` | ADD `--constellation-edge` (plain-hsl) to §1 (light arm) + §10 (`:root.dark .deck`, dark arm). (ALREADY dirty `M` from H — land first.) |
-| `tests/e2e/constellation-visibility.spec.ts` | TIGHTEN: alpha-weight the pixel count; ADD `--foreground` to the no-light-dark-in-canvas assertion; reconcile the stale 0.62/0.72 anchor → 0.60. (Untracked `??` from H — land first.) |
-| `package.json` (slides) + `npm run audit` script | Wire the 7 e2e specs into the EXECUTED `audit` set (the spec exists; the runner wiring is the gate registration). |
-| `docs/tranches/H/audit/slides-visual-digest.md`, `docs/tranches/H/H.md`, the E/F tranche docs leaking the key | REDACT `wolfpack-ledger-2026` → `<ACCESS_KEY>` + a pointer to the gitignored `.env` (or rotate). |
-| `~/Programming/glass-ui/coordination/CONSTELLATION.md` (glass-ui side) | **NEW** — the cross-repo coordination doc: the slides HEAD + branch + `git status --porcelain` sibling-baseline; the SELECTIVE-land file manifest; the feedback-coder/fourier deck disposition; the BOTH-decks L-band enumeration; the writer-vs-reader boundary (glass-ui owns the W17 library token; slides owns the deck read); the AX-publish gate for the W17 adoption leg; the FourierField-probe-as-W37-consumer-#2 note. |
-| `~/Programming/glass-ui/docs/tranches/AX/audit/W30-slides-baseline.json` (glass-ui side) | **NEW** — the wave's born-RED→GREEN audit artefact + the SELECTIVE-land manifest + the executed-e2e verdicts + the live render-matrix BEFORE/AFTER + the RATIFY record (plain-hsl token path A). |
+| `tranche/AX-slides` branch (git op — orchestrator) | CUT FORWARD from `deck/feedback-coder` (HEAD `d79091e`) — carries the committed H + I til-briefing history; `feedback-coder/**` rides forward untouched. Agents stay read-only on git. |
+| `src/decks/til-briefing/constellation.ts` | VERIFY-ONLY — the `:116` `cLine` read already resolves `--constellation-line` first (the leak is fixed in the committed base). W30 does NOT edit it; the render-matrix audit proves the neutral lattice live. Any in-scope render-truth fix surfaced live stays WITHIN `src/decks/til-briefing/**`. |
+| `src/styles/deck.css` | VERIFY-ONLY — `--constellation-line` plain-hex already present in both arms (`#1c1815` light `:279`, `#e8e6df` dark `:809`). W30 does NOT edit it. |
+| `tests/e2e/*.spec.ts` (til-briefing matrix) | RUN-ONLY — the committed specs (`constellation-visibility`, `complex-graphs`, `deck-progress`, `dedup-pulse`, `deck.spec`, …) RUN GREEN across the render matrix on the forward-cut branch. The two prior reds were fixed at source (`fb2ad39`). |
+| `main` branch merge + push (git op — orchestrator) | MERGE `tranche/AX-slides` → `main` + PUSH once the branch is GREEN — triggers `ci.yml`(push:main) → `deploy-pages.yml`(`workflow_run`, `head_branch==main`) → the custom-domain re-deploy. Agents stay read-only on git. |
+| any committed slides doc leaking `wolfpack-ledger-2026` | CONFIRM the redaction holds; redact any surviving occurrence → `<ACCESS_KEY>` + a pointer to the gitignored `.env` (or rotate). |
+| `~/Programming/glass-ui/coordination/CONSTELLATION.md` (glass-ui side) | **EDIT/APPEND** — W28 is the sole OPENER; W30 APPENDs the band-L section: the slides HEAD `d79091e` + branch + `git status --porcelain` sibling-baseline; the FORWARD-cut protocol; the feedback-coder/fourier deck disposition (HARD out-of-bounds, rides forward); the BOTH-decks L-band enumeration; the writer-vs-reader boundary (glass-ui owns the W17 library token; slides owns the deck read); the AX-publish gate for the W17 adoption leg; the merge-to-main → `deploy-pages.yml` terminal; the FourierField-probe-as-W37-consumer-#2 note. |
+| `~/Programming/glass-ui/docs/tranches/AX/audit/W30-slides-baseline.json` (glass-ui side) | **NEW** — the wave's born-RED→GREEN audit artefact + the FORWARD-cut record (the §24 satisfied-witness discharge of the prior 3 witnesses) + the verified-e2e verdicts + the live render-matrix BEFORE/AFTER + the merge-to-main → deploy verdict. |
 
-**OUT of bounds:** any `src/decks/feedback-coder/**` file (the fourier deck WIP stays UNTOUCHED on its branch
-— the load-bearing recoverability constraint); the Slide04/lock/modal/SlideNutrition CONTENT changes (**AX.W31**);
-the `reveal.ts`/`useCountup.ts`/deploy adoption (**AX.W32**); any glass-ui library `src/` (the
-`--constellation-line` token + focal/warp seam are **AX.W17**, the `resolveCanvasColor` substrate is **AX.W37**
-— glass-ui writes no library source in this slides wave); the W17 `Constellation.vue`/`constellationField.ts`
-(W30 READS the W17 seam, it does not author it).
+**OUT of bounds:** any `src/decks/feedback-coder/**` file (HARD out-of-bounds — the fourier deck rides the
+forward cut untouched, NOT edited; the load-bearing recoverability + no-clobber constraint); the
+Slide04/lock/modal/SlideNutrition CONTENT changes (**AX.W31**); the `reveal.ts`/`useCountup.ts`/deploy-verify
+adoption (**AX.W32**); any glass-ui library `src/` (the `--constellation-line` token + focal/warp seam are
+**AX.W17**, the `resolveCanvasColor` substrate is **AX.W37** — glass-ui writes no library source in this slides
+wave); the W17 `Constellation.vue`/`constellationField.ts` (W30 READS the W17 seam, it does not author it);
+the source re-authoring of the already-committed constellation leak fix + the e2e specs (DISCHARGED at source
+per §24 — W30 VERIFIES, it does not re-implement).
 
 ---
 
@@ -256,12 +251,14 @@ The disjointness contract:
 
 - **vs AX.W17 (the library-side constellation seam) — SEQUENTIAL + REPO-DISJOINT.** W17 owns the LIBRARY-side
   `--constellation-line` plain-hsl token + `readPalette` full-set + the focal-node/`warpTo`/`warpOnClick` seam
-  (`glass-ui/src`). W30 owns the SLIDES-side `--constellation-edge` deck token + the `:107` leak fix + the
-  fail-loud `readCanvasColor` guard + (the W17 adoption leg, GATED on publish) the 510-line `constellation.ts`
-  deletion onto a thin `<Constellation :draw-overlay>` wrapper. The shared SEMANTIC surface is the Canvas2D-safe
-  plain-hsl edge color (W17 ships the library default `--constellation-line`; W30 ships the deck-scoped
-  `--constellation-edge` + reads it). **NO shared FILE — different repos.** The W17 adoption is gated on the AX
-  cut PUBLISHING (§4 note 12 — slides MEASURED published 3.6.0 which ships NO `/constellation`); coordinate via
+  (`glass-ui/src`). W30 owns the SLIDES-side branch protocol (the forward cut + the merge-to-main → deploy
+  terminal) + the LIVE VERIFICATION that the committed `--constellation-line` deck token reads the neutral
+  lattice (the leak fix already shipped in the H/I base) + (the W17 adoption leg, GATED on publish) the
+  510-line `constellation.ts` deletion onto a thin `<Constellation :draw-overlay>` wrapper. The shared SEMANTIC
+  surface is the Canvas2D-safe plain-hsl edge color (W17 ships the library default `--constellation-line`; the
+  slides deck carries its own deck-scoped `--constellation-line` value + reads it). **NO shared FILE —
+  different repos.** The W17 adoption is gated on the AX cut PUBLISHING (§4 note 12 — slides MEASURED published
+  3.6.0/3.7.0 which ships NO `/constellation`); coordinate via the band-L section of W28's
   `coordination/CONSTELLATION.md`.
 
 - **vs AX.W00 (the π lane) — SEQUENTIAL (dependsOn).** W00 codifies the π visual-runtime discipline + the
@@ -271,57 +268,93 @@ The disjointness contract:
   `tests-visual/` workspace is a glass-ui workspace. DISJOINT by repo + file; W30 inherits the DISCIPLINE, not
   W00's spec files.
 
-- **vs AX.W31 (slides content reframe) — SEQUENTIAL (W31 dependsOn W30).** W30 LANDS the working tree + fixes
-  the constellation leak + executes the guards (the known-good BASE); W31 authors the CONTENT (Slide04 reframe,
+- **vs AX.W28 (the CONSTELLATION.md opener) — SEQUENTIAL (dependsOn) + DOC-DISJOINT.** W28 is the SOLE OPENER
+  of `coordination/CONSTELLATION.md` (it authors the band-K + gate-0 section before any cross-repo wave reads
+  it). W30 EDIT/APPENDs the band-L (SLIDES) section onto that same doc — it NEVER creates the file (the prior
+  `**NEW**` creator-collision is resolved: W28 opens, W30/W34 extend). The path is the ONE canonical repo-root
+  `coordination/CONSTELLATION.md`. Section-disjoint: W28 owns band-K, W30 owns band-L, W34 owns the §16
+  receiver bands.
+
+- **vs AX.W31 (slides content reframe) — SEQUENTIAL (W31 dependsOn W30).** W30 forward-cuts the branch + reaches
+  the deploy terminal + verifies the converged base (the known-good BASE); W31 authors the CONTENT (Slide04 reframe,
   $5M clip, lock affordance, modal restyle, mobile content guards, SlideNutrition excision) ON that base.
-  Shared FILES (the slide SFCs + deck.css are dirty for both) but SEQUENTIAL — W30 lands them, W31 edits the
-  landed versions. No concurrent write: W31 cannot start until W30's clean-branch land is GREEN (the §0 mandate
-  — no content wave builds on uncommitted/unverified state).
+  Shared FILES (the slide SFCs + deck.css) but SEQUENTIAL — W30 forward-cuts + verifies them, W31 edits the
+  committed versions on the AX-slides branch. No concurrent write: W31 cannot start until W30's forward-cut
+  branch is GREEN (the §0 mandate — no content wave builds on an unverified base).
 
 - **vs AX.W32 (slides motion + form adoption) — SEQUENTIAL (W32 dependsOn W31 + W24).** W32 owns the
   `reveal.ts`/`useCountup.ts`/`DeckProgress` adoption + deploy verification + the slides Lighthouse arm.
   DISJOINT by file (motion composables + DeckSettings, not the constellation or the slide content). W32 is
   gated on the AX PUBLISH for `useCountup`/`DeckProgress` (`vReveal` is already in 3.4.0).
 
-- **vs the feedback-coder/fourier deck (NOT a wave — a live WIP on the branch).** The ONE hard
-  collision-avoidance: W30 must NOT touch `src/decks/feedback-coder/**`. The SELECTIVE land by file manifest
-  (§1) is the mechanism: the orchestrator commits ONLY the 12 til-briefing files + 7 specs, leaving the
-  fourier WIP on `deck/feedback-coder`. Get this wrong and either the H work or the feedback-coder WIP is lost
-  (the harden lane's load-bearing warning).
+- **vs the feedback-coder/fourier deck (NOT a wave — a committed deck on the base branch).** The ONE hard
+  collision-avoidance: W30 must NOT touch `src/decks/feedback-coder/**` (HARD out-of-bounds in FileBounds).
+  The FORWARD-cut protocol (§1) is the mechanism: cutting `tranche/AX-slides` forward from `deck/feedback-coder`
+  carries the committed fourier deck along on the same base — it rides forward untouched, neither clobbered nor
+  stranded. The forward cut dissolves the chronic dirty-tree wall: there is no stash, no selective by-path
+  land, nothing to lose. W30 EDITS only `src/decks/til-briefing/**` + the shared deck chrome; the fourier deck
+  is read-along-only.
 
 ---
 
 ## Triumvirate (implement / adversarially-verify / gate-author split)
 
-This is a slides-repo wave; the orchestrator owns the index (the SELECTIVE land + commits); agents stay
-read-only on git per the hardened agent git clause (K W0).
+This is a slides-repo wave; the orchestrator owns the index (the FORWARD cut + the merge-to-main + commits);
+agents stay read-only on git per the hardened agent git clause (K W0).
 
-- **Implement (≤1 agent — the constellation leak fix + the deck token + the spec tightening + the doc
-  redaction; the orchestrator does the SELECTIVE land).** Add `--constellation-edge` (plain-hsl, light + dark
-  arms) to `deck.css`; change `constellation.ts:107` to read it via the new fail-loud `readCanvasColor` helper;
-  route all constellation color reads through the helper. Tighten `constellation-visibility.spec.ts`
-  (alpha-weight + `--foreground` in the no-light-dark assertion + the 0.60 anchor). Wire the 7 specs into the
-  executed `npm run audit`. Redact the leaked key. Lint + typecheck at every interval. (The orchestrator —
-  NOT this agent — executes the SELECTIVE clean-branch land of the 12 H files + 7 specs onto `tranche/AX-slides`
-  BEFORE the agent's edits, so the edits layer on the landed base. The agent writes NO `src/decks/feedback-coder/**`.)
-- **Adversarially-verify (≤1 read-only lane).** (a) Re-runs the four RED witnesses on the patched + landed
-  tree: the working tree is on `tranche/AX-slides` (not `deck/feedback-coder`) and the 12 til-briefing files +
-  7 specs are committed; `constellation.ts:107` no longer reads `--foreground` (it reads `--constellation-edge`
-  through `readCanvasColor`); the live slide-1 pixel histogram measures neutral > red (the splatter is gone);
-  the 7 specs RUN and PASS. ADVERSARIAL twists: (i) confirms `readCanvasColor` THROWS on a synthetic
-  `light-dark()` token (the fail-loud guard is honest — feed it `--foreground` and it must throw, not silently
-  fall through); (ii) confirms the feedback-coder deck files are UNTOUCHED (`git diff` on
-  `src/decks/feedback-coder/**` = empty — the SELECTIVE land did not sweep or strand the fourier WIP); (iii)
-  confirms the tightened `constellation-visibility.spec.ts` would FAIL on the OLD `--foreground`-leak code (the
-  guard actually bites — revert the fix, run the spec, it reds); (iv) confirms the leaked key is gone from the
-  committed docs (`grep -rn wolfpack-ledger-2026 docs/` = 0 in the landed tree); (v) confirms the
-  `--constellation-edge` token is PLAIN-hsl (no `light-dark(` substring) in BOTH the light and dark arms.
-- **Gate-author (≤1 agent — born-RED→GREEN).** Authors the tightened `constellation-visibility.spec.ts`
-  assertion (alpha-weighted neutral > red×2 + `--foreground` in the no-light-dark-in-canvas check) + the
-  executed-all-7-specs audit-set wiring; confirms the assertion FAILS at the pre-wave `--foreground`-leak tree
-  and PASSES on the patched tree. Registers the 7 specs in the slides `npm run audit` runner.
+- **Implement (≤1 agent — the live VERIFICATION pass + the band-L coordination append + the key-redaction
+  confirmation; the orchestrator does the FORWARD cut + the merge-to-main).** Run the committed til-briefing
+  e2e specs across the render matrix on the forward-cut branch; confirm GREEN. APPEND the band-L section to
+  W28's `coordination/CONSTELLATION.md` (the sibling-baseline + the FORWARD-cut protocol + the both-decks
+  enumeration + the merge-to-main → deploy terminal + the FourierField-W37-consumer-#2 note). Confirm the
+  key-redaction holds; redact any surviving occurrence. Lint + typecheck at every interval. (The orchestrator —
+  NOT this agent — cuts `tranche/AX-slides` FORWARD from `deck/feedback-coder` BEFORE the verification pass,
+  and MERGES to `main` + pushes once GREEN. The agent writes NO `src/decks/feedback-coder/**`; the
+  constellation leak + the e2e specs are already fixed/committed in the forward-cut base — the agent VERIFIES,
+  it does not re-author.)
+- **Adversarially-verify (≤1 read-only lane).** (a) Re-runs the TWO surviving RED witnesses on the forward-cut
+  tree: `tranche/AX-slides` exists and carries the committed H til-briefing history; the merge-to-main →
+  `deploy-pages.yml` terminal is reachable (the branch merges to `main` and the deploy workflow fires on the
+  `head_branch==main` build). It also CONFIRMS the §24 satisfied-witness discharges hold: `constellation.ts:116`
+  reads `--constellation-line` first (the leak is fixed in the base); the live slide-1 pixel histogram measures
+  neutral > red (the splatter is gone); the committed specs RUN and PASS. ADVERSARIAL twists: (i) confirms the
+  `--constellation-line` token is PLAIN-hex (no `light-dark(` substring) in BOTH arms of `deck.css`; (ii)
+  confirms the feedback-coder deck files are UNTOUCHED on the forward-cut branch (`git diff
+  deck/feedback-coder..tranche/AX-slides -- src/decks/feedback-coder/**` = empty — the forward cut neither
+  swept nor stranded the fourier WIP, and W30 edited none of it) AND the fourier deck still boots; (iii)
+  confirms the committed `constellation-visibility.spec.ts` would FAIL on a synthetic re-introduction of the
+  `--foreground`-leak code (the guard actually bites); (iv) confirms the leaked key is gone from the committed
+  docs (`grep -rn wolfpack-ledger-2026 docs/` = 0 on the AX-slides branch); (v) confirms `CONSTELLATION.md` was
+  EDIT/APPENDed (W28's band-K section is intact above W30's band-L append — W30 did not overwrite the opener).
+- **Gate-author (≤1 agent — born-RED→GREEN).** Authors the two surviving born-RED gate assertions: the
+  forward-cut branch-existence + committed-H proof, and the merge-to-main → `deploy-pages.yml` reachability
+  proof; confirms both FAIL at HEAD (`tranche/AX-slides` does not exist; the AX line is unmerged to `main`) and
+  PASS post-wave. Confirms the committed e2e specs run GREEN in the slides `npm run audit` runner on the
+  forward-cut branch.
 
 (All within the AX ≤6-implementation / ≤7-read-only ceiling — this wave's actual count is 3.)
+
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):**
+The wave-agnostic authorization grant is by-reference — AX.md §6.1 (the canonical autonomous-resilience clause) +
+§6.2 (the halt-vs-work-around decision tree) + §6.3 (the cross-session clobber ritual — load-bearing on this
+slides-repo wave). The implementing agent works AROUND a roadblock with an idiomatic gestalt fix in-FileBounds
+rather than stall; it spawns a tangent triumvirate (research→plan-augment carrying `## Exact Wave-Amendment
+Text`→redress; caps 20/15/30) on a scope-reveal, a non-local gate failure, or a 3rd diagnostic-loop iteration; it
+escalates ONLY on a §21 held-invariant breach or a §6.2 Class-3/4 user-gate. **The wave-specific §3a auto-triggers
+(authored from this wave's FileBounds + HardGate):** (1) an edit reveal OUTSIDE FileBounds — the forward-cut
+VERIFICATION needs a touch of `src/decks/feedback-coder/**` (HARD out-of-bounds — the fourier deck rides forward
+un-edited) or a re-author of the already-committed constellation/e2e fix the agent is meant only to VERIFY (a
+satisfied-witness that must be re-opened = triumvirate, never an in-line re-author); (2) the constellation
+neutral-lattice e2e gate or the committed-specs executed-audit gate fails NON-LOCALLY on the forward-cut branch —
+the `--constellation-line` plain-hex fix did not hold, a transitive `var(--…)→light-dark()` leak re-admits into a
+Canvas2D stroke/fill, or a committed spec reds against the live render; (3) the 3rd diagnostic-loop iteration on
+the merge-to-main → `deploy-pages.yml` terminal reachability (a deploy that will not fire on the `head_branch==main`
+build — the §21 end-state leg-2 keystone); (4) the cross-session clobber ritual detects a delta on
+`origin/at-dock-convergence` or a sibling `.git/index.lock`, or a satisfied-witness already-GREEN out-of-band — the
+orchestrator-owned rebase/sleep path per §6.3, agents stay read-only, never corrupt the slides tree; (5) the
+VISUAL-TRUTH render-matrix audit shows the lattice still reads as the historical red splatter or a deck fails to
+boot. The FORWARD-cut + merge-to-main + every commit are ORCHESTRATOR-owned (agents read-only on git per K W0); a
+genuine deploy credential is the only Class-4 user-gate.
 
 ---
 
@@ -329,135 +362,150 @@ read-only on git per the hardened agent git clause (K W0).
 
 **Headless / executed-test gate — born-RED→GREEN (in the slides `npm run audit` set).**
 
-- **The clean-branch SELECTIVE-land proof (born-RED — a deletion/recoverability artefact).** Assert the 12
-  til-briefing files + the 7 e2e specs are COMMITTED on a clean `tranche/AX-slides` branch (`git log` shows the
-  land commit; `git status --porcelain` on those paths is clean) AND `src/decks/feedback-coder/**` is UNTOUCHED
-  (the fourier WIP preserved). **Born-RED at HEAD** (the branch does not exist; the files are dirty `M`/`??` on
-  `deck/feedback-coder`). This is an explicit-document-reconciliation + deletion-proof artefact (an accepted
-  SPEC.md §Hard-Gates form — a git-state observation, NOT a grep-for-runtime-behaviour).
+- **The forward-cut clean-branch proof (born-RED — a branch-protocol + recoverability artefact).** Assert
+  `tranche/AX-slides` EXISTS, was cut FORWARD from `deck/feedback-coder`, and carries the committed H + I
+  til-briefing history (`git log tranche/AX-slides` shows `da173e7`/`b622ac7`/`fb2ad39`) AND
+  `src/decks/feedback-coder/**` is UNTOUCHED on it (`git diff deck/feedback-coder..tranche/AX-slides --
+  src/decks/feedback-coder/**` = empty — the fourier deck rides forward un-edited). **Born-RED at HEAD** (the
+  branch does not exist; the AX slides band has no clean line). This is a git-state observation (an accepted
+  SPEC.md §Hard-Gates form, NOT a grep-for-runtime-behaviour).
 
-- **The tightened `constellation-visibility` e2e spec (born-RED — EXECUTED, the constellation leak gate).**
-  Runs against the LIVE deck: render slide 1, measure the alpha-weighted painted-constellation pixel histogram,
-  assert **neutral > red × 2** (the lattice reads as a neutral web, NOT a red splatter), AND assert no
-  `--constellation-*` token NOR `--foreground` carries a `light-dark(` value read into a Canvas2D stroke/fill.
-  **Born-RED at HEAD** (the live render is red 6.6× neutral — the spec, when actually RUN, FAILS on the
-  `--foreground` leak). This is a **runtime-observation** artefact (a real browser render + per-pixel readback,
-  the precept-valid form — NOT a grep for a source string).
+- **The merge-to-main → deploy-terminal proof (born-RED — the §21 end-state leg-2 reachability gate).** Assert
+  `tranche/AX-slides` MERGES to `main` and the push triggers `ci.yml`(push:main) → `deploy-pages.yml`
+  (`workflow_run`, `head_branch==main`) → the custom-domain re-deploy (a recorded `deploy-pages.yml` run on the
+  AX-slides cut). **Born-RED at HEAD** (`git log origin/main..tranche/AX-slides` is non-empty / the branch does
+  not exist; no `head_branch==main` deploy of the AX slides cut). Git-state + CI-run-record observation.
 
-- **The fail-loud `readCanvasColor` guard (born-RED — a throw-on-violation runtime assertion).** A unit/e2e
-  assertion that `readCanvasColor` THROWS when fed a `light-dark()` value (the library-internal contract
-  violation fails LOUDLY per the fail-explicit precept — a slides-DEV defect, not a befitting-silent
-  browser-API degradation). **Born-RED at HEAD** (no `readCanvasColor` helper exists; `cLine` silently absorbs
-  the rejected `--foreground`). Runtime-observation artefact.
+- **The constellation neutral-lattice e2e spec (born-RED→GREEN — VERIFYING the §24-shipped fix).** The committed
+  `constellation-visibility.spec.ts` runs against the LIVE deck on the forward-cut branch: render slide 1,
+  measure the alpha-weighted painted-constellation pixel histogram, assert **neutral > red × 2** (the lattice
+  reads as a neutral web, NOT a red splatter), AND assert no `--constellation-*` token carries a `light-dark(`
+  value read into a Canvas2D stroke/fill. **Born-RED against a synthetic re-introduction of the `--foreground`
+  leak** (the spec bites if the fix is reverted), GREEN on the committed `--constellation-line` base. This is a
+  **runtime-observation** artefact (a real browser render + per-pixel readback — NOT a grep for a source
+  string). W30 VERIFIES the shipped fix live; it does not re-author it.
 
-- **The all-7-specs executed-audit gate (born-RED — the discipline gate).** All 7 H specs
-  (`constellation-visibility`, `mobile-reflow`, `xray-portal`, `complex-graphs`, `deck-progress`,
-  `dedup-pulse`, deck.spec) are wired into the EXECUTED slides `npm run audit` and RUN GREEN across the render
-  matrix. **Born-RED at HEAD** (the specs are untracked `??` with no run record; PROGRESS.md admits they were
-  never executed). Test-output artefact.
+- **The committed-specs executed-audit gate (born-RED→GREEN — the discipline gate).** The committed til-briefing
+  e2e specs (`constellation-visibility`, `complex-graphs`, `deck-progress`, `dedup-pulse`, `deck.spec`, …) RUN
+  GREEN across the render matrix in the slides `npm run audit` on the forward-cut branch. **Born-RED against an
+  un-run state** (the §24-discharged "authored-but-never-run" witness — W30's leg is the EXECUTED run record on
+  the AX line). Test-output artefact.
 
-This is a **git-state + runtime-observation + test-output** gate quartet (the precept-valid artefact forms per
-SPEC.md §Hard Gates), NOT a "grep found a source string for runtime behaviour" invalid form: the land proof is
-a git-state observation, the constellation + readCanvasColor gates are real browser renders + readbacks, the
-all-7 gate is executed test output.
+This is a **git-state + CI-run-record + runtime-observation + test-output** gate quartet (the precept-valid
+artefact forms per SPEC.md §Hard Gates), NOT a "grep found a source string for runtime behaviour" invalid form:
+the forward-cut + merge proofs are git-state + CI-run observations, the constellation gate is a real browser
+render + readback, the executed-specs gate is test output.
 
 **VISUAL-TRUTH live audit (NON-NEGOTIABLE per AX.W00 — the wave's close criterion).** An EXECUTED live
 Playwright + frontend-design pass across the slides render matrix — **390×844 / 768×1024 / 1280×720 / the 1280
 export frame**, both `?light` and `?dark`:
 
-- **The constellation reads as a NEUTRAL lattice with ONE red anomaly** on cream AND ink — NOT the 86.3%-red
-  splatter (the §3.gestaltFix ask + the §4.2 ask: the neutral web with the single red focal event). The neutral
-  edge hairlines paint their intended ink/cream tone; the red anomaly is the ONLY red.
-- **BOTH decks preserved** — the feedback-coder/fourier deck still boots and renders (the SELECTIVE land did
-  not break it); the til-briefing deck boots public.
-- **The 7 e2e specs PASS live** — the xray window flex-fills the column with no dead band, the graph
-  aspect-ratios clear ≥80px, the mobile markers thread their spine ≥32px, the dedup pulse de-dups — converting
-  every H "done" claim to a live-verified verdict.
+- **The constellation reads as a NEUTRAL lattice with ONE red anomaly** on cream AND ink — NOT the historical
+  86.3%-red splatter (the §2 verify ask: the neutral web with the single red focal event, the §24-shipped fix
+  proven live). The neutral edge hairlines paint their intended `--constellation-line` ink/cream tone; the red
+  anomaly is the ONLY red.
+- **BOTH decks preserved** — the feedback-coder/fourier deck still boots and renders on the forward-cut branch
+  (the forward cut carried it untouched); the til-briefing deck boots public.
+- **The committed e2e specs PASS live** — the xray window flex-fills the column with no dead band, the graph
+  aspect-ratios clear ≥80px, the mobile markers thread their spine ≥32px, the dedup pulse de-dups — the
+  live-verified verdict on the AX line.
 - **Affordance / hierarchy / spacing / NO visual occlusion** per the AX cardinal gate.
 
 **The wave does NOT close on the executed e2e gate alone** — the live render-matrix audit (captured as a
-paired-π BEFORE/AFTER + DELTA artefact per the W00 protocol: the 86.3%-red-splatter BEFORE vs the neutral
-lattice + single-red-anomaly AFTER, at the 4 frames × light/dark) is the binding close criterion. A green spec
-proves the heuristic; only the executed live audit proves the lattice reads as a neutral web and both decks
-survive the land. (The H tranche's cardinal failure was a green-but-unrun spec — W30 must not repeat it.)
+paired-π BEFORE/AFTER + DELTA artefact per the W00 protocol: the historical 86.3%-red-splatter BEFORE — the
+audit baseline against the stale stranded tree — vs the neutral lattice + single-red-anomaly AFTER on the
+forward-cut branch, at the 4 frames × light/dark) is the binding close criterion. A green spec proves the
+heuristic; only the executed live audit proves the lattice reads as a neutral web, both decks survive the
+forward cut, and the merge-to-main → deploy terminal fires. (The H tranche's cardinal failure was a
+green-but-unrun spec — W30 must not repeat it.)
 
 ---
 
 ## Cadence (sub-step order)
 
-1. **Live re-diagnosis ritual + sibling-baseline capture (W00 wave-open).** Re-confirm the four RED witnesses
-   against the slides HEAD: `git -C ~/Programming/slides status --porcelain` shows the 12 dirty + 7 untracked;
-   branch = `deck/feedback-coder`, HEAD `f78f623` (a fourier commit); `constellation.ts:107` reads
-   `--foreground`; a live slide-1 pixel histogram measures red > neutral; the 7 specs have no run record.
-   Record the slides HEAD + `git status --porcelain` as the sibling-baseline in `coordination/CONSTELLATION.md`.
-   Do NOT proceed on the audit's word — re-prove the splatter live.
-2. **RATIFY the Canvas2D-color-resolution disposition (RATIFY-BEFORE-IMPL).** The orchestrator confirms path
-   (A) — plain-hsl `--constellation-edge` token + fail-loud `readCanvasColor` guard for W30's REQUIRED scope —
-   over the shared-`resolveCanvasColor` path (B), which is AX.W37 substrate work. Record the ratification + the
-   FourierField-probe-as-W37-consumer-#2 note in `coordination/CONSTELLATION.md` + the audit ledger.
-3. **The orchestrator executes the SELECTIVE clean-branch land** (the index is the orchestrator's). Capture the
-   exact 12 til-briefing files + 7 specs; create `tranche/AX-slides`; commit ONLY that manifest; leave
-   `src/decks/feedback-coder/**` untouched. Record + decide the feedback-coder/fourier deck disposition. (Agents
-   stay read-only on git.)
-4. **Fix the constellation leak.** Add `--constellation-edge` (plain-hsl light + dark arms) to `deck.css` §1 +
-   §10; add the fail-loud `readCanvasColor` helper to `constellation.ts`; change `:107` to read
-   `--constellation-edge` through it; route all color reads through the guard. Lint + typecheck.
-5. **Tighten the constellation guard + wire the all-7 audit.** Alpha-weight the pixel count in
-   `constellation-visibility.spec.ts`; add `--foreground` to the no-light-dark assertion; reconcile the anchor
-   to 0.60. Wire all 7 specs into the executed `npm run audit`. Confirm the tightened spec FAILS on the
-   pre-wave `--foreground`-leak code and PASSES on the patched tree.
-6. **Redact the leaked access key** across the committed docs (digest, H.md, E/F docs) → `<ACCESS_KEY>` + a
-   pointer to the gitignored `.env`; rotate if genuinely retired.
-7. **Gate GREEN + VISUAL-TRUTH.** Run the 7 specs across the render matrix; run the live Playwright +
-   frontend-design audit (neutral lattice + single red anomaly on cream + ink; both decks preserved; the
-   xray/graph/marker/dedup specs PASS live) at the 4 frames × light/dark; capture the paired-π BEFORE/AFTER +
-   DELTA (the 86.3%-red splatter BEFORE vs the neutral lattice AFTER); write `W30-slides-baseline.json` GREEN.
-8. **Hand off to AX.W31 (the content reframe) + record the publish gate.** Record in
-   `coordination/CONSTELLATION.md` that the H tree is landed + the constellation leak is fixed + the guards are
-   executed (the known-good base); W31 builds the content reframe on it. Note the W17 adoption leg (the
-   `constellation.ts` 510-line deletion onto `<Constellation :draw-overlay>`) is gated on the AX cut PUBLISHING
-   (§4 note 12 — slides dev-resolves the published line; 3.6.0 ships no `/constellation`).
+1. **Live re-diagnosis ritual + sibling-baseline capture (W00 wave-open).** Re-confirm the §24 reality against
+   the slides HEAD: `git -C ~/Programming/slides status --porcelain` is CLEAN save `?? docs/tranches/J/`;
+   branch = `deck/feedback-coder`, HEAD `d79091e`; `constellation.ts:116` reads `--constellation-line` first
+   (the leak is fixed); `deck.css` carries `--constellation-line` plain-hex in both arms; the e2e specs are
+   tracked; the deck is deployed (`9f08ded`). Confirm the §24 satisfied-witness discharges hold (do NOT
+   re-land, re-fix, or re-author). Record the slides HEAD + branch + `git status --porcelain` as the band-L
+   sibling-baseline in W28's `coordination/CONSTELLATION.md`.
+2. **The orchestrator cuts `tranche/AX-slides` FORWARD from `deck/feedback-coder`** (the index is the
+   orchestrator's). A forward branch off HEAD `d79091e` carries the committed H + I til-briefing history AND the
+   feedback-coder fourier deck on the same base — no stash, no by-path selective land, no recoverability risk.
+   Confirm `src/decks/feedback-coder/**` is byte-identical between the two branches. (Agents stay read-only on
+   git.)
+3. **EDIT/APPEND the band-L section to W28's `coordination/CONSTELLATION.md`.** Record the FORWARD-cut protocol,
+   the BOTH-decks enumeration (til-briefing + feedback-coder, both rideable forward; feedback-coder HARD
+   out-of-bounds), the writer-vs-reader boundary, the AX-publish gate for the W17 adoption leg, the
+   merge-to-main → `deploy-pages.yml` terminal, and the FourierField-probe-as-W37-consumer-#2 note. (W28 is the
+   sole OPENER — W30 NEVER creates the doc.)
+4. **VERIFY the constellation neutral lattice live.** On the forward-cut branch, render slide 1 across the
+   matrix; measure the alpha-weighted pixel histogram (neutral > red × 2 — the §24-shipped fix proven live);
+   confirm `--constellation-line` is plain-hex (no `light-dark(` substring) in both arms of `deck.css`. W30
+   VERIFIES the shipped fix; it does NOT re-edit `constellation.ts` or `deck.css`.
+5. **Run the committed e2e specs across the render matrix.** Execute the slides `npm run audit` til-briefing
+   set on the forward-cut branch; confirm GREEN. (The specs are committed; their two prior reds were fixed at
+   source per `fb2ad39` — this is the live run record on the AX line, not a re-author.)
+6. **Confirm the access-key redaction holds.** `grep -rn wolfpack-ledger-2026 docs/` on the forward-cut branch;
+   redact any surviving occurrence → `<ACCESS_KEY>` + a pointer to the gitignored `.env`; rotate if genuinely
+   retired. MUST NOT propagate the live key in a new AX-line commit.
+7. **Gate GREEN + VISUAL-TRUTH.** Run the matrix audit; run the live Playwright + frontend-design pass (neutral
+   lattice + single red anomaly on cream + ink; both decks boot; the xray/graph/marker/dedup specs PASS live)
+   at the 4 frames × light/dark; capture the paired-π BEFORE/AFTER + DELTA (the historical 86.3%-red splatter
+   BEFORE vs the neutral lattice AFTER on the forward-cut branch); write `W30-slides-baseline.json` GREEN.
+8. **Merge-to-main → deploy + hand off to AX.W31.** Once the forward-cut branch is GREEN, the orchestrator
+   MERGES `tranche/AX-slides` → `main` + PUSHES — `ci.yml`(push:main) → `deploy-pages.yml`(`head_branch==main`)
+   re-deploys the AX-rebuilt deck to slides.friday.institute on the custom domain. Record in
+   `coordination/CONSTELLATION.md` that the AX slides base is on a clean branch + verified + deployed (the
+   known-good base); W31 builds the content reframe on it. Note the W17 adoption leg (the `constellation.ts`
+   510-line deletion onto `<Constellation :draw-overlay>`) is gated on the AX cut PUBLISHING (§4 note 12 —
+   slides dev-resolves the published line; 3.6.0/3.7.0 ships no `/constellation`).
 
 ---
 
 ## Artefacts (the audit json + evidence it emits)
 
-- `docs/tranches/AX/audit/W30-slides-baseline.json` (glass-ui side) — the born-RED→GREEN ledger: the four RED
-  witnesses (the stranded-uncommitted-under-6-commits git state, the `constellation.ts:107` `--foreground`
-  leak + the measured 86.3%-red splatter, the authored-but-unrun 7 specs, the second FourierField probe
-  instance), the RATIFY record (path A plain-hsl token over path B shared resolver), the SELECTIVE-land file
-  manifest (the exact 12 + 7) with the feedback-coder-untouched proof, the per-finding (slice 29 F6 + slice 30
-  F0/F1 + the hist:slides/idiom:slides/harden refinements) disposition with the OUT-of-scope routes (W31
-  content / W32 motion+deploy / W17 library seam / W37 substrate), and the post-wave GREEN measurements (the
-  neutral-lattice pixel histogram, the executed-7-specs verdicts, the readCanvasColor throw-on-light-dark
-  proof, the key-redaction grep-0).
-- `coordination/CONSTELLATION.md` (glass-ui side) — the cross-repo coordination doc (REQUIRED per §0 — AX has
-  the three triggers; this wave is the slides-band entry): the slides HEAD + branch + `git status --porcelain`
-  sibling-baseline at coordination time, the SELECTIVE-land manifest, BOTH decks enumerated (til-briefing +
-  feedback-coder) with the fourier deck's disposition, the writer-vs-reader boundary (glass-ui owns the W17
-  library `--constellation-line` token; slides owns the `--constellation-edge` deck read), the AX-publish gate
-  for the W17 adoption leg, the FourierField-probe-as-W37-consumer-#2 note, and the conflict-resolution
-  protocol (the SELECTIVE land leaves the fourier WIP untouched).
-- The paired-π **BEFORE/AFTER + DELTA** capture (the W00 protocol): the 86.3%-red-splatter BEFORE vs the
-  neutral lattice + single-red-anomaly AFTER, at the 4 render-matrix frames × light/dark, on cream + ink.
-- The EXECUTED 7-spec run record (the slides `npm run audit` output — the discipline gate's evidence that
-  converts every H "green-but-unrun" to live-verified) + the tightened `constellation-visibility.spec.ts`.
+- `docs/tranches/AX/audit/W30-slides-baseline.json` (glass-ui side) — the born-RED→GREEN ledger: the §24
+  re-ground (the live slides state `d79091e`, CLEAN, H committed, leak fixed at `constellation.ts:116`, deck
+  deployed `9f08ded`) discharging the prior three witnesses (stranded-tree, the leak, the unrun specs) as
+  satisfied-out-of-band, the TWO surviving RED witnesses (the absent `tranche/AX-slides` branch + the
+  unreachable merge-to-main → deploy terminal), the FORWARD-cut record with the feedback-coder-untouched proof,
+  the per-finding (slice 28 F6 + slice 29 F0/F1 + the hist:slides/idiom:slides/harden refinements) disposition
+  with the OUT-of-scope routes (W31 content / W32 motion+deploy / W17 library seam / W37 substrate), and the
+  post-wave GREEN measurements (the neutral-lattice pixel histogram VERIFYING the shipped fix, the
+  executed-specs verdicts, the merge-to-main → deploy verdict, the key-redaction grep-0).
+- The band-L section APPENDED to W28's `coordination/CONSTELLATION.md` (glass-ui side — W28 is the sole OPENER;
+  W30 EDIT/APPENDs, NEVER creates): the slides HEAD `d79091e` + branch + `git status --porcelain`
+  sibling-baseline at coordination time, the FORWARD-cut protocol, BOTH decks enumerated (til-briefing +
+  feedback-coder, both rideable forward) with the fourier deck's HARD-out-of-bounds disposition, the
+  writer-vs-reader boundary (glass-ui owns the W17 library `--constellation-line` token; slides owns its
+  deck-scoped `--constellation-line` read), the AX-publish gate for the W17 adoption leg, the merge-to-main →
+  `deploy-pages.yml` terminal, the FourierField-probe-as-W37-consumer-#2 note, and the conflict-resolution
+  protocol (the forward cut leaves the fourier deck untouched).
+- The paired-π **BEFORE/AFTER + DELTA** capture (the W00 protocol): the historical 86.3%-red-splatter BEFORE
+  (the stale-tree audit baseline) vs the neutral lattice + single-red-anomaly AFTER on the forward-cut branch,
+  at the 4 render-matrix frames × light/dark, on cream + ink.
+- The EXECUTED committed-spec run record (the slides `npm run audit` output on the forward-cut branch — the
+  live-verified verdict on the AX line) + the merge-to-main → `deploy-pages.yml` run record.
 
 ---
 
 ## CommitPlan (conventional-commit messages, one per sub-step — in the SLIDES repo unless noted)
 
-1. `chore(slides): SELECTIVE-land H W2-W10 til-briefing working-tree onto tranche/AX-slides (12 files + 7 e2e specs; feedback-coder WIP untouched) (AX.W30 slice29-F6)`
-2. `fix(constellation): --constellation-edge plain-hsl token (light+dark arms) — close the --foreground light-dark()-into-Canvas2D leak (AX.W30 slice30-F0)`
-3. `feat(constellation): fail-loud readCanvasColor guard — throw on any light-dark() value, route all color reads through it (AX.W30 §0-fail-explicit)`
-4. `test(slides): tighten constellation-visibility (alpha-weighted neutral>red×2 + --foreground in no-light-dark assertion + 0.60 anchor) + wire all 7 H specs into npm run audit (AX.W30 slice30-F1)`
-5. `chore(slides): redact the leaked access key wolfpack-ledger-2026 from committed docs → <ACCESS_KEY> + .env pointer (AX.W30 slice30-F8)`
-6. `docs(AX): W30 close — coordination/CONSTELLATION.md sibling-baseline + both-decks ledger + the RATIFY record + W30-slides-baseline.json GREEN + paired-π BEFORE/AFTER + DELTA (glass-ui side)`
+1. (git op, not a commit) Orchestrator cuts `tranche/AX-slides` FORWARD from `deck/feedback-coder` (HEAD `d79091e`) — carries the committed H + I til-briefing history + the feedback-coder deck on the same base, untouched.
+2. `docs(coordination): append CONSTELLATION.md band-L — slides forward-cut protocol + both-decks ledger + merge-to-main→deploy terminal + FourierField-W37-consumer-#2 (AX.W30)` (glass-ui side; W28 opened the doc)
+3. `chore(slides): confirm wolfpack-ledger-2026 redaction holds on tranche/AX-slides → <ACCESS_KEY> + .env pointer (AX.W30 slice29-F8)` (only if a surviving occurrence is found)
+4. (git op, not a commit) Orchestrator MERGES `tranche/AX-slides` → `main` + PUSHES once GREEN — triggers `ci.yml`(push:main) → `deploy-pages.yml`(`head_branch==main`) → the custom-domain re-deploy.
+5. `docs(AX): W30 close — W30-slides-baseline.json GREEN (forward-cut + verified neutral lattice + merge-to-main→deploy verdict) + paired-π BEFORE/AFTER + DELTA (glass-ui side)`
 
-(One conventional-commit per sub-step; the orchestrator owns the index — agents NEVER stage/commit/stash/branch
-per the hardened agent git clause, K W0. Commits 1-5 land in the SLIDES repo on `tranche/AX-slides`; commit 6
-lands the glass-ui-side coordination + audit artefacts. The W17 adoption leg — the `constellation.ts` 510-line
-deletion onto `<Constellation :draw-overlay>` — is a SEPARATE later slides commit GATED on the AX publish.)
+(The orchestrator owns the index — agents NEVER stage/commit/stash/branch/merge per the hardened agent git
+clause, K W0; the forward cut + the merge-to-main are orchestrator git ops. The constellation leak + the e2e
+specs are already fixed/committed in the forward-cut base — there is NO leak-fix or spec-tightening commit
+(those were the stale-premise commits, discharged per §24). The glass-ui-side coordination append + close land
+on the glass-ui line; any surviving key redaction lands on the SLIDES `tranche/AX-slides` branch. The W17
+adoption leg — the `constellation.ts` 510-line deletion onto `<Constellation :draw-overlay>` — is a SEPARATE
+later slides commit GATED on the AX publish.)
 
 ---
 
@@ -467,19 +515,24 @@ deletion onto `<Constellation :draw-overlay>` — is a SEPARATE later slides com
   `dependsOn AX.W17`).** W17 ships the LIBRARY `--constellation-line` plain-hsl token + `readPalette` full-set
   + the focal-node/`warpTo`/`warpOnClick` seam that the slides `constellation.ts` 510-line DELETION (the W17
   adoption leg routed here) reads — the drift+warp cannot move through a read-only overlay, so the deletion is
-  CONTINGENT on the focal/warp seam landing in W17. The W30 REQUIRED scope (the `--constellation-edge` deck
-  token + the leak fix + the executed guards) does NOT itself need W17 to LAND the H tree or fix the leak — but
-  the charter sequences W30 after W17 so the slides port (the deletion onto the thin wrapper) is unblocked, and
-  that port is GATED on the AX cut PUBLISHING (§4 note 12 — slides MEASURED published 3.6.0 which ships NO
-  `/constellation`; the seam is at-HEAD-only until the AX publish).
+  CONTINGENT on the focal/warp seam landing in W17. The W30 REQUIRED scope (the forward-cut branch + the live
+  VERIFICATION of the already-shipped leak fix + the merge-to-main → deploy terminal) does NOT itself need W17
+  — but the charter sequences W30 after W17 so the slides port (the deletion onto the thin wrapper) is
+  unblocked, and that port is GATED on the AX cut PUBLISHING (§4 note 12 — slides MEASURED published 3.6.0/3.7.0
+  which ships NO `/constellation`; the seam is at-HEAD-only until the AX publish).
 - **AX.W00 (the π visual-runtime lane) — HARD (implicit; §2b makes π binding on the consumer repo).** W00
   codifies the executed-visual-truth discipline + the live-re-diagnosis wave-open ritual + the paired-π
   BEFORE/AFTER + DELTA close protocol. W30's close is an EXECUTED live render-matrix audit (not the authored-spec
   claim that sank H) — that discipline is W00's, declared binding on the slides repo (hist:slides: "the π-lane
   visual-truth discipline must be declared binding on the slides repo, not only glass-ui").
+- **AX.W28 (the CONSTELLATION.md opener) — HARD (the doc-ownership edge).** W28 is the SOLE OPENER of
+  `coordination/CONSTELLATION.md` (band-K + gate-0); W30 EDIT/APPENDs the band-L (SLIDES) section onto that same
+  doc and NEVER creates it. W30 must dispatch AFTER W28 has opened the doc so the band-L append lands on an
+  existing file — the prior `**NEW**` creator-collision (W28 + W30 both claiming creation) is resolved by this
+  ordering edge (W28 opens, W30/W34 extend).
 - **Downstream (NOT a W30 dependsOn — W30 is the predecessor):** **AX.W31** dependsOn AX.W30 (the content
-  reframe builds on the landed + leak-fixed + guard-executed BASE — no content wave builds on
-  uncommitted/unverified state); **AX.W32** dependsOn AX.W31 + AX.W24 (motion + form adoption + deploy verify).
+  reframe builds on the forward-cut + verified BASE — no content wave builds on an unverified base); **AX.W32**
+  dependsOn AX.W31 + AX.W24 (motion + form adoption + deploy verify).
 - **Coordinate (NOT a hard dependency):** **AX.W37** ships `useCanvas2D`/`resolveCanvasColor` — W30 records the
   FourierField probe as that substrate's consumer #2 (the ≥2-consumer math) but does NOT author the resolver;
   the shared-helper consolidation (path B) is W37/W17-substrate work the two decks adopt later.
@@ -488,22 +541,25 @@ deletion onto `<Constellation :draw-overlay>` — is a SEPARATE later slides com
 
 ## Archaeology (the git commits / prior-tranche lineage the audit cited)
 
-- **slides `f78f623`** (the slides HEAD at audit time — a Fourier-DECK commit, branch `deck/feedback-coder`) —
-  the live-verified evidence that the H til-briefing work is stranded: the branch moved on to a DIFFERENT deck
-  (the fourier deck, `edc23e7`…`f78f623`, 5 commits today) while the H W2-W10 til-briefing changes sit as dirty
-  `M`/`??` working-tree state UNDER that stack. Re-proved live: `git status -s` returns the exact 12 modified +
-  7 untracked manifest the audit names (`DeckView.vue` + `constellation.ts` + `meta.ts` + `deck.css` + the 8
-  slide SFCs + the 7 `tests/e2e/*.spec.ts`).
+- **slides `f78f623` (audit baseline) → `d79091e` (live HEAD — the §24 convergence).** At AUDIT time the slides
+  HEAD was `f78f623` (a Fourier-DECK commit) with the H til-briefing work STRANDED as dirty `M`/`??`
+  working-tree state under the fourier stack. The live state has since CONVERGED: the H W2-W10 til-briefing pass
+  is COMMITTED (`da173e7` "H.W2..W10 implementation"), the e2e specs are COMMITTED (`b622ac7`), the two e2e reds
+  were fixed at source (`fb2ad39` "I.W11"), and HEAD is now `d79091e` with a CLEAN tree (only `?? docs/tranches/J/`
+  untracked). The recoverability blocker the audit named is DISCHARGED — the forward cut off `deck/feedback-coder`
+  carries the committed work onto the AX line. The audit's `f78f623` baseline is preserved here as the lineage
+  anchor; the live re-ground is `d79091e`.
 - **slides `97ce874`** (H.W1 — the ONLY committed H wave: `feat(tranche-H): H.W1 consume glass-ui 3.4.0 — the
   AW dock-collapse fix`). H.W1 consumed only the dock-collapse fix; H W2-W10 (the deck visual-refinement pass)
   was left dirty for orchestrator commit/verify, then the branch advanced to the feedback-coder deck — the
   exact headless-green/visually-broken GAP the AX mandate (§0, §13) names the cardinal lesson.
-- **The H.W4 visibility tuning** (slides `constellation.ts:100-112` + `deck.css` §1/§10) — H.W4 promoted
+- **The H.W4 + I.W11 visibility close** (slides `constellation.ts:100-118` + `deck.css` §1/§10) — H.W4 promoted
   `--constellation-node/-node-dim/-accent` + the edge-alpha MULTIPLIERS to plain-hex tokens PRECISELY because
-  "Canvas2D rejects light-dark()" (the comment at `:104` says "PLAIN-HEX only (Canvas2D)") — but LEFT `cLine`
-  at `:107` reading raw `--foreground`, the single most voluminous element (every inter-node edge). The fix was
-  INCOMPLETE: it patched the node fills + the anomaly accent + the alpha multipliers but missed the neutral edge
-  STROKE color. W30 closes the last leak — the `--constellation-edge` plain-hsl token + the fail-loud guard.
+  "Canvas2D rejects light-dark()", and the I.W11 pass closed the LAST edge-stroke leak: `constellation.ts:116`
+  now reads `this.cLine = readVar(c, "--constellation-line", readVar(c, "--foreground", "#1c1714"))` — the
+  plain-hex `--constellation-line` token first (`#1c1815` light at `deck.css:279`, `#e8e6df` dark at `:809`),
+  with `--foreground` surviving only as a last-ditch fallback. The leak is FIXED at the source in the
+  forward-cut base — W30 VERIFIES it paints the neutral lattice live; it does NOT re-author the fix.
 - **The feedback-coder `FourierField.vue:223-250`** (the net-new fourier deck, `8586539`…`f78f623`) — ALREADY
   solves the EXACT Canvas2D light-dark() defect via a hidden probe-span `readStroke()`
   (`getComputedStyle(probe).color` → a canvas-valid `rgb()`). AUDIT-FOURIER-v2 confirms it resolves to clean
@@ -512,13 +568,15 @@ deletion onto `<Constellation :draw-overlay>` — is a SEPARATE later slides com
   and the proof that the slides corpus had the answer (a GENUINELY-EXECUTED headless Playwright render audit, 9
   gates) the H til-briefing pass failed to apply.
 - **§4 note 9 (the slides band is a SEPARATE REPO, folded for tracking).** Most §12 items are RESOLVED at the
-  code level by tranches G + H but were NEVER browser-verified, and the H work is stranded as uncommitted state.
-  W30 lands + executes; the genuinely-unaddressed content gap (the Slide04 hypothetical reframe) is W31.
-- **§4 note 12 (publish-currency, not code).** slides MEASURED published 3.6.0 (it pins `^3.4.0`, resolves
-  3.4.0); 3.6.0 ships NO `/constellation`. The W17 focal/warp seam + the `--constellation-line` library token
-  are at-HEAD-only until the AX cut PUBLISHES. The W17 adoption leg (the slides `constellation.ts` 510-line
-  deletion) is gated on the AX publish — W30's REQUIRED scope (land + leak-fix + executed guards) runs against
-  the slides-local code TODAY; the library-seam adoption is the publish-gated tail.
+  code level by tranches G + H and — per the §24 reality — are NOW committed + browser-verified + deployed
+  (`9f08ded`). W30 forward-cuts + verifies the converged base + reaches the deploy terminal; the
+  genuinely-unaddressed content gap (the Slide04 hypothetical reframe) is W31.
+- **§4 note 12 (publish-currency, not code).** slides MEASURED published 3.6.0/3.7.0 (the I.W10 deploy gate
+  pinned 3.7.0 from the registry at `15c1817`); neither ships `/constellation`. The W17 focal/warp seam + the
+  `--constellation-line` library token are at-HEAD-only until the AX cut PUBLISHES. The W17 adoption leg (the
+  slides `constellation.ts` 510-line deletion) is gated on the AX publish — W30's REQUIRED scope (forward-cut +
+  verify + merge-to-main → deploy) runs against the slides-local code TODAY; the library-seam adoption is the
+  publish-gated tail.
 
 ---
 
@@ -534,44 +592,54 @@ Per §2b the band-L (SLIDES) binding precepts (pinned `docs/precepts/` @ `63240e
   claim that sank H. The H tranche reproduced the cardinal failure (a green-but-unrun spec) IN the consumer
   repo; W30 makes the π discipline binding here. MUST NOT close on a headless/authored gate alone.
 - **one-path / no-legacy-code — Canvas2D-safe plain-hsl tokens, NEVER `light-dark()` into canvas (the band-L
-  precept).** The fix is the ROOT-CAUSE one-path answer — a plain-hsl `--constellation-edge` token (light
-  `:root` + dark `:root.dark .deck` arm) that Canvas2D accepts, NEVER `--foreground` (a `light-dark()` value
-  Canvas2D silently rejects). NOT a workaround (no try/catch around the rejected assignment, no per-site patch).
-  The fail-loud `readCanvasColor` guard makes the discipline a one-path invariant: any `light-dark()` read into
-  canvas THROWS. MUST NOT introduce a `light-dark()` token read into a Canvas2D stroke/fill or a per-site
-  workaround.
+  precept).** The shipped fix is the ROOT-CAUSE one-path answer — the plain-hex `--constellation-line` token
+  (light `:root` + dark `:root.dark .deck` arm at `deck.css:279`/`:809`) that Canvas2D accepts, read first at
+  `constellation.ts:116`, NEVER `--foreground` (a `light-dark()` value Canvas2D silently rejects, kept only as
+  a last-ditch fallback). NOT a workaround (no try/catch around the rejected assignment, no per-site patch).
+  W30 VERIFIES this one-path invariant holds live (the neutral lattice + the no-`light-dark(`-in-canvas
+  assertion in the committed spec). MUST NOT introduce a `light-dark()` token read into a Canvas2D stroke/fill
+  or a per-site workaround.
 - **fail-explicit on library-internal violations vs befitting-silent browser-API degradation
   (`instructions/README.md §Edicts`; SPEC.md §Hard-Gates "silent `console.warn` + return is an invalid hard
-  gate").** The `readCanvasColor` guard THROWS on a `light-dark()` value — a DEV-side contract violation
-  (a deck author passing the wrong token) fails LOUDLY, never silently absorbs the rejected assignment (the
-  exact silent-failure that produced the 86.3%-red splatter). This is a library-internal-style violation (a
-  slides-DEV defect), NOT a befitting-silent browser-API degradation — the two are never collapsed. MUST NOT
-  ship a silent fall-through on a `light-dark()` read.
+  gate").** The committed `constellation-visibility.spec.ts` is the LOUD gate — a real browser render + per-pixel
+  readback that REDS on the exact silent-failure class that produced the historical 86.3%-red splatter (a
+  `light-dark()` value read into a Canvas2D stroke). W30's close runs it; the discipline is a runtime-observation
+  gate, never a silent fall-through. MUST NOT close on a headless/authored gate that cannot catch the
+  silent-reject class.
 - **cross-repo coordination doc + sibling-baseline-capture + clean-branch landing (`instructions/tranche/SPEC.md`
-  cross-repo coordination clause; the bbnf sibling-baseline ritual).** W30 authors `coordination/CONSTELLATION.md`
-  (the three-trigger requirement is met: separate repo tracked + deferred cross-repo handoff + shared
-  touchpoint) declaring the slides HEAD + branch + `git status --porcelain` sibling-baseline, the SELECTIVE-land
-  manifest, the writer-vs-reader boundary, and the conflict-resolution protocol (the fourier WIP stays
-  untouched). The SELECTIVE clean-branch land is the recoverability precondition. MUST NOT land the H tree
-  without the coordination doc + the sibling-baseline snapshot, and MUST NOT clobber or strand the
-  feedback-coder WIP.
+  cross-repo coordination clause; the bbnf sibling-baseline ritual).** W30 EDIT/APPENDs the band-L section to
+  W28's `coordination/CONSTELLATION.md` (W28 is the SOLE OPENER — W30 NEVER creates the doc) declaring the
+  slides HEAD `d79091e` + branch + `git status --porcelain` sibling-baseline, the FORWARD-cut protocol, the
+  writer-vs-reader boundary, and the conflict-resolution protocol (the fourier deck stays untouched). The
+  FORWARD cut off `deck/feedback-coder` is the clean-branch recoverability mechanism (carries the committed
+  work onto the AX line with no stash/no by-path land/no clobber). MUST NOT cut the branch without the
+  coordination append + the sibling-baseline snapshot, MUST NOT create the doc (W28 owns the open), and MUST
+  NOT edit or strand the feedback-coder deck.
+- **deploy-DAG terminal reachability (the §21 end-state leg 2 + §F.1 deploy DAG).** W30 establishes the
+  merge-to-main → push → `deploy-pages.yml` (`head_branch==main`) terminal so the AX-rebuilt til-briefing deck
+  re-deploys to slides.friday.institute on the custom domain. Without it the AX slides leg of the §21 end-state
+  cannot complete (the deploy workflow does not watch `tranche/AX-slides`). MUST NOT close W30 leaving the AX
+  slides line unmerged to `main` (the deploy terminal unreachable).
 - **substrate-with-consumer / wire-before-retire (precepts README "Substrate and consumer land together").**
   The W17 library `--constellation-line` token + focal/warp seam land WITH slides as consumer #2 — but the
   slides `constellation.ts` 510-line DELETION (the consumer adoption) is GATED on the AX publish (§4 note 12),
-  so W30's REQUIRED scope is the slides-local leak fix on a known-good base; the publish-gated adoption tail is
-  a SEQUENCED cross-repo handoff (recorded in the coordination doc), NOT a silent deferral. The FourierField
-  probe is recorded as the W37 `resolveCanvasColor` substrate's consumer #2 (the ≥2-consumer math: constellation
-  + FourierField). MUST NOT retire the slides duplication un-routed or ship a single-consumer substrate.
+  so W30's REQUIRED scope is the forward-cut + live VERIFICATION of the already-shipped leak fix on the
+  known-good base; the publish-gated adoption tail is a SEQUENCED cross-repo handoff (recorded in the
+  coordination doc), NOT a silent deferral. The FourierField probe is recorded as the W37 `resolveCanvasColor`
+  substrate's consumer #2 (the ≥2-consumer math: constellation + FourierField). MUST NOT retire the slides
+  duplication un-routed or ship a single-consumer substrate.
 - **no-silent-deferrals (the W31 content + the W17 adoption + the W37 substrate are SEQUENCED, not "deferred to
   next tranche").** Every out-of-scope item is explicitly ROUTED with a named successor wave: the Slide04
   reframe + lock + modal → AX.W31; the motion/form/deploy → AX.W32; the `constellation.ts` deletion → the W17
   adoption leg (publish-gated); the shared `resolveCanvasColor` → AX.W37. MUST NOT close W30 leaving any item
   with a generic "future tranche" placeholder.
 - **cross-repo-dev-resolution contract-v2 (`docs/precepts/cross-repo-dev-resolution.md` invariant 30; §4 note
-  12).** slides dev-resolves the BUILT `dist/` of the published glass-ui line (3.6.0 ships no `/constellation`),
-  so the W17 library-seam adoption is gated on the AX cut PUBLISHING — W30's REQUIRED scope runs against the
-  slides-local code TODAY, the library-seam adoption is the publish-currency-gated tail. MUST NOT assume slides
-  resolves the at-HEAD library seam before the AX publish.
+  12).** slides dev-resolves the BUILT `dist/` of the published glass-ui line (3.6.0/3.7.0 ships no
+  `/constellation`; slides pins 3.7.0 from the registry per `15c1817`), so the W17 library-seam adoption is
+  gated on the AX cut PUBLISHING — W30's REQUIRED scope runs against the slides-local code TODAY, the
+  library-seam adoption is the publish-currency-gated tail. MUST NOT assume slides resolves the at-HEAD library
+  seam before the AX publish.
 - **security hygiene / key-isolation (the standing `grep wolfpack-ledger src/` → 0 rule).** The leaked key
-  `wolfpack-ledger-2026` in committed DOCS is redacted-or-rotated in W30 (the first slides-repo wave) BEFORE any
-  further commit propagates it. MUST NOT propagate the live key in a new commit.
+  `wolfpack-ledger-2026` must not persist in committed DOCS; W30 CONFIRMS the redaction holds on the
+  forward-cut branch and redacts-or-rotates any surviving occurrence BEFORE any further AX-line commit
+  propagates it. MUST NOT propagate the live key in a new commit.

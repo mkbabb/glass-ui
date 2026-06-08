@@ -278,6 +278,15 @@ W00 π-workspace SCAFFOLD (W00 owns the lane; W22 authors the font-cascade ASSER
 (All within the AX ≤6-implementation / ≤7-read-only ceiling — this wave's actual count is 4: 2 implement +
 1 verify + 1 gate.)
 
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):**
+
+The wave-agnostic authorization grant is AX.md §6.1 (the canonical clause — devise an in-FileBounds gestalt fix; spawn a tangent triumvirate to work AROUND an error; escalate ONLY when genuinely user-gated) + §6.2 (the 4-class halt-vs-work-around decision tree). It governs here by reference; the orchestrator may not redispatch the failing unit alone. The wave-specific §3a triggers (authored from this wave's FileBounds + HardGate):
+
+- **Out-of-FileBounds reveal → triumvirate (Class 2).** If the Fraunces excise requires the W25b `tokens.css` §-seam PARTIAL CARVE (W22 edits the font-token block IN PLACE only), if `.cm-serif` re-grounding pulls in a `--ease-apple-spring` namespace edit W05 owns, if the speedtest/words/value.js repoint reaches into sibling source W34 receives, or if the typography-story IA placement needs re-authoring W18 owns → HALT, dispatch the triumvirate. A sibling-owned surface is NEVER edited in-line.
+- **Non-local gate failure → triumvirate (Class 2).** If `proof:font-cascade-live` has no home because W00 scoped the π lane WebGL-`readPixels`-only (the DOM-cascade readback capability is missing — Open Question 3), or `vue-tsc`/`npm run build` reds on a dangling `@import`/dropped `@font-face` that resolves to a non-W22 surface → triumvirate.
+- **3rd diagnostic-loop iteration → triumvirate (Class 2).** If `proof:font-cascade-live` fails to distinguish the real Plus Jakarta face from a metric-matched fallback (the `document.fonts.check` silent-pass trap) for a third canvas-fingerprint re-tune, or the body-default repoint live audit fails to settle for a third pass → HALT the failing unit + triumvirate.
+- **§5.3 ratify reached un-ratified → halt-and-ratify (Class 3).** If fold-0 (the Fraunces path-a-EXCISE vs path-b-keep adjudication) reaches impl un-ratified, or the W00↔W22 π-lane DOM-readback coordination (Open Question 3) is un-settled → stop, surface to the orchestrator, never self-ratify. (The cross-consumer Fraunces reconcile is USER-ADJUDICATED per §6.1(iii) — escalate, do not self-decide.)
+
 ---
 
 ## HardGate (born-RED→GREEN + the MANDATORY VISUAL-TRUTH live audit)

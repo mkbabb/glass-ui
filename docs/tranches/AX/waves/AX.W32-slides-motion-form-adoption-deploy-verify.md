@@ -318,6 +318,30 @@ RATIFY). If the bridge composes (the likely case), W32 touches NO glass-ui compo
 verify + 1 gate. NOTE: the slides-side arms DISPATCH from the slides session per the cross-repo coordination
 boundary; glass-ui authors the annex + the contract decision, the slides session executes the slides edits.)
 
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):**
+The wave-agnostic authorization grant is by-reference — AX.md §6.1 (the canonical autonomous-resilience clause) +
+§6.2 (the halt-vs-work-around decision tree) + §6.3 (the cross-session clobber ritual). The implementing agent
+works AROUND a roadblock with an idiomatic gestalt fix in-FileBounds rather than stall; it spawns a tangent
+triumvirate (research→plan-augment carrying `## Exact Wave-Amendment Text`→redress; caps 20/15/30) on a
+scope-reveal, a non-local gate failure, or a 3rd diagnostic-loop iteration; it escalates ONLY on a §21
+held-invariant breach or a §6.2 Class-3/4 user-gate. **The wave-specific §3a auto-triggers (authored from this
+wave's FileBounds + HardGate):** (1) the contingent Input-invalid-state reconcile FIRES — the binding-verification
+sweep finds the glass-ui `useUserInvalidAria` bridge does NOT compose with the `<LabeledInput>` `error` slot, so a
+SMALL `LabeledInput.vue`/`Input.vue` glass-ui `src/` edit is needed (in FileBounds for THAT contingency only,
+recorded as RATIFY) — any LARGER library-source reveal beyond it is a scope-reveal triumvirate; (2) a
+no-local-reveal / no-local-countup / no-parallel-rail slides gate fails NON-LOCALLY — the vReveal/useCountup
+grammar does NOT paint byte-identically post-swap, or the `--progress-rail-*` override does not make the library
+`<DeckProgress>` paint the deck look (the W24 cascade fix must WIN in the consumer); (3) the 3rd diagnostic-loop
+iteration on the glass-ui pin-bump (step-0) — the `^3.4.0`→AX-cut bump breaks a reka prop/emit binding the
+binding-verification sweep catches (stale `:pressed`/`v-model:search-term`/`tag=` silently no-op; vue-tsc + units
+MISS them); (4) the deploy pptx-200 assertion or the xray/graph live-audit specs fail on the deployed custom
+domain (the §21 end-state leg-3 prod-validation reachability); (5) the cross-session clobber ritual detects the
+AX line moved under the consumer session, or `CONSTELLATION.md` writer-boundary contention with W34 over the
+slides-leg append. **The DeckGate LabeledField channel-(a)-vs-(b) adjudication and the F4 `/deck` lift-vs-scrub
+ratify are §6.2 Class-3** — HALT-AND-RATIFY if reached un-ratified. The pin-bump is gated on the AX publish
+(W41/W33); the slides MERGE-to-main + deploy are ORCHESTRATOR-owned; a genuine deploy credential is the only
+Class-4 user-gate.
+
 ---
 
 ## HardGate (born-RED→GREEN + the MANDATORY VISUAL-TRUTH live audit)

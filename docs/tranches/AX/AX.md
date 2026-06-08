@@ -49,9 +49,13 @@ the per-wave-spec authorship is the NEXT-session driving deliverable.
 
 ---
 
-## §0 — Mandate (governs every wave; verbatim-faithful to REQUIREMENTS §0)
+## §0 — Mandate (governs every wave; verbatim-faithful to REQUIREMENTS §0 + §21)
 
-- **Tranche development ONLY** — AX is plan/research/write, NOT implementation. No merges, no publish.
+- **Phase-gated mandate (the §21 transition).** The CONVERGE + HARDEN spec-formation phase — plan /
+  research / write, NO merges, NO publish — is the phase this charter was AUTHORED under, and it is now
+  COMPLETE. Per REQUIREMENTS §21 (the governing directive), AX now OPENS its autonomous EXECUTION phase:
+  end-to-end, one-shot, full-deploy. The two are SEQUENTIAL, not contradictory. The §0b EXECUTION
+  MANDATE block below governs the execution phase; every dispatched agent inherits it.
 - **30+ waves.** Convergent-loop method per feature: research → plan → harden → synthesize → tranche
   writing, LOOPED until a convergent optimum, prototyping as needed.
 - **NO quick solutions, NO workarounds, NO legacy code, NO fallbacks, NO special cases, no effusive
@@ -103,6 +107,46 @@ tree-cleanliness at coordination time, the shared write surfaces, the writer-vs-
 conflict-resolution protocol. Adopt bbnf-lang's **sibling-baseline-capture ritual** (snapshot each
 sibling's HEAD+status BEFORE any cross-repo edit; reconcile at close) so the chronic dirty-tree wall is a
 recorded delta, not a silent stall.
+
+---
+
+## §0b — EXECUTION MANDATE (governs the DRIVE session; REQUIREMENTS §21 verbatim-faithful)
+
+AX is executed END-TO-END, IN ONE SHOT, over a long-horizon multi-compact autonomous session (12+hr
+unattended). The user steps away and returns to a COMPLETED session; every agent inherits this frame (§22.6).
+
+**End state (the only acceptable done — three legs, sequential DAG):** (1) glass-ui PUBLISHED to npm at its
+most-modern version (the AX cut = **3.8.0**), ALL AX features visually-true (rides W33 + the release.yml
+provenance path); (2) slides.friday.institute DEPLOYED to Cloudflare Pages, live-validated (rides W30-W32 +
+the merge-to-main → deploy-pages.yml); (3) every ancillary constellation consumer ADOPTED, born-RED consumer
+gates GREEN (rides W34/W35, greening only on the published bump). The deploy DAG is sequential: glass-ui
+publish → consumer bumps → slides deploy → prod validation. FINAL.md (W33) closes `complete_with_misses`,
+NOT `complete`, if any leg is unmet.
+
+**Full authorization (durable, this tranche):** CI, npm publish (release.yml OIDC provenance on tag push),
+CF-Pages/deploy, AWS CLI — NOTHING user-gated within AX, no per-action confirmation.
+
+**Operating rules under autonomy** (the autonomous-resilience axis — composes WITH each wave's in-spec
+triumvirate trigger; per-wave governs scope, these govern session-level adversity): rate-limit/session-cap →
+ScheduleWakeup + resume, never abort; roadblock → tangent gestalt fix (precept-clean, no workaround/legacy),
+resume; cross-session clobber → DETECT (fetch origin + compare baseline SHA; check `.git/index.lock` on main
++ each sibling; re-capture each sibling HEAD+branch+porcelain) → orchestrator-owned rebase (agents stay
+read-only) → sequence → sleep, never corrupt a sibling (inv-16'); work through compaction.
+
+**Held invariants (remain under full authorization — the Class-4 user-gate set):** NEVER touch
+`docs/precepts/` (verify `precepts staged: 0` every commit); NEVER source-embed `wolfpack-ledger-2026`
+(gitignored `.env` + GH secret + CF env only); agents NEVER stage/commit/stash/checkout/reset the main index
+(orchestrator owns it); inv-16' clean-sibling-only; the hard-prohibited action classes cannot be
+agent-performed — if the deploy chain genuinely needs one, surface as a NOW user-gate, never silently.
+
+**Operational readiness — ZERO HARD USER-GATES (probed live 2026-06-08, user-present):** gh authed (mkbabb);
+glass-ui release.yml OIDC provenance GREEN (3.6.0/3.7.0 proof) + npm locally authed; git push OK; slides
+CF-Pages deploy-pages.yml + all 3 secrets set (CLOUDFLARE_API_TOKEN/CLOUDFLARE_ACCOUNT_ID/VITE_TIL_ACCESS_KEY);
+AWS CLI authed (acct 376462297027); keyframes.js 4.1.0 published. No hard user-gate stands between the drive
+and the §21 end-state.
+
+See §6 (autonomous-resilience governance) for the per-wave clause + the halt-vs-work-around decision tree +
+the cross-session clobber ritual, and the HARDENING.md §F deploy DAG for the end-state acceptance gate.
 
 ---
 
@@ -2452,3 +2496,66 @@ in `PROTOTYPE-HARDEN.md` Part 2A):
   waves/AX.W42 §Open-Questions).
 - **Specular off-vs-subtle (W09)** — the Card `specular` default: `subtle` (rest≈0) vs `off` — flat-data
   consumers want `off` trivially declarable (§20 USF-1/kf-G-1 hand-off; §4 note 24).
+
+---
+
+## §6 — Autonomous-resilience governance (REQUIREMENTS §22.4b — mandatory under the §0b execution mandate)
+
+The canonical clause below lives ONCE here and is instantiated at the tail of every wave's `## Triumvirate`
+section (directly above `## HardGate`). It authorizes the implementing agent to work AROUND a roadblock with
+an idiomatic gestalt fix rather than stall — the single highest-value provision for the unattended run.
+
+### §6.1 — The canonical clause (master template)
+
+> **Autonomous-resilience clause (REQUIREMENTS §22.4b — mandatory; governs every wave under the §0b
+> autonomous mandate).** A roadblock is a path-forward, not a stop. The implementing agent is AUTHORIZED,
+> without waiting for a user prompt, to:
+> 1. **Devise an idiomatic GESTALT fix** when the spec-prescribed approach hits a technical roadblock or
+>    proves wrong. If the better idiomatic fix stays WITHIN this wave's FileBounds and violates no precept,
+>    apply it directly — re-derive from first principles, no workaround/legacy/special-case (§0). Record the
+>    divergence + rationale in the wave's audit JSON.
+> 2. **Spawn a tangent triumvirate to work AROUND an error**, never stall. If the fix would expand
+>    FileBounds, cross a sibling-wave boundary, re-open a §5.3 ratify, or a hard gate fails non-locally / a
+>    diagnostic loop hits its third iteration, HALT the failing unit and dispatch the standard triumvirate
+>    (research → plan-augment carrying the mandatory `## Exact Wave-Amendment Text` → redress; HARD CAPs
+>    20/15/30 min; artefacts `audit/{COHORT}-research|plan|redress.md`). Work the tangent to resolution,
+>    resume the main line. Do NOT redispatch the failing unit alone; do NOT hand-roll a bespoke recovery; do
+>    NOT absorb a scope reveal silently.
+> 3. **Escalate to the orchestrator ONLY when genuinely user-gated** — which is ONLY when it (i) requires a
+>    §21 hard-prohibited action class (financial credentials, account creation, access-control/sharing
+>    changes, permanent data deletion, financial trades, security-setting changes, CAPTCHA), (ii) would
+>    violate a §21 held invariant (touch `docs/precepts/`; source-embed `wolfpack-ledger-2026`; an agent
+>    staging/committing the main index; inv-16' writing a dirty sibling), or (iii) is a §5.3 ratify the
+>    charter marks USER-ADJUDICATED (W22 Fraunces, W23 glass-scrubber rename, W42 second-consumer).
+>    EVERYTHING ELSE — an ambiguous root cause, a wrong-approach roadblock, a non-local gate failure — is
+>    resolved autonomously per (1)/(2). On a server throttle/session cap → ScheduleWakeup + resume, never
+>    abort. On cross-session clobber → coordinate (read the sibling branch/locks), sequence, sleep; never
+>    corrupt a sibling tree.
+
+### §6.2 — The halt-vs-work-around decision tree (4 classes — the closed, decidable boundary)
+
+| Class | Trigger | Action |
+|---|---|---|
+| **1 · WORK-AROUND** (most cases) | A blocking obstacle that is locally fixable, in-FileBounds, precept-clean | Devise an idiomatic gestalt fix in-line. Resume. No stall, no user-gate. |
+| **2 · TRIUMVIRATE** | Scope-reveal (out-of-FileBounds / sibling boundary / §5.3 re-open) · non-local hard-gate failure · 3rd diagnostic-loop iteration | Dispatch research→plan-augment(Exact-Wave-Amendment-Text)→redress (caps 20/15/30). Work AROUND via the amended spec. Scope-reveal is NEVER absorbed in-line. Still no user-gate. |
+| **3 · HALT-AND-RATIFY** | A §5.3 ratify-before-drive reached un-ratified, OR any precept the agent would have to VIOLATE to proceed | Stop. Surface to the orchestrator. Never self-ratify. Orchestrator takes the recorded default or escalates. |
+| **4 · HALT-AND-USER-GATE** | A §21 held-invariant breach the work genuinely needs, OR a missing deploy credential | Stop. Surface as a user-gate NOW. NEVER perform silently, NEVER silently skip. |
+
+**Vocabulary disambiguation (load-bearing):** §0's banned "workaround" = a shortcut that leaves a
+legacy/fallback/special-case in the SHIPPED code. §22.4b's sanctioned "work AROUND a roadblock" = an
+idiomatic gestalt fix that itself satisfies §0. A Class-1/2 fix is sanctioned ONLY when precept-clean. The
+per-wave "halt" means "halt THIS edit-line and spawn a tangent triumvirate that proceeds AUTONOMOUSLY" —
+NEVER "stop and await a human" during the unattended window.
+
+### §6.3 — Cross-session clobber ritual (orchestrator-owned; agents stay read-only)
+
+Run before each integration commit and at each wakeup: (1) `git fetch origin` + compare
+`origin/at-dock-convergence` vs the recorded baseline — on a delta, another session pushed: pause, inspect
+read-only, orchestrator rebases the AX line, re-run gates, resume. (2) Check `.git/index.lock` on main + each
+sibling — a live lock = a concurrent writer → ScheduleWakeup, retry. (3) Re-capture each sibling
+HEAD+branch+`git status --porcelain` into `coordination/CONSTELLATION.md`; a dirty/unexpected-branch sibling
+is NOT a halt — record it, dispatch its leg as a born-RED handoff gate. **Satisfied-witness branch:** if the
+W00 live re-diagnosis finds a RED witness ALREADY GREEN (upstream landed out-of-band — the slides tranche-I
+land, the 3.7.0 publish), do NOT execute that witness's fix; record it ADDRESSED-out-of-band with the landing
+commit, COLLAPSE the wave scope to the surviving RED witnesses, verify green holds. A satisfied witness is a
+scope-collapse, never a re-do.

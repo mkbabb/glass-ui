@@ -263,6 +263,14 @@ concurrently** (digest line 353). W06 lands **LAST in the dock band** by constru
 (All within the AX ≤6-implementation / ≤7-read-only ceiling — this wave's actual count is 4: 2 implement
 + 1 verify + 1 gate.)
 
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):**
+The wave-agnostic authorization grant lives ONCE in AX.md §6.1 (the master template — devise an in-FileBounds idiomatic gestalt fix; spawn a tangent triumvirate to work AROUND, never stall; escalate ONLY when genuinely user-gated) with the 4-class halt-vs-work-around decision tree in AX.md §6.2 — by reference, not restated here. This wave's §3a triumvirate AUTO-TRIGGERS (Class-2 → research→plan-augment(Exact-Wave-Amendment-Text)→redress, caps 20/15/30):
+- **Out-of-FileBounds reveal** — the `dock.css` carve or the `dock-controls.css` rail-polish hoist needs an edit to the W01 morph-driver region, the W04 wrap recipe, `useDockHold`/Slider (W03), the `--spring-*`/`--ease-apple-spring` cohort (W05), the `proof:no-god-module` collector script (W25a-owned), or the storybook IA category-tree / `EXPECTED_TREE` authorship (W18-owned) — NEVER absorbed in-line; HALT and triumvirate.
+- **`proof:no-god-module` (.css-aware) fails non-locally** — a carved `dock/*.css` partial or the trimmed `dock.css` core cannot clear < 500 without a cohesion-violating split (or the W25a `.css`-extension has not landed and the local collector-probe disagrees) → triumvirate, never a contrived sub-file split.
+- **`proof:storybook-ia` re-baseline collides with W18** — the dock-home re-baseline cannot be reconciled with W18's tree authorship without editing rows W18/W19/W20/W29 own → triumvirate (coordinate, do not unilaterally re-author).
+- **The 3rd diagnostic-loop iteration** on the rail type-narrow proof (the `<GlassDock variant="rail" :collapse-delay>` discriminated-union refusal) OR the USF-2 `--dock-control-glyph-size` optical-parity (the DarkModeToggle `h-full w-full` self-sizing vs the slot convention) — HALT and triumvirate rather than re-spin.
+- **A §5.3 ratify reached un-ratified** (Class-3) — the "Dock Rail" vs "Instrument Rail" disambiguation hinges on a W28/W29 instrument-chassis retirement decision not yet taken → surface to the orchestrator, never self-ratify.
+
 ---
 
 ## Consumer hand-off sub-finding (§20 — USF-2, the dock-control optical-size contract)

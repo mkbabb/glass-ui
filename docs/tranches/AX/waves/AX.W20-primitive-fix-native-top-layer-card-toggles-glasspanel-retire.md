@@ -367,6 +367,15 @@ owns — W20's card-toggle repair is a symptom, not the gate-authorship).
 (All within the AX ≤6-implementation / ≤7-read-only ceiling — this wave's actual count is 5: 3 implement +
 1 verify + 1 gate.)
 
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):**
+
+The wave-agnostic authorization grant is AX.md §6.1 (the canonical clause — devise an in-FileBounds gestalt fix; spawn a tangent triumvirate to work AROUND an error; escalate ONLY when genuinely user-gated) + §6.2 (the 4-class halt-vs-work-around decision tree). It governs here by reference; the orchestrator may not redispatch the failing unit alone. The wave-specific §3a triggers (authored from this wave's FileBounds + HardGate):
+
+- **Out-of-FileBounds reveal → triumvirate (Class 2).** If the GlassPanel-filter delete from `useGlassRenderer.ts` requires touching the W26-owned detector half (`detectTier()`/`tier`) or the `(window as any).chrome`→capability-probe cleanup, if the `<Dialog :native>` fold reveals a reka-portal-bypass edit outside the Dialog SFC, or if the card-toggle repair snags a `var-in-arbitrary` non-emit class W27a owns → HALT, dispatch the triumvirate. The W26 detector-only split + the W27a guard gate are NEVER absorbed in-line.
+- **Non-local gate failure → triumvirate (Class 2).** If `vue-tsc`/`verify-export-types` reds on a GlassPanel re-export the census missed (a consumer outside this wave's FileBounds), or `proof:no-nested-hsl` reds on an `hsl(var(--token) / α)` occurrence beyond the 3 `animations.css` lines (a tree-wide instance) → triumvirate. The cross-repo `proof:off-glasspanel` PUBLISH-gate is W35-owned: a keyframes-side red is routed, never fixed here.
+- **3rd diagnostic-loop iteration → triumvirate (Class 2).** If `proof:card-toggle-perceptible` (the π-lane ΔE/luminance readback) fails to clear the perceptible floor for a third shadow/grain re-tune, or the native-top-layer dimming-scrim live audit fails to settle for a third pass → HALT the failing unit + triumvirate.
+- **§5.3 ratify reached un-ratified → halt-and-ratify (Class 3).** If a RATIFY-BEFORE-IMPL item reaches impl un-adjudicated — the W20↔W26 `useGlassRenderer` delete-vs-keep boundary (Open Question 4), the native-dialog fold-vs-orphan-DELETE disposition, the GlassNativeDrawer route, or the Card `specular` default (W09-coupled) → stop, surface to the orchestrator, never self-ratify.
+
 ---
 
 ## HardGate (born-RED→GREEN + the MANDATORY VISUAL-TRUTH live audit)

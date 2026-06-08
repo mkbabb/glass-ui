@@ -268,6 +268,15 @@ it is slides-local single-consumer chrome).
 (All within the AX ≤6-implementation / ≤7-read-only ceiling — this wave's actual count is 4: 2 implement +
 1 verify + 1 gate.)
 
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):**
+
+The wave-agnostic authorization grant is AX.md §6.1 (the canonical clause — devise an in-FileBounds gestalt fix; spawn a tangent triumvirate to work AROUND an error; escalate ONLY when genuinely user-gated) + §6.2 (the 4-class halt-vs-work-around decision tree). It governs here by reference; the orchestrator may not redispatch the failing unit alone. The wave-specific §3a triggers (authored from this wave's FileBounds + HardGate):
+
+- **Out-of-FileBounds reveal → triumvirate (Class 2).** If the dot re-author needs a NEW `tokens.css` token (W23 consumes `--surface-tint-*`/`--scale-hover`, never mints — a new token routes to the J-band CSS waves), if the spring re-point requires authoring a `--spring-*` curve W05 owns, if the carousel `scale-[var(--scale-hover)]` excise pulls in the tree-wide `proof:no-dead-arbitrary` guard W27a owns (fix the INSTANCE only), or if the `.glass-material` restyle needs a specular-ladder edit W09 owns, or the muster/slides consumer-port reaches sibling source W34 receives → HALT, dispatch the triumvirate. A sibling-owned surface is NEVER edited in-line.
+- **Non-local gate failure → triumvirate (Class 2).** If `proof:carousel-glass-atoms` reds because the consumed `--surface-tint-*`/`--spring-*`/`.glass-material` substrate is not yet at HEAD (a W05/W09 dependency not landed), or `proof:slider-two-only` re-registration reds on a slider surface the verify-only F0/F1 was supposed to leave untouched → triumvirate.
+- **3rd diagnostic-loop iteration → triumvirate (Class 2).** If the dark-page dot-contrast π-lane readback fails the ≥3:1 floor for a third `--surface-tint-*` rung re-tune, or the active-dot emitted-morph live audit fails to settle for a third pass → HALT the failing unit + triumvirate.
+- **§5.3 ratify reached un-ratified → halt-and-ratify (Class 3).** If the §9.1 glass-scrubber RENAME decision gate reaches impl un-adjudicated → stop, surface to the orchestrator, never self-ratify. (The glass-scrubber rename is USER-ADJUDICATED per §6.1(iii) — escalate, do not self-decide; the DEFAULT-ACCEPT path makes no rename edit.)
+
 ---
 
 ## HardGate (born-RED→GREEN + the MANDATORY VISUAL-TRUTH live audit)

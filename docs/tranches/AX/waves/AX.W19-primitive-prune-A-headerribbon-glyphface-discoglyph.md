@@ -264,6 +264,15 @@ honesty repair rides W21/W29, not this wave); `proof:storybook-complete` REGISTR
 (All within the AX ≤6-implementation / ≤7-read-only ceiling — this wave's actual count is 4: 2 implement +
 1 verify + 1 gate.)
 
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):**
+
+The wave-agnostic authorization grant is AX.md §6.1 (the canonical clause — devise an in-FileBounds gestalt fix; spawn a tangent triumvirate to work AROUND an error; escalate ONLY when genuinely user-gated) + §6.2 (the 4-class halt-vs-work-around decision tree). It governs here by reference; the orchestrator may not redispatch the failing unit alone. The wave-specific §3a triggers (authored from this wave's FileBounds + HardGate):
+
+- **Out-of-FileBounds reveal → triumvirate (Class 2).** If excising a pruned dir requires touching a do-not-touch surface (`dock-active-tokens.vue` is W06's; `TokenLadder.vue`/`ToneSwatch.vue` are live chassis primitives; the keyframes `EditorShell.vue`/`EasingCurveCanvas.vue` sibling source is W35's; `proof:storybook-complete` registration is W18's), or the disco-glyph→glyph-face severance reveals a third in-repo consumer of `GLYPH_FACE_SILHOUETTE_KEY` beyond the demo coupling → HALT, dispatch the triumvirate. A sibling-owned surface is NEVER edited in-line.
+- **Non-local gate failure → triumvirate (Class 2).** If `vue-tsc`/`npm run build` reds on a dangling import after the severance that resolves OUTSIDE this wave's FileBounds (a consumer of a pruned export the census missed), or `proof:consumers-static`/`proof:di-consistency` reds on a count/ledger a sibling wave co-owns → triumvirate. The cross-repo `proof:off-headerribbon` PUBLISH-gate is W35-owned: a keyframes-side red is routed, never fixed here.
+- **3rd diagnostic-loop iteration → triumvirate (Class 2).** If the chart-chassis-palette plain-tile re-expression (the disco-glyph swatch-grid replacement) fails its live frontend-design read for a third re-author pass, or the no-dangling-route live audit surfaces a surviving route for a third pass → HALT the failing unit + triumvirate.
+- **§5.3 ratify reached un-ratified → halt-and-ratify (Class 3).** If any RATIFY-BEFORE-IMPL item reaches impl un-adjudicated → stop, surface to the orchestrator, never self-ratify.
+
 ---
 
 ## HardGate (born-RED→GREEN + the MANDATORY VISUAL-TRUTH live audit)

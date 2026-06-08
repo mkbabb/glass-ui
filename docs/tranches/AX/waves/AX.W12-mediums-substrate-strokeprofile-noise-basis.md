@@ -290,6 +290,13 @@ W12 is in band C (AURORA), sequenced after band B (GRAPHICS, W07-W09). The disjo
 
 (All within the AX ≤6-implementation / ≤7-read-only ceiling — this wave's actual count is 3.)
 
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):** the wave-agnostic authorization grant is AX.md §6.1 (the canonical clause — work AROUND a roadblock with an idiomatic gestalt fix, never stall; §6.2 is the 4-class halt-vs-work-around decision tree) — read it by reference, it is not restated here. The wave-SPECIFIC §3a auto-triggers (authored from this wave's FileBounds + HardGate):
+
+- **Scope-reveal → halt + triumvirate (Class 2; NEVER absorb in-line):** any need to touch the OUT-of-bounds surfaces — the `mediumVangogh`/`mediumOilPastel`/`mediumCrayon` BODIES (W13), `painterly.wgsl.ts`/`wake.wgsl.ts` or any WGSL multi-pass (W14), the W07 f32-uniform/storage struct in `aurora.wgsl.ts`, `samplePalette`/the OKLCh palette arc/`color.ts` (W11), or any `atoms.ts`/`presets.ts`/`renderMode.ts`/`uniformBridge.ts` config surface (W07/W10). The aurora-local `hash21`/`hash22`/`vnoise`/`fbm` loop is legitimately divergent — do NOT delete it to "unify"; that is a scope creep, not a fix.
+- **Non-local hard-gate failure → triumvirate (Class 2):** if `proof:aurora-noise-hash-equivalence` REDs non-locally (the 1e-6 GLSL↔WGSL twin diverges OR the STRUCTURAL splice-discipline arm catches a re-authored inline hash), or `proof:no-god-module` over `mediums.glsl.ts` fails (the extraction nets UP not DOWN), or the oil/knife/chunky/crayon extraction byte/1e-6 regression breaks — escalate the gate-author design rather than hand-patch the probe.
+- **3rd diagnostic-loop iteration → triumvirate (Class 2):** if the `StrokeProfile`/`paintStrokeLayers` extraction does NOT bake oil-medium-NEUTRAL after three retunes, OR the new PCG/gradient-noise basis does NOT read organic (still shows `sin()`-periodicity banding / axis-aligned value-noise lattice) after three retunes, dispatch research→plan→redress, do NOT re-roll the noise constants ad hoc.
+- **§5.3 ratify reached un-ratified → HALT-and-ratify (Class 3):** the hash + gradient-noise choice (PCG2D + simplex, recommended) is RATIFY-BEFORE-IMPL, and the `profileFor`-home cohesion seam (`brush.glsl.ts` vs `mediums.glsl.ts`) is ratified at impl-open — if either reaches impl un-ratified, surface to the orchestrator (take the recorded default), do NOT self-ratify.
+
 ---
 
 ## HardGate (born-RED→GREEN + the MANDATORY VISUAL-TRUTH live audit)

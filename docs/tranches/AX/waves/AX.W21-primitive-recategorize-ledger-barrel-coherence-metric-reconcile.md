@@ -336,6 +336,15 @@ writes NO sibling source — the metric ownership is the W28/W29 cross-repo anne
 (All within the AX ≤6-implementation / ≤7-read-only ceiling — this wave's actual count is 4: 2 implement
 + 1 verify + 1 gate.)
 
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):**
+
+The wave-agnostic authorization grant is AX.md §6.1 (the canonical clause — devise an in-FileBounds gestalt fix; spawn a tangent triumvirate to work AROUND an error; escalate ONLY when genuinely user-gated) + §6.2 (the 4-class halt-vs-work-around decision tree). It governs here by reference; the orchestrator may not redispatch the failing unit alone. The wave-specific §3a triggers (authored from this wave's FileBounds + HardGate):
+
+- **Out-of-FileBounds reveal → triumvirate (Class 2).** If the configurator demote or the metric-pill subpath add reveals an edit to a W19-owned `src/index.ts` cherry-pick line or the W29-owned metric prune, if the `proof:no-retired-survivor` REGISTRATION needs the W33-owned gate fleet, if the A-1/A-2 configurator-groove port needs the `.instrument-rail` source W29 prunes (capture BEFORE the prune, never re-author after), or if a ToggleChip-cohort / LabeledSlider adoption crosses into W34's idiom-census → HALT, dispatch the triumvirate. A sibling-owned surface is NEVER edited in-line.
+- **Non-local gate failure → triumvirate (Class 2).** If `proof:barrel-rationale-coherence` reds on a cherry-pick count a sibling wave (W19/W20) co-mutates, or `proof:no-retired-survivor` reds on a MIGRATION.md "RETIRED" heading whose survivor is a W29-prune target → triumvirate (route the count arithmetic, do not absorb it).
+- **3rd diagnostic-loop iteration → triumvirate (Class 2).** If the `DrawerContent spring?` SpringProgress wire fails its additive byte-identical-default check for a third pass, or the drawer-live-behind disambiguation fails its live affordance read for a third re-author → HALT the failing unit + triumvirate.
+- **§5.3 ratify reached un-ratified → halt-and-ratify (Class 3).** If a RATIFY-BEFORE-IMPL item reaches impl un-adjudicated — the configurator demote-vs-de-document path, the metric-pill subpath-vs-W29-route, the drawer-story retitle-vs-fold-into-one-home, the A-1/A-2-in-W21-vs-W21b split, or the kf-G-6 cartoon-quiet preset RATIFY → stop, surface to the orchestrator, never self-ratify.
+
 ---
 
 ## HardGate (born-RED→GREEN + the MANDATORY VISUAL-TRUTH live audit)

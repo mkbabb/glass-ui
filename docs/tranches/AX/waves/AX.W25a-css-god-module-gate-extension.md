@@ -19,9 +19,9 @@ deadlink, jointly a glass-ui packaging defect + a consumer `@source`-gap routed 
 The wave is born-RED at HEAD on **two structurally-falsifiable witnesses** that do NOT hold today.
 The charter audit baseline is `eaba94f`; the working tree at write-time is `at-dock-convergence`,
 and the witnesses were re-measured LIVE (per the §0 cardinal "re-verify before acting"). Both
-witnesses are *purely structural* (file-extension reach + line count; published-dist directory
-resolution) — exactly the class the precept (`precepts/instructions/README.md:183`) names as the
-sole case where a non-runtime artefact gate is sufficient. This wave has **NO visual surface** (the
+witnesses are *purely structural* (file-extension reach + line count; published-dist content-scan
+class-string findability) — exactly the class the precept (`precepts/instructions/README.md:183`)
+names as the sole case where a non-runtime artefact gate is sufficient. This wave has **NO visual surface** (the
 gate-extension reports violations and the dist `@source` re-point is a packaging fix — no pixels
 change), so the VISUAL-TRUTH clause below is the *structural-wave* variant, not a screenshot audit.
 
@@ -42,21 +42,30 @@ change), so the VISUAL-TRUTH clause below is the *structural-wave* variant, not 
   the gate goes GREEN (a green intermediate exists ONLY because the gate-extension is its own step;
   §4 note 19).*
 
-- **RED witness 2 (the published `dist/styles/index.css` carries a dead `@source "../components"`
-  content-scan directive that resolves to a non-existent dir).** `dist/styles/index.css:145`
-  (mirroring `src/styles/index.css:137`) carries `@source "../components"`. From the **published**
-  `dist/styles/` location that resolves to `node_modules/@mkbabb/glass-ui/dist/components` — a
-  directory that **DOES NOT EXIST** (`ls dist/components` → "No such file or directory"; the dist is
-  a flat `dist/*.js` per-subpath chunk set, no `components/` subtree). So glass-ui's OWN
-  component-template content-scan scans NOTHING in a consumer's production build (value.js gh-pages
-  `production`-condition build confirmed — digest line 132): the library's layout/CVA utility
-  classes that a consumer's own templates don't also emit are dropped from the production CSS across
-  181 glass-ui mount sites. (In DEV the same directive resolves from `src/styles/` against
-  `src/components`, which DOES exist — `ls src/components` → present — so the deadlink is a
-  **dist-only** packaging defect masked in development.) *The falsifiable RED: a probe asserting the
-  `@source` directive in the BUILT `dist/styles/index.css` resolves to an existing directory FAILS
-  at HEAD (`../components` from `dist/styles/` → absent). After: the directive re-points at the real
-  dist chunk location and the probe GREENs.*
+- **RED witness 2 (the published `dist/styles/index.css` `@source "../components"` content-scan
+  directive reaches NO class-string-bearing dist file — a CLASS-STRING-FINDABILITY defect, NOT a
+  bare dir-absence).** `dist/styles/index.css:145` (mirroring `src/styles/index.css:137`) carries
+  `@source "../components"`. From the **published** `dist/styles/` location that resolves to
+  `node_modules/@mkbabb/glass-ui/dist/components` — a directory that DOES exist but is a
+  **declarations-only `.d.ts` tree** (`find dist/components -name '*.js' | wc -l` → **0**;
+  `find dist/components -name '*.d.ts' | wc -l` → **398**). The compiled render functions that carry
+  glass-ui's layout/CVA utility class STRINGS are NOT under `dist/components/` — they are the flat
+  `dist/*.js` per-subpath chunk set at the dist ROOT (152 `.js`; e.g. the sentinel `shrink-0`/`h-full`
+  classes are findable across `dist/*.js`, absent from `dist/components/`). So Tailwind's content-scan,
+  pointed at `dist/components/`, scans a tree with ZERO class-string-bearing `.js` and emits none of
+  glass-ui's classes. **This is the exact GREEN-at-HEAD-ships-the-defect trap a bare dir-existence
+  probe falls into: `test -d dist/components` PASSES at HEAD (the dir is present) while the real defect
+  — the directive reaches no class strings — still ships.** So glass-ui's OWN component-template
+  content-scan emits NOTHING in a consumer's production build (value.js gh-pages `production`-condition
+  build confirmed — digest line 132): the library's layout/CVA utility classes that a consumer's own
+  templates don't also emit are dropped from the production CSS across 181 glass-ui mount sites. (In DEV
+  the same directive resolves from `src/styles/` against `src/components`, the actual `.vue` SOURCE tree,
+  which DOES carry the class strings — `ls src/components` → present — so the defect is a **dist-only**
+  packaging defect masked in development.) *The falsifiable RED: a CLASS-STRING-FINDABILITY probe — does
+  the directory the BUILT `dist/styles/index.css` `@source` resolves to contain ≥1 `dist/*.js` bearing a
+  sentinel utility class (e.g. `shrink-0`/`h-full`)? — FAILS at HEAD (`../components` → a 398-`.d.ts`,
+  0-`.js` tree: no sentinel-class-bearing `.js`). After: the directive re-points at the real dist chunk
+  location (`dist/*.js`) and the probe finds the sentinel class and GREENs.*
 
 The HardGate drives both witnesses to GREEN-AT-THE-GATE-LEVEL (the four CSS violations are reported
 RED-by-design and CLEARED by W25b/W06, not by W25a; the dist `@source` resolves). W25a does NOT
@@ -111,13 +120,16 @@ carry no release tag — the W25/W27 internal contradiction note 21 resolves.
 **(3) Fix the DIST `@source` content-scan deadlink so the library is self-sufficient (digest
 line 132/133, part 1).** The intent of `@source "../components"` is to make Tailwind's content-scan
 reach glass-ui's COMPILED component templates so a consumer's build emits the library's layout/CVA
-utility classes. In DEV (`src/styles/index.css:137`) it correctly resolves to `src/components`. But
-the SAME relative path ships verbatim into `dist/styles/index.css:145`, where it resolves to a
-non-existent `dist/components/`. The gestalt fix re-points the directive at the **real published
-chunk location** so the directive is correct IN BOTH trees — the dist chunk set is the flat
-`dist/*.js`, so the directive must scan the dist JS (the compiled render functions carrying the
-class strings), e.g. `@source "..";` (from `dist/styles/` → `dist/`) which reaches `dist/*.js`, OR a
-build-step that rewrites the directive to a dist-correct path on emit. **RATIFY-BEFORE-IMPL** the
+utility classes. In DEV (`src/styles/index.css:137`) it correctly resolves to `src/components`, the
+`.vue` SOURCE tree that carries the class strings. But the SAME relative path ships verbatim into
+`dist/styles/index.css:145`, where it resolves to a `dist/components/` that EXISTS but is a
+declarations-only `.d.ts` tree (0 `.js`, ~398 `.d.ts`) — so the content-scan reaches NO class-string-
+bearing file (a class-string-findability defect, NOT a bare dir-absence; the compiled render functions
+that carry the class strings are the flat `dist/*.js` at the dist ROOT). The gestalt fix re-points the
+directive at the **real published chunk location** so the directive is correct IN BOTH trees — the
+dist chunk set is the flat `dist/*.js`, so the directive must scan the dist JS (the compiled render
+functions carrying the class strings), e.g. `@source "..";` (from `dist/styles/` → `dist/`) which
+reaches `dist/*.js`, OR a build-step that rewrites the directive to a dist-correct path on emit. **RATIFY-BEFORE-IMPL** the
 exact form (see Open questions / Cadence step 1): the recommended path is a **single directive that
 resolves correctly in both the `src/` cascade and the published `dist/` cascade** — the cleanest is
 to make `src/styles/index.css` carry a directive whose dist-emitted form lands on `dist/*.js` (a
@@ -224,8 +236,10 @@ the gate-author and implementer are the same role. The actual count is **2** (1 
   (a) confirms `proof:no-god-module` reports EXACTLY the four CSS + one TS violations (not more, not
   fewer — a fifth CSS file creeping over 500 or a count drift is caught); (b) confirms the gate now
   carries `["local","ci"]` in `gates.mjs` and would RUN in the CI aggregate (not just local); (c)
-  confirms the built `dist/styles/index.css` `@source` resolves to a real dir (`test -d` the
-  resolved target from `dist/styles/`); (d) confirms `npm run build` re-emits the corrected directive
+  confirms the directory the built `dist/styles/index.css` `@source` resolves to (from `dist/styles/`)
+  carries ≥1 class-string-bearing `dist/*.js` — a SENTINEL-CLASS readback (grep a known utility class
+  like `shrink-0`/`h-full` in the resolved scan-target), NOT a bare `test -d` (which false-GREENs on
+  the declarations-only `dist/components/` tree); (d) confirms `npm run build` re-emits the corrected directive
   (the dist is not hand-edited — it regenerates). ADVERSARIAL twists: **(i)** tries to make the gate
   "pass" by special-casing glass.css to skip the `.css` scan — confirms the collector treats all
   `.css` uniformly (born-RED on glass.css too; the cohesion-not-length rationale is W25b's
@@ -236,11 +250,18 @@ the gate-author and implementer are the same role. The actual count is **2** (1 
   cascade (the `src/styles/index.css` directive still resolves to `src/components` in a dev build —
   the dist-correct rewrite must not red the dev content-scan); **(iv)** confirms re-tagging to
   release was NOT done (a `["local","ci","release"]` tag would red `proof:tag-parity` per the
-  at-least-ci model — the named exception is the 2 legacy gates ONLY).
+  at-least-ci model — the named exception is the 2 legacy gates ONLY); **(v)** confirms the dist
+  `@source` probe asserts CLASS-STRING-FINDABILITY, NOT bare dir-existence — re-points the directive at
+  ANY existing-but-class-string-empty dir (e.g. back at the declarations-only `dist/components/`) and
+  confirms the probe FAILS (a bare `test -d` form would false-GREEN there and re-admit the
+  GREEN-at-HEAD-ships-the-defect trap; the probe must require ≥1 sentinel-class-bearing `dist/*.js` in
+  the resolved scan-target).
 
 - **(No separate gate-author arm.)** The wave's product is the gate change itself; there is no
   downstream assertion to author beyond the gate. W27a authors `proof:tag-parity` (the meta-assert
   W25a's tag must satisfy); W00 authors the proof↔package.json meta-gate — both are sibling-owned.
+
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):** the wave-agnostic authorization grant is AX.md §6.1 (work AROUND a roadblock with an idiomatic gestalt fix rather than stall; the §6.2 decision tree bounds halt-vs-work-around) — by reference, not restated. This wave's §3a auto-triggers (HALT the failing unit + dispatch the research→plan-augment→redress triumvirate, never stall): an out-of-FileBounds reveal — any need to actually CARVE a CSS monolith (`tokens.css`/`utilities.css`/`glass.css` partials → **W25b**), split `dock.css` (→ **W06**), split `useMetaballRenderer.ts` (→ **W26**), author `proof:tag-parity` (→ **W27a** — W25a only CONSUMES the tag model), or touch the proof↔package.json meta-gate (→ **W00**) — is a scope-reveal → halt + triumvirate, do NOT absorb (W25a is the GATE-EXTENSION only; the born-RED roster it hands forward is NOT this wave's to fix). Non-local hard-gate failure: if extending the `collect()` predicate to `.css` reds an UNRELATED gate, or if `proof:no-god-module` does NOT report EXACTLY the four CSS + one TS born-RED-CORRECT violations (a count drift means a fifth file crept over 500 or the predicate over-/under-matches — a non-local signal, not a local-edit fix), halt + triumvirate. Third diagnostic-loop iteration: if the dist `@source` content-scan deadlink cannot be made to resolve to a class-string-bearing `dist/*.js` after three attempts (the SENTINEL-CLASS probe still FAILS), dispatch research+plan+redress on the `@source` form rather than re-rolling the directive a fourth time. §5.3 / RATIFY-BEFORE-IMPL reaching un-ratified: the dist-`@source` RATIFY (Cadence step 1 — the dist-correct directive form vs a build-step rewrite) reaching impl un-ratified, OR the at-LEAST-ci tag MODEL (shared with W27a) un-ratified before W25a re-tags `proof:no-god-module` → §6.2 Class-3 HALT-AND-RATIFY (the tag-model is load-bearing across W25a + W27a; do NOT re-tag to `release` unilaterally — that reds `proof:tag-parity`).
 
 ---
 
@@ -266,11 +287,18 @@ failure; a god-module ceiling has no runtime behaviour to mis-measure).
    The gate enters the CI aggregate (was `["local"]`-only). **Born-RED** if the registration still
    reads `["local"]`; GREEN after. Consistent with W27a's at-LEAST-ci `proof:tag-parity` model (NOT
    `release` — the named exception is the 2 legacy gates).
-3. **A dist `@source`-resolves probe — a directory-resolution artefact.** Asserts the `@source`
-   directive in the BUILT `dist/styles/index.css` resolves (from `dist/styles/`) to an EXISTING
-   directory in the published dist tree. **Born-RED** at HEAD (`../components` → `dist/components`
-   absent); GREEN after the `src/styles/index.css` re-point + `npm run build` re-emit. A
-   build-output + directory-existence artefact (NOT a grep-for-string).
+3. **A dist `@source` CLASS-STRING-FINDABILITY probe — a content-reach artefact (NOT bare
+   dir-existence).** Asserts the directory the BUILT `dist/styles/index.css` `@source` directive
+   resolves to (from `dist/styles/`) contains ≥1 class-string-bearing `dist/*.js` chunk — proven by a
+   SENTINEL-CLASS probe: at least one `.js` in the resolved scan-target must carry a known glass-ui
+   utility class string (e.g. `shrink-0`/`h-full`). **Born-RED** at HEAD: `../components` resolves to
+   `dist/components`, which EXISTS but is a 398-`.d.ts`, 0-`.js` declarations tree — `test -d` PASSES
+   yet ZERO sentinel-class-bearing `.js` is reachable, so the directive ships GREEN-by-dir-existence
+   while emitting no classes. The probe must FAIL there. GREEN after the `src/styles/index.css`
+   re-point lands the directive on the flat `dist/*.js` chunk set (the sentinel class is found) +
+   `npm run build` re-emit. A build-output + class-string-reach artefact — a bare `test -d`
+   directory-existence check is INSUFFICIENT (it false-GREENs on the declarations-only tree and ships
+   the defect; this is the cardinal AW GREEN-at-HEAD trap).
 4. **`npm run build` GREEN + the corrected directive re-emits into `dist/`.** The build regenerates
    `dist/styles/index.css` with the dist-correct `@source`; no dangling `@source` to a missing dir
    ships. A build artefact — the canary that the `src/` edit produces a self-sufficient dist.
@@ -305,12 +333,17 @@ packaging fix; the relevant truth axis is the emitted-CSS class set, which the r
 
 1. **Live re-diagnosis ritual (W00 wave-open) + RATIFY the dist `@source` form.** Re-confirm both RED
    witnesses against HEAD live: `wc -l` the four CSS files (>500); `proof:no-god-module` does NOT
-   list them (`.css`-blind); `gates.mjs:338` reads `["local"]`; `ls dist/components` → absent;
-   `dist/styles/index.css:145` carries `@source "../components"`. **RATIFY the exact dist-correct
-   `@source` form** (the recommended path: a single directive whose dist-emitted relative path
-   resolves to a real `dist/` dir while the dev resolution against `src/components` stays correct —
-   the build-rewrite-on-emit or a both-trees-correct relative path) and record it in the audit json.
-   Do NOT trust the audit's word — re-prove.
+   list them (`.css`-blind); `gates.mjs:338` reads `["local"]`; `dist/styles/index.css:145` carries
+   `@source "../components"`; **re-prove the class-string-findability defect, NOT a bare dir-absence**:
+   `find dist/components -name '*.js' | wc -l` → 0 and `find dist/components -name '*.d.ts' | wc -l`
+   → ~398 (the resolved `../components` tree EXISTS but is declarations-only), while
+   `grep -lE 'shrink-0|h-full' dist/*.js` finds the sentinel class strings only at the flat dist ROOT
+   (NOT under `dist/components/`) — so a `test -d dist/components` would false-GREEN, masking the
+   defect. **RATIFY the exact dist-correct `@source` form** (the recommended path: a single directive
+   whose dist-emitted relative path resolves to the flat `dist/*.js` chunk set carrying the class
+   strings while the dev resolution against `src/components` stays correct — the build-rewrite-on-emit
+   or a both-trees-correct relative path) and record it in the audit json. Do NOT trust the audit's
+   word — re-prove.
 2. **Extend the collector to scan `.css` (F0).** `proof-no-god-module.mjs:47` predicate +-`.css`;
    update the header comment. Run `proof:no-god-module` → confirm it now reports the four CSS + one
    TS violations (RED, born-RED-CORRECT). Confirm the `.ts`/`.vue` bite still fires (a synthetic
@@ -320,10 +353,12 @@ packaging fix; the relevant truth axis is the emitted-CSS class set, which the r
    release — coordinate with W27a's `proof:tag-parity` so the tag does not red parity).
 4. **Re-point the dist `@source` directive (digest 132/133 part 1).** `src/styles/index.css:137` →
    the ratified dist-correct form. `npm run build` → re-emit `dist/styles/index.css`. Confirm the
-   built directive resolves to an existing dir from `dist/styles/`, AND the dev cascade still
-   resolves against `src/components`.
-5. **Gate probe + VISUAL-TRUTH structural readback.** Author/run the dist-`@source`-resolves probe.
-   Capture the consumer content-scan BEFORE/AFTER class-presence readback (the structural-wave
+   built directive resolves from `dist/styles/` to a dir carrying ≥1 class-string-bearing `dist/*.js`
+   (a sentinel-class grep, e.g. `shrink-0`/`h-full`, finds it — NOT merely that the dir exists), AND
+   the dev cascade still resolves against `src/components`.
+5. **Gate probe + VISUAL-TRUTH structural readback.** Author/run the dist-`@source`
+   CLASS-STRING-FINDABILITY probe (asserts the resolved scan-target carries ≥1 sentinel-class-bearing
+   `dist/*.js`, NOT a bare `test -d`). Capture the consumer content-scan BEFORE/AFTER class-presence readback (the structural-wave
    VISUAL-TRUTH evidence). Hand the four born-RED-CORRECT CSS-violation roster to W25b/W06 via the
    audit json. Route the value.js + words consumer-`@source` adoption notes to W34. Write
    `audit/W25a-…json` to its born-RED→staged-GREEN state.
@@ -338,12 +373,15 @@ packaging fix; the relevant truth axis is the emitted-CSS class set, which the r
   **four-violation born-RED-CORRECT roster** (tokens 1728 / dock 1227 / utilities 1119 / glass 691,
   with the glass.css cohesion-not-length flag handed to W25b as an ADJUDICATION item) handed to
   W25b/W06, the gate-tag change (`["local"]` → `["local","ci"]`) + its at-least-ci-model consistency
-  with W27a, and the post-fix dist `@source` resolution measurement.
+  with W27a, and the post-fix dist `@source` class-string-findability measurement (the sentinel-class
+  reach in the resolved scan-target, BEFORE → AFTER).
 - The gate-output artefact `AV-no-god-module` (the existing `writeGateArtifact` emit from
   `proof-no-god-module.mjs`) now listing the five violations — the machine evidence the gate sees
   `.css`.
 - The post-build `dist/styles/index.css` proof: the `@source` directive resolves from `dist/styles/`
-  to a real dir; the BEFORE (`../components` → absent) / AFTER (resolves) delta.
+  to a dir carrying ≥1 class-string-bearing `dist/*.js`; the BEFORE (`../components` → a 398-`.d.ts`,
+  0-`.js` declarations tree, ZERO sentinel-class-bearing `.js`) / AFTER (the sentinel class is found in
+  the resolved dist chunk set) delta.
 - The **consumer content-scan BEFORE/AFTER** capture (the structural-wave VISUAL-TRUTH evidence): a
   minimal/value.js production build's emitted-CSS class-presence for glass-ui's layout/CVA utilities,
   dropped BEFORE the dist fix, emitted AFTER — captured under `docs/tranches/AX/audit/`.
@@ -411,9 +449,11 @@ stash per the hardened agent git clause. These are the messages the orchestrator
   ceiling that pattern relieves VISIBLE; the carve itself is W25b/W06.
 - **The dist `@source` line** (`dist/styles/index.css:145` = `src/styles/index.css:137`,
   `@source "../components"`) — the value.js gh-pages `production`-condition build (digest line 132)
-  is the field witness that the directive resolves to a non-existent `dist/components/` and silently
-  drops glass-ui's utility classes across 181 mount sites. This is the CLAUDE.md-documented
-  content-scan silent-failure class (the `@source`/`tw-animate-css`-missing family) confirmed in a
+  is the field witness that the directive resolves to a `dist/components/` that EXISTS but is a
+  declarations-only `.d.ts` tree (0 `.js`, ~398 `.d.ts`) bearing NO class strings — so the content-scan
+  reaches nothing and silently drops glass-ui's utility classes across 181 mount sites (a class-string-
+  findability defect, NOT a bare dir-absence — which is why a `test -d` probe would false-GREEN it).
+  This is the CLAUDE.md-documented content-scan silent-failure class (the `@source`/`tw-animate-css`-missing family) confirmed in a
   real consumer.
 - **HEAD `eaba94f`** (charter audit baseline; working tree `at-dock-convergence`) — the gate ships
   GREEN-in-CI absence over four CSS god-modules + one TS regression; the dist `@source` deadlink

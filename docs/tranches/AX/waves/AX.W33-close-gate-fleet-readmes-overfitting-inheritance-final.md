@@ -1,10 +1,12 @@
 # AX.W33 — AX close: gate-fleet + READMEs + overfitting audit + inheritance cross-walk + FINAL
 
-**Band** M · CLOSE · **Severity** major · **dependsOn** AX.W00…AX.W32 + AX.W34…AX.W41 (ENUMERATED —
-every prior wave; LAST, HARD-gated terminal) · **Charter** AX.md §3 (the `### AX.W33` block, lines
-1931-1978) + the §1 summary row (line 143) + the §2 band-M membership (lines 193-194) + the §2b band-M
-precept row (line 225) + §4 note 12 (publish-currency — the consumer "still broken" findings are a
-stale-registry gap the AX cut PUBLISH resolves, lines 2057-2067) · **Audit** `deep-audit-corpus.json`
+**Band** M · CLOSE · **Severity** major · **dependsOn** AX.W00…AX.W32 + AX.W34…AX.W42 (ENUMERATED —
+every prior wave INCLUDING the W42 morph substrate; LAST, HARD-gated terminal) · **Charter** AX.md §3 (the
+`### AX.W33` block, re-locate by name — at HEAD `cdcf331` the block is ~line 2092) + the §1 summary row +
+the §2 band-M membership + the §2b band-M
+precept row + §4 note 12 (publish-currency — the consumer "still broken" findings are a
+stale-registry gap the AX cut PUBLISH resolves; all charter cross-refs re-locate by section/note name, never
+raw line — line anchors are `eaba94f`-relative and drift at HEAD `cdcf331`) · **Audit** `deep-audit-corpus.json`
 slice 31 `aw-plan-delivery-audit` (the CENTRAL slice — F4 the renumbered-thrice never-reached close, F7
 the cardinal headless-green/visually-broken gate-philosophy gap, F8 the READMEs-over-a-dead-substrate
 currency defect) + slice 7 F0 / 11 F2 / 13 F5 (the aurora/blob README planned→landed-against-LIVE sweep)
@@ -21,7 +23,9 @@ P-inv-28 inheritance-ledger cross-walk + the precepts-pin ι-sweep)
 ## State (born-RED — the gate must fail at HEAD)
 
 The wave is born-RED at HEAD on **SIX falsifiable witnesses**, each re-confirmed LIVE at write-time
-against `at-dock-convergence @ eaba94f`. (Per the §0 cardinal "re-verify before acting" + the AX.W00
+against `at-dock-convergence @ cdcf331` (HEAD; `eaba94f` was the spec-authoring anchor — the `src` close
+machinery is unchanged across the interval, so the witnesses re-confirm verbatim; re-locate by name, never
+raw line). (Per the §0 cardinal "re-verify before acting" + the AX.W00
 wave-open ritual — the AW close never ran, so the close machinery is provably absent, not stale.)
 
 - **RED witness 1 — `proof:ax-final` does NOT exist (the release close-gate is absent).** `ls
@@ -121,7 +125,9 @@ W25a's `.css`-aware `proof:no-god-module`, W27a's `proof:tag-parity` + `proof:fa
 W37's `proof:canvas2d-lifecycle`/`proof:text-highlight`, W38's `proof:configurator-glass-atoms`, W39's
 `proof:lighthouse-demo`, W40's re-baselined `proof:demo-dock-nav`/`proof:animation-coherence`/
 `proof:design-md-current`/`proof:naming-consistency`, W41's `proof:build-watch-dts`/
-`proof:peer-devdep-parity`/`proof:peer-conformance`. Apply the **at-LEAST-ci tag model** (§4 note 21 / slice
+`proof:peer-devdep-parity`/`proof:peer-conformance`, W42's `proof:morph-substrate-single` (the unified
+liquid-morph substrate's one-driver-per-axis / 3-state-lifecycle π gate — registered here so the morph
+substrate cannot escape the fleet meta-assert). Apply the **at-LEAST-ci tag model** (§4 note 21 / slice
 31 F6 / slice 26 F4): the manifest's real parity claim is `local==ci`, with `release` a deliberate subset;
 the meta-assertion is "every non-sibling static `src/`-scan gate carries at LEAST `ci`", with the 2 legacy
 gates (`fail-explicit`/`no-legacy-commentary`) + the 2 legacy-lane gates W27a names tagged
@@ -135,8 +141,9 @@ meta-assert as a close concern (NOT re-deciding the model — slice 31 F13 owner
 `scripts/proof-au-final.mjs` (release-only, NOT ci; DEV-meta — greens once FINAL + the changeset exist;
 no born-RED@HEAD beyond the missing-file witness). It asserts, on a CLEAN tree at the tag boundary:
 (a) **FINAL-EXISTS** — `docs/tranches/AX/FINAL.md` exists AND cites a green run per wave via the gate-fleet
-regex `${w}\b[\s\S]{0,200}(run|actions|green)` over the ENUMERATED wave id list `W00..W41` (incl. W25a/
-W25b/W27a/W27b) — drop a wave's "green" → RED; (b) **GATE-FLEET-REGISTERED** — the proof-script↔manifest
+regex `${w}\b[\s\S]{0,200}(run|actions|green)` over the ENUMERATED wave id list `W00..W42` (incl. W25a/
+W25b/W27a/W27b AND W42 — the morph substrate's `proof:morph-substrate-single` is covered) — drop a wave's
+"green" → RED; (b) **GATE-FLEET-REGISTERED** — the proof-script↔manifest
 meta-gate returns ZERO orphans + tag-parity passes; (c) **PRIOR-CLOSE-META-ASSERT** — `proof:ax-final`
 asserts the prior close-gate machinery existed (the antidote to AW's silent renumber-drift — a close that
 cannot prove its own predecessor existed is the loose binding §4 / slice 31 F6 names; constellation digest
@@ -237,6 +244,21 @@ confirmation** (charter §3 fold f) — `proof:animation-coherence`/`design-md-c
 re-ran against the AX-REBUILT motion surfaces in W40; W33 CONFIRMS the W40 re-run is green (W40 owns the
 re-run; W33 confirms it in the close).
 
+**(11) §24 SHARED-STATE lineage-merge + the 3.8.0 cut + post-publish prod-validation (REQUIREMENTS §24;
+HARDENING §F.1/§F.2; the publish keystone).** Before the changeset cut, VERIFY-PRESENT-OR-MERGE the 3.7.0
+source deltas onto the AX line — the **fourier-field** addition, the **useCanvas2D** lift, and the
+**constellation-fix** (the three deltas that landed between the 3.6.0 cut and the 3.7.0 line). At HEAD
+`cdcf331` these are VERIFIED ALREADY PRESENT on `at-dock-convergence` (the intervening commits are
+AX-docs + fourier-field; the `src` baseline carries them) — so the step is a verify-present assertion in the
+common case, and a forward-merge ONLY if a re-diagnosis finds a delta missing (a satisfied witness →
+scope-collapse, never a re-do, per the §F.3 satisfied-witness branch). Then cut **3.8.0**: stage the
+`.changeset/*.md` (the bump from 3.7.0 → 3.8.0; `changeset version` rides the publish), and after the
+publish + the slides merge-to-main → `deploy-pages.yml`, run the post-publish prod-validation — `npm view
+@mkbabb/glass-ui version` == 3.8.0 + `https://slides.friday.institute` → HTTP 200 on the CUSTOM domain with
+the AX-deck content marker + the pptx-200 links (per the Dependencies post-publish prod-validation bullet +
+§F.2). FINAL reconciles the three legs (npm-live + slides-live + content-marker); any unmet leg →
+`complete_with_misses` with the leg explicit.
+
 This wave touches NO `src/` component code, NO shader, NO style cascade beyond the README markdown — it is
 the gate-fleet + close-machinery authorship wave. It is the LAST wave to land (the terminal); every other
 wave is its dependsOn (enumerated).
@@ -249,11 +271,12 @@ W33 is close-machinery authorship + README currency. It writes NO `src/` compone
 
 | File | Edit |
 |------|------|
-| `scripts/gates.mjs` | **MODIFY** — register every new AX gate (the π lane, dock, graphics, W21 `proof:no-retired-survivor`, W25a/W27a/W36/W37/W38/W39/W40/W41 gates) with the at-LEAST-ci tag model + the 2 legacy gates as the `['local','ci','release']` exception. (DISJOINT from W27a, which AUTHORS the tag-MODEL + the tag-parity probe + promotes the 2 legacy gates; W33 REGISTERS the rest of the fleet against that model + runs the fleet-wide meta-assert. Coordinate the gate-array region.) |
+| `scripts/gates.mjs` | **MODIFY** — register every new AX gate (the π lane, dock, graphics, W21 `proof:no-retired-survivor`, W25a/W27a/W36/W37/W38/W39/W40/W41/W42 gates — incl. W42's `proof:morph-substrate-single` morph-substrate gate) with the at-LEAST-ci tag model + the 2 legacy gates as the `['local','ci','release']` exception. (DISJOINT from W27a, which AUTHORS the tag-MODEL + the tag-parity probe + promotes the 2 legacy gates; W33 REGISTERS the rest of the fleet against that model + runs the fleet-wide meta-assert. Coordinate the gate-array region.) |
 | `scripts/proof-ax-final.mjs` | **NEW** — the aggregate close gate (modeled on `proof-au-final.mjs`); release-only, NOT ci. The 8 assertions (FINAL-EXISTS / GATE-FLEET-REGISTERED / PRIOR-CLOSE-META-ASSERT / ZERO-ORPHANS / INHERITANCE-LEDGER-CLOSED / CARRY-CLOSURE / CLEAN-TREE / STAGED-NOT-PUBLISHED). |
 | `scripts/proof-gate-fleet-registered.mjs` | **NEW** — the proof-script↔manifest meta-gate (every `scripts/proof-*.mjs` has a matching `proof:*` package.json entry; 12 orphans → 0) + the fleet-wide tag-parity meta-assert (at-LEAST-ci). |
 | `scripts/proof-carry-closure.mjs` | **NEW** — the bbnf BD-G7-form carry-closure gate (every AX deferred item closed-in-a-wave OR `{receiver, close-gate}`-tagged; zero un-receivered carries; reads W34's ledger as input). |
-| `package.json` | **MODIFY** — register the `scripts` entries for `proof:ax-final`, `proof:gate-fleet-registered`, `proof:carry-closure`, `proof:no-retired-survivor` (W21-authored), and any other orphaned `proof:*` keys for the 12 RED-witness-2 scripts. Add a `.changeset/*.md` (stages the bump; `changeset version` is USER-DOMAIN). NO `exports` change (the `proof:deck-progress-rail` `scripts` entry + the `./deck-progress` export are W24's — slice 31 F13). |
+| `scripts/proof-prod-validation.mjs` | **NEW** — the post-publish §21 end-state gate (HardGate 8): asserts `npm view @mkbabb/glass-ui version` == **3.8.0** + `https://slides.friday.institute` → HTTP 200 on the CUSTOM domain + the AX-deck content marker + the pptx-200 links. Release-only, run at the live end-state (after the publish + the slides deploy fire). The §24 lineage-merge verify-present (the 3.7.0 fourier-field/useCanvas2D/constellation-fix deltas) is the changeset precondition. |
+| `package.json` | **MODIFY** — register the `scripts` entries for `proof:ax-final`, `proof:gate-fleet-registered`, `proof:carry-closure`, `proof:no-retired-survivor` (W21-authored), and any other orphaned `proof:*` keys for the 12 RED-witness-2 scripts. Add a `.changeset/*.md` (stages the 3.7.0 → **3.8.0** bump; `changeset version` rides the publish). Register `proof:prod-validation` (HardGate 8 — the post-publish `npm view == 3.8.0` + slides-live HTTP-200 + content-marker assertion), release-only, run at the live end-state. NO `exports` change (the `proof:deck-progress-rail` `scripts` entry + the `./deck-progress` export are W24's — slice 31 F13). |
 | `src/components/custom/aurora/README.md` | **MODIFY** — planned→landed sweep (the `:312` linear-sRGB/`next color step` lie → "landed, gated by `proof:X`") + live π-capture run-id citations post-dating W07. |
 | `src/components/custom/goo-blob/README.md` | **MODIFY** — planned→landed sweep (correct `smoothK` 0.28/0.22→0.12; fix the `defineExpose` pause/resume table; flip iridescence/SSS/rest-pose "Planned"→shipped) + π-capture run-ids post-dating W08/W15/W16. |
 | `src/components/custom/dock/README.md` | **MODIFY** — currency sweep against the W01-W06 rebuilt dock + π-capture run-ids. |
@@ -261,7 +284,7 @@ W33 is close-machinery authorship + README currency. It writes NO `src/` compone
 | `docs/tranches/AX/FINAL.md` | **NEW** — the close report (commits + artefacts + goal reconciliation + the phantom-owner anti-pattern naming + the KEEP-BOOK ledger transcription + the standing user-GO carries). |
 | `docs/tranches/AX/PROGRESS.md` | **NEW** — matches reality (per-wave green-run citations). |
 | `docs/tranches/AX/archive/<item>.md` | **NEW (per ARCHIVED item)** — the P-inv-28 permanent-out-of-scope justifications. |
-| `docs/tranches/AX/audit/W33-close-gate-fleet-readmes-overfitting-inheritance-final.json` | **NEW** — the born-RED ledger (the 6 witnesses + live measurements), the inheritance-ledger cross-walk table (§13/§14 → disposition), the overfitting audit verdict + spot-verification, the inv-26 ADOPTION-ASKS reconcile, the ι-sweep result, the carry-closure ledger. |
+| `docs/tranches/AX/audit/W33-close-gate-fleet-readmes-overfitting-inheritance-final.json` | **NEW** — the born-RED ledger (the 6 witnesses + live measurements), the inheritance-ledger cross-walk table (§13/§14 → disposition), the overfitting audit verdict + spot-verification, the inv-26 ADOPTION-ASKS reconcile, the ι-sweep result, the carry-closure ledger, the §24 lineage-merge verify-present result (the 3.7.0 fourier-field/useCanvas2D/constellation-fix deltas), and the post-publish prod-validation result (npm `version == 3.8.0` + slides-live HTTP-200 + content-marker + pptx-200). |
 | `docs/tranches/AX/waves/AX.W33-close-gate-fleet-readmes-overfitting-inheritance-final.md` | This spec. |
 | `docs/precepts` (submodule pointer) | **MODIFY (pin re-sync ONLY, RATIFY-BEFORE-IMPL)** — bump the pin past `63240e6` to a REAL "Before/after + compare-at-close" commit IF owed; never a phantom bump. |
 
@@ -324,7 +347,7 @@ waves W01-W41). W33 writes NO consumer source + NO sibling annex (W34/W35 own th
 ## Triumvirate (implement / adversarially-verify / gate-author split)
 
 The actual glass-ui-side count is **4** (1 gate-fleet + close-machinery author, 1 README-currency author, 1
-adversarial-verify lane, 1 gate-author for the 3 net-new close gates), under the AX ≤6-implementation /
+adversarial-verify lane, 1 gate-author for the 4 net-new close gates), under the AX ≤6-implementation /
 ≤7-read-only ceiling (NOT the REQUIREMENTS "32-agent" literal — the 32-agent deep-audit + converge already
 RAN read-only; their output is this charter, slice 31 the central input).
 
@@ -349,8 +372,9 @@ RAN read-only; their output is this charter, slice 31 the central input).
   substrate-repair waves (a README citing a pre-W07 capture shows a maxChannel=0 canvas — slice 31 F8/F11);
   **(ii)** confirms `proof:ax-final` PRIOR-CLOSE-META-ASSERT actually bites (the antidote to renumber-drift
   — a close that cannot prove its predecessor existed is the AW failure); **(iii)** confirms the
-  dependsOn is ENUMERATED W00…W41 (not "ALL"), and that the FINAL gate-fleet regex covers EVERY enumerated
-  wave id incl. W25a/W25b/W27a/W27b — a missing id silently exempts a wave from the close (slice 31 F6 / F4);
+  dependsOn is ENUMERATED W00…W42 (not "ALL"), and that the FINAL gate-fleet regex covers EVERY enumerated
+  wave id incl. W25a/W25b/W27a/W27b AND W42 — a missing id silently exempts a wave from the close (the W42
+  morph substrate is the canonical at-risk id this twist guards; slice 31 F6 / F4);
   **(iv)** confirms the inheritance-ledger has zero "deferred to next tranche" dispositions (P-inv-28);
   **(v)** confirms the carry-closure gate reads W34's ledger (not a stale copy) and returns zero
   un-receivered carries; **(vi)** confirms the publish-currency findings (§4 note 12 — Card specular / VT
@@ -358,12 +382,44 @@ RAN read-only; their output is this charter, slice 31 the central input).
   defects to re-fix; **(vii)** confirms the overfitting spot-verification caught any hallucinated
   retire-candidate (a non-existent flagged item is an integrity-sweep blocker — SPEC.md:286).
 
-- **Gate-author (≤1 agent — 3 net-new close gates).** Authors `scripts/proof-ax-final.mjs` (modeled on
+- **Gate-author (≤1 agent — 4 net-new close gates).** Authors `scripts/proof-ax-final.mjs` (modeled on
   `proof-au-final.mjs`), `scripts/proof-gate-fleet-registered.mjs` (the proof-script↔manifest meta-gate +
-  tag-parity), `scripts/proof-carry-closure.mjs` (the bbnf BD-G7 form). Each is a precept-valid artefact
+  tag-parity), `scripts/proof-carry-closure.mjs` (the bbnf BD-G7 form), and `scripts/proof-prod-validation.mjs`
+  (HardGate 8 — the post-publish `npm view == 3.8.0` + slides-live HTTP-200 + AX-deck content-marker +
+  pptx-200 §21 end-state gate). The first three are precept-valid static artefacts
   (build/test/document-reconciliation — NOT grep-only-for-runtime; these are close-machinery / manifest
-  artefacts, the legitimate static-gate form per SPEC.md §Hard Gates). The VISUAL-TRUTH axis lives in the
-  README π-capture re-audit + the FINAL goal reconciliation (see HardGate).
+  artefacts, the legitimate static-gate form per SPEC.md §Hard Gates); `proof:prod-validation` is the
+  live-end-state RE-CHECK (registry + HTTP probe, not a runtime-behaviour grep). The VISUAL-TRUTH axis lives
+  in the README π-capture re-audit + the FINAL goal reconciliation + the prod-validation live probe (see
+  HardGate).
+
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):**
+The wave-agnostic authorization grant is by-reference — AX.md §6.1 (the canonical autonomous-resilience clause) +
+§6.2 (the halt-vs-work-around decision tree) + §6.3 (the cross-session clobber ritual — load-bearing on the
+post-publish prod-validation leg). The implementing agent works AROUND a roadblock with an idiomatic gestalt fix
+in-FileBounds rather than stall; it spawns a tangent triumvirate (research→plan-augment carrying `## Exact
+Wave-Amendment Text`→redress; caps 20/15/30) on a scope-reveal, a non-local gate failure, or a 3rd
+diagnostic-loop iteration; it escalates ONLY on a §21 held-invariant breach or a §6.2 Class-3/4 user-gate. **The
+wave-specific §3a auto-triggers (authored from this wave's FileBounds + HardGate):** (1) an edit reveal OUTSIDE
+this close wave's FileBounds — a `src/` component/shader/style defect the README-currency sweep surfaces (owned by
+a named library wave W01-W41, NEVER re-fixed here), or a gate-registration that belongs to a NAMED owner (W24's
+`proof:deck-progress-rail`, W25a's `.css` god-module extension, W27a's tag-MODEL, W21's `proof:no-retired-survivor`
+SCRIPT) the fleet meta-assert must only REGISTER/CONFIRM, not author; (2) `proof:gate-fleet-registered` fails
+NON-LOCALLY — a `scripts/proof-*.mjs` lacks its `proof:*` package.json entry (the 12-orphans→0 meta-gate reds), or
+the `proof:ax-final` PRIOR-CLOSE-META-ASSERT cannot prove its predecessor, or the FINAL gate-fleet regex does NOT
+cover EVERY enumerated wave id W00…W42 (a missing id — W42's `proof:morph-substrate-single` is the canonical
+at-risk — silently exempts a wave from the close); (3) the 3rd diagnostic-loop iteration on `proof:prod-validation`
+— `npm view @mkbabb/glass-ui version` ≠ 3.8.0, the slides custom domain ≠ HTTP 200 / missing the AX-deck content
+marker / dead pptx-200 links (the §21 end-state RE-CHECK that gates the `complete` vs `complete_with_misses`
+FINAL); (4) the inheritance-ledger cross-walk surfaces a §13/§14 (or §11) item with NO ADDRESSED/RETIRES/ARCHIVES
+disposition, or the carry-closure gate reads a stale W34 ledger / an un-receivered carry (P-inv-28 zero-deferral);
+(5) the overfitting spot-verification catches a hallucinated retire-candidate (a flagged item that does not exist
+— an integrity-sweep blocker per SPEC.md:286). **The `docs/precepts` pin re-sync is a §6.2 Class-3/held-invariant
+boundary** — RATIFY-BEFORE-IMPL, a REAL "Before/after + compare-at-close" commit only, NEVER a phantom bump, and
+NEVER staged into the AX drive (the §21 held invariant forbids touching `docs/precepts/`). The `npm view`/HTTP
+prod-validation re-check runs at the LIVE end-state; a genuine publish/deploy credential the close chain needs is
+the only Class-4 user-gate. This is the LAST, HARD-gated terminal wave — a non-local failure here HALTS the close,
+never silently downgrades it.
 
 ---
 
@@ -411,6 +467,18 @@ inheritance-ledger axis, the legitimate static-gate form).**
    walk shows only the AUTHORIZED pin re-sync. **Born-RED** (the sweep has not run at HEAD); GREEN after the
    close-ceremony ι lane.
 
+8. **Post-publish prod-validation — the §21 end-state acceptance gate (born-RED → GREEN at the live
+   end-state).** After the publish + the slides merge-to-main → `deploy-pages.yml`: `npm view
+   @mkbabb/glass-ui version` == **3.8.0** (the published cut on the registry, NOT the local `package.json`);
+   `https://slides.friday.institute` → HTTP 200 on the CUSTOM domain (not a `*.pages.dev` preview) AND the
+   served HTML carries the AX-deck content marker (the deck title / a known AX slide id — proving the live
+   build is the AX rebuild, not a stale cache); the slides pptx export links resolve 200 (the W32 pptx-200
+   assertion). **Born-RED** (npm `latest` is 3.7.0 + the AX deck is not yet live at HEAD); GREEN at the
+   published-and-deployed end-state. FINAL closes `complete` only if all three legs (npm-live + slides-live +
+   content-marker) hold, else `complete_with_misses` with the unmet leg explicit. (The publish itself rides
+   the changeset → `v3.8.0` tag → `release.yml` provenance, pre-authorized per §0b; this gate is the
+   live-product RE-CHECK after it, the §21 cardinal "audited GREEN against the live product".)
+
 **VISUAL-TRUTH clause (the NON-NEGOTIABLE AX.W00 close discipline — appearance/interaction axis, NOT a
 headless proof alone).** W33's own deliverables are close-machinery (gates, FINAL, ledgers) — but the wave
 is the GUARANTOR of the tranche's visual truth, so its VISUAL-TRUTH obligation is REAL, in two forms:
@@ -441,11 +509,13 @@ reconciliation are the appearance/interaction axis that makes the close fail-CLO
    (5); no carry-closure gate (6). RATIFY-BEFORE-IMPL: confirm AX is user-bound zero-deferral (likely YES per
    §16.4); confirm the precepts-pin re-sync target is a REAL commit. Do NOT re-fix the publish-currency
    findings (§4 note 12 — they are AT HEAD; the corrective is the publish hinge).
-2. **Register the gate fleet + the 12 orphan keys + author the 3 net-new gates.** Register every late-wave AX
-   gate in `gates.mjs` against W27a's at-LEAST-ci model; register `proof:no-retired-survivor` (W21) + the 12
-   RED-witness-2 `proof:*` keys in `package.json`. Author `proof-gate-fleet-registered.mjs` (meta-gate +
-   tag-parity), `proof-carry-closure.mjs` (BD-G7), `proof-ax-final.mjs` (the 8 assertions, modeled on
-   `proof-au-final.mjs`). Run the meta-gate → 0 orphans.
+2. **Register the gate fleet (incl. W42's `proof:morph-substrate-single`) + the 12 orphan keys + author the
+   4 net-new gates.** Register every late-wave AX gate in `gates.mjs` against W27a's at-LEAST-ci model
+   (including W42's `proof:morph-substrate-single` morph-substrate gate); register `proof:no-retired-survivor`
+   (W21) + the 12 RED-witness-2 `proof:*` keys in `package.json`. Author `proof-gate-fleet-registered.mjs`
+   (meta-gate + tag-parity), `proof-carry-closure.mjs` (BD-G7), `proof-ax-final.mjs` (the 8 assertions,
+   modeled on `proof-au-final.mjs`), `proof-prod-validation.mjs` (the post-publish §21 end-state gate). Run
+   the meta-gate → 0 orphans.
 3. **Sweep the four READMEs planned→landed + the live π-capture re-audit.** Editorial pass keyed off the
    registered gates (the aurora linear-sRGB lie, the goo-blob `smoothK`/`defineExpose`/Planned-sections);
    execute the π lane for the README capture pass (captures post-dating W07/W08/W15/W16/W17); cite the run-ids;
@@ -462,11 +532,19 @@ reconciliation are the appearance/interaction axis that makes the close fail-CLO
 7. **Run the ι integrity-sweep + the precepts-pin re-sync.** `audit-stash-list.mjs` + the reflog walk + the
    `git log -- docs/precepts/` walk; bump the precepts pin past `63240e6` IF owed; transcribe the KEEP-BOOK
    ledger + the standing user-GO carries.
-8. **Write FINAL.md + PROGRESS.md + confirm the W40 coherence re-run; run `proof:ax-final`.** FINAL cites
-   commits + artefacts, reconciles the goal criterion honestly (`complete_with_misses` if any goal unmet),
-   runs the Close-Honesty Checklist, confirms W40's `animation-coherence`/`design-md-current`/`naming-consistency`
-   green. Add the `.changeset/*.md`. Run `proof:ax-final` on a clean tree → GREEN (READY-TO-PUBLISH; the
-   publish is USER-DOMAIN).
+8. **§24 lineage-merge verify-present + write FINAL.md + PROGRESS.md + confirm the W40 coherence re-run;
+   run `proof:ax-final`.** VERIFY-PRESENT the 3.7.0 source deltas (fourier-field / useCanvas2D /
+   constellation-fix) on the AX line — present at HEAD `cdcf331`; forward-merge ONLY if a re-diagnosis finds
+   one missing (satisfied-witness → scope-collapse). FINAL cites commits + artefacts, reconciles the goal
+   criterion honestly (`complete_with_misses` if any goal unmet), runs the Close-Honesty Checklist, confirms
+   W40's `animation-coherence`/`design-md-current`/`naming-consistency` green. Add the `.changeset/*.md` (the
+   3.7.0 → **3.8.0** bump). Run `proof:ax-final` on a clean tree → GREEN (STAGED-NOT-PUBLISHED at the gate
+   boundary).
+9. **Publish + post-publish prod-validation (the §21 end-state).** Ride the changeset → push `v3.8.0` tag →
+   `release.yml` OIDC-provenance publish (pre-authorized per §0b). After the publish + the slides merge-to-main
+   → `deploy-pages.yml` fire, assert the live end-state: `npm view @mkbabb/glass-ui version` == **3.8.0** +
+   `https://slides.friday.institute` → HTTP 200 on the CUSTOM domain with the AX-deck content marker + the
+   pptx-200 links. FINAL reconciles the three legs; any unmet → `complete_with_misses` with the leg explicit.
 
 ---
 
@@ -480,6 +558,9 @@ reconciliation are the appearance/interaction axis that makes the close fail-CLO
   the KEEP-BOOK transcription + the standing user-GO carries.
 - `scripts/proof-ax-final.mjs` + its `gate-output` JSON artefact — the 8-assertion aggregate close gate.
 - `scripts/proof-gate-fleet-registered.mjs` + `scripts/proof-carry-closure.mjs` + their artefacts.
+- `scripts/proof-prod-validation.mjs` + its `gate-output` JSON — the post-publish §21 end-state gate (npm
+  `version == 3.8.0` + slides-live HTTP-200 + the AX-deck content marker + the pptx-200 links), recording
+  the §24 lineage-merge verify-present result (the 3.7.0 fourier-field/useCanvas2D/constellation-fix deltas).
 - The four `src/components/custom/{aurora,goo-blob,dock,constellation}/README.md` swept planned→landed with
   live π-lane capture run-id citations (the captures themselves archived per fourier's before/after
   discipline).
@@ -499,7 +580,8 @@ reconciliation are the appearance/interaction axis that makes the close fail-CLO
 5. `docs(AX.W33): inheritance-ledger cross-walk (§13/§14 → ADDRESSED/RETIRES/ARCHIVES, zero deferred-to-next-tranche, P-inv-28) + the inv-26 ADOPTION-ASKS reconcile + archive/<item>.md`
 6. `docs(AX.W33): carry-closure gate green (zero un-receivered carries; reads W34 ledger) + name the phantom-owner re-defer anti-pattern + the chronic-closure meta-invariant`
 7. `chore(close): ι integrity-sweep (zero unauthorized git mutations + stash + the precepts-pin re-sync past 63240e6) + transcribe the KEEP-BOOK ledger + the standing user-GO carries`
-8. `docs(AX): FINAL.md + PROGRESS.md — goal reconciled (complete_with_misses if any goal unmet) + W40 coherence re-run confirmed; proof:ax-final GREEN on a clean tree (READY-TO-PUBLISH; publish is USER-DOMAIN)`
+8. `docs(AX): FINAL.md + PROGRESS.md — goal reconciled (complete_with_misses if any goal unmet) + W40 coherence re-run confirmed; §24 lineage verify-present (3.7.0 fourier-field/useCanvas2D/constellation-fix deltas) + .changeset 3.7.0→3.8.0; proof:ax-final GREEN on a clean tree (STAGED-NOT-PUBLISHED)`
+9. `chore(release): glass-ui 3.8.0 — the AX cut (changeset → v3.8.0 tag → release.yml provenance); post-publish prod-validation (npm view == 3.8.0 + slides.friday.institute 200 + AX-deck content marker + pptx-200)`
 
 (One conventional-commit per sub-step; the orchestrator owns the index — agents NEVER stage/commit/stash/
 checkout per the hardened agent git clause. The precepts-pin re-sync is the ONE authorized submodule
@@ -509,24 +591,40 @@ mutation, recorded by ι. These are the messages the orchestrator authors.)
 
 ## Dependencies (dependsOn from the charter + why)
 
-- **AX.W00…AX.W32 + AX.W34…AX.W41 — ENUMERATED, every prior wave (the charter `### AX.W33` block, line
-  1932).** W33 is the TERMINAL wave. The dependsOn is ENUMERATED (not "ALL") precisely because a literal
+- **AX.W00…AX.W32 + AX.W34…AX.W42 — ENUMERATED, every prior wave INCLUDING the W42 morph substrate (the
+  charter `### AX.W33` block — re-locate by name; at HEAD `cdcf331` ~line 2092).** W33 is the TERMINAL wave.
+  The dependsOn is ENUMERATED (not "ALL") precisely because a literal
   "ALL" is the loose binding that let AW.W33 renumber-drift (W18→W21→W27→W33, never reached — slice 31 F4 /
   constellation F6). The enumeration is the antidote: the `proof:ax-final` FINAL-EXISTS regex iterates the
-  EXPLICIT id list `W00, W01, …, W25a, W25b, …, W27a, W27b, …, W41`, so a wave silently dropped from the
-  list is a RED. The substrate-repair waves (W07/W08/W15/W16/W17) MUST be in the list so the README
+  EXPLICIT id list `W00, W01, …, W25a, W25b, …, W27a, W27b, …, W41, W42`, so a wave silently dropped from the
+  list is a RED — the W42 morph substrate (`proof:morph-substrate-single`) is the exact id this enumeration
+  was extended to keep covered (the W33-drops-W42 contradiction the close exists to prevent, applied to W42
+  itself). The substrate-repair waves (W07/W08/W15/W16/W17) MUST be in the list so the README
   live-currency provably runs against PAINTING substrates (constellation F11). The dock/graphics/primitive/
   encapsulation/cross-repo waves MUST be in the list so the gate-fleet meta-assert covers their gates.
 - **Why the close cannot run earlier:** the README live-π re-audit needs the substrates to paint (W07/W08/
-  W15/W16/W17); the gate-fleet meta-assert needs every gate authored (W00-W41); the W40 coherence re-run
+  W15/W16/W17); the gate-fleet meta-assert needs every gate authored (W00-W42, incl. W42's
+  `proof:morph-substrate-single`); the W40 coherence re-run
   must have run against the AX-rebuilt surfaces; the carry-closure gate reads W34's complete ledger; the
   inheritance cross-walk needs every §13 item's wave to have landed. W33 is the LAST to land — the terminal,
   HARD-gated.
-- **Routes (not blocks): the publish hinge.** W33 stages the close READY-TO-PUBLISH; the publish itself is
-  USER-DOMAIN (changeset version → push `v*` tag → `release.yml` gated provenance, MEMORY
-  `project_publish_ci_broken` — `release.yml` FULLY GREEN for glass-ui). The W34/W35 consumer-adoption legs +
-  the value.js peer-bump (W41) all gate on that publish — W33's `proof:ax-final` STAGED-NOT-PUBLISHED
-  assertion confirms the cut is staged, not yet published.
+- **Routes (not blocks): the publish hinge (the AX cut = 3.8.0).** W33 stages + drives the close to the
+  PUBLISHED end-state. The AX cut version is **3.8.0** — the line is at 3.7.0 (npm `latest`, local
+  `package.json`) at HEAD `cdcf331`, so the AX bump is `3.7.0 → 3.8.0`. The publish rides the changeset →
+  push `v*` tag → `release.yml` OIDC-provenance path (MEMORY `project_publish_ci_broken` — `release.yml`
+  FULLY GREEN for glass-ui; the 3.2.0/3.7.0 runs are the proof) and is PRE-AUTHORIZED per the §0b EXECUTION
+  MANDATE (NOT user-gated within AX). The W34/W35 consumer-adoption legs + the value.js peer-bump (W41) all
+  gate on that publish — W33's `proof:ax-final` STAGED-NOT-PUBLISHED assertion confirms the cut is staged at
+  the gate boundary, and the §F.1/§F.2 **post-publish prod-validation** (below) confirms it shipped.
+- **Post-publish prod-validation (the §21 end-state acceptance gate; HARDENING §F.1 step 4 / §F.2).** After
+  the publish + the merge-to-main → `deploy-pages.yml` fire, W33 asserts the live end-state, NOT just the
+  staged tree: (a) `npm view @mkbabb/glass-ui version` == **3.8.0** (the published cut resolved on the
+  registry, not the local `package.json`); (b) `https://slides.friday.institute` → HTTP **200** on the
+  CUSTOM domain (not a `*.pages.dev` preview) AND serves the AX-rebuilt til-briefing deck — a **content
+  marker** in the served HTML (the deck title / a known AX-deck slide id) confirms the AX build is live, not
+  a stale cache; (c) the slides pptx export links resolve 200 (the W32 pptx-200 assertion). These ride the
+  W33/W32 close per HARDENING §F.1; FINAL reconciles `complete` only if all three legs (npm-live + slides-live
+  + content-marker) hold, else `complete_with_misses` with the unmet leg explicit.
 
 ---
 
@@ -559,8 +657,9 @@ mutation, recorded by ι. These are the messages the orchestrator authors.)
   but shipped in commits `953fdf4`/`365a2e5`); README:296 (composed rest pose "Planned" but shipped in
   `useBlobPointer.rest()`). The READMEs were written from the static-bake thumbnails over the
   maxChannel=0 live canvas — the same headless-green root the π lane closes.
-- **The renumber-drift antidote (constellation slice 31 F6; slice 31 NOTES).** AX.md:1932 dependsOn
-  ENUMERATED `AX.W00…AX.W32 + AX.W34…AX.W41`; slice 31's proposed AX.W33 dependsOn was a sparse 10-ID list
+- **The renumber-drift antidote (constellation slice 31 F6; slice 31 NOTES).** AX.md (the `### AX.W33`
+  block — re-locate by name; at HEAD `cdcf331` ~line 2092) dependsOn
+  ENUMERATED `AX.W00…AX.W32 + AX.W34…AX.W42`; slice 31's proposed AX.W33 dependsOn was a sparse 10-ID list
   (the audit's pre-renumber IDs `AX.W1, AX.W2, AX.W3, AX.W8, AX.W26-W31`); the gate-fleet meta-assertion is
   the machine check the word "ALL" lacked. Slice 31 NOTES: "Do NOT let the close wave renumber-drift the way
   AW.W33 did … fix it at the tail with hard depends-on EVERY wave."

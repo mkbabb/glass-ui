@@ -344,6 +344,30 @@ the metric-pill density block + the §17 metric-cell/stack tokens, NOT the metri
 (All within the AX ≤6-implementation / ≤7-read-only ceiling — this wave's actual count is 4: 2 implement +
 1 verify + 1 gate.)
 
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):**
+The wave-agnostic authorization grant is by-reference — AX.md §6.1 (the canonical autonomous-resilience clause) +
+§6.2 (the halt-vs-work-around decision tree). The implementing agent works AROUND a roadblock with an idiomatic
+gestalt fix in-FileBounds rather than stall; it spawns a tangent triumvirate (research→plan-augment carrying
+`## Exact Wave-Amendment Text`→redress; caps 20/15/30) on a scope-reveal, a non-local gate failure, or a 3rd
+diagnostic-loop iteration; it escalates ONLY on a §21 held-invariant breach or a §6.2 Class-3/4 user-gate. **The
+wave-specific §3a auto-triggers (authored from this wave's FileBounds + HardGate):** (1) the EDIT-ORDER-INVARIANT
+build-break guard fires NON-LOCALLY — `vue-tsc --noEmit` or `npm run build` reds on a dangling `export *` after a
+dir delete that the per-family root-barrel→subpath→api→package.json→gate-scripts→CSS→dir strike order should have
+prevented (a build red the local edit cannot resolve = triumvirate, never a redispatch of the same delete); (2) a
+required strike reveals a surface OUTSIDE this wave's FileBounds — a surviving glass-ui consumer of the §17
+`--metric-row-*`/`--metric-cell-*` tokens or the `--chart-*` ladder that blocks the token removal, or a
+W25b-owned metric-badge-recipe carve / a W06-owned `dock.css` partial that the instrument-strip excision collides
+with; (3) the 3rd diagnostic-loop iteration on a chassis-hardcoding gate re-shape (`proof:composable-return-types`
+clause #2 retire, `proof:tailwind-v4-idiom` CONTAINER_CONTEXT, `proof:consumers-static` census) that will not go
+GREEN at its new shape; (4) `proof:no-retired-survivor` (W21's) goes RED after the prune — the MIGRATION.md
+final-retired-state rewrite left a surviving dir/subpath/export/token; (5) the VISUAL-TRUTH live storybook audit
+reveals a dangling route, a collateral-deleted kept atom, or a `--chart-*`/rail-variant render regression the
+headless gates passed over. **The five RATIFY-BEFORE-IMPL items are §6.2 Class-3 HALT-AND-RATIFY:** the W21↔W29
+metric-pill-subpath disposition, the `proof-tailwind-v4-idiom` ≥2-floor, the chart-chassis-palette co-edit order
+with W19, the instrument-strip strike-order vs W06's dock.css split, and the §17 metric-token-removal-vs-surviving-consumers
+verification each HALT to the recorded recommended path if reached un-ratified — never self-ratified in-line. No
+Class-4 user-gate gates this in-repo wave.
+
 ---
 
 ## HardGate (born-RED→GREEN + the MANDATORY VISUAL-TRUTH live audit)

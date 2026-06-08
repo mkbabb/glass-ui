@@ -199,6 +199,8 @@ These are disjoint paths and may proceed in parallel after the implement lane la
   `proof:dock-hold-contract` in `package.json`. Carve the fail-open `detectSliderHold` SKIP arm out of
   `proof-dock-layering-polish.mjs`. Author the π-lane visual-truth Playwright probe spec (below).
 
+**Autonomous-resilience clause + triumvirate auto-triggers (per WAVE_SPEC §3a; AX REQUIREMENTS §22.4b — mandatory):** the wave-agnostic authorization grant is AX.md §6.1 (work AROUND a roadblock with an idiomatic gestalt fix rather than stall; the §6.2 decision tree bounds halt-vs-work-around) — by reference, not restated. This wave's §3a auto-triggers (HALT the failing unit + dispatch the research→plan-augment→redress triumvirate, never stall): (a) any need to touch `GlassDock.vue`/`useLayerTransition.ts`/`useDockState.ts` (W01 owns the morph driver + state-machine rebuild — W03 only CONSUMES the rebuilt `held` edge), `dock.css`/`dock-controls.css`, or the spring `tokens.css`/`theme.css` (W05) — a scope-reveal → triumvirate, never absorbed in-line; (b) the `proof:dock-hold-contract` mount gate not biting in CI on the resolved slider host (the reka forwarding-drop not reproducible headless, or the listener orphan-able under teleport/unmount-during-drag) → non-local gate failure → triumvirate, not a hand-patched probe; (c) the §Scope RATIFY-BEFORE-IMPL (native-host-listeners vs the reka `SliderRoot` pressed/dragging-state subscription; preserve the `keepOpen`/portal DI contract) reaching un-ratified → §6.2 Class-3 HALT-AND-RATIFY; (d) the 3rd diagnostic-loop iteration on `held` re-breaking against W01's rebuilt `useDockState` (the re-seat CAVEAT) → triumvirate.
+
 ---
 
 ## HardGate
