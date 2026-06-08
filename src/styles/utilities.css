@@ -982,7 +982,8 @@
 
 /* ── Text-highlight paint (CSS Custom Highlight API) ─────────────────────
    The default `::highlight()` paint for the `useTextHighlight` composable
-   (composables/dom). A named `Highlight` registered in `CSS.highlights`
+   (composables/motion; the `/motion-core` subpath, AX.W37). A named `Highlight`
+   registered in `CSS.highlights`
    under one of these keys paints its `Range` set without a `<mark>` wrapper.
    Token-bridged: the search mark reads the canonical pastel-yellow rainbow
    token at a soft alpha; the equation/variable mark reads `--primary`. Both

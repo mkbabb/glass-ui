@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, useTemplateRef, type HTMLAttributes } from "vue";
-import { createCanvas2D } from "../../../composables/glass/canvas2d";
+import { useCanvas2D } from "../../../composables/glass/canvas2d";
 import { mulberry32, hashString } from "../../../utils/prng";
 import {
     seedField,
@@ -131,7 +131,7 @@ onMounted(() => {
     const canvas = canvasRef.value;
     if (!canvas) return;
 
-    const handle = createCanvas2D({
+    const handle = useCanvas2D({
         canvas: canvasRef,
         setup: (ctx) => {
             // Resolve the palette + lay out the field on the first frame, once

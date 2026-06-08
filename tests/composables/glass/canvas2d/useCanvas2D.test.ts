@@ -9,7 +9,7 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ref } from "vue";
-import { createCanvas2D } from "../../../../src/composables/glass/canvas2d/useCanvas2D";
+import { useCanvas2D } from "../../../../src/composables/glass/canvas2d/useCanvas2D";
 
 let rafQueue: Array<() => void>;
 let docListeners: Record<string, Array<(e: any) => void>>;
@@ -98,7 +98,7 @@ describe("useCanvas2D — the Canvas2D substrate park/freeze contract (AW.W17)",
                 frames += 1;
             },
         }));
-        const handle = createCanvas2D({ canvas, setup });
+        const handle = useCanvas2D({ canvas, setup });
 
         // arm() runs on autoStart; the substrate handed the consumer ITS ctx.
         expect(setup).toHaveBeenCalledWith(ctx);
@@ -136,7 +136,7 @@ describe("useCanvas2D — the Canvas2D substrate park/freeze contract (AW.W17)",
         const ctx = makeCtx();
         const canvas = ref<HTMLCanvasElement | null>(makeCanvas(ctx));
         let frames = 0;
-        const handle = createCanvas2D({
+        const handle = useCanvas2D({
             canvas,
             setup: () => ({ render: () => { frames += 1; } }),
         });
@@ -164,7 +164,7 @@ describe("useCanvas2D — the Canvas2D substrate park/freeze contract (AW.W17)",
         const ctx = makeCtx();
         const canvas = ref<HTMLCanvasElement | null>(makeCanvas(ctx));
         let frames = 0;
-        createCanvas2D({
+        useCanvas2D({
             canvas,
             setup: () => ({ render: () => { frames += 1; } }),
         });
@@ -179,7 +179,7 @@ describe("useCanvas2D — the Canvas2D substrate park/freeze contract (AW.W17)",
         const ctx = makeCtx();
         const canvas = ref<HTMLCanvasElement | null>(makeCanvas(ctx));
         let frames = 0;
-        const handle = createCanvas2D({
+        const handle = useCanvas2D({
             canvas,
             setup: () => ({ render: () => { frames += 1; } }),
         });

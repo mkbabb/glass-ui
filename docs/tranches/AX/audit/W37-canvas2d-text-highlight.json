@@ -1,0 +1,96 @@
+{
+  "wave": "AX.W37",
+  "title": "Canvas2D-lifecycle substrate + text-highlight — publish / name / route (NOT from-scratch authoring)",
+  "band": "G",
+  "severity": "major",
+  "dependsOn": ["AX.W00"],
+  "baseSha": "e32d944",
+  "status": "GREEN",
+  "meta_truth_correction": {
+    "note": "Per §4 note 12 (verify-against-HEAD, do not re-ship): the charter's 'two NET-NEW substrates' title is FALSIFIED at HEAD. BOTH substrates already exist in src/ — useCanvas2D (AW.W17, complete + EXEMPLARY) + useTextHighlight (3.2.0, complete + already consumed by FuzzySearch). W37's REAL work is PUBLICATION-SURFACE + NAMING + ROUTING + the ONE genuinely net-new helper (resolveCanvasColor). No landed substrate was re-implemented.",
+    "live_rediagnosis_divergence": "The spec's FileBounds assumed FourierField is slides-side (W30). LIVE re-diagnosis found FourierField.vue ALSO lives in glass-ui at HEAD (src/components/custom/fourier-field/) and is a SECOND in-repo createCanvas2D consumer — so it is a binding-verification re-point target the rename canary would red. Re-pointed in the same wave alongside Constellation.vue. This makes the /canvas substrate have TWO REAL in-repo consumers at landing (Constellation + FourierField), clearing the ≥2-consumer bar against real consumers (not a demo-only second)."
+  },
+  "born_red_witnesses": {
+    "witness_1_canvas_unpublished_misnamed": {
+      "claim": "The Canvas2D substrate is complete but UNREACHABLE on a public subpath + MIS-NAMED createCanvas2D vs the charter's useCanvas2D contract.",
+      "head_proof": "grep '\"./canvas\"' package.json -> 0; src/composables/glass/canvas2d/index.ts exported createCanvas2D (not useCanvas2D); node -e import('@mkbabb/glass-ui/canvas') -> 404.",
+      "after": "Renamed the factory createCanvas2D -> useCanvas2D + added useCanvasLifecycle alias-of-record (handle-return UNCHANGED — §4 note 10). Shipped src/subpaths/canvas.ts + ./canvas package.json exports {types,import} + typesVersions['canvas']. import('@mkbabb/glass-ui/canvas') RESOLVES -> {resolveCanvasColor, useCanvas2D, useCanvasLifecycle}. dist/canvas.js + dist/canvas.d.ts emit."
+    },
+    "witness_2_resolveCanvasColor_missing": {
+      "claim": "resolveCanvasColor does not exist — the light-dark()-into-Canvas2D defect is hand-rolled per-consumer, not solved once at the library.",
+      "head_proof": "grep -rn resolveCanvasColor src/ -> 0 (genuinely net-new). FourierField.vue:117-126 carries a bespoke probe-span; the constellation reads PLAIN-hsl tokens so it does not hit the reject TODAY.",
+      "after": "Shipped src/composables/glass/canvas2d/resolveCanvasColor.ts (a sibling file — RATIFY 1 default, single-concern). A pure CPU probe-span resolver: appends a TRANSIENT inert <span> into the cascade at `el`, sets its color to the candidate (a bare --token is wrapped as var(--token); a light-dark()/color-mix()/var() value passes through), reads getComputedStyle(probe).color (the concrete rgb()/rgba()), removes the probe. Token READER — never mutates `el`'s own inline style (slice-28 boundary). SSR/no-DOM -> returns the input unchanged (befitting-silent, no throw)."
+    },
+    "witness_3_text_highlight_mishomed": {
+      "claim": "useTextHighlight is MIS-HOMED on /dom, not the charter's /motion-core; the FuzzySearch <mark> retirement is ALREADY landed at HEAD.",
+      "head_proof": "src/composables/dom/useTextHighlight.ts present; grep -rn useTextHighlight src/composables/motion/core -> 0; FuzzySearch.vue:9/79 ALREADY consumes useTextHighlight('glass-search-mark') + setFromMatches (the <mark> splitter is GONE at HEAD — §4 note 12, verify-only).",
+      "after": "CLEAN MOVE (RATIFY 3 default): relocated the file to src/composables/motion/useTextHighlight.ts, added export to composables/motion/core/index.ts (the /motion-core barrel), dropped the /dom re-export (no dual-publish). Re-pointed FuzzySearch.vue import to the motion home. Added a TARGETED root-barrel re-export (vReveal precedent) to preserve the pre-move root-barrel reach (it shipped on the root via the ./composables/dom walk before). Verified the ::highlight(glass-search-mark) rule in utilities.css is the canonical paint identity (present + token-bridged; fixed a stale 'composables/dom' comment to 'composables/motion')."
+    }
+  },
+  "ratify_decisions": {
+    "1_rename_shape": "rename-ONLY (keep the handle return; useCanvasLifecycle = const alias). NO re-shape to a ref-bundle — would diverge from the WebGL twin §4 note 10 blesses. Default taken.",
+    "2_subpath_name": "/canvas (the charter literal, shorter import). Default taken.",
+    "3_text_highlight_disposition": "clean MOVE to /motion-core (one home, one-path mandate). NO dual-publish. Default taken.",
+    "4_api_types": "ADD the canvas types (Canvas2DFrame/Canvas2DHandle/Canvas2DOptions/Canvas2DSuspendReason) + the text-highlight types (HighlightMatcher/UseTextHighlightControls) to /api. The /canvas + /motion-core public-subpath surfaces belong in the discovery census. Default taken.",
+    "5_verification_guardrail": "the audit records the §4-note-12 'exists-but-unpublished' correction explicitly (above) — the 'net-new' title is NOT a from-scratch authoring mandate."
+  },
+  "files_changed": [
+    "src/composables/glass/canvas2d/useCanvas2D.ts (rename factory + add useCanvasLifecycle alias)",
+    "src/composables/glass/canvas2d/resolveCanvasColor.ts (NEW — the probe-span resolver)",
+    "src/composables/glass/canvas2d/index.ts (export useCanvas2D/useCanvasLifecycle/resolveCanvasColor; drop createCanvas2D)",
+    "src/composables/glass/index.ts (re-export the renamed surface)",
+    "src/subpaths/canvas.ts (NEW — the /canvas mirror barrel)",
+    "package.json (./canvas exports + typesVersions['canvas']; proof:resolve-canvas-color + proof:text-highlight scripts)",
+    "src/components/custom/constellation/Constellation.vue (re-point createCanvas2D->useCanvas2D import — in-repo binding-verification)",
+    "src/components/custom/fourier-field/FourierField.vue (re-point createCanvas2D->useCanvas2D import — the SECOND in-repo consumer the live re-diagnosis surfaced)",
+    "src/composables/motion/useTextHighlight.ts (NEW location — moved from dom/)",
+    "src/composables/motion/core/index.ts (add the useTextHighlight export)",
+    "src/composables/dom/index.ts (drop the useTextHighlight export + re-home the header comment)",
+    "src/index.ts (targeted root-barrel re-export of useTextHighlight, preserving pre-move reach)",
+    "src/components/custom/search/FuzzySearch.vue (re-point useTextHighlight import dom/->motion/)",
+    "src/styles/utilities.css (doc-truth: ::highlight comment dom->motion)",
+    "src/api/index.ts (add canvas + text-highlight public types)",
+    "scripts/gates.mjs (register proof:resolve-canvas-color + proof:text-highlight; re-pointed proof:canvas2d-substrate + constellation-substrate-single notes)",
+    "scripts/proof-constellation-substrate-single.mjs (assert useCanvas2D export name, not createCanvas2D — binding-verification of the rename gate)",
+    "tests/composables/glass/canvas2d/useCanvas2D.test.ts (re-point createCanvas2D->useCanvas2D)",
+    "tests/composables/glass/canvas2d/resolveCanvasColor.test.ts (NEW)",
+    "tests/composables/motion/useTextHighlight.test.ts (MOVED from tests/composables/ + re-point import to motion home)",
+    "tests/composables/motion/text-highlight-home.test.ts (NEW — the /motion-core home + zero-<mark> gate)"
+  ],
+  "gates_green_headless": {
+    "vue-tsc --noEmit": "GREEN (the rename canary — no stale createCanvas2D import, no broken useTextHighlight reference)",
+    "npm run build": "GREEN (vite arm + dts emit; flatten-subpath-types flattened 63 subpaths, +1 for canvas)",
+    "verify-export-types": "GREEN (./canvas types resolution valid)",
+    "proof:resolution": "GREEN (contract-v2 dev-resolution satisfied; sibling-skip CI-expected)",
+    "proof:canvas2d-substrate": "GREEN (re-pointed rename; 3-reason park + PRM static-frame + idempotent dispose)",
+    "proof:resolve-canvas-color": "GREEN (8 tests — bare --token resolves, light/dark flip, raw light-dark()/color-mix() resolve, probe append+remove with host inline-style untouched, literal passthrough, unresolvable + SSR befitting-silent fallback)",
+    "proof:text-highlight": "GREEN (HOME import from /motion-core + ZERO-<mark> setFromMatches Range paint + feature-detect no-op fallback; + the moved multiplex suite)",
+    "proof:constellation-substrate-single": "GREEN (SUBSTRATE-EXISTS now asserts useCanvas2D)",
+    "proof:gate-script-parity": "GREEN (both new scripts registered in package.json AND gates.mjs; 0 new orphans, 0 new dangling)",
+    "proof:subpath-enumeration": "GREEN (73 JS subpath exports == 73 libraryEntries chunks)",
+    "proof:vueuse-free-root": "GREEN (root barrel stays vueuse-free with the canvas + text-highlight additions)",
+    "proof:no-nested-import / proof:motion-value-free / proof:no-orphan-composable": "GREEN",
+    "rename-PROOF": "grep -rc createCanvas2D src/ -> 0 (clean break, no @deprecated alias); grep useCanvas2D|useCanvasLifecycle canvas2d/index.ts -> both present; grep useTextHighlight src/composables/motion/core -> present"
+  },
+  "live_verify_needed_pi_lane": {
+    "note": "W37 does NOT close on the headless gates alone — the π-lane VISUAL-TRUTH audit (orchestrator-owned, real Metal GPU, light+dark, >=3 viewports) is the binding close criterion.",
+    "checks": [
+      "A 2D surface on useCanvas2D PARKS: mount /substrates/constellation (or a useCanvas2D fixture); scroll offscreen -> rAF parks (no frames attach, the IntersectionObserver off-screen reason); hide the tab -> parks (document.hidden); enable prefers-reduced-motion -> ONE static frame then freeze; un-park -> re-arms.",
+      "resolveCanvasColor paints the RESOLVED color, not black: a 2D surface whose stroke reads a light-dark() token through resolveCanvasColor paints the resolved hue in BOTH light and dark (the token flips), NOT the silent-rejected black/transparent. The W30 cardinal-defect class proven FIXED at the library layer.",
+      "The highlight marks PAINT via CSS.highlights: type a query into the FuzzySearch demo -> matched substrings highlight (::highlight(glass-search-mark) paint) with NO <mark> wrapper in the DOM (the text node unsplit); the feature-detect fallback degrades befitting-silent on an engine without CSS.highlights."
+    ]
+  },
+  "consumer_adoption_routes": {
+    "W30_W31_slides": "FourierField (in-repo here) + slides constellation.ts adopt useCanvas2D (delete the re-derivations); FourierField drops its bespoke probe-span onto resolveCanvasColor; the slides constellation.ts --foreground light-dark() leak routes through resolveCanvasColor. NOTE: the in-repo FourierField is ALREADY on useCanvas2D (re-pointed here); its bespoke resolveColorString probe at FourierField.vue:117-126 is a routed drop-onto-resolveCanvasColor for W30/W31 (NOT executed here — FourierField's color path runs through the injected value.js colorResolver seam, a separate concern; the probe drop is the slides-side adoption).",
+    "W34_idiom_census": "fourier equation-var + words search-mark useTextHighlight adoptions; the fourier ^3.1.0->^3.6.0 pin bump (pulls the published /canvas + /motion-core surfaces).",
+    "W21_token_color": "the cssVarToHex / useTokenColor overlap NOTE — resolveCanvasColor (a Canvas2D-string resolver) is a DIFFERENT concern from a {hex,rgb} CPU leaf; NOT merged here."
+  },
+  "documentation_routes": {
+    "CLAUDE_md_subpath_census": "ROUTED (not edited — CLAUDE.md is not in W37 FileBounds): add /canvas to the subpath surface census + the composables/glass note (useCanvas2D + resolveCanvasColor on /canvas), and the /motion-core useTextHighlight home reconcile. The orchestrator owns the CLAUDE.md edit. The informal '70 flat JS subpaths' prose count is pre-drifted (actual 73 post-wave) and un-gated."
+  },
+  "divergences_from_spec": [
+    "FourierField.vue is an in-repo SECOND createCanvas2D consumer (spec assumed slides-side) — re-pointed in the same wave (binding-verification; vue-tsc would have red'd otherwise). This STRENGTHENS the ≥2-real-consumer bar (Constellation + FourierField).",
+    "scripts/proof-constellation-substrate-single.mjs was NOT in the FileBounds table but asserts `export function createCanvas2D` — updated to `useCanvas2D` as part of the same rename (the rename leaves a stale assertion; updating it is the binding-verification, not a scope expansion). Recorded as an in-bounds gestalt necessity per AUTONOMOUS-RESILIENCE §6.1.",
+    "Added a targeted root-barrel re-export of useTextHighlight (beyond the bare /motion-core home) to AVOID a root-barrel surface REGRESSION — it shipped on the root via the ./composables/dom walk before the move; the targeted re-export (vReveal precedent) preserves that reach without an `export * from motion/core` that would drag the keyframes-excluded leaves."
+  ]
+}

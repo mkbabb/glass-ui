@@ -2,7 +2,7 @@
 //
 // NAMING CONVENTION (AW.W15): the `Use…Controls` return interfaces in this
 // sub-tree (`UseResizeObserverControls`, `UseTokenColorControls`,
-// `UseIntervalControls`, `UseTimerControls`, `UseTextHighlightControls`) use the
+// `UseIntervalControls`, `UseTimerControls`) use the
 // "Controls" suffix DELIBERATELY — it names a bundle of imperative HANDLES
 // (`refresh`/`start`/`stop`/`pause`), distinct from the "Return" suffix that
 // names a reactive STATE shape (`Use<Name>Return`, the motion/glass convention).
@@ -18,10 +18,12 @@
 //                        native visual state, with a fallback class-toggle for
 //                        engines without `:user-invalid` (AQ.W4; the muster J
 //                        cross-repo coupling contract).
-//   - useTextHighlight — named CSS Custom Highlight API wrapper (CSS.highlights
-//                        registry + ::highlight(<name>) paint); Range-based
-//                        substring/match emphasis with no <mark> DOM mutation,
-//                        feature-detected no-op fallback.
+//   - useTextHighlight — RE-HOMED to `/motion-core` (AX.W37). The named CSS
+//                        Custom Highlight composable is a motion/decoration
+//                        concern, not a DOM-observer one; it now lives at
+//                        `composables/motion/useTextHighlight.ts` on the
+//                        keyframes-FREE+vueuse-FREE `/motion-core` surface its
+//                        named consumers pin. No `/dom` re-export survives.
 //   - useBreakpoint / useIdleReady / useViewportReady — RE-INSTATED (AW.W19,
 //                        glassui-aw-corrections Item 5). The AV "speedtest-
 //                        ownership" wave (cbbaeb0) removed these 3 /dom leaves as
@@ -38,7 +40,6 @@ export * from "./useTouchGate";
 export * from "./useTokenColor";
 export * from "./useClipboard";
 export * from "./useUserInvalidAria";
-export * from "./useTextHighlight";
 export * from "./useBreakpoint";
 export * from "./useIdleReady";
 export * from "./useViewportReady";

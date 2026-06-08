@@ -43,3 +43,11 @@ export * from "../useViewTransition";
 // no `@mkbabb/keyframes.js`, no `@vueuse/core`), so it ships on the engine-free
 // `/motion-core` surface AND is re-exported from the root barrel below.
 export * from "../vReveal";
+// AX.W37 — the named CSS Custom Highlight composable (CSS.highlights registry +
+// ::highlight(<name>) Range paint, no <mark> DOM mutation). RE-HOMED here from
+// `/dom`: text-highlight is a motion/decoration concern, not a DOM-observer one,
+// and its named consumers (fourier equation vars, words search marks, glass-ui
+// FuzzySearch) pin the keyframes-FREE+vueuse-FREE `/motion-core` surface. It
+// imports `vue` `getCurrentScope`/`onScopeDispose` only — engine-free +
+// vueuse-free, so it ships here. CLEAN MOVE (no `/dom` re-export survives).
+export * from "../useTextHighlight";

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, useTemplateRef, watch } from "vue";
-import { createCanvas2D } from "../../../composables/glass/canvas2d";
+import { useCanvas2D } from "../../../composables/glass/canvas2d";
 import { useGlobalDark } from "../../../composables/dark";
 import { mulberry32, hashString } from "../../../utils/prng";
 import {
@@ -179,7 +179,7 @@ onMounted(() => {
     // the segments fade with age so the oldest reaches zero alpha.
     const trail: [number, number][] = [];
 
-    const handle = createCanvas2D({
+    const handle = useCanvas2D({
         canvas: canvasRef,
         setup: () => ({
             render(c, now) {

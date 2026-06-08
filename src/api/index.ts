@@ -286,3 +286,28 @@ export type {
     DarkModeSyncScriptOptions,
     UseGlobalDarkOptions,
 } from "../composables/dark";
+
+// ── Canvas2D lifecycle substrate (AX.W37) ────────────────────────────────────
+// The Canvas2D park/freeze/dispose substrate now ships on the `/canvas` subpath
+// (`useCanvas2D`/`useCanvasLifecycle` + `resolveCanvasColor`). Its public option
+// + handle + frame shapes ride the discovery layer so a consumer composing the
+// substrate (a custom Canvas2D field paralleling Constellation/FourierField)
+// pins them without dragging the runtime. `Canvas2DSuspendReason` is the
+// three-reason park enum. The runtime values live on `/canvas`.
+export type {
+    Canvas2DFrame,
+    Canvas2DHandle,
+    Canvas2DOptions,
+    Canvas2DSuspendReason,
+} from "../composables/glass/canvas2d";
+
+// ── Text-highlight controls (AX.W37) ─────────────────────────────────────────
+// `useTextHighlight` (the named CSS Custom Highlight composable) re-homed to
+// `/motion-core`. `UseTextHighlightControls` is its imperative-handle return
+// shape and `HighlightMatcher` the per-node match callback; consumers wiring a
+// search-mark / equation-var highlight pin them here. The runtime value lives on
+// `/motion-core` + the root barrel.
+export type {
+    HighlightMatcher,
+    UseTextHighlightControls,
+} from "../composables/motion/useTextHighlight";
