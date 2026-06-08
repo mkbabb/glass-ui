@@ -93,6 +93,11 @@
     --corner-shape-pill:    round;
     --corner-shape-panel:   round;
     --corner-shape-bigdock: superellipse(var(--corner-k-squircle));
+    /* AX.W59 — the spectrum slider's track-height thumb reads as a SQUIRCLE
+       (the iOS color-picker idiom). It rides the same --corner-k-squircle
+       vocabulary; @supports-gated in Slider.vue over a --radius-* round
+       fallback. A consumer dials it to round (a circular knob) or to soft. */
+    --corner-shape-thumb:   superellipse(var(--corner-k-squircle));
 }
 
 @theme inline {

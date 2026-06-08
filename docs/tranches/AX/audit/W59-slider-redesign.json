@@ -1,0 +1,68 @@
+{
+  "wave": "AX.W59",
+  "title": "Slider redesign — the INTEGRATED-CYLINDER glass standard + the track-height SQUIRCLE spectrum (the EXACTLY-TWO cardinality kept; the LOOK re-authored)",
+  "status": "dev-complete-headless-green-live-pending",
+  "band": "B (GRAPHICS / glass-IDENTITY)",
+  "severity": "minor (a LOOK overhaul on the slider atom — the glass-first-class + squircle pivot reaches the last interactive primitive)",
+  "baseSha": "7e238772be78362d68ee5ad723090d80fbb659be",
+  "dependsOn": ["AX.W52", "AX.W56"],
+  "folds": ["USER-DEFECTS-2026-06-08-pass2.md G1 (glass-first-class)", "USER-DEFECTS-2026-06-08-pass2.md G3 (squircle design language)"],
+  "headlessGate": {
+    "id": "proof:slider-two-only",
+    "reconciled": true,
+    "registration": "package.json — node scripts/proof-slider-two-only.mjs (UNCHANGED — already registered); gates.mjs GATES note updated to the reconciled four clauses",
+    "clauses": [
+      "(1) KEYSET — sliderVariants lists exactly ['standard','spectrum'] (KEPT)",
+      "(2) ORPHAN-SCAN — Slider.vue scoped CSS carries no [data-variant=X] for X ∉ keyset (KEPT)",
+      "(3) CYLINDER-CAP — RECONCILED off the 50%-circle ROUNDED-KNOB clause: the standard thumb resolves a pill radius (var(--radius-pill), NOT 50%), height:100% (track-height leading edge, not a floating disc), no border: paint; AND .slider-range carries a backdrop-filter (the glass cylinder material)",
+      "(4) SQUIRCLE-SPECTRUM — NEW: the spectrum thumb's corner-shape:var(--corner-shape-thumb) decl lives ONLY inside @supports (corner-shape: superellipse(2)) over a border-radius round contract, height:100%"
+    ],
+    "bornRed": true,
+    "bornRedMethod": "the SOURCE detector inverted over mutations: revert the standard thumb to width==height + border-radius:50% → CYLINDER-CAP (radius-50% violation + height-not-100% violation); strip the .slider-range backdrop-filter → CYLINDER-CAP (range glass violation); drop the @supports squircle gate → SQUIRCLE-SPECTRUM (corner-shape missing). All bite >0; the patched base = 0 violations.",
+    "greenAtPatchedTree": true,
+    "greenResult": "variant keys = standard, spectrum ✓; no orphan selectors ✓; std cap radius = var(--radius-pill) height 100% no border paint ✓; range glass blur = true ✓; spectrum squircle = @supports-gated height 100% ✓; status PASS exit 0. Bite-confirmed: 50%-circle+fixed-height → 2 violations RED; squircle gate removed → 1 violation RED; restored → PASS.",
+    "piArm": {
+      "shape": "orchestrator-driven chrome-devtools-mcp drag + getComputedStyle readback @ localhost:5173 over /primitives/slider",
+      "asserts": "standard reads as ONE integrated glass cylinder (no seam between thumb + fill, the rounded leading edge IS the grab, the fill is glass with the backdrop bleeding through); spectrum thumb getComputedStyle(...).cornerShape === 'superellipse(2)' on Chrome-139 + spans the full track height (a rounded-square, not a floating circle), round --radius-lg fallback on a non-supporting engine; keepDockOpen + .focus-ring + the size axis + range mode unregressed; light AND dark",
+      "liveVerdict": "pending-re-probe — the orchestrator drives the drag/render readback (the binding close)"
+    }
+  },
+  "priorLook": {
+    "standard": "a detached 50% circle (width==height, border-radius:50%) floating in a flat --primary fill bar — a separate disc, not the iOS integrated cylinder; the fill carried no glass material",
+    "spectrum": "a small 0.85x bordered circle floating on the gradient track — a ringed disc, not the track-height squircle of the iOS color-picker idiom"
+  },
+  "newLook": {
+    "standard": "the INTEGRATED-CYLINDER glass slider: .slider-range is a glass rounded-pill (W52 backdrop-filter blur + --glass-material-rim edge rim + under-shadow floor, --primary-tinted color-mix(in oklab) so the backdrop bleeds through, --radius-pill); .slider-thumb is the cylinder's slim leading CAP (~0.46x size wide, height:100% track-height, --radius-pill SAME as the fill so the seam is invisible, a faint --background top-down specular grip, no border ring, scaleX press squish). NO visible demarcation between thumb and fill.",
+    "spectrum": "the value.js gradient track (--slider-track-bg linear-gradient) + a transparent range + a track-height SQUIRCLE thumb (height:100%, ~1.1x size near-square footprint so the superellipse READS, border-radius:var(--radius-lg) round CONTRACT + corner-shape:var(--corner-shape-thumb) inside @supports (corner-shape: superellipse(2)) — the W56 PE tier)"
+  },
+  "findingDisposition": {
+    "G1_glass_first_class": "DONE — the standard fill is the W52 liquid-glass cylinder (backdrop blur + edge rim), glass-first-class on the slider atom",
+    "G3_squircle_language": "DONE — the spectrum thumb is the track-height squircle via --corner-shape-thumb on the W56 --corner-k-squircle band; @supports-gated over the round fallback",
+    "cardinality_kept": "EXACTLY-TWO {standard, spectrum} — the proof:slider-two-only KEYSET + ORPHAN-SCAN clauses UNCHANGED; the LOOK overhaul reconciled the ROUNDED-KNOB clause to CYLINDER-CAP + added SQUIRCLE-SPECTRUM (clean break, no parallel clause)",
+    "keepDockOpen_focus_ring": "KEPT — the dock-hold contract (useDockHold + the data-held halo) + the .focus-ring utility unchanged; the press-squish moved scale → scaleX (the slim cap squishes on the X axis)",
+    "one_k_vocabulary": "--corner-shape-thumb rides W56's --corner-k-squircle (no second k definition)"
+  },
+  "selfGates": {
+    "typecheck": "PASS",
+    "build": "PASS",
+    "test": "PASS",
+    "proof:slider-two-only": "PASS (4 source clauses green; bite-confirmed; π arm orchestrator-driven)",
+    "proof:gate-script-parity": "PASS",
+    "proof:resolution": "PASS",
+    "verify-export-types": "PASS"
+  },
+  "filesChanged": [
+    "src/styles/theme.css",
+    "src/components/ui/slider/Slider.vue",
+    "src/components/ui/slider/index.ts",
+    "scripts/proof-slider-two-only.mjs",
+    "scripts/gates.mjs",
+    "demo/stories/primitives/slider.vue",
+    "docs/tranches/AX/waves/AX.W59-slider-redesign.md",
+    "docs/tranches/AX/audit/W59-slider-redesign.json"
+  ],
+  "liveArmNotes": {
+    "magnitudes": "standard cap width ~0.46x --slider-thumb-size (slim), height 100% (track-height), --radius-pill (shared with the fill); fill blur default blur(2px) (--slider-range-blur), --primary 88% color-mix; spectrum thumb width ~1.1x --slider-thumb-size (near-square), height 100%, --radius-lg round contract + --corner-shape-thumb = superellipse(var(--corner-k-squircle)) = superellipse(2).",
+    "liveChecks": "On a real Chrome-139 @ localhost:5173 over /primitives/slider: (1) drag a standard slider — fill + cap read as ONE continuous glass cylinder, no seam, the rounded leading edge IS the grab, the backdrop bleeds through the fill (glass), hover lifts a faint cap halo, press squishes the cap; (2) the spectrum thumb getComputedStyle(...).cornerShape === 'superellipse(2)' and the thumb spans the full track height (a rounded-square, not a floating circle); on Safari/Firefox (or CSS.supports false) the thumb is the --radius-lg round arc with no broken paint; (3) keepDockOpen pins an enclosing dock open mid-drag (the data-held halo intensifies), .focus-ring paints on keyboard focus, sm/md/lg scale both looks, range mode reads two cylinder caps; light AND dark. TUNE: if the standard cap reads too wide/narrow, dial the 0.46x factor; if the fill glass reads too strong over a busy backdrop, dial --slider-range-blur; if the spectrum squircle reads too square at k=2, the orchestrator re-points --corner-shape-thumb to --corner-k-soft (1.7) live."
+  }
+}

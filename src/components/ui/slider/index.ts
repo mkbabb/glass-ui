@@ -11,15 +11,22 @@ export { default as Slider } from './Slider.vue'
  * `.slider-thumb` paint. The size axis lifts pure geometry via CSS vars
  * (`--slider-track-height`, `--slider-thumb-size`) the SFC defaults read.
  *
- * Exactly two canonical recipes ship:
- *   standard — the continuous rounded iOS knob: a fully-circular, borderless
- *              thumb that sits in the track and reads as a swelling of the
- *              capsule, with halo-on-state and the iOS press spring. This is
- *              the general-purpose glass-scrubber knob and the default.
- *   spectrum — the gradient-track color slider: a tall capsule whose
+ * Exactly two canonical recipes ship (AX.W59 redesign):
+ *   standard — the INTEGRATED-CYLINDER glass slider: the fill is ONE
+ *              continuous glass rounded-pill (W52 backdrop + edge rim, tinted
+ *              to `--primary`) pulled left/right; its rounded LEADING edge IS
+ *              the grab. There is NO visible demarcation between thumb and
+ *              fill — the reka SliderThumb stays mounted (a11y/keyboard/focus)
+ *              but is styled as the cylinder's slim leading CAP (a faint
+ *              specular grip, not a detached circle). Halo-on-state + the iOS
+ *              press spring. This is the general-purpose glass scrubber and
+ *              the default.
+ *   spectrum — the value.js gradient-track color slider: a tall capsule whose
  *              background is a consumer-supplied `--slider-track-bg`
  *              linear-gradient (the LCH/hue ramp), a transparent range, and a
- *              small ringed knob that reads against any track hue. This is the
+ *              SQUIRCLE thumb the HEIGHT of the track (the iOS color-picker
+ *              idiom — `corner-shape: superellipse()` via `--corner-shape-thumb`,
+ *              @supports-gated over a `--radius-lg` round fallback). This is the
  *              aurora/blob color-picking surface.
  *
  * Sizes:
