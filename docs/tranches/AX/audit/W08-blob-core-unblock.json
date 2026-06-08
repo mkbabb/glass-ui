@@ -1,0 +1,115 @@
+{
+  "wave": "AX.W08",
+  "title": "Blob core unblock — re-derive the smin distance regime, un-flood the SDF",
+  "status": "dev-complete (headless GREEN on the real Metal GPU; orchestrator owns the live-audit close)",
+  "baseSha": "9f7b58c9b5eac36306600f4cef2fd2974ff63ae8",
+  "dependsOn": ["AX.W00"],
+  "rootCauseLocked": "composed-k flood — a unit-regime mismatch, NOT a shader bug, blank canvas, failed compile, broken import, or spring-API mismatch (all verified sound). The W9.a smin-normalization (k *= 4.0) made the in-shader band == the uploaded k, but the THREE coupled JS inputs (config default, mood lerp, POS_SCALE-on-smoothK) were never re-tuned for the new regime.",
+  "liveRediagnosisAtHead": {
+    "method": "Read the ACTUAL implementation at HEAD 9f7b58c; reproduced the composed flood math in-page; ran the new proof:blob-render gate against the live demo on the real Metal GPU.",
+    "witness1_composedFlood": {
+      "uploadedFormulaAtHead": "config.smoothK * (params.smoothK / BLOB_CONFIG_DEFAULTS.smoothK)  [useMetaballRenderer.ts:437-439]",
+      "valuesAtHead": "0.12 * (0.216 / 0.12) = 0.216 uploaded; in-shader k *= 4.0 -> effective 0.864 in a 0.5-half-extent UV; seam-pull 0.216 (~6.28x the pre-AW working 0.034)",
+      "result": "min(a,b) - 0.864 drives the composite SDF negative across nearly the whole canvas -> alpha = 1 -> the slab",
+      "renderedCoverageAtHead": "interior coverage ~0.736 (clip-robust modal-bg metric) / ~0.99 (W00 loose corner-average); the canvas-filling slab",
+      "confirmedInCode": true
+    },
+    "witness2_falseGate": {
+      "gate": "proof:blob-smin-normalized",
+      "greenAtHeadWhileBroken": true,
+      "why": "clause-1 GREPS that the /0.22 + POS_SCALE-on-smoothK fudges are GONE (the exact deletion that broke the render) + a pure-math k-sweep in isolation; renders ZERO pixels, so the slab passes it.",
+      "confirmedInCode": true
+    },
+    "witness3_missingPosScale": {
+      "grep": "useMetaballRenderer.ts:437-439 uploaded uSmoothK on the bare composed value with NO * POS_SCALE",
+      "siblingsThatCarryIt": "uBodyRadius (:404), satellite radius (:495), uPointer/velocity (:363/:376-377/:393-396), noiseAmp (:423) — all * POS_SCALE (= 1/1.6 = 0.625)",
+      "confirmedInCode": true
+    },
+    "witness4_deadKeys_docRot": {
+      "deadSpringKeys": "useBlobPointer.ts:46 SpringProgress({ from: 0, to: 0, ... }) — SpringProgressOptions has no from/to (it uses initial, default 0); silently ignored (confirmed in @mkbabb/keyframes.js d.ts:695 + the minified ctor reads no from/to key)",
+      "readmeDocRot": "README :91 0.28, :142 default 0.22, :310 0.26, :322 0.3 — dead pre-W9 regime values while BLOB_CONFIG_DEFAULTS.smoothK was 0.12 under changed band semantics",
+      "confirmedInCode": true
+    },
+    "divergenceFromSpecHypothesis": "NONE on the root cause — all four witnesses confirmed verbatim in the code at HEAD. ONE methodology divergence in the GATE (see gateMethodologyDivergence) + ONE wave-boundary clarification on the per-edge-margin assertion (top/bottom four-side containment is W15's FOOTPRINT job, not W08's; W08 owns the smin slab->field un-flood)."
+  },
+  "reDerivedRegime": {
+    "approach": "ONE coherent distance regime re-solved as a single budget against the k *= 4.0 + POS_SCALE semantics — NOT three independent magic numbers. The smin band is brought onto the SAME coordinate system every other length-like uniform already uses.",
+    "uploadedFormulaAfter": "config.smoothK * params.smoothK * POS_SCALE  (the /DEFAULTS ratio is gone — mood smoothK is now the multiplier directly)",
+    "configDefault": { "before": 0.12, "after": 0.05 },
+    "moodMultiplier": { "before": "lerp(0.16, 0.32, arousal)  [absolute distance]", "after": "lerp(0.85, 1.35, arousal)  [unitless, 1.0-centred multiplier]" },
+    "posScaleRestored": true,
+    "seamPullAchieved": {
+      "sleepy_minArousal": 0.0266,
+      "idle": 0.0320,
+      "excited_maxArousal": 0.0422,
+      "target": "~0.03-0.08 (the pre-AW oracle ran 0.034)",
+      "inBandAtBothExtremes": true,
+      "note": "seam-pull == the uploaded uSmoothK value (the IQ-normalized smin's seam dip at a==b is exactly k); reduced ~27x from the flood's effective 0.864"
+    }
+  },
+  "perFindingDisposition": {
+    "F0_root": "RESOLVED — config default 0.12 -> 0.05; mood lerp re-expressed as a 1.0-centred multiplier; POS_SCALE restored on the uSmoothK upload. The composed band lands seam-pull ~0.027-0.042 across the full mood arc.",
+    "F0b_posScale": "RESOLVED — * POS_SCALE re-applied (useMetaballRenderer.ts); the smin band rides the 0.625 inner-region compression like every sibling length.",
+    "F0d_moodMultiplier": "RESOLVED — mood smoothK is a unitless 1.0-centred multiplier (the config holds the ONE absolute band; mood scales it). No split-length regime; the /DEFAULTS ratio normalization is no longer needed (and the now-unused BLOB_CONFIG_DEFAULTS import was dropped from the renderer).",
+    "F2_docRot": "RESOLVED — README :91 0.28->0.08, :142 default 0.22->0.05, :310 0.26->0.06, :322 0.3->0.09; added a short smoothK distance-regime + POS_SCALE note (the full research README is W16).",
+    "F3_deadKeys": "RESOLVED — useBlobPointer.ts springOpts dropped { from: 0, to: 0 } (silently-ignored keys); SpringProgress starts at initial (default 0). grep 'from:.*to:.*response' across goo-blob/ -> no copies. Functional no-op (clamp default UNCHANGED — out of W08 F3 scope)."
+  },
+  "gate": {
+    "id": "proof:blob-render",
+    "kind": "runtime-observation / rendered-pixel π-lane gate (fail-CLOSED, preserveDrawingBuffer-equivalent composited-screenshot readback; the blob's CLOSING gate)",
+    "newFiles": ["tests-visual/blob-render.spec.ts", "scripts/proof-blob-render.mjs"],
+    "packageJsonEntry": "proof:blob-render -> node scripts/proof-blob-render.mjs",
+    "gateScriptParity": "PASS — bijection intact (NEW orphan 0; NEW dangling 0; gates.mjs ghost cmds 0)",
+    "bornRedAtHead": {
+      "proven": true,
+      "method": "Ran the gate against the live demo on the real Metal GPU at HEAD (smoothK 0.12 + old composed math + no POS_SCALE) -> interior coverage ~0.74 (corner-average ~0.99) > the un-flood ceil -> RED, exit 1.",
+      "adversarialReFlood": "Set BLOB_CONFIG_DEFAULTS.smoothK = 1.4 (effective k ~0.86, a deliberate re-flood) on the patched tree -> interior coverage 0.736 > 0.55 -> RED, exit 1. PROVES the gate catches the very defect that shipped GREEN under proof:blob-smin-normalized."
+    },
+    "greenOnFix": {
+      "proven": true,
+      "method": "Ran the gate against a worktree-bound dev server (port 5399, serving the edited src/) on the real Metal GPU -> 1 passed.",
+      "measuredDroplet": { "interiorCoverage": 0.222, "centreVsCornerLumaDelta": 206.8, "worstSideMarginFrac_LR": 0.082, "modalBg": [248, 248, 248] }
+    },
+    "assertions": [
+      "1. UN-FLOOD — interior-inset coverage (modal-bg, clip-robust) in [0.10, 0.55]: a contained field, NOT the slab (flood reads ~0.74) and NOT blank (0).",
+      "2. FIELD-NOT-SLAB — centre-vs-interior-corner luma delta >= 25: a metaball field, not alpha-1-everywhere.",
+      "3. SIDE MARGIN — worst L/R literal-edge ring (mid-50%, modal-bg) <= 0.20: the un-flood opens a transparent L/R margin (the slab touched all four edges)."
+    ]
+  },
+  "gateMethodologyDivergence": {
+    "what": "The spec prescribed (a) opaque-fraction band 0.25-0.6 via a 4-corner-AVERAGE background, (b) a per-edge transparent margin on ALL FOUR edges. Both were re-derived in-FileBounds (the spec file is W08's).",
+    "why_a": "The goo-blob story mounts each <GooBlob> in a `rounded-card overflow-hidden` cell, so the canvas SCREENSHOT's literal corner pixels fall OUTSIDE the rounded clip and read DARK. A 4-corner average is corrupted into a false flood reading (0.99) even on a CONTAINED droplet. Fix: a MODAL (most-common, 16-step-quantized) background — the cream field for a droplet — measured over an INTERIOR INSET box that excludes the rounded-corner band. This cleanly separates droplet (~0.22 interior) from flood (~0.74 interior) on the real device. The 0.25-0.6 band was calibrated against the broken corner-average; the clip-robust interior band is [0.10, 0.55].",
+    "why_b": "At the DEFAULT body radius 0.25 + orbit 0.35 in a [-1,1] UV, the un-flooded droplet is TALLER than the box clears, so it touches the TOP/BOTTOM canvas edges (L/R are margined). Full four-side FOOTPRINT containment requires shrinking the body/orbit/satellite radii — those are W15's geometry constants, EXPLICITLY out of W08 FileBounds (spec §NOT-in-scope: 'W08 UN-FLOODS the smin over-merge (the slab); W15 PERFECTS the contained-droplet look on the un-flooded field'). W08 asserts the slab->field un-flood (interior band + gradient + L/R margin); W15 dependsOn W08 and RE-POINTS proof:blob-render to the four-side footprint-fit band (spec disjointness vs W15: 'W15 also re-points proof:blob-render thresholds (footprint-fit band) — it INHERITS W08's gate').",
+    "inFileBounds": true,
+    "preceptAligned": "no-workaround / one-coherent-regime: the gate measures the actual un-flood truth robustly, not a corner-average artefact; it goes RED on a re-flood (load-bearing). It does NOT reach into W15's footprint geometry — that boundary is the spec's, preserved."
+  },
+  "gateFleetPrecedenceNote": {
+    "proofBlobSminNormalized": "Now REDs (exit 1) on the W08 fix — its clause-1 FORBIDS POS_SCALE on uSmoothK, the very thing W08 MANDATES. The spec ANTICIPATED this (lines 172-174, 246): the static gate is DEMOTED to corroborating-only by proof:blob-render becoming the close criterion. Re-pointing its clause-1 (keep only the /0.22 fudge-deletion clause) is OUT of W08 FileBounds (scripts/proof-blob-smin-normalized.mjs is not in the table); the demotion is a gate-fleet-precedence note formalized at the W33 fleet registration, NOT a deletion in this wave. RECORDED here as an owed roadblock for the orchestrator (a follow-up re-point or W33 registration).",
+    "siblingStaticGates": "proof:blob-mood-resolved, blob-gradient-unit-length, blob-spec-premult, blob-space-gamma, blob-tempo-suppression, blob-interaction-prm all stay GREEN over the now-correct field (they do not reference POS_SCALE-on-smoothK). proof:blob-value-free REDs ONLY because dist/ is unbuilt in the worktree (a build-state condition, not a W08 regression — the orchestrator's build resolves it).",
+    "secondBlindGate_W15": "proof:blob-gradient-unit-length ports only the Z-dome lift and ASSUMES grad2d is unit — it ships green over a wrong-DIRECTION gradient on the real warped+smin field [corpus 2]. W08 does not touch it (shaders out of bounds); flagged here as the SAME false-green class W15 owns."
+  },
+  "selfGatesHeadless": [
+    { "gate": "typecheck (vue-tsc --noEmit)", "pass": true, "method": "npm run typecheck -> clean exit, no errors" },
+    { "gate": "goo-blob unit tests", "pass": true, "method": "npx vitest run tests/components/custom/goo-blob/ -> 2 files, 14 tests passed" },
+    { "gate": "proof:gate-script-parity", "pass": true, "method": "node scripts/proof-gate-script-parity.mjs -> exit 0; NEW orphan 0, NEW dangling 0, ghost cmds 0" },
+    { "gate": "seam-pull re-derivation (deterministic)", "pass": true, "method": "config 0.05 * mood{0.85..1.35} * POS_SCALE 0.625 -> 0.0266 / 0.032 / 0.042 across sleepy/idle/excited — all in the ~0.03-0.08 band" },
+    { "gate": "proof:blob-render (real Metal GPU, worktree-bound dev server)", "pass": true, "method": "playwright blob-render.spec.ts vs port 5399 (edited src) -> 1 passed; vs the smoothK=1.4 re-flood -> 1 failed (load-bearing)" }
+  ],
+  "liveAuditClose": {
+    "ownedBy": "orchestrator (the headless agent cannot run the binding live Playwright + frontend-design pass — that is the visual-truth close)",
+    "obligation": "proof:substrate-paints-color (blob arm) + proof:blob-render across the {quadratic,circular}x{min,max arousal} 4-corner matrix; ALL THREE blob stories (/substrates/goo-blob, /blob-interaction, /blob-mood) at >=3 viewports (375x667 / 1280x800 / 1440x900) x light/dark; capture the paired-pi slab->droplet BEFORE/AFTER + DELTA; confirm the W9.b lit rim + W11.a iridescence/SSS sheen STILL paint on the contained droplet's curved edge (no regression of the salvageable features).",
+    "note": "The headless agent proved the un-flood on the default (quadratic, idle) mount on the real GPU; the circular variant + min/max arousal mounts are not in the default story (story file is NOT in W08 FileBounds), so the 4-corner matrix is the orchestrator's live-audit obligation. The seam-pull math confirms BOTH arousal extremes stay in-band; circular smin is normalized to the same band units (sdf-body.glsl.ts) so it inherits the regime."
+  },
+  "posScaleDispositionInheritance": "W08 takes the MINIMAL un-flood — restore POS_SCALE on uSmoothK + re-tune the composed band to ~0.03-0.08 effective. W08 does NOT excise POS_SCALE. The full raw-wrapper-normalized re-expression (slice-12) is W15's ATOMIC job: W15 either KEEPS W08's POS_SCALE regime (dropping the 'eliminate the fudge' language) OR re-derives the ENTIRE length cohort (body/sat/orbit/smin/noise) in ONE atomic re-derivation with proof:blob-render as the regression-lock — NEVER a partial migration that re-floods across the wave seam.",
+  "filesChanged": [
+    "src/components/custom/goo-blob/types.ts",
+    "src/components/custom/goo-blob/composables/useBlobMood.ts",
+    "src/components/custom/goo-blob/composables/useMetaballRenderer.ts",
+    "src/components/custom/goo-blob/composables/useBlobPointer.ts",
+    "src/components/custom/goo-blob/README.md",
+    "tests-visual/blob-render.spec.ts",
+    "scripts/proof-blob-render.mjs",
+    "package.json",
+    "docs/tranches/AX/audit/W08-blob-core-unblock.json"
+  ]
+}
