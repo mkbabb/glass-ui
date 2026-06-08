@@ -27,7 +27,7 @@ import { MetricBadge } from "../src/subpaths/metric-badge";
 import { PaperBackdrop } from "../src/subpaths/paper-backdrop";
 import { Pulse } from "../src/subpaths/pulse";
 import { StatusDot } from "../src/subpaths/status-dot";
-import { BouncyToggle } from "../src/subpaths/tabs";
+import { SegmentedTabs } from "../src/subpaths/tabs";
 import { ToggleChip, toggleChipVariants } from "../src/subpaths/toggle-chip";
 
 describe("component smoke coverage", () => {
@@ -352,8 +352,8 @@ describe("component smoke coverage", () => {
         expect(toggleChipVariants({ variant: "cell" })).toContain("flex-col");
     });
 
-    it("renders BouncyToggle options", () => {
-        const wrapper = mount(BouncyToggle, {
+    it("renders SegmentedTabs options", () => {
+        const wrapper = mount(SegmentedTabs, {
             props: {
                 options: [
                     { label: "One", value: "one" },
@@ -366,8 +366,8 @@ describe("component smoke coverage", () => {
         expect(wrapper.text()).toContain("Two");
     });
 
-    it("emits BouncyToggle single-select updates", async () => {
-        const wrapper = mount(BouncyToggle, {
+    it("emits SegmentedTabs single-select updates", async () => {
+        const wrapper = mount(SegmentedTabs, {
             props: {
                 options: [
                     { label: "One", value: "one" },
