@@ -1,18 +1,34 @@
 #!/usr/bin/env node
 // AW.W9.a — the smin-normalization gate (proof:blob-smin-normalized).
 //
+// SEVERITY: CORROBORATING (demoted at AX.W08). This static + analytic gate is NOT
+// the load-bearing close for the blob un-flood — proof:blob-render (the live
+// device-coverage probe) is. It stays GREEN as a cheap structure guard that the
+// smin is IQ-normalized and that the band rides the inner-region UV compression.
+//
 // The blob's gooey merge was an IQ quadratic-polynomial smin where the effective
 // blend band was `0.25 * k`, NOT `k` — so the `uSmoothK` uniform was NOT a real
-// distance. The renderer papered over the scale with a `/0.22` normalizer and a
-// `POS_SCALE` multiply on the upload (a magic fudge). W9.a normalizes the smin (IQ
-// 2024 `k *= 4.0`) so the blend band == k in distance units, and DELETES the
-// `/0.22` + the `POS_SCALE`-on-smoothK fudge.
+// distance. The renderer papered over the scale with a `/0.22` normalizer. W9.a
+// normalized the smin (IQ 2024 `k *= 4.0`) so the blend band == k in distance
+// units, and DELETED the `/0.22` magic normalizer.
+//
+// AX.W08 — POS_SCALE-ON-SMOOTHK IS NOW MANDATED, NOT A FUDGE. The flood's second
+// half was that the merge band was 1.6× oversized relative to every other length:
+// `uSmoothK` is a TRUE blend-band measured in the SAME UV space as the radii, and
+// every length-like uniform (uBodyRadius / satRadius / uPointer / noiseAmp) carries
+// the POS_SCALE inner-region compression (0.625). So the band MUST carry the same
+// compression — `config.smoothK * params.smoothK * POS_SCALE` — or it is 1.6×
+// oversized and floods. The prior gate asserted POS_SCALE was ABSENT from the
+// upload (the old un-normalized regime); that now REDs on the correct fix. Clause-1
+// is re-pointed to assert POS_SCALE IS PRESENT on the uSmoothK upload (the new
+// regime), while keeping the still-valid `/0.22`-deletion assertion.
 //
 // This gate has two clauses:
-//   1. NEUTRALIZED-FUDGE (static) — the renderer no longer divides the smoothK
-//      upload by `0.22` AND no longer multiplies the `uSmoothK` upload by
-//      `POS_SCALE` (a grep on the upload statement). The shader carries the
-//      normalized `k *= 4.0` form.
+//   1. NORMALIZED-BAND (static) — the renderer no longer divides the smoothK
+//      upload by `0.22` (the magic normalizer is gone) AND DOES multiply the
+//      `uSmoothK` upload by `POS_SCALE` (the band rides the inner-region UV
+//      compression like every other length-like uniform — AX.W08). The shader
+//      carries the normalized `k *= 4.0` form.
 //   2. NECK-DEPTH (runtime k-sweep) — a JS port of the NORMALIZED smin
 //      (`sminQuadratic`, the exact `k *= 4.0` form spliced into the shader). At the
 //      seam (a == b) the smin dips below `min(a,b)` by EXACTLY k in the normalized
@@ -77,7 +93,7 @@ function run() {
     const violations = [];
     const facts = {};
 
-    // ── Clause 1: NEUTRALIZED-FUDGE (static) ──────────────────────────────────
+    // ── Clause 1: NORMALIZED-BAND (static) ────────────────────────────────────
     if (!existsSync(RENDERER)) {
         violations.push("useMetaballRenderer.ts is absent");
     } else {
@@ -95,9 +111,12 @@ function run() {
             violations.push(
                 "the uSmoothK upload still divides by the `0.22` magic normalizer — the smin is normalized; delete it (W9.a)",
             );
-        if (hasPosScale)
+        // AX.W08 — the band is a TRUE length in the inner-region UV space; it MUST
+        // ride POS_SCALE like every other length-like uniform (uBodyRadius/satRadius
+        // /uPointer/noiseAmp). Without it the merge band is 1.6× oversized → flood.
+        if (!hasPosScale)
             violations.push(
-                "the uSmoothK upload still multiplies by POS_SCALE — uSmoothK is a true blend-band now; delete the POS_SCALE on it (W9.a)",
+                "the uSmoothK upload does NOT multiply by POS_SCALE — the blend band is a length in the inner-region UV space and must carry the same 0.625 compression as the radii, or it is 1.6× oversized and floods (AX.W08)",
             );
         // The whole-file `/0.22` literal must be gone too (no other site reintroduces it).
         if (/\/\s*0\.22\b/.test(src))
@@ -144,7 +163,7 @@ function run() {
 
     console.log("proof:blob-smin-normalized — uSmoothK is a true blend-band (AW.W9.a)");
     console.log(
-        `  fudge gone   : /0.22 ${facts.divBy022 ? "PRESENT ✗" : "absent ✓"} | POS_SCALE-on-smoothK ${facts.posScaleOnSmoothK ? "PRESENT ✗" : "absent ✓"}`,
+        `  normalized band : /0.22 ${facts.divBy022 ? "PRESENT ✗" : "gone ✓"} | POS_SCALE-on-smoothK ${facts.posScaleOnSmoothK ? "present ✓" : "ABSENT ✗"} (AX.W08 — the band rides the inner-region UV compression)`,
     );
     console.log(`  shader norm  : k *= 4.0 ${facts.shaderNormalized ? "yes ✓" : "NO ✗"}`);
     console.log("  neck sweep   : (k → measured seam depth, rel err)");

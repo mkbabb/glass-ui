@@ -1,133 +1,129 @@
 import { describe, expect, it } from "vitest";
 
 import {
-    allEqual,
-    arrivalTimeMs,
+    changingFrames,
     detectAnimation,
-    fallingFrames,
     maxInterFrameJump,
+    onsetTimeMs,
     risingFrames,
 } from "../../../../scripts/proof-dock-animation-live.mjs";
 
 /**
- * AW.W1/W2 — the pure-detector unit for `proof:dock-animation-live`.
+ * AX.W01 — the pure-detector unit for `proof:dock-animation-live`, re-authored to
+ * the SINGLE-SCALAR `--dock-morph-t` architecture.
  *
- * The behavioral gate mounts a real browser and rAF-samples the dock's
- * collapse↔expand width morph; on a harnessless runner it SKIPs. This unit
- * covers the gate's PURE detectors directly so its failure path cannot
- * regress to a false-GREEN on a flat (frozen) timeline.
+ * The behavioral gate mounts a real browser and rAF-samples the dock-ROOT box
+ * width + the `--dock-morph-t` scalar + a leaving child's opacity on ONE timeline;
+ * on a harnessless runner it SKIPs. This unit covers the gate's PURE detectors
+ * directly so its failure path cannot regress to a false-GREEN on a flat (frozen)
+ * timeline.
  *
- * The 3.3.0 regression (`container-type: inline-size` on `.glass-dock`
- * collapsing every horizontal dock to its ~19px padding floor) produced a
- * FROZEN width timeline — all-equal widths at the summary floor through the
- * first expand. The detector MUST flag exactly that as a freeze violation.
- *
- * AW.W2 clip-reveal — the opacity sampler is RE-POINTED to the LEAVING pane
- * (`opacities` FALLS as the aperture reveals the active content); the ACTIVE
- * pane (`activeOpacities`) is asserted statically == 1 (revealed, not faded).
+ * The old gate measured the `.dock-layers` FLIP width + a VT-group animation
+ * witness — both DELETED at AX.W01 (the single-scalar morph drives the ROOT box off
+ * one `--dock-morph-t` spring, no VT collapse fork, no `.dock-layers` FLIP driver).
+ * The detector now asserts: `--dock-morph-t` ramps over ≥5 rising frames (NOT frozen
+ * at 0 — the snap/desync regression), the root box width rises over ≥5 rising frames
+ * (NOT a 1-frame snap), and the width-onset and the scalar-onset co-occur within ≤1
+ * frame (the single-clock assert — the box rides the scalar).
  */
 
-const SUMMARY_FLOOR = 19;
+const MIN = 5; // MIN_MORPH_FRAMES in the gate
+const FRAME_MS = 1000 / 60;
 
-// A FROZEN flip timeline — width never rises (the 3.3.0 stuck-at-summary-floor
-// regression). The leaving pane fade may still tick down.
-const FROZEN_FLIP = {
-    W0: SUMMARY_FLOOR,
-    O0: 1,
-    W1: SUMMARY_FLOOR,
-    O1: 0,
-    widths: [SUMMARY_FLOOR, SUMMARY_FLOOR, SUMMARY_FLOOR, SUMMARY_FLOOR, SUMMARY_FLOOR],
-    opacities: [1, 0.75, 0.5, 0.25, 0], // leaving pane fades
-    activeOpacities: [1, 1, 1, 1, 1], // active pane is statically 1
+// A HEALTHY single-scalar morph timeline — the root box width rises 58→211 over the
+// spring's rising frames, `--dock-morph-t` ramps 0→1.05→1.0 IN STEP (same onset),
+// and the leaving pane fades. Device-proven shape (the published (0.32,0.7) spring).
+const HEALTHY_FLIP = {
+    W0: 58,
+    T0: 0,
+    C0: 1,
+    W1: 211,
+    widths: [58, 80, 120, 165, 198, 211, 209, 211, 211],
+    morphTs: [0, 0.18, 0.45, 0.72, 0.95, 1.05, 1.01, 1.0, 1.0],
+    childOpacities: [1, 0.78, 0.42, 0.15, 0.03, 0, 0, 0, 0],
+    times: [0, 16.7, 33.4, 50.1, 66.8, 83.5, 100.2, 116.9, 133.6],
+};
+
+// A FROZEN/SNAP timeline — `--dock-morph-t` never leaves 0 and the box snaps to the
+// expanded size in one frame (the desync/snap regression W01 fixes).
+const SNAP_FLIP = {
+    W0: 58,
+    T0: 0,
+    C0: 1,
+    W1: 211,
+    widths: [58, 211, 211, 211, 211],
+    morphTs: [0, 0, 0, 0, 0],
+    childOpacities: [1, 1, 1, 1, 1],
     times: [0, 16.7, 33.4, 50.1, 66.8],
 };
 
-// A HEALTHY flip timeline — width rises over >=3 frames; the leaving pane fades
-// (falls) over >=3 frames and arrives together (post-fix morph: 40 -> 197).
-const HEALTHY_FLIP = {
-    W0: 40,
-    O0: 1,
-    W1: 197,
-    O1: 0,
-    widths: [40, 64, 110, 160, 195, 197, 197],
-    opacities: [1, 0.8, 0.45, 0.15, 0.02, 0, 0], // leaving pane fades out
-    activeOpacities: [1, 1, 1, 1, 1, 1, 1], // active pane statically 1
-    times: [0, 16.7, 33.4, 50.1, 66.8, 83.5, 100.2],
+// A DESYNC timeline — the box width onsets two frames BEFORE the `--dock-morph-t`
+// scalar (the "box grows first, content lags" defect). Both eventually ramp, but the
+// onsets are > 1 frame apart.
+const DESYNC_FLIP = {
+    W0: 58,
+    T0: 0,
+    C0: 1,
+    W1: 211,
+    // box width starts rising at frame 1 (16.7ms)…
+    widths: [58, 80, 120, 165, 198, 211, 211, 211],
+    // …but the scalar stays 0 until frame 3 (50.1ms) — a 33.4ms (2-frame) lead.
+    morphTs: [0, 0, 0, 0.45, 0.72, 0.95, 1.05, 1.0],
+    childOpacities: [1, 1, 1, 0.6, 0.3, 0.05, 0, 0],
+    times: [0, 16.7, 33.4, 50.1, 66.8, 83.5, 100.2, 116.9],
 };
-
-// An active-pane-FADES timeline — the born-RED clip-reveal tell (the active pane
-// dips below 1 during the morph instead of being statically revealed).
-const ACTIVE_FADES_FLIP = {
-    ...HEALTHY_FLIP,
-    activeOpacities: [0, 0.2, 0.55, 0.85, 0.98, 1, 1],
-};
-
-function frozenResult() {
-    return {
-        vt: { ran: true, vtGroupAnimations: 2 },
-        vtForcedOff: true,
-        flip: FROZEN_FLIP,
-        retarget: { widths: [40, 64, 110, 160, 195, 197], times: [0, 16, 33, 50, 66, 83] },
-        verticalInner: { ran: false },
-    };
-}
 
 function healthyResult() {
     return {
-        vt: { ran: true, vtGroupAnimations: 2 },
         vtForcedOff: true,
         flip: HEALTHY_FLIP,
-        retarget: { widths: [40, 64, 110, 160, 195, 197], times: [0, 16, 33, 50, 66, 83] },
-        verticalInner: {
-            ran: true,
-            H0: 40,
-            H1: 120,
-            heights: [40, 58, 84, 105, 118, 120, 120],
-            times: [0, 16, 33, 50, 66, 83, 100],
+        retarget: {
+            widths: [58, 80, 120, 165, 198, 211],
+            times: [0, 16, 33, 50, 66, 83],
         },
     };
 }
 
-describe("risingFrames / fallingFrames", () => {
-    it("counts zero rising frames on a flat (frozen) series", () => {
-        expect(risingFrames(FROZEN_FLIP.widths, 0.5)).toBe(0);
+describe("risingFrames / changingFrames", () => {
+    it("counts zero rising frames on a frozen scalar series", () => {
+        expect(risingFrames(SNAP_FLIP.morphTs, 1e-4)).toBe(0);
     });
 
-    it("counts the rising frames on a monotonically-growing series", () => {
-        expect(risingFrames(HEALTHY_FLIP.widths, 0.5)).toBeGreaterThanOrEqual(3);
+    it("counts ≥5 rising frames on a healthy scalar ramp", () => {
+        expect(risingFrames(HEALTHY_FLIP.morphTs, 1e-4)).toBeGreaterThanOrEqual(MIN);
     });
 
-    it("counts the falling frames on a fading (leaving-pane) series", () => {
-        expect(fallingFrames(HEALTHY_FLIP.opacities, 0.01)).toBeGreaterThanOrEqual(3);
-    });
-});
-
-describe("allEqual — the active-pane static-opacity:1 witness", () => {
-    it("is true when every active-pane sample is 1", () => {
-        expect(allEqual(HEALTHY_FLIP.activeOpacities, 1, 0.001)).toBe(true);
+    it("counts ≥5 rising frames on a healthy root box width", () => {
+        expect(risingFrames(HEALTHY_FLIP.widths, 0.5)).toBeGreaterThanOrEqual(MIN);
     });
 
-    it("is false when the active pane dips below 1 (fades)", () => {
-        expect(allEqual(ACTIVE_FADES_FLIP.activeOpacities, 1, 0.001)).toBe(false);
+    it("counts the leaving-pane fade as ≥3 moving frames", () => {
+        expect(changingFrames(HEALTHY_FLIP.childOpacities, 0.01)).toBeGreaterThanOrEqual(3);
     });
 });
 
-describe("arrivalTimeMs", () => {
-    it("returns the final timestamp for a flat series (never reaches a span)", () => {
-        const t = arrivalTimeMs(FROZEN_FLIP.widths, FROZEN_FLIP.times);
-        expect(t).toBe(FROZEN_FLIP.times[FROZEN_FLIP.times.length - 1]);
+describe("onsetTimeMs — the single-clock onset witness", () => {
+    it("clocks the box-width and scalar onsets in the SAME frame on a healthy morph", () => {
+        const wOnset = onsetTimeMs(HEALTHY_FLIP.widths, HEALTHY_FLIP.times, 0.5);
+        const tOnset = onsetTimeMs(HEALTHY_FLIP.morphTs, HEALTHY_FLIP.times, 1e-4);
+        expect(Math.abs(wOnset - tOnset)).toBeLessThanOrEqual(FRAME_MS + 1e-3);
     });
 
-    it("clocks a healthy morph's 90%-arrival inside its window", () => {
-        const t = arrivalTimeMs(HEALTHY_FLIP.widths, HEALTHY_FLIP.times);
-        expect(t).toBeGreaterThan(0);
-        expect(t).toBeLessThanOrEqual(HEALTHY_FLIP.times[HEALTHY_FLIP.times.length - 1]);
+    it("separates the box and scalar onsets on a desync timeline", () => {
+        const wOnset = onsetTimeMs(DESYNC_FLIP.widths, DESYNC_FLIP.times, 0.5);
+        const tOnset = onsetTimeMs(DESYNC_FLIP.morphTs, DESYNC_FLIP.times, 1e-4);
+        expect(Math.abs(wOnset - tOnset)).toBeGreaterThan(FRAME_MS + 1e-3);
+    });
+
+    it("returns the final timestamp for a flat series (never moves)", () => {
+        const t = onsetTimeMs(SNAP_FLIP.morphTs, SNAP_FLIP.times, 1e-4);
+        expect(t).toBe(SNAP_FLIP.times[SNAP_FLIP.times.length - 1]);
     });
 });
 
 describe("maxInterFrameJump", () => {
     it("flags a hard snap as a large isolated jump", () => {
-        const { max } = maxInterFrameJump([40, 40, 197, 197]);
+        const { max } = maxInterFrameJump([58, 58, 211, 211]);
         expect(max).toBeGreaterThan(150);
     });
 
@@ -137,53 +133,59 @@ describe("maxInterFrameJump", () => {
     });
 });
 
-describe("detectAnimation — the freeze bite", () => {
-    it("flags a FROZEN width timeline as a freeze violation", () => {
-        const { facts, violations } = detectAnimation(frozenResult());
-        expect(facts.widthRisingFrames).toBe(0);
-        expect(violations.some((v) => /SNAPPED|FROZE|rising frame/.test(v))).toBe(true);
-    });
-
-    it("passes a HEALTHY morph with zero violations", () => {
+describe("detectAnimation — the single-scalar bites", () => {
+    it("passes a HEALTHY single-scalar morph with zero violations", () => {
         const { facts, violations } = detectAnimation(healthyResult());
-        expect(facts.widthRisingFrames).toBeGreaterThanOrEqual(3);
-        expect(facts.leavingOpacityFallingFrames).toBeGreaterThanOrEqual(3);
-        expect(facts.activeOpacityStatic1).toBe(true);
-        expect(facts.verticalInnerHeightRisingFrames).toBeGreaterThanOrEqual(3);
+        expect(facts.morphTRisingFrames).toBeGreaterThanOrEqual(MIN);
+        expect(facts.rootWidthRisingFrames).toBeGreaterThanOrEqual(MIN);
+        expect(facts.onsetDeltaMs).toBeLessThanOrEqual(FRAME_MS + 1e-3);
         expect(violations).toHaveLength(0);
     });
 
-    it("flags an ACTIVE pane that FADES (the clip-reveal contract violation)", () => {
+    it("flags a FROZEN --dock-morph-t scalar as a snap/desync violation", () => {
         const { facts, violations } = detectAnimation({
-            vt: { ran: true, vtGroupAnimations: 2 },
             vtForcedOff: true,
-            flip: ACTIVE_FADES_FLIP,
-            retarget: { widths: [40, 64, 110, 160, 195, 197], times: [0, 16, 33, 50, 66, 83] },
-            verticalInner: { ran: false },
-        });
-        expect(facts.activeOpacityStatic1).toBe(false);
-        expect(violations.some((v) => /ACTIVE pane opacity fell below 1|FADING/.test(v))).toBe(
-            true,
-        );
-    });
-
-    it("flags a frozen vertical inner-group height morph", () => {
-        const { violations } = detectAnimation({
-            vt: { ran: true, vtGroupAnimations: 2 },
-            vtForcedOff: true,
-            flip: HEALTHY_FLIP,
-            retarget: { widths: [40, 64, 110, 160, 195, 197], times: [0, 16, 33, 50, 66, 83] },
-            verticalInner: {
-                ran: true,
-                H0: 40,
-                H1: 40,
-                heights: [40, 40, 40, 40, 40],
-                times: [0, 16, 33, 50, 66],
+            flip: SNAP_FLIP,
+            retarget: {
+                widths: [58, 80, 120, 165, 198, 211],
+                times: [0, 16, 33, 50, 66, 83],
             },
         });
-        expect(violations.some((v) => /vertical INNER DockLayerGroup height/.test(v))).toBe(
-            true,
-        );
+        expect(facts.morphTRisingFrames).toBe(0);
+        expect(violations.some((v) => /--dock-morph-t/.test(v))).toBe(true);
+    });
+
+    it("flags a SNAPPED root box width", () => {
+        const { facts, violations } = detectAnimation({
+            vtForcedOff: true,
+            flip: SNAP_FLIP,
+            retarget: { widths: [58, 211], times: [0, 16] },
+        });
+        expect(facts.rootWidthRisingFrames).toBeLessThan(MIN);
+        expect(violations.some((v) => /SNAPPED|FROZE|rising frame/.test(v))).toBe(true);
+    });
+
+    it("flags the box-leads-scalar DESYNC (onset > 1 frame apart)", () => {
+        const { facts, violations } = detectAnimation({
+            vtForcedOff: true,
+            flip: DESYNC_FLIP,
+            retarget: {
+                widths: [58, 80, 120, 165, 198, 211],
+                times: [0, 16, 33, 50, 66, 83],
+            },
+        });
+        expect(facts.onsetDeltaMs).toBeGreaterThan(FRAME_MS);
+        expect(violations.some((v) => /one clock|desync/.test(v))).toBe(true);
+    });
+
+    it("flags a retarget hard-snap (velocity discontinuity)", () => {
+        const { violations } = detectAnimation({
+            vtForcedOff: true,
+            flip: HEALTHY_FLIP,
+            // a ~150px single-frame jump over a ~153px span = > 70% snap to rest
+            retarget: { widths: [58, 60, 62, 211, 211, 211], times: [0, 16, 33, 50, 66, 83] },
+        });
+        expect(violations.some((v) => /snapped to rest|carrying velocity/.test(v))).toBe(true);
     });
 
     it("flags a probe error", () => {

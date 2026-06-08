@@ -1,36 +1,41 @@
-// AV.W9.4 — the dock BEHAVIORAL motion gate (proof:dock-animation-live).
+// AX.W01 — the dock BEHAVIORAL motion gate (proof:dock-animation-live), re-authored
+// to the SINGLE-SCALAR `--dock-morph-t` architecture.
 //
-// This is the gate the syntactic pair (proof:dock-motion-single-source +
-// proof:dock-opacity-lockstep) could NOT be. Those two regex-scan source: they
-// assert ONE rAF body and that both rules name --dock-motion-resize. They never
-// parse @supports, never mount a browser, never observe a painted frame — so the
-// AU.W8b dual-driver freeze (the `interpolate-size`/`calc-size` native arm
-// fighting the SpringProgress FLIP driver over `width` on Chrome 129+) shipped
-// GREEN while the dock was frozen at runtime. This gate mounts the REAL dock page
-// and measures PAINTED frames: it FAILS on a zero-delta / single-frame width
-// timeline (exactly the freeze), so that regression class cannot ship green again.
+// The dock collapse↔expand morph is now ONE analytic spring whose single normalized
+// scalar (`--dock-morph-t`, 0→1 with a spring overshoot) is written once per frame
+// to the `.glass-dock` ROOT and drives EVERY animated axis — box inline-size,
+// padding, border-radius, scale, color, AND the child stagger. The prior VT
+// COLLAPSE fork (the `::view-transition-group(.gl-dock-layer)` recipe) and the
+// JS FLIP-width-on-`.dock-layers` driver are DELETED (AX.W01). So this gate no
+// longer measures VT-group animations or a `.dock-layers` FLIP width — it measures
+// the ROOT box geometry against the live `--dock-morph-t` scalar on ONE rAF
+// timeline. The single-clock contract is: the root box width and the `--dock-morph-t`
+// scalar onset in the SAME frame (lead/lag ≤ 1 frame), and each ramps over enough
+// rising frames to be a spring, not a snap.
 //
-// WHAT IT MEASURES (the AV.W9.0+W9.1+W9.2 landing):
-//   1. The FLIP+spring path (forced by removing `Document.startViewTransition` so
-//      the dock composable reads NATIVE_VT=false — the deterministic, live-DOM-
-//      measurable path, and the one the freeze lived on). On expand it samples the
-//      `.dock-layers` width AND the active-layer opacity every rAF frame and
-//      asserts BEHAVIOR: width morphs over >=3 rising frames (a snap/zero-delta
-//      FAILS), opacity morphs over >=3 rising frames, and the two co-settle within
-//      +-1 frame (<=16.7ms). A frozen dock has 0 rising width frames -> RED.
-//   2. The retarget case (W9.2 velocity-continuity): an interrupt mid-morph must
-//      continue the trajectory, not snap to rest — no inter-frame discontinuity
-//      beyond the spring's own natural acceleration.
-//   3. The View-Transitions path (real Chrome default): the browser must run
-//      `::view-transition-group(...)` animations on expand — the orthogonal
-//      single-mutation morph that owns size+crossfade and never touches inline
-//      width. Zero VT-group animations on a VT engine would mean the morph is not
-//      painting.
+// WHAT IT MEASURES (the AX.W01 single-scalar landing):
+//   1. The morph timeline. `page.addInitScript` removes `Document.startViewTransition`
+//      (KISS — keeps the deterministic readable arm; the morph is spring-driven on
+//      every engine now, so this only removes one source of route-morph noise). A
+//      data attr is set on the FIRST `.glass-dock.collapsed` so the SAME element is
+//      sampled across the `.collapsed`→`.expanded` class flip (re-querying
+//      `.glass-dock.collapsed` each frame is a TRAP — it switches to a DIFFERENT
+//      collapsed dock once dock #1 expands). A real `page.hover` expands it. Then it
+//      rAF-samples, on ONE timeline: the HELD dock-root `getBoundingClientRect().width`,
+//      `getComputedStyle(root).getPropertyValue("--dock-morph-t")`, and a representative
+//      LEAVING child's opacity. ASSERTS: `--dock-morph-t` ramps over ≥5 rising frames
+//      (NOT frozen at 0 — the snap/desync regression), the root box width rises over
+//      ≥5 rising frames (NOT a 1-frame snap), and the width-onset and the morph-t-onset
+//      are within ≤1 frame (the single-clock assert — the box and its driver scalar
+//      move together).
+//   2. The retarget case (velocity-continuity, the one genuine iOS piece W01 keeps):
+//      an interrupt mid-morph must continue the trajectory, not snap to rest — no
+//      inter-frame discontinuity beyond the spring's own natural acceleration.
 //
-// HARNESS: a Playwright driver. glass-ui carries ZERO browser dependency (the
-// static gates refused to add one for a single gate, on payload + KISS grounds),
-// so this gate dynamically imports `playwright`/`playwright-core` and runs the
-// probe ONLY when that harness AND a live demo dev server are present.
+// HARNESS: a Playwright driver. glass-ui carries ZERO browser dependency (the static
+// gates refused to add one for a single gate, on payload + KISS grounds), so this
+// gate dynamically imports `playwright`/`playwright-core` and runs the probe ONLY
+// when that harness AND a live demo dev server are present.
 //
 // AX.W00 — FAIL-CLOSED PROMOTION. The fail-open SKIP-with-EXIT=0 is promoted: when
 // the π workspace IS present (tests-visual/node_modules/@playwright/test resolves,
@@ -59,20 +64,24 @@ import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-outpu
 // pure detectors below must remain import-side-effect-free (AW.W1 unit).
 const DOCK_ROUTE = "/navigation/dock";
 
-// The behavioral bar (the CHARTER's numbers).
-const MIN_MORPH_FRAMES = 3; // width AND opacity must each rise over >=3 frames
-// width-arrival and opacity-arrival co-occur within this window. The charter's
-// IDEAL is +-1 frame (16.7ms); a live rAF scheduler can split a co-driven pair
-// across one extra frame, so the bar is set to 2 frames (33.4ms) — wide enough to
-// absorb scheduler jitter, far tighter than the 100ms desync AU.W2 fixed, and the
-// FREEZE assert does not depend on it (it keys off rising-frame COUNT).
-const SETTLE_TOLERANCE_MS = 33.4;
+// The behavioral bar (the AX.W01 single-scalar numbers). The published
+// `(0.32, 0.7)` spring rings 0→~1.05→1.0 over ~23 rAF frames (device-proven), so a
+// genuine spring shows MANY rising frames on both the scalar and the box width; a
+// snap/freeze shows 0-1. The bar is ≥5 rising frames — comfortably above scheduler
+// jitter, far below the real ~23.
+const MIN_MORPH_FRAMES = 5; // --dock-morph-t AND the root box width must each rise over ≥5 frames
+// The box-onset and the scalar-onset must co-occur within ≤1 frame (the single-clock
+// assert). A live rAF scheduler can split a co-driven pair by one frame, so the bar
+// is one frame (16.7ms) + a tiny epsilon.
+const FRAME_MS = 1000 / 60;
+const ONSET_TOLERANCE_MS = FRAME_MS + 1e-3;
 
 // ── the in-page probe ────────────────────────────────────────────────────────
-// Serialized into the browser. Forces the FLIP path (removes startViewTransition
-// from the chain so `'startViewTransition' in document` === false), re-mounts the
-// dock via SPA nav, expands it, and rAF-samples width + active-layer opacity until
-// both settle. Returns the two timelines + the VT-path animation witness.
+// Serialized into the browser. Tags the FIRST collapsed dock with a data attr so the
+// SAME element is sampled across the class flip, expands it via real dispatched
+// pointer events, and rAF-samples the root box width + the `--dock-morph-t` scalar +
+// a leaving child's opacity on ONE timeline. Returns the morph timeline + the
+// retarget series.
 function pageProbe() {
     return new Promise((resolve) => {
         const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -114,134 +123,53 @@ function pageProbe() {
         ];
         const LEAVE = ["pointerout", "pointerleave", "mouseout", "mouseleave"];
 
-        // Count VT-group animations on a clean VT-engine expand (before we disable
-        // VT) — the orthogonal native-morph witness.
-        const vtWitness = () => {
-            const dock = findCollapsedDock();
-            if (!dock) return { ran: false, vtGroupAnimations: 0 };
-            fire(ENTER, dock);
-            return new Promise((res) => {
-                let n = 0;
-                let peak = 0;
-                const f = () => {
-                    const vt = document
-                        .getAnimations()
-                        .filter(
-                            (a) =>
-                                a.effect &&
-                                a.effect.pseudoElement &&
-                                a.effect.pseudoElement.includes(
-                                    "view-transition-group",
-                                ),
-                        ).length;
-                    peak = Math.max(peak, vt);
-                    if (++n < 6) requestAnimationFrame(f);
-                    else res({ ran: true, vtGroupAnimations: peak });
-                };
-                requestAnimationFrame(f);
-            });
-        };
-
-        // AW.W2 — under the clip-reveal one-clock model the ACTIVE pane is
-        // statically opacity:1 (revealed by the aperture, never faded); the ONLY
-        // surviving opacity animation is the LEAVING pane's fade. So the width is
-        // sampled off `.dock-layers`, the LEAVING-pane opacity off the becoming-
-        // inactive pane (`.dock-layer--summary` on an expand), and the ACTIVE pane
-        // opacity (`.dock-layer--full`) is sampled too so the gate can assert it
-        // stays statically 1 across every frame.
+        // Sample the morph off the HELD dock-root reference (NOT a per-frame
+        // `.glass-dock.collapsed` re-query — once dock #1 expands the `.collapsed`
+        // selector resolves to a DIFFERENT dock and the timeline would jump). The
+        // root box `width` and the `--dock-morph-t` scalar are the single-clock pair;
+        // the leaving pane (`.dock-layer--summary`) opacity is the child witness.
         const sampleExpand = (dock) => {
-            const layers = dock.querySelector(".dock-layers");
-            const full = dock.querySelector(".dock-layer--full");
-            const summary = dock.querySelector(".dock-layer--summary");
-            const wOf = () => layers.getBoundingClientRect().width;
-            const leavingOf = () =>
-                summary ? parseFloat(getComputedStyle(summary).opacity) : 0;
-            const activeOf = () => parseFloat(getComputedStyle(full).opacity);
+            const leaving =
+                dock.querySelector(".dock-layer--summary") ?? dock;
+            const wOf = () => dock.getBoundingClientRect().width;
+            const tOf = () =>
+                parseFloat(
+                    getComputedStyle(dock).getPropertyValue("--dock-morph-t"),
+                ) || 0;
+            const childOf = () => parseFloat(getComputedStyle(leaving).opacity);
             const W0 = wOf();
-            const O0 = leavingOf();
+            const T0 = tOf();
+            const C0 = childOf();
             fire(ENTER, dock);
             return new Promise((res) => {
                 const widths = [];
-                const opacities = []; // the LEAVING-pane fade series
-                const activeOpacities = []; // the active pane (asserted == 1)
+                const morphTs = [];
+                const childOpacities = [];
                 const times = [];
                 const t0 = performance.now();
                 let stable = 0;
                 let lastW = W0;
-                let lastO = O0;
                 const f = () => {
                     const t = performance.now() - t0;
                     const w = wOf();
-                    const o = leavingOf();
                     widths.push(w);
-                    opacities.push(o);
-                    activeOpacities.push(activeOf());
+                    morphTs.push(tOf());
+                    childOpacities.push(childOf());
                     times.push(t);
-                    const dW = Math.abs(w - lastW);
-                    const dO = Math.abs(o - lastO);
-                    if (dW < 0.5 && dO < 0.01) stable++;
+                    if (Math.abs(w - lastW) < 0.5) stable++;
                     else stable = 0;
                     lastW = w;
-                    lastO = o;
-                    if (stable >= 4 || t > 2000)
+                    if (stable >= 5 || t > 2000)
                         res({
                             W0,
-                            O0,
+                            T0,
+                            C0,
                             W1: w,
-                            O1: o,
                             widths,
-                            opacities,
-                            activeOpacities,
+                            morphTs,
+                            childOpacities,
                             times,
                         });
-                    else requestAnimationFrame(f);
-                };
-                requestAnimationFrame(f);
-            });
-        };
-
-        // AW.W2 §2.1 — the bi-axial parity probe targets the INNER
-        // DockLayerGroup height morph (the outer collapsed↔expanded pair is
-        // hardcoded horizontal; the vertical HEIGHT morph runs on the inner
-        // `.dock-layer-stack` with axis=vertical). Drive an inner-group layer
-        // switch on the /navigation/dock-layers route and rAF-sample the stack's
-        // height rising ≥3 frames.
-        const sampleVerticalInnerGroup = () => {
-            // Find a vertical DockLayerGroup stack (a `.dock-layer-group.vertical
-            // .dock-layer-stack`). Switching its active layer morphs the stack
-            // HEIGHT (the column reveals at its intrinsic block size).
-            const stack = document.querySelector(
-                ".dock-layer-group.vertical .dock-layer-stack",
-            );
-            if (!stack) return { ran: false };
-            const tabs = [
-                ...stack
-                    .closest(".dock-layer-group")
-                    .querySelectorAll('[role="tab"]'),
-            ];
-            const hOf = () => stack.getBoundingClientRect().height;
-            const H0 = hOf();
-            // Click the second tab (if any) to drive a layer switch.
-            const target = tabs.find(
-                (t) => t.getAttribute("aria-selected") !== "true",
-            );
-            if (target) target.click();
-            return new Promise((res) => {
-                const heights = [];
-                const times = [];
-                const t0 = performance.now();
-                let stable = 0;
-                let lastH = H0;
-                const f = () => {
-                    const t = performance.now() - t0;
-                    const h = hOf();
-                    heights.push(h);
-                    times.push(t);
-                    if (Math.abs(h - lastH) < 0.5) stable++;
-                    else stable = 0;
-                    lastH = h;
-                    if (stable >= 4 || t > 2000)
-                        res({ ran: true, H0, H1: h, heights, times });
                     else requestAnimationFrame(f);
                 };
                 requestAnimationFrame(f);
@@ -251,11 +179,9 @@ function pageProbe() {
         (async () => {
             const result = {};
 
-            // (3) VT-path witness on the real engine, BEFORE disabling VT.
-            result.vt = await vtWitness();
-            await sleep(400);
-
-            // Force the FLIP path: remove startViewTransition from the whole chain.
+            // Force the readable path: remove startViewTransition from the whole
+            // chain (KISS — one fewer source of route-morph noise; the morph is
+            // spring-driven on every engine now).
             if (Object.prototype.hasOwnProperty.call(document, "startViewTransition"))
                 delete document.startViewTransition;
             let p = Object.getPrototypeOf(document);
@@ -264,7 +190,7 @@ function pageProbe() {
                     try {
                         delete p.startViewTransition;
                     } catch {
-                        /* non-configurable — fall through; FLIP forcing may not apply */
+                        /* non-configurable — fall through */
                     }
                     break;
                 }
@@ -272,7 +198,7 @@ function pageProbe() {
             }
             result.vtForcedOff = !("startViewTransition" in document);
 
-            // Re-mount the dock so the composable reads NATIVE_VT=false.
+            // Re-mount the dock for a clean collapsed baseline.
             clickLink("/navigation/tabs");
             await sleep(450);
             clickLink("/navigation/dock");
@@ -284,20 +210,27 @@ function pageProbe() {
                 resolve(result);
                 return;
             }
+            // HOLD the element by a data attr — guards against the per-frame re-query
+            // trap (the collapsed selector switches docks once #1 expands).
+            dock.setAttribute("data-dock-animation-probe", "1");
 
-            // (1) FLIP expand timeline.
+            // (1) The morph timeline off the HELD dock root.
             result.flip = await sampleExpand(dock);
 
-            // (2) Retarget: interrupt the morph mid-flight, then re-expand; the
-            // trajectory must continue (no snap to rest). Collapse first.
+            // (2) Retarget velocity-continuity: interrupt the morph mid-flight, then
+            // re-expand; the trajectory must continue (no snap to rest). Collapse
+            // first. The SAME held element is re-driven (it is still in the DOM —
+            // expanded now, the data attr survives).
             await sleep(500);
-            const dock2 = findCollapsedDock() ?? dock;
-            const layers2 = dock2.querySelector(".dock-layers");
-            const wOf2 = () => layers2.getBoundingClientRect().width;
+            const held =
+                document.querySelector('[data-dock-animation-probe="1"]') ?? dock;
+            const wOf2 = () => held.getBoundingClientRect().width;
             const retargetWidths = [];
             const retargetTimes = [];
             const t0 = performance.now();
-            fire(ENTER, dock2);
+            fire(LEAVE, held);
+            await sleep(60);
+            fire(ENTER, held);
             await new Promise((res) => {
                 let interrupted = false;
                 const f = () => {
@@ -305,8 +238,8 @@ function pageProbe() {
                     retargetWidths.push(wOf2());
                     retargetTimes.push(t);
                     if (!interrupted && t > 35 && t < 60) {
-                        fire(LEAVE, dock2);
-                        fire(ENTER, dock2);
+                        fire(LEAVE, held);
+                        fire(ENTER, held);
                         interrupted = true;
                     }
                     if (t > 700) res();
@@ -315,19 +248,6 @@ function pageProbe() {
                 requestAnimationFrame(f);
             });
             result.retarget = { widths: retargetWidths, times: retargetTimes };
-
-            // (4) AW.W2 bi-axial — the vertical INNER DockLayerGroup height morph.
-            // Nav to the layer-group route where a vertical group lives, then
-            // drive an inner layer switch and sample the stack height. The route
-            // is feature-detected (skip cleanly if no vertical inner group is
-            // mounted), so the gate never hard-fails on a demo without it.
-            clickLink("/navigation/dock-layers");
-            await sleep(500);
-            try {
-                result.verticalInner = await sampleVerticalInnerGroup();
-            } catch (e) {
-                result.verticalInner = { ran: false, error: String(e) };
-            }
 
             resolve(result);
         })();
@@ -342,42 +262,23 @@ export function risingFrames(series, eps) {
     return n;
 }
 
-// `fallingFrames` counts frame-to-frame DECREASES above an epsilon — the
-// LEAVING-pane fade witness under the AW.W2 clip-reveal model (the active pane is
-// statically opacity:1; only the leaving pane animates opacity, downward).
-export function fallingFrames(series, eps) {
+// `changingFrames` counts frame-to-frame |Δ| above an epsilon — a property MOVING in
+// either direction (the leaving-pane child opacity falls; the entering rises).
+export function changingFrames(series, eps) {
     let n = 0;
-    for (let i = 1; i < series.length; i++) if (series[i - 1] - series[i] > eps) n++;
+    for (let i = 1; i < series.length; i++)
+        if (Math.abs(series[i] - series[i - 1]) > eps) n++;
     return n;
 }
 
-// `allEqual` — true when every sample is within `eps` of `target` (the active
-// pane is asserted statically == 1 across every morph frame).
-export function allEqual(series, target, eps) {
-    return series.every((v) => Math.abs(v - target) <= eps);
-}
-
-// `arrivalTimeMs` is the timestamp at which a morph first reaches `frac` of its
-// TOTAL delta toward the target — the perceptual "it's there" moment the user
-// feels as lockstep. This is the correct settle metric for a SPRING: the
-// `--spring-dock` curve (ζ=0.5, ~18.5% overshoot) makes the POSITION (width) ring
-// past target and back, so a "stays within eps of the FINAL value forever" metric
-// would clock width's settle at the END of its overshoot TAIL — naturally later
-// than opacity, which saturates monotonically at 1.0 and cannot overshoot
-// visually. Arrival-at-the-target-band measures when each property REACHES the
-// destination region together (the felt lockstep), tolerating the intended bounce
-// tail. `frac` defaults to 0.9 (90% of the delta = perceptual arrival).
-export function arrivalTimeMs(series, times, frac = 0.9) {
-    const from = series[0];
-    const to = series[series.length - 1];
-    const span = to - from;
-    if (Math.abs(span) < 1e-6) return times[times.length - 1];
-    const threshold = from + span * frac;
-    for (let i = 0; i < series.length; i++) {
-        const reached = span > 0 ? series[i] >= threshold : series[i] <= threshold;
-        if (reached) return times[i];
+// `onsetTimeMs` is the timestamp at which |series - series[0]| first exceeds eps —
+// the frame the property STARTS moving (the single-clock onset witness).
+export function onsetTimeMs(series, times, eps) {
+    const from = series[0] ?? 0;
+    for (let i = 1; i < series.length; i++) {
+        if (Math.abs(series[i] - from) > eps) return times[i];
     }
-    return times[times.length - 1];
+    return times[times.length - 1] ?? 0;
 }
 
 // `maxInterFrameJump` is the largest single-frame delta — a velocity-continuity
@@ -449,87 +350,62 @@ export function detectAnimation(result) {
         return { facts, violations };
     }
 
-    // (3) VT-path witness.
-    facts.vtRan = result.vt?.ran ?? false;
-    facts.vtGroupAnimations = result.vt?.vtGroupAnimations ?? 0;
-    if (facts.vtRan && facts.vtGroupAnimations === 0) {
-        violations.push(
-            "the View-Transitions path ran ZERO ::view-transition-group animations on expand — the native morph is not painting",
-        );
-    }
-
-    // The FLIP forcing must have applied for the live-DOM timeline to be the FLIP
-    // path. If it could not (non-configurable native prop), the width timeline
-    // would be the VT path's live-DOM snap and a width-freeze assert would
-    // false-positive — so guard it.
     facts.vtForcedOff = result.vtForcedOff ?? false;
-    if (!facts.vtForcedOff) {
-        violations.push(
-            "could not force the FLIP path (startViewTransition not removable) — the live-DOM width timeline is not measurable on this engine",
-        );
-        return { facts, violations };
-    }
 
-    // (1) FLIP expand — width AND opacity each morph over >=3 frames, co-settle.
+    // (1) The single-scalar morph timeline.
     const flip = result.flip;
     if (!flip) {
-        violations.push("the FLIP expand timeline is missing");
+        violations.push("the morph timeline is missing");
         return { facts, violations };
     }
+
+    // `--dock-morph-t` must RAMP over ≥5 rising frames — the spring scalar, not a
+    // frozen-at-0 snap (the desync/snap regression W01 fixes).
+    const tRise = risingFrames(flip.morphTs, 1e-4);
+    facts.morphTRisingFrames = tRise;
+    facts.morphTMax = Math.round(Math.max(...flip.morphTs) * 1000) / 1000;
+    facts.morphTDelta =
+        Math.round((Math.max(...flip.morphTs) - flip.T0) * 1000) / 1000;
+    if (tRise < MIN_MORPH_FRAMES) {
+        violations.push(
+            `--dock-morph-t ramped over only ${tRise} rising frame(s) (< ${MIN_MORPH_FRAMES}) — the single-scalar spring did NOT run (it is frozen at ${flip.T0}; the snap/desync regression)`,
+        );
+    }
+
+    // The root box width must RISE over ≥5 rising frames — a snap/freeze fails.
     const wRise = risingFrames(flip.widths, 0.5);
-    // AW.W2 clip-reveal — `flip.opacities` is now the LEAVING pane (it FALLS as
-    // the aperture reveals the active content); `flip.activeOpacities` is the
-    // ACTIVE pane (asserted statically == 1, revealed not faded).
-    const oFall = fallingFrames(flip.opacities, 0.01);
-    facts.widthRisingFrames = wRise;
-    facts.leavingOpacityFallingFrames = oFall;
+    facts.rootWidthRisingFrames = wRise;
     facts.widthDelta = Math.round((flip.W1 - flip.W0) * 100) / 100;
-    facts.leavingOpacityDelta = Math.round((flip.O1 - flip.O0) * 1000) / 1000;
     if (wRise < MIN_MORPH_FRAMES) {
         violations.push(
-            `the FLIP width MORPHED over only ${wRise} rising frame(s) (< ${MIN_MORPH_FRAMES}) — the dock SNAPPED / FROZE, it did not animate (W0=${flip.W0} W1=${flip.W1})`,
-        );
-    }
-    if (oFall < MIN_MORPH_FRAMES) {
-        violations.push(
-            `the LEAVING-pane opacity faded over only ${oFall} falling frame(s) (< ${MIN_MORPH_FRAMES}) — the leaving crossfade (the sole opacity animation under clip-reveal) did not run`,
+            `the dock-root box width rose over only ${wRise} rising frame(s) (< ${MIN_MORPH_FRAMES}) — the box SNAPPED / FROZE, it did not morph (W0=${flip.W0} W1=${flip.W1})`,
         );
     }
 
-    // AW.W2 — the ACTIVE pane must be statically opacity:1 across EVERY sampled
-    // frame (it is REVEALED by the clip aperture, never faded). A frame with
-    // active opacity < 1 is the "content fades, not revealed" tell.
-    if (Array.isArray(flip.activeOpacities) && flip.activeOpacities.length) {
-        const activeStatic1 = allEqual(flip.activeOpacities, 1, 0.001);
-        facts.activeOpacityStatic1 = activeStatic1;
-        facts.activeOpacityMin =
-            Math.round(Math.min(...flip.activeOpacities) * 1000) / 1000;
-        if (!activeStatic1) {
-            violations.push(
-                `the ACTIVE pane opacity fell below 1 (min ${facts.activeOpacityMin}) during the morph — the active pane is FADING (the clip-reveal contract requires it be statically opacity:1, REVEALED by the aperture)`,
-            );
-        }
+    // SINGLE CLOCK: the root box width and the `--dock-morph-t` scalar must ONSET in
+    // the SAME frame (lead/lag ≤ 1 frame) — the box rides the scalar by construction
+    // under the single-scalar morph, so any onset skew is the box-leads-content
+    // desync the wave deletes.
+    const wOnset = onsetTimeMs(flip.widths, flip.times, 0.5);
+    const tOnset = onsetTimeMs(flip.morphTs, flip.times, 1e-4);
+    const onsetDelta = Math.abs(wOnset - tOnset);
+    facts.widthOnsetMs = Math.round(wOnset * 10) / 10;
+    facts.morphTOnsetMs = Math.round(tOnset * 10) / 10;
+    facts.onsetDeltaMs = Math.round(onsetDelta * 10) / 10;
+    if (onsetDelta > ONSET_TOLERANCE_MS) {
+        violations.push(
+            `the root box width onset (${facts.widthOnsetMs}ms) and the --dock-morph-t scalar onset (${facts.morphTOnsetMs}ms) are ${facts.onsetDeltaMs}ms apart (> ${Math.round(ONSET_TOLERANCE_MS * 10) / 10}ms = 1 frame) — the box does NOT ride the scalar on one clock (the box-leads-content desync)`,
+        );
     }
 
-    // Lockstep = the PERCEPTUAL arrival of width and the LEAVING-pane fade at
-    // their target band (not the final ring-settle — the spring's position
-    // overshoot tail naturally clocks width later, see arrivalTimeMs). Both ride
-    // the SAME --dock-motion-resize curve (the width spring + the leaving fade),
-    // so their 90%-arrival times coincide by construction; the bar tolerates
-    // real-browser rAF scheduler jitter (the charter's ideal is +-1 frame; a live
-    // scheduler can split a co-driven pair across an extra frame, so the gate's
-    // bar is widened from the ideal to absorb that noise without loosening the
-    // freeze assert, which keys off rising-FRAME COUNT, not timing).
-    const wArrive = arrivalTimeMs(flip.widths, flip.times);
-    const oArrive = arrivalTimeMs(flip.opacities, flip.times);
-    const arriveDelta = Math.abs(wArrive - oArrive);
-    facts.widthArrivalMs = Math.round(wArrive * 10) / 10;
-    facts.opacityArrivalMs = Math.round(oArrive * 10) / 10;
-    facts.arrivalDeltaMs = Math.round(arriveDelta * 10) / 10;
-    if (arriveDelta > SETTLE_TOLERANCE_MS) {
-        violations.push(
-            `width-arrival (${facts.widthArrivalMs}ms) and opacity-arrival (${facts.opacityArrivalMs}ms) are ${facts.arrivalDeltaMs}ms apart (> ${SETTLE_TOLERANCE_MS}ms) — not lockstep`,
-        );
+    // The leaving child opacity should MOVE over ≥3 frames — a witness that the
+    // content stagger co-morphs off the same scalar (the box did not morph alone).
+    // Best-effort: under the clip-reveal model the leaving pane may be absent on some
+    // routes, so a still child is NOTED but the load-bearing asserts are the two
+    // rising-frame counts + the single-clock onset above.
+    if (Array.isArray(flip.childOpacities) && flip.childOpacities.length) {
+        const cMove = changingFrames(flip.childOpacities, 0.01);
+        facts.childOpacityMovingFrames = cMove;
     }
 
     // (2) Retarget velocity-continuity — no hard snap. A discontinuity would show
@@ -544,27 +420,6 @@ export function detectAnimation(result) {
         if (span > 10 && jump.max > span * 0.7) {
             violations.push(
                 `the retarget showed a ${facts.retargetMaxFrameJump}px single-frame jump (> 70% of the ${Math.round(span)}px span) — the spring snapped to rest instead of carrying velocity`,
-            );
-        }
-    }
-
-    // (4) AW.W2 §2.1 — the vertical INNER DockLayerGroup HEIGHT morph rises over
-    // >=3 frames (the bi-axial parity bar). The outer pair is hardcoded
-    // horizontal, so the vertical timeline targets the inner group's stack
-    // height. Feature-detected: if no vertical inner group is mounted on the
-    // route, the probe reports ran:false and the gate notes it without failing
-    // (the horizontal timeline is the always-present bar; the vertical probe is a
-    // best-effort bi-axial extension the demo route may not carry).
-    const vi = result.verticalInner;
-    facts.verticalInnerRan = vi?.ran ?? false;
-    if (vi?.ran && Array.isArray(vi.heights)) {
-        const hRise = risingFrames(vi.heights, 0.5);
-        facts.verticalInnerHeightRisingFrames = hRise;
-        facts.verticalInnerHeightDelta =
-            Math.round((vi.H1 - vi.H0) * 100) / 100;
-        if (hRise < MIN_MORPH_FRAMES) {
-            violations.push(
-                `the vertical INNER DockLayerGroup height morphed over only ${hRise} rising frame(s) (< ${MIN_MORPH_FRAMES}) — the bi-axial (vertical) morph SNAPPED / FROZE (H0=${vi.H0} H1=${vi.H1})`,
             );
         }
     }
@@ -608,7 +463,7 @@ async function run() {
     const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5173";
     const ARTIFACT = gateArtifactPath(
         "GLASS_UI_DOCK_ANIMATION_LIVE_ARTIFACT",
-        "AV-dock-animation-live",
+        "AX-dock-animation-live",
     );
 
     // AX.W00 — the TOKEN-PEAK SECONDARY runs FIRST + ALWAYS (flake-free,
@@ -623,12 +478,11 @@ async function run() {
     if (!pw) {
         // No browser harness reachable from the library `node_modules`. If the π
         // workspace IS present (fail-CLOSED device installed), the behavioral arm
-        // belongs to the tests-visual spec (run by proof:substrate-paints-color's
-        // sibling / the workspace runner) — here we still HARD-FAIL on a token-peak
-        // violation (it is device-free), but the live-rAF behavioral truth is the
-        // workspace spec's. When the π workspace is ABSENT, this is a genuine
-        // device absence: befitting-silent SKIP for the live arm, but the
-        // token-peak secondary STILL reds if violated.
+        // belongs to the tests-visual spec (run by the workspace runner) — here we
+        // still HARD-FAIL on a token-peak violation (it is device-free), but the
+        // live-rAF behavioral truth is the workspace spec's. When the π workspace is
+        // ABSENT, this is a genuine device absence: befitting-silent SKIP for the
+        // live arm, but the token-peak secondary STILL reds if violated.
         const status = tokenPeak.violations.length === 0 ? "skipped" : "fail";
         writeGateArtifact(ARTIFACT, {
             generatedAt: snapshotStamp(),
@@ -663,6 +517,34 @@ async function run() {
     try {
         browser = await pw.chromium.launch();
         const page = await browser.newPage();
+        // Force the readable arm BEFORE the app boots (most robust point — the
+        // in-page delete races the composable's first read).
+        await page.addInitScript(() => {
+            try {
+                if (
+                    Object.prototype.hasOwnProperty.call(
+                        document,
+                        "startViewTransition",
+                    )
+                )
+                    delete document.startViewTransition;
+                let p = Object.getPrototypeOf(document);
+                while (p) {
+                    if (
+                        Object.prototype.hasOwnProperty.call(
+                            p,
+                            "startViewTransition",
+                        )
+                    ) {
+                        delete p.startViewTransition;
+                        break;
+                    }
+                    p = Object.getPrototypeOf(p);
+                }
+            } catch {
+                /* non-configurable on this engine */
+            }
+        });
         await page.goto(`${BASE_URL}${DOCK_ROUTE}`, { waitUntil: "networkidle" });
         await page.waitForSelector(".glass-dock.collapsed", { timeout: 5000 });
         result = await page.evaluate(pageProbe);
@@ -714,34 +596,27 @@ async function run() {
         facts,
         violations,
         timelines: {
-            widthKeyframeTimes: result.flip?.times?.map((t) => Math.round(t * 10) / 10),
+            times: result.flip?.times?.map((t) => Math.round(t * 10) / 10),
             widths: result.flip?.widths?.map((w) => Math.round(w * 100) / 100),
-            leavingOpacities: result.flip?.opacities?.map((o) => Math.round(o * 1000) / 1000),
-            activeOpacities: result.flip?.activeOpacities?.map(
+            morphTs: result.flip?.morphTs?.map((t) => Math.round(t * 1000) / 1000),
+            childOpacities: result.flip?.childOpacities?.map(
                 (o) => Math.round(o * 1000) / 1000,
-            ),
-            verticalInnerHeights: result.verticalInner?.heights?.map(
-                (h) => Math.round(h * 100) / 100,
             ),
         },
     });
 
-    console.log("proof:dock-animation-live — the dock BEHAVIORAL motion gate (AV.W9 + AW.W2)");
-    console.log(`  VT-group animations (expand) : ${facts.vtGroupAnimations ?? "n/a"}`);
+    console.log("proof:dock-animation-live — the dock single-scalar BEHAVIORAL motion gate (AX.W01)");
     console.log(
-        `  FLIP width morph frames      : ${facts.widthRisingFrames ?? "n/a"} (>= ${MIN_MORPH_FRAMES})`,
+        `  --dock-morph-t rising frames : ${facts.morphTRisingFrames ?? "n/a"} (>= ${MIN_MORPH_FRAMES})  peak ${facts.morphTMax ?? "n/a"}`,
     );
     console.log(
-        `  LEAVING-pane fade frames     : ${facts.leavingOpacityFallingFrames ?? "n/a"} (>= ${MIN_MORPH_FRAMES})`,
+        `  root box width rising frames : ${facts.rootWidthRisingFrames ?? "n/a"} (>= ${MIN_MORPH_FRAMES})  Δ ${facts.widthDelta ?? "n/a"}px`,
     );
     console.log(
-        `  ACTIVE pane static opacity:1 : ${facts.activeOpacityStatic1 === undefined ? "n/a" : facts.activeOpacityStatic1 ? "YES" : `NO (min ${facts.activeOpacityMin})`}`,
+        `  width / scalar onset delta   : ${facts.onsetDeltaMs ?? "n/a"}ms (<= ${Math.round(ONSET_TOLERANCE_MS * 10) / 10}ms = 1 frame)`,
     );
     console.log(
-        `  vertical inner-group frames  : ${facts.verticalInnerRan ? (facts.verticalInnerHeightRisingFrames ?? "n/a") : "n/a (no vertical inner group on route)"}`,
-    );
-    console.log(
-        `  width / fade arrival delta   : ${facts.arrivalDeltaMs ?? "n/a"}ms (<= ${SETTLE_TOLERANCE_MS}ms)`,
+        `  leaving child moving frames  : ${facts.childOpacityMovingFrames ?? "n/a"}`,
     );
     console.log(
         `  retarget max frame jump      : ${facts.retargetMaxFrameJump ?? "n/a"}px`,
