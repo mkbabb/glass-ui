@@ -169,6 +169,15 @@ rootAllowed.add("vReveal");
 // the whole-file contract cannot express, same as vReveal/useViewTransition.
 rootAllowed.add("DeckProgress");
 rootAllowed.add("DeckProgressProps");
+// AX.W37 — useTextHighlight + its types are the named CSS Custom Highlight
+// composable, re-homed from /dom to /motion-core and targeted-re-exported to the
+// root barrel (keyframes-FREE + vueuse-FREE, per the vReveal precedent). It WAS
+// root-public via the ./composables/dom contract-file walk before the re-home; the
+// re-home preserved the reach but moved it off a rootContractFile, so the union
+// no longer captures it. These three single-symbol adds restore the allowlist.
+rootAllowed.add("useTextHighlight");
+rootAllowed.add("HighlightMatcher");
+rootAllowed.add("UseTextHighlightControls");
 // L.W1 SCC-trap closure — the 4 vueuse-bearing ui families (input/, textarea/,
 // combobox/, carousel/) are subpath-only (`/forms`, `/carousel`): the curated root
 // barrel re-exports the 37 vueuse-FREE ui packages but NOT these. The `ui/index.ts`

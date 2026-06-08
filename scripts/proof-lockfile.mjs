@@ -31,6 +31,15 @@ for (const [key, entry] of Object.entries(packages)) {
         continue;
     }
     if (!key.includes("node_modules/@mkbabb/")) continue;
+    // An IN-REPO workspace link (e.g. the `tests-visual` π-lane workspace declared in
+    // package.json `workspaces`) records as `link: true` with `resolved` pointing at
+    // the committed workspace dir (no `../`). `npm ci` resolves it natively from the
+    // repo — it is NOT dev-sibling drift, so it is exempt. Only a `../sibling` link
+    // (a `npm link ../keyframes.js`) is the registry-resolution drift this gate guards.
+    const linkTarget = typeof entry.resolved === "string" ? entry.resolved : "";
+    const isInRepoWorkspace =
+        entry.link === true && linkTarget !== "" && !linkTarget.startsWith("..") && packages[linkTarget] !== undefined;
+    if (isInRepoWorkspace) continue;
     // A node_modules @mkbabb entry must carry a registry `resolved` URL, never a
     // `link: true` / `file:` resolution.
     if (entry.link === true) {
