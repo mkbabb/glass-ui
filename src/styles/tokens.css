@@ -575,6 +575,22 @@
     --dock-shadow:           var(--shadow-dock);
     --dock-shadow-collapsed: var(--shadow-dock-collapsed);
 
+    /* AX.W04 F1 — the wrap/card-tier dock shadow. A wrapped multi-row dock (and
+       any finite-radius card silhouette) is a THICKER material than a flat thin
+       pill — WWDC25 §219 "material thickens as glass flexes larger". So when the
+       wrap dock expands it lifts its elevation onto the FLOATING-tier shadow
+       stack (the `--glass-shadow-floating` family — `--shadow-xl` + the
+       `--glass-material-rim` hairline + the `--glass-under-shadow-vivid` under-cast)
+       rather than carrying the flat `--shadow-dock` glow of a 40px pill. Composed
+       on `:root` as ONE consumer-overridable token (per the cartoon-shadow
+       override contract — override on the cascade, never a dead local). The dock
+       reads it via `calc()`-on-`--dock-expand-t` so the lift glides in lockstep
+       with the pill→card radius morph (ONE clock, ONE register). */
+    --glass-material-rim:    0 0 0 0.5px color-mix(in srgb, var(--shadow-color) 5%, transparent);
+    --shadow-dock-wrap:      var(--shadow-xl),
+        var(--glass-material-rim),
+        var(--glass-under-shadow-vivid);
+
     /* Cartoon shadow color primitives (kept for tiered cartoon utilities) */
     --shadow-cartoon-color:             rgb(0 0 0 / 0.12);
     --shadow-cartoon-color-soft:        rgb(0 0 0 / 0.06);
@@ -906,17 +922,14 @@
        than cliffs. Defaults clamp to 80vw / 80vh capped at sensible
        desktop widths; consumers override per-dock by setting either
        token directly on a `.glass-dock` instance. User findings 1 + 5a. */
+    /* AX.W04 — `--dock-max-inline-size` is the canonical inline cap EVERY overflow
+       strategy reads: `overflow="scroll"` scrolls past it, and `overflow="wrap"`
+       wraps to N rows on the over-cap crossing (`min(max-content, cap)`). The
+       prior `--dock-overflow-bp: 640px` viewport-breakpoint token (the magic-640
+       snap-back) is DELETED — the wrap is content-driven, not viewport-coupled, so
+       there is no breakpoint threshold to name. */
     --dock-max-inline-size: min(80vw, 64rem);
     --dock-max-block-size: min(80vh, 48rem);
-
-    /* AT.W7-dock-a — the `overflow="wrap"` desktop snap-back breakpoint, named
-       once. Below this viewport width a wrap-mode dock reads as a multi-row pill
-       that narrows to the viewport gutter; at/above it the pill snaps back to a
-       single nowrap row. The single source-of-record for the threshold the
-       `@media` in dock.css realizes (a `var()` cannot drive a media-query
-       feature in Baseline CSS, so the MQ carries the literal value of THIS
-       token; consumers reading the breakpoint do so through this name). */
-    --dock-overflow-bp: 640px;
 
     /* AB.W1.T1 — chassis max-block-size guardrail.
        Maximum block size a centred consumer-app card may consume while

@@ -99,11 +99,13 @@ symmetric spring.
 ### Reduced-motion is binding
 
 Auto-running, non-user-initiated motion honors `prefers-reduced-motion: reduce`:
-the bounce, the item-stagger, and the wrap morph are suppressed, but the state
-change still completes instantly. Bounce belongs on user-initiated changes (tap,
-expand), never on ambient idle motion (the NN/g Liquid-Glass over-animation
-critique). The press squish, the item cascade, and the wrap reflow all collapse to
-a snap under PRM.
+the bounce and the item-stagger are suppressed, but the state change still
+completes instantly. Bounce belongs on user-initiated changes (tap, expand), never
+on ambient idle motion (the NN/g Liquid-Glass over-animation critique). The press
+squish and the item cascade collapse to a snap under PRM. (The `overflow="wrap"`
+row reflow is intrinsic flex — content wraps to N rows on the over-cap crossing
+with no spring; only the radius + shadow card-tier lift rides the dock morph
+scalar, suppressed with the rest of the morph under PRM.)
 
 > Sources: [Motion — layout animations](https://motion.dev/docs/react-layout-animations),
 > [Motion — performance tier list](https://motion.dev/magazine/web-animation-performance-tier-list),
@@ -269,8 +271,12 @@ substrate-with-consumer precept).
    `--spring-dock` token; a retune touches BOTH `DOCK_SPRING` and the
    `regen-spring-tokens.mjs` PRESETS row, then re-runs the generator
    (`proof:spring-tokens-synced` enforces no drift).
-6. **For multi-row controls, use `overflow="wrap"`** — the row reflow morphs on the
-   dock spring and snaps under reduced motion.
+6. **For multi-row controls, use `overflow="wrap"`** — the dock caps its inline size
+   at `min(max-content, --dock-max-inline-size)` and the row reflows to N rows by
+   INTRINSIC flex-wrap on the over-cap crossing (at any viewport width, no
+   breakpoint). The wrapped multi-row silhouette lifts onto the card/floating shadow
+   tier as the dock expands (the radius + shadow ride the dock morph scalar in
+   lockstep). Horizontal-only.
 7. **Vertical docks are tool palettes** — they are `alwaysExpanded`, render a single
    slot (no summary), and animate `height`. Set `orientation="vertical"`; no other
    consumer change is required.
@@ -286,6 +292,7 @@ substrate-with-consumer precept).
 | `proof:dock-motion-single-source` | The FLIP ref-swap + width-set share one rAF origin. |
 | `proof:dock-motion-parity` | The VT and FLIP paths share one timing source. |
 | `proof:spring-tokens-synced` | `--spring-dock` equals the generator output (the JS driver + the CSS token cannot drift). |
-| `proof:dock-layering-polish` | Directional expand/collapse asymmetry, a spring-keyed (not fixed-ms) item cascade, a hover-scale on the dock spring, and a morphing (not snapping) wrap reflow — all PRM-suppressed. |
+| `proof:dock-layering-polish` | Directional expand/collapse asymmetry, a spring-keyed (not fixed-ms) item cascade, and a hover-scale on the dock spring — all PRM-suppressed. |
+| `proof:dock-wrap-content-driven` | `overflow="wrap"` reflows by INTRINSIC content-driven flex-wrap (`min(max-content, --dock-max-inline-size)` cap, no viewport `@media`); the multi-row card lifts onto the card-tier `--shadow-dock-wrap` shadow + the `--dock-card-radius` corner, both tracking `--dock-morph-t` in lockstep; horizontal-only; the `--dock-overflow-bp` token is gone. |
 | `proof:dock-a11y-contract` | The switcher-rail roles. |
 | `proof:offscreen-pause` | The dock's motion honors the WebGL-substrate park. |

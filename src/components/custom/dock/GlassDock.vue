@@ -97,10 +97,18 @@ const props = withDefaults(
          * which all touched overflow divergently).
          *   `"grow"`   — content grows to fit then overflows visibly past
          *                the cap (the default; nothing clips or scrolls).
-         *   `"wrap"`   — expanded content wraps to multiple lines/rows (the
-         *                `.dock-overflow-wrap` recipe — a multi-row pill that narrows
-         *                to the viewport gutter on small screens and snaps
-         *                back to a single nowrap row past `--dock-overflow-bp`).
+         *   `"wrap"`   — expanded content wraps to multiple rows via CONTENT-DRIVEN
+         *                intrinsic flex-wrap (the `.dock-overflow-wrap` recipe). The
+         *                dock inline-size caps at `min(max-content,
+         *                --dock-max-inline-size)`, so the row reflows to N rows
+         *                EXACTLY when its intrinsic width exceeds the cap — at ANY
+         *                viewport width — and collapses to one row when it fits (no
+         *                viewport breakpoint). The wrapped multi-row silhouette lifts
+         *                onto the card/floating shadow tier as the dock expands.
+         *                HORIZONTAL-ONLY: a vertical rail grows-to-fit + clamps via
+         *                `--dock-max-block-size` (its own overflow story), so the
+         *                `.dock-overflow-wrap` class is not emitted for a vertical
+         *                orientation.
          *   `"scroll"` — the dock becomes the scroll port. Horizontal docks
          *                scroll the active layer on the inline axis
          *                (`.dock-scroll-x`); vertical rails scroll on the
@@ -450,7 +458,7 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
             `shape-${shape}`,
             `layout-${layout}`,
             scrollClass,
-            { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'dock-overflow-wrap': overflow === 'wrap' },
+            { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'dock-overflow-wrap': overflow === 'wrap' && orientation !== 'vertical' },
             position === 'fixed' ? 'fixed bottom-[var(--dock-pos)] left-1/2 -translate-x-1/2'
               : position === 'sticky' ? 'dock-sticky'
               : 'dock-inline',
