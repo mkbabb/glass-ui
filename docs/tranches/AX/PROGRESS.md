@@ -68,11 +68,11 @@ soundness discipline: "complete" never collapses to "headless-green").
 | W50 | uniform dropdown/select/menu type-scale (D17) | planned |
 | W51 | comfortable component sizing — library-wide --ui-scale (D18 umbrella; W45/W50 specialize) | planned |
 | W52 | liquid-glass material overhaul (D19) — kill central bloom → edge gleam + button glass/hover/gold | live-verified (DEVELOPED) |
-| W53 | tabs-unify — one Tabs (segmented default/pill/underline), drop Bouncy, merge toggle/responsive (T1-T4) | planned |
+| W53 | tabs-unify — one Tabs (segmented default/pill/underline), drop Bouncy, merge toggle/responsive (T1-T4) | live-verified (DEVELOPED) |
 | W54 | glass-first-class — --glass-level scalar + opaque escape (G1) | planned |
 | W55 | adaptive-glass-legibility — iOS27 backdrop-luminance darken (G2) | planned |
-| W56 | squircle design-language — corner-shape: superellipse() token axis (G3, foundational) | planned |
-| W57 | demo-radial reauthor + pulse-aura calm + aurora/constellation heros (P6/P7) | planned |
+| W56 | squircle design-language — corner-shape: superellipse() token axis (G3, foundational) | live-verified (DEVELOPED) |
+| W57 | demo-radial reauthor + pulse-aura calm + aurora/constellation heros (P6/P7) | live-verified (DEVELOPED) |
 
 ## W00 — visual-runtime (π) lane — COMPLETE
 
