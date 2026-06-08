@@ -6,13 +6,15 @@
 // carousel's own story) places it on: the inactive dot painted `bg-muted-medium`
 // (invisible on a dark card), and the active emphasis rode the dead
 // `scale-[var(--scale-hover)]` Tailwind-v4 var-in-arbitrary class (it emits NO
-// CSS — `transform:none`). AX.W23 re-authored the rail; the AW.W30 chrome restyle
-// (shell `.glass-wash`/`.glass-material`, item four-state) was folded in.
+// CSS — `transform:none`). AX.W23 re-authored the rail. (AX.W19 pruned the
+// custom/glass-carousel composite — its four-state / chrome-substrate clauses,
+// formerly C+D, retired with it; this gate now guards the surviving
+// `ui/carousel/CarouselDots.vue` dot rail only.)
 //
 // This gate is a RENDER assertion (not a source-string scan): it reads the
 // EMITTED `dist/glass-ui.css` — the actual painted recipe — and computes the
 // real WCAG 1.4.11 contrast of the inactive dot against the composited
-// translucent dark card surface. Four clauses:
+// translucent dark card surface. Two clauses:
 //
 //   (A) DOT-CONTRAST — the inactive `.carousel-dot::before` background is a
 //       `color-mix(in srgb, var(--foreground) N%, transparent)` whose RESOLVED
@@ -24,18 +26,10 @@
 //       var-in-arbitrary class (the non-emit), AND the active emphasis emits a
 //       REAL scoped rule: an emitted `.carousel-dot[data-active]::before` with a
 //       `width:` or `height:` morph in dist/glass-ui.css.
-//   (C) FOUR-STATE — GlassCarouselItem.vue carries the interactive four-state
-//       contract: `data-state` + `aria-pressed` (the state attrs), `.focus-ring`
-//       (the focus cue), `.tap-squish` (the press-spring).
-//   (D) CHROME-SUBSTRATE — GlassCarousel.vue composes a `.glass-material` band
-//       member (`glass-wash`/`glass-quiet`/`glass-resting`/`glass-floating`/
-//       `glass-overlay`/`glass-material`) — the specular/rim substrate, not the
-//       prior flat on-hover-only `--glass-shadow-wash` pill.
 //
 // inv ε / bite-check: revert the inactive dot to `bg-muted-medium` (or any rung
 // resolving <3:1) → (A) RED; re-add `scale-[var(--x)]` or drop the
-// `[data-active]::before` morph → (B) RED; drop a four-state attr → (C) RED;
-// strip the `.glass-*` band class off the shell → (D) RED.
+// `[data-active]::before` morph → (B) RED.
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -45,18 +39,6 @@ import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-outpu
 // WCAG 1.4.11 non-text contrast floor.
 const CONTRAST_FLOOR = 3.0;
 
-// The `.glass-material` band members (glass.css selector group) any of which
-// brings the specular/rim substrate (clause D).
-const GLASS_BAND_CLASSES = [
-    "glass-material",
-    "glass-wash",
-    "glass-quiet",
-    "glass-resting",
-    "glass-floating",
-    "glass-overlay",
-    "glass-card",
-];
-
 let _cliPaths = null;
 function cliPaths() {
     if (_cliPaths) return _cliPaths;
@@ -64,8 +46,6 @@ function cliPaths() {
     _cliPaths = {
         ROOT,
         DOTS: resolve(ROOT, "src/components/ui/carousel/CarouselDots.vue"),
-        ITEM: resolve(ROOT, "src/components/custom/glass-carousel/GlassCarouselItem.vue"),
-        SHELL: resolve(ROOT, "src/components/custom/glass-carousel/GlassCarousel.vue"),
         CSS: resolve(ROOT, "dist/glass-ui.css"),
         ARTIFACT: gateArtifactPath("GLASS_UI_CAROUSEL_GLASS_ATOMS_ARTIFACT", "AX-carousel-glass-atoms"),
     };
@@ -116,11 +96,11 @@ function stripVueComments(src) {
 }
 
 function run() {
-    const { ROOT, DOTS, ITEM, SHELL, CSS, ARTIFACT } = cliPaths();
+    const { ROOT, DOTS, CSS, ARTIFACT } = cliPaths();
     const violations = [];
     const facts = {};
 
-    for (const [label, p] of [["CarouselDots.vue", DOTS], ["GlassCarouselItem.vue", ITEM], ["GlassCarousel.vue", SHELL]]) {
+    for (const [label, p] of [["CarouselDots.vue", DOTS]]) {
         if (!existsSync(p)) violations.push(`${label} missing at ${p.slice(ROOT.length + 1)}`);
     }
     if (!existsSync(CSS)) {
@@ -135,8 +115,6 @@ function run() {
 
     const css = stripCssComments(readFileSync(CSS, "utf8"));
     const dotsSrc = readFileSync(DOTS, "utf8");
-    const itemSrc = readFileSync(ITEM, "utf8");
-    const shellSrc = readFileSync(SHELL, "utf8");
 
     // ── (A) DOT-CONTRAST — read the emitted inactive-dot recipe + resolve ────────
     // Match the `.carousel-dot::before` base rule (the inactive resting fill) in
@@ -182,27 +160,6 @@ function run() {
         violations.push("no emitted `.carousel-dot[data-active]::before { width|height: … }` morph in dist/glass-ui.css — the active emphasis must be a REAL emitted morph, not a dead arbitrary class");
     }
 
-    // ── (C) FOUR-STATE — GlassCarouselItem interactive contract ─────────────────
-    const itemCode = stripVueComments(itemSrc);
-    const fourState = {
-        "data-state": /data-state\b/.test(itemCode),
-        "aria-pressed": /aria-pressed\b/.test(itemCode),
-        "focus-ring": /\bfocus-ring\b/.test(itemCode),
-        "tap-squish": /\btap-squish\b/.test(itemCode),
-    };
-    facts.itemFourState = fourState;
-    for (const [attr, present] of Object.entries(fourState)) {
-        if (!present) violations.push(`GlassCarouselItem.vue is missing the four-state contract member \`${attr}\``);
-    }
-
-    // ── (D) CHROME-SUBSTRATE — shell composes a glass-material band member ───────
-    const shellCode = stripVueComments(shellSrc);
-    const bandClass = GLASS_BAND_CLASSES.find((c) => new RegExp(`['"\\s]${c}['"\\s]`).test(shellCode));
-    facts.shellBandClass = bandClass ?? null;
-    if (!bandClass) {
-        violations.push(`GlassCarousel.vue shell composes no .glass-material band member (${GLASS_BAND_CLASSES.join("/")}) — it must sit on the specular/rim substrate, not a flat on-hover-only pill`);
-    }
-
     const status = violations.length === 0 ? "pass" : "fail";
     writeGateArtifact(ARTIFACT, {
         generatedAt: snapshotStamp(),
@@ -213,13 +170,11 @@ function run() {
         violations,
     });
 
-    console.log("proof:carousel-glass-atoms — the carousel dot rail + chrome render assertion (AX.W23)");
+    console.log("proof:carousel-glass-atoms — the carousel dot rail render assertion (AX.W23; W19-pruned glass-carousel clauses)");
     console.log(`  inactive dot α    : ${facts.inactiveDotAlphaPct ?? "(unfound)"}%`);
     console.log(`  dot contrast      : dark ${facts.inactiveDotContrast?.dark ?? "?"}  light ${facts.inactiveDotContrast?.light ?? "?"} (floor ${CONTRAST_FLOOR}:1)`);
     console.log(`  dead arbitrary    : ${facts.deadArbitraryClass ?? "(none)"}`);
     console.log(`  active morph emit : ${facts.activeMorphEmitted ? "yes" : "NO"}`);
-    console.log(`  item four-state   : ${Object.entries(facts.itemFourState ?? {}).map(([k, v]) => `${k}=${v ? "✓" : "✗"}`).join(" ")}`);
-    console.log(`  shell band class  : ${facts.shellBandClass ?? "(none)"}`);
     if (violations.length) { console.log("\nVIOLATIONS:"); for (const v of violations) console.log(`  ✗ ${v}`); }
     console.log(`\n  status: ${status.toUpperCase()}   artefact: ${ARTIFACT.slice(ROOT.length + 1)}`);
     process.exit(status === "pass" ? 0 : 1);

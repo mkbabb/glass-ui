@@ -6,7 +6,6 @@ import {
     ChassisDivider,
     type InstrumentChassisPhase,
 } from "../../../src/components/custom/instrument-chassis";
-import { GlyphFace } from "../../../src/components/custom/glyph-face";
 import { MetricBadge } from "../../../src/components/custom/metric-badge";
 import { DockIconButton, DockTabButton } from "../../../src/components/custom/dock";
 import {
@@ -171,13 +170,7 @@ const primaryGlyph = computed<{ icon: LucideIcon; label: string }>(() => {
                         </div>
                     </div>
                     <DockIconButton aria-label="Settings">
-                        <GlyphFace
-                            active
-                            tint="color-mix(in srgb, var(--muted-foreground) 18%, transparent)"
-                            class="size-9 text-muted-foreground"
-                        >
-                            <Settings :stroke-width="2" class="size-5" />
-                        </GlyphFace>
+                        <Settings :stroke-width="2" class="size-5 text-muted-foreground" />
                     </DockIconButton>
                 </template>
 
@@ -225,13 +218,7 @@ const primaryGlyph = computed<{ icon: LucideIcon; label: string }>(() => {
                     </div>
                     <div class="dock-spacer" />
                     <DockTabButton data-tier="primary" class="primary-action-demo">
-                        <GlyphFace
-                            active
-                            tint="var(--phase-color)"
-                            class="size-6 text-foreground"
-                        >
-                            <component :is="primaryGlyph.icon" :stroke-width="2.5" class="size-5" />
-                        </GlyphFace>
+                        <component :is="primaryGlyph.icon" :stroke-width="2.5" class="size-5 text-foreground" />
                         <span class="text-heading font-medium">{{ primaryGlyph.label }}</span>
                     </DockTabButton>
                 </template>

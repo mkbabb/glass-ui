@@ -3,17 +3,16 @@
 // + chassis-tier opacities. Resolves the --viz-topology / --viz-recursion
 // non-existent token references named in C-d §4.1.
 //
-// L.W3 Lane B — second-consumer wiring for `<InstrumentChassis>` + `<DiscoGlyph>`:
-// the chassis-tier ladder now sits alongside a live mini-chassis so consumers
-// see the tokens composed, and the chart-palette ladder sits alongside live
-// DiscoGlyph swatches that bind each chart hue into the facet gradient.
+// L.W3 Lane B — second-consumer wiring for `<InstrumentChassis>`: the
+// chassis-tier ladder sits alongside a live mini-chassis so consumers see the
+// tokens composed. The chart-palette ladder sits alongside a row of plain
+// token-color tiles so each chart hue reads at swatch scale.
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import TokenLadder from "../TokenLadder.vue";
 import type { TokenLadderRow } from "../TokenLadder.vue";
 import { InstrumentChassis } from "../../../src/components/custom/instrument-chassis";
-import { DiscoGlyph } from "../../../src/components/custom/disco-glyph";
 
 const chartAliases: TokenLadderRow[] = [
     { cls: "bg-[var(--chart-ping)]", label: "--chart-ping", hint: "viz-fourier basis" },
@@ -29,14 +28,11 @@ const chassisOpacities: TokenLadderRow[] = [
     { cls: "bg-[var(--glass-specular)]", label: "--glass-specular", hint: "highlight pinch" },
 ];
 
-// Lucide-shaped SVG paths reused for the facet-swatch row.
-const ARROW_RIGHT = "M3 10.5h11.4l-3.95-3.95 1.55-1.55L18.5 12l-6.5 7-1.55-1.55 3.95-3.95H3z";
-
-const chartGlyphSwatches: { id: string; hint: string; phaseColor: string }[] = [
-    { id: "ping", hint: "--chart-ping", phaseColor: "var(--chart-ping)" },
-    { id: "download", hint: "--chart-download", phaseColor: "var(--chart-download)" },
-    { id: "upload", hint: "--chart-upload", phaseColor: "var(--chart-upload)" },
-    { id: "jitter", hint: "--chart-jitter", phaseColor: "var(--chart-jitter)" },
+const chartTileSwatches: { id: string; hint: string; cssVar: string }[] = [
+    { id: "ping", hint: "--chart-ping", cssVar: "var(--chart-ping)" },
+    { id: "download", hint: "--chart-download", cssVar: "var(--chart-download)" },
+    { id: "upload", hint: "--chart-upload", cssVar: "var(--chart-upload)" },
+    { id: "jitter", hint: "--chart-jitter", cssVar: "var(--chart-jitter)" },
 ];
 </script>
 
@@ -57,24 +53,20 @@ const chartGlyphSwatches: { id: string; hint: string; phaseColor: string }[] = [
         </StorySection>
 
         <StorySection
-            label="chart palette · DiscoGlyph facet swatches"
-            blurb="Each chart-palette hue drives the 8-stop facet gradient on a DiscoGlyph. The base silhouette holds currentColor; the facet overlay reads the chart token as `phaseColor`. This is the same primitive consumers compose under GlyphFace caps and inside primary-audacious CTAs — one place to verify the chart palette reads at glyph scale."
+            label="chart palette · token-color tiles"
+            blurb="Each chart-palette hue painted as a plain token-color tile. The tile reads the chart token directly as its background — one place to verify the chart palette reads at swatch scale."
         >
             <ShowcaseFrame pad="lg">
                 <div class="flex flex-wrap items-center gap-8">
                     <div
-                        v-for="swatch in chartGlyphSwatches"
+                        v-for="swatch in chartTileSwatches"
                         :key="swatch.id"
                         class="flex flex-col items-center gap-2"
                     >
-                        <div class="size-12 text-foreground">
-                            <DiscoGlyph
-                                :silhouette="ARROW_RIGHT"
-                                :active="true"
-                                :phase-color="swatch.phaseColor"
-                                facet-axis="vertical"
-                            />
-                        </div>
+                        <div
+                            class="size-12 rounded-md border border-border"
+                            :style="{ background: swatch.cssVar }"
+                        />
                         <span class="text-mono-caption text-muted-foreground">{{ swatch.hint }}</span>
                     </div>
                 </div>

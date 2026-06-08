@@ -1,10 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { nextTick, ref } from "vue";
 import ExpandableContainer from "../src/components/custom/expandable-container/ExpandableContainer.vue";
 import TypewriterText from "../src/components/custom/typewriter/TypewriterText.vue";
-import { useGlassCarousel } from "../src/components/custom/glass-carousel/useGlassCarousel";
-import { mountComposable } from "./utils/mountComposable";
 
 afterEach(() => {
     vi.useRealTimers();
@@ -50,41 +47,5 @@ describe("lifecycle cleanup", () => {
         expect(document.body.style.overflow).toBe("auto");
 
         second.unmount();
-    });
-
-    it("detaches glass carousel scroll listeners from the bound viewport", async () => {
-        const orientation = ref<"horizontal" | "vertical">("horizontal");
-        const expanded = ref(false);
-        const rootEl = ref<HTMLElement | null>(document.createElement("div"));
-        const viewportEl = ref<HTMLElement | null>(null);
-        const firstViewport = document.createElement("div");
-        const secondViewport = document.createElement("div");
-        const firstAdd = vi.spyOn(firstViewport, "addEventListener");
-        const firstRemove = vi.spyOn(firstViewport, "removeEventListener");
-        const secondAdd = vi.spyOn(secondViewport, "addEventListener");
-        const secondRemove = vi.spyOn(secondViewport, "removeEventListener");
-
-        const mounted = mountComposable(() =>
-            useGlassCarousel({
-                orientation,
-                expanded,
-                rootEl,
-                viewportEl,
-            }),
-        );
-
-        viewportEl.value = firstViewport;
-        await nextTick();
-        const firstScrollHandler = firstAdd.mock.calls[0]?.[1];
-        expect(firstAdd).toHaveBeenCalledWith("scroll", firstScrollHandler, { passive: true });
-
-        viewportEl.value = secondViewport;
-        await nextTick();
-        const secondScrollHandler = secondAdd.mock.calls[0]?.[1];
-        expect(firstRemove).toHaveBeenCalledWith("scroll", firstScrollHandler);
-        expect(secondAdd).toHaveBeenCalledWith("scroll", secondScrollHandler, { passive: true });
-
-        mounted.unmount();
-        expect(secondRemove).toHaveBeenCalledWith("scroll", secondScrollHandler);
     });
 });

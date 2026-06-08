@@ -216,7 +216,7 @@ export const GATES = [
         id: "proof:motion-value-free",
         cmd: "proof:motion-value-free",
         tags: ["local", "ci"],
-        note: "AV.W3 — the W3-lifted/adopted motion composables (useCountup/vReveal/useStagger*/useLayerTransition/useGlassCarousel) consume the keyframes LIGHT tier only (no value.js edge, no loadAnimationEngine/animate/CSSKeyframesAnimation). Sibling of proof:blob-value-free",
+        note: "AV.W3 — the W3-lifted/adopted motion composables (useCountup/vReveal/useStagger*/useLayerTransition) consume the keyframes LIGHT tier only (no value.js edge, no loadAnimationEngine/animate/CSSKeyframesAnimation). Sibling of proof:blob-value-free",
     },
     {
         id: "proof:blob-space-gamma",
@@ -396,7 +396,7 @@ export const GATES = [
         id: "proof:di-consistency",
         cmd: "proof:di-consistency",
         tags: ["local", "ci"],
-        note: "AV.W14 — every InjectionKey<T> context that hand-rolls a strict-or-optional triplet collapses onto the canonical createStrictContext/createOptionalContext pair (dock/dock-layer = strict+optional, toggle-group/glyph-face/configurator = optional, sortable = strict; goo-blob BLOB_CONFIG_KEY is an allowlisted // di-default: external-provide key); the strict-vs-optional matrix matches; mulberry32/hashString defined exactly once (src/utils/prng.ts). Bite: re-inline a hand-rolled inject()+throw triplet → RED",
+        note: "AV.W14 — every InjectionKey<T> context that hand-rolls a strict-or-optional triplet collapses onto the canonical createStrictContext/createOptionalContext pair (dock/dock-layer = strict+optional, toggle-group/configurator = optional, sortable = strict; goo-blob BLOB_CONFIG_KEY is an allowlisted // di-default: external-provide key); the strict-vs-optional matrix matches; mulberry32/hashString defined exactly once (src/utils/prng.ts). Bite: re-inline a hand-rolled inject()+throw triplet → RED",
     },
     {
         id: "proof:no-nested-import",
@@ -552,7 +552,7 @@ export const GATES = [
         id: "proof:carousel-glass-atoms",
         cmd: "proof:carousel-glass-atoms",
         tags: ["local", "ci"],
-        note: "AX.W23 — the carousel dot rail + chrome RENDER assertion (reads the emitted dist/glass-ui.css, not a source string). FOUR clauses: (A) DOT-CONTRAST — the emitted .carousel-dot::before inactive fill is color-mix(in srgb, var(--foreground) N%) whose RESOLVED color clears ≥3:1 (WCAG 1.4.11) against the composited bg-card/30 dark card in BOTH schemes (born-RED on HEAD's bg-muted-medium ~1.2:1); (B) NO-DEAD-CLASS — CarouselDots carries no scale-[var(--x)] var-in-arbitrary non-emit AND the active emphasis emits a REAL scoped .carousel-dot[data-active]::before width|height morph; (C) FOUR-STATE — GlassCarouselItem carries data-state + aria-pressed + .focus-ring + .tap-squish; (D) CHROME-SUBSTRATE — GlassCarousel composes a .glass-material band member. NOTE reads dist/ → run after build. Bite: revert the dot to bg-muted-medium → (A) RED; re-add scale-[var(--x)] or drop the [data-active] morph → (B) RED; drop a four-state attr → (C) RED; strip the band class → (D) RED.",
+        note: "AX.W23 — the carousel dot rail RENDER assertion (reads the emitted dist/glass-ui.css, not a source string). TWO clauses (AX.W19 pruned the custom/glass-carousel composite + its former clauses C FOUR-STATE / D CHROME-SUBSTRATE): (A) DOT-CONTRAST — the emitted .carousel-dot::before inactive fill is color-mix(in srgb, var(--foreground) N%) whose RESOLVED color clears ≥3:1 (WCAG 1.4.11) against the composited bg-card/30 dark card in BOTH schemes (born-RED on HEAD's bg-muted-medium ~1.2:1); (B) NO-DEAD-CLASS — CarouselDots carries no scale-[var(--x)] var-in-arbitrary non-emit AND the active emphasis emits a REAL scoped .carousel-dot[data-active]::before width|height morph. NOTE reads dist/ → run after build. Bite: revert the dot to bg-muted-medium → (A) RED; re-add scale-[var(--x)] or drop the [data-active] morph → (B) RED.",
     },
     {
         id: "proof:deck-progress-rail",

@@ -43,7 +43,7 @@ export const EXPECTED_TREE = [
         "number-field", "select", "combobox", "multi-select", "toggle",
         "toggle-chip", "label", "badge", "separator", "section",
         "metric-badge", "metric-pill", "status-dot", "pulse", "stacked-icons",
-        "dark-mode-toggle", "glyph-face", "disco-glyph",
+        "dark-mode-toggle",
     ]],
     ["containers", [
         "dialog", "native-top-layer", "sheet", "drawer", "popover",
@@ -51,7 +51,7 @@ export const EXPECTED_TREE = [
         "collapsible", "hover-popover", "expandable-container",
     ]],
     ["navigation", [
-        "tabs", "dock", "dock-layers", "rail", "carousel", "glass-carousel",
+        "tabs", "dock", "dock-layers", "rail", "carousel",
         "deck-progress", "header-ribbon",
     ]],
     ["data", [

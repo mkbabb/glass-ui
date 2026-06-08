@@ -32,7 +32,6 @@ function cliPaths() {
             "src/composables/motion/vReveal.ts",
             "src/composables/motion/useStaggerReveal.ts",
             "src/components/custom/dock/composables/useLayerTransition.ts",
-            "src/components/custom/glass-carousel/useGlassCarousel.ts",
         ].map((p) => resolve(ROOT, p)),
         ARTIFACT: gateArtifactPath(
             "GLASS_UI_AV_W3_MOTION_VALUE_FREE_ARTIFACT",
