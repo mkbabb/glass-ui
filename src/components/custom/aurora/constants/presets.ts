@@ -52,21 +52,26 @@ export interface AuroraNucleus {
     angle?: number;
 }
 
-// AW.W4.3/W4.4 — `vangogh` (first-class energy-graded atomic-stroke medium) and
-// `oil-pastel` (the reworked deposition+scumble+waxy medium) join the union
-// additively. Both force the structure-tensor orientation (the painterly hug). The
-// `uMedium` ladder dispatches vangogh==5 / oil-pastel==6; the bridge MEDIUM_ID map
-// + the aurora.frag dispatch + the uniform uploads all move in the W4 lane.
+// `vangogh` (first-class atomic comma/crescent dabs), `oil-pastel` (stroke-deposition
+// + burnish), and `crayon` (DRY tooth-multiply) are all first-class mediums. Each
+// AUTHORS its own shader body (AX.W13 — no shared dispatch). van-Gogh/oil-pastel/crayon
+// force the structure-tensor orientation (the painterly hug). The `uMedium` ladder
+// dispatches crayon==4 / vangogh==5 / oil-pastel==6; the bridge MEDIUM_ID map + the
+// aurora.frag dispatch + the uniform uploads all carry the medium.
 export type AuroraMedium =
     | "smooth"
     | "pastel"
     | "watercolor"
     | "oil"
+    | "crayon"
     | "vangogh"
     | "oil-pastel";
 
-/** Applied only when `medium === "oil"`. Routes inside the shader. */
-export type StrokeMode = "oil" | "knife" | "crayon" | "chunky";
+// AX.W13 — `crayon` is a first-class `AuroraMedium` (uMedium==4), NOT a `strokeMode`.
+// The legacy `oil` + `strokeMode:"crayon"` peer-route is REMOVED (clean break, no
+// alias — MEMORY no-backwards-compat); a crayon surface selects `medium:"crayon"`.
+/** Oil-stroke sub-mode. Applied only when `medium === "oil"`. Routes inside the shader. */
+export type StrokeMode = "oil" | "knife" | "chunky";
 
 export type FlowPattern =
     | "none"

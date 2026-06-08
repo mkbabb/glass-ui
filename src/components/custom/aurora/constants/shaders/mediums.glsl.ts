@@ -123,30 +123,25 @@ vec3 mediumPastel(vec3 col, vec2 p, float t) {
 `;
 
 export const AURORA_MEDIUMS_POST_BRUSH_GLSL = /* glsl */ `// ── Medium id constants (mirror uniformBridge.ts MEDIUM_ID — the uMedium ladder) ──
-// The StrokeProfile selector (AX.W12) dispatches on the medium id; today only oil
-// authors a profile, the W13 van-Gogh / oil-pastel profiles add cases to profileFor.
+// The StrokeProfile selector (AX.W12 + AX.W13) dispatches on the medium id: oil,
+// van-Gogh, and oil-pastel each AUTHOR a first-class profile in profileFor.
 #define MEDIUM_OIL 3
+#define MEDIUM_CRAYON 4
+#define MEDIUM_VANGOGH 5
+#define MEDIUM_OILPASTEL 6
 
-// ── Crayon / oil-pastel — paper tooth × wax pigment (PEER medium) ─────────
-// Crayon is not strokes. It's pigment crumbs dragged across paper tooth.
-// Model: heavy 2D tooth noise at multiple scales, anisotropically stretched
-// along flow direction, multiplied into the base color. Add a slow "waxy
-// film" that slightly unifies hues, and occasional darker "pressed" spots
-// where the crayon dug in. NO straight segments. Dispatched at main() level as
-// a peer of pastel/watercolor/oil — never a branch inside mediumOil().
-// AW.W4.4 — GENUINE oil pastel: pigment DEPOSITED on the paper tooth, a broken
-// SCUMBLE upper layer letting the paper/lower color show through, and a waxy BURNISH
-// film whose sheen grows with layer count. Reworked from the old tooth-multiply
-// gradient into a material-truth deposition model. Oriented along the ETF field
-// (W4.1); OKLCh broken color (W5). The oil-pastel first-class medium (uMedium==6)
-// AND the legacy crayon peer (uMedium==4) both dispatch this single body.
+// ── Crayon — DRY wax pigment on paper tooth (first-class medium, uMedium==4) ──
+// Crayon is not strokes. It's dry pigment crumbs dragged across paper tooth — the
+// DRY tooth-multiply model: anisotropic tooth noise multiplied into the base, a hard
+// SCUMBLE that lets the lower color show through the broken upper layer, and stable
+// OKLCh broken-color pigment patches. NO sheen, NO burnish film — that waxy gloss is
+// the OIL-PASTEL deposition's signature (mediumOilPastel), distinct from dry crayon
+// (AX.W13 slice 8 F1 — the split). Crayon shares the SUBSTRATE (the structure-tensor
+// orientation, the tooth noise, OKLCh brokenColorJitter), not the dispatch body.
 vec3 mediumCrayon(vec3 col, vec2 p, float t) {
-  // Orient the deposition streaks along the structure-tensor edge-tangent. The
-  // painterly mediums force uStrokeOrient==tensor, so read the tensor field directly;
-  // fall back to flowField for the legacy crayon strokeMode route.
-  vec2 flow = (uStrokeOrient == 1)
-    ? structureTensorField(p, t, flowField(p, t)).xy
-    : flowField(p, t);
+  // Orient the deposition along the structure-tensor edge-tangent (the bridge forces
+  // tensor for crayon, so read the tensor field directly).
+  vec2 flow = structureTensorField(p, t, flowField(p, t)).xy;
   float ang = atan(flow.y, flow.x);
   float ca = cos(-ang), sa = sin(-ang);
   vec2 pr = vec2(p.x * ca - p.y * sa, p.x * sa + p.y * ca);
@@ -154,46 +149,27 @@ vec3 mediumCrayon(vec3 col, vec2 p, float t) {
   float aniso = mix(0.45, 0.95, uStrokeAnisotropy);
   float scale = max(uStrokeScale * 1.6, 180.0);
 
-  // ── Paper TOOTH height field — the relief the pigment rides. Anisotropic
+  // ── Paper TOOTH height field — the relief the dry pigment rides. Anisotropic
   // (squished along flow, coarse cross-flow). Peaks = ridges, valleys = paper pits.
   float t1 = vnoise(vec2(pr.x * scale * aniso, pr.y * scale));
   float t2 = vnoise(vec2(pr.x * scale * aniso * 0.4, pr.y * scale * 0.4) + 11.0);
   float t3 = vnoise(vec2(pr.x * scale * aniso * 2.1, pr.y * scale * 2.1) + 23.0);
-  float paperHeight = 0.55 * t1 + 0.30 * t2 + 0.15 * t3;
+  float tooth = 0.55 * t1 + 0.30 * t2 + 0.15 * t3;
 
-  // ── DEPOSITION — pigment lands on the tooth PEAKS and skips the valleys. Light
-  // pressure (low uStrokeAmount) shows paper through the valleys; heavy pressure
-  // fills them. deposit in [0,1] is the per-pixel pigment coverage.
+  // ── DRY TOOTH-MULTIPLY — the crayon multiplies the tooth relief into the base
+  // color (dark in the pits, bright on the ridges). The pressure (uStrokeAmount) sets
+  // how hard the multiply bites. This is the DRY model — no pigment build-up, no sheen.
   float pressure = clamp(uStrokeAmount, 0.0, 1.0);
-  float toothFloor = mix(0.62, 0.18, pressure);  // heavy pressure lowers the floor
-  float deposit = smoothstep(toothFloor, toothFloor + 0.35, paperHeight);
+  float bite = mix(0.18, 0.46, pressure);        // multiply strength
+  vec3 result = col * (1.0 - bite * (0.5 - tooth));
 
-  // ── SCUMBLE — a broken UPPER layer at coverage < 1 (the signature oil-pastel
-  // move). A coarse mask gates a lighter dragged stroke over the deposition so the
-  // LOWER color shows through the gaps. Drag direction follows the tensor flow.
-  float scumbleMask = smoothstep(0.35, 0.85, vnoise(vec2(pr.x * scale * 0.55, pr.y * scale * 0.22) + 7.0));
-  float scumbleCoverage = scumbleMask * pressure * 0.6;  // < 1 — paper/lower shows
-
-  // The lower color is the base; the deposited pigment is the base lifted into the
-  // tooth. Mix the base toward the deposited layer by the deposition coverage, then
-  // let the scumble break the upper layer so the lower reads through the gaps.
-  vec3 paper = col * 0.92;                       // the paper-showing-through tone
-  vec3 deposited = col;                          // the pigment-on-tooth tone
-  vec3 result = mix(paper, deposited, deposit);
-  // Scumble: a broken pass of the deposited color at < 1 coverage.
-  result = mix(result, deposited * (0.96 + 0.08 * t1), scumbleCoverage);
-
-  // ── WAXY BURNISH FILM — a low-roughness BROAD specular lobe whose sheen grows
-  // with the pigment build-up (burnish), distinct from oil's sharp glint. Reads the
-  // paper-height gradient as a soft normal and lights it with the movable uLightDir.
-  float waxNormalZ = 2.4;
-  vec3 N = normalize(vec3(-dFdx(paperHeight) * 30.0, -dFdy(paperHeight) * 30.0, waxNormalZ));
-  vec3 L = normalize(uLightDir);
-  vec3 V = vec3(0.0, 0.0, 1.0);
-  vec3 H = normalize(L + V);
-  float burnish = deposit * (0.5 + 0.5 * scumbleMask); // sheen grows with build-up
-  float sheen = pow(max(dot(N, H), 0.0), 6.0);          // broad waxy lobe
-  result += burnish * sheen * 0.10 * uLightColor;
+  // ── HARD SCUMBLE — a broken upper layer that lets the lower color show through the
+  // gaps. A coarse mask gates a HARD (high-contrast) dragged pass so the dry crayon
+  // reads as broken pigment crumbs, not a smooth wash. Drag follows the tensor flow.
+  float scumbleMask = smoothstep(0.42, 0.78, vnoise(vec2(pr.x * scale * 0.55, pr.y * scale * 0.22) + 7.0));
+  float scumbleCoverage = scumbleMask * pressure * 0.7;     // hard broken upper layer
+  vec3 paper = col * mix(0.80, 0.94, pressure);             // the paper showing through
+  result = mix(paper, result, scumbleCoverage);
 
   // ── Broken-color pigment: stable wax/pigment patches in OKLCh (W5), not flicker.
   vec2 pigmentCell = floor(pr * max(scale * 0.18, 32.0));
@@ -205,8 +181,8 @@ vec3 mediumCrayon(vec3 col, vec2 p, float t) {
     0.45 + 0.55 * pigmentMask
   );
 
-  // Oil pastel is saturation-amplified (the waxy chroma punch).
-  result = saturate3(result, 1.12);
+  // Crayon is saturation-amplified (the wax chroma punch — but DRY, no sheen).
+  result = saturate3(result, 1.08);
 
   return result;
 }
@@ -218,7 +194,7 @@ vec3 mediumCrayon(vec3 col, vec2 p, float t) {
 // the four-layer bestOil/paintOver cascade off it. A new medium (the W13 van-Gogh /
 // oil-pastel profiles) AUTHORS a profile entry — it never edits a monolith.
 struct StrokeProfile {
-  int   shapeType;   // 0 tapered, 1 load-drag, 2 dab, 3 even
+  int   shapeType;   // 0 tapered, 1 load-drag, 2 dab, 3 even, 4 comma/crescent
   float bristleAmp;  // edge raggedness 0..0.5
   float streakFreq;  // internal-streak spatial frequency
   float streakAmp;   // internal-streak amplitude
@@ -230,12 +206,19 @@ struct StrokeProfile {
   float densityBig;  // layer-1 (big gestural) placement density gate
   float densityMed;  // layer-2 (medium body) placement density gate
   float densitySml;  // layer-3 (small dabs) placement density gate
+  float energyGrade; // AX.W13 — SBR energy-grade magnitude (0 off; 1 the van-Gogh
+                     // Starry-Night length cascade). The energy grade is a PROFILE
+                     // field, NOT a buried uMedium==5 bestOil branch (slice 8 F0).
+  float impastoFloor;// AX.W13 — the per-stroke height-crown floor (0.4 oil falloff;
+                     // 1.0 van-Gogh FULL-height crown so each dab catches its glint).
 };
 
 // The (medium, mode) -> StrokeProfile selector. The if-ladder's knobs are the profile's
 // fields; a new medium adds a CASE here (never an edit to a dispatch body). mode is the
-// uStrokeMode oil-stroke sub-mode (0 oil, 1 palette-knife, 3 brushwork) — crayon is a
-// PEER medium (uMedium==4), not an oil mode.
+// uStrokeMode oil-stroke sub-mode (0 oil, 1 palette-knife, 3 brushwork). crayon
+// (uMedium==4) is a PEER tooth-multiply medium that never reaches the stroke cascade.
+// The painterly STROKE mediums are oil (MEDIUM_OIL), van-Gogh (MEDIUM_VANGOGH) and
+// oil-pastel (MEDIUM_OILPASTEL) — each AUTHORS its own profile entry below.
 StrokeProfile profileFor(int medium, int mode) {
   // The oil baseline (mode 0) — balanced modern-abstract/palette-knife hybrid.
   StrokeProfile prof = StrokeProfile(
@@ -250,8 +233,58 @@ StrokeProfile profileFor(int medium, int mode) {
     1.03,   // pigmentSat
     0.65,   // densityBig
     0.78,   // densityMed
-    0.90    // densitySml
+    0.90,   // densitySml
+    0.0,    // energyGrade — oil is uniform-length (no Starry-Night cascade)
+    0.4     // impastoFloor — oil's 0.4+0.6·edgeN crown falloff
   );
+
+  // ── Van-Gogh — first-class atomic comma/crescent dabs (slice 8 F0). NOT a length
+  // modulation of oil: sparse high-contrast SEPARABLE marks with their own asymmetric
+  // shape, the full Starry-Night energy cascade (energyGrade=1), and full-height
+  // impasto crowns so each dab catches its own glint. The mode sub-modes don't apply
+  // (van-Gogh has its own grammar), so this returns early.
+  if (medium == MEDIUM_VANGOGH) {
+    prof.shapeType   = 4;     // comma / crescent — the divisionist atomic dab
+    prof.bristleAmp  = 0.22;  // a touch of raggedness on the loaded head
+    prof.streakFreq  = 16.0;  // tight within-stroke streaks (the loaded comma)
+    prof.streakAmp   = 0.16;
+    prof.impastoAmp  = 1.5;   // heavy paint per atomic dab
+    prof.hardness    = 0.92;  // crisp separable edges (visible inter-stroke gaps)
+    prof.toothScale  = 220.0;
+    prof.toothAmp    = 0.06;
+    prof.pigmentSat  = 1.12;  // the van-Gogh chroma punch
+    // SPARSE placement — visible inter-stroke canvas gaps (the atomicity read). Lower
+    // density gates than oil so each mark stays separable, not a coverage smear.
+    prof.densityBig  = 0.42;
+    prof.densityMed  = 0.52;
+    prof.densitySml  = 0.60;
+    prof.energyGrade = 1.0;   // the full Starry-Night length cascade (the profile field)
+    prof.impastoFloor = 1.0;  // FULL-height crowns — every atomic dab catches its glint
+    return prof;
+  }
+
+  // ── Oil-pastel — broad smeared directional strokes deposited via the brush engine
+  // (slice 8 F1). Creamy soft edges (low hardness), heavy build-up, and a chroma punch.
+  // Distinct from the dry-crayon tooth-multiply (mediumCrayon): oil-pastel LAYS strokes.
+  if (medium == MEDIUM_OILPASTEL) {
+    prof.shapeType   = 2;     // dab / blob — broad short smeared marks
+    prof.bristleAmp  = 0.10;  // smooth creamy edges (waxy pastel, not bristle)
+    prof.streakFreq  = 6.0;   // soft low-frequency internal smear
+    prof.streakAmp   = 0.07;
+    prof.impastoAmp  = 0.7;   // build-up, but flatter than oil impasto
+    prof.hardness    = 0.42;  // CREAMY — soft compositing, strokes blend on overlap
+    prof.toothScale  = 280.0;
+    prof.toothAmp    = 0.12;  // the pastel tooth reads stronger
+    prof.pigmentSat  = 1.16;  // the waxy chroma punch
+    prof.densityBig  = 0.80;  // dense — broad coverage, pigment-on-pigment build-up
+    prof.densityMed  = 0.90;
+    prof.densitySml  = 0.95;
+    prof.energyGrade = 0.0;   // uniform (no Starry-Night grade)
+    prof.impastoFloor = 0.55; // a softer crown than van-Gogh's full-height glint
+    return prof;
+  }
+
+  // ── Oil sub-modes (mode dispatch on the oil medium).
   if (mode == 1) {           // palette knife — razor edges, heavy impasto
     prof.shapeType  = 3;     // flat, even
     prof.bristleAmp = 0.12;
@@ -299,23 +332,25 @@ void paintStrokeLayers(inout vec3 col, inout float height, StrokeProfile prof,
 
   // Layer 1 — big gestural strokes (sparse, shaping)
   StrokeHit hBig = bestOil(p, sBig, lenMulBig, widMulBig, jitterAmt * 0.55,
-                           prof.densityBig, prof.shapeType, prof.bristleAmp, flow, t, 1.3);
+                           prof.densityBig, prof.shapeType, prof.bristleAmp, flow, t, 1.3,
+                           prof.energyGrade);
   paintOver(col, height, hBig, prof.streakFreq * 0.7, prof.streakAmp,
-            uImpasto * prof.impastoAmp * uStrokeAmount, prof.hardness, 1.3);
+            uImpasto * prof.impastoAmp * uStrokeAmount, prof.hardness, 1.3, prof.impastoFloor);
 
   // Layer 2 — medium body strokes
   StrokeHit hMed = bestOil(p + vec2(11.3, 3.7), sMed, lenMulMed, widMulMed,
-                           jitterAmt, prof.densityMed, prof.shapeType, prof.bristleAmp, flow, t, 2.7);
+                           jitterAmt, prof.densityMed, prof.shapeType, prof.bristleAmp, flow, t, 2.7,
+                           prof.energyGrade);
   paintOver(col, height, hMed, prof.streakFreq, prof.streakAmp,
-            uImpasto * prof.impastoAmp * uStrokeAmount, prof.hardness, 2.7);
+            uImpasto * prof.impastoAmp * uStrokeAmount, prof.hardness, 2.7, prof.impastoFloor);
 
   // Layer 3 — small dabs (more frequent, smaller)
   int smlShape = (mode == 1) ? 2 : prof.shapeType; // knife uses dabs for sparkle
   StrokeHit hSml = bestOil(p + vec2(-5.1, 8.4), sSml, lenMulSml, widMulSml,
                            jitterAmt * 1.3, prof.densitySml, smlShape,
-                           prof.bristleAmp * 0.85, flow, t, 4.1);
+                           prof.bristleAmp * 0.85, flow, t, 4.1, prof.energyGrade);
   paintOver(col, height, hSml, prof.streakFreq * 1.4, prof.streakAmp * 0.8,
-            uImpasto * prof.impastoAmp * 0.65 * uStrokeAmount, prof.hardness, 4.1);
+            uImpasto * prof.impastoAmp * 0.65 * uStrokeAmount, prof.hardness, 4.1, prof.impastoFloor);
 
   // Layer 4 — fill dabs (very dense, very small) — covers bald spots
   float sFill = baseScale * 0.22;
@@ -324,28 +359,27 @@ void paintStrokeLayers(inout vec3 col, inout float height, StrokeProfile prof,
   int fillShape = (mode == 1) ? 3 : 2; // knife=even, others=dab (round fills)
   StrokeHit hFill = bestOil(p + vec2(3.9, -6.2), sFill, lenMulFill, widMulFill,
                             jitterAmt * 1.5, 0.95, fillShape,
-                            prof.bristleAmp * 0.6, flow, t, 8.9);
+                            prof.bristleAmp * 0.6, flow, t, 8.9, prof.energyGrade);
   paintOver(col, height, hFill, prof.streakFreq * 1.8, prof.streakAmp * 0.6,
-            uImpasto * prof.impastoAmp * 0.4 * uStrokeAmount, prof.hardness * 0.9, 8.9);
+            uImpasto * prof.impastoAmp * 0.4 * uStrokeAmount, prof.hardness * 0.9, 8.9, prof.impastoFloor);
 
   // Optional crosshatch layer
   if (uStrokeLayers == 2) {
     vec2 flow2 = vec2(-flow.y, flow.x);
     StrokeHit hX = bestOil(p + vec2(7.3, -2.1), sMed, lenMulMed * 0.9, widMulMed,
-                           jitterAmt, prof.densityMed * 0.7, prof.shapeType, prof.bristleAmp, flow2, t, 6.5);
+                           jitterAmt, prof.densityMed * 0.7, prof.shapeType, prof.bristleAmp, flow2, t, 6.5,
+                           prof.energyGrade);
     paintOver(col, height, hX, prof.streakFreq, prof.streakAmp * 0.85,
-              uImpasto * prof.impastoAmp * 0.55 * uStrokeAmount, prof.hardness, 6.5);
+              uImpasto * prof.impastoAmp * 0.55 * uStrokeAmount, prof.hardness, 6.5, prof.impastoFloor);
   }
 }
 
-vec3 mediumOil(vec3 col, vec2 p, float t) {
-  // The oil medium is now a thin body: fetch the profile, paint the layers, then the
-  // canvas-tooth + relight + saturation finish. The per-mode if-ladder + the four
-  // hand-unrolled stroke layers moved into profileFor + paintStrokeLayers (AX.W12).
-  //   uStrokeMode: 0 oil (gestural), 1 palette-knife, 3 brushwork.
-  int mode = uStrokeMode;
-  StrokeProfile prof = profileFor(MEDIUM_OIL, mode);
-
+// The shared stroke-medium SUBSTRATE finish (AX.W12 + AX.W13): paint the four-layer
+// cascade off the profile, then canvas-tooth + relight + saturation. The three painterly
+// STROKE mediums (oil / van-Gogh / oil-pastel) each AUTHOR their own profile and call
+// this — the substrate is shared, the PROFILE (not a dispatch-body fork) differentiates
+// the medium (slice 8 F6). mode passes through for the cascade's mode-special-cased shapes.
+vec3 paintStrokeMedium(vec3 col, vec2 p, float t, StrokeProfile prof, int mode) {
   vec3 result = col;
   // AW.W4.2 — accumulated paint HEIGHT across the stroke layers. The relight reads
   // its gradient for the normal; the canvas tooth seeds the base relief.
@@ -370,13 +404,36 @@ vec3 mediumOil(vec3 col, vec2 p, float t) {
   return result;
 }
 
-// AW.W4.3 — the van-Gogh atomic-stroke medium. Composes the oil stroke engine
-// (mediumOil) with the W4.1 ETF orientation (forced tensor via the bridge), the
-// W4.3 energy grading (gated by uMedium==5 inside bestOil — long confident strokes
-// in the lights/coherent zones, short dabs in the darks/flat zones, the Starry-Night
-// Kolmogorov/Batchelor cascade), the W5 OKLCh per-stroke pigment jitter (already in
-// bestOil's brokenColorJitter), and the W4.2 real impasto relight. No subject matter
-// — the "source image" is the generated nuclei field, so strokes trace its iso-bands.
+vec3 mediumOil(vec3 col, vec2 p, float t) {
+  // The oil medium is a thin body: fetch the oil profile (mode-dispatched), paint via
+  // the shared stroke substrate.  uStrokeMode: 0 oil (gestural), 1 knife, 3 brushwork.
+  int mode = uStrokeMode;
+  StrokeProfile prof = profileFor(MEDIUM_OIL, mode);
+  return paintStrokeMedium(col, p, t, prof, mode);
+}
+
+// AX.W13 — the van-Gogh atomic-stroke medium is now a FIRST-CLASS body, NOT a
+// mediumOil passthrough (slice 8 F0). It composes its OWN vangogh StrokeProfile (the
+// comma/crescent shapeType, sparse high-contrast atomic placement with visible
+// inter-stroke gaps, the full Starry-Night energy-grade cascade as a PROFILE field,
+// and full-height impasto crowns) through the shared stroke substrate. The bridge forces
+// the ETF (tensor) orientation so the swirl-rows queue along the color field's tangent;
+// the within-stroke OKLCh broken color (paintOver) + the OKLab stroke OVER-composite
+// give pigment-true atom-level shimmer. No subject matter — the "source image" is the
+// generated nuclei field, so dabs trace its iso-bands (the Starry-Night swirl-rows).
 vec3 mediumVangogh(vec3 col, vec2 p, float t) {
-  return mediumOil(col, p, t);
+  StrokeProfile prof = profileFor(MEDIUM_VANGOGH, 0);
+  return paintStrokeMedium(col, p, t, prof, 0);
+}
+
+// AX.W13 — the oil-pastel medium (uMedium==6) is a DISTINCT stroke-deposition body,
+// split out of the dry-crayon tooth-multiply (mediumCrayon) (slice 8 F1). It DEPOSITS
+// broad smeared directional strokes via the same brush engine with a creamy soft
+// hardness, heavy pigment build-up where strokes overlap, and a chroma punch — the
+// stroke-deposition model that gives oil-pastel its depth and less-uniform read.
+// Shares the SUBSTRATE (the stroke cascade + tooth + relight) with oil/van-Gogh, NOT
+// the dispatch body of dry crayon. The bridge forces tensor orientation.
+vec3 mediumOilPastel(vec3 col, vec2 p, float t) {
+  StrokeProfile prof = profileFor(MEDIUM_OILPASTEL, 0);
+  return paintStrokeMedium(col, p, t, prof, 0);
 }`;

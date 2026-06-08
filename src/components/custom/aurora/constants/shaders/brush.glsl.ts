@@ -43,6 +43,10 @@ vec2 safeDir(vec2 dir) {
 //   1 load-drag  — fat start, tapers to a point
 //   2 dab        — ellipse-like, round center
 //   3 even       — near-constant, slight end taper
+//   4 comma      — van-Gogh atomic dab: ASYMMETRIC taper, fat near one end and
+//                  drawn to a fine point at the other (the divisionist crescent
+//                  mark). The width peak sits off-centre (~0.32) so the two ends
+//                  taper at DIFFERENT rates — a loaded round head + a dragged tail.
 float strokeShape(float t, int type) {
   t = clamp(t, 0.0, 1.0);
   if (type == 1) {
@@ -55,6 +59,14 @@ float strokeShape(float t, int type) {
   } else if (type == 3) {
     // mostly even, slight end softening
     return smoothstep(0.0, 0.08, t) * smoothstep(1.0, 0.92, t) * 0.95 + 0.05;
+  } else if (type == 4) {
+    // comma / crescent — width peaks at ~0.32 then drags to a fine tail. The two
+    // sides of the peak fall at different exponents (a fat round head, a long thin
+    // tail), so the mark reads as a directional van-Gogh comma, not a symmetric oval.
+    float peak = 0.32;
+    float head = smoothstep(0.0, peak, t);                            // rounded loaded head
+    float tail = pow(clamp((1.0 - t) / (1.0 - peak), 0.0, 1.0), 1.6); // dragged thin tail
+    return clamp(min(head, tail) * 1.04, 0.0, 1.0);
   }
   // 0 tapered
   return smoothstep(0.0, 0.22, t) * smoothstep(1.0, 0.78, t);
@@ -148,6 +160,24 @@ StrokeHit curvedStroke(vec2 p, vec2 a, vec2 b, float halfW,
   );
 }
 
+// The painterly STROKE mediums (those that deposit via paintStrokeLayers/paintOver):
+// oil (3), van-Gogh (5), oil-pastel (6). For these the stroke OVER-composite runs in
+// OKLab so overlapping complementaries mix through a chromatic path, not the linear-
+// RGB grey mud; the smooth/atmospheric pole never reaches paintOver so it pays nothing.
+bool isPainterlyStroke() {
+  return uMedium == 3 || uMedium == 5 || uMedium == 6;
+}
+
+// OKLab OVER-composite: lerp L,a,b of the over-color toward the under-color (the
+// Ottosson matrices spliced from procedural-color.glsl.ts — no new color math). Two
+// complementary-hued strokes overlapping transition through OKLab, where the midpoint
+// holds chroma, instead of the linear mix() that desaturates toward grey (slice 8 F2).
+vec3 paintOverOklab(vec3 under, vec3 over, float alpha) {
+  vec3 labU = linOklab(under);
+  vec3 labO = linOklab(over);
+  return max(oklabToLinearSrgb(mix(labU, labO, alpha)), vec3(0.0));
+}
+
 // Composite stroke over col with internal streaking + ACCUMULATE paint HEIGHT.
 //   streakAmp    — 0..0.2 how much internal streaks darken/lighten
 //   impastoAmp   — 0..1 paint-thickness contribution (the height the relight reads)
@@ -158,9 +188,20 @@ StrokeHit curvedStroke(vec2 p, vec2 a, vec2 b, float halfW,
 // thickness, perturbed by the bristle/streak fbm for ridges/grooves); mediumOil
 // derives a normal from the accumulated height gradient (dFdx/dFdy) and relights it
 // once with the movable uLightDir source (relightImpasto), in linear before aces().
+//
+// AX.W13 — the internal streak now perturbs HUE + CHROMA in OKLCh (not value-only),
+// so a single stroke carries a small hue gradient (broken color at the ATOM level —
+// adjacent strokes shimmer like real impasto, not flat stamped swatches; slice 8 F5);
+// and the OVER-composite runs in OKLab on the painterly stroke mediums so overlapping
+// complementaries mix as pigment, not the linear-mix grey (slice 8 F2).
+//   impastoFloor — the per-stroke height-crown floor: oil's 0.4+0.6*edgeN reads
+//                  floor=0.4 (the crown tapers to 40% at the stroke edge); the van-Gogh
+//                  profile passes floor=1.0 so each atomic dab catches a FULL-height
+//                  glint (scope item 1d). The crown magnitude is floor + (1-floor)*edgeN.
 void paintOver(inout vec3 col, inout float height, StrokeHit s,
                float streakFreq, float streakAmp,
-               float impastoAmp, float hardness, float streakSeed) {
+               float impastoAmp, float hardness, float streakSeed,
+               float impastoFloor) {
   if (s.coverage < 0.002) return;
   float strokeOpacity = clamp(uStrokeAmount, 0.0, 1.0);
   if (strokeOpacity <= 0.001) return;
@@ -171,6 +212,26 @@ void paintOver(inout vec3 col, inout float height, StrokeHit s,
   float streakA = fbm(vec2(s.alongT * streakFreq, s.crossN * 2.7 + streakSeed));
   float streakB = fbm(vec2(s.alongT * streakFreq * 0.6 + streakSeed * 3.7, s.crossN * 4.1));
   float streak = 0.6 * (streakA - 0.5) + 0.4 * (streakB - 0.5);
+
+  // ── WITHIN-stroke OKLCh broken color (AX.W13, slice 8 F5). The streak fBm perturbs
+  // the stroke's HUE + CHROMA along alongT/crossN, seeded per-stroke, so a single
+  // stroke reads a small hue gradient (the atom-level broken-color shimmer). Value is
+  // carried by the same streak so the loaded-brush light/dark survives. Gated to the
+  // painterly stroke mediums + uBrokenColor (the smooth pole keeps the cheap value-only
+  // streak). A second decorrelated fBm drives the hue axis so hue ≠ a scaled value.
+  float hueStreak = fbm(vec2(s.alongT * streakFreq * 0.45 + streakSeed * 5.3,
+                             s.crossN * 1.9 + streakSeed * 1.7)) - 0.5;
+  if (isPainterlyStroke() && uBrokenColor > 0.001) {
+    vec3 lch = oklabToOklch(linOklab(c));
+    // ±~10° within-stroke hue swing + ±~9% chroma, scaled by uBrokenColor. Smaller
+    // than the per-stroke cell jitter (brokenColorJitter) — this is the intra-stroke
+    // gradient layered on top of the per-cell pigment patch.
+    lch.z += hueStreak * (20.0 * PI / 180.0) * uBrokenColor;
+    lch.y = max(lch.y * (1.0 + (streak) * 0.18 * uBrokenColor), 0.0);
+    c = max(oklabToLinearSrgb(oklchToOklab(lch)), vec3(0.0));
+  }
+  // Value streak (the loaded-brush light/dark across the bristles) — kept for every
+  // medium that reaches paintOver (the smooth pole never does).
   c *= 1.0 + streak * streakAmp * 2.0;
 
   // Subtle value variance across width (hollow-center catch-light)
@@ -179,13 +240,17 @@ void paintOver(inout vec3 col, inout float height, StrokeHit s,
 
   float softLimit = mix(0.35, 0.98, hardness);
   float alpha = smoothstep(0.0, 1.0 - softLimit, s.coverage) * strokeOpacity;
-  col = mix(col, c, alpha);
+  // OKLab OVER-composite on the painterly stroke mediums (overlap mixes as pigment,
+  // not grey); the smooth pole never reaches paintOver, so it keeps the cheap path.
+  col = isPainterlyStroke() ? paintOverOklab(col, c, alpha) : mix(col, c, alpha);
 
   // ── Accumulate paint HEIGHT (AW.W4.2). Thickness peaks at the stroke spine and
-  // falls to zero at the edge (edgeN: 0=edge, 1=spine), perturbed by the bristle
-  // streak so ridges/grooves form. The relight reads the gradient of this field.
+  // falls toward the impastoFloor at the edge (edgeN: 0=edge, 1=spine), perturbed by
+  // the bristle streak so ridges/grooves form. The relight reads the gradient of this
+  // field. The van-Gogh profile's floor=1.0 gives every atomic dab a full-height crown.
   float ridge = 0.7 + 0.3 * (streak + 0.5);
-  height += s.coverage * impastoAmp * (0.4 + 0.6 * s.edgeN) * ridge * alpha;
+  float crown = impastoFloor + (1.0 - impastoFloor) * s.edgeN;
+  height += s.coverage * impastoAmp * crown * ridge * alpha;
 }
 
 // AW.W4.2 — relight the accumulated paint height. Derive a normal from the height
@@ -216,9 +281,15 @@ vec3 relightImpasto(vec3 col, float height, float canvasBase) {
 // Best-of-9-neighbor placement: sample 3x3 surrounding cells and take the
 // stroke that covers this pixel most. Breaks the grid by per-cell jitter and
 // sparse density via noise thresholding.
+//   energyGrade — the SBR energy-grade magnitude (0 = none, the oil/oil-pastel
+//                 baseline; 1 = the full van-Gogh Starry-Night cascade — long
+//                 confident strokes in the lights/coherent zones, short dabs in
+//                 the darks/flat zones). The van-Gogh profile carries 1.0 (the
+//                 energy grade is a PROFILE field, not a buried uMedium==5 branch).
 StrokeHit bestOil(vec2 p, float cellSize, float lenMul, float halfWMul,
                   float jitterAmt, float density, int shapeType,
-                  float bristleAmp, vec2 flow, float t, float seed) {
+                  float bristleAmp, vec2 flow, float t, float seed,
+                  float energyGrade) {
   vec2 cell = floor(p / cellSize);
 
   StrokeHit best = noHit();
@@ -256,15 +327,18 @@ StrokeHit bestOil(vec2 p, float cellSize, float lenMul, float halfWMul,
       float localCurl = (fbm(center * (2.6 + seed * 0.11) + seed * 1.9) - 0.5) * 0.55 * uFlowCurl;
       vec2 dir = rotateDir(f, angJ + localCurl);
 
-      // AW.W4.3 — energy-graded length/density for the van-Gogh cascade: in vangogh
-      // mode (uMedium==5) modulate the stroke length by local luminance (bright →
-      // long confident strokes, dark → short dabs, the Starry-Night Kolmogorov/
-      // Batchelor congruence) AND by coherence (coherent zones → long, flat → stubby).
+      // AX.W13 — the SBR energy grade is a PROFILE field (energyGrade), not a buried
+      // uMedium==5 branch. The van-Gogh profile passes energyGrade=1.0 (the full
+      // Starry-Night cascade); oil/oil-pastel pass 0.0 (uniform length). The grade
+      // modulates stroke length by local luminance (bright → long confident strokes,
+      // dark → short dabs, the Kolmogorov/Batchelor congruence) AND by coherence
+      // (coherent zones → long, flat → stubby), lerped in by energyGrade so a profile
+      // can dial the cascade from off (0) to full (1).
       float energy = 1.0;
-      if (uMedium == 5) {
+      if (energyGrade > 0.001) {
         float luma = clamp(dot(sampleBase(center, t), W_LUMA), 0.0, 1.0);
-        // long in the lights + coherent zones; short dabs in the darks + flat zones.
-        energy = mix(0.5, 1.5, luma) * mix(0.6, 1.0, coh);
+        float graded = mix(0.5, 1.5, luma) * mix(0.6, 1.0, coh);
+        energy = mix(1.0, graded, energyGrade);
       }
 
       float lenV = cellSize * lenMul * (0.65 + 0.55 * hash21(cc + seed + 23.0)) * energy;

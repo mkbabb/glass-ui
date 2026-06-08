@@ -6,11 +6,11 @@
  * NEW union member is a COMPILE error until it gets a slot — no silent stale-Record
  * gap where a fresh enum value uploads `undefined`.
  *
- * Crayon is a PEER medium (`uMedium == 4`), NOT a stroke mode: the shader hoists it
- * out of `mediumOil()` (wax-on-tooth, not oil strokes). So `MEDIUM_ID` carries the
- * peer `crayon: 4` slot and `STROKE_MODE_ID` no longer maps `crayon` — a
- * `strokeMode === "crayon"` config resolves to the crayon peer medium via
- * `resolveMediumId` and uploads a benign `uStrokeMode` (oil).
+ * Crayon is a FIRST-CLASS medium (`uMedium == 4`, AX.W13), NOT a stroke mode: the
+ * shader has a dedicated `mediumCrayon()` body (DRY wax-on-tooth). `MEDIUM_ID` carries
+ * the `crayon: 4` slot and `StrokeMode` no longer has a `crayon` member — the legacy
+ * `oil` + `strokeMode:"crayon"` peer-route is REMOVED (clean break); a crayon surface
+ * selects `medium:"crayon"`.
  *
  * The pre-allocated upload buffers live in the bridge: a slider drag refills them
  * in place rather than allocating ~8 Float32Arrays per frame.
@@ -33,14 +33,12 @@ import {
     type WarpMode,
 } from "../constants/presets";
 
-// AW.W4.3/W4.4 — `vangogh: 5` (the energy-graded atomic-stroke medium) and
-// `oil-pastel: 6` (the reworked deposition+scumble+waxy medium) join the map. The
-// `satisfies Record<AuroraMedium | "crayon", number>` FORCES a slot the instant the
-// union grows — omitting one is a COMPILE error (the good kind), so a fresh medium
-// can never upload `undefined`. `crayon: 4` is the legacy StrokeMode peer route
-// (oil + strokeMode:"crayon"); it shares the reworked oil-pastel deposition shader
-// body (uMedium==4 and uMedium==6 both dispatch `mediumCrayon`), so there is no
-// parallel duplicate medium.
+// AX.W13 — `crayon: 4` (DRY tooth-multiply), `vangogh: 5` (atomic comma/crescent
+// dabs), and `oil-pastel: 6` (stroke deposition + burnish) are all first-class
+// mediums, each with its OWN shader body (no shared dispatch). The `satisfies
+// Record<AuroraMedium, number>` FORCES a slot the instant the union grows — omitting
+// one is a COMPILE error (the good kind), so a fresh medium can never upload
+// `undefined`.
 export const MEDIUM_ID = {
     smooth: 0,
     pastel: 1,
@@ -49,7 +47,7 @@ export const MEDIUM_ID = {
     crayon: 4,
     vangogh: 5,
     "oil-pastel": 6,
-} as const satisfies Record<AuroraMedium | "crayon", number>;
+} as const satisfies Record<AuroraMedium, number>;
 
 // W5 — the value.js HueInterpolationMethod → GLSL int map. The `satisfies` forces
 // a slot for every method, so a value.js enum change is a COMPILE error here.
@@ -84,12 +82,13 @@ export const WARP_ID = {
     hybrid: 2,
 } as const satisfies Record<WarpMode, number>;
 
-// Oil-stroke modes ONLY — crayon dropped (it is a peer medium per MEDIUM_ID).
+// Oil-stroke sub-modes. AX.W13 — `crayon` is a first-class medium (MEDIUM_ID), no
+// longer a stroke mode, so the union has no `crayon` member to Exclude.
 export const STROKE_MODE_ID = {
     oil: 0,
     knife: 1,
     chunky: 3,
-} as const satisfies Record<Exclude<StrokeMode, "crayon">, number>;
+} as const satisfies Record<StrokeMode, number>;
 
 // AX.W11 — the aurora catch-light OKLCh anchor. The `(0.985, 0.0125, 77.5°)` anchor
 // reproduces the prior eyeballed `[1.0, 0.95, 0.88]` warm-white to <1e-3 linear (so
@@ -120,37 +119,36 @@ export function resolveLightColor(
 }
 
 /**
- * The effective `uMedium` int for a config. The only non-identity case: a
- * `medium: "oil"` + `strokeMode: "crayon"` config selects the crayon PEER
- * (`uMedium == 4`) rather than oil — behavior-preserving with the pre-hoist
- * `mediumOil()` `mode == 2` branch (same pixel output, dispatched one level up).
+ * The effective `uMedium` int for a config. AX.W13 — a pure identity map over the
+ * medium union (the `oil` + `strokeMode:"crayon"` peer-route is REMOVED; crayon is its
+ * own first-class `medium:"crayon"`). `medium` is total over `MEDIUM_ID` (the
+ * `satisfies` guarantees it), so this never resolves `undefined`.
  */
 export function resolveMediumId(cfg: AuroraConfig): number {
-    if (cfg.medium === "oil" && cfg.strokeMode === "crayon") {
-        return MEDIUM_ID.crayon;
-    }
     return MEDIUM_ID[cfg.medium];
 }
 
 /**
- * The `uStrokeMode` int for a config. Crayon is not an oil stroke (it routes to
- * the crayon peer medium where `uStrokeMode` is unread), so it uploads the benign
- * oil default; the other modes map directly.
+ * The `uStrokeMode` int for a config. AX.W13 — `strokeMode` is total over
+ * `STROKE_MODE_ID` (no `crayon` special-case), so this is a direct map.
  */
 export function resolveStrokeModeId(cfg: AuroraConfig): number {
-    if (cfg.strokeMode === "crayon") return STROKE_MODE_ID.oil;
     return STROKE_MODE_ID[cfg.strokeMode];
 }
 
 /**
- * AW.W4.1/W4.3/W4.4 — the `uStrokeOrient` int for a config. The painterly mediums
- * (`vangogh`, `oil-pastel`) FORCE the structure-tensor orientation regardless of
- * the config's `strokeOrient` field — their brushwork must hug the color zones (the
- * congruent-to-real-Van-Gogh contract). Every other medium honors the config's
- * `strokeOrient` (default `"flow"` — the pre-W4 path renders identically).
+ * AX.W13 — the `uStrokeOrient` int for a config. The painterly mediums (`vangogh`,
+ * `oil-pastel`, `crayon`) FORCE the structure-tensor orientation regardless of the
+ * config's `strokeOrient` field — their marks must hug the color zones (the
+ * congruent-to-real-works contract). Every other medium honors the config's
+ * `strokeOrient` (default `"flow"`).
  */
 export function resolveStrokeOrientId(cfg: AuroraConfig): number {
-    if (cfg.medium === "vangogh" || cfg.medium === "oil-pastel") {
+    if (
+        cfg.medium === "vangogh" ||
+        cfg.medium === "oil-pastel" ||
+        cfg.medium === "crayon"
+    ) {
         return STROKE_ORIENT_ID.tensor;
     }
     return STROKE_ORIENT_ID[cfg.strokeOrient ?? "flow"];
