@@ -10,6 +10,9 @@
     "homepage": "https://github.com/mkbabb/glass-ui#readme",
     "bugs": "https://github.com/mkbabb/glass-ui/issues",
     "type": "module",
+    "workspaces": [
+        "tests-visual"
+    ],
     "types": "./dist/index.d.ts",
     "typesVersions": {
         "*": {
@@ -648,6 +651,8 @@
         "proof:animation-coherence": "node scripts/proof-animation-coherence.mjs",
         "proof:design-md-current": "node scripts/proof-design-md-current.mjs",
         "proof:naming-consistency": "node scripts/proof-naming-consistency.mjs",
+        "proof:substrate-paints-color": "node scripts/proof-substrate-paints-color.mjs",
+        "proof:gate-script-parity": "node scripts/proof-gate-script-parity.mjs",
         "proof:all": "node scripts/gates.mjs --run local",
         "gates:verify-ci": "node scripts/gates.mjs --verify-ci",
         "profile:bundle": "node scripts/profile-bundle.mjs",

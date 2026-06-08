@@ -1,0 +1,15 @@
+{
+    "name": "@mkbabb/glass-ui-tests-visual",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "description": "AX.W00 — the fail-CLOSED π visual-runtime workspace. DEV-ONLY: carries Playwright + the headless WebGPU/WebGL2 device backend OFF the library's zero-dep publish surface (NOT in glass-ui dependencies/peerDependencies, NOT in dist/exports). Renders the real demo on a real device, reads back canvas pixels, and asserts on the painted image.",
+    "scripts": {
+        "test": "playwright test",
+        "test:substrate": "playwright test substrate-paints-color.spec.ts",
+        "test:dock": "playwright test dock-animation-live.spec.ts"
+    },
+    "devDependencies": {
+        "@playwright/test": "^1.49.0"
+    }
+}
