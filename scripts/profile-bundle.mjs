@@ -150,9 +150,17 @@ const startedAt = Date.now();
 // W4 §3a field-bake-hoist triumvirate (a structural transposition, not a tap-count
 // tweak). Orthogonal to `profile:aurora` (the FPS/ALU floor) — this bounds gzip
 // chunk SIZE, that bounds runtime draw cost.
+// AX re-base (the 3.8.0 cut): the dock content-driven wrap recipe + card-tier
+// shadow/radius morph (W04), the van-Gogh/oil-pastel medium ground + profile fields
+// (W13), the /deck-progress rail + carousel dot rail (W23/W24), and the font-register
+// reconciliation (W22) lift the measured /styles draw to gzip ~134.6k / raw ~526.9k.
+// Lifted to gzip 140000 / raw 548000 — the SEVENTH conscious lift, sized to carry the
+// AX convergence CSS (the dock showcase section, the idiomatic configurator restyle,
+// the uniform dropdown type-scale) net of the convergence trims (blob-page
+// consolidation, chassis retire), NOT per-wave creep.
 const BUDGETS = {
     "dist/glass-ui.js": { raw: 190_000, gzip: 33_700 },
-    "dist/styles/index.css": { raw: 516_000, gzip: 134_000 },
+    "dist/styles/index.css": { raw: 548_000, gzip: 140_000 },
     "dist/aurora.js": { raw: 130_000, gzip: 38_000 },
 };
 

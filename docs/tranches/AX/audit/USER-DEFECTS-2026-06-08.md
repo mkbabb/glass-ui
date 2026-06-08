@@ -26,6 +26,8 @@ waves.
 | D13 | dock controls (H + V) | The dock controls should PERSIST on the dock. Structure the vertical + horizontal docks for better persistent elements, a better sense of proportion, and proper dividing lines. | major | new — dock persistent-controls + proportion + dividers (relates W06 dock storybook) |
 | D14 | dock demo | There should be an ENTIRE section dedicated to the dock — morphing, animations, layers, variants, rail, etc. | major | new — dock showcase section (relates W06, W18 storybook IA) |
 | D15 | dock on mobile | The dock on mobile should be ~1.5x bigger — bigger touch targets, bigger icons on mobile. | major | new — dock mobile sizing (relates the coarse-pointer touch floor in dock-controls.css) |
+| D16 | `/compositions/math-paper` + math facilities | Should properly leverage the latex-paper lib (the sibling `../latex-paper`?). The math-paper composition + math rendering should compose that lib, not a hand-rolled path. | major | new — math-paper/latex-paper integration (relates the paper-backdrop / cards.css paper-texture) |
+| D17 | dropdowns / select / menu elements | Inconsistent font-size + scaling across dropdown-family elements (a shadcn-vue inheritance consequence). ALL such elements should share ONE uniform scale — override the shadcn default. | major | new — uniform dropdown/select/menu type-scale token override (relates the typography ladder + menuItemVariants) |
 
 ## P — process directives (this audit round)
 
