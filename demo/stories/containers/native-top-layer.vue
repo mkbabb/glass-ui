@@ -1,10 +1,7 @@
 <script setup lang="ts">
-// AQ.W6 pilot demo — the native top-layer cluster: the `<GlassDialogNative>`
-// pilot (native `<dialog>` + `commandfor` + light-dismiss, consuming the
-// `.glass-top-layer` @starting-style grammar) and the `HoverPopover :native`
-// `interestfor` opt-in. This story is the SECOND consumer for both gated
-// primitives (the muster J.W6 adoption being the first); the disposition is
-// recorded for the W8 overfitting audit.
+// The native top-layer cluster: `<GlassDialogNative>` (a native `<dialog>` +
+// `commandfor` + light-dismiss, consuming the `.glass-top-layer` @starting-style
+// grammar) and the `HoverPopover :native` `interestfor` opt-in.
 import { ref } from "vue";
 import StoryPage from "../StoryPage.vue";
 import { GlassDialogNative } from "../../../src/components/custom/dialog-native";
@@ -38,7 +35,7 @@ const caps = [
             <section class="grid gap-3">
                 <h2 class="font-display text-xl">Platform capability probe</h2>
                 <p class="text-sm text-muted-foreground">
-                    Each AQ.W6 native path is feature-detected; the kept JS / reka-ui
+                    Each native path is feature-detected; the JS / reka-ui
                     fallback runs where a capability is off.
                 </p>
                 <ul class="flex flex-wrap gap-2">

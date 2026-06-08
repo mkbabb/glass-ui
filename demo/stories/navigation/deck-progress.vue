@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// AW.W16 (consumer #1) — the deck-position rail.
+// The deck-position rail.
 //
 // This story is the LITERAL demonstration of the look-only library surface: the
 // position math (`100·(k+1)/N`) AND the pinned chrome (the absolute

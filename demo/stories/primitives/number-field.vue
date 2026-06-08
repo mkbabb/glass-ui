@@ -80,11 +80,10 @@ const bounded = ref<number>(5);
         </section>
 
         <!--
-            Label-binding contract (AN.W4.C). axe's `label` rule fires on the
-            inner <input role="spinbutton"> itself, NOT on the NumberField group
-            wrapper. The accessible name MUST be bound on <NumberFieldInput> via
-            one of three channels — each resolves the name onto the focusable
-            input (AM.W0.2's `inheritAttrs:false` + `v-bind="$attrs"` forward).
+            Label-binding contract. The accessible name belongs on the inner
+            <NumberFieldInput> (the focusable spinbutton), NOT on the NumberField
+            group wrapper. Bind it via one of three channels — each lands the name
+            on the input below.
         -->
         <section class="grid grid-cols-1 gap-10 md:grid-cols-3">
             <!-- Channel 1: <Label for> → input id. -->

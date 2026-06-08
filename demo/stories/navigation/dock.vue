@@ -73,12 +73,12 @@ function togglePlay() {
         <section class="flex flex-col gap-3">
             <h2 class="text-sm font-semibold text-muted-foreground">Collapsible (hover to expand)</h2>
             <p class="text-sm text-muted-foreground">
-                AW.W3 — the collapsed pill scales up on hover riding the SAME
+                The collapsed pill scales up on hover on the same
                 <code class="rounded bg-muted px-1">--spring-dock</code> vocabulary the expand morph uses, so
-                hover→expand reads as one continuous spring. The controls cascade in on the size spring's
-                progress (outer→in), reversed on collapse. Under
-                <code class="rounded bg-muted px-1">prefers-reduced-motion</code> the scale + stagger snap; the
-                state still toggles.
+                hover-to-expand reads as one continuous spring. The controls cascade in outer-to-inward,
+                reversed on collapse. Under
+                <code class="rounded bg-muted px-1">prefers-reduced-motion</code> the scale and stagger snap;
+                the state still toggles.
             </p>
             <div class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
                 <GlassDock>
@@ -335,12 +335,12 @@ function togglePlay() {
 
         <section class="flex flex-col gap-3">
             <h2 class="text-sm font-semibold text-foreground">
-                Background pause/play toggle (WCAG 2.2.2)
+                Background pause/play toggle
             </h2>
             <p class="text-xs text-muted-foreground">
                 <code class="rounded bg-muted px-1">&lt;DockBackgroundToggle&gt;</code>
-                is the Level-A pause/play control a consumer wires to a running
-                Aurora/GooBlob renderer's <code class="rounded bg-muted px-1">pause()</code>/<code
+                lets the user pause a running Aurora/GooBlob background — wire it to the
+                renderer's <code class="rounded bg-muted px-1">pause()</code>/<code
                     class="rounded bg-muted px-1"
                     >resume()</code
                 >. It reflects state via <code class="rounded bg-muted px-1">aria-pressed</code>
@@ -361,9 +361,9 @@ function togglePlay() {
         <section class="flex flex-col gap-2 text-sm text-muted-foreground">
             <h2 class="text-sm font-semibold text-foreground">Notes</h2>
             <ul class="list-disc pl-5 space-y-1">
-                <li>Collapse delay is ref-counted — any popover or nested keep-open source pins it.</li>
-                <li>The collapsed pill renders via the named <code class="rounded bg-muted px-1">#collapsed</code> slot.</li>
-                <li>Use <code class="rounded bg-muted px-1">DockIconButton</code> for flush-fit buttons inside.</li>
+                <li>The dock stays open while a popover or held control inside it is active.</li>
+                <li>Pass a <code class="rounded bg-muted px-1">#collapsed</code> slot to choose what the collapsed pill shows.</li>
+                <li>Use <code class="rounded bg-muted px-1">DockIconButton</code> for buttons that fit the dock flush.</li>
             </ul>
         </section>
     </StoryPage>

@@ -1,18 +1,15 @@
 <script setup lang="ts">
-// AU.W7 — the goo-blob + watercolor-dot demo story (DEC-AT-5: the blob's 2nd
-// consumer — value.js K.W3 is the firm #1, this demo-story is the honest #2; the
-// injected ColorResolver seam is the proof it is not value.js-coupled).
+// The goo-blob + watercolor-dot demo story. The blob takes an injected
+// ColorResolver, so it is not coupled to any one color library.
 //
-// AX.W16 — the TIER CASCADE made explicit + the WCAG-2.2.2 pause seam wired live:
-//   1. the 4-color GL grid (BLOB_CONFIG_DEFAULTS — the lit contained droplet; ALSO
-//      the π-lane blob-render fixture, the var(--primary)-dark-wash both-mode guard),
-//   2. the ONE interactive GL HERO + a live <DockBackgroundToggle> pause seam
-//      (replacing the prior 5th "Live color" GL mount — bounding the per-page WebGL
-//      context cap, ~8 in Chromium; commit 9427536's incident class),
-//   3. the WatercolorDot STATIC register (CSS/SVG, zero GL context) — the deliberate
-//      sibling for ambient/decorative thumbnails that never need a per-pixel GL field.
+// The tier cascade, made explicit, plus the live pause seam:
+//   1. the 4-color GL grid (the lit contained droplet),
+//   2. the one interactive GL hero + a live <DockBackgroundToggle> pause seam,
+//   3. the WatercolorDot static register (CSS/SVG, zero GL context) — the
+//      sibling for ambient/decorative thumbnails that never need a per-pixel
+//      GL field.
 // Reserve GooBlob for the interactive/lit register; route the static one to
-// WatercolorDot so the canonical demo does not itself exhaust the cap.
+// WatercolorDot so a page does not exhaust the browser's WebGL context cap.
 import { ref, watch } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
@@ -31,11 +28,11 @@ const blobColors = [
     "oklch(0.78 0.16 150)",
 ];
 
-// AX.W16 — the interactive hero + its declarative v-model:paused pause seam. The
-// <DockBackgroundToggle> reflects + drives `heroPaused`; `v-model:paused` on the blob
-// parks/restarts the render loop (the WCAG-2.2.2 Level-A control, reachable by ALL
-// users). Either the imperative ref or the prop could drive it — the prop is the
-// canonical declarative shape, so this story uses it.
+// The interactive hero + its declarative v-model:paused pause seam. The
+// <DockBackgroundToggle> reflects and drives `heroPaused`; `v-model:paused` on
+// the blob parks and restarts the render loop, a pause control reachable by all
+// users. Either the imperative ref or the prop could drive it — the prop is the
+// declarative shape, so this story uses it.
 const heroPaused = ref(false);
 
 // The WatercolorDot static register — the CSS/SVG sibling for ambient swatches.
@@ -77,11 +74,11 @@ watch(heroPaused, (p) => {
         </StorySection>
 
         <StorySection
-            label="Pause seam (WCAG 2.2.2)"
+            label="Pause seam"
             blurb="The interactive hero wired to a DockBackgroundToggle via v-model:paused.
-                Click the control to PAUSE the render loop (the membrane stops warping, the
-                satellites stop orbiting) and again to RESUME — the Level-A pause control any
-                user can reach (NOT gated behind prefers-reduced-motion). One GL context."
+                Click the control to pause the render loop (the membrane stops warping, the
+                satellites stop orbiting) and again to resume — a pause control any user can
+                reach. One GL context."
         >
             <ShowcaseFrame class="flex items-center gap-4">
                 <div class="relative aspect-square w-40 overflow-hidden rounded-card">

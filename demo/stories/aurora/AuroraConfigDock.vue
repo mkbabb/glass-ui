@@ -19,18 +19,15 @@ import TextureLayer from "./config/TextureLayer.vue";
 import { layerOptions } from "./config/options";
 
 /**
- * AX.W10 — the ONE atoms door is the DEFAULT surface. The dock opens on the
- * "Atoms" tab — the ≤7 intuitive control elements (COLOR / ZONES / NOISE /
- * MEDIUM / MOTION) drive the canvas through `resolveAtoms`. The full ~28-field
- * `AuroraConfig` lives behind the genuine "Advanced" disclosure (the six raw
- * `config/*Layer.vue` panels) — the escape hatch, NOT the default chrome.
+ * The dock opens on the "Atoms" tab — the few intuitive controls (COLOR / ZONES
+ * / NOISE / MEDIUM / MOTION) drive the canvas through `resolveAtoms`. The full
+ * `AuroraConfig` lives behind the "Advanced" disclosure (the raw `config/*Layer.vue`
+ * panels) — the escape hatch, not the default chrome.
  *
  * Data flow: the Atoms panel edits an `AuroraAtoms` object; on any atom change
- * `resolveAtoms(atoms)` is COPIED FIELD-BY-FIELD onto the live `props.config`
- * reactive (the same in-place mutation the raw layers do), so the canvas, the
- * Advanced raw layers, and the preset dirty-detection all read the ONE config
- * object. (NO glass-atoms visual restyle — that is AX.W38; W10 is FUNCTIONAL
- * wiring only.)
+ * `resolveAtoms(atoms)` is copied field-by-field onto the live `props.config`
+ * reactive, so the canvas, the Advanced raw layers, and the preset dirty-detection
+ * all read the one config object.
  */
 
 const props = defineProps<{

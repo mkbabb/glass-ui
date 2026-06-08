@@ -9,9 +9,9 @@ import type {
 import { cn } from "../../../src/utils/cn";
 
 /**
- * Segmented variant — Z.W2.T1 / A2 §B5. Adjacent gradient bands with
- * boundary dots that emit `hover` + `click` events. Demo shape mirrors
- * the speedtest 3-phase progression (ping → download → upload); each
+ * Segmented variant — adjacent gradient bands with boundary dots that emit
+ * `hover` + `click` events. This demo mirrors a 3-phase progression
+ * (ping → download → upload); each
  * segment carries its own gradient endpoint pair and a payload surfaced
  * via the events.
  */
@@ -114,8 +114,7 @@ function reset() {
 /**
  * Legend swatch background. Lifted out of the template binding so the
  * inline `{ from, to }` type assertion doesn't clash with vue-tsc's
- * template parser (N.W1 Lane C / N-4 absorb). Mirrors the primitive's
- * own `gradientFor` resolver shape.
+ * template parser. Mirrors the primitive's own `gradientFor` resolver shape.
  */
 function legendBackground(seg: TimelineSegment): string {
     const g = seg.gradient;
@@ -131,7 +130,7 @@ function legendBackground(seg: TimelineSegment): string {
     <StoryPage>
         <div>
             <p class="text-admin-label mb-4 text-muted-foreground">
-                Segmented variant — multi-phase progress (Z.W2.T1)
+                Segmented variant — multi-phase progress
             </p>
 
             <div

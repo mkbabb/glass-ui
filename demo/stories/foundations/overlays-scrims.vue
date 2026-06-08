@@ -1,6 +1,6 @@
 <script setup lang="ts">
-// Overlays & Scrims — the V.W3 ModalOverlay + scrim ladder + popover offset
-// + motion offsets. Closes the foundations-deck drift named in C-d §4.1.
+// Overlays & Scrims — the ModalOverlay + scrim ladder + popover offset
+// + motion offsets.
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
@@ -40,7 +40,7 @@ const motionOffsets: TokenLadderRow[] = [
     <StoryPage>
         <StorySection
             label="three scrim weights"
-            blurb="The V.W3 <ModalOverlay> primitive collapses 3 scrim declarations onto a shared SFC. The three weights below paint behind dialogs, sheets, and confirm flows respectively."
+            blurb="The <ModalOverlay> primitive is one shared scrim surface. The three weights below paint behind dialogs, sheets, and confirm flows respectively."
         >
             <ShowcaseFrame pad="lg">
                 <TokenLadder
@@ -68,7 +68,7 @@ const motionOffsets: TokenLadderRow[] = [
 
         <StorySection
             label="ModalOverlay primitive"
-            blurb="V.W3 collapsed AlertDialogOverlay, DialogOverlay, and SheetOverlay onto a shared <ModalOverlay> SFC reading from --overlay-scrim. Consumers compose `<ModalOverlay tier='strong' />` for the destructive variant."
+            blurb="One <ModalOverlay> SFC backs the dialog, sheet, and confirm scrims, reading from --overlay-scrim. Compose `<ModalOverlay tier='strong' />` for the destructive variant."
         />
     </StoryPage>
 </template>

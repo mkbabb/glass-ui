@@ -30,16 +30,12 @@ import { usePresetThumbnails } from "../aurora/usePresetThumbnails";
  * into the stage size — eliminates the wave-1 "canvas grows on layer
  * switch" defect at the source.
  *
- * Chrome composes `<Configurator>` (J.W4.A) — the canonical studio shell
- * (`stage` / `controls` slots + `scrollMode="auto"` + glass-floating
- * substrate).
+ * Chrome composes `<Configurator>` — the studio shell (`stage` / `controls`
+ * slots + `scrollMode="auto"` + glass-floating substrate).
  *
  * State composes `useConfiguratorState<AuroraConfig>` with
- * `cloneMode: "per-preset"` (L.W7 Lane B Option-A unification — Rε §A.8).
- * Per-preset clone semantics preserve slider edits when the user switches
- * presets and returns; previously this lived in a parallel state machine
- * (retired at L.W7 Lane B). Aurora consumes the canonical Configurator
- * state primitive, closing the K-tranche cross-tranche-debt item.
+ * `cloneMode: "per-preset"`. Per-preset clone semantics preserve slider edits
+ * when the user switches presets and returns.
  *
  * Fullscreen is owned by `ExpandableContainer` (corner button + Esc + body
  * scroll-lock + Teleport-to-body); the slot re-mounts in fullscreen, so
@@ -74,8 +70,8 @@ function selectPreset(key: PresetKey) {
 const thumbs = usePresetThumbnails({ widthCss: 320, heightCss: 200 });
 
 const activeLayer = ref<string>("medium");
-// AX.W10 — the dock opens on the "atoms" surface by DEFAULT (the ≤7-atom door);
-// "advanced" is the raw ~28-field escape hatch.
+// The dock opens on the "atoms" surface by default (the few intuitive controls);
+// "advanced" is the raw escape hatch.
 const dockTab = ref<string>("atoms");
 
 onMounted(() => {
@@ -131,10 +127,9 @@ void currentMeta;
               swapping from a constrained `min(78vh,720px)` to `h-full`.
             -->
             <div class="relative overflow-clip">
-                <!-- Pastel wash behind the inline frame, mirrors intro.vue.
-                     `overflow-clip` on the host keeps the bloom decorative
-                     without leaking horizontal overflow at narrow viewports
-                     (L K-residual π-2 / aurora 375 +8 px absorb — M.W2 Lane C). -->
+                <!-- Pastel wash behind the inline frame. `overflow-clip` on the
+                     host keeps the bloom decorative without leaking horizontal
+                     overflow at narrow viewports. -->
                 <div
                     aria-hidden="true"
                     class="absolute -inset-6 -z-10 rounded-card opacity-60 blur-2xl"

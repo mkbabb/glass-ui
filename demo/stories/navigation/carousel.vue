@@ -49,7 +49,7 @@ function setApi(api: CarouselApi | undefined) {
                 <code class="rounded bg-muted px-1">&lt;Button variant="ghost" size="icon"&gt;</code> chevrons
                 with a "X / N" counter pill;
                 <code class="rounded bg-muted px-1">&lt;CarouselDots&gt;</code> renders a dark/light-safe
-                position dot per snap (inactive dots clear WCAG 1.4.11 ≥3:1 against the translucent card),
+                position dot per snap (inactive dots stay clearly visible against the translucent card),
                 with the active dot elongating into a pip via a real emitted morph. Both wire to the embla
                 API via <code class="rounded bg-muted px-1">useCarousel()</code>.
             </p>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// scale-on-hover — canonical hover-transform utility (O.W6 Lane C).
+// scale-on-hover — the hover-transform utility.
 //
 // Single-token recipe over --scale-hover (default 1.08). Replaces
 // `hover:scale-105`-style arbitrary-scale recipes across consumers

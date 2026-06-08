@@ -1,11 +1,8 @@
 <script setup lang="ts">
-// Constellation (consumer #1) — the neutral proximity-graph lattice + a
-// `drawOverlay` focal node. The overlay paints a glass-ui-toned (`--primary`)
-// pulse ring, NOT the slides NC-red anomaly: the demo proves the skin seam
-// carries ARBITRARY consumer content, so the branded skin stays a consumer
-// concern. The second consumer — the slides anomaly-ring deck — adopts at
-// AX.W30 (gated on the AX publish): it deletes its 510-line constellation.ts
-// and re-points onto this seam + the focal-node click-to-warp interaction.
+// Constellation — the neutral proximity-graph lattice + a `drawOverlay` focal
+// node. The overlay paints a glass-ui-toned (`--primary`) pulse ring; the
+// `drawOverlay` seam carries arbitrary consumer content, so a branded skin stays
+// a consumer concern.
 import { computed, onMounted, ref, useTemplateRef } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
@@ -55,7 +52,7 @@ const drawFocal = computed(
         },
 );
 
-// ── Click-to-warp section (AX.W17) ──────────────────────────────────────────
+// ── Click-to-warp section ───────────────────────────────────────────────────
 // The focal mark rides the ENGINE-OWNED warp spring position (`field.warp`), not
 // a static node. A click warps it to the nearest drifting node + springs it
 // there (critically damped, chasing a live target). The overlay paints at
@@ -128,8 +125,7 @@ onMounted(() => {
 
             <ShowcaseFrame pad="none">
                 <!-- warm-cream full-bleed surface; the lattice tracks the
-                     --constellation-* tokens (the library light/dark legibility
-                     block — AX.W17). -->
+                     --constellation-* tokens for light/dark legibility. -->
                 <div class="relative h-[420px] w-full overflow-hidden rounded-card bg-card">
                     <Constellation
                         seed="glass-ui"
@@ -151,7 +147,7 @@ onMounted(() => {
         </StorySection>
 
         <StorySection
-            label="click-to-warp focal node (AX.W17)"
+            label="click-to-warp focal node"
             blurb="Click anywhere — the focal mark warps to the NEAREST drifting node and springs there (critically damped, chasing the live drifting target so it arrives ON the node, then rides its drift). Click again to re-point. The warp is one engine-owned spring stepped inside the substrate's single rAF (no second rAF, no useSpring); it is disabled under prefers-reduced-motion. The --constellation-accent tint is the consumer-preset boundary (the library ships a neutral default; slides aliases it to --ncsu-red)."
         >
             <ShowcaseFrame pad="none">

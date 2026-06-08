@@ -43,11 +43,8 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
         <section class="flex flex-col gap-4">
             <h2 class="text-subheading">Audacious primary CTA</h2>
             <p class="text-small text-muted-foreground">
-                The K.W6 HEADLINE variant. Disco-grain + specular highlight at rest,
-                sparkle-sweep on hover. Recipe lifted from
-                <code class="fira-code">dock.css</code>'s
-                <code class="fira-code">data-tier="primary"</code> with phase-tinting
-                dropped — the canonical variant is bound to <code class="fira-code">--primary</code>.
+                The headline CTA variant. Disco-grain + specular highlight at rest,
+                sparkle-sweep on hover, bound to <code class="fira-code">--primary</code>.
                 Reduced-motion suppresses the sparkle.
             </p>
             <div class="flex flex-wrap items-center gap-3">
@@ -60,18 +57,16 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
         <section class="flex flex-col gap-4">
             <h2 class="text-subheading">Gold audacious CTA</h2>
             <p class="text-small text-muted-foreground">
-                AN.R0 D9 — primary-CTA with gold sweep shimmer on hover.
-                Reuses the <code class="fira-code">btn-audacious</code> glass substrate
-                (sparkle + ripple) plus a translucent gold gradient sweep via
+                A primary CTA with a gold sweep shimmer on hover. Reuses the
+                <code class="fira-code">btn-audacious</code> glass substrate (sparkle + ripple)
+                plus a translucent gold gradient sweep via
                 <code class="fira-code">btn-audacious-gold</code>. Reduced-motion suppresses
-                the sweep; static gold tint remains.
+                the sweep; the static gold tint remains.
             </p>
-            <!-- AW.W13 contrast canary — the REST text is the warm-ink
-                 `--foreground` (the gold-tint-over-cream rest substrate made
-                 white-on-cream sub-legible). Read the rest label in light mode:
-                 it must be legible dark ink, NOT washed-out white. Light text is
-                 reserved for hover/active, where the gold sweep darkens the
-                 backplate. -->
+            <!-- The rest text is the warm-ink `--foreground` so the label stays
+                 legible dark ink over the gold-tint-over-cream rest substrate;
+                 light text is reserved for hover/active, where the gold sweep
+                 darkens the backplate. -->
             <div class="flex flex-wrap items-center gap-3">
                 <Button variant="gold-audacious" size="lg">Next →</Button>
                 <Button variant="gold-audacious">Submit</Button>
@@ -79,7 +74,7 @@ const sizes = ["xs", "sm", "default", "lg"] as const;
             </div>
             <p class="fira-code text-mono-caption text-muted-foreground">
                 rest text: var(--foreground) (warm ink) · hover/active: white over
-                the saturated gold backplate — both clear WCAG-AA.
+                the saturated gold backplate.
             </p>
         </section>
 

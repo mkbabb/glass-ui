@@ -1,15 +1,11 @@
 <script setup lang="ts">
 /**
- * Dock-with-Slider composition — cross-substrate `keep-dock-open` contract.
+ * Dock-with-Slider composition — the keep-dock-open contract.
  *
- * J.W5.C wired the `keep-dock-open` cross-substrate contract: a `<Slider>`
- * descendant of a `<GlassDock>` acquires a `dockKeepOpen` token while the
- * user drags, and the slider also subscribes to the dock's `dockHeld`
- * computed and reflects it via `data-held` on its root. This story is
- * the J FINAL named-residual closeout — no demo previously bound a
- * `<Slider>` inside a `<GlassDock>` to *visually* exercise the contract.
+ * A `<Slider>` descendant of a `<GlassDock>` holds the dock open while the user
+ * drags, and reflects the dock's held state via `data-held` on its root.
  *
- * Visual proof (drag any of the cells below):
+ * What this shows (drag any of the cells below):
  *   1. The slider thumb-halo intensifies (denser surface-tint rung) while
  *      held — see `.glass-slider[data-held]` in Slider.vue scoped CSS.
  *   2. The dock substrate background tier-shades up while *any* descendant
@@ -44,7 +40,7 @@ const trim = ref<number[]>([55]);
     <StoryPage>
         <StorySection
             label="slider in dock — standard variant"
-            blurb="Drag the slider. The thumb halo intensifies (denser surface-tint rung) and the dock substrate tier-shades up while held — both states come from the J.W5.C `dockKeepOpen` / `dockHeld` provide-inject contract. Release: both return to default."
+            blurb="Drag the slider. The thumb halo intensifies and the dock substrate shades up while held; release returns both to default."
         >
             <div class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
                 <GlassDock fit-content>
@@ -86,7 +82,7 @@ const trim = ref<number[]>([55]);
 
         <StorySection
             label="multi-slider dock — collapsible (hover to expand)"
-            blurb="Two sliders inside a collapsible dock. Either drag holds the dock open via ref-counted `dockKeepOpen` tokens (`useDockState.keepOpenCount`); both halos intensify when *either* is dragged because both subscribe to the same `dockHeld` computed."
+            blurb="Two sliders inside a collapsible dock. Either drag holds the dock open, and both halos intensify when either is dragged since both read the dock's shared held state."
         >
             <div class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
                 <GlassDock>
@@ -121,8 +117,8 @@ const trim = ref<number[]>([55]);
         </StorySection>
 
         <StorySection
-            label="idle-collapse-under-drag — the keepDockOpen hold (AW.W3)"
-            blurb="A collapsible dock with a SHORT idle-collapse delay (600 ms). Hover to expand, then press-and-hold the slider thumb and move the pointer OFF the dock: the dock must STAY open through the held drag (the `dockKeepOpen` token suppresses the idle-collapse timer), and re-collapse only after you release. This is the AW.W3 proof story — `proof:dock-layering-polish` synthetically drives this exact gesture and asserts the dock does not collapse mid-hold."
+            label="idle-collapse under drag — the keep-dock-open hold"
+            blurb="A collapsible dock with a short idle-collapse delay (600 ms). Hover to expand, then press-and-hold the slider thumb and move the pointer OFF the dock: the dock stays open through the held drag and re-collapses only after you release."
         >
             <div
                 class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8"

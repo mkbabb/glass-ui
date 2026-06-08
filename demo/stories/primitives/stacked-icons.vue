@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // StackedIconGroup — overlapping icon stack with maxVisible / +N overflow.
-// Per V.W3 — size axis only (NOT a density-rail consumer per B5 §2.1).
+// Size axis only.
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";

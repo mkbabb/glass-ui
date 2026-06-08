@@ -8,9 +8,8 @@ import {
 } from "../../../src/components/ui/progress";
 import { Button } from "../../../src/components/ui/button";
 
-// N.W4 β absorb — sectioned variant canonical demo. Mirrors the
-// phase-bus speedtest pattern (4 phases: pings / jitter / download / upload)
-// with one phase active to demonstrate the spring active-fill seam.
+// Sectioned variant demo — a 4-phase pattern (pings / jitter / download /
+// upload) with one phase active to show the spring active-fill.
 const phaseSegments: ProgressSegment[] = [
     { key: "pings", label: "Pings", color: "var(--viz-fourier)", state: "completed" },
     { key: "jitter", label: "Jitter", color: "var(--viz-chebyshev)", state: "completed" },
@@ -122,9 +121,8 @@ onUnmounted(stopAnimated);
             </div>
         </StorySection>
 
-        <!-- AB.W3.T2 — sectioned variant (per-segment colour cells +
-             spring active fill + transition-gradient seams). N.W4 β
-             absorb: glass-ui-side canonical consumer for the recipe. -->
+        <!-- Sectioned variant — per-segment colour cells,
+             spring active fill, transition-gradient seams. -->
         <StorySection label="sectioned variant (phase bus)">
             <p class="font-mono text-xs text-muted-foreground">
                 Per-segment colour cells + spring active-fill overlay. Mirrors the

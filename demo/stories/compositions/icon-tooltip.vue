@@ -14,7 +14,7 @@ import { IconTooltip } from "../../../src/components/custom/icon-tooltip";
     <StoryPage>
         <StorySection
             label="canonical pattern"
-            blurb="A wrapper around <Tooltip> with auto-provider + baked-in font-display + text-base content typography. The slotted child IS the trigger — a bare decorative glyph carries its own WCAG 2.5.5 (44×44) hit-area via a min-h-11 min-w-11 inline-flex host."
+            blurb="A wrapper around <Tooltip> with an auto-provider and baked-in content typography. The slotted child IS the trigger — a bare glyph still gets a comfortable 44×44 hit-area from its inline-flex host."
         >
             <ShowcaseFrame pad="lg">
                 <div class="flex items-center gap-6">

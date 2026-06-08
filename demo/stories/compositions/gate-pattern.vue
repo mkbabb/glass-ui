@@ -1,12 +1,10 @@
 <script setup lang="ts">
-// Gate pattern (consumer #1) — the non-dismissable access-modal idiom composed
-// ENTIRELY from shipped parts. There is NO new component: the story IS the
-// pattern. Two anti-patterns are gone BY CONSTRUCTION —
-//   - the close-X suppression is the shipped show-close=false prop, NOT a
+// Gate pattern — the non-dismissable access-modal idiom composed entirely from
+// shipped parts. There is no new component: the story IS the pattern.
+//   - the close-X is suppressed via the shipped show-close=false prop, not a
 //     close-button CSS pierce;
-//   - the invalid ring comes from the widened library .input-pill
-//     [aria-invalid="true"] selector (AW.W18), NOT a scoped ring re-paint.
-// Consumer #2 is the slides DeckGate (H.W2).
+//   - the invalid ring comes from the library .input-pill [aria-invalid="true"]
+//     selector, not a scoped ring re-paint.
 import { ref, nextTick } from "vue";
 import { Lock } from "@lucide/vue";
 import StoryPage from "../StoryPage.vue";

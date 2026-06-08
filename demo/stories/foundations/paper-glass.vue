@@ -7,12 +7,11 @@ import { useGlassRenderer, type GlassTier } from "../../../src/composables/glass
 import { cn } from "../../../src/utils/cn";
 import { heroAuroraConfig } from "../aurora-hero";
 
-// AX.W57 (P7) — the paper-vs-glass tour backdrop replaces its hand-rolled
-// 3-ellipse radial wash with a live <Aurora> on the amber/indigo/rose brand
-// hues (--section-color-5/2/0). The wash gives the tier tiles a live painterly
-// backdrop to read translucent over; opacityCeiling 0.55 keeps the tile labels
-// legible. (Only the page-hero radial is replaced; the small sample-tile
-// linear+radial swatch lower in the page is the SUBJECT and stays.)
+// The paper-vs-glass tour backdrop carries a live <Aurora> on the
+// amber/indigo/rose brand hues, giving the tier tiles a live painterly backdrop
+// to read translucent over; opacityCeiling 0.55 keeps the tile labels legible.
+// (Only the page-hero wash uses Aurora; the small sample-tile swatch lower in
+// the page is the subject and stays a plain gradient.)
 const paperGlassAurora = heroAuroraConfig("amber-indigo-rose");
 
 interface Tile {
@@ -141,7 +140,7 @@ onMounted(() => {
 
 <template>
     <StoryPage>
-        <!-- AX.W57 (P7) live Aurora wash backdrop for the four tier tiles. -->
+        <!-- Live Aurora wash backdrop for the four tier tiles. -->
         <div
             :class="
                 cn(

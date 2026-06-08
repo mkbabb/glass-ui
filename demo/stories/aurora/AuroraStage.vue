@@ -21,8 +21,8 @@ const auroraRef = ref<InstanceType<typeof Aurora> | null>(null);
 useCursorInteraction(stageRef, () => props.config, {
     setCursor: (x, y, strength) => auroraRef.value?.setCursor(x, y, strength),
     clearCursor: () => auroraRef.value?.clearCursor(),
-    // AW.W8.1 — feed the per-move delta into the velocity-reactive flow (a fast flick
-    // → a transient swirl-burst). The runtime PRM-gates the write-path.
+    // Feed the per-move delta into the velocity-reactive flow (a fast flick →
+    // a transient swirl-burst). The runtime PRM-gates the write-path.
     injectVelocity: (dx, dy) => auroraRef.value?.injectCursorVelocity(dx, dy),
 });
 </script>

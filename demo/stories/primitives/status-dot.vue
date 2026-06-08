@@ -93,7 +93,7 @@ const sizes: Size[] = ["xs", "sm", "md"];
             </p>
         </StorySection>
 
-        <!-- Role contract: consumer-bound aria-label → role="img" (AN.W4.A). -->
+        <!-- Role contract: a bound aria-label promotes the dot to role="img". -->
         <StorySection label="role contract · consumer-bound aria-label">
             <div class="flex items-center gap-6">
                 <StatusDot variant="active" aria-label="Cary hue · active" data-probe="labelled" />

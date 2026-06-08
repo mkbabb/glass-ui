@@ -11,11 +11,10 @@ import { heroAuroraConfig } from "../aurora-hero";
 
 const wonkSettings = '"WONK" 1, "SOFT" 0';
 
-// AX.W57 (P7) — the hand-rolled 3-ellipse radial wash is replaced by a live
-// <Aurora> keyed off the page's rose/indigo/amber brand hues
-// (--section-color-0/2/5). opacityCeiling 0.6 keeps the drift behind the
-// text-dense hero prose; renderMode="auto" falls to the CSS-gradient
-// placeholder under reduced-motion / low-power (>= the prior static radial).
+// A live <Aurora> keyed off the page's rose/indigo/amber brand hues.
+// opacityCeiling 0.6 keeps the drift behind the text-dense hero prose;
+// renderMode="auto" falls to the CSS-gradient placeholder under reduced-motion
+// or low-power.
 const heroAurora = heroAuroraConfig("rose-indigo-amber");
 
 // ─── Motion gate ─────────────────────────────────────────────────────────
@@ -78,7 +77,7 @@ const claims = [
                 'border border-border bg-card shadow-cartoon px-8 py-20 md:px-16 md:py-28',
             )"
         >
-            <!-- AX.W57 (P7): live painterly wash, page brand hues. -->
+            <!-- Live painterly wash, page brand hues. -->
             <Aurora
                 :config="heroAurora"
                 :opacity-ceiling="0.6"
@@ -94,7 +93,7 @@ const claims = [
                 </div>
 
                 <!--
-                    Headline (N.W0 A4 wire). Split around the italic-f
+                    Headline. Split around the italic-f
                     signature glyph so the typewriter animates the prose
                     while the f stays anchored as a static, deliberate
                     visual mark. Segment 1 types first (no cursor — the

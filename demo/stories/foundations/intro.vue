@@ -4,12 +4,10 @@ import { Aurora } from "../../../src/components/custom/aurora";
 import { cn } from "../../../src/utils/cn";
 import { heroAuroraConfig } from "../aurora-hero";
 
-// AX.W57 (P7) — the storybook front-door hero replaces its hand-rolled
-// 3-ellipse pastel bloom with a live <Aurora> on the SAME brand hues
-// (--section-color-0/2/5). Recommendation (audit map): Aurora for intro — the
-// brand identity is the warm painterly wash, not a tech lattice. The
-// `--hue-shift` filter still rides the live canvas (it sits on the section,
-// the Aurora is a child). opacityCeiling 0.6 keeps the display title legible.
+// The storybook front-door hero carries a live <Aurora> on the brand hues — the
+// brand identity is the warm painterly wash, not a tech lattice. The `--hue-shift`
+// filter rides the live canvas (it sits on the section; the Aurora is a child).
+// opacityCeiling 0.6 keeps the display title legible.
 const introAurora = heroAuroraConfig("rose-indigo-amber");
 
 // Anchor links to every category — resolved by the router via the manifest.
@@ -27,7 +25,7 @@ const categories: { slug: string; title: string; blurb: string }[] = [
 
 <template>
     <StoryPage>
-        <!-- Hero wash: AX.W57 (P7) live Aurora drift on the brand hues. -->
+        <!-- Hero wash: live Aurora drift on the brand hues. -->
         <section
             :class="
                 cn(

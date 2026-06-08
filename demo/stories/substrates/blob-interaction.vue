@@ -1,10 +1,8 @@
 <script setup lang="ts">
-// AW.W10 — the interactive GooBlob story. The consumer that exercises the shipped
-// interaction (the overfitting-audit "no orphaned substrate" requirement): a
-// hover-and-flick stretches the blob (the velocity squash), a decaying-radius
-// trail reaches an elastic pseudopod toward the cursor, and a CLICK fires the
-// one-shot spring impulse (the bounce). The blob LEANS toward the cursor
-// (pointerAttraction is non-zero out of the box now).
+// The interactive GooBlob story. A hover-and-flick stretches the blob (the
+// velocity squash), a decaying-radius trail reaches an elastic pseudopod toward
+// the cursor, and a click fires a one-shot spring impulse (the bounce). The blob
+// leans toward the cursor (pointerAttraction is non-zero out of the box).
 import { ref, reactive } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
@@ -26,10 +24,8 @@ const cfg = reactive({
 const clickCount = ref(0);
 const blobRef = ref<InstanceType<typeof GooBlob> | null>(null);
 
-// AX.W16 — the live WCAG-2.2.2 pause seam (the proof:blob-integration π-lane fixture).
-// The DockBackgroundToggle reflects + drives `paused`; `v-model:paused` on the blob
-// parks/restarts the render loop. The π-lane spec clicks the toggle (testid below) and
-// asserts the rAF loop PARKS — the live rAF-park observation, not a static string check.
+// The pause seam. The DockBackgroundToggle reflects and drives `paused`;
+// `v-model:paused` on the blob parks and restarts the render loop.
 const paused = ref(false);
 
 function onClick() {
@@ -69,7 +65,7 @@ function poke() {
                     <button class="btn-press rounded-pill border px-3 py-1" @click="poke">
                         Poke (impulse)
                     </button>
-                    <!-- AX.W16 — the WCAG-2.2.2 pause control (the π-lane fixture). -->
+                    <!-- The pause control. -->
                     <span data-testid="blob-pause-toggle">
                         <DockBackgroundToggle v-model:paused="paused" />
                     </span>

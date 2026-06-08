@@ -59,7 +59,7 @@ const STATES: Array<{
             </p>
         </section>
 
-        <!-- Q.W3.A.3 — facetAxis × silhouette aspect. -->
+        <!-- facetAxis × silhouette aspect. -->
         <section class="flex flex-col gap-3">
             <p class="section-label">facetAxis · gradient direction adapts to silhouette</p>
             <div class="grid grid-cols-3 gap-6">
