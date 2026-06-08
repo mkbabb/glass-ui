@@ -129,6 +129,12 @@ export function useBlobMood() {
     let transitioning = false;
     // A one-shot `excited` latch — a click holds excited briefly before it relaxes.
     let excitedHoldMs = 0;
+    // AX.W16 (arm 2) — the last `idleMs` seen by `update`. A PENDING idle→sleepy
+    // auto-mood arc (`idleMs` not yet past IDLE_SLEEP_MS while the current mood is not
+    // already sleepy) must keep the quiescence loop ALIVE so the arc actually FIRES
+    // (the "scheduled, not polled" hazard — a parked loop never re-evaluates `update`).
+    // `isSettled` reads this; the renderer's wake scheduler reads `nextAutoMoodMs`.
+    let lastIdleMs = 0;
 
     function setMood(mood: BlobMood) {
         if (mood === currentMood.value && !transitioning) return;
@@ -146,6 +152,7 @@ export function useBlobMood() {
      * `sleepy`; otherwise `idle`. The single internal caller of `setMood`.
      */
     function update(interaction: MoodInteraction) {
+        lastIdleMs = interaction.idleMs;
         if (interaction.clicked) {
             excitedHoldMs = 900; // hold excited ~0.9s after a click
             setMood("excited");
@@ -159,6 +166,32 @@ export function useBlobMood() {
         } else {
             setMood("idle");
         }
+    }
+
+    /**
+     * AX.W16 (arm 2) — the mood is SETTLED (the quiescence loop may park) when it is
+     * NOT mid-transition, NOT holding an excited latch, AND has no PENDING auto-mood
+     * arc. The pending arc: the current mood is not yet `sleepy` and the last-seen
+     * `idleMs` is below IDLE_SLEEP_MS — i.e. an idle→sleepy retarget is still due. The
+     * renderer keeps the loop alive (or wakes it at `nextAutoMoodMs`) until the arc
+     * fires, so the scheduled mood drift is never starved by a parked loop.
+     */
+    function isSettled(): boolean {
+        if (transitioning || excitedHoldMs > 0) return false;
+        const sleepyArcPending =
+            currentMood.value !== "sleepy" && lastIdleMs < IDLE_SLEEP_MS;
+        return !sleepyArcPending;
+    }
+
+    /**
+     * The wall-ms until the next AUTO-MOOD retarget is due (the idle→sleepy arc), so
+     * the renderer's wake scheduler re-arms the parked loop in time for it. Returns
+     * `Infinity` when no arc is pending (already sleepy / transitioning / held).
+     */
+    function nextAutoMoodMs(): number {
+        if (transitioning || excitedHoldMs > 0) return Infinity;
+        if (currentMood.value === "sleepy") return Infinity;
+        return Math.max(0, IDLE_SLEEP_MS - lastIdleMs);
     }
 
     function tick(dt: number) {
@@ -177,6 +210,10 @@ export function useBlobMood() {
         setMood,
         update,
         tick,
+        /** AX.W16 — the quiescence at-rest predicate the renderer's demand gate reads. */
+        isSettled,
+        /** AX.W16 — wall-ms to the next auto-mood retarget (the wake horizon). */
+        nextAutoMoodMs,
     };
 }
 

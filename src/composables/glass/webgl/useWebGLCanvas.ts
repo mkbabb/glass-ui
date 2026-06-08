@@ -35,7 +35,14 @@ import {
     type CanvasFrameHooks,
 } from "./createCanvasLifecycle";
 
-export type WebGLSuspendReason = "tab-hidden" | "off-screen" | "manual";
+// Lockstep with createCanvasLifecycle's CanvasSuspendReason (AX.W16 F6 adds
+// "off-screen-io" — the IntersectionObserver fallback's OWN reason key, distinct from
+// the content-visibility path's "off-screen").
+export type WebGLSuspendReason =
+    | "tab-hidden"
+    | "off-screen"
+    | "off-screen-io"
+    | "manual";
 
 /** The per-frame hooks a consumer's `setup(gl)` returns. */
 export interface WebGLCanvasFrame {

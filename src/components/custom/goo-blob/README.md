@@ -1,101 +1,106 @@
 # GooBlob
 
-A WebGL2 metaball "creature" — a pulsing, organic, gooey SDF body with up to four orbiting
-satellites that merge in, get absorbed, and re-emerge, painted with a perceptually-uniform OKLCh
-color perturbation over glass-ui's warm-cream glass identity. It is the WebGL sibling of
+A WebGL2 metaball "creature" for Vue 3.5 — a lit, pulsing, gooey SDF droplet with up to four
+orbiting satellites that merge in, get absorbed, and re-emerge, painted with a perceptually-uniform
+OKLCh color perturbation over glass-ui's warm-cream glass identity. It is the WebGL sibling of
 [`WatercolorDot`](../watercolor-dot/) (the CSS/SVG dot): the goo-blob is the continuously-animated,
-per-pixel-shaded metaball; the watercolor-dot is the cheap static dot. They are deliberate
-siblings, not redundant.
+per-pixel-shaded metaball; the watercolor-dot is the cheap static dot. They are deliberate siblings,
+not redundant — reach for the dot for the ambient/static register, the blob for the interactive/lit
+hero.
 
-> Research-backed. This README documents the blob as it ships, with the SOTA technique behind
-> each axis cited with access dates. The three formal blob waves all landed: **W9 — Droplet
-> Surface** (lit glass: normalized + circular smin, SDF-gradient normal, warm-cream specular +
-> Fresnel rim, analytic-derivative gradient noise, domain-warped edge), **W10 — Interaction**
-> (critically-damped spring pointer, the decaying-radius elastic trail, velocity
-> squash-and-stretch, the reduced-motion composed rest pose), and **W11 — Mood, Iridescence and
-> Palette** (warm-biased iridescence + fake-SSS depth, the seed-driven OKLCh palette, the
-> wire-or-cut mood resolution; the OKLCh color path is gated by `proof:blob-color-equivalence`).
+## Install
+
+```bash
+npm install @mkbabb/glass-ui
+```
+
+`@mkbabb/value.js` and `@mkbabb/keyframes.js` are peer dependencies (the injected `ColorResolver`
+and the pointer spring). Import the blob from its subpath:
 
 ```ts
 import { GooBlob } from "@mkbabb/glass-ui/goo-blob";
 ```
 
+## Usage
+
+```vue
+<script setup lang="ts">
+import { GooBlob, BLOB_CONFIG_DEFAULTS } from "@mkbabb/glass-ui/goo-blob";
+import { defaultBlobColorResolver } from "@mkbabb/glass-ui/color";
+</script>
+
+<template>
+  <!-- A calm, lit, ambient brand mark in the primary color -->
+  <GooBlob
+    color="var(--primary)"
+    :color-resolver="defaultBlobColorResolver"
+    :config="BLOB_CONFIG_DEFAULTS"
+    class="w-28"
+  />
+</template>
+```
+
+`color` and `colorResolver` are REQUIRED; `config` is required unless an ancestor
+`provide(BLOB_CONFIG_KEY, …)` supplies it (a mount with neither throws — there is no silent
+defaults synthesis). Pass `BLOB_CONFIG_DEFAULTS` for the stock lit warm-cream droplet.
+
+## Documentation
+
+The longer reference below documents what it is, the API surface, the interaction model, performance,
+and accessibility.
+
 ---
 
 ## What it is
 
-The blob is a **single-pass WebGL2 signed-distance-field (SDF) metaball**, not an SVG goo-filter
-and not a CPU marching-squares contour. Each fragment evaluates the field directly on the GPU:
+The blob is a **single-pass WebGL2 signed-distance-field (SDF) metaball**, not an SVG goo-filter and
+not a CPU marching-squares contour. Each fragment evaluates the field directly on the GPU:
 
 - **Field** — an `sdCircle` body plus up to four satellite circles, merged with the Inigo Quilez
-  quadratic-polynomial **smooth-minimum** (`smin`) so they fuse into one gooey mass rather than
-  popping together. The edge is displaced by fractal Brownian-motion (FBM) noise for the organic
-  "watercolor" silhouette, and anti-aliased analytically via `fwidth(d)` so it stays ~1px crisp at
-  any zoom or device-pixel ratio.
-- **Color** — the base color arrives in gamma-sRGB, is lifted into **OKLCh** (the perceptually-
-  uniform color space), perturbed per-pixel (a small hue/chroma/lightness swing off a second FBM
-  field), hue-preservingly gamut-clamped, then emitted through the mandatory sRGB OETF. Working in
-  OKLCh is why the blob's color stays in-family and never goes muddy or garish — most reference
-  blobs perturb in raw sRGB/HSV and band.
+  normalized **smooth-minimum** (`smin`) so they fuse into one gooey mass rather than popping
+  together. The edge is displaced by domain-warped fractal Brownian-motion (FBM) noise for the
+  organic "watercolor" silhouette, and anti-aliased analytically via `fwidth(d)` so it stays ~1px
+  crisp at any zoom or device-pixel ratio. The composite SDF carries its **analytic gradient**, so
+  the surface normal reads the field gradient directly — the per-pixel 4-tap finite-difference normal
+  is gone.
+- **Lit droplet (the default)** — the body reads as a **lit warm-cream dome**: a curved-rim Fresnel +
+  energy-conserving Blinn-Phong glint, a warm-pearl iridescent sheen (an Inigo Quilez cosine palette
+  biased to the warm arc), a fast-subsurface back-light, and a Beer-Lambert inner glow. A
+  foreground-aware min-contrast rim guard keeps the curved rim legible even when a `var(--primary)`
+  blob in dark mode resolves a rim near the body color.
+- **Color** — the base color arrives in gamma-sRGB, is lifted into **OKLCh** (the perceptually-uniform
+  color space), perturbed per-pixel (a small hue/chroma/lightness swing off a second FBM field),
+  hue-preservingly gamut-clamped, then emitted through the mandatory sRGB OETF, with an
+  interleaved-gradient-noise dither to kill warm-cream banding. Working in OKLCh is why the blob's
+  color stays in-family and never goes muddy or garish.
 - **Motion** — a deterministic, seeded satellite state machine (`orbiting → merging → absorbed →
-  emerging`), a sine breathing pulse, and a smoothed pointer deformation.
+  emerging`), a de-synced breathing pulse (three detuned sines so it never re-phases like a
+  metronome), and a critically-damped spring pointer deformation with a velocity squash-and-stretch
+  and an elastic pseudopod trail.
 - **Substrate** — it composes the shared `useWebGLCanvas` WebGL2 substrate, which owns the canvas
   lifecycle, context-loss self-healing, and the full pause machinery (offscreen, tab-hidden,
   reduced-motion). The blob never bootstraps its own GL context.
 
-It renders on a transparent canvas, so it sits over any glass-ui surface and reads as a soft,
-living, colored droplet.
+It renders on a transparent canvas, contained on all four sides of its layout footprint (only the
+orbiting satellites peek the edge), so it sits over any glass-ui surface and reads as a soft, living,
+colored droplet.
 
 ---
 
 ## Use cases
 
-- **Ambient brand accent** — a small (≈7rem) living mark in a hero, an empty state, a loading
-  surface, or a dock corner. Slow, calm, on-palette.
+- **Ambient brand accent** — a small (≈7rem) living mark in a hero, an empty state, a loading surface,
+  or a dock corner. Slow, calm, on-palette. The idle blob **quiesces** (parks its render loop between
+  satellite phase transitions), so an ambient mark is nearly free at rest.
 - **AV background** — a larger continuously-running backdrop. When used this way it MUST carry a
   `DockBackgroundToggle` (or equivalent) pause control per WCAG 2.2.2 (see [Accessibility](#accessibility)).
-- **Interactive toy / mascot** — a pointer-reactive creature that leans toward the cursor, squishes
-  on click, and shifts mood. (The interaction model ships partly wired today; the AW waves complete
-  it — see [Interaction model](#interaction-model).)
+- **Interactive toy / mascot** — a pointer-reactive creature that leans toward the cursor, squishes on
+  click, and shifts mood (idle → curious on hover → excited on click → sleepy after inactivity), the
+  conversational-state affordance register (idle → listening → thinking → responding) modern assistant
+  marks wear.
 
 It is **not** a data visualization and conveys no information — the canvas is decorative
 (`aria-hidden="true"`).
-
----
-
-## Quick start
-
-```vue
-<script setup lang="ts">
-import { GooBlob } from "@mkbabb/glass-ui/goo-blob";
-</script>
-
-<template>
-  <!-- A calm ambient blob in the brand color -->
-  <GooBlob color="var(--primary)" :size="112" />
-</template>
-```
-
-Override configuration two ways — a `config` prop (wins), or an injected `BLOB_CONFIG_KEY`
-(fallback) so an ancestor can theme every descendant blob:
-
-```vue
-<script setup lang="ts">
-import { provide } from "vue";
-import { GooBlob, BLOB_CONFIG_KEY, BLOB_CONFIG_DEFAULTS } from "@mkbabb/glass-ui/goo-blob";
-
-provide(BLOB_CONFIG_KEY, {
-  ...BLOB_CONFIG_DEFAULTS,
-  satelliteCount: 4,
-  smoothK: 0.08,      // gooier merge (vs the 0.05 default — still contained)
-  noiseAmp: 0.035,    // more organic edge wobble
-});
-</script>
-
-<template>
-  <GooBlob color="oklch(0.7 0.12 48)" :size="160" />
-</template>
-```
 
 ---
 
@@ -103,47 +108,58 @@ provide(BLOB_CONFIG_KEY, {
 
 ### Props
 
-| Prop     | Type                  | Default | Notes |
-|----------|-----------------------|---------|-------|
-| `color`  | `string` (CSS color)  | brand   | Any CSS color string — hex, `oklch(...)`, `var(--token)`. Resolved through the injected `ColorResolver` seam to gamma-sRGB, then lifted into OKLCh in-shader. |
-| `size`   | `number` (px)         | —       | The rendered footprint; the canvas is internally oversized to give satellite orbits overflow room. |
-| `config` | `Partial<BlobConfig>` | —       | Overrides specific fields; takes precedence over an injected `BLOB_CONFIG_KEY`. |
+| Prop            | Type                  | Default | Notes |
+|-----------------|-----------------------|---------|-------|
+| `color`         | `string` (CSS color)  | —       | REQUIRED. Any CSS color string — hex, `oklch(...)`, `var(--token)`. A `var(--token)` is un-wrapped to a concrete `rgb(...)` before the resolver sees it (re-resolved on a dark-mode flip). |
+| `colorResolver` | `ColorResolver`       | —       | REQUIRED. Resolves a concrete CSS color to a gamma-sRGB `[r,g,b]` triple. Pass `defaultBlobColorResolver` from `@mkbabb/glass-ui/color`. |
+| `config`        | `BlobConfig`          | —       | The metaball tuning. REQUIRED unless an ancestor `provide(BLOB_CONFIG_KEY, …)` supplies it. Pass `BLOB_CONFIG_DEFAULTS` for the stock look. |
+| `seed`          | `string`              | `""`    | Extra seed mixed into the satellite PRNG for a unique-but-reproducible system. |
+| `paused`        | `boolean`             | `false` | `v-model:paused` — the declarative WCAG-2.2.2 pause seam. `true` parks the render loop, `false` restarts it. Wire a `<DockBackgroundToggle>`'s `v-model:paused` straight to it. |
 
 ### Exposed (via `defineExpose`)
 
-| Member        | Type                         | Notes |
-|---------------|------------------------------|-------|
-| `nudge()`     | `() => void`                 | Perturbs satellite phases — a discrete jiggle impulse. |
-| `setMood(m)`  | `(mood: BlobMood) => void`   | Retargets the mood cross-fade. (See [Interaction model](#interaction-model) — wiring is completed in AW.) |
-| `currentMood` | `Readonly<Ref<BlobMood>>`    | The current mood. |
-| `pause()` / `resume()` | `() => void`        | Stops/starts the render loop — the seam a `DockBackgroundToggle` wires to. |
+| Member        | Type                       | Notes |
+|---------------|----------------------------|-------|
+| `nudge()`     | `() => void`               | Perturbs satellite phases — a discrete jiggle impulse. |
+| `setMood(m)`  | `(mood: BlobMood) => void` | Retargets the mood cross-fade (`idle \| happy \| curious \| sleepy \| excited`). |
+| `pulse()`     | `() => void`               | Fires the one-shot click spring impulse (the bounce) — the same impulse a click fires. |
+| `currentMood` | `Readonly<Ref<BlobMood>>`  | The current mood. |
+| `pause()`     | `() => void`               | Parks the render loop — the imperative half of the WCAG-2.2.2 seam (the `v-model:paused` prop is the declarative half; both bind the same substrate suspend). |
+| `resume()`    | `() => void`               | Restarts the render loop. |
 
 ### Emits
 
-| Event   | Notes |
-|---------|-------|
-| `click` | Fired on activation. (AW wires this to a click-squish impulse internally; consumers may also handle it.) |
+| Event            | Notes |
+|------------------|-------|
+| `click`          | Fired on activation (also fires the click-squish impulse internally). |
+| `update:paused`  | The `v-model:paused` companion (emitted by a control bound to `paused`). |
 
 ### `BlobConfig`
 
-The full tunable surface (`types.ts`). All fields have defaults via `BLOB_CONFIG_DEFAULTS`.
+The full tunable surface (`types.ts`). All fields are concrete with defaults via `BLOB_CONFIG_DEFAULTS`.
 
 ```ts
 interface BlobConfig {
-  // Geometry
-  canvasSize: number;         // internal canvas px (default 200)
-  bodyRadius: number;         // body radius, fraction of canvas (default 0.25)
+  // Geometry (the contained, lit droplet — four-side contained at these defaults)
+  canvasSize: number;         // internal canvas px fallback (default 200)
+  bodyRadius: number;         // body radius, UV fraction (default 0.22)
   satelliteCount: number;     // 0–4 satellites (default 3)
-  satelliteRadius: number;    // satellite radius (default 0.13)
-  orbitRadius: number;        // orbit envelope (default 0.35)
+  satelliteRadius: number;    // satellite radius (default 0.082)
+  orbitRadius: number;        // orbit envelope (default 0.17)
+  quality: "full" | "half";   // render quality (default "full"); "half" = half-res backing store
+
+  // Master tempo — ONE scalar multiplying every integrated dt (default 1.0; 0 = freeze)
+  tempo: number;
 
   // Gooey
-  smoothK: number;            // smin blend band, UV-space distance (default 0.05) — higher = gooier merge, but too high floods
+  smoothK: number;            // smin blend band, UV-space distance (default 0.05) — higher = gooier, too high floods
+  merge: "quadratic" | "circular";  // smin variant (default "quadratic")
 
-  // Surface noise (the organic edge)
-  noiseAmp: number;           // edge displacement amplitude (default 0.025)
+  // Surface noise (the living membrane)
+  noiseAmp: number;           // edge displacement amplitude (default 0.038)
   noiseFreq: number;          // edge noise frequency (default 3.5)
   noiseSpeed: number;         // edge noise drift speed (default 0.08)
+  warpAmp: number;            // domain-warp strength on the FBM edge (default 0.35)
 
   // Pulsation (the breath)
   pulseFreq: number;          // breath frequency (default 0.3)
@@ -155,13 +171,33 @@ interface BlobConfig {
   brightnessShift: number;    // OKLCh lightness bias (default 0)
   colorNoiseFreq: number;     // color-field frequency (default 2.0)
   colorNoiseSpeed: number;    // color-field drift (default 0.05)
+  paletteStops: string[];     // 2–4 in-family CSS color stops (default []); derive via deriveBlobPalette
 
-  // Pointer
-  pointerAttraction: number;  // deform strength toward (>0) / away (<0) the cursor (default 0.0)
-  pointerStrength: number;    // deform scale (default 0.08)
+  // Iridescence + fake-SSS (the translucent-gel read)
+  iridescence: number;        // warm-pearl rim sheen weight (default 0.18)
+  iridHue: number;            // base hue degrees the warm cosine palette centres on (default 85)
+  iridSpeed: number;          // animated-thickness scroll speed (default 0.06)
+  sssScale: number;           // fast-SSS back-light weight (default 0.2)
+  sssPower: number;           // fast-SSS exponent (default 2.0)
+  coreGlow: number;           // thickness-driven inner-luminosity lift (default 0.1)
+
+  // Lit glass surface (default ON — the canonical lit warm-cream droplet)
+  lit: boolean;               // (default true)
+  rimColor: string;           // Fresnel rim tint, resolved through the ColorResolver (default "var(--foreground)")
+  lightDir: [number, number, number];  // light direction (default [0.4, 0.7, 0.6])
+  specStrength: number;       // (default 0.9)
+  specShininess: number;      // specular exponent (default 32)
+  rimPower: number;           // Fresnel/Schlick exponent (default 2.5)
+  rimStrength: number;        // (default 0.5)
+
+  // Pointer / interaction
+  pointerAttraction: number;  // deform strength toward (>0) / away (<0) the cursor (default 0.35)
+  pointerStrength: number;    // deform scale (default 0.45)
+  stretch: number;            // velocity squash-and-stretch magnitude (default 0.5)
+  clickImpulse: number;       // click spring-impulse amplitude (default 0.5)
 
   // Satellites (the orbit/merge lifecycle)
-  eccentricity: number;       // orbit ellipticity (default 0.25)
+  eccentricity: number;       // orbit ellipticity (default 0.05)
   orbitSpeedScale: number;    // orbit speed multiplier (default 1.0)
   wobbleScale: number;        // orbit wobble multiplier (default 1.0)
   mergeRate: number;          // merge-frequency multiplier (default 1.0)
@@ -172,77 +208,58 @@ interface BlobConfig {
 }
 ```
 
-> **Note (AW):** today `orbitSpeedScale` and `wobbleScale` are present in `MoodParams` but not
-> consumed by the satellite tick — the AW mood wave either wires them or the config simplifies to
-> grouped sub-objects + an `energy` scalar. Treat their per-mood values as not-yet-load-bearing
-> until that wave lands.
-
-> **`smoothK` distance regime.** `smoothK` is the smin blend band in the shader's UV space (the
-> canvas is a `[-1, 1]` quad, half-extent 0.5). The smin is IQ-normalized (`k *= 4.0` in the
-> shader) so the seam dip at a fully-overlapped seam (`a == b`) is **exactly** the uploaded `k` —
-> `k` IS the maximum merge inflation in distance units. The renderer composes the uploaded value as
-> `smoothK × moodMultiplier × POS_SCALE`, where `POS_SCALE = 1/1.6 = 0.625` is the inner-region
-> compression **every** length-like uniform rides (body/satellite radius, pointer, noise amplitude).
-> At the `0.05` default with an idle mood (multiplier ≈ 1.0) the seam-pull is ≈ 0.031 — a tight, wet
-> meniscus. Raise `smoothK` for a gooier merge, but a too-large band floods the whole field
-> NON-LOCALLY (the polynomial smin is non-rigid — its effect spans far past the seam), so keep it in
-> the contained range (roughly ≤ 0.10 at the default radii). Mood `smoothK` is a unitless
-> multiplier on this band, not a second absolute length.
+> **`smoothK` distance regime.** `smoothK` is the smin blend band in the shader's UV space (the canvas
+> is a `[-1, 1]` quad, half-extent 0.5). The smin is IQ-normalized (`k *= 4.0` in the shader) so the
+> seam dip at a fully-overlapped seam (`a == b`) is **exactly** the uploaded `k`. The renderer composes
+> the uploaded value as `smoothK × moodMultiplier × POS_SCALE`, where `POS_SCALE = 1/1.6 = 0.625` is
+> the inner-region compression **every** length-like uniform rides (body/satellite radius, pointer,
+> noise amplitude). At the `0.05` default with an idle mood the seam-pull is ≈ 0.031 — a tight, wet
+> meniscus. Raise `smoothK` for a gooier merge, but a too-large band floods the whole field NON-LOCALLY
+> (the polynomial smin is non-rigid), so keep it in the contained range (roughly ≤ 0.10 at the default
+> radii). Mood `smoothK` is a unitless multiplier on this band, not a second absolute length.
 
 ---
 
 ## Interaction model
 
-The blob is built to be a pointer-reactive creature. The vocabulary exists; the wiring completes
-in the AW tranche.
+The blob is a pointer-reactive creature; the interaction ships wired (it is no longer "planned"):
 
-**Today:**
-
-- **Pointer deform** — when `pointerAttraction != 0` and the pointer is over the blob, the body
-  deforms toward (or away from) the cursor. The default is `0.0`, so an out-of-the-box blob is
-  inert to the pointer — set `pointerAttraction` to feel it.
-- **Mood** — a 5-mood cross-fade engine (`idle | happy | curious | sleepy | excited`), each a
-  valence/arousal-shaped parameter set, exposed via `setMood`.
-- **Nudge / click** — `nudge()` jiggles the satellites; `click` is emitted.
-
-**Planned (AW.W10 — Interaction; AW.W11 — Mood):**
-
-- **At-rest pointer-follow** (W10) — a small default attraction so hover always deforms the blob,
-  with the *sign* of `pointerAttraction` honored (lean-in vs shy-away).
-- **Reach-toward droplet** (W10) — a short decaying-radius pointer trail of smin-merged spheres, so
-  the blob stretches an elastic pseudopod toward the cursor and snaps back (the Codrops droplet
-  pattern), reusing the satellite plumbing.
-- **Click squish** (W10) — the `click` emit drives a one-shot spring impulse (overshoot then settle).
-- **Spring pointer** (W10) — the pointer smoothing becomes a frame-rate-independent critically-damped
-  spring (overshoot + settle = weight), via `@mkbabb/keyframes.js`.
-- **Velocity squash-and-stretch** (W10) — a volume-preserving anisotropic UV warp ∝ |velocity| —
-  the blob leans into motion and recovers (~80% of the soft-body feel, zero sim).
-- **Mood from state** (W11) — moods are driven internally from pointer/idle state (curious on
-  approach, excited on click, sleepy after inactivity), with `setMood` retained for manual override;
-  the today-dead `orbitSpeedScale`/`wobbleScale` are wired or the model collapses to one `energy`
-  scalar (wire-or-cut, no orphaned substrate).
+- **Pointer-follow + lean** — the body deforms toward (or, for negative `pointerAttraction`, away from)
+  the cursor via a frame-rate-independent critically-damped spring (`@mkbabb/keyframes.js`). The
+  default `pointerAttraction` is non-zero, so an out-of-the-box blob leans on hover.
+- **Reach-toward droplet** — a short decaying-radius pointer trail of smin-merged spheres, so the blob
+  stretches an elastic pseudopod toward the cursor and snaps back.
+- **Click squish** — the `click` emit + `pulse()` drive a one-shot spring impulse (overshoot then
+  settle).
+- **Velocity squash-and-stretch** — a volume-preserving anisotropic UV warp ∝ |velocity|; the blob
+  leans into motion and recovers.
+- **Mood from state** — moods are driven internally from pointer/idle state on a `{valence, arousal}`
+  affect model (curious on approach, excited on click, sleepy after inactivity), with `setMood`
+  retained for manual override. The sheen intensity, orbit speed, wobble, and pulse all read off the
+  affect point.
 
 All interaction respects `prefers-reduced-motion` and the `DockBackgroundToggle` pause — see
-[Accessibility](#accessibility).
+[Accessibility](#accessibility). Under reduced-motion the substrate paints a composed rest pose (peak
+roundness, satellites tucked, the lit dome kept — a deliberate poster, not a random freeze).
 
 ---
 
 ## Best practices
 
-- **Import from the subpath, not the root barrel** — `@mkbabb/glass-ui/goo-blob` pulls only the
-  blob chunk + its leaves; it never drags in the root barrel's reach.
+- **Import from the subpath, not the root barrel** — `@mkbabb/glass-ui/goo-blob` pulls only the blob
+  chunk + its leaves; it never drags in the root barrel's reach.
 - **Theme via the injected config**, not by editing source — `provide(BLOB_CONFIG_KEY, …)` for a
   subtree, or a `config` prop per-instance. Named themed palettes belong in *your* app, not in the
   library (the library's defaults are its own identity).
-- **Keep it calm by default** — the blob is an ambient accent. Hold `pulseAmp` small (≤ ~0.012),
-  `orbitRadius` modest, and animation cycles slow (premium ambient is slow-and-breathing, not
-  busy). Fast motion reads cheap and is a vestibular trigger.
+- **Keep it calm by default** — the blob is an ambient accent. Hold `pulseAmp` small, `orbitRadius`
+  modest, and animation cycles slow. Fast motion reads cheap and is a vestibular trigger.
 - **Pause continuously-running backgrounds** — if the blob auto-runs > 5s as a non-essential
-  background, wire `pause()`/`resume()` to a `DockBackgroundToggle` (WCAG 2.2.2). This is binding,
-  not optional.
-- **Don't stack many large blobs** — each is a fragment-shader fill-rate cost. For multiple, prefer
-  small footprints; the substrate parks any blob that scrolls offscreen or whose tab is hidden, so
-  off-screen blobs are free.
+  background, wire `v-model:paused` (or `pause()`/`resume()`) to a `DockBackgroundToggle` (WCAG 2.2.2).
+  This is binding, not optional.
+- **Reserve `GooBlob` for the interactive/lit hero; route the static register to `WatercolorDot`** —
+  each `GooBlob` holds its own WebGL2 context, and browsers cap ~8 live contexts per page. A grid of
+  ambient/decorative thumbnails should be `WatercolorDot`s (zero GL context); reserve the GL blob for
+  the one interactive hero.
 - **Decorative, so `aria-hidden`** — don't bolt an `aria-label` onto the canvas; it carries no
   information. If you make a blob genuinely interactive (a button), wrap it in a real
   `<button>`/`role` with a name, not the canvas.
@@ -251,46 +268,51 @@ All interaction respects `prefers-reduced-motion` and the `DockBackgroundToggle`
 
 ## Color notes
 
-- The blob works entirely in **OKLCh**, lifted from a gamma-sRGB base through value.js's exact
-  Ottosson OKLab/OKLCh matrices, with a **hue-preserving gamut clamp** (a chroma bisection that
-  shrinks saturation until in-gamut without shifting hue) and the **mandatory `linearToSrgb()`
+- The blob works entirely in **OKLCh**, lifted from a gamma-sRGB base through value.js's exact Ottosson
+  OKLab/OKLCh matrices, with a **hue-preserving gamut clamp** and the **mandatory `linearToSrgb()`
   OETF** on output. A linear-in-without-an-OETF-out ships visibly ~2.2× too dark — the named A5/A2
   trap, machine-locked by `proof:blob-space-gamma`.
 - The OETF + the four Ottosson matrices + the FBM rotation constant are **spliced from the shared
-  `procedural-color.glsl.ts` chunk** that both the blob and aurora compose, so the color math can
-  never diverge between the two surfaces (AV.W2). The line-for-line TS port
-  (`tests/components/custom/goo-blob/metaball-color.glsl-port.ts`) + the equivalence gate
+  `procedural-color.glsl.ts` chunk** that both the blob and aurora compose, so the color math can never
+  diverge between the two surfaces. The line-for-line TS port + the equivalence gate
   (`proof:blob-color-equivalence`) lock it.
-- **Warm-cream fit** — any highlight, rim, or sheen the blob grows should be tinted warm (toward
-  `--foreground` / a warm highlight), never clinical white, so it sits in glass-ui's cream-glass
-  system rather than reading as a generic cold liquid-glass bubble.
-- **(Planned — AW.W11)** A `deriveBlobPalette(seed, options)` front door — one seed → 2–4
-  gamut-mapped OKLCh stops distributed across the body + satellites — parallel to aurora's
-  `deriveAurora`, sharing one hoisted `ColorHarmony` vocabulary (no second divergent deriver); plus
-  iridescence (a warm-biased Inigo Quilez cosine palette driven by the W9 Fresnel/edge angle —
-  *subtle*, not maximal rainbow) and a thickness-from-`-d` fake-subsurface inner glow. An IGN dither
-  to kill the warm-cream banding (the same dither aurora already ships) lands alongside the W9
-  surface finish.
+- **The renderer is DOM-free.** A `var(--token)` color is un-wrapped to a concrete `rgb(...)` by the
+  SFC (the single cached `resolveTokenColor` cascade read) BEFORE the renderer's `ColorResolver` sees
+  it — value.js's `parseCSSColor` cannot parse a `var()` wrapper, and the renderer never reaches the
+  DOM. The un-wrap re-resolves on a dark-mode flip.
+- **`deriveBlobPalette(seed, options)`** (`@mkbabb/glass-ui/color`) — one seed → 2–4 gamut-mapped OKLCh
+  stops distributed across the body + satellites, parallel to aurora's `deriveAurora`, sharing one
+  hoisted `ColorHarmony` vocabulary. Feed the stops to `config.paletteStops`.
+- **Warm-cream fit** — any highlight, rim, or sheen the blob grows is tinted warm (toward
+  `--foreground` / a warm highlight), never clinical white, so it sits in glass-ui's cream-glass system.
 
 ---
 
 ## Performance notes
 
-- **Fill-rate is the cost, and it is quadratic in device-pixel ratio.** The substrate clamps DPR at
-  2×; Retina is already 4× the fragment work, so the clamp is load-bearing. The fragment runs FBM
-  (3 octaves) twice per pixel plus a full OKLCh round-trip — keep the footprint modest.
+- **Fill-rate is the cost, and it is quadratic in device-pixel ratio.** The substrate clamps DPR at 2×.
+  The fragment runs FBM (3 octaves) twice per pixel plus a full OKLCh round-trip — keep the footprint
+  modest.
+- **Quiescence — the biggest onscreen lever.** The render loop is **event-scheduled**: an idle blob
+  (mood settled, pointer at rest, trail collapsed, click pulse zero, no satellite mid-merge) PARKS its
+  rAF and re-arms only when the next satellite phase or auto-mood arc is due. An idle ambient blob
+  renders ~0 frames between phase transitions instead of burning a full 60fps forever.
 - **The substrate parks aggressively** — offscreen (intersection + `content-visibility`),
   tab-backgrounded (`document.hidden`), and under `prefers-reduced-motion` (one static frame then
-  park). An off-screen or hidden blob attaches zero frames; you pay only for visible, in-motion
-  blobs.
-- **(Planned — AW)** A `quality: "full" | "half"` axis — render the metaball pass at half internal
-  resolution and bilinear-upsample (blobs are the ideal candidate; the soft FBM edge hides the
-  interpolation) for ~4× fragment savings on weak GPUs, plus a trim of the internal oversize margin
-  to stop paying FBM cost on transparent border pixels. The new lighting/iridescence terms are
-  per-pixel ALU on the already-running fragment — no new pass, no new rAF.
-- **No WebGPU, no particle migration.** With ≤4 nuclei there is no accumulation bottleneck;
-  single-pass WebGL2 SDF is the SOTA-correct architecture for this body count. WebGPU is a
-  documented substrate-wide non-goal (revisit only if a consumer needs ≥ ~1k simulated bodies).
+  park). An off-screen or hidden blob attaches zero frames; you pay only for visible, in-motion blobs.
+- **Pre-FBM bounding discard** — a fragment outside the padded droplet reach (`uMaxReach`) writes
+  transparent and returns BEFORE the two FBM calls + the OKLCh round-trip + the lit block, so the
+  oversized canvas does not pay the full ALU on its transparent border.
+- **`quality: "full" | "half"`** — `half` renders the metaball pass at half the backing-store
+  resolution and lets the browser bilinear-upsample on composite (~4× fragment savings on weak GPUs;
+  the soft FBM/AA edge hides the interpolation). One blit, no multi-pass chain.
+- **No WebGPU, no particle migration (research-backed non-goals).** With ≤4 nuclei there is no
+  accumulation bottleneck; single-pass WebGL2 SDF is the SOTA-correct architecture for this body count.
+  A 2D screen-space field beats raymarching for a flat UI droplet on every axis (flat `O(W·H·N)`,
+  zero overdraw, resolution-independent `fwidth`-AA). WebGPU compute is a net loss at ≤4 nuclei (a
+  buffer round-trip + sync barrier with zero field-eval savings) and is a documented substrate-wide
+  decision (aurora's WGSL path), never blob-local; a decorative background cannot carry a hard WebGPU
+  dependency. Both are explicit non-goals.
 
 ---
 
@@ -299,63 +321,34 @@ All interaction respects `prefers-reduced-motion` and the `DockBackgroundToggle`
 - **Decorative canvas** — `aria-hidden="true"`; no accessible-name obligation (the blob conveys no
   information).
 - **`prefers-reduced-motion`** — the `useWebGLCanvas` substrate *live-monitors* PRM (a `matchMedia`
-  `change` listener) and paints one static frame then parks under reduce — every surface inherits
-  the freeze, and a CSS reset cannot reach the WebGL rAF, so the substrate owns it. Any interaction
-  must collapse to instant/no-op under reduce and hook the *same* gate (no parallel motion path).
-- **WCAG 2.2.2 (Pause, Stop, Hide)** — a continuously-running, auto-starting, > 5s, non-essential
-  blob background MUST carry a user-reachable pause control, available to **all** users (not gated
-  behind PRM). Wire `pause()`/`resume()` to a `DockBackgroundToggle`.
-- **(Planned — AW)** The reduced-motion static frame becomes a *composed* rest pose (peak roundness,
-  satellites at a designed arrangement) — a deliberate poster, not a random freeze.
-
----
-
-## Examples
-
-**A pointer-reactive accent** (feel the deform):
-
-```vue
-<GooBlob
-  color="var(--primary)"
-  :size="128"
-  :config="{ pointerAttraction: 0.5, smoothK: 0.06 }"
-/>
-```
-
-**A gooier, livelier blob** with four satellites:
-
-```vue
-<GooBlob
-  color="oklch(0.68 0.13 30)"
-  :size="180"
-  :config="{
-    satelliteCount: 4,
-    smoothK: 0.09,
-    noiseAmp: 0.04,
-    pulseFreq: 0.5,
-    pulseAmp: 0.012,
-  }"
-/>
-```
-
-**As a pausable AV background**, wired to a dock toggle:
+  `change` listener) and paints one composed-rest-pose static frame then parks under reduce — every
+  surface inherits the freeze, and a CSS reset cannot reach the WebGL rAF, so the substrate owns it.
+  Any interaction collapses to instant/no-op under reduce and hooks the *same* gate (no parallel
+  motion path).
+- **WCAG 2.2.2 (Pause, Stop, Hide)** — a continuously-running, auto-starting, > 5s, non-essential blob
+  background MUST carry a user-reachable pause control, available to **all** users (not gated behind
+  PRM). Wire `v-model:paused` (or `pause()`/`resume()`) to a `DockBackgroundToggle`. This is distinct
+  from WCAG 2.3.3 (Animation from Interactions), which the PRM freeze covers.
 
 ```vue
 <script setup lang="ts">
 import { ref } from "vue";
-import { GooBlob } from "@mkbabb/glass-ui/goo-blob";
+import { GooBlob, BLOB_CONFIG_DEFAULTS } from "@mkbabb/glass-ui/goo-blob";
 import { DockBackgroundToggle } from "@mkbabb/glass-ui/dock";
+import { defaultBlobColorResolver } from "@mkbabb/glass-ui/color";
 
-const blob = ref<InstanceType<typeof GooBlob>>();
 const paused = ref(false);
-function onPaused(v: boolean) {
-  v ? blob.value?.pause() : blob.value?.resume();
-}
 </script>
 
 <template>
-  <GooBlob ref="blob" color="var(--primary)" :size="320" />
-  <DockBackgroundToggle v-model:paused="paused" @update:paused="onPaused" />
+  <GooBlob
+    v-model:paused="paused"
+    color="var(--primary)"
+    :color-resolver="defaultBlobColorResolver"
+    :config="BLOB_CONFIG_DEFAULTS"
+    class="w-80"
+  />
+  <DockBackgroundToggle v-model:paused="paused" />
 </template>
 ```
 
@@ -365,60 +358,57 @@ function onPaused(v: boolean) {
 
 ```
 goo-blob/
-├── GooBlob.vue              # the component shell — props, resolver injection, expose, wrapper shadow
-├── types.ts                 # BlobConfig, MoodParams, MetaballSource, BLOB_CONFIG_KEY/DEFAULTS
+├── GooBlob.vue              # the shell — props (incl. v-model:paused), resolver injection,
+│                            #   var()-unwrap (the resolveTokenColor leaf), expose, wrapper shadow
+├── types.ts                 # BlobConfig, BlobMood, BlobMerge, BlobQuality, MoodParams,
+│                            #   MetaballSource, BLOB_CONFIG_KEY/DEFAULTS
 ├── shaders/
 │   ├── metaball.vert.ts     # full-quad vertex
-│   ├── metaball.frag.ts     # the fragment assembler (spliced from the partials below)
-│   ├── sdf-body.glsl.ts     # sdCircle + smin (the merge field)
-│   ├── watercolor-edges.glsl.ts  # the FBM that displaces the edge
+│   ├── metaball.frag.ts     # the fragment assembler (pre-FBM bounding discard, OKLCh perturb, lit dome)
+│   ├── sdf-body.glsl.ts     # sdCircle + value+gradient smin (the analytic-gradient merge field)
+│   ├── watercolor-edges.glsl.ts  # the domain-warped FBM that displaces the edge
 │   └── oklch-perturb.glsl.ts     # inGamut + hue-preserving gamutClampOklch
 └── composables/
-    ├── useMetaballRenderer.ts   # composes useWebGLCanvas; shader compile, uniform upload, color cache
+    ├── useMetaballRenderer.ts   # composes useWebGLCanvas; compile, uniform upload, quiescence gate,
+    │                            #   pause/resume seam, quality axis (DOM-free — concrete colors only)
     ├── useBlobSatellites.ts     # the orbit/merge/absorb/emerge state machine (seeded, deterministic)
-    ├── useBlobMood.ts           # the 5-mood cross-fade engine
-    ├── useBlobPointer.ts        # pointer → [-1,1], smoothed
+    ├── useBlobMood.ts           # the {valence, arousal} 5-mood cross-fade engine
+    ├── useBlobPointer.ts        # spring pointer → [-1,1], trail, click impulse, composed rest pose
     └── easing.ts                # easeInOut helpers
 ```
 
 The fragment shader is **composed from cohesive partials** spliced into one source string at module
-load — the emitted shader is character-equivalent to a hand-inlined version. The OETF + Ottosson
-matrices + FBM rotation are spliced from the shared `procedural-color.glsl.ts` so they can never
-diverge from aurora's.
+load — the emitted shader is character-equivalent to a hand-inlined version. The renderer composes the
+shared `useWebGLCanvas` substrate and is DOM-free: the SFC un-wraps every color via one
+`resolveTokenColor` leaf before handing concrete strings to the renderer's injected `ColorResolver`.
 
 ---
 
 ## References
 
-All accessed 2026-06-06.
+All accessed 2026-06-08.
 
-- Inigo Quilez — [Smooth Minimum](https://iquilezles.org/articles/smin/) (the `smin` merge; the 2024
-  rewrite adds normalization + the `vec2` material-blend variant), [Distance + Gradient functions
-  2D](https://iquilezles.org/articles/distgradfunctions2d/) (the SDF gradient = free fake normal),
-  [Domain Warping](https://iquilezles.org/articles/warp/), [Procedural Color
-  Palettes](https://iquilezles.org/articles/palettes/) (the cosine palette for iridescence).
-- Björn Ottosson — [Oklab](https://bottosson.github.io/posts/oklab/) (the perceptual color space +
-  the gamut-clipping the blob's clamp follows).
+- Inigo Quilez — [Smooth Minimum](https://iquilezles.org/articles/smin/), [Distance + Gradient
+  functions 2D](https://iquilezles.org/articles/distgradfunctions2d/) (the SDF gradient = free fake
+  normal), [Domain Warping](https://iquilezles.org/articles/warp/), [Procedural Color
+  Palettes](https://iquilezles.org/articles/palettes/).
+- Björn Ottosson — [Oklab](https://bottosson.github.io/posts/oklab/) (the perceptual color space + the
+  gamut-clipping the blob's clamp follows).
 - Codrops — [Interactive droplet-like metaballs with Three.js and GLSL](https://tympanus.net/codrops/2025/06/09/how-to-create-interactive-droplet-like-metaballs-with-three-js-and-glsl/)
-  (Yuki Kojima, 2025-06-09 — the canonical premium-metaball reference: SDF normals, pointer trail,
-  glass tone-crush).
-- imadrahmoune — [How Apple's Liquid Glass probably works](https://imadrahmoune.com/liquid-glass/)
-  (the 2D-SDF fake normal + Fresnel rim + refraction grammar).
-- Alan Zucconi — [Fast Subsurface Scattering in Unity](https://www.alanzucconi.com/2017/08/30/fast-subsurface-scattering-1/)
-  (the fake-SSS back-light term).
-- Khronos — [PBR Neutral Tone Mapper](https://www.khronos.org/news/press/khronos-pbr-neutral-tone-mapper-released-for-true-to-life-color-rendering-of-3d-products)
-  (2024 — the LDR brand-color tonemap, vs ACES/AgX which desaturate).
-- frost.kiwi — [How to fix color banding](https://blog.frost.kiwi/GLSL-noise-and-radial-gradient/)
-  (the interleaved-gradient-noise dither).
+  (the canonical premium-metaball reference: SDF normals, pointer trail, glass tone-crush).
+- Alan Zucconi — [Fast Subsurface Scattering in Unity](https://www.alanzucconi.com/2017/08/30/fast-subsurface-scattering-1/).
+- frost.kiwi — [How to fix color banding](https://blog.frost.kiwi/GLSL-noise-and-radial-gradient/) (the
+  interleaved-gradient-noise dither).
 - Josh Comeau — [Spring physics](https://www.joshwcomeau.com/animation/a-friendly-introduction-to-spring-physics/),
   [Squash and Stretch](https://www.joshwcomeau.com/animation/squash-and-stretch/).
-- *Velocity Skinning for Real-time Stylized Skeletal Animation* — [arXiv:2104.04934](https://arxiv.org/pdf/2104.04934)
-  (the velocity → anisotropic squash/stretch).
-- WebGPU Baseline — [web.dev, WebGPU supported in all major browsers](https://web.dev/blog/webgpu-supported-major-browsers)
-  (2025-11-25 — all four engines as of 2025-11-25; "Baseline 2026", newly-available not yet widely-available).
 - WCAG — [2.2.2 Pause, Stop, Hide](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html),
   [2.3.3 Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html);
   MDN — [`prefers-reduced-motion`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion).
 
-The full SOTA path-forward + the AW wave specs live at `docs/tranches/AW/blob/PATH-FORWARD.md` and
-`docs/tranches/AW/blob/wave-seeds.md`.
+## Contributing
+
+See [CONTRIBUTING.md](../../../../CONTRIBUTING.md).
+
+## License
+
+[MIT](../../../../LICENSE) © 2026 Mike Babb

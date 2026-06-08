@@ -132,7 +132,13 @@ function run() {
         }
         const src = stripComments(readFileSync(path, "utf8"));
         const composes = /useIntersectionPause\s*\(/.test(src);
-        const drivesOffScreen = /["']off-screen["']/.test(src);
+        // The seam drives an off-screen* suspend reason. AX.W16 F6 split the IO
+        // fallback onto its OWN reason key `off-screen-io` (distinct from the
+        // content-visibility path's `off-screen` — the one-writer-per-reason
+        // tightening), so the blob drives `off-screen-io` while aurora still drives
+        // `off-screen`. Accept EITHER off-screen reason key — the gate's intent (the
+        // runtime parks offscreen via useIntersectionPause) is preserved.
+        const drivesOffScreen = /["']off-screen(?:-io)?["']/.test(src);
         const wired = composes && drivesOffScreen;
         if (!wired) {
             violations.push(

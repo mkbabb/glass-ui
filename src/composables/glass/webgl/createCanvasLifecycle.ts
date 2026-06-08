@@ -20,7 +20,20 @@
 // reschedule is gated, never the suspend set, so the on-screen reduced surface never
 // blanks). This is the JS gate a CSS reset cannot reach.
 
-export type CanvasSuspendReason = "tab-hidden" | "off-screen" | "manual";
+// AX.W16 F6 — the offscreen-park is ORed across TWO independent detectors writing
+// DISTINCT reason keys, so the "one writer per reason" invariant is literally true:
+//   - "off-screen"    — the substrate's `contentvisibilityautostatechange` path
+//                       (content-visibility:auto, the headline lever).
+//   - "off-screen-io" — the consumer's IntersectionObserver `rootMargin` fallback
+//                       (the engine-without-content-visibility path).
+// Both gate the same empty-`Set` `isRunning()` check, so the loop runs ONLY when BOTH
+// agree the surface is visible. Before this split both wrote "off-screen", so an IO
+// `resume` could lift a legitimately-skipped CV suspend (the latent F6 breach).
+export type CanvasSuspendReason =
+    | "tab-hidden"
+    | "off-screen"
+    | "off-screen-io"
+    | "manual";
 
 /** The per-frame hooks a backend's `buildContext` returns to the lifecycle core. */
 export interface CanvasFrameHooks {
