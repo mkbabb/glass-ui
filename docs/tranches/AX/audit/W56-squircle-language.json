@@ -1,0 +1,95 @@
+{
+  "wave": "AX.W56",
+  "title": "Squircle design language — the corner-SHAPE token axis + the rounded-vs-squircle POLICY (re-home AW.W23 off cards → onto the big-dock)",
+  "status": "dev-complete-headless-green-live-pending",
+  "band": "B (GRAPHICS / glass-IDENTITY)",
+  "severity": "major (G3 — the user's corner-shape ask)",
+  "baseSha": "6050dc4b39cfe41a78eef4cdd38729f420c1c82d",
+  "dependsOn": ["AX.W00"],
+  "folds": ["convergence2/R-squircle.md (SOTA + CSS recipe)", "convergence2/A-squircle-pivot.md (source-site audit + re-home policy)"],
+  "headlessGate": {
+    "id": "proof:squircle-language",
+    "registration": "package.json — node scripts/proof-squircle-language.mjs; gates.mjs GATES row (local + ci)",
+    "coUpdated": true,
+    "bornRed": true,
+    "bornRedMethod": "the SOURCE detector inverted over 5 mutations: re-hardcode `corner-shape: squircle` on the big-dock → BIGDOCK-READS-TOKEN (2 violations); re-add a `.glass-card` squircle → CARD-REHOMED (1); leak a corner-shape decl outside @supports → SUPPORTS-GATE-INTACT (1); flip --corner-shape-card to a superellipse → POLICY-CARD-ROUND (1); drop --corner-k-squircle → TOKEN-AXIS-EXISTS (1). All bite >0; the OK base = 0 violations.",
+    "greenAtPatchedTree": true,
+    "greenResult": "--corner-k-squircle=2 ✓; card/pill/panel=round ✓; bigdock=superellipse(var(--corner-k-squircle)) ✓; big-dock reads var(--corner-shape-bigdock) (bite) ✓; @supports (corner-shape: superellipse(2)) gate intact + leak-free ✓; border-radius round fallback present ✓; glass.css card squircle re-homed ✓; π render arm SKIP (workspace-resident spec authored; orchestrator drives the chrome-devtools-mcp cornerShape readback); status PASS exit 0.",
+    "piArm": {
+      "id": "tests-visual/squircle-language.spec.ts",
+      "shape": "fail-CLOSED Playwright cornerShape readback; befitting-silent SKIP on workspace/device absence",
+      "asserts": "engine-aware: on a Chrome-139 supporting engine + a real .shape-card big-dock → getComputedStyle(...).cornerShape resolves superellipse(2); on a non-supporting engine → the round fallback (never a false RED); a .glass-card stays round on EVERY engine (the re-home canary)",
+      "liveVerdict": "pending-re-probe — the orchestrator drives the cornerShape readback on a real Chrome-139 via chrome-devtools-mcp (the binding close)"
+    }
+  },
+  "redWitnesses": [
+    {
+      "id": "RED-1",
+      "claim": "no corner-SHAPE token axis — the corner RADIUS is tokenized (--radius-{xs..3xl,pill} + semantic aliases) but the corner SHAPE is a hardcoded `squircle` keyword in two CSS files, no --corner-k-* / --corner-shape-* companion",
+      "confirmedAtHead": true,
+      "codeEvidence": "grep 'corner-k-\\|corner-shape-' src/styles/theme.css = NONE at HEAD; theme.css:28-65 is the radius half only",
+      "disposition": "GREEN — theme.css mints --corner-k-{squircle:2,soft:1.7,sharp:2.4} (squircle == superellipse(2) == n=4 per MDN) + the semantic --corner-shape-{card:round,pill:round,panel:round,bigdock:superellipse(var(--corner-k-squircle))} POLICY aliases in the leading plain @theme."
+    },
+    {
+      "id": "RED-2",
+      "claim": "the policy is INVERTED — corner-shape: squircle is applied to .glass-card/.glass-btn/.btn-pill (cards + icon-buttons + pills), directly contradicting the user's 'rounded for cards'",
+      "confirmedAtHead": true,
+      "codeEvidence": "glass.css:721-728 @supports (corner-shape: squircle) { .glass-card, .glass-btn, .btn-pill { corner-shape: squircle } }",
+      "disposition": "GREEN — the glass.css squircle block is RE-HOMED OFF cards/buttons/pills (DELETED; they resolve --corner-shape-card/-pill == round — no corner-shape decl). A policy comment records the no-re-add rule. Clean break, no alias."
+    },
+    {
+      "id": "RED-3",
+      "claim": "the big-dock corner shape is a bare hardcoded `squircle` keyword, not a token — not :root-overridable, W42's dock-morph cannot calc() a k against it",
+      "confirmedAtHead": true,
+      "codeEvidence": "dock.css:539 corner-shape: squircle (bare keyword inside the @supports block)",
+      "disposition": "GREEN — dock.css reads corner-shape: var(--corner-shape-bigdock) — as token-overridable as the radius; W42 reads the SAME --corner-k-squircle vocabulary."
+    },
+    {
+      "id": "RED-4",
+      "claim": "the @supports condition tests the keyword `squircle`, not the literal-2 feature query — the token resolves to superellipse(var(--corner-k-squircle)) and var() is not @supports-evaluable",
+      "confirmedAtHead": true,
+      "codeEvidence": "dock.css:537 + glass.css:721 @supports (corner-shape: squircle)",
+      "disposition": "GREEN — the big-dock gate is @supports (corner-shape: superellipse(2)) (the literal feature query, the same Chrome-139 feature); the un-gated border-radius round stays the cross-engine contract."
+    },
+    {
+      "id": "RED-5",
+      "claim": "the clip-path-fallback REJECTION is unrecorded — a later agent might 'fix' the 35% Safari gap with a JS path generator (which hard-clips the box, severing the backdrop-filter blur halo + the cartoon offset-shadow)",
+      "confirmedAtHead": true,
+      "codeEvidence": "no DECISION in src/ or the wave docs rejecting the clip-path figma-squircle cross-engine fallback",
+      "disposition": "GREEN — the rejection is recorded in the wave doc (§Scope fold 4 + §SOTA + §PreceptAlignment) + the glass.css/dock.css policy comments; the gate locks the @supports-over-border-radius-round shape (no clip-path)."
+    }
+  ],
+  "findingDisposition": {
+    "R_squircle_3_1_token_axis": "DONE — --corner-k-* + --corner-shape-* minted in theme.css (the leading plain @theme, radius-sibling rationale)",
+    "A_squircle_pivot_0_re_home": "DONE — the glass.css card/button/pill squircle re-homed off; cards round by policy; clean break no alias",
+    "R_squircle_3_1_bigdock_tokenize": "DONE — dock.css reads var(--corner-shape-bigdock) under @supports (corner-shape: superellipse(2))",
+    "R_squircle_3_3_clippath_reject": "RECORDED — the clip-path figma-squircle fallback rejected (severs the blur halo + cartoon shadow); the round border-radius is the honest zero-cost fallback",
+    "R_squircle_3_2_and_the_like": "DEFAULT big-dock ONLY — the large-radius candidates (dialogs/sheets/panels/Configurator) are consumer-opt-in (re-point --corner-shape-<surface>); NOT applied by default (no overfit)",
+    "W42_cross_ref": "RECORDED — W42's dock-morph reads this wave's --corner-k-squircle band (ONE k vocabulary, no second definition); G3 lands the band first"
+  },
+  "selfGates": {
+    "typecheck": "PASS",
+    "build": "PASS (dist/styles/{theme,dock,glass}.css carry the tokenized cascade; /styles is the consumer path)",
+    "proof:squircle-language": "PASS (5 source asserts green; π arm SKIP — orchestrator-driven)",
+    "proof:gate-script-parity": "PASS (the new gate registered; 0 new orphan, 0 new dangling)",
+    "proof:theme": "PASS",
+    "proof:components-css": "PASS"
+  },
+  "filesChanged": [
+    "src/styles/theme.css",
+    "src/styles/dock.css",
+    "src/styles/glass.css",
+    "src/components/custom/dock/GlassDock.vue",
+    "scripts/proof-squircle-language.mjs",
+    "tests-visual/squircle-language.spec.ts",
+    "package.json",
+    "scripts/gates.mjs",
+    "docs/tranches/AX/waves/AX.W56-squircle-design-language.md",
+    "docs/tranches/AX/audit/W56-squircle-language.json",
+    "docs/tranches/AX/audit/convergence2/CONVERGENCE-PLAN-2.md"
+  ],
+  "liveArmNotes": {
+    "magnitudes": "--corner-k-squircle: 2 (squircle, n=4 — the canonical web squircle); --corner-k-soft: 1.7 (n≈3.4); --corner-k-sharp: 2.4 (n≈4.8); --corner-shape-card/pill/panel: round; --corner-shape-bigdock: superellipse(var(--corner-k-squircle)).",
+    "liveChecks": "On a real Chrome-139 @ localhost:5173 over the dock route (/navigation/dock): (1) getComputedStyle('.glass-dock.shape-card').cornerShape === 'superellipse(2)' (the big-dock squircle paints — backdrop-filter + cartoon shadow follow the silhouette, not a plain rounded arc); (2) getComputedStyle('.glass-card').cornerShape === 'round'/'normal' (the re-home canary — cards stay round); (3) on Safari/Firefox (or CSS.supports('corner-shape','superellipse(2)') === false) the big-dock falls back to the border-radius round arc with no broken paint; (4) no dock-morph / glass-material regression, light AND dark. TUNE: if the big-dock squircle reads too square at k=2, the orchestrator dials --corner-k-squircle (or --corner-shape-bigdock to --corner-k-soft=1.7) live; if a large-radius surface ('and the like') is opted in, re-point its --corner-shape-<surface> at superellipse(var(--corner-k-squircle))."
+  }
+}
