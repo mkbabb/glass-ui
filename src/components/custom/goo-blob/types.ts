@@ -161,10 +161,16 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
 
     tempo: 1.0,
 
-    // `smoothK` is now a TRUE blend-band in the shader's UV space (the smin is
-    // IQ-normalized — `k *= 4.0` — so the band == k; the old `/0.22` normalizer is
-    // gone). ~0.12 reads as a wet, rounded meniscus at the body/satellite seam.
-    smoothK: 0.12,
+    // `smoothK` is the smin blend-band in the shader's UV space (half-extent 0.5).
+    // The smin is IQ-normalized (`k *= 4.0`) so the seam dip at a==b is EXACTLY the
+    // uploaded k. The renderer composes the upload as `smoothK × moodMult × POS_SCALE`
+    // (POS_SCALE = 1/1.6 = 0.625 — the smin band rides the same inner-region
+    // compression as every other length-like uniform). At idle (moodMult ≈ 1.0) that
+    // is 0.05 × 1.0 × 0.625 ≈ 0.031 of seam-pull — a tight, wet, rounded meniscus
+    // (matching the pre-AW oracle's 0.034). Higher floods (smaller is crisper): the
+    // 0.864-effective slab the un-normalized 0.12 produced after the `k *= 4.0`
+    // regime change is the AW.W9 over-merge this default re-solves.
+    smoothK: 0.05,
     merge: "quadratic",
 
     noiseAmp: 0.025,

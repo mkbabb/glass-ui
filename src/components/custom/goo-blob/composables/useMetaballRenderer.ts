@@ -8,7 +8,7 @@ import { resolveBudgetDpr } from "../../aurora/constants/budget";
 import type { ColorResolver } from "../../../../composables/color";
 import { METABALL_VERTEX_SRC } from "../shaders/metaball.vert";
 import { METABALL_FRAGMENT_SRC } from "../shaders/metaball.frag";
-import { BLOB_CONFIG_DEFAULTS, type BlobConfig } from "../types";
+import type { BlobConfig } from "../types";
 import type { BlobMoodSystem } from "./useBlobMood";
 import type { BlobPointer } from "./useBlobPointer";
 import type { BlobSatelliteSystem } from "./useBlobSatellites";
@@ -427,17 +427,20 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     gl.uniform1f(U.uWarpAmp, config.warpAmp);
 
                     // Gooey — `uSmoothK` is a TRUE blend-band in the shader's UV
-                    // space now that the smin is normalized (`k *= 4.0` in
-                    // sdf-body.glsl.ts). The prior `/0.22` normalizer + the
-                    // `POS_SCALE` multiply are GONE (W9.a): the config value is the
-                    // neck-width the consumer reasons about directly. The mood
-                    // `smoothK` is a unitless multiplier (1.0 at idle) so a mood
-                    // shift widens/tightens the neck without re-introducing a
-                    // hidden length transform.
-                    gl.uniform1f(
-                        U.uSmoothK,
-                        config.smoothK * (params.smoothK / BLOB_CONFIG_DEFAULTS.smoothK),
-                    );
+                    // space: the smin is IQ-normalized (`k *= 4.0` in
+                    // sdf-body.glsl.ts) so the band == k (the seam dip at a==b is
+                    // exactly the uploaded k). The `/0.22` normalizer stayed deleted
+                    // (W9.a — the right deletion), but the smin band RIDES `POS_SCALE`
+                    // like every other length-like uniform (uBodyRadius/satRadius/
+                    // uPointer/noiseAmp all carry the 0.625 inner-region compression):
+                    // the merge inflation is measured in the SAME UV space as the
+                    // radii, so it must carry the same compression or it is 1.6×
+                    // oversized relative to every other length (the second half of
+                    // the AW.W9 flood). The mood `smoothK` is now a unitless,
+                    // 1.0-centred MULTIPLIER (idle ≈ 1.0): the config holds the ONE
+                    // absolute band, mood scales it — there is no split-length regime,
+                    // so no `/DEFAULTS` ratio normalization is needed.
+                    gl.uniform1f(U.uSmoothK, config.smoothK * params.smoothK * POS_SCALE);
                     gl.uniform1f(U.uMerge, config.merge === "circular" ? 1.0 : 0.0);
 
                     // Color perturbation
