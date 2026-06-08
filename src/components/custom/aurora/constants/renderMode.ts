@@ -16,6 +16,29 @@ export type AuroraRenderMode = "webgl" | "css" | "auto";
 export type AuroraSubstrate = "webgpu" | "webgl" | "css";
 
 /**
+ * AX.W07 — the WebGPU-parity lever (internal, NOT a consumer prop — consumers should
+ * not know the WGSL twin exists). The shared W07↔W14 switch:
+ *
+ *   - W07 sets it `false`. The WGSL twin's two device-proven black-canvas defects (the
+ *     int-in-float counts + the `var<uniform>` dynamic-index Metal miscompile) are FIXED
+ *     at their root in this wave, but the twin is STILL reduced-parity by design even
+ *     unblocked (isotropic-only nuclei, fbm-only warp, NO flow/cursor/lighting/mediums/
+ *     strokes/grain, a straight-OKLab palette vs the GLSL OKLCh hue-arc). So a
+ *     WebGPU-capable machine is served the TESTED universal WebGL2 path (DESIGN.md
+ *     invariant 8 — the correct single-pass renderer) rather than the reduced-parity twin:
+ *     `resolveRenderModeAsync` returns `{ substrate: "webgl", device: null }` while this
+ *     is `false`. This is a knowingly-DEGRADED-by-design phased outcome (SPEC.md
+ *     §DEGRADED).
+ *   - W14 (band C · AURORA) owns the flip — and ONLY for the OPT-IN Kuwahara painterly
+ *     finish over a parity-floor field, never to auto-default a capable machine (the
+ *     §4 note 14 DELETE-the-auto-default disposition). W14 is the NAMED restoration wave.
+ *
+ * The gate forces the WebGPU path internally regardless of this lever (it tests the
+ * SHADER, not the default routing); only the LIVE default routing reads it.
+ */
+export const WEBGPU_PARITY = false;
+
+/**
  * Resolve `"auto"` to a concrete substrate per device tier. `"webgl"` and
  * `"css"` pass through unchanged.
  *
@@ -98,6 +121,15 @@ export async function resolveRenderModeAsync(
     // The sync tier decides whether to animate; a `"css"` floor skips the WebGPU probe.
     const syncMode = resolveRenderMode(mode);
     if (syncMode === "css") return { substrate: "css", device: null };
+
+    // AX.W07 — WebGL2-default-until-parity. While the WGSL twin is reduced-parity
+    // (WEBGPU_PARITY === false) a capable machine is served the tested universal WebGL2
+    // path, never the twin: short-circuit BEFORE the adapter probe (a capable device
+    // should not pay the requestAdapter for a backend it will not bind). W14 flips the
+    // lever for the opt-in Kuwahara path; until then this is the shipped default.
+    if (!WEBGPU_PARITY) {
+        return { substrate: "webgl", device: null };
+    }
 
     // SSR / no WebGPU — the WebGL2 fragment path is the universal fallback.
     if (typeof navigator === "undefined" || !navigator.gpu) {
