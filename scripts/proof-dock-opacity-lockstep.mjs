@@ -112,8 +112,13 @@ function transitionValue(body) {
 }
 
 const BASE_RULE_RE = /\.dock-layer\s*,\s*\.dock-layer-item-host\s*\{/;
+// AX.W02 — the active-pane vocabulary UNIFIED: the outer `.layer-active` triple
+// retired, both surfaces now drive crossfade off `.is-active`. The active rule is
+// `.dock-layer.is-active, .dock-layer-item-host.is-active`. The gate's INTENT is
+// unchanged (the active pane carries NO opacity transition arm — only the leaving
+// pane fades); only the selector name moved off `.layer-active`.
 const ACTIVE_RULE_RE =
-    /\.dock-layer\.layer-active\s*,\s*\.dock-layer-item-host\.is-active\s*\{/;
+    /\.dock-layer\.is-active\s*,\s*\.dock-layer-item-host\.is-active\s*\{/;
 
 // The pure detector. Takes the comment-stripped dock.css, returns {facts,violations}.
 export function detectLockstep(dockCss) {
@@ -176,7 +181,7 @@ export function detectLockstep(dockCss) {
     const activeBody = matchRuleBody(dockCss, ACTIVE_RULE_RE);
     if (activeBody === null) {
         violations.push(
-            "dock.css: the `.dock-layer.layer-active, .dock-layer-item-host.is-active` rule is missing",
+            "dock.css: the `.dock-layer.is-active, .dock-layer-item-host.is-active` rule is missing",
         );
     } else {
         const t = transitionValue(activeBody);
