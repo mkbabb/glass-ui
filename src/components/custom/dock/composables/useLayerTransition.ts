@@ -1,131 +1,94 @@
-import { ref, computed, watch, nextTick, onUnmounted } from "vue";
+import { computed, ref, watch, onUnmounted } from "vue";
 import type { Ref } from "vue";
 import { SpringProgress } from "@mkbabb/keyframes.js";
-import { startViewTransition } from "../../../../composables/motion/useViewTransition";
 
 /**
- * The dock resize-morph spring (AU.W8.3). MIRRORS the `--spring-dock` PRESETS
- * row in `scripts/regen-spring-tokens.mjs` (response 0.32, ζ 0.7, ~+4.6%
- * overshoot — the AW.W2 iOS-control retune off the prior +18.5% playful
- * register) so the build-time CSS token and the runtime driver sample the SAME
- * analytic ODE — bit-identical motion. A retune MUST touch BOTH this const and
- * the PRESETS row, or the CSS-token and JS-driven curves drift.
+ * AX.W01 — the dock single-scalar morph: ONE spring, ONE clock, the whole box.
  *
- * LIGHT-surface only: `SpringProgress` carries no static value.js edge (it owns
- * its own `RAFPlayback` via `.play(onFrame)`). NEVER import `AnimationGroup` /
- * `loadAnimationEngine` / `CSSKeyframesAnimation` / `.fromString` — those cross
- * the HEAVY `./engine` boundary and pull value.js into the dock bundle
- * (AU-keyframes-coordination.md §2.3).
+ * Re-derived from first principles (the e8380d7 single-clock high-water; the
+ * 479-line VT-fork accretion is gone). The collapse↔expand (and inner pane-swap)
+ * morph runs off ONE normalized analytic spring whose progress scalar (0→1) is
+ * written once per frame to `--dock-morph-t` on the `.glass-dock` root. EVERY
+ * animated axis — inline-size, padding, border-radius, scale, background / border
+ * color, AND the child stagger — is a pure `calc()` read off that one scalar in
+ * `dock.css`. NO CSS `transition` on the root morph props; NO View-Transitions
+ * fork: the live `SpringProgress` ODE is the single authority on every engine, so
+ * iOS interruptible-physics + velocity-continuity retarget are universal, not
+ * capability-gated.
+ *
+ * The morph is a FLIP — the from→to size is measured ONCE per swap (the allowed
+ * one-time measurement primitive, never a co-driver), written as `--dock-morph-from`
+ * / `--dock-morph-to` px vars on the morphing element, and the live scalar
+ * interpolates between them in CSS. Content lays out once at natural size;
+ * `overflow:clip` on the morph axis (dock.css, gated on `data-morphing`) makes the
+ * box the reveal aperture; the spring-keyed stagger fades the children in-step.
+ *
+ * Velocity-continuity (the ONE load-bearing iOS piece): a re-toggle mid-flight
+ * re-bases the live solver onto the new span from its current velocity (the
+ * analytic re-seat keyframes.js owns) — inertia carries, no snap-from-rest. The
+ * spring constant is the published `--spring-dock` (response 0.32, ζ 0.7, ~+4.6%
+ * overshoot), the SAME analytic ODE the build-time linear() token samples.
+ *
+ * LIGHT-surface only: `SpringProgress` owns its own rAF via `.play(onFrame)` and
+ * carries no static value.js edge. NEVER import `AnimationGroup` / the `./engine`
+ * boundary — that pulls value.js into the dock bundle.
  */
 const DOCK_SPRING = { response: 0.32, dampingFraction: 0.7 } as const;
 
 export interface UseLayerTransitionOptions {
     /** The container element that owns the stacked layer panes. */
     containerEl: Ref<HTMLElement | null>;
-    /** The currently active layer id */
+    /** The currently active layer id. */
     activeLayer: Ref<string>;
     /**
-     * Animation axis. `"horizontal"` animates `width`; `"vertical"` animates
-     * `height`. Defaults to horizontal when omitted.
+     * Animation axis. `"horizontal"` morphs the inline axis; `"vertical"` morphs
+     * the block axis. Defaults to horizontal when omitted.
      */
     axis?: Ref<"horizontal" | "vertical">;
     /**
-     * AW.W3 — typed directional View-Transitions. Maps a swap `(from, to)` to
-     * the `types` array passed to `startViewTransition`, so
-     * `:active-view-transition-type(<t>)` CSS can author DIRECTION-specific
-     * curves (snappier exit, softer entry-overshoot — the iOS-feel asymmetry).
-     * The outer collapsed↔expanded pair resolves `dock-expand` / `dock-collapse`;
-     * the inner DockLayerGroup pane swap resolves `layer-forward` / `layer-back`.
-     * Omit to run the single symmetric curve. Feature-detected — degrades to the
-     * symmetric curve on an engine without the `types` overload (Firefox 144).
+     * Retained for API parity with the prior VT-typed signature (consumed by
+     * `GlassDock` + `DockLayerGroup`). The single-scalar morph runs ONE symmetric
+     * spring on every engine, so the direction hint is no longer a curve fork — it
+     * is accepted and ignored. Kept so the call sites need no edit.
      */
     directionTypes?: (from: string, to: string) => string[];
 }
 
 export interface UseLayerTransitionReturn {
-    /** Attach to @transitionend on the container */
+    /** Attach to `@transitionend` on the container (kept for call-site parity). */
     onTransitionEnd(e: TransitionEvent): void;
-    /** The currently active layer id (post-swap) */
+    /** The currently active layer id (post-swap). */
     currentLayer: Ref<string>;
-    /** The layer id currently fading out, or null */
+    /** The layer id currently fading out, or null. */
     leavingLayer: Ref<string | null>;
 }
 
 /**
- * Coordinates the crossfade + size animation between grid-stacked dock layer
- * panes. Reusable at any nesting level (the inner `<DockLayerGroup>` pair AND
- * the outer GlassDock collapsed↔expanded pair).
- *
- * AQ.W6 §Design 7 — the swap FORKS on View-Transitions support:
- *
- * - **Native path** (`document.startViewTransition` present): the layer swap is
- *   wrapped in `startViewTransition(() => mutate())`. The browser snapshots the
- *   container + panes (tagged `view-transition-name` in `dock.css`) and morphs
- *   the size + crossfades the pane content with ZERO `getBoundingClientRect`
- *   reads. No pin/measure/re-pin dance, no inline size, no rAF.
- *
- * - **Fallback path** (no `startViewTransition`): the axis-aware FLIP, KEPT as
- *   the sole feature-detected fallback (no alias — one path or the other runs per
- *   swap, never both). It is now the ONLY driver that writes inline size on a
- *   non-VT engine (AV.W9.0 retired the `interpolate-size`/`calc-size` CSS arm that
- *   used to second-drive width on Chrome 129+ and freeze the dock):
- *   1. Capture current container size (or the live spring's pixel value on a
- *      retarget)
- *   2. Pin container to that size
- *   3. nextTick → rAF: swap classes (old → leaving, new → active) AND measure new
- *      natural size in ONE frame origin
- *   4. Drive size off ONE `SpringProgress` clock in PIXEL space (its `value` IS
- *      the live width/height)
- *   5. On settle, clear inline size + restore the CSS transition
- *
- *   AV.W9.2 — velocity-continuity: an interrupted swap (a re-toggle while the
- *   spring is still live) RE-SEATS the existing solver's target from its current
- *   `(value, velocity)` instead of dispose+reconstruct-from-rest, so the morph is
- *   continuous through a retarget (the iOS interruptible-spring contract).
- *
- * AV.W7 perf folds:
- *   - F3 — on-demand `will-change`: the morphing box gets `will-change:<dim>`
- *     ONLY for the gesture's duration (set just before the spring drives it,
- *     cleared to `auto` on settle/`transitionend`). NEVER a standing hint — a
- *     permanent `will-change` holds a compositor layer + VRAM for an idle dock.
- *   - F5 — inheritance-bomb guard (CONVENTION): this driver animates ONLY the
- *     element's own `width`/`height` (the spring's pixel-space `value`) and the
- *     pane opacity rides a class-driven CSS transition on the SEPARATE
- *     `.dock-layer-item-host`. NO INHERITED custom property (`--phase-color` /
- *     `--shadow-color`) is TWEENED per frame here — animating an inherited
- *     custom property forces a whole-subtree style recalc every frame (the
- *     inheritance bomb). Phase/shadow colors are SET on a discrete state change,
- *     never interpolated frame-by-frame. Keep new motion on `transform`/`opacity`
- *     /`width`/`height`; route any color shift through a discrete class swap.
+ * Coordinates the size morph + crossfade between grid-stacked dock layer panes.
+ * Reusable at any nesting level (the inner `<DockLayerGroup>` pair AND the outer
+ * `GlassDock` collapsed↔expanded pair).
  */
 export function useLayerTransition(
     options: UseLayerTransitionOptions,
 ): UseLayerTransitionReturn {
-    const { containerEl, activeLayer, axis, directionTypes } = options;
-
-    // Forked once at composable construction — `startViewTransition` support is
-    // a stable engine capability, not a per-swap condition.
-    const NATIVE_VT =
-        typeof document !== "undefined" && "startViewTransition" in document;
+    const { containerEl, activeLayer, axis } = options;
 
     const dim = computed<"width" | "height">(() =>
         axis?.value === "vertical" ? "height" : "width",
+    );
+    const morphAxisProp = computed(() =>
+        dim.value === "width" ? "inline-size" : "block-size",
     );
     const getSize = (el: HTMLElement) => el.getBoundingClientRect()[dim.value];
 
     const currentLayer = ref(activeLayer.value);
     const leavingLayer = ref<string | null>(null);
     let transitionId = 0;
-    let cleanupTimer: ReturnType<typeof setTimeout> | null = null;
-    // The live FLIP-fallback driver (AU.W8.3); held on a closure var so a
-    // retargeted swap can RE-SEAT it from its current `(value, velocity)` rather
-    // than dispose+reconstruct from rest (AV.W9.2, the iOS interruptible-spring
-    // contract). The spring drives the container size in PIXEL space directly —
-    // its `value` IS the live width/height — so a retarget is the solver's native
-    // `set target(newToSize)`, which re-seats the closed-form solution from the
-    // current pixel value AND velocity (keyframes.d.ts:800-805). The element it is
-    // driving is captured alongside so the live frame loop keeps writing the right
-    // box across a retarget.
+
+    // The single live morph driver, held on a closure var so a re-toggle mid-flight
+    // RE-BASES it onto the new span from its current velocity rather than
+    // reconstructing from rest (the iOS interruptible-spring contract). The scalar
+    // runs 0→1 normalized; the per-frame `value` IS `--dock-morph-t`.
     let spring: SpringProgress | null = null;
     let springEl: HTMLElement | null = null;
 
@@ -137,110 +100,22 @@ export function useLayerTransition(
         springEl = null;
     }
 
-    function parseTimeMs(value: string): number {
-        const trimmed = value.trim();
-        if (!trimmed) return 0;
-        if (trimmed.endsWith("ms")) return Number.parseFloat(trimmed);
-        if (trimmed.endsWith("s")) return Number.parseFloat(trimmed) * 1000;
-        return Number.parseFloat(trimmed) || 0;
+    /** The `.glass-dock` root that carries the morph scalar + clip aperture. */
+    function morphRoot(el: HTMLElement): HTMLElement {
+        return (el.closest(".glass-dock") as HTMLElement | null) ?? el;
     }
 
-    function cleanupDelayMs(el: HTMLElement): number {
-        const style = getComputedStyle(el);
-        const properties = style.transitionProperty
-            .split(",")
-            .map((part) => part.trim());
-        const durations = style.transitionDuration.split(",").map(parseTimeMs);
-        const delays = style.transitionDelay.split(",").map(parseTimeMs);
-        const candidates = durations.map((duration, index) => {
-            const property = properties[index] ?? properties[0] ?? "all";
-            if (property !== "all" && property !== dim.value) return 0;
-            return duration + (delays[index] ?? delays[0] ?? 0);
-        });
-        return Math.max(0, ...candidates) + 50;
+    function clearMorphVars(el: HTMLElement) {
+        el.style.removeProperty("--dock-morph-from");
+        el.style.removeProperty("--dock-morph-to");
     }
 
-    function clearCleanup() {
-        if (cleanupTimer) {
-            clearTimeout(cleanupTimer);
-            cleanupTimer = null;
-        }
-    }
-
-    function setDim(el: HTMLElement, value: string) {
-        el.style.setProperty(dim.value, value);
-    }
-
-    function clearDim(el: HTMLElement) {
-        el.style.removeProperty(dim.value);
-    }
-
-    // AV.W7 F3 — on-demand `will-change` lifecycle. A STANDING `will-change`
-    // holds a compositor layer + VRAM for an idle surface, and the dock is
-    // interactive/idle-mostly (not the always-animating goo-blob canvas, where
-    // a standing hint is defensible). So the hint is promoted ONLY for the
-    // duration of a morph: set on the animated `dim` (`width`/`height`) at
-    // gesture START (just before the spring drives the box), cleared to `auto`
-    // on the spring-SETTLE / `transitionend` so it never stands. The clear fires
-    // on settle (after the final paint), NOT before — so it cannot race the
-    // spring's last frame and flash.
-    function setWillChange(el: HTMLElement) {
-        el.style.willChange = dim.value;
-    }
-
-    function clearWillChange(el: HTMLElement) {
-        el.style.willChange = "auto";
-    }
-
-    // AW.W2 — the clip-reveal aperture lifecycle. `data-morphing` is set on the
-    // morphing container's GlassDock root at gesture START and cleared on SETTLE,
-    // so dock.css holds the single-axis `overflow: clip` for the whole morph (the
-    // box IS the reveal aperture) and lifts it to `overflow: visible` only at rest
-    // (`.expanded:not([data-morphing])`). It rides the SAME set/clear seam as the
-    // `will-change` hint — one attribute, established lifecycle. The attribute
-    // lands on the nearest `.glass-dock` ancestor (the clip shell): for the outer
-    // pair the container IS inside the root; for the inner DockLayerGroup the
-    // stack sits inside the dock root, so the clip-bearing element is the root.
-    function morphRoot(el: HTMLElement): HTMLElement | null {
-        return el.closest(".glass-dock");
-    }
-
-    function setMorphing(el: HTMLElement) {
-        morphRoot(el)?.setAttribute("data-morphing", "");
-    }
-
-    function clearMorphing(el: HTMLElement) {
-        morphRoot(el)?.removeAttribute("data-morphing");
-    }
-
-    // AW.W3 — the spring-keyed child stagger. The SINGLE size spring's normalized
-    // progress (0 at the start size → 1 at the target size) is written to the
-    // container as `--dock-morph-progress` every frame. dock.css keys each child's
-    // opacity onset off a per-child threshold against this scalar, so the cascade
-    // rides the PHYSICAL morph — a fast flick and a slow hover-open both
-    // choreograph correctly and an interrupted morph carries the cascade with it
-    // (no orphaned `setTimeout`s). This is a per-CHILD opacity onset INSIDE the
-    // active pane (the pane itself stays statically opacity:1, revealed by the
-    // aperture — the W2 clip-reveal contract is NOT regressed). `data-revealing`
-    // arms the staggered children; cleared on settle so they paint at full opacity
-    // at rest. Suppressed under PRM (the FLIP fast-path / the spring's
-    // `respectReducedMotion` never run the cascade; the CSS arms the children only
-    // while `data-revealing` is set, and the synchronous swap never sets it).
-    function setStaggerProgress(el: HTMLElement, progress: number) {
-        // Clamp to [0,1]; an overshooting spring would push past 1 (the children
-        // are already fully revealed by then — clamping keeps the onset monotone).
-        const p = progress < 0 ? 0 : progress > 1 ? 1 : progress;
-        el.style.setProperty("--dock-morph-progress", `${p}`);
-    }
-
-    function armStagger(el: HTMLElement) {
-        el.setAttribute("data-revealing", "");
-        el.style.setProperty("--dock-morph-progress", "0");
-    }
-
-    function clearStagger(el: HTMLElement) {
-        el.removeAttribute("data-revealing");
-        el.style.removeProperty("--dock-morph-progress");
+    function settle(el: HTMLElement, root: HTMLElement) {
+        clearMorphVars(el);
+        root.style.removeProperty("--dock-morph-t");
+        root.removeAttribute("data-morphing");
+        leavingLayer.value = null;
+        disposeSpring();
     }
 
     watch(activeLayer, (newLayer, oldLayer) => {
@@ -253,227 +128,91 @@ export function useLayerTransition(
             return;
         }
 
-        // ── Native path (AQ.W6) — the browser owns the size morph + crossfade.
-        // Mutate the layer state synchronously inside `startViewTransition` (the
-        // callback snapshots old → new); ZERO getBoundingClientRect. The leaving
-        // pane is held painted for the duration of the snapshot transition, then
-        // cleared on `finished`. `view-transition-name` on the container + panes
-        // (set in `dock.css`) drives the morph.
-        if (NATIVE_VT) {
-            clearCleanup();
-            const id = ++transitionId;
-            // AW.W2 — set the clip aperture synchronously inside the VT callback
-            // (the browser owns the morph; the clip holds for its duration).
-            setMorphing(el);
-            // AW.W3 — typed directional intent. The driver maps the swap
-            // `(from, to)` to the `types` array so `:active-view-transition-type`
-            // CSS authors a snappier exit / softer entry-overshoot. Empty/absent
-            // → the symmetric `.gl-dock-layer` curve (the kept default). The
-            // helper feature-detects the object-with-`types` overload, so on an
-            // engine without it the call degrades to the plain symmetric form.
-            const vtTypes = directionTypes?.(oldLayer, newLayer);
-            const { finished } = startViewTransition(
-                () => {
-                    leavingLayer.value = oldLayer;
-                    currentLayer.value = newLayer;
-                },
-                vtTypes && vtTypes.length > 0 ? { types: vtTypes } : undefined,
-            );
-            finished.finally(() => {
-                if (id !== transitionId) return;
-                leavingLayer.value = null;
-                clearMorphing(el);
-            });
-            return;
-        }
-
-        // ── prefers-reduced-motion fast-path (AU.W8.1). A single synchronous
-        // state swap — no measure/pin/animate dance, no inline size, no rAF, no
-        // spring driver. The VT path's PRM is CSS-gated (view-transition.css);
-        // the FLIP fallback needs this explicit JS gate. Returns BEFORE any
-        // driver is constructed (belt-and-suspenders with the driver's own
-        // `respectReducedMotion`).
-        const prm =
-            typeof window !== "undefined" &&
-            window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-        if (prm) {
-            clearCleanup();
-            ++transitionId;
-            currentLayer.value = newLayer;
-            leavingLayer.value = null;
-            return;
-        }
-
-        // ── Fallback path — the kept axis-aware FLIP.
-        clearCleanup();
+        const root = morphRoot(el);
         const id = ++transitionId;
 
-        // AV.W9.2 — RETARGET an in-flight spring instead of dispose+reconstruct.
-        // If a prior swap's spring is still live (non-null, unsettled, driving
-        // THIS container), the morph is being interrupted mid-flight: read its
-        // current pixel value as the new `from`, re-seat its target to the new
-        // intrinsic size, and carry the in-flight velocity through (the solver's
-        // `set target` re-seats the closed-form from the live `(value, velocity)`
-        // — keyframes.d.ts:800). Disposing here would zero the velocity and the
-        // morph would snap from rest (the non-iOS re-toggle the charter flags).
+        // The live solver still driving THIS container is the retarget seam: carry
+        // its in-flight velocity through the re-base rather than snap from rest.
         const live =
             spring !== null && springEl === el && !spring.settled ? spring : null;
+        const inheritedVelocity = live ? live.velocity : 0;
 
-        // 1. Capture current size. On a retarget the live spring's value IS the
-        // current painted pixel size (it has been writing it every frame); on a
-        // fresh swap, measure the box.
-        const fromSize = live ? live.value : getSize(el);
+        // 1. Capture the from-size. On a retarget the box is mid-morph; its painted
+        // pixel size is the live `calc(from + (to-from)*t)` — re-measuring it gives
+        // the exact px the new span must start from. On a fresh swap, measure the box.
+        const fromSize = getSize(el);
 
-        if (!live) {
-            // Fresh swap — dispose any settled/foreign driver, pin the box so the
-            // class swap does not snap it, then construct a pixel-space spring.
-            disposeSpring();
-            setDim(el, `${fromSize}px`);
+        // 2. Swap the layer refs SYNCHRONOUSLY (class-driven opacity flips now), then
+        // measure the new natural size off the post-swap layout in the SAME tick.
+        // The box never snaps because its CSS size reads `--dock-morph-from` (pinned
+        // to `fromSize`) until the scalar moves — ONE frame origin for the ref-swap,
+        // the measure, and the spring start (the desync the prior nextTick→rAF
+        // deferral introduced is structurally gone).
+        leavingLayer.value = oldLayer;
+        currentLayer.value = newLayer;
+
+        // Measure the post-swap natural size with the morph vars cleared so CSS
+        // resolves the intrinsic size (no inline pin fighting the measurement).
+        clearMorphVars(el);
+        root.style.removeProperty("--dock-morph-t");
+        const toSize = getSize(el);
+
+        // No span — a same-size swap, nothing to morph. Land flush at rest.
+        if (Math.abs(toSize - fromSize) < 0.5) {
+            settle(el, root);
+            return;
         }
 
-        // 2. Measure new natural size, then drive the morph. The layer ref swap
-        // (→ class-driven opacity) and the width set (→ size morph) must START
-        // in the SAME animation frame, so the box never shrinks before items
-        // fade (the async-fork the user reported). The swap is therefore
-        // DEFERRED into the rAF callback that drives the width — one frame
-        // ORIGIN for both (AU.W8.1; gate: proof:dock-motion-single-source).
-        nextTick(() => {
-            if (id !== transitionId) return;
-            if (!el) return;
+        // 3. Pin the morph span as CSS pixel vars on the morphing element and arm
+        // the clip aperture + the scalar on the root. The box size, padding, radius,
+        // color, and child stagger ALL read `--dock-morph-t` off this one scalar
+        // (dock.css; the CSS picks the morph axis off the orientation class). Set
+        // t=0 before the first frame so the box holds at `fromSize` until the
+        // spring drives it.
+        el.style.setProperty("--dock-morph-from", `${fromSize}px`);
+        el.style.setProperty("--dock-morph-to", `${toSize}px`);
+        root.style.setProperty("--dock-morph-t", "0");
+        root.setAttribute("data-morphing", "");
 
-            requestAnimationFrame(() => {
-                if (id !== transitionId) return;
-
-                // Swap DEFERRED into the rAF so class-opacity and width-set
-                // start in the SAME frame.
-                leavingLayer.value = oldLayer;
-                currentLayer.value = newLayer;
-
-                // Measure new natural size (the swap is applied this tick).
-                el.style.transition = "none";
-                clearDim(el);
-                const toSize = getSize(el);
-
-                // Re-pin to the live `from` (the retarget pixel value or the
-                // captured fresh size) so the morph runs continuously from there.
-                setDim(el, `${fromSize}px`);
-                void el.offsetWidth;
-
-                if (!live && Math.abs(toSize - fromSize) < 0.5) {
-                    el.style.transition = "";
-                    clearDim(el);
-                    clearWillChange(el);
-                    clearMorphing(el);
-                    clearStagger(el);
-                    leavingLayer.value = null;
-                    return;
-                }
-
-                // Promote the morphing box for the gesture's duration (cleared on
-                // settle / transitionend below — never standing). AW.W2 — set the
-                // clip aperture at the same gesture-START seam. AW.W3 — arm the
-                // spring-keyed child stagger (progress 0 at gesture start).
-                setWillChange(el);
-                setMorphing(el);
-                armStagger(el);
-
-                // AW.W3 — the morph span, captured once so the per-frame spring
-                // value maps to a normalized [0,1] progress for the child stagger.
-                // A retarget re-reads `toSize`/`fromSize` above, so the span is the
-                // live one (the cascade carries through an interrupt).
-                const morphSpan = toSize - fromSize;
-
-                // 3. Drive size off ONE SpringProgress clock in PIXEL space — its
-                // `value` is the live width/height. On a retarget reuse the live
-                // solver (velocity carried through `set target`); on a fresh swap
-                // construct one seeded at `fromSize`. The JS driver OWNS the
-                // container size (transition stays "none" on `el` so the CSS
-                // `width var(--dock-motion-resize)` does not fight the per-frame
-                // inline set). AW.W2 — the active pane is REVEALED by the clip
-                // aperture (statically opacity:1, no fade); only the LEAVING pane
-                // fades, class-driven on the SEPARATE `.dock-layer-item-host` via
-                // its `--dock-motion-resize` fade, so the leaving fade + the size
-                // morph settle in lockstep by the shared (0.32, 0.7) curve (the
-                // token + the driver), continuous across a retarget.
-                if (!live) {
-                    spring = new SpringProgress({
-                        response: DOCK_SPRING.response,
-                        dampingFraction: DOCK_SPRING.dampingFraction,
-                        initial: fromSize,
-                        respectReducedMotion: true,
-                    });
-                    springEl = el;
-                }
-                const activeSpring = spring!;
-                activeSpring.target = toSize;
-                activeSpring.play((w: number) => {
-                    if (id !== transitionId) return;
-                    setDim(el, `${w}px`);
-                    // AW.W3 — write the SINGLE size spring's normalized progress so
-                    // the child stagger rides the physical morph. `morphSpan` is the
-                    // live (retarget-aware) span; a zero span (rare) pins progress
-                    // at 1 (already revealed). The cascade is monotone in this
-                    // scalar — no fixed-ms timer.
-                    if (Math.abs(morphSpan) > 0.5) {
-                        setStaggerProgress(el, (w - fromSize) / morphSpan);
-                    } else {
-                        setStaggerProgress(el, 1);
-                    }
-                    // Opacity stays class-driven via the --dock-motion-resize CSS
-                    // transition on `.dock-layer-item-host`; the spring drives
-                    // size only.
-                    if (activeSpring.settled) {
-                        el.style.transition = "";
-                        clearDim(el);
-                        // Clear the compositor hint AND the clip aperture AFTER the
-                        // final paint (settle), so they never race the spring's last
-                        // frame (F3 / AW.W2 — the clip lifts to `overflow:visible`
-                        // only after the morph has fully painted). AW.W3 — disarm
-                        // the child stagger so the children rest at full opacity.
-                        clearWillChange(el);
-                        clearMorphing(el);
-                        clearStagger(el);
-                        leavingLayer.value = null;
-                        disposeSpring();
-                    }
-                });
-
-                // Safety: clear inline size + restore the CSS transition after
-                // the computed window in case the spring's settle is missed.
-                cleanupTimer = setTimeout(() => {
-                    if (id !== transitionId) return;
-                    el.style.transition = "";
-                    clearDim(el);
-                    clearWillChange(el);
-                    clearMorphing(el);
-                    clearStagger(el);
-                    leavingLayer.value = null;
-                    disposeSpring();
-                }, cleanupDelayMs(el));
+        // 4. Drive ONE SpringProgress 0→1. The scalar always re-bases to 0 on the
+        // NEW [from,to] span (the box's current px IS the new span's origin); a
+        // retarget carries the inherited velocity through the re-seat so the
+        // trajectory stays continuous (no snap to rest — the analytic re-seat
+        // keyframes.js owns). A fresh swap starts at rest.
+        if (!live) {
+            disposeSpring();
+            spring = new SpringProgress({
+                response: DOCK_SPRING.response,
+                dampingFraction: DOCK_SPRING.dampingFraction,
+                initial: 0,
+                respectReducedMotion: true,
             });
+            springEl = el;
+        }
+        const activeSpring = spring!;
+        activeSpring.reset(0, inheritedVelocity);
+        activeSpring.target = 1;
+        activeSpring.play((t: number) => {
+            if (id !== transitionId) return;
+            root.style.setProperty("--dock-morph-t", `${t}`);
+            if (activeSpring.settled) settle(el, root);
         });
     });
 
+    // Kept for call-site parity (`@transitionend` on the container). The morph no
+    // longer runs on a CSS transition, so there is no size-morph transitionend to
+    // consume; this is a defensive settle if a stray transition fires after the
+    // spring has already settled.
     function onTransitionEnd(e: TransitionEvent) {
         const el = containerEl.value;
         if (!el) return;
         if (e.target !== el) return;
-        if (e.propertyName !== dim.value) return;
-
-        clearCleanup();
-        disposeSpring();
-        el.style.transition = "";
-        clearDim(el);
-        clearWillChange(el);
-        clearMorphing(el);
-        clearStagger(el);
-        leavingLayer.value = null;
+        if (e.propertyName !== morphAxisProp.value && e.propertyName !== dim.value)
+            return;
+        if (spring && spring.settled) settle(el, morphRoot(el));
     }
 
-    onUnmounted(() => {
-        clearCleanup();
-        disposeSpring();
-    });
+    onUnmounted(disposeSpring);
 
     return { onTransitionEnd, currentLayer, leavingLayer };
 }
