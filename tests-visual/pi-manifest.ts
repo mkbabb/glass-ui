@@ -135,7 +135,10 @@ export const PENDING_BROWSER_VERIFY: PendingBrowserVerify[] = [
         obligation:
             "aurora WebGPU/WebGL2 interior paints non-black across all presets at t=1 (the black-canvas class)",
         ownerWave: "AX.W07",
-        verdict: "pending-re-probe",
+        // RE-PROBED on a real Metal GPU (apple/metal-3): the aurora interior paints
+        // non-black device-proven; WEBGPU_PARITY=false defaults the live aurora to
+        // WebGL2 (docs/tranches/AX/audit/W07-aurora-core-unblock.json).
+        verdict: "re-probed",
     },
     {
         awWave: "AW.W6",

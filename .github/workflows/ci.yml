@@ -81,27 +81,15 @@ jobs:
               run: npm run proof:phantom-classes
             - name: proof:vt-names
               run: npm run proof:vt-names
-            # AT.W6-dock-c — the dock VT/FLIP motion-parity static gate. Asserts
-            # the native View-Transition path and the JS FLIP fallback consume
-            # ONE source timing curve (--dock-resize-spring), so an identity
-            # dock layer-swap morph is timing-identical per engine (retiring the
-            # AQ.W6 --vt-ease fork). The runtime concurrency half (isTransitioning
-            # A→B→A no-skip/no-queue) rides `npm run test`.
-            - name: proof:dock-motion-parity
-              run: npm run proof:dock-motion-parity
-            # AU.W8 — the dock single-frame-origin gate. The PERCEPTUAL sibling of
-            # the string-match proof:dock-opacity-lockstep: the FLIP fallback's layer
-            # ref-swap (→ opacity) and the width set (→ morph) must share ONE rAF
-            # frame origin (closing the useLayerTransition async fork). Static source
-            # proof — the perceptual settle-probe rides the slides deck Playwright.
-            - name: proof:dock-motion-single-source
-              run: npm run proof:dock-motion-single-source
             # AU.W2 — the dock fade↔morph opacity-lockstep static gate (slides-F
             # P0, the "not iOS-smooth" report). Asserts the `.dock-layer{,-item-host}`
             # opacity transition rides the SAME `--dock-motion-resize` token the
             # container morph uses (a 0-frame settle, inside the ≤1-frame bar) and
             # the active layer's `visibility 0s` stays immediate. Sibling-free.
-            # DEMOTED W8 → syntactic; the frame-origin sibling is proof:dock-motion-single-source.
+            # The AX.W01 single-scalar --dock-morph-t morph retired the VT/FLIP fork
+            # the prior proof:dock-motion-parity + proof:dock-motion-single-source
+            # static gates policed; the PERCEPTUAL frame-origin truth is now the
+            # live-rAF proof:dock-animation-live (box-vs-child lead/lag ≤ 1 frame).
             - name: proof:dock-opacity-lockstep
               run: npm run proof:dock-opacity-lockstep
             # AU.W8 — the reka-Tabs dock rail a11y contract. The mounted-dock vitest

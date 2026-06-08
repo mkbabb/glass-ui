@@ -87,22 +87,10 @@ export const GATES = [
     },
     { id: "proof:vt-names", cmd: "proof:vt-names", tags: ["local", "ci", "release"] },
     {
-        id: "proof:dock-motion-parity",
-        cmd: "proof:dock-motion-parity",
-        tags: ["local", "ci", "release"],
-        note: "AT.W6-dock-c (W8 re-pinned) — dock VT/FLIP timing-parity static gate; the shared source is now var(--spring-dock) (AU.W8)",
-    },
-    {
-        id: "proof:dock-motion-single-source",
-        cmd: "proof:dock-motion-single-source",
-        tags: ["local", "ci"],
-        note: "AU.W8 — the dock FLIP single-frame-origin gate: the layer ref-swap (→opacity) and the width set (→morph) share ONE rAF origin; the perceptual sibling of the string-match proof:dock-opacity-lockstep (the perceptual settle-probe is delegated DOWNSTREAM to the slides deck Playwright — no playwright dep here, KISS)",
-    },
-    {
         id: "proof:dock-opacity-lockstep",
         cmd: "proof:dock-opacity-lockstep",
         tags: ["local", "ci", "release"],
-        note: "AU.W2 (DEMOTED W8 → 'syntactic') — the SAME-TOKEN string-match that the dock fade opacity rides --dock-motion-resize (a 0-frame token settle). The PERCEPTUAL frame-origin sibling is proof:dock-motion-single-source (W8).",
+        note: "AU.W2 — the SAME-TOKEN string-match that the dock fade opacity rides --dock-motion-resize. The PERCEPTUAL frame-origin truth is now proof:dock-animation-live (the live-rAF box-vs-child lead/lag gate); the AX.W01 single-scalar --dock-morph-t morph retired the VT/FLIP fork that the prior proof:dock-motion-parity + proof:dock-motion-single-source static gates policed.",
     },
     {
         id: "proof:dock-a11y-contract",
