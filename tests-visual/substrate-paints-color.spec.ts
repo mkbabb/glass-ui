@@ -39,11 +39,12 @@ import { PI_TARGETS, sourcePresetKeys } from "./pi-manifest.ts";
 // ── tunables (the W00 LOOSE floors) ──────────────────────────────────────────
 const AURORA_INTERIOR_INSET = 0.2; // sample the central 60% box (avoid edge fade)
 const AURORA_MAX_CHANNEL_FLOOR = 0; // maxChannel must be STRICTLY > 0 (non-black)
+const BLOB_INTERIOR_INSET = 0.12; // exclude the outer rounded-corner band from coverage
 const BLOB_COVERAGE_MIN = 0.1; // W00 LOOSE floor (W08 narrows to 0.25)
-const BLOB_COVERAGE_MAX = 0.7; // W00 LOOSE ceil (W08 narrows to 0.6)
+const BLOB_COVERAGE_MAX = 0.7; // W00 LOOSE ceil (W08 narrows to 0.55)
 const BLOB_FRAMES = 6; // read back N frames; verdict over the peak
 const ANTI_FLAKE_RUNS = 3; // 3-run named-region baseline (median verdict)
-const COLOR_DIFF_THRESHOLD = 40; // |ΔR|+|ΔG|+|ΔB| over the corner bg = "painted"
+const COLOR_DIFF_THRESHOLD = 40; // |ΔR|+|ΔG|+|ΔB| over the modal bg = "painted"
 
 // The aurora 12-preset drive on a real-GPU screenshot pass is well under this, but
 // software-GL degrade + the procedural settle want generous headroom.
@@ -80,34 +81,55 @@ function interiorMaxChannel(png: PNG, inset: number): number {
 }
 
 /**
- * Coverage = fraction of pixels DIFFERING from the canvas-corner background by a
- * perceptual threshold. A composited screenshot renders a transparent margin as the
- * page background, so the corner IS the background; a contained droplet leaves a
- * margin (coverage in-band), a flood fills it (→1), a blank paints nothing (→0).
+ * The MODAL background RGB — the most-common 16-step-quantized colour over the whole
+ * canvas. For a contained droplet that is the cream field. UNLIKE a 4-corner average
+ * it is immune to the rounded-card clip's dark corner pixels (the goo-blob story
+ * mounts each canvas in a `rounded-card overflow-hidden` cell, so the literal corners
+ * fall OUTSIDE the clip and read dark — a corner-average false-floods even a contained
+ * droplet, exactly what W08's blob-render.spec.ts robust metric corrects).
  */
-function coverageVsCorner(png: PNG, threshold: number): number {
-    const { width: w, height: h, data } = png;
-    const corners: number[][] = [
-        [1, 1],
-        [w - 2, 1],
-        [1, h - 2],
-        [w - 2, h - 2],
-    ].map(([cx, cy]) => {
-        const i = (cy! * w + cx!) * 4;
-        return [data[i]!, data[i + 1]!, data[i + 2]!];
-    });
-    const bg = [0, 1, 2].map((k) =>
-        Math.round(corners.reduce((s, c) => s + c[k]!, 0) / corners.length),
-    );
-    let differ = 0;
+function modalBackground(png: PNG): [number, number, number] {
+    const { data } = png;
+    const counts = new Map<number, number>();
     for (let i = 0; i < data.length; i += 4) {
-        const d =
-            Math.abs(data[i]! - bg[0]!) +
-            Math.abs(data[i + 1]! - bg[1]!) +
-            Math.abs(data[i + 2]! - bg[2]!);
-        if (d > threshold) differ++;
+        const key =
+            ((data[i]! >> 4) << 8) | ((data[i + 1]! >> 4) << 4) | (data[i + 2]! >> 4);
+        counts.set(key, (counts.get(key) ?? 0) + 1);
     }
-    return differ / (w * h);
+    let best = 0;
+    let bestKey = 0;
+    for (const [k, c] of counts) if (c > best) ((best = c), (bestKey = k));
+    return [((bestKey >> 8) & 0xf) << 4, ((bestKey >> 4) & 0xf) << 4, (bestKey & 0xf) << 4];
+}
+
+/**
+ * Coverage = fraction of INTERIOR-INSET pixels DIFFERING from the MODAL background by a
+ * perceptual threshold. The inset excludes the rounded-corner band; the modal bg is
+ * clip-robust. A contained droplet leaves a margin (coverage in-band), a flood fills it
+ * (→1), a blank paints nothing (→0). W08's TIGHT band (0.25–0.55) is a strict SUBSET of
+ * this LOOSE floor, measured on the SAME metric (subset-consistent by construction).
+ */
+function interiorCoverage(png: PNG, inset: number, threshold: number): number {
+    const { width: w, height: h, data } = png;
+    const bg = modalBackground(png);
+    const x0 = Math.floor(w * inset);
+    const y0 = Math.floor(h * inset);
+    const x1 = Math.ceil(w * (1 - inset));
+    const y1 = Math.ceil(h * (1 - inset));
+    let differ = 0;
+    let total = 0;
+    for (let y = y0; y < y1; y++) {
+        for (let x = x0; x < x1; x++) {
+            const i = (y * w + x) * 4;
+            const d =
+                Math.abs(data[i]! - bg[0]!) +
+                Math.abs(data[i + 1]! - bg[1]!) +
+                Math.abs(data[i + 2]! - bg[2]!);
+            if (d > threshold) differ++;
+            total++;
+        }
+    }
+    return differ / total;
 }
 
 test.describe("substrate-paints-color (π lane — fail-CLOSED)", () => {
@@ -181,7 +203,11 @@ test.describe("substrate-paints-color (π lane — fail-CLOSED)", () => {
         for (let run = 0; run < ANTI_FLAKE_RUNS; run++) {
             let peak = 0;
             for (let f = 0; f < BLOB_FRAMES; f++) {
-                const cov = coverageVsCorner(await grab(blobCanvas), COLOR_DIFF_THRESHOLD);
+                const cov = interiorCoverage(
+                    await grab(blobCanvas),
+                    BLOB_INTERIOR_INSET,
+                    COLOR_DIFF_THRESHOLD,
+                );
                 if (cov > peak) peak = cov;
                 await page.waitForTimeout(80);
             }
