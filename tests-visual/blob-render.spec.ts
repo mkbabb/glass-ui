@@ -64,6 +64,7 @@ const GRADIENT_MIN_DELTA = 25; // centre-vs-corner |Δluma| floor (a FIELD, not 
 const SIDE_MARGIN_MAX_FRAC = 0.35; // worst of L/R/top/bottom literal-edge paint fraction
 const EDGE_RING_W = 2; // the literal-edge ring width (px) sampled for the margin
 const EDGE_SPAN_INSET = 0.25; // sample the MIDDLE 50% of an edge (skip the rounded corners)
+const FOOTPRINT_INSET = 0.1875; // the visible wrapper = the central 1/1.6 of the 160% canvas
 const BLOB_FRAMES = 6; // read back N frames; the verdict is the PEAK coverage
 const ANTI_FLAKE_RUNS = 3; // 3-run median verdict (anti-flake)
 const COLOR_DIFF_THRESHOLD = 40; // |ΔR|+|ΔG|+|ΔB| over the modal bg = "painted"
@@ -210,21 +211,31 @@ function worstSideMargin(png: PNG, bg: [number, number, number], threshold: numb
         }
         return total === 0 ? 0 : differ / total;
     };
-    const y0 = Math.floor(h * EDGE_SPAN_INSET);
-    const y1 = Math.ceil(h * (1 - EDGE_SPAN_INSET));
-    const x0 = Math.floor(w * EDGE_SPAN_INSET);
-    const x1 = Math.ceil(w * (1 - EDGE_SPAN_INSET));
+    // The canvas is 160% of the visible WRAPPER (GooBlob overflows it so satellites at
+    // wide orbits render — GooBlob.vue, `overflow:visible`). Its LITERAL edges sit ~30%
+    // OUTSIDE the wrapper, over PAGE BLEED (the story's text above the card) — measuring
+    // there reads page content, invariant to the blob. Four-side containment is the
+    // BLOB's transparent margin inside the VISIBLE WRAPPER FOOTPRINT, so sample the edge
+    // rings at the footprint border (FOOTPRINT_INSET = (1.6-1)/2/1.6), not the canvas edge.
+    const fx0 = Math.floor(w * FOOTPRINT_INSET);
+    const fx1 = Math.ceil(w * (1 - FOOTPRINT_INSET));
+    const fy0 = Math.floor(h * FOOTPRINT_INSET);
+    const fy1 = Math.ceil(h * (1 - FOOTPRINT_INSET));
+    const spanY0 = fy0 + Math.floor((fy1 - fy0) * EDGE_SPAN_INSET);
+    const spanY1 = fy1 - Math.floor((fy1 - fy0) * EDGE_SPAN_INSET);
+    const spanX0 = fx0 + Math.floor((fx1 - fx0) * EDGE_SPAN_INSET);
+    const spanX1 = fx1 - Math.floor((fx1 - fx0) * EDGE_SPAN_INSET);
     const left = ringFrac(function* () {
-        for (let x = 0; x < EDGE_RING_W; x++) for (let y = y0; y < y1; y++) yield [x, y];
+        for (let x = fx0; x < fx0 + EDGE_RING_W; x++) for (let y = spanY0; y < spanY1; y++) yield [x, y];
     });
     const right = ringFrac(function* () {
-        for (let x = w - EDGE_RING_W; x < w; x++) for (let y = y0; y < y1; y++) yield [x, y];
+        for (let x = fx1 - EDGE_RING_W; x < fx1; x++) for (let y = spanY0; y < spanY1; y++) yield [x, y];
     });
     const top = ringFrac(function* () {
-        for (let y = 0; y < EDGE_RING_W; y++) for (let x = x0; x < x1; x++) yield [x, y];
+        for (let y = fy0; y < fy0 + EDGE_RING_W; y++) for (let x = spanX0; x < spanX1; x++) yield [x, y];
     });
     const bottom = ringFrac(function* () {
-        for (let y = h - EDGE_RING_W; y < h; y++) for (let x = x0; x < x1; x++) yield [x, y];
+        for (let y = fy1 - EDGE_RING_W; y < fy1; y++) for (let x = spanX0; x < spanX1; x++) yield [x, y];
     });
     return Math.max(left, right, top, bottom);
 }
