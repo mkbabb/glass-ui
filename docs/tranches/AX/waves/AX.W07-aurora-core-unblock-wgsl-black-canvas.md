@@ -151,6 +151,62 @@ that drifted off the GLSL/WebGL2 reference. One cohesive architectural fix, four
 
 ---
 
+## SOTA deepening (aurora research)
+
+The 32-facet aurora corpus (`docs/tranches/AX/research/aurora-research-corpus.json`) confirms the W07 root-cause
+diagnosis at the literature level and routes two upgrades into THIS wave's storage transposition + the
+real-device gate. Cited facets: **19** (WGSL address-space), **21** (WGSL↔GLSL parity), **22** (GPU perf),
+**0/11** (Display-P3 / fp16 headroom).
+
+- **The `var<uniform>`→`var<storage,read>` flip is the named canonical fix, not a workaround [facet 19].**
+  Facet 19's headline rule — DYNAMIC-INDEX-FORCES-STORAGE — is exactly W07 scope item 2: WGSL permits a
+  fixed-size `array<vec4f,N>` in a `var<uniform>` block, but the moment a per-invocation index reads it (the
+  `floor(t)` palette index, the `U.nucleiPos[i]` loop counter), Naga must map it to MSL `constant` address
+  space, and MSL forbids per-instance dynamic indexing of `constant` (it requires `device`). Storage is
+  always-legal for dynamic indices; uniform is the hazard. The fix is canonical SOTA (gpuweb #2559).
+- **The SoA-of-vec4 packing means the flip is ZERO re-pack — the corpus confirms byte-identity [facet 19].**
+  Facet 19's STRUCT-OF-ARRAYS-vs-ARRAY-OF-STRUCTS note validates the W07 claim that the existing two-vec4-lane
+  nucleus padding (`nucleiPos.xyzw` + `nucleiMod.xyzw`) is std140-legal in BOTH uniform and storage, so only
+  the binding keyword + the `GPUBufferUsage` flag change — the `Float32Array` byte layout is identical
+  (std140 over-pads vs std430, but a vec4-aligned record is the same in both). This is the load-bearing reason
+  the storage move keeps byte-exact visual parity.
+- **The runtime-sized `array<T>` lifts the caps the WGSL header already aspired to [facet 19].** Facet 19's
+  RUNTIME-SIZED-ARRAY note backs scope item 2's "free win": `array<vec4f>` with no length as the last storage
+  member + `arrayLength(&field.nuclei)` retires the `MAX_NUCLEI=6`/`MAX_STOPS=8` compile-time caps and the
+  `if (i >= n) break;` over-iteration guard — the buffer is exactly `nuclei.length` long. (The cap-lift is the
+  follow-up form; W07 may land the minimal binding-flip first and defer the runtime-sized rewrite — both are
+  storage-correct.)
+- **The TEXTURE-LUT palette is a recorded alternative, NOT the W07 path [facet 19].** Facet 19's
+  dependent-read escape hatch (bake the palette into a 1×N `texture_2d<f32>`, sample with hardware bilinear)
+  sidesteps the uniform-dynamic-index hazard AND gives free stop interpolation. W07 takes the storage flip
+  (byte-identical, no resample-path change); the LUT is noted as the W14/W11-era refinement if the WGSL ramp
+  ever wants hardware-filtered stops — out of W07 scope.
+- **The real-device gate IS the corpus-prescribed parity instrument [facet 21].** Facet 21's REAL-DEVICE WGSL
+  EXECUTION via `dawn.node` (the `webgpu` npm package — Google's Dawn as a Node native addon, prebuilt for
+  macOS Intel+ARM/Windows/Linux) is the exact device choice the W07 `proof:aurora-webgpu-render` gate ratifies
+  in the W00 manifest. It closes the "WGSL cannot run in node" caveat that the current hand-transcribed
+  `aurora-color.wgsl-port.ts` mirror was a stand-in for: the gate compiles + runs the ACTUAL WGSL string and
+  reads back pixels (the CPU-reference-oracle / pixel-readback golden pattern, facet 21). The
+  COLUMN-MAJOR-IS-THE-INVARIANT note confirms the one thing the twin already has right — the verbatim Ottosson
+  column-major matrices are byte-identical GLSL↔WGSL with no re-transpose.
+- **The masterTempo/demand-gate thread is also a perf lever [facet 22].** Facet 22's offscreen-park /
+  early-out discipline backs scope item 4: the WebGPU frame must inherit the same `shouldContinue()`/
+  `cursor.burst` demand gate the WebGL2 path carries, so a parked surface attaches zero frames — not just a
+  parity nicety but the cheapest global perf lever.
+- **Display-P3 / fp16 swapchain is the W07/W14 wide-gamut hook, recorded not landed [facets 0, 11].** Facets
+  0 and 11 (Display-P3 / float-framebuffer headroom) note that an sRGB swapchain clamps the bell-curve chroma
+  peak; a `display-p3` canvas color-space + fp16 intermediate storage unlocks ~25% more chroma and defers
+  banding to the single OETF+dither close. This is a W07/W14 swapchain-config decision (the WebGPU canvas
+  `configure({ format, colorSpace: "display-p3" })` + `@media (color-gamut: p3)` probe) — flagged here as an
+  open gating question (see the orchestrator return), NOT landed in W07's black-canvas fix.
+
+**Reconciliation note (no redo of landed work):** W07 fixes the WGSL UPLOAD + ADDRESS-SPACE defects only. The
+OKLCh color core is confirmed-correct by the corpus (see W11 deepening) and W07 does NOT touch it — the WGSL
+`samplePalette` stays the straight-OKLab placeholder until W14 enables the opt-in path. The storage flip is a
+correctness fix the literature names canonical, not a speculative rearchitecture.
+
+---
+
 ## FileBounds (the EXACT files this wave may touch — for parallel-dispatch disjointness)
 
 | File | Edit |

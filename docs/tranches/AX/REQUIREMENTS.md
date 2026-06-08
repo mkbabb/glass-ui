@@ -233,3 +233,38 @@ the green claims.
    bespoke. Grounds the dock single-scalar `--dock-morph-t` (W01) as the FIRST consumer of a general
    facility, not a dock-local trick. Research → spec → fold into the dock/animation/glass waves +
    the new substrate wave. Research-backed README for the dock + the morph facility (per §2.9).
+
+## §19 DOCK — full-facility prototyping + hardening matrix (new — AX directive 2026-06-08)
+
+Every dock facility must be PROTOTYPED (a live PoC validating the look/feel/interruption) AND
+HARDENED (spec sharpened, edge cases enumerated, gate + visual-truth) before driving — not just the
+collapse morph. The full matrix, each a prototype + harden line:
+
+1. **Collapse / expand morph** — the single-scalar `--morph-t` one-clock box+content (W01).
+2. **Layering** — DockLayerGroup/DockLayer crossfade + size FLIP between named layers; the layer-swap
+   morph in-step (W02); the clip-reveal aperture.
+3. **Big dock** — the multi-row/column non-pill card variant (`shape="card"` + `layout="grid"`,
+   alwaysExpanded, concentric tiles); the 2D reflow without per-frame thrash (W04/W42).
+4. **Vertical** — the height-axis morph + vertical rail + vertical layer stack; axis-parity with
+   horizontal on one driver (W01-04, the `dim` switch).
+5. **Rail** — the Figma-style switcher rail (showRail/railPosition); the honest rail refinement;
+   tap-squish on rail items (W06).
+6. **Carousel dock** — a dock hosting/driving a carousel (the dock-as-carousel-chrome pattern); the
+   indicator (W23 carousel) integration.
+7. **Slide dock** — the slides bottom-bar dock as a PAGE-BOTTOM element (not baked in), the deck
+   progress rail (W24); the slide-navigation dock.
+8. **useIdle / idle-collapse** — the idle-timer auto-collapse + the keepDockOpen hold (W03); the
+   useIdle composable behavior; pointer/focus re-open.
+9. **Click events** — click-driven layer switch, click-to-expand, the dock trigger aria-expanded
+   contract, the select/dropdown triggers inside a dock.
+10. **Shrinking / expanding** — the size morph in both directions, interruptible mid-flight
+    (velocity-continuous retarget — collapse→re-expand reversal), the content stagger in-step.
+11. **Morphing into arbitrary shapes** — the dock reshaping (pill ↔ card ↔ circle ↔ custom),
+    the matched-geometry/glassEffectID-style fluid reshape into arbitrary silhouettes (W42 facility).
+12. **Slider-in-dock** — the keepDockOpen bidirectional pointer-anchored hold for a `<Slider>`
+    descendant (W03).
+
+Each line: a minimal live PoC (the facility working + interruptible + PRM-safe + visual-truth
+screenshot) → a hardened wave-spec scope with the edge cases. These deepen the dock band (W01-06)
++ the morph substrate (W42); a dedicated dock-facility prototype/harden pass enumerates + de-risks
+each before the dock band drives.

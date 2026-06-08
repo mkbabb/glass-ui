@@ -128,6 +128,102 @@ alone — that is W15's job. This wave PERFECTS the look on the un-flooded field
    asserts a pointer-driven centroid shift so the felt interaction is machine-locked, not just the PRM /
    single-loop structure the existing `proof:blob-interaction-prm` checks.
 
+## SOTA deepening (blob research)
+
+The 32-facet blob corpus (`docs/tranches/AX/research/blob-research-corpus.json`, synthesis
+`blob-synthesis.md`) confirms the W15 keystone: **every premium surface feature already SHIPS — containment
+RESURFACES the work that paints nothing.** Facets: **containment [25]**, **analytic-gradients [2]**,
+**domain-warp [4]**, **living-membrane [26]**, **blinn-phong [9]**, **fresnel [10]**, **sss [12]**,
+**iridescence [11]**, **OKLCh-palette [13]**, **mood-model [14]**, **auto-mood-arcs [15]**, **soft-body [5]**.
+
+- **The footprint budget COUNTS the smin band ([25][1]).** Solve `bodyRadius + orbitRadius + satelliteRadius +
+  smin_band ≤ 0.5 × 0.75` (the wrapper half-extent × the ~75% target) as ONE atomic sum, not per-constant.
+  At HEAD `body 0.25 + orbit 0.35 + sat 0.13 = 0.73` reach in a `0.5` half-extent ≈ `1.46×` the half-box
+  **BEFORE** the smin inflation — and the smin band is INVISIBLE to a raw-radius budget: IQ proves the kernel's
+  inward-at-seam is an OUTWARD-of-union expansion, so the merged isosurface reaches `~k` BEYOND the union of the
+  raw circles. A budget that ignores the `+smin` term still overflows [25]. The same `+k` padding applies to the
+  W16 bounding-discard `maxReach` (routed). Re-derive the whole length cohort DOWN against this budget so the
+  widest-orbit + trail excursion fits `~70-80%` of the footprint, overflow ONLY for the intentional orbit
+  excursion (KEEP the deliberate CSS overflow — `contain:layout style`, NO paint containment, the 160% canvas;
+  a hard SDF box-clip `max(d, sdRoundBox)` would AMPUTATE the intended overflow and is a fallback only [25]).
+
+- **The analytic-gradient smin is the keystone quality+perf lever — LAND IT HERE ([2]).** W15 owns
+  `metaball.frag.ts`, so the migration lands in this wave: (1) `sdCircle → sdgCircle` returning `vec3(d, p/d)`
+  (the circle gradient `p/d` is UNIT-LENGTH free, the eikonal property holds exactly); (2) carry the FBM
+  displacement's analytic gradient (already in `noised().yz`) into the body gradient via the chain rule
+  `circleGrad − amp*fbmGrad` (WATCH the sign — `circleDist − displacement` ⇒ `circleGrad − amp*fbmGrad`; verify
+  against a central-difference reference); (3) convert `smin/sminQuadratic/sminCircular` to the value+gradient
+  `vec3` form propagating `mix(a.yz, b.yz, h)`; (4) `sceneDist` returns `vec3(dist, grad)` so `surfaceNormal`
+  reads `grad2d` DIRECTLY — **DELETING 4 full `sceneDist` evals per lit pixel** (each running 3-octave FBM ×2 +
+  the sat/trail loops; a `~4-5×` field-cost cut on the normal, delivered FREE, the exact trim W16 arm-5 wanted).
+  **Caveats ([2]):** the smin field is sub-unit (CD family `|grad| ≤ 1`) so the gradient is NOT unit-length —
+  `normalize()` before the dome lift (it already is) and NEVER assert `|grad2d|==1` as a gate clause (would RED
+  on a correct field — the unit contract is on the FINAL lifted normal `N`, not the raw field gradient); keep the
+  `+1e-6` core-degenerate guard; the win is **DIRECTION correctness at the meniscus** (where the 4-tap averages
+  two surfaces across the seam and tilts wrong), not magnitude. **Subtlest hazard:** the anisotropic squash basis
+  (`bodyUv = (dot/sa, dot*sa)`) transforms the gradient too — the analytic gradient must be transformed back by
+  the INVERSE-TRANSPOSE of the squash basis or the normal tilts wrong under fast pointer motion (the 4-tap
+  handled this implicitly by sampling in screen space). Keep the warp-Jacobian APPROXIMATION (use only the outer
+  FBM gradient — the warp is low-frequency, the error sub-perceptible; full autodiff is overfit for one blob [2]).
+  This makes W16's "gate the 4-tap behind the lit path" arm MOOT (there is no 4-tap left to gate).
+
+- **Living-but-calm membrane — the liquid constants + the de-synced breath ([4][26]).** The blob ships
+  `fbmWarped` but `warpAmp` DEFAULTS to `0.0` (domain warp OFF — a clean geometric arc). Turn `warpAmp` ON at a
+  calm `~0.3-0.4` floor; raise `noiseAmp` to a perceptible-but-calm floor **tied to the new smaller body** (so
+  the wobble stays proportional — an absolute UV amplitude on a smaller droplet reads as a huge wobble or
+  sub-perceptible [4]); tune the FBM toward the **LIQUID band** (lacunarity `2.0 → ~1.8`, persistence/gain
+  `0.5 → ~0.42`, 2-3 octaves not 4-5 terrain-grade) in `watercolor-edges.glsl.ts`; **de-sync the single
+  `sin(uPulsePhase)` breath into 2-3 detuned sines at IRRATIONAL frequency ratios** (e.g. `0.13/0.09`) tuned to
+  the human calm band (~6 breaths/min ≈ 10s cycle, asymmetric slower exhale) so the membrane never mechanically
+  re-syncs [4][15]. Keep the QUINTIC noise fade (`f*f*f*(f*(f*6-15)+10)`) — a cubic fade creases the analytic
+  gradient and shimmers the normal [4]. Stay SINGLE-level warp on the default path (each warp level roughly
+  doubles FBM evals; two-level ≈6× [4]). **Free premium:** reuse the intermediate warp vector `q` (already
+  computed inside `fbmWarped`) to drive the OKLCh hue perturbation (small `~5°` swing on the perceptually-uniform
+  OKLCh path — NOT raw sRGB/HSV, which bands and goes muddy) so warp + color move coherently — one extra return,
+  vs the current separate `fbm(uv*colorNoiseFreq)` color call [4].
+
+- **Material-blend `vec2` smin — color through the seam ([4][15]).** The highest-leverage un-flood-era polish
+  the blob does NOT yet ship: the IQ `vec2 smin` returns BOTH the blended distance (`.x`) AND a blend weight
+  (`.y` ⇒ `mix(colorA, colorB, blendFactor)`) so a merging satellite carries its OWN palette stop INTO the neck
+  instead of popping at the merge. Today the body/satellite color is a flat global `colorNoise` field — the gel
+  seam reads uniform. Cheap depth-reading, high polish-per-effort; **gate it behind the multi-stop palette path
+  (`uStopCount > 1`)** so single-color blobs pay nothing [15].
+
+- **Lit warm-glass default — ship it ON ([9][10][11][12][13]).** The lit dome (4-tap → analytic normal +
+  dome-Z lift `z=sqrt(1-(1-interior)^2)`), Blinn-Phong glint, Schlick/Fresnel rim, fast-SSS Beer-Lambert inner
+  glow, and warm-pearl IQ-cosine iridescence ALL execute correctly but `thickness = -d/bodyR` SATURATES to ~1
+  across the oversize body, so they paint nothing — **containment resurfaces them for free** [25]. Flip
+  `lit:true` + low iridescence/SSS/coreGlow floors; DELETE the "zero regression" flag-gating (greenfield has no
+  legacy default — the SOTA look IS the default). Three robustness folds the corpus surfaces: **energy-conserving
+  Blinn-Phong** (`spec ×= (shininess+2)/8` so shininess and strength decouple — today tuning one re-tunes the
+  other [9]); **specular antialiasing** (widen the spec lobe where the FBM normal varies — Toksvig/fwidth-clamp —
+  so the tight glint 16-64 does not STROBE on the animated membrane, critical for small dock-grid instances; do
+  NOT just crank shininess [9]); **IGN dither** (`fract(52.9829189*fract(dot(gl_FragCoord.xy, vec2(0.06711056,0.00583715))))`
+  at 1/255, AFTER `linearToSrgb`, BEFORE the `*alpha` premultiply) — the low-chroma warm-cream dome bands on
+  8-bit panels; aurora ships it, splice the same [2][9]. Beer-Lambert: swap the linear `oklch.x += coreGlow*thickness`
+  for a saturating `1 - exp(-k*thickness)` curve (flat thick core, fast warm rim falloff) and scale the SSS
+  hue-warm-shift by `(1-thickness)` so only the thin rim warms [12]. Budget the combined L-lift with `max()`
+  between competing highlights (the lit block already does `max(warmCream*spec, rimLin*rim)`).
+
+- **Warm-cream identity + min-contrast rim ([13][9][10]).** Derive the default palette from glass-ui WARM tokens
+  via `deriveBlobPalette` (harmony `analogous`, low chromaBump, L-spread so satellites read lighter); the
+  warm-cream specular is OKLCh `L≈0.97, C≈0.03, h≈85°` through the SAME spliced OKLCh matrices — NOT hardcoded
+  sRGB white (reads cheap-CG) [9][13][30]. Feed the Fresnel rim `--foreground` via the ColorResolver, with a
+  **foreground-aware min-contrast rim guard** so a `var(--primary)` blob never washes out in dark mode (the dark
+  move is chroma-reduce + L-lift the rim stop, not a re-tint) [10][15]. Cold/neon stays explicit consumer opt-in
+  (presets-in-consumers). The OKLCh perceptual perturbation + hue-preserving gamut clamp (Ottosson) is the
+  already-shipped in-family color architecture — preserve it [13].
+
+- **Mood headroom re-tune ([14][15]).** The circumplex is SOTA-correct — preserve it. With lit/iridescence/SSS
+  now default-ON, the mood `iridScale` (0.4→1.8) is **load-bearing for the FIRST time** — re-tune the excited
+  ceiling DOWN so it does not over-saturate into a garish neon thin-film on the now-default-lit warm body (the
+  excited extreme must stay WARM, not neon). The `orbitSpeedScale`/`wobbleScale` are **derived-but-IGNORED** by
+  the satellite tick (a real bug class per the overfitting-audit precept) — wire them (excited speeds the orbit +
+  merge cycle, sleepy droops it) or the audit flags them dead [14][15]. Re-balance pointer-lean/pseudopod/squash/
+  trail magnitudes against the smaller body so the already-wired interaction (Codrops 15-sphere decaying-radius
+  trail, volume-preserving `1/sa` squash, critically-damped follow spring) becomes legible WITHIN the footprint
+  [5][15]. Keep sleepy ALIVE (slow the breath/orbit, do not freeze — `arousal=0` reads DEAD, not asleep [15]).
+
 ### POS_SCALE DISPOSITION (inherits W08 — §4 note 13; the explicit disposition line W15 MUST carry)
 
 This is the resolution of the `harden:dock-graphics` F0 **blocker contradiction**: W08 (slice-11) and W15

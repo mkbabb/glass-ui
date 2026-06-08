@@ -156,6 +156,76 @@ seam leaks (F1, F3) + the doc-lie sweep (F0). Three cohesive parts:
 
 ---
 
+## SOTA deepening (aurora research)
+
+The 32-facet corpus is emphatic on this wave: **the OKLCh color core is already at SOTA — eight things the
+engine does are confirmed-correct by the literature** — so W11 stays SEAM-LEVEL (catch-light derive + ramp
+twin hoist + doc sweep), NOT a color-core redo. Cited facets: **0** (OKLab/OKLCh interpolation), **1**
+(gamut mapping), **2** (color harmony), **3** (seed→skyscape palette), **29** (tonemap/dither).
+
+**CONFIRMED-CORRECT — the eight things the corpus says the engine already gets right (do NOT re-litigate):**
+
+1. **Linear-light compositing + a single sRGB OETF close** — facet 0's "non-negotiable substrate"; the AV.W1
+   "~2.2× too dark" defect was exactly the missing-OETF failure, now landed (`proof:aurora-space-gamma`).
+2. **OKLab-rectangular interpolation for adjacent stops** — facet 0's "muddy-midpoint kill"; the engine's
+   `mixPaletteOklab` is Aras' named guidance (rectangular for two-color pairs, NOT OKLCh-polar).
+3. **The four CSS-Color-4 hue-arc methods** (shorter/longer/increasing/decreasing) — facet 0/2; the engine's
+   `mixPaletteOklchArc` + the `HARMONY_METHOD` map (complementary/split→longer, analogous/mono→shorter,
+   triad→increasing) is "the named CSS-gradient-era fix."
+4. **Bell-curve chroma** (saturated body, calm edges via `sin(πt)`) — facet 0/28; the `bell()` helper matches
+   the painterly "saturated body, calm edges" recommendation verbatim.
+5. **Warm-light/cool-shadow temperature coupling** — facet 0/2/3/28's single most-cited painting rule; the
+   engine ships `temperatureShift`/`applyTemperature` (the magic-number tightening is W10's, not a color-core
+   defect).
+6. **IGN dither in DISPLAY space after the OETF** — facet 0/3/29; Jimenez IGN at 1/255 is "the highest-ROI
+   move for flat gradients" and the engine already lands it.
+7. **The Ottosson cusp twins in value.js** — facet 1/2; `findCusp`/`findGamutIntersection`/
+   `computeMaxSaturation`/`deltaEOK`/`DELTA_E_OK_JND` are ALREADY shipped (the gamut machinery exists, it is
+   the SHADER-side call site that under-uses it).
+8. **The column-major Ottosson matrices, single-sourced** — facet 21; the verbatim GLSL↔WGSL twin is
+   byte-identical and sound.
+
+**SEAM-LEVEL UPGRADES the corpus routes INTO W11 (the two seam leaks + the doc sweep, not a redo):**
+
+- **The catch-light OKLCh derive (scope item 1) is the warm-light coupling rule applied to the light model
+  [facets 0, 3, 28].** The eyeballed `[1.0, 0.95, 0.88]` literal is the unprincipled seam; deriving it from
+  a shared `warmCatchLight(L,C,h)` OKLCh anchor (the blob's `(0.97, 0.03, 85°)` reference) is the warm-white
+  the temperature-coupling literature prescribes — one OKLCh derive unifying both surfaces' light models.
+- **The palette-ramp twin hoist (scope item 2) is the muddy-midpoint discipline made structural [facet 0,
+  1].** Hoisting the `smoothstep` t-ease + the OKLab-rect-vs-OKLCh-arc dispatch into the shared chunk as
+  GLSL+WGSL twins is the two-copy-elimination pattern; the corpus's MIDPOINT CHROMA BUMP (facet 1's
+  `C += k·sin(πt)`, "already used in deriveBlobPalette") is the recorded refinement to counter the slight
+  chroma sag a straight C-lerp leaves between unequal-chroma stops — INPUT for the ramp shape, not a new edit.
+
+**THE FOUR UPGRADES — where they route (W11 owns one; the gamut/Oklch+ pair is W11-adjacent, P3 is W07/W14):**
+
+- **Cusp adaptive-L0 gamut mapping → the gamut SEAM (W11-adjacent / value.js K.W4) [facets 0, 1, 2].** The
+  current `gamutMapStop` 0.999 chroma-shrink loop under-shrinks saturated stops AND over-desaturates (facet
+  1's witness: pure chroma reduction grays P3-yellow to chroma ~25 vs the hybrid's ~103). The SOTA is the
+  CSS-Color-4 binary-search + deltaEOK-JND (0.02) channel-clip refinement, OR the analytic Ottosson cusp clip
+  (project toward `L0=L_cusp` with adaptive α≈0.05 — branch-free, constant-cost, the gradient sweet spot,
+  "mind the blue-hue precision dip" with one Halley + one Newton step). value.js ALREADY exposes every
+  primitive. This is a CPU-bake upgrade with negligible cost; it is recorded here as the principled successor
+  to the shrink loop, gated to the value.js color-leaf seam (W11 hoists the ramp twin; the gamut-map call-site
+  swap rides the same `/color` leaf — coordinate with value.js K.W4).
+- **The optional Oklch+ path → a documented axis, flag-gated, default-unchanged [facet 0].** Oklch+ (arXiv
+  2606.05255: `L'=L^0.73` + Naka-Rushton `C'=C^0.87/(C^0.87+0.34^0.87)`, hue unchanged) reaches STRESS 29
+  (~CIEDE2000) vs native OKLab's 47, giving gradients whose perceived rate-of-change is even more uniform. It
+  is an OPTIONAL perceptual-correction axis for WIDE-HUE presets only — gated behind a flag, MUST NOT move the
+  wispy-sky default (`proof:aurora-atoms-roundtrip`). **OPEN: ratify whether to ship the Oklch+ path at all
+  or document-only** (see orchestrator return) — it is all CPU-side and deterministic, but a second
+  interpolation space is surface the default never needs.
+- **Display-P3 swapchain + fp16 → W07/W14 [facets 0, 1, 11].** Out of W11's CPU-color seam scope — it is a
+  swapchain-config decision (the higher P3 cusp `C_max` lets the bell-curve chroma peak actually paint).
+  Routed to the WebGPU/canvas waves, flagged in W07's deepening.
+
+**Reconciliation note (binding — no redo of landed work):** §4 note 7 + this corpus AGREE the OKLCh migration
+is genuinely landed and machine-locked. W11 is SEAM-level: the catch-light derive, the ramp twin hoist, and
+the planned→landed doc sweep. The corpus's confirmation is the citable basis for NOT re-opening the migration
+— the eight confirmed-correct facets are the receipts.
+
+---
+
 ## FileBounds (the EXACT files this wave may touch — for parallel-dispatch disjointness)
 
 | File | Edit |

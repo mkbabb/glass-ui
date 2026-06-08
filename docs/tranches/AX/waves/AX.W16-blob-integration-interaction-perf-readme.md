@@ -182,6 +182,95 @@ ColorResolver contract (AS-P3) FOLD into W16's surface decisions (the `/goo-blob
 is what value.js resolves through). **W16 writes NO value.js source** — the adoption edit is W34; W16 records
 the close-criterion + verifies the `/goo-blob` surface is consumer-ready.
 
+## SOTA deepening (blob research)
+
+The 32-facet blob corpus (`docs/tranches/AX/research/blob-research-corpus.json`, synthesis
+`blob-synthesis.md`) makes the W16 perf + integration arms precise. Facets: **offscreen-park [22]**,
+**perf-budget [19][29]**, **PRM-rest-pose [21]**, **affordance [23]**, **mood-model [14]**, **integration [24]**,
+**accessibility [28]**, **analytic-gradients [2]**, **ray-marched-vs-2D [3]**, **webgpu-compute [20]**.
+
+- **Quiescence is the biggest onscreen lever — an EVENT-SCHEDULED loop with a REAL at-rest predicate ([22][19][29]).**
+  The substrate ALREADY built the demand gate (`createCanvasLifecycle.tick` reschedules IFF `shouldContinue()`,
+  `:106-109`); the blob defeats it with `shouldContinue(){return !paused}` (`:511-520`, the `:512` comment
+  literally "the blob is perpetually animated"). Replace it with: park when **mood settled (not transitioning)
+  AND pointer spring `|v| < eps` AND trail collapsed AND click pulse 0 AND no satellite mid-merge** → wake from
+  the satellite phase scheduler (`canvasHandle.wake()` is glass-ui's `invalidate()`/R3F `frameloop="demand"`
+  model; the plumbing exists at `:551`). An idle ambient blob then renders ZERO frames between phase transitions
+  instead of burning 60fps of FBM×2 + OKLCh-per-fragment forever. **Two wiring facts the corpus pins:**
+  `useBlobMood` has a PRIVATE `transitioning` let at `:117` — surface it READ-ONLY [22]; and the mood's
+  homeostatic decay must REACH a steady set-point within eps and STAY there — a smooth exponential mood decay
+  (vs the current hard hold-then-snap) gives a CLEAN `|d(params)/dt| < eps` settle point, whereas a perpetually
+  micro-drifting mood is itself a demand-gate violation that never parks [14][22]. **False-park is a correctness
+  hazard ([22][14][15]):** OR every motion source or the blob freezes mid-gesture then jerks; a pending auto-mood
+  arc (idle→sleepy) must be SCHEDULED, not polled, or it never fires on a parked loop; preserve the first-post-park
+  50ms dt clamp on every integrated axis (the first frame after re-arm can be seconds).
+
+- **Perf trim, ordered by ROI ([19][29][2][3]).** (1) **Pre-FBM bounding early-out** —
+  `if (length(uv) > uMaxReach) { fragColor = vec4(0.0); return; }` BEFORE the two 3-octave FBM calls + the OKLCh
+  round-trip (~60% of the 1.6× canvas = 2.56× the fragments is transparent border running the full ALU today).
+  **`uMaxReach` MUST be PADDED by the smin band + noiseAmp** (`bodyR + orbitR + satR + uSmoothK + noiseAmp`) or
+  it clips the wet meniscus — IQ: "inflate the bounding radius to match any outward-expanding op" [19][25].
+  Use a **transparent WRITE, not GLSL `discard`** — the spec text says "discard"; CORRECT it: the pass is a pure
+  premultiplied blend with no depth, and `discard` disables the tiled-renderer fast path on mobile GPUs; compute
+  any `fwidth` BEFORE the branch (derivatives in non-uniform control flow are undefined [19][2]). (2) **The 4-tap
+  gate is MOOT if W15 lands the analytic-gradient normal** (there is no 4-tap to gate — drop this arm to a
+  no-op note); if analytic did NOT land, gating it behind the lit/iridescence/SSS path is the correct interim
+  (the 4-tap ~5×'s the field cost per lit pixel, and lit is now the COMMON path so the default-lit path must be
+  made cheap regardless) [2][19]. (3) **`quality:'full'|'half'` axis** — half-res FBO + free bilinear upsample,
+  ~4× fragment savings; the blob is the IDEAL candidate (the soft FBM/AA edge HIDES the interpolation); ONE blit,
+  never a multi-pass blur chain; align the down/up grids (box-down then bilinear-up avoids the half-pixel shift);
+  the tight specular glint softens at half-res — keep it full or accept it as the half tier [19][22]. (4) **Trim
+  the 1.6× oversize** toward W15's measured orbit envelope (fill-rate is QUADRATIC in oversize: 2.56× → ~1.3-1.5×).
+  (5) **FP16/mediump split (mobile-only, measure-first, lowest priority)** — SDF/positions/FBM-coords stay highp
+  (the ~0.03-0.08 seam-pull is precision-sensitive, bands under FP16); color + bounded lighting dot-products are
+  mediump-safe; desktop runs mediump as FP32 (zero win); too many casts cost cycles [19].
+
+- **WebGL2 single-pass 2D-SDF is the permanent floor; WebGPU + particle-swarm are documented NON-GOALS
+  ([3][20][19]).** A 2D screen-space field beats raymarching for a flat UI droplet on every axis: flat
+  `O(W*H*N)` cost, zero overdraw, no per-fragment step loop, resolution-independent `fwidth`-AA, the "volume"
+  faked cheaply by the dome-lifted 2D gradient — raymarching only wins for genuine refraction-through-thickness /
+  volumetric scattering / self-shadowing / 3D-composited depth, none of which a flat ambient mark needs [3].
+  WebGPU compute is a NET LOSS at ≤4 nuclei: compute beats a fragment field only for hundreds-to-thousands of
+  balls (the `O(balls × pixels)` accumulation bottleneck) or 3D marching-cubes — our blob is body + ≤3 satellites
+  + ≤15 trail + ≤4 stops, CPU-simulated, uploaded as ~12 uniforms; a compute pre-pass adds a buffer round-trip +
+  sync barrier with ZERO field-eval savings [20][19]. A decorative background cannot carry a hard WebGPU
+  dependency (Baseline-2026 "newly available"); if ever adopted it is a SUBSTRATE-WIDE decision (Aurora's WGSL
+  path), never blob-local — and the backend-agnostic `createCanvasLifecycle` core already carries the park gate +
+  quiescence predicate over for free [20][22]. Document both as explicit research-backed non-goals in the README.
+
+- **Composed reduced-motion rest pose — a DESIGNED poster, not an arbitrary freeze ([21]).** Land it here
+  (README currently says "Planned — AW"). Under PRM, `restPose()` DRIVES every axis to a chosen target before the
+  one static frame: `uPulsePhase = PI/2` (`sin=+1`, fullest "inhale held" round body — NOT the random frozen
+  phase a `tempo=0` clock leaves); satellites at a tucked/absorbed arrangement (one round body — there is no
+  `satellites.rest()` today, the orbit freezes at a RANDOM angle); mood snapped to NEUTRAL canonical (bit-stable,
+  not the last emotional frame); zero stretch (`pointer.rest()` already guarantees velocity-symmetry — the most
+  vestibular-hostile axis); trail collapsed; **lit dome KEPT** (zero only the TIME-driven inputs — a flat gray
+  poster is a regression; the lit/Fresnel/iridescence are static per-pixel shading on a still field and paint
+  correctly frozen [21]); IGN dither matters MORE on the frozen frame (motion temporally hides banding). The
+  substrate OWNS PRM (one static frame then park, live `matchMedia` re-monitor) — **NO blob-local matchMedia**;
+  `restPose()` composes on the substrate's one-static-frame call; re-blend on un-reduce via the existing
+  `ORBIT_BLEND_MS` seam (ease out, not snap) [21][22]. Gate with rendered-pixel readback (peak-round opaque
+  fraction + edge-symmetric silhouette + deterministic across two mounts).
+
+- **Multi-instance context cap → the WatercolorDot tier cascade ([29][22][23]).** Browsers hard-cap ~8-16 live
+  WebGL contexts/page (OffscreenCanvas only 4); one context per `GooBlob`; parking the rAF does NOT release the
+  context; the Nth past the cap force-evicts (commit `9427536`'s live incident). Route static/ambient instances
+  to the `WatercolorDot` CSS/SVG sibling (zero GL context — the deliberate pair); reserve `GooBlob` for the ONE
+  interactive hero; a shared scissored context is the heavier alternative only if multiple LIVE blobs are
+  genuinely needed [29][22]. Tier cascade: WebGL2 SDF hero → WatercolorDot ambient → static poster frame.
+
+- **The pause seam + the DOM-free renderer ([24][28][2]).** The `v-model:paused` shape (RATIFIED) matches
+  Aurora's `useAurora` pause/resume parity and is STRUCTURALLY un-droppable (a discarded return cannot recur);
+  it binds the EXISTING renderer `pause()`/`resume()` — NO parallel pause path (the `?.`-swallow that hid the
+  dead seam is the exact anti-pattern). The duplicated `var()`-unwrap collapses to ONE `resolveTokenColor` leaf
+  (`getComputedStyle` appears EXACTLY once, cached + MutationObserver-driven on `<html>.class`, never per-frame —
+  it is a forced sync reflow; value.js's `parseCSSColor` throws on `var(--token)` so the concrete rgb() must be
+  cascade-unwrapped FIRST) — keeping the renderer DOM-free per the inv-K-3 seam [2]. WCAG: the canvas is
+  `aria-hidden` decorative (the clickable variant is a real `<button>` + name + keyboard, never `aria-label` on
+  the canvas); WCAG 2.2.2 pause (ALL users) is DISTINCT from 2.3.3 interaction-motion (the PRM no-op) [28].
+  The conversational-state affordance register (Microsoft Copilot "Mico": idle→listening→thinking→responding)
+  maps onto the mood model and belongs in the README use-case section [23][14].
+
 ### NOT in scope (routed elsewhere — no scope-creep)
 
 - **The smin distance regime / POS_SCALE** — W08 (the un-flood) + §4 note 13 (the disposition). W16 touches

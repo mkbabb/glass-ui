@@ -176,6 +176,93 @@ directional dabs with their OWN shape/spacing/impasto, and the W4.3 spec collaps
 
 ---
 
+## SOTA deepening (aurora research)
+
+This is the corpus's densest medium-fidelity wave. The literature supplies the van-Gogh stroke-based-rendering
+cascade, the oil-pastel scumble/burnish/tooth model, and the named pigment-compositing math for the OVER-blend.
+Cited facets: **9** (van-Gogh brushstroke synthesis), **8** (oil-pastel rendering), **10** (impasto
+height→normal→relight), **11** (SBR), **12** (watercolor), **13** (paper texture).
+
+**Van-Gogh body (scope item 1) — the SBR cascade [facets 9, 11, 10]:**
+
+- **Multi-scale coarse-to-fine SBR is the biggest quality lever, named [facets 9, 11].** Hertzmann 1998: paint
+  in layers of DECREASING brush radius (canonical {8,4,2}), fine dabs ONLY where the coarse layer's luma
+  diverges from a blurred reference (the residual field). Facet 11 flags this as "the single most important
+  quality lever and NOT yet in our engine — our oil path is single-scale." A 2–3 descending-cellSize cascade,
+  each gated by the previous residual, is the principled engine for "long-in-lights / dabs-in-darks" as a
+  SCALE cascade, not a single-pass length lerp. The Starry-Night turbulence prior (facet 9: luminance power
+  spectrum follows −5/3 Kolmogorov across the visible-eddy band, −1 Batchelor below) is the cell-size /
+  brightness-coupling exponent.
+- **Replace the fixed quadratic-bulge spine with structure-tensor integration [facets 9, 11].** The engine's
+  `bend = 4·K·t·(1−t)` is a single symmetric parabola; facet 11 prescribes a SHORT multi-step integration
+  (2–4 segments) along the `structureTensorField` minor-eigenvector — genuinely meandering strokes that hug
+  iso-bands. The comma/crescent `strokeShape` (asymmetric taper) the W13 van-Gogh profile authors is the
+  divisionist atomic dab.
+- **Directional complementary broken color (NOT i.i.d. jitter) [facet 9].** Facet 9's divisionism note: push
+  NEIGHBORING cells toward OPPOSITE OKLCh hue/temperature poles (the blue/orange, red/green optical mixing van
+  Gogh used), not symmetric ±16° jitter. This is the corpus's exact refinement for W13 scope item 4's
+  within-stroke OKLCh broken color — the directional pole-push is what makes adjacent strokes shimmer.
+- **GGX relight is the 2026 SOTA over Blinn-Phong, with named constants [facet 10].** Facet 10 (Liu et al.
+  2026, Differentiable Stroke Planning): shade the impasto height field with a GGX/Cook-Torrance microfacet
+  BRDF — roughness α=0.3, Fresnel F0=0.08 (the canonical non-metallic-pigment value), `(Ld,Ls)=(1.0,0.8)`. The
+  Schlick-Fresnel `pow(1−N·V, p)` rim is the TRUE view-dependent catch-light (the old `vec3(0.18,0.15,0.11)`
+  constant rim was a screen-space phantom UL light); for a camera-less backdrop V is fixed at (0,0,1) so N·V
+  reads as a grazing sheen on the steep impasto flanks. MANDATORY companion: geometric specular AA (Toksvig /
+  Kaplanyan — fold sub-pixel normal variance into roughness, `roughness'² = roughness² + k·|∇N|²`) or the
+  fbm-driven height field strobes once the lobe sharpens; and a 4-tap central-difference normal (kill the
+  dFdx 2×2-quad faceting). The full-height impasto crowns (scope item 1d) catch their own glint under this.
+
+**Oil-pastel body (scope item 2) — scumble / waxy burnish / paper tooth [facet 8]:**
+
+- **Pigment-on-tooth deposition + scumble is the headline oil-pastel model [facet 8].** Facet 8 (Murakami &
+  Tsuruno 2002): model the support as a height field; pigment lands on tooth PEAKS and skips VALLEYS
+  (smoothstep coverage against paper height with a pressure-lowered floor). SCUMBLE = a broken upper layer at
+  coverage<1 dragged over a base so the lower color reads THROUGH the gaps → OPTICAL mixing. The W13 oil-pastel
+  profile makes scumble optical (let the lower palette color show through) — facet 8's "the eye blends the
+  broken film" pointillism principle. Sgraffito (scratch-through to reveal under-layers) is the inverse
+  negative-coverage move, a cheap high-value gesture.
+- **Waxy burnish = a wide low-roughness specular lobe that grows with layer count [facet 8].** Facet 8: model
+  the oil-pastel sheen as a wide Blinn lobe (low exponent ~6) whose intensity GROWS with pigment build-up
+  (burnish), distinct from oil-impasto's sharp glint. This maps onto speedtest's OIL `uSheen` axis (the
+  CONVERGE fold INPUT already noted in scope) and the W13 `hardness`/burnish profile fields.
+- **Broken color via per-cell OKLCh jitter, not RGB snow [facet 8].** Hash stable pigment patches, jitter
+  hue(±~16°)/value(±~14%) in OKLCh — "so it reads as broken paint not chroma snow." This is scope item 4 done
+  per-cell; the directional-complementary refinement (facet 9) is the van-Gogh sharpening over it.
+
+**Pigment compositing (scope item 3) — the OKLab vs Kubelka-Munk RATIFY [facets 8, 12, 13]:**
+
+- **OKLab OVER-compositing is the cheap-correct fix; Kubelka-Munk is the richer option, both corpus-named
+  [facets 8, 12].** The W13 recommendation (move `paintOver`'s linear-RGB `mix` into OKLab on painterly
+  mediums) is the cheapest correct fix — overlapping complementaries transition through a chromatic path, not
+  grey, reusing the Ottosson matrices already in the shared chunk. The RICHER option is Kubelka-Munk
+  subtractive mixing (facet 8/12: spectral.js / spectral.glsl — lift sRGB to a 38-band reflectance curve, mix
+  K/S by concentration, recombine; blue+yellow→green, not the muddy lerp). The corpus's COST guidance is
+  decisive: **bake the K-M mix into the CPU palette LUT (zero per-pixel cost)** rather than calling 38-band
+  `spectral_mix` per fragment, strip spectral.js's own companding (keep aurora's single shared OETF), and gate
+  to painterly mediums. This is the citable basis for the W13 Open-Questions RATIFY (OKLab vs K-M) — OKLab
+  ships as the default; K-M-as-CPU-LUT is the recorded richer path if the LUT bake is warranted.
+- **Watercolor's wet-edge / granulation / boundary-wobble levers are single-pass and corpus-named [facet
+  12].** Though watercolor is not W13's headline medium, facet 12 supplies the single-pass upgrades the
+  `watercolor` profile can adopt: the wet-edge power-curve `col = pow(col, 1+k·edge)` (monotone, rim-darkens
+  more, pre-tonemap — replaces a flat multiply), pigment-density turbulence `col *= (1 − density·(τ−0.5))` (the
+  no-flat-fills keystone), paper-height granulation + OKLab two-pigment separation, and boundary wobble (warp
+  the edge sample coordinate by the existing fBm). The fluid wet-on-wet bleed + backruns are inherently
+  multi-pass → the W14 WebGPU wake, NOT W13.
+- **Paper-tooth grain is luminance-adaptive + soft-light composited [facet 13].** Facet 13: grain amplitude is
+  gated by local brightness (`smoothstep(0.05,0.5,luminance)` — strongest in mid-shadows, suppressed in
+  highlights) and blended via soft-light NOT additive (additive washes shadows to grey). Physically-based
+  granulation = heavy pigment settles in tooth valleys (height-field × pigment-load weight, not a uniform
+  multiply). These are the corpus's "grain interacts with pigment opacity" laws for the tooth fields the W12
+  noise basis feeds.
+
+**Reconciliation note:** W13 authors NEW medium bodies (van-Gogh, oil-pastel split) RIDING the W12 substrate +
+the confirmed-correct placement/relight primitives — it does not re-derive them. The corpus confirms the
+bristle/impasto relight is already SOTA-parity (facet 11) and supplies the named upgrades (GGX + specular AA +
+central-difference normal, multi-scale cascade, directional broken color, scumble optical mixing) as the
+medium-fidelity perfection layer. The multi-pass Kuwahara/LIC painterly FINISH is explicitly W14, not W13.
+
+---
+
 ## FileBounds (the EXACT files this wave may touch — for parallel-dispatch disjointness)
 
 | File | Edit |

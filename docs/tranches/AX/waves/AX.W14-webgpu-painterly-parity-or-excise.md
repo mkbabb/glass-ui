@@ -163,6 +163,66 @@ not throw at the consumer.
 
 ---
 
+## SOTA deepening (aurora research)
+
+The corpus is decisive on this wave's central fork. If BRANCH A (WIRE) is ratified, the literature supplies the
+EXACT anisotropic-Kuwahara recipe + constants AND a sharp warning: the engine's authored `painterly.wgsl.ts`
+uses the PRE-2010 hard sector-binning that bands into a pinwheel on aurora's flat gradient fields (its worst
+case). Cited facets: **6** (anisotropic Kuwahara — the "make a gradient read as oil paint" operator), **5**
+(structure-tensor / ETF), **18** (WebGPU compute multi-pass), **20** (multi-pass FBO ping-pong), **22** (GPU
+perf), **21** (parity), **23** (PRM / offscreen park).
+
+- **The Kuwahara/LIC multi-pass IS the corpus's "make a gradient read as oil paint" operator [facets 6, 5].**
+  Facet 6 names the anisotropic Kuwahara as THE canonical operator and it is inherently MULTI-PASS (tensor pass
+  → smoothed tensor → filter pass → tonemap) — correctly scoped to WebGPU. The smoothed structure tensor is
+  "the single biggest quality jump" (facet 5): smooth the tensor COMPONENTS `Jxx/Jyy/Jxy` (NOT the gradient
+  vectors, which cancel at opposite-signed edges) with a separable Gaussian before eigen-decomposition. This is
+  the genuine WebGPU enhancement — the thing that makes WebGPU "genuinely better than WebGL2."
+- **CRITICAL — the authored scaffold uses the OBSOLETE hard-argmin form; the SOTA is a SOFT polynomial blend
+  [facets 6, 5].** Facet 6/5's modern recipe (Kyprianidis 2009 / Acerola): N=8 OVERLAPPING sectors of an
+  ELLIPTICAL kernel warped by the structure tensor (`a=R·clamp((α+A)/α,0.1,2)`, `b=R·clamp(α/(α+A),0.1,2)`),
+  polynomial sector weights `max(0,(x+η)−λy²)²` (η≈0.1, λ≈0.5) computed IN-LOOP with NO precomputed mask
+  texture, accumulate per-sector mean `m_k` + variance `s_k`, and combine via SOFT inverse-power weighting
+  `w_k = 1/(1+(hardness·1000·s_k)^(sharpness/2))` (hardness≈8, sharpness≈8) — a SOFT variance blend, NOT a
+  hard lowest-variance winner. The pre-2010 hard sector-binning + winner-take-all bands into an 8-spoke
+  pinwheel on flat gradient fields — aurora's exact worst case. If Branch A is ratified, the wire MUST adopt
+  the soft polynomial form (compute mean/variance in linear/OKLab, not gamma); the WGSL constants come
+  straight from the corpus (Heckel 2024 "On crafting painterly shaders" is the closest portable reference,
+  facet 11/17).
+- **LIC is the stroke-texture half the orientation field alone cannot give [facets 5, 17].** Facet 5: the
+  tensor/ETF answers "which way," LIC (line-integral-convolution — Euler-integrate the tangent field a few
+  steps each direction, accumulate) answers "draw the bristle smear that way." ETF-without-LIC (the engine's
+  current state) is an honest orientation-only approximation; LIC is the WebGPU multi-pass fold that turns the
+  field into visible directional brush texture.
+- **Performance: benchmark before promoting; half-res tensor; allocate-once [facets 18, 20, 22].** Facet 22's
+  separable/decimated note: the tensor smooth is separable (two 1D passes, O(2r)) and can run at HALF res in an
+  `rg16float` target then bilinear-upsample into the full-res Kuwahara — the standard real-time recipe. Facet
+  18 (WebGPU compute): the Kuwahara gather benefits from workgroup shared-memory tiling, but the lisyarus
+  finding (cited in the synthesis) warns texture cache often beats hand-rolled LDS — BENCHMARK first, convert
+  ONLY the Kuwahara gather, keep tensor/smooth as fragment passes. Facet 20 (multi-pass FBO ping-pong):
+  allocate intermediates ONCE (rebuild on resize only), use `rgba16float` for the tensor (renderable +
+  filterable by default; NEVER `rgba32float`), and instrument each pass with `timestamp-query` to assert the
+  multi-pass total stays inside `profile:budget`. The render-bundle reuse path amortizes pass setup.
+- **The PRM / offscreen park gates EVERY pass [facet 23].** Facet 23: no pass may attach a frame while parked
+  — the offscreen/tab-hidden/PRM freeze the `useWebGLCanvas` substrate owns must gate the whole ping-pong
+  ladder (this is already in the W14 Branch-A scope; the corpus confirms it is non-negotiable for a continuous
+  backdrop).
+- **The palette-divergence close is single-source, confirmed-correct [facet 21].** Porting `mixPaletteOklchArc`
+  into the WGSL `samplePalette` reuses the already-spliced `OKLCH_MATRICES_WGSL` (column-major, byte-identical
+  per facet 21) — no re-authored color math. The OKLCh arc is the confirmed-correct interpolation (see W11
+  deepening); W14 closes ONLY the straight-OKLab-vs-arc ramp divergence on the opt-in path.
+
+**Reconciliation note (binding for BOTH branches):** WebGPU is an ENHANCEMENT, never the default and never a
+hard requirement — the corpus confirms WebGPU ships in all four engines (Safari 26, Nov 2025) but is NOT yet
+Baseline-widely-available (~5% still WebGL2-only). The wispy-sky default + the parity-floor field MUST render
+acceptably single-pass WebGL2 (reaching ~100% of users); the Kuwahara/LIC finish is the gated bonus for the
+~95% on WebGPU. This is the basis for the recommended BRANCH B (EXCISE) — but if Branch A (WIRE) is over-ridden,
+the soft-polynomial-Kuwahara correction above is MANDATORY (the authored hard-argmin scaffold would pinwheel on
+aurora's flat fields). Display-P3 + fp16 swapchain (facets 0, 11) is the wide-gamut hook that rides W14's canvas
+config — flagged as an open gating question in the orchestrator return.
+
+---
+
 ## FileBounds (the EXACT files this wave may touch — for parallel-dispatch disjointness)
 
 ### Branch B (EXCISE — the recommended disposition)

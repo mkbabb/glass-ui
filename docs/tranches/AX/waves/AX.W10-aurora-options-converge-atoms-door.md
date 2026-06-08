@@ -158,6 +158,68 @@ does not silently ship a second dead door. The existing internal `deriveAurora` 
 
 ---
 
+## SOTA deepening (aurora research)
+
+The corpus backs the atoms-door convergence with a named design discipline and supplies the precise shape for
+the zones/noise/color re-derivation + the seed→whole-scene unification. Cited facets: **26** (atom-based
+parametric control — grounded against the existing `resolveAtoms`), **27** (generative parameter spaces),
+**28** (preset/derive systems), **2/3** (harmony + seed→skyscape palette).
+
+- **The atom model: zones / noise / color → ≤7 atoms is the corpus's exact decomposition [facet 26].** Facet
+  26 names the target as `zones/noise/color/mood/medium/medium-texture/motion + seed/interactivity` collapsed
+  onto `resolveAtoms`, and validates the existing door as "a pure/total/default-preserving clamped-override
+  mapper over `DEFAULT_AURORA_CONFIG`." This IS the W10 §2.7 control-element decomposition — the corpus
+  ratifies the shape the wave RATIFY-BEFORE-IMPL step was holding open.
+- **The Disney "Principled" 5-rule discipline is the governing ruleset [facet 26].** Burley 2012: (1)
+  intuitive not physical parameters, (2) as few as possible, (3) each normalized 0..1, (4) allow push beyond
+  [0,1] where meaningful, (5) EVERY combination must be robust + plausible (no setting produces garbage). Rule
+  5 is the backbone of the W10 "make inapplicable knobs structurally absent" + the "audit ALL atom pairs for
+  garbage combinations" mandate. This is the design-discipline citation for the door itself.
+- **Co-varying axes: one knob moves the entangled cluster, as a CONTINUOUS curve not a 3-point LUT [facet
+  26].** Facet 26's co-varying-perceptual-axes note: a single mood/energy atom must move
+  `saturation + warpAmount + valueVariance + breathDepth` TOGETHER along a monotone curve, "because moving any
+  one alone reads as a defect." The corpus explicitly flags the existing `MOOD_ENERGY`/`MOTION_FIELDS` 3-point
+  Records as the gap — "SOTA is a CONTINUOUS scalar t∈[0,1] driving a curve, not 3 named stops." This is the
+  recorded successor shape for the W10 fan-out (named stops stay as labels on the axis); the wave may land the
+  enum-collapse or carry it as a follow-up — the corpus is the basis either way.
+- **Seed→whole-scene determinism is the named fix for the FIXED `thirdsNuclei` LUT [facets 26, 27, 2, 3].**
+  Facet 26's Art-Blocks hash-to-traits + facet 27's golden-ratio / stratified-jittered placement: the `seed`
+  atom should be the single source from which palette AND a stable nuclei arrangement (positions, drift
+  phases, value bias) derive via the seeded PRNG (`src/utils/prng.ts` mulberry32+hashString — already in
+  tree). The corpus names the exact defect W10's `thirdsNuclei`-deletion addresses: a fixed 6-anchor LUT means
+  two seeds give identically-arranged scenes. Golden-ratio-conjugate (φ⁻¹=0.618) hue stepping +
+  low-discrepancy/stratified scatter "stays composed for any count, deterministic for renderAt bakes." This
+  routes into the W10 `nucleiPrior(count, arrangement)` consolidation — the arrangement-character enum
+  (scattered/composed/centred) selects among priors, and the seed drives the scatter within each.
+- **Total-function / clamped-budget contract is the corpus's robustness law [facet 27].** Facet 27: every
+  parameter mapper is a pure TOTAL function — every input (incl. out-of-range/adversarial) yields a valid
+  in-range result via clamp/saturate, never NaN/undefined/out-of-gamut. This is the existing `resolveAtoms`
+  contract; the corpus validates it AND prescribes the offline verification: the weakest-output curation loop
+  (Hobbs/Fidenza — "you curate the PARAMETER SPACE, not outputs") + optional MAP-Elites coverage illumination
+  (bin over mood × medium × zone-count, prove no dead bins). This backs extending `proof:aurora-atoms-roundtrip`
+  to a degeneracy/coverage sweep.
+- **The preset/derive layering is three-tier with sparse overrides [facet 28].** Facet 28: primitive
+  (`OklchStop[]`) → semantic (`AuroraConfig`) → instance (per-preset override), first-explicit-value-wins, and
+  the SOTA stores only the DIFF from baseline (Unity prefab-variant / Figma extended-collection / Lightroom
+  preset-as-instruction-set), NOT a full `structuredClone` snapshot — so an evolving `DEFAULT_AURORA_CONFIG`
+  propagates to fields a preset never touched. This is design INPUT for how the atoms door + the Configurator's
+  `cloneMode="per-preset"` relate; the sparse-override model is the corpus-named upgrade over the current
+  full-clone snapshot (recorded, not a forced W10 edit — presets live in the consumer per the house rule).
+- **Design-galleries as the primary "choose" UI [facet 26].** Facet 26's Design Galleries / Sequential
+  Gallery (Marks 1997; Koyama 2020): dispersion-sampled thumbnail grids + a refine slider, so the user picks
+  visually rather than tuning numbers. The existing `usePresetThumbnails` bake harness ALREADY supports the
+  deterministic `renderAt` bakes — the corpus names the two-tier progressive disclosure as
+  gallery-picker → ≤7 atoms → 28-field Advanced. This validates the W10 "atoms tab as default, raw config as
+  Advanced" wiring and points at the gallery as the eventual primary surface (a forward note, not W10 scope).
+
+**Reconciliation note:** the atom door (`resolveAtoms`) is confirmed-correct-shape by facet 26 — pure/total/
+default-preserving. W10 does NOT re-invent it; it CONVERGES the live UI onto it + deletes the dead parallel
+`deriveScene` door + re-derives the atom set per the corpus-ratified zones/noise/color decomposition. The
+continuous-curve and seed→scene upgrades are named successors the corpus supplies; the wave lands the
+convergence and carries the curve/scatter refinement as scoped here.
+
+---
+
 ## FileBounds (the EXACT files this wave may touch — for parallel-dispatch disjointness)
 
 | File | Edit |

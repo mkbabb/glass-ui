@@ -143,6 +143,54 @@ without. Three cohesive parts.
 
 ---
 
+## SOTA deepening (aurora research)
+
+The corpus backs the `StrokeProfile`-as-data extraction with the SBR literature's parameterized-stroke
+vocabulary and supplies the named noise basis the painterly mediums need. Cited facets: **11** (stroke-based
+rendering — greedy placement, curved spines, bristle texture), **5** (structure-tensor / ETF orientation),
+**7** (cellular/Worley nuclei fields), **13** (canvas/paper texture synthesis), **22** (GPU perf).
+
+- **The `StrokeProfile` struct is the SBR "stroke = parameter vector" canon [facet 11].** Facet 11's
+  neural/differentiable-SBR note represents a stroke as an 8-vector `{x,y,h,w,θ,r,g,b}` (Bézier control pts +
+  width + color + opacity), and the classical SBR vocabulary is exactly the W12 cohort: brush radius, curvature
+  filter `fc`, grid factor `fg`, max stroke length. Extracting `mediumOil`'s if-ladder knobs into a
+  `struct StrokeProfile` (`shapeType`/`bristleAmp`/`streakFreq`/`impastoAmp`/`hardness`/`tooth*`/`density*`/
+  `lenMul`/`widMul`) is the logic-as-DATA move the literature treats as the stroke's natural representation —
+  W13's van-Gogh + oil-pastel profiles become new parameter vectors, never engine forks.
+- **The engine's `bestOil` IS greedy-best-of-neighborhood SBR — confirmed-correct, keep it [facet 11].**
+  Facet 11 names the engine's `bestOil` as "a structurally identical but PROCEDURAL inversion" of the
+  Litwinowicz/Hertzmann greedy "paint where it's worst" loop: it scans a 3×3 cell neighborhood and keeps the
+  max-coverage stroke (coverage-driven since there is no target image). The placement substrate
+  (`bestOil`/`curvedStroke`/`paintOver`/`strokeShape`) is at-parity and STAYS — W12 parameterizes it through
+  the profile, it does not re-derive placement.
+- **The bristle/impasto height-field is already SOTA-parity [facet 11].** Facet 11's bristle note: the engine
+  "ALREADY implements exactly this (`paintOver` accumulates height, `relightImpasto` does dFdx/dFdy normal +
+  movable `uLightDir` + height-graded shininess) — genuine SOTA-parity; the only refinement available is
+  layered multi-frequency bristle harmonics + a separate waxy-burnish lobe." Those refinements are W13's
+  profile fields (van-Gogh full-height crowns, oil-pastel burnish); W12 ships the substrate that carries them.
+- **The NET-NEW noise basis: integer-PCG hash + gradient noise is the corpus-named organic basis [facets 13,
+  22].** Facet 13's paper/canvas synthesis (Paper Shaders, paper.design — the Stripe-gradient lineage) builds
+  grain from gradient/simplex primitives, NOT a `sin()`/value-noise lattice; the value-noise basis is the
+  wrong primitive for organic paper/pigment tooth. Facet 22's TEXTURE-LUT-FOR-NOISE measurement (proceduralpixels:
+  procedural sin-hash → 64×64 LUT, 1.02ms→0.59ms because the LUT fits L1 and the TMU runs concurrent with ALU)
+  validates the cost story: the integer-PCG hash kills `sin()` periodicity-banding permanently, and the cellular
+  `sin`-hash is the top LUT candidate if a texture path is ever wanted. The smooth/atmospheric pole stays on
+  the cheap value-noise `fbm` per the charter — facet 22's per-medium octave-budget note (budget-cap to 3
+  octaves on smooth/default, reserve 4–5 for painterly) backs the cost-tiering.
+- **The ETF orientation + Worley/smin nuclei the profile rides are confirmed-correct [facets 5, 7].** Facet 5
+  confirms the engine's `structureTensorField()` is "already correct and canonical" (closed-form
+  `θ=½atan2(2Jxy,Jxx−Jyy)`, coherence A); facet 7 confirms the softmax/smin nuclei field is the canonical
+  "one knob spans chunky↔soft" operator (IQ log-sum-exp softmin). W12's profile parameterizes stroke
+  orientation off this existing tensor seam; the Gaussian-smoothed-tensor / ETF-iteration UPGRADES (facet 5's
+  "single biggest quality jump") are the multi-pass WebGPU finish → W14, not W12.
+
+**Reconciliation note:** the placement substrate (`bestOil`/`curvedStroke`/`paintOver`), the structure tensor,
+and the bristle/impasto relight are all corpus-confirmed at SOTA-parity. W12 extracts the DATA (the
+`StrokeProfile`) and adds the noise BASIS — a pure structural transposition (byte-equal oil/knife/chunky/crayon
+bake) + an opt-in organic-grain primitive. No placement or relight math is re-derived.
+
+---
+
 ## FileBounds (the EXACT files this wave may touch — for parallel-dispatch disjointness)
 
 | File | Edit |

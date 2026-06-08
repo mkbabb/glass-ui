@@ -117,6 +117,77 @@ indexing / surfaceNormal all execute CORRECTLY and are salvageable as-is. One co
    lineage, OKLCh lit-droplet rationale, the README-defaults-currency gate — is the blob band's README close,
    routed to **W16**; W08 only un-rots the values it changes.)
 
+## SOTA deepening (blob research)
+
+The 32-facet blob corpus (`docs/tranches/AX/research/blob-research-corpus.json`, synthesis
+`blob-synthesis.md`) makes the W08 root cause **DEFINITIVE** and the fix a measurable re-solve, not a
+magic number. The facets unanimous on the un-flood: **smin-distance-regime [1]**, **containment [25]**,
+**perf-budget [29]**, **goo-aesthetics [30]**, **affordance [23]**, **mood-model [14]**, **auto-mood-arcs [15]**,
+**domain-warp [4]**, **analytic-gradients [2]**, **OKLCh-palette [13]**.
+
+- **IQ-2024 NORMALIZES smin so `k` IS the max merge-inflation — this is the load-bearing fact ([1][25][29][30]).**
+  IQ's 2024 rewrite pre-scales `k` by the kernel's `1/g(0)` (quadratic `k*=4.0`, with `g(0)=1/4`; circular
+  `k*=1/(1-sqrt(0.5))`) so the parameter equals EXACTLY the maximum surface inflation in distance units — the
+  seam dip at `a==b` is exactly `k`. `sdf-body.glsl.ts` ships this VERBATIM-correct (validation, not a change).
+  The flood is therefore NOT a shader bug; it is a unit-regime mismatch in the JS `k` fed in. **The composed
+  flood math, named precisely ([1][4]):** the uploaded `uSmoothK = config.smoothK × (mood.smoothK / DEFAULTS.smoothK)`
+  = `0.12 × (0.216/0.12)` = `0.216`; the in-shader `k*=4.0` makes effective `k ≈ 0.864` in a 0.5-half-extent UV
+  → every merged seam pulled `~0.86` units inward → `min(a,b) − k` drives the composite SDF **negative across the
+  whole canvas** → `alpha=1` everywhere = the 84%-coverage slab. IQ's own proof of WHY this floods globally:
+  the polynomial smin is **NON-LOCAL** ("lack of rigidity" — its effect "spans to infinity," underestimating
+  the field even for shapes far apart [23]), so an over-large `k` floods non-locally, not just at one seam.
+
+- **The fix is to RE-SOLVE the composed `k`, measurably — NOT a magic number ([1][25][29]).** Solve
+  `k_effective = smoothK × mood_multiplier × POS_SCALE × 4.0` (the in-shader pre-scale) targeting the
+  **~0.03-0.08 of the half-extent** wet-meniscus band (the pre-AW oracle ran `0.034`; commit `067473c`,
+  effective `0.1375`). That lands a default `smoothK ~0.04-0.05` + a mood multiplier `~5×` down from the live
+  `0.216`. The corpus targets are the same `~0.03-0.08` the spec already names — the research CONFIRMS the band,
+  it is not a guess. The Codrops `k=7` premium-droplet reference is NOT a counter-example: it runs in a sub-unit
+  coordinate space (`baseRadius = 8e-3`, so `k` is ~875× the radius yet contained because the WHOLE scene is
+  sub-unit) — the lesson is **`k` is meaningless in isolation; it is a RATIO against the body/satellite radii**,
+  which is exactly the re-solve [30]. Containment direction is confirmed: **smaller effective `k` = more
+  contained** (the circular variant gives roundness at a SMALL `k`; raising `k` for roundness always floods [1]).
+
+- **POS_SCALE on the band is LENGTH-COHERENCE, not a fudge ([1][25][29]).** Every length-like uniform rides
+  `POS_SCALE = 1/1.6 = 0.625` (body `:404`, satRadius `:495`, pointer `:363`, noiseAmp `:423`, pulseAmp `:417`);
+  `uSmoothK` alone (`:437-439`) does not. The smin inflation is measured in the SAME UV space as the radii, so it
+  must carry the same compression or it is `1.6×` oversized relative to every other length — the second half of
+  the flood. Restoring `* POS_SCALE` is the MINIMAL coordinate-system fix. **POS_SCALE recommended resolution
+  (charter §4 note 13):** the corpus ratifies the spec's path — W08 takes the MINIMAL un-flood (restore POS_SCALE
+  + re-solve the band), W15 KEEPS W08's POS_SCALE regime and budgets geometry on top of it (drop slice-12's
+  "excise the fudge" language as scope-creep); a full raw-normalized re-expression, IF ratified, is ONE ATOMIC
+  re-derivation of the entire cohort (body/sat/orbit/smin/noise) with `proof:blob-render` as the lock — **never a
+  partial migration that re-floods across the wave seam** [1][25][4][15]. This is the highest-risk hazard in the
+  blob band; the research names it the single highest-risk trap.
+
+- **Mood-as-multiplier kills the split-length regime ([1][14][15]).** The renderer already treats mood smoothK
+  as the ratio `params.smoothK / DEFAULTS.smoothK`; SOTA authors it directly as a 1.0-centred multiplier
+  (`lerp(0.85, 1.35, arousal)` — excited gooier, sleepy crisper) so there is ONE length authority (the
+  POS_SCALE'd config band) and ONE unitless modulator (mood). The `/0.015` (pulseAmp `:416`) and `/0.025`
+  (noiseAmp `:423`) magic divisors are the SAME smell — they exist only because some MoodParams are absolute and
+  some are multipliers. Convert EVERY mood param that scales a config field to a 1.0-centred multiplier; the
+  config holds the absolute, mood scales it. The circumplex model itself ([14][15] Russell valence/arousal) is
+  SOTA-correct and PRESERVED — only the smoothK-as-multiplier reframing changes here.
+
+- **The gate is structurally blind to a flood ([1][2]).** `proof:blob-smin-normalized` clause-1 *forbids*
+  POS_SCALE on `uSmoothK` — W08 MANDATES it, so the gate REDs on the fix unless re-pointed (keep only the
+  `/0.22` fudge-deletion clause; re-point clause-1). A static k-sweep renders zero pixels; the real lock is the
+  render-and-readback `proof:blob-render` (opaque-fraction `0.25-0.6`, a transparent margin off all four edges,
+  a centre-vs-corner gradient = a field, not a slab). Naive `readPixels` returns 0 against this substrate —
+  the gate MUST use `preserveDrawingBuffer: true` [25]. Corpus flags the SECOND structurally-blind gate W15
+  will own: `proof:blob-gradient-unit-length` ports only the Z-dome lift and ASSUMES `grad2d` is unit — it ships
+  green over a wrong-DIRECTION gradient on the real warped+smin field [2]. W08 does not touch it (shaders are
+  out of bounds), but the W08 artefact should flag it as the same false-green class.
+
+- **Analytic-gradient smin DELETES the 4-tap normal (routed to W15, foreshadowed here [2]).** The IQ
+  value-AND-gradient primitives (`sdgCircle` returning `vec3(d, p/d)` with `p/d` unit-length free; `vec3 smin`
+  propagating `mix(a.yz, b.yz, h)`) let `sceneDist` return `vec3(dist, grad)` so `surfaceNormal` reads `grad2d`
+  DIRECTLY — DELETING the 4 extra `sceneDist` evals per lit pixel (each running 3-octave FBM ×2 + the sat/trail
+  loops ≈ a `~4-5×` field-cost cut on the normal). `noised()` already returns its analytic gradient in `.yz`,
+  so the FBM membrane chains in via `circleGrad − amp*fbmGrad` (chain rule). W08 does NOT land this (out of
+  bounds — `sdf-body.glsl.ts`/`metaball.frag.ts` are W15's), but it is the keystone quality+perf lever the W08
+  un-flood makes worthwhile, and it is recorded here so W15 inherits the routing.
+
 ### POS_SCALE DISPOSITION (decided ONCE — W08 owns it, W15 inherits; §4 note 13)
 
 This is the resolution of the `harden:dock-graphics` F0 **blocker contradiction**: W08 (slice-11) and W15
