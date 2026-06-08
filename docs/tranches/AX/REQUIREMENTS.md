@@ -351,3 +351,133 @@ chronic-closure forcing function (no silent forever-punt). These belong in the W
 consumer-adoption ledger) + W35 (consumer-migration DAG) tracking, and the discipline itself reinforces
 the W00 visual-truth / no-silent-deferral philosophy. The publish hinge is AX.W33/W34: USF + kf bump
 3.x → the AX publish, full live re-audit after (the batch-1 reconciliation rides along).
+
+## §21 AX EXECUTION MANDATE — autonomous, end-to-end, full-authorization (2026-06-08)
+
+**The call (heard).** AX is to be executed END-TO-END, IN ONE SHOT, IN TOTALITY, over a long-horizon
+MULTI-COMPACT autonomous session. The user steps away; return after 12+ hours to a COMPLETED session.
+
+**End state (the only acceptable done):**
+1. glass-ui fully deployed to npm at its most-modern version, ALL AX features implemented + visually-true.
+2. slides.friday.institute fully deployed (Cloudflare Pages), ALL features implemented + live-validated.
+3. Every ancillary constellation tranche/feature fully implemented (consumers adopted, their gates green).
+
+**Full authorization (durable, this tranche).** The orchestrator + agents MAY run: CI (GH Actions),
+npm publish (the release.yml provenance path on tag push), Cloudflare Pages/deploy, AWS CLI. NOTHING is
+user-gated within AX. Outward-facing publish/deploy is pre-authorized — no per-action confirmation.
+
+**Operating rules under autonomy:**
+- **Rate limits → SLEEP.** On a server throttle or session cap, ScheduleWakeup and resume; do not abort.
+- **Roadblocks → tangent gestalt fix.** A blocker is not a stop — devise a path forward in a tangent
+  workflow, fix it idiomatically (no workaround/no legacy), resume the main line.
+- **Cross-session clobber → orchestrate + sleep.** If another session is mutating shared state, coordinate
+  (read its branch/locks), sequence, sleep as needed; never corrupt a sibling tree (inv-16').
+- **Work through compaction** — the long-horizon session continues across context summarization.
+
+**Held invariants (these remain, even under full authorization — they are safety, not friction):**
+- NEVER touch the `docs/precepts/` submodule (verify "precepts staged: 0" every commit).
+- NEVER place the `wolfpack-ledger-2026` access key in any source/test file (it lives in gitignored
+  `.env` + GH secret + CF env only).
+- Agents NEVER stage/commit/stash/checkout/reset on the main index — the orchestrator owns it.
+- inv-16': never write a dirty sibling tree; named cross-repo arms only on clean checkouts.
+- The hard-prohibited action classes still cannot be performed by the agent (entering financial
+  credentials, creating accounts, modifying access-controls/sharing, permanent data deletion, financial
+  trades, security-setting changes, CAPTCHA-solving). If the deploy chain genuinely needs one of these,
+  it is surfaced as a USER-GATE to resolve NOW (§21 operational audit), not performed silently.
+
+**Operational-readiness gate (resolve NOW, user present):** the final hardening pass audits every point
+the autonomous run could need the user — npm-publish auth (CI provenance vs local token), CF-Pages deploy
+secrets (CLOUDFLARE_API_TOKEN / ACCOUNT_ID / VITE_TIL_ACCESS_KEY presence), gh/AWS CLI auth, the keyframes.js
+dependency (assumed fixed in another session), the deploy-chain DAG (glass-ui publish → consumer bumps →
+slides deploy → prod validation). Any genuine user-gate is surfaced + resolved BEFORE the user steps away,
+or minimized to vanishing.
+
+## §22 FINAL HARDENING dimensions (the 32-agent pass before AX drives)
+
+1. **Tranche completeness** — every requirement §0-§21 routes to a wave; nothing dropped/deferred.
+2. **Wave cogency** — each wave has CONCRETE goals + a falsifiable born-RED→GREEN gate + the visual-truth
+   clause; no vague scope.
+3. **Cross-wave coherence** — consistent vocabulary/tokens; no contradiction between waves; the §4
+   reconciliations hold.
+4. **Coordination** — the dependsOn DAG is acyclic + correctly ordered; FileBounds are disjoint for
+   parallel dispatch (the dock.css/glass.css/tokens.css/utilities.css/manifest shared-file collisions
+   resolved); cross-repo sequencing sound (W28→W29, W30-32, W34/W35/W41).
+4b. **Ad-hoc triumvirate-dispatch language** — EVERY wave carries explicit language authorizing agents to
+    devise idiomatic gestalt fixes / spawn a tangent triumvirate to work AROUND an error or roadblock,
+    rather than stalling — the autonomous-resilience clause.
+5. **Dock-facility + primitive live-test augmentation** — test the current dock facilities + primitives
+   and fold concrete findings to sharpen the waves.
+6. **End-to-end-totality exhortation** — the §21 one-shot-full-deploy framing is woven into the tranche
+   mandate so every agent inherits it.
+7. **Operational / user-gate audit** — §21 above.
+
+## §23 SLIDES til-briefing — live-feedback items (new — 2026-06-08, fold non-duplicatively)
+
+From a live review of slides.friday.institute/til-briefing (currently 7 slides; screenshot of #6).
+Fold idiomatically into the AX slides waves (W30 constellation, W31 content/visual, W32 deploy) —
+CHECK non-duplication against §12 + §20 first (some may already be specced). NEVER touch
+`src/decks/feedback-coder/` (the active session's WIP). These are til-briefing-deck items.
+
+1. **Xray slide (#6) — two-column desktop layout.** The xray live-window slide ("A live window into
+   the model, working in the open") must be a proper TWO-COLUMN layout on desktop — the xray PORTAL
+   (the browser-framed xray.friday.institute embed) on the RIGHT, the heading + descriptive copy on
+   the LEFT. Currently the portal spans full width below the text (negative-space-heavy — ties to the
+   §12 "too much negative space" + "xray full-height" items; reconcile, don't duplicate).
+2. **Slide ORDERING.** Verify the slide order is correct. #5 reads like it might belong LAST (a
+   conclusion-class slide). If #5 is NOT last, then why does #7 lack the constellation background? The
+   intent: the closing slide should carry the constellation backdrop. Resolve the ordering so the
+   conclusion slide is terminal + constellation-backed (ties to the §12 "#6 proper conclusion +
+   restructure 5+6" item — reconcile against the now-7-slide reality).
+3. **Constellation TRANSLUCENCY.** The constellation background should be MORE TRANSLUCENT on BOTH
+   light mode and dark mode (currently too present). Distinct from the §12/§16 "not visible ENOUGH"
+   note — reconcile: the bar is the right BALANCE (legible but recessive), tuned per-mode. This is the
+   generalized /constellation visibility/opacity token (AX.W17) consumed by slides.
+4. **Duplicate xray.friday.institute reference.** TWO slides (#5 and #6) both reference "See the live
+   portal at xray.friday.institute". Dedupe the messaging. Slide #6 should carry the proper
+   HYPERLINKS to xray.friday.institute (clickable, not just text) AND be befittingly X-RAY STYLED —
+   the x-ray visual treatment applies to slide #6 ONLY (not #5, not the deck globally).
+
+Routing: #1 (two-col xray) + #4 (hyperlinks + xray-styling slide-6-only) → W31 (slides visual/content);
+#2 (ordering + terminal-constellation slide) → W31 (content restructure); #3 (constellation
+translucency per-mode) → W17 (the /constellation opacity token) + W30 (slides adopts). The xray-styled
+slide-6 treatment may need a glass-ui idiom (an "x-ray panel" surface) if it recurs — else slides-local.
+
+## §24 SHARED-STATE RECONCILIATION — the I-session 3.7.0 publish (2026-06-08)
+
+The feedback-coder/slides session (Tranche I) FINISHED + shipped while AX spec-dev was in flight.
+Reconciliation facts (ground-truthed from git + npm, NOT trusted from the report):
+
+- **glass-ui 3.7.0 is PUBLISHED (npm latest).** It was tagged + published from the I-session's
+  glass-ui line (`v3.7.0`/`d79091e`), which is a SEPARATE line from this session's AX work. My local
+  `at-dock-convergence` is `cdcf331` (all the batch-1 merges + the full AX spec) and is UNPUSHED —
+  origin/at-dock-convergence is still `246f535`. **The AX spec is intact; the I-session did not touch
+  my working tree.** 3.7.0 shipped "dist/styles/fonts only" per the report — no in-flight AX docs/specs
+  leaked — but `latest` now points at 3.7.0 off that line.
+- **The I-session added glass-ui SOURCE that intersects AX waves — RECONCILE at drive-time, NON-DUP:**
+  (a) **fourier-field is now a first-class glass-ui primitive** (sibling to aurora) on a **useCanvas2D
+  substrate** + a GooBlob color seam (no probe-span, no MutationObserver). This LARGELY BUILDS what
+  AX.W37 (Canvas2D lifecycle substrate) was going to build, and the fourier-field is a NEW primitive
+  the AX storybook IA (W18) must account for. **W37 → verify-not-rebuild** (the substrate may exist);
+  **W18 → include fourier-field in the IA.** (b) The **constellation light-mode red-lattice fix** (the
+  light-dark() Canvas2D hazard recurrence) — overlaps §23.3 (translucency) + §12 (visibility) + AX.W17.
+  **W17 → reconcile against the shipped fix; don't redo; tune translucency on top.**
+- **RELEASE LINEAGE.** AX continues from my `cdcf331` line. When AX lands, integrate the 3.7.0 source
+  deltas (fourier-field/useCanvas2D/constellation-fix) into the AX line, then publish AX's features as
+  3.8.0+ (the §21 end-state publish). The lineage divergence is reconciled by MERGING the I-session's
+  3.7.0 source into the AX line before the AX publish — a drive-time W33/close concern, flagged here so
+  it is not missed. The batch-1 broken-visual material (the black aurora/flooded blob JS) is what AX
+  FIXES; verify 3.7.0 did not ship it live (the "styles/fonts only" claim — confirm at drive-time).
+- **The slides session is DONE** — slides branch `deck/feedback-coder` is shipped + aligned. The
+  cross-session CLOBBER risk is RESOLVED (no longer a live-session collision). AX slides waves (W30-32)
+  now proceed against the landed Tranche-I state; STILL never edit `src/decks/feedback-coder/` (now a
+  shipped deck, the user's), and read `slides/docs/tranches/I/FINAL.md` + `H/FINAL.md` for the real state.
+
+### §20 specular — THIRD live confirmation (2026-06-08)
+
+A third live screenshot (til-briefing-adjacent "Runs locally" glass Card) shows the egregious
+resting-specular bloom — the SAME §20/AX.W09 defect (harsh white center bloom on a resting glass Card
+over a dark backplate). THREE independent confirmations now (USF + keyframes + this). AX.W09 already
+owns the full fix (rest-floor→0 = highest-value, warm-cream low-alpha core, wire-or-omit, the Card
+`specular="off|subtle|full"` prop). No new wave — this RAISES W09's priority to a definite blocker for
+every glass-Card-over-dark consumer, and the `specular="off"` default for data/content backplates is
+the consumer-confirmed resolution (ratify).

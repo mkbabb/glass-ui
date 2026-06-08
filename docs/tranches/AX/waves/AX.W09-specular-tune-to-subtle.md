@@ -1,6 +1,7 @@
 # AX.W09 — Specular tune-to-subtle: warm-cream low-alpha + one token ladder + retire the double-light
 
-**Band** B · GRAPHICS · **Severity** major · **dependsOn** AX.W00 (the π-lane close machinery)
+**Band** B · GRAPHICS · **Severity** blocker (raised from major — THREE live consumer confirmations, §24)
+· **dependsOn** AX.W00 (the π-lane close machinery)
 · **Charter** AX.md §3 (the `### AX.W09` block, lines 618-657) + §4 note 12 (the published-vs-HEAD
 reconcile) + §4 note 2 (the substrate-hygiene `-1000` routing) + §2b band-B precept row · **Audit**
 `deep-audit-corpus.json` slice `graphics-specular-substrate` (index 14, findings F0-F4) + slice
@@ -302,6 +303,49 @@ calmer default and the consumer bumps to the AX publish.
 
 ---
 
+## Live-feedback fold (§23/§24) — THIRD specular confirmation + the `off`-default ratification
+
+REQUIREMENTS §24 records a **THIRD** independent live confirmation (2026-06-08) of the EXACT defect this
+wave already owns — the slides til-briefing-adjacent **"Runs locally" glass Card** screenshot shows the
+egregious resting-specular bloom (a harsh white center bloom on a resting `surface="glass"` Card over a
+dark backplate). This is NOT a new finding and gets **NO new wave** — it is the SAME
+`glass.css .glass-material::before` rest-floor blowout the §20 USF + keyframes hand-offs already routed
+here. **THREE independent consumers now confirm it** (USF flat-data charts + keyframes ~13 glass hosts +
+this slides Card). The fold is two non-duplicative refinements to the EXISTING scope:
+
+1. **Priority RAISE — definite blocker, not "major."** The third confirmation upgrades W09 from a band-B
+   `major` to a **definite blocker for every glass-Card-over-dark consumer**. The slides deck, USF, and
+   keyframes ALL paint a resting `surface="glass"` Card over a dark/aurora backplate, and ALL show the
+   ~0.47 pure-white screen-blend hotspot at rest. The **rest-floor→0** correction (Scope item 3 / HardGate
+   "Rest floor ~0") is the SINGLE highest-value, lowest-risk fix — it cleans every static unwired plate
+   library-wide off ONE token re-baseline, and is the gating fix for the §21 publish hinge (no
+   glass-Card-over-dark consumer reads clean until it ships). The visual-truth live audit's "static plates
+   clean" + "`specular='off'` genuinely clean" criteria are the close-bar for this blocker.
+
+2. **RATIFY the `off`-default for data/content backplates (resolves Open-Question 1).** §24 states the
+   **consumer-confirmed resolution**: `specular="off"` is the default for **data/content backplates** (the
+   `surface="glass"` case that carries charts, metrics, copy — the slides "Runs locally" Card, the USF
+   chart panels, the keyframes settings panels). This is the convergent answer to the wave's own
+   Open-Question 1 (`subtle` vs `off`) — three live consumers all want `off` trivially the default on a
+   content surface. The ratified contract: **`<Card specular>` resolves the default by intent** — a
+   data/content Card (the common case) defaults `off` (zero catch-light, clean over any backplate); a
+   `subtle` lens is the EXPLICIT opt-in for a hero/chrome surface; `full` stays the busy-backdrop case.
+   The token-ladder rest rung still lands at ≈ 0 so even an explicit `subtle` is clean at rest — but the
+   PROP DEFAULT for the content-Card case is `off`, not `subtle`. This closes the J-invariant gap (a
+   resting content panel must be clean WITHOUT a consumer editing library source) the consumer-confirmed
+   way, and is the ratified resolution the implement-lane carries (Open-Question 1's "if `subtle`-at-rest
+   still reads hot over an aurora backdrop, default to `off`" is now SETTLED to `off` by three live
+   confirmations — no need to re-litigate at the live audit).
+
+**Non-duplication note:** the §20 two-consumer hand-off (USF + kf) is ALREADY recorded above (lines
+274-301); this §24 fold adds ONLY the third confirmation's two consequences (the priority raise + the
+`off`-default ratification). It mints NO new token, NO new prop, NO new gate, NO new file beyond what the
+existing scope already specs — the `specular="off"` value, the rest-floor→0, the warm-cream core, and the
+wire-or-omit leg are all already in Scope/FileBounds/HardGate. The third confirmation is a
+priority-and-default ratification, not a scope expansion.
+
+---
+
 ## HardGate (born-RED→GREEN + the MANDATORY VISUAL-TRUTH live audit)
 
 **Headless / runtime gate — born-RED→GREEN.** `proof:glass-material-unified` (EXISTING, re-pointed; the
@@ -504,12 +548,14 @@ Per §2b the band-B binding precepts (pinned `docs/precepts/` @ `63240e6`):
 
 ## Open questions / RATIFY-BEFORE-IMPL
 
-1. **Card `specular` default — `subtle` vs `off`.** The keyframes.js consumer asks for a CLEAN resting panel by
-   default. RATIFY whether `<Card>` defaults `specular="subtle"` (a faint always-available lens) or
-   `specular="off"` (zero catch-light unless opted-in). **Recommendation: `subtle`** with the rest rung at ≈ 0
-   so `subtle` is already clean at rest and only wakes on hover/active — this satisfies the consumer ask AND
-   preserves the lens identity for wired surfaces. Confirm against the live audit (if `subtle`-at-rest still
-   reads hot over an aurora backdrop, default to `off`).
+1. **Card `specular` default — `subtle` vs `off`. RATIFIED → `off` for data/content backplates (§24
+   third confirmation).** The original recommendation was `subtle` with a rest rung ≈ 0; the §24 fold
+   above SETTLES this to **`off`** as the default for the data/content `surface="glass"` Card (the common
+   case — three live consumers confirm a resting content Card must be clean over a dark backplate). A
+   `subtle` always-available lens is the EXPLICIT opt-in for a hero/chrome surface; `full` the
+   busy-backdrop case. The rest rung still lands at ≈ 0 so an explicit `subtle` is clean at rest too — but
+   the PROP DEFAULT for the content Card is `off`. No longer an open question; carried as the ratified
+   contract. (See "Live-feedback fold (§23/§24)" above.)
 2. **Exact subtle magnitudes — the rung set.** The charter recommends rest ≈ 0/0.08 · hover ≈ 0.22 · active ≈
    0.32 (≈ half the present `0.35/0.6/0.85`). RATIFY the final triple against the live audit over BOTH flat and
    aurora backdrops (the magnitude reads differently in each). **Recommendation: rest 0 · hover 0.22 · active

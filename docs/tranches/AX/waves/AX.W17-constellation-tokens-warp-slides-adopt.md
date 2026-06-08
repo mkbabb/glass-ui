@@ -224,6 +224,40 @@ plain-hsl `--constellation-*` tokens (NO `light-dark()` by construction), so the
 COORDINATE, not a hard dependency: if a future token EVER needs `light-dark()` it routes through W37's
 resolver. W17 does NOT edit `useCanvas2D` (W37 owns it).
 
+## Live-feedback fold (§23/§24)
+
+### 7. The `--constellation-alpha` default is RECESSIVE-calibrated per-mode (REQUIREMENTS §23.3; reconciles §12/§16/§24)
+
+§1 above already ships `--constellation-alpha` (the field-yields-to-type knob) as part of the
+`--constellation-*` block — the §23.3 live-feedback item PINS its CALIBRATION TARGET, which §1 did not state.
+§23.3 reads the slides lattice as *"too present"* and asks for *"more translucent on BOTH light + dark,
+legible-but-recessive, the right balance, per-mode."* This is NOT a new token (the mechanism is §1's) — it is
+the DEFAULT VALUE the library ships for the two arms, and the calibration intent that governs it:
+
+- **The library `--constellation-alpha` default is tuned to the legible-but-recessive MIDPOINT, NOT maximum
+  legibility.** The lattice must RECEDE behind type while staying visible on both grounds — neither the §12/§16
+  "not visible ENOUGH" failure (the H.W4 floor problem) NOR the §23.3 "too present" failure. The two arms are
+  per-mode by construction (the `:root` vs `.dark` cascade): a LOWER alpha on light (the cream ground already
+  lifts the node tones, so the field can recede further) + a MODESTLY-HIGHER alpha on dark (the ink ground
+  needs more presence to read at all) — the `.dark` arm is NOT simply `1.0`. The slides values H.W4 landed
+  (`0.92` light / `1.0` dark) are the MAXIMUM-legibility reference; the library default ships BELOW them as the
+  recessive baseline a consumer inherits, so a drop-in `<Constellation>` reads recessive WITHOUT a consumer
+  override.
+- **§24 reconcile — tune ON TOP of the shipped color fix, never redo it.** The I-session 3.7.0 line landed the
+  light-mode `--constellation-line` plain-hex resolved-color fix (`deck.css:279`/`:809` slides-side; W30 lands
+  the library-side `--constellation-line` plain-hsl complement). The §23.3 translucency calibration is the
+  ALPHA channel, ORTHOGONAL to that color/leak fix — it rides on top. W17 does NOT touch the resolved-color
+  fix; it sets the recessive `--constellation-alpha` default + states the per-mode balance intent. (The W30
+  no-`light-dark(`-in-`--constellation-*` static guard already forbids re-introducing the leak through the
+  alpha tokens.)
+- **Non-dup vs §12/§16.** §12.13 + §16 "not visible ENOUGH" and §23.3 "too present" are the SAME knob read at
+  two ends of one calibration — recorded so the recessive default is not mistaken for a regression of the H.W4
+  legibility win. ONE value per arm, tuned to the midpoint.
+
+The slides-side ADOPTION (drop the local `0.92`/`1.0` override or retune it down to inherit/match the recessive
+default) routes to **AX.W31 fold §E** (the slides repo; gated on the AX publish per §4 note 12) — W17 OWNS only
+the library default + the per-mode calibration intent + the README documentation of the recessive balance.
+
 **Explicitly OUT of W17 scope (routes elsewhere):**
 - The slides-side `constellation.ts` DELETION + the slides anomaly drawOverlay skin authoring + the
   `--foreground` light-dark()-into-Canvas2D leak fix at `constellation.ts:107` → **AX.W30** (the slides
@@ -241,10 +275,10 @@ resolver. W17 does NOT edit `useCanvas2D` (W37 owns it).
 
 | File | Edit |
 |------|------|
-| `src/styles/tokens.css` | **ADD** the `--constellation-*` token block — a light arm (`:root`) + a `.dark` arm carrying the H.W4-derived legibility values (`--constellation-node` / `-node-dim` lifted off the dark ground, `--constellation-line`/`-edge` plain-hsl, `--constellation-edge-alpha` / `-edge-anomaly-alpha` / `--constellation-alpha`, a neutral `--constellation-accent` default). PLAIN-hsl, NEVER `light-dark()`. |
+| `src/styles/tokens.css` | **ADD** the `--constellation-*` token block — a light arm (`:root`) + a `.dark` arm carrying the H.W4-derived legibility values (`--constellation-node` / `-node-dim` lifted off the dark ground, `--constellation-line`/`-edge` plain-hsl, `--constellation-edge-alpha` / `-edge-anomaly-alpha` / `--constellation-alpha`, a neutral `--constellation-accent` default). PLAIN-hsl, NEVER `light-dark()`. **§7** the `--constellation-alpha` DEFAULT is calibrated to the legible-but-recessive MIDPOINT per-mode (LOWER on `:root`/light, modestly-higher on `.dark` but NOT `1.0`) — BELOW the slides `0.92`/`1.0` max-legibility reference, so a drop-in consumer inherits a recessive field (REQUIREMENTS §23.3). |
 | `src/components/custom/constellation/constellationField.ts` | Extend `readPalette` to read the FULL token set (`:95-105`); make the paint passes read `var(--constellation-edge-alpha)` / `var(--constellation-alpha)` (replacing the `0.17` `:207` / `0.24` `:252` literals). ADD the focal-node model (`focalIndex` + `warpStep(field, dt)` — the dt-stepped critically-damped integrator, per-axis, dt-clamped) + `nearestNode(field, px, py, excludeIdx)`. Strike the "No node is pinned" comment (`:110`) → the focal node IS pinnable. |
 | `src/components/custom/constellation/Constellation.vue` | ADD the `warpOnClick?: boolean` prop + the `warpTo(point)` / `warpTo(clientX, clientY)` `defineExpose` method (reusing the existing `toLocal` mapping `:145-152` + the host `pointerdown` `:175`); thread `focalIndex` to `drawOverlay`; PRM-gate the warp (the click does not warp under reduced-motion). Step `warpStep` inside the existing `stepField` render hook (`:124` neighborhood). |
-| `src/components/custom/constellation/README.md` | Research-backed canonical-readme-shape rewrite: the token vocabulary + the library-legibility-vs-`--constellation-accent`-preset boundary, the unified focal-warp-and-drift seam (`warpTo` + `warpOnClick` + FORBID-useSpring rationale + the deck-scale `toLocal` mapping + the PRM policy), and the DECORATIVE-not-data-graph non-goal (§4 note 16). |
+| `src/components/custom/constellation/README.md` | Research-backed canonical-readme-shape rewrite: the token vocabulary + the library-legibility-vs-`--constellation-accent`-preset boundary, the `--constellation-alpha` recessive-balance per-mode calibration intent (§7 — legible-but-recessive, not max-legibility), the unified focal-warp-and-drift seam (`warpTo` + `warpOnClick` + FORBID-useSpring rationale + the deck-scale `toLocal` mapping + the PRM policy), and the DECORATIVE-not-data-graph non-goal (§4 note 16). |
 | `src/components/custom/constellation/index.ts` | Co-export any new public type (`ConstellationFocal` / the `warpTo` signature) if the public surface widens (the `/constellation` subpath barrel mirror already re-exports `*`; verify the new symbols ride). |
 | `demo/stories/substrates/constellation.vue` | Add a `warpOnClick` + focal-skin demo section (the click-to-warp visible in the storybook) + the dark/light token-ladder tour; update the stale `:5-6` comment ("slides anomaly-ring deck never delivered" → "slides adopts at AX.W30"). DEMO-private — not a library edit. |
 | `scripts/proof-constellation-tokens.mjs` | **NEW** — the gate: (a) the `--constellation-*` token block is PRESENT with both a `:root` and a `.dark` arm; (b) `readPalette` reads the FULL set (≥6 tokens); (c) **no `light-dark(` substring** inside any `--constellation-*` token declaration (the W30 cardinal-defect static assertion) AND `--constellation-line` is never `var(--foreground)`. |

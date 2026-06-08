@@ -231,9 +231,10 @@ from every other AX wave by REPO.)
 | `src/views/HomeView.vue` | **§3** Per the RATIFIED path: EITHER lift the lock cue to REST (standing glass lock-disc + resting `filter:blur(~1px)` on the card body, PRM-honored, replacing the dead `opacity:0` scrim `:134-144`) OR DELETE the dead scrim + gated branch (the retirement path). |
 | `src/decks/til-briefing/meta.ts` | **§3** IF re-gating a demonstrator: a sibling demo/`_fixture` deck's meta flips `softGated:true` (NOT til-briefing — `:16` stays `false`, public). IF retiring: no edit (or remove the now-dead `softGated`/`protected` fields per excise). |
 | `src/views/DeckGate.vue` | **§4** Pin `color-scheme` (+ `.dark`) on the teleported `DialogContent` root; warm+blur the `DialogOverlay`; raise `.deck-gate` text-align specificity; add the floating shadow + lock-disc highlight. OR DELETE entirely (retirement path). |
-| `src/styles/deck.css` | **§4** The `:global()`/§8 portal-pierce for the `DialogOverlay` warm-glass restyle (the ONE existing global reach the modal scheme-fix extends). **§5** the `--marker-*`/`--chart-min-h` recipes are PRESERVED (no edit) — the guards assert ON them. |
+| `src/styles/deck.css` | **§4** The `:global()`/deck.css-§8 portal-pierce for the `DialogOverlay` warm-glass restyle (the ONE existing global reach the modal scheme-fix extends). **§5** the `--marker-*`/`--chart-min-h` recipes are PRESERVED (no edit) — the guards assert ON them. **fold §E** retune (or drop) the slides-local `--constellation-alpha` override (`:237` light / `:793` dark) DOWNWARD to the W17 recessive legible-but-recessive balance; the §24 `--constellation-line` plain-hex fix (`:279`/`:809`) stays UNTOUCHED. |
 | `src/decks/til-briefing/slides/SlideXray.vue` | **§7** verify-only + the xray negative-space/density pass (the aw-delivery fold) IF the live audit flags density; the Open-AI-XRAY button is already gone (verify). |
-| `src/decks/til-briefing/slides/SlideConclusion.vue` | **§7** verify-only; trim the minor proof-lockup/track-record copy redundancy if the live audit flags it. |
+| `src/decks/til-briefing/slides/SlideConclusion.vue` | **fold §D** ADD the RESOLVED constellation backdrop canvas (the `data-constellation data-resolved data-anomaly` markup + the `.scatter` mask recipe ported from Slide10, retuned for the two-column lede-grid dead space) so the terminal ask slide carries the bookend. **§7** verify-only; trim the minor proof-lockup/track-record copy redundancy if the live audit flags it. |
+| `src/decks/til-briefing/slides/Slide10.vue` | **fold §B** REMOVE the `.land__link` xray reference (the dedup). **fold §D** REMOVE the RESOLVED constellation backdrop (`:14-18` canvas + `:97-105` `.scatter` recipe) — the bookend moves to SlideConclusion (#7); #5 reverts to a clean recap (or a quieter field — live-audit decides). |
 | `src/decks/til-briefing/slides/SlideNutrition.vue` | **§6 DELETE** (the orphan; back out the H.W10 edits). |
 | `tests/e2e/mobile-reflow.spec.ts` | **§5** EXTEND with the unreset-`calc(N*var(--cqx))` (N≥24, unfloored, portrait `@container`) lint + the chart/graph min-height starvation guard (≥80px at 390/768/1280). (This spec was AUTHORED by H but UNRUN — W30 executes it; W31 extends the guards.) |
 | `docs/tranches/{E,F,H}/**/*.md` (the leak set) | **§6** REDACT `wolfpack-ledger-2026` → `<ACCESS_KEY>` + a `.env` pointer (security; may be W30's if promoted there). |
@@ -503,3 +504,187 @@ Per §17.2 + the §2b band-L precept row, W31 is pursuant to `docs/precepts/` (p
   begotten-workflow voice, em-dashes without spaces, plain register, no grandiloquence) — the user's supplied
   what-if sentence is a DIRECTION, not verbatim copy to paste. MUST NOT VIOLATE: the deck's voice + the
   red-discipline (the $5M is the single focal event).
+
+---
+
+## Live-feedback fold (§23/§24)
+
+Folds REQUIREMENTS §23.1 + §23.4 (the live-review xray items, 2026-06-08) into this wave's XRAY scope.
+The slice's ground-truth slide map (deck.ts manifest order): #5 = `Slide10.vue` (teach-to-fish close), #6
+= `SlideXray.vue` (the transparency portal), #7 = `SlideConclusion.vue`. RECONCILED against §3.7's existing
+verify-only XRAY line + §12 (xray-own-slide / full-height-mobile / negative-space / Open-AI-XRAY-button) +
+§20 + §24 — the genuinely-NEW residue below is what §3.7 does NOT yet specify; the rest is already owned.
+
+**ALREADY ADDRESSED here / elsewhere (do NOT re-fold).**
+- *XRAY is its own slide; no Open-AI-XRAY button; full-height mobile flex-fill* — §12 items, MET by G.W5 +
+  H.W7/W8 at HEAD, carried in §3.7 as verify-only (the `@container (width<700px)` `aspect-ratio:auto +
+  min-height:48cqh` block, `SlideXray.vue:272-299`; grep confirms NO "Open AI XRAY" launch button survives —
+  the portal window IS the launch). KEEP as §3.7 verify-only.
+- *xray negative-space/density pass (desktop)* — §3.7 already routes "add the xray-slide negative-space/
+  density pass IF the live audit flags density." §23.1 makes the density fix CONCRETE (the two-column
+  restructure, below) — this REPLACES the vague §3.7 density line with a specified gestalt, not a new task.
+- *constellation translucency per-mode (§23.3)* — owned by AX.W17 (the `--constellation-*` opacity token) +
+  AX.W30 (slides adopts). NOT this slice.
+- *slide ordering / terminal-constellation (§23.2)* — the 7-slide order is correct at HEAD (Conclusion is
+  terminal #7); the §23.2 ordering reconcile is the W31 conclusion-restructure concern, not the xray slice.
+- *the StatusDot live-pulse dedup* — the W30 `dedup-pulse.spec.ts` covers the PULSE-DOT single-sourcing; it
+  is a DIFFERENT "dedup" from the §23.4 URL-reference dedup below.
+
+**ROUTING DETERMINATION — x-ray-panel: SLIDES-LOCAL, not a glass-ui idiom.** §23 asks whether the xray-styled
+faux-browser surface should become a glass-ui "x-ray panel" primitive. It must NOT. The faux-browser-window
+chrome (`.window` / `.window__bar` / traffic-light dots / `--portal-*` tokens) recurs in EXACTLY ONE place:
+`SlideXray.vue` + its `--portal-*` token block in `deck.css`. Zero occurrences in glass-ui `src/`, zero other
+slides consumers (`grep -rln "window__bar\|faux-browser\|portal-window"` = the one slide + deck.css only). Per
+the visual-load-bearing-ness invariant (J inv-10 / L inv-8 — a primitive ships only at ≥2 consumers or is
+retired with rationale), a single-consumer deck chrome is slides-LOCAL deck decoration, not a library
+primitive. NO route to W18 (storybook IA) or W21 (primitive-additions). If a SECOND consumer ever wants the
+faux-browser frame, THEN it earns a glass-ui census — flagged for the W34 cross-consumer ledger as a watch
+item, not built now. (This mirrors §3.4's generic-portal-scheme-helper handling: fix the slides instance, do
+not over-abstract into the library.)
+
+### Fold §A — Slide #6 (SlideXray) desktop TWO-COLUMN layout (§23.1, MAJOR — replaces the vague §3.7 density line)
+
+The xray slide reads negative-space-heavy on desktop because it is a STACKED column: `.xray__intro` (head +
+copy) ABOVE → `.xray__bar` heavy rule → `.xray__stage` full-width portal BELOW (`SlideXray.vue:157-195`). The
+intro `display:grid; grid-template-columns:1.1fr 1fr` only splits the HEAD from the SUB within the intro band
+— the portal still spans full width underneath, pooling dead space. The user's directive: a proper
+TWO-COLUMN DESKTOP layout — the portal PORTAL on the RIGHT, the heading + descriptive copy on the LEFT. The
+gestalt fix (idiomatic, not a one-off): restructure the slide body as a desktop two-column grid
+(`grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr)` — copy-left subordinate, portal-right dominant)
+with the header spanning both columns; the LEFT column carries `.xray__intro` (head + sub stacked vertically,
+not the current side-by-side intra-intro split) + the `.xray__bar` rule as a left-column accent; the RIGHT
+column carries `.xray__stage` portal HERO filling the column height. This eliminates the negative space by
+giving the portal a tall right column rather than a short full-width band, and reads as the canonical
+"feature + framing copy" editorial two-up. The `@container (width<700px)` portrait block ALREADY collapses to
+single-column flex-fill (§3.7 verify-only) — the two-column rule is the DESKTOP `@container (width≥700px)`
+default; the portrait stack is preserved unchanged. Every axis stays on the deck's `--cqx` / `--space-*` /
+`--portal-*` token grammar (no new magic numbers — the column ratio + gaps are the only new tokens, deck-local).
+
+### Fold §B — DEDUP the duplicate xray.friday.institute reference (#5 vs #6) (§23.4)
+
+`grep` confirms TWO slides reference the live portal URL: **#5 `Slide10.vue:66`** (*"See the live portal at
+xray.friday.institute"* — a hyperlinked `.land__link <a>`) AND **#6 `SlideXray.vue:83,118`** (the intro
+*"Open xray.friday.institute"* + the faux-browser address-bar `xray.friday.institute`). The xray slide (#6) IS
+the portal's home; #5's inline link is redundant messaging now that the portal has its own slide
+(`Slide10.vue:6-7` even comments *"The XRAY transparency portal is its OWN slide now — here it is demoted to
+one inline link"* — the demotion-to-link was the half-measure). The gestalt dedup: REMOVE the `.land__link`
+xray reference from `Slide10.vue` (the close lands on the teach-to-fish statement + sign-off; the portal CTA
+belongs to #6, one slide later). The xray URL is then referenced ONCE in the narrative-CTA register — on
+slide #6 where it is the subject. (NOTE the THIRD hit `SlideNutrition.vue:181` `method · xray.friday.institute`
+dies with the §6 SlideNutrition deletion — no separate action.)
+
+### Fold §C — Slide #6 proper hyperlinks (all render states) + x-ray styling slide-6-ONLY (§23.4)
+
+The xray-styling treatment is ALREADY substantially present on #6 (the `--portal-*` faux-browser chrome, the
+dark-by-composition window, the lock glyph, the LIVE/PREVIEW StatusDot) — and it is correctly scoped to #6
+ONLY (the chrome is `SlideXray.vue`-scoped `<style scoped>`, not deck-global). So "x-ray styled, slide-6-only"
+is MOSTLY MET — verify-live it reads as a coherent x-ray treatment after the §A two-column restructure (the
+chrome must survive the right-column reflow). The genuinely-NEW residue is the HYPERLINK reliability: today the
+address-bar URL is a real `<a>` ONLY in the `liveFrame` branch (`SlideXray.vue:109-119`); in the poster/coarse
+state the addr is a `<span>` and the WINDOW is the launch `<a>` (to avoid a nested anchor). The §23.4 "proper
+HYPERLINKS (clickable, not just text)" ask is SATISFIED in both states (window-as-launch in poster, addr-as-
+link when live) — the verify-only task is to CONFIRM the link is operable + visibly affordant (cursor, hover,
+focus-visible) in ALL THREE render states (live / poster-desktop / poster-coarse), since the live-feedback
+screenshot was a desktop poster where the clickability must read. No structural change needed unless the live
+audit finds the poster-window affordance unclear; if so, ADD a visible "open in new tab" arrow glyph to the
+poster window-bar (matching `Slide10.vue:67`'s `.land__link-arr` vocabulary, now FREED by the §B dedup) so the
+launch affordance reads without hover. This is the durable cross-state affordance, not a one-off.
+
+### Fold §D — Slide ORDERING: the terminal slide must be constellation-backed (§23.2 — the conclusion-restructure residue §A's routing table handed here; reconciles §12.4)
+
+The §A xray slice (above) correctly routed §23.2 to "the W31 conclusion-restructure concern, not the xray
+slice" — this fold OWNS it. A live review of the now-7-slide deck surfaces an ordering/backdrop incoherence
+the verify-only §7 CONCLUSION note did NOT catch. Ground-truthed from `src/decks/til-briefing/deck.ts:28-36`,
+the manifest order is: Slide01 (cover) · Slide04 (problem) · Slide08 (operating model) · Slide09
+(audit→monitoring) · **Slide10 (#5)** · **SlideXray (#6)** · **SlideConclusion (#7)**. The defect is the
+constellation BACKDROP placement, NOT a re-sequence:
+
+- **Slide10 (#5) reads conclusion-class but is NOT terminal, AND it is the ONLY late slide carrying the
+  constellation.** Its header comment (`Slide10.vue:4`) literally calls it "a single-column **close**"; it
+  signs off with a `<PresenterCard variant="close" tag="Presented by">` and carries the RESOLVED constellation
+  (`Slide10.vue:14-18` — `data-constellation data-resolved`, the "found · contained" bookend to the cover).
+  That is why §23.2 reads "#5 reads like it might belong LAST." But #5 is a content recap (teach-to-fish), not
+  the ask — the deck deliberately lands the ASK last (SlideConclusion #7, the G.W5 restructure choice). So the
+  FIX is NOT to move #5 to the end; the fix is the BACKDROP.
+- **SlideConclusion (#7) — the true terminal slide — carries NO constellation** (`grep -c
+  "constellation\|scatter" SlideConclusion.vue` = 0). It signs off with its own `<PresenterCard
+  variant="close" tag="Let's talk">` but the cover↔close constellation bookend dies one slide short of the
+  real close. §23.2's intent: *the closing slide should carry the constellation backdrop* — and it is the
+  wrong slide that has it.
+
+**The gestalt fix (idiomatic — the constellation is a deck-private backdrop motif driven off the manifest, not
+per-SFC ad-hoc):** MOVE the RESOLVED constellation bookend from Slide10 (#5) ONTO SlideConclusion (#7), so the
+cover's anomaly-found motif (Slide01 `data-constellation`) RESOLVES on the terminal ask slide (the
+"found · contained" payoff lands where the deck closes). Slide10 (#5) reverts to a clean recap without the
+backdrop (it is no longer the bookend) — or keeps a quieter field; the live audit decides which reads better,
+but the RESOLVED bookend belongs on #7. This reuses the EXISTING `data-constellation data-resolved
+data-anomaly` attribute contract the `constellation.ts onMount` scanner already drives (`deck.ts:38-41`
+`createConstellations(root)` → the per-canvas attribute reader) — **no new mechanism**, the canvas markup
+moves SFCs. The `.scatter` mask/positioning recipe (`Slide10.vue:97-105`) ports with it, retuned for the
+Conclusion's two-column lede-grid dead space (mask off the type, seed the resolved anomaly clear of the `.cta`
+and `.next` columns) — the same `-webkit-mask-image` linear-gradient idiom, not a new approach. The
+RED-discipline holds: ONE resolved anomaly, recessive behind the ask. **COORDINATES with §B** (both edit
+`Slide10.vue`: §B removes the `.land__link` xray reference, §D removes the `.scatter` constellation canvas —
+different blocks, one file, sequenced). **Reconciles §12.4** ("#6 proper conclusion + restructure 5+6" against
+the now-7-slide reality): the conclusion IS proper (SlideConclusion exists, the G.W5 5+6 restructure landed);
+the residual §12.4 left unfinished is the constellation-backdrop placement on the terminal slide, not a fresh
+restructure.
+
+### Fold §E — Constellation translucency: slides adopts the recessive per-mode override (§23.3 — the slides-side leg of W17's library token)
+
+The §23.3 *"more translucent on BOTH light + dark, legible-but-recessive, the right balance, per-mode"*
+calibration is the GENERALIZED `--constellation-alpha` field-dimmer token. **AX.W17 OWNS the library-side
+token + its recessive DEFAULT calibration** (W17 fold §7); this fold is the SLIDES-SIDE adoption (the §A
+routing table's "W17 + W30" disposition, sharpened to a concrete W31 slides edit). The deck currently sets
+`--constellation-alpha: 0.92` (light, `deck.css:237`) / `1.0` (dark, `deck.css:793`) — values H.W4 tuned for
+MAXIMUM legibility, which §23.3 now reads as "too present." Per W17's recessive recalibration, slides either
+(a) DROPS its local `--constellation-alpha` override and inherits the library's recessive default, or (b)
+retunes the override DOWNWARD per-mode to the legible-but-recessive balance (lower on light where the cream
+ground already lifts the lattice; a smaller drop on dark where the ink ground needs more presence). This is a
+TUNE on the EXISTING token — the §24 I-session light-mode fix (`--constellation-line: #1c1815` light /
+`#e8e6df` dark, plain-hex) stays UNTOUCHED; translucency rides ON TOP of the resolved-color fix, never redoes
+it. The per-mode balance is a live-audit judgment captured in the BEFORE/AFTER matrix (the lattice recedes
+behind type yet stays visible on both grounds — neither the invisible-on-dark §12/§16 failure NOR the
+too-present §23.3 failure).
+
+> **NON-DUP note (§23.3 vs §12/§16).** §23.3 is the INVERSE-balance refinement of the §12/§16 "not visible
+> ENOUGH" direction, not a contradiction: §12/§16 lifted the lattice off the perceptual floor (the H.W4
+> legibility win); §23.3 says the lift over-shot to "too present" and asks for the recessive balance. ONE token
+> (`--constellation-alpha`), tuned to the legible-but-recessive midpoint per-mode — recorded so a future pass
+> does not see them as opposed asks.
+
+### Routing summary
+
+| §23/§24 item | Disposition | Owner |
+|------|------|------|
+| §23.1 xray desktop two-column (portal-right / copy-left) | NEW — fold §A (replaces §3.7 vague density line) | **W31** |
+| §23.4 dedup `xray.friday.institute` #5 vs #6 | NEW — fold §B (remove Slide10 `.land__link`) | **W31** |
+| §23.4 slide-6 hyperlinks (all states) | verify-only + conditional poster-arrow (fold §C) | **W31** |
+| §23.4 x-ray styling slide-6-ONLY | already MET (`SlideXray` scoped `--portal-*` chrome) — verify-live | **W31** |
+| x-ray-panel-as-glass-ui-idiom | NO — single-consumer, slides-local (J inv-10 / L inv-8); watch-flag for W34 | — |
+| §23.3 constellation translucency per-mode | library token + recessive default → **W17 fold §7**; slides adopts → NEW **fold §E** | W17 + **W31 §E** |
+| §23.2 slide ordering / terminal-constellation | NEW — fold §D (move the RESOLVED constellation bookend from #5 onto #7) | **W31 §D** |
+| §12 xray-own-slide / full-height-mobile / no Open-AI-XRAY button | already MET (G.W5 + H.W7/W8) — verify-only | W31 §3.7 |
+
+**FileBounds delta (additive to the §FileBounds table — reflected in the table rows above):** `Slide10.vue`
+GAINS a §B edit (remove the `.land__link` block + its `.land__link*` scoped CSS + the now-unused `XRAY_URL`
+const) AND a §D edit (remove the `.scatter` RESOLVED constellation canvas `:14-18` + its `:97-105` recipe);
+`SlideConclusion.vue` GAINS the §D RESOLVED constellation backdrop (the ported `data-constellation
+data-resolved data-anomaly` canvas + `.scatter` mask, retuned for the lede-grid dead space); `SlideXray.vue`
+GAINS the §A two-column desktop `@container` grid restructure + the §C conditional poster-arrow; `deck.css`
+GAINS the §E `--constellation-alpha` recessive retune (`:237` light / `:793` dark — the §24
+`--constellation-line` color fix at `:279`/`:809` stays untouched). All are `~/Programming/slides` files
+already in scope class (no glass-ui `src/` touched). The §A/§B/§C/§D/§E edits ride the existing §7 XRAY +
+CONCLUSION verify-only lines — they SHARPEN them from "verify + maybe density" to the concrete two-column +
+dedup + hyperlink-affordance + terminal-constellation + recessive-translucency gestalt.
+
+**HardGate delta:** the live render-matrix audit (the §HardGate VISUAL-TRUTH pass) gains: (1) the xray slide
+reads as a balanced two-column on desktop (portal-right, copy-left, NO negative-space band) at 1280×720 +
+the export frame, light AND dark; (2) `grep -c "xray.friday.institute" Slide10.vue` = 0 after the dedup (the
+URL is referenced ONCE in the narrative, on #6); (3) the #6 portal launch is operable + visibly affordant in
+all three render states; (4) the TERMINAL slide (SlideConclusion #7) carries the RESOLVED constellation
+backdrop and Slide10 (#5) no longer does — `grep -c "data-constellation" SlideConclusion.vue` = 1, `= 0` on
+`Slide10.vue` — and the live audit reads the cover↔close bookend resolving on the real close (§D); (5) the
+constellation reads legible-but-recessive on BOTH light and dark — recedes behind type yet visible, neither
+invisible-on-dark nor too-present (§E), at ≥3 viewports × light/dark. The portrait single-column flex-fill
+(§3.7) is unregressed.
