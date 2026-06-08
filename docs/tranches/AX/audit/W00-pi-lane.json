@@ -1,0 +1,115 @@
+{
+  "wave": "AX.W00",
+  "title": "visual-runtime (π) lane — the fail-CLOSED gate-philosophy foundation",
+  "status": "complete",
+  "baseSha": "6f452cec913f6f4c0a19eb3ffb794b7b4001898f",
+  "ratifyBeforeImpl": {
+    "workspaceLocation": "tests-visual/ (a package.json workspaces member; private:true; OFF the published dist/exports surface)",
+    "headlessDevice": "Chrome-headless-new — Playwright's bundled Chromium in the new headless mode, carrying BOTH a WebGL2 backend (ANGLE → SwiftShader software-rasterizer, deterministic on a GPU-less runner) AND a WebGPU backend (Dawn). Launch flags: --headless=new --use-gl=angle --use-angle=swiftshader --enable-unsafe-swiftshader --enable-unsafe-webgpu --enable-features=Vulkan --ignore-gpu-blocklist.",
+    "rationale": "The aurora WebGL2 + blob WebGL2 surfaces need a real device backend; the SwiftShader software GL gives a deterministic paint on a GPU-less CI runner. The demo dev server already serves the routes. A single headless device covers both the WebGL2 floor (W08) and the WebGPU arm (W07).",
+    "demoOrigin": "http://127.0.0.1:5173 — what `npm run dev` (bare vite) actually serves; standardized away from the legacy 5175 default in proof-dock-animation-live.mjs (now 5173, overridable via GLASS_UI_DEMO_URL)."
+  },
+  "publishSurfaceIntact": {
+    "resolution": "PASS — proof:resolution (contract-v2 dev-resolution) satisfied; the tests-visual workspace did not perturb the exports/dist surface",
+    "vueuseFreeRootSourceArm": "PASS — proof:vueuse-free-root SOURCE reach to @vueuse is 'none ✓'; the dist-floor tier needs a build (dist/ is gitignored, absent in the agent sandbox — a build-state condition, not a regression)",
+    "libraryTypecheck": "PASS — vue-tsc --noEmit clean; tests-visual is outside src/ and does not affect the library typecheck",
+    "testsVisualReachableFromSrc": false,
+    "note": "tests-visual is referenced by NO src/ file; the library dependencies/peerDependencies are untouched; @playwright/test is a tests-visual devDependency ONLY."
+  },
+  "gatesErected": [
+    {
+      "id": "proof:gate-script-parity",
+      "kind": "device-free meta-gate (FS/JSON bijection)",
+      "tags": ["local", "ci"],
+      "greenAtHead": true,
+      "redWitnessProven": true,
+      "redWitnessMethod": "Removed the proof:naming-consistency registration from package.json (its proof-naming-consistency.mjs exists + is not allowlisted) → gate went RED ('orphan proof script: scripts/proof-naming-consistency.mjs has NO proof:* package.json registration'), exit 1. Restored → GREEN, exit 0.",
+      "greenResult": "NEW orphan scripts: 0; known-orphan baseline: 6 (AW fleet, owner-owed); NEW dangling refs: 0; known-dangling baseline: 2; gates.mjs ghost cmds: 0; status PASS exit 0."
+    },
+    {
+      "id": "proof:dock-animation-live",
+      "kind": "PROMOTED fail-open SKIP → fail-CLOSED; device-free token-peak secondary + live-rAF arm in tests-visual",
+      "tags": ["local", "ci"],
+      "tokenPeakSecondary": {
+        "deviceFree": true,
+        "parsedPeak": 1.04501,
+        "ceil": 1.051,
+        "publishedBaseline": "(0.32, 0.7), analytic overshoot exp(-ζπ/√(1-ζ²)) ≈ 0.046 (+4.6%)",
+        "greenAtHead": true,
+        "redWitnessProven": true,
+        "redWitnessMethod": "Temporarily retuned --spring-dock's 18.367% stop from 1.04501 → 1.18000 (the playful +18% register) → token-peak went RED ('--spring-dock peak stop 1.18 exceeds the published (0.32,0.7) ~+4.6% baseline ceil 1.051'), exit 1. Restored tokens.css byte-clean → GREEN."
+      },
+      "failClosedPromotion": "When the tests-visual π workspace carries an installed @playwright/test (the device present), an unreachable demo / missing morph exits NON-ZERO — never SKIP-with-EXIT=0. The befitting-silent SKIP stays ONLY for the genuine no-π-workspace device-absence. The live-rAF behavioral truth lives in tests-visual/dock-animation-live.spec.ts.",
+      "detectorUnitTests": "tests/components/custom/dock/dock-animation-live.detect.test.ts — 14/14 PASS after the modification (the existing exports are backward-compatible)."
+    },
+    {
+      "id": "proof:substrate-paints-color",
+      "kind": "device readPixels (aurora interior non-black + blob non-flood band); device-free SKIP-when-workspace-absent",
+      "tags": ["local", "ci"],
+      "spec": "tests-visual/substrate-paints-color.spec.ts",
+      "sandboxBrowserRan": false,
+      "note": "The readPixels arm requires a real browser the agent sandbox lacks; AUTHORED + JSON-validated here, EXECUTED on the real device by the orchestrator. The driver (scripts/proof-substrate-paints-color.mjs) is fail-CLOSED when the workspace is present, befitting-silent SKIP when the device is absent."
+    }
+  ],
+  "readPixelsBaselines": {
+    "aurora": {
+      "selector": "canvas.aurora-canvas",
+      "route": "/substrates/aurora",
+      "namedRegion": "central interior inset 0.2 (the central 60% box, avoiding the edge cross-fade)",
+      "assertion": "maxChannel > 0 over the interior for DEFAULT config + EACH of the 12 demo presets at t=1 (the non-black luma floor)",
+      "presetKeys": ["OPENAI_SKY","OPENAI_DAWN","OPENAI_MEADOW","DELIBERATIVE","DAY9_YELLOW","OIL_IMPASTO","OIL_GESTURAL","OIL_VANGOGH","CRAYON_SUNSET","CRAYON_RAINBOW","CRAYON_OCEAN","SPEEDTEST"],
+      "presetKeysReSourced": "re-sourced from demo/stories/aurora/presets.ts (PRESETS object) by static parse — 12 keys, anti-drift",
+      "antiFlake": "3-run named-region baseline; verdict = median over 3 readbacks"
+    },
+    "blob": {
+      "selector": "canvas[data-testid=\"goo-blob-canvas\"]",
+      "route": "/substrates/goo-blob",
+      "config": "BLOB_CONFIG_DEFAULTS (mounted directly by the story — zero extra wiring)",
+      "assertion": "the LOOSE non-flood opaque-fraction band 0.10–0.70 of the canvas (transparent margin survives — catches BOTH the flood→1 and the blank→0)",
+      "subsetRelation": "W08's TIGHT droplet band 0.25–0.6 is a strict SUBSET of this LOOSE 0.10–0.70 floor (subset-consistent by construction)",
+      "frames": 6,
+      "antiFlake": "3 runs × 6 frames; verdict = median of the per-run peak opaque fraction"
+    }
+  },
+  "scenesReSource": {
+    "method": "static parse of the s(\"cat\",\"id\",…) call sites in demo/stories/manifest.ts (the manifest is import.meta.glob + lucide-bearing → browser-resolved; a Node import would pull a Vite-only graph). NOT a hand-list (keyframes I-1/I-2 anti-drift mandate).",
+    "scenesParsed": 132,
+    "targetsResolved": {
+      "aurora": "/substrates/aurora",
+      "blob": "/substrates/goo-blob",
+      "dock": "/navigation/dock"
+    }
+  },
+  "pendingBrowserVerify": {
+    "note": "The 7 AW PENDING browserVerify items, ENUMERATED as named re-probe obligations (the 'no silent deferrals' edict). Each carries an owner wave + a verdict ∈ {re-probed, pending-re-probe}. At W00 close NONE is yet re-probed on the real device (the per-surface fixes land in W07/W08) — so each is pending-re-probe with its owner.",
+    "rows": [
+      { "awWave": "AW.W4", "surface": "aurora", "ownerWave": "AX.W07", "verdict": "pending-re-probe", "obligation": "aurora interior paints non-black across all presets at t=1 (black-canvas class)" },
+      { "awWave": "AW.W6", "surface": "aurora", "ownerWave": "AX.W07", "verdict": "pending-re-probe", "obligation": "aurora medium transposition renders distinctly live (not CPU-oracle equivalence only)" },
+      { "awWave": "AW.W7", "surface": "aurora", "ownerWave": "AX.W07", "verdict": "pending-re-probe", "obligation": "aurora impasto relight + specular not blown-out live (over-bright specular class)" },
+      { "awWave": "AW.W8", "surface": "aurora", "ownerWave": "AX.W07", "verdict": "pending-re-probe", "obligation": "aurora cursor swirl/warp paints a live interaction delta (not a static frame)" },
+      { "awWave": "AW.W9", "surface": "blob", "ownerWave": "AX.W08", "verdict": "pending-re-probe", "obligation": "blob metaball paints a contained non-flood droplet live (not black, not flooded)" },
+      { "awWave": "AW.W10", "surface": "blob", "ownerWave": "AX.W08", "verdict": "pending-re-probe", "obligation": "blob pointer interaction (spring follow + pseudopod trail + click impulse) paints a live delta" },
+      { "awWave": "AW.W11", "surface": "blob", "ownerWave": "AX.W08", "verdict": "pending-re-probe", "obligation": "blob mood/palette renders distinct moods live (not CPU-oracle equivalence only)" }
+    ]
+  },
+  "standingRoadblocks": {
+    "note": "Pre-existing AW breakages the W00 meta-gate CAUGHT at HEAD (NOT introduced by W00). Recorded as owed to their owner waves for orchestrator triumvirate dispatch — fixing each is OUT of W00 FileBounds (it touches other waves' deliverables / src/).",
+    "orphanProofScripts": [
+      { "file": "scripts/proof-affordance-contrast.mjs", "owner": "AW.W13" },
+      { "file": "scripts/proof-composable-return-types.mjs", "owner": "AW.W15" },
+      { "file": "scripts/proof-datatable-split.mjs", "owner": "AW.W14" },
+      { "file": "scripts/proof-deck-progress-rail.mjs", "owner": "AW.W16" },
+      { "file": "scripts/proof-dock-big-dock.mjs", "owner": "AW.W3b" },
+      { "file": "scripts/proof-glass-panel-tiers.mjs", "owner": "AW.W12" }
+    ],
+    "danglingProofRegistrations": [
+      { "script": "proof:styling-hygiene", "missingFile": "scripts/proof-styling-hygiene.mjs", "owner": "AW.W20", "severity": "CRASHES — `npm run proof:styling-hygiene` is module-not-found; it is a gates.mjs ci-tagged row, so CI runs a crashing gate" },
+      { "script": "proof:glass-card-tiers", "missingFile": "scripts/proof-glass-card-tiers.mjs", "owner": "AW.W12" }
+    ],
+    "verifyCiDrift": {
+      "note": "gates:verify-ci is ALREADY RED at the base (pre-existing) — 5 manifest ci-tagged gates have no matching ci.yml step. W00's own 3 gates ARE correctly wired in both gates.mjs and ci.yml; these 5 are independent pre-existing drift.",
+      "missingFromCiYml": ["proof:constellation-substrate-single","proof:canvas2d-substrate","proof:constellation-field","proof:input-invalid-aria","proof:styling-hygiene"]
+    }
+  },
+  "liveVerifyHandoff": "The orchestrator runs the live readPixels + rAF-morph arms on the real Chrome per liveVerifyRecipe (see W00 BUILD structured output). The agent sandbox has no browser binary — the pixel gates were AUTHORED + JSON-validated here, not executed."
+}
