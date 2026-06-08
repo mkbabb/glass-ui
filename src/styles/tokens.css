@@ -219,17 +219,40 @@
        Breathing rhythm for `<Pulse variant="aura">`. The 6s duration is the
        canon ambient-pulse rate; scale 1.0 ↔ 1.15 reads as a quiet halo at
        intensity="normal" (Pulse remaps min/max from its `intensity` prop).
-       The aura always keeps a visible halo at the trough (opacity min 0.55).
        Reduced motion: Pulse.vue parks at the min stop, breath cycle disabled.
-       ═══════════════════════════════════════════════ */
+
+       AX.W57 (P6) — the aura re-baselined from a glowing DISC to an AMBIENT
+       halo. The egregiousness was doubly-stacked: a 0.55-density currentColor
+       radial multiplied by an element opacity the `ambient-pulse` keyframe
+       drove up to 0.95 mid-breath (so a saturated viz hue read as a near-
+       opaque throbbing blob). The fix is two decoupled, single-source knobs:
+         · `--pulse-aura-strength` (0..1) — the ONE gradient-density scalar
+           both color-mix stops derive via calc() (replaces the
+           `--pulse-aura-opacity-pct` / `-pct-num` twin desync trap — the
+           percent and the raw number had to be hand-kept in sync).
+         · `--pulse-aura-breath-{min,max}` — the aura's OWN element-opacity
+           range, decoupled from the shared `--pulse-aura-opacity-*` shimmer
+           tokens (those stay 0.55/0.95 for the neutral skeleton-breath, where
+           a grey shimmer at that range is the correct soft swell).
+       The loud old read is the explicit `intensity="vivid"` opt-in. */
     --animate-ambient-pulse-duration: 6s;
     --animate-ambient-pulse-scale-min: 1.0;
     --animate-ambient-pulse-scale-max: 1.15;
     --animate-ambient-pulse-easing: var(--ease-apple);
 
-    /* Aura opacity range — keep the trough visible (the colour reads
-       at every phase of the cycle). Consumers may override per site
-       (e.g. the completion one-shot uses min=0 to fade out). */
+    /* Aura gradient density — ONE scalar (0..1). The center stop paints at
+       `strength`, the mid stop at `strength * 0.35` (both via calc() in
+       Pulse.vue). 0.22 reads as an ambient wash, not a glowing disc. */
+    --pulse-aura-strength: 0.22;
+
+    /* Aura element-opacity breath range (the `ambient-pulse` keyframe stops).
+       Quiet: the halo stays a wash at every phase of the 6s cycle. */
+    --pulse-aura-breath-min: 0.28;
+    --pulse-aura-breath-max: 0.42;
+
+    /* Skeleton-breath shimmer range — the SHARED neutral-shimmer stops
+       (`.skeleton-breath` reads these; a grey shimmer at 0.55↔0.95 is the
+       correct soft swell, distinct from the aura's calmer breath above). */
     --pulse-aura-opacity-min: 0.55;
     --pulse-aura-opacity-max: 0.95;
 

@@ -214,14 +214,18 @@
  * through <Pulse variant="aura">.
  */
 @keyframes ambient-pulse {
+    /* AX.W57 (P6) — the aura breath reads its OWN element-opacity range
+       (`--pulse-aura-breath-{min,max}`, 0.28↔0.42), decoupled from the
+       shared `--pulse-aura-opacity-*` skeleton-shimmer stops so the halo
+       breathes as an ambient wash, never up to the 0.95 shimmer peak. */
     0%,
     100% {
         transform: scale(var(--animate-ambient-pulse-scale-min, 1));
-        opacity: var(--pulse-aura-opacity-min, 0.55);
+        opacity: var(--pulse-aura-breath-min, 0.28);
     }
     50% {
         transform: scale(var(--animate-ambient-pulse-scale-max, 1.15));
-        opacity: var(--pulse-aura-opacity-max, 0.95);
+        opacity: var(--pulse-aura-breath-max, 0.42);
     }
 }
 

@@ -144,6 +144,15 @@ const auraScaleMax = computed(() => ({
  * animates scale + opacity off the shipped --animate-ambient-pulse-*
  * tokens.
  *
+ * AX.W57 (P6) — re-baselined from a glowing disc to an AMBIENT halo.
+ * The gradient density is ONE scalar `--pulse-aura-strength` (0..1) both
+ * color-mix stops derive via calc() — the prior `--pulse-aura-opacity-pct`
+ * / `-pct-num` percent+number twin (a desync trap) is collapsed. The
+ * falloff starts earlier (mid stop at 35%, transparent by 70%) so the
+ * halo reads ambient, not a dense disc. The element opacity reads the
+ * aura's own `--pulse-aura-breath-min` (decoupled from the skeleton-
+ * shimmer stops). The loud old read is the `intensity="vivid"` opt-in.
+ *
  * `pointer-events: none` keeps the host's hit region intact. The aura
  * sits behind the host's content via `z-index: 0` (the host's content
  * stays at the natural ≥1 stacking order); set --pulse-aura-z to lift
@@ -157,11 +166,11 @@ const auraScaleMax = computed(() => ({
     z-index: var(--pulse-aura-z, 0);
     background: radial-gradient(
         ellipse at 50% 50%,
-        color-mix(in srgb, var(--pulse-aura-color, currentColor) var(--pulse-aura-opacity-pct, 55%), transparent) 0%,
-        color-mix(in srgb, var(--pulse-aura-color, currentColor) calc(var(--pulse-aura-opacity-pct-num, 55) * 0.35 * 1%), transparent) 45%,
-        transparent 75%
+        color-mix(in srgb, var(--pulse-aura-color, currentColor) calc(var(--pulse-aura-strength, 0.22) * 100%), transparent) 0%,
+        color-mix(in srgb, var(--pulse-aura-color, currentColor) calc(var(--pulse-aura-strength, 0.22) * 35%), transparent) 35%,
+        transparent 70%
     );
-    opacity: var(--pulse-aura-opacity-min, 0.55);
+    opacity: var(--pulse-aura-breath-min, 0.28);
     transform: scale(var(--animate-ambient-pulse-scale-min, 1));
     animation: ambient-pulse
         var(--animate-ambient-pulse-duration, 6s)
@@ -181,13 +190,13 @@ const auraScaleMax = computed(() => ({
 
     /*
      * W3 contract: depth/colour stays visible; the breath cycle
-     * disables. The static halo reads at the canonical mid-cycle
-     * scale + opacity so the visual identity persists.
+     * disables. The static halo reads at the aura's breath-min stop
+     * so the ambient visual identity persists.
      */
     .pulse-aura {
         animation: none;
         transform: scale(1);
-        opacity: var(--pulse-aura-opacity-min, 0.55);
+        opacity: var(--pulse-aura-breath-min, 0.28);
     }
 }
 </style>

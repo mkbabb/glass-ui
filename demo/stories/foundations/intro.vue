@@ -1,6 +1,16 @@
 <script setup lang="ts">
 import StoryPage from "../StoryPage.vue";
+import { Aurora } from "../../../src/components/custom/aurora";
 import { cn } from "../../../src/utils/cn";
+import { heroAuroraConfig } from "../aurora-hero";
+
+// AX.W57 (P7) — the storybook front-door hero replaces its hand-rolled
+// 3-ellipse pastel bloom with a live <Aurora> on the SAME brand hues
+// (--section-color-0/2/5). Recommendation (audit map): Aurora for intro — the
+// brand identity is the warm painterly wash, not a tech lattice. The
+// `--hue-shift` filter still rides the live canvas (it sits on the section,
+// the Aurora is a child). opacityCeiling 0.6 keeps the display title legible.
+const introAurora = heroAuroraConfig("rose-indigo-amber");
 
 // Anchor links to every category — resolved by the router via the manifest.
 const categories: { slug: string; title: string; blurb: string }[] = [
@@ -17,16 +27,21 @@ const categories: { slug: string; title: string; blurb: string }[] = [
 
 <template>
     <StoryPage>
-        <!-- Hero wash: pastel radial bloom behind audacious display title. -->
+        <!-- Hero wash: AX.W57 (P7) live Aurora drift on the brand hues. -->
         <section
             :class="
                 cn(
-                    'paper-grain-overlay relative overflow-hidden rounded-card px-8 py-20 md:px-16 md:py-32',
-                    'bg-[radial-gradient(ellipse_80%_70%_at_20%_20%,color-mix(in_srgb,var(--section-color-0)_34%,transparent),transparent_60%),radial-gradient(ellipse_70%_60%_at_80%_30%,color-mix(in_srgb,var(--section-color-2)_30%,transparent),transparent_55%),radial-gradient(ellipse_75%_65%_at_50%_90%,color-mix(in_srgb,var(--section-color-5)_26%,transparent),transparent_60%)]',
+                    'paper-grain-overlay relative isolate overflow-hidden rounded-card px-8 py-20 md:px-16 md:py-32',
                 )
             "
             style="filter: hue-rotate(var(--hue-shift, 0deg));"
         >
+            <Aurora
+                :config="introAurora"
+                :opacity-ceiling="0.6"
+                class="absolute inset-0 -z-10"
+                aria-hidden="true"
+            />
             <p class="text-admin-label mb-6 text-muted-foreground">
                 glass-ui · storybook
             </p>
