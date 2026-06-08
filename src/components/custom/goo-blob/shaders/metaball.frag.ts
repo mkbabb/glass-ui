@@ -284,10 +284,17 @@ void main() {
     // Pointer deformation — honor the SIGN of uPointerAttraction (W10): a positive
     // attraction leans the body IN toward the cursor, a negative shies it AWAY. The
     // signed influence flows straight into the UV shift (no hardcoded repulsion).
+    //
+    // AX.W15 REDRESS — the falloff radius WIDENS 0.4 to 0.65. The flick lands the
+    // pointer at ~0.32 uv from the body centre; with the old 0.4 cutoff the body sat
+    // deep in the dead smoothstep tail (~0.10 weight), so even a strong strength left
+    // a sub-floor centroid shift (the live 0.0011 vs the 0.012 gate). 0.65 reaches the
+    // whole creature coherently — the body, satellites and trail all tilt toward the
+    // cursor as one — so the lean READS. Paired with pointerStrength 0.45 (types.ts).
     if (uPointerActive > 0.5) {
         vec2 pointerDir = uPointer - uv;
         float pointerDist = length(pointerDir);
-        float influence = smoothstep(0.4, 0.0, pointerDist) * uPointerAttraction * uPointerStrength;
+        float influence = smoothstep(0.65, 0.0, pointerDist) * uPointerAttraction * uPointerStrength;
         uv -= normalize(pointerDir + 1e-6) * influence;
     }
 

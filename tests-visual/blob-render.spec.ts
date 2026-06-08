@@ -309,16 +309,32 @@ function paintedShape(
     return { cx: cx / w, cy: cy / h, silhouetteCV: cv };
 }
 
-/** A synthetic hover-flick over a canvas toward (fx, fy) in element fractions. */
+/**
+ * A synthetic hover-flick toward (fx, fy) in element fractions.
+ *
+ * AX.W15 REDRESS — drive over the WRAPPER, not the canvas. The pointer-follow
+ * listener lives on the `.goo-blob-wrapper` (useBlobPointer(wrapperRef) in
+ * GooBlob.vue); the canvas carries `pointer-events: none` and is CSS-sized 160% of
+ * the wrapper, CENTERED — so the wrapper occupies only the central 62.5% of the
+ * canvas box (canvas-fraction [0.1875, 0.8125]). The prior drive flicked to fx=0.82
+ * of the CANVAS box, which lands OFF the wrapper's right edge: the last move fires
+ * `pointerleave` → `active=false` → the spring relaxes the blob HOME before readback,
+ * measuring ~0 shift (the live 0.0011). Driving over the WRAPPER box keeps every move
+ * (including the held final position) on the listener, so the lean is actually driven
+ * AND held through the readback window — the real pointer path the spec intends.
+ */
 async function hoverFlick(page: import("@playwright/test").Page, canvas: Locator, fx: number, fy: number) {
-    const box = await canvas.boundingBox();
+    // The wrapper is the canvas's parent (the listener host). Drive over IT.
+    const wrapper = canvas.locator("xpath=..");
+    const box = (await wrapper.boundingBox()) ?? (await canvas.boundingBox());
     if (!box) return;
     const cx = box.x + box.width / 2;
     const cy = box.y + box.height / 2;
     const tx = box.x + box.width * fx;
     const ty = box.y + box.height * fy;
     // Move centre → target in steps so the spring follow + velocity squash + trail
-    // accumulate (a single jump leaves zero velocity).
+    // accumulate (a single jump leaves zero velocity). The final position is HELD on
+    // the wrapper (no pointerleave) so `active` stays true through the readback.
     await page.mouse.move(cx, cy);
     for (let s = 1; s <= 8; s++) {
         await page.mouse.move(cx + (tx - cx) * (s / 8), cy + (ty - cy) * (s / 8));
