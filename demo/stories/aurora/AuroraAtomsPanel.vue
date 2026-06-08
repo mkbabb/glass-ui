@@ -1,129 +1,190 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from "vue";
-import {
-    Aurora,
-    resolveAtoms,
-    type AuroraAtoms,
-    type AuroraConfig,
+import { computed } from "vue";
+import type {
+    AuroraAtoms,
+    AuroraHarmony,
+    AuroraMedium,
+    AuroraMotionAtom,
+    AuroraZoneArrangement,
 } from "../../../src/components/custom/aurora";
-import {
-    Collapsible,
-    CollapsibleContent,
-    CollapsibleTrigger,
-} from "../../../src/components/ui/collapsible";
 
 /**
- * AW.W6 — the two-tier "atoms of control" demo. The ≤7 Tier-1 atoms are shown by
- * default; the full AuroraConfig surface lives under an "Advanced" Collapsible
- * disclosure (progressive disclosure — essentials shown, complexity on demand). The
- * panel binds `resolveAtoms(atoms) → AuroraConfig` so a consumer configures a stunning
- * backdrop from a handful of intuitive knobs. The full schema stays whole as the
- * escape hatch; nothing is removed. No new disclosure primitive — Collapsible is the
- * shipped surface.
+ * AX.W10 — the ≤7-atom control surface. The user's named control elements
+ * (§2.7) — COLOR (seed + harmony + energy), ZONES (count + arrangement), NOISE
+ * (one organic-boundary knob), MEDIUM (+ texture when textured), MOTION. The
+ * panel is a `v-model:atoms` surface; the host (`AuroraConfigDock`) resolves the
+ * atoms to a config and drives the canvas. No `resolveAtoms`/`Aurora` here — this
+ * is the live default surface, not a standalone demo.
  */
-const atoms = reactive<AuroraAtoms>({
-    seed: "#3a7bd5",
-    harmony: "analogous",
-    mood: "balanced",
-    medium: "smooth",
-    textureAmount: 0.5,
-    motion: "drifting",
-    zones: 2,
-});
+const props = defineProps<{
+    atoms: AuroraAtoms;
+}>();
 
-const advancedOpen = ref(false);
+const emit = defineEmits<{
+    (e: "update:atoms", v: AuroraAtoms): void;
+}>();
 
-// The live config the atoms resolve to (the Aurora consumes it directly).
-const config = computed<AuroraConfig>(() => resolveAtoms({ ...atoms }));
+// Edit the atoms object in place (it is the host's reactive); the host's deep
+// watcher re-resolves + drives the canvas. We mutate then re-emit for v-model.
+function patch(fn: (a: AuroraAtoms) => void) {
+    fn(props.atoms);
+    emit("update:atoms", props.atoms);
+}
 
-const HARMONIES = [
+const HARMONIES: readonly AuroraHarmony[] = [
     "analogous",
     "complementary",
     "split-complementary",
     "triad",
     "tetradic",
     "monochrome",
-] as const;
-const MOODS = ["calm", "balanced", "vivid"] as const;
-const MEDIA = ["smooth", "pastel", "watercolor", "oil", "vangogh", "oil-pastel"] as const;
-const MOTIONS = ["still", "breathing", "drifting"] as const;
+];
+const ARRANGEMENTS: readonly AuroraZoneArrangement[] = ["scattered", "composed", "centred"];
+const MEDIA: readonly AuroraMedium[] = [
+    "smooth",
+    "pastel",
+    "watercolor",
+    "oil",
+    "vangogh",
+    "oil-pastel",
+];
+const MOTIONS: readonly AuroraMotionAtom[] = ["still", "breathing", "drifting"];
+
+// The medium's texture amount is STRUCTURALLY ABSENT on a smooth medium — the
+// slider is hidden, not disabled-and-ignored (no dead affordance).
+const mediumKind = computed(() => props.atoms.medium?.kind ?? "smooth");
+const isTextured = computed(() => mediumKind.value !== "smooth");
+const textureAmount = computed<number>(() =>
+    props.atoms.medium && props.atoms.medium.kind !== "smooth"
+        ? props.atoms.medium.amount ?? 0.5
+        : 0.5,
+);
+
+function setMedium(kind: AuroraMedium) {
+    patch((a) => {
+        a.medium = kind === "smooth" ? { kind } : { kind, amount: textureAmount.value };
+    });
+}
+function setTexture(amount: number) {
+    patch((a) => {
+        if (a.medium && a.medium.kind !== "smooth") a.medium.amount = amount;
+    });
+}
 </script>
 
 <template>
-    <div class="grid h-full grid-cols-[1fr_22rem] gap-3">
-        <div class="relative overflow-hidden rounded-panel">
-            <Aurora :config="config" />
-        </div>
+    <div class="flex flex-col gap-3 p-3">
+        <!-- ── COLOR ──────────────────────────────────────────────────────── -->
+        <p class="text-admin-label text-muted-foreground">Color</p>
+        <label class="grid gap-1 text-sm" data-atom="seed">
+            <span>seed</span>
+            <input
+                :value="typeof atoms.seed === 'string' ? atoms.seed : '#3a7bd5'"
+                type="color"
+                class="h-8 w-full rounded"
+                @input="patch((a) => (a.seed = ($event.target as HTMLInputElement).value))"
+            />
+        </label>
 
-        <div class="glass-resting flex flex-col gap-3 rounded-panel p-4">
-            <p class="text-mono-caption uppercase tracking-widest text-foreground/50">
-                atoms of control
-            </p>
+        <label class="grid gap-1 text-sm" data-atom="harmony">
+            <span>harmony</span>
+            <select
+                :value="atoms.harmony"
+                class="rounded border bg-card px-2 py-1"
+                @change="patch((a) => (a.harmony = ($event.target as HTMLSelectElement).value as AuroraHarmony))"
+            >
+                <option v-for="h in HARMONIES" :key="h" :value="h">{{ h }}</option>
+            </select>
+        </label>
 
-            <!-- Tier-1: the ≤7 intuitive atoms shown by default. -->
-            <label class="grid gap-1 text-sm">
-                <span>seed</span>
-                <input v-model="atoms.seed" type="color" class="h-8 w-full rounded" />
-            </label>
+        <label class="grid gap-1 text-sm" data-atom="colorEnergy">
+            <span>energy ({{ (atoms.colorEnergy ?? 0.5).toFixed(2) }})</span>
+            <input
+                :value="atoms.colorEnergy ?? 0.5"
+                type="range"
+                min="0"
+                max="1"
+                step="0.05"
+                @input="patch((a) => (a.colorEnergy = Number(($event.target as HTMLInputElement).value)))"
+            />
+        </label>
 
-            <label class="grid gap-1 text-sm">
-                <span>harmony</span>
-                <select v-model="atoms.harmony" class="rounded border bg-card px-2 py-1">
-                    <option v-for="h in HARMONIES" :key="h" :value="h">{{ h }}</option>
-                </select>
-            </label>
+        <!-- ── ZONES ──────────────────────────────────────────────────────── -->
+        <p class="mt-1 text-admin-label text-muted-foreground">Zones</p>
+        <label class="grid gap-1 text-sm" data-atom="zones-count">
+            <span>count ({{ atoms.zones?.count ?? 2 }})</span>
+            <input
+                :value="atoms.zones?.count ?? 2"
+                type="range"
+                min="1"
+                max="6"
+                step="1"
+                @input="patch((a) => { a.zones = { count: Number(($event.target as HTMLInputElement).value), arrangement: a.zones?.arrangement ?? 'composed' }; })"
+            />
+        </label>
 
-            <label class="grid gap-1 text-sm">
-                <span>mood / energy</span>
-                <select v-model="atoms.mood" class="rounded border bg-card px-2 py-1">
-                    <option v-for="m in MOODS" :key="m" :value="m">{{ m }}</option>
-                </select>
-            </label>
+        <label class="grid gap-1 text-sm" data-atom="zones-arrangement">
+            <span>arrangement</span>
+            <select
+                :value="atoms.zones?.arrangement ?? 'composed'"
+                class="rounded border bg-card px-2 py-1"
+                @change="patch((a) => { a.zones = { count: a.zones?.count ?? 2, arrangement: ($event.target as HTMLSelectElement).value as AuroraZoneArrangement }; })"
+            >
+                <option v-for="ar in ARRANGEMENTS" :key="ar" :value="ar">{{ ar }}</option>
+            </select>
+        </label>
 
-            <label class="grid gap-1 text-sm">
-                <span>medium</span>
-                <select v-model="atoms.medium" class="rounded border bg-card px-2 py-1">
-                    <option v-for="m in MEDIA" :key="m" :value="m">{{ m }}</option>
-                </select>
-            </label>
+        <!-- ── NOISE ──────────────────────────────────────────────────────── -->
+        <p class="mt-1 text-admin-label text-muted-foreground">Noise</p>
+        <label class="grid gap-1 text-sm" data-atom="noise">
+            <span>organic boundary ({{ (atoms.noise ?? 0.5).toFixed(2) }})</span>
+            <input
+                :value="atoms.noise ?? 0.5"
+                type="range"
+                min="0"
+                max="1"
+                step="0.05"
+                @input="patch((a) => (a.noise = Number(($event.target as HTMLInputElement).value)))"
+            />
+        </label>
 
-            <label class="grid gap-1 text-sm">
-                <span>texture amount</span>
-                <input
-                    v-model.number="atoms.textureAmount"
-                    type="range"
-                    min="0"
-                    max="1"
-                    step="0.05"
-                />
-            </label>
+        <!-- ── MEDIUM (+ texture only when textured) ──────────────────────── -->
+        <p class="mt-1 text-admin-label text-muted-foreground">Medium</p>
+        <label class="grid gap-1 text-sm" data-atom="medium">
+            <span>medium</span>
+            <select
+                :value="mediumKind"
+                class="rounded border bg-card px-2 py-1"
+                @change="setMedium(($event.target as HTMLSelectElement).value as AuroraMedium)"
+            >
+                <option v-for="m in MEDIA" :key="m" :value="m">{{ m }}</option>
+            </select>
+        </label>
 
-            <label class="grid gap-1 text-sm">
-                <span>motion</span>
-                <select v-model="atoms.motion" class="rounded border bg-card px-2 py-1">
-                    <option v-for="m in MOTIONS" :key="m" :value="m">{{ m }}</option>
-                </select>
-            </label>
+        <!-- texture amount is STRUCTURALLY ABSENT on smooth (no dead slider). -->
+        <label v-if="isTextured" class="grid gap-1 text-sm" data-atom="texture">
+            <span>texture ({{ textureAmount.toFixed(2) }})</span>
+            <input
+                :value="textureAmount"
+                type="range"
+                min="0"
+                max="1"
+                step="0.05"
+                @input="setTexture(Number(($event.target as HTMLInputElement).value))"
+            />
+        </label>
 
-            <label class="grid gap-1 text-sm">
-                <span>zones ({{ atoms.zones }})</span>
-                <input v-model.number="atoms.zones" type="range" min="2" max="6" step="1" />
-            </label>
-
-            <!-- Tier-2: the full AuroraConfig surface under an Advanced disclosure. -->
-            <Collapsible v-model:open="advancedOpen" class="mt-2">
-                <CollapsibleTrigger
-                    class="w-full rounded border px-3 py-2 text-left text-sm font-medium"
-                >
-                    {{ advancedOpen ? "▾" : "▸" }} Advanced (full schema)
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                    <pre
-                        class="mt-2 max-h-72 overflow-auto rounded bg-card p-2 text-mono-caption"
-                        >{{ config }}</pre
-                    >
-                </CollapsibleContent>
-            </Collapsible>
-        </div>
+        <!-- ── MOTION ─────────────────────────────────────────────────────── -->
+        <p class="mt-1 text-admin-label text-muted-foreground">Motion</p>
+        <label class="grid gap-1 text-sm" data-atom="motion">
+            <span>motion</span>
+            <select
+                :value="atoms.motion"
+                class="rounded border bg-card px-2 py-1"
+                @change="patch((a) => (a.motion = ($event.target as HTMLSelectElement).value as AuroraMotionAtom))"
+            >
+                <option v-for="m in MOTIONS" :key="m" :value="m">{{ m }}</option>
+            </select>
+        </label>
     </div>
 </template>

@@ -1,8 +1,4 @@
-import {
-    MAX_STOPS,
-    DEFAULT_AURORA_CONFIG,
-    type AuroraConfig,
-} from "../constants/presets";
+import { MAX_STOPS } from "../constants/presets";
 
 // inv-K-2 / AU.W5 — the single canonical color core is value.js's Ottosson
 // primitives. The SHARED runtime-JS hoist (oklchToLinear / cssToOklch /
@@ -26,6 +22,7 @@ import {
 import {
     srgbToOKLab,
     rawOklabToOklch,
+    interpolateHue,
 } from "@mkbabb/value.js";
 
 // Re-export the shared color core from the leaf (AU.W5 hoist — surface preserved).
@@ -228,8 +225,8 @@ export function deriveAurora(
         }
 
         let h = deriveHue(anchor.h, harmony, hueSpread, t);
-        // Warm-light / cool-shadow: warm (toward ~70°, orange) as it lightens, cool
-        // (toward ~250°, blue) as it darkens. A signed nudge centred on the mid.
+        // Warm-light / cool-shadow: warm (toward WARM_POLE) as it lightens, cool
+        // (toward COOL_POLE) as it darkens — interpolated toward the named poles.
         if (temperatureShift > 0) {
             h = applyTemperature(h, t, temperatureShift);
         }
@@ -251,140 +248,63 @@ function bell(t: number): number {
     return Math.sin(Math.PI * t);
 }
 
-/** Warm the lights, cool the shadows by a signed hue nudge centred on the mid. */
+/**
+ * The named temperature poles (OKLCh hue degrees). The lights warm toward
+ * `WARM_POLE` (orange); the shadows cool toward `COOL_POLE` (blue) — the single
+ * most-cited painting rule. ONE retunable source: shift a pole here and the whole
+ * warm/cool axis re-anchors. Previously the model was a blind ±degree nudge whose
+ * comment NAMED these poles but never used them (the documented-model-≠-implementation
+ * seam AX.W10 closes — the model IS the implementation now).
+ */
+const WARM_POLE = 70; // orange — the lit edge
+const COOL_POLE = 250; // blue — the shadow
+
+/**
+ * The maximum hue THROW (degrees) toward a pole at full `amount=1` and the
+ * t-extremes. The temperature coupling tints the hue TOWARD the named pole but the
+ * throw is BOUNDED to this cap, so a hue near a pole moves the same perceptual
+ * distance as a hue far from it (a symmetric warm/cool swing) and never snaps onto
+ * the pole. 22° matches the prior ±22° throw — a regression-safe re-derivation that
+ * keeps the warm-light/cool-shadow swing magnitude identical at the boundaries while
+ * the DIRECTION now genuinely tracks the named poles.
+ */
+const TEMPERATURE_MAX_THROW = 22;
+
+/**
+ * Warm the lights, cool the shadows by stepping the hue TOWARD the named poles.
+ * `t∈[0,1]` is the ramp position (0 = deep base/shadow, 1 = pale apex/light);
+ * `amount∈[0,1]` is the coupling strength. The light end (t>0.5) steps toward
+ * `WARM_POLE`, the shadow end (t<0.5) toward `COOL_POLE`, by up to
+ * `|signed|·amount·MAX_THROW` degrees — so the documented poles ARE the model AND the
+ * swing magnitude stays bounded + symmetric (the documented-model-IS-the-implementation
+ * fix without a base-hue-dependent over-swing).
+ */
 function applyTemperature(h: number, t: number, amount: number): number {
-    const wrap = (x: number) => ((x % 360) + 360) % 360;
-    // -1 at the deep base, +1 at the pale apex.
+    // -1 at the deep base (shadow), +1 at the pale apex (light); 0 at the mid (no shift).
     const signed = (t - 0.5) * 2;
-    // Warm pole ~70° (orange), cool pole ~250° (blue) — nudge toward warm as t→1.
-    const delta = signed * amount * 22; // up to ~22° of warm/cool swing
-    return wrap(h + delta);
+    if (signed === 0 || amount === 0) return h;
+    const pole = signed >= 0 ? WARM_POLE : COOL_POLE;
+    // The toward-pole SHORTER-arc direction (value.js owns the cylindrical hue math):
+    // a tiny step toward the pole reveals the signed direction without a hand-rolled wrap.
+    const toward = interpolateHue(h, pole, 1, "shorter");
+    const signedArc = ((toward - h + 540) % 360) - 180; // [-180, 180], toward the pole
+    const dir = Math.sign(signedArc);
+    // Bounded throw: never overshoot the pole, never exceed MAX_THROW.
+    const throwDeg = Math.min(
+        Math.abs(signed) * amount * TEMPERATURE_MAX_THROW,
+        Math.abs(signedArc),
+    );
+    return ((h + dir * throwDeg) % 360 + 360) % 360;
 }
 
 // `deriveHue` + `gamutMapStop` are HOISTED to the `/color` leaf (AW.W11.b) and
 // imported above — aurora and the blob derive from ONE source (no forked copies).
-
-// ── deriveScene — one seed + a mood word → a whole AuroraConfig (W5) ──────────
-
-/** Atmospheric mood words for {@link deriveScene}. */
-export type AuroraMood = "atmospheric" | "painterly" | "vivid" | "muted";
-
-/**
- * A nuclei layout on a rule-of-thirds / golden prior — deterministic placement
- * for `count` nuclei (NOT centred), so a derived scene reads as a composed field.
- */
-function thirdsNuclei(count: number): AuroraConfig["nuclei"] {
-    const T = [0.33, 0.67];
-    // The golden-prior anchor points, walked deterministically.
-    const anchors: [number, number][] = [
-        [T[0]!, T[0]!],
-        [T[1]!, T[1]!],
-        [T[1]!, T[0]!],
-        [T[0]!, T[1]!],
-        [0.5, 0.5],
-        [0.5, T[0]!],
-    ];
-    const n = Math.max(1, Math.min(anchors.length, count));
-    return Array.from({ length: n }, (_, i) => {
-        const [x, y] = anchors[i]!;
-        return {
-            x,
-            y,
-            radius: 0.5,
-            paletteBias: n === 1 ? 0 : i / (n - 1),
-            valueBias: (i % 2 === 0 ? 1 : -1) * 0.05,
-            driftRadius: 0.045,
-            driftPhase: (i * 2.4) % (Math.PI * 2),
-        };
-    });
-}
-
-interface MoodRecipe {
-    harmony: AuroraHarmony;
-    medium: AuroraConfig["medium"];
-    temperatureShift: number;
-    chromaEasing: DeriveEasing;
-    saturation: number;
-    warpAmount: number;
-    valueVariance: number;
-    breathDepth: number;
-    zones: number;
-}
-
-const MOOD_RECIPE: Record<AuroraMood, MoodRecipe> = {
-    atmospheric: {
-        harmony: "analogous",
-        medium: "smooth",
-        temperatureShift: 0.3,
-        chromaEasing: "bell",
-        saturation: 0.95,
-        warpAmount: 0.55,
-        valueVariance: 0.08,
-        breathDepth: 0.06,
-        zones: 2,
-    },
-    painterly: {
-        harmony: "split-complementary",
-        medium: "oil",
-        temperatureShift: 0.6,
-        chromaEasing: "bell",
-        saturation: 1.05,
-        warpAmount: 0.45,
-        valueVariance: 0.12,
-        breathDepth: 0.04,
-        zones: 3,
-    },
-    vivid: {
-        harmony: "triad",
-        medium: "watercolor",
-        temperatureShift: 0.2,
-        chromaEasing: "linear",
-        saturation: 1.2,
-        warpAmount: 0.5,
-        valueVariance: 0.14,
-        breathDepth: 0.05,
-        zones: 3,
-    },
-    muted: {
-        harmony: "monochrome",
-        medium: "pastel",
-        temperatureShift: 0.15,
-        chromaEasing: "bell",
-        saturation: 0.78,
-        warpAmount: 0.4,
-        valueVariance: 0.06,
-        breathDepth: 0.03,
-        zones: 2,
-    },
-};
-
-/**
- * Seed ONE color + a mood word into a WHOLE `AuroraConfig` — palette (via
- * `deriveAurora`), nuclei layout (a rule-of-thirds/golden prior), medium, and the
- * motion/output knobs the mood implies. A SUPERSET front door over `deriveAurora`:
- * a consumer hands a seed + `"painterly"` and gets a coherent backdrop, not just a
- * palette. The base is the wispy-sky `DEFAULT_AURORA_CONFIG` (every field the mood
- * does not touch stays the library default).
- */
-export function deriveScene(
-    seed: string | OklchStop,
-    mood: AuroraMood = "atmospheric",
-): AuroraConfig {
-    const r = MOOD_RECIPE[mood];
-    const palette = deriveAurora(seed, {
-        harmony: r.harmony,
-        temperatureShift: r.temperatureShift,
-        chromaEasing: r.chromaEasing,
-        stopCount: 4,
-    });
-    return {
-        ...DEFAULT_AURORA_CONFIG,
-        palette,
-        nuclei: thirdsNuclei(r.zones),
-        medium: r.medium,
-        saturation: r.saturation,
-        warpAmount: r.warpAmount,
-        valueVariance: r.valueVariance,
-        breathDepth: r.breathDepth,
-    };
-}
+//
+// AX.W10 — the dead second seed→whole-scene door (the prior mood-word config
+// derive + its own mood union + recipe table + duplicated thirds prior) is DELETED
+// (zero non-test consumers; the converged `resolveAtoms` door in `atoms.ts` is the
+// ONE consumer-facing surface). The only unique value it carried — the
+// mood→medium/temperature/chroma coupling — folds into the surviving door's COLOR
+// atom (`resolveAtoms`'s colorEnergy → temperatureShift on the palette derive). The
+// rule-of-thirds nuclei prior is single-sourced at ONE home (`nucleiPrior` in
+// `atoms.ts`).

@@ -1,0 +1,116 @@
+{
+  "wave": "AX.W10",
+  "title": "Aurora options converge — ONE atoms door wired into the live config UI",
+  "status": "green-pending-live-visual-truth",
+  "band": "C · AURORA",
+  "severity": "major",
+  "baseSha": "27036cc",
+  "dependsOn": ["AX.W07", "AX.W00"],
+  "downstream": ["AX.W11 (color seams — edits color.ts AFTER the dead door is excised)", "AX.W38 (Configurator glass-atoms restyle — skins the FINAL atoms structure)", "AX.W34 (cross-repo speedtest-E2 adoption — executes the annex below)"],
+
+  "redWitnessesAtHead": {
+    "witness1_orphanedUnroutedDoor": {
+      "confirmedInCode": true,
+      "evidence": "resolveAtoms had exactly ONE consumer — demo/stories/aurora/AuroraAtomsPanel.vue (a standalone Aurora+Collapsible panel) — and that panel was NOT routed: `grep AuroraAtomsPanel demo/stories/manifest.ts` = 0. The REAL routed story is demo/stories/substrates/aurora.vue → AuroraConfigDock + the six config/*Layer.vue panels, which mutate the full AuroraConfig DIRECTLY (MediumLayer.vue:22 `props.config.medium = …`) and NEVER call resolveAtoms. The substrate built to 'simplify the options' was bypassed by the only shipped UI.",
+      "disposition": "FIXED — AuroraConfigDock now drives the atoms door by DEFAULT (an 'Atoms' tab as the default surface, the six raw layers behind an 'Advanced' tab); AuroraAtomsPanel is REBUILT as the live ≤7-atom control surface; the aurora story routes the atoms-default door (the routed substrates/aurora.vue passes dockTab=ref('atoms'))."
+    },
+    "witness2_deadSecondDoor": {
+      "confirmedInCode": true,
+      "evidence": "deriveScene(seed, mood) (color.ts:369) — a SECOND seed→full-config door with its own AuroraMood union (color.ts:270) + MOOD_RECIPE table (color.ts:314) + thirdsNuclei prior (color.ts:276) — was exported on the public surface AND /api (api/index.ts:44 AuroraMood) yet had ZERO non-test consumers (`grep deriveScene src/ demo/` = its own def + the barrel/api re-export + a comment only).",
+      "disposition": "FIXED — deriveScene + AuroraMood + MOOD_RECIPE + thirdsNuclei DELETED; the barrel + /api re-exports removed. The only unique value (the mood→medium/temperatureShift/chromaEasing coupling) folded into the surviving door's COLOR atom (colorEnergy → temperatureShift on the palette derive). `grep deriveScene|AuroraMood|MOOD_RECIPE|thirdsNuclei src/` = 0."
+    },
+    "witness3_duplicatedPriors": {
+      "confirmedInCode": true,
+      "evidence": "thirdsZones (atoms.ts:101) and thirdsNuclei (color.ts:276) were near-identical duplicates (same anchor table, same construction). The mood→energy mapping existed TWICE with divergent vocabularies: MOOD_ENERGY (calm/balanced/vivid) vs MOOD_RECIPE (atmospheric/painterly/vivid/muted).",
+      "disposition": "FIXED — ONE nucleiPrior(count, arrangement) in atoms.ts is the single source (proof gate asserts exactly one); ONE COLOR-energy curve (the COLOR_ENERGY poles + lerp) replaces both mood tables."
+    },
+    "witness4_noiseHasNoDoor": {
+      "confirmedInCode": true,
+      "evidence": "The user named the atoms as 'zones, noise, color' (§2.7). The shipped AuroraAtoms split COLOR awkwardly across seed+harmony+mood, ZONES was a bare integer on a FIXED thirds prior, and NOISE was not an atom at all: `grep warpMode|warpScale|noiseOctaves atoms.ts` = 0; warpAmount was reached only as a mood side-effect.",
+      "disposition": "FIXED — the re-derived AuroraAtoms carries a NOISE atom (one 0..1 organic-boundary scalar) fanning to warpAmount + warpScale + warpMode (fBm→hybrid→cellular) + noiseOctaves; ZONES is {count, arrangement} (scattered/composed/centred selects the prior); COLOR is seed + harmony + colorEnergy (a continuous energy curve)."
+    },
+    "witness5_silentInertArms": {
+      "confirmedInCode": true,
+      "evidence": "applyTexture (atoms.ts:148) had a `case \"smooth\": default:` empty no-op (textureAmount on smooth silently did nothing). The interactivity atom's flow/wake axes were declared + passed through (atoms.ts:226) but only light+scroll are wired downstream (`grep .flow|.wake frameLoop.ts useAurora.ts` shows only light+scroll consumed).",
+      "disposition": "FIXED — texture is STRUCTURALLY ABSENT on smooth (AuroraMediumAtom is a discriminated union: the `{kind:\"smooth\"}` arm has no `amount` field; TypeScript narrows it away — proof gate + a @ts-expect-error test assert it). The interactivity atom (AuroraInteractivityAtom) ships ONLY light + scroll; flow/wake are EXCISED until wired (the full AuroraConfig.interactivity author schema keeps all four for authors — only the ATOM door narrows)."
+    },
+    "witness6_greenGateOverDeadDoor": {
+      "confirmedInCode": true,
+      "evidence": "proof:aurora-atoms-roundtrip was GREEN + rigorous (2000+ combination totality fuzz, default-preservation deep-equal) but proved a property of a door NOTHING SHIPPED THROUGH and asserted NOTHING about reachability or render.",
+      "disposition": "FIXED — proof:aurora-atoms-roundtrip EXTENDED: kept (a) totality + default-preservation, ADDED (b) reachability (the story is routed + the dock drives via resolveAtoms + the atoms tab is default), (c) dead-door grep=0 + exactly-one-nucleiPrior, (d) noise-atom-fans-out + texture-absent-on-smooth. The per-atom VISIBLE-CHANGE device readback is the NEW π-lane proof:aurora-atoms-render spec (the orchestrator runs it on real GPU)."
+    }
+  },
+
+  "ratifyDecisions": {
+    "ratify1_atomDecomposition": {
+      "decision": "RATIFIED — the ≤7 atoms are the user's named control elements (§2.7), corpus-confirmed (facet 26): COLOR (seed + harmony + colorEnergy), ZONES (count + arrangement: scattered/composed/centred), NOISE (one organic-boundary 0..1 knob → warpAmount/warpScale/warpMode/noiseOctaves), MEDIUM ({kind, amount?} — amount textured-only), MOTION (still/breathing/drifting).",
+      "moodFold": "The prior mood→energy fan-out folds INTO the COLOR-energy atom (a CONTINUOUS scalar t∈[0,1] driving a curve over saturation + valueVariance + breathDepth + the palette temperatureShift — the corpus's named co-varying-axes successor, facet 26, not a 3-point LUT).",
+      "arrangementEnum": "AuroraZoneArrangement = scattered | composed | centred — selects among golden-scatter / rule-of-thirds / central-cluster priors; the seed-stable scatter uses the φ⁻¹ low-discrepancy walk (facet 27).",
+      "flowWakeVerdict": "EXCISE — flow/wake are NOT wired downstream (only light/scroll are), so they are excised from the shipped AuroraInteractivityAtom until wired (the excise-or-wire mandate). The full AuroraConfig.interactivity author schema is UNCHANGED (keeps all four for hand-authoring)."
+    },
+    "ratify2_val1DeriveColor": {
+      "decision": "KILL (do not ship) — deriveAuroraFromColor is NOT added as a new public surface (it would manufacture substrate-without-consumer, the exact trap this wave corrects). `grep deriveAuroraFromColor src/` = 0 confirmed at HEAD and unchanged. The internal deriveAurora (the palette composer) STAYS — it has a real consumer (resolveAtoms calls it). Carry the caveat: speedtest hand-rolls an equivalent but is not the published 2nd consumer; the named-consumer-#2 obligation is discharged via the W34 adoption annex, not a new public door."
+    }
+  },
+
+  "fileChanges": [
+    { "file": "src/components/custom/aurora/composables/atoms.ts", "change": "Re-derived AuroraAtoms to the zones/noise/color control elements: added the NOISE atom (one organic-boundary scalar → warpAmount/warpScale/warpMode/noiseOctaves via applyNoise), the ZONES {count, arrangement} with the AuroraZoneArrangement enum, the COLOR colorEnergy continuous curve (COLOR_ENERGY poles + lerp, folding the mood→temperatureShift coupling). Replaced thirdsZones with the ONE hoisted nucleiPrior(count, arrangement) (the single source). applyTexture is now textured-medium-only (AuroraMediumAtom narrows `amount` off the smooth arm — no silent no-op). AuroraInteractivityAtom ships only light/scroll. Struck the 'Advanced escape hatch / nothing removed' header framing." },
+    { "file": "src/components/custom/aurora/composables/color.ts", "change": "DELETED deriveScene + AuroraMood + MOOD_RECIPE + thirdsNuclei (the dead second door + duplicated prior). KEPT deriveAurora (real consumer). Fixed applyTemperature to step the hue TOWARD named WARM_POLE (70°) / COOL_POLE (250°) — the toward-pole shorter-arc direction (value.js interpolateHue) with a BOUNDED ±TEMPERATURE_MAX_THROW (22°) throw, so the documented poles ARE the model AND the swing magnitude stays regression-safe + symmetric (the prior ±22° blind nudge had the magnitude but a base-hue-blind direction). Removed the now-unused AuroraConfig/DEFAULT_AURORA_CONFIG imports." },
+    { "file": "src/components/custom/aurora/index.ts", "change": "Removed the deriveScene / AuroraMood / AuroraMoodAtom re-exports; added resolveAtoms's new public shape (nucleiPrior, AuroraZones, AuroraZoneArrangement, AuroraMediumAtom, AuroraInteractivityAtom)." },
+    { "file": "src/api/index.ts", "change": "Removed AuroraMood from the /api type block (dead /api substrate); added the new public atom-shape types (AuroraZoneArrangement, AuroraZones, AuroraMediumAtom, AuroraInteractivityAtom, AuroraMotionAtom)." },
+    { "file": "demo/stories/aurora/AuroraConfigDock.vue", "change": "Rebuilt to drive the resolveAtoms-backed atoms by DEFAULT (a top-level Atoms↔Advanced BouncyTabs; Atoms is the default surface). The atoms surface edits an AuroraAtoms object; a deep watcher copies resolveAtoms(atoms) field-by-field onto the live reactive config (the same in-place mutation the raw layers do), so the canvas + the Advanced raw layers + the preset dirty-detection all read the ONE config object. The six raw config/*Layer.vue panels become the Advanced disclosure. NO glass-atoms restyle (that is W38)." },
+    { "file": "demo/stories/aurora/AuroraAtomsPanel.vue", "change": "Absorbed — rebuilt as the live ≤7-atom v-model:atoms control surface (COLOR/ZONES/NOISE/MEDIUM/MOTION; each control carries a data-atom hook for the π-lane spec). The texture slider is v-if=isTextured (structurally absent on smooth — no dead affordance). No standalone Aurora/resolveAtoms/Collapsible (the host owns the resolve + drive)." },
+    { "file": "demo/stories/substrates/aurora.vue", "change": "Added dockTab=ref('atoms') (the dock opens on the atoms surface by DEFAULT) + the :tab / @update:tab wiring to AuroraConfigDock." },
+    { "file": "scripts/proof-aurora-atoms-roundtrip.mjs", "change": "EXTENDED: kept the (a) totality/default-preservation vitest property test + ADDED (b) reachability (the aurora story is routed; AuroraConfigDock drives via resolveAtoms + the atoms panel; the atoms tab is the default), (c) the dead-door deletion grep over src/ + the exactly-one-nucleiPrior count, (d) the noise-atom-fans-out + texture-absent-on-smooth source witnesses. The grep arms are valid SOURCE-witness artefacts (presence/absence), NOT grep-for-runtime-behaviour (the per-atom render is the separate device spec)." },
+    { "file": "tests/components/custom/aurora/atoms.test.ts", "change": "Updated for the re-derived atom shape (colorEnergy / zones{count,arrangement} / noise / medium{kind,amount}); kept totality + default-preservation. Added: the NOISE-atom fan-out, the texture-structurally-absent-on-smooth (a @ts-expect-error union narrowing + a default-preservation check), and the ZONES arrangement-distinct-layouts + nucleiPrior clamp. The totality fuzz is restructured into TWO coordinated sweeps (color axes × composition axes) — independent in resolveAtoms, so two sweeps exceed the 2000-combo floor without a multi-million-iteration deriveAurora blowup." },
+    { "file": "tests-visual/aurora-atoms-render.spec.ts", "change": "NEW (π-lane, fail-CLOSED, in the W00 tests-visual/ workspace) — routes to the atoms story, reads an ambient-drift baseline (two same-state reads), then drives each atom (medium/noise/zones/colorEnergy/seed) in the LIVE config UI and asserts the canvas centre region's mean perceptual delta clears the drift baseline + the floor (the atom is WIRED, not inert). Composited screenshot + pngjs readback (the W00 mechanism)." },
+    { "file": "src/components/custom/aurora/README.md", "change": "Demoted AuroraConfig to the INTERNAL author schema; documented the ONE atoms door as THE consumer surface (the zones/noise/color decomposition + the structural-absence note); struck the 'two-tier, nothing removed' framing; struck the dead deriveScene door references; updated the gate table (the extended roundtrip row + the new render row)." },
+    { "file": "src/components/custom/aurora/DESIGN.md", "change": "Rewrote §The atoms door (was §The two-tier door) — AuroraConfig is the internal author schema, resolveAtoms is the ONE consumer door, the re-derived atom table, the structural-absence note; struck the deriveScene references in §5/§7/§9 and the file tree." },
+    { "file": "tests/components/custom/aurora/derive-color.test.ts", "change": "Removed the deriveScene describe block + its deriveScene/AuroraMood/MOODS bindings (the deleted-def consumer dies with the def — the deriveAurora gamut-matrix block stays)." },
+    { "file": "docs/tranches/AX/audit/W10-aurora-options-converge.json", "change": "NEW — this born-RED→GREEN ledger." }
+  ],
+
+  "findingDispositions": {
+    "slice9_aurora-options-simplify": {
+      "F0_additiveNotTransposed": "FIXED — the live UI is TRANSPOSED onto the simplified model (the atoms tab is the default + drives resolveAtoms), not ADDED alongside the raw config.",
+      "F1_reDeriveAtomSet": "FIXED — re-derived to the user's named COLOR/ZONES/NOISE/MEDIUM/MOTION control elements (the NOISE atom + the ZONES arrangement + the COLOR energy knob).",
+      "F2_deadDeriveScene": "FIXED — deriveScene + its mood union/recipe + the duplicated thirds prior DELETED (grep=0).",
+      "F3_continuousCurve": "ADOPTED — colorEnergy is a CONTINUOUS t∈[0,1] curve over the co-varying chroma/value cluster (the corpus facet-26 successor over the 3-point mood LUT); the noise scalar is likewise continuous.",
+      "F4_silentInertArms": "FIXED — texture structurally absent on smooth + flow/wake excised (excise-or-wire)."
+    },
+    "slice7_aurora-color-spaces": {
+      "F2_deadDeriveScene": "FIXED (same as slice9 F2 — the dead second door).",
+      "F4_temperaturePoleModel": "FIXED — applyTemperature steps toward named WARM_POLE/COOL_POLE OKLCh anchors with a bounded throw (the documented model IS the implementation; the poles are a single retunable source)."
+    },
+    "outOfScopeRoutes": {
+      "warmCatchLight_samplePalette": "AX.W11 — the /color warmCatchLight OKLCh helper + the samplePalette palette-ramp gate-hole. NOT touched (W10 owns color.ts deriveScene-deletion + applyTemperature only; partition by symbol).",
+      "configuratorGlassRestyle": "AX.W38 — the AuroraConfigDock preset-chip glass-tier / tap-squish / data-slot restyle. NOT touched (W10 is FUNCTIONAL wiring only).",
+      "speedtestAdoption": "AX.W34 — the speedtest auroraConfig.ts → resolveAtoms adoption (a SIBLING repo). glass-ui writes NO speedtest source; the W10 adoption annex is the handoff (below).",
+      "shaderPipeline": "aurora.frag.ts / composition.glsl.ts / mediums.glsl.ts / brush.glsl.ts / aurora.wgsl.ts / renderMode.ts / WEBGPU_PARITY — W11/W12/W13/W07/W14. NOT touched."
+    }
+  },
+
+  "greenMeasurements": {
+    "typecheck": "vue-tsc --noEmit clean.",
+    "gate_proof_aurora_atoms_roundtrip": "PASS — (a) atoms.test.ts green (13 tests), (b) story routed + dock drives via resolveAtoms + atoms tab default, (c) dead-door grep=0 + exactly-one nucleiPrior, (d) noise atom fans out + texture absent on smooth.",
+    "unitSuite": "tests/components/custom/aurora/ — 48 tests pass (atoms re-shape + derive-gamut + color-equivalence all green).",
+    "deadDoorGrepSrc": 0,
+    "deriveAuroraFromColorGrepSrc": 0,
+    "applyTemperatureRegression": "At t=0 (shadow) and t=1 (light) the throw is exactly 22° (matching the prior ±22°) for every base hue, but the DIRECTION now tracks the named poles (e.g. green h=140 at t=1 swings -22° toward warm 70°, where the old model blindly added +22° AWAY from warm) — regression-safe magnitude, corrected direction.",
+    "newSpecTranspiles": "tests-visual/aurora-atoms-render.spec.ts esbuild-transpiles clean (resolves ./pi-manifest.ts).",
+    "runtimeReactivityChain": "atom-drag → patch() mutates the dock's reactive atoms → deep watcher → resolveAtoms(atoms) → Object.assign(config, resolved) (in-place on the configurator reactive proxy) → Aurora.vue's useAurora watch(getCfg, inst.update, {deep:true}) re-uploads uniforms → canvas re-renders. Verified end-to-end at the source level (useAurora.ts:229 is the load-bearing deep watcher)."
+  },
+
+  "speedtestE2AdoptionAnnex": {
+    "routedTo": "AX.W34 (cross-repo consumer adoption — glass-ui writes NO sibling source).",
+    "obligation": "speedtest's 232-line auroraConfig.ts AS-6 stopgap → a resolveAtoms({...}) call over the published @mkbabb/glass-ui/aurora door + excise the dead --aurora-1..6 / --aurora-gradient CSS tokens.",
+    "bornRedSiblingGate": "A sibling-side gate asserts speedtest's aurora backdrop is derived via resolveAtoms (the named-consumer-#2 contract — the live story is consumer #1, speedtest E2 is consumer #2, meeting the ≥2-consumer substrate-with-consumer bar). Born-RED in speedtest until the consume lands.",
+    "publishHinge": "The consume reaches speedtest only via the AX cut PUBLISHING (the W41 dts-watch + W33/W34/W35 republish hinge). W10 builds the door; the publish is a separate hinge. Discharges the §13 chronically-deferred 'speedtest E2 (aurora-derive)' item WITHOUT silently shipping a second dead public door (VAL-1 KILL)."
+  },
+
+  "liveVisualTruthAudit": {
+    "status": "PENDING — the orchestrator's binding close criterion (this headless agent cannot run the live Playwright + frontend-design pass on a real GPU at the 3 viewports × light/dark).",
+    "required": "Route to /substrates/aurora on a WebGL2-capable machine (the live aurora defaults to WebGL2 per W07 WEBGPU_PARITY=false). (1) Confirm the Atoms tab opens FIRST (the default surface) — the ≤7 controls (COLOR seed/harmony/energy, ZONES count/arrangement, NOISE, MEDIUM, MOTION) are visible; the raw ~28-field layers are behind the Advanced tab. (2) Drive each atom and confirm a FELT visible change on the live canvas: the NOISE knob warps the organic boundary; the ZONES arrangement (scattered↔composed↔centred) re-places the nuclei; the COLOR energy knob re-saturates; the MEDIUM swap (smooth→oil) shows strokework; the SEED swap re-hues the palette. (3) Confirm NO dead affordance: no texture slider on a smooth medium, no flow/wake control. (4) Confirm the preset round-trip works (select a preset → the Advanced raw config loads; the atoms tab is the simple author surface). At 375×667 / 1280×800 / 1440×900 in light AND dark. Capture the paired-π BEFORE (raw-config-dock / orphaned-atoms-panel) / AFTER (routed atoms-default door) + the per-atom (noise/zones/color) canvas-region deltas under docs/tranches/AX/audit/.",
+    "headlessProof": "The agent's extended proof:aurora-atoms-roundtrip PASS + the unit suite + the esbuild-transpiled per-atom render spec are the headless floor; the orchestrator runs proof:aurora-atoms-render on the real Metal GPU (the screenshot+pngjs per-atom delta) and the live frontend-design audit — the wave does NOT close on the headless gate alone (the cardinal AX precept)."
+  }
+}
