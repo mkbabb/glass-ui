@@ -31,6 +31,7 @@ import {
     OETF_GLSL,
     OKLCH_MATRICES_GLSL,
     PALETTE_RAMP_GLSL,
+    PCG_HASH_GLSL,
 } from "../../../../../composables/glass/webgl/shaders/procedural-color.glsl";
 import { AURORA_COMPOSITION_GLSL } from "./composition.glsl";
 import { AURORA_FLOW_GLSL } from "./flow.glsl";
@@ -195,6 +196,17 @@ float fbm(vec2 p) {
   }
   return v;
 }
+
+// AX.W12 — the painterly-medium organic noise basis (Jarzynski PCG2D integer-bit hash
+// + 2D simplex gradient noise), SPLICED from the shared procedural-color chunk — the
+// SAME single source the WebGPU twin (aurora.wgsl.ts) splices, so the hash can NEVER
+// drift between backends (proof:aurora-noise-hash-equivalence locks the twins to 1e-6).
+// The painterly mediums (mediumOil's tooth/granulation) opt into pcgHash2/gnoise for
+// organic paper/pigment grain; the smooth/atmospheric pole KEEPS its cheap value-noise
+// fbm above (the cost-tiering is preserved per AX.W12 §3a — this is an ADDITIVE basis,
+// not a blanket upgrade). The aurora-local hash21/vnoise/fbm loop stays (legitimately
+// divergent per the chunk's §3a).
+${PCG_HASH_GLSL}
 
 // The sRGB OETF (linearToSrgb) — spliced from the shared procedural-color chunk
 // (AV.W2 — the single OETF source; the AV.W1 local copy is deleted here). Aurora's

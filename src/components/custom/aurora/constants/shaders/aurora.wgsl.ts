@@ -35,6 +35,7 @@ import {
     OKLCH_MATRICES_WGSL,
     FBM_ROT_WGSL,
     PALETTE_RAMP_WGSL,
+    PCG_HASH_WGSL,
 } from "../../../../../composables/glass/webgl/shaders/procedural-color.glsl";
 
 // The uniform/storage split layout. The bridge's WebGPU write path (uniformBridge.ts)
@@ -114,6 +115,15 @@ ${OETF_WGSL}
 ${FBM_ROT_WGSL}
 ${OKLCH_MATRICES_WGSL}
 ${PALETTE_RAMP_WGSL}
+
+// AX.W12 — the painterly-medium organic noise basis (PCG2D integer-bit hash + 2D
+// simplex gradient noise), SPLICED from the shared procedural-color chunk — the EXACT
+// twin of the GLSL leaf aurora.frag.ts splices, so the hash can NEVER drift between
+// backends (proof:aurora-noise-hash-equivalence locks the twins to 1e-6). The WebGPU
+// single-pass fs_main below stays the smooth pole (it runs no medium body — the
+// painterly mediums are the W7c/W14 multi-pass), so the leaf is single-sourced HERE for
+// the twin-equivalence contract; the W14 painterly passes consume it.
+${PCG_HASH_WGSL}
 
 fn hash21(p0: vec2f) -> f32 {
   var p = fract(p0 * vec2f(123.34, 456.21));
