@@ -122,7 +122,12 @@ vec3 mediumPastel(vec3 col, vec2 p, float t) {
 }
 `;
 
-export const AURORA_MEDIUMS_POST_BRUSH_GLSL = /* glsl */ `// ── Crayon / oil-pastel — paper tooth × wax pigment (PEER medium) ─────────
+export const AURORA_MEDIUMS_POST_BRUSH_GLSL = /* glsl */ `// ── Medium id constants (mirror uniformBridge.ts MEDIUM_ID — the uMedium ladder) ──
+// The StrokeProfile selector (AX.W12) dispatches on the medium id; today only oil
+// authors a profile, the W13 van-Gogh / oil-pastel profiles add cases to profileFor.
+#define MEDIUM_OIL 3
+
+// ── Crayon / oil-pastel — paper tooth × wax pigment (PEER medium) ─────────
 // Crayon is not strokes. It's pigment crumbs dragged across paper tooth.
 // Model: heavy 2D tooth noise at multiple scales, anisotropically stretched
 // along flow direction, multiplied into the base color. Add a slow "waxy
@@ -206,48 +211,78 @@ vec3 mediumCrayon(vec3 col, vec2 p, float t) {
   return result;
 }
 
-vec3 mediumOil(vec3 col, vec2 p, float t) {
-  // Mode knobs (uStrokeMode) — oil-stroke modes ONLY (crayon is a peer medium,
-  // uMedium==4, dispatched at main()):
-  //   0 oil         — balanced modern-abstract/palette-knife hybrid
-  //   1 knife       — palette-knife impasto: razor edges, heavy bristle/shadow
-  //   3 brushwork   — thick bristle brush
-  int mode = uStrokeMode;
+// ── StrokeProfile — the oil-stroke parameter vector (AX.W12, slice 8 F6) ──────
+// The SBR "stroke = parameter vector" canon (facet 11): the per-mode if-ladder knobs
+// become struct FIELDS — logic-as-DATA, not an imperative branch. profileFor(medium,
+// mode) populates the profile for a (medium, mode) pair; paintStrokeLayers(profile) runs
+// the four-layer bestOil/paintOver cascade off it. A new medium (the W13 van-Gogh /
+// oil-pastel profiles) AUTHORS a profile entry — it never edits a monolith.
+struct StrokeProfile {
+  int   shapeType;   // 0 tapered, 1 load-drag, 2 dab, 3 even
+  float bristleAmp;  // edge raggedness 0..0.5
+  float streakFreq;  // internal-streak spatial frequency
+  float streakAmp;   // internal-streak amplitude
+  float impastoAmp;  // paint-thickness contribution (the relight reads the height)
+  float hardness;    // edge-compositing crispness 0..1
+  float toothScale;  // canvas-tooth (linen weave) spatial frequency
+  float toothAmp;    // canvas-tooth amplitude
+  float pigmentSat;  // pigment saturation boost (OKLCh chroma scale)
+  float densityBig;  // layer-1 (big gestural) placement density gate
+  float densityMed;  // layer-2 (medium body) placement density gate
+  float densitySml;  // layer-3 (small dabs) placement density gate
+};
 
-  // Per-mode parameters
-  int  shapeType   = 0;     // tapered
-  float bristleAmp = 0.25;  // 0..0.5
-  float streakFreq = 9.0;
-  float streakAmp  = 0.09;
-  float impastoAmp = 0.9;
-  float hardness   = 0.80;  // edge compositing
-  float toothScale = 240.0;
-  float toothAmp   = 0.09;
-  float pigmentSat = 1.03;
-  float densityBig = 0.65;
-  float densityMed = 0.78;
-  float densitySml = 0.90;
-
-  if (mode == 1) {        // palette knife
-    shapeType = 3;        // flat, even
-    bristleAmp = 0.12;
-    streakFreq = 4.0;  streakAmp = 0.05;
-    impastoAmp = 1.6;
-    hardness   = 0.95;
-    toothAmp   = 0.04;
-    densityBig = 0.80; densityMed = 0.88; densitySml = 0.70;
-  } else if (mode == 3) { // thick brushwork
-    shapeType = 0;        // tapered
-    bristleAmp = 0.32;
-    streakFreq = 14.0; streakAmp = 0.14;
-    impastoAmp = 1.2;
-    hardness   = 0.85;
-    toothAmp   = 0.07;
+// The (medium, mode) -> StrokeProfile selector. The if-ladder's knobs are the profile's
+// fields; a new medium adds a CASE here (never an edit to a dispatch body). mode is the
+// uStrokeMode oil-stroke sub-mode (0 oil, 1 palette-knife, 3 brushwork) — crayon is a
+// PEER medium (uMedium==4), not an oil mode.
+StrokeProfile profileFor(int medium, int mode) {
+  // The oil baseline (mode 0) — balanced modern-abstract/palette-knife hybrid.
+  StrokeProfile prof = StrokeProfile(
+    0,      // shapeType — tapered
+    0.25,   // bristleAmp
+    9.0,    // streakFreq
+    0.09,   // streakAmp
+    0.9,    // impastoAmp
+    0.80,   // hardness
+    240.0,  // toothScale
+    0.09,   // toothAmp
+    1.03,   // pigmentSat
+    0.65,   // densityBig
+    0.78,   // densityMed
+    0.90    // densitySml
+  );
+  if (mode == 1) {           // palette knife — razor edges, heavy impasto
+    prof.shapeType  = 3;     // flat, even
+    prof.bristleAmp = 0.12;
+    prof.streakFreq = 4.0;  prof.streakAmp = 0.05;
+    prof.impastoAmp = 1.6;
+    prof.hardness   = 0.95;
+    prof.toothAmp   = 0.04;
+    prof.densityBig = 0.80; prof.densityMed = 0.88; prof.densitySml = 0.70;
+  } else if (mode == 3) {    // thick brushwork — heavy bristle brush
+    prof.shapeType  = 0;     // tapered
+    prof.bristleAmp = 0.32;
+    prof.streakFreq = 14.0; prof.streakAmp = 0.14;
+    prof.impastoAmp = 1.2;
+    prof.hardness   = 0.85;
+    prof.toothAmp   = 0.07;
   }
+  return prof;
+}
 
-  // Scales & multipliers from uniforms
+// The single parameterized four-layer stroke cascade (AX.W12). The four hand-unrolled
+// bestOil/paintOver invocations collapse into ONE body driven by the profile + the
+// uniform-derived per-layer scale/anisotropy multipliers (which are mode-INVARIANT — the
+// per-layer offsets, seeds, and len/wid muls are fixed across modes, so they stay here as
+// the cascade's structure; only the profile's knobs differentiate the medium). The
+// mode passes through for the two mode-special-cased shapes (knife layer-3 dabs +
+// layer-4 fill shape), which are placement details of the cascade, not profile knobs.
+void paintStrokeLayers(inout vec3 col, inout float height, StrokeProfile prof,
+                       int mode, vec2 p, float t) {
+  // Scales & multipliers from uniforms (mode-invariant cascade structure).
   float baseScale = max(uStrokeScale * 0.006, 0.008);
-  // Three layers: big gestural, medium body, small dabs
+  // Three primary layers: big gestural, medium body, small dabs.
   float sBig = baseScale * 2.4;
   float sMed = baseScale * 1.1;
   float sSml = baseScale * 0.45;
@@ -262,30 +297,25 @@ vec3 mediumOil(vec3 col, vec2 p, float t) {
   float jitterAmt = 0.75;   // large jitter — no grid
   vec2 flow = flowField(p, t);
 
-  vec3 result = col;
-  // AW.W4.2 — accumulated paint HEIGHT across the stroke layers. The relight reads
-  // its gradient for the normal; the canvas tooth seeds the base relief.
-  float height = 0.0;
-
   // Layer 1 — big gestural strokes (sparse, shaping)
   StrokeHit hBig = bestOil(p, sBig, lenMulBig, widMulBig, jitterAmt * 0.55,
-                           densityBig, shapeType, bristleAmp, flow, t, 1.3);
-  paintOver(result, height, hBig, streakFreq * 0.7, streakAmp,
-            uImpasto * impastoAmp * uStrokeAmount, hardness, 1.3);
+                           prof.densityBig, prof.shapeType, prof.bristleAmp, flow, t, 1.3);
+  paintOver(col, height, hBig, prof.streakFreq * 0.7, prof.streakAmp,
+            uImpasto * prof.impastoAmp * uStrokeAmount, prof.hardness, 1.3);
 
   // Layer 2 — medium body strokes
   StrokeHit hMed = bestOil(p + vec2(11.3, 3.7), sMed, lenMulMed, widMulMed,
-                           jitterAmt, densityMed, shapeType, bristleAmp, flow, t, 2.7);
-  paintOver(result, height, hMed, streakFreq, streakAmp,
-            uImpasto * impastoAmp * uStrokeAmount, hardness, 2.7);
+                           jitterAmt, prof.densityMed, prof.shapeType, prof.bristleAmp, flow, t, 2.7);
+  paintOver(col, height, hMed, prof.streakFreq, prof.streakAmp,
+            uImpasto * prof.impastoAmp * uStrokeAmount, prof.hardness, 2.7);
 
   // Layer 3 — small dabs (more frequent, smaller)
-  int smlShape = (mode == 1) ? 2 : shapeType; // knife uses dabs for sparkle
+  int smlShape = (mode == 1) ? 2 : prof.shapeType; // knife uses dabs for sparkle
   StrokeHit hSml = bestOil(p + vec2(-5.1, 8.4), sSml, lenMulSml, widMulSml,
-                           jitterAmt * 1.3, densitySml, smlShape,
-                           bristleAmp * 0.85, flow, t, 4.1);
-  paintOver(result, height, hSml, streakFreq * 1.4, streakAmp * 0.8,
-            uImpasto * impastoAmp * 0.65 * uStrokeAmount, hardness, 4.1);
+                           jitterAmt * 1.3, prof.densitySml, smlShape,
+                           prof.bristleAmp * 0.85, flow, t, 4.1);
+  paintOver(col, height, hSml, prof.streakFreq * 1.4, prof.streakAmp * 0.8,
+            uImpasto * prof.impastoAmp * 0.65 * uStrokeAmount, prof.hardness, 4.1);
 
   // Layer 4 — fill dabs (very dense, very small) — covers bald spots
   float sFill = baseScale * 0.22;
@@ -294,33 +324,48 @@ vec3 mediumOil(vec3 col, vec2 p, float t) {
   int fillShape = (mode == 1) ? 3 : 2; // knife=even, others=dab (round fills)
   StrokeHit hFill = bestOil(p + vec2(3.9, -6.2), sFill, lenMulFill, widMulFill,
                             jitterAmt * 1.5, 0.95, fillShape,
-                            bristleAmp * 0.6, flow, t, 8.9);
-  paintOver(result, height, hFill, streakFreq * 1.8, streakAmp * 0.6,
-            uImpasto * impastoAmp * 0.4 * uStrokeAmount, hardness * 0.9, 8.9);
+                            prof.bristleAmp * 0.6, flow, t, 8.9);
+  paintOver(col, height, hFill, prof.streakFreq * 1.8, prof.streakAmp * 0.6,
+            uImpasto * prof.impastoAmp * 0.4 * uStrokeAmount, prof.hardness * 0.9, 8.9);
 
   // Optional crosshatch layer
   if (uStrokeLayers == 2) {
     vec2 flow2 = vec2(-flow.y, flow.x);
     StrokeHit hX = bestOil(p + vec2(7.3, -2.1), sMed, lenMulMed * 0.9, widMulMed,
-                           jitterAmt, densityMed * 0.7, shapeType, bristleAmp, flow2, t, 6.5);
-    paintOver(result, height, hX, streakFreq, streakAmp * 0.85,
-              uImpasto * impastoAmp * 0.55 * uStrokeAmount, hardness, 6.5);
+                           jitterAmt, prof.densityMed * 0.7, prof.shapeType, prof.bristleAmp, flow2, t, 6.5);
+    paintOver(col, height, hX, prof.streakFreq, prof.streakAmp * 0.85,
+              uImpasto * prof.impastoAmp * 0.55 * uStrokeAmount, prof.hardness, 6.5);
   }
+}
+
+vec3 mediumOil(vec3 col, vec2 p, float t) {
+  // The oil medium is now a thin body: fetch the profile, paint the layers, then the
+  // canvas-tooth + relight + saturation finish. The per-mode if-ladder + the four
+  // hand-unrolled stroke layers moved into profileFor + paintStrokeLayers (AX.W12).
+  //   uStrokeMode: 0 oil (gestural), 1 palette-knife, 3 brushwork.
+  int mode = uStrokeMode;
+  StrokeProfile prof = profileFor(MEDIUM_OIL, mode);
+
+  vec3 result = col;
+  // AW.W4.2 — accumulated paint HEIGHT across the stroke layers. The relight reads
+  // its gradient for the normal; the canvas tooth seeds the base relief.
+  float height = 0.0;
+  paintStrokeLayers(result, height, prof, mode, p, t);
 
   // Canvas tooth — linen weave
-  float tooth1 = vnoise(p * toothScale);
-  float tooth2 = vnoise(p * toothScale * vec2(0.6, 2.4) + 37.0);
+  float tooth1 = vnoise(p * prof.toothScale);
+  float tooth2 = vnoise(p * prof.toothScale * vec2(0.6, 2.4) + 37.0);
   float tooth  = (0.6 * tooth1 + 0.4 * tooth2) - 0.5;
-  result *= 1.0 + tooth * toothAmp * uCanvasGrain;
+  result *= 1.0 + tooth * prof.toothAmp * uCanvasGrain;
 
   // AW.W4.2 — relight the accumulated paint height with the movable uLightDir
   // source (diffuse + Blinn specular, in LINEAR before aces()). The canvas tooth
   // is the base relief term so the weave also catches the raking light.
-  float canvasBase = tooth * toothAmp * 0.5;
+  float canvasBase = tooth * prof.toothAmp * 0.5;
   result = relightImpasto(result, height, canvasBase);
 
   // Pigment saturation boost
-  result = saturate3(result, pigmentSat);
+  result = saturate3(result, prof.pigmentSat);
 
   return result;
 }
