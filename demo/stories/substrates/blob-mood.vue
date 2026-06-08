@@ -71,7 +71,7 @@ const HARMONIES: ColorHarmony[] = [
                 <div class="relative aspect-square w-56 overflow-hidden rounded-card">
                     <GooBlob
                         ref="blobRef"
-                        color="oklch(0.7 0.16 250)"
+                        color="var(--primary)"
                         :color-resolver="defaultBlobColorResolver"
                         :config="moodConfig"
                         seed="mood"
@@ -101,7 +101,7 @@ const HARMONIES: ColorHarmony[] = [
                 <div class="flex items-center gap-4">
                     <div class="relative aspect-square w-40 overflow-hidden rounded-card">
                         <GooBlob
-                            color="oklch(0.7 0.16 250)"
+                            color="var(--primary)"
                             :color-resolver="defaultBlobColorResolver"
                             :config="paletteConfig"
                             seed="palette"

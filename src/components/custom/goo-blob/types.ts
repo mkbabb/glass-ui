@@ -154,10 +154,37 @@ export interface BlobConfig {
 
 export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
     canvasSize: 200,
-    bodyRadius: 0.25,
+    // ── Geometry cohort, re-derived as ONE footprint budget (AX.W15 F0) ──────────
+    //
+    // The wrapper footprint is the HARD visual bound. The coordinate chain: the
+    // full-canvas quad makes `uv ∈ [-0.5, 0.5]` across the CANVAS; the canvas is
+    // CSS-sized 160% of the wrapper (GooBlob.vue), so the wrapper edge sits at
+    // `±0.5 × (1/1.6) = ±0.3125` in `uv` — the wrapper HALF-EXTENT is 0.3125 uv.
+    // Every length uniform rides `POS_SCALE = 0.625` (useMetaballRenderer.ts), so a
+    // raw config radius `r` paints at `r × 0.625` uv and reads as
+    // `r × 0.625 / 0.3125 = r × 2.0` of the wrapper half.
+    //
+    // The budget (the SOTA-deepening [25] atomic sum): solve
+    // `body + orbit + satellite + smin_band` TOGETHER so the merged field fits
+    // ~70-80% of the wrapper, with the orbit EXCURSION the only intentional overflow.
+    // The smin band is INVISIBLE to a raw-radius budget — IQ's kernel expands the
+    // isosurface OUTWARD of the union by ~k, so it MUST be counted. At idle the band
+    // is `smoothK × moodMult(≈1.03) ≈ 0.0515` raw. The W08 over-merge was tuned
+    // against the OLD flooded field; this is the contained re-solve:
+    //   body  0.22 → 0.54 wrapper-half (radius) — a generous, fully-contained bead.
+    //   orbit 0.27 + sat 0.105 = 0.375 outer reach → 0.75 wrapper-half at rest; the
+    //         wobble/eccentricity carries the widest excursion to ~0.86 (the
+    //         intended orbit overflow, which the 160% canvas margin absorbs).
+    //   body + smin (0.22 + 0.0515) → 0.54 wrapper-half — the bead clears the rim
+    //         with a transparent margin on ALL FOUR sides (W08 left top/bottom
+    //         touching; this is the four-side containment).
+    // This is a SINGLE atomic re-derivation of the length cohort DOWN against the
+    // footprint, not a per-constant nudge, and it KEEPS W08's POS_SCALE regime
+    // untouched (the ratified disposition — §4 note 13).
+    bodyRadius: 0.22,
     satelliteCount: 3,
-    satelliteRadius: 0.13,
-    orbitRadius: 0.35,
+    satelliteRadius: 0.105,
+    orbitRadius: 0.27,
 
     tempo: 1.0,
 
@@ -173,10 +200,21 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
     smoothK: 0.05,
     merge: "quadratic",
 
-    noiseAmp: 0.025,
+    // ── Living-but-calm membrane (AX.W15 F3) ─────────────────────────────────────
+    //
+    // Once the body is CONTAINED, the warped-FBM watercolor edge resurfaces. The
+    // displacement is tied to the new (smaller) body so the wobble stays
+    // PROPORTIONAL: at idle the shader paints `±0.5 × noiseAmp × (moodNoise/0.025) ×
+    // POS_SCALE ≈ ±0.011 uv` on a `0.1375 uv` body radius — an ~8% organic wobble, a
+    // calm living membrane rather than the dead geometric arc (`warpAmp:0.0` shipped
+    // a clean circle). `warpAmp` turns ON at a calm 0.35 floor so the domain-warped
+    // marbling reads (the FBM lacunarity/persistence is tuned toward the LIQUID band
+    // in watercolor-edges.glsl.ts — ~1.8 / ~0.42, not terrain-grade). `noiseFreq`
+    // stays 3.5 (proportional to the body scale).
+    noiseAmp: 0.038,
     noiseFreq: 3.5,
     noiseSpeed: 0.08,
-    warpAmp: 0.0,
+    warpAmp: 0.35,
 
     pulseFreq: 0.3,
     pulseAmp: 0.008,
@@ -188,14 +226,23 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
     colorNoiseSpeed: 0.05,
     paletteStops: [],
 
-    iridescence: 0.0,
+    // ── Lit warm-glass droplet, the DEFAULT identity (AX.W15 F1) ─────────────────
+    //
+    // A greenfield product's canonical look IS the SOTA look — the "zero regression"
+    // OFF-by-default flag-gating is DELETED as the legacy/fallback path the §0 mandate
+    // forbids. The lit dome (curved-rim Fresnel + Blinn-Phong glint), warm-pearl
+    // iridescence, a fast-SSS floor and a low core-glow ALL execute correctly and were
+    // swamped only by the over-sized field — containment (F0) resurfaces them. The
+    // floors are LOW and TASTEFUL (a wet warm-cream bead, not a garish neon thin-film):
+    // a warm-pearl sheen, a thin translucent rim, a faint inner luminosity.
+    iridescence: 0.18,
     iridHue: 85,
     iridSpeed: 0.06,
-    sssScale: 0.0,
+    sssScale: 0.2,
     sssPower: 2.0,
-    coreGlow: 0.0,
+    coreGlow: 0.1,
 
-    lit: false,
+    lit: true,
     rimColor: "var(--foreground)",
     lightDir: [0.4, 0.7, 0.6],
     specStrength: 0.9,
@@ -203,14 +250,22 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
     rimPower: 2.5,
     rimStrength: 0.5,
 
-    // Non-zero so hover is felt out of the box (W10): a small lean-IN toward the
-    // cursor. Negative shies away; the shader honors the sign.
+    // ── Interaction magnitudes, re-balanced against the contained body (AX.W15 F2) ─
+    //
+    // NO new interaction code — containment alone makes the EXISTING wired
+    // spring/trail/squash/click legible (the W10/W11 work was swamped by the
+    // over-sized field). The magnitudes were tuned against the OVERSIZED body; the
+    // new bead is smaller, so the lean now READS — `pointerStrength` lifts to 0.11
+    // for a clearly-felt lean toward the cursor WITHIN the footprint, `stretch` to
+    // 0.5 so a flick squashes visibly, and `clickImpulse` stays a bouncy 0.5. The
+    // trail pseudopod radius is driven off `satelliteRadius` (now 0.105) in the
+    // renderer, so it tapers proportionally to the smaller body with no extra knob.
     pointerAttraction: 0.35,
-    pointerStrength: 0.08,
-    stretch: 0.4,
+    pointerStrength: 0.11,
+    stretch: 0.5,
     clickImpulse: 0.5,
 
-    eccentricity: 0.25,
+    eccentricity: 0.22,
     orbitSpeedScale: 1.0,
     wobbleScale: 1.0,
     mergeRate: 1.0,

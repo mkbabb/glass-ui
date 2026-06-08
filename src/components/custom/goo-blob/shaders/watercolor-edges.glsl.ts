@@ -10,11 +10,13 @@
 // edge displacement now rides ONE noise primitive whose derivative the surface
 // could consume.
 //
-// `fbm` accumulates value-only octaves (the displacement scalar); `fbmWarped`
-// wraps it in ONE domain-warp pass (`fbm(p + W*fbm(p+offset))`) for the organic
-// marbled edge. Both read the shared FBM_ROT rotation constant. Two exports: the
-// assembler splices the W2 ${FBM_ROT_GLSL} BETWEEN them (the hash + noised() before
-// the constant, the FBM loops after) so FBM_ROT is in scope for the loop bodies.
+// `fbm` accumulates value-only octaves (the color-noise + warp-offset scalar);
+// `fbmG`/`fbmWarpedG` accumulate the value AND its ANALYTIC GRADIENT per octave
+// (AX.W15 — the keystone feed for the analytic surface normal that DELETES the
+// 4-tap), the warp pass folded directly into `fbmWarpedG`. All read the shared
+// FBM_ROT rotation constant. Two exports: the assembler splices the W2
+// ${FBM_ROT_GLSL} BETWEEN them (the hash + noised() before the constant, the FBM
+// loops after) so FBM_ROT is in scope for the loop bodies.
 export const METABALL_EDGE_NOISE_PRE_GLSL = /* glsl */ `// --- Noise ---
 
 float hash21(vec2 p) {
@@ -60,7 +62,17 @@ vec3 noised(vec2 p) {
 // Rotated-octave FBM over the analytic gradient noise: a fixed ~0.5 rad 2x2
 // rotation between octaves breaks the axis-aligned banding. The rotation CONSTANT
 // is spliced from the shared chunk (AV.W2 — the one FBM_ROT); the loops below
-// stay blob-local (param octaves + 2.0 lacunarity, per §3a).`;
+// stay blob-local (param octaves + the LIQUID lacunarity/persistence, per §3a).`;
+
+// AX.W15 F3 — the LIQUID-not-rocky band. The membrane reads as a liquid blob, not
+// terrain: the lacunarity drops 2.0 → 1.8 (octaves stay closer in frequency so the
+// edge undulates smoothly rather than fracturing) and the persistence/gain drops
+// 0.5 → 0.42 (higher octaves contribute LESS, so the silhouette stays a calm wave,
+// not a noisy crust). 2-3 octaves on the default path (NOT 4-5 terrain-grade). The
+// QUINTIC fade in noised() is preserved — a cubic fade creases the analytic gradient
+// and shimmers the normal.
+const FBM_LACUNARITY = 1.8;
+const FBM_GAIN = 0.42;
 
 export const METABALL_EDGE_NOISE_POST_GLSL = /* glsl */ `float fbm(vec2 p, int octaves) {
     float value = 0.0;
@@ -70,18 +82,48 @@ export const METABALL_EDGE_NOISE_POST_GLSL = /* glsl */ `float fbm(vec2 p, int o
         if (i >= octaves) break;
         value += amp * noised(p * freq).x;
         p = FBM_ROT * p;
-        freq *= 2.0;
-        amp *= 0.5;
+        freq *= ${FBM_LACUNARITY.toFixed(1)};
+        amp *= ${FBM_GAIN.toFixed(2)};
     }
     return value;
 }
 
-// One domain-warp pass: offset the sample point by a low-frequency FBM of itself
-// (the IQ fbm(p + W*fbm(p)) marbling). warpAmp (uniform-driven) is the warp
-// strength; warpAmp == 0.0 degrades to plain fbm (the pre-warp look).
-float fbmWarped(vec2 p, int octaves, float warpAmp) {
-    if (warpAmp <= 0.0) return fbm(p, octaves);
+// AX.W15 — FBM with ANALYTIC GRADIENT. Returns vec3(value, ∂/∂x, ∂/∂y). The
+// gradient accumulates noised()'s analytic gradient per octave, chain-ruled
+// through the per-octave frequency scale AND the FBM_ROT rotation: octave i samples
+// at R^i · (freq·p), so the gradient w.r.t. the ORIGINAL p picks up freq and
+// the accumulated rotation transpose (R^T)^i. The keystone feed for the
+// analytic surface normal — it DELETES the per-pixel 4-tap finite difference.
+vec3 fbmG(vec2 p, int octaves) {
+    float value = 0.0;
+    vec2 grad = vec2(0.0);
+    float amp = 0.5;
+    float freq = 1.0;
+    // The accumulated octave rotation R^i — its transpose maps the i-th octave's
+    // local gradient back into the ORIGINAL p frame. Seeded at identity (octave 0).
+    mat2 rotAccum = mat2(1.0, 0.0, 0.0, 1.0);
+    vec2 pp = p;
+    for (int i = 0; i < 4; i++) {
+        if (i >= octaves) break;
+        vec3 n = noised(pp * freq);
+        value += amp * n.x;
+        // d(value)/dp = amp · freq · (R^i)^T · noised.yz  (the rotated chain rule).
+        grad += amp * freq * (transpose(rotAccum) * n.yz);
+        pp = FBM_ROT * pp;
+        freq *= ${FBM_LACUNARITY.toFixed(1)};
+        amp *= ${FBM_GAIN.toFixed(2)};
+        rotAccum = FBM_ROT * rotAccum;
+    }
+    return vec3(value, grad);
+}
+
+// One domain-warp pass with the ANALYTIC GRADIENT carried (warp-Jacobian
+// APPROXIMATION per the SOTA deepening [2]: the warp is low-frequency, so the
+// gradient of the OUTER fbm dominates and the warp-offset Jacobian is dropped —
+// the error is sub-perceptible and full autodiff is overfit for one blob).
+vec3 fbmWarpedG(vec2 p, int octaves, float warpAmp) {
+    if (warpAmp <= 0.0) return fbmG(p, octaves);
     vec2 q = vec2(fbm(p + vec2(0.0, 0.0), octaves), fbm(p + vec2(5.2, 1.3), octaves));
-    return fbm(p + warpAmp * (q - 0.5), octaves);
+    return fbmG(p + warpAmp * (q - 0.5), octaves);
 }
 `;

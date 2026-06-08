@@ -157,79 +157,104 @@ ${OKLCH_MATRICES_GLSL}
     METABALL_OKLCH_PERTURB_GLSL +
     NL +
     /* glsl */ `
-// The composite SDF field — the domain-warped body membrane smin-merged with the
-// satellites. Factored so the lit-surface block (W9.b) can sample the SAME field
-// at a screen-space epsilon to derive the IQ tetrahedron normal: the normal MUST
-// ride the composite distance the alpha is cut from, not a clean circle.
-float sceneDist(vec2 uv) {
-    // Pulsing body radius.
-    float bodyR = uBodyRadius + sin(uPulsePhase) * uPulseAmp;
+// AX.W15 — de-synced breath. The body throb was a single sin(uPulsePhase) — a
+// mechanical pulse that re-syncs every cycle. Three DETUNED sines at IRRATIONAL
+// frequency ratios (1, 0.13/0.09 ≈ 1.444, 0.31) never re-phase, so the membrane
+// breathes like a living creature (an asymmetric slower-exhale calm band) rather
+// than a metronome. Normalized so the composite stays in ~[-1, 1].
+float breath(float phase) {
+    return (sin(phase)
+          + 0.5 * sin(phase * 1.4444 + 1.7)
+          + 0.28 * sin(phase * 0.31 + 4.1)) / 1.78;
+}
 
-    // Velocity-driven VOLUME-PRESERVING squash-and-stretch (W10). Stretch the body
-    // along the motion direction by sa = 1 + |v|*k and squash the PERPENDICULAR
-    // axis by EXACTLY 1/sa (NOT 1 - amt, which loses area so the blob SHRINKS at
-    // speed). Applied as an anisotropic basis in body space: q = (dot/sa, dot*sa).
+// AX.W15 — the composite SDF field WITH its ANALYTIC GRADIENT, returned as
+// vec3(dist, ∂d/∂x, ∂d/∂y). The domain-warped body membrane smin-merged with the
+// satellites + trail; the gradient propagates through sminG's mix(a.yz, b.yz, h)
+// so the surface normal reads the field gradient DIRECTLY (the 4-tap finite
+// difference is DELETED — its 4 full evals per lit pixel are gone).
+//
+// The ANISOTROPIC SQUASH (W10 volume-preserving stretch) is a linear map
+// bodyUv = D·R·uv (R rotates world→(motion-axis, perp); D = diag(1/sa, sa)). The
+// body field's gradient is computed in bodyUv space, so it MUST be transformed back
+// to uv space by M^T = R^T·D (the inverse-transpose handling the SOTA-deepening [2]
+// warns the 4-tap did implicitly by sampling in screen space).
+vec3 sceneDistG(vec2 uv) {
+    // De-synced pulsing body radius.
+    float bodyR = uBodyRadius + breath(uPulsePhase) * uPulseAmp;
+
+    // Velocity-driven VOLUME-PRESERVING squash-and-stretch (W10). sa = 1 + |v|·k
+    // along motion, EXACTLY 1/sa perpendicular (area-preserving). The basis (ax,
+    // perp) is captured so the gradient can be transformed back below.
     vec2 bodyUv = uv;
+    vec2 ax = vec2(1.0, 0.0);
+    vec2 perp = vec2(0.0, 1.0);
+    float sa = 1.0;
     float speed = length(uVelocity);
-    if (uStretch > 0.0 && speed > 1e-4) {
-        vec2 ax = uVelocity / speed;          // motion axis (unit)
-        vec2 perp = vec2(-ax.y, ax.x);        // perpendicular
-        float sa = 1.0 + speed * uStretch;    // stretch factor along motion
+    bool squashed = uStretch > 0.0 && speed > 1e-4;
+    if (squashed) {
+        ax = uVelocity / speed;
+        perp = vec2(-ax.y, ax.x);
+        sa = 1.0 + speed * uStretch;
         bodyUv = vec2(dot(uv, ax) / sa, dot(uv, perp) * sa);
     }
 
-    // Domain-warped FBM displacement — the organic marbled watercolor membrane.
-    float noiseVal = fbmWarped(bodyUv * uNoiseFreq + uTime * uNoiseSpeed, 3, uWarpAmp);
-    float bodyDisplacement = (noiseVal - 0.5) * uNoiseAmp;
+    // Domain-warped FBM displacement WITH its analytic gradient (the warp-Jacobian
+    // approximation per [2]). disp = (noiseVal - 0.5) · uNoiseAmp; its gradient in
+    // bodyUv space is uNoiseAmp · uNoiseFreq · fbmGrad (the uNoiseFreq chain factor
+    // from the bodyUv·uNoiseFreq argument).
+    vec3 fbmv = fbmWarpedG(bodyUv * uNoiseFreq + uTime * uNoiseSpeed, 3, uWarpAmp);
+    float bodyDisplacement = (fbmv.x - 0.5) * uNoiseAmp;
+    vec2 dispGradBody = uNoiseAmp * uNoiseFreq * fbmv.yz;
 
-    float d = sdCircle(bodyUv, vec2(0.0), bodyR + bodyDisplacement);
+    // Body circle WITH gradient (in bodyUv space). The displaced radius subtracts
+    // the displacement, so the body gradient is circleGrad - dispGrad (sign per
+    // [2]: d = circleDist - displacement ⇒ grad = circleGrad - dispGrad).
+    vec3 bodyG = sdgCircle(bodyUv, vec2(0.0), bodyR + bodyDisplacement);
+    vec2 bodyGradBody = bodyG.yz - dispGradBody;
+
+    // Transform the body gradient back to uv space: g_uv = R^T · D · g_body, i.e.
+    // scale by D = diag(1/sa, sa) in the (ax, perp) frame then reconstruct in world.
+    vec2 bodyGradUv;
+    if (squashed) {
+        vec2 scaled = vec2(bodyGradBody.x / sa, bodyGradBody.y * sa);
+        bodyGradUv = scaled.x * ax + scaled.y * perp;
+    } else {
+        bodyGradUv = bodyGradBody;
+    }
+    vec3 d = vec3(bodyG.x, bodyGradUv);
 
     // Satellites — smin-merged into the body (uMerge selects quadratic/circular).
     for (int i = 0; i < MAX_SATS; i++) {
         if (i >= uSatCount) break;
-        float satD = sdCircle(uv, uSatPos[i], uSatRadius[i]);
-        satD += (1.0 - uSatOpacity[i]) * 0.3;
-        d = smin(d, satD, uSmoothK);
+        vec3 satG = sdgCircle(uv, uSatPos[i], uSatRadius[i]);
+        satG.x += (1.0 - uSatOpacity[i]) * 0.3;
+        d = sminG(d, satG, uSmoothK);
     }
 
     // Pointer trail — a decaying-radius pseudopod reaching toward the cursor,
-    // smin-merged so it stretches an elastic limb and snaps back. COMPILE-TIME
-    // array, DYNAMIC break (mirrors the satellite loop).
+    // smin-merged so it stretches an elastic limb and snaps back.
     for (int i = 0; i < TRAIL_N; i++) {
         if (i >= uTrailCount) break;
-        float trailD = sdCircle(uv, uTrailPos[i], uTrailRadius[i]);
-        d = smin(d, trailD, uSmoothK);
+        vec3 trailG = sdgCircle(uv, uTrailPos[i], uTrailRadius[i]);
+        d = sminG(d, trailG, uSmoothK);
     }
     return d;
 }
 
-// W9.b — the IQ 4-tap tetrahedron gradient of the composite SDF, lifted to a
-// pseudo-3D surface normal so the droplet reads as a rounded bead (flat centre,
-// steep rim) rather than a flat sticker.
-//
-// SCREEN-SPACE epsilon: the smin + domain-warped FBM field is NOT a unit-gradient
-// SDF, so a tiny fixed epsilon shimmers; the tap offset is ~1.5px / uResolution.y
-// so it tracks the rendered pixel size at any zoom. normalize() is guarded with
-// +1e-6 (the gate's |N| ~ 1 assertion holds across the interior).
-//
-// The Z lift: 'interior' is the normalized depth inward from the rim
-// (-d / bodyR, 0 at the edge, ~1 deep inside); the dome height
-// z = sqrt(max(0, 1 - (1 - interior)^2)) is the unit half-sphere profile (flat
-// at the centre, steep at the rim). n3 = normalize(vec3(grad2d * (1 - z), z))
-// tilts the normal outward along the SDF gradient near the rim and points it at
-// the viewer deep inside.
-vec3 surfaceNormal(vec2 uv, float d, float bodyR) {
-    const vec2 k = vec2(1.0, -1.0);
-    float eps = 1.5 / max(uResolution.y, 1.0);
-    vec2 grad2d = normalize(
-        k.xy * sceneDist(uv + k.xy * eps) +
-        k.yy * sceneDist(uv + k.yy * eps) +
-        k.yx * sceneDist(uv + k.yx * eps) +
-        k.xx * sceneDist(uv + k.xx * eps) + vec2(1e-6));
-
+// AX.W15 — the analytic surface normal. The field gradient grad2d arrives
+// DIRECTLY from sceneDistG (no 4-tap). The smin field is sub-unit (the CD family
+// |grad| ≤ 1) so the gradient is NOT unit-length — normalize() before the dome
+// lift (the unit contract is on the FINAL lifted normal N, not the raw field
+// gradient). The Z dome: 'interior' is the normalized depth inward from the rim
+// (-d/bodyR); z = sqrt(1 - (1 - interior)^2) is the unit half-sphere profile (flat
+// centre, steep rim). N tilts outward along the field gradient near the rim and
+// points at the viewer deep inside.
+vec3 surfaceNormalFromGrad(vec2 grad2d, float d, float bodyR) {
+    vec2 g = normalize(grad2d + vec2(1e-6));
     float interior = clamp(-d / max(bodyR, 1e-4), 0.0, 1.0);
     float z = sqrt(max(0.0, 1.0 - (1.0 - interior) * (1.0 - interior)));
-    return normalize(vec3(grad2d * (1.0 - z), z) + vec3(0.0, 0.0, 1e-6));
+    return normalize(vec3(g * (1.0 - z), z) + vec3(0.0, 0.0, 1e-6));
 }
 
 // W11.b — sample the multi-stop palette at t in [0,1], interpolating adjacent
@@ -266,11 +291,13 @@ void main() {
         uv -= normalize(pointerDir + 1e-6) * influence;
     }
 
-    // The pulsing body radius — also reused below for the inner-glow falloff scale.
-    float bodyR = uBodyRadius + sin(uPulsePhase) * uPulseAmp;
+    // The de-synced pulsing body radius — also reused below for the inner-glow scale.
+    float bodyR = uBodyRadius + breath(uPulsePhase) * uPulseAmp;
 
-    // Composite domain-warped membrane field.
-    float d = sceneDist(uv);
+    // Composite domain-warped membrane field WITH its analytic gradient (AX.W15).
+    vec3 scene = sceneDistG(uv);
+    float d = scene.x;
+    vec2 fieldGrad = scene.yz;
 
     // Edit #1 — fwidth-based anti-aliased edge: derive the smoothstep half-width
     // from the SDF screen-space gradient so the edge stays ~1px regardless of zoom.
@@ -293,9 +320,10 @@ void main() {
     oklch.y = max(oklch.y + (colorNoise - 0.5) * uSatShift, 0.0); // chroma swing
     oklch.x = clamp(oklch.x + uBrightnessShift, 0.0, 1.0);        // lightness bias
 
-    // Surface normal — computed ONCE here and reused by the iridescence (W11.a),
-    // the fake-SSS (W11.a), and the lit glass block (W9.b).
-    vec3 N = surfaceNormal(uv, d, bodyR);
+    // Surface normal — from the ANALYTIC field gradient (AX.W15: the 4-tap is
+    // deleted). Computed ONCE here and reused by the iridescence (W11.a), the
+    // fake-SSS (W11.a), and the lit glass block (W9.b).
+    vec3 N = surfaceNormalFromGrad(fieldGrad, d, bodyR);
     vec3 V = vec3(0.0, 0.0, 1.0);
     float thickness = clamp(-d / max(bodyR, 1e-4), 0.0, 1.0); // 0 at rim, ~1 deep in
     float fres = pow(1.0 - max(dot(N, V), 0.0), 2.5);          // rim-weighted angle
@@ -326,14 +354,19 @@ void main() {
     // the fast-SSS back-light (light wrapping through the thin rim). Both lift OKLCh
     // L and warm the hue, consuming the W9 normal. In OKLCh before the gamut clamp.
     if (uCoreGlow > 0.0 || uSssScale > 0.0) {
-        // Inner-luminosity ramp: brighter where the body is thick.
-        oklch.x = min(oklch.x + uCoreGlow * thickness, 1.0);
+        // Beer-Lambert inner luminosity (AX.W15): a SATURATING 1 - exp(-k·thickness)
+        // curve — a flat thick core with a fast warm rim falloff — NOT the linear
+        // coreGlow·thickness ramp (which over-brightens deep interiors). k ≈ 3 reads
+        // as glass depth.
+        oklch.x = min(oklch.x + uCoreGlow * (1.0 - exp(-3.0 * thickness)), 1.0);
         // Fast-SSS back-light: light wrapping through the thin (low-thickness) rim.
         vec3 L = normalize(uLightDir + vec3(1e-6));
         float back = pow(clamp(dot(V, -(L + N * thickness)), 0.0, 1.0), uSssPower);
         float sss = back * uSssScale * (1.0 - thickness);
         oklch.x = min(oklch.x + sss, 1.0);
-        oklch.z += sss * 0.1; // warm the leaking edge slightly
+        // Warm the THIN leaking rim only (scale by 1 - thickness): the SSS hue-warm
+        // shift rides the rim, not the core (AX.W15 — only the thin rim warms).
+        oklch.z += sss * 0.1 * (1.0 - thickness);
     }
 
     oklch = gamutClampOklch(oklch);
@@ -357,15 +390,39 @@ void main() {
         // hue~85°) routed through the SAME spliced OKLCh matrices, NOT hardcoded
         // sRGB white (pure white reads cheap-CG). Linearized for the linear add.
         vec3 warmCream = oklabToLinearSrgb(oklchToOklab(vec3(0.97, 0.03, radians(85.0))));
-        float spec = pow(max(dot(N, H), 0.0), uSpecShininess) * uSpecStrength;
+
+        // ENERGY-CONSERVING Blinn-Phong (AX.W15 [9]): the (shininess+2)/8 factor
+        // DECOUPLES shininess from strength (without it, raising shininess dims the
+        // glint, so the two knobs fight). SPECULAR ANTIALIASING: the FBM membrane
+        // makes the normal vary fast, so a tight glint (16-64) STROBES on small
+        // dock-grid blobs. Widen the effective lobe where the normal varies
+        // (Toksvig-style fwidth clamp) — drop shininess, NOT raise it. nVar reads
+        // the screen-space normal derivative; a high-variance pixel softens the
+        // exponent so the glint stays stable.
+        float nVar = length(fwidth(N));
+        float shininess = uSpecShininess / (1.0 + 24.0 * nVar);
+        float energyNorm = (shininess + 2.0) / 8.0;
+        float spec = pow(max(dot(N, H), 0.0), shininess) * uSpecStrength * energyNorm;
 
         // Fresnel/Schlick rim — fed uRimColor (the --foreground warm rim via the
-        // injected ColorResolver, NOT a cold-blue default). Attenuated where the
-        // body is thick so the sheen rides the rim, not the core. The rim Fresnel
-        // uses uRimPower (the W9.b knob), distinct from the iridescence's fixed 2.5.
+        // injected ColorResolver). FOREGROUND-AWARE MIN-CONTRAST GUARD (AX.W15 [10]):
+        // a var(--primary) blob in dark mode resolves a rim near the BODY color, so
+        // the rim washes out (no contrast). When the rim's luminance sits too close
+        // to the body's, the guard CHROMA-REDUCES and L-LIFTS the rim stop (a
+        // perceptual move, NOT a re-tint) so the curved rim always reads. Computed in
+        // OKLCh so the lift is perceptual.
+        vec3 rimOkl = oklabToOklch(srgbToOklab(uRimColor));
+        float bodyL = oklch.x; // the post-perturb body lightness
+        float dL = abs(rimOkl.x - bodyL);
+        // If the rim is within 0.22 L of the body, push it AWAY (lift if the body is
+        // dark, the dark-mode primary case; the chroma-reduce keeps it neutral-warm).
+        float lack = clamp((0.22 - dL) / 0.22, 0.0, 1.0);
+        rimOkl.x = clamp(mix(rimOkl.x, (bodyL < 0.5 ? 0.92 : 0.18), lack), 0.0, 1.0);
+        rimOkl.y *= mix(1.0, 0.5, lack); // chroma-reduce toward a pale pearl
+        vec3 rimLin = oklabToLinearSrgb(oklchToOklab(rimOkl));
+
         float rimFres = pow(1.0 - max(dot(N, V), 0.0), uRimPower);
         float rim = rimFres * uRimStrength * (1.0 - 0.6 * thickness);
-        vec3 rimLin = srgbToLinear(uRimColor);
 
         // Combine the two warm highlights and add in LINEAR. max(spec, rim*scale)
         // keeps the glint from stacking on the rim into a blown hotspot.
@@ -374,6 +431,13 @@ void main() {
     }
 
     vec3 rgb = clamp(linearToSrgb(lin), 0.0, 1.0); // MANDATORY OETF — closes the seam
+
+    // IGN dither (AX.W15 [2][9]) — the low-chroma warm-cream dome BANDS on 8-bit
+    // panels (visible Mach steps in the smooth L roll). Interleaved-gradient noise at
+    // 1/255, applied AFTER linearToSrgb and BEFORE the *alpha premultiply (aurora
+    // ships the same splice). A triangular ±0.5 LSB dither decorrelates the steps.
+    float ign = fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(0.06711056, 0.00583715))));
+    rgb = clamp(rgb + (ign - 0.5) / 255.0, 0.0, 1.0);
 
     // Edit #8 — premultiply AFTER the OETF: straight-alpha gamma → premultiplied.
     fragColor = vec4(rgb * alpha, alpha);
