@@ -191,14 +191,32 @@
        AL-W10 SLIM (X6 §M-1 + Y7 §3 + DESIGN.md §L3). I compose this
        class onto every interactive surface that wants the iOS tap-
        squish idiom; the press scales to `--scale-press` (0.96, the
-       canonical iOS `.regular` control rung) and the spring carries
-       the return via `--spring-snappy` (the §L3 release-spring
-       contract). I keep this as a single canonical rung — NOT a
-       3-rung ladder. The one outlier I leave alone is the button
-       `0.97` (`--scale-press-btn`), which consumes its own slightly-
-       softer token directly. The dock control now tracks the canonical
-       `--scale-press` (0.96) too (AT.W7-dock-b press canon — the prior
-       deeper `0.92` was retired to ONE source).
+       canonical iOS `.regular` control rung). I keep this as a single
+       canonical rung — NOT a 3-rung ladder. The one outlier I leave
+       alone is the button `0.97` (`--scale-press-btn`), which consumes
+       its own slightly-softer token directly. The dock control now
+       tracks the canonical `--scale-press` (0.96) too (AT.W7-dock-b
+       press canon — the prior deeper `0.92` was retired to ONE source).
+
+       AX.W52 §6 doctrine — the `scale` register is reconciled onto
+       `--spring-smooth` (was `--spring-snappy`), the ONE button/interactive
+       scale register the §6 easing doctrine records and the gate asserts
+       across `.btn-pill`/`.tap-squish`/`.glass-btn`/`btn-interactive`. At
+       ζ=0.86 `--spring-smooth` settles a press crisply with a sub-perceptual
+       (~0.5%) peak — no visible bounce — so press still reads alive while
+       hover reads as a smooth glide on the SAME spring.
+
+       The transition lists the SURFACE legs (bg/border/box-shadow/color/
+       opacity) on the bezier `--ease-standard` alongside the spring `scale`
+       leg — the SAME coherent set `.btn-pill` carries. This is load-bearing:
+       `.tap-squish` and `.btn-pill` are co-composed on the button base and
+       this `transition` shorthand would otherwise CLOBBER `.btn-pill`'s
+       surface legs down to a scale-only animation (the cascade bug that left
+       every button transitioning ONLY `scale` — the live-readback RED). With
+       both classes carrying the full set, whichever wins the surface cross-
+       fade survives. On a non-button press surface the extra legs are inert
+       unless that prop changes, in which case a smooth cross-fade is the
+       desired interactive read anyway.
 
        Under PRM I retire the press transform entirely and lean on the
        consumer's own hover/active bg-tint cascade to acknowledge the
@@ -206,7 +224,13 @@
     .tap-squish {
         /* AQ.W3 §W3.2 identity base */
         scale: 1;
-        transition: scale var(--duration-fast) var(--spring-snappy);
+        transition:
+            background-color var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard),
+            color var(--duration-fast) var(--ease-standard),
+            opacity var(--duration-fast) var(--ease-standard),
+            scale var(--duration-fast) var(--spring-smooth);
         transform-origin: center center;
     }
     .tap-squish:active {
@@ -683,9 +707,12 @@
    `--duration-fast` + `--ease-standard` tokens. */
 @utility scale-on-hover {
     /* Individual-transform identity base (AQ.W3 §W3.2). Transition the `scale`
-       longhand (not `transform`) so the migrated hover scale animates. */
+       longhand (not `transform`) so the migrated hover scale animates.
+       AX.W52 §6 doctrine — the `scale` transform leg rides `--spring-smooth`
+       (the settle register), NOT the bezier `--ease-standard` (a transform on a
+       bezier reads mechanical; springs read alive on transform). */
     scale: 1;
-    transition: scale var(--duration-fast) var(--ease-standard);
+    transition: scale var(--duration-fast) var(--spring-smooth);
 
     &:hover {
         scale: var(--scale-hover);
@@ -1005,22 +1032,28 @@
 
 /* ── Interactive-button four-state recipe ────────────────────────────────
    `.btn-interactive` carries the canonical "Button-with-spring-hover"
-   four-state contract — transition + hover-scale (`--scale-hover`) +
-   active-press (`--scale-press`) + disabled-opacity + focus-ring fade-in.
-   The Button primitive's variants emit the four states except `hover:scale-*`;
-   this is the canonical opt-in that adds the spring-hover lift. Consumed by
-   keyframes.js at 7 sites. */
+   four-state contract — transition + hover-scale + active-press + disabled-
+   opacity + focus-ring fade-in. The Button primitive's variants emit the four
+   states except `hover:scale-*`; this is the canonical opt-in that adds the
+   spring-hover lift. Consumed by keyframes.js at 7 sites.
+
+   AX.W52 §6 — the hover lift is the restrained `--scale-hover-btn` (1.035, NOT
+   the emphatic 1.08 `--scale-hover`) routed through `--spring-smooth` — the ONE
+   button scale register the §6 doctrine records and the gate asserts across
+   `.btn-pill`/`.tap-squish`/`.glass-btn`/`btn-interactive`. The surface legs
+   stay on the bezier `--ease-standard` (a colour cross-fade reads as a wobble
+   on a spring); only the `scale` transform leg springs. */
 @utility btn-interactive {
     /* AQ.W3 §W3.2 identity base */
     scale: 1;
     transition:
         background-color var(--duration-fast) var(--ease-standard),
         color var(--duration-fast) var(--ease-standard),
-        scale var(--duration-fast) var(--ease-standard),
+        scale var(--duration-fast) var(--spring-smooth),
         opacity var(--duration-fast) var(--ease-standard);
 
     &:hover {
-        scale: var(--scale-hover);
+        scale: var(--scale-hover-btn);
     }
 
     &:active {
@@ -1036,11 +1069,11 @@
         box-shadow: var(--focus-ring-shadow);
         outline: none;
         /* Fade in; base state has no box-shadow transition → instant
-           removal */
+           removal. The `scale` leg keeps the `--spring-smooth` register. */
         transition:
             background-color var(--duration-fast) var(--ease-standard),
             color var(--duration-fast) var(--ease-standard),
-            scale var(--duration-fast) var(--ease-standard),
+            scale var(--duration-fast) var(--spring-smooth),
             opacity var(--duration-fast) var(--ease-standard),
             box-shadow var(--duration-fast) var(--ease-standard);
     }
