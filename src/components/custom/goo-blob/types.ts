@@ -5,6 +5,14 @@ export type BlobMood = "idle" | "happy" | "curious" | "sleepy" | "excited";
 /** Smin merge variant — `quadratic` (cheap, creased) | `circular` (rounder menisci). */
 export type BlobMerge = "quadratic" | "circular";
 
+/**
+ * Render-quality axis (AX.W16) — `full` (default) renders the metaball pass at the
+ * clamped DPR; `half` renders the backing store at HALF resolution and lets the
+ * browser bilinear-upsample on composite (~4× fragment savings for weak GPUs — the
+ * blob is the ideal candidate: the soft FBM/AA edge hides the interpolation).
+ */
+export type BlobQuality = "full" | "half";
+
 export interface MoodParams {
     orbitSpeedScale: number;
     wobbleScale: number;
@@ -67,6 +75,11 @@ export interface BlobConfig {
     satelliteCount: number;
     satelliteRadius: number;
     orbitRadius: number;
+
+    // Render quality (AX.W16) — `full` (default) | `half` (half-res backing store +
+    // free bilinear upsample, ~4× fragment savings for weak GPUs). NON-length — does
+    // not touch the geometry regime, only the backing-store resolution.
+    quality: BlobQuality;
 
     // Master tempo (W11.c) — ONE scalar multiplying every INTEGRATED dt
     // (mood.tick, the spring step, orbit/phase advance, noise scroll). `tempo=0`
@@ -193,6 +206,9 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
     satelliteCount: 3,
     satelliteRadius: 0.082,
     orbitRadius: 0.17,
+
+    // AX.W16 — full-resolution by default; weak-GPU consumers opt into `half`.
+    quality: "full",
 
     tempo: 1.0,
 

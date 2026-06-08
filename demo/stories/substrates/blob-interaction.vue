@@ -11,6 +11,7 @@ import StorySection from "../StorySection.vue";
 import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { GooBlob } from "../../../src/components/custom/goo-blob";
 import { BLOB_CONFIG_DEFAULTS } from "../../../src/components/custom/goo-blob/types";
+import { DockBackgroundToggle } from "../../../src/components/custom/dock";
 import { defaultBlobColorResolver } from "../../../src/composables/color";
 
 // A reactive config that drives the shipped interaction props — proving they are
@@ -24,6 +25,12 @@ const cfg = reactive({
 
 const clickCount = ref(0);
 const blobRef = ref<InstanceType<typeof GooBlob> | null>(null);
+
+// AX.W16 — the live WCAG-2.2.2 pause seam (the proof:blob-integration π-lane fixture).
+// The DockBackgroundToggle reflects + drives `paused`; `v-model:paused` on the blob
+// parks/restarts the render loop. The π-lane spec clicks the toggle (testid below) and
+// asserts the rAF loop PARKS — the live rAF-park observation, not a static string check.
+const paused = ref(false);
 
 function onClick() {
     clickCount.value++;
@@ -50,6 +57,7 @@ function poke() {
                 <div class="relative aspect-square w-56 overflow-hidden rounded-card">
                     <GooBlob
                         ref="blobRef"
+                        v-model:paused="paused"
                         color="var(--primary)"
                         :color-resolver="defaultBlobColorResolver"
                         :config="cfg"
@@ -61,7 +69,13 @@ function poke() {
                     <button class="btn-press rounded-pill border px-3 py-1" @click="poke">
                         Poke (impulse)
                     </button>
-                    <span class="tabular-nums opacity-70">clicks: {{ clickCount }}</span>
+                    <!-- AX.W16 — the WCAG-2.2.2 pause control (the π-lane fixture). -->
+                    <span data-testid="blob-pause-toggle">
+                        <DockBackgroundToggle v-model:paused="paused" />
+                    </span>
+                    <span class="tabular-nums opacity-70">
+                        clicks: {{ clickCount }} · {{ paused ? "paused" : "running" }}
+                    </span>
                 </div>
             </ShowcaseFrame>
         </StorySection>

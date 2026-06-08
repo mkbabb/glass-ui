@@ -2,6 +2,13 @@
 // AW.W11 — the blob mood + palette story. Exercises every shipped mood (idle,
 // happy, curious, sleepy, excited) via the GooBlob `setMood` expose, a seed-derived
 // multi-stop palette (deriveBlobPalette), and the warm-biased iridescence + fake-SSS.
+//
+// AX.W16 — reserve ONE interactive GL <GooBlob> hero (the mood + palette showcase);
+// the seed-derived palette is now previewed by WatercolorDot swatches (CSS/SVG, zero
+// GL context) instead of a SECOND live GL blob, so this story holds a SINGLE WebGL
+// context — bounding the per-page cap when the demo navigates between blob stories
+// (commit 9427536's context-exhaustion class). The hero blob CARRIES the live palette,
+// so the GL palette path is still demonstrated on the one hero.
 import { ref, reactive, computed } from "vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
@@ -9,6 +16,7 @@ import ShowcaseFrame from "../ShowcaseFrame.vue";
 import { GooBlob } from "../../../src/components/custom/goo-blob";
 import type { BlobMood } from "../../../src/components/custom/goo-blob";
 import { BLOB_CONFIG_DEFAULTS } from "../../../src/components/custom/goo-blob/types";
+import { WatercolorDot } from "../../../src/components/custom/watercolor-dot";
 import {
     defaultBlobColorResolver,
     deriveBlobPalette,
@@ -35,6 +43,8 @@ const paletteStops = computed(() =>
     ),
 );
 
+// The ONE hero config — lit + iridescent, and it CARRIES the live palette so the GL
+// palette path is exercised on the single hero (no second GL context).
 const moodConfig = reactive({
     ...BLOB_CONFIG_DEFAULTS,
     lit: true,
@@ -43,7 +53,7 @@ const moodConfig = reactive({
     coreGlow: 0.12,
 });
 
-const paletteConfig = computed(() => ({
+const heroConfig = computed(() => ({
     ...moodConfig,
     paletteStops: paletteStops.value,
 }));
@@ -65,7 +75,8 @@ const HARMONIES: ColorHarmony[] = [
             blurb="Every shipped mood (idle · happy · curious · sleepy · excited) drives the
                 {valence, arousal} affect model — orbit speed, wobble, pulse, the
                 iridescence/SSS sheen intensity all read off it. The mood also auto-drives
-                from interaction (curious on hover, excited on click, sleepy after idle)."
+                from interaction (curious on hover, excited on click, sleepy after idle).
+                The hero also carries the seed-derived palette below."
         >
             <ShowcaseFrame class="flex flex-col items-center gap-4">
                 <div class="relative aspect-square w-56 overflow-hidden rounded-card">
@@ -73,7 +84,7 @@ const HARMONIES: ColorHarmony[] = [
                         ref="blobRef"
                         color="var(--primary)"
                         :color-resolver="defaultBlobColorResolver"
-                        :config="moodConfig"
+                        :config="heroConfig"
                         seed="mood"
                     />
                 </div>
@@ -95,27 +106,22 @@ const HARMONIES: ColorHarmony[] = [
             label="Seed-derived palette"
             blurb="deriveBlobPalette(seed, { harmony }) → 2-4 in-family OKLCh stops distributed
                 across body + satellites, OKLab-interpolated with a midpoint chroma-bump. The
-                shared ColorHarmony vocabulary the aurora deriver also consumes."
+                shared ColorHarmony vocabulary the aurora deriver also consumes. The stops are
+                previewed as WatercolorDots (zero GL) and fed LIVE to the one hero above."
         >
             <ShowcaseFrame class="flex flex-col gap-4">
                 <div class="flex items-center gap-4">
-                    <div class="relative aspect-square w-40 overflow-hidden rounded-card">
-                        <GooBlob
-                            color="var(--primary)"
-                            :color-resolver="defaultBlobColorResolver"
-                            :config="paletteConfig"
-                            seed="palette"
+                    <div class="flex flex-wrap gap-2">
+                        <WatercolorDot
+                            v-for="s in paletteStops"
+                            :key="s"
+                            :color="s"
+                            :seed="s"
+                            animate
+                            class="h-12 w-12"
                         />
                     </div>
                     <div class="flex flex-col gap-2">
-                        <div class="flex gap-1">
-                            <span
-                                v-for="s in paletteStops"
-                                :key="s"
-                                class="h-8 w-8 rounded-pill border"
-                                :style="{ background: s }"
-                            />
-                        </div>
                         <input
                             v-model="seed"
                             class="input-pill"

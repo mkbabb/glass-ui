@@ -11,6 +11,11 @@
 //   - useResizeObserver — RAF-coalesced ResizeObserver wrapper.
 //   - useTouchGate     — per-control tap-to-activate guard for touch devices.
 //   - useTokenColor    — reactive read of a CSS custom property's resolved value.
+//   - resolveTokenColor — ONE `var(--token)` → concrete-rgb un-wrap leaf (AX.W16):
+//                        the single cached `getComputedStyle` cascade read the blob
+//                        un-wraps colors through BEFORE the renderer's ColorResolver,
+//                        so the renderer stays DOM-free. Distinct from useTokenColor
+//                        (reads a property BY NAME) — this un-wraps a color STRING.
 //   - useClipboard     — clipboard copy with auto-resetting `copied` flag
 //                        (O.W6 Lane A; value.js + fourier-analysis promotion).
 //   - useUserInvalidAria — `:user-invalid` → `aria-invalid` blur-bridge; keeps
@@ -36,6 +41,7 @@
 export * from "./useResizeObserver";
 export * from "./useTouchGate";
 export * from "./useTokenColor";
+export * from "./useResolveTokenColor";
 export * from "./useClipboard";
 export * from "./useUserInvalidAria";
 export * from "./useTextHighlight";

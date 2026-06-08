@@ -218,6 +218,26 @@ export function useBlobPointer(el: Ref<HTMLElement | null>) {
         trailLen = 0;
     }
 
+    /**
+     * AX.W16 (arm 2) — the pointer is AT REST (the quiescence loop may park) when
+     * EVERY motion source has settled: the pointer is inactive (not over the blob, so
+     * the spring is relaxing toward / sitting at centre), the spring velocity is below
+     * eps, the spring has reached centre (|value| < eps), the trail has collapsed, AND
+     * the click pulse is zero. An ACTIVE pointer is never at rest (the spring is
+     * following the cursor), so a held hover keeps the loop alive — no false-park.
+     */
+    const REST_EPS = 1e-3;
+    function isAtRest(): boolean {
+        if (active.value) return false;
+        const speed = Math.hypot(springX.velocity, springY.velocity);
+        if (speed > REST_EPS) return false;
+        if (Math.abs(springX.value) > REST_EPS || Math.abs(springY.value) > REST_EPS)
+            return false;
+        if (trailLen > 0) return false;
+        if (pulse !== 0 || pulseVel !== 0) return false;
+        return true;
+    }
+
     return {
         pointer: readonly(pointer),
         velocity: readonly(velocity),
@@ -231,6 +251,8 @@ export function useBlobPointer(el: Ref<HTMLElement | null>) {
         click,
         consumeClick,
         rest,
+        /** AX.W16 — the quiescence at-rest predicate the renderer's demand gate reads. */
+        isAtRest,
     };
 }
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject, useTemplateRef, watch, ref, computed, onScopeDispose } from "vue";
 import type { ColorResolver } from "../../../composables/color";
+import { createTokenColorCache } from "../../../composables/dom";
 import type { BlobMood, BlobConfig } from "./types";
 import { BLOB_CONFIG_KEY } from "./types";
 import { useBlobMood } from "./composables/useBlobMood";
@@ -28,7 +29,13 @@ import { useMetaballRenderer } from "./composables/useMetaballRenderer";
  * synthesis. A consumer that genuinely wants the stock tuning passes
  * `BLOB_CONFIG_DEFAULTS` explicitly.
  */
-const { color, colorResolver, config, seed = "" } = defineProps<{
+const {
+    color,
+    colorResolver,
+    config,
+    seed = "",
+    paused = false,
+} = defineProps<{
     /** Base CSS color string (any form the `colorResolver` understands). */
     color: string;
     /** REQUIRED color seam — resolves `color` to a gamma-sRGB [r,g,b] triple in [0,1]. */
@@ -40,9 +47,18 @@ const { color, colorResolver, config, seed = "" } = defineProps<{
     config?: BlobConfig;
     /** Extra seed string mixed into the satellite PRNG for a unique-but-reproducible system. */
     seed?: string;
+    /**
+     * AX.W16 — the declarative WCAG-2.2.2 pause seam. `v-model:paused` parks the
+     * render loop (the substrate's `manual` suspend) when `true` and restarts it when
+     * `false`. This is the EXACT shape `<DockBackgroundToggle>` wears — wire its
+     * `@update:paused` to this `v-model` and the blob's animation stops/starts for ALL
+     * users. The imperative `pause()`/`resume()` defineExpose handles bind the SAME
+     * renderer seam (no parallel pause path); the prop owns the default.
+     */
+    paused?: boolean;
 }>();
 
-const emit = defineEmits<{ click: [] }>();
+const emit = defineEmits<{ click: []; "update:paused": [value: boolean] }>();
 
 const injectedConfig = inject(BLOB_CONFIG_KEY, null);
 const cfg = config ?? injectedConfig;
@@ -61,39 +77,41 @@ const mood = useBlobMood();
 const pointer = useBlobPointer(wrapperRef);
 const satelliteSystem = useBlobSatellites(cfg, color + seed);
 
-// AW.W13 — resolve a `var(--token)` color to a CONCRETE color string BEFORE the
-// `colorResolver` (value.js) sees it. value.js's `parseCSSColor` cannot parse a
-// `var()` wrapper and THROWS once per frame on a token color — the confirmed
-// live per-frame runtime bug. The wrapper element resolves the cascade for us:
-// we paint the `color` onto a throwaway `color:` read on the host and pull back
-// the browser-resolved `rgb(...)`. A non-`var()` color (hex/oklch/hsl literal)
-// passes straight through. Re-resolves on a color change AND on a dark-mode
-// flip (a token resolves differently under `.dark`), so the blob retints with
-// the theme.
+// AX.W16 (arm 4) — un-wrap EVERY color string (base + rim + every palette stop) to a
+// CONCRETE value HERE, in the SFC, via the ONE `resolveTokenColor` leaf, BEFORE handing
+// strings to the renderer. value.js's `parseCSSColor` cannot parse a `var(--token)`
+// wrapper and THROWS once per frame on a token color (the AW.W13 live bug); a token
+// also resolves differently under `.dark`. The leaf paints the string onto the host
+// `color:` and reads back the browser-resolved `rgb(...)` (the single cached
+// `getComputedStyle` cascade read — `getComputedStyle` now appears EXACTLY ONCE in the
+// codebase for this concern). The renderer receives concrete strings only and stays
+// DOM-FREE (the inv-K-3 seam restored — the renderer's prior `resolveRimColor` +
+// `rimCache` DOM-reach is DELETED). Re-resolves on a color change AND on a dark-mode
+// flip (the MutationObserver on `<html>.class`, vueuse-free per the SCC discipline).
+const tokenColors = createTokenColorCache();
 const resolvedColor = ref(color);
+const resolvedRim = ref(cfg!.rimColor);
+const resolvedStops = ref<string[]>([...cfg!.paletteStops]);
 
-function resolveColorString(css: string): string {
-    // A literal color (no `var()`) is already concrete — pass through.
-    if (!css.includes("var(")) return css;
+function refreshResolvedColors(): void {
     const el = wrapperRef.value;
-    if (typeof window === "undefined" || !el) return css;
-    // Read the browser-resolved value: a `var(--token)` painted onto a real CSS
-    // property resolves through the cascade, so `getComputedStyle(...).color`
-    // returns the concrete `rgb(...)` value.js can parse.
-    const prev = el.style.color;
-    el.style.color = css;
-    const resolved = getComputedStyle(el).color;
-    el.style.color = prev;
-    return resolved || css;
+    // The cascade may have flipped (dark-mode) — drop the cache so tokens re-resolve.
+    tokenColors.invalidate();
+    resolvedColor.value = tokenColors.resolve(color, el);
+    resolvedRim.value = tokenColors.resolve(cfg!.rimColor, el);
+    resolvedStops.value = cfg!.paletteStops.map((s) => tokenColors.resolve(s, el));
 }
 
-function refreshResolvedColor(): void {
-    resolvedColor.value = resolveColorString(color);
-}
-
-useMetaballRenderer({
+// AX.W16 (arm 1) — CAPTURE the renderer return (the prior code DISCARDED it, which is
+// why `pause`/`resume` were undefined at every consumer — the dead WCAG-2.2.2 seam).
+// The captured handles bind the EXISTING substrate `manual` suspend (no parallel pause
+// path); the declarative `v-model:paused` prop drives them and the imperative
+// `pause()`/`resume()` re-exposed below bind the SAME handles.
+const renderer = useMetaballRenderer({
     canvasRef,
     color: resolvedColor,
+    rimColor: resolvedRim,
+    paletteStops: resolvedStops,
     mood,
     pointer,
     satellites: satelliteSystem,
@@ -101,14 +119,14 @@ useMetaballRenderer({
     colorResolver,
 });
 
-// Resolve once the host is in the tree (the cascade is live), then on every
-// color change. A MutationObserver on `<html>`'s class re-resolves the token on
-// a dark-mode flip without pulling in `@vueuse/core` (the SCC discipline).
-watch(wrapperRef, refreshResolvedColor, { immediate: true });
+// Resolve once the host is in the tree (the cascade is live), then on every color
+// change. A MutationObserver on `<html>`'s class re-resolves the tokens on a dark-mode
+// flip without pulling in `@vueuse/core` (the SCC discipline).
+watch(wrapperRef, refreshResolvedColors, { immediate: true });
 
 let darkObserver: MutationObserver | null = null;
 if (typeof document !== "undefined") {
-    darkObserver = new MutationObserver(refreshResolvedColor);
+    darkObserver = new MutationObserver(refreshResolvedColors);
     darkObserver.observe(document.documentElement, {
         attributes: true,
         attributeFilter: ["class"],
@@ -117,9 +135,18 @@ if (typeof document !== "undefined") {
 
 const colorRef = computed(() => color);
 watch(colorRef, (c) => {
-    refreshResolvedColor();
+    refreshResolvedColors();
     satelliteSystem.reseed(c + seed);
 });
+
+// Drive the substrate pause/resume from the declarative `paused` prop. `immediate`
+// so a blob mounted already-`paused` parks from the first frame (the renderer's local
+// `paused` flag gates `shouldContinue` even before the canvas handle arms).
+watch(
+    () => paused,
+    (p) => (p ? renderer.pause() : renderer.resume()),
+    { immediate: true },
+);
 
 onScopeDispose(() => {
     darkObserver?.disconnect();
@@ -145,7 +172,17 @@ function onBlobClick() {
     emit("click");
 }
 
-defineExpose({ nudge, setMood, pulse, currentMood: mood.currentMood });
+// AX.W16 — the defineExpose now carries `pause`/`resume` (the imperative half of the
+// WCAG-2.2.2 seam — the README table + Aurora-parity), alongside the declarative
+// `v-model:paused` prop. Both bind the SAME captured renderer handles.
+defineExpose({
+    nudge,
+    setMood,
+    pulse,
+    currentMood: mood.currentMood,
+    pause: renderer.pause,
+    resume: renderer.resume,
+});
 </script>
 
 <template>

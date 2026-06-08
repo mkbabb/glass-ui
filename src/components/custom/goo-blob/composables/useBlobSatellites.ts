@@ -341,7 +341,39 @@ export function useBlobSatellites(config: BlobConfig, initialColor: string) {
         rng = mulberry32(hashString(color + "goo"));
     }
 
-    return { sources, tick, nudge, reseed };
+    /**
+     * AX.W16 (arm 2) — the satellite system is QUIESCENT (the quiescence loop may park)
+     * when NO satellite is mid-TRANSITION — i.e. none is `merging`, `absorbed`, or
+     * `emerging`. Those phases are the per-frame morph events (the gooey merge in, the
+     * re-emergence) that demand continuous render; a steady `orbiting` satellite is the
+     * slow ambient sweep the loop parks between, re-arming at the next phase boundary
+     * via `nextEventMs`. (The spec's at-rest condition: "no satellite is mid-merge".)
+     */
+    function isQuiescent(): boolean {
+        for (const s of internals) {
+            if (s.phase !== "orbiting") return false;
+        }
+        return true;
+    }
+
+    /**
+     * AX.W16 (arm 2) — the soonest upcoming phase-boundary across all satellites, in
+     * the SAME tempo-integrated clock `tick` is driven by. The renderer's wake
+     * scheduler re-arms the parked loop at this horizon so the next orbit→merge
+     * transition animates on time (the demand-loop wake, not a poll). Returns the min
+     * `phaseStart + phaseDuration` over the pool; `now + a long idle ceiling` when the
+     * pool is empty (a satellite-less blob has no phase events).
+     */
+    function nextEventMs(now: number): number {
+        let soonest = Infinity;
+        for (const s of internals) {
+            const end = s.phaseStart + s.phaseDuration;
+            if (end < soonest) soonest = end;
+        }
+        return soonest === Infinity ? now + 30_000 : soonest;
+    }
+
+    return { sources, tick, nudge, reseed, isQuiescent, nextEventMs };
 }
 
 export type BlobSatelliteSystem = ReturnType<typeof useBlobSatellites>;

@@ -48,6 +48,7 @@ const UNIFORM_NAMES = [
     "uWarpAmp",
     "uSmoothK",
     "uMerge",
+    "uMaxReach",
     "uLit",
     "uRimColor",
     "uLightDir",
@@ -77,17 +78,32 @@ type UniformName = (typeof UNIFORM_NAMES)[number];
 
 export interface UseMetaballRendererOptions {
     canvasRef: Ref<HTMLCanvasElement | null>;
+    /** The base color, ALREADY un-wrapped to a CONCRETE string by the SFC (DOM-free). */
     color: Ref<string>;
+    /**
+     * The Fresnel rim color, ALREADY un-wrapped to a CONCRETE string by the SFC
+     * (AX.W16 — the renderer no longer reaches the DOM for the `var()`-cascade read;
+     * the SFC's `resolveTokenColor` leaf does ALL un-wrapping before the renderer sees
+     * it). A `var(--token)` rim arrives here already resolved to `rgb(...)`.
+     */
+    rimColor: Ref<string>;
+    /**
+     * The multi-stop palette, ALREADY un-wrapped to CONCRETE strings by the SFC
+     * (AX.W16). EMPTY falls back to the base color (uStopCount <= 1).
+     */
+    paletteStops: Ref<string[]>;
     mood: BlobMoodSystem;
     pointer: BlobPointer;
     satellites: BlobSatelliteSystem;
     config: BlobConfig;
     /**
-     * The injected color seam (DEC-AT-2). Resolves a CSS color string to a GAMMA-
-     * sRGB triple in [0,1] fed straight into the shader's base-color uniform — the
-     * faithful AU.W7 lift paints gamma. REQUIRED: a no-resolver mount throws (the
+     * The injected color seam (DEC-AT-2). Resolves a CONCRETE CSS color string to a
+     * GAMMA-sRGB triple in [0,1] fed straight into the shader's base-color uniform —
+     * the faithful AU.W7 lift paints gamma. REQUIRED: a no-resolver mount throws (the
      * loud failure, not a silent gray) instructing the consumer to pass
-     * `defaultBlobColorResolver` from `@mkbabb/glass-ui/color` (or their own).
+     * `defaultBlobColorResolver` from `@mkbabb/glass-ui/color` (or their own). The
+     * renderer is DOM-FREE: it never un-wraps a `var(--token)` — the SFC's
+     * `resolveTokenColor` leaf does that BEFORE handing strings here (inv-K-3 seam).
      */
     colorResolver: ColorResolver;
 }
@@ -109,8 +125,17 @@ export interface UseMetaballRendererOptions {
  * `colorResolver`; the value.js 1×1-canvas DOM probe is gone (the seam replaces it).
  */
 export function useMetaballRenderer(options: UseMetaballRendererOptions) {
-    const { canvasRef, color, mood, pointer, satellites, config, colorResolver } =
-        options;
+    const {
+        canvasRef,
+        color,
+        rimColor,
+        paletteStops,
+        mood,
+        pointer,
+        satellites,
+        config,
+        colorResolver,
+    } = options;
 
     if (typeof colorResolver !== "function") {
         throw new Error(
@@ -140,6 +165,14 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
     // Memoise the resolver: the consumer cycles through a handful of stable color
     // strings, so the resolve runs once per unique color rather than every frame.
     // Cap defensively against unbounded growth from synthesized values.
+    //
+    // AX.W16 (arm 4) — the renderer is DOM-FREE: every string handed here is already
+    // CONCRETE (the SFC's `resolveTokenColor` leaf un-wrapped any `var(--token)` via
+    // the ONE cached cascade read). The renderer's prior `resolveRimColor` + `rimCache`
+    // — which reached BACK into the canvas element for a `getComputedStyle`, coupling
+    // the pure-fn ColorResolver to a DOM read the inv-K-3 seam forbade — are DELETED.
+    // ONE `resolveColor` cache (the ColorResolver memo) remains; it never touches the
+    // DOM (`getComputedStyle` no longer appears in this file).
     const colorCache = new Map<string, [number, number, number]>();
     function resolveColor(css: string): [number, number, number] {
         const cached = colorCache.get(css);
@@ -150,43 +183,51 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
         return rgb;
     }
 
-    // The rim color (W9.b) may be a `var(--token)` the ColorResolver (value.js)
-    // cannot parse. Mirror GooBlob.vue's cascade trick: paint the string onto the
-    // canvas element's `color` and read back the browser-resolved `rgb(...)`, then
-    // feed THAT to the resolver. A literal (no `var()`) passes straight through.
-    // Cached so the cascade read runs once per unique rim string.
-    const rimCache = new Map<string, [number, number, number]>();
-    function resolveRimColor(css: string, el: HTMLElement | null): [number, number, number] {
-        const cached = rimCache.get(css);
-        if (cached) return cached;
-        let concrete = css;
-        if (css.includes("var(") && typeof window !== "undefined" && el) {
-            const prev = el.style.color;
-            el.style.color = css;
-            concrete = getComputedStyle(el).color || css;
-            el.style.color = prev;
-        }
-        const rgb = colorResolver(concrete);
-        if (rimCache.size > 64) rimCache.clear();
-        rimCache.set(css, rgb);
-        return rgb;
-    }
-
     let canvasHandle: ReturnType<typeof createWebGLCanvas> | null = null;
     let paused = false;
+
+    // AX.W16 (arm 2) — the satellite-phase WAKE scheduler. When the quiescence gate
+    // parks a fully-at-rest blob, a `setTimeout` re-arms the loop exactly when the next
+    // orbit/merge phase is due (the demand-loop wake, not a poll). `simTimeMs` is the
+    // tempo-integrated clock; `nextEventMs` returns the next phase horizon in that same
+    // clock, so the delta is the real-time wall delay (tempo === 1 at rest).
+    let wakeTimer: ReturnType<typeof setTimeout> | null = null;
+    function clearWakeTimer(): void {
+        if (wakeTimer !== null) {
+            clearTimeout(wakeTimer);
+            wakeTimer = null;
+        }
+    }
+    function scheduleWake(nextEventMs: number): void {
+        clearWakeTimer();
+        if (typeof setTimeout === "undefined") return;
+        // The horizon is in the tempo-integrated clock; at rest tempo === 1 so the
+        // wall delay == the sim delta. Floor at one frame, cap at a long idle ceiling
+        // so a far-future or NaN horizon can't strand the loop parked.
+        const delayMs = Math.min(Math.max(nextEventMs - simTimeMs, 16), 30_000);
+        wakeTimer = setTimeout(() => {
+            wakeTimer = null;
+            canvasHandle?.wake();
+        }, delayMs);
+    }
 
     // AV.W7 F4 — wire the RAF through the viewport-intersection seam so a blob
     // scrolled out of the viewport (the `rootMargin:200px` warm band) parks its
     // loop; this is the IntersectionObserver fallback for engines without
-    // `contentvisibilityautostatechange` (the substrate's F1 content-visibility
-    // path). The substrate owns `tab-hidden` itself, so `pauseWhenHidden:false`
-    // keeps exactly one writer per reason — the IO drives ONLY `off-screen`.
-    // Both gate the same `isRunning()` set, ORed.
+    // `contentvisibilityautostatechange` (the substrate's F1 content-visibility path).
+    // The substrate owns `tab-hidden` itself, so `pauseWhenHidden:false`.
+    //
+    // AX.W16 F6 — the IO fallback writes its OWN reason key `off-screen-io`, DISTINCT
+    // from the content-visibility path's `off-screen` (createCanvasLifecycle owns that
+    // key). Both gate the same empty-`Set` `isRunning()` check, ORed — so the loop runs
+    // ONLY when BOTH detectors agree the surface is visible. Before this split both
+    // wrote `off-screen`, so an IO `resume` could lift a legitimately-skipped CV
+    // suspend (the one-writer-per-reason breach this closes).
     useIntersectionPause(
         canvasRef,
         {
-            pause: () => canvasHandle?.suspend("off-screen"),
-            resume: () => canvasHandle?.resume("off-screen"),
+            pause: () => canvasHandle?.suspend("off-screen-io"),
+            resume: () => canvasHandle?.resume("off-screen-io"),
         },
         { rootMargin: "200px", pauseWhenHidden: false },
     );
@@ -268,12 +309,21 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                 function resize() {
                     // AV.W7 F6 — the DPR≤2 clamp is the named `AV_DPR_MAX` ceiling.
                     const dpr = resolveBudgetDpr();
+                    // AX.W16 (arm 2) — the quality axis: `half` renders the metaball
+                    // pass at HALF the backing-store resolution (the CSS box stays the
+                    // same, so the browser bilinear-upsamples the smaller buffer on
+                    // composite) for ~4× fragment savings on weak GPUs. The blob is the
+                    // IDEAL candidate — the soft FBM/AA edge HIDES the interpolation;
+                    // ONE blit, never a multi-pass chain. `full` (default) renders at
+                    // the clamped DPR. The fwidth-AA self-adjusts to the lower buffer
+                    // resolution (the edge stays ~1px in buffer space).
+                    const qScale = config.quality === "half" ? 0.5 : 1.0;
                     // Size from the rendered element, not config — the blob fills its
                     // container.
                     const cssW = canvas.clientWidth || config.canvasSize;
                     const cssH = canvas.clientHeight || config.canvasSize;
-                    const w = Math.round(cssW * dpr);
-                    const h = Math.round(cssH * dpr);
+                    const w = Math.max(1, Math.round(cssW * dpr * qScale));
+                    const h = Math.max(1, Math.round(cssH * dpr * qScale));
                     if (canvas.width !== w || canvas.height !== h) {
                         canvas.width = w;
                         canvas.height = h;
@@ -342,16 +392,18 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     gl.uniform3f(U.uBaseColor, rgb[0], rgb[1], rgb[2]);
 
                     // Multi-stop palette (W11.b) — 2-4 in-family stops. EMPTY falls
-                    // back to uBaseColor (uStopCount <= 1). Stops resolve through the
-                    // SAME ColorResolver seam (var()-cascade un-wrap + value.js).
-                    const stops = config.paletteStops;
+                    // back to uBaseColor (uStopCount <= 1). The stops arrive ALREADY
+                    // CONCRETE (the SFC un-wrapped any var()-token via resolveTokenColor
+                    // — AX.W16); the renderer parses them through the ColorResolver memo,
+                    // never the DOM.
+                    const stops = paletteStops.value;
                     const stopCount = Math.min(stops.length, MAX_BLOB_STOPS);
                     gl.uniform1i(U.uStopCount, stopCount);
                     for (let i = 0; i < MAX_BLOB_STOPS; i++) {
                         const loc = paletteLocs[i] ?? null;
                         const css = stops[i];
                         if (css) {
-                            const p = resolveRimColor(css, canvas);
+                            const p = resolveColor(css);
                             gl.uniform3f(loc, p[0], p[1], p[2]);
                         } else {
                             gl.uniform3f(loc, rgb[0], rgb[1], rgb[2]);
@@ -443,6 +495,32 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     gl.uniform1f(U.uSmoothK, config.smoothK * params.smoothK * POS_SCALE);
                     gl.uniform1f(U.uMerge, config.merge === "circular" ? 1.0 : 0.0);
 
+                    // AX.W16 (arm 5) — the PRE-FBM bounding-discard radius (UV space).
+                    // The fragment early-outs to a transparent write for any pixel
+                    // OUTSIDE this radius BEFORE the two 3-octave FBM calls + the OKLCh
+                    // round-trip — the oversized canvas runs the full ALU on a large
+                    // transparent border otherwise. uMaxReach is the worst-case painted
+                    // reach PADDED so it NEVER clips the wet meniscus (IQ: inflate the
+                    // bounding radius to match any outward-expanding op). It sums every
+                    // outward term — body + the eccentric satellite orbit (the Y-long
+                    // axis, ×1.2 random baseR × (1+ecc)) + the satellite radius + the
+                    // smin blend band + the FBM edge amplitude + the click-pulse — all
+                    // riding POS_SCALE (the same inner-region compression the radii ride),
+                    // plus a 0.10 UV safety pad for the pointer-lean excursion and the
+                    // squash stretch. NO length constant is edited (W08/W15 own those);
+                    // this is a READ of them.
+                    const satWorst =
+                        config.orbitRadius * 1.2 * (1 + config.eccentricity) +
+                        config.satelliteRadius;
+                    const maxReach =
+                        (Math.max(config.bodyRadius, satWorst) +
+                            config.smoothK * params.smoothK +
+                            (config.noiseAmp * params.noiseAmp) / 0.025 +
+                            Math.abs(pointer.pulse.value) * config.clickImpulse) *
+                            POS_SCALE +
+                        0.1;
+                    gl.uniform1f(U.uMaxReach, maxReach);
+
                     // Color perturbation
                     gl.uniform1f(U.uHueRange, config.hueRange + params.hueRange);
                     gl.uniform1f(U.uSatShift, config.satShift + params.satShift);
@@ -454,12 +532,12 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     gl.uniform1f(U.uColorNoiseSpeed, config.colorNoiseSpeed);
 
                     // Lit glass surface (W9.b) — Blinn-Phong glint + Fresnel rim.
-                    // `uRimColor` resolves through the SAME injected ColorResolver
-                    // seam as `uBaseColor` (NOT a DOM probe — the `var()`-cascade
-                    // read above only un-wraps a token to a concrete string the
-                    // resolver then parses). Gated behind `uLit` (default flat).
+                    // `uRimColor` arrives ALREADY CONCRETE (the SFC un-wrapped any
+                    // var()-token via resolveTokenColor — AX.W16) and parses through the
+                    // SAME injected ColorResolver memo as `uBaseColor`, never the DOM.
+                    // Gated behind `uLit` (default lit).
                     gl.uniform1f(U.uLit, config.lit ? 1.0 : 0.0);
-                    const rim = resolveRimColor(config.rimColor, canvas);
+                    const rim = resolveColor(rimColor.value);
                     gl.uniform3f(U.uRimColor, rim[0], rim[1], rim[2]);
                     gl.uniform3f(
                         U.uLightDir,
@@ -511,15 +589,54 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                 }
 
                 /**
-                 * Demand gate. While manually paused (G2) the loop parks; otherwise
-                 * the blob is perpetually animated (mood drift + satellite cycle).
-                 * The reduced-motion one-static-frame-then-park is now owned by the
-                 * substrate's reschedule gate (G1) — it draws the current frame then
-                 * parks while `reducedMotion` is live, so this gate stays
-                 * motion-only.
+                 * Demand gate (AX.W16 arm 2 — the EVENT-SCHEDULED quiescence signal).
+                 *
+                 * The prior gate `return !paused` defeated the substrate's demand loop
+                 * for the onscreen-idle case — an idle ambient blob burned a full 60fps
+                 * rAF (FBM×2 + OKLCh-per-fragment) forever (the `:512` "perpetually
+                 * animated" comment). This replaces it with a REAL at-rest predicate:
+                 * the loop runs IFF SOMETHING is actually changing —
+                 *   • the mood is mid-transition or has a pending auto-mood arc, OR
+                 *   • the pointer spring is moving / the trail is non-empty / the click
+                 *     pulse is non-zero, OR
+                 *   • a satellite is mid-merge/absorbed/emerging (not in steady orbit).
+                 * When ALL are at rest the gate returns false and the substrate STOPS
+                 * rescheduling — the blob renders ZERO frames between phase transitions.
+                 *
+                 * NO false-park: the predicate ORs EVERY motion source (a frozen-mid-
+                 * gesture blob is the hazard); the first-post-park dt clamp (drawFrame's
+                 * `Math.min(rawDtMs, 50)` + the spring/pointer clamps) keeps the re-arm
+                 * smooth. While paused (G2) OR reduced (the substrate's reschedule gate)
+                 * the loop parks regardless — this gate is the MOTION quiescence layer.
+                 *
+                 * The WAKE: a parked-at-rest blob must RE-ARM when its next satellite
+                 * orbit/merge phase is due (a pending idle→sleepy auto-mood arc fires on
+                 * the same wake). The satellite system knows its phase horizon
+                 * (`nextEventMs`); we schedule a `setTimeout` wake at that horizon so the
+                 * loop re-arms on the scheduler (glass-ui's invalidate()/R3F demand
+                 * model), never by polling.
                  */
                 function shouldContinue(): boolean {
-                    return !paused;
+                    if (paused) return false;
+                    const live =
+                        !mood.isSettled() ||
+                        !pointer.isAtRest() ||
+                        !satellites.isQuiescent();
+                    if (live) {
+                        clearWakeTimer();
+                        return true;
+                    }
+                    // About to park at rest — arm a wake at the SOONER of the next
+                    // satellite phase boundary and the pending auto-mood (idle→sleepy)
+                    // arc, so the parked loop re-renders exactly when the next scheduled
+                    // event is due (the orbit/merge resumes OR the mood drifts).
+                    const satHorizonMs = satellites.nextEventMs(simTimeMs);
+                    const moodDelayMs = mood.nextAutoMoodMs();
+                    const moodHorizonMs = Number.isFinite(moodDelayMs)
+                        ? simTimeMs + moodDelayMs
+                        : Infinity;
+                    scheduleWake(Math.min(satHorizonMs, moodHorizonMs));
+                    return false;
                 }
 
                 return {
@@ -554,6 +671,7 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
     watch(color, () => canvasHandle?.wake());
 
     onUnmounted(() => {
+        clearWakeTimer();
         canvasHandle?.dispose();
         canvasHandle = null;
     });

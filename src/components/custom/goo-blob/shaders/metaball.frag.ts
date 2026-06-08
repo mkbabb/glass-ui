@@ -82,6 +82,14 @@ uniform float uNoiseSpeed;
 uniform float uSmoothK;
 uniform float uMerge;   // 0 = quadratic smin, 1 = circular smin (rounder menisci)
 
+// AX.W16 (arm 5) — the PRE-FBM bounding-discard radius (UV space). main() early-outs
+// to a transparent write for any fragment OUTSIDE this radius BEFORE the two 3-octave
+// FBM calls + the OKLCh round-trip. The renderer uploads it PADDED by every
+// outward-expanding term (body + eccentric orbit + sat radius + smin band + FBM edge
+// amplitude + click-pulse + a lean/squash safety pad) so it NEVER clips the wet
+// meniscus (IQ: inflate the bound to match any outward op).
+uniform float uMaxReach;
+
 // Membrane — domain-warp strength on the FBM edge displacement (0 = plain fbm).
 uniform float uWarpAmp;
 
@@ -280,6 +288,23 @@ vec3 samplePaletteOklch(float t) {
 
 void main() {
     vec2 uv = vUv - 0.5;
+
+    // AX.W16 (arm 5) — PRE-FBM bounding early-out. The oversized canvas (1.6x the
+    // wrapper) runs the full fragment ALU — two 3-octave FBM evals + the OKLCh
+    // round-trip + the lit/iridescence/SSS block — on a large transparent border
+    // otherwise (~60% of the canvas is outside the droplet reach). Any fragment beyond
+    // uMaxReach (the PADDED worst-case painted reach, uploaded so it never clips the
+    // wet meniscus) writes transparent and returns BEFORE any of that work. This is a
+    // transparent WRITE, NOT a GLSL discard: the pass is a pure premultiplied blend
+    // with no depth, and discard disables the tiled-renderer fast path on mobile GPUs.
+    // No fwidth is computed before the return, so there is no
+    // derivative-in-non-uniform-control-flow hazard (the kept pixels compute their own
+    // fwidth normally below). The pad covers the pointer-lean uv shift, so testing the
+    // pre-deform uv is safe.
+    if (dot(uv, uv) > uMaxReach * uMaxReach) {
+        fragColor = vec4(0.0);
+        return;
+    }
 
     // Pointer deformation — honor the SIGN of uPointerAttraction (W10): a positive
     // attraction leans the body IN toward the cursor, a negative shies it AWAY. The
