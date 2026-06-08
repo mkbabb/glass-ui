@@ -31,16 +31,21 @@ real class of "still broken" findings is in fact a PUBLISH-CURRENCY gap, not a c
 `FINAL.md`). This file is the CHARTER only — DEV (it writes no `src`). AX is **tranche-development
 ONLY**: plan / research / harden / synthesize / write. No merges, no publish, no `src` edits.
 
-**Status — CONVERGED + HARDENED (this pass).** This is the post-CONVERGE charter: the 34-slice deep audit
-+ the 32-agent §16 cross-constellation analysis + the four adversarial band-critiques are FOLDED, the D5
-hardening corrections APPLIED (POS_SCALE §4 note 13, WEBGPU_PARITY §4 note 14, §15-warp-is-net-new §4 note
-15, the W24/W32 double-assignment §4 note 18, the W25/W27 splits + tag-model §4 notes 19-21, the W33
-enumerated-dependsOn, the W06 dock.css-split re-ordering, the W28 clean-sibling gate-0), the
-published-vs-HEAD corrections applied (§4 note 12 — OKLCh + Card-specular-wiring + VT-swallow + deriveAurora
-are LANDED at HEAD; the gap is publish-currency), the per-band precept→wave map authored (§2b), and the
-§4 reconciliation appendix completed to 23 notes. The wave-spec bodies for W00-W41 are authored here; the
-per-wave `waves/AX.Wnn-*.md` docs (FileBounds/Disjointness/Triumvirate/HardGate/Cadence/CommitPlan) are the
-NEXT-session deliverable each wave's §17.1 spec must carry.
+**Status — CONVERGED + HARDENED + SOTA-DEEPENED (this pass).** This is the post-CONVERGE charter: the
+34-slice deep audit + the 32-agent §16 cross-constellation analysis + the four adversarial band-critiques
+are FOLDED, the D5 hardening corrections APPLIED (POS_SCALE §4 note 13, WEBGPU_PARITY §4 note 14,
+§15-warp-is-net-new §4 note 15, the W24/W32 double-assignment §4 note 18, the W25/W27 splits + tag-model §4
+notes 19-21, the W33 enumerated-dependsOn, the W06 dock.css-split re-ordering, the W28 clean-sibling
+gate-0), the published-vs-HEAD corrections applied (§4 note 12 — OKLCh + Card-specular-wiring + VT-swallow +
+deriveAurora are LANDED at HEAD; the gap is publish-currency), the per-band precept→wave map authored (§2b),
+and the §4 reconciliation appendix completed to 27 notes. **NEW this pass:** the unified liquid-morph
+substrate **AX.W42** is added (§1 row + §3 block + §2b map + §5 gating); every SOTA-deepened wave references
+its per-wave `waves/AX.Wnn-*.md` §SOTA-deepening (liquid-glass W01-W06/W09/W20/W42, aurora W07/W10-W14, blob
+W08/W15-W16); the §20 cross-session hand-offs (USF + keyframes.js) are routed (W09/W06/W21/W33); and the new
+**§5 Prototype-and-harden gating** section references `PROTOTYPE-HARDEN.md` + `DOCK-FACILITIES.md` as the
+drive-readiness gate. The wave-spec bodies for W00-W42 are authored here AND each carries a full
+`waves/AX.Wnn-*.md` doc (FileBounds/Disjointness/Triumvirate/HardGate/Cadence/CommitPlan + §SOTA-deepening);
+the per-wave-spec authorship is the NEXT-session driving deliverable.
 
 ---
 
@@ -106,27 +111,27 @@ recorded delta, not a silent stall.
 | Wave | Band | Severity | One-line |
 |------|------|----------|----------|
 | **AX.W00** | π · gate-philosophy | blocker | Stand up the fail-CLOSED visual-runtime (π) lane — the device render-and-readback workspace every visual wave closes on |
-| **AX.W01** | A · DOCK | blocker | Dock single-scalar morph — one analytic spring → `--dock-morph-t` → every axis (box+chrome+children) on ONE clock; retire the VT fork |
-| **AX.W02** | A · DOCK | blocker | One morph orchestrator per dock — fold the inner DockLayerGroup pair onto the outer collapse driver via DI; clip-reveal aperture everywhere |
-| **AX.W03** | A · DOCK | blocker | keepDockOpen rebuild — `useDockHold(rootRef)` native host listeners (the reka forwarding-drop fix); held as a first-class morph-state input |
-| **AX.W04** | A · DOCK | major | Dock overflow/wrap — content-driven intrinsic flex-wrap (kill the magic-640 viewport chain) + card-tier shadow + tokenized radius |
-| **AX.W05** | A · DOCK | major | One iOS-spring vocabulary — excise the legacy apple-spring bezier; re-point its 5 consumers; spring-pipeline gate truth-up |
-| **AX.W06** | A · DOCK | major | Dock storybook consolidation — single `dock` home; DELETE dock-active-tokens (token-ladder); honest rail variant + hoisted polish; dock.css split |
-| **AX.W07** | B · GRAPHICS | blocker | Aurora core unblock — WGSL int-in-float + var<uniform> dynamic-index → f32-cast + storage-buffer; WebGL2-default-until-parity |
-| **AX.W08** | B · GRAPHICS | blocker | Blob core unblock — re-derive uSmoothK as ONE coherent distance regime (un-flood the SDF); restore POS_SCALE on the merge band |
-| **AX.W09** | B · GRAPHICS | major | Specular tune-to-subtle — warm-cream low-alpha core + tokenized intensity ladder; retire the dock double-specular; `useSpecularTracking` |
-| **AX.W10** | C · AURORA | major | Aurora options converge — ONE atoms door (zones/noise/color control-elements), wire it into the live config UI; delete dead deriveScene |
-| **AX.W11** | C · AURORA | major | Aurora color seams — OKLCh-derive the catch-light; hoist the palette-ramp twin to the shared chunk; close the wgsl samplePalette gate hole |
-| **AX.W12** | C · AURORA | major | Mediums substrate — StrokeProfile + paintStrokeLayers extraction + the high-quality painterly noise basis (precondition for the medium waves) |
-| **AX.W13** | C · AURORA | major | First-class van-Gogh + oil-pastel mediums — atomic comma-stroke grammar; split oil-pastel from crayon; OKLab/Kubelka-Munk stroke compositing |
-| **AX.W14** | C · AURORA | major | WebGPU painterly parity — wire the authored Kuwahara/LIC/tensor multi-pass + stable-fluids wake (or excise); device-loss fallback |
-| **AX.W15** | D · BLOB | blocker | Blob contained-droplet geometry — solve body/orbit/satellite/smin against the footprint; lit warm-cream default; living membrane edge |
-| **AX.W16** | D · BLOB | major | Blob integration + interaction + perf — restore pause/resume seam; demand-gate quiescence; shared-context multi-instance; one var()-unwrap leaf; README |
+| **AX.W01** | A · DOCK | blocker | Dock single-scalar morph — one analytic spring → `--dock-morph-t` → every axis (box+chrome+children) on ONE clock; retire the VT fork *(SOTA-deepened: `@property`-registered scalar + velocity-continuity retarget — see waves/AX.W01 §SOTA deepening)* |
+| **AX.W02** | A · DOCK | blocker | One morph orchestrator per dock — fold the inner DockLayerGroup pair onto the outer collapse driver via DI; clip-reveal aperture everywhere *(SOTA-deepened: the web `GlassEffectContainer`/`provideMorphGroup` one-batched-pass model — see waves/AX.W02 §SOTA deepening)* |
+| **AX.W03** | A · DOCK | blocker | keepDockOpen rebuild — `useDockHold(rootRef)` native host listeners (the reka forwarding-drop fix); held as a first-class morph-state input *(SOTA-deepened: `held` as a synchronous morph-state INPUT, not a token race — see waves/AX.W03 §SOTA deepening)* |
+| **AX.W04** | A · DOCK | major | Dock overflow/wrap — content-driven intrinsic flex-wrap (kill the magic-640 viewport chain) + card-tier shadow + tokenized radius *(SOTA-deepened: concentric corners + "material thickens when it flexes larger" off `--dock-morph-t` — see waves/AX.W04 §SOTA deepening)* |
+| **AX.W05** | A · DOCK | major | One iOS-spring vocabulary — excise the legacy apple-spring bezier; re-point its 5 consumers; spring-pipeline gate truth-up *(SOTA-deepened: adopt the iOS-17+ `(perceptualDuration, bounce)` authoring surface + settle-threshold gate — see waves/AX.W05 §SOTA deepening)* |
+| **AX.W06** | A · DOCK | major | Dock storybook consolidation — single `dock` home; DELETE dock-active-tokens (token-ladder); honest rail variant + hoisted polish; dock.css split *(SOTA-deepened: the rail tap-squish IS `.glassEffect(.interactive())` gel-squish; folds the §20 USF-2 DarkModeToggle optical-size sub-finding — see waves/AX.W06 §SOTA deepening + §Consumer hand-off)* |
+| **AX.W07** | B · GRAPHICS | blocker | Aurora core unblock — WGSL int-in-float + var<uniform> dynamic-index → f32-cast + storage-buffer; WebGL2-default-until-parity *(SOTA-deepened: the `var<uniform>`→`var<storage,read>` flip is the named canonical dynamic-index fix — see waves/AX.W07 §SOTA deepening)* |
+| **AX.W08** | B · GRAPHICS | blocker | Blob core unblock — re-derive uSmoothK as ONE coherent distance regime (un-flood the SDF); restore POS_SCALE on the merge band *(SOTA-deepened: IQ-2024 normalizes smin so `k` IS the max merge-inflation — composed-k flood is the DEFINITIVE root cause, a measurable re-solve not a magic number — see waves/AX.W08 §SOTA deepening)* |
+| **AX.W09** | B · GRAPHICS | major | Specular tune-to-subtle — warm-cream low-alpha core + tokenized intensity ladder; retire the dock double-specular; `useSpecularTracking` *(SOTA-deepened: warm-cream low-alpha NEVER pure-white + rim/normal catch-light; folds the §20 USF-1/kf-G-1/kf-G-2 two-consumer specular confirm + wire-or-omit + off-vs-subtle ratify — see waves/AX.W09 §SOTA deepening + §Consumer hand-off)* |
+| **AX.W10** | C · AURORA | major | Aurora options converge — ONE atoms door (zones/noise/color control-elements), wire it into the live config UI; delete dead deriveScene *(SOTA-deepened: zones/noise/color → ≤7 atoms is the corpus's exact atom decomposition — see waves/AX.W10 §SOTA deepening)* |
+| **AX.W11** | C · AURORA | major | Aurora color seams — OKLCh-derive the catch-light; hoist the palette-ramp twin to the shared chunk; close the wgsl samplePalette gate hole *(SOTA-deepened: the OKLCh core is CONFIRMED-CORRECT — W11 stays SEAM-LEVEL, NOT a redo — see waves/AX.W11 §SOTA deepening + §4 note 7)* |
+| **AX.W12** | C · AURORA | major | Mediums substrate — StrokeProfile + paintStrokeLayers extraction + the high-quality painterly noise basis (precondition for the medium waves) *(SOTA-deepened: `StrokeProfile` IS the SBR "stroke = parameter vector" canon + integer-PCG GLSL hash — see waves/AX.W12 §SOTA deepening)* |
+| **AX.W13** | C · AURORA | major | First-class van-Gogh + oil-pastel mediums — atomic comma-stroke grammar; split oil-pastel from crayon; OKLab/Kubelka-Munk stroke compositing *(SOTA-deepened: multi-scale coarse-to-fine van-Gogh SBR cascade + named pigment-compositing math — see waves/AX.W13 §SOTA deepening)* |
+| **AX.W14** | C · AURORA | major | WebGPU painterly parity — wire the authored Kuwahara/LIC/tensor multi-pass + stable-fluids wake (or excise); device-loss fallback *(SOTA-deepened: anisotropic Kuwahara recipe + the pre-2010 hard-sector pinwheel warning — see waves/AX.W14 §SOTA deepening)* |
+| **AX.W15** | D · BLOB | blocker | Blob contained-droplet geometry — solve body/orbit/satellite/smin against the footprint; lit warm-cream default; living membrane edge *(SOTA-deepened: the footprint budget COUNTS the smin band as ONE atomic sum + analytic-gradient smin — see waves/AX.W15 §SOTA deepening)* |
+| **AX.W16** | D · BLOB | major | Blob integration + interaction + perf — restore pause/resume seam; demand-gate quiescence; shared-context multi-instance; one var()-unwrap leaf; README *(SOTA-deepened: event-scheduled quiescence with a REAL at-rest predicate is the biggest onscreen lever — see waves/AX.W16 §SOTA deepening)* |
 | **AX.W17** | E · CONSTELLATION | major | Constellation port — ship `--constellation-*` light/dark tokens + `drawOverlay` seam; slides adopts; research-backed README |
 | **AX.W18** | F · STORYBOOK IA | major | Storybook IA ground-up reinvention — author the new category tree, dock home, dissolve debris bins; re-baseline the three IA gates |
 | **AX.W19** | G · PRIMITIVES | major | Primitive prune A — excise header-ribbon + glyph-face + disco-glyph (+ sever the silhouette DI coupling); confirm token-ladder removed |
-| **AX.W20** | G · PRIMITIVES | blocker | Primitive fix — native-top-layer hsl-nest fix-or-fold; card toggles meaningful; GlassPanel retire onto `.glass-material` (kill the JS renderer) |
-| **AX.W21** | G · PRIMITIVES | minor | Primitive recategorize-ledger + barrel coherence — configurator root-barrel reconcile; drawer live-behind disambiguate; use-token-color justify; metric-pill subpath |
+| **AX.W20** | G · PRIMITIVES | blocker | Primitive fix — native-top-layer hsl-nest fix-or-fold; card toggles meaningful; GlassPanel retire onto `.glass-material` (kill the JS renderer) *(SOTA-deepened: the nested-`hsl()` trap + the no-style-stomping-imperative-filter retire are corpus-ratified; `.glass-material` is the canonical refraction substrate — see waves/AX.W20 §SOTA deepening)* |
+| **AX.W21** | G · PRIMITIVES | minor | Primitive recategorize-ledger + barrel coherence — configurator root-barrel reconcile; drawer live-behind disambiguate; use-token-color justify; metric-pill subpath *(folds the §20 hand-offs: kf-G-3 `LabeledField orientation="horizontal"` + label-action slot, kf-G-5 `<DrawerContent spring>`, kf-G-6 cartoon-quiet preset — route to W21)* |
 | **AX.W22** | G · PRIMITIVES | major | Font register reconciliation — one brand register (Plus Jakarta + Fira Code), default == rendered, excise dead Fraunces; live-cascade font gate |
 | **AX.W23** | H · SLIDERS | blocker | Carousel indicator re-author — dark/light-safe position-dot rail (fix invisible dots + dead scale class); fold AW.W30 carousel restyle; glass-scrubber rename decision |
 | **AX.W24** | I · DECK | major | Deck-progress LIBRARY-side — export `/deck-progress` subpath; fix cascade-layer + glow + var-in-arbitrary; register the gate (the slides-side port moves to W32) |
@@ -140,7 +145,7 @@ recorded delta, not a silent stall.
 | **AX.W30** | L · SLIDES | blocker | Slides baseline — land the H working-tree on a clean branch; fix the constellation light-dark()-into-Canvas2D leak; execute the authored e2e specs |
 | **AX.W31** | L · SLIDES | major | Slides content reframe — Slide04 hypothetical/what-if anomaly + $5M figure-clip; lock-affordance; access-modal glass restyle; mobile reflow guards |
 | **AX.W32** | L · SLIDES | minor | Slides motion + form adoption — delete local reveal.ts/useCountup.ts → glass-ui vReveal/useCountup; LabeledField error pattern; deploy verification |
-| **AX.W33** | M · CLOSE | major | AX close — gate-fleet registration + `proof:ax-final` + README live-currency (π-lane captures) + overfitting audit + inheritance-ledger cross-walk + carry-closure gate + FINAL (LAST, HARD-gated terminal, dependsOn ENUMERATED) |
+| **AX.W33** | M · CLOSE | major | AX close — gate-fleet registration + `proof:ax-final` + README live-currency (π-lane captures) + overfitting audit + inheritance-ledger cross-walk + carry-closure gate + FINAL (LAST, HARD-gated terminal, dependsOn ENUMERATED) *(folds the §20 kf-G-4 verify-landed: `startViewTransition({types})` IS at HEAD — confirm the directional `::view-transition-*` CSS companion ships, then publish-currency)* |
 | **AX.W34** | N · CROSS-REPO | major | Cross-constellation analysis + idiom-maximization + consumer-adoption ledger (§16 receiver) — author `coordination/CONSTELLATION.md`; per-consumer idiom census (words/bbnf-buddy/bbnf-playground/value.js/fourier/muster); route each adoption + each newly-surfaced glass-ui debt to its wave |
 | **AX.W35** | N · CROSS-REPO | blocker | Primitive-prune consumer-migration DAG — keyframes.js EditorShell off HeaderRibbon + EasingCurveCanvas off GlassPanel; value.js dock/blob/watercolor forks; native-first / migrate-before-prune, born-RED cross-repo gates; sequenced BEFORE W19/W20 publish |
 | **AX.W36** | G · PRIMITIVES | major | Forced-colors / Windows-High-Contrast glass-language skin — `@media (forced-colors:active)` so structure survives when the glass evaporates (tier panes → CanvasText, hue dots → bordered glyphs, focus → Highlight); forcedColors π-lane gate |
@@ -149,19 +154,27 @@ recorded delta, not a silent stall.
 | **AX.W39** | M · CLOSE | major | Lighthouse perf/a11y audit (demo + slides matrix; dropped AW.W32) — `scripts/lighthouse-demo.mjs` + substrate-aware budget + `proof:lighthouse-demo` ci-gated; remediate the floors over the new IA route matrix |
 | **AX.W40** | F · STORYBOOK IA | major | Demo-shell dock-nav + cross-surface coherence re-audit (merged-but-untrusted AW.W28/W31) — rebuild demo nav on GlassDock (sidebar + bottom dock); re-run animation-coherence/DESIGN.md-currency/naming-consistency over the AX-rebuilt surfaces |
 | **AX.W41** | N · CROSS-REPO | major | Publisher-side cross-repo build + supplier-edge hardening — the `build:watch` dts-emit arm (the cross-repo dts-freshness keystone, value.js C-DTS root cause); devDep↔peer range-parity gate (keyframes/value); the orphan AW.W27 supplier-edge (keyframes-4 `file:`-link republish handoff + E2 value-0.11 cap); keyframes peer-range-bump export-surface-stability check (the bbnf-buddy `getTimingFunction`-removal cascade) |
+| **AX.W42** | A · DOCK / SUBSTRATE | major | The unified liquid-morph substrate — `useLiquidMorph` / `--morph-t` / `MorphGroup` as ONE idiom (the web `GlassEffectContainer`+`glassEffectID` / Motion `LayoutGroup`+`layoutId` transposition); W01's `--dock-morph-t` is the FIRST consumer; ≥2-consumer-at-landing (dock + ≥1 glass primitive); bifurcated self-reshape-vs-route seam; `@supports`-gated lensing fold *(net-new §18.3 substrate, ~70% assembly — see waves/AX.W42 + §5)* |
 
-**44 waves** (AX.W00…AX.W41, with W25/W27 each split into a/b → W25a·W25b·W27a·W27b; numbering runs
-W00…W33 then W34…W41, 42 numbered slots, 44 dispatchable waves counting the two splits). Dependency-
-ordered, dock-first. The two graphics blockers (aurora-black W07, blob-flood W08) and the dock-desync
+**45 waves** (AX.W00…AX.W42, with W25/W27 each split into a/b → W25a·W25b·W27a·W27b; numbering runs
+W00…W33 then W34…W42, 43 numbered slots, 45 dispatchable waves counting the two splits). W42 is the
+unified-morph substrate added this pass — the §18.3 net-new facility the dock single-scalar `--dock-morph-t`
+(W01) is the FIRST consumer of. Dependency-ordered, dock-first. The two graphics blockers (aurora-black W07, blob-flood W08) and the dock-desync
 (W01) are co-headline; the visual-truth π lane (W00) is the structural precondition every visual wave's
 close depends on. W35 (consumer-migration DAG) is a hard predecessor of the W19/W20 prune PUBLISH; W34
 (the §16 receiver) is the zero-loss forcing-function that may SPAWN further consumer-adoption sub-waves —
 held read-only, tranche-development-only. W41 (publisher-side build + supplier-edge) is the glass-ui-OWNED
 cross-repo obligation cohort the consumer-side W34/W35 legs depend on — the dts-watch keystone + the
-peer-range coordination every consumer dev-resolves through. **NEW at CONVERGE** vs the prior 42: W41 is
-the only genuinely-new wave the digest surfaced that no existing wave covered (the `build:watch` dts gap +
-the orphan AW.W27 supplier-edge had no home); every other digest NEW-WAVE candidate DEDUP'd onto an
-existing wave (see §4 note 22 for the dedup ledger).
+peer-range coordination every consumer dev-resolves through. W42 (the unified liquid-morph substrate) opens
+AFTER W01 lands its single-scalar dock model — W42 GENERALIZES that model into the shared `useLiquidMorph` /
+`--morph-t` / `MorphGroup` facility (§18.3 net-new), of which W01's `--dock-morph-t` is the FIRST consumer;
+it ships with ≥2 in-repo consumers at landing. **NEW at CONVERGE** vs the prior 42: W41 is the only
+genuinely-new wave the *digest* surfaced that no existing wave covered (the `build:watch` dts gap + the
+orphan AW.W27 supplier-edge had no home); every other digest NEW-WAVE candidate DEDUP'd onto an existing
+wave (see §4 note 22 for the dedup ledger). **NEW this pass** (the §18 liquid-glass directive): W42 is the
+net-new unified-morph substrate, added per REQUIREMENTS §18.3 — it is a distinct wave (not a digest
+candidate) so the glass-primitive second consumer lands WITH the substrate at one close (the distinct-wave
+vs fold-into-W01 ratify is in waves/AX.W42 §Open-Questions + §5).
 
 ---
 
@@ -169,8 +182,12 @@ existing wave (see §4 note 22 for the dedup ledger).
 
 - **π (W00)** — the gate-philosophy foundation. The fail-CLOSED visual-runtime lane that converts every
   downstream "green" into "the real device paints the right image." OPENS FIRST.
-- **A · DOCK (W01-W06)** — the headline. The dock from first principles: one-scalar one-clock morph,
-  slider-hold, overflow/wrap, one spring vocabulary, rail/consolidation. Top of the tranche per §1.
+- **A · DOCK (W01-W06) + the morph SUBSTRATE (W42)** — the headline. The dock from first principles:
+  one-scalar one-clock morph, slider-hold, overflow/wrap, one spring vocabulary, rail/consolidation. Top of
+  the tranche per §1. **W42** generalizes the W01 single-scalar dock model into the shared liquid-morph
+  substrate (`useLiquidMorph`/`--morph-t`/`MorphGroup`) — the §18.3 net-new facility every UI element morphs
+  off; W01's `--dock-morph-t` is its FIRST consumer (opens after the dock band's morph model + spring
+  vocabulary settle).
 - **B · GRAPHICS BLOCKERS (W07-W09)** — the co-headline. The two device-proven black/flood renders +
   the specular blowout. These unblock everything downstream in C/D.
 - **C · AURORA (W10-W14)** — perfection: options converge, color seams, mediums substrate, first-class
@@ -210,7 +227,7 @@ cites and MUST NOT violate (per-wave specs cite the specific clause + use a prec
 | Band | Binding precepts (cite + do-not-violate) |
 |------|------------------------------------------|
 | **π (W00)** | π visual-runtime lane (SPEC.md §π); fail-explicit on library-internal violations vs befitting-silent browser-API degradation; Gates close on evidence (no grep-only runtime gate); cross-repo π is binding on slides too |
-| **A · DOCK (W01-W06)** | one-path / no-legacy-code (collapse the VT-vs-FLIP fork); abrogate-before-patch (retire VT fork, re-derive from first principles); typed-key + paired DI (the dock provide/inject collapses onto `createStrictContext`); no-god-modules (dock.css split, last in band); substrate-with-consumer (expose `useLayerTransition` on the `/dock` barrel so the value.js fork retires) |
+| **A · DOCK (W01-W06, W42)** | one-path / no-legacy-code (collapse the VT-vs-FLIP fork; W42 collapses the per-component-bespoke morph idiom onto ONE substrate); abrogate-before-patch (retire VT fork, re-derive from first principles; W42 re-derives the dock-private FLIP into a shared facility, deletes the value.js fork rather than bridging); typed-key + paired DI (the dock provide/inject collapses onto `createStrictContext`; W42's `MorphGroup` rides `createOptionalContext`); no-god-modules (dock.css split, last in band); substrate-with-consumer (expose `useLayerTransition` on the `/dock` barrel so the value.js fork retires; **W42 ships ONLY with ≥2 in-repo consumers — the dock + ≥1 glass primitive — at landing, gated fail-closed; no-overfitting bars a speculative options surface**); fail-explicit vs befitting-silent (W42's lensing fold fails to the flat-glass tier EXPLICITLY on non-Chromium, never a broken `url()`); π visual-runtime close (the morph reads as one continuous iOS spring on the live device) |
 | **B · GRAPHICS (W07-W09)** | one-path (one coherent distance regime; one specular source); fail-explicit (shader-pipeline throws; device-loss is a befitting-silent browser-API fallback); no-overfitting (delete dead deriveScene); π visual-truth close |
 | **C · AURORA (W10-W14, W38)** | substrate-with-consumer (the atoms door consumed by the live UI + speedtest E2 as consumer #2); no-overfitting (excise dead deriveScene/painterly-wgsl-or-wire); one-path (single-source shader twins); canonical-readme-shape |
 | **D · BLOB (W15-W16)** | one-path (one POS_SCALE regime — see §4 note 13); substrate-with-consumer (restore the pause/resume seam; value.js fork retires onto /goo-blob); fail-explicit vs befitting-silent (PRM freeze stays silent); canonical-readme-shape |
@@ -519,6 +536,20 @@ a real primitive gap a speedtest consumer measured at 40×40 regardless of `.gla
 dock-controls.css carve. (c) The refined rail + dock-control polish W06 hoists is exactly what bbnf-buddy
 ToolsLayer re-derives by hand — note it as a re-adoption target (routes to W34).
 
+**§20 CROSS-SESSION HAND-OFF fold (USF-2 — the dock-control optical-size contract; NEW, see waves/AX.W06
+§Consumer hand-off).** USF reports `DarkModeToggle`-in-dock renders ~2.5× the nav icons in `variant="rail"`.
+Root cause (glyph-sizing asymmetry): (1) DockIconButton glyphs are consumer slots (`h-4 w-4` ≈ 40% of the
+2.5rem box); (2) DarkModeToggle renders its OWN internal SVG `h-full w-full`
+(`custom/dark/DarkModeToggle.vue`) — bypassing the slot convention; (3) in-dock, dock-controls.css:194-201
+sets `--dark-mode-toggle-padding: var(--dock-icon-padding, 0)` but `--dock-icon-padding` is NEVER DEFINED →
+zero padding → the SVG fills the box (standalone `md` correctly gets 0.375rem — dock-specific). First-principles
+fix: the two icon-button families share ONE optical-size contract WHEN DOCKED — route the toggle's internal
+glyph through a `--dock-control-glyph-size` token (default `--icon-md`), scoped to the in-dock path only
+(`h-full w-full` stays correct for standalone). One token the whole dock-control family reads; no
+per-component magic padding. W06 owns dock-controls.css + lands LAST in the dock band, so the contract carves
+the FINAL model. Cross-repo consume gate: USF's dock-control optical-parity visual gate (routes through
+W34/W35).
+
 **gate.** `proof:storybook-ia` re-baselined for the dock home; `proof:no-orphan-demo-route`;
 `proof:no-god-module` (.css-aware, W25a) over the dock partials. VISUAL-TRUTH: live audit of the
 consolidated dock story + the refined rail.
@@ -649,6 +680,20 @@ consumer-visible blowout the tune must beat. Cite keyframes a-glass-ui-consumpti
 surface the retune must satisfy live (the kf demo gets the fix free via the softened default after a pin
 bump — confirm no kf-side override remains). (c) The forced-colors:active glass-language skin arm is its
 OWN wave (W36), NOT folded here — flagged so the specular tune does not absorb the broader a11y obligation.
+
+**§20 CROSS-SESSION HAND-OFF folds (USF-1 + kf-G-1 + kf-G-2 — see waves/AX.W09 §Consumer hand-off).** TWO
+consumers (USF + keyframes.js) independently confirm the resting-specular blowout — the two-consumer confirm
+makes the root cause definitive: (1) inner stop `hsl(40 30% 100% / 0.55)` resolves to PURE white (L=100%
+washes the 30% sat), (2) `mix-blend-mode: screen` of white over the dark canvas, (3) the non-zero rest floor
+`opacity: var(--specular-intensity, 0.35)` paints it at rest, defeating the `@property` `initial-value:0`.
+**The rest-floor→0 is the single highest-value fix for a flat consumer.** W09 gains a SECOND leg — the
+**wire-or-omit** contract (kf-G-1): a glass surface either WRITES `--specular-x/y` from the pointer itself
+(as `dock.js` does) OR does NOT emit `.glass-specular-track` until a consumer opts in — a mouse-tracked
+radial with NO mouse writer must never be the default; the calmer default is rest ≤ 0.25 / radius ≤ 40%
+(kf-G-2 confirms the dock-icon track IS already pointer-wired → a TUNE, not a wire-up). RATIFY the specular
+default — `subtle` (rest≈0) vs `off` — flat-data consumers want `off` trivially declarable (the Card
+`specular="off|subtle|full"` prop W09 already specs). Cross-repo consume gate: kf `proof:specular-handoff` +
+USF's specular visual gate, born-RED, greening ONLY on the published bump (routes through W34/W35).
 
 **gate.** `proof:glass-material-unified` re-pointed to assert the tokens exist (not literal values) +
 co-update `proof-glass-material-unified.mjs:167,170` hardcoded `0.6`/`0.85`; assert the Card `specular`
@@ -1156,6 +1201,22 @@ contract** here (the W32 DeckGate + muster SettingsDialog/ConstraintsLayer "adop
 pattern" asks need the contract, not adoption-only — verify the `useUserInvalidAria` bridge composes with
 LabeledField's error slot). This is a feature-gap fold (NOT a new wave) since W21 already touches the
 labeled-field/drawer surface.
+
+**§20 CROSS-SESSION HAND-OFF folds (kf-G-3 + kf-G-5 + kf-G-6 — the keyframes.js + USF API asks routed to
+W21).** (a) **kf-G-3 (HIGH, NEW) — `LabeledField orientation="horizontal"`** (label-LEFT / value-RIGHT, the
+macOS/iOS settings-row idiom, distinct from the labels-above data-entry-FORM idiom). Add an
+`orientation`/`inline` prop laying the row `grid-template-columns: auto 1fr; align-items:center` with
+`.error { grid-column: 1 / -1 }` — every `Labeled*` consumer inherits the compact settings-row by ONE prop
+instead of re-authoring a `grid-cols-[auto_1fr]` wrapper (`.labeled-field` is block-flow today,
+utilities.css:62). Sub-ask: a **label-row ACTION slot** (`<LabeledField>` exposes only `default`+`error`
+today — a label-row action slot lets an "edit pencil" sit in the label row idiomatically). This is the
+DURABLE home for kf's controls-row layout; it composes with the (e) LabeledField feature-gap above. Gate: kf
+`proof:single-column-pack` label-left clause. (b) **kf-G-5 — `<DrawerContent spring>` prop** (confirms the
+(b) Drawer-spring fold above): vaul `DrawerContent` uses 500ms `cubic-bezier(.32,.72,0,1)` (drawer.css:30); a
+`spring` prop (SpringProgress curve ~240-300ms) lets consumers opt into the springy register. LOW/BOOK. (c)
+**kf-G-6 (LOW/OPTIONAL) — a named `surface="cartoon" tier="quiet"` preset/alias** (kf sets the pair on ~14
+panel Cards; born-GREEN today via the explicit pair) — expose a named register ONLY if wanted. Gate: kf
+`proof:glass-and-cartoon`. All three carry born-RED cross-repo consume gates routed through W34/W35.
 
 **gate.** `proof:storybook-ia` for the placements; a root-barrel-vs-rationale consistency check;
 `proof:no-retired-survivor` authored (registered in W33); a `proof:configurator-divider-rule` /
@@ -1928,8 +1989,64 @@ packaging wave. (The keyframes-side cuts are sibling-session work; glass-ui auth
 
 ---
 
+### AX.W42 — The unified liquid-morph substrate: `useLiquidMorph` / `--morph-t` / `MorphGroup` as ONE idiom
+**Band** A · DOCK / SUBSTRATE · **Severity** major · **dependsOn** AX.W00, AX.W01
+
+**Scope (a CONCISE pointer to the full spec — `waves/AX.W42-liquid-morph-substrate.md`; do NOT duplicate it
+here).** Ship `useLiquidMorph(elRef)` + `--morph-t` + `MorphGroup` as ONE reusable morph substrate — the web
+transposition of SwiftUI's `GlassEffectContainer` + `glassEffectID` and Motion's `LayoutGroup` + `layoutId`
+— so "every element morphs/springs/flows" is ONE idiom, not per-component bespoke (REQUIREMENTS §18.1/§18.3).
+The substrate is ~70% ASSEMBLY of primitives already in the tree; the net-new is the unifying API surface +
+the `MorphGroup` orchestrator + the `axes`-declaration that lets CSS `calc()` off one scalar + the 3-state
+`data-morph-state=idle|morphing|settled` lifecycle enum + the four perf/a11y SUBSTRATE invariants
+(on-demand will-change · `@property inherits:false` inheritance-bomb guard · PRM fast-path · one-driver-per-axis).
+The matched-geometry seam stays BIFURCATED (spring+FLIP for self-reshape, native View Transitions via an
+opt-in `morphId` for the route/shared-element morph); the lensing-`backdrop-filter` fold is explicitly
+`@supports`-gated Chromium-only over the flat-glass blur base (fail-explicit-degrade, never a broken `url()`).
+The full six folds + FileBounds + Triumvirate + HardGate + Cadence live in the per-wave spec.
+
+**RECONCILIATION — W01's `--dock-morph-t` is the FIRST consumer of this GENERAL facility (the load-bearing
+relationship).** W01 (single-scalar dock morph) builds the dock-flavored single-scalar one-clock model
+(`--dock-morph-t`, the VT-collapse retirement, `useLayerTransition` re-derived 479→~130); W42 then
+GENERALIZES that settled model — `--dock-morph-t` becomes the FIRST `--morph-t` instance, `useLayerTransition`
+becomes a thin dock-flavored WRAPPER over `useLiquidMorph`, and W02's `dockMorphContext` becomes the first
+`MorphGroup` consumer. This is why W42 dependsOn W01 (HARD) and SEQUENCES strictly after it — there is no
+single-scalar model to lift until W01 builds it. The substrate ships with ≥2 in-repo consumers at landing
+(the dock + ONE ratified glass primitive — tab-indicator glide or card→detail expand, RATIFY against the
+live audit) + the value.js FLIP-width fork-deletion as the cross-repo adoption (W34). W42 may be FOLDED into
+W01 as the generalization arm, but the §18.3 net-new mandate + the ≥2-consumer-at-landing bar argue for a
+distinct wave (RATIFY at wave-open — see §5 + waves/AX.W42 §Open-Questions).
+
+**Soft-coordinates** with W02 (the `MorphGroup` ↔ `dockMorphContext` ordering), W03 (the `data-morph-state`
+enum the held edge feeds), W05 (the governed `--spring-*` register the substrate consumes — no new curve,
+no hand-rolled `k`), W09 (the `useSpecularTracking` light seam + the SPECULAR/REFRACTION half split), W20
+(the no-imperative-filter posture the lensing fold honors). None is a HARD dependsOn (W42 consumes each
+settled surface if it lands first, else the published baseline).
+
+**foldsFindings.** REQUIREMENTS §18.3 (the net-new unified MORPH substrate mandate). Constellation slice 10
+F0 (the value.js box-leads-content FLIP-width fork re-derived ONLY because the `/dock` barrel never
+re-exported the primitive — substrate-with-consumer; the fork-deletion is W42's named cross-repo adoption).
+The liquid-glass research corpus facets 1/3/12/26/27/28/29/30 (`liquidglass-research-corpus.json` + synthesis
+§1.4: net-new + wave-worthy, ~70% assembly — the proven `GlassEffectContainer`/`LayoutGroup` API shape, the
+3-state lifecycle, the bifurcated seam, the four invariants are all corpus-grounded, NOT speculative).
+AV.W9.0 (the `interpolate-size`/`calc-size` dual-driver dock-freeze — the one-driver-per-axis lesson the
+substrate makes a STRUCTURAL invariant).
+
+**gate.** `proof:morph-substrate-single` (π-lane, born-RED — the substrate is the SOLE morph engine across
+its ≥2 consumers; one driver per axis; the 3-state lifecycle; the inheritance-bomb / will-change-lifecycle /
+PRM-fast-path / bifurcated-seam guards; the ≥2-consumer count fails CLOSED below 2) + a pure-detector vitest
+(`liquid-morph.detect.test.ts`) + the W00 meta-gate parity. VISUAL-TRUTH: a live Playwright +
+frontend-design audit confirms the dock AND ≥1 glass primitive morph as ONE continuous iOS spring on the
+DEFAULT engine off the SAME `useLiquidMorph`/`--morph-t` substrate, the velocity-continuity retarget reverses
+a mid-flight re-toggle fluidly on each, the lensing fold degrades cleanly to flat-glass on non-Chromium, and
+PRM snaps both to target — the numeric gate alone does NOT close the wave (a paired-π BEFORE/AFTER + DELTA
+over ≥3 viewports in light AND dark). The high-risk PoC (the second-consumer + the single-scalar substrate)
+spikes GO in the §5 prototype pass before this wave drives.
+
+---
+
 ### AX.W33 — AX close: gate-fleet + READMEs + overfitting audit + inheritance cross-walk + FINAL
-**Band** M · CLOSE · **Severity** major · **dependsOn** AX.W00…AX.W32 + AX.W34…AX.W41 (ENUMERATED — every prior wave; LAST, HARD-gated terminal)
+**Band** M · CLOSE · **Severity** major · **dependsOn** AX.W00…AX.W32 + AX.W34…AX.W42 (ENUMERATED — every prior wave INCLUDING the W42 morph substrate; LAST, HARD-gated terminal)
 
 **Scope.** Bake the close as a concrete HARD-gated terminal wave (the AW close W33 never ran — the gate-fleet
 is partially hand-registered, the overfitting audit + π lane + FINAL all unrun). Register every new AX gate
@@ -1962,7 +2079,15 @@ still-open. (f) **AW.W31 re-audit:** `proof:animation-coherence`/`design-md-curr
 re-run against the AX-REBUILT motion surfaces (the dock W01-W06 + aurora/blob rebuilds CHANGE what W31
 audited — the cross-surface coherence work lands in W40, the re-audit confirms here). (g) ι integrity-sweep
 + `scripts/audit-stash-list.mjs` + the `git log --since docs/precepts/` walk; bump the precepts submodule
-pin past `63240e6` to the "Before/after + compare-at-close" commit if owed.
+pin past `63240e6` to the "Before/after + compare-at-close" commit if owed. (h) **§20 kf-G-4 VERIFY-LANDED:**
+the directional View-Transition helper `startViewTransition({types})` IS already landed at HEAD (unpublished)
+— so kf-G-4 is largely DONE; W33 CONFIRMS the directional `::view-transition-*` CSS companion ships, then it
+is publish-currency (the kf `useSceneTransition.ts` consumer greens on the AX bump via a kf demo-smoke
+VT-types assertion). (i) **§20 kf-G-0 DO-NOT-REOPEN:** the dock-spring retune (ramp peak +16.3% → the
+published `(0.32,0.7)` ~+4.6% at 53c1b07) is ALREADY published (3.5.0/3.5.1/3.6.0) and the keyframes
+a-historical-dock oracle confirms it as the SHIPPED-CORRECT baseline — AX must NOT re-open it (the W01
+single-scalar morph COMPOSES with the published curve; W05 pins the governed dock register to it; see §4
+note 23). Record both as closed-at-HEAD / publish-currency in the inheritance-ledger cross-walk.
 
 **foldsFindings.** Slice 31 F4 (the renumbered-thrice never-reached close — AX absorbs it as HARD-gated
 terminal). Slice 31 F8 + 7 F0 + 11 F2 + 13 F5 (README planned→landed against the LIVE surface). Slice 22 F3
@@ -2166,8 +2291,9 @@ so the orchestrator can ratify each disposition.
     is a deliberate subset), with the 2 legacy gates tagged `['local','ci','release']` as the named exception.
     W25a's no-god-module tag matches this model.
 
-22. **DEDUP LEDGER — W41 is the ONLY genuinely-new wave; every other digest NEW-WAVE candidate DEDUP'd onto an
-    existing wave (the CONVERGE dedup-hard mandate, 32 candidates overlap heavily).** The digest emitted ~30
+22. **DEDUP LEDGER — W41 is the only genuinely-new wave the DIGEST surfaced (W42 is the separate §18-directive
+    net-new substrate, not a digest candidate); every other digest NEW-WAVE candidate DEDUP'd onto an existing
+    wave (the CONVERGE dedup-hard mandate, 32 candidates overlap heavily).** The digest emitted ~30
     `NEW-WAVE?` candidates; all but ONE route onto an existing wave: Card-specular/Drawer-spring → W09/W21;
     forced-colors skin → **W36**; useTextHighlight + Canvas2D-lifecycle → **W37**; aurora-configurator restyle →
     **W38**; Lighthouse (demo + slides) → **W39**; demo-dock-nav + coherence re-audit → **W40**; §16 receiver +
@@ -2178,7 +2304,11 @@ so the orchestrator can ratify each disposition.
     candidate with NO existing home is the **publisher-side build + supplier-edge cohort** (the `build:watch`
     dts gap + the orphan AW.W27 keyframes-4 `file:`-link republish + the E2 value-0.11 cap + the devDep↔peer
     parity gate + the keyframes export-stability check) → **W41 (NEW)**. The dedup is HARD: a candidate spawns a
-    new wave only when no existing wave's scope can absorb it without scope-creep.
+    new wave only when no existing wave's scope can absorb it without scope-creep. **W42 (the unified
+    liquid-morph substrate) is a SEPARATE net-new wave on a different basis** — it is not a digest dedup
+    candidate but the REQUIREMENTS §18.3 net-new substrate mandate (the dock single-scalar `--dock-morph-t` of
+    W01 is its FIRST consumer); it is a DISTINCT wave (not folded into W01) so the glass-primitive second
+    consumer lands WITH the substrate at one ≥2-consumer close (RATIFY — §5.3, waves/AX.W42 §Open-Questions).
 
 23. **The keyframes.js dock-spring is the SHIPPED-CORRECT baseline ORACLE, NOT a defect to re-fix (idiom:keyframes
     + hist:keyframes + harden:dock-graphics).** keyframes.js's FIRST dock implementation (the single-clock
@@ -2194,3 +2324,131 @@ so the orchestrator can ratify each disposition.
     fourier's K+ critical path route-morphs through (separable concerns the prior charter conflated; live
     re-diagnose per the W00 wave-open ritual; if the name truly must die, an inv-16'-style annex coordinates
     fourier's K.W1 + e2e with a born-RED fourier-side gate).
+
+24. **The cross-repo consume-gate discipline binds every §20 hand-off (the §20 cross-session forcing
+    function).** Two consumer sessions (USF tranche B + keyframes.js tranche H) audited glass-ui-owned items
+    IN the consumer and NEVER patched them there (per inv-16 — kf/USF consume the PUBLISHED glass-ui; these
+    are HAND-OFFs). Each hand-off pairs a born-RED CONSUMER gate (the consume-signal: kf
+    `proof:specular-handoff` / `proof:single-column-pack` / `proof:glass-and-cartoon` / the VT-types
+    demo-smoke / `proof:dock-morph-settled`; USF's specular + dock-control optical-parity visual gates) that
+    greens ONLY when glass-ui SHIPS the fix AND the consumer bumps — the chronic-closure forcing function (no
+    silent forever-punt). These belong in W34 (the cross-constellation consumer-adoption ledger) + W35 (the
+    consumer-migration DAG) tracking; the discipline itself reinforces the W00 visual-truth /
+    no-silent-deferral philosophy. The publish hinge is W33/W34: USF + kf bump 3.x → the AX publish, full
+    live re-audit after (the batch-1 reconciliation rides along). Sources:
+    `usf/docs/tranches/B/GLASS-UI-AX-HANDOFF.md`, kf `docs/tranches/H/valuejs-parsethat-glassui-handoff.md`.
+
+25. **OKLCh-core is CONFIRMED-CORRECT at SOTA — W11 is seam-level, NOT a redo (extends note 7; the aurora
+    research §SOTA fold).** The 32-facet aurora corpus is emphatic: the OKLCh color core is already at SOTA —
+    EIGHT things the engine does are confirmed-correct by the literature (linear-light compositing + a single
+    sRGB OETF close, the Ottosson matrices, the cusp-aware gamut mapping, etc. — see waves/AX.W11 §SOTA
+    deepening). So W11 stays SEAM-LEVEL (the catch-light OKLCh-derive + the palette-ramp twin hoist + the
+    planned→landed doc sweep + the WGSL `samplePalette` gate-hole close), NOT a color-core redo. Do NOT
+    re-litigate the migration (note 7 already established it is genuinely landed + machine-locked). The
+    cusp-aware gamut mapping is the named upgrade the catch-light/ramp seam work composes with.
+
+26. **The W08 composed-k flood is the DEFINITIVE root cause — a measurable re-solve, NOT a magic number
+    (extends note 13; the blob research §SOTA fold makes it definitive).** The 32-facet blob corpus makes the
+    W08 diagnosis DEFINITIVE: IQ-2024 NORMALIZES smin so `k` IS the max merge-inflation (the quadratic
+    `k*=4.0` pre-scale, `g(0)=1/4`) — the composed live `uSmoothK ≈ 0.21` → in-shader effective `k ≈ 0.84` in
+    a 1.0-wide UV is ≈6× the working band, flooding the SDF; the fix is a coupled re-derivation of the config
+    default + mood lerp + the restored POS_SCALE, NOT a magic-number patch (see waves/AX.W08 §SOTA deepening).
+    The analytic-gradient smin (facet [2]) is the named upgrade W15 inherits. POS_SCALE disposition
+    (re-affirmed, note 13): W08 takes the MINIMAL un-flood (restore `POS_SCALE` on the `uSmoothK` upload — it
+    IS a length and must ride the same compression as every other length-like uniform — + re-tune the composed
+    band to ~0.03-0.08 effective; W08 does NOT excise POS_SCALE); W15 KEEPS that regime OR, IF it re-expresses
+    all lengths in wrapper-normalized units, re-derives the ENTIRE length cohort (body/sat/orbit/smin/noise)
+    ATOMICALLY in that wave with `proof:blob-render` as the regression-lock — never a partial migration that
+    re-floods.
+
+27. **The prototype-gating truths (the PROTOTYPE-HARDEN drive-readiness gate; see §5).** The prototype/harden
+    pass surfaced four load-bearing truths the charter records so no wave drives on a false assumption: (a)
+    **W01's `--dock-morph-t` is NET-NEW architecture, not a tune** — HEAD does pixel-space FLIP with NO
+    `--dock-morph-t` scalar in the tree, so W01 builds the single-scalar one-clock model from scratch (it must
+    spike GO before driving). (b) **The `@property`-perf claim is HALF-TRUE** — a registered `<number>`
+    scalar interpolates composited, but the `calc()` axes it drives (`inline-size`, `padding`, `border-radius`,
+    `background`) are D/C-tier and reflow/repaint per frame; the morph is acceptable ONLY because the
+    clip-reveal aperture makes it paint-bounded (content laid out once, box-as-window), NOT because
+    `@property` makes it free — audit which axes can move to S-tier `transform`/`clip-path` and keep the
+    morphing subtree small (waves/AX.W01 §SOTA.4). (c) **Velocity-continuity is the HIGHEST-regression-risk
+    piece** — the mid-flight-retarget re-seat from `(value, velocity)` is the one load-bearing iOS-feel item
+    VT/`linear()` fundamentally CANNOT do; the 479→~130 rewrite MUST preserve the AV.W9.2 retarget, and the
+    PoC must prove a mid-flight re-toggle reverses fluidly on a REAL browser (happy-dom cannot reproduce it).
+    (d) **W42's reuse-ledger conflates `useSpring` vs `SpringProgress` FLIP** — the ~70%-assembly inventory
+    must be RATIFIED against the live model: `useSpring` wraps `SpringProgress.play()` which spawns its OWN
+    rAF bound to a reactive ref (correct for an element's own reshape, but FORBIDDEN where a SECOND rAF would
+    defeat the parked-substrate contract — the W17 warp integrator is the cautionary instance). The W42
+    second-consumer + the single-scalar substrate are P1 highest-architecture-risk PoCs that spike GO in the
+    §5 pass before W42 drives.
+
+---
+
+## §5 — Prototype-and-harden gating (the drive-readiness gate)
+
+NOTHING drives on an unproven assumption. Two backlogs are the drive-readiness gate for the whole tranche;
+this section REFERENCES them (the full PoC/edge-case enumeration lives in the backlog docs, NOT duplicated
+here):
+
+- **`docs/tranches/AX/PROTOTYPE-HARDEN.md`** — the prototype-and-harden backlog (17 prioritized PoCs + the
+  hardening backlog 2A-2G + the grouping + the drive-readiness verdict). The load-bearing sequencing law:
+  **W00 first** (the π lane, proven on REAL devices — a software-fallback WebGPU false-GREENs the aurora-black
+  gate) → **the two ratification hinges** (W42 distinct-vs-fold, W22 Fraunces) → **the device PoCs** → **the
+  visual bands against a working π-lane**; cross-repo + slides waves are publish-currency-gated carries.
+- **`docs/tranches/AX/DOCK-FACILITIES.md`** — the §19 dock prototype+harden matrix (all 12 dock facilities,
+  each a prototype-effort + GO/NO-GO hinge + visual-truth gate; the four cross-cutting morph-substrate
+  invariants promoted to W42; the convergent single-spike showcase plan).
+
+### §5.1 — The high-risk PoCs that MUST spike GO before their wave drives
+
+Each is a minimal throwaway spike that retires a named architecture/visual risk; a NO-GO re-scopes its wave
+(it does not silently proceed):
+
+- **Lensing-backdrop-filter (W42 / W20 neighbourhood)** — the `@supports`-gated `--glass-refract-scale`
+  springs-off-`--morph-t` fold; the authored map disagrees with its own comment (a crude `radialGradient`
+  fisheye vs the documented Snell squircle, never device-judged). Spike the LOOK + the mechanism + the
+  non-Chromium flat-glass degrade on a real device before W42 lands the fold.
+- **Dock single-scalar morph (W01) + the morph substrate (W42)** — `--dock-morph-t` is NET-NEW (HEAD does
+  pixel-space FLIP); the interruptible single-scalar one-clock model + the velocity-continuity retarget
+  (highest-regression-risk, §4 note 27c) spike on a REAL browser (happy-dom cannot reproduce the
+  iOS-feel retarget). The W42 second-consumer choice (tab-indicator glide vs card→detail expand) RATIFIES
+  against the live audit — the consumer must read BETTER on the substrate, not just compile.
+- **Aurora WebGPU storage-buffer (W07)** — the `var<uniform>`→`var<storage,read>` dynamic-index flip + the
+  f32-cast on a real Metal device (a software fallback false-GREENs the black-canvas gate — the sharpest
+  hidden risk, runnable now).
+- **Blob smin (W08/W15)** — the composed-k un-flood + the analytic-gradient smin + the lit warm-cream
+  contained droplet against the footprint budget.
+- **Van-Gogh fidelity (W13)** — a LIVE bake against actual Van Gogh / oil-pastel reference works is the
+  oracle (a passthrough + a shared body both PASS the current text gates — a green snapshot is NOT proof).
+
+### §5.2 — The dock-facility showcase as the convergent visual-truth proof
+
+`DOCK-FACILITIES.md` §5 recommends ONE throwaway `dock-facility-showcase.vue` route co-mounting all 12 §19
+facilities across six dock instances on the post-W01 single-scalar driver, with one instrumentation harness
+(the W00 π-lane test-seam, one rAF timeline, the interruption matrix, the composition assertions, the PRM
+pass), closing on a paired-π BEFORE/AFTER/DELTA at 3 viewports × light/dark on the DEFAULT engine. This is
+the convergent visual-truth proof that the 12 facilities are ONE morph model — the single guard against the
+AW headless-green/visually-broken gap recurring across the whole dock surface. Two structural flags the
+matrix surfaced: §19.6 carousel-dock is OWNERLESS (recommend minting a dedicated composition wave), and
+§19.8's "useIdle composable" is a charter fiction (it is inline `scheduleCollapse` machinery in
+`useDockState.ts` with a 2000/2500ms delay divergence — name it, do not invent a composable that does not
+exist).
+
+### §5.3 — The ratify-before-drive decisions (forcing functions)
+
+These un-ratified decisions gate their wave from driving until adjudicated (the recommended ratify order is
+in `PROTOTYPE-HARDEN.md` Part 2A):
+
+- **Font register (W22)** — the Fraunces cross-constellation contradiction (KILL AS-P5 + re-ground onto
+  Plus-Jakarta, OR SHIP the full-axes face + re-scope W22 to the body-default fix). §4 note 17; HARD
+  precondition of any excision.
+- **WebGPU-parity-default (W07↔W14)** — the `WEBGPU_PARITY` lever: keep WebGPU as an OPT-IN enhancement over
+  a parity-floor field (the de-facto DELETE branch) vs W14 ports the six mediums into WGSL. §4 note 14.
+- **Glass-scrubber rename (W23)** — accept `standard` as the CVA key (prose-name only, zero churn) vs rename
+  standard→glass-scrubber across the keyset + every call-site. USER-ADJUDICATED, not a runtime defect.
+- **POS_SCALE (W08/W15)** — the minimal un-flood regime W08 owns + W15 inherits (KEEP) vs the full
+  wrapper-normalized re-derivation (atomic, W15 only). §4 notes 13 + 26.
+- **W42 second-consumer (W42)** — which glass primitive (tab-indicator glide vs card→detail expand) AND the
+  distinct-wave-vs-fold-into-W01 decision — RATIFY against the live re-diagnosis at wave-open (§4 note 27d;
+  waves/AX.W42 §Open-Questions).
+- **Specular off-vs-subtle (W09)** — the Card `specular` default: `subtle` (rest≈0) vs `off` — flat-data
+  consumers want `off` trivially declarable (§20 USF-1/kf-G-1 hand-off; §4 note 24).
