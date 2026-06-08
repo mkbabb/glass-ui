@@ -32,6 +32,35 @@
 
 ## Unreleased
 
+### Tranche AX.W07 — aurora WGSL black-canvas fix + WebGPU gated-off (KNOWN LIMITATION)
+
+Fixed the two device-proven defects that rendered the aurora WebGPU twin **pure
+black** on every WebGPU-capable machine (the WebGL2 path was always correct and is
+untouched). The WGSL `Uniforms` struct declared the five count/enum fields as `i32`
+while the CPU packed them as floats — so the shader read the IEEE-754 bit-pattern of
+`3.0` (`1077936128`) instead of the count `3`, overflowing the palette ramp index →
+black. AND the dynamically-indexed `palette`/`nucleiPos`/`nucleiMod` arrays lived in a
+`var<uniform>` block, which returns `[0,0,0,0]` for a runtime index on Apple/Metal (MSL
+forbids dynamic indexing of the `constant` address space). The fix lands both in one
+atomic shader-struct rewrite: the count fields are now `f32` + `i32()`-cast in-shader
+(one Float32Array pack path, no Int32Array dual-view), and the arrays move into a new
+`var<storage, read> Field` buffer at `@binding(1)` (always-legal for dynamic indices,
+byte-identical std140 layout). The WebGPU frame seam also inherits the `masterTempo()` +
+`cursor.burst` demand-gate parity the WebGL2 `frameLoop` carries.
+
+**KNOWN LIMITATION — WebGPU is gated OFF by default.** Even unblocked, the WGSL
+single-pass twin is **reduced-parity by design** (isotropic-only nuclei, fbm-only warp,
+no flow/cursor/lighting/mediums/strokes/grain, straight-OKLab palette vs the GLSL OKLCh
+hue-arc). So a WebGPU-capable machine is served the **tested universal WebGL2 path**, not
+the reduced-parity twin — no capable machine silently downgrades. The internal
+`WEBGPU_PARITY` lever (`renderMode.ts`, NOT a consumer prop) is shipped `false`; while it
+is, a capable adapter resolves `"webgl"`. **The restoration wave is AX.W14 (band C ·
+AURORA)** — it owns the `WEBGPU_PARITY` flip, and only for the OPT-IN Kuwahara painterly
+finish over a parity-floor field, never to auto-default a capable machine. New device
+gate `proof:aurora-webgpu-render` (a real `GPUDevice` render + centre-pixel readback —
+the only instrument that catches the black-canvas class; born-RED black at HEAD, GREEN
+non-black after both fixes, device-proven on a real Metal adapter).
+
 ### Tranche AV.W12 — legacy-excision + fail-explicit
 
 Excised the silent error-swallows and masking defaults from `src/`, moved the

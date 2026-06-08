@@ -356,29 +356,57 @@ Leonardo / OKLCh ramp tooling; Baudisch / Gamblin warm-cool temperature.)*
   runtime toggle freezes/wakes. Cursor easing is JS-side (position/strength lerp + decay in
   the runtime, not the shader) so the response stays breath-paced and framerate-independent.
 
-### WebGPU (planned — AW.W7)
+### WebGPU — gated OFF by default until the W14 parity finalize (KNOWN LIMITATION)
 
 The single architectural reason to stage WebGPU is that the full-quality painterly half is
 **multi-pass** — the Gaussian-smoothed multi-tap structure tensor and the anisotropic
 Kuwahara finish — which a single-pass WebGL2 fragment shader fundamentally cannot express.
 This is not a perf chase. The migration is low-risk because the substrate already isolates
-the backend: the one backend-specific line is `getContext("webgl2")` in
-`useWebGLCanvas.ts:267`; the suspend set, offscreen-park, PRM monitor, resize, and dispose
-are all API-shaped. The wave lifts that lifecycle into a shared core and adds a
-`createGPUCanvas` sibling over a `GPUDevice`; `resolveRenderMode` grows a
-`navigator.gpu.requestAdapter()` probe (`webgpu | webgl | css`). The GPU color/noise math is
-single-sourced as a WGSL twin of `procedural-color.glsl`, gated by a 1e-6 CPU-equivalence
-test (mirroring AV.W2's OETF convergence — pre-empting the AV.W1 divergence-bug class). The
-WGSL is hand-written — no Three.js/TSL (TSL pulls in Three.js, which the zero-dep posture
-does not carry); the std140 storage struct lifts the `MAX_NUCLEI 6` / `MAX_STOPS 8` caps.
+the backend: the one backend-specific line is `getContext("webgl2")` in `useWebGLCanvas.ts`;
+the suspend set, offscreen-park, PRM monitor, resize, and dispose are all API-shaped. The
+substrate lifts that lifecycle into a shared core and adds a `createGPUCanvas` sibling over a
+`GPUDevice`; `resolveRenderModeAsync` carries a `navigator.gpu.requestAdapter()` probe
+(`webgpu | webgl | css`). The GPU color/noise math is single-sourced as a WGSL twin of
+`procedural-color.glsl`, gated by a 1e-6 CPU-equivalence test (pre-empting the AV.W1
+divergence-bug class). The WGSL is hand-written — no Three.js/TSL (the zero-dep posture).
+
+**The WGSL twin architecture (AX.W07).** The uniform upload is split across two buffers:
+
+- a `var<uniform> Uniforms` block carrying ONLY the constant-indexed scalars (`time…alpha`),
+  with the five count/enum fields (`stopCount`/`nucleiCount`/`warpMode`/`noiseOctaves`/
+  `medium`) declared **`f32`** and `i32()`-cast in-shader at each use — the single
+  Float32Array pack path, no Int32Array dual-view (the int-in-float class is eliminated at
+  the root, not papered).
+- a `var<storage, read> Field` buffer (`@binding(1)`) carrying the **dynamically-indexed**
+  `palette` / `nucleiPos` / `nucleiMod` vec4 arrays. A per-invocation runtime index into a
+  `var<uniform> array<vec4f>` returns `[0,0,0,0]` on Apple/Metal (MSL forbids dynamic
+  indexing of the `constant` address space); `var<storage,read>` is always-legal. The std140
+  vec4-aligned record is byte-identical between uniform and storage, so the move keeps visual
+  parity (and the storage `array<T>` could be runtime-sized to lift the `MAX_NUCLEI 6` /
+  `MAX_STOPS 8` caps — the cap-lift is a W14 follow-up; W07 keeps the caps).
+
+**KNOWN LIMITATION — WebGPU is gated OFF by default (`WEBGPU_PARITY = false`).** Even with
+the black-canvas defects fixed, the WGSL single-pass twin is **reduced-parity by design**:
+isotropic-only nuclei, fbm-only warp, NO flow / cursor / lighting / mediums / strokes / grain,
+and a straight-OKLab palette vs the GLSL OKLCh hue-arc. So a WebGPU-capable machine is served
+the **tested universal WebGL2 path** (the correct single-pass renderer per the single-pass
+invariant), NOT the reduced-parity twin — no capable machine silently downgrades. The internal
+`WEBGPU_PARITY` lever (`renderMode.ts`, NOT a consumer prop) gates the `"webgpu"` branch in
+`resolveRenderModeAsync`; while it is `false`, a capable adapter resolves `"webgl"`. **The
+restoration wave is AX.W14 (band C · AURORA)** — it owns the `WEBGPU_PARITY` flip, and ONLY
+for the OPT-IN Kuwahara painterly finish over a parity-floor field, never to auto-default a
+capable machine. (This is a knowingly-DEGRADED phased outcome with a named restoration wave;
+the CHANGELOG carries the honest-disclosure entry.) The device render-and-readback gate
+(`proof:aurora-webgpu-render`) forces the WebGPU path internally to test the SHADER regardless
+of the lever, and is the only instrument that catches the black-canvas class — a real device
+render + centre-pixel readback, never a function-level oracle.
 
 WebGPU shipped by default in all four major engines as of 2025-11-25 (Safari 26 last); it is
 production-deployable in 2026 with the WebGL2 fallback (~95% / 5% reach) but is **not yet
-"Baseline widely available"** (the ~30-month all-engines mark has not passed). So WebGPU is
-staged as the **capability-gated enhancement, WebGL2 the universal fallback, CSS the floor**
-— not made the default path. Every substrate contract (offscreen-park, PRM freeze,
+"Baseline widely available"**. Every substrate contract (offscreen-park, PRM freeze,
 `DockBackgroundToggle` pause) reaches the compute dispatch: a parked rAF skips compute too.
-*(web.dev 2025-11-25; WGSL spec; Chrome From-WebGL-to-WebGPU.)*
+*(web.dev 2025-11-25; WGSL spec; gpuweb #2559 dynamic-index-forces-storage; Chrome
+From-WebGL-to-WebGPU.)*
 
 ---
 
@@ -563,6 +591,7 @@ named bite-check that re-reds it:
 | `proof:aurora-derive-gamut` | every harmony × easing × temperature stop is in-sRGB over a neon-seed matrix after `gamutMapStop`. Bite: remove `gamutMapStop` → RED | planned (AW.W5) |
 | `proof:aurora-atoms-roundtrip` | `resolveAtoms` is total (every atom combination is a valid in-range config) and `resolveAtoms(DEFAULT_ATOMS)` deep-equals the wispy-sky default. Bite: break a `DEFAULT_ATOMS` value → RED | planned (AW.W6) |
 | `proof:aurora-backend-fallback` · `proof:aurora-wgsl-equivalence` | the forced WebGL2 path renders the identical visual contract; the WGSL color/noise chunk matches its GLSL twin to 1e-6. Bite: break the fallback route / perturb a WGSL constant → RED | planned (AW.W7) |
+| `proof:aurora-webgpu-render` | the π-lane DEVICE render-and-readback — the REAL `aurora.wgsl.ts` + `packGPUUniforms` on a real `GPUDevice` paint a NON-BLACK centre pixel (DEFAULT at t=1); the per-i32-field decode reads the counts (not the `bits(3.0)=1077936128` bit-pattern); the WebGL2-vs-WebGPU base-field delta is below the parity floor; `WEBGPU_PARITY=false` resolves `"webgl"`. Bite: revert the f32-cast OR the storage move → BLACK on Metal → RED | shipped (AX.W07) |
 | `proof:aurora-interaction-prm` | every interactive axis is suppressed under `prefers-reduced-motion`; the master tempo scalar zeroes the stateful field; the pause stops every axis. Bite: detach an axis from the tempo scalar → RED | planned (AW.W8) |
 
 ---
