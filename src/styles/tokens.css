@@ -419,6 +419,46 @@
     --muted-medium: color-mix(in srgb, var(--muted) 50%, transparent);
 
     /* ═══════════════════════════════════════════════
+       §5c CONSTELLATION — Canvas2D proximity-graph lattice (AX.W17)
+
+       The H.W4 legibility intelligence promoted from the slides deck to
+       LIBRARY identity: the node tones, the edge hairline color, the per-mode
+       edge-alpha multipliers, and the field-yields-to-type translucency knob.
+       Only `--constellation-accent` (the anomaly tint) stays a CONSUMER preset
+       (slides aliases it to `--ncsu-red`); the library ships a neutral default.
+
+       PLAIN-hsl LITERALS, per arm — NEVER `light-dark()` and NEVER a
+       `var(--neutral-*)`/`var(--foreground)`/`var(--border)`/`var(--card)`
+       alias. Canvas2D silently REJECTS a `light-dark()` value into
+       `strokeStyle`/`fillStyle` (the W30 86.3%-red-splatter cardinal defect),
+       and the rejection is identical whether the value is a literal
+       `light-dark(…)` OR a `var()` that RESOLVES to one — so the constellation
+       tokens are plain-hsl LEAVES, the `:root` vs `.dark` cascade carrying two
+       literals. `proof:constellation-tokens` clause (c) machine-locks this
+       (the no-`light-dark(`-substring NOR transitive-`var()` static assertion).
+       ═══════════════════════════════════════════════ */
+    /* Node tones — readable on the warm-cream ground. The two-tone split (the
+       `dim` half rides `-node-dim`). Warm-grey ink, NOT a neutral-ladder alias. */
+    --constellation-node:      hsl(36 8% 46%);
+    --constellation-node-dim:  hsl(36 8% 60%);
+    /* Edge hairline stroke — warm near-black on cream (the plain-hsl complement
+       the slides deck reads to fix the `--foreground` light-dark() leak). */
+    --constellation-line:      hsl(24 14% 14%);
+    /* Anomaly tint — NEUTRAL library default (a desaturated warm accent). The
+       consumer overrides this (slides → `--ncsu-red`); the library does NOT
+       bake a brand hue. This is the single consumer-preset boundary. */
+    --constellation-accent:    hsl(18 58% 46%);
+    /* Edge-alpha multipliers — replace the magic `0.17` hairline / pointer-web
+       literals. The cream ground lifts the node tones, so the field can recede;
+       the focus-proximity edge reads a touch stronger. */
+    --constellation-edge-alpha:          0.22;
+    --constellation-edge-focus-alpha:  0.34;
+    /* §7 field-yields-to-type translucency knob — the legible-but-RECESSIVE
+       MIDPOINT, NOT max-legibility. On cream the node tones already read, so the
+       field recedes further: BELOW the slides 0.92 max-legibility reference. */
+    --constellation-alpha:               0.80;
+
+    /* ═══════════════════════════════════════════════
        §6  SECTION PALETTE — 13-stop jewel tones (light)
        ═══════════════════════════════════════════════ */
     /* AV.W16 TW2 — oklch ramp (perceptually-even L; hue preserved from the
@@ -1588,6 +1628,25 @@
 
     --shadow-cartoon-color:            rgb(255 255 255 / 0.07);
     --shadow-cartoon-color-soft:       rgb(255 255 255 / 0.03);
+
+    /* §5c CONSTELLATION — dark arm (AX.W17). The H.W4 dark-mode lift: the node
+       tones step UP off the ink ground (the light arm's mid-grey would vanish on
+       L6 black), the hairline goes warm off-white, the field carries a touch more
+       presence to read at all. PLAIN-hsl literals, NEVER light-dark()/var(). */
+    --constellation-node:      hsl(42 9% 72%);
+    --constellation-node-dim:  hsl(42 8% 56%);
+    --constellation-line:      hsl(45 12% 86%);
+    /* Anomaly — brightened for the deep canvas (same neutral-default register;
+       the consumer still overrides to its brand). */
+    --constellation-accent:    hsl(20 70% 60%);
+    /* The dark hairlines lift harder over the ink ground, so the edge multipliers
+       run a touch lower than light to keep the field recessive. */
+    --constellation-edge-alpha:          0.20;
+    --constellation-edge-focus-alpha:  0.32;
+    /* §7 — the ink ground needs MORE field presence than cream to read at all, so
+       the dark alpha is modestly HIGHER than the light arm — but still BELOW the
+       slides 1.0 max-legibility reference (the recessive midpoint, not 1.0). */
+    --constellation-alpha:               0.88;
 
     /* Glass opacity + grain for dark — five-tier ladder, alpha-monotonic.
        Each rung lifts ~0.08 from its light counterpart so the dark surfaces

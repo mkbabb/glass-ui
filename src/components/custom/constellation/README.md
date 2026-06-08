@@ -14,10 +14,15 @@ All three compose the same lifecycle/park contract — the constellation over
 
 > Research-backed. This README documents the constellation as it ships. The primitive lands the
 > `useCanvas2D` + `Constellation` design that AV.W8 authored but GATED-NOT-LANDED (it had one
-> consumer then); the slides anomaly-ring deck is consumer #2 that unblocked it (AW.W17). The
-> mechanical engine — drifting nodes, distance-falloff edges, pointer steer, ripples — is lifted
-> from the slides `til-briefing/constellation.ts`; the branded content (the NC State red anomaly
-> ring, the dashed callout) stays a consumer skin, not a library export.
+> consumer then); the slides anomaly-ring deck is consumer #2 that adopts it at AX.W30 (gated on the
+> AX publish). The mechanical engine — drifting nodes, distance-falloff edges, pointer steer, ripples
+> — is lifted from the slides `til-briefing/constellation.ts`; the branded content (the NC State red
+> anomaly ring, the dashed callout) stays a consumer skin, not a library export.
+>
+> AX.W17 completes the abstraction: it ships the `--constellation-*` light/dark **legibility token
+> block** as library identity (the hard-won dark-mode-lift / field-yields-to-type intelligence that
+> lived only in slides), and promotes the focal node to a **first-class engine concept** with a
+> **click-to-warp** spring (`warpTo` + `warpOnClick`) — drift and warp unified on ONE seam.
 
 ```ts
 import { Constellation } from "@mkbabb/glass-ui/constellation";
@@ -68,6 +73,16 @@ When NOT to reach for it: a dense, fast particle storm, a force-directed graph w
 or a data viz where edges encode real relationships — the constellation's edges are proximity
 hairlines, not data. For per-pixel organic color fields use [`Aurora`](../aurora/) /
 [`GooBlob`](../goo-blob/).
+
+### Non-goal — the constellation is DECORATIVE, not a data-graph renderer
+
+The constellation is a **decorative random-seeded proximity graph**, NOT a data-graph renderer. It
+will **NOT** absorb semantic fixed-topology graphs (a value.js conversion graph, a node-flow chart, a
+dependency DAG). Routing a semantic graph through `drawOverlay` would FAIL — `drawOverlay` paints OVER
+a random drifting field it cannot pin to fixed nodes; the focal-warp seam re-points among the random
+nodes, it does not lay out a fixed topology. A data-graph primitive, if ever wanted, is a **SEPARATE
+component** with its own layout + edge semantics, NOT constellation prop-bloat. The seam stays a
+decorative-field skin injection, not a graph-data binding.
 
 ---
 
@@ -131,8 +146,17 @@ function drawFocal(ctx: CanvasRenderingContext2D, field: ConstellationField, now
 | `speed` | `number` | `0.16` | node drift speed |
 | `seed` | `number \| string` | — | omit → fresh `Math.random` field; supply → reproducible `mulberry32` field (string hashed via `hashString`) |
 | `pointerReactive` | `boolean` | `true` | nodes steer gently toward the cursor + taps drop ripples (disabled under reduced-motion) |
-| `drawOverlay` | `(ctx, field, now) => void` | — | the consumer skin pass; runs LAST, after the four neutral passes, with the live `ConstellationField` |
+| `warpOnClick` | `boolean` | `false` | a click warps the focal node to the nearest drifting node + springs it there. **INDEPENDENT** of `pointerReactive` — warp works on a non-ripple lattice (disabled under reduced-motion) |
+| `drawOverlay` | `(ctx, field, now) => void` | — | the consumer skin pass; runs LAST, after the four neutral passes, with the live `ConstellationField`. Read `field.warp.{x,y}` for the spring-eased focal position |
 | `class` | `string` | — | forwarded to the host (pin/position/z-index live here) |
+
+### Exposed methods (`defineExpose`)
+
+| Method | Signature | Notes |
+|---|---|---|
+| `field` | `ConstellationField` | the live field (the low-level imperative seam for a custom overlay) |
+| `warpTo` | `warpTo(localPoint: {x,y}): number` | warp to the nearest node to an **already-canvas-local** px point (the lower primitive) |
+| `warpTo` | `warpTo(clientX, clientY): number` | warp to the nearest node to a **client** point, mapped through the deck-scale `toLocal` (the sugar `warpOnClick` calls). Returns the chosen node index, or `-1` on a degenerate no-op |
 
 ### `ConstellationField`
 
@@ -145,8 +169,10 @@ The live field handed to `drawOverlay` — read-only, the consumer paints agains
 | `w` / `h` | `number` | canvas CSS px |
 | `k` | `number` | the width/base scale (`w / 1280`) — multiply px constants by `k` so a skin scales with the field |
 | `dpr` | `number` | the device-pixel ratio the context is transformed by (clamped ≤ 2) |
+| `focalIndex` | `number` | the designated focal node's INDEX, or `-1` when none is pinned (re-points on each `warpTo`; node count is conserved) |
+| `warp` | `ConstellationWarp` | the engine-owned warp spring: `{ x, y, vx, vy, targetIdx }`. A `drawOverlay` paints the focal mark at `warp.{x,y}` (the spring-eased position) |
 
-The library exports `ConstellationProps` + `ConstellationField` on `@mkbabb/glass-ui/api`.
+The library exports `ConstellationProps` + `ConstellationField` + `ConstellationWarp` on `@mkbabb/glass-ui/api`.
 
 ---
 
@@ -166,6 +192,87 @@ keeps the mapping correct even when the surface is CSS-scaled (a deck-scale tran
 
 ---
 
+## Focal node + click-to-warp (the unified warp-and-drift seam)
+
+The focal node is a **first-class engine concept**, not a consumer `drawOverlay` hack. The design
+thesis — the DRY/KISS resolution — is that **drift and warp are THE SAME mechanic**: "spring the
+focal node toward a target NODE," differing only in what PICKS the target. A click picks it (warp); a
+periodic auto-pick picks it (drift). ONE focal-node position spring + a pluggable target-source
+carries both. There is no second parallel hook and no generic `stepOverlay` mutate-the-field callback
+(that would be a single-consumer overfit) — only `focalIndex` + a per-axis `warp` spring the engine
+owns.
+
+**`warpOnClick`** — the sugar. A click resolves the nearest drifting node (an `O(count)` min-d² scan,
+EXCLUDING the current focal so you never re-warp to yourself; a click that lands on the focal no-ops)
+and springs the focal mark there:
+
+```vue
+<Constellation seed="warp" :count="60" warp-on-click :draw-overlay="drawFocal" />
+```
+
+The consumer paints the focal mark at `field.warp.{x,y}` in its `drawOverlay` — the engine owns the
+**position**, the consumer owns the **skin**. `warpOnClick` is **independent of `pointerReactive`**:
+warp works on a static (non-ripple) lattice, and ripples work without warp (the two axes are separate
+guards now that the coordinate mapper is hoisted out of the pointer-reactive gate).
+
+**`warpTo(...)`** — the low-level imperative seam (via `defineExpose`), for a consumer that picks the
+target itself (the slides drift becomes "warp to a periodically-chosen random node" — the same seam,
+an auto target-source). Two shapes: `warpTo(localPoint)` takes already-canvas-local px;
+`warpTo(clientX, clientY)` takes client coords and maps them through the deck-scale `toLocal` mapper
+(so a click lands correctly under any CSS scale/zoom).
+
+Three properties make the warp read as a real spring chasing a real node:
+
+- **LIVE-TARGET tracking.** The warp stores the target node's **INDEX**, not a click-time position
+  snapshot. Each frame it re-reads `field.nodes[targetIdx].{x,y}` as its live target, so it CHASES a
+  drifting node and arrives ON it (the **identity-ride** — on settle the mark rides that node's drift
+  until the next warp re-points it). A frozen snapshot would land the mark next-to the moved node —
+  visually wrong.
+- **No `useSpring`, no second rAF (a hard contract).** The spring is a dt-stepped 2nd-order
+  critically-damped integrator (`x += v·dt; v += (−2ζω·v − ω²·(x−target))·dt`, with `ω = 2π/response`,
+  `ζ = dampingFraction` — the keyframes.js `(response, dampingFraction)` PARAM model reused, but NOT
+  its rAF) advanced **inside the substrate's single rAF** (`warpStep` is called from `stepField`).
+  `useSpring` wraps `SpringProgress.play()`, which spawns its OWN rAF bound to a reactive ref — a
+  SECOND rAF would DEFEAT the offscreen/tab-hidden/PRM freeze the whole `useCanvas2D` substrate
+  exists to provide. The `dt` is clamped (~50 ms) so a tab-throttle / offscreen-park-resume gap
+  cannot teleport the mark.
+- **PRM policy (stated, not accidental).** Warp follows the ripple/steer precedent: **disabled under
+  `prefers-reduced-motion`**. The click does not warp; the focal node stays put. The warp listener is
+  simply not registered under PRM (its own guard, independent of the ripple block).
+
+---
+
+## Tokens — the `--constellation-*` legibility vocabulary
+
+The library ships a `--constellation-*` light/dark token block as its **own legibility identity** (the
+hard-won dark-mode-lift / field-yields-to-type intelligence). Both arms are **plain-hsl literals**,
+NEVER `light-dark()` and NEVER a `var()` alias to a neutral-ladder token — Canvas2D silently rejects a
+`light-dark()` value into `strokeStyle`/`fillStyle` (it would paint a wrong/inverted color), so the
+`:root`/`.dark` cascade carries two literals. The static gate `proof:constellation-tokens` machine-
+locks this (no `light-dark(` substring NOR any transitive `var()` to a `light-dark()`-bearing token).
+
+| Token | Role | Boundary |
+|---|---|---|
+| `--constellation-node` / `--constellation-node-dim` | the two node tones (the `.dark` arm LIFTS them off the ink ground) | **library legibility** |
+| `--constellation-line` | the hairline edge/pointer-web stroke color (plain-hsl, never `--foreground`) | **library legibility** |
+| `--constellation-edge-alpha` | the ambient hairline-edge alpha multiplier | **library legibility** |
+| `--constellation-edge-focus-alpha` | the focus/pointer-web edge multiplier (a touch stronger near the active point) | **library legibility** |
+| `--constellation-alpha` | the field-yields-to-type translucency knob (the global field dimmer) | **library legibility** |
+| `--constellation-accent` | the anomaly/focal **tint** — the library ships a NEUTRAL default | **consumer preset** (slides aliases it to `--ncsu-red`) |
+
+Everything except `--constellation-accent` is **universal legibility** (a node color that reads on a
+dark ground is universal, not deck-identity), so it evolves in the library. Only the brand accent is
+the consumer's preset — the single legitimate preset boundary.
+
+**Recessive-by-default calibration.** `--constellation-alpha` ships tuned to the legible-but-RECESSIVE
+midpoint, NOT maximum legibility — the lattice must RECEDE behind type while staying visible on both
+grounds. The two arms are per-mode by construction: a LOWER alpha on light (the cream ground already
+lifts the node tones, so the field can recede further) + a MODESTLY-HIGHER alpha on dark (the ink
+ground needs more presence to read). Both ship BELOW a max-legibility reference, so a drop-in consumer
+inherits a recessive field with zero tuning; a consumer that wants more presence overrides the token.
+
+---
+
 ## Best practices
 
 - **Pin via `class`, not the component.** The library owns the field math; the consumer owns the
@@ -173,9 +280,13 @@ keeps the mapping correct even when the surface is CSS-scaled (a deck-scale tran
   split [`DeckProgress`](../deck-progress/) uses.
 - **Seed for captures.** A snapshot/print/export mode wants a reproducible web — pass a `seed` so the
   field is deterministic frame-over-frame; omit it for live variety.
-- **Tone the palette with tokens.** The neutral passes read `--constellation-node` / `--constellation-line`
-  (with neutral fallbacks). Override them at the consumer to retint; the field re-samples on a
-  dark-mode flip so the lattice tracks the color mode instead of freezing at the arm it mounted under.
+- **Tone the palette with tokens.** The neutral passes read the FULL `--constellation-*` set (node /
+  node-dim / line colors + the edge-alpha multipliers + the `--constellation-alpha` field dimmer; see
+  the Tokens section). The library ships a recessive-but-legible default for both light + dark;
+  override any rung at the consumer to retint or re-weight. The field re-samples on a dark-mode flip
+  so the lattice tracks the color mode instead of freezing at the arm it mounted under. **Never** set
+  a `--constellation-*` token to `light-dark()` or a `var(--foreground)`/`var(--neutral-*)` alias —
+  Canvas2D silently rejects it (write a plain-hsl literal per arm; the gate enforces this).
 - **Keep the skin in `drawOverlay`.** Anything branded — a red anomaly, an annotation, a domain mark —
   belongs in your overlay pass, not the library. That is the seam that lets one lattice serve many
   consumers without any one consumer's identity leaking into the primitive.
@@ -235,9 +346,12 @@ ships none of them.
 ```
 src/components/custom/constellation/
 ├── Constellation.vue        # the component: composes useCanvas2D, seeds via prng,
-│                            #   runs the four neutral passes, then drawOverlay
-├── constellationField.ts    # the pure engine: Node, seedField, stepField, and the
-│                            #   four neutral draw passes as free functions
+│                            #   runs the four neutral passes + the warp spring,
+│                            #   then drawOverlay; warpOnClick + the warpTo expose
+├── constellationField.ts    # the pure engine: Node, seedField, stepField, the four
+│                            #   neutral draw passes, AND the focal seam (nearestNode,
+│                            #   warpStep critically-damped integrator, warpTo,
+│                            #   setWarpTarget) — all free functions
 ├── index.ts                 # package barrel
 └── README.md                # this file
 

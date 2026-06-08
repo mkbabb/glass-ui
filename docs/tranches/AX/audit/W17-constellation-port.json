@@ -1,0 +1,93 @@
+{
+  "wave": "AX.W17",
+  "title": "Constellation — light/dark legibility tokens + the drawOverlay/focal-warp seam; slides adopts (W30); README",
+  "band": "E (CONSTELLATION)",
+  "severity": "major",
+  "dependsOn": ["AX.W00"],
+  "baseSha": "27036cc",
+  "status": "GREEN",
+  "headlineSummary": "Shipped the --constellation-* light/dark legibility token block (plain-hsl, Canvas2D-safe), wired readPalette + the paint passes to the full set + the alpha tokens, and promoted the focal node to a first-class engine concept with a critically-damped click-to-warp spring (warpTo + warpOnClick) — drift and warp unified on ONE seam, useSpring FORBIDDEN. The slides constellation.ts deletion + anomaly drawOverlay skin route to AX.W30 (gated on the AX publish).",
+  "bornRedWitnesses": {
+    "witness1_zeroTokens": {
+      "claim": "grep -rn '--constellation-' src/styles/ = 0 hits AND readPalette reads < 6 tokens",
+      "confirmedAtHead": true,
+      "evidence": "grep src/styles/ = EMPTY; readPalette read 3 tokens (node/node-dim/line) with a hardcoded 3-hex DEFAULT_PALETTE; edge alpha 0.17 (:207) + pointer-web 0.24 (:252) were magic literals",
+      "drivenGreenBy": "the --constellation-* block (6 legibility tokens + accent) in tokens.css §5c (both :root + .dark arms) + readPalette extended to the full set + the paint passes reading var(--constellation-edge-alpha)/var(--constellation-alpha)"
+    },
+    "witness2_noFocalSeam": {
+      "claim": "grep -rn 'focalIndex|warpTo|warpStep|nearestNode' src/components/custom/constellation/ = 0 hits (in either repo)",
+      "confirmedAtHead": true,
+      "evidence": "constellationField.ts:110 'No node is pinned — every node drifts'; no focalIndex, no warpStep, no nearestNode; Constellation.vue:135 drawOverlay AFTER stepField (paint-only, structurally cannot mutate node position); defineExpose({field}) the only seam",
+      "drivenGreenBy": "the focal-node model (field.focalIndex + field.warp ConstellationWarp) + nearestNode + warpStep (dt-clamped critically-damped integrator) + warpTo + setWarpTarget in constellationField.ts; warpOnClick prop + warpTo defineExpose + a SEPARATE warp pointerdown guard in Constellation.vue; warpStep advanced inside stepField (one rAF, no useSpring)"
+    },
+    "witness3_slidesDuplicate": {
+      "claim": "slides runs a 510-line constellation.ts duplicate; the adoption loop never closed",
+      "confirmedAtHead": "out-of-band (slides repo, not editable from glass-ui)",
+      "disposition": "ROUTED to AX.W30 (slides-side, separate repo, gated on the AX publish). W17 ships the LIBRARY seam that UNBLOCKS the slides re-point (drift+warp cannot move through a read-only overlay). Coordination recorded in coordination/CONSTELLATION.md."
+    },
+    "witness4_lightDarkLeakUnguarded": {
+      "claim": "no no-light-dark-in-constellation-token gate exists at HEAD (ls scripts/proof-constellation-tokens.mjs = absent); the leak re-admits TRANSITIVELY through a var(--neutral-*) alias",
+      "confirmedAtHead": true,
+      "drivenGreenBy": "proof:constellation-tokens clause (c): forbids both a literal light-dark( substring AND any var() reference to a light-dark()-bearing token (the transitive-var hole). The gate builds the bearing-token set from literal light-dark( carriers + per-mode :root-vs-.dark splits, and FAILS on any --constellation-* value that var()-references one. Born-RED fixtures proven: var(--neutral-4) FAILS (transitive), light-dark(...) FAILS (literal)."
+    }
+  },
+  "focalSeamRatification": {
+    "thesis": "drift and warp are THE SAME mechanic — 'spring the focal node toward a target NODE' — differing only in what PICKS the target (a click for warp, a periodic auto-pick for drift). ONE focal-node position spring + a pluggable target-source.",
+    "chosenDisposition": "promote the FOCAL NODE to a first-class LIBRARY concept (field.focalIndex + a per-axis field.warp spring the engine steps inside stepField + warpTo/warpOnClick)",
+    "rejectedAlternative": "a generic single-consumer stepOverlay(field, k, now) mutate-the-field hook — the result[29] overfit anti-pattern (one consumer = slides). The focal-node-as-typed-field is STRICTLY LESS new API than a generic mutate-the-field callback; the adversarial least-new-API preference is honored by NOT shipping the generic hook.",
+    "premiseCorrection": "the §15 'first shipped in the slides constellation, GENERALIZE it' framing is a FACTUAL ERROR (grep-proven: warpTo|nearest|snapToNode = 0 hits in either repo). W17 AUTHORS the click-to-warp net-new; slides drift() is the architectural ANALOG, NOT a source to port."
+  },
+  "springMath": {
+    "model": "2nd-order critically-damped integrator: x += v*dt; v += (-2*zeta*omega*v - omega^2*(x - target))*dt, with omega = 2*PI/response, zeta = dampingFraction",
+    "tuning": { "response_s": 0.55, "dampingFraction": 1.0, "dtClamp_s": 0.05 },
+    "useSpringForbidden": true,
+    "useSpringForbidReason": "useSpring wraps SpringProgress.play() which spawns its OWN rAF bound to a reactive ref — a SECOND rAF would DEFEAT the offscreen/tab-hidden/PRM freeze the useCanvas2D substrate provides. The keyframes.js (response, dampingFraction) PARAM model is reused but NOT its rAF; warpStep is advanced inside the substrate's single rAF (called from stepField).",
+    "liveTargetTracking": "the warp stores the target node INDEX (not a click-time position snapshot); each frame warpStep re-reads field.nodes[targetIdx].{x,y} as its LIVE target, so it CHASES a drifting node and arrives ON it (the identity-ride).",
+    "dtClampRationale": "a clamped dt guards a tab-throttle / offscreen-park-resume gap from teleporting the mark (a 5s resume dt is clamped to one 50ms step)."
+  },
+  "filesChanged": [
+    "src/styles/tokens.css (the §5c --constellation-* block — :root light arm + .dark arm; plain-hsl literals)",
+    "src/components/custom/constellation/constellationField.ts (readPalette full-set + alpha-token paint passes; focal model: ConstellationWarp, nearestNode, warpStep, warpTo, setWarpTarget; struck the 'No node is pinned' comment)",
+    "src/components/custom/constellation/Constellation.vue (warpOnClick prop; hoisted toLocal; warpTo defineExpose; separate warp pointerdown guard; threaded dt into stepField; seeded warp at field-center on layout)",
+    "src/components/custom/constellation/index.ts (export nearestNode/warpStep/warpTo/setWarpTarget + ConstellationWarp type)",
+    "src/components/custom/constellation/README.md (canonical-readme-shape: token vocabulary + the unified focal-warp-and-drift seam + the DECORATIVE-not-data-graph non-goal)",
+    "src/api/index.ts (co-export ConstellationWarp)",
+    "demo/stories/substrates/constellation.vue (warp section + π-lane window handle; corrected the stale 'slides never delivered' comment → 'adopts at AX.W30')",
+    "tests/components/custom/constellation/constellationField.test.ts (7 new focal/warp tests: nearestNode, warpTo, no-op-on-focal, converge, chase-live-target, spring-eased-not-snap, dt-clamp)",
+    "scripts/proof-constellation-tokens.mjs (NEW — the token gate)",
+    "scripts/proof-constellation-warp-live.mjs (NEW — the π-lane warp-render driver)",
+    "tests-visual/constellation-warp-live.spec.ts (NEW — the device focal-warp readback spec)",
+    "package.json (proof:constellation-tokens + proof:constellation-warp-live registration)"
+  ],
+  "divergences": [
+    {
+      "item": "--constellation-edge-anomaly-alpha renamed to --constellation-edge-focus-alpha",
+      "reason": "the spec's literal token name carried the deck-domain word 'anomaly', which collides with the OUT-of-bounds AW.W17 proof:constellation-substrate-single gate's ANOMALY-IS-SKIN clause (forbids the /anomaly/i substring in any .ts/.vue under the constellation dir — and readPalette MUST embed the token-name STRING). Renaming to the NEUTRAL 'edge-focus-alpha' is MORE precept-correct (the library ships neutral legibility; 'anomaly' is the consumer's deck framing — presets-in-consumers), and resolves the gate collision IN-BOUNDS (no edit to the out-of-bounds gate). The token's role is unchanged (the focus/pointer-web edge multiplier). The README documents the canonical name; W30 (slides) reads the library's actual token.",
+      "class": "idiomatic in-bounds gestalt fix (autonomous-resilience)"
+    },
+    {
+      "item": "warpStep guards against an absent field.warp (a hand-built field literal that omits the spring no-ops)",
+      "reason": "robust runtime contract — a consumer building a ConstellationField by hand (or an older fixture) without the warp spring must not crash. The interface requires warp; the guard tolerates a JS literal that omits it.",
+      "class": "robustness keep"
+    }
+  ],
+  "outOfScopeRoutes": {
+    "AX.W30": "the slides-side constellation.ts DELETION (510 lines) + the anomaly drawOverlay skin authoring (slides repo; gated on the AX publish per §4 note 12). The --foreground light-dark()-into-Canvas2D leak is ALREADY FIXED slides-side (I-session at constellation.ts:116, deck deployed 9f08ded) — W30 treats it as a satisfied witness, do NOT re-fix.",
+    "AX.W37": "useCanvas2D / useCanvasLifecycle / resolveCanvasColor authoring — W17 COMPOSES the existing substrate + reads plain-hsl tokens (no light-dark()), so the W37 resolver is a future-token escape, not a W17 dependency.",
+    "AX.W24": "the /deck-progress subpath export + DeckProgress rail (a different slice-24 finding).",
+    "AX.W32": "the slides reveal.ts / useCountup.ts motion adoption (a different slice-24 finding).",
+    "AX.W31_foldE": "the slides-side --constellation-alpha override drop/retune to inherit the recessive default (slides repo; gated on the AX publish)."
+  },
+  "gatesGreen": {
+    "proof:constellation-tokens": "PASS — TOKEN-BLOCK-PRESENT (both arms) + READPALETTE-FULL-SET (6/6) + NO-LIGHT-DARK + TRANSITIVE-VAR; born-RED fixtures proven (drop block / read-3 / literal-light-dark / transitive var(--neutral-4) all bite)",
+    "proof:constellation-warp-live": "PASS on real device — the focal centroid migrates toward the click, converges onto an existing node (min-d² ~0 at settle), chases a LIVE drifting target (not a frozen snapshot), over a spring-eased path (≥5 closing frames, first frame < 60% of the gap, no snap). Born-RED proven (handle-absent → fail-CLOSED RED).",
+    "proof:constellation-substrate-single": "PASS — ANOMALY-IS-SKIN clause cleared by the neutral edge-focus-alpha rename; the four neutral passes intact; PRNG single-source held",
+    "proof:constellation-field": "PASS — 11 unit tests (4 original + 7 new focal/warp)",
+    "npm run typecheck": "GREEN"
+  },
+  "liveVerify": {
+    "route": "/substrates/constellation",
+    "note": "The wave does NOT close on the headless gate alone — the paired-π BEFORE/AFTER + DELTA live audit (legible-on-cream-AND-ink at ≥3 viewports × light/dark + the spring-eased warp + the PRM no-op) is the binding close criterion the orchestrator executes (the constellation is Canvas2D, so the headless 2D path IS the true render path — no GPU shader concern; the warp-live spec ran GREEN on chromium-headless-new).",
+    "warpLiveDeviceProven": true
+  }
+}

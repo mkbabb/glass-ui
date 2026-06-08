@@ -211,9 +211,13 @@ export type {
 // `<Constellation>` (the proximity-graph lattice; ships via `/constellation`).
 // `ConstellationField` — the live field handed to the `drawOverlay` skin seam,
 // so a consumer types its overlay against the node set + scale (AW.W17).
+// `ConstellationWarp` — the engine-owned focal-warp spring state (`field.warp`),
+// so a consumer types its focal-mark overlay against the spring-eased position
+// (AX.W17 — the click-to-warp seam).
 export type {
     ConstellationProps,
     ConstellationField,
+    ConstellationWarp,
 } from "../components/custom/constellation";
 
 // ── Metric primitives ───────────────────────────────────────────────────────
