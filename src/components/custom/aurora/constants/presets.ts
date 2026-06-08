@@ -170,11 +170,14 @@ export interface AuroraConfig {
      */
     lightDir?: [number, number, number];
     /**
-     * AW.W4.2 — the relight tint (linear-light RGB). Optional; omitted = a warm
-     * white (the canonical impasto catch-light). The diffuse + Blinn-specular terms
-     * modulate by this.
+     * AW.W4.2 / AX.W11 — the relight tint (the impasto catch-light). Optional;
+     * omitted = the canonical warm-white the shared `warmCatchLight` OKLCh helper
+     * derives (the `(0.985, 0.0125, 77.5°)` anchor — perceptually the prior eyeballed
+     * warm-white, now on the OKLCh core). Author it either as a raw LINEAR-light
+     * `[r,g,b]` triple OR as an `{L,C,h}` OKLCh anchor (the bridge derives the linear
+     * triple via `warmCatchLight`). The diffuse + Blinn-specular terms modulate by it.
      */
-    lightColor?: [number, number, number];
+    lightColor?: [number, number, number] | OklchStop;
 
     // Motion
     nucleiDrift: number; // 0..0.05

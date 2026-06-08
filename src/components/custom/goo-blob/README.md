@@ -7,15 +7,14 @@ color perturbation over glass-ui's warm-cream glass identity. It is the WebGL si
 per-pixel-shaded metaball; the watercolor-dot is the cheap static dot. They are deliberate
 siblings, not redundant.
 
-> Research-backed. This README documents the blob as it ships and as the AW perfection plan
-> (`docs/tranches/AW/blob/PATH-FORWARD.md`) targets it. Sections marked **(planned — AW)** describe
-> in-flight work and the SOTA technique behind it, cited with access dates. The three formal blob
-> waves are **W9 — Droplet Surface** (lit glass: normalized + circular smin, SDF-gradient normal,
-> warm-cream specular + Fresnel rim, analytic-derivative gradient noise, domain-warped edge),
-> **W10 — Interaction** (critically-damped spring pointer, the decaying-radius elastic trail,
-> velocity squash-and-stretch, the reduced-motion composed rest pose), and **W11 — Mood,
-> Iridescence and Palette** (warm-biased iridescence + fake-SSS depth, the seed-driven OKLCh
-> palette, the wire-or-cut mood resolution) — specced under `docs/tranches/AW/waves/`.
+> Research-backed. This README documents the blob as it ships, with the SOTA technique behind
+> each axis cited with access dates. The three formal blob waves all landed: **W9 — Droplet
+> Surface** (lit glass: normalized + circular smin, SDF-gradient normal, warm-cream specular +
+> Fresnel rim, analytic-derivative gradient noise, domain-warped edge), **W10 — Interaction**
+> (critically-damped spring pointer, the decaying-radius elastic trail, velocity
+> squash-and-stretch, the reduced-motion composed rest pose), and **W11 — Mood, Iridescence and
+> Palette** (warm-biased iridescence + fake-SSS depth, the seed-driven OKLCh palette, the
+> wire-or-cut mood resolution; the OKLCh color path is gated by `proof:blob-color-equivalence`).
 
 ```ts
 import { GooBlob } from "@mkbabb/glass-ui/goo-blob";

@@ -213,20 +213,29 @@ function run() {
             "aurora.frag.ts does NOT splice OKLCH_MATRICES_GLSL (the W5 OKLCh path is absent)",
         );
     }
-    // samplePalette must NOT be the prior linear mix() of the two stops. The new
-    // path routes through mixPaletteOklab / mixPaletteOklchArc.
-    facts.samplePaletteOklab = /mixPaletteOklab\s*\(/.test(comp);
+    // AX.W11 — the ramp (mixPaletteOklab / mixPaletteOklchArc + the smoothstep-eased
+    // samplePaletteRamp dispatcher) was HOISTED to the shared procedural-color chunk
+    // (PALETTE_RAMP_GLSL) so the GLSL + WGSL ports splice ONE source. So the OKLab
+    // interp body now lives in the CHUNK; composition.glsl.ts's samplePalette ROUTES
+    // through the shared samplePaletteRamp + aurora.frag.ts SPLICES PALETTE_RAMP_GLSL.
+    // The grep follows the code: the chunk owns mixPaletteOklab, samplePalette calls
+    // samplePaletteRamp, and the linear mix() of the two stops is gone.
+    facts.samplePaletteOklab =
+        /vec3 mixPaletteOklab\s*\(/.test(chunk) && /samplePaletteRamp\s*\(/.test(comp);
     facts.linearMixGone = !/return\s+mix\(uPalette\[i0\],\s*uPalette\[i1\]/.test(comp);
-    if (!facts.samplePaletteOklab || !facts.linearMixGone) {
+    facts.fragSplicesRamp = /\$\{PALETTE_RAMP_GLSL\}/.test(frag);
+    if (!facts.samplePaletteOklab || !facts.linearMixGone || !facts.fragSplicesRamp) {
         violations.push(
-            "samplePalette still uses the linear mix(uPalette…) — the OKLCh interpolation did not land (the muddy-midtone source remains)",
+            "samplePalette is not routed through the shared samplePaletteRamp (mixPaletteOklab in the chunk + the splice + the linear mix(uPalette…) gone) — the OKLCh interpolation did not land via the hoisted ramp",
         );
     }
-    // The turns-domain hue port must be present (fract wrap, not +TAU radians).
-    facts.turnsDomainPort = /interpolateHueTurns/.test(frag) && /fract\(r\)/.test(frag);
+    // The turns-domain hue port must be present (fract wrap, not +TAU radians). AX.W11
+    // hoisted it into the shared chunk (PALETTE_RAMP_GLSL); the grep follows it there.
+    facts.turnsDomainPort =
+        /interpolateHueTurns/.test(chunk) && /fract\(a \+ t \* \(b - a\)\)|fract\(r\)/.test(chunk);
     if (!facts.turnsDomainPort) {
         violations.push(
-            "the in-shader turns-domain interpolateHueTurns (with fract() wrap) is absent — a radians-native port diverges 180° at the antipode",
+            "the turns-domain interpolateHueTurns (with fract() wrap) is absent from the shared ramp chunk — a radians-native port diverges 180° at the antipode",
         );
     }
     // brokenColorJitter + saturate3 moved to OKLCh; the YIQ hueShift matrix deleted.

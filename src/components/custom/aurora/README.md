@@ -20,20 +20,23 @@ creature, aurora is the full-bleed field.
 import { Aurora } from "@mkbabb/glass-ui/aurora";
 ```
 
-> **Research-backed.** This README documents aurora as it ships AND as the AW perfection
-> plan (`docs/tranches/AW/aurora/PATH-FORWARD.md`) targets it. Sections marked
-> **(planned — AW)** describe in-flight work and the SOTA technique behind it, cited with
-> access dates (2026-06-06). `DESIGN.md` is the authoritative architecture spec (the
-> invariants, the cursor model, the load-bearing implementation notes); this README is the
-> consumer-facing guide. The five aurora waves are **W4 — painterly** (the structure-tensor
-> / ETF keystone + real height-field impasto + the van-Gogh atomic-stroke medium + genuine
-> oil-pastel deposition), **W5 — color** (in-shader OKLCh interpolation + hue-path + the
-> `deriveAurora` palette front door), **W6 — options** (the ≤7-atom `resolveAtoms`
-> door — AX.W10 converged it to the ONE consumer surface + retired the parallel
-> seed+mood door), **W7 — WebGPU** (`createGPUCanvas` + the WGSL parity twin + the multi-pass
-> smoothed-tensor + anisotropic Kuwahara substrate), and **W8 — interactive** (cursor-as-
-> light + velocity-reactive flow + the stateful pointer wake) — specced under
-> `docs/tranches/AW/waves/AW.W4-aurora-painterly.md` … `AW.W8-aurora-interactive.md`.
+> **Research-backed.** This README documents aurora as it ships, with the SOTA technique
+> behind each axis cited with access dates (2026-06-06). `DESIGN.md` is the authoritative
+> architecture spec (the invariants, the cursor model, the load-bearing implementation
+> notes); this README is the consumer-facing guide. The aurora perfection arc landed across
+> five waves, each gated: **W4 — painterly** (the structure-tensor / ETF keystone + real
+> height-field impasto + the van-Gogh atomic-stroke medium + genuine oil-pastel deposition;
+> gated by `proof:aurora-tensor-field` · `proof:aurora-impasto-relight` ·
+> `proof:aurora-vangogh-preset` · `proof:aurora-oilpastel-medium`), **W5 — color**
+> (in-shader OKLCh interpolation + hue-path + the `deriveAurora` palette front door; gated by
+> `proof:aurora-oklch-interp` · `proof:aurora-derive-gamut`), **W6 — options** (the ≤7-atom
+> `resolveAtoms` door — AX.W10 converged it to the ONE consumer surface + retired the parallel
+> seed+mood door; gated by `proof:aurora-atoms-roundtrip`), **W7 — WebGPU** (`createGPUCanvas`
+> + the WGSL parity twin, gated OFF by default behind `WEBGPU_PARITY` until the W14 multi-pass
+> finalize — gated by `proof:aurora-wgsl-equivalence` · `proof:aurora-webgpu-render`), and
+> **W8 — interactive** (cursor-as-light + velocity-reactive flow; gated by
+> `proof:aurora-interaction-prm`). The shared palette ramp is single-sourced across the GLSL
+> and WGSL backends (AX.W11 — `proof:aurora-wgsl-equivalence` certifies the twin to 1e-6).
 
 ---
 
@@ -43,10 +46,10 @@ Aurora is a **single-pass WebGL2 fragment shader** assembled from cohesive GLSL 
 (`constants/shaders/`), not a multi-FBO compositor and not an SVG/CSS gradient. Every
 fragment evaluates the whole field directly on the GPU. The pipeline, per frame:
 
-1. **Composition** — a Quilez double-fBm *domain warp* of the UV (`aurora.frag.ts:206`),
+1. **Composition** — a Quilez double-fBm *domain warp* of the UV (`aurora.frag.ts:348`),
    then a *multi-nuclei softmax field* (2–6 anisotropic-Gaussian color attractors, each
    with elongation + angle) that selects a palette position per pixel, with internal
-   lightness/chroma mottling (`composition.glsl.ts:20`). Palette position never comes from
+   lightness/chroma mottling (`composition.glsl.ts:25`). Palette position never comes from
    a single focal point, a pure fBm color-id, or a spatial-distance axis — each produces a
    visible artifact (`DESIGN.md §3`).
 2. **Medium** — an optional painterly overlay: `smooth` (no brush), `pastel`, `watercolor`,
@@ -55,7 +58,7 @@ fragment evaluates the whole field directly on the GPU. The pipeline, per frame:
    field underlies every medium.
 3. **Post** — saturation trim, ACES tonemap, paper grain, the mandatory sRGB OETF, and a
    1-LSB Interleaved-Gradient-Noise dither to break 8-bit banding
-   (`aurora.frag.ts:327-343`).
+   (`aurora.frag.ts:372-388`).
 
 The palette is authored in **OKLCh** (perceptually-uniform color) and baked CPU-side to
 linear sRGB; the shader tonemaps and composites in linear, then closes the seam with the
@@ -77,6 +80,10 @@ offscreen, content-hidden, or tab-backgrounded, and freezes to one static frame 
 - **Content-over-aurora routes** — forms, dashboards, text-dense panels where the field
   should recede. Use `:opacity-ceiling` (a per-route compositing clamp, e.g. `0.5`) so the
   drift sits quietly behind page content without re-authoring the palette.
+- **Warm low-intensity page-backdrop** — a calm, slow, low-saturation full-page wash behind
+  long-form reading content. The `smooth` medium at a low `warpAmount` + a near-monochrome
+  warm palette + `:opacity-ceiling` ~0.4 drifts gently without competing with the text; pair
+  with a `DockBackgroundToggle` pause for the WCAG 2.2.2 floor.
 - **Brand / mood surfaces** — derive a whole palette from one seed color (`deriveAurora`)
   to match a product accent; the NCSU-red house accent seeds a complementary ramp cleanly.
 - **Painterly art pieces** — the oil / pastel / crayon mediums for an editorial,
@@ -151,37 +158,37 @@ optional crosshatch (`strokeLayers: 2`). Per-stroke broken color jitters each st
 pigment deterministically (`brokenColorJitter`, bounded to ≈±16° hue / ±14% value so it
 reads as broken paint, not noise — `DESIGN.md §7`).
 
-**(planned — AW.W4)** The painterly roadmap perfects this engine over four folds that all
-consume one keystone:
+The painterly engine is perfected over four folds that all consume one keystone (landed,
+gated by `proof:aurora-tensor-field` · `proof:aurora-impasto-relight` ·
+`proof:aurora-vangogh-preset` · `proof:aurora-oilpastel-medium`):
 
-- **The structure-tensor / edge-tangent-flow keystone.** Today strokes orient off the
-  hand-authored `flowField` (`flow.glsl.ts:6`). The keystone derives stroke direction from
-  the *color field's own gradient*: a Sobel-derivative `sampleBase` → the 2×2 structure
+- **The structure-tensor / edge-tangent-flow keystone.** Strokes orient either off the
+  hand-authored `flowField` (`flow.glsl.ts:6`) or off the *color field's own gradient*
+  (`strokeOrient: "tensor"`): a Sobel-derivative `sampleBase` → the 2×2 structure
   tensor `J=[[Gx·Gx,Gx·Gy],[Gx·Gy,Gy·Gy]]` → its minor eigenvector (the edge-tangent flow)
   + a coherence scalar `A=(λ1−λ2)/(λ1+λ2)`. Strokes then hug the color zones the way real
   Van Gogh contours curve around the moon — the single biggest "congruent to real Van Gogh"
   lever. Selectable via `strokeOrient: "flow" | "tensor"`; a single-pass small-tap
   approximation ships on WebGL2, the Gaussian-smoothed multi-tap form is the W7 WebGPU pass.
   *(Kyprianidis & Kang CGF 2009; Kang/Lee/Chui ETF NPAR 2007; Heckel 2024.)*
-- **Real height-field impasto.** The faked fixed-RGB edge rim (`brush.glsl.ts:173-178`, a
-  phantom upper-left light) is retired for an accumulated per-pixel paint *height* across
-  the four stroke layers → a `dFdx`/`dFdy` surface normal → diffuse + Blinn specular from a
-  movable `uLightDir`, all in linear light before the ACES tonemap. Thick impasto catches a
-  raking light; the light direction becomes the interactive cursor-as-light axis (W8).
-  *(IMPaSTo, Baxter/Wendt/Lin NPAR 2004.)*
-- **The van-Gogh atomic-stroke medium.** A first-class `medium:"vangogh"` (retiring the
-  "oil + swirl preset" approximation): ETF-oriented strokes, length + layer density graded
-  by local luminance and coherence (long confident strokes in bright passages, short dabs
-  in the darks — the measured Starry-Night Kolmogorov/Batchelor turbulence cascade), OKLCh
-  per-stroke pigment jitter, real impasto. No subject matter — the "source image" is the
-  generated nuclei field, so strokes trace its iso-bands. *(Hidden Turbulence in The Starry
-  Night, Physics of Fluids 36 / arXiv:2310.03415, 2024; Hertzmann SIGGRAPH 1998.)*
-- **Genuine oil-pastel deposition.** `mediumCrayon` is reworked from a tooth-multiply into a
-  pigment-on-tooth deposition model: tooth-occlusion deposition (pigment on the paper-height
+- **Real height-field impasto.** No faked fixed-RGB edge rim — an accumulated per-pixel
+  paint *height* across the four stroke layers → a `dFdx`/`dFdy` surface normal → diffuse +
+  Blinn specular from a movable `uLightDir`, all in linear light before the ACES tonemap.
+  Thick impasto catches a raking light; the light direction doubles as the interactive
+  cursor-as-light axis (W8). *(IMPaSTo, Baxter/Wendt/Lin NPAR 2004.)*
+- **The van-Gogh atomic-stroke medium.** A first-class `medium:"vangogh"`: ETF-oriented
+  strokes, length + layer density graded by local luminance and coherence (long confident
+  strokes in bright passages, short dabs in the darks — the measured Starry-Night
+  Kolmogorov/Batchelor turbulence cascade), OKLCh per-stroke pigment jitter, real impasto.
+  No subject matter — the "source image" is the generated nuclei field, so strokes trace its
+  iso-bands. *(Hidden Turbulence in The Starry Night, Physics of Fluids 36 /
+  arXiv:2310.03415, 2024; Hertzmann SIGGRAPH 1998.)*
+- **Genuine oil-pastel deposition.** `medium:"oil-pastel"` is a pigment-on-tooth deposition
+  model, not a tooth-multiply: tooth-occlusion deposition (pigment on the paper-height
   peaks, skipping valleys — light pressure shows paper, heavy fills it), a *scumble* broken-
   upper-layer pass (coverage < 1 letting the lower color through), and a *waxy specular film*
-  whose sheen grows with layer count (burnish, distinct from oil's sharp glint). The demo
-  label becomes `oil-pastel`. *(Mont Marte oil-pastel-technique references.)*
+  whose sheen grows with layer count (burnish, distinct from oil's sharp glint). *(Mont Marte
+  oil-pastel-technique references.)*
 
 The **anisotropic Kuwahara finish** (the canonical "make a gradient read as oil paint"
 operator — an 8-sector elliptical kernel squeezed along the tensor) and the smoothed
@@ -313,16 +320,15 @@ Harmonies today: `analogous` (the painterly default), `complementary`, `triad`,
 pale apex), falls chroma off toward the apex, and gamut-maps every stop through value.js's
 Ottosson core (`gamutMapStop`, `color.ts:250`).
 
-**(planned — AW.W5)** The color wave extends `deriveAurora` with `split-complementary` /
-`tetradic` harmonies, eased L/C journeys (a **bell** chroma curve — peak in the mids,
-desaturated extremes — becomes the new default), and warm-light/cool-shadow
-`temperatureShift` coupling (the single most-cited painting rule, the fold that makes the
-oil/oil-pastel mediums read as *mixed paint* rather than stamped hue — the
-`temperatureShift` now interpolates the hue toward named warm/cool OKLCh poles, AX.W10).
-The whole-scene derive from one seed lives in the **atoms door** (`resolveAtoms` above —
-the ONE consumer surface; AX.W10 retired the prior parallel seed+mood door). *(meodai
-pro-color-harmonies; Adobe Leonardo / OKLCh ramp tooling; Baudisch / Gamblin warm-cool
-temperature.)*
+`deriveAurora` carries `split-complementary` / `tetradic` harmonies, eased L/C journeys (a
+**bell** chroma curve — peak in the mids, desaturated extremes — is the default), and
+warm-light/cool-shadow `temperatureShift` coupling (the single most-cited painting rule, the
+fold that makes the oil/oil-pastel mediums read as *mixed paint* rather than stamped hue —
+`temperatureShift` interpolates the hue toward named warm/cool OKLCh poles, AX.W10). The
+whole-scene derive from one seed lives in the **atoms door** (`resolveAtoms` above — the ONE
+consumer surface; AX.W10 retired the prior parallel seed+mood door). Landed, gated by
+`proof:aurora-derive-gamut`. *(meodai pro-color-harmonies; Adobe Leonardo / OKLCh ramp
+tooling; Baudisch / Gamblin warm-cool temperature.)*
 
 ---
 
@@ -331,20 +337,23 @@ temperature.)*
 - **The palette is baked to LINEAR sRGB**, not gamma sRGB. The whole shader pipeline
   (palette interp, nuclei field, mediums, ACES tonemap, grain) runs in linear, and the
   **mandatory `linearToSrgb()` OETF closes the seam** as the final step before `fragColor`
-  (`aurora.frag.ts:339`). Without it the field ships ~2.2× too dark (linear 0.5 → display
+  (`aurora.frag.ts:384`). Without it the field ships ~2.2× too dark (linear 0.5 → display
   ~0.215 instead of ~0.735). This is machine-locked by `proof:aurora-space-gamma`. The OETF
   + the rotated-octave FBM constant are spliced from the shared `procedural-color.glsl`
   chunk so they can never diverge from the goo-blob's copy (the AV.W1 divergence root cause).
-- **Palette interpolation is currently linear-sRGB; OKLCh is the next color step.** The
-  stop-to-stop blend in `samplePalette` (`composition.glsl.ts:16`) is a linear `mix()`, so
-  distant-hue midpoints can desaturate toward grey. **(planned — AW.W5)** moves the
-  interpolation, broken-color (`brokenColorJitter`, `aurora.frag.ts:276`, off its YIQ-style
-  `hueShift` matrix), and saturation (`saturate3`, `:284`) into OKLCh for chroma-preserving
-  ramps. The `OKLCH_MATRICES_GLSL` chunk (`procedural-color.glsl.ts:73`) is already authored
-  and 1e-6-verified — zero new payload. The interpolation-space choice is deliberate:
-  *ramps interpolate in OKLab (rectangular)* to avoid the hue-detour midpoint darkening
-  Tailwind documented (#14955); the OKLCh hue-arc is reserved for deliberate rainbow travel
-  via a `huePath` atom (`shorter` | `longer` | `increasing` | `decreasing`). *(Ottosson
+- **Palette interpolation runs in OKLCh, not linear-sRGB.** The stop-to-stop blend in
+  `samplePalette` (`composition.glsl.ts:15`) routes through the shared `samplePaletteRamp`
+  (`procedural-color.glsl.ts:147`, `PALETTE_RAMP_GLSL`): a smoothstep ease then an
+  OKLab-rectangular blend, so distant-hue midpoints hold chroma instead of greying. Broken
+  color (`brokenColorJitter`, `aurora.frag.ts:310`) and saturation (`saturate3`, `:323`) run
+  in OKLCh too — the YIQ-style `hueShift` matrix is gone. The `OKLCH_MATRICES_GLSL` chunk
+  (`procedural-color.glsl.ts:73`) is 1e-6-verified (`proof:aurora-oklch-interp`). The
+  interpolation-space choice is deliberate: *ramps interpolate in OKLab (rectangular)* to
+  avoid the hue-detour midpoint darkening Tailwind documented (#14955); the OKLCh hue-arc is
+  reserved for deliberate rainbow travel via the `huePath` axis (`shorter` | `longer` |
+  `increasing` | `decreasing`). The ramp is single-sourced across the GLSL and WGSL backends
+  (AX.W11 — `PALETTE_RAMP_GLSL` / `PALETTE_RAMP_WGSL` twins both `samplePalette` ports splice;
+  `proof:aurora-wgsl-equivalence` certifies the ramp to 1e-6 across the huePath modes). *(Ottosson
   OKLab; Aras Pranckevičius cbrt-LMS precompute; MDN `<hue-interpolation-method>`.)*
 - **Author in OKLCh, not hex.** `OklchStop { L, C, h }` gives perceptually-even ramps —
   equal numeric steps read as equal visual steps, and a hue rotation at fixed L/C preserves
@@ -357,12 +366,13 @@ temperature.)*
 ## Performance notes
 
 - **Banding is dithered post-transfer.** A 1-LSB Interleaved-Gradient-Noise dither (Jimenez)
-  is applied in *display* space *after* the OETF (`aurora.frag.ts:341`) — the canonical fix
+  is applied in *display* space *after* the OETF (`aurora.frag.ts:388`) — the canonical fix
   for 8-bit mid-tone banding on soft gradients. Don't move it into linear space.
 - **One draw, one shader.** No multi-pass, no FBO ping-pong, no external deps — a single
-  full-screen triangle (`DESIGN.md §2` invariant 8). **(planned — AW.W7)** the WebGPU path
-  relaxes this *on the WebGPU branch only*, for the structure-tensor / Kuwahara passes a
-  single fragment program cannot express; WebGL2 stays the universal fallback.
+  full-screen triangle (`DESIGN.md §2` invariant 8). The WebGPU path (gated OFF by default
+  behind `WEBGPU_PARITY` until the W14 finalize) relaxes this *on the WebGPU branch only*,
+  for the structure-tensor / Kuwahara passes a single fragment program cannot express;
+  WebGL2 stays the universal fallback.
 - **The loop parks aggressively.** Offscreen (`IntersectionObserver`), content-hidden
   (`content-visibility:auto`), and tab-backgrounded (`document.hidden`) all park the rAF
   loop, so an off-screen aurora attaches zero frames (the `useWebGLCanvas` substrate, gated
@@ -436,25 +446,27 @@ From-WebGL-to-WebGPU.)*
 
 ---
 
-## Interactivity (planned — AW.W8)
+## Interactivity
 
-Today interaction is the stateless cursor swirl (`aurora.frag.ts:229-244`) — the pointer
-rotates the warp and bends the flow, instantaneous and stateless. The SOTA move is
-**stateful**: the pointer leaves a wake that advects and decays. The wave adds, all opt-in
-behind a config flag (the wispy-sky default stays non-interactive):
+The base interaction is the cursor swirl (`aurora.frag.ts:269-283`) — the pointer rotates
+the warp and bends the flow with a Gaussian-radius falloff and a ~2s decay. The interactive
+axes are all opt-in behind a config flag (the wispy-sky default stays non-interactive),
+landed + gated by `proof:aurora-interaction-prm`:
 
 - **Cursor-as-light** — the pointer drives the W4 impasto `uLightDir`, so the catch-lights
   track the cursor and the relief reads tactile (a slow auto-orbit when idle). No new
-  lighting path — it reuses the movable light the impasto wave already lands.
-- **Velocity-reactive flow** — `cursorModel.ts` (position-only today) gains pointer/scroll
-  velocity; a fast flick injects a transient swirl-burst easing out over ~1s, distinct from
-  the steady attraction.
-- **The stateful pointer wake (WebGPU branch)** — one ping-pong velocity texture; the
-  pointer writes a delta-tracked Gaussian splat that self-advects and dissipates (lingering
-  eddies, not an instantaneous swirl), with a click → radial-ripple impulse. *(Pavel
-  Dobryakov's WebGL-Fluid-Simulation; Bridson 2007 procedural vortex.)*
+  lighting path — it reuses the movable impasto light.
+- **Velocity-reactive flow** — `cursorModel.ts` carries pointer/scroll velocity (the
+  `uCursorVelocity` / `uCursorBurst` uniforms); a fast flick injects a transient swirl-burst
+  easing out over ~1s, distinct from the steady attraction.
 - **Scroll coupling** — palette/breath progress binds to scroll via the existing
   `useScrollProgress` motion composable (no new substrate).
+
+The **stateful pointer wake** (a ping-pong velocity texture the pointer writes a self-
+advecting Gaussian splat into — lingering eddies rather than an instantaneous swirl, with a
+click → radial-ripple impulse) is a WebGPU-branch fold (it needs the multi-pass feedback the
+single-pass WebGL2 shader cannot express), staged with the W14 painterly finalize. *(Pavel
+Dobryakov's WebGL-Fluid-Simulation; Bridson 2007 procedural vortex.)*
 
 **Accessibility is binding.** Every interactive axis routes through one master tempo scalar
 that `prefers-reduced-motion: reduce` (WCAG 2.3.3, Animation from Interactions — the
@@ -502,7 +514,7 @@ are binding, both owned by the shared substrate, not re-implemented per surface:
 - **WCAG 2.3.3 (Animation from Interactions) / 2.2.4 motion** — under
   `prefers-reduced-motion: reduce` the field paints one static frame and parks. The substrate
   *live-monitors* the media query (a `matchMedia` change listener), so a runtime toggle
-  freezes/wakes without a remount. Every planned interactive axis (W8) hooks the same master
+  freezes/wakes without a remount. Every interactive axis (W8) hooks the same master
   tempo scalar.
 - **WCAG 2.2.2 (Pause, Stop, Hide)** — a continuously-running background over 5s must carry a
   user-reachable stop *available to all users* (not gated behind PRM). `DockBackgroundToggle`
@@ -609,17 +621,17 @@ named bite-check that re-reds it:
 | `proof:aurora-space-gamma` | the linear pipeline closes the seam — `col = linearToSrgb(col)` precedes the `fragColor` write (the ~2.2×-too-dark trap is forbidden) | shipped (AV.W1) |
 | `proof:webgl-substrate-single` · `proof:single-color-core` · `proof:shader-shared-source` | aurora + blob share ONE `useWebGLCanvas` substrate and ONE OKLCh/OETF/FBM color chunk (no divergent copy) | shipped (AV.W2) |
 | `proof:offscreen-pause` | a parked rAF (offscreen / content-hidden / tab-hidden / PRM-reduce) attaches ZERO frames | shipped (AV.W7) |
-| `proof:aurora-tensor-field` | the structure-tensor eigen-decomposition matches a synthetic gradient field within tolerance; `strokeOrient:"tensor"` tracks the field gradient, not the global flow. Bite: swap the minor eigenvector for the major → RED | planned (AW.W4) |
-| `proof:aurora-impasto-relight` | the fixed-RGB rim is gone from `paintOver`; a `uLightDir` sweep moves the catch-light. Bite: restore the fixed rim → RED | planned (AW.W4) |
-| `proof:aurora-vangogh-preset` | `medium:"vangogh"` resolves its uniforms; the deterministic `renderAt(t)` bake is snapshot-blessed. Bite: fall back to oil+swirl → RED | planned (AW.W4) |
-| `proof:aurora-oilpastel-medium` | the reworked oil-pastel bake shows paper-through-scumble; the WebGL2 path stays inside `profile:budget`. Bite: revert to the tooth-multiply → RED | planned (AW.W4) |
-| `proof:aurora-oklch-interp` | the spliced OKLCh matrices match value.js to 1e-6; the blue→yellow midpoint holds chroma above the linear-`mix` midpoint. Bite: revert `samplePalette` to linear `mix()` → RED | planned (AW.W5) |
-| `proof:aurora-derive-gamut` | every harmony × easing × temperature stop is in-sRGB over a neon-seed matrix after `gamutMapStop`. Bite: remove `gamutMapStop` → RED | planned (AW.W5) |
+| `proof:aurora-tensor-field` | the structure-tensor eigen-decomposition matches a synthetic gradient field within tolerance; `strokeOrient:"tensor"` tracks the field gradient, not the global flow. Bite: swap the minor eigenvector for the major → RED | shipped (AW.W4) |
+| `proof:aurora-impasto-relight` | the fixed-RGB rim is gone from `paintOver`; a `uLightDir` sweep moves the catch-light. Bite: restore the fixed rim → RED | shipped (AW.W4) |
+| `proof:aurora-vangogh-preset` | `medium:"vangogh"` resolves its uniforms; the deterministic `renderAt(t)` bake is snapshot-blessed. Bite: fall back to oil+swirl → RED | shipped (AW.W4) |
+| `proof:aurora-oilpastel-medium` | the reworked oil-pastel bake shows paper-through-scumble; the WebGL2 path stays inside `profile:budget`. Bite: revert to the tooth-multiply → RED | shipped (AW.W4) |
+| `proof:aurora-oklch-interp` | the spliced OKLCh matrices match value.js to 1e-6; the blue→yellow midpoint holds chroma above the linear-`mix` midpoint. Bite: revert `samplePalette` to linear `mix()` → RED | shipped (AW.W5) |
+| `proof:aurora-derive-gamut` | every harmony × easing × temperature stop is in-sRGB over a neon-seed matrix after `gamutMapStop`. Bite: remove `gamutMapStop` → RED | shipped (AW.W5) |
 | `proof:aurora-atoms-roundtrip` | `resolveAtoms` is total + default-preserving AND REACHABLE — the live aurora story routes the atoms-default door (drives the canvas via `resolveAtoms`, not raw config) AND the dead parallel seed+mood door is GONE (grep=0) + ONE `nucleiPrior` + the noise atom fans out + texture is structurally absent on smooth. Bite: re-route the atoms tab to mutate raw config / re-introduce the dead door / drop the noise atom → RED | shipped (AX.W10) |
 | `proof:aurora-atoms-render` | the π-lane PER-ATOM device readback — driving each atom (seed / colorEnergy / zones / noise / medium) in the live config UI visibly changes the canvas centre region above the ambient drift baseline (the atoms are WIRED, not inert). Bite: leave an atom unwired → its delta collapses to the drift floor → RED | shipped (AX.W10) |
-| `proof:aurora-backend-fallback` · `proof:aurora-wgsl-equivalence` | the forced WebGL2 path renders the identical visual contract; the WGSL color/noise chunk matches its GLSL twin to 1e-6. Bite: break the fallback route / perturb a WGSL constant → RED | planned (AW.W7) |
+| `proof:aurora-backend-fallback` · `proof:aurora-wgsl-equivalence` | the forced WebGL2 path renders the identical visual contract; the WGSL color/noise chunk matches its GLSL twin to 1e-6. Bite: break the fallback route / perturb a WGSL constant → RED | shipped (AW.W7, gated OFF by default) |
 | `proof:aurora-webgpu-render` | the π-lane DEVICE render-and-readback — the REAL `aurora.wgsl.ts` + `packGPUUniforms` on a real `GPUDevice` paint a NON-BLACK centre pixel (DEFAULT at t=1); the per-i32-field decode reads the counts (not the `bits(3.0)=1077936128` bit-pattern); the WebGL2-vs-WebGPU base-field delta is below the parity floor; `WEBGPU_PARITY=false` resolves `"webgl"`. Bite: revert the f32-cast OR the storage move → BLACK on Metal → RED | shipped (AX.W07) |
-| `proof:aurora-interaction-prm` | every interactive axis is suppressed under `prefers-reduced-motion`; the master tempo scalar zeroes the stateful field; the pause stops every axis. Bite: detach an axis from the tempo scalar → RED | planned (AW.W8) |
+| `proof:aurora-interaction-prm` | every interactive axis is suppressed under `prefers-reduced-motion`; the master tempo scalar zeroes the stateful field; the pause stops every axis. Bite: detach an axis from the tempo scalar → RED | shipped (AW.W8) |
 
 ---
 

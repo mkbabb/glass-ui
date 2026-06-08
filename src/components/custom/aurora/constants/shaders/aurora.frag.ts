@@ -30,6 +30,7 @@ import {
     FBM_ROT_GLSL,
     OETF_GLSL,
     OKLCH_MATRICES_GLSL,
+    PALETTE_RAMP_GLSL,
 } from "../../../../../composables/glass/webgl/shaders/procedural-color.glsl";
 import { AURORA_COMPOSITION_GLSL } from "./composition.glsl";
 import { AURORA_FLOW_GLSL } from "./flow.glsl";
@@ -207,57 +208,18 @@ ${OETF_GLSL}
 const float PI = 3.141592653589793;
 ${OKLCH_MATRICES_GLSL}
 
-// ── OKLCh palette interpolation (W5) ─────────────────────────────────────────
+// ── OKLCh palette ramp (W5 interp · AX.W11 single-sourced twin) ───────────────
 // The muddy-midtone kill: distant-hue stops interpolated by a plain linear mix()
 // desaturate toward grey at the midpoint. The OKLab-rectangular lerp (L,a,b) holds
-// chroma across the ramp; the OKLCh hue-arc form (used only for deliberate rainbow
-// travel via uHuePath increasing/decreasing) sweeps the hue wheel without flipping.
-
-// value.js's interpolateHue, transcribed in the NORMALIZED-TURNS domain (h_rad/TAU
-// → turns, the exact .5/+1.0 branch per method, fract() wrap, *TAU back). A
-// radians-native port (PI thresholds / +TAU wrap) diverges 180° at the antipode.
-// methods: 0 shorter, 1 longer, 2 increasing, 3 decreasing.
-float interpolateHueTurns(float h0, float h1, float t, int method) {
-  // h0/h1 are radians in [0, 2pi); convert to turns [0,1).
-  float TAU = 2.0 * PI;
-  float a = h0 / TAU;
-  float b = h1 / TAU;
-  float i = b - a;
-  if (method == 0) {              // shorter
-    if (i > 0.5) a += 1.0; else if (i < -0.5) b += 1.0;
-  } else if (method == 1) {       // longer
-    if (i > 0.0 && i < 0.5) a += 1.0; else if (i > -0.5 && i <= 0.0) b += 1.0;
-  } else if (method == 2) {       // increasing
-    if (i < 0.0) b += 1.0;
-  } else {                        // decreasing
-    if (i > 0.0) a += 1.0;
-  }
-  float r = a + t * (b - a);
-  r = fract(r);                   // (r % 1 + 1) % 1 — fract is non-negative in GLSL
-  return r * TAU;                 // back to radians
-}
-
-// Linear-sRGB endpoint pair → OKLab-rectangular interpolation → linear sRGB. Holds
-// chroma across the ramp (no grey midpoint). Used for the default/shorter ramp path.
-vec3 mixPaletteOklab(vec3 linA, vec3 linB, float t) {
-  vec3 labA = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * linA) * pow(abs(LINEAR_SRGB_TO_LMS * linA), vec3(1.0 / 3.0)));
-  vec3 labB = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * linB) * pow(abs(LINEAR_SRGB_TO_LMS * linB), vec3(1.0 / 3.0)));
-  vec3 lab = mix(labA, labB, t);
-  return oklabToLinearSrgb(lab);
-}
-
-// Linear-sRGB endpoint pair → OKLCh interpolation along the uHuePath arc → linear
-// sRGB. L and C lerp; H walks the chosen arc. The deliberate-rainbow path.
-vec3 mixPaletteOklchArc(vec3 linA, vec3 linB, float t, int method) {
-  vec3 labA = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * linA) * pow(abs(LINEAR_SRGB_TO_LMS * linA), vec3(1.0 / 3.0)));
-  vec3 labB = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * linB) * pow(abs(LINEAR_SRGB_TO_LMS * linB), vec3(1.0 / 3.0)));
-  vec3 lchA = oklabToOklch(labA);
-  vec3 lchB = oklabToOklch(labB);
-  float L = mix(lchA.x, lchB.x, t);
-  float C = mix(lchA.y, lchB.y, t);
-  float H = interpolateHueTurns(lchA.z, lchB.z, t, method);
-  return oklabToLinearSrgb(oklchToOklab(vec3(L, C, H)));
-}
+// chroma across the ramp; the OKLCh hue-arc form (deliberate rainbow travel via
+// uHuePath increasing/decreasing) sweeps the hue wheel without flipping.
+//
+// AX.W11 — the ramp (interpolateHueTurns + mixPaletteOklab + mixPaletteOklchArc +
+// the smoothstep-eased samplePaletteRamp dispatcher) is SPLICED from the shared
+// procedural-color chunk, the SAME single source the WebGPU twin (aurora.wgsl.ts)
+// splices — so the ramp can NEVER drift between backends (the AV.W1 two-copy class,
+// applied to the ramp). composition.glsl.ts's samplePalette calls samplePaletteRamp.
+${PALETTE_RAMP_GLSL}
 
 // Interleaved Gradient Noise (Jimenez) — a 1-LSB triangular dither applied in
 // DISPLAY space AFTER the OETF, so 8-bit mid-tone banding on the soft gradient is

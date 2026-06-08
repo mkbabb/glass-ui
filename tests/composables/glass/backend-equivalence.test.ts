@@ -101,4 +101,55 @@ describe("AW.W7a — the WGSL color twin matches the GLSL oracle to 1e-6", () =>
             near3(wgsl.auroraWgslColorChain(c), chainG, `chain ${hex}`);
         }
     });
+
+    // ── AX.W11 — the samplePalette gate-hole close ──────────────────────────────
+    // The headline RED witness: at HEAD the WGSL twin flat-lerped the ramp (no
+    // smoothstep ease, no huePath branch) while the GLSL oracle smoothstep-eased +
+    // hue-arc-dispatched. After both samplePalette ports SPLICE the shared
+    // samplePaletteRamp twin, the ramp is one source — assert the two TS ports agree
+    // to 1e-6 across the eased OKLab path AND the OKLCh hue-arc path. A DISTANT-HUE
+    // stop pair is the muddy-middle witness (the OKLab-rectangular midpoint desaturates
+    // toward grey; the hue-arc stays saturated) — both ports must take the SAME path.
+    const RAMP_T = [0.25, 0.5, 0.75];
+    // Linear-sRGB stop pairs (the palette is CPU-baked to linear). A DISTANT-HUE pair
+    // (blue → yellow, near-antipodal) so the OKLab-vs-hue-arc divergence is exercised.
+    const STOP_A: wgsl.Vec3 = [0.02, 0.05, 0.55]; // deep blue (linear)
+    const STOP_B: wgsl.Vec3 = [0.85, 0.62, 0.02]; // warm yellow (linear)
+
+    it("samplePaletteRamp: WGSL twin == GLSL oracle to 1e-6 across huePath:'flat' (smoothstep OKLab-rect)", () => {
+        // huePath 0 (shorter) and 1 (longer) both take the OKLab-rectangular ramp.
+        for (const huePath of [0, 1]) {
+            for (const t of RAMP_T) {
+                near3(
+                    wgsl.samplePaletteRamp(STOP_A, STOP_B, t, huePath),
+                    glsl.samplePaletteRamp(STOP_A, STOP_B, t, huePath),
+                    `ramp flat hp=${huePath} t=${t}`,
+                );
+            }
+        }
+    });
+
+    it("samplePaletteRamp: WGSL twin == GLSL oracle to 1e-6 across huePath:'increasing'/'decreasing' (OKLCh hue-arc)", () => {
+        // huePath 2 (increasing) + 3 (decreasing) take the OKLCh hue-arc — the path the
+        // WGSL twin flat-lerped at HEAD. After the hoist both splice the same arc.
+        for (const huePath of [2, 3]) {
+            for (const t of RAMP_T) {
+                near3(
+                    wgsl.samplePaletteRamp(STOP_A, STOP_B, t, huePath),
+                    glsl.samplePaletteRamp(STOP_A, STOP_B, t, huePath),
+                    `ramp arc hp=${huePath} t=${t}`,
+                );
+            }
+        }
+    });
+
+    it("the huePath carry is load-bearing: increasing arc != flat lerp on the distant-hue pair (the muddy-middle witness)", () => {
+        // Proves the huePath branch is NOT redundant with the smoothstep ease — the
+        // arc path and the flat path produce DIFFERENT colors at the midpoint, so a
+        // twin that drops the huePath carry (flat-lerps the rainbow) is provably wrong.
+        const arc = glsl.samplePaletteRamp(STOP_A, STOP_B, 0.5, 2);
+        const flat = glsl.samplePaletteRamp(STOP_A, STOP_B, 0.5, 0);
+        const delta = Math.hypot(arc[0] - flat[0], arc[1] - flat[1], arc[2] - flat[2]);
+        expect(delta, `arc vs flat midpoint delta = ${delta}`).toBeGreaterThan(0.01);
+    });
 });

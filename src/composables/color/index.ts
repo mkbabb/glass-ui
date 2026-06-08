@@ -58,6 +58,37 @@ export function oklchToLinear(stop: OklchStop): [number, number, number] {
 }
 
 /**
+ * Warm-white catch-light → LINEAR-sRGB triple (AX.W11). The OKLCh-principled light
+ * tint the painterly relight (aurora's impasto sheen, the blob's `warmCream`) adds
+ * in LINEAR light — one shared OKLCh derivation both surfaces' light models route
+ * through instead of an eyeballed sRGB-ish literal. Just `oklchToLinear({L,C,h})`
+ * with a self-documenting name (the warm-light/cool-shadow temperature-coupling rule
+ * the literature prescribes is "the catch-light is a warm, near-white OKLCh anchor").
+ *
+ * Aurora's default anchor is `(0.985, 0.0125, 77.5°)` — the OKLCh anchor that
+ * reproduces the prior eyeballed `[1.0, 0.95, 0.88]` warm-white to <1e-3 linear (so
+ * the live relight reads identically; the seam fix is invisible to the eye). The
+ * blob's `warmCream` anchor is `(0.97, 0.03, 85°)` — a deeper, more-saturated cream;
+ * W15 re-routes the blob default through THIS helper at that anchor (the cross-surface
+ * unification: ONE OKLCh derive, each surface its own principled anchor).
+ *
+ * An invalid (non-finite) anchor THROWS — a library-internal contract violation, not
+ * a silent grey return (the fail-explicit precept; a stale anchor must surface loud).
+ */
+export function warmCatchLight(
+    L: number,
+    C: number,
+    hDeg: number,
+): [number, number, number] {
+    if (!Number.isFinite(L) || !Number.isFinite(C) || !Number.isFinite(hDeg)) {
+        throw new Error(
+            `warmCatchLight: non-finite OKLCh anchor (L=${L}, C=${C}, h=${hDeg})`,
+        );
+    }
+    return oklchToLinear({ L, C, h: hDeg });
+}
+
+/**
  * OKLCh stop → GAMMA-sRGB in [0,1] — the blob's faithful-lift exit (DEC-AT-7's W7
  * GAMMA space). value.js's `oklabToRgb255` returns gamma-encoded 0..255 (HSV/sRGB,
  * no extra OETF); divide to [0,1]. The blob's default resolver returns THIS space
