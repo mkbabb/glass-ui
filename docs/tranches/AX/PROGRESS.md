@@ -12,7 +12,7 @@ over a black live canvas is NOT done).
 |---|---|---|
 | W00 | visual-runtime (π) lane | complete |
 | W01 | single-scalar dock morph | complete |
-| W02 | one morph-orchestrator per dock | planned |
+| W02 | one morph-orchestrator per dock | complete |
 | W03 | keepDockOpen host-native hold | planned |
 | W04 | dock overflow wrap | planned |
 | W05 | one iOS-spring vocabulary | planned |
@@ -20,14 +20,14 @@ over a black live canvas is NOT done).
 | W07 | aurora core unblock — WGSL black canvas | complete |
 | W08 | blob core unblock — smin distance regime | complete |
 | W09 | specular tune to subtle | complete |
-| W10 | aurora options converge — atoms door | planned |
+| W10 | aurora options converge — atoms door | complete |
 | W11 | aurora color seams — OKLCh catchlight palette-ramp twin | planned |
 | W12 | mediums substrate — strokeProfile + noise basis | planned |
 | W13 | vangogh/oilpastel mediums — pigment compositing | planned |
 | W14 | WebGPU painterly parity or excise | planned |
-| W15 | blob contained droplet — lit warm-cream living membrane | planned |
+| W15 | blob contained droplet — lit warm-cream living membrane | complete |
 | W16 | blob integration — interaction + perf + readme | planned |
-| W17 | constellation tokens + warp + slides adopt | planned |
+| W17 | constellation tokens + warp + slides adopt | complete |
 | W18 | storybook IA reinvention | planned |
 | W19 | primitive prune A — header-ribbon/glyph-face/disco-glyph | planned |
 | W20 | primitive fix — native top-layer, card toggles, glass-panel retire | planned |
