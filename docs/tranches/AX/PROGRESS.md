@@ -13,7 +13,7 @@ over a black live canvas is NOT done).
 | W00 | visual-runtime (π) lane | complete |
 | W01 | single-scalar dock morph | complete |
 | W02 | one morph-orchestrator per dock | complete |
-| W03 | keepDockOpen host-native hold | planned |
+| W03 | keepDockOpen host-native hold | complete |
 | W04 | dock overflow wrap | planned |
 | W05 | one iOS-spring vocabulary | planned |
 | W06 | dock storybook honest rail + css split | planned |
@@ -21,12 +21,12 @@ over a black live canvas is NOT done).
 | W08 | blob core unblock — smin distance regime | complete |
 | W09 | specular tune to subtle | complete |
 | W10 | aurora options converge — atoms door | complete |
-| W11 | aurora color seams — OKLCh catchlight palette-ramp twin | planned |
+| W11 | aurora color seams — OKLCh catchlight palette-ramp twin | complete |
 | W12 | mediums substrate — strokeProfile + noise basis | planned |
 | W13 | vangogh/oilpastel mediums — pigment compositing | planned |
 | W14 | WebGPU painterly parity or excise | planned |
 | W15 | blob contained droplet — lit warm-cream living membrane | complete |
-| W16 | blob integration — interaction + perf + readme | planned |
+| W16 | blob integration — interaction + perf + readme | complete |
 | W17 | constellation tokens + warp + slides adopt | complete |
 | W18 | storybook IA reinvention | planned |
 | W19 | primitive prune A — header-ribbon/glyph-face/disco-glyph | planned |
@@ -49,7 +49,7 @@ over a black live canvas is NOT done).
 | W34 | cross-constellation idiom + consumer-adoption ledger | planned |
 | W35 | keyframes prune + migration DAG | planned |
 | W36 | forced-colors glass-language skin | planned |
-| W37 | Canvas2D lifecycle + text-highlight substrates | planned |
+| W37 | Canvas2D lifecycle + text-highlight substrates | complete |
 | W38 | aurora configurator + glass-atoms restyle | planned |
 | W39 | lighthouse perf/a11y route matrix | planned |
 | W40 | demo-shell dock-nav coherence reaudit | planned |
