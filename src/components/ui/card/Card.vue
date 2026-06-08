@@ -85,15 +85,18 @@ const specularArmed = computed(
     () => props.surface === "glass" && props.specular !== "off",
 );
 
-// `full` restores the brighter pre-tune ladder by overriding the intensity-token
-// cohort locally on the host (the token-first axis — the magnitude stays a token,
-// not a hardcode); `subtle` rides the defaults. `off`/cartoon carry nothing.
+// `full` runs the brighter opt-in rung set for a busy backdrop by overriding the
+// intensity-token cohort locally on the host (the token-first axis — the magnitude
+// stays a token, not a hardcode); `subtle` rides the defaults. `off`/cartoon carry
+// nothing. AX.W52 D19 — re-derived DOWN (`0.08/0.45/0.6` → `0.04/0.18/0.26`) so even
+// the brightest opt-in is a contained gleam over the bounded `--glass-specular-size`
+// geometry, not the prior near-opaque whole-tile white screen.
 const specularTokenStyle = computed<CSSProperties>(() =>
     props.specular === "full"
         ? ({
-              "--glass-specular-intensity-rest": "0.08",
-              "--glass-specular-intensity-hover": "0.45",
-              "--glass-specular-intensity-active": "0.6",
+              "--glass-specular-intensity-rest": "0.04",
+              "--glass-specular-intensity-hover": "0.18",
+              "--glass-specular-intensity-active": "0.26",
           } as CSSProperties)
         : {},
 );

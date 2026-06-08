@@ -1,0 +1,86 @@
+{
+  "wave": "AX.W52",
+  "title": "Liquid-glass material overhaul — delete the central screen-disc → a bounded plus-lighter edge gleam; reduce the cohort + tame the saturate + re-tune the fixed-anchor radials (glass-core lane)",
+  "lane": "glass-core (the material CORE: the bloom-kill + edge-strengthening arm)",
+  "status": "dev-complete-headless-green-live-pending",
+  "band": "B (GRAPHICS)",
+  "severity": "blocker (D19 — the user's loudest live defect: the egregious central radial bloom + the screen-blend wash + the over-juiced saturate)",
+  "baseSha": "e1490d1c2e1e177f544a408ae5513c7852e7d99e",
+  "dependsOn": ["AX.W00", "AX.W09"],
+  "laneScope": {
+    "owned": [
+      "src/styles/glass.css — the .glass-material::before geometry+blend re-author (central-disc → bounded gleam; screen → plus-lighter; the .dark comment + the hover/active fallback literals)",
+      "src/styles/tokens.css — mint --glass-specular-size; reduce the --glass-specular-intensity cohort; tame --glass-blur-floating/overlay saturate; re-tune --glass-curvature-overlay onto warm-cream + the --glass-curvature-intensity knob + a softened .dark arm",
+      "src/styles/dock-controls.css — demote the dock primary phase hover radial + the rest phase-halo (18%→8%, ellipse 30%30% → 40%25%, transparent 70%→55%, halo opacity 1→0.5)",
+      "src/components/ui/card/Card.vue — re-derive the specular=\"full\" override down (0.08/0.45/0.6 → 0.04/0.18/0.26)",
+      "scripts/proof-liquid-glass-material.mjs + package.json + scripts/gates.mjs — the NEW born-RED→GREEN gate + its registration"
+    ],
+    "notOwnedThisLane": [
+      "the button-hover smoothing (--scale-hover-btn, utilities.css/button/index.ts, the .glass-btn↔.btn-pill reconcile)",
+      "the easing doctrine record (tokens.css §2 header + --ease-apple fold)",
+      "the gold-CTA CLAUDE.md promotion + the routed-asks ledger",
+      "instrument-chassis.css — no source edit needed: it CONSUMES the re-tuned --glass-curvature-overlay/-overlay-dark tokens, so the warm-cream + softened-dark fix flows through token-first with zero per-component patch"
+    ]
+  },
+  "headlessGate": {
+    "id": "proof:liquid-glass-material",
+    "registration": "package.json — \"proof:liquid-glass-material\": \"node scripts/proof-liquid-glass-material.mjs\"; gates.mjs row tags [local, ci]; proof:gate-script-parity GREEN (bijection intact)",
+    "coUpdated": true,
+    "bornRed": true,
+    "bornRedMethod": "the ORIGINAL HEAD (e1490d1) source confirmed RED on every witness via a regex probe of the unmodified src/styles/{glass.css,tokens.css}: bounded gleam present=false, legacy 'circle at var(--specular-x …)' present=true, mix-blend-mode:screen present=true, plus-lighter present=false, --glass-specular-size minted=false, hover cohort=0.22 (>0.10), curvature pure-white=true. The gate's assertions invert each. On the patched tree → exit 0.",
+    "greenAtPatchedTree": true,
+    "greenResult": "bounded gleam circle var(--glass-specular-size)=✓ (background+mask, reads=2); legacy-disc gone ✓; blend plus-lighter=✓, screen gone ✓; intensity→opacity ✓, hsl-alpha-trap clear ✓; cohort hover=0.1/active=0.16 (dark 0.08/0.12, rest=0); size-minted ✓; saturate floating=1.18/overlay=1.2; curvature warm-cream ✓, pure-white gone ✓, intensity light 0.02→dark 0.012 (softer); dock hard-30%30% gone ✓, 18%-mix gone ✓; Card full hover=0.18/active=0.26; -webkit-backdrop-filter in dist=true; status PASS exit 0.",
+    "siblingGatesStillGreen": "proof:glass-material-unified GREEN after the cohort re-baseline (hover=0.1 active=0.16, warm-cream confirmed, all W09 asserts intact); proof:glass-material-sota GREEN; proof:theme GREEN; proof:components-css GREEN (post-build); proof:animation-coherence GREEN; proof:shadow-contract GREEN; proof:gate-script-parity GREEN; typecheck + build GREEN."
+  },
+  "redWitnesses": [
+    {
+      "id": "RED-1",
+      "claim": "the .glass-material::before is GEOMETRICALLY a whole-surface disc — an unbounded 'circle at X Y, … transparent 55%' (mask to 75%) that fills a ~80–110px MetricCell tile; no --glass-specular-size token in src/",
+      "confirmedAtHead": true,
+      "codeEvidence": "glass.css:118-133 unbounded circle reaching 55%/75% of the half-diagonal; grep 'glass-specular-size' src/ = NONE",
+      "disposition": "GREEN — re-authored to 'circle var(--glass-specular-size,36%) at X Y, hsl(40 35% 92% / 0.5) 0%, /0 70%, transparent 100%' (falloff well INSIDE the plate); the mask narrowed to the gleam (black 0%, black 60%, transparent 100%) at the same size; --glass-specular-size: 36% minted in tokens.css §8 (the single overridable bound)."
+    },
+    {
+      "id": "RED-2",
+      "claim": "mix-blend-mode: screen lifts the warm-cream core toward white over a mid-luminance backdrop — the literal muddy/washed-out tell",
+      "confirmedAtHead": true,
+      "codeEvidence": "glass.css:134 mix-blend-mode: screen",
+      "disposition": "GREEN — mix-blend-mode: plus-lighter (additive, HDR-clamped, Safari 16.4+, does NOT over-white); a non-supporting engine degrades to a plain low-alpha warm overlay (the gleam composes normally — no screen fallback). Confirmed in dist/styles/glass.css: 3× plus-lighter, 0× screen."
+    },
+    {
+      "id": "RED-3",
+      "claim": "the bloom WAKES ON HOVER on every glass surface — cohort hover 0.22 / active 0.32 (dark 0.18/0.26); the Card specular=\"full\" override makes it WORSE (rest 0.08 / hover 0.45 / active 0.6, a near-opaque whole-tile white screen)",
+      "confirmedAtHead": true,
+      "codeEvidence": "tokens.css:1826-1827 hover 0.22 active 0.32; :1833-1834 dark 0.18/0.26; Card.vue:94-96 full 0.08/0.45/0.6",
+      "disposition": "GREEN — cohort hover→0.10 / active→0.16 (dark hover→0.08 / active→0.12, rest stays 0); the bounded gleam means even at the lifted rung the hover is a whisper edge glint, not a whole-tile bloom; Card specular=\"full\" re-derived DOWN to 0.04/0.18/0.26 (a contained gleam over the bounded geometry, not a screen). The 'subtle' arm rides the lowered cohort; an 'off' content card carries no track class (no pointer glint) — the content-tile-no-glint default preserved."
+    },
+    {
+      "id": "RED-4",
+      "claim": "the backdrop saturate is over-juiced — --glass-blur-floating saturate(1.4) / --glass-blur-overlay saturate(1.5); garish over a colored substrate",
+      "confirmedAtHead": true,
+      "codeEvidence": "tokens.css:669-670 saturate(1.4)/saturate(1.5)",
+      "disposition": "GREEN — saturate(1.18)/saturate(1.2) (the gentle ~1.1–1.2× light-concentration real liquid glass does; wash/quiet/resting already 1.05, untouched)."
+    },
+    {
+      "id": "RED-5",
+      "claim": "the FIXED-ANCHOR curvature overlay is the #1 rest-bloom culprit — pure-white hsl(0 0% 100% / 0.06) ellipse at 50% -20% reaching transparent 60%, a broad top-centre wash; the .dark arm is BYTE-IDENTICAL (reads HARDER over the deep canvas)",
+      "confirmedAtHead": true,
+      "codeEvidence": "tokens.css:789-793 pure-white curvature; :794-798 byte-identical -overlay-dark; :1698-1702 byte-identical .dark re-declaration",
+      "disposition": "GREEN — re-derived onto warm-cream hsl(40 30% 96% / var(--glass-curvature-intensity)) with intensity 0.06→0.02 (a third) and the ellipse tightened to transparent 38% (an edge sheen, not a central wash); the strength routed through the SINGLE overridable --glass-curvature-intensity knob; the -overlay-dark alias now = var(--glass-curvature-overlay) (same warm-cream recipe); the .dark arm lowers --glass-curvature-intensity to 0.012 (genuinely softer, no byte-identical re-declaration). instrument-chassis.css consumes the tokens unchanged (token-first flow-through)."
+    },
+    {
+      "id": "RED-6",
+      "claim": "the dock primary 'ellipse at 30% 30%' corner radials bloom the most prominent dock control — the hover radial (18%) AND the rest phase-halo ::before (18%, opacity 1, fires for the whole speedtest run)",
+      "confirmedAtHead": true,
+      "codeEvidence": "dock-controls.css:303-311 hover radial 30% 30% 18% transparent 70%; :324-343 rest phase-halo 30% 30% 18% opacity:1 transparent 70%",
+      "disposition": "GREEN — both demoted on the same axis: 18%→8%, the hard 30% 30% corner shifted to a softer 40% 25% top-biased ellipse, the falloff tightened transparent 70%→55%, and the rest phase-halo opacity 1→0.5 (a subtle surface lift, not a persistent corner bloom). The disco hover identity survives; the egregious corner glow does not."
+    }
+  ],
+  "safariDiscipline": {
+    "blend": "plus-lighter over screen/overlay (Safari quirks); un-blended low-alpha warm overlay is the no-workaround fallback floor",
+    "intensityDriver": "layer opacity, NEVER a per-stop hsl() alpha (the Chromium @property-in-hsl-alpha=0 trap) — gate-locked",
+    "maskFallback": "mask-image radial bounded to the gleam; inset:0 + border-radius:inherit + the in-paint /0 falloff bound it even on a mask-ignoring engine",
+    "webkitPrefix": "-webkit-backdrop-filter present in dist/styles/glass.css (1×) + dist/glass-ui.css (1×) — autoprefixer emit from the single-source unprefixed authorship; gate-locked"
+  },
+  "liveArmHandoff": "The PAINTED-pixel truth is the W00 π live audit (orchestrator-owned via chrome-devtools-mcp @ localhost:5173) — NOT this SOURCE gate alone (the cardinal lesson: W09 shipped headless-green over a still-blooming surface, which is why D19 re-opened it). See W52-DELTA.md + the orchestrator's liveArmNotes for the exact magnitudes to verify/tune live (the gleam size, the cohort whisper, the curvature/dock-corner softening, the Safari plus-lighter parity)."
+}

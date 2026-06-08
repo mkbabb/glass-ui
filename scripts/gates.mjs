@@ -501,6 +501,12 @@ export const GATES = [
         note: "AX.W00 — the SHARED substrate-paints-non-black readPixels primitive (W07 aurora + W08 blob compose it). The behavioral truth lives in the tests-visual π workspace spec (substrate-paints-color.spec.ts): renders aurora DEFAULT + each preset at t=1 (maxChannel>0 interior floor) + blob BLOB_CONFIG_DEFAULTS over N frames (LOOSE non-flood opaque-fraction band 0.10–0.70). FAIL-CLOSED when the π workspace is installed; befitting-silent SKIP only on a zero-dep runner (device absent). Bite: black the aurora clearColor → RED (maxChannel==0); flood the blob → RED.",
     },
     {
+        id: "proof:liquid-glass-material",
+        cmd: "proof:liquid-glass-material",
+        tags: ["local", "ci"],
+        note: "AX.W52 D19 — the liquid-glass material-CORE gate (the bloom-kill + edge-strengthening arm). Device-free SOURCE + token-resolution arm (the PAINTED render is the W00 π live audit, NEVER a text gate alone — the cardinal lesson: W09 shipped headless-green over a still-blooming surface). Asserts: the `.glass-material::before` is a BOUNDED `circle var(--glass-specular-size,36%)` gleam (NOT the unbounded full-plate disc) on BOTH background + mask; the blend is `plus-lighter` (NOT `screen`); the intensity drives layer `opacity` (NOT a per-stop hsl() alpha — the Chromium `@property`-in-hsl-alpha=0 trap); `--glass-specular-size` minted; the cohort at/below the W52 ceiling (light hover ≤ 0.10 / active ≤ 0.16, dark ≤ 0.08/0.12, rest 0); the floating/overlay saturate ≤ 1.2; the curvature overlay warm-cream-on-`--glass-curvature-intensity` (NOT pure-white) with a SOFTER dark arm (lower intensity, not byte-identical); the dock `ellipse at 30% 30%` 18% corner radials demoted; the Card specular=\"full\" override re-derived down (hover ≤ 0.18 / active ≤ 0.26); and `-webkit-backdrop-filter` present in the built dist/glass-ui.css (the Safari prefix; device-absent SKIP for that clause only on a pre-build tree). Bite: re-introduce `circle at X Y, … transparent 55%` or `mix-blend-mode: screen` on the ::before → RED; bump the cohort/saturate above ceiling → RED; re-pure-white the curvature or strip the dist prefix → RED.",
+    },
+    {
         id: "proof:dock-animation-live",
         cmd: "proof:dock-animation-live",
         tags: ["local", "ci"],

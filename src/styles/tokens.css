@@ -666,8 +666,12 @@
        `--glass-blur-quiet: none`, so this whole chain drops with the blur. */
     --glass-blur-quiet:    blur(var(--glass-blur-quiet-radius)) saturate(1.05) brightness(1.02);
     --glass-blur-resting:  blur(var(--glass-blur-resting-radius)) saturate(1.05);
-    --glass-blur-floating: blur(var(--glass-blur-floating-radius)) saturate(1.4);
-    --glass-blur-overlay:  blur(var(--glass-blur-overlay-radius)) saturate(1.5);
+    /* AX.W52 D19 — the floating/overlay backdrop saturate tamed from 1.4/1.5 to a
+       gentle ~1.18/1.2 (real liquid glass concentrates light ~1.1–1.2×; the prior
+       1.4–1.5× over-juiced the bleed-through into a garish smear over a colored
+       substrate). wash/quiet/resting already sit at 1.05 — untouched. */
+    --glass-blur-floating: blur(var(--glass-blur-floating-radius)) saturate(1.18);
+    --glass-blur-overlay:  blur(var(--glass-blur-overlay-radius)) saturate(1.2);
     /* Dock blur composes blur() only — no saturate. */
     --glass-blur-dock:     blur(var(--glass-blur-dock-radius));
 
@@ -783,19 +787,36 @@
         inset 0.75px 0 0 0 var(--glass-fringe-warm),
         inset -0.75px 0 0 0 var(--glass-fringe-cool);
 
+    /* AX.W52 D19 — the moving-specular gleam radius (glass.css `.glass-material::
+       before`). The ONE knob that BOUNDS the gleam geometry as a percentage of the
+       plate so it can NEVER again become a whole-surface disc (the prior implicit
+       `circle at …` ran its stops to 55–75% of the half-diagonal — a wash on a
+       small tile). 36% reads as a tracked edge glint. Override on `:root` to retune
+       library-wide; a per-surface override clips the gleam tighter/wider. */
+    --glass-specular-size: 36%;
+
     /* Chassis curvature illusion — a subtle radial gradient at the chassis
        top centre that lifts the surface without committing to literal 3D.
-       Composed into <InstrumentChassis>'s background stack. */
+       Composed into <InstrumentChassis>'s background stack. AX.W52 D19 — the
+       prior pure-white `hsl(0 0% 100% / 0.06)` reaching `transparent 60%` was a
+       broad top-centre WASH (the #1 fixed-anchor rest-bloom culprit). Re-derived
+       onto the warm-cream house identity (`hsl(40 30% 96%)`, L < 100% so the warm
+       hue survives — mirroring the moving gleam), the alpha routed through the
+       SINGLE overridable `--glass-curvature-intensity` knob (0.02 default, a third
+       of the old 0.06), and the ellipse tightened to `transparent 38%` so it reads
+       as a thin top-edge sheen, not a central wash. */
+    --glass-curvature-intensity: 0.02;
     --glass-curvature-overlay: radial-gradient(
         ellipse at 50% -20%,
-        hsl(0 0% 100% / 0.06),
-        transparent 60%
+        hsl(40 30% 96% / var(--glass-curvature-intensity)),
+        transparent 38%
     );
-    --glass-curvature-overlay-dark: radial-gradient(
-        ellipse at 50% -20%,
-        hsl(0 0% 100% / 0.06),
-        transparent 60%
-    );
+    /* The light-arm dark alias kept on the same warm-cream + token recipe so a
+       non-`.dark` consumer reading `…-overlay-dark` still resolves a softened
+       sheen; the `.dark` block below lowers `--glass-curvature-intensity` so the
+       deep-canvas arm is genuinely softer (the prior byte-identical dark arm read
+       HARDER over the dark canvas). */
+    --glass-curvature-overlay-dark: var(--glass-curvature-overlay);
 
     /* Chart palette aliases — speedtest et al. read these for phase tinting.
        Defaults map to viz-basis hues; consumers can override per app. */
@@ -1695,11 +1716,13 @@
        resolves the dark card). */
     --glass-fringe-warm: oklch(0.78 0.07 40 / 0.18);
     --glass-fringe-cool: oklch(0.74 0.06 230 / 0.14);
-    --glass-curvature-overlay: radial-gradient(
-        ellipse at 50% -20%,
-        hsl(0 0% 100% / 0.06),
-        transparent 60%
-    );
+    /* AX.W52 D19 — the curvature sheen is genuinely SOFTER on the deep canvas (the
+       prior dark arm re-declared the overlay BYTE-IDENTICAL to light, so it read
+       HARDER over the dark substrate — an unsoftened-dark defect). The `:root`
+       `--glass-curvature-overlay` already reads `var(--glass-curvature-intensity)`,
+       so lowering just the intensity here re-resolves the SAME warm-cream recipe at
+       a softer alpha — no byte-identical re-declaration. */
+    --glass-curvature-intensity: 0.012;
 
     /* Gold — boosted for dark (oklch; AV.W16 TW2) */
     --gold: oklch(0.784 0.143 86.0);
@@ -1812,24 +1835,25 @@
    arm) retunes ON THE CASCADE — never a re-buried literal. Override on `:root`
    to retune library-wide; the cartoon-shadow override contract is the precedent.
 
-   Re-baselined to a SUBTLE ladder (≈ half the retired `0.35/0.6/0.85`):
-     • rest   0    — static, unwired surfaces are CLEAN; the catch-light wakes
-                     only on hover/active or on a pointer-wired surface. This
-                     aligns the painted rest behaviour with the @property
-                     `--specular-intensity { initial-value: 0 }` dormancy the
-                     prior unconditional `0.35` floor defeated.
-     • hover  0.22 — a subtle warm-cream lens, not a flash.
-     • active 0.32 — the press whisper; ≈ 0.22α × the warm-cream core, a lens
-                     not the prior ≈ 0.47 pure-white-screen hotspot. */
+   Re-baselined AGAIN at AX.W52 D19 — with the central screen-disc replaced by a
+   BOUNDED plus-lighter edge gleam (glass.css), the gleam is a whisper at every
+   rung, so the cohort drops further (the W09 0.22/0.32 ceiling still lifted the
+   whole-tile disc on hover):
+     • rest   0    — static, unwired surfaces are CLEAN; the gleam wakes only on
+                     hover/active or on a pointer-wired surface. Aligns the painted
+                     rest with the @property `--specular-intensity { initial-value:
+                     0 }` dormancy.
+     • hover  0.10 — a whisper edge gleam, not a bloom.
+     • active 0.16 — the press whisper. */
 :root {
     --glass-specular-intensity-rest: 0;
-    --glass-specular-intensity-hover: 0.22;
-    --glass-specular-intensity-active: 0.32;
+    --glass-specular-intensity-hover: 0.1;
+    --glass-specular-intensity-active: 0.16;
 }
 
-/* Over the deep canvas the `screen` blend lifts harder, so the dark arm runs a
-   touch softer on the interaction rungs (rest already 0). */
+/* Over the deep canvas `plus-lighter` still lifts, so the dark arm runs a touch
+   softer on the interaction rungs (rest already 0). */
 .dark {
-    --glass-specular-intensity-hover: 0.18;
-    --glass-specular-intensity-active: 0.26;
+    --glass-specular-intensity-hover: 0.08;
+    --glass-specular-intensity-active: 0.12;
 }
