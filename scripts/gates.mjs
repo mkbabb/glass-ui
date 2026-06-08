@@ -285,6 +285,12 @@ export const GATES = [
         note: "AW.W7a + AX.W11 — the WGSL color/noise twin (OETF_WGSL + OKLCH_MATRICES_WGSL + FBM_ROT_WGSL + PALETTE_RAMP_WGSL) matches its GLSL twin to 1e-6 via the hand-transcribed WGSL→TS ports asserted against the EXISTING GLSL oracle (metaball-color.glsl-port.ts; never a new oracle) over the asymmetric witness #3a7bd5 AND the samplePaletteRamp across huePath modes (flat OKLab-rect + the OKLCh hue-arc) at t∈{0.25,0.5,0.75}, AND aurora.wgsl.ts SPLICES the shared chunk's WGSL exports (incl. PALETTE_RAMP_WGSL + samplePaletteRamp + the huePath:f32 uniform) rather than re-authoring/flat-lerping the ramp. Bite: perturb a WGSL matrix/OETF constant → the 1e-6 equivalence REDs; re-author the WGSL OETF inline OR revert samplePalette to the flat oklabToLinearSrgb(mix(labA,labB,f)) → the splice arm REDs",
     },
     {
+        id: "proof:aurora-noise-hash-equivalence",
+        cmd: "proof:aurora-noise-hash-equivalence",
+        tags: ["local", "ci"],
+        note: "AX.W12 — the NET-NEW painterly noise basis (Jarzynski PCG2D integer-bit hash + 2D simplex gradient noise) lives ONCE in procedural-color.glsl.ts as a GLSL twin (PCG_HASH_GLSL) + WGSL twin (PCG_HASH_WGSL); the hand-transcribed TS port (noise-hash.glsl-port.ts — certified bit-identical integer pipeline: GLSL uint/WGSL u32 wrap mod 2^32, floatBitsToUint/bitcast reinterpret the same IEEE-754 bits) matches frozen 1e-6 oracle witnesses, AND BOTH aurora.frag.ts + aurora.wgsl.ts SPLICE the chunk twin (import + ${...} interpolation) rather than re-authoring the hash inline. Bite: perturb a PCG constant (1664525u/1013904223u) or the simplex F2/G2 → the 1e-6 equivalence REDs; re-author the pcg2d/gnoise body inline in either shader → the splice/no-inline arm REDs",
+    },
+    {
         id: "proof:aurora-backend-fallback",
         cmd: "proof:aurora-backend-fallback",
         tags: ["local", "ci"],
