@@ -43,7 +43,22 @@ run the live demo"), so the two-clock claim is source-grounded and MUST be empir
 against `eaba94f` before any edit. Record the confirmation in §Archaeology (the AW dock-misdiagnosis
 analogue — §4 note 11: a from-hypothesis fix without live re-diagnosis is the cardinal AW failure).
 
-**Status** — SPEC (this doc). DEV-only; writes no `src` from this session.
+**Status** — DEV-COMPLETE (AX.W02 implement session). The DI seam
+(`dockMorphContext.ts` — `createOptionalContext<DockMorphContext>` +
+`useDockMorphOrchestrator`), the `GlassDock` provide, the `DockLayerGroup`
+inject-and-defer (the nested second engine EXCISED), the `dock.css` vocabulary
+unification (`.is-active`/`.is-leaving`, greppable-sync comment deleted) +
+`--dock-stagger-step` token, the born-RED gate (`proof:dock-orchestrator-single`)
++ the extended `proof:dock-vocabulary` CSS arm + the pure-detector/runtime vitest,
+and the bi-axial nested + vertical-overflow demo showcase all LAND. Headless
+self-gated GREEN (typecheck, build, structure arm, vocabulary CSS arm, vt-names,
+gate-script-parity, no-test-in-src, the 15-test dock detect+runtime spec). The
+live π-lane runtime arm + the visual-truth BEFORE/AFTER/DELTA capture are the
+orchestrator's to run on the real device (see `audit/W02-DELTA.md` §Live-verify).
+Three out-of-bounds blockers recorded (see `audit/W02-orchestrator-fold.json`):
+the `proof:dock-opacity-lockstep` regex follows the vocabulary rename (one token);
+the `proof:dock-vocabulary` README arm + `public-surface.spec.ts` dock surface are
+BOTH pre-existing-RED at base (W01 conditions, not W02 regressions).
 
 ---
 
