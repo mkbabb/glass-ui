@@ -22,7 +22,7 @@ const DOCK_CSS_GREEN = `
 @layer components {
     .glass-dock.dock-overflow-wrap {
         white-space: normal;
-        max-inline-size: min(max-content, var(--dock-max-inline-size));
+        max-inline-size: var(--dock-max-inline-size);
         border-radius: calc(
             var(--radius-pill) +
                 (var(--dock-card-radius) - var(--radius-pill)) *
@@ -135,6 +135,23 @@ describe("detectWrapSource()", () => {
         expect(facts.wrapLayerHasMinHeightTransition).toBe(true);
         expect(facts.wrapGuardHorizontalOnly).toBe(false);
         expect(facts.falseWrapClaimInReadme).toBe(true);
+    });
+
+    it("BITES on the INVALID min(max-content, cap) cap regression (the integration bug)", () => {
+        // The lane first shipped `max-inline-size: min(max-content, var(--dock-max-inline-size))`,
+        // which is INVALID CSS — math functions reject the `max-content` intrinsic
+        // keyword, so the property computes to its initial `none` and the cap silently
+        // drops (live rowCount stays 1). The detector must NOT treat that as a valid cap.
+        const src = greenSrc();
+        src.dockCss = DOCK_CSS_GREEN.replace(
+            "max-inline-size: var(--dock-max-inline-size);",
+            "max-inline-size: min(max-content, var(--dock-max-inline-size));",
+        );
+        const { facts, violations } = detectWrapSource(src);
+        expect(facts.wrapRootHasMaxContentCap).toBe(false);
+        expect(violations.some((v) => v.includes("INVALID") && v.includes("min(max-content"))).toBe(
+            true,
+        );
     });
 
     it("does NOT false-RED on a deletion-doc comment (the comment-strip seam)", () => {

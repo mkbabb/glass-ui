@@ -119,12 +119,26 @@ export function detectWrapSource(src) {
         );
     }
     const wrapRootRule = sliceRule(dockCss, ".glass-dock.dock-overflow-wrap {");
+    // The cap is the VALID idiom: the dock base shrink-wraps to content, and the
+    // wrap recipe caps that intrinsic width at `max-inline-size: var(--dock-max-inline-size)`.
+    // The `min(max-content, …)` form is INVALID CSS (math functions reject the
+    // `max-content` intrinsic keyword → invalid-at-computed-value → the property
+    // computes to its initial `none` and the cap silently drops, so the over-cap row
+    // never wraps). The check asserts the valid plain cap AND that no `min(max-content`
+    // regression sneaks back in.
+    const wrapHasInvalidMinMaxContent =
+        wrapRootRule != null && /max-inline-size:\s*min\(\s*max-content/.test(wrapRootRule);
     facts.wrapRootHasMaxContentCap =
         wrapRootRule != null &&
-        /max-inline-size:\s*min\(\s*max-content\s*,\s*var\(--dock-max-inline-size\)/.test(wrapRootRule);
-    if (!facts.wrapRootHasMaxContentCap) {
+        !wrapHasInvalidMinMaxContent &&
+        /max-inline-size:\s*var\(--dock-max-inline-size\)/.test(wrapRootRule);
+    if (wrapHasInvalidMinMaxContent) {
         violations.push(
-            "the `.dock-overflow-wrap` root does not cap inline-size at `min(max-content, var(--dock-max-inline-size))` — the over-cap reflow trigger is missing",
+            "the `.dock-overflow-wrap` root caps inline-size with the INVALID `min(max-content, var(--dock-max-inline-size))` — math functions reject the `max-content` intrinsic keyword, so the property computes to `none` and the cap silently drops (the over-cap row never wraps); use the plain `max-inline-size: var(--dock-max-inline-size)` over the base shrink-wrap",
+        );
+    } else if (!facts.wrapRootHasMaxContentCap) {
+        violations.push(
+            "the `.dock-overflow-wrap` root does not cap inline-size at `var(--dock-max-inline-size)` — the over-cap reflow trigger is missing",
         );
     }
 
@@ -348,7 +362,11 @@ function piWorkspacePresent(ROOT) {
 
 async function run() {
     const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
-    const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://localhost:5173";
+    // Default to 127.0.0.1 (NOT `localhost`) to match the canonical demo spawn
+    // (`npm run dev -- --host 127.0.0.1 --port 5173`) and the π playwright config.
+    // `localhost` can resolve to IPv6 `::1` on macOS, which vite does not bind, so
+    // the page loads degraded and the wrap-dock selector times out (a false RED).
+    const BASE_URL = process.env.GLASS_UI_DEMO_URL ?? "http://127.0.0.1:5173";
     const ARTIFACT = gateArtifactPath(
         "GLASS_UI_DOCK_WRAP_ARTIFACT",
         "AX-dock-wrap-content-driven",
@@ -442,7 +460,7 @@ function printSummary(sourceFacts, liveFacts, violations, ROOT, ARTIFACT) {
     console.log(`  [source] @media-640 governs wrap : ${sourceFacts.media640GovernsWrap} (must be false)`);
     console.log(`  [source] --dock-overflow-bp gone : ${!sourceFacts.overflowBpDefined}`);
     console.log(`  [source] always-on flex-wrap     : ${sourceFacts.wrapFullHasFlexWrap}`);
-    console.log(`  [source] min(max-content,cap)    : ${sourceFacts.wrapRootHasMaxContentCap}`);
+    console.log(`  [source] valid max-inline cap    : ${sourceFacts.wrapRootHasMaxContentCap}`);
     console.log(`  [source] radius unify (card-rad) : ${sourceFacts.wrapRadiusOnCardRadiusScalar} (2xl gone: ${!sourceFacts.wrapRootUsesRadius2xl})`);
     console.log(`  [source] --shadow-dock-wrap token: ${sourceFacts.shadowDockWrapTokenDefined}  shadow on scalar: ${sourceFacts.wrapShadowOnScalar}`);
     console.log(`  [source] horizontal-only guard   : ${sourceFacts.wrapGuardHorizontalOnly}`);

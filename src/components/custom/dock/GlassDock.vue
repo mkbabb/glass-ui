@@ -99,11 +99,11 @@ const props = withDefaults(
          *                the cap (the default; nothing clips or scrolls).
          *   `"wrap"`   — expanded content wraps to multiple rows via CONTENT-DRIVEN
          *                intrinsic flex-wrap (the `.dock-overflow-wrap` recipe). The
-         *                dock inline-size caps at `min(max-content,
-         *                --dock-max-inline-size)`, so the row reflows to N rows
-         *                EXACTLY when its intrinsic width exceeds the cap — at ANY
-         *                viewport width — and collapses to one row when it fits (no
-         *                viewport breakpoint). The wrapped multi-row silhouette lifts
+         *                dock shrink-wraps to content and caps that intrinsic width
+         *                at `max-inline-size: var(--dock-max-inline-size)`, so the row
+         *                reflows to N rows EXACTLY when its intrinsic width exceeds
+         *                the cap — at ANY viewport width — and collapses to one row
+         *                when it fits (no viewport breakpoint). The wrapped multi-row silhouette lifts
          *                onto the card/floating shadow tier as the dock expands.
          *                HORIZONTAL-ONLY: a vertical rail grows-to-fit + clamps via
          *                `--dock-max-block-size` (its own overflow story), so the

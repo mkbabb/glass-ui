@@ -378,18 +378,33 @@
        below interpolate composited. Under PRM the spring's `respectReducedMotion`
        settles instantly (the scalar jumps 0→1 in one frame → the chrome snaps). */
 
-    /* `--dock-expand-t` — the directional expanded-ness. At REST the morph scalar
-       is unset, so the fallback pins the class's resting look (expanded → 1,
-       collapsed → 0). DURING a morph `--dock-morph-t` (per-swap progress 0→1) is
-       set, and the class is ALREADY the END state, so the read resolves the
-       correct in-flight blend (collapse: 1→0 via `1 - t`; expand: 0→1 via `t`). */
+    /* `--dock-expand-t` — the directional expanded-ness. `--dock-morph-t` is a
+       REGISTERED `@property` (initial-value 0), so it is NEVER guaranteed-invalid:
+       `var(--dock-morph-t, 1)` reads 0 at REST (the fallback is DEAD), which would
+       resolve every expanded dock to expand-t 0 → the collapsed resting look (the
+       pill-radius + collapsed bg/border/padding regression). So the resting value is
+       stated STATICALLY per class, and ONLY while a morph is in flight
+       (`[data-morphing]` armed on the root by useLayerTransition, cleared on settle)
+       does expand-t track the live spring scalar. The class is ALREADY the END state
+       during the morph, so the read resolves the correct in-flight blend (collapse
+       1→0 via `1 - t`; expand 0→1 via `t`); on settle `[data-morphing]` clears and
+       expand-t snaps to the exact class endpoint. */
     .glass-dock:not(.vertical).expanded,
     .glass-dock:not(.vertical).always-expanded {
-        --dock-expand-t: var(--dock-morph-t, 1);
+        --dock-expand-t: 1;
     }
 
     .glass-dock:not(.vertical).collapsed {
-        --dock-expand-t: calc(1 - var(--dock-morph-t, 1));
+        --dock-expand-t: 0;
+    }
+
+    .glass-dock:not(.vertical).expanded[data-morphing],
+    .glass-dock:not(.vertical).always-expanded[data-morphing] {
+        --dock-expand-t: var(--dock-morph-t);
+    }
+
+    .glass-dock:not(.vertical).collapsed[data-morphing] {
+        --dock-expand-t: calc(1 - var(--dock-morph-t));
     }
 
     /* The morphing root chrome — background / border-color interpolate between the
@@ -1063,8 +1078,8 @@
        `--dock-max-block-size`, its own overflow story.)
 
        The reflow is INTRINSIC: `flex-wrap: wrap` is ALWAYS-ON (no viewport MQ),
-       and the dock inline-size is capped at `min(max-content, cap)` where the
-       cap is the canonical `--dock-max-inline-size` token (the SAME cap every
+       and the dock shrink-wraps to content with `max-inline-size` capping it at
+       the canonical `--dock-max-inline-size` token (the SAME cap every
        overflow strategy reads — `min(80vw, 64rem)` default, consumer-overridable
        per-instance). So the layer wraps to N rows EXACTLY when its intrinsic row
        exceeds the cap — at ANY viewport width — and collapses to one row when it
@@ -1072,11 +1087,16 @@
        DELETED (the inherited mobile-responsive debt, origin 078dd79). */
     .glass-dock.dock-overflow-wrap {
         white-space: normal;
-        /* The content-driven cap. `max-content` is the unwrapped single-row
-           intrinsic width; the cap floors it at `--dock-max-inline-size`. When
-           content fits under the cap → max-content wins → one row. When it
-           overflows → the cap wins → flex wraps. ONE token, no breakpoint. */
-        max-inline-size: min(max-content, var(--dock-max-inline-size));
+        /* The content-driven cap. The dock ALREADY shrink-wraps to its content's
+           intrinsic width (the base `.glass-dock` rule), so `max-inline-size` caps
+           that intrinsic width at `--dock-max-inline-size`: under the cap the
+           shrink-wrap wins → one row; over the cap the dock holds at the cap and the
+           inner `flex-wrap: wrap` row reflows to N rows. ONE token, no breakpoint.
+           (The `min(max-content, …)` form is INVALID CSS — the math functions reject
+           the `max-content` intrinsic keyword, computing the property to its initial
+           `none` and silently dropping the cap; intrinsic-shrink + this plain cap IS
+           the valid `min(max-content, cap)`.) */
+        max-inline-size: var(--dock-max-inline-size);
         padding: var(--dock-wrap-padding-block, var(--dock-padding-block, 0.375rem))
             var(--dock-wrap-padding-inline, 0.625rem);
 
@@ -1141,9 +1161,10 @@
     }
 
     /* Collapsed, a wrap dock is the single-row summary PILL. `white-space: nowrap`
-       keeps the summary on one line; the inline cap stays `min(max-content, cap)`
-       (inherited from the `.dock-overflow-wrap` rule above) so the collapsed box
-       still shrink-wraps to the small summary's max-content (NOT the full cap). The
+       keeps the summary on one line; the inline cap stays `max-inline-size:
+       var(--dock-max-inline-size)` (inherited from the `.dock-overflow-wrap` rule
+       above) so the collapsed box still shrink-wraps to the small summary's
+       max-content (NOT the full cap). The
        radius morph resolves to `--radius-pill` at collapsed (--dock-expand-t 0) and
        the box-shadow to the flat `--shadow-dock` glow (--dock-wrap-elev 0%). */
     .glass-dock.dock-overflow-wrap.collapsed {
@@ -1357,9 +1378,9 @@
        `flex-wrap: nowrap` + `max-width: none` above 640px, so the dock NEVER
        wrapped on a wide viewport even when its row overflowed (the 800px → 1861px
        viewport-bleed defect). The wrap is now CONTENT-driven: the always-on
-       `flex-wrap: wrap` + the `min(max-content, --dock-max-inline-size)` cap above
-       reflow to N rows at ANY width on the over-cap crossing — no viewport coupling,
-       no breakpoint. */
+       `flex-wrap: wrap` + the `max-inline-size: var(--dock-max-inline-size)` cap
+       above (over the base shrink-wrap) reflow to N rows at ANY width on the
+       over-cap crossing — no viewport coupling, no breakpoint. */
 
     /* O.W6 Lane D — Touch-target floor (speedtest AC.W6 F2.AA-03 / WCAG
        2.5.5). On coarse-pointer devices (touch), every dock-control's

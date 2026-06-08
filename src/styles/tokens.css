@@ -924,8 +924,9 @@
        token directly on a `.glass-dock` instance. User findings 1 + 5a. */
     /* AX.W04 — `--dock-max-inline-size` is the canonical inline cap EVERY overflow
        strategy reads: `overflow="scroll"` scrolls past it, and `overflow="wrap"`
-       wraps to N rows on the over-cap crossing (`min(max-content, cap)`). The
-       prior `--dock-overflow-bp: 640px` viewport-breakpoint token (the magic-640
+       wraps to N rows on the over-cap crossing (the dock shrink-wraps to content,
+       `max-inline-size` caps that intrinsic width at this token). The prior
+       `--dock-overflow-bp: 640px` viewport-breakpoint token (the magic-640
        snap-back) is DELETED — the wrap is content-driven, not viewport-coupled, so
        there is no breakpoint threshold to name. */
     --dock-max-inline-size: min(80vw, 64rem);

@@ -271,10 +271,11 @@ substrate-with-consumer precept).
    `--spring-dock` token; a retune touches BOTH `DOCK_SPRING` and the
    `regen-spring-tokens.mjs` PRESETS row, then re-runs the generator
    (`proof:spring-tokens-synced` enforces no drift).
-6. **For multi-row controls, use `overflow="wrap"`** — the dock caps its inline size
-   at `min(max-content, --dock-max-inline-size)` and the row reflows to N rows by
-   INTRINSIC flex-wrap on the over-cap crossing (at any viewport width, no
-   breakpoint). The wrapped multi-row silhouette lifts onto the card/floating shadow
+6. **For multi-row controls, use `overflow="wrap"`** — the dock shrink-wraps to
+   content and caps its inline size at `max-inline-size: var(--dock-max-inline-size)`,
+   and the row reflows to N rows by INTRINSIC flex-wrap on the over-cap crossing (at
+   any viewport width, no breakpoint). The wrapped multi-row silhouette lifts onto
+   the card/floating shadow
    tier as the dock expands (the radius + shadow ride the dock morph scalar in
    lockstep). Horizontal-only.
 7. **Vertical docks are tool palettes** — they are `alwaysExpanded`, render a single
@@ -293,6 +294,6 @@ substrate-with-consumer precept).
 | `proof:dock-motion-parity` | The VT and FLIP paths share one timing source. |
 | `proof:spring-tokens-synced` | `--spring-dock` equals the generator output (the JS driver + the CSS token cannot drift). |
 | `proof:dock-layering-polish` | Directional expand/collapse asymmetry, a spring-keyed (not fixed-ms) item cascade, and a hover-scale on the dock spring — all PRM-suppressed. |
-| `proof:dock-wrap-content-driven` | `overflow="wrap"` reflows by INTRINSIC content-driven flex-wrap (`min(max-content, --dock-max-inline-size)` cap, no viewport `@media`); the multi-row card lifts onto the card-tier `--shadow-dock-wrap` shadow + the `--dock-card-radius` corner, both tracking `--dock-morph-t` in lockstep; horizontal-only; the `--dock-overflow-bp` token is gone. |
+| `proof:dock-wrap-content-driven` | `overflow="wrap"` reflows by INTRINSIC content-driven flex-wrap (shrink-wrap + `max-inline-size: var(--dock-max-inline-size)` cap, no viewport `@media`); the multi-row card lifts onto the card-tier `--shadow-dock-wrap` shadow + the `--dock-card-radius` corner, both tracking `--dock-morph-t` in lockstep; horizontal-only; the `--dock-overflow-bp` token is gone. |
 | `proof:dock-a11y-contract` | The switcher-rail roles. |
 | `proof:offscreen-pause` | The dock's motion honors the WebGL-substrate park. |

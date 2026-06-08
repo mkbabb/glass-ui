@@ -256,8 +256,9 @@ function togglePlay() {
             <p class="text-xs text-muted-foreground">
                 <code class="rounded bg-muted px-1">overflow="wrap"</code> reflows the row to
                 multiple rows by INTRINSIC flex-wrap whenever the content's natural width exceeds
-                the dock's inline cap (<code class="rounded bg-muted px-1">min(max-content,
-                --dock-max-inline-size)</code>) — at ANY viewport width, no breakpoint. The wrapped
+                the dock's inline cap (the dock shrink-wraps to content and
+                <code class="rounded bg-muted px-1">max-inline-size: var(--dock-max-inline-size)</code>
+                caps it) — at ANY viewport width, no breakpoint. The wrapped
                 multi-row silhouette lifts onto the card/floating shadow tier and a finite
                 <code class="rounded bg-muted px-1">--dock-card-radius</code> corner as it expands.
             </p>
