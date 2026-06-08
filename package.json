@@ -79,6 +79,9 @@
             "status-dot": [
                 "dist/status-dot.d.ts"
             ],
+            "deck-progress": [
+                "dist/deck-progress.d.ts"
+            ],
             "pulse": [
                 "dist/pulse.d.ts"
             ],
@@ -353,6 +356,10 @@
         "./status-dot": {
             "types": "./dist/status-dot.d.ts",
             "import": "./dist/status-dot.js"
+        },
+        "./deck-progress": {
+            "types": "./dist/deck-progress.d.ts",
+            "import": "./dist/deck-progress.js"
         },
         "./pulse": {
             "types": "./dist/pulse.d.ts",
@@ -667,6 +674,7 @@
         "proof:design-md-current": "node scripts/proof-design-md-current.mjs",
         "proof:naming-consistency": "node scripts/proof-naming-consistency.mjs",
         "proof:substrate-paints-color": "node scripts/proof-substrate-paints-color.mjs",
+        "proof:deck-progress-rail": "node scripts/proof-deck-progress-rail.mjs",
         "proof:blob-render": "node scripts/proof-blob-render.mjs",
         "proof:blob-integration": "node scripts/proof-blob-integration.mjs",
         "proof:gate-script-parity": "node scripts/proof-gate-script-parity.mjs",

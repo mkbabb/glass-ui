@@ -1,0 +1,125 @@
+{
+  "wave": "AX.W24",
+  "title": "Deck-progress LIBRARY-side — export the /deck-progress subpath + fix the rail recipe (cascade + glow) + register/upgrade the gate",
+  "status": "complete",
+  "band": "I · DECK",
+  "severity": "major",
+  "dependsOn": ["AX.W00"],
+  "baseSha": "a125d9a6434c790ab929722c113cda2f0a5f85cf",
+  "librarySideOnly": true,
+  "scopeNote": "§4 note 18 binding — W24 ships the LIBRARY surface only (the subpath + the correct recipe + the registered/upgraded gate). The slides .deck-progress -> <DeckProgress> consumer PORT, the --progress-rail-* override IN slides, and the consumer-#2 clearance ALL ride W32. The /deck engine (useDeck/useDeckNav/DeckPager) stays RATIFIED slides-local (§4 note 6 / F4) — NOT lifted; the reserved-guard gate clauses keep /deck un-squatted.",
+  "redWitnessesReprovenAtHead": {
+    "note": "All four re-proven LIVE against HEAD a125d9a before acting (the §0 cardinal re-verify, not trusted from the audit).",
+    "witness1_noSubpath": {
+      "claim": "No /deck-progress subpath — a consumer importing DeckProgress on the minimal path must drag the root barrel.",
+      "reproven": "ls src/subpaths/deck-progress.ts -> 'No such file'; grep -c deck-progress package.json -> 0; node -e import('@mkbabb/glass-ui/deck-progress') -> would 404 (no exports entry, no dist chunk).",
+      "verdict": "RED at HEAD — confirmed."
+    },
+    "witness2_cascadeInversion": {
+      "claim": "The --progress-rail-fill/--progress-rail-track override is a SILENT NO-OP — the @layer-utilities-over-@layer-components inversion.",
+      "reproven": "ProgressDefault.vue:26 baked `bg-secondary` + :32 baked `bg-primary` (the @layer utilities colour). The .glass-progress-rail recipe sat in @layer components (glass.css:31 layer wrapper). Live render of <DeckProgress :value=50> under :root{--progress-rail-fill:rgb(0,200,0)} read indicator computed background-color = rgb(28,25,23) (the --primary near-black, green channel 25) — the override was IGNORED.",
+      "verdict": "RED at HEAD — confirmed by computed-style readback."
+    },
+    "witness3_clippedGlow": {
+      "claim": "The leading-edge glow is CLIPPED — the OUTSET rightward shadow is eaten by the ProgressRoot overflow-hidden clip.",
+      "reproven": "glass.css:600-602 was `box-shadow: var(--progress-rail-glow-x,4px) 0 var(--progress-rail-glow-blur,8px) <fill@55%>` — an OUTSET shadow extending RIGHTWARD past the fill boundary into the `overflow-hidden rounded-pill` ProgressRoot (ProgressDefault.vue:26). The rightward extent is in the hidden-overflow region -> eaten.",
+      "verdict": "RED at HEAD — the rightward outset shadow is structurally clipped."
+    },
+    "witness4_unregisteredStringScan": {
+      "claim": "proof:deck-progress-rail is NOT REGISTERED + is a string-scan (never a render).",
+      "reproven": "grep -c '\"proof:deck-progress-rail\"' package.json -> 0; `npm run proof:deck-progress-rail` -> 'Missing script'. The script existed but only STRING-asserted the recipe reads --progress-rail-* + DeckProgress composes <Progress> — it never RENDERED, so it was GREEN while witnesses 2+3 paint broken (the headless-green/visually-broken gap). It was also listed in the gate-script-parity KNOWN_ORPHANS allowlist ('AW.W16 — owner-wave registers/removes').",
+      "verdict": "RED at HEAD on BOTH axes — unregistered AND string-scan over a broken-paint contract."
+    }
+  },
+  "findingsDisposition": {
+    "F0_subpathEnablement": {
+      "status": "DONE",
+      "fix": "src/subpaths/deck-progress.ts mirror (`export * from \"../components/custom/deck-progress\"`) — the AV.W5.A batch pattern, auto-resolved by the vite.library.ts src/subpaths/*.ts glob. package.json gains the ./deck-progress contract-v2 exports block ({types,import}) + the typesVersions['*']['deck-progress'] entry, mirroring ./status-dot. DeckProgress STAYS on the root barrel (additive, NOT a demote — no src/index.ts edit).",
+      "evidence": "dist/deck-progress.js (83B) + dist/deck-progress.d.ts (`export * from \"./components/custom/deck-progress\"`, flat) EMIT; node -e import('@mkbabb/glass-ui/deck-progress') RESOLVES (exports: ['DeckProgress']); verify-export-types PASS; proof:resolution PASS."
+    },
+    "F1_cascadeLayerInversion": {
+      "status": "DONE — token-read-at-source (the audit's recommended option b, the one-path root cause)",
+      "fix": "ProgressDefault.vue reads --progress-track (root) / --progress-fill (indicator) at SOURCE — `bg-[var(--progress-track,var(--secondary))]` + `[background:var(--progress-fill,var(--primary))]`, the exact gradient-variant idiom — and DROPS the bg-secondary/bg-primary utilities. The .glass-progress-rail recipe FEEDS those tokens (--progress-track/--progress-fill from --progress-rail-track/--progress-rail-fill); the --progress-fill set on the rail root inherits to the indicator child. Now the default variant is token-retintable for EVERY consumer (closing the latent 'default is the only un-retintable variant' defect), NOT just the rail.",
+      "rejectedAlternative": "Re-authoring .glass-progress-rail in @layer utilities purely to out-rank bg-primary on source order — papers the symptom, leaves the default variant un-retintable for every OTHER consumer. NOT chosen for colour.",
+      "evidence": "Live render under :root{--progress-rail-fill:rgb(0,200,0)}: indicator computed background-color = rgb(0,200,0) (override WINS; green=200 dominant). Bite-proven: reverting ONLY the ProgressDefault token-read (re-add bg-primary) -> render REDS (green channel 25, override lost) — the render gate catches the cascade-layer class, not a string."
+    },
+    "F1b_geometryCascade": {
+      "status": "DONE — DIVERGENCE/EXTENSION (the render gate surfaced it; in the F1 gestalt)",
+      "discovery": "The render readback the upgraded gate now performs surfaced that the cascade inversion ALSO clobbered the GEOMETRY: the recipe's `height: var(--progress-rail-h,3px)` (and zero radius) in @layer components lost to the variant's `h-4`/`rounded-pill` @layer utilities, so the rail painted as a 16px bar (computed height 16px), NOT the hairline the slice's own close criterion demands ('a hairline sliver, NOT a 16px bar'). The string-scan never saw this; the original AW.W16 recipe shipped a 16px rail GREEN.",
+      "fix": "Re-authored .glass-progress-rail as a Tailwind `@utility glass-progress-rail` (lands in @layer utilities — the idiomatic restyle-class idiom, cf. btn-audacious/cartoon-surface). The hairline geometry is scoped under a doubled-class self-reference (`&&` -> .glass-progress-rail.glass-progress-rail, specificity 0,2,0) so it out-ranks the base h-4/rounded-pill DETERMINISTICALLY regardless of Tailwind's utility emit order — no !important. NOTE this is NOT the rejected colour layer-juggle: colour stays the token-read-at-source path; the @utility only wins the geometry, which has no token-read-at-source alternative (the base Progress legitimately wants h-4; the rail is a restyle).",
+      "evidence": "Live render: rail computed height = 3px (the hairline); the bare single-class @utility tied h-4 and lost (16px) — the `&&` doubled-class fixed it."
+    },
+    "F2_clippedGlow": {
+      "status": "DONE — trailing INSET edge inside the clip",
+      "ratifiedForm": "The audit's recommended `linear-gradient` right-edge brightening was REJECTED at impl after a runtime check: the indicator carries the @layer-utilities `[background:var(--progress-fill,...)]` SHORTHAND, which resets `background-image` to none and ALWAYS outranks the @layer-components/@utility recipe's `background-image` longhand — so a gradient-image glow would be a silent no-op (the exact same cascade-layer trap as F1, on a different property). The INSET box-shadow fallback the slice names is the correct one-path form: `box-shadow` is a separate property the `[background:...]` shorthand does NOT touch.",
+      "fix": "`.glass-progress-rail && > * { box-shadow: inset calc(-1*var(--progress-rail-glow-x,4px)) 0 var(--progress-rail-glow-blur,8px) calc(-1*var(--progress-rail-glow-spread,2px)) color-mix(in srgb, hsl(0 0% 100%) var(--progress-rail-glow-strength,55%), transparent) }` — an inset shadow offset LEFTWARD brightens just inside the indicator's right (leading) edge: a moving position head that never crosses the fill boundary, so the load-bearing overflow-hidden clip cannot eat it (the clip is never lifted).",
+      "evidence": "Live render: indicator computed box-shadow = 'color(srgb 1 1 1 / 0.55) -4px 0px 8px -2px inset' (the inset glow renders). Holds light AND dark."
+    },
+    "F3_gateRegistrationAndUpgrade": {
+      "status": "DONE",
+      "fix": "package.json scripts gains `proof:deck-progress-rail`; scripts/gates.mjs GATES array gains the row (tags ['local','ci']). The proof-deck-progress-rail.mjs script UPGRADED from string-scan to a dual-arm gate: a device-free STRUCTURE arm (the @utility recipe feeds --progress-fill/--progress-track + sets the hairline height + uses an INSET glow; ProgressDefault reads the tokens at source + carries NO bg-primary/bg-secondary; DeckProgress composes <Progress> no chrome/math; ./deck-progress published; /deck RESERVED) + a π-lane RENDER arm (deck-progress-rail.spec.ts in tests-visual: getComputedStyle readback of (a) override-hue-wins, (b) inset-glow-renders, (c) hairline-height — fail-CLOSED when the workspace is present, befitting-silent SKIP on a device-absent runner). The gate-script-parity KNOWN_ORPHANS stale entry for proof-deck-progress-rail.mjs removed (the gate's own design names the owner wave as the remover).",
+      "evidence": "`npm run proof:deck-progress-rail` RESOLVES + PASS (structure + render). gate-script-parity PASS (no orphan). Bite-proven: revert the ProgressDefault token-read -> STRUCTURE + RENDER RED; the upgraded gate REDS on the cascade inversion (a string-scan could not)."
+    },
+    "F4_deckEngineStaysSlidesLocal": {
+      "status": "RATIFIED — slides-local, NOT lifted",
+      "evidence": "The /deck engine (useDeck/useDeckNav/DeckPager/deckSpring) is single-consumer slides logic; lifting it manufactures substrate-without-consumer (the overfitting anti-pattern). The reserved-guard clauses HOLD: no src/subpaths/deck.ts, no `./deck` exports entry (matched EXACTLY `\"./deck\":` — distinct from the legitimate `./deck-progress` added), no deckProgress() math leaf. The 100*(k+1)/N position math stays consumer-side (a one-liner, in the demo story)."
+    }
+  },
+  "gatesGreen": {
+    "build": "PASS — vite + emit-types; dist/deck-progress.{js,d.ts} EMIT (the subpaths-glob auto-resolve).",
+    "typecheck": "PASS — vue-tsc --noEmit clean.",
+    "verifyExportTypes": "PASS — All package export targets and type resolutions valid (the ./deck-progress block resolves to the emitted dist).",
+    "proofResolution": "PASS — contract-v2 dev-resolution satisfied across the constellation.",
+    "proofDeckProgressRail": "PASS — STRUCTURE (all 4 clause groups green) + RENDER (override-wins + inset-glow + hairline-height) against the live demo at http://localhost:5173.",
+    "proofComponentsCss": "PASS — glass.css edit clean.",
+    "proofPhantomClasses": "PASS — zero phantom-class sites.",
+    "proofSubpathEnumeration": "PASS — exports<->dist<->libraryEntries BATCH-EQUIV + ENUM-COMPLETE; deck-progress present in both.",
+    "proofGateScriptParity": "PASS — no NEW orphan; the stale proof-deck-progress-rail KNOWN_ORPHANS entry removed.",
+    "progressUnitTests": "PASS — 17/17 (tests/components/ui/progress/Progress.test.ts).",
+    "subpathProbe": "node -e import('@mkbabb/glass-ui/deck-progress') -> RESOLVES (exports: ['DeckProgress'])."
+  },
+  "renderTruth": {
+    "mechanism": "DOM-cascade getComputedStyle readback (NOT GPU readPixels — the deck rail is a DOM-cascade recipe; the harden critique result[30] names DeckProgress as a computed-style π-lane consumer). Run against the live demo dev server.",
+    "lightArm": {
+      "indicatorBackgroundUnderOverride": "rgb(0,200,0) — the --progress-rail-fill override WINS (was rgb(28,25,23) --primary at HEAD)",
+      "indicatorBoxShadow": "color(srgb 1 1 1 / 0.55) -4px 0px 8px -2px inset — the inset glow renders",
+      "railHeight": "3px — the hairline (was 16px at HEAD)"
+    },
+    "darkArm": {
+      "note": "Token-adaptive BY CONSTRUCTION — no .dark re-declaration. Under .dark the no-override fill reads rgb(232,231,227) (the dark-flipped --primary hsl(48 10% 90%)); --progress-track re-resolves color-mix(... hsl(48 10% 90%) 8% ...) (--foreground flips); height 3px holds; inset glow holds.",
+      "verified": true
+    },
+    "viewports": "The computed-style cascade is viewport-independent (no GPU). The screenshot π-lane (light/dark x 375x667/1280x800/1440x900) is the orchestrator's real-device run — see liveVerify recipe in the wave return."
+  },
+  "consumerClearance": {
+    "binaryInvariant": "UNcleared — routed to W32 (gated on the AX pin-bump + publish per §4 note 12). W24 does NOT claim 'making slides consumer #2'. DeckProgress has exactly ONE real consumer (the demo story navigation/deck-progress) until W32 lands the slides port (replace the hand-rolled .deck-progress <div>+::after with <DeckProgress :value class> importing @mkbabb/glass-ui/deck-progress, override --progress-rail-*, delete the hand-rolled rail + --deck-progress-* tokens). W24 makes the rail ADOPTABLE (importable subpath + cascade-correct + glow-true recipe); W32 ADOPTS it. The de-dock PAGE-BOTTOM placement (§10.1) is ALREADY MET in slides today via the hand-rolled bar — W24 touched NO slides file.",
+    "ratify": "A GREEN W24 with an UNcleared (explicitly-routed) binary invariant is a valid close, distinct from a silent deferral (§Open-question 4 recommendation accepted)."
+  },
+  "ratifyBeforeImpl": {
+    "cascadeFixChannel": "(a) token-read at ProgressDefault source — ACCEPTED (the one-path root cause; also closes the latent default-variant gap; matches the gradient-variant idiom).",
+    "glowForm": "INSET box-shadow — ACCEPTED over the linear-gradient brightening (the gradient was rejected at impl: the indicator's @layer-utilities `[background:...]` shorthand resets background-image and out-ranks the recipe — the gradient glow would be a silent no-op; the inset box-shadow is a separate property the shorthand cannot touch).",
+    "demoOverrideFixture": "Option B — the :root override is applied in the π-lane spec (post-mount, into document.head), NOT added to the product demo story (the story stays the canonical consumer-#1 look; demo SFC untouched).",
+    "binaryInvariantAnnotation": "Option recommendation accepted — GREEN W24, binary invariant UNcleared until W32 (routed, not silently deferred)."
+  },
+  "filesChanged": [
+    "src/subpaths/deck-progress.ts (CREATE — the trivial mirror)",
+    "package.json (./deck-progress exports + typesVersions + proof:deck-progress-rail scripts entry)",
+    "src/styles/glass.css (the .glass-progress-rail recipe — re-authored as @utility @619: token-feed cascade fix + && geometry win + inset glow)",
+    "src/components/ui/progress/ProgressDefault.vue (token-read parity: bg-secondary->--progress-track, bg-primary->--progress-fill)",
+    "scripts/proof-deck-progress-rail.mjs (string-scan -> dual-arm structure+render gate)",
+    "scripts/gates.mjs (register the proof:deck-progress-rail GATES row)",
+    "scripts/proof-gate-script-parity.mjs (remove the now-stale proof-deck-progress-rail KNOWN_ORPHANS entry — the gate's own design names the owner wave as the remover)",
+    "tests-visual/deck-progress-rail.spec.ts (CREATE — the π-lane render half; the §4 'render half lands in the W00 π-workspace' clause)",
+    "docs/tranches/AX/audit/W24-deck-progress.json (this ledger)"
+  ],
+  "divergences": [
+    "scripts/proof-gate-script-parity.mjs (OUT of the literal FileBounds table): registering proof:deck-progress-rail forced the removal of its now-stale KNOWN_ORPHANS allowlist entry — the entry itself reads 'AW.W16 — owner-wave registers/removes' and the gate's stale-detection logic REDS until the owner wave removes it. W24 is the owner wave. An in-bounds-by-design consequence of the F3 registration; without it gate-script-parity stays RED and the W33 fleet meta-gate cannot go green.",
+    "tests-visual/deck-progress-rail.spec.ts (CREATE; not in the literal FileBounds table but explicitly authorized by §Scope(4) 'The render half lands in the W00 π-workspace' + HardGate-3 + the established per-wave pattern — W10 authored aurora-atoms-render.spec.ts, W08 blob-render.spec.ts in the same workspace). It CONSUMES W00's machinery (resolveScene from pi-manifest, the Playwright config), it does not author the lane.",
+    "F1b geometry-cascade fix (the @utility + && doubled-class): a SCOPE EXTENSION within the F1 gestalt the render readback surfaced — the cascade inversion clobbered height/radius too, not just colour. The string-scan gate could never see this (the AW.W16 recipe shipped a 16px rail GREEN). Fixed in-bounds (glass.css), idiomatic (the btn-audacious/cartoon-surface @utility restyle idiom), no !important."
+  ],
+  "archaeology": {
+    "a62c76f": "AW.W16 library-half — the recipe + wrapper + proof script; the F1 cascade inversion + F2 clipped glow + F1b 16px-bar were minted here (the recipe assumed class-vs-class specificity but Tailwind v4 puts utilities in a named layer that always outranks @layer components). Shipped GREEN because the proof script never rendered.",
+    "1df7783": "AW.W16 demo — the deck-progress navigation story (consumer #1, the render-gate FIXTURE; it does NOT override --progress-rail-fill, a clean witness for the inversion).",
+    "50b2926": "AW batch-1 reconcile — where the proof:deck-progress-rail scripts-block registration was DROPPED (F3)."
+  }
+}
