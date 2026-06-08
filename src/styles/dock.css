@@ -530,13 +530,20 @@
         );
     }
 
-    /* The squircle reads markedly better at the large card radius — an
-       `@supports`-gated ENHANCEMENT only (Chrome 139+, no FF/Safari 2026). The
-       border-radius arc is the CONTRACT; the squircle is the better tier (the
-       baseline arc is the acceptable contract, NOT a degraded fallback). */
-    @supports (corner-shape: squircle) {
+    /* AX.W56 — the big-dock IS the one squircle surface (the rounded-vs-squircle
+       policy: cards/pills/panels stay round, big-docks + the like → superellipse).
+       The squircle reads markedly better at the large `--radius-dock-card` (24px)
+       shell — an `@supports`-gated ENHANCEMENT only (Chrome 139+, no FF/Safari 2026).
+       The `border-radius` arc is the cross-engine CONTRACT; the squircle is the
+       better tier (NOT a degraded fallback). The shape is now the tokenized
+       `var(--corner-shape-bigdock)` (theme.css) so it is as overridable as the
+       radius — a consumer retints the corner shape from `:root`, and W42's
+       dock-morph reads the same `--corner-k-*` vocabulary. The `@supports`
+       condition tests the LITERAL `superellipse(2)` (a `var()` is not evaluable in
+       an `@supports` query) — the same Chrome-139 feature the token resolves to. */
+    @supports (corner-shape: superellipse(2)) {
         .glass-dock.variant-dock:not(.vertical).shape-card {
-            corner-shape: squircle;
+            corner-shape: var(--corner-shape-bigdock);
         }
     }
 

@@ -53,9 +53,12 @@ const props = withDefaults(
          *                 radius (`--dock-card-radius`, default `--radius-3xl`)
          *                 ABOVE 2xl, below pill — does NOT collapse to a stadium.
          *                 Collapsed it returns to a pill; the pill↔card swap
-         *                 morphs on the `--dock-motion-resize` spring. A `@supports
-         *                 (corner-shape: squircle)` enhancement reads better at the
-         *                 large radius (the border-radius arc is the contract).
+         *                 morphs on the `--dock-motion-resize` spring. AX.W56's
+         *                 squircle policy applies `corner-shape:
+         *                 var(--corner-shape-bigdock)` here under `@supports
+         *                 (corner-shape: superellipse(2))` — the big-dock is the ONE
+         *                 surface where the superellipse reads (cards/pills stay
+         *                 round); the border-radius arc is the cross-engine contract.
          *
          * `"pill"`/`"rounded"` previously bound ONLY under the vertical rail
          * variant — on a horizontal dock the prop silently no-op'd. AW.W3b adds

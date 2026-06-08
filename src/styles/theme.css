@@ -62,6 +62,37 @@
        The density-scaled --dock-card-radius (dock.css) resolves through this. */
     --radius-dock-card: var(--radius-3xl);
     --radius-tooltip: var(--radius-lg);
+
+    /* ── AX.W56 — the corner-SHAPE axis (parallel to the corner-RADIUS ladder above).
+       `corner-shape` only changes the CURVE within the `border-radius` box; the
+       region is still the `--radius-*` token. These are plain @theme (the radius
+       siblings' rationale applies — each alias is its own override point, and the
+       semantic shapes are value-identical keywords that must not collapse under
+       inline). Chrome 139+ only (~65% global May 2026); the un-gated `border-radius`
+       round stays the cross-engine CONTRACT and the `@supports (corner-shape:
+       superellipse(2))` gate (glass.css/dock.css) is the PE tier. NEVER make
+       corner-shape the contract — Safari/Firefox have no positive signal through 2026.
+
+       Superellipse exponent (MDN authoritative): `superellipse(K)` paints
+       |x|^(2K) + |y|^(2K) = 1, so the curve exponent n = 2K. The CSS `squircle`
+       keyword == `superellipse(2)` == n=4 — the iOS-idiomatic web squircle. The
+       k-PRIMITIVE band (a consumer dials 1.7–2.4 to taste; W42's dock-morph calc()s
+       its animated k against this ONE vocabulary — do not re-define a second k). */
+    --corner-k-squircle: 2;   /* the squircle — superellipse(2), n=4               */
+    --corner-k-soft:     1.7; /* gentler, between round and squircle — n≈3.4       */
+    --corner-k-sharp:    2.4; /* crisper square-bias for large surfaces — n≈4.8    */
+
+    /* Semantic per-surface SHAPE aliases — the rounded-vs-squircle POLICY.
+       Cards, pills/buttons, small docks, and panels stay ROUND (the superellipse is
+       imperceptible at a 16px card radius or a stadium pill — dropping it there is
+       visually free). The big-dock card shell (the large --radius-dock-card / 24px
+       surface) is the one site where the squircle READS — the iOS-26 idiom the dock
+       wants. A consumer opts an additional large-radius surface in by re-pointing its
+       `--corner-shape-<surface>` at `superellipse(var(--corner-k-squircle))`. */
+    --corner-shape-card:    round;
+    --corner-shape-pill:    round;
+    --corner-shape-panel:   round;
+    --corner-shape-bigdock: superellipse(var(--corner-k-squircle));
 }
 
 @theme inline {

@@ -711,22 +711,20 @@
     }
 }
 
-/* ── AW.W23 — corner-shape: squircle PE (Chrome 139+) ───────────────────────
-   The literal iOS-26 superellipse corner geometry that `backdrop-filter`,
-   borders, and shadows follow. `@supports (corner-shape: squircle)`-gated over
-   the un-gated `border-radius` round, which stays the fallback at zero cost on
-   every other engine (Safari/Firefox). The `corner-shape` decl sits ONLY inside
-   the `@supports` block — a leak onto the un-gated base would break the round
-   fallback on a partial-support engine. */
-@supports (corner-shape: squircle) {
-    @layer components {
-        .glass-card,
-        .glass-btn,
-        .btn-pill {
-            corner-shape: squircle;
-        }
-    }
-}
+/* ── AX.W56 — the rounded-vs-squircle POLICY (re-homes AW.W23's squircle) ─────
+   Cards, glass buttons, and pills stay ROUND. The earlier AW.W23 block applied
+   `corner-shape: squircle` to `.glass-card`/`.glass-btn`/`.btn-pill`, which
+   inverted the design intent — the superellipse is imperceptible at a 16px card
+   radius or a stadium pill, so the squircle on those surfaces was visual cost
+   without read. The squircle is RE-HOMED onto the one surface where it reads: the
+   big-dock card shell (`dock.css` → `var(--corner-shape-bigdock)` under
+   `@supports (corner-shape: superellipse(2))`). This is a clean break — no alias,
+   no `--corner-shape-card` decl here (it resolves `round`, the default, so a
+   `corner-shape` rule would be a no-op). The `--corner-shape-*` token axis lives
+   in `theme.css`; a consumer who WANTS a squircle card opts in by re-pointing
+   `--corner-shape-card` at `superellipse(var(--corner-k-squircle))`. Do NOT
+   re-add a squircle rule to the card/button/pill surfaces — they are round by
+   policy. */
 
 /* ── Accessibility: reduced transparency ────────── */
 @media (prefers-reduced-transparency: reduce) {
