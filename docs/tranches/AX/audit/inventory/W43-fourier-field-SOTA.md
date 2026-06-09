@@ -1,10 +1,12 @@
 # W43 — Fourier-field SOTA research (the per-hero background substrate, pulled up + executed NOW)
 
-**Lane** W43-fourier-sota (research) · **Pulled up** per USER-DEFECTS pass-3 (the W43 SOTA research is no longer
-mid-tranche — "execute it NOW, not mid-tranche") · **Target wave** `AX.W43-fourier-field-first-class.md` (the
-intensity model + full citizenship) · **Downstream consumer** `W60` (the page-redesign container-layer — each
-hero gets a UNIQUE aurora / constellation / fourier background per P7/Q9) · **HEAD** the AX line; the
-fourier-field present at `src/components/custom/fourier-field/` on the `useCanvas2D` substrate.
+**Lane** W43-fourier-sota (research) · **Status** EXECUTED 2026-06-09 (the pull-up ran NOW; source-grounded
+against `FourierField.vue`/`math.ts` + the sibling `fourier-analysis` canvas-drawing leaves at HEAD, web SOTA
+refreshed) · **Pulled up** per USER-DEFECTS pass-3 (the W43 SOTA research is no longer mid-tranche — "execute
+it NOW, not mid-tranche") · **Target wave** `AX.W43-fourier-field-first-class.md` (the intensity model + full
+citizenship) · **Downstream consumer** `W60` (the page-redesign container-layer — each hero gets a UNIQUE
+aurora / constellation / fourier background per P7/Q9) · **HEAD** the AX line; the fourier-field present at
+`src/components/custom/fourier-field/` on the `useCanvas2D` substrate.
 
 > Research artefact. Writes no `src`. The recipe + the intensity prop + the W43/W60 consumption story below
 > fold into W43's spec drive + the research-backed README. The deferral rationale in the W43 spec (§7) is
@@ -149,8 +151,15 @@ c.shadowBlur = 0; c.globalCompositeOperation = "source-over"; c.globalAlpha = 1
 ground is the phosphor look — light accumulates, trail crossings bloom. Over the warm-cream ground additive
 blows the trail to white and kills the hue (the same `screen`-over-cream defect W52 names for the glass
 material). So the field reads additive on ink, plain-alpha on cream — driven off the `isDark` watch the
-component already owns. `lighter` is universally Canvas2D-supported (no Safari quirk — it is a 2D-context
-compositing op, not a CSS `mix-blend-mode`). This is the device-free-safe path.
+component already owns. **The Safari-safe distinction (load-bearing — do NOT conflate with W52's blend
+choice):** the field uses `ctx.globalCompositeOperation = "lighter"` — the **Canvas2D 2D-context compositing
+op**, universally supported across every engine since the Canvas2D spec shipped (no Safari quirk, no
+`@supports` gate, no fallback rung needed). This is DIFFERENT from W52's `plus-lighter` choice — W52 composites
+a CSS `mix-blend-mode` against the page backdrop (the Safari-quirky path that needs the HDR-clamp + an
+un-blended fallback), whereas the fourier-field composites WITHIN its own canvas via the 2D drawing context,
+which has no such quirk. (Corroboration: Safari 26.4, March 2026, added the `lighter` operator even for
+SVGFECompositeElement — the additive op is first-class across the platform; the Canvas2D `"lighter"` predates
+that by a decade.) The 2D-context `"lighter"` is the device-free-safe path; no fallback rung is required.
 
 ### 2.2 The per-variant BUNDLE fields (extends `VariantPreset`)
 
@@ -200,13 +209,17 @@ static-no-alloc clause asserts the paint reads a cached triple, not a per-frame 
 ### 4.1 The verdict — Canvas2D is correct AT THIS SCALE
 
 The fourier-field's actual budget: ≤~64 phasors (`positionsAt` chain), a ≤200-point trail, ~4 head-glow
-segments. That is a **few hundred line segments per frame** — trivially Canvas2D. The WebGPU/compute win
-(storage-buffer harmonic sums, in-place compute without ping-pong) is real but starts at **10³–10⁶ points**
-(the `ChartGPU` "million points" regime, the FFT-ocean-simulation regime) — orders of magnitude above this
-field. WebGPU here would be substrate-without-a-reason: more code, a parity-floor fallback to maintain, and a
-WebGPU-vs-Canvas2D blend-mode divergence to reconcile, for zero perceptible gain at a few-hundred-segment
-budget. The shared `useCanvas2D` substrate already gives the field the offscreen/tab-hidden/reduced-motion
-park-freeze for free.
+segments. That is a **few hundred line segments per frame** — trivially Canvas2D. The concrete 2026 crossover
+(re-confirmed at execution): **Canvas2D becomes the render bottleneck only at ~2500 drawn objects per frame**,
+where WebGPU compute starts to pull ahead (a WebGPU physics sim holds 14k objects in a 16ms budget where
+Canvas2D stalls at ~2.5k). The fourier-field's few-hundred-segment budget is an **order of magnitude below
+even the Canvas2D bottleneck**, two orders below the WebGPU-worth-it line. The headline WebGPU/compute win
+(storage-buffer harmonic sums, in-place compute without ping-pong) is real but starts at **10³–10⁶ points** —
+the `ChartGPU` "1M-points-at-60fps / 35M-at-72fps" regime, the FFT-ocean-simulation regime — orders of
+magnitude above this field. WebGPU here would be substrate-without-a-reason: more code, a parity-floor
+fallback to maintain, and a WebGPU-vs-Canvas2D blend-mode divergence to reconcile, for zero perceptible gain
+at a few-hundred-segment budget. The shared `useCanvas2D` substrate already gives the field the
+offscreen/tab-hidden/reduced-motion park-freeze for free.
 
 Sources: [webgpufundamentals — compute basics](https://webgpufundamentals.org/webgpu/lessons/webgpu-compute-shaders.html),
 [Ping-Pong WebGL → compute](https://medium.com/phishchiang/webgpu-from-ping-pong-webgl-to-compute-shader-%EF%B8%8F-1ab3d8a461e2),
@@ -255,6 +268,28 @@ Read `/Users/mkbabb/Programming/fourier-analysis/web/src/`. What it ships + what
   SVG, sample, DFT into components, smooth via Catmull-Rom). This is the "draw a literal glyph" path. glass-ui
   deliberately does NOT do this (generative ambient, not literal trace) — but it is the exact substrate a future
   "trace this logo as a hero background" feature would compose. Keep-book.
+- **`components/visualization/lib/canvas-drawing/` — the canonical render decomposition + the EXACT in-repo
+  alpha ratios** (the most directly-implementable axis-d reference; the W43 implementer + README anchor the §2.2
+  bundle defaults against these). Read verbatim at HEAD:
+  - `epicycles.ts` — `drawEpicycleCircles`: circle stroke at `0.5·epicycleAlpha`, arm at `0.75·epicycleAlpha`,
+    center-dot at `0.75·α`, endpoint-dot at `0.6·α`; `epicycleAlphaFromScale = 0.65 → 1.0` (hover-grow);
+    `BASE_EPICYCLE_SCALE=0.38` / `HOVER_EPICYCLE_SCALE=0.55`. The **DC-term-suppression** technique: an
+    `index===0` phasor (frequency 0) would render a figure-sized stationary disc — fa drops it to a small
+    centre-marker (`max(5.5, lineWidth·1.5)`) and keeps only its arm. glass-ui's `makeEllipticSpectrum` emits
+    NO `index 0` term (the spectrum starts at `±1`), so the field is DC-suppression-FREE by construction —
+    note it in the README as a deliberate generative-model property, not a missing guard. `drawTipDot` — the
+    SOTA head: a pulsing radial glow (`r≈20`, `0.2 + 0.1·sin(now/300)` alpha) + a solid dot + a white
+    highlight. glass-ui's `shadowBlur` head-glow is the lighter background-variant of this; the
+    `headGlowBlur≈14–18` (§2.2) is the analogous bloom radius.
+  - `trail.ts` — `TrailManager` strokes the path at `lineWidth 3.5` / `globalAlpha 0.9`, round cap/join, over a
+    precomputed `Float64Array` (`TRAIL_RESOLUTION=1200`). glass-ui's ring-buffer trail is the recessive
+    chrome-variant (`lineWidth 1.6`, age-decayed); the fa `0.9` flat-alpha is the FOREGROUND-figure value — the
+    background field's softer per-segment decay (§2.1) is the correct register, NOT a regression.
+  - `ghost-path.ts` (`rgba(150,150,150,0.2)` source-contour overlay) + `transforms.ts` `spectrumColor` =
+    `hsl((1−t^0.6)·300, 85%, 55%)` (the per-phasor FOREGROUND rainbow) — both N/A to glass-ui: no source contour
+    (the spectrum IS the curve), and the background keys off ONE brand hue + an analogous scaffold shift, NOT a
+    per-phasor rainbow. glass-ui correctly diverges here; record WHY in the README (foreground teaching-figure
+    vs recessive brand-keyed chrome).
 
 **The cross-repo consumer story:** fourier-analysis is the candidate ≥2nd-EXTERNAL consumer of a `/fourier-field`
 or a shared `/fourier-math` surface IF the math leaf is ever promoted out of `math.ts` into a shared subpath.
@@ -352,6 +387,9 @@ rich background — the whole point of P7/Q9.
 - [LearnOpenGL ES — additive blending](https://www.learnopengles.com/tag/additive-blending/)
 - [WebGPU Fundamentals — compute shader basics](https://webgpufundamentals.org/webgpu/lessons/webgpu-compute-shaders.html)
 - [Ping-Pong WebGL → Compute Shader (storage buffers)](https://medium.com/phishchiang/webgpu-from-ping-pong-webgl-to-compute-shader-%EF%B8%8F-1ab3d8a461e2)
-- [ChartGPU — WebGPU charts at a million points](https://www.webgpu.com/showcase/chartgpu-webgpu-charts/)
+- [ChartGPU — WebGPU charts at a million points (1M@60fps / 35M@72fps; Canvas2D bottleneck ~2.5k objects)](https://www.webgpu.com/showcase/chartgpu-webgpu-charts/)
+- [ChartGPU — Show HN (the 2026 Canvas2D-vs-WebGPU crossover discussion)](https://news.ycombinator.com/item?id=46706528)
 - [WebGPU: Unlocking modern GPU access (Chrome IO2023)](https://developer.chrome.com/blog/webgpu-io2023)
-- glass-ui sibling: `/Users/mkbabb/Programming/fourier-analysis/web/src/lib/{evaluators,bases,svg-fourier,svg-contours}.ts` + `composables/useFourierMorph.ts`
+- [MDN — CanvasRenderingContext2D.globalCompositeOperation (the 2D-context `lighter` additive op)](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation)
+- [WebKit Features for Safari 26.4 — `lighter` operator first-class (corroboration; the Canvas2D op predates it)](https://webkit.org/blog/17862/webkit-features-for-safari-26-4/)
+- glass-ui sibling (read VERBATIM at HEAD): `/Users/mkbabb/Programming/fourier-analysis/web/src/lib/{evaluators,bases,svg-fourier,svg-contours}.ts` + `composables/useFourierMorph.ts` + `components/visualization/lib/canvas-drawing/{epicycles,trail,ghost-path,transforms}.ts`

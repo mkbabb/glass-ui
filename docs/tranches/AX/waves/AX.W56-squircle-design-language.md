@@ -1,6 +1,6 @@
-# AX.W56 — Squircle design language: the corner-SHAPE token axis + the rounded-vs-squircle POLICY (re-home AW.W23 off cards → onto the big-dock)
+# AX.W56 — Squircle design language: the corner-SHAPE token axis + the rounded-vs-squircle POLICY (re-home AW.W23 off cards → big-dock + ⊕W56b: the large-radius glass family — dialogs/sheets/panels/hero)
 
-**Band** B · GRAPHICS / glass-IDENTITY · **Severity** major (G3 — the user's corner-shape ask: "rounded for cards, rounded for docks, but big-docks + the like → squircles")
+**Band** B · GRAPHICS / glass-IDENTITY · **Severity** major (G3 — the user's corner-shape ask: "rounded for cards, rounded for docks, but big-docks + the like → squircles"; ⊕ W56b amend RATIFIES "the like" = dialogs + sheets + panels + glass hero cards + where befitting, per MASTER-PLAN R1)
 · **dependsOn** AX.W00 (the π visual-runtime lane — the cornerShape live-readback close machinery)
 · **Charter** convergence-2 NET-NEW wave G3 (`docs/tranches/AX/audit/convergence2/CONVERGENCE-PLAN-2.md:14` — "squircle-design-language … Mint `--corner-k-{squircle:2,soft:1.7,sharp:2.4}` parallel to `--radius-*` + semantic `--corner-shape-{card:round, pill:round, bigdock:superellipse(k), panel:round}`. Rounded for cards/docks, SUPERELLIPSE for big-docks + the like. `@supports` fallback to `--radius-*`. MANY waves consume it.")
 · **Audit** `docs/tranches/AX/audit/convergence2/R-squircle.md` (the SOTA + browser-support + CSS recipe) + `docs/tranches/AX/audit/convergence2/A-squircle-pivot.md` (every radius/corner-shape file:line + the re-home policy map) — the research+audit pair that folds into ONE G3 wave.
@@ -9,6 +9,16 @@
 > the gate; the orchestrator drives the §HardGate π live cornerShape readback via chrome-devtools-mcp
 > (the cardinal AX lesson — the agent has no browser). Per the hardened agent git clause (K W0): agents
 > NEVER stage/commit/stash — the orchestrator owns the index.
+
+> **⊕ AMEND AX.W56b (2026-06-09) — the squircle EXTENDS off big-dock-only → onto the large-radius glass
+> family (USER-DECISION R1).** The base wave (above, DEV-COMPLETE at HEAD `89edffc` — tokens minted,
+> dock tokenized, glass re-homed, `proof:squircle-language` shipped) restricted the squircle to the ONE
+> big-dock surface and deferred the "and the like" membership as a consumer-opt-in (Open Question 1). The
+> user has now RATIFIED that membership: **extend the iOS superellipse to dialogs + sheets + panels +
+> glass hero cards + where befitting (the large-radius glass family). Cards + pills STAY rounded.** This
+> amend ADDS scope (it does NOT rewrite the base) — see §AMEND below for the four new born-RED witnesses,
+> the new `--corner-shape-{dialog,sheet,panel,hero}` aliases, and the gate policy-clause update. The base
+> §Scope folds 1-4 stay verbatim; the §AMEND folds 5-9 layer on top.
 
 > *Gloss.* The **corner SHAPE** is a SECOND corner axis parallel to the corner RADIUS. `border-radius`
 > sets the radius BOX; `corner-shape` changes the CURVE within that box (`round`=circle, `squircle`=the
@@ -135,6 +145,149 @@ round CONTRACT on every surface (the cross-engine fallback the `@supports` PE ti
 
 ---
 
+---
+
+## AMEND AX.W56b — extend the squircle off big-dock-only → onto the large-radius glass family (USER-DECISION R1)
+
+The base wave shipped the corner-SHAPE token axis + the re-home, and made the big-dock the ONE squircle
+surface (the "and the like" membership deferred as a consumer-opt-in, base Open Question 1). The user has
+RATIFIED the membership (MASTER-PLAN R1, `docs/tranches/AX/audit/inventory/MASTER-PLAN.md:59`): **"extend
+to dialogs + sheets + panels + glass hero cards + where befitting (large-radius surfaces). Cards + pills
+STAY rounded."** The research already flagged exactly this family as the candidate (`R-squircle.md:204` —
+"Dialogs / large panels / hero overlays | squircle (candidate) | 'and the like' — the large-radius family;
+NEEDS-USER-DECISION on exactly which"). The decision is now MADE — this amend lands it.
+
+> *Why these surfaces, why the policy holds.* The superellipse only READS at a LARGE radius — at a 16px
+> card or a stadium pill it is imperceptible (R-squircle §1, base RED-1 rationale), so the rounded-vs-squircle
+> POLICY is a RADIUS-THRESHOLD policy in disguise: round below ~`--radius-xl`(12px), squircle at the large
+> `--radius-{2xl,3xl,panel}` glass overlays where the iOS-26 idiom reads. Dialog (`--radius-dialog`=2xl/16px),
+> Sheet (`glass-floating`, the rounded inner-corner pair on a viewport-flush edge panel), Configurator +
+> floating-panel (`--radius-panel`=xl/12px), Drawer (the `--radius-panel` top corners), and a glass HERO
+> card (the large editorial overlay, distinct from a data Card) all sit AT or ABOVE the threshold AND are
+> glass overlays where the squircle's silhouette (the backdrop-filter blur + the cartoon under-shadow follow
+> the shape) reads as the system idiom. Data cards + pills + the small `--radius-{sm,md,lg}` controls stay
+> round — the base policy, unchanged.
+
+### State (the four NEW born-RED witnesses — the amend's gate must fail at HEAD `89edffc`)
+
+The base wave's five witnesses are GREEN at HEAD (the axis is minted, the dock tokenized, the card re-homed).
+The amend is born-RED on FOUR new falsifiable source-true witnesses, each a line-probe the updated gate
+inverts:
+
+- **AMEND RED witness 6 (the panel alias is `round` — the policy is now WRONG for panels, grep-falsifiable).**
+  `theme.css:94` is `--corner-shape-panel: round`. Per the base wave panels stayed round; per the
+  USER-DECISION panels JOIN the squircle family. `grep "corner-shape-panel" src/styles/theme.css` returns
+  `round` (RED). **GREEN after:** `--corner-shape-panel: superellipse(var(--corner-k-squircle))` (rides the
+  SAME k vocabulary — no second `k`, no inline literal).
+
+- **AMEND RED witness 7 (no `--corner-shape-{dialog,sheet,hero}` aliases exist, grep-falsifiable).**
+  `theme.css:92-100` mints `--corner-shape-{card,pill,panel,bigdock,thumb}` but NO `dialog`/`sheet`/`hero`
+  semantic alias — the three new large-radius glass surfaces have no shape token to read.
+  `grep "corner-shape-dialog\|corner-shape-sheet\|corner-shape-hero" src/styles/theme.css` returns NONE (RED).
+  **GREEN after:** `theme.css` mints `--corner-shape-dialog`, `--corner-shape-sheet`, `--corner-shape-hero`
+  all = `superellipse(var(--corner-k-squircle))` (one vocabulary).
+
+- **AMEND RED witness 8 (the dialog/sheet/panel/hero surfaces carry NO `corner-shape` decl,
+  parse-falsifiable).** `DialogContent.vue:84-85` paints `glass-floating rounded-dialog` with NO
+  `corner-shape`; `sheet/index.ts:22` paints `glass-floating` (sheetVariants base) with NO `corner-shape`;
+  `Configurator.vue:130` + `floating-panel.css:7` paint `rounded-panel` with NO `corner-shape`. So at HEAD
+  these large glass overlays are plain rounded arcs even on a Chrome-139 device. `grep "corner-shape"` over
+  these four sites returns NONE (RED). **GREEN after:** each large-radius glass surface reads
+  `corner-shape: var(--corner-shape-<surface>)` inside an `@supports (corner-shape: superellipse(2))` block
+  over the un-gated `border-radius` round contract (the SAME PE-tier shape the big-dock uses).
+
+- **AMEND RED witness 9 (the gate HARD-ASSERTS `--corner-shape-panel === round` — it would REJECT the new
+  policy, parse-falsifiable).** `scripts/proof-squircle-language.mjs:178-180` asserts `--corner-shape-panel
+  must be round`. Under the amend that assertion is INVERTED (panel must now resolve a `superellipse(...)`).
+  Worse, an un-amended gate would FALSE-RED the correct implementation. `grep "corner-shape-panel must be"
+  proof-squircle-language.mjs` returns the round assertion (RED). **GREEN after:** the gate's policy clause
+  splits the round set (`card`/`pill` only) from the squircle set (`bigdock`/`dialog`/`sheet`/`panel`/`hero`),
+  and asserts each new surface reads its `var(--corner-shape-<surface>)` token inside an `@supports
+  (corner-shape: superellipse(2))` block.
+
+The amend is RED at HEAD on all four; the updated HardGate below drives each to GREEN.
+
+**Status** — SPEC (amend). DEV-only; writes no `src` from this session (the base wave is DEV-COMPLETE; this
+amend extends its FileBounds + gate).
+
+### Scope (the amend folds — extend the family, ONE vocabulary, no workaround)
+
+Five folds, all token-routed, layering on the base wave's clean break (no alias):
+
+5. **Re-point `--corner-shape-panel` + mint the three new aliases (`theme.css`).** Change
+   `--corner-shape-panel: round` → `superellipse(var(--corner-k-squircle))`; mint `--corner-shape-dialog`,
+   `--corner-shape-sheet`, `--corner-shape-hero` all = `superellipse(var(--corner-k-squircle))` in the same
+   leading plain `@theme` block (each its own override point per the radius-sibling rationale). The POLICY
+   lives in these aliases: `card`/`pill` round; `bigdock`/`dialog`/`sheet`/`panel`/`hero` squircle. ALL ride
+   the ONE `--corner-k-squircle` vocabulary (W42's dock-morph reads the same `k`). Update the §AX.W56 policy
+   comment (`theme.css:85-91`) to record the extended family + the radius-threshold rationale (large-radius
+   glass overlays squircle; small controls + data cards round).
+
+6. **Apply `corner-shape` to the four large-radius glass surfaces (Dialog, Sheet, Configurator panel,
+   floating-panel) under the `@supports` PE tier.** Each surface gets a `corner-shape:
+   var(--corner-shape-<surface>)` decl INSIDE an `@supports (corner-shape: superellipse(2))` block over the
+   existing `border-radius` round contract — the SAME shape as the big-dock (RED-4/RED-8 GREEN). The cleanest
+   home is a CSS rule keyed off the surface's existing class (`.glass-floating` is shared by dialog+sheet —
+   but the shape rides the SEMANTIC alias, so a per-surface utility class or a small `@supports` block in the
+   surface's own stylesheet keeps the dialog/sheet/panel aliases independently overridable). Author the
+   `@supports` block; KEEP the un-gated `border-radius` round as the cross-engine contract (Safari/Firefox/old
+   Chrome ~35% — the base wave's hard constraint, unchanged).
+
+7. **The glass HERO card surface (`where befitting`).** A glass HERO card (the large editorial glass overlay
+   — distinct from a data Card, which stays round per the base policy) reads `corner-shape:
+   var(--corner-shape-hero)`. RATIFY the exact hero-surface SELECTOR against the live audit (a `.glass-hero`
+   utility class vs the existing large `glass-card` hero variants in the page-redesign W60 surfaces) — the
+   TOKEN ships; the consumer surface that reads it is the page-redesign hero (W60 cross-ref). If no distinct
+   hero class exists at landing, mint a thin `.glass-hero` opt-in utility (the W60 page-redesign hero reads
+   it) rather than squircle-ing every `glass-card` (that would re-break the base "cards stay round" policy).
+
+8. **Update the gate policy clause (`scripts/proof-squircle-language.mjs`).** Split the POLICY-CARD-ROUND
+   assertion: the ROUND set is now `card`/`pill` ONLY (DELETE the `--corner-shape-panel must be round`
+   assertion); the SQUIRCLE set is `bigdock`/`dialog`/`sheet`/`panel`/`hero` (each must resolve a
+   `superellipse(...)` riding `var(--corner-k-squircle)`, NOT round, NOT an inline literal). ADD a
+   SURFACE-READS-TOKEN assertion per new surface (the dialog/sheet/panel/hero sites read
+   `corner-shape: var(--corner-shape-<surface>)` inside an `@supports (corner-shape: superellipse(2))` block
+   over a `border-radius` fallback). KEEP the base SUPPORTS-GATE-INTACT + CARD-REHOMED asserts. Rename the
+   gate's policy summary line (`card/pill = round`, drop panel).
+
+9. **Record the radius-threshold rationale + the W60 hero cross-ref (no overfit).** The membership is now
+   CLOSED (not a guess): the large-radius glass FAMILY (dialog/sheet/panel/hero/bigdock) squircles; the small
+   controls + data cards + pills round. Record the threshold (~`--radius-xl`) as the membership RULE so a
+   later agent does not squircle a small surface or round a large one. The hero surface ships with its
+   consumer (the W60 page-redesign hero) — NOT a speculative squircle on a surface with no consumer
+   (substrate-with-consumer, L invariant 8); cross-ref W60.
+
+### KEEP (the amend does NOT touch)
+
+UNCHANGED from the base: the `--radius-*` ladder; the `--corner-k-*` k-band (the squircle family ALL ride
+`--corner-k-squircle` — no new k); `--corner-shape-card`/`-pill` (= round, the policy floor — data cards +
+pills + the small `--radius-{sm,md,lg}` controls stay round, the base wave's correct read); the big-dock
+site (`dock.css` — already tokenized + `@supports`-gated by the base wave); `glass-refract.css`; the clip-path
+REJECTION (still rejected — a JS path generator would sever the blur halo + cartoon shadow on the NEW surfaces
+too, recorded in the base wave). The `--corner-shape-thumb` (AX.W59 slider knob — its own surface, untouched).
+
+### DEDUP (how the amend folds without duplicating an existing wave)
+
+- **vs the base AX.W56 (the same wave) — the amend EXTENDS, does not rewrite.** The base minted the axis +
+  the big-dock consumer + the re-home; the amend re-points `panel` + mints `dialog`/`sheet`/`hero` + applies
+  them + updates the gate policy clause. ONE `k` vocabulary, ONE `@supports` PE tier, ONE round contract. No
+  duplicate token, no second axis, no alias.
+- **vs AX.W60 (page-redesign container-layer) — the hero surface ships WITH its consumer there.** W60 wraps
+  each story in a glass card + a rich per-page background + a glass HERO. The `--corner-shape-hero` token is
+  minted HERE (the shape vocabulary is W56's); the W60 hero surface READS it (the consumer). Cross-ref both —
+  W56b lands the token so W60's hero reads it; no duplicate hero-shape definition. (If W60 lands first, it
+  reads the token W56b ships; if W56b lands first, it ships the token + the thin `.glass-hero` opt-in W60
+  consumes.)
+- **vs AX.W42 (liquid-MORPH §19.11) — UNCHANGED dedup.** W42's continuous animated `k` reads the SAME
+  `--corner-k-squircle` the extended family rides — no second `k`, exactly as the base DEDUP records.
+- **vs AX.W54 (glass-first-class) — composes, no overlap.** W54 makes glass the DEFAULT surface (the
+  material LEVEL); W56b sets the corner SHAPE on the large glass overlays (the SILHOUETTE). A surface can be
+  glass without squircling (a small glass control) and squircle without being the default-glass (the token
+  is orthogonal to `--glass-level`). Line-region-disjoint — W54 touches `--glass-level`/the material; W56b
+  touches the `corner-shape` decls.
+
+---
+
 ## SOTA deepening (squircle / superellipse research — R-squircle §1)
 
 - **The CSS feature is shipped + spec-stable.** `corner-shape` + `superellipse()` landed Chrome/Edge 139
@@ -179,11 +332,36 @@ round CONTRACT on every surface (the cross-engine fallback the `@supports` PE ti
 | `docs/tranches/AX/audit/W56-squircle-language.json` | **NEW** — the born-RED→GREEN audit artefact + the five RED witnesses + the per-finding disposition. |
 | `docs/tranches/AX/audit/convergence2/CONVERGENCE-PLAN-2.md` | Mark the G3 / W56 row DEV-COMPLETE (the ledger update). |
 
-**OUT of bounds:** the `--radius-*` ladder (the corner-RADIUS axis — unchanged); the big-dock radius morph
-(`dock.css:525-531` — the radius lerp is W01's, the shape is G3's; line-region-disjoint); `glass-refract.css`
-(the refraction substrate, not a corner-shape decl); W42's `--superellipse-k` continuous animation (it
-READS G3's `k` band, G3 does not author the animation); the instrument-chassis / Configurator / Drawer
-surfaces (the "and the like" candidates are consumer-opt-in, NOT applied by default this wave — no overfit).
+### AMEND FileBounds (the W56b extension — layered on the base table above)
+
+| File | Edit |
+|------|------|
+| `src/styles/theme.css` | **RE-POINT + MINT** in the same leading plain `@theme` block (`:92-100`): `--corner-shape-panel: round` → `superellipse(var(--corner-k-squircle))`; MINT `--corner-shape-dialog`, `--corner-shape-sheet`, `--corner-shape-hero` all = `superellipse(var(--corner-k-squircle))` (one k vocabulary). Update the policy comment (`:85-91`) to the extended family + the radius-threshold rule (large-radius glass overlays squircle; small controls + data cards round). |
+| `src/styles/dialog.css` *(or the dialog SFC `<style>`/`utilities.css` dialog rule)* | **APPLY** `corner-shape: var(--corner-shape-dialog)` to the `.glass-floating.rounded-dialog` / DialogContent glass surface INSIDE an `@supports (corner-shape: superellipse(2))` block over the un-gated `border-radius` round. The implement lane resolves the cleanest home (a dialog-scoped rule that reads the dialog alias, NOT a blanket `.glass-floating` rule — sheet shares that class but reads its OWN alias). |
+| `src/styles/floating-panel.css` | **APPLY** `corner-shape: var(--corner-shape-panel)` to `.floating-panel` (`:7`, the `rounded-panel`/`--radius-panel` surface) inside an `@supports (corner-shape: superellipse(2))` block over the `border-radius: var(--radius-panel)` contract. The Configurator (`rounded-panel`) reads the same alias. |
+| `src/components/ui/sheet/index.ts` *or* `src/styles/sheet.css` | **APPLY** `corner-shape: var(--corner-shape-sheet)` to the SheetContent surface (the `glass-floating` sheetVariants base, `:22`) inside an `@supports (corner-shape: superellipse(2))` block. Note: the sheet is viewport-flush (the squircle reads only on its rounded INNER corner pair — which is exactly where it should). |
+| `src/styles/glass.css` *(the `.glass-hero` opt-in)* | **MINT** a thin `.glass-hero` opt-in utility reading `corner-shape: var(--corner-shape-hero)` inside an `@supports (corner-shape: superellipse(2))` block IF no distinct hero surface exists (RATIFY the hero selector against the W60 page-redesign hero — do NOT squircle every `.glass-card`, which re-breaks the base "data cards stay round" policy). Line-region-disjoint from the base re-home comment (`:714-729`) + W52's specular region. |
+| `scripts/proof-squircle-language.mjs` | **UPDATE the policy clause** (fold 8): split the round set (`card`/`pill` ONLY — DELETE the `--corner-shape-panel must be round` assert, `:178-180`); the squircle set is `bigdock`/`dialog`/`sheet`/`panel`/`hero` (each resolves a `superellipse(...)` riding `var(--corner-k-squircle)`); ADD a SURFACE-READS-TOKEN assert per new surface (reads `var(--corner-shape-<surface>)` inside `@supports (corner-shape: superellipse(2))` over a `border-radius` fallback); KEEP SUPPORTS-GATE-INTACT + CARD-REHOMED; rename the policy summary line. The amend must re-RED the gate at HEAD (the panel-round assert would FALSE-GREEN; the new surface asserts born-RED). |
+| `tests-visual/squircle-language.spec.ts` | **EXTEND** the π render arm: add the dialog/sheet/panel/hero `getComputedStyle(...).cornerShape` readbacks (=== `superellipse(2)` on Chrome-139, round fallback otherwise) alongside the big-dock + card-stays-round canaries. |
+| `docs/tranches/AX/audit/W56-squircle-language.json` | **UPDATE** the ledger with the four new RED witnesses (panel-was-round, no-dialog/sheet/hero-alias, surfaces-no-decl, gate-asserts-panel-round) + the extended GREEN structure + the π readbacks. |
+
+**AMEND OUT of bounds:** data `.glass-card` + `.btn-pill` + the small `--radius-{sm,md,lg}` controls (round
+by policy — the squircle is RADIUS-THRESHOLD-gated, only the large glass overlays); the `--corner-k-*` k-band
+(no new k — the family rides `--corner-k-squircle`); `--corner-shape-card`/`-pill` (= round, unchanged);
+`--corner-shape-thumb` (AX.W59 slider, its own surface); the big-dock site (already done by the base wave);
+`glass-refract.css`; the clip-path REJECTION (still rejected for the new surfaces too). The W60 hero CONTENT
+surface (W56b ships the `--corner-shape-hero` token + the thin `.glass-hero` opt-in; W60 owns the hero
+content layout — cross-ref, not co-edit).
+
+**OUT of bounds (base wave — superseded by the amend where noted):** the `--radius-*` ladder (the
+corner-RADIUS axis — unchanged); the big-dock radius morph (`dock.css:525-531` — the radius lerp is W01's,
+the shape is G3's; line-region-disjoint); `glass-refract.css` (the refraction substrate, not a corner-shape
+decl); W42's `--superellipse-k` continuous animation (it READS G3's `k` band, G3 does not author the
+animation). ~~the instrument-chassis / Configurator / Drawer surfaces (the "and the like" candidates are
+consumer-opt-in, NOT applied by default this wave)~~ — **SUPERSEDED by the amend:** the Configurator panel /
+floating-panel / Drawer-`--radius-panel` corners now squircle via `--corner-shape-panel` per the
+USER-DECISION (they are large-radius glass overlays); the instrument-chassis stays a design call against the
+live audit (it is a chassis bezel, not a floating glass overlay — RATIFY).
 
 ---
 
@@ -279,6 +457,49 @@ the ORCHESTRATOR runs via chrome-devtools-mcp @ `localhost:5173` on a real Chrom
 
 **The wave does NOT close on the headless gate alone** — the executed π cornerShape readback (captured in
 `W56-squircle-language.json` per the W00 protocol) is the binding close criterion.
+
+### AMEND HardGate (the W56b policy-clause + π extension — supersedes the base POLICY-CARD-ROUND)
+
+The base SOURCE asserts (TOKEN-AXIS-EXISTS, BIGDOCK-READS-TOKEN, SUPPORTS-GATE-INTACT, CARD-REHOMED) stay
+GREEN. The amend REWRITES the POLICY clause + ADDS a per-surface SOURCE assert and extends the π arm:
+
+- **POLICY-ROUND-VS-SQUIRCLE (rewrites POLICY-CARD-ROUND).** Assert `--corner-shape-card`/`-pill` resolve
+  `round` (the round set — DELETE the `-panel must be round` assert); assert
+  `--corner-shape-bigdock`/`-dialog`/`-sheet`/`-panel`/`-hero` each resolve a `superellipse(...)` riding
+  `var(--corner-k-squircle)` (NOT round, NOT an inline literal — the squircle set). **Born-RED at the amend
+  HEAD** (panel = round; dialog/sheet/hero aliases absent — RED-6/RED-7).
+- **SURFACE-READS-TOKEN (NEW — the bite, per new surface).** Assert each large-radius glass surface site
+  reads `corner-shape: var(--corner-shape-<surface>)` (dialog/sheet/panel/hero) INSIDE an `@supports
+  (corner-shape: superellipse(2))` block over a `border-radius` round fallback (NOT a leak, NOT a bare
+  keyword). **Born-RED at the amend HEAD** (no `corner-shape` decl on any of the four — RED-8).
+- **HERO-NOT-BLANKET-CARD (NEW — the policy guard).** Assert the squircle is NOT re-added to `.glass-card`
+  (the base CARD-REHOMED still holds — the hero is a DISTINCT `.glass-hero`/W60 surface, not a blanket
+  re-squircle of every card). A re-added card squircle → RED (the base "data cards stay round" floor).
+
+**π cornerShape live readback (EXTENDED — the amend's binding close).** The orchestrator runs the base
+big-dock + card readbacks AND adds, over the dialog/sheet/configurator-panel/hero routes on a real
+Chrome-139, light AND dark:
+
+- **Each large-radius glass surface reads the squircle.** Open the Dialog, the Sheet, the Configurator panel,
+  and a glass HERO; `evaluate_script` reads `getComputedStyle(<surface>).cornerShape` === `superellipse(2)`
+  on Chrome-139, AND visually confirms the corners read as the iOS superellipse silhouette (the
+  backdrop-filter blur + the cartoon under-shadow follow the shape), not a plain rounded arc — the iOS-26
+  idiom the user asked for.
+- **The sheet's inner-corner pair reads it (viewport-flush check).** The sheet butts the viewport edge, so
+  ONLY its inner-corner pair is rounded — confirm the squircle paints there (and the flush outer edge is a
+  clean straight line, not a clipped artefact).
+- **Data cards + pills STILL round (the policy floor canary).** A data `.glass-card` + a `.btn-pill` read
+  `cornerShape` === `round`/`normal` — the squircle is OFF the small surfaces, EXACTLY as the base wave. The
+  extension did not leak onto the round set.
+- **The round fallback is honest on every NEW surface.** On a non-supporting engine (`CSS.supports` false),
+  the dialog/sheet/panel/hero fall back to the `border-radius` round arc with NO broken paint — the
+  cross-engine contract holds on the extended family too. The engine-aware assert never false-REDs the ~35%.
+- **No regression.** The dialog/sheet entrance springs + the glass material + the page-redesign hero still
+  paint correctly with the squircle silhouette; light AND dark.
+
+The amend does NOT close on the SOURCE gate alone — the executed π readback over ALL the new surfaces
+(captured in `W56-squircle-language.json`) is the binding close criterion (the cardinal AX lesson: a green
+source gate over a wrong painted shape on a dialog is NOT done).
 
 ---
 
@@ -389,11 +610,14 @@ close.
 
 ## Open questions / RATIFY-BEFORE-IMPL
 
-1. **The "and the like" membership — RATIFY against the live audit.** The big-dock is unambiguous. The
-   large-radius family (dialogs / `--radius-dialog`, the Configurator panel, Drawer top corners, hero
-   overlays) is a design call. **Recommendation: default = big-dock ONLY** (the no-overfitting bar — ship
-   the token axis + the big-dock consumer; let the user opt additional surfaces in by re-pointing
-   `--corner-shape-<surface>`). Surface the candidate list to the user; do NOT guess membership.
+1. **The "and the like" membership — ✅ RESOLVED by the USER-DECISION (W56b amend).** The base wave deferred
+   this; the user has RATIFIED (MASTER-PLAN R1): **extend to dialogs + sheets + panels + glass hero cards +
+   where befitting (large-radius surfaces); cards + pills stay rounded.** The membership is now CLOSED via
+   the radius-threshold rule (large-radius glass overlays squircle; small controls + data cards round) — see
+   §AMEND. The ONE residual RATIFY is the exact HERO selector (`.glass-hero` opt-in vs an existing W60 hero
+   surface) + whether the instrument-chassis bezel joins (it is a chassis, not a floating glass overlay —
+   default NO, RATIFY against the live audit). Do NOT blanket-squircle every `.glass-card` (re-breaks the
+   data-card-round floor).
 2. **`--corner-shape-*` plain token vs `@property`-registered — RATIFY.** A plain `@theme` token suffices
    for a `:root` override + the `var()` read in dock.css. `@property` registration is warranted ONLY if a
    per-surface ANIMATED shape is wanted (none at landing — W42 animates the `k` SCALAR, not the shape

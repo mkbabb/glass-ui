@@ -530,3 +530,206 @@ Per §2b the band-A binding precepts (pinned `docs/precepts/` @ `63240e6`):
    leftover thin `dock.css` shell is itself a small orphan; the `dock-controls.css` pattern `@import`s the
    sibling directly. RATIFY the `@import` ordering (shell → layers → layer-group → overflow → dock-controls)
    so the cascade is preserved bit-for-bit (the carve-isomorphism A/B is the gate on this).
+
+---
+
+## AMEND (convergence — D14 dock-showcase content half + the W18 IA-category reconciliation + the W45/W61 carve re-order)
+
+> **This is an AMEND, not a rewrite.** Everything above (the four original folds F0-F4, the FileBounds,
+> the Disjointness, the HardGate) STANDS. This section ADDS three reconciliations the 32-lane inventory +
+> the convergence/convergence2 passes surfaced AFTER the original spec was authored: (A) W06 owns the dock
+> SHOWCASE content half of D14 — the morph/animation/layers/variants/rail tour + the DK9/DK10 vertical-vs-rail
+> contrast — while W18 owns the IA CATEGORY framing; (B) the dock.css carve is re-ordered to land AFTER the
+> WHOLE dock band (now `W45 → W54 → W61 → W06`, not just `W01 → W04`) because the region-model + nav-pattern +
+> collapsed-floor + glass-first additions grew `dock.css` from 1227 → **1639** and the carve must shelve the
+> FINAL model; (C) the W18 reconciliation REVERSES the original RATIFY-#1 "keep flat `navigation/` siblings"
+> recommendation toward category-member rows. The header `dependsOn` is amended to `AX.W01, AX.W04, AX.W45,
+> AX.W54, AX.W61` (· AX.W56 `--corner-shape-*` read-only · AX.W18 downstream · AX.W00 for the π-lane).
+
+### A.1 — The W06↔W18 split is content-vs-category (the binding D14 contract)
+
+The convergence pass (`docs/tranches/AX/audit/convergence/D14.md` — *"There should be an ENTIRE section
+dedicated to the dock — morphing, animations, layers, variants, rail, etc."*) folds the user's dedicated-dock-
+section ask onto **TWO coordinated waves with a single-writer split** (`D14.md §3.4`, ratified in
+`AX.W18-storybook-ia-reinvention.md:49` Scope-5 + `:101` Disjointness):
+
+- **W06 owns the dock STORY CONTENT half (this wave — the NET-NEW D14 scope addition):** the consolidated
+  `dock/overview` morph+recipes home (the original F1 consolidation, RE-HOMED under the `dock` category — see
+  A.3), a **dedicated morph/animation showcase section** (a "Watch it morph" controlled collapse↔expand the
+  user can TRIGGER, making the W01 single-scalar `--dock-morph-t` spring VISIBLE as the showcase, not implicit
+  in hover — the first thing D14 names), the **`dock/variants` axis-tour SFC content** (one `<StorySection>`
+  per shipped-but-undemoed axis — see A.2), the "Slider in dock" / `overflow="wrap"` sections (the original
+  F1/F4-relocate folds), the `foundations/dock-active-tokens` DELETION (the original F0), and the rail-variant
+  type-narrow + chrome hoist (the original F2). All SFC BODY content, all on the SHIPPED `StoryPage` +
+  `<StorySection>` + `<ShowcaseFrame>` chassis — **NO new tabbed-sub-nav primitive** (the D6 no-invented-chassis
+  discipline: stacked sections read fine).
+
+- **W18 owns the IA CATEGORY half (downstream — `AX.W18:49`):** the first-class TOP-LEVEL `dock` category in
+  `manifest.ts` (sibling to Foundations/Substrates/Primitives, NOT a `navigation/dock` leaf), the cross-category
+  row consolidation, the `dock/variants` row PLACEMENT (the row whose SFC BODY W06 authors), and the
+  `proof:storybook-ia` `EXPECTED_TREE` re-baseline to `["dock", ["overview", "layers", "variants", "rail"]]`.
+
+**The single-writer contract (binding — `AX.W18:101`):** W18 is the SOLE `manifest.ts` dock-row writer; W06 is
+the dock-story-CONTENT writer. W06 writes SFC BODIES (incl. the new `dock/variants` showcase content into the
+file W18 places), never `manifest.ts` dock rows/ordering. W18 `dependsOn` W06 — W06 lands first (settling the
+story set + authoring the morph/variants content + deleting `dock-active-tokens`), then W18 frames the settled
+set into the `dock` category. **If W18 places a `dock/variants` row whose SFC W06 has not yet authored, W18
+HALTS + coordinates** (`AX.W18:87`,`:125` — the showcase BODY is W06 scope, never authored in-line by W18).
+
+### A.2 — The `dock/variants` axis-tour (the NET-NEW showcase content W06 authors)
+
+D14 §1 measured the showcase-completeness gap: the dock prop surface is rich but **whole axes are demoed
+NOWHERE**. The `dock/variants` SFC walks them as one `<StorySection>` per axis on the shipped chassis:
+
+- `shape` — pill · rounded · card on a **HORIZONTAL** dock (exercising the AW.W3b horizontal-shape paint,
+  `GlassDock.vue:61-62` — no story exercises horizontal-rounded today).
+- `layout` — linear · grid.
+- `density` — **mobile · compact · comfortable · spacious** (the 4-rung axis currently INVISIBLE — zero
+  `density=` in any dock story; this is the surface the W45 `--dock-scale` mobile-sizing ask becomes visible on).
+- `orientation` — horizontal · vertical side by side.
+- `overflow` — grow · wrap · scroll (the `wrap` section RELOCATED from W04 per the original F4; `scroll` only
+  dogfooded inside the demo's own `BottomDock`, never a story axis).
+
+**Overfitting check (the §0 mandate):** the `dock/variants` SFC + the morph section are private demo helpers
+(≥2 sections / exercised axes each) and surface SHIPPED props — documentation-is-part-of-the-change, not
+contrivance. NO new chassis primitive.
+
+### A.3 — DK9 (vertical-vs-rail) + DK10 (the dedicated vertical-dock section) — the contrast W06 authors
+
+The convergence2 rail audit (`docs/tranches/AX/audit/convergence2/A-dock-rail.md §2`, verdict *"augment-
+existing-wave (W06 for DK9)"*) confirms W06 ALREADY owns DK9's core (RED witness 3 is the rail-conflation
+verbatim; the F2 type-narrow + hoist + demo-de-derivation is the fix). The W45 DK9/DK10 routing
+(`AX.W45:77-80`) routes the *demo* half here. The amend adds the two contrast deliverables:
+
+1. **The DK9 Option-A-vs-B RATIFY gate (surface to user, do not self-decide).** `A-dock-rail.md §2b` frames a
+   user design call: **Option A** — the rail stays a first-class named variant with its own refined nav chrome
+   (W06's existing plan — the type-narrow + hoist); **Option B** — retire `variant="rail"` and make a vertical
+   nav-dock just `<GlassDock orientation="vertical" always-expanded shape="rounded">` + the hoisted nav chrome,
+   deleting the force-coupling. The audit reads DK9 toward Option A (the user wants the rail to BE a distinct
+   recognizable thing, not a leaky alias) and the AX squircle/glass-first pivot reinforces it — but the
+   original W06 §RATIFY-#2 ASSUMES Option A silently. **Amend:** make Option-A-vs-B an EXPLICIT
+   RATIFY-WITH-USER gate (Class-3 — surface to the orchestrator, never self-ratify the design call).
+   **Recommendation: Option A** (a distinct, refined, well-sectioned rail).
+
+2. **A vertical-vs-rail CONTRAST section (DK10 — the dedicated vertical-dock section).** The consolidated dock
+   home (`dock/overview`, or a `dock/variants` `orientation` subsection) carries an explicit section that
+   VISUALLY CONTRASTS a plain `<GlassDock orientation="vertical">` against `<GlassDock variant="rail">` side by
+   side, so the differentiation is TEACHABLE — the rail reads as a purpose-built navigation column (refined
+   nav-item affordance + the W45 rail-bg token ladder it COMPOSES with), not 6 surface rules apart from a
+   generic vertical dock. This discharges DK10's "dedicated vertical dock section" against the dock home AND
+   makes the DK9 differentiation legible. The W06 hoist + the W45 rail-bg ladder COMPOSE here (W45 ships the
+   `--dock-layer-rail-bg` surface token; W06 hoists the active-item/tap-squish/tooltip chrome — together they
+   make the rail a recognizable thing). **OUT of bounds:** the W45 rail-bg token AUTHORING (`--dock-layer-rail-bg`,
+   the axis-aware `.dock-layer-tab-indicator` translate fix — DK8 is W45's, `A-dock-rail.md §1`); W06 only
+   COMPOSES the settled tokens into the contrast section, never authors the rail-bg ladder.
+
+The "Dock Rail" (`GlassDock variant="rail"`) vs "Instrument Rail" (`<InstrumentRail>` cockpit chassis) vs
+"Layer-switcher rail" (`.dock-layer-rail` inside a `DockLayerGroup`) three-way noun collision
+(`A-dock-rail.md §0`) is SIGNPOSTED in the manifest descriptions (the original F3) — the amend notes the THIRD
+member (the layer-switcher rail) so the disambiguation is complete; the Instrument-Rail DISSOLVES if W28/W29
+retire instrument-chassis (signpost now, route the dissolution to W28/W29 — the original §RATIFY-#3 stands).
+
+### A.4 — The dock.css carve is re-ordered AFTER the WHOLE dock band (W45 → W54 → W61 → W06)
+
+The original spec sequenced the carve `dependsOn AX.W01, AX.W04` ("LAST in the dock band" meaning post-W01-
+morph + post-W04-wrap). **The dock band GREW** — W45 (three-region model + `#persistent` slot + `DockSeparator`
++ `--dock-scale` cascade), W54 (the glass-first ROOT default), W56 (the `--corner-shape-*` squircle axis), and
+W61 (the dock-unify-root nav-pattern contract + the collapsed-pill floor tokens + the glass-first selected-
+control re-point) all land structural additions INSIDE `dock.css`. The carve must shelve the **FINAL** post-
+band model, not a mid-churn snapshot.
+
+**The canonical sequence is now `W45 → W54 → W61 → W06` (ratified in `AX.W61:272`,`:551`,`:316`,`:573` —
+*"W06 carves the SETTLED collapsed-floor + active-fill model into `src/styles/dock/` partials … W06 ≠ this
+wave … Sequence: W45 → W54 → W61 → W06"*).** W06's carve is the LAST dock-band act by construction; carving
+before W45/W61 would partition a model those waves then re-author, guaranteeing a three-way merge across the
+whole band. The W61 FileBounds (`AX.W61:236`) name the carve explicitly: *"the `dock.css`→`src/styles/dock/`
+PARTITION carve (W06 owns — W06 carves the settled model AFTER W61's token mints)."*
+
+**Carve sizing for the region-model additions (the headline line-count amend).** `wc -l src/styles/dock.css`
+at the convergence HEAD = **1639** (the original spec's 1227 + the W45/W61 region-model + nav-pattern +
+collapsed-floor growth). The carve must size the four partials for the FINAL model:
+
+- `dock/shell.css` — the `.glass-dock` root, the W02 morph-clip aperture (one-clock `overflow: clip`), the
+  density cascade (`data-density` × `--dock-scale`, now `:231-553`), the shape/variant rules, the glass-first
+  rim, AND **the W45 `#persistent` region rules + the `<DockSeparator>` `.dock-separator` axis-aware rule + the
+  W61 collapsed-pill floor + glass-first selected-control fill** (the region-model additions the original spec
+  did not yet account for — these ride shell.css as the dock's structural skeleton).
+- `dock/layers.css` — the `.dock-layer` / `.dock-layer-stack` crossfade + hit-test + reveal-stagger contract
+  (now on the ONE `--dock-morph-t` scalar per W45 DK7, `:929-1011`).
+- `dock/layer-group.css` — `.dock-layer-group` / `.dock-layer-rail` (the layer-switcher rail) / stack +
+  the W45-settled axis-aware switcher-rail rules.
+- `dock/overflow.css` — the W04-settled wrap recipe (RELOCATED verbatim, never re-authored).
+
+**Re-measure at wave-open** (the W00 live re-diagnosis ritual): `dock.css` MAY have grown further if W45/W54/
+W56/W61 land additional rules between this amend and W06's execution. If any single cohesion axis (e.g.
+`dock/shell.css` carrying the density cascade + the region-model + the glass-first additions) cannot clear
+< 500 without a cohesion-violating split, that is the §3a AUTO-TRIGGER (Class-2 → triumvirate, never a
+contrived sub-file split — split on a SECOND cohesion axis, e.g. `dock/density.css` carved off `dock/shell.css`
+if the density cascade alone is a coherent partial, NOT a length-only orphan). The carve-isomorphism A/B
+screenshot-diff (the original HardGate item 4) remains the gate: the WHOLE post-band dock renders pixel-
+identical before/after the carve (same `@layer components`, same cascade order → ZERO visual delta).
+
+### A.5 — FileBounds delta (the amend's additional surface)
+
+| File | Edit | Amend rationale |
+|------|------|-----------------|
+| `demo/stories/dock/variants.vue` (or `navigation/dock.vue` `dock/variants` section) | **AUTHOR the axis-tour content** (W18 places the row; W06 authors the SFC BODY). | The NET-NEW D14 showcase half (A.2). |
+| `demo/stories/navigation/dock.vue` (→ `dock/overview` post-W18) | ADD the dedicated **morph/animation showcase** section ("Watch it morph") + the **vertical-vs-rail CONTRAST** section (DK9/DK10, A.3) — on TOP of the original F1 "Slider in dock" + portal-contract + wrap folds. | The D14 morph showcase + the DK10 dedicated vertical-dock section. |
+| `src/styles/dock/shell.css` | The carve now ALSO partitions the **W45 `#persistent`/`DockSeparator`/density-cascade + the W61 collapsed-floor/glass-first** rules (A.4) — sized for the 1639-line FINAL model. | The region-model carve re-size. |
+
+**OUT of bounds (amend additions):** the `dock` CATEGORY creation + `EXPECTED_TREE` re-baseline + the
+`dock/variants` ROW placement — **W18** (W06 authors the SFC body, never the `manifest.ts` dock rows); the W45
+rail-bg token ladder + the axis-aware switcher-rail indicator fix (DK8) — **W45**; the W61 nav-pattern contract
++ collapsed-floor token MINT + glass-first selected-control re-point — **W61** (W06 carves the SETTLED model,
+authors no token mint); the `--corner-shape-*` squircle axis — **W56** (consumed read-only); the W54 glass-
+first ROOT default — **W54**. W06 COMPOSES all four settled outputs into the showcase + the carve; it authors
+none of them.
+
+### A.6 — DEDUP (how this amend folds without duplicating a sibling)
+
+- **vs W18 (IA category).** Content-vs-category single-writer split (A.1) — W06 writes SFC bodies, W18 writes
+  `manifest.ts` rows + categories + the gate re-baseline. The amend REVERSES the original §RATIFY-#1 "keep flat
+  `navigation/` siblings" recommendation toward W18's category-member rows (`overview`/`layers`/`variants`/`rail`
+  under a first-class `dock` category) — the original RATIFY-#1 is SUPERSEDED by the D14 convergence. No
+  `manifest.ts` write overlaps (W06's dock edits are SFC content). W18 `dependsOn` W06.
+- **vs W45 (three-region model).** W06 carves the SETTLED W45 model AFTER (`W45 → W54 → W61 → W06`); the DK9/DK10
+  contrast section COMPOSES the W45 rail-bg token ladder, never authors it. W06 carries NO region-model edit.
+- **vs W61 (dock-unify-root).** W06 carves the SETTLED W61 collapsed-floor + glass-first selected-control model
+  into partials AFTER; W06 authors NO collapsed-floor mint, NO active-fill re-point, NO nav-pattern contract
+  (`AX.W61:316`,`:573` — *"W06 ≠ this wave"*). The nav-pattern contract W06 DOCUMENTS in the dock home is W61's
+  recorded canon (W06 references it, does not author it).
+- **vs W54/W56.** W06 carves the glass-first (W54) + `--corner-shape-*` (W56) additions into the partials
+  unchanged; consumed read-only.
+- **vs the original W06 folds (F0-F4).** All STAND — the amend ADDS the D14 content half + the DK9/DK10 contrast
+  + re-orders/re-sizes the carve. NO original fold is removed or duplicated.
+
+### A.7 — HardGate delta (the amend's additional close criteria)
+
+The original HardGate (the structural `proof:storybook-ia` / `proof:no-orphan-demo-route` / `.css`-aware
+`proof:no-god-module` / deletion-proof / type-narrow-proof + the VISUAL-TRUTH live audit) STANDS. The amend
+adds to the **VISUAL-TRUTH live audit** (the binding close criterion — a fail-CLOSED chrome-devtools-mcp π
+pass the ORCHESTRATOR runs @ `localhost:5173`, light AND dark, ≥ 3 viewports 375×667 / 1280×800 / 1440×900,
+captured as a paired-π BEFORE/AFTER + DELTA under `docs/tranches/AX/audit/visual/`):
+
+- **The dock SHOWCASE reads as the D14 walkthrough:** the dedicated **morph/animation** section's "Watch it
+  morph" trigger drives a VISIBLE single-scalar `--dock-morph-t` spring (the W01 morph legible as the showcase,
+  not implicit in hover — `getComputedStyle` reads the scalar mid-morph, the screenshot shows the aperture
+  animating); the `dock/variants` axis-tour renders every shipped axis (the previously-invisible `density`
+  4-rung axis paints `mobile`/`compact`/`comfortable`/`spacious` at measurably distinct sizes); the
+  vertical-vs-rail CONTRAST section reads as TWO distinct things side by side (the rail's refined nav-item
+  affordance + the W45 rail-bg surface vs a plain `orientation="vertical"` dock — the DK9 differentiation is
+  legible, the DK10 dedicated vertical-dock section is present).
+- **The rest state is GENUINELY static (the original SOTA item 3, re-asserted):** the dock/rail is at REST with
+  NO ambient idle motion — the morph/squish fires ONLY on user-initiated trigger/expand/tap (the Liquid-Glass
+  rest-quiet contract + the reduced-motion floor; a low-amplitude breathing loop is a fail). `proof`-gate the
+  reduced-motion arm (no deform under `prefers-reduced-motion: reduce`).
+- **The carve-isomorphism A/B (re-asserted for the 1639-line model):** the WHOLE post-band dock renders
+  pixel-identical before/after the `dock.css`→partials carve (same `@layer components`, same cascade order →
+  ZERO visual delta), confirmed by an A/B screenshot-diff at every viewport × light/dark.
+
+**The wave does NOT close on the headless gates alone** (the cardinal AX precept) — the executed live audit,
+captured as the paired-π BEFORE/AFTER + DELTA artefact under `docs/tranches/AX/audit/visual/`, is the binding
+close criterion. The DELTA names: BEFORE — five-route dock scatter across three categories, no morph showcase,
+the `density` axis invisible, the rail indistinguishable from a vertical dock, `dock.css` 1639 un-carved;
+AFTER — the `dock` category walkthrough (morph → animations → layers → variants → rail), the `density` axis
+demoed, the vertical-vs-rail contrast legible, `dock.css` carved into four < 500-line partials.
