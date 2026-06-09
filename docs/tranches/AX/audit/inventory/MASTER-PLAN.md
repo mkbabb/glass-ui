@@ -55,8 +55,9 @@ DK7 second clock deleted). Soundness debt being discharged (story-language GREEN
 
 | # | Decision | Recommended default | Gates |
 |---|---|---|---|
-| R3 | glass-first-class BOUNDARY — how far does "glass by default" go? | navigation/overlay/chrome + buttons default to glass + a `--glass-level` knob + an explicit opaque escape; content text sits ON the glass surface (legible via tint + W55 adaptive-over-light), NOT raw glass-on-busy-content | **W54 (the ROOT)** |
-| R1 | squircle "and the like" membership — beyond big-docks, which surfaces get the iOS superellipse? | big-dock only (current); candidate add-list: dialogs/sheets/panels/hero-overlays | W56 close |
+| R3 | glass-first-class BOUNDARY — how far does "glass by default" go? | **USER-DECIDED: MAXIMAL — everything glass.** W54 makes glass the default for EVERY surface (containers, chrome, buttons, AND content panels) over the rich backgrounds; the `--glass-level` scalar + the explicit opaque escape remain for the rare solid need; **W55 adaptive-over-light carries the legibility** (the heavy-tint-where-needed). Glass-first is the root default, not an opt-in. | **W54 (the ROOT)** |
+| R1 | squircle "and the like" membership — beyond big-docks, which surfaces get the iOS superellipse? | **USER-DECIDED: extend to dialogs + sheets + panels + glass hero cards + where befitting** (large-radius surfaces). Cards + pills STAY rounded (prior guidance). | W56 amend |
+| PR | page-redesign relationship to W18/W40/W57/W58 | **USER-DECIDED: a thin NET-NEW container-layer wave (W60)** that wraps each story page in a glass card + a rich per-page background + proper hierarchy; W18/W40/W57/W58 stay as-is (layered on top). | W60 (net-new) |
 | R2 | ColorSwatch primitive (aurora seed/palette) — mint vs keep native `<input type=color>` | keep native (zero new surface) | W38 |
 | R5 | slider "spectrum" naming / glass-scrubber | accept the shipped standard+spectrum (W59 done) | — |
 | P1 | use-token-color — the COMPOSABLE has a real 2nd consumer (constellation.vue, keep); the DEMO STORY removed + the vertical-dock icon → DarkModeToggle | remove the demo + fix the dock icon (the composable stays) | W18/W21 |
