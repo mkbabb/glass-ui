@@ -47,7 +47,7 @@ reference; the Status column reflects each wave's reconciled state.
 | W03 | keepDockOpen host-native hold | complete |
 | W04 | dock overflow wrap | complete |
 | W05 | one iOS-spring vocabulary | complete |
-| W06 | dock storybook honest rail + css split | planned |
+| W06 | dock storybook honest rail + css split | live-verified — dock.css carved into dock/{shell,morph,density,layers,layer-group,overflow}.css partials (<500 each); proof:dock-css-carve green; DELTA audit/visual/W06-DELTA.md |
 | W07 | aurora core unblock — WGSL black canvas | complete |
 | W08 | blob core unblock — smin distance regime | complete |
 | W09 | specular tune to subtle | live-pending — D11 radials absorbed by W52 (cardinal re-open) |
@@ -105,7 +105,7 @@ reference; the Status column reflects each wave's reconciled state.
 | W58 | storybook-language strip — kill WCAG citations + impl-note code-comments (P10/P11) | dev-complete (proof:story-language born-RED→GREEN; 49 SFCs swept) |
 | W59 | slider redesign — integrated-cylinder glass default + squircle-thumb spectrum | live-verified — STANDARD = continuous integrated cylinder (thumb=fill cap, no demarcation), SPECTRUM = gradient track + track-height squircle thumb; proof:slider-two-only green; DELTA audit/visual/W59-DELTA.md |
 | W60 | page-redesign container-layer — glass card + per-page rich background + hierarchy (Q4/Q7/Q9) | planned (spec authored) |
-| W61 | dock-unify-root — all docks one GlassDock root, home-left + nav + separators, Q1 collapsed size | planned (spec authored) |
+| W61 | dock-unify-root — all docks one GlassDock root, home-left + nav + separators, Q1 collapsed size | live-verified — the unified nav pattern (home-left #persistent + <DockSeparator> + glass-first aria-pressed selected) on the rail+showcase docks, collapsed-floor on --dock-scale; proof:dock-unify F1-F5 green (shell docks pendingW40); DELTA audit/visual/W61-DELTA.md |
 | W62 | soundness gate battery (Batch −1, lands FIRST) — proof:live-verified-ledger + tsconfig.test.json fold + proof:consumer-staleness + gates:verify-ci/gen-ci-fresh + proof:disposition-live (GOLDEN §B) | dev-complete — 5 gates landed; ci.yml drift killed (20-gate mirror → generated, 92 ci gates byte-matched); tests/ folded into typecheck (caught the AuroraHarmony dead import); consumer-staleness born-RED on 12 real cross-repo stale imports (4 sibling repos) pending the W34 discharge; 2 phantom danglers retired. No live DELTA owed (gate-machinery wave, no `src/`) |
 | W63 | gate-pattern de-trap (Q8 BLOCKER) — /compositions/gate-pattern open=ref(true) traps the visitor on click; make it dismissable, lands BEFORE W60 wraps pages | live-verified — re-authored as a CONTAINED glass-card preview + on-demand modal trigger (page always reachable; reachability assertion PASS); proof:gate-detrap green; DELTA audit/visual/W63-DELTA.md |
 

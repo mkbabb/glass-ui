@@ -1,0 +1,230 @@
+/* dock/density.css — the density × `--dock-scale` cascade (AX.W06 carve).
+ *
+ * Carved from the dock.css god-module (slice 25). This partial owns the W45
+ * density cascade: every per-density geometry axis (padding / control-size /
+ * layer-height / gap / tile-min / trigger+tab padding) is `calc(<base> *
+ * var(--dock-scale))` so the ONE `--dock-scale` multiplier grows box+pad+gap+
+ * tab+tile in lockstep on touch, with the inner `max(…, --dock-control-floor)`
+ * WCAG 2.5.5 clamp. The four rungs (compact · comfortable · spacious · audacious)
+ * + the audacious narrow-box `@container` label compression.
+ *
+ * @import-ed by dock.css in cascade order, in the SAME `@layer components` — the
+ * carve is isomorphic (same layer, same source order → ZERO visual delta). */
+
+@layer components {
+    /* AX.W45 — the density cascade is threaded by the ONE `--dock-scale`
+       multiplier (default 1, lifted to `--dock-mobile-scale` on coarse pointers).
+       EVERY per-density geometry axis is `calc(<base> * var(--dock-scale))` so a
+       single knob grows box+pad+gap+tab+tile-min in lockstep on touch — the desktop
+       proportion preserved, never a 44px box around a desktop glyph. The
+       control-size carries an INNER `max(…, 44px)` WCAG 2.5.5 clamp (the coarse
+       block sets `--dock-control-floor: var(--dock-touch-target)`) so a consumer
+       dialing `--dock-mobile-scale` below 1.0 cannot drop the touch target under the
+       floor — the floor survives as a CLAMP, not a parallel `@media` rule. `--dock-
+       tile-min` is now IN the cascade (DK4-b) so the grid tile scales with the
+       control + glyph; it is a proportional `calc(control-size + tile-pad)` so the
+       icon-to-tile margin is ONE knob, not a per-density literal. */
+    .glass-dock[data-density="compact"] {
+        --dock-padding-block: calc(
+            var(--dock-density-compact-padding-block, 0.25rem) * var(--dock-scale)
+        );
+        --dock-padding-inline: calc(
+            var(--dock-density-compact-padding-inline, 0.375rem) * var(--dock-scale)
+        );
+        --dock-control-size: max(
+            calc(var(--dock-density-compact-control-size, 2rem) * var(--dock-scale)),
+            var(--dock-control-floor, 0px)
+        );
+        --dock-layer-height: max(
+            calc(var(--dock-density-compact-layer-height, 2rem) * var(--dock-scale)),
+            var(--dock-control-floor, 0px)
+        );
+        --dock-layer-gap: calc(
+            var(--dock-density-compact-gap, 0.25rem) * var(--dock-scale)
+        );
+        --dock-tile-min: calc(
+            var(--dock-control-size) + var(--dock-tile-pad, 1rem) * var(--dock-scale)
+        );
+        --dock-trigger-padding-block: calc(
+            var(--dock-density-compact-trigger-padding-block, 0.1875rem) *
+                var(--dock-scale)
+        );
+        --dock-trigger-padding-inline: calc(
+            var(--dock-density-compact-trigger-padding-inline, 0.4375rem) *
+                var(--dock-scale)
+        );
+        --dock-tab-padding-block: calc(
+            var(--dock-density-compact-tab-padding-block, 0.3125rem) *
+                var(--dock-scale)
+        );
+        --dock-tab-padding-inline: calc(
+            var(--dock-density-compact-tab-padding-inline, 0.625rem) *
+                var(--dock-scale)
+        );
+        --dock-tab-h: calc(32px * var(--dock-scale));
+    }
+
+    /* Comfortable density — the GlassDock default. Sits between compact
+       and spacious. */
+    .glass-dock[data-density="comfortable"] {
+        --dock-padding-block: calc(
+            var(--dock-density-comfortable-padding-block, 0.375rem) * var(--dock-scale)
+        );
+        --dock-padding-inline: calc(
+            var(--dock-density-comfortable-padding-inline, 0.5rem) * var(--dock-scale)
+        );
+        --dock-control-size: max(
+            calc(
+                var(--dock-density-comfortable-control-size, 2.5rem) *
+                    var(--dock-scale)
+            ),
+            var(--dock-control-floor, 0px)
+        );
+        --dock-layer-height: max(
+            calc(
+                var(--dock-density-comfortable-layer-height, 2.5rem) *
+                    var(--dock-scale)
+            ),
+            var(--dock-control-floor, 0px)
+        );
+        --dock-layer-gap: calc(
+            var(--dock-density-comfortable-gap, 0.375rem) * var(--dock-scale)
+        );
+        --dock-tile-min: calc(
+            var(--dock-control-size) + var(--dock-tile-pad, 2rem) * var(--dock-scale)
+        );
+        --dock-trigger-padding-block: calc(
+            var(--dock-density-comfortable-trigger-padding-block, 0.25rem) *
+                var(--dock-scale)
+        );
+        --dock-trigger-padding-inline: calc(
+            var(--dock-density-comfortable-trigger-padding-inline, 0.5rem) *
+                var(--dock-scale)
+        );
+        --dock-tab-padding-block: calc(
+            var(--dock-density-comfortable-tab-padding-block, 0.4375rem) *
+                var(--dock-scale)
+        );
+        --dock-tab-padding-inline: calc(
+            var(--dock-density-comfortable-tab-padding-inline, 0.75rem) *
+                var(--dock-scale)
+        );
+        --dock-tab-h: calc(38px * var(--dock-scale));
+    }
+
+    .glass-dock[data-density="spacious"] {
+        --dock-padding-block: calc(
+            var(--dock-density-spacious-padding-block, 0.5rem) * var(--dock-scale)
+        );
+        --dock-padding-inline: calc(
+            var(--dock-density-spacious-padding-inline, 0.75rem) * var(--dock-scale)
+        );
+        --dock-control-size: max(
+            calc(
+                var(--dock-density-spacious-control-size, 2.75rem) * var(--dock-scale)
+            ),
+            var(--dock-control-floor, 0px)
+        );
+        --dock-layer-height: max(
+            calc(
+                var(--dock-density-spacious-layer-height, 2.75rem) * var(--dock-scale)
+            ),
+            var(--dock-control-floor, 0px)
+        );
+        --dock-layer-gap: calc(
+            var(--dock-density-spacious-gap, 0.5rem) * var(--dock-scale)
+        );
+        --dock-tile-min: calc(
+            var(--dock-control-size) + var(--dock-tile-pad, 2.75rem) * var(--dock-scale)
+        );
+        --dock-trigger-padding-block: calc(
+            var(--dock-density-spacious-trigger-padding-block, 0.375rem) *
+                var(--dock-scale)
+        );
+        --dock-trigger-padding-inline: calc(
+            var(--dock-density-spacious-trigger-padding-inline, 0.625rem) *
+                var(--dock-scale)
+        );
+        --dock-tab-padding-block: calc(
+            var(--dock-density-spacious-tab-padding-block, 0.5rem) * var(--dock-scale)
+        );
+        --dock-tab-padding-inline: calc(
+            var(--dock-density-spacious-tab-padding-inline, 0.875rem) *
+                var(--dock-scale)
+        );
+        --dock-tab-h: calc(44px * var(--dock-scale));
+    }
+
+    /* Audacious density — typography-forward chrome where the dock reads as
+       a primary surface, not a tray. Tab buttons set their own min-height so
+       consumer-bumped fonts no longer drift the button height — the
+       `--dock-tab-min-height` token reserves the row regardless of glyph rise. */
+    .glass-dock[data-density="audacious"] {
+        --dock-padding-block: calc(
+            var(--dock-density-audacious-padding-block, 0.5rem) * var(--dock-scale)
+        );
+        --dock-padding-inline: calc(
+            var(--dock-density-audacious-padding-inline, 0.875rem) * var(--dock-scale)
+        );
+        --dock-control-size: max(
+            calc(var(--dock-density-audacious-control-size, 4rem) * var(--dock-scale)),
+            var(--dock-control-floor, 0px)
+        );
+        --dock-layer-height: max(
+            calc(var(--dock-density-audacious-layer-height, 4rem) * var(--dock-scale)),
+            var(--dock-control-floor, 0px)
+        );
+        --dock-layer-gap: calc(
+            var(--dock-density-audacious-gap, 0.875rem) * var(--dock-scale)
+        );
+        --dock-tile-min: calc(
+            var(--dock-control-size) + var(--dock-tile-pad, 2.75rem) * var(--dock-scale)
+        );
+        --dock-trigger-padding-block: calc(
+            var(--dock-density-audacious-trigger-padding-block, 0.625rem) *
+                var(--dock-scale)
+        );
+        --dock-trigger-padding-inline: calc(
+            var(--dock-density-audacious-trigger-padding-inline, 1rem) *
+                var(--dock-scale)
+        );
+        --dock-tab-padding-block: calc(
+            var(--dock-density-audacious-tab-padding-block, 0.5rem) * var(--dock-scale)
+        );
+        --dock-tab-padding-inline: calc(
+            var(--dock-density-audacious-tab-padding-inline, 1.5rem) *
+                var(--dock-scale)
+        );
+        --dock-tab-min-height: calc(
+            var(--dock-density-audacious-tab-min-height, 3.5rem) * var(--dock-scale)
+        );
+        --dock-tab-h: calc(
+            var(--dock-density-audacious-tab-min-height, 3.5rem) * var(--dock-scale)
+        );
+    }
+
+    /* Density-audacious narrow-box carve (AV.W16 TW3) — when the dock's OWN
+       box is narrow the audacious-dock label glyphs compress so the chrome
+       doesn't overflow its host (≤14px below 30rem, 15px 30–45rem). Keyed off
+       the dock's `dock` inline-size container — now OPT-IN via the
+       `containerName="dock"` prop (AW.W1 removed the always-on default that
+       broke shrink-to-fit), so it fires only for a dock the consumer has
+       width-CONSTRAINED into a host (the 320px sidebar case) where the
+       compression is meaningful and the containment does not collapse the box.
+       A free-floating dock shrink-wraps (box == content) so there is nothing to
+       compress. The var
+       is set on the `.dock-label` descendant (which reads it via
+       `font-size: var(--dock-label-size)`, typography.css). Thresholds keep
+       the prior 479/719px viewport cadence as box widths (30rem ≈ 480px,
+       45rem ≈ 720px at the 16px root). */
+    @container dock (max-width: 29.9375rem) {
+        .glass-dock[data-density="audacious"] .dock-label {
+            --dock-label-size: 14px;
+        }
+    }
+    @container dock (min-width: 30rem) and (max-width: 44.9375rem) {
+        .glass-dock[data-density="audacious"] .dock-label {
+            --dock-label-size: 15px;
+        }
+    }
+}

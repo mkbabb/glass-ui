@@ -1,0 +1,244 @@
+/* dock/morph.css — the SINGLE-SCALAR morph chrome + state response (AX.W06 carve).
+ *
+ * Carved from the dock.css god-module (slice 25). This partial owns the dock's
+ * DYNAMIC chrome: the W01 `--dock-expand-t` directional expanded-ness derivation,
+ * the root background/border/padding interpolation on the ONE `--dock-morph-t`
+ * clock, the collapsed/summary state (the W45-TUNE Q1 proportioned pill + the
+ * summary glyph reveal), the held / open-descendant surface response, and the
+ * W55 adaptive-legibility `--glass-backdrop: light` bucket. The static structural
+ * surface (root, clip, variants, persistent) lives in dock/shell.css.
+ *
+ * @import-ed by dock.css in cascade order, in the SAME `@layer components` — the
+ * carve is isomorphic (same layer, same source order → ZERO visual delta). */
+
+@layer components {
+    /* AX.W01 — the root chrome morphs off the SINGLE `--dock-morph-t` scalar, NOT a
+       CSS transition (the prior `padding/scale/radius var(--dock-motion-resize)` +
+       `background/border-color var(--dock-motion-standard)` transition list — TWO
+       curves on TWO durations — is DELETED). `--dock-expand-t` is the directional
+       expanded-ness (0 = collapsed look, 1 = expanded look) derived from the
+       per-swap morph scalar + the synchronously-set `.expanded`/`.collapsed` class:
+       the box width AND the root padding/radius/color move on ONE clock. The
+       per-frame writes drive the registered `<number>` scalar; the `calc()` reads
+       below interpolate composited. Under PRM the spring's `respectReducedMotion`
+       settles instantly (the scalar jumps 0→1 in one frame → the chrome snaps). */
+
+    /* `--dock-expand-t` — the directional expanded-ness. `--dock-morph-t` is a
+       REGISTERED `@property` (initial-value 0), so it is NEVER guaranteed-invalid:
+       `var(--dock-morph-t, 1)` reads 0 at REST (the fallback is DEAD), which would
+       resolve every expanded dock to expand-t 0 → the collapsed resting look (the
+       pill-radius + collapsed bg/border/padding regression). So the resting value is
+       stated STATICALLY per class, and ONLY while a morph is in flight
+       (`[data-morphing]` armed on the root by useLayerTransition, cleared on settle)
+       does expand-t track the live spring scalar. The class is ALREADY the END state
+       during the morph, so the read resolves the correct in-flight blend (collapse
+       1→0 via `1 - t`; expand 0→1 via `t`); on settle `[data-morphing]` clears and
+       expand-t snaps to the exact class endpoint. */
+    .glass-dock:not(.vertical).expanded,
+    .glass-dock:not(.vertical).always-expanded {
+        --dock-expand-t: 1;
+    }
+
+    .glass-dock:not(.vertical).collapsed {
+        --dock-expand-t: 0;
+    }
+
+    .glass-dock:not(.vertical).expanded[data-morphing],
+    .glass-dock:not(.vertical).always-expanded[data-morphing] {
+        --dock-expand-t: var(--dock-morph-t);
+    }
+
+    .glass-dock:not(.vertical).collapsed[data-morphing] {
+        --dock-expand-t: calc(1 - var(--dock-morph-t));
+    }
+
+    /* The morphing root chrome — background / border-color interpolate between the
+       collapsed and expanded endpoints on the ONE `--dock-expand-t` scalar. Scoped
+       to the horizontal `variant-dock` (the rail / instrument-strip variants own
+       their own surface vocabulary and do not collapse↔expand). The two color axes
+       blend in srgb (the house mix the token ladder speaks). The `.collapsed`
+       discrete bg/border declarations are RETIRED — this block is the single
+       authority, and at rest `--dock-expand-t` resolves to the class endpoint (0
+       collapsed / 1 expanded) so the resting look is exact. */
+    .glass-dock.variant-dock:not(.vertical) {
+        background: color-mix(
+            in srgb,
+            var(--glass-bg-dock, var(--glass-bg-resting))
+                calc(var(--dock-expand-t, 1) * 100%),
+            var(--glass-bg-wash)
+        );
+        border-color: color-mix(
+            in srgb,
+            var(--glass-border-dock, var(--glass-border-resting))
+                calc(var(--dock-expand-t, 1) * 100%),
+            var(--glass-border-floating)
+        );
+    }
+
+    /* The padding morph is split out + scoped `:not(.dock-overflow-wrap)` so the
+       wrap variant's own padding rules (W04 territory — `.dock-overflow-wrap` +
+       its `@media` snap-back) are NOT clobbered by this higher-specificity longhand.
+       Padding interpolates linearly between the collapsed floor and the expanded
+       block/inline padding on the same `--dock-expand-t` scalar. */
+    .glass-dock.variant-dock:not(.vertical):not(.dock-overflow-wrap) {
+        --dock-pad-collapsed: var(
+            --dock-collapsed-padding,
+            var(--dock-padding-block, 0.375rem)
+        );
+        padding-block: calc(
+            var(--dock-pad-collapsed) +
+                (var(--dock-padding-block, 0.375rem) - var(--dock-pad-collapsed)) *
+                var(--dock-expand-t, 1)
+        );
+        padding-inline: calc(
+            var(--dock-pad-collapsed) +
+                (var(--dock-padding-inline, 0.5rem) - var(--dock-pad-collapsed)) *
+                var(--dock-expand-t, 1)
+        );
+    }
+
+    /* AX.W01 — the collapsed padding / background / border-color are RETIRED here
+       (the `--dock-expand-t` morph block above is the single authority for those
+       three axes — they interpolate, never snap). `.collapsed` keeps only its
+       non-morphing concerns: the pointer affordance, the centred summary layout,
+       and the collapsed shadow (box-shadow crossfades discretely — a subtle,
+       acceptable swap that a `color-mix` cannot blend across its multi-layer
+       value). */
+    .glass-dock.collapsed {
+        cursor: pointer;
+        justify-content: center;
+        box-shadow: var(--shadow-dock-override, var(--shadow-dock-collapsed));
+    }
+
+    /* AX.W45-TUNE Q1 — the collapsed summary floors on BOTH axes off the SAME
+       `--dock-collapsed-summary-min-size` token (now MINTED in tokens.css §10 as a
+       tight ≈0.7× of the full control height). The prior rule floored ONLY
+       `min-width` and let the token fall to `--dock-layer-height` (the full control
+       height) — so the collapsed pill read as a full-row stub, not a proportioned
+       squircle. Adding the symmetric `min-block-size` makes the collapsed pill a
+       tight square-ish dot the consumer's glyph sits centred in (the proportioned-
+       pill target the user's Q1 named). */
+    .glass-dock.collapsed .dock-layer--summary {
+        min-width: var(
+            --dock-collapsed-summary-min-size,
+            var(--dock-layer-height, 2.5rem)
+        );
+        min-block-size: var(
+            --dock-collapsed-summary-min-size,
+            var(--dock-layer-height, 2.5rem)
+        );
+        justify-content: center;
+    }
+
+    /* AX.W45 DK1 — the collapsed/summary glyph appears WITH the pill, no added
+       delay. The `--summary` pane is the INCOMING pane on collapse, but the shared
+       stagger ramp reads `--dock-expand-t` which runs 1→0 on collapse — so the
+       summary glyph used to fade OUT over the back half of the morph and pop in only
+       at settle (the "shrunken icon does not appear for a while" defect). Keying the
+       summary pane's stagger scalar to `--dock-morph-t` directly (the per-swap
+       incoming-ness, 0→1) reveals it as the box settles — appearing WITH the pill.
+       The summary is a single front-loaded glyph (onset 0), so this lands it at full
+       opacity by the morph's tail. The `--dock-expand-t` directional scalar stays
+       the right driver for the box CHROME (bg/border/padding/radius interpolate
+       between the collapsed↔expanded endpoints); only the summary pane's CONTENT
+       reveal is decoupled onto the incoming scalar. */
+    .glass-dock[data-morphing] .dock-layer--summary {
+        --dock-expand-t: var(--dock-morph-t);
+    }
+
+    /* AW.W3 — the collapsed-hover scale rides the unified dock spring vocabulary.
+       The `scale var(--dock-motion-resize)` arm was added to the `.glass-dock`
+       root transition above, so this hover scale settles on the SAME spring curve
+       the expand morph uses — a collapsed→hover→expand gesture is one continuous
+       spring, not a `scale`-ease handed off to the width-spring. The hover scale
+       and the press squish (`--scale-press-dock`) are now one register on the dock
+       surface. */
+    .glass-dock.collapsed:hover {
+        background: var(--glass-bg-wash);
+        border-color: var(--glass-border-floating);
+        box-shadow: var(--shadow-dock-override, var(--shadow-dock));
+        scale: var(--dock-collapsed-hover-scale);
+    }
+
+    /* J.W5.C — held-state substrate response.
+     *
+     * When a descendant signals `dockKeepOpen` (e.g. an active slider drag),
+     * `useDockState.isHeld` flips true and the root carries `data-held`.
+     * The dock background lifts a tier (resting → floating-equivalent) and
+     * the border quiets to the floating ring; the change tracks pointer
+     * movement on `--duration-fast` so it reads as a held-cursor cue, not
+     * a state change. The same flag is consumed by descendants (Slider
+     * thumb halo) via `useOptionalDockContext().held` for cross-substrate
+     * coordination (typed-key canonical shape; O.W2 invariant 25).
+     */
+    .glass-dock[data-held] {
+        /* AX.W55 — the held tier threads the oklab tint wrapper (zero-delta at the
+           `0%` rest default) so the adaptive darken reaches the held state too. */
+        background: color-mix(
+            in oklab,
+            var(--glass-bg-floating, var(--glass-bg-resting)),
+            var(--glass-tint-source) var(--glass-tint-strength)
+        );
+        border-color: var(--glass-border-floating, var(--glass-border-resting));
+        transition:
+            background var(--duration-fast) var(--ease-standard),
+            border-color var(--duration-fast) var(--ease-standard),
+            box-shadow var(--duration-fast) var(--ease-standard);
+    }
+
+    /* AQ.W3 §W3.1b — open-descendant surface response. When a dock-hosted
+       trigger (`[data-state="open"]`) is open, the dock root holds its elevated
+       read natively (no consumer JS). Idempotent with `[data-held]` above (same
+       floating paint, different trigger). Decorative; `:has()` Baseline Widely. */
+    .glass-dock:has([data-state="open"]) {
+        /* AX.W55 — same oklab tint wrapper as `[data-held]` (zero-delta at rest). */
+        background: color-mix(
+            in oklab,
+            var(--glass-bg-floating, var(--glass-bg-resting)),
+            var(--glass-tint-source) var(--glass-tint-strength)
+        );
+        border-color: var(--glass-border-floating, var(--glass-border-resting));
+    }
+
+    /* ── Adaptive legibility: the dock over a light backdrop (AX.W55 — the literal
+       G2 surface; "Glass dock over VERY LIGHT materials is unreadable") ──────────
+       The dock is the surface the user reported unreadable over light content. Its
+       shell (`--glass-bg-dock`), chassis-strip, and held/open tiers all now read the
+       SAME oklab tint seam the five rungs use, so this ONE bucket block — set when a
+       consumer marks `--glass-backdrop: light` on the dock's ancestor — lifts every
+       dock surface toward ink in lockstep. The tint tokens are INHERITING, so
+       re-pointing them on the `.glass-dock` root re-resolves every nested surface +
+       cascades to the dock CONTROLS (which read `--dock-fg-on-aurora` for their
+       foreground); `--dock-fg-on-aurora` re-points to the warm-ink here so the
+       control glyphs/labels clear AA over the now-darkened plate — ONE reconciled
+       path, the foreground twin folded INTO the probe, not a third fork. The
+       morph-root interp (`.variant-dock:not(.vertical)` above) stays `color-mix(in
+       srgb …)` for the transition; the adaptive darken rides its RESTING endpoint
+       (`--glass-bg-dock`, which carries the tint) — the in-flight morph frames are
+       sub-perceptual (the ratified resting-endpoint-only default). */
+    @container style(--glass-backdrop: light) {
+        .glass-dock {
+            --glass-tint-source: var(--glass-tint-ink);
+            --glass-tint-strength: var(--glass-tint-strength-aa);
+            --dock-fg-on-aurora: var(--glass-tint-ink);
+        }
+    }
+
+    /* AX.W55 — the `contrast-color()` flip for the dock control foreground (Chrome
+       147+/Safari 26+; progressive enhancement, NEVER the load-bearing floor). The
+       declarative bucket above already carries AA on all engines (it darkens the dock
+       plate so the warm-dark `--dock-fg-on-aurora` clears ~17:1 over white at the 18%
+       floor). On a supporting engine `contrast-color()` REFINES the control ink,
+       anchored on the LIGHT BACKDROP signal (`--card`, the warm-white surface base the
+       bright bucket implies) — `contrast-color(var(--card))` resolves to the legible
+       DARK ink. Anchoring on the dark ink instead inverts to white (illegible on the
+       still-light dock plate), so the anchor is the light surface, matching the rung
+       refinement in glass.css. The bucket is the floor; this is the native pick. */
+    @supports (color: contrast-color(white)) {
+        @container style(--glass-backdrop: light) {
+            .glass-dock {
+                --dock-fg-on-aurora: contrast-color(var(--card));
+            }
+        }
+    }
+}

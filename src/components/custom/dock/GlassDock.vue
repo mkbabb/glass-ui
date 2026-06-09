@@ -16,141 +16,166 @@ import {
 
 type DockDensity = "compact" | "comfortable" | "spacious" | "audacious";
 
-const props = withDefaults(
-    defineProps<{
-        collapseDelay?: number;
-        startCollapsed?: boolean;
-        fitContent?: boolean;
-        position?: "fixed" | "inline" | "sticky";
-        alwaysExpanded?: boolean;
-        /**
-         * Visual/behavioral preset.
-         *   `dock`             — the horizontal floating dock (default).
-         *   `rail`             — the vertical icon rail variant used by
-         *                        app chrome (stadium-pill silhouette,
-         *                        `--glass-bg-wash` plate).
-         *   `instrument-strip` — vertical chassis-strip mode for consumer
-         *                        cockpits composing an instrument-cluster
-         *                        gauge column (the speedtest
-         *                        SurveyResultDock consumer). Drops the
-         *                        rail variant's `--radius-pill` extreme
-         *                        and adopts the `<InstrumentChassis>`
-         *                        family's surface vocabulary
-         *                        (`--radius-card` border-radius,
-         *                        `--glass-bg-chassis` background,
-         *                        `--glass-border-quiet` border,
-         *                        `--glass-shadow-quiet` shadow, plus an
-         *                        engraved-bezel `::before` inner stroke
-         *                        matching `InstrumentChassis::before`).
-         *                        No new tokens — lifts the existing
-         *                        chassis vocabulary. AJ-W1-δ / G-AJ-D7.
-         */
-        variant?: "dock" | "rail" | "instrument-strip";
-        /**
-         * Corner treatment.
-         *   `"pill"`    — the stadium silhouette (default).
-         *   `"rounded"` — a finite rounded radius (`--radius-xl`).
-         *   `"card"`    — the AW.W3b big-dock card shell: a finite concentric
-         *                 radius (`--dock-card-radius`, default `--radius-3xl`)
-         *                 ABOVE 2xl, below pill — does NOT collapse to a stadium.
-         *                 Collapsed it returns to a pill; the pill↔card swap
-         *                 morphs on the `--dock-motion-resize` spring. AX.W56's
-         *                 squircle policy applies `corner-shape:
-         *                 var(--corner-shape-bigdock)` here under `@supports
-         *                 (corner-shape: superellipse(2))` — the big-dock is the ONE
-         *                 surface where the superellipse reads (cards/pills stay
-         *                 round); the border-radius arc is the cross-engine contract.
-         *
-         * `"pill"`/`"rounded"` previously bound ONLY under the vertical rail
-         * variant — on a horizontal dock the prop silently no-op'd. AW.W3b adds
-         * the horizontal-root shape rules (closing that documented-but-dead prop),
-         * so `shape` now paints on a horizontal dock too.
-         */
-        shape?: "pill" | "rounded" | "card";
-        /**
-         * In-cap arrangement. `"linear"` (default) lays the active layer out as a
-         * linear row/column. `"grid"` makes the active layer a self-wrapping tile
-         * grid (Launchpad/Stage-Manager track symmetry — `auto-fill` columns of
-         * `--dock-tile-min`). ORTHOGONAL to `overflow` (the OVER-cap strategy):
-         * `layout` is the IN-cap arrangement.
-         *
-         * Hard contract: a `layout="grid"` dock is `alwaysExpanded` (a 2D panel
-         * does not read as a collapsible pill, and no width morph means no
-         * per-frame grid reflow). The canonical pairing is
-         * `shape="card" layout="grid"` (the props stay independent — no
-         * auto-implication of `shape`).
-         */
-        layout?: "linear" | "grid";
-        /**
-         * Layout axis of the dock. `"horizontal"` (default) lays items out
-         * left-to-right and animates `width`; `"vertical"` lays items out
-         * top-to-bottom and animates `height`.
-         */
-        orientation?: "horizontal" | "vertical";
-        /**
-         * Density controls dock padding, gaps, layer height, and inherited
-         * dock control sizing. Root CSS variables can override each density.
-         */
-        density?: DockDensity;
-        /**
-         * Overflow strategy when the expanded content exceeds the dock's
-         * axis cap (`--dock-max-inline-size` horizontally,
-         * `--dock-max-block-size` vertically). The ONE knob governing every
-         * overflow behaviour (AT.W7-dock-a clean break — collapsed from the
-         * prior `wrap` boolean + `overflow` pair + `containerName` clip-lift,
-         * which all touched overflow divergently).
-         *   `"grow"`   — content grows to fit then overflows visibly past
-         *                the cap (the default; nothing clips or scrolls).
-         *   `"wrap"`   — expanded content wraps to multiple rows via CONTENT-DRIVEN
-         *                intrinsic flex-wrap (the `.dock-overflow-wrap` recipe). The
-         *                dock shrink-wraps to content and caps that intrinsic width
-         *                at `max-inline-size: var(--dock-max-inline-size)`, so the row
-         *                reflows to N rows EXACTLY when its intrinsic width exceeds
-         *                the cap — at ANY viewport width — and collapses to one row
-         *                when it fits (no viewport breakpoint). The wrapped multi-row silhouette lifts
-         *                onto the card/floating shadow tier as the dock expands.
-         *                HORIZONTAL-ONLY: a vertical rail grows-to-fit + clamps via
-         *                `--dock-max-block-size` (its own overflow story), so the
-         *                `.dock-overflow-wrap` class is not emitted for a vertical
-         *                orientation.
-         *   `"scroll"` — the dock becomes the scroll port. Horizontal docks
-         *                scroll the active layer on the inline axis
-         *                (`.dock-scroll-x`); vertical rails scroll on the
-         *                block axis (`.dock-scroll-y`), keeping the
-         *                `max-block-size` cap. The rounded pill masks the
-         *                scroll edge; the scrollbar is hidden. The axis is
-         *                chosen automatically from `orientation`.
-         */
-        overflow?: "grow" | "wrap" | "scroll";
-        /**
-         * When set, the dock root establishes an inline-size container query
-         * subject (`container-type: inline-size; container-name: <value>`) so
-         * descendants can query the named container via `@container <value>
-         * (...)` rules. ORTHOGONAL to the `overflow` clip: opting into a
-         * container subject does NOT silently change the dock's clip shell
-         * (AT.W7-dock-a — the prior clip-lift was folded out; use
-         * `overflow="wrap"` to allow multi-line content).
-         *
-         * T.B audit §1.3 cornerstone: the cluster's container subject must
-         * live on the dock primitive, never on a descendant whose intrinsic
-         * size the dock relies on.
-         */
-        containerName?: string;
-    }>(),
-    {
-        collapseDelay: 2000,
-        startCollapsed: true,
-        fitContent: false,
-        position: "inline",
-        alwaysExpanded: false,
-        variant: "dock",
-        shape: "pill",
-        layout: "linear",
-        orientation: "horizontal",
-        density: "comfortable",
-        overflow: "grow",
-    },
-);
+/* AX.W06 F2 — the HONEST rail surface. The prop contract is a DISCRIMINATED
+   UNION on `variant`: the horizontal `dock` variant carries the collapse↔expand
+   surface (`collapseDelay`/`startCollapsed`/`layout="grid"`); the vertical
+   `rail` / `instrument-strip` variants are vertical-ALWAYS-EXPANDED by contract
+   and DO NOT accept that surface (a compile error, not a silent no-op). This
+   removes the dead half-inapplicable prop surface from the type (the one-path
+   precept), so the rail's vertical-always-expanded contract is the SINGLE
+   documented shape. (The `#collapsed` slot is NOT the horizontal collapse-summary
+   pane on a vertical rail — there is no collapse↔expand morph to summarise. Per
+   the W45-TUNE C7 vertical three-region body it renders as an OPTIONAL trailing
+   section below a `<DockSeparator>`; a rail that authors no `#collapsed` slot is a
+   single always-expanded column.) */
+interface DockCommonProps {
+    fitContent?: boolean;
+    position?: "fixed" | "inline" | "sticky";
+    alwaysExpanded?: boolean;
+    /**
+     * Corner treatment.
+     *   `"pill"`    — the stadium silhouette (default).
+     *   `"rounded"` — a finite rounded radius (`--radius-xl`).
+     *   `"card"`    — the AW.W3b big-dock card shell: a finite concentric
+     *                 radius (`--dock-card-radius`, default `--radius-3xl`)
+     *                 ABOVE 2xl, below pill — does NOT collapse to a stadium.
+     *                 Collapsed it returns to a pill; the pill↔card swap
+     *                 morphs on the `--dock-motion-resize` spring. AX.W56's
+     *                 squircle policy applies `corner-shape:
+     *                 var(--corner-shape-bigdock)` here under `@supports
+     *                 (corner-shape: superellipse(2))` — the big-dock is the ONE
+     *                 surface where the superellipse reads (cards/pills stay
+     *                 round); the border-radius arc is the cross-engine contract.
+     *
+     * `"pill"`/`"rounded"` previously bound ONLY under the vertical rail
+     * variant — on a horizontal dock the prop silently no-op'd. AW.W3b adds
+     * the horizontal-root shape rules (closing that documented-but-dead prop),
+     * so `shape` now paints on a horizontal dock too.
+     */
+    shape?: "pill" | "rounded" | "card";
+    /**
+     * Layout axis of the dock. `"horizontal"` (default) lays items out
+     * left-to-right and animates `width`; `"vertical"` lays items out
+     * top-to-bottom and animates `height`. IGNORED under `variant="rail"` /
+     * `"instrument-strip"` (those force vertical by construction).
+     */
+    orientation?: "horizontal" | "vertical";
+    /**
+     * Density controls dock padding, gaps, layer height, and inherited
+     * dock control sizing. Root CSS variables can override each density.
+     */
+    density?: DockDensity;
+    /**
+     * Overflow strategy when the expanded content exceeds the dock's
+     * axis cap (`--dock-max-inline-size` horizontally,
+     * `--dock-max-block-size` vertically). The ONE knob governing every
+     * overflow behaviour (AT.W7-dock-a clean break — collapsed from the
+     * prior `wrap` boolean + `overflow` pair + `containerName` clip-lift,
+     * which all touched overflow divergently).
+     *   `"grow"`   — content grows to fit then overflows visibly past
+     *                the cap (the default; nothing clips or scrolls).
+     *   `"wrap"`   — expanded content wraps to multiple rows via CONTENT-DRIVEN
+     *                intrinsic flex-wrap (the `.dock-overflow-wrap` recipe). The
+     *                dock shrink-wraps to content and caps that intrinsic width
+     *                at `max-inline-size: var(--dock-max-inline-size)`, so the row
+     *                reflows to N rows EXACTLY when its intrinsic width exceeds
+     *                the cap — at ANY viewport width — and collapses to one row
+     *                when it fits (no viewport breakpoint). The wrapped multi-row silhouette lifts
+     *                onto the card/floating shadow tier as the dock expands.
+     *                HORIZONTAL-ONLY: a vertical rail grows-to-fit + clamps via
+     *                `--dock-max-block-size` (its own overflow story), so the
+     *                `.dock-overflow-wrap` class is not emitted for a vertical
+     *                orientation.
+     *   `"scroll"` — the dock becomes the scroll port. Horizontal docks
+     *                scroll the active layer on the inline axis
+     *                (`.dock-scroll-x`); vertical rails scroll on the
+     *                block axis (`.dock-scroll-y`), keeping the
+     *                `max-block-size` cap. The rounded pill masks the
+     *                scroll edge; the scrollbar is hidden. The axis is
+     *                chosen automatically from `orientation`.
+     */
+    overflow?: "grow" | "wrap" | "scroll";
+    /**
+     * When set, the dock root establishes an inline-size container query
+     * subject (`container-type: inline-size; container-name: <value>`) so
+     * descendants can query the named container via `@container <value>
+     * (...)` rules. ORTHOGONAL to the `overflow` clip: opting into a
+     * container subject does NOT silently change the dock's clip shell
+     * (AT.W7-dock-a — the prior clip-lift was folded out; use
+     * `overflow="wrap"` to allow multi-line content).
+     *
+     * T.B audit §1.3 cornerstone: the cluster's container subject must
+     * live on the dock primitive, never on a descendant whose intrinsic
+     * size the dock relies on.
+     */
+    containerName?: string;
+}
+
+/* The horizontal `dock` variant — the ONLY variant that collapses↔expands, so
+   the collapse surface (`collapseDelay`/`startCollapsed`/`layout="grid"`) lives
+   here and ONLY here. `variant` is optional + defaults to `"dock"`, so a bare
+   `<GlassDock>` resolves to this branch. */
+interface DockVariantProps extends DockCommonProps {
+    variant?: "dock";
+    /** Idle-collapse delay in ms (default 2000). DOCK-ONLY — a rail never collapses. */
+    collapseDelay?: number;
+    /** Start in the collapsed state (default true). DOCK-ONLY — a rail is always expanded. */
+    startCollapsed?: boolean;
+    /**
+     * In-cap arrangement. `"linear"` (default) lays the active layer out as a
+     * linear row/column. `"grid"` makes the active layer a self-wrapping tile
+     * grid (Launchpad/Stage-Manager track symmetry — `auto-fill` columns of
+     * `--dock-tile-min`). ORTHOGONAL to `overflow` (the OVER-cap strategy):
+     * `layout` is the IN-cap arrangement.
+     *
+     * Hard contract: a `layout="grid"` dock is `alwaysExpanded` (a 2D panel
+     * does not read as a collapsible pill, and no width morph means no
+     * per-frame grid reflow). The canonical pairing is
+     * `shape="card" layout="grid"` (the props stay independent — no
+     * auto-implication of `shape`). DOCK-ONLY — the grid is a horizontal big-dock
+     * arrangement, never a rail's.
+     */
+    layout?: "linear" | "grid";
+}
+
+/* The vertical `rail` / `instrument-strip` variants — vertical-ALWAYS-EXPANDED
+   by construction. They DO NOT carry the collapse surface: there is no
+   `collapseDelay`/`startCollapsed`/`layout` here, so a consumer setting one
+   under `variant="rail"` is a COMPILE error (the inapplicable prop is narrowed
+   away from the type, not bridged to a runtime no-op).
+     `rail`             — the vertical icon-rail navigation column used by app
+                          chrome (stadium-pill silhouette, `--glass-bg-wash`
+                          plate). It is the refined nav-rail: active-item accent,
+                          tap-squish press feedback, and right-anchored tooltips
+                          are hoisted into the variant CSS (`dock-controls.css`),
+                          so a consumer reaching for `variant="rail"` gets the
+                          polished surface for free.
+     `instrument-strip` — vertical chassis-strip mode for consumer cockpits
+                          composing an instrument-cluster gauge column (the
+                          speedtest SurveyResultDock consumer). Adopts the
+                          `<InstrumentChassis>` family's surface vocabulary
+                          (`--radius-card` border-radius, `--glass-bg-chassis`
+                          background, `--glass-border-quiet` border,
+                          `--glass-shadow-quiet` shadow, plus an engraved-bezel
+                          `::before` inner stroke). No new tokens — lifts the
+                          existing chassis vocabulary. AJ-W1-δ / G-AJ-D7. */
+interface DockRailProps extends DockCommonProps {
+    variant: "rail" | "instrument-strip";
+}
+
+type DockProps = DockVariantProps | DockRailProps;
+
+/* AX.W06 F2 — pure `defineProps<DockProps>()` (NOT `withDefaults`). The
+   discriminated-union narrow is ONLY enforced at the template/type level under
+   pure `defineProps`: `withDefaults` over a union props type degrades the
+   runtime props inference to `Record<string, any>` and ERASES the narrow (the
+   `<GlassDock variant="rail" :collapse-delay>` refusal vanishes). With pure
+   `defineProps` the union survives, so the inapplicable collapse surface is a
+   COMPILE error under `variant="rail"` (the one-path honest-rail contract).
+   The defaults the prior `withDefaults` object held are now applied at each read
+   site via `?? default` (localized to the computeds below — every shared default
+   has exactly one resolution point). */
+const props = defineProps<DockProps>();
 
 /* AT.W7-dock-a — the container-query opt-in is ORTHOGONAL to the overflow
    clip. The prior `overflow: visible` clip-lift here silently coupled the
@@ -164,17 +189,38 @@ const containerStyle = computed<Record<string, string> | undefined>(() => {
     };
 });
 
+/* AX.W06 F2 — the collapse surface is DOCK-BRANCH only (the discriminated
+   union). A rail/instrument-strip never carries `collapseDelay`/`startCollapsed`/
+   `layout`, so these resolve to their dock defaults when the consumer is on a
+   non-dock branch — but a non-dock dock is always-expanded by construction, so
+   the resolved collapse values are inert there anyway. The `dockBranch()` type
+   guard narrows the union by its `variant` discriminant before the branch-only
+   reads, keeping the single set of defaults the prior `withDefaults` object held
+   now that the branch-specific props left the shared defaults block. */
+function dockBranch(p: DockProps): p is DockVariantProps {
+    return p.variant !== "rail" && p.variant !== "instrument-strip";
+}
+const collapseDelay = computed(() =>
+    dockBranch(props) ? props.collapseDelay ?? 2000 : 2000,
+);
+const startCollapsed = computed(() =>
+    dockBranch(props) ? props.startCollapsed ?? true : false,
+);
+const layoutValue = computed<"linear" | "grid">(() =>
+    dockBranch(props) ? props.layout ?? "linear" : "linear",
+);
+
 const dockEl = useTemplateRef<HTMLElement>("dockEl");
 const layersEl = useTemplateRef<HTMLElement>("layersEl");
-const variant = computed(() => props.variant);
-const shape = computed(() => props.shape);
-const layout = computed(() => props.layout);
+const variant = computed(() => props.variant ?? "dock");
+const shape = computed(() => props.shape ?? "pill");
+const layout = layoutValue;
 const orientation = computed(() =>
     props.variant === "rail" || props.variant === "instrument-strip"
         ? "vertical"
-        : props.orientation,
+        : props.orientation ?? "horizontal",
 );
-const density = computed(() => props.density);
+const density = computed(() => props.density ?? "comfortable");
 /* Scroll-on-overflow opt-in (default `"grow"` keeps the historical
    visible-overflow behaviour). When `overflow === "scroll"` the dock
    becomes the scroll port on its layout axis: horizontal docks scroll the
@@ -193,7 +239,7 @@ const alwaysExpanded = computed(
     () =>
         props.alwaysExpanded ||
         orientation.value === "vertical" ||
-        props.layout === "grid",
+        layoutValue.value === "grid",
 );
 const fitContent = computed(() =>
     props.fitContent ||
@@ -202,7 +248,7 @@ const fitContent = computed(() =>
 );
 
 const isTransitioning = ref(false);
-const touchGate = useTouchGate(props.collapseDelay);
+const touchGate = useTouchGate(collapseDelay.value);
 const dockId = `glass-dock-${useId()}`;
 let transitionTimer: ReturnType<typeof setTimeout> | null = null;
 /* AT.W6-dock-c — the morph GENERATION. `isTransitioning` must track the ACTUAL
@@ -229,7 +275,7 @@ const {
     expand,
     collapse,
 } = useDockState({
-    collapseDelay: props.collapseDelay,
+    collapseDelay: collapseDelay.value,
     rootEl: dockEl,
     alwaysExpanded,
     isTransitioning,
@@ -385,7 +431,7 @@ function onDockTransitionDone(event: TransitionEvent): void {
 }
 
 onMounted(() => {
-    if (props.alwaysExpanded || !props.startCollapsed) {
+    if (props.alwaysExpanded || !startCollapsed.value) {
         expand();
     }
 });

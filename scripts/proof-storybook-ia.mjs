@@ -35,7 +35,7 @@ export const EXPECTED_TREE = [
         "intro", "colors", "typography", "radii", "shadows", "motion",
         "paper-glass", "icons", "surface-tints", "overlays-scrims",
         "chart-chassis-palette", "paper-backdrop-texture-system",
-        "paper-backdrop", "dock-active-tokens", "css-utilities",
+        "paper-backdrop", "css-utilities",
     ]],
     ["substrates", ["aurora", "goo-blob", "blob-interaction", "blob-mood", "glass-panel", "constellation", "glass-material"]],
     ["primitives", [
@@ -71,7 +71,7 @@ export const EXPECTED_TREE = [
     ["tools", ["command"]],
     ["compositions", [
         "hero", "math-paper", "dashboard", "auth-shell", "settings",
-        "empty-states", "dock-with-slider", "drawer-live-behind",
+        "empty-states", "drawer-live-behind",
         "configurator", "instrument-chassis", "instrument-rail",
         "form-validation", "labeled-field", "icon-tooltip", "gate-pattern",
     ]],

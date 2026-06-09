@@ -60,10 +60,15 @@
  *                              over the glass tiers.
  *   5. paper.css             — paper underpaint + grain overlay utilities.
  *                              Pairs with (4) for paper-on-glass compositions.
- *   6. dock.css              — dock shell / density / grain / layer-crossfade
- *                              contract + the shared cross-control four-state
- *                              comma-groups. Component utility layer; consumes
- *                              (1) + (3).
+ *   6. dock.css              — the dock CORE: the `@property --dock-morph-t`
+ *                              registration, the shared cross-control four-state
+ *                              comma-groups, and the `@import`s of the cohesive
+ *                              `dock/*.css` partials (shell · morph · density ·
+ *                              layers · layer-group · overflow — AX.W06 carved
+ *                              the 1762-line god-module into single-axis partials,
+ *                              each < 500 lines, all in the SAME @layer components
+ *                              so the cascade is isomorphic). Component utility
+ *                              layer; consumes (1) + (3).
  *  6b. dock-controls.css     — the five dock CONTROL families carved out of
  *                              dock.css (AU.W8b.3): .dock-icon-button,
  *                              .dark-mode-toggle-button, .dock-tab-button + tiers,

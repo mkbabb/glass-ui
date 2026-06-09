@@ -38,6 +38,7 @@ import { resolve } from "node:path";
 import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { readDockCss } from "./read-dock-css.mjs";
 
 const DOCK_ROUTE = "/navigation/dock";
 
@@ -374,7 +375,7 @@ async function run() {
 
     // (A) The DEVICE-FREE SOURCE arm — runs FIRST + ALWAYS, hard-RED on EVERY runner.
     const src = {
-        dockCss: readFileSync(resolve(ROOT, "src/styles/dock.css"), "utf8"),
+        dockCss: readDockCss(ROOT),
         tokensCss: readFileSync(resolve(ROOT, "src/styles/tokens.css"), "utf8"),
         glassDockVue: readFileSync(
             resolve(ROOT, "src/components/custom/dock/GlassDock.vue"),

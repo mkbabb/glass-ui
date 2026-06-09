@@ -1,0 +1,103 @@
+{
+  "wave": "AX.W61",
+  "title": "Dock-unify-root — ONE GlassDock root nav-pattern contract (home-left #persistent + nav + <DockSeparator> dividers), the Q1 collapsed-floor --dock-scale thread, and the glass-first selected-control re-point (the keyframes-dock model)",
+  "base": "65ec4bc",
+  "status": "DEV-COMPLETE (device-free source/structure arm GREEN on F1-F4; F5 CLAUDE.md record is the orchestrator resync; the W00 π live-truth audit — the tight collapsed pill measurably smaller than expanded, the glass selected control, the unified docks — is the binding close per the wave HardGate)",
+  "predecessorState": {
+    "note": "The wave doc was authored at HEAD 89edffc (pre-W45-TUNE). By the actual implementation base 65ec4bc the W45-TUNE close had already landed two of the wave's four RED witnesses: witness 2 (the collapsed-floor tokens minted + the symmetric min-block-size) and witness 3 (the glass-first active register --dock-control-active-bg: var(--glass-bg-floating)). W61 finishes the residual: the collapsed-padding --dock-scale thread (witness 2 completion), the nav-pattern census + showcase migration (witness 1), the proof:dock-unify gate, and the CLAUDE.md contract (witness 4).",
+    "landedByW45Tune": [
+      "--dock-collapsed-summary-min-size minted (calc(var(--dock-layer-height) * 0.7))",
+      "--dock-collapsed-padding minted (but as a flat 0.25rem literal OFF the --dock-scale thread)",
+      ".glass-dock.collapsed .dock-layer--summary carries a symmetric min-block-size",
+      "--dock-control-active-bg re-pointed off --surface-tint-12 onto --glass-bg-floating (a glass tier above --dock-control-hover-bg: --glass-bg-resting)"
+    ]
+  },
+  "bornRed": {
+    "gate": "proof:dock-unify",
+    "violationsAtSimulatedHead": 7,
+    "witnesses": {
+      "F1_collapsedFloorScaleThread": "--dock-collapsed-padding was a flat 0.25rem literal — OFF the --dock-scale coarse-pointer thread the rest of the W45 collapsed cascade rides. At the 1.5× mobile scale the box/glyph/min-size grew but the collapsed pad alone stayed desktop-sized, a desync the morph then interpolated FROM. (RED: paddingThreadsScale=false.)",
+      "F2_symmetricFloor": "the collapsed summary floored only on min-width (a full-row stub, not a proportioned squircle) at the original HEAD; closed by W45-TUNE; the gate re-asserts it (min-block-size present).",
+      "F3_glassSelected": "--dock-control-active-bg: var(--surface-tint-12) — a flat foreground-over-transparent ink wash, NOT a glass tier reading the dock substrate through it (the keyframes-dock model unmet); closed by W45-TUNE; the gate re-asserts it (a --glass-bg-* tier AND active ≠ hover).",
+      "F4_unifiedNavPattern": "demo/stories/navigation/rail.vue diverged — it drove the selected state via a hand-rolled `bg-foreground/10` raw class (NOT the dock-control's glass-first --dock-active-bg via aria-pressed), had NO home-left #persistent anchor, and NO <DockSeparator> between the home and the nav group. (RED on rail.vue.) The shell docks (BottomDock/SidebarDock) carry raw-class separators (demo-bottom-dock__sep / bg-border/50) + no #persistent — tracked as pendingW40, the contract W40's rebuild clears.",
+      "F5_recordedContract": "CLAUDE.md recorded NO dock nav-pattern contract, NO collapsed-floor tokens, NO glass-first selected register — so the divergent vocabularies had no recorded law to follow. (RED: grep → none.)"
+    }
+  },
+  "fix": {
+    "F1_collapsedFloorScaleThread": "tokens.css §10 — --dock-collapsed-padding now threads --dock-scale DIRECTLY: `calc(0.25rem * var(--dock-scale))`. The 0.25rem base stays the ratified tight floor; the only change is the multiplier so the collapsed pad scales in lockstep with the box/glyph/min-size on touch (the summary min-size already threads --dock-scale transitively through --dock-layer-height, itself calc(* --dock-scale) at every density rung).",
+    "F2_symmetricFloor": "no edit — W45-TUNE landed the symmetric min-block-size on .glass-dock.collapsed .dock-layer--summary; W61's gate RE-ASSERTS it (a regression on the symmetric floor REDs proof:dock-unify F2).",
+    "F3_glassSelected": "no token re-point edit — W45-TUNE landed --dock-control-active-bg: var(--glass-bg-floating) (a glass tier a step above --dock-control-hover-bg: var(--glass-bg-resting)); W61's gate RE-ASSERTS it (active is a --glass-bg-* register AND active ≠ hover — re-pointing back to surface-tint-12 REDs F3, proven adversarially).",
+    "F4_unifiedNavPattern": "demo/stories/navigation/rail.vue MIGRATED onto the nav-pattern: a Home <DockIconButton> in the leading `#persistent` slot (home-left) for BOTH rail sections, a `<DockSeparator>` after the home anchor, and the selected state driven by `:aria-pressed` (which the .dock-icon-button active rule keys off — so the glass-first --dock-active-bg paints) — the hand-rolled `bg-foreground/10` raw class + the unused `cn` import RETIRED. The shell docks remain W40's FileBounds; the gate tracks them as pendingW40 (the census law W40's rebuild satisfies, NOT failing the gate at W61 close).",
+    "F5_recordedContract": "CLAUDE.md — append the dock nav-pattern contract (home-left #persistent + nav + <DockSeparator>, ONE GlassDock root) + the collapsed-floor tokens (--dock-collapsed-summary-min-size + --dock-collapsed-padding + the --dock-scale thread) + the glass-first selected-control register (--dock-control-active-bg is a --glass-bg-* tier, not a flat --surface-tint overlay). [Orchestrator-owned resync — the exact append text is in the implementer's needsRegistration.]"
+  },
+  "filesChanged": [
+    "src/styles/tokens.css (the --dock-collapsed-padding --dock-scale thread)",
+    "demo/stories/navigation/rail.vue (the nav-pattern migration: #persistent home-left + <DockSeparator> + aria-pressed glass-first active)",
+    "scripts/proof-dock-unify.mjs (NEW — the device-free source/structure arm + the dock-instance census)",
+    "docs/tranches/AX/audit/W61-dock-unify-root.json (NEW — this ledger)",
+    "docs/tranches/AX/audit/W61-DELTA.md (NEW — the paired-π BEFORE/AFTER + DELTA)",
+    "CLAUDE.md (orchestrator resync — the nav-pattern contract + the collapsed-floor tokens + the glass-first selected register)",
+    "package.json (orchestrator resync — proof:dock-unify registration)",
+    "scripts/gates.mjs (orchestrator resync — the manifest row)"
+  ],
+  "dockInstanceCensus": {
+    "w61Owned": {
+      "demo/stories/navigation/dock.vue": {
+        "navPattern": true,
+        "home": "#persistent <Home>",
+        "dividers": "<DockSeparator> (5)",
+        "rawSeparators": 0,
+        "note": "the model dock the user praised (the keyframes-dock register)"
+      },
+      "demo/stories/navigation/rail.vue": {
+        "navPattern": true,
+        "home": "#persistent <Home> (both sections — MIGRATED this wave)",
+        "dividers": "<DockSeparator> after the home anchor",
+        "rawSeparators": 0,
+        "selected": "aria-pressed → glass-first --dock-active-bg (the raw bg-foreground/10 retired)"
+      },
+      "demo/stories/navigation/dock-layers.vue": {
+        "navPattern": true,
+        "home": "n/a — a DockLayerGroup drill-in mechanic showcase (a Back control + layer rail, not a nav rail)",
+        "dividers": "<DockSeparator> (3)",
+        "rawSeparators": 0,
+        "note": "requireHome=false in the gate (it demonstrates the layer-group mechanic, not the home-left nav rail)"
+      },
+      "demo/stories/compositions/dock-with-slider.vue": {
+        "status": "ABSENT in the working tree at the implementation base (git ` D` deleted — a sibling-wave restructure); the gate skips an absent dock rather than false-REDing it. When present it uses GlassDock + <DockSeparator> + #collapsed.",
+        "navPattern": "n/a (absent)"
+      }
+    },
+    "pendingW40": {
+      "demo/layout/BottomDock.vue": {
+        "rawSeparators": "demo-bottom-dock__sep (×2)",
+        "home": "PanelLeft menu trigger in the leading slot (NOT a home-left #persistent)",
+        "disposition": "W40 rebuilds onto the contract (home-left #persistent + <DockSeparator>); tracked, not gate-failing at W61"
+      },
+      "demo/layout/SidebarDock.vue": {
+        "rawSeparators": "bg-border/50 hairline (×1)",
+        "home": "a hand-rolled <RouterLink> brand wordmark (NOT a #persistent home control)",
+        "disposition": "W40 rebuilds onto the contract; tracked, not gate-failing at W61"
+      }
+    }
+  },
+  "consumerCensus": {
+    "note": "External --dock-* consumers inherit the glass-first active fill + the collapsed-floor tokens token-first from dist/ — no consumer edit forced (consumer-overridable; a bespoke --dock-active-bg override still wins). Routed to W34 as a cross-repo NOTE, NOT a sibling source edit here.",
+    "speedtest": "DockIconButton host — inherits --dock-control-active-bg (glass) + --dock-collapsed-* (default consumer)",
+    "bbnf-buddy ToolsLayer": "--dock-active-* override host — its O.W6 active-ladder override still retints per-instance; only the DEFAULT moved to glass-correct"
+  },
+  "gate": {
+    "command": "npm run proof:dock-unify",
+    "arms": {
+      "deviceFree": "the source/structure arm (F1-F5) — GREEN on F1-F4 at W61 close; F5 GREEN after the CLAUDE.md resync",
+      "piLive": "the fail-closed W00 chrome-devtools-mcp + frontend-design render — the collapsed pill measurably smaller than expanded (both axes), the selected control reads glass over the rich backdrop, the docks read as ONE bar, the collapsed pill scales on --dock-scale at 375×667, no W45/W01 morph regression — the BINDING close (W61-DELTA.md)"
+    },
+    "adversarialBite": [
+      "re-point --dock-control-active-bg back to var(--surface-tint-12) → F3 REDs (proven)",
+      "set --dock-collapsed-padding to a flat literal → F1 REDs (proven)",
+      "set --dock-collapsed-summary-min-size = --dock-layer-height → F1 summaryBelow REDs",
+      "drop min-block-size from the collapsed summary → F2 REDs (proven)",
+      "leave a raw-class separator in a W61-owned dock → F4 REDs (proven)"
+    ]
+  }
+}

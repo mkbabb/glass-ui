@@ -46,6 +46,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { readDockCss } from "./read-dock-css.mjs";
 
 let _cliPaths = null;
 function cliPaths() {
@@ -449,7 +450,7 @@ function run() {
 
     const { facts, violations } = detectSource({
         tokensCss: readFileSync(TOKENS_CSS, "utf8"),
-        dockCss: readFileSync(DOCK_CSS, "utf8"),
+        dockCss: readDockCss(ROOT),
         dockControlsCss: readFileSync(DOCK_CONTROLS_CSS, "utf8"),
         glassCss: readFileSync(GLASS_CSS, "utf8"),
         glassDockVue: readFileSync(GLASS_DOCK_VUE, "utf8"),

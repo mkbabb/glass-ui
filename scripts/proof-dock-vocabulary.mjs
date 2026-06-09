@@ -22,6 +22,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { readDockCss } from "./read-dock-css.mjs";
 
 const ROLES = ["ChromeDock", "TransportDock", "CanvasDock", "ToolDock"];
 const COMPOSABLES = ["useDockState", "useLayerTransition", "useDockContext"];
@@ -143,7 +144,7 @@ function run() {
     if (!existsSync(DOCK_CSS)) {
         violations.push("dock.css (src/styles/dock.css) is absent — the CSS vocabulary arm cannot run");
     } else {
-        const cssArm = detectCssVocabulary(readFileSync(DOCK_CSS, "utf8"));
+        const cssArm = detectCssVocabulary(readDockCss(ROOT));
         Object.assign(facts, { css: cssArm.facts });
         violations.push(...cssArm.violations);
     }

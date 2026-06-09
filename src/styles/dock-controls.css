@@ -230,6 +230,29 @@
         --dark-mode-toggle-padding: var(--dock-icon-padding, 0);
     }
 
+    /* AX.W06 USF-2 — the dock-control optical-size contract. The
+       DarkModeToggle renders its OWN internal SVG `h-full w-full` (it bypasses
+       the `--dock-icon-glyph`-sized `> svg` slot the `.dock-icon-button` family
+       uses), so IN-DOCK it filled the whole control box edge-to-edge (~2.5× the
+       nav glyphs) — `--dock-icon-padding` is NEVER DEFINED, so the
+       `--dark-mode-toggle-padding: var(--dock-icon-padding, 0)` above fell to the
+       `0` fallback and zero padding let the SVG fill the box. Route the in-dock
+       toggle glyph through `--dock-control-glyph-size` (the ONE size the whole
+       dock-control family reads, default = `--dock-icon-glyph`, the same
+       `--dock-scale`-keyed glyph the nav icons paint), so the toggle is optically
+       UNIFORM with the nav glyphs WHEN DOCKED. The `h-full w-full` SVG stays
+       correct for the STANDALONE DarkModeToggle sizes (no `.glass-dock`
+       ancestor); this rule is scoped to the in-dock path only. Machine-checked by
+       the dock-control optical-parity gate, not eyeballed. */
+    .glass-dock
+        .dark-mode-toggle-button:not([data-size="sm"]):not([data-size="lg"]):not(
+            [data-size="control"]
+        )
+        > svg {
+        width: var(--dock-control-glyph-size, var(--dock-icon-glyph, 1.25rem));
+        height: var(--dock-control-glyph-size, var(--dock-icon-glyph, 1.25rem));
+    }
+
     .dock-tab-button {
         display: inline-flex;
         align-items: center;
@@ -547,5 +570,54 @@
             min-block-size: var(--dock-touch-target, 2.75rem);
             min-inline-size: var(--dock-touch-target, 2.75rem);
         }
+    }
+
+    /* AX.W06 F2/F3 — the HOISTED refined rail nav-item polish. The demo's
+       `SidebarDock` dogfooded the active-category affordance (accent glyph tint +
+       a left-edge accent rule) as DEMO-PRIVATE chrome (`demo/layout/dock-nav.css`
+       `.demo-sidebar-item.is-active`), so a consumer reaching for `variant="rail"`
+       got the UN-refined bare `.is-active` colour shift. This hoists the refined
+       treatment into the shipped variant CSS so the demo == the shipped contract
+       (the demo no longer re-derives a worse rail by hand). The tap-squish press
+       feedback (the `:active` `--scale-press-dock` squish) + the right-anchored
+       tooltips are already the dock-control family + the consumer's `<Tooltip
+       side="right">` — this carries the active-item ACCENT, the half the variant
+       CSS did not own.
+
+       The accent is TOKENIZED, not baked: `--dock-rail-active-accent` defaults to
+       the library `--primary` brand ink; a consumer retints it per-instance (the
+       demo overrides it to `--viz-fourier` NCSU-red on the cascade). The active
+       state reads the SHIPPED four-state hooks the dock-control family already
+       activates (`.is-active`, `aria-current="page"`, `[aria-pressed="true"]`).
+       Scoped to a `.glass-dock.variant-rail` descendant icon-button — a horizontal
+       dock or the layer-switcher rail are untouched. */
+    .glass-dock.variant-rail .dock-icon-button {
+        position: relative;
+    }
+
+    .glass-dock.variant-rail
+        .dock-icon-button:is(.is-active, [aria-current="page"], [aria-pressed="true"]) {
+        --dock-active-color: var(--dock-rail-active-accent, var(--primary));
+        color: var(--dock-rail-active-accent, var(--primary));
+    }
+
+    /* The leading-edge accent rule — a short rounded bar pinned to the rail-leading
+       edge of the active nav item (the iOS / Figma side-rail selected-affordance).
+       `inset-inline-start` keys it off the writing-direction leading edge, so the
+       bar sits OUTSIDE the button on the rail's plate; `inset-block: <inset>` keeps
+       it short + centred. The width/inset/colour all read `--dock-rail-active-*`
+       tokens so the whole accent is tunable from one place. */
+    .glass-dock.variant-rail
+        .dock-icon-button:is(.is-active, [aria-current="page"], [aria-pressed="true"])::before {
+        content: "";
+        position: absolute;
+        inset-block: var(--dock-rail-accent-inset, 18%);
+        inset-inline-start: calc(
+            -1 * var(--dock-rail-accent-width, 3px) - var(--dock-rail-accent-gap, 2px)
+        );
+        width: var(--dock-rail-accent-width, 3px);
+        border-radius: var(--radius-pill);
+        background: var(--dock-rail-active-accent, var(--primary));
+        pointer-events: none;
     }
 }

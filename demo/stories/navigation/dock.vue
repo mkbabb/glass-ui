@@ -4,6 +4,7 @@ import { ref } from "vue";
 import {
     Home, Search, Bell, Settings, Plus, Share2, Download,
     ChevronDown, Play, Pause, SkipBack, SkipForward,
+    Volume2, SlidersHorizontal,
 } from "@lucide/vue";
 import {
     GlassDock,
@@ -13,6 +14,7 @@ import {
     DockSeparator,
     DockBackgroundToggle,
 } from "../../../src/components/custom/dock";
+import { Slider } from "../../../src/components/ui/slider";
 import { HoverPopover } from "../../../src/components/custom/hover-popover";
 import {
     DropdownMenu,
@@ -31,6 +33,8 @@ import {
 
 const playing = ref(false);
 const bgPaused = ref(false);
+const volume = ref<number[]>([42]);
+const mix = ref<number[]>([55]);
 const track = ref("The Garden");
 const tracks = ["The Garden", "Morning Weft", "Carmine Drift", "Salt & Slate"];
 
@@ -249,6 +253,69 @@ function togglePlay() {
                     </HoverPopover>
                 </GlassDock>
             </div>
+        </section>
+
+        <section class="flex flex-col gap-3" data-testid="dock-slider-section">
+            <h2 class="text-sm font-semibold text-muted-foreground">Slider in dock — the keep-dock-open hold</h2>
+            <p class="text-sm text-muted-foreground">
+                A <code class="rounded bg-muted px-1">&lt;Slider&gt;</code> descendant of a dock holds the
+                dock open while the user drags (the <code class="rounded bg-muted px-1">dockKeepOpen</code>
+                token), and reflects the dock's held state via
+                <code class="rounded bg-muted px-1">data-held</code> on its root. Drag a knob: the thumb halo
+                intensifies and the dock substrate tier-shades up while held; release returns both to default.
+                The contract is bidirectional and pointer-anchored — it lives on the API surface, not the recipe.
+            </p>
+            <div
+                class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8"
+                data-testid="dock-slider-hold"
+            >
+                <GlassDock :collapse-delay="600">
+                    <DockIconButton aria-label="Volume"><Volume2 /></DockIconButton>
+                    <div class="flex w-44 items-center px-2">
+                        <Slider v-model="volume" :max="100" :step="1" aria-label="Volume" />
+                    </div>
+                    <DockSeparator />
+                    <DockIconButton aria-label="Mix"><SlidersHorizontal /></DockIconButton>
+                    <div class="flex w-44 items-center px-2">
+                        <Slider v-model="mix" :max="100" :step="1" aria-label="Mix" />
+                    </div>
+                    <template #collapsed>
+                        <SlidersHorizontal class="h-4 w-4" />
+                    </template>
+                </GlassDock>
+            </div>
+            <p class="text-xs text-muted-foreground">
+                Hover to expand, then press-and-hold a thumb and move the pointer OFF the dock: the dock stays
+                open through the held drag and re-collapses only after release. Either drag holds the dock open,
+                and both halos intensify when either is dragged since both read the dock's shared held state.
+            </p>
+        </section>
+
+        <section class="flex flex-col gap-3">
+            <h2 class="text-sm font-semibold text-foreground">
+                Dock as a portal host — the navigation-layer / no-glass-on-glass contract
+            </h2>
+            <p class="text-sm text-muted-foreground">
+                A dropdown or menu mounted inside a dock MUST be wired into the dock's
+                <code class="rounded bg-muted px-1">keepOpen</code> +
+                <code class="rounded bg-muted px-1">data-glass-dock-portal</code> teleport contract — the
+                same contract the
+                <code class="rounded bg-muted px-1">DockSelectTrigger</code> /
+                <code class="rounded bg-muted px-1">DockDropdownTrigger</code> /
+                <code class="rounded bg-muted px-1">HoverPopover keep-dock-open</code> sections above already
+                ride. This is Apple's navigation-layer / no-glass-on-glass rule made structural: glass floats
+                only in the navigation/overlay band and never nests in glass (stacked blur muddies, the rim
+                doubles), so a dock-hosted menu TELEPORTS OUT to its own sampling region rather than painting a
+                second glass plate inside the dock's.
+            </p>
+            <p class="text-xs text-muted-foreground">
+                The canonical mis-wire (the keyframes D9 break): a dropdown mounted OUTSIDE the
+                <code class="rounded bg-muted px-1">keepOpen</code>+portal contract drops out of the dock the
+                instant the trigger fires — it paints its own glass plate stacked over the dock's and the dock
+                idle-collapses out from under it. Reach for the dock-native trigger primitives (which bundle
+                the contract), not a raw
+                <code class="rounded bg-muted px-1">&lt;DropdownMenu&gt;</code> child.
+            </p>
         </section>
 
         <section class="flex flex-col gap-3">

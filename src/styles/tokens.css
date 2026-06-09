@@ -1199,7 +1199,15 @@
        same token so the pill floors on BOTH axes — a squircle, not a stub. Consumers
        retune the pill geometry per-instance via these two handles. */
     --dock-collapsed-summary-min-size: calc(var(--dock-layer-height, 2.5rem) * 0.7);
-    --dock-collapsed-padding: 0.25rem;
+    /* AX.W61 — the collapsed padding now threads the ONE `--dock-scale` coarse-pointer
+       multiplier DIRECTLY (at HEAD it was a flat 0.25rem off the scale, so the
+       collapsed pad alone stayed desktop-sized at the 1.5x mobile scale while the
+       box/glyph/min-size grew — a desync the morph then interpolated FROM). The
+       summary min-size already threads `--dock-scale` transitively through
+       `--dock-layer-height` (itself `calc(* --dock-scale)` at every density rung); this
+       lands the collapsed pad on the same thread so the whole collapsed pill scales
+       coherently on touch. The 0.25rem base stays the ratified tight floor. */
+    --dock-collapsed-padding: calc(0.25rem * var(--dock-scale));
 
     /* AX.W45-TUNE Q3/C3 + C5 — the dock-control family reads a real GLASS register
        on hover/active, NOT a same-hue `--card` mix at an alpha adjacent to the dock's

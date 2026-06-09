@@ -361,6 +361,16 @@ Beyond the built-in two-layer grid (the default slot + the `collapsed` slot), ri
 
 Each `DockLayer` registers itself with its parent via `provide`/`inject`; the group renders an optional Figma-style switcher rail from the registered descriptors (`showRail` + `railPosition`) and drives crossfade + size FLIP transitions between layers. Only the active layer is interactive—inactive layers receive `inert` and `pointer-events: none`.
 
+#### Dock nav-pattern contract (AX.W61)
+
+Every dock composes ONE `<GlassDock>` root with a consistent **nav-pattern**: a home/brand control in the leading `#persistent` slot (**home-left**), the nav items, and `<DockSeparator>` dividers between groups — zero raw-class separators, zero hand-rolled home chrome (the showcase `dock.vue` + `rail.vue` are the model; the demo-layout shell docks BottomDock/SidebarDock adopt it in W40). Three load-bearing pieces:
+
+- **The collapsed-floor tokens.** `--dock-collapsed-summary-min-size` (`calc(--dock-layer-height * 0.7)`, a tight proportioned pill below the full control height) + `--dock-collapsed-padding` (`calc(0.25rem * var(--dock-scale))`, a tighter pad floor) — BOTH ride the `--dock-scale` coarse-pointer thread, so the collapsed pill is a tight squircle that grows in lockstep at the mobile 1.5×, never a full-control-width stub (the user's Q1).
+- **The glass-first selected-control register.** `--dock-control-active-bg` is a `--glass-bg-*` tier (`var(--glass-bg-floating)`, a tier ABOVE the hover fill `var(--glass-bg-resting)`) reading the dock substrate through it — the keyframes-dock "selected reads as glass" model the user named — NOT a flat `--surface-tint-N` overlay.
+- **The hover register** (W45-TUNE) — the dock control hover is a real glass register (bg → `--glass-bg-resting`, scale → `--scale-hover-dock`, the specular gleam 0 → ~0.1), all three legs reading on HOVER before click; the REST specular is default-off (the 19→0 keyframes I.W6 tracks).
+
+Machine-locked by `proof:dock-unify` (the nav-pattern + the collapsed-floor scale-thread + the glass-first active register) + `proof:dock-perfection` (W45-TUNE) + `proof:dock-region-model` (W45). `dock.css` is a thin `@import` root over the cohesive `dock/{shell,morph,density,layers,layer-group,overflow}.css` partials (the AX.W06 monolith split; `dock-controls.css` keeps the five control families).
+
 #### GlassDock aria contract
 
 The `GlassDock` root is **presentational**—a `<div class="glass-dock">` carrying layout/state data attributes (`data-density`, `data-held`, `data-container-name`) and pointer/focus listeners, but no ARIA role. `aria-expanded` MUST NOT be applied to the root: it has no interactive role, so the attribute is disallowed there and trips axe's `aria-allowed-attr` rule. `aria-expanded` belongs on the dock **trigger** child—the interactive control (`<button>`/`role="button"`) the user activates to open/collapse the dock—bound to the dock's exposed `expanded` state (reachable via `defineExpose`). Consumers that need an expand-state announcement wire `:aria-expanded` to their trigger button, not the dock wrapper. See `docs/tranches/AM/audit/W0-forms-a11y.md` (gap 3).

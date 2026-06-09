@@ -126,6 +126,18 @@ export const GATES = [
         note: "AX.W45-TUNE — the dock-perfection close (the TUNE+re-point layer on the settled W45 structure). Device-free SOURCE arm: Q1 the collapsed-pill floor tokens (--dock-collapsed-summary-min-size + --dock-collapsed-padding) minted + a symmetric min-block-size on the collapsed summary (a tight squircle, not a full-row stub); C2 --dock-tile-pad threaded through --dock-scale in every density rung; Q3 the dock hover reads a real GLASS register (--dock-control-hover-bg off --glass-bg-resting + --scale-hover-dock on all 4 members); C4 the dock-control REST specular default-off (rest intensity 0, the keyframes I.W6 19→0 tracks) + all 4 members in the specular ::before family + the 22% small-tile gleam; C5 the selected/active state reads GLASS (--dock-control-active-bg off --glass-bg-floating, the gleam held lit on .is-active/[aria-pressed]); C7 the vertical three-region body is STRUCTURAL (.dock-layer--vertical-body, not a bare <slot/>); C1 the demo DockIconButton glyphs drop their explicit size so --dock-icon-glyph paints. The π live DELTA (W45-DELTA.md — Q1 geometry + Q3 hover rest-vs-hover readback) is the binding close. Bite: revert a token/register → the matching witness REDs.",
     },
     {
+        id: "proof:dock-unify",
+        cmd: "proof:dock-unify",
+        tags: ["local", "ci"],
+        note: "AX.W61 — the unified dock nav-pattern contract (home-left #persistent + nav + <DockSeparator>, ONE GlassDock root) + the Q1 collapsed-floor --dock-scale thread + the glass-first selected control. Device-free SOURCE arm: F1 --dock-collapsed-padding threads --dock-scale + both floor tokens below the expanded values; F2 the symmetric collapsed-summary min-block-size; F3 --dock-control-active-bg is a --glass-bg-* tier (NOT --surface-tint-N) AND active != hover; F4 the W61-owned showcase docks compose <GlassDock>+<DockSeparator> with zero raw-class separators + home-left #persistent (shell docks tracked pendingW40); F5 CLAUDE.md records the contract. The W00 π live arm (W61-DELTA.md) is the binding close. Bite: re-point active to surface-tint-12 → F3 RED; flat padding literal → F1 RED; a raw-class separator → F4 RED.",
+    },
+    {
+        id: "proof:dock-css-carve",
+        cmd: "proof:dock-css-carve",
+        tags: ["local", "ci"],
+        note: "AX.W06 — the dock.css → src/styles/dock/ carve: dock.css is a thin @import root over the cohesive dock/{shell,morph,density,layers,layer-group,overflow}.css partials (each < 500 lines, the no-god-module budget), the shared four-state :where() contract stays, and index.css's import order is preserved. Bite: a partial grows past 500, or a control rule leaks back into dock.css → RED.",
+    },
+    {
         id: "proof:dock-css-split",
         cmd: "proof:dock-css-split",
         tags: ["local", "ci", "release"],

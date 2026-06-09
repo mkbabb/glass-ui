@@ -1,0 +1,191 @@
+/* dock/overflow.css — the OVER-cap overflow strategies (AX.W06 carve).
+ *
+ * Carved from the dock.css god-module (slice 25). This partial owns the
+ * `overflow=` axis: the `overflow="scroll"` inline/block scroll ports
+ * (`.dock-scroll-x` / `.dock-scroll-y`, hidden scrollbar, momentum-trapped), the
+ * W04 CONTENT-DRIVEN `overflow="wrap"` intrinsic-flex recipe (the
+ * `.dock-overflow-wrap` pill↔card radius + floating-tier elevation morph on the
+ * ONE `--dock-expand-t` scalar — RELOCATED verbatim, never re-authored), and the
+ * W45 D15 single coarse-pointer `--dock-scale` multiplier.
+ *
+ * @import-ed by dock.css in cascade order, in the SAME `@layer components` — the
+ * carve is isomorphic (same layer, same source order → ZERO visual delta). */
+
+@layer components {
+    /* ── Scroll-on-overflow opt-in (GlassDock `overflow="scroll"`) ───────
+       The default contract grows-to-fit then overflows visibly past the
+       axis cap. `overflow="scroll"` instead makes the dock the scroll port
+       on its layout axis, pairing the existing cap with a hidden-scrollbar
+       scroll region so over-cap content stays reachable. The rounded pill
+       masks the scroll edge; both axes keep their cap. */
+
+    /* Inline axis (horizontal docks). The active layer becomes the scroll
+       port: `min-width: 0` releases the flex item's `min-content` floor so
+       it can shrink under the clamped `.dock-layers` track, then `overflow-x:
+       auto` scrolls its over-cap content. `.dock-layers` must KEEP clipping
+       so the pill's rounded edge masks the scroll boundary — hence the
+       grow-mode `overflow-x: visible` (`.dock-layers`, above) is overridden
+       back to `hidden` here. */
+    .glass-dock.dock-scroll-x.expanded:not(.dock-overflow-wrap) > .dock-layers {
+        overflow-x: hidden;
+    }
+
+    .glass-dock.dock-scroll-x .dock-layer--full {
+        min-width: 0;
+        overflow-x: auto;
+        scrollbar-width: none;
+        /* Trap the inline-scroll momentum at the dock's own boundary so a
+           wheel/trackpad gesture that bottoms out the pill does NOT chain into
+           scrolling the page behind it (the dock is a self-contained scroll
+           port, not a window into the route scroller). */
+        overscroll-behavior-x: contain;
+    }
+
+    .glass-dock.dock-scroll-x .dock-layer--full::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Block axis (vertical rails). The root keeps its `max-block-size` cap
+       and scrolls its over-cap children — cap + scroll is the correct
+       pairing the grow-mode contract split apart. Ties the
+       `.vertical.always-expanded` visible default on specificity and wins on
+       source order. */
+    .glass-dock.vertical.dock-scroll-y {
+        overflow-y: auto;
+        scrollbar-width: none;
+        /* Same momentum-trap as the inline port — a rail that bottoms out must
+           not chain its remaining wheel delta into the page scroller behind it. */
+        overscroll-behavior-y: contain;
+    }
+
+    .glass-dock.vertical.dock-scroll-y::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* ── `overflow="wrap"` recipe — CONTENT-DRIVEN intrinsic flex reflow ──
+       (AX.W04 F0). Parallel to the `.dock-scroll-{x,y}` hooks the
+       `overflow="scroll"` member emits, `overflow="wrap"` emits this class.
+       (HORIZONTAL-ONLY — GlassDock.vue guards the emit on
+       `orientation !== 'vertical'`; a vertical rail grows-to-fit + clamps via
+       `--dock-max-block-size`, its own overflow story.)
+
+       The reflow is INTRINSIC: `flex-wrap: wrap` is ALWAYS-ON (no viewport MQ),
+       and the dock shrink-wraps to content with `max-inline-size` capping it at
+       the canonical `--dock-max-inline-size` token (the SAME cap every
+       overflow strategy reads — `min(80vw, 64rem)` default, consumer-overridable
+       per-instance). So the layer wraps to N rows EXACTLY when its intrinsic row
+       exceeds the cap — at ANY viewport width — and collapses to one row when it
+       fits. The magic-640 `@media` snap-back + the `--dock-overflow-bp` token are
+       DELETED (the inherited mobile-responsive debt, origin 078dd79). */
+    .glass-dock.dock-overflow-wrap {
+        white-space: normal;
+        /* The content-driven cap. The dock ALREADY shrink-wraps to its content's
+           intrinsic width (the base `.glass-dock` rule), so `max-inline-size` caps
+           that intrinsic width at `--dock-max-inline-size`: under the cap the
+           shrink-wrap wins → one row; over the cap the dock holds at the cap and the
+           inner `flex-wrap: wrap` row reflows to N rows. ONE token, no breakpoint.
+           (The `min(max-content, …)` form is INVALID CSS — the math functions reject
+           the `max-content` intrinsic keyword, computing the property to its initial
+           `none` and silently dropping the cap; intrinsic-shrink + this plain cap IS
+           the valid `min(max-content, cap)`.) */
+        max-inline-size: var(--dock-max-inline-size);
+        padding: var(--dock-wrap-padding-block, var(--dock-padding-block, 0.375rem))
+            var(--dock-wrap-padding-inline, 0.625rem);
+
+        /* F4 — the pill↔card radius morph. A wrap dock is a FINITE multi-row CARD
+           surface when expanded and a stadium PILL when collapsed — the SAME
+           pill↔card morph the big-dock `shape-card` path rides. The corner glides
+           on the `--dock-expand-t` W01 single-scalar: `--radius-pill` at expand-t 0
+           (collapsed), `--dock-card-radius` at expand-t 1 (expanded — UNIFIED on
+           the SAME finite-radius token the big-dock card uses; the bare 16px
+           `--radius-2xl` literal is DELETED). ONE register, no discrete snap. */
+        border-radius: calc(
+            var(--radius-pill) +
+                (var(--dock-card-radius) - var(--radius-pill)) *
+                var(--dock-expand-t, 1)
+        );
+
+        /* F1 — the card-tier elevation morph ("material thickens as glass flexes
+           larger", WWDC25 §219). The wrap dock lifts from the flat thin-pill
+           `--shadow-dock` glow onto the FLOATING-tier stack (the `--shadow-dock-wrap`
+           token names the canonical composite on `:root`; a consumer retints the
+           whole card shadow by overriding THAT one token per the cartoon-shadow
+           contract). The three floating layers — drop / material-rim / under-cast —
+           fade in driven by the SAME `--dock-expand-t` scalar the radius glides on:
+           `--dock-wrap-elev` is the scalar as a 0→1 percent, so each layer's alpha
+           tracks the corner morph in LOCKSTEP (ONE clock, ONE register). At
+           expand-t 0 (collapsed/pill) the floating layers are 0%-alpha (invisible)
+           → only the base `--shadow-dock` glow shows; at expand-t 1 (expanded/card)
+           the full floating stack grounds the multi-row silhouette. The per-layer
+           recipe mirrors `--shadow-dock-wrap` (= `--shadow-xl` + `--glass-material-rim`
+           + `--glass-under-shadow-vivid`) so the token stays the source-of-record. */
+        --dock-wrap-elev: calc(var(--dock-expand-t, 1) * 100%);
+        box-shadow:
+            var(--glass-edge-light),
+            var(--shadow-dock-override, var(--shadow-dock)),
+            0 8px 24px color-mix(in srgb, var(--shadow-color) calc(0.14 * var(--dock-wrap-elev)), transparent),
+            0 0 0 0.5px color-mix(in srgb, var(--shadow-color) calc(0.05 * var(--dock-wrap-elev)), transparent),
+            0 8px 32px -4px color-mix(in srgb, oklch(0 0 0 / 0.12) var(--dock-wrap-elev), transparent);
+    }
+
+    .glass-dock.dock-overflow-wrap .dock-layer--full {
+        flex-wrap: wrap;
+        justify-content: center;
+        height: auto;
+        min-height: var(--dock-wrap-layer-min-height, var(--dock-layer-height, 2rem));
+        gap: var(--dock-wrap-row-gap, 0.25rem)
+            var(--dock-wrap-column-gap, var(--dock-layer-gap, 0.375rem));
+        /* AX.W04 — NO `transition: min-height` JS-morph (the AW.W3b spring-keyed
+           min-height detector is RETIRED — the false `proof:dock-layering-polish`
+           wrap-reflow claim is STRUCK). The reflow is intrinsic flex: rows
+           appear/vanish on the cap crossing with no second clock. The radius +
+           shadow lift ride the `--dock-expand-t` scalar (the W01 single clock),
+           NOT a CSS transition on the retired `--dock-motion-resize` list. */
+    }
+
+    .glass-dock.dock-overflow-wrap .dock-layer--summary {
+        height: auto;
+        min-height: var(--dock-wrap-layer-min-height, var(--dock-layer-height, 2rem));
+    }
+
+    .glass-dock.dock-overflow-wrap .dock-separator {
+        display: none;
+    }
+
+    /* Collapsed, a wrap dock is the single-row summary PILL. `white-space: nowrap`
+       keeps the summary on one line; the inline cap stays `max-inline-size:
+       var(--dock-max-inline-size)` (inherited from the `.dock-overflow-wrap` rule
+       above) so the collapsed box still shrink-wraps to the small summary's
+       max-content (NOT the full cap). The
+       radius morph resolves to `--radius-pill` at collapsed (--dock-expand-t 0) and
+       the box-shadow to the flat `--shadow-dock` glow (--dock-wrap-elev 0%). */
+    .glass-dock.dock-overflow-wrap.collapsed {
+        white-space: nowrap;
+    }
+
+    /* AX.W45 D15 — the ONE coarse-pointer multiplier (the two prior FLOOR blocks
+       SUBSUMED). On touch, the dock grows ~1.5× via `--dock-scale: var(--dock-
+       mobile-scale, 1.5)` — the SAME knob that threads the WHOLE density cascade, so
+       box + padding + gap + tab + tile-min + glyph all grow in LOCKSTEP (the desktop
+       proportion preserved, never a 44px box around a 20px glyph swimming in desktop
+       padding — the prior floor-not-scale state). At 1.5× comfortable's 40px control
+       → 60px and spacious's 44px → 66px, both PAST the 44px WCAG 2.5.5 target, so the
+       scale SUBSUMES the floor. The 44px guarantee survives as a CLAMP, not a parallel
+       rule: `--dock-control-floor: var(--dock-touch-target)` feeds the `max(…, floor)`
+       in the scaled control-size, so a consumer dialing `--dock-mobile-scale` below
+       1.0 still cannot drop the touch target under 44px. `--size-icon-btn` keeps its
+       floor for STANDALONE icon-button surfaces (a routed gear, no dock ancestor)
+       that read it directly. Fine pointer byte-identical (`--dock-scale` stays 1).
+
+       AP.W3 R0G-6 — selector is `.glass-dock[data-density]`, not bare `.glass-dock`:
+       the always-present density setter (0,2,0) would shadow a bare (0,1,0) rule. The
+       presence-selector (0,2,0) wins by source order, lifting `--dock-scale` so the
+       cascade re-resolves at touch scale. */
+    @media (pointer: coarse) {
+        .glass-dock[data-density] {
+            --dock-scale: var(--dock-mobile-scale, 1.5);
+            --dock-control-floor: var(--dock-touch-target, 2.75rem);
+            --size-icon-btn: var(--dock-touch-target, 2.75rem);
+        }
+    }
+}

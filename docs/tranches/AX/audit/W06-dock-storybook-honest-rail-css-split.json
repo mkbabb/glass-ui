@@ -1,0 +1,67 @@
+{
+  "wave": "AX.W06",
+  "title": "Dock storybook consolidation + honest rail + dock.css split",
+  "status": "dev-complete (headless GREEN; live-verify owned by the orchestrator π lane)",
+  "baseSha": "65ec4bc",
+  "headlineFolds": "F0 delete token-ladder debris · F1 one dock home (fold keepDockOpen + portal contract) · F2 honest type-narrowed rail + hoisted polish + USF-2 + 44px floor · F4 dock.css carved into src/styles/dock/ partials",
+  "bornRedWitnesses": [
+    {
+      "witness": "RED-1 — token-ladder debris still shipping (renamed, not removed)",
+      "atHead": "demo/stories/foundations/dock-active-tokens.vue EXISTS (the byte-for-byte rename of icon-button-token-ladder.vue, 0b27f01 | 0 content delta); manifest.ts row present; proof:storybook-ia EXPECTED_TREE lists it.",
+      "afterWave": "file DELETED outright; manifest row dropped; EXPECTED_TREE re-baselined (the dock-row re-baseline W06 owns, coordinated with W18). proof:storybook-ia + proof:no-orphan-demo-route GREEN.",
+      "result": "GREEN"
+    },
+    {
+      "witness": "RED-2 — dock-primary content scattered across three categories",
+      "atHead": "dock-PRIMARY routes in navigation/ (dock, dock-layers, rail), foundations/ (dock-active-tokens debris), compositions/ (dock-with-slider — the keepDockOpen proof filed by lineage).",
+      "afterWave": "the keepDockOpen proof is a 'Slider in dock' SECTION inside navigation/dock + a dock-as-portal-host consumer-contract note (the keyframes D9 no-glass-on-glass break documented); compositions/dock-with-slider + its manifest row GONE. dock-layers/rail kept as sibling navigation/ routes (RATIFY-#1, reaffirmed: the consolidation target is the SCATTER, not a single-page merge). The six incidental-host stories untouched.",
+      "result": "GREEN"
+    },
+    {
+      "witness": "RED-3 — the rail is a half-inapplicable variant flag + the demo re-derives a worse rail",
+      "atHead": "<GlassDock variant=\"rail\" :collapse-delay=\"2000\" start-collapsed> COMPILES (the inapplicable prop accepted); the refined active-rail treatment lives only in SidebarDock/dock-nav.css demo chrome, not the variant CSS.",
+      "afterWave": "the rail surface is type-NARROWED via a discriminated prop union (collapseDelay/startCollapsed/layout are a COMPILE error under variant=\"rail\"/\"instrument-strip\" — the generated dts surfaces the union branch, NOT the Record<string,any> the prior withDefaults form erased it to). The refined active-item accent + leading-edge accent rule are HOISTED into dock-controls.css (tokenized via --dock-rail-active-accent, default --primary); the demo retints the token to the NCSU-red preset (demo == shipped, the hand-rolled ::before retired). navigation/rail.vue shows the canonical recipe + a vertical-vs-rail CONTRAST (DK9/DK10) + the three-rail naming disambiguation (F3).",
+      "result": "GREEN"
+    },
+    {
+      "witness": "RED-4 — dock.css is a structurally-invisible CSS god-module",
+      "atHead": "wc -l src/styles/dock.css = 1762 (> 500); invisible to the .ts/.vue-only proof:no-god-module collector.",
+      "afterWave": "dock.css CARVED into six cohesive single-axis src/styles/dock/ partials (shell 457 · morph 244 · density 230 · layers 355 · layer-group 263 · overflow 191), each < 500, @import-ed by a thin 111-line dock.css core in cascade order in the SAME @layer components. Selector-set + declaration-body proven byte-isomorphic (122 selectors, zero diff). proof:dock-css-carve (the local .css-aware line-count probe) GREEN.",
+      "result": "GREEN"
+    }
+  ],
+  "ratifyDecisions": {
+    "ratify1_siblings_vs_sections": "KEEP navigation/dock-layers + navigation/rail as SIBLING routes (the consolidation target is the SCATTER — token-ladder out of foundations/, dock-with-slider out of compositions/ — not a single-page merge). The amend (A.1) reverses this toward a first-class `dock` CATEGORY, but W18 owns that category creation + EXPECTED_TREE re-baseline; W06 lands first within the existing tree (single-writer split — W06 writes SFC bodies, W18 writes manifest dock rows).",
+    "ratify2_narrow_mechanism": "DISCRIMINATED PROP UNION (the compile-time narrow, one-path). The honest-rail surface is a union of DockVariantProps (the horizontal dock branch, carries collapseDelay/startCollapsed/layout) | DockRailProps (rail/instrument-strip, no collapse surface). REQUIRED pure defineProps<DockProps>() — withDefaults over a union props type degrades the runtime inference to Record<string,any> and ERASES the narrow; defaults are now applied via ?? at each read site.",
+    "ratify3_instrument_rail_disambig": "SIGNPOST now (the manifest rail description + the rail.vue naming section disambiguate Dock Rail vs Instrument Rail vs the layer-switcher rail — the three-way noun collision, amend A.3); the Instrument-Rail DISSOLUTION is routed to W28/W29 (not pre-emptively done here).",
+    "ratify4_carve_shape": "THIN dock.css CORE + @import-ed partials. The core keeps the @property --dock-morph-t registration + the SHARED cross-control four-state comma-groups (which legitimately live at the import root — they reference EVERY control family) + the @imports. This preserves the existing proof:dock-css-split coherence anchor (which reads dock.css for the shared :where()/:focus-visible groups) AND the index.css @import \"./dock.css\" chain, while every partial + the core clear < 500. (A full dissolve would break that existing AU.W8b.3 gate — the constraint RATIFY-#4 did not weigh.)"
+  },
+  "usf2_optical_size": {
+    "rootCause": "DarkModeToggle renders its OWN internal SVG h-full w-full (it bypasses the --dock-icon-glyph-sized > svg slot); in-dock, --dark-mode-toggle-padding fell to var(--dock-icon-padding, 0) but --dock-icon-padding is NEVER DEFINED → 0 padding → the SVG filled the box (~2.5x the nav glyphs).",
+    "fix": "route the in-dock toggle glyph through --dock-control-glyph-size (default = --dock-icon-glyph, the --dock-scale-keyed glyph the nav icons paint), scoped to the in-dock path ONLY (h-full w-full stays correct standalone). One token the dock-control family reads — optically uniform when docked."
+  },
+  "carvePartitionMap": {
+    "src/styles/dock/shell.css": "the .glass-dock structural skeleton — root, W02 overflow:clip aperture, paper-grain ::after, vertical-root column, shape/variant plates (rail · instrument-strip · horizontal shape-rounded/card + W56 squircle), position helpers, W45 #persistent + vertical three-region body (457 lines)",
+    "src/styles/dock/morph.css": "the W01 single-scalar morph chrome + state response — --dock-expand-t interp, root bg/border/padding interpolation, collapsed/summary (W45-TUNE Q1), held/open response, W55 adaptive-legibility bucket (244)",
+    "src/styles/dock/density.css": "the W45 density x --dock-scale cascade — four rungs + the audacious narrow-box @container label compression (230)",
+    "src/styles/dock/layers.css": "the .dock-layer crossfade + hit-test + reveal-stagger contract + the FLIP box-size morph + layout=grid tile grid (355; the AV.W9.0 retired-arm tombstone struck)",
+    "src/styles/dock/layer-group.css": "the <DockLayerGroup> family — DockSeparator paint, .dock-layer-group, the .dock-layer-rail layer-switcher rail (W45 DK8 + the axis-aware indicator), .dock-layer-stack, .dock-layer-item-host (263)",
+    "src/styles/dock/overflow.css": "the overflow= axis — scroll ports + the W04 content-driven wrap recipe (relocated verbatim) + the W45 D15 coarse-pointer --dock-scale multiplier (191)",
+    "src/styles/dock.css": "the thin CORE — @property --dock-morph-t + the shared cross-control four-state comma-groups + the @imports (111)"
+  },
+  "isomorphism": {
+    "selectorSet": "122 selectors original == 122 carved (zero diff)",
+    "declarationBodies": "byte-equivalent modulo whitespace (the only diff is 4 blank lines inside the @property normalize); the @property block is byte-identical",
+    "buildGreen": "npm run build GREEN — vite arm + the vue-tsc dts arm; the /styles bundle ships dist/styles/dock.css (core) + dist/styles/dock/*.css (partials) via the @import chain"
+  },
+  "gates": {
+    "proof:dock-css-carve": "NEW (this wave) — the local .css-aware line-count + deletion + type-narrow probe. GREEN; born-RED at HEAD (dock.css 1762 > 500, debris present, 2 manifest refs). NEEDS REGISTRATION in package.json (orchestrator).",
+    "proof:storybook-ia": "RE-BASELINED — dropped foundations/dock-active-tokens + compositions/dock-with-slider from EXPECTED_TREE (the W06 dock-row re-baseline, coordinated with W18). GREEN.",
+    "proof:no-orphan-demo-route": "GREEN — 126 rows / 126 files after the two deletions (set-equality preserved).",
+    "proof:dock-css-split": "GREEN (unchanged) — the AU.W8b.3 controls-carve coherence anchor (the shared :where()/:focus-visible groups stay in the dock.css core).",
+    "dockStructureGates": "proof:dock-region-model / dock-perfection / dock-opacity-lockstep / dock-vocabulary / dock-wrap-content-driven(source arm) — GREEN after wiring the new scripts/read-dock-css.mjs helper (each gate's bare readFileSync(dock.css) → readDockCss(ROOT), which concatenates the core + the six partials in cascade order; NO detector change). The carve relocated the rules these gates assert; the helper restores the authority view.",
+    "dockTests": "95/95 dock unit tests pass; proof:dock-a11y-contract 9/9.",
+    "typecheck": "vue-tsc --noEmit clean (0 errors)."
+  },
+  "liveVerifyOwed": "the binding close criterion — the orchestrator's fail-CLOSED chrome-devtools-mcp π pass @ localhost:5173, light AND dark, >=3 viewports (375x667 / 1280x800 / 1440x900): the consolidated dock home reads as ONE coherent home (the Slider-in-dock keepDockOpen halo through a real drag, the portal contract, the relocated wrap section); navigation/rail == the SidebarDock chrome the hoisted variant CSS now drives (active accent + tap-squish + tooltip anchoring); the vertical-vs-rail contrast legible; a standalone DockIconButton presents >= 44x44 on a coarse pointer; the DarkModeToggle glyph optically uniform with the nav glyphs in-dock (USF-2); the carve-isomorphism A/B (the whole dock pixel-identical pre/post carve); the rest state GENUINELY static (no ambient idle motion). Captured as the paired-pi BEFORE/AFTER + DELTA under docs/tranches/AX/audit/visual/."
+}

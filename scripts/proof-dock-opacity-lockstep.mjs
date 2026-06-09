@@ -55,6 +55,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { readDockCss } from "./read-dock-css.mjs";
 
 let _cliPaths = null;
 function cliPaths() {
@@ -253,8 +254,8 @@ export function detectSource(dockCss) {
 }
 
 function run() {
-    const { ROOT, DOCK_CSS, ARTIFACT } = cliPaths();
-    const { facts, violations } = detectSource(readFileSync(DOCK_CSS, "utf8"));
+    const { ROOT, ARTIFACT } = cliPaths();
+    const { facts, violations } = detectSource(readDockCss(ROOT));
     const status = violations.length === 0 ? "pass" : "fail";
     writeGateArtifact(ARTIFACT, {
         generatedAt: snapshotStamp(),

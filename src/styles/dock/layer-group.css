@@ -1,0 +1,263 @@
+/* dock/layer-group.css — `.dock-layer-group` / layer-switcher rail / stack
+ * (AX.W06 carve).
+ *
+ * Carved from the dock.css god-module (slice 25). This partial owns the
+ * `<DockLayerGroup>` family: the `<DockSeparator>` orientation+layout-aware
+ * paint (vertical hairline · horizontal rule · grid section-break), the
+ * `.dock-spacer`, the `.dock-layer-group` flex axes, the `.dock-layer-rail`
+ * layer-switcher rail (the W45 DK8 rail-bg plate + the axis-aware travelling
+ * `.dock-layer-tab-indicator`), the `.dock-layer-stack`, and the axis-aware
+ * `.dock-layer-item-host` pane.
+ *
+ * NOTE: this `.dock-layer-rail` is the LAYER-SWITCHER rail inside a
+ * `<DockLayerGroup>` — distinct from the `GlassDock variant="rail"` navigation
+ * column (dock/shell.css + dock-controls.css) and the `<InstrumentRail>` cockpit
+ * chassis (instrument-rail). The three share the noun, not the architecture.
+ *
+ * @import-ed by dock.css in cascade order, in the SAME `@layer components` — the
+ * carve is isomorphic (same layer, same source order → ZERO visual delta). */
+
+@layer components {
+    /* AX.W45 D13-c / DK5 — the `<DockSeparator>` paint source. The separator is now
+       a first-class orientation+layout-aware primitive (DockSeparator.vue) that
+       carries the orientation contract the bare class could not. It demarcates dock
+       item GROUPS (transport | navigation | settings) for affordance hierarchy. The
+       paint is PERPENDICULAR to the layout axis:
+         - row dock (horizontal, the default)   → a VERTICAL 1px hairline
+         - column dock (vertical / rail)         → a HORIZONTAL 1px rule, cross-extent
+         - grid dock (`layout="grid"`)           → a full-row SECTION BREAK
+       The component sets `data-orientation` from `useOptionalDockContext`; the
+       dock-root ancestor class (`.glass-dock.vertical` / `.layout-grid`) drives the
+       perpendicular paint so the same primitive reads correctly at every layout. */
+    .dock-separator {
+        @apply flex-shrink-0;
+        width: 1px;
+        height: var(--dock-separator-height);
+        margin: 0 0.375rem;
+        background: var(--surface-tint-15);
+    }
+
+    /* Column (vertical) dock — a HORIZONTAL hairline across the column's cross
+       extent (a 1px-WIDE vertical sliver does not divide a stack). */
+    .glass-dock.vertical .dock-separator,
+    .dock-layer-group.vertical .dock-separator,
+    .dock-separator[data-orientation="vertical"] {
+        width: var(--dock-separator-height);
+        height: 1px;
+        align-self: center;
+        margin: 0.375rem 0;
+    }
+
+    /* Grid (big-dock) — a full-row SECTION BREAK spanning every column, the
+       Launchpad-style group demarcation (a 1px sliver in one cell is useless). */
+    .glass-dock.layout-grid .dock-separator {
+        grid-column: 1 / -1;
+        width: 100%;
+        height: 1px;
+        margin: var(--dock-layer-gap, 0.375rem) 0;
+        align-self: center;
+    }
+
+    .dock-spacer {
+        @apply flex-1;
+    }
+
+    .dock-layer-group {
+        display: flex;
+        gap: var(--dock-layer-group-gap, var(--dock-layer-gap, 0.25rem));
+        min-width: 0;
+        min-height: 0;
+    }
+
+    .dock-layer-group.horizontal {
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+    .dock-layer-group.horizontal.rail-end {
+        flex-direction: row-reverse;
+    }
+
+    .dock-layer-group.vertical {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .dock-layer-group.vertical.rail-end {
+        flex-direction: column-reverse;
+    }
+
+    /* AX.W45 DK8 — the rail gets its OWN surface plate. Previously the rail was a
+       bare bordered gutter (a hairline `border-right`, no background), so its
+       `--primary 15%` indicator + `--accent 40%` hover were tuned against an absent
+       plate (the "bg's not right"). The `--dock-layer-rail-bg` rung (a quiet
+       `--surface-tint-8` default, consumer-overridable) gives the rail a finished
+       glass-quiet surface; the hover/active affordance reads the `--dock-layer-rail-
+       {hover,active}` tokens, so the whole rail ladder is tunable from §10. */
+    .dock-layer-rail {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        gap: var(--dock-layer-rail-gap, 0.125rem);
+        padding: var(--dock-layer-rail-padding, 0.125rem);
+        background: var(--dock-layer-rail-bg, var(--surface-tint-8));
+        border-radius: var(--dock-layer-rail-radius, var(--radius-md));
+        border-right: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
+    }
+
+    .dock-layer-group.vertical .dock-layer-rail {
+        flex-direction: row;
+        border-right: none;
+        border-bottom: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
+    }
+
+    .dock-layer-group.horizontal.rail-end .dock-layer-rail {
+        border-right: none;
+        border-left: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
+    }
+
+    .dock-layer-group.vertical.rail-end .dock-layer-rail {
+        border-bottom: none;
+        border-top: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
+    }
+
+    /* AU.W8.4 — the rail is a reka-ui Tabs contract. The travelling
+       `.dock-layer-tab-indicator` (the reka TabsIndicator) now carries the
+       active affordance; the rail is `position: relative` so the indicator's
+       absolute placement is rail-local. */
+    .dock-layer-rail {
+        position: relative;
+    }
+
+    .dock-layer-rail .dock-layer-tab {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--dock-layer-tab-size, var(--dock-control-size, 1.75rem));
+        height: var(--dock-layer-tab-size, var(--dock-control-size, 1.75rem));
+        border: 0;
+        border-radius: var(--dock-layer-tab-radius, var(--radius-sm));
+        background: transparent;
+        color: var(--muted-foreground);
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.75rem;
+        /* The tab glyph rides above the travelling indicator backplate. */
+        z-index: 1;
+        transition:
+            background var(--dock-motion-fast),
+            color var(--dock-motion-fast);
+    }
+
+    .dock-layer-rail .dock-layer-tab:hover {
+        background: var(
+            --dock-layer-rail-hover,
+            color-mix(in srgb, var(--accent) 40%, transparent)
+        );
+        color: var(--foreground);
+    }
+
+    /* AU.W8.4 — KEEP the active glyph tint on the selected tab (reka emits
+       `data-state="active"` + `aria-selected="true"`); the per-button active
+       BACKGROUND is RETIRED — the travelling indicator carries that affordance. */
+    .dock-layer-rail .dock-layer-tab[data-state="active"] {
+        color: var(--primary);
+    }
+
+    /* AU.W8.4 — the dock control focus-ring contract does not cover
+       `.dock-layer-tab` (the rail tab is not in the `.dock-icon-button` family).
+       The roving tabindex means only the active tab is in the tab order; a
+       focus-visible tab paints the shared dock ring. */
+    .dock-layer-rail [role="tab"]:focus-visible {
+        box-shadow: var(--focus-ring-shadow);
+        outline: none;
+    }
+
+    /* AX.W45 DK8 — the travelling indicator is now AXIS-AWARE. reka computes
+       `--reka-tabs-indicator-position`/`-size` for the axis the `<Tabs orientation>`
+       names; DockLayerGroup threads the group axis into it (`orientation="vertical"`
+       for the DEFAULT column rail, `"horizontal"` for the `.vertical` group's row
+       rail). The DEFAULT (horizontal-group) rail is a COLUMN of stacked tabs, so the
+       indicator travels the BLOCK (Y) axis — the prior `translateX` + `top:0` pinned
+       it at the top tab and it NEVER reached the active tab below (the mis-alignment
+       the user screenshotted). The default rule below travels Y; the `.vertical`
+       group's ROW rail overrides back to X. The active-tab plate reads the tunable
+       `--dock-layer-rail-active` rung. Both morph on `--dock-motion-resize`. */
+    .dock-layer-rail .dock-layer-tab-indicator {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: var(--dock-layer-tab-size, var(--dock-control-size, 1.75rem));
+        height: var(--reka-tabs-indicator-size);
+        transform: translateY(var(--reka-tabs-indicator-position));
+        border-radius: var(--dock-layer-tab-radius, var(--radius-sm));
+        background: var(
+            --dock-layer-rail-active,
+            color-mix(in srgb, var(--primary) 15%, transparent)
+        );
+        transition:
+            width var(--dock-motion-resize),
+            height var(--dock-motion-resize),
+            transform var(--dock-motion-resize);
+        pointer-events: none;
+    }
+
+    /* The `.vertical` group's rail is a ROW of tabs (flex-direction: row), so the
+       indicator travels the INLINE (X) axis — the row layout, reka
+       `orientation="horizontal"`. */
+    .dock-layer-group.vertical .dock-layer-rail .dock-layer-tab-indicator {
+        height: var(--dock-layer-tab-size, var(--dock-control-size, 1.75rem));
+        width: var(--reka-tabs-indicator-size);
+        transform: translateX(var(--reka-tabs-indicator-position));
+    }
+
+    .dock-layer-stack {
+        position: relative;
+        display: grid;
+        /* AW.W2 — the morph axis (width for a horizontal group, height for a
+           vertical one) is driven by the `useLayerTransition` SpringProgress in
+           pixel space (FLIP path) or the View-Transition (native path); a CSS
+           `width`/`height` transition here would be a SECOND driver on the same
+           axis (the AV.W9.0 dual-driver race that froze the dock). The cross axis
+           is intrinsic-sized and never morphs. So NO size transition on the stack
+           — one owner per axis. */
+    }
+
+    /* Base layout — the crossfade + hit-test contract is shared with
+       `.dock-layer` above (see "Layer crossfade + hit-test contract"). The
+       default state is inactive: absolute + inset:0. */
+    .dock-layer-item-host {
+        grid-area: 1 / 1;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        gap: var(--dock-layer-gap, 0.375rem);
+        position: absolute;
+        inset: 0;
+    }
+
+    .dock-layer-item-host.is-active {
+        position: relative;
+        inset: auto;
+        width: max-content;
+        min-width: 0;
+    }
+
+    /* AP.W3 — axis-aware layer pane. The stack + `useLayerTransition` are
+       axis-aware, but the pane was hardcoded to a no-wrap ROW with
+       `width: max-content` — forcing a `vertical` group's content onto one
+       horizontal line that could not grow down (the vertical-overflow fight).
+       A vertical group stacks in a column, stretches, wraps, and block-sizes
+       to the height the stack animates. Horizontal byte-identical. */
+    .dock-layer-group.vertical .dock-layer-item-host {
+        flex-direction: column;
+        align-items: stretch;
+        white-space: normal;
+    }
+
+    .dock-layer-group.vertical .dock-layer-item-host.is-active {
+        width: auto;
+        height: max-content;
+    }
+}

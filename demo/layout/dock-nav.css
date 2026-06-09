@@ -45,29 +45,18 @@
     margin: 0;
 }
 
-/* ── Active-category restyle (the genuine NEW deliverable) ──────────────────
-   The affordance moves from the bare `.is-active` colour shift onto the
-   NCSU-red accent + a left-edge accent rule + `tap-squish` press feedback
-   (the `.tap-squish` utility is composed in markup). */
-.demo-sidebar-item {
-    position: relative;
-}
+/* ── Active-category restyle — the demo's NCSU-red preset over the SHIPPED rail
+   polish (AX.W06 demo == shipped) ───────────────────────────────────────────
+   The active-item accent + the leading-edge accent rule are now SHIPPED by the
+   `GlassDock variant="rail"` variant CSS (`src/styles/dock-controls.css`,
+   tokenized via `--dock-rail-active-accent` + `--dock-rail-accent-*`). The demo
+   no longer hand-rolls its own `::before` — it RETINTS the shipped accent to the
+   NCSU-red brand preset by overriding the one token on the cascade (presets live
+   in the consumer; the library's default is `--primary`). `tap-squish` press
+   feedback stays composed in markup. */
 .demo-sidebar-item.is-active {
-    /* The dock's `--dock-active-color` cohort already paints the active glyph;
-       override it to the NCSU-red accent for this demo (token-on-the-cascade,
-       not a dead local). */
-    --dock-active-color: var(--demo-nav-accent);
-    color: var(--demo-nav-accent);
-}
-.demo-sidebar-item.is-active::before {
-    /* The left-edge accent rule. */
-    content: "";
-    position: absolute;
-    inset-block: 18%;
-    inset-inline-start: calc(-1 * var(--demo-nav-rail-accent-w) - 2px);
-    width: var(--demo-nav-rail-accent-w);
-    border-radius: var(--radius-pill);
-    background: var(--demo-nav-accent);
+    --dock-rail-active-accent: var(--demo-nav-accent);
+    --dock-rail-accent-width: var(--demo-nav-rail-accent-w);
 }
 
 /* ── Bottom-bar viewport anchoring ─────────────────────────────────────────
