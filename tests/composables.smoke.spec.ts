@@ -115,8 +115,8 @@ describe("sidebar tree helpers", () => {
     const tree = [
         {
             id: "root",
-            label: "Root",
-            children: [{ id: "child", label: "Child" }],
+            title: "Root",
+            children: [{ id: "child", title: "Child" }],
         },
     ];
 

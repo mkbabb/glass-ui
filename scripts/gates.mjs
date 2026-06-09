@@ -15,8 +15,10 @@
 // So local == ci == release is STRUCTURAL, not coincidental.
 
 import { execSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { argv } from "node:process";
+import { fileURLToPath } from "node:url";
 import { ROOT } from "./constellation.mjs";
 
 /**
@@ -39,7 +41,14 @@ export const GATES = [
         cmd: "verify-export-types",
         tags: ["local", "ci", "release"],
     },
-    { id: "profile:budget", cmd: "profile:budget", tags: ["local", "ci", "release"] },
+    {
+        id: "profile:budget",
+        cmd: "profile:budget",
+        tags: ["local", "ci", "release"],
+        // In CI the `build` step already ran; skip the re-build inside the budget
+        // gate (the env the hand-mirror carried — now single-sourced into emit-ci).
+        env: { GLASS_UI_BUDGET_SKIP_BUILD: "1" },
+    },
     {
         id: "proof:package",
         cmd: "proof:package",
@@ -471,12 +480,6 @@ export const GATES = [
         note: "AW.W18 — the .input-pill invalid-ring selector group honors [aria-invalid=\"true\"] alongside :user-invalid + .user-invalid-fallback, so an app-driven (non-native-validation) form gets the library's destructive ring with NO consumer :deep() re-paint. Two asserts: THREE-MEMBER (every .input-pill invalid rule carries all three trigger surfaces) + RECIPE-INTACT (the ring still resolves var(--destructive) — widened, not replaced). Born RED on HEAD (two of three). Bite: drop the [aria-invalid] arm → RED",
     },
     {
-        id: "proof:styling-hygiene",
-        cmd: "proof:styling-hygiene",
-        tags: ["local", "ci"],
-        note: "AW.W20 — the styling assay LOCK. Asserts the named brittle magic-numbers resolve through tokens (the BouncyToggle pill-track trim reads a --bouncy-track-trim token, not a repeated hand-computed rem); the glass-panel/card demo tier-force controls render as <ToggleGroup> with NO surviving raw-<button> tier re-roll (the ToggleGroup bite); useTokenColor carries a public-vs-reference doc block. Bite: re-roll a raw <button class=...border...> tier control → RED; hardcode the pill-track trim back to a literal → RED",
-    },
-    {
         id: "proof:subpath-enumeration",
         cmd: "proof:subpath-enumeration",
         tags: ["local", "ci", "release"],
@@ -578,6 +581,38 @@ export const GATES = [
         tags: ["local", "ci"],
         note: "AX.W56 — the corner-SHAPE token axis + the rounded-vs-squircle POLICY. Device-free SOURCE arm (runs + hard-REDs on EVERY runner): theme.css mints --corner-k-{squircle:2,soft:1.7,sharp:2.4} (the superellipse-k primitives; squircle == superellipse(2) == n=4) + the semantic --corner-shape-{card:round,pill:round,panel:round,bigdock:superellipse(var(--corner-k-squircle))} POLICY aliases; the big-dock dock.css site reads `corner-shape: var(--corner-shape-bigdock)` (the bite — NOT a bare squircle keyword) ONLY inside `@supports (corner-shape: superellipse(2))` (no leak onto the un-gated base) over a `border-radius` round fallback; glass.css carries NO corner-shape on .glass-card/.glass-btn/.btn-pill (the AW.W23 inversion RE-HOMED — cards stay round). π render arm (fail-CLOSED when the tests-visual workspace is present; squircle-language.spec.ts): getComputedStyle(...).cornerShape readback === superellipse(2) on the big-dock card shell on a Chrome-139 engine (or the round fallback on a non-supporting engine), a card stays round. Bite: re-hardcode `corner-shape: squircle` on the big-dock → BIGDOCK-READS-TOKEN RED; re-add a squircle to .glass-card → CARD-REHOMED RED; leak the decl outside @supports → SUPPORTS-GATE-INTACT RED; flip --corner-shape-card to a superellipse → POLICY-CARD-ROUND RED.",
     },
+    {
+        id: "proof:live-verified-ledger",
+        cmd: "proof:live-verified-ledger",
+        tags: ["local", "ci"],
+        note: "AX.W62 Gate 1 (cardinal forcing function) — a PROGRESS wave-row whose STATUS cell is `live-verified` REDs unless a matching audit/visual/W<NN>-DELTA.md references ≥1 REAL on-disk PNG (the SOURCE arm rejects prose/section-markers); any `(DEVELOPED)` modifier in a status cell REDs (the retired inflation-vehicle vocabulary). Self-proving: a synthetic DELTA-less live-verified row is flagged every run. Also the .githooks/commit-msg local bite. Bite: flip a row to live-verified with no .png → RED; write `(DEVELOPED)` in a status cell → RED.",
+    },
+    {
+        id: "proof:consumer-staleness",
+        cmd: "proof:consumer-staleness",
+        tags: ["local", "ci"],
+        sibling: true,
+        note: "AX.W62 Gate 3 (reverse cross-repo) — every present-consumer `import … from \"@mkbabb/glass-ui[/sub]\"` resolves against the CURRENT surface: the subpath is a published exports key (retired /responsive-tabs → RED) and each named import is on that subpath's flat dist d.ts export set (deleted BouncyTabs/UnderlineTabs → RED). Absent siblings skip (registry-default; CI-green). The named arm needs a built dist (build is the predecessor). Born-RED on the speedtest tab-family imports — discharged by the W34 consumer bump. Bite: a consumer importing a deleted symbol / retired subpath → RED.",
+    },
+    {
+        id: "proof:disposition-live",
+        cmd: "proof:disposition-live",
+        tags: ["local", "ci"],
+        sibling: true,
+        note: "AX.W62 Gate 5 (deferral re-evaluation) — parses docs/tranches/AX/audit/DISPOSITION-REGISTER.json; a book/archived row whose `min-consumers` trigger now re-evaluates MET (≥n distinct present consumers grep the pattern) while unresolved REDs the close. Self-proving: a synthetic always-MET book row is flagged every run. Catches LATE-1 (trigger met, ignored) + LATE-3 (never re-checked). Bite: seed a met-trigger book row → RED; resolve it or the trigger un-METs → green.",
+    },
+    {
+        id: "proof:gen-ci-fresh",
+        cmd: "proof:gen-ci-fresh",
+        tags: ["local", "release"],
+        note: "AX.W62 Gate 4 (ci.yml drift kill) — asserts .github/workflows/ci.yml is byte-identical to `gates.mjs --emit-ci` (the ci-tagged set is the single source; ci.yml is a GENERATED artefact). A ci.yml meta-step (not ci-tagged here, to avoid double-render); in the RELEASE set so a drifted ci.yml refuses to publish. Bite: hand-edit ci.yml or add a ci gate without re-emitting → RED.",
+    },
+    {
+        id: "gates:verify-ci",
+        cmd: "gates:verify-ci",
+        tags: ["release"],
+        note: "AX.W62 — the cheap pre-check superseded by proof:gen-ci-fresh's byte-match; kept in the RELEASE set as the fast set-equality drift detect. A ci.yml meta-step (allowlisted in verifyCi's CI_META_STEPS).",
+    },
     { id: "audit:stash", cmd: "audit:stash", tags: ["ci"] },
 ];
 
@@ -626,7 +661,7 @@ function verifyCi() {
     // gate NOR an allowlisted meta-step is an UNKNOWN step and fails closed (a
     // truly-novel `run: npm run …` line added to ci.yml must be classified here or
     // ci-tagged in the manifest — it can no longer slip through undetected).
-    const CI_META_STEPS = new Set(["gates:verify-ci"]);
+    const CI_META_STEPS = new Set(["gates:verify-ci", "proof:gen-ci-fresh"]);
     const missing = [...expected].filter((c) => !ciSteps.has(c));
     const extra = [...ciSteps].filter((c) => !expected.has(c) && !CI_META_STEPS.has(c));
     if (missing.length || extra.length) {
@@ -647,19 +682,106 @@ function verifyCi() {
     );
 }
 
-const arg = process.argv[2];
-if (arg === "--run") runMode(process.argv[3]);
-else if (arg === "--verify-ci") verifyCi();
-else if (arg === "--list") {
-    const mode = process.argv[3] ?? "local";
+/**
+ * Render the `.github/workflows/ci.yml` content from the ci-tagged manifest set
+ * — the single source of truth. Each ci gate becomes one `- name:` step (the
+ * per-step Actions-UI view the team wanted; option (a), never the collapse), in
+ * manifest order, followed by the two drift-check meta-steps. Per-gate
+ * documentation stays in the manifest `note` (duplicating it here would be the
+ * exact drift this generator kills), so the YAML is a clean generated artefact.
+ *
+ * RED-NAMING (the W62 forcing function): a ci-tagged gate whose backing
+ * `scripts/*.mjs` is absent on disk THROWS, naming it — never a silent skip. So
+ * a dangling gate can no longer ride into a generated ci.yml and crash the
+ * runner; its fix-or-retire is forced at emit time.
+ */
+export function renderCiYaml() {
+    const ciGates = gatesFor("ci");
+    const pkg = JSON.parse(readFileSync(resolve(ROOT, "package.json"), "utf8"));
+    const missing = [];
+    for (const g of ciGates) {
+        const script = pkg.scripts?.[g.cmd] ?? "";
+        const m = script.match(/scripts\/([\w.-]+\.mjs)/);
+        if (m && !existsSync(resolve(ROOT, "scripts", m[1]))) missing.push(g.cmd);
+    }
+    if (missing.length) {
+        throw new Error(
+            `[gates --emit-ci] refusing to emit: ${missing.length} ci-tagged gate(s) have no backing script on disk:\n` +
+                missing.map((c) => `  - ${c} (${pkg.scripts?.[c] ?? "no npm script"})`).join("\n") +
+                `\nFix-or-retire these (the gate owner / W25 / W27a) before ci.yml can be generated.`,
+        );
+    }
+    const I = " ".repeat(12); // `- name:` step indent (matches the repo style)
+    const L = [];
+    L.push("# GENERATED by `node scripts/gates.mjs --emit-ci` (npm run gates:emit-ci) — DO NOT EDIT BY HAND.");
+    L.push("# The ci-tagged gate set in scripts/gates.mjs is the single source of truth; per-gate");
+    L.push("# documentation lives in that manifest's `note` field. A drift between this file and the");
+    L.push("# manifest fails closed via proof:gen-ci-fresh (byte-match) — so the CI mirror can never");
+    L.push("# silently fall behind the gate set again. To change CI: edit the manifest, re-emit, commit.");
+    L.push("");
+    L.push("name: ci");
+    L.push("");
+    L.push("on:");
+    L.push("    pull_request:");
+    L.push("        branches: [master]");
+    L.push("    push:");
+    L.push("        branches: [master]");
+    L.push("");
+    L.push("jobs:");
+    L.push("    gates:");
+    L.push("        runs-on: ubuntu-latest");
+    L.push("        steps:");
+    L.push("            - uses: actions/checkout@v4");
+    L.push("            - uses: actions/setup-node@v4");
+    L.push("              with:");
+    L.push("                  node-version: 24");
+    L.push("            - run: npm ci");
+    for (const g of ciGates) {
+        L.push(`${I}- name: ${g.id}`);
+        if (g.env) {
+            L.push(`${I}  env:`);
+            for (const [k, v] of Object.entries(g.env))
+                L.push(`${I}      ${k}: ${JSON.stringify(String(v))}`);
+        }
+        L.push(`${I}  run: npm run ${g.cmd}`);
+    }
+    // The two drift-check meta-steps (NOT manifest gates — they verify the mirror).
+    L.push(`${I}- name: gates:verify-ci`);
+    L.push(`${I}  run: npm run gates:verify-ci`);
+    L.push(`${I}- name: proof:gen-ci-fresh`);
+    L.push(`${I}  run: npm run proof:gen-ci-fresh`);
+    return L.join("\n") + "\n";
+}
+
+/** Write the generated ci.yml to disk. */
+function emitCi() {
+    const yaml = renderCiYaml();
+    const ciPath = resolve(ROOT, ".github/workflows/ci.yml");
+    writeFileSync(ciPath, yaml);
     console.log(
-        gatesFor(mode)
-            .map((g) => g.cmd)
-            .join("\n"),
+        `[gates --emit-ci] wrote ${ciPath} (${gatesFor("ci").length} ci gates + 2 meta-steps).`,
     );
-} else {
-    console.error(
-        "usage: gates.mjs --run <local|ci|release> | --verify-ci | --list <mode>",
-    );
-    process.exit(2);
+}
+
+// Run-as-main guard — gates.mjs is also IMPORTED (proof:gen-ci-fresh consumes
+// renderCiYaml), so the CLI dispatch must not fire on import.
+const isMain = Boolean(argv[1]) && resolve(argv[1]) === fileURLToPath(import.meta.url);
+if (isMain) {
+    const arg = argv[2];
+    if (arg === "--run") runMode(argv[3]);
+    else if (arg === "--verify-ci") verifyCi();
+    else if (arg === "--emit-ci") emitCi();
+    else if (arg === "--list") {
+        const mode = argv[3] ?? "local";
+        console.log(
+            gatesFor(mode)
+                .map((g) => g.cmd)
+                .join("\n"),
+        );
+    } else {
+        console.error(
+            "usage: gates.mjs --run <local|ci|release> | --verify-ci | --emit-ci | --list <mode>",
+        );
+        process.exit(2);
+    }
 }

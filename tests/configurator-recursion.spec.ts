@@ -347,8 +347,16 @@ function installRecursionProbe(): RecursionProbe {
         // masked. Vitest's own listener will see this on the next tick.
         throw err;
     };
-    process.prependListener("unhandledRejection", rejectionListener);
-    process.prependListener("uncaughtException", rejectionListener);
+    // The shared listener intentionally services both async channels; cast to
+    // each channel's NodeJS listener shape so the overload resolves cleanly.
+    process.prependListener(
+        "unhandledRejection",
+        rejectionListener as NodeJS.UnhandledRejectionListener,
+    );
+    process.prependListener(
+        "uncaughtException",
+        rejectionListener as NodeJS.UncaughtExceptionListener,
+    );
 
     function mount<Setup extends () => unknown>(
         component: ReturnType<typeof defineComponent>,

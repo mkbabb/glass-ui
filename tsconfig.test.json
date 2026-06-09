@@ -1,0 +1,18 @@
+{
+    // AX.W62 — the tests/ mirror type-fold. The tests/ tree (carved out of every
+    // tsconfig since AV.W14) was a type-unchecked island, so a clean-break
+    // orphaned test import (the W53 BouncyToggle class) stayed invisible while
+    // typecheck went green. This config folds tests/ into the type system: it
+    // BITES on a dead import (TS2305 "no exported member") and on an explicit
+    // type mismatch (TS2345/TS2769) — the dead-reference detection the fold
+    // exists for — while relaxing noImplicitAny (test-scope ergonomics: the
+    // detect-tests map untyped gate-JSON callbacks) and shimming the .mjs gate
+    // imports (tests/shims.d.ts). src/ keeps its STRICT coverage from the main
+    // `vue-tsc --noEmit` (tsconfig.json) — this config is additive over tests/.
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "types": ["vite/client", "node", "vitest/globals"],
+        "noImplicitAny": false
+    },
+    "include": ["tests/", "src/", "tests/shims.d.ts"]
+}

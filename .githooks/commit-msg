@@ -1,0 +1,12 @@
+#!/bin/sh
+# AX.W62 — the live-verified-ledger commit-time forcing function (the fast local
+# bite). Re-validates the PROGRESS ledger on every commit: a row flipped to
+# `live-verified` without a fresh on-disk .png DELTA, or a retired `(DEVELOPED)`
+# status cell, fails the commit. The CI job re-runs the same gate, so a
+# `git commit --no-verify` bypass is still caught on the PR.
+node scripts/proof-live-verified-ledger.mjs || {
+    echo ""
+    echo "commit blocked: the live-verified ledger is inconsistent (see above)."
+    echo "  Either capture the owed .png DELTA, or set the status to 'live-pending'."
+    exit 1
+}

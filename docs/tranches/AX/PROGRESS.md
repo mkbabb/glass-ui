@@ -106,7 +106,7 @@ reference; the Status column reflects each wave's reconciled state.
 | W59 | slider redesign — integrated-cylinder glass default + squircle-thumb spectrum | dev-landed · live-pending (DELTA owed) |
 | W60 | page-redesign container-layer — glass card + per-page rich background + hierarchy (Q4/Q7/Q9) | planned (spec authored) |
 | W61 | dock-unify-root — all docks one GlassDock root, home-left + nav + separators, Q1 collapsed size | planned (spec authored) |
-| W62 | soundness gate battery (Batch −1, lands FIRST) — proof:live-verified-ledger + tsconfig.test.json fold + proof:consumer-staleness + gates:verify-ci/gen-ci-fresh + proof:disposition-live (GOLDEN §B) | planned (spec authored) |
+| W62 | soundness gate battery (Batch −1, lands FIRST) — proof:live-verified-ledger + tsconfig.test.json fold + proof:consumer-staleness + gates:verify-ci/gen-ci-fresh + proof:disposition-live (GOLDEN §B) | dev-complete — 5 gates landed; ci.yml drift killed (20-gate mirror → generated, 92 ci gates byte-matched); tests/ folded into typecheck (caught the AuroraHarmony dead import); consumer-staleness born-RED on 12 real cross-repo stale imports (4 sibling repos) pending the W34 discharge; 2 phantom danglers retired. No live DELTA owed (gate-machinery wave, no `src/`) |
 | W63 | gate-pattern de-trap (Q8 BLOCKER) — /compositions/gate-pattern open=ref(true) traps the visitor on click; make it dismissable, lands BEFORE W60 wraps pages | planned (spec authored) |
 
 ## W00 — visual-runtime (π) lane — COMPLETE

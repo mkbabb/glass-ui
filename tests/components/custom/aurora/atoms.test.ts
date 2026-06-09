@@ -27,9 +27,9 @@ import {
     MAX_NUCLEI,
     MAX_STOPS,
     type AuroraConfig,
-    type AuroraHarmony,
     type AuroraMedium,
 } from "../../../../src/components/custom/aurora/constants/presets";
+import type { AuroraHarmony } from "../../../../src/components/custom/aurora/composables/color";
 import { AV_MAX_COLORS } from "../../../../src/components/custom/aurora/constants/budget";
 
 // ── The full atom-combination matrix. ────────────────────────────────────────

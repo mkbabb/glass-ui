@@ -31,6 +31,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
+import { DELETION_SWEEP_ROOTS } from "./constellation.mjs";
 
 const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
 const COMMAND = "npm run proof:tabs-unified";
@@ -48,8 +49,10 @@ function stripComments(src) {
         .replace(/\/\/[^\n]*/g, "");
 }
 
-// Walk src/ + demo/ for the deletion-proof + the no-Bouncy-export grep.
-const SWEEP_ROOTS = ["src", "demo"];
+// Walk src/ + demo/ + tests/ for the deletion-proof + the no-Bouncy-export grep.
+// The walk roots are the SHARED constellation constant (AX.W62) — so a dropped
+// name surviving in the tests/ mirror (the carve-out blind spot) reds here too.
+const SWEEP_ROOTS = DELETION_SWEEP_ROOTS;
 const SWEEP_EXT = /\.(vue|ts|css)$/;
 const SWEEP_SKIP = new Set(["node_modules", "dist", ".git", ".claude"]);
 function walk(dir, out = []) {

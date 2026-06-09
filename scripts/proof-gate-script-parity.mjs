@@ -58,10 +58,14 @@ const KNOWN_ORPHANS = new Map([
 // KNOWN_ORPHANS this is a FINITE, OWNER-ATTRIBUTED allowlist: any NEW dangling
 // reference STILL reds. Recorded in W00-pi-lane.json as an owed roadblock for
 // orchestrator triumvirate dispatch.
-const KNOWN_DANGLING = new Map([
-    ["proof:styling-hygiene", "AW.W20 — missing proof-styling-hygiene.mjs (CI-tagged, crashes)"],
-    ["proof:glass-card-tiers", "AW.W12 — missing proof-glass-card-tiers.mjs"],
-]);
+// AX.W62 RETIRED both AW phantom danglers: proof:styling-hygiene (its subject —
+// the BouncyToggle pill-track trim — died with BouncyToggle at W53; never-built
+// script) and proof:glass-card-tiers (never-built, never-ci-mirrored) are gone
+// from the manifest + package.json. A fresh styling/tier invariant, if one is
+// still load-bearing against the CURRENT surface, is W25/W27a's to author — not
+// a phantom row amnestied forever. The baseline is now empty: any NEW dangling
+// reference reds immediately.
+const KNOWN_DANGLING = new Map([]);
 //
 // Bite (the §HardGate-3 RED witness): remove a `proof:*` registration whose
 // proof-*.mjs still exists AND is NOT in KNOWN_ORPHANS → assert A reds (orphan

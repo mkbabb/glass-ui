@@ -1,0 +1,48 @@
+{
+    "$schema": "AX.W62 disposition register — machine-readable BOOK/ARCHIVED rows + their named triggers.",
+    "doc": "A deferral with a named trigger is only honest if a gate RE-EVALUATES the trigger each close. proof:disposition-live parses this file and FAILS the close if a book/archived row's trigger now re-evaluates MET (e.g. a ≥2-consumer threshold the constellation now crosses) while the row is still booked. The chronic it kills: the native-drawer ≥2-consumer trigger was MET at AT and rode BOOK'd five tranches; the AN ARCHIVED-on-2-consumer-gate items were write-once-watch-never. A trigger of kind 'min-consumers' is MET when at least n DISTINCT present consumer repos (constellation.presentConsumers, self excluded) contain a line matching the grep pattern.",
+    "selfTest": {
+        "id": "__selftest__",
+        "disposition": "book",
+        "comment": "A synthetic always-MET book row the gate evaluates every run to prove its detector is load-bearing: every present consumer imports @mkbabb/glass-ui, so n:1 is trivially met. If the detector does NOT classify this as a violation, the gate is broken and reds loudly (the acceptance-is-the-inverse contract).",
+        "trigger": { "kind": "min-consumers", "n": 1, "grep": "@mkbabb/glass-ui" }
+    },
+    "items": [
+        {
+            "id": "native-drawer-as-asChild",
+            "disposition": "book",
+            "summary": "GlassDialogNative / native <dialog> drawer-mode polymorphic `as`/`asChild` host.",
+            "trigger": {
+                "kind": "min-consumers",
+                "n": 2,
+                "grep": "dialog-native|GlassDialogNative",
+                "note": "muster + speedtest were cited as the firm ≥2, but neither is in the present constellation set (muster absent; speedtest does not import dialog-native). Re-evaluates un-MET among present consumers — legitimately booked."
+            },
+            "resolved": false
+        },
+        {
+            "id": "panel-host-primitive",
+            "disposition": "archived",
+            "summary": "A standalone GlassPanelHost docking-host primitive (AN ARCHIVED-on-2-consumer-gate).",
+            "trigger": {
+                "kind": "min-consumers",
+                "n": 2,
+                "grep": "GlassPanelHost|panel-host",
+                "note": "no present consumer references a panel-host primitive; the dock + sheet cover the shipped need. Re-evaluates un-MET."
+            },
+            "resolved": false
+        },
+        {
+            "id": "interruptible-reorder",
+            "disposition": "archived",
+            "summary": "An interruptible (mid-gesture re-grab) sortable reorder mode (AN ARCHIVED-on-2-consumer-gate).",
+            "trigger": {
+                "kind": "min-consumers",
+                "n": 2,
+                "grep": "interruptibleReorder|reorderInterrupt",
+                "note": "useSortable ships the committed-drop model; no present consumer asks for the interruptible variant. Re-evaluates un-MET."
+            },
+            "resolved": false
+        }
+    ]
+}

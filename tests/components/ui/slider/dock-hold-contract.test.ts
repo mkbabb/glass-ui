@@ -167,7 +167,8 @@ describe("AX.W03 — dock keepDockOpen host-native hold contract", () => {
                             default: () => [
                                 h(Slider, {
                                     modelValue: v.value,
-                                    "onUpdate:modelValue": (n: number[]) => (v.value = n),
+                                    "onUpdate:modelValue": (n: number[] | undefined) =>
+                                        (v.value = n ?? v.value),
                                     max: 100,
                                 }),
                             ],

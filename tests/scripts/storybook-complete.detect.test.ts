@@ -58,7 +58,7 @@ describe("proof:storybook-complete detect()", () => {
     it("ships a non-empty COMPOSED_BY allowlist whose parents are real names", () => {
         // The allowlist must name a parent for each internal sub-component.
         expect(Object.keys(COMPOSED_BY).length).toBeGreaterThan(0);
-        for (const parent of Object.values(COMPOSED_BY)) {
+        for (const parent of Object.values(COMPOSED_BY) as string[]) {
             expect(typeof parent).toBe("string");
             expect(parent.length).toBeGreaterThan(0);
         }

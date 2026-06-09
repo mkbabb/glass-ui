@@ -128,6 +128,17 @@ export function skipSibling(gate, member) {
     );
 }
 
+// ── Deletion-sweep roots ──────────────────────────────────────────────────────
+// AX.W62 — the SHARED source-tree set every "no-Identifier-survives" deletion
+// proof walks. Before this, each clean-break gate hand-rolled its own
+// `["src","demo"]` local, so the `tests/` mirror (carved out of every tsconfig
+// + every sweep since AV.W14) was a blind spot: a deleted symbol could survive
+// in a test file un-caught (the W53 BouncyToggle class). Minting it ONCE here
+// (and having `proof:tabs-unified` + every future deletion gate consume it)
+// stops the copy-forward `["src","demo"]` hole from propagating into the next
+// clean-break wave's gate.
+export const DELETION_SWEEP_ROOTS = ["src", "demo", "tests"];
+
 /** Present publishers, in declaration order (self first). */
 export function presentPublishers() {
     return PUBLISHERS.filter((p) => resolveSibling(p).present);

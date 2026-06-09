@@ -1,0 +1,79 @@
+{
+    "wave": "AX.W62",
+    "title": "the soundness gate battery — five forcing functions, landed FIRST",
+    "status": "dev-complete",
+    "summary": "The five chronics that the whole AX tranche exists to kill are now IMPOSSIBLE rather than NOTED. Each gate is born-RED on its inverse and self-proves its bite where applicable.",
+    "ratify": {
+        "commit-hook-mechanism": {
+            "decision": "native .githooks/ + git config core.hooksPath (dependency-free; NO husky added), wired by scripts/install-hooks.mjs from `prepare`. BOTH arms: the local .githooks/commit-msg fast bite AND the ci-tagged proof:live-verified-ledger job (so a --no-verify bypass is still caught on CI).",
+            "rationale": "the repo carries no husky/lint-staged; adding a hook framework for one hook is over-engineering. A tracked .githooks dir + hooksPath is the KISS gestalt and survives a fresh clone via prepare."
+        },
+        "emit-ci-dangling-policy": {
+            "decision": "RED-naming — renderCiYaml() THROWS naming any ci-tagged gate whose backing scripts/*.mjs is absent (never a silent skip). PLUS resolved the two phantom danglers NOW (the user requires perfected CI and a RED-blocking emit would otherwise stall): proof:styling-hygiene (its subject — the BouncyToggle pill-track trim — died with BouncyToggle at W53) and proof:glass-card-tiers (never-built) are RETIRED from the manifest + package.json + the KNOWN_DANGLING baseline (now empty).",
+            "rationale": "RED-naming is the forcing function for future waves; retiring the two extant phantoms is the honest discharge (a never-built script whose subject was deleted is dead weight, not coverage). A fresh styling/tier invariant is W25/W27a's to author against the CURRENT surface."
+        }
+    },
+    "gates": [
+        {
+            "id": "proof:live-verified-ledger",
+            "tags": ["local", "ci"],
+            "bornRed": "a PROGRESS status cell of `live-verified` with no on-disk .png DELTA, or a retired `(DEVELOPED)` modifier, is unflagged",
+            "green": "self-test flags a synthetic DELTA-less live-verified row every run; 67 wave rows parsed, 0 live-verified, 0 (DEVELOPED) in any status cell. Commit-msg hook armed.",
+            "biteProof": "self-test (synthetic row) on every invocation"
+        },
+        {
+            "id": "tsconfig.test.json (typecheck fold)",
+            "tags": ["typecheck", "ci", "release"],
+            "bornRed": "tests/ was in NO tsconfig scope since AV.W14; a dead test import was type-invisible",
+            "green": "`vue-tsc -p tsconfig.test.json` folded into the typecheck script; the tests/ mirror type-checks GREEN after 6 real fixes the fold surfaced (incl. the AuroraHarmony dead import — the fold's first real catch, a TS2305). shims.d.ts types the .mjs gate imports; noImplicitAny relaxed for test-scope ergonomics.",
+            "biteProof": "the AuroraHarmony TS2305 the fold caught at authoring",
+            "realFixes": [
+                "tests/components/custom/aurora/atoms.test.ts — AuroraHarmony re-pointed from constants/presets (dead) to composables/color",
+                "tests/composables.smoke.spec.ts — SidebarSection fixture given the required `title` (non-field `label` removed)",
+                "tests/components/ui/slider/dock-hold-contract.test.ts — onUpdate:modelValue typed number[]|undefined",
+                "tests/configurator-recursion.spec.ts — process listener cast to NodeJS.{Unhandled,Uncaught}* listener shapes",
+                "tests/scripts/storybook-complete.detect.test.ts — Object.values(COMPOSED_BY) cast string[]"
+            ]
+        },
+        {
+            "id": "proof:consumer-staleness",
+            "tags": ["local", "ci", "sibling"],
+            "bornRed": "12 stale imports across 4 sibling repos (fourier ×4, words ×2, bbnf-buddy ×1, speedtest ×5) import the W53-deleted Bouncy*/UnderlineTabs family + the retired /responsive-tabs subpath",
+            "green": "every present-consumer glass-ui import resolves against the current surface. DISCHARGED by the W34/Batch-7 consumer migration; absent siblings skip (CI-green). The named arm follows the dist d.ts export* chain recursively (incl. `export type {}` re-exports) — zero false positives after the parser hardening.",
+            "biteProof": "12 real cross-repo stale imports flagged at HEAD; sibling-absent → skip",
+            "note": "DELETION_SWEEP_ROOTS = [src, demo, tests] minted in constellation.mjs; proof:tabs-unified now consumes it (the tests/ blind spot is closed for every deletion gate)."
+        },
+        {
+            "id": "proof:gen-ci-fresh + gates:verify-ci (+ gates --emit-ci)",
+            "tags": ["local", "release (gen-ci-fresh)", "release (verify-ci)"],
+            "bornRed": "ci.yml had DRIFTED 20 ci-tagged gates behind the manifest (W23/W24/W45/W52/W53 + the constellation band never mirrored) — CI was effectively RED on the missing set",
+            "green": "ci.yml is now a GENERATED artefact (gates.mjs --emit-ci, 92 ci gates + 2 meta-steps); proof:gen-ci-fresh asserts byte-identity (drift impossible, not merely detected); both gates added to the RELEASE set so a drifted ci.yml refuses to publish. gates.mjs CLI guarded run-as-main so renderCiYaml is importable.",
+            "biteProof": "a hand-edit or an un-re-emitted ci gate reds the byte-match"
+        },
+        {
+            "id": "proof:disposition-live",
+            "tags": ["local", "ci", "sibling"],
+            "bornRed": "no gate re-evaluated a deferral's named trigger; a met trigger could ride BOOK'd forever (native-drawer LATE-1, the AN ARCHIVED items LATE-3)",
+            "green": "DISPOSITION-REGISTER.json seeds the 3 named book/archived rows; the gate re-evaluates each min-consumers trigger against the present constellation (all 3 un-MET → green). Self-test (a synthetic always-MET book row) proves the detector bites every run.",
+            "biteProof": "self-test (synthetic met-trigger row) on every invocation"
+        }
+    ],
+    "fileBounds": [
+        "scripts/proof-live-verified-ledger.mjs (NEW)",
+        "scripts/proof-consumer-staleness.mjs (NEW)",
+        "scripts/proof-disposition-live.mjs (NEW)",
+        "scripts/proof-gen-ci-fresh.mjs (NEW)",
+        "scripts/install-hooks.mjs (NEW)",
+        "scripts/gates.mjs (MODIFY — env field, renderCiYaml/--emit-ci, run-as-main guard, 5 manifest rows, styling-hygiene row retired)",
+        "scripts/constellation.mjs (MODIFY — DELETION_SWEEP_ROOTS)",
+        "scripts/proof-tabs-unified.mjs (MODIFY — consume DELETION_SWEEP_ROOTS)",
+        "scripts/proof-gate-script-parity.mjs (MODIFY — KNOWN_DANGLING emptied)",
+        "tsconfig.test.json (NEW)",
+        "tests/shims.d.ts (NEW)",
+        ".githooks/commit-msg (NEW)",
+        ".github/workflows/ci.yml (EMITTED — now generated)",
+        "package.json (MODIFY — typecheck fold, prepare hook-install, 5 scripts +/- 2 retired)",
+        "docs/tranches/AX/audit/DISPOSITION-REGISTER.json (NEW)",
+        "5 test files (real type-fold fixes)"
+    ]
+}
