@@ -84,6 +84,7 @@ tranche has no past); the table fills as waves close.
 | W-CSS1 | CSS partial reconcile | planned |
 | W-COLOCATE | test/source co-location reconcile | planned |
 | W-GOD1 | god-module carve (after W-CON1/W-BLOB2 land) | planned |
+| W-COHERE | the four substrates as ONE set — blob mood-register + ambient shadow, constellation recession envelope, the set-cohesion gate (B2-gestalt; runs LAST in the substrate band) | planned |
 | W-LEG1 | legibility reconcile | planned |
 | W-LIVE1 | the local-only live-gate CI decision | planned |
 | W-NDA | NDA / scope-clause reconcile | planned |

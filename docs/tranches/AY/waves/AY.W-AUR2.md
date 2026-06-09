@@ -7,6 +7,31 @@ the composable already ships)
 
 ---
 
+## §0 — RE-GROUND (pre-implement; from `audit/hardening/b2/B2-readiness.md` §2 + §3.1)
+
+The doc-reconcile substance is correct (the OKLAB/OKLCH migration, the ≤7-atom door, the
+`deriveAurora` composable are all DONE + gated at HEAD; the three already-met gates are the right
+evidence). One BLOCKING dependency hole + one cite-drift:
+
+**RG-A (the G4 dependency is REAL but UNMET — the cross-cutting DAG hole).** G4 reads
+`proof:ay-w0-reground` (the ledger meta-gate W0-REGROUND mints). The spec is HONEST that this is a
+dependency read, not a W-AUR2-authored gate — but at HEAD the gate DOES NOT EXIST:
+`grep ay-w0-reground package.json scripts/` → 0 hits (only the AU twin `proof:au-w0-reground`), and
+`PROGRESS.md` still lists W0-REGROUND as `planned`. W0-REGROUND was SPECCED to mint it
+(`AY.W0-REGROUND.md`) but the gate script was never landed. So W-AUR2 is UN-CLOSEABLE as written
+until W0-REGROUND actually lands `scripts/proof-ay-w0-reground.mjs`. **Resolution (one of):** (a)
+W0-REGROUND runs FIRST and mints the gate (the spec's pick — `AY.W0-REGROUND.md` §0 RE-GROUND now
+makes the mint a HARD obligation), OR (b) if W0-REGROUND is descoped, W-AUR2's G4 drops to the AU
+twin / is struck. This is a genuine DAG hole, not a cite typo — sequence W0-REGROUND before W-AUR2.
+
+**RG-B (package.json +9 cite drift).** The package.json gate-line cites in the edit-sites are ~+9
+stale (Batch-2 added AY proof scripts). `gates.mjs` + in-script cites are accurate; only package.json
+drifted — trust the gate-ID, re-grep the line. The `Aurora.vue:41-84` defineProps + the
+`atoms.ts:150-155` / `color.ts:169` cites are at the AX base (aurora composables untouched by
+Batch-2, so likely valid) — verify with a 1-line re-grep.
+
+---
+
 ## Defect (file:line, source-grounded)
 
 W-AUR2 as the AY plan carries it (`AY.md:55,145`) **triple-counts ALREADY-LANDED work**. The

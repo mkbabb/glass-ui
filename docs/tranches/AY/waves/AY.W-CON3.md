@@ -37,6 +37,35 @@ vs lib, identical) registered in `AY/PROGRESS.md` so `proof:live-verified-ledger
 
 ---
 
+## §0 — RE-GROUND (pre-implement; from `audit/hardening/b2/B2-readiness.md` §2)
+
+W-CON3 was authored at the PRE-Batch-2 base. The `?freeze` seam, the anomaly `drawOverlay` recipe
+(no domain props), and the export VERIFY are all gestalt-correct — the wave is RE-GROUND (refresh
+the cites), NOT re-design. Step-0 re-grep mandated.
+
+**RG-A (stale cites, +143 lines).** At HEAD `constellationField.ts` is **653** (not the cited 510)
+and `Constellation.vue` is **353** — W-CON1 inserted the `wander` cadence (the `field.wander` block,
+the `now`/`rng` `stepField` params, the new demo refit+auto-drift section). The render-loop guards
+W-CON3 folds its `freeze` predicate INTO have shifted: the `!handle.reducedMotion` step block is now
+~`Constellation.vue:216-218`, the warp listener ~`:290`, `readPalette` ~`:202` (the spec cites
+`:172-185`/`:149-185`/`:161`/`:78`). The demo handle the freeze π gate mirrors (`__constellationWarp`)
+is now at `demo/stories/substrates/constellation.vue:112`, and W-CON1 added `__constellationRefit` at
+`:128` — the W-CON3 `__constellationFreeze` handle lands ALONGSIDE these two (the cite is stale, the
+pattern intact). Re-grep every cite before editing.
+
+**RG-B (the core defect HOLDS).** D1's `grep location.search src/components/custom/constellation/` →
+**0 hits** is STILL TRUE at HEAD (verified) — the `?freeze` seam genuinely does not exist; the wave's
+reason-to-exist is intact.
+
+**RG-C (the W-CON1 dependency is SATISFIED).** W-CON3's anomaly recipe pins to `field.warp.{x,y}`; W-CON1
+landed `wander` re-pointing the warp to a drifting node, so the anomaly can pin to a LIVE-wandering
+focal as designed. Good — no dependency hole.
+
+**RG-D — serialization unchanged.** W-CON1 (landed) → W-CON2 → W-CON3 serial (all edit
+`Constellation.vue` render-loop + `constellationField.ts` + the demo story). Re-base the cites first.
+
+---
+
 ## §1 — The verified defect (file:line)
 
 ### D1 (DEPLOY-CHAIN REGRESSION) — glass-ui `Constellation` has NO `?freeze` deterministic-capture seam; it freezes ONLY under `prefers-reduced-motion`. Adopting the lib without porting the seam REGRESSES the pptx + shoot capture.

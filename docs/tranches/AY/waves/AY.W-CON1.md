@@ -27,6 +27,60 @@ velocity heat-up); and a captured before/after DELTA artefact registered in `AY/
 
 ---
 
+## §0 — RE-GROUND (post-Batch-2 as-built; from `audit/hardening/b2/B2-con1.md`)
+
+W-CON1 was EXECUTED at Batch-2 (`tranche/AY` @ `1151899`). The engine logic landed clean and the
+gates went green (18/18 unit; the π refit-coverage + auto-drift cadence + PRM-suppression + both-mode
+alpha all real device readbacks; the 24px `WARP_SETTLE_BAND` is a TRUE fix, B2 FINDING 5 cleared). But
+the as-built is gate-passing, not perfected. Four facets RE-OPEN — they are the refinement debt this
+wave still owes, NOT a re-build of the shipped engine. No clause below touches the sound `refitField` /
+wander / `warpSettled` / `pickWanderTarget` logic.
+
+**RG1 (line-count, BLOCKER) — the wave self-created a god-module.** §5.5 / risk #5 below still reads
+"currently 510, at the cap." The TRUE as-built count is **653** — the refit + the full wander cluster
+(`ConstellationWander`, `refitField`, `warpSettled`, `pickWanderTarget`, the in-`stepField` cadence
+block, `WARP_SETTLE_BAND` + its comment) pushed `constellationField.ts` 510→653, **153 over** the hard
+cap. `proof:no-god-module` (HARD_LIMIT=500) is RED at HEAD. W-GOD1's carve plan still grades this file
+at 510 — its target is now 653, shedding 153+ not 10. This is recorded in `AY.W-GOD1.md` §RE-GROUND;
+the carve is the remediation and it is DEFERRED to the build phase the user greenlights. Risk #5 below
+is superseded by this number.
+
+**RG2 (DELTA-honesty, HIGH) — the captured DELTA is partly evidentiary garbage; it RE-CAPTURES.** The
+ledger gate passed on a file-count technicality (`isRealPng` + basename regex + light/dark presence) —
+it cannot see that the PNGs demonstrate none of the wave's claims. Two re-capture obligations:
+- The four `W-CON1-*-mobile-*.png` are **1280×721 desktop screenshots, not 375×667 mobile**, and they
+  show the lattice filling only a left ~342px column (the OPPOSITE of "fills the box"), with NO focal
+  ring. The DELTA doc's "mobile 375×667" protocol line is fabricated. RE-CAPTURE at a real 375×667
+  mobile viewport, on the deck-cover scene, showing a filled box + the focal mark — or DELETE the
+  mobile claim from the DELTA doc and the protocol line (do not register a viewport you did not shoot).
+- The `W-CON1-refit-before-*.png` (360×241) depict no defect — a small lattice captured at small size
+  cannot show "small lattice inside a LARGE box." The binding before-number (0.259 coverage) is REAL
+  (the π engine readback), but the PNG pair is decorative. RE-SHOOT the "before" as the actual
+  drift-out frame: seed at small, resize to large, capture the FIRST post-resize frame of the
+  control (no-refit) instance — that frame SHOWS the sparse lattice in the big box. The picture and
+  the number must depict the same fact.
+
+**RG3 (gate-bite, MEDIUM) — "refit-fills-box ≥ 0.92" is a uniform-scale tautology; add the shear arm.**
+`refitField` scales every coord by `sx = w/prevW` uniformly, so bbox-coverage is INVARIANT under the
+resize (`bbox_new/canvas_new = bbox_old/canvas_old`) — the 0.92 "after" is just the seed's intrinsic
+coverage of any box, structurally pinned, identical before and after. The gate verifies "refitField
+multiplies" (which the unit test already proves) and CANNOT distort, so it answers "does the lattice
+look right after resize" trivially-green. The case that MATTERS — a NON-UNIFORM (sheared) refit, the
+portrait→landscape transpose that is the actual deck slide-enter scenario the whole wave exists to fix
+— is captured nowhere (all 12 shots are the mild 360×240→1280×720, sx 3.55/sy 3.0). §6 gate clause 1
+gains a SHEAR arm: drive a portrait→landscape `resizeTo` (e.g. 360×720 → 1280×360, `sx≠sy`), capture
+the post-resize frame, and assert the sheared lattice still COVERS both axes ≥ 0.9 AND reads as a
+pleasing field (the DELTA shows the transpose, not just the mild grow). The coverage-tautology arm
+stays as the cool-down check; the shear arm is the one that binds the aesthetic claim.
+
+**RG4 — scope fence unchanged.** RG1–RG3 are refinement of THIS wave's own artefacts (line count,
+DELTA capture, one gate arm). They do NOT re-open the engine logic (sound), the alpha plumbing
+(ratified), or the PRM model (correct). The god-module carve (RG1) is W-GOD1's; the honest re-capture
+(RG2) and the shear arm (RG3) execute when the user greenlights the build phase — pure spec debt until
+then.
+
+---
+
 ## §1 — The verified defect (file:line)
 
 ### D1 (BLOCKER-class) — the RO resize RE-FIT lives ONLY in the slides bespoke copy; adopting the lib REGRESSES it.
@@ -428,7 +482,10 @@ DELTA on disk.
   this landing first).
 - Sibling waves: AY.W-CON2 (warp VERIFY + decided-scope eggs + the spring tokenisation), AY.W-CON3 (the
   `?freeze` deterministic-capture seam + anomaly props — slides pre-reqs), AY.W-GOD1 (the
-  `constellationField.ts` carve — runs AFTER this content), AY.W-DOC1 (README provenance strip).
+  `constellationField.ts` carve — runs AFTER this content), AY.W-DOC1 (README provenance strip),
+  AY.W-COHERE (the set-cohesion convergence — it adds the per-instance `opacityCeiling` RECESSION
+  envelope constellation lacks, the B2-gestalt F4 3-of-4 parity gap; that prop is W-COHERE's, NOT
+  this wave — W-CON1 owns refit+wander+alpha, the recession envelope is the cross-cutting set wave).
 - Downstream: L.W-ADOPT (slides DELETEs `constellation.ts`, re-authors `drawAnomaly` as a `drawOverlay`,
   mounts `<Constellation wander>` — depends on this wave + W-PUB1 publish).
 - Precepts: `docs/precepts/instructions/TRANCHE-AND-WAVE-SPEC.md` §"Hard gate" (artefact-backed, not

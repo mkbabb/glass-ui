@@ -39,6 +39,43 @@ proof); and the numeric tokens resolve into the live engine with `proof:constell
 
 ---
 
+## §0 — RE-GROUND (pre-implement; from `audit/hardening/b2/B2-readiness.md` §2 + §3.4)
+
+W-CON2 was authored at the PRE-Batch-2 base and is RE-GROUND-required before harvest. The
+substance (the ω-derivation reconcile, the decided-scope eggs, the safety-floor discipline, the PRM
+state-reset, the `proof:constellation-egg-live` mirror) is sound — but two grounding facts shifted
+when W-CON1 landed (`tranche/AY` @ `1151899`). The executing agent MUST do the step-0 re-grep
+below FIRST (the stale-worktree-trap discipline) or it carves a moving target.
+
+**RG-A (stale cites, +143 lines) — every `constellationField.ts`/`Constellation.vue` cite is wrong.**
+W-CON1 grew `constellationField.ts` 510→**653** and `Constellation.vue` to 353. The cites below are
+at the PRE-W-CON1 base and have all shifted: `constellationField.ts:286-290` (WARP_RESPONSE/ZETA/
+OMEGA/DT_CLAMP) → ~`:376-380`; `:337-355` (warpStep) → ~`:418-440`; `:300-321` (nearestNode) +
+`:257-263` (the `|v|→speed` steer renorm the well routes through) → shifted. `proof:constellation-
+warp-live` is at `package.json:653`, NOT `:644` (the universal +9 package.json drift — the
+`gates.mjs` + in-script cites are accurate, only package.json drifted; trust the gate-ID, re-grep the
+line). Mandate: re-grep EVERY cite against HEAD before editing.
+
+**RG-B (FALSE PREMISE, the load-bearing correction) — W-CON1 declared ZERO numeric tokens; W-CON2
+owns the ENTIRE numeric cohort.** §6 + E4 below repeatedly assume W-CON1 "lands the numeric-token
+cohort START" (the `--constellation-wander-idle`/`-wander-jitter` members) and that W-CON2 merely
+"extends" it. This is FALSE: a grep for `constellation-warp-response` / `-wander-idle` / `-well` in
+`src/styles/tokens.css` → **0 hits**. The only `--constellation-*` tokens at HEAD are the 6
+COLOR/alpha tokens. W-CON1 landed `wander` with `minIdle`/`jitter` as JS FIELD DEFAULTS
+(`constellationField.ts:95-97`, `:356-359`), NOT CSS tokens. So W-CON2 is the FIRST wave to mint ANY
+`--constellation-*` NUMERIC token and must declare the ENTIRE cohort (`-warp-response`/`-zeta`/
+`-well-*`/`-wander-idle`/`-wander-jitter`), not just its well subset. The "extend the cohort W-CON1
+started (IFF W-CON1 has not already)" framing resolves to: it has NOT — W-CON2 declares it all. This
+is a scope EXPANSION the spec under-counts; update §6/E4 to OWN the wander tokens too. (The
+`proof:constellation-tokens` clause-(c) numeric-false-positive analysis is otherwise correct.)
+
+**RG-C — serialization unchanged.** W-CON1 (landed) → W-CON2 → W-CON3 serial order holds (all three
+edit `Constellation.vue` render-loop + `constellationField.ts` + the demo story). RG-A/RG-B are
+re-grounding (cites + token ownership), NOT a re-design — the egg engine + the safety floors are
+sound as specced.
+
+---
+
 ## §1 — The verified defects (file:line)
 
 ### D1 (PROCESS / stale-ledger — VERIFY, do NOT re-build) — the warp is SHIPPED + GATED; the AUDIT-LEDGER calls it UNADDRESSED.

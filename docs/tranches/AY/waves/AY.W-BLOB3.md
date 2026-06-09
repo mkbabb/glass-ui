@@ -7,6 +7,37 @@
 
 ---
 
+## §0 — RE-GROUND (pre-implement; from `audit/hardening/b2/B2-readiness.md` §2)
+
+W-BLOB3 was authored at the PRE-Batch-2 base; W-BLOB2 already touched the DI edit-site files. The
+BOOK-demo-only + STRIP-the-ColorResolver-DI disposition is empirically sound (value.js never
+repatriated; the only consumer is the demo passing the default) — the wave is RE-GROUND (cites +
+ordering), NOT re-design. Step-0 re-grep mandated.
+
+**RG-A (near-miss cites; W-BLOB2 shifted the renderer to 707).** W-BLOB2 modified `GooBlob.vue`
+(+10/-N) and `useBlobSatellites.ts`, and `useMetaballRenderer.ts` is now **707 lines** (the cream-base
+wiring + the `cCol.*` color-perturbation uploads). The DI cites are NEAR-MISS, not catastrophic: the
+`colorResolver` option is at ~`:108` (spec cites `:99-184`), the throw at ~`:140-143`, the import at
+`:8`; `GooBlob.vue` `colorResolver` prop at `:34,42`, the `useMetaballRenderer` call at `:110-119`
+(spec cites `:32-59`/`:110-120`). Every cite needs a re-grep (the W-BLOB2 cream-default edit
+interleaved with the DI sites).
+
+**RG-B (the W-GOD1 ordering dependency is UNMET, and W-GOD1 is itself not-ready).** W-BLOB3 "Depends
+on W-GOD1 (the `useMetaballRenderer` <500 carve lands FIRST)" — but W-GOD1 has NOT landed
+(`useMetaballRenderer.ts` is 707, not <500) and B2-con1 flags W-GOD1's constellation carve as also
+un-landed + under-scoped (its grading is stale; the real targets are 653/707, see `AY.W-GOD1.md`
+§RE-GROUND). This is a DAG ordering risk with an escape: the spec's own note "the strip REMOVES lines,
+so it eases W-GOD1" means the order COULD invert (W-BLOB3 strips first, easing the carve). The orchestrator
+chooses at execution: either W-GOD1 carves first (the spec's pick — confirm W-GOD1 is re-grounded +
+ready) OR W-BLOB3 strips first (then W-GOD1 carves the smaller file). Record the chosen order; do not
+run them concurrently on `useMetaballRenderer.ts`.
+
+**RG-C (deps that ARE met).** `proof:live-verified-ledger --tranche=AY` is wired; W-BLOB2 landed the
+cream default, so the interaction DELTA shows the cream bead leaning (as designed), not a charcoal
+mass. The HEAD pin in the header (`fba6262`) is stale — re-base to the carved tree.
+
+---
+
 ## Defect (file:line, source-grounded)
 
 ### D1 — the blob carries a DI-elaborate ColorResolver seam built for a consumer-#2 (value.js repatriation) that NEVER arrived; the only real consumer is the demo, which always passes the ONE default resolver (substrate-without-a-2nd-consumer; L invariant 8)

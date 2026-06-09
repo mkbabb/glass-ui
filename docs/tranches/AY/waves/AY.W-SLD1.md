@@ -16,6 +16,34 @@ The slider STANDARD-thumb design intent is RESOLVED on the record — not by a d
 
 Paired with the §6 Hard Gate (the completion criterion). A wave whose gates pass but whose goal is unmet (e.g. the SFC + gate + corpus agree on a shape the user did NOT judge against a capture) closes `complete_with_misses`, not `complete`.
 
+## §0 — RE-GROUND (pre-implement; from `audit/hardening/b2/B2-readiness.md` §2)
+
+W-SLD1's documented ordering invariant was VIOLATED by a landed wave. §4a Disjointness states the
+mandated sequence `W-SLD1 → W-GLASS → W-SCALE2` so `Slider.vue` has one writer at a time — but
+**W-GLASS ALREADY LANDED IN `Slider.vue` FIRST.** `W-GLASS-DELTA.md` is committed and
+`Slider.vue:200-201` carries the `--glass-level` routing W-GLASS owns. The user-judged-DELTA hinge
+(the supersede/revert/reconcile decision) is intact and correct; what shifted is the BASE the SFC
+edits land on.
+
+**RG-A (the W-GLASS-modified SFC is the new base).** All W-SLD1 SFC line-cites are at the pre-W-GLASS
+base. At HEAD (`Slider.vue` is 330 lines) most cites largely SURVIVED — the spectrum rule is still
+~`:299-322`, the `border-radius: var(--radius-lg)` round-fallback HAPPENS to still be at `:309`, the
+`0.46` cap width at `:228`, `--radius-pill` at `:230` — but the standard `.slider-thumb` rule body is
+now INTERMIXED with the W-GLASS `--glass-level` edits. Re-read the full standard-thumb rule before
+touching it.
+
+**RG-B (NEW write-collision risk on the (b)/(c) branches).** If the user judges (b) revert-to-knob,
+the standard-thumb geometry edit lands ON TOP of the W-GLASS glass-level edits in the SAME rule — the
+agent MUST preserve the `--glass-level` legs while changing the radius/width. The spec's "one writer
+at a time" guarantee is already broken; the re-ground treats the W-GLASS-modified SFC as the base and
+the (b)/(c) edit as a SURGICAL change that keeps the landed glass-level routing intact.
+
+**RG-C (downstream + allowlist).** `proof:live-verified-ledger:ay` is wired (`package.json:696`) and
+enforces the captured DELTA. `VISUAL-ALLOWLIST.json` is now `["W-DOCK1","W-CON1","W-DOCK2","W-BLOB2"]`
+(the spec's claim of `["W-DOCK1"]` is stale — more landed); the append-`"W-SLD1"` action is
+unaffected. W-SLD2 (the consumer-boundary clause) opens AFTER W-SLD1 closes — that serialization
+holds.
+
 ## Defect (verified, file:line)
 
 The collapse-to-two ALREADY SHIPPED (AX.W59, commit `a730782`) and is CI-gated green — this wave does NOT re-collapse. Two live defects remain:

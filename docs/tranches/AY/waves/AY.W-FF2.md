@@ -35,6 +35,72 @@ PNGs at ≥2 viewports × {light,dark}. Both goal AND completion must hold for a
 
 ---
 
+## §0 — RE-GROUND (post-Batch-2 as-built; from `audit/hardening/b2/B2-ff.md`)
+
+W-FF2 was EXECUTED at Batch-2 (`tranche/AY` @ `1151899`). The W43 intensity model LANDED at the source
+level and is gate-green: `OUTLINE_PEAK_ALPHA` is deleted (grep=0), the six-field per-variant bundle
+ships and is populated for both presets, the `intensity` prop + `[0,2]` clamp ship, the zero-alloc color
+hoist moved into the watch, the amplitude sort + dark/light blend fork are present, `evalFourier` is
+deleted, `/fourier-math` is minted, and BOTH gates (`proof:fourier-field-intensity` static +
+`proof:fourier-field-visibility-live` device 2/2) genuinely pass. The structural land is real and
+faithful to the SOTA recipe. But the FIELD is gate-passing, not stunning. Four facets RE-OPEN.
+
+**RG1 (the stunning-bar, HEADLINE) — the `final` preset reads as a THIN ARC, not the signature comet.**
+The DELTA prose claims `final` "READS as a full-frame phosphor comet" — viewing the 4 captured PNGs, it
+is a single thin diagonal red stroke with a small bright head: measured ≈4% pixel coverage on the
+desktop-dark final panel at spanW=spanH=100%. Better than the AX 0.24-whisper corner stub (the head now
+glows), but NOT the oscilloscope/CRT-vector signature mark the SOTA research (§0.2, §R2) and the Goal
+("a signature mark," "stunning") demand. The 100% bbox-span is a metric artefact — a thin diagonal line
+spans the bbox without filling it. A perfecting pass lengthens/brightens the trail toward a true
+signature stroke (the trailLength budget + the peak/head-glow alphas tuned against the live readback),
+against the user's stunning bar. DEFERRED to the greenlit build phase; the floor is the contract.
+
+**RG2 (gate-bite, MEDIUM) — the 25% bbox-span floor is a weak proxy any thin arc clears.**
+`BBOX_SPAN_MIN = 0.25` certifies presence, not fullness: a comet trail covers only ~16% of the curve
+period BY DESIGN (hero trailLength 170/period ≈17.7%, final 200/period ≈15.9%), so the figure is always
+a partial arc, and a single thin diagonal sweeping the bbox clears spanW≥25% trivially. The gate is
+born-RED→GREEN correctly but UNDER-CONSTRAINS the result — it cannot distinguish "thin arc" from "full
+comet." RG2: replace/augment the bbox-span proxy with a true coverage-fraction OR a perceptual-arc-length
+metric so the gate binds the RG1 stunning bar, not just non-emptiness. Pairs with RG1 (the metric and
+the visual move together).
+
+**RG3 (light-mode legibility, MEDIUM) — the trail body is sub-perceptible on cream.** Over the cream
+ground (source-over, no additive accumulation) the final trail floor is peak·floor = 0.45·0.08 = 0.036
+effective alpha (hero 0.055) — sub-perceptible; the light captures corroborate (the arc fades to
+invisible at the tail). The D2 "the body survives" fix is real in DARK mode (the `lighter` additive op
+accumulates) but NOT in light mode. The gate's `BODY_MEAN_MIN = 0.08` is a whole-canvas normalized
+delta, not per-pixel alpha, so it passes while the light tail is gone. RG3: raise the LIGHT-mode floor
+with a non-additive legibility lift (a min-alpha or a source-over-compatible body boost that does not
+touch the dark additive path), captured both modes — the body must survive on cream too.
+
+**RG4 (recession-parity, MEDIUM) — the StoryHero intensity=0.4 recession is UNVERIFIED, likely invisible
+in light.** StoryHero threads `:intensity="opacityCeiling"` (hero 0.6, page 0.4). At intensity=0.4 the
+final light-mode trail floor = 0.45·0.08·0.4 = 0.0144 — invisible. The visibility gate measures
+intensity=1 ONLY; the recession monotonicity is delegated to a smoke-test MATH assert (`peak = peakAlpha
+* intensityClamped`), NOT a visual floor at the recessed intensity. So the actual three-substrate-parity
+state (the fourier hero recessed at 0.4–0.6, the Q9/P7 parity the wave exists to deliver) is never
+visually verified — the parity may land the hero below perceptibility while the gate stays green. RG4:
+capture the StoryHero/auth-shell hero DELTA at the recessed intensity (both modes) so the parity is
+SHOWN, not asserted; couples to RG3 (the light-mode floor is what fails first under recession).
+
+**RG5 — honesty/scope notes (LOW).** (a) The cross-repo math-dup is DEFERRED, not resolved — the sibling
+`fourier-analysis` still byte-duplicates `fourierPositionsAt`/`evaluateFourier` and does not import
+`/fourier-math` (the glass-ui PROMOTE half is minted; the consumer re-point is booked to the sibling's
+own tranche — correct cross-repo discipline, but the AY "close the bespoke-copy-in-consumer" headline is
+NOT achieved for the fourier leaf until that sibling edit lands). (b) `/fourier-math`'s only consumer
+today is a self-written smoke test — defensible (pre-acknowledged) but thin against the speculative-subpath
+bar; the real second consumer is the booked sibling re-point. (c) The dist `.d.ts` for the new subpaths
+is absent on-disk at HEAD (partial/stale build) — the G4 dts-publish clause needs a fresh full
+`npm run build` to confirm. RG5 is recorded for honesty; (a)/(b) close on the sibling tranche, (c) on the
+next full build.
+
+**RG6 — scope fence.** RG1–RG4 are the stunning-bar + the gate-tightening + the two missing captures;
+all execute when the user greenlights the build phase. None re-opens the landed mechanism (the bundle,
+the intensity prop, the blend fork, the hoist, the `evalFourier` deletion — all sound). The WebGPU render
+axis stays a future additive enhancement (SOTA §3), not a blocker.
+
+---
+
 ## 1. The verified defect (file:line, against HEAD `at-dock-convergence`)
 
 W43 was authored fully born-RED (`docs/tranches/AX/waves/AX.W43-fourier-field-first-class.md`, two gates) but

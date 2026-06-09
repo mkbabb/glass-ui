@@ -6,6 +6,46 @@
 
 ---
 
+## §0 — RE-GROUND scope EXTENSION (from `audit/hardening/b2/B2-readiness.md` §3 + B2-con1/B2-blob)
+
+The Batch-2 hardening surfaced THREE re-ground obligations beyond the original AUDIT-LEDGER restamp.
+W0-REGROUND OWNS all three (it is the re-ground-to-HEAD wave; these are exactly its class). The gate
+mint (edit-site 2) is also re-affirmed as a HARD precondition — several waves depend on it.
+
+**RG-X (the gate is UNLANDED + load-bearing — it is a HARD precondition, not optional).** W0-REGROUND
+was SPECCED to mint `proof:ay-w0-reground` but the script was NEVER landed and `PROGRESS.md` lists
+this wave `planned`. **W-AUR2 G4 reads this gate** (`AY.W-AUR2.md` §0 RG-A) and is UN-CLOSEABLE until
+it exists. So minting `scripts/proof-ay-w0-reground.mjs` (edit-site 2) is a BLOCKING obligation: W0
+runs FIRST in the impl sequence and W-AUR2 serializes after it. Confirm at close that the gate exists,
+is wired into `proof:all`, and is RED-witnessed (the §HARD GATE bite).
+
+**RG-Y (restamp PROGRESS.md too, not only AUDIT-LEDGER).** `PROGRESS.md` is stale vs reality:
+`W-CARDINAL-INFRA` + `W0-REGROUND` read `planned` (`PROGRESS.md:51-52`) but `proof:live-verified-ledger:ay`
+is WIRED (`package.json:696`) and 8 own-surface DELTAs landed (W-DOCK1/W-CON1/W-BLOB2 + more). An agent
+reading PROGRESS to gauge readiness gets the WRONG picture. EXTEND the restamp to the `PROGRESS.md`
+status rows: a row whose substance landed reads its true status (`W-CARDINAL-INFRA` the gate is wired →
+reflect it), not a stale `planned`. The clause-(d) closed-vocabulary check extends to the PROGRESS
+status column.
+
+**RG-Z (the cardinal-lesson inflation at the PROGRESS roll-up — honest restamp of the overstated
+visual rows).** The B2 refinement (`B2-con1` F2/F3, `B2-blob` F2/F3) found the W-CON1 + W-BLOB2 rows
+read a clean confident `live-verified` while their captured DELTAs are partly GAMED: W-CON1's four
+"mobile" PNGs are 1280×721 desktop screenshots showing a sparse left column (not the filled box, no
+focal); W-BLOB2's mood frames are 5 static red frames (no readable lean) + the mood surface never
+shows the cream default. This is the MEMORY "live-verify capture" inflation recurring at the PROGRESS
+roll-up. The honest restamp: those rows carry a `live-verified (RG-noted: DELTA re-capture owed —
+see <wave> §0 RE-GROUND)` qualifier, NOT a clean `live-verified`, until the W-CON1 RG2 / W-BLOB2
+RG2/RG3 re-captures land. The DELTA-honesty debt is real and must not be papered over by a green
+PROGRESS cell. (The engine LOGIC is sound — this qualifies the CAPTURE claim, not the code.)
+
+**RG-W (the +9 package.json cite drift is universal — mandate a re-grep note).** Batch-2 added AY proof
+scripts, shifting every `package.json:6XX` script-line cite ~+9 across the remaining specs (`gates.mjs`
++ in-script cites are accurate; only package.json drifted). W0 records the cross-cutting mandate: an
+executing agent trusts the gate-ID and re-greps the package.json line, never the stale cite (the
+stale-worktree-trap step-0 discipline, applied tranche-wide).
+
+---
+
 ## Defect (file:line, source-grounded)
 
 The `AUDIT-LEDGER.md` was authored when the 32-agent AY pre-audit hit the session

@@ -110,6 +110,79 @@ See HARD GATE.
 
 ---
 
+## §0 — RE-GROUND (post-Batch-2 as-built; from `audit/hardening/b2/B2-blob.md`)
+
+W-BLOB2 was EXECUTED at Batch-2 (`tranche/AY` @ `1151899`). The headline LANDED and is gate-ratified:
+`proof:blob-warm-default` is a real Metal-GPU π readback (NOT headless-green) asserting `bodyMeanL ≥
+0.62` in both schemes, and the captures paint a warm bead, not the AX.W46 charcoal coffee-bean; the
+46→8 atom fold is genuine and `proof:blob-config-atoms` passes; the README↔reality prose lie is closed
+for the resting default. But the component is not perfected end-to-end. Six facets RE-OPEN. None
+re-builds the shipped color/atom work; each is refinement debt.
+
+**RG1 (line-count + dependency-order, BLOCKER) — the wave shipped into an uncarved god-module.**
+`useMetaballRenderer.ts` is **707 lines** (was 694; W-BLOB2's `cCol.*` color-perturbation uploads +
+the cream-base wiring grew it), the LARGEST `proof:no-god-module` violator in the repo, RED at HEAD.
+The spec's F5 ordering says "W-GOD1 lands FIRST so this wave's edits do not re-conflict" — but
+execution INVERTED it (W-GOD1 is `planned`, W-BLOB2 shipped first), and `proof:no-god-module` is not in
+this wave's G3 fleet (G3 is `proof:blob-*` only), so the wave passed its own gates while leaving the
+god-module gate redder than before. Recorded in `AY.W-GOD1.md` §RE-GROUND (carve target 707); the carve
+is the remediation, DEFERRED to the build phase the user greenlights. The Depends-on line's "W-GOD1
+lands FIRST" is now counterfactual — re-grounded here, not silently.
+
+**RG2 (DELTA-honesty, HIGH) — the mood DELTA proves no readable motion; it RE-CAPTURES.** The five
+`W-BLOB2-blob-mood-hover-frame{1..5}-*.png` are byte-distinct (5 md5s → the "≥5 frames" depth-floor
+passes) but **visually identical**: a static sphere, no perceptible centroid lean, no deformation. The
+H-cardinal "≥5 hover frames" intent (PROVE the motion) is met as a byte-diff, not a readable delta — a
+reader cannot see the creature notice the pointer. RE-CAPTURE the mood hover so the lean is VISIBLE
+frame-to-frame (sample across a wider pointer travel / a longer dwell so the centroid displacement
+exceeds perceptual threshold), and record the per-frame centroid-offset number in the DELTA so the
+motion is falsifiable, not asserted.
+
+**RG3 (DELTA-correctness, HIGH) — the mood surface's captured "default" is RED, not the cream default
+G4 demanded.** The mood hero seeds `seed = "oklch(0.62 0.19 25)"` (`blob.vue:68`) — a vivid red — so
+the captured mood frames are RED and the resting CREAM default is NEVER shown on `/substrates/blob-mood`
+(the DELTA comment "untouched is the cream default" is false; the seed UI's default value is red).
+G4 asked the mood surface to show the cream default FIRST. RE-CAPTURE the mood surface's resting frame
+at the cream default (seed UI at the cream base) BEFORE the hover-flick frames — the red register is a
+SECOND capture, not a substitute for the default-identity shot. G4's cream-default obligation is met on
+`/substrates/goo-blob` only today; it must also hold on the mood surface.
+
+**RG4 (source-honesty, MEDIUM) — stale body-L numbers in the shipped source contradict the
+authoritative readback.** `types.ts:261` comment reads "~0.87 light / ~0.83 dark" and `types.ts:292`
+"body L≈0.86 … rim sits 0.31 away" — but the authoritative DELTA π table + the PROGRESS row read
+**0.814 light / 0.775 dark, body L≈0.81, rim sits 0.26 away**. The `types.ts` comments are pre-down-tune
+numbers (the 0.86 anchor era, before the anchor dropped to 0.78) never reconciled when the anchor moved.
+RECONCILE the two comments to the readback values (a comment-only edit; the source const is correct, the
+narration is stale). A reader trusting the comment today gets a body lightness ~0.05 too high and a
+fabricated rim delta.
+
+**RG5 (decision-record, LOW) — the color-perturbation fold was declined without recording it.** Spec D2
+/ edit-site #5 offered "FOLD the color-perturbation cohort (`hueRange`/`satShift`/`brightnessShift`/
+`colorNoiseFreq`/`colorNoiseSpeed`) under ONE atom if they co-vary." The as-built KEPT all five as
+separate `BlobColor` fields — DEFENSIBLE (each is read as a base, e.g. `cCol.hueRange + params.hueRange`
+at `useMetaballRenderer.ts:542-549`, none dead) — but the keep-decision is unrecorded. The 8-atom
+ceiling is met by NESTING (132 leaf fields survive behind 8 atoms — the gate counts bundles, not leaf
+surface), which is the intended J §6.3 model, but the spec's explicit fold-consideration was silently
+declined. RECORD the KEEP + its "each is read" rationale in the W-BLOB2 DELTA and the W-CLOSE1
+overfitting audit (a one-line decision note; no code change).
+
+**RG6 (the stunning-bar, the named tuning debt) — "warm-cream living bead" is met as "honey-tan
+lemon."** The body stop `#b5947f` (`types.ts:267`) is a desaturated rosy-TAN, not cream; the ramp reads
+honey/marzipan; the default capture is a flat, matte, slightly-muddy silhouette with a weak specular
+(`specStrength: 0.16`) and a wobble that does not read static. It clears L≥0.62 and is a massive step up
+from charcoal — but the README's "stunning warm-cream living bead" overstates what ships; only the
+dark-mode plate reads as a glowing gel. This is the user's bar (stunning, not green). The named-successor
+clause already covers it: a W-BLOB-TUNE follow re-tunes the cream-base OKLCh anchor + the specular
+toward the gel-bead read, against the live π readback, WITHOUT lowering the 0.62 floor. The tuning is
+DEFERRED to the greenlit build phase; the floor is the contract, the body is what moves.
+
+**RG7 — scope fence.** RG1–RG6 are refinement of this wave's own artefacts (line count, two DELTA
+captures, two source comments, one decision note, one tuning follow). None re-opens the cream-default
+color decision (ratified), the atom fold (gate-bound), or the ColorResolver derivation (inv J-10 held).
+The carve (RG1) is W-GOD1's; the captures/tuning execute when the user greenlights the build phase.
+
+---
+
 ## Edit-sites (exact)
 
 ### Arm 1 — the light warm-cream default base (D1)
@@ -326,6 +399,14 @@ own surface — the single largest open live-truth gap H-cardinal §6 names.
   EXISTING `/color` producer (inv J-10; no parallel color math).
 - It does **NOT** touch the `--surface-tint-*` in-srgb family or the `--glass-*` tint axis — the blob's
   color is its own OKLCh in-shader path, disjoint from the surface-tint ladder.
+- It does **NOT** own the MOOD/seed chroma register or the wrapper SHADOW — the B2-gestalt set
+  red-team's two highest-leverage blob findings (F1 the mood neon clashes with the cream default;
+  F2 the `GooBlob.vue:229` `5px 5px` Memphis cartoon stamp reads as a sticker, not a gel contact
+  shadow) are owned by **AY.W-COHERE** (the set-cohesion convergence wave), which pulls the mood
+  bead into the warm-red lower-chroma register the constellation focal + FF comet speak and swaps the
+  cartoon stamp for a soft ambient shadow. W-BLOB2 owns the resting CREAM DEFAULT (RG6 / the
+  W-BLOB-TUNE named successor for the stunning-bar on the default); W-COHERE owns the mood-register +
+  shadow cohesion across the set. The two coordinate (RG6) but are distinct waves.
 
 ## Named successor (on miss)
 

@@ -65,6 +65,70 @@ GREENs on the `W-DOCK2` row (own-surface light+dark frame-series DELTA present).
 
 ---
 
+## §0 — RE-GROUND (post-Batch-2 as-built; from `audit/hardening/b2/B2-dock.md`)
+
+W-DOCK2 was EXECUTED at Batch-2 (`tranche/AY` @ `1151899`). The substrate thesis LANDED and is
+born-RED-proven: the tautology IS demoted (HG1 box-vs-scalar Δ is now a non-binding fact); the REAL
+entering-child witness exists and fires (`lastChildVsBoxMs` pushes a violation past the budget, the
+D1 blind-spot guard REDs an unsampled child); HG3 (one `DOCK_SPRING` authority, reads the canonical
+`dockMorphContext.ts`), HG5 (single-indicator + one-clock rail), and HG4 (drift-guard) are all
+born-RED-able on synthetic edits. The single `--dock-morph-t` scalar was correctly KEPT, not churned.
+But the GREEN side is uncaptured and the gate is loose. Five facets RE-OPEN.
+
+**RG1 (DELTA-honesty, BLOCKER) — zero `W-DOCK2-*.png` exist; the headline lockstep is never SHOWN.**
+The prompt's core question "does the captured DELTA SHOW items fading in sync with the shell" answers
+NO — `ls audit/visual/` has no `W-DOCK2-*.png`, and the DELTA admits HG6 is OWED (`live-pending`).
+HG6 below already states the obligation; RE-GROUND records that it is the wave's single biggest debt:
+capture the own-surface light+dark frame-series on the REAL `/dock/overview` dock showing the
+entering-child opacity onset tracking the shell-width onset frame-by-frame. Until then the component
+is NOT live-verified (the cardinal lesson).
+
+**RG2 (captured-GREEN, BLOCKER) — there is NO persisted GREEN run of the gate against the real dock.**
+`.cache/gates/AX-dock-animation-live.json` (the W-DOCK2 landing) is status `fail` against the SYNTHETIC
+lag fixture. Every "GREEN" in the DELTA is either the device-free `--head` synthetic arm (a fabricated
+66.7ms onset, `bornred.mjs:89` hardcodes `FRAME+60`) or prose. The route fix (`pi-manifest.ts:82` →
+`resolveScene("dock","overview")`) IS landed, but the gate was never EXERCISED green on the real
+collapsible dock in a persisted artefact. The build phase must run the π twin against the real dock and
+persist the GREEN artefact alongside the RG1 frame-series — the GREEN side cannot rest on synthetic
+timelines + an un-exercised route.
+
+**RG3 (gate-bite, SUBSTANTIVE) — the budget is LOOSE; it witnesses a gross regression, not the
+perceived lag.** `LOCKSTEP_BUDGET_MS ≈ 537ms`; a real 150–400ms lag PASSES. The re-frame (from "items
+fade in lockstep" to "the deliberate macOS cascade is bounded by a 537ms ceiling") is DEFENSIBLE and
+W-DOCK1-grounded (the trail IS the deliberate stagger, box↔scalar Δ=0 in 12 real captures) — but the
+born-RED only discriminates at EXTREMES (700ms RED vs 60ms GREEN); a regression landing the last child
+at 450ms sails through. RE-GROUND records the looseness honestly: the gate binds "no second clock
+re-added," NOT the perceived-lag magnitude. If the user's residual complaint persists after RG1's real
+capture, the budget tightens against the captured onset number (not a hand-set ceiling).
+
+**RG4 (gate-bite, SUBSTANTIVE) — the gate samples a dock with no cap-rung child; its ceiling is never
+exercised.** The CSS cap is `nth-child(n+6)` but the capture dock (`overview.vue:284-297`) has exactly
+5 `.dock-layer--full` children, so the last child is `nth-child(5)`, onset `step×4=0.32`, NOT the
+`step×5=0.40` the 537ms budget derives from. The gate's stated worst-case child does not exist on the
+surface it measures (the budget over-estimates, GREEN is even safer). RE-GROUND: add a 6th capture-dock
+child (or re-derive the budget on the real 5-child onset 0.32) so the ceiling is exercised against a
+real cap-rung child, not a phantom one.
+
+**RG5 (source + DELTA cleanup, MINOR) — two honesty nits.** (a) `layers.css:235` still declares
+`var(--dock-stagger-window-size, 0.55)` while HG2's reconciliation fixed only the budget derivation (it
+uses the shipped `shell.css:51` value 0.4) — the fallback should match the shipped 0.4 or be removed (a
+consumer unsetting the token would make the window 0.55 and the 537ms budget under-estimate). (b) The
+HG4 BOOK carries a FABRICATED justification: `W-DOCK2-DELTA.md:172-176` claims the FLIP fold can't land
+because it "breaks an external consumer — value.js." value.js is a color-normalization library with no
+dock dependency; `useLayerTransition` has exactly ONE live src consumer (`DockLayerGroup.vue:101`) + the
+`/dock` re-export, the clean single-consumer fold the spec named. The BOOK is fully defensible on the
+W-GOD1-carve-collision grounds ALONE (RG6); STRIKE the value.js invented corroboration (the
+cardinal-lesson inflation pattern).
+
+**RG6 — scope fence.** RG1–RG2 (the captures), RG3–RG4 (the gate-tightening) execute when the user
+greenlights the build phase. The FLIP-engine behavioral unification (the D4 sibling-rebase divergence
+the marker-guard cannot see) + the `#persistent` first-mount FLIP mis-seat + rail persistence-on-collapse
+are HONESTLY booked to W-GOD1 (it carves the same FLIP code) — the drift-guard is a tripwire for NEW
+string-drift only, not a closure of the existing behavioral drift. RG5 is a comment/source cleanup, no
+behavior change.
+
+---
+
 ## §1 — The verified defects (file:line, source-grounded)
 
 **D1 — the lockstep gate is a TAUTOLOGY; the entering-child onset is never asserted.**

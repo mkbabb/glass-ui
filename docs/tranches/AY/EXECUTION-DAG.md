@@ -86,6 +86,7 @@ fictional CI gates are removed or BUILT, not cited.
 | E13 | **W-CON/W-BLOB content → W-GOD1** | the carve targets move when W-CON1 adds refitField + W-BLOB2 edits drawFrame; W-GOD1 carves AFTER (or it carves a moving target) |
 | E14 | **L.W1 (settled copy) → L.W2/W3 → L.W4 (conformance sweep + cardinal-gate port)** | L.W4 also ports the cardinal gate (E3 twin) + resolves the OQs |
 | E15 | **W-PUB1 ← W-CLOSE1 ← (ALL AY waves green)** | publish is the terminal AY node; cannot precede the close, which cannot precede every gate green |
+| E16 | **(W-CON1/2/3 + W-BLOB2/3 + W-FF2-RG3 + W-DOCK2-RG1 + W-GOD1) → W-COHERE → W-CLOSE1** | the set-cohesion convergence (B2-gestalt) edits the CARVED blob+constellation SFCs and binds the FF light floor + the dock capture into a both-mode set DELTA; it runs LAST in the substrate band (after the carve) and BEFORE the close (the FINAL/overfitting audit reads the converged set, not four mismatched surfaces) |
 
 ---
 
@@ -152,6 +153,7 @@ it parallelizes cleanly and unblocks correct dispatch of all else.
 | **W-CONSUMER** (ex-DRAFT W5) | the consumer-staleness ledger (`proof:consumer-staleness` born-RED on 12 stale imports) | green after the consumer re-pins land |
 | **W-CARRY** (net-new) | onboard the full AT BOOK backlog; encode G-4/G-5/G-6; a register-completeness clause | register-row-count = ledger-BOOK-count |
 | **W-LIVE1** | the local-only live-gate CI decision; the cardinal-gate `complete`-coverage hardening | decision + (Branch B) lane green |
+| **W-COHERE** (net-new; E16) | the four substrates as ONE set (B2-gestalt): blob mood→warm-register + ambient shadow (off the cartoon stamp), constellation `opacityCeiling` recession envelope (the 3-of-4 parity gap), the set-level `proof:substrate-cohesion` gate + a both-mode set DELTA. Runs LAST in the substrate band (edits the W-GOD1-carved SFCs); binds W-FF2-RG3 (FF light floor) + W-DOCK2-RG1 (dock capture) into G4 | `proof:substrate-cohesion` born-RED→GREEN (ONE accent / ONE recession / ONE shadow) + the four-substrate both-mode set DELTA |
 
 ### BATCH 5 — AY TERMINAL CLOSE → PUBLISH [HINGE 1]
 | node | does | gate |
