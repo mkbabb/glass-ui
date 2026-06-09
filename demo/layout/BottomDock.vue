@@ -22,6 +22,7 @@ import {
 } from "@lucide/vue";
 import {
     DockIconButton,
+    DockSeparator,
     DockTabButton,
     GlassDock,
 } from "../../src/components/custom/dock";
@@ -86,27 +87,31 @@ const hasNext = computed(() =>
             overflow="scroll"
             class="demo-bottom-dock__shell"
         >
-            <TooltipProvider :delay-duration="250">
-                <!-- Mobile-only: off-canvas SidebarDock category trigger. The
-                     Sheet primitive owns the open/close + aria-expanded native
-                     a11y contract (no hand-bound dock collapse state). -->
+            <!-- The category trigger is the home-left anchor — it lives in the
+                 #persistent region so it stays put as the story tabs scroll. On
+                 the mobile viewport it opens the off-canvas SidebarDock Sheet.
+                 The Sheet primitive owns the open/close + aria-expanded native
+                 a11y contract (no hand-bound dock collapse state). -->
+            <template #persistent>
                 <Sheet v-model:open="sheetOpen">
-                    <Tooltip>
-                        <TooltipTrigger as-child>
-                            <SheetTrigger as-child>
-                                <DockIconButton
-                                    type="button"
-                                    class="demo-bottom-dock__menu tap-squish"
-                                    aria-label="Open category navigation"
-                                >
-                                    <PanelLeft class="h-4 w-4" aria-hidden="true" />
-                                </DockIconButton>
-                            </SheetTrigger>
-                        </TooltipTrigger>
-                        <TooltipContent side="top" :side-offset="10">
-                            Categories
-                        </TooltipContent>
-                    </Tooltip>
+                    <TooltipProvider :delay-duration="250">
+                        <Tooltip>
+                            <TooltipTrigger as-child>
+                                <SheetTrigger as-child>
+                                    <DockIconButton
+                                        type="button"
+                                        class="demo-bottom-dock__menu tap-squish"
+                                        aria-label="Open category navigation"
+                                    >
+                                        <PanelLeft class="h-4 w-4" aria-hidden="true" />
+                                    </DockIconButton>
+                                </SheetTrigger>
+                            </TooltipTrigger>
+                            <TooltipContent side="top" :side-offset="10">
+                                Categories
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
                     <SheetContent
                         side="left"
                         class="demo-bottom-dock__sheet w-fit max-w-[18rem]"
@@ -123,9 +128,9 @@ const hasNext = computed(() =>
                         />
                     </SheetContent>
                 </Sheet>
+            </template>
 
-                <span class="demo-bottom-dock__sep" aria-hidden="true" />
-
+            <TooltipProvider :delay-duration="250">
                 <!-- Prev / next within the category. -->
                 <Tooltip>
                     <TooltipTrigger as-child>
@@ -174,7 +179,7 @@ const hasNext = computed(() =>
                     </TooltipContent>
                 </Tooltip>
 
-                <span class="demo-bottom-dock__sep" aria-hidden="true" />
+                <DockSeparator />
 
                 <!-- Prev / next category (wraps). -->
                 <Tooltip>

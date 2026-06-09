@@ -85,13 +85,6 @@
     gap: 0.25rem;
 }
 
-.demo-bottom-dock__sep {
-    align-self: stretch;
-    width: 1px;
-    margin-inline: 0.125rem;
-    background: var(--glass-border-quiet, color-mix(in srgb, var(--foreground) 12%, transparent));
-}
-
 /* ── Active-story affordance — the NCSU-red underline/pill ──────────────────
    DockTabButton auto-activates its `.is-active` state when the rendered
    RouterLink carries aria-current="page". Restyle that state to the accent. */
@@ -116,22 +109,13 @@
 }
 
 /* ── Responsive: mobile off-canvas, bottom bar primary ─────────────────────
-   Below the mobile breakpoint the fixed sidebar rail column is hidden (it
-   moves off-canvas behind the BottomDock's <Sheet> trigger); the mobile
-   category trigger + separator paint only at narrow widths. */
-.demo-bottom-dock__menu,
-.demo-bottom-dock__menu + .demo-bottom-dock__sep {
-    display: none;
-}
-
+   The category trigger is now the home-left #persistent anchor on the bottom
+   dock — it stays put at every viewport and opens the off-canvas SidebarDock
+   Sheet (a quick category jump on desktop, the primary category nav on mobile).
+   Below the mobile breakpoint the fixed sidebar rail column is hidden; the
+   persistent bottom-dock category trigger carries the category navigation. */
 @media (max-width: 767px) {
     .demo-sidebar-rail {
         display: none;
-    }
-    .demo-bottom-dock__menu {
-        display: inline-flex;
-    }
-    .demo-bottom-dock__menu + .demo-bottom-dock__sep {
-        display: block;
     }
 }

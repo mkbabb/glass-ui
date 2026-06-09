@@ -618,6 +618,24 @@ export const GATES = [
         note: "AX.W54 — G-1 of the GOLDEN done-definition: glass cohesion MEASURED, not asserted (the --one-model arm of proof:glass-level). No ui/ chrome-or-content surface paints a solid bg-{card,background,muted,secondary,primary} without the glass tier or the named .glass-opaque escape; the legibility allowlist (avatar/label/separator/skeleton/table/data-table/badge) is exempt. Bite: re-introduce a solid chrome surface off the allowlist → RED.",
     },
     {
+        id: "proof:storybook-complete",
+        cmd: "proof:storybook-complete",
+        tags: ["local", "ci"],
+        note: "AX.W18 — the storybook export→story totality gate (the third IA triad member with storybook-ia + no-orphan-demo-route): every public component-export surface is DEMONSTRATED by ≥1 story (the export→story map is total). Bite: a public export with no story → RED.",
+    },
+    {
+        id: "proof:demo-dock-nav",
+        cmd: "proof:demo-dock-nav",
+        tags: ["local", "ci"],
+        note: "AX.W40 — the demo-shell dock-nav coherence (SidebarDock + BottomDock adopt the W61 unified nav-pattern: home-left #persistent + <DockSeparator>, zero raw-class separators, the 12-category nav). Bite: a raw-class separator or a missing home anchor in a shell dock → RED.",
+    },
+    {
+        id: "proof:aurora-fill-resize",
+        cmd: "proof:aurora-fill-resize",
+        tags: ["local", "ci"],
+        note: "AX.W18/Q2 — the aurora black-bar root fix: the runtime resize() measures the laid-out border-box via getBoundingClientRect() (NOT the content-visibility-skip-degenerate canvas.clientWidth/Height that sized a 1px sliver buffer stretched as a black band), + the .aurora-root contain-intrinsic-size reserves a non-zero block fallback. Bite: revert resize() to clientWidth/clientHeight → RED.",
+    },
+    {
         id: "proof:page-redesign",
         cmd: "proof:page-redesign",
         tags: ["local", "ci"],

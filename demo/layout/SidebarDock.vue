@@ -13,7 +13,11 @@
 // from the bare `.is-active` colour shift onto the NCSU-red accent + a
 // left-edge accent rule + W25 `tap-squish` press feedback.
 import { computed } from "vue";
-import { DockIconButton, GlassDock } from "../../src/components/custom/dock";
+import {
+    DockIconButton,
+    DockSeparator,
+    GlassDock,
+} from "../../src/components/custom/dock";
 import {
     Tooltip,
     TooltipContent,
@@ -64,25 +68,28 @@ function go(categoryId: string): void {
         class="demo-sidebar-dock min-h-0"
         aria-label="Category navigation"
     >
-        <!-- Brand wordmark — lives once, at the top of the rail. -->
-        <RouterLink
-            to="/"
-            class="focus-ring tap-squish mb-1 flex h-10 w-10 items-center justify-center rounded-full"
-            aria-label="glass-ui home"
-            @click="emit('navigate')"
-        >
-            <span
-                aria-hidden="true"
-                class="font-display italic leading-none text-viz-fourier select-none"
-                style="
-                    font-size: 1.875rem;
-                    font-variation-settings: 'WONK' 1, 'SOFT' 0;
-                    font-optical-sizing: auto;
-                "
+        <!-- The brand wordmark is the home-left anchor — it lives in the
+             #persistent region so it stays put as the category set scrolls. -->
+        <template #persistent>
+            <RouterLink
+                to="/"
+                class="focus-ring tap-squish flex h-10 w-10 items-center justify-center rounded-full"
+                aria-label="glass-ui home"
+                @click="emit('navigate')"
             >
-                &#x2131;
-            </span>
-        </RouterLink>
+                <span
+                    aria-hidden="true"
+                    class="font-display italic leading-none text-viz-fourier select-none"
+                    style="
+                        font-size: 1.875rem;
+                        font-variation-settings: 'WONK' 1, 'SOFT' 0;
+                        font-optical-sizing: auto;
+                    "
+                >
+                    &#x2131;
+                </span>
+            </RouterLink>
+        </template>
 
         <TooltipProvider :delay-duration="250">
             <Tooltip v-for="category in primaryCategories" :key="category.id">
@@ -117,14 +124,11 @@ function go(categoryId: string): void {
 
             <!--
               Reference-only shelf (Composables). Visually separated from the
-              component categories by a thin divider so the distinction reads at
+              component categories by a divider so the distinction reads at
               a glance — these are reference docs, not surfaces.
             -->
             <template v-if="referenceCategories.length > 0">
-                <div
-                    aria-hidden="true"
-                    class="my-1 h-px w-6 self-center bg-border/50"
-                />
+                <DockSeparator />
                 <Tooltip
                     v-for="category in referenceCategories"
                     :key="category.id"

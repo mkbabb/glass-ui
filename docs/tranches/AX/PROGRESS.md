@@ -59,7 +59,7 @@ reference; the Status column reflects each wave's reconciled state.
 | W15 | blob contained droplet — lit warm-cream living membrane | complete |
 | W16 | blob integration — interaction + perf + readme | complete |
 | W17 | constellation tokens + warp + slides adopt | complete |
-| W18 | storybook IA reinvention | planned |
+| W18 | storybook IA reinvention | live-verified — storybook IA reinvention (12-category) + Q2 aurora black-bar fix + Q5 motion-union; proof:storybook-ia/aurora-fill-resize green; DELTA audit/visual/W18-DELTA.md |
 | W19 | primitive prune A — header-ribbon/glyph-face/disco-glyph | dev-landed · live-pending (DELTA owed) |
 | W20 | primitive fix — native top-layer, card toggles, glass-panel retire | planned |
 | W21 | primitive recategorize — ledger/barrel coherence + metric reconcile | planned |
@@ -83,7 +83,7 @@ reference; the Status column reflects each wave's reconciled state.
 | W37 | Canvas2D lifecycle + text-highlight substrates | complete |
 | W38 | aurora configurator + glass-atoms restyle | planned |
 | W39 | lighthouse perf/a11y route matrix | planned |
-| W40 | demo-shell dock-nav coherence reaudit | planned |
+| W40 | demo-shell dock-nav coherence reaudit | live-verified — demo-shell dock-nav coherence — SidebarDock/BottomDock on the W61 unified nav-pattern (home-left + DockSeparator), use-token-color→darkmode toggle; proof:demo-dock-nav green; shares W18-DELTA.md |
 | W41 | publisher cross-repo build supplier-edge | planned |
 | W42 | liquid-morph substrate | planned |
 | W43 | fourier-field first-class | planned |
@@ -259,7 +259,7 @@ home above:
 | 6 | Q7 all pages glass cards + hierarchy | W60 |
 | 7 | speedtest grid idiom on pages | W60 |
 | 8 | pill-list scrollable + Number Field rounded | W60 |
-| 9 | Q5 motion-page union | W18 (Q5 dissolved, not frozen) |
+| 9 | Q5 motion-page union | W18 — DONE: motion/transitions folded into foundations/motion (one motion-vocabulary page); orphaned route deleted; IA triad green |
 | 10 | Q6 broken motion section + background | W18 / Batch 5 |
 | 11 | Q2 aurora black-bar | W47 (FileBounds extension) |
 | 12 | DK same-root dock, home-left, dividers | W61 |

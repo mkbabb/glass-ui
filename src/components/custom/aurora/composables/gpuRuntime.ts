@@ -104,10 +104,22 @@ export function createGPUAuroraSetup(deps: GPUAuroraDeps) {
 
         function resize(): void {
             const dpr = resolveBudgetDpr();
-            const cw = canvas.clientWidth || canvas.parentElement?.clientWidth || 1;
-            const ch = canvas.clientHeight || canvas.parentElement?.clientHeight || 1;
-            canvas.width = Math.max(1, Math.floor(cw * dpr));
-            canvas.height = Math.max(1, Math.floor(ch * dpr));
+            // Measure the laid-out border-box, not clientWidth/clientHeight: a
+            // canvas under a `content-visibility:auto` ancestor reports a zero
+            // client size while that ancestor is skipped, which would size the
+            // backing texture to a 1px sliver that stretches as a black band. The
+            // bounding rect reflects the real box across a skip. (Parity with the
+            // WebGL2 frameLoop resize.)
+            const rect = canvas.getBoundingClientRect();
+            const parentRect = canvas.parentElement?.getBoundingClientRect();
+            const cw = rect.width || parentRect?.width || 1;
+            const ch = rect.height || parentRect?.height || 1;
+            const w = Math.max(1, Math.round(cw * dpr));
+            const h = Math.max(1, Math.round(ch * dpr));
+            if (canvas.width !== w || canvas.height !== h) {
+                canvas.width = w;
+                canvas.height = h;
+            }
         }
 
         function frame(timeSec: number): void {

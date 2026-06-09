@@ -1,0 +1,49 @@
+{
+  "wave": "AX.W40",
+  "title": "Demo-shell dock-nav adopts the W61 unified nav-pattern",
+  "generatedAt": "2026-06-09",
+  "scope": "The shell-dock half — discharge the W61 'shell docks pendingW40' the proof:dock-unify gate tracked. The cross-surface coherence-gate re-scope (animation-coherence / design-md-current / naming-consistency) is NOT in this pass: animation-coherence reds at HEAD on a cross-repo ../speedtest consumer reading the excised --ease-apple-spring, which is publish-gated (W34) and outside this FileBounds.",
+  "beforeShell": {
+    "SidebarDock": "brand wordmark as a bare top child (not #persistent); reference-shelf divider as a raw `bg-border/50` span",
+    "BottomDock": "two raw `demo-bottom-dock__sep` separator spans; the category trigger mobile-only, not a persistent anchor",
+    "w61_census": "shell docks pendingW40: 2 (both diverged from the nav-pattern)"
+  },
+  "afterShell": {
+    "SidebarDock": "brand wordmark moved into the #persistent slot (home-left anchor); reference-shelf divider is now <DockSeparator />",
+    "BottomDock": "the category trigger moved into the #persistent slot (home-left anchor, persistent at every viewport — opens the off-canvas Sheet); the two raw separators replaced with <DockSeparator />",
+    "dock-nav.css": "dead `.demo-bottom-dock__sep` rule + the mobile-only `__menu` toggle removed (the persistent anchor carries category nav at every viewport)",
+    "w61_census": "shell docks pendingW40: 0 (DISCHARGED); F4 showcase docks unified 3/3 (paths re-pointed to the W18 dock category)"
+  },
+  "navPatternContract": {
+    "home_left_persistent": "both docks carry a #persistent region (the brand anchor / the category trigger)",
+    "DockSeparator": "all dividers are the orientation-aware <DockSeparator> primitive",
+    "zero_raw_class_separators": "no demo-bottom-dock__sep, no bg-border/N hairline",
+    "one_GlassDock_root": "each dock composes a single <GlassDock> root — the same one the showcase docks use"
+  },
+  "gates": {
+    "proof:dock-unify": "GREEN — shell docks pendingW40: 0; showcase docks 3/3 (paths resynced to dock/overview, dock/rail, dock/layers)",
+    "proof:demo-dock-nav": "GREEN — AppShell imports+renders both docks; both render <GlassDock> + consume useStoryNavigation; CategoryRail/StoryPager stay deleted; 0 residual imports. REGISTRATION in gates.mjs owed to the orchestrator resync (package.json entry already present).",
+    "proof:demo-dock-nav-runtime": "fail-open SKIP at HEAD; the live route-walk truth is captured here via the pi-lane playwright walk (shell-home + mobile-sheet captures). The promotion to fail-CLOSED in the pi workspace is a separate gate-author concern (package.json entry present; gates.mjs registration owed to resync)."
+  },
+  "piLaneCaptures": {
+    "dir": "docs/tranches/AX/audit/visual/W18-W40/",
+    "shellNavAudit_1440": {
+      "hasSidebar": true,
+      "hasBottom": true,
+      "dockSeparators": 2,
+      "persistentRegions": 2,
+      "homeAnchor": true,
+      "categoryButtons": 12,
+      "rawSep": 0,
+      "categoryTrigger": true
+    },
+    "mobile_375": {
+      "categoryTriggerPresent": true,
+      "offCanvasRailRevealsOnTrigger": true
+    }
+  },
+  "deps_observed_at_HEAD": {
+    "W06": "dock.css carve landed; dock story content (Slider-in-dock, overflow wrap, big-dock, background toggle) already folded into navigation/dock.vue -> moved to dock/overview.vue. No separate dock/variants SFC authored (W06 content half not separately landed; the variant tour lives in dock/overview).",
+    "W61": "the unified nav-pattern contract + collapsed-floor tokens + glass-first selected control landed; this wave discharges its tracked pendingW40 shell-dock rows."
+  }
+}

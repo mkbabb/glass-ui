@@ -5,11 +5,12 @@
  * `import.meta.glob`, so adding a story means creating its SFC at
  * `demo/stories/<category>/<id>.vue` and appending a row here.
  *
- * The manifest is consumed by `router.ts` (routes), `AppShell.vue` (dock rail
- * + carousel pager), and `useStoryNavigation` (current/next/prev).
+ * The manifest is consumed by `router.ts` (routes), the demo-shell docks
+ * (SidebarDock + BottomDock), and `useStoryNavigation` (current/next/prev).
  *
- * The IA is 11 coherent categories — Foundations, Substrates, Primitives,
- * Containers, Navigation, Data, Feedback, Motion, Tools, Compositions, and a
+ * The IA is a coherent category tree — Foundations, Substrates (render
+ * backgrounds), Forms, Display, Containers, Navigation, Dock (the headline
+ * primitive's own section), Data, Feedback, Motion, Compositions, and a
  * reference-only Composables shelf collapsed below the fold.
  */
 import type { Component } from "vue";
@@ -17,13 +18,14 @@ import type { StoryBackground } from "./aurora-hero";
 import {
     Compass,
     Droplet,
+    FormInput,
     Shapes,
     Boxes,
     Navigation,
+    PanelBottom,
     Database,
     Bell,
     Sparkles,
-    Command,
     LayoutDashboard,
     Cog,
     type LucideIcon,
@@ -134,41 +136,47 @@ export const CATEGORIES: Category[] = [
         icon: Droplet,
         stories: [
             s("substrates", "aurora", "Aurora", "Procedural painterly gradients — multi-nuclei composition, four mediums, cursor-driven swirl. Shipped /aurora."),
-            s("substrates", "goo-blob", "GooBlob + WatercolorDot", "WebGL2 metaball on the shared substrate (injected color resolver) + a CSS/SVG pastel swatch. Shipped /goo-blob + /watercolor-dot."),
-            s("substrates", "blob-interaction", "GooBlob Interaction", "The pointer-reactive blob (AW.W10) — frame-rate-independent spring follow, decaying-radius pseudopod trail, volume-preserving velocity squash, and a one-shot click spring impulse. Lit + circular merge + warp."),
-            s("substrates", "blob-mood", "GooBlob Mood + Palette", "Every shipped mood on the {valence, arousal} model (AW.W11) + a seed-derived multi-stop OKLCh palette (deriveBlobPalette over the shared ColorHarmony) + warm-biased iridescence + thickness-driven fake-SSS."),
-            s("substrates", "glass-panel", "Glass Panel", "Five-rung glass tier ladder over a renderer-tier detection cascade (svg-filter / css / fallback) — a substrate, not a UI primitive."),
+            s("substrates", "blob", "GooBlob", "WebGL2 metaball droplet on the shared substrate (injected color resolver) — the lit static register, the pointer-reactive interaction hero, the mood + seed-palette model, and the pause seam. Shipped /goo-blob + /watercolor-dot."),
             s("substrates", "constellation", "Constellation", "A drifting proximity-graph lattice on the Canvas2D substrate (park/freeze/dispose). The neutral lattice ships; the --primary focal node is a consumer drawOverlay pass. Shipped /constellation."),
-            s("substrates", "glass-material", "Glass Material", "The unified .glass-material grammar (moving-specular + edge-rim from one mixin) + the four @supports-gated Baseline-2025 SOTA folds — convex-lens refract, squircle, chromatic edge-dispersion, adaptive tint — each over a working fallback (AW.W22/W23)."),
+            s("substrates", "fourier-field", "Fourier Field", "A reconstructing elliptic Fourier curve on the Canvas2D substrate — a seeded inverse-DFT closed curve with a comet trail and nested epicycles, the injected color seam, and a freeze capture lever. Sibling to Aurora and GooBlob."),
+            s("substrates", "glass-panel", "Glass Panel", "Five-rung glass tier ladder over a renderer-tier detection cascade (svg-filter / css / fallback) — a substrate, not a UI primitive."),
+            s("substrates", "glass-material", "Glass Material", "The unified .glass-material grammar (moving-specular + edge-rim from one mixin) + the four @supports-gated Baseline-2025 SOTA folds — convex-lens refract, squircle, chromatic edge-dispersion, adaptive tint — each over a working fallback."),
         ],
     },
     {
-        id: "primitives",
-        title: "Primitives",
+        id: "forms",
+        title: "Forms",
+        icon: FormInput,
+        stories: [
+            s("forms", "inputs", "Inputs"),
+            s("forms", "textarea", "Textarea"),
+            s("forms", "checks", "Checkbox · Radio · Switch"),
+            s("forms", "slider", "Slider", "Two recipes — standard (continuous rounded iOS knob) + spectrum (gradient-track color slider)."),
+            s("forms", "number-field", "Number Field"),
+            s("forms", "select", "Select"),
+            s("forms", "combobox", "Combobox"),
+            s("forms", "multi-select", "Multi-Select"),
+            s("forms", "toggle", "Toggle · Toggle Group"),
+            s("forms", "toggle-chip", "Toggle Chip", "chip vs cell variants over a reka-ui Toggle root; aria-pressed semantics."),
+            s("forms", "label", "Label"),
+        ],
+    },
+    {
+        id: "display",
+        title: "Display",
         icon: Shapes,
         stories: [
-            s("primitives", "buttons", "Buttons"),
-            s("primitives", "card", "Card", "Five-tier glass surface — wash · quiet · resting · floating · overlay; orthogonal surface=cartoon decoration; scroll-pane recipe; polymorphic root via reka-ui Primitive."),
-            s("primitives", "inputs", "Inputs"),
-            s("primitives", "textarea", "Textarea"),
-            s("primitives", "checks", "Checkbox · Radio · Switch"),
-            s("primitives", "slider", "Slider", "Two recipes — standard (continuous rounded iOS knob) + spectrum (gradient-track color slider)."),
-            s("primitives", "number-field", "Number Field"),
-            s("primitives", "select", "Select"),
-            s("primitives", "combobox", "Combobox"),
-            s("primitives", "multi-select", "Multi-Select"),
-            s("primitives", "toggle", "Toggle · Toggle Group"),
-            s("primitives", "toggle-chip", "Toggle Chip", "chip vs cell variants over a reka-ui Toggle root; aria-pressed semantics."),
-            s("primitives", "label", "Label"),
-            s("primitives", "badge", "Badge"),
-            s("primitives", "separator", "Separator"),
-            s("primitives", "section", "Section", "Sectioning landmark over the typography ladder — title / description / tone / gap."),
-            s("primitives", "metric-badge", "Metric Badge"),
-            s("primitives", "metric-pill", "Metric Pill", "A `MetricBadge` composition — `labelPosition=stacked` + `density=spacious` + `size=lg` baked in. Not a parallel primitive."),
-            s("primitives", "status-dot", "Status Dot"),
-            s("primitives", "pulse", "Pulse"),
-            s("primitives", "stacked-icons", "Stacked Icons", "Overlapping icon stack with maxVisible / +N overflow; size axis only."),
-            s("primitives", "dark-mode-toggle", "Dark Mode Toggle", "Size axis (sm · md · lg · control standalone; dock sizes to its GlassDock host); composes useGlobalDark."),
+            s("display", "buttons", "Buttons"),
+            s("display", "card", "Card", "Five-tier glass surface — wash · quiet · resting · floating · overlay; orthogonal surface=cartoon decoration; scroll-pane recipe; polymorphic root via reka-ui Primitive."),
+            s("display", "badge", "Badge"),
+            s("display", "separator", "Separator"),
+            s("display", "section", "Section", "Sectioning landmark over the typography ladder — title / description / tone / gap."),
+            s("display", "metric-badge", "Metric Badge"),
+            s("display", "metric-pill", "Metric Pill", "A `MetricBadge` composition — `labelPosition=stacked` + `density=spacious` + `size=lg` baked in. Not a parallel primitive."),
+            s("display", "status-dot", "Status Dot"),
+            s("display", "pulse", "Pulse"),
+            s("display", "stacked-icons", "Stacked Icons", "Overlapping icon stack with maxVisible / +N overflow; size axis only."),
+            s("display", "dark-mode-toggle", "Dark Mode Toggle", "Size axis (sm · md · lg · control standalone; dock sizes to its GlassDock host); composes useGlobalDark."),
         ],
     },
     {
@@ -189,6 +197,7 @@ export const CATEGORIES: Category[] = [
             s("containers", "collapsible", "Collapsible"),
             s("containers", "hover-popover", "Hover Popover", "Hover-triggered floating label with adaptive side / align + defer-on-leave timer; popover-tier floating surface."),
             s("containers", "expandable-container", "Expandable Container", "In-place vs Teleport-to-body fullscreen with body-overflow lock-depth."),
+            s("containers", "command", "Command Palette", "Fuzzy command tool — a search/command overlay surface, dropdown / context-menu / command-palette family."),
         ],
     },
     {
@@ -196,13 +205,20 @@ export const CATEGORIES: Category[] = [
         title: "Navigation",
         icon: Navigation,
         stories: [
-            s("navigation", "tabs", "Tabs", "reka Tabs (default · pill · underline · vertical) + the unified SegmentedTabs spring-slider (segmented · pill · underline variants, multi-select, responsive collapse — AX.W53)."),
-            s("navigation", "deck-progress", "Deck Progress", "Thin deck-position rail — DeckProgress + .glass-progress-rail recipe over <Progress>. Library owns the LOOK; the consumer owns the 100·(k+1)/N math + the pinned chrome (AW.W16)."),
-            s("navigation", "dock", "Dock"),
-            s("navigation", "dock-layers", "Dock Layers"),
-            s("navigation", "rail", "Dock Rail", "The vertical `GlassDock variant=\"rail\"` navigation column (refined active-item accent + tap-squish + tooltip anchoring). DISAMBIGUATION: the \"Dock Rail\" is distinct from the \"Instrument Rail\" (the `<InstrumentRail>` cockpit-ratio chassis column, Compositions) and the \"layer-switcher rail\" (`.dock-layer-rail` inside a `<DockLayerGroup>`, Dock Layers) — the three share the noun, not the architecture."),
+            s("navigation", "tabs", "Tabs", "reka Tabs (default · pill · underline · vertical) + the unified SegmentedTabs spring-slider (segmented · pill · underline variants, multi-select, responsive collapse)."),
+            s("navigation", "deck-progress", "Deck Progress", "Thin deck-position rail — DeckProgress + .glass-progress-rail recipe over <Progress>. Library owns the LOOK; the consumer owns the 100·(k+1)/N math + the pinned chrome."),
             s("navigation", "header-ribbon", "Header Ribbon", "Hover-tracking ribbon — an anchor button reveals a control row, then auto-collapses; the anchor slot exposes pinned / toggled state. Shipped /header-ribbon."),
             s("navigation", "carousel", "Carousel"),
+        ],
+    },
+    {
+        id: "dock",
+        title: "Dock",
+        icon: PanelBottom,
+        stories: [
+            s("dock", "overview", "Overview", "The GlassDock walkthrough — the collapse↔expand morph on one spring, always-expanded media transport, select / dropdown / popover triggers, the slider keep-open hold, content-driven overflow wrap, the big-dock card + tile grid, and the background pause toggle."),
+            s("dock", "layers", "Dock Layers", "DockLayerGroup drill-in — named panes with an optional switcher rail, crossfade + size FLIP between layers, collapse-while-switching, and the vertical-overflow case."),
+            s("dock", "rail", "Dock Rail", "The vertical `GlassDock variant=\"rail\"` navigation column (refined active-item accent + tap-squish + tooltip anchoring). The \"Dock Rail\" is distinct from the \"Instrument Rail\" (the `<InstrumentRail>` cockpit-ratio chassis column, Compositions) and the layer-switcher rail inside a DockLayerGroup."),
         ],
     },
     {
@@ -248,20 +264,11 @@ export const CATEGORIES: Category[] = [
         title: "Motion",
         icon: Sparkles,
         stories: [
-            s("motion", "transitions", "Transitions"),
             s("motion", "springs", "Spring Orchestrator"),
             s("motion", "countup", "Count-up", "Walk [data-countup] figures and tween textContent on the keyframes NumericAnimation engine."),
             s("motion", "reveal", "v-reveal", "Dependency-free entrance directive — sets the [data-reveal] hook + --d stagger step the CSS reads."),
             s("motion", "typewriter", "Typewriter"),
             s("motion", "animated-digit", "Animated Digit", "Single-figure smoothed reel over useAnimatedNumber — tweens a metric toward its bound value so it never snaps; null reads the placeholder."),
-        ],
-    },
-    {
-        id: "tools",
-        title: "Tools",
-        icon: Command,
-        stories: [
-            s("tools", "command", "Command Palette", "Fuzzy command tool — search/command surface, not nav structure."),
         ],
     },
     {

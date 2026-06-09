@@ -1,59 +1,79 @@
 #!/usr/bin/env node
-// AV.W10 — the storybook-IA gate (proof:storybook-ia).
+// AX.W18 — the storybook-IA gate (proof:storybook-ia).
 //
-// The storybook re-invention collapses 16 messy categories to a coherent
-// 11-category IA: Substrates rises to 2nd (aurora · goo-blob · glass-panel),
-// the dock consolidates into Navigation, the single-story debris bins dissolve,
-// and configurator / hover-popover leave Primitives. This gate FREEZES that tree
-// so it cannot silently drift:
+// SUPERSEDES the AV.W10 11-category snapshot. The IA was reinvented from first
+// principles into a coherent 12-category tree: Substrates reframed as render
+// backgrounds (the three GooBlob facet rows folded to ONE `blob`, the new
+// `fourier-field` primitive surfaced), the overloaded Primitives bin split into
+// Forms + Display, the single-story Tools bin dissolved (Command folds into
+// Containers), and the headline Dock primitive lifted into its OWN first-class
+// top-level category (overview · layers · rail) instead of scattering across
+// Navigation. This gate FREEZES the NEW tree so it cannot silently drift:
 //
-//   (1) CATEGORY ORDER — the manifest's category id sequence matches the §1
-//       11-category fixture EXACTLY (order is load-bearing: Substrates 2nd).
-//   (2) STORY SET — each category's story id SET matches the §1 fixture EXACTLY
+//   (1) CATEGORY ORDER — the manifest's category id sequence matches the
+//       12-category fixture below EXACTLY (order is load-bearing).
+//   (2) STORY SET — each category's story id SET matches the fixture EXACTLY
 //       (no missing/extra/recategorized row).
 //   (3) NO MISSING-STORY — every `<category>/<id>` row resolves to an existing
 //       `demo/stories/<category>/<id>.vue` file (the `lazy()` MissingStory
 //       render-fallback never fires).
 //
-// The expected tree is the frozen §1 fixture below. The manifest parse +
-// glob-existence check are pure given injected source/fs.
+// The expected tree is the frozen fixture below. The manifest parse +
+// glob-existence check are pure given injected source/fs. NOTE: the fixture is
+// the AX-reinvented tree; it SUPERSEDES the AV.W10 snapshot — it is not
+// immutable, only re-baselined when the IA is deliberately re-authored.
 //
-// inv ε / bite-check: reorder a category off the §1 order → RED (1); add/drop a
+// inv ε / bite-check: reorder a category off the order → RED (1); add/drop a
 // story id in a category → RED (2); add a row pointing at a nonexistent file →
-// RED (3).
+// RED (3); re-introduce a single-story `tools` bin or a second GooBlob row → RED
+// (1)/(2).
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gateArtifactPath, snapshotStamp, writeGateArtifact } from "./gate-output.mjs";
 
-// ── The frozen §1 11-category IA fixture ─────────────────────────────────────
+// ── The frozen AX-reinvented 12-category IA fixture ──────────────────────────
 // Category order is asserted as a sequence; each category's story ids are
-// asserted as a SET (intra-category order is presentational).
+// asserted as a SET (intra-category order is presentational). This SUPERSEDES
+// the AV.W10 11-category snapshot (the blob trio folded to one, fourier-field
+// surfaced, Primitives split into Forms + Display, Tools dissolved into
+// Containers, and the first-class Dock category lifted out of Navigation).
 export const EXPECTED_TREE = [
     ["foundations", [
+        // `motion` is the unified motion-vocabulary tour: the named easing +
+        // spring curve register AND the Vue <Transition> class-sets (the former
+        // motion/transitions row folded in — no duplicate motion page).
         "intro", "colors", "typography", "radii", "shadows", "motion",
         "paper-glass", "icons", "surface-tints", "overlays-scrims",
         "chart-chassis-palette", "paper-backdrop-texture-system",
         "paper-backdrop", "css-utilities",
     ]],
-    ["substrates", ["aurora", "goo-blob", "blob-interaction", "blob-mood", "glass-panel", "constellation", "glass-material"]],
-    ["primitives", [
-        "buttons", "card", "inputs", "textarea", "checks", "slider",
-        "number-field", "select", "combobox", "multi-select", "toggle",
-        "toggle-chip", "label", "badge", "separator", "section",
-        "metric-badge", "metric-pill", "status-dot", "pulse", "stacked-icons",
+    // Render backgrounds. The three GooBlob facet rows collapse to ONE `blob`;
+    // `fourier-field` is the new Canvas2D render-background sibling.
+    ["substrates", ["aurora", "blob", "constellation", "fourier-field", "glass-panel", "glass-material"]],
+    // The Primitives bin split: form-controls.
+    ["forms", [
+        "inputs", "textarea", "checks", "slider", "number-field", "select",
+        "combobox", "multi-select", "toggle", "toggle-chip", "label",
+    ]],
+    // The Primitives bin split: display atoms.
+    ["display", [
+        "buttons", "card", "badge", "separator", "section", "metric-badge",
+        "metric-pill", "status-dot", "pulse", "stacked-icons",
         "dark-mode-toggle",
     ]],
+    // Command folds in from the dissolved single-story Tools bin.
     ["containers", [
         "dialog", "native-top-layer", "sheet", "drawer", "popover",
         "dropdown-menu", "context-menu", "hover-card", "tooltip", "accordion",
-        "collapsible", "hover-popover", "expandable-container",
+        "collapsible", "hover-popover", "expandable-container", "command",
     ]],
     ["navigation", [
-        "tabs", "dock", "dock-layers", "rail", "carousel",
-        "deck-progress", "header-ribbon",
+        "tabs", "carousel", "deck-progress", "header-ribbon",
     ]],
+    // The headline primitive's own first-class category.
+    ["dock", ["overview", "layers", "rail"]],
     ["data", [
         "table", "data-table", "tags-input", "avatar", "sortable-list",
         "infinite-scroll", "timeline", "timeline-segmented",
@@ -65,10 +85,8 @@ export const EXPECTED_TREE = [
         "confirm-dialog",
     ]],
     ["motion", [
-        "transitions", "springs", "countup", "reveal", "typewriter",
-        "animated-digit",
+        "springs", "countup", "reveal", "typewriter", "animated-digit",
     ]],
-    ["tools", ["command"]],
     ["compositions", [
         "hero", "math-paper", "dashboard", "auth-shell", "settings",
         "empty-states", "drawer-live-behind",
@@ -86,6 +104,11 @@ export const EXPECTED_TREE = [
         "use-infinite-scroll", "use-clipboard",
     ]],
 ];
+
+// The category count asserted in the human summary header (truthful to the
+// fixture above). A single-story category is forbidden — every category carries
+// ≥ 2 rows (the `tools`-dissolution invariant).
+const EXPECTED_CATEGORY_COUNT = EXPECTED_TREE.length;
 
 let _cliPaths = null;
 function cliPaths() {
@@ -175,6 +198,38 @@ function run() {
         violations.push(`row ${mf} resolves no SFC → lazy() MissingStory fallback would fire`);
     }
 
+    // (4) TRUTHFUL CATEGORY COUNT — the derived count matches the fixture count.
+    facts.categoryCount = facts.derivedOrder.length;
+    facts.expectedCategoryCount = EXPECTED_CATEGORY_COUNT;
+    if (facts.categoryCount !== EXPECTED_CATEGORY_COUNT) {
+        violations.push(
+            `category COUNT drifted: derived ${facts.categoryCount}, fixture asserts ${EXPECTED_CATEGORY_COUNT}`,
+        );
+    }
+
+    // (5) NO SINGLE-STORY CATEGORY — the `tools`-dissolution invariant. Every
+    // category carries ≥ 2 rows; a one-story category is a debris bin.
+    const singleStory = tree.filter(([, ids]) => ids.length < 2).map(([c]) => c);
+    facts.singleStoryCategories = singleStory;
+    for (const c of singleStory) {
+        violations.push(
+            `category "${c}" holds a single story — a debris bin (the tools-dissolution invariant: every category carries ≥ 2 rows)`,
+        );
+    }
+
+    // (6) NO MANY-ROWS-FOR-ONE-SUBSTRATE — the D6 blob-fold invariant: the three
+    // GooBlob facet rows MUST be one `blob` row, never resurface as a trio.
+    const subs = derivedMap.get("substrates") ?? [];
+    const blobFacetRows = subs.filter((id) =>
+        ["goo-blob", "blob-interaction", "blob-mood"].includes(id),
+    );
+    facts.blobFacetRows = blobFacetRows;
+    if (blobFacetRows.length > 0) {
+        violations.push(
+            `Substrates ships per-facet GooBlob row(s) [${blobFacetRows.join(", ")}] — the blob facets MUST be ONE \`blob\` row (no many-rows-for-one-primitive debris bin)`,
+        );
+    }
+
     const status = violations.length === 0 ? "pass" : "fail";
     writeGateArtifact(P.ARTIFACT, {
         generatedAt: snapshotStamp(),
@@ -184,8 +239,9 @@ function run() {
         violations,
     });
 
-    console.log("proof:storybook-ia — the manifest matches the §1 11-category IA exactly (AV.W10)");
+    console.log(`proof:storybook-ia — the manifest matches the AX-reinvented ${EXPECTED_CATEGORY_COUNT}-category IA exactly (AX.W18, supersedes AV.W10)`);
     console.log(`  categories : ${facts.derivedOrder.length} (${facts.derivedOrder.join(", ")})`);
+    console.log(`  single-story bins: ${singleStory.length}`);
     console.log(`  missing SFCs: ${missingFiles.length}`);
     if (violations.length) {
         console.log("\nVIOLATIONS:");

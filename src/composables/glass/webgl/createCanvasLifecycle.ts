@@ -149,6 +149,13 @@ export function createCanvasLifecycle(
         suspended.delete(reason);
         if (wasSuspended && isRunning() && armed && hooks) {
             startTime = performance.now() - 1000;
+            // Re-measure on wake: a surface that was content-skipped (or scrolled
+            // offscreen) may have changed box while parked, and the ResizeObserver
+            // does not fire for a skipped subtree. Without this the buffer keeps the
+            // size it last had — a stale/zero buffer paints as a black band over the
+            // re-shown box. resize() is idempotent (no-op when the buffer already
+            // matches), so a same-size wake costs nothing.
+            resize();
             tick();
         }
     }

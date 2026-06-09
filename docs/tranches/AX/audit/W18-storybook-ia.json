@@ -1,0 +1,71 @@
+{
+  "wave": "AX.W18",
+  "title": "Storybook IA ground-up reinvention",
+  "generatedAt": "2026-06-09",
+  "beforeTree": {
+    "categoryCount": 11,
+    "categories": ["foundations", "substrates", "primitives", "containers", "navigation", "data", "feedback", "motion", "tools", "compositions", "composables"],
+    "defects": {
+      "substrates_blob_trio": ["goo-blob", "blob-interaction", "blob-mood"],
+      "primitives_overload": 22,
+      "tools_debris_bin": ["command"],
+      "dock_scatter_across_categories": ["navigation/dock", "navigation/dock-layers", "navigation/rail"],
+      "motion_duplicate": ["foundations/motion (curve tour)", "motion/transitions (vue Transition gallery)"]
+    }
+  },
+  "afterTree": {
+    "categoryCount": 12,
+    "categories": ["foundations", "substrates", "forms", "display", "containers", "navigation", "dock", "data", "feedback", "motion", "compositions", "composables"],
+    "resolutions": {
+      "substrates_reframed_render_backgrounds": ["aurora", "blob", "constellation", "fourier-field", "glass-panel", "glass-material"],
+      "blob_trio_folded_to_one": "substrates/blob (4 stacked StorySection: static WatercolorDot register, interaction hero, mood+palette hero, pause seam; <= 2 live GooBlob GL contexts)",
+      "fourier_field_surfaced": "substrates/fourier-field (new SFC, Canvas2D substrate, injected color seam, freeze lever)",
+      "primitives_split": { "forms": 11, "display": 11 },
+      "tools_dissolved": "command folded into containers (no single-story category survives)",
+      "dock_first_class_category": ["dock/overview (ex-navigation/dock)", "dock/layers (ex-navigation/dock-layers)", "dock/rail (ex-navigation/rail)"],
+      "motion_unioned_Q5": "motion/transitions folded into foundations/motion (one motion-vocabulary page: easing+spring curves + Vue Transition class-sets); the orphaned route deleted"
+    }
+  },
+  "rowDeltaLedger": {
+    "folded": {
+      "substrates/blob": ["was goo-blob + blob-interaction + blob-mood (3 SFCs deleted, no orphan, no tombstone)"]
+    },
+    "created": ["substrates/fourier-field.vue", "demo/stories/dock/ (overview, layers, rail moved in)"],
+    "moved": {
+      "navigation/dock.vue -> dock/overview.vue": "sideways move, imports unchanged",
+      "navigation/dock-layers.vue -> dock/layers.vue": "sideways move",
+      "navigation/rail.vue -> dock/rail.vue": "sideways move",
+      "primitives/* -> forms/* + display/*": "11 + 11 SFCs split by form-control vs display-atom",
+      "tools/command.vue -> containers/command.vue": "single-story tools bin dissolved"
+    },
+    "deleted": ["substrates/goo-blob.vue", "substrates/blob-interaction.vue", "substrates/blob-mood.vue", "motion/transitions.vue"],
+    "prune_waves_not_yet_landed_kept_as_surviving": {
+      "note": "W19/W20 prune waves have NOT ruled at this HEAD — header-ribbon, glass-panel, native-top-layer src + rows still ship. W18 frames the surviving set per the single-writer contract; those rows are NOT deleted here (their owning prune wave drops them with the src change). glyph-face/disco-glyph already absent (already pruned)."
+    }
+  },
+  "staleSection7ConfirmAndClose": {
+    "icon-button-token-ladder": "already pruned (zero repo refs)",
+    "configurator": "already in compositions (not primitives)",
+    "hover-popover": "already in containers (not primitives)"
+  },
+  "overrides": {
+    "D6": "REVERSES W18 prior Scope-4 'trio stays' + the W16 three-page residue — the blob facets collapse to ONE blob row",
+    "D14": "REVERSES W06 RATIFY-#1 'keep flat navigation/ siblings' — the dock is a first-class top-level category"
+  },
+  "gateTriad": {
+    "proof:storybook-ia": "re-baselined EXPECTED_TREE to the 12-category AX tree; truthful category count + supersedes-AV.W10 header note; added no-single-story-category (tools-dissolution) + no-many-rows-for-one-substrate (D6 blob-fold) assertions; GREEN",
+    "proof:no-orphan-demo-route": "bidirectional set-equality GREEN (12 categories, 124 rows, 124 files)",
+    "proof:storybook-complete": "exports->story totality GREEN (74 component exports, 0 undemonstrated; FourierField + blob demonstrated); REGISTRATION in gates.mjs owed to the orchestrator resync"
+  },
+  "piLaneCaptures": {
+    "dir": "docs/tranches/AX/audit/visual/W18-W40/",
+    "captured": ["dock-overview.png", "dock-layers.png", "dock-rail.png", "substrates-blob.png", "substrates-fourier-field.png", "forms-inputs.png", "display-buttons.png", "containers-command.png", "foundations-motion-unified.png", "shell-home-1440.png", "shell-home-375.png", "shell-mobile-sheet-375.png"],
+    "liveFindings": {
+      "every_new_row_mounts_no_MissingStory": true,
+      "substrates_blob_gl_contexts": 2,
+      "fourier_field_canvas2d_contexts": 4,
+      "dock_category_reads_as_walkthrough": "overview (morph) -> layers -> rail",
+      "old_routes_clean_break": "goo-blob/blob-interaction/blob-mood/motion-transitions/navigation-dock/tools-command SFCs deleted, no tombstone, no stale refs in demo/"
+    }
+  }
+}

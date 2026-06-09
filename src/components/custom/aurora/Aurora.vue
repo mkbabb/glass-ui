@@ -186,11 +186,22 @@ defineExpose({
        (50–80% paint-area reduction; caps VRAM). `content-visibility:auto`
        (F1) lets the browser content-skip the surface when it scrolls offscreen
        — the substrate's `contentvisibilityautostatechange` listener parks the
-       RAF on `skipped`. `contain-intrinsic-size:auto` preserves the rendered
-       size across a skip so the layout box does not collapse. */
+       RAF on `skipped`.
+
+       `contain-intrinsic-size` reserves the box across a skip. The block axis
+       MUST carry a non-zero fallback: with a `none` block fallback a
+       never-yet-rendered aurora collapses to zero height while skipped, the
+       deferred-arm IntersectionObserver then targets a zero-height box, and the
+       arm-time `resize()` measures a zero subtree — sizing the backing buffer to
+       a 1px sliver that stretches as a black band over the rest of the surface.
+       `auto 600px` keeps the remembered rendered size once there is one (the
+       `auto` keyword) and reserves a substrate-scale block height otherwise, so a
+       full-bleed background hero never collapses before it first paints. A
+       percentage is NOT valid here, so the fallback is a concrete length; the
+       exact value is immaterial past first paint since `auto` then wins. */
     contain: content;
     content-visibility: auto;
-    contain-intrinsic-size: auto none;
+    contain-intrinsic-size: auto 600px;
 }
 
 /* Both layers share the single grid cell so they stack — no positioning. */

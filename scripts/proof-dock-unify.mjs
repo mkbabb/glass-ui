@@ -52,11 +52,14 @@ import { readDockCss } from "./read-dock-css.mjs";
 // showcases (layer-group drill-in / slider contract) -> require <DockSeparator>
 // dividers + zero raw-class separators, but a home anchor is not befitting (they
 // demonstrate a mechanic, not a nav rail).
+// The W18 IA reinvention lifted the dock showcases into a first-class `dock`
+// category: navigation/dock -> dock/overview, navigation/rail -> dock/rail,
+// navigation/dock-layers -> dock/layers (the dock-with-slider composite folded
+// into dock/overview's "Slider in dock" section).
 const SHOWCASE_DOCKS = [
-    { path: "demo/stories/navigation/dock.vue", requireHome: true },
-    { path: "demo/stories/navigation/rail.vue", requireHome: true },
-    { path: "demo/stories/navigation/dock-layers.vue", requireHome: false },
-    { path: "demo/stories/compositions/dock-with-slider.vue", requireHome: false },
+    { path: "demo/stories/dock/overview.vue", requireHome: true },
+    { path: "demo/stories/dock/rail.vue", requireHome: true },
+    { path: "demo/stories/dock/layers.vue", requireHome: false },
 ];
 
 // The shell docks W40 rebuilds onto the contract. The gate TRACKS their status

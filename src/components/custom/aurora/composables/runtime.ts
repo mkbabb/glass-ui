@@ -213,13 +213,29 @@ export function createAurora(
             function resize() {
                 // AV.W7 F6 — the DPR≤2 clamp is the named `AV_DPR_MAX` ceiling.
                 const dpr = resolveBudgetDpr();
-                const cw = canvas.clientWidth || canvas.parentElement?.clientWidth || 1;
-                const ch =
-                    canvas.clientHeight || canvas.parentElement?.clientHeight || 1;
-                const w = Math.max(1, Math.floor(cw * dpr));
-                const h = Math.max(1, Math.floor(ch * dpr));
-                canvas.width = w;
-                canvas.height = h;
+                // Measure the LAID-OUT box via getBoundingClientRect, not
+                // clientWidth/clientHeight. A canvas inside a `content-visibility:
+                // auto` ancestor reports clientHeight 0 while that ancestor is in
+                // the skipped state (the subtree is not laid out), and the arm
+                // path can call `resize()` inside that window — sizing the backing
+                // buffer to a 1px sliver that then stretches as a black band over
+                // the rest of the box. getBoundingClientRect reflects the real
+                // border-box even across a skip, so the buffer always tracks the
+                // displayed size. Fall back up the ancestor chain only when our own
+                // rect is still zero (truly un-laid-out), never to the 300×150 HTML
+                // default.
+                const rect = canvas.getBoundingClientRect();
+                const parentRect = canvas.parentElement?.getBoundingClientRect();
+                const cw = rect.width || parentRect?.width || 1;
+                const ch = rect.height || parentRect?.height || 1;
+                const w = Math.max(1, Math.round(cw * dpr));
+                const h = Math.max(1, Math.round(ch * dpr));
+                // Skip the realloc when the buffer already matches — a no-op resize
+                // would needlessly clear the drawing buffer on every observer tick.
+                if (canvas.width !== w || canvas.height !== h) {
+                    canvas.width = w;
+                    canvas.height = h;
+                }
                 gl.viewport(0, 0, w, h);
                 gl.useProgram(prog);
             }
