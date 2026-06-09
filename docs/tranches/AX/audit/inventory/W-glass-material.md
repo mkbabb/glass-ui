@@ -1,0 +1,66 @@
+# W-glass-material — Glass + material band inventory (AX deep step-back)
+
+**Lane** W-glass-material · **Scope** W09 (specular, absorbed-by-W52) · W52 (liquid-glass material overhaul, DEVELOPED) · W54 (glass-first-class, PLANNED) · W55 (adaptive-glass, PLANNED) · W56 (squircle, DEVELOPED) · W59 (slider redesign, DEVELOPED). The glass IDENTITY band coherence.
+**HEAD at audit** `b03246c` (the inventory-scaffold commit; the glass band landed on `c72d2ac` and below). NOTE the dispatch prompt cited `c72d2ac`; the tree advanced one doc-only commit. All glass-band source deltas are at HEAD.
+**Read corpus** AX.md charter · PROGRESS.md · CONVERGENCE-PLAN-2.md · USER-DEFECTS-2026-06-08-pass2.md (§G) · wave docs W52/W56/W59 (full) · audit JSONs W09/W52/W56/W59 · research R-glass-default / R-ios27-adaptive-glass / A-glass-tokens · live source verification of glass.css/tokens.css/theme.css/dock-controls.css/button/Slider/Card.
+
+---
+
+## 1 — Status matrix (DONE / PARTIAL / NOT-STARTED / AT-RISK)
+
+| Wave | Title | Charter status | Source-verified | Disposition |
+|---|---|---|---|---|
+| **W09** | specular tune-to-subtle | `live-pending → D11 radials absorbed by W52 (developed)` | the cohort + `useSpecularTracking` + Card `specular` prop + dock double-specular retirement ALL landed; the THREE fixed-anchor radials (curvature overlay + dock corner radials) were re-tuned BY W52 (commit `31d716e`) | **DONE (absorbed)** — W09's MOVING-specular ALPHA + the FIXED-anchor radials are both fixed; W09 no longer has independent open work. Its `W09-specular-tune.json` still reads `live-pending` but is superseded. |
+| **W52** | liquid-glass material overhaul (D19) | `live-verified (DEVELOPED)` (PROGRESS.md:70) | bounded `circle var(--glass-specular-size,36%)` gleam (glass.css:121,132), `mix-blend-mode: plus-lighter` (glass.css:142), `--glass-specular-size: 36%` (tokens.css:859), cohort hover 0.10/active 0.16, saturate 1.18/1.2, `--scale-hover-btn: 1.035` on `--spring-smooth`, curvature warm-cream @0.02, dock corners 18%→8% `40% 25%`, Card `full` 0.04/0.18/0.26 | **DONE (dev + live-verified MCP)** — all 6 RED witnesses GREEN at source; gate `proof:liquid-glass-material` born-RED→GREEN; commits `31d716e` + `97551ca`. **GAP: no `W52-DELTA.md` paired-π artefact written** (spec-mandated). |
+| **W54** | glass-first-class (`--glass-level` + opaque escape) | `planned` (PROGRESS.md:72) | `grep glass-level src/styles/` = NONE; no `opaque` tier; no two-layer canon doc in CLAUDE.md | **NOT-STARTED** — research COMPLETE (R-glass-default + A-glass-tokens), no wave doc authored, no source. |
+| **W55** | adaptive-glass-legibility (iOS27 backdrop-luma) | `planned` (PROGRESS.md:73) | `grep glass-backdrop-luma src/styles/` = NONE; no `@container style(--glass-backdrop)` probe; no `proof:adaptive-glass` | **NOT-STARTED** — research COMPLETE (R-ios27-adaptive-glass), no wave doc, no source. |
+| **W56** | squircle design-language (G3, foundational) | `live-verified (DEVELOPED)` (PROGRESS.md:74) | `--corner-k-{squircle:2,soft:1.7,sharp:2.4}` + `--corner-shape-{card,pill,panel,bigdock}` (theme.css:81-95); dock.css reads `var(--corner-shape-bigdock)` under `@supports (corner-shape: superellipse(2))`; card squircle re-homed | **DONE (dev + live-verified MCP)** — 5 RED witnesses GREEN; gate `proof:squircle-language`; commit `8e17346`. |
+| **W59** | slider redesign (integrated-cylinder + squircle thumb) | `live-verified (DEVELOPED)` (PROGRESS.md:77) | `--corner-shape-thumb` (theme.css:100); Slider.vue re-authored (cylinder fill glass + leading-cap + track-height squircle spectrum); `proof:slider-two-only` reconciled to 4 clauses | **DONE (dev + live-verified MCP)** — commits `a730782` + `d21babb`; gate GREEN + bite-confirmed. |
+
+**Band roll-up:** 4 of 6 sub-waves DONE (W09 absorbed, W52/W56/W59 dev+live-verified). 2 NOT-STARTED (W54/W55 — research-complete, un-authored). The DEVELOPED waves form a coherent glass-identity spine: W52 = the material LOOK (bounded gleam, plus-lighter, calm saturate, smooth hover), W56 = the corner SHAPE axis, W59 = the slider consuming both. W54/W55 are the two remaining GLASS-CHARACTER asks (G1/G2) that complete the band.
+
+---
+
+## 2 — DEFERRED items that MUST FOLD INTO this tranche
+
+1. **W54 (glass-first-class, G1) — un-authored, research-complete.** The deferred deliverable is THREE-fold (per R-glass-default §DEDUP + A-glass-tokens §GESTALT):
+   - mint `--glass-level` ONE `@property`-registered scalar (default 1) threaded through BOTH ladders at their single sites (the `--glass-bg-*` `color-mix` recipe tokens.css:746-752 + the `--glass-blur-*` radii) — `0`=solid, `1`=canonical, `>1`=clearer;
+   - mint a first-class `opaque` tier rung (`CardTier` + `.glass-opaque { --glass-level: 0 }`) routing through the SAME machinery as the `prefers-reduced-transparency` bracket (collapse the per-rung clobber onto the ONE `--glass-level:0` path — the gestalt collapse, NOT a duplicate opaque recipe);
+   - the two-layer-law canon doc in CLAUDE.md (glass = navigation/overlay default BY DESIGN; content layer opaque BY DESIGN; NOT glass-everywhere).
+   **dependsOn W52** (the material must be stable before `--glass-level` multiplies its blur/opacity); coordinate with W36 (forced-colors) for ONE opaque path. **RATIFY hinge (un-resolved):** the user's "why is the DEFAULT not glass" implies content-layer glass; SOTA + `no-glass-on-glass` say NO — recorded default is do-NOT-glass-content; the user must confirm "glass-first-class" = navigation-band-default + level-knob + opaque-escape, not content glass.
+
+2. **W55 (adaptive-glass-legibility, G2) — un-authored, research-complete.** The deferred deliverable (per R-ios27-adaptive-glass §VERDICT): a `--glass-backdrop`/`--glass-backdrop-luma` declarative bucket via the SHIPPED `@container style()` mechanism (the density-cascade precedent at utilities.css:516-543); the bright bucket lifts `--glass-tint-strength` to a bounded AA floor (≤~18-24%) + re-points `--glass-tint-source` to low-luminance warm-ink — the "locally darken over light backdrops" move, ZERO new compositing seam (reuses the existing `color-mix(in oklab)` tint seam); `contrast-color()` `@supports`-gated foreground flip; a `--glass-clarity` Clear↔Tinted user-escape reconciled with the existing `prefers-contrast`/`prefers-reduced-transparency` brackets; a `proof:adaptive-glass` π gate (W00 harness, 4.5:1 over white). **dependsOn W52+W00**, SEQUENCE AFTER W52. **W36 is the WRONG anchor** (forced-colors is a binary palette override, disjoint from a continuous luminance probe) — the research explicitly rejects folding G2 into W36.
+
+3. **W52-DELTA.md paired-π artefact — never written.** The W52 wave spec (§Artefacts, §HardGate) mandates `docs/tranches/AX/audit/W52-DELTA.md` (the paired-π BEFORE/AFTER + DELTA capture). It does NOT exist (`ls audit/*DELTA*` shows only W01/W02/the band DELTA.md). W52 was marked live-verified via MCP in the commit message (`5cf2980`) but the formal DELTA capture the W00 protocol requires is missing. Same gap likely for W56/W59 (no W56-DELTA / W59-DELTA). This is a documentation-is-part-of-the-change miss, not a source gap.
+
+---
+
+## 3 — GAPS (unaddressed prompts / plan divergences)
+
+- **G4 (Apple-SOTA liquid + squishy audit/mirror) has no named wave.** USER-DEFECTS pass2 §G4 ("audit apple.com/os liquid + squishy effects — mirror them") is a SOTA-research lane that CONVERGENCE-PLAN-2 folds implicitly into W52-ratify (the press-squash atom) + W53 (the elastic tab indicator) + W05 (the confirmed Apple spring numbers). It is not a standalone glass-material wave but its squish-spring residue (the volume-preserving press-squash, maxStretch ~1.06-1.10) should be confirmed reaching the glass atoms (button `.tap-squish`, slider cap `scaleX` squish) at band close. Currently un-cross-walked.
+
+- **Audit-JSON status drift (soundness canary).** W09/W52/W56/W59 JSONs all read `dev-complete-headless-green-live-pending`, but PROGRESS.md + the git commits mark W52/W56/W59 `live-verified (DEVELOPED)`. The JSONs were never updated to reflect the MCP live-verification. This is the EXACT class the cardinal lesson institutionalizes (status collapsing inconsistently) — the JSONs lag the commits. A close-time reconciliation is owed (the JSON is the born-RED→GREEN ledger; if live-verified, it should say so, or the live verdict captured in a DELTA the JSON references).
+
+- **W54/W55 sequencing vs the W42 morph substrate.** W54's `--glass-level` and W55's backdrop-luma both compose on the W52 material. W56's `--corner-k-*` band is read by W42's dock-morph. None of W54/W55/W42 has authored its cross-consumer cross-ref against the OTHERS landing — the glass-identity token axes (level / shape / adaptive-tint) need ONE coherence pass so they do not mint overlapping or conflicting `@property` scalars.
+
+- **The `no-glass-on-glass` discipline is the load-bearing invariant W54 must NOT regress.** Both research files flag this loudly: the naive G1 reading (glass-everywhere) would re-break the legibility W52 just fixed. Any W54 author must gate against re-introducing glass on the content layer. This is recorded but not yet machine-locked (no proof asserts content-band surfaces stay opaque).
+
+- **`specular="full"` retune-vs-retire was RATIFY-deferred.** W52 Open-Question 2 recorded the default (retune DOWN to 0.04/0.18/0.26) and shipped it; the alternative (delete the `full` rung entirely) was deferred to the live audit. Live-verified means the retune held — but the RATIFY is not formally closed in the JSON.
+
+---
+
+## 4 — Gestalt PATH FORWARD (planning, not code)
+
+The glass-material band is the most-converged band in AX: the LOOK (W52), the SHAPE (W56), and the first consuming atom (W59) are all dev+live-verified, forming a coherent liquid-glass identity. The path forward is to AUTHOR the two remaining glass-character waves and to close the documentation/coherence gaps — NOT to re-touch the shipped material.
+
+1. **Author W54 (glass-first-class) as a bbnf wave doc, then develop.** Scope it TIGHT per the research consensus (it is an AUGMENT + small net-new, NOT a 32-agent glass-everywhere rebuild): (a) `--glass-level` scalar at the ONE `color-mix` seam + the blur radii (`--glass-level:1` is byte-identical to today — the clean-break collapse rewrites the reduced-transparency/prefers-contrast brackets to set `--glass-level` instead of clobbering 10 rungs); (b) the `opaque` tier rung as the level-0 endpoint of the SAME axis (recorded default: tier-rung over surface-register); (c) the two-layer canon doc folded into CLAUDE.md. Open the user RATIFY hinge FIRST (content-layer glass yes/no) — recorded default if un-ratified is do-not-glass-content. dependsOn W52 (landed). Overfitting bar clears (content Card + form-over-aurora + the a11y opaque path = ≥2). Machine-lock with a `proof:glass-level` (the level scalar threads both ladders; the opaque rung resolves solid; content-band-stays-opaque assertion).
+
+2. **Author W55 (adaptive-glass-legibility) as a bbnf wave doc, then develop.** It is purely additive on W52's corrected `plus-lighter` blend + the `--glass-tint-*` seam — ZERO new compositing. The `@container style(--glass-backdrop)` probe reuses the shipped density-cascade idiom verbatim; the darken-over-light is a re-point of `--glass-tint-source` to warm-ink + a bounded `--glass-tint-strength` lift inside the bright bucket; `contrast-color()` is the `@supports`-gated native flip. Gate `proof:adaptive-glass` reads the rung foreground luminance over a synthetic white backdrop and asserts ≥4.5:1 (the π-lane harness). dependsOn W52+W00. **Do NOT fold into W36** (the research's explicit dedup verdict). Reconcile the Clear↔Tinted escape with the existing brackets as a `--glass-clarity` axis, not a third fork.
+
+3. **Close the DELTA / JSON coherence gap at band close.** Write `W52-DELTA.md` (+ W56/W59 DELTAs) capturing the paired-π BEFORE/AFTER the live MCP pass already produced; reconcile the four audit JSONs from `live-pending` to `live-verified` (or have them reference the DELTAs). This is the W00-protocol close obligation and the soundness-discipline canary — a band cannot close `complete` with its ledgers claiming `live-pending` while the commits claim `live-verified`.
+
+4. **One glass-identity token-axis coherence pass.** After W54/W55 author, cross-walk the four token axes — `--glass-level` (W54), `--corner-k-*`/`--corner-shape-*` (W56), `--glass-backdrop-luma`/`--glass-clarity` (W55), `--superellipse-k`/`--morph-t` (W42) — so the `@property` scalars are non-overlapping, the brackets ride ONE opaque path, and the dock-morph reads the single `--corner-k-squircle` vocabulary. This is the band's coherence keystone: four glass-character axes, one consistent token grammar.
+
+5. **Confirm the squish-spring (G4) reaches the glass atoms at close.** Cross-walk that the volume-preserving press-squash (W52-ratify atom + W53 tab indicator + the slider cap `scaleX` squish) is the SAME register library-wide, so the Apple-liquid-squishy idiom is coherent, not per-component-bespoke.
+
+**No code edits in this lane** — the shipped material (W52/W56/W59) is correct and live-verified; the work is AUTHOR (W54/W55), DOCUMENT (DELTAs + canon), and COHERE (the token-axis cross-walk). All gestalt, token-first, clean-break — no patches to the landed glass.

@@ -83,9 +83,8 @@ function togglePlay() {
             </p>
             <div class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
                 <GlassDock>
-                    <!-- AX.W45 — Home is a PERSISTENT control: authored ONCE in
-                         #persistent, it stays in-flow + visible in BOTH collapsed and
-                         expanded (no #collapsed-slot duplication). -->
+                    <!-- Home is a persistent control: it stays visible in both the
+                         collapsed and expanded states via the #persistent slot. -->
                     <template #persistent>
                         <DockIconButton aria-label="Home"><Home class="h-4 w-4" /></DockIconButton>
                     </template>
