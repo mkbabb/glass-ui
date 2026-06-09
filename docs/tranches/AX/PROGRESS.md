@@ -32,7 +32,7 @@ soundness discipline: "complete" never collapses to "headless-green").
 | W16 | blob integration — interaction + perf + readme | complete |
 | W17 | constellation tokens + warp + slides adopt | complete |
 | W18 | storybook IA reinvention | planned |
-| W19 | primitive prune A — header-ribbon/glyph-face/disco-glyph | live-verified (DEVELOPED) |
+| W19 | primitive prune A — header-ribbon/glyph-face/disco-glyph | dev-landed · live-pending (DELTA owed) |
 | W20 | primitive fix — native top-layer, card toggles, glass-panel retire | planned |
 | W21 | primitive recategorize — ledger/barrel coherence + metric reconcile | planned |
 | W22 | font register reconciliation | complete |
@@ -60,21 +60,21 @@ soundness discipline: "complete" never collapses to "headless-green").
 | W42 | liquid-morph substrate | planned |
 | W43 | fourier-field first-class | planned |
 | W44 | dark-mode semantic-token contrast — destructive/alert AA floor (D10) | planned |
-| W45 | dock region-model + DockSeparator + mobile --dock-scale (D13+D15) | live-verified (DEVELOPED) — region-model + DK1/2/4/5/7/8 |
+| W45 | dock region-model + DockSeparator + mobile --dock-scale (D13+D15) | dev-landed · live-pending (DELTA owed) — region-model + DK1/2/4/5/7/8 |
 | W46 | blob live-truth tune — floors→bands, lighting/hover down, mood latch (D4+D5+D7) | planned |
 | W47 | aurora preset-roster reconcile — name van-Gogh/oil-pastel/crayon (D2) | planned |
 | W48 | glass-material demo reauthor — bind the shipped specular seams (D8) | planned |
 | W49 | math-paper composes latex-paper (D16) | planned |
 | W50 | uniform dropdown/select/menu type-scale (D17) | planned |
 | W51 | comfortable component sizing — library-wide --ui-scale (D18 umbrella; W45/W50 specialize) | planned (spec authored)  |
-| W52 | liquid-glass material overhaul (D19) — kill central bloom → edge gleam + button glass/hover/gold | live-verified (DEVELOPED) |
-| W53 | tabs-unify — one Tabs (segmented default/pill/underline), drop Bouncy, merge toggle/responsive (T1-T4) | live-verified (DEVELOPED) |
+| W52 | liquid-glass material overhaul (D19) — kill central bloom → edge gleam + button glass/hover/gold | dev-landed · live-pending (DELTA owed) |
+| W53 | tabs-unify — one Tabs (segmented default/pill/underline), drop Bouncy, merge toggle/responsive (T1-T4) | dev-landed · live-pending (DELTA owed) |
 | W54 | glass-first-class — --glass-level scalar + opaque escape (G1) | planned (spec authored)  |
 | W55 | adaptive-glass-legibility — iOS27 backdrop-luminance darken (G2) | planned (spec authored)  |
-| W56 | squircle design-language — corner-shape: superellipse() token axis (G3, foundational) | live-verified (DEVELOPED) |
-| W57 | demo-radial reauthor + pulse-aura calm + aurora/constellation heros (P6/P7) | live-verified (DEVELOPED) |
+| W56 | squircle design-language — corner-shape: superellipse() token axis (G3, foundational) | dev-landed · live-pending (DELTA owed) |
+| W57 | demo-radial reauthor + pulse-aura calm + aurora/constellation heros (P6/P7) | dev-landed · live-pending (DELTA owed) |
 | W58 | storybook-language strip — kill WCAG citations + impl-note code-comments (P10/P11) | dev-complete (proof:story-language born-RED→GREEN; 49 SFCs swept) |
-| W59 | slider redesign — integrated-cylinder glass default + squircle-thumb spectrum | live-verified (DEVELOPED) |
+| W59 | slider redesign — integrated-cylinder glass default + squircle-thumb spectrum | dev-landed · live-pending (DELTA owed) |
 | W60 | page-redesign container-layer — glass card + per-page rich background + hierarchy (Q4/Q7/Q9) | planned (spec authored) |
 | W61 | dock-unify-root — all docks one GlassDock root, home-left + nav + separators, Q1 collapsed size | planned (spec authored) |
 

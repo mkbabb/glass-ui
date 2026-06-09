@@ -9,7 +9,7 @@
  * discipline.
  *
  * The fixture below exercises a multi-axis configurator host (configurator
- * state with commit-on-write clone-mode, BouncyToggle-driven derived
+ * state with commit-on-write clone-mode, SegmentedTabs-driven derived
  * computed from a numeric axis, list v-for binding directly to a reactive
  * array) and asserts:
  *
@@ -46,7 +46,7 @@ import {
     useConfiguratorState,
     type ConfiguratorPreset,
 } from "../src/components/custom/configurator";
-import { BouncyToggle } from "../src/components/custom/tabs";
+import { SegmentedTabs } from "../src/components/custom/tabs";
 
 // ─── Fixture shape (local; replaces the retired MetaballConfig) ───────────
 
@@ -265,7 +265,7 @@ const MultiAxisConfiguratorHost = defineComponent({
                                     ConfiguratorRow,
                                     { label: "Mode", name: "derivedMode" },
                                     () =>
-                                        h(BouncyToggle, {
+                                        h(SegmentedTabs, {
                                             options: derivedOptions,
                                             modelValue: derivedMode.value,
                                             "onUpdate:modelValue": setDerivedMode,
