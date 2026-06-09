@@ -89,6 +89,35 @@ if (!existsSync(REGISTER)) {
 }
 const reg = JSON.parse(readFileSync(REGISTER, "utf8"));
 
+// Registry-default world (inv-θ): every trigger re-evaluates via a min-consumers
+// grep over consumer SIBLINGS. A clean CI runner has no consumer sibling checked
+// out, so (a) there is no booked deferral to re-evaluate and (b) the synthetic
+// always-MET self-test (an n:1 grep for "@mkbabb/glass-ui" across present
+// consumers) cannot meet — its "always" only holds where ≥1 consumer is on disk.
+// So with zero siblings present this gate befittingly SKIPs, consistent with
+// proof:resolution / proof:phantom-classes / proof:consumer-staleness. Locally
+// (siblings present) the self-test meets and every booked row is re-evaluated.
+const anySiblingPresent = CONSUMERS.some(
+    (c) => !c.self && resolveSibling(c).present,
+);
+if (!anySiblingPresent) {
+    writeGateArtifact(gateArtifactPath("GATE_DISPOSITION_LIVE_OUT", "AX-disposition-live"), {
+        generatedAt: snapshotStamp(),
+        status: "skipped",
+        gate: "proof:disposition-live",
+        command: COMMAND,
+        reason:
+            "no consumer sibling present on this runner (registry-default) — the deferral-trigger re-evaluation walks siblings; nothing to check, and the min-consumers self-test cannot meet without a present consumer.",
+    });
+    console.log(
+        "proof:disposition-live — SKIPPED (no consumer siblings present; registry-default runner).",
+    );
+    console.log(
+        "  Every booked deferral's trigger re-evaluates against present consumers; with none checked out there is nothing to evaluate.",
+    );
+    process.exit(0);
+}
+
 const violations = [];
 
 // (1) self-test — the detector MUST flag the synthetic always-MET book row.
