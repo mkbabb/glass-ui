@@ -98,7 +98,7 @@ reference; the Status column reflects each wave's reconciled state.
 | W51 | comfortable component sizing — library-wide --ui-scale (D18 umbrella; W45/W50 specialize) | planned (spec authored)  |
 | W52 | liquid-glass material overhaul (D19) — kill central bloom → edge gleam + button glass/hover/gold | dev-landed · live-pending (DELTA owed) |
 | W53 | tabs-unify — one Tabs (segmented default/pill/underline), drop Bouncy, merge toggle/responsive (T1-T4) | dev-landed · live-pending (DELTA owed) |
-| W54 | glass-first-class — --glass-level scalar + opaque escape (G1) | planned (spec authored)  |
+| W54 | glass-first-class — --glass-level scalar + opaque escape (G1) | live-verified — the scalar threads both ladders (level=1 byte-identical); Button/Card/Dialog/SegmentedTabs/Alert/TagsInput defaults flipped to glass; the 4 divergent recipes + 2 recipe divergences reconciled (proof:glass-level + proof:glass-one-model 14/14); W56(R1) squircle on dialog/sheet coupled; 16-png DELTA captured (desktop+mobile × light+dark), backdrop-filter + translucent --glass-bg-* readback confirms glass paints. See audit/visual/W54-DELTA.md |
 | W55 | adaptive-glass-legibility — iOS27 backdrop-luminance darken (G2) | planned (spec authored)  |
 | W56 | squircle design-language — corner-shape: superellipse() token axis (G3, foundational) | dev-landed · live-pending (DELTA owed) |
 | W57 | demo-radial reauthor + pulse-aura calm + aurora/constellation heros (P6/P7) | dev-landed · live-pending (DELTA owed) |
