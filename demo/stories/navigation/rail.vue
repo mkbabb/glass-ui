@@ -58,7 +58,7 @@ const active = ref<string>("primitives");
                                 "
                                 @click="active = e.id"
                             >
-                                <component :is="e.icon" class="h-4 w-4" />
+                                <component :is="e.icon" />
                                 <span class="sr-only">{{ e.label }}</span>
                             </DockIconButton>
                         </TooltipTrigger>
@@ -84,7 +84,7 @@ const active = ref<string>("primitives");
                         class="text-muted-foreground"
                         :aria-label="e.label"
                     >
-                        <component :is="e.icon" class="h-4 w-4" />
+                        <component :is="e.icon" />
                     </DockIconButton>
                 </GlassDock>
             </div>

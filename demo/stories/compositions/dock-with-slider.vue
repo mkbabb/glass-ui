@@ -45,7 +45,7 @@ const trim = ref<number[]>([55]);
             <div class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
                 <GlassDock fit-content>
                     <DockIconButton aria-label="Volume">
-                        <Volume2 class="h-4 w-4" />
+                        <Volume2 />
                     </DockIconButton>
                     <div class="flex w-48 items-center px-2">
                         <Slider
@@ -66,7 +66,7 @@ const trim = ref<number[]>([55]);
             <div class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
                 <GlassDock fit-content>
                     <DockIconButton aria-label="Brightness">
-                        <Sun class="h-4 w-4" />
+                        <Sun />
                     </DockIconButton>
                     <div class="flex w-56 items-center px-2">
                         <Slider
@@ -87,7 +87,7 @@ const trim = ref<number[]>([55]);
             <div class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
                 <GlassDock>
                     <DockIconButton aria-label="Mixer">
-                        <SlidersHorizontal class="h-4 w-4" />
+                        <SlidersHorizontal />
                     </DockIconButton>
                     <div class="flex w-40 items-center px-2">
                         <Slider
@@ -99,7 +99,7 @@ const trim = ref<number[]>([55]);
                     </div>
                     <DockSeparator />
                     <DockIconButton aria-label="Trim">
-                        <Music class="h-4 w-4" />
+                        <Music />
                     </DockIconButton>
                     <div class="flex w-40 items-center px-2">
                         <Slider
@@ -126,7 +126,7 @@ const trim = ref<number[]>([55]);
             >
                 <GlassDock :collapse-delay="600">
                     <DockIconButton aria-label="Hold mixer">
-                        <SlidersHorizontal class="h-4 w-4" />
+                        <SlidersHorizontal />
                     </DockIconButton>
                     <div class="flex w-48 items-center px-2">
                         <Slider

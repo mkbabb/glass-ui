@@ -41,6 +41,16 @@
         .dock-dropdown-trigger
     ) {
         --dock-press-spring: var(--duration-fast) var(--spring-smooth);
+        /* AX.W45-TUNE C4/C5 — the small-tile specular sizing. The dock controls are
+           ~40px tiles, a fraction of a card's plate, so the global 36% specular
+           radius blooms a tile-filling disc (the I.W6 finding). The family re-points
+           `--glass-specular-size` to the tighter `--dock-control-specular-size` (22%,
+           tokens.css), so the SHARED `.glass-material::before` catch-light recipe
+           (glass.css) paints a restrained EDGE-catch on the small tile WITHOUT
+           forking the recipe — the gleam wakes on hover/active (the cohort's 0.1/0.16
+           rungs), sized for the tile. The rest intensity stays 0 (the default-off
+           discipline) so the resting tile carries NO bloom. */
+        --glass-specular-size: var(--dock-control-specular-size, 22%);
     }
 
     .dock-icon-button {
@@ -263,10 +273,17 @@
 
         /* AX.W45 DK2 — converged onto the FAMILY hover/active token pair (the
            surface-tint-8/10 ladder it spoke is ≈ the same intent — glass-translucent
-           foreground-over-transparent). ONE grammar across icon/tab/picker. */
+           foreground-over-transparent). ONE grammar across icon/tab/picker.
+           AX.W45-TUNE Q3/C3 — the hover MOTION channel is now UNIFIED: the
+           `--scale-hover-dock` lift fires here (it used to fire on only icon +
+           dropdown), so all four control members lift on hover as ONE register —
+           the bg cross-fade (glass-tier), the scale, and the specular gleam read
+           together BEFORE click. The transform rides `--dock-press-spring`
+           (`--spring-smooth`) per the W52 easing doctrine. */
         &:hover:not(:disabled) {
             background: var(--dock-control-hover-bg);
             color: var(--foreground);
+            scale: var(--scale-hover-dock);
         }
 
         &:active:not(:disabled) {
@@ -442,13 +459,16 @@
        LADDER step above hover), so an OPEN dropdown reads distinctly from a merely-
        hovered one (paired with the chevron flip). ONE source per state, glass-aware
        across the whole dock-control family. */
+    /* AX.W45-TUNE Q3/C3 — the picker hover lift is now in the SHARED group: the
+       `--scale-hover-dock` scale fires on BOTH select + dropdown (it used to fire on
+       the dropdown ONLY — the split-brain hover the DK2 fix left). All four dock
+       control members (icon/tab/select/dropdown) now lift on hover as one register,
+       mirroring the unified glass-tier `--dock-control-hover-bg` cross-fade. The
+       lone `.dock-dropdown-trigger:hover` scale rule is RETIRED into this group. */
     .dock-select-trigger:hover:not(:disabled),
     .dock-dropdown-trigger:hover:not(:disabled) {
         background: var(--dock-control-hover-bg);
         color: var(--btn-hover-color, var(--foreground));
-    }
-
-    .dock-dropdown-trigger:hover:not(:disabled) {
         scale: var(--scale-hover-dock);
     }
 

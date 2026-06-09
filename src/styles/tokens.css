@@ -1186,13 +1186,49 @@
        component layer); this is a DEFAULT, not a ceiling. */
     --dock-icon-glyph: calc(1.25rem * var(--dock-scale));
 
-    /* AX.W45 — ONE glass-aware four-state contract for the dock-control family.
-       The whole family (icon-button, tab-button, select/dropdown triggers) reads
-       this hover/active pair so hover ≠ active is distinct AND both are alpha-
-       bearing (the dock substrate shows through — never the opaque `--muted` plate
-       the pickers used to stamp). The active fill is a tint LADDER step above hover. */
-    --dock-control-hover-bg: color-mix(in srgb, var(--card) 55%, transparent);
-    --dock-control-active-bg: var(--surface-tint-12);
+    /* AX.W45-TUNE Q1 — the COLLAPSED-pill floor tokens. The collapsed summary
+       used to fall to `--dock-layer-height` (the FULL control height, ~2.5rem) for
+       its `min-width` with NO block floor, so the shrunken pill read as an
+       un-collapsed control row, not a tight proportioned squircle. These two floor
+       tokens (referenced by dock.css's `.collapsed .dock-layer--summary` min-size +
+       the `--dock-pad-collapsed` morph floor) mint a TIGHT proportioned pill: the
+       summary min-size is ≈70% of the full control height (a proportioned dot, not a
+       full-row stub — the ratified default), and the collapsed padding is a step
+       BELOW the expanded `--dock-padding-block` so the collapsed chrome hugs the
+       glyph. The summary carries a SYMMETRIC `min-block-size` (dock.css) keyed to the
+       same token so the pill floors on BOTH axes — a squircle, not a stub. Consumers
+       retune the pill geometry per-instance via these two handles. */
+    --dock-collapsed-summary-min-size: calc(var(--dock-layer-height, 2.5rem) * 0.7);
+    --dock-collapsed-padding: 0.25rem;
+
+    /* AX.W45-TUNE Q3/C3 + C5 — the dock-control family reads a real GLASS register
+       on hover/active, NOT a same-hue `--card` mix at an alpha adjacent to the dock's
+       own `--glass-bg-dock` substrate (a sub-1%-ΔL no-op — the loud Q3 tell: "nothing
+       on hover, something on click"). Both legs now point at NAMED glass tiers a
+       measurable step ABOVE the dock's 42%-opacity substrate:
+         • hover  → `--glass-bg-resting` (the 65% glass plate) — the control surface
+                    WAKES as a brighter glass tier on hover, reading the blurred dock
+                    substrate through it. The +ΔL above `--glass-bg-dock` is perceptible
+                    BEFORE click; the specular gleam + scale ride alongside (one register).
+         • active → `--glass-bg-floating` (the 80% glass plate) — a tier ABOVE hover,
+                    the keyframes-dock "selected element reads as glass" model the user
+                    named (`pass-3:13`): the selected tile is a glass tier that shows the
+                    substrate through it, NOT the flat `--surface-tint-12` ink wash. The
+                    active ≠ hover register is the glass-tier step, not an alpha nudge.
+       This is a REGISTER change (substrate→glass-tier), not a magnitude knob. The
+       per-control `--dock-icon-hover-bg` override still wins if a consumer set it. */
+    --dock-control-hover-bg: var(--glass-bg-resting);
+    --dock-control-active-bg: var(--glass-bg-floating);
+
+    /* AX.W45-TUNE C4/C5 — the small-tile specular override. The 40px dock-control
+       tile is a fraction of a card's plate, so the global `--glass-specular-size`
+       (36% of the plate) blooms a disproportionate disc on a hover/active dock tile
+       (the I.W6 finding). The dock controls scope a TIGHTER radius (22%) so the gleam
+       wakes as a restrained EDGE-catch on the small tile, not a tile-filling bloom —
+       the right resolution of I.W6 (sized-down on the small surface), not turning the
+       specular off everywhere. Read by the dock-control `::before` recipe (glass.css)
+       via the family-scoped override below; the global card/panel size is untouched. */
+    --dock-control-specular-size: 22%;
 
     /* AX.W45 DK8 — the layer-switcher rail surface ladder. The rail
        (`.dock-layer-rail` inside a `<DockLayerGroup>`) gets its own quiet plate +

@@ -84,7 +84,7 @@ function back() {
                             :icon="l.icon"
                         >
                             <DockIconButton aria-label="Back" @click="back">
-                                <ChevronLeft class="h-4 w-4" />
+                                <ChevronLeft />
                             </DockIconButton>
                             <DockSeparator />
                             <component :is="l.icon" class="h-4 w-4 opacity-70" />
@@ -92,10 +92,10 @@ function back() {
                             <span class="text-xs text-muted-foreground">· {{ l.blurb }}</span>
                             <DockSeparator />
                             <DockIconButton aria-label="New item">
-                                <FileText class="h-4 w-4" />
+                                <FileText />
                             </DockIconButton>
                             <DockIconButton aria-label="Forward">
-                                <ChevronRight class="h-4 w-4" />
+                                <ChevronRight />
                             </DockIconButton>
                         </DockLayer>
                     </DockLayerGroup>
@@ -163,7 +163,7 @@ function back() {
                                 :aria-pressed="railLayer === candidate.id"
                                 @click="railLayer = candidate.id"
                             >
-                                <component :is="candidate.icon" class="h-4 w-4" />
+                                <component :is="candidate.icon" />
                             </DockIconButton>
                         </DockLayer>
                     </DockLayerGroup>
@@ -199,7 +199,7 @@ function back() {
                     </DockLayerGroup>
                     <template #collapsed>
                         <DockIconButton aria-label="Open layers">
-                            <Layers class="h-4 w-4" />
+                            <Layers />
                         </DockIconButton>
                     </template>
                 </GlassDock>

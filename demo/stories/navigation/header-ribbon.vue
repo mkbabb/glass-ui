@@ -26,18 +26,18 @@ import { Menu, Settings, Search, Bell } from "@lucide/vue";
                             :aria-pressed="pinned"
                             aria-label="Toggle navigation ribbon"
                         >
-                            <Menu class="h-4 w-4" aria-hidden="true" />
+                            <Menu aria-hidden="true" />
                         </DockIconButton>
                     </template>
                     <template #items>
                         <DockIconButton type="button" aria-label="Search">
-                            <Search class="h-4 w-4" aria-hidden="true" />
+                            <Search aria-hidden="true" />
                         </DockIconButton>
                         <DockIconButton type="button" aria-label="Notifications">
-                            <Bell class="h-4 w-4" aria-hidden="true" />
+                            <Bell aria-hidden="true" />
                         </DockIconButton>
                         <DockIconButton type="button" aria-label="Settings">
-                            <Settings class="h-4 w-4" aria-hidden="true" />
+                            <Settings aria-hidden="true" />
                         </DockIconButton>
                     </template>
                 </HeaderRibbon>

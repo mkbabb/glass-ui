@@ -86,12 +86,12 @@ function togglePlay() {
                     <!-- Home is a persistent control: it stays visible in both the
                          collapsed and expanded states via the #persistent slot. -->
                     <template #persistent>
-                        <DockIconButton aria-label="Home"><Home class="h-4 w-4" /></DockIconButton>
+                        <DockIconButton aria-label="Home"><Home /></DockIconButton>
                     </template>
-                    <DockIconButton aria-label="Search"><Search class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Search"><Search /></DockIconButton>
                     <DockSeparator />
-                    <DockIconButton aria-label="Notifications"><Bell class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Settings"><Settings class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Notifications"><Bell /></DockIconButton>
+                    <DockIconButton aria-label="Settings"><Settings /></DockIconButton>
                 </GlassDock>
             </div>
         </section>
@@ -100,16 +100,16 @@ function togglePlay() {
             <h2 class="text-sm font-semibold text-muted-foreground">Always expanded — media transport</h2>
             <div class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
                 <GlassDock always-expanded>
-                    <DockIconButton aria-label="Previous"><SkipBack class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Previous"><SkipBack /></DockIconButton>
                     <DockIconButton
                         :aria-pressed="playing"
                         :aria-label="playing ? 'Pause' : 'Play'"
                         @click="togglePlay"
                     >
-                        <Pause v-if="playing" class="h-4 w-4" />
-                        <Play v-else class="h-4 w-4" />
+                        <Pause v-if="playing" />
+                        <Play v-else />
                     </DockIconButton>
-                    <DockIconButton aria-label="Next"><SkipForward class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Next"><SkipForward /></DockIconButton>
                     <DockSeparator />
                     <span class="px-2 text-xs text-muted-foreground tabular-nums max-w-36 truncate">
                         {{ track }}
@@ -189,12 +189,12 @@ function togglePlay() {
             </p>
             <div class="flex justify-center rounded-[var(--radius-card)] border border-border/40 bg-card/40 p-8">
                 <GlassDock always-expanded>
-                    <DockIconButton aria-label="New"><Plus class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="New"><Plus /></DockIconButton>
 
                     <HoverPopover side="bottom" align="center" keep-dock-open>
                         <template #trigger>
                             <DockIconButton aria-label="Share">
-                                <Share2 class="h-4 w-4" />
+                                <Share2 />
                             </DockIconButton>
                         </template>
                         <template #content>
@@ -210,7 +210,7 @@ function togglePlay() {
                     <HoverPopover side="bottom" align="end" keep-dock-open>
                         <template #trigger>
                             <DockIconButton aria-label="Export">
-                                <Download class="h-4 w-4" />
+                                <Download />
                             </DockIconButton>
                         </template>
                         <template #content>
@@ -272,20 +272,20 @@ function togglePlay() {
                     always-expanded
                     style="--dock-max-inline-size: 28rem"
                 >
-                    <DockIconButton aria-label="Home"><Home class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Search"><Search class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Add"><Plus class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Notifications"><Bell class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Share"><Share2 class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Download"><Download class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Settings"><Settings class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Previous"><SkipBack class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Play"><Play class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Next"><SkipForward class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Home (2)"><Home class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Search (2)"><Search class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Add (2)"><Plus class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Settings (2)"><Settings class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Home"><Home /></DockIconButton>
+                    <DockIconButton aria-label="Search"><Search /></DockIconButton>
+                    <DockIconButton aria-label="Add"><Plus /></DockIconButton>
+                    <DockIconButton aria-label="Notifications"><Bell /></DockIconButton>
+                    <DockIconButton aria-label="Share"><Share2 /></DockIconButton>
+                    <DockIconButton aria-label="Download"><Download /></DockIconButton>
+                    <DockIconButton aria-label="Settings"><Settings /></DockIconButton>
+                    <DockIconButton aria-label="Previous"><SkipBack /></DockIconButton>
+                    <DockIconButton aria-label="Play"><Play /></DockIconButton>
+                    <DockIconButton aria-label="Next"><SkipForward /></DockIconButton>
+                    <DockIconButton aria-label="Home (2)"><Home /></DockIconButton>
+                    <DockIconButton aria-label="Search (2)"><Search /></DockIconButton>
+                    <DockIconButton aria-label="Add (2)"><Plus /></DockIconButton>
+                    <DockIconButton aria-label="Settings (2)"><Settings /></DockIconButton>
                 </GlassDock>
             </div>
             <p class="text-xs text-muted-foreground">
@@ -296,18 +296,18 @@ function togglePlay() {
             </p>
             <div class="flex justify-center py-6">
                 <GlassDock overflow="wrap" style="--dock-max-inline-size: 22rem">
-                    <DockIconButton aria-label="Home"><Home class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Search"><Search class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Add"><Plus class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Notifications"><Bell class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Share"><Share2 class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Download"><Download class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Settings"><Settings class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Previous"><SkipBack class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Play"><Play class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Next"><SkipForward class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Home (2)"><Home class="h-4 w-4" /></DockIconButton>
-                    <DockIconButton aria-label="Search (2)"><Search class="h-4 w-4" /></DockIconButton>
+                    <DockIconButton aria-label="Home"><Home /></DockIconButton>
+                    <DockIconButton aria-label="Search"><Search /></DockIconButton>
+                    <DockIconButton aria-label="Add"><Plus /></DockIconButton>
+                    <DockIconButton aria-label="Notifications"><Bell /></DockIconButton>
+                    <DockIconButton aria-label="Share"><Share2 /></DockIconButton>
+                    <DockIconButton aria-label="Download"><Download /></DockIconButton>
+                    <DockIconButton aria-label="Settings"><Settings /></DockIconButton>
+                    <DockIconButton aria-label="Previous"><SkipBack /></DockIconButton>
+                    <DockIconButton aria-label="Play"><Play /></DockIconButton>
+                    <DockIconButton aria-label="Next"><SkipForward /></DockIconButton>
+                    <DockIconButton aria-label="Home (2)"><Home /></DockIconButton>
+                    <DockIconButton aria-label="Search (2)"><Search /></DockIconButton>
                 </GlassDock>
             </div>
         </section>
@@ -322,15 +322,15 @@ function togglePlay() {
             </p>
             <div class="flex justify-center py-6">
                 <GlassDock shape="card" layout="grid" class="w-80">
-                    <DockIconButton aria-label="Home"><Home class="h-5 w-5" /></DockIconButton>
-                    <DockIconButton aria-label="Search"><Search class="h-5 w-5" /></DockIconButton>
-                    <DockIconButton aria-label="Add"><Plus class="h-5 w-5" /></DockIconButton>
-                    <DockIconButton aria-label="Notifications"><Bell class="h-5 w-5" /></DockIconButton>
-                    <DockIconButton aria-label="Previous"><SkipBack class="h-5 w-5" /></DockIconButton>
-                    <DockIconButton aria-label="Next"><SkipForward class="h-5 w-5" /></DockIconButton>
-                    <DockIconButton aria-label="Home (2)"><Home class="h-5 w-5" /></DockIconButton>
-                    <DockIconButton aria-label="Search (2)"><Search class="h-5 w-5" /></DockIconButton>
-                    <DockIconButton aria-label="Settings"><Settings class="h-5 w-5" /></DockIconButton>
+                    <DockIconButton aria-label="Home"><Home /></DockIconButton>
+                    <DockIconButton aria-label="Search"><Search /></DockIconButton>
+                    <DockIconButton aria-label="Add"><Plus /></DockIconButton>
+                    <DockIconButton aria-label="Notifications"><Bell /></DockIconButton>
+                    <DockIconButton aria-label="Previous"><SkipBack /></DockIconButton>
+                    <DockIconButton aria-label="Next"><SkipForward /></DockIconButton>
+                    <DockIconButton aria-label="Home (2)"><Home /></DockIconButton>
+                    <DockIconButton aria-label="Search (2)"><Search /></DockIconButton>
+                    <DockIconButton aria-label="Settings"><Settings /></DockIconButton>
                 </GlassDock>
             </div>
         </section>
@@ -351,8 +351,8 @@ function togglePlay() {
             <div class="flex justify-center py-6">
                 <GlassDock>
                     <DockBackgroundToggle v-model:paused="bgPaused" />
-                    <DockIconButton aria-label="Home"><Home class="h-5 w-5" /></DockIconButton>
-                    <DockIconButton aria-label="Settings"><Settings class="h-5 w-5" /></DockIconButton>
+                    <DockIconButton aria-label="Home"><Home /></DockIconButton>
+                    <DockIconButton aria-label="Settings"><Settings /></DockIconButton>
                 </GlassDock>
             </div>
             <p class="text-center text-xs text-muted-foreground">

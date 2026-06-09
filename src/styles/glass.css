@@ -59,7 +59,10 @@
     .glass-overlay,
     .glass-card,
     .glass-specular-track,
-    .dock-icon-button {
+    .dock-icon-button,
+    .dock-tab-button,
+    .dock-select-trigger,
+    .dock-dropdown-trigger {
         position: relative;
     }
 
@@ -85,7 +88,10 @@
     .glass-overlay::before,
     .glass-card::before,
     .glass-specular-track::before,
-    .dock-icon-button::before {
+    .dock-icon-button::before,
+    .dock-tab-button::before,
+    .dock-select-trigger::before,
+    .dock-dropdown-trigger::before {
         content: "";
         position: absolute;
         inset: 0;
@@ -156,7 +162,10 @@
     .dark .glass-overlay::before,
     .dark .glass-card::before,
     .dark .glass-specular-track::before,
-    .dark .dock-icon-button::before {
+    .dark .dock-icon-button::before,
+    .dark .dock-tab-button::before,
+    .dark .dock-select-trigger::before,
+    .dark .dock-dropdown-trigger::before {
         /* Softer over the deep canvas — `plus-lighter` still lifts on dark, so the
            `.dark` cohort runs a lower hover/active rung (tokens.css §specular-
            intensity `.dark` arm); the rest rung is already 0 so the dark arm only
@@ -177,7 +186,10 @@
     .glass-overlay:hover::before,
     .glass-card:hover::before,
     .glass-specular-track:hover::before,
-    .dock-icon-button:hover::before {
+    .dock-icon-button:hover::before,
+    .dock-tab-button:hover::before,
+    .dock-select-trigger:hover::before,
+    .dock-dropdown-trigger:hover::before {
         --specular-intensity: var(--glass-specular-intensity-hover, 0.1);
     }
     .glass-material:active::before,
@@ -188,7 +200,25 @@
     .glass-overlay:active::before,
     .glass-card:active::before,
     .glass-specular-track:active::before,
-    .dock-icon-button:active::before {
+    .dock-icon-button:active::before,
+    .dock-tab-button:active::before,
+    .dock-select-trigger:active::before,
+    .dock-dropdown-trigger:active::before {
+        --specular-intensity: var(--glass-specular-intensity-active, 0.16);
+    }
+
+    /* AX.W45-TUNE C5 — the SELECTED dock control reads as the keyframes-dock glass
+       register: a glass-tier active fill (`--dock-control-active-bg` → the floating
+       plate, tokens.css) WITH the specular gleam waking over it, not a flat ink
+       stamp. The CSS `:active` pseudo above only fires on press-down; a SELECTED tile
+       (`.is-active` / `[aria-pressed]` / `[aria-expanded]` / `[aria-current]`) holds
+       the gleam lit so the selected element reads as a lit glass tier the substrate
+       shows through (the model the user named, `pass-3:13`). Family-scoped addition
+       on the dock-control `::before`, line-disjoint from the shared recipe above. */
+    .dock-icon-button:is(.is-active, .active, [aria-pressed="true"], [aria-expanded="true"], [aria-current="page"])::before,
+    .dock-tab-button:is(.is-active, .active, [aria-pressed="true"], [aria-expanded="true"], [aria-current="page"])::before,
+    .dock-select-trigger:is(.is-active, .active, [aria-pressed="true"], [aria-expanded="true"], [aria-current="page"])::before,
+    .dock-dropdown-trigger:is(.is-active, .active, [aria-pressed="true"], [aria-expanded="true"], [aria-current="page"])::before {
         --specular-intensity: var(--glass-specular-intensity-active, 0.16);
     }
 

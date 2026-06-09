@@ -5,6 +5,7 @@
 // concern (the transition composables already factor the FLIP logic out). W14
 // split the ONE over-threshold god-module (DataTable); this stays whole by design.
 import { computed, onBeforeUnmount, onMounted, ref, useId, useTemplateRef, watch } from "vue";
+import DockSeparator from "./DockSeparator.vue";
 import { useTouchGate } from "../../../composables/dom/useTouchGate";
 import { provideDockContext } from "./composables/dockContext";
 import { useDockState } from "./composables/useDockState";
@@ -501,10 +502,7 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
         <!--
             Horizontal docks use the built-in two-layer pattern (full +
             collapsed summary) with CSS-grid stacking and FLIP-driven
-            width crossfade transitions. Vertical docks are tool palettes:
-            they don't collapse into a summary icon, and hosting a
-            DockLayerGroup inside demands a direct single-slot body with
-            no nested grid.
+            width crossfade transitions.
         -->
         <template v-if="orientation === 'horizontal'">
             <div
@@ -527,8 +525,38 @@ defineExpose({ expanded, isPinned, isHeld, isTransitioning, expand, collapse, ke
                 </div>
             </div>
         </template>
+        <!--
+            AX.W45-TUNE C7 — the vertical three-region BODY (structural parity with
+            the horizontal template, not CSS-only). A vertical dock is an always-
+            expanded tool palette: it has no collapse↔expand width morph, so the
+            body is NOT the horizontal full/summary FLIP pair. But the three-region
+            STRUCTURE is now real:
+              1. `#persistent` — the stable rail (already the root flex SIBLING above,
+                 shared by both orientations).
+              2. the DEFAULT content stack — wrapped in `.dock-layers` (mirroring the
+                 horizontal morph-region container) so the column reads as a
+                 structured body, not a bare slot dump; consumers demarcate item
+                 GROUPS with `<DockSeparator>` (the built-in section rhythm — transport
+                 | nav | settings), the same primitive the horizontal dock uses.
+              3. `#collapsed` — an OPTIONAL trailing section (the vertical analogue of
+                 the horizontal summary pane). On a non-collapsing rail it renders as a
+                 persistent secondary group below a structural section divider, so a
+                 consumer authoring a `#collapsed` slot gets a real bottom region with
+                 the dock's gap rhythm rather than a no-op. Rendered only when authored
+                 ($slots.collapsed), so a vertical dock with no collapsed slot is
+                 byte-identical to the prior bare-slot body (one `.dock-layers`
+                 wrapper, same column flow).
+        -->
         <template v-else>
-            <slot />
+            <div class="dock-layers dock-layer--vertical-body">
+                <slot />
+                <template v-if="$slots.collapsed">
+                    <DockSeparator />
+                    <div class="dock-layer--vertical-section">
+                        <slot name="collapsed" />
+                    </div>
+                </template>
+            </div>
         </template>
     </div>
 </template>

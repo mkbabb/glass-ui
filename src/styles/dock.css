@@ -270,7 +270,9 @@
         --dock-layer-gap: calc(
             var(--dock-density-compact-gap, 0.25rem) * var(--dock-scale)
         );
-        --dock-tile-min: calc(var(--dock-control-size) + var(--dock-tile-pad, 1rem));
+        --dock-tile-min: calc(
+            var(--dock-control-size) + var(--dock-tile-pad, 1rem) * var(--dock-scale)
+        );
         --dock-trigger-padding-block: calc(
             var(--dock-density-compact-trigger-padding-block, 0.1875rem) *
                 var(--dock-scale)
@@ -316,7 +318,9 @@
         --dock-layer-gap: calc(
             var(--dock-density-comfortable-gap, 0.375rem) * var(--dock-scale)
         );
-        --dock-tile-min: calc(var(--dock-control-size) + var(--dock-tile-pad, 2rem));
+        --dock-tile-min: calc(
+            var(--dock-control-size) + var(--dock-tile-pad, 2rem) * var(--dock-scale)
+        );
         --dock-trigger-padding-block: calc(
             var(--dock-density-comfortable-trigger-padding-block, 0.25rem) *
                 var(--dock-scale)
@@ -358,7 +362,9 @@
         --dock-layer-gap: calc(
             var(--dock-density-spacious-gap, 0.5rem) * var(--dock-scale)
         );
-        --dock-tile-min: calc(var(--dock-control-size) + var(--dock-tile-pad, 2.75rem));
+        --dock-tile-min: calc(
+            var(--dock-control-size) + var(--dock-tile-pad, 2.75rem) * var(--dock-scale)
+        );
         --dock-trigger-padding-block: calc(
             var(--dock-density-spacious-trigger-padding-block, 0.375rem) *
                 var(--dock-scale)
@@ -399,7 +405,9 @@
         --dock-layer-gap: calc(
             var(--dock-density-audacious-gap, 0.875rem) * var(--dock-scale)
         );
-        --dock-tile-min: calc(var(--dock-control-size) + var(--dock-tile-pad, 2.75rem));
+        --dock-tile-min: calc(
+            var(--dock-control-size) + var(--dock-tile-pad, 2.75rem) * var(--dock-scale)
+        );
         --dock-trigger-padding-block: calc(
             var(--dock-density-audacious-trigger-padding-block, 0.625rem) *
                 var(--dock-scale)
@@ -735,8 +743,20 @@
         box-shadow: var(--shadow-dock-override, var(--shadow-dock-collapsed));
     }
 
+    /* AX.W45-TUNE Q1 — the collapsed summary floors on BOTH axes off the SAME
+       `--dock-collapsed-summary-min-size` token (now MINTED in tokens.css §10 as a
+       tight ≈0.7× of the full control height). The prior rule floored ONLY
+       `min-width` and let the token fall to `--dock-layer-height` (the full control
+       height) — so the collapsed pill read as a full-row stub, not a proportioned
+       squircle. Adding the symmetric `min-block-size` makes the collapsed pill a
+       tight square-ish dot the consumer's glyph sits centred in (the proportioned-
+       pill target the user's Q1 named). */
     .glass-dock.collapsed .dock-layer--summary {
         min-width: var(
+            --dock-collapsed-summary-min-size,
+            var(--dock-layer-height, 2.5rem)
+        );
+        min-block-size: var(
             --dock-collapsed-summary-min-size,
             var(--dock-layer-height, 2.5rem)
         );
@@ -931,6 +951,35 @@
 
     .glass-dock.vertical .dock-persistent + .dock-layers {
         margin-block-start: var(--dock-layer-gap, 0.375rem);
+    }
+
+    /* AX.W45-TUNE C7 — the VERTICAL three-region body. The vertical dock's default
+       slot is now wrapped in a structural `.dock-layers` column (parity with the
+       horizontal morph-region container) instead of a bare slot. A vertical dock is
+       always-expanded (no width morph), so this `.dock-layers` is NOT the grid-stacked
+       crossfade pair the horizontal `.dock-layers` is — it is a single column stack
+       carrying the dock's `--dock-layer-gap` rhythm so authored item groups +
+       `<DockSeparator>` rules read with the correct vertical cadence. The base
+       `.dock-layers { display: grid }` is re-pointed to a column flex here (the
+       vertical body is content-stacked, not pane-stacked). */
+    .glass-dock.vertical .dock-layer--vertical-body {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--dock-layer-gap, 0.375rem);
+        min-width: 0;
+    }
+
+    /* The OPTIONAL trailing `#collapsed` section (the vertical analogue of the
+       horizontal summary pane) — a persistent secondary group below a structural
+       `<DockSeparator>`, sharing the column's gap rhythm. Renders only when the
+       consumer authors a `#collapsed` slot (GlassDock.vue guards it), so a vertical
+       dock with no collapsed slot keeps the prior single-stack body. */
+    .glass-dock.vertical .dock-layer--vertical-section {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--dock-layer-gap, 0.375rem);
     }
 
     /* AX.W01 — the box size morph reads the SAME `--dock-morph-t` scalar as the
