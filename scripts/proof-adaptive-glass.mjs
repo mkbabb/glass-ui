@@ -36,7 +36,21 @@ const strip = (s) =>
 
 const tokens = strip(read("src/styles/tokens.css"));
 const glass = strip(read("src/styles/glass.css"));
-const dock = strip(read("src/styles/dock.css"));
+// The dock shell was carved into src/styles/dock/*.css partials (+ dock-controls.css)
+// at the convergence; the adaptive-glass tint seam lives in dock/shell.css + dock/morph.css.
+// Read the whole carved dock family so the seam checks resolve post-carve.
+const dock = [
+    "src/styles/dock.css",
+    "src/styles/dock/shell.css",
+    "src/styles/dock/morph.css",
+    "src/styles/dock/density.css",
+    "src/styles/dock/layer-group.css",
+    "src/styles/dock/layers.css",
+    "src/styles/dock/overflow.css",
+    "src/styles/dock-controls.css",
+]
+    .map((p) => strip(read(p)))
+    .join("\n");
 
 const checks = []; // {id, pass, detail}
 const add = (id, pass, detail) => checks.push({ id, pass: Boolean(pass), detail });

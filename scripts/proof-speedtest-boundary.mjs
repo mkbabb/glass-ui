@@ -1,28 +1,26 @@
 #!/usr/bin/env node
-// AV.W17 — the speedtest-boundary gate (proof:speedtest-boundary).
+// AV.W17 → AW.W19 — the speedtest-boundary gate (proof:speedtest-boundary).
 //
 // The speedtest-origin composable set is the eight composables that were
 // promoted into glass-ui from the speedtest app. AV.W17 ledgered each against a
 // HEAD consumer-grep: the ≥2-consumer bar (NOT the origin) decides ownership. A
 // speedtest-origin primitive glass-ui genuinely consumes (or exports as a
-// documented public primitive) STAYS as CORE; one glass-ui never consumes is an
-// ORPHAN and is removed (moved back to the speedtest owner — name-forward,
-// inv-16).
+// documented public primitive) STAYS as CORE.
 //
-// This gate SPECIALIZES proof:no-orphan-composable (AV.W5.B — the general
-// sub-tree structure-lock) to the speedtest-origin set: it asserts that every
-// MOVED orphan is GONE (no leaf file, no barrel re-export, no live import) and
-// that every STAY primitive is STILL grounded (leaf present + barrel-exported).
-// The boundary contract is one-way: glass-ui CORE carries only the ≥2-consumer
-// general primitives; the app-specific patterns live in the speedtest owner.
+// AW.W19/Item-5 REVERSED the AV.W17 "move-orphan-out" boundary: the five
+// composables AV.W17 had pruned (useBreakpoint / useIdleReady / useViewportReady
+// / useStagger / useAnimatedNumberMap) were RE-INSTATED as documented public
+// /dom + /motion primitives (the AV prune mis-judged real downstream consumers —
+// value.js's demo imports useBreakpoint; speedtest consumes useIdleReady /
+// useViewportReady; useStagger is a distinct API from useStaggerReveal). So the
+// ledger now classes all eight speedtest-origin composables STAY-as-CORE: this
+// gate is the grounding-lock that keeps every one of them present + barrel-
+// exported (the AW.W19 surface decision), no longer a one-way move-out boundary.
 //
 // Bite:
-//   - re-add a moved orphan leaf (useBreakpoint / useIdleReady / useViewportReady
-//     / useStagger / useAnimatedNumberMap) or its barrel re-export → RED
-//     (a speedtest-specific orphan is back on the CORE surface).
-//   - delete a STAY primitive (useYieldToMain / usePrioritizedTask /
-//     useViewTransition) or drop its barrel export → RED (a grounded CORE
-//     primitive lost its surface).
+//   - delete any of the eight STAY primitives (the 3 always-core + the 5
+//     AW.W19-re-instated) or drop its barrel export → RED (a grounded public
+//     CORE primitive lost its surface).
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -46,13 +44,17 @@ const LEDGER = [
     { name: "useYieldToMain", leaf: "motion/useYieldToMain.ts", barrel: "motion/core/index.ts", token: "useYieldToMain", disposition: "stay" },
     { name: "usePrioritizedTask", leaf: "motion/usePrioritizedTask.ts", barrel: "motion/core/index.ts", token: "usePrioritizedTask", disposition: "stay" },
     { name: "useViewTransition", leaf: "motion/useViewTransition.ts", barrel: "motion/core/index.ts", token: "useViewTransition", disposition: "stay" },
-    // MOVED → speedtest — glass-ui orphans (zero genuine glass-ui consumer).
-    { name: "useBreakpoint", leaf: "dom/useBreakpoint.ts", barrel: "dom/index.ts", token: "useBreakpoint", disposition: "moved" },
-    { name: "useIdleReady", leaf: "dom/useIdleReady.ts", barrel: "dom/index.ts", token: "useIdleReady", disposition: "moved" },
-    { name: "useViewportReady", leaf: "dom/useViewportReady.ts", barrel: "dom/index.ts", token: "useViewportReady", disposition: "moved" },
-    // MOVED → speedtest — demo-held only; the demo story was retired in lockstep.
-    { name: "useStagger", leaf: "motion/useStagger.ts", barrel: "motion/core/index.ts", token: "useStagger", disposition: "moved" },
-    { name: "useAnimatedNumberMap", leaf: "motion/useAnimatedNumberMap.ts", barrel: "motion/index.ts", token: "useAnimatedNumberMap", disposition: "moved" },
+    // RE-INSTATED as CORE (AW.W19/Item-5 + the extended commit) — the AV.W17
+    // "move-orphan-out" boundary was REVERSED: these five are now documented
+    // public primitives (value.js's demo imports useBreakpoint; speedtest
+    // consumes useIdleReady/useViewportReady via /dom; useStagger is a distinct
+    // API from useStaggerReveal; useAnimatedNumberMap rides /motion). Their leaf
+    // + barrel export are the grounded surface — dropping any of them now REDs.
+    { name: "useBreakpoint", leaf: "dom/useBreakpoint.ts", barrel: "dom/index.ts", token: "useBreakpoint", disposition: "stay" },
+    { name: "useIdleReady", leaf: "dom/useIdleReady.ts", barrel: "dom/index.ts", token: "useIdleReady", disposition: "stay" },
+    { name: "useViewportReady", leaf: "dom/useViewportReady.ts", barrel: "dom/index.ts", token: "useViewportReady", disposition: "stay" },
+    { name: "useStagger", leaf: "motion/useStagger.ts", barrel: "motion/core/index.ts", token: "useStagger", disposition: "stay" },
+    { name: "useAnimatedNumberMap", leaf: "motion/useAnimatedNumberMap.ts", barrel: "motion/index.ts", token: "useAnimatedNumberMap", disposition: "stay" },
 ];
 
 /**

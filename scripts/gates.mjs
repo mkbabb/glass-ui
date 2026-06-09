@@ -26,6 +26,22 @@ import { ROOT } from "./constellation.mjs";
  * belongs to; `sibling: true` means it walks a sibling checkout (so it is
  * skipped-by-policy when no sibling is present — never a hard failure on a
  * clean runner, per constellation.resolveSibling). `note` documents intent.
+ *
+ * LIVE-VERIFICATION GATES ARE `local`-ONLY (the cardinal-lesson architecture,
+ * AX close). The 11 gates that `spawnSync(PW_BIN …)` a Playwright run against
+ * tests-visual (aurora-painterly-statistics, font-cascade-live,
+ * substrate-paints-color, tabs-unified, dock-animation-live,
+ * dock-orchestrator-single, dock-wrap-content-driven, deck-progress-rail,
+ * squircle-language, glass-material-demo, blob-live-truth) need a REAL browser
+ * binary + a running demo dev server + (for the GPU readbacks) a real GPU — none
+ * of which a clean CI runner has. Their own notes name the LOCAL orchestrator /
+ * dev-Mac Metal run as "the binding close". So they carry `local` only, matching
+ * the `release` set (which excludes them and published 3.9.0 green). CI does NOT
+ * re-execute them headless under SwiftShader; instead the STATIC
+ * `proof:live-verified-ledger` (ci) enforces that every live-verified wave has a
+ * captured on-disk DELTA (.png + π readback) — that ledger is the CI-side proof
+ * the live-verification HAPPENED. This is alignment with the cardinal lesson, not
+ * a weakening of it.
  */
 export const GATES = [
     { id: "typecheck", cmd: "typecheck", tags: ["local", "ci", "release"] },
@@ -308,7 +324,7 @@ export const GATES = [
     {
         id: "proof:aurora-painterly-statistics",
         cmd: "proof:aurora-painterly-statistics",
-        tags: ["local", "ci"],
+        tags: ["local"],
         note: "AX.W13 (new born-RED; π-lane fail-CLOSED, HARDENING §G #16) — the operationalized 'stunning' bar: a real-GPU readback of the van-Gogh / oil-pastel / crayon / oil mediums at t=1 asserts (a) van-Gogh atomicity gap-fraction above a floor (discrete dabs, not a coverage smear), (b) no-flat-fills local density variance per painterly medium, (c) van-Gogh OKLab overlap-not-grey (mean chroma above the muddy-grey threshold), (d) the four media pairwise MEASURABLY distinct (no passthrough/shared-body collapse), against the public-domain Starry Night crop fixture. Device-absent → befitting-silent SKIP; a PRESENT-GPU passthrough/shared/linear-mix render → FAIL. Bite: a passthrough van-Gogh measures zero gap-fraction + grey overlap + two-media-identical → RED",
     },
     {
@@ -428,7 +444,7 @@ export const GATES = [
     {
         id: "proof:font-cascade-live",
         cmd: "proof:font-cascade-live",
-        tags: ["local", "ci"],
+        tags: ["local"],
         note: "AX.W22 — the font-register reconciliation gate (the library DEFAULT register == the rendered register; one brand voice, no preset opt-out, no serif body). Device-free STRUCTURE arm (runs + hard-REDs on EVERY runner): tokens.css §0 single-sources --font-stack-text (Plus Jakarta) with --font-stack-display aliasing it + --font-stack-serif GONE; theme.css bridges --font-text + folds the --font-serif bridge onto --font-stack-text; typography.css body{} reads var(--font-text) + the ladder re-grounds + the WONK/SOFT machinery (--font-display-variation-settings/--font-display-weight) is excised; the brand-uniform-sans preset + --font-brand-sans are gone; DELETION proof — src/fonts/fraunces/ + the Fraunces @font-face + the index.html data-typography-preset + the demo.css --font-brand-sans + the configurator Fraunces option are all gone, and .cm-serif (the DISTINCT math voice) survives non-Fraunces. π-lane RENDER arm (fail-CLOSED when the tests-visual workspace is present; font-cascade-live.spec.ts): loads the demo, awaits document.fonts.ready, reads getComputedStyle on body/.text-display-*/.fira-code/.text-admin-label, asserts the resolved face IS the brand register (document.fonts.check + a canvas width-fingerprint vs a serif control to defeat the metric-matched-fallback silent-pass), and BITES on a Georgia --font-text override. Bite: re-point --font-stack-text at a serif → STRUCTURE 1 RED; restore the preset attr → STRUCTURE RED; a serif-first computed body family → RENDER RED.",
     },
     {
@@ -542,7 +558,7 @@ export const GATES = [
     {
         id: "proof:substrate-paints-color",
         cmd: "proof:substrate-paints-color",
-        tags: ["local", "ci"],
+        tags: ["local"],
         note: "AX.W00 — the SHARED substrate-paints-non-black readPixels primitive (W07 aurora + W08 blob compose it). The behavioral truth lives in the tests-visual π workspace spec (substrate-paints-color.spec.ts): renders aurora DEFAULT + each preset at t=1 (maxChannel>0 interior floor) + blob BLOB_CONFIG_DEFAULTS over N frames (LOOSE non-flood opaque-fraction band 0.10–0.70). FAIL-CLOSED when the π workspace is installed; befitting-silent SKIP only on a zero-dep runner (device absent). Bite: black the aurora clearColor → RED (maxChannel==0); flood the blob → RED.",
     },
     {
@@ -554,19 +570,19 @@ export const GATES = [
     {
         id: "proof:tabs-unified",
         cmd: "proof:tabs-unified",
-        tags: ["local", "ci"],
+        tags: ["local"],
         note: "AX.W53 — the SegmentedTabs unification gate. Device-free SOURCE arm (always gates): ONE Tabs family (SegmentedTabs.vue; BouncyToggle/BouncyTabs/UnderlineTabs/useBouncySlider + the standalone responsive-tabs/ dir all DELETED), the three-value `variant` axis (segmented DEFAULT · pill · underline), the indicator glides on `--spring-snappy` (NOT --spring-bouncy) + squishes on a volume-preserving `scale: var(--stretch) calc(1/var(--stretch))` capped LOW by `--tab-indicator-max-stretch` (≤ 1.10, PRM-gated), the ARIA-role-per-variant contract (underline=tablist/tab+aria-selected; segmented/pill=group+aria-pressed), the multi-select + responsive props, the api/index.ts type re-sync, the retired ./responsive-tabs subpath, and the deletion-proof grep (NO live Bouncy*/UnderlineTabs/ResponsiveTabs import/tag/export across src+demo). PLUS a fail-CLOSED π LIVE arm (the indicator GLIDES + the --stretch exceeds 1 mid-travel on /navigation/tabs — when the Playwright workspace is present a non-animating indicator is a hard RED). Bite: re-introduce a Bouncy* export/tag → deletion-proof RED; remove the squish token → squish clause RED; route travel through --spring-bouncy → register RED.",
     },
     {
         id: "proof:dock-animation-live",
         cmd: "proof:dock-animation-live",
-        tags: ["local", "ci"],
+        tags: ["local"],
         note: "AV.W9.4 + AW.W2; AX.W00 PROMOTED fail-open SKIP → fail-CLOSED. The dock BEHAVIORAL motion gate: deterministic-drive (forced FLIP arm via removed startViewTransition + real page.hover) samples the dock-root box geometry AND a representative child opacity on ONE rAF timeline (lead/lag ≤ 1 frame). PLUS the AX.W00 device-free TOKEN-PEAK secondary (--spring-dock linear() peak ≤ the published (0.32,0.7) ~+4.6% baseline) which reds on EVERY runner. The live-rAF arm lives in the tests-visual π workspace (dock-animation-live.spec.ts); fail-CLOSED when the workspace is present. Bite: retune --spring-dock bouncier → token-peak RED; desync the box/child clock → live RED.",
     },
     {
         id: "proof:dock-orchestrator-single",
         cmd: "proof:dock-orchestrator-single",
-        tags: ["local", "ci"],
+        tags: ["local"],
         note: "AX.W02 — ONE morph engine per dock. Device-free STRUCTURE arm: GlassDock builds exactly 1 useDockMorphOrchestrator + provides the morph context, DockLayerGroup injects the OPTIONAL context and defers (registerGroup) with its SINGLE useLayerTransition gated standalone-only. π-lane RUNTIME arm (fail-CLOSED when the workspace is present; dock-orchestrator-single.spec.ts): a simultaneous collapse + pane-swap on the /navigation/dock-layers nested showcase samples the dock-root box AND the nested pane-stack on ONE --dock-morph-t timeline (both onset ≤ 1 frame from the scalar; engineCount == 1). Bite: re-add an unconditional useLayerTransition to the nested path → STRUCTURE RED; drive the stack on a second clock → RUNTIME RED.",
     },
     {
@@ -578,7 +594,7 @@ export const GATES = [
     {
         id: "proof:dock-wrap-content-driven",
         cmd: "proof:dock-wrap-content-driven",
-        tags: ["local", "ci"],
+        tags: ["local"],
         note: "AX.W04 — `overflow=\"wrap\"` is CONTENT-driven intrinsic flex-wrap, not a viewport @media. Device-free SOURCE arm (runs + hard-REDs on EVERY runner): the magic-640 `@media` snap-back governing `.dock-overflow-wrap` is GONE, the `--dock-overflow-bp` token is deleted, the wrap recipe carries always-on `flex-wrap: wrap` + a valid `max-inline-size: var(--dock-max-inline-size)` cap over the base shrink-wrap (NOT the INVALID `min(max-content, …)` — math functions reject the `max-content` intrinsic keyword, so that form computes the property to its initial `none` and the cap silently drops; the SOURCE arm BITES on a `min(max-content` regression), the radius unifies onto `--dock-card-radius` (the bare `--radius-2xl` literal is gone) morphing off `--dock-expand-t`, the `--shadow-dock-wrap` card-tier token + the scalar-driven floating-tier box-shadow lift, the GlassDock.vue `orientation !== 'vertical'` horizontal-only guard, and the struck false `proof:dock-layering-polish` wrap-reflow doc-rot (`wrap reflow|morphing.*wrap` grep = 0). π-lane RUNTIME arm (fail-CLOSED when the workspace is present; dock-wrap-content-driven.spec.ts): mounts the demo wrap dock at a ≥640px viewport and asserts computed `flex-wrap === 'wrap'`, `rowCount >= 2`, `dock.right <= innerWidth` (no viewport bleed), and no vertical `.dock-overflow-wrap`. Bite: re-add the @media-640 nowrap snap-back → SOURCE RED; restore the invalid `min(max-content, …)` cap → SOURCE RED + live rowCount:1 RED; raise the cap above content width → live rowCount:1 RED.",
     },
     {
@@ -596,13 +612,13 @@ export const GATES = [
     {
         id: "proof:deck-progress-rail",
         cmd: "proof:deck-progress-rail",
-        tags: ["local", "ci"],
+        tags: ["local"],
         note: "AX.W24 — the deck-position rail gate, UPGRADED string-scan → render assertion. Device-free STRUCTURE arm (runs on EVERY runner): the `.glass-progress-rail` recipe FEEDS --progress-fill/--progress-track from --progress-rail-fill/--progress-rail-track (the F1 cascade-correct token-feed, NOT a `background:` that loses to the @layer utilities `bg-primary`) + uses an INSET glow (the F2 fix, not the eaten OUTSET shadow); ProgressDefault.vue reads the tokens at SOURCE + carries NO bg-primary/bg-secondary utility; DeckProgress composes <Progress> with no chrome/math; the /deck namespace stays RESERVED (no deck.ts subpath, no ./deck export) while ./deck-progress IS published. π-lane RENDER arm (fail-CLOSED when the tests-visual workspace is present; deck-progress-rail.spec.ts): mounts the live deck-progress story under a `:root { --progress-rail-fill: <distinct green> }` override and asserts via getComputedStyle (a) the override hue WINS the indicator background-color (the cascade fix — RED at HEAD where it painted --primary), (b) an `inset` box-shadow glow renders, (c) the rail reads as the hairline --progress-rail-h. Bite: re-add bg-primary to ProgressDefault → STRUCTURE 2 + RENDER (a) RED; re-author the glow OUTSET → STRUCTURE 1 + RENDER (b) RED; squat /deck → STRUCTURE 4 RED.",
     },
     {
         id: "proof:squircle-language",
         cmd: "proof:squircle-language",
-        tags: ["local", "ci"],
+        tags: ["local"],
         note: "AX.W56 — the corner-SHAPE token axis + the rounded-vs-squircle POLICY. Device-free SOURCE arm (runs + hard-REDs on EVERY runner): theme.css mints --corner-k-{squircle:2,soft:1.7,sharp:2.4} (the superellipse-k primitives; squircle == superellipse(2) == n=4) + the semantic --corner-shape-{card:round,pill:round,panel:round,bigdock:superellipse(var(--corner-k-squircle))} POLICY aliases; the big-dock dock.css site reads `corner-shape: var(--corner-shape-bigdock)` (the bite — NOT a bare squircle keyword) ONLY inside `@supports (corner-shape: superellipse(2))` (no leak onto the un-gated base) over a `border-radius` round fallback; glass.css carries NO corner-shape on .glass-card/.glass-btn/.btn-pill (the AW.W23 inversion RE-HOMED — cards stay round). π render arm (fail-CLOSED when the tests-visual workspace is present; squircle-language.spec.ts): getComputedStyle(...).cornerShape readback === superellipse(2) on the big-dock card shell on a Chrome-139 engine (or the round fallback on a non-supporting engine), a card stays round. Bite: re-hardcode `corner-shape: squircle` on the big-dock → BIGDOCK-READS-TOKEN RED; re-add a squircle to .glass-card → CARD-REHOMED RED; leak the decl outside @supports → SUPPORTS-GATE-INTACT RED; flip --corner-shape-card to a superellipse → POLICY-CARD-ROUND RED.",
     },
     {
@@ -692,13 +708,13 @@ export const GATES = [
     {
         id: "proof:glass-material-demo",
         cmd: "proof:glass-material-demo",
-        tags: ["local", "ci"],
+        tags: ["local"],
         note: "AX.W48 — the glass-material DEMO-ROUTE falsifier (the demo twin of proof:glass-material-unified/-sota, which pass green over a broken demo). Asserts the SFC BINDS the seams it narrates: useSpecularTracking composed (the moving catch-light is live), a non-zero --glass-tint-strength companion (the color-mix bites), zero glass-btn token + a real <Button variant=glass>, the rim on/off device. Bite: strip useSpecularTracking / zero the tint strength → RED.",
     },
     {
         id: "proof:blob-live-truth",
         cmd: "proof:blob-live-truth",
-        tags: ["local", "ci"],
+        tags: ["local"],
         note: "AX.W46 — the GooBlob live-truth gate (the blob reads as a contained lit droplet, hover responds, moods resolve — not skeuomorphic/broken). Device-free SOURCE arm + a fail-CLOSED π blob render/mood arm. Bite: regress the mood resolution / the lit-droplet material → RED.",
     },
     {
