@@ -5,6 +5,12 @@ dist/
 # public domain). The π painterly-statistics gate anchors its atomicity-congruence read
 # against this crop; it must be TRACKED past the *.png ignore.
 !tests-visual/fixtures/*.png
+# AX.W54 — the archived visual-evidence protocol: every live-verified wave's
+# captured DELTA screenshots live under docs/tranches/*/audit/visual/ and MUST be
+# TRACKED past the *.png ignore (the cardinal-lesson artefact — the
+# proof:live-verified-ledger gate asserts these on-disk pngs exist on a fresh CI
+# checkout, so they are version-controlled evidence, not scratch).
+!docs/tranches/*/audit/visual/*.png
 .playwright-mcp/
 demo/dist/
 demo/.qa/
