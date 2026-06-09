@@ -14,8 +14,8 @@
 // decoded with pngjs. On a dev box the real GPU (darwin→Metal) paints; a GPU-less CI
 // runner SwiftShader-degrades and the driver SKIPs befitting-silent (no browser binary).
 //
-// DEVICE: the live aurora defaults to WebGL2 (W07 WEBGPU_PARITY=false), so this drives
-// the WebGL2 field through the live config UI — the path the user touches.
+// DEVICE: the live aurora renders on the single-pass WebGL2 fragment shader, so this
+// drives the WebGL2 field through the live config UI — the path the user touches.
 //
 // The PER-ATOM assertion is a PERCEPTUAL DELTA: the mean |ΔR|+|ΔG|+|ΔB| over the interior
 // region between the BEFORE-atom and AFTER-atom frames must exceed a floor (the atom moved

@@ -24,7 +24,7 @@
 // READBACK MECHANISM (inherited from AX.W00 / aurora-mediums-substrate): a COMPOSITED
 // element screenshot (locator.screenshot) decoded with pngjs. On a dev box the real GPU
 // (darwin→Metal) paints; a GPU-less CI runner SwiftShader-degrades + the spec SKIPs
-// befitting-silent. The live aurora defaults to WebGL2 (W07 WEBGPU_PARITY=false).
+// befitting-silent. The live aurora renders on the single-pass WebGL2 fragment shader.
 //
 // DUAL-TIER CLOSE: the human side-by-side audit (the paired-π BEFORE/AFTER + DELTA the
 // orchestrator captures) is the ENRICHMENT; these numeric assertions are the UNATTENDED

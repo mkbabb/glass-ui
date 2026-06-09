@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, useTemplateRef, type HTMLAttributes } from "vue";
+import {
+    computed,
+    getCurrentInstance,
+    onMounted,
+    ref,
+    useTemplateRef,
+    type HTMLAttributes,
+} from "vue";
 import { useCanvas2D } from "../../../composables/glass/canvas2d";
 import { mulberry32, hashString } from "../../../utils/prng";
 import {
@@ -7,6 +14,7 @@ import {
     stepField,
     refitField,
     readPalette,
+    readInteractionConfig,
     drawEdges,
     drawNodes,
     drawPointerWeb,
@@ -14,11 +22,15 @@ import {
     warpTo as warpToField,
     BASE_WIDTH,
     DEFAULT_PALETTE,
+    DEFAULT_WELL_CONFIG,
+    DEFAULT_WANDER_IDLE,
+    DEFAULT_WANDER_JITTER,
     type ConstellationField,
     type ConstellationRipple,
     type ConstellationPointer,
     type ConstellationPalette,
     type ConstellationWander,
+    type ConstellationWell,
 } from "./constellationField";
 import { cn } from "../../../utils/cn";
 
@@ -53,6 +65,10 @@ const {
     pointerReactive = true,
     warpOnClick = false,
     wander = false,
+    gravityWell = false,
+    // `freeze` is resolved via the RAW vnode prop (see `rawFreeze` below) — NOT
+    // destructured — because Vue casts an absent Boolean prop to `false`, which
+    // would erase the omitted-vs-explicit-false distinction the auto-derive needs.
     class: className,
     drawOverlay,
 } = defineProps<{
@@ -91,13 +107,54 @@ const {
      * the focal mark stays at its seed (NOT fire-but-freeze).
      */
     wander?: boolean | { minIdle?: number; jitter?: number };
+    /**
+     * Pointer-held GRAVITY-WELL (AY.W-CON2). Hold the pointer over the lattice and
+     * the nodes within reach are PULLED toward it (an inverse-square force on the
+     * SAME engine, no second rAF); release and the field cools back to `speed`.
+     * INDEPENDENT of `warpOnClick` and `pointerReactive` (a consumer can
+     * hold-to-pull on a non-ripple, non-warp lattice). `true` uses the tokenised
+     * `--constellation-well-*` defaults; an object overrides the gains. Default
+     * OFF — `gravityWell` absent leaves `field.well` undefined (byte-identical to
+     * HEAD; `stepField` skips the force pass). PRM-gated by the WARP precedent: the
+     * held-timer block lives inside `!reducedMotion`, so under reduced-motion the
+     * well never arms; AND the well STATE resets to neutral on the PRM-true edge
+     * (no half-ramped force frozen on).
+     */
+    gravityWell?:
+        | boolean
+        | {
+              holdMs?: number;
+              gain?: number;
+              reach?: number;
+              ramp?: number;
+              maxSpeed?: number;
+              soften?: number;
+          };
+    /**
+     * Deterministic-capture freeze (AY.W-CON3). When `true`, the lattice lays
+     * out ONE reproducible STATIC frame and does NOT advance — seeded layout
+     * (set `seed` for a stable field ACROSS runs; an unseeded freeze still
+     * freezes but lays out a one-shot `Math.random` frame), no `stepField`, no
+     * ripple / warp / wander / well advance, and a FROZEN `now` handed to
+     * `drawOverlay` so a phase-driven skin (`(now % T) / T`) resolves to a fixed
+     * value (the pulse-ring radius is identical frame-over-frame). Omit to
+     * AUTO-DERIVE from `location.search` matching `export | print | freeze` (the
+     * deploy-pipeline contract — a consumer's pptx / print / screenshot capture
+     * gets a stable frame with zero per-consumer wiring). An explicit
+     * `:freeze="false"` forces live even under a capture URL. Unifies with the
+     * reduced-motion one-static-frame path — `freeze || reducedMotion` is the
+     * single static-frame predicate; the capture takes no input (the pointer /
+     * warp / well listeners are NOT registered under freeze).
+     */
+    freeze?: boolean;
     class?: HTMLAttributes["class"];
     /**
      * The skin seam. Runs after the neutral passes with the live field, so a
      * consumer paints its own focal mark pinned to a real node — read
      * `field.warp.{x,y}` for the spring-eased focal position when `warpOnClick`
      * is on. The branded content (a domain accent, a callout label) lives HERE,
-     * in the consumer.
+     * in the consumer. Under `freeze` it receives a FROZEN `now`, so a phase-
+     * driven mark resolves to a fixed value.
      */
     drawOverlay?: (
         ctx: CanvasRenderingContext2D,
@@ -117,6 +174,43 @@ const rng = computed<() => number>(() => {
     return mulberry32(s);
 });
 
+// The deterministic-capture predicate (AY.W-CON3). An explicit `freeze` prop
+// wins; omitted, it AUTO-DERIVES from the capture URL (?export / ?print /
+// ?freeze) — the deploy-pipeline contract a consumer's pptx / print / screenshot
+// capture rides with zero per-instance wiring. SSR-safe (no `location` off-
+// window). The URL is read LIVE (not captured at setup) so an SPA route resolving
+// the query AFTER the child's synchronous setup still freezes — the capture URL
+// is a one-shot pipeline flag, never live-toggled, so reading it on demand is
+// correct (no reactive tracking needed). `isFrozen` folds into the EXISTING
+// `!handle.reducedMotion` guards so `freeze || reducedMotion` is the SINGLE
+// static-frame predicate (no parallel branch). The frozen frame paints edges +
+// nodes + the overlay ONCE, with a stable `now` handed to the skin so a
+// phase-driven mark is identical frame-over-frame.
+const urlFreeze = (): boolean =>
+    typeof window !== "undefined" &&
+    /[?&](export|print|freeze)\b/.test(window.location.search);
+// NOTE: Vue casts an ABSENT `Boolean`-typed prop to `false` (not `undefined`),
+// so the destructured `freeze` alone cannot distinguish "omitted" from an
+// explicit `false`. Read the RAW vnode prop at setup (`undefined` when truly
+// omitted, `true`/`false`/`""` when passed) so the three states stay distinct:
+// explicit `true` (or a bare `freeze` attr → `""`) → frozen; omitted →
+// AUTO-DERIVE from the URL; explicit `false` → force live even under a capture
+// URL (the documented escape).
+const rawFreeze = getCurrentInstance()?.vnode.props?.freeze as
+    | boolean
+    | ""
+    | undefined;
+const isFrozen = computed<boolean>(() => {
+    if (rawFreeze !== undefined) return rawFreeze === true || rawFreeze === "";
+    return urlFreeze();
+});
+// The stable `now` handed to `drawOverlay` under freeze — a fixed sentinel so a
+// `(now % T) / T` phase resolves to the SAME value every frame (the pulse-ring
+// radius does not vary). 0 maps a `(now % T) / T` phase to 0 (ring at its inner
+// radius) — the determinism truth, the slides skin's `reduceMotion ? 0.5` clamp
+// generalised (the consumer picks its frozen phase by the constant it reads).
+const FROZEN_NOW = 0;
+
 // Field + per-instance interaction state live in the setup closure. The focal
 // node (AX.W17) is engine-owned: `focalIndex` names the pinned node, `warp` is
 // the per-axis critically-damped spring the engine steps inside `stepField`.
@@ -135,22 +229,44 @@ const field: ConstellationField = {
 // undefined (byte-identical to HEAD — stepField skips the cadence block); `true`
 // uses the default 8–16s rhythm; an object tunes the idle/jitter (ms). `nextAt`
 // arms on the first stepped frame, so there is no immediate jump on mount.
-const wanderState: ConstellationWander | undefined = (() => {
-    if (!wander) return undefined;
-    const cfg = wander === true ? {} : wander;
-    return {
-        nextAt: -1,
-        minIdle: cfg.minIdle ?? 8000,
-        jitter: cfg.jitter ?? 8000,
-    };
-})();
+const wanderOverride = wander && wander !== true ? wander : {};
+const wanderState: ConstellationWander | undefined = wander
+    ? {
+          nextAt: -1,
+          minIdle: wanderOverride.minIdle ?? DEFAULT_WANDER_IDLE,
+          jitter: wanderOverride.jitter ?? DEFAULT_WANDER_JITTER,
+      }
+    : undefined;
 field.wander = wanderState;
+
+// The gravity-well state (AY.W-CON2). `gravityWell` absent/false leaves `field.well`
+// undefined (byte-identical to HEAD — stepField skips the force pass); `true` /
+// an object uses the tokenised `--constellation-well-*` defaults with any prop
+// override layered on. The cfg is seeded from the built-in defaults here; the
+// on-mount token-read (readInteractionConfig) re-points the un-overridden members
+// to the tokenised values, with the PROP override (`wellOverride`) winning over
+// both. `x = -1` (inactive), `strength = target = 0` (cold) until the held-timer
+// arms the well.
+const wellOverride = gravityWell && gravityWell !== true ? gravityWell : {};
+const wellState: ConstellationWell | undefined = gravityWell
+    ? {
+          x: -1,
+          y: -1,
+          strength: 0,
+          target: 0,
+          cfg: { ...DEFAULT_WELL_CONFIG, ...wellOverride },
+      }
+    : undefined;
+field.well = wellState;
 const pointer: ConstellationPointer = { x: -1, y: -1 };
 const ripples: ConstellationRipple[] = [];
 let palette: ConstellationPalette = { ...DEFAULT_PALETTE };
 // The previous frame's `now` (ms) for the warp-spring `dt` (AX.W17). -1 until
 // the first frame stamps it.
 let prevNow = -1;
+// One-shot guard: the numeric interaction tokens (warp spring + well gains) are
+// read ONCE on the first sized frame (AY.W-CON2), never per-frame.
+let interactionRead = false;
 // The hoisted client→canvas-local-px mapper, assigned on mount. The exposed
 // `warpTo(clientX, clientY)` reads it (the deck-scale invariant); null pre-mount.
 const toLocalRef = ref<
@@ -200,6 +316,28 @@ onMounted(() => {
                             refitField(field, prevW, prevH);
                         }
                         palette = readPalette(canvas);
+                        // Read the NUMERIC interaction tokens ONCE, on the first
+                        // sized frame (AY.W-CON2) — the warp spring + the well gains
+                        // — into the field config. A PROP override (wellOverride)
+                        // STILL wins over the token (re-layered after the token read).
+                        // Read once (the hot loop never calls getComputedStyle).
+                        if (!interactionRead) {
+                            interactionRead = true;
+                            const cfgs = readInteractionConfig(canvas);
+                            field.warpCfg = cfgs.warp;
+                            if (field.well) {
+                                field.well.cfg = { ...cfgs.well, ...wellOverride };
+                            }
+                            // The auto-drift cadence: the token fills the
+                            // un-overridden members; an explicit prop still wins
+                            // (the same prop-over-token layering as the well).
+                            if (field.wander) {
+                                field.wander.minIdle =
+                                    wanderOverride.minIdle ?? cfgs.wander.minIdle;
+                                field.wander.jitter =
+                                    wanderOverride.jitter ?? cfgs.wander.jitter;
+                            }
+                        }
                     }
                     field.k = k;
 
@@ -208,12 +346,36 @@ onMounted(() => {
                     const dt = prevNow < 0 ? 0 : (now - prevNow) / 1000;
                     prevNow = now;
 
-                    // Step the field unless the substrate is frozen (reduced-
-                    // motion paints one static frame, no drift, no warp advance,
-                    // and — the WARP precedent — no auto-DRIFT cadence advance:
-                    // `wander.nextAt` stays put and the focal mark holds at its
-                    // seed). `now` + `rng.value` drive the wander cadence (AY.W-CON1).
-                    if (!handle.reducedMotion) {
+                    // The SINGLE static-frame predicate (AY.W-CON3). A
+                    // deterministic capture (`freeze` / a ?export|print|freeze
+                    // URL) OR reduced-motion paints ONE static frame: no drift,
+                    // no warp / wander / well advance, no ripple, and a FROZEN
+                    // `now` to the overlay. The freeze folds INTO the existing
+                    // `!handle.reducedMotion` guards (one predicate, not a
+                    // parallel branch) so the whole render-loop has ONE
+                    // live-vs-static fork.
+                    const isStatic = isFrozen.value || handle.reducedMotion;
+
+                    // PRM-true-edge state reset (AY.W-CON2). The substrate LIVE-
+                    // MONITORS reduced-motion and re-arms on un-reduce; a user
+                    // toggling PRM true MID-HOLD would otherwise freeze a half-ramped
+                    // well ON. When the frame is static, reset the well to neutral
+                    // so the parked static frame carries NO pull (the ramped-force
+                    // reset the wander — cadence-only — does not need).
+                    if (isStatic && field.well) {
+                        field.well.strength = 0;
+                        field.well.target = 0;
+                        field.well.x = -1;
+                        field.well.y = -1;
+                    }
+
+                    // Step the field unless the substrate is static (reduced-
+                    // motion OR a deterministic capture paints one static frame,
+                    // no drift, no warp advance, and — the WARP precedent — no
+                    // auto-DRIFT cadence advance: `wander.nextAt` stays put and the
+                    // focal mark holds at its seed). `now` + `rng.value` drive the
+                    // wander cadence (AY.W-CON1).
+                    if (!isStatic) {
                         const livePointer = pointerReactive ? pointer : null;
                         stepField(field, k, speed, livePointer, dt, now, rng.value);
                     }
@@ -221,12 +383,16 @@ onMounted(() => {
                     c.clearRect(0, 0, w, h);
                     drawEdges(c, field, link, palette);
                     drawNodes(c, field, palette);
-                    if (pointerReactive && !handle.reducedMotion) {
+                    if (pointerReactive && !isStatic) {
                         drawPointerWeb(c, field, link, palette, pointer);
                         drawRipples(c, field, now, ripples, palette);
                     }
-                    // The consumer skin runs LAST with the live field.
-                    drawOverlay?.(c, field, now);
+                    // The consumer skin runs LAST with the live field. Under a
+                    // static frame it gets a FROZEN `now` (AY.W-CON3) so a phase-
+                    // driven mark resolves to a fixed value — identical
+                    // frame-over-frame (the determinism truth, not just a frozen
+                    // field). Live otherwise.
+                    drawOverlay?.(c, field, isStatic ? FROZEN_NOW : now);
                 },
             };
         },
@@ -254,8 +420,10 @@ onMounted(() => {
 
     // Pointer reactivity — listen on the host (the canvas itself may be behind
     // type), map to canvas-local px via the hoisted mapper. Disabled under
-    // reduced-motion. NO behavior change vs HEAD — same gate, same handlers.
-    if (pointerReactive && host && !handle.reducedMotion) {
+    // reduced-motion AND under a deterministic capture (`isFrozen` — a frozen
+    // capture takes no input; the same listener-not-registered policy as PRM,
+    // AY.W-CON3).
+    if (pointerReactive && host && !isFrozen.value && !handle.reducedMotion) {
         const onMove = (e: PointerEvent) => {
             const p = toLocal(e);
             if (p) {
@@ -287,7 +455,8 @@ onMounted(() => {
     // does not warp under reduced-motion — the listener is simply not
     // registered). Resolves toLocal → nearestNode (excluding the focal) → warpTo;
     // the spring is stepped inside stepField (no second rAF, no useSpring).
-    if (warpOnClick && host && !handle.reducedMotion) {
+    // Not registered under a deterministic capture (`isFrozen`, AY.W-CON3).
+    if (warpOnClick && host && !isFrozen.value && !handle.reducedMotion) {
         const onWarp = (e: PointerEvent) => {
             const p = toLocal(e);
             if (!p) return;
@@ -296,11 +465,67 @@ onMounted(() => {
         };
         host.addEventListener("pointerdown", onWarp);
     }
+
+    // Pointer-held GRAVITY-WELL (AY.W-CON2) — its OWN guard, INDEPENDENT of
+    // warpOnClick + pointerReactive (a consumer can hold-to-pull on a non-ripple,
+    // non-warp lattice). PRM-gated by the WARP precedent: the block is INSIDE
+    // `!reducedMotion`, so under reduce the held-timer is never registered and the
+    // well never arms (the listener-not-ramped precedent). Reuses the SAME `toLocal`
+    // mapper (the deck-scale invariant) and `field.well` state; the well force is
+    // composed inside stepField (no second rAF). The held-timer is the only new
+    // event piece — `onDown` arms the well after `holdMs`, `onMove` tracks it to the
+    // held pointer, and `release` eases it back to 0 (the field then cools).
+    if (gravityWell && host && field.well && !isFrozen.value && !handle.reducedMotion) {
+        const well = field.well;
+        let holdTimer: number | undefined;
+        const onDown = (e: PointerEvent) => {
+            const p = toLocal(e);
+            if (!p) return;
+            well.x = p.x;
+            well.y = p.y;
+            holdTimer = window.setTimeout(() => {
+                well.target = 1;
+                handle.wake();
+            }, well.cfg.holdMs);
+            handle.wake();
+        };
+        const onMove = (e: PointerEvent) => {
+            // track the well to the held pointer once it has armed.
+            if (well.target > 0) {
+                const p = toLocal(e);
+                if (p) {
+                    well.x = p.x;
+                    well.y = p.y;
+                }
+            }
+        };
+        const release = () => {
+            if (holdTimer !== undefined) {
+                clearTimeout(holdTimer);
+                holdTimer = undefined;
+            }
+            well.target = 0; // ease back to 0 → the field cools to `speed`
+            handle.wake();
+        };
+        host.addEventListener("pointerdown", onDown);
+        host.addEventListener("pointermove", onMove);
+        host.addEventListener("pointerup", release);
+        host.addEventListener("pointerleave", release);
+        host.addEventListener("pointercancel", release);
+    }
 });
 
 defineExpose({
     /** The live field (the low-level imperative seam — for a custom overlay). */
     field,
+    /**
+     * The resolved deterministic-capture predicate (AY.W-CON3) — `true` when the
+     * lattice is laying out a frozen static frame (`freeze` prop OR a
+     * `?export|print|freeze` URL OR reduced-motion via the substrate). A read-only
+     * test/debug seam (the π freeze-live spec reads it to confirm the auto-derive
+     * fired without inferring from drift).
+     */
+    isFrozen,
     /**
      * Imperative warp (AX.W17). Two call shapes:
      *   `warpTo(localPoint)`              — `{x, y}` already in canvas-local px
@@ -320,6 +545,25 @@ defineExpose({
         }
         const pt = a as { x: number; y: number };
         return warpToField(field, pt.x, pt.y);
+    },
+    /**
+     * Imperatively ARM the gravity-well at a canvas-LOCAL point (AY.W-CON2) — the
+     * π-lane test seam that drives the well WITHOUT racing a real held-pointer
+     * gesture + the held-timer. Sets the well position + `target = 1` directly (the
+     * timer is bypassed; the ramp still eases `strength` over the next frames). No-op
+     * when `gravityWell` is off (no `field.well`). Returns true when the well armed.
+     */
+    holdWellAt(x: number, y: number): boolean {
+        if (!field.well) return false;
+        field.well.x = x;
+        field.well.y = y;
+        field.well.target = 1;
+        return true;
+    },
+    /** Imperatively RELEASE the well (AY.W-CON2) — `target → 0`, the field cools. */
+    releaseWell(): void {
+        if (!field.well) return;
+        field.well.target = 0;
     },
 });
 </script>

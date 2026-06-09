@@ -511,6 +511,26 @@
        field recedes further: BELOW the slides 0.92 max-legibility reference. */
     --constellation-alpha:               0.80;
 
+    /* §interaction — the warp spring + the gravity-well tunings (NUMERIC, NOT
+       colors — read ONCE on mount via parseFloat, never reach a Canvas2D
+       fillStyle, so immune to the W30 light-dark()/Canvas2D leak; AY.W-CON2).
+       Mode-INVARIANT, declared ONCE in :root (the .dark arm needs no numeric
+       re-declare — a per-mode value SPLIT is what proof:constellation-tokens
+       clause (c) flags, and these tunings are identical in both modes).
+       `--constellation-warp-response` is the keyframes.js ANGULAR PERIOD (the
+       SwiftUI .spring(response:) axis), NOT a settle-duration — at ζ=1 the 2%
+       settle lands at t₂ ≈ 5.83/ω₀ ≈ 0.93·response (the engine keeps the
+       keyframes.js ω₀ = 2π/response convention, mints no second ω). */
+    --constellation-warp-response:    0.55;   /* s — keyframes.js angular period (NOT a settle) */
+    --constellation-warp-zeta:        1.0;    /* critically damped — a focal mark must NOT ring */
+    --constellation-well-gain:        14000;  /* inverse-square force scale (the held-pull gain) */
+    --constellation-well-reach:       340;    /* base-width px — the well's reach (k-scaled at step) */
+    --constellation-well-ramp:        4.0;    /* 1/s — the hold/release ramp rate (≈0.25s to full) */
+    --constellation-well-max-speed:   4.0;    /* base-width px/frame cap — the no-slingshot clamp */
+    --constellation-well-hold-ms:     140;    /* ms hold before the well arms */
+    --constellation-wander-idle:      8000;   /* ms — min idle between auto re-targets (the W-CON1 drift cadence) */
+    --constellation-wander-jitter:    8000;   /* ms — random extra idle per cadence (so the rhythm is not metronomic) */
+
     /* ═══════════════════════════════════════════════
        §6  SECTION PALETTE — 13-stop jewel tones (light)
        ═══════════════════════════════════════════════ */

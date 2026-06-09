@@ -7,6 +7,7 @@ import { mulberry32 } from "../../../../src/utils/prng";
 import {
     seedField,
     stepField,
+    stepWell,
     refitField,
     drawEdges,
     drawNodes,
@@ -19,9 +20,13 @@ import {
     warpSettled,
     pickWanderTarget,
     DEFAULT_PALETTE,
+    DEFAULT_WELL_CONFIG,
+    WARP_RESPONSE,
+    WARP_ZETA,
     type ConstellationField,
     type ConstellationNode,
     type ConstellationWander,
+    type ConstellationWell,
 } from "../../../../src/components/custom/constellation/constellationField";
 
 /** A complete `ConstellationField` (focalIndex + warp) — AX.W17. */
@@ -389,5 +394,223 @@ describe("constellation refit + auto-drift wander (AY.W-CON1)", () => {
             expect(p.vy).toBe(b.nodes[i].vy);
         });
         expect(a.focalIndex).toBe(b.focalIndex);
+    });
+});
+
+describe("constellation warp ω-reconcile + gravity-well (AY.W-CON2)", () => {
+    /** The keyframes.js critically-damped 2%-settle: t₂ ≈ 5.83/ω₀ = 5.83·response/(2π). */
+    const settleFrames = (response: number, fps = 60) =>
+        Math.round(((5.83 * response) / (2 * Math.PI)) * fps);
+
+    /**
+     * Integrate the warp spring from a known start over a step target and return
+     * the per-frame |x−target| gap. `response`/`zeta` ride field.warpCfg (the
+     * tokenised override seam — AY.W-CON2). Still nodes so the target does not drift.
+     */
+    function warpGapTrace(
+        response: number,
+        zeta: number,
+        frames: number,
+    ): { gap: number[]; startGap: number } {
+        const field = makeField([
+            { x: 0, y: 0, vx: 0, vy: 0, r: 2, dim: false },
+            { x: 600, y: 0, vx: 0, vy: 0, r: 2, dim: false },
+        ]);
+        field.warpCfg = { response, zeta };
+        field.warp.x = 0; // start at node 0
+        field.warp.y = 0;
+        setWarpTarget(field, 1); // chase node 1 at (600, 0)
+        const target = field.nodes[1];
+        const startGap = Math.hypot(field.warp.x - target.x, field.warp.y - target.y);
+        const gap: number[] = [];
+        for (let i = 0; i < frames; i++) {
+            warpStep(field, 1 / 60);
+            gap.push(Math.hypot(field.warp.x - target.x, field.warp.y - target.y));
+        }
+        return { gap, startGap };
+    }
+
+    it("warp-settle-matches-keyframes-model — the 2%-settle frame tracks round(5.83·response/(2π)·60) at ζ=1", () => {
+        // The ω-reconcile (D2): `response` is the keyframes.js ANGULAR PERIOD, NOT a
+        // settle. At ζ=1 the 2%-settle is governed by the (1+ω₀t)e^(−ω₀t) envelope →
+        // t₂ ≈ 5.83/ω₀ = 5.83·response/(2π). The DISCRETE warpStep (semi-implicit
+        // Euler at the clamped 1/60 dt) tracks that continuous envelope within ~1
+        // frame of discretization lag — so assert the integrated gap crosses below 2%
+        // of the initial gap WITHIN ±2 frames of the model frame, and that the
+        // discrete/model ratio is ≈ 1.0 (NOT "looks springy", NOT off by a factor).
+        const response = 0.55;
+        const f = settleFrames(response); // ≈ 31
+        const { gap, startGap } = warpGapTrace(response, 1.0, f + 12);
+        const thresh = startGap * 0.02;
+        const firstUnder = gap.findIndex((g) => g <= thresh);
+        expect(firstUnder).toBeGreaterThan(0);
+        // the discrete settle is within 1 frame OF the keyframes.js model frame (the
+        // ω-reconcile is NUMERICALLY honest — the discrete integrator settles at the
+        // model's t₂, modulo the ~1-frame Euler lag, NOT at some unrelated frame).
+        expect(
+            Math.abs(firstUnder - f),
+            `the discrete 2%-settle landed at frame ${firstUnder}, off the keyframes.js model frame ${f} by ${Math.abs(firstUnder - f)} (> 2) — `,
+        ).toBeLessThanOrEqual(2);
+        // and the field has NOT settled a THIRD of the way in (else `response` is not
+        // the angular period it claims — the masking-at-default case the D2 reconcile
+        // surfaces).
+        const early = Math.floor(f / 3);
+        expect(gap[early]!).toBeGreaterThan(thresh);
+    });
+
+    it("warp-settle-SCALES-with-response — halving response ≈ halves the settle frame (the token semantics)", () => {
+        // The proof the token is the ANGULAR PERIOD: a SHORTER response settles
+        // PROPORTIONALLY sooner (not "stays ~0.55"). Settle = first frame the gap
+        // drops below 2%, measured at two response values.
+        const firstUnder = (response: number) => {
+            const { gap, startGap } = warpGapTrace(response, 1.0, 120);
+            const thresh = startGap * 0.02;
+            return gap.findIndex((g) => g <= thresh);
+        };
+        const settle55 = firstUnder(0.55);
+        const settle30 = firstUnder(0.3);
+        expect(settle55).toBeGreaterThan(0);
+        expect(settle30).toBeGreaterThan(0);
+        // 0.30/0.55 ≈ 0.545 — the settle frame scales with response (±20% tolerance
+        // for the discrete-step rounding). A response-independent settle would FAIL.
+        const ratio = settle30 / settle55;
+        expect(
+            ratio,
+            `the settle frame did not scale with response: response 0.55 → ${settle55}f, 0.30 → ${settle30}f (ratio ${ratio.toFixed(2)}, expected ≈ 0.545) — `,
+        ).toBeGreaterThan(0.4);
+        expect(ratio).toBeLessThan(0.72);
+    });
+
+    it("interaction-config-overrides-spring — a response:0.30 field settles FASTER than the 0.55 default", () => {
+        const fast = warpGapTrace(0.3, 1.0, 60).gap;
+        const slow = warpGapTrace(WARP_RESPONSE, WARP_ZETA, 60).gap;
+        // at the SAME frame, the faster (shorter-period) spring is closer to target.
+        const at = 18;
+        expect(
+            fast[at]! < slow[at]!,
+            `the tokenised override did not reach the integrator: at frame ${at} response-0.30 gap ${fast[at]!.toFixed(1)}px should be < response-0.55 gap ${slow[at]!.toFixed(1)}px`,
+        ).toBe(true);
+    });
+
+    // ── gravity-well ────────────────────────────────────────────────────────────
+    /** A well at `(x, y)` with the default config, target=1 (held). */
+    function makeWell(
+        x: number,
+        y: number,
+        over: Partial<ConstellationWell["cfg"]> = {},
+    ): ConstellationWell {
+        return {
+            x,
+            y,
+            strength: 0,
+            target: 1,
+            cfg: { ...DEFAULT_WELL_CONFIG, ...over },
+        };
+    }
+
+    /** Mean node |v| over the field. */
+    const meanSpeed = (field: ConstellationField) =>
+        field.nodes.reduce((s, p) => s + Math.hypot(p.vx, p.vy), 0) /
+        field.nodes.length;
+
+    it("well-perturbs-then-cools — mean |v| RISES while held, RETURNS to ~speed after release", () => {
+        const SPEED = 0.16;
+        const field = makeField(
+            seedField(mulberry32(0xbeef), 40, 800, 600, SPEED),
+            800,
+            600,
+        );
+        // rest baseline (a few cool frames at speed).
+        field.well = makeWell(-1, -1); // inactive
+        field.well.target = 0;
+        for (let i = 0; i < 10; i++) stepField(field, 1, SPEED, null, 1 / 60);
+        const restMean = meanSpeed(field);
+        // ARM the well at centre + hold for ≥ 30 frames — the field heats.
+        field.well.x = 400;
+        field.well.y = 300;
+        field.well.target = 1;
+        let heldPeak = 0;
+        for (let i = 0; i < 40; i++) {
+            stepField(field, 1, SPEED, null, 1 / 60);
+            heldPeak = Math.max(heldPeak, meanSpeed(field));
+        }
+        // RELEASE + step ≥ 30 frames — the field cools.
+        field.well.target = 0;
+        for (let i = 0; i < 40; i++) stepField(field, 1, SPEED, null, 1 / 60);
+        const cooledMean = meanSpeed(field);
+
+        // the field HEATED while held (mean |v| rose meaningfully above rest)…
+        expect(
+            heldPeak,
+            `the well did not perturb the field: held-peak mean |v| ${heldPeak.toFixed(4)} ≤ rest ${restMean.toFixed(4)}`,
+        ).toBeGreaterThan(restMean * 1.2);
+        // …and COOLED back to within ±5% of `speed` after release (field-cools).
+        expect(
+            Math.abs(cooledMean - SPEED) / SPEED,
+            `the field did not cool after release: mean |v| ${cooledMean.toFixed(4)} vs speed ${SPEED} (> ±5%) — the |v|→speed ease-back must renormalise`,
+        ).toBeLessThan(0.05);
+    });
+
+    it("well-no-slingshot — a co-located max-strength well keeps every node in [0,w]×[0,h]", () => {
+        const W = 800;
+        const H = 600;
+        const SPEED = 0.16;
+        const field = makeField(
+            seedField(mulberry32(0xdead), 40, W, H, SPEED),
+            W,
+            H,
+        );
+        // a node placed EXACTLY at the well centre (the singularity case).
+        field.nodes[0].x = 400;
+        field.nodes[0].y = 300;
+        field.nodes[0].vx = 0;
+        field.nodes[0].vy = 0;
+        // a MAX-strength well at centre with a large gain (the slingshot stress).
+        field.well = makeWell(400, 300, { gain: 80000 });
+        field.well.strength = 1; // already at full pull (skip the ramp)
+        for (let i = 0; i < 80; i++) {
+            stepField(field, 1, SPEED, null, 1 / 60);
+            for (const p of field.nodes) {
+                expect(Number.isFinite(p.x)).toBe(true);
+                expect(Number.isFinite(p.y)).toBe(true);
+                expect(p.x).toBeGreaterThanOrEqual(0);
+                expect(p.x).toBeLessThanOrEqual(W);
+                expect(p.y).toBeGreaterThanOrEqual(0);
+                expect(p.y).toBeLessThanOrEqual(H);
+            }
+        }
+    });
+
+    it("well-default-off byte-identity — a well-absent field steps identically to a no-well field", () => {
+        // adding the force pass must not perturb the default render: a field with NO
+        // well produces a node trace byte-identical to one stepped without the seam.
+        const mk = () =>
+            makeField(seedField(mulberry32(0x1234), 24, 800, 600, 0.16), 800, 600);
+        const a = mk(); // never assigned a well
+        const b = mk(); // never assigned a well
+        for (let f = 0; f < 30; f++) {
+            stepField(a, 1, 0.16, null, 1 / 60);
+            stepField(b, 1, 0.16, null, 1 / 60);
+        }
+        a.nodes.forEach((p, i) => {
+            expect(p.x).toBe(b.nodes[i].x);
+            expect(p.y).toBe(b.nodes[i].y);
+            expect(p.vx).toBe(b.nodes[i].vx);
+            expect(p.vy).toBe(b.nodes[i].vy);
+        });
+    });
+
+    it("stepWell is a no-op when field.well is undefined (the skipped pass)", () => {
+        const field = makeField(
+            seedField(mulberry32(9), 12, 400, 300, 0.16),
+            400,
+            300,
+        );
+        const before = field.nodes.map((p) => ({ vx: p.vx, vy: p.vy }));
+        stepWell(field, 1, 0.16, 1 / 60); // no field.well → returns immediately
+        field.nodes.forEach((p, i) => {
+            expect(p.vx).toBe(before[i].vx);
+            expect(p.vy).toBe(before[i].vy);
+        });
     });
 });

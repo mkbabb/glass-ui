@@ -134,7 +134,7 @@ export interface BlobSurface {
     // Lit glass surface (W9.b) — Blinn-Phong glint + Fresnel rim. `lit` gates the
     // whole block (default ON).
     lit: boolean;
-    /** CSS color for the Fresnel rim tint (resolved through the ColorResolver). */
+    /** CSS color for the Fresnel rim tint (resolved through the `/color` leaf). */
     rimColor: string;
     /** Light direction [x, y, z] (normalized in-shader). */
     lightDir: [number, number, number];

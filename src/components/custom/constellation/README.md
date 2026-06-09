@@ -147,7 +147,8 @@ function drawFocal(ctx: CanvasRenderingContext2D, field: ConstellationField, now
 | `seed` | `number \| string` | — | omit → fresh `Math.random` field; supply → reproducible `mulberry32` field (string hashed via `hashString`) |
 | `pointerReactive` | `boolean` | `true` | nodes steer gently toward the cursor + taps drop ripples (disabled under reduced-motion) |
 | `warpOnClick` | `boolean` | `false` | a click warps the focal node to the nearest drifting node + springs it there. **INDEPENDENT** of `pointerReactive` — warp works on a non-ripple lattice (disabled under reduced-motion) |
-| `drawOverlay` | `(ctx, field, now) => void` | — | the consumer skin pass; runs LAST, after the four neutral passes, with the live `ConstellationField`. Read `field.warp.{x,y}` for the spring-eased focal position |
+| `freeze` | `boolean` | — (auto) | deterministic-capture: a reproducible STATIC frame (no `stepField`, no advance) + a FROZEN `now` to `drawOverlay`. Omit → auto-derives from `?export \| ?print \| ?freeze`; `false` forces live. Set `seed` for cross-run determinism |
+| `drawOverlay` | `(ctx, field, now) => void` | — | the consumer skin pass; runs LAST, after the four neutral passes, with the live `ConstellationField`. Read `field.warp.{x,y}` for the spring-eased focal position. Under `freeze` it receives a FROZEN `now` |
 | `class` | `string` | — | forwarded to the host (pin/position/z-index live here) |
 
 ### Exposed methods (`defineExpose`)
@@ -239,6 +240,135 @@ Three properties make the warp read as a real spring chasing a real node:
 - **PRM policy (stated, not accidental).** Warp follows the ripple/steer precedent: **disabled under
   `prefers-reduced-motion`**. The click does not warp; the focal node stays put. The warp listener is
   simply not registered under PRM (its own guard, independent of the ripple block).
+
+---
+
+## Deterministic-capture freeze (`freeze` / `?export | ?print | ?freeze`)
+
+A pptx / print / screenshot pipeline needs a **reproducible static frame** — the same constellation
+pixel-for-pixel across captures. The **`freeze` prop** lays out ONE static frame and does NOT advance:
+seeded layout (set `seed` for a field stable ACROSS runs), no `stepField`, no ripple / warp / wander /
+well advance, and a **FROZEN `now`** handed to `drawOverlay` so a phase-driven skin (`(now % T) / T`)
+resolves to a fixed value — the pulse-ring radius is identical frame-over-frame.
+
+```vue
+<!-- explicit freeze — a stable, reproducible frame -->
+<Constellation seed="cover" :count="64" :freeze="true" :draw-overlay="drawAnomaly" />
+```
+
+Omit `freeze` and it **auto-derives from `location.search`** matching `export | print | freeze` — the
+deploy-pipeline contract, so a consumer's capture URL freezes the field with **zero per-instance
+wiring**:
+
+```vue
+<!-- no freeze prop: the field freezes automatically under ?export / ?print / ?freeze -->
+<Constellation seed="cover" :count="64" :draw-overlay="drawAnomaly" />
+```
+
+An explicit `:freeze="false"` forces the live path even under a capture URL. The freeze unifies with
+the reduced-motion one-static-frame path — `freeze || reducedMotion` is the single static-frame
+predicate (no parallel render branch); like PRM, a frozen capture takes no input (the pointer / warp /
+well listeners are not registered).
+
+---
+
+## Anomaly skin recipe (a copy-pasteable `drawOverlay`)
+
+A branded callout — a focal pulse, an optional resolved-check, a labelled annotation — is a **consumer
+`drawOverlay`**, NOT a library prop. The component ships **no** `anomaly` / `resolved` / `label` prop:
+that is deck-domain content (one consumer, a pinned mark with a monospace callout) and would violate
+the *zero deck-domain content lives in the component* canon. Instead, copy this recipe and pin it to
+the engine-owned focal (`field.warp.{x,y}` — the auto-drift / click-warp focal). The fractional anchor,
+the label text, and the `resolved` flag are **consumer state closed over the fn** — not library props.
+
+```ts
+import type { ConstellationField } from "@mkbabb/glass-ui/constellation";
+
+// CONSUMER state — closed over the overlay, NOT library props.
+const label = "anomaly";
+const resolved = false;
+const accent = "oklch(0.55 0.18 25)"; // your domain accent (slides aliases --ncsu-red)
+
+function drawAnomaly(
+    ctx: CanvasRenderingContext2D,
+    field: ConstellationField,
+    now: number,
+) {
+    // Pin to the engine-owned focal — the click-warp / auto-drift node
+    // (field.warp.{x,y}). Before the first warp it rides field-center.
+    const x = field.warp.x;
+    const y = field.warp.y;
+    if (field.focalIndex < 0 && x === 0 && y === 0) return;
+    const k = field.k; // multiply px constants by k so the mark scales with the field
+
+    // The pulse phase. Under ?freeze the engine hands a FROZEN `now`, so this
+    // resolves to ONE value — the ring radius is identical frame-over-frame.
+    const phase = (now % 2600) / 2600;
+
+    // outer pulse ring
+    ctx.strokeStyle = accent;
+    ctx.globalAlpha = (1 - phase) * 0.55;
+    ctx.lineWidth = 1.6 * k;
+    ctx.beginPath();
+    ctx.arc(x, y, (12 + phase * 24) * k, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // inner steady ring + soft halo + core dot
+    ctx.globalAlpha = 0.85;
+    ctx.lineWidth = 1.4 * k;
+    ctx.beginPath();
+    ctx.arc(x, y, 14 * k, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.globalAlpha = 0.18;
+    ctx.fillStyle = accent;
+    ctx.beginPath();
+    ctx.arc(x, y, 26 * k, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.beginPath();
+    ctx.arc(x, y, 4.4 * k, 0, Math.PI * 2);
+    ctx.fill();
+
+    // optional resolved checkmark (consumer state, not a lib prop)
+    if (resolved) {
+        ctx.strokeStyle = accent;
+        ctx.lineWidth = 1.8 * k;
+        ctx.beginPath();
+        ctx.moveTo(x - 2.4 * k, y + 0.2 * k);
+        ctx.lineTo(x - 0.6 * k, y + 2.2 * k);
+        ctx.lineTo(x + 2.6 * k, y - 2.0 * k);
+        ctx.stroke();
+    }
+
+    // dashed monospace callout pinned to the focal
+    const lx = x + 30 * k;
+    const ly = y - 18 * k;
+    ctx.globalAlpha = 0.5;
+    ctx.setLineDash([3 * k, 3 * k]);
+    ctx.beginPath();
+    ctx.moveTo(x + 8 * k, y - 6 * k);
+    ctx.lineTo(lx - 4 * k, ly + 4 * k);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.globalAlpha = 0.9;
+    ctx.fillStyle = accent;
+    ctx.font = `${11 * k}px ui-monospace, monospace`;
+    ctx.fillText(label, lx, ly);
+}
+```
+
+```vue
+<template>
+    <!-- a live wander focal the anomaly rides, frozen for a capture -->
+    <Constellation seed="cover" :count="60" warp-on-click wander
+                   :freeze="captureMode" :draw-overlay="drawAnomaly" />
+</template>
+```
+
+The recipe lives in the **demo** (`demo/stories/substrates/constellation.vue` — the "anomaly
+drawOverlay recipe + ?freeze" section) as the executable reference. A decl-model markup contract (e.g.
+`data-anomaly="0.6,0.36" data-anomaly-label="anomaly"`) is the consumer's, parsed in the consumer and
+re-expressed as the `label` / anchor / `resolved` state closed over this fn.
 
 ---
 

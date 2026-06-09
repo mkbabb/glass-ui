@@ -5,7 +5,7 @@ import { useIntersectionPause } from "../../../../composables/motion/useIntersec
 // leaf; goo-blob keeps its `[GooBlob]` diagnostic label via the `label` arg.
 import { compileShader, linkProgram } from "../../../../composables/glass/webgl/compile";
 import { resolveBudgetDpr } from "../../aurora/constants/budget";
-import type { ColorResolver } from "../../../../composables/color";
+import { cssToOklch, oklchToGammaRgb } from "../../../../composables/color";
 import { METABALL_VERTEX_SRC } from "../shaders/metaball.vert";
 import { METABALL_FRAGMENT_SRC } from "../shaders/metaball.frag";
 import type { BlobConfig } from "../types";
@@ -96,16 +96,6 @@ export interface UseMetaballRendererOptions {
     pointer: BlobPointer;
     satellites: BlobSatelliteSystem;
     config: BlobConfig;
-    /**
-     * The injected color seam (DEC-AT-2). Resolves a CONCRETE CSS color string to a
-     * GAMMA-sRGB triple in [0,1] fed straight into the shader's base-color uniform —
-     * the faithful AU.W7 lift paints gamma. REQUIRED: a no-resolver mount throws (the
-     * loud failure, not a silent gray) instructing the consumer to pass
-     * `defaultBlobColorResolver` from `@mkbabb/glass-ui/color` (or their own). The
-     * renderer is DOM-FREE: it never un-wraps a `var(--token)` — the SFC's
-     * `resolveTokenColor` leaf does that BEFORE handing strings here (inv-K-3 seam).
-     */
-    colorResolver: ColorResolver;
 }
 
 /**
@@ -113,7 +103,7 @@ export interface UseMetaballRendererOptions {
  *
  * This module owns ONLY the metaball-specific concerns: compiling the shader,
  * building the quad + uniform cache, and uploading the per-frame uniforms derived
- * from the mood / pointer / satellite systems and the injected color resolver. The
+ * from the mood / pointer / satellite systems and the resolved base color. The
  * generic WebGL2 lifecycle — context creation, the suspend/resume model, the
  * demand-driven rAF loop, the tab-visibility owner, the ResizeObserver, and the
  * webglcontextlost/restored robustness — lives in the substrate; this renderer
@@ -121,8 +111,11 @@ export interface UseMetaballRendererOptions {
  * `setup`/`frame`/`shouldContinue`/`resize`/`teardown` callbacks. It does NOT call
  * `getContext("webgl2")` itself (the single-bootstrap contract).
  *
- * Colors arrive ALREADY resolved to a gamma-sRGB triple via the injected
- * `colorResolver`; the value.js 1×1-canvas DOM probe is gone (the seam replaces it).
+ * Color is resolved INTERNALLY through the `/color` leaf (`cssToOklch →
+ * oklchToGammaRgb`) — the GAMMA-sRGB triple fed straight into the base-color uniform
+ * (the faithful AU.W7 lift paints gamma). The renderer is DOM-FREE: it never un-wraps
+ * a `var(--token)` — the SFC's `resolveTokenColor` leaf does that BEFORE handing
+ * concrete strings here (inv-K-3 seam); the value.js 1×1-canvas DOM probe is gone.
  */
 export function useMetaballRenderer(options: UseMetaballRendererOptions) {
     const {
@@ -134,16 +127,7 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
         pointer,
         satellites,
         config,
-        colorResolver,
     } = options;
-
-    if (typeof colorResolver !== "function") {
-        throw new Error(
-            "[GooBlob] a `colorResolver` is required. Pass `defaultBlobColorResolver` " +
-                "from `@mkbabb/glass-ui/color` (or your own `ColorResolver`) — the blob " +
-                "resolves its base CSS color through this seam and will not paint without it.",
-        );
-    }
 
     // AV.W7 G1 — the reduced-motion freeze is LIFTED into the `useWebGLCanvas`
     // substrate, which OWNS + LIVE-MONITORS the query (a `matchMedia` `change`
@@ -162,22 +146,23 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
     // clock, so a tempo change (pause / PRM) freezes motion without a discontinuity.
     let simTimeMs = 0;
 
-    // Memoise the resolver: the consumer cycles through a handful of stable color
-    // strings, so the resolve runs once per unique color rather than every frame.
-    // Cap defensively against unbounded growth from synthesized values.
+    // Resolve a CONCRETE CSS color string to a GAMMA-sRGB triple via the `/color`
+    // leaf (`cssToOklch → oklchToGammaRgb` — the faithful AU.W7 gamma exit; ONE shared
+    // color core, inv J-10, no parallel math). Memoised: the consumer cycles through a
+    // handful of stable color strings, so the resolve runs once per unique color rather
+    // than every frame. Cap defensively against unbounded growth from synthesized values.
     //
     // AX.W16 (arm 4) — the renderer is DOM-FREE: every string handed here is already
     // CONCRETE (the SFC's `resolveTokenColor` leaf un-wrapped any `var(--token)` via
     // the ONE cached cascade read). The renderer's prior `resolveRimColor` + `rimCache`
-    // — which reached BACK into the canvas element for a `getComputedStyle`, coupling
-    // the pure-fn ColorResolver to a DOM read the inv-K-3 seam forbade — are DELETED.
-    // ONE `resolveColor` cache (the ColorResolver memo) remains; it never touches the
+    // — which reached BACK into the canvas element for a `getComputedStyle` the inv-K-3
+    // seam forbade — are DELETED. ONE `resolveColor` cache remains; it never touches the
     // DOM (`getComputedStyle` no longer appears in this file).
     const colorCache = new Map<string, [number, number, number]>();
     function resolveColor(css: string): [number, number, number] {
         const cached = colorCache.get(css);
         if (cached) return cached;
-        const rgb = colorResolver(css);
+        const rgb = oklchToGammaRgb(cssToOklch(css));
         if (colorCache.size > 256) colorCache.clear();
         colorCache.set(css, rgb);
         return rgb;
@@ -411,8 +396,8 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     // Multi-stop palette (W11.b) — 2-4 in-family stops. EMPTY falls
                     // back to uBaseColor (uStopCount <= 1). The stops arrive ALREADY
                     // CONCRETE (the SFC un-wrapped any var()-token via resolveTokenColor
-                    // — AX.W16); the renderer parses them through the ColorResolver memo,
-                    // never the DOM.
+                    // — AX.W16); the renderer resolves them through the `resolveColor`
+                    // memo (the `/color` leaf), never the DOM.
                     const stops = paletteStops.value;
                     const stopCount = Math.min(stops.length, MAX_BLOB_STOPS);
                     gl.uniform1i(U.uStopCount, stopCount);
@@ -550,9 +535,9 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
 
                     // Lit glass surface (W9.b) — Blinn-Phong glint + Fresnel rim.
                     // `uRimColor` arrives ALREADY CONCRETE (the SFC un-wrapped any
-                    // var()-token via resolveTokenColor — AX.W16) and parses through the
-                    // SAME injected ColorResolver memo as `uBaseColor`, never the DOM.
-                    // Gated behind `uLit` (default lit).
+                    // var()-token via resolveTokenColor — AX.W16) and resolves through
+                    // the SAME `resolveColor` memo (the `/color` leaf) as `uBaseColor`,
+                    // never the DOM. Gated behind `uLit` (default lit).
                     gl.uniform1f(U.uLit, cSurf.lit ? 1.0 : 0.0);
                     const rim = resolveColor(rimColor.value);
                     gl.uniform3f(U.uRimColor, rim[0], rim[1], rim[2]);

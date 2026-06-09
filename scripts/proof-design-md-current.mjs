@@ -18,14 +18,6 @@
 //                 aurora + blob both consume), not ONLY the CPU `color.ts`
 //                 flatten. (The v4.1 doc named only `color.ts`.)
 //
-//   WEBGPU-RELAX — name the WebGPU / multi-pass relaxation of invariant 8: the
-//                 `createGPUCanvas` substrate + the WGSL color twin + the
-//                 multi-pass (smoothed structure tensor + anisotropic Kuwahara)
-//                 painterly passes, RE-STATING invariant 8 as the WebGL2-single-
-//                 pass FALLBACK contract (not a violated invariant). (The v4.1
-//                 doc said "Single draw, single shader" + "No multi-pass
-//                 pipelines" with no fallback framing.)
-//
 //   PAINTERLY-MEDIUMS — name the W4 painterly mediums + the tensor-orientation
 //                 axis: the structure-tensor / ETF orientation field, real
 //                 (height→normal→relit) impasto, the van-Gogh atomic-stroke
@@ -61,17 +53,6 @@ const MARKERS = [
             "OKLCH_MATRICES_GLSL",
         ],
         gap: "does not name the SHARED procedural-color.glsl.ts color source (the W5 splice) — names only the CPU color.ts flatten",
-    },
-    {
-        label: "WEBGPU-RELAX",
-        // The WebGPU/multi-pass relaxation must be named by its concrete terms.
-        // Require BOTH a backend term AND a multi-pass term so a passing mention
-        // re-states invariant 8 as the fallback contract, not a stray word.
-        allOf: [
-            ["createGPUCanvas", "WebGPU", "WGSL"],
-            ["multi-pass", "multipass", "Kuwahara"],
-        ],
-        gap: "does not name the WebGPU/multi-pass relaxation of invariant 8 (createGPUCanvas/WGSL + Kuwahara/multi-pass) re-stating it as the WebGL2-single-pass fallback contract",
     },
     {
         label: "PAINTERLY-MEDIUMS",

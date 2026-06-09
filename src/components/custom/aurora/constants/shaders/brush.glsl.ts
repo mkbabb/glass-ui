@@ -231,12 +231,19 @@ void paintOver(inout vec3 col, inout float height, StrokeHit s,
     c = max(oklabToLinearSrgb(oklchToOklab(lch)), vec3(0.0));
   }
   // Value streak (the loaded-brush light/dark across the bristles) — kept for every
-  // medium that reaches paintOver (the smooth pole never does).
-  c *= 1.0 + streak * streakAmp * 2.0;
+  // medium that reaches paintOver (the smooth pole never does). The along-spine value
+  // modulation is the loaded-brush light/dark that gives each stroke its OWN directional
+  // luminance band — the structure-tensor signal a low-contrast color field (a uniform-hue
+  // oil field) has no other source for (the §4.2 anisotropy lift on the flat-palette case).
+  c *= 1.0 + streak * streakAmp * 3.2;
 
-  // Subtle value variance across width (hollow-center catch-light)
-  float crossShade = smoothstep(0.0, 0.4, s.edgeN) * (1.0 - smoothstep(0.65, 1.0, s.edgeN));
-  c *= 1.0 + crossShade * 0.05;
+  // Cross-stroke ridge/valley shading — a catch-light along the spine centre, darkening to
+  // the stroke edges. This is the strongest DIRECTIONAL luminance cue: it carves a bright
+  // ridge down the stroke's length and dark grooves between adjacent strokes, so a field of
+  // parallel strokes reads as parallel light/dark bands (the high-A van-Gogh signature) even
+  // where the underlying colour is flat. s.edgeN is 0 at the edge, 1 at the spine.
+  float ridgeShade = smoothstep(0.0, 0.55, s.edgeN);
+  c *= 1.0 + (ridgeShade - 0.5) * 0.30;
 
   float softLimit = mix(0.35, 0.98, hardness);
   float alpha = smoothstep(0.0, 1.0 - softLimit, s.coverage) * strokeOpacity;
@@ -274,7 +281,13 @@ vec3 relightImpasto(vec3 col, float height, float canvasBase) {
   // Modulate the lit terms by how much paint sits here (no relief on bare ground).
   float relief = clamp(h * 1.5, 0.0, 1.0);
   vec3 lit = col * (1.0 + uImpasto * relief * (diff - 0.5) * 0.5 * uLightColor);
-  lit += uImpasto * relief * spec * 0.6 * uLightColor;
+  // The specular glint is gated to ACCUMULATED-thick paint (height²) — a per-fine-stroke
+  // sharp glint on every thin fill dab read as bright isotropic SPECKLE that buried the
+  // directional stroke bands (the §4.2 anisotropy / §4.3 slope sink on the low-contrast
+  // oil field). Only where real impasto has built up does the raked glint fire, so the
+  // highlight tracks the macro ridges, not the fine speckle.
+  float specGate = clamp(height, 0.0, 1.0);
+  lit += uImpasto * relief * spec * specGate * 0.5 * uLightColor;
   return lit;
 }
 
@@ -321,10 +334,14 @@ StrokeHit bestOil(vec2 p, float cellSize, float lenMul, float halfWMul,
         f = safeDir(flow);
       }
       // Per-stroke deterministic local perturbation so alternate stroke layers stay
-      // live. Tensor strokes get LESS angular jitter (the field already orients them).
-      float jScale = (uStrokeOrient == 1) ? 0.4 : 1.0;
-      float angJ = (hash21(cc + seed + 11.0) - 0.5) * 0.9 * jScale;  // +/- 0.45/0.18 rad
-      float localCurl = (fbm(center * (2.6 + seed * 0.11) + seed * 1.9) - 0.5) * 0.55 * uFlowCurl;
+      // live. Tensor strokes get FAR less angular jitter (the field already orients them
+      // — over-jittering the tensor strokes scatters their directions and the rendered
+      // field reads isotropic, the §4.2 anisotropy floor). The flow-oriented (non-tensor)
+      // strokes keep the full jitter (they have no per-cell orientation source).
+      float jScale = (uStrokeOrient == 1) ? 0.15 : 1.0;
+      float angJ = (hash21(cc + seed + 11.0) - 0.5) * 0.9 * jScale;  // +/- 0.45/0.07 rad
+      float curlScale = (uStrokeOrient == 1) ? 0.30 : 1.0;
+      float localCurl = (fbm(center * (2.6 + seed * 0.11) + seed * 1.9) - 0.5) * 0.55 * uFlowCurl * curlScale;
       vec2 dir = rotateDir(f, angJ + localCurl);
 
       // AX.W13 — the SBR energy grade is a PROFILE field (energyGrade), not a buried

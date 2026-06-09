@@ -14,7 +14,7 @@ hero.
 npm install @mkbabb/glass-ui
 ```
 
-`@mkbabb/value.js` and `@mkbabb/keyframes.js` are peer dependencies (the injected `ColorResolver`
+`@mkbabb/value.js` and `@mkbabb/keyframes.js` are peer dependencies (the OKLCh color core
 and the pointer spring). Import the blob from its subpath:
 
 ```ts
@@ -26,23 +26,23 @@ import { GooBlob } from "@mkbabb/glass-ui/goo-blob";
 ```vue
 <script setup lang="ts">
 import { GooBlob, BLOB_CONFIG_DEFAULTS } from "@mkbabb/glass-ui/goo-blob";
-import { defaultBlobColorResolver } from "@mkbabb/glass-ui/color";
 </script>
 
 <template>
   <!-- A calm, lit, ambient brand mark — the warm-cream living bead the defaults paint -->
   <GooBlob
     color="var(--card)"
-    :color-resolver="defaultBlobColorResolver"
     :config="BLOB_CONFIG_DEFAULTS"
     class="w-28"
   />
 </template>
 ```
 
-`color` and `colorResolver` are REQUIRED; `config` is required unless an ancestor
-`provide(BLOB_CONFIG_KEY, …)` supplies it (a mount with neither throws — there is no silent
-defaults synthesis). Pass `BLOB_CONFIG_DEFAULTS` for the stock lit warm-cream droplet — the
+`config` is required unless an ancestor `provide(BLOB_CONFIG_KEY, …)` supplies it (a mount
+with neither throws — there is no silent defaults synthesis). Color is resolved INTERNALLY
+through the `/color` leaf (`cssToOklch → oklchToGammaRgb`) — no injected resolver prop (the
+speculative DI was stripped at W-BLOB3; see `docs/consumer-evidence/goo-blob.md`). Pass
+`BLOB_CONFIG_DEFAULTS` for the stock lit warm-cream droplet — the
 defaults carry a light warm-cream OKLCh `color.paletteStops` ramp, so a bare mount paints the
 cream bead WITHOUT a per-instance `color`; `color` is only the single-stop fallback. Pass an
 explicit `color` (e.g. `var(--primary)`) for the dark per-instance opt-in.
@@ -117,8 +117,7 @@ It is **not** a data visualization and conveys no information — the canvas is 
 
 | Prop            | Type                  | Default | Notes |
 |-----------------|-----------------------|---------|-------|
-| `color`         | `string` (CSS color)  | —       | REQUIRED. Any CSS color string — hex, `oklch(...)`, `var(--token)`. A `var(--token)` is un-wrapped to a concrete `rgb(...)` before the resolver sees it (re-resolved on a dark-mode flip). |
-| `colorResolver` | `ColorResolver`       | —       | REQUIRED. Resolves a concrete CSS color to a gamma-sRGB `[r,g,b]` triple. Pass `defaultBlobColorResolver` from `@mkbabb/glass-ui/color`. |
+| `color`         | `string` (CSS color)  | —       | REQUIRED. Any CSS color string — hex, `oklch(...)`, `var(--token)`. A `var(--token)` is un-wrapped to a concrete `rgb(...)` then resolved INTERNALLY through the `/color` leaf to a gamma-sRGB triple (re-resolved on a dark-mode flip). |
 | `config`        | `BlobConfig`          | —       | The metaball tuning. REQUIRED unless an ancestor `provide(BLOB_CONFIG_KEY, …)` supplies it. Pass `BLOB_CONFIG_DEFAULTS` for the stock look. |
 | `seed`          | `string`              | `""`    | Extra seed mixed into the satellite PRNG for a unique-but-reproducible system. |
 | `paused`        | `boolean`             | `false` | `v-model:paused` — the declarative WCAG-2.2.2 pause seam. `true` parks the render loop, `false` restarts it. Wire a `<DockBackgroundToggle>`'s `v-model:paused` straight to it. |
@@ -195,9 +194,9 @@ interface BlobConfig {
   // The lit-glass surface — glint + Fresnel rim + iridescence/SSS/core-glow
   surface: {
     lit: boolean;             // (default true)
-    rimColor: string;         // Fresnel rim tint via the ColorResolver — a warm MID-TONE that
-                              // defines the silhouette curve on the light cream body
-                              // (default "#8c694e", oklch(0.55 0.06 60))
+    rimColor: string;         // Fresnel rim tint (resolved via the `/color` leaf) — a warm
+                              // MID-TONE that defines the silhouette curve on the light cream
+                              // body (default "#8c694e", oklch(0.55 0.06 60))
     lightDir: [number, number, number];  // light direction (default [0.4, 0.7, 0.6])
     specStrength: number;     // energy-conserving glint weight, re-derived sub-unity (default 0.16)
     specShininess: number;    // specular exponent — a soft broad lobe (default 20)
@@ -297,9 +296,9 @@ roundness, satellites tucked, the lit dome kept — a deliberate poster, not a r
   diverge between the two surfaces. The line-for-line TS port + the equivalence gate
   (`proof:blob-color-equivalence`) lock it.
 - **The renderer is DOM-free.** A `var(--token)` color is un-wrapped to a concrete `rgb(...)` by the
-  SFC (the single cached `resolveTokenColor` cascade read) BEFORE the renderer's `ColorResolver` sees
-  it — value.js's `parseCSSColor` cannot parse a `var()` wrapper, and the renderer never reaches the
-  DOM. The un-wrap re-resolves on a dark-mode flip.
+  SFC (the single cached `resolveTokenColor` cascade read) BEFORE the renderer resolves it through the
+  `/color` leaf (`cssToOklch → oklchToGammaRgb`) — value.js's `parseCSSColor` cannot parse a `var()`
+  wrapper, and the renderer never reaches the DOM. The un-wrap re-resolves on a dark-mode flip.
 - **`deriveBlobPalette(seed, options)`** (`@mkbabb/glass-ui/color`) — one seed → 2–4 gamut-mapped OKLCh
   stops distributed across the body + satellites, parallel to aurora's `deriveAurora`, sharing one
   hoisted `ColorHarmony` vocabulary. Feed the stops to `config.color.paletteStops`.
@@ -355,7 +354,6 @@ roundness, satellites tucked, the lit dome kept — a deliberate poster, not a r
 import { ref } from "vue";
 import { GooBlob, BLOB_CONFIG_DEFAULTS } from "@mkbabb/glass-ui/goo-blob";
 import { DockBackgroundToggle } from "@mkbabb/glass-ui/dock";
-import { defaultBlobColorResolver } from "@mkbabb/glass-ui/color";
 
 const paused = ref(false);
 </script>
@@ -364,7 +362,6 @@ const paused = ref(false);
   <GooBlob
     v-model:paused="paused"
     color="var(--card)"
-    :color-resolver="defaultBlobColorResolver"
     :config="BLOB_CONFIG_DEFAULTS"
     class="w-80"
   />
@@ -378,7 +375,7 @@ const paused = ref(false);
 
 ```
 goo-blob/
-├── GooBlob.vue              # the shell — props (incl. v-model:paused), resolver injection,
+├── GooBlob.vue              # the shell — props (incl. v-model:paused),
 │                            #   var()-unwrap (the resolveTokenColor leaf), expose, wrapper shadow
 ├── types.ts                 # BlobConfig, BlobMood, BlobMerge, BlobQuality, MoodParams,
 │                            #   MetaballSource, BLOB_CONFIG_KEY/DEFAULTS
@@ -400,7 +397,8 @@ goo-blob/
 The fragment shader is **composed from cohesive partials** spliced into one source string at module
 load — the emitted shader is character-equivalent to a hand-inlined version. The renderer composes the
 shared `useWebGLCanvas` substrate and is DOM-free: the SFC un-wraps every color via one
-`resolveTokenColor` leaf before handing concrete strings to the renderer's injected `ColorResolver`.
+`resolveTokenColor` leaf before the renderer resolves the concrete strings through the `/color` leaf
+(`cssToOklch → oklchToGammaRgb`).
 
 ---
 

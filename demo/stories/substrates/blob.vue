@@ -17,7 +17,6 @@ import { BLOB_CONFIG_DEFAULTS } from "../../../src/components/custom/goo-blob/ty
 import { WatercolorDot } from "../../../src/components/custom/watercolor-dot";
 import { DockBackgroundToggle } from "../../../src/components/custom/dock";
 import {
-    defaultBlobColorResolver,
     deriveBlobPalette,
     oklchStopToHex,
     type ColorHarmony,
@@ -146,7 +145,6 @@ watch([interactionPaused, moodPaused], () => {
                         ref="interactionBlob"
                         v-model:paused="interactionPaused"
                         color="var(--card)"
-                        :color-resolver="defaultBlobColorResolver"
                         :config="interactionCfg"
                         seed="interaction"
                         @click="onInteractionClick"
@@ -213,7 +211,6 @@ watch([interactionPaused, moodPaused], () => {
                         ref="moodBlob"
                         v-model:paused="moodPaused"
                         color="var(--card)"
-                        :color-resolver="defaultBlobColorResolver"
                         :config="heroConfig"
                         seed="mood"
                     />

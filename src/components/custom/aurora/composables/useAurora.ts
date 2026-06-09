@@ -14,7 +14,6 @@ import {
 import { asGetter, type ConfigSource } from "./configSource";
 import { useIntersectionPause } from "../../../../composables/motion/useIntersectionPause";
 import { useScrollProgress } from "../../../../composables/motion/useScrollProgress";
-import { resolveRenderModeAsync } from "../constants/renderMode";
 import type { AuroraConfig } from "../constants/presets";
 
 /**
@@ -333,32 +332,12 @@ export function useAurora(
                 // the *whether* — HA4 §1.3).
                 cancelSchedule = scheduleAfterFirstPaint(() => {
                     cancelSchedule = null;
-                    // AW.W7b — probe for WebGPU PAST first paint (the CSS placeholder
-                    // already painted), then arm. The probe resolves a non-fallback
-                    // device → reconstruct the (still un-armed, cheap) inst on the
-                    // WebGPU backend; else the WebGL2 fragment path is the fallback.
-                    // A probe failure / no-WebGPU keeps the WebGL2 inst untouched.
+                    // Arm the WebGL2 fragment path PAST first paint (the CSS
+                    // placeholder already painted). Re-check visibility — an
+                    // Aurora the observer later reports off-screen is not armed
+                    // until it genuinely intersects.
                     if (!visibility.value) return; // still off-screen — re-trigger later
-                    void resolveRenderModeAsync("webgl")
-                        .then(({ substrate, device }) => {
-                            if (armAttempted) return;
-                            if (substrate === "webgpu" && device && inst && canvasRef.value) {
-                                // Swap the un-armed WebGL2 inst for the WebGPU backend.
-                                inst.dispose();
-                                inst = createAurora(canvasRef.value, getCfg(), {
-                                    initStrategy: "deferred",
-                                    ...runtimeOptions,
-                                    gpuDevice: device,
-                                });
-                            }
-                            if (visibility.value) armRuntime();
-                        })
-                        .catch(() => {
-                            // fail-explicit: a probe rejection is impossible
-                            // (resolveRenderModeAsync never rejects), but if the
-                            // environment surprises us, fall back to the WebGL2 inst.
-                            if (visibility.value) armRuntime();
-                        });
+                    armRuntime();
                 });
             },
             { immediate: true },

@@ -5,9 +5,10 @@
 This is the design document **of record** — the *why* behind the shader
 architecture, distinct from the consumer-contract `README.md` (which W33 owns).
 v5.0 brings the doc current with the AW aurora band: the W5 shared-color splice
-(landed), and the W4 painterly mediums + the W7 WebGPU/multi-pass relaxation
-(staged as the forward contract — see §10 "Spec deltas (v4.1 → v5.0)" for the
-landed-vs-staged split). The earlier v4 → v4.1 deltas stay archived at §6.
+and the W4 painterly mediums on the WebGL2 single-pass path (landed). The WebGPU
+multi-pass branch was investigated and excised as substrate-without-consumer
+(AX.W14 — see §10 "Spec deltas (v4.1 → v5.0)"). The earlier v4 → v4.1 deltas stay
+archived at §6.
 
 ## 1. Purpose
 
@@ -31,7 +32,7 @@ Observed across all references; violating any visibly breaks the aesthetic linea
 5. **Flow couples to medium only for palette placement** — flow never drives which palette stop a pixel picks. But see (6).
 6. **Cursor deflects flow AND composition.** Gaussian-radius rotation around the pointer enters both `domainWarp` (color zones swirl) and `flowField` (stroke direction bends). This was a deliberate change from the v4 spec's "flow only" draft — references demand visible color-band curl, not just stroke bend. Palette position stays put; only the spatial coordinate is rotated.
 7. **Breath-paced motion.** Primary `warpDrift` at 0.005–0.010; full breath cycle 40–60 s. Stroke texture stays static (material, not process).
-8. **WebGL2 is single-pass-universal; multi-pass is the capability-gated enhancement.** The universal contract is ONE full-screen triangle, ONE fragment program, ZERO deps — uniforms select medium and flow behavior. This is the FALLBACK invariant: every engine renders the full visual contract on a single WebGL2 fragment pass with no FBO ping-pong and no external library. AW.W7 RELAXES the single-pass constraint *additively, on the WebGPU branch only*: a `createGPUCanvas` substrate behind `navigator.gpu`, a hand-written WGSL color/noise twin gated to its GLSL twin at 1e-6, and the genuinely multi-pass painterly passes a single fragment shader fundamentally cannot express — the Gaussian-smoothed multi-tap structure tensor and the anisotropic Kuwahara finish (the canonical "make a gradient read as oil paint" operator). The WebGPU multi-pass is a capability-gated ENHANCEMENT, not a violated invariant: WebGL2 STAYS the declared zero-regression fallback and renders the identical single-pass contract. (See §10 Δ09.)
+8. **WebGL2 single-pass-universal.** The universal contract is ONE full-screen triangle, ONE fragment program, ZERO deps — uniforms select medium and flow behavior. Every engine renders the full visual contract on a single WebGL2 fragment pass with no FBO ping-pong and no external library. The multi-pass painterly half (the Gaussian-smoothed multi-tap structure tensor + the anisotropic Kuwahara finish a single fragment shader cannot express) was investigated on a WebGPU branch and excised as substrate-without-consumer (AX.W14 — see §10 Δ09a); aurora renders single-pass WebGL2, unconditionally.
 
 ## 3. Non-invariants (explicit non-goals)
 
@@ -40,8 +41,8 @@ Observed across all references; violating any visibly breaks the aesthetic linea
 - No spatial-distance axis for palette (creates contour-line artifacts).
 - No global saturation/contrast compensation tricks (workarounds masking bad architecture).
 - No medium-specific shader branches at the top level. One shader. Medium parameters route inside.
-- **No multi-pass pipelines ON THE WEBGL2 PATH** (invariant 8). The WebGL2 fallback is single-pass-universal; multi-pass is the capability-gated WebGPU enhancement (the smoothed multi-tap structure tensor + the anisotropic Kuwahara finish, AW.W7) — additive on the WebGPU branch, no-op on WebGL2. Multi-pass is NOT a non-goal of the system; it is a non-goal of the *fallback* path.
-- No external libraries — neither path pulls Three.js/TSL; the WGSL twin is hand-written (the zero-dep posture survives the WebGPU branch).
+- **No multi-pass pipelines** (invariant 8). Aurora is single-pass-universal; the multi-pass painterly half (the smoothed multi-tap structure tensor + the anisotropic Kuwahara finish) was investigated and excised as substrate-without-consumer (AX.W14).
+- No external libraries — the WebGL2 path pulls no Three.js/TSL (the zero-dep posture).
 
 ## 4. Architecture
 
@@ -192,24 +193,21 @@ Per memory rule "Presets in consumers": the 11 authored themes (Sky, Dawn, Meado
 - **The van-Gogh atomic-stroke medium is a FIRST-CLASS body (`vangogh`, uMedium==5; AX.W13).** NOT a `mediumOil` passthrough — `mediumVangogh` AUTHORS its own `vangogh` `StrokeProfile`: a **comma/crescent** `strokeShape` (asymmetric taper — a loaded round head drawn to a fine tail, the divisionist atomic dab), **sparse high-contrast** placement (lower density gates → visible inter-stroke canvas gaps, so each mark reads separable, not a coverage smear), the **energy-grade as a PROFILE field** (`prof.energyGrade=1.0` — the Starry-Night length cascade `bestOil` runs off the field, NOT a buried `uMedium==5` branch), and **full-height impasto crowns** (`prof.impastoFloor=1.0` so every atomic dab catches its own glint). The bridge forces the ETF (tensor) orientation so the dabs queue into swirl-rows along the color field's tangent. The within-stroke OKLCh broken color (`paintOver`) + the OKLab stroke OVER-composite give pigment-true atom-level shimmer. No subject matter — the nuclei field is the "source image", so dabs trace its iso-bands.
 - **Oil-pastel is a DISTINCT deposition body, split from dry crayon (`oil-pastel`, uMedium==6; AX.W13).** `mediumOilPastel` DEPOSITS broad smeared directional strokes via the shared brush engine off its OWN `oil-pastel` `StrokeProfile`: a creamy soft `hardness` (strokes blend on overlap), heavy pigment build-up, and a chroma punch — the stroke-deposition model that gives oil-pastel its depth and less-uniform read. It shares the SUBSTRATE (the stroke cascade + tooth + relight) with oil/van-Gogh, NOT the dispatch body of dry crayon. `mediumCrayon` (uMedium==4) stays the DRY tooth-multiply. The two media share the SUBSTRATE, not the body (no duplicate, no shared dispatch).
 - **OKLab stroke OVER-composite + within-stroke OKLCh broken color (AX.W13).** `paintOver` composites overlapping strokes in OKLab on the painterly stroke mediums (oil/van-Gogh/oil-pastel) — lerp L,a,b of the over-color toward the under-color via the Ottosson matrices spliced from `procedural-color.glsl.ts` — so two complementary-hued strokes overlapping transition through a chromatic path, NOT the linear-RGB grey mud (the muddy-midtone defect OKLCh killed at the palette layer, re-entering at the compositing layer). The smooth/atmospheric pole never reaches `paintOver`, so it keeps the cheap linear mix. The within-stroke streak modulation perturbs HUE + CHROMA in OKLCh (not the old value-only `c *= 1+streak`), seeded per-stroke off a decorrelated streak fBm, so a single stroke carries a small hue gradient — broken color at the ATOM level, the impasto shimmer.
-- **The WebGL2-single-pass-now / WebGPU-full-quality-later split (the AW.W4 → AW.W7 handoff).** W4 ships the ETF orientation field as a single-pass small-tap approximation (the load-bearing fidelity lever). The Gaussian-smoothed multi-tap structure tensor, the LIC (line-integral-convolution) smear that convolves the field ALONG the ETF orientation, and the anisotropic Kuwahara finish are multi-pass operators the single-pass WebGL2 fragment shader fundamentally cannot express (invariant 8 bans multi-pass) — they stage on the AW.W7 WebGPU branch, which relaxes the constraint. ETF-without-LIC here is honest: the orientation field is the direction source; the LIC smear is the WebGPU finish.
+- **The single-pass ETF half ships; the multi-pass finish was excised (the AW.W4 → AX.W14 outcome).** W4 ships the ETF orientation field as a single-pass small-tap approximation (the load-bearing fidelity lever). The Gaussian-smoothed multi-tap structure tensor, the LIC (line-integral-convolution) smear that convolves the field ALONG the ETF orientation, and the anisotropic Kuwahara finish are multi-pass operators the single-pass WebGL2 fragment shader fundamentally cannot express (invariant 8 bans multi-pass). They were investigated for a WebGPU branch and EXCISED as substrate-without-consumer (AX.W14, terminal — Δ09a): no named consumer route binds the multi-pass finish, so no second backend ships. ETF-without-LIC here is honest: the orientation field is the direction source; the LIC smear is the finish that did not land.
 
-### The substrate — WebGPU-first with the WebGL2 fallback (AW.W7)
+### The substrate — single-pass WebGL2
 
-- **The verdict: STAGE IT, WebGPU-first with the WebGL2 fragment shader as the tested fallback.** The single architectural reason to adopt WebGPU is the painterly headline is multi-pass (the smoothed-tensor + the anisotropic Kuwahara), which the single-pass WebGL2 fragment shader fundamentally cannot do — not a perf chase. WebGPU ships by default in all four major browser engines as of 2025-11-25 (Safari 26 on macOS Tahoe / iOS 26 was the last); it is production-deployable in 2026 but not yet "Baseline widely available" (~95% WebGPU / 5% WebGL2 with the fallback). WebGL2 stays the UNIVERSAL fallback; WebGPU is the capability-gated enhancement, NEVER a hard requirement. The wispy-sky default renders identically on both paths.
-- **The backend-agnostic lifecycle carve.** The demand-driven schedule (the 3-reason suspend Set), the offscreen-park (the content-visibility hook + the tab-hidden owner), and the live PRM freeze are CARVED into `createCanvasLifecycle.ts` (the shared core); `useWebGLCanvas` is the WebGL2 backend over it; `createGPUCanvas` is the WebGPU sibling over the SAME core — no forked second copy. A parked rAF (offscreen / tab-hidden / PRM-reduce / paused) attaches ZERO frames on BOTH backends; the WebGPU compute dispatch inherits the park gate (`proof:offscreen-pause` extends to it).
-- **The probe.** `resolveRenderModeAsync` extends the synchronous `resolveRenderMode` to `"webgpu" | "webgl" | "css"`: it `await navigator.gpu.requestAdapter({powerPreference:"high-performance"})` (which NEVER rejects — it resolves `null` when unsupported, guarded to `"webgl"`) AND checks `isFallbackAdapter` (a software adapter is slower than the WebGL2 fragment path → `"webgl"`, not `"webgpu"`). It runs behind the deferred first-paint schedule (the CSS placeholder paints first), so it can never block first paint.
-- **The single-source-the-GPU-math-first discipline.** The WGSL color/noise math is the certified TWIN of the GLSL chunk — the shared `procedural-color.glsl.ts` emits `OETF_WGSL`/`OKLCH_MATRICES_WGSL`/`FBM_ROT_WGSL` (the SAME transposed value.js constants copied VERBATIM into `mat3x3f`; WGSL is column-major, so no re-transpose). `aurora.wgsl.ts` SPLICES it, never re-authoring the color core — so the WebGPU path can NEVER diverge from the WebGL2/GLSL reference (the AV.W1 two-copy "~2.2× too dark" bug class). `proof:aurora-wgsl-equivalence` certifies a hand-transcribed WGSL→TS port against the EXISTING GLSL oracle to 1e-6 over the asymmetric witness `#3a7bd5` (WGSL can't run in node). Hand-written WGSL, no Three.js/TSL; a fragment path (not compute) for the base field (faster, dodges Safari's compute limits); compute reserved for the structure-tensor pass.
-- **The WebGPU substrate-binary gate (the new `proof:webgpu-substrate-single`).** `proof:webgl-substrate-single`'s `getContext('webgl2')` regex passes a `navigator.gpu` backend BY IRRELEVANCE (zero protection on the WebGPU path). The new sibling gate asserts: the `navigator.gpu` device acquisition is confined to the sanctioned sites (the probe + the swapchain); NO baked aurora pass-count / `rgba16float` tensor format / Kuwahara-sector-count in EITHER substrate (the consumer declares the N-pass seam — `painterly.wgsl.ts`'s `PAINTERLY_TENSOR_FORMAT`/`PAINTERLY_KUWAHARA_SECTORS` live in the CONSUMER, not the substrate); the WGSL twin splices the shared chunk.
+- **The renderer.** Aurora renders on a single-pass WebGL2 fragment shader (invariant 8 — one draw, one shader). The synchronous `resolveRenderMode` decides the device tier (`auto` → `webgl`/`css`: a low-power / reduced-motion / save-data device gets the static CSS-gradient placeholder; otherwise the animated WebGL2 field). There is no second backend.
+- **The backend-agnostic lifecycle carve.** The demand-driven schedule (the 3-reason suspend Set), the offscreen-park (the content-visibility hook + the tab-hidden owner), and the live PRM freeze are CARVED into `createCanvasLifecycle.ts` (the shared core); `useWebGLCanvas` is the WebGL2 backend over it. A parked rAF (offscreen / tab-hidden / PRM-reduce / paused) attaches ZERO frames (`proof:offscreen-pause`).
 
 ### Interactivity (AW.W8) — opt-in, PRM-binding
 
-Interactivity is OPT-IN via the `AuroraConfig.interactivity` flag (`light` · `flow` · `scroll` · `wake`; default OFF — the wispy-sky default stays static). The axes:
+Interactivity is OPT-IN via the `AuroraConfig.interactivity` flag (`light` · `flow` · `scroll`; default OFF — the wispy-sky default stays static). The axes:
 
 - **Cursor-as-light (`light`, WebGL2).** The cursor drives the AW.W4.2 impasto `uLightDir` (the movable catch-light) — a slow idle auto-orbit when the pointer is at rest, pulled toward the pointer when active. No new lighting path; it reuses the impasto seam.
 - **Velocity-reactive flow (`flow`, WebGL2).** `cursorModel` gains a smoothed pointer velocity + a transient swirl-BURST. A fast flick injects a `uCursorBurst` (decaying over ~1s) that biases the flow along the pointer velocity — distinct from the steady `uCursorStrength` attraction. The stateless cursor swirl is SUPERSEDED by this velocity-reactive form.
 - **Scroll coupling (`scroll`, WebGL2).** Palette/breath progress binds to scroll via the EXISTING `useScrollProgress` public composable — no new substrate.
-- **The stateful pointer wake (`wake`, WebGPU).** On the AW.W7 WebGPU branch, one ping-pong velocity texture: the pointer writes a delta-tracked Gaussian splat (Dobryakov's stable-fluids pattern) that self-advects + dissipates — the cursor leaves lingering eddies, not an instantaneous swirl. A click → a radial-ripple impulse (`wake.wgsl.ts`).
+The `wake` stateful-pointer-wake axis (a ping-pong velocity texture, stable-fluids self-advection) was a WebGPU-only arm; with the WebGPU branch excised (AX.W14, §10 Δ09a) it does not ship — the `interactivity.wake` flag is unwired and unrendered. The shipped interactive axes are the three WebGL2 forms above.
 
 **The master tempo scalar is the single suppression seam.** Every axis routes through `masterTempo()` (frameLoop) which returns 0 under the substrate's live PRM ref (`prefers-reduced-motion: reduce`) and 1 otherwise — so PRM zeroes the whole interactive stack. **Tempo scales the integrated `dt` of every axis, NEVER `uTime`** (scaling the clock makes the flow jump when tempo changes; the absolute clock keeps marching, only the integration step scales). The DockBackgroundToggle pause (WCAG 2.2.2) suspends the loop entirely (the substrate's `manual` suspend), so it converges here too. **The cursor pointermove WRITE-PATH** (`injectCursorVelocity`) fires INDEPENDENT of the parked rAF loop, so a time-orbited `uLightDir` (frozen by `uTime` under reduce) is not enough — the cursor-driven write EARLY-OUTS on `handle.reducedMotion` (a parked loop with a live cursor write must not move the field). NO parallel `matchMedia` — every axis hooks the substrate's EXISTING live PRM ref (the AV.W7 lift owns the listener). Binding WCAG 2.3.3 (Animation from Interactions) + 2.2.2 (Pause, Stop, Hide); `proof:aurora-interaction-prm` is born-RED to catch any escape.
 
@@ -265,9 +263,9 @@ The aurora SFC + runtime + `useAurora` ride the shared `useWebGLCanvas` substrat
 ## 10. Spec deltas (v4.1 → v5.0)
 
 The post-AW cut. Every delta is **LANDED** in the aurora source and gated — the W4
-painterly + W5 color + W7 WebGPU arms all shipped (the W7 WGSL twin is gated OFF by
-default behind `WEBGPU_PARITY` until the W14 multi-pass finalize). Each delta names the
-proof gate that machine-locks it.
+painterly + W5 color arms shipped on the single-pass WebGL2 path. The W7 WebGPU
+investigation resolved to the EXCISE (Δ09a, AX.W14, terminal): no second backend
+ships. Each delta names the proof gate that machine-locks it.
 
 - **Δ07 — Shared OKLCh color source (AW.W5, LANDED).** The GPU-side OKLCh math
   moved out of an aurora-local copy into the SHARED
@@ -292,33 +290,25 @@ proof gate that machine-locks it.
   WebGL2 single-pass path inside `profile:budget`; the Gaussian-smoothed
   multi-tap tensor is the Δ09 WebGPU scope. (§2.4 reflects the axis names.)
 
-- **Δ09 — WebGPU multi-pass relaxation of invariant 8 (AW.W7, LANDED — gated OFF
-  by default until W14).** The
-  HINGE wave that relaxes the single-pass constraint *additively, on the WebGPU
-  branch only*: a `createGPUCanvas` substrate behind `navigator.gpu`, a
-  hand-written WGSL color/noise twin gated to its GLSL twin at 1e-6
-  (`proof:aurora-wgsl-equivalence`), and the genuinely multi-pass painterly
-  passes a single fragment shader cannot express — the Gaussian-smoothed
-  multi-tap structure tensor + the **anisotropic Kuwahara** finish. WebGL2 STAYS
-  the declared zero-regression single-pass FALLBACK
-  (`proof:aurora-backend-fallback`); the WebGPU multi-pass is a capability-gated
-  ENHANCEMENT, not a violated invariant. (§2 invariant 8 + §3 reflect the
-  re-statement.) Hand-written WGSL — no Three.js/TSL (the zero-dep posture
-  survives).
+- **Δ09 — WebGPU investigation (AW.W7, the HISTORICAL intent Δ09a resolved).** AW.W7
+  investigated relaxing the single-pass constraint on a WebGPU branch — a second
+  canvas substrate behind `navigator.gpu`, a color/noise twin of the GLSL chunk, and
+  the genuinely multi-pass painterly passes a single fragment shader cannot express
+  (the Gaussian-smoothed multi-tap structure tensor + the **anisotropic Kuwahara**
+  finish). The smooth single-pass twin that landed was reduced-parity-by-design and
+  consumer-less; the multi-pass painterly half was never wired. This intent is
+  RESOLVED by Δ09a (the EXCISE) below — it did not graduate to a shipping backend.
 
-- **Δ09a — WebGPU painterly EXCISE (AX.W14, LANDED).** The Δ09 multi-pass painterly
-  half (`painterly.wgsl.ts`'s structure-tensor / smoothed-tensor / anisotropic-Kuwahara
-  passes + `wake.wgsl.ts`'s stable-fluids pointer wake) shipped as DEAD substrate — the
-  WGSL strings + format constants were authored and exported but NEVER wired to a
-  consumer FBO ladder (zero importers). Per the no-overfitting bar (substrate-without-
-  consumer is binary), the two files are DELETED. WebGPU is RE-SCOPED to a **parity-floor
-  single-pass opt-in enhancement**: it draws the SAME single-pass base field the WebGL2
-  path draws, with the OKLCh palette ramp spliced from the shared chunk (no divergence).
-  `WEBGPU_PARITY` stays the opt-in lever; the auto-probe never routes a capable machine to
-  WebGPU by default — WebGL2 is the universal shipped default. The Kuwahara/LIC finish is
-  deferred to a future tranche if a real consumer demands it (then wired live, not shipped
-  as dead scaffold). The earlier "WebGPU full-quality multi-pass half" framing above is
-  the historical Δ09 intent; Δ09a is its resolution.
+- **Δ09a — WebGPU EXCISE (AX.W14 → AY, terminal).** The Δ09 multi-pass painterly half
+  shipped as DEAD substrate — the WGSL strings + format constants were authored and
+  exported but NEVER wired to a consumer FBO ladder (zero importers). Per the
+  no-overfitting bar (substrate-without-consumer is binary), AX.W14 deleted the
+  multi-pass half, and AY deleted the REMAINING smooth single-pass twin root-and-branch:
+  the WGSL shader, the GPU canvas + runtime, the uniform-pack half, the async probe arm,
+  the render-mode lever, and the five WebGPU gates are all gone. No named consumer route
+  binds the Kuwahara painterly finish at HEAD, so no second backend survives. Aurora
+  renders single-pass WebGL2, unconditionally; a future WebGPU path opens fresh with a
+  named consumer (a clean greenfield re-introduction, no scaffold to resurrect).
 
 - **Δ10 — Color-seam single-sourcing (AX.W11, LANDED).** Two OKLCh seam leaks the
   W5 migration left closed: (1) the **catch-light** (`lightColor`) is OKLCh-derived
@@ -327,9 +317,6 @@ proof gate that machine-locks it.
   on the OKLCh core (the blob's `warmCream` re-routes onto the SAME helper at its own
   `(0.97, 0.03, 85°)` anchor in W15). (2) The **palette ramp** (the smoothstep ease +
   the OKLab-rect-vs-OKLCh-hue-arc huePath dispatch) is HOISTED to the shared
-  `procedural-color.glsl` chunk as `PALETTE_RAMP_GLSL` / `PALETTE_RAMP_WGSL` twins both
-  `samplePalette` ports splice — so the ramp can never drift between the WebGL2 and
-  WebGPU backends. The WGSL `samplePalette` (gated OFF until W14) is now parity-true:
-  it splices the shared ramp + carries the `huePath` uniform. Gated by
-  `proof:aurora-wgsl-equivalence` (extended to certify `samplePaletteRamp` to 1e-6
-  across the huePath modes).
+  `procedural-color.glsl` chunk as `PALETTE_RAMP_GLSL` that aurora's `samplePalette`
+  splices — so the ramp lives in one source. Gated by `proof:aurora-oklch-interp`
+  (the in-shader OKLCh ramp across the huePath modes).

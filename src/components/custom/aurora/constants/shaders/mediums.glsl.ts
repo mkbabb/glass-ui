@@ -76,7 +76,13 @@ vec3 structureTensorField(vec2 p, float t, vec2 fallbackDir) {
   // Coherence-weighted blend: full tensor in coherent zones, smooth in flat ones.
   // Resolve the 180° sign ambiguity toward the fallback so the blend is continuous.
   if (dot(tangent, fallbackDir) < 0.0) tangent = -tangent;
-  vec2 dir = normalize(mix(fallbackDir, tangent, A) + 1e-6);
+  // The blend weight is a low-power curve (A^0.35) so even MODERATE-coherence zones queue
+  // strongly along the tangent (a flowing van-Gogh band reads coherent the way the
+  // structure-tensor metric measures it; a linear A under-orients the mid-band and the
+  // rendered field reads too isotropic — the §4.2 anisotropy lift). The flat-zone (A≈0)
+  // relax to the fallback survives (0^0.35=0), so tensor noise never reads as jitter.
+  float blendW = pow(A, 0.28);
+  vec2 dir = normalize(mix(fallbackDir, tangent, blendW) + 1e-6);
   return vec3(dir, A);
 }
 
@@ -244,7 +250,13 @@ StrokeProfile profileFor(int medium, int mode) {
     0.90,   // densitySml
     0.0,    // energyGrade — oil is uniform-length (no Starry-Night cascade)
     0.4,    // impastoFloor — oil's 0.4+0.6·edgeN crown falloff
-    0.95,   // densityFill — oil fills the bald spots (full coverage, no bare canvas)
+    0.92,   // densityFill — oil fills DENSELY with the directional low-relief fill so the
+            //               flat-colour regions between the macro strokes are TEXTURED with
+            //               flow-aligned fine strokes (the §4.2 anisotropy needs every pixel
+            //               to carry directional gradient; a flat untextured region reads as
+            //               an isotropic/degenerate tensor and drags mean A down). The fill
+            //               is now directional + low-streak, so dense coverage textures
+            //               WITHOUT the prior round-dab speckle.
     1.0     // groundFloor — oil keeps the full base (no ground darken; fills everywhere)
   );
 
@@ -256,25 +268,43 @@ StrokeProfile profileFor(int medium, int mode) {
   if (medium == MEDIUM_VANGOGH) {
     prof.shapeType   = 4;     // comma / crescent — the divisionist atomic dab
     prof.bristleAmp  = 0.22;  // a touch of raggedness on the loaded head
-    prof.streakFreq  = 16.0;  // tight within-stroke streaks (the loaded comma)
-    prof.streakAmp   = 0.16;
-    prof.impastoAmp  = 1.5;   // heavy paint per atomic dab
+    prof.streakFreq  = 16.0;  // within-stroke streaks (the loaded comma) — kept in the
+                              // FFT inertial band (a too-fine streak falls past the §4.3
+                              // resolved-band edge and reads as steeper, not shallower)
+    prof.streakAmp   = 0.22;
+    prof.impastoAmp  = 1.1;   // paint per atomic dab — eased off 1.5 so the impasto crown
+                              // does not push the dab past the PBR-Neutral 0.8 highlight
+                              // knee (where it compresses + loses the directional contrast
+                              // the §4.2 anisotropy reads)
     prof.hardness    = 0.92;  // crisp separable edges (visible inter-stroke gaps)
     prof.toothScale  = 220.0;
     prof.toothAmp    = 0.06;
-    prof.pigmentSat  = 1.12;  // the van-Gogh chroma punch
-    // SPARSE placement — visible inter-stroke canvas gaps (the atomicity read). Lower
-    // density gates than oil so each mark stays separable, not a coverage smear.
-    prof.densityBig  = 0.42;
-    prof.densityMed  = 0.52;
-    prof.densitySml  = 0.60;
+    prof.pigmentSat  = 0.60;  // the van-Gogh chroma — pulled DOWN off the hand-set 1.12
+                              // so the rendered colorfulness lands inside [55.67, 95.67]
+                              // (the hand-set punch + the saturated indigo/cobalt/yellow
+                              // ramp pushed C past the garish ceiling — §4.1 bidirectional)
+    // SPARSE-BUT-FLOWING placement — visible inter-stroke canvas gaps (the atomicity read)
+    // yet enough directional coverage that the swirl-rows read as coherent flowing bands
+    // (the §4.2 anisotropy needs the strokes to dominate the gradient field; too-sparse
+    // gates left large flat-ground regions that read isotropic and dragged mean A down).
+    prof.densityBig  = 0.58;
+    prof.densityMed  = 0.68;
+    prof.densitySml  = 0.74;
     prof.energyGrade = 1.0;   // the full Starry-Night length cascade (the profile field)
     prof.impastoFloor = 1.0;  // FULL-height crowns — every atomic dab catches its glint
-    prof.densityFill = 0.09;  // SPARSE fill — the bald-spot layer stays mostly open so
-                              // the atomic dabs read as separable marks over a bare
-                              // ground, not a fill-closed coverage smear (the gap read).
-    prof.groundFloor = 0.38;  // darken the bare-ground gaps to the visible Starry-Night
-                              // underpainting so the bright impasto dabs read separable.
+    prof.densityFill = 0.30;  // a LIGHT directional fill — textures the dark ground with
+                              // flow-aligned fine strokes so the gaps carry directional
+                              // gradient (the §4.2 A lift: an untextured dark ground reads
+                              // isotropic) WHILE staying open enough that the bright atomic
+                              // dabs still read separable over it (the gap-fraction floor
+                              // stays satisfied — the fill is fine + dark, not a smear).
+    prof.groundFloor = 0.31;  // darken the bare-ground gaps to the visible Starry-Night
+                              // underpainting so the bright impasto dabs read separable —
+                              // the dab↔ground contrast injects MID-scale energy (the §4.3
+                              // β-flatten: the PBR-Neutral highlight compression concentrated
+                              // energy at low-k and steepened β). 0.31 is the balance point:
+                              // deep enough to hold β in-band, light enough that the textured
+                              // ground keeps the §4.2 coherence the too-dark 0.26 floor cost.
     return prof;
   }
 
@@ -282,19 +312,40 @@ StrokeProfile profileFor(int medium, int mode) {
   // (slice 8 F1). Creamy soft edges (low hardness), heavy build-up, and a chroma punch.
   // Distinct from the dry-crayon tooth-multiply (mediumCrayon): oil-pastel LAYS strokes.
   if (medium == MEDIUM_OILPASTEL) {
-    prof.shapeType   = 2;     // dab / blob — broad short smeared marks
+    prof.shapeType   = 0;     // tapered directional smear — a round dab reads locally
+                              // isotropic (steep β / low A); the creamy oil-pastel mark
+                              // is a broad DIRECTIONAL smear, which carries the §4.2
+                              // coherence + adds the directional mid-band the §4.3 slope
+                              // needs (the round-dab profile rolled β off to −2.8)
     prof.bristleAmp  = 0.10;  // smooth creamy edges (waxy pastel, not bristle)
-    prof.streakFreq  = 6.0;   // soft low-frequency internal smear
-    prof.streakAmp   = 0.07;
+    prof.streakFreq  = 18.0;  // finer internal smear — adds the mid/high-band the smooth
+                              // round-dab profile lacked (the β-too-steep fix); the
+                              // directional along-spine streak flattens the §4.3 slope
+                              // without crossing the strokes
+    prof.streakAmp   = 0.20;
     prof.impastoAmp  = 0.7;   // build-up, but flatter than oil impasto
     prof.hardness    = 0.42;  // CREAMY — soft compositing, strokes blend on overlap
     prof.toothScale  = 280.0;
     prof.toothAmp    = 0.12;  // the pastel tooth reads stronger
-    prof.pigmentSat  = 1.16;  // the waxy chroma punch
-    prof.densityBig  = 0.80;  // dense — broad coverage, pigment-on-pigment build-up
-    prof.densityMed  = 0.90;
-    prof.densitySml  = 0.95;
-    prof.energyGrade = 0.0;   // uniform (no Starry-Night grade)
+    prof.pigmentSat  = 0.80;  // the waxy chroma — eased off 1.16 so the rendered C clears
+                              // the §4.1 band ceiling with margin while the K-M subtractive
+                              // overlap path (paintOverOklab) keeps the chroma OFF the grey floor
+    prof.hardness    = 0.58;  // creamy but the strokes still REGISTER — a too-soft blend
+                              // (0.42) smeared the marks into the smooth colour zones and
+                              // the field rolled off too steep (β≈−2.9, a near-gradient);
+                              // a crisper deposit keeps the mid/high-band the −5/3 slope needs
+    prof.densityBig  = 0.62;  // broad directional coverage — but NOT over-dense: too many
+                              // overlapping creamy strokes point in slightly-varied
+                              // directions and the local §4.2 coherence DROPS (over-dense
+                              // measured A=0.57 < the 0.62-density A=0.63). The mid-density
+                              // flow-aligned deposit is the coherence sweet spot.
+    prof.densityMed  = 0.78;
+    prof.densitySml  = 0.90;
+    prof.energyGrade = 0.80;  // a strong Starry-Night length cascade — varies stroke length
+                              // by luma/coherence so the dab-size energy spreads across
+                              // scales (the −5/3 cascade the uniform-length 0.0 grade lacked,
+                              // the §4.3 β-too-steep fix). Not the full van-Gogh 1.0 (oil-
+                              // pastel keeps its creamy broad character).
     prof.impastoFloor = 0.55; // a softer crown than van-Gogh's full-height glint
     return prof;
   }
@@ -335,12 +386,17 @@ void paintStrokeLayers(inout vec3 col, inout float height, StrokeProfile prof,
   float sMed = baseScale * 1.1;
   float sSml = baseScale * 0.45;
 
-  float lenMulBig = mix(2.2, 3.8, uStrokeAnisotropy);
-  float widMulBig = mix(0.55, 0.32, uStrokeAnisotropy);
-  float lenMulMed = mix(2.0, 3.4, uStrokeAnisotropy);
-  float widMulMed = mix(0.50, 0.30, uStrokeAnisotropy);
-  float lenMulSml = mix(1.6, 2.6, uStrokeAnisotropy);
-  float widMulSml = mix(0.45, 0.32, uStrokeAnisotropy);
+  // Strokes are elongated HARD (long·thin) so the rendered field reads strongly
+  // directional — the §4.2 structure-tensor anisotropy lift. A short fat dab is locally
+  // isotropic and drags the measured A down; a long thin stroke that hugs the tensor
+  // tangent is what gives Starry Night its A≈0.83. The width muls are pulled tighter to
+  // keep the long·thin aspect.
+  float lenMulBig = mix(3.0, 5.2, uStrokeAnisotropy);
+  float widMulBig = mix(0.42, 0.22, uStrokeAnisotropy);
+  float lenMulMed = mix(2.8, 4.8, uStrokeAnisotropy);
+  float widMulMed = mix(0.40, 0.21, uStrokeAnisotropy);
+  float lenMulSml = mix(2.2, 3.6, uStrokeAnisotropy);
+  float widMulSml = mix(0.36, 0.23, uStrokeAnisotropy);
 
   float jitterAmt = 0.75;   // large jitter — no grid
   vec2 flow = flowField(p, t);
@@ -359,26 +415,35 @@ void paintStrokeLayers(inout vec3 col, inout float height, StrokeProfile prof,
   paintOver(col, height, hMed, prof.streakFreq, prof.streakAmp,
             uImpasto * prof.impastoAmp * uStrokeAmount, prof.hardness, 2.7, prof.impastoFloor);
 
-  // Layer 3 — small dabs (more frequent, smaller)
-  int smlShape = (mode == 1) ? 2 : prof.shapeType; // knife uses dabs for sparkle
+  // Layer 3 — small strokes (more frequent, smaller). Even the knife layer-3 stays the
+  // medium's DIRECTIONAL shape, not a round dab — the round-dab sparkle was a fine-scale
+  // isotropic speckle that dragged the §4.2 anisotropy down + rolled the §4.3 slope shallow.
+  int smlShape = prof.shapeType;
   StrokeHit hSml = bestOil(p + vec2(-5.1, 8.4), sSml, lenMulSml, widMulSml,
-                           jitterAmt * 1.3, prof.densitySml, smlShape,
+                           jitterAmt * 0.9, prof.densitySml, smlShape,
                            prof.bristleAmp * 0.85, flow, t, 4.1, prof.energyGrade);
-  paintOver(col, height, hSml, prof.streakFreq * 1.4, prof.streakAmp * 0.8,
-            uImpasto * prof.impastoAmp * 0.65 * uStrokeAmount, prof.hardness, 4.1, prof.impastoFloor);
+  paintOver(col, height, hSml, prof.streakFreq * 1.4, prof.streakAmp * 0.6,
+            uImpasto * prof.impastoAmp * 0.45 * uStrokeAmount, prof.hardness, 4.1, prof.impastoFloor);
 
-  // Layer 4 — fill dabs (very dense, very small) — covers bald spots. The density is
+  // Layer 4 — fill strokes (dense, fine) — cover bald spots. The density is
   // PROFILE-driven (prof.densityFill): oil/oil-pastel fill to full coverage; van-Gogh
-  // keeps it sparse so the bare-ground gaps between its atomic dabs survive.
+  // keeps it sparse so the bare-ground gaps between its atomic dabs survive. The fill is
+  // ELONGATED + flow-oriented (NOT a round dab) — a dense round-dab fill is locally
+  // isotropic and was the dominant §4.2 anisotropy sink; an oriented fine stroke keeps the
+  // fill directional so the whole field reads coherent.
   float sFill = baseScale * 0.22;
-  float lenMulFill = mix(1.4, 2.0, uStrokeAnisotropy);
-  float widMulFill = mix(0.50, 0.38, uStrokeAnisotropy);
-  int fillShape = (mode == 1) ? 3 : 2; // knife=even, others=dab (round fills)
+  float lenMulFill = mix(2.0, 3.2, uStrokeAnisotropy);
+  float widMulFill = mix(0.34, 0.24, uStrokeAnisotropy);
+  int fillShape = (mode == 1) ? 3 : prof.shapeType; // knife=even; others inherit the medium's directional shape
   StrokeHit hFill = bestOil(p + vec2(3.9, -6.2), sFill, lenMulFill, widMulFill,
-                            jitterAmt * 1.5, prof.densityFill, fillShape,
+                            jitterAmt * 0.8, prof.densityFill, fillShape,
                             prof.bristleAmp * 0.6, flow, t, 8.9, prof.energyGrade);
-  paintOver(col, height, hFill, prof.streakFreq * 1.8, prof.streakAmp * 0.6,
-            uImpasto * prof.impastoAmp * 0.4 * uStrokeAmount, prof.hardness * 0.9, 8.9, prof.impastoFloor);
+  // The fill is a low-relief, low-streak base coat — it covers bald spots WITHOUT adding
+  // fine bright speckle (a high-impasto/high-streak fill caught a per-dab glint that read
+  // as isotropic noise over the directional macro strokes — the §4.2/§4.3 sink). Its
+  // positional jitter is tamed too so the fill strokes stay flow-aligned, not scattered.
+  paintOver(col, height, hFill, prof.streakFreq * 1.2, prof.streakAmp * 0.35,
+            uImpasto * prof.impastoAmp * 0.18 * uStrokeAmount, prof.hardness * 0.9, 8.9, prof.impastoFloor);
 
   // Optional crosshatch layer
   if (uStrokeLayers == 2) {

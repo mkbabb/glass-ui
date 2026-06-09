@@ -50,6 +50,10 @@ the ROOT (glass-ui where the component is shared; slides only for slide-specific
    into the path forward; ensure it's a perfected, abstracted glass-ui element.
 9. **Sliders**: collapse the slider zoo → `glass-scrubber` (standard, a FULLY ROUNDED iOS
    knob continuous with the track, not pill/offset) + `spectrum`; migrate ALL consumers.
+   RESOLVED (AY.W-SLD1, resolution (b) revert+invert-gate): the standard thumb IS the
+   fully-rounded iOS knob — `Slider.vue` paints `border-radius: 50%` over a square
+   `aspect-ratio: 1` footprint, riding the continuous glass fill; `proof:slider-two-only`
+   now REQUIRES the 50% circle. The user's words above match the shipped shape.
 10. **Slider keep-dock-open / dock-with-slider**: fix the broken integration.
 11. **Storybook prune + restructure** (the "wtf is X" list): remove header-ribbon route;
     fix/remove native-top-layer; remove glyph-face, disco-glyph; reconcile metric-badge vs

@@ -198,9 +198,8 @@ float fbm(vec2 p) {
 }
 
 // AX.W12 — the painterly-medium organic noise basis (Jarzynski PCG2D integer-bit hash
-// + 2D simplex gradient noise), SPLICED from the shared procedural-color chunk — the
-// SAME single source the WebGPU twin (aurora.wgsl.ts) splices, so the hash can NEVER
-// drift between backends (proof:aurora-noise-hash-equivalence locks the twins to 1e-6).
+// + 2D simplex gradient noise), SPLICED from the shared procedural-color chunk (the
+// single hash source).
 // The painterly mediums (mediumOil's tooth/granulation) opt into pcgHash2/gnoise for
 // organic paper/pigment grain; the smooth/atmospheric pole KEEPS its cheap value-noise
 // fbm above (the cost-tiering is preserved per AX.W12 §3a — this is an ADDITIVE basis,
@@ -228,9 +227,8 @@ ${OKLCH_MATRICES_GLSL}
 //
 // AX.W11 — the ramp (interpolateHueTurns + mixPaletteOklab + mixPaletteOklchArc +
 // the smoothstep-eased samplePaletteRamp dispatcher) is SPLICED from the shared
-// procedural-color chunk, the SAME single source the WebGPU twin (aurora.wgsl.ts)
-// splices — so the ramp can NEVER drift between backends (the AV.W1 two-copy class,
-// applied to the ramp). composition.glsl.ts's samplePalette calls samplePaletteRamp.
+// procedural-color chunk (the single ramp source). composition.glsl.ts's
+// samplePalette calls samplePaletteRamp.
 ${PALETTE_RAMP_GLSL}
 
 // Interleaved Gradient Noise (Jimenez) — a 1-LSB triangular dither applied in

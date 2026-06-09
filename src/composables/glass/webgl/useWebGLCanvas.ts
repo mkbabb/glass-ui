@@ -1,22 +1,22 @@
-// AU.W6 / AW.W7b — `useWebGLCanvas`: the WebGL2 backend over the shared
+// AU.W6 — `useWebGLCanvas`: the WebGL2 backend over the shared
 // `createCanvasLifecycle` core. Aurora AND the AU.W7 goo-blob compose it.
 //
-// AW.W7b carved the backend-AGNOSTIC lifecycle (the three-reason suspend Set, the
-// rAF tick/wake demand gate, the document-visibility owner, the content-visibility
-// offscreen-park, and the live `prefers-reduced-motion` re-monitor) into
-// `createCanvasLifecycle.ts` so the WebGPU sibling `createGPUCanvas` shares the EXACT
-// same machinery — no forked second copy. This module is now the WebGL2 BACKEND: it
-// owns ONLY the `getContext("webgl2")` acquisition, the `webglcontextlost`/`restored`
-// robustness, the `ResizeObserver`, and the consumer-`setup`/`frame`/`resize`/`time`
-// hook seam (C6 must-fix #4 — the substrate must NOT bake aurora's quad/DPR/uniforms;
-// those are threaded through the consumer callbacks). The schedule lives in the core.
+// The backend-AGNOSTIC lifecycle (the three-reason suspend Set, the rAF tick/wake
+// demand gate, the document-visibility owner, the content-visibility offscreen-park,
+// and the live `prefers-reduced-motion` re-monitor) lives in `createCanvasLifecycle.ts`
+// so a thin context wrapper shares the EXACT same machinery — no forked second copy.
+// This module is the WebGL2 BACKEND: it owns ONLY the `getContext("webgl2")`
+// acquisition, the `webglcontextlost`/`restored` robustness, the `ResizeObserver`, and
+// the consumer-`setup`/`frame`/`resize`/`time` hook seam (C6 must-fix #4 — the
+// substrate must NOT bake aurora's quad/DPR/uniforms; those are threaded through the
+// consumer callbacks). The schedule lives in the core.
 //
 //   - CONTEXT LIFECYCLE — create the `webgl2` context with the consumer's attrs, AND
 //     the `webglcontextlost`/`webglcontextrestored` pair: on restore it re-creates
 //     the program via the consumer's `setup(gl)` and re-arms, so a GPU context loss
 //     self-heals instead of going permanently blank.
 //   - DEMAND-DRIVEN SCHEDULING + OFFSCREEN RAF-PARK + REDUCED-MOTION FREEZE — owned
-//     by `createCanvasLifecycle` (the lifted core), shared with `createGPUCanvas`. The
+//     by `createCanvasLifecycle` (the lifted core). The
 //     three suspend reasons (`tab-hidden`/`off-screen`/`manual`) gate the SAME
 //     `isRunning()` set; a parked rAF attaches zero frames; under reduced-motion the
 //     loop draws ONE static frame then parks. The IntersectionObserver `rootMargin`

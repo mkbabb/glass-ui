@@ -1,18 +1,17 @@
-// AW.W7b — the backend-AGNOSTIC canvas lifecycle core.
+// The backend-AGNOSTIC canvas lifecycle core.
 //
-// Carved out of `useWebGLCanvas` (AU.W6) so the WebGPU sibling `createGPUCanvas` can
-// share the EXACT same demand-driven scheduling + offscreen-park + PRM-freeze
-// machinery without a forked second copy (the AV.W1 two-copy class). The ONLY
-// backend-specific concern is acquiring the drawing context + building the per-frame
-// hooks; everything else — the three-reason suspend Set, the rAF tick/wake gate, the
-// document-visibility owner, the content-visibility offscreen-park, and the live
-// `prefers-reduced-motion` re-monitor — is API-shaped and lives HERE once.
+// Carved out of `useWebGLCanvas` (AU.W6) so a thin context wrapper shares the EXACT
+// same demand-driven scheduling + offscreen-park + PRM-freeze machinery without a
+// forked second copy (the AV.W1 two-copy class). The ONLY backend-specific concern is
+// acquiring the drawing context + building the per-frame hooks; everything else — the
+// three-reason suspend Set, the rAF tick/wake gate, the document-visibility owner, the
+// content-visibility offscreen-park, and the live `prefers-reduced-motion` re-monitor
+// — is API-shaped and lives HERE once.
 //
-// `useWebGLCanvas` (WebGL2) and `createGPUCanvas` (WebGPU) are thin wrappers: each
-// builds its own context in `buildContext()` and hands the lifecycle core the frame
-// hooks; the core owns the schedule. A parked rAF (offscreen / tab-hidden / PRM-reduce
-// / paused) attaches ZERO frames on BOTH backends — the WebGPU compute dispatch
-// inherits the park gate for free (proof:offscreen-pause extends to it).
+// `useWebGLCanvas` (WebGL2) is the thin wrapper: it builds its own context in
+// `buildContext()` and hands the lifecycle core the frame hooks; the core owns the
+// schedule. A parked rAF (offscreen / tab-hidden / PRM-reduce / paused) attaches ZERO
+// frames (proof:offscreen-pause).
 //
 // The suspend reasons are a `Set<reason>`: the loop runs IFF the set is empty, each
 // reason cleared ONLY by its owner (so a tab-show can never lift an off-screen

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // The aurora fill-resize gate (proof:aurora-fill-resize).
 //
-// A WebGL/WebGPU aurora surface inside a `content-visibility:auto` ancestor can
+// A WebGL2 aurora surface inside a `content-visibility:auto` ancestor can
 // paint a BLACK BAR over part of its box. The mechanism is a size-measurement
 // race:
 //
@@ -21,10 +21,9 @@
 // assertion would need a headless RAF/GL context — the §3a redress clause: that
 // is a plan defect, so this is a SEAM gate over the source):
 //
-//   A. Both aurora runtimes (WebGL2 `runtime.ts`, WebGPU `gpuRuntime.ts`) measure
-//      the laid-out box via `getBoundingClientRect()`, NOT `clientWidth`/
-//      `clientHeight` — the bounding rect reflects the real border-box across a
-//      content-visibility skip.
+//   A. The aurora runtime (WebGL2 `runtime.ts`) measures the laid-out box via
+//      `getBoundingClientRect()`, NOT `clientWidth`/`clientHeight` — the bounding
+//      rect reflects the real border-box across a content-visibility skip.
 //   B. `Aurora.vue`'s `.aurora-root` `contain-intrinsic-size` carries a non-zero
 //      block fallback (no `none`), so a skipped/never-rendered aurora reserves
 //      its box instead of collapsing.
@@ -58,10 +57,6 @@ function paths() {
         WEBGL_RUNTIME: resolve(
             ROOT,
             "src/components/custom/aurora/composables/runtime.ts",
-        ),
-        GPU_RUNTIME: resolve(
-            ROOT,
-            "src/components/custom/aurora/composables/gpuRuntime.ts",
         ),
         AURORA_SFC: resolve(ROOT, "src/components/custom/aurora/Aurora.vue"),
         LIFECYCLE: resolve(
@@ -107,20 +102,14 @@ function resizeMeasuresBoundingRect(label, path, violations) {
 }
 
 function run() {
-    const { ROOT, WEBGL_RUNTIME, GPU_RUNTIME, AURORA_SFC, LIFECYCLE, ARTIFACT } =
-        paths();
+    const { ROOT, WEBGL_RUNTIME, AURORA_SFC, LIFECYCLE, ARTIFACT } = paths();
     const violations = [];
     const facts = {};
 
-    // ── A — both runtimes measure the box via getBoundingClientRect.
+    // ── A — the runtime measures the box via getBoundingClientRect.
     facts.webglResizeMeasuresBox = resizeMeasuresBoundingRect(
         "WebGL2",
         WEBGL_RUNTIME,
-        violations,
-    );
-    facts.gpuResizeMeasuresBox = resizeMeasuresBoundingRect(
-        "WebGPU",
-        GPU_RUNTIME,
         violations,
     );
 
@@ -177,7 +166,7 @@ function run() {
         "proof:aurora-fill-resize — the aurora surface always fills its box (no content-skip black bar)",
     );
     console.log(
-        `  A box-measured resize : WebGL2 ${facts.webglResizeMeasuresBox ? "yes ✓" : "NO ✗"}   WebGPU ${facts.gpuResizeMeasuresBox ? "yes ✓" : "NO ✗"}`,
+        `  A box-measured resize : WebGL2 ${facts.webglResizeMeasuresBox ? "yes ✓" : "NO ✗"}`,
     );
     console.log(
         `  B block axis reserved : ${facts.intrinsicSizeReservesBlock ? "yes ✓" : "NO ✗"}   (contain-intrinsic-size: ${facts.containIntrinsicSize ?? "—"})`,

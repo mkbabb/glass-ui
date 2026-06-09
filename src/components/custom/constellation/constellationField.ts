@@ -98,6 +98,76 @@ export interface ConstellationWander {
 }
 
 /**
+ * Auto-DRIFT cadence DEFAULTS (AY.W-CON1 source; tokenised in AY.W-CON2). The
+ * `--constellation-wander-idle`/`-wander-jitter` tokens override these on mount via
+ * `readInteractionConfig` (the SAME numeric `--constellation-*` cohort as the warp
+ * spring + the well gains); a prop `{ minIdle, jitter }` still wins over the token.
+ * The 8s/8s default rhythm re-targets the focal mark every 8–16s (the slides cadence).
+ */
+export const DEFAULT_WANDER_IDLE = 8000; // ms — min idle between auto re-targets
+export const DEFAULT_WANDER_JITTER = 8000; // ms — random extra idle per cadence
+
+/**
+ * The warp-spring tuning the integrator reads (AY.W-CON2). Tokenised numeric (the
+ * `--constellation-warp-*` cohort) so a consumer retunes the warp WITHOUT editing
+ * src — read ONCE on mount via `parseFloat`, threaded onto the field.
+ *
+ * `response` is the keyframes.js `(response, dampingFraction)` model's ANGULAR
+ * PERIOD (the SwiftUI `.spring(response:)` axis): `ω₀ = 2π/response`. It is NOT a
+ * settle-duration — at ζ=1 the 2%-settle lands at `t₂ ≈ 5.83/ω₀ ≈ 0.93·response`
+ * (the `(1 + ω₀t)e^(−ω₀t)` critically-damped envelope). Documented here + in the
+ * `--constellation-warp-response` token comment so the token semantics are honest
+ * at ANY ζ (the AY.W-CON2 ω-reconcile; the engine keeps the keyframes.js convention,
+ * mints NO second ω formula).
+ */
+export interface ConstellationWarpConfig {
+    /** keyframes.js angular period (s) — `ω₀ = 2π/response`, NOT a settle-duration. */
+    response: number;
+    /** damping ratio ζ — 1 critically damped (a focal mark must NOT ring). */
+    zeta: number;
+}
+
+/**
+ * The gravity-well tuning (AY.W-CON2). The held-pointer pull is an inverse-square
+ * force composed into `stepField` (no new rAF). Tokenised numeric (the
+ * `--constellation-well-*` cohort) so a consumer retunes the well WITHOUT editing
+ * src. All distances are base-width px (`k`-scaled at step time).
+ */
+export interface ConstellationWellConfig {
+    /** the inverse-square pull gain (the force scale at unit distance). */
+    gain: number;
+    /** the reach (base-width px) — nodes beyond it are untouched (the O(within-reach) cost floor). */
+    reach: number;
+    /** the hold/release ramp rate (1/s) — `strength` eases toward `target` at this rate. */
+    ramp: number;
+    /** the per-node speed cap (base-width px/frame) — the no-slingshot clamp. */
+    maxSpeed: number;
+    /** the singularity floor (px) — a node AT the cursor gets a bounded pull, never `∞`. */
+    soften: number;
+    /** ms the pointer is held before the well arms. */
+    holdMs: number;
+}
+
+/**
+ * The gravity-well live STATE (AY.W-CON2). `(x, y)` is the held pointer in
+ * canvas-local px (`-1` = inactive); `strength` is the eased pull 0→1 (ramps to
+ * `target` at `cfg.ramp`/s); `target` is the strength the ramp eases toward (1
+ * while held, 0 on release). A transient force — the field renormalises back to
+ * `speed` after release (the field-cools invariant).
+ */
+export interface ConstellationWell {
+    /** canvas-local px of the held pointer; `-1` = inactive. */
+    x: number;
+    y: number;
+    /** the eased pull strength 0→1 (ramps to `target` at `cfg.ramp`/s). */
+    strength: number;
+    /** the strength the ramp is easing toward: 1 while held, 0 on release. */
+    target: number;
+    /** the well tuning (gain/reach/ramp/maxSpeed/soften). */
+    cfg: ConstellationWellConfig;
+}
+
+/**
  * The field state the component exposes to its `drawOverlay` consumer so a
  * skin can pin itself to a real field node. `k` is the `width / BASE_WIDTH`
  * scale, `dpr` the device-pixel ratio applied by the substrate.
@@ -126,12 +196,27 @@ export interface ConstellationField {
     /** The per-axis warp spring the engine steps inside `stepField` (AX.W17). */
     warp: ConstellationWarp;
     /**
+     * The warp-spring tuning `warpStep` reads (AY.W-CON2). Optional — absent
+     * falls back to the shipped `{ response: 0.55, zeta: 1.0 }` defaults (the
+     * byte-identical HEAD spring). A tokenised override (read on mount) reaches
+     * the integrator through this member.
+     */
+    warpCfg?: ConstellationWarpConfig;
+    /**
      * The optional auto-DRIFT cadence (AY.W-CON1). When set, `stepField`
      * periodically re-points the warp to a random node (the wander source on the
      * SAME spring). Absent (`undefined`) leaves the field BYTE-IDENTICAL to the
      * pre-wander HEAD — `stepField` skips the cadence block entirely.
      */
     wander?: ConstellationWander;
+    /**
+     * The optional gravity-well (AY.W-CON2). When set, `stepField` composes a
+     * held-pointer inverse-square pull force (no new rAF) — `well.target → 1`
+     * while held, `→ 0` on release, the field renormalising back to `speed` once
+     * the well cools. Absent (`undefined`) leaves the field BYTE-IDENTICAL to the
+     * pre-well HEAD — `stepField` skips the force pass entirely.
+     */
+    well?: ConstellationWell;
 }
 
 /**
@@ -166,6 +251,36 @@ export interface ConstellationProps {
      * advances under reduced-motion — the focal stays at its seed).
      */
     wander?: boolean | { minIdle?: number; jitter?: number };
+    /**
+     * Pointer-held GRAVITY-WELL (AY.W-CON2): hold the pointer and the lattice is
+     * pulled toward it (an inverse-square force on the same engine, no new rAF);
+     * release and the field cools back to `speed`. INDEPENDENT of `warpOnClick`
+     * and `pointerReactive` (a consumer can hold-to-pull on a non-ripple,
+     * non-warp lattice). `true` uses the tokenised defaults; an object tunes the
+     * gains. Default OFF (absent → byte-identical to HEAD). PRM-gated by the WARP
+     * precedent (the held-timer is not registered under reduced-motion).
+     */
+    gravityWell?:
+        | boolean
+        | {
+              holdMs?: number;
+              gain?: number;
+              reach?: number;
+              ramp?: number;
+              maxSpeed?: number;
+              soften?: number;
+          };
+    /**
+     * Deterministic-capture freeze (AY.W-CON3): when `true`, lays out ONE
+     * reproducible STATIC frame (no `stepField`, no ripple / warp / wander / well
+     * advance) and hands `drawOverlay` a FROZEN `now` so a phase-driven skin
+     * resolves to a fixed value. Omit to AUTO-DERIVE from `location.search`
+     * matching `export | print | freeze` (the deploy-pipeline contract); an
+     * explicit `false` forces live even under a capture URL. Set `seed` for a
+     * field stable ACROSS runs. Unifies with the reduced-motion one-static-frame
+     * path (`freeze || reducedMotion` is the single static-frame predicate).
+     */
+    freeze?: boolean;
     class?: string;
     /** The skin seam — paints the consumer's focal mark on the live field. */
     drawOverlay?: (
@@ -214,6 +329,43 @@ export function readPalette(canvas: HTMLCanvasElement): ConstellationPalette {
         ),
         alpha: readNum("--constellation-alpha", DEFAULT_PALETTE.alpha),
     };
+}
+
+/**
+ * Read the NUMERIC interaction-tuning tokens (the warp spring + the gravity-well
+ * gains) off a canvas's resolved custom properties — ONCE on mount (AY.W-CON2),
+ * via `parseFloat`, NOT per-frame `getComputedStyle` (the hot loop stays clean).
+ * Returns `{ warp, well }` configs the field carries; every member falls back to
+ * the shipped default when the token is absent (an SSR / no-token mount reads the
+ * byte-identical spring). The tokens are PLAIN numbers (`0.55`, `12000`), immune
+ * to the W30 `light-dark()`-into-Canvas2D leak (they never reach a `fillStyle`).
+ */
+export function readInteractionConfig(canvas: HTMLCanvasElement): {
+    warp: ConstellationWarpConfig;
+    well: ConstellationWellConfig;
+    wander: { minIdle: number; jitter: number };
+} {
+    const warp: ConstellationWarpConfig = { response: WARP_RESPONSE, zeta: WARP_ZETA };
+    const well: ConstellationWellConfig = { ...DEFAULT_WELL_CONFIG };
+    const wander = { minIdle: DEFAULT_WANDER_IDLE, jitter: DEFAULT_WANDER_JITTER };
+    if (typeof window === "undefined") return { warp, well, wander };
+    const cs = getComputedStyle(canvas);
+    const readNum = (name: string, fallback: number): number => {
+        const raw = cs.getPropertyValue(name).trim();
+        if (!raw) return fallback;
+        const n = Number.parseFloat(raw);
+        return Number.isFinite(n) ? n : fallback;
+    };
+    warp.response = readNum("--constellation-warp-response", WARP_RESPONSE);
+    warp.zeta = readNum("--constellation-warp-zeta", WARP_ZETA);
+    well.gain = readNum("--constellation-well-gain", DEFAULT_WELL_CONFIG.gain);
+    well.reach = readNum("--constellation-well-reach", DEFAULT_WELL_CONFIG.reach);
+    well.ramp = readNum("--constellation-well-ramp", DEFAULT_WELL_CONFIG.ramp);
+    well.maxSpeed = readNum("--constellation-well-max-speed", DEFAULT_WELL_CONFIG.maxSpeed);
+    well.holdMs = readNum("--constellation-well-hold-ms", DEFAULT_WELL_CONFIG.holdMs);
+    wander.minIdle = readNum("--constellation-wander-idle", DEFAULT_WANDER_IDLE);
+    wander.jitter = readNum("--constellation-wander-jitter", DEFAULT_WANDER_JITTER);
+    return { warp, well, wander };
 }
 
 /**
@@ -338,6 +490,16 @@ export function stepField(
             }
         }
     }
+    // The gravity-well force pass (AY.W-CON2) — a held-pointer inverse-square pull
+    // composed ON the same frame (no new rAF). The well ADDS velocity while held
+    // (the field heats — the perturb), with the no-singularity floor + the
+    // no-slingshot clamp; an ALWAYS-ON `|v|→speed` ease-back renormalises the field
+    // back toward `speed` (the field-cools invariant), so once the well releases
+    // (`target → 0`, `strength` eases to 0) the lattice re-settles. Absent
+    // (`field.well` undefined) → the entire pass + ease-back are skipped, so the
+    // default render is BYTE-IDENTICAL to the pre-well HEAD.
+    stepWell(field, k, speed, dt);
+
     // Advance the focal-node warp spring on the SAME frame (AX.W17). The drift
     // happened above, so the LIVE target node has already moved this frame — the
     // spring chases its post-step position (it tracks a moving target, not a
@@ -361,6 +523,114 @@ export function stepField(
     }
 }
 
+// ── Gravity-well force (AY.W-CON2) ───────────────────────────────────────────
+/** Below this strength the well force is sub-perceptual — skip the O(count) pass. */
+const WELL_EPS = 1e-3;
+/**
+ * The `|v|→speed` ease-back rate (per second), ASYMMETRIC by well phase (the
+ * shape-(ii) cool-down). While the well is HELD it is GENTLE
+ * ({@link WELL_COOL_HELD}/s) so the inverse-square force out-paces it and the field
+ * HEATS to a bounded equilibrium (the perturb the π gate reads); once RELEASED it is
+ * BRISK ({@link WELL_COOL_RELEASED}/s) so the lattice re-settles to within a few % of
+ * `speed` inside the ≥30-frame window (the field-cools invariant). The asymmetry is
+ * what lets BOTH invariants hold at once — a single mid rate either masks the perturb
+ * (too brisk) or never cools (too gentle). Preferred over the steer's hard
+ * `|v|=speed` renorm because the well MUST be able to heat the field while held.
+ */
+const WELL_COOL_HELD = 1.5;
+const WELL_COOL_RELEASED = 7.0;
+/**
+ * The strength-ramp rate (per second) is ASYMMETRIC by phase, MIRRORING the cool
+ * asymmetry. The ARM rate is `cfg.ramp` (the token — a gentle ≈0.25s ease so the
+ * pull blooms in, not snaps). The RELEASE rate is a brisk {@link WELL_RELEASE_RAMP}
+ * floor (independent of `cfg.ramp`) so on release the pull DROPS below
+ * {@link WELL_EPS} within a handful of frames — the inverse-square force STOPS
+ * injecting velocity, and the brisk {@link WELL_COOL_RELEASED} `|v|→speed` ease
+ * then renorms the lattice to within a few % of `speed` inside the ≥30-frame
+ * window (the field-cools invariant). A symmetric `cfg.ramp` release decays the
+ * pull too slowly — the force keeps heating the field past the 30-frame sample,
+ * so the field reads HOT at any canvas where the held equilibrium |v| sits above
+ * the tolerance (the live-vs-unit `k`-scale divergence the π gate caught).
+ */
+const WELL_RELEASE_RAMP = 22.0;
+
+/**
+ * Advance the gravity-well one `dt` (AY.W-CON2). A transient held-pointer force
+ * composed inside `stepField` (NO new rAF): ease `well.strength` toward
+ * `well.target` (1 held / 0 released) at `cfg.ramp`/s; while active, add an
+ * inverse-square pull toward the held point onto each node within `cfg.reach`
+ * (the `max(d, soften)` no-singularity floor + the `cfg.maxSpeed` no-slingshot
+ * clamp); ALWAYS ease every node's |v| back toward `speed` (the field-cools
+ * invariant — so a released well re-settles). No-ops (entirely skipped) when
+ * `field.well` is undefined → the default render is byte-identical to HEAD.
+ *
+ * `dt` is clamped to {@link WARP_DT_CLAMP} (the same park-resume guard the warp
+ * uses) so a tab-throttle gap cannot slingshot the field in one giant step.
+ */
+export function stepWell(
+    field: ConstellationField,
+    k: number,
+    speed: number,
+    dt: number,
+): void {
+    const well = field.well;
+    if (!well || !(dt > 0)) return;
+    const h = Math.min(dt, WARP_DT_CLAMP);
+    const cfg = well.cfg;
+    // Ease the pull strength toward its target (1 held, 0 released) — a bounded
+    // approach so a long frame cannot overshoot the [0,1] ramp. The ARM rate is
+    // the `cfg.ramp` token (gentle bloom); the RELEASE rate is the brisk
+    // WELL_RELEASE_RAMP floor so the pull drops below WELL_EPS in a handful of
+    // frames and the force STOPS injecting velocity (the cool-down precondition).
+    const rampRate = well.target > 0 ? cfg.ramp : WELL_RELEASE_RAMP;
+    const ramp = Math.min(rampRate * h, 1);
+    well.strength += (well.target - well.strength) * ramp;
+    if (well.strength < WELL_EPS) well.strength = well.target <= 0 ? 0 : well.strength;
+
+    const { nodes } = field;
+    const reach = cfg.reach * k;
+    const reach2 = reach * reach;
+    const cap = cfg.maxSpeed * k;
+    // The cool-back fraction this frame (the |v|→speed ease toward `speed`),
+    // ASYMMETRIC: gentle while held (`target > 0` → the field heats), brisk once
+    // released (`target ≤ 0` → the field cools fast). See the WELL_COOL_* doc.
+    const coolRate = well.target > 0 ? WELL_COOL_HELD : WELL_COOL_RELEASED;
+    const cool = Math.min(coolRate * h, 1);
+    const active = well.strength > WELL_EPS && well.x >= 0;
+    for (let i = 0; i < nodes.length; i++) {
+        const p = nodes[i];
+        if (active) {
+            const dx = well.x - p.x;
+            const dy = well.y - p.y;
+            const d2 = dx * dx + dy * dy;
+            if (d2 <= reach2) {
+                const d = Math.max(Math.sqrt(d2), cfg.soften); // singularity floor
+                const a = (cfg.gain * well.strength) / (d * d); // inverse-square pull
+                let nvx = p.vx + (dx / d) * a * h;
+                let nvy = p.vy + (dy / d) * a * h;
+                const nsp = Math.hypot(nvx, nvy);
+                if (nsp > cap) {
+                    nvx = (nvx / nsp) * cap; // no-slingshot clamp
+                    nvy = (nvy / nsp) * cap;
+                }
+                p.vx = nvx;
+                p.vy = nvy;
+            }
+        }
+        // |v|→speed ease-back (the field-cools invariant). Pulls each node's speed
+        // a `cool` fraction toward `speed` every frame — while the well is held the
+        // force out-paces it (the field heats), once released it wins (the field
+        // cools back to `speed`). A node at rest (|v|≈0) is nudged up to `speed`.
+        const sp = Math.hypot(p.vx, p.vy);
+        if (sp > 1e-9) {
+            const eased = sp + (speed - sp) * cool;
+            const scale = eased / sp;
+            p.vx *= scale;
+            p.vy *= scale;
+        }
+    }
+}
+
 // ── Focal node + warp spring (AX.W17) ────────────────────────────────────────
 // The design thesis: drift and warp are THE SAME mechanic — "spring the focal
 // node toward a target NODE" — differing only in what PICKS the target (a click
@@ -372,12 +642,41 @@ export function stepField(
 // the substrate's ONE rAF. The keyframes.js `(response, dampingFraction)` PARAM
 // model is reused (ω₀ = 2π/response, ζ = dampingFraction) but NOT its rAF.
 
-/** Warp spring tuning — gentle critically-damped (no overshoot on a focal mark). */
-const WARP_RESPONSE = 0.55; // seconds; the settle window
-const WARP_ZETA = 1.0; // critically damped — a focal mark must NOT ring/overshoot
-const WARP_OMEGA = (2 * Math.PI) / WARP_RESPONSE;
+/**
+ * Warp spring tuning DEFAULTS — gentle critically-damped (no overshoot on a focal
+ * mark). The `--constellation-warp-response`/`-zeta` tokens override these on mount
+ * via `field.warpCfg` (AY.W-CON2); these stay the byte-identical fallback.
+ *
+ * `WARP_RESPONSE` is the keyframes.js `(response, dampingFraction)` model's ANGULAR
+ * PERIOD (the SwiftUI `.spring(response:)` axis), `ω₀ = 2π/response` — NOT a
+ * settle-duration. At ζ=1 the 2%-settle lands at `t₂ ≈ 5.83/ω₀ ≈ 0.93·response`
+ * (the `(1 + ω₀t)e^(−ω₀t)` critically-damped envelope); the shipped 0.55 settles
+ * at ≈0.51s. This is the AY.W-CON2 ω-reconcile: the engine keeps the keyframes.js
+ * `ω₀ = 2π/response` convention (the shared house model — `regen-spring-tokens.mjs`,
+ * `keyframes.d.ts:860-882`) and mints NO second ω formula; the SEMANTIC honesty
+ * (period, not settle) lives in this doc + the token comment + the settle-time unit
+ * assertion, so a consumer setting the token gets the documented behaviour at ANY ζ.
+ */
+export const WARP_RESPONSE = 0.55; // s — keyframes.js angular period (NOT a settle-duration)
+export const WARP_ZETA = 1.0; // critically damped — a focal mark must NOT ring/overshoot
 /** dt clamp (s) — guards a tab-throttle / offscreen-park-resume gap from teleporting. */
 const WARP_DT_CLAMP = 0.05; // ≈50ms; a clamped dt resolves the park-mid-warp teleport for free.
+
+/**
+ * Gravity-well tuning DEFAULTS (AY.W-CON2). The `--constellation-well-*` tokens
+ * override these on mount via `field.well.cfg`; these stay the fallback. SET by the
+ * §6 egg-live π readback (the field-perturbs-then-cools capture is the binding
+ * truth) — a moderate gain over a generous reach, a brisk ramp, a tight no-slingshot
+ * speed cap, and the singularity-soften floor.
+ */
+export const DEFAULT_WELL_CONFIG: ConstellationWellConfig = {
+    gain: 14000, // inverse-square force scale — a clear pull over the reach
+    reach: 340, // base-width px — the well's influence radius (k-scaled at step)
+    ramp: 4.0, // 1/s — the hold/release ramp rate (≈0.25s to full)
+    maxSpeed: 4.0, // base-width px/frame cap — the no-slingshot clamp
+    soften: 8, // px — the singularity floor (a node AT the cursor → bounded pull)
+    holdMs: 140, // ms hold before the well arms
+};
 
 /**
  * The nearest DRIFTING node to `(px, py)` in canvas-local px — a linear O(count)
@@ -420,8 +719,12 @@ export function nearestNode(
  *
  *   x += v·dt ;  v += (−2ζω·v − ω²·(x − target))·dt
  *
- * Reuses the keyframes.js `(response, dampingFraction)` param model
- * (ω = 2π/response, ζ = dampingFraction) but NOT its rAF — the FORBID-useSpring
+ * Reads `(response, ζ)` from `field.warpCfg` (the tokenised override — AY.W-CON2),
+ * falling back to the shipped `WARP_RESPONSE`/`WARP_ZETA` defaults. `ω = 2π/response`
+ * is the keyframes.js `(response, dampingFraction)` convention (the SHARED house
+ * model — `ω₀` is the angular frequency, `response` its ANGULAR PERIOD, NOT a
+ * settle-duration; at ζ=1 the 2%-settle is `t₂ ≈ 5.83/ω₀ ≈ 0.93·response`). NO
+ * second ω formula is minted (the ω-reconcile). NOT its rAF — the FORBID-useSpring
  * contract (a second rAF would defeat the parked-substrate one-path freeze).
  */
 export function warpStep(field: ConstellationField, dt: number): void {
@@ -431,13 +734,16 @@ export function warpStep(field: ConstellationField, dt: number): void {
     if (!warp || warp.targetIdx < 0 || warp.targetIdx >= nodes.length) return;
     if (!(dt > 0)) return;
     const h = Math.min(dt, WARP_DT_CLAMP);
+    // ω/ζ from the tokenised config (AY.W-CON2), else the shipped defaults —
+    // `ω = 2π/response` (the keyframes.js angular-period convention, unchanged).
+    const response = field.warpCfg?.response ?? WARP_RESPONSE;
+    const zeta = field.warpCfg?.zeta ?? WARP_ZETA;
+    const omega = (2 * Math.PI) / response;
     const target = nodes[warp.targetIdx];
     // Per-axis critically-damped step (semi-implicit Euler — velocity first,
     // then position, for stability at the clamped dt).
-    const ax =
-        -2 * WARP_ZETA * WARP_OMEGA * warp.vx - WARP_OMEGA * WARP_OMEGA * (warp.x - target.x);
-    const ay =
-        -2 * WARP_ZETA * WARP_OMEGA * warp.vy - WARP_OMEGA * WARP_OMEGA * (warp.y - target.y);
+    const ax = -2 * zeta * omega * warp.vx - omega * omega * (warp.x - target.x);
+    const ay = -2 * zeta * omega * warp.vy - omega * omega * (warp.y - target.y);
     warp.vx += ax * h;
     warp.vy += ay * h;
     warp.x += warp.vx * h;

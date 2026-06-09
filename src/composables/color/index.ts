@@ -36,9 +36,13 @@ export interface OklchStop {
 }
 
 /**
- * The injected color seam (DEC-AT-2, consumed by the AU.W7 blob). Resolves a CSS
- * color string to a GAMMA-sRGB triple in [0,1]. `defaultBlobColorResolver` is the
- * opt-in default; a consumer (value.js) may inject its own.
+ * A color seam: resolves a CSS color string to a GAMMA-sRGB triple in [0,1].
+ * `defaultBlobColorResolver` is the shipped default. A general-purpose injection
+ * type — the `<FourierField>` background takes it as a REQUIRED `colorResolver`
+ * prop (the SVG-field surface owns its own color pipeline). The goo-blob no longer
+ * injects it: it resolves color internally through `cssToOklch → oklchToGammaRgb`
+ * (W-BLOB3 STRIPPED the speculative DI built for an absent value.js consumer that
+ * never repatriated; see `docs/consumer-evidence/goo-blob.md`).
  */
 export type ColorResolver = (css: string) => [number, number, number];
 
@@ -128,10 +132,11 @@ export function oklchStopToHex(s: OklchStop): string {
 }
 
 /**
- * The OPT-IN default `ColorResolver` — `(css) => gamma [r,g,b]` via
- * `cssToOklch → oklchToGammaRgb`. The AU.W7 goo-blob requires an INJECTED resolver
- * and throws by THIS name on a no-resolver mount (the loud failure, not a silent
- * gray default); value.js supplies its own, the demo story uses this one.
+ * The shipped default `ColorResolver` — `(css) => gamma [r,g,b]` via
+ * `cssToOklch → oklchToGammaRgb` (the GAMMA exit; `proof:blob-space-gamma` witnesses
+ * the `oklchToGammaRgb` resolve). The `<FourierField>` background passes THIS as its
+ * `colorResolver` prop. The goo-blob inlines this exact body internally (W-BLOB3 —
+ * no DI seam).
  */
 export const defaultBlobColorResolver: ColorResolver = (css) =>
     oklchToGammaRgb(cssToOklch(css));

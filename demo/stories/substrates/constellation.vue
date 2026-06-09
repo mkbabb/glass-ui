@@ -97,6 +97,101 @@ const drawWarpFocal = computed(
 const refitHostRef = useTemplateRef<HTMLElement>("refitHostRef");
 const refitRef = useTemplateRef<InstanceType<typeof Constellation>>("refitRef");
 
+// ── Gravity-well section (AY.W-CON2) ────────────────────────────────────────
+// A dedicated <Constellation gravityWell> — hold the pointer and the lattice is
+// pulled toward it (the engine egg); release and the field cools. The π egg-live
+// spec drives the well via the exposed holdWellAt/releaseWell (no real held-pointer
+// race) and reads back mean |v| per frame off __constellationEgg.field.
+const wellRef = useTemplateRef<InstanceType<typeof Constellation>>("wellRef");
+
+// ── Anomaly drawOverlay recipe + ?freeze section (AY.W-CON3) ────────────────
+// The transposed slides `drawAnomaly` skin, neutralized of deck-domain wording —
+// a copy-pasteable `drawOverlay` pinned to the W-CON1 auto-drift focal
+// (`field.warp.{x,y}`): a pulse ring + soft halo + core dot + an optional
+// resolved-check + a dashed monospace callout. The fractional anchor, the label,
+// and the `resolved` flag are CONSUMER state closed over the fn (NOT library
+// props) — the recipe shows the closure shape. Under `:freeze` the engine hands
+// this a FROZEN `now`, so `(now % 2600) / 2600` resolves to a fixed phase: the
+// ring radius is identical frame-over-frame (the deterministic-capture truth).
+const ANOMALY_LABEL = "anomaly";
+const ANOMALY_RESOLVED = false;
+const freezeRef = useTemplateRef<InstanceType<typeof Constellation>>("freezeRef");
+
+const drawAnomaly = computed(
+    () =>
+        (ctx: CanvasRenderingContext2D, field: ConstellationField, now: number) => {
+            // Pin to the engine-owned focal (the W-CON1 auto-drift focal under
+            // `warpOnClick`/`wander`); before the first warp it rides field-center.
+            const x = field.warp.x;
+            const y = field.warp.y;
+            if (field.focalIndex < 0 && x === 0 && y === 0) return;
+            const k = field.k;
+            // The pulse phase — under `?freeze` `now` is a fixed sentinel, so this
+            // resolves to ONE value (the determinism truth).
+            const phase = (now % 2600) / 2600;
+
+            // outer pulse ring
+            ctx.strokeStyle = accent.value;
+            ctx.globalAlpha = (1 - phase) * 0.55;
+            ctx.lineWidth = 1.6 * k;
+            ctx.beginPath();
+            ctx.arc(x, y, (12 + phase * 24) * k, 0, Math.PI * 2);
+            ctx.stroke();
+            // inner steady ring
+            ctx.globalAlpha = 0.85;
+            ctx.lineWidth = 1.4 * k;
+            ctx.beginPath();
+            ctx.arc(x, y, 14 * k, 0, Math.PI * 2);
+            ctx.stroke();
+            // soft halo
+            ctx.globalAlpha = 0.18;
+            ctx.beginPath();
+            ctx.arc(x, y, 26 * k, 0, Math.PI * 2);
+            ctx.fillStyle = accent.value;
+            ctx.fill();
+            // core dot
+            ctx.globalAlpha = 1;
+            ctx.fillStyle = accent.value;
+            ctx.beginPath();
+            ctx.arc(x, y, 4.4 * k, 0, Math.PI * 2);
+            ctx.fill();
+            // optional resolved checkmark (consumer state, not a lib prop)
+            if (ANOMALY_RESOLVED) {
+                ctx.strokeStyle = accent.value;
+                ctx.lineWidth = 1.8 * k;
+                ctx.beginPath();
+                ctx.moveTo(x - 2.4 * k, y + 0.2 * k);
+                ctx.lineTo(x - 0.6 * k, y + 2.2 * k);
+                ctx.lineTo(x + 2.6 * k, y - 2.0 * k);
+                ctx.stroke();
+            }
+            // dashed monospace callout pinned to the focal
+            const lx = x + 30 * k;
+            const ly = y - 18 * k;
+            ctx.globalAlpha = 0.5;
+            ctx.setLineDash([3 * k, 3 * k]);
+            ctx.beginPath();
+            ctx.moveTo(x + 8 * k, y - 6 * k);
+            ctx.lineTo(lx - 4 * k, ly + 4 * k);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.globalAlpha = 0.9;
+            ctx.fillStyle = accent.value;
+            ctx.font = `${11 * k}px ui-monospace, monospace`;
+            ctx.textBaseline = "alphabetic";
+            ctx.fillText(ANOMALY_LABEL, lx, ly);
+        },
+);
+
+// ── Supernova section (DEMO-ONLY — NOT an engine prop, AY.W-CON2) ───────────
+// Double-tap pushes a radial OUTWARD impulse onto the live field — implemented
+// ENTIRELY here, calling the public `field` expose (no library code, no engine
+// prop). Proves the public `field` seam carries arbitrary consumer content (the
+// W-DOC1 README example). On a DIFFERENT canvas from the warp instance so the
+// double-tap-vs-warp collision is structurally absent (no warp/ripple listener).
+const novaRef = useTemplateRef<InstanceType<typeof Constellation>>("novaRef");
+const novaHostRef = useTemplateRef<HTMLElement>("novaHostRef");
+
 // DEMO-PRIVATE π-lane hook: expose the live warp field + the imperative warpTo
 // on `window` so the W00 visual-runtime lane can read `field.warp`/`field.nodes`
 // per frame and dispatch a synthetic warp (a runtime-observation probe, NOT a
@@ -134,6 +229,103 @@ onMounted(() => {
                 void refitHost.offsetWidth;
             },
         };
+    }
+
+    // AY.W-CON2: the gravity-well egg seam. `field` lets the π egg-live spec read
+    // mean node |v| + every node's bbox per frame; `holdWellAt(x, y)` /
+    // `releaseWell()` drive the well WITHOUT racing a real held-pointer gesture +
+    // the held-timer (the test hook on the public expose).
+    const wellInst = wellRef.value as
+        | (InstanceType<typeof Constellation> & {
+              field?: ConstellationField;
+              holdWellAt?: (x: number, y: number) => boolean;
+              releaseWell?: () => void;
+          })
+        | null;
+    if (wellInst && typeof window !== "undefined") {
+        (window as unknown as Record<string, unknown>).__constellationEgg = {
+            field: wellInst.field,
+            holdWellAt: wellInst.holdWellAt?.bind(wellInst),
+            releaseWell: wellInst.releaseWell?.bind(wellInst),
+        };
+    }
+
+    // AY.W-CON3: the ?freeze deterministic-capture seam. `field` lets the π
+    // freeze-live spec read the node-position hash + the warp/focal state per
+    // mount; `overlayPulseRadius()` recomputes the recipe's outer-ring radius
+    // off the frozen state (the FROZEN_NOW=0 phase → the inner radius), so the
+    // spec can hash the OVERLAY phase across runs WITHOUT re-running the painter.
+    // Two back-to-back mounts of `<Constellation :freeze :seed>` must hash
+    // BYTE-IDENTICAL (cross-run determinism); one mount sampled at frame 1 vs a
+    // later `now` must hash IDENTICAL (frame-stillness — the field + the frozen
+    // overlay phase do not advance).
+    const freezeInst = freezeRef.value as
+        | (InstanceType<typeof Constellation> & { field?: ConstellationField })
+        | null;
+    if (freezeInst?.field && typeof window !== "undefined") {
+        const freezeField = freezeInst.field;
+        (window as unknown as Record<string, unknown>).__constellationFreeze = {
+            field: freezeField,
+            // The recipe's frozen-phase pulse radius. Under ?freeze the engine
+            // hands drawOverlay `now = FROZEN_NOW` (0), so phase = 0 → the outer
+            // ring sits at `(12 + 0 * 24) * k = 12 * k`. This recomputes that
+            // SAME value off the live `k`, so the spec reads the overlay-phase
+            // observable the static frame actually paints.
+            overlayPulseRadius(): number {
+                const phase = (0 % 2600) / 2600; // FROZEN_NOW = 0
+                return (12 + phase * 24) * freezeField.k;
+            },
+        };
+    }
+
+    // AY.W-CON2 — the DEMO-ONLY supernova. A double-tap (two pointerdowns within
+    // ~300ms near the same point) pushes a radial OUTWARD impulse onto the live
+    // field.nodes[].{vx,vy}; the existing |v|→speed drift renormalises it back to
+    // `speed`. NO library code — this calls the public `field` expose only. PRM-
+    // checked here (it is not engine code). On a SEPARATE canvas with NO warp/ripple
+    // listener so the double-tap-vs-warp collision is structurally absent.
+    const nova = novaRef.value as
+        | (InstanceType<typeof Constellation> & { field?: ConstellationField })
+        | null;
+    const novaHost = novaHostRef.value;
+    if (nova?.field && novaHost && typeof window !== "undefined") {
+        const novaField = nova.field;
+        const prmReduce = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+        ).matches;
+        let lastTap = 0;
+        let lastX = 0;
+        let lastY = 0;
+        const supernova = (cx: number, cy: number) => {
+            const r = novaHost.getBoundingClientRect();
+            if (!r.width || !r.height) return;
+            const lx = ((cx - r.left) / r.width) * novaField.w;
+            const ly = ((cy - r.top) / r.height) * novaField.h;
+            // a radial OUTWARD impulse: push each node away from the tap, decaying
+            // with distance, directly onto its velocity (the drift cools it back).
+            for (const p of novaField.nodes) {
+                const dx = p.x - lx;
+                const dy = p.y - ly;
+                const d = Math.hypot(dx, dy) || 1;
+                const impulse = Math.max(0, 1 - d / 360) * 6; // base-width px/frame
+                p.vx += (dx / d) * impulse;
+                p.vy += (dy / d) * impulse;
+            }
+        };
+        if (!prmReduce) {
+            novaHost.addEventListener("pointerdown", (e: PointerEvent) => {
+                const t = performance.now();
+                const near = Math.hypot(e.clientX - lastX, e.clientY - lastY) < 40;
+                if (t - lastTap < 300 && near) {
+                    supernova(e.clientX, e.clientY);
+                    lastTap = 0; // consume the pair
+                } else {
+                    lastTap = t;
+                    lastX = e.clientX;
+                    lastY = e.clientY;
+                }
+            });
+        }
     }
 });
 </script>
@@ -232,6 +424,100 @@ onMounted(() => {
                     />
                 </div>
             </ShowcaseFrame>
+        </StorySection>
+
+        <StorySection
+            label="pointer-held gravity-well"
+            blurb="HOLD the pointer over the lattice — the nodes within reach are PULLED toward it (an inverse-square force on the SAME engine, no second rAF); release and the field cools back to its drift speed. The well is the ONE engine egg (gravityWell prop): it reuses the pointer the engine already tracks (no new listener class), it has real safety floors (a no-singularity max(d,soften) floor + a no-slingshot maxSpeed clamp), and it has a real second consumer (any background decoration wants pointer-pulls-the-field-in). PRM-gated by the WARP precedent: under reduced-motion the held-timer never arms and the well STATE resets on the PRM-true edge. The π egg-live spec drives it via the exposed holdWellAt/releaseWell and reads back mean |v| per frame (perturb-then-cool)."
+        >
+            <ShowcaseFrame pad="none">
+                <div
+                    class="relative h-[420px] w-full cursor-grab overflow-hidden rounded-card bg-card active:cursor-grabbing"
+                >
+                    <Constellation
+                        ref="wellRef"
+                        seed="well-demo"
+                        :count="64"
+                        :link="148"
+                        :pointer-reactive="false"
+                        gravity-well
+                        :draw-overlay="drawWarpFocal"
+                        class="absolute inset-0"
+                    />
+                    <span
+                        class="pointer-events-none absolute bottom-3 left-3 rounded-pill bg-card/80 px-2.5 py-1 text-xs text-muted-foreground"
+                    >
+                        hold to pull the field in
+                    </span>
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
+
+        <StorySection
+            label="double-tap supernova (DEMO-ONLY — not an engine prop)"
+            blurb="Double-tap the field — a radial OUTWARD impulse scatters the nodes, then the existing drift renormalises |v| back to speed. This is implemented ENTIRELY in the demo, calling the public `field` expose — NO library code, NO engine prop. It proves the public field seam carries arbitrary consumer content (the W-DOC1 README example). The pointer-held well SHIPS as an engine prop (a real second consumer); this double-tap stays a demo flourish (one slide is not a ≥2-consumer engine prop); the keyboard-egg boids idea is CUT (no second consumer, the least field-coherent)."
+        >
+            <ShowcaseFrame pad="none">
+                <div
+                    ref="novaHostRef"
+                    class="relative h-[420px] w-full cursor-pointer overflow-hidden rounded-card bg-card"
+                >
+                    <Constellation
+                        ref="novaRef"
+                        seed="nova-demo"
+                        :count="60"
+                        :link="148"
+                        :pointer-reactive="false"
+                        :draw-overlay="drawWarpFocal"
+                        class="absolute inset-0"
+                    />
+                    <span
+                        class="pointer-events-none absolute bottom-3 left-3 rounded-pill bg-card/80 px-2.5 py-1 text-xs text-muted-foreground"
+                    >
+                        double-tap to detonate (demo-only)
+                    </span>
+                </div>
+            </ShowcaseFrame>
+        </StorySection>
+
+        <StorySection
+            label="anomaly drawOverlay recipe + ?freeze deterministic capture"
+            blurb="The branded anomaly mark (a pulse ring + halo + core dot + an optional resolved-check + a dashed monospace callout) is a copy-pasteable consumer drawOverlay pinned to the engine-owned focal (field.warp.{x,y}) — NOT a library prop. There is NO anomaly/resolved/label prop on the component (the zero-deck-domain canon holds; the slides decl-model re-authors against THIS recipe). The freeze prop lays out ONE reproducible STATIC frame (seeded layout, no stepField, no advance) and hands drawOverlay a FROZEN now, so the pulse-ring radius is identical frame-over-frame — the determinism a pptx/print/screenshot capture needs. Omit freeze to auto-derive from a ?export|?print|?freeze URL. The π freeze-live spec mounts this twice and asserts the node-position + overlay-phase hashes are BYTE-IDENTICAL across runs (and frame-still within one run)."
+        >
+            <ShowcaseFrame pad="none">
+                <div
+                    class="relative h-[420px] w-full overflow-hidden rounded-card bg-card"
+                >
+                    <Constellation
+                        ref="freezeRef"
+                        seed="ay-w-con3"
+                        :count="60"
+                        :link="148"
+                        :pointer-reactive="false"
+                        warp-on-click
+                        :freeze="true"
+                        :draw-overlay="drawAnomaly"
+                        class="absolute inset-0"
+                    />
+                    <span
+                        class="pointer-events-none absolute bottom-3 left-3 rounded-pill bg-card/80 px-2.5 py-1 text-xs text-muted-foreground"
+                    >
+                        frozen static frame (?freeze) — the anomaly recipe overlay
+                    </span>
+                </div>
+            </ShowcaseFrame>
+
+            <p class="text-sm text-muted-foreground">
+                This instance carries <code class="font-mono text-xs">:freeze="true"</code>
+                — the lattice is a frozen, reproducible static frame (seeded layout,
+                no drift, no warp advance) and the anomaly recipe's pulse phase is
+                clamped, so two captures of this frame are byte-identical. Omit the
+                prop to auto-derive freeze from a
+                <code class="font-mono text-xs">?export</code> /
+                <code class="font-mono text-xs">?print</code> /
+                <code class="font-mono text-xs">?freeze</code> URL (the deploy
+                capture contract).
+            </p>
         </StorySection>
     </StoryPage>
 </template>

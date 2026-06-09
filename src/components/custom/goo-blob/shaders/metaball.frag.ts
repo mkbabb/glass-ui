@@ -10,7 +10,7 @@
 // displaces the edge) · oklch-perturb (inGamut + gamutClampOklch). The uniforms +
 // the three W2 splices + the per-pixel perturbation in main() stay inline here.
 //
-// The base color arrives GAMMA-sRGB (the injected `ColorResolver`'s output). The
+// The base color arrives GAMMA-sRGB (the `/color` leaf's `oklchToGammaRgb` output). The
 // shader-quality flip (DEC-AT-7 LINEAR half): srgbToLinear(uBaseColor) → OKLab →
 // OKLCh, perturb L/C/h perceptually, OKLCh → OKLab → linear sRGB, hue-preserving
 // gamut clamp, then the MANDATORY `linearToSrgb()` OETF before output — a linear-in
@@ -95,7 +95,7 @@ uniform float uWarpAmp;
 
 // Lit glass surface (W9.b) — gated behind uLit so the flat fill stays default.
 uniform float uLit;             // 0 = flat fill (default), 1 = lit droplet
-uniform vec3 uRimColor;         // Fresnel rim tint (GAMMA sRGB, via ColorResolver)
+uniform vec3 uRimColor;         // Fresnel rim tint (GAMMA sRGB, via the /color leaf)
 uniform vec3 uLightDir;         // normalized light direction (x, y, z)
 uniform float uSpecStrength;    // Blinn-Phong specular weight
 uniform float uSpecShininess;   // specular exponent (16-64, tight glint)
@@ -448,7 +448,7 @@ void main() {
         float spec = pow(max(dot(N, H), 0.0), shininess) * uSpecStrength * energyNorm;
 
         // Fresnel/Schlick rim — fed uRimColor (the --foreground warm rim via the
-        // injected ColorResolver). FOREGROUND-AWARE MIN-CONTRAST GUARD (AX.W15 [10]):
+        // /color leaf). FOREGROUND-AWARE MIN-CONTRAST GUARD (AX.W15 [10]):
         // a var(--primary) blob in dark mode resolves a rim near the BODY color, so
         // the rim washes out (no contrast). When the rim's luminance sits too close
         // to the body's, the guard CHROMA-REDUCES and L-LIFTS the rim stop (a

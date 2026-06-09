@@ -140,17 +140,14 @@ vec3 oklchToOklab(vec3 lch) {
     return vec3(lch.x, lch.y * cos(lch.z), lch.y * sin(lch.z));
 }`;
 
-// ── Palette ramp (AX.W11 — single-sourced GLSL+WGSL twin) ────────────────────
+// ── Palette ramp (AX.W11) ─────────────────────────────────────────────────────
 // The stop-to-stop interpolation: a smoothstep ease on the inter-stop parameter,
 // then a huePath dispatch — OKLab-rectangular (chroma-holding, no grey midpoint)
 // for the default/adjacent ramp, the OKLCh hue-arc (deliberate rainbow travel)
-// only when huePath requests increasing(2)/decreasing(3). The W5 migration landed
-// this in aurora's composition stage (GLSL) but the WGSL twin (aurora.wgsl.ts)
-// flat-lerped it — a backend drift the matrices-only equivalence gate could not
-// see. Hoisted here as a twin so both samplePalette ports SPLICE one source and
-// the ramp can NEVER drift between backends (the AV.W1 two-copy-elimination
-// pattern, applied to the ramp). Depends on OKLCH_MATRICES (the space fns) +
-// PI being in scope (the consumer splices the matrices chunk + defines PI first).
+// only when huePath requests increasing(2)/decreasing(3). The ramp lives HERE (the
+// shared chunk) so aurora's samplePalette splices one source. Depends on
+// OKLCH_MATRICES (the space fns) + PI being in scope (the consumer splices the
+// matrices chunk + defines PI first).
 export const PALETTE_RAMP_GLSL = /* glsl */ `
 // value.js interpolateHue in the NORMALIZED-TURNS domain (h_rad/TAU → turns, the
 // exact .5/+1.0 branch per method, fract() wrap, *TAU back). A radians-native port
@@ -197,11 +194,10 @@ vec3 mixPaletteOklchArc(vec3 linA, vec3 linB, float t, int method) {
   return oklabToLinearSrgb(oklchToOklab(vec3(L, C, H)));
 }
 
-// The ramp dispatcher both samplePalette ports splice. tRaw is the raw inter-stop
-// parameter [0,1]; the smoothstep ease + the huePath branch live HERE so the GLSL
-// and WGSL ramps are character-for-character one source. increasing(2)/decreasing(3)
-// take the OKLCh hue-arc (rainbow sweep); every other method takes the OKLab-
-// rectangular straight line (no hue detour).
+// The ramp dispatcher aurora's samplePalette splices. tRaw is the raw inter-stop
+// parameter [0,1]; the smoothstep ease + the huePath branch live HERE so the ramp is
+// one source. increasing(2)/decreasing(3) take the OKLCh hue-arc (rainbow sweep);
+// every other method takes the OKLab-rectangular straight line (no hue detour).
 vec3 samplePaletteRamp(vec3 a, vec3 b, float tRaw, int huePath) {
   float t = smoothstep(0.0, 1.0, tRaw);
   if (huePath == 2 || huePath == 3) {
@@ -229,16 +225,9 @@ vec3 samplePaletteRamp(vec3 a, vec3 b, float tRaw, int huePath) {
 //     gradients. Gradient noise is zero at the lattice nodes (no value-noise blocky
 //     plateaus); the simplex skew kills the square-lattice directional bias classic
 //     Perlin carries.
-// SINGLE-SOURCED: this GLSL leaf has its WGSL twin (PCG_HASH_WGSL) below; both shaders
-// SPLICE one source so the hash can NEVER drift between backends (the AV.W1 two-copy
-// class). proof:aurora-noise-hash-equivalence locks the twins to 1e-6.
-//
-// Twin-equivalence discipline: GLSL `uint`/`floatBitsToUint`/`>>` and WGSL
-// `u32`/`bitcast<u32>`/`>>` both wrap mod 2^32 and reinterpret the IEEE-754 bits
-// identically, so the integer pipeline is bit-exact across the two. The only float math
-// is the final `* (1.0 / 4294967296.0)` normalization + the simplex skew/falloff — all
-// f32-identical. The TS oracle (noise-hash.glsl-port.ts) transcribes BOTH twins and the
-// gate asserts they agree to 1e-6 over a witness coordinate set.
+// The integer pipeline is bit-exact: `uint`/`floatBitsToUint`/`>>` wrap mod 2^32 and
+// reinterpret the IEEE-754 bits deterministically; the only float math is the final
+// `* (1.0 / 4294967296.0)` normalization + the simplex skew/falloff.
 export const PCG_HASH_GLSL = /* glsl */ `
 // Jarzynski PCG2D — uvec2 → uvec2 permuted-congruential hash (JCGT 2020).
 uvec2 pcg2d(uvec2 v) {
@@ -291,196 +280,4 @@ float gnoise(vec2 p) {
   float t2 = 0.5 - dot(x2, x2);
   if (t2 > 0.0) { t2 *= t2; n += t2 * t2 * dot(pcgGrad2(ii + ivec2(1, 1)), x2); }
   return 70.0 * n;                           // normalize to ~[-1, 1]
-}`;
-
-// ════════════════════════════════════════════════════════════════════════════
-// AW.W7a — the WGSL TWIN of the shared color/noise chunk.
-//
-// The SINGLE-SOURCE-THE-GPU-MATH-FIRST discipline: the WebGPU aurora path needs the
-// SAME OETF + the SAME Ottosson OKLCh matrices + the SAME FBM_ROT the GLSL path uses.
-// Authoring a SECOND independent WGSL color core re-opens the AV.W1 "~2.2× too dark"
-// two-copy divergence (the precise class the AV.W2 convergence closed for the two
-// GLSL shaders). Instead these WGSL exports are the certified TWIN of the GLSL above:
-//
-//   - The `mat3x3f` literals are the SAME transposed value.js constants, copied
-//     VERBATIM. WGSL `mat3x3f(c0, c1, c2)` takes COLUMNS (column-major, like GLSL
-//     `mat3`), so the columns are identical — NO re-transpose (re-transposing would
-//     diverge ~1e-4 at the asymmetric witness `#3a7bd5`).
-//   - The OETF transfer constants (2.4 / 0.055 / 12.92 / 0.04045 / 0.0031308) are
-//     value.js's EXACT transfer, identical to the GLSL.
-//   - `proof:aurora-wgsl-equivalence` certifies a hand-transcribed WGSL→TS port of
-//     THIS chunk against the EXISTING `metaball-color.glsl-port.ts` GLSL oracle to
-//     1e-6 (never a new oracle) — so the WGSL string and the GLSL string provably
-//     compute the same numbers.
-//   - The premultiply (the consumer's, not here) stays AFTER the OETF (the
-//     straight-alpha gamma triple × alpha).
-
-// sRGB OETF + inverse — value.js's exact transfer (WGSL twin of OETF_GLSL).
-export const OETF_WGSL = /* wgsl */ `
-fn srgbToLinearCh(c: f32) -> f32 {
-    return select(pow((c + 0.055) / 1.055, 2.4), c / 12.92, c <= 0.04045);
-}
-fn srgbToLinear(c: vec3f) -> vec3f {
-    return vec3f(srgbToLinearCh(c.r), srgbToLinearCh(c.g), srgbToLinearCh(c.b));
-}
-fn linearToSrgbCh(c: f32) -> f32 {
-    return select(1.055 * pow(c, 1.0 / 2.4) - 0.055, c * 12.92, c <= 0.0031308);
-}
-fn linearToSrgb(c: vec3f) -> vec3f {
-    return vec3f(linearToSrgbCh(c.r), linearToSrgbCh(c.g), linearToSrgbCh(c.b));
-}`;
-
-// The rotated-octave FBM rotation constant (WGSL twin of FBM_ROT_GLSL). WGSL
-// mat2x2f is column-major, same as the GLSL mat2 — the columns are identical.
-export const FBM_ROT_WGSL = /* wgsl */ `const FBM_ROT: mat2x2f = mat2x2f(0.8, 0.6, -0.6, 0.8);`;
-
-// The four Ottosson OKLab/OKLCh matrices + their space fns (WGSL twin of
-// OKLCH_MATRICES_GLSL). The mat3x3f literals are the SAME transposed value.js
-// columns, copied VERBATIM (column-major takes columns — no re-transpose). PI must
-// be defined by the consumer before this chunk (oklabToOklch folds the hue to [0,2π)).
-export const OKLCH_MATRICES_WGSL = /* wgsl */ `
-const LINEAR_SRGB_TO_LMS: mat3x3f = mat3x3f(
-    0.4122214708, 0.2119034982, 0.0883024619,
-    0.5363325363, 0.6806995451, 0.2817188376,
-    0.0514459929, 0.1073969566, 0.6299787005
-);
-const LMS_TO_OKLAB: mat3x3f = mat3x3f(
-    0.2104542553, 1.9779984951, 0.0259040371,
-    0.7936177850, -2.4285922050, 0.7827717662,
-    -0.0040720468, 0.4505937099, -0.8086757660
-);
-const OKLAB_TO_LMS: mat3x3f = mat3x3f(
-    1.0, 1.0, 1.0,
-    0.3963377774, -0.1055613458, -0.0894841775,
-    0.2158037573, -0.0638541728, -1.2914855480
-);
-const LMS_TO_LINEAR_SRGB: mat3x3f = mat3x3f(
-    4.0767416621, -1.2684380046, -0.0041960863,
-    -3.3077115913, 2.6097574011, -0.7034186147,
-    0.2309699292, -0.3413193965, 1.7076147010
-);
-
-fn srgbToOklab(c: vec3f) -> vec3f {
-    let lin = srgbToLinear(c);
-    let lms = LINEAR_SRGB_TO_LMS * lin;
-    let lmsCbrt = sign(lms) * pow(abs(lms), vec3f(1.0 / 3.0));
-    return LMS_TO_OKLAB * lmsCbrt;
-}
-fn oklabToLinearSrgb(lab: vec3f) -> vec3f {
-    let lms_ = OKLAB_TO_LMS * lab;
-    let lms = lms_ * lms_ * lms_;
-    return LMS_TO_LINEAR_SRGB * lms;
-}
-fn oklabToOklch(lab: vec3f) -> vec3f {
-    let C = length(lab.yz);
-    var H = atan2(lab.z, lab.y);
-    if (H < 0.0) { H = H + 2.0 * PI; }
-    return vec3f(lab.x, C, H);
-}
-fn oklchToOklab(lch: vec3f) -> vec3f {
-    return vec3f(lch.x, lch.y * cos(lch.z), lch.y * sin(lch.z));
-}`;
-
-// The palette ramp WGSL twin (AX.W11) — the EXACT twin of PALETTE_RAMP_GLSL. WGSL
-// mix/smoothstep/sign/pow/abs operate componentwise on vec3f identically to GLSL, so
-// the math is line-for-line. Consumes the OKLCH_MATRICES_WGSL space fns + PI (define
-// both before this chunk). The WebGPU samplePalette splices this so its ramp can never
-// diverge from the GLSL oracle — proof:aurora-wgsl-equivalence certifies it to 1e-6.
-export const PALETTE_RAMP_WGSL = /* wgsl */ `
-fn interpolateHueTurns(h0: f32, h1: f32, t: f32, method: i32) -> f32 {
-  let TAU = 2.0 * PI;
-  var a = h0 / TAU;
-  var b = h1 / TAU;
-  let i = b - a;
-  if (method == 0) {              // shorter
-    if (i > 0.5) { a = a + 1.0; } else if (i < -0.5) { b = b + 1.0; }
-  } else if (method == 1) {       // longer
-    if (i > 0.0 && i < 0.5) { a = a + 1.0; } else if (i > -0.5 && i <= 0.0) { b = b + 1.0; }
-  } else if (method == 2) {       // increasing
-    if (i < 0.0) { b = b + 1.0; }
-  } else {                        // decreasing
-    if (i > 0.0) { a = a + 1.0; }
-  }
-  let r = fract(a + t * (b - a));
-  return r * TAU;
-}
-
-fn mixPaletteOklab(linA: vec3f, linB: vec3f, t: f32) -> vec3f {
-  let labA = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * linA) * pow(abs(LINEAR_SRGB_TO_LMS * linA), vec3f(1.0 / 3.0)));
-  let labB = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * linB) * pow(abs(LINEAR_SRGB_TO_LMS * linB), vec3f(1.0 / 3.0)));
-  let lab = mix(labA, labB, vec3f(t));
-  return oklabToLinearSrgb(lab);
-}
-
-fn mixPaletteOklchArc(linA: vec3f, linB: vec3f, t: f32, method: i32) -> vec3f {
-  let labA = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * linA) * pow(abs(LINEAR_SRGB_TO_LMS * linA), vec3f(1.0 / 3.0)));
-  let labB = LMS_TO_OKLAB * (sign(LINEAR_SRGB_TO_LMS * linB) * pow(abs(LINEAR_SRGB_TO_LMS * linB), vec3f(1.0 / 3.0)));
-  let lchA = oklabToOklch(labA);
-  let lchB = oklabToOklch(labB);
-  let L = mix(lchA.x, lchB.x, t);
-  let C = mix(lchA.y, lchB.y, t);
-  let H = interpolateHueTurns(lchA.z, lchB.z, t, method);
-  return oklabToLinearSrgb(oklchToOklab(vec3f(L, C, H)));
-}
-
-fn samplePaletteRamp(a: vec3f, b: vec3f, tRaw: f32, huePath: i32) -> vec3f {
-  let t = smoothstep(0.0, 1.0, tRaw);
-  if (huePath == 2 || huePath == 3) {
-    return mixPaletteOklchArc(a, b, t, huePath);
-  }
-  return mixPaletteOklab(a, b, t);
-}`;
-
-// The PCG2D hash + 2D simplex gradient-noise WGSL twin (AX.W12) — the EXACT twin of
-// PCG_HASH_GLSL. WGSL `u32` arithmetic wraps mod 2^32 (the same overflow semantics as
-// GLSL `uint`), `bitcast<u32>` reinterprets the IEEE-754 bits identically to GLSL
-// `floatBitsToUint`, and `>>` on u32 is the same logical shift — so the integer hash
-// pipeline is bit-exact across the backends. WGSL has no implicit ivec2→uvec2; the
-// casts are explicit (`vec2u(vec2i(...))` / `bitcast`). The simplex skew/falloff math is
-// f32-identical. proof:aurora-noise-hash-equivalence certifies this twin against the
-// GLSL twin to 1e-6 over a witness coordinate set (never a new oracle — both ports
-// transcribe THIS chunk).
-export const PCG_HASH_WGSL = /* wgsl */ `
-fn pcg2d(v0: vec2u) -> vec2u {
-  var v = v0 * 1664525u + vec2u(1013904223u);
-  v.x = v.x + v.y * 1664525u;
-  v.y = v.y + v.x * 1664525u;
-  v = v ^ (v >> vec2u(16u));
-  v.x = v.x + v.y * 1664525u;
-  v.y = v.y + v.x * 1664525u;
-  v = v ^ (v >> vec2u(16u));
-  return v;
-}
-
-fn pcgHash2(p: vec2f) -> f32 {
-  let u = bitcast<vec2u>(p);
-  return f32(pcg2d(u).x) * (1.0 / 4294967296.0);
-}
-
-fn pcgGrad2(cell: vec2i) -> vec2f {
-  let h = pcg2d(bitcast<vec2u>(cell));
-  let ang = f32(h.x) * (1.0 / 4294967296.0) * 6.28318530717958647692;
-  return vec2f(cos(ang), sin(ang));
-}
-
-fn gnoise(p: vec2f) -> f32 {
-  let F2 = 0.36602540378443864676;
-  let G2 = 0.21132486540518711775;
-  let s = (p.x + p.y) * F2;
-  let i = floor(p + vec2f(s));
-  let tt = (i.x + i.y) * G2;
-  let x0 = p - (i - vec2f(tt));
-  var i1 = vec2i(0, 1);
-  if (x0.x > x0.y) { i1 = vec2i(1, 0); }
-  let x1 = x0 - vec2f(i1) + vec2f(G2);
-  let x2 = x0 - vec2f(1.0) + vec2f(2.0 * G2);
-  let ii = vec2i(i);
-  var n = 0.0;
-  var t0 = 0.5 - dot(x0, x0);
-  if (t0 > 0.0) { t0 = t0 * t0; n = n + t0 * t0 * dot(pcgGrad2(ii), x0); }
-  var t1 = 0.5 - dot(x1, x1);
-  if (t1 > 0.0) { t1 = t1 * t1; n = n + t1 * t1 * dot(pcgGrad2(ii + i1), x1); }
-  var t2 = 0.5 - dot(x2, x2);
-  if (t2 > 0.0) { t2 = t2 * t2; n = n + t2 * t2 * dot(pcgGrad2(ii + vec2i(1, 1)), x2); }
-  return 70.0 * n;
 }`;

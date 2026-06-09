@@ -39,9 +39,9 @@ const delegatedProps = computed(() => {
   const { class: _, variant: __, size: ___, keepDockOpen: ____, ...delegated } = props
   // The spectrum squircle thumb is contained within the capsule so it never
   // overshoots the tall gradient track; reka-ui's `contain` alignment matches
-  // that intent. The standard cap-thumb keeps the default `overflow` alignment
-  // so the integrated-cylinder leading edge tracks the value edge-to-edge (the
-  // iOS continuous feel — the fill's rounded leading edge IS the grab).
+  // that intent. The standard round knob keeps the default `overflow` alignment
+  // so the knob centres on the value edge-to-edge (the iOS continuous feel — the
+  // knob rides the fill's leading edge, its centre IS the value point).
   if (v.value === 'spectrum' && !delegated.thumbAlignment) {
     delegated.thumbAlignment = 'contain'
   }
@@ -180,14 +180,14 @@ const isTouchActive = computed(() => touchGate.isActive.value)
         border-color var(--duration-fast) var(--ease-standard);
 }
 
-/* ── The integrated-cylinder GLASS fill (standard, AX.W59) ──
-   The fill is ONE continuous glass rounded-pill pulled left/right; its
-   rounded LEADING edge is the grab. There is NO visible demarcation
-   between thumb and fill — they read as a single cylinder. The range
-   carries the W52 liquid-glass material (backdrop blur + the unified edge
-   rim) tinted to `--primary`, so the filled portion is a glass cylinder
-   over the muted track, not a flat bar. The reka SliderThumb stays mounted
-   (a11y/keyboard/focus) but is styled below as the cylinder's leading cap. */
+/* ── The continuous GLASS fill (standard) ──
+   The fill is ONE continuous glass rounded-pill pulled left/right; the round
+   knob rides ON it so the fill flows straight under the knob's centre (the
+   value point) — continuous with the track, not a detached disc on a bar. The
+   range carries the W52 liquid-glass material (backdrop blur + the unified edge
+   rim) tinted to `--primary`, so the filled portion is a glass cylinder over
+   the muted track, not a flat bar. The reka SliderThumb is styled below as the
+   round knob (a11y/keyboard/focus stay native on it). */
 .slider-range {
     position: absolute;
     height: 100%;
@@ -214,26 +214,27 @@ const isTouchActive = computed(() => touchGate.isActive.value)
         box-shadow var(--duration-fast) var(--ease-standard);
 }
 
-/* ── The leading cap (standard) ──
-   The thumb is NOT a detached circle. It is the cylinder's LEADING CAP — a
-   slim vertical capsule the HEIGHT of the track, flush at the fill's leading
-   edge, carrying a faint specular grip so the grab affordance reads without a
-   ring or an offset disc. The cap shares the fill's pill radius so the
-   thumb↔fill seam is invisible (the integrated cylinder). The four-state
-   contract rides the box-shadow halo + the iOS press spring on transform. */
+/* ── The round knob (standard) ──
+   The thumb is a FULLY ROUNDED iOS knob — a circle the size of the size token,
+   centred on the fill's leading edge so it sits CONTINUOUS with the track (the
+   knob's centre IS the value point, the fill flows straight under it). It is
+   not a detached floating disc and not a slim offset cap: a 1:1 round knob
+   flush on the continuous glass fill. It carries a faint specular grip so the
+   grab affordance reads, and the four-state contract rides the box-shadow halo
+   + the iOS press spring on transform. */
 .slider-thumb {
     display: block;
-    /* A slim cap (not a full circle): ~46% of the size token wide, the full
-       track height tall. The cylinder seam is hidden by the shared radius. */
-    width: calc(var(--slider-thumb-size, 1rem) * 0.46);
-    height: 100%;
-    border-radius: var(--radius-pill);
+    /* A round knob: a square footprint (1:1) at the full size token, so the
+       50% radius paints a true circle continuous with the fill it rides. */
+    width: var(--slider-thumb-size, 1rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
     border: none;
     /* AY.W-GLASS — a flat fill; the grip catch-light is the SHARED opt-in
        edge-gleam (the `.glass-specular-track` `::before` recipe Card/Button/dock-
        controls use, composed on the thumb in the template), NOT a hand-rolled
        static `linear-gradient` lip (the parallel specular idiom the band did not
-       speak). The thumb is the slider's interactive cap, so it is a legitimate
+       speak). The thumb is the slider's interactive knob, so it is a legitimate
        opt-in (wire-or-omit: it WIRES); the gleam wakes only on pointer-move, idle
        at rest. */
     background: var(--slider-thumb-bg, var(--primary));
@@ -252,17 +253,17 @@ const isTouchActive = computed(() => touchGate.isActive.value)
             var(--slider-thumb-spring, var(--spring-smooth));
 }
 
-/* Hover/focus lift a light specular halo on the cap — the cylinder's leading
-   edge brightens rather than gaining a detached ring. */
+/* Hover/focus lift a light specular halo on the knob — the round knob
+   brightens its grip rather than gaining a second detached ring. */
 .glass-slider:hover .slider-thumb,
 .slider-thumb:focus-visible {
     box-shadow: 0 0 0 4px var(--surface-tint-8);
 }
 
 /* iOS press spring — the snappy spring ease on the transform channel makes
-   the cylinder "give" under the pointer (the cap squishes its grip). */
+   the knob "give" under the pointer (a uniform shrink, the felt press). */
 .glass-slider:active .slider-thumb {
-    transform: scaleX(var(--scale-press-btn, 0.97));
+    transform: scale(var(--scale-press-btn, 0.97));
 }
 
 .glass-slider[data-disabled] .slider-thumb {
@@ -304,9 +305,12 @@ const isTouchActive = computed(() => touchGate.isActive.value)
     height: 100%;
     background: var(--slider-thumb-bg, transparent);
     border: 2px solid var(--slider-thumb-border-color, var(--background));
-    /* The cross-engine CONTRACT: a generous --radius rounds the box on
-       Safari/Firefox/old-Chrome. The squircle is the @supports-gated PE tier. */
-    border-radius: var(--radius-lg);
+    /* The cross-engine CONTRACT: a GENEROUS radius proportional to the box
+       (0.7× the thumb-size, ≈0.64× the 1.1× box WIDTH) reads squircle-adjacent
+       on Safari/Firefox/old-Chrome — NOT the old bare 10px `--radius-lg` that
+       left a rounded RECT on the ~35% without `corner-shape`. The superellipse
+       is the @supports-gated PE tier that REFINES this curve, never its base. */
+    border-radius: calc(var(--slider-thumb-size, 1rem) * 0.7);
     box-shadow: var(--slider-thumb-shadow, var(--shadow-sm));
 }
 

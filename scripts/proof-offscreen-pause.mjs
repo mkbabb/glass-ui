@@ -37,12 +37,11 @@ function cliPaths() {
     const ROOT = resolve(fileURLToPath(new URL("../", import.meta.url)));
     _cliPaths = {
         ROOT,
-        // AW.W7b — the backend-AGNOSTIC park machinery (the content-visibility hook,
-        // the tab-hidden owner, the live PRM re-monitor) was CARVED into the shared
-        // `createCanvasLifecycle` core so the WebGPU sibling `createGPUCanvas` shares
-        // it. The substrate-side F1/F4/G1 assertions read the core (its real home);
-        // the WebGL2 backend `useWebGLCanvas.ts` + the WebGPU `createGPUCanvas.ts` both
-        // compose it, so a parked rAF skips both the WebGL2 draw AND the WebGPU compute.
+        // The backend-AGNOSTIC park machinery (the content-visibility hook, the
+        // tab-hidden owner, the live PRM re-monitor) lives in the shared
+        // `createCanvasLifecycle` core. The substrate-side F1/F4/G1 assertions read the
+        // core (its real home); the WebGL2 backend `useWebGLCanvas.ts` composes it, so
+        // a parked rAF skips the WebGL2 draw.
         SUBSTRATE: resolve(ROOT, "src/composables/glass/webgl/createCanvasLifecycle.ts"),
         AURORA: resolve(ROOT, "src/components/custom/aurora/composables/useAurora.ts"),
         BLOB: resolve(

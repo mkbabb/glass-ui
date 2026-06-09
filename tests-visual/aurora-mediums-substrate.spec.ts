@@ -14,7 +14,7 @@
 // preserveDrawingBuffer; the robust cross-context readback is a COMPOSITED element
 // screenshot (locator.screenshot) decoded with pngjs. On a dev box the real GPU
 // (darwin→Metal) paints; a GPU-less CI runner SwiftShader-degrades + the driver SKIPs
-// befitting-silent. The live aurora defaults to WebGL2 (W07 WEBGPU_PARITY=false).
+// befitting-silent. The live aurora renders on the single-pass WebGL2 fragment shader.
 //
 // THE TWO ASSERTIONS (headless-runnable on the real GPU):
 //   (1) NEUTRALITY-FLOOR — the oil-medium bake paints a non-black, structured field: the

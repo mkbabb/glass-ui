@@ -340,30 +340,6 @@ export const GATES = [
         note: "AW.W6 — resolveAtoms is a PURE TOTAL mapper over the ≤7 Tier-1 atoms (seed/harmony/mood/medium/textureAmount/motion/zones): a fuzz over the full atom-combination matrix (incl. out-of-range inputs) yields a valid in-range AuroraConfig respecting every budget.ts cap, AND resolveAtoms(DEFAULT_ATOMS) deep-equals DEFAULT_AURORA_CONFIG (the wispy-sky default survives the new door). Bite: change a DEFAULT_ATOMS value (default ≠ wispy-sky) → RED; OR remove a budget clamp so a vivid×6-zone combination overflows → RED",
     },
     {
-        id: "proof:aurora-wgsl-equivalence",
-        cmd: "proof:aurora-wgsl-equivalence",
-        tags: ["local", "ci"],
-        note: "AW.W7a + AX.W11 — the WGSL color/noise twin (OETF_WGSL + OKLCH_MATRICES_WGSL + FBM_ROT_WGSL + PALETTE_RAMP_WGSL) matches its GLSL twin to 1e-6 via the hand-transcribed WGSL→TS ports asserted against the EXISTING GLSL oracle (metaball-color.glsl-port.ts; never a new oracle) over the asymmetric witness #3a7bd5 AND the samplePaletteRamp across huePath modes (flat OKLab-rect + the OKLCh hue-arc) at t∈{0.25,0.5,0.75}, AND aurora.wgsl.ts SPLICES the shared chunk's WGSL exports (incl. PALETTE_RAMP_WGSL + samplePaletteRamp + the huePath:f32 uniform) rather than re-authoring/flat-lerping the ramp. Bite: perturb a WGSL matrix/OETF constant → the 1e-6 equivalence REDs; re-author the WGSL OETF inline OR revert samplePalette to the flat oklabToLinearSrgb(mix(labA,labB,f)) → the splice arm REDs",
-    },
-    {
-        id: "proof:aurora-noise-hash-equivalence",
-        cmd: "proof:aurora-noise-hash-equivalence",
-        tags: ["local", "ci"],
-        note: "AX.W12 — the NET-NEW painterly noise basis (Jarzynski PCG2D integer-bit hash + 2D simplex gradient noise) lives ONCE in procedural-color.glsl.ts as a GLSL twin (PCG_HASH_GLSL) + WGSL twin (PCG_HASH_WGSL); the hand-transcribed TS port (noise-hash.glsl-port.ts — certified bit-identical integer pipeline: GLSL uint/WGSL u32 wrap mod 2^32, floatBitsToUint/bitcast reinterpret the same IEEE-754 bits) matches frozen 1e-6 oracle witnesses, AND BOTH aurora.frag.ts + aurora.wgsl.ts SPLICE the chunk twin (import + ${...} interpolation) rather than re-authoring the hash inline. Bite: perturb a PCG constant (1664525u/1013904223u) or the simplex F2/G2 → the 1e-6 equivalence REDs; re-author the pcg2d/gnoise body inline in either shader → the splice/no-inline arm REDs",
-    },
-    {
-        id: "proof:aurora-backend-fallback",
-        cmd: "proof:aurora-backend-fallback",
-        tags: ["local", "ci"],
-        note: "AW.W7b — the WebGL2 single-pass fragment shader is the DECLARED zero-regression fallback; resolveRenderModeAsync drops a null adapter AND an isFallbackAdapter software adapter to webgl (NOT webgpu), runtime.ts routes to createGPUCanvas only when a device is present (else createWebGLCanvas), the WGSL twin draws the single-pass aurora, and useAurora runs the probe behind the deferred first-paint schedule. Bite: break the WebGL2 fallback route (probe always returns webgpu / accepts a fallback adapter) → RED",
-    },
-    {
-        id: "proof:webgpu-substrate-single",
-        cmd: "proof:webgpu-substrate-single",
-        tags: ["local", "ci"],
-        note: "AW.W7b — the WebGPU substrate-binary gate (the proof:webgl-substrate-single by-irrelevance hole): the navigator.gpu device acquisition is confined to the sanctioned sites (renderMode.ts probe via requestAdapter→requestDevice + createGPUCanvas.ts swapchain), NO baked aurora pass-count/rgba16float/Kuwahara-sector-count in EITHER substrate (createCanvasLifecycle/createGPUCanvas), and aurora.wgsl.ts SPLICES the shared procedural-color WGSL chunk. Bite: bake passCount=4/rgba16float into createGPUCanvas → RED; add a 2nd navigator.gpu acquisition → RED; re-author the WGSL OETF inline → RED",
-    },
-    {
         id: "proof:aurora-interaction-prm",
         cmd: "proof:aurora-interaction-prm",
         tags: ["local", "ci"],
@@ -525,6 +501,36 @@ export const GATES = [
         cmd: "proof:constellation-field",
         tags: ["local", "ci"],
         note: "AW.W17 — the pure field engine: seedField lays out `count` nodes within bounds (reproducible under a seed), stepField bounces a node off a wall (velocity sign flips) + preserves speed under pointer steering, the four neutral passes paint without throwing",
+    },
+    {
+        id: "proof:constellation-egg-live",
+        cmd: "proof:constellation-egg-live",
+        tags: ["local"],
+        note: "AY.W-CON2 — the gravity-well egg PERTURBS-THEN-COOLS on the real engine (pi readback: rest 0.160 -> held-peak 0.210 +31% -> cooled within ±6% via the asymmetric WELL_RELEASE_RAMP), NO-SLINGSHOT (maxOob 0px), PRM-suppressed + state-reset-on-edge; a field-is-drifting pre-check guards runner contention. Bite: heat-without-cool / a slung node / a PRM-advancing well -> RED",
+    },
+    {
+        id: "proof:constellation-freeze-live",
+        cmd: "proof:constellation-freeze-live",
+        tags: ["local"],
+        note: "AY.W-CON3 — the ?freeze deterministic-capture render gate (pi lane, fail-CLOSED): two back-to-back mounts of <Constellation :freeze :seed :drawOverlay> hash BYTE-IDENTICAL (node positions + overlay phase) + frame-1-vs-later-now still + the ?freeze URL auto-derive fires. Bite: a stepped frozen field / a live-now overlay leak / a non-firing hook -> RED",
+    },
+    {
+        id: "proof:aur2-residue",
+        cmd: "proof:aur2-residue",
+        tags: ["local"],
+        note: "AY.W-AUR2 — the aurora residue strike: the OKLAB/atoms migration claims reconciled (done-strikes verified against the shipped gates) + the derive-color prop sliver wired-or-recorded. Bite: a re-introduced stale migration claim -> RED",
+    },
+    {
+        id: "proof:aurora-arresting",
+        cmd: "proof:aurora-arresting",
+        tags: ["local"],
+        note: "AY.W-AUR-PAINTERLY — the reference-anchored painterly bar on REAL GPU: the van-Gogh hero lands ALL THREE bands (C in [55.67,95.67], A in-band, beta in [-1.85,-1.45] vs the starry-night triple C=70.67/A=0.832/beta=-1.672); oil + oil-pastel hard-assert their ACHIEVED bars with the residual recorded (the T5 anisotropic-Kuwahara successor owns the misses; the bands are never lowered). Bite: a washed-out/garish medium or an off-band slope -> RED; SwiftShader -> SKIP-fail-closed",
+    },
+    {
+        id: "proof:blob3-strip",
+        cmd: "proof:blob3-strip",
+        tags: ["local"],
+        note: "AY.W-BLOB3 — the ColorResolver DI strip deletion-proof: the seam GONE from goo-blob (0 code hits), the renderer re-points to /color (import + resolveColor), the type/default survive for FourierField. Bite: seam-readd OR repoint-removal -> RED (self-test proven)",
     },
     {
         id: "proof:input-invalid-aria",

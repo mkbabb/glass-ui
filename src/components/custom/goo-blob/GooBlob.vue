@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { inject, useTemplateRef, watch, ref, computed, onScopeDispose } from "vue";
-import type { ColorResolver } from "../../../composables/color";
 import { createTokenColorCache } from "../../../composables/dom";
 import type { BlobMood, BlobConfig } from "./types";
 import { BLOB_CONFIG_KEY } from "./types";
@@ -17,13 +16,13 @@ import { useMetaballRenderer } from "./composables/useMetaballRenderer";
  * satellite system drive the motion. The renderer composes the `useWebGLCanvas`
  * substrate — it never bootstraps its own context.
  *
- * Color is resolved through an INJECTED `colorResolver` seam (DEC-AT-2): the blob
- * paints the GAMMA-sRGB triple it returns. The prop is REQUIRED — pass
- * `defaultBlobColorResolver` from `@mkbabb/glass-ui/color` (or your own) so a
- * `lab()`/`oklch()`/`hsl()`/hex string resolves correctly. A missing resolver
- * throws (the loud failure, not a silent gray).
+ * Color is resolved INTERNALLY through the `/color` leaf (`cssToOklch →
+ * oklchToGammaRgb`): the blob paints the GAMMA-sRGB triple of the `color` prop. A
+ * `lab()`/`oklch()`/`hsl()`/hex string resolves correctly; a `var(--token)` is
+ * un-wrapped to a concrete string by the SFC's `resolveTokenColor` leaf BEFORE the
+ * renderer sees it (the DOM-free renderer contract).
  *
- * Config is resolved with the SAME loud discipline as the resolver: either
+ * Config is resolved with a loud discipline: either
  * `provide(BLOB_CONFIG_KEY, cfg)` from an ancestor OR pass an explicit `config`
  * prop. A mount with NEITHER throws — there is no silent reactive-defaults
  * synthesis. A consumer that genuinely wants the stock tuning passes
@@ -31,15 +30,13 @@ import { useMetaballRenderer } from "./composables/useMetaballRenderer";
  */
 const {
     color,
-    colorResolver,
     config,
     seed = "",
     paused = false,
 } = defineProps<{
-    /** Base CSS color string (any form the `colorResolver` understands). */
+    /** Base CSS color string (a `var()`/`oklch()`/`lab()`/`hsl()`/hex form; resolved
+     *  internally through the `/color` leaf to a gamma-sRGB triple). */
     color: string;
-    /** REQUIRED color seam — resolves `color` to a gamma-sRGB [r,g,b] triple in [0,1]. */
-    colorResolver: ColorResolver;
     /**
      * REQUIRED unless an ancestor `provide(BLOB_CONFIG_KEY, …)` supplies it.
      * The metaball tuning. Pass `BLOB_CONFIG_DEFAULTS` for the stock look.
@@ -116,7 +113,6 @@ const renderer = useMetaballRenderer({
     pointer,
     satellites: satelliteSystem,
     config: cfg,
-    colorResolver,
 });
 
 // Resolve once the host is in the tree (the cascade is live), then on every color
