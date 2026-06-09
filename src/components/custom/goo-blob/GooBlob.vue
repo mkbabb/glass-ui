@@ -157,8 +157,13 @@ function nudge() {
     satelliteSystem.nudge();
 }
 
+// AX.W46 D7 — the imperative `setMood` expose is a MANUAL retarget: it pins the mood
+// above the autonomic arc (`source: "manual"`), so the demo mood pills + any consumer
+// `blobRef.setMood(m)` drive a VISIBLE, PERSISTING param delta instead of being
+// clobbered back to idle within one frame. The latch releases on a fresh live
+// interaction (a hover/click over the canvas), handing control back to the auto-arc.
 function setMood(m: BlobMood) {
-    mood.setMood(m);
+    mood.setMood(m, { source: "manual" });
 }
 
 // A click fires the one-shot spring impulse (W10) — the blob bounces — AND emits

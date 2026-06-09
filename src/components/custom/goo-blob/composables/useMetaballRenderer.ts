@@ -359,10 +359,14 @@ export function useMetaballRenderer(options: UseMetaballRendererOptions) {
                     // collapsed, pulse zero) rather than advancing — the SUBSTRATE
                     // then paints ONE static frame and parks. Every axis reads the
                     // SAME tempo-scaled clock so the whole creature breathes as one.
-                    // Drive the auto-mood arc from the interaction/idle state
+                    // Drive the AUTONOMIC mood arc from the interaction/idle state
                     // (W11.c wires setMood: curious on approach, excited on click,
-                    // sleepy after inactivity). Under reduced-motion (tempo 0) the
-                    // mood holds — no retargeting on a parked frame.
+                    // sleepy after inactivity). `update` IS the auto source — it tags
+                    // every internal `setMood` with `source: "auto"` and EARLY-RETURNS
+                    // while a manual `setMood` pins the mood (AX.W46 D7), so this call
+                    // never clobbers a user-pinned mood; a fresh live click/pointer-over
+                    // releases the pin back to the arc. Under reduced-motion (tempo 0)
+                    // the mood holds — no retargeting on a parked frame.
                     if (!reduced) {
                         mood.update({
                             pointerActive: pointer.active.value,

@@ -87,19 +87,19 @@ reference; the Status column reflects each wave's reconciled state.
 | W41 | publisher cross-repo build supplier-edge | planned |
 | W42 | liquid-morph substrate | planned |
 | W43 | fourier-field first-class | planned |
-| W44 | dark-mode semantic-token contrast — destructive/alert AA floor (D10) | planned |
+| W44 | dark-mode semantic-token contrast — destructive/alert AA floor (D10) | live-verified — .dark semantic tokens (success/warning/info/destructive fg+surface) re-tuned to the AA floor (token-first, dark-arm-only); proof:dark-semantic-contrast green; DELTA audit/visual/W44-DELTA.md |
 | W45 | dock region-model + DockSeparator + mobile --dock-scale (D13+D15) | dev-landed · live-pending (DELTA owed) — region-model + DK1/2/4/5/7/8 |
 | W45-TUNE | dock-perfection close — capture owed DELTA + fix Q1 pill/C1 glyph/C2 tile-pad/C7 vertical body, re-point hover (Q3), bind dock-glass W54-successor (glass-selected · clear 19→0 specular) | planned (spec authored) |
-| W46 | blob live-truth tune — floors→bands, lighting/hover down, mood latch (D4+D5+D7) | planned |
+| W46 | blob live-truth tune — floors→bands, lighting/hover down, mood latch (D4+D5+D7) | live-verified — the blob renders as a lit contained droplet (4 moods resolve, specular highlight, contained), no broken hover/moods; proof:blob-live-truth + π render arm green; DELTA audit/visual/W46-DELTA.md |
 | W47 | aurora preset-roster reconcile — name van-Gogh/oil-pastel/crayon (D2) | planned |
-| W48 | glass-material demo reauthor — bind the shipped specular seams (D8) | planned |
+| W48 | glass-material demo reauthor — bind the shipped specular seams (D8) | live-verified — the demo BINDS the shipped seams (useSpecularTracking live, --glass-tint-strength bites, real <Button variant=glass>, rim device); proof:glass-material-demo + π arm green; DELTA audit/visual/W48-DELTA.md |
 | W49 | math-paper composes latex-paper (D16) | planned |
 | W50 | uniform dropdown/select/menu type-scale (D17) | planned |
 | W51 | comfortable component sizing — library-wide --ui-scale (D18 umbrella; W45/W50 specialize) | planned (spec authored)  |
 | W52 | liquid-glass material overhaul (D19) — kill central bloom → edge gleam + button glass/hover/gold | dev-landed · live-pending (DELTA owed) |
 | W53 | tabs-unify — one Tabs (segmented default/pill/underline), drop Bouncy, merge toggle/responsive (T1-T4) | dev-landed · live-pending (DELTA owed) |
 | W54 | glass-first-class — --glass-level scalar + opaque escape (G1) | live-verified — the scalar threads both ladders (level=1 byte-identical); Button/Card/Dialog/SegmentedTabs/Alert/TagsInput defaults flipped to glass; the 4 divergent recipes + 2 recipe divergences reconciled (proof:glass-level + proof:glass-one-model 14/14); W56(R1) squircle on dialog/sheet coupled; 16-png DELTA captured (desktop+mobile × light+dark), backdrop-filter + translucent --glass-bg-* readback confirms glass paints. See audit/visual/W54-DELTA.md |
-| W55 | adaptive-glass-legibility — iOS27 backdrop-luminance darken (G2) | planned (spec authored)  |
+| W55 | adaptive-glass-legibility — iOS27 backdrop-luminance darken (G2) | live-verified — the --glass-tint-* adaptive axis darkens glass over a light substrate so the MAXIMAL glass default stays legible (the G2 over-light surface incl. the dock); proof:adaptive-glass green; DELTA audit/visual/W55-DELTA.md (bucket on/off pngs) |
 | W56 | squircle design-language — corner-shape: superellipse() token axis (G3, foundational) | dev-landed · live-pending (DELTA owed) |
 | W57 | demo-radial reauthor + pulse-aura calm + aurora/constellation heros (P6/P7) | dev-landed · live-pending (DELTA owed) |
 | W58 | storybook-language strip — kill WCAG citations + impl-note code-comments (P10/P11) | dev-complete (proof:story-language born-RED→GREEN; 49 SFCs swept) |
@@ -107,7 +107,7 @@ reference; the Status column reflects each wave's reconciled state.
 | W60 | page-redesign container-layer — glass card + per-page rich background + hierarchy (Q4/Q7/Q9) | planned (spec authored) |
 | W61 | dock-unify-root — all docks one GlassDock root, home-left + nav + separators, Q1 collapsed size | planned (spec authored) |
 | W62 | soundness gate battery (Batch −1, lands FIRST) — proof:live-verified-ledger + tsconfig.test.json fold + proof:consumer-staleness + gates:verify-ci/gen-ci-fresh + proof:disposition-live (GOLDEN §B) | dev-complete — 5 gates landed; ci.yml drift killed (20-gate mirror → generated, 92 ci gates byte-matched); tests/ folded into typecheck (caught the AuroraHarmony dead import); consumer-staleness born-RED on 12 real cross-repo stale imports (4 sibling repos) pending the W34 discharge; 2 phantom danglers retired. No live DELTA owed (gate-machinery wave, no `src/`) |
-| W63 | gate-pattern de-trap (Q8 BLOCKER) — /compositions/gate-pattern open=ref(true) traps the visitor on click; make it dismissable, lands BEFORE W60 wraps pages | planned (spec authored) |
+| W63 | gate-pattern de-trap (Q8 BLOCKER) — /compositions/gate-pattern open=ref(true) traps the visitor on click; make it dismissable, lands BEFORE W60 wraps pages | live-verified — re-authored as a CONTAINED glass-card preview + on-demand modal trigger (page always reachable; reachability assertion PASS); proof:gate-detrap green; DELTA audit/visual/W63-DELTA.md |
 
 ## W00 — visual-runtime (π) lane — COMPLETE
 

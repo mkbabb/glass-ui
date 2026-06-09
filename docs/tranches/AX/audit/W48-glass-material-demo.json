@@ -1,0 +1,92 @@
+{
+  "wave": "AX.W48",
+  "title": "glass-material demo reauthor — bind the SHIPPED specular/tint/rim/squircle seams the story narrates (D8: /substrates/glass-material totally broken)",
+  "status": "dev-complete-headless-green-live-verified",
+  "band": "F (DEMO-REAUTHOR)",
+  "severity": "blocker",
+  "baseSha": "da57287",
+  "headSha": "002bda5",
+  "dependsOn": ["AX.W09", "AX.W00"],
+  "sequenceAfter": ["AX.W18"],
+  "audit": "docs/tranches/AX/audit/convergence/D8.md",
+  "zeroLibraryEdit": true,
+  "zeroLibraryEditNote": "Zero src/ edits. The reauthor BINDS the already-shipped seams: useSpecularTracking (W09 — the DRY pointer-write seam, root barrel via composables/glass), the --glass-tint-source + --glass-tint-strength consumer knobs (W23, read by the rung color-mix(in oklab,…) recipe), the --glass-edge-light rim token (suppressed inline on the rim-OFF plate — a consumer token write, not a library edit), the Button variant=glass (consumed as-shipped), and the .glass-floating.rounded-dialog squircle register (W56 — the surface where the squircle reads).",
+  "w56Reconciliation": {
+    "note": "The W48 doc (authored before W56 landed) directed the squircle demo onto .glass-card. W56 RE-HOMED the squircle OFF .glass-card/.glass-btn/.btn-pill (round by policy — imperceptible at a 16px card radius) and onto the dialog/sheet/big-dock register. To narrate the SHIPPED truth (the wave's whole thesis: narrate nothing absent), the squircle section demonstrates `.glass-floating.rounded-dialog` (the exact compound DialogContent composes — where the superellipse actually paints) paired with a `.glass-card` labelled `round (.glass-card)` as the re-home canary. Showing a squircle on .glass-card would itself narrate an absent feature — the exact D8 pathology.",
+    "shippedSquircleSurfaces": ".glass-floating.rounded-dialog + .glass-floating.sheet-animate (glass.css W56 R1) + the big-dock .shape-card (dock.css)"
+  },
+  "headlessGate": {
+    "id": "proof:glass-material-demo",
+    "script": "scripts/proof-glass-material-demo.mjs",
+    "registration": "package.json — \"proof:glass-material-demo\": \"node scripts/proof-glass-material-demo.mjs\"; gates.mjs GATES row (local + ci); proof:gate-script-parity bijection satisfied (the new proof-*.mjs is referenced by its proof:* cmd + the manifest row resolves).",
+    "coUpdated": "pending-orchestrator (package.json + gates.mjs are out of this wave's hand-edit bounds; see needsRegistration)",
+    "bornRed": true,
+    "bornRedMethod": "At HEAD the SOURCE detector REDs on all four asserts (SPECULAR-SEAM-COMPOSED ×4: no import/call/@pointermove/:style; TINT-BITES ×1: no --glass-tint-strength; GLASS-BTN-RETIRED ×2: 3× glass-btn token + no Button variant=glass; RIM-CONTRAST-DEVICE ×1: no data-rim-device) → 8 violations, exit 1. With the spec present, the π render arm ALSO fails-CLOSED RED (no --mouse-x ever writes; tint click shifts zero), exit 1. Bite-checks over the PATCHED tree: zero all strength → TINT-BITES RED; 45% over ceiling → ceiling RED; re-add glass-btn → GLASS-BTN-RETIRED RED; strip useSpecularTracking() → SPECULAR-SEAM RED. The OK base = 0 violations.",
+    "greenAtPatchedTree": true,
+    "greenResult": "specular seam composed ✓ (import + call + @pointermove + :style=specularStyle); tint bites ✓ (--glass-tint-strength 22% non-zero, ≤30% ceiling); glass-btn retired ✓ (0 tokens) + Button variant=glass ✓; rim on/off device ✓ (data-rim-device on+off); π render arm PASS; status PASS exit 0.",
+    "piArm": {
+      "id": "tests-visual/glass-material-demo.spec.ts",
+      "shape": "fail-CLOSED Playwright moving-specular + biting-tint readback; befitting-silent SKIP only on workspace/device absence",
+      "asserts": "hover a [data-specular-plate] + move the pointer → the host writes a LIVE --mouse-x (the unwired HEAD state writes none), the ::before opacity lifts off the rest 0, and the catch-light POSITION tracks (a left-third vs right-third hover writes a >10% different --mouse-x); click a non-zero [data-tint-sample] → the [data-tint-plate] computed background MEASURABLY shifts (the color-mix bites).",
+      "liveVerdict": "GREEN — the π arm RAN and PASSED on the patched tree (the binding close criterion: a green source gate over a LIVE render, not a dead-plates one)."
+    }
+  },
+  "redWitnesses": [
+    {
+      "id": "RED-1",
+      "headline": true,
+      "claim": "the moving-specular seam is NEVER composed — the story's blurb promises a 'pointer-anchored catch-light' but the SFC imports/calls no useSpecularTracking and binds no @pointermove/:style specular write. With --glass-specular-intensity-rest: 0 (W09's correct dormancy) the ::before opacity is 0 at rest, so a static frame reads as flat DEAD plates.",
+      "confirmedAtHead": true,
+      "codeEvidence": "grep -E 'useSpecularTracking|mouse-x|onPointerMove|pointermove' glass-material.vue → only blurb prose at :40, zero binding. Live BEFORE probe: rung --mouse-x '(unset)', ::before opacity 0; card --mouse-x '(unset)', ::before opacity 0.",
+      "disposition": "GREEN — one shared useSpecularTracking() instance drives the whole headline band; every rung + card plate binds :style=specularStyle @pointermove=onPointerMove + data-specular-plate. Live AFTER probe: hover at 70%/40% → --mouse-x 70.00%, --mouse-y 40.00%, ::before opacity 0.092 (off the dead 0). The DRY library-blessed path — no hand-rolled --mouse-x math, no per-plate copy."
+    },
+    {
+      "id": "RED-2",
+      "claim": "the adaptive-tint buttons are DEAD — the SFC set only --glass-tint-source inline, never --glass-tint-strength (default 0%), so the rung color-mix(in oklab, <bg>, var(--glass-tint-source) var(--glass-tint-strength)) is a 0% no-op. Clicking 'aurora rose'/'aurora teal' changed nothing — the tint demo demonstrated the OPPOSITE of working.",
+      "confirmedAtHead": true,
+      "codeEvidence": "glass-material.vue:124-126 set only --glass-tint-source; grep -- --glass-tint-strength → none.",
+      "disposition": "GREEN — the tint model carries BOTH source AND a non-zero strength (22%, inside the ≤30% house ceiling); the plate binds both knobs. 'none' resolves strength 0% (genuine zero delta). Live AFTER probe: bg shifts oklab(0.986 -0.00007 0.00133 / 0.8) → oklab(0.911 0.0293 0.0117 / 0.844) on the rose click (a real, measurable bias toward the sampled hue; the a-channel goes +0.029 redder)."
+    },
+    {
+      "id": "RED-3",
+      "claim": "the glass-btn is ABUSED into a wide bar — `glass-btn !h-12 !w-44` (the squircle 'demo') + `glass-btn px-3 text-xs` (the tint-sample buttons). .glass-btn is a 2.5rem CIRCULAR icon button; coercing it to an 11rem × 3rem bar via two !important overrides reads as a broken/misshapen control.",
+      "confirmedAtHead": true,
+      "codeEvidence": "glass-material.vue:93 `glass-btn !h-12 !w-44`; :114 `glass-btn px-3 text-xs`. 3 glass-btn tokens in the SFC; 5 .glass-btn elements rendered.",
+      "disposition": "GREEN — ZERO glass-btn token in the SFC. The tint-sample selector uses real <Button variant=glass size=sm> (the four-state interactive contract + the unified .glass-material specular/rim it inherits via the glass-wash rung); the squircle bar is replaced by the .glass-floating.rounded-dialog dialog register (where the squircle paints per W56) paired with a round .glass-card canary. The 1 residual runtime .glass-btn is demo-SHELL chrome (PresetEditor), outside the story body + FileBounds."
+    },
+    {
+      "id": "RED-4",
+      "claim": "the subtle rim has NO contrast device — the blurb claims 'the --glass-edge-light rim across the band' but the 0.75px 18%-α white inset ring (W09 'subtle by design') is sub-perceptual with no rim-on/rim-off pairing + no dark-plate sample, so the rim is invisible and the claim reads as a missing feature.",
+      "confirmedAtHead": true,
+      "codeEvidence": "glass-material.vue:40 blurb claim only; no rim-on/rim-off, no dark plate, no edge-light device.",
+      "disposition": "GREEN — a dedicated 'subtle rim — the --glass-edge-light contrast device' section stages a rim-ON .glass-resting plate vs a rim-OFF one (--glass-edge-light: 0 0 0 0 transparent suppressed inline — a consumer token write, not a library edit), both over a dark bg-foreground/[0.18] sample where the 0.75px ring reads AS a deliberate-subtle feature. Marked data-rim-device=on/off for the gate anchor."
+    }
+  ],
+  "pairedPi": {
+    "protocol": "AX.W00 — paired-π BEFORE/AFTER + DELTA",
+    "before": {
+      "capture": "tests-visual/.cache/w48/before.png (gitignored cache)",
+      "probe": "rung --mouse-x '(unset)', ::before opacity 0; card --mouse-x '(unset)', ::before opacity 0; glassBtnCount 5; the render reads as dead flat plates over the busy aurora, misshapen glass-btn bars, an inert tint.",
+      "verdict": "dead plates — the specular ::before is structurally 0 (no seam to ever wake it); the tint cannot bias (0% strength)."
+    },
+    "after": {
+      "capture": "tests-visual/.cache/w48/after.png + after-plates.png + after-tint-rose.png (gitignored cache)",
+      "probe": "hover 70%/40% → --mouse-x 70.00% --mouse-y 40.00% ::before opacity 0.092; the catch-light tracks the pointer (left-third vs right-third write a >10% different --mouse-x — π arm assert); tint rose click → plate bg oklab(0.911 0.0293 0.0117 / 0.844) (visibly rose); the tint-sample selector is idiomatic glass <Button>s; the squircle reads on the dialog register; the rim on/off device makes the ring legible.",
+      "verdict": "LIVE glass — the catch-light follows the cursor, the tint bites the surface, the controls are idiomatic, the rim is legible. The AFTER visibly beats the BEFORE dead-plates baseline."
+    },
+    "delta": "BEFORE: ::before opacity 0 / --mouse-x unset / tint bg a-channel ~0 / 5 misshapen glass-btn. AFTER: ::before opacity 0.092 position-tracked / --mouse-x live + travels with the pointer / tint bg a-channel +0.029 (rose bias) / 0 story-body glass-btn, idiomatic glass <Button>."
+  },
+  "metaClassRecorded": {
+    "note": "D8 is the SAME meta-class as D7 (blob-mood 'totally broken') + the W20 card-story finding — a demo authored against a prior behaviour and never rewired after the library moved underneath it. The class-fix (a proof-style guard that EVERY substrate story exercises the tokens/seams it claims) is a W33-altitude decision, NOT this single-demo wave's reach. proof:glass-material-demo is the per-story template the W33 class-guard generalizes from.",
+    "owedTo": "AX.W33 (the close / overfitting pass)"
+  },
+  "fileBounds": {
+    "reauthored": ["demo/stories/substrates/glass-material.vue"],
+    "new": [
+      "scripts/proof-glass-material-demo.mjs",
+      "tests-visual/glass-material-demo.spec.ts",
+      "docs/tranches/AX/audit/W48-glass-material-demo.json"
+    ],
+    "registrationOwedToOrchestrator": ["package.json", "scripts/gates.mjs"]
+  }
+}

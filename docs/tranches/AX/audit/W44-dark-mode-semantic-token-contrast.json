@@ -1,0 +1,107 @@
+{
+  "wave": "AX.W44",
+  "title": "Dark-mode semantic-token contrast — lift the dark `--destructive` to the AA floor (token-first, dark-arm-only, no component edits)",
+  "status": "dev-complete-headless-green-live-verified",
+  "band": "G · A11Y",
+  "severity": "major",
+  "baseSha": "da57287",
+  "dependsOn": ["AX.W00"],
+  "sequencedBefore": "AX.W39 (so W39's dark-mode a11y arm measures the CORRECTED token; {detector: W39, fixer: W44})",
+  "folds": ["convergence/D10.md (root cause + WCAG contrast table + dual-role tension + dedup proofs)"],
+  "decision": {
+    "path": "SINGLE-TOKEN (the PREFERRED gestalt-simpler path)",
+    "value": "hsl(0 80% 60%)",
+    "ratifiedAt": "π live readback — the lifted value reads as RED (not washed) and clears both floors with headroom (5.34:1 over the composited glass-wash surface)",
+    "twoTokenSplit": "NOT taken — the single value clears every consumer (ink over card + plate vs page + off-white large-glyph on plate); the `--destructive-text` split stays the recorded fallback, not the default. ZERO component-class re-points; ZERO Alert/Notification/Toast/Label/Combobox/Select SFC edits."
+  },
+  "redWitnesses": [
+    {
+      "id": "RED-1",
+      "claim": "the dark `--destructive` is the shadcn STOCK plate value `hsl(0 62.8% 30.6%)` (L≈30.6, calibrated as a saturated plate under a LIGHT foreground) used AS INK over a card by the Alert destructive variant (`alert/index.ts` `text-destructive`) — illegible at 1.75:1 over `--card`",
+      "confirmedAtHead": true,
+      "codeEvidence": "tokens.css — the dark `--destructive` at BOTH the light-dark() enhancement arm (`light-dark(hsl(0 72% 50%), hsl(0 62.8% 30.6%))`) AND the `.dark` class fallback floor (`hsl(0 62.8% 30.6%)`). alert/index.ts:18 destructive variant `text-destructive` over the glass-wash surface.",
+      "reprovedRatio": "resolved dark `--destructive` hsl(0 62.8% 30.6%) vs dark `--card` hsl(24 8% 10%) = 1.75:1 (Arm A source compute, matching D10) — far under the 4.5 body floor",
+      "disposition": "GREEN — lifted to hsl(0 80% 60%) at BOTH arms in lockstep; 4.60:1 over `--card` (Arm A) / 5.34:1 over the composited glass-wash surface (Arm B live)."
+    },
+    {
+      "id": "RED-2",
+      "claim": "the same dark `hsl(0 62.8% 30.6%)` is the PLATE background (Toast/Badge/Notification/Button-destructive) and sits at only 1.91:1 vs the dark page `hsl(24 8% 6%)` — under the 3.0 WCAG non-text graphic floor (the muddy dark rectangle off the page)",
+      "confirmedAtHead": true,
+      "codeEvidence": "tokens.css dark page `--neutral-0`/`--background` = hsl(24 8% 6%); the dark `--destructive` plate is the same token.",
+      "reprovedRatio": "resolved dark `--destructive` hsl(0 62.8% 30.6%) vs page hsl(24 8% 6%) = 1.91:1 (Arm A source compute) — under the 3.0 graphic floor",
+      "disposition": "GREEN — the lifted hsl(0 80% 60%) plate clears 5.03:1 vs the page (≥5 target headroom)."
+    },
+    {
+      "id": "RED-3",
+      "claim": "NO gate guards dark-mode semantic-token contrast — the dark `--destructive` can be any illegible value and the entire proof:* fleet stays green (gate-blindspot, structural)",
+      "confirmedAtHead": true,
+      "codeEvidence": "grep -l 'proof:dark-semantic-contrast|proof:dark-token-contrast' scripts/ = NONE at HEAD; no script parses tokens.css, resolves the dark `--destructive`, and asserts a WCAG floor.",
+      "disposition": "GREEN — proof:dark-semantic-contrast (Arm A) parses tokens.css, resolves the dark `--destructive` from BOTH arms, computes the WCAG ratio, asserts the lockstep + the floors, and FAILS CLOSED under any value < floor. Born-RED at HEAD; load-bearing."
+    }
+  ],
+  "contrastTable": {
+    "formula": "WCAG 2.1 sRGB relative-luminance (hsl→rgb→linearize→luminance→ratio; no external dep)",
+    "darkCard": "hsl(24 8% 10%)",
+    "darkPage": "hsl(24 8% 6%)",
+    "destructiveForeground": "hsl(48 10% 90%) (off-white, UNCHANGED)",
+    "HEAD": {
+      "value": "hsl(0 62.8% 30.6%)",
+      "inkOverCard": "1.75:1 (RED — under 4.5)",
+      "plateVsPage": "1.91:1 (RED — under 3.0)"
+    },
+    "GREEN": {
+      "value": "hsl(0 80% 60%)",
+      "inkOverCard": "4.60:1 (≥4.6 ink floor ✓)",
+      "plateVsPage": "5.03:1 (≥5 plate target ✓)",
+      "fgOnPlate": "3.07:1 (≥3.0 large-glyph ✓)"
+    },
+    "lightArm": {
+      "value": "hsl(0 72% 50%) (UNCHANGED)",
+      "inkOverCard": "4.70:1 (already passing — D10 parity ref)"
+    }
+  },
+  "siblingRedSweep": {
+    "note": "--like / --delete / --accent-red are oklch + brighter in dark. Confirmed: in src/ they are reachable ONLY via their @theme color aliases (--color-like/--color-delete/--color-accent-red); there is NO text-[var(--X)]-over-card consumer. RECORDED disposition (plate/icon role, lower-risk); no fix forced.",
+    "like": "plate/icon-role, no text-over-card consumer (recorded disposition)",
+    "delete": "plate/icon-role, no text-over-card consumer (recorded disposition)",
+    "accent-red": "plate/icon-role, no text-over-card consumer (recorded disposition)"
+  },
+  "filesEdited": {
+    "src/styles/tokens.css": "the light-dark() enhancement-arm dark arg (hsl(0 62.8% 30.6%) → hsl(0 80% 60%)) + the `.dark` class fallback floor (hsl(0 62.8% 30.6%) → hsl(0 80% 60%)) in LOCKSTEP. The light `:root` arm + the light-dark() light arg UNCHANGED. NO other token row.",
+    "scripts/proof-dark-semantic-contrast.mjs": "NEW — Arm A (parse tokens.css + resolve the dark `--destructive` from BOTH arms + §2c lockstep assert + WCAG ink/plate compute + sibling-red sweep).",
+    "tests-visual/dark-semantic-contrast.spec.ts": "NEW — Arm B (live `.dark` readback of the destructive Alert title color + the composited glass-wash background; WCAG recompute ≥4.6 at 375×667 + 1280×800; light cross-check; best-effort axe color-contrast secondary).",
+    "tests-visual/pi-manifest.ts": "register the feedbackAlert scene in PI_TARGETS (resolveScene('feedback','alert'))."
+  },
+  "headlessGate": {
+    "id": "proof:dark-semantic-contrast",
+    "registration": "OWED to orchestrator — package.json `proof:dark-semantic-contrast`: `node scripts/proof-dark-semantic-contrast.mjs`; satisfies the proof:gate-script-parity bijection (the cmd string references scripts/proof-dark-semantic-contrast.mjs). A gates.mjs GATES row (tags local + ci) is the aggregate-run convention (gates.mjs is NOT in W44 FileBounds — orchestrator adds the row).",
+    "armA": {
+      "shape": "device-free SOURCE-RESOLUTION + WCAG COMPUTE (resolves the token cascade + computes a number — a precept-valid artefact form, not grep-for-runtime)",
+      "bornRed": true,
+      "bornRedMethod": "revert the dark arm to hsl(0 62.8% 30.6%) → both floor clauses red (1.75 over card / 1.91 vs page); desync the light-dark() dark arg from the `.dark` floor → the §2c lockstep clause reds (BROKEN).",
+      "greenAtPatchedTree": true,
+      "greenResult": "lockstep ✓ (both arms hsl(0 80% 60%)); ink 4.60:1 over --card (≥4.6) ✓; plate 5.03:1 vs page (≥5) ✓; sibling sweep records plate/icon disposition for like/delete/accent-red ✓; status PASS exit 0."
+    },
+    "armB": {
+      "id": "tests-visual/dark-semantic-contrast.spec.ts",
+      "shape": "fail-CLOSED Playwright live readback under .dark; the binding assertion is the getComputedStyle WCAG recompute (axe-independent — axe-core is not a workspace dep; the axe color-contrast scan is a best-effort secondary, skipped when no axe build is reachable).",
+      "asserts": "navigate /feedback/alert, toggle .dark, read the 'Session expired' AlertTitle resolved color + the STACK of background layers (the W54 glass-WASH `color(srgb …/0.38)` composited over the opaque page beneath), recompute the WCAG ratio, assert ≥4.6:1 at 375×667 + 1280×800; light cross-check the unchanged light arm.",
+      "bornRed": true,
+      "bornRedMethod": "with the HEAD value reverted, the live readback computes 1.85:1 (title rgb(127,29,29) over the composited surface rgb(21,19,17)) — both viewports RED.",
+      "liveVerdict": "VERIFIED — at the lifted value both viewports GREEN; the live composited ratio is 5.34:1 (title rgb(245,77,77) over the wash-composited surface), clearing 4.6 with headroom. The 'Session expired' Alert is legible under .dark."
+    }
+  },
+  "pairedPi": {
+    "before": "HEAD hsl(0 62.8% 30.6%) — title rgb(127,29,29) over composited rgb(21,19,17) = 1.85:1 live (Arm A source: 1.75 over card / 1.91 vs page); the illegible dark-red 'Session expired' Alert (D10 capture 15.02.13).",
+    "after": "lifted hsl(0 80% 60%) — title rgb(245,77,77) over composited rgb(21,19,17) = 5.34:1 live (Arm A source: 4.60 over card / 5.03 vs page); the Alert title reads legibly under .dark at both viewports.",
+    "deltaRef": "the spec asserts the AFTER ≥4.6 at both viewports; the orchestrator captures the paired-π BEFORE/AFTER screenshots + DELTA.md per the W00 protocol on the real device."
+  },
+  "preceptAlignment": {
+    "tokenFirst": "the entire fix is ONE token value in tokens.css re-resolving every text-destructive/bg-destructive site library-wide — no consumer edits library source for styling.",
+    "noHslVarWrap": "the lifted value is a complete hsl() color consumed directly as var(--destructive); the existing color-mix(in srgb, var(--destructive) N%, transparent) sites re-resolve off the lifted base.",
+    "cleanBreak": "the stock shadcn dark value is REPLACED, not aliased — no --destructive-legacy, no deprecation shim.",
+    "presetsInConsumers": "the lifted dark --destructive is the LIBRARY's own identity evolution (the dark semantic-red the library ships), in src/styles/tokens.css.",
+    "overfitting": "the single-token path adds ZERO component artefacts; the new gate + spec each have the dark-semantic-contrast assertion as their reason to exist.",
+    "cardinalLesson": "closes on the EXECUTED live readback under .dark (the 'Session expired' Alert rendered legible), never on Arm A's headless compute alone."
+  }
+}

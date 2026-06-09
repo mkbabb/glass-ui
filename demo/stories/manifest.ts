@@ -236,7 +236,7 @@ export const CATEGORIES: Category[] = [
             s("compositions", "instrument-chassis", "Instrument Chassis", "Three-region chassis with twin-line bezel grooves and phase cascade; the GlassDock instrument-strip host."),
             s("compositions", "instrument-rail", "Instrument Rail", "Flex-basis cockpit-ratio rail (1/φ²) with engraved bezel hairlines + a twin-line divider rule; the sidekick column of a cockpit composition (AK-W2-α)."),
             s("compositions", "form-validation", "Form Validation", ":user-invalid / :user-valid rungs + useUserInvalidAria aria-invalid bridge + required asterisk + error slot + Textarea autosize (AQ.W4)."),
-            s("compositions", "gate-pattern", "Gate Pattern", "The non-dismissable access-modal idiom — a form-in-Dialog refusing esc/scrim/close (`:show-close=false`, `@escape-key-down.prevent`), with the widened `[aria-invalid]` ring + shake feedback. A blessed composition, not a component (AW.W18)."),
+            s("compositions", "gate-pattern", "Gate Pattern", "A contained, on-demand preview of the non-dismissable access-modal idiom — a glass-card frame shows the gate; 'Open the modal demo' opens the real modal that refuses esc/scrim/close (`:show-close=false`, `@escape-key-down.prevent`), with the widened `[aria-invalid]` ring + shake feedback, closing on the correct key. A blessed composition, not a component."),
             s("compositions", "labeled-field", "Labeled Field", "Parent SFC + 4 wrappers (Input · Select · Slider · Switch) with shared IconTooltip label."),
             s("compositions", "icon-tooltip", "Icon Tooltip", "Auto-provider tooltip for label co-location with display typography baked in."),
         ],

@@ -66,7 +66,7 @@ export function resolveScene(category: string, story: string): Scene {
     return scene;
 }
 
-/** The 3 π-lane substrate targets, RESOLVED (not hand-coded) from the manifest. */
+/** The π-lane targets, RESOLVED (not hand-coded) from the manifest. */
 export const PI_TARGETS = {
     get aurora(): Scene {
         return resolveScene("substrates", "aurora");
@@ -76,6 +76,12 @@ export const PI_TARGETS = {
     },
     get dock(): Scene {
         return resolveScene("navigation", "dock");
+    },
+    // AX.W44 — the destructive-Alert route (the "Session expired" ink-role surface).
+    // dark-semantic-contrast.spec.ts toggles `.dark`, reads back the AlertTitle's
+    // resolved color over the card, and recomputes the WCAG ratio in-test.
+    get feedbackAlert(): Scene {
+        return resolveScene("feedback", "alert");
     },
 } as const;
 

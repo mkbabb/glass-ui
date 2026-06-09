@@ -63,11 +63,15 @@ not a CPU marching-squares contour. Each fragment evaluates the field directly o
   crisp at any zoom or device-pixel ratio. The composite SDF carries its **analytic gradient**, so
   the surface normal reads the field gradient directly — the per-pixel 4-tap finite-difference normal
   is gone.
-- **Lit droplet (the default)** — the body reads as a **lit warm-cream dome**: a curved-rim Fresnel +
-  energy-conserving Blinn-Phong glint, a warm-pearl iridescent sheen (an Inigo Quilez cosine palette
-  biased to the warm arc), a fast-subsurface back-light, and a Beer-Lambert inner glow. A
-  foreground-aware min-contrast rim guard keeps the curved rim legible even when a `var(--primary)`
-  blob in dark mode resolves a rim near the body color.
+- **Lit droplet (the default)** — the body reads as a **calm lit warm-cream bead**: the load-bearing
+  cue is the curved-rim Fresnel (it defines the silhouette) plus a **contained warm catch-light** —
+  the energy-conserving Blinn-Phong glint is re-derived sub-unity and clamped before the OETF so it is
+  a soft gleam defining the dome curvature, never a blown white spot. The warm-pearl iridescent sheen
+  (an Inigo Quilez cosine palette biased to the warm arc), the fast-subsurface back-light, and the
+  Beer-Lambert inner glow are **whispers** — felt, not seen (one perceptual cue, not a five-layer
+  over-described surface). A foreground-aware min-contrast rim guard keeps the curved rim legible even
+  when a `var(--primary)` blob in dark mode resolves a rim near the body color. A consumer who wants the
+  glossier look raises `specStrength` / `iridescence` via the config seam.
 - **Color** — the base color arrives in gamma-sRGB, is lifted into **OKLCh** (the perceptually-uniform
   color space), perturbed per-pixel (a small hue/chroma/lightness swing off a second FBM field),
   hue-preservingly gamut-clamped, then emitted through the mandatory sRGB OETF, with an
@@ -121,7 +125,7 @@ It is **not** a data visualization and conveys no information — the canvas is 
 | Member        | Type                       | Notes |
 |---------------|----------------------------|-------|
 | `nudge()`     | `() => void`               | Perturbs satellite phases — a discrete jiggle impulse. |
-| `setMood(m)`  | `(mood: BlobMood) => void` | Retargets the mood cross-fade (`idle \| happy \| curious \| sleepy \| excited`). |
+| `setMood(m)`  | `(mood: BlobMood) => void` | Retargets the mood cross-fade (`idle \| happy \| curious \| sleepy \| excited`). **AUTHORITATIVE** — a manual `setMood` PINS the mood above the autonomic arc (it is not clobbered back to idle), and the pin holds until a fresh live interaction (a hover/click over the canvas) hands control back to the auto-arc. |
 | `pulse()`     | `() => void`               | Fires the one-shot click spring impulse (the bounce) — the same impulse a click fires. |
 | `currentMood` | `Readonly<Ref<BlobMood>>`  | The current mood. |
 | `pause()`     | `() => void`               | Parks the render loop — the imperative half of the WCAG-2.2.2 seam (the `v-model:paused` prop is the declarative half; both bind the same substrate suspend). |
@@ -173,27 +177,27 @@ interface BlobConfig {
   colorNoiseSpeed: number;    // color-field drift (default 0.05)
   paletteStops: string[];     // 2–4 in-family CSS color stops (default []); derive via deriveBlobPalette
 
-  // Iridescence + fake-SSS (the translucent-gel read)
-  iridescence: number;        // warm-pearl rim sheen weight (default 0.18)
+  // Iridescence + fake-SSS (the translucent-gel read — a felt whisper, not a seen sheen)
+  iridescence: number;        // warm-pearl rim sheen weight (default 0.09)
   iridHue: number;            // base hue degrees the warm cosine palette centres on (default 85)
   iridSpeed: number;          // animated-thickness scroll speed (default 0.06)
-  sssScale: number;           // fast-SSS back-light weight (default 0.2)
+  sssScale: number;           // fast-SSS back-light weight (default 0.1)
   sssPower: number;           // fast-SSS exponent (default 2.0)
-  coreGlow: number;           // thickness-driven inner-luminosity lift (default 0.1)
+  coreGlow: number;           // thickness-driven inner-luminosity lift (default 0.06)
 
-  // Lit glass surface (default ON — the canonical lit warm-cream droplet)
+  // Lit glass surface (default ON — the canonical calm lit warm-cream bead)
   lit: boolean;               // (default true)
   rimColor: string;           // Fresnel rim tint, resolved through the ColorResolver (default "var(--foreground)")
   lightDir: [number, number, number];  // light direction (default [0.4, 0.7, 0.6])
-  specStrength: number;       // (default 0.9)
-  specShininess: number;      // specular exponent (default 32)
+  specStrength: number;       // energy-conserving glint weight, re-derived sub-unity (default 0.16)
+  specShininess: number;      // specular exponent — a soft broad lobe, not a tight spot (default 20)
   rimPower: number;           // Fresnel/Schlick exponent (default 2.5)
-  rimStrength: number;        // (default 0.5)
+  rimStrength: number;        // (default 0.32)
 
-  // Pointer / interaction
+  // Pointer / interaction (a gentle "the creature notices you" lean, not a lurch)
   pointerAttraction: number;  // deform strength toward (>0) / away (<0) the cursor (default 0.35)
-  pointerStrength: number;    // deform scale (default 0.45)
-  stretch: number;            // velocity squash-and-stretch magnitude (default 0.5)
+  pointerStrength: number;    // deform scale — a calm lean (default 0.18)
+  stretch: number;            // velocity squash-and-stretch magnitude, tanh-saturated in-shader (default 0.5)
   clickImpulse: number;       // click spring-impulse amplitude (default 0.5)
 
   // Satellites (the orbit/merge lifecycle)
@@ -226,17 +230,21 @@ The blob is a pointer-reactive creature; the interaction ships wired (it is no l
 
 - **Pointer-follow + lean** — the body deforms toward (or, for negative `pointerAttraction`, away from)
   the cursor via a frame-rate-independent critically-damped spring (`@mkbabb/keyframes.js`). The
-  default `pointerAttraction` is non-zero, so an out-of-the-box blob leans on hover.
+  default `pointerAttraction` is non-zero, so an out-of-the-box blob leans on hover — a **gentle "the
+  creature notices you" lean**, not a lurch (the default `pointerStrength` is calm).
 - **Reach-toward droplet** — a short decaying-radius pointer trail of smin-merged spheres, so the blob
   stretches an elastic pseudopod toward the cursor and snaps back.
 - **Click squish** — the `click` emit + `pulse()` drive a one-shot spring impulse (overshoot then
   settle).
-- **Velocity squash-and-stretch** — a volume-preserving anisotropic UV warp ∝ |velocity|; the blob
-  leans into motion and recovers.
-- **Mood from state** — moods are driven internally from pointer/idle state on a `{valence, arousal}`
-  affect model (curious on approach, excited on click, sleepy after inactivity), with `setMood`
-  retained for manual override. The sheen intensity, orbit speed, wobble, and pulse all read off the
-  affect point.
+- **Velocity squash-and-stretch** — a volume-preserving anisotropic UV warp ∝ |velocity|, **tanh-
+  saturated** so the fastest flick reads as a lively bounce, never a taffy-pull; the blob leans into
+  motion and recovers.
+- **Mood from state, with an AUTHORITATIVE manual override** — the autonomic arc drives moods from
+  pointer/idle state on a `{valence, arousal}` affect model (curious on approach, excited on click,
+  sleepy after inactivity). A manual `setMood` (the expose) sits ABOVE the arc: it PINS the mood (the
+  arc does not clobber it) until a fresh live interaction over the canvas releases the pin back to the
+  arc — ONE precedence rule, manual > auto until interrupted. The sheen intensity, orbit speed,
+  wobble, and pulse all read off the affect point.
 
 All interaction respects `prefers-reduced-motion` and the `DockBackgroundToggle` pause — see
 [Accessibility](#accessibility). Under reduced-motion the substrate paints a composed rest pose (peak

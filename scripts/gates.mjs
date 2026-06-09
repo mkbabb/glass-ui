@@ -396,6 +396,12 @@ export const GATES = [
         note: "AX.W57 — P6 pulse-aura calm + P7 demo hero-radial → Aurora. Device-free SOURCE scan: tokens.css ships --pulse-aura-strength ≤ 0.25 + --pulse-aura-breath-max ≤ 0.5 and the pct/num twin is collapsed out of Pulse.vue (A); each of the four Class-A hero files (hero/intro/paper-glass/auth-shell) imports + renders <Aurora> and carries ZERO hand-rolled radial-gradient( (B); no non-allowlisted demo story carries a > 30%-alpha full-bleed radial (C). Bite: raise --pulse-aura-strength to 0.55 → A reds; re-add a radial to a hero or drop its <Aurora> → B reds; add a loud full-bleed radial to a non-keep story → C reds",
     },
     {
+        id: "proof:gate-detrap",
+        cmd: "proof:gate-detrap",
+        tags: ["local"],
+        note: "AX.W63 — the /compositions/gate-pattern DE-TRAP (the pass-3 Q8 BLOCKER: the demo opened a full-viewport non-dismissable modal ON MOUNT and locked the visitor out). Device-free SOURCE scan: gate-pattern.vue has NO `open = ref(true)` on-mount open (A); the gate demonstration renders inside a bounded glass-card preview frame (<Card> / .glass-card, the W54 glass-first default) (B); an explicit on-page <Button> opens the modal demo on demand (`open.value = true` handler — the visitor controls the preview, the page stays reachable) (C); the suppression idiom is PRESERVED (`:show-close=\"false\"` + the three @escape-key-down/@interact-outside/@pointer-down-outside .prevent still present — the demo still TEACHES the non-dismissable pattern) (D); the gate-pattern manifest blurb carries no \\b[A-Z]{1,2}\\.W\\d tranche code (E). The not-trapped PAINTED truth rides the π live arm (the visitor reaches the page). Bite: re-add open=ref(true) → A reds; drop the glass-card frame → B reds; remove the trigger Button → C reds; strip a @*.prevent / :show-close → D reds (over-correction guard); re-inject a tranche code into the blurb → E reds",
+    },
+    {
         id: "proof:font-canon",
         cmd: "proof:font-canon",
         tags: ["local", "ci"],
@@ -592,6 +598,30 @@ export const GATES = [
         cmd: "proof:glass-one-model",
         tags: ["local", "ci"],
         note: "AX.W54 — G-1 of the GOLDEN done-definition: glass cohesion MEASURED, not asserted (the --one-model arm of proof:glass-level). No ui/ chrome-or-content surface paints a solid bg-{card,background,muted,secondary,primary} without the glass tier or the named .glass-opaque escape; the legibility allowlist (avatar/label/separator/skeleton/table/data-table/badge) is exempt. Bite: re-introduce a solid chrome surface off the allowlist → RED.",
+    },
+    {
+        id: "proof:adaptive-glass",
+        cmd: "proof:adaptive-glass",
+        tags: ["local", "ci"],
+        note: "AX.W55 — the adaptive-over-light glass legibility gate (the SEPARATE --glass-tint-* axis paired with W54's --glass-level). Asserts the over-light tint hook lifts --glass-tint-strength adaptively so the MAXIMAL glass default reads legible over a light substrate (the G2 over-light surface, incl. the dock); zero new compositing seam. Bite: detach the adaptive tint hook / drop the over-light darken → RED.",
+    },
+    {
+        id: "proof:dark-semantic-contrast",
+        cmd: "proof:dark-semantic-contrast",
+        tags: ["local", "ci"],
+        note: "AX.W44 — the dark-mode semantic-token contrast gate (token-first, dark-arm-only). Asserts the success/warning/info/destructive foreground+surface tokens clear the WCAG AA contrast floor in the .dark arm. Bite: a dark semantic token below the floor → RED.",
+    },
+    {
+        id: "proof:glass-material-demo",
+        cmd: "proof:glass-material-demo",
+        tags: ["local", "ci"],
+        note: "AX.W48 — the glass-material DEMO-ROUTE falsifier (the demo twin of proof:glass-material-unified/-sota, which pass green over a broken demo). Asserts the SFC BINDS the seams it narrates: useSpecularTracking composed (the moving catch-light is live), a non-zero --glass-tint-strength companion (the color-mix bites), zero glass-btn token + a real <Button variant=glass>, the rim on/off device. Bite: strip useSpecularTracking / zero the tint strength → RED.",
+    },
+    {
+        id: "proof:blob-live-truth",
+        cmd: "proof:blob-live-truth",
+        tags: ["local", "ci"],
+        note: "AX.W46 — the GooBlob live-truth gate (the blob reads as a contained lit droplet, hover responds, moods resolve — not skeuomorphic/broken). Device-free SOURCE arm + a fail-CLOSED π blob render/mood arm. Bite: regress the mood resolution / the lit-droplet material → RED.",
     },
     {
         id: "proof:live-verified-ledger",

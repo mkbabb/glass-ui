@@ -1,0 +1,96 @@
+{
+  "wave": "AX.W46",
+  "title": "Blob live-truth tune — floor→band gates + calm-bead lighting/interaction + manual-mood latch",
+  "band": "D",
+  "lane": "BLOB",
+  "severity": "blocker",
+  "status": "GREEN",
+  "headBaseline": "002bda5",
+  "dischargedDeferred": {
+    "note": "Discharges the W15 + W16 deferred `liveVerifyNeeded` clauses — both JSONs stamped headless-GREEN with the live π-lane UNMET ('the orchestrator MUST run the π-lane on the real Metal GPU'). W46 IS that discharge: the live π-lane ran on the real device (darwin/Metal ANGLE) and the band/mood-delta readbacks are GREEN over the calm-bead + persisting-mood render.",
+    "W15-blob-contained-droplet.json": "liveVerifyNeeded → DISCHARGED (the lighting/interaction magnitudes re-tuned + live-verified)",
+    "W16-blob-integration.json": "liveVerifyNeeded → DISCHARGED (the manual-mood latch composed into the W16 isSettled quiescence predicate, live-verified)"
+  },
+  "redWitnesses": [
+    {
+      "id": "RED-1",
+      "name": "the gate was a one-sided FLOOR — 'louder' passes forever (the structural root)",
+      "headState": "blob-render.spec.ts asserted domeLumaStd (DOME_LUMA_STD_MIN=9) and centroidShift (CENTROID_SHIFT_MIN=0.012) as bare toBeGreaterThanOrEqual floors with NO ceiling — a garish dome and a lunging lean passed 'better'.",
+      "disposition": "FIXED — converted both to BANDS (paired toBeLessThanOrEqual ceilings) + added the no-blown-white worst-painted-luma witness. proof:blob-live-truth arm A source-parses the band structure (born-RED at HEAD: floor-only).",
+      "verdict": "GREEN"
+    },
+    {
+      "id": "RED-2",
+      "name": "the lighting cohort is over-bright — the skeuomorphic wet-plastic bead (D4)",
+      "headState": "specStrength:0.9 × energyNorm(shininess 32)=4.25 → a 3.83× over-unity glint crushed to a HARD WHITE spot over the dome; 5 lighting layers co-added on a ~0.14uv bead. The live BEFORE screenshot shows the blown-white specular hotspot.",
+      "disposition": "FIXED — re-derived specStrength against energyNorm (0.9 → 0.16, a sub-unity warm gleam), softened specShininess (32 → 20, a broad lobe), pulled iridescence (0.18 → 0.09) / sssScale (0.2 → 0.1) / coreGlow (0.1 → 0.06) / rimStrength (0.5 → 0.32) DOWN (one perceptual cue: rim + a whisper, not five layers), and CLAMPed the linear highlight before the OETF (min(highlight, vec3(0.85))). lit:true STAYS.",
+      "verdict": "GREEN"
+    },
+    {
+      "id": "RED-3",
+      "name": "the interaction is far too dramatic — the lunging hover (D5)",
+      "headState": "pointerStrength:0.45 (W15-REDRESS bumped 0.11→0.45 to clear the 0.012 floor by ≈9×, a MODELED 0.111 shift) + falloff smoothstep(0.65,…) + the curious-hover arousal-compound; the squash sa=1+speed·stretch reached ~2.25× on a flick (a taffy-pull).",
+      "disposition": "FIXED — pointerStrength 0.45 → 0.18 (a calm lean), falloff narrowed 0.65 → 0.5 (coherent but calm), the curious-hover arousal multiplier flattened (0.4+0.6·arousal → 0.7+0.15·arousal, decouples the mood-compound), and the squash velocity SATURATED (sa = 1 + tanh(speed·1.6)·stretch, capped at ~1.5× — no taffy-pull). NO new interaction code.",
+      "verdict": "GREEN"
+    },
+    {
+      "id": "RED-4",
+      "name": "blob-mood totally broken — the auto-mood clobbers manual setMood every frame (D7)",
+      "headState": "useMetaballRenderer calls mood.update(...) UNCONDITIONALLY every non-reduced frame; update falls through to setMood('idle') with no pointer/click/short-idle. So ~16ms after a manual blobRef.setMood(m), the auto-arc force-retargets to idle — every mood renders IDENTICAL (the pill highlights but the render never changes; the shipped setMood expose is a documented lie).",
+      "disposition": "FIXED — setMood(mood, { source }) carries a source discriminant; a manual setMood arms a manualOverride latch (the generalization of excitedHoldMs); update EARLY-RETURNS while the latch holds and RELEASES it on a fresh clicked OR rising-edge pointerActive over the live canvas; the latch is folded into isSettled (a pinned non-idle mood keeps the loop alive) + nextAutoMoodMs (no auto-arc to wake for). proof:blob-live-truth arm B source-parses the latch structure; arm C blob-mood-live.spec.ts proves the mood-DELTA persistence.",
+      "verdict": "GREEN"
+    }
+  ],
+  "liveSetBands": {
+    "note": "RATIFY 1 — the band CEILINGS were set LIVE against the calm-bead render on the real device (darwin/Metal ANGLE), NOT pre-committed. The audit's modeled numbers MISPREDICTED the live truth (the cardinal lesson restated): the audit modeled domeLumaStd ≈16-18 (live: ≈65, dominated by the dark var(--primary) body falling to the cream rim, NOT the specular) and the HEAD lean centroidShift ≈0.11 (live: ≈0.04 — the over-dramatic lurch the audit modeled was an overestimate; the live lean was always calmer). The bands are the live-set restraint guards.",
+    "domeLumaStd": { "min": 9, "max": 80, "liveCalmBead": 65, "basis": "painted-interior luma std-dev; floor catches a flat fill, ceiling catches a runaway over-bright dome" },
+    "centroidShift": { "min": 0.012, "max": 0.07, "liveCalmBead": 0.042, "basis": "centroid shift under a rightward hover-flick, fraction of width; floor catches an invisible lean, ceiling catches a lunge toward the modeled 0.11" },
+    "highlightLumaMax": { "max": 250, "liveCalmBead": 235, "headOverbright": "238-246 on the lighter grid colors", "basis": "worst-case painted-interior luma; the shader highlight clamp guarantees sub-unity, so a dome crushed to pure white (255) reds" }
+  },
+  "pairedPi": {
+    "device": "darwin / Metal (ANGLE --use-angle=metal), Chrome-headless-new",
+    "scene": "/substrates/goo-blob (the BLOB_CONFIG_DEFAULTS grid, .first() = var(--primary))",
+    "before": {
+      "screenshot": "audit/visual/W46/blob-default-BEFORE-overbright.png",
+      "read": "a blown-white specular hotspot over the dark body — the skeuomorphic wet-plastic bead (D4 root); the lighter grid blobs ran worst painted luma 242-246.",
+      "domeLumaStd": 65,
+      "centroidShift": 0.041,
+      "moodDeltaRatio_excitedVsSleepy": "≈1.7 under the simulated HEAD clobber (both moods render the auto-arc idle — the documented lie)"
+    },
+    "after": {
+      "screenshots": [
+        "audit/visual/W46/blob-default-AFTER-calm.png",
+        "audit/visual/W46/blob-default-AFTER-dark.png",
+        "audit/visual/W46/blob-default-AFTER-mobile.png"
+      ],
+      "read": "a calm contained warm-cream bead with a soft dome/rim and NO blown hotspot; the dark-mode min-contrast rim guard keeps the luminous bead legible.",
+      "domeLumaStd": 65,
+      "centroidShift": 0.042,
+      "worstPaintedLuma": 235,
+      "moodDeltaRatio_excitedVsSleepy": "≈19-21 (excited orbits ~20× the motion rate of sleepy — the manual setMood is AUTHORITATIVE)",
+      "moodPersistence": "the pinned excited HELD across a 1.5s idle window at ≈5-7× the sleepy rate (NOT clobbered to idle); a fresh pointer-over RELEASES the latch back to the auto-arc"
+    },
+    "delta": "BEFORE blown-white skeuomorphic bead + a clobbered (identical-every-mood) render → AFTER a calm warm-cream membrane + a 20× mood-delta that persists. The visual BEFORE/AFTER (the blown spot → the soft dome) is the binding close criterion."
+  },
+  "geometryUntouched": {
+    "note": "W08/W15 own the GEOMETRY/length/POS_SCALE regime atomically — W46 touched NO length constant.",
+    "confirmedUnchanged": ["bodyRadius (0.22)", "satelliteRadius (0.082)", "orbitRadius (0.17)", "eccentricity (0.05)", "smoothK (0.05)", "POS_SCALE (0.625)", "the * POS_SCALE uploads", "uMaxReach"],
+    "w46Touched": "lighting MAGNITUDES (specStrength/specShininess/iridescence/sssScale/coreGlow/rimStrength), interaction MAGNITUDES (pointerStrength), the falloff SHAPE (0.65→0.5), the squash SATURATION (tanh), the manual-mood latch — never a distance."
+  },
+  "ratifyDecisions": {
+    "1_bandCeilings": "TAKEN-DEFAULT (set live above the calm-bead measured value): domeLumaStd ≤ 80, centroidShift ≤ 0.07, highlight luma ≤ 250.",
+    "2_lightingTriple": "TAKEN-DEFAULT (tuned live to the calm warm-cream-bead reference, worst-case highlight sub-unity): specStrength 0.16, specShininess 20, iridescence 0.09, sssScale 0.1.",
+    "3_latchRelease": "TAKEN-DEFAULT (either a fresh clicked OR a RISING-EDGE pointerActive over the live canvas releases the latch; a held hover releases ONCE then the auto-arc drives — an idle frame can never release).",
+    "4_autoMoodProp": "TAKEN-DEFAULT (ship the latch as the library-correct default; autoMood prop NOT added — the latch-release is NOT fiddly in the live audit, the mood pills drive a clean 20× delta + persistence, so the escape hatch is not warranted, no-overfitting).",
+    "5_listenerHostCoordinate": "DEFERRED (the calm-bead re-tune resolves the 'broken' read; the live audit shows NO outer-ring dead-zone blocking the calm lean — the coordinate reconciliation is routed to a geometry follow if a later audit shows the dead-zone, never silently dropped)."
+  },
+  "gates": {
+    "proof:blob-live-truth": {
+      "armA_bandStructure": "PASS (source-parse: domeLumaStd + centroidShift each paired floor+ceiling, no-blown-white witness present) — born-RED at HEAD (floor-only)",
+      "armB_latchStructure": "PASS (source-parse: setMood source param + manualOverride latch + update early-return + isSettled fold) — born-RED at HEAD (no source param, unconditional clobber)",
+      "armC_piReadback": "PASS (4 specs: 3 blob-render band + 1 blob-mood-live mood-delta) — born-RED at HEAD (the band reds the over-bright/over-dramatic, the mood readback reds the clobber)"
+    },
+    "regression": "all existing static blob gates GREEN (blob-mood-resolved, blob-spec-premult, blob-space-gamma, blob-smin-normalized, blob-value-free, blob-tempo-suppression, blob-interaction-prm, blob-gradient-unit-length); typecheck GREEN"
+  },
+  "needsRegistration": "package.json scripts: add \"proof:blob-live-truth\": \"node scripts/proof-blob-live-truth.mjs\" (the orchestrator owns the index; the proof-gate-script-parity meta-gate auto-discovers it from the cmd string — no allowlist edit)"
+}

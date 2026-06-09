@@ -5,10 +5,23 @@
 //     close-button CSS pierce;
 //   - the invalid ring comes from the library .input-pill [aria-invalid="true"]
 //     selector, not a scoped ring re-paint.
+//
+// The idiom is DEMONSTRATED, not IMPOSED: a contained glass-card preview shows
+// what the gate looks like (static, always on the page), and an explicit
+// "Open the modal demo" button opens the REAL non-dismissable modal ON DEMAND —
+// the visitor experiences the suppressed esc / scrim / close behaviour, then the
+// correct key closes it. The page is always reachable; nothing traps the viewport.
 import { ref, nextTick } from "vue";
-import { Lock } from "@lucide/vue";
+import { Lock, Unlock } from "@lucide/vue";
 import StoryPage from "../StoryPage.vue";
 import StorySection from "../StorySection.vue";
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+    CardDescription,
+} from "../../../src/components/ui/card";
 import {
     Dialog,
     DialogContent,
@@ -19,8 +32,8 @@ import {
 import { Input } from "../../../src/components/ui/input";
 import { Button } from "../../../src/components/ui/button";
 
-// The gate is always open while locked — it refuses esc / scrim / close.
-const open = ref(true);
+// The modal starts CLOSED — the demo opens it on demand, never on mount.
+const open = ref(false);
 const value = ref("");
 const error = ref(false);
 const shake = ref(false);
@@ -28,6 +41,13 @@ const unlocked = ref(false);
 
 // A demo "key" — the right value dismisses; a wrong one paints the ring + shakes.
 const KEY = "wolfpack";
+
+// Open the modal demo on demand — the on-page trigger the visitor controls.
+function openDemo() {
+    value.value = "";
+    error.value = false;
+    open.value = true;
+}
 
 async function submit() {
     if (value.value.trim().toLowerCase() === KEY) {
@@ -43,11 +63,10 @@ async function submit() {
     shake.value = true;
 }
 
-function reset() {
+function relock() {
     value.value = "";
     error.value = false;
     unlocked.value = false;
-    open.value = true;
 }
 </script>
 
@@ -55,13 +74,46 @@ function reset() {
     <StoryPage>
         <StorySection
             label="non-dismissable access modal (a blessed composition, not a component)"
-            blurb="A form-in-Dialog that refuses esc / scrim / close, carries an error + shake state, and submits a footer action. Composed from Dialog / DialogContent / Input / Button — no new primitive. The invalid ring paints from the widened library .input-pill [aria-invalid] selector (no scoped re-paint); the close-X is suppressed with show-close=false (no close-button CSS pierce). Try a wrong key (any text) to see the ring + shake; the right key is 'wolfpack'."
+            blurb="A form-in-Dialog that refuses esc / scrim / close, carries an error + shake state, and submits a footer action. Composed from Dialog / DialogContent / Input / Button — no new primitive. The invalid ring paints from the widened library .input-pill [aria-invalid] selector (no scoped re-paint); the close-X is suppressed with show-close=false (no close-button CSS pierce). The contained preview below shows the gate; 'Open the modal demo' opens the real non-dismissable modal — type a wrong key (any text) to see the ring + shake, or the right key 'wolfpack' to close it."
         >
-            <div class="flex flex-wrap items-center gap-4">
-                <Button v-if="!open" variant="outline" @click="reset">Re-lock the gate</Button>
-                <span v-if="unlocked" class="text-sm text-success">Unlocked.</span>
-            </div>
+            <!-- Contained preview frame: a bounded glass card on the page. The gate
+                 form renders INSIDE it (static, always reachable) — the visitor sees
+                 the idiom without being trapped by it. -->
+            <Card tier="floating" class="max-w-sm">
+                <CardHeader class="items-center text-center">
+                    <span
+                        class="grid size-12 place-items-center rounded-full bg-muted text-foreground"
+                    >
+                        <Unlock v-if="unlocked" class="size-6 text-success" />
+                        <Lock v-else class="size-6" />
+                    </span>
+                    <CardTitle>{{ unlocked ? "Unlocked" : "Access required" }}</CardTitle>
+                    <CardDescription>
+                        {{
+                            unlocked
+                                ? "The gate accepted the key. This is the contained preview of the access-modal idiom."
+                                : "This is the contained preview of the access-modal idiom. Open the modal demo to experience the suppressed esc / scrim / close behaviour."
+                        }}
+                    </CardDescription>
+                </CardHeader>
+                <CardContent class="flex flex-col items-stretch gap-2">
+                    <Button variant="primary-audacious" class="w-full" @click="openDemo">
+                        Open the modal demo
+                    </Button>
+                    <Button
+                        v-if="unlocked"
+                        variant="outline"
+                        class="w-full"
+                        @click="relock"
+                    >
+                        Re-lock the gate
+                    </Button>
+                </CardContent>
+            </Card>
 
+            <!-- The REAL non-dismissable modal — opened on demand. Every dismissal
+                 channel stays suppressed (the idiom): show-close=false, esc / scrim /
+                 outside-pointer all .prevent'd. The visitor escapes by the correct key. -->
             <Dialog v-model:open="open">
                 <DialogContent
                     :show-close="false"
@@ -82,7 +134,7 @@ function reset() {
                         <DialogDescription>
                             Enter the access key to continue. This gate cannot be
                             dismissed — esc, the scrim, and the close button are all
-                            suppressed.
+                            suppressed. The right key closes it.
                         </DialogDescription>
                     </div>
 

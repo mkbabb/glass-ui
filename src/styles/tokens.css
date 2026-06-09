@@ -758,7 +758,14 @@
        muted icon weight the control mixes it down with `--opacity-icon-muted`.
        Defaults to `var(--foreground)` so the dock paints byte-identically to
        today; a consumer overrides it per-backdrop (e.g. a near-white over a
-       dark aurora) without touching library source. */
+       dark aurora) without touching library source.
+
+       AX.W55 — this is the FOREGROUND half of the adaptive story, now reconciled
+       INTO the `--glass-backdrop` probe (not a third fork): under the bright bucket
+       (`@container style(--glass-backdrop: light)` in dock.css) it re-points toward
+       the contrast-clearing ink, and an `@supports (color: contrast-color(…))`
+       block flips it natively on supporting engines. The `var(--foreground)`
+       default keeps the zero-delta rest state. */
     --dock-fg-on-aurora: var(--foreground);
 
     /* Chassis-specific opacity. Looser than `default` (0.50) so the
@@ -849,9 +856,57 @@
        and `--glass-tint-strength` is 0%, so the rung background mixes 0% toward
        the source = byte-identical to today. A consumer sets `--glass-tint-source`
        to a sampled aurora hue + a strength ≤30% to bias the surface. Alpha-safe:
-       the mix is bounded ≤30% and never re-points the card's own alpha. */
+       the mix is bounded ≤30% and never re-points the card's own alpha.
+
+       AX.W55 — the DEFAULTS stay `var(--card)`/`0%` (the zero-delta rest state).
+       The backdrop-luminance probe (`--glass-backdrop`, below) is what OVERRIDES
+       them under a bright backdrop; the `:root` defaults are NEVER touched — the
+       bucket blocks (glass.css / dock.css `@container style(--glass-backdrop:
+       light)`) do the lift, so a surface over today's rich/dark background reads
+       byte-identical. */
     --glass-tint-source:   var(--card);
     --glass-tint-strength: 0%;
+
+    /* AX.W55 — adaptive glass legibility (the iOS-26/27 "locally darken the glass
+       over light content" move; G2). There is NO web API that reads the pixels
+       painted BEHIND a `backdrop-filter` element, so the backdrop-luminance signal
+       is a DECLARATIVE BUCKET a consumer sets where it KNOWS the backdrop is bright
+       (a near-white card surface, a pale aurora bleed, a bright data grid). It is
+       read by the `@container style(--glass-backdrop: light)` blocks on every glass
+       family (the shipped density-cascade mechanism — utilities.css §density) which
+       lift `--glass-tint-strength` toward the AA floor + re-point `--glass-tint-
+       source` to the warm-ink below, mixing the rung TOWARD ink via the EXISTING
+       `color-mix(in oklab)` seam — ZERO new compositing seam.
+
+         --glass-backdrop:      the bucket. `dark` (or unset) = today's zero-delta;
+                                `light` engages the bright-bucket darken. An
+                                INHERITING ident set on any ancestor reaches every
+                                descendant glass surface (the @container read).
+         --glass-backdrop-luma: the numeric escape hatch — a sampled backdrop
+                                relative-luminance (0..1) a heavier JS observer sets
+                                when the declarative bucket is too coarse. The TOKEN
+                                is minted (the cascade reads it if set); the OBSERVER
+                                that sets it stays demo-private until a 2nd consumer
+                                arrives (the no-overfitting bar — the DEFAULT path is
+                                the declarative bucket, not a speculative sampler).
+         --glass-tint-ink:      the LOW-LUMINANCE warm-ink the bright bucket re-points
+                                `--glass-tint-source` to — the warm dark `--foreground`
+                                family (NOT white; a lightener over light content is
+                                exactly the W52-fixed wrong direction). It auto-flips
+                                with `--foreground` (dark-mode it resolves the light
+                                warm ink — but the bright-backdrop case is a light-mode
+                                concern). Overridable like every magnitude here.
+
+       The bright-bucket `--glass-tint-strength` is clamped to a BOUNDED AA-clearing
+       floor — `--glass-tint-strength-aa` (≤24%, the iOS clamp; the lowest value that
+       clears 4.5:1 over synthetic white, capped LOW so the surface STAYS translucent,
+       "let as much content through as possible"). Recorded here as the ceiling the
+       bucket blocks drive to; the live 4.5:1 readback (proof:adaptive-glass π arm)
+       ratifies the exact value. */
+    --glass-backdrop:           dark;
+    --glass-backdrop-luma:      ;
+    --glass-tint-ink:           var(--foreground);
+    --glass-tint-strength-aa:   18%;
 
     /* AW.W23 — chromatic edge dispersion (the "polished glass" rim fringe Apple
        shows). A warm fringe on one edge + a cool fringe on the other, low-alpha,
@@ -1623,7 +1678,14 @@
 
         --primary:                 light-dark(hsl(24 10% 10%), hsl(48 10% 90%));
         --primary-foreground:      light-dark(var(--neutral-0), hsl(24 10% 10%));
-        --destructive:             light-dark(hsl(0 72% 50%), hsl(0 62.8% 30.6%));
+        /* AX.W44 — dark-arm lift. The stock shadcn dark `hsl(0 62.8% 30.6%)`
+           (L≈30.6) was a saturated-PLATE value used AS INK over `--card` by the
+           Alert destructive variant — 1.75:1 over card (illegible) / 1.91:1 vs the
+           page. Lifted to `hsl(0 80% 60%)`: 4.60:1 as text over `--card` (clears the
+           4.5 body floor) AND 5.03:1 as a plate vs the dark page (clears the 3.0
+           graphic floor). The light arm is UNCHANGED (already 4.70:1). Lockstep with
+           the `.dark` fallback floor below (§2c). */
+        --destructive:             light-dark(hsl(0 72% 50%), hsl(0 80% 60%));
         --destructive-foreground:  light-dark(var(--neutral-0), hsl(48 10% 90%));
         --ring:                    light-dark(hsl(24 10% 10%), hsl(48 10% 70%));
         --shadow:                  light-dark(hsl(24 10% 10%), hsl(0 0% 5%));
@@ -1745,7 +1807,11 @@
 
     --primary: hsl(48 10% 90%);
     --primary-foreground: hsl(24 10% 10%);
-    --destructive: hsl(0 62.8% 30.6%);
+    /* AX.W44 — the `.dark` class fallback floor, in LOCKSTEP with the light-dark()
+       enhancement arm above (§2c). Same lifted `hsl(0 80% 60%)` so a
+       @supports-split engine and a class-toggle engine paint the SAME dark red
+       (4.60:1 as ink over --card / 5.03:1 as a plate vs page). */
+    --destructive: hsl(0 80% 60%);
     --destructive-foreground: hsl(48 10% 90%);
     --ring: hsl(48 10% 70%);
     --shadow: hsl(0 0% 5%);
@@ -1984,7 +2050,10 @@
      • level >1 — clearer (more transparent + more diffuse) in lockstep.
    Glass is the DEFAULT surface register for EVERY band (USER-DECIDED MAXIMAL);
    the opaque level-0 rung is the explicit opt-out. W55 carries the over-light
-   legibility on the SEPARATE `--glass-tint-*` axis (level = opacity+blur). */
+   legibility on the SEPARATE `--glass-tint-*` axis (the `--glass-backdrop` probe
+   lifts the tint toward ink — level = opacity+blur, tint = darken-over-light, the
+   two axes coordinate but never collapse: the a11y Clear↔Tinted escape rides
+   level-up here AND tint-toward-ink under `prefers-contrast: more`). */
 @property --glass-level {
     syntax: "<number>";
     inherits: true;

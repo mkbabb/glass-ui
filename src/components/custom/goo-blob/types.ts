@@ -250,54 +250,81 @@ export const BLOB_CONFIG_DEFAULTS: BlobConfig = {
     colorNoiseSpeed: 0.05,
     paletteStops: [],
 
-    // ── Lit warm-glass droplet, the DEFAULT identity (AX.W15 F1) ─────────────────
+    // ── Lit warm-cream bead, the DEFAULT identity (AX.W46 re-tune of AX.W15 F1) ───
     //
     // A greenfield product's canonical look IS the SOTA look — the "zero regression"
     // OFF-by-default flag-gating is DELETED as the legacy/fallback path the §0 mandate
-    // forbids. The lit dome (curved-rim Fresnel + Blinn-Phong glint), warm-pearl
-    // iridescence, a fast-SSS floor and a low core-glow ALL execute correctly and were
-    // swamped only by the over-sized field — containment (F0) resurfaces them. The
-    // floors are LOW and TASTEFUL (a wet warm-cream bead, not a garish neon thin-film):
-    // a warm-pearl sheen, a thin translucent rim, a faint inner luminosity.
-    iridescence: 0.18,
+    // forbids. `lit: true` STAYS (the lit-dome identity is right); the AMOUNT was
+    // wrong. W15 carried the W9.b-era specular/rim magnitudes UNCHANGED when it flipped
+    // `lit: false → true` — they were demo-toggle-only values never re-derived against
+    // the energy-conserving Blinn-Phong, so on the now-default-lit body the glint blew
+    // a hard white spot and FIVE lighting layers (spec glint + Fresnel rim + iridescence
+    // + fast-SSS + Beer-Lambert core-glow) co-added on a ~0.14-uv bead. The live π-lane
+    // measured the resting dome-luma-std running HOT (the skeuomorphic wet-plastic tell).
+    //
+    // THE RE-DERIVATION (D4). The shader's glint is energy-CONSERVING:
+    // `spec = pow(N·H, shininess) · specStrength · energyNorm`, `energyNorm =
+    // (shininess+2)/8`. At shininess 32 that is `34/8 = 4.25`, so `specStrength: 0.9`
+    // gave a `0.9 × 4.25 ≈ 3.83×` over-unity peak — crushed to white by the OETF clamp.
+    // `specStrength` is re-derived as a fraction of the NORMALIZED peak (NOT a raw
+    // weight): at the softer shininess 20 (`energyNorm = 22/8 = 2.75`) a target linear
+    // peak ≈ 0.45 lands `specStrength ≈ 0.45/2.75 ≈ 0.16` — a contained warm gleam, never
+    // a blown hotspot (the shader also CLAMPs the linear highlight below unity as a
+    // belt-and-braces guard). `specShininess` 32 → 20 broadens the lobe (wet plastic =
+    // a tight bright spot; soft glass = a wide gentle gradient, congruent with the
+    // Toksvig fwidth-widen the shader already does).
+    //
+    // ONE perceptual cue, not four. The load-bearing pair is the Fresnel RIM (it reads
+    // the silhouette) + a WHISPER of core-glow; `iridescence` and `sssScale` drop to ≈
+    // half their W15 floors so the sheen is FELT, not seen. `rimStrength` softens 0.5 →
+    // 0.32 (the rim defines the curve without ringing a bright band). The rim already
+    // reads `rimColor: "var(--foreground)"` (token-first, untouched). A consumer wanting
+    // the glossier look passes a higher `specStrength`/`iridescence` (the config seam).
+    iridescence: 0.09,
     iridHue: 85,
     iridSpeed: 0.06,
-    sssScale: 0.2,
+    sssScale: 0.1,
     sssPower: 2.0,
-    coreGlow: 0.1,
+    coreGlow: 0.06,
 
     lit: true,
     rimColor: "var(--foreground)",
     lightDir: [0.4, 0.7, 0.6],
-    specStrength: 0.9,
-    specShininess: 32,
+    specStrength: 0.16,
+    specShininess: 20,
     rimPower: 2.5,
-    rimStrength: 0.5,
+    rimStrength: 0.32,
 
-    // ── Interaction magnitudes, re-balanced for a LEGIBLE lean (AX.W15 REDRESS F2) ─
+    // ── Interaction magnitudes, re-tuned DOWN to a CALM lean (AX.W46 D5) ──────────
     //
-    // The first W15 solve set `pointerStrength: 0.11`, which the LIVE π-lane proved
-    // INVISIBLE — a synthetic hover-flick to fx=0.82 moved the painted centroid only
-    // 0.0011 width (gate floor 0.012). The chain (traced numerically, not eyeballed):
-    // the flick lands the pointer at `uPointer.x ≈ 0.32 uv`; the in-shader
-    // deformation `uv -= normalize(uPointer−uv) · smoothstep(R,0,dist) · A · S` then
-    // pulls the WHOLE field toward the cursor, so the centroid shift ≈ the
-    // body-integrated influence. At S=0.11 with the body sitting 0.32 uv from the
-    // pointer (deep in the OLD smoothstep(0.4,0,·) weak tail → ~0.10 weight), the
-    // integrated shift was ~0.005 width → ~0.001 live after spring-settle/median
-    // attenuation. TWO compounding fixes make the lean READ:
-    //   • `pointerStrength` 0.11 → 0.45 — a strong, clearly-felt lean.
-    //   • the smoothstep falloff radius widens 0.4 → 0.65 in metaball.frag.ts main()
-    //     so the body (at 0.32 uv) is no longer in the dead tail — the whole creature
-    //     coherently tilts toward the cursor.
-    // Together the modeled body-integrated centroid shift is ≈0.078 width (6.5× the
-    // floor), and the LEANED body still reaches only ~0.52 canvas-half — contained on
-    // all four sides even mid-lean. NO new interaction code: same wired spring/trail/
-    // squash/click, re-balanced. `stretch` 0.5 (visible flick squash), `clickImpulse`
-    // a bouncy 0.5 (unchanged). The trail pseudopod radius rides `satelliteRadius`
-    // (now 0.082) in the renderer, tapering proportionally with no extra knob.
+    // The W15 REDRESS drove `pointerStrength 0.11 → 0.45` + the falloff `0.4 → 0.65`
+    // to clear the synthetic `centroidShift ≥ 0.012` floor by ≈9× (a MODELED 0.111
+    // shift — "could NOT run a real browser"). That was tuned-to-the-gate, never to the
+    // eye: the live π-lane reads it as a LUNGE — the creature lurches a fraction toward
+    // a body-width on a plain hover, and the mood machine compounds it (a hover
+    // auto-promotes to `curious`, whose arousal multiplier scales `pointerAttraction`
+    // UP). The fix is a magnitude reconciliation, NO new interaction code — the wired
+    // spring/trail/squash/click MACHINERY is sound.
+    //
+    //   • `pointerStrength` 0.45 → 0.18 — a gentle "the creature notices you" lean at
+    //     ≈ 0.2–0.35× the body radius, not the 0.93–1.70× lurch. The lean lives in the
+    //     STRENGTH, not the falloff.
+    //   • the falloff radius narrows 0.65 → 0.5 in metaball.frag.ts main() — the lean
+    //     stays COHERENT across the whole creature (a narrow falloff is what makes the
+    //     body tilt as ONE), but a calm one. (The body at ≈0.2 uv from the pointer is
+    //     still well inside the 0.5 cutoff, so the coherence holds.)
+    //   • `stretch` 0.5 stays, but the shader SATURATES the squash velocity
+    //     (`1 + tanh(speed·k)·stretch` in metaball.frag.ts:206) so the fastest flick is
+    //     a lively bounce capped at a tasteful ceiling, NEVER the 2.25× taffy-pull an
+    //     unbounded `1 + speed·stretch` reached.
+    //   • the `curious`-hover compounding is decoupled in useBlobMood.ts (the arousal
+    //     multiplier on `pointerAttraction` is flattened) so an auto-`curious` hover
+    //     lean stays calm rather than auto-jumping toward the excited regime.
+    // `clickImpulse` a bouncy 0.5 (unchanged — a deliberate click bounce is welcome).
+    // The trail pseudopod radius rides `satelliteRadius` (0.082) in the renderer,
+    // tapering proportionally with no extra knob.
     pointerAttraction: 0.35,
-    pointerStrength: 0.45,
+    pointerStrength: 0.18,
     stretch: 0.5,
     clickImpulse: 0.5,
 

@@ -6,8 +6,20 @@ import { easeInOut } from "./easing";
 // circumplex affect model). Each named mood is a POINT in that space; the
 // per-mood MoodParams are DERIVED from valence/arousal by `paramsFor`, so the five
 // moods are not hand-tuned in isolation — they read off one principled surface
-// (excited = high arousal + high valence, sleepy = low arousal, etc.). `setMood`
-// is wired internally from the interaction/idle state by `update` (no dead param).
+// (excited = high arousal + high valence, sleepy = low arousal, etc.).
+//
+// AX.W46 D7 — the manual/auto precedence. `setMood(mood, { source })` records whether
+// the retarget came from the autonomic arc (`update` → source "auto") or the public
+// expose (source "manual"). A MANUAL setMood arms a `manualOverride` latch that sits
+// ABOVE the auto-arc: `update` EARLY-RETURNS while the latch holds, so the autonomic
+// `idle/curious/sleepy/excited` drift never clobbers a user-pinned mood. The latch
+// RELEASES on a genuine FRESH interaction signal (a click or a pointer-over the live
+// canvas), so hovering the live blob still hands control back to the auto-arc. ONE
+// precedence rule — manual > auto until interrupted — generalizing the prior one-shot
+// `excitedHoldMs` click latch; NOT a parallel mood path, NOT a flag soup. Before this
+// `update` drove `setMood` UNCONDITIONALLY every frame, so an imperative `setMood` was
+// clobbered back to idle within ~16ms (the shipped expose silently no-op'd — the
+// binding-verification class).
 
 interface AffectPoint {
     /** Pleasantness, -1 (unpleasant) .. +1 (pleasant). */
@@ -51,7 +63,17 @@ function paramsFor({ valence, arousal }: AffectPoint): MoodParams {
         // band stays inside the contained-droplet seam-pull at BOTH arousal extremes.
         smoothK: lerp(0.85, 1.35, arousal),
         // Pleasant + activated leans IN; unpleasant shies AWAY.
-        pointerAttraction: lerp(-0.2, 0.6, valence * 0.5 + 0.5) * (0.4 + 0.6 * arousal),
+        //
+        // AX.W46 D5 — the arousal multiplier is FLATTENED (`0.4 + 0.6·arousal` →
+        // `0.7 + 0.15·arousal`). The old multiplier reached 1.0 at full arousal, so a
+        // plain hover (which auto-promotes to `curious`, arousal 0.5) scaled the pointer
+        // attraction UP and COMPOUNDED with the config `pointerStrength` into the lunge
+        // the live π-lane flagged. The flattened band (0.775 at curious, 0.85 at
+        // excited) keeps the auto-`curious` hover lean CALM — the mood still warms the
+        // attraction with arousal, but it no longer auto-jumps a hover toward the
+        // excited-regime lean. The lean magnitude now lives in `config.pointerStrength`
+        // (0.18), not a mood-compounded multiplier.
+        pointerAttraction: lerp(-0.2, 0.6, valence * 0.5 + 0.5) * (0.7 + 0.15 * arousal),
         // Energized = faster merge cycling (lower stagger scale).
         mergeRate: lerp(2.0, 0.3, arousal),
         // The iridescence/SSS sheen intensity (excited shimmers, sleepy is calm —
@@ -112,11 +134,27 @@ export interface MoodInteraction {
 }
 
 /**
+ * Who is driving a `setMood` retarget (AX.W46 D7). `"auto"` — the autonomic arc
+ * (`update` from the pointer/idle state); `"manual"` — the public expose (an imperative
+ * `setMood` from a consumer / the demo mood pills). A manual retarget arms the
+ * `manualOverride` latch the auto-arc respects.
+ */
+export type MoodSource = "auto" | "manual";
+
+/** The options bag for `setMood` — the source discriminant (default `"manual"`). */
+export interface SetMoodOptions {
+    /** Who is driving the retarget. Defaults to `"manual"` (the public-expose default). */
+    source?: MoodSource;
+}
+
+/**
  * Animates the blob's mood parameters — a cross-fade between named mood targets
- * driven per frame by `tick(dt)`. `setMood` retargets; `update(interaction)` wires
- * `setMood` internally from the AW.W10 pointer/idle state (curious on approach,
- * excited on click, sleepy after inactivity); `params` is the eased current value
- * the renderer reads.
+ * driven per frame by `tick(dt)`. `setMood(mood, { source })` retargets (a `"manual"`
+ * source — the default — pins the mood above the auto-arc, AX.W46 D7);
+ * `update(interaction)` drives the AUTONOMIC arc from the AW.W10 pointer/idle state
+ * (curious on approach, excited on click, sleepy after inactivity), always
+ * `source: "auto"`, and early-returns while a manual mood is pinned; `params` is the
+ * eased current value the renderer reads.
  */
 export function useBlobMood() {
     const currentMood = ref<BlobMood>("idle");
@@ -129,6 +167,15 @@ export function useBlobMood() {
     let transitioning = false;
     // A one-shot `excited` latch — a click holds excited briefly before it relaxes.
     let excitedHoldMs = 0;
+    // AX.W46 D7 — the manual-mood latch (the generalization of `excitedHoldMs` from a
+    // one-shot timed hold into a held override). `true` while a manual `setMood` is
+    // pinned; `update` early-returns and does NOT auto-drive over it. Released on a
+    // genuine fresh interaction signal (a fresh click or pointer-over the live canvas),
+    // so hovering the live blob hands control back to the autonomic arc.
+    let manualOverride = false;
+    // The last-frame `pointerActive` — so `update` can detect a RISING-EDGE pointer-over
+    // (a fresh entry releases the latch ONCE; a held hover does not keep re-releasing).
+    let prevPointerActive = false;
     // AX.W16 (arm 2) — the last `idleMs` seen by `update`. A PENDING idle→sleepy
     // auto-mood arc (`idleMs` not yet past IDLE_SLEEP_MS while the current mood is not
     // already sleepy) must keep the quiescence loop ALIVE so the arc actually FIRES
@@ -136,7 +183,11 @@ export function useBlobMood() {
     // `isSettled` reads this; the renderer's wake scheduler reads `nextAutoMoodMs`.
     let lastIdleMs = 0;
 
-    function setMood(mood: BlobMood) {
+    function setMood(mood: BlobMood, options: SetMoodOptions = {}) {
+        // A MANUAL retarget arms the override latch ABOVE the auto-arc (AX.W46 D7) —
+        // recorded BEFORE the no-op early-return so re-pinning the CURRENT mood still
+        // (re-)arms the latch (a deliberate user pin must hold even if the mood matches).
+        if ((options.source ?? "manual") === "manual") manualOverride = true;
         if (mood === currentMood.value && !transitioning) return;
         currentMood.value = mood;
         fromParams = { ...params.value };
@@ -149,22 +200,39 @@ export function useBlobMood() {
     /**
      * Wire the mood from the interaction/idle state (W11.c). Priority: a fresh
      * click → `excited` (held briefly); pointer over → `curious`; long idle →
-     * `sleepy`; otherwise `idle`. The single internal caller of `setMood`.
+     * `sleepy`; otherwise `idle`. The internal AUTONOMIC caller of `setMood` (always
+     * `source: "auto"`).
+     *
+     * AX.W46 D7 — the manual-override precedence. A genuine FRESH interaction signal —
+     * a fresh `clicked`, OR a RISING-EDGE `pointerActive` (the pointer just entered the
+     * live canvas this frame) — RELEASES a pinned manual mood and hands control back to
+     * the autonomic arc. While the latch holds (no fresh interaction), `update`
+     * EARLY-RETURNS so it never auto-drives over a user-pinned mood. The rising-edge
+     * test (not bare `pointerActive`) means a CONTINUOUSLY-held hover releases ONCE then
+     * lets the auto-arc drive; an idle frame can never release the latch.
      */
     function update(interaction: MoodInteraction) {
         lastIdleMs = interaction.idleMs;
+
+        const freshPointer = interaction.pointerActive && !prevPointerActive;
+        prevPointerActive = interaction.pointerActive;
+        if (manualOverride && (interaction.clicked || freshPointer)) {
+            manualOverride = false; // a fresh live interaction reclaims the auto-arc
+        }
+        if (manualOverride) return; // a user-pinned mood holds; the arc does not drive
+
         if (interaction.clicked) {
             excitedHoldMs = 900; // hold excited ~0.9s after a click
-            setMood("excited");
+            setMood("excited", { source: "auto" });
             return;
         }
         if (excitedHoldMs > 0) return; // stay excited until the latch decays
         if (interaction.pointerActive) {
-            setMood("curious");
+            setMood("curious", { source: "auto" });
         } else if (interaction.idleMs > IDLE_SLEEP_MS) {
-            setMood("sleepy");
+            setMood("sleepy", { source: "auto" });
         } else {
-            setMood("idle");
+            setMood("idle", { source: "auto" });
         }
     }
 
@@ -175,21 +243,34 @@ export function useBlobMood() {
      * `idleMs` is below IDLE_SLEEP_MS — i.e. an idle→sleepy retarget is still due. The
      * renderer keeps the loop alive (or wakes it at `nextAutoMoodMs`) until the arc
      * fires, so the scheduled mood drift is never starved by a parked loop.
+     *
+     * AX.W46 D7 — a MANUAL override pinned to a NON-idle mood is NOT settled: its
+     * distinct mood animation (a faster orbit on `excited`, a calmer one on `sleepy`,
+     * the brighter sheen on `happy`) must keep rendering rather than the loop parking
+     * the moment the cross-fade completes — and the latch suppresses the auto-arc's
+     * idle→sleepy drift (`update` early-returns), so without this the pinned mood would
+     * be silently dragged toward an idle-then-parked steady state. A pinned `idle` IS
+     * settled (idle is the rest pose). When NOT overridden the auto-arc owns the verdict.
      */
     function isSettled(): boolean {
         if (transitioning || excitedHoldMs > 0) return false;
+        if (manualOverride && currentMood.value !== "idle") return false;
         const sleepyArcPending =
-            currentMood.value !== "sleepy" && lastIdleMs < IDLE_SLEEP_MS;
+            !manualOverride &&
+            currentMood.value !== "sleepy" &&
+            lastIdleMs < IDLE_SLEEP_MS;
         return !sleepyArcPending;
     }
 
     /**
      * The wall-ms until the next AUTO-MOOD retarget is due (the idle→sleepy arc), so
      * the renderer's wake scheduler re-arms the parked loop in time for it. Returns
-     * `Infinity` when no arc is pending (already sleepy / transitioning / held).
+     * `Infinity` when no arc is pending (already sleepy / transitioning / held / a
+     * manual override pins the mood — AX.W46 D7: the auto-arc does not drive, so there
+     * is no auto-mood retarget to wake for).
      */
     function nextAutoMoodMs(): number {
-        if (transitioning || excitedHoldMs > 0) return Infinity;
+        if (transitioning || excitedHoldMs > 0 || manualOverride) return Infinity;
         if (currentMood.value === "sleepy") return Infinity;
         return Math.max(0, IDLE_SLEEP_MS - lastIdleMs);
     }

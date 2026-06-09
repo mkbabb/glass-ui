@@ -143,7 +143,19 @@
         white-space: nowrap;
         max-inline-size: var(--dock-max-inline-size);
         padding: var(--dock-padding-block, 0.375rem) var(--dock-padding-inline, 0.5rem);
-        background: var(--glass-bg-dock, var(--glass-bg-resting));
+        /* AX.W55 — the dock SHELL composes the oklab tint at the ELEMENT (not via the
+           pre-substituted `--glass-bg-dock` token, which resolves its tint at the
+           `:root` 0% strength before the @container bucket can re-point it — the
+           substitution-vs-inheritance trap). Wrapping here lets the bright-bucket
+           block below (which re-points --glass-tint-source/-strength on `.glass-dock`)
+           reach the shell: the inner `--glass-bg-dock` mix is a 0% no-op at rest, the
+           outer element mix does the adaptive darken. Zero-delta at the `0%` default
+           (both mixes resolve to the flat dock bg = byte-identical to today). */
+        background: color-mix(
+            in oklab,
+            var(--glass-bg-dock, var(--glass-bg-resting)),
+            var(--glass-tint-source) var(--glass-tint-strength)
+        );
         backdrop-filter: var(--dock-surface-blur);
         border: 1.5px solid var(--glass-border-dock, var(--glass-border-resting));
         /* AV.W15 M3 — the full-perimeter `--glass-edge-light` rim rides as the
@@ -672,7 +684,16 @@
             --dock-instrument-strip-padding,
             var(--dock-padding-inline, 0.75rem)
         );
-        background: var(--glass-bg-chassis, var(--glass-bg-wash));
+        /* AX.W55 — the chassis-strip threads the SAME oklab tint wrapper the five
+           rungs + the dock shell (--glass-bg-dock) carry, so the adaptive darken
+           reaches it. Zero-delta at the `0%` rest default (the mix is 0% toward the
+           source = byte-identical to the flat `var(--glass-bg-chassis)`); it only
+           activates under the bright bucket below. */
+        background: color-mix(
+            in oklab,
+            var(--glass-bg-chassis, var(--glass-bg-wash)),
+            var(--glass-tint-source) var(--glass-tint-strength)
+        );
         border: 1px solid var(--glass-border-quiet, var(--glass-border-resting));
         border-radius: var(--radius-card);
         box-shadow:
@@ -764,7 +785,13 @@
      * coordination (typed-key canonical shape; O.W2 invariant 25).
      */
     .glass-dock[data-held] {
-        background: var(--glass-bg-floating, var(--glass-bg-resting));
+        /* AX.W55 — the held tier threads the oklab tint wrapper (zero-delta at the
+           `0%` rest default) so the adaptive darken reaches the held state too. */
+        background: color-mix(
+            in oklab,
+            var(--glass-bg-floating, var(--glass-bg-resting)),
+            var(--glass-tint-source) var(--glass-tint-strength)
+        );
         border-color: var(--glass-border-floating, var(--glass-border-resting));
         transition:
             background var(--duration-fast) var(--ease-standard),
@@ -777,8 +804,55 @@
        read natively (no consumer JS). Idempotent with `[data-held]` above (same
        floating paint, different trigger). Decorative; `:has()` Baseline Widely. */
     .glass-dock:has([data-state="open"]) {
-        background: var(--glass-bg-floating, var(--glass-bg-resting));
+        /* AX.W55 — same oklab tint wrapper as `[data-held]` (zero-delta at rest). */
+        background: color-mix(
+            in oklab,
+            var(--glass-bg-floating, var(--glass-bg-resting)),
+            var(--glass-tint-source) var(--glass-tint-strength)
+        );
         border-color: var(--glass-border-floating, var(--glass-border-resting));
+    }
+
+    /* ── Adaptive legibility: the dock over a light backdrop (AX.W55 — the literal
+       G2 surface; "Glass dock over VERY LIGHT materials is unreadable") ──────────
+       The dock is the surface the user reported unreadable over light content. Its
+       shell (`--glass-bg-dock`), chassis-strip, and held/open tiers all now read the
+       SAME oklab tint seam the five rungs use, so this ONE bucket block — set when a
+       consumer marks `--glass-backdrop: light` on the dock's ancestor — lifts every
+       dock surface toward ink in lockstep. The tint tokens are INHERITING, so
+       re-pointing them on the `.glass-dock` root re-resolves every nested surface +
+       cascades to the dock CONTROLS (which read `--dock-fg-on-aurora` for their
+       foreground); `--dock-fg-on-aurora` re-points to the warm-ink here so the
+       control glyphs/labels clear AA over the now-darkened plate — ONE reconciled
+       path, the foreground twin folded INTO the probe, not a third fork. The
+       morph-root interp (`.variant-dock:not(.vertical)` above) stays `color-mix(in
+       srgb …)` for the transition; the adaptive darken rides its RESTING endpoint
+       (`--glass-bg-dock`, which carries the tint) — the in-flight morph frames are
+       sub-perceptual (the ratified resting-endpoint-only default). */
+    @container style(--glass-backdrop: light) {
+        .glass-dock {
+            --glass-tint-source: var(--glass-tint-ink);
+            --glass-tint-strength: var(--glass-tint-strength-aa);
+            --dock-fg-on-aurora: var(--glass-tint-ink);
+        }
+    }
+
+    /* AX.W55 — the `contrast-color()` flip for the dock control foreground (Chrome
+       147+/Safari 26+; progressive enhancement, NEVER the load-bearing floor). The
+       declarative bucket above already carries AA on all engines (it darkens the dock
+       plate so the warm-dark `--dock-fg-on-aurora` clears ~17:1 over white at the 18%
+       floor). On a supporting engine `contrast-color()` REFINES the control ink,
+       anchored on the LIGHT BACKDROP signal (`--card`, the warm-white surface base the
+       bright bucket implies) — `contrast-color(var(--card))` resolves to the legible
+       DARK ink. Anchoring on the dark ink instead inverts to white (illegible on the
+       still-light dock plate), so the anchor is the light surface, matching the rung
+       refinement in glass.css. The bucket is the floor; this is the native pick. */
+    @supports (color: contrast-color(white)) {
+        @container style(--glass-backdrop: light) {
+            .glass-dock {
+                --dock-fg-on-aurora: contrast-color(var(--card));
+            }
+        }
     }
 
     .glass-dock:where(.fixed) {

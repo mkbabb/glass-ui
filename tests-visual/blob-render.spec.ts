@@ -44,6 +44,18 @@
 // with a robust anti-flake MEDIAN-of-runs verdict (a single flaky frame cannot flip
 // it). The blob breathes/orbits, so coverage oscillates — the verdict reads the PEAK
 // per run (the most-filled frame, which must STILL be a contained field).
+//
+// AX.W46 — the FLOOR→BAND conversion (the structural antidote to the cardinal lesson).
+// W08 authored the dome-luma-std + centroid-shift as one-sided FLOORS, so "louder
+// always passed" — the lighting AND the interaction drifted loud (the over-bright
+// wet-plastic bead + the lunging lean) because every retune that cleared the floor by
+// more passed "better," and the live π-lane (the only ceiling) never ran. This spec now
+// PAIRS each floor with a CEILING (domeLumaStd 9..80, centroidShift 0.012..0.07) +
+// adds a no-blown-white worst-painted-luma witness, all SET LIVE against the calm-bead
+// render (the binding ceilings are the live-audit values, not the audit's modeled
+// numbers — the model mispredicted both, the lesson restated). The floors stay
+// (legibility); the ceilings are the restraint axis that makes "more variance / more
+// lean" stop being "more passing."
 
 import { test, expect } from "@playwright/test";
 import type { Locator } from "@playwright/test";
@@ -92,7 +104,30 @@ const COLOR_DIFF_THRESHOLD = 40; // |ΔR|+|ΔG|+|ΔB| over the modal bg = "paint
 // (bright specular cap → mid body → dark rim), so the painted interior's luma has a
 // real spread; a FLAT fill (lit:false) has near-zero spread. The floor is the std-dev
 // of luma over the PAINTED pixels (excludes the background).
-const DOME_LUMA_STD_MIN = 9; // painted-pixel luma std-dev floor (flat fill ≈ 3, lit ≈ 18+)
+//
+// AX.W46 D4 — the FLOOR→BAND conversion (the structural antidote: a one-sided floor
+// REWARDED the over-bright overshoot it should bound — "louder always passed"). The
+// floor stays (a flat fill still reds); a paired CEILING now reds a RUNAWAY luma
+// roll. The ceiling is set LIVE against the calm-bead render (RATIFY 1): the live
+// π-lane measures the calm-bead default at domeLumaStd ≈ 65 (the spread is dominated
+// by the dark var(--primary) body falling to the cream rim, NOT the now-tamed
+// specular — the over-bright tell is the BLOWN HIGHLIGHT, gated below + by the shader
+// clamp + the visual audit, not the aggregate std). The ceiling 80 sits ≈ 22% above
+// the measured calm value so a future over-bright re-tune that drives the roll hotter
+// reds, while the calm bead passes.
+const DOME_LUMA_STD_MIN = 9; // painted-pixel luma std-dev FLOOR (flat fill ≈ 3, lit dome rolls luma)
+const DOME_LUMA_STD_MAX = 80; // luma-roll CEILING (live: calm bead ≈ 65; a runaway over-bright dome reds)
+// AX.W46 D4 — the NO-BLOWN-WHITE highlight witness. The over-bright specular crushed a
+// HARD WHITE catch-light spot over the dome (the skeuomorphic wet-plastic tell, the D4
+// root). The re-derived specStrength + the shader's pre-OETF highlight clamp
+// (min(highlight, 0.85)) keep the worst-case highlight SUB-UNITY — a contained warm
+// gleam, never a blown spot. The runtime witness: the worst-case PAINTED-interior luma
+// (median over runs) stays below a ceiling the clamp guarantees. The cream rim AA
+// pixels read high (~243), so the ceiling allows them; a dome crushed to pure white
+// (the over-bright regression) drives the worst-case painted luma to 255 and reds. The
+// live calm bead measures a worst-case painted luma ≈ 235 (BEFORE the re-tune it ran
+// 242–246 on the lighter grid colors); 250 is the no-pure-white ceiling.
+const HIGHLIGHT_LUMA_MAX = 250; // worst-case painted-interior luma ceiling (no blown-white dome)
 // AX.W15 silhouette deviation: the warped-FBM membrane makes the edge deviate from a
 // perfect circle, PROPORTIONAL to the body. Measured as the coefficient-of-variation
 // of the per-angle painted radius (std/mean); a clean circle reads ≈ 0, a living
@@ -101,7 +136,18 @@ const SILHOUETTE_CV_MIN = 0.015; // per-angle radius CV floor (clean arc ≈ 0.0
 // AX.W15 pointer-driven centroid shift: a synthetic hover-flick toward an off-centre
 // point measurably pulls the painted centroid toward the pointer (the wired lean +
 // pseudopod, now legible on the contained body). The floor is in canvas-width fraction.
-const CENTROID_SHIFT_MIN = 0.012; // |Δcentroid| toward the pointer, fraction of width
+//
+// AX.W46 D5 — the FLOOR→BAND conversion (the same structural antidote: the one-sided
+// floor REWARDED the lunge it should bound). The floor stays (an invisible lean still
+// reds); a paired CEILING now reds a LUNGE. The ceiling is set LIVE against the
+// calm-bead render (RATIFY 1): the live π-lane measures the re-tuned calm lean at a
+// centroid shift ≈ 0.042 (the audit MODELED the HEAD over-dramatic lean at ≈ 0.11 — a
+// modeled number that never ran a real browser; the live truth is the spring-followed
+// lean was ≈ 0.04, and the pointerStrength/falloff/arousal re-tune keeps it calm AND
+// legible). The ceiling 0.07 sits ≈ 67% above the calm value so a future lunge re-tune
+// (toward the modeled 0.11) reds, while the calm lean passes.
+const CENTROID_SHIFT_MIN = 0.012; // |Δcentroid| toward the pointer FLOOR, fraction of width
+const CENTROID_SHIFT_MAX = 0.07; // lean CEILING (live: calm lean ≈ 0.042; a lunge toward 0.11 reds)
 
 test.setTimeout(180_000);
 
@@ -286,6 +332,32 @@ function domeLumaStd(png: PNG, bg: [number, number, number], threshold: number):
 }
 
 /**
+ * AX.W46 — the worst-case PAINTED-interior luma (the no-blown-white highlight witness).
+ * The max luminance over the painted (differ-from-bg) interior-inset pixels. An
+ * over-bright specular crushes a HARD WHITE spot (luma → 255); the re-derived
+ * specStrength + the shader's pre-OETF highlight clamp keep the worst-case sub-unity (a
+ * contained warm gleam). The cream rim AA pixels read high (~243) but never pure white,
+ * so the ceiling allows them while REDding a dome crushed to 255.
+ */
+function worstPaintedLuma(png: PNG, bg: [number, number, number], threshold: number): number {
+    const { width: w, height: h, data } = png;
+    const x0 = Math.floor(w * INTERIOR_INSET);
+    const x1 = Math.ceil(w * (1 - INTERIOR_INSET));
+    const y0 = Math.floor(h * INTERIOR_INSET);
+    const y1 = Math.ceil(h * (1 - INTERIOR_INSET));
+    let maxLuma = 0;
+    for (let y = y0; y < y1; y++) {
+        for (let x = x0; x < x1; x++) {
+            const i = (y * w + x) * 4;
+            if (diffFromBg(data, i, bg) <= threshold) continue; // background → skip
+            const luma = 0.299 * data[i]! + 0.587 * data[i + 1]! + 0.114 * data[i + 2]!;
+            if (luma > maxLuma) maxLuma = luma;
+        }
+    }
+    return maxLuma;
+}
+
+/**
  * AX.W15 — the painted centroid (in [0,1] canvas fractions) + the silhouette CV. The
  * centroid is the mean position of the painted interior pixels. The silhouette CV is
  * the coefficient-of-variation of the per-angle outermost-painted radius about the
@@ -392,16 +464,22 @@ test.describe("blob-render (π lane — fail-CLOSED, the blob's CLOSING gate)", 
         const margins: number[] = [];
         const domeStds: number[] = [];
         const silhouettes: number[] = [];
+        // AX.W46 — the no-blown-white witness is the WORST painted luma over EVERY frame
+        // in the run (not the peak-coverage frame), so a transient over-bright spot on
+        // any satellite phase is caught.
+        const worstLumas: number[] = [];
         for (let run = 0; run < ANTI_FLAKE_RUNS; run++) {
             let peakCov = 0;
             let peakGrad = 0;
             let peakMargin = 0;
             let peakDome = 0;
             let peakSil = 0;
+            let worstLuma = 0;
             for (let f = 0; f < BLOB_FRAMES; f++) {
                 const png = await grab(blobCanvas);
                 const bg = modalBackground(png);
                 const cov = interiorCoverage(png, bg, COLOR_DIFF_THRESHOLD);
+                worstLuma = Math.max(worstLuma, worstPaintedLuma(png, bg, COLOR_DIFF_THRESHOLD));
                 if (cov > peakCov) {
                     peakCov = cov;
                     peakGrad = centreVsCornerDelta(png);
@@ -416,12 +494,14 @@ test.describe("blob-render (π lane — fail-CLOSED, the blob's CLOSING gate)", 
             margins.push(peakMargin);
             domeStds.push(peakDome);
             silhouettes.push(peakSil);
+            worstLumas.push(worstLuma);
         }
         const coverage = median(coverages);
         const gradient = median(gradients);
         const sideMargin = median(margins);
         const domeStd = median(domeStds);
         const silhouetteCV = median(silhouettes);
+        const worstLuma = median(worstLumas);
 
         // 1. UN-FLOOD — the interior is a CONTAINED field, NOT the canvas-filling slab.
         expect(
@@ -454,13 +534,19 @@ test.describe("blob-render (π lane — fail-CLOSED, the blob's CLOSING gate)", 
             `blob worst-edge paint fraction ${sideMargin.toFixed(3)} exceeds the satellite-overflow ceil ${SIDE_MARGIN_MAX_FRAC} — the orbit excursion is unbounded (the steady body must stay inside the footprint on all four sides; only the orbiting satellite may peek, bounded by this ceil; a body that reaches the edge also reds the coverage/gradient witnesses)`,
         ).toBeLessThanOrEqual(SIDE_MARGIN_MAX_FRAC);
 
-        // 4. DOME LUMINANCE VARIANCE (AX.W15 F1) — a LIT dome rolls luma across a
-        // sphere; a FLAT fill (lit:false) is near-uniform. Born-RED at HEAD (lit:false
-        // shipped a near-flat fill, std ≈ 3).
+        // 4. DOME LUMINANCE VARIANCE — a BAND (AX.W46 D4 floor→band). FLOOR: a LIT dome
+        // rolls luma across a sphere; a FLAT fill (lit:false) is near-uniform (std ≈ 3).
+        // CEILING: a RUNAWAY luma roll (an over-bright re-tune) reds — the one-sided floor
+        // REWARDED the overshoot it should bound, so the paired ceiling is the restraint
+        // axis. Live-set against the calm bead (≈ 65 → 80 ceiling).
         expect(
             domeStd,
             `blob painted-pixel luma std-dev ${domeStd.toFixed(1)} is below the lit-dome floor ${DOME_LUMA_STD_MIN} — the body reads as a FLAT fill, not a lit warm-cream dome (the default-OFF flat-sticker witness)`,
         ).toBeGreaterThanOrEqual(DOME_LUMA_STD_MIN);
+        expect(
+            domeStd,
+            `blob painted-pixel luma std-dev ${domeStd.toFixed(1)} exceeds the calm-bead ceiling ${DOME_LUMA_STD_MAX} — the dome luma rolls TOO hot (an over-bright re-tune drifting back toward the skeuomorphic wet-plastic bead; the calm bead measures ≈ 65)`,
+        ).toBeLessThanOrEqual(DOME_LUMA_STD_MAX);
 
         // 5. SILHOUETTE DEVIATION (AX.W15 F3) — the warped-FBM membrane deviates from a
         // perfect circle. Born-RED at HEAD (warpAmp:0.0 + low noiseAmp → a clean arc,
@@ -469,6 +555,18 @@ test.describe("blob-render (π lane — fail-CLOSED, the blob's CLOSING gate)", 
             silhouetteCV,
             `blob silhouette radius CV ${silhouetteCV.toFixed(4)} is below the living-membrane floor ${SILHOUETTE_CV_MIN} — the edge reads as a clean geometric circle, not a living warped-FBM membrane`,
         ).toBeGreaterThanOrEqual(SILHOUETTE_CV_MIN);
+
+        // 6. NO BLOWN-WHITE HIGHLIGHT (AX.W46 D4) — the over-bright specular crushed a
+        // HARD WHITE catch-light spot over the dome (the skeuomorphic wet-plastic tell).
+        // The re-derived specStrength + the shader's pre-OETF highlight clamp keep the
+        // worst-case PAINTED luma sub-unity (a contained warm gleam). A dome crushed to
+        // pure white drives the worst painted luma to 255 and reds; the calm bead measures
+        // ≈ 235 (the cream rim AA pixels ride just under the ceiling). This is the RUNTIME
+        // half of the no-blown-white guarantee (the shader clamp is the STRUCTURE half).
+        expect(
+            worstLuma,
+            `blob worst-case painted-interior luma ${worstLuma.toFixed(1)} exceeds the no-blown-white ceiling ${HIGHLIGHT_LUMA_MAX} — the specular highlight crushed a hard white spot over the dome (the skeuomorphic over-bright bead; the calm bead's worst painted luma is ≈ 235)`,
+        ).toBeLessThanOrEqual(HIGHLIGHT_LUMA_MAX);
     });
 
     test("blob LEANS toward a synthetic hover-flick (the wired interaction is legible within the footprint)", async ({
@@ -503,10 +601,19 @@ test.describe("blob-render (π lane — fail-CLOSED, the blob's CLOSING gate)", 
         const leanCx = median(leanCxs);
         const shift = leanCx - restCx; // positive = toward the right-side pointer
 
+        // The centroid shift is a BAND (AX.W46 D5 floor→band). FLOOR: the lean must be
+        // LEGIBLE (an invisible lean reds — no contained silhouette deforming). CEILING:
+        // the lean must be RESTRAINED (a LUNGE reds — the one-sided floor REWARDED the
+        // lurch the re-tune dismantles). Live-set against the calm lean (≈ 0.042 → 0.07
+        // ceiling; the audit MODELED the HEAD lurch at ≈ 0.11, which this ceiling reds).
         expect(
             shift,
             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} (rest ${restCx.toFixed(3)} → lean ${leanCx.toFixed(3)}); it must move ≥ ${CENTROID_SHIFT_MIN} toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)`,
         ).toBeGreaterThanOrEqual(CENTROID_SHIFT_MIN);
+        expect(
+            shift,
+            `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} exceeds the calm-lean ceiling ${CENTROID_SHIFT_MAX} — the creature LURCHES toward the cursor (the "far too dramatic" lunge; the calm lean measures ≈ 0.042, a lunge toward ≈ 0.11 reds)`,
+        ).toBeLessThanOrEqual(CENTROID_SHIFT_MAX);
     });
 
     test("EVERY grid blob paints visibly against the page background in BOTH light and dark (the var(--primary)-dark-wash guard)", async ({

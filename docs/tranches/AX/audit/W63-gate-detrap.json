@@ -1,0 +1,86 @@
+{
+  "wave": "AX.W63",
+  "title": "Gate-pattern de-trap — /compositions/gate-pattern opened a non-dismissable viewport modal ON MOUNT and locked the visitor out; re-authored as a CONTAINED inline preview inside a bounded glass card (Q8 BLOCKER)",
+  "status": "dev-complete-source-green-live-arm-orchestrator-owed",
+  "band": "F (STORYBOOK IA / DEMO)",
+  "severity": "blocker (pass-3 Q8 — USER-DEFECTS-2026-06-08-pass3.md:33)",
+  "baseSha": "da57287cacca10fdbed3fb400fdfdcd30f80b059",
+  "dependsOn": ["AX.W00", "AX.W54", "AX.W56"],
+  "mustPrecede": ["AX.W60"],
+  "folds": [
+    "USER-DEFECTS-2026-06-08-pass3.md:33 (Q8 — the demo literally gates you from the page on click)",
+    "docs/tranches/AX/audit/hardening/CH-demo-ia.md CH-2 / CHRONIC-4 (NO wave owned Q8)",
+    "GOLDEN.md:71 (Q8 gate-pattern de-trap, must precede W60)"
+  ],
+  "redWitnessesAtHead": {
+    "w1_onMountOpen": {
+      "probe": "grep 'open = ref(true)' demo/stories/compositions/gate-pattern.vue:23",
+      "headState": "HIT — const open = ref(true); the modal opens the instant the route mounts, no trigger",
+      "disposition": "the headline BLOCKER — the modal IS the page"
+    },
+    "w2_suppressionAllLive": {
+      "probe": "gate-pattern.vue:67-72 — :show-close=false + @escape-key-down.prevent + @interact-outside.prevent + @pointer-down-outside.prevent",
+      "headState": "all four channels LIVE while open-on-mount — only escape is typing the magic key 'wolfpack'",
+      "disposition": "a non-dismissable full-viewport modal with no exit but a magic string"
+    },
+    "w3_noContainedFrame": {
+      "probe": "grep -c 'glass-card|<Card|ShowcaseFrame' gate-pattern.vue",
+      "headState": "0 — the Dialog is a sibling of the StorySection body, portals raw to the document top layer, no bounded glass-card frame",
+      "disposition": "the demo is NOT contained — it occupies the viewport"
+    },
+    "w4_blurbLeaksTrancheCode": {
+      "probe": "grep 'AW.W18' demo/stories/manifest.ts:239",
+      "headState": "HIT — the gate-pattern blurb ends '…A blessed composition, not a component (AW.W18).' (the consumer-facing story description leaks a tranche code the .vue-scoped proof:story-language never opens manifest.ts)",
+      "disposition": "the meta-language leak CH-demo-ia CH-1 found"
+    }
+  },
+  "w54SettledConfirmation": "W54 glass-first ROOT landed at da57287 (the latest commit per the dispatch); .glass-card + the <Card> default register read glass-first, so the W63 preview-frame card reads glass WITHOUT a non-glass fallback (the dependsOn-W54 precondition is met — no Class-2 HALT triggered).",
+  "fix": {
+    "shape": "Shape A (the recommended, no-re-trap-window default) — a non-modal CONTAINED render of the gate inside a bounded glass <Card tier=floating max-w-sm> preview frame on the page (the Lock/Unlock glyph + title + description + an explicit 'Open the modal demo' Button + a conditional 'Re-lock the gate' Button), PLUS the REAL <Dialog> non-dismissable modal opened ON DEMAND by the trigger Button (every suppression channel INTACT) and closed on the correct key 'wolfpack'. The modal is NEVER open on mount; the page is ALWAYS reachable.",
+    "ratifyHinge": "the Shape-A vs Shape-B decision reached impl as a §Open-questions ratify hinge; per the autonomous-resilience clause the recorded default (Shape A — the safest, no re-trap window) was taken without self-ratifying Shape B.",
+    "idiomPreserved": "the de-trap is purely STRUCTURAL — :show-close=false + the three @escape-key-down/@interact-outside/@pointer-down-outside .prevent stay INTACT inside the on-demand modal; the widened .input-pill [aria-invalid] ring (library selector, consumed not re-painted) + the gate-shake PRM-gated wrong-key cue + the magic-key submit() flow all preserved. A visitor still learns exactly how to build a non-dismissable gate.",
+    "noLibraryEdit": "DEMO-side only — Card/CardHeader/CardTitle/CardDescription/CardContent + Dialog/DialogContent + Input + Button + the .glass-card recipe + the .input-pill [aria-invalid] ring are CONSUMED, edited by no W63 commit.",
+    "manifestBlurbClean": "manifest.ts:239 re-stated language-clean — '(AW.W18)' stripped, the de-trapped idiom re-described (a contained, on-demand, escapable preview of the non-dismissable-access-modal pattern inside a glass-card frame)."
+  },
+  "headlessGate": {
+    "id": "proof:gate-detrap",
+    "script": "scripts/proof-gate-detrap.mjs",
+    "registration": "package.json — node scripts/proof-gate-detrap.mjs; gates.mjs GATES row (local — matching the sibling proof:story-language demo-language gate; the orchestrator may promote to ci by adding a .github/workflows/ci.yml step, which is out of W63 FileBounds)",
+    "bornRed": true,
+    "bornRedMethod": "ran scripts/proof-gate-detrap.mjs against HEAD da57287: A RED (open=ref(true)), B RED (no glass-card frame), E RED (blurb leaks AW.W1 from '(AW.W18)'). status FAIL exit 1.",
+    "greenAtPatchedTree": true,
+    "greenResult": "A/B/C/D/E all ok — status PASS exit 0.",
+    "asserts": {
+      "A_noOnMountOpen": "no `open = ref(true)` (the modal does not open on mount)",
+      "B_containedGlassCard": "the gate renders inside a bounded <Card>/.glass-card preview frame (the W54 glass-first default)",
+      "C_onDemandTrigger": "an explicit on-page <Button> sets open.value=true (opened on demand; the page stays reachable)",
+      "D_idiomPreserved": ":show-close=false + the three @*.prevent still present (the demo still teaches the non-dismissable pattern — the over-correction guard)",
+      "E_blurbLanguageClean": "the gate-pattern manifest row blurb carries no \\b[A-Z]{1,2}\\.W\\d tranche code"
+    },
+    "noRegression": {
+      "proof:story-language": "GREEN over the re-stated blurb (145 SFCs, 0 hits) — W58 stays GREEN",
+      "proof:gate-script-parity": "the W63 gate IS registered (NOT in the orphan list); the two remaining parity orphans (proof-dark-semantic-contrast.mjs, proof-glass-material-demo.mjs) are UNTRACKED sibling-wave WIP, not introduced by W63 — orchestrator cross-wave registration concern",
+      "typecheck": "no errors in gate-pattern.vue / manifest.ts / the gate scripts; the 13 pre-existing errors are all in src/components/custom/goo-blob/shaders/metaball.frag.ts (untracked sibling-wave WIP), not W63"
+    }
+  },
+  "piLiveArm": {
+    "present": true,
+    "selfRun": false,
+    "rationale": "the chrome browser extension was not connected in this implementer session (tabs_context returned 'extension not connected'). The binding fail-CLOSED live π audit is ORCHESTRATOR-OWED per the W00 readback protocol.",
+    "orchestratorMustVerify": [
+      "navigate localhost:5173/compositions/gate-pattern — ASSERT the page content reads (StorySection + the bounded glass <Card> gate preview) and NO full-viewport non-dismissable modal covers it on mount; esc + a click outside the preview do NOT trap the visitor (the BLOCKER fix)",
+      "ASSERT the contained preview <Card> is a GLASS card — getComputedStyle(card).backdropFilter is a glass blur (the W54 default), translucent background",
+      "click 'Open the modal demo' — ASSERT the REAL non-dismissable modal opens (show-close=false, esc/scrim suppressed); type a wrong key — ASSERT the widened .input-pill [aria-invalid] ring + the gate-shake cue fire (PRM-gated); type 'wolfpack' — ASSERT the modal closes and the page is regained",
+      "light AND dark, >=2 viewports (desktop + mobile); capture the paired-pi BEFORE/AFTER into docs/tranches/AX/audit/visual/W63-DELTA.md"
+    ]
+  },
+  "filesEdited": [
+    "demo/stories/compositions/gate-pattern.vue (RE-AUTHOR — contained glass-card preview + on-demand modal)",
+    "demo/stories/manifest.ts (blurb clean — strip AW.W18, re-state the de-trapped idiom)",
+    "scripts/proof-gate-detrap.mjs (NEW gate)",
+    "scripts/gates.mjs (proof:gate-detrap manifest row)",
+    "package.json (proof:gate-detrap registration)",
+    "docs/tranches/AX/audit/W63-gate-detrap.json (this artefact)",
+    "docs/tranches/AX/audit/visual/W63-DELTA.md (the paired-pi capture)"
+  ]
+}

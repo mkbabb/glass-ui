@@ -281,6 +281,63 @@
         box-shadow: var(--glass-material-rim), var(--glass-shadow-overlay);
     }
 
+    /* ── Adaptive legibility: the bright-backdrop bucket (AX.W55 — the iOS-26/27
+       "locally darken the glass over light content" move; G2) ──────────────────
+       When a consumer sets `--glass-backdrop: light` on any ancestor (a near-white
+       card surface, a pale aurora bleed, a bright data grid), the `@container
+       style()` read engages here and LIFTS the tint toward ink: `--glass-tint-
+       strength` climbs from the `0%` rest default to the bounded AA floor
+       (`--glass-tint-strength-aa`, ≤24% — translucent floor preserved) and `--glass-
+       tint-source` re-points from `var(--card)` to the warm-ink `--glass-tint-ink`.
+       Both are INHERITING custom properties the rungs' `background:` composite
+       already reads, so re-pointing them on the material group re-resolves the
+       EXISTING `color-mix(in oklab, <rung bg>, …)` toward ink — ZERO new compositing
+       seam, the literal darken-over-light recipe. The `.glass-*::before` specular
+       `plus-lighter` gleam (W52) is untouched (it composes ON the darkened plate;
+       the darkening is the orthogonal oklab-tint axis). No `@supports` wrapper:
+       style queries introduce no new `container-type` value (every element is a
+       style container by default), so an engine without style-query support parses
+       the unknown at-rule as invalid, drops the block, and keeps the zero-delta
+       glass (the graceful degradation — the surface is today's-glass, the pre-W55
+       state; see utilities.css §density for the same precedent). */
+    @container style(--glass-backdrop: light) {
+        .glass-material,
+        .glass-wash,
+        .glass-quiet,
+        .glass-resting,
+        .glass-floating,
+        .glass-overlay,
+        .glass-card {
+            --glass-tint-source: var(--glass-tint-ink);
+            --glass-tint-strength: var(--glass-tint-strength-aa);
+        }
+    }
+
+    /* AX.W55 — the `contrast-color()` foreground-ink flip (Chrome 147+/Safari 26+).
+       A PROGRESSIVE-ENHANCEMENT layer, NEVER the load-bearing floor (Open-Q #5
+       ratified): the declarative bucket above already carries AA on ALL engines (it
+       darkens the translucent plate so dark text clears ~11:1 over white at the 18%
+       floor — the live π readback ratifies). On a supporting engine `contrast-color()`
+       REFINES the foreground-ink pick natively, anchored on the LIGHT BACKDROP signal
+       (`--card`, the warm-white surface base the bright bucket implies) — NOT on the
+       ink. `contrast-color(var(--card))` over the light backdrop resolves to the
+       maximally-legible DARK ink (anchoring on the dark ink instead would invert to
+       white, illegible on the still-light translucent plate). The bucket is the floor;
+       this is the native refinement. Scoped to the bright bucket. */
+    @supports (color: contrast-color(white)) {
+        @container style(--glass-backdrop: light) {
+            .glass-material,
+            .glass-wash,
+            .glass-quiet,
+            .glass-resting,
+            .glass-floating,
+            .glass-overlay,
+            .glass-card {
+                color: contrast-color(var(--card));
+            }
+        }
+    }
+
     /* ── The opaque escape (AX.W54) ───────────────────
        The level-0 endpoint of the SAME glass machinery — a solid `--card` plate
        (the opacity seam → 1) with `blur(0)` (the blur seam → 0), routed through
@@ -789,10 +846,21 @@
 /* ── Accessibility: high contrast ─────────────────
    AX.W54 — a single bounded `--glass-level: 0.3` (mostly-solid, not fully flat)
    replaces the five per-rung opacity clobbers: every rung firms up toward solid
-   for AA while keeping a hint of the glass register. ONE knob, every rung. */
+   for AA while keeping a hint of the glass register. ONE knob, every rung.
+
+   AX.W55 — the Clear↔Tinted user-escape (Apple's iOS-26.2 analog) COORDINATES the
+   two axes here: the OPACITY axis rides W54's `--glass-level` (firm up toward solid)
+   AND the TINT axis biases toward ink — `--glass-tint-source` → the warm-ink +
+   `--glass-tint-strength` → the AA floor, the same darken the automatic bright
+   bucket applies, now reached by the explicit "more contrast" user request. The two
+   axes stay DISTINCT (level = opacity+blur, tint = darken) but share the bracket so
+   a high-contrast user gets BOTH a firmer plate and the ink-tint legibility lift —
+   one coordinated escape, not two parallel forks. */
 @media (prefers-contrast: more) {
     :root {
         --glass-level: 0.3;
+        --glass-tint-source: var(--glass-tint-ink);
+        --glass-tint-strength: var(--glass-tint-strength-aa);
     }
 }
 

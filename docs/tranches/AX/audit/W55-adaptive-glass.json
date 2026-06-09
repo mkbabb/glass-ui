@@ -1,0 +1,85 @@
+{
+  "wave": "AX.W55",
+  "title": "Adaptive glass legibility — the backdrop-luminance bucket that DARKENS the glass over light/busy backdrops to a bounded AA floor (the iOS-26/27 locally-darken move)",
+  "defect": "G2 — Glass dock over VERY LIGHT materials is unreadable; dynamically darken the glass adaptively. SOTA as of iOS 27.",
+  "head": "da57287",
+  "headNote": "W54 glass-first CSS core + the --glass-level scalar already landed; W54 routed --glass-bg-dock through the oklab tint seam at --glass-tint-strength:0 (zero-delta). W44 dark-arm edits preserved.",
+  "status": "GREEN",
+  "closeCriterion": "the live π contrast-readback (tests-visual/adaptive-glass.spec.ts) — NOT the source gate alone (the cardinal AX lesson; G2 is the exact live-truth case)",
+  "ratifiedDefaults": {
+    "morphRootInterp": "resting-endpoint-only (the morph interp stays color-mix(in srgb …); the adaptive darken rides --glass-bg-dock at the resting endpoint)",
+    "aaBandCeiling": "18% (clamped LOW by the live readback — the lowest value that clears 4.5:1 over synthetic white; ≤24% translucency floor; measured ~11:1 card / ~17:1 dock at 18%, well above the floor, headroom kept)",
+    "numericLumaObserver": "demo-private (the token is minted; the JS observer ships only with ≥2 consumers — the no-overfitting bar)",
+    "glassLevelPlaceholder": "W54's --glass-level is LANDED at HEAD; no placeholder needed — the a11y brackets already ride it (W54 collapsed them), W55 adds the tint-axis coordination",
+    "contrastColorAnchor": "contrast-color(var(--card)) — anchored on the LIGHT backdrop signal (over the light backdrop → the legible dark ink); NOT contrast-color(var(--glass-tint-ink)) which inverts to white (illegible on the still-light plate). The LIVE readback caught this — the dark-ink anchor gave 1.56:1; the card anchor gives the dark-text 13.5:1."
+  },
+  "redWitnesses": [
+    {
+      "id": 1,
+      "name": "no backdrop probe; the tint is a zero-delta no-op by default",
+      "headState": "tokens.css minted --glass-tint-source: var(--card) + --glass-tint-strength: 0%; no --glass-backdrop token, no @container style() block lifting the strength",
+      "disposition": "GREEN — minted --glass-backdrop: dark (zero-delta default) + --glass-backdrop-luma + --glass-tint-ink + --glass-tint-strength-aa; @container style(--glass-backdrop: light) blocks lift the strength toward ink on every glass family"
+    },
+    {
+      "id": 2,
+      "name": "the DOCK (the literal G2 surface) is OFF the --glass-tint-* seam",
+      "headState": "dock.css shell + chassis + held/open tiers paint flat var(--glass-bg-*) with no oklab tint wrapper",
+      "disposition": "GREEN — the dock shell (element-level wrap, escaping the :root substitution trap), chassis-strip, and held/open tiers thread color-mix(in oklab, …, --glass-tint-source --glass-tint-strength); the bright bucket reaches the dock"
+    },
+    {
+      "id": 3,
+      "name": "--dock-fg-on-aurora is the half-built foreground twin (push, not adaptive)",
+      "headState": "tokens.css minted --dock-fg-on-aurora: var(--foreground) — consumer-push, never backdrop-adaptive, no contrast-color() flip",
+      "disposition": "GREEN — the bright bucket re-points --dock-fg-on-aurora to the warm-ink + an @supports (color: contrast-color(white)) block refines it natively; folded INTO the probe, not a third fork"
+    },
+    {
+      "id": 4,
+      "name": "the a11y Clear↔Tinted brackets CLOBBER per-rung instead of riding ONE scalar",
+      "headState": "W54 ALREADY collapsed the brackets onto --glass-level (the OPACITY axis); the TINT axis was not yet coordinated",
+      "disposition": "GREEN — the brackets ride --glass-level for opacity (W54); W55 ADDS the tint-toward-ink coordination under prefers-contrast: more (the two axes distinct-but-coordinated; no per-rung --glass-opacity-* clobber survives)"
+    },
+    {
+      "id": 5,
+      "name": "the bright-bucket darkening direction does not exist — the W52 blend can only LIGHTEN",
+      "headState": "glass.css:142 plus-lighter (W52) is HDR-clamped but still a lightener; the only darkening lever is the 0%-default oklab tint",
+      "disposition": "GREEN — the bright bucket's --glass-tint-ink + lifted --glass-tint-strength mix the rung TOWARD ink via the EXISTING color-mix(in oklab); the W52 plus-lighter blend is INTACT (the darkening is the orthogonal oklab-tint axis)"
+    },
+    {
+      "id": 6,
+      "name": "no contrast-readback π gate exists for the light-backdrop case",
+      "headState": "no proof:adaptive-glass registered; no scripts/proof-adaptive-glass.mjs; no tests-visual/adaptive-glass.spec.ts",
+      "disposition": "GREEN — scripts/proof-adaptive-glass.mjs (21/21 source asserts) + tests-visual/adaptive-glass.spec.ts (the π 4.5:1-over-white readback, 5/5 pass); born-RED at HEAD (zero --glass-backdrop/contrast-color/oklab markers in tokens/glass/dock at da57287)"
+    }
+  ],
+  "sotaDisposition": {
+    "R-ios27 L1 (backdrop-luminance switch)": "the declarative --glass-backdrop bucket (no web pixel-sampler exists)",
+    "R-ios27 L2 (local darkening — the EXACT G2 ask)": "the bright-bucket --glass-tint-source: warm-ink + lifted --glass-tint-strength mixing the rung toward ink via the EXISTING color-mix(in oklab)",
+    "R-ios27 L3 (contrast-ratio clamp)": "the AA floor (--glass-tint-strength-aa, 18%) driven to clear 4.5:1, asserted by the π arm",
+    "R-ios27 L4 (vibrancy != transparency; why a naive lightener is wrong)": "the darken is the orthogonal oklab-tint axis, NOT the plus-lighter lightener (W52); composes ON W52's blend",
+    "A-glass-over-light audit-1 (dock off the seam)": "the dock shell/chassis/tiers now thread the oklab tint wrapper (the SOTA lane's missed finding)",
+    "A-glass-over-light audit-2 (--dock-fg-on-aurora push twin)": "reconciled INTO the probe + contrast-color()",
+    "A-glass-over-light audit-3 (lightener-only blend)": "the bright bucket adds the right-direction darken path",
+    "A-glass-over-light audit-4 (per-rung a11y clobber)": "the brackets ride --glass-level (opacity) + coordinate the tint axis (W55)"
+  },
+  "piReadback": {
+    "spec": "tests-visual/adaptive-glass.spec.ts",
+    "device": "Chrome-headless-new @ localhost:5173",
+    "result": "5/5 pass (4 darken/AA cases over 2 viewports x 2 modes + the default-path byte-identity canary)",
+    "measurements": {
+      "cardOverWhite_bucketOff": { "effPlate": [253, 253, 252], "darkInkContrast": "17.18:1", "note": "warm-cream translucent over white — the surface has no edge (the G2 collapse for light/mid-tone content)" },
+      "cardOverWhite_bucketOn": { "effPlate": [208, 207, 206], "darkInkContrast": "13.50:1", "translucent": true, "note": "the plate DARKENS (253→208 luminance drop) giving the dark text a contrasting surface; stays translucent (alpha 0.59)" },
+      "dockOverWhite_bucketOn": { "effPlate": "darkened", "darkInkContrast": "~17:1", "translucent": true, "note": "the dock shell reaches the seam (element-level wrap) — the literal G2 surface now darkens" },
+      "defaultPath": "byte-identical (unset --glass-backdrop === dark bucket surface bg) — W55 only activates under the explicit light bucket"
+    }
+  },
+  "gates": {
+    "proof:adaptive-glass": "21/21 source asserts GREEN; born-RED at HEAD",
+    "proof:glass-level (W54)": "6/6 + 8/8 GREEN — no regression",
+    "proof:liquid-glass-material (W52)": "PASS — no regression",
+    "typecheck": "GREEN",
+    "build": "GREEN (vite + the /styles cascade ship the new tokens + bucket blocks)"
+  },
+  "needsRegistration": "the orchestrator registers proof:adaptive-glass in package.json (node scripts/proof-adaptive-glass.mjs) + the tests-visual/adaptive-glass.spec.ts workspace member; proof:gate-script-parity then resolves the bijection automatically",
+  "consumerLegNote": "speedtest dock-over-light + the page-redesign (W60/Q4/Q7/Q9) glass-card-over-busy-background legibility get the floor FREE via the AX publish + a pin bump — each bright page background sets --glass-backdrop: light on its glass-card ancestor (routes to W34/W60, NOT executed here)",
+  "delta": "docs/tranches/AX/audit/W55-DELTA.md + docs/tranches/AX/audit/visual/W55-glass-over-light-bucket-{off,on}.png"
+}

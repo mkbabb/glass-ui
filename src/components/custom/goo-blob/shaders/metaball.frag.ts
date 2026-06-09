@@ -191,9 +191,18 @@ vec3 sceneDistG(vec2 uv) {
     // De-synced pulsing body radius.
     float bodyR = uBodyRadius + breath(uPulsePhase) * uPulseAmp;
 
-    // Velocity-driven VOLUME-PRESERVING squash-and-stretch (W10). sa = 1 + |v|·k
-    // along motion, EXACTLY 1/sa perpendicular (area-preserving). The basis (ax,
-    // perp) is captured so the gradient can be transformed back below.
+    // Velocity-driven VOLUME-PRESERVING squash-and-stretch (W10), SATURATED (AX.W46
+    // D5). sa is the stretch along motion, EXACTLY 1/sa perpendicular (area-preserving).
+    // The basis (ax, perp) is captured so the gradient can be transformed back below.
+    //
+    // The W10 form sa = 1 + speed*uStretch rode an UNBOUNDED critically-damped spring
+    // velocity (O(5-8)/s on a fast flick) -> sa ~ 1.78-2.25x elongation, a violent
+    // taffy-pull. A tanh saturation sa = 1 + tanh(speed*k)*uStretch caps the elongation
+    // at 1 + uStretch (~1.5x at the default stretch 0.5) no matter how fast the flick —
+    // the fastest flick reads as a lively bounce, never a rubber-band snap (the standard
+    // volume-preserving squash-and-stretch restraint). k = 1.6 keeps the tanh in its
+    // near-linear regime for a slow drag (the gentle squash still reads) and saturates
+    // only the fast flick.
     vec2 bodyUv = uv;
     vec2 ax = vec2(1.0, 0.0);
     vec2 perp = vec2(0.0, 1.0);
@@ -203,7 +212,7 @@ vec3 sceneDistG(vec2 uv) {
     if (squashed) {
         ax = uVelocity / speed;
         perp = vec2(-ax.y, ax.x);
-        sa = 1.0 + speed * uStretch;
+        sa = 1.0 + tanh(speed * 1.6) * uStretch;
         bodyUv = vec2(dot(uv, ax) / sa, dot(uv, perp) * sa);
     }
 
@@ -310,16 +319,18 @@ void main() {
     // attraction leans the body IN toward the cursor, a negative shies it AWAY. The
     // signed influence flows straight into the UV shift (no hardcoded repulsion).
     //
-    // AX.W15 REDRESS — the falloff radius WIDENS 0.4 to 0.65. The flick lands the
-    // pointer at ~0.32 uv from the body centre; with the old 0.4 cutoff the body sat
-    // deep in the dead smoothstep tail (~0.10 weight), so even a strong strength left
-    // a sub-floor centroid shift (the live 0.0011 vs the 0.012 gate). 0.65 reaches the
-    // whole creature coherently — the body, satellites and trail all tilt toward the
-    // cursor as one — so the lean READS. Paired with pointerStrength 0.45 (types.ts).
+    // AX.W46 D5 — the falloff radius NARROWS 0.65 → 0.5 (the calm-lean reconciliation).
+    // The W15 REDRESS widened it to 0.65 to clear a synthetic floor; the live π-lane
+    // read the result as a LUNGE. The drama lives in the STRENGTH (pointerStrength,
+    // dropped to 0.18 in types.ts), NOT the falloff — the falloff's job is purely to keep
+    // the lean COHERENT across the creature so the body, satellites and trail all tilt
+    // toward the cursor as ONE. At 0.5 the body (sitting ≈0.2 uv from the cursor on a
+    // hover-flick) is still well inside the cutoff, so the whole creature tilts as one —
+    // a gentle, coherent "it notices you" lean rather than the body lunging a body-width.
     if (uPointerActive > 0.5) {
         vec2 pointerDir = uPointer - uv;
         float pointerDist = length(pointerDir);
-        float influence = smoothstep(0.65, 0.0, pointerDist) * uPointerAttraction * uPointerStrength;
+        float influence = smoothstep(0.5, 0.0, pointerDist) * uPointerAttraction * uPointerStrength;
         uv -= normalize(pointerDir + 1e-6) * influence;
     }
 
@@ -458,7 +469,18 @@ void main() {
 
         // Combine the two warm highlights and add in LINEAR. max(spec, rim*scale)
         // keeps the glint from stacking on the rim into a blown hotspot.
+        //
+        // AX.W46 D4 — CLAMP the linear highlight below unity before the add (the
+        // belt-and-braces guard the re-derived specStrength makes rarely-binding but
+        // never lets a worst-case normal blow to a hard white spot). The energy-
+        // conserving Blinn-Phong CAN still spike on a grazing normal where the Toksvig
+        // widen has not kicked in; capping the highlight magnitude at 0.85 (a contained
+        // warm gleam, sub-unity) means the OETF clamp below can never crush a
+        // pure-white pixel over the dome. The cap is on the highlight ALONE (not the
+        // composited lin), so the body color underneath is untouched — it caps only
+        // the additive catch-light's energy.
         vec3 highlight = max(warmCream * spec, rimLin * rim);
+        highlight = min(highlight, vec3(0.85));
         lin += highlight;
     }
 
