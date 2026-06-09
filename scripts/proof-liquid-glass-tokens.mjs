@@ -45,7 +45,17 @@ const dock = [
 ]
     .map((f) => read(f))
     .join("\n");
-const specular = read("src/styles/glass-specular-track.css");
+// AW.W22 — the moving-specular ::before catch-light was FOLDED from
+// glass-specular-track.css into the unified `.glass-material::before` group in
+// glass.css (the track file now keeps only the thin alias), and the
+// feDisplacementMap refraction garnish lives in its own glass-refract.css. Read
+// the family so every specular/refraction assertion finds the recipe at its home.
+const specular =
+    read("src/styles/glass.css") +
+    "\n" +
+    read("src/styles/glass-specular-track.css") +
+    "\n" +
+    read("src/styles/glass-refract.css");
 const indexCss = read("src/styles/index.css");
 
 const violations = [];
@@ -70,8 +80,12 @@ assert(
     /--glass-edge-light:\s*var\(--glass-edge-light-dark\)/.test(tokens),
 );
 assert(
-    "edge-light wired onto floating tier",
-    /\.glass-floating\s*\{[^}]*var\(--glass-edge-light\)/s.test(glass),
+    // AW.W22 — the rim moved off the floating-only block onto the UNIFIED
+    // `.glass-material` group via `--glass-material-rim` (= var(--glass-edge-light)),
+    // so EVERY rung carries it. Assert the unified rim is wired (which IS the
+    // edge-light) rather than the retired floating-tier-specific form.
+    "edge-light wired onto the unified material rim",
+    /var\(--glass-material-rim\)/.test(glass) && /var\(--glass-edge-light\)/.test(glass),
 );
 assert(
     "edge-light wired onto dock tier",
@@ -148,7 +162,9 @@ assert(
 );
 assert(
     "specular paints a masked radial-gradient that tracks --specular-x/y",
-    /radial-gradient\([^)]*var\(--specular-x/.test(specular) &&
+    // [\s\S]*? (not [^)]*) so the match crosses the inner `)` of the W52
+    // `circle var(--glass-specular-size, 36%)` size argument.
+    /radial-gradient\([\s\S]*?var\(--specular-x/.test(specular) &&
         /mask-image:/.test(specular),
 );
 // centred var() fallback — `var(--specular-x, 50%)` paints centred without the
@@ -179,11 +195,13 @@ const reducedTransp =
         /@media\s*\(prefers-reduced-transparency:\s*reduce\)\s*\{([\s\S]*?)\n\}/,
     )?.[1] ?? "";
 facts.reducedTransparencyBracketLen = reducedTransp.length;
-// `--glass-blur-quiet: none` inside the bracket drops the whole chain
-// (blur+saturate+brightness) — the saturate cannot survive when the blur drops.
+// AX.W54 — the per-rung opacity+blur clobbers collapsed onto ONE `--glass-level: 0`
+// in the reduce bracket (the blur seam resolves blur(0), so the whole
+// blur+saturate+brightness chain drops with the level — the same effect the old
+// per-rung `--glass-blur-quiet: none` had, now from the single knob).
 assert(
-    "reduced-transparency maps --glass-blur-quiet: none (drops the saturate chain)",
-    /--glass-blur-quiet:\s*none/.test(reducedTransp),
+    "reduced-transparency collapses onto --glass-level: 0 (drops the blur+saturate chain)",
+    /--glass-level:\s*0/.test(reducedTransp),
 );
 // the specular rung also drops under reduced-transparency.
 assert(
