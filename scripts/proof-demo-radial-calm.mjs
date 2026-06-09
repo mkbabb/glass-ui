@@ -194,15 +194,18 @@ export function detect(heroSources, allStorySources, tokensCss, pulseSrc) {
             violations.push(`hero file missing: demo/stories/${rel}`);
             continue;
         }
-        const importsAurora = /import\b[^;\n]*\bAurora\b[^;\n]*from\s+["'][^"']*aurora["']/.test(src);
-        const rendersAurora = /<Aurora\b/.test(src);
+        // AX.W60 — the per-hero inline <Aurora> was reconciled onto the StoryPage→
+        // StoryHero chassis + the manifest `background` seam (each hero declares
+        // background: aurora|constellation|fourier|paper, rendered by StoryHero), so
+        // the inline import/render requirement is superseded. The real P7 intent —
+        // ZERO hand-rolled --section-color-* radial hero wash — is what stays locked.
+        const rendersSubstrate =
+            /<(Aurora|Constellation|FourierField|StoryHero|PaperBackdrop)\b/.test(src);
         const heroRadial = heroWashRadials(src);
-        facts[`hero_${rel}`] = { importsAurora, rendersAurora, heroRadial: heroRadial > 0 };
-        if (!importsAurora) violations.push(`${rel} does not import <Aurora>`);
-        if (!rendersAurora) violations.push(`${rel} does not render <Aurora>`);
+        facts[`hero_${rel}`] = { rendersSubstrate, heroRadial: heroRadial > 0 };
         if (heroRadial > 0)
             violations.push(
-                `${rel} still hand-rolls a --section-color-* radial-gradient hero wash — it must be the <Aurora> drift`,
+                `${rel} still hand-rolls a --section-color-* radial-gradient hero wash — it must be the shipped <Aurora>/<Constellation>/<FourierField> drift (via the StoryHero background seam)`,
             );
     }
 
