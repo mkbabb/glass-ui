@@ -142,9 +142,17 @@ function detectShadowBridgeIntegrity(tokensCss, themeCss) {
 // ── (c) the container-context asserts ───────────────────────────────────────
 const CONTAINER_CONTEXT = [
     {
+        // AX.W06 — dock.css was carved into dock/{shell,morph,density,…}.css, so
+        // read the dock CSS FAMILY (the @import root + its partials). The dock's
+        // `dock` inline-size container is OPT-IN via the GlassDock `containerName`
+        // prop (AW.W1 removed the always-on CSS default that broke shrink-to-fit),
+        // so the CONTEXT is component-provided (GlassDock.vue) — the family carries
+        // the `@container dock(…)` VARIANTS (density.css), which is the TW3 idiom
+        // evidence the gate locks. `contextInComponent` points at the prop binding.
         file: "src/styles/dock.css",
-        // The dock root establishes a named inline-size container + reads it.
-        contextRe: /container:\s*dock\s*\/\s*inline-size|container-type:\s*inline-size/,
+        family: ["src/styles/dock/shell.css", "src/styles/dock/density.css", "src/styles/dock/morph.css"],
+        contextInComponent: "src/components/custom/dock/GlassDock.vue",
+        contextRe: /container:\s*dock\s*\/\s*inline-size|container-type:\s*inline-size|container(?:Name|-name)/,
         variantRe: /@container\s+dock\s*\(/,
     },
     {
@@ -295,12 +303,15 @@ export function detectCompleteness(tokensCss, themeCss) {
 export function detectContainerContext(readFile) {
     const violations = [];
     const facts = [];
-    for (const { file, contextRe, variantRe } of CONTAINER_CONTEXT) {
-        const text = readFile(resolve(ROOT, file)) ?? "";
+    for (const { file, family, contextInComponent, contextRe, variantRe } of CONTAINER_CONTEXT) {
+        // Read the file + any carved partials (AX.W06) + the component that may
+        // set the container via a prop (opt-in context, AW.W1) — concatenated.
+        const sources = [file, ...(family ?? []), contextInComponent].filter(Boolean);
+        const text = sources.map((f) => readFile(resolve(ROOT, f)) ?? "").join("\n");
         const hasContext = contextRe.test(text);
         const hasVariant = variantRe.test(text);
         facts.push({ file, hasContext, hasVariant });
-        if (!hasContext) violations.push(`${file}: missing @container CONTEXT (container-type / container: name) — TW3`);
+        if (!hasContext) violations.push(`${file}: missing @container CONTEXT (container-type / container: name / containerName prop) — TW3`);
         if (!hasVariant) violations.push(`${file}: declares no @container <name>(…) size variant — TW3`);
     }
     return { facts, violations };

@@ -133,11 +133,11 @@ function lineOf(text, offset) {
 }
 
 // Is this {relFile, line, matchText} covered by the allowlist? The allowlist var
-// must appear inside the matched wrap (anchors the entry to the right binding).
+// appearing inside the matched wrap (file + var) anchors the entry to the right
+// binding — robust against line shifts (the `line` field stays informational; an
+// edit elsewhere in the file no longer falsely un-allowlists the binding).
 function isAllowed(relFile, line, matchText) {
-    return ALLOWLIST.some(
-        (a) => a.file === relFile && a.line === line && matchText.includes(a.var),
-    );
+    return ALLOWLIST.some((a) => a.file === relFile && matchText.includes(a.var));
 }
 
 // The pure detector. Takes a list of {rel, src} (src is comment-stripped) and
