@@ -43,8 +43,9 @@ describe("reka binding-idiom render-effect canary (AW.W26)", () => {
         const svgCls = wrapper.get("svg").classes();
         expect(svgCls).toContain("size-9");
         // the base guarded icon-sizing token is present on the button (it scopes
-        // to un-sized svgs only, so it cannot collide the host size)
-        expect(cls.some((c) => c.includes("[&_svg:not([class*=size-])]:size-4"))).toBe(true);
+        // to un-sized svgs only, so it cannot collide the host size). AX.W51 — the
+        // un-sized glyph reads the scaled `--ui-glyph` register, not the raw size-4.
+        expect(cls.some((c) => c.includes("[&_svg:not([class*=size-])]:size-[var(--ui-glyph)]"))).toBe(true);
         // data-slot / data-variant are wired
         expect(wrapper.get("button").attributes("data-slot")).toBe("button");
         expect(wrapper.get("button").attributes("data-variant")).toBe("default");

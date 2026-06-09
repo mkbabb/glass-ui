@@ -32,8 +32,8 @@ export const GATES = [
     {
         id: "test",
         cmd: "test",
-        tags: ["local", "ci"],
-        note: "release runs it via prepublishOnly",
+        tags: ["local", "ci", "release"],
+        note: "AX — promoted to the RELEASE set: prepublishOnly ALSO runs it, but that fails LATE (after the gate matrix passes + the publish starts), so a stale unit test blocked the 3.9.0 publish at the publish step. The gate matrix now runs it early — a stale test fails the release BEFORE the publish attempt.",
     },
     { id: "build", cmd: "build", tags: ["local", "ci", "release"] },
     {
